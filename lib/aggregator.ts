@@ -52,9 +52,16 @@ export class BookAggregator {
 
                 // Filter to only editions that match the same author(s)
                 const filtered = editions.filter(edition => {
-                  // Check author match
-                  if (!edition.authors || edition.authors.length === 0) return true;
-                  if (!work.authors || work.authors.length === 0) return true;
+                  // STRICT: Only include editions with author data that matches
+                  // Skip editions without author data - we can't verify they belong to this work
+                  if (!edition.authors || edition.authors.length === 0) {
+                    return false;
+                  }
+
+                  // Skip if work has no authors (shouldn't happen)
+                  if (!work.authors || work.authors.length === 0) {
+                    return false;
+                  }
 
                   const normalizedWorkAuthors = work.authors.map(a => normalizeAuthor(a));
                   const normalizedEditionAuthors = edition.authors.map(a => normalizeAuthor(a));
@@ -76,9 +83,14 @@ export class BookAggregator {
 
                 // Filter to only editions that match the same author(s)
                 return editions.filter(edition => {
-                  // Check author match
-                  if (!edition.authors || edition.authors.length === 0) return true;
-                  if (!work.authors || work.authors.length === 0) return true;
+                  // STRICT: Only include editions with author data that matches
+                  if (!edition.authors || edition.authors.length === 0) {
+                    return false;
+                  }
+
+                  if (!work.authors || work.authors.length === 0) {
+                    return false;
+                  }
 
                   const normalizedWorkAuthors = work.authors.map(a => normalizeAuthor(a));
                   const normalizedEditionAuthors = edition.authors.map(a => normalizeAuthor(a));
@@ -164,9 +176,9 @@ export class BookAggregator {
 
             // Filter to only editions that match the same author(s)
             return editions.filter(edition => {
-              // Check author match
-              if (!edition.authors || edition.authors.length === 0) return true;
-              if (!authors || authors.length === 0) return true;
+              // STRICT: Only include editions with matching author data
+              if (!edition.authors || edition.authors.length === 0) return false;
+              if (!authors || authors.length === 0) return false;
 
               const normalizedAuthors = authors.map(a => normalizeAuthor(a));
               const normalizedEditionAuthors = edition.authors.map(a => normalizeAuthor(a));
@@ -185,9 +197,9 @@ export class BookAggregator {
 
             // Filter to only editions that match the same author(s)
             return editions.filter(edition => {
-              // Check author match
-              if (!edition.authors || edition.authors.length === 0) return true;
-              if (!authors || authors.length === 0) return true;
+              // STRICT: Only include editions with matching author data
+              if (!edition.authors || edition.authors.length === 0) return false;
+              if (!authors || authors.length === 0) return false;
 
               const normalizedAuthors = authors.map(a => normalizeAuthor(a));
               const normalizedEditionAuthors = edition.authors.map(a => normalizeAuthor(a));
