@@ -37,21 +37,20 @@ export class BookAggregator {
     const worksWithAllEditions = await Promise.all(
       initialGroups.map(async (work) => {
         const firstEdition = work.editions[0];
-        const workLanguage = firstEdition.language; // The language that defines this work
 
         // Fetch all editions for this work from all sources
-        // Filter by author AND language (since WORK = book + author + language)
+        // Filter by author only (language is now an edition attribute, not work-defining)
         const allEditionsResults = await Promise.all(
           this.sources.map(async (source) => {
             try {
               // Use the work ID if available (for Open Library)
-              // Still need to filter by language and author even with work ID
-              // because Open Library work IDs can contain editions in multiple languages
+              // Still need to filter by author even with work ID
+              // because Open Library work IDs can contain different books by different authors
               if (firstEdition.workId && source.name === 'Open Library') {
                 const editions = await source.getEditions(firstEdition.workId);
-                console.log(`[Aggregator] OL returned ${editions.length} editions for ${firstEdition.workId}, filtering for lang: ${workLanguage}`);
+                console.log(`[Aggregator] OL returned ${editions.length} editions for ${firstEdition.workId}`);
 
-                // Filter to only editions that match the same author(s) AND language
+                // Filter to only editions that match the same author(s)
                 const filtered = editions.filter(edition => {
                   // Check author match
                   if (!edition.authors || edition.authors.length === 0) return true;
@@ -66,22 +65,16 @@ export class BookAggregator {
                     )
                   );
 
-                  if (!authorMatches) return false;
-
-                  // Check language match (a work is specific to one language)
-                  // Allow editions without language data (they're likely in the work's primary language)
-                  if (!workLanguage || !edition.language) return true;
-
-                  return edition.language === workLanguage;
+                  return authorMatches;
                 });
 
                 console.log(`[Aggregator] After filtering: kept ${filtered.length} editions`);
                 return filtered;
               } else {
-                // For Google Books, use title but then filter by author AND language
+                // For Google Books, use title but then filter by author
                 const editions = await source.getEditions(work.title);
 
-                // Filter to only editions that match the same author(s) AND language
+                // Filter to only editions that match the same author(s)
                 return editions.filter(edition => {
                   // Check author match
                   if (!edition.authors || edition.authors.length === 0) return true;
@@ -96,13 +89,7 @@ export class BookAggregator {
                     )
                   );
 
-                  if (!authorMatches) return false;
-
-                  // Check language match (a work is specific to one language)
-                  // Allow editions without language data (they're likely in the work's primary language)
-                  if (!workLanguage || !edition.language) return true;
-
-                  return edition.language === workLanguage;
+                  return authorMatches;
                 });
               }
             } catch (error) {
@@ -168,7 +155,6 @@ export class BookAggregator {
     const title = details.title;
     const workId = details.workId;
     const authors = details.authors || [];
-    const workLanguage = details.language; // The language that defines this work
 
     const allEditionsResults = await Promise.all(
       this.sources.map(async (source) => {
@@ -176,7 +162,7 @@ export class BookAggregator {
           if (workId && source.name === 'Open Library') {
             const editions = await source.getEditions(workId);
 
-            // Filter to only editions that match the same author(s) AND language
+            // Filter to only editions that match the same author(s)
             return editions.filter(edition => {
               // Check author match
               if (!edition.authors || edition.authors.length === 0) return true;
@@ -191,19 +177,13 @@ export class BookAggregator {
                 )
               );
 
-              if (!authorMatches) return false;
-
-              // Check language match (a work is specific to one language)
-              // If work has no language or edition has no language, allow it
-              if (!workLanguage || !edition.language) return true;
-
-              return edition.language === workLanguage;
+              return authorMatches;
             });
           } else {
-            // For Google Books, fetch by title and filter by author AND language
+            // For Google Books, fetch by title and filter by author
             const editions = await source.getEditions(title);
 
-            // Filter to only editions that match the same author(s) AND language
+            // Filter to only editions that match the same author(s)
             return editions.filter(edition => {
               // Check author match
               if (!edition.authors || edition.authors.length === 0) return true;
@@ -218,13 +198,7 @@ export class BookAggregator {
                 )
               );
 
-              if (!authorMatches) return false;
-
-              // Check language match (a work is specific to one language)
-              // If work has no language or edition has no language, allow it
-              if (!workLanguage || !edition.language) return true;
-
-              return edition.language === workLanguage;
+              return authorMatches;
             });
           }
         } catch (error) {
@@ -290,16 +264,16 @@ export class BookAggregator {
   private getWorkKey(book: BookEdition): string {
     const title = normalizeTitle(book.title);
     const author = book.authors?.[0] ? normalizeAuthor(book.authors[0]) : 'unknown';
-    const language = book.language || 'unknown';
 
-    // A WORK is defined as the triplet: book + author + language
+    // A WORK is defined as: book + author (language is an EDITION attribute)
+    // All translations are editions of the SAME work
     // ALWAYS include author in the key, even with workId, because Open Library
     // sometimes assigns the same workId to different books by different authors
     if (book.workId) {
-      return `work:${book.workId}::${author}::${language}`;
+      return `work:${book.workId}::${author}`;
     }
 
-    return `${title}::${author}::${language}`;
+    return `${title}::${author}`;
   }
 
   private deduplicateEditions(editions: BookEdition[]): BookEdition[] {

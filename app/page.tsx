@@ -1,12 +1,37 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import SearchBar from '@/components/SearchBar';
 import BookGrid from '@/components/BookGrid';
 
 export default function Home() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [language, setLanguage] = useState('en');
+
+  // Initialize from URL on mount
+  useEffect(() => {
+    const query = searchParams.get('q') || '';
+    const lang = searchParams.get('lang') || 'en';
+    setSearchQuery(query);
+    setLanguage(lang);
+  }, [searchParams]);
+
+  // Update URL when search changes
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (searchQuery) {
+      params.set('q', searchQuery);
+    }
+    if (language && language !== 'en') {
+      params.set('lang', language);
+    }
+
+    const newUrl = params.toString() ? `/?${params.toString()}` : '/';
+    router.replace(newUrl, { scroll: false });
+  }, [searchQuery, language, router]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-orange-50">
