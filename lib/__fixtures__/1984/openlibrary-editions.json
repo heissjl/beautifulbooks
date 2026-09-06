@@ -1,0 +1,2663 @@
+{
+  "workId": "OL1168083W",
+  "size": 537,
+  "entries": [
+    {
+      "key": "/books/OL55257669M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781976304699"
+      ],
+      "number_of_pages": 232
+    },
+    {
+      "key": "/books/OL55266723M",
+      "title": "1984",
+      "subtitle": "Nineteen Eighty-Four",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781987679359"
+      ],
+      "number_of_pages": 170
+    },
+    {
+      "key": "/books/OL55302621M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL8340621A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2015",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9781517514181"
+      ],
+      "number_of_pages": 356
+    },
+    {
+      "key": "/books/OL55441533M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781717012890"
+      ],
+      "number_of_pages": 170
+    },
+    {
+      "key": "/books/OL55455937M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781530044351"
+      ],
+      "number_of_pages": 238
+    },
+    {
+      "key": "/books/OL55486784M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781530043927"
+      ],
+      "number_of_pages": 238
+    },
+    {
+      "key": "/books/OL55519843M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781535061766"
+      ],
+      "number_of_pages": 170
+    },
+    {
+      "key": "/books/OL55532981M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781986607766"
+      ],
+      "number_of_pages": 250
+    },
+    {
+      "key": "/books/OL55533675M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL14562112A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781987598384"
+      ],
+      "number_of_pages": 224
+    },
+    {
+      "key": "/books/OL55569478M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781537775050"
+      ],
+      "number_of_pages": 196
+    },
+    {
+      "key": "/books/OL55652244M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2015",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9781522932376"
+      ],
+      "number_of_pages": 350
+    },
+    {
+      "key": "/books/OL55683897M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL8340026A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781530644049"
+      ],
+      "number_of_pages": 222
+    },
+    {
+      "key": "/books/OL55708108M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL8339403A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2015",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9781517277703"
+      ],
+      "number_of_pages": 464
+    },
+    {
+      "key": "/books/OL55725219M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9781979644358"
+      ],
+      "number_of_pages": 276
+    },
+    {
+      "key": "/books/OL52637236M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "ENWISE"
+      ],
+      "publish_date": "2024",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781964960005"
+      ]
+    },
+    {
+      "key": "/books/OL52649478M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "ENWISE"
+      ],
+      "publish_date": "2024",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781964960050"
+      ]
+    },
+    {
+      "key": "/books/OL54024847M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Sweet Cherry Publishing"
+      ],
+      "publish_date": "2024",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781802633900"
+      ],
+      "number_of_pages": 424
+    },
+    {
+      "key": "/books/OL54238554M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2012",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781477550380"
+      ],
+      "number_of_pages": 260
+    },
+    {
+      "key": "/books/OL54304891M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2012",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781477550182"
+      ],
+      "number_of_pages": 260
+    },
+    {
+      "key": "/books/OL54620413M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2014",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781503241312"
+      ],
+      "number_of_pages": 134
+    },
+    {
+      "key": "/books/OL54713242M",
+      "title": "1984",
+      "subtitle": "Nineteen Eighty-Four",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781717012227"
+      ],
+      "number_of_pages": 282
+    },
+    {
+      "key": "/books/OL54826673M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781530036097"
+      ],
+      "number_of_pages": 238
+    },
+    {
+      "key": "/books/OL54958802M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2015",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781514223000"
+      ],
+      "number_of_pages": 394
+    },
+    {
+      "key": "/books/OL55068920M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL9268359A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2015",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9781512393934"
+      ],
+      "number_of_pages": 260
+    },
+    {
+      "key": "/books/OL55090866M",
+      "title": "1984",
+      "subtitle": "Orwell G. Edition",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781979898614"
+      ],
+      "number_of_pages": 162
+    },
+    {
+      "key": "/books/OL51102525M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Liese. Outside The Box, Andreas"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9783962725297"
+      ]
+    },
+    {
+      "key": "/books/OL51874222M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Blurb"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781388730925"
+      ]
+    },
+    {
+      "key": "/books/OL51988745M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Blurb"
+      ],
+      "publish_date": "2015",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781320829731"
+      ]
+    },
+    {
+      "key": "/books/OL49174051M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798485404635"
+      ]
+    },
+    {
+      "key": "/books/OL49178322M",
+      "title": "1984",
+      "subtitle": "Nineteen Eighty-Four",
+      "authors": [
+        {
+          "key": "/authors/OL10034889A"
+        },
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798594919693"
+      ]
+    },
+    {
+      "key": "/books/OL48236395M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9798732781649"
+      ]
+    },
+    {
+      "key": "/books/OL48476596M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL9640601A"
+        },
+        {
+          "key": "/authors/OL1390222A"
+        },
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/dut"
+        }
+      ],
+      "isbn_13": [
+        "9798528164908"
+      ]
+    },
+    {
+      "key": "/books/OL48486997M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_13": [
+        "9798599858768"
+      ]
+    },
+    {
+      "key": "/books/OL48500788M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798589924183"
+      ]
+    },
+    {
+      "key": "/books/OL48517005M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL9640601A"
+        },
+        {
+          "key": "/authors/OL1390222A"
+        },
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_13": [
+        "9798528142388"
+      ]
+    },
+    {
+      "key": "/books/OL48520055M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL12934061A"
+        },
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9798664304275"
+      ]
+    },
+    {
+      "key": "/books/OL48802930M",
+      "title": "1984",
+      "subtitle": "Nineteen Eighty-Four",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798747349483"
+      ]
+    },
+    {
+      "key": "/books/OL48859063M",
+      "title": "1984",
+      "subtitle": "Con el Apéndice Principios de Neolengua",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9798468865927"
+      ]
+    },
+    {
+      "key": "/books/OL48974251M",
+      "title": "1984",
+      "subtitle": "Spanish Edition/ George Orwell",
+      "authors": [
+        {
+          "key": "/authors/OL12561168A"
+        },
+        {
+          "key": "/authors/OL9804292A"
+        },
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9798472370790"
+      ],
+      "covers": [
+        15230634
+      ]
+    },
+    {
+      "key": "/books/OL47305574M",
+      "title": "1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "עם עובד"
+      ],
+      "publish_date": "1971",
+      "isbn_10": [
+        "8804719133"
+      ],
+      "isbn_13": [
+        "9788804719137"
+      ],
+      "covers": [
+        13770046
+      ],
+      "number_of_pages": 251,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL49852822M",
+      "title": "1984",
+      "subtitle": "Unnīs sau chaurāsī, George Orwell kā shuhra-e-āfāq nāvĕl",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Urdū Akeḍĕmī Sindh"
+      ],
+      "publish_date": "1958",
+      "languages": [
+        {
+          "key": "/languages/urd"
+        }
+      ],
+      "number_of_pages": 461
+    },
+    {
+      "key": "/books/OL49972499M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Dār al-Adīb"
+      ],
+      "publish_date": "1956",
+      "languages": [
+        {
+          "key": "/languages/ara"
+        }
+      ],
+      "number_of_pages": 280
+    },
+    {
+      "key": "/books/OL47190609M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL7955749A"
+        },
+        {
+          "key": "/authors/OL5849592A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Editorial Edaf, S.L."
+      ],
+      "publish_date": "Oct 13, 2022",
+      "isbn_10": [
+        "8441440670"
+      ],
+      "isbn_13": [
+        "9788441440678"
+      ],
+      "covers": [
+        13614819
+      ],
+      "number_of_pages": 336,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL47257367M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL277417A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Edicions 62"
+      ],
+      "publish_date": "Jul 01, 2003",
+      "languages": [
+        {
+          "key": "/languages/cat"
+        }
+      ],
+      "isbn_10": [
+        "8429753214"
+      ],
+      "isbn_13": [
+        "9788429753219"
+      ],
+      "covers": [
+        13706328
+      ],
+      "number_of_pages": 304,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL47328450M",
+      "title": "1984",
+      "subtitle": "Library Edition",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL2865744A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Blackstone Pub"
+      ],
+      "publish_date": "Sep 01, 2008",
+      "isbn_10": [
+        "1606406981"
+      ],
+      "isbn_13": [
+        "9781606406984"
+      ],
+      "covers": [
+        13913104
+      ],
+      "physical_format": "preloaded digital audio player"
+    },
+    {
+      "key": "/books/OL47332872M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL9945484A"
+        },
+        {
+          "key": "/authors/OL4254085A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Libros del Zorro Rojo",
+        "LIBROS DEL ZORRO ROJO"
+      ],
+      "publish_date": "Sep 22, 2021",
+      "isbn_10": [
+        "8412270517"
+      ],
+      "isbn_13": [
+        "9788412270518"
+      ],
+      "covers": [
+        13919651
+      ],
+      "number_of_pages": 360,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL46761656M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2022",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798443126265"
+      ]
+    },
+    {
+      "key": "/books/OL46847927M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "BUZZ"
+      ],
+      "publish_date": "Feb 24, 2019",
+      "isbn_10": [
+        "6586077699"
+      ],
+      "isbn_13": [
+        "9786586077698"
+      ],
+      "covers": [
+        13339502
+      ],
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL46865755M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Fingerprint! Publishing"
+      ],
+      "publish_date": "2019-05-01",
+      "isbn_10": [
+        "9389053730"
+      ],
+      "isbn_13": [
+        "9789389053739"
+      ],
+      "covers": [
+        15228881
+      ]
+    },
+    {
+      "key": "/books/OL47090527M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Txalaparta"
+      ],
+      "publish_date": "Sep 22, 2020",
+      "isbn_10": [
+        "841825226X"
+      ],
+      "isbn_13": [
+        "9788418252266"
+      ],
+      "covers": [
+        13459134
+      ],
+      "number_of_pages": 512,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL44881954M",
+      "title": "1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Destino"
+      ],
+      "publish_date": "2001",
+      "covers": [
+        13113204
+      ],
+      "number_of_pages": 299,
+      "physical_format": "Rústica"
+    },
+    {
+      "key": "/books/OL45208794M",
+      "title": "1984",
+      "subtitle": "With an Afterword by Erich Fromm",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "The New American Library of World Literature"
+      ],
+      "publish_date": "1963",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "number_of_pages": 267
+    },
+    {
+      "key": "/books/OL47071348M",
+      "title": "1984",
+      "subtitle": "a novel",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "New American Library"
+      ],
+      "publish_date": "1950",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "number_of_pages": 236
+    },
+    {
+      "key": "/books/OL44271473M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Penguin Publishing Group"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780143416302"
+      ]
+    },
+    {
+      "key": "/books/OL45137401M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Krevi",
+        "Principis"
+      ],
+      "publish_date": "Dec 31, 2019",
+      "isbn_10": [
+        "6555522267"
+      ],
+      "isbn_13": [
+        "9786555522266"
+      ],
+      "covers": [
+        13122540
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL45278258M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Penguin Group USA"
+      ],
+      "isbn_10": [
+        "0140862544"
+      ],
+      "isbn_13": [
+        "9780140862546"
+      ],
+      "covers": [
+        13125062
+      ],
+      "physical_format": "audio cassette"
+    },
+    {
+      "key": "/books/OL46308790M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Ediciones Lea S.A."
+      ],
+      "publish_date": "2022",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9789877187182"
+      ]
+    },
+    {
+      "key": "/books/OL46706731M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2022",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798365339477"
+      ]
+    },
+    {
+      "key": "/books/OL42628600M",
+      "title": "1984 by George Orwell",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798520497264"
+      ]
+    },
+    {
+      "key": "/books/OL48517776M",
+      "title": "1984 by George Orwell",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798500243164"
+      ]
+    },
+    {
+      "key": "/books/OL42052784M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/dut"
+        }
+      ],
+      "isbn_13": [
+        "9798552520060"
+      ]
+    },
+    {
+      "key": "/books/OL42077487M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_13": [
+        "9798699260331"
+      ]
+    },
+    {
+      "key": "/books/OL42104193M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798698422624"
+      ]
+    },
+    {
+      "key": "/books/OL42196737M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2019",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798673723265"
+      ]
+    },
+    {
+      "key": "/books/OL42208438M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_13": [
+        "9798699549153"
+      ]
+    },
+    {
+      "key": "/books/OL42232313M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9798698125211"
+      ]
+    },
+    {
+      "key": "/books/OL39803444M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "E-Kitap Projesi & Cheapest Books"
+      ],
+      "publish_date": "Jun 14, 2022",
+      "isbn_10": [
+        "6257120896"
+      ],
+      "isbn_13": [
+        "9786257120890"
+      ],
+      "covers": [
+        -1
+      ],
+      "number_of_pages": 324,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL40101301M",
+      "title": "1984",
+      "subtitle": "A Novel",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL4529350A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Pegasus Books"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781643136981"
+      ]
+    },
+    {
+      "key": "/books/OL40184830M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2022",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798817200782"
+      ]
+    },
+    {
+      "key": "/books/OL40228844M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL8648483A"
+        },
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL10819113A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Libretto"
+      ],
+      "publish_date": "Oct 27, 2004",
+      "isbn_10": [
+        "8683725065"
+      ],
+      "isbn_13": [
+        "9788683725069"
+      ],
+      "covers": [
+        13195444
+      ],
+      "number_of_pages": 313,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL40268475M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Austral"
+      ],
+      "publish_date": "Apr 10, 2007",
+      "isbn_10": [
+        "8467024771"
+      ],
+      "isbn_13": [
+        "9788467024777"
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL40279735M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        },
+        {
+          "key": "/authors/OL9303767A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Austral"
+      ],
+      "publish_date": "Mar 09, 2022",
+      "isbn_10": [
+        "8445012770"
+      ],
+      "isbn_13": [
+        "9788445012772"
+      ],
+      "number_of_pages": 400,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL32539027M",
+      "title": "1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "isbn_10": [
+        "3730609769"
+      ],
+      "isbn_13": [
+        "9783730609767"
+      ],
+      "covers": [
+        11187836
+      ],
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL43168412M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Signet New American Library"
+      ],
+      "publish_date": "1964-01-01"
+    },
+    {
+      "key": "/books/OL44003434M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Hawk Press"
+      ],
+      "publish_date": "May 12, 1994",
+      "isbn_10": [
+        "9388318560"
+      ],
+      "isbn_13": [
+        "9789388318563"
+      ],
+      "covers": [
+        13729733
+      ],
+      "number_of_pages": 242,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL44179713M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Arcturus Publishing"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781788282369"
+      ]
+    },
+    {
+      "key": "/books/OL60620826M",
+      "title": "1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Books & Coffee"
+      ],
+      "publish_date": "1949",
+      "isbn_13": [
+        "9789389053739"
+      ],
+      "covers": [
+        15228892,
+        -1
+      ]
+    },
+    {
+      "key": "/books/OL60553257M",
+      "title": "1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "ASAP, S.A."
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9789962904946"
+      ],
+      "covers": [
+        15136841
+      ],
+      "number_of_pages": 456,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL60466311M",
+      "title": "1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Via Leitura"
+      ],
+      "publish_date": "30/01/2020",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_10": [
+        "6587034209"
+      ],
+      "isbn_13": [
+        "9786587034201"
+      ],
+      "covers": [
+        15131560
+      ],
+      "number_of_pages": 288,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL60135617M",
+      "title": "Rok 1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Wydawnictwo MUZA S.A."
+      ],
+      "publish_date": "2013-01-16",
+      "languages": [
+        {
+          "key": "/languages/pol"
+        }
+      ],
+      "isbn_13": [
+        "9788328722156",
+        "9788377583661",
+        "9788328706507"
+      ],
+      "covers": [
+        15123607
+      ],
+      "number_of_pages": 288
+    },
+    {
+      "key": "/books/OL59156144M",
+      "title": "Nineteen Eighty-Four",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Mirlo Ediciones"
+      ],
+      "publish_date": "2023",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "6071440882"
+      ],
+      "isbn_13": [
+        "9786071440884"
+      ],
+      "covers": [
+        15088441
+      ],
+      "number_of_pages": 501,
+      "physical_format": "Tapa dura"
+    },
+    {
+      "key": "/books/OL58946388M",
+      "title": "1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Editora Aleph"
+      ],
+      "publish_date": "24/02/2021",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_13": [
+        "9786586064377"
+      ],
+      "covers": [
+        15017403
+      ],
+      "number_of_pages": 400,
+      "physical_format": "Brochura"
+    },
+    {
+      "key": "/books/OL58373024M",
+      "title": "1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Gramedia Pustaka Utama"
+      ],
+      "publish_date": "2022",
+      "isbn_13": [
+        "9786020661988"
+      ]
+    },
+    {
+      "key": "/books/OL58373101M",
+      "title": "Nineteen Eighty-Four",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Gramedia Pustaka Utama"
+      ],
+      "publish_date": "2022",
+      "languages": [
+        {
+          "key": "/languages/ind"
+        }
+      ],
+      "isbn_13": [
+        "9786020661988"
+      ],
+      "covers": [
+        14857956
+      ],
+      "number_of_pages": 408,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL53012478M",
+      "title": "Nineteen Eighty-Four",
+      "subtitle": "Modern Classics",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Penguin"
+      ],
+      "publish_date": "2004-01-29",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780141919959"
+      ],
+      "covers": [
+        14653131
+      ],
+      "number_of_pages": 360,
+      "physical_format": "eBook"
+    },
+    {
+      "key": "/books/OL53012477M",
+      "title": "Nineteen Eighty-Four",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Penguin Modern Classics"
+      ],
+      "publish_date": "2004/01/29"
+    },
+    {
+      "key": "/books/OL53012476M",
+      "title": "Nineteen Eighty-Four",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Penguin Modern Classics"
+      ],
+      "publish_date": "2004/01/29"
+    },
+    {
+      "key": "/books/OL51295440M",
+      "title": "1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Feltrinelli"
+      ],
+      "publish_date": "7 gennaio 2021",
+      "isbn_10": [
+        "8807903814"
+      ]
+    },
+    {
+      "key": "/books/OL47677164M",
+      "title": "Nineteen Eighty-Four",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Penguin"
+      ],
+      "publish_date": "1961",
+      "covers": [
+        14303941
+      ]
+    },
+    {
+      "key": "/books/OL46545044M",
+      "title": "1984",
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Can Yayınları"
+      ],
+      "publish_date": "2019-04-25",
+      "languages": [
+        {
+          "key": "/languages/tur"
+        }
+      ],
+      "isbn_13": [
+        "9789750718533"
+      ],
+      "covers": [
+        -1
+      ],
+      "number_of_pages": 352,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL44231675M",
+      "title": "Nineteen Eighty-Four",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Penguin Publishing Group"
+      ],
+      "publish_date": "1950",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780451512185"
+      ]
+    },
+    {
+      "key": "/books/OL44231668M",
+      "title": "Nineteen Eighty-Four",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Penguin Publishing Group"
+      ],
+      "publish_date": "1971",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780451503114"
+      ]
+    },
+    {
+      "key": "/books/OL44231662M",
+      "title": "Nineteen Eighty-Four",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Penguin Publishing Group"
+      ],
+      "publish_date": "1960",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780451016409"
+      ]
+    },
+    {
+      "key": "/books/OL40573145M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9781520485744"
+      ]
+    },
+    {
+      "key": "/books/OL40594989M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781980405573"
+      ]
+    },
+    {
+      "key": "/books/OL40655194M",
+      "title": "1984",
+      "subtitle": "Nineteen Eighty-Four",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781980784654"
+      ]
+    },
+    {
+      "key": "/books/OL40743730M",
+      "title": "1984",
+      "subtitle": "Nineteen Eighty-Four",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781521360286"
+      ]
+    },
+    {
+      "key": "/books/OL40789454M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781520185903"
+      ]
+    },
+    {
+      "key": "/books/OL40848870M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781520817897"
+      ]
+    },
+    {
+      "key": "/books/OL40853148M",
+      "title": "1984",
+      "authors": [
+        {
+          "key": "/authors/OL118077A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL1168083W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781521430934"
+      ]
+    }
+  ]
+}

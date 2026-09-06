@@ -1,0 +1,817 @@
+{
+  "numFound": 2362,
+  "start": 0,
+  "numFoundExact": true,
+  "num_found": 2362,
+  "documentation_url": "https://openlibrary.org/dev/docs/api/search",
+  "q": "pride and prejudice",
+  "offset": null,
+  "docs": [
+    {
+      "author_key": [
+        "OL21594A"
+      ],
+      "author_name": [
+        "Jane Austen"
+      ],
+      "cover_edition_key": "OL47044678M",
+      "cover_i": 14348537,
+      "edition_count": 4041,
+      "first_publish_year": 1813,
+      "key": "/works/OL66554W",
+      "language": [
+        "spa",
+        "rus",
+        "eng",
+        "ita",
+        "fre",
+        "sin",
+        "pol",
+        "dut",
+        "cor",
+        "ind",
+        "ger",
+        "hin",
+        "swe",
+        "jpn",
+        "kor",
+        "mul",
+        "por",
+        "fin",
+        "hun",
+        "srp",
+        "cze",
+        "tam",
+        "guj",
+        "vie",
+        "rum",
+        "chi",
+        "pan"
+      ],
+      "title": "Pride and Prejudice",
+      "subject": [
+        "Fiction, Romance, Historical, Regency",
+        "British and Irish fiction (fictional works by one author)",
+        "Brothers and sisters",
+        "Courtship",
+        "Drama",
+        "English fiction",
+        "English literature",
+        "Families",
+        "Family",
+        "Family life",
+        "Family relations",
+        "Fiction Classics",
+        "History",
+        "Interpersonal relations",
+        "Literary Fiction",
+        "Love stories",
+        "manners",
+        "Manners and customs",
+        "marriage",
+        "Sisters",
+        "Social classes",
+        "Social life and customs",
+        "Upper class",
+        "wealth",
+        "Women in England",
+        "young ladies",
+        "Young women",
+        "entail",
+        "Young women, fiction",
+        "Sisters, fiction",
+        "Fiction, family life, general",
+        "England, fiction",
+        "Man-woman relationships, fiction",
+        "Roman anglais",
+        "Classes sociales",
+        "Romans, nouvelles",
+        "Sœurs",
+        "Amours",
+        "Jeunes femmes",
+        "Familles",
+        "Mœurs et coutumes\"",
+        "Clases sociales",
+        "Novela",
+        "Jóvenes (Mujeres)",
+        "Cortejo amoroso",
+        "Hermanas",
+        "Cuentos de amor",
+        "Fiction, coming of age",
+        "Fiction, romance, general",
+        "Great britain, social life and customs, fiction",
+        "Readers",
+        "Prejudices",
+        "Romance fiction",
+        "Historical fiction",
+        "Classical literature",
+        "Domestic fiction",
+        "English language, textbooks for foreign speakers",
+        "Women, fiction",
+        "Adaptations",
+        "Gentry",
+        "Mate selection",
+        "Fiction, romance, historical, general",
+        "English literature (collections)",
+        "Coloring books",
+        "Fiction, family life",
+        "Language and languages, study and teaching",
+        "Emoticons",
+        "Drama (dramatic works by one author)",
+        "Feelings",
+        "Class",
+        "Englisch",
+        "Roman",
+        "Sociala klasser i litteraturen",
+        "Prophecies",
+        "Great britain",
+        "Reading level-grade 7",
+        "Reading level-grade 9",
+        "Reading level-grade 8",
+        "Reading level-grade 11",
+        "Reading level-grade 10",
+        "Reading level-grade 12",
+        "Large type books",
+        "Fiction, romance, historical",
+        "Austen, jane, 1775-1817",
+        "Literature and fiction (general)",
+        "English literature, history and criticism",
+        "England",
+        "Художественная литература -- Великобритания -- Английская литература -- 1-ая пол. 19 в. -- Романы",
+        "Novel",
+        "Fiction",
+        "Long Now Manual for Civilization",
+        "Elizabeth Bennet (Fictitious character)",
+        "Fitzwilliam Darcy (Fictitious character)",
+        "Pride and prejudice (Austen, Jane)",
+        "Mr. Collins (Fictitious character)"
+      ]
+    },
+    {
+      "author_key": [
+        "OL21594A"
+      ],
+      "author_name": [
+        "Jane Austen"
+      ],
+      "cover_edition_key": "OL43531166M",
+      "cover_i": 13148521,
+      "edition_count": 132,
+      "first_publish_year": 1813,
+      "key": "/works/OL15165350W",
+      "language": [
+        "ger",
+        "fre",
+        "por",
+        "eng"
+      ],
+      "title": "Pride and Prejudice",
+      "subject": [
+        "British and irish fiction (fictional works by one author)",
+        "Brothers and sisters",
+        "Children's fiction",
+        "Courtship",
+        "Drama",
+        "English fiction",
+        "English literature",
+        "Families",
+        "Family",
+        "Family life",
+        "Family relations",
+        "Fiction",
+        "Fiction Classics",
+        "History",
+        "Interpersonal relations",
+        "Juvenile fiction",
+        "Literary Fiction",
+        "love stories",
+        "manners",
+        "Manners and customs",
+        "marriage",
+        "Romance",
+        "Sisters",
+        "Social classes",
+        "Social life and customs",
+        "Upper class",
+        "wealth",
+        "Women in England",
+        "young ladies",
+        "Young women",
+        "entail",
+        "Pride and prejudice (Austen, Jane)",
+        "Austen, jane, 1775-1817",
+        "Bennet, elizabeth (fictitious character), fiction",
+        "England, fiction",
+        "Young women, fiction",
+        "Darcy, fitzwilliam (fictitious character), fiction",
+        "Sisters, fiction",
+        "Austen, jane , 1775-1817",
+        "Bennet, elizabeth",
+        "Darcy, fitzwilliam",
+        "Young women--fiction",
+        "Courtship--fiction",
+        "Sisters--fiction",
+        "Social classes--fiction",
+        "Young women in literature",
+        "Courtship in literature",
+        "Pr4034 .p7 2001",
+        "823/.7"
+      ]
+    },
+    {
+      "author_key": [
+        "OL3125727A",
+        "OL21594A",
+        "OL7830906A"
+      ],
+      "author_name": [
+        "Seth Grahame-Smith",
+        "Jane Austen",
+        "Katherine Kellgren"
+      ],
+      "cover_edition_key": "OL23857454M",
+      "cover_i": 6260257,
+      "edition_count": 19,
+      "first_publish_year": 2009,
+      "key": "/works/OL15093171W",
+      "language": [
+        "eng",
+        "fre"
+      ],
+      "title": "Pride and Prejudice and Zombies",
+      "subject": [
+        "Parodies, imitations",
+        "nyt:e-book_fiction=2011-07-16",
+        "Fitzwilliam Darcy (Fictitious character)",
+        "Darcy, Fitzwilliam (Fictitious character) $v Fiction",
+        "Social classes",
+        "Bennet, Elizabeth (Fictitious character) $v Fiction",
+        "Open Library Staff Picks",
+        "New York Times bestseller",
+        "Zombies",
+        "Sisters",
+        "Young women",
+        "Fiction",
+        "Elizabeth Bennet (Fictitious character)",
+        "Families",
+        "Courtship",
+        "Social life and customs",
+        "Parodies",
+        "Fitzwilliam Darcy (Fictional character)",
+        "Manners and customs",
+        "Elizabeth Bennet (Fictional character)",
+        "Jóvenes (Mujeres)",
+        "Hermanas",
+        "Novela",
+        "Cuentos populares de terror",
+        "Ficción",
+        "Clases sociales",
+        "Humor, form, parodies",
+        "Bennet, elizabeth (fictitious character), fiction",
+        "Darcy, fitzwilliam (fictitious character), fiction",
+        "Fiction, horror",
+        "Fiction, mashups",
+        "Parodies, pastiches",
+        "Austen, jane , 1775-1817",
+        "Bennet, elizabeth",
+        "Darcy, fitzwilliam",
+        "Bennet, elizabeth (fictitious character)",
+        "Bennet, elizabeth (fictitious character)--fiction",
+        "Darcy, fitzwilliam (fictitious character)",
+        "Darcy, fitzwilliam (fictitious character)--fiction",
+        "Zombies--fiction",
+        "Young women--england--fiction",
+        "Social classes--england--fiction",
+        "Families--england--fiction",
+        "Sisters--fiction",
+        "Courtship--england--fiction",
+        "Ps3607.r33848 p75 2009",
+        "813/.6",
+        "zombis",
+        "Cortejo amoroso",
+        "Clases sociales en la literatura",
+        "Modales y costumbres",
+        "Orgullo",
+        "Inglaterra",
+        "prejuicios"
+      ]
+    },
+    {
+      "author_key": [
+        "OL1394857A"
+      ],
+      "author_name": [
+        "Fern Siegel"
+      ],
+      "cover_edition_key": "OL48118470M",
+      "cover_i": 14348568,
+      "edition_count": 4,
+      "first_publish_year": 1997,
+      "key": "/works/OL5738118W",
+      "language": [
+        "fre",
+        "eng"
+      ],
+      "title": "Pride and Prejudice [adaptation]",
+      "subject": [
+        "Courtship",
+        "Family life",
+        "Fiction",
+        "History",
+        "Interpersonal relations",
+        "Sisters",
+        "Social life and customs"
+      ]
+    },
+    {
+      "author_key": [
+        "OL21594A"
+      ],
+      "author_name": [
+        "Jane Austen"
+      ],
+      "cover_i": 12728748,
+      "edition_count": 28,
+      "first_publish_year": 1949,
+      "key": "/works/OL66597W",
+      "language": [
+        "spa",
+        "eng"
+      ],
+      "title": "Novels (Pride and Prejudice / Sense and Sensibility)",
+      "subject": [
+        "British and irish fiction (fictional works by one author)",
+        "Brothers and sisters",
+        "Children's fiction",
+        "Courtship",
+        "Drama",
+        "English fiction",
+        "English literature",
+        "Families",
+        "Family",
+        "Family life",
+        "Family relations",
+        "Fiction",
+        "Fiction Classics",
+        "History",
+        "Interpersonal relations",
+        "Juvenile fiction",
+        "Literary Fiction",
+        "love stories",
+        "manners",
+        "Manners and customs",
+        "marriage",
+        "Romance",
+        "Sisters",
+        "Social classes",
+        "Social life and customs",
+        "Upper class",
+        "wealth",
+        "Women in England",
+        "young ladies",
+        "Young women",
+        "entail"
+      ]
+    },
+    {
+      "author_key": [
+        "OL21594A"
+      ],
+      "author_name": [
+        "Jane Austen"
+      ],
+      "cover_edition_key": "OL26337259M",
+      "cover_i": 8094315,
+      "edition_count": 1,
+      "first_publish_year": 1984,
+      "key": "/works/OL17737918W",
+      "language": [
+        "eng"
+      ],
+      "title": "Pride and Prejudice [adaptation]",
+      "subject": [
+        "Social life and customs",
+        "Pride and prejudice (Austen, Jane)",
+        "Sisters",
+        "Young women",
+        "Courtship",
+        "Manners and customs",
+        "Comic books, strips"
+      ]
+    },
+    {
+      "author_key": [
+        "OL7527561A"
+      ],
+      "author_name": [
+        "Stacy King"
+      ],
+      "cover_edition_key": "OL32398746M",
+      "cover_i": 11061327,
+      "edition_count": 3,
+      "first_publish_year": 2014,
+      "key": "/works/OL21259954W",
+      "language": [
+        "eng"
+      ],
+      "title": "Pride and Prejudice [adaptation]",
+      "subject": [
+        "Literature"
+      ]
+    },
+    {
+      "author_key": [
+        "OL1392897A"
+      ],
+      "author_name": [
+        "Curtis Sittenfeld"
+      ],
+      "cover_edition_key": "OL25933885M",
+      "cover_i": 7433943,
+      "edition_count": 9,
+      "first_publish_year": 2016,
+      "key": "/works/OL17356046W",
+      "language": [
+        "eng"
+      ],
+      "title": "Eligible",
+      "subject": [
+        "Sisters",
+        "Families",
+        "Fiction",
+        "nyt:hardcover-fiction=2016-05-08",
+        "New York Times bestseller",
+        "New York Times reviewed",
+        "Fiction, romance, contemporary",
+        "Fiction, family life, general",
+        "Sisters, fiction",
+        "Cincinnati (ohio), fiction",
+        "Bachelors",
+        "FICTION",
+        "Contemporary Women",
+        "Family Life",
+        "Literary",
+        "Family life",
+        "Large print books",
+        "Single women",
+        "Mate selection",
+        "Love-hate relationships",
+        "Dysfunctional families",
+        "Romance fiction",
+        "Love stories",
+        "Pride and prejudice (Austen, Jane)"
+      ]
+    },
+    {
+      "author_key": [
+        "OL7512204A"
+      ],
+      "author_name": [
+        "Ibi Aanu Zoboi"
+      ],
+      "cover_edition_key": "OL28376250M",
+      "cover_i": 10312513,
+      "edition_count": 7,
+      "first_publish_year": 2018,
+      "key": "/works/OL19662884W",
+      "language": [
+        "eng"
+      ],
+      "title": "Pride",
+      "subject": [
+        "Urban renewal",
+        "Gentrification",
+        "Neighborhoods",
+        "Racially mixed people",
+        "Juvenile fiction",
+        "Fiction",
+        "Sisters",
+        "YOUNG ADULT FICTION / Social Themes / Class Differences",
+        "Pride and vanity",
+        "YOUNG ADULT FICTION / Romance / Contemporary",
+        "YOUNG ADULT FICTION / Diversity & Multicultural",
+        "Children's fiction",
+        "Racially mixed people, fiction",
+        "Brooklyn (new york, n.y.), fiction",
+        "Neighbors, fiction",
+        "Urban renewal, fiction"
+      ]
+    },
+    {
+      "author_key": [
+        "OL2993482A"
+      ],
+      "author_name": [
+        "Dario Marianelli"
+      ],
+      "cover_edition_key": "OL8495254M",
+      "cover_i": 766715,
+      "edition_count": 19,
+      "first_publish_year": 2006,
+      "key": "/works/OL8786477W",
+      "language": [
+        "eng"
+      ],
+      "subtitle": "Music from the Motion Picture Soundtrack",
+      "title": "Pride and Prejudice",
+      "subject": [
+        "Motion picture music"
+      ]
+    },
+    {
+      "author_key": [
+        "OL7553056A"
+      ],
+      "author_name": [
+        "Rachael Lippincott"
+      ],
+      "cover_edition_key": "OL48279862M",
+      "cover_i": 14414408,
+      "edition_count": 3,
+      "first_publish_year": 2023,
+      "key": "/works/OL35749735W",
+      "language": [
+        "eng"
+      ],
+      "title": "Pride and Prejudice and Pittsburgh",
+      "subject": [
+        "nyt:young-adult-hardcover=2023-09-17",
+        "New York Times bestseller"
+      ]
+    },
+    {
+      "author_key": [
+        "OL1432358A"
+      ],
+      "author_name": [
+        "Linda Berdoll"
+      ],
+      "cover_edition_key": "OL24935583M",
+      "cover_i": 6901264,
+      "edition_count": 1,
+      "first_publish_year": 2004,
+      "key": "/works/OL16033354W",
+      "language": [
+        "eng"
+      ],
+      "title": "Mr. Darcy takes a wife",
+      "subject": [
+        "Fitzwilliam Darcy (Fictitious character)",
+        "Open Library Staff Picks",
+        "Married people",
+        "Fiction",
+        "Elizabeth Bennet (Fictitious character)",
+        "Fiction, historical",
+        "Darcy, fitzwilliam (fictitious character), fiction",
+        "Bennet, elizabeth (fictitious character), fiction",
+        "England, fiction",
+        "Married people, fiction"
+      ]
+    },
+    {
+      "author_key": [
+        "OL13072925A"
+      ],
+      "author_name": [
+        "Jane Jane"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 2017,
+      "key": "/works/OL41675083W",
+      "language": [
+        "eng"
+      ],
+      "title": "PRIDE and PREJUDICE by Jane Austen"
+    },
+    {
+      "author_key": [
+        "OL2631903A"
+      ],
+      "author_name": [
+        "Janet Aylmer"
+      ],
+      "cover_edition_key": "OL9243521M",
+      "cover_i": 46695,
+      "edition_count": 9,
+      "first_publish_year": 1996,
+      "key": "/works/OL278116W",
+      "language": [
+        "eng"
+      ],
+      "title": "Darcy's Story",
+      "subject": [
+        "Fiction",
+        "England, fiction",
+        "Fiction, romance, historical, general",
+        "Darcy, fitzwilliam (fictitious character), fiction"
+      ]
+    },
+    {
+      "author_key": [
+        "OL1432358A"
+      ],
+      "author_name": [
+        "Linda Berdoll"
+      ],
+      "cover_edition_key": "OL8373437M",
+      "cover_i": 751202,
+      "edition_count": 5,
+      "first_publish_year": 2004,
+      "key": "/works/OL5840417W",
+      "language": [
+        "eng"
+      ],
+      "title": "Mr. Darcy Takes a Wife",
+      "subject": [
+        "Fiction",
+        "Historical Fiction",
+        "Bennet, elizabeth (fictitious character), fiction",
+        "Darcy, fitzwilliam (fictitious character), fiction",
+        "England, fiction",
+        "Married people, fiction",
+        "Fiction, historical, general"
+      ]
+    },
+    {
+      "author_key": [
+        "OL2516619A",
+        "OL9220446A",
+        "OL9220447A",
+        "OL9288156A",
+        "OL3698354A",
+        "OL9297879A"
+      ],
+      "author_name": [
+        "Mrs. Steele MacKaye",
+        "STEELE MACKAYE",
+        "Mary Keith Medbery MacKaye",
+        "Mrs. Steele Mackaye",
+        "Steele Mackaye",
+        "Mary Keith Medbery Mackaye"
+      ],
+      "cover_edition_key": "OL24173208M",
+      "cover_i": 9277753,
+      "edition_count": 15,
+      "first_publish_year": 1906,
+      "key": "/works/OL235881W",
+      "language": [
+        "eng"
+      ],
+      "title": "Pride and Prejudice, A Play",
+      "subject": [
+        "Drama",
+        "Fiction",
+        "Elizabeth Bennet (Fictitious character)",
+        "Adaptations",
+        "Young women",
+        "Courtship",
+        "Social classes",
+        "Social life and customs"
+      ]
+    },
+    {
+      "author_key": [
+        "OL896947A"
+      ],
+      "author_name": [
+        "Janice Greene"
+      ],
+      "cover_edition_key": "OL25551766M",
+      "cover_i": 14417856,
+      "edition_count": 3,
+      "first_publish_year": 2002,
+      "key": "/works/OL8210981W",
+      "language": [
+        "eng"
+      ],
+      "title": "Pride and Prejudice [adaptation]",
+      "subject": [
+        "High interest-low vocabulary books",
+        "Reading (Elementary)",
+        "Sisters",
+        "Young women",
+        "Juvenile fiction",
+        "Reading (Secondary)",
+        "Courtship",
+        "Children's fiction",
+        "Women, fiction",
+        "England, fiction",
+        "Love, fiction",
+        "Fiction",
+        "Man-woman relationships",
+        "Social life and customs",
+        "Love",
+        "Coming of age",
+        "Jeunes femmes",
+        "Romans, nouvelles, etc. pour la jeunesse",
+        "Amours",
+        "Sœurs"
+      ]
+    },
+    {
+      "author_key": [
+        "OL21594A"
+      ],
+      "author_name": [
+        "Jane Austen"
+      ],
+      "cover_edition_key": "OL8732963M",
+      "cover_i": 9277764,
+      "edition_count": 12,
+      "first_publish_year": 1992,
+      "key": "/works/OL66518W",
+      "language": [
+        "eng"
+      ],
+      "title": "Novels (Emma / Pride and Prejudice / Sense and Sensibility)",
+      "subject": [
+        "British and irish fiction (fictional works by one author)",
+        "Brothers and sisters",
+        "Children's fiction",
+        "Courtship",
+        "Drama",
+        "English fiction",
+        "English literature",
+        "Families",
+        "Family",
+        "Family life",
+        "Family relations",
+        "Fiction",
+        "Fiction Classics",
+        "History",
+        "Interpersonal relations",
+        "Juvenile fiction",
+        "Literary Fiction",
+        "love stories",
+        "manners",
+        "Manners and customs",
+        "marriage",
+        "Romance",
+        "Sisters",
+        "Social classes",
+        "Social life and customs",
+        "Upper class",
+        "wealth",
+        "Women in England",
+        "young ladies",
+        "Young women",
+        "entail",
+        "Cocktails",
+        "Handbooks, manuals",
+        "Female friendship",
+        "Mate selection",
+        "Amitié féminine",
+        "Romans, nouvelles",
+        "Choix du conjoint",
+        "Jeunes femmes"
+      ]
+    },
+    {
+      "author_key": [
+        "OL10303763A"
+      ],
+      "author_name": [
+        "Gabe Cole Novoa"
+      ],
+      "cover_edition_key": "OL62201386M",
+      "cover_i": 15232955,
+      "edition_count": 3,
+      "first_publish_year": 2024,
+      "key": "/works/OL35176708W",
+      "language": [
+        "eng"
+      ],
+      "title": "Most Ardently",
+      "subject": [
+        "Children's fiction",
+        "nyt:young-adult-hardcover=2024-02-04",
+        "New York Times bestseller",
+        "Stonewall Book Awards"
+      ]
+    },
+    {
+      "author_key": [
+        "OL7702642A"
+      ],
+      "author_name": [
+        "Lara S. Ormiston"
+      ],
+      "cover_edition_key": "OL27526356M",
+      "cover_i": 8982282,
+      "edition_count": 5,
+      "first_publish_year": 2014,
+      "key": "/works/OL20320747W",
+      "language": [
+        "eng"
+      ],
+      "title": "Unequal Affections",
+      "subject": [
+        "Fiction, romance, general",
+        "Man-woman relationships, fiction",
+        "Sisters, fiction",
+        "England, fiction",
+        "Young women, fiction"
+      ]
+    }
+  ]
+}

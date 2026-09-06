@@ -1,0 +1,423 @@
+{
+  "numFound": 82,
+  "start": 0,
+  "numFoundExact": true,
+  "num_found": 82,
+  "documentation_url": "https://openlibrary.org/dev/docs/api/search",
+  "q": "gravity's rainbow",
+  "offset": null,
+  "docs": [
+    {
+      "author_key": [
+        "OL384171A"
+      ],
+      "author_name": [
+        "Thomas Pynchon"
+      ],
+      "cover_edition_key": "OL922236M",
+      "cover_i": 97894,
+      "edition_count": 44,
+      "first_publish_year": 1973,
+      "key": "/works/OL2636675W",
+      "language": [
+        "ger",
+        "fre",
+        "spa",
+        "eng"
+      ],
+      "title": "Gravity's Rainbow",
+      "subject": [
+        "Fiction",
+        "Rockets (Ordnance)",
+        "Americans",
+        "World War, 1939-1945",
+        "Rocketry",
+        "Soldiers",
+        "National Book Award Winner",
+        "award:national_book_award=1974",
+        "award:national_book_award=fiction",
+        "World War, 1939-1945 -- Fiction",
+        "Americans -- Europe -- Fiction",
+        "Rockets (Ordnance) -- Fiction",
+        "Rocketry -- Fiction",
+        "Soldiers -- Fiction",
+        "Europe -- Fiction",
+        "World war, 1939-1945, fiction",
+        "Fiction, war & military",
+        "Fiction, science fiction, general",
+        "American fiction (fictional works by one author)",
+        "Science fiction",
+        "Fiction in English",
+        "World War (1939-1945) fast (OCoLC)fst01180924",
+        "American literature",
+        "Comic books, strips",
+        "Juvenile literature",
+        "Fighter pilots",
+        "Biography",
+        "World War, 1914-1918",
+        "German Aerial operations",
+        "Cartoons and comics",
+        "Pilotes de chasse",
+        "Biographies",
+        "Bandes dessinées",
+        "Ouvrages pour la jeunesse",
+        "COMICS & GRAPHIC NOVELS",
+        "Nonfiction",
+        "HISTORY",
+        "Military",
+        "World War I.",
+        "Modern",
+        "20th Century",
+        "Aerial Military operations",
+        "German"
+      ]
+    },
+    {
+      "author_key": [
+        "OL6605273A"
+      ],
+      "author_name": [
+        "Zak Smith"
+      ],
+      "cover_edition_key": "OL8590580M",
+      "cover_i": 743066,
+      "edition_count": 4,
+      "first_publish_year": 2006,
+      "key": "/works/OL8846857W",
+      "language": [
+        "eng"
+      ],
+      "title": "Gravity's rainbow illustrated",
+      "subject": [
+        "American fiction",
+        "Illustration of books",
+        "Illustrations"
+      ]
+    },
+    {
+      "author_key": [
+        "OL539319A",
+        "OL3239076A"
+      ],
+      "author_name": [
+        "Luc Herman",
+        "Steven C. Weisenburger"
+      ],
+      "cover_i": 7783257,
+      "edition_count": 4,
+      "first_publish_year": 2013,
+      "key": "/works/OL17540813W",
+      "language": [
+        "eng"
+      ],
+      "title": "Gravity's Rainbow, Domination, and Freedom",
+      "subject": [
+        "Pynchon, thomas, 1937-",
+        "American literature, history and criticism"
+      ]
+    },
+    {
+      "author_key": [
+        "OL29809A"
+      ],
+      "author_name": [
+        "Harold Bloom"
+      ],
+      "cover_edition_key": "OL2716417M",
+      "cover_i": 4166531,
+      "edition_count": 1,
+      "first_publish_year": 1986,
+      "key": "/works/OL19672898W",
+      "language": [
+        "eng"
+      ],
+      "title": "Thomas Pynchon's Gravity's rainbow",
+      "subject": [
+        "History and criticism",
+        "American literature"
+      ]
+    },
+    {
+      "author_key": [
+        "OL1123121A"
+      ],
+      "author_name": [
+        "Mark Richard Siegel"
+      ],
+      "cover_edition_key": "OL21500944M",
+      "cover_i": 4693700,
+      "edition_count": 3,
+      "first_publish_year": 1978,
+      "key": "/works/OL5101003W",
+      "language": [
+        "eng"
+      ],
+      "title": "Pynchon",
+      "subject": [
+        "Paranoia in literature"
+      ]
+    },
+    {
+      "author_key": [
+        "OL223205A",
+        "OL3239076A"
+      ],
+      "author_name": [
+        "Steven Weisenburger",
+        "Steven C. Weisenburger"
+      ],
+      "cover_edition_key": "OL2403856M",
+      "cover_i": 618548,
+      "edition_count": 4,
+      "first_publish_year": 1988,
+      "key": "/works/OL1864666W",
+      "language": [
+        "eng"
+      ],
+      "title": "A Gravity's rainbow companion",
+      "subject": [
+        "Gravity's rainbow (Pynchon)",
+        "Pynchon, thomas, 1937-"
+      ]
+    },
+    {
+      "author_key": [
+        "OL547728A"
+      ],
+      "author_name": [
+        "Charles Clerc"
+      ],
+      "cover_edition_key": "OL3486916M",
+      "cover_i": 4273077,
+      "edition_count": 3,
+      "first_publish_year": 1983,
+      "key": "/works/OL18269505W",
+      "language": [
+        "eng"
+      ],
+      "title": "Approaches to Gravity's Rainbow"
+    },
+    {
+      "author_key": [
+        "OL830056A"
+      ],
+      "author_name": [
+        "Douglas Fowler"
+      ],
+      "cover_edition_key": "OL4099811M",
+      "cover_i": 12641586,
+      "edition_count": 2,
+      "first_publish_year": 1979,
+      "key": "/works/OL4280331W",
+      "language": [
+        "eng"
+      ],
+      "title": "A Reader's Guide to Gravity's Rainbow"
+    },
+    {
+      "author_key": [
+        "OL384171A"
+      ],
+      "author_name": [
+        "Thomas Pynchon"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 1993,
+      "key": "/works/OL2636661W",
+      "title": "V. ; The Crying of Lot 49 ; Gravity's Rainbow"
+    },
+    {
+      "cover_edition_key": "OL26399737M",
+      "cover_i": 8097408,
+      "edition_count": 1,
+      "key": "/works/OL17810248W",
+      "title": "The style of connectedness : Gravity's rainbow and Thomas Pynchon"
+    },
+    {
+      "author_key": [
+        "OL7354414A"
+      ],
+      "author_name": [
+        "Stefano Ercolino"
+      ],
+      "cover_edition_key": "OL37166792M",
+      "cover_i": 13530991,
+      "edition_count": 4,
+      "first_publish_year": 2014,
+      "key": "/works/OL25712356W",
+      "language": [
+        "eng"
+      ],
+      "title": "Maximalist Novel",
+      "subject": [
+        "Fiction",
+        "History and criticism",
+        "History",
+        "Postmodernism (Literature)",
+        "English language",
+        "Style",
+        "Roman",
+        "Postmoderne",
+        "Komplexität",
+        "Postmodernism (litteratur)"
+      ]
+    },
+    {
+      "author_key": [
+        "OL7705613A"
+      ],
+      "author_name": [
+        "Robert Crayola"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 2015,
+      "key": "/works/OL28756329W",
+      "title": "The Gravity's Rainbow Handbook"
+    },
+    {
+      "author_key": [
+        "OL3016509A"
+      ],
+      "author_name": [
+        "Sean Carswell"
+      ],
+      "cover_edition_key": "OL27398623M",
+      "cover_i": 8861028,
+      "edition_count": 4,
+      "first_publish_year": 2017,
+      "key": "/works/OL20210237W",
+      "language": [
+        "eng"
+      ],
+      "title": "Occupy Pynchon",
+      "subject": [
+        "Politics in literature",
+        "American literature, history and criticism",
+        "Pynchon, thomas, 1937-",
+        "Government, resistance to",
+        "Criticism and interpretation",
+        "Government, Resistance to, in literature"
+      ]
+    },
+    {
+      "author_key": [
+        "OL4586041A"
+      ],
+      "author_name": [
+        "Khachig Tölölyan"
+      ],
+      "edition_count": 3,
+      "first_publish_year": 1980,
+      "key": "/works/OL11016791W",
+      "language": [
+        "eng"
+      ],
+      "title": "An index to Gravity's rainbow",
+      "subject": [
+        "Indexes"
+      ]
+    },
+    {
+      "author_key": [
+        "OL13524430A"
+      ],
+      "author_name": [
+        "BookCaps Study Guides Staff"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 2012,
+      "key": "/works/OL39764051W",
+      "language": [
+        "eng"
+      ],
+      "title": "Gravity's Rainbow"
+    },
+    {
+      "author_key": [
+        "OL6811095A"
+      ],
+      "author_name": [
+        "Gale Cengage Learning"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 2017,
+      "key": "/works/OL31198381W",
+      "title": "A Study Guide for Thomas Pynchon's \"Gravity's Rainbow\""
+    },
+    {
+      "author_key": [
+        "OL31892A"
+      ],
+      "author_name": [
+        "Kathryn Hume"
+      ],
+      "cover_edition_key": "OL2731854M",
+      "cover_i": 4701348,
+      "edition_count": 1,
+      "first_publish_year": 1987,
+      "key": "/works/OL18361233W",
+      "language": [
+        "eng"
+      ],
+      "title": "Pynchon's mythography",
+      "subject": [
+        "Myth in literature",
+        "Pynchon, thomas, 1937-",
+        "Myth"
+      ]
+    },
+    {
+      "author_key": [
+        "OL1446497A"
+      ],
+      "author_name": [
+        "Samuli Hägg"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 2005,
+      "key": "/works/OL5873333W",
+      "language": [
+        "eng"
+      ],
+      "title": "Narratologies of Gravity's rainbow",
+      "subject": [
+        "History",
+        "Narration (Rhetoric)"
+      ]
+    },
+    {
+      "edition_count": 1,
+      "first_publish_year": 2011,
+      "key": "/works/OL38181354W",
+      "language": [
+        "eng"
+      ],
+      "title": "Gravity's Rainbow (Thomas Pynchon)",
+      "subject": [
+        "Canada, history"
+      ]
+    },
+    {
+      "author_key": [
+        "OL683049A"
+      ],
+      "author_name": [
+        "Owen Wilkes"
+      ],
+      "cover_edition_key": "OL1332471M",
+      "cover_i": 12641584,
+      "edition_count": 1,
+      "first_publish_year": 1991,
+      "key": "/works/OL3830627W",
+      "language": [
+        "eng"
+      ],
+      "title": "Chasing gravity's rainbow",
+      "subject": [
+        "Arms control",
+        "Ballistic missiles",
+        "Testing"
+      ]
+    }
+  ]
+}

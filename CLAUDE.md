@@ -13,7 +13,8 @@ The spec is written in German; code, comments, commit messages and this file are
 The UI layer (`app/`, `components/`) is kept. The data layer (`lib/`) is being rewritten according to SPEC.md §7. Until that rewrite lands:
 
 - `lib/aggregator.ts` and `lib/sources/*` are the **old** implementation. They fetch external APIs from the browser and fan out one editions request per search result. Do not extend them; replace them per the spec.
-- `lib/__tests__/aggregator.test.ts` does not load and tests a design that was already removed. It is to be replaced by tests against recorded fixtures (§7 step 2).
+- New, spec-conformant modules (step 2, done): `lib/model.ts`, `lib/normalize.ts`, `lib/works.ts`, `lib/sources/openlibrary-parse.ts`, `lib/sources/googlebooks-parse.ts`. Tests in `lib/__tests__/` run against fixtures in `lib/__fixtures__/`, recorded with `npx tsx scripts/record-fixtures.ts`.
+- Google Books fixtures are missing: the unauthenticated API answered HTTP 429 (daily quota) at recording time. Set `GOOGLE_BOOKS_API_KEY` and re-run the recorder to add them.
 - `scripts/debug-mumbo.ts` is a throwaway probe of the old aggregator.
 
 Progress is tracked by the numbered steps in SPEC.md §7. Check `git log` to see which step was completed last.

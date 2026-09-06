@@ -1,0 +1,670 @@
+{
+  "workId": "OL30751W",
+  "size": 23,
+  "entries": [
+    {
+      "key": "/books/OL47443600M",
+      "title": "Mumbo Jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL11412010A"
+        },
+        {
+          "key": "/authors/OL10828018A"
+        },
+        {
+          "key": "/authors/OL6284880A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "La Fuga Ediciones, S.L."
+      ],
+      "publish_date": "Sep 23, 2016",
+      "isbn_10": [
+        "8494594400"
+      ],
+      "isbn_13": [
+        "9788494594403"
+      ],
+      "covers": [
+        14046178
+      ],
+      "number_of_pages": 332,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL47443601M",
+      "title": "Mumbo Jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL11412010A"
+        },
+        {
+          "key": "/authors/OL10828018A"
+        },
+        {
+          "key": "/authors/OL6284880A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "La Fuga Ediciones, S.L."
+      ],
+      "publish_date": "Sep 23, 2016",
+      "isbn_10": [
+        "8494594400"
+      ],
+      "isbn_13": [
+        "9788494594403"
+      ],
+      "covers": [
+        14046179
+      ],
+      "number_of_pages": 332,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL38814379M",
+      "title": "Mumbo Jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Penguin Books, Limited"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780241305829"
+      ]
+    },
+    {
+      "key": "/books/OL28638193M",
+      "title": "Mumbo Jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Penguin Books, Limited"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780241305812"
+      ],
+      "number_of_pages": 224
+    },
+    {
+      "key": "/books/OL28943570M",
+      "title": "Mumbo Jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Doubleday"
+      ],
+      "publish_date": "Aug 01, 1972",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0385056753"
+      ],
+      "isbn_13": [
+        "9780385056755"
+      ],
+      "covers": [
+        10362663
+      ],
+      "number_of_pages": 223,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL32014762M",
+      "title": "Mumbo Jumbo",
+      "subtitle": "A Novel",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        },
+        {
+          "key": "/authors/OL7931349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Audible Studios on Brilliance Audio",
+        "Audible Studios on Brilliance"
+      ],
+      "publish_date": "Mar 24, 2020",
+      "isbn_10": [
+        "1713518066"
+      ],
+      "isbn_13": [
+        "9781713518068"
+      ],
+      "covers": [
+        10681238
+      ],
+      "physical_format": "audio cd"
+    },
+    {
+      "key": "/books/OL34484316M",
+      "title": "Mumbo Jumbo",
+      "subtitle": "A Novel",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Open Road Integrated Media, Inc."
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781453287972"
+      ],
+      "number_of_pages": 221
+    },
+    {
+      "key": "/books/OL34484341M",
+      "title": "Mumbo Jumbo",
+      "subtitle": "A Novel",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Open Road Integrated Media, Inc."
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781453291115"
+      ],
+      "number_of_pages": 221
+    },
+    {
+      "key": "/books/OL35792352M",
+      "title": "Mumbo Jumbo",
+      "subtitle": "A Novel",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Open Road Integrated Media, Inc."
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781453291108"
+      ]
+    },
+    {
+      "key": "/books/OL21500987M",
+      "title": "Mumbo jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Avon"
+      ],
+      "publish_date": "Apr 10, 1978",
+      "isbn_10": [
+        "0380018608"
+      ],
+      "covers": [
+        13878622
+      ],
+      "number_of_pages": 256
+    },
+    {
+      "key": "/books/OL21620245M",
+      "title": "Mumbo jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Atheneum"
+      ],
+      "publish_date": "1988",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0689707304"
+      ],
+      "covers": [
+        7078582
+      ],
+      "number_of_pages": 223
+    },
+    {
+      "key": "/books/OL19031608M",
+      "title": "Mumbo jumbo.",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Doubleday"
+      ],
+      "publish_date": "1972",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "number_of_pages": 223
+    },
+    {
+      "key": "/books/OL15024293M",
+      "title": "Mumbo jumbo.",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Bard"
+      ],
+      "publish_date": "1978",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "038049437X"
+      ]
+    },
+    {
+      "key": "/books/OL20122362M",
+      "title": "Mumbo jumbo.",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Allison & Busby"
+      ],
+      "publish_date": "1989",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0850318440"
+      ],
+      "covers": [
+        15212136
+      ]
+    },
+    {
+      "key": "/books/OL11591997M",
+      "title": "Mumbo Jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Allison & Busby LTD"
+      ],
+      "isbn_10": [
+        "0850318343"
+      ],
+      "isbn_13": [
+        "9780850318340"
+      ],
+      "number_of_pages": 256,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL7721361M",
+      "title": "Mumbo Jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Scribner"
+      ],
+      "publish_date": "June 11, 1996",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0684824779"
+      ],
+      "isbn_13": [
+        "9780684824772"
+      ],
+      "covers": [
+        425906
+      ],
+      "number_of_pages": 224,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL9362494M",
+      "title": "Mumbo Jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "ZBS Foundation"
+      ],
+      "publish_date": "October 1, 2001",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1931654042"
+      ],
+      "isbn_13": [
+        "9781931654043"
+      ],
+      "number_of_pages": 2,
+      "physical_format": "Audio CD"
+    },
+    {
+      "key": "/books/OL7431513M",
+      "title": "Mumbo Jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Avon"
+      ],
+      "publish_date": "March 1978",
+      "isbn_10": [
+        "0380018608"
+      ],
+      "isbn_13": [
+        "9780380018604"
+      ]
+    },
+    {
+      "key": "/books/OL2040100M",
+      "title": "Mumbo jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Atheneum"
+      ],
+      "publish_date": "1989",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0689707304"
+      ],
+      "number_of_pages": 223
+    },
+    {
+      "key": "/books/OL5468355M",
+      "title": "Mumbo jumbo.",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Doubleday"
+      ],
+      "publish_date": "1972",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        7975374
+      ],
+      "number_of_pages": 223
+    },
+    {
+      "key": "/books/OL9005192M",
+      "title": "Mumbo jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Editions de l'Olivier"
+      ],
+      "publish_date": "January 5, 1998",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_10": [
+        "2879291488"
+      ],
+      "isbn_13": [
+        "9782879291482"
+      ],
+      "covers": [
+        992726
+      ],
+      "number_of_pages": 292,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL17898228M",
+      "title": "Mumbo jumbo",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Avon Books"
+      ],
+      "publish_date": "1978",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "038049437X"
+      ],
+      "number_of_pages": 256
+    },
+    {
+      "key": "/books/OL24214584M",
+      "title": "Mumbo jumbo.",
+      "authors": [
+        {
+          "key": "/authors/OL27626A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL30751W"
+        }
+      ],
+      "publishers": [
+        "Atheneum"
+      ],
+      "publish_date": "1972",
+      "isbn_10": [
+        "0689707304"
+      ],
+      "isbn_13": [
+        "9780689707308"
+      ],
+      "covers": [
+        6542038
+      ],
+      "number_of_pages": 223
+    }
+  ]
+}

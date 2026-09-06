@@ -92,7 +92,7 @@ Startliste: Amazon, AbeBooks, Bookshop.org, Google Books (nur wenn `buyLink` vor
 
 | Query | Erwartung |
 |---|---|
-| `mumbo jumbo` | Erster Treffer: *Mumbo Jumbo* von Ishmael Reed, ≥10 Ausgaben. Kathryn Lasky, Francis Wheen usw. als **eigene** Works, nicht gemischt. |
+| `mumbo jumbo` | Erster Treffer: *Mumbo Jumbo* von Ishmael Reed, ≥20 Ausgaben laut Quelle, davon ≥5 mit Cover (Stand 2026-09: 8 von 23). Kathryn Lasky, Francis Wheen usw. als **eigene** Works, nicht gemischt. |
 | `1984` | Orwell an erster Stelle. Deutsche/französische Ausgaben in derselben Karte, nicht als eigenes Work. |
 | `gravity's rainbow` | Pynchons Roman vor allen Study Guides. |
 | `the great gatsby` | Ein Work, kein Duplikat durch Google Books vs. Open Library. |
@@ -114,6 +114,7 @@ Startliste: Amazon, AbeBooks, Bookshop.org, Google Books (nur wenn `buyLink` vor
   - Der Editions-Endpoint liefert Autoren **nur als Keys** (`/authors/OL242325A`), keine Namen. Autorennamen für Ausgaben werden vom Work übernommen, nicht pro Ausgabe geprüft.
   - `author_name` im Suchergebnis enthält Duplikate und Übersetzer; nur der erste Eintrag ist der Erstautor.
 - **F3.2 Google Books** (sekundär, nur ergänzend): Suche `volumes?q=intitle:…`. Liefert keine Work-Gruppierung und **erzeugt deshalb nie eigene Works**. Google-Treffer werden per Titel+Erstautor einem Open-Library-Work zugeordnet; Treffer ohne passendes Work werden verworfen. Rolle: (a) bei der Suche zusätzliche Cover fürs Mosaik, (b) auf der Detailseite zusätzliche Ausgaben, Beschreibungen und Vorschau-Links.
+  - **Quota:** Ohne API-Key teilt sich die App das anonyme Tageskontingent mit allen anderen anonymen Nutzern und bekommt regelmäßig `429 Quota exceeded` (beobachtet 2026-09-06 für jede Anfrage). Ein eigener Key (kostenlos, Google-Cloud-Projekt, 1.000 Anfragen/Tag) ist Voraussetzung, sobald Google Books in Produktion genutzt wird. Environment-Variable `GOOGLE_BOOKS_API_KEY`; ohne Key läuft die App mit Open Library allein.
 - **F3.3** Jede Quelle ist unabhängig ausfallsicher: Fehler oder Timeout (5 s) einer Quelle führen zu Teilergebnissen, nicht zu einem Fehler.
 - **F3.4** Hörbücher, Zeitschriften, Proceedings werden herausgefiltert.
 
@@ -194,11 +195,15 @@ Ziel-Struktur von `lib/`:
 
 ```
 lib/
+  model.ts            Work, Edition, WorkSummary, LanguageGroup (SPEC §2)
   normalize.ts        Titel/Autor-Normalisierung, ISBN-10→13, Sprachcodes
   works.ts            Work-Identität, Edition-Dedupe, Relevanz-Ranking (rein, ohne I/O)
   sources/
+    openlibrary-parse.ts  reine Parser für Such- und Editions-Antworten
+    googlebooks-parse.ts  reiner Parser für volumes-Antworten
     openlibrary.ts    search(), getWork(), getEditions(); kein Logging
     googlebooks.ts    search(), getEditions(); kein Logging
+  __fixtures__/       aufgezeichnete API-Antworten (scripts/record-fixtures.ts)
   search.ts           Orchestrierung: beide Quellen mit Timeout, Zuordnung GB→OL, Ranking, Cache
   work.ts             Detailseite: OL-Editionen + GB-Ergänzung, Dedupe, Sprach-Gruppierung
   buylinks.ts         Anbieter-Konfiguration → Links aus ISBN
@@ -206,10 +211,10 @@ lib/
 
 Schritte, jeder einzeln commit-fähig:
 
-1. **Aufräumen.** Löschen: `lib/api.ts`, `lib/aggregator-old.ts`, `components/BookCard.tsx`, `scripts/test-v2.ts`, `scripts/test-relevance.js`, `scripts/debug-search.js` (JS-Duplikate). `README.md` auf Kurzform kürzen, `CLAUDE.md` neu schreiben und auf diese Spec verweisen. Aktuelle `aggregator.ts`-Änderung als Zwischenstand committen, damit nichts verloren geht.
-2. **`normalize.ts` + `works.ts`** mit Unit-Tests (Fixtures aus echten API-Antworten für die fünf Akzeptanz-Queries in F1, per Skript aufgezeichnet unter `lib/__fixtures__/`).
+1. **Aufräumen.** *Erledigt 2026-09-06.* Löschen: `lib/api.ts`, `lib/aggregator-old.ts`, `components/BookCard.tsx`, `scripts/test-v2.ts`, `scripts/test-relevance.js`, `scripts/debug-search.js` (JS-Duplikate). `README.md` auf Kurzform kürzen, `CLAUDE.md` neu schreiben und auf diese Spec verweisen. Aktuelle `aggregator.ts`-Änderung als Zwischenstand committen, damit nichts verloren geht.
+2. **`normalize.ts` + `works.ts`** mit Unit-Tests (Fixtures aus echten API-Antworten für die fünf Akzeptanz-Queries in F1, per Skript aufgezeichnet unter `lib/__fixtures__/`). *Erledigt 2026-09-06, nur Open-Library-Fixtures; Google-Books-Fixtures folgen, sobald ein API-Key vorliegt.*
 3. **Quellen-Clients** neu: Autoren-Bug (5.2) beheben, Timeouts (N3), Logging raus, Cover-URLs in S/M/L.
-4. **`search.ts` + `work.ts`** mit Integrationstests gegen die Fixtures. Akzeptanzkriterien aus F1 müssen grün sein.
+4. **`search.ts` + `work.ts`** mit Integrationstests gegen die Fixtures. Akzeptanzkriterien aus F1 müssen grün sein. Beachten: der Editions-Endpoint liefert max. 100 Einträge pro Aufruf, nur ~25 % davon haben ein Cover; bei Works mit >100 Ausgaben (1984: 537, Gatsby: 1180, Austen: 4041) muss `work.ts` per `offset` nachladen, bis genug Cover da sind oder ein Limit (z. B. 500 Einträge) erreicht ist.
 5. **API-Routen** `app/api/search` (bestehend, umstellen) und neu `app/api/works/[id]`. Server-seitiges Fetching mit `revalidate`. Alle Seiten und `BookGrid` gehen ausschließlich über diese Routen.
 6. **Detailseite** auf Work-ID umstellen, gewählte Ausgabe in `?edition=`, Zurück-Link mit Query.
 7. **Kauf-Links** aus Konfiguration, Book Depository raus, Bookshop.org rein.
