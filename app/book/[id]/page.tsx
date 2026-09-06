@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, useEffect, useMemo, useState } from 'react';
-import Image from 'next/image';
+import CoverImage from '@/components/CoverImage';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
@@ -189,7 +189,7 @@ function CoverDetails({ cover, editions, coversPerEdition }: { cover: Cover; edi
         <div className="grid md:grid-cols-5 gap-8">
           <div className="md:col-span-2">
             <div className="relative aspect-[2/3] bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden shadow-xl sticky top-24">
-              <Image src={cover.url} alt="Selected cover" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover" unoptimized priority />
+              <CoverImage src={cover.url} alt="Selected cover" sizes="(max-width: 768px) 100vw, 40vw" priority />
             </div>
             <p className="mt-2 text-xs text-gray-500">
               Image from {cover.source === 'openlibrary' ? 'Open Library' : 'Google Books'}

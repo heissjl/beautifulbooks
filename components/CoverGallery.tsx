@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+import CoverImage from './CoverImage';
 import type { Cover } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 
@@ -80,13 +80,10 @@ export default function CoverGallery({ groups, selectedCover, onSelectCover, cap
                 selected ? 'ring-4 ring-amber-500 scale-105' : ''
               }`}
             >
-              <Image
+              <CoverImage
                 src={cover.urlSmall ?? cover.url}
                 alt={caption ? `Cover, ${caption}` : 'Cover'}
-                fill
                 sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 12.5vw"
-                className="object-cover"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2">
                 <p className="text-white text-xs text-left line-clamp-2">{caption}</p>

@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import CoverImage from './CoverImage';
 
 interface CoverMosaicProps {
   /** Distinct cover URLs, at most four are shown (SPEC §3 F4). */
@@ -14,7 +14,7 @@ const SIZES_HALF = '(max-width: 640px) 25vw, (max-width: 1024px) 16.5vw, 10vw';
 function Cover({ src, alt, sizes }: { src: string; alt: string; sizes: string }) {
   return (
     <div className="relative w-full h-full">
-      <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" unoptimized />
+      <CoverImage src={src} alt={alt} sizes={sizes} />
     </div>
   );
 }
