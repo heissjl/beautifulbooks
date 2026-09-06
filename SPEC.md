@@ -261,30 +261,29 @@ Reihenfolge ist Vorschlag: erst 8.1 und 8.2 (sichtbar und online), dann 8.3 (Gel
 
 ### 8.1 Moderneres Design
 
-**Ist:** Amber-Orange-Verläufe, Geist-Font, weiße Karten mit Schatten. Funktional, aber austauschbar. Die Cover sind das Produkt und müssen dominieren, das Chrome drumherum muss zurücktreten.
+*Erster Durchgang erledigt 2026-09-06 (Commit „Design pass“). Leitidee umgesetzt: Galerie statt Shop.*
 
-**Leitidee:** Galerie statt Shop. Dunkler oder neutraler Hintergrund, Cover groß, wenig Text, Typografie mit Charakter.
+**Designsystem** (`app/globals.css`, Tailwind-4-Tokens über `@theme inline`):
+- Farben: warmes Papier (`#f4f0e8`) mit Off-Black-Tinte, Dark Mode als warmes Schwarz (`#131110`) mit heller Tinte, beides über `prefers-color-scheme`. Eine Akzentfarbe, Terrakotta (`#b1502b` hell, `#e6a677` dunkel). Kein Verlauf im Hintergrund.
+- Typografie: Fraunces (Variable Font, optische Größe) für Titel und Wortmarke, Geist Sans für UI, Geist Mono für ISBNs. Basis 15 px.
+- Bausteine: `.chip` (Sprach- und Tab-Chips), `.btn` / `.btn-accent`, `.kicker` (Kapitälchen-Label), `.cover-shadow` (Kontaktlinie plus weicher Schlagschatten), `.cover-img` (Einblenden nach Laden). Fokus-Ringe in Akzentfarbe, `prefers-reduced-motion` respektiert.
 
-- [ ] **Designsystem festlegen** (eine Session, mit dem `design`-Skill als Canvas zum Rumprobieren)
-  - [ ] Farbpalette: neutrale Basis (Warmgrau oder Off-Black), eine Akzentfarbe. Kein Verlauf im Hintergrund.
-  - [ ] Typografie: Serif für Titel (z. B. Fraunces, Newsreader, Instrument Serif), Sans für UI. Skala mit 4–5 Stufen.
-  - [ ] Dark Mode als Erstklasse-Variante, nicht als Nachgedanke. Cover wirken auf dunklem Grund besser.
-  - [ ] Abstände und Raster auf 8-px-Basis.
-- [ ] **Startseite**
-  - [ ] Hero: ein Satz Wertversprechen, Suchfeld, darunter sofort ein Mosaik kuratierter Cover (statt leerer Zustand mit Icon).
-  - [ ] Suchfeld ohne separaten Sprach-Dropdown links, Sprache als kleiner Chip-Filter unter dem Feld.
-  - [ ] Ergebnisraster: Karten ohne Rahmen und Schatten, nur Cover + zwei Zeilen Text. Hover zeigt Anzahl Ausgaben und Sprachen.
-- [ ] **Detailseite**
-  - [ ] Cover-Wand als Hauptelement (Masonry oder gleichmäßiges Grid, deutlich größer als heute).
-  - [ ] Sprach-Tabs als Chips über der Wand, Anzahl in Klammern.
-  - [ ] Ausgewählte Ausgabe als Seitenleiste oder Drawer, nicht unter der Wand (heute muss man scrollen).
-  - [ ] Cover-Vergleich: zwei Ausgaben nebeneinander anzeigen.
-  - [ ] Teilen-Button, der die URL mit `?edition=` kopiert.
-- [ ] **Bewegung und Ladezustände**
-  - [ ] Skeletons in Cover-Proportion, sanftes Einblenden der Bilder beim Laden.
-  - [ ] View Transitions zwischen Karte und Detailseite (Cover „fliegt" mit).
-- [ ] **Mobil**: Raster 2-spaltig, Detailseite mit horizontal scrollbarer Cover-Wand, Sticky-Suchfeld.
-- [ ] **Zugänglichkeit**: Alt-Texte mit Verlag und Jahr, Fokus-Ringe, Kontrast AA.
+**Erledigt:**
+- [x] Farbpalette, Typografie, Dark Mode, 8-px-Raster
+- [x] Startseite: Hero mit einem Satz Wertversprechen, großes Suchfeld, Sprache als Chips unter dem Feld (kein Dropdown mehr), kuratierte Cover-Wand mit zwölf Klassikern statt leerem Zustand (`lib/curated.ts`)
+- [x] Ergebnisraster: Karten ohne Rahmen, nur Cover mit Buchschatten und zwei Zeilen Text; Hover hebt die Karte und zeigt Ausgaben- und Sprachanzahl
+- [x] Detailseite: Cover-Wand links (zwei Drittel), gewähltes Cover mit Ausgabe als sticky Seitenleiste rechts; Sprach-Tabs als Chips; Metadaten als Definitionsliste; Kauf-Links als ruhige Buttons mit Hinweistext; Teilen-Button kopiert die URL
+- [x] Ladezustände: Skeletons in Cover-Proportion, Cover blenden nach dem Laden ein, Fehler-Fallback ohne Alt-Text-Kasten
+- [x] Mobil: Raster zweispaltig, Detailseite einspaltig mit Seitenleiste unter der Wand
+- [x] Zugänglichkeit: Alt-Texte mit Verlag und Jahr, `role=tablist`/`tab`, `aria-pressed` auf Chips und Covern, Fokus-Ringe
+
+**Offen für einen zweiten Durchgang:**
+- [ ] Cover-Vergleich: zwei Ausgaben nebeneinander
+- [ ] View Transitions zwischen Karte und Detailseite (Cover „fliegt“ mit)
+- [ ] Detailseite mobil: horizontal scrollbare Cover-Wand, Seitenleiste als Drawer
+- [ ] Sticky-Suchfeld auf Mobil
+- [ ] About-Seite, Footer-Links (Impressum, Datenschutz, Affiliate-Hinweis, siehe 8.2)
+- [ ] Feinjustierung nach Nutzung: Größe der Cover-Kacheln auf der Detailseite, Kontrast der Chips im Dark Mode
 
 ### 8.2 Hosting und Deployment
 

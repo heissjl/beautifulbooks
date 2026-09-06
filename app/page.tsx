@@ -4,6 +4,7 @@ import { Suspense, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import SearchBar from '@/components/SearchBar';
 import BookGrid from '@/components/BookGrid';
+import SiteHeader from '@/components/SiteHeader';
 
 /**
  * The URL is the single source of truth for search state (SPEC §3 F1.5):
@@ -14,6 +15,7 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('q') ?? '';
   const language = searchParams.get('lang') ?? '';
+  const isHero = !searchQuery;
 
   const navigate = useCallback((q: string, lang: string) => {
     const params = new URLSearchParams();
@@ -24,40 +26,41 @@ function HomeContent() {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-orange-50">
-      <header className="border-b border-amber-200 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-                Beautiful Books
-              </h1>
-              <p className="text-sm text-gray-600 hidden sm:block">Discover every edition</p>
-            </div>
-            <p className="text-gray-600 text-sm max-w-2xl">
-              Explore different covers and editions of your favorite books, beautifully displayed with links to find and purchase them.
-            </p>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen">
+      <SiteHeader />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <SearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={q => navigate(q, language)}
-            language={language}
-            setLanguage={lang => navigate(searchQuery, lang)}
-          />
-        </div>
-        <BookGrid searchQuery={searchQuery} language={language} />
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className={`${isHero ? 'pb-12 pt-16 sm:pt-24' : 'pb-8 pt-8'} transition-[padding]`}>
+          {isHero && (
+            <div className="mb-8 max-w-2xl">
+              <h1 className="text-4xl leading-[1.1] text-ink sm:text-5xl">
+                Every cover of every edition, <em className="text-accent">in one place.</em>
+              </h1>
+              <p className="mt-4 max-w-xl text-base text-ink-2 sm:text-lg">
+                Search a book, compare all the covers it has ever had, and find the edition you actually want to own.
+              </p>
+            </div>
+          )}
+          <div className={isHero ? 'max-w-3xl' : 'max-w-3xl'}>
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={q => navigate(q, language)}
+              language={language}
+              setLanguage={lang => navigate(searchQuery, lang)}
+              hero={isHero}
+            />
+          </div>
+        </section>
+
+        <section className="pb-24">
+          <BookGrid searchQuery={searchQuery} language={language} />
+        </section>
       </main>
 
-      <footer className="mt-20 border-t border-amber-200 bg-white/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <p className="text-center text-sm text-gray-500">
-            Built with Next.js • Data from Open Library &amp; Google Books
-          </p>
+      <footer className="border-t border-line">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-6 text-xs text-ink-3 sm:px-6 lg:px-8">
+          <p>Data from Open Library and Google Books. Cover images belong to their publishers.</p>
+          <p>Purchase links may earn us a commission.</p>
         </div>
       </footer>
     </div>

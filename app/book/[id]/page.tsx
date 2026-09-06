@@ -1,10 +1,11 @@
 'use client';
 
 import { Suspense, useEffect, useMemo, useState } from 'react';
-import CoverImage from '@/components/CoverImage';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
+import CoverImage from '@/components/CoverImage';
+import SiteHeader from '@/components/SiteHeader';
 import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 import type { WorkDetailResponse } from '@/app/api/works/[id]/route';
@@ -15,33 +16,58 @@ type State =
   | { status: 'error'; message: string }
   | { status: 'done'; data: WorkDetailResponse };
 
-function Shell({ children, backHref }: { children: React.ReactNode; backHref: string }) {
+function BackLink({ href }: { href: string }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-orange-50">
-      <header className="border-b border-amber-200 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link href={backHref} className="flex items-center gap-2 text-gray-600 hover:text-amber-600 transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Back to search
-          </Link>
-        </div>
-      </header>
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">{children}</main>
+    <Link href={href} className="inline-flex items-center gap-1.5 rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
+      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+      </svg>
+      Search
+    </Link>
+  );
+}
+
+function ShareButton() {
+  const [copied, setCopied] = useState(false);
+  return (
+    <button
+      type="button"
+      className="btn py-1.5"
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1800);
+        } catch {
+          // Clipboard unavailable: nothing to do, the URL is in the address bar.
+        }
+      }}
+    >
+      {copied ? 'Link copied' : 'Share'}
+    </button>
+  );
+}
+
+function Shell({ children, backHref, right }: { children: React.ReactNode; backHref: string; right?: React.ReactNode }) {
+  return (
+    <div className="min-h-screen">
+      <SiteHeader left={<BackLink href={backHref} />} right={right} />
+      <main className="mx-auto max-w-7xl px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
     </div>
   );
 }
 
 function Skeleton() {
   return (
-    <div className="animate-pulse">
-      <div className="h-10 bg-gray-200 rounded w-1/2 mb-3"></div>
-      <div className="h-6 bg-gray-200 rounded w-1/4 mb-8"></div>
-      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
-        {[...Array(12)].map((_, i) => <div key={i} className="aspect-[2/3] bg-gray-200 rounded-lg"></div>)}
+    <div className="animate-pulse" aria-busy="true" aria-label="Loading book">
+      <div className="h-10 w-1/2 rounded bg-surface-2"></div>
+      <div className="mt-3 h-5 w-1/4 rounded bg-surface-2"></div>
+      <div className="mt-10 grid gap-8 lg:grid-cols-3">
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:col-span-2">
+          {[...Array(8)].map((_, i) => <div key={i} className="aspect-[2/3] rounded-card bg-surface-2"></div>)}
+        </div>
+        <div className="aspect-[2/3] rounded-card bg-surface-2"></div>
       </div>
-      <div className="bg-gray-200 rounded-2xl h-96"></div>
     </div>
   );
 }
@@ -133,49 +159,53 @@ function BookDetail() {
   if (state.status === 'notfound' || state.status === 'error' || !view) {
     return (
       <Shell backHref={backHref}>
-        <div className="text-center py-20">
-          <p className="text-gray-700 text-lg">
+        <div className="py-24 text-center">
+          <p className="font-display text-2xl text-ink">
             {state.status === 'notfound' ? 'Book not found' : state.status === 'error' ? state.message : 'Nothing to show'}
           </p>
-          <Link href={backHref} className="inline-block mt-4 text-amber-600 hover:text-amber-700">Return to search</Link>
+          <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">Back to search</Link>
         </div>
       </Shell>
     );
   }
 
   const { work } = view.data;
+  const meta = [
+    work.editionCount ? `${work.editionCount.toLocaleString('en')} editions` : undefined,
+    work.firstPublishYear ? `first published ${work.firstPublishYear}` : undefined,
+    `${view.data.covers.length} covers`,
+  ].filter(Boolean).join(' · ');
 
   return (
-    <Shell backHref={backHref}>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">{work.title}</h1>
-        <p className="text-xl text-gray-600">by {work.authors.join(', ')}</p>
-        {work.editionCount && (
-          <p className="text-sm text-gray-500 mt-1">
-            {work.editionCount} editions known{work.firstPublishYear ? `, first published ${work.firstPublishYear}` : ''}
-          </p>
-        )}
+    <Shell backHref={backHref} right={<ShareButton />}>
+      <div className="mb-8 max-w-3xl">
+        <h1 className="text-4xl leading-[1.05] text-ink sm:text-5xl">{work.title}</h1>
+        <p className="mt-3 text-lg text-ink-2">{work.authors.join(', ')}</p>
+        <p className="mt-1 text-sm text-ink-3">{meta}</p>
       </div>
 
-      {view.groups.length > 0 ? (
-        <div className="mb-8">
-          <CoverGallery
-            groups={view.groups}
-            selectedCover={selected}
-            onSelectCover={c => selectCover(c.id)}
-            captions={view.captions}
-          />
-        </div>
+      {view.groups.length === 0 ? (
+        <p className="text-ink-2">No cover images were found for this book.</p>
       ) : (
-        <p className="text-gray-600 mb-8">No cover images were found for this book.</p>
-      )}
-
-      {selected && (
-        <CoverDetails
-          cover={selected}
-          editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
-          coversPerEdition={view.coversPerEdition}
-        />
+        <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
+          <div className="lg:col-span-2">
+            <CoverGallery
+              groups={view.groups}
+              selectedCover={selected}
+              onSelectCover={c => selectCover(c.id)}
+              captions={view.captions}
+            />
+          </div>
+          <aside className="lg:sticky lg:top-20 lg:self-start">
+            {selected && (
+              <CoverDetails
+                cover={selected}
+                editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
+                coversPerEdition={view.coversPerEdition}
+              />
+            )}
+          </aside>
+        </div>
       )}
     </Shell>
   );
@@ -183,97 +213,72 @@ function BookDetail() {
 
 function CoverDetails({ cover, editions, coversPerEdition }: { cover: Cover; editions: EditionView[]; coversPerEdition: ReadonlyMap<string, number> }) {
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-amber-100 overflow-hidden">
-      <div className="p-6 sm:p-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">This Cover</h2>
-        <div className="grid md:grid-cols-5 gap-8">
-          <div className="md:col-span-2">
-            <div className="relative aspect-[2/3] bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden shadow-xl sticky top-24">
-              <CoverImage src={cover.url} alt="Selected cover" sizes="(max-width: 768px) 100vw, 40vw" priority />
-            </div>
-            <p className="mt-2 text-xs text-gray-500">
-              Image from {cover.source === 'openlibrary' ? 'Open Library' : 'Google Books'}
-            </p>
-          </div>
+    <div>
+      <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-xs overflow-hidden rounded-card bg-surface-2 lg:mx-0 lg:max-w-none">
+        <CoverImage src={cover.url} alt="Selected cover" sizes="(max-width: 1024px) 320px, 30vw" priority />
+      </div>
+      <p className="mt-2 text-xs text-ink-3">
+        Image from {cover.source === 'openlibrary' ? 'Open Library' : 'Google Books'}
+        {editions.length > 1 ? ` · on ${editions.length} editions` : ''}
+      </p>
 
-          <div className="md:col-span-3 space-y-8">
-            {editions.length > 1 && (
-              <p className="text-sm text-gray-600">This cover appears on {editions.length} editions.</p>
-            )}
-            {editions.map(edition => (
-              <EditionBlock key={edition.id} edition={edition} otherCovers={(coversPerEdition.get(edition.id) ?? 1) - 1} />
-            ))}
-          </div>
-        </div>
+      <div className="mt-6 space-y-8">
+        {editions.map(edition => (
+          <EditionBlock key={edition.id} edition={edition} otherCovers={(coversPerEdition.get(edition.id) ?? 1) - 1} />
+        ))}
       </div>
     </div>
   );
 }
 
 function EditionBlock({ edition, otherCovers }: { edition: EditionView; otherCovers: number }) {
+  const rows: Array<[string, string | undefined]> = [
+    ['Title', edition.title],
+    ['Published', edition.publishedDate],
+    ['Publisher', edition.publisher],
+    ['Format', edition.format],
+    ['Pages', edition.pageCount ? String(edition.pageCount) : undefined],
+    ['Language', languageName(edition.language)],
+    ['ISBN', edition.isbn13],
+    ['Also printed with', otherCovers > 0 ? `${otherCovers} other cover${otherCovers > 1 ? 's' : ''}` : undefined],
+  ];
   return (
-    <div className="space-y-5">
-      <div className="grid grid-cols-2 gap-4 p-6 bg-amber-50 rounded-xl">
-        <Field label="Title" value={edition.title} />
-        {edition.publishedDate && <Field label="Published" value={edition.publishedDate} />}
-        {edition.publisher && <Field label="Publisher" value={edition.publisher} />}
-        {edition.pageCount && <Field label="Pages" value={String(edition.pageCount)} />}
-        {edition.isbn13 && <Field label="ISBN" value={edition.isbn13} mono />}
-        {edition.format && <Field label="Format" value={edition.format} />}
-        <Field label="Language" value={languageName(edition.language)} />
-        {otherCovers > 0 && (
-          <Field label="Also printed with" value={`${otherCovers} other cover${otherCovers > 1 ? 's' : ''}`} />
-        )}
-      </div>
+    <div>
+      <dl className="divide-y divide-line border-y border-line text-sm">
+        {rows.filter(([, v]) => v).map(([k, v]) => (
+          <div key={k} className="grid grid-cols-[7.5rem_1fr] gap-3 py-2">
+            <dt className="text-ink-3">{k}</dt>
+            <dd className={`text-ink ${k === 'ISBN' ? 'font-mono text-[13px]' : ''}`}>{v}</dd>
+          </div>
+        ))}
+      </dl>
 
       {edition.description && (
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">Description</h3>
-          <p className="text-gray-700 leading-relaxed">{edition.description}</p>
-        </div>
+        <p className="mt-4 line-clamp-6 text-sm leading-relaxed text-ink-2">{edition.description}</p>
       )}
 
       {edition.buyLinks.length > 0 && (
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-1">
-            Find copies of ISBN <span className="font-mono">{edition.isbn13}</span>
-          </h3>
-          <p className="text-sm text-gray-500 mb-3">
-            Sellers list by ISBN and ship the current printing, so the cover may differ from the one shown.
-            {edition.publisher || edition.year ? ` Look for ${[edition.publisher, edition.year].filter(Boolean).join(' ')}.` : ''}
-          </p>
-          <div className="flex flex-wrap gap-3">
+        <div className="mt-5">
+          <p className="kicker">Find copies of this ISBN</p>
+          <div className="mt-2 flex flex-wrap gap-2">
             {edition.buyLinks.map(link => (
-              <a
-                key={link.provider}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer sponsored"
-                className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg hover:from-amber-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg font-medium"
-              >
+              <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer sponsored" className="btn">
                 {link.label}
               </a>
             ))}
           </div>
+          <p className="mt-2 text-xs leading-relaxed text-ink-3">
+            Sellers list by ISBN and ship the current printing, so the cover may differ from the one shown.
+            {edition.publisher || edition.year ? ` Look for ${[edition.publisher, edition.year].filter(Boolean).join(' ')}.` : ''}
+          </p>
         </div>
       )}
 
       {edition.previewUrl && (
-        <div className="pt-4 border-t border-gray-200">
-          <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-medium">
-            Preview on Google Books
-          </a>
-        </div>
+        <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm text-accent hover:underline">
+          Preview on Google Books
+        </a>
       )}
-    </div>
-  );
-}
-
-function Field({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
-  return (
-    <div>
-      <p className="text-sm text-gray-500 font-medium mb-1">{label}</p>
-      <p className={`text-gray-900 font-semibold ${mono ? 'font-mono text-sm' : ''}`}>{value}</p>
     </div>
   );
 }
