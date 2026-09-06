@@ -87,6 +87,16 @@ Werden **nicht gespeichert**, sondern zur Anzeige aus der ISBN generiert. Anbiet
 
 Startliste: Bookshop.org, Amazon, AbeBooks. **Book Depository entfällt** (seit 2023 geschlossen).
 
+**Markt (E9).** Ein Nutzer hat einen Markt: `us` (Default), `uk`, `de`; weitere später (`fr`, `ca`, `au`). Der Markt bestimmt Händlerliste, Reihenfolge, Amazon-Domain und Affiliate-Tag. Erkennung: Vercel-Geo-Header, sonst `Accept-Language`; Nutzer kann im Footer umschalten, Wahl in Cookie/localStorage. Händler pro Markt:
+
+| Markt | Händler (Reihenfolge) | Amazon |
+|---|---|---|
+| `us` | Bookshop.org, Amazon, AbeBooks, ThriftBooks, eBay | amazon.com |
+| `uk` | Bookshop.org UK, Amazon, Blackwell's, Waterstones, AbeBooks, World of Books | amazon.co.uk |
+| `de` | Thalia, genialokal, Amazon, Hugendubel, AbeBooks, Booklooker (antiquarisch) | amazon.de |
+
+Links sind ISBN-basiert (Amazon `/dp/<ISBN-10>`, sonst Händler-ISBN-Suche); Suchwege ohne ISBN nach 8.5. Die Konfiguration lebt in `lib/buylinks.ts` als Tabelle Markt → Händler, ohne Logik in den Komponenten.
+
 Ein Kauf-Link führt zur **ISBN**, nicht zum Cover (2.3). Der Link-Text sagt das: „Copies of ISBN … (cover may differ)“, mit Verlag und Jahr der gezeigten Ausgabe als Orientierung. Bei AbeBooks und eBay gehen Jahr und Verlag zusätzlich als Suchparameter mit, damit Sammler den richtigen Druck finden.
 
 ---
@@ -202,6 +212,7 @@ Getroffen am 2026-09-06.
 | E5 | Google Books in der Suche | **Nur ergänzend**: liefert Cover für OL-Works, erzeugt keine eigenen Works. Volle Rolle nur auf der Detailseite | F3.2. Löst den scheinbaren Konflikt mit E4 |
 | E6 | Caching-Backend | Next-`fetch`-Cache, kein KV | N4 |
 | E7 | Sprache der Doku | Spec Deutsch, Code und Kommentare Englisch | |
+| E9 | Märkte (2026-09-06) | **Die Site bedient mehrere Märkte, der englischsprachige zuerst.** Kauf-Links, Händler und Affiliate-Konten sind pro Markt konfiguriert; der Markt wird aus Sprache/Region erkannt und ist vom Nutzer umschaltbar. Die Oberfläche bleibt Englisch. | §2.4, 8.3, 8.5 |
 | E8 | Cover-Identität (2026-09-06) | **Cover ist eigene Entität, Dedupe nach Bild statt ISBN.** ISBN identifiziert ein Verlagsprodukt, nicht ein Cover; Neudrucke wechseln das Cover bei gleicher ISBN. | §2.3, F2, §7 Schritt 6, §8.3 Bild-Quellen |
 
 ---
@@ -238,7 +249,7 @@ Schritte, jeder einzeln commit-fähig:
 5. **API-Routen** `app/api/search` (bestehend, umstellen) und neu `app/api/works/[id]`. Server-seitiges Fetching mit `revalidate`. Alle Seiten und `BookGrid` gehen ausschließlich über diese Routen. *Erledigt 2026-09-06.* Mit erledigt: Detailseite liest bereits `/api/works/[id]` (Work-ID statt Editions-ID, F2.1), Kauf-Links aus `lib/buylinks.ts`, Startseite ist URL-getrieben (F1.5), alter Aggregator und Legacy-Clients gelöscht. Offen aus Schritt 6: `?edition=` in der URL (F2.6), Übersetzer aus der Autorenzeile, Rest-Feinschliff.
 6. **Cover-Modell (E8).** `lib/model.ts` bekommt `Cover`; Parser übernehmen alle Cover-IDs; `works.ts` baut aus Quell-Ausgaben `{ editions, covers }` (ISBN-Merge mit Cover-Erhalt); Detail-Route und -Seite zeigen Cover mit ihren Ausgaben; Kauf-Link-Text nach 2.4. Google-`isbn:`-Nachschlag pro ISBN (F2.2), aktiv sobald ein Key da ist. *Erledigt und mit Key live verifiziert 2026-09-06: Mumbo Jumbo zeigt unter ISBN 9780684824772 beide Cover (Scribner 1996 gemalt, 50th Anniversary 2022 rot), die Ausgabe trägt „Also printed with 1 other cover“.*
 7. **Detailseite** Feinschliff: gewähltes Cover in `?cover=`, Zurück-Link mit Query, Übersetzer aus der Autorenzeile. *Erledigt 2026-09-06.* Übersetzer werden aus den Daten erkannt: Ein Autor (nie der erste), dessen Open-Library-Key auf keiner Ausgabe in der Hauptsprache des Werks steht, wird entfernt; Ausgaben ohne Sprachangabe zählen nicht als Beleg. Auf Suchkarten (ohne Ausgabendaten) zeigt die Karte bei drei und mehr Namen nur den Erstautor.
-8. **Kauf-Links** Regionen-Reihenfolge und Affiliate-Parameter (Kern erledigt in Schritt 5).
+8. **Kauf-Links** Markt-Modell nach E9 (Erkennung, Umschalter, Händlertabelle pro Markt), Amazon-Direktlink per ISBN-10, Suchwege ohne ISBN (8.5), Affiliate-Parameter pro Markt (Kern erledigt in Schritt 5).
 9. **Verifikation** im Browser mit den fünf Akzeptanz-Queries, Screenshots in den PR. *Erledigt 2026-09-06, 11 von 11 Prüfungen bestanden (Skript gegen die laufende App, Screenshots per Chrome headless):*
 
    | Query | Ergebnis |
@@ -317,7 +328,7 @@ Reihenfolge ist Vorschlag: erst 8.1 und 8.2 (sichtbar und online), dann 8.3 (Gel
 
 ### 8.3 Kauf-Links mit Provision
 
-**Prinzip:** Links werden aus der ISBN generiert (`lib/buylinks.ts`), Affiliate-Parameter kommen aus Environment-Variablen. Ohne gesetzte Variable wird der neutrale Link erzeugt, damit die Seite auch vor der Freischaltung funktioniert.
+**Prinzip:** Links werden aus der ISBN generiert (`lib/buylinks.ts`), Affiliate-Parameter kommen aus Environment-Variablen, **pro Markt** (E9): `AFFILIATE_AMAZON_TAG_US`, `_UK`, `_DE`, `AFFILIATE_BOOKSHOP_ID_US`, `_UK` usw. Ohne gesetzte Variable wird der neutrale Link erzeugt, damit die Seite auch vor der Freischaltung funktioniert. Reihenfolge der Beantragung: erst US (Amazon Associates, Bookshop.org US, AbeBooks), dann UK (Amazon UK, Bookshop.org UK, Awin für Blackwell's/Waterstones), dann DE (Amazon PartnerNet, Awin/Adcell für Thalia und Hugendubel, genialokal).
 
 - [ ] **Anbieter-Konfiguration bauen** (Teil von Option A, Schritt 7)
   - [ ] Struktur: `{ id, label, region, urlFromIsbn(isbn, affiliateId), affiliateEnv }`.
@@ -374,7 +385,7 @@ Drei Beobachtungen nach dem ersten Durchgang mit der neuen Oberfläche. Reihenfo
 - [ ] **Amazon-Links treffen nicht.** Heute `amazon.com/s?k=<ISBN-13>`: eine Volltextsuche, die Kindle, Audible und Fremdtreffer mischt.
   - Direktlink statt Suche: Bei gedruckten Büchern ist Amazons ASIN gleich der **ISBN-10**. `https://www.amazon.<tld>/dp/<ISBN-10>` führt direkt auf die Produktseite. ISBN-10 aus der ISBN-13 zurückrechnen (Präfix 978; bei 979 gibt es keine ISBN-10, dann Suche).
   - Suche als Fallback nur in der Buchabteilung: `s?k=<ISBN>&i=stripbooks` (schließt Audible und Kindle aus). Deutschland: `i=stripbooks` gilt auch auf amazon.de.
-  - Marktplatz nach Nutzerregion (`Accept-Language` / Geo-Header): `.de` für deutsche Nutzer, sonst `.com`. Affiliate-Tag pro Marktplatz (8.3).
+  - Marktplatz nach Markt (E9, §2.4): `.com` als Default, `.co.uk` und `.de` nach Erkennung oder Nutzerwahl. Affiliate-Tag pro Marktplatz (8.3). Amazon leitet ISBN-10-Direktlinks zwischen Marktplätzen nicht um, deshalb muss die Domain zum Markt passen.
   - Gleiche Prüfung für Bookshop.org (`/book/<ISBN>`?) und AbeBooks (`isbn=` ist dort bereits exakt).
 - [ ] **Jede Variante braucht einen Suchweg, auch ohne ISBN.** Ausgaben vor 1970 und viele OL-Datensätze haben keine ISBN, dann gibt es heute gar keinen Link. Kandidaten, in dieser Reihenfolge anbieten:
   - AbeBooks nach Titel + Verlag + Jahr: `SearchResults?tn=<Titel>&pn=<Verlag>&yrl=<Jahr>&yrh=<Jahr>` (dort haben Antiquare oft eigene Fotos, also das tatsächliche Cover).
