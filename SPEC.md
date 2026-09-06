@@ -118,7 +118,7 @@ Ein Kauf-Link führt zur **ISBN**, nicht zum Cover (2.3). Der Link-Text sagt das
 | Query | Erwartung |
 |---|---|
 | `mumbo jumbo` | Erster Treffer: *Mumbo Jumbo* von Ishmael Reed, ≥20 Ausgaben laut Quelle, davon ≥5 mit Cover (Stand 2026-09: 8 von 23). Kathryn Lasky, Francis Wheen usw. als **eigene** Works, nicht gemischt. |
-| `1984` | Orwell an erster Stelle. Deutsche/französische Ausgaben in derselben Karte, nicht als eigenes Work. |
+| `1984` | *Nineteen Eighty-Four* (OL1168083W, >500 Ausgaben) an erster Stelle, nicht die Übersetzungs- oder Adaptions-Works mit Orwell als Autor (Stand 2026-09-06 steht das 8-Ausgaben-Work „1984“ vorn, siehe §9.1). Deutsche/französische Ausgaben in derselben Karte, nicht als eigenes Work. |
 | `gravity's rainbow` | Pynchons Roman vor allen Study Guides. |
 | `the great gatsby` | Ein Work, kein Duplikat durch Google Books vs. Open Library. |
 | `pride and prejudice` | Ein Work Austen; Adaptionen/Zombies etc. getrennt. |
@@ -394,7 +394,7 @@ Drei Beobachtungen nach dem ersten Durchgang mit der neuen Oberfläche. Reihenfo
   - **Reverse Image Search mit dem Cover-Bild:** Google Lens per URL (`https://lens.google.com/uploadbyurl?url=<Cover-URL>`), TinEye (`https://tineye.com/search?url=<Cover-URL>`), Bing Visual Search. Findet Händlerangebote und Blogposts zum exakten Cover; kein API-Key nötig, nur Links.
   - Bibliotheken: WorldCat (`worldcat.org/search?q=<Titel Verlag Jahr>`), Open-Library-Ausgabenseite (`openlibrary.org/books/<OL-ID>`) als Nachweis.
   - Umsetzung: `lib/buylinks.ts` bekommt zwei Ebenen, „Kaufen (ISBN)“ und „Suchen (Titel/Verlag/Jahr/Bild)“; die zweite ist immer da.
-- [x] **Dedupe der Cover ist noch zu schwach.** *Erledigt 2026-09-06 mit dem Bild-Hash (unten „Richtig“): `lib/imagehash.ts` (dHash 64 Bit, Kontrastmaß), `lib/coverhash.ts` (Bilder klein laden, 8 parallel, 4 s Budget, Next-Cache 30 Tage), `foldDuplicateCovers` in `lib/works.ts` (Hamming ≤ 8 = dasselbe Bild; OL-Scan vor Google-Bild als Repräsentant; leere Scans fallen, außer sie sind das einzige Cover einer Ausgabe). Kacheln zeigen „+N“. Was im Budget nicht gehasht wird, faltet beim nächsten Aufruf, weil die Bilder dann im Cache sind.* Bei *1984* stehen mehrere identische Cover nebeneinander, mit derselben Beschriftung im Hover (z. B. dreimal derselbe Verlag und Jahr). Ursachen: Open Library hat pro Ausgabe mehrere hochgeladene Scans desselben Covers (verschiedene `cover_i`), und derselbe Druck existiert als mehrere OL-Ausgaben ohne ISBN, die wir nicht zusammenführen können.
+- [ ] **Dedupe der Cover ist noch zu schwach.** *Wieder geöffnet 2026-09-06 (Julian): faltet zu wenig, Ursachen und Plan in §9.3.* *Erster Schritt erledigt 2026-09-06 mit dem Bild-Hash (unten „Richtig“): `lib/imagehash.ts` (dHash 64 Bit, Kontrastmaß), `lib/coverhash.ts` (Bilder klein laden, 8 parallel, 4 s Budget, Next-Cache 30 Tage), `foldDuplicateCovers` in `lib/works.ts` (Hamming ≤ 8 = dasselbe Bild; OL-Scan vor Google-Bild als Repräsentant; leere Scans fallen, außer sie sind das einzige Cover einer Ausgabe). Kacheln zeigen „+N“. Was im Budget nicht gehasht wird, faltet beim nächsten Aufruf, weil die Bilder dann im Cache sind.* Bei *1984* stehen mehrere identische Cover nebeneinander, mit derselben Beschriftung im Hover (z. B. dreimal derselbe Verlag und Jahr). Ursachen: Open Library hat pro Ausgabe mehrere hochgeladene Scans desselben Covers (verschiedene `cover_i`), und derselbe Druck existiert als mehrere OL-Ausgaben ohne ISBN, die wir nicht zusammenführen können.
   - Kurzfristig, ohne Bildvergleich: Cover, deren Ausgaben in Titel + Verlag + Jahr + Sprache übereinstimmen, zu **einer Kachel mit „+2 ähnliche“** zusammenfassen; die Kachel zeigt das erste Bild, die Details listen alle. Falsch-positiv möglich (echte Neugestaltung im selben Jahr beim selben Verlag), deshalb aufklappbar statt verworfen.
   - Richtig: perzeptueller Hash (dHash/pHash) serverseitig pro Cover-ID, gecacht; Hamming-Distanz ≤ Schwelle = dasselbe Bild. Schließt auch den Fall „Scan bei OL, Verlagsbild bei Google“ ab. Damit zieht Phase 2 aus E8 nach vorn.
   - Nebeneffekt: mit dem Hash lassen sich auch leere Scans erkennen (geringe Varianz) und ausblenden.
@@ -409,3 +409,96 @@ Drei Beobachtungen nach dem ersten Durchgang mit der neuen Oberfläche. Reihenfo
 - [ ] Filter auf der Detailseite: Format (Hardcover/Paperback), Jahrzehnt, Verlag.
 - [ ] Goodreads-CSV-Import als „Meine Bibliothek in allen Covern" (aus altem TODO).
 - [ ] Redis/KV-Cache (E6), wenn Traffic da ist.
+
+---
+
+## 9. Analyse: eine Suche, der man vertrauen kann (2026-09-06)
+
+Anlass (Julian): „Ich wundere mich manchmal, wie wenig Cover angezeigt werden. Das Deduping funktioniert noch nicht gut. Die Kauf-Links finden vielleicht nicht die richtige Ausgabe. Das Herzstück der Website ist eine Suche und Suchlogik, der man vertrauen kann. Der Hero-Claim ist zu selbstbewusst, wir werden nie *alle* Cover finden.“
+
+Gemessen gegen die Live-APIs am 2026-09-06 mit den Werken *The Great Gatsby* (OL468431W), *Nineteen Eighty-Four* (OL1168083W), *Beloved* (OL50548W) und *Mumbo Jumbo* (OL30751W). Skripte lagen im Scratchpad, die Zahlen stehen hier.
+
+### 9.1 Befund
+
+**A. Die Detailseite zeigt einen Bruchteil der Cover, und zwar den falschen.**
+
+| Work | Ausgaben bei OL | davon mit Cover | von uns gezeigt | Anteil |
+|---|---|---|---|---|
+| The Great Gatsby | 1180 | 379 | 43 | 11 % |
+| Nineteen Eighty-Four | 537 | 272 | 68 | 25 % |
+| Beloved | 110 | ~44 | 44 | ~100 % |
+
+Ursache: `getEditions` liest 100 Einträge pro Aufruf und hört bei `minWithCovers = 24` auf, also nach der ersten Seite. Open Library sortiert `editions.json` nach Anlagedatum des Datensatzes absteigend: Seite 1 enthält die zuletzt angelegten Ausgaben (bei Gatsby ausschließlich 2011–2022, viele türkische Lizenzausgaben), die Cover der Erstausgaben und der 1950er–1990er kommen nie. Ein kompletter Durchlauf kostet 3–5 s pro Seite, bei Gatsby 12 Seiten ≈ 54 s. Der Kaltstart der 1984-Seite scheiterte einmal mit „Book data source unavailable“ nach 10 s. Das ist der Kern von „so wenig Cover“: nicht die Quellen sind dünn, wir lesen sie nicht aus.
+
+**B. Die Dedupe scheitert vor allem am Zeitbudget, dann an der Schwelle.**
+
+- Gatsby kalt: 55 Cover, 1 gefaltet. Dieselbe Seite warm (Bilder im Cache): 9 gefaltet. Das 4-s-Budget in `hashCovers` reicht beim ersten Aufruf für einen Bruchteil der Bilder; identische Scans (Distanz 0: Chiltern 2021 zweimal, Porto Editora 2020 dreimal) bleiben beim ersten Besucher nebeneinander stehen. Der Nutzer sieht die kalte Seite.
+- Echte Duplikate liegen oberhalb der Schwelle 8, wenn sie Metadaten teilen. Beloved: Knopf 1987 dreimal dasselbe Design mit Distanzen 5, 9, 12; Rowohlt 1994 gleiche ISBN, Distanz 16 (ein Scan mit, einer ohne rororo-Banderole); Debolsillo 2011 gleiche ISBN, Distanz 12–14 (OL-Scan gegen Google-Bild). Gatsby: Herder 2021 gleiche ISBN, Foto des Buchs gegen Verlagsbild, Distanz > 22.
+- Falsch-positiv-Risiko ohne Metadaten: dasselbe Public-Domain-Artwork („Celestial Eyes“) bei Scribner 2003 und Lulu 2021 hat Distanz 19; verschiedene türkische Verlage teilen Layouts mit Distanz 17–22. Eine reine Schwellenanhebung auf 16–20 würde das falten. Die Distanz allein taugt also nur bis 8; darüber entscheidet die Metadaten-Nähe.
+- Leere Scans: zwei Plume-1998-Ausgaben bei Beloved tragen als einziges „Cover“ eine gescannte Textseite (Hash `e0c0c0c0c0000000`). Sie bleiben stehen, weil die Regel nur Leerscans mit Alternative fallen lässt.
+
+**C. Die Suche rankt das falsche Work nach vorn.**
+
+- `1984`: Open Library selbst liefert *Nineteen Eighty-Four* (537 Ausgaben, `readinglog_count` 8491) auf Platz 1. Unser Ranking setzt das Work „1984“ (8 Ausgaben, `readinglog_count` 73, Orwell plus französische Übersetzerin als Autorin) davor, dahinter die Bühnenfassung von Icke/Macmillan und die Adaption von Michael Dean. Grund: exakter Titeltreffer gibt 100 Punkte, Popularität maximal 40. Die Akzeptanzprüfung „Orwell an erster Stelle“ war zu lasch und ist oben verschärft.
+- Open Library liefert im Suchergebnis Popularitätsfelder (`readinglog_count`, `want_to_read_count`, `ratings_count`), die wir nicht abfragen, und bereits eine gute Reihenfolge. Wir werfen beides weg.
+- Ableitungen sind nicht erkannt: „(adaptation)“, Graphic Novel (Orwell + Fido Nesti), Bühnenfassung, „SparkNotes for …“, „(Book Analysis)“, „For Fans“, „Trivia“. Die Regex `SECONDARY_LITERATURE` deckt nur Study-Guide-Vokabular.
+
+**D. Die Karten im Suchergebnis haben fast immer nur ein Cover.**
+
+OL-Suche liefert genau ein `cover_i` pro Work; Google-Treffer hängen nur bei exakt gleichem Titel an (Gatsby: 3 von 17 Kandidaten, die übrigen sind Sekundärliteratur oder Titel mit Zusatz). Ergebnis: 15 Works, 18 Cover vorher, 22 nachher. Das Mosaik (F4) tritt praktisch nie ein. N2 (kein Fan-out) war richtig für die synchrone Antwort, blockiert aber die Karten.
+
+**E. Kauf-Links: der Link ist präzise, die Zuordnung Cover → ISBN ist es nicht.**
+
+- Technisch stimmt der Link: Amazon `/dp/<ISBN-10>`, die anderen suchen per ISBN-13. Mehrere ISBN-13 pro OL-Datensatz sind selten (1 von 300 Gatsby-Einträgen), die „andere ISBN-Art“ ist nicht das Problem.
+- Das Problem ist, was der Händler unter der ISBN liefert. Abgleich OL-Cover gegen Googles ISBN-Bild bei Beloved: 9780307388629 Distanz 0 (gleiches Cover), 9783499130656 Distanz 14 (gleiches Design, anderer Scan), 9781400033416 Distanz 27 und 9780394535975 Distanz 25 (der Handel zeigt ein **anderes** Cover als unser Scan). Für die Hälfte der geprüften ISBNs mit Google-Bild würde der Käufer also ein anderes Cover bekommen, und wir sagen es ihm nur pauschal („cover may differ“).
+- Für viele ISBNs hat Google gar kein Bild (9 von 14), dort ist keine Aussage möglich.
+
+**F. Der Claim verspricht, was A widerlegt.**
+
+„Every cover of every edition, in one place“ (Hero, Header-Zeile, Meta-Description) neben einer Seite, die 11 % der bekannten Gatsby-Cover zeigt. Ehrlich wäre: wir zeigen, was zwei offene Kataloge kennen, und sagen, wie viel das ist.
+
+### 9.2 Grundsatz
+
+Vertrauen entsteht aus drei Dingen, in dieser Reihenfolge: das richtige Work ganz oben (C), sichtbar vollständige Cover-Wand mit ehrlichem Zähler (A, F), und Kauf-Links, die sagen, wie sicher die Zuordnung ist (E). Dedupe (B) und Mosaik (D) sind Qualität obendrauf. Jede Aussage im UI muss aus Daten folgen, die wir gemessen haben; wo wir es nicht wissen, steht das da.
+
+### 9.3 Plan (Schritte 10–15, Fortsetzung von §7)
+
+**Schritt 10 – Ranking mit Popularität und Ableitungs-Erkennung (C).** Klein, sofort.
+- OL-Suche zusätzlich mit `readinglog_count`, `want_to_read_count`, `ratings_count` abfragen (`SEARCH_FIELDS`), Felder in `WorkSummary` als `popularity`.
+- Neue Relevanz: Ausgangspunkt ist die OL-Position (Platz 1 = 100, dann abfallend), plus `min(40, 8·log2(readinglog+1))`, plus Titeltreffer nur noch als Bonus von 20/10/5. Exakter Titel darf ein Work mit 100-facher Popularität nicht überholen.
+- Ableitungen erkennen und um 60 abwerten: Titel mit „adaptation“, „graphic novel“, „stage“, „play“, „illustrated“ in Klammern; `SECONDARY_LITERATURE` um „sparknotes for“, „book analysis“, „for fans“, „trivia“, „quiz“, „summary of“, „festschrift“ erweitern; ein Work, dessen **Nicht-Erstautor** der Erstautor eines Works mit ≥ 10-facher Ausgabenzahl im selben Ergebnis ist, gilt als Ableitung (Dean/Orwell, Nesti/Orwell, Audiberti-Übersetzung).
+- Akzeptanz: alle fünf Queries aus F1 mit den verschärften Erwartungen, dazu `beloved` → OL50548W und `harry potter` → Band 1 vor dem Pop-up-Buch.
+
+**Schritt 11 – Vollständige Cover-Wand durch fortlaufendes Nachladen (A, F).** Der wichtigste Schritt.
+- Work-Route wird seitenweise: `GET /api/works/[id]?offset=0` liefert Work, Ausgaben und Cover der ersten OL-Seite plus Google-Kandidaten, dazu `total` (OL-Größe), `nextOffset` und pro Cover seinen Hash (`hash`, `contrast`), soweit berechnet. `?offset=100` usw. liefern nur die Ausgaben und Cover dieser Seite. Jede Seite ist einzeln im Next-Cache (24 h), ein Nutzer wärmt sie für alle.
+- Die Detailseite lädt Seite 0 wie heute (Ladeszene), zeigt die Wand und lädt im Hintergrund weiter, eine Seite nach der anderen, bis `nextOffset` fehlt oder 1500 Einträge erreicht sind. Neue Cover werden angehängt, die Sprachgruppen neu berechnet; der Zähler sagt „N covers · M of K editions checked“ und am Ende „N covers from K editions“. Falten über alle Seiten passiert im Client mit `foldDuplicateCovers` (rein, läuft dort genauso) über die mitgelieferten Hashes; Cover ohne Hash bleiben ungefaltet, bis ein späterer Aufruf sie liefert.
+- Sortierung innerhalb der Sprachgruppen bleibt Jahr absteigend; neu eintreffende alte Ausgaben rutschen also nach hinten, nicht nach vorn, die Wand springt nicht. Unbekanntes Jahr ganz hinten.
+- `stage=fast/full` entfällt zugunsten des Seitenmodells: Seite 0 rechnet Hashes mit kleinem Budget (2 s), jede Folgeseite mit ihrem eigenen Budget; damit ist beim letzten Nachladen praktisch alles gehasht.
+- Grenze: Werke mit mehr als 1500 Ausgaben (Bibel, Shakespeare-Sammlungen) werden gekappt, der Zähler sagt das.
+- Persistenz: der Next-Cache reicht für den Start (8.2). Wenn Hosting steht, wandern Hashes und Seiten in KV (8.6), damit ein Deploy den Vorrat nicht löscht.
+
+**Schritt 12 – Dedupe in drei Stufen und ohne Zeitdruck (B).** Baut auf 11 auf.
+- Stufe 1, immer: Distanz ≤ 8 (wie heute).
+- Stufe 2, gleiche ISBN-13 an beiden Covern: Distanz ≤ 20. Deckt OL-Scan gegen Google-Bild und Scan mit/ohne Banderole.
+- Stufe 3, gleicher Verlag (normalisiert: Kleinschreibung, ohne „Verlag/Books/Press/Inc.“, Ortsangaben ab Komma) und Jahr ±1 und gleiche oder unbekannte Sprache: Distanz ≤ 16. Deckt Knopf 1987 dreimal.
+- Nie über Verlagsgrenzen bei Distanz > 8 (Scribner/Lulu, türkische Layout-Familien bleiben getrennt). Nie bei verschiedenen Sprachen.
+- Leere und Text-Scans (Kontrast unter Schwelle **oder** Hash aus ≤ 2 gesetzten Bytes) verschwinden aus der Wand, auch ohne Alternative; die Ausgabe bleibt in einer Liste „Editions without a usable cover“ mit ihren Links.
+- Tests: die Beloved- und Gatsby-Paare oben als Fixture (Hash + Metadaten, keine Bilder), pro Stufe ein Positiv- und ein Negativfall.
+
+**Schritt 13 – Kauf-Links mit Verifikationsgrad (E).**
+- Beim Auswählen eines Covers prüft der Client `GET /api/isbn/<isbn13>`: Server holt Googles ISBN-Bild (gecacht 24 h) und OLs `/isbn/<isbn>.json`, hasht und vergleicht mit dem gezeigten Cover. Antwort: `verified` (Distanz ≤ 16), `differs` (mit URL des Handelsbildes), `unknown` (kein Bild). Ein Google-Call pro ISBN und Tag, nur auf Auswahl, das passt ins Kontingent.
+- Anzeige über den Links: „Sellers list this ISBN with this cover“ / „Sellers currently show a different cover for this ISBN“ mit dem anderen Bild daneben, dann kommen die Suchwege (AbeBooks/eBay nach Titel, Verlag, Jahr) **vor** den ISBN-Links / „We can't tell which cover ships with this ISBN“.
+- Amazon bleibt `/dp/<ISBN-10>`; die Übergabe zusätzlicher Metadaten an Händler-URLs bringt nichts, die Händler suchen ohnehin nach ISBN. Metadaten gehören in die Suchwege, die haben sie schon.
+- ISBN-13 aus einem OL-Datensatz mit mehreren ISBNs: alle behalten (`isbns: string[]`), Links für die erste, die anderen als „also as ISBN …“ mit eigenen Links. Selten, aber dann richtig.
+
+**Schritt 14 – Mosaik durch nachgeladene Cover je Karte (D).**
+- Karte fordert nach dem Rendern `GET /api/works/[id]?offset=0&summary=1` an (dieselbe gecachte Seite 0 aus Schritt 11, verkürzt auf bis zu 4 unterschiedliche Cover-URLs), nur für sichtbare Karten, maximal 8 parallel. Das wärmt zugleich die Detailseite, der Klick wird schneller.
+- Mit Sprachfilter: OL-Suche mit `language=<ISO-3>` aufrufen, das `editions`-Unterdokument liefert dann ein Cover in dieser Sprache; es wird das erste Cover der Karte.
+- N2 wird angepasst: zwei synchrone Calls für die Antwort, dazu gedeckelte, gecachte Nachlade-Calls für sichtbare Karten. E4 (a) in 8.6 ist damit entschieden.
+
+**Schritt 15 – Ehrliche Sprache (F).**
+- Hero: „The covers a book has had.“ Unterzeile: „Search a book, see the covers two open catalogues know, and find the edition you actually want.“ Header-Zeile: „Book covers, side by side.“ Meta-Description entsprechend. Nirgends „every“ oder „all“.
+- Zähler auf der Detailseite aus Schritt 11 („42 covers · 300 of 1180 editions checked“), Fußnote unter der Wand: „Cover images come from Open Library and Google Books. Editions without a scan are listed below.“
+- About-Seite (8.1) erklärt Quellen, Lücken und die Verifikationsgrade aus Schritt 13 in drei Absätzen.
+
+Reihenfolge: 10 (halber Tag), 15 (eine Stunde), 11 (zwei Tage), 12 (ein Tag), 13 (ein Tag), 14 (halber Tag). 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 11 vor 12, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar ist.

@@ -18,7 +18,7 @@ The data layer was rewritten per SPEC.md §7; the old aggregator and legacy clie
 - Fixtures cover both sources. Re-record with `GOOGLE_BOOKS_API_KEY` set in `.env.local` (`set -a; source .env.local; set +a; npx tsx scripts/record-fixtures.ts`). Never commit the key; fixtures contain no URLs with keys.
 - UI state rules: the URL is the source of truth for search state (`/?q=&lang=`) and for the selected cover on the detail page (`/book/<id>?q=&lang=&cover=`); components derive loading state from a request key instead of setting state inside effects (the `react-hooks/set-state-in-effect` lint rule is an error in this repo).
 
-Progress is tracked by the numbered steps in SPEC.md §7. Check `git log` to see which step was completed last.
+Progress is tracked by the numbered steps in SPEC.md §7 (steps 1–9, done) and §9.3 (steps 10–15, the trust plan from the 2026-09-06 analysis: ranking, complete cover wall via paged loading, tiered dedupe, verified buy links, card mosaics, honest copy). Check `git log` to see which step was completed last.
 
 ## Facts about the APIs that the old code got wrong
 
