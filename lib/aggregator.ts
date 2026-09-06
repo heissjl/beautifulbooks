@@ -4,288 +4,203 @@ import { normalizeTitle, normalizeAuthor } from './sources/base';
 import { GoogleBooksSource } from './sources/googleBooks';
 import { OpenLibrarySource } from './sources/openLibrary';
 
+/**
+ * SIMPLE SEARCH AGGREGATOR - Clean rewrite
+ *
+ * Core principles:
+ * 1. Work = Title + Author (language is an edition attribute)
+ * 2. Trust Open Library workIds - they're already correct groupings
+ * 3. Only filter by author when we don't have a trustworthy workId
+ * 4. Keep it simple - fewer edge cases, clearer logic
+ */
 export class BookAggregator {
   private sources: BookSource[];
 
   constructor() {
     this.sources = [
-      new GoogleBooksSource(),
       new OpenLibrarySource(),
+      new GoogleBooksSource(),
     ];
   }
 
   async search(query: string, options: SearchOptions = {}): Promise<NormalizedBook[]> {
-    // Step 1: Get initial search results from all sources
-    console.log(`[Aggregator] Searching for "${query}" with options:`, options);
-    const allResults = await Promise.all(
-      this.sources.map(async (source) => {
-        console.log(`[Aggregator] Querying ${source.name}...`);
-        const results = await source.search(query, options);
-        console.log(`[Aggregator] ${source.name} returned ${results.length} results`);
-        results.forEach(r => console.log(`  - "${r.title}" by ${r.authors?.join(', ')}`));
-        return results;
-      })
+    // Step 1: Get search results from all sources
+    const allSearchResults = await Promise.all(
+      this.sources.map(source => source.search(query, options))
     );
+    const flatResults = allSearchResults.flat();
 
-    const flatResults = allResults.flat();
-    console.log(`[Aggregator] Total flat results: ${flatResults.length}`);
+    // Step 2: Group into works (Title + Author)
+    const works = this.groupIntoWorks(flatResults);
 
-    // Step 2: Group by work to identify unique books
-    const initialGroups = this.groupByWork(flatResults);
-
-    // Step 3: For each work, fetch ALL editions from all sources
+    // Step 3: For each work, fetch ALL editions
     const worksWithAllEditions = await Promise.all(
-      initialGroups.map(async (work) => {
-        const firstEdition = work.editions[0];
-
-        // Fetch all editions for this work from all sources
-        // Filter by author only (language is now an edition attribute, not work-defining)
-        const allEditionsResults = await Promise.all(
-          this.sources.map(async (source) => {
-            try {
-              // Use the work ID if available (for Open Library)
-              // Still need to filter by author even with work ID
-              // because Open Library work IDs can contain different books by different authors
-              if (firstEdition.workId && source.name === 'Open Library') {
-                const editions = await source.getEditions(firstEdition.workId);
-                console.log(`[Aggregator] OL returned ${editions.length} editions for ${firstEdition.workId}`);
-
-                // Filter to only editions that match the same author(s)
-                const filtered = editions.filter(edition => {
-                  // STRICT: Only include editions with author data that matches
-                  // Skip editions without author data - we can't verify they belong to this work
-                  if (!edition.authors || edition.authors.length === 0) {
-                    return false;
-                  }
-
-                  // Skip if work has no authors (shouldn't happen)
-                  if (!work.authors || work.authors.length === 0) {
-                    return false;
-                  }
-
-                  const normalizedWorkAuthors = work.authors.map(a => normalizeAuthor(a));
-                  const normalizedEditionAuthors = edition.authors.map(a => normalizeAuthor(a));
-
-                  const authorMatches = normalizedWorkAuthors.some(workAuthor =>
-                    normalizedEditionAuthors.some(editionAuthor =>
-                      workAuthor.includes(editionAuthor) || editionAuthor.includes(workAuthor)
-                    )
-                  );
-
-                  return authorMatches;
-                });
-
-                console.log(`[Aggregator] After filtering: kept ${filtered.length} editions`);
-                return filtered;
-              } else {
-                // For Google Books, use title but then filter by author
-                const editions = await source.getEditions(work.title);
-
-                // Filter to only editions that match the same author(s)
-                return editions.filter(edition => {
-                  // STRICT: Only include editions with author data that matches
-                  if (!edition.authors || edition.authors.length === 0) {
-                    return false;
-                  }
-
-                  if (!work.authors || work.authors.length === 0) {
-                    return false;
-                  }
-
-                  const normalizedWorkAuthors = work.authors.map(a => normalizeAuthor(a));
-                  const normalizedEditionAuthors = edition.authors.map(a => normalizeAuthor(a));
-
-                  const authorMatches = normalizedWorkAuthors.some(workAuthor =>
-                    normalizedEditionAuthors.some(editionAuthor =>
-                      workAuthor.includes(editionAuthor) || editionAuthor.includes(workAuthor)
-                    )
-                  );
-
-                  return authorMatches;
-                });
-              }
-            } catch (error) {
-              console.error(`Error fetching editions from ${source.name}:`, error);
-              return [];
-            }
-          })
-        );
-
-        const allEditions = allEditionsResults.flat();
-
-        // Deduplicate editions
-        const uniqueEditions = this.deduplicateEditions(allEditions);
-
-        return {
-          ...work,
-          editions: uniqueEditions,
-        };
-      })
+      works.map(work => this.fetchAllEditionsForWork(work))
     );
 
-    // Step 4: Filter out works with no editions and sort by relevance
+    // Step 4: Remove empty works and sort by relevance
     return worksWithAllEditions
-      .filter(work => work.editions.length > 0) // Remove works with no editions
+      .filter(work => work.editions.length > 0)
       .sort((a, b) => {
-        const aRelevance = this.calculateRelevance(a, query);
-        const bRelevance = this.calculateRelevance(b, query);
-        return bRelevance - aRelevance;
+        const aScore = this.calculateRelevance(a, query);
+        const bScore = this.calculateRelevance(b, query);
+        return bScore - aScore;
       });
   }
 
   async getAllEditions(bookId: string): Promise<BookEdition[]> {
-    // This is now mainly for the detail page to get fresh data
-    // But we should return the editions we already have
     const [source, id] = bookId.split('-', 2);
 
-    let bookSource: BookSource | undefined;
-    let sourceId = id;
+    // Get the book details first
+    const book = await this.getBookDetails(bookId);
+    if (!book) return [];
 
-    if (source === 'gb') {
-      bookSource = this.sources.find(s => s.name === 'Google Books');
-    } else if (source === 'ol') {
-      bookSource = this.sources.find(s => s.name === 'Open Library');
-      if (id.startsWith('edition-')) {
-        // This is an edition ID, we need to get the work ID first
-        const details = await this.getBookDetails(bookId);
-        if (details?.workId) {
-          sourceId = details.workId;
-        }
+    // If it has a workId (Open Library), use that
+    if (book.workId) {
+      const olSource = this.sources.find(s => s.name === 'Open Library') as OpenLibrarySource;
+      if (olSource) {
+        return olSource.getEditions(book.workId);
       }
     }
 
-    if (!bookSource) {
-      return [];
-    }
-
-    const details = await bookSource.getDetails(sourceId);
-    if (!details) {
-      return [];
-    }
-
-    // Fetch all editions from all sources
-    const title = details.title;
-    const workId = details.workId;
-    const authors = details.authors || [];
-
-    const allEditionsResults = await Promise.all(
-      this.sources.map(async (source) => {
-        try {
-          if (workId && source.name === 'Open Library') {
-            const editions = await source.getEditions(workId);
-
-            // Filter to only editions that match the same author(s)
-            return editions.filter(edition => {
-              // STRICT: Only include editions with matching author data
-              if (!edition.authors || edition.authors.length === 0) return false;
-              if (!authors || authors.length === 0) return false;
-
-              const normalizedAuthors = authors.map(a => normalizeAuthor(a));
-              const normalizedEditionAuthors = edition.authors.map(a => normalizeAuthor(a));
-
-              const authorMatches = normalizedAuthors.some(author =>
-                normalizedEditionAuthors.some(editionAuthor =>
-                  author.includes(editionAuthor) || editionAuthor.includes(author)
-                )
-              );
-
-              return authorMatches;
-            });
-          } else {
-            // For Google Books, fetch by title and filter by author
-            const editions = await source.getEditions(title);
-
-            // Filter to only editions that match the same author(s)
-            return editions.filter(edition => {
-              // STRICT: Only include editions with matching author data
-              if (!edition.authors || edition.authors.length === 0) return false;
-              if (!authors || authors.length === 0) return false;
-
-              const normalizedAuthors = authors.map(a => normalizeAuthor(a));
-              const normalizedEditionAuthors = edition.authors.map(a => normalizeAuthor(a));
-
-              const authorMatches = normalizedAuthors.some(author =>
-                normalizedEditionAuthors.some(editionAuthor =>
-                  author.includes(editionAuthor) || editionAuthor.includes(author)
-                )
-              );
-
-              return authorMatches;
-            });
-          }
-        } catch (error) {
-          console.error(`Error fetching editions from ${source.name}:`, error);
-          return [];
-        }
-      })
+    // Otherwise, search by title and filter by author
+    const allEditions = await Promise.all(
+      this.sources.map(s => s.getEditions(book.title))
     );
 
-    const allEditions = allEditionsResults.flat();
-
-    return this.deduplicateEditions(allEditions);
+    return this.filterEditionsByAuthor(allEditions.flat(), book.authors || []);
   }
 
   async getBookDetails(bookId: string): Promise<BookEdition | null> {
     const [source, id] = bookId.split('-', 2);
 
     let bookSource: BookSource | undefined;
-
     if (source === 'gb') {
       bookSource = this.sources.find(s => s.name === 'Google Books');
     } else if (source === 'ol') {
       bookSource = this.sources.find(s => s.name === 'Open Library');
     }
 
-    if (!bookSource) {
-      return null;
-    }
-
+    if (!bookSource) return null;
     return bookSource.getDetails(id);
   }
 
-  private groupByWork(books: BookEdition[]): NormalizedBook[] {
+  private groupIntoWorks(editions: BookEdition[]): NormalizedBook[] {
     const workMap = new Map<string, NormalizedBook>();
 
-    for (const book of books) {
-      const key = this.getWorkKey(book);
+    for (const edition of editions) {
+      const key = this.makeWorkKey(edition);
 
       if (workMap.has(key)) {
-        const existing = workMap.get(key)!;
-        // Don't add duplicate, just track that we found this work
-        if (!existing.editions.some(e => e.id === book.id)) {
-          existing.editions.push(book);
+        // Add to existing work
+        const work = workMap.get(key)!;
+        if (!work.editions.some(e => e.id === edition.id)) {
+          work.editions.push(edition);
         }
       } else {
-        // Use the key itself as a stable work ID (it's unique per work)
-        const normalizedBook: NormalizedBook = {
-          workId: book.workId || key, // Use the grouping key as fallback
-          title: book.title,
-          normalizedTitle: normalizeTitle(book.title),
-          authors: book.authors || [],
-          normalizedAuthors: (book.authors || []).map(normalizeAuthor),
-          editions: [book],
-          primaryEdition: book, // Keep track of the defining edition for linking
-        };
-        workMap.set(key, normalizedBook);
+        // Create new work
+        workMap.set(key, {
+          workId: edition.workId || key,
+          title: edition.title,
+          normalizedTitle: normalizeTitle(edition.title),
+          authors: edition.authors || [],
+          normalizedAuthors: (edition.authors || []).map(normalizeAuthor),
+          editions: [edition],
+          primaryEdition: edition,
+        });
       }
     }
 
     return Array.from(workMap.values());
   }
 
-  private getWorkKey(book: BookEdition): string {
-    const title = normalizeTitle(book.title);
-    const author = book.authors?.[0] ? normalizeAuthor(book.authors[0]) : 'unknown';
+  private makeWorkKey(edition: BookEdition): string {
+    const title = normalizeTitle(edition.title);
+    const author = edition.authors?.[0] ? normalizeAuthor(edition.authors[0]) : 'unknown';
 
-    // A WORK is defined as: book + author (language is an EDITION attribute)
-    // All translations are editions of the SAME work
-    // ALWAYS include author in the key, even with workId, because Open Library
-    // sometimes assigns the same workId to different books by different authors
-    if (book.workId) {
-      return `work:${book.workId}::${author}`;
+    // If we have an Open Library workId, use it with author
+    // (workIds can sometimes be shared by different authors)
+    if (edition.workId && edition.workId.startsWith('OL')) {
+      return `${edition.workId}::${author}`;
     }
 
+    // Otherwise use title + author
     return `${title}::${author}`;
+  }
+
+  private async fetchAllEditionsForWork(work: NormalizedBook): Promise<NormalizedBook> {
+    const firstEdition = work.editions[0];
+
+    // Case 1: We have an Open Library workId - TRUST IT
+    if (firstEdition.workId && firstEdition.workId.startsWith('OL')) {
+      const olSource = this.sources.find(s => s.name === 'Open Library') as OpenLibrarySource;
+      if (olSource) {
+        try {
+          const olEditions = await olSource.getEditions(firstEdition.workId);
+
+          // Also try to get from Google Books (search by title, filter by author)
+          const gbSource = this.sources.find(s => s.name === 'Google Books');
+          let gbEditions: BookEdition[] = [];
+          if (gbSource && work.authors.length > 0) {
+            const searchResults = await gbSource.getEditions(work.title);
+            gbEditions = this.filterEditionsByAuthor(searchResults, work.authors);
+          }
+
+          // Combine and deduplicate
+          const allEditions = [...olEditions, ...gbEditions];
+          const uniqueEditions = this.deduplicateEditions(allEditions);
+
+          return { ...work, editions: uniqueEditions };
+        } catch (error) {
+          console.error(`Error fetching OL editions for ${firstEdition.workId}:`, error);
+        }
+      }
+    }
+
+    // Case 2: No reliable workId - search by title and filter by author
+    if (work.authors.length > 0) {
+      const editionResults = await Promise.all(
+        this.sources.map(async (source) => {
+          try {
+            const editions = await source.getEditions(work.title);
+            return this.filterEditionsByAuthor(editions, work.authors);
+          } catch (error) {
+            console.error(`Error fetching from ${source.name}:`, error);
+            return [];
+          }
+        })
+      );
+
+      const allEditions = editionResults.flat();
+      const uniqueEditions = this.deduplicateEditions(allEditions);
+
+      return { ...work, editions: uniqueEditions };
+    }
+
+    // Fallback: just return what we have
+    return work;
+  }
+
+  private filterEditionsByAuthor(editions: BookEdition[], workAuthors: string[]): BookEdition[] {
+    if (workAuthors.length === 0) return editions;
+
+    const normalizedWorkAuthors = workAuthors.map(normalizeAuthor);
+
+    return editions.filter(edition => {
+      // If edition has no authors, we can't verify - skip it
+      if (!edition.authors || edition.authors.length === 0) {
+        return false;
+      }
+
+      const normalizedEditionAuthors = edition.authors.map(normalizeAuthor);
+
+      // Check if any work author matches any edition author
+      return normalizedWorkAuthors.some(workAuthor =>
+        normalizedEditionAuthors.some(editionAuthor =>
+          workAuthor.includes(editionAuthor) || editionAuthor.includes(workAuthor)
+        )
+      );
+    });
   }
 
   private deduplicateEditions(editions: BookEdition[]): BookEdition[] {
@@ -309,12 +224,12 @@ export class BookAggregator {
   }
 
   private getEditionKey(edition: BookEdition): string {
-    // Primary: Use ISBN if available (most reliable)
+    // Primary: ISBN
     if (edition.isbn) {
       return `isbn:${edition.isbn}`;
     }
 
-    // Secondary: Use cover image URL (often unique per edition)
+    // Secondary: Cover image ID
     if (edition.coverImage) {
       const coverIdMatch = edition.coverImage.match(/\/(\d+)-[LM]\.jpg$/);
       if (coverIdMatch) {
@@ -322,7 +237,7 @@ export class BookAggregator {
       }
     }
 
-    // Tertiary: Use title + publisher + year
+    // Tertiary: Title + Publisher + Year
     const title = normalizeTitle(edition.title);
     const publisher = edition.publisher?.toLowerCase().substring(0, 20) || '';
     const year = edition.publishedDate?.substring(0, 4) || '';
@@ -336,16 +251,12 @@ export class BookAggregator {
 
     if (a.description) scoreA += 2;
     if (b.description) scoreB += 2;
-
     if (a.coverImage) scoreA += 1;
     if (b.coverImage) scoreB += 1;
-
     if (a.isbn) scoreA += 1;
     if (b.isbn) scoreB += 1;
-
     if (a.pageCount) scoreA += 1;
     if (b.pageCount) scoreB += 1;
-
     if (a.publisher) scoreA += 1;
     if (b.publisher) scoreB += 1;
 
@@ -354,7 +265,6 @@ export class BookAggregator {
 
   private calculateRelevance(book: NormalizedBook, query: string): number {
     const normalizedQuery = normalizeTitle(query);
-    const queryWords = normalizedQuery.split(' ');
     let score = 0;
 
     // Exact title match
@@ -366,36 +276,8 @@ export class BookAggregator {
       score += 25;
     }
 
-    // Check if query contains author name - if so, strongly prefer books BY that author
-    // This helps prioritize "Gravity's Rainbow by Pynchon" over "Guide to Pynchon's Gravity's Rainbow by Someone Else"
-    const queryContainsAuthor = book.normalizedAuthors.some(author =>
-      queryWords.some(word => word.length > 3 && author.includes(word))
-    );
-
-    console.log(`[Relevance] "${book.title}" by ${book.authors.join(', ')}`);
-    console.log(`  - Query: "${query}" -> normalized: "${normalizedQuery}"`);
-    console.log(`  - Authors: ${book.normalizedAuthors.join(', ')}`);
-    console.log(`  - Query contains author: ${queryContainsAuthor}`);
-
-    if (queryContainsAuthor) {
-      // Big boost if the book is BY the author mentioned in the query
-      score += 150;
-      console.log(`  - Author boost: +150`);
-    } else {
-      // Small penalty if query mentions an author but this book is by someone else
-      const queryHasAuthorWord = queryWords.some(word =>
-        word.length > 3 && ['by', 'author'].every(stopWord => word !== stopWord)
-      );
-      if (queryHasAuthorWord && book.normalizedAuthors.length > 0) {
-        score -= 50;
-        console.log(`  - Author penalty: -50`);
-      }
-    }
-
-    // More editions = more popular/relevant
+    // More editions = more popular
     score += Math.min(book.editions.length * 2, 20);
-
-    console.log(`  - Total score: ${score}`);
 
     return score;
   }
