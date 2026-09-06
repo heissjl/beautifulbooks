@@ -1,8 +1,8 @@
 import type { BookEdition } from '@/types/book';
 import type { BookSource, SearchOptions, NormalizedBook } from './sources/base';
 import { normalizeTitle, normalizeAuthor } from './sources/base';
-import { GoogleBooksSource } from './sources/googleBooks';
-import { OpenLibrarySource } from './sources/openLibrary';
+import { GoogleBooksSource } from './sources/legacy-googlebooks';
+import { OpenLibrarySource } from './sources/legacy-openlibrary';
 
 /**
  * SIMPLE SEARCH AGGREGATOR - Clean rewrite
