@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import SearchBar from '@/components/SearchBar';
 import BookGrid from '@/components/BookGrid';
 
-export default function Home() {
+function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
@@ -79,5 +79,14 @@ export default function Home() {
         </div>
       </footer>
     </div>
+  );
+}
+
+// useSearchParams() requires a Suspense boundary for static prerendering.
+export default function Home() {
+  return (
+    <Suspense>
+      <HomeContent />
+    </Suspense>
   );
 }

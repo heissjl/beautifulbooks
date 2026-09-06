@@ -1,212 +1,56 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code when working in this repository.
 
-## Project Overview
+## Read this first
 
-**Beautiful Books** is a Next.js 15 web application that allows users to explore different covers and editions of books. The app fetches book data from multiple sources (Open Library, Google Books) and displays beautiful mosaics of book covers for each work.
+**[SPEC.md](SPEC.md) is the source of truth.** It defines the product, the domain model (Work / Edition), the functional requirements with acceptance queries, the decisions already taken, the implementation plan, and the roadmap. Do not re-derive any of that from the code. If code and spec disagree, the spec wins unless the user says otherwise.
 
-## Tech Stack
+The spec is written in German; code, comments, commit messages and this file are English (decision E7).
 
-- **Framework**: Next.js 15.1.6 (App Router)
-- **Language**: TypeScript
-- **UI**: React 19, Tailwind CSS
-- **Testing**: Vitest
-- **Package Manager**: npm
+## Current state (2026-09-06)
 
-## Project Structure
+The UI layer (`app/`, `components/`) is kept. The data layer (`lib/`) is being rewritten according to SPEC.md §7. Until that rewrite lands:
+
+- `lib/aggregator.ts` and `lib/sources/*` are the **old** implementation. They fetch external APIs from the browser and fan out one editions request per search result. Do not extend them; replace them per the spec.
+- `lib/__tests__/aggregator.test.ts` does not load and tests a design that was already removed. It is to be replaced by tests against recorded fixtures (§7 step 2).
+- `scripts/debug-mumbo.ts` is a throwaway probe of the old aggregator.
+
+Progress is tracked by the numbered steps in SPEC.md §7. Check `git log` to see which step was completed last.
+
+## Facts about the APIs that the old code got wrong
+
+- Open Library `/works/{id}/editions.json` returns `authors` as `[{ key: '/authors/OL…A' }]`, **not names**. Reading `a.name` yields `undefined` for every edition. Author names for editions must be taken from the work, not from the edition.
+- Open Library search `author_name` contains duplicates and translators; only the first entry is the primary author.
+- Google Books has no work concept. Its results must be matched to an Open Library work by normalized title + primary author and must never create a work of their own (decision E5).
+- Open Library can take more than 30 s to answer. Every external call needs a timeout and a cache (§4 N3, N4).
+
+## Layout
 
 ```
-beautifulbooks/
-├── app/                    # Next.js app router pages
-│   ├── api/               # API routes
-│   │   └── search/        # Book search endpoint
-│   ├── book/[id]/         # Individual book detail pages
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Home page with search
-├── components/            # React components
-│   ├── BookWorkCard.tsx   # Card displaying a work with edition mosaic
-│   ├── CoverMosaic.tsx    # Creates cover mosaic from editions
-│   └── SearchResults.tsx  # Search results display
-├── lib/                   # Core application logic
-│   ├── sources/           # Book data source integrations
-│   │   ├── base.ts        # Base types and interfaces
-│   │   ├── openlibrary.ts # Open Library API client
-│   │   └── google-books.ts# Google Books API client
-│   └── normalize.ts       # Data normalization and aggregation
-├── scripts/               # Utility scripts
-│   └── debug-search.ts    # Debug script for testing search
-└── types/                 # TypeScript type definitions
-    └── book.ts            # Book-related types
+app/                Next.js App Router pages and API routes
+  api/search/       search endpoint (to become the only search entry point)
+  book/[id]/        detail page (to be switched from edition ID to work ID)
+components/         React components, Tailwind; reusable as-is
+lib/                data layer (being rewritten, target layout in SPEC.md §7)
+  sources/          Open Library and Google Books clients
+types/              shared TypeScript types
+scripts/            ad-hoc probes, not part of the build
 ```
 
-## Key Concepts
-
-### Book Data Model
-
-The application uses a normalized data model:
-
-- **Edition**: A specific published version of a book (e.g., "2000 Callaway Editions hardcover")
-- **Work**: A conceptual book that groups multiple editions together (e.g., "Mumbo Jumbo by Ishmael Reed")
-
-### Data Sources
-
-1. **Open Library** (`lib/sources/openlibrary.ts`)
-   - Primary data source
-   - Provides work-level grouping
-   - Rich edition metadata
-   - Search: `/search.json?q={query}`
-   - Work details: `/works/{id}/editions.json`
-
-2. **Google Books** (`lib/sources/google-books.ts`)
-   - Secondary/fallback source
-   - Good cover images
-   - Search: `volumes?q={query}`
-
-### Data Flow
-
-1. User enters search query in `app/page.tsx`
-2. Request sent to `app/api/search/route.ts`
-3. API route calls multiple sources in parallel
-4. `lib/normalize.ts` aggregates and deduplicates results
-5. Results grouped by work (same title + author)
-6. `SearchResults` component displays work cards
-7. Each `BookWorkCard` shows a `CoverMosaic` of edition covers
-
-## Development Commands
+## Commands
 
 ```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Run production server
-npm start
-
-# Run tests
-npm test
-
-# Debug search functionality
-npm run debug-search "mumbo jumbo"
+npm run dev        # dev server on :3000
+npm run test:run   # vitest, single run
+npx tsc --noEmit   # type check without building
+npm run build      # must pass before a step is considered done
 ```
 
-## Key Files
+## Working rules
 
-### Core Logic
-
-- `lib/normalize.ts:1-200` - Aggregates books from multiple sources, groups editions into works
-- `lib/sources/openlibrary.ts:1-150` - Open Library API integration
-- `app/api/search/route.ts:1-50` - Search API endpoint that orchestrates data fetching
-
-### Components
-
-- `components/CoverMosaic.tsx:1-100` - Creates responsive mosaic layouts (1-4 covers)
-- `components/BookWorkCard.tsx:1-72` - Displays work card with mosaic and metadata
-- `components/SearchResults.tsx:1-50` - Grid layout for search results
-
-### Pages
-
-- `app/page.tsx:1-100` - Home page with search interface
-- `app/book/[id]/page.tsx:1-200` - Individual book detail page with all editions
-
-## Common Development Tasks
-
-### Adding a New Data Source
-
-1. Create new file in `lib/sources/` implementing `BookSource` interface
-2. Add source to `lib/normalize.ts` aggregation
-3. Handle source-specific data normalization
-
-### Modifying Work Grouping Logic
-
-- Edit `groupEditionsByWork()` in `lib/normalize.ts:50-100`
-- Current logic groups by normalized title + first author
-- Consider: ISBN families, publisher series, language variations
-
-### Improving Cover Mosaics
-
-- Edit `CoverMosaic.tsx` component
-- Current layouts: 1 (full), 2 (split), 3 (grid), 4+ (quad grid)
-- Fallback: gradient background for missing covers
-
-### Debugging Search Issues
-
-```bash
-# Run debug script to see raw data
-npm run debug-search "your query"
-
-# Check browser console for API responses
-# Check Network tab for API calls to /api/search
-```
-
-## Known Issues & TODOs
-
-1. **Work Grouping**: Currently groups by title+author, which may incorrectly merge different works with similar titles (e.g., multiple books titled "Mumbo Jumbo" by different authors)
-2. **Cover Quality**: Some editions lack high-quality cover images
-3. **Search Performance**: No caching, every search hits external APIs
-4. **Rate Limiting**: No rate limiting on API endpoints
-5. **Error Handling**: Limited error boundaries and fallback UI
-
-## Testing
-
-- Test files use Vitest
-- Run with `npm test`
-- Add tests in `*.test.ts` files next to source files
-- Current coverage is minimal - needs expansion
-
-## Deployment
-
-This is a Next.js app that can be deployed to:
-- Vercel (recommended)
-- Netlify
-- Any Node.js hosting platform
-
-Environment variables: None currently required (APIs are public)
-
-## Architecture Decisions
-
-### Why Next.js App Router?
-
-- Server-side rendering for better SEO
-- API routes for backend logic
-- React 19 features and streaming
-
-### Why Multiple Data Sources?
-
-- Redundancy: If one source is down, others provide data
-- Coverage: Different sources have different book catalogs
-- Quality: Aggregate best covers and metadata from multiple sources
-
-### Why Client-Side Search State?
-
-- Simple implementation for MVP
-- Future: Consider URL state for shareable searches
-
-## Code Style
-
-- TypeScript strict mode
-- Functional React components
-- Tailwind for styling (utility-first)
-- Minimal external dependencies
-- Comments for complex logic only
-
-## Resources
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Open Library API](https://openlibrary.org/dev/docs/api)
-- [Google Books API](https://developers.google.com/books/docs/v1/using)
-- [Tailwind CSS](https://tailwindcss.com/docs)
-
-## Contributing
-
-When working on this project:
-1. Read this entire CLAUDE.md file first
-2. Check existing issues and TODOs
-3. Test search with various queries before committing
-4. Run `npm run build` to catch TypeScript errors
-5. Keep components small and focused
+- One commit per step of SPEC.md §7; the commit message names the step.
+- `lib/` must have no `any` and no `console.log` outside a `DEBUG` guard.
+- New logic in `lib/` gets a unit test next to it or under `lib/__tests__/`. Tests that need API data use recorded fixtures under `lib/__fixtures__/`, never live calls.
+- Verify UI changes in the browser with the five acceptance queries from SPEC.md §3 F1 before calling a step done.
+- Do not add features from SPEC.md §8 while §7 is unfinished.
