@@ -1,296 +1,215 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { bookAggregator } from '@/lib/aggregator';
-import EditionsByLanguage from '@/components/EditionsByLanguage';
-import type { BookEdition } from '@/types/book';
+import Link from 'next/link';
+import { useParams, useSearchParams } from 'next/navigation';
+import EditionsByLanguage, { type LanguageTab } from '@/components/EditionsByLanguage';
+import type { EditionView } from '@/lib/model';
+import { languageName } from '@/lib/normalize';
+import type { WorkDetailResponse } from '@/app/api/works/[id]/route';
 
-export default function BookDetailPage() {
-  const params = useParams();
-  const router = useRouter();
-  const [mainBook, setMainBook] = useState<BookEdition | null>(null);
-  const [editions, setEditions] = useState<BookEdition[]>([]);
-  const [selectedEdition, setSelectedEdition] = useState<BookEdition | null>(null);
-  const [loading, setLoading] = useState(true);
+type State =
+  | { status: 'loading' }
+  | { status: 'notfound' }
+  | { status: 'error'; message: string }
+  | { status: 'done'; data: WorkDetailResponse };
 
-  useEffect(() => {
-    const fetchBook = async () => {
-      if (!params.id || typeof params.id !== 'string') {
-        return;
-      }
-
-      setLoading(true);
-      try {
-        const [bookData, allEditions] = await Promise.all([
-          bookAggregator.getBookDetails(params.id),
-          bookAggregator.getAllEditions(params.id),
-        ]);
-
-        setMainBook(bookData);
-        setEditions(allEditions);
-        setSelectedEdition(bookData);
-      } catch (error) {
-        console.error('Error fetching book details:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBook();
-  }, [params.id]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-orange-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-24 mb-8"></div>
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
-              {[...Array(12)].map((_, i) => (
-                <div key={i} className="aspect-[2/3] bg-gray-200 rounded-lg"></div>
-              ))}
-            </div>
-            <div className="bg-gray-200 rounded-2xl h-96"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!mainBook) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-orange-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center py-20">
-            <p className="text-gray-600">Book not found</p>
-            <button
-              onClick={() => router.push('/')}
-              className="mt-4 text-amber-600 hover:text-amber-700"
-            >
-              Return home
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const displayBook = selectedEdition || mainBook;
-
+function Shell({ children, backHref }: { children: React.ReactNode; backHref: string }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-orange-50">
-      {/* Header */}
       <header className="border-b border-amber-200 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button
-            onClick={() => router.push('/')}
-            className="flex items-center gap-2 text-gray-600 hover:text-amber-600 transition-colors"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              />
+          <Link href={backHref} className="flex items-center gap-2 text-gray-600 hover:text-amber-600 transition-colors">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             Back to search
-          </button>
+          </Link>
         </div>
       </header>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">{children}</main>
+    </div>
+  );
+}
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Title Section */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            {mainBook.title}
-          </h1>
-          {mainBook.authors && mainBook.authors.length > 0 && (
-            <p className="text-xl text-gray-600">
-              by {mainBook.authors.join(', ')}
-            </p>
-          )}
+function Skeleton() {
+  return (
+    <div className="animate-pulse">
+      <div className="h-10 bg-gray-200 rounded w-1/2 mb-3"></div>
+      <div className="h-6 bg-gray-200 rounded w-1/4 mb-8"></div>
+      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+        {[...Array(12)].map((_, i) => <div key={i} className="aspect-[2/3] bg-gray-200 rounded-lg"></div>)}
+      </div>
+      <div className="bg-gray-200 rounded-2xl h-96"></div>
+    </div>
+  );
+}
+
+function BookDetail() {
+  const params = useParams<{ id: string }>();
+  const searchParams = useSearchParams();
+  const lang = searchParams.get('lang') ?? '';
+  const backHref = lang ? `/?lang=${lang}` : '/';
+
+  const requestKey = `${params.id}\u0000${lang}`;
+  const [loaded, setLoaded] = useState<{ key: string; state: State } | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const qs = lang ? `?lang=${encodeURIComponent(lang)}` : '';
+    fetch(`/api/works/${encodeURIComponent(params.id)}${qs}`, { signal: controller.signal })
+      .then(async res => {
+        if (res.status === 404 || res.status === 400) return setLoaded({ key: requestKey, state: { status: 'notfound' } });
+        if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `Request failed (${res.status})`);
+        setLoaded({ key: requestKey, state: { status: 'done', data: (await res.json()) as WorkDetailResponse } });
+      })
+      .catch(err => {
+        if (controller.signal.aborted) return;
+        setLoaded({ key: requestKey, state: { status: 'error', message: err instanceof Error ? err.message : 'Request failed' } });
+      });
+    return () => controller.abort();
+  }, [params.id, lang, requestKey]);
+
+  const state = useMemo<State>(
+    () => (loaded?.key === requestKey ? loaded.state : { status: 'loading' }),
+    [loaded, requestKey],
+  );
+
+  const groups = useMemo<LanguageTab[]>(() => {
+    if (state.status !== 'done') return [];
+    const byId = new Map(state.data.editions.map(e => [e.id, e]));
+    return state.data.groups.map(g => ({
+      language: g.language,
+      editions: g.editionIds.map(id => byId.get(id)).filter((e): e is EditionView => !!e),
+    }));
+  }, [state]);
+
+  const selected = useMemo<EditionView | null>(() => {
+    if (state.status !== 'done') return null;
+    return state.data.editions.find(e => e.id === selectedId) ?? groups[0]?.editions[0] ?? null;
+  }, [state, selectedId, groups]);
+
+  if (state.status === 'loading') return <Shell backHref={backHref}><Skeleton /></Shell>;
+
+  if (state.status === 'notfound' || state.status === 'error') {
+    return (
+      <Shell backHref={backHref}>
+        <div className="text-center py-20">
+          <p className="text-gray-700 text-lg">
+            {state.status === 'notfound' ? 'Book not found' : state.message}
+          </p>
+          <Link href={backHref} className="inline-block mt-4 text-amber-600 hover:text-amber-700">Return to search</Link>
         </div>
+      </Shell>
+    );
+  }
 
-        {/* All Editions Gallery - Grouped by Language */}
-        {editions.length > 0 && (
-          <div className="mb-8">
-            <EditionsByLanguage
-              editions={editions}
-              selectedEdition={selectedEdition}
-              onSelectEdition={setSelectedEdition}
-            />
-          </div>
+  const { work } = state.data;
+
+  return (
+    <Shell backHref={backHref}>
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">{work.title}</h1>
+        <p className="text-xl text-gray-600">by {work.authors.join(', ')}</p>
+        {work.editionCount && (
+          <p className="text-sm text-gray-500 mt-1">
+            {work.editionCount} editions known{work.firstPublishYear ? `, first published ${work.firstPublishYear}` : ''}
+          </p>
         )}
+      </div>
 
-        {/* Selected Edition Details */}
-        <div className="bg-white rounded-2xl shadow-lg border border-amber-100 overflow-hidden">
-          <div className="p-6 sm:p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Edition Details
-            </h2>
+      {groups.length > 0 ? (
+        <div className="mb-8">
+          <EditionsByLanguage groups={groups} selectedEdition={selected} onSelectEdition={e => setSelectedId(e.id)} />
+        </div>
+      ) : (
+        <p className="text-gray-600 mb-8">No editions with cover images were found for this book.</p>
+      )}
 
-            <div className="grid md:grid-cols-5 gap-8">
-              {/* Large Cover */}
-              <div className="md:col-span-2">
-                <div className="relative aspect-[2/3] bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden shadow-xl sticky top-24">
-                  {displayBook.coverImage ? (
-                    <Image
-                      src={displayBook.coverImage}
-                      alt={`${displayBook.title} cover`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 40vw"
-                      className="object-cover"
-                      unoptimized
-                      priority
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <svg
-                        className="w-20 h-20 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                        />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-              </div>
+      {selected && <EditionDetails edition={selected} />}
+    </Shell>
+  );
+}
 
-              {/* Edition Info */}
-              <div className="md:col-span-3 space-y-6">
-                {/* Metadata Grid */}
-                <div className="grid grid-cols-2 gap-4 p-6 bg-amber-50 rounded-xl">
-                  {displayBook.publishedDate && (
-                    <div>
-                      <p className="text-sm text-gray-500 font-medium mb-1">Published</p>
-                      <p className="text-gray-900 font-semibold">{displayBook.publishedDate}</p>
-                    </div>
-                  )}
-                  {displayBook.publisher && (
-                    <div>
-                      <p className="text-sm text-gray-500 font-medium mb-1">Publisher</p>
-                      <p className="text-gray-900 font-semibold">{displayBook.publisher}</p>
-                    </div>
-                  )}
-                  {displayBook.pageCount && (
-                    <div>
-                      <p className="text-sm text-gray-500 font-medium mb-1">Pages</p>
-                      <p className="text-gray-900 font-semibold">{displayBook.pageCount}</p>
-                    </div>
-                  )}
-                  {displayBook.isbn && (
-                    <div>
-                      <p className="text-sm text-gray-500 font-medium mb-1">ISBN</p>
-                      <p className="text-gray-900 font-mono text-sm font-semibold">{displayBook.isbn}</p>
-                    </div>
-                  )}
-                  {displayBook.language && (
-                    <div>
-                      <p className="text-sm text-gray-500 font-medium mb-1">Language</p>
-                      <p className="text-gray-900 font-semibold uppercase">{displayBook.language}</p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Description */}
-                {displayBook.description && (
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                      Description
-                    </h3>
-                    <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed">
-                      {displayBook.description.replace(/<[^>]*>/g, '')}
-                    </div>
-                  </div>
-                )}
-
-                {/* Buy Links */}
-                {displayBook.buyLinks && displayBook.buyLinks.length > 0 && (
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                      Find this edition
-                    </h3>
-                    <div className="flex flex-wrap gap-3">
-                      {displayBook.buyLinks.map((link, index) => (
-                        <a
-                          key={index}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg hover:from-amber-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg font-medium"
-                        >
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                            />
-                          </svg>
-                          {link.name}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Preview Link */}
-                {displayBook.previewLink && (
-                  <div className="pt-4 border-t border-gray-200">
-                    <a
-                      href={displayBook.previewLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-medium"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
-                      </svg>
-                      Preview on Google Books
-                    </a>
-                  </div>
-                )}
-              </div>
+function EditionDetails({ edition }: { edition: EditionView }) {
+  return (
+    <div className="bg-white rounded-2xl shadow-lg border border-amber-100 overflow-hidden">
+      <div className="p-6 sm:p-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Edition Details</h2>
+        <div className="grid md:grid-cols-5 gap-8">
+          <div className="md:col-span-2">
+            <div className="relative aspect-[2/3] bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden shadow-xl sticky top-24">
+              <Image src={edition.coverUrl} alt={`${edition.title} cover`} fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover" unoptimized priority />
             </div>
           </div>
+
+          <div className="md:col-span-3 space-y-6">
+            <div className="grid grid-cols-2 gap-4 p-6 bg-amber-50 rounded-xl">
+              {edition.title && <Field label="Title" value={edition.title} />}
+              {edition.publishedDate && <Field label="Published" value={edition.publishedDate} />}
+              {edition.publisher && <Field label="Publisher" value={edition.publisher} />}
+              {edition.pageCount && <Field label="Pages" value={String(edition.pageCount)} />}
+              {edition.isbn13 && <Field label="ISBN" value={edition.isbn13} mono />}
+              {edition.format && <Field label="Format" value={edition.format} />}
+              <Field label="Language" value={languageName(edition.language)} />
+              <Field label="Source" value={edition.source === 'openlibrary' ? 'Open Library' : 'Google Books'} />
+            </div>
+
+            {edition.description && (
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Description</h3>
+                <p className="text-gray-700 leading-relaxed">{edition.description}</p>
+              </div>
+            )}
+
+            {edition.buyLinks.length > 0 && (
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Find this edition</h3>
+                <div className="flex flex-wrap gap-3">
+                  {edition.buyLinks.map(link => (
+                    <a
+                      key={link.provider}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer sponsored"
+                      className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg hover:from-amber-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg font-medium"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {edition.previewUrl && (
+              <div className="pt-4 border-t border-gray-200">
+                <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-medium">
+                  Preview on Google Books
+                </a>
+              </div>
+            )}
+          </div>
         </div>
-      </main>
+      </div>
     </div>
+  );
+}
+
+function Field({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
+  return (
+    <div>
+      <p className="text-sm text-gray-500 font-medium mb-1">{label}</p>
+      <p className={`text-gray-900 font-semibold ${mono ? 'font-mono text-sm' : ''}`}>{value}</p>
+    </div>
+  );
+}
+
+export default function BookDetailPage() {
+  return (
+    <Suspense>
+      <BookDetail />
+    </Suspense>
   );
 }

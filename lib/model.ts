@@ -53,3 +53,15 @@ export interface LanguageGroup {
   language?: string;
   editions: Edition[];
 }
+
+/** A purchase link generated from an ISBN at display time (SPEC §2.3). */
+export interface BuyLink {
+  provider: string;
+  label: string;
+  url: string;
+}
+
+/** Edition as delivered by /api/works/[id]: with display-time purchase links. */
+export interface EditionView extends Edition {
+  buyLinks: BuyLink[];
+}

@@ -83,7 +83,11 @@ export function candidatesToEditions(
   const key = identityKey(work);
   return candidates
     .filter(c => identityKey(c) === key)
-    .map(({ authors: _authors, ...rest }) => ({ ...rest, workId: work.id }));
+    .map(c => {
+      const { authors, ...rest } = c;
+      void authors;
+      return { ...rest, workId: work.id };
+    });
 }
 
 /** Dedupe key per SPEC §2.2: ISBN-13, then cover id/URL, then title+publisher+year. */

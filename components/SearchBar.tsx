@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useRecentSearches } from './useRecentSearches';
 
 interface SearchBarProps {
   searchQuery: string;
@@ -34,31 +35,16 @@ const POPULAR_SEARCHES = [
 
 export default function SearchBar({ searchQuery, setSearchQuery, language, setLanguage }: SearchBarProps) {
   const [inputValue, setInputValue] = useState(searchQuery);
+  const [syncedQuery, setSyncedQuery] = useState(searchQuery);
+  if (syncedQuery !== searchQuery) {
+    // Derived-state pattern: adopt the query from the URL when it changes.
+    setSyncedQuery(searchQuery);
+    setInputValue(searchQuery);
+  }
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [recentSearches, saveRecentSearch] = useRecentSearches();
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
-
-  // Load recent searches from localStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem('recentSearches');
-    if (saved) {
-      try {
-        setRecentSearches(JSON.parse(saved));
-      } catch (e) {
-        // Ignore parse errors
-      }
-    }
-  }, []);
-
-  // Save to recent searches when search is executed
-  const saveRecentSearch = (query: string) => {
-    if (!query.trim()) return;
-
-    const updated = [query, ...recentSearches.filter(s => s !== query)].slice(0, 5);
-    setRecentSearches(updated);
-    localStorage.setItem('recentSearches', JSON.stringify(updated));
-  };
 
   // Close suggestions when clicking outside
   useEffect(() => {

@@ -1,20 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { bookAggregator } from '@/lib/aggregator';
+import { normalizeQuery, search } from '@/lib/search';
 
+/**
+ * GET /api/search?q=<query>&lang=<iso|all>
+ * The only search entry point for the UI (SPEC §4 N1). Response: SearchResult.
+ */
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const query = searchParams.get('q');
-  const language = searchParams.get('language') || 'en';
-
+  const params = request.nextUrl.searchParams;
+  const query = normalizeQuery(params.get('q'));
   if (!query) {
-    return NextResponse.json({ error: 'Query parameter required' }, { status: 400 });
+    return NextResponse.json({ error: 'Query parameter "q" is required' }, { status: 400 });
   }
-
   try {
-    const results = await bookAggregator.search(query, { language });
-    return NextResponse.json(results);
-  } catch (error) {
-    console.error('Search error:', error);
+    const result = await search(query, { language: params.get('lang') ?? undefined });
+    return NextResponse.json(result, {
+      headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' },
+    });
+  } catch {
     return NextResponse.json({ error: 'Search failed' }, { status: 500 });
   }
 }

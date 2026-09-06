@@ -10,12 +10,11 @@ The spec is written in German; code, comments, commit messages and this file are
 
 ## Current state (2026-09-06)
 
-The UI layer (`app/`, `components/`) is kept. The data layer (`lib/`) is being rewritten according to SPEC.md §7. Until that rewrite lands:
+The data layer was rewritten per SPEC.md §7; the old aggregator and legacy clients are gone (step 5). The UI talks only to `/api/search` and `/api/works/[id]`; external APIs are called server-side only.
 
-- `lib/aggregator.ts` and `lib/sources/legacy-*.ts` are the **old** implementation. They fetch external APIs from the browser and fan out one editions request per search result. Do not extend them; replace them per the spec.
-- New, spec-conformant modules (steps 2–4, done): `lib/model.ts`, `lib/normalize.ts`, `lib/works.ts`, `lib/debug.ts`, `lib/sources/http.ts`, `lib/sources/openlibrary.ts` (+ `-parse.ts`), `lib/sources/googlebooks.ts` (+ `-parse.ts`), `lib/search.ts` (search orchestration, two external calls), `lib/work.ts` (detail page orchestration). The `legacy-*.ts` clients exist only for the old aggregator and go away in step 5. Tests in `lib/__tests__/` run against fixtures in `lib/__fixtures__/`, recorded with `npx tsx scripts/record-fixtures.ts`.
+- Spec-conformant modules (steps 2–5, done): `lib/model.ts`, `lib/normalize.ts`, `lib/works.ts`, `lib/debug.ts`, `lib/sources/http.ts`, `lib/sources/openlibrary.ts` (+ `-parse.ts`), `lib/sources/googlebooks.ts` (+ `-parse.ts`), `lib/search.ts` (search orchestration, two external calls), `lib/work.ts` (detail page orchestration). `lib/buylinks.ts` generates purchase links from ISBNs with optional `AFFILIATE_*` env variables. Tests in `lib/__tests__/` run against fixtures in `lib/__fixtures__/`, recorded with `npx tsx scripts/record-fixtures.ts`.
 - Google Books fixtures are missing: the unauthenticated API answered HTTP 429 (daily quota) at recording time. Set `GOOGLE_BOOKS_API_KEY` and re-run the recorder to add them.
-- `scripts/debug-mumbo.ts` is a throwaway probe of the old aggregator.
+- UI state rules: the URL is the source of truth for search state (`/?q=&lang=`); components derive loading state from a request key instead of setting state inside effects (the `react-hooks/set-state-in-effect` lint rule is an error in this repo).
 
 Progress is tracked by the numbered steps in SPEC.md §7. Check `git log` to see which step was completed last.
 
@@ -30,13 +29,14 @@ Progress is tracked by the numbered steps in SPEC.md §7. Check `git log` to see
 
 ```
 app/                Next.js App Router pages and API routes
-  api/search/       search endpoint (to become the only search entry point)
-  book/[id]/        detail page (to be switched from edition ID to work ID)
-components/         React components, Tailwind; reusable as-is
-lib/                data layer (being rewritten, target layout in SPEC.md §7)
-  sources/          Open Library and Google Books clients
-types/              shared TypeScript types
-scripts/            ad-hoc probes, not part of the build
+  api/search/       GET ?q=&lang=  -> SearchResult (lib/search.ts)
+  api/works/[id]/   GET ?lang=     -> WorkDetailResponse (lib/work.ts + buy links)
+  book/[id]/        detail page, id = Open Library work id
+components/         React components, Tailwind
+lib/                data layer, layout in SPEC.md §7; types in lib/model.ts
+  sources/          Open Library and Google Books clients and parsers
+  __fixtures__/     recorded API responses for tests
+scripts/            record-fixtures.ts
 ```
 
 ## Commands
