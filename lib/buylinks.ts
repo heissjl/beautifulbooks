@@ -6,6 +6,7 @@
  * before any affiliate program is approved.
  */
 import type { BuyLink, Edition } from './model';
+import { isbn13to10 } from './normalize';
 
 interface Provider {
   id: string;
@@ -26,7 +27,15 @@ export const PROVIDERS: Provider[] = [
     id: 'amazon',
     label: 'Amazon',
     affiliateEnv: 'AFFILIATE_AMAZON_TAG',
-    url: (isbn, aff) => `https://www.amazon.com/s?k=${isbn}${aff ? `&tag=${encodeURIComponent(aff)}` : ''}`,
+    // Print books' ASIN is the ISBN-10, so /dp/<ISBN-10> opens the product
+    // page directly. 979-ISBNs have no ISBN-10; fall back to a search limited
+    // to the Books department (i=stripbooks), which excludes Kindle and Audible.
+    url: (isbn, aff) => {
+      const tag = aff ? `tag=${encodeURIComponent(aff)}` : '';
+      const isbn10 = isbn13to10(isbn);
+      if (isbn10) return `https://www.amazon.com/dp/${isbn10}${tag ? `?${tag}` : ''}`;
+      return `https://www.amazon.com/s?k=${isbn}&i=stripbooks${tag ? `&${tag}` : ''}`;
+    },
   },
   {
     id: 'abebooks',
@@ -36,7 +45,7 @@ export const PROVIDERS: Provider[] = [
   },
 ];
 
-export function buyLinksFor(edition: Pick<Edition, 'isbn13'>, env: NodeJS.ProcessEnv = process.env): BuyLink[] {
+export function buyLinksFor(edition: Pick<Edition, 'isbn13'>, env: Record<string, string | undefined> = process.env): BuyLink[] {
   if (!edition.isbn13) return [];
   return PROVIDERS.map(p => ({
     provider: p.id,

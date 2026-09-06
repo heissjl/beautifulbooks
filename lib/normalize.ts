@@ -114,6 +114,22 @@ export function isbn10to13(isbn: string): string {
   return `${core}${check}`;
 }
 
+/**
+ * Converts a 978-prefixed ISBN-13 to ISBN-10 (Amazon's ASIN for print books).
+ * 979-prefixed ISBNs have no ISBN-10 form; returns undefined for those.
+ */
+export function isbn13to10(isbn: string): string | undefined {
+  const s = cleanIsbn(isbn);
+  if (!s) return undefined;
+  if (s.length === 10) return s;
+  if (!s.startsWith('978')) return undefined;
+  const core = s.slice(3, 12);
+  let sum = 0;
+  for (let i = 0; i < 9; i++) sum += Number(core[i]) * (10 - i);
+  const check = (11 - (sum % 11)) % 11;
+  return `${core}${check === 10 ? 'X' : check}`;
+}
+
 /** First plausible 4-digit year in a free-form date string. */
 export function parseYear(date: string | undefined): number | undefined {
   if (!date) return undefined;
