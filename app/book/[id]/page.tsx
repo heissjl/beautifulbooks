@@ -241,6 +241,7 @@ function CoverDetails({ cover, editions, coversPerEdition, author, market, onMar
       <p className="mt-2 text-xs text-ink-3">
         Image from {cover.source === 'openlibrary' ? 'Open Library' : 'Google Books'}
         {editions.length > 1 ? ` · on ${editions.length} editions` : ''}
+        {cover.similarIds?.length ? ` · ${cover.similarIds.length} duplicate scan${cover.similarIds.length > 1 ? 's' : ''} folded` : ''}
       </p>
 
       <div className="mt-6 space-y-8">

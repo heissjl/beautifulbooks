@@ -3,8 +3,9 @@ import type { SourceEdition, WorkSummary } from '../model';
 import type { EditionCandidate } from '../sources/googlebooks-parse';
 import {
   assembleEditions, attachCandidates, candidatesToSourceEditions, editionKey, filterWorksByLanguage,
-  groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks, relevance, withoutTranslators,
+  foldDuplicateCovers, groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks, relevance, withoutTranslators,
 } from '../works';
+import type { Cover } from '../model';
 
 const work = (over: Partial<WorkSummary> & { id: string }): WorkSummary => ({
   title: 'Test Book',
@@ -209,5 +210,43 @@ describe('withoutTranslators', () => {
   it('returns the work unchanged without keys or without language data', () => {
     expect(withoutTranslators({ ...work, authorKeys: undefined }, [edition({ id: '1', authorKeys: ['A'] })]).authors).toEqual(work.authors);
     expect(withoutTranslators(work, [edition({ id: '1', authorKeys: ['A'] })]).authors).toEqual(work.authors);
+  });
+});
+
+describe('foldDuplicateCovers (E8 phase 2)', () => {
+  const cover = (id: string, editionIds: string[], source: Cover['source'] = 'openlibrary'): Cover =>
+    ({ id, url: `https://x/${id}`, source, editionIds });
+  const sig = (hash: string, contrast = 40) => ({ hash, contrast });
+
+  it('folds covers within the hamming threshold, unions editions, keeps folded ids', () => {
+    const covers = [cover('gb:a', ['e1'], 'googlebooks'), cover('ol:b', ['e2']), cover('ol:c', ['e3']), cover('ol:d', ['e1'])];
+    const sigs = new Map([
+      ['gb:a', sig('ffff000000000000')],
+      ['ol:b', sig('ffff000000000001')], // 1 bit away from a
+      ['ol:c', sig('0000ffff00000000')], // far
+      ['ol:d', sig('ffff00000000000f')], // 4 bits from a
+    ]);
+    const out = foldDuplicateCovers(covers, sigs);
+    expect(out.map(c => c.id)).toEqual(['ol:b', 'ol:c']);
+    const rep = out[0];
+    expect(rep.editionIds.sort()).toEqual(['e1', 'e2']);
+    expect(rep.similarIds!.sort()).toEqual(['gb:a', 'ol:d']);
+    expect(out[1].similarIds).toBeUndefined();
+  });
+
+  it('leaves covers without a signature untouched', () => {
+    const covers = [cover('ol:a', ['e1']), cover('ol:b', ['e2'])];
+    const out = foldDuplicateCovers(covers, new Map([['ol:a', sig('0000000000000000')]]));
+    expect(out).toHaveLength(2);
+  });
+
+  it('drops blank scans unless they are an edition\'s only cover', () => {
+    const covers = [cover('ol:a', ['e1']), cover('ol:blank', ['e1']), cover('ol:only', ['e2'])];
+    const sigs = new Map([
+      ['ol:a', sig('1111111111111111')],
+      ['ol:blank', sig('0000000000000000', 1)],
+      ['ol:only', sig('0000000000000000', 1)],
+    ]);
+    expect(foldDuplicateCovers(covers, sigs).map(c => c.id)).toEqual(['ol:a', 'ol:only']);
   });
 });

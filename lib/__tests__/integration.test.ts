@@ -160,7 +160,7 @@ describe('search', () => {
 
 describe('getWorkDetail', () => {
   it('removes translators from the author line using edition data (Reed, not Pellisa Díaz)', async () => {
-    const d = await getWorkDetail('OL30751W');
+    const d = await getWorkDetail('OL30751W', { dedupeCovers: false });
     expect(d!.work.authors).toEqual(['Ishmael Reed']);
     expect(d!.editions.every(e => !('authorKeys' in e))).toBe(true);
   });
@@ -171,7 +171,7 @@ describe('getWorkDetail', () => {
   });
 
   it('loads work, editions and language groups', async () => {
-    const d = await getWorkDetail('OL1168083W');
+    const d = await getWorkDetail('OL1168083W', { dedupeCovers: false });
     expect(d).not.toBeNull();
     expect(d!.work.title).toBe('Nineteen Eighty-Four');
     expect(d!.work.authors[0]).toBe('George Orwell');
@@ -186,7 +186,7 @@ describe('getWorkDetail', () => {
   });
 
   it('puts the preferred language first, merges Google Books editions by ISBN and keeps both covers (E8)', async () => {
-    const without = await getWorkDetail('OL1168083W');
+    const without = await getWorkDetail('OL1168083W', { dedupeCovers: false });
     googleBooks = () => ({
       body: {
         items: [
@@ -199,7 +199,7 @@ describe('getWorkDetail', () => {
         ],
       },
     });
-    const d = await getWorkDetail('OL1168083W', { preferredLanguage: 'de' });
+    const d = await getWorkDetail('OL1168083W', { preferredLanguage: 'de', dedupeCovers: false });
     expect(d!.groups[0].language).toBe('de');
     expect(d!.editions.some(e => e.id === 'gb:g-new')).toBe(true);
     expect(d!.editions.some(e => e.id === 'gb:g-other')).toBe(false);

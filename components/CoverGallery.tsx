@@ -77,6 +77,11 @@ export default function CoverGallery({ groups, selectedCover, onSelectCover, cap
               <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-2 pb-2 pt-8 text-left text-[11px] font-medium leading-tight text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
                 {caption}
               </div>
+              {cover.similarIds && cover.similarIds.length > 0 && (
+                <span className="pointer-events-none absolute right-1.5 top-1.5 rounded-full bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white" title={`${cover.similarIds.length} more scan${cover.similarIds.length > 1 ? 's' : ''} of this cover`}>
+                  +{cover.similarIds.length}
+                </span>
+              )}
             </button>
           );
         })}

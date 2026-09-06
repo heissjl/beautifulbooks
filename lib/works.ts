@@ -5,6 +5,7 @@
 import type { Cover, Edition, LanguageGroup, SourceEdition, Work, WorkSummary } from './model';
 import type { EditionCandidate } from './sources/googlebooks-parse';
 import { looksLikeSecondaryLiterature, normalizeTitle, titleAuthorKey } from './normalize';
+import { BLANK_CONTRAST, hamming, type ImageSignature } from './imagehash';
 
 export const MOSAIC_COVERS = 4;
 
@@ -283,4 +284,56 @@ export function groupCoversByLanguage(
       return b.covers.length - a.covers.length || a.language.localeCompare(b.language);
     })
     .map(g => ({ language: g.language, coverIds: g.covers.map(c => c.id) }));
+}
+
+export const SAME_COVER_MAX_DISTANCE = 8;
+
+/**
+ * SPEC §2.3 phase 2 (§8.5): covers whose images are the same design are
+ * folded into one. `signatures` maps cover id to a perceptual hash; covers
+ * without a signature (not fetched within the time budget) stay as they
+ * are and fold on a later request once cached. Blank scans (no contrast)
+ * are dropped unless they are an edition's only cover.
+ *
+ * Representative of a group: an Open Library cover before a Google one
+ * (Google images are often the current printing, OL scans the actual
+ * edition), then the first seen. Edition ids are unioned; folded ids are
+ * kept in `similarIds` so the UI can say "+2 similar".
+ */
+export function foldDuplicateCovers(
+  covers: readonly Cover[],
+  signatures: ReadonlyMap<string, ImageSignature>,
+  maxDistance = SAME_COVER_MAX_DISTANCE,
+): Cover[] {
+  // Drop blank scans that are not an edition's only cover.
+  const coversPerEdition = new Map<string, number>();
+  for (const c of covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
+  const kept = covers.filter(c => {
+    const sig = signatures.get(c.id);
+    if (!sig || sig.contrast >= BLANK_CONTRAST) return true;
+    return c.editionIds.some(id => (coversPerEdition.get(id) ?? 0) <= 1);
+  });
+
+  // Greedy grouping: each cover joins the first group whose representative is within range.
+  const groups: Array<{ rep: Cover; members: Cover[] }> = [];
+  for (const c of kept) {
+    const sig = signatures.get(c.id);
+    let target: { rep: Cover; members: Cover[] } | undefined;
+    if (sig) {
+      target = groups.find(g => {
+        const rs = signatures.get(g.rep.id);
+        return !!rs && hamming(rs.hash, sig.hash) <= maxDistance;
+      });
+    }
+    if (target) target.members.push(c);
+    else groups.push({ rep: c, members: [c] });
+  }
+
+  return groups.map(g => {
+    if (g.members.length === 1) return g.members[0];
+    const rep = g.members.find(m => m.source === 'openlibrary') ?? g.members[0];
+    const editionIds = uniq(g.members.flatMap(m => m.editionIds));
+    const similarIds = g.members.filter(m => m.id !== rep.id).map(m => m.id);
+    return { ...rep, editionIds, similarIds };
+  });
 }

@@ -42,3 +42,19 @@ export async function fetchJson<T>(url: string, { timeoutMs, revalidate }: Fetch
 export function isTimeout(err: unknown): boolean {
   return err instanceof Error && (err.name === 'TimeoutError' || err.name === 'AbortError');
 }
+
+/**
+ * Fetches raw bytes (cover images) with a timeout and the Next data cache.
+ * Follows redirects (Open Library covers redirect to archive.org).
+ */
+export async function fetchBytes(url: string, { timeoutMs, revalidate }: FetchJsonOptions): Promise<Uint8Array> {
+  const started = Date.now();
+  const res = await fetch(url, {
+    signal: AbortSignal.timeout(timeoutMs),
+    headers: { 'User-Agent': USER_AGENT },
+    next: { revalidate },
+  });
+  debug('http', `${res.status} ${Date.now() - started}ms ${url}`);
+  if (!res.ok) throw new HttpError(res.status, url);
+  return new Uint8Array(await res.arrayBuffer());
+}

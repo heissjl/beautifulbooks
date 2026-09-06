@@ -7,11 +7,12 @@
  * groups covers by language.
  */
 import type { Cover, Edition, LanguageGroup, Work } from './model';
+import { hashCovers } from './coverhash';
 import { lookupByIsbns, searchEditionCandidates } from './sources/googlebooks';
 import { getEditions, getWork } from './sources/openlibrary';
 import {
-  assembleEditions, candidatesToSourceEditions, groupCoversByLanguage, isbnCandidatesToSourceEditions,
-  withoutTranslators,
+  assembleEditions, candidatesToSourceEditions, foldDuplicateCovers, groupCoversByLanguage,
+  isbnCandidatesToSourceEditions, withoutTranslators,
 } from './works';
 
 export interface WorkDetail {
@@ -26,6 +27,10 @@ export interface WorkDetailOptions {
   preferredLanguage?: string;
   /** Stop paging Open Library once this many covers were found. */
   minWithCovers?: number;
+  /** Fold covers with the same image (perceptual hash). Default true. */
+  dedupeCovers?: boolean;
+  /** Time budget for hashing cover images. */
+  hashDeadlineMs?: number;
 }
 
 const WORK_ID = /^OL\d+W$/;
@@ -56,11 +61,18 @@ export async function getWorkDetail(workId: string, options: WorkDetailOptions =
     .map(e => e.isbn13!);
   const isbnCandidates = await lookupByIsbns(newestIsbns);
 
-  const { editions, covers } = assembleEditions([
+  const assembled = assembleEditions([
     ...olEditions,
     ...candidatesToSourceEditions(work, gbCandidates),
     ...isbnCandidatesToSourceEditions(work.id, isbnCandidates),
   ]);
+  const { editions } = assembled;
+
+  // Same design, several scans: fold by perceptual hash within a time budget.
+  const covers = options.dedupeCovers === false
+    ? assembled.covers
+    : foldDuplicateCovers(assembled.covers, await hashCovers(assembled.covers, { deadlineMs: options.hashDeadlineMs }));
+
   const groups = groupCoversByLanguage(covers, editions, options.preferredLanguage);
   return { work: cleanWork, editions, covers, groups };
 }

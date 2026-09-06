@@ -52,6 +52,8 @@ export interface Cover {
   source: Source;
   /** Ids of editions that carry this cover, at least one. */
   editionIds: string[];
+  /** Ids of covers folded into this one because their image is the same design (SPEC §2.3 phase 2). */
+  similarIds?: string[];
 }
 
 /** An edition as parsed from a source, before covers are split out. */
