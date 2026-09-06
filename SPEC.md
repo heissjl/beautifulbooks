@@ -78,7 +78,7 @@ Ein Cover ist ein Bild, das eine oder mehrere Ausgaben tragen. Es ist die zentra
 Regeln:
 - **Dedupe nach Bild, nicht nach ISBN.** Zwei Cover-IDs sind zwei Cover, auch bei gleicher ISBN. Zwei Ausgaben mit gleicher ISBN werden zu einer Ausgabe, behalten aber alle ihre Cover.
 - Open Library liefert pro Ausgabe ein `covers`-Array; **alle** gültigen IDs werden übernommen (Gatsby und Austen haben Ausgaben mit mehreren).
-- Cover derselben Ausgabe aus zwei Quellen können dasselbe Bild sein oder nicht. Phase 1: beide zeigen, unter der ISBN gruppiert. Phase 2 (8.5): perzeptueller Hash serverseitig, gecacht pro Cover, um echte Duplikate zu falten.
+- Cover derselben Ausgabe aus zwei Quellen können dasselbe Bild sein oder nicht. Phase 1: beide zeigen, unter der ISBN gruppiert. Phase 2 (8.5/8.6): perzeptueller Hash serverseitig, gecacht pro Cover, um echte Duplikate zu falten.
 - Detailseite zeigt Cover (F2); die Ausgaben mit Kauf-Links hängen am Cover. Mosaik (F4) nimmt Cover.
 
 ### 2.4 Kauf-Links
@@ -367,7 +367,27 @@ Reihenfolge ist Vorschlag: erst 8.1 und 8.2 (sichtbar und online), dann 8.3 (Gel
   - [ ] Google Search Console ab Tag 1, Bing Webmaster Tools.
   - [ ] Vercel Analytics: Referrer pro Kanal. Nach 8 Wochen entscheiden, welche zwei Kanäle bleiben.
 
-### 8.5 Funktionale Erweiterungen (aus Entscheidungen zurückgestellt)
+### 8.5 Aus der Nutzung (2026-09-06, Julian)
+
+Drei Beobachtungen nach dem ersten Durchgang mit der neuen Oberfläche. Reihenfolge nach Nutzen pro Aufwand.
+
+- [ ] **Amazon-Links treffen nicht.** Heute `amazon.com/s?k=<ISBN-13>`: eine Volltextsuche, die Kindle, Audible und Fremdtreffer mischt.
+  - Direktlink statt Suche: Bei gedruckten Büchern ist Amazons ASIN gleich der **ISBN-10**. `https://www.amazon.<tld>/dp/<ISBN-10>` führt direkt auf die Produktseite. ISBN-10 aus der ISBN-13 zurückrechnen (Präfix 978; bei 979 gibt es keine ISBN-10, dann Suche).
+  - Suche als Fallback nur in der Buchabteilung: `s?k=<ISBN>&i=stripbooks` (schließt Audible und Kindle aus). Deutschland: `i=stripbooks` gilt auch auf amazon.de.
+  - Marktplatz nach Nutzerregion (`Accept-Language` / Geo-Header): `.de` für deutsche Nutzer, sonst `.com`. Affiliate-Tag pro Marktplatz (8.3).
+  - Gleiche Prüfung für Bookshop.org (`/book/<ISBN>`?) und AbeBooks (`isbn=` ist dort bereits exakt).
+- [ ] **Jede Variante braucht einen Suchweg, auch ohne ISBN.** Ausgaben vor 1970 und viele OL-Datensätze haben keine ISBN, dann gibt es heute gar keinen Link. Kandidaten, in dieser Reihenfolge anbieten:
+  - AbeBooks nach Titel + Verlag + Jahr: `SearchResults?tn=<Titel>&pn=<Verlag>&yrl=<Jahr>&yrh=<Jahr>` (dort haben Antiquare oft eigene Fotos, also das tatsächliche Cover).
+  - eBay nach Titel + Verlag + Jahr (Sammlerausgaben, Erstauflagen).
+  - **Reverse Image Search mit dem Cover-Bild:** Google Lens per URL (`https://lens.google.com/uploadbyurl?url=<Cover-URL>`), TinEye (`https://tineye.com/search?url=<Cover-URL>`), Bing Visual Search. Findet Händlerangebote und Blogposts zum exakten Cover; kein API-Key nötig, nur Links.
+  - Bibliotheken: WorldCat (`worldcat.org/search?q=<Titel Verlag Jahr>`), Open-Library-Ausgabenseite (`openlibrary.org/books/<OL-ID>`) als Nachweis.
+  - Umsetzung: `lib/buylinks.ts` bekommt zwei Ebenen, „Kaufen (ISBN)“ und „Suchen (Titel/Verlag/Jahr/Bild)“; die zweite ist immer da.
+- [ ] **Dedupe der Cover ist noch zu schwach.** Bei *1984* stehen mehrere identische Cover nebeneinander, mit derselben Beschriftung im Hover (z. B. dreimal derselbe Verlag und Jahr). Ursachen: Open Library hat pro Ausgabe mehrere hochgeladene Scans desselben Covers (verschiedene `cover_i`), und derselbe Druck existiert als mehrere OL-Ausgaben ohne ISBN, die wir nicht zusammenführen können.
+  - Kurzfristig, ohne Bildvergleich: Cover, deren Ausgaben in Titel + Verlag + Jahr + Sprache übereinstimmen, zu **einer Kachel mit „+2 ähnliche“** zusammenfassen; die Kachel zeigt das erste Bild, die Details listen alle. Falsch-positiv möglich (echte Neugestaltung im selben Jahr beim selben Verlag), deshalb aufklappbar statt verworfen.
+  - Richtig: perzeptueller Hash (dHash/pHash) serverseitig pro Cover-ID, gecacht; Hamming-Distanz ≤ Schwelle = dasselbe Bild. Schließt auch den Fall „Scan bei OL, Verlagsbild bei Google“ ab. Damit zieht Phase 2 aus E8 nach vorn.
+  - Nebeneffekt: mit dem Hash lassen sich auch leere Scans erkennen (geringe Varianz) und ausblenden.
+
+### 8.6 Funktionale Erweiterungen (aus Entscheidungen zurückgestellt)
 
 - [ ] **F1.8** Query-Parsing in Titel + Autor (E3). Auslöser: wenn Akzeptanz-Query „gravity's rainbow" mit reinem Ranking nicht stabil ist.
 - [ ] **E4 (a)** Editions-Call für die ersten 8 Treffer mit Cache, falls Google-Books-Cover zu selten zu einem 4er-Mosaik führen.
