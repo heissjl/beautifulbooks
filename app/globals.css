@@ -122,13 +122,25 @@
     from { opacity: 0; transform: translateY(6px) scale(0.98); }
     to { opacity: 1; transform: none; }
   }
-  /* A cover arriving on the loading stage. */
+  /* A cover on the loading stage: 1.5x the old size, centred, fanned by --dx and --tilt. */
+  .stage-tile {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 16.5rem;
+    height: 24.75rem;
+    transform: translate(calc(-50% + var(--dx, 0px)), -50%) rotate(var(--tilt, 0deg));
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  @media (min-width: 640px) {
+    .stage-tile { width: 18rem; height: 27rem; }
+  }
   .stage-in {
-    animation: stage-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation: stage-in 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
   @keyframes stage-in {
-    from { opacity: 0; transform: translateY(24px) scale(0.92) rotate(var(--tilt, 0deg)); }
-    to { opacity: 1; transform: translateY(0) scale(1) rotate(var(--tilt, 0deg)); }
+    from { opacity: 0; transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + 32px)) scale(0.9) rotate(var(--tilt, 0deg)); }
+    to { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), -50%) scale(1) rotate(var(--tilt, 0deg)); }
   }
   .stage-pulse {
     animation: stage-pulse 1.6s ease-in-out infinite;

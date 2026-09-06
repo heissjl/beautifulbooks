@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
 import CoverImage from '@/components/CoverImage';
-import LoadingStage, { type StageCover } from '@/components/LoadingStage';
+import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
 import SiteHeader from '@/components/SiteHeader';
-import { flyCovers, measureStage, type StagedRect } from '@/components/flyCovers';
+import { flyCovers } from '@/components/flyCovers';
+import { useLoadingScene } from '@/components/useLoadingScene';
 import { useMarket } from '@/components/useMarket';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor } from '@/lib/buylinks';
@@ -16,11 +17,6 @@ import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 import type { WorkDetailResponse } from '@/app/api/works/[id]/route';
-
-/** Loading scene: switch to the gallery after this many covers arrived, or after the grace period. */
-const STAGE_TARGET = 4;
-const STAGE_GRACE_MS = 2500;
-const STAGE_PRELOAD = 8;
 
 type Loaded =
   | { status: 'notfound' }
@@ -108,16 +104,6 @@ function backHrefFrom(searchParams: URLSearchParams): string {
   return qs ? `/?${qs}` : '/';
 }
 
-/** Preloads cover images and reports each one as it arrives, in arrival order. */
-function preloadCovers(covers: readonly Cover[], onArrive: (c: StageCover) => void, signal: AbortSignal): void {
-  for (const c of covers.slice(0, STAGE_PRELOAD)) {
-    const url = c.urlSmall ?? c.url;
-    const img = new window.Image();
-    img.onload = () => { if (!signal.aborted) onArrive({ id: c.id, url }); };
-    img.src = url;
-  }
-}
-
 function BookDetail() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
@@ -132,10 +118,6 @@ function BookDetail() {
   const requestKey = `${params.id} ${lang} ${chosenMarket ?? ''}`;
   const [loaded, setLoaded] = useState<{ key: string; state: Loaded } | null>(null);
 
-  // Loading scene state (SPEC 8.1): covers that arrived, and whether the scene ended.
-  const [arrived, setArrived] = useState<{ key: string; covers: StageCover[] }>({ key: '', covers: [] });
-  const [sceneDone, setSceneDone] = useState<string>('');
-  const stagedRef = useRef<StagedRect[]>([]);
 
   // The selected cover lives in the URL (?cover=) so it can be shared (SPEC F2.6).
   const selectedId = searchParams.get('cover');
@@ -161,24 +143,11 @@ function BookDetail() {
       return (await res.json()) as WorkDetailResponse;
     };
 
-    const endScene = () => {
-      stagedRef.current = measureStage();
-      setSceneDone(key);
-    };
-
-    let graceTimer: ReturnType<typeof setTimeout> | undefined;
     (async () => {
       try {
         const fast = await load('fast');
         if (!fast || controller.signal.aborted) return;
         setLoaded({ key, state: { status: 'fast', data: fast } });
-        // Scene: preload the first covers; end after enough arrived or after the grace period.
-        preloadCovers(
-          fast.covers,
-          c => setArrived(a => (a.key === key ? { key, covers: a.covers.some(x => x.id === c.id) ? a.covers : [...a.covers, c] } : { key, covers: [c] })),
-          controller.signal,
-        );
-        graceTimer = setTimeout(() => { if (!controller.signal.aborted) endScene(); }, STAGE_GRACE_MS);
         const full = await load('full');
         if (!full || controller.signal.aborted) return;
         setLoaded({ key, state: { status: 'full', data: full } });
@@ -188,26 +157,18 @@ function BookDetail() {
       }
     })();
 
-    return () => { controller.abort(); if (graceTimer) clearTimeout(graceTimer); };
+    return () => controller.abort();
   }, [params.id, lang, chosenMarket, requestKey]);
-
-  // End the scene early once enough covers are on stage: measure after the
-  // fourth cover has painted, then switch.
-  const enoughArrived = arrived.key === requestKey && arrived.covers.length >= STAGE_TARGET;
-  useEffect(() => {
-    if (!enoughArrived || sceneDone === requestKey) return;
-    const raf = requestAnimationFrame(() => {
-      stagedRef.current = measureStage();
-      setSceneDone(requestKey);
-    });
-    return () => cancelAnimationFrame(raf);
-  }, [enoughArrived, sceneDone, requestKey]);
 
   const state = useMemo<Loaded | { status: 'loading' }>(
     () => (loaded?.key === requestKey ? loaded.state : { status: 'loading' }),
     [loaded, requestKey],
   );
-  const inScene = state.status === 'loading' || (state.status === 'fast' && sceneDone !== requestKey);
+
+  // Loading scene (SPEC 8.1): paced by the hook; runs at least two covers long.
+  const sceneCovers = state.status === 'fast' || state.status === 'full' ? state.data.covers : null;
+  const scene = useLoadingScene(requestKey, sceneCovers, state.status === 'full');
+  const inScene = state.status === 'loading' || ((state.status === 'fast' || state.status === 'full') && !scene.done);
 
   const view = useMemo(() => {
     if (state.status !== 'fast' && state.status !== 'full') return null;
@@ -226,13 +187,13 @@ function BookDetail() {
   }, [state]);
 
   // When the scene ends, fly the staged covers to their gallery tiles.
+  const flownFor = useRef('');
   useEffect(() => {
-    if (inScene || !view || stagedRef.current.length === 0) return;
-    const staged = stagedRef.current;
-    stagedRef.current = [];
-    const raf = requestAnimationFrame(() => flyCovers(staged));
+    if (inScene || !view || scene.staged.length === 0 || flownFor.current === requestKey) return;
+    flownFor.current = requestKey;
+    const raf = requestAnimationFrame(() => flyCovers(scene.staged));
     return () => cancelAnimationFrame(raf);
-  }, [inScene, view]);
+  }, [inScene, view, scene.staged, requestKey]);
 
   const selected = useMemo<Cover | null>(() => {
     if (!view) return null;
@@ -266,7 +227,7 @@ function BookDetail() {
           meta={work?.editionCount ? `${work.editionCount.toLocaleString('en')} editions` : undefined}
         />
         <LoadingStage
-          covers={arrived.key === requestKey ? arrived.covers : []}
+          covers={scene.presented}
           hero={preview?.coverUrls[0]}
           expected={view?.data.covers.length}
         />
