@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
 import CoverImage from '@/components/CoverImage';
+import MarketSwitcher from '@/components/MarketSwitcher';
 import SiteHeader from '@/components/SiteHeader';
+import { useMarket } from '@/components/useMarket';
+import { searchLinksFor } from '@/lib/buylinks';
+import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 import type { WorkDetailResponse } from '@/app/api/works/[id]/route';
@@ -101,7 +105,9 @@ function BookDetail() {
   const lang = searchParams.get('lang') ?? '';
   const backHref = backHrefFrom(searchParams);
 
-  const requestKey = `${params.id} ${lang}`;
+  // Market for buy links (E9): the user's choice, else detected by the server.
+  const [chosenMarket, setMarket] = useMarket();
+  const requestKey = `${params.id} ${lang} ${chosenMarket ?? ''}`;
   const [loaded, setLoaded] = useState<{ key: string; state: State } | null>(null);
 
   // The selected cover lives in the URL (?cover=) so it can be shared (SPEC F2.6).
@@ -114,8 +120,11 @@ function BookDetail() {
 
   useEffect(() => {
     const controller = new AbortController();
-    const qs = lang ? `?lang=${encodeURIComponent(lang)}` : '';
-    fetch(`/api/works/${encodeURIComponent(params.id)}${qs}`, { signal: controller.signal })
+    const query = new URLSearchParams();
+    if (lang) query.set('lang', lang);
+    if (chosenMarket) query.set('market', chosenMarket);
+    const qs = query.toString();
+    fetch(`/api/works/${encodeURIComponent(params.id)}${qs ? `?${qs}` : ''}`, { signal: controller.signal })
       .then(async res => {
         if (res.status === 404 || res.status === 400) return setLoaded({ key: requestKey, state: { status: 'notfound' } });
         if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `Request failed (${res.status})`);
@@ -126,7 +135,7 @@ function BookDetail() {
         setLoaded({ key: requestKey, state: { status: 'error', message: err instanceof Error ? err.message : 'Request failed' } });
       });
     return () => controller.abort();
-  }, [params.id, lang, requestKey]);
+  }, [params.id, lang, chosenMarket, requestKey]);
 
   const state = useMemo<State>(
     () => (loaded?.key === requestKey ? loaded.state : { status: 'loading' }),
@@ -202,6 +211,9 @@ function BookDetail() {
                 cover={selected}
                 editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
                 coversPerEdition={view.coversPerEdition}
+                author={work.authors[0]}
+                market={view.data.market}
+                onMarketChange={setMarket}
               />
             )}
           </aside>
@@ -211,7 +223,16 @@ function BookDetail() {
   );
 }
 
-function CoverDetails({ cover, editions, coversPerEdition }: { cover: Cover; editions: EditionView[]; coversPerEdition: ReadonlyMap<string, number> }) {
+interface CoverDetailsProps {
+  cover: Cover;
+  editions: EditionView[];
+  coversPerEdition: ReadonlyMap<string, number>;
+  author?: string;
+  market: Market;
+  onMarketChange: (market: Market) => void;
+}
+
+function CoverDetails({ cover, editions, coversPerEdition, author, market, onMarketChange }: CoverDetailsProps) {
   return (
     <div>
       <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-xs overflow-hidden rounded-card bg-surface-2 lg:mx-0 lg:max-w-none">
@@ -224,14 +245,29 @@ function CoverDetails({ cover, editions, coversPerEdition }: { cover: Cover; edi
 
       <div className="mt-6 space-y-8">
         {editions.map(edition => (
-          <EditionBlock key={edition.id} edition={edition} otherCovers={(coversPerEdition.get(edition.id) ?? 1) - 1} />
+          <EditionBlock
+            key={edition.id}
+            edition={edition}
+            otherCovers={(coversPerEdition.get(edition.id) ?? 1) - 1}
+            searchLinks={searchLinksFor({ title: edition.title, author, publisher: edition.publisher, year: edition.year, coverUrl: cover.url, editionId: edition.id }, market)}
+            market={market}
+            onMarketChange={onMarketChange}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-function EditionBlock({ edition, otherCovers }: { edition: EditionView; otherCovers: number }) {
+interface EditionBlockProps {
+  edition: EditionView;
+  otherCovers: number;
+  searchLinks: EditionView['buyLinks'];
+  market: Market;
+  onMarketChange: (market: Market) => void;
+}
+
+function EditionBlock({ edition, otherCovers, searchLinks, market, onMarketChange }: EditionBlockProps) {
   const rows: Array<[string, string | undefined]> = [
     ['Title', edition.title],
     ['Published', edition.publishedDate],
@@ -242,6 +278,7 @@ function EditionBlock({ edition, otherCovers }: { edition: EditionView; otherCov
     ['ISBN', edition.isbn13],
     ['Also printed with', otherCovers > 0 ? `${otherCovers} other cover${otherCovers > 1 ? 's' : ''}` : undefined],
   ];
+  const hint = [edition.publisher, edition.year].filter(Boolean).join(' ');
   return (
     <div>
       <dl className="divide-y divide-line border-y border-line text-sm">
@@ -257,9 +294,12 @@ function EditionBlock({ edition, otherCovers }: { edition: EditionView; otherCov
         <p className="mt-4 line-clamp-6 text-sm leading-relaxed text-ink-2">{edition.description}</p>
       )}
 
-      {edition.buyLinks.length > 0 && (
-        <div className="mt-5">
-          <p className="kicker">Find copies of this ISBN</p>
+      <div className="mt-5">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <p className="kicker">{edition.isbn13 ? 'Buy this ISBN' : 'No ISBN on record'}</p>
+          <MarketSwitcher market={market} onChange={onMarketChange} compact />
+        </div>
+        {edition.buyLinks.length > 0 ? (
           <div className="mt-2 flex flex-wrap gap-2">
             {edition.buyLinks.map(link => (
               <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer sponsored" className="btn">
@@ -267,12 +307,32 @@ function EditionBlock({ edition, otherCovers }: { edition: EditionView; otherCov
               </a>
             ))}
           </div>
+        ) : (
+          <p className="mt-2 text-xs leading-relaxed text-ink-3">
+            This edition predates ISBNs or has none on record, so shops cannot look it up directly. Use the searches below.
+          </p>
+        )}
+        {edition.buyLinks.length > 0 && (
           <p className="mt-2 text-xs leading-relaxed text-ink-3">
             Sellers list by ISBN and ship the current printing, so the cover may differ from the one shown.
-            {edition.publisher || edition.year ? ` Look for ${[edition.publisher, edition.year].filter(Boolean).join(' ')}.` : ''}
+            {hint ? ` Look for ${hint}.` : ''}
           </p>
+        )}
+      </div>
+
+      <div className="mt-5">
+        <p className="kicker">Find this exact cover</p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {searchLinks.map(link => (
+            <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
+              {link.label}
+            </a>
+          ))}
         </div>
-      )}
+        <p className="mt-2 text-xs leading-relaxed text-ink-3">
+          Title, publisher and year at antiquarian and auction sites; Google Lens and TinEye search by the cover image.
+        </p>
+      </div>
 
       {edition.previewUrl && (
         <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm text-accent hover:underline">

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { buyLinksFor } from '../buylinks';
+import { buyLinksFor, retailersFor, searchLinksFor } from '../buylinks';
+import { cookieValue, detectMarket, normalizeMarket } from '../market';
 import { isbn13to10 } from '../normalize';
 
 describe('isbn13to10', () => {
@@ -15,17 +16,69 @@ describe('isbn13to10', () => {
   });
 });
 
-describe('buyLinksFor / Amazon', () => {
-  it('links straight to the product page via ISBN-10, with affiliate tag when set', () => {
-    const amazon = (env: Record<string, string | undefined>) => buyLinksFor({ isbn13: '9780684824772' }, env).find(l => l.provider === 'amazon')!.url;
-    expect(amazon({})).toBe('https://www.amazon.com/dp/0684824779');
-    expect(amazon({ AFFILIATE_AMAZON_TAG: 'bb-20' })).toBe('https://www.amazon.com/dp/0684824779?tag=bb-20');
+describe('detectMarket (E9)', () => {
+  it('prefers the explicit choice, then country, then language, then US', () => {
+    expect(detectMarket({ explicit: 'de', country: 'US', acceptLanguage: 'en-US' })).toBe('de');
+    expect(detectMarket({ explicit: 'gb' })).toBe('uk');
+    expect(detectMarket({ explicit: 'xx', country: 'AT' })).toBe('de');
+    expect(detectMarket({ country: 'IE' })).toBe('uk');
+    expect(detectMarket({ country: 'FR', acceptLanguage: 'de-DE,de;q=0.9' })).toBe('de');
+    expect(detectMarket({ country: 'FR', acceptLanguage: 'en-GB,en;q=0.8' })).toBe('uk');
+    expect(detectMarket({ country: 'FR', acceptLanguage: 'fr-FR' })).toBe('us');
+    expect(detectMarket({})).toBe('us');
+  });
+  it('parses cookies and normalizes values', () => {
+    expect(cookieValue('a=1; market=uk; b=2', 'market')).toBe('uk');
+    expect(cookieValue(undefined, 'market')).toBeUndefined();
+    expect(normalizeMarket(' UK ')).toBe('uk');
+    expect(normalizeMarket('fr')).toBeUndefined();
+  });
+});
+
+describe('buyLinksFor per market', () => {
+  const isbn = { isbn13: '9780684824772' };
+  const amazon = (market: 'us' | 'uk' | 'de', env: Record<string, string | undefined> = {}) =>
+    buyLinksFor(isbn, market, env).find(l => l.provider === 'amazon')!.url;
+
+  it('links straight to the Amazon product page on the market domain, with the market tag', () => {
+    expect(amazon('us')).toBe('https://www.amazon.com/dp/0684824779');
+    expect(amazon('uk')).toBe('https://www.amazon.co.uk/dp/0684824779');
+    expect(amazon('de', { AFFILIATE_AMAZON_TAG_DE: 'bb-21', AFFILIATE_AMAZON_TAG_US: 'wrong' })).toBe('https://www.amazon.de/dp/0684824779?tag=bb-21');
   });
   it('falls back to a books-only search for 979 ISBNs', () => {
-    const url = buyLinksFor({ isbn13: '9798472370790' }, {}).find(l => l.provider === 'amazon')!.url;
-    expect(url).toBe('https://www.amazon.com/s?k=9798472370790&i=stripbooks');
+    expect(buyLinksFor({ isbn13: '9798472370790' }, 'us', {}).find(l => l.provider === 'amazon')!.url)
+      .toBe('https://www.amazon.com/s?k=9798472370790&i=stripbooks');
   });
-  it('returns no links without an ISBN', () => {
+  it('orders retailers per market as specified', () => {
+    expect(retailersFor('us').map(r => r.id)).toEqual(['bookshop', 'amazon', 'abebooks', 'thriftbooks', 'ebay']);
+    expect(retailersFor('uk').map(r => r.id)).toEqual(['bookshop', 'amazon', 'blackwells', 'waterstones', 'abebooks', 'ebay']);
+    expect(retailersFor('de').map(r => r.id)).toEqual(['thalia', 'genialokal', 'amazon', 'hugendubel', 'abebooks', 'booklooker']);
+    expect(buyLinksFor(isbn, 'de', {}).map(l => l.provider)).toEqual(retailersFor('de').map(r => r.id));
+  });
+  it('uses the Bookshop affiliate storefront only when configured', () => {
+    expect(buyLinksFor(isbn, 'uk', {})[0].url).toBe('https://uk.bookshop.org/search?keywords=9780684824772');
+    expect(buyLinksFor(isbn, 'uk', { AFFILIATE_BOOKSHOP_ID_UK: 'shop1' })[0].url).toBe('https://uk.bookshop.org/a/shop1/9780684824772');
+  });
+  it('returns no buy links without an ISBN', () => {
     expect(buyLinksFor({ isbn13: undefined })).toEqual([]);
+  });
+});
+
+describe('searchLinksFor (no ISBN needed)', () => {
+  it('always offers title searches, adds image search with a cover and provenance for OL editions', () => {
+    const links = searchLinksFor({ title: 'Mumbo Jumbo', author: 'Ishmael Reed', publisher: 'Doubleday', year: 1972, coverUrl: 'https://covers.openlibrary.org/b/id/1-L.jpg', editionId: 'ol:OL5468355M' }, 'us');
+    expect(links.map(l => l.provider)).toEqual(['abebooks-search', 'ebay-search', 'google-lens', 'tineye', 'worldcat', 'openlibrary']);
+    const abe = new URL(links[0].url);
+    expect(abe.searchParams.get('tn')).toBe('Mumbo Jumbo');
+    expect(abe.searchParams.get('pn')).toBe('Doubleday');
+    expect(abe.searchParams.get('yrl')).toBe('1972');
+    expect(links[2].url).toContain('lens.google.com/uploadbyurl?url=https%3A%2F%2Fcovers');
+    expect(links[5].url).toBe('https://openlibrary.org/books/OL5468355M');
+  });
+  it('uses market domains and skips what it cannot build', () => {
+    const links = searchLinksFor({ title: 'Stolz und Vorurteil' }, 'de');
+    expect(links.map(l => l.provider)).toEqual(['abebooks-search', 'ebay-search', 'worldcat']);
+    expect(links[0].url).toContain('abebooks.de');
+    expect(links[1].url).toContain('ebay.de');
   });
 });

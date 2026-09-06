@@ -24,7 +24,7 @@ No environment variables are required for local development; without them the ap
 | Variable | Purpose |
 |---|---|
 | `GOOGLE_BOOKS_API_KEY` | Enables Google Books as a cover source. Without a key the shared anonymous quota is used, which is exhausted most of the time (HTTP 429). |
-| `AFFILIATE_BOOKSHOP_ID`, `AFFILIATE_AMAZON_TAG`, `AFFILIATE_ABEBOOKS_ID` | Affiliate parameters for purchase links (SPEC.md §8.3). |
+| `AFFILIATE_AMAZON_TAG_US`, `_UK`, `_DE`, `AFFILIATE_BOOKSHOP_ID_US`, `_UK` | Affiliate parameters for purchase links, per market (SPEC.md §2.4, §8.3). |
 | `DEBUG` | Any value enables request logging in `lib/`. |
 
 ### Getting a Google Books API key
