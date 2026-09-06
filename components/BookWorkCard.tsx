@@ -6,14 +6,31 @@ import type { WorkSummary } from '@/lib/model';
 
 interface BookWorkCardProps {
   work: WorkSummary;
-  /** Current search state, carried to the detail page for the back link. */
-  searchHref?: string;
+  /** Current search state, carried to the detail page for its back link (SPEC F2.7). */
+  query?: string;
   language?: string;
 }
 
-export default function BookWorkCard({ work, language }: BookWorkCardProps) {
+/**
+ * Search results carry no edition data, so translators cannot be detected
+ * there (SPEC §2.1). Lists of three or more names on Open Library are almost
+ * always author + translators, so the card shows the primary author alone.
+ */
+export function displayAuthors(authors: readonly string[]): string {
+  return authors.length > 2 ? authors[0] : authors.join(', ');
+}
+
+export function detailHref(workId: string, query?: string, language?: string): string {
+  const params = new URLSearchParams();
+  if (query) params.set('q', query);
+  if (language && language !== 'all') params.set('lang', language);
+  const qs = params.toString();
+  return qs ? `/book/${workId}?${qs}` : `/book/${workId}`;
+}
+
+export default function BookWorkCard({ work, query, language }: BookWorkCardProps) {
   const editionCount = work.editionCount ?? work.coverUrls.length;
-  const href = language && language !== 'all' ? `/book/${work.id}?lang=${language}` : `/book/${work.id}`;
+  const href = detailHref(work.id, query, language);
 
   return (
     <Link href={href} className="group block">
@@ -39,7 +56,7 @@ export default function BookWorkCard({ work, language }: BookWorkCardProps) {
         <h3 className="font-semibold text-sm text-gray-900 line-clamp-2 group-hover:text-amber-600 transition-colors">
           {work.title}
         </h3>
-        <p className="text-xs text-gray-600 line-clamp-1">{work.authors.join(', ')}</p>
+        <p className="text-xs text-gray-600 line-clamp-1">{displayAuthors(work.authors)}</p>
         {work.firstPublishYear && (
           <p className="text-xs text-gray-500">First published {work.firstPublishYear}</p>
         )}

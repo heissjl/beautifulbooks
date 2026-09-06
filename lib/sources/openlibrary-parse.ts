@@ -5,7 +5,7 @@
  */
 import type { Edition, SourceEdition, Work, WorkSummary } from '../model';
 import {
-  cleanAuthors, cleanIsbn, isbn10to13, looksLikeNonBook, parseYear, toIsoLanguage,
+  cleanAuthorEntries, cleanIsbn, isbn10to13, looksLikeNonBook, parseYear, toIsoLanguage,
 } from '../normalize';
 
 /** Subset of a `/search.json` doc as requested via `fields=` in the client. */
@@ -59,8 +59,10 @@ export function parseSearchDocs(docs: readonly OlSearchDoc[]): WorkSummary[] {
   for (const doc of docs) {
     if (!doc.key || !doc.title || !doc.cover_i || doc.cover_i <= 0) continue;
     if (looksLikeNonBook(doc.title)) continue;
-    const authors = cleanAuthors(doc.author_name);
-    if (authors.length === 0) continue;
+    const entries = cleanAuthorEntries(doc.author_name, doc.author_key);
+    if (entries.length === 0) continue;
+    const authors = entries.map(a => a.name);
+    const authorKeys = entries.every(a => a.key) ? entries.map(a => a.key!) : undefined;
 
     const languages = Array.from(
       new Set((doc.language ?? []).map(toIsoLanguage).filter((l): l is string => !!l)),
@@ -70,6 +72,7 @@ export function parseSearchDocs(docs: readonly OlSearchDoc[]): WorkSummary[] {
       id: olWorkId(doc.key),
       title: doc.title,
       authors,
+      authorKeys,
       firstPublishYear: doc.first_publish_year,
       editionCount: doc.edition_count,
       coverUrls: [olCoverUrl(doc.cover_i)],
@@ -118,6 +121,7 @@ export function parseEditions(entries: readonly OlEditionEntry[], work: Work): S
       isbn10,
       pageCount: e.number_of_pages,
       format: parseFormat(e.physical_format),
+      authorKeys: e.authors?.map(a => a.key.replace('/authors/', '')).filter(Boolean),
       covers: coverIds.map(id => ({ id: `ol:${id}`, url: olCoverUrl(id, 'L'), urlSmall: olCoverUrl(id, 'M') })),
     });
   }

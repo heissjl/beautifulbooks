@@ -34,7 +34,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
       groups: detail.groups,
     };
     return NextResponse.json(body, {
-      headers: { 'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800' },
     });
   } catch {
     return NextResponse.json({ error: 'Book data source unavailable, try again shortly' }, { status: 503 });

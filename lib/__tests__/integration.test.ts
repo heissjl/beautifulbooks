@@ -159,6 +159,12 @@ describe('search', () => {
 });
 
 describe('getWorkDetail', () => {
+  it('removes translators from the author line using edition data (Reed, not Pellisa Díaz)', async () => {
+    const d = await getWorkDetail('OL30751W');
+    expect(d!.work.authors).toEqual(['Ishmael Reed']);
+    expect(d!.editions.every(e => !('authorKeys' in e))).toBe(true);
+  });
+
   it('rejects malformed ids and returns null for unknown works', async () => {
     await expect(getWorkDetail('../etc/passwd')).resolves.toBeNull();
     await expect(getWorkDetail('OL999999999W')).resolves.toBeNull();

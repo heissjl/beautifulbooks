@@ -2,7 +2,7 @@
  * Work identity, edition dedupe, relevance ranking and language grouping.
  * Pure functions, no I/O (SPEC.md §2, §3 F1.2–F1.4, F2.3–F2.4, F4).
  */
-import type { Cover, Edition, LanguageGroup, SourceEdition, WorkSummary } from './model';
+import type { Cover, Edition, LanguageGroup, SourceEdition, Work, WorkSummary } from './model';
 import type { EditionCandidate } from './sources/googlebooks-parse';
 import { looksLikeSecondaryLiterature, normalizeTitle, titleAuthorKey } from './normalize';
 
@@ -119,6 +119,50 @@ function mergeEditionMeta(base: Edition, extra: Edition): Edition {
   };
 }
 
+/**
+ * SPEC §2.1: translators are not authors. Open Library lists them among a
+ * work's authors without a role, but they only appear on editions in a
+ * language other than the work's main language. An author (never the first)
+ * whose key occurs on no edition explicitly in the main language is dropped.
+ * Editions without language data give no evidence either way (the Spanish
+ * Mumbo Jumbo lacks a language field at Open Library). Requires author keys
+ * on the work and on the editions; otherwise the work is returned unchanged.
+ */
+export function withoutTranslators(work: Work, editions: readonly SourceEdition[]): Work {
+  if (!work.authorKeys || work.authorKeys.length !== work.authors.length || work.authors.length < 2) return work;
+  const withKeys = editions.filter(e => e.authorKeys && e.authorKeys.length > 0);
+  if (withKeys.length === 0) return work;
+
+  const langCounts = new Map<string, number>();
+  for (const e of withKeys) if (e.language) langCounts.set(e.language, (langCounts.get(e.language) ?? 0) + 1);
+  let mainLanguage: string | undefined;
+  let best = 0;
+  for (const [lang, n] of langCounts) if (n > best) { mainLanguage = lang; best = n; }
+  if (!mainLanguage) return work;
+
+  const onMainLanguage = new Set<string>();
+  const onAnyEdition = new Set<string>();
+  for (const e of withKeys) {
+    for (const k of e.authorKeys!) {
+      onAnyEdition.add(k);
+      if (e.language === mainLanguage) onMainLanguage.add(k);
+    }
+  }
+  const keep = work.authors.map((_, i) => {
+    if (i === 0) return true;
+    const key = work.authorKeys![i];
+    // Unknown to the editions: no evidence either way, keep.
+    if (!onAnyEdition.has(key)) return true;
+    return onMainLanguage.has(key);
+  });
+  if (keep.every(Boolean)) return work;
+  return {
+    ...work,
+    authors: work.authors.filter((_, i) => keep[i]),
+    authorKeys: work.authorKeys.filter((_, i) => keep[i]),
+  };
+}
+
 export interface EditionsAndCovers {
   editions: Edition[];
   covers: Cover[];
@@ -133,7 +177,8 @@ export function assembleEditions(sources: readonly SourceEdition[]): EditionsAnd
   const editionsByKey = new Map<string, Edition>();
   const coversById = new Map<string, Cover>();
   for (const src of sources) {
-    const { covers, ...edition } = src;
+    const { covers, authorKeys, ...edition } = src;
+    void authorKeys;
     const key = editionKey(edition);
     const existing = editionsByKey.get(key);
     const survivor = existing ? mergeEditionMeta(existing, edition) : edition;

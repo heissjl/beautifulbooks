@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
   try {
     const result = await search(query, { language: params.get('lang') ?? undefined });
     return NextResponse.json(result, {
-      headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400' },
     });
   } catch {
     return NextResponse.json({ error: 'Search failed' }, { status: 500 });

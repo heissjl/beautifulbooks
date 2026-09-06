@@ -13,6 +13,8 @@ export interface Work {
   title: string;
   /** At least one entry. First entry is the primary author. */
   authors: string[];
+  /** Open Library author keys aligned with `authors`, when known. */
+  authorKeys?: string[];
   firstPublishYear?: number;
   /** Total edition count reported by the source, not just what was loaded. */
   editionCount?: number;
@@ -55,6 +57,8 @@ export interface Cover {
 /** An edition as parsed from a source, before covers are split out. */
 export interface SourceEdition extends Edition {
   covers: Array<Pick<Cover, 'id' | 'url' | 'urlSmall'>>;
+  /** Open Library author keys on this edition (translators appear here). */
+  authorKeys?: string[];
 }
 
 /** A work as it appears in search results: enough to render a card. */

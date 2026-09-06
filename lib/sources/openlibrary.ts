@@ -6,7 +6,7 @@
  * page can tell "not found" from "temporarily unavailable".
  */
 import type { SourceEdition, Work, WorkSummary } from '../model';
-import { cleanAuthors } from '../normalize';
+import { cleanAuthorEntries, cleanAuthors } from '../normalize';
 import { debug } from '../debug';
 import { HttpError, fetchJson } from './http';
 import {
@@ -100,12 +100,13 @@ async function getWorkViaSearch(workId: string): Promise<Work | null> {
     });
     const doc = data.docs?.[0];
     if (!doc || olWorkId(doc.key) !== workId || !doc.title) return null;
-    const authors = cleanAuthors(doc.author_name);
-    if (authors.length === 0) return null;
+    const entries = cleanAuthorEntries(doc.author_name, doc.author_key);
+    if (entries.length === 0) return null;
     return {
       id: workId,
       title: doc.title,
-      authors,
+      authors: entries.map(a => a.name),
+      authorKeys: entries.every(a => a.key) ? entries.map(a => a.key!) : undefined,
       firstPublishYear: doc.first_publish_year,
       editionCount: doc.edition_count,
     };

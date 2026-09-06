@@ -64,24 +64,35 @@ export function titleAuthorKey(title: string, primaryAuthor: string | undefined)
   return `t:${normalizeTitle(title)}::a:${primaryAuthor ? authorMatchKey(primaryAuthor) : 'unknown'}`;
 }
 
+export interface AuthorEntry {
+  name: string;
+  /** Open Library author key (`OL27626A`) when the source provides one. */
+  key?: string;
+}
+
 /**
- * Dedupes author names and drops entries that look like translators or
- * editors when they are not the first entry.
+ * Dedupes author names (keeping source keys aligned) and drops entries whose
+ * name itself says translator, editor or illustrator.
  */
-export function cleanAuthors(names: readonly string[] | undefined): string[] {
+export function cleanAuthorEntries(names: readonly string[] | undefined, keys?: readonly string[]): AuthorEntry[] {
   if (!names) return [];
   const seen = new Set<string>();
-  const out: string[] = [];
-  for (const raw of names) {
+  const out: AuthorEntry[] = [];
+  names.forEach((raw, i) => {
     const name = raw.trim();
-    if (!name) continue;
-    if (/\b(translat|übersetz|trad\.|editor|hrsg|illustrat)/i.test(name)) continue;
-    const key = authorMatchKey(name);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    out.push(name);
-  }
+    if (!name) return;
+    if (/\b(translat|übersetz|trad\.|editor|hrsg|illustrat)/i.test(name)) return;
+    const matchKey = authorMatchKey(name);
+    if (seen.has(matchKey)) return;
+    seen.add(matchKey);
+    const key = keys?.[i]?.replace('/authors/', '');
+    out.push(key ? { name, key } : { name });
+  });
   return out;
+}
+
+export function cleanAuthors(names: readonly string[] | undefined): string[] {
+  return cleanAuthorEntries(names).map(a => a.name);
 }
 
 /** Removes hyphens/spaces, uppercases the check digit. Returns undefined if not 10 or 13 chars. */

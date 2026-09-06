@@ -11,6 +11,7 @@ import { lookupByIsbns, searchEditionCandidates } from './sources/googlebooks';
 import { getEditions, getWork } from './sources/openlibrary';
 import {
   assembleEditions, candidatesToSourceEditions, groupCoversByLanguage, isbnCandidatesToSourceEditions,
+  withoutTranslators,
 } from './works';
 
 export interface WorkDetail {
@@ -46,6 +47,7 @@ export async function getWorkDetail(workId: string, options: WorkDetailOptions =
     getEditions(work, { minWithCovers: options.minWithCovers }),
     searchEditionCandidates(work.title, work.authors[0]),
   ]);
+  const cleanWork = withoutTranslators(work, olEditions);
 
   // Current Google cover for the newest ISBNs (reveals reprints under an old ISBN).
   const newestIsbns = olEditions
@@ -60,5 +62,5 @@ export async function getWorkDetail(workId: string, options: WorkDetailOptions =
     ...isbnCandidatesToSourceEditions(work.id, isbnCandidates),
   ]);
   const groups = groupCoversByLanguage(covers, editions, options.preferredLanguage);
-  return { work, editions, covers, groups };
+  return { work: cleanWork, editions, covers, groups };
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-  authorMatchKey, cleanAuthors, cleanIsbn, isbn10to13, languageName, looksLikeNonBook,
+  authorMatchKey, cleanAuthorEntries, cleanAuthors, cleanIsbn, isbn10to13, languageName, looksLikeNonBook,
   looksLikeSecondaryLiterature, normalizeAuthor, normalizeTitle, parseYear, stripHtml,
   titleAuthorKey, toIsoLanguage,
 } from '../normalize';
@@ -41,6 +41,11 @@ describe('cleanAuthors', () => {
     expect(cleanAuthors(['Ishmael Reed', 'Ishmael Reed', 'Inga Pellisa Díaz (translator)'])).toEqual(['Ishmael Reed']);
     expect(cleanAuthors(undefined)).toEqual([]);
     expect(cleanAuthors(['', '  '])).toEqual([]);
+  });
+  it('keeps Open Library keys aligned through dedupe', () => {
+    expect(cleanAuthorEntries(['Ishmael Reed', 'Ishmael Reed', 'Inga Pellisa Díaz'], ['/authors/OL27626A', '/authors/OL27626A', '/authors/OL6284880A']))
+      .toEqual([{ name: 'Ishmael Reed', key: 'OL27626A' }, { name: 'Inga Pellisa Díaz', key: 'OL6284880A' }]);
+    expect(cleanAuthorEntries(['A'])).toEqual([{ name: 'A' }]);
   });
 });
 

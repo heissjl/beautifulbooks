@@ -3,7 +3,7 @@ import type { SourceEdition, WorkSummary } from '../model';
 import type { EditionCandidate } from '../sources/googlebooks-parse';
 import {
   assembleEditions, attachCandidates, candidatesToSourceEditions, editionKey, filterWorksByLanguage,
-  groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks, relevance,
+  groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks, relevance, withoutTranslators,
 } from '../works';
 
 const work = (over: Partial<WorkSummary> & { id: string }): WorkSummary => ({
@@ -181,5 +181,33 @@ describe('groupCoversByLanguage', () => {
       edition({ id: 'c', language: 'en' }, ['s']),
     ]);
     expect(groupCoversByLanguage(shared.covers, shared.editions)[0].language).toBe('en');
+  });
+});
+
+describe('withoutTranslators', () => {
+  const work = { id: 'W', title: 'Mumbo Jumbo', authors: ['Ishmael Reed', 'Inga Pellisa Díaz', 'Co Author'], authorKeys: ['A', 'T', 'C'] };
+  it('drops authors that only occur on editions in another language', () => {
+    const eds = [
+      edition({ id: '1', language: 'en', authorKeys: ['A'] }),
+      edition({ id: '2', language: 'en', authorKeys: ['A', 'C'] }),
+      edition({ id: '3', language: 'es', authorKeys: ['A', 'T'] }),
+    ];
+    expect(withoutTranslators(work, eds).authors).toEqual(['Ishmael Reed', 'Co Author']);
+  });
+  it('treats editions without language data as no evidence (La Fuga case)', () => {
+    const eds = [
+      edition({ id: '1', language: 'en', authorKeys: ['A'] }),
+      edition({ id: '2', authorKeys: ['A2', 'T', 'C'] }),
+    ];
+    expect(withoutTranslators(work, eds).authors).toEqual(['Ishmael Reed']);
+  });
+  it('never drops the first author and keeps authors with no edition evidence', () => {
+    const eds = [edition({ id: '1', language: 'en', authorKeys: ['X'] })];
+    expect(withoutTranslators({ ...work, authors: ['Only One'], authorKeys: ['A'] }, eds).authors).toEqual(['Only One']);
+    expect(withoutTranslators(work, eds).authors).toEqual(work.authors);
+  });
+  it('returns the work unchanged without keys or without language data', () => {
+    expect(withoutTranslators({ ...work, authorKeys: undefined }, [edition({ id: '1', authorKeys: ['A'] })]).authors).toEqual(work.authors);
+    expect(withoutTranslators(work, [edition({ id: '1', authorKeys: ['A'] })]).authors).toEqual(work.authors);
   });
 });

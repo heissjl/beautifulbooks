@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useParams, useSearchParams } from 'next/navigation';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
 import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
@@ -56,15 +56,35 @@ function captionFor(cover: Cover, editionsById: ReadonlyMap<string, EditionView>
   return parts.join(' ') + more;
 }
 
+/** Back to the search the user came from (SPEC F2.7). */
+function backHrefFrom(searchParams: URLSearchParams): string {
+  const params = new URLSearchParams();
+  const q = searchParams.get('q');
+  const lang = searchParams.get('lang');
+  if (q) params.set('q', q);
+  if (lang) params.set('lang', lang);
+  const qs = params.toString();
+  return qs ? `/?${qs}` : '/';
+}
+
 function BookDetail() {
   const params = useParams<{ id: string }>();
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const lang = searchParams.get('lang') ?? '';
-  const backHref = lang ? `/?lang=${lang}` : '/';
+  const backHref = backHrefFrom(searchParams);
 
   const requestKey = `${params.id} ${lang}`;
   const [loaded, setLoaded] = useState<{ key: string; state: State } | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  // The selected cover lives in the URL (?cover=) so it can be shared (SPEC F2.6).
+  const selectedId = searchParams.get('cover');
+  const selectCover = (coverId: string) => {
+    const next = new URLSearchParams(searchParams.toString());
+    next.set('cover', coverId);
+    router.replace(`${pathname}?${next.toString()}`, { scroll: false });
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -142,7 +162,7 @@ function BookDetail() {
           <CoverGallery
             groups={view.groups}
             selectedCover={selected}
-            onSelectCover={c => setSelectedId(c.id)}
+            onSelectCover={c => selectCover(c.id)}
             captions={view.captions}
           />
         </div>
