@@ -25,7 +25,9 @@ export function marketFromRequest(request: NextRequest): Market {
 }
 
 /**
- * GET /api/works/<OL work id>?lang=<iso|all>&market=<us|uk|de>
+ * GET /api/works/<OL work id>?lang=<iso|all>&market=<us|uk|de>&stage=<fast|full>
+ * `stage=fast` skips cover hashing so the page can start its loading scene
+ * early; the client then requests the full, folded response (SPEC 8.1).
  * 400 malformed id, 404 unknown work, 503 Open Library unreachable.
  */
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
@@ -35,8 +37,9 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
   }
   const lang = normalizeLanguageOption(request.nextUrl.searchParams.get('lang'));
   const market = marketFromRequest(request);
+  const fast = request.nextUrl.searchParams.get('stage') === 'fast';
   try {
-    const detail = await getWorkDetail(id, { preferredLanguage: lang === 'all' ? undefined : lang });
+    const detail = await getWorkDetail(id, { preferredLanguage: lang === 'all' ? undefined : lang, dedupeCovers: !fast });
     if (!detail) {
       return NextResponse.json({ error: 'Work not found' }, { status: 404 });
     }

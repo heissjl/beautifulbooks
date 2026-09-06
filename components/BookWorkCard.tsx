@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import CoverMosaic from './CoverMosaic';
+import { storeWorkPreview } from './useWorkPreview';
 import type { WorkSummary } from '@/lib/model';
 
 interface BookWorkCardProps {
@@ -37,7 +38,11 @@ export default function BookWorkCard({ work, query, language }: BookWorkCardProp
   ].filter(Boolean).join(' · ');
 
   return (
-    <Link href={href} className="group block focus-visible:outline-none">
+    <Link
+      href={href}
+      className="group block focus-visible:outline-none"
+      onClick={() => storeWorkPreview(work.id, { title: work.title, authors: [displayAuthors(work.authors)], coverUrls: work.coverUrls })}
+    >
       <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
         <CoverMosaic coverUrls={work.coverUrls} title={work.title} />
         {facts && (

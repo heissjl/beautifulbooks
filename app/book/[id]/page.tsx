@@ -1,24 +1,32 @@
 'use client';
 
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
 import CoverImage from '@/components/CoverImage';
+import LoadingStage, { type StageCover } from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
 import SiteHeader from '@/components/SiteHeader';
+import { flyCovers, measureStage, type StagedRect } from '@/components/flyCovers';
 import { useMarket } from '@/components/useMarket';
+import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor } from '@/lib/buylinks';
 import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 import type { WorkDetailResponse } from '@/app/api/works/[id]/route';
 
-type State =
-  | { status: 'loading' }
+/** Loading scene: switch to the gallery after this many covers arrived, or after the grace period. */
+const STAGE_TARGET = 4;
+const STAGE_GRACE_MS = 2500;
+const STAGE_PRELOAD = 8;
+
+type Loaded =
   | { status: 'notfound' }
   | { status: 'error'; message: string }
-  | { status: 'done'; data: WorkDetailResponse };
+  | { status: 'fast'; data: WorkDetailResponse }
+  | { status: 'full'; data: WorkDetailResponse };
 
 function BackLink({ href }: { href: string }) {
   return (
@@ -61,17 +69,20 @@ function Shell({ children, backHref, right }: { children: React.ReactNode; backH
   );
 }
 
-function Skeleton() {
-  return (
-    <div className="animate-pulse" aria-busy="true" aria-label="Loading book">
-      <div className="h-10 w-1/2 rounded bg-surface-2"></div>
-      <div className="mt-3 h-5 w-1/4 rounded bg-surface-2"></div>
-      <div className="mt-10 grid gap-8 lg:grid-cols-3">
-        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:col-span-2">
-          {[...Array(8)].map((_, i) => <div key={i} className="aspect-[2/3] rounded-card bg-surface-2"></div>)}
-        </div>
-        <div className="aspect-[2/3] rounded-card bg-surface-2"></div>
+function TitleBlock({ title, authors, meta }: { title?: string; authors?: string[]; meta?: string }) {
+  if (!title) {
+    return (
+      <div className="mb-8 max-w-3xl animate-pulse" aria-hidden="true">
+        <div className="h-10 w-1/2 rounded bg-surface-2"></div>
+        <div className="mt-3 h-5 w-1/4 rounded bg-surface-2"></div>
       </div>
+    );
+  }
+  return (
+    <div className="mb-8 max-w-3xl">
+      <h1 className="text-4xl leading-[1.05] text-ink sm:text-5xl">{title}</h1>
+      {authors && authors.length > 0 && <p className="mt-3 text-lg text-ink-2">{authors.join(', ')}</p>}
+      <p className="mt-1 min-h-5 text-sm text-ink-3">{meta ?? ''}</p>
     </div>
   );
 }
@@ -97,6 +108,16 @@ function backHrefFrom(searchParams: URLSearchParams): string {
   return qs ? `/?${qs}` : '/';
 }
 
+/** Preloads cover images and reports each one as it arrives, in arrival order. */
+function preloadCovers(covers: readonly Cover[], onArrive: (c: StageCover) => void, signal: AbortSignal): void {
+  for (const c of covers.slice(0, STAGE_PRELOAD)) {
+    const url = c.urlSmall ?? c.url;
+    const img = new window.Image();
+    img.onload = () => { if (!signal.aborted) onArrive({ id: c.id, url }); };
+    img.src = url;
+  }
+}
+
 function BookDetail() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
@@ -104,11 +125,17 @@ function BookDetail() {
   const searchParams = useSearchParams();
   const lang = searchParams.get('lang') ?? '';
   const backHref = backHrefFrom(searchParams);
+  const preview = useWorkPreview(params.id);
 
   // Market for buy links (E9): the user's choice, else detected by the server.
   const [chosenMarket, setMarket] = useMarket();
   const requestKey = `${params.id} ${lang} ${chosenMarket ?? ''}`;
-  const [loaded, setLoaded] = useState<{ key: string; state: State } | null>(null);
+  const [loaded, setLoaded] = useState<{ key: string; state: Loaded } | null>(null);
+
+  // Loading scene state (SPEC 8.1): covers that arrived, and whether the scene ended.
+  const [arrived, setArrived] = useState<{ key: string; covers: StageCover[] }>({ key: '', covers: [] });
+  const [sceneDone, setSceneDone] = useState<string>('');
+  const stagedRef = useRef<StagedRect[]>([]);
 
   // The selected cover lives in the URL (?cover=) so it can be shared (SPEC F2.6).
   const selectedId = searchParams.get('cover');
@@ -120,30 +147,70 @@ function BookDetail() {
 
   useEffect(() => {
     const controller = new AbortController();
+    const key = requestKey;
     const query = new URLSearchParams();
     if (lang) query.set('lang', lang);
     if (chosenMarket) query.set('market', chosenMarket);
-    const qs = query.toString();
-    fetch(`/api/works/${encodeURIComponent(params.id)}${qs ? `?${qs}` : ''}`, { signal: controller.signal })
-      .then(async res => {
-        if (res.status === 404 || res.status === 400) return setLoaded({ key: requestKey, state: { status: 'notfound' } });
-        if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `Request failed (${res.status})`);
-        setLoaded({ key: requestKey, state: { status: 'done', data: (await res.json()) as WorkDetailResponse } });
-      })
-      .catch(err => {
+    const base = `/api/works/${encodeURIComponent(params.id)}`;
+    const url = (stage: 'fast' | 'full') => `${base}?${new URLSearchParams({ ...Object.fromEntries(query), stage })}`;
+
+    const load = async (stage: 'fast' | 'full'): Promise<WorkDetailResponse | null> => {
+      const res = await fetch(url(stage), { signal: controller.signal });
+      if (res.status === 404 || res.status === 400) { setLoaded({ key, state: { status: 'notfound' } }); return null; }
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `Request failed (${res.status})`);
+      return (await res.json()) as WorkDetailResponse;
+    };
+
+    const endScene = () => {
+      stagedRef.current = measureStage();
+      setSceneDone(key);
+    };
+
+    let graceTimer: ReturnType<typeof setTimeout> | undefined;
+    (async () => {
+      try {
+        const fast = await load('fast');
+        if (!fast || controller.signal.aborted) return;
+        setLoaded({ key, state: { status: 'fast', data: fast } });
+        // Scene: preload the first covers; end after enough arrived or after the grace period.
+        preloadCovers(
+          fast.covers,
+          c => setArrived(a => (a.key === key ? { key, covers: a.covers.some(x => x.id === c.id) ? a.covers : [...a.covers, c] } : { key, covers: [c] })),
+          controller.signal,
+        );
+        graceTimer = setTimeout(() => { if (!controller.signal.aborted) endScene(); }, STAGE_GRACE_MS);
+        const full = await load('full');
+        if (!full || controller.signal.aborted) return;
+        setLoaded({ key, state: { status: 'full', data: full } });
+      } catch (err) {
         if (controller.signal.aborted) return;
-        setLoaded({ key: requestKey, state: { status: 'error', message: err instanceof Error ? err.message : 'Request failed' } });
-      });
-    return () => controller.abort();
+        setLoaded({ key, state: { status: 'error', message: err instanceof Error ? err.message : 'Request failed' } });
+      }
+    })();
+
+    return () => { controller.abort(); if (graceTimer) clearTimeout(graceTimer); };
   }, [params.id, lang, chosenMarket, requestKey]);
 
-  const state = useMemo<State>(
+  // End the scene early once enough covers are on stage: measure after the
+  // fourth cover has painted, then switch.
+  const enoughArrived = arrived.key === requestKey && arrived.covers.length >= STAGE_TARGET;
+  useEffect(() => {
+    if (!enoughArrived || sceneDone === requestKey) return;
+    const raf = requestAnimationFrame(() => {
+      stagedRef.current = measureStage();
+      setSceneDone(requestKey);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [enoughArrived, sceneDone, requestKey]);
+
+  const state = useMemo<Loaded | { status: 'loading' }>(
     () => (loaded?.key === requestKey ? loaded.state : { status: 'loading' }),
     [loaded, requestKey],
   );
+  const inScene = state.status === 'loading' || (state.status === 'fast' && sceneDone !== requestKey);
 
   const view = useMemo(() => {
-    if (state.status !== 'done') return null;
+    if (state.status !== 'fast' && state.status !== 'full') return null;
     const { data } = state;
     const editionsById = new Map(data.editions.map(e => [e.id, e]));
     const coversById = new Map(data.covers.map(c => [c.id, c]));
@@ -158,22 +225,51 @@ function BookDetail() {
     return { data, editionsById, coversById, groups, captions, coversPerEdition };
   }, [state]);
 
+  // When the scene ends, fly the staged covers to their gallery tiles.
+  useEffect(() => {
+    if (inScene || !view || stagedRef.current.length === 0) return;
+    const staged = stagedRef.current;
+    stagedRef.current = [];
+    const raf = requestAnimationFrame(() => flyCovers(staged));
+    return () => cancelAnimationFrame(raf);
+  }, [inScene, view]);
+
   const selected = useMemo<Cover | null>(() => {
     if (!view) return null;
-    return view.coversById.get(selectedId ?? '') ?? view.groups[0]?.covers[0] ?? null;
+    const byId = view.coversById.get(selectedId ?? '');
+    if (byId) return byId;
+    // A folded duplicate may be in the URL: resolve to its representative.
+    const folded = view.data.covers.find(c => c.similarIds?.includes(selectedId ?? ''));
+    return folded ?? view.groups[0]?.covers[0] ?? null;
   }, [view, selectedId]);
 
-  if (state.status === 'loading') return <Shell backHref={backHref}><Skeleton /></Shell>;
-
-  if (state.status === 'notfound' || state.status === 'error' || !view) {
+  if (state.status === 'notfound' || state.status === 'error') {
     return (
       <Shell backHref={backHref}>
         <div className="py-24 text-center">
           <p className="font-display text-2xl text-ink">
-            {state.status === 'notfound' ? 'Book not found' : state.status === 'error' ? state.message : 'Nothing to show'}
+            {state.status === 'notfound' ? 'Book not found' : state.message}
           </p>
           <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">Back to search</Link>
         </div>
+      </Shell>
+    );
+  }
+
+  if (inScene || !view) {
+    const work = view?.data.work;
+    return (
+      <Shell backHref={backHref}>
+        <TitleBlock
+          title={work?.title ?? preview?.title}
+          authors={work?.authors ?? preview?.authors}
+          meta={work?.editionCount ? `${work.editionCount.toLocaleString('en')} editions` : undefined}
+        />
+        <LoadingStage
+          covers={arrived.key === requestKey ? arrived.covers : []}
+          hero={preview?.coverUrls[0]}
+          expected={view?.data.covers.length}
+        />
       </Shell>
     );
   }
@@ -182,16 +278,12 @@ function BookDetail() {
   const meta = [
     work.editionCount ? `${work.editionCount.toLocaleString('en')} editions` : undefined,
     work.firstPublishYear ? `first published ${work.firstPublishYear}` : undefined,
-    `${view.data.covers.length} covers`,
+    `${view.data.covers.length} covers${state.status === 'fast' ? ', tidying duplicates' : ''}`,
   ].filter(Boolean).join(' · ');
 
   return (
     <Shell backHref={backHref} right={<ShareButton />}>
-      <div className="mb-8 max-w-3xl">
-        <h1 className="text-4xl leading-[1.05] text-ink sm:text-5xl">{work.title}</h1>
-        <p className="mt-3 text-lg text-ink-2">{work.authors.join(', ')}</p>
-        <p className="mt-1 text-sm text-ink-3">{meta}</p>
-      </div>
+      <TitleBlock title={work.title} authors={work.authors} meta={meta} />
 
       {view.groups.length === 0 ? (
         <p className="text-ink-2">No cover images were found for this book.</p>

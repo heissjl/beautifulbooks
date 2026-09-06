@@ -54,16 +54,18 @@ export default function CoverGallery({ groups, selectedCover, onSelectCover, cap
       </div>
 
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5" role="tabpanel">
-        {active?.covers.map(cover => {
+        {active?.covers.map((cover, index) => {
           const selected = selectedCover?.id === cover.id;
           const caption = captions.get(cover.id) ?? '';
           return (
             <button
               key={cover.id}
+              data-cover-id={cover.id}
+              style={{ animationDelay: `${Math.min(index, 24) * 35}ms` }}
               onClick={() => onSelectCover(cover)}
               aria-pressed={selected}
               aria-label={caption ? `Cover, ${caption}` : 'Cover'}
-              className={`group relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 text-left transition-transform duration-300 ease-out focus-visible:outline-none ${
+              className={`tile-in group relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 text-left transition-transform duration-300 ease-out focus-visible:outline-none ${
                 selected
                   ? 'cover-shadow ring-2 ring-accent ring-offset-2 ring-offset-bg'
                   : 'cover-shadow hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'

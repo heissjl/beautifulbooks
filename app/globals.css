@@ -113,7 +113,34 @@
   }
 }
 
+@layer components {
+  /* Gallery tiles settle in with a short stagger (SPEC 8.1 loading scene). */
+  .tile-in {
+    animation: tile-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes tile-in {
+    from { opacity: 0; transform: translateY(6px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+  /* A cover arriving on the loading stage. */
+  .stage-in {
+    animation: stage-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes stage-in {
+    from { opacity: 0; transform: translateY(24px) scale(0.92) rotate(var(--tilt, 0deg)); }
+    to { opacity: 1; transform: translateY(0) scale(1) rotate(var(--tilt, 0deg)); }
+  }
+  .stage-pulse {
+    animation: stage-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes stage-pulse {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.8; }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .tile-in, .stage-in, .stage-pulse { animation: none !important; }
   .cover-img, .transition-all, .transition-transform, .transition-colors, .transition-opacity {
     transition: none !important;
   }

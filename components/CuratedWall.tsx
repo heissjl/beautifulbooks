@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import CoverImage from './CoverImage';
+import { storeWorkPreview } from './useWorkPreview';
 import { CURATED_WORKS, olCover } from '@/lib/curated';
 
 /** Empty-state cover wall on the home page (SPEC §8.1). */
@@ -15,7 +16,11 @@ export default function CuratedWall() {
       <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6">
         {CURATED_WORKS.map(w => (
           <li key={w.id}>
-            <Link href={`/book/${w.id}`} className="group block focus-visible:outline-none">
+            <Link
+              href={`/book/${w.id}`}
+              className="group block focus-visible:outline-none"
+              onClick={() => storeWorkPreview(w.id, { title: w.title, authors: [w.author], coverUrls: [olCover(w.coverId, 'L')] })}
+            >
               <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
                 <CoverImage src={olCover(w.coverId, 'M')} alt={`${w.title} by ${w.author}`} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
               </div>
