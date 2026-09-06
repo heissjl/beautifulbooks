@@ -13,7 +13,7 @@ The spec is written in German; code, comments, commit messages and this file are
 The UI layer (`app/`, `components/`) is kept. The data layer (`lib/`) is being rewritten according to SPEC.md §7. Until that rewrite lands:
 
 - `lib/aggregator.ts` and `lib/sources/legacy-*.ts` are the **old** implementation. They fetch external APIs from the browser and fan out one editions request per search result. Do not extend them; replace them per the spec.
-- New, spec-conformant modules (steps 2–3, done): `lib/model.ts`, `lib/normalize.ts`, `lib/works.ts`, `lib/debug.ts`, `lib/sources/http.ts`, `lib/sources/openlibrary.ts` (+ `-parse.ts`), `lib/sources/googlebooks.ts` (+ `-parse.ts`). The `legacy-*.ts` clients exist only for the old aggregator and go away in step 5. Tests in `lib/__tests__/` run against fixtures in `lib/__fixtures__/`, recorded with `npx tsx scripts/record-fixtures.ts`.
+- New, spec-conformant modules (steps 2–4, done): `lib/model.ts`, `lib/normalize.ts`, `lib/works.ts`, `lib/debug.ts`, `lib/sources/http.ts`, `lib/sources/openlibrary.ts` (+ `-parse.ts`), `lib/sources/googlebooks.ts` (+ `-parse.ts`), `lib/search.ts` (search orchestration, two external calls), `lib/work.ts` (detail page orchestration). The `legacy-*.ts` clients exist only for the old aggregator and go away in step 5. Tests in `lib/__tests__/` run against fixtures in `lib/__fixtures__/`, recorded with `npx tsx scripts/record-fixtures.ts`.
 - Google Books fixtures are missing: the unauthenticated API answered HTTP 429 (daily quota) at recording time. Set `GOOGLE_BOOKS_API_KEY` and re-run the recorder to add them.
 - `scripts/debug-mumbo.ts` is a throwaway probe of the old aggregator.
 
