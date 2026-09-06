@@ -4,7 +4,7 @@
  * Google Books has no work concept, so this yields edition candidates that
  * still need to be attached to a work by title + author (SPEC §3 F3.2).
  */
-import type { Edition } from '../model';
+import type { SourceEdition } from '../model';
 import {
   cleanAuthors, cleanIsbn, isbn10to13, looksLikeNonBook, parseYear, stripHtml, toIsoLanguage,
 } from '../normalize';
@@ -28,9 +28,11 @@ export interface GbVolume {
   saleInfo?: { buyLink?: string };
 }
 
-/** An edition that is not yet assigned to a work. */
-export interface EditionCandidate extends Omit<Edition, 'workId'> {
+/** A source edition that is not yet assigned to a work. */
+export interface EditionCandidate extends Omit<SourceEdition, 'workId'> {
   authors: string[];
+  /** Convenience: the single Google cover, also present in `covers[0]`. */
+  coverUrl: string;
 }
 
 /** Larger, curl-free cover from the thumbnail URL Google returns. */
@@ -62,7 +64,7 @@ export function parseVolumes(items: readonly GbVolume[] | undefined): EditionCan
       title: info.title,
       authors,
       coverUrl: gbCoverUrl(thumb, 2),
-      coverUrlSmall: gbCoverUrl(thumb, 1),
+      covers: [{ id: `gb:${v.id}`, url: gbCoverUrl(thumb, 2), urlSmall: gbCoverUrl(thumb, 1) }],
       language: toIsoLanguage(info.language),
       publisher: info.publisher,
       publishedDate: info.publishedDate,

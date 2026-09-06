@@ -154,12 +154,15 @@ describe('getWorkDetail', () => {
     expect(d!.work.authors[0]).toBe('George Orwell');
     expect(d!.work.editionCount).toBe(537);
     expect(d!.editions.length).toBeGreaterThan(20);
-    expect(d!.editions.every(e => e.workId === 'OL1168083W' && e.coverUrl)).toBe(true);
+    expect(d!.editions.every(e => e.workId === 'OL1168083W')).toBe(true);
+    expect(d!.covers.length).toBeGreaterThanOrEqual(d!.editions.length);
+    expect(d!.covers.every(c => c.editionIds.length >= 1)).toBe(true);
     expect(d!.groups.map(g => g.language)).toContain('es');
     expect(d!.groups.at(-1)!.language).toBeUndefined();
+    expect(d!.groups.flatMap(g => g.coverIds).sort()).toEqual(d!.covers.map(c => c.id).sort());
   });
 
-  it('puts the preferred language first and merges Google Books editions by ISBN', async () => {
+  it('puts the preferred language first, merges Google Books editions by ISBN and keeps both covers (E8)', async () => {
     const without = await getWorkDetail('OL1168083W');
     googleBooks = () => ({
       body: {
@@ -180,8 +183,11 @@ describe('getWorkDetail', () => {
     expect(d!.editions.some(e => e.id === 'gb:g-alt')).toBe(false);
     const dup = d!.editions.find(e => e.isbn13 === '9788804719137');
     expect(dup?.description).toBe('Big Brother');
-    // one new edition, one merged into an existing one
+    // one new edition, one merged into an existing one ...
     expect(d!.editions.length).toBe(without!.editions.length + 1);
+    // ... but both Google covers survive: the merged ISBN now carries two covers
+    expect(d!.covers.length).toBe(without!.covers.length + 2);
+    expect(d!.covers.filter(c => c.editionIds.includes(dup!.id)).map(c => c.source).sort()).toEqual(['googlebooks', 'openlibrary']);
     expect(decodeURIComponent(calls.find(u => u.includes('googleapis'))!)).toContain('inauthor:George Orwell');
   });
 });

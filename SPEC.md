@@ -61,18 +61,32 @@ Eine konkret veröffentlichte Ausgabe mit eigenem Cover.
 | `description` | string | nein | HTML entfernt |
 | `previewUrl` | string | nein | Google Books |
 
-**Dedupe-Regel für Editions** (in dieser Reihenfolge):
-1. gleiche ISBN-13 (ISBN-10 wird nach ISBN-13 konvertiert)
-2. gleiche Cover-ID (Open Library) bzw. gleiche Cover-URL
-3. gleicher normalisierter Titel + Verlag + Jahr
+**Dedupe-Regel für Editions:** gleiche ISBN-13 (ISBN-10 wird konvertiert) = dieselbe Ausgabe, quellenübergreifend. Ohne ISBN bleibt jede Quell-Ausgabe eigenständig. Bei Duplikaten werden die Metadaten zusammengeführt (Description > Seitenzahl > Verlag), **die Cover beider Quellen bleiben erhalten** (siehe 2.3).
 
-Bei Duplikaten gewinnt die vollständigere Ausgabe (Description > ISBN > Seitenzahl > Verlag).
+### 2.3 Cover (Entscheidung E8)
 
-### 2.3 Kauf-Links
+Ein Cover ist ein Bild, das eine oder mehrere Ausgaben tragen. Es ist die zentrale Entität des Produkts und **nicht** durch die ISBN bestimmt: Verlage drucken Backlist-Titel mit neuem Cover unter alter ISBN nach, und ein Cover-Design erscheint unter mehreren ISBNs (Hardcover, Paperback, Länderausgaben). Beispiel: ISBN 9780684824772 (Scribner 1996) trägt bei Open Library das gemalte Cover von 1996 und im Handel das rote 50th-Anniversary-Cover von 2022.
+
+| Feld | Typ | Bemerkung |
+|---|---|---|
+| `id` | string | `ol:<cover_i>` oder `gb:<volumeId>` |
+| `url`, `urlSmall` | string | Bild in groß und klein |
+| `source` | Source | |
+| `editionIds` | string[] | Ausgaben, die dieses Cover tragen, ≥1 |
+
+Regeln:
+- **Dedupe nach Bild, nicht nach ISBN.** Zwei Cover-IDs sind zwei Cover, auch bei gleicher ISBN. Zwei Ausgaben mit gleicher ISBN werden zu einer Ausgabe, behalten aber alle ihre Cover.
+- Open Library liefert pro Ausgabe ein `covers`-Array; **alle** gültigen IDs werden übernommen (Gatsby und Austen haben Ausgaben mit mehreren).
+- Cover derselben Ausgabe aus zwei Quellen können dasselbe Bild sein oder nicht. Phase 1: beide zeigen, unter der ISBN gruppiert. Phase 2 (8.5): perzeptueller Hash serverseitig, gecacht pro Cover, um echte Duplikate zu falten.
+- Detailseite zeigt Cover (F2); die Ausgaben mit Kauf-Links hängen am Cover. Mosaik (F4) nimmt Cover.
+
+### 2.4 Kauf-Links
 
 Werden **nicht gespeichert**, sondern zur Anzeige aus der ISBN generiert. Anbieter-Liste ist eine Konfiguration (Name, URL-Template, optional Affiliate-Parameter).
 
-Startliste: Amazon, AbeBooks, Bookshop.org, Google Books (nur wenn `buyLink` vorhanden). **Book Depository entfällt** (seit 2023 geschlossen, aktuell noch im Code).
+Startliste: Bookshop.org, Amazon, AbeBooks. **Book Depository entfällt** (seit 2023 geschlossen).
+
+Ein Kauf-Link führt zur **ISBN**, nicht zum Cover (2.3). Der Link-Text sagt das: „Copies of ISBN … (cover may differ)“, mit Verlag und Jahr der gezeigten Ausgabe als Orientierung. Bei AbeBooks und eBay gehen Jahr und Verlag zusätzlich als Suchparameter mit, damit Sammler den richtigen Druck finden.
 
 ---
 
@@ -101,11 +115,11 @@ Startliste: Amazon, AbeBooks, Bookshop.org, Google Books (nur wenn `buyLink` vor
 ### F2 – Detailseite `/book/[workId]`
 
 - **F2.1** Route nimmt eine **Work-ID**, nicht eine Editions-ID (heute: Editions-ID, siehe 5.3).
-- **F2.2** Lädt alle Ausgaben des Works aus beiden Quellen, dedupliziert.
-- **F2.3** Ausgaben gruppiert nach Sprache als Tabs. Reihenfolge: Sprache des Suchfilters (falls gesetzt) zuerst, dann nach Anzahl absteigend. Ausgaben ohne Sprache in Tab „Unbekannt" am Ende.
+- **F2.2** Lädt alle Ausgaben des Works aus beiden Quellen, führt gleiche ISBNs zusammen und behält alle Cover (2.3). Zusätzlich pro bekannter ISBN das aktuelle Cover bei Google Books nachschlagen (`isbn:`-Suche), damit Neudrucke mit neuem Cover unter alter ISBN sichtbar werden.
+- **F2.3** **Cover** gruppiert nach Sprache als Tabs (Sprache = Sprache der Ausgaben, die das Cover tragen). Reihenfolge: Sprache des Suchfilters (falls gesetzt) zuerst, dann nach Anzahl absteigend. Ausgaben ohne Sprache in Tab „Unbekannt" am Ende.
 - **F2.4** Innerhalb eines Tabs sortiert nach Jahr absteigend.
-- **F2.5** Klick auf eine Ausgabe zeigt deren Details: großes Cover, Verlag, Jahr, Seiten, ISBN, Beschreibung, Kauf-Links, Vorschau-Link.
-- **F2.6** Ausgewählte Ausgabe in der URL (`?edition=…`), damit verlinkbar.
+- **F2.5** Klick auf ein Cover zeigt es groß und darunter die Ausgabe(n), die es tragen: Verlag, Jahr, Seiten, ISBN, Beschreibung, Kauf-Links, Vorschau-Link. Trägt eine ISBN mehrere Cover, wird das an der Ausgabe gezeigt („also printed with 1 other cover“).
+- **F2.6** Ausgewähltes Cover in der URL (`?cover=…`), damit verlinkbar.
 - **F2.7** Zurück-Link führt zur Suche mit erhaltenem Query.
 
 ### F3 – Datenquellen
@@ -186,6 +200,7 @@ Getroffen am 2026-09-06.
 | E5 | Google Books in der Suche | **Nur ergänzend**: liefert Cover für OL-Works, erzeugt keine eigenen Works. Volle Rolle nur auf der Detailseite | F3.2. Löst den scheinbaren Konflikt mit E4 |
 | E6 | Caching-Backend | Next-`fetch`-Cache, kein KV | N4 |
 | E7 | Sprache der Doku | Spec Deutsch, Code und Kommentare Englisch | |
+| E8 | Cover-Identität (2026-09-06) | **Cover ist eigene Entität, Dedupe nach Bild statt ISBN.** ISBN identifiziert ein Verlagsprodukt, nicht ein Cover; Neudrucke wechseln das Cover bei gleicher ISBN. | §2.3, F2, §7 Schritt 6, §8.3 Bild-Quellen |
 
 ---
 
@@ -219,11 +234,12 @@ Schritte, jeder einzeln commit-fähig:
 3. **Quellen-Clients** neu: Autoren-Bug (5.2) beheben, Timeouts (N3), Logging raus, Cover-URLs in S/M/L. *Erledigt 2026-09-06.* Editions-Paging (siehe Schritt 4) ist bereits im Client (`getEditions` mit `minWithCovers`/`maxEntries`).
 4. **`search.ts` + `work.ts`** mit Integrationstests gegen die Fixtures. Akzeptanzkriterien aus F1 müssen grün sein. *Erledigt 2026-09-06.* Beachten: der Editions-Endpoint liefert max. 100 Einträge pro Aufruf, nur ~25 % davon haben ein Cover; bei Works mit >100 Ausgaben (1984: 537, Gatsby: 1180, Austen: 4041) muss `work.ts` per `offset` nachladen, bis genug Cover da sind oder ein Limit (z. B. 500 Einträge) erreicht ist.
 5. **API-Routen** `app/api/search` (bestehend, umstellen) und neu `app/api/works/[id]`. Server-seitiges Fetching mit `revalidate`. Alle Seiten und `BookGrid` gehen ausschließlich über diese Routen. *Erledigt 2026-09-06.* Mit erledigt: Detailseite liest bereits `/api/works/[id]` (Work-ID statt Editions-ID, F2.1), Kauf-Links aus `lib/buylinks.ts`, Startseite ist URL-getrieben (F1.5), alter Aggregator und Legacy-Clients gelöscht. Offen aus Schritt 6: `?edition=` in der URL (F2.6), Übersetzer aus der Autorenzeile, Rest-Feinschliff.
-6. **Detailseite** auf Work-ID umstellen, gewählte Ausgabe in `?edition=`, Zurück-Link mit Query.
-7. **Kauf-Links** aus Konfiguration, Book Depository raus, Bookshop.org rein.
-8. **Verifikation** im Browser mit den fünf Akzeptanz-Queries, Screenshots in den PR.
+6. **Cover-Modell (E8).** `lib/model.ts` bekommt `Cover`; Parser übernehmen alle Cover-IDs; `works.ts` baut aus Quell-Ausgaben `{ editions, covers }` (ISBN-Merge mit Cover-Erhalt); Detail-Route und -Seite zeigen Cover mit ihren Ausgaben; Kauf-Link-Text nach 2.4. Google-`isbn:`-Nachschlag pro ISBN (F2.2), aktiv sobald ein Key da ist. *Erledigt 2026-09-06; der ISBN-Nachschlag ist gebaut, aber ohne Key inaktiv und deshalb noch nicht live verifiziert.*
+7. **Detailseite** Feinschliff: gewähltes Cover in `?cover=`, Zurück-Link mit Query, Übersetzer aus der Autorenzeile.
+8. **Kauf-Links** Regionen-Reihenfolge und Affiliate-Parameter (Kern erledigt in Schritt 5).
+9. **Verifikation** im Browser mit den fünf Akzeptanz-Queries, Screenshots in den PR.
 
-Geschätzt: zwei Sessions. Session 1 = Schritte 1–4 (reine Logik, testbar ohne Browser). Session 2 = Schritte 5–8.
+Geschätzt: drei Sessions. Session 1 = Schritte 1–4 (reine Logik, testbar ohne Browser). Session 2 = Schritt 5. Session 3 = Schritte 6–9.
 
 ---
 
@@ -297,7 +313,7 @@ Reihenfolge ist Vorschlag: erst 8.1 und 8.2 (sichtbar und online), dann 8.3 (Gel
   - [ ] Reihenfolge der Links nach Region des Nutzers (`Accept-Language` bzw. Vercel-Geo-Header): DE-Nutzer sehen Thalia/genialokal/Amazon.de zuerst, EN-Nutzer Bookshop.org/Amazon.com.
   - [ ] Klick-Tracking: `/go/[provider]/[isbn]` als eigene Route, die zählt und weiterleitet. Ohne Zahlen keine Optimierung.
 - [ ] **Programme beantragen** (Freischaltung dauert Tage bis Wochen, früh starten)
-  - [ ] **Amazon PartnerNet (DE) / Associates (US)**: höchste Abdeckung, ~1–4,5 % auf Bücher. Voraussetzung: öffentlich erreichbare Seite mit Inhalt, drei qualifizierte Verkäufe in den ersten 180 Tagen, sonst Kontosperrung. Also erst beantragen, wenn 8.2 steht und etwas Traffic da ist. Pro Marktplatz ein eigenes Konto (`.de`, `.com`, `.co.uk`).
+  - [ ] **Amazon PartnerNet (DE) / Associates (US)**: höchste Abdeckung, ~1–4,5 % auf Bücher. Zweiter Grund für das Konto: die **Product Advertising API** liefert zur ISBN das aktuelle Produktbild, also genau das Cover, das der Handel gerade ausliefert (E8). Ohne Associates-Konto gibt es keinen legalen Zugang zu Amazon-Bildern. Voraussetzung: öffentlich erreichbare Seite mit Inhalt, drei qualifizierte Verkäufe in den ersten 180 Tagen, sonst Kontosperrung. Also erst beantragen, wenn 8.2 steht und etwas Traffic da ist. Pro Marktplatz ein eigenes Konto (`.de`, `.com`, `.co.uk`).
   - [ ] **Bookshop.org** (US/UK, auch DE seit 2024 im Aufbau): ~10 % Provision, unterstützt unabhängige Buchhandlungen. Passt zur Zielgruppe „Menschen, die schöne Bücher mögen" besser als Amazon.
   - [ ] **AbeBooks**: eigenes Partnerprogramm (über Impact-Netzwerk), wichtig für vergriffene und antiquarische Ausgaben, also genau die mit den interessanten Covern.
   - [ ] **Thalia / Hugendubel / genialokal** (Deutschland): über Affiliate-Netzwerke (Awin, Adcell). Für deutsche Nutzer die naheliegende Wahl.
@@ -344,6 +360,8 @@ Reihenfolge ist Vorschlag: erst 8.1 und 8.2 (sichtbar und online), dann 8.3 (Gel
 
 - [ ] **F1.8** Query-Parsing in Titel + Autor (E3). Auslöser: wenn Akzeptanz-Query „gravity's rainbow" mit reinem Ranking nicht stabil ist.
 - [ ] **E4 (a)** Editions-Call für die ersten 8 Treffer mit Cache, falls Google-Books-Cover zu selten zu einem 4er-Mosaik führen.
+- [ ] **Cover-Duplikate über Quellen falten (E8 Phase 2).** Perzeptueller Hash (dHash/pHash) der Cover-Bilder serverseitig berechnen, pro Cover-ID cachen, Cover mit Hamming-Distanz ≤ Schwelle zusammenlegen. Auslöser: sichtbar doppelte Cover auf Detailseiten nach Aktivierung von Google Books.
+- [ ] **Weitere Cover-Quellen:** ISBNdb (kostenpflichtig), Amazon PA-API (8.3), Community-Upload mit Moderation.
 - [ ] **Alternativtitel desselben Works.** Identitätsregel 2 ist strikt: Google-Books-Ausgaben mit anderem Titel (*1984* vs. *Nineteen Eighty-Four*) werden dem Work nicht zugeordnet. Lösung wäre eine Titel-Alias-Liste aus den OL-Editions-Titeln des Works (die kennt man auf der Detailseite bereits). Auslöser: wenn auf Detailseiten sichtbar Google-Cover fehlen.
 - [ ] Filter auf der Detailseite: Format (Hardcover/Paperback), Jahrzehnt, Verlag.
 - [ ] Goodreads-CSV-Import als „Meine Bibliothek in allen Covern" (aus altem TODO).

@@ -11,7 +11,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { authorMatchKey, normalizeTitle } from '../normalize';
 import { parseEditions, parseSearchDocs, type OlEditionEntry, type OlSearchDoc } from '../sources/openlibrary-parse';
-import { dedupeEditions, groupEditionsByLanguage, mergeWorks, rankWorks } from '../works';
+import { assembleEditions, groupCoversByLanguage, mergeWorks, rankWorks } from '../works';
 
 const FIXTURES = path.join(__dirname, '..', '__fixtures__');
 
@@ -41,10 +41,11 @@ describe('mumbo jumbo', () => {
   });
   it('loads at least 5 editions with covers for the primary work (8 of 23 have covers)', () => {
     const { entries } = loadEditions('mumbo-jumbo');
-    const eds = dedupeEditions(parseEditions(entries, works[0]));
-    expect(eds.length).toBeGreaterThanOrEqual(5);
-    expect(eds.every(e => e.coverUrl.startsWith('https://covers.openlibrary.org/'))).toBe(true);
-    expect(eds.every(e => e.workId === 'OL30751W')).toBe(true);
+    const { editions, covers } = assembleEditions(parseEditions(entries, works[0]));
+    expect(editions.length).toBeGreaterThanOrEqual(5);
+    expect(covers.length).toBeGreaterThanOrEqual(editions.length);
+    expect(covers.every(c => c.url.startsWith('https://covers.openlibrary.org/') && c.editionIds.length >= 1)).toBe(true);
+    expect(editions.every(e => e.workId === 'OL30751W')).toBe(true);
   });
 });
 
@@ -60,15 +61,15 @@ describe('1984', () => {
   });
   it('keeps translations as editions of the same work, grouped by language', () => {
     const { entries } = loadEditions('1984');
-    const eds = dedupeEditions(parseEditions(entries, { id: 'OL1168083W', title: 'Nineteen Eighty-Four', authors: ['George Orwell'] }));
-    const groups = groupEditionsByLanguage(eds);
+    const { editions, covers } = assembleEditions(parseEditions(entries, { id: 'OL1168083W', title: 'Nineteen Eighty-Four', authors: ['George Orwell'] }));
+    const groups = groupCoversByLanguage(covers, editions);
     const codes = groups.map(g => g.language);
     expect(codes).toContain('en');
     expect(codes).toContain('es');
     expect(codes.indexOf(undefined)).toBe(codes.length - 1);
     // Sorted by size; the recorded slice has more Spanish covers than English.
-    expect(groups[0].editions.length).toBeGreaterThanOrEqual(groups[1].editions.length);
-    expect(groupEditionsByLanguage(eds, 'en')[0].language).toBe('en');
+    expect(groups[0].coverIds.length).toBeGreaterThanOrEqual(groups[1].coverIds.length);
+    expect(groupCoversByLanguage(covers, editions, 'en')[0].language).toBe('en');
   });
 });
 

@@ -24,8 +24,6 @@ export interface Edition {
   workId: string;
   source: Source;
   title: string;
-  coverUrl: string;
-  coverUrlSmall?: string;
   /** ISO 639-1 (`en`, `de`). Unknown = undefined. */
   language?: string;
   publisher?: string;
@@ -39,6 +37,26 @@ export interface Edition {
   previewUrl?: string;
 }
 
+/**
+ * A cover image carried by one or more editions (SPEC §2.3, decision E8).
+ * Identity is the image, never the ISBN: reprints change covers under the
+ * same ISBN, and one design appears under several ISBNs.
+ */
+export interface Cover {
+  /** `ol:<cover_i>` or `gb:<volumeId>` */
+  id: string;
+  url: string;
+  urlSmall?: string;
+  source: Source;
+  /** Ids of editions that carry this cover, at least one. */
+  editionIds: string[];
+}
+
+/** An edition as parsed from a source, before covers are split out. */
+export interface SourceEdition extends Edition {
+  covers: Array<Pick<Cover, 'id' | 'url' | 'urlSmall'>>;
+}
+
 /** A work as it appears in search results: enough to render a card. */
 export interface WorkSummary extends Work {
   /** Up to 4 distinct cover URLs for the mosaic; first is the primary cover. */
@@ -47,11 +65,11 @@ export interface WorkSummary extends Work {
   languages: string[];
 }
 
-/** Editions of one work grouped for the detail page (SPEC §3 F2.3). */
+/** Covers of one work grouped for the detail page (SPEC §3 F2.3). */
 export interface LanguageGroup {
-  /** ISO 639-1 code, or `undefined` for editions without language data. */
+  /** ISO 639-1 code, or `undefined` for covers whose editions lack language data. */
   language?: string;
-  editions: Edition[];
+  coverIds: string[];
 }
 
 /** A purchase link generated from an ISBN at display time (SPEC §2.3). */

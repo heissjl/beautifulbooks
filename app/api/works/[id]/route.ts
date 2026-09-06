@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buyLinksFor } from '@/lib/buylinks';
-import type { EditionView, LanguageGroup, Work } from '@/lib/model';
+import type { Cover, EditionView, LanguageGroup, Work } from '@/lib/model';
 import { normalizeLanguageOption } from '@/lib/search';
 import { getWorkDetail, isWorkId } from '@/lib/work';
 
-/** Response shape of GET /api/works/[id]. */
+/** Response shape of GET /api/works/[id] (SPEC §2.3: covers are the unit). */
 export interface WorkDetailResponse {
   work: Work;
   editions: EditionView[];
-  groups: Array<Omit<LanguageGroup, 'editions'> & { editionIds: string[] }>;
+  covers: Cover[];
+  groups: LanguageGroup[];
 }
 
 /**
@@ -29,7 +30,8 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
     const body: WorkDetailResponse = {
       work: detail.work,
       editions: detail.editions.map(e => ({ ...e, buyLinks: buyLinksFor(e) })),
-      groups: detail.groups.map(g => ({ language: g.language, editionIds: g.editions.map(e => e.id) })),
+      covers: detail.covers,
+      groups: detail.groups,
     };
     return NextResponse.json(body, {
       headers: { 'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800' },

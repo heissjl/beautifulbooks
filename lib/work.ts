@@ -1,17 +1,22 @@
 /**
- * Detail-page orchestration (SPEC §3 F2). Server-side only.
+ * Detail-page orchestration (SPEC §3 F2, E8). Server-side only.
  *
  * Loads the work, its Open Library editions (paged until enough covers) and
- * Google Books candidates in parallel, dedupes, and groups by language.
+ * Google Books candidates in parallel; then looks up the current Google cover
+ * for the newest ISBNs; merges same-ISBN editions while keeping every cover;
+ * groups covers by language.
  */
-import type { Edition, LanguageGroup, Work } from './model';
-import { searchEditionCandidates } from './sources/googlebooks';
+import type { Cover, Edition, LanguageGroup, Work } from './model';
+import { lookupByIsbns, searchEditionCandidates } from './sources/googlebooks';
 import { getEditions, getWork } from './sources/openlibrary';
-import { candidatesToEditions, dedupeEditions, groupEditionsByLanguage } from './works';
+import {
+  assembleEditions, candidatesToSourceEditions, groupCoversByLanguage, isbnCandidatesToSourceEditions,
+} from './works';
 
 export interface WorkDetail {
   work: Work;
   editions: Edition[];
+  covers: Cover[];
   groups: LanguageGroup[];
 }
 
@@ -42,7 +47,18 @@ export async function getWorkDetail(workId: string, options: WorkDetailOptions =
     searchEditionCandidates(work.title, work.authors[0]),
   ]);
 
-  const editions = dedupeEditions([...olEditions, ...candidatesToEditions(work, gbCandidates)]);
-  const groups = groupEditionsByLanguage(editions, options.preferredLanguage);
-  return { work, editions, groups };
+  // Current Google cover for the newest ISBNs (reveals reprints under an old ISBN).
+  const newestIsbns = olEditions
+    .filter(e => e.isbn13)
+    .sort((a, b) => (b.year ?? -1) - (a.year ?? -1))
+    .map(e => e.isbn13!);
+  const isbnCandidates = await lookupByIsbns(newestIsbns);
+
+  const { editions, covers } = assembleEditions([
+    ...olEditions,
+    ...candidatesToSourceEditions(work, gbCandidates),
+    ...isbnCandidatesToSourceEditions(work.id, isbnCandidates),
+  ]);
+  const groups = groupCoversByLanguage(covers, editions, options.preferredLanguage);
+  return { work, editions, covers, groups };
 }

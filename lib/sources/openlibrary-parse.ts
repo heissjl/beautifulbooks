@@ -3,7 +3,7 @@
  * in openlibrary.ts (SPEC.md §7 step 3). Kept separate so the parsing can be
  * tested against recorded fixtures.
  */
-import type { Edition, Work, WorkSummary } from '../model';
+import type { Edition, SourceEdition, Work, WorkSummary } from '../model';
 import {
   cleanAuthors, cleanIsbn, isbn10to13, looksLikeNonBook, parseYear, toIsoLanguage,
 } from '../normalize';
@@ -89,15 +89,16 @@ function parseFormat(raw: string | undefined): Edition['format'] {
 }
 
 /**
- * Converts edition entries of one work to Editions. Entries without a cover
- * are dropped. Author names come from the work because the endpoint only
- * returns author keys (SPEC §3 F3.1).
+ * Converts edition entries of one work to source editions. Entries without
+ * any cover are dropped; every valid cover id is kept (SPEC §2.3). Author
+ * names come from the work because the endpoint only returns author keys
+ * (SPEC §3 F3.1).
  */
-export function parseEditions(entries: readonly OlEditionEntry[], work: Work): Edition[] {
-  const out: Edition[] = [];
+export function parseEditions(entries: readonly OlEditionEntry[], work: Work): SourceEdition[] {
+  const out: SourceEdition[] = [];
   for (const e of entries) {
-    const coverId = e.covers?.find(c => c > 0);
-    if (!coverId || !e.key) continue;
+    const coverIds = Array.from(new Set((e.covers ?? []).filter(c => c > 0)));
+    if (coverIds.length === 0 || !e.key) continue;
     const title = e.title?.trim() || work.title;
     if (looksLikeNonBook(title) || /audio/i.test(e.physical_format ?? '')) continue;
 
@@ -109,8 +110,6 @@ export function parseEditions(entries: readonly OlEditionEntry[], work: Work): E
       workId: work.id,
       source: 'openlibrary',
       title,
-      coverUrl: olCoverUrl(coverId, 'L'),
-      coverUrlSmall: olCoverUrl(coverId, 'M'),
       language: toIsoLanguage(e.languages?.[0]?.key),
       publisher: e.publishers?.[0],
       publishedDate: e.publish_date,
@@ -119,6 +118,7 @@ export function parseEditions(entries: readonly OlEditionEntry[], work: Work): E
       isbn10,
       pageCount: e.number_of_pages,
       format: parseFormat(e.physical_format),
+      covers: coverIds.map(id => ({ id: `ol:${id}`, url: olCoverUrl(id, 'L'), urlSmall: olCoverUrl(id, 'M') })),
     });
   }
   return out;

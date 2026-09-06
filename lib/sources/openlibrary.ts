@@ -5,7 +5,7 @@
  * throw on transport errors and return null / empty on 404, so the detail
  * page can tell "not found" from "temporarily unavailable".
  */
-import type { Edition, Work, WorkSummary } from '../model';
+import type { SourceEdition, Work, WorkSummary } from '../model';
 import { cleanAuthors } from '../normalize';
 import { debug } from '../debug';
 import { HttpError, fetchJson } from './http';
@@ -183,8 +183,8 @@ export interface EditionsOptions {
 export async function getEditions(
   work: Work,
   { minWithCovers = 24, maxEntries = 500 }: EditionsOptions = {},
-): Promise<Edition[]> {
-  const out: Edition[] = [];
+): Promise<SourceEdition[]> {
+  const out: SourceEdition[] = [];
   let offset = 0;
   let total = Infinity;
   while (offset < total && offset < maxEntries && out.length < minWithCovers) {

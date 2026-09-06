@@ -111,7 +111,7 @@ describe('getEditions', () => {
     expect(calls).toHaveLength(2);
     expect(calls[1]).toContain('offset=100');
     expect(eds.length).toBeGreaterThanOrEqual(40);
-    expect(eds.every(e => e.workId === work.id && e.coverUrl)).toBe(true);
+    expect(eds.every(e => e.workId === work.id && e.covers.length > 0)).toBe(true);
   });
 
   it('stops at the entry budget and at the last page', async () => {

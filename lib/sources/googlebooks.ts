@@ -52,3 +52,28 @@ export async function searchEditionCandidates(title: string, author: string | un
     return [];
   }
 }
+
+export const GB_ISBN_LOOKUP_MAX = 10;
+
+/**
+ * Current cover per ISBN (SPEC §3 F2.2, E8): Google usually carries the
+ * publisher's current image, which reveals reprints that changed the cover
+ * under an unchanged ISBN. One request per ISBN, so the list is capped; only
+ * runs when an API key is configured because the anonymous quota is tiny.
+ */
+export async function lookupByIsbns(isbns: readonly string[], max = GB_ISBN_LOOKUP_MAX): Promise<EditionCandidate[]> {
+  if (!process.env.GOOGLE_BOOKS_API_KEY) return [];
+  const unique = Array.from(new Set(isbns)).slice(0, max);
+  const results = await Promise.all(unique.map(async isbn => {
+    const url = `${BASE}?q=isbn:${encodeURIComponent(isbn)}&maxResults=3${apiKeyParam()}`;
+    try {
+      const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: 24 * 60 * 60 });
+      // Keep only volumes that really carry the ISBN; Google sometimes pads results.
+      return parseVolumes(data.items).filter(c => c.isbn13 === isbn);
+    } catch (err) {
+      debug('googlebooks', `isbn ${isbn} failed: ${(err as Error).message}`);
+      return [];
+    }
+  }));
+  return results.flat();
+}

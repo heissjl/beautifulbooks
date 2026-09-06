@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import type { Edition, WorkSummary } from '../model';
+import type { SourceEdition, WorkSummary } from '../model';
 import type { EditionCandidate } from '../sources/googlebooks-parse';
 import {
-  attachCandidates, candidatesToEditions, dedupeEditions, editionKey, filterWorksByLanguage,
-  groupEditionsByLanguage, mergeWorks, mosaicCovers, rankWorks, relevance,
+  assembleEditions, attachCandidates, candidatesToSourceEditions, editionKey, filterWorksByLanguage,
+  groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks, relevance,
 } from '../works';
 
 const work = (over: Partial<WorkSummary> & { id: string }): WorkSummary => ({
@@ -14,11 +14,12 @@ const work = (over: Partial<WorkSummary> & { id: string }): WorkSummary => ({
   ...over,
 });
 
-const edition = (over: Partial<Edition> & { id: string }): Edition => ({
+/** Source edition with one Open Library cover whose id equals the edition id unless overridden. */
+const edition = (over: Partial<SourceEdition> & { id: string }, coverIds: string[] = [over.id]): SourceEdition => ({
   workId: 'W1',
   source: 'openlibrary',
   title: 'Test Book',
-  coverUrl: `https://covers.openlibrary.org/b/id/${over.id}-L.jpg`,
+  covers: coverIds.map(c => ({ id: `ol:${c}`, url: `https://covers.openlibrary.org/b/id/${c}-L.jpg` })),
   ...over,
 });
 
@@ -51,6 +52,7 @@ describe('attachCandidates', () => {
     title: '1984',
     authors: ['George Orwell'],
     coverUrl: `https://books.google.com/${over.id}`,
+    covers: [{ id: `gb:${over.id}`, url: `https://books.google.com/${over.id}` }],
     ...over,
   });
 
@@ -68,33 +70,46 @@ describe('attachCandidates', () => {
     expect(works[0].coverUrls).toHaveLength(1); // input untouched
   });
 
-  it('converts matching candidates to editions of a known work', () => {
-    const eds = candidatesToEditions({ id: 'W', title: '1984', authors: ['George Orwell'] }, [
+  it('converts matching candidates to source editions of a known work', () => {
+    const eds = candidatesToSourceEditions({ id: 'W', title: '1984', authors: ['George Orwell'] }, [
       gb({ id: 'a' }),
       gb({ id: 'b', authors: ['Aldous Huxley'] }),
     ]);
     expect(eds).toHaveLength(1);
     expect(eds[0].workId).toBe('W');
     expect('authors' in eds[0]).toBe(false);
+    expect(eds[0].covers.map(c => c.id)).toEqual(['gb:a']);
   });
 });
 
-describe('dedupeEditions', () => {
-  it('dedupes by ISBN-13, then cover id, then title+publisher+year, keeping the more complete one', () => {
-    const eds = dedupeEditions([
-      edition({ id: '1', isbn13: '9780141187761' }),
-      edition({ id: '2', isbn13: '9780141187761', description: 'richer', source: 'googlebooks', coverUrl: 'https://books.google.com/x' }),
-      edition({ id: '3' }),
-      edition({ id: '4', coverUrl: 'https://covers.openlibrary.org/b/id/3-L.jpg', publisher: 'P' }),
-      edition({ id: '5', source: 'googlebooks', coverUrl: 'https://books.google.com/y', publisher: 'Penguin', year: 2000 }),
-      edition({ id: '6', source: 'googlebooks', coverUrl: 'https://books.google.com/y', publisher: 'Penguin', year: 2000 }),
+describe('assembleEditions (E8)', () => {
+  it('merges same-ISBN editions across sources but keeps every cover', () => {
+    const { editions, covers } = assembleEditions([
+      edition({ id: 'ol:1', isbn13: '9780141187761', publisher: 'Penguin' }),
+      { ...edition({ id: 'gb:x', isbn13: '9780141187761', source: 'googlebooks', description: 'richer' }), covers: [{ id: 'gb:x', url: 'https://g/x' }] },
+      edition({ id: 'ol:3' }),
+      edition({ id: 'ol:4', publisher: 'P' }, ['4a', '4b']),
     ]);
-    expect(eds.map(e => e.id).sort()).toEqual(['2', '4', '5']);
+    expect(editions.map(e => e.id).sort()).toEqual(['ol:1', 'ol:3', 'ol:4']);
+    const merged = editions.find(e => e.id === 'ol:1')!;
+    expect(merged.description).toBe('richer');
+    expect(merged.publisher).toBe('Penguin');
+    expect(covers.map(c => c.id).sort()).toEqual(['gb:x', 'ol:4a', 'ol:4b', 'ol:ol:1', 'ol:ol:3']);
+    expect(covers.find(c => c.id === 'gb:x')!.editionIds).toEqual(['ol:1']);
+    expect(covers.find(c => c.id === 'ol:ol:1')!.editionIds).toEqual(['ol:1']);
+    expect(covers.filter(c => c.editionIds.includes('ol:4'))).toHaveLength(2);
   });
-  it('builds keys in the documented order', () => {
-    expect(editionKey(edition({ id: '9', isbn13: '9780000000002' }))).toBe('isbn:9780000000002');
-    expect(editionKey(edition({ id: '9' }))).toBe('cover:9');
-    expect(editionKey(edition({ id: '9', source: 'googlebooks', coverUrl: 'https://g/x' }))).toBe('cover:https://g/x');
+  it('lets one cover carry several editions', () => {
+    const { covers } = assembleEditions([
+      edition({ id: 'ol:h', isbn13: '9780000000001' }, ['same']),
+      edition({ id: 'ol:p', isbn13: '9780000000002' }, ['same']),
+    ]);
+    expect(covers).toHaveLength(1);
+    expect(covers[0].editionIds).toEqual(['ol:h', 'ol:p']);
+  });
+  it('keys by ISBN, else by source id', () => {
+    expect(editionKey({ id: 'x', isbn13: '9780000000002' })).toBe('isbn:9780000000002');
+    expect(editionKey({ id: 'x' })).toBe('id:x');
   });
 });
 
@@ -139,8 +154,8 @@ describe('mosaicCovers', () => {
   });
 });
 
-describe('groupEditionsByLanguage', () => {
-  const eds = [
+describe('groupCoversByLanguage', () => {
+  const src = [
     edition({ id: '1', language: 'en', year: 1990 }),
     edition({ id: '2', language: 'en', year: 2020 }),
     edition({ id: '3', language: 'de', year: 2000 }),
@@ -149,13 +164,22 @@ describe('groupEditionsByLanguage', () => {
     edition({ id: '6', language: 'fr' }),
     edition({ id: '7', language: 'fr', year: 2015 }),
   ];
+  const { editions, covers } = assembleEditions(src);
   it('orders by size, unknown last, newest first inside a group', () => {
-    const groups = groupEditionsByLanguage(eds);
+    const groups = groupCoversByLanguage(covers, editions);
     expect(groups.map(g => g.language)).toEqual(['fr', 'en', 'de', undefined]);
-    expect(groups[1].editions.map(e => e.id)).toEqual(['2', '1']);
-    expect(groups[0].editions.map(e => e.id)).toEqual(['7', '5', '6']);
+    expect(groups[1].coverIds).toEqual(['ol:2', 'ol:1']);
+    expect(groups[0].coverIds).toEqual(['ol:7', 'ol:5', 'ol:6']);
   });
   it('puts the preferred language first', () => {
-    expect(groupEditionsByLanguage(eds, 'de').map(g => g.language)).toEqual(['de', 'fr', 'en', undefined]);
+    expect(groupCoversByLanguage(covers, editions, 'de').map(g => g.language)).toEqual(['de', 'fr', 'en', undefined]);
+  });
+  it('takes the majority language of a shared cover', () => {
+    const shared = assembleEditions([
+      edition({ id: 'a', language: 'de' }, ['s']),
+      edition({ id: 'b', language: 'en' }, ['s']),
+      edition({ id: 'c', language: 'en' }, ['s']),
+    ]);
+    expect(groupCoversByLanguage(shared.covers, shared.editions)[0].language).toBe('en');
   });
 });

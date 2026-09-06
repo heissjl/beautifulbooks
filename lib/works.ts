@@ -2,7 +2,7 @@
  * Work identity, edition dedupe, relevance ranking and language grouping.
  * Pure functions, no I/O (SPEC.md §2, §3 F1.2–F1.4, F2.3–F2.4, F4).
  */
-import type { Edition, LanguageGroup, WorkSummary } from './model';
+import type { Cover, Edition, LanguageGroup, SourceEdition, WorkSummary } from './model';
 import type { EditionCandidate } from './sources/googlebooks-parse';
 import { looksLikeSecondaryLiterature, normalizeTitle, titleAuthorKey } from './normalize';
 
@@ -76,41 +76,78 @@ export function attachCandidates(
 }
 
 /** Assigns candidates to a known work (detail page). Non-matching ones are dropped. */
-export function candidatesToEditions(
+export function candidatesToSourceEditions(
   work: { id: string; title: string; authors: string[] },
   candidates: readonly EditionCandidate[],
-): Edition[] {
+): SourceEdition[] {
   const key = identityKey(work);
-  return candidates
-    .filter(c => identityKey(c) === key)
-    .map(c => {
-      const { authors, ...rest } = c;
-      void authors;
-      return { ...rest, workId: work.id };
-    });
+  return candidates.filter(c => identityKey(c) === key).map(c => toSourceEdition(work.id, c));
 }
 
-/** Dedupe key per SPEC §2.2: ISBN-13, then cover id/URL, then title+publisher+year. */
-export function editionKey(e: Edition): string {
-  if (e.isbn13) return `isbn:${e.isbn13}`;
-  const olCover = e.coverUrl.match(/\/b\/id\/(\d+)-/);
-  if (olCover) return `cover:${olCover[1]}`;
-  if (e.source === 'googlebooks') return `cover:${e.coverUrl}`;
-  return `tpy:${normalizeTitle(e.title)}::${(e.publisher ?? '').toLowerCase().slice(0, 20)}::${e.year ?? ''}`;
+/** Candidates found by ISBN lookup already belong to the work; no title match needed. */
+export function isbnCandidatesToSourceEditions(
+  workId: string,
+  candidates: readonly EditionCandidate[],
+): SourceEdition[] {
+  return candidates.map(c => toSourceEdition(workId, c));
 }
 
-function completeness(e: Edition): number {
-  return (e.description ? 4 : 0) + (e.isbn13 ? 2 : 0) + (e.pageCount ? 1 : 0) + (e.publisher ? 1 : 0);
+function toSourceEdition(workId: string, c: EditionCandidate): SourceEdition {
+  const { authors, coverUrl, ...rest } = c;
+  void authors;
+  void coverUrl;
+  return { ...rest, workId };
 }
 
-export function dedupeEditions(editions: readonly Edition[]): Edition[] {
-  const seen = new Map<string, Edition>();
-  for (const e of editions) {
-    const key = editionKey(e);
-    const existing = seen.get(key);
-    if (!existing || completeness(e) > completeness(existing)) seen.set(key, e);
+/** Merge key per SPEC §2.2: ISBN-13 when present, otherwise the source edition id. */
+export function editionKey(e: Pick<Edition, 'id' | 'isbn13'>): string {
+  return e.isbn13 ? `isbn:${e.isbn13}` : `id:${e.id}`;
+}
+
+function mergeEditionMeta(base: Edition, extra: Edition): Edition {
+  return {
+    ...base,
+    language: base.language ?? extra.language,
+    publisher: base.publisher ?? extra.publisher,
+    publishedDate: base.publishedDate ?? extra.publishedDate,
+    year: base.year ?? extra.year,
+    isbn10: base.isbn10 ?? extra.isbn10,
+    pageCount: base.pageCount ?? extra.pageCount,
+    format: base.format ?? extra.format,
+    previewUrl: base.previewUrl ?? extra.previewUrl,
+    description: (extra.description?.length ?? 0) > (base.description?.length ?? 0) ? extra.description : base.description,
+  };
+}
+
+export interface EditionsAndCovers {
+  editions: Edition[];
+  covers: Cover[];
+}
+
+/**
+ * SPEC §2.2/§2.3 (E8): editions with the same ISBN become one edition with
+ * merged metadata; every cover of every source survives and points at the
+ * surviving edition. Cover identity is the image id, never the ISBN.
+ */
+export function assembleEditions(sources: readonly SourceEdition[]): EditionsAndCovers {
+  const editionsByKey = new Map<string, Edition>();
+  const coversById = new Map<string, Cover>();
+  for (const src of sources) {
+    const { covers, ...edition } = src;
+    const key = editionKey(edition);
+    const existing = editionsByKey.get(key);
+    const survivor = existing ? mergeEditionMeta(existing, edition) : edition;
+    editionsByKey.set(key, survivor);
+    for (const c of covers) {
+      const cover = coversById.get(c.id);
+      if (cover) {
+        if (!cover.editionIds.includes(survivor.id)) cover.editionIds.push(survivor.id);
+      } else {
+        coversById.set(c.id, { id: c.id, url: c.url, urlSmall: c.urlSmall, source: src.source, editionIds: [survivor.id] });
+      }
+    }
   }
-  return Array.from(seen.values());
+  return { editions: Array.from(editionsByKey.values()), covers: Array.from(coversById.values()) };
 }
 
 export const SECONDARY_PENALTY = 60;
@@ -154,20 +191,43 @@ export function mosaicCovers(work: WorkSummary): string[] {
   return uniq(work.coverUrls).slice(0, MOSAIC_COVERS);
 }
 
-/**
- * SPEC §3 F2.3–F2.4: group by language, preferred language first, then by
- * size descending; unknown language last. Within a group newest first.
- */
-export function groupEditionsByLanguage(editions: readonly Edition[], preferred?: string): LanguageGroup[] {
-  const groups = new Map<string | undefined, Edition[]>();
-  for (const e of editions) {
-    const list = groups.get(e.language) ?? [];
-    list.push(e);
-    groups.set(e.language, list);
+/** Language of a cover: the most common language among the editions carrying it. */
+export function coverLanguage(cover: Cover, editionsById: ReadonlyMap<string, Edition>): string | undefined {
+  const counts = new Map<string, number>();
+  for (const id of cover.editionIds) {
+    const lang = editionsById.get(id)?.language;
+    if (lang) counts.set(lang, (counts.get(lang) ?? 0) + 1);
   }
-  const byYearDesc = (a: Edition, b: Edition) => (b.year ?? -1) - (a.year ?? -1);
+  let best: string | undefined;
+  let bestN = 0;
+  for (const [lang, n] of counts) if (n > bestN) { best = lang; bestN = n; }
+  return best;
+}
+
+function coverYear(cover: Cover, editionsById: ReadonlyMap<string, Edition>): number {
+  return Math.max(-1, ...cover.editionIds.map(id => editionsById.get(id)?.year ?? -1));
+}
+
+/**
+ * SPEC §3 F2.3–F2.4: covers grouped by language, preferred language first,
+ * then by size descending; unknown language last. Within a group newest first.
+ */
+export function groupCoversByLanguage(
+  covers: readonly Cover[],
+  editions: readonly Edition[],
+  preferred?: string,
+): LanguageGroup[] {
+  const editionsById = new Map(editions.map(e => [e.id, e]));
+  const groups = new Map<string | undefined, Cover[]>();
+  for (const c of covers) {
+    const lang = coverLanguage(c, editionsById);
+    const list = groups.get(lang) ?? [];
+    list.push(c);
+    groups.set(lang, list);
+  }
+  const newestFirst = (a: Cover, b: Cover) => coverYear(b, editionsById) - coverYear(a, editionsById);
   return Array.from(groups.entries())
-    .map(([language, eds]) => ({ language, editions: eds.sort(byYearDesc) }))
+    .map(([language, cs]) => ({ language, covers: cs.sort(newestFirst) }))
     .sort((a, b) => {
       if (a.language === undefined) return 1;
       if (b.language === undefined) return -1;
@@ -175,6 +235,7 @@ export function groupEditionsByLanguage(editions: readonly Edition[], preferred?
         if (a.language === preferred) return -1;
         if (b.language === preferred) return 1;
       }
-      return b.editions.length - a.editions.length || a.language.localeCompare(b.language);
-    });
+      return b.covers.length - a.covers.length || a.language.localeCompare(b.language);
+    })
+    .map(g => ({ language: g.language, coverIds: g.covers.map(c => c.id) }));
 }
