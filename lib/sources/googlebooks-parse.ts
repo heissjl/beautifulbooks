@@ -35,12 +35,25 @@ export interface EditionCandidate extends Omit<SourceEdition, 'workId'> {
   coverUrl: string;
 }
 
-/** Larger, curl-free cover from the thumbnail URL Google returns. */
-export function gbCoverUrl(thumbnail: string, zoom: 1 | 2 | 3 = 2): string {
-  return thumbnail
+export const GB_COVER_WIDTH_LARGE = 800;
+export const GB_COVER_WIDTH_SMALL = 300;
+
+/**
+ * Cover URL at a usable size from the thumbnail URL Google returns.
+ *
+ * Only `zoom=1` (and 5) come from Google's cover database; `zoom=2` and up
+ * are pages from the book scan and can be a half-title page instead of the
+ * cover (observed for Mumbo Jumbo 9780684824772). Larger versions of the
+ * zoom=1 cover are requested with the `fife=w<px>` resize parameter, which
+ * caps at the native size.
+ */
+export function gbCoverUrl(thumbnail: string, width: number = GB_COVER_WIDTH_LARGE): string {
+  const base = thumbnail
     .replace(/^http:\/\//, 'https://')
     .replace(/&edge=curl/, '')
-    .replace(/zoom=\d/, `zoom=${zoom}`);
+    .replace(/&fife=[^&]*/, '')
+    .replace(/zoom=\d/, 'zoom=1');
+  return `${base}&fife=w${width}`;
 }
 
 export function parseVolumes(items: readonly GbVolume[] | undefined): EditionCandidate[] {
@@ -63,8 +76,8 @@ export function parseVolumes(items: readonly GbVolume[] | undefined): EditionCan
       source: 'googlebooks',
       title: info.title,
       authors,
-      coverUrl: gbCoverUrl(thumb, 2),
-      covers: [{ id: `gb:${v.id}`, url: gbCoverUrl(thumb, 2), urlSmall: gbCoverUrl(thumb, 1) }],
+      coverUrl: gbCoverUrl(thumb),
+      covers: [{ id: `gb:${v.id}`, url: gbCoverUrl(thumb), urlSmall: gbCoverUrl(thumb, GB_COVER_WIDTH_SMALL) }],
       language: toIsoLanguage(info.language),
       publisher: info.publisher,
       publishedDate: info.publishedDate,

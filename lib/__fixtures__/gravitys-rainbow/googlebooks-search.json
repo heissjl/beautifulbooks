@@ -1,0 +1,860 @@
+{
+  "totalItems": 300,
+  "items": [
+    {
+      "id": "-jRbAAAAMAAJ",
+      "volumeInfo": {
+        "title": "Gravity's Rainbow",
+        "authors": [
+          "Thomas Pynchon"
+        ],
+        "publisher": "Viking Adult",
+        "publishedDate": "1973",
+        "description": "Winner of the 1973 National Book Award, \"Gravity's Rainbow\" is a postmodern epic, a work as exhaustively significant to the second half of the 20th century as Joyce's \"Ulysses\" was to the first.",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "UOM:39015066065254"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 772,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.10.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=-jRbAAAAMAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=-jRbAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=-jRbAAAAMAAJ&q=intitle:gravity%27s+rainbow&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=1&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=-jRbAAAAMAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Gravity_s_Rainbow.html?hl=&id=-jRbAAAAMAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "wFwcoXNRmS8C",
+      "volumeInfo": {
+        "title": "Thomas Pynchons 'Gravity's Rainbow' zwischen Postmoderne und Postkolonialität",
+        "authors": [
+          "Nadia Cohen"
+        ],
+        "publisher": "GRIN Verlag",
+        "publishedDate": "2005-01-12",
+        "description": "Studienarbeit aus dem Jahr 2004 im Fachbereich Germanistik - Komparatistik, Vergleichende Literaturwissenschaft, Note: 1,3, Johannes Gutenberg-Universität Mainz (Institut für Allgemeine und Vergleichende Literaturwissenschaft), Veranstaltung: Deutsch-amerikanische Vermittlungen - Thomas Pynchon, Thomas Meinecke, Sprache: Deutsch, Abstract: „But might it not be the case that a single work may be postmodern in the light of one set of interests and values, and postcolonial in the light of another?” (Simon During: Postmodernism or Postcolonialism?, in: Landfall 39.3 (1985), 366-380, hier: 372) Diese Frage Simon Durings soll das Leitmotiv der vorliegenden Hausarbeit sein. Thomas Pynchon ist ein Autor, der in erster Linie als einer der postmodernen Autoren überhaupt bezeichnet wird. In vielen Texten, die sich mit postmoderner Literatur beschäftigen, wird Pynchon als Paradebeispiel herangezogen. Die eingehende Beschäftigung Pynchons mit der Geschichte einer kolonisierten afrikanischen Gesellschaft soll hier jedoch Ausgangspunkt für die Frage sein, inwiefern sich Pynchon auch als postkolonialer Autor bezeichnen läßt, bzw. inwiefern seine Auseinandersetzung mit der Thematik als postkolonial einzustufen ist. „Schreibt das Imperium“ auch in Pynchons Romanen bzw. durch seine Romane „zurück“, wie Ashcroft et al. es in ihrem Buch The Empire writes back formulieren? Dieser Frage soll vor allem am Beispiel von Gravity’s Rainbow nachgegangen werden. Hierzu ist es zunächst notwendig, einen kurzen Einblick in die großen Felder „Postmoderne“ und „Postkolonialismus“ zu geben und deren Verhältnis zueinander zu klären. In einem weiteren Schritt soll dann untersucht werden, inwiefern sich Pynchon mit Thematiken beschäftigt bzw. Stile benutzt, die sowohl Postmoderne als auch Postkolonialismus eigen sind, und wie Pynchon damit „seine“ Herero darstellt. Die Ergebnisse dieser Untersuchung sollen schließlich Aufschluß darüber geben, wie Pynchon im Verhältnis zu Postmoderne und Postkolonialität zu positionieren ist.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783638338059"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "3638338053"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": true
+        },
+        "pageCount": 37,
+        "printType": "BOOK",
+        "categories": [
+          "Literary Criticism"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "1.8.6.0.preview.3",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=wFwcoXNRmS8C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=wFwcoXNRmS8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=wFwcoXNRmS8C&printsec=frontcover&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=2&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=wFwcoXNRmS8C&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=wFwcoXNRmS8C"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 15.99,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 15.99,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=wFwcoXNRmS8C&rdid=book-wFwcoXNRmS8C&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 15990000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 15990000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "CbnNAQAACAAJ",
+      "volumeInfo": {
+        "title": "An Index to Gravity's Rainbow",
+        "authors": [
+          "Khachig Tölölyan"
+        ],
+        "publishedDate": "1980",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:63228696"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 126,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=CbnNAQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=3&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=CbnNAQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/An_Index_to_Gravity_s_Rainbow.html?hl=&id=CbnNAQAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "lI9yHAAACAAJ",
+      "volumeInfo": {
+        "title": "Thomas Pynchon's Gravity's Rainbow",
+        "subtitle": "A Critical Commentary",
+        "authors": [
+          "Jeffrey Helterman"
+        ],
+        "publishedDate": "1976",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:21418665"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 75,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=lI9yHAAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=4&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=lI9yHAAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Thomas_Pynchon_s_Gravity_s_Rainbow.html?hl=&id=lI9yHAAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "BYiCzQEACAAJ",
+      "volumeInfo": {
+        "title": "Gravity's Rainbow - Thomas Pynchon",
+        "publishedDate": "2020",
+        "description": "A collection of critical essays on Pynchon's Gravity's Rainbow arranged in chronological order of publication.This is an electronic version of the original edition of this;Bloom's Modern Critical Interpretations;title, containi.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "1646932560"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9781646932566"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "printType": "BOOK",
+        "categories": [
+          "Criticism"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=BYiCzQEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=5&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=BYiCzQEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Gravity_s_Rainbow_Thomas_Pynchon.html?hl=&id=BYiCzQEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "Tm2FAQAACAAJ",
+      "volumeInfo": {
+        "title": "Between the Lines",
+        "subtitle": "A Reading of Thomas Pynchon's Gravity's Rainbow",
+        "authors": [
+          "Hui Min Chua"
+        ],
+        "publishedDate": "1999",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:969708271"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 318,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=Tm2FAQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=6&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=Tm2FAQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Between_the_Lines.html?hl=&id=Tm2FAQAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "wDXiPgAACAAJ",
+      "volumeInfo": {
+        "title": "Charles Hohmann, Thomas Pynchon's \"Gravity's rainbow\"",
+        "authors": [
+          "Monika Fludernik"
+        ],
+        "publishedDate": "1989",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:312324634"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 4,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=wDXiPgAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=7&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=wDXiPgAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Charles_Hohmann_Thomas_Pynchon_s_Gravity.html?hl=&id=wDXiPgAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "RDVbAAAAMAAJ",
+      "volumeInfo": {
+        "title": "A Reader's Guide to Gravity's Rainbow",
+        "authors": [
+          "Douglas Fowler"
+        ],
+        "publisher": "Ann Arbor, Mich. : Ardis Publishers",
+        "publishedDate": "1980",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "UOM:39015002138512"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 312,
+        "printType": "BOOK",
+        "categories": [
+          "Literary Criticism"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.5.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=RDVbAAAAMAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=RDVbAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=RDVbAAAAMAAJ&q=intitle:gravity%27s+rainbow&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=8&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=RDVbAAAAMAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/A_Reader_s_Guide_to_Gravity_s_Rainbow.html?hl=&id=RDVbAAAAMAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "UbDUjgEACAAJ",
+      "volumeInfo": {
+        "title": "Möglichkeiten des Humanen in Thomas Pynchons Gravity's rainbow",
+        "publishedDate": "1991",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:917693548"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 186,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=UbDUjgEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=9&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=UbDUjgEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/M%C3%B6glichkeiten_des_Humanen_in_Thomas_Pyn.html?hl=&id=UbDUjgEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "xS5bAAAAMAAJ",
+      "volumeInfo": {
+        "title": "Pynchon",
+        "subtitle": "Creative Paranoia in Gravity's Rainbow",
+        "authors": [
+          "Mark Siegel"
+        ],
+        "publisher": "Kennikat Press",
+        "publishedDate": "1978",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "UOM:39015004162098"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 152,
+        "printType": "BOOK",
+        "categories": [
+          "Literary Criticism"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.5.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=xS5bAAAAMAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=xS5bAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=xS5bAAAAMAAJ&q=intitle:gravity%27s+rainbow&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=10&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=xS5bAAAAMAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Pynchon.html?hl=&id=xS5bAAAAMAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "py1bAAAAMAAJ",
+      "volumeInfo": {
+        "title": "Approaches to Gravity's Rainbow",
+        "authors": [
+          "Charles Clerc"
+        ],
+        "publishedDate": "1983",
+        "description": "Beginning with an introduction summarizing critical reaction to Pynchon's fiction and to Gravity's Rainbow in particular, this volume contains eight original essays exploring different aspects of the novel. Alan Friedman provides a guide to the novel's use of statistics and post-Newtonian physics and Khachig Toloyan examines Pynchon's use of history. Charles Cler explores the author's use of film; Joseph Slade discusses his treatment of religion, psychology, sex and love; Raymond Olderman discusses Pynchon's contrast of freak and straight world views; James Earl writes on Pynchon's opposition of rational and intuitive epistemologies in the novel; Charles Russell on Pynchon's portrayal of the limitations of the language systems and Roger Henkle on comedy. ISBN 0-8242-0337-X : $25.00.",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "UOM:39015066038491"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 328,
+        "printType": "BOOK",
+        "categories": [
+          "Literary Criticism"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.5.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=py1bAAAAMAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=py1bAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=py1bAAAAMAAJ&q=intitle:gravity%27s+rainbow&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=11&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=py1bAAAAMAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Approaches_to_Gravity_s_Rainbow.html?hl=&id=py1bAAAAMAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "MmexAAAAIAAJ",
+      "volumeInfo": {
+        "title": "Thomas Pynchon's Gravity's Rainbow",
+        "subtitle": "A Study of Its Conceptual Structure and of Rilke's Influence",
+        "authors": [
+          "Charles Hohmann"
+        ],
+        "publisher": "Peter Lang Incorporated, International Academic Publishers",
+        "publishedDate": "1986",
+        "description": "This study delineates what can be called the conceptual structure of Gravity's Rainbow and analyzes it in terms of Rilke's Duinesian Elegies, a text which was a major influence on Pynchon's novel.",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "UCSC:32106019134417"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 452,
+        "printType": "BOOK",
+        "categories": [
+          "Literary Criticism"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.13.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=MmexAAAAIAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=MmexAAAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=MmexAAAAIAAJ&q=intitle:gravity%27s+rainbow&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=12&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=MmexAAAAIAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Thomas_Pynchon_s_Gravity_s_Rainbow.html?hl=&id=MmexAAAAIAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "EFcMjwEACAAJ",
+      "volumeInfo": {
+        "title": "The Gravity's Rainbow Handbook: A Key to the Thomas Pynchon Novel",
+        "authors": [
+          "Robert Crayola"
+        ],
+        "publisher": "Createspace Independent Publishing Platform",
+        "publishedDate": "2015-12-11",
+        "description": "Thomas Pynchon has a reputation as a \"difficult\" author -- but he doesn't have to be! With this new guide, Gravity's Rainbow can be understood by the average reader. Included are: a chapter-by-chapter summary and commentary on the story, a thorough description of all major characters, a biography of Pynchon, suggestions for essay topics, and much more. This guide is guaranteed help you finish and make sense of Gravity's Rainbow -- all in a concise and easy-to-read format. Whether you are totally new to the book or just want to deepen your understanding, this guide will save you hours of struggle and frustration.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "1519742428"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9781519742421"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 72,
+        "printType": "BOOK",
+        "categories": [
+          "Study Aids"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=EFcMjwEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=EFcMjwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=EFcMjwEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=13&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=EFcMjwEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/The_Gravity_s_Rainbow_Handbook_A_Key_to.html?hl=&id=EFcMjwEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "YUrFzgEACAAJ",
+      "volumeInfo": {
+        "title": "Radical Uncertainity",
+        "subtitle": "A Study of Thomas Pynchon's Gravity's Rainbow",
+        "authors": [
+          "Peter Thomas Herbert"
+        ],
+        "publishedDate": "1982",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:1274868570"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=YUrFzgEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=14&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=YUrFzgEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Radical_Uncertainity.html?hl=&id=YUrFzgEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "mSxZPQAACAAJ",
+      "volumeInfo": {
+        "title": "A Guide to Pynchon's Gravity's Rainbow",
+        "authors": [
+          "Douglas Fowler"
+        ],
+        "publishedDate": "1980-05-01",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0882334042"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780882334042"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=mSxZPQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=15&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=mSxZPQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/A_Guide_to_Pynchon_s_Gravity_s_Rainbow.html?hl=&id=mSxZPQAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "FbSAAAAACAAJ",
+      "volumeInfo": {
+        "title": "Lesen - beobachten",
+        "subtitle": "Modell einer Wirkungsästhetik mit Thomas Pynchons Gravity's Rainbow",
+        "authors": [
+          "Bruno Arich-Gerz"
+        ],
+        "publishedDate": "2001",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "3879407584"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9783879407583"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 178,
+        "printType": "BOOK",
+        "categories": [
+          "Reading"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=FbSAAAAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=16&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=FbSAAAAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Lesen_beobachten.html?hl=&id=FbSAAAAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "6a__xwEACAAJ",
+      "volumeInfo": {
+        "title": "Radical Uncertainty",
+        "subtitle": "A Study of Thomas Pynchon's Gravity's Rainbow",
+        "authors": [
+          "Peter Thomas Herbert"
+        ],
+        "publishedDate": "1982",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:1110286364"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 278,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=6a__xwEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=17&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=6a__xwEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Radical_Uncertainty.html?hl=&id=6a__xwEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "8VWCMAEACAAJ",
+      "volumeInfo": {
+        "title": "Gravity's Rainbow",
+        "subtitle": "A BookCaps Study Guide",
+        "authors": [
+          "BookCaps Study Guides Staff"
+        ],
+        "publishedDate": "2012-07-17",
+        "description": "The perfect companion to Thomas Pynchon's Gravity's Rainbow,\" this study guide contains a chapter analysis of the book, a summary of the plot, and a guide to major characters and themes.BookCap Study Guides do not contain text from the actual book, and are not meant to be purchased as alternatives to reading the book.We all need refreshers every now and then. Whether you are a student trying to cram for that big final, or someone just trying to understand a book more, BookCaps can help. We are a small, but growing company, and are adding titles every month.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "1478260939"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9781478260936"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 44,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=8VWCMAEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=18&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=8VWCMAEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Gravity_s_Rainbow.html?hl=&id=8VWCMAEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "2EWHAQAACAAJ",
+      "volumeInfo": {
+        "title": "Gravity's Rainbow",
+        "publishedDate": "1993",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:727346666"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 10,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=2EWHAQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=19&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=2EWHAQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Gravity_s_Rainbow.html?hl=&id=2EWHAQAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "4Yr_swEACAAJ",
+      "volumeInfo": {
+        "title": "A Study Guide for Thomas Pynchon's \"Gravity's Rainbow\"",
+        "authors": [
+          "Cengage Learning Gale"
+        ],
+        "publishedDate": "2017-07-25",
+        "description": "A Study Guide for Thomas Pynchon's \"Gravity's Rainbow,\" excerpted from Gale's acclaimed Novels for Students. This concise study guide includes plot summary; character analysis; author biography; study questions; historical context; suggestions for further reading; and much more. For any literature project, trust Novels for Students for all of your research needs.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "1375380753"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9781375380751"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 56,
+        "printType": "BOOK",
+        "categories": [
+          "Study Aids"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=4Yr_swEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=4Yr_swEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=4Yr_swEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=20&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=4Yr_swEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/A_Study_Guide_for_Thomas_Pynchon_s_Gravi.html?hl=&id=4Yr_swEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    }
+  ]
+}

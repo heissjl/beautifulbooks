@@ -143,7 +143,7 @@ describe('googlebooks', () => {
     const items = await searchVolumes('1984');
     expect(calls[1]).toContain('key=abc');
     expect(items).toHaveLength(1);
-    expect(items[0].coverUrl).toBe('https://books.google.com/x?zoom=2');
+    expect(items[0].coverUrl).toBe('https://books.google.com/x?zoom=1&fife=w800');
 
     const cands = await searchEditionCandidates('1984', 'George Orwell');
     expect(decodeURIComponent(calls[2])).toContain('intitle:1984 inauthor:George Orwell');

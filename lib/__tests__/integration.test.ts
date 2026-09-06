@@ -1,7 +1,8 @@
 /**
  * End-to-end through the data layer with a mocked fetch that serves the
- * recorded fixtures by URL. Covers SPEC §3 F1/F2 and §4 N2 (two calls per
- * search) and F3.3 (a failing source does not fail the request).
+ * recorded fixtures by URL (Open Library and Google Books). Covers SPEC §3
+ * F1/F2, §4 N2 (two calls per search), F3.3 (a failing source does not fail
+ * the request) and E4/E5 (Google covers attach to Open Library works only).
  */
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
@@ -23,7 +24,13 @@ const SLUG_BY_QUERY: Record<string, string> = {
 
 type Route = (url: URL) => { status?: number; body?: unknown } | undefined;
 
-let googleBooks: Route = () => ({ status: 429 });
+/** Default: serve the recorded Google search fixture for a known query, else 429. */
+const googleFixture: Route = url => {
+  const q = (url.searchParams.get('q') ?? '').replace(/^intitle:/, '');
+  const slug = SLUG_BY_QUERY[q];
+  return slug ? { body: fixture(slug, 'googlebooks-search.json') } : { status: 429 };
+};
+let googleBooks: Route = googleFixture;
 const calls: string[] = [];
 
 /** Serves Open Library fixtures; Google Books behaviour is pluggable per test. */
@@ -58,7 +65,7 @@ function route(url: URL): { status?: number; body?: unknown } {
 
 beforeEach(() => {
   calls.length = 0;
-  googleBooks = () => ({ status: 429 });
+  googleBooks = googleFixture;
   vi.stubGlobal('fetch', vi.fn(async (input: string | URL) => {
     const url = new URL(String(input));
     calls.push(url.toString());
@@ -70,6 +77,7 @@ afterEach(() => vi.unstubAllGlobals());
 
 describe('search', () => {
   it('makes exactly two external calls and survives Google Books failing (N2, F3.3)', async () => {
+    googleBooks = () => ({ status: 429 });
     const r = await search('mumbo jumbo');
     expect(calls).toHaveLength(2);
     expect(calls.some(u => u.includes('openlibrary.org/search.json'))).toBe(true);
@@ -83,6 +91,15 @@ describe('search', () => {
     const r = await search('   ');
     expect(r.works).toEqual([]);
     expect(calls).toHaveLength(0);
+  });
+
+  it('adds recorded Google covers to the mosaic of the top work without creating works', async () => {
+    const r = await search('mumbo jumbo');
+    expect(r.works[0].id).toBe('OL30751W');
+    expect(r.works[0].coverUrls.length).toBeGreaterThan(1);
+    expect(r.works[0].coverUrls[0]).toContain('covers.openlibrary.org');
+    expect(r.works[0].coverUrls.slice(1).every(u => u.includes('books.google.com') && u.includes('zoom=1') && u.includes('fife=w'))).toBe(true);
+    expect(r.works.every(w => /^OL\d+W$/.test(w.id))).toBe(true);
   });
 
   it('meets the acceptance criteria for the five queries', async () => {
@@ -117,7 +134,7 @@ describe('search', () => {
     expect(reed.id).toBe('OL30751W');
     expect(reed.coverUrls).toHaveLength(3);
     expect(reed.coverUrls[0]).toContain('covers.openlibrary.org');
-    expect(reed.coverUrls.slice(1)).toEqual(['https://books.google.com/g1?zoom=2', 'https://books.google.com/g2?zoom=2']);
+    expect(reed.coverUrls.slice(1)).toEqual(['https://books.google.com/g1?zoom=1&fife=w800', 'https://books.google.com/g2?zoom=1&fife=w800']);
     expect(reed.languages).toContain('de');
     expect(r.works.some(w => w.authors[0] === 'Nobody Known')).toBe(false);
   });

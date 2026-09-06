@@ -14,7 +14,7 @@ The data layer was rewritten per SPEC.md §7; the old aggregator and legacy clie
 
 - Cover model (E8, step 6, done): `Cover` is its own entity in `lib/model.ts`; `assembleEditions` in `lib/works.ts` merges same-ISBN editions but never drops a cover. ISBN != cover: reprints change the cover under the same ISBN, so never dedupe by ISBN alone and never promise a cover at a purchase link.
 - Spec-conformant modules (steps 2–5, done): `lib/model.ts`, `lib/normalize.ts`, `lib/works.ts`, `lib/debug.ts`, `lib/sources/http.ts`, `lib/sources/openlibrary.ts` (+ `-parse.ts`), `lib/sources/googlebooks.ts` (+ `-parse.ts`), `lib/search.ts` (search orchestration, two external calls), `lib/work.ts` (detail page orchestration). `lib/buylinks.ts` generates purchase links from ISBNs with optional `AFFILIATE_*` env variables. Tests in `lib/__tests__/` run against fixtures in `lib/__fixtures__/`, recorded with `npx tsx scripts/record-fixtures.ts`.
-- Google Books fixtures are missing: the unauthenticated API answered HTTP 429 (daily quota) at recording time. Set `GOOGLE_BOOKS_API_KEY` and re-run the recorder to add them.
+- Fixtures cover both sources. Re-record with `GOOGLE_BOOKS_API_KEY` set in `.env.local` (`set -a; source .env.local; set +a; npx tsx scripts/record-fixtures.ts`). Never commit the key; fixtures contain no URLs with keys.
 - UI state rules: the URL is the source of truth for search state (`/?q=&lang=`); components derive loading state from a request key instead of setting state inside effects (the `react-hooks/set-state-in-effect` lint rule is an error in this repo).
 
 Progress is tracked by the numbered steps in SPEC.md §7. Check `git log` to see which step was completed last.
@@ -24,6 +24,7 @@ Progress is tracked by the numbered steps in SPEC.md §7. Check `git log` to see
 - Open Library `/works/{id}/editions.json` returns `authors` as `[{ key: '/authors/OL…A' }]`, **not names**. Reading `a.name` yields `undefined` for every edition. Author names for editions must be taken from the work, not from the edition.
 - Open Library search `author_name` contains duplicates and translators; only the first entry is the primary author.
 - Open Library editions carry a `covers` array with possibly several ids; take all of them, not just `[0]`.
+- Google Books cover URLs: keep `zoom=1` and request size with `&fife=w800`. `zoom=2`+ is a page from the book scan and may not be the cover at all.
 - Google Books has no work concept. Its results must be matched to an Open Library work by normalized title + primary author and must never create a work of their own (decision E5).
 - Open Library regularly takes 2–7 s for a search and 3–10 s for an editions page from Germany, occasionally much longer. Every external call needs a timeout and a cache (§4 N3, N4); the values live in `OL_TIMEOUTS`.
 
