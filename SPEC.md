@@ -578,9 +578,11 @@ Beim Auswählen eines Covers holt die Seite über die Route aus 13a das Bild, da
 
 | Urteil | Text über den Links | Verhalten |
 |---|---|---|
-| `verified` | „Shops list this ISBN with this cover.“ | Kauf-Links zuerst |
-| `differs` | „Shops currently show a different cover for this ISBN.“ mit dem Handelsbild daneben, verlinkt auf dessen Kachel | **Suchwege zuerst**, dann die Kauf-Links |
-| `unknown` | „We cannot tell which cover ships with this ISBN.“ | Kauf-Links zuerst |
+| `verified` | „The publisher's current image for this ISBN is this cover.“ | Kauf-Links zuerst |
+| `differs` | „The publisher's current image for this ISBN is a different cover.“ mit diesem Bild daneben, verlinkt auf dessen Kachel | **Suchwege zuerst**, dann die Kauf-Links |
+| `unknown` | „No current publisher image is on record for this ISBN.“ | Kauf-Links zuerst |
+
+**Der Text nennt die Quelle, weil die Prüfung nur so weit reicht (Julian, 2026-09-07).** Es wird **kein Händler abgefragt**: Thalia, Amazon, Bookshop und die übrigen Links sind reine URL-Vorlagen aus der Tabelle in `lib/buylinks.ts`, die erst beim Klick des Nutzers benutzt werden. Der Server kontaktiert überhaupt nur drei Hosts: Open Library, dessen Cover-Server und Google Books. Googles Bild stammt aus dem Metadaten-Feed des Verlags, aus dem sich die Händler in der Regel ebenfalls bedienen — gutes Indiz, aber keine Messung an einer Händlerseite. Eine frühere Fassung sagte „Shops list this ISBN with this cover“ und behauptete damit mehr, als geprüft wird.
 
 **Gemessen an 20 ISBNs von *Beloved* (2026-09-07):** 4 `verified`, 4 `differs`, 12 `unknown`. Wo Google überhaupt ein Bild hat, zeigt der Handel also in der Hälfte der Fälle ein anderes Cover — der Befund aus §9.1 E, jetzt an der Oberfläche.
 

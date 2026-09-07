@@ -446,30 +446,37 @@ function EditionBlock({ edition, otherCovers, searchLinks, market, onMarketChang
 }
 
 /**
- * Says whether the ISBN below will actually arrive with the cover on screen
- * (SPEC §9.3 step 13). Measured on *Beloved*: for half the ISBNs where Google
- * has an image, the shop shows a different jacket than the catalogue scan.
+ * Says what the publisher's current image for this ISBN shows (SPEC §9.3
+ * step 13). Measured on *Beloved*: for half the ISBNs where Google Books has
+ * an image, it is a different jacket than the catalogue scan.
+ *
+ * The wording names the source on purpose. No shop is ever contacted: the
+ * retailer links are URL templates built from the ISBN, and the only lookup
+ * is Google Books, which carries the image from the publisher's metadata
+ * feed. Shops usually draw on the same feed, so the image is good evidence
+ * for what will arrive, but it is not a reading of any shop's page, and the
+ * text must not claim otherwise (Julian, 2026-09-07).
  */
 function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) {
   if (verdict.status === 'verified') {
     return (
       <p className="mt-2 text-xs leading-relaxed text-ink-3">
-        <span className="text-ink-2">Shops list this ISBN with this cover.</span>{' '}
-        Checked against the publisher&rsquo;s current image.
+        <span className="text-ink-2">The publisher&rsquo;s current image for this ISBN is this cover.</span>{' '}
+        Shops list by number and mostly use that image, so a new copy should look like this.
       </p>
     );
   }
   if (verdict.status === 'differs') {
     return (
       <div className="mt-2 flex items-start gap-3">
-        <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the cover shops show">
+        <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the publisher's current image for this ISBN">
           <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
-            <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="Cover shops currently show" sizes="55px" />
+            <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="The publisher's current image for this ISBN" sizes="55px" />
           </span>
         </a>
         <p className="text-xs leading-relaxed text-ink-3">
-          <span className="text-ink-2">Shops currently show a different cover for this ISBN.</span>{' '}
-          The picture beside this note is what a new copy is likely to look like.
+          <span className="text-ink-2">The publisher&rsquo;s current image for this ISBN is a different cover.</span>{' '}
+          It is the one beside this note, so that is what a new copy is likely to be.
           {hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
         </p>
       </div>
@@ -477,8 +484,8 @@ function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) 
   }
   return (
     <p className="mt-2 text-xs leading-relaxed text-ink-3">
-      We cannot tell which cover ships with this ISBN. Sellers list by number and send the current
-      printing.{hint ? ` Look for ${hint}.` : ''}
+      No current publisher image is on record for this ISBN, so we cannot say which cover ships.
+      Shops list by number and send the current printing.{hint ? ` Look for ${hint}.` : ''}
     </p>
   );
 }
