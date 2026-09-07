@@ -673,3 +673,17 @@ Fünf Stellen geändert:
 Unangetastet blieben die Texte, die kurz zuvor mit Bedacht entstanden sind: die fünf Verdikt-Sätze aus `lib/verdicts.ts`, die Fehler- und Leerzustände der Suche, die Fußzeile und die Fußnote unter der Cover-Wand.
 
 **Kein Copywriting-Skill vorhanden** (die verfügbaren decken Design, Code-Review, Workflows und Konfiguration ab), der Durchgang war Handarbeit.
+
+---
+
+## 2026-09-07 · Speichermodell durchdacht: es sind zwei Bedürfnisse, nicht eines
+
+Vollständig in [plans/PLAN-speicher.md](plans/PLAN-speicher.md). Der Kern und die Befunde aus dem Code:
+
+**E6 beantwortet eine Frage, die eigentlich zwei sind.** Ein **Index** (Cover-Signaturen, Werke, Autoren, Verlage) wird einmal von einem Skript geschrieben, bei jeder Anfrage gelesen und kommt mit dem Deploy — er ist eine Datei, keine Infrastruktur. **Zähler** (Klicks, Ereignisse, Kontingent) werden ständig geschrieben, selten gelesen und müssen einen Deploy überleben — das ist eine Datenbank. Nur das Zweite fällt unter E6, und nur das Zweite bleibt zurückgestellt. Sechs offene Punkte hängen ausschließlich am Ersten: 6.10, 6.9, 5.1, 5.4, 1.9 und das kalte Hashing.
+
+**Größenrechnung.** Ein Cover-Eintrag wiegt als JSON rund 70 Byte; die zwölf kuratierten Werke mit etwa 600 Covern ergeben **42 KB**, 500 Werke mit 25.000 Covern **1,8 MB**. Entscheidend ist die Form im Speicher: dieselben Hashes als `BigUint64Array` sind **200 KB**, und eine Ähnlichkeitssuche wird damit zu einer Schleife über 25.000 XOR-Operationen — Mikrosekunden, ohne Index und ohne Datenbank. Als JS-Objekte belassen wären es fünf bis acht Megabyte Heap für dasselbe Ergebnis.
+
+**Zwei Befunde im vorhandenen Code.** `lib/coverhash.ts` hält eine Modul-`Map` als Memo für Signaturen: sie lebt **pro Serverinstanz** und stirbt mit ihr, weshalb eine kalte Instanz neu dekodiert (billig, weil die Bytes 30 Tage gecacht sind, aber nicht umsonst) — das ist die Ursache der Beobachtung aus SPEC §7, dass die Cover-Zahl beim zweiten Besuch sinkt. Und die `Map` hat **keine Obergrenze**; bei den heutigen Zahlen harmlos, bei einer lange laufenden Instanz ein Leck.
+
+**Der billigste Gewinn braucht gar keine Datei:** Signaturen in den Next-Datencache statt in die Modul-`Map`. Next 16 hat dafür die `use cache`-Direktive mit `cacheLife`, die ältere `unstable_cache` gibt es weiterhin; welche bei der aktuellen Konfiguration greift, ist vor dem Bauen zu prüfen, da `cacheComponents` in `next.config.ts` nicht gesetzt ist. Damit sähe der erste Besucher, was heute erst der zweite sieht.

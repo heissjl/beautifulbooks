@@ -76,6 +76,14 @@ Keine davon ist Code. 0.1 bis 0.4 und 0.8 stehen vor dem Deployment; 0.5 bis 0.7
 
 - [ ] **0.8 Zwei Minuten von Hand: geht Enter im Suchfeld?** Der Durchklick konnte es nicht prüfen — das Automatisierungs-Panel schickt Tastendrücke ohne Tastenwert, deshalb löste weder Enter noch ein Zeilenumbruch ein Absenden aus. Das Formular hat `onSubmit` und einen `type="submit"`-Knopf, im echten Browser sollte es also gehen. Es ist der häufigste Weg, eine Suche abzuschicken, deshalb gehört es geprüft und nicht angenommen. Gleich mitprüfen: Tab-Reihenfolge, Enter auf einer Cover-Kachel, Sichtbarkeit der Fokus-Ringe. Kommt dabei etwas heraus, wird daraus ein Punkt in Phase 1.
 
+- [ ] **0.9 Speichermodell: eine Präzisierung von E6 abnicken.** (Vorschlag aus [PLAN-speicher.md](docs/plans/PLAN-speicher.md), 2026-09-07.) Beim Durchdenken von 6.10 zerfiel „brauchen wir einen Speicher?" in zwei Fragen, die fast nichts miteinander zu tun haben: ein **Index**, den ein Skript vor dem Deploy baut und der als Datei im Repo mitkommt, und **Zähler**, in die die laufende Seite schreibt. Nur das Zweite ist Infrastruktur.
+
+  E6 sagt heute „Next-`fetch`-Cache, kein KV, bis ein Auslöser eintritt", und das liest sich als „gar kein Speicher". Damit blieben sechs Punkte liegen, die an nichts als einer Datei hängen (6.10, 6.9, 5.1, 5.4, 1.9 und das kalte Hashing aus SPEC §7). Vorschlag, als Satz an E6 oder als E18:
+
+  > Gebaute, nur lesbare Daten im Repo sind kein Speicher im Sinne von E6. Ein Index, den ein Skript vor dem Deploy erzeugt und der mit dem Deploy ausgeliefert wird, ist erlaubt; ein Speicher, in den die laufende Seite schreibt, bleibt zurückgestellt.
+
+  Zwei Minuten, aber es ist eine Entscheidung und keine Umsetzung.
+
 ---
 
 ## Phase 1 — Vor dem Deployment bauen
@@ -335,6 +343,8 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 - [ ] **6.10 „Cover, die so aussehen wie dieses".** (Julian, 2026-09-07: „zeige ähnliche cover, ähnlich wie ‚mehr von diesem Autor', aber für ähnliche Bilder. Vielleicht geht das über einen smart aufgebauten Cache oder eine smarte kleine Datenbank.") Der Instinkt mit der kleinen Datenbank ist richtig, und die Größenordnung ist freundlicher, als sie klingt.
 
   **Was schon da ist.** Jedes Cover bekommt serverseitig eine Signatur (`lib/imagehash.ts`): 64-Bit-dHash, Kontrast, mittlere Helligkeit. Der Vergleich zweier Cover ist ein XOR und ein Bitzähler — das ist die Faltung auf der Wand, und sie funktioniert.
+
+  *Speichermodell und Größenrechnung dazu: [docs/plans/PLAN-speicher.md](docs/plans/PLAN-speicher.md); die Entscheidung, die es braucht, ist 0.9.*
 
   **Was fehlt, erstens: ein Gedächtnis.** Signaturen werden heute bei jeder Anfrage neu gerechnet und nirgends aufbewahrt; gecacht sind nur die Bildbytes (30 Tage). „Ähnlich" über Werke hinweg braucht einen Index über viele Cover. Der ist klein: eine Signatur sind 8 Byte, bei 500 kuratierten Werken à 50 Covern etwa 25.000 Einträge, also **wenige hundert Kilobyte**. Ein linearer Durchlauf über 25.000 XOR-Vergleiche dauert Mikrosekunden — es braucht keinen ausgefeilten Index, eine beim Build erzeugte Datei oder ein KV-Eintrag genügt. Das ist deutlich billiger als der Redis-Punkt, den die zurückgestellten Sachen unten führen.
 
