@@ -204,7 +204,7 @@ Die Seite landet als JSON oder MDX unter `content/`, eine Route rendert sie mit 
 
 ## 6. Reihenfolge
 
-1. **5.1 zuerst** — ohne die Liste der ~500 Werke gibt es keine Kandidaten. Sie fällt aus den Suchen der Analyse-Seite (Phase 3) plus einer Setzliste.
+1. **5.1 zuerst** — ohne die Liste der ~500 Werke gibt es keine Kandidaten. Sie ist eine schlichte Liste von Work-IDs, die drei Zwecken dient (Sitemap, Vorrendern der vordersten Seiten, Kandidaten für die Gattungen hier) und aus Ausgabenzahl, Coverzahl und Leserzahl gefiltert wird; Einzelheiten im Roadmap-Punkt 5.1.
 2. **5.4b Jahrzehnte-Seiten** als erste Gattung: vollständig aus vorhandenen Daten, kein Google-Aufruf, kein Modell nötig. Damit lässt sich die Kette bauen und messen, bevor Prosa ins Spiel kommt.
 3. **5.4a Reihen-Seiten** danach, weil sie den größten Sucherfolg versprechen und die Aliaslisten Julians Zeit kosten.
 4. **5.5 Pinterest** parallel, sobald es Seiten zum Verlinken gibt.
