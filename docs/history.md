@@ -619,3 +619,15 @@ Julian wollte Neuromancer, Pynchon, Arno Schmidt, *Berlin Alexanderplatz* und Cl
 **Heraus** flogen die vier vorhersehbarsten Einträge einer Klassikerliste: *Pride and Prejudice*, *The Hobbit*, *Dracula*, *Frankenstein*. **Herein** kamen Neuromancer, Berlin Alexanderplatz, Vom Kriege und KAFF. Geblieben sind 1984, Gatsby, Dune, Ulysses, Lolita, Moby Dick, Beloved und Gravity's Rainbow. Die Reihenfolge ist fürs Auge gesetzt, nicht nach Rang: hell neben dunkel, keine zwei roten Cover nebeneinander.
 
 Nebenbei festgehalten, weil es sich schon einmal verwechselt hat: `lib/curated.ts` ist **nicht** die Liste aus ROADMAP 5.1. Diese zwölf sind nach Aussehen gewählt, jene 500 nach Ausgabenzahl für die Sitemap.
+
+---
+
+## 2026-09-07 · Recherche Goodreads, und was ein „ähnliche Cover" kosten würde
+
+Zwei Ideen von Julian, beide geprüft statt geschätzt. Die Punkte daraus sind ROADMAP 6.10 und 6.11.
+
+**Goodreads ist rechtlich zu.** Seit dem 8. Dezember 2020 gibt Goodreads keine neuen Entwicklerschlüssel mehr aus und hat die öffentliche API zurückgezogen ([Ankündigung im Entwicklerforum](https://www.goodreads.com/topic/show/21788520-api-deprecation), [Bericht](https://developers.slashdot.org/story/20/12/17/1522242/goodreads-is-retiring-its-current-api-and-book-loving-developers-arent-happy)). Die [Nutzungsbedingungen](https://www.goodreads.com/about/terms) untersagen ausdrücklich, Inhalte des Dienstes zu kopieren, zu vervielfältigen, öffentlich anzuzeigen, zu verbreiten oder Abgeleitetes daraus herzustellen; Rezensionen gehören ihren Verfassern, sind aber an Goodreads lizenziert, und der Weitergabe-Kanal für Dritte ist ein bezahltes Abonnement des Rezensions-Feeds. Übernahme von Editionsdaten, Rezensionen oder Bewertungen scheidet damit aus, auch über Scraper von Dritten. Dazu kommt: Goodreads gehört Amazon, und ein Verstoß gefährdet das Associates-Konto, das ROADMAP 4.2 braucht. **Erlaubt und nützlich bleibt das Verlinken.**
+
+**Die Bewertungen, die wir schon haben.** Open Library liefert bei jeder Suche `ratings_count`, `readinglog_count` und `want_to_read_count` mit; sie stehen seit Schritt 10 an `WorkSummary` und tragen das Ranking, werden aber nirgends angezeigt. Für *Nineteen Eighty-Four* sind das 8.491 Leser. Frei nutzbar, schon bezahlt, keine zusätzliche Anfrage.
+
+**„Ähnliche Cover" ist kleiner als gedacht und größer als es aussieht.** Klein: eine Signatur sind 8 Byte, ein Index über 500 kuratierte Werke à 50 Cover wären rund 25.000 Einträge und damit wenige hundert Kilobyte; ein linearer Vergleich über 25.000 XOR-Operationen dauert Mikrosekunden, ein ausgefeilter Index erübrigt sich. Größer: der dHash ist ein **Strukturhash auf Graustufen** — `decodeToGray` verwirft die Farbe in der ersten Schleife. Zwei Cover mit gleichem Aufbau, eines rot und eines blau, sind für ihn identisch. „Sieht aus wie" ohne Farbe wäre also ein falsches Versprechen (N12). Nötig wäre eine Erweiterung der Signatur um mittlere Sättigung und ein grobes RGB-Histogramm im selben Durchlauf — dasselbe Maß, das ROADMAP 1.9 für ein farbenfrohes Cover braucht.

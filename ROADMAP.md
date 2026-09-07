@@ -19,6 +19,8 @@ Vor dem Deployment stehen damit noch 1.1, 1.2, 1.3, 1.7, 1.8 und 1.9, dazu Julia
 
 **Dazugekommen am 2026-09-07 abends** (Julian beim Ansehen der eigenen Seite): der leere Platz oben rechts auf der Startseite (**1.9**, mit vier Vorschlägen), eine Prüfung anderer Datenbanken, bevor weiter an der Faltung geschraubt wird (**6.6**), die gemessenen Dubletten bei *Mason & Dixon* und in den Mosaiken (**6.7**), und eine „All languages"-Pille hinter „Unknown" auf der Detailseite (**6.8**). 6.6 steht ausdrücklich **vor** 6.7 und 6.4: löst eine andere Quelle die Dubletten an der Wurzel, ist jede Schwellenwert-Arbeit davor verschwendet.
 
+**Zwei Ideen vom 2026-09-07 abends** (Julian): **6.10** „Cover, die so aussehen wie dieses" — machbar, braucht aber einen kleinen Index (wenige hundert Kilobyte) und vor allem ein Farbmaß, denn der heutige Hash ist blind für Farbe; und **6.11** Goodreads, wo die Recherche eindeutig ausfällt: keine API mehr, die Nutzungsbedingungen verbieten die Übernahme von Daten, und Goodreads gehört Amazon, dessen Konto 4.2 braucht. Bleibt: verlinken — und die Leserzahlen von Open Library zeigen, die wir längst holen und bisher nur fürs Ranking benutzen.
+
 **Phase 5 neu gefasst am 2026-09-07** (Julian): ausführlicher Plan in [docs/plans/PLAN-5-reichweite.md](docs/plans/PLAN-5-reichweite.md), mit den Seitengattungen, der Kette aus Claude-Agenten, die sie herstellt, und den zehn Regeln gegen Slop. Der Newsletter ist gestrichen, die interne Verlinkung nach **6.9** gewandert, weil sie zuerst der Seite selbst nützt und einen Index braucht, den es noch nicht gibt.
 
 ---
@@ -311,6 +313,40 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 - [ ] Ladeszene: sanfter Übergang, wenn das Falten Kacheln umsortiert, sobald Signaturen eintreffen.
 - [ ] Feinjustierung nach Nutzung: Größe der Kacheln auf der Detailseite, Kontrast der Chips im Dark Mode.
 - [ ] Mosaik: gescannte Textseiten erkennen (bei *Dune* zwei von achtzig Bildern), nur wenn es sichtbar stört; die Kurzantwort hasht absichtlich nicht.
+
+---
+
+- [ ] **6.10 „Cover, die so aussehen wie dieses".** (Julian, 2026-09-07: „zeige ähnliche cover, ähnlich wie ‚mehr von diesem Autor', aber für ähnliche Bilder. Vielleicht geht das über einen smart aufgebauten Cache oder eine smarte kleine Datenbank.") Der Instinkt mit der kleinen Datenbank ist richtig, und die Größenordnung ist freundlicher, als sie klingt.
+
+  **Was schon da ist.** Jedes Cover bekommt serverseitig eine Signatur (`lib/imagehash.ts`): 64-Bit-dHash, Kontrast, mittlere Helligkeit. Der Vergleich zweier Cover ist ein XOR und ein Bitzähler — das ist die Faltung auf der Wand, und sie funktioniert.
+
+  **Was fehlt, erstens: ein Gedächtnis.** Signaturen werden heute bei jeder Anfrage neu gerechnet und nirgends aufbewahrt; gecacht sind nur die Bildbytes (30 Tage). „Ähnlich" über Werke hinweg braucht einen Index über viele Cover. Der ist klein: eine Signatur sind 8 Byte, bei 500 kuratierten Werken à 50 Covern etwa 25.000 Einträge, also **wenige hundert Kilobyte**. Ein linearer Durchlauf über 25.000 XOR-Vergleiche dauert Mikrosekunden — es braucht keinen ausgefeilten Index, eine beim Build erzeugte Datei oder ein KV-Eintrag genügt. Das ist deutlich billiger als der Redis-Punkt, den die zurückgestellten Sachen unten führen.
+
+  **Was fehlt, zweitens und wichtiger: ein Ähnlichkeitsmaß, das zu „sieht aus wie" passt.** Der dHash ist ein **Struktur**hash auf **Graustufen** (`decodeToGray` verwirft die Farbe in der ersten Schleife). Er findet dasselbe Bild wieder, und das soll er auch. „Ähnlich aussehend" heißt für einen Leser aber zuerst: ähnliche Farbe, ähnliche Stimmung. Zwei Cover mit gleichem Aufbau, eines rot und eines blau, sind für den dHash **identisch**. Ohne Farbe zeigte die Funktion also etwas anderes, als ihr Name verspricht — genau die Art Behauptung, die N12 verbietet.
+
+  **Vorgehen:**
+  1. Die Signatur um Farbe erweitern: mittlere Sättigung und ein grobes Histogramm (etwa 4×4×4 RGB-Eimer, ein paar hundert Byte), berechnet im selben Durchlauf, in dem heute die Graustufen entstehen. Es ist dasselbe Maß, das 1.9 für ein farbenfrohes Cover braucht — einmal bauen, zweimal nutzen.
+  2. Index über die kuratierten Werke beim Build erzeugen, als Datei im Repo. Erst wenn das trägt, über einen Speicher zur Laufzeit nachdenken.
+  3. Eine Reihe „Covers that look like this" unter dem gewählten Cover, drei bis sechs Kacheln, jede mit Buch und Jahr. Ohne Distanzangabe: die Zahl gehört uns, nicht dem Leser.
+  4. Eine Schwelle festlegen und **an echten Beispielen prüfen**, bevor es live geht. Visuelle Ähnlichkeit über fremde Bücher hinweg ist eine Fundgrube für peinliche Treffer; lieber wenige und gute als viele.
+
+  **Warum es sich lohnt:** das ist die Funktion, die es sonst nirgends gibt, und sie füttert Phase 5 direkt — „fünfzig Cover mit einem einzelnen Gesicht darauf" ist eine redaktionelle Seite, die aus demselben Index fällt.
+
+  **Vorher zu klären:** ob der Index über die kuratierten Werke bleibt oder über alles wachsen soll. Über alles hieße, jedes je angesehene Cover zu speichern — das ist eine eigene Datenbank und widerspricht E6, solange kein Traffic da ist.
+
+- [ ] **6.11 Goodreads: was geht, was nicht.** (Julian, 2026-09-07: bessere Anbindung, Editionsdaten, Rezensionen, Bewertungen.) Recherchiert am selben Tag, und die Antwort fällt klarer aus als erhofft.
+
+  **Eine Schnittstelle gibt es nicht mehr.** Goodreads gibt seit dem 8. Dezember 2020 keine neuen Entwicklerschlüssel aus und hat die öffentliche API zurückgezogen. Was es gibt, sind Scraper von Dritten — die aber genau das tun, was die Nutzungsbedingungen untersagen.
+
+  **Die Daten sind nicht frei.** Die Nutzungsbedingungen verbieten ausdrücklich, Inhalte des Dienstes zu kopieren, zu vervielfältigen, öffentlich anzuzeigen, zu verbreiten oder daraus Abgeleitetes herzustellen. Rezensionen gehören zwar ihren Verfassern, sind aber an Goodreads lizenziert und nicht freigegeben; der Weitergabe-Kanal für Dritte ist ein **bezahltes Abonnement** des Rezensions-Feeds, das etwa Google Play und Bibliotheken nutzen. Für uns heißt das: **Editionsdaten, Rezensionstexte und Bewertungszahlen von dort zu übernehmen, ist keine Option** — weder von Hand noch über den Scraper eines Dritten.
+
+  **Der zusätzliche Grund, es nicht zu versuchen:** Goodreads gehört Amazon. Ein Verstoß gegen deren Bedingungen gefährdet dasselbe Konto, an dem 4.2 hängt — Amazon Associates und die Product Advertising API, die das beste Handelsbild liefern würde. Ein paar Bewertungssterne sind das nicht wert.
+
+  **Was erlaubt ist und trotzdem etwas bringt: verlinken.** Ein Link auf die Goodreads-Seite eines Buchs ist gewöhnliche Verlinkung und kein Kopieren. Er passt zu den „Find this exact cover"-Links, die es schon gibt: eine Zeile „Reviews at Goodreads" neben WorldCat und Open Library, gebaut aus der ISBN (`goodreads.com/search?q=<isbn>`), ohne dass ein einziges Datum von dort bei uns landet.
+
+  **Und die Bewertungen, die wir längst haben.** Open Library liefert bei jeder Suche `ratings_count`, `readinglog_count` und `want_to_read_count` mit — wir holen sie heute schon und benutzen sie **nur** fürs Ranking (F1.4), zeigen sie aber nie an. Das ist eine offene, frei nutzbare Quelle, die nichts kostet und keine zusätzliche Anfrage braucht. „8.491 Leser bei Open Library" auf einer Karte wäre dieselbe Information, um die es geht, nur ohne Rechtsproblem.
+
+  **Zu entscheiden, bevor gebaut wird:** SPEC §1 schließt „Bewertungen" ausdrücklich aus dem Produkt aus. Gemeint sind erkennbar **eigene** Bewertungen — Leser, die bei uns Sterne vergeben — und nicht das Anzeigen einer fremden, benannten Zahl. Der Satz ist trotzdem zu schärfen, bevor irgendwo eine Zahl erscheint. Zwei Dinge stehen dabei fest: die Quelle wird genannt, und **im JSON-LD hat eine fremde Bewertung nichts zu suchen** — `aggregateRating` gilt dort als Aussage der Seite über sich selbst, und `bookJsonLd` lässt es aus genau diesem Grund weg (F2.13).
 
 ---
 
