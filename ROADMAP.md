@@ -48,7 +48,7 @@ Danach entscheidet sich anhand der Zahlen aus Phase 3, ob Phase 4 (Geld) oder Ph
 
 ## Phase 0 — Entscheidungen, die nur Julian treffen kann
 
-Keine davon ist Code. 0.1 bis 0.4 und 0.8 stehen vor dem Deployment; 0.5 bis 0.7 gehören dazu, dulden aber Aufschub.
+Keine davon ist Code. 0.1 bis 0.4 und 0.8 stehen vor dem Deployment; 0.5 bis 0.7 gehören dazu, dulden aber Aufschub. **0.10 ist ausdrücklich nicht jetzt zu entscheiden** — der Punkt sammelt nur die Argumente und nennt, welche Messungen die Frage später beantworten.
 
 - [ ] **0.1 Verfügbarkeits-Button** (SPEC F2.10, E12). Vor dem ersten Deployment entscheiden, denn auf `localhost` schadet er niemandem, öffentlich schon: vier von sechs Händlern verbieten den abgefragten Pfad in ihrer robots.txt, Amazons Partnerbedingungen untersagen automatisierte Zugriffe, und er sagt nur für etwa zwei von sechs Händlern überhaupt etwas.
 
@@ -78,13 +78,36 @@ Keine davon ist Code. 0.1 bis 0.4 und 0.8 stehen vor dem Deployment; 0.5 bis 0.7
 
 - [ ] **0.8 Zwei Minuten von Hand: geht Enter im Suchfeld?** Der Durchklick konnte es nicht prüfen — das Automatisierungs-Panel schickt Tastendrücke ohne Tastenwert, deshalb löste weder Enter noch ein Zeilenumbruch ein Absenden aus. Das Formular hat `onSubmit` und einen `type="submit"`-Knopf, im echten Browser sollte es also gehen. Es ist der häufigste Weg, eine Suche abzuschicken, deshalb gehört es geprüft und nicht angenommen. Gleich mitprüfen: Tab-Reihenfolge, Enter auf einer Cover-Kachel, Sichtbarkeit der Fokus-Ringe. Kommt dabei etwas heraus, wird daraus ein Punkt in Phase 1.
 
-- [ ] **0.9 Speichermodell: eine Präzisierung von E6 abnicken.** (Vorschlag aus [PLAN-speicher.md](docs/plans/PLAN-speicher.md), 2026-09-07.) Beim Durchdenken von 6.10 zerfiel „brauchen wir einen Speicher?" in zwei Fragen, die fast nichts miteinander zu tun haben: ein **Index**, den ein Skript vor dem Deploy baut und der als Datei im Repo mitkommt, und **Zähler**, in die die laufende Seite schreibt. Nur das Zweite ist Infrastruktur.
+- [x] **0.9 Speichermodell: eine Präzisierung von E6 abnicken.** *Erledigt 2026-09-07: als **E18** in SPEC §6 aufgenommen, E6 verweist darauf, und §1 sagt jetzt ausdrücklich, dass ein Index abgeleiteter Werte nicht die ausgeschlossene „eigene Buchdatenbank“ ist.* (Vorschlag aus [PLAN-speicher.md](docs/plans/PLAN-speicher.md), 2026-09-07.) Beim Durchdenken von 6.10 zerfiel „brauchen wir einen Speicher?" in zwei Fragen, die fast nichts miteinander zu tun haben: ein **Index**, den ein Skript vor dem Deploy baut und der als Datei im Repo mitkommt, und **Zähler**, in die die laufende Seite schreibt. Nur das Zweite ist Infrastruktur.
 
   E6 sagt heute „Next-`fetch`-Cache, kein KV, bis ein Auslöser eintritt", und das liest sich als „gar kein Speicher". Damit blieben sechs Punkte liegen, die an nichts als einer Datei hängen (6.10, 6.9, 5.1, 5.4, 1.9 und das kalte Hashing aus SPEC §7). Vorschlag, als Satz an E6 oder als E18:
 
   > Gebaute, nur lesbare Daten im Repo sind kein Speicher im Sinne von E6. Ein Index, den ein Skript vor dem Deploy erzeugt und der mit dem Deploy ausgeliefert wird, ist erlaubt; ein Speicher, in den die laufende Seite schreibt, bleibt zurückgestellt.
 
   Zwei Minuten, aber es ist eine Entscheidung und keine Umsetzung.
+
+- [ ] **0.10 Die Grundsatzfrage: hat das Projekt seinen eigenen Zuschnitt überholt?** (Julian, 2026-09-07, beim Abnicken von E18: „nimm auf, ob diese Frage nicht grundsätzlich überdacht werden muss mit dem Scope.") **Jetzt nicht entscheiden** — hier stehen die Argumente, damit die Entscheidung später billig ist.
+
+  E6 und der Ausschluss der „eigenen Buchdatenbank" in §1 stammen vom 2026-09-06, als das Produkt eine Suchmaske über zwei fremde Kataloge war. Seitdem ist einiges dazugekommen, das in dieselbe Richtung zeigt: ein Index über Cover-Signaturen (6.10), Autoren- und Verlagsregister (6.9), eine kuratierte Liste von 500 Werken (5.1), redaktionelle Seiten, die daraus schöpfen (5.4), Zähler für die Analyse (3.1) und ein Bild-Cache (1.3). E18 hält davon ein Stück auf Distanz — ein gebauter Index ist keine Datenbank —, aber die Frage dahinter ist damit nicht beantwortet, sondern vertagt.
+
+  **Was für einen eigenen Datenbestand spricht**, alles gemessen und nicht vermutet:
+  - **Die Quellen sind unzuverlässig.** Vier von rund vierzehn kalten Suchen liefen in den Timeout; ein Abruf von *Mumbo Jumbo* kam leer zurück und beim nächsten Versuch vollständig. Ein eigener Bestand wäre schnell und immer da.
+  - **Das Google-Kontingent ist die harte Grenze vor dem Start** — 1.000 am Tag, nicht erhöhbar, rund 500 kalte Detailseiten (N9).
+  - **Die Faltung scheitert an fremden Metadaten.** „Henry Holt" gegen „Holt Paperbacks" ist für uns nicht dasselbe Haus, weil die Verlagsnamen so ankommen, wie sie ankommen (6.7). Mit eigener Normalisierung wäre es lösbar.
+  - **Sechs offene Punkte hängen an einem Index**, der ohne Traffic-Argument nicht zu rechtfertigen war und mit E18 nun doch geht.
+
+  **Was dagegen spricht:**
+  - **Jede Kopie muss frisch gehalten werden**, und Veralten ist für diese Seite eine Form von Unehrlichkeit (N12). Der Zähler auf der Detailseite lebt davon, dass er den heutigen Stand der Quelle nennt.
+  - **Die Lizenzen sind nicht gleich.** Open-Library-Daten sind offen, **Google-Books-Inhalte sind nicht weitergabefähig**. Ein eigener Bestand müsste sauber trennen, was gespeichert werden darf und was nur durchgereicht werden darf — sonst entsteht genau das Problem, das 6.11 bei Goodreads schon beantwortet hat.
+  - **Betrieb kostet.** Ein Bestand, den niemand pflegt, ist schlechter als eine langsame Quelle. Solange es keine Besucher gibt, gäbe es auch niemanden, für den sich der Aufwand lohnt.
+  - **Das Produktversprechen hängt nicht daran.** „Judge a book by its covers" braucht keine eigene Datenbank, sondern gute Cover und ehrliche Texte.
+
+  **Wann die Frage sinnvoll zu entscheiden ist — und nicht früher:**
+  1. **Nach 6.6**, wenn gemessen ist, was andere Quellen leisten. Löst eine davon Dubletten und Abdeckung, erübrigt sich die Frage weitgehend.
+  2. **Nach Phase 3**, wenn Zahlen zeigen, wie viele Besucher es überhaupt gibt und was ein Tag an Kontingent wirklich kostet.
+  3. **Sofort dagegen**, wenn keine der beiden Messungen Not zeigt. Dann bleibt es bei zwei fremden Katalogen plus dem Index aus E18, und das ist die richtige Größe für dieses Projekt.
+
+  **Wonach zu entscheiden wäre**, wenn es so weit ist: nicht „hätten wir gern", sondern ob eine dieser drei Zahlen es verlangt — Ausfallquote der Quellen über eine Woche, tatsächlicher Kontingentverbrauch, und wie viele Leser eine Seite verlassen, bevor die Wand steht.
 
 ---
 

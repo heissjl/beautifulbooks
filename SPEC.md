@@ -18,7 +18,7 @@ Kernwert: *Die Cover eines Buchs nebeneinander sehen und die Ausgabe finden, die
 
 **Die Seite verspricht keine Vollständigkeit.** Open Library und Google Books kennen zusammen nur einen Teil dessen, was je gedruckt wurde, und nur ein Teil der Datensätze trägt ein Bild (§7). Deshalb steht nirgends „every“, „all“ oder „complete“, weder im UI noch in Meta-Tags noch im README; der Zähler auf der Detailseite nennt, was tatsächlich geprüft wurde, und alle Texte müssen zu ihm passen.
 
-Nicht Teil des Produkts (bewusst): Nutzerkonten, Bewertungen, Buchrücken-Bilder ([docs/spine-research.md](docs/spine-research.md)), eigene Buchdatenbank.
+Nicht Teil des Produkts (bewusst): Nutzerkonten, Bewertungen, Buchrücken-Bilder ([docs/spine-research.md](docs/spine-research.md)), eigene Buchdatenbank. Ein **Index abgeleiteter Werte** — Cover-Signaturen und Farbmaße, keine Katalogdatensätze — ist davon nicht betroffen (E18).
 
 ---
 
@@ -263,7 +263,7 @@ Leitidee: **Galerie, nicht Shop.** Tokens in `app/globals.css` (Tailwind 4, `@th
 | E3 | 2026-09-06 | Query in Titel + Autor zerlegen | Nein. Das Ranking trägt allein; vorgemerkt mit Auslöser (ROADMAP, zurückgestellt). |
 | E4 | 2026-09-06 → 09-07 | Mosaik-Cover ohne Fan-out | Gecachter Nachlade-Call pro Karte aus Seite 0; der Google-Anteil entfiel, weil Open Library allein alle vier Kacheln füllt. |
 | E5 | 2026-09-06 | Rolle von Google Books | Nur ergänzend, nur auf der Detailseite; erzeugt nie eigene Works. |
-| E6 | 2026-09-06 | Caching-Backend | Next-`fetch`-Cache, kein KV, bis ein Auslöser eintritt. |
+| E6 | 2026-09-06 | Caching-Backend | Next-`fetch`-Cache, kein KV, bis ein Auslöser eintritt. **Präzisiert durch E18**, das sagt, was hier „Speicher“ heißt. |
 | E7 | 2026-09-06 | Sprache der Doku | Spec und Roadmap Deutsch, Code, Kommentare und Commits Englisch. |
 | E8 | 2026-09-06 | Cover-Identität | Cover ist eigene Entität, Dedupe nach Bild, nie nach ISBN (2.3). |
 | E9 | 2026-09-06 | Märkte | Mehrere Märkte, US zuerst; Händler und Affiliate-Konten pro Markt; Oberfläche Englisch (2.4). |
@@ -275,6 +275,7 @@ Leitidee: **Galerie, nicht Shop.** Tokens in `app/globals.css` (Tailwind 4, `@th
 | E15 | 2026-09-07 | Mosaik und Sprachfilter | Das Mosaik bleibt sprachneutral: Seite 0 enthält die gesuchte Sprache fast nie, und weitere Seiten pro Karte sind zu teuer. |
 | E16 | 2026-09-07 | Leer aussehende Cover | Werden nie gelöscht, nur ans Ende sortiert; eine Löschregel traf vier echte Cover von acht. |
 | E17 | 2026-09-07 | Reihenfolge der Sprach-Tabs | Gesuchte Sprache, dann Englisch, dann Deutsch, dann Häufigkeit, Unbekannt zuletzt; Reihenfolge wird nach dem ersten Auftauchen eingefroren. |
+| E18 | 2026-09-07 | Was E6 mit „Speicher“ meint | **Gebaute, nur lesbare Daten im Repo sind kein Speicher im Sinne von E6.** Ein Index, den ein Skript vor dem Deploy erzeugt und der mit dem Deploy ausgeliefert wird, ist erlaubt; ein Speicher, in den die **laufende Seite schreibt**, bleibt zurückgestellt. Abgrenzung zu §1: ein solcher Index hält **abgeleitete Werte** (Signaturen, Farbmaße) und Kennungen, keine Katalogdatensätze — die „eigene Buchdatenbank“, die §1 ausschließt, bleibt ausgeschlossen. Begründung und Größenrechnung in [docs/plans/PLAN-speicher.md](docs/plans/PLAN-speicher.md). |
 
 ---
 
