@@ -651,3 +651,25 @@ Die DNB liefert dafür die sauberste Beschreibung, die es umsonst gibt: Reihe �
 Der Testfall ist damit als Trennschärfe angelegt: Handelsdatenbanken führen, was verkauft wird oder wurde, und ein 1979er Taschenbuch steht dort vermutlich nicht. Wer den Umschlag hat, sind eher Leser und Sammler. **Die naheliegende teure Antwort ISBNdb ist für diesen Fall vermutlich die falsche**, und das vor dem Abschluss eines Abos zu wissen, ist die halbe Miete der Prüfung.
 
 Nebenbei bestätigt: die Google-Books-Anfrage **ohne** Schlüssel scheitert an einem erschöpften anonymen Tageskontingent (`429 Quota exceeded … consumer project_number:624717413613`). Das ist die Aussage aus dem README, jetzt belegt — und der Grund, warum `GOOGLE_BOOKS_API_KEY` in Produktion Pflicht ist und nicht Kür.
+
+---
+
+## 2026-09-07 · Ein Durchgang durch die kurzen Texte
+
+Anlass war Julians Urteil über eine Zeile, die ich am selben Tag geschrieben hatte: „Some have hundreds of covers, some only a few" sei schlechtes Copywriting. Es stimmt, und der Fehler ist lehrreich. Die Zeile war als Ehrlichkeit gemeint, nachdem ein Werk mit zwei Covern auf die Wand kam — aber sie war ein **Vorbehalt in einem Slot, der einladen soll**. Sie beantwortete eine Frage, die niemand gestellt hatte, und gab dem Leser nichts zu tun.
+
+Die Lehre daraus, für den nächsten Fall: **N12 verlangt, kein falsches Versprechen zu geben, nicht, ein Zugeständnis zu machen.** Der Ausweg aus einem Versprechen, das man nicht halten kann, ist eine andere Aussage — nicht dieselbe Aussage mit einem „aber". Die neue Zeile sagt, was die Auswahl *ist*, und erklärt nebenbei, warum Clausewitz neben Dune steht.
+
+Fünf Stellen geändert:
+
+| Wo | Vorher | Nachher | Warum |
+|---|---|---|---|
+| Kuratierte Wand | „Some have hundreds of covers, some only a few" | „Twelve books, picked by eye" | Vorbehalt raus, Aussage rein; erklärt die eigensinnige Mischung |
+| Hero-Unterzeile | „Compare the editions of a book side by side, by language and year, …" | „Type a title and see the covers it has been printed with, by language and year. Then find the edition …" | „side by side" stand zweimal auf demselben Bildschirm (auch in der Kopfzeile); beginnt jetzt mit dem, was der Leser tun kann, statt mit einem abstrakten „Compare" |
+| Suchfeld | „Search a book title" | „A title, or a title and author" | War grammatisch schief und lehrte nichts. Autorenzugaben verbessern das Ranking nachweislich (gemessen: `ursula k le guin` liefert 20 Le-Guin-Werke), also gehört das in den Platzhalter |
+| Werk ohne Cover | „No cover images were found for this book." | „Neither catalogue has a cover for this book." | Passiv und ohne Grund; nennt jetzt wie überall sonst, wer nichts weiß |
+| Peek-Leiste ohne Bildunterschrift | „Details, buy and search links" | „Publisher, ISBN and where to find it" | Eine Aufzählung von Substantiven wird zu dem, was tatsächlich dort steht |
+
+Unangetastet blieben die Texte, die kurz zuvor mit Bedacht entstanden sind: die fünf Verdikt-Sätze aus `lib/verdicts.ts`, die Fehler- und Leerzustände der Suche, die Fußzeile und die Fußnote unter der Cover-Wand.
+
+**Kein Copywriting-Skill vorhanden** (die verfügbaren decken Design, Code-Review, Workflows und Konfiguration ab), der Durchgang war Handarbeit.

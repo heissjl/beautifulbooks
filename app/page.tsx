@@ -38,8 +38,8 @@ function HomeContent() {
                 Judge a book <em className="text-accent">by its covers.</em>
               </h1>
               <p className="mt-4 max-w-xl text-base text-ink-2 sm:text-lg">
-                Compare the editions of a book side by side, by language and year, and find the one
-                you&rsquo;d actually want on your shelf.
+                Type a title and see the covers it has been printed with, by language and year.
+                Then find the edition you&rsquo;d actually want on your shelf.
               </p>
             </div>
           )}

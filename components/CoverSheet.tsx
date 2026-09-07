@@ -58,7 +58,7 @@ export default function CoverSheet({ coverUrl, caption, children }: CoverSheetPr
           </span>
           <span className="min-w-0 flex-1">
             <span className="block text-sm font-medium text-ink">Selected cover</span>
-            <span className="block truncate text-xs text-ink-3">{caption || 'Details, buy and search links'}</span>
+            <span className="block truncate text-xs text-ink-3">{caption || 'Publisher, ISBN and where to find it'}</span>
           </span>
           <span className="btn shrink-0 py-1.5 text-xs">Details</span>
         </button>

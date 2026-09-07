@@ -325,7 +325,7 @@ function BookDetail() {
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
 
       {view.groups.length === 0 ? (
-        <p className="text-ink-2">No cover images were found for this book.</p>
+        <p className="text-ink-2">Neither catalogue has a cover for this book.</p>
       ) : (
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
           {/* Room for the sheet's peek bar, so the last row stays reachable. */}
@@ -338,7 +338,7 @@ function BookDetail() {
             />
             <p className="mt-6 max-w-prose text-xs leading-relaxed text-ink-3">
               Covers come from Open Library and Google Books. Most edition records carry no
-              scan, so a book has had covers that neither catalogue knows.
+              scan, so a book has had covers neither catalogue knows.
             </p>
           </div>
           {/*

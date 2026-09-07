@@ -85,7 +85,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
           onFocus={() => setShowSuggestions(true)}
-          placeholder="Search a book title"
+          placeholder="A title, or a title and author"
           aria-label="Search a book title"
           autoComplete="off"
           className={`w-full rounded-lg border border-line bg-surface pl-12 pr-28 text-ink placeholder:text-ink-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-colors focus:border-ink-3 focus:outline-none ${
