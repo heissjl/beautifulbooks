@@ -55,6 +55,16 @@ export interface WorkPageOptions {
   /** Hash this page's covers so the client can fold duplicates. */
   signatures?: boolean;
   hashDeadlineMs?: number;
+  /**
+   * Ask Google Books for this title on page 0. Default true.
+   *
+   * Off for a search card's mosaic: a result page of twenty cards would cost
+   * twenty Google requests, and measured on five works Google contributed
+   * nothing the mosaic needs — Open Library alone filled all four tiles every
+   * time (2026-09-07, SPEC §8.7). The quota is the binding constraint before
+   * launch, so a caller that does not need the retail image does not spend it.
+   */
+  googleBooks?: boolean;
 }
 
 export interface WorkDetailOptions {
@@ -96,10 +106,12 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
   if (!work) return null;
 
   const first = offset === 0;
-  // Google Books runs on page 0 only: its quota must not grow with the page count.
+  // Google Books runs on page 0 only, and only when the caller wants it: its
+  // quota must not grow with the page count nor with the size of a result list.
+  const askGoogle = first && (options.googleBooks ?? true);
   const [page, gbCandidates] = await Promise.all([
     getEditionsPage(workId, offset, OL_EDITIONS_PAGE),
-    first ? searchEditionCandidates(work.title, work.authors[0]) : Promise.resolve([]),
+    askGoogle ? searchEditionCandidates(work.title, work.authors[0]) : Promise.resolve([]),
   ]);
   const olEditions = parseEditions(page.entries, work);
   const cleanWork = first ? withoutTranslators(work, olEditions) : work;

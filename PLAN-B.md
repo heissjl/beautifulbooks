@@ -51,3 +51,59 @@ Das **Mosaik auf den Suchkarten** richtet sich nicht nach der Sprache: die Kache
 2. Im Browser: `/?q=1984&lang=de` → Detailseite. Erwartet: deutscher Tab führt, ein deutsches Cover ist ausgewählt, die Szene endet nicht vor dem deutschen Tab.
 3. Gegenprobe ohne Filter: `/?q=1984` → Englisch führt wie bisher.
 4. Gegenprobe mit einer Sprache, die das Werk nicht hat (`lang=ja` auf einem rein englischen Werk): die Szene endet trotzdem nach spätestens drei Seiten.
+
+---
+
+## B1 — Rate-Limit auf den API-Routen
+
+### B1a zuerst: das Mosaik kostet ein Google-Kontingent, das es nicht braucht
+
+Beim Planen des Limits gemessen, ein Befund aus Schritt 14: `?summary=1` ruft `getWorkPage(offset 0)` auf, und Seite 0 startet **immer** die Google-Titelsuche. Eine Trefferliste mit zwanzig Karten kostet damit bei kaltem Cache **1 + 20 = 21 Google-Anfragen** statt einer. Bei einem Tageskontingent von 1.000 sind das 47 Trefferlisten pro Tag — die Zahl aus §8.7 wäre um den Faktor 20 falsch.
+
+Google trägt zum Mosaik nichts bei, was Open Library nicht auch hätte. Gemessen am 2026-09-07, Seite 0, vier Kacheln pro Karte:
+
+| Werk | Cover auf Seite 0 | davon von Google | gefüllte Kacheln | gefüllte Kacheln ohne Google |
+|---|---|---|---|---|
+| Nineteen Eighty-Four | 24 | 2 | 4 | 4 |
+| Frankenstein | 22 | 6 | 4 | 4 |
+| The Lord of the Rings | 62 | 5 | 4 | 4 |
+| The Great Gatsby | 12 | 5 | 4 | 4 |
+| Wuthering Heights | 48 | 1 | 4 | 4 |
+
+**Änderung:** `WorkPageOptions` bekommt `googleBooks?: boolean` (Vorgabe `true`); der Zweig `summary=1` setzt es auf `false`. Damit kostet eine Trefferliste wieder genau eine Google-Anfrage, und die Detailseite bleibt unverändert bei zwei.
+
+### Warum überhaupt ein Limit
+
+§8.7: *„Rate-Limit auf den API-Routen, sonst zahlen Bots dein Google-Kontingent leer."* Nach B1a kostet nur noch dreierlei ein Kontingent: eine Suche, Seite 0 einer Detailseite und eine ISBN-Nachschau. Genau diese drei bekommen deshalb **zusätzlich zum Routenlimit ein gemeinsames Budget**: Es hat keinen Zweck, jede Route einzeln großzügig zu bemessen, wenn die knappe Ressource dieselbe ist.
+
+### Aufbau
+
+`lib/ratelimit.ts`, ohne Abhängigkeit, ohne Redis (§8.6 stellt Redis bis zu einem Auslöser zurück):
+
+- **Token-Bucket** je Schlüssel: `capacity` (Stoß) und `refillPerMinute` (Dauerlast). Reine Funktion `take(bucket, rule, now)` — testbar ohne Uhr und ohne Netz.
+- **Speicher** eine `Map` im Modul, mit Obergrenze: bei mehr als 10.000 Schlüsseln fallen die vollen (also untätigen) Eimer heraus. Ein Prozess, der nichts mehr tut, hält kein Gedächtnis.
+- **Schlüssel** ist die erste IP aus `x-forwarded-for`, sonst `x-real-ip`, sonst `unknown`. Alle Anfragen ohne erkennbare IP teilen sich einen Eimer; das ist die konservative Richtung.
+- **Antwort** bei Erschöpfung: `429` mit `Retry-After` in Sekunden und einer Fehlermeldung im gleichen Format wie die übrigen Routen (`{ error }`).
+
+### Werte
+
+| Eimer | Kapazität | Nachfüllung | Überlegung |
+|---|---|---|---|
+| `search` | 30 | 20/min | Eine Suche = eine Anfrage. |
+| `works` | 120 | 60/min | Eine Trefferliste löst bis zu 20 Kurzanfragen aus, eine Detailseite bis zu 16 Seiten. Zwei Trefferlisten plus zwei Bücher liegen im Stoß. |
+| `isbn` | 40 | 20/min | Eine pro ausgewähltem Cover. |
+| `availability` | 6 | 3/min | Teuerste Route: jeder Klick fragt jeden Händler zweimal an (ISBN und Kontroll-ISBN). |
+| `google` (quer) | 20 | 5/min | Gilt zusätzlich für Suche, Detailseite Seite 0 und ISBN-Nachschau. Ein Mensch verbraucht pro Buch zwei, pro Suche eine. |
+
+### Was das Limit nicht ist
+
+**Kein Sicherheitsmerkmal.** Der Zähler lebt im Speicher einer Instanz; Vercel startet mehrere, also ist die tatsächliche Grenze das Vielfache. Gegen einen verteilten Angriff hilft das nicht, gegen einen einzelnen Crawler, der eine Sitemap durchgeht, schon — und das ist der Fall aus §8.7. Redis kommt, wenn die Zahlen es verlangen (§8.6).
+
+Die CDN-Antworten (`s-maxage`) erreichen die Funktion gar nicht erst; das Limit greift also nur bei kalten Anfragen, und genau die kosten.
+
+### Prüfen
+
+1. Unit-Tests für `take`: Stoß, Nachfüllung über die Zeit, `retryAfter` korrekt, Eimer wird nicht größer als die Kapazität, Pruning.
+2. Im Browser eine Suche und eine Detailseite: keine 429 im Normalbetrieb (Netzwerk-Panel).
+3. Von Hand: 40 schnelle Anfragen an `/api/search` → die letzten kommen als 429 mit `Retry-After`.
+4. `npm run build`.

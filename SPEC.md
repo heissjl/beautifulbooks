@@ -487,7 +487,25 @@ Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil s
 
 - [ ] **Vercel-Plan.** Hobby ist nicht-kommerziell; mit dem ersten Affiliate-Link ist ein Wechsel fällig (8.2).
 - [ ] **Impressum und Datenschutzerklärung** stehen und sind verlinkt (8.2).
-- [ ] **Rate-Limit auf den API-Routen**, sonst zahlen Bots dein Google-Kontingent leer (8.2).
+- [x] **Rate-Limit auf den API-Routen** (erledigt 2026-09-07, `lib/ratelimit.ts`). Token-Bucket pro IP und Route, ohne Abhängigkeit: `search` 30/20 pro Minute, `works` 120/60, `isbn` 40/20, `availability` 6/3, dazu ein gemeinsamer Eimer `google` 20/5 für alle Anfragen, die ein Kontingent kosten können. Antwort bei Erschöpfung: 429 mit `Retry-After`.
+
+  **Zwei Einschränkungen, die hier stehen müssen, damit niemand sich in Sicherheit wiegt:**
+  1. Der Zähler liegt im Speicher *einer* Instanz. Vercel startet mehrere, die tatsächliche Grenze ist also ein Vielfaches. Gegen einen einzelnen Crawler hilft das, gegen einen verteilten nicht. Ein geteilter Zähler braucht Redis, das §8.6 bis zu einem Auslöser zurückstellt.
+  2. **Das Limit begrenzt den Tagesverbrauch nicht.** 5 Google-Anfragen pro Minute sind 7.200 pro Tag, also weit über einem Kontingent von 1.000. Es bremst den Stoß, nicht den Tag. Dafür braucht es Punkt 5 unten, den Tageszähler — und der braucht die Zahl aus Punkt 1.
+
+- [x] **Ein Suchergebnis kostete 21 Google-Anfragen statt einer** (gefunden und behoben 2026-09-07 beim Planen des Limits). Das Kartenmosaik aus §9.3 Schritt 14 ruft `getWorkPage(offset 0)` auf, und Seite 0 startete immer die Google-Titelsuche — bei zwanzig Karten also zwanzig zusätzliche Anfragen pro kalter Trefferliste. Damit wäre die Rechnung oben („eine Suche = 1") um den Faktor 20 falsch gewesen: statt hunderten nur 47 Trefferlisten pro Tag bei einem Kontingent von 1.000.
+
+  Google trägt zum Mosaik nichts bei, was Open Library nicht hat (gemessen 2026-09-07, Seite 0, vier Kacheln):
+
+  | Werk | Cover auf Seite 0 | davon Google | gefüllte Kacheln | ohne Google |
+  |---|---|---|---|---|
+  | Nineteen Eighty-Four | 24 | 2 | 4 | 4 |
+  | Frankenstein | 22 | 6 | 4 | 4 |
+  | The Lord of the Rings | 62 | 5 | 4 | 4 |
+  | The Great Gatsby | 12 | 5 | 4 | 4 |
+  | Wuthering Heights | 48 | 1 | 4 | 4 |
+
+  `WorkPageOptions.googleBooks` (Vorgabe `true`) schaltet die Titelsuche ab; der Zweig `summary=1` setzt sie auf `false`. Ein Test hält fest, dass ein Mosaik keine Google-Anfrage auslöst.
 - [x] **Händler-URLs geprüft** (2026-09-07, §9.3 Schritt 16): `npx tsx scripts/check-buylinks.ts`. Hugendubel und genialokal antworten mit HTTP 200, rendern ihre Treffer aber im Browser; ihre URL-Muster sind damit weder bestätigt noch widerlegt. Vor dem Start einmal von Hand im Browser nachsehen.
 
 ### 8.6 Funktionale Erweiterungen (aus Entscheidungen zurückgestellt)

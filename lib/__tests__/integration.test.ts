@@ -193,6 +193,15 @@ describe('getWorkPage', () => {
     expect(p!.editions.every(e => e.source === 'openlibrary')).toBe(true);
   });
 
+  it('spends no Google request when the caller does not want one (mosaics)', async () => {
+    // A result list of twenty cards would otherwise cost twenty title
+    // searches, twenty times the figure §8.7 plans the quota against.
+    const p = await getWorkPage(GATSBY, { offset: 0, googleBooks: false });
+    expect(calls.some(u => u.includes('googleapis'))).toBe(false);
+    expect(p!.covers.length).toBeGreaterThan(3);
+    expect(p!.editions.every(e => e.source === 'openlibrary')).toBe(true);
+  });
+
   it('serves different editions per page, which is the point of paging (SPEC §9.1 A)', async () => {
     const [first, second] = await Promise.all([getWorkPage(GATSBY, { offset: 0 }), getWorkPage(GATSBY, { offset: 100 })]);
     const ids = new Set(first!.editions.map(e => e.id));

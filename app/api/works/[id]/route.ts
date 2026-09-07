@@ -7,6 +7,7 @@ import type { PageInfo } from '@/lib/pages';
 import { OL_EDITIONS_PAGE } from '@/lib/sources/openlibrary';
 import { getWorkPage, isWorkId, MAX_EDITIONS_SCANNED } from '@/lib/work';
 import { MOSAIC_COVERS } from '@/lib/works';
+import { rateLimited } from '@/app/api/rate';
 
 /**
  * Response of GET /api/works/[id] (SPEC §2.3: covers are the unit).
@@ -75,8 +76,19 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
   const signatures = request.nextUrl.searchParams.get('signatures') === '1';
   const summary = request.nextUrl.searchParams.get('summary') === '1';
 
+  // Only a full page 0 asks Google; a mosaic and every later page do not, so
+  // they must not be charged against the shared quota bucket.
+  const spendsGoogle = !summary && offset === 0;
+  const limited = spendsGoogle ? rateLimited(request, 'works', 'google') : rateLimited(request, 'works');
+  if (limited) return limited;
+
   try {
-    const page = await getWorkPage(id, { offset: summary ? 0 : offset, signatures: summary ? false : signatures });
+    const page = await getWorkPage(id, {
+      offset: summary ? 0 : offset,
+      signatures: summary ? false : signatures,
+      // A mosaic never spends a Google request (SPEC §8.7, measured 2026-09-07).
+      googleBooks: !summary,
+    });
     if (!page) {
       return NextResponse.json({ error: 'Work not found' }, { status: 404 });
     }

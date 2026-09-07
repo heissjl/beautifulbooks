@@ -3,6 +3,7 @@ import { checkAvailability, type ShopCheck } from '@/lib/availability';
 import { isIsbn13 } from '@/lib/isbn';
 import { cleanIsbn } from '@/lib/normalize';
 import { marketFromRequest } from '@/app/api/works/[id]/route';
+import { rateLimited } from '@/app/api/rate';
 
 export interface AvailabilityResponse {
   isbn13: string;
@@ -21,6 +22,9 @@ export interface AvailabilityResponse {
  * answer, not an error.
  */
 export async function GET(request: NextRequest) {
+  const limited = rateLimited(request, 'availability');
+  if (limited) return limited;
+
   const isbn13 = cleanIsbn(request.nextUrl.searchParams.get('isbn') ?? '');
   if (!isIsbn13(isbn13)) {
     return NextResponse.json({ error: 'Malformed ISBN' }, { status: 400 });
