@@ -34,10 +34,11 @@ function HomeContent() {
           {isHero && (
             <div className="mb-8 max-w-2xl">
               <h1 className="text-4xl leading-[1.1] text-ink sm:text-5xl">
-                Every cover of every edition, <em className="text-accent">in one place.</em>
+                Judge a book <em className="text-accent">by its covers.</em>
               </h1>
               <p className="mt-4 max-w-xl text-base text-ink-2 sm:text-lg">
-                Search a book, compare all the covers it has ever had, and find the edition you actually want to own.
+                Compare the editions of a book side by side, by language and year, and find the one
+                you&rsquo;d actually want on your shelf.
               </p>
             </div>
           )}

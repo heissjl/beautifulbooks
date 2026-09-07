@@ -36,7 +36,7 @@ export default function CoverGallery({ groups, selectedCover, onSelectCover, cap
   const total = groups.reduce((n, g) => n + g.covers.length, 0);
 
   return (
-    <section aria-label="All covers">
+    <section aria-label="Covers">
       <div className="mb-4 flex flex-wrap items-center gap-2" role="tablist" aria-label="Language">
         <span className="kicker mr-2">{total} cover{total !== 1 ? 's' : ''}</span>
         {groups.map(g => (

@@ -17,7 +17,7 @@ export default function SiteHeader({ left, right }: SiteHeaderProps) {
             Beautiful Books
           </Link>
         </div>
-        <p className="hidden text-sm text-ink-3 md:block">Every cover of every edition.</p>
+        <p className="hidden text-sm text-ink-3 md:block">Covers, side by side.</p>
         <div className="ml-auto flex items-center gap-2">{right}</div>
       </div>
     </header>

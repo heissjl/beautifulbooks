@@ -1,10 +1,10 @@
 # Beautiful Books
 
-A visual book search: type a title, get one card per book with a mosaic of its covers. Open a book to see every edition, grouped by language, with metadata and purchase links.
+A visual book search: type a title, get one card per book with a mosaic of its covers. Open a book to see the editions those catalogues have a cover for, grouped by language, with metadata and purchase links.
 
 Data comes from [Open Library](https://openlibrary.org/developers/api) (primary) and [Google Books](https://developers.google.com/books) (supplementary covers and descriptions).
 
-**Status:** the data layer is being rewritten. See [SPEC.md](SPEC.md) for the full specification, the findings on the previous implementation, and the roadmap.
+**Status:** the data layer rewrite and the trust pass are done (SPEC §7 steps 1–9, §9.3 steps 10–16). What remains, in order, is in [SPEC.md](SPEC.md) §10; the site is not deployed yet.
 
 ## Stack
 

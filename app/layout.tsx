@@ -25,7 +25,8 @@ export const metadata: Metadata = {
     default: "Beautiful Books",
     template: "%s · Beautiful Books",
   },
-  description: "Every cover of every edition of a book, in one place. Find the edition you actually want.",
+  description:
+    "Compare the covers and editions a book has been printed with, side by side. Data from Open Library and Google Books.",
 };
 
 export const viewport: Viewport = {
