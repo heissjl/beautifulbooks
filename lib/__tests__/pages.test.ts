@@ -121,8 +121,13 @@ describe('orderGroups', () => {
     const groups = [group(undefined, 5), group('en', 8), group('de', 3), group('fr', 4)];
     expect(orderGroups(groups, 'fr').map(g => g.language)).toEqual(['fr', 'en', 'de', undefined]);
     expect(orderGroups(groups, 'all').map(g => g.language)).toEqual(['en', 'de', 'fr', undefined]);
-    // Searching a lead language does not duplicate its position.
-    expect(orderGroups(groups, 'de').map(g => g.language)).toEqual(['en', 'de', 'fr', undefined]);
+  });
+
+  it('leads with a searched lead language too, without giving it two places', () => {
+    const groups = [group(undefined, 5), group('en', 8), group('de', 3), group('fr', 4)];
+    // The reported bug: German searched, English tab shown (2026-09-07).
+    expect(orderGroups(groups, 'de').map(g => g.language)).toEqual(['de', 'en', 'fr', undefined]);
+    expect(orderGroups(groups, 'en').map(g => g.language)).toEqual(['en', 'de', 'fr', undefined]);
   });
 
   it('copes with a work that has no English or German editions', () => {
@@ -142,8 +147,19 @@ describe('leadLanguagesSettled', () => {
     expect(leadLanguagesSettled([group('tr', 4), group('en', 1)], false)).toBe(true);
   });
 
+  it('waits for the searched language instead, wherever it sits', () => {
+    const loaded = [group('en', 12)];
+    expect(leadLanguagesSettled(loaded, false, 'de')).toBe(false);
+    expect(leadLanguagesSettled([...loaded, group('de', 1)], false, 'de')).toBe(true);
+    // No filter, or the "all" option, keeps the English rule.
+    expect(leadLanguagesSettled(loaded, false, '')).toBe(true);
+    expect(leadLanguagesSettled(loaded, false, 'all')).toBe(true);
+  });
+
   it('gives up waiting once every page is loaded', () => {
     expect(leadLanguagesSettled([group('tr', 4)], true)).toBe(true);
     expect(leadLanguagesSettled([], true)).toBe(true);
+    // A language the work does not have must not hold the scene for ever.
+    expect(leadLanguagesSettled([group('en', 12)], true, 'ja')).toBe(true);
   });
 });

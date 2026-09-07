@@ -230,9 +230,10 @@ function BookDetail() {
   }, [pages, lang, isbnCovers]);
 
   // Hold the scene until the pinned tabs can no longer appear underneath the
-  // reader's cursor: English present, everything loaded, or three pages in,
-  // whichever comes first (Julian 2026-09-07).
-  const tabsSettled = !view || leadLanguagesSettled(view.groups, view.merged.done || view.merged.checked >= 300);
+  // reader's cursor: the searched language (else English) present, everything
+  // loaded, or three pages in, whichever comes first (Julian 2026-09-07).
+  const tabsSettled =
+    !view || leadLanguagesSettled(view.groups, view.merged.done || view.merged.checked >= 300, lang || undefined);
   const inScene = pages.status === 'loading' || (pages.status === 'ready' && (!scene.done || !tabsSettled));
 
   // When the scene ends, fly the staged covers to their gallery tiles.

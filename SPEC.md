@@ -402,6 +402,23 @@ Drei Beobachtungen nach dem ersten Durchgang mit der neuen Oberfläche. Reihenfo
   - Richtig: perzeptueller Hash (dHash/pHash) serverseitig pro Cover-ID, gecacht; Hamming-Distanz ≤ Schwelle = dasselbe Bild. Schließt auch den Fall „Scan bei OL, Verlagsbild bei Google“ ab. Damit zieht Phase 2 aus E8 nach vorn.
   - Nebeneffekt: mit dem Hash lassen sich auch leere Scans erkennen (geringe Varianz) und ausblenden.
 
+### 8.5.1 Aus der Nutzung (2026-09-07, Julian)
+
+- [x] **Die im Suchfeld gewählte Sprache schlug nicht auf die Detailseite durch.** *Behoben 2026-09-07.* Gemessen an `/book/OL1168083W?q=1984&lang=de`: die URL trug die Sprache, die Wand zeigte trotzdem den englischen Tab mit einem englischen Cover. Drei Ursachen in derselben Kette:
+  1. `orderGroups` in `lib/pages.ts` setzte die gewünschte Sprache nur dann nach vorn, wenn sie *nicht* zu den festgesetzten Lead-Sprachen `en`/`de` gehörte — also gerade bei den beiden Sprachen nicht, die im Filter am häufigsten gewählt werden. Ein Test hielt das ausdrücklich fest. Die Absicht war, eine Position nicht doppelt zu vergeben; die Wirkung war, den Wunsch des Lesers zu verwerfen. Jetzt führt die gewünschte Sprache immer, die restlichen Lead-Sprachen folgen.
+  2. `leadLanguagesSettled` wartete auf Englisch statt auf die gewünschte Sprache. Open Library sortiert Ausgaben nach Datensatzalter, deutsche Ausgaben liegen deshalb oft erst auf Seite 2 oder 3; die Ladeszene endete vorher, und der deutsche Tab schob sich später unter dem Cursor des Lesers dazwischen. Die Obergrenze der Wartezeit bleibt (`done` oder 300 geprüfte Ausgaben), damit eine Sprache, die das Werk nicht hat, die Szene nicht anhält.
+  3. Das ausgewählte Cover ist das erste der ersten Gruppe und folgte damit automatisch mit.
+
+  **Bewusst nicht geändert: das Mosaik auf den Suchkarten bleibt sprachneutral.** Gemessen am 2026-09-07 auf Seite 0 dreier Werke (die Karten haben nur diese eine Seite):
+
+  | Werk | Cover auf Seite 0 | Sprachen der ersten acht |
+  |---|---|---|
+  | Nineteen Eighty-Four | 24 | es, –, –, ca, –, –, –, – |
+  | Frankenstein | 22 | –, pt, pt, fr, nl, –, es, pt |
+  | The Lord of the Rings | 62 | it, pt, –, es, –, –, de, – |
+
+  Seite 0 ist ein Sprachengemisch, meist ohne Sprachangabe und fast nie in der gesuchten Sprache: bei *1984* liegt dort keine einzige deutsche Ausgabe. Eine Sortierung nach Wunschsprache hätte also nichts zu sortieren, und weitere Seiten pro Karte zu laden ist um Größenordnungen zu teuer. Die Karte zeigt das Buch, nicht die Ausgabe; die Sprache entscheidet sich auf der Detailseite.
+
 ### 8.7 Klärungsliste vor dem Start mit echten Nutzern (Julian, 2026-09-07)
 
 Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil sie Geld, Recht oder Verfügbarkeit betreffen. Anders als 8.1–8.4 sind das keine Aufgaben, sondern Entscheidungen mit offenem Ausgang.

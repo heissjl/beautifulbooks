@@ -112,24 +112,27 @@ export const LEAD_LANGUAGES = ['en', 'de'] as const;
 /**
  * Orders the language tabs (SPEC §9.3 step 12, Julian 2026-09-07).
  *
- * English first, then German, then everything else by how many covers it has,
- * with the unknown-language group last. The language the user searched in
- * comes before all of them.
+ * The language the user searched in leads, then English, then German, then
+ * everything else by how many covers it has, with the unknown-language group
+ * last.
  *
  * `groupCoversByLanguage` orders purely by size, which changes with every
  * page that arrives, so the tabs would reshuffle under the reader's cursor.
- * Pinning the first two positions means the row the reader actually points at
- * stands still; the tail may still reorder as counts grow, which is what the
- * reader expects of a long tail.
+ * Pinning the first places means the row the reader actually points at stands
+ * still; the tail may still reorder as counts grow, which is what the reader
+ * expects of a long tail.
+ *
+ * A searched lead language leads too. The first version skipped that case to
+ * avoid handing out the same position twice, which quietly threw away the two
+ * commonest wishes: searching in German landed on the English tab with an
+ * English cover selected (measured 2026-09-07).
  */
 export function orderGroups(
   groups: readonly LanguageGroup[],
   preferred?: string,
 ): LanguageGroup[] {
-  const wanted = preferred && preferred !== 'all' && !LEAD_LANGUAGES.includes(preferred as 'en' | 'de')
-    ? preferred
-    : undefined;
-  const lead = [...(wanted ? [wanted] : []), ...LEAD_LANGUAGES];
+  const wanted = preferred && preferred !== 'all' ? preferred : undefined;
+  const lead = [...(wanted ? [wanted] : []), ...LEAD_LANGUAGES.filter(l => l !== wanted)];
 
   const rank = (g: LanguageGroup): number => {
     if (g.language === undefined) return lead.length + 1;
@@ -152,13 +155,25 @@ export function orderGroups(
 /**
  * Is the wall ready to be shown without the tabs jumping afterwards?
  *
- * The lead languages are pinned, so the row settles as soon as they are known
- * to be there or known to be absent. While the first page is still the only
- * one loaded, an English group that has not turned up yet may still arrive
- * and push everything one place to the right; waiting for it costs a moment
- * and buys a row that does not move (Julian 2026-09-07).
+ * The leading languages are pinned, so the row settles as soon as they are
+ * known to be there or known to be absent. While the first page is still the
+ * only one loaded, a group that has not turned up yet may still arrive and
+ * push everything one place to the right; waiting for it costs a moment and
+ * buys a row that does not move (Julian 2026-09-07).
+ *
+ * `preferred` is the language the reader searched in. Open Library returns
+ * editions by record age, so a German group often appears only on page 2 or
+ * 3; ending the scene before it arrives shows an English wall to someone who
+ * asked for German, and then moves the tabs under their cursor. The caller
+ * bounds the wait (`done`), so a language the work does not have costs at
+ * most those pages.
  */
-export function leadLanguagesSettled(groups: ReadonlyArray<{ language?: string }>, done: boolean): boolean {
+export function leadLanguagesSettled(
+  groups: ReadonlyArray<{ language?: string }>,
+  done: boolean,
+  preferred?: string,
+): boolean {
   if (done) return true;
-  return groups.some(g => g.language === LEAD_LANGUAGES[0]);
+  const wanted = preferred && preferred !== 'all' ? preferred : LEAD_LANGUAGES[0];
+  return groups.some(g => g.language === wanted);
 }
