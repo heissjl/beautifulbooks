@@ -425,6 +425,8 @@ Drei Beobachtungen nach dem ersten Durchgang mit der neuen Oberfläche. Reihenfo
 
   **Was dabei zu entscheiden ist, und was nicht.** Unberührt bleiben geteilte Links mit `?cover=` (die Auswahl steht in der URL), die Peek-Leiste auf dem Telefon (die erscheint ohnehin erst bei einer Auswahl) und die Ladeszene. Zu gestalten ist allein die **breite Ansicht**: eine leere zweite Spalte wäre schlechter als das Problem. Kandidaten: die Wand läuft bis zur ersten Auswahl über die volle Breite und rückt dann zusammen; oder die Spalte trägt bis dahin eine kurze Erklärung, was ein Klick auf ein Cover bringt. Ersteres ist ehrlicher zur Sache, kostet aber ein Umspringen des Layouts.
 
+  **Julians dritter Vorschlag (2026-09-07), hier unbewertet festgehalten:** einen Algorithmus einbauen, der ein **farbenfrohes** Cover auswählt, und das kleine Google-Cover darunter erst nachladen, **wenn die Seitenleiste gescrollt wurde**. Die Auswahl bliebe damit automatisch, wäre aber nicht mehr willkürlich, und die Google-Anfrage fiele erst an, wenn jemand tatsächlich in Richtung der Kauf-Links liest.
+
 - [ ] **Die Kauf-Links sind in der Seitenleiste nicht auffindbar.** (Julian, 2026-09-07: „man weiß erst gar nicht, dass man scrollen muss".) Gemessen auf 1440 × 900, *Beloved*:
 
   | | |
