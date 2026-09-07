@@ -585,3 +585,14 @@ Der Plan für ROADMAP 1.1 steht in [plans/PLAN-1.1-keine-vorauswahl.md](plans/PL
 **`decodeToGray` verwirft die Farbe in der ersten Schleife.** `lib/imagehash.ts` rechnet jedes Bild sofort in Graustufen um; `signature()` liefert danach `hash`, `contrast` und `mean`, alle drei ohne Farbe. Ein Maß für „farbenfroh" — Julians Vorschlag vom selben Tag — ist daraus **nicht** ableitbar. Nachrüstbar ist es billig: ein zweiter Akkumulator für die Sättigung in derselben Schleife, und da die Signaturen bei jeder Anfrage aus den 30 Tage lang gecachten Bytes neu gerechnet werden (`lib/coverhash.ts` cacht die Bytes, nicht die Signatur), kostet es keine zusätzliche Ladung. Der Vorschlag ist deshalb nicht verworfen, sondern nach ROADMAP 1.9 gewandert, wo ein auffälliges Cover die Startseite illustrieren soll, statt für den Leser eine Ausgabe auszuwählen.
 
 **Klappentexte sind dünn und oft in der falschen Sprache.** *Wolf Hall*, Seite 0: von 26 Ausgaben tragen **3** eine Beschreibung, und die längste davon (927 Zeichen) gehört zu Editorial Presença — sie ist portugiesisch. Ein Panel, das schlicht die längste Beschreibung zeigt, setzt also einen portugiesischen Text unter ein englisches Buch. Der Plan sieht deshalb `blurbFor(editions, language)` vor: erst die gewünschte Sprache, dann der Rest, und die Sprache wird genannt, wenn ausgewichen wurde.
+
+**Was eine Werk-Ansicht zeigen könnte, gemessen.** Für dieselbe Planung über alle geladenen Seiten von vier Werken erhoben:
+
+| Werk | Ausgaben | mit Klappentext | Verlage | Jahre |
+|---|---|---|---|---|
+| Wolf Hall | 26 | 3 (2 en, 1 ohne Sprache) | 18 | 2009–2020 |
+| Beloved | 51 | 5 (4 en, 1 de) | 37 | 1987–2025 |
+| Mason & Dixon | 11 | 2 (1 en, 1 de) | 10 | 1997–2015 |
+| Mumbo Jumbo | 10 | 2 | 8 | 1972–2017 |
+
+Jedes Werk hat mindestens einen Klappentext, aber nur 10 bis 18 Prozent der Ausgaben tragen einen. Jahresspanne und Verlagszahl sind dagegen immer vorhanden und stehen bisher nirgends auf der Seite. Seitenzahl (14 von 26 bei *Wolf Hall*, 40 von 51 bei *Beloved*) und Format sind zu dünn für eine Aussage über das Werk. Nebenbei bestätigt: der erste Abruf von *Mumbo Jumbo* kam leer zurück und beim zweiten mit 10 Ausgaben — dieselbe Unzuverlässigkeit von Open Library, die 1.4 auf der Suchseite behandelt.

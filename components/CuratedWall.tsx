@@ -11,7 +11,7 @@ export default function CuratedWall() {
     <section aria-labelledby="curated-heading">
       <div className="mb-5 flex items-baseline justify-between">
         <h2 id="curated-heading" className="text-2xl text-ink">Start with a classic</h2>
-        <p className="hidden text-sm text-ink-3 sm:block">Books with dozens of covers to compare</p>
+        <p className="hidden text-sm text-ink-3 sm:block">Some have hundreds of covers, some only a few</p>
       </div>
       <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6">
         {CURATED_WORKS.map(w => (

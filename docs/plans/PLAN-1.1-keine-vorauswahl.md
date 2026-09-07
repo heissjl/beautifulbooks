@@ -107,13 +107,28 @@ Verhalten: ohne `selectedId` null; bei Treffer das Cover; sonst das Cover, in da
 
 ### 4.3 `components/WorkPanel.tsx` (neu, Client)
 
-Bewusst kurz. Drei Blöcke, in dieser Reihenfolge:
+**Was überhaupt zur Verfügung steht.** Gemessen am 2026-09-07 über alle geladenen Seiten von vier Werken, damit der Inhalt nicht erfunden wird:
 
-1. **Die Einladung.** Ein Satz, der sagt, was ein Klick bringt: „Pick a cover to see the edition it belongs to, its ISBN, and where to find a copy." Das ist der eigentliche Zweck des Panels.
-2. **Die Spanne der Jahre**, aus den geladenen Ausgaben: „Editions here run from 1925 to 2022." Neue Information — die Meta-Zeile nennt Cover und Datensätze, nicht die Zeitachse, und die ist das Versprechen des Produkts. **Achtung:** die Zahl wandert, solange Seiten nachladen, weil Seite 0 die jüngsten Datensätze bringt (bei *Wolf Hall* zuerst 2009–2020). Das ist zulässig, weil der Zähler daneben ohnehin läuft, aber die Zeile darf erst erscheinen, wenn mindestens zwei Seiten geladen sind — sonst behauptet sie eine Spanne, die es nicht gibt.
-3. **Der Klappentext**, wenn es einen gibt, dreizeilig beschnitten, mit Quellenangabe „Description from Google Books". Ohne Klappentext entfällt der Block ersatzlos.
+| Werk | Ausgaben | mit Klappentext | Verlage | Jahre | mit Vorschau |
+|---|---|---|---|---|---|
+| Wolf Hall | 26 | 3 (2 en, 1 ohne Sprache), längster 927 Zeichen | 18 | 2009–2020 | 4 |
+| Beloved | 51 | 5 (4 en, 1 de), längster 2.307 Zeichen | 37 | 1987–2025 | 7 |
+| Mason & Dixon | 11 | 2 (1 en, 1 de), längster 920 Zeichen | 10 | 1997–2015 | 3 |
+| Mumbo Jumbo | 10 | 2 | 8 | 1972–2017 | – |
 
-**Nicht** hinein: Titel und Autor (stehen im `TitleBlock` darüber), die Cover-Zahl (steht in der Meta-Zeile), die Sprachen (stehen in den Reitern). Doppelungen machen die Spalte zum Beiwerk.
+Daraus folgt der Zuschnitt: **jedes** der vier Werke hat mindestens einen Klappentext, aber nur 10 bis 18 Prozent der Ausgaben tragen einen, und regelmäßig ist einer davon in einer anderen Sprache. Verlagszahl und Jahresspanne sind dagegen **immer** da. Seitenzahl und Format sind zu dünn (14 von 26, 40 von 51) und taugen nicht für eine Aussage über das Werk.
+
+**Der Inhalt, in dieser Reihenfolge:**
+
+1. **Ein Kicker** „This book", damit klar ist, dass die Spalte gerade nicht von einer Ausgabe spricht.
+2. **Eine Zeile mit zwei Zahlen, die es sonst nirgends gibt:** „Editions here run from 1987 to 2025, from 37 publishers." Die Meta-Zeile oben nennt Cover und geprüfte Datensätze, nicht die Zeitachse und nicht die Streuung über Verlage — und genau das ist das Thema der Seite. Das „here" ist wörtlich zu nehmen und nötig: beide Zahlen beziehen sich auf die **geladenen** Ausgaben und wachsen, solange Seiten nachkommen. Deshalb erscheint die Zeile erst, wenn mindestens zwei Seiten geladen sind oder das Werk fertig ist; sonst behauptet sie bei *Wolf Hall* zuerst „2009 bis 2020" und korrigiert sich hinterher.
+3. **Der Klappentext**, sprachbewusst gewählt (4.4), auf vier Zeilen beschnitten, mit Quelle: „Description from the Fourth Estate 2010 edition, via Google Books." Die Ausgabe zu nennen ist kein Schmuck — Klappentexte sind Verlagswerbung für **eine** Ausgabe, und wer das weiß, liest sie richtig. Ohne Klappentext entfällt der Block ersatzlos.
+4. **Die Einladung**, leise und zum Schluss: „Pick a cover to see the edition it belongs to, its ISBN and where to find a copy." Sie steht nicht oben, weil ein Leser vor einer Wand aus Covern nicht erklärt bekommen muss, dass man Cover anklicken kann; sie beantwortet nur, was danach passiert.
+5. **Ein kleiner Herkunftslink** „This work at Open Library". Das ist die Stelle, an der jemand die Daten nachsehen und **korrigieren** kann — Open Library ist ein Wiki, und die falsche Jahreszahl bei *Gatsby* (1920 statt 1925, SPEC N12) ist dort mit zwei Klicks zu reparieren. Der Link steht heute nur im JSON-LD als `sameAs` und ist für Leser unsichtbar.
+
+**Nicht** hinein: Titel und Autor (stehen im `TitleBlock` darüber), Cover- und Ausgabenzahl (Meta-Zeile), die Sprachen (Reiter), Seitenzahl und Format (zu dünn). Doppelungen machen aus der Spalte Beiwerk.
+
+**Der natürliche nächste Bewohner** ist [6.9](../../ROADMAP.md), „Mehr von diesem Autor": das ist eine Aussage über das Werk, nicht über eine Ausgabe, und hätte hier zum ersten Mal einen Platz. Nicht Teil dieses Punktes, aber der Grund, das Panel als Werk-Ansicht anzulegen und nicht als Erklärtext.
 
 ### 4.4 `lib/works.ts`: den Klappentext auswählen
 
