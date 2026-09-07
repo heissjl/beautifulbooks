@@ -397,7 +397,7 @@ Drei Beobachtungen nach dem ersten Durchgang mit der neuen Oberfläche. Reihenfo
   - **Reverse Image Search mit dem Cover-Bild:** Google Lens per URL (`https://lens.google.com/uploadbyurl?url=<Cover-URL>`), TinEye (`https://tineye.com/search?url=<Cover-URL>`), Bing Visual Search. Findet Händlerangebote und Blogposts zum exakten Cover; kein API-Key nötig, nur Links.
   - Bibliotheken: WorldCat (`worldcat.org/search?q=<Titel Verlag Jahr>`), Open-Library-Ausgabenseite (`openlibrary.org/books/<OL-ID>`) als Nachweis.
   - Umsetzung: `lib/buylinks.ts` bekommt zwei Ebenen, „Kaufen (ISBN)“ und „Suchen (Titel/Verlag/Jahr/Bild)“; die zweite ist immer da.
-- [ ] **Dedupe der Cover ist noch zu schwach.** *Wieder geöffnet 2026-09-06 (Julian): faltet zu wenig, Ursachen und Plan in §9.3.* *Erster Schritt erledigt 2026-09-06 mit dem Bild-Hash (unten „Richtig“): `lib/imagehash.ts` (dHash 64 Bit, Kontrastmaß), `lib/coverhash.ts` (Bilder klein laden, 8 parallel, 4 s Budget, Next-Cache 30 Tage), `foldDuplicateCovers` in `lib/works.ts` (Hamming ≤ 8 = dasselbe Bild; OL-Scan vor Google-Bild als Repräsentant; leere Scans fallen, außer sie sind das einzige Cover einer Ausgabe). Kacheln zeigen „+N“. Was im Budget nicht gehasht wird, faltet beim nächsten Aufruf, weil die Bilder dann im Cache sind.* Bei *1984* stehen mehrere identische Cover nebeneinander, mit derselben Beschriftung im Hover (z. B. dreimal derselbe Verlag und Jahr). Ursachen: Open Library hat pro Ausgabe mehrere hochgeladene Scans desselben Covers (verschiedene `cover_i`), und derselbe Druck existiert als mehrere OL-Ausgaben ohne ISBN, die wir nicht zusammenführen können.
+- [x] **Dedupe der Cover ist noch zu schwach.** *Erledigt 2026-09-07 mit den drei Stufen aus §9.3 Schritt 12; die Zeitnot fiel schon mit Schritt 11 weg.* *Erster Schritt erledigt 2026-09-06 mit dem Bild-Hash (unten „Richtig“): `lib/imagehash.ts` (dHash 64 Bit, Kontrastmaß), `lib/coverhash.ts` (Bilder klein laden, 8 parallel, 4 s Budget, Next-Cache 30 Tage), `foldDuplicateCovers` in `lib/works.ts` (Hamming ≤ 8 = dasselbe Bild; OL-Scan vor Google-Bild als Repräsentant; leere Scans fallen, außer sie sind das einzige Cover einer Ausgabe). Kacheln zeigen „+N“. Was im Budget nicht gehasht wird, faltet beim nächsten Aufruf, weil die Bilder dann im Cache sind.* Bei *1984* stehen mehrere identische Cover nebeneinander, mit derselben Beschriftung im Hover (z. B. dreimal derselbe Verlag und Jahr). Ursachen: Open Library hat pro Ausgabe mehrere hochgeladene Scans desselben Covers (verschiedene `cover_i`), und derselbe Druck existiert als mehrere OL-Ausgaben ohne ISBN, die wir nicht zusammenführen können.
   - Kurzfristig, ohne Bildvergleich: Cover, deren Ausgaben in Titel + Verlag + Jahr + Sprache übereinstimmen, zu **einer Kachel mit „+2 ähnliche“** zusammenfassen; die Kachel zeigt das erste Bild, die Details listen alle. Falsch-positiv möglich (echte Neugestaltung im selben Jahr beim selben Verlag), deshalb aufklappbar statt verworfen.
   - Richtig: perzeptueller Hash (dHash/pHash) serverseitig pro Cover-ID, gecacht; Hamming-Distanz ≤ Schwelle = dasselbe Bild. Schließt auch den Fall „Scan bei OL, Verlagsbild bei Google“ ab. Damit zieht Phase 2 aus E8 nach vorn.
   - Nebeneffekt: mit dem Hash lassen sich auch leere Scans erkennen (geringe Varianz) und ausblenden.
@@ -476,8 +476,8 @@ Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil s
 ### 8.6 Funktionale Erweiterungen (aus Entscheidungen zurückgestellt)
 
 - [ ] **F1.8** Query-Parsing in Titel + Autor (E3). Auslöser: wenn Akzeptanz-Query „gravity's rainbow" mit reinem Ranking nicht stabil ist.
-- [ ] **E4 (a)** Editions-Call für die ersten 8 Treffer mit Cache, falls Google-Books-Cover zu selten zu einem 4er-Mosaik führen.
-- [ ] **Cover-Duplikate über Quellen falten (E8 Phase 2).** Perzeptueller Hash (dHash/pHash) der Cover-Bilder serverseitig berechnen, pro Cover-ID cachen, Cover mit Hamming-Distanz ≤ Schwelle zusammenlegen. Auslöser: sichtbar doppelte Cover auf Detailseiten nach Aktivierung von Google Books.
+- [x] **E4 (a)** Editions-Call für die ersten Treffer mit Cache. *Entschieden 2026-09-06 in §9.3 Schritt 14: gemessen liefert der Google-Aufruf 2,5 zusätzliche Cover pro Suche, nur 17 von 129 Karten bekommen überhaupt ein zweites. Die Karte lädt stattdessen die ohnehin gecachte Seite 0 nach.*
+- [x] **Cover-Duplikate über Quellen falten (E8 Phase 2).** *Erledigt: Hash in `lib/imagehash.ts`, drei Stufen in §9.3 Schritt 12.*
 - [ ] **Weitere Cover-Quellen:** ISBNdb (kostenpflichtig), Amazon PA-API (8.3), Community-Upload mit Moderation.
 - [ ] **Alternativtitel desselben Works.** Identitätsregel 2 ist strikt: Google-Books-Ausgaben mit anderem Titel (*1984* vs. *Nineteen Eighty-Four*) werden dem Work nicht zugeordnet. Lösung wäre eine Titel-Alias-Liste aus den OL-Editions-Titeln des Works (die kennt man auf der Detailseite bereits). Auslöser: wenn auf Detailseiten sichtbar Google-Cover fehlen.
 - [ ] Filter auf der Detailseite: Format (Hardcover/Paperback), Jahrzehnt, Verlag.
@@ -644,3 +644,41 @@ Ein serverseitiger Test kann also für etwa zwei von sechs Händlern eine positi
 - About-Seite (8.1) erklärt Quellen, Lücken und die Verifikationsgrade aus Schritt 13 in drei Absätzen.
 
 Reihenfolge: 11, 13a, 10, 12, 13 und 16 sind erledigt; es folgen 15 und 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).
+
+---
+
+## 10. Nächste Schritte, sortiert (Stand 2026-09-07)
+
+Die Vertrauensarbeit aus §9 ist bis auf zwei Schritte erledigt. Was jetzt zählt, ist die Seite online und ehrlich zu bekommen, dann Geld, dann Reichweite. Die Reihenfolge folgt Abhängigkeiten, nicht Aufwand: 8.3 braucht eine öffentliche Seite, 8.4 braucht Inhalte, die man verlinken kann.
+
+### A. Bevor die Seite jemand sieht
+
+1. **PR #1 aktualisieren und mergen.** 30 Commits liegen auf `rewrite-data-layer`, `origin/main` ist entsprechend alt. Titel und Beschreibung passen nicht mehr, der PR enthält inzwischen §9 Schritte 10–16. Vercel deployt später `main`, also muss das zuerst aufgeräumt sein.
+2. **Schritt 15, ehrliche Sprache** (§9.3). Eine Stunde. „Every cover of every edition“ steht noch im Header, in der Wortmarke und in der Meta-Description, während die Seite nachweislich einen Teil zeigt. Das ist der einzige verbliebene Punkt, an dem die Seite dem Nutzer etwas Falsches sagt.
+3. **Drei Entscheidungen aus §8.7, die zusammen eine halbe Stunde kosten:** Google-Kontingent im Cloud-Dashboard ablesen und dort eintragen; über den Verfügbarkeits-Button entscheiden; Bookshop-ID beantragen (siehe C1).
+
+### B. Online gehen (§8.2)
+
+4. **Impressum, Datenschutzerklärung, Affiliate-Hinweis.** Pflicht ab dem ersten Affiliate-Link, und die Partnerprogramme verlangen ohnehin eine erreichbare Seite mit diesen Angaben. Die **About-Seite** aus §8.1 gleich mitnehmen: sie erklärt Quellen, Lücken und die Verifikationsgrade aus Schritt 13, also genau das, was §9.2 verspricht.
+5. **Rate-Limit auf `/api/search`, `/api/works`, `/api/isbn` und `/api/availability`.** Ohne das zahlen Bots das Google-Kontingent leer, und der Verfügbarkeits-Button vervielfacht die Anfragen an Händler.
+6. **Vercel-Projekt, Domain, Region `fra1`, Analytics.** Plan-Frage aus §8.7 beachten: Hobby ist nicht-kommerziell, spätestens mit dem ersten Affiliate-Link fällig.
+
+### C. Geld (§8.3)
+
+7. **Bookshop.org zuerst.** Höchste Provision (~10 %), passt zur Zielgruppe, und die ID repariert nebenbei einen kaputten Link: ohne sie zeigt Bookshop auf eine Suchseite, die per robots.txt gesperrt ist und nichts einbringt, mit ID auf eine Produktseite.
+8. **Amazon erst mit etwas Traffic.** Drei qualifizierte Verkäufe in 180 Tagen, sonst wird das Konto geschlossen. Zweiter Grund für das Konto: die Product Advertising API liefert das Bild, das der Handel wirklich ausliefert, und würde Schritt 13 von „unbekannt“ auf eine echte Aussage heben (heute 12 von 20 ISBNs unbekannt).
+9. **Klick-Tracking `/go/[provider]/[isbn]`.** Ohne Zahlen lässt sich die Händlerreihenfolge nicht optimieren, und die Reihenfolge ist der einzige Hebel, den wir selbst in der Hand haben.
+
+### D. Reichweite (§8.4)
+
+10. **Statische Work-Seiten mit ISR.** Der größte Hebel und fast geschenkt: jede besuchte Detailseite wird indexierbar. Dazu das Titelmuster („Alle Cover von *1984* …“), Schema.org `Book`, und das Cover-Mosaik als Open-Graph-Bild — Letzteres ist der Grund, warum solche Links geteilt werden.
+11. **Sitemap aus ~500 kuratierten Works, Search Console ab Tag 1.**
+
+### E. Qualität, jederzeit dazwischen
+
+12. **Schritt 14, Mosaik auf den Suchkarten** (§9.3). Behebt Befund D aus §9.1: heute zeigen 112 von 129 Karten ein einzelnes Cover. Nebeneffekt: der Klick auf die Detailseite wird schneller, weil die Karte deren Seite 0 vorwärmt.
+13. **§8.1 zweiter Durchgang**, in dieser Reihenfolge: Detailseite mobil (Cover-Wand horizontal, Seitenleiste als Drawer), Sticky-Suchfeld mobil, Cover-Vergleich zweier Ausgaben, View Transitions.
+
+### Was bewusst liegen bleibt
+
+§8.6 in Gänze: Query-Parsing (F1.8), Alternativtitel, Filter nach Format und Jahrzehnt, Goodreads-Import, Redis. Alle haben in §8.6 einen Auslöser stehen; keiner ist eingetreten. Mehrere ISBNs pro Datensatz (§9.3 Schritt 13) bleibt ebenfalls liegen, das betrifft 1 von 300 Datensätzen.
