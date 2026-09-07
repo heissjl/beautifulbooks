@@ -4,6 +4,7 @@ import { Suspense, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import SearchBar from '@/components/SearchBar';
 import BookGrid from '@/components/BookGrid';
+import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 
 /**
@@ -58,12 +59,7 @@ function HomeContent() {
         </section>
       </main>
 
-      <footer className="border-t border-line">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-6 text-xs text-ink-3 sm:px-6 lg:px-8">
-          <p>Data from Open Library and Google Books. Cover images belong to their publishers.</p>
-          <p>Purchase links may earn us a commission.</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

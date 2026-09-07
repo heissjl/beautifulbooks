@@ -249,3 +249,31 @@ Eine Seite unter `/admin/insights`, hinter einem einfachen Schutz (ein Token in 
 ### Aufwand und Reihenfolge
 
 Ein Tag für Speicher, Endpunkt und die drei serverseitigen Zahlen (Händlerklicks, Google-Anfragen, Suchen ohne Treffer); ein zweiter für die drei clientseitigen (gesehene Cover, geöffnete Trefferposition, Verdikt). **Sinnvoll erst nach dem Deployment (§10 B6)** — auf `localhost` misst man sich selbst.
+
+---
+
+## B5 — die About-Seite
+
+### Warum sie zu diesem Projekt gehört
+
+§10 B4 nennt sie neben Impressum und Datenschutz, aber sie ist nicht Beiwerk: §9.2 verspricht eine Suche, der man vertrauen kann, und Vertrauen entsteht dadurch, dass jemand sagt, **was er nicht weiß**. Die Detailseite tut das in Fußnoten („Most edition records carry no scan"), aber es gibt keinen Ort, an dem das im Zusammenhang steht. Genau das ist die About-Seite: Quellen, Lücken, und was die Urteile an den Kauf-Links bedeuten.
+
+### Inhalt, fünf Abschnitte
+
+1. **Was die Seite tut** — drei Sätze, dieselbe Sprache wie der Hero.
+2. **Woher die Bilder kommen** — Open Library und Google Books, was jedes beisteuert, mit den gemessenen Zahlen aus §8.7 (bei *1984* vier von 282 Covern von Google). Und der Satz, der nirgends fehlen darf: beide Kataloge zusammen kennen nur einen Teil dessen, was je gedruckt wurde.
+3. **Was fehlt und warum** — Ausgaben ohne Scan, Ausgaben ohne ISBN, doppelte Scans desselben Covers, die Obergrenze von 1.500 geprüften Datensätzen. Jede Lücke mit ihrem Grund, keine Entschuldigung.
+4. **Was „shows this cover / shows a different one / nothing known" heißt** — die drei Urteile aus Schritt 13 in Worten, samt der Klarstellung, dass **kein Händler gefragt wird**: verglichen wird mit dem Bild, das der Verlag bei Google hinterlegt hat.
+5. **Kauf-Links und Provision** — dass Links Provision bringen können, dass die Reihenfolge nicht danach sortiert ist, und dass ein Klick gezählt wird, ohne dass etwas über den Leser gespeichert wird (B4).
+
+Kein „Team", keine Entstehungsgeschichte, kein Kontaktformular. Was fehlt, gehört ins Impressum, und das braucht Julians Angaben.
+
+### Technik
+
+- `app/about/page.tsx`, Server-Komponente, statisch, mit eigenem `metadata`.
+- Fußzeile aus `app/page.tsx` wird zu `components/SiteFooter.tsx` und bekommt Links auf About (und später Impressum/Datenschutz); die Detailseite bekommt dieselbe Fußzeile, die sie heute gar nicht hat.
+- `/about` kommt in `app/sitemap.ts`.
+
+### Prüfen
+
+`npm run build`, Sichtprüfung auf 375 und 1440, `grep` auf „every/all/complete", Links in der Fußzeile auf beiden Seitentypen.

@@ -723,7 +723,9 @@ Die Vertrauensarbeit aus §9 ist bis auf zwei Schritte erledigt. Was jetzt zähl
 
 ### B. Online gehen (§8.2)
 
-4. **Impressum, Datenschutzerklärung, Affiliate-Hinweis.** Pflicht ab dem ersten Affiliate-Link, und die Partnerprogramme verlangen ohnehin eine erreichbare Seite mit diesen Angaben. Die **About-Seite** aus §8.1 gleich mitnehmen: sie erklärt Quellen, Lücken und die Verifikationsgrade aus Schritt 13, also genau das, was §9.2 verspricht.
+4. **Impressum, Datenschutzerklärung, Affiliate-Hinweis.** Pflicht ab dem ersten Affiliate-Link, und die Partnerprogramme verlangen ohnehin eine erreichbare Seite mit diesen Angaben. **Beide brauchen Julians Angaben** (Name, Anschrift, Kontakt) und bleiben deshalb offen.
+
+    **Die About-Seite ist erledigt (2026-09-07, `/about`).** Fünf Abschnitte: was die Seite tut; woher die Bilder kommen (beide Kataloge, mit den gemessenen Anteilen, und der Satz, dass sie zusammen nur einen Teil des je Gedruckten kennen); was fehlt und warum (Ausgaben ohne Scan, ohne ISBN, doppelte Scans, die Grenze von 1.500 Datensätzen); was die drei Urteile aus Schritt 13 bedeuten, samt der Klarstellung, dass **kein Händler gefragt wird**; und Kauf-Links, Provision und die Klickzählung ohne jede Kennung des Lesers. Dazu `components/SiteFooter.tsx`, dieselbe Fußzeile jetzt auch auf der Detailseite, die vorher gar keine hatte, mit dem Link auf About.
 5. **Rate-Limit auf `/api/search`, `/api/works`, `/api/isbn` und `/api/availability`.** Ohne das zahlen Bots das Google-Kontingent leer, und der Verfügbarkeits-Button vervielfacht die Anfragen an Händler.
 6. **Vercel-Projekt, Domain, Region `fra1`, Analytics.** Plan-Frage aus §8.7 beachten: Hobby ist nicht-kommerziell, spätestens mit dem ersten Affiliate-Link fällig.
 

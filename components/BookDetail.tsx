@@ -9,6 +9,7 @@ import CoverImage from '@/components/CoverImage';
 import CoverSheet from '@/components/CoverSheet';
 import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
+import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import { flyCovers } from '@/components/flyCovers';
 import { useLoadingScene } from '@/components/useLoadingScene';
@@ -60,9 +61,10 @@ function ShareButton() {
 
 function Shell({ children, backHref, right }: { children: React.ReactNode; backHref: string; right?: React.ReactNode }) {
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <SiteHeader left={<BackLink href={backHref} />} right={right} />
-      <main className="mx-auto max-w-7xl px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
+      <SiteFooter />
     </div>
   );
 }
