@@ -4,7 +4,7 @@ import type { EditionCandidate } from '../sources/googlebooks-parse';
 import {
   assembleEditions, attachCandidates, candidatesToSourceEditions, editionKey, filterWorksByLanguage,
   derivativeIds, foldDuplicateCovers, groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks,
-  relevance, rankContext, withoutTranslators,
+  relevance, rankContext, samePublisher, withoutTranslators,
 } from '../works';
 import type { Cover } from '../model';
 
@@ -279,12 +279,23 @@ describe('withoutTranslators', () => {
   });
 });
 
-describe('foldDuplicateCovers (E8 phase 2)', () => {
+describe('foldDuplicateCovers (E8 phase 2, three tiers in SPEC 9.3 step 12)', () => {
   const cover = (id: string, editionIds: string[], source: Cover['source'] = 'openlibrary'): Cover =>
     ({ id, url: `https://x/${id}`, source, editionIds });
-  const sig = (hash: string, contrast = 40) => ({ hash, contrast });
+  const sig = (hash: string, contrast = 40, mean = 120) => ({ hash, contrast, mean });
+  const ed = (over: Partial<SourceEdition> & { id: string }) => {
+    const { covers, ...rest } = edition(over);
+    void covers;
+    return rest;
+  };
 
-  it('folds covers within the hamming threshold, unions editions, keeps folded ids', () => {
+  /** Hashes 12 bits apart: too far for tier 1, close enough for tiers 2 and 3. */
+  const NEAR_A = 'ffffff0000000000';
+  const NEAR_B = 'ffffff0000000fff';
+  /** 24 bits apart: beyond every tier. */
+  const FAR = '0000000fffffff00';
+
+  it('folds near-identical images and unions their editions (tier 1)', () => {
     const covers = [cover('gb:a', ['e1'], 'googlebooks'), cover('ol:b', ['e2']), cover('ol:c', ['e3']), cover('ol:d', ['e1'])];
     const sigs = new Map([
       ['gb:a', sig('ffff000000000000')],
@@ -300,19 +311,124 @@ describe('foldDuplicateCovers (E8 phase 2)', () => {
     expect(out[1].similarIds).toBeUndefined();
   });
 
+  it('folds two images of one ISBN that tier 1 would keep apart (tier 2)', () => {
+    // Beloved 9788497932653: the catalogue scan and Google's image of the same
+    // Debolsillo printing measured 12-14 bits apart.
+    const covers = [cover('ol:scan', ['e1']), cover('gb:shop', ['e2'], 'googlebooks')];
+    const sigs = new Map([['ol:scan', sig(NEAR_A)], ['gb:shop', sig(NEAR_B)]]);
+    const editions = [
+      ed({ id: 'e1', isbn13: '9788497932653', publisher: 'Debolsillo', year: 2011, language: 'es' }),
+      ed({ id: 'e2', isbn13: '9788497932653', publisher: 'Debolsillo', year: 2011, language: 'es', source: 'googlebooks' }),
+    ];
+    expect(foldDuplicateCovers(covers, sigs, editions).map(c => c.id)).toEqual(['ol:scan']);
+    // Without the edition data the same pair stays apart.
+    expect(foldDuplicateCovers(covers, sigs)).toHaveLength(2);
+  });
+
+  it('folds scans of one printing by publisher and year (tier 3)', () => {
+    // Three Knopf 1987 scans of Beloved, measured 5, 9 and 12 bits apart.
+    const covers = [cover('ol:1', ['e1']), cover('ol:2', ['e2']), cover('ol:3', ['e3'])];
+    const sigs = new Map([['ol:1', sig(NEAR_A)], ['ol:2', sig(NEAR_B)], ['ol:3', sig('ffffff00000000ff')]]);
+    const editions = [
+      ed({ id: 'e1', publisher: 'Alfred A. Knopf', year: 1987, language: 'en' }),
+      ed({ id: 'e2', publisher: 'Knopf, New York', year: 1987, language: 'en' }),
+      ed({ id: 'e3', publisher: 'Alfred A. Knopf', year: 1988, language: 'en' }),
+    ];
+    expect(foldDuplicateCovers(covers, sigs, editions)).toHaveLength(1);
+  });
+
+  it('never folds across publishers beyond tier 1, however alike the artwork', () => {
+    // Scribner 2003 and Lulu 2021 both print the public-domain Celestial Eyes
+    // jacket of Gatsby; measured 19 bits apart, and they are different books.
+    const covers = [cover('ol:scribner', ['e1']), cover('ol:lulu', ['e2'])];
+    const sigs = new Map([['ol:scribner', sig(NEAR_A)], ['ol:lulu', sig(NEAR_B)]]);
+    const editions = [
+      ed({ id: 'e1', publisher: 'Scribner', year: 2003, language: 'en' }),
+      ed({ id: 'e2', publisher: 'Lulu.com', year: 2021, language: 'en' }),
+    ];
+    expect(foldDuplicateCovers(covers, sigs, editions)).toHaveLength(2);
+  });
+
+  it('never folds two known languages together', () => {
+    const covers = [cover('ol:en', ['e1']), cover('ol:tr', ['e2'])];
+    const sigs = new Map([['ol:en', sig(NEAR_A)], ['ol:tr', sig(NEAR_B)]]);
+    const editions = [
+      ed({ id: 'e1', isbn13: '9780000000001', publisher: 'Same House', year: 2016, language: 'en' }),
+      ed({ id: 'e2', isbn13: '9780000000001', publisher: 'Same House', year: 2016, language: 'tr' }),
+    ];
+    expect(foldDuplicateCovers(covers, sigs, editions)).toHaveLength(2);
+  });
+
+  it('keeps genuinely different designs of one printing apart', () => {
+    const covers = [cover('ol:1', ['e1']), cover('ol:2', ['e2'])];
+    const sigs = new Map([['ol:1', sig(NEAR_A)], ['ol:2', sig(FAR)]]);
+    const editions = [
+      ed({ id: 'e1', publisher: 'Penguin', year: 2001, language: 'en' }),
+      ed({ id: 'e2', publisher: 'Penguin', year: 2001, language: 'en' }),
+    ];
+    expect(foldDuplicateCovers(covers, sigs, editions)).toHaveLength(2);
+  });
+
   it('leaves covers without a signature untouched', () => {
     const covers = [cover('ol:a', ['e1']), cover('ol:b', ['e2'])];
     const out = foldDuplicateCovers(covers, new Map([['ol:a', sig('0000000000000000')]]));
     expect(out).toHaveLength(2);
   });
 
-  it('drops blank scans unless they are an edition\'s only cover', () => {
-    const covers = [cover('ol:a', ['e1']), cover('ol:blank', ['e1']), cover('ol:only', ['e2'])];
+  it('keeps every cover, including the ones that look like scanned pages', () => {
+    // Measured on two Plume 1998 records of Beloved: mean 249, contrast 12-13.
+    // They are shown last rather than dropped, because the same numbers also
+    // describe a plain white Greek 1984 that is a real cover.
+    const covers = [cover('ol:a', ['e1']), cover('ol:blurb', ['e2'])];
     const sigs = new Map([
       ['ol:a', sig('1111111111111111')],
-      ['ol:blank', sig('0000000000000000', 1)],
-      ['ol:only', sig('0000000000000000', 1)],
+      ['ol:blurb', sig('e0c0c0c0c0000000', 12.5, 249)],
     ]);
-    expect(foldDuplicateCovers(covers, sigs).map(c => c.id)).toEqual(['ol:a', 'ol:only']);
+    const editions = [ed({ id: 'e1', publisher: 'Plume', year: 1998 }), ed({ id: 'e2', publisher: 'Plume', year: 1998 })];
+    expect(foldDuplicateCovers(covers, sigs, editions).map(c => c.id)).toEqual(['ol:a', 'ol:blurb']);
+  });
+});
+
+describe('groupCoversByLanguage sorting', () => {
+  const cover = (id: string, editionIds: string[]): Cover => ({ id, url: `https://x/${id}`, source: 'openlibrary', editionIds });
+  const ed = (over: Partial<SourceEdition> & { id: string }) => {
+    const { covers, ...rest } = edition(over);
+    void covers;
+    return rest;
+  };
+
+  it('sorts newest first', () => {
+    const covers = [cover('ol:old', ['e1']), cover('ol:new', ['e2'])];
+    const editions = [ed({ id: 'e1', year: 1990, language: 'en' }), ed({ id: 'e2', year: 2020, language: 'en' })];
+    expect(groupCoversByLanguage(covers, editions)[0].coverIds).toEqual(['ol:new', 'ol:old']);
+  });
+
+  it('sends images that look like scanned pages to the end, however new', () => {
+    const covers = [cover('ol:page', ['e1']), cover('ol:cover', ['e2'])];
+    const editions = [ed({ id: 'e1', year: 2020, language: 'en' }), ed({ id: 'e2', year: 1990, language: 'en' })];
+    const sigs = new Map([
+      ['ol:page', { hash: 'e0c0c0c0c0000000', contrast: 12.5, mean: 249 }],
+      ['ol:cover', { hash: '11d457b5e85d7934', contrast: 25.5, mean: 120 }],
+    ]);
+    expect(groupCoversByLanguage(covers, editions, undefined, sigs)[0].coverIds).toEqual(['ol:cover', 'ol:page']);
+  });
+});
+
+describe('samePublisher', () => {
+  it('ignores case, place of publication, legal form, initials and the usual nouns', () => {
+    expect(samePublisher('Alfred A. Knopf', 'Knopf, New York')).toBe(true);
+    expect(samePublisher('Rowohlt Verlag', 'Rowohlt')).toBe(true);
+    expect(samePublisher('Vintage Books', 'vintage')).toBe(true);
+    expect(samePublisher('Penguin Books Ltd', 'Penguin')).toBe(true);
+    expect(samePublisher('Vintage International', 'Vintage')).toBe(true);
+  });
+  it('keeps different houses apart', () => {
+    expect(samePublisher('Scribner', 'Lulu.com')).toBe(false);
+    expect(samePublisher('Diogenes', 'Reclam')).toBe(false);
+    expect(samePublisher('Debolsillo', 'Alfaguara')).toBe(false);
+  });
+  it('matches nothing when the publisher is unknown or only noise words', () => {
+    expect(samePublisher(undefined, 'Knopf')).toBe(false);
+    expect(samePublisher('Books', 'Books')).toBe(false);
   });
 });

@@ -19,7 +19,7 @@ import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 import type { ImageSignature } from '@/lib/imagesig';
-import { orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
+import { leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { foldDuplicateCovers, groupCoversByLanguage } from '@/lib/works';
 
 function BackLink({ href }: { href: string }) {
@@ -100,13 +100,9 @@ function buildWall(
   const signatures = new Map(merged.signatures);
   for (const [id, sig] of extraSignatures) signatures.set(id, sig);
 
-  const covers = foldDuplicateCovers(all, signatures);
+  const covers = foldDuplicateCovers(all, signatures, merged.editions);
   const coversById = new Map(covers.map(c => [c.id, c]));
-  const ordered = orderGroups(
-    groupCoversByLanguage(covers, merged.editions, preferred),
-    all.map(c => c.id),
-    preferred,
-  );
+  const ordered = orderGroups(groupCoversByLanguage(covers, merged.editions, preferred, signatures), preferred);
   const groups: CoverTab[] = ordered.map(g => ({
     language: g.language,
     covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
@@ -218,7 +214,6 @@ function BookDetail() {
   // Loading scene (SPEC 8.1): paced by the hook; runs at least two covers long
   // and ends once page 0 has been hashed, so it never shows a cover twice.
   const scene = useLoadingScene(requestKey, pages.firstCovers, pages.page0Hashed);
-  const inScene = pages.status === 'loading' || (pages.status === 'ready' && !scene.done);
 
   const view = useMemo(() => {
     const { merged, work, market } = pages;
@@ -232,6 +227,12 @@ function BookDetail() {
     return { work, market, merged, ...wall, editionsById, captions, coversPerEdition };
   }, [pages, lang, isbnCovers]);
 
+  // Hold the scene until the pinned tabs can no longer appear underneath the
+  // reader's cursor: English present, everything loaded, or three pages in,
+  // whichever comes first (Julian 2026-09-07).
+  const tabsSettled = !view || leadLanguagesSettled(view.groups, view.merged.done || view.merged.checked >= 300);
+  const inScene = pages.status === 'loading' || (pages.status === 'ready' && (!scene.done || !tabsSettled));
+
   // When the scene ends, fly the staged covers to their gallery tiles.
   const flownFor = useRef('');
   useEffect(() => {
@@ -242,6 +243,7 @@ function BookDetail() {
   }, [inScene, view, scene.staged, requestKey]);
 
   const selected = useMemo<Cover | null>(() => (view ? selectCoverFrom(view, selectedId) : null), [view, selectedId]);
+
 
   if (pages.status === 'notfound' || pages.status === 'error') {
     return (

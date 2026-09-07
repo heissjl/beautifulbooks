@@ -5,7 +5,7 @@
 import type { Cover, Edition, LanguageGroup, SourceEdition, Work, WorkSummary } from './model';
 import type { EditionCandidate } from './sources/googlebooks-parse';
 import { authorMatchKey, looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeTitle, titleAuthorKey } from './normalize';
-import { BLANK_CONTRAST, hamming, type ImageSignature } from './imagesig';
+import { hamming, looksLikeScannedPage, type ImageSignature } from './imagesig';
 
 export const MOSAIC_COVERS = 4;
 
@@ -342,6 +342,7 @@ export function groupCoversByLanguage(
   covers: readonly Cover[],
   editions: readonly Edition[],
   preferred?: string,
+  signatures?: ReadonlyMap<string, ImageSignature>,
 ): LanguageGroup[] {
   const editionsById = new Map(editions.map(e => [e.id, e]));
   const groups = new Map<string | undefined, Cover[]>();
@@ -351,7 +352,12 @@ export function groupCoversByLanguage(
     list.push(c);
     groups.set(lang, list);
   }
-  const newestFirst = (a: Cover, b: Cover) => coverYear(b, editionsById) - coverYear(a, editionsById);
+  const newestFirst = (a: Cover, b: Cover) => {
+    // Title pages and blurb scans go last, however new the printing is.
+    const pageA = looksLikeScannedPage(signatures?.get(a.id)) ? 1 : 0;
+    const pageB = looksLikeScannedPage(signatures?.get(b.id)) ? 1 : 0;
+    return pageA - pageB || coverYear(b, editionsById) - coverYear(a, editionsById);
+  };
   return Array.from(groups.entries())
     .map(([language, cs]) => ({ language, covers: cs.sort(newestFirst) }))
     .sort((a, b) => {
@@ -367,13 +373,135 @@ export function groupCoversByLanguage(
 }
 
 export const SAME_COVER_MAX_DISTANCE = 8;
+/** Two covers on one ISBN are one printing; a rebound scan may differ this much. */
+export const SAME_ISBN_MAX_DISTANCE = 20;
+/** Same publisher and year: scans of one printing, allowed to differ this much. */
+export const SAME_PRINTING_MAX_DISTANCE = 16;
+/** Years this far apart still count as the same printing. */
+export const SAME_PRINTING_YEAR_SLACK = 1;
+
+export interface FoldThresholds {
+  sameImage?: number;
+  sameIsbn?: number;
+  samePrinting?: number;
+}
+
+/** What the editions carrying a cover say about the printing it belongs to. */
+interface Printing {
+  isbns: Set<string>;
+  publishers: string[];
+  years: number[];
+  languages: Set<string>;
+}
+
+const PUBLISHER_NOISE =
+  /\b(verlag|books?|press|publishers?|publishing|editions?|edizioni|ediciones|éditions|yayinlari|yayınları|kitap|gmbh|ltd|inc|co|company|group|sa|ag)\b/g;
 
 /**
- * SPEC §2.3 phase 2 (§8.5): covers whose images are the same design are
+ * The words that identify a publishing house, lowercased.
+ *
+ * The same house is printed many ways: "Alfred A. Knopf" and "Knopf, New
+ * York", "Vintage" and "Vintage Books". Dropped are anything after a comma
+ * (the place of publication), the legal form, the nouns every publisher
+ * shares, and single letters (initials).
+ */
+export function publisherTokens(raw: string | undefined): string[] {
+  if (!raw) return [];
+  return raw
+    .toLowerCase()
+    .split(',')[0]
+    .replace(/[^a-z0-9äöüßàáâçèéêëìíîïñòóôùúû ]/g, ' ')
+    .replace(PUBLISHER_NOISE, ' ')
+    .split(/\s+/)
+    .filter(t => t.length > 1);
+}
+
+/**
+ * Same publishing house? True when one name's words are all contained in the
+ * other's, so "Knopf" matches "Alfred A. Knopf" and "Vintage" matches
+ * "Vintage International", while "Scribner" and "Lulu.com" stay apart. An
+ * unknown or unrecognisable publisher matches nothing.
+ */
+export function samePublisher(a: string | undefined, b: string | undefined): boolean {
+  const x = publisherTokens(a);
+  const y = publisherTokens(b);
+  if (x.length === 0 || y.length === 0) return false;
+  const [small, large] = x.length <= y.length ? [x, y] : [y, x];
+  const set = new Set(large);
+  return small.every(t => set.has(t));
+}
+
+function printingOf(cover: Cover, editionsById: ReadonlyMap<string, Edition>): Printing {
+  const out: Printing = { isbns: new Set(), publishers: [], years: [], languages: new Set() };
+  for (const id of cover.editionIds) {
+    const e = editionsById.get(id);
+    if (!e) continue;
+    if (e.isbn13) out.isbns.add(e.isbn13);
+    if (e.publisher) out.publishers.push(e.publisher);
+    if (e.year !== undefined) out.years.push(e.year);
+    if (e.language) out.languages.add(e.language);
+  }
+  return out;
+}
+
+function shares<T>(a: ReadonlySet<T>, b: ReadonlySet<T>): boolean {
+  for (const v of a) if (b.has(v)) return true;
+  return false;
+}
+
+/** Different known languages are different books, whatever the images look like. */
+function languagesConflict(a: Printing, b: Printing): boolean {
+  if (a.languages.size === 0 || b.languages.size === 0) return false;
+  return !shares(a.languages, b.languages);
+}
+
+function sharePublisher(a: Printing, b: Printing): boolean {
+  return a.publishers.some(x => b.publishers.some(y => samePublisher(x, y)));
+}
+
+function yearsClose(a: Printing, b: Printing): boolean {
+  if (a.years.length === 0 || b.years.length === 0) return false;
+  return a.years.some(x => b.years.some(y => Math.abs(x - y) <= SAME_PRINTING_YEAR_SLACK));
+}
+
+/**
+ * Is this the same cover, given how far the images differ (SPEC §9.3 step 12)?
+ *
+ * A single threshold cannot do this. Measured on real works: identical scans
+ * sit at distance 0-5, but the same design photographed twice reaches 12-16
+ * (three Knopf 1987 printings of *Beloved*), and a catalogue scan against the
+ * publisher's own image reaches 14-25 under one ISBN. Meanwhile *different*
+ * books share layouts at distance 17-22 (Turkish paperbacks of *Gatsby*) and
+ * the same public-domain artwork appears at 19 across unrelated publishers.
+ * So distance alone only decides up to 8; beyond that the metadata must agree.
+ */
+export function sameCover(
+  distance: number,
+  a: Printing,
+  b: Printing,
+  thresholds: Required<FoldThresholds>,
+): boolean {
+  if (distance <= thresholds.sameImage) return true;
+  if (languagesConflict(a, b)) return false;
+  // One ISBN is one printing: a second image of it is the same book.
+  if (distance <= thresholds.sameIsbn && shares(a.isbns, b.isbns)) return true;
+  // Same house, same year: scans of one printing rather than a redesign.
+  if (distance <= thresholds.samePrinting && sharePublisher(a, b) && yearsClose(a, b)) return true;
+  return false;
+}
+
+/**
+ * SPEC §2.3 phase 2 (§8.5, §9.3 step 12): covers showing the same design are
  * folded into one. `signatures` maps cover id to a perceptual hash; covers
- * without a signature (not fetched within the time budget) stay as they
- * are and fold on a later request once cached. Blank scans (no contrast)
- * are dropped unless they are an edition's only cover.
+ * without a signature (not fetched within the time budget) stay as they are
+ * and fold on a later request once cached. `editions` supplies the ISBN,
+ * publisher, year and language that decide the relaxed tiers; without it only
+ * near-identical images fold.
+ *
+ * Nothing is dropped: images that look like a scanned page rather than a
+ * cover are sorted to the end of their language group instead, because the
+ * measures that identify them also match some real covers (see
+ * `looksLikeScannedPage`).
  *
  * Representative of a group: an Open Library cover before a Google one
  * (Google images are often the current printing, OL scans the actual
@@ -383,26 +511,27 @@ export const SAME_COVER_MAX_DISTANCE = 8;
 export function foldDuplicateCovers(
   covers: readonly Cover[],
   signatures: ReadonlyMap<string, ImageSignature>,
-  maxDistance = SAME_COVER_MAX_DISTANCE,
+  editions: readonly Edition[] = [],
+  thresholds: FoldThresholds = {},
 ): Cover[] {
-  // Drop blank scans that are not an edition's only cover.
-  const coversPerEdition = new Map<string, number>();
-  for (const c of covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
-  const kept = covers.filter(c => {
-    const sig = signatures.get(c.id);
-    if (!sig || sig.contrast >= BLANK_CONTRAST) return true;
-    return c.editionIds.some(id => (coversPerEdition.get(id) ?? 0) <= 1);
-  });
+  const limits: Required<FoldThresholds> = {
+    sameImage: thresholds.sameImage ?? SAME_COVER_MAX_DISTANCE,
+    sameIsbn: thresholds.sameIsbn ?? SAME_ISBN_MAX_DISTANCE,
+    samePrinting: thresholds.samePrinting ?? SAME_PRINTING_MAX_DISTANCE,
+  };
+  const editionsById = new Map(editions.map(e => [e.id, e]));
+  const printings = new Map(covers.map(c => [c.id, printingOf(c, editionsById)]));
 
-  // Greedy grouping: each cover joins the first group whose representative is within range.
+  // Greedy grouping: each cover joins the first group whose representative it matches.
   const groups: Array<{ rep: Cover; members: Cover[] }> = [];
-  for (const c of kept) {
+  for (const c of covers) {
     const sig = signatures.get(c.id);
     let target: { rep: Cover; members: Cover[] } | undefined;
     if (sig) {
       target = groups.find(g => {
         const rs = signatures.get(g.rep.id);
-        return !!rs && hamming(rs.hash, sig.hash) <= maxDistance;
+        if (!rs) return false;
+        return sameCover(hamming(rs.hash, sig.hash), printings.get(g.rep.id)!, printings.get(c.id)!, limits);
       });
     }
     if (target) target.members.push(c);
@@ -417,3 +546,4 @@ export function foldDuplicateCovers(
     return { ...rep, editionIds, similarIds };
   });
 }
+

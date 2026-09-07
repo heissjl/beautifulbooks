@@ -542,13 +542,29 @@ Gatsby kalt: erste Wand nach 8 s, vollständig nach etwa 38 s; warm unter 5 s. D
 - Grenze: Werke mit mehr als 1500 Ausgaben (Bibel, Shakespeare-Sammlungen) werden gekappt, der Zähler sagt das.
 - Persistenz: der Next-Cache reicht für den Start (8.2). Wenn Hosting steht, wandern Hashes und Seiten in KV (8.6), damit ein Deploy den Vorrat nicht löscht.
 
-**Schritt 12 – Dedupe in drei Stufen und ohne Zeitdruck (B).** Baut auf 11 auf.
-- Stufe 1, immer: Distanz ≤ 8 (wie heute).
-- Stufe 2, gleiche ISBN-13 an beiden Covern: Distanz ≤ 20. Deckt OL-Scan gegen Google-Bild und Scan mit/ohne Banderole.
-- Stufe 3, gleicher Verlag (normalisiert: Kleinschreibung, ohne „Verlag/Books/Press/Inc.“, Ortsangaben ab Komma) und Jahr ±1 und gleiche oder unbekannte Sprache: Distanz ≤ 16. Deckt Knopf 1987 dreimal.
-- Nie über Verlagsgrenzen bei Distanz > 8 (Scribner/Lulu, türkische Layout-Familien bleiben getrennt). Nie bei verschiedenen Sprachen.
-- Leere und Text-Scans (Kontrast unter Schwelle **oder** Hash aus ≤ 2 gesetzten Bytes) verschwinden aus der Wand, auch ohne Alternative; die Ausgabe bleibt in einer Liste „Editions without a usable cover“ mit ihren Links.
-- Tests: die Beloved- und Gatsby-Paare oben als Fixture (Hash + Metadaten, keine Bilder), pro Stufe ein Positiv- und ein Negativfall.
+**Schritt 12 – Dedupe in drei Stufen (B).** *Erledigt 2026-09-07.* `foldDuplicateCovers` bekommt jetzt die Ausgaben mit und entscheidet gestuft (`sameCover` in `lib/works.ts`):
+
+- **Stufe 1, immer:** Distanz ≤ 8. Wie bisher.
+- **Stufe 2, gleiche ISBN-13 an beiden Covern:** Distanz ≤ 20. Deckt Katalog-Scan gegen Verlagsbild.
+- **Stufe 3, gleicher Verlag und Jahr ±1 und gleiche oder unbekannte Sprache:** Distanz ≤ 16. Deckt die drei Knopf-Scans von 1987.
+- Über Verlagsgrenzen wird oberhalb von 8 nie gefaltet, über Sprachgrenzen nie. Verlagsnamen vergleicht `samePublisher` über Wortmengen: „Knopf“ passt zu „Alfred A. Knopf“ und „Knopf, New York“, „Scribner“ nicht zu „Lulu.com“.
+
+**Gemessen im Browser (Cover nach dem Falten):**
+
+| Werk | vor Schritt 12 | nach Schritt 12 |
+|---|---|---|
+| The Great Gatsby | 301 | 293 |
+| Nineteen Eighty-Four | 232 | 226 |
+| Beloved | 57 | 51 |
+| Mumbo Jumbo | 12 | 12 |
+
+**Abweichung vom Plan: leere Scans werden nicht mehr entfernt, sondern nach hinten sortiert.** Der Plan wollte sie ausblenden und die Ausgaben in einer Liste „Editions without a usable cover“ führen. Beim Prüfen der acht Bilder, die die Regel bei *1984* traf, waren vier davon echte Cover: die Leineneinbände der Harcourt-Erstausgabe von 1949 (dunkel, kontrastarm), ein blauer Knopf-Einband von 1992 und ein schlichtes weißes Kaktos-Cover von 1999. Die alte Regel „Kontrast < 6“ war dabei der schlimmere Übeltäter, sie traf jeden dunklen Einband.
+
+Die neue Regel `looksLikeScannedPage` verlangt alle drei Bedingungen zugleich: nahezu weiß (Mittelwert ≥ 245), flach (Kontrast < 20) und ohne Struktur (≤ 12 gesetzte Bits im Hash). Jede Bedingung allein trifft echte Cover: das blasseste echte Cover der Stichprobe liegt bei 234, ein echtes Arcturus-Cover bei Kontrast 10,5, und Knopfs weißer *Beloved*-Schutzumschlag hat 23 Bits bei Mittelwert 251. Selbst zusammen bleibt eine Überschneidung: das weiße griechische *1984* ist von einer Klappentext-Seite an diesen Zahlen nicht zu unterscheiden. **Deshalb wird nichts gelöscht, sondern nur ans Ende der Sprachgruppe sortiert** (`groupCoversByLanguage` mit Signaturen). Ein Fehlurteil kostet dann eine Position statt eines Covers.
+
+**Nebenbefund und Korrektur:** Ein einzelner langsamer Editions-Aufruf (Open Library brauchte 13,4 s bei 12 s Timeout) ließ die ganze Detailseite als „Book data source unavailable“ enden, beobachtet bei *Mumbo Jumbo*. Seite 0 wird jetzt einmal wiederholt; der zweite Versuch trifft den Cache, den der erste gefüllt hat.
+
+**Sprach-Pillen (Julian, 2026-09-07):** Englisch steht fest an erster, Deutsch an zweiter Stelle, der Rest folgt nach Häufigkeit, Unbekannt zuletzt; eine explizit gesuchte Sprache steht vor allen. Die Ladeszene wartet, bis eine englische Ausgabe da ist (`leadLanguagesSettled`), längstens bis 300 Ausgaben geprüft sind, damit die vorderen Reiter nicht unter dem Mauszeiger nachrücken. Der Rest der Reihe darf sich beim Nachladen weiter nach Häufigkeit umsortieren.
 
 **Schritt 13a – ISBN-Nachschau erst bei Auswahl (Kontingent, §8.7).** *Erledigt 2026-09-07.* `lookupByIsbns` ist aus `getWorkPage` verschwunden; die neue Route `GET /api/isbn/<isbn13>?signatures=1` (`lib/isbn.ts`) liefert das Handelsbild einer ISBN, und die Detailseite fragt danach, sobald ein Cover ausgewählt ist (`useIsbnCovers`). Die Bilder kommen vor dem Falten in die Wand, damit ein Handelsbild, das dem Katalog-Scan gleicht, in ihn hineinfaltet statt doppelt zu erscheinen. Welche ISBN gefragt wird, entscheidet eine Auswahl allein auf den Katalogdaten (`buildWall` ohne Zusatz-Cover), sonst hinge die Frage von ihrer eigenen Antwort ab.
 
@@ -572,4 +588,4 @@ Gatsby kalt: erste Wand nach 8 s, vollständig nach etwa 38 s; warm unter 5 s. D
 - Zähler auf der Detailseite aus Schritt 11 („42 covers · 300 of 1180 editions checked“), Fußnote unter der Wand: „Cover images come from Open Library and Google Books. Editions without a scan are listed below.“
 - About-Seite (8.1) erklärt Quellen, Lücken und die Verifikationsgrade aus Schritt 13 in drei Absätzen.
 
-Reihenfolge: 11, 13a und 10 sind erledigt; es folgen 12, dann 15, 13, 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).
+Reihenfolge: 11, 13a, 10 und 12 sind erledigt; es folgen 15, 13, 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).

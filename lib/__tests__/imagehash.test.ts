@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { PNG } from 'pngjs';
 import jpeg from 'jpeg-js';
-import { BLANK_CONTRAST, contrast, decodeToGray, dhash, hamming, signature } from '../imagehash';
+import { decodeToGray, dhash, hamming, looksLikeScannedPage, signature } from '../imagehash';
 
 /**
  * Synthetic "covers" with horizontal structure (dHash compares left/right
@@ -15,7 +15,7 @@ function paint(width: number, height: number, variant: 'a' | 'a-noisy' | 'b' | '
       const fx = x / width;
       const fy = y / height;
       let v: number;
-      if (variant === 'blank') v = 240;
+      if (variant === 'blank') v = 251; // scanned paper, not mid-grey
       else if (variant === 'b') v = Math.round((1 - fx) * 255) - (fx > 0.55 && fx < 0.7 ? 90 : 0) - (fy < 0.15 ? 60 : 0);
       else v = Math.round(fx * 255) - (fx > 0.2 && fx < 0.35 ? 90 : 0) - (fy > 0.4 && fy < 0.6 ? 60 : 0);
       if (variant === 'a-noisy') v += ((x * 7 + y * 13) % 5) - 2;
@@ -59,10 +59,19 @@ describe('imagehash', () => {
     expect(hamming(a, b)).toBeGreaterThan(16);
   });
 
-  it('flags blank scans by contrast', () => {
-    expect(contrast(decodeToGray(pngBytes(60, 90, 'blank'))!)).toBeLessThan(BLANK_CONTRAST);
-    expect(contrast(decodeToGray(pngBytes(60, 90, 'a'))!)).toBeGreaterThan(BLANK_CONTRAST);
-    expect(signature(pngBytes(10, 10, 'blank'))).toMatchObject({ contrast: 0 });
+  it('measures a blank page as flat, pale and structureless', () => {
+    const blank = signature(pngBytes(60, 90, 'blank'))!;
+    expect(blank.contrast).toBe(0);
+    expect(blank.mean).toBeGreaterThan(200);
+    expect(looksLikeScannedPage(blank)).toBe(true);
+
+    const cover = signature(pngBytes(60, 90, 'a'))!;
+    expect(cover.contrast).toBeGreaterThan(20);
+    expect(looksLikeScannedPage(cover)).toBe(false);
+  });
+
+  it('never flags a signature recorded before mean luminance existed', () => {
+    expect(looksLikeScannedPage({ hash: '0000000000000000', contrast: 0 })).toBe(false);
   });
 
   it('hamming distance basics', () => {

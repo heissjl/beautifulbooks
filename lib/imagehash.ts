@@ -11,9 +11,9 @@
  */
 import jpeg from 'jpeg-js';
 import { PNG } from 'pngjs';
-import { BLANK_CONTRAST, HASH_BITS, hamming, type ImageSignature } from './imagesig';
+import { HASH_BITS, hamming, looksLikeScannedPage, type ImageSignature } from './imagesig';
 
-export { BLANK_CONTRAST, HASH_BITS, hamming };
+export { HASH_BITS, hamming, looksLikeScannedPage };
 export type { ImageSignature };
 
 export interface GrayImage {
@@ -83,19 +83,25 @@ export function dhash(img: GrayImage): string {
   return hex;
 }
 
-/** Standard deviation of luminance on a 32x32 thumbnail; near-blank scans score very low. */
-export function contrast(img: GrayImage): number {
+/** Mean and standard deviation of luminance on a 32x32 thumbnail. */
+export function luminance(img: GrayImage): { mean: number; contrast: number } {
   const t = resizeGray(img, 32, 32);
   let sum = 0;
   for (const v of t.data) sum += v;
   const mean = sum / t.data.length;
   let varSum = 0;
   for (const v of t.data) varSum += (v - mean) ** 2;
-  return Math.sqrt(varSum / t.data.length);
+  return { mean, contrast: Math.sqrt(varSum / t.data.length) };
+}
+
+/** Standard deviation of luminance; near-blank scans score very low. */
+export function contrast(img: GrayImage): number {
+  return luminance(img).contrast;
 }
 
 export function signature(bytes: Uint8Array): ImageSignature | null {
   const img = decodeToGray(bytes);
   if (!img) return null;
-  return { hash: dhash(img), contrast: contrast(img) };
+  const { mean, contrast } = luminance(img);
+  return { hash: dhash(img), contrast, mean };
 }

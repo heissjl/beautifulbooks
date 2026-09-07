@@ -100,36 +100,65 @@ export function mergeWorkPages<E extends Edition>(pages: readonly WorkPageData<E
 }
 
 /**
- * Orders the language tabs by when each language first showed up.
+ * Languages that lead the tab row, in this order, whatever the counts say.
  *
- * `groupCoversByLanguage` orders by group size, which changes with every page
- * that arrives, so the tabs would reshuffle under the user's cursor while a
- * work loads. First appearance is stable instead: pages are appended, never
- * reordered, so a language seen on page 0 stays ahead of one that turns up on
- * page 7, and new languages join at the end. The language the user searched
- * in still comes first (SPEC F2.3), and covers whose editions carry no
- * language stay last.
+ * English and German are the markets this site is built for (E9), and they
+ * are the tabs a reader looks for first. Fixing them also removes the worst
+ * of the reshuffling: they are the two groups that grow fastest while later
+ * pages arrive.
+ */
+export const LEAD_LANGUAGES = ['en', 'de'] as const;
+
+/**
+ * Orders the language tabs (SPEC §9.3 step 12, Julian 2026-09-07).
+ *
+ * English first, then German, then everything else by how many covers it has,
+ * with the unknown-language group last. The language the user searched in
+ * comes before all of them.
+ *
+ * `groupCoversByLanguage` orders purely by size, which changes with every
+ * page that arrives, so the tabs would reshuffle under the reader's cursor.
+ * Pinning the first two positions means the row the reader actually points at
+ * stands still; the tail may still reorder as counts grow, which is what the
+ * reader expects of a long tail.
  */
 export function orderGroups(
   groups: readonly LanguageGroup[],
-  coverOrder: readonly string[],
   preferred?: string,
 ): LanguageGroup[] {
-  const position = new Map(coverOrder.map((id, i) => [id, i]));
-  const firstSeen = (g: LanguageGroup) =>
-    Math.min(...g.coverIds.map(id => position.get(id) ?? Number.MAX_SAFE_INTEGER), Number.MAX_SAFE_INTEGER);
-  const wanted = preferred && preferred !== 'all' ? preferred : undefined;
+  const wanted = preferred && preferred !== 'all' && !LEAD_LANGUAGES.includes(preferred as 'en' | 'de')
+    ? preferred
+    : undefined;
+  const lead = [...(wanted ? [wanted] : []), ...LEAD_LANGUAGES];
+
+  const rank = (g: LanguageGroup): number => {
+    if (g.language === undefined) return lead.length + 1;
+    const i = lead.indexOf(g.language);
+    return i === -1 ? lead.length : i;
+  };
 
   return groups
-    .map((group, i) => ({ group, rank: firstSeen(group), i }))
+    .map((group, i) => ({ group, i }))
     .sort((a, b) => {
-      if (a.group.language === undefined) return 1;
-      if (b.group.language === undefined) return -1;
-      if (wanted) {
-        if (a.group.language === wanted) return -1;
-        if (b.group.language === wanted) return 1;
-      }
-      return a.rank - b.rank || a.i - b.i;
+      const byLead = rank(a.group) - rank(b.group);
+      if (byLead !== 0) return byLead;
+      // Inside the tail, the bigger group first; ties keep the incoming order.
+      if (rank(a.group) === lead.length) return b.group.coverIds.length - a.group.coverIds.length || a.i - b.i;
+      return a.i - b.i;
     })
     .map(x => x.group);
+}
+
+/**
+ * Is the wall ready to be shown without the tabs jumping afterwards?
+ *
+ * The lead languages are pinned, so the row settles as soon as they are known
+ * to be there or known to be absent. While the first page is still the only
+ * one loaded, an English group that has not turned up yet may still arrive
+ * and push everything one place to the right; waiting for it costs a moment
+ * and buys a row that does not move (Julian 2026-09-07).
+ */
+export function leadLanguagesSettled(groups: ReadonlyArray<{ language?: string }>, done: boolean): boolean {
+  if (done) return true;
+  return groups.some(g => g.language === LEAD_LANGUAGES[0]);
 }

@@ -3,7 +3,7 @@
  * (SPEC §9.3 step 11, lib/pages.ts).
  */
 import { describe, expect, it } from 'vitest';
-import { mergeWorkPages, orderGroups, type WorkPageData } from '../pages';
+import { leadLanguagesSettled, mergeWorkPages, orderGroups, type WorkPageData } from '../pages';
 import type { Cover, Edition, LanguageGroup } from '../model';
 
 function edition(id: string, extra: Partial<Edition> = {}): Edition {
@@ -94,35 +94,56 @@ describe('mergeWorkPages', () => {
 });
 
 describe('orderGroups', () => {
-  const group = (language: string | undefined, ids: string[]): LanguageGroup => ({ language, coverIds: ids });
-
-  it('orders languages by when they first appeared, not by size', () => {
-    const order = ['en1', 'en2', 'de1', 'fr1'];
-    // German has more covers than English but showed up later.
-    const groups = [group('de', ['de1', 'de2', 'de3']), group('en', ['en1', 'en2']), group('fr', ['fr1'])];
-    expect(orderGroups(groups, order).map(g => g.language)).toEqual(['en', 'de', 'fr']);
+  const group = (language: string | undefined, n: number): LanguageGroup => ({
+    language,
+    coverIds: Array.from({ length: n }, (_, i) => `${language ?? 'x'}-${i}`),
   });
 
-  it('keeps that order when a later page adds covers', () => {
-    const first = orderGroups([group('en', ['en1']), group('de', ['de1'])], ['en1', 'de1']);
-    expect(first.map(g => g.language)).toEqual(['en', 'de']);
-    // Page 2 brings 20 German covers and one new language.
-    const later = orderGroups(
-      [group('de', ['de1', ...Array.from({ length: 20 }, (_, i) => `dx${i}`)]), group('en', ['en1']), group('es', ['es1'])],
-      ['en1', 'de1', ...Array.from({ length: 20 }, (_, i) => `dx${i}`), 'es1'],
-    );
-    expect(later.map(g => g.language)).toEqual(['en', 'de', 'es']);
+  it('leads with English, then German, whatever the counts say', () => {
+    const groups = [group('tr', 40), group('de', 3), group('es', 20), group('en', 8)];
+    expect(orderGroups(groups).map(g => g.language)).toEqual(['en', 'de', 'tr', 'es']);
   });
 
-  it('puts the searched language first and the unknown group last', () => {
-    const groups = [group(undefined, ['u1']), group('en', ['en1']), group('de', ['de1'])];
-    const order = ['u1', 'en1', 'de1'];
-    expect(orderGroups(groups, order, 'de').map(g => g.language)).toEqual(['de', 'en', undefined]);
-    expect(orderGroups(groups, order, 'all').map(g => g.language)).toEqual(['en', 'de', undefined]);
+  it('orders the tail by size, so the big languages come first', () => {
+    const groups = [group('es', 2), group('fr', 9), group('it', 5)];
+    expect(orderGroups(groups).map(g => g.language)).toEqual(['fr', 'it', 'es']);
   });
 
-  it('puts groups whose covers are not in the order list at the end', () => {
-    const groups = [group('it', ['gone']), group('en', ['en1'])];
-    expect(orderGroups(groups, ['en1']).map(g => g.language)).toEqual(['en', 'it']);
+  it('holds the first two places while later pages arrive', () => {
+    const first = orderGroups([group('en', 8), group('de', 3), group('tr', 2)]);
+    expect(first.map(g => g.language)).toEqual(['en', 'de', 'tr']);
+    // Turkish overtakes both, but must not push them aside.
+    const later = orderGroups([group('en', 9), group('de', 4), group('tr', 60), group('es', 30)]);
+    expect(later.map(g => g.language)).toEqual(['en', 'de', 'tr', 'es']);
+  });
+
+  it('puts the searched language ahead of the leads, and unknown last', () => {
+    const groups = [group(undefined, 5), group('en', 8), group('de', 3), group('fr', 4)];
+    expect(orderGroups(groups, 'fr').map(g => g.language)).toEqual(['fr', 'en', 'de', undefined]);
+    expect(orderGroups(groups, 'all').map(g => g.language)).toEqual(['en', 'de', 'fr', undefined]);
+    // Searching a lead language does not duplicate its position.
+    expect(orderGroups(groups, 'de').map(g => g.language)).toEqual(['en', 'de', 'fr', undefined]);
+  });
+
+  it('copes with a work that has no English or German editions', () => {
+    const groups = [group('it', 3), group('fr', 7), group(undefined, 1)];
+    expect(orderGroups(groups).map(g => g.language)).toEqual(['fr', 'it', undefined]);
+  });
+});
+
+describe('leadLanguagesSettled', () => {
+  const group = (language: string | undefined, n: number): LanguageGroup => ({
+    language,
+    coverIds: Array.from({ length: n }, (_, i) => `${language ?? 'x'}-${i}`),
+  });
+
+  it('waits until an English group is there, so the row does not shift later', () => {
+    expect(leadLanguagesSettled([group('tr', 4)], false)).toBe(false);
+    expect(leadLanguagesSettled([group('tr', 4), group('en', 1)], false)).toBe(true);
+  });
+
+  it('gives up waiting once every page is loaded', () => {
+    expect(leadLanguagesSettled([group('tr', 4)], true)).toBe(true);
+    expect(leadLanguagesSettled([], true)).toBe(true);
   });
 });

@@ -163,7 +163,7 @@ export async function getWorkDetail(workId: string, options: WorkDetailOptions =
   // Same design, several scans: fold by perceptual hash within a time budget.
   const covers = options.dedupeCovers === false
     ? assembled
-    : foldDuplicateCovers(assembled, await hashCovers(assembled, { deadlineMs: options.hashDeadlineMs }));
+    : foldDuplicateCovers(assembled, await hashCovers(assembled, { deadlineMs: options.hashDeadlineMs }), editions);
 
   const groups = groupCoversByLanguage(covers, editions, options.preferredLanguage);
   return { work: first.work, editions, covers, groups };

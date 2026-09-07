@@ -77,6 +77,24 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       return (await res.json()) as WorkPageResponse;
     };
 
+    /**
+     * Open Library answers a slow editions request in 13 s now and then, past
+     * the 12 s timeout, and a single such request used to leave the whole
+     * page dead with "data source unavailable" (seen on Mumbo Jumbo,
+     * 2026-09-07). One retry costs a moment and the second attempt is served
+     * from the cache the first one filled.
+     */
+    const loadFirstPage = async (): Promise<WorkPageResponse | null> => {
+      try {
+        return await loadPage(0, false);
+      } catch (err) {
+        if (controller.signal.aborted) throw err;
+        await new Promise(r => setTimeout(r, RETRY_DELAY_MS));
+        if (controller.signal.aborted) throw err;
+        return loadPage(0, false);
+      }
+    };
+
     const update = (fn: (p: Progress) => Progress) => {
       if (controller.signal.aborted) return;
       setProgress(prev => (prev && prev.key === key ? fn(prev) : prev));
@@ -85,7 +103,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
     (async () => {
       let first: WorkPageResponse | null;
       try {
-        first = await loadPage(0, false);
+        first = await loadFirstPage();
       } catch (err) {
         if (controller.signal.aborted) return;
         setProgress({
