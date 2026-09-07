@@ -6,7 +6,9 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { resetGoogleQuota } from '../googlequota';
-import { searchVolumes, searchEditionCandidates } from '../sources/googlebooks';
+import {
+  GB_ISBN_REVALIDATE, GB_REVALIDATE, searchEditionCandidates, searchVolumes,
+} from '../sources/googlebooks';
 import { HttpError, fetchJson } from '../sources/http';
 import { getEditionsPage, getWork, searchWorks } from '../sources/openlibrary';
 
@@ -126,6 +128,14 @@ describe('editions pages', () => {
 });
 
 describe('googlebooks', () => {
+  it('keeps a title search for a week and an ISBN lookup for a day', () => {
+    // The quota is 1,000 a day and cannot be raised (SPEC §8.7), so not
+    // asking twice is the cheapest capacity there is. The ISBN lookup is the
+    // exception: it answers "what ships today" and has to stay fresh.
+    expect(GB_REVALIDATE).toBe(7 * 24 * 60 * 60);
+    expect(GB_ISBN_REVALIDATE).toBe(24 * 60 * 60);
+  });
+
   it('appends the API key only when configured and never throws', async () => {
     vi.stubEnv('GOOGLE_BOOKS_API_KEY', '');
     handler = () => ({ status: 429 });

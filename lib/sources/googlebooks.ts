@@ -13,8 +13,23 @@ import { parseVolumes, type EditionCandidate, type GbVolume } from './googlebook
 const BASE = 'https://www.googleapis.com/books/v1/volumes';
 
 export const GB_TIMEOUT_MS = 5_000;
-export const GB_REVALIDATE = 60 * 60;
+/**
+ * How long a title search stays in the data cache.
+ *
+ * A week, not the hour it used to be. The quota is 1,000 requests a day and
+ * cannot be raised — the console marks it adjustable, but the link behind
+ * that leads to the help centre for Google Search (checked 2026-09-07). So
+ * the cheapest capacity left is not asking twice. What a title search returns
+ * is a book's supplementary covers and description; that a 1949 novel might
+ * acquire one is not worth re-asking every hour.
+ *
+ * The ISBN lookup keeps its 24 hours on purpose: it answers "which cover does
+ * the trade ship *today*", and that one has to stay fresh (SPEC §9.3 step 13).
+ */
+export const GB_REVALIDATE = 7 * 24 * 60 * 60;
 export const GB_SEARCH_LIMIT = 20;
+/** The one Google answer that must stay fresh: what the trade ships today. */
+export const GB_ISBN_REVALIDATE = 24 * 60 * 60;
 
 interface GbSearchResponse {
   totalItems?: number;
@@ -72,7 +87,7 @@ export async function lookupByIsbns(isbns: readonly string[], max = GB_ISBN_LOOK
   const results = await Promise.all(unique.map(async isbn => {
     const url = `${BASE}?q=isbn:${encodeURIComponent(isbn)}&maxResults=3${apiKeyParam()}`;
     try {
-      const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: 24 * 60 * 60 });
+      const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: GB_ISBN_REVALIDATE });
       // Keep only volumes that really carry the ISBN; Google sometimes pads results.
       return parseVolumes(data.items).filter(c => c.isbn13 === isbn);
     } catch (err) {
@@ -101,7 +116,7 @@ export async function lookupIsbnOrThrow(isbn13: string): Promise<EditionCandidat
   if (!googleAvailable()) return null;
   const url = `${BASE}?q=isbn:${encodeURIComponent(isbn13)}&maxResults=3${apiKeyParam()}`;
   try {
-    const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: 24 * 60 * 60 });
+    const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: GB_ISBN_REVALIDATE });
     // Google pads results; keep only volumes that really carry the ISBN.
     return parseVolumes(data.items).filter(c => c.isbn13 === isbn13);
   } catch (err) {

@@ -326,3 +326,50 @@ Deshalb gehört zu B6:
 2. Ein Test, der belegt: offener Automat ⇒ `getIsbnCovers` meldet `unavailable`, nicht „keine Cover".
 3. Im Browser: Verdikt beim Auswählen — kein falscher Satz mehr in der Wartezeit.
 4. `npm run build`.
+
+---
+
+## B7 — die 1.000 haltbarer machen, nachdem der Erhöhungsweg tot ist
+
+### Befund
+
+Die Konsole führt „Queries per day" als **anpassbar**, aber der Weg dorthin endet in der Hilfe für die **Google-Suche** (`support.google.com/websearch`, Thema 3378866) — mit dem Books-API hat die Seite nichts zu tun (geprüft 2026-09-07). Es gibt also keinen Selbstbedienungsweg zu mehr als 1.000 Anfragen pro Tag. Damit ist §8.7 Frage 2 beantwortet, nur nicht so, wie man es sich wünscht.
+
+Nebenbefund aus derselben Sitzung: der Verbrauch stieg während der Prüfung von 298 auf 305. Jede Testsitzung geht vom selben Budget ab wie die Besucher.
+
+Was bleibt, sind drei Hebel. Zwei davon kann ich ziehen, einer ist eine Entscheidung.
+
+### B7.1 — Cache verlängern (kostet nichts, verliert nichts)
+
+Heute lebt die **Titelsuche** eine Stunde im Next-Datencache, die **ISBN-Nachschau** einen Tag. Eine Stunde ist für Buchmetadaten absurd kurz: der Titel eines 1949 erschienenen Romans ändert sich nicht stündlich. Ein Werk, das an einem Tag zwölfmal geöffnet wird, kostet damit heute bis zu zwölf Anfragen statt einer.
+
+- **Titelsuche (Detailseite und Suche): 1 Stunde → 7 Tage.** Rein ergänzende Cover und Beschreibungen; eine neue Ausgabe darf eine Woche brauchen, bis sie auftaucht.
+- **ISBN-Nachschau: bleibt bei 24 Stunden.** Sie beantwortet „welches Cover liefert der Handel *heute*" — das ist die eine Google-Antwort, die frisch sein muss.
+
+Kein Verlust, keine Entscheidung nötig.
+
+### B7.2 — ein zweiter Schlüssel für die Entwicklung (Julians drei Minuten)
+
+Derselbe Schlüssel bedient Arbeit und Betrieb. Solange das so ist, nimmt jede Testsitzung den Besuchern Anfragen weg — heute 305 von 1.000. Ein zweiter Schlüssel in einem zweiten Cloud-Projekt trennt das sauber und verdoppelt faktisch das Budget des Betriebs. Codeseitig ist nichts zu tun, nur ein anderer Wert in `.env.local`.
+
+### B7.3 — die Entscheidung: kostet eine Detailseite eine oder zwei Anfragen?
+
+Eine kalte Detailseite kostet heute zwei: die **Titelsuche** auf Seite 0 und die **ISBN-Nachschau** beim Auswählen eines Covers. Fiele die Titelsuche weg, verdoppelte sich die Kapazität von rund 500 auf rund 1.000 Detailseiten pro Tag.
+
+Was das kosten würde, gemessen (§8.7, ganzes Werk, vor der Faltung):
+
+| Werk | Cover gesamt | davon nur von Google | Anteil | Beschreibungen | Vorschau-Links |
+|---|---|---|---|---|---|
+| 1984 | 282 | 4 | 1,4 % | 4 | 4 |
+| Mumbo Jumbo | 13 | 3 | 23 % | 2 | 3 |
+| Beloved | 72 | 12 | 17 % | 9 | 11 |
+
+Bei *1984* wäre es ein Rundungsfehler, bei *Beloved* jedes sechste Cover. **Das ist eine Produktentscheidung, keine technische**, deshalb baue ich sie nicht von mir aus: Der Schalter (`WorkPageOptions.googleBooks`) existiert seit B1a, das Umlegen ist eine Zeile. Meine Neigung: erst B7.1 und B7.2 wirken lassen und den Verbrauch mit echten Besuchern ansehen, bevor Cover geopfert werden.
+
+### Nicht empfohlen, aber der Vollständigkeit halber
+
+Im Projekt ist **keine Abrechnung aktiviert** (die Konsole wirbt noch mit dem Startguthaben). Ob eine aktivierte Abrechnung das Tageskontingent anhebt, ist für die Books API unbelegt — bei anderen Google-APIs ist es so. Das wäre ein Versuch mit hinterlegter Zahlungsmethode, und den entscheidet Julian, nicht ich.
+
+### Prüfen
+
+`GB_REVALIDATE` in den Tests, `npm run test:run`, `npm run build`, und eine Detailseite zweimal laden: der zweite Aufruf darf keine Google-Anfrage auslösen.
