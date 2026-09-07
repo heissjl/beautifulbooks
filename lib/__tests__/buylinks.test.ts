@@ -82,3 +82,27 @@ describe('searchLinksFor (no ISBN needed)', () => {
     expect(links[1].url).toContain('ebay.de');
   });
 });
+
+describe('link kind (SPEC §9.3 step 16)', () => {
+  it('marks the Amazon product page as a product and the 979 fallback as a search', () => {
+    const [amazonUs] = buyLinksFor({ isbn13: '9780307388629' }, 'us', {}).filter(l => l.provider === 'amazon');
+    expect(amazonUs).toMatchObject({ kind: 'product' });
+    expect(amazonUs.url).toContain('/dp/030738862X');
+
+    const [amazon979] = buyLinksFor({ isbn13: '9791234567896' }, 'us', {}).filter(l => l.provider === 'amazon');
+    expect(amazon979).toMatchObject({ kind: 'search' });
+  });
+
+  it('marks Bookshop as a product only once an affiliate id makes it one', () => {
+    const without = buyLinksFor({ isbn13: '9780307388629' }, 'us', {}).find(l => l.provider === 'bookshop');
+    expect(without).toMatchObject({ kind: 'search' });
+    const with_ = buyLinksFor({ isbn13: '9780307388629' }, 'us', { AFFILIATE_BOOKSHOP_ID_US: '12345' }).find(l => l.provider === 'bookshop');
+    expect(with_).toMatchObject({ kind: 'product' });
+  });
+
+  it('marks every ISBN search as a search', () => {
+    const de = buyLinksFor({ isbn13: '9783499130656' }, 'de', {});
+    const searches = de.filter(l => l.kind === 'search').map(l => l.provider);
+    expect(searches).toEqual(['thalia', 'genialokal', 'hugendubel', 'abebooks', 'booklooker']);
+  });
+});

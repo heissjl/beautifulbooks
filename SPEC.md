@@ -451,7 +451,7 @@ Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil s
 - [ ] **Vercel-Plan.** Hobby ist nicht-kommerziell; mit dem ersten Affiliate-Link ist ein Wechsel fällig (8.2).
 - [ ] **Impressum und Datenschutzerklärung** stehen und sind verlinkt (8.2).
 - [ ] **Rate-Limit auf den API-Routen**, sonst zahlen Bots dein Google-Kontingent leer (8.2).
-- [ ] **Händler-URLs geprüft:** Hugendubel und genialokal sind noch nie gegen echte ISBNs getestet worden (8.3).
+- [x] **Händler-URLs geprüft** (2026-09-07, §9.3 Schritt 16): `npx tsx scripts/check-buylinks.ts`. Hugendubel und genialokal antworten mit HTTP 200, rendern ihre Treffer aber im Browser; ihre URL-Muster sind damit weder bestätigt noch widerlegt. Vor dem Start einmal von Hand im Browser nachsehen.
 
 ### 8.6 Funktionale Erweiterungen (aus Entscheidungen zurückgestellt)
 
@@ -590,6 +590,29 @@ Beim Auswählen eines Covers holt die Seite über die Route aus 13a das Bild, da
 
 **Nicht umgesetzt:** mehrere ISBN-13 an einem Datensatz („also as ISBN …“). Das betrifft 1 von 300 geprüften Gatsby-Einträgen; der Aufwand (Modell, Merge, Links, UI) steht nicht dafür. Amazon bleibt wie geplant beim Direktlink `/dp/<ISBN-10>`; zusätzliche Metadaten in Händler-URLs bringen nichts, weil die Händler ohnehin nach ISBN suchen.
 
+**Schritt 16 – Verfügbarkeitsprüfung, Scrollen, Link-Art (Julian, 2026-09-07).** *Erledigt.*
+
+- **Seitenleiste scrollt selbst.** Sie ist höher als der Bildschirm; ein einfaches `sticky` heftet nur ihren Kopf fest, sodass man erst an der ganzen Cover-Wand vorbeiscrollen musste, um an die Kauf-Links zu kommen. Sie hat jetzt `max-h-[calc(100vh-6rem)]` und `overflow-y-auto`, das Rad scrollt erst die Leiste, dann die Seite.
+- **Kauf-Links öffnen in neuem Tab.** War bereits so; im DOM geprüft, alle 26 Links der Leiste tragen `target="_blank"`. Einzige Ausnahme ist das Vorschaubild im `differs`-Hinweis, das absichtlich in der Seite bleibt, weil es nur die Auswahl wechselt.
+- **Link-Art ist ausgezeichnet.** `BuyLink.kind` sagt ohne jede Anfrage, ob ein Link auf eine Buchseite führt (Amazon `/dp/`, Blackwell's, Bookshop mit Affiliate-ID) oder auf eine Trefferliste; Suchen tragen ein kleines „search“.
+- **Button „Check availability“** (`lib/availability.ts`, `GET /api/availability`). Er fragt jeden Händler des Marktes nach dieser ISBN **und** nach einer Kontroll-ISBN, die es nicht geben kann, und vergleicht die Antworten.
+
+**Was dabei herauskam, und warum der Button weniger sagt, als man hoffen würde.** Gemessen am 2026-09-07 gegen die echten Shops, je eine reale und eine unmögliche ISBN:
+
+| Händler | Antwort auf eine Server-Anfrage |
+|---|---|
+| Amazon .com | jedes Mal Bot-Prüfung |
+| Amazon .de / .co.uk | meist echte Produktseite, unterscheidbar |
+| AbeBooks (alle Märkte) | echte Trefferliste, unterscheidbar |
+| Bookshop.org US | unterscheidbar; UK 403 |
+| Thalia | mal 403, mal unterscheidbar |
+| Hugendubel, genialokal | HTTP 200, aber **byte-identisch** für reale und unmögliche ISBN: Treffer werden im Browser gerendert |
+| eBay, ThriftBooks, Blackwell's, Booklooker, Waterstones | 403, 406, 429 oder Bot-Prüfung |
+
+Ein serverseitiger Test kann also für etwa zwei von sechs Händlern eine positive Aussage treffen und sonst nichts. Deshalb heißen die Zustände **„found it“, „can't tell“, „won't answer“, „no answer“** — `can't tell` darf ausdrücklich **nicht** als „hat es nicht“ gelesen werden, denn Hugendubel und genialokal führen das Buch sehr wohl. Und keiner der Zustände ist eine Bestandsprüfung. Der Button läuft nur auf Klick, das Ergebnis wird sechs Stunden gecacht, die Kontrollantwort 24 Stunden.
+
+- **Prüfskript `scripts/check-buylinks.ts`** macht dieselbe Messung über alle Märkte und ISBNs auf der Kommandozeile. Damit ist der offene Punkt „Händler-URLs geprüft“ aus §8.7 bedienbar; vor dem Start und nach jeder Händler-Änderung laufen lassen.
+
 **Schritt 14 – Mosaik durch nachgeladene Cover je Karte (D).**
 - Karte fordert nach dem Rendern `GET /api/works/[id]?offset=0&summary=1` an (dieselbe gecachte Seite 0 aus Schritt 11, verkürzt auf bis zu 4 unterschiedliche Cover-URLs), nur für sichtbare Karten, maximal 8 parallel. Das wärmt zugleich die Detailseite, der Klick wird schneller.
 - Mit Sprachfilter: OL-Suche mit `language=<ISO-3>` aufrufen, das `editions`-Unterdokument liefert dann ein Cover in dieser Sprache; es wird das erste Cover der Karte.
@@ -600,4 +623,4 @@ Beim Auswählen eines Covers holt die Seite über die Route aus 13a das Bild, da
 - Zähler auf der Detailseite aus Schritt 11 („42 covers · 300 of 1180 editions checked“), Fußnote unter der Wand: „Cover images come from Open Library and Google Books. Editions without a scan are listed below.“
 - About-Seite (8.1) erklärt Quellen, Lücken und die Verifikationsgrade aus Schritt 13 in drei Absätzen.
 
-Reihenfolge: 11, 13a, 10, 12 und 13 sind erledigt; es folgen 15 und 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).
+Reihenfolge: 11, 13a, 10, 12, 13 und 16 sind erledigt; es folgen 15 und 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).

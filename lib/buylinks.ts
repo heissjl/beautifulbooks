@@ -26,6 +26,11 @@ interface Retailer {
   /** Environment variable holding the affiliate id/tag for this market. */
   affiliateEnv?: string;
   url: (isbn13: string, affiliate: string | undefined) => string;
+  /**
+   * Whether the URL lands on one book's page or on a list of results.
+   * Defaults to a search, which is what most retailers give for an ISBN.
+   */
+  kind?: (isbn13: string, affiliate: string | undefined) => BuyLink['kind'];
 }
 
 const withTag = (url: string, key: string, value: string | undefined) =>
@@ -42,6 +47,8 @@ function amazon(domain: string, affiliateEnv: string): Retailer {
       const base = isbn10 ? `https://www.amazon.${domain}/dp/${isbn10}` : `https://www.amazon.${domain}/s?k=${isbn}&i=stripbooks`;
       return withTag(base, 'tag', tag);
     },
+    // 979-prefixed ISBNs have no ISBN-10, so those fall back to a search.
+    kind: isbn => (isbn13to10(isbn) ? 'product' : 'search'),
   };
 }
 
@@ -60,6 +67,7 @@ const RETAILERS: Record<Market, Retailer[]> = {
       label: 'Bookshop.org',
       affiliateEnv: 'AFFILIATE_BOOKSHOP_ID_US',
       url: (isbn, aff) => (aff ? `https://bookshop.org/a/${aff}/${isbn}` : `https://bookshop.org/search?keywords=${isbn}`),
+      kind: (_isbn, aff) => (aff ? 'product' : 'search'),
     },
     amazon('com', 'AFFILIATE_AMAZON_TAG_US'),
     abebooks('com'),
@@ -72,9 +80,10 @@ const RETAILERS: Record<Market, Retailer[]> = {
       label: 'Bookshop.org',
       affiliateEnv: 'AFFILIATE_BOOKSHOP_ID_UK',
       url: (isbn, aff) => (aff ? `https://uk.bookshop.org/a/${aff}/${isbn}` : `https://uk.bookshop.org/search?keywords=${isbn}`),
+      kind: (_isbn, aff) => (aff ? 'product' : 'search'),
     },
     amazon('co.uk', 'AFFILIATE_AMAZON_TAG_UK'),
-    { id: 'blackwells', label: "Blackwell's", url: isbn => `https://blackwells.co.uk/bookshop/product/${isbn}` },
+    { id: 'blackwells', label: "Blackwell's", url: isbn => `https://blackwells.co.uk/bookshop/product/${isbn}`, kind: () => 'product' },
     { id: 'waterstones', label: 'Waterstones', url: isbn => `https://www.waterstones.com/books/search/term/${isbn}` },
     abebooks('co.uk'),
     { id: 'ebay', label: 'eBay', url: isbn => `https://www.ebay.co.uk/sch/i.html?_nkw=${isbn}&_sacat=267` },
@@ -96,11 +105,16 @@ export function retailersFor(market: Market): ReadonlyArray<Pick<Retailer, 'id' 
 /** Buy links for an edition in a market. Empty without an ISBN. */
 export function buyLinksFor(edition: Pick<Edition, 'isbn13'>, market: Market = DEFAULT_MARKET, env: Env = process.env): BuyLink[] {
   if (!edition.isbn13) return [];
-  return RETAILERS[market].map(r => ({
-    provider: r.id,
-    label: r.label,
-    url: r.url(edition.isbn13!, r.affiliateEnv ? env[r.affiliateEnv] || undefined : undefined),
-  }));
+  const isbn13 = edition.isbn13;
+  return RETAILERS[market].map(r => {
+    const affiliate = r.affiliateEnv ? env[r.affiliateEnv] || undefined : undefined;
+    return {
+      provider: r.id,
+      label: r.label,
+      url: r.url(isbn13, affiliate),
+      kind: r.kind ? r.kind(isbn13, affiliate) : 'search',
+    };
+  });
 }
 
 export interface SearchLinkInput {

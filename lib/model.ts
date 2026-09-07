@@ -99,6 +99,11 @@ export interface BuyLink {
   provider: string;
   label: string;
   url: string;
+  /**
+   * Does the link open one book's page, or a list of results? Knowable from
+   * the URL alone; no shop is ever contacted to find out (SPEC §9.3 step 16).
+   */
+  kind?: 'product' | 'search';
 }
 
 /** Edition as delivered by /api/works/[id]: with display-time purchase links. */

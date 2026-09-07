@@ -4,6 +4,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
+import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
 import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
@@ -15,6 +16,7 @@ import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor } from '@/lib/buylinks';
+import type { ShopStatus } from '@/lib/availability';
 import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
@@ -303,7 +305,14 @@ function BookDetail() {
               scan, so a book has had covers that neither catalogue knows.
             </p>
           </div>
-          <aside className="lg:sticky lg:top-20 lg:self-start">
+          {/*
+            The sidebar is taller than the viewport, so a plain sticky block
+            pins its top and leaves the buy links below the fold until the
+            reader has scrolled past the whole wall (Julian, 2026-09-07).
+            Giving it its own scroll area makes the links reachable at once;
+            the wheel scrolls the sidebar first and then the page.
+          */}
+          <aside className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
             {selected && (
               <CoverDetails
                 cover={selected}
@@ -497,6 +506,12 @@ function BuyBlock({ edition, hint, verdict, market, onMarketChange }: {
   market: Market;
   onMarketChange: (market: Market) => void;
 }) {
+  // Reset whenever the edition or the market changes: an answer belongs to
+  // one ISBN in one market's shops.
+  const [checked, setChecked] = useState<{ key: string; byProvider: Map<string, ShopStatus> } | null>(null);
+  const key = `${edition.id} ${market}`;
+  const shops = checked?.key === key ? checked.byProvider : null;
+
   return (
     <div className="mt-5">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -506,12 +521,44 @@ function BuyBlock({ edition, hint, verdict, market, onMarketChange }: {
       {edition.buyLinks.length > 0 ? (
         <>
           <div className="mt-2 flex flex-wrap gap-2">
-            {edition.buyLinks.map(link => (
-              <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer sponsored" className="btn">
-                {link.label}
-              </a>
-            ))}
+            {edition.buyLinks.map(link => {
+              const status = shops?.get(link.provider);
+              return (
+                <a
+                  key={link.provider}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  className="btn"
+                  title={status
+                    ? SHOP_STATUS_TITLE[status]
+                    : link.kind === 'product' ? `${link.label}: this book's page` : `${link.label}: search results for this ISBN`}
+                >
+                  {link.label}
+                  {status ? (
+                    <span className="ml-1 text-[10px] uppercase tracking-wide opacity-60">{SHOP_STATUS_LABEL[status]}</span>
+                  ) : (
+                    link.kind === 'search' && <span className="ml-1 text-[10px] uppercase tracking-wide opacity-50">search</span>
+                  )}
+                </a>
+              );
+            })}
           </div>
+          {edition.isbn13 && (
+            <AvailabilityCheck
+              isbn13={edition.isbn13}
+              checked={!!shops}
+              onResult={byProvider => setChecked({ key, byProvider })}
+            />
+          )}
+          {shops && (
+            <p className="mt-2 text-xs leading-relaxed text-ink-3">
+              Each shop was asked whether its page for this ISBN differs from its page for an ISBN
+              that cannot exist. Only &ldquo;found it&rdquo; tells you anything: some shops refuse the
+              question, and others build their results in the browser, where this check cannot follow.
+              Nothing here is a stock check.
+            </p>
+          )}
           <VerdictNote verdict={verdict} hint={hint} />
         </>
       ) : (
