@@ -19,6 +19,14 @@ import { filterWorksByLanguage, mergeWorks, mosaicCovers, rankWorks } from './wo
 export const DEFAULT_LANGUAGE = 'all';
 export const MAX_QUERY_LENGTH = 200;
 
+/**
+ * Open Library refuses a shorter query with HTTP 422 ("Query too short, must
+ * be at least 3 characters"). Asking anyway and showing the refusal as "No
+ * books found" would tell the reader that *It* does not exist, so the check
+ * happens here and the route turns it into a 400 the UI can word properly.
+ */
+export const MIN_QUERY_LENGTH = 3;
+
 export interface SearchOptions {
   /** ISO 639-1 code or 'all' (default, decision E2). */
   language?: string;
@@ -39,10 +47,16 @@ export function normalizeLanguageOption(raw: string | null | undefined): string 
   return /^[a-z]{2}$/.test(v) ? v : DEFAULT_LANGUAGE;
 }
 
+/**
+ * Runs a search. **Throws `SourceUnavailableError` when Open Library does not
+ * answer**; an empty `works` means Open Library answered and had nothing.
+ * Callers must keep those two apart (SPEC §3 F1.7).
+ */
 export async function search(rawQuery: string, options: SearchOptions = {}): Promise<SearchResult> {
   const query = normalizeQuery(rawQuery);
   const language = normalizeLanguageOption(options.language);
-  if (!query) return { query, language, works: [] };
+  // Nobody asked anything answerable: no call, and no claim about the world.
+  if (query.length < MIN_QUERY_LENGTH) return { query, language, works: [] };
 
   const olWorks = await searchWorks(query);
 

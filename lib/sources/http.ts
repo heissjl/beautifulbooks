@@ -23,6 +23,26 @@ export class HttpError extends Error {
   }
 }
 
+/**
+ * A source was asked and did not give an answer: it timed out, the network
+ * failed, or it replied with an error status.
+ *
+ * This exists so that "the catalogue did not answer" can never be mistaken
+ * for "the catalogue has nothing" (SPEC §3 F1.7, F3.3, §4 N12). A client that
+ * swallows a failure into an empty list tells the reader their book does not
+ * exist, which is the one thing this site must not do.
+ */
+export class SourceUnavailableError extends Error {
+  constructor(
+    /** Which catalogue stayed silent, for the message and for logging. */
+    public readonly source: 'openlibrary' | 'googlebooks',
+    public readonly cause?: unknown,
+  ) {
+    super(`${source} did not answer: ${cause instanceof Error ? cause.message : String(cause)}`);
+    this.name = 'SourceUnavailableError';
+  }
+}
+
 /** Reads an error body without letting that reading become the failure. */
 async function errorBody(res: Response): Promise<string> {
   try {

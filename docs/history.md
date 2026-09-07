@@ -497,3 +497,21 @@ Vollständiger Befund in [tests/2026-09-07-durchklick.md](tests/2026-09-07-durch
 **Was hielt**, und damit als geprüft gilt: `/go` baut das Ziel neu und ignoriert ein untergeschobenes `url=` (kein offener Redirect); das Rate-Limit lässt 20 Anfragen durch und antwortet dann mit 429, `Retry-After` und `no-store`; leere Query 400, kaputte ISBN 400, unbekannte Sprache fällt auf `all`, die Query ist bei 200 Zeichen gedeckelt und Markup wird escaped; die Telefon-Schublade öffnet, setzt den Fokus auf „Close", schließt per Escape und gibt den Bildlauf wieder frei; der Marktwechsel setzt Cookie und Händlerliste; der Zurück-Knopf stellt Query, Suchfeld und Karten wieder her; Titel, Beschreibung, Canonical, JSON-LD, OG-Bild, robots.txt und Sitemap stimmen; die Seitenleiste scrollt eigenständig; die Verdikte `verified` und `unknown` nennen ihre Quelle.
 
 **Nicht prüfbar:** Enter im Suchfeld und die Tastaturbedienung insgesamt — das Automatisierungs-Panel schickt Tastendrücke ohne Tastenwert. Steht als ROADMAP 0.8 zur Handprüfung.
+
+---
+
+## 2026-09-07 · Ein Ausfall der Suche heißt nicht mehr „nichts gefunden" (Roadmap 1.4)
+
+Der schwerste Fund des [Durchklicks](tests/2026-09-07-durchklick.md). `searchWorks` fing jeden Fehler ab und gab eine leere Liste zurück, die Route antwortete 200 mit `works: []`, und die Oberfläche sagte dem Leser, es gebe das Buch nicht. Vier von rund vierzehn kalten Suchen taten das, darunter zweimal *Norwegian Wood*, das bei Open Library 124 Werke hat.
+
+**Zwei Ursachen, beide behoben.**
+
+*Erstens die Verwechslung von Schweigen und Leere.* `SourceUnavailableError` (`lib/sources/http.ts`) benennt jetzt „gefragt, keine Antwort bekommen". `searchWorks` wirft ihn bei Timeout, Netzfehler, Fehlerstatus und bei einer 200er-Antwort ohne `docs`-Array; eine leere Liste bedeutet ausschließlich, dass Open Library geantwortet hat und nichts hatte. `app/api/search/route.ts` macht daraus **503 mit `no-store`**, und nur die 200 trägt weiter `s-maxage=3600` — vorher hätte das CDN eine Ausfallantwort eine Stunde lang ausgeliefert und jedem Besucher dasselbe Falsche erzählt. Der Test, der das alte Verhalten festhielt („returns [] on HTTP error and on timeout"), ist durch seinen Gegensatz ersetzt.
+
+*Zweitens der Deckel selbst.* Gemessen über zwölf kalte Suchen direkt bei Open Library, ohne Deckel: sieben antworteten unter 8 s, **drei zwischen 9 und 10 s**, eine nach 24 s, eine gar nicht. Der alte 8-Sekunden-Deckel machte damit aus einem Drittel der langsamen, aber gültigen Antworten einen Fehler. `OL_TIMEOUTS.search` steht deshalb auf **12 s**. Der Preis ist eine längere Wartezeit im schlechten Fall, und sie endet jetzt in einer Auskunft statt in einer falschen.
+
+**Dabei mitgefunden: zu kurze Suchen.** Open Library lehnt eine Suche unter drei Zeichen mit HTTP 422 ab („Query too short"). Das erreichte den Leser bisher ebenfalls als „No books found" — für `it` etwa. `MIN_QUERY_LENGTH = 3` in `lib/search.ts` verhindert die Anfrage, die Route antwortet 400, und die Oberfläche sagt „Not enough to go on".
+
+**In der Oberfläche** (`components/BookGrid.tsx`) unterscheidet `failureFor` jetzt 503, 429, 400 und den Rest und gibt jedem einen eigenen Satz; wo ein zweiter Versuch etwas bringen kann, steht ein Knopf **„Try again"**, der die Anfrage über einen Zähler im Anfrageschlüssel wirklich neu stellt. Der Leerzustand nennt den Sprachfilter nur noch, wenn einer gesetzt ist: ohne Filter „Open Library knows nothing under this title. Try another spelling, or add the author.", mit Filter der Zusatz über die gewählte Sprache.
+
+**Verifiziert** im Browser mit erzwungenem 503 (Fehlerzustand samt Knopf), mit echtem Ausfall (`austerlitz sebald` → 503 nach 10,5 s, vorher „nichts gefunden"), mit wiederholtem Versuch nach dem Ausfall (8 Treffer, Ishiguro zuerst), mit beiden Leerzustands-Varianten und mit `q=it` → 400. Fünf neue Tests in `lib/__tests__/search-route.test.ts` halten die Zusagen der Route fest, darunter dass ein Timeout 503 ergibt und nicht 200 mit leerer Liste; die Suite steht bei 188.

@@ -121,7 +121,7 @@ Zwei Ebenen:
   **Offene Lücke:** die Ableitungsregel greift nicht, wenn eine Ableitung denselben Titel trägt und einen **eigenen Erstautor** hat. Gemessen am 2026-09-07: `alice in wonderland` liefert „Alice in Wonderland in Five Acts“ (eine Ausgabe, Bühnenfassung) vor Carrolls Original mit 3.547; bei `the great gatsby` sind elf von fünfzehn Karten Bücher *über* Gatsby, auf Platz 2 eine Penguin-Critical-Study. Der Vergleich, der das entscheidet — gleicher normalisierter Titel, anderer Erstautor, ein Bruchteil der Ausgaben — liegt im `RankContext` bereits vor. Siehe [ROADMAP](ROADMAP.md) 6.1.
 - **F1.5** URL-Zustand `/?q=…&lang=…`; Back-Button und Teilen funktionieren.
 - **F1.6** Kürzlich gesucht (localStorage, max. 5) und eine kuratierte Cover-Wand aus zwölf Klassikern als leerer Zustand (`lib/curated.ts`).
-- **F1.7** Zustände: leer, lädt, Fehler, keine Treffer. **Ein Ausfall der Quelle ist kein leeres Ergebnis.** Antwortet Open Library nicht oder läuft in den Timeout, zeigt die Seite den Fehlerzustand mit einem Weg zum erneuten Versuch — nie „No books found“ — und die Antwort wird nicht gecacht. Der Leerzustand nennt den Sprachfilter nur, wenn einer gesetzt ist. *Beides ist heute verletzt, siehe [Durchklick 2026-09-07](docs/tests/2026-09-07-durchklick.md) Punkte 1 und 2 und [ROADMAP](ROADMAP.md) 1.4.*
+- **F1.7** Zustände: leer, lädt, Fehler, keine Treffer. **Ein Ausfall der Quelle ist kein leeres Ergebnis.** Antwortet Open Library nicht oder läuft in den Timeout, zeigt die Seite „The catalogue did not answer“ mit einem Knopf zum erneuten Versuch — nie „No books found“ — und die Antwort wird nicht gecacht. Der Leerzustand nennt den Sprachfilter nur, wenn einer gesetzt ist. Eine Suche unter `MIN_QUERY_LENGTH` (drei Zeichen) wird gar nicht erst gestellt, weil Open Library sie mit 422 ablehnt; sie ergibt 400 und einen eigenen Satz, keine Fehlanzeige. *Erledigt 2026-09-07, siehe [Historie](docs/history.md).*
 
 **Akzeptanzkriterien** (`lib/__tests__/acceptance.test.ts`, gegen aufgezeichnete Fixtures; im Browser vor jedem abgeschlossenen Schritt):
 
@@ -174,9 +174,11 @@ Zwei Ebenen:
   - Bild-URLs nur mit `zoom=1` und `&fife=w800`; `zoom=2` und höher ist eine Seite aus dem Buch-Scan, nicht das Cover.
   - Google antwortet häufig mit transienten 503; die ISBN-Nachschau wiederholt einmal und meldet sonst `unavailable`, nie „kein Cover“.
   - **Kontingent** (N9): eigener Schlüssel `GOOGLE_BOOKS_API_KEY`, 1.000 Anfragen pro Tag. Ohne Schlüssel läuft die Seite auf Open Library allein.
-- **F3.3 Ausfallsicherheit.** Jede Quelle fällt unabhängig aus: ein Fehler bei Google führt zu Teilergebnissen, nie zu einem Seitenfehler. Timeouts (`OL_TIMEOUTS`, `GB_TIMEOUT_MS`): Suche 8 s, Work 5 s, Editions 12 s, Google 5 s. Seite 0 wird bei Fehler einmal wiederholt; der zweite Versuch trifft den Cache. Die Detailseite unterscheidet „nicht gefunden“ (404) von „nicht erreichbar“ (503).
+- **F3.3 Ausfallsicherheit.** Jede Quelle fällt unabhängig aus: ein Fehler bei Google führt zu Teilergebnissen, nie zu einem Seitenfehler. Timeouts (`OL_TIMEOUTS`, `GB_TIMEOUT_MS`): Suche **12 s**, Work 5 s, Editions 12 s, Google 5 s. Seite 0 wird bei Fehler einmal wiederholt; der zweite Versuch trifft den Cache. Die Detailseite unterscheidet „nicht gefunden“ (404) von „nicht erreichbar“ (503).
 
-  **Die Suche muss dieselbe Unterscheidung treffen, tut es aber nicht.** `searchWorks` fängt jeden Fehler ab und gibt eine leere Liste zurück; die Route antwortet daraufhin 200 mit `works: []`. Der Leser bekommt „No books found“, obwohl die Quelle nur geschwiegen hat. Gemessen am 2026-09-07: vier von rund vierzehn kalten Suchen liefen in den 8-Sekunden-Timeout, darunter zweimal *Norwegian Wood*, das bei Open Library 124 Werke hat. Der vorhandene Fehlerzustand ist auf diesem Weg unerreichbar, und `s-maxage=3600` würde die leere Antwort in Produktion eine Stunde lang ausliefern. Open Library ist an dieser Stelle nicht zuverlässiger zu machen, die Antwort darauf schon.
+  **Die Suche trifft dieselbe Unterscheidung.** `searchWorks` wirft `SourceUnavailableError`, wenn Open Library schweigt, einen Fehlerstatus liefert oder mit einem Rumpf ohne `docs` antwortet; eine leere Liste bedeutet ausschließlich, dass Open Library geantwortet hat und nichts hatte. Die Route macht daraus 503 ohne Cache-Header, und nur die 200 trägt `s-maxage`. Vorher verschluckte der Client jeden Fehler, die Route antwortete 200 mit leerer Liste, und der Leser las „No books found“ für ein Buch mit hunderten Ausgaben.
+
+  **Der Deckel liegt bei 12 s, nicht bei 8.** Gemessen am 2026-09-07 über zwölf kalte Suchen direkt bei Open Library, ohne Deckel: sieben antworteten unter 8 s, **drei zwischen 9 und 10 s**, eine nach 24 s, eine gar nicht. Acht Sekunden machten also aus einem Drittel der langsamen, aber gültigen Antworten einen Fehler. Der Preis ist eine längere Wartezeit im schlechten Fall; das Skelett steht so lange auf dem Schirm, und die Wartezeit endet jetzt in einer Auskunft statt in einer falschen.
 - **F3.4** Hörbücher, Zeitschriften, Proceedings werden herausgefiltert.
 
 ### F4 – Cover-Mosaik
@@ -282,7 +284,7 @@ Die Zahlen, die den Entwurf bestimmen. Herkunft und Messaufbau in [docs/history.
 
 | Grenze | Zahl | Folge |
 |---|---|---|
-| Verlässlichkeit der Suche¹ | 4 von rund 14 kalten Suchen liefen in den 8-Sekunden-Timeout | Der Ausfall muss als Ausfall erscheinen (F1.7, F3.3) |
+| Verlässlichkeit der Suche¹ | 4 von rund 14 kalten Suchen liefen in den damaligen 8-Sekunden-Timeout. Direkt gemessen über 12 Suchen ohne Deckel: 7 unter 8 s, 3 zwischen 9 und 10 s, eine nach 24 s, eine gar nicht | Deckel auf 12 s, und der Ausfall erscheint als Ausfall (F1.7, F3.3) |
 | Kosten einer Auswahl¹ | 2 bis 5 Google-Anfragen pro Klick, je nach Zahl der ISBNs am gefalteten Cover | N9; entscheidet ROADMAP 0.7 mit |
 | Ladeszene mit Sprachfilter¹ | *1984* mit `lang=de`: über 20 s Bühne, weil deutsche Ausgaben erst auf Seite 3–4 liegen; ohne Filter 8 s | Die Wartegrenze aus F2.4 greift, fühlt sich aber wie ein Hänger an |
 | Ranking bei gleichnamigen Ableitungen¹ | `alice in wonderland`: Bühnenfassung mit 1 Ausgabe vor dem Original mit 3.547; `the great gatsby`: 11 von 15 Karten Sekundärliteratur. 10 andere Suchen lagen richtig | F1.4, offene Lücke |

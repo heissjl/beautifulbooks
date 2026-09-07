@@ -10,16 +10,15 @@ Die Phasen folgen Abhängigkeiten, nicht Aufwand: Provision braucht eine öffent
 
 | # | Was | Wer | Aufwand |
 |---|---|---|---|
-| 1 | Phase 1, Punkt 1.4: ein Ausfall der Suche darf nicht „nichts gefunden“ heißen | Claude | zwei Stunden |
-| 2 | Phase 0, Punkte 0.1–0.4 und 0.8: Verfügbarkeits-Button, zweiter Google-Schlüssel, Abrechnungsversuch, Angaben fürs Impressum, Enter im Suchfeld | Julian | eine halbe Stunde plus Wartezeit |
-| 3 | Phase 1, Punkte 1.5 und 1.6: die falschen Sätze (About, Leerzustand) und die zwei kaputten Bilder (Mosaik, OG) | Claude | eine Sitzung |
-| 4 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links | Claude | eine Sitzung |
-| 5 | Phase 1, Punkt 1.3: Bild-Cache vor Open Library und Google | Claude | eine Sitzung, mit Messung |
-| 6 | Phase 2: Vercel, Domain, Impressum und Datenschutz, Search Console | beide | eine Sitzung |
-| 7 | Phase 4, Punkt 4.1: Bookshop.org beantragen, sobald die Seite erreichbar ist | Julian | zehn Minuten plus Tage Wartezeit |
-| 8 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
+| 1 | Phase 0, Punkte 0.1–0.4 und 0.8: Verfügbarkeits-Button, zweiter Google-Schlüssel, Abrechnungsversuch, Angaben fürs Impressum, Enter im Suchfeld | Julian | eine halbe Stunde plus Wartezeit |
+| 2 | Phase 1, Punkte 1.5 und 1.6: die restlichen falschen Sätze (About, Erscheinungsjahr) und die zwei kaputten Bilder (Mosaik, OG) | Claude | eine Sitzung |
+| 3 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links | Claude | eine Sitzung |
+| 4 | Phase 1, Punkt 1.3: Bild-Cache vor Open Library und Google | Claude | eine Sitzung, mit Messung |
+| 5 | Phase 2: Vercel, Domain, Impressum und Datenschutz, Search Console | beide | eine Sitzung |
+| 6 | Phase 4, Punkt 4.1: Bookshop.org beantragen, sobald die Seite erreichbar ist | Julian | zehn Minuten plus Tage Wartezeit |
+| 7 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
 
-Punkt 1 steht vorn, weil er das Kernversprechen betrifft und heute jeden vierten neuen Besucher trifft. Die Ranking-Punkte aus Phase 6 sind bewusst nicht in dieser Liste: sie sind Qualität, kein Fehler, und sie brauchen mehr Messung als eine Sitzung hergibt.
+Der schwerste Punkt aus dem Testbericht ist erledigt: ein Ausfall der Suche heißt seit dem 2026-09-07 nicht mehr „nichts gefunden“ (ehemals 1.4, jetzt in der [Historie](docs/history.md); die Nummer bleibt frei, damit Verweise darauf nicht ins Leere zeigen). Die Ranking-Punkte aus Phase 6 stehen bewusst nicht in dieser Liste: sie sind Qualität, kein Fehler, und sie brauchen mehr Messung als eine Sitzung hergibt.
 
 Danach entscheidet sich anhand der Zahlen aus Phase 3, ob Phase 4 (Geld) oder Phase 5 (Reichweite) zuerst weitergeht. Ohne Besucher bringen Kauf-Links nichts, ohne Kauf-Links kostet Reichweite nur.
 
@@ -81,17 +80,6 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
   **Julians Zusatzidee, nur die zwei provisionsfähigen Links hochzuziehen, hat heute zwei Haken:** beide (Amazon, Bookshop) sind unkonfiguriert, es gibt also null Links zum Nudgen (Phase 4); und die About-Seite sagt „The order of the shops is not sorted by what they pay“. Vertretbar wäre eine Ordnung nach `BuyLink.kind` (Buchseite vor Trefferliste), die zufällig dieselben Links begünstigt und dem Leser nachweisbar nützt; oder der Satz auf About wird geändert. Unausgesprochen geht es nicht.
 
 - [ ] **1.3 Bild-Cache vor Open Library und Google** (SPEC N8). Cover laden heute direkt von `covers.openlibrary.org`, das auf archive.org weiterleitet und unter Last langsam oder gar nicht liefert (bei 18 gleichzeitigen Anfragen kamen nach 15 s nur die Google-Bilder); Open Library dokumentiert außerdem Rate-Limits für Cover. Optionen: `next/image` ohne `unoptimized` mit `remotePatterns` (Vercels Bildoptimierung, Kontingent des Plans prüfen) oder eine eigene Proxy-Route mit CDN-Cache. Vorher messen, wie viele verschiedene Bilder eine Detailseite lädt, damit das Kontingent der Optimierung nicht die nächste Grenze wird. *Im Durchklick bestätigt [T16]: die Konsole meldet auf jeder Seite mehrfach LCP-Warnungen zu `covers.openlibrary.org`; das `priority` auf den ersten Kacheln gehört mit dazu (6.5).*
-
-- [ ] **1.4 Ein Ausfall der Suche darf nicht „No books found“ heißen. [T1, T2]** Der schwerste Fund des Durchklicks und der einzige, der das Kernversprechen direkt verletzt: `searchWorks` fängt jeden Fehler ab und gibt `[]` zurück, die Route antwortet 200 mit `works: []`, die Oberfläche sagt, es gebe das Buch nicht. Vier von rund vierzehn kalten Suchen liefen am 2026-09-07 in den 8-Sekunden-Timeout, darunter zweimal *Norwegian Wood*, das bei Open Library 124 Werke hat.
-
-  **Zu ändern:**
-  1. `searchWorks` unterscheidet: bei Timeout oder Netzfehler **werfen**, `[]` nur bei einer echten Antwort ohne Treffer. Der Kommentar „never throws“ fällt mit.
-  2. `app/api/search/route.ts` antwortet auf diesen Fehler mit **503 und ohne `Cache-Control`** — heute trägt auch die leere Antwort `s-maxage=3600`, das CDN würde sie in Produktion eine Stunde ausliefern.
-  3. `BookGrid` zeigt den vorhandenen Fehlerzustand (heute nur bei Netzfehlern erreichbar) mit einem Knopf „nochmal versuchen“, statt ihn ins Leere laufen zu lassen.
-  4. Der Leerzustand nennt den Sprachfilter **nur, wenn einer gesetzt ist** (`BookGrid.tsx:80`, heute fest verdrahtet).
-  5. Ein Test, der einen Timeout der Quelle nachstellt und belegt, dass die Route 503 sagt und nicht 200 mit leerer Liste.
-
-  Zu bedenken: ein zweiter Versuch im Server wäre verlockend, verdoppelt aber die Wartezeit auf 16 s, bevor der Leser irgendetwas erfährt. Besser einmal schnell scheitern und den Knopf anbieten.
 
 - [ ] **1.5 Die Sätze, die etwas Falsches sagen. [T5, T14, T2, T11]** Klein, aber es sind genau die Stellen, an denen die Seite ihr eigenes Versprechen bricht.
   - **About-Seite:** erklärt die Verdikte als „Shops show this cover“ / „Shops show a different cover“ (`app/about/page.tsx:97,101`) — die zurückgezogene Formulierung, die zwei Absätze weiter von „No shop is contacted for this“ widerlegt wird. Auf den Wortlaut der Oberfläche bringen und die beiden fehlenden Zustände ergänzen (wird geprüft / Quelle antwortete nicht). Danach sind es fünf, nicht drei.

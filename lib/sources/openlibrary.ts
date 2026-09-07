@@ -8,13 +8,22 @@
 import type { Work, WorkSummary } from '../model';
 import { cleanAuthorEntries, cleanAuthors } from '../normalize';
 import { debug } from '../debug';
-import { HttpError, fetchJson } from './http';
+import { HttpError, SourceUnavailableError, fetchJson } from './http';
 import { olWorkId, parseSearchDocs, type OlEditionEntry, type OlSearchDoc } from './openlibrary-parse';
 
 const BASE = 'https://openlibrary.org';
 
 export const OL_TIMEOUTS = {
-  search: 8_000,
+  /**
+   * 12 s, not 8. Measured 2026-09-07 over twelve cold searches straight at
+   * Open Library with no cap: seven answered inside 8 s, **three answered
+   * between 9 and 10 s**, one took 24 s and one never came. The old 8 s cap
+   * therefore turned a third of the slow-but-fine answers into failures.
+   * Raising it costs a longer wait in the bad case; the skeleton is on screen
+   * for it, and since F1.7 the wait now ends in an error a reader can act on
+   * rather than in "no books found".
+   */
+  search: 12_000,
   work: 5_000,
   editions: 12_000,
 } as const;
@@ -63,18 +72,35 @@ export interface OlEditionsResponse {
 export const OL_SEARCH_LIMIT = 20;
 export const OL_EDITIONS_PAGE = 100;
 
-/** F1.1: free-text search. Never throws. */
+/**
+ * F1.1: free-text search.
+ *
+ * **Throws `SourceUnavailableError` when Open Library does not answer**, and
+ * returns an empty list only when Open Library answered and had nothing. The
+ * two used to be the same value, and the reader was told "No books found" for
+ * a book with hundreds of editions: four of roughly fourteen cold searches on
+ * 2026-09-07 ran into the timeout and said exactly that (SPEC §3 F3.3).
+ *
+ * A missing `docs` array counts as no answer too. Open Library replies 200
+ * with a body that has no `docs` when it is unhappy in ways it does not spell
+ * out, and reading that as "nothing found" is the same lie in a smaller hat.
+ */
 export async function searchWorks(query: string, limit = OL_SEARCH_LIMIT): Promise<WorkSummary[]> {
   const url = `${BASE}/search.json?q=${encodeURIComponent(query)}&limit=${limit}&fields=${SEARCH_FIELDS}`;
+  let data: OlSearchResponse;
   try {
-    const data = await fetchJson<OlSearchResponse>(url, {
+    data = await fetchJson<OlSearchResponse>(url, {
       timeoutMs: OL_TIMEOUTS.search, revalidate: OL_REVALIDATE.search,
     });
-    return parseSearchDocs(data.docs ?? []);
   } catch (err) {
     debug('openlibrary', `search failed: ${(err as Error).message}`);
-    return [];
+    throw new SourceUnavailableError('openlibrary', err);
   }
+  if (!Array.isArray(data.docs)) {
+    debug('openlibrary', 'search answered without a docs array');
+    throw new SourceUnavailableError('openlibrary', new Error('response had no docs array'));
+  }
+  return parseSearchDocs(data.docs);
 }
 
 /**

@@ -7,7 +7,7 @@ import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { resetGoogleQuota } from '../googlequota';
 import { GB_ISBN_REVALIDATE, GB_REVALIDATE, searchEditionCandidates } from '../sources/googlebooks';
-import { HttpError, fetchJson } from '../sources/http';
+import { HttpError, SourceUnavailableError, fetchJson } from '../sources/http';
 import { getEditionsPage, getWork, searchWorks } from '../sources/openlibrary';
 
 const FIXTURES = path.join(__dirname, '..', '__fixtures__');
@@ -58,12 +58,23 @@ describe('searchWorks', () => {
     expect(calls[0]).toContain('fields=key,title');
     expect(calls[0]).toContain('q=1984');
   });
-  it('returns [] on HTTP error and on timeout instead of throwing (F3.3)', async () => {
+  // This used to assert the opposite — that a failure comes back as [] — and
+  // that is exactly how a timeout reached the reader as "No books found"
+  // (SPEC §3 F1.7, F3.3). Silence and emptiness must not share a value.
+  it('throws SourceUnavailableError when the catalogue does not answer', async () => {
     handler = () => ({ status: 503 });
-    await expect(searchWorks('x')).resolves.toEqual([]);
+    await expect(searchWorks('x')).rejects.toBeInstanceOf(SourceUnavailableError);
     // AbortSignal.timeout uses internal timers that fake timers cannot advance,
     // so the timeout is simulated by the mock rejecting the way fetch does.
     handler = () => { const e = new Error('timeout'); e.name = 'TimeoutError'; throw e; };
+    await expect(searchWorks('x')).rejects.toBeInstanceOf(SourceUnavailableError);
+    // 200 with a body that has no docs array is not an empty result either.
+    handler = () => ({ body: { numFound: 0 } });
+    await expect(searchWorks('x')).rejects.toBeInstanceOf(SourceUnavailableError);
+  });
+
+  it('returns [] only when the catalogue answered and had nothing', async () => {
+    handler = () => ({ body: { docs: [] } });
     await expect(searchWorks('x')).resolves.toEqual([]);
   });
 });
