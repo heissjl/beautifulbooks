@@ -1,5 +1,7 @@
 # Plan für Schritt 11: vollständige Cover-Wand durch fortlaufendes Nachladen
 
+> **Erledigt 2026-09-07** (Commit `e05cddb`). Historisches Arbeitsdokument; die Messungen stehen in [../history.md](../history.md), alte §9.3 Schritt 11. Verweise auf `SPEC.md §…` meinen die Gliederung vor dem 2026-09-07 (Konkordanz in SPEC.md §8).
+
 Umsetzungsplan zu SPEC.md §9.3 Schritt 11, geschrieben 2026-09-07 für eine Sitzung, die den Code nicht kennt. Lies vorher CLAUDE.md und SPEC.md §2.3, §3 F2, §9.1 A/B. Code, Kommentare und Commits auf Englisch (E7), dieser Plan auf Deutsch.
 
 ## 1. Ziel und Nicht-Ziel

@@ -1,5 +1,7 @@
 # Plan für Punkt B und die Arbeit, die keine Entscheidung braucht
 
+> **B0 bis B8 erledigt 2026-09-07.** Historisches Arbeitsdokument mit den Messungen. Weiterhin gültig als Vorlage: der **vorläufige Plan für die Analyse-Seite** nach B4, siehe [../../ROADMAP.md](../../ROADMAP.md) Phase 3. Verweise auf `SPEC.md §…` meinen die Gliederung vor dem 2026-09-07 (Konkordanz in SPEC.md §8).
+
 Detailplan zu SPEC.md §10, geschrieben 2026-09-07, während A3 auf Julian wartet. Jeder Abschnitt wird einzeln geplant, umgesetzt und committet; die Reihenfolge folgt dem Risiko, nicht dem Aufwand.
 
 | | Was | Warum jetzt |

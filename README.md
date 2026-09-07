@@ -4,7 +4,7 @@ A visual book search: type a title, get one card per book with a mosaic of its c
 
 Data comes from [Open Library](https://openlibrary.org/developers/api) (primary) and [Google Books](https://developers.google.com/books) (supplementary covers and descriptions).
 
-**Status:** the data layer rewrite and the trust pass are done (SPEC §7 steps 1–9, §9.3 steps 10–16). What remains, in order, is in [SPEC.md](SPEC.md) §10; the site is not deployed yet.
+**Status:** the data layer and the trust pass are done; the site is not deployed yet. What the site is: [SPEC.md](SPEC.md). What remains, in order: [ROADMAP.md](ROADMAP.md). What was built and measured: [docs/history.md](docs/history.md).
 
 ## Stack
 
@@ -24,7 +24,7 @@ No environment variables are required for local development; without them the ap
 | Variable | Purpose |
 |---|---|
 | `GOOGLE_BOOKS_API_KEY` | Enables Google Books as a cover source. Without a key the shared anonymous quota is used, which is exhausted most of the time (HTTP 429). |
-| `AFFILIATE_AMAZON_TAG_US`, `_UK`, `_DE`, `AFFILIATE_BOOKSHOP_ID_US`, `_UK` | Affiliate parameters for purchase links, per market (SPEC.md §2.4, §8.3). |
+| `AFFILIATE_AMAZON_TAG_US`, `_UK`, `_DE`, `AFFILIATE_BOOKSHOP_ID_US`, `_UK` | Affiliate parameters for purchase links, per market (SPEC.md §2.4, ROADMAP.md phase 4). |
 | `DEBUG` | Any value enables request logging in `lib/`. |
 
 ### Getting a Google Books API key

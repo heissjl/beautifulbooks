@@ -4,13 +4,15 @@ Guidance for Claude Code when working in this repository.
 
 ## Read this first
 
-**[SPEC.md](SPEC.md) is the source of truth.** It defines the product, the domain model (Work / Edition), the functional requirements with acceptance queries, the decisions already taken, the implementation plan, and the roadmap. Do not re-derive any of that from the code. If code and spec disagree, the spec wins unless the user says otherwise.
+**[SPEC.md](SPEC.md) is the source of truth for what the site is:** product, domain model (Work / Edition / Cover), functional and non-functional requirements with acceptance queries, decisions E1–E17, and the measured limits. Do not re-derive any of that from the code. If code and spec disagree, the spec wins unless the user says otherwise.
+
+**[ROADMAP.md](ROADMAP.md) holds every open item exactly once**, in phase order with an owner (Julian or Claude). Take work from there. **[docs/history.md](docs/history.md)** is the record of what was built and measured, kept under the old section numbers (§5, §7, §8.x, §9, §10) that code comments still cite; the finished implementation plans are in `docs/plans/`. When an item is done, it leaves the roadmap, its measurements go to the history, and the spec is updated if the behaviour changed.
 
 The spec is written in German; code, comments, commit messages and this file are English (decision E7).
 
 ## Current state (2026-09-07)
 
-The data layer was rewritten per SPEC.md §7; the old aggregator and legacy clients are gone (step 5). The UI talks only to `/api/search` and `/api/works/[id]`; external APIs are called server-side only.
+The data layer was rewritten in 2026-09-06 (docs/history.md, old §7); the old aggregator and legacy clients are gone (step 5). The UI talks only to `/api/search` and `/api/works/[id]`; external APIs are called server-side only.
 
 - **Availability check (§9.3 step 16):** `lib/availability.ts` compares each shop's page for an ISBN with its page for an impossible control ISBN. Most shops cannot be checked: Amazon .com always answers with a bot check, eBay/ThriftBooks/Blackwell's/Booklooker refuse outright, and Hugendubel and genialokal return byte-identical HTML for a real and an invented ISBN because they render results in the browser. Hence the four states found it / can't tell / won't answer / no answer, and `can't tell` must never be worded as "the shop does not have it". It is not a stock check. `scripts/check-buylinks.ts` runs the same measurement from the command line before launch. **This feature is not cleared for production**: four of the six shops disallow the probed path in robots.txt and Amazon's Associates terms forbid automated access, so a decision is due before the first deployment (SPEC §8.7). Do not deploy without resolving it.
 - **Buy links carry a verdict (§9.3 step 13, done 2026-09-07):** selecting a cover asks `/api/isbn/<isbn13>` and `verifyIsbnCover` says whether shops show this cover, a different one, or nothing known. The verdict reuses the wall's folding rather than a second threshold, so the sidebar and the wall never contradict each other. On `differs` the search links move above the buy links. **No retailer is ever contacted**: the buy links are URL templates and the only lookup is Google Books, so the wording names the publisher's image as the evidence and must not be changed to claim anything about shops. Google answers a transient 503 often; `getIsbnCovers` retries once and reports `unavailable`, which the client must not cache as "no cover".
@@ -33,7 +35,7 @@ The data layer was rewritten per SPEC.md §7; the old aggregator and legacy clie
 - Sidebar and phone sheet are **exclusive** (`components/useIsDesktop.ts`), not CSS-hidden duplicates: hiding one would still fetch the cover image twice.
 - UI state rules: the URL is the source of truth for search state (`/?q=&lang=`) and for the selected cover on the detail page (`/book/<id>?q=&lang=&cover=`); components derive loading state from a request key instead of setting state inside effects (the `react-hooks/set-state-in-effect` lint rule is an error in this repo, and so is `react-hooks/refs`: a ref may not be read during render, which is why tab order is a pure function of arrival order rather than remembered).
 
-Progress is tracked by the numbered steps in SPEC.md §7 (steps 1–9, done) and §9.3 (steps 10–15, the trust plan from the 2026-09-06 analysis: ranking, complete cover wall via paged loading, tiered dedupe, verified buy links, card mosaics, honest copy). Check `git log` to see which step was completed last.
+Steps 1–9 (data layer) and 10–16 (the trust plan: ranking, paged cover wall, tiered dedupe, verified buy links, card mosaics, honest copy) are done and described in docs/history.md. Open work is ROADMAP.md; check `git log` for the last thing finished.
 
 ## Facts about the APIs that the old code got wrong
 
@@ -60,7 +62,7 @@ app/                Next.js App Router pages and API routes
 components/         React components, Tailwind
   BookDetail.tsx    the whole interactive detail page (client)
   CoverSheet.tsx    phone-only peek bar and sheet for the selected cover
-lib/                data layer, layout in SPEC.md §7; types in lib/model.ts
+lib/                data layer; types in lib/model.ts
   pages.ts          merging edition pages, tab order (pure, runs on the client)
   imagesig.ts       signature type and hamming distance (client-safe)
   ratelimit.ts      token buckets per IP and route (server only)
@@ -69,6 +71,7 @@ lib/                data layer, layout in SPEC.md §7; types in lib/model.ts
   sources/          Open Library and Google Books clients and parsers
   __fixtures__/     recorded API responses for tests
 scripts/            record-fixtures.ts, check-buylinks.ts
+docs/               history.md (what was built and measured), plans/ (finished plans), spine-research.md
 ```
 
 ## Commands
@@ -84,8 +87,8 @@ npm run build      # must pass before a step is considered done
 
 - **No copy claims completeness.** The site shows what two open catalogues happen to hold, which is a fraction of what was printed: never "every", "all" or "complete" about covers or editions, in the UI, the metadata or the README. The detail page's counter states what was actually seen, and the surrounding text must not contradict it (SPEC §9.3 step 15).
 
-- One commit per step of SPEC.md §7; the commit message names the step.
+- One commit per roadmap item; the commit message names it.
 - `lib/` must have no `any` and no `console.log` outside a `DEBUG` guard.
 - New logic in `lib/` gets a unit test next to it or under `lib/__tests__/`. Tests that need API data use recorded fixtures under `lib/__fixtures__/`, never live calls.
 - Verify UI changes in the browser with the five acceptance queries from SPEC.md §3 F1 before calling a step done.
-- Do not add features from SPEC.md §8 while §7 is unfinished.
+- Work ROADMAP.md in phase order. Do not start a later phase while an earlier one has items that do not wait on Julian.

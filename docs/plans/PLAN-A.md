@@ -1,5 +1,7 @@
 # Plan für Punkt A: bevor die Seite jemand sieht
 
+> **A1 und A2 erledigt 2026-09-07.** Die Entscheidungen aus A3 stehen offen in [../../ROADMAP.md](../../ROADMAP.md), Phase 0 (0.1 Verfügbarkeits-Button, 4.1 Bookshop); das Kontingent aus A3.1 ist abgelesen (history, alte §8.7). Verweise auf `SPEC.md §…` meinen die Gliederung vor dem 2026-09-07 (Konkordanz in SPEC.md §8).
+
 Detailplan zu SPEC.md §10 Abschnitt A, geschrieben 2026-09-07. Drei Teile, in dieser Reihenfolge: den Branch aufräumen und mergen, den falschen Claim entfernen, drei offene Entscheidungen fällen. Zusammen etwa zwei Stunden, davon eine für A2.
 
 Danach ist die Seite in dem Zustand, in dem man sie jemandem zeigen kann: nichts darin behauptet mehr etwas, das die Messungen widerlegen. Erst dann lohnt Punkt B.

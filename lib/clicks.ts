@@ -12,7 +12,7 @@
  * guard, and it is deliberate: the line is the product's telemetry, not
  * debugging. Vercel keeps it in the platform log. That is enough to see
  * *that* links are used; answering "which retailer earns" needs a store, and
- * the plan for that is in PLAN-B.md under the analytics page.
+ * the plan for that is in docs/plans/PLAN-B.md under the analytics page.
  */
 import type { Market } from './market';
 
