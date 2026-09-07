@@ -23,6 +23,11 @@ The data layer was rewritten per SPEC.md §7; the old aggregator and legacy clie
 - **Never delete a cover for looking blank.** `looksLikeScannedPage` only sorts an image to the end of its group. Measured on Nineteen Eighty-Four, a delete rule flagged four real covers among eight, including the 1949 Harcourt first-edition cloth boards; the numbers that describe a blurb scan also describe a plain white cover.
 - Spec-conformant modules (steps 2–5, done): `lib/model.ts`, `lib/normalize.ts`, `lib/works.ts`, `lib/debug.ts`, `lib/sources/http.ts`, `lib/sources/openlibrary.ts` (+ `-parse.ts`), `lib/sources/googlebooks.ts` (+ `-parse.ts`), `lib/search.ts` (search orchestration, two external calls), `lib/work.ts` (detail page orchestration). `lib/market.ts` detects the market (US/UK/DE, decision E9) from an explicit choice, country header or Accept-Language; `lib/buylinks.ts` holds the retailer table per market (`buyLinksFor`, needs an ISBN; Amazon gets `/dp/<ISBN-10>`) and `searchLinksFor` (works without an ISBN: title searches, reverse image search, catalogues). Affiliate env variables carry the market suffix, e.g. `AFFILIATE_AMAZON_TAG_US`. Tests in `lib/__tests__/` run against fixtures in `lib/__fixtures__/`, recorded with `npx tsx scripts/record-fixtures.ts`.
 - Fixtures cover both sources; Gatsby also has `openlibrary-editions-100.json` and `-200.json` so paging is testable. Re-record with `GOOGLE_BOOKS_API_KEY` set in `.env.local` (`set -a; source .env.local; set +a; npx tsx scripts/record-fixtures.ts`). Never commit the key; fixtures contain no URLs with keys.
+- **A mosaic must never ask Google Books.** `getWorkPage` runs the Google title search on page 0, so `?summary=1` (a search card's mosaic) would cost one Google request per card: 21 for a result page instead of 1. `WorkPageOptions.googleBooks: false` turns it off, and an integration test asserts a mosaic spends none. Measured on five works, Open Library alone fills all four tiles anyway (SPEC §8.7).
+- **Rate limits** (`lib/ratelimit.ts`, applied via `app/api/rate.ts`): a bucket per route plus a shared `google` bucket for the requests that can spend the quota. Charge `google` only where a Google request is actually possible — page 0 of a work, a search, an ISBN lookup — never for a mosaic or a later page. The counters are per instance and 5/min is 7,200 a day, so this bounds a burst, not a day; do not describe it as protecting the quota.
+- **`/go/[provider]/[isbn]` rebuilds the target from `lib/buylinks.ts`** and must never take a URL from the request, or it becomes an open redirect. It records provider, market, ISBN, kind and time, and nothing about the reader — no IP, cookie, user agent or referrer. Keep it that way: the About page and the privacy notice say so.
+- The detail page's metadata and JSON-LD live in `app/book/[id]/page.tsx` (server); the interactive body is `components/BookDetail.tsx`. Wording for both comes from `lib/seo.ts`, which is covered by tests that reject "all", "every" and "complete".
+- Sidebar and phone sheet are **exclusive** (`components/useIsDesktop.ts`), not CSS-hidden duplicates: hiding one would still fetch the cover image twice.
 - UI state rules: the URL is the source of truth for search state (`/?q=&lang=`) and for the selected cover on the detail page (`/book/<id>?q=&lang=&cover=`); components derive loading state from a request key instead of setting state inside effects (the `react-hooks/set-state-in-effect` lint rule is an error in this repo, and so is `react-hooks/refs`: a ref may not be read during render, which is why tab order is a pure function of arrival order rather than remembered).
 
 Progress is tracked by the numbered steps in SPEC.md §7 (steps 1–9, done) and §9.3 (steps 10–15, the trust plan from the 2026-09-06 analysis: ranking, complete cover wall via paged loading, tiered dedupe, verified buy links, card mosaics, honest copy). Check `git log` to see which step was completed last.
@@ -40,17 +45,27 @@ Progress is tracked by the numbered steps in SPEC.md §7 (steps 1–9, done) and
 
 ```
 app/                Next.js App Router pages and API routes
+  api/rate.ts       rateLimited(request, ...buckets) -> 429 or null, used by every route
   api/search/       GET ?q=&lang=  -> SearchResult (lib/search.ts)
-  api/works/[id]/   GET ?offset=&signatures=  -> WorkPageResponse, one page (lib/work.ts + buy links)
+  api/works/[id]/   GET ?offset=&signatures=&summary=  -> WorkPageResponse or WorkSummaryResponse
   api/isbn/[isbn]/  GET ?signatures=  -> IsbnCovers, what a shop shows for an ISBN (lib/isbn.ts)
-  book/[id]/        detail page, id = Open Library work id
+  book/[id]/        server component: metadata, JSON-LD, ISR; body in components/BookDetail.tsx
+    opengraph-image.tsx  1200x630 cover mosaic for shared links
+  about/            sources, gaps, what a verdict means
+  go/[provider]/[isbn]/  counts a buy-link click and redirects (lib/clicks.ts)
+  sitemap.ts, robots.ts
 components/         React components, Tailwind
+  BookDetail.tsx    the whole interactive detail page (client)
+  CoverSheet.tsx    phone-only peek bar and sheet for the selected cover
 lib/                data layer, layout in SPEC.md §7; types in lib/model.ts
   pages.ts          merging edition pages, tab order (pure, runs on the client)
   imagesig.ts       signature type and hamming distance (client-safe)
+  ratelimit.ts      token buckets per IP and route (server only)
+  seo.ts            page title, description, schema.org Book (pure)
+  clicks.ts         one structured log line per buy-link click (server only)
   sources/          Open Library and Google Books clients and parsers
   __fixtures__/     recorded API responses for tests
-scripts/            record-fixtures.ts
+scripts/            record-fixtures.ts, check-buylinks.ts
 ```
 
 ## Commands
