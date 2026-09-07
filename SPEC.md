@@ -448,6 +448,26 @@ Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil s
      Diese 2 bis 5 Bilder verschwinden zunächst aus der Wand und tauchen erst beim Anklicken der jeweiligen Ausgabe auf. Verschmerzbar, denn die Auswahl ist ohnehin willkürlich: nachgeschlagen werden nur die zehn neuesten ISBNs von Seite 0, bei Beloved zehn von 37 ISBN-tragenden Ausgaben allein auf dieser Seite und von weit über hundert im ganzen Werk. Eine vollständige Abdeckung war das nie, sondern eine Stichprobe zum Preis von zehn Anfragen pro Seitenaufruf.
   5. **Tageszähler mit sauberem Abschalten.** Ein leeres Kontingent darf die Seite nicht in Fehler laufen lassen. F3.3 deckt den Ausfall einer Quelle bereits ab, aber ungebremst: heute wird bei jedem Aufruf weiter angefragt und jede Anfrage läuft in einen 429. Zähler pro Tag, danach Google überspringen und im UI sagen, dass die Handelsbilder heute nicht verfügbar sind.
 
+- [ ] **Entscheidung über den Verfügbarkeits-Button vor dem Deployment** (Julian, 2026-09-07: Button bleibt vorerst drin, Entscheidung vor dem Start).
+
+  Der Button aus §9.3 Schritt 16 fragt bei jedem Klick eines Lesers jeden Händler des Marktes einmal an. Gemessen am 2026-09-07 verbieten die meisten genau diesen Pfad:
+
+  | Händler | abgefragter Pfad | robots.txt für `*` |
+  |---|---|---|
+  | Booklooker | `/Bücher/Angebote/isbn=` | `Disallow: /` — alles |
+  | AbeBooks | `/servlet/SearchResults` | `Disallow: /servlet/` |
+  | Bookshop.org | `/search` | `Disallow: /search` |
+  | genialokal | `/Suche/` | `Disallow: /Suche/` |
+  | Hugendubel | `/de/search` | erlaubt |
+  | Thalia | `/suche` | robots.txt antwortet selbst mit 403, unbekannt |
+  | Amazon | `/dp/<ISBN-10>` | robots erlaubt es; die Bot-Prüfung greift trotzdem, und die Associates-Bedingungen untersagen automatisierte Zugriffe |
+
+  **Was auf dem Spiel steht:** nicht die Links, die funktionieren für Menschen unverändert, sondern die Partnerbeziehung zu genau diesen Häusern (8.3). Ein gesperrter Affiliate-Account wiegt schwerer als der Nutzen des Buttons, der ohnehin nur für etwa zwei von sechs Händlern eine Aussage liefert. Solange nur auf `localhost` entwickelt wird, entsteht kein Schaden; **die Entscheidung fällt vor dem ersten öffentlichen Deployment.**
+
+  Optionen: (a) Button entfernen, Prüfskript behalten; (b) Button auf Händler beschränken, die den Pfad erlauben — heute nur Hugendubel, dessen Antwort aber nichts aussagt, der Button wäre also leer; (c) drin lassen und das Risiko bewusst tragen. Bei (b) und (c) zusätzlich ein Rate-Limit auf `/api/availability` (8.2) und ein aussagekräftiger User-Agent mit Kontaktadresse statt des Browser-Strings, der heute gesendet wird.
+
+- [ ] **Neun von elf Kauf-Links verdienen heute nichts** (gemessen 2026-09-07 an der Tabelle in `lib/buylinks.ts`). Nur Amazon (`tag=`) und Bookshop.org (`/a/<id>/<isbn>`) haben überhaupt einen Provisionsparameter. Thalia, Hugendubel, genialokal, Booklooker, AbeBooks, ThriftBooks, eBay, Blackwell's und Waterstones sind reine Servicelinks. **Höchster Hebel:** die Bookshop-ID, denn ohne sie zeigt der Link auf eine Suchseite, die zugleich per robots.txt gesperrt ist und nichts einbringt; mit ID wird daraus eine Produktseite, die verdient. Programme und Reihenfolge in 8.3.
+
 - [ ] **Vercel-Plan.** Hobby ist nicht-kommerziell; mit dem ersten Affiliate-Link ist ein Wechsel fällig (8.2).
 - [ ] **Impressum und Datenschutzerklärung** stehen und sind verlinkt (8.2).
 - [ ] **Rate-Limit auf den API-Routen**, sonst zahlen Bots dein Google-Kontingent leer (8.2).

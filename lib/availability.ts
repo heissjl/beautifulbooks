@@ -20,6 +20,13 @@
  * page means the shop found something; the same size means its results are
  * not in the HTML at all. **This is never a stock check**, and the wording
  * shown to the reader must not imply one.
+ *
+ * NOT CLEARED FOR PRODUCTION. Booklooker disallows everything in robots.txt,
+ * and AbeBooks, Bookshop.org and genialokal disallow the exact paths asked
+ * here; Amazon's Associates terms forbid automated access. On localhost that
+ * harms nobody, but going live with this as it stands risks the affiliate
+ * relationships with the very shops involved. The decision is an open item in
+ * SPEC §8.7 and must be made before the first deployment.
  */
 import { debug } from './debug';
 import { buyLinksFor } from './buylinks';
