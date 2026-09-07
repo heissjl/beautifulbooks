@@ -638,12 +638,24 @@ Ein serverseitiger Test kann also für etwa zwei von sechs Händlern eine positi
 - Mit Sprachfilter: OL-Suche mit `language=<ISO-3>` aufrufen, das `editions`-Unterdokument liefert dann ein Cover in dieser Sprache; es wird das erste Cover der Karte.
 - N2 wird angepasst: zwei synchrone Calls für die Antwort, dazu gedeckelte, gecachte Nachlade-Calls für sichtbare Karten. E4 (a) in 8.6 ist damit entschieden.
 
-**Schritt 15 – Ehrliche Sprache (F).**
-- Hero: „The covers a book has had.“ Unterzeile: „Search a book, see the covers two open catalogues know, and find the edition you actually want.“ Header-Zeile: „Book covers, side by side.“ Meta-Description entsprechend. Nirgends „every“ oder „all“.
-- Zähler auf der Detailseite aus Schritt 11 („42 covers · 300 of 1180 editions checked“), Fußnote unter der Wand: „Cover images come from Open Library and Google Books. Editions without a scan are listed below.“
-- About-Seite (8.1) erklärt Quellen, Lücken und die Verifikationsgrade aus Schritt 13 in drei Absätzen.
+**Schritt 15 – Ehrliche Sprache (F).** *Erledigt 2026-09-07.*
 
-Reihenfolge: 11, 13a, 10, 12, 13 und 16 sind erledigt; es folgen 15 und 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).
+Die Seite behauptete an vier Stellen, alle Cover aller Ausgaben zu zeigen, während der Zähler auf der Detailseite seit Schritt 11 die Wahrheit sagt. Das ist beseitigt; nirgends steht mehr „every“ oder „all“.
+
+| Stelle | Neu |
+|---|---|
+| Hero-Überschrift | „Judge a book *by its covers.*“ |
+| Hero-Unterzeile | „Compare the editions of a book side by side, by language and year, and find the one you’d actually want on your shelf.“ |
+| Wortmarke im Header | „Covers, side by side.“ |
+| Meta-Description | „Compare the covers and editions a book has been printed with, side by side. Data from Open Library and Google Books.“ |
+| README | „the editions those catalogues have a cover for“ statt „every edition“; die veraltete Status-Zeile ersetzt |
+| `CoverGallery` | `aria-label` von „All covers“ auf „Covers“ |
+
+Die Überschrift dreht das Sprichwort um: hier ist das Urteil nach dem Äußeren der Zweck, und es gibt viele Umschläge. Sie verspricht keine Vollständigkeit, nennt „book“ und „covers“ für die Suche und ist kurz genug zum Weitersagen, was für §8.4 zählt. Fußzeile und Fußnote unter der Wand waren bereits korrekt und blieben unverändert.
+
+Die About-Seite, die in der ursprünglichen Fassung dieses Schrittes stand, gehört zu §10 B: sie entsteht zusammen mit Impressum und Datenschutz, weil sie dieselben Fußzeilen-Links braucht.
+
+Reihenfolge: 11, 13a, 10, 12, 13, 16 und 15 sind erledigt; offen bleibt 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).
 
 ---
 

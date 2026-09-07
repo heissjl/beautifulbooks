@@ -64,6 +64,8 @@ npm run build      # must pass before a step is considered done
 
 ## Working rules
 
+- **No copy claims completeness.** The site shows what two open catalogues happen to hold, which is a fraction of what was printed: never "every", "all" or "complete" about covers or editions, in the UI, the metadata or the README. The detail page's counter states what was actually seen, and the surrounding text must not contradict it (SPEC §9.3 step 15).
+
 - One commit per step of SPEC.md §7; the commit message names the step.
 - `lib/` must have no `any` and no `console.log` outside a `DEBUG` guard.
 - New logic in `lib/` gets a unit test next to it or under `lib/__tests__/`. Tests that need API data use recorded fixtures under `lib/__fixtures__/`, never live calls.

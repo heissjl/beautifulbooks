@@ -6,7 +6,7 @@ Danach ist die Seite in dem Zustand, in dem man sie jemandem zeigen kann: nichts
 
 ---
 
-## A1 — PR #1 aktualisieren und mergen
+## A1 — PR #1 aktualisieren und mergen · *erledigt 2026-09-07, Merge-Commit `3e353b3`*
 
 ### Ausgangslage (geprüft 2026-09-07)
 
@@ -37,7 +37,7 @@ Titel und Beschreibung nennen nur die Schritte 1–9. Tatsächlich enthält der 
 
 ---
 
-## A2 — Schritt 15: ehrliche Sprache
+## A2 — Schritt 15: ehrliche Sprache · *erledigt 2026-09-07; als Überschrift wurde „Judge a book by its covers.“ gewählt*
 
 ### Der Befund
 
