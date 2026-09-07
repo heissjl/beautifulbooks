@@ -34,7 +34,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
       if (page) {
         title = page.work.title;
         author = authorLine(page.work.authors);
-        urls = coverImages(page.covers, 4);
+        urls = coverImages(page.covers, 4, page.editions);
       }
     } catch {
       // No covers: the card falls back to the wordmark, which is still a card.

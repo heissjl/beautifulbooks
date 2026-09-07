@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buyLinksFor } from '@/lib/buylinks';
+import { coverImages } from '@/lib/seo';
 import { cookieValue, detectMarket, MARKET_KEY, type Market } from '@/lib/market';
 import type { Cover, EditionView, Work } from '@/lib/model';
 import type { ImageSignature } from '@/lib/imagesig';
@@ -94,20 +95,16 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
     }
 
     if (summary) {
-      // One cover per edition, so a mosaic shows four books rather than four
-      // scans of one. Not folded: hashing a whole result page of cards would
-      // cost more than the mosaic is worth.
-      const seen = new Set<string>();
-      const coverUrls: string[] = [];
-      for (const cover of page.covers) {
-        const edition = cover.editionIds[0];
-        if (edition) {
-          if (seen.has(edition)) continue;
-          seen.add(edition);
-        }
-        coverUrls.push(cover.url);
-        if (coverUrls.length >= MOSAIC_COVERS) break;
-      }
+      /*
+        One cover per printing, so a mosaic shows four books rather than four
+        scans of one. The images are not compared — hashing a whole result
+        page of cards would cost more than the mosaic is worth — so the test
+        is the metadata: publisher and year, falling back to the edition
+        record. Deduplicating by edition alone was not enough: two records of
+        the same Spanish printing put the same picture on a card twice
+        (2026-09-07). The same rule picks the covers for a shared link.
+      */
+      const coverUrls = coverImages(page.covers, MOSAIC_COVERS, page.editions);
       const body: WorkSummaryResponse = { id, coverUrls };
       return NextResponse.json(body, {
         headers: { 'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800' },

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
+import { VERDICT_LEAD, VERDICT_MEANING, VERDICT_ORDER } from '@/lib/verdicts';
 
 /**
  * What the site knows, what it does not, and what its judgements mean
@@ -90,23 +91,22 @@ export default function AboutPage() {
         <Section title="What the note under a buy link means">
           <p>
             Pick a cover and the buy links carry a short verdict. It compares the cover on your
-            screen with the image the publisher has registered for that ISBN:
+            screen with the image the publisher has registered for that ISBN, and it says one of
+            five things:
           </p>
+          {/*
+            Quoted from lib/verdicts.ts, the same constants the sidebar
+            renders. Written out by hand, this list drifted: it went on
+            teaching "Shops show this cover" long after that wording had been
+            retired for claiming more than is checked.
+          */}
           <ul className="list-disc space-y-3 pl-5 marker:text-ink-3">
-            <li>
-              <strong className="font-medium text-ink">Shops show this cover</strong> &mdash; the
-              registered image matches the one you picked.
-            </li>
-            <li>
-              <strong className="font-medium text-ink">Shops show a different cover</strong> &mdash;
-              it does not. The ISBN is right, but the printing you would receive probably looks like
-              something else, so the search links move to the front.
-            </li>
-            <li>
-              <strong className="font-medium text-ink">Nothing known</strong> &mdash; no image is
-              registered for that ISBN. Common for older printings, and it says nothing about
-              whether a shop has the book.
-            </li>
+            {VERDICT_ORDER.map(status => (
+              <li key={status}>
+                <strong className="font-medium text-ink">{VERDICT_LEAD[status]}</strong>{' '}
+                {VERDICT_MEANING[status]}
+              </li>
+            ))}
           </ul>
           <p>
             <strong className="font-medium text-ink">No shop is contacted for this.</strong> The only

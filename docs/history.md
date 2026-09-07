@@ -515,3 +515,33 @@ Der schwerste Fund des [Durchklicks](tests/2026-09-07-durchklick.md). `searchWor
 **In der Oberfläche** (`components/BookGrid.tsx`) unterscheidet `failureFor` jetzt 503, 429, 400 und den Rest und gibt jedem einen eigenen Satz; wo ein zweiter Versuch etwas bringen kann, steht ein Knopf **„Try again"**, der die Anfrage über einen Zähler im Anfrageschlüssel wirklich neu stellt. Der Leerzustand nennt den Sprachfilter nur noch, wenn einer gesetzt ist: ohne Filter „Open Library knows nothing under this title. Try another spelling, or add the author.", mit Filter der Zusatz über die gewählte Sprache.
 
 **Verifiziert** im Browser mit erzwungenem 503 (Fehlerzustand samt Knopf), mit echtem Ausfall (`austerlitz sebald` → 503 nach 10,5 s, vorher „nichts gefunden"), mit wiederholtem Versuch nach dem Ausfall (8 Treffer, Ishiguro zuerst), mit beiden Leerzustands-Varianten und mit `q=it` → 400. Fünf neue Tests in `lib/__tests__/search-route.test.ts` halten die Zusagen der Route fest, darunter dass ein Timeout 503 ergibt und nicht 200 mit leerer Liste; die Suite steht bei 188.
+
+---
+
+## 2026-09-07 · Die falschen Sätze und die zwei kaputten Bilder (Roadmap 1.5 und 1.6)
+
+### Die Verdikte stehen nur noch an einer Stelle
+
+Die About-Seite erklärte die Urteile unter den Kauf-Links als „Shops show this cover" und „Shops show a different cover" — die Formulierung, die am 2026-09-07 zurückgezogen worden war, weil sie behauptet, eine Händlerseite gelesen zu haben. Zwei Absätze tiefer stand auf derselben Seite „No shop is contacted for this". Sie zählte außerdem drei Zustände, während die Oberfläche fünf kennt.
+
+Ursache war nicht der Text, sondern dass es ihn zweimal gab. `lib/verdicts.ts` hält jetzt `VERDICT_LEAD` (der Satz, den der Leser sieht), `VERDICT_MEANING` (was er bedeutet, für die Liste auf der About-Seite) und `VERDICT_ORDER`; Seitenleiste und About-Seite lesen beide daraus, ein Auseinanderlaufen ist damit ausgeschlossen und ein neuer Zustand kann nicht mehr ohne Worte hinzukommen. Fünf Tests halten fest, was diese Sätze nicht sagen dürfen: nichts über Händler („shops show/list/stock/have", „in stock", „available at"), nichts über Vollständigkeit, und `unknown`, `pending` und `unavailable` müssen drei verschiedene Sätze bleiben.
+
+### Das Erscheinungsjahr ist ein Zitat, keine Tatsache
+
+Open Library datiert *The Great Gatsby* auf 1920; erschienen ist er 1925. Die Meta-Zeile sagte „first published 1920". Sie sagt jetzt **„Open Library dates it to 1920"**. Eine zweite Quelle zum Gegenprüfen gibt es hier nicht: die Wand lädt den jüngsten Datensatz zuerst, die älteste Ausgabe auf dem Schirm ist also nicht die älteste Ausgabe. Im JSON-LD bleibt der Wert stehen, wie jedes Feld dort aus Open Library stammt und über `sameAs` an seiner Quelle nachprüfbar ist.
+
+### Zwei Cover nebeneinander sind keine zwei Streifen
+
+Bei zwei Covern teilt die Karte ihren 2:3-Rahmen in zwei Kacheln von 1:3; `object-fit: cover` zeigte dann rund die halbe Breite jedes Bildes. Auf der Karte für *The Manningtree Witches* las man zweimal „ANNINGTRE WITCH" nebeneinander, was wie ein Rendering-Fehler aussah. Dasselbe traf die linke Spalte des Drei-Cover-Mosaiks, was im Testbericht noch nicht auffiel.
+
+`CoverImage` nimmt jetzt ein `fit`, und die hohen Kacheln passen das ganze Cover ein, statt es zu beschneiden; der Kartengrund zeigt sich darüber und darunter. Zwei ganze Cover auf Papier ist die Sprache der übrigen Seite, ein halbes Cover nicht ([nachher](tests/2026-09-07-mosaik-behoben.png), [vorher](tests/2026-09-07-mosaik.png)). Das Vier-Cover-Raster bleibt unangetastet: seine Zellen sind bereits 2:3, dort nimmt ein Zuschnitt nichts weg.
+
+### Eine Kachel je Druck, für Karte und Teilbild
+
+Das Open-Graph-Bild von *Wolf Hall* zeigte vier Cover, davon zweimal dieselbe spanische Ausgabe: `coverImages` verwarf nur gleiche URLs, und ein Druck liegt im Katalog oft als mehrere Datensätze mit mehreren Scans. Die Karte hatte denselben Fehler eine Stufe schwächer, sie unterschied nur nach Ausgabe.
+
+Beide benutzen jetzt dieselbe Auswahl: ein Cover je **Druck**, erkannt an Verlag und Jahr der tragenden Ausgabe, ersatzweise an der Ausgabe selbst. Aussortierte Cover rücken nach, wenn sonst eine Kachel leer bliebe — lieber eine Wiederholung als ein unfertiges Bild. Bewusst **nicht** über die Bilder selbst entschieden: das bräuchte Signaturen, die der Server erst holen und hashen müsste, mehrere Sekunden auf einer Route, auf die der Vorschau-Dienst eines Messengers nicht wartet.
+
+Die Grenze davon ist gemessen und bleibt: *The Manningtree Witches* zeigt weiter zweimal dasselbe Motiv, weil Granta 2021 und Catapult 2021 zwei echte Ausgaben zweier Verlage sind, die dieselbe Gestaltung lizenziert haben. Das erkennt nur ein Bildvergleich, und den leistet die Wand, nicht die Karte.
+
+**Verifiziert im Browser:** About-Seite mit allen fünf Urteilen im Wortlaut der Oberfläche und ohne „Shops show" (im Text geprüft); Meta-Zeile „Open Library dates it to 2009 · 22 covers from 43 editions"; Verdikt in der Seitenleiste unverändert; hohe Kacheln mit `object-fit: contain` und zwei ganzen Covern auf der Manningtree-Karte; [Teilbild von *Wolf Hall*](tests/2026-09-07-teilbild-behoben.png) mit vier verschiedenen Covern (niederländisch, spanisch, englisch, deutsch) statt zweimal demselben. Neun neue Tests, Suite bei 199, Build grün.

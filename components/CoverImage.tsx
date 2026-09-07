@@ -8,6 +8,12 @@ interface CoverImageProps {
   alt: string;
   sizes: string;
   priority?: boolean;
+  /**
+   * `cover` fills the tile and crops what does not fit; `contain` fits the
+   * whole cover inside it. Use `contain` wherever the tile is not roughly
+   * 2:3, or the crop eats the book (SPEC §3 F4).
+   */
+  fit?: 'cover' | 'contain';
 }
 
 /**
@@ -15,7 +21,7 @@ interface CoverImageProps {
  * on error. Open Library covers redirect to archive.org, which is slow under
  * load; a failed image must never show alt text in a grey box (SPEC §3 F4).
  */
-export default function CoverImage({ src, alt, sizes, priority }: CoverImageProps) {
+export default function CoverImage({ src, alt, sizes, priority, fit = 'cover' }: CoverImageProps) {
   const [status, setStatus] = useState<{ src: string; state: 'loaded' | 'failed' } | null>(null);
   const loaded = status?.src === src && status.state === 'loaded';
   const failed = status?.src === src && status.state === 'failed';
@@ -36,7 +42,7 @@ export default function CoverImage({ src, alt, sizes, priority }: CoverImageProp
       alt={alt}
       fill
       sizes={sizes}
-      className={`cover-img object-cover ${loaded ? 'is-loaded' : ''}`}
+      className={`cover-img ${fit === 'contain' ? 'object-contain' : 'object-cover'} ${loaded ? 'is-loaded' : ''}`}
       unoptimized
       priority={priority}
       onLoad={() => setStatus({ src, state: 'loaded' })}

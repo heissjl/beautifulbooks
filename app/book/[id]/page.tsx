@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import BookDetailPage from '@/components/BookDetail';
 import { CURATED_WORKS } from '@/lib/curated';
-import type { Cover, Work } from '@/lib/model';
+import type { Cover, Edition, Work } from '@/lib/model';
 import { bookJsonLd, workDescription, workPageTitle, workUrl } from '@/lib/seo';
 import { getWorkPage, isWorkId } from '@/lib/work';
 
@@ -31,11 +31,11 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-async function loadWork(id: string): Promise<{ work: Work; covers: Cover[] } | null> {
+async function loadWork(id: string): Promise<{ work: Work; covers: Cover[]; editions: Edition[] } | null> {
   if (!isWorkId(id)) return null;
   try {
     const page = await getWorkPage(id, { offset: 0, googleBooks: false });
-    return page ? { work: page.work, covers: page.covers } : null;
+    return page ? { work: page.work, covers: page.covers, editions: page.editions } : null;
   } catch {
     // Open Library is having a moment. The page still works, it just goes out
     // with the site's default metadata rather than none at all.
@@ -72,7 +72,7 @@ async function WorkJsonLd({ id }: { id: string }) {
     <script
       type="application/ld+json"
       // Built from our own types, never from anything a visitor typed.
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(bookJsonLd(loaded.work, loaded.covers)) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(bookJsonLd(loaded.work, loaded.covers, loaded.editions)) }}
     />
   );
 }

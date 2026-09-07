@@ -75,3 +75,63 @@ describe('bookJsonLd', () => {
     expect(json.image).toBeUndefined();
   });
 });
+
+describe('cover images for a shared link (SPEC §3 F2.13)', () => {
+  const cover = (id: string, editionIds: string[]) => ({
+    id, url: `https://covers/${id}.jpg`, source: 'openlibrary' as const, editionIds,
+  });
+  const edition = (id: string, publisher?: string, year?: number) => ({ id, publisher, year });
+
+  it('drops a second scan of the same printing and fills the slot from further down', () => {
+    // The Wolf Hall case: the same Spanish edition sat in the catalogue twice
+    // and took two of the four tiles in the shared image (2026-09-07).
+    const covers = [cover('a', ['e1']), cover('b', ['e2']), cover('c', ['e3']), cover('d', ['e4']), cover('e', ['e5'])];
+    const editions = [
+      edition('e1', 'Destino', 2011),
+      edition('e2', 'Destino', 2011),
+      edition('e3', 'Fourth Estate', 2009),
+      edition('e4', 'Picador', 2020),
+      edition('e5', 'Henry Holt', 2009),
+    ];
+    expect(coverImages(covers, 4, editions)).toEqual([
+      'https://covers/a.jpg', 'https://covers/c.jpg', 'https://covers/d.jpg', 'https://covers/e.jpg',
+    ]);
+  });
+
+  it('shows a repeat rather than leaving a slot empty', () => {
+    const covers = [cover('a', ['e1']), cover('b', ['e2'])];
+    const editions = [edition('e1', 'Destino', 2011), edition('e2', 'Destino', 2011)];
+    expect(coverImages(covers, 4, editions)).toEqual(['https://covers/a.jpg', 'https://covers/b.jpg']);
+  });
+
+  it('keeps covers whose editions are unknown or unpublished-looking', () => {
+    const covers = [cover('a', ['e1']), cover('b', ['missing'])];
+    expect(coverImages(covers, 4, [edition('e1')])).toEqual(['https://covers/a.jpg', 'https://covers/b.jpg']);
+  });
+
+  it('treats the same publisher in different years as different printings', () => {
+    const covers = [cover('a', ['e1']), cover('b', ['e2'])];
+    const editions = [edition('e1', 'Penguin', 1990), edition('e2', 'Penguin', 2005)];
+    expect(coverImages(covers, 4, editions)).toHaveLength(2);
+  });
+});
+
+describe('one cover per printing, for cards and shared links alike', () => {
+  const cover = (id: string, editionIds: string[]) => ({
+    id, url: `https://covers/${id}.jpg`, source: 'openlibrary' as const, editionIds,
+  });
+
+  it('falls back to the edition record when the publisher is unknown', () => {
+    // Four scans of one edition would otherwise fill all four slots.
+    const covers = [cover('a', ['e1']), cover('b', ['e1']), cover('c', ['e2']), cover('d', ['e3'])];
+    const editions = [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }];
+    expect(coverImages(covers, 4, editions)).toEqual([
+      'https://covers/a.jpg', 'https://covers/c.jpg', 'https://covers/d.jpg', 'https://covers/b.jpg',
+    ]);
+  });
+
+  it('without editions it only removes identical URLs, as before', () => {
+    const covers = [cover('a', ['e1']), cover('b', ['e2'])];
+    expect(coverImages(covers, 4)).toEqual(['https://covers/a.jpg', 'https://covers/b.jpg']);
+  });
+});

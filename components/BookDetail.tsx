@@ -19,6 +19,7 @@ import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
+import { VERDICT_LEAD } from '@/lib/verdicts';
 import type { ShopStatus } from '@/lib/availability';
 import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
@@ -305,8 +306,16 @@ function BookDetail() {
       )}
     />
   );
+  /*
+    The year is quoted, not asserted. Open Library dates The Great Gatsby to
+    1920; it was published in 1925. The field is a stray record often enough
+    that stating it as fact breaks the rule in SPEC §4 N12, and there is no
+    second source here to check it against — the wall loads newest-record
+    first, so the earliest edition on screen is not the earliest edition. So
+    the line names who says it and leaves the reader to weigh that.
+  */
   const meta = [
-    work.firstPublishYear ? `first published ${work.firstPublishYear}` : undefined,
+    work.firstPublishYear ? `Open Library dates it to ${work.firstPublishYear}` : undefined,
     progressLabel(view.covers.length, merged),
   ].filter(Boolean).join(' · ');
 
@@ -494,7 +503,7 @@ function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) 
   if (verdict.status === 'verified') {
     return (
       <p className="mt-2 text-xs leading-relaxed text-ink-3">
-        <span className="text-ink-2">The publisher&rsquo;s current image for this ISBN is this cover.</span>{' '}
+        <span className="text-ink-2">{VERDICT_LEAD.verified}</span>{' '}
         Shops list by number and mostly use that image, so a new copy should look like this.
       </p>
     );
@@ -508,7 +517,7 @@ function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) 
           </span>
         </a>
         <p className="text-xs leading-relaxed text-ink-3">
-          <span className="text-ink-2">The publisher&rsquo;s current image for this ISBN is a different cover.</span>{' '}
+          <span className="text-ink-2">{VERDICT_LEAD.differs}</span>{' '}
           It is the one beside this note, so that is what a new copy is likely to be.
           {hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
         </p>
@@ -523,24 +532,20 @@ function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) 
     there permanently (2026-09-07).
   */
   if (verdict.status === 'pending') {
-    return (
-      <p className="mt-2 text-xs leading-relaxed text-ink-3">
-        Checking which cover the publisher has registered for this ISBN&hellip;
-      </p>
-    );
+    return <p className="mt-2 text-xs leading-relaxed text-ink-3">{VERDICT_LEAD.pending}</p>;
   }
   if (verdict.status === 'unavailable') {
     return (
       <p className="mt-2 text-xs leading-relaxed text-ink-3">
-        The catalogue that holds publishers&rsquo; current images did not answer, so nothing can be
-        said about which cover ships.{hint ? ` Look for ${hint}.` : ''}
+        {VERDICT_LEAD.unavailable} Nothing can be said about which cover ships.
+        {hint ? ` Look for ${hint}.` : ''}
       </p>
     );
   }
   return (
     <p className="mt-2 text-xs leading-relaxed text-ink-3">
-      No current publisher image is on record for this ISBN, so we cannot say which cover ships.
-      Shops list by number and send the current printing.{hint ? ` Look for ${hint}.` : ''}
+      {VERDICT_LEAD.unknown} Shops list by number and send the current printing.
+      {hint ? ` Look for ${hint}.` : ''}
     </p>
   );
 }

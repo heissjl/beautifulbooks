@@ -11,14 +11,14 @@ Die Phasen folgen Abhängigkeiten, nicht Aufwand: Provision braucht eine öffent
 | # | Was | Wer | Aufwand |
 |---|---|---|---|
 | 1 | Phase 0, Punkte 0.1–0.4 und 0.8: Verfügbarkeits-Button, zweiter Google-Schlüssel, Abrechnungsversuch, Angaben fürs Impressum, Enter im Suchfeld | Julian | eine halbe Stunde plus Wartezeit |
-| 2 | Phase 1, Punkte 1.5 und 1.6: die restlichen falschen Sätze (About, Erscheinungsjahr) und die zwei kaputten Bilder (Mosaik, OG) | Claude | eine Sitzung |
-| 3 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links | Claude | eine Sitzung |
-| 4 | Phase 1, Punkt 1.3: Bild-Cache vor Open Library und Google | Claude | eine Sitzung, mit Messung |
+| 2 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links | Claude | eine Sitzung |
+| 3 | Phase 1, Punkt 1.3: Bild-Cache vor Open Library und Google | Claude | eine Sitzung, mit Messung |
+| 4 | Phase 1, Punkt 1.7: die zwei Antworten, die nicht stimmen | Claude | eine Stunde |
 | 5 | Phase 2: Vercel, Domain, Impressum und Datenschutz, Search Console | beide | eine Sitzung |
 | 6 | Phase 4, Punkt 4.1: Bookshop.org beantragen, sobald die Seite erreichbar ist | Julian | zehn Minuten plus Tage Wartezeit |
 | 7 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
 
-Der schwerste Punkt aus dem Testbericht ist erledigt: ein Ausfall der Suche heißt seit dem 2026-09-07 nicht mehr „nichts gefunden“ (ehemals 1.4, jetzt in der [Historie](docs/history.md); die Nummer bleibt frei, damit Verweise darauf nicht ins Leere zeigen). Die Ranking-Punkte aus Phase 6 stehen bewusst nicht in dieser Liste: sie sind Qualität, kein Fehler, und sie brauchen mehr Messung als eine Sitzung hergibt.
+Drei Punkte aus dem Testbericht sind erledigt und stehen in der [Historie](docs/history.md): der Ausfall der Suche, der nicht mehr „nichts gefunden“ heißt (ehemals 1.4), die Sätze, die etwas Falsches sagten (1.5), und die zwei Bilder, die nach einem Fehler aussahen (1.6). Ihre Nummern bleiben frei, damit Verweise darauf nicht ins Leere zeigen. Die Ranking-Punkte aus Phase 6 stehen bewusst nicht in dieser Liste: sie sind Qualität, kein Fehler, und sie brauchen mehr Messung als eine Sitzung hergibt.
 
 Danach entscheidet sich anhand der Zahlen aus Phase 3, ob Phase 4 (Geld) oder Phase 5 (Reichweite) zuerst weitergeht. Ohne Besucher bringen Kauf-Links nichts, ohne Kauf-Links kostet Reichweite nur.
 
@@ -80,15 +80,6 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
   **Julians Zusatzidee, nur die zwei provisionsfähigen Links hochzuziehen, hat heute zwei Haken:** beide (Amazon, Bookshop) sind unkonfiguriert, es gibt also null Links zum Nudgen (Phase 4); und die About-Seite sagt „The order of the shops is not sorted by what they pay“. Vertretbar wäre eine Ordnung nach `BuyLink.kind` (Buchseite vor Trefferliste), die zufällig dieselben Links begünstigt und dem Leser nachweisbar nützt; oder der Satz auf About wird geändert. Unausgesprochen geht es nicht.
 
 - [ ] **1.3 Bild-Cache vor Open Library und Google** (SPEC N8). Cover laden heute direkt von `covers.openlibrary.org`, das auf archive.org weiterleitet und unter Last langsam oder gar nicht liefert (bei 18 gleichzeitigen Anfragen kamen nach 15 s nur die Google-Bilder); Open Library dokumentiert außerdem Rate-Limits für Cover. Optionen: `next/image` ohne `unoptimized` mit `remotePatterns` (Vercels Bildoptimierung, Kontingent des Plans prüfen) oder eine eigene Proxy-Route mit CDN-Cache. Vorher messen, wie viele verschiedene Bilder eine Detailseite lädt, damit das Kontingent der Optimierung nicht die nächste Grenze wird. *Im Durchklick bestätigt [T16]: die Konsole meldet auf jeder Seite mehrfach LCP-Warnungen zu `covers.openlibrary.org`; das `priority` auf den ersten Kacheln gehört mit dazu (6.5).*
-
-- [ ] **1.5 Die Sätze, die etwas Falsches sagen. [T5, T14, T2, T11]** Klein, aber es sind genau die Stellen, an denen die Seite ihr eigenes Versprechen bricht.
-  - **About-Seite:** erklärt die Verdikte als „Shops show this cover“ / „Shops show a different cover“ (`app/about/page.tsx:97,101`) — die zurückgezogene Formulierung, die zwei Absätze weiter von „No shop is contacted for this“ widerlegt wird. Auf den Wortlaut der Oberfläche bringen und die beiden fehlenden Zustände ergänzen (wird geprüft / Quelle antwortete nicht). Danach sind es fünf, nicht drei.
-  - **Erscheinungsjahr:** „first published 1920“ bei *The Great Gatsby* (erschienen 1925). Der Wert kommt aus Open Library und steht auch als `datePublished` im JSON-LD. Entweder die Zeile nennt ihre Quelle („Open Library says 1920“) oder der Wert wird gegen die früheste Ausgabe der Wand geprüft. Letzteres ist ehrlicher und kostet nichts, weil die Jahre ohnehin geladen werden.
-  - **Geteilter Link:** solange 1.1 offen ist, zeigt ein Link ohne `?cover=` dem Empfänger möglicherweise eine andere Ausgabe. Mit 1.1 erledigt sich das; bis dahin hier notiert, damit es nicht vergessen wird.
-
-- [ ] **1.6 Die zwei Bilder, die nach einem Fehler aussehen. [T7, T8]**
-  - **Zwei-Cover-Mosaik:** jede Hälfte bekommt eine Kachel von 113 × 341 px für ein Bild von 333 × 500, mit `object-fit: cover` bleibt rund ein Drittel der Breite übrig. Bei *The Manningtree Witches* steht zweimal derselbe Ausschnitt nebeneinander ([Bild](docs/tests/2026-09-07-mosaik.png)). Kandidaten: die beiden Cover **übereinander** statt nebeneinander (dann sind die Kacheln 4:3 und der Zuschnitt fällt oben und unten an, wo bei Covern weniger steht), eines groß und eines als Ecke, oder bei genau zwei schlicht nur das erste zeigen. Die Layouts für 1, 3 und 4 Cover sind korrekt und bleiben.
-  - **OG-Bild:** `coverImages` in `lib/seo.ts` nimmt die ersten vier Cover der Wand; bei *Wolf Hall* sind zwei davon dieselbe spanische Ausgabe. Vier **verschieden aussehende** Cover wählen. Ohne Hashes geht das nicht exakt, aber eine billige Heuristik (verschiedene Ausgaben, verschiedene Verlage, sonst verschiedene Jahre) reicht für ein Teilbild.
 
 - [ ] **1.7 Zwei Antworten, die nicht stimmen. [T4, T6]** Beides klein, beides sauber prüfbar.
   - Eine unbekannte, aber wohlgeformte Work-ID (`/book/OL99999999W`) antwortet mit **200** statt 404; `notFound()` läuft nur für ein kaputtes ID-Muster. Vor Phase 5 beheben, sonst indexiert Google den Soft-404.

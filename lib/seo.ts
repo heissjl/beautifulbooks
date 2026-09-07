@@ -6,7 +6,7 @@
  * tags in particular — nobody reads them, which is exactly why a false claim
  * would survive there longest.
  */
-import type { Cover, Work } from './model';
+import type { Cover, Edition, Work } from './model';
 
 /** Where the site is served from; needed for absolute image and canonical URLs. */
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
@@ -51,12 +51,66 @@ export function workUrl(workId: string): string {
   return `${SITE_URL}/book/${workId}`;
 }
 
-/** Cover images for a work page, largest first, at most `limit`. */
-export function coverImages(covers: readonly Cover[], limit = 4): string[] {
+/**
+ * Which printing a cover belongs to, as far as the metadata can tell.
+ *
+ * Publisher and year first, because that is what distinguishes two printings.
+ * Failing that the edition record itself, which at least keeps four scans of
+ * one edition from filling all four slots. Null when nothing is known, and
+ * then the cover is always kept: an unknown edition is not a duplicate.
+ */
+function printingKey(cover: Cover, editionsById: ReadonlyMap<string, Pick<Edition, 'publisher' | 'year'>>): string | null {
+  for (const id of cover.editionIds) {
+    const edition = editionsById.get(id);
+    if (!edition) continue;
+    const publisher = (edition.publisher ?? '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    return publisher ? `p:${publisher}|${edition.year ?? ''}` : `e:${id}`;
+  }
+  return null;
+}
+
+/**
+ * Cover images for a work page, at most `limit`, avoiding obvious repeats.
+ *
+ * Deduplicating by URL is not enough: one printing often sits in the
+ * catalogue as several records with several scans, so the shared link for
+ * *Wolf Hall* showed the same Spanish edition twice out of four (found
+ * 2026-09-07). The image that decides whether anyone opens a link should not
+ * look careless.
+ *
+ * The wall folds repeats by comparing the images themselves, but that needs
+ * signatures the server would have to fetch and hash — several seconds on a
+ * route that a messenger's unfurler will not wait for. So this uses what is
+ * already in hand: two covers filed under the same publisher **and** year are
+ * treated as one printing. It is a weaker test than the wall's, and it errs
+ * towards showing a repeat rather than dropping a genuinely different cover:
+ * anything skipped comes back to fill the remaining slots.
+ */
+export function coverImages(
+  covers: readonly Cover[],
+  limit = 4,
+  editions: readonly Pick<Edition, 'id' | 'publisher' | 'year'>[] = [],
+): string[] {
+  const editionsById = new Map(editions.map(e => [e.id, e]));
   const urls: string[] = [];
+  const skipped: string[] = [];
+  const seenPrintings = new Set<string>();
+
   for (const cover of covers) {
     if (urls.length >= limit) break;
-    if (!urls.includes(cover.url)) urls.push(cover.url);
+    if (urls.includes(cover.url)) continue;
+    const key = printingKey(cover, editionsById);
+    if (key && seenPrintings.has(key)) {
+      skipped.push(cover.url);
+      continue;
+    }
+    if (key) seenPrintings.add(key);
+    urls.push(cover.url);
+  }
+  // Better a repeat than an empty slot: a three-cover card looks unfinished.
+  for (const url of skipped) {
+    if (urls.length >= limit) break;
+    if (!urls.includes(url)) urls.push(url);
   }
   return urls;
 }
@@ -69,7 +123,11 @@ export function coverImages(covers: readonly Cover[], limit = 4): string[] {
  * data policy as well as the promise in SPEC §9.2. `sameAs` points at the
  * Open Library record so the claim can be checked at its source.
  */
-export function bookJsonLd(work: Work, covers: readonly Cover[]): Record<string, unknown> {
+export function bookJsonLd(
+  work: Work,
+  covers: readonly Cover[],
+  editions: readonly Pick<Edition, 'id' | 'publisher' | 'year'>[] = [],
+): Record<string, unknown> {
   const authors = work.authors.filter(Boolean);
   return {
     '@context': 'https://schema.org',
@@ -80,7 +138,7 @@ export function bookJsonLd(work: Work, covers: readonly Cover[]): Record<string,
       author: authors.map(name => ({ '@type': 'Person', name })),
     }),
     ...(work.firstPublishYear && { datePublished: String(work.firstPublishYear) }),
-    ...(covers.length > 0 && { image: coverImages(covers) }),
+    ...(covers.length > 0 && { image: coverImages(covers, 4, editions) }),
     sameAs: `https://openlibrary.org/works/${work.id}`,
   };
 }
