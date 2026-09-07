@@ -1,14 +1,20 @@
 /**
  * Search orchestration (SPEC §3 F1, §4 N2). Server-side only.
  *
- * Exactly two external calls per search: Open Library (creates works) and
- * Google Books (adds covers to those works, never creates works). Both run in
- * parallel; either may fail without failing the search.
+ * Exactly **one** external call per search: Open Library, which is also the
+ * only source that creates works (E5).
+ *
+ * Google Books used to run alongside it and hang extra covers on the result
+ * cards. Since §9.3 step 14 each card loads its own mosaic from the work's
+ * first edition page, and that made the second call pointless: measured over
+ * five searches and 82 works on 2026-09-07, Google added covers to six cards,
+ * and for every one of them Open Library alone already filled all four tiles.
+ * What was left was one extra language per five searches, for one request out
+ * of a daily quota of 1,000 (§8.7). So a search now costs no quota at all.
  */
 import type { WorkSummary } from './model';
-import { searchVolumes } from './sources/googlebooks';
 import { searchWorks } from './sources/openlibrary';
-import { attachCandidates, filterWorksByLanguage, mergeWorks, mosaicCovers, rankWorks } from './works';
+import { filterWorksByLanguage, mergeWorks, mosaicCovers, rankWorks } from './works';
 
 export const DEFAULT_LANGUAGE = 'all';
 export const MAX_QUERY_LENGTH = 200;
@@ -38,10 +44,10 @@ export async function search(rawQuery: string, options: SearchOptions = {}): Pro
   const language = normalizeLanguageOption(options.language);
   if (!query) return { query, language, works: [] };
 
-  const [olWorks, gbCandidates] = await Promise.all([searchWorks(query), searchVolumes(query)]);
+  const olWorks = await searchWorks(query);
 
   const works = rankWorks(
-    filterWorksByLanguage(attachCandidates(mergeWorks(olWorks), gbCandidates), language),
+    filterWorksByLanguage(mergeWorks(olWorks), language),
     query,
   ).map(w => ({ ...w, coverUrls: mosaicCovers(w) }));
 

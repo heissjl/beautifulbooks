@@ -6,9 +6,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { resetGoogleQuota } from '../googlequota';
-import {
-  GB_ISBN_REVALIDATE, GB_REVALIDATE, searchEditionCandidates, searchVolumes,
-} from '../sources/googlebooks';
+import { GB_ISBN_REVALIDATE, GB_REVALIDATE, searchEditionCandidates } from '../sources/googlebooks';
 import { HttpError, fetchJson } from '../sources/http';
 import { getEditionsPage, getWork, searchWorks } from '../sources/openlibrary';
 
@@ -139,7 +137,7 @@ describe('googlebooks', () => {
   it('appends the API key only when configured and never throws', async () => {
     vi.stubEnv('GOOGLE_BOOKS_API_KEY', '');
     handler = () => ({ status: 429 });
-    await expect(searchVolumes('1984')).resolves.toEqual([]);
+    await expect(searchEditionCandidates('1984', undefined)).resolves.toEqual([]);
     expect(calls[0]).not.toContain('key=');
 
     // That 429 legitimately opened the quota breaker; the rest of this test
@@ -148,14 +146,11 @@ describe('googlebooks', () => {
 
     vi.stubEnv('GOOGLE_BOOKS_API_KEY', 'abc');
     handler = () => ({ body: { items: [{ id: 'v1', volumeInfo: { title: '1984', authors: ['George Orwell'], imageLinks: { thumbnail: 'http://books.google.com/x?zoom=1&edge=curl' }, language: 'en' } }] } });
-    const items = await searchVolumes('1984');
-    expect(calls[1]).toContain('key=abc');
-    expect(items).toHaveLength(1);
-    expect(items[0].coverUrl).toBe('https://books.google.com/x?zoom=1&fife=w800');
-
     const cands = await searchEditionCandidates('1984', 'George Orwell');
-    expect(decodeURIComponent(calls[2])).toContain('intitle:1984 inauthor:George Orwell');
+    expect(calls[1]).toContain('key=abc');
+    expect(decodeURIComponent(calls[1])).toContain('intitle:1984 inauthor:George Orwell');
     expect(cands).toHaveLength(1);
+    expect(cands[0].coverUrl).toBe('https://books.google.com/x?zoom=1&fife=w800');
     vi.unstubAllEnvs();
   });
 });

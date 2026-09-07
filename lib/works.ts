@@ -65,29 +65,6 @@ function maxDefined(a?: number, b?: number): number | undefined {
   return Math.max(a, b);
 }
 
-/**
- * Attaches Google Books candidates to existing works by title + primary
- * author, contributing covers and languages. Candidates that match no work
- * are discarded: Google Books never creates works (decision E5).
- */
-export function attachCandidates(
-  works: readonly WorkSummary[],
-  candidates: readonly EditionCandidate[],
-): WorkSummary[] {
-  const byKey = new Map<string, WorkSummary>();
-  const out = works.map(w => {
-    const copy = { ...w, coverUrls: [...w.coverUrls], languages: [...w.languages] };
-    byKey.set(identityKey(copy), copy);
-    return copy;
-  });
-  for (const c of candidates) {
-    const work = byKey.get(identityKey(c));
-    if (!work) continue;
-    if (!work.coverUrls.includes(c.coverUrl)) work.coverUrls.push(c.coverUrl);
-    if (c.language && !work.languages.includes(c.language)) work.languages.push(c.language);
-  }
-  return out;
-}
 
 /** Assigns candidates to a known work (detail page). Non-matching ones are dropped. */
 export function candidatesToSourceEditions(

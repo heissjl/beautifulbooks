@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { SourceEdition, WorkSummary } from '../model';
 import type { EditionCandidate } from '../sources/googlebooks-parse';
 import {
-  assembleEditions, attachCandidates, candidatesToSourceEditions, editionKey, filterWorksByLanguage,
+  assembleEditions, candidatesToSourceEditions, editionKey, filterWorksByLanguage,
   derivativeIds, foldDuplicateCovers, groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks,
   relevance, rankContext, samePublisher, verifyIsbnCover, withoutTranslators,
 } from '../works';
@@ -48,7 +48,7 @@ describe('mergeWorks', () => {
   });
 });
 
-describe('attachCandidates', () => {
+describe('candidatesToSourceEditions', () => {
   const gb = (over: Partial<EditionCandidate> & { id: string }): EditionCandidate => ({
     source: 'googlebooks',
     title: '1984',
@@ -56,20 +56,6 @@ describe('attachCandidates', () => {
     coverUrl: `https://books.google.com/${over.id}`,
     covers: [{ id: `gb:${over.id}`, url: `https://books.google.com/${over.id}` }],
     ...over,
-  });
-
-  it('adds covers and languages to a matching work and drops the rest (E5)', () => {
-    const works = [work({ id: 'W', title: '1984', authors: ['George Orwell'], languages: ['en'] })];
-    const out = attachCandidates(works, [
-      gb({ id: 'a', language: 'de' }),
-      gb({ id: 'b' }),
-      gb({ id: 'c', title: 'Animal Farm' }),
-      gb({ id: 'd', authors: ['Someone Else'] }),
-    ]);
-    expect(out).toHaveLength(1);
-    expect(out[0].coverUrls).toHaveLength(3);
-    expect(out[0].languages).toEqual(['en', 'de']);
-    expect(works[0].coverUrls).toHaveLength(1); // input untouched
   });
 
   it('converts matching candidates to source editions of a known work', () => {

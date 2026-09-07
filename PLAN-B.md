@@ -373,3 +373,44 @@ Im Projekt ist **keine Abrechnung aktiviert** (die Konsole wirbt noch mit dem St
 ### Prüfen
 
 `GB_REVALIDATE` in den Tests, `npm run test:run`, `npm run build`, und eine Detailseite zweimal laden: der zweite Aufruf darf keine Google-Anfrage auslösen.
+
+---
+
+## B8 — die Google-Anfrage aus der Suche entfernen
+
+### Der Grund
+
+Gemessen am 2026-09-07 über fünf Suchen und 82 Werke: Google steuerte Covern zu sechs Karten bei — und für **jede** dieser Karten füllt Open Library allein bereits alle vier Kacheln, seit Schritt 14 jede Karte ihr Mosaik selbst nachlädt.
+
+```
+The Great Gatsby   google +4  | Kacheln ohne Google 4/4
+Dune               google +1  | Kacheln ohne Google 4/4
+Children of Dune   google +1  | Kacheln ohne Google 4/4
+Dune (zweites)     google +10 | Kacheln ohne Google 4/4
+```
+
+Übrig bleibt **eine gewonnene Sprache pro fünf Suchen** (bei *Dune* Schwedisch), die über `filterWorksByLanguage` beeinflusst, ob ein Werk unter einem Sprachfilter erscheint. Dafür eine Anfrage pro kalter Suche, bei einem Kontingent von 1.000 am Tag.
+
+Der Aufruf hat sich damit überlebt: Entscheidung E4 („Editions-Call für die ersten Treffer") wurde in §9.3 Schritt 14 zugunsten der nachgeladenen Seite 0 entschieden, und dieser Rest ist der letzte Teil davon, den niemand mehr braucht.
+
+**Die Titelsuche auf der Detailseite bleibt.** Sie bringt bei *Beloved* jedes sechste Cover und überall die Klappentexte; die wird erst geopfert, wenn echte Besucher zeigen, dass es nötig ist.
+
+### Änderungen
+
+| Datei | Was |
+|---|---|
+| `lib/search.ts` | Nur noch **ein** externer Aufruf: Open Library. `attachCandidates` fällt aus der Kette. |
+| `lib/sources/googlebooks.ts` | `searchVolumes` entfernen (danach ohne Aufrufer) und `lookupByIsbns`, das seit Schritt 13a toter Code ist. Übrig bleiben `searchEditionCandidates` und `lookupIsbnOrThrow`. |
+| `lib/works.ts` | `attachCandidates` entfernen; `candidatesToSourceEditions` bleibt, das ist der Weg der Detailseite. |
+| Tests | Die drei Integrationstests zur Google-Anreicherung der Suche werden zu einem Test, der belegt, dass eine Suche **keine** Google-Anfrage mehr stellt. `attachCandidates`-Unit-Tests entfallen. |
+| SPEC | §3 F1.1 und F1.3, §4 N2 und E4 nachziehen: eine Suche ist jetzt ein externer Aufruf, und die Mosaik-Cover kommen aus Open Library. |
+
+### Was das bringt
+
+Ein Besuch aus einer Suche und zwei geöffneten Büchern kostet **4 statt 5** Google-Anfragen, ohne dass ein Cover verschwindet. Eine reine Suchsitzung ohne geöffnetes Buch kostet **null**.
+
+### Prüfen
+
+1. Ein Integrationstest, der zählt: `search()` löst keine Anfrage an `googleapis.com` aus.
+2. Die fünf Akzeptanz-Queries aus §3 F1 liefern dieselbe erste Position wie vorher.
+3. Im Browser: Trefferliste mit Mosaiken unverändert.

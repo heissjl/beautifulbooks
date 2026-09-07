@@ -105,9 +105,9 @@ Ein Kauf-Link führt zur **ISBN**, nicht zum Cover (2.3). Der Link-Text sagt das
 
 ### F1 – Suche
 
-- **F1.1** Eingabe: Freitext. Der Text wird an beide Quellen geschickt; Autorennamen im Query werden nicht speziell geparst (siehe Entscheidung E3).
+- **F1.1** Eingabe: Freitext. Der Text geht an Open Library; Autorennamen im Query werden nicht speziell geparst (siehe Entscheidung E3). *Bis 2026-09-07 ging er auch an Google Books — das entfiel mit B8, siehe F1.3.*
 - **F1.2** Sprachfilter: `all | en | de | fr | es | it | …`. Default: **`all`** (entschieden, E2). Der Filter wirkt auf die Ausgaben, nicht auf die Works: ein Work erscheint, wenn es mindestens eine Ausgabe in der Sprache hat.
-- **F1.3** Ergebnis: Liste von Works, sortiert nach Relevanz. Pro Work: Titel, Autor(en), Erstveröffentlichung, Anzahl Ausgaben, bis zu 4 Cover-URLs für das Mosaik. Erstes Cover aus Open Library (`cover_i`), weitere aus Google-Books-Treffern, die per Titel+Autor demselben Work zugeordnet werden (E4/E5).
+- **F1.3** Ergebnis: Liste von Works, sortiert nach Relevanz. Pro Work: Titel, Autor(en), Erstveröffentlichung, Anzahl Ausgaben, bis zu 4 Cover-URLs für das Mosaik, **alle aus Open Library**. *Geändert 2026-09-07:* die Cover 2 bis 4 kamen früher aus Google-Books-Treffern (E4/E5). Seit §9.3 Schritt 14 lädt jede Karte ihr Mosaik selbst aus der ersten Ausgabenseite ihres Werks, und die Messung über fünf Suchen und 82 Werke zeigte: bei **jedem** Werk, dem Google noch Cover beisteuerte, füllte Open Library allein bereits alle vier Kacheln. Der Aufruf kostete damit eine von 1.000 Tagesanfragen für nichts (§8.7).
 - **F1.4** Relevanz: exakter Titeltreffer > Titel beginnt mit Query > Query im Titel enthalten. Zusatzpunkte für Anzahl Ausgaben (gedeckelt). Sekundärliteratur („A Study Guide for …") rangiert unter dem Werk selbst.
 - **F1.5** URL-Zustand: `/?q=…&lang=…`. Back-Button und Teilen funktionieren.
 - **F1.6** Kürzlich gesucht (localStorage, max. 5) und kuratierte Vorschläge.
@@ -158,7 +158,7 @@ Ein Kauf-Link führt zur **ISBN**, nicht zum Cover (2.3). Der Link-Text sagt das
 ## 4. Nicht-funktionale Anforderungen
 
 - **N1 Server-seitig fetchen.** Externe APIs werden ausschließlich vom Server aufgerufen (Route Handler oder Server Components). Heute ruft der Browser die APIs direkt auf.
-- **N2 Kein Fan-out bei der Suche.** Die Suche macht **zwei** externe Calls (OL + GB), nicht 2 + 2×Anzahl Works. Cover fürs Mosaik kommen aus den Suchergebnissen selbst: OL liefert ein Cover pro Work, Google Books liefert weitere (E4). Ein Work mit nur einem bekannten Cover zeigt ein einzelnes Cover, kein Mosaik.
+- **N2 Kein Fan-out bei der Suche.** Die Suche macht **einen** externen Call (Open Library), nicht 1 + 1×Anzahl Works. *Bis 2026-09-07 waren es zwei (OL + Google Books); der Google-Aufruf entfiel mit B8, siehe F1.3.* Dazu kommen die gedeckelten, gecachten Nachlade-Calls pro Karte aus §9.3 Schritt 14, die **keine** Google-Anfrage kosten. Ein Work, von dem Open Library nur ein Cover kennt und dessen Seite 0 keine weiteren hergibt, zeigt ein einzelnes Cover statt eines Mosaiks.
 - **N3 Antwortzeit.** Suche < 3 s im Normalfall. Open Library kann > 30 s brauchen; deshalb Timeouts und Caching.
 - **N4 Caching.** Suchergebnisse 1 h, Work-Details 24 h. Mechanismus: Next.js `fetch` mit `revalidate`, später optional KV.
 - **N5 Kein Logging im Produktpfad.** Debug-Ausgaben nur über `DEBUG`-Flag.
@@ -211,7 +211,7 @@ Getroffen am 2026-09-06.
 | E1 | Umfang | **Option A**: Datenschicht neu, UI behalten | Abschnitt 7 |
 | E2 | Sprachfilter-Default | **`all`** | F1.2; API-Route und UI bekommen denselben Default |
 | E3 | Query in Titel + Autor zerlegen | **Nein**, vorerst | Relevanz-Ranking (F1.4) muss allein tragen. Vorgemerkt als F1.8 in 8.5 |
-| E4 | Mosaik-Cover ohne Fan-out | **(b)** Google-Books-Cover als 2.–4. Bild | F1.3, N2 |
+| E4 | Mosaik-Cover ohne Fan-out | ~~(b) Google-Books-Cover als 2.–4. Bild~~ → **(a) gecachter Nachlade-Call pro Karte**, entschieden 2026-09-06 in §9.3 Schritt 14, Google-Anteil entfernt 2026-09-07 (B8) | F1.3, N2 |
 | E5 | Google Books in der Suche | **Nur ergänzend**: liefert Cover für OL-Works, erzeugt keine eigenen Works. Volle Rolle nur auf der Detailseite | F3.2. Löst den scheinbaren Konflikt mit E4 |
 | E6 | Caching-Backend | Next-`fetch`-Cache, kein KV | N4 |
 | E7 | Sprache der Doku | Spec Deutsch, Code und Kommentare Englisch | |
@@ -726,7 +726,7 @@ Jede Karte fragt `GET /api/works/[id]?summary=1` an, dieselbe gecachte Seite 0, 
 
 **Bekannte Schwäche:** Die Kurzantwort hasht nicht, weil das Hashing für ein ganzes Ergebnisraster teurer wäre als das Mosaik wert ist. Vereinzelt landet deshalb ein gescannter Textseiten-Vorsatz in einer Kachel (bei *Dune* zwei von achtzig Bildern). Auf der Detailseite sortiert `looksLikeScannedPage` solche Bilder nach hinten; im Mosaik fehlt diese Information.
 
-**N2 angepasst:** Die Suche macht weiterhin zwei synchrone externe Calls; dazu kommen gedeckelte, gecachte Nachlade-Calls pro Karte. Damit ist E4 (a) in §8.6 entschieden.
+**N2 angepasst:** Die Suche macht seit dem 2026-09-07 **einen** synchronen externen Call; dazu kommen gedeckelte, gecachte Nachlade-Calls pro Karte. Damit ist E4 (a) in §8.6 entschieden, und der frühere Google-Aufruf der Suche ist ersatzlos entfallen.
 
 **Schritt 15 – Ehrliche Sprache (F).** *Erledigt 2026-09-07.*
 

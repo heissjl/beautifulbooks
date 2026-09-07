@@ -89,12 +89,15 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllGlobals());
 
 describe('search', () => {
-  it('makes exactly two external calls and survives Google Books failing (N2, F3.3)', async () => {
-    googleBooks = () => ({ status: 429 });
+  it('makes exactly one external call and spends no Google quota (N2, §8.7)', async () => {
     const r = await search('mumbo jumbo');
-    expect(calls).toHaveLength(2);
-    expect(calls.some(u => u.includes('openlibrary.org/search.json'))).toBe(true);
-    expect(calls.some(u => u.includes('googleapis.com'))).toBe(true);
+    expect(calls).toHaveLength(1);
+    expect(calls[0]).toContain('openlibrary.org/search.json');
+    // Google used to run alongside this call to hang extra covers on the
+    // cards. Since step 14 each card fetches its own mosaic from Open
+    // Library, and measured over five searches that made the Google covers
+    // redundant every time — so a search now costs nothing of the 1,000 a day.
+    expect(calls.some(u => u.includes('googleapis.com'))).toBe(false);
     expect(r.works[0].id).toBe('OL30751W');
     expect(r.works[0].authors[0]).toBe('Ishmael Reed');
     expect(r.language).toBe('all');
@@ -106,12 +109,11 @@ describe('search', () => {
     expect(calls).toHaveLength(0);
   });
 
-  it('adds recorded Google covers to the mosaic of the top work without creating works', async () => {
+  it('builds the mosaic from Open Library alone, and only Open Library makes works', async () => {
     const r = await search('mumbo jumbo');
     expect(r.works[0].id).toBe('OL30751W');
-    expect(r.works[0].coverUrls.length).toBeGreaterThan(1);
     expect(r.works[0].coverUrls[0]).toContain('covers.openlibrary.org');
-    expect(r.works[0].coverUrls.slice(1).every(u => u.includes('books.google.com') && u.includes('zoom=1') && u.includes('fife=w'))).toBe(true);
+    expect(r.works[0].coverUrls.every(u => u.includes('covers.openlibrary.org'))).toBe(true);
     expect(r.works.every(w => /^OL\d+W$/.test(w.id))).toBe(true);
   });
 
@@ -132,32 +134,22 @@ describe('search', () => {
     expect(austen.works.some(w => /zombies/i.test(w.title))).toBe(true);
   });
 
-  it('attaches Google Books covers to the matching work only (E4/E5)', async () => {
+  it('ignores Google volumes offered during a search, however tempting (E4)', async () => {
+    // The recording still holds volumes for this query; nothing must reach
+    // the result. E5 (Google never creates works) is exercised on the detail
+    // page, which is the only place Google still runs.
     googleBooks = () => ({
       body: {
         items: [
-          { id: 'g1', volumeInfo: { title: 'Mumbo Jumbo', authors: ['Ishmael Reed'], imageLinks: { thumbnail: 'http://books.google.com/g1?zoom=1' }, language: 'en' } },
-          { id: 'g2', volumeInfo: { title: 'Mumbo Jumbo', authors: ['Ishmael Reed'], imageLinks: { thumbnail: 'http://books.google.com/g2?zoom=1' }, language: 'de' } },
+          { id: 'g1', volumeInfo: { title: 'Mumbo Jumbo', authors: ['Ishmael Reed'], imageLinks: { thumbnail: 'http://books.google.com/g1?zoom=1' }, language: 'de' } },
           { id: 'g3', volumeInfo: { title: 'Mumbo Jumbo', authors: ['Nobody Known'], imageLinks: { thumbnail: 'http://books.google.com/g3?zoom=1' } } },
         ],
       },
     });
     const r = await search('mumbo jumbo');
-    const reed = r.works[0];
-    expect(reed.id).toBe('OL30751W');
-    expect(reed.coverUrls).toHaveLength(3);
-    expect(reed.coverUrls[0]).toContain('covers.openlibrary.org');
-    expect(reed.coverUrls.slice(1)).toEqual(['https://books.google.com/g1?zoom=1&fife=w800', 'https://books.google.com/g2?zoom=1&fife=w800']);
-    expect(reed.languages).toContain('de');
+    expect(calls.some(u => u.includes('googleapis.com'))).toBe(false);
+    expect(r.works[0].coverUrls.some(u => u.includes('books.google.com'))).toBe(false);
     expect(r.works.some(w => w.authors[0] === 'Nobody Known')).toBe(false);
-  });
-
-  it('caps mosaic covers at four', async () => {
-    googleBooks = () => ({
-      body: { items: Array.from({ length: 8 }, (_, i) => ({ id: `g${i}`, volumeInfo: { title: 'Mumbo Jumbo', authors: ['Ishmael Reed'], imageLinks: { thumbnail: `http://books.google.com/g${i}?zoom=1` } } })) },
-    });
-    const r = await search('mumbo jumbo');
-    expect(r.works[0].coverUrls).toHaveLength(4);
   });
 
   it('filters works by language while keeping works without language data (F1.2)', async () => {
