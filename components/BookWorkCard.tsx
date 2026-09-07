@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import CoverMosaic from './CoverMosaic';
+import { useCardCovers } from './useCardCovers';
 import { storeWorkPreview } from './useWorkPreview';
 import type { WorkSummary } from '@/lib/model';
 
@@ -30,6 +31,9 @@ export function detailHref(workId: string, query?: string, language?: string): s
 }
 
 export default function BookWorkCard({ work, query, language }: BookWorkCardProps) {
+  // The search gives one cover; the rest of the mosaic is fetched once the
+  // card nears the viewport (SPEC §9.3 step 14).
+  const coverUrls = useCardCovers(work.id, work.coverUrls);
   const editionCount = work.editionCount ?? work.coverUrls.length;
   const href = detailHref(work.id, query, language);
   const facts = [
@@ -41,10 +45,10 @@ export default function BookWorkCard({ work, query, language }: BookWorkCardProp
     <Link
       href={href}
       className="group block focus-visible:outline-none"
-      onClick={() => storeWorkPreview(work.id, { title: work.title, authors: [displayAuthors(work.authors)], coverUrls: work.coverUrls })}
+      onClick={() => storeWorkPreview(work.id, { title: work.title, authors: [displayAuthors(work.authors)], coverUrls })}
     >
       <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
-        <CoverMosaic coverUrls={work.coverUrls} title={work.title} />
+        <CoverMosaic coverUrls={coverUrls} title={work.title} />
         {facts && (
           <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-1 bg-gradient-to-t from-black/70 to-transparent px-3 pb-2.5 pt-8 text-xs font-medium text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
             {facts}

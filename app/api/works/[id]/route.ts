@@ -6,6 +6,7 @@ import type { ImageSignature } from '@/lib/imagesig';
 import type { PageInfo } from '@/lib/pages';
 import { OL_EDITIONS_PAGE } from '@/lib/sources/openlibrary';
 import { getWorkPage, isWorkId, MAX_EDITIONS_SCANNED } from '@/lib/work';
+import { MOSAIC_COVERS } from '@/lib/works';
 
 /**
  * Response of GET /api/works/[id] (SPEC §2.3: covers are the unit).
@@ -24,6 +25,16 @@ export interface WorkPageResponse {
   page: PageInfo;
   /** Market the buy links were generated for (E9). */
   market: Market;
+}
+
+/**
+ * A search card's mosaic: a few covers of different editions (SPEC §9.3
+ * step 14). Shares the cached page 0 with the detail page, so asking for it
+ * also warms the page the reader is about to open.
+ */
+export interface WorkSummaryResponse {
+  id: string;
+  coverUrls: string[];
 }
 
 /** E9: explicit `?market=` or cookie, else the request's country, else Accept-Language. */
@@ -62,11 +73,33 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
   const market = marketFromRequest(request);
   const offset = offsetFromRequest(request.nextUrl.searchParams.get('offset'));
   const signatures = request.nextUrl.searchParams.get('signatures') === '1';
+  const summary = request.nextUrl.searchParams.get('summary') === '1';
 
   try {
-    const page = await getWorkPage(id, { offset, signatures });
+    const page = await getWorkPage(id, { offset: summary ? 0 : offset, signatures: summary ? false : signatures });
     if (!page) {
       return NextResponse.json({ error: 'Work not found' }, { status: 404 });
+    }
+
+    if (summary) {
+      // One cover per edition, so a mosaic shows four books rather than four
+      // scans of one. Not folded: hashing a whole result page of cards would
+      // cost more than the mosaic is worth.
+      const seen = new Set<string>();
+      const coverUrls: string[] = [];
+      for (const cover of page.covers) {
+        const edition = cover.editionIds[0];
+        if (edition) {
+          if (seen.has(edition)) continue;
+          seen.add(edition);
+        }
+        coverUrls.push(cover.url);
+        if (coverUrls.length >= MOSAIC_COVERS) break;
+      }
+      const body: WorkSummaryResponse = { id, coverUrls };
+      return NextResponse.json(body, {
+        headers: { 'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800' },
+      });
     }
     const body: WorkPageResponse = {
       work: page.work,

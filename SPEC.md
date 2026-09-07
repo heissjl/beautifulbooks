@@ -633,10 +633,25 @@ Ein serverseitiger Test kann also für etwa zwei von sechs Händlern eine positi
 
 - **Prüfskript `scripts/check-buylinks.ts`** macht dieselbe Messung über alle Märkte und ISBNs auf der Kommandozeile. Damit ist der offene Punkt „Händler-URLs geprüft“ aus §8.7 bedienbar; vor dem Start und nach jeder Händler-Änderung laufen lassen.
 
-**Schritt 14 – Mosaik durch nachgeladene Cover je Karte (D).**
-- Karte fordert nach dem Rendern `GET /api/works/[id]?offset=0&summary=1` an (dieselbe gecachte Seite 0 aus Schritt 11, verkürzt auf bis zu 4 unterschiedliche Cover-URLs), nur für sichtbare Karten, maximal 8 parallel. Das wärmt zugleich die Detailseite, der Klick wird schneller.
-- Mit Sprachfilter: OL-Suche mit `language=<ISO-3>` aufrufen, das `editions`-Unterdokument liefert dann ein Cover in dieser Sprache; es wird das erste Cover der Karte.
-- N2 wird angepasst: zwei synchrone Calls für die Antwort, dazu gedeckelte, gecachte Nachlade-Calls für sichtbare Karten. E4 (a) in 8.6 ist damit entschieden.
+**Schritt 14 – Mosaik durch nachgeladene Cover je Karte (D).** *Erledigt 2026-09-07.*
+
+Jede Karte fragt `GET /api/works/[id]?summary=1` an, dieselbe gecachte Seite 0, die auch die Detailseite zuerst lädt. Die Antwort ist auf bis zu vier Cover **verschiedener Ausgaben** verkürzt, damit ein Mosaik vier Bücher zeigt und nicht vier Scans desselben. `components/coverQueue.ts` lässt acht Anfragen gleichzeitig zu, `useCardCovers` hängt sie hinter das Cover, das die Suche selbst geliefert hat, damit das Raster nicht springt.
+
+**Gemessen im Browser (Karten mit mehr als einem Cover):**
+
+| Suche | vorher | nachher |
+|---|---|---|
+| dune | 3 von 20 | 20 von 20 |
+| beloved | 2 von 20 | 17 von 20 |
+| the great gatsby | 1 von 13 | 10 von 13 |
+
+Über die drei Suchen zusammen 47 von 53 Karten statt 6. Der Befund D aus §9.1 ist damit erledigt.
+
+**Abweichung vom Plan: kein IntersectionObserver.** Geplant war, nur sichtbare Karten zu laden. Verworfen, weil der Gewinn klein und der Preis eine zusätzliche Fehlerquelle ist: Ein Ergebnis hat höchstens zwanzig Karten, die Warteschlange deckelt ohnehin auf acht gleichzeitige Anfragen, und jede Antwort liegt einen Tag im Server-Cache. Beim Prüfen zeigte sich zudem, dass der Observer in eingebetteten Browsern gar nicht auslöst — dann bleiben fast alle Karten einbildrig, ohne erkennbaren Grund. Ein Nebeneffekt der einfacheren Fassung: das Mosaik steht schon da, bevor der Leser scrollt, und der Klick auf die Detailseite ist vorgewärmt.
+
+**Bekannte Schwäche:** Die Kurzantwort hasht nicht, weil das Hashing für ein ganzes Ergebnisraster teurer wäre als das Mosaik wert ist. Vereinzelt landet deshalb ein gescannter Textseiten-Vorsatz in einer Kachel (bei *Dune* zwei von achtzig Bildern). Auf der Detailseite sortiert `looksLikeScannedPage` solche Bilder nach hinten; im Mosaik fehlt diese Information.
+
+**N2 angepasst:** Die Suche macht weiterhin zwei synchrone externe Calls; dazu kommen gedeckelte, gecachte Nachlade-Calls pro Karte. Damit ist E4 (a) in §8.6 entschieden.
 
 **Schritt 15 – Ehrliche Sprache (F).** *Erledigt 2026-09-07.*
 
@@ -655,7 +670,7 @@ Die Überschrift dreht das Sprichwort um: hier ist das Urteil nach dem Äußeren
 
 Die About-Seite, die in der ursprünglichen Fassung dieses Schrittes stand, gehört zu §10 B: sie entsteht zusammen mit Impressum und Datenschutz, weil sie dieselben Fußzeilen-Links braucht.
 
-Reihenfolge: 11, 13a, 10, 12, 13, 16 und 15 sind erledigt; offen bleibt 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).
+Reihenfolge: alle Schritte 10 bis 16 sind erledigt (11, 13a, 10, 12, 13, 16, 15, 14, in dieser Folge). 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).
 
 ---
 
@@ -690,7 +705,7 @@ Die Vertrauensarbeit aus §9 ist bis auf zwei Schritte erledigt. Was jetzt zähl
 
 ### E. Qualität, jederzeit dazwischen
 
-12. **Schritt 14, Mosaik auf den Suchkarten** (§9.3). Behebt Befund D aus §9.1: heute zeigen 112 von 129 Karten ein einzelnes Cover. Nebeneffekt: der Klick auf die Detailseite wird schneller, weil die Karte deren Seite 0 vorwärmt.
+12. ~~Schritt 14, Mosaik auf den Suchkarten~~ *erledigt 2026-09-07, siehe §9.3.*
 13. **§8.1 zweiter Durchgang**, in dieser Reihenfolge: Detailseite mobil (Cover-Wand horizontal, Seitenleiste als Drawer), Sticky-Suchfeld mobil, Cover-Vergleich zweier Ausgaben, View Transitions.
 
 ### Was bewusst liegen bleibt
