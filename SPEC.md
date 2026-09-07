@@ -429,13 +429,24 @@ Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil s
   Für die **Menge** an Covern ist Google seit Schritt 11 zweitrangig: 1 bis 23 Prozent, bei 1984 vier Bilder von 282. Unverzichtbar ist es für etwas anderes: die ISBN-Nachschau liefert das Bild, das der **Handel heute** zu einer ISBN zeigt. Nur damit lässt sich Schritt 13 bauen („Sellers show a different cover for this ISBN“), und genau das ist das Vertrauensversprechen aus §9.2. Beschreibungen und Vorschau-Links sind angenehm, aber ersetzbar.
 
   **Zu klären, in dieser Reihenfolge:**
-  1. Wie hoch ist das Kontingent 2026 tatsächlich? Die Angaben widersprechen sich (1.000 vs. 10.000 Anfragen/Tag); die offizielle Dokumentation nennt keine Zahl. Im Google-Cloud-Dashboard des eigenen Projekts nachsehen, das ist die einzige verlässliche Quelle.
-  2. Lässt sich das Kontingent erhöhen, und kostet das etwas? Die Books API wird, anders als Maps, **nicht** pro Anfrage verkauft. Es gibt ein Formular für eine Kontingenterhöhung; Berichte von Entwicklern sprechen von langer Bearbeitung und häufigen Ablehnungen. Zu prüfen, ob Abrechnung im Projekt zu aktivieren die Grenze anhebt.
+  1. Wie hoch ist das Kontingent 2026 tatsächlich? **Recherchiert am 2026-09-07, ohne belastbares Ergebnis:** die [offizielle Dokumentation](https://developers.google.com/books/docs/v1/using) nennt keine Zahl, Drittquellen widersprechen sich zwischen 1.000 und 10.000 Anfragen pro Tag. Einzige verlässliche Quelle ist das Kontingent-Dashboard des eigenen Google-Cloud-Projekts. Dort nachsehen, Zahl hier eintragen, danach erst weiterentscheiden.
+  2. Lässt sich das Kontingent erhöhen, und kostet das etwas? Die Books API wird, anders als Maps, **nicht** pro Anfrage verkauft; es gibt keinen Preis, den man einfach bezahlen kann. Es gibt ein [Formular für eine Kontingenterhöhung](https://discuss.google.dev/t/requesting-higher-quota-for-google-books-api-bookquest-app/286093); Entwicklerberichte sprechen von langer Bearbeitung und häufigen Ablehnungen. Zu prüfen, ob [Abrechnung im Projekt zu aktivieren](https://support.google.com/googleapi/answer/7035610?hl=en) die Grenze anhebt — bei manchen Google-APIs ist ein höheres Kontingent an aktivierte Abrechnung gebunden, ob das für die Books API gilt, ist offen.
   3. Wenn beides nicht trägt: welcher Ersatz? Kandidaten in der Reihenfolge ihrer Eignung:
      - **ISBNdb** (kostenpflichtig, ab ~15 USD/Monat) liefert Cover und Metadaten pro ISBN und ersetzt die Nachschau eins zu eins.
      - **Amazon Product Advertising API** (kostenlos, aber erst nach drei qualifizierten Verkäufen freigeschaltet, siehe 8.3) liefert genau das Bild, das der Käufer sieht — inhaltlich die beste Quelle, aber ein Henne-Ei-Problem beim Start.
      - **Verzicht:** Schritt 13 zeigt dann nur „unknown“ statt eines Vergleichs. Die Seite funktioniert, das Versprechen wird kleiner.
-  4. Eigenen Schutz einbauen, unabhängig vom Ausgang: die ISBN-Nachschau erst beim Auswählen eines Covers auslösen statt beim Laden von Seite 0 (heute 6 bis 10 Aufrufe, die niemand angesehen hat), und einen Tageszähler mit sauberem Abschalten, damit ein leeres Kontingent die Seite nicht in Fehler laufen lässt (F3.3 deckt den Ausfall ab, aber ungebremst).
+  4. **Die billigste Maßnahme zuerst, unabhängig vom Ausgang der Punkte 1–3: ISBN-Nachschau erst beim Auswählen eines Covers.** Heute läuft `lookupByIsbns` beim Laden von Seite 0 für die zehn neuesten ISBNs, also 6 bis 10 Anfragen für Ausgaben, die niemand angeklickt hat. Damit sinkt der Verbrauch pro Detailseite **von 7–11 auf 2** (Titelsuche plus die eine Nachschau zum gewählten Cover), und die Kontingentfrage entschärft sich um den Faktor fünf. Siehe Schritt 13a in §9.3.
+
+     **Der Preis dafür, gemessen 2026-09-07 auf Seite 0:**
+
+     | Werk | Cover, die nur aus der ISBN-Nachschau stammen | Anfragen dafür |
+     |---|---|---|
+     | Beloved | 5 | 10 |
+     | The Great Gatsby | 3 | 6 |
+     | 1984 | 2 | 10 |
+
+     Diese 2 bis 5 Bilder verschwinden zunächst aus der Wand und tauchen erst beim Anklicken der jeweiligen Ausgabe auf. Verschmerzbar, denn die Auswahl ist ohnehin willkürlich: nachgeschlagen werden nur die zehn neuesten ISBNs von Seite 0, bei Beloved zehn von 37 ISBN-tragenden Ausgaben allein auf dieser Seite und von weit über hundert im ganzen Werk. Eine vollständige Abdeckung war das nie, sondern eine Stichprobe zum Preis von zehn Anfragen pro Seitenaufruf.
+  5. **Tageszähler mit sauberem Abschalten.** Ein leeres Kontingent darf die Seite nicht in Fehler laufen lassen. F3.3 deckt den Ausfall einer Quelle bereits ab, aber ungebremst: heute wird bei jedem Aufruf weiter angefragt und jede Anfrage läuft in einen 429. Zähler pro Tag, danach Google überspringen und im UI sagen, dass die Handelsbilder heute nicht verfügbar sind.
 
 - [ ] **Vercel-Plan.** Hobby ist nicht-kommerziell; mit dem ersten Affiliate-Link ist ein Wechsel fällig (8.2).
 - [ ] **Impressum und Datenschutzerklärung** stehen und sind verlinkt (8.2).
@@ -538,6 +549,8 @@ Gatsby kalt: erste Wand nach 8 s, vollständig nach etwa 38 s; warm unter 5 s. D
 - Leere und Text-Scans (Kontrast unter Schwelle **oder** Hash aus ≤ 2 gesetzten Bytes) verschwinden aus der Wand, auch ohne Alternative; die Ausgabe bleibt in einer Liste „Editions without a usable cover“ mit ihren Links.
 - Tests: die Beloved- und Gatsby-Paare oben als Fixture (Hash + Metadaten, keine Bilder), pro Stufe ein Positiv- und ein Negativfall.
 
+**Schritt 13a – ISBN-Nachschau erst bei Auswahl (Kontingent, §8.7).** Klein, unabhängig, sollte vor 13 kommen und darf vorgezogen werden. `lookupByIsbns` verschwindet aus `getWorkPage`; stattdessen fragt die Detailseite beim Auswählen eines Covers nach. Verbrauch pro Seitenaufruf 7–11 → 2. Kosten: 2 bis 5 Cover pro Werk erscheinen erst beim Anklicken statt sofort in der Wand (Zahlen in §8.7).
+
 **Schritt 13 – Kauf-Links mit Verifikationsgrad (E).**
 - Beim Auswählen eines Covers prüft der Client `GET /api/isbn/<isbn13>`: Server holt Googles ISBN-Bild (gecacht 24 h) und OLs `/isbn/<isbn>.json`, hasht und vergleicht mit dem gezeigten Cover. Antwort: `verified` (Distanz ≤ 16), `differs` (mit URL des Handelsbildes), `unknown` (kein Bild). Ein Google-Call pro ISBN und Tag, nur auf Auswahl, das passt ins Kontingent.
 - Anzeige über den Links: „Sellers list this ISBN with this cover“ / „Sellers currently show a different cover for this ISBN“ mit dem anderen Bild daneben, dann kommen die Suchwege (AbeBooks/eBay nach Titel, Verlag, Jahr) **vor** den ISBN-Links / „We can't tell which cover ships with this ISBN“.
@@ -554,4 +567,4 @@ Gatsby kalt: erste Wand nach 8 s, vollständig nach etwa 38 s; warm unter 5 s. D
 - Zähler auf der Detailseite aus Schritt 11 („42 covers · 300 of 1180 editions checked“), Fußnote unter der Wand: „Cover images come from Open Library and Google Books. Editions without a scan are listed below.“
 - About-Seite (8.1) erklärt Quellen, Lücken und die Verifikationsgrade aus Schritt 13 in drei Absätzen.
 
-Reihenfolge: 10 (halber Tag), 15 (eine Stunde), 11 (zwei Tage), 12 (ein Tag), 13 (ein Tag), 14 (halber Tag). 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 11 vor 12, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar ist.
+Reihenfolge: 11 (erledigt), dann 10, 15, 12, 13a, 13, 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).
