@@ -631,3 +631,23 @@ Zwei Ideen von Julian, beide geprüft statt geschätzt. Die Punkte daraus sind R
 **Die Bewertungen, die wir schon haben.** Open Library liefert bei jeder Suche `ratings_count`, `readinglog_count` und `want_to_read_count` mit; sie stehen seit Schritt 10 an `WorkSummary` und tragen das Ranking, werden aber nirgends angezeigt. Für *Nineteen Eighty-Four* sind das 8.491 Leser. Frei nutzbar, schon bezahlt, keine zusätzliche Anfrage.
 
 **„Ähnliche Cover" ist kleiner als gedacht und größer als es aussieht.** Klein: eine Signatur sind 8 Byte, ein Index über 500 kuratierte Werke à 50 Cover wären rund 25.000 Einträge und damit wenige hundert Kilobyte; ein linearer Vergleich über 25.000 XOR-Operationen dauert Mikrosekunden, ein ausgefeilter Index erübrigt sich. Größer: der dHash ist ein **Strukturhash auf Graustufen** — `decodeToGray` verwirft die Farbe in der ersten Schleife. Zwei Cover mit gleichem Aufbau, eines rot und eines blau, sind für ihn identisch. „Sieht aus wie" ohne Farbe wäre also ein falsches Versprechen (N12). Nötig wäre eine Erweiterung der Signatur um mittlere Sättigung und ein grobes RGB-Histogramm im selben Durchlauf — dasselbe Maß, das ROADMAP 1.9 für ein farbenfrohes Cover braucht.
+
+---
+
+## 2026-09-07 · Was die freien Quellen zu einem vergriffenen Taschenbuch wissen (Vorprobe zu 6.6)
+
+Julian hat *Aus julianischen Tagen* von Arno Schmidt zum Testfall der Datenbank-Prüfung gemacht: „es hat ein wunderschönes cover und wir sollten eine seite bauen, die das auch findet." Fischer Taschenbuch 1979, ISBN 9783596219261, seit rund 45 Jahren vergriffen.
+
+Abgefragt, was ohne Schlüssel und ohne Kosten zu erreichen war:
+
+| Quelle | Datensatz | Bild |
+|---|---|---|
+| Open Library, über Werk **und** über ISBN | ja, eine einzige Ausgabe | derselbe Scan der **Impressumsseite**, mit Bibliotheksstempel (5.273 Bytes, 128 × 226) |
+| Google Books | ja | Scan des **Schmutztitels** |
+| DNB über SRU, ohne Schlüssel | ja, vollständig | **keines**, kein 856-Feld |
+
+Die DNB liefert dafür die sauberste Beschreibung, die es umsonst gibt: Reihe „Fischer-Taschenbücher“ mit der Nummer **1926**, beide ISBNs, 256 Seiten, Ladenpreis DM 7,80. **Die Reihennummer ist ein Feld, das Open Library nicht führt** — genau das, was die Reihen-Seiten aus ROADMAP 5.4b bräuchten, die sich heute mit der unsauberen Verlagsfacette behelfen müssen.
+
+Der Testfall ist damit als Trennschärfe angelegt: Handelsdatenbanken führen, was verkauft wird oder wurde, und ein 1979er Taschenbuch steht dort vermutlich nicht. Wer den Umschlag hat, sind eher Leser und Sammler. **Die naheliegende teure Antwort ISBNdb ist für diesen Fall vermutlich die falsche**, und das vor dem Abschluss eines Abos zu wissen, ist die halbe Miete der Prüfung.
+
+Nebenbei bestätigt: die Google-Books-Anfrage **ohne** Schlüssel scheitert an einem erschöpften anonymen Tageskontingent (`429 Quota exceeded … consumer project_number:624717413613`). Das ist die Aussage aus dem README, jetzt belegt — und der Grund, warum `GOOGLE_BOOKS_API_KEY` in Produktion Pflicht ist und nicht Kür.
