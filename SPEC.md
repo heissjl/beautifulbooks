@@ -419,6 +419,27 @@ Drei Beobachtungen nach dem ersten Durchgang mit der neuen Oberfläche. Reihenfo
 
   Seite 0 ist ein Sprachengemisch, meist ohne Sprachangabe und fast nie in der gesuchten Sprache: bei *1984* liegt dort keine einzige deutsche Ausgabe. Eine Sortierung nach Wunschsprache hätte also nichts zu sortieren, und weitere Seiten pro Karte zu laden ist um Größenordnungen zu teuer. Die Karte zeigt das Buch, nicht die Ausgabe; die Sprache entscheidet sich auf der Detailseite.
 
+- [ ] **Beim Öffnen eines Buchs kein Cover automatisch auswählen — erst die Wand.** (Julian, 2026-09-07.) Heute fällt `selectCoverFrom` auf `groups[0].covers[0]` zurück, es ist also immer eines ausgewählt. Diese Auswahl ist willkürlich: der neueste Datensatz der führenden Sprachgruppe, nicht das schönste und nicht das bekannteste Cover.
+
+  **Zwei Gründe, das zu ändern.** Erstens das Produkt: die Seite heißt „Judge a book by its covers", und wer ein Buch öffnet, soll auf einer Wand landen und nicht auf einer schon getroffenen Entscheidung. Zweitens das Kontingent: die automatische Auswahl löst die ISBN-Nachschau aus, also **eine Google-Anfrage pro geöffnetem Buch, ob jemand die Seitenleiste ansieht oder nicht**. Eine kalte Detailseite fiele von 2 auf 1 Anfrage — die größte verbliebene Ersparnis, und anders als der Verzicht auf die Titelsuche (§8.7 Frage 2) kostet sie **kein einziges Cover**. Wer nur stöbert, kostet dann gar nichts.
+
+  **Was dabei zu entscheiden ist, und was nicht.** Unberührt bleiben geteilte Links mit `?cover=` (die Auswahl steht in der URL), die Peek-Leiste auf dem Telefon (die erscheint ohnehin erst bei einer Auswahl) und die Ladeszene. Zu gestalten ist allein die **breite Ansicht**: eine leere zweite Spalte wäre schlechter als das Problem. Kandidaten: die Wand läuft bis zur ersten Auswahl über die volle Breite und rückt dann zusammen; oder die Spalte trägt bis dahin eine kurze Erklärung, was ein Klick auf ein Cover bringt. Ersteres ist ehrlicher zur Sache, kostet aber ein Umspringen des Layouts.
+
+- [ ] **Die Kauf-Links sind in der Seitenleiste nicht auffindbar.** (Julian, 2026-09-07: „man weiß erst gar nicht, dass man scrollen muss".) Gemessen auf 1440 × 900, *Beloved*:
+
+  | | |
+  |---|---|
+  | sichtbare Höhe der Seitenleiste | 804 px |
+  | Inhalt der Seitenleiste | 2.351 px |
+  | davon allein das Cover | 554 px (69 % des Sichtbaren) |
+  | „Buy this ISBN" liegt bei | y = 1.337, also **437 px unter dem Fensterrand** |
+
+  Die eigene Scrollfläche vom 2026-09-07 hat den Weg verkürzt, aber nichts daran geändert, dass es **keinen sichtbaren Hinweis** gibt, dass unterhalb des Covers noch etwas kommt. Wer nicht auf Verdacht scrollt, findet die Kauf-Links nie.
+
+  **Kandidaten, ohne Vorentscheidung:** (a) die Kauf-Links **über** das Cover; (b) das Cover in der Seitenleiste in der Höhe deckeln, so wie es in der Telefon-Schublade schon geschieht (dort 180 px), damit Bild und Links zusammen ins Fenster passen; (c) eine kleine, festgeklebte Leiste am unteren Rand der Seitenleiste mit den ersten Links, analog zur Peek-Leiste auf dem Telefon; (d) eine Verlaufskante als Hinweis, dass es weitergeht — das Billigste, aber auch das Schwächste.
+
+  **Julians Zusatzidee, nur die zwei Links hochzuziehen, die Provision bringen, hat heute zwei Haken.** Erstens tragen von elf Kauf-Links überhaupt nur Amazon und Bookshop.org einen Provisionsparameter, und **beide sind unkonfiguriert**: weder `AFFILIATE_AMAZON_TAG_*` noch `AFFILIATE_BOOKSHOP_ID_*` sind gesetzt (geprüft 2026-09-07). Es gibt derzeit also **null** Links, auf die sich nudgen ließe; das setzt Punkt C7 voraus. Zweitens steht auf der About-Seite der Satz „The order of the shops is not sorted by what they pay, and no shop pays to appear." Zwei Links nach Provision nach oben zu ziehen, macht diesen Satz falsch. Entweder die Anordnung folgt einem anderen Kriterium, das zufällig dieselben Links begünstigt (etwa „Links, die auf eine Produktseite führen, vor Links, die auf eine Suchseite führen" — das ist bereits als `BuyLink.kind` bekannt und nachweisbar nützlich für den Leser), oder der Satz auf der About-Seite muss geändert werden. Beides ist vertretbar; unausgesprochen ist es nicht.
+
 ### 8.7 Klärungsliste vor dem Start mit echten Nutzern (Julian, 2026-09-07)
 
 Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil sie Geld, Recht oder Verfügbarkeit betreffen. Anders als 8.1–8.4 sind das keine Aufgaben, sondern Entscheidungen mit offenem Ausgang.
