@@ -8,11 +8,19 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { search } from '../search';
-import { getWorkDetail } from '../work';
+import { MAX_EDITIONS_SCANNED, getWorkDetail, getWorkPage } from '../work';
 import { authorMatchKey, normalizeTitle } from '../normalize';
 
 const FIXTURES = path.join(__dirname, '..', '__fixtures__');
 const fixture = (slug: string, file: string) => JSON.parse(readFileSync(path.join(FIXTURES, slug, file), 'utf8'));
+/** Later edition pages exist for Gatsby only; missing pages mean "no more entries". */
+function tryFixture(slug: string, file: string): { entries: unknown[] } | undefined {
+  try {
+    return fixture(slug, file);
+  } catch {
+    return undefined;
+  }
+}
 
 const SLUG_BY_QUERY: Record<string, string> = {
   'mumbo jumbo': 'mumbo-jumbo',
@@ -53,10 +61,11 @@ function route(url: URL): { status?: number; body?: unknown } {
   if (m) {
     for (const slug of Object.values(SLUG_BY_QUERY)) {
       const f = fixture(slug, 'openlibrary-editions.json');
-      if (f.workId === m[1]) {
-        const offset = Number(url.searchParams.get('offset') ?? 0);
-        return { body: { size: f.size, entries: offset === 0 ? f.entries : [] } };
-      }
+      if (f.workId !== m[1]) continue;
+      const offset = Number(url.searchParams.get('offset') ?? 0);
+      // Only Gatsby has later pages recorded; everything else ends after page 0.
+      const page = offset === 0 ? f : tryFixture(slug, `openlibrary-editions-${offset}.json`);
+      return { body: { size: f.size, entries: page?.entries ?? [] } };
     }
     return { status: 404 };
   }
@@ -158,6 +167,69 @@ describe('search', () => {
   });
 });
 
+describe('getWorkPage', () => {
+  const GATSBY = 'OL468431W';
+
+  it('returns the first page with the work, the source total and the next offset', async () => {
+    const p = await getWorkPage(GATSBY);
+    expect(p!.work.title).toBe('The Great Gatsby');
+    expect(p!.page).toMatchObject({ offset: 0, limit: 100, total: 1180, nextOffset: 100 });
+    expect(p!.editions.length).toBeGreaterThan(0);
+    expect(p!.signatures).toBeUndefined();
+  });
+
+  it('asks Google Books on the first page only, so the quota does not grow with the page count', async () => {
+    await getWorkPage(GATSBY, { offset: 0 });
+    expect(calls.filter(u => u.includes('googleapis')).length).toBeGreaterThan(0);
+
+    calls.length = 0;
+    const p = await getWorkPage(GATSBY, { offset: 100 });
+    expect(calls.some(u => u.includes('googleapis'))).toBe(false);
+    expect(p!.editions.every(e => e.source === 'openlibrary')).toBe(true);
+  });
+
+  it('serves different editions per page, which is the point of paging (SPEC §9.1 A)', async () => {
+    const [first, second] = await Promise.all([getWorkPage(GATSBY, { offset: 0 }), getWorkPage(GATSBY, { offset: 100 })]);
+    const ids = new Set(first!.editions.map(e => e.id));
+    expect(second!.editions.some(e => !ids.has(e.id))).toBe(true);
+    // The newest records carry few covers; later pages are where the covers are.
+    expect(second!.covers.length).toBeGreaterThan(first!.covers.filter(c => c.source === 'openlibrary').length);
+  });
+
+  it('stops offering pages at the end of the work and at the scan cap', async () => {
+    // A short page means the work has no more records.
+    const short = await getWorkPage(GATSBY, { offset: 300 });
+    expect(short!.page.nextOffset).toBeUndefined();
+
+    // A full page near the cap must not offer another one either.
+    const fullPage = fixture('the-great-gatsby', 'openlibrary-editions-200.json');
+    vi.stubGlobal('fetch', vi.fn(async (input: string | URL) => {
+      const url = new URL(String(input));
+      if (url.pathname.includes('/editions.json')) {
+        return new Response(JSON.stringify({ size: 5000, entries: fullPage.entries }), { headers: { 'content-type': 'application/json' } });
+      }
+      const { status = 200, body = {} } = route(url);
+      return new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
+    }));
+    const atCap = await getWorkPage(GATSBY, { offset: MAX_EDITIONS_SCANNED - 100 });
+    expect(atCap!.page.nextOffset).toBeUndefined();
+    const below = await getWorkPage(GATSBY, { offset: MAX_EDITIONS_SCANNED - 200 });
+    expect(below!.page.nextOffset).toBe(MAX_EDITIONS_SCANNED - 100);
+  });
+
+  it('rejects malformed ids and unknown works', async () => {
+    await expect(getWorkPage('../etc/passwd')).resolves.toBeNull();
+    await expect(getWorkPage('OL999999999W')).resolves.toBeNull();
+  });
+
+  it('asks for signatures without failing when the images cannot be hashed', async () => {
+    const p = await getWorkPage(GATSBY, { offset: 100, signatures: true, hashDeadlineMs: 200 });
+    // The mocked fetch serves JSON, not images, so nothing hashes; the page still loads.
+    expect(p!.signatures).toEqual({});
+    expect(p!.covers.length).toBeGreaterThan(0);
+  });
+});
+
 describe('getWorkDetail', () => {
   it('removes translators from the author line using edition data (Reed, not Pellisa Díaz)', async () => {
     const d = await getWorkDetail('OL30751W', { dedupeCovers: false });
@@ -169,6 +241,15 @@ describe('getWorkDetail', () => {
     await expect(getWorkDetail('../etc/passwd')).resolves.toBeNull();
     await expect(getWorkDetail('OL999999999W')).resolves.toBeNull();
   });
+
+  it('walks every page of a work, not just the newest records (SPEC §9.3 step 11)', async () => {
+    const first = await getWorkPage('OL468431W', { offset: 0 });
+    const whole = await getWorkDetail('OL468431W', { dedupeCovers: false });
+    expect(whole!.editions.length).toBeGreaterThan(first!.editions.length);
+    expect(whole!.covers.length).toBeGreaterThan(first!.covers.length * 3);
+    expect(calls.filter(u => u.includes('/editions.json')).length).toBeGreaterThanOrEqual(4);
+  });
+
 
   it('loads work, editions and language groups', async () => {
     const d = await getWorkDetail('OL1168083W', { dedupeCovers: false });

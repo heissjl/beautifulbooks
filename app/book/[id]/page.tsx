@@ -11,18 +11,14 @@ import SiteHeader from '@/components/SiteHeader';
 import { flyCovers } from '@/components/flyCovers';
 import { useLoadingScene } from '@/components/useLoadingScene';
 import { useMarket } from '@/components/useMarket';
+import { useWorkPages } from '@/components/useWorkPages';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor } from '@/lib/buylinks';
 import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
-import type { WorkDetailResponse } from '@/app/api/works/[id]/route';
-
-type Loaded =
-  | { status: 'notfound' }
-  | { status: 'error'; message: string }
-  | { status: 'fast'; data: WorkDetailResponse }
-  | { status: 'full'; data: WorkDetailResponse };
+import { orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
+import { foldDuplicateCovers, groupCoversByLanguage } from '@/lib/works';
 
 function BackLink({ href }: { href: string }) {
   return (
@@ -83,6 +79,25 @@ function TitleBlock({ title, authors, meta }: { title?: string; authors?: string
   );
 }
 
+/**
+ * What the wall is showing and how much of the catalogue it has seen
+ * (SPEC §9.3 step 11, F). Open Library knows far more editions than carry a
+ * cover, so the honest statement is "n covers out of m edition records
+ * checked", never "every cover".
+ */
+export function progressLabel(covers: number, merged: Pick<MergedWork, 'checked' | 'total' | 'done' | 'truncated'>): string {
+  const n = `${covers} cover${covers === 1 ? '' : 's'}`;
+  const checked = merged.checked.toLocaleString('en');
+  const total = merged.total.toLocaleString('en');
+  if (!merged.done) return `${n} · ${checked} of ${total} editions checked`;
+  const reason: Record<Exclude<Truncation, null>, string> = {
+    cap: `${n} · first ${checked} of ${total} editions checked`,
+    error: `${n} · ${checked} of ${total} editions checked, the source stopped answering`,
+  };
+  if (merged.truncated) return reason[merged.truncated];
+  return `${n} from ${total} edition${merged.total === 1 ? '' : 's'}`;
+}
+
 /** "Scribner 1996" style caption from the editions carrying a cover. */
 function captionFor(cover: Cover, editionsById: ReadonlyMap<string, EditionView>): string {
   const eds = cover.editionIds.map(id => editionsById.get(id)).filter((e): e is EditionView => !!e);
@@ -116,8 +131,10 @@ function BookDetail() {
   // Market for buy links (E9): the user's choice, else detected by the server.
   const [chosenMarket, setMarket] = useMarket();
   const requestKey = `${params.id} ${lang} ${chosenMarket ?? ''}`;
-  const [loaded, setLoaded] = useState<{ key: string; state: Loaded } | null>(null);
 
+  // Editions arrive page by page and keep arriving while the user looks
+  // around (SPEC §9.3 step 11).
+  const pages = useWorkPages(params.id, lang, chosenMarket);
 
   // The selected cover lives in the URL (?cover=) so it can be shared (SPEC F2.6).
   const selectedId = searchParams.get('cover');
@@ -127,64 +144,37 @@ function BookDetail() {
     router.replace(`${pathname}?${next.toString()}`, { scroll: false });
   };
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const key = requestKey;
-    const query = new URLSearchParams();
-    if (lang) query.set('lang', lang);
-    if (chosenMarket) query.set('market', chosenMarket);
-    const base = `/api/works/${encodeURIComponent(params.id)}`;
-    const url = (stage: 'fast' | 'full') => `${base}?${new URLSearchParams({ ...Object.fromEntries(query), stage })}`;
-
-    const load = async (stage: 'fast' | 'full'): Promise<WorkDetailResponse | null> => {
-      const res = await fetch(url(stage), { signal: controller.signal });
-      if (res.status === 404 || res.status === 400) { setLoaded({ key, state: { status: 'notfound' } }); return null; }
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `Request failed (${res.status})`);
-      return (await res.json()) as WorkDetailResponse;
-    };
-
-    (async () => {
-      try {
-        const fast = await load('fast');
-        if (!fast || controller.signal.aborted) return;
-        setLoaded({ key, state: { status: 'fast', data: fast } });
-        const full = await load('full');
-        if (!full || controller.signal.aborted) return;
-        setLoaded({ key, state: { status: 'full', data: full } });
-      } catch (err) {
-        if (controller.signal.aborted) return;
-        setLoaded({ key, state: { status: 'error', message: err instanceof Error ? err.message : 'Request failed' } });
-      }
-    })();
-
-    return () => controller.abort();
-  }, [params.id, lang, chosenMarket, requestKey]);
-
-  const state = useMemo<Loaded | { status: 'loading' }>(
-    () => (loaded?.key === requestKey ? loaded.state : { status: 'loading' }),
-    [loaded, requestKey],
-  );
-
-  // Loading scene (SPEC 8.1): paced by the hook; runs at least two covers long.
-  const sceneCovers = state.status === 'fast' || state.status === 'full' ? state.data.covers : null;
-  const scene = useLoadingScene(requestKey, sceneCovers, state.status === 'full');
-  const inScene = state.status === 'loading' || ((state.status === 'fast' || state.status === 'full') && !scene.done);
+  // Loading scene (SPEC 8.1): paced by the hook; runs at least two covers long
+  // and ends once page 0 has been hashed, so it never shows a cover twice.
+  const scene = useLoadingScene(requestKey, pages.firstCovers, pages.page0Hashed);
+  const inScene = pages.status === 'loading' || (pages.status === 'ready' && !scene.done);
 
   const view = useMemo(() => {
-    if (state.status !== 'fast' && state.status !== 'full') return null;
-    const { data } = state;
-    const editionsById = new Map(data.editions.map(e => [e.id, e]));
-    const coversById = new Map(data.covers.map(c => [c.id, c]));
-    const groups: CoverTab[] = data.groups.map(g => ({
+    const { merged, work, market } = pages;
+    if (!merged || !work || !market) return null;
+
+    // Folding runs here, over every page loaded so far: the server cannot do
+    // it, because it only ever sees one page (SPEC §9.3 step 11).
+    const covers = foldDuplicateCovers(merged.covers, merged.signatures);
+    const editionsById = new Map(merged.editions.map(e => [e.id, e]));
+    const coversById = new Map(covers.map(c => [c.id, c]));
+    // Tabs in order of first appearance, so they do not reshuffle while
+    // later pages arrive (lib/pages.ts).
+    const ordered = orderGroups(
+      groupCoversByLanguage(covers, merged.editions, lang || undefined),
+      merged.covers.map(c => c.id),
+      lang || undefined,
+    );
+    const groups: CoverTab[] = ordered.map(g => ({
       language: g.language,
       covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
     }));
-    const captions = new Map(data.covers.map(c => [c.id, captionFor(c, editionsById)]));
+    const captions = new Map(covers.map(c => [c.id, captionFor(c, editionsById)]));
     // How many covers each edition appears with (to flag reprints, SPEC F2.5).
     const coversPerEdition = new Map<string, number>();
-    for (const c of data.covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
-    return { data, editionsById, coversById, groups, captions, coversPerEdition };
-  }, [state]);
+    for (const c of covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
+    return { work, market, merged, covers, editionsById, coversById, groups, captions, coversPerEdition };
+  }, [pages, lang]);
 
   // When the scene ends, fly the staged covers to their gallery tiles.
   const flownFor = useRef('');
@@ -200,16 +190,16 @@ function BookDetail() {
     const byId = view.coversById.get(selectedId ?? '');
     if (byId) return byId;
     // A folded duplicate may be in the URL: resolve to its representative.
-    const folded = view.data.covers.find(c => c.similarIds?.includes(selectedId ?? ''));
+    const folded = view.covers.find(c => c.similarIds?.includes(selectedId ?? ''));
     return folded ?? view.groups[0]?.covers[0] ?? null;
   }, [view, selectedId]);
 
-  if (state.status === 'notfound' || state.status === 'error') {
+  if (pages.status === 'notfound' || pages.status === 'error') {
     return (
       <Shell backHref={backHref}>
         <div className="py-24 text-center">
           <p className="font-display text-2xl text-ink">
-            {state.status === 'notfound' ? 'Book not found' : state.message}
+            {pages.status === 'notfound' ? 'Book not found' : pages.message}
           </p>
           <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">Back to search</Link>
         </div>
@@ -218,7 +208,7 @@ function BookDetail() {
   }
 
   if (inScene || !view) {
-    const work = view?.data.work;
+    const work = view?.work;
     return (
       <Shell backHref={backHref}>
         <TitleBlock
@@ -229,22 +219,22 @@ function BookDetail() {
         <LoadingStage
           covers={scene.presented}
           hero={preview?.coverUrls[0]}
-          expected={view?.data.covers.length}
+          expected={view?.covers.length}
         />
       </Shell>
     );
   }
 
-  const { work } = view.data;
+  const { work, merged } = view;
   const meta = [
-    work.editionCount ? `${work.editionCount.toLocaleString('en')} editions` : undefined,
     work.firstPublishYear ? `first published ${work.firstPublishYear}` : undefined,
-    `${view.data.covers.length} covers${state.status === 'fast' ? ', tidying duplicates' : ''}`,
+    progressLabel(view.covers.length, merged),
   ].filter(Boolean).join(' · ');
 
   return (
     <Shell backHref={backHref} right={<ShareButton />}>
       <TitleBlock title={work.title} authors={work.authors} meta={meta} />
+      <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
 
       {view.groups.length === 0 ? (
         <p className="text-ink-2">No cover images were found for this book.</p>
@@ -257,6 +247,10 @@ function BookDetail() {
               onSelectCover={c => selectCover(c.id)}
               captions={view.captions}
             />
+            <p className="mt-6 max-w-prose text-xs leading-relaxed text-ink-3">
+              Covers come from Open Library and Google Books. Most edition records carry no
+              scan, so a book has had covers that neither catalogue knows.
+            </p>
           </div>
           <aside className="lg:sticky lg:top-20 lg:self-start">
             {selected && (
@@ -265,7 +259,7 @@ function BookDetail() {
                 editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
                 coversPerEdition={view.coversPerEdition}
                 author={work.authors[0]}
-                market={view.data.market}
+                market={view.market}
                 onMarketChange={setMarket}
               />
             )}
@@ -273,6 +267,24 @@ function BookDetail() {
         </div>
       )}
     </Shell>
+  );
+}
+
+/** A quiet line that fills while later edition pages load; gone when done. */
+function ScanProgress({ checked, total, done }: { checked: number; total: number; done: boolean }) {
+  if (done || total === 0) return null;
+  const pct = Math.min(100, Math.round((checked / total) * 100));
+  return (
+    <div
+      className="mb-6 h-px w-full max-w-3xl bg-line"
+      role="progressbar"
+      aria-label="Editions checked"
+      aria-valuenow={pct}
+      aria-valuemin={0}
+      aria-valuemax={100}
+    >
+      <div className="h-px bg-accent transition-[width] duration-500 ease-out" style={{ width: `${pct}%` }} />
+    </div>
   );
 }
 

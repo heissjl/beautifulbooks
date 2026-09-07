@@ -741,81 +741,6 @@
       }
     },
     {
-      "id": "eWLhDwAAQBAJ",
-      "volumeInfo": {
-        "title": "The Great Gatsby: A Novel",
-        "subtitle": "Illustrated Edition",
-        "authors": [
-          "F. Scott Fitzgerald"
-        ],
-        "publisher": "Hachette UK",
-        "publishedDate": "2021-01-05",
-        "description": "A beautifully illustrated version of the original 1925 edition of F. Scott Fitzgerald's classic Great American novel. Widely considered to be the greatest American novel of all time, The Great Gatsby is the story of the wealthy, quixotic Jay Gatsby and his obsessive love for debutante Daisy Buchanan. It is also a cautionary tale of the American Dream in all its exuberance, decadence, hedonism, and passion. First published in 1925 by Charles Scribner's Sons, The Great Gatsby sold modestly and received mixed reviews from literary critics of the time. Upon his death in 1940, Fitzgerald believed the book to be a failure, but a year later, as the U.S. was in the grips of the Second World War, an initiative known as Council on Books in Wartime was created to distribute paperbacks to soldiers abroad. The Great Gatsby became one of the most popular books provided to regiments, with more than 100,000 copies shipped to soldiers overseas. By 1960, the book was selling apace and being incorporated into classrooms across the nation. Today, it has sold over 25 million copies worldwide in 42 languages. This exquisitely rendered edition of the original 1925 printing reintroduces readers to Fitzgerald's iconic portrait of the Jazz Age, complete with specially commissioned illustrations by Adam Simpson that reflect the gilded splendor of the Roaring Twenties.",
-        "industryIdentifiers": [
-          {
-            "type": "ISBN_13",
-            "identifier": "9780762498147"
-          },
-          {
-            "type": "ISBN_10",
-            "identifier": "0762498145"
-          }
-        ],
-        "readingModes": {
-          "text": true,
-          "image": false
-        },
-        "pageCount": 198,
-        "printType": "BOOK",
-        "categories": [
-          "Fiction"
-        ],
-        "maturityRating": "NOT_MATURE",
-        "allowAnonLogging": false,
-        "contentVersion": "1.3.3.0.preview.2",
-        "panelizationSummary": {
-          "containsEpubBubbles": false,
-          "containsImageBubbles": false
-        },
-        "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=eWLhDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=eWLhDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
-        },
-        "language": "en",
-        "previewLink": "http://books.google.de/books?id=eWLhDwAAQBAJ&printsec=frontcover&dq=intitle:the+great+gatsby&hl=&as_pt=BOOKS&cd=13&source=gbs_api",
-        "infoLink": "https://play.google.com/store/books/details?id=eWLhDwAAQBAJ&source=gbs_api",
-        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=eWLhDwAAQBAJ"
-      },
-      "saleInfo": {
-        "country": "DE",
-        "saleability": "FOR_SALE",
-        "isEbook": true,
-        "listPrice": {
-          "amount": 11.99,
-          "currencyCode": "EUR"
-        },
-        "retailPrice": {
-          "amount": 11.99,
-          "currencyCode": "EUR"
-        },
-        "buyLink": "https://play.google.com/store/books/details?id=eWLhDwAAQBAJ&rdid=book-eWLhDwAAQBAJ&rdot=1&source=gbs_api",
-        "offers": [
-          {
-            "finskyOfferType": 1,
-            "listPrice": {
-              "amountInMicros": 11990000,
-              "currencyCode": "EUR"
-            },
-            "retailPrice": {
-              "amountInMicros": 11990000,
-              "currencyCode": "EUR"
-            },
-            "giftable": true
-          }
-        ]
-      }
-    },
-    {
       "id": "kPd4DwAAQBAJ",
       "volumeInfo": {
         "title": "The Great Gatsby",
@@ -857,7 +782,7 @@
           "thumbnail": "http://books.google.com/books/content?id=kPd4DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
         },
         "language": "de",
-        "previewLink": "http://books.google.de/books?id=kPd4DwAAQBAJ&printsec=frontcover&dq=intitle:the+great+gatsby&hl=&as_pt=BOOKS&cd=14&source=gbs_api",
+        "previewLink": "http://books.google.de/books?id=kPd4DwAAQBAJ&printsec=frontcover&dq=intitle:the+great+gatsby&hl=&as_pt=BOOKS&cd=13&source=gbs_api",
         "infoLink": "https://play.google.com/store/books/details?id=kPd4DwAAQBAJ&source=gbs_api",
         "canonicalVolumeLink": "https://play.google.com/store/books/details?id=kPd4DwAAQBAJ"
       },
@@ -883,6 +808,81 @@
             },
             "retailPrice": {
               "amountInMicros": 5990000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "eWLhDwAAQBAJ",
+      "volumeInfo": {
+        "title": "The Great Gatsby: A Novel",
+        "subtitle": "Illustrated Edition",
+        "authors": [
+          "F. Scott Fitzgerald"
+        ],
+        "publisher": "Hachette UK",
+        "publishedDate": "2021-01-05",
+        "description": "A beautifully illustrated version of the original 1925 edition of F. Scott Fitzgerald's classic Great American novel. Widely considered to be the greatest American novel of all time, The Great Gatsby is the story of the wealthy, quixotic Jay Gatsby and his obsessive love for debutante Daisy Buchanan. It is also a cautionary tale of the American Dream in all its exuberance, decadence, hedonism, and passion. First published in 1925 by Charles Scribner's Sons, The Great Gatsby sold modestly and received mixed reviews from literary critics of the time. Upon his death in 1940, Fitzgerald believed the book to be a failure, but a year later, as the U.S. was in the grips of the Second World War, an initiative known as Council on Books in Wartime was created to distribute paperbacks to soldiers abroad. The Great Gatsby became one of the most popular books provided to regiments, with more than 100,000 copies shipped to soldiers overseas. By 1960, the book was selling apace and being incorporated into classrooms across the nation. Today, it has sold over 25 million copies worldwide in 42 languages. This exquisitely rendered edition of the original 1925 printing reintroduces readers to Fitzgerald's iconic portrait of the Jazz Age, complete with specially commissioned illustrations by Adam Simpson that reflect the gilded splendor of the Roaring Twenties.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9780762498147"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "0762498145"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": false
+        },
+        "pageCount": 198,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "1.3.3.0.preview.2",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=eWLhDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=eWLhDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=eWLhDwAAQBAJ&printsec=frontcover&dq=intitle:the+great+gatsby&hl=&as_pt=BOOKS&cd=14&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=eWLhDwAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=eWLhDwAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 11.99,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 11.99,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=eWLhDwAAQBAJ&rdid=book-eWLhDwAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 11990000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 11990000,
               "currencyCode": "EUR"
             },
             "giftable": true

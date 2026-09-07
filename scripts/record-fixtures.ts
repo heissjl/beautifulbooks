@@ -12,11 +12,13 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const QUERIES: { slug: string; query: string; expectAuthor: string }[] = [
+const QUERIES: { slug: string; query: string; expectAuthor: string; extraPages?: number[] }[] = [
   { slug: 'mumbo-jumbo', query: 'mumbo jumbo', expectAuthor: 'Reed' },
   { slug: '1984', query: '1984', expectAuthor: 'Orwell' },
   { slug: 'gravitys-rainbow', query: "gravity's rainbow", expectAuthor: 'Pynchon' },
-  { slug: 'the-great-gatsby', query: 'the great gatsby', expectAuthor: 'Fitzgerald' },
+  // Gatsby has 1180 edition records; two more pages let the tests exercise
+  // paging (SPEC §9.3 step 11) without recording all twelve.
+  { slug: 'the-great-gatsby', query: 'the great gatsby', expectAuthor: 'Fitzgerald', extraPages: [100, 200] },
   { slug: 'pride-and-prejudice', query: 'pride and prejudice', expectAuthor: 'Austen' },
 ];
 
@@ -68,7 +70,7 @@ function pick<T extends object>(obj: T, fields: string[]): Partial<T> {
   return out as Partial<T>;
 }
 
-async function record({ slug, query, expectAuthor }: (typeof QUERIES)[number]) {
+async function record({ slug, query, expectAuthor, extraPages }: (typeof QUERIES)[number]) {
   console.log(`\n== ${slug} ("${query}")`);
   const dir = path.join(OUT_DIR, slug);
   await mkdir(dir, { recursive: true });
@@ -105,16 +107,20 @@ async function record({ slug, query, expectAuthor }: (typeof QUERIES)[number]) {
     return;
   }
   const workId = primary.key.replace('/works/', '');
-  const editions = (await getJson(
-    `https://openlibrary.org/works/${workId}/editions.json?limit=100`,
-  )) as { size?: number; entries: object[] };
-  const trimmed = {
-    workId,
-    size: editions.size,
-    entries: editions.entries.map(e => pick(e, EDITION_FIELDS)),
-  };
-  await writeFile(path.join(dir, 'openlibrary-editions.json'), JSON.stringify(trimmed, null, 2));
-  console.log(`  primary work ${workId}, ${trimmed.entries.length} editions recorded`);
+  for (const offset of [0, ...(extraPages ?? [])]) {
+    const editions = (await getJsonWithRetry(
+      `https://openlibrary.org/works/${workId}/editions.json?limit=100&offset=${offset}`,
+    )) as { size?: number; entries: object[] };
+    const trimmed = {
+      workId,
+      offset,
+      size: editions.size,
+      entries: editions.entries.map(e => pick(e, EDITION_FIELDS)),
+    };
+    const file = offset === 0 ? 'openlibrary-editions.json' : `openlibrary-editions-${offset}.json`;
+    await writeFile(path.join(dir, file), JSON.stringify(trimmed, null, 2));
+    console.log(`  primary work ${workId}, offset ${offset}: ${trimmed.entries.length} editions recorded`);
+  }
 }
 
 async function main() {

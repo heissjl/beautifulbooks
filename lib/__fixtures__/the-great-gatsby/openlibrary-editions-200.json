@@ -1,0 +1,2838 @@
+{
+  "workId": "OL468431W",
+  "offset": 200,
+  "size": 1180,
+  "entries": [
+    {
+      "key": "/books/OL27889763M",
+      "title": "Liao bu qi de Gaicibi",
+      "subtitle": "The great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/chi"
+        }
+      ],
+      "isbn_10": [
+        "7201077635"
+      ],
+      "isbn_13": [
+        "9787201077635"
+      ],
+      "covers": [
+        15144215,
+        9248279
+      ],
+      "number_of_pages": 187
+    },
+    {
+      "key": "/books/OL27498548M",
+      "title": "El gran Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Debolsillo"
+      ],
+      "publish_date": "Jun 11, 2015",
+      "isbn_10": [
+        "8490628645"
+      ],
+      "isbn_13": [
+        "9788490628645"
+      ],
+      "covers": [
+        8955841
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL27485658M",
+      "title": "Der große Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Diogenes Verlag AG"
+      ],
+      "publish_date": "Oct 23, 2012",
+      "isbn_10": [
+        "3257261039"
+      ],
+      "isbn_13": [
+        "9783257261035"
+      ],
+      "covers": [
+        8943199
+      ],
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL27141759M",
+      "title": "Da heng xiao zhuan",
+      "subtitle": "The great gatsby / F. Scott Fitzgerald",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Hao du chu ban you xian gong si"
+      ],
+      "publish_date": "2012",
+      "languages": [
+        {
+          "key": "/languages/chi"
+        }
+      ],
+      "isbn_10": [
+        "9861782265"
+      ],
+      "isbn_13": [
+        "9789861782263"
+      ],
+      "number_of_pages": 217
+    },
+    {
+      "key": "/books/OL9766451M",
+      "title": "Der große Gatsby. 5 CDs.",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        },
+        {
+          "key": "/authors/OL3183083A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Heyne Hörbuch, Mchn."
+      ],
+      "publish_date": "March 1, 2002",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3453214439"
+      ],
+      "isbn_13": [
+        "9783453214439"
+      ],
+      "covers": [
+        2206154
+      ],
+      "physical_format": "Audio CD"
+    },
+    {
+      "key": "/books/OL9601548M",
+      "title": "Der große Gatsby. 5 CDs.",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        },
+        {
+          "key": "/authors/OL3183083A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Ullstein Hörverlag"
+      ],
+      "publish_date": "March 1, 2002",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3550101546"
+      ],
+      "isbn_13": [
+        "9783550101540"
+      ],
+      "physical_format": "Audio CD"
+    },
+    {
+      "key": "/books/OL12667383M",
+      "title": "The Great Gatsby. (Lernmaterialien)",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Klett"
+      ],
+      "publish_date": "January 1, 1992",
+      "isbn_10": [
+        "3125372402"
+      ],
+      "isbn_13": [
+        "9783125372405"
+      ],
+      "covers": [
+        3169298
+      ],
+      "number_of_pages": 112,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL9588640M",
+      "title": "Der große Gatsby. 4 Cassetten.",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Heyne Hörbuch, Mchn."
+      ],
+      "publish_date": "March 1, 2002",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3453214447"
+      ],
+      "isbn_13": [
+        "9783453214446"
+      ],
+      "covers": [
+        2206155
+      ],
+      "physical_format": "Audio cassette"
+    },
+    {
+      "key": "/books/OL9064508M",
+      "title": "Der große Gatsby. 4 Cassetten.",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        },
+        {
+          "key": "/authors/OL3183083A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Ullstein Hörverlag"
+      ],
+      "publish_date": "March 1, 2002",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3550101554"
+      ],
+      "isbn_13": [
+        "9783550101557"
+      ],
+      "physical_format": "Audio Cassette"
+    },
+    {
+      "key": "/books/OL40233721M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Audible"
+      ],
+      "publish_date": "2013",
+      "isbn_13": [
+        "9781480529960"
+      ]
+    },
+    {
+      "key": "/books/OL42031133M",
+      "title": "Gatsby le Magnifique",
+      "authors": [
+        {
+          "key": "/authors/OL3079850A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9798639061738"
+      ]
+    },
+    {
+      "key": "/books/OL29896039M",
+      "title": "Gatsby le Magnifique",
+      "authors": [
+        {
+          "key": "/authors/OL3079850A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9798639065927"
+      ],
+      "number_of_pages": 164
+    },
+    {
+      "key": "/books/OL42294323M",
+      "title": "Great Gatsby",
+      "subtitle": "Rags to Riches",
+      "authors": [
+        {
+          "key": "/authors/OL3079850A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798733108957"
+      ]
+    },
+    {
+      "key": "/books/OL41922558M",
+      "title": "Great Gatsby",
+      "subtitle": "Illustrator",
+      "authors": [
+        {
+          "key": "/authors/OL11149714A"
+        },
+        {
+          "key": "/authors/OL3079850A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798627604695"
+      ]
+    },
+    {
+      "key": "/books/OL41873198M",
+      "title": "Great Gatsby",
+      "subtitle": "Illustrator",
+      "authors": [
+        {
+          "key": "/authors/OL11148577A"
+        },
+        {
+          "key": "/authors/OL3079850A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798613747450"
+      ]
+    },
+    {
+      "key": "/books/OL38168593M",
+      "title": "Great Gatsby",
+      "subtitle": "Illustrated",
+      "authors": [
+        {
+          "key": "/authors/OL10109346A"
+        },
+        {
+          "key": "/authors/OL3079850A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798702172644"
+      ]
+    },
+    {
+      "key": "/books/OL30265759M",
+      "title": "Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL3079850A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798651759590"
+      ],
+      "number_of_pages": 170
+    },
+    {
+      "key": "/books/OL26500820M",
+      "title": "El gran Gatsby / The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Ediciones Plutón"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        },
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "8494510487"
+      ],
+      "isbn_13": [
+        "9788494510489"
+      ],
+      "covers": [
+        8257076
+      ]
+    },
+    {
+      "key": "/books/OL26495834M",
+      "title": "El gran Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Penguin Random House Grupo Editorial"
+      ],
+      "publish_date": "2015 May",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "8466329714"
+      ],
+      "isbn_13": [
+        "9788466329712"
+      ],
+      "covers": [
+        8248468
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495850M",
+      "title": "Il grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Giunti"
+      ],
+      "publish_date": "2016 April",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_13": [
+        "9788809835245"
+      ],
+      "covers": [
+        8248481
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495843M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Macho Pubhouse"
+      ],
+      "publish_date": "2014",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9788081690877"
+      ],
+      "covers": [
+        8248475
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL9149960M",
+      "title": "El Gran Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Norma"
+      ],
+      "publish_date": "1994 August",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "9580420580"
+      ],
+      "isbn_13": [
+        "9789580420583"
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495852M",
+      "title": "El gran Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "ePubYou"
+      ],
+      "publish_date": "2016 January",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "8899637032"
+      ],
+      "isbn_13": [
+        "9788899637033"
+      ],
+      "covers": [
+        8248485
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26496240M",
+      "title": "Den store Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Gyldendal"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/dan"
+        }
+      ],
+      "isbn_10": [
+        "870226370X"
+      ],
+      "isbn_13": [
+        "9788702263701"
+      ],
+      "covers": [
+        8249085
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL27032175M",
+      "title": "The Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Harrap's Editions"
+      ],
+      "publish_date": "Sep 16, 2015",
+      "isbn_10": [
+        "2818704332"
+      ],
+      "isbn_13": [
+        "9782818704332"
+      ],
+      "covers": [
+        8639203
+      ]
+    },
+    {
+      "key": "/books/OL26495842M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Wisehouse Classics"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9789176371411"
+      ],
+      "covers": [
+        8248473
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495851M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Wisehouse Classics"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "9176373908"
+      ],
+      "isbn_13": [
+        "9789176373903"
+      ],
+      "covers": [
+        8248482
+      ],
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL26496237M",
+      "title": "The Great Gatsby",
+      "subtitle": "An Edition of the Manuscript",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Cambridge University Press"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1108426808"
+      ],
+      "isbn_13": [
+        "9781108426800"
+      ],
+      "covers": [
+        8249081
+      ],
+      "number_of_pages": 258,
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL26496209M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Musaicum Books"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9788027232062"
+      ],
+      "covers": [
+        8249051
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL9597728M",
+      "title": "El Gran Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Yoyo USA"
+      ],
+      "publish_date": "2002 August",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "9584301985"
+      ],
+      "isbn_13": [
+        "9789584301987"
+      ],
+      "physical_format": "Audio Cassette"
+    },
+    {
+      "key": "/books/OL26495830M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "MABED"
+      ],
+      "publish_date": "2015",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9788898891191"
+      ],
+      "covers": [
+        8248466
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26496242M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "General Press"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "9380914474"
+      ],
+      "isbn_13": [
+        "9789380914473"
+      ],
+      "covers": [
+        8249088
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26496260M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Scribner Classics"
+      ],
+      "publish_date": "2018 April",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0684830426"
+      ],
+      "isbn_13": [
+        "9780684830421"
+      ],
+      "covers": [
+        8249104
+      ],
+      "number_of_pages": 170,
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL26398085M",
+      "title": "El gran Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Penguin Random House"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_13": [
+        "9789589016640"
+      ],
+      "covers": [
+        9396760
+      ]
+    },
+    {
+      "key": "/books/OL24499014M",
+      "title": "The Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Limited Editions Club"
+      ],
+      "publish_date": "1980",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "number_of_pages": 171,
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL26495856M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Samira Book Publishers"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "8193607007"
+      ],
+      "isbn_13": [
+        "9788193607008"
+      ],
+      "covers": [
+        8248490
+      ],
+      "physical_format": "ebook"
+    },
+    {
+      "key": "/books/OL26495854M",
+      "title": "Il grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "DeA Classici"
+      ],
+      "publish_date": "2016 June",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_13": [
+        "9788851139605"
+      ],
+      "covers": [
+        8248488
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26385040M",
+      "title": "El gran Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Alianza Editorial"
+      ],
+      "publish_date": "2014",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "8420689777"
+      ],
+      "isbn_13": [
+        "9788420689777"
+      ],
+      "covers": [
+        8078299
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26496250M",
+      "title": "Il grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Minimum fax"
+      ],
+      "publish_date": "2018 July",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_10": [
+        "8875213224"
+      ],
+      "isbn_13": [
+        "9788875213220"
+      ],
+      "covers": [
+        8249096
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26496213M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Musaicum Books"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "8027235669"
+      ],
+      "isbn_13": [
+        "9788027235667"
+      ],
+      "covers": [
+        8249054
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495826M",
+      "title": "大亨小傳",
+      "subtitle": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Azoth Books"
+      ],
+      "publish_date": "2015",
+      "languages": [
+        {
+          "key": "/languages/chi"
+        }
+      ],
+      "isbn_10": [
+        "986567159X"
+      ],
+      "isbn_13": [
+        "9789865671594"
+      ],
+      "covers": [
+        8248462
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495848M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Alma Classics"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1847496148"
+      ],
+      "isbn_13": [
+        "9781847496140"
+      ],
+      "covers": [
+        14656333,
+        8248480
+      ],
+      "number_of_pages": 256
+    },
+    {
+      "key": "/books/OL8122319M",
+      "title": "The Great Gatsby",
+      "subtitle": "the revised and rewritten galleys",
+      "authors": [
+        {
+          "key": "/authors/OL2624386A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Garland Science"
+      ],
+      "publish_date": "1990-03-01",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0824059573"
+      ],
+      "isbn_13": [
+        "9780824059576"
+      ],
+      "number_of_pages": 208,
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL26495493M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Alma Classics"
+      ],
+      "publish_date": "2012 September",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1847492584"
+      ],
+      "isbn_13": [
+        "9781847492586"
+      ],
+      "covers": [
+        8248037
+      ],
+      "number_of_pages": 224,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495480M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Kiddy Monster Publications"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9789879990841"
+      ],
+      "covers": [
+        8248026
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495418M",
+      "title": "Der große Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Diogenes"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3257240899"
+      ],
+      "isbn_13": [
+        "9783257240894"
+      ],
+      "covers": [
+        8247958
+      ]
+    },
+    {
+      "key": "/books/OL26495507M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Kompas Gramedia"
+      ],
+      "publish_date": "2014",
+      "languages": [
+        {
+          "key": "/languages/ind"
+        }
+      ],
+      "isbn_10": [
+        "6020308804"
+      ],
+      "isbn_13": [
+        "9786020308807"
+      ],
+      "covers": [
+        8248058
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495396M",
+      "title": "O Grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Texto Editores"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_10": [
+        "8580447852"
+      ],
+      "isbn_13": [
+        "9788580447859"
+      ]
+    },
+    {
+      "key": "/books/OL26495447M",
+      "title": "El gran Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Emecé Editores"
+      ],
+      "publish_date": "2013 May",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "9500435268"
+      ],
+      "isbn_13": [
+        "9789500435260"
+      ],
+      "covers": [
+        8247992
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495469M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "e-artnow"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "8074844900"
+      ],
+      "isbn_13": [
+        "9788074844904"
+      ],
+      "covers": [
+        8248020
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495498M",
+      "title": "Der große Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Anaconda"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3730690213"
+      ],
+      "isbn_13": [
+        "9783730690215"
+      ],
+      "covers": [
+        8248053
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495428M",
+      "title": "De grote Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "L.J. VEEN KLASSIEK"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/dut"
+        }
+      ],
+      "isbn_10": [
+        "9045020653"
+      ],
+      "isbn_13": [
+        "9789045020655"
+      ],
+      "covers": [
+        8247968
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495314M",
+      "title": "大亨小傳",
+      "subtitle": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Yuan-Liou"
+      ],
+      "publish_date": "2012",
+      "languages": [
+        {
+          "key": "/languages/chi"
+        }
+      ],
+      "isbn_10": [
+        "9573270145"
+      ],
+      "isbn_13": [
+        "9789573270140"
+      ],
+      "covers": [
+        8247782
+      ]
+    },
+    {
+      "key": "/books/OL26495389M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Urban Romantics"
+      ],
+      "publish_date": "2012",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1907832564"
+      ],
+      "isbn_13": [
+        "9781907832567"
+      ],
+      "covers": [
+        8247931
+      ],
+      "number_of_pages": 154
+    },
+    {
+      "key": "/books/OL26495391M",
+      "title": "Den store Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Albert Bonniers"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/swe"
+        }
+      ],
+      "isbn_10": [
+        "9174292935"
+      ],
+      "isbn_13": [
+        "9789174292930"
+      ],
+      "covers": [
+        8247933
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495444M",
+      "title": "Il grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Edizioni Clandestine"
+      ],
+      "publish_date": "2012",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_10": [
+        "8890162910"
+      ],
+      "isbn_13": [
+        "9788890162916"
+      ],
+      "covers": [
+        8247987
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495390M",
+      "title": "Der große Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Insel"
+      ],
+      "publish_date": "2012",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3458358919"
+      ],
+      "isbn_13": [
+        "9783458358916"
+      ],
+      "covers": [
+        8247932
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495442M",
+      "title": "Il grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Edizioni Scientifiche e Artistiche"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_10": [
+        "889543076X"
+      ],
+      "isbn_13": [
+        "9788895430768"
+      ],
+      "covers": [
+        8247986
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495387M",
+      "title": "The Great Gatsby",
+      "subtitle": "大亨小傳",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Cite"
+      ],
+      "publish_date": "2012 March 13",
+      "languages": [
+        {
+          "key": "/languages/chi"
+        }
+      ],
+      "isbn_10": [
+        "9862721294"
+      ],
+      "isbn_13": [
+        "9789862721292"
+      ],
+      "covers": [
+        8247928
+      ]
+    },
+    {
+      "key": "/books/OL26495508M",
+      "title": "Marele Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Humanitas Fiction"
+      ],
+      "publish_date": "2014",
+      "languages": [
+        {
+          "key": "/languages/rum"
+        }
+      ],
+      "isbn_10": [
+        "9736896846"
+      ],
+      "isbn_13": [
+        "9789736896842"
+      ],
+      "covers": [
+        8248059
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495451M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Pulp! The Classics",
+        "Oldcastle Books, Limited"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1843441314"
+      ],
+      "isbn_13": [
+        "9781843441311"
+      ],
+      "covers": [
+        8247997
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495463M",
+      "title": "O Grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Geração"
+      ],
+      "publish_date": "2015 February",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_10": [
+        "858130172X"
+      ],
+      "isbn_13": [
+        "9788581301723"
+      ],
+      "covers": [
+        8248011
+      ],
+      "number_of_pages": 204,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495313M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Wordsworth Classics"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1848703627"
+      ],
+      "isbn_13": [
+        "9781848703629"
+      ],
+      "covers": [
+        8247781
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495803M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "KAPO",
+        "SPb.: Karo"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "5457911748"
+      ],
+      "isbn_13": [
+        "9785992503357"
+      ],
+      "covers": [
+        8248438
+      ]
+    },
+    {
+      "key": "/books/OL26495320M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "BUR"
+      ],
+      "publish_date": "2012 May",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_10": [
+        "885862985X"
+      ],
+      "isbn_13": [
+        "9788858629857"
+      ],
+      "covers": [
+        8247786
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495788M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Baldini & Castoldi"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_10": [
+        "8868651823"
+      ],
+      "isbn_13": [
+        "9788868651824"
+      ],
+      "covers": [
+        8248427
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495413M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Scribner"
+      ],
+      "publish_date": "2013 April",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1451689438"
+      ],
+      "isbn_13": [
+        "9781451689433"
+      ],
+      "covers": [
+        8247951
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495434M",
+      "title": "O grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Geração"
+      ],
+      "publish_date": "2013 May",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_10": [
+        "8581301738"
+      ],
+      "isbn_13": [
+        "9788581301730"
+      ],
+      "covers": [
+        8247979
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495479M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Text Publishing"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "192196183X"
+      ],
+      "isbn_13": [
+        "9781921961830"
+      ],
+      "covers": [
+        8248025
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495483M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Rupa"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "812912422X"
+      ],
+      "isbn_13": [
+        "9788129124227"
+      ],
+      "covers": [
+        8248030
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495467M",
+      "title": "Wielki Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Znak"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/pol"
+        }
+      ],
+      "isbn_10": [
+        "8324020837"
+      ],
+      "isbn_13": [
+        "9788324020836"
+      ],
+      "covers": [
+        8248017
+      ]
+    },
+    {
+      "key": "/books/OL26495496M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "LibriPro"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9788087680025"
+      ],
+      "covers": [
+        8248048
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495403M",
+      "title": "Der große Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Reclam"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3150202574"
+      ],
+      "isbn_13": [
+        "9783150202579"
+      ],
+      "covers": [
+        8247944
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495504M",
+      "title": "O Grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Landmark"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_10": [
+        "8580700124"
+      ],
+      "isbn_13": [
+        "9788580700121"
+      ],
+      "covers": [
+        8248056
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495388M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Klett"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "3125776821"
+      ],
+      "isbn_13": [
+        "9783125776821"
+      ],
+      "covers": [
+        8247930
+      ],
+      "number_of_pages": 200,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495392M",
+      "title": "Gatsby le Magnifique",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Hachette"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_10": [
+        "201203456X"
+      ],
+      "isbn_13": [
+        "9782012034563"
+      ],
+      "covers": [
+        8247934
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495806M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Infilaindiana Edizioni"
+      ],
+      "publish_date": "2014",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "8898369816"
+      ],
+      "isbn_13": [
+        "9788898369812"
+      ],
+      "covers": [
+        8248440,
+        8248439
+      ]
+    },
+    {
+      "key": "/books/OL26495321M",
+      "title": "Der große Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Diogenes"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3257601999"
+      ],
+      "isbn_13": [
+        "9783257601992"
+      ],
+      "covers": [
+        8247787
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495495M",
+      "title": "O Grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Tordesilhas"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_10": [
+        "8564406667"
+      ],
+      "isbn_13": [
+        "9788564406667"
+      ],
+      "covers": [
+        8248047
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495318M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Urban Romantics"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1907832572"
+      ],
+      "isbn_13": [
+        "9781907832574"
+      ],
+      "covers": [
+        8247784
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26148702M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Naxos Audiobooks"
+      ],
+      "publish_date": "2010",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1843793636"
+      ],
+      "isbn_13": [
+        "9781843793632"
+      ],
+      "covers": [
+        7818188
+      ],
+      "physical_format": "Audio CD"
+    },
+    {
+      "key": "/books/OL26495307M",
+      "title": "Der große Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "dtv"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3423407182"
+      ],
+      "isbn_13": [
+        "9783423407182"
+      ],
+      "covers": [
+        8247776
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495311M",
+      "title": "Der große Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Insel"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3458175156",
+        "3458175156"
+      ],
+      "covers": [
+        8926126
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495305M",
+      "title": "Il grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "emons:audiolibri"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_10": [
+        "8895703545"
+      ],
+      "isbn_13": [
+        "9788895703541"
+      ],
+      "covers": [
+        8247774
+      ],
+      "physical_format": "MP3 CD"
+    },
+    {
+      "key": "/books/OL26492716M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "NuVision"
+      ],
+      "publish_date": "2008",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1595476245"
+      ],
+      "isbn_13": [
+        "9781595476241"
+      ],
+      "covers": [
+        8241383
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL12033870M",
+      "title": "The Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Audio Book Contractors, Inc.",
+        "Audio Book Contractors, LLC"
+      ],
+      "publish_date": "2007 October 31",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1556859058"
+      ],
+      "isbn_13": [
+        "9781556859052"
+      ],
+      "covers": [
+        13263946
+      ],
+      "number_of_pages": 5,
+      "physical_format": "Audio CD"
+    },
+    {
+      "key": "/books/OL7275007M",
+      "title": "The Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Caedmon"
+      ],
+      "publish_date": "2002 October 01",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0060098910"
+      ],
+      "isbn_13": [
+        "9780060098919"
+      ],
+      "covers": [
+        22081
+      ],
+      "physical_format": "Audio CD"
+    },
+    {
+      "key": "/books/OL9786099M",
+      "title": "El gran Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Debolsillo"
+      ],
+      "publish_date": "2005",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "0307343197"
+      ],
+      "isbn_13": [
+        "9780307343192"
+      ],
+      "covers": [
+        15140991,
+        168008
+      ],
+      "number_of_pages": 184,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL9562456M",
+      "title": "El Gran Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Colleccion Millenium"
+      ],
+      "publish_date": "2001 November",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "8481301132"
+      ],
+      "isbn_13": [
+        "9788481301137"
+      ],
+      "number_of_pages": 191,
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL26492721M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Penguin Books"
+      ],
+      "publish_date": "2010",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0141194057"
+      ],
+      "isbn_13": [
+        "9780141194059"
+      ],
+      "covers": [
+        8241389
+      ],
+      "number_of_pages": 204,
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL26495298M",
+      "title": "Il grande Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Feltrinelli"
+      ],
+      "publish_date": "2011 January",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_10": [
+        "880782227X"
+      ],
+      "isbn_13": [
+        "9788807822278"
+      ],
+      "covers": [
+        8247756
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL7508121M",
+      "title": "The Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Heinemann Educational Publishers"
+      ],
+      "publish_date": "1987 August 14",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0435123246"
+      ],
+      "isbn_13": [
+        "9780435123246"
+      ],
+      "covers": [
+        274844
+      ],
+      "number_of_pages": 230,
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL26492266M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Bernard Grasset"
+      ],
+      "publish_date": "2007",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_10": [
+        "2246799430"
+      ],
+      "isbn_13": [
+        "9782246799436"
+      ],
+      "covers": [
+        8240431
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495301M",
+      "title": "Der große Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Diogenes Horbuch"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3257802765"
+      ],
+      "isbn_13": [
+        "9783257802764"
+      ],
+      "covers": [
+        8247769
+      ],
+      "physical_format": "Audio CD"
+    },
+    {
+      "key": "/books/OL26492715M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "ReadHowYouWant Classics Library"
+      ],
+      "publish_date": "2008",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1427070318"
+      ],
+      "isbn_13": [
+        "9781427070319"
+      ],
+      "covers": [
+        8241382
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495294M",
+      "title": "Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "P.O.L"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_10": [
+        "2818012864"
+      ],
+      "isbn_13": [
+        "9782818012864"
+      ],
+      "covers": [
+        8247753
+      ]
+    },
+    {
+      "key": "/books/OL26492261M",
+      "title": "Der große Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Diogenes",
+        "Diogenes Verlag AG"
+      ],
+      "publish_date": "2007",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3257236921"
+      ],
+      "isbn_13": [
+        "9783257236927"
+      ],
+      "covers": [
+        8240423
+      ],
+      "number_of_pages": 256,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL26495312M",
+      "title": "The Great Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Wordsworth Classics"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "1848703627"
+      ],
+      "isbn_13": [
+        "9781848703629"
+      ],
+      "covers": [
+        8247780
+      ],
+      "physical_format": "Epub"
+    },
+    {
+      "key": "/books/OL26495304M",
+      "title": "Der Große Gatsby",
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Anaconda"
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3866476132"
+      ],
+      "isbn_13": [
+        "9783866476134"
+      ],
+      "covers": [
+        8247773
+      ],
+      "number_of_pages": 224,
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL13364402M",
+      "title": "El Gran Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Debolsillo"
+      ],
+      "publish_date": "2005",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "8497936604"
+      ],
+      "isbn_13": [
+        "9788497936606"
+      ],
+      "covers": [
+        7905611
+      ],
+      "number_of_pages": 184,
+      "physical_format": "Paperback"
+    }
+  ]
+}

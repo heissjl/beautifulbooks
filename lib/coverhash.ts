@@ -7,7 +7,8 @@
  * fully folded gallery on later requests without extra infrastructure.
  */
 import { debug } from './debug';
-import { signature, type ImageSignature } from './imagehash';
+import { signature } from './imagehash';
+import type { ImageSignature } from './imagesig';
 import type { Cover } from './model';
 import { fetchBytes } from './sources/http';
 

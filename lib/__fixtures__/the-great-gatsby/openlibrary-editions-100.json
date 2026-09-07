@@ -1,42 +1,697 @@
 {
   "workId": "OL468431W",
-  "offset": 0,
+  "offset": 100,
   "size": 1180,
   "entries": [
     {
-      "key": "/books/OL48590937M",
-      "title": "The Great Gatsby / Der große Gatsby",
-      "subtitle": "Zweispachige Ausgabe",
+      "key": "/books/OL36602302M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
       "works": [
         {
           "key": "/works/OL468431W"
         }
       ],
       "publishers": [
-        "Anaconda"
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798753151261"
+      ]
+    },
+    {
+      "key": "/books/OL36594277M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798476931782"
+      ]
+    },
+    {
+      "key": "/books/OL36605960M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798481480107"
+      ]
+    },
+    {
+      "key": "/books/OL36851925M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798768962593"
+      ]
+    },
+    {
+      "key": "/books/OL36576679M",
+      "title": "Great Gatsby by F. Scott Fitzgerald (Illustrated)",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798769636103"
+      ]
+    },
+    {
+      "key": "/books/OL36513297M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798458156875"
+      ]
+    },
+    {
+      "key": "/books/OL36481046M",
+      "title": "Great Gatsby Original Classic Edition",
+      "subtitle": "The Complete 1925 Text",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Ascent Audio"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781722505851"
+      ]
+    },
+    {
+      "key": "/books/OL36476157M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798489639057"
+      ]
+    },
+    {
+      "key": "/books/OL36466984M",
+      "title": "Great Gatsby / F. Scott Fitzgerald",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798709455030"
+      ]
+    },
+    {
+      "key": "/books/OL36345817M",
+      "title": "Great Gatsby : a Novel",
+      "subtitle": "Illustrated Edition",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        },
+        {
+          "key": "/authors/OL7987006A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Running Press"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780762498147"
+      ]
+    },
+    {
+      "key": "/books/OL39631019M",
+      "title": "Great Gatsby : a Novel",
+      "subtitle": "Illustrated Edition",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        },
+        {
+          "key": "/authors/OL7987006A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Running Press"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780762498185"
+      ]
+    },
+    {
+      "key": "/books/OL36163982M",
+      "title": "Great Gatsby Illustrated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798453072620"
+      ]
+    },
+    {
+      "key": "/books/OL36492934M",
+      "title": "Great Gatsby - Illustrated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798756870275"
+      ]
+    },
+    {
+      "key": "/books/OL36504297M",
+      "title": "Great Gatsby Illustrated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
       ],
       "publish_date": "2020",
       "languages": [
         {
-          "key": "/languages/ger"
-        },
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798679481961"
+      ]
+    },
+    {
+      "key": "/books/OL36162043M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
         {
           "key": "/languages/eng"
         }
       ],
       "isbn_13": [
-        "9783730600009"
-      ],
-      "covers": [
-        14369845
-      ],
-      "number_of_pages": 431,
-      "physical_format": "Taschenbuch"
+        "9798483660729"
+      ]
     },
     {
-      "key": "/books/OL39699283M",
-      "title": "Great Gatsby - the Great American Historical Romance Novel",
-      "subtitle": "Unabridged Contents with a Short Author's Autobiography",
+      "key": "/books/OL36166512M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798471246461"
+      ]
+    },
+    {
+      "key": "/books/OL36123187M",
+      "title": "Great Gatsby : a Novel",
+      "subtitle": "Illustrated Edition",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798471517516"
+      ]
+    },
+    {
+      "key": "/books/OL36112718M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL7572562A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798485989736"
+      ]
+    },
+    {
+      "key": "/books/OL36129724M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL7572562A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798542897486"
+      ]
+    },
+    {
+      "key": "/books/OL36154627M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL7572562A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798495303850"
+      ]
+    },
+    {
+      "key": "/books/OL36498685M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL7572562A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798454424114"
+      ]
+    },
+    {
+      "key": "/books/OL38128633M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL7572562A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2022",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798424189548"
+      ]
+    },
+    {
+      "key": "/books/OL38174540M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL7572562A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2022",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798447358846"
+      ]
+    },
+    {
+      "key": "/books/OL36072524M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798544591580"
+      ]
+    },
+    {
+      "key": "/books/OL36444338M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798485205096"
+      ]
+    },
+    {
+      "key": "/books/OL36072191M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798473738100"
+      ]
+    },
+    {
+      "key": "/books/OL38455834M",
+      "title": "Great Gatsby Annotated",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -57,12 +712,12 @@
         }
       ],
       "isbn_13": [
-        "9798407482048"
+        "9798802327449"
       ]
     },
     {
-      "key": "/books/OL39660073M",
-      "title": "Great Gatsby, by F. Scott Fitzgerald (Gold Edition)",
+      "key": "/books/OL38506390M",
+      "title": "Great Gatsby Annotated",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -83,12 +738,12 @@
         }
       ],
       "isbn_13": [
-        "9798804453030"
+        "9798802327401"
       ]
     },
     {
-      "key": "/books/OL39479050M",
-      "title": "The great Gatsby",
+      "key": "/books/OL36060128M",
+      "title": "Great Gatsby Illustrated",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -100,32 +755,129 @@
         }
       ],
       "publishers": [
-        "Arcturus"
+        "Independently Published"
       ],
-      "publish_date": "2011",
+      "publish_date": "2021",
       "languages": [
         {
           "key": "/languages/eng"
         }
       ],
+      "isbn_13": [
+        "9798549286573"
+      ]
+    },
+    {
+      "key": "/books/OL36118947M",
+      "title": "Great Gatsby Illustrated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798530131516"
+      ]
+    },
+    {
+      "key": "/books/OL36028022M",
+      "title": "Great Gatsby : (Annotated)",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798465152471"
+      ]
+    },
+    {
+      "key": "/books/OL36163724M",
+      "title": "Great Gatsby : (Annotated)",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798545209491"
+      ]
+    },
+    {
+      "key": "/books/OL35724580M",
+      "title": "The Great Gatsby",
+      "subtitle": "With a New Historical Introduction for the Classroom",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Decameron Books"
+      ],
+      "publish_date": "Jan 04, 2021",
       "isbn_10": [
-        "1398805475",
-        "1782122710",
-        "1848378890"
+        "1936767694"
       ],
       "isbn_13": [
-        "9781398805477",
-        "9781782122715",
-        "9781848378896"
+        "9781936767694"
       ],
       "covers": [
-        15144216,
-        12882405
-      ]
+        12461562
+      ],
+      "number_of_pages": 161,
+      "physical_format": "paperback"
     },
     {
-      "key": "/books/OL39459633M",
-      "title": "Great Gatsby : (School Edition)",
+      "key": "/books/OL35859337M",
+      "title": "Great Gatsby",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -137,21 +889,21 @@
         }
       ],
       "publishers": [
-        "Independently Published"
+        "HarperCollins Publishers"
       ],
-      "publish_date": "2021",
+      "publish_date": "2013",
       "languages": [
         {
           "key": "/languages/eng"
         }
       ],
       "isbn_13": [
-        "9798744098964"
+        "9781443425148"
       ]
     },
     {
-      "key": "/books/OL38890576M",
-      "title": "Great Gatsby by F. Scott Fitzgerald",
+      "key": "/books/OL35861744M",
+      "title": "Great Gatsby",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -163,7 +915,7 @@
         }
       ],
       "publishers": [
-        "Independently Published"
+        "HarperCollins Publishers"
       ],
       "publish_date": "2021",
       "languages": [
@@ -172,18 +924,18 @@
         }
       ],
       "isbn_13": [
-        "9798581484234"
+        "9780063087491"
       ]
     },
     {
-      "key": "/books/OL38556474M",
+      "key": "/books/OL36012827M",
       "title": "Great Gatsby",
       "authors": [
         {
           "key": "/authors/OL27349A"
         },
         {
-          "key": "/authors/OL3028274A"
+          "key": "/authors/OL1002762A"
         }
       ],
       "works": [
@@ -192,7 +944,60 @@
         }
       ],
       "publishers": [
-        "Pierian Springs Press"
+        "Random House Publishing Group"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780593133552"
+      ]
+    },
+    {
+      "key": "/books/OL36014755M",
+      "title": "Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Information Age Publishing, Incorporated"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781609425722"
+      ]
+    },
+    {
+      "key": "/books/OL36021605M",
+      "title": "Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Sterling Publishing Co., Inc.",
+        "Union Square & Co."
       ],
       "publish_date": "2022",
       "languages": [
@@ -201,12 +1006,12 @@
         }
       ],
       "isbn_13": [
-        "9781953136169"
+        "9781435171978"
       ]
     },
     {
-      "key": "/books/OL38547514M",
-      "title": "Great Gatsby by Francis Scott Fitzgerald",
+      "key": "/books/OL36021611M",
+      "title": "Great Gatsby",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -218,7 +1023,7 @@
         }
       ],
       "publishers": [
-        "Independently Published"
+        "Sterling Publishing Co., Inc."
       ],
       "publish_date": "2022",
       "languages": [
@@ -227,1289 +1032,37 @@
         }
       ],
       "isbn_13": [
-        "9798412965345"
+        "9781435172470"
       ]
     },
     {
-      "key": "/books/OL38546985M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
+      "key": "/books/OL40233722M",
+      "title": "The Great Gatsby",
       "works": [
         {
           "key": "/works/OL468431W"
         }
       ],
       "publishers": [
-        "Independently Published"
+        "Audible"
       ],
-      "publish_date": "2022",
+      "publish_date": "2013",
       "languages": [
         {
           "key": "/languages/eng"
         }
       ],
       "isbn_13": [
-        "9798424648458"
-      ]
-    },
-    {
-      "key": "/books/OL38555255M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798772810477"
-      ]
-    },
-    {
-      "key": "/books/OL38546462M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798589166279"
-      ]
-    },
-    {
-      "key": "/books/OL38547527M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798806971952"
-      ]
-    },
-    {
-      "key": "/books/OL38555037M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798543364079"
-      ]
-    },
-    {
-      "key": "/books/OL38533837M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798548891891"
-      ]
-    },
-    {
-      "key": "/books/OL38554394M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798431690532"
-      ]
-    },
-    {
-      "key": "/books/OL38513937M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798522754266"
-      ]
-    },
-    {
-      "key": "/books/OL38519657M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798739674593"
-      ]
-    },
-    {
-      "key": "/books/OL38524318M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798453778676"
-      ]
-    },
-    {
-      "key": "/books/OL38530750M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798734691427"
-      ]
-    },
-    {
-      "key": "/books/OL38538048M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798404420272"
-      ]
-    },
-    {
-      "key": "/books/OL38511024M",
-      "title": "Great Gatsby the Original 1925 Edition",
-      "subtitle": "A F. Scott Fitzgerald Classic Novel",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798821604767"
-      ]
-    },
-    {
-      "key": "/books/OL38507822M",
-      "title": "Great Gatsby by Francis Scott Fitzgerald",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798754310865"
-      ]
-    },
-    {
-      "key": "/books/OL38503724M",
-      "title": "Great Gatsby by Francis Scott Fitzgerald (Illustrated Edition)",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798758354919"
-      ]
-    },
-    {
-      "key": "/books/OL38524849M",
-      "title": "Great Gatsby by Francis Scott Fitzgerald (Illustrated Edition)",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798761373914"
-      ]
-    },
-    {
-      "key": "/books/OL38503070M",
-      "title": "Great Gatsby Illustrated Edition",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798426780484"
-      ]
-    },
-    {
-      "key": "/books/OL38494220M",
-      "title": "Great Gatsby Illustrated Edition",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798461972707"
-      ]
-    },
-    {
-      "key": "/books/OL38493884M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798599567417"
-      ]
-    },
-    {
-      "key": "/books/OL38511523M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798543839171"
-      ]
-    },
-    {
-      "key": "/books/OL38493703M",
-      "title": "Great Gatsby Annotated (Dover Thrift Edition)",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798482253915"
-      ]
-    },
-    {
-      "key": "/books/OL38473569M",
-      "title": "Great Gatsby by Francis Scott Fitzgerald (Illustrated Edition)",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798804947058"
-      ]
-    },
-    {
-      "key": "/books/OL38467909M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798806986215"
-      ]
-    },
-    {
-      "key": "/books/OL38487008M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798543278437"
-      ]
-    },
-    {
-      "key": "/books/OL38465946M",
-      "title": "Great Gatsby (Illustarted)",
-      "authors": [
-        {
-          "key": "/authors/OL7572562A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798413355015"
-      ]
-    },
-    {
-      "key": "/books/OL38524496M",
-      "title": "Great Gatsby (Illustarted)",
-      "authors": [
-        {
-          "key": "/authors/OL7572562A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798787645859"
-      ]
-    },
-    {
-      "key": "/books/OL38533686M",
-      "title": "Great Gatsby (Illustarted)",
-      "authors": [
-        {
-          "key": "/authors/OL7572562A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798790577925"
-      ]
-    },
-    {
-      "key": "/books/OL38443794M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798751900601"
-      ]
-    },
-    {
-      "key": "/books/OL38451105M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798486436802"
-      ]
-    },
-    {
-      "key": "/books/OL38443066M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798483435044"
-      ]
-    },
-    {
-      "key": "/books/OL38461549M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798533086196"
-      ]
-    },
-    {
-      "key": "/books/OL38461707M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798701375169"
-      ]
-    },
-    {
-      "key": "/books/OL38434284M",
-      "title": "Great Gatsby by Francis Scott Fitzgerald",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798425150127"
-      ]
-    },
-    {
-      "key": "/books/OL38435903M",
-      "title": "Great Gatsby by Francis Scott Fitzgerald",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798447550189"
-      ]
-    },
-    {
-      "key": "/books/OL38433340M",
-      "title": "Great Gatsby by Francis Scott Fitzgerald(illustrated Edition)",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798417483066"
-      ]
-    },
-    {
-      "key": "/books/OL38200429M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798411531886"
-      ]
-    },
-    {
-      "key": "/books/OL38200467M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798804870233"
-      ]
-    },
-    {
-      "key": "/books/OL38435822M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798803305972"
-      ]
-    },
-    {
-      "key": "/books/OL38193915M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798479372865"
-      ]
-    },
-    {
-      "key": "/books/OL38194272M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798451370018"
-      ]
-    },
-    {
-      "key": "/books/OL38426184M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798545078608"
-      ]
-    },
-    {
-      "key": "/books/OL38131839M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798469284925"
-      ]
-    },
-    {
-      "key": "/books/OL38131747M",
-      "title": "Great Gatsby Illustrated Edition",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798740697185"
-      ]
-    },
-    {
-      "key": "/books/OL38132260M",
-      "title": "Great Gatsby Illustrated Edition",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798753011060"
-      ]
-    },
-    {
-      "key": "/books/OL38108421M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798407022954"
-      ]
-    },
-    {
-      "key": "/books/OL38163575M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798445374107"
-      ]
-    },
-    {
-      "key": "/books/OL37962145M",
-      "title": "Great Gatsby Minibook - Limited Gilt-Edged Edition",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Wartelsteiner GmbH"
-      ],
-      "publish_date": "2014",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9783861842361"
-      ]
-    },
-    {
-      "key": "/books/OL37798879M",
-      "title": "The Great Gatsby. Fitzgerald",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "aionas"
-      ],
-      "publish_date": "Jan 18, 2019",
-      "isbn_10": [
-        "3946571964"
-      ],
-      "isbn_13": [
-        "9783946571964"
-      ],
-      "physical_format": "paperback"
-    },
-    {
-      "key": "/books/OL37754155M",
-      "title": "F. Scott Fitzgerald. The Great Gatsby",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Lulu.com"
-      ],
-      "publish_date": "Feb 15, 2021",
-      "isbn_10": [
-        "1716075734"
-      ],
-      "isbn_13": [
-        "9781716075735"
+        "9781480529960"
       ],
       "covers": [
-        13853193
+        12991845
       ],
-      "number_of_pages": 153,
-      "physical_format": "paperback"
+      "physical_format": "Digital"
     },
     {
-      "key": "/books/OL37738623M",
-      "title": "El gran Gatsby",
+      "key": "/books/OL35723734M",
+      "title": "El gran Gatsby / The Great Gatsby",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -1523,26 +1076,660 @@
       "publishers": [
         "Debolsillo"
       ],
-      "publish_date": "2013",
-      "languages": [
-        {
-          "key": "/languages/spa"
-        }
-      ],
+      "publish_date": "Dec 29, 2015",
       "isbn_10": [
-        "8490325707"
+        "1941999581"
       ],
       "isbn_13": [
-        "9788490325704"
+        "9781941999585"
       ],
       "covers": [
-        12655917
+        12460229
       ],
-      "number_of_pages": 184
+      "number_of_pages": 184,
+      "physical_format": "paperback"
     },
     {
-      "key": "/books/OL37728080M",
-      "title": "Great Gatsby Illustrated",
+      "key": "/books/OL35641425M",
+      "title": "El gran Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Herder"
+      ],
+      "publish_date": "Dec 28, 2021",
+      "isbn_10": [
+        "841654042X"
+      ],
+      "isbn_13": [
+        "9788416540426"
+      ],
+      "covers": [
+        12348634
+      ],
+      "number_of_pages": 200,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35600781M",
+      "title": "Muhteşem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Everest Yaynlar",
+        "Everest"
+      ],
+      "publish_date": "Nov 03, 2011",
+      "isbn_10": [
+        "9752899420"
+      ],
+      "isbn_13": [
+        "9789752899421"
+      ],
+      "covers": [
+        12306931
+      ],
+      "number_of_pages": 184,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35594229M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Sayfa6 Yayinlari"
+      ],
+      "publish_date": "Nov 03, 2016",
+      "isbn_10": [
+        "9751036658"
+      ],
+      "isbn_13": [
+        "9789751036650"
+      ],
+      "covers": [
+        12300274
+      ],
+      "number_of_pages": 184,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35594962M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Remzi"
+      ],
+      "publish_date": "Nov 03, 2013",
+      "isbn_10": [
+        "9751415527"
+      ],
+      "isbn_13": [
+        "9789751415523"
+      ],
+      "covers": [
+        12301258
+      ],
+      "number_of_pages": 192,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35597491M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Do?u Bat? Yay?nlar?"
+      ],
+      "publish_date": "Nov 03, 2017",
+      "isbn_10": [
+        "9752410545"
+      ],
+      "isbn_13": [
+        "9789752410541"
+      ],
+      "covers": [
+        12303738
+      ],
+      "number_of_pages": 191,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35604285M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Oda",
+        "Oda Yaynlar"
+      ],
+      "publish_date": "Nov 04, 2013",
+      "isbn_10": [
+        "9753854013"
+      ],
+      "isbn_13": [
+        "9789753854016"
+      ],
+      "covers": [
+        12310331
+      ],
+      "number_of_pages": 160,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35411266M",
+      "title": "Muhtesem Gatsby  - Ciltli",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Türkiye Is Bankasi Kültür Yayinlari"
+      ],
+      "publish_date": "Oct 30, 2021",
+      "isbn_10": [
+        "6254053993"
+      ],
+      "isbn_13": [
+        "9786254053993"
+      ],
+      "covers": [
+        12253320
+      ],
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL35381853M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Marti Yayinlari"
+      ],
+      "publish_date": "Oct 28, 2013",
+      "isbn_10": [
+        "605348122X"
+      ],
+      "isbn_13": [
+        "9786053481225"
+      ],
+      "covers": [
+        12224850
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35392800M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Pinhan Yayincilik"
+      ],
+      "publish_date": "Oct 29, 2013",
+      "isbn_10": [
+        "6055302314"
+      ],
+      "isbn_13": [
+        "9786055302313"
+      ],
+      "covers": [
+        12235388
+      ],
+      "number_of_pages": 200,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35394881M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Bilge Kültür Sanat"
+      ],
+      "publish_date": "Oct 29, 2004",
+      "isbn_10": [
+        "6055715457"
+      ],
+      "isbn_13": [
+        "9786055715458"
+      ],
+      "covers": [
+        12237412
+      ],
+      "number_of_pages": 160,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35420901M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Elfene Dünya Yayincilik"
+      ],
+      "publish_date": "Oct 31, 2021",
+      "isbn_10": [
+        "605700874X"
+      ],
+      "isbn_13": [
+        "9786057008749"
+      ],
+      "covers": [
+        12262649
+      ],
+      "number_of_pages": 180,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35613127M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Iletisim Yayinevi"
+      ],
+      "publish_date": "Nov 05, 2013",
+      "isbn_10": [
+        "9750513258"
+      ],
+      "isbn_13": [
+        "9789750513251"
+      ],
+      "covers": [
+        12319744
+      ],
+      "number_of_pages": 226,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35376520M",
+      "title": "Gatsby The Great",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Artemis Yayinlari"
+      ],
+      "publish_date": "Oct 28, 2017",
+      "isbn_10": [
+        "6053042773"
+      ],
+      "isbn_13": [
+        "9786053042778"
+      ],
+      "covers": [
+        12219625
+      ],
+      "number_of_pages": 202,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35300349M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Dogan Kitap"
+      ],
+      "publish_date": "Oct 17, 2018",
+      "isbn_10": [
+        "6050951519"
+      ],
+      "isbn_13": [
+        "9786050951516"
+      ],
+      "covers": [
+        12111502
+      ],
+      "number_of_pages": 232,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL35303272M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Artemis Yaynlar",
+        "Artemis Yayinlari"
+      ],
+      "publish_date": "Oct 18, 2013",
+      "isbn_10": [
+        "6051422129"
+      ],
+      "isbn_13": [
+        "9786051422121"
+      ],
+      "covers": [
+        12114286
+      ],
+      "number_of_pages": 208,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35378857M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Gece Kitapligi"
+      ],
+      "publish_date": "Oct 28, 2014",
+      "isbn_10": [
+        "6053243426"
+      ],
+      "isbn_13": [
+        "9786053243427"
+      ],
+      "covers": [
+        12221917
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35384428M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Ithaki Yayinlari"
+      ],
+      "publish_date": "Oct 29, 2016",
+      "isbn_10": [
+        "6053756156"
+      ],
+      "isbn_13": [
+        "9786053756156"
+      ],
+      "covers": [
+        12227107
+      ],
+      "number_of_pages": 208,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35392100M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Alakarga Yayinlari"
+      ],
+      "publish_date": "Oct 29, 2014",
+      "isbn_10": [
+        "6055182556"
+      ],
+      "isbn_13": [
+        "9786055182557"
+      ],
+      "covers": [
+        12234705
+      ],
+      "number_of_pages": 184,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35397401M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Sms Yayinlari"
+      ],
+      "publish_date": "Oct 30, 2020",
+      "isbn_10": [
+        "6056896447"
+      ],
+      "isbn_13": [
+        "9786056896446"
+      ],
+      "covers": [
+        12239892
+      ],
+      "number_of_pages": 176,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35398940M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Koridor Yayincilik"
+      ],
+      "publish_date": "Oct 30, 2020",
+      "isbn_10": [
+        "6057572734"
+      ],
+      "isbn_13": [
+        "9786057572738"
+      ],
+      "covers": [
+        12241250
+      ],
+      "number_of_pages": 224,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL35407776M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Yabanci"
+      ],
+      "publish_date": "Oct 30, 2018",
+      "isbn_10": [
+        "6059585337"
+      ],
+      "isbn_13": [
+        "9786059585330"
+      ],
+      "covers": [
+        12249923
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35417588M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Zeplin Kitap"
+      ],
+      "publish_date": "Oct 31, 2020",
+      "isbn_10": [
+        "6257966019"
+      ],
+      "isbn_13": [
+        "9786257966016"
+      ],
+      "covers": [
+        12259473
+      ],
+      "number_of_pages": 168,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35175524M",
+      "title": "Great Gatsby : ",
+      "subtitle": "1925 Original Edition, Scott Fitzgerald Novel",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -1563,408 +1750,16 @@
         }
       ],
       "isbn_13": [
-        "9798497356120"
+        "9798452553427"
       ]
     },
     {
-      "key": "/books/OL37724984M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798766025641"
-      ]
-    },
-    {
-      "key": "/books/OL37711554M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798791839169"
-      ]
-    },
-    {
-      "key": "/books/OL37698892M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798781917532"
-      ]
-    },
-    {
-      "key": "/books/OL37615140M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798795318738"
-      ]
-    },
-    {
-      "key": "/books/OL37599178M",
-      "title": "Great Gatsby (Annotated Edition)",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798768295325"
-      ]
-    },
-    {
-      "key": "/books/OL37590416M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798512383384"
-      ]
-    },
-    {
-      "key": "/books/OL37610575M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798527595604"
-      ]
-    },
-    {
-      "key": "/books/OL37566184M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798795229256"
-      ]
-    },
-    {
-      "key": "/books/OL38462182M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798456251046"
-      ]
-    },
-    {
-      "key": "/books/OL37554630M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798704992295"
-      ]
-    },
-    {
-      "key": "/books/OL37570801M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798450468969"
-      ]
-    },
-    {
-      "key": "/books/OL37634067M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798514478484"
-      ]
-    },
-    {
-      "key": "/books/OL37552144M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL3079850A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798456420404"
-      ]
-    },
-    {
-      "key": "/books/OL38500242M",
-      "title": "Great Gatsby Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL3079850A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798486719714"
-      ]
-    },
-    {
-      "key": "/books/OL38520019M",
-      "title": "Great Gatsby, Illustrated",
-      "authors": [
-        {
-          "key": "/authors/OL8523025A"
-        },
-        {
-          "key": "/authors/OL3079850A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2020",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798674258926"
-      ]
-    },
-    {
-      "key": "/books/OL37549783M",
+      "key": "/books/OL35164956M",
       "title": "Great Gatsby",
+      "subtitle": "Illustrated Edition",
       "authors": [
         {
-          "key": "/authors/OL9656800A"
+          "key": "/authors/OL9841896A"
         },
         {
           "key": "/authors/OL27349A"
@@ -1985,144 +1780,14 @@
         }
       ],
       "isbn_13": [
-        "9798527435900"
+        "9798513361350"
       ]
     },
     {
-      "key": "/books/OL37532734M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798752128554"
-      ]
-    },
-    {
-      "key": "/books/OL37556222M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798484685356"
-      ]
-    },
-    {
-      "key": "/books/OL37592140M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798485199685"
-      ]
-    },
-    {
-      "key": "/books/OL37610052M",
-      "title": "Great Gatsby Annotated",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2022",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798798761227"
-      ]
-    },
-    {
-      "key": "/books/OL37505251M",
+      "key": "/books/OL35126360M",
       "title": "Great Gatsby by F. Scott Fitzgerald",
       "authors": [
         {
-          "key": "/authors/OL9656800A"
-        },
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798527435184"
-      ]
-    },
-    {
-      "key": "/books/OL37010072M",
-      "title": "Great Gatsby Francis Scott Fitzgerald Illustrated (classics Edition)",
-      "authors": [
-        {
           "key": "/authors/OL27349A"
         }
       ],
@@ -2141,95 +1806,12 @@
         }
       ],
       "isbn_13": [
-        "9798533677912"
+        "9798724709255"
       ]
     },
     {
-      "key": "/books/OL37008546M",
-      "title": "Great Gatsby",
-      "subtitle": "Illustrated Edition",
-      "authors": [
-        {
-          "key": "/authors/OL7572562A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798470582737"
-      ]
-    },
-    {
-      "key": "/books/OL38468514M",
-      "title": "Great Gatsby",
-      "subtitle": "Illustrated Edition",
-      "authors": [
-        {
-          "key": "/authors/OL7572562A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798471285231"
-      ]
-    },
-    {
-      "key": "/books/OL41087176M",
-      "title": "Great Gatsby",
-      "authors": [
-        {
-          "key": "/authors/OL7572562A"
-        },
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2019",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9781096335405"
-      ]
-    },
-    {
-      "key": "/books/OL36995685M",
-      "title": "Great Gatsby Illustrated",
+      "key": "/books/OL35129171M",
+      "title": "Great Gatsby by F. Scott Fitzgerald",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -2250,12 +1832,12 @@
         }
       ],
       "isbn_13": [
-        "9798751985905"
+        "9798511086569"
       ]
     },
     {
-      "key": "/books/OL36988832M",
-      "title": "Great Gatsby Annotated Edition",
+      "key": "/books/OL38506499M",
+      "title": "Great Gatsby by F. Scott Fitzgerald",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -2276,12 +1858,12 @@
         }
       ],
       "isbn_13": [
-        "9798466879254"
+        "9798598669877"
       ]
     },
     {
-      "key": "/books/OL36986732M",
-      "title": "Great Gatsby Illustrated",
+      "key": "/books/OL42269722M",
+      "title": "Great Gatsby by F. Scott Fitzgerald",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -2302,12 +1884,12 @@
         }
       ],
       "isbn_13": [
-        "9798771891712"
+        "9798747129900"
       ]
     },
     {
-      "key": "/books/OL36972882M",
-      "title": "Great Gatsby Illustrated",
+      "key": "/books/OL42398567M",
+      "title": "Great Gatsby by F. Scott Fitzgerald",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -2328,12 +1910,12 @@
         }
       ],
       "isbn_13": [
-        "9798531422255"
+        "9798598677124"
       ]
     },
     {
-      "key": "/books/OL36986027M",
-      "title": "Great Gatsby Illustrated",
+      "key": "/books/OL42449518M",
+      "title": "Great Gatsby by F. Scott Fitzgerald",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -2354,12 +1936,12 @@
         }
       ],
       "isbn_13": [
-        "9798778363908"
+        "9798718366280"
       ]
     },
     {
-      "key": "/books/OL36992452M",
-      "title": "Great Gatsby Illustrated",
+      "key": "/books/OL42450934M",
+      "title": "Great Gatsby by F. Scott Fitzgerald",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -2380,11 +1962,63 @@
         }
       ],
       "isbn_13": [
-        "9798722849458"
+        "9798713657499"
       ]
     },
     {
-      "key": "/books/OL36959984M",
+      "key": "/books/OL42553677M",
+      "title": "Great Gatsby by F. Scott Fitzgerald",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798598664131"
+      ]
+    },
+    {
+      "key": "/books/OL35014222M",
+      "title": "Great Gatsby by F. Scott Fitzgerald",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798539834852"
+      ]
+    },
+    {
+      "key": "/books/OL34279777M",
       "title": "Great Gatsby Annotated",
       "authors": [
         {
@@ -2406,38 +2040,12 @@
         }
       ],
       "isbn_13": [
-        "9798759387336"
-      ]
+        "9798740189642"
+      ],
+      "number_of_pages": 213
     },
     {
-      "key": "/books/OL36951405M",
-      "title": "Great Gatsby : a Classic Literature and Fiction Novel",
-      "subtitle": "Annotated Edition",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798723705906"
-      ]
-    },
-    {
-      "key": "/books/OL36950211M",
+      "key": "/books/OL34283898M",
       "title": "Great Gatsby Annotated",
       "authors": [
         {
@@ -2459,12 +2067,118 @@
         }
       ],
       "isbn_13": [
-        "9798493354328"
+        "9798597910710"
+      ],
+      "number_of_pages": 213
+    },
+    {
+      "key": "/books/OL34311303M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798511718255"
+      ],
+      "number_of_pages": 213
+    },
+    {
+      "key": "/books/OL36134065M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798463296160"
       ]
     },
     {
-      "key": "/books/OL36914861M",
-      "title": "Great Gatsby Illustrated",
+      "key": "/books/OL36919448M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798451212189"
+      ]
+    },
+    {
+      "key": "/books/OL38489112M",
+      "title": "Great Gatsby Annotated",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798739136022"
+      ]
+    },
+    {
+      "key": "/books/OL38546980M",
+      "title": "Great Gatsby Annotated",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -2485,41 +2199,15 @@
         }
       ],
       "isbn_13": [
-        "9798682844937"
+        "9798583961832"
       ]
     },
     {
-      "key": "/books/OL36909233M",
-      "title": "GREAT GATSBY(Annotated)",
+      "key": "/books/OL34240622M",
+      "title": "GREAT GATSBY",
       "authors": [
         {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Independently Published"
-      ],
-      "publish_date": "2021",
-      "languages": [
-        {
-          "key": "/languages/eng"
-        }
-      ],
-      "isbn_13": [
-        "9798526733861"
-      ]
-    },
-    {
-      "key": "/books/OL36821481M",
-      "title": "Great Gatsby : (Illustrated) (English Edition)",
-      "authors": [
-        {
-          "key": "/authors/OL10168825A"
+          "key": "/authors/OL9634893A"
         },
         {
           "key": "/authors/OL27349A"
@@ -2540,70 +2228,14 @@
         }
       ],
       "isbn_13": [
-        "9798701954777"
-      ]
+        "9798517532152"
+      ],
+      "number_of_pages": 127
     },
     {
-      "key": "/books/OL36652265M",
-      "title": "The Great Gatsby",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Pharos Books"
-      ],
-      "publish_date": "Mar 15, 2019",
-      "isbn_10": [
-        "9389843618"
-      ],
-      "isbn_13": [
-        "9789389843613"
-      ],
-      "covers": [
-        12543834
-      ],
-      "number_of_pages": 152,
-      "physical_format": "paperback"
-    },
-    {
-      "key": "/books/OL36655258M",
-      "title": "The Great Gatsby",
-      "authors": [
-        {
-          "key": "/authors/OL27349A"
-        }
-      ],
-      "works": [
-        {
-          "key": "/works/OL468431W"
-        }
-      ],
-      "publishers": [
-        "Tingle Books"
-      ],
-      "publish_date": "Sep 02, 2020",
-      "isbn_10": [
-        "9390354498"
-      ],
-      "isbn_13": [
-        "9789390354498"
-      ],
-      "covers": [
-        12547003
-      ],
-      "number_of_pages": 154,
-      "physical_format": "paperback"
-    },
-    {
-      "key": "/books/OL36606400M",
-      "title": "Great Gatsby Illustrated",
+      "key": "/books/OL34248073M",
+      "title": "Great Gatsby by F. Scott Fitzgerald",
+      "subtitle": "Annotated",
       "authors": [
         {
           "key": "/authors/OL27349A"
@@ -2624,13 +2256,18 @@
         }
       ],
       "isbn_13": [
-        "9798461901837"
-      ]
+        "9798533044820"
+      ],
+      "number_of_pages": 250
     },
     {
-      "key": "/books/OL36611356M",
-      "title": "Great Gatsby Illustrated",
+      "key": "/books/OL34356988M",
+      "title": "Great Gatsby by F. Scott Fitzgerald",
+      "subtitle": "Original Classic, Annotated Editor by Ablaze Bliss",
       "authors": [
+        {
+          "key": "/authors/OL9669347A"
+        },
         {
           "key": "/authors/OL27349A"
         }
@@ -2650,8 +2287,479 @@
         }
       ],
       "isbn_13": [
-        "9798499282335"
-      ]
+        "9798533808538"
+      ],
+      "number_of_pages": 121
+    },
+    {
+      "key": "/books/OL34211635M",
+      "title": "Great Gatsby - Large Print",
+      "authors": [
+        {
+          "key": "/authors/OL9602912A"
+        },
+        {
+          "key": "/authors/OL9602913A"
+        },
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798702400433"
+      ],
+      "number_of_pages": 180
+    },
+    {
+      "key": "/books/OL32218768M",
+      "title": "O Grande Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Porto Editora"
+      ],
+      "publish_date": "Apr 18, 2020",
+      "isbn_10": [
+        "972003307X"
+      ],
+      "isbn_13": [
+        "9789720033079"
+      ],
+      "covers": [
+        10862569
+      ],
+      "number_of_pages": 196,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL32218766M",
+      "title": "O Grande Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Porto Editora"
+      ],
+      "publish_date": "Apr 18, 2020",
+      "isbn_10": [
+        "972003307X"
+      ],
+      "isbn_13": [
+        "9789720033079"
+      ],
+      "covers": [
+        10862568
+      ],
+      "physical_format": "flexibound"
+    },
+    {
+      "key": "/books/OL32218767M",
+      "title": "O Grande Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Porto Editora"
+      ],
+      "publish_date": "Apr 18, 2020",
+      "isbn_10": [
+        "972003307X"
+      ],
+      "isbn_13": [
+        "9789720033079"
+      ],
+      "covers": [
+        10862567
+      ],
+      "physical_format": "flexibound"
+    },
+    {
+      "key": "/books/OL32205553M",
+      "title": "Muhteşem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Turkuvaz Kitap"
+      ],
+      "publish_date": "Apr 13, 2019",
+      "isbn_10": [
+        "6057717015"
+      ],
+      "isbn_13": [
+        "9786057717016"
+      ],
+      "covers": [
+        10854642
+      ],
+      "number_of_pages": 175,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL32202054M",
+      "title": "Muhteşem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Dogan Kitap"
+      ],
+      "publish_date": "Apr 13, 2019",
+      "isbn_10": [
+        "6050964092"
+      ],
+      "isbn_13": [
+        "9786050964097"
+      ],
+      "covers": [
+        10851231
+      ],
+      "number_of_pages": 168,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL32200769M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Ren Kitap"
+      ],
+      "publish_date": "Apr 13, 2018",
+      "isbn_10": [
+        "6052398620"
+      ],
+      "isbn_13": [
+        "9786052398623"
+      ],
+      "covers": [
+        10849944
+      ],
+      "number_of_pages": 256,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL32463530M",
+      "title": "Muhtesem Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Is Bankasi Kültür Yayinlari"
+      ],
+      "publish_date": "May 18, 2015",
+      "isbn_10": [
+        "6053325953"
+      ],
+      "isbn_13": [
+        "9786053325956"
+      ],
+      "covers": [
+        11120908
+      ],
+      "number_of_pages": 184,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL31869634M",
+      "title": "The Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Chiltern Publishing"
+      ],
+      "publish_date": "Jan 01, 2021",
+      "isbn_10": [
+        "191271406X"
+      ],
+      "isbn_13": [
+        "9781912714063"
+      ],
+      "covers": [
+        10549500
+      ],
+      "number_of_pages": 171,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL31869633M",
+      "title": "The Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Chiltern Publishing"
+      ],
+      "publish_date": "Jan 01, 2021",
+      "isbn_10": [
+        "191271406X"
+      ],
+      "isbn_13": [
+        "9781912714063"
+      ],
+      "covers": [
+        10549499
+      ],
+      "number_of_pages": 171,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL30697667M",
+      "title": "El gran Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Alfaguara"
+      ],
+      "publish_date": "Jun 15, 2019",
+      "isbn_10": [
+        "8420438979"
+      ],
+      "isbn_13": [
+        "9788420438979"
+      ],
+      "covers": [
+        10492048
+      ],
+      "number_of_pages": 232,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL30153640M",
+      "title": "Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Pocket"
+      ],
+      "publish_date": "2012",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_10": [
+        "2266217259"
+      ],
+      "isbn_13": [
+        "9782266217255"
+      ],
+      "covers": [
+        10446518
+      ],
+      "number_of_pages": 221
+    },
+    {
+      "key": "/books/OL29468424M",
+      "title": "Great Gatsby",
+      "subtitle": "V&a Collector's Edition",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Penguin Books, Limited"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780241432570"
+      ],
+      "number_of_pages": 224
+    },
+    {
+      "key": "/books/OL29507225M",
+      "title": "Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Dover Publications, Incorporated",
+        "Dover Publications"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780486845593"
+      ],
+      "number_of_pages": 144
+    },
+    {
+      "key": "/books/OL29565301M",
+      "title": "Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "Scribner"
+      ],
+      "publish_date": "2003",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780743246392"
+      ],
+      "covers": [
+        14811162
+      ],
+      "number_of_pages": 165
+    },
+    {
+      "key": "/books/OL28059721M",
+      "title": "Great Gatsby",
+      "authors": [
+        {
+          "key": "/authors/OL27349A"
+        },
+        {
+          "key": "/authors/OL7342670A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL468431W"
+        }
+      ],
+      "publishers": [
+        "HarperCollins Publishers Limited"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780008371814"
+      ],
+      "number_of_pages": 224
     }
   ]
 }

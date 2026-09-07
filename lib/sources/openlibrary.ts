@@ -5,13 +5,11 @@
  * throw on transport errors and return null / empty on 404, so the detail
  * page can tell "not found" from "temporarily unavailable".
  */
-import type { SourceEdition, Work, WorkSummary } from '../model';
+import type { Work, WorkSummary } from '../model';
 import { cleanAuthorEntries, cleanAuthors } from '../normalize';
 import { debug } from '../debug';
 import { HttpError, fetchJson } from './http';
-import {
-  olWorkId, parseEditions, parseSearchDocs, type OlEditionEntry, type OlSearchDoc,
-} from './openlibrary-parse';
+import { olWorkId, parseSearchDocs, type OlEditionEntry, type OlSearchDoc } from './openlibrary-parse';
 
 const BASE = 'https://openlibrary.org';
 
@@ -167,33 +165,4 @@ export async function getEditionsPage(workId: string, offset = 0, limit = OL_EDI
     if (err instanceof HttpError && err.status === 404) return { entries: [], size: 0 };
     throw err;
   }
-}
-
-export interface EditionsOptions {
-  /** Stop paging once this many editions with covers were found. */
-  minWithCovers?: number;
-  /** Never read more than this many raw entries. */
-  maxEntries?: number;
-}
-
-/**
- * Editions with covers for a work. Pages through the editions endpoint
- * (100 per call, only ~25 % have covers) until enough covers are found or
- * the entry budget is spent (SPEC §7 step 4 note).
- */
-export async function getEditions(
-  work: Work,
-  { minWithCovers = 24, maxEntries = 500 }: EditionsOptions = {},
-): Promise<SourceEdition[]> {
-  const out: SourceEdition[] = [];
-  let offset = 0;
-  let total = Infinity;
-  while (offset < total && offset < maxEntries && out.length < minWithCovers) {
-    const page = await getEditionsPage(work.id, offset, OL_EDITIONS_PAGE);
-    total = page.size;
-    out.push(...parseEditions(page.entries, work));
-    if (page.entries.length < OL_EDITIONS_PAGE) break;
-    offset += OL_EDITIONS_PAGE;
-  }
-  return out;
 }

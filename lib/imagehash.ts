@@ -3,9 +3,18 @@
  * hash (dHash) over a 9x8 grayscale thumbnail. Two scans of the same cover
  * differ by a few bits; different covers differ by ~half. Pure functions,
  * no I/O; decoding uses jpeg-js and pngjs so no native module is needed.
+ *
+ * Server-side only: the decoders make this module unusable in the browser.
+ * The signature type and its comparison live in `imagesig.ts` and are
+ * re-exported here, so client code can fold covers without the decoders
+ * (SPEC §9.3 step 11).
  */
 import jpeg from 'jpeg-js';
 import { PNG } from 'pngjs';
+import { BLANK_CONTRAST, HASH_BITS, hamming, type ImageSignature } from './imagesig';
+
+export { BLANK_CONTRAST, HASH_BITS, hamming };
+export type { ImageSignature };
 
 export interface GrayImage {
   width: number;
@@ -13,8 +22,6 @@ export interface GrayImage {
   /** Row-major luminance 0..255. */
   data: Uint8Array;
 }
-
-export const HASH_BITS = 64;
 
 /** Decodes JPEG or PNG bytes to grayscale. Returns null for unsupported data. */
 export function decodeToGray(bytes: Uint8Array): GrayImage | null {
@@ -76,17 +83,6 @@ export function dhash(img: GrayImage): string {
   return hex;
 }
 
-/** Number of differing bits between two hex hashes of equal length. */
-export function hamming(a: string, b: string): number {
-  if (a.length !== b.length) return HASH_BITS;
-  let d = 0;
-  for (let i = 0; i < a.length; i++) {
-    let x = parseInt(a[i], 16) ^ parseInt(b[i], 16);
-    while (x) { d += x & 1; x >>= 1; }
-  }
-  return d;
-}
-
 /** Standard deviation of luminance on a 32x32 thumbnail; near-blank scans score very low. */
 export function contrast(img: GrayImage): number {
   const t = resizeGray(img, 32, 32);
@@ -97,14 +93,6 @@ export function contrast(img: GrayImage): number {
   for (const v of t.data) varSum += (v - mean) ** 2;
   return Math.sqrt(varSum / t.data.length);
 }
-
-export interface ImageSignature {
-  hash: string;
-  /** Luminance standard deviation; below BLANK_CONTRAST the image carries no design. */
-  contrast: number;
-}
-
-export const BLANK_CONTRAST = 6;
 
 export function signature(bytes: Uint8Array): ImageSignature | null {
   const img = decodeToGray(bytes);

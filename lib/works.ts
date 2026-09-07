@@ -5,7 +5,7 @@
 import type { Cover, Edition, LanguageGroup, SourceEdition, Work, WorkSummary } from './model';
 import type { EditionCandidate } from './sources/googlebooks-parse';
 import { looksLikeSecondaryLiterature, normalizeTitle, titleAuthorKey } from './normalize';
-import { BLANK_CONTRAST, hamming, type ImageSignature } from './imagehash';
+import { BLANK_CONTRAST, hamming, type ImageSignature } from './imagesig';
 
 export const MOSAIC_COVERS = 4;
 

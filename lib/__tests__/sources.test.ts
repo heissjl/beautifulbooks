@@ -7,7 +7,7 @@ import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { searchVolumes, searchEditionCandidates } from '../sources/googlebooks';
 import { HttpError, fetchJson } from '../sources/http';
-import { getEditions, getEditionsPage, getWork, searchWorks } from '../sources/openlibrary';
+import { getEditionsPage, getWork, searchWorks } from '../sources/openlibrary';
 
 const FIXTURES = path.join(__dirname, '..', '__fixtures__');
 const fixture = (slug: string, file: string) => JSON.parse(readFileSync(path.join(FIXTURES, slug, file), 'utf8'));
@@ -92,42 +92,32 @@ describe('getWork', () => {
   });
 });
 
-describe('getEditions', () => {
-  const work = { id: 'OL1168083W', title: 'Nineteen Eighty-Four', authors: ['George Orwell'] };
+describe('editions pages', () => {
+  const workId = 'OL1168083W';
   const page = fixture('1984', 'openlibrary-editions.json') as { size: number; entries: unknown[] };
 
   it('reads one page and reports the total size', async () => {
     handler = () => ({ body: { size: page.size, entries: page.entries } });
-    const p = await getEditionsPage(work.id, 0);
+    const p = await getEditionsPage(workId, 0);
     expect(p.size).toBe(537);
     expect(p.entries).toHaveLength(100);
     expect(calls[0]).toContain('limit=100&offset=0');
   });
 
-  it('pages until enough covers are found, within the entry budget', async () => {
+  it('asks for the page at the given offset', async () => {
     handler = () => ({ body: { size: 537, entries: page.entries } });
-    const eds = await getEditions(work, { minWithCovers: 40, maxEntries: 500 });
-    // 24 covers per recorded page -> 2 pages needed for 40
-    expect(calls).toHaveLength(2);
-    expect(calls[1]).toContain('offset=100');
-    expect(eds.length).toBeGreaterThanOrEqual(40);
-    expect(eds.every(e => e.workId === work.id && e.covers.length > 0)).toBe(true);
+    await getEditionsPage(workId, 300);
+    expect(calls[0]).toContain('limit=100&offset=300');
   });
 
-  it('stops at the entry budget and at the last page', async () => {
-    handler = () => ({ body: { size: 537, entries: page.entries } });
-    await getEditions(work, { minWithCovers: 1000, maxEntries: 250 });
-    expect(calls).toHaveLength(3);
-
-    calls.length = 0;
-    handler = () => ({ body: { size: 23, entries: page.entries.slice(0, 23) } });
-    await getEditions(work, { minWithCovers: 1000, maxEntries: 500 });
-    expect(calls).toHaveLength(1);
-  });
-
-  it('returns [] for an unknown work', async () => {
+  it('returns an empty page for an unknown work', async () => {
     handler = () => ({ status: 404 });
-    await expect(getEditions(work)).resolves.toEqual([]);
+    await expect(getEditionsPage(workId, 0)).resolves.toEqual({ entries: [], size: 0 });
+  });
+
+  it('throws when the source is unreachable so the page can show an error', async () => {
+    handler = () => ({ status: 500 });
+    await expect(getEditionsPage(workId, 0)).rejects.toBeInstanceOf(HttpError);
   });
 });
 
