@@ -19,6 +19,8 @@ Vor dem Deployment stehen damit noch 1.1, 1.2, 1.3, 1.7, 1.8 und 1.9, dazu Julia
 
 **Dazugekommen am 2026-09-07 abends** (Julian beim Ansehen der eigenen Seite): der leere Platz oben rechts auf der Startseite (**1.9**, mit vier Vorschlägen), eine Prüfung anderer Datenbanken, bevor weiter an der Faltung geschraubt wird (**6.6**), die gemessenen Dubletten bei *Mason & Dixon* und in den Mosaiken (**6.7**), und eine „All languages"-Pille hinter „Unknown" auf der Detailseite (**6.8**). 6.6 steht ausdrücklich **vor** 6.7 und 6.4: löst eine andere Quelle die Dubletten an der Wurzel, ist jede Schwellenwert-Arbeit davor verschwendet.
 
+**Phase 5 neu gefasst am 2026-09-07** (Julian): ausführlicher Plan in [docs/plans/PLAN-5-reichweite.md](docs/plans/PLAN-5-reichweite.md), mit den Seitengattungen, der Kette aus Claude-Agenten, die sie herstellt, und den zehn Regeln gegen Slop. Der Newsletter ist gestrichen, die interne Verlinkung nach **6.9** gewandert, weil sie zuerst der Seite selbst nützt und einen Index braucht, den es noch nicht gibt.
+
 ---
 
 ## Empfohlene Reihenfolge der nächsten Sitzungen
@@ -178,18 +180,30 @@ Prinzip (SPEC 2.4): Affiliate-Parameter aus Umgebungsvariablen pro Markt; ohne V
 
 ## Phase 5 — Reichweite
 
-Eine Suchseite ohne eigene Inhalte bekommt keinen organischen Traffic. Die Grundlage (statische Work-Seiten, Titel, Schema.org, OG-Bild, Sitemap, robots) steht seit 2026-09-07.
+Eine Suchseite ohne eigene Inhalte bekommt keinen organischen Traffic. Die Grundlage (statische Work-Seiten, Titel, Schema.org, OG-Bild, Sitemap, robots) steht seit 2026-09-07; die Inhalte fehlen.
 
-- [ ] **5.1 Sitemap auf ~500 kuratierte Werke** (Klassiker, Bestseller, Bücher mit vielen Ausgaben). Die Liste gibt es noch nicht; erfundene IDs wären schlechter als die heutigen zwölf. Quelle für die Liste: die Suchen ohne guten Treffer aus 3.1.
-- [ ] **5.2 Seite 0 serverseitig rendern**, falls die Indexierung schwach bleibt. Heute stehen Titel, JSON-LD und OG-Bild im HTML, die Wand lädt im Browser; Google rendert JavaScript, aber nicht garantiert. Eigener Schritt, kein Nebenbei.
-- [ ] **5.3 Interne Verlinkung:** „Weitere Bücher von …“, „Andere Ausgaben dieses Verlags“.
-- [ ] **5.4 Redaktionelle Seiten**, eine pro Woche: Listen („Die schönsten Ausgaben von Pride and Prejudice“), eine Seite pro Reihe (Penguin Clothbound, Everyman's Library, Folio Society, Suhrkamp Bibliothek, Manesse). Reihen haben Sammler, Sammler suchen.
-- [ ] **5.5 Visuelle Plattformen:** Pinterest (Cover-Mosaike als Pins, jeder Pin auf die Work-Seite; Pins leben Monate), Instagram / TikTok („30 Cover von Dune in 15 Sekunden“, aus den Daten automatisierbar), Reddit (r/bookcovers, r/books; nicht spammen, bei „welche Ausgabe?“-Fragen die Vergleichsseite verlinken).
-- [ ] **5.6 Launch-Momente:** Show HN, Product Hunt, r/InternetIsBeautiful; Book-Blogger und BookTok-Accounts mit vorbereitetem Link zu „ihrem“ Buch.
-- [ ] **5.7 Bindung:** Newsletter „Cover der Woche“ (Buttondown oder Resend), „Benachrichtige mich bei neuer Ausgabe“ pro Werk.
-- [ ] **5.8 Messen:** Referrer pro Kanal in Vercel Analytics; nach acht Wochen entscheiden, welche zwei Kanäle bleiben.
+**Detailplan: [docs/plans/PLAN-5-reichweite.md](docs/plans/PLAN-5-reichweite.md).** Dort steht, welche Seitengattungen aus welchen Daten entstehen, die sechsstufige Kette, mit der Claude-Agenten sie herstellen, und vor allem die **zehn Regeln gegen Slop** — ohne die wäre die Automatisierung nicht zu verantworten. Kurzfassung des Grundsatzes: auf einer Seite über Buchcover ist der Text die Bildunterschrift, nicht der Inhalt; die Maschine schreibt keine Artikel, sie stellt Belege zusammen.
 
----
+- [ ] **5.1 Die Liste der ~500 Werke.** Ohne sie gibt es weder eine ergiebige Sitemap noch Kandidaten für Inhalte. Sie fällt aus den Suchen der Analyse-Seite (3.1) plus einer Setzliste aus Klassikern und Büchern mit vielen Ausgaben. Erfundene IDs wären schlechter als die heutigen zwölf. **Voraussetzung für alles Weitere in dieser Phase.**
+
+- [ ] **5.2 Seite 0 serverseitig rendern**, falls die Indexierung schwach bleibt. Heute stehen Titel, JSON-LD und OG-Bild im HTML, die Wand lädt im Browser; Google rendert JavaScript, aber nicht garantiert. **Nicht auf Verdacht bauen** — erst wenn die Search Console zeigt, dass die Cover nicht ankommen.
+
+- [ ] **5.3 Die Fabrik: Kandidaten, Faktenblatt, Entwurf, Prüfung, Freigabe.** Die Kette aus Abschnitt 4 des Plans, an der ersten Gattung (5.4a) gebaut und dort gemessen. Zwei Skripte (`find-candidates.ts`, `factsheet.ts`, beide ohne Modell), zwei Agenten-Aufträge (Entwurf und gegnerische Prüfung), ein Pull Request je Woche. **Die Prüfstufe ist der Kern**, nicht die Entwurfsstufe: mehr als zwei unbelegte Sätze, oder ein unbelegter Satz mit einer Zahl darin, und der Entwurf wird verworfen statt repariert.
+
+- [ ] **5.4 Die Seitengattungen**, in dieser Reihenfolge. Schwellen und Datenlage je Gattung im Plan.
+  - **(a) Ein Buch durch die Jahrzehnte** `/book/<id>/jahrzehnte` — vollständig aus vorhandenen Daten, ohne Google-Aufruf und ohne Modell. Deshalb die erste: daran lässt sich die Kette bauen, bevor Prosa ins Spiel kommt. Ab 20 Covern über vier Jahrzehnte.
+  - **(b) Reihen-Seiten** `/reihe/<slug>` — der stärkste Hebel bei der Suche. Möglich ohne eigenen Index, weil Open Librarys Verlagsfacette trägt (geprüft 2026-09-07: Penguin Classics 2.239 Werke, Folio Society 2.227, Manesse 705). Je Reihe braucht es eine kurze, von Julian bestätigte Liste von Verlagsschreibweisen; „Penguin Clothbound Classics" etwa findet der Katalog nicht, weil es ein Reihen- und kein Verlagsname ist.
+  - **(c) Sprachvergleich** `/book/<id>/sprachen` — ein Cover je Sprache. Vollständig automatisch, ab sechs Sprachen.
+  - **(d) „Welche Ausgabe soll ich kaufen?"** `/kaufen/<slug>` — die Frage, für die es die Seite gibt, und die einzige Gattung, die auf Phase 4 einzahlt. **Erst nach Phase 4**, sonst zeigt sie Kauf-Links ohne Provision. Einzige Gattung, die das Google-Kontingent belastet (eine Anfrage je geprüfter ISBN), deshalb mit Wochenobergrenze.
+  - **(e) Gleiches Motiv, verschiedene Bücher** — die eine Idee, die sonst niemand hat: dasselbe Public-Domain-Gemälde auf den Covern verschiedener Bücher, gefunden über unsere Signaturen. Braucht einen Signatur-Index über Werke hinweg, den es nicht gibt. **Ganz zuletzt.**
+
+  Bewusst gestrichen: Verlagsporträts und Gestalter-Seiten (keine Daten, also reine Modellprosa) und „Die 10 schönsten Cover von X" (ein erfundenes Ranking ist die reinste Form von Slop). Kuratiert Julian selbst, gern.
+
+- [ ] **5.5 Pinterest, und Bewegtbild von Hand.** Der einzige Kanal, dessen Material vollständig aus den Daten fällt: ein zweites Format 1000×1500 aus derselben Maschinerie, die das OG-Bild erzeugt, ergibt einen Pin je Werk. Pins leben Monate, das passt zum langsamen Aufbau. Vor dem automatischen Hochladen prüfen, ob Pinterests Bedingungen das erlauben. Clips für Instagram und TikTok („30 Cover von Dune in 15 Sekunden") lassen sich mit ffmpeg aus der Coverliste bauen; **erzeugen ja, posten von Hand.**
+
+- [ ] **5.6 Launch-Momente und Reddit, beides von Hand.** Show HN, Product Hunt, r/InternetIsBeautiful; Book-Blogger und BookTok-Accounts mit einem vorbereiteten Link auf „ihr" Buch. Bei Reddit liegt der Nutzen darin, bei „welche Ausgabe soll ich kaufen?"-Fragen die passende Seite zu verlinken — willkommen ist das nur, wenn ein Mensch es tut. **Kein Kommentar, kein Beitrag, keine E-Mail und keine Antwort an einen Menschen kommt aus einer Maschine.** Das ist keine Frage der Qualität, sondern des Anstands, und es ist die Grenze, an der Plattformen sperren.
+
+- [ ] **5.7 Messen, und Gattungen einstellen.** Nach acht Wochen je Seitengattung Impressionen, Klicks und mittlere Position in der Search Console, dazu Referrer pro Kanal. **Eine Gattung unter 50 Impressionen pro Woche wird eingestellt, nicht verbessert.** Dazu die Ablehnungsquote aus der Freigabe: über ein Drittel abgelehnt heißt, die Schwellen sind zu weich. Und die Frage über allem, die 3.1 ohnehin misst: bringt eine erzeugte Seite jemanden dazu, ein Buch zu öffnen?
 
 ## Phase 6 — Qualität, jederzeit dazwischen
 
@@ -265,6 +279,12 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 - [ ] **6.8 Eine „All languages"-Pille am Ende der Sprachreiter.** (Julian, 2026-09-07.) Die Detailseite gruppiert Cover heute nach Sprache und hat keinen Weg, alle zusammen zu sehen; wer die Wand als Ganzes betrachten will, muss sich durch die Reiter klicken. Die Pille steht **am Ende, hinter „Unknown"** — vorne wäre sie die Vorauswahl und würde die Sprachordnung aus F2.4 aushebeln, die genau deshalb existiert, weil die gesuchte Sprache zuerst kommen soll.
 
   Zu klären beim Bauen: die Sortierung innerhalb der Gesamtansicht (Jahr absteigend über alle Sprachen hinweg, wie in F2.5, ist der naheliegende Weg), ob die Auswahl in die URL gehört (`?lang=all` neben dem bestehenden `?lang=`), und dass die Ladeszene aus F2.4 weiterhin auf die gewünschte Sprache wartet und nicht auf diese Pille.
+
+- [ ] **6.9 Interne Verlinkung: „Mehr von diesem Autor", „Andere Ausgaben dieses Verlags".** *Stand bis 2026-09-07 als 5.3 in der Reichweiten-Phase; hierher verschoben, weil es zuerst der Seite selbst nützt und erst in zweiter Linie der Auffindbarkeit.* Wer eine Cover-Wand ansieht, will oft von dort weiter — zum nächsten Buch desselben Autors, oder zu dem, was derselbe Verlag im selben Jahr gestaltet hat. Heute endet jede Werkseite in einer Sackgasse.
+
+  **Die Abhängigkeit, wegen der es hier und nicht weiter vorn steht:** beide Links brauchen einen Index, den es nicht gibt. Wir laden Daten je Werk und wissen nichts über „alle Werke dieses Autors" oder „alle Ausgaben dieses Verlags". Zwei Wege: Open Librarys Facetten (`author_key:` und `publisher:`, beide geprüft ergiebig — siehe 5.4b) kosten je Seite eine zusätzliche Anfrage, sind aber sofort verfügbar; ein eigener Index über die kuratierten Werke ist schneller und teurer zu bauen und braucht den Speicher aus Phase 3.
+
+  **Wer den Index baut, baut beides:** die Reihen-Seiten aus 5.4b brauchen genau dieselbe Verlagsabfrage. Deshalb diese beiden Punkte zusammen angehen, egal in welcher Phase sie stehen.
 
 - [ ] Cover-Vergleich: zwei Ausgaben nebeneinander.
 - [ ] View Transitions zwischen Karte und Detailseite (das Cover „fliegt“ mit).
