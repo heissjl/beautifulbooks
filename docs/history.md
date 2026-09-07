@@ -545,3 +545,33 @@ Beide benutzen jetzt dieselbe Auswahl: ein Cover je **Druck**, erkannt an Verlag
 Die Grenze davon ist gemessen und bleibt: *The Manningtree Witches* zeigt weiter zweimal dasselbe Motiv, weil Granta 2021 und Catapult 2021 zwei echte Ausgaben zweier Verlage sind, die dieselbe Gestaltung lizenziert haben. Das erkennt nur ein Bildvergleich, und den leistet die Wand, nicht die Karte.
 
 **Verifiziert im Browser:** About-Seite mit allen fünf Urteilen im Wortlaut der Oberfläche und ohne „Shops show" (im Text geprüft); Meta-Zeile „Open Library dates it to 2009 · 22 covers from 43 editions"; Verdikt in der Seitenleiste unverändert; hohe Kacheln mit `object-fit: contain` und zwei ganzen Covern auf der Manningtree-Karte; [Teilbild von *Wolf Hall*](tests/2026-09-07-teilbild-behoben.png) mit vier verschiedenen Covern (niederländisch, spanisch, englisch, deutsch) statt zweimal demselben. Neun neue Tests, Suite bei 199, Build grün.
+
+---
+
+## 2026-09-07 · Dubletten gemessen: Mason & Dixon und die Pynchon-Mosaike
+
+Julian hatte beide gesehen und gemeldet; hier stehen die Zahlen dazu. Was daraus folgt, steht als ROADMAP 6.7, und die Prüfung anderer Quellen davor als 6.6.
+
+**Auf der Wand.** *Mason & Dixon* (OL2636672W), alle Seiten geladen und wie im Browser gefaltet: **16 Cover roh, 12 nach dem Falten, alle 16 mit Signatur** — es fehlten also keine Hashes, die Regeln selbst greifen nicht. Bei einer Distanzschwelle von 22 zerfallen die zwölf gezeigten Kacheln in **sechs Motive**, und das größte davon umfasst **sieben Kacheln**: Henry Holt 1997 (dreimal), Holt Paperbacks 1998 (zweimal), Vintage 1998 und Rowohlt 1999. Zehn Paare bleiben mit Distanz ≤ 22 nebeneinander stehen. Drei Ursachen:
+
+| Paar | Distanz | Ursache |
+|---|---|---|
+| Henry Holt 1997 gegen Henry Holt 1997, **gleiche ISBN** 9780805037586 | 22 | Die ISBN-Stufe faltet bis 20; zwei Scans derselben Ausgabe stehen nebeneinander |
+| Holt Paperbacks 1998 gegen Henry Holt 1997 | 10 | `samePublisher` vergleicht Wortmengen, und {holt, paperbacks} ist keine Teilmenge von {henry, holt}; dasselbe Haus wird nicht erkannt |
+| Vintage 1998 (Sprache unbekannt) gegen Henry Holt 1997 | 11 | Verschiedene Verlage, also gilt nur die Stufe bis 8 |
+
+Rowohlt 1999 gegen Henry Holt 1997 bei Distanz 16 ist **kein** Fehler: über Sprachgrenzen wird nie gefaltet, und das bleibt so.
+
+**In den Mosaiken.** Suche `pynchon`, die vier Kacheln von sechs Karten nachträglich gehasht: *Inherent Vice* Kachel 1 und 2 bei Distanz 13, *V.* Kachel 1 und 4 bei 10 sowie zwei weitere Paare bei 20. Die übrigen vier Karten (*Gravity's Rainbow*, *The Crying of Lot 49*, *Vineland*, *Mason & Dixon*) haben kein Paar unter 21. **Zwei von sechs Karten** zeigen also sichtbar dasselbe Motiv zweimal — die in SPEC F4 benannte Grenze des Kurzpfads, der nicht hasht und nur Verlag und Jahr vergleichen kann.
+
+---
+
+## 2026-09-07 · Recherche: welche Buchdatenbanken sonst infrage kommen
+
+Anlass war Julians Vermutung, andere Datenbanken könnten mehrere Probleme auf einmal lösen. Das Ergebnis der Recherche steht als Kandidatenliste und Messplan in ROADMAP 6.6; hier die Belege.
+
+- **ISBNdb**: rund 110 Millionen Titel, ein kuratiertes Cover je ISBN, Bulk-Abfrage 100 bis 1.000 ISBNs pro Aufruf, Tarife ab 14,99 USD im Monat bis 299,99 ([Preise](https://isbndb.com/isbn-database), [API 2.0](https://isbndb.com/api-20-deployed-new-account-pricing-structures)).
+- **Hardcover.app**: GraphQL unter `api.hardcover.app/v1/graphql`, Token aus den Kontoeinstellungen, Werke **und** Ausgaben mit Verlag, ISBN-13, Format und Cover; nur lesend, keine Textsuche-Operatoren ([Doku](https://docs.hardcover.app/api/getting-started/), am 2026-09-07 selbst nicht abrufbar, HTTP 403 — Lizenz und Rate-Limit sind damit ungeklärt).
+- **LibraryThing Covers**: `covers.librarything.com/devkey/KEY/large/isbn/…`, **1.000 Cover am Tag**, höchstens eines je Sekunde bei automatischem Abruf, fehlendes Bild kommt als transparentes 1×1-GIF ([Free covers](https://wiki.librarything.com/index.php/Free_covers)).
+- **K10plus / DNB**: SRU unter `sru.k10plus.de/opac-de-627`, rund 80 Millionen Titel aus über 1.000 Bibliotheken, DNB-Titeldaten unter CC0 ([K10plus SRU](https://wiki.k10plus.de/display/K10PLUS/SRU)). Keine Schutzumschläge, aber die sauberste kostenlose Quelle für Verlag, Imprint und Jahr — also für genau die Felder, an denen die Faltung scheitert.
+- **Open-Library-Dumps**: monatlich, Editions-Datei 45 GB entpackt, rund 250 GB für den vollständigen Import, **für Cover gibt es keinen laufenden Dump** ([Data Dumps](https://openlibrary.org/developers/dumps)). Würde Paging, Latenz und Ratenbegrenzung erledigen, verlangt aber eine Datenbank und damit die Infrastruktur, die E6 bisher bewusst vermeidet.

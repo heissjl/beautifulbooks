@@ -8,6 +8,8 @@ Guidance for Claude Code when working in this repository.
 
 **[ROADMAP.md](ROADMAP.md) holds every item exactly once**, open or done, in phase order with an owner (Julian or Claude). Take work from there. **[docs/history.md](docs/history.md)** is the record of what was built and measured, kept under the old section numbers (§5, §7, §8.x, §9, §10) that code comments still cite; the finished implementation plans are in `docs/plans/`. When an item is done, tick it in the roadmap and add one line saying what came of it; the measurements go to the history, and the spec is updated if the behaviour changed. Finished items stay on the roadmap so that what is open and what is settled can be read in one place.
 
+**Nothing is finished in the chat.** Every finding, decision, measurement and change lands in a file before the turn ends: a requirement or a rule in SPEC.md, an open or ticked item in ROADMAP.md, a measurement in docs/history.md. A number that was only said in conversation is lost, and the next session will re-measure it or, worse, guess it. This holds for the small things too — a threshold that turned out wrong, a source that was slower than assumed, an idea the user mentioned in passing. If the user says something worth keeping, write it down and say where it went.
+
 The spec is written in German; code, comments, commit messages and this file are English (decision E7).
 
 ## Current state (2026-09-07)

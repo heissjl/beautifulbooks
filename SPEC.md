@@ -185,7 +185,7 @@ Zwei Ebenen:
 
 - 1 Cover: voll. 2: nebeneinander. 3: eines groß links, zwei rechts. ≥ 4: 2×2.
 - **Keine Kachel schneidet mehr weg, als ihr Seitenverhältnis verlangt.** Ein Cover ist 2:3. Eine Kachel, die deutlich schmaler ist, zeigt nur einen Streifen: bei zwei Covern nebeneinander in einem 2:3-Rahmen sind die Kacheln 1:3, und `object-fit: cover` zeigt dann etwa die halbe Breite jedes Bildes. Die hohen Kacheln — die beiden Hälften des Zwei-Cover-Mosaiks und die linke Spalte des Drei-Cover-Mosaiks — **passen das ganze Cover ein** statt es zu beschneiden; der Kartengrund zeigt sich darüber und darunter. Das Vier-Cover-Raster bleibt unverändert, seine Zellen sind bereits 2:3.
-- **Eine Kachel je Druck.** Cover werden nach Verlag und Jahr der tragenden Ausgabe zusammengefasst, ersatzweise nach der Ausgabe selbst (`coverImages` in `lib/seo.ts`, dieselbe Auswahl für Karte und Teilbild). Das Mosaik hasht nicht, kann also nur die Metadaten befragen: zwei Verlage, die dasselbe Motiv lizenzieren, stehen weiter nebeneinander, und dabei bleibt es, solange der Kurzpfad nicht hasht. Die Regel irrt bewusst in Richtung „lieber eine Wiederholung als eine leere Kachel": aussortierte Cover rücken nach, wenn sonst ein Platz frei bliebe.
+- **Eine Kachel je Druck.** Cover werden nach Verlag und Jahr der tragenden Ausgabe zusammengefasst, ersatzweise nach der Ausgabe selbst (`coverImages` in `lib/seo.ts`, dieselbe Auswahl für Karte und Teilbild). Das Mosaik hasht nicht, kann also nur die Metadaten befragen: zwei Verlage, die dasselbe Motiv lizenzieren, stehen weiter nebeneinander, und dabei bleibt es, solange der Kurzpfad nicht hasht. Gemessen am 2026-09-07 über sechs Karten der Suche `pynchon`: bei zwei davon liegen zwei Kacheln bei Distanz 10 und 13, zeigen also dasselbe Motiv ([ROADMAP](ROADMAP.md) 6.7). Die Regel irrt bewusst in Richtung „lieber eine Wiederholung als eine leere Kachel": aussortierte Cover rücken nach, wenn sonst ein Platz frei bliebe.
 - Fallback ohne Cover: Platzhalter; ein fehlgeschlagenes Bild zeigt nie Alt-Text in einem grauen Kasten (`CoverImage`).
 
 ### F5 – Klick-Zählung `/go/[provider]/[isbn]?market=`
@@ -280,7 +280,7 @@ Leitidee: **Galerie, nicht Shop.** Tokens in `app/globals.css` (Tailwind 4, `@th
 
 ## 7. Gemessene Grenzen (Stand 2026-09-07)
 
-Die Zahlen, die den Entwurf bestimmen. Herkunft und Messaufbau in [docs/history.md](docs/history.md); die mit ¹ markierten stammen aus dem [Durchklick vom 2026-09-07](docs/tests/2026-09-07-durchklick.md).
+Die Zahlen, die den Entwurf bestimmen. Herkunft und Messaufbau in [docs/history.md](docs/history.md); die mit ¹ markierten stammen aus den Messungen vom 2026-09-07, dem [Durchklick](docs/tests/2026-09-07-durchklick.md) und der Dubletten-Analyse.
 
 | Grenze | Zahl | Folge |
 |---|---|---|
@@ -296,6 +296,7 @@ Die Zahlen, die den Entwurf bestimmen. Herkunft und Messaufbau in [docs/history.
 | Open-Library-Latenz | 2–7 s Suche, 3–10 s pro Editions-Seite aus Deutschland, gelegentlich über 12 s. | Timeouts F3.3, Wiederholung von Seite 0, Cache N4. |
 | Seite 0 | Sprachengemisch, meist ohne Sprachangabe; bei *1984* keine deutsche Ausgabe auf Seite 0. | Mosaik sprachneutral (E15); Ladeszene wartet auf die Sprache (F2.4). |
 | Dedupe-Schwellen | Verschiedene Designs mit gemeinsamem Public-Domain-Motiv liegen bei Distanz 17–22; echte Duplikate desselben Verlags bei 5–16, gleiche ISBN bis 20. | Drei Stufen (2.3); oberhalb von 8 nur mit Metadaten. |
+| Was die Stufen nicht fangen¹ | *Mason & Dixon*: 12 gezeigte Kacheln, davon 7 dasselbe Motiv. Gleiche ISBN bei Distanz 22 (Stufe faltet bis 20); „Henry Holt" gegen „Holt Paperbacks" bei 10 (Wortmengen-Vergleich erkennt das Haus nicht); fehlende Sprachangabe bei 11. | [ROADMAP](ROADMAP.md) 6.7, nach der Quellenprüfung 6.6 |
 | Kaltes Hashing | 4 s Budget pro Seite reichen beim ersten Aufruf nur für einen Teil der Bilder. | Cover-Zahl sinkt beim zweiten Besuch; hingenommen. |
 | Verdikt | Von 20 ISBNs bei *Beloved*: 4 `verified`, 4 `differs`, 12 `unknown`. | Wo Google ein Bild hat, zeigt der Handel in der Hälfte der Fälle ein anderes; ohne Amazon-PA-API bleibt die Mehrheit unbekannt. |
 | Verfügbarkeitsprüfung | Aussage für etwa zwei von sechs Händlern; vier verbieten den Pfad per robots.txt. | Vier Zustände, nicht freigegeben (F2.10, E12). |
