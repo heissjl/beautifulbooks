@@ -1,10 +1,23 @@
 # Beautiful Books – Roadmap
 
-Stand: 2026-09-07, nach dem [Durchklick als Nutzer](docs/tests/2026-09-07-durchklick.md). **Jeder offene Punkt steht hier genau einmal.** Was die Seite ist, steht in [SPEC.md](SPEC.md); was schon gebaut und gemessen wurde, in [docs/history.md](docs/history.md). Ein erledigter Punkt verschwindet von hier und bekommt seinen Eintrag in der Historie.
+Stand: 2026-09-07, nach dem [Durchklick als Nutzer](docs/tests/2026-09-07-durchklick.md). **Jeder offene Punkt steht hier genau einmal.** Was die Seite ist, steht in [SPEC.md](SPEC.md); was schon gebaut und gemessen wurde, in [docs/history.md](docs/history.md). Ein erledigter Punkt **bleibt stehen und wird abgehakt**, mit einer Zeile, was dabei herauskam; die ausführliche Fassung steht in der Historie. So bleibt an einem Ort sichtbar, was offen ist und was schon erledigt wurde.
 
 Punkte mit **[T*n*]** kommen aus dem Testbericht und nennen dessen Nummer.
 
 Die Phasen folgen Abhängigkeiten, nicht Aufwand: Provision braucht eine öffentliche Seite, Reichweite braucht Inhalte, Messen braucht Besucher. Innerhalb einer Phase gilt die Reihenfolge der Liste. *Wer* steht bei jedem Punkt: **Julian** (Konten, Geld, Recht, Produktentscheidungen), **Claude** (Code, Messung, Text) oder beide.
+
+## Wo das Projekt steht
+
+**Stand nach dem [Testbericht](docs/tests/2026-09-07-durchklick.md), 2026-09-07 abends.** Was daraus geworden ist, Punkt für Punkt:
+
+| Aus dem Bericht | Erledigt | Offen |
+|---|---|---|
+| Sechs Fehler (T1–T6) | T1, T2, T5 → 1.4 und 1.5 | T4, T6 → 1.7. T3 war keine Reparatur, sondern eine Messung; sie geht in Entscheidung 0.7 ein |
+| Zehn Qualitätsfunde (T7–T16) | T7, T14, und T8 zum Teil → 1.5 und 1.6 | T9 → 6.4, T10 → 1.2, T11 → 1.1, T12 → 6.1, T13 → 6.2, T15 → 6.3, T16 → 1.3 |
+
+Vor dem Deployment stehen damit noch 1.1, 1.2, 1.3, 1.7 und 1.8, dazu Julians Phase 0. Phase 6 ist Qualität und wartet.
+
+---
 
 ## Empfohlene Reihenfolge der nächsten Sitzungen
 
@@ -18,7 +31,7 @@ Die Phasen folgen Abhängigkeiten, nicht Aufwand: Provision braucht eine öffent
 | 6 | Phase 4, Punkt 4.1: Bookshop.org beantragen, sobald die Seite erreichbar ist | Julian | zehn Minuten plus Tage Wartezeit |
 | 7 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
 
-Drei Punkte aus dem Testbericht sind erledigt und stehen in der [Historie](docs/history.md): der Ausfall der Suche, der nicht mehr „nichts gefunden“ heißt (ehemals 1.4), die Sätze, die etwas Falsches sagten (1.5), und die zwei Bilder, die nach einem Fehler aussahen (1.6). Ihre Nummern bleiben frei, damit Verweise darauf nicht ins Leere zeigen. Die Ranking-Punkte aus Phase 6 stehen bewusst nicht in dieser Liste: sie sind Qualität, kein Fehler, und sie brauchen mehr Messung als eine Sitzung hergibt.
+Die Ranking-Punkte aus Phase 6 stehen bewusst nicht in dieser Liste: sie sind Qualität, kein Fehler, und sie brauchen mehr Messung als eine Sitzung hergibt.
 
 Danach entscheidet sich anhand der Zahlen aus Phase 3, ob Phase 4 (Geld) oder Phase 5 (Reichweite) zuerst weitergeht. Ohne Besucher bringen Kauf-Links nichts, ohne Kauf-Links kostet Reichweite nur.
 
@@ -80,6 +93,22 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
   **Julians Zusatzidee, nur die zwei provisionsfähigen Links hochzuziehen, hat heute zwei Haken:** beide (Amazon, Bookshop) sind unkonfiguriert, es gibt also null Links zum Nudgen (Phase 4); und die About-Seite sagt „The order of the shops is not sorted by what they pay“. Vertretbar wäre eine Ordnung nach `BuyLink.kind` (Buchseite vor Trefferliste), die zufällig dieselben Links begünstigt und dem Leser nachweisbar nützt; oder der Satz auf About wird geändert. Unausgesprochen geht es nicht.
 
 - [ ] **1.3 Bild-Cache vor Open Library und Google** (SPEC N8). Cover laden heute direkt von `covers.openlibrary.org`, das auf archive.org weiterleitet und unter Last langsam oder gar nicht liefert (bei 18 gleichzeitigen Anfragen kamen nach 15 s nur die Google-Bilder); Open Library dokumentiert außerdem Rate-Limits für Cover. Optionen: `next/image` ohne `unoptimized` mit `remotePatterns` (Vercels Bildoptimierung, Kontingent des Plans prüfen) oder eine eigene Proxy-Route mit CDN-Cache. Vorher messen, wie viele verschiedene Bilder eine Detailseite lädt, damit das Kontingent der Optimierung nicht die nächste Grenze wird. *Im Durchklick bestätigt [T16]: die Konsole meldet auf jeder Seite mehrfach LCP-Warnungen zu `covers.openlibrary.org`; das `priority` auf den ersten Kacheln gehört mit dazu (6.5).*
+
+- [x] **1.4 Ein Ausfall der Suche heißt nicht mehr „No books found“. [T1, T2]** *Erledigt 2026-09-07, Commit `0991444`.*
+
+  Der schwerste Fund des Testberichts. `searchWorks` verschluckte jeden Fehler in eine leere Liste, die Route antwortete 200, und der Leser las, es gebe das Buch nicht — bei vier von rund vierzehn kalten Suchen, zweimal davon für *Norwegian Wood*, das Open Library mit 124 Werken führt.
+
+  **Ergebnis:** `SourceUnavailableError` trennt Schweigen von Leere; die Route antwortet 503 ohne Cache-Header, und nur die 200 trägt noch `s-maxage`. Der Deckel für die Suche steht auf 12 s statt 8, weil von zwölf ungedeckelt gemessenen Suchen drei zwischen 9 und 10 s antworteten. Die Oberfläche zeigt „The catalogue did not answer“ mit einem Knopf „Try again“; der Leerzustand nennt den Sprachfilter nur noch, wenn einer gesetzt ist. Mitgefunden und behoben: Suchen unter drei Zeichen (Open Library lehnt sie mit 422 ab) hießen ebenfalls „nichts gefunden“. Live belegt, `austerlitz sebald` antwortete während der Prüfung mit 503 nach 10,5 s.
+
+- [x] **1.5 Die Sätze, die etwas Falsches sagten. [T5, T14, T2, T11]** *Erledigt 2026-09-07, Commit `48a493a`.*
+
+  **Ergebnis:** Die Verdikte stehen nur noch an einer Stelle (`lib/verdicts.ts`); Seitenleiste und About-Seite lesen daraus, ein Auseinanderlaufen ist ausgeschlossen. Die About-Seite zeigt jetzt alle fünf Zustände im Wortlaut der Oberfläche statt drei in der zurückgezogenen Fassung „Shops show this cover“. Fünf Tests halten fest, was diese Sätze nicht sagen dürfen. Das Erscheinungsjahr ist ein Zitat geworden: „Open Library dates it to 1920“ statt „first published 1920“ — eine zweite Quelle zum Gegenprüfen gibt es nicht, weil die Wand den jüngsten Datensatz zuerst lädt. Der Punkt zum geteilten Link erledigt sich mit 1.1 und steht dort.
+
+- [x] **1.6 Die zwei Bilder, die nach einem Fehler aussahen. [T7, T8]** *Erledigt 2026-09-07, Commit `48a493a`.*
+
+  **Ergebnis:** Die hohen Kacheln passen das ganze Cover ein, statt die Hälfte wegzuschneiden ([vorher](docs/tests/2026-09-07-mosaik.png), [nachher](docs/tests/2026-09-07-mosaik-behoben.png)). Betroffen war auch die linke Spalte des Drei-Cover-Mosaiks, was der Bericht nicht gesehen hatte; das Vier-Cover-Raster blieb unangetastet. Karte und Teilbild wählen jetzt ein Cover je Druck, erkannt an Verlag und Jahr: das [Teilbild von *Wolf Hall*](docs/tests/2026-09-07-teilbild-behoben.png) zeigt vier verschiedene Cover statt zweimal derselben spanischen Ausgabe.
+
+  **Was dabei nicht zu lösen war:** Zwei Verlage, die dieselbe Gestaltung lizenzieren (Granta 2021 und Catapult 2021 bei *The Manningtree Witches*), stehen weiter nebeneinander. Das erkennt nur ein Bildvergleich, und der bräuchte Signaturen, die der Server erst holen und hashen müsste — mehrere Sekunden auf einer Route, auf die der Vorschau-Dienst eines Messengers nicht wartet. Die Wand faltet sie, die Karte nicht.
 
 - [ ] **1.7 Zwei Antworten, die nicht stimmen. [T4, T6]** Beides klein, beides sauber prüfbar.
   - Eine unbekannte, aber wohlgeformte Work-ID (`/book/OL99999999W`) antwortet mit **200** statt 404; `notFound()` läuft nur für ein kaputtes ID-Muster. Vor Phase 5 beheben, sonst indexiert Google den Soft-404.
