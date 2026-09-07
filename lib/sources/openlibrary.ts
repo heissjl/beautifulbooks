@@ -28,6 +28,8 @@ export const OL_REVALIDATE = {
 const SEARCH_FIELDS = [
   'key', 'title', 'subtitle', 'author_name', 'author_key', 'first_publish_year',
   'edition_count', 'cover_i', 'cover_edition_key', 'language',
+  // Popularity: Open Library ranks by these and we use them too (SPEC §9.3 step 10).
+  'readinglog_count', 'want_to_read_count', 'ratings_count',
 ].join(',');
 
 interface OlSearchResponse {

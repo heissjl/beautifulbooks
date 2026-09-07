@@ -343,6 +343,44 @@
       }
     },
     {
+      "id": "KWMDzQEACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo Gumbo",
+        "subtitle": "Original Politiverse",
+        "authors": [
+          "Tom Hipps"
+        ],
+        "publishedDate": "1994",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:500983608"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=KWMDzQEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=9&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=KWMDzQEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo_Gumbo.html?hl=&id=KWMDzQEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
       "id": "7sbb36Zw5IMC",
       "volumeInfo": {
         "title": "Mumbo Jumbo",
@@ -386,7 +424,7 @@
           "thumbnail": "http://books.google.com/books/content?id=7sbb36Zw5IMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
         },
         "language": "en",
-        "previewLink": "http://books.google.de/books?id=7sbb36Zw5IMC&printsec=frontcover&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=9&source=gbs_api",
+        "previewLink": "http://books.google.de/books?id=7sbb36Zw5IMC&printsec=frontcover&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=10&source=gbs_api",
         "infoLink": "https://play.google.com/store/books/details?id=7sbb36Zw5IMC&source=gbs_api",
         "canonicalVolumeLink": "https://play.google.com/store/books/details?id=7sbb36Zw5IMC"
       },
@@ -417,44 +455,6 @@
             "giftable": true
           }
         ]
-      }
-    },
-    {
-      "id": "KWMDzQEACAAJ",
-      "volumeInfo": {
-        "title": "Mumbo Jumbo Gumbo",
-        "subtitle": "Original Politiverse",
-        "authors": [
-          "Tom Hipps"
-        ],
-        "publishedDate": "1994",
-        "industryIdentifiers": [
-          {
-            "type": "OTHER",
-            "identifier": "OCLC:500983608"
-          }
-        ],
-        "readingModes": {
-          "text": false,
-          "image": false
-        },
-        "printType": "BOOK",
-        "maturityRating": "NOT_MATURE",
-        "allowAnonLogging": false,
-        "contentVersion": "preview-1.0.0",
-        "panelizationSummary": {
-          "containsEpubBubbles": false,
-          "containsImageBubbles": false
-        },
-        "language": "en",
-        "previewLink": "http://books.google.de/books?id=KWMDzQEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=10&source=gbs_api",
-        "infoLink": "http://books.google.de/books?id=KWMDzQEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
-        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo_Gumbo.html?hl=&id=KWMDzQEACAAJ"
-      },
-      "saleInfo": {
-        "country": "DE",
-        "saleability": "NOT_FOR_SALE",
-        "isEbook": false
       }
     },
     {

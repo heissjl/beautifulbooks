@@ -22,6 +22,10 @@ export interface OlSearchDoc {
   /** 3-letter codes of languages this work has editions in. */
   language?: string[];
   subject?: string[];
+  /** How many readers have the work on a list; drives ranking (SPEC §9.3 step 10). */
+  readinglog_count?: number;
+  want_to_read_count?: number;
+  ratings_count?: number;
 }
 
 /** Subset of a `/works/{id}/editions.json` entry. */
@@ -77,6 +81,13 @@ export function parseSearchDocs(docs: readonly OlSearchDoc[]): WorkSummary[] {
       editionCount: doc.edition_count,
       coverUrls: [olCoverUrl(doc.cover_i)],
       languages,
+      popularity: {
+        readinglog: doc.readinglog_count,
+        wantToRead: doc.want_to_read_count,
+        ratings: doc.ratings_count,
+      },
+      // Open Library's own ranking is a strong signal; keep the position.
+      sourceRank: out.length,
     });
   }
   return out;

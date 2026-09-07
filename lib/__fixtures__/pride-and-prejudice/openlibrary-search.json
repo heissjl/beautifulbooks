@@ -145,7 +145,10 @@
         "Fitzwilliam Darcy (Fictitious character)",
         "Pride and prejudice (Austen, Jane)",
         "Mr. Collins (Fictitious character)"
-      ]
+      ],
+      "ratings_count": 402,
+      "readinglog_count": 7596,
+      "want_to_read_count": 6367
     },
     {
       "author_key": [
@@ -216,7 +219,10 @@
         "Courtship in literature",
         "Pr4034 .p7 2001",
         "823/.7"
-      ]
+      ],
+      "ratings_count": 28,
+      "readinglog_count": 349,
+      "want_to_read_count": 276
     },
     {
       "author_key": [
@@ -294,7 +300,10 @@
         "Orgullo",
         "Inglaterra",
         "prejuicios"
-      ]
+      ],
+      "ratings_count": 16,
+      "readinglog_count": 137,
+      "want_to_read_count": 102
     },
     {
       "author_key": [
@@ -321,7 +330,10 @@
         "Interpersonal relations",
         "Sisters",
         "Social life and customs"
-      ]
+      ],
+      "ratings_count": 9,
+      "readinglog_count": 55,
+      "want_to_read_count": 41
     },
     {
       "author_key": [
@@ -371,7 +383,10 @@
         "young ladies",
         "Young women",
         "entail"
-      ]
+      ],
+      "ratings_count": 4,
+      "readinglog_count": 35,
+      "want_to_read_count": 28
     },
     {
       "author_key": [
@@ -397,7 +412,9 @@
         "Courtship",
         "Manners and customs",
         "Comic books, strips"
-      ]
+      ],
+      "readinglog_count": 27,
+      "want_to_read_count": 21
     },
     {
       "author_key": [
@@ -417,7 +434,10 @@
       "title": "Pride and Prejudice [adaptation]",
       "subject": [
         "Literature"
-      ]
+      ],
+      "ratings_count": 2,
+      "readinglog_count": 20,
+      "want_to_read_count": 16
     },
     {
       "author_key": [
@@ -460,7 +480,10 @@
         "Romance fiction",
         "Love stories",
         "Pride and prejudice (Austen, Jane)"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 24,
+      "want_to_read_count": 21
     },
     {
       "author_key": [
@@ -495,7 +518,10 @@
         "Brooklyn (new york, n.y.), fiction",
         "Neighbors, fiction",
         "Urban renewal, fiction"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 18,
+      "want_to_read_count": 14
     },
     {
       "author_key": [
@@ -516,7 +542,10 @@
       "title": "Pride and Prejudice",
       "subject": [
         "Motion picture music"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 9,
+      "want_to_read_count": 7
     },
     {
       "author_key": [
@@ -537,7 +566,10 @@
       "subject": [
         "nyt:young-adult-hardcover=2023-09-17",
         "New York Times bestseller"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 20,
+      "want_to_read_count": 17
     },
     {
       "author_key": [
@@ -566,7 +598,10 @@
         "Bennet, elizabeth (fictitious character), fiction",
         "England, fiction",
         "Married people, fiction"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 24,
+      "want_to_read_count": 16
     },
     {
       "author_key": [
@@ -581,7 +616,10 @@
       "language": [
         "eng"
       ],
-      "title": "PRIDE and PREJUDICE by Jane Austen"
+      "title": "PRIDE and PREJUDICE by Jane Austen",
+      "ratings_count": 1,
+      "readinglog_count": 14,
+      "want_to_read_count": 11
     },
     {
       "author_key": [
@@ -604,7 +642,10 @@
         "England, fiction",
         "Fiction, romance, historical, general",
         "Darcy, fitzwilliam (fictitious character), fiction"
-      ]
+      ],
+      "ratings_count": 0,
+      "readinglog_count": 12,
+      "want_to_read_count": 10
     },
     {
       "author_key": [
@@ -630,7 +671,10 @@
         "England, fiction",
         "Married people, fiction",
         "Fiction, historical, general"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 27,
+      "want_to_read_count": 22
     },
     {
       "author_key": [
@@ -667,7 +711,10 @@
         "Courtship",
         "Social classes",
         "Social life and customs"
-      ]
+      ],
+      "ratings_count": 0,
+      "readinglog_count": 4,
+      "want_to_read_count": 4
     },
     {
       "author_key": [
@@ -706,7 +753,10 @@
         "Romans, nouvelles, etc. pour la jeunesse",
         "Amours",
         "Sœurs"
-      ]
+      ],
+      "ratings_count": 4,
+      "readinglog_count": 5,
+      "want_to_read_count": 2
     },
     {
       "author_key": [
@@ -764,7 +814,10 @@
         "Romans, nouvelles",
         "Choix du conjoint",
         "Jeunes femmes"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 12,
+      "want_to_read_count": 11
     },
     {
       "author_key": [
@@ -787,7 +840,9 @@
         "nyt:young-adult-hardcover=2024-02-04",
         "New York Times bestseller",
         "Stonewall Book Awards"
-      ]
+      ],
+      "readinglog_count": 25,
+      "want_to_read_count": 25
     },
     {
       "author_key": [
@@ -811,7 +866,10 @@
         "Sisters, fiction",
         "England, fiction",
         "Young women, fiction"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 14,
+      "want_to_read_count": 13
     }
   ]
 }

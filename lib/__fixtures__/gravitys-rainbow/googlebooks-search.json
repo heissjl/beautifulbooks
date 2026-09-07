@@ -772,41 +772,6 @@
       }
     },
     {
-      "id": "2EWHAQAACAAJ",
-      "volumeInfo": {
-        "title": "Gravity's Rainbow",
-        "publishedDate": "1993",
-        "industryIdentifiers": [
-          {
-            "type": "OTHER",
-            "identifier": "OCLC:727346666"
-          }
-        ],
-        "readingModes": {
-          "text": false,
-          "image": false
-        },
-        "pageCount": 10,
-        "printType": "BOOK",
-        "maturityRating": "NOT_MATURE",
-        "allowAnonLogging": false,
-        "contentVersion": "preview-1.0.0",
-        "panelizationSummary": {
-          "containsEpubBubbles": false,
-          "containsImageBubbles": false
-        },
-        "language": "en",
-        "previewLink": "http://books.google.de/books?id=2EWHAQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=19&source=gbs_api",
-        "infoLink": "http://books.google.de/books?id=2EWHAQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
-        "canonicalVolumeLink": "https://books.google.com/books/about/Gravity_s_Rainbow.html?hl=&id=2EWHAQAACAAJ"
-      },
-      "saleInfo": {
-        "country": "DE",
-        "saleability": "NOT_FOR_SALE",
-        "isEbook": false
-      }
-    },
-    {
       "id": "4Yr_swEACAAJ",
       "volumeInfo": {
         "title": "A Study Guide for Thomas Pynchon's \"Gravity's Rainbow\"",
@@ -846,9 +811,44 @@
           "thumbnail": "http://books.google.com/books/content?id=4Yr_swEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         },
         "language": "en",
-        "previewLink": "http://books.google.de/books?id=4Yr_swEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=20&source=gbs_api",
+        "previewLink": "http://books.google.de/books?id=4Yr_swEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=19&source=gbs_api",
         "infoLink": "http://books.google.de/books?id=4Yr_swEACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
         "canonicalVolumeLink": "https://books.google.com/books/about/A_Study_Guide_for_Thomas_Pynchon_s_Gravi.html?hl=&id=4Yr_swEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "2EWHAQAACAAJ",
+      "volumeInfo": {
+        "title": "Gravity's Rainbow",
+        "publishedDate": "1993",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:727346666"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 10,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=2EWHAQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&cd=20&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=2EWHAQAACAAJ&dq=intitle:gravity%27s+rainbow&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Gravity_s_Rainbow.html?hl=&id=2EWHAQAACAAJ"
       },
       "saleInfo": {
         "country": "DE",

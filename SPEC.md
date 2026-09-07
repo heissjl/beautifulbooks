@@ -517,11 +517,12 @@ Vertrauen entsteht aus drei Dingen, in dieser Reihenfolge: das richtige Work gan
 
 ### 9.3 Plan (Schritte 10–15, Fortsetzung von §7)
 
-**Schritt 10 – Ranking mit Popularität und Ableitungs-Erkennung (C).** Klein, sofort.
-- OL-Suche zusätzlich mit `readinglog_count`, `want_to_read_count`, `ratings_count` abfragen (`SEARCH_FIELDS`), Felder in `WorkSummary` als `popularity`.
-- Neue Relevanz: Ausgangspunkt ist die OL-Position (Platz 1 = 100, dann abfallend), plus `min(40, 8·log2(readinglog+1))`, plus Titeltreffer nur noch als Bonus von 20/10/5. Exakter Titel darf ein Work mit 100-facher Popularität nicht überholen.
-- Ableitungen erkennen und um 60 abwerten: Titel mit „adaptation“, „graphic novel“, „stage“, „play“, „illustrated“ in Klammern; `SECONDARY_LITERATURE` um „sparknotes for“, „book analysis“, „for fans“, „trivia“, „quiz“, „summary of“, „festschrift“ erweitern; ein Work, dessen **Nicht-Erstautor** der Erstautor eines Works mit ≥ 10-facher Ausgabenzahl im selben Ergebnis ist, gilt als Ableitung (Dean/Orwell, Nesti/Orwell, Audiberti-Übersetzung).
-- Akzeptanz: alle fünf Queries aus F1 mit den verschärften Erwartungen, dazu `beloved` → OL50548W und `harry potter` → Band 1 vor dem Pop-up-Buch.
+**Schritt 10 – Ranking mit Popularität und Ableitungs-Erkennung (C).** *Erledigt 2026-09-07.*
+- OL-Suche fragt zusätzlich `readinglog_count`, `want_to_read_count`, `ratings_count` ab; sie stehen als `popularity` an `WorkSummary`, dazu `sourceRank`, die Position in Open Librarys eigener Reihung.
+- **Neue Relevanz** (`relevance` mit `RankContext` in `lib/works.ts`): Ausgangspunkt ist `100 − 5 · sourceRank`, denn Open Library liegt bei allen sieben geprüften Queries mit Platz 1 richtig. Dazu bis zu 40 Punkte Popularität, **relativ zum meistgelesenen Werk desselben Ergebnisses** (`40 · log2(Leser+1) / log2(max+1)`); eine feste Deckelung hätte 8.491 und 73 Leser beide auf denselben Wert gebracht. Titeltreffer nur noch 20/10/5. Ohne Leserzahlen fällt die Formel auf die Ausgabenzahl zurück.
+- **Ableitungen** (`derivativeIds`) verlieren 60 Punkte: Titel mit „(adaptation)“, „[adaptation]“, „graphic novel“, „stage“, „retold by“ usw. (`MARKED_DERIVATIVE` in `lib/normalize.ts`), und Werke, deren **Nicht-Erstautor** Erstautor eines Werks mit ≥ 10-facher Ausgabenzahl im selben Ergebnis ist (Dean/Orwell). `SECONDARY_LITERATURE` wurde um „book analysis“, „for fans“, „trivia“, „quiz“, „festschrift“ und weitere erweitert.
+- **Gemessen live am 2026-09-07:** alle sieben Queries liefern das richtige Werk auf Platz 1. `1984` → *Nineteen Eighty-Four* (vorher das 15-Ausgaben-Work „1984“), `harry potter` → Band 1 (vorher das Pop-up-Buch von Wilson/Reinhart), `beloved` → Morrison, `the great gatsby` → Fitzgerald, `mumbo jumbo` → Reed, `gravity's rainbow` → Pynchon, `pride and prejudice` → Austen.
+- Akzeptanztest für `1984` prüft jetzt die Work-ID, nicht mehr nur den Autor, plus dass Adaptionen unter dem Roman stehen. Fixtures neu aufgenommen, weil sie die Popularitätsfelder noch nicht enthielten.
 
 **Schritt 11 – Vollständige Cover-Wand durch fortlaufendes Nachladen (A, F).** *Erledigt 2026-09-07.* Umsetzungsplan in [PLAN-11.md](PLAN-11.md). Gemessen im Browser:
 
@@ -571,4 +572,4 @@ Gatsby kalt: erste Wand nach 8 s, vollständig nach etwa 38 s; warm unter 5 s. D
 - Zähler auf der Detailseite aus Schritt 11 („42 covers · 300 of 1180 editions checked“), Fußnote unter der Wand: „Cover images come from Open Library and Google Books. Editions without a scan are listed below.“
 - About-Seite (8.1) erklärt Quellen, Lücken und die Verifikationsgrade aus Schritt 13 in drei Absätzen.
 
-Reihenfolge: 11 (erledigt), dann 10, 15, 12, 13a, 13, 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).
+Reihenfolge: 11, 13a und 10 sind erledigt; es folgen 12, dann 15, 13, 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).

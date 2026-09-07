@@ -25,6 +25,7 @@ const QUERIES: { slug: string; query: string; expectAuthor: string; extraPages?:
 const OL_SEARCH_FIELDS = [
   'key', 'title', 'subtitle', 'author_name', 'author_key', 'first_publish_year',
   'edition_count', 'cover_i', 'cover_edition_key', 'language', 'subject',
+  'readinglog_count', 'want_to_read_count', 'ratings_count',
 ].join(',');
 
 const EDITION_FIELDS = [

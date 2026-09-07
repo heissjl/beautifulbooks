@@ -4,7 +4,7 @@
  */
 import type { Cover, Edition, LanguageGroup, SourceEdition, Work, WorkSummary } from './model';
 import type { EditionCandidate } from './sources/googlebooks-parse';
-import { looksLikeSecondaryLiterature, normalizeTitle, titleAuthorKey } from './normalize';
+import { authorMatchKey, looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeTitle, titleAuthorKey } from './normalize';
 import { BLANK_CONTRAST, hamming, type ImageSignature } from './imagesig';
 
 export const MOSAIC_COVERS = 4;
@@ -41,6 +41,13 @@ export function mergeWorks(works: readonly WorkSummary[]): WorkSummary[] {
       editionCount: (existing.editionCount ?? 0) + (w.editionCount ?? 0) || undefined,
       coverUrls: uniq([...existing.coverUrls, ...w.coverUrls]),
       languages: uniq([...existing.languages, ...w.languages]),
+      // The merged work is as popular and as highly ranked as its best member.
+      popularity: {
+        readinglog: maxDefined(existing.popularity?.readinglog, w.popularity?.readinglog),
+        wantToRead: maxDefined(existing.popularity?.wantToRead, w.popularity?.wantToRead),
+        ratings: maxDefined(existing.popularity?.ratings, w.popularity?.ratings),
+      },
+      sourceRank: minDefined(existing.sourceRank, w.sourceRank),
     });
   }
   return Array.from(byKey.values());
@@ -50,6 +57,12 @@ function minDefined(a?: number, b?: number): number | undefined {
   if (a === undefined) return b;
   if (b === undefined) return a;
   return Math.min(a, b);
+}
+
+function maxDefined(a?: number, b?: number): number | undefined {
+  if (a === undefined) return b;
+  if (b === undefined) return a;
+  return Math.max(a, b);
 }
 
 /**
@@ -189,27 +202,102 @@ export function assembleEditions(sources: readonly SourceEdition[]): EditionsAnd
 }
 
 export const SECONDARY_PENALTY = 60;
+/** Adaptations, graphic novels and study guides sit below the work itself. */
+export const DERIVATIVE_PENALTY = 60;
+/** A title match is a hint, not a verdict (SPEC §9.1 C). */
+export const TITLE_EXACT = 20;
+export const TITLE_PREFIX = 10;
+export const TITLE_CONTAINS = 5;
+/** Most a work can gain from having many readers. */
+export const POPULARITY_WEIGHT = 40;
+/** How much each place in the source's own ranking is worth. */
+export const RANK_STEP = 5;
+export const RANK_BASE = 100;
+/** An edition count this many times larger marks the other work as the original. */
+export const DERIVATIVE_EDITION_RATIO = 10;
+
+/** Context a work is ranked in: its competitors decide what "popular" means here. */
+export interface RankContext {
+  /** log2 of the highest reading-list count in the result set. */
+  maxPopularityLog: number;
+  /** Ids of works that are adaptations or companions of another result. */
+  derivatives: ReadonlySet<string>;
+}
+
+function readers(work: WorkSummary): number {
+  return work.popularity?.readinglog ?? work.popularity?.wantToRead ?? 0;
+}
+
+export function rankContext(works: readonly WorkSummary[]): RankContext {
+  const most = Math.max(0, ...works.map(readers));
+  return { maxPopularityLog: Math.log2(most + 1), derivatives: derivativeIds(works) };
+}
 
 /**
- * Relevance per SPEC §3 F1.4. Exact title match beats prefix beats
- * substring; edition count adds a logarithmic popularity bonus; titles that
- * are about a work rather than the work itself are penalized.
+ * Works that exist because another result exists (SPEC §9.3 step 10).
+ *
+ * Open Library files an adaptation, a graphic novel or a stage version as
+ * its own work, with the adapter first and the original author second. So a
+ * work whose *later* author is the primary author of a far larger work in the
+ * same result set is a derivative of it: `1984 (adaptation)` by Michael Dean
+ * and George Orwell against Orwell's own 537 editions.
  */
-export function relevance(work: WorkSummary, query: string): number {
+export function derivativeIds(works: readonly WorkSummary[]): Set<string> {
+  const out = new Set<string>();
+  const primaries = new Map<string, number>();
+  for (const w of works) {
+    const key = authorMatchKey(w.authors[0] ?? '');
+    if (key) primaries.set(key, Math.max(primaries.get(key) ?? 0, w.editionCount ?? 0));
+  }
+  for (const w of works) {
+    if (MARKED_DERIVATIVE.test(w.title)) { out.add(w.id); continue; }
+    const mine = w.editionCount ?? 0;
+    for (const author of w.authors.slice(1)) {
+      const biggest = primaries.get(authorMatchKey(author));
+      if (biggest !== undefined && biggest >= Math.max(1, mine) * DERIVATIVE_EDITION_RATIO) {
+        out.add(w.id);
+        break;
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * Relevance per SPEC §3 F1.4 and §9.3 step 10.
+ *
+ * Open Library's own ranking is the starting point, because it is right far
+ * more often than a title match: for `1984` it puts *Nineteen Eighty-Four*
+ * first, while scoring the exact string put an eight-edition record above it.
+ * Readers add up to POPULARITY_WEIGHT, measured against the most-read work in
+ * the same result. The title match is a small bonus on top, and adaptations
+ * and secondary literature are pushed below the work they descend from.
+ */
+export function relevance(work: WorkSummary, query: string, context?: RankContext): number {
+  const ctx = context ?? rankContext([work]);
   const q = normalizeTitle(query);
   const t = normalizeTitle(work.title);
-  let score = 0;
-  if (q && t === q) score += 100;
-  else if (q && t.startsWith(q)) score += 50;
-  else if (q && t.includes(q)) score += 25;
-  score += Math.min(40, 6 * Math.log2((work.editionCount ?? 0) + 1));
+
+  let score = Math.max(0, RANK_BASE - RANK_STEP * (work.sourceRank ?? 0));
+  if (ctx.maxPopularityLog > 0) {
+    score += POPULARITY_WEIGHT * (Math.log2(readers(work) + 1) / ctx.maxPopularityLog);
+  } else {
+    // No reader counts anywhere: fall back to how widely the work was printed.
+    score += Math.min(POPULARITY_WEIGHT, 6 * Math.log2((work.editionCount ?? 0) + 1));
+  }
+  if (q && t === q) score += TITLE_EXACT;
+  else if (q && t.startsWith(q)) score += TITLE_PREFIX;
+  else if (q && t.includes(q)) score += TITLE_CONTAINS;
+
   if (looksLikeSecondaryLiterature(work.title)) score -= SECONDARY_PENALTY;
+  if (ctx.derivatives.has(work.id)) score -= DERIVATIVE_PENALTY;
   return score;
 }
 
 export function rankWorks(works: readonly WorkSummary[], query: string): WorkSummary[] {
+  const context = rankContext(works);
   return works
-    .map((w, i) => ({ w, i, s: relevance(w, query) }))
+    .map((w, i) => ({ w, i, s: relevance(w, query, context) }))
     .sort((a, b) => b.s - a.s || a.i - b.i)
     .map(x => x.w);
 }

@@ -192,7 +192,16 @@ export function looksLikeNonBook(title: string, description?: string): boolean {
 }
 
 const SECONDARY_LITERATURE =
-  /\b(study guide|summary|analysis|cliffsnotes|cliff's notes|sparknotes|companion|reader'?s guide|notes on|critical essays|lesson plans|a guide to|casebook|teacher'?s guide|and philosophy|for dummies)\b/i;
+  /\b(study guide|summary|summaries|analysis|book analysis|cliffsnotes|cliff's notes|sparknotes|companion|reader'?s guide|notes on|critical essays|lesson plans|a guide to|casebook|teacher'?s guide|and philosophy|for dummies|for fans|trivia|quiz|questions and answers|festschrift|in plain and simple english)\b/i;
+
+/**
+ * Titles that announce themselves as a version of another work (SPEC §9.3
+ * step 10): Open Library keeps `1984 (adaptation)` and `Pride and Prejudice
+ * [adaptation]` as their own works, and a graphic novel or stage script is
+ * not the book someone searched for.
+ */
+export const MARKED_DERIVATIVE =
+  /[([](\s*)(adaptation|adapted|abridged|graphic novel|comic|illustrated|stage|play|script|screenplay|retold)\b|\b(graphic novel|stage adaptation|a play in|retold by|adapted by)\b/i;
 
 /** Titles that are about a work rather than the work itself (SPEC §3 F1.4). */
 export function looksLikeSecondaryLiterature(title: string): boolean {

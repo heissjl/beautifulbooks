@@ -162,7 +162,10 @@
         "Man-woman relationships",
         "Romance",
         "Fiction, historical"
-      ]
+      ],
+      "ratings_count": 244,
+      "readinglog_count": 3301,
+      "want_to_read_count": 2586
     },
     {
       "author_key": [
@@ -232,7 +235,10 @@
         "Nineteen twenties",
         "English fiction",
         "Rich"
-      ]
+      ],
+      "ratings_count": 8,
+      "readinglog_count": 173,
+      "want_to_read_count": 152
     },
     {
       "author_key": [
@@ -253,7 +259,9 @@
       "title": "Great Gatsby",
       "subject": [
         "American literature"
-      ]
+      ],
+      "readinglog_count": 6,
+      "want_to_read_count": 5
     },
     {
       "author_key": [
@@ -306,7 +314,10 @@
         "Motion picture industry",
         "Psychiatrists",
         "Moral and ethical aspects"
-      ]
+      ],
+      "ratings_count": 0,
+      "readinglog_count": 10,
+      "want_to_read_count": 8
     },
     {
       "author_key": [
@@ -326,7 +337,10 @@
       "title": "The Great Gatsby",
       "subject": [
         "American fiction (fictional works by one author)"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 10,
+      "want_to_read_count": 8
     },
     {
       "author_key": [
@@ -350,7 +364,9 @@
         "American Authors",
         "Great Gatsby (Fitzgerald, F. Scott)",
         "Great Gatsby"
-      ]
+      ],
+      "readinglog_count": 8,
+      "want_to_read_count": 8
     },
     {
       "author_key": [
@@ -385,7 +401,10 @@
         "Fitzgerald, zelda, 1900-1948",
         "New york (n.y.), social life and customs",
         "Murder, new jersey"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 10,
+      "want_to_read_count": 9
     },
     {
       "author_key": [
@@ -405,7 +424,9 @@
       "title": "The great Gatsby, by F. Scott Fitzgerald",
       "subject": [
         "American literature"
-      ]
+      ],
+      "readinglog_count": 12,
+      "want_to_read_count": 11
     },
     {
       "author_key": [
@@ -426,7 +447,10 @@
       "subject": [
         "American Novelists",
         "Criticism and interpretation"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 7,
+      "want_to_read_count": 5
     },
     {
       "author_key": [
@@ -473,7 +497,10 @@
         "Man-woman relationships in fiction",
         "Motion picture industry in fiction",
         "American literature"
-      ]
+      ],
+      "ratings_count": 3,
+      "readinglog_count": 42,
+      "want_to_read_count": 32
     },
     {
       "author_key": [
@@ -490,7 +517,10 @@
       "language": [
         "eng"
       ],
-      "title": "The Great Gatsby"
+      "title": "The Great Gatsby",
+      "ratings_count": 1,
+      "readinglog_count": 6,
+      "want_to_read_count": 6
     },
     {
       "author_key": [
@@ -514,7 +544,10 @@
         "Fitzgerald, f. scott (francis scott), 1896-1940",
         "American Authors",
         "Criticism and interpretation"
-      ]
+      ],
+      "ratings_count": 0,
+      "readinglog_count": 3,
+      "want_to_read_count": 2
     },
     {
       "author_key": [
@@ -535,7 +568,9 @@
       "subject": [
         "Study guides",
         "Examinations"
-      ]
+      ],
+      "readinglog_count": 5,
+      "want_to_read_count": 4
     },
     {
       "author_key": [
@@ -558,7 +593,9 @@
         "Great Gatsby (Fitzgerald, F. Scott)",
         "Aufsatzsammlung",
         "Fitzgerald, f. scott (francis scott), 1896-1940"
-      ]
+      ],
+      "readinglog_count": 7,
+      "want_to_read_count": 7
     },
     {
       "author_key": [
@@ -579,7 +616,9 @@
       "title": "The Great Gatsby",
       "subject": [
         "Fitzgerald, f. scott (francis scott), 1896-1940"
-      ]
+      ],
+      "readinglog_count": 4,
+      "want_to_read_count": 3
     },
     {
       "author_key": [
@@ -600,7 +639,10 @@
         "Married people, fiction",
         "American fiction (fictional works by one author)",
         "Man-woman relationships, fiction"
-      ]
+      ],
+      "ratings_count": 0,
+      "readinglog_count": 2,
+      "want_to_read_count": 2
     },
     {
       "author_key": [
@@ -617,7 +659,9 @@
       "language": [
         "eng"
       ],
-      "title": "THE GREAT GATSBY"
+      "title": "THE GREAT GATSBY",
+      "readinglog_count": 3,
+      "want_to_read_count": 0
     },
     {
       "author_key": [
@@ -637,7 +681,9 @@
       "title": "F. Scott Fitzgerald",
       "subject": [
         "Fitzgerald, f. scott (francis scott), 1896-1940"
-      ]
+      ],
+      "readinglog_count": 5,
+      "want_to_read_count": 4
     },
     {
       "author_key": [
@@ -659,7 +705,9 @@
       "title": "The Great Gatsby",
       "subject": [
         "American fiction (fictional works by one author)"
-      ]
+      ],
+      "readinglog_count": 2,
+      "want_to_read_count": 2
     },
     {
       "cover_edition_key": "OL32102028M",
@@ -672,7 +720,10 @@
       "subject": [
         "the great gatsby",
         "scoliosis"
-      ]
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 4,
+      "want_to_read_count": 2
     }
   ]
 }

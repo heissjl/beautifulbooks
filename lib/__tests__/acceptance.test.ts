@@ -51,8 +51,18 @@ describe('mumbo jumbo', () => {
 
 describe('1984', () => {
   const works = search('1984', '1984');
-  it('ranks Orwell first', () => {
+  it('ranks the novel first, not the small record whose title happens to match', () => {
+    // SPEC 9.1 C: an eight-edition "1984" used to beat Nineteen Eighty-Four
+    // because an exact title was worth more than any amount of readers.
+    expect(works[0].id).toBe('OL1168083W');
     expect(works[0].authors[0]).toBe('George Orwell');
+    expect(works[0].editionCount).toBeGreaterThan(400);
+  });
+  it('ranks adaptations and stage versions below the novel', () => {
+    const novel = works.findIndex(w => w.id === 'OL1168083W');
+    for (const derived of works.filter(w => /\(adaptation\)|graphic novel/i.test(w.title))) {
+      expect(works.indexOf(derived)).toBeGreaterThan(novel);
+    }
   });
   it('ranks SparkNotes and other secondary literature below every Orwell work', () => {
     const lastOrwell = works.map(w => w.authors[0]).lastIndexOf('George Orwell');

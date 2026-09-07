@@ -3,7 +3,8 @@ import type { SourceEdition, WorkSummary } from '../model';
 import type { EditionCandidate } from '../sources/googlebooks-parse';
 import {
   assembleEditions, attachCandidates, candidatesToSourceEditions, editionKey, filterWorksByLanguage,
-  foldDuplicateCovers, groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks, relevance, withoutTranslators,
+  derivativeIds, foldDuplicateCovers, groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks,
+  relevance, rankContext, withoutTranslators,
 } from '../works';
 import type { Cover } from '../model';
 
@@ -115,17 +116,82 @@ describe('assembleEditions (E8)', () => {
 });
 
 describe('relevance / rankWorks', () => {
-  it('orders exact > prefix > substring and penalizes secondary literature', () => {
-    const novel = work({ id: 'N', title: "Gravity's Rainbow", authors: ['Thomas Pynchon'], editionCount: 44 });
-    const illustrated = work({ id: 'I', title: "Gravity's rainbow illustrated", authors: ['Zak Smith'], editionCount: 4 });
-    const guide = work({ id: 'G', title: "A Reader's Guide to Gravity's Rainbow", authors: ['Douglas Fowler'], editionCount: 2 });
-    const unrelated = work({ id: 'U', title: 'Maximalist Novel', authors: ['Stefano Ercolino'], editionCount: 400 });
-    const q = "gravity's rainbow";
-    expect(relevance(novel, q)).toBeGreaterThan(relevance(illustrated, q));
-    expect(relevance(illustrated, q)).toBeGreaterThan(relevance(unrelated, q));
-    expect(relevance(unrelated, q)).toBeGreaterThan(relevance(guide, q));
-    expect(rankWorks([guide, unrelated, illustrated, novel], q).map(w => w.id)).toEqual(['N', 'I', 'U', 'G']);
+  /** As Open Library returns them: rank 0 first, with reading-list counts. */
+  const ranked = (list: Array<Partial<WorkSummary> & { id: string }>) =>
+    list.map((w, i) => work({ sourceRank: i, ...w }));
+
+  it('keeps the source order unless something argues against it', () => {
+    const list = ranked([
+      { id: 'N', title: "Gravity's Rainbow", authors: ['Thomas Pynchon'], editionCount: 44, popularity: { readinglog: 353 } },
+      { id: 'I', title: "Gravity's rainbow illustrated", authors: ['Zak Smith'], editionCount: 4, popularity: { readinglog: 13 } },
+      { id: 'G', title: "A Reader's Guide to Gravity's Rainbow", authors: ['Douglas Fowler'], editionCount: 2, popularity: { readinglog: 3 } },
+    ]);
+    expect(rankWorks(list, "gravity's rainbow").map(w => w.id)).toEqual(['N', 'I', 'G']);
   });
+
+  it('does not let an exact title beat a far more read work (SPEC 9.1 C)', () => {
+    // The real 1984 case: Open Library ranks the novel first, but its title is
+    // "Nineteen Eighty-Four", while an eight-edition record is called "1984".
+    const list = ranked([
+      { id: 'novel', title: 'Nineteen Eighty-Four', authors: ['George Orwell'], editionCount: 537, popularity: { readinglog: 8491 } },
+      { id: 'omnibus', title: 'Animal Farm / Nineteen Eighty-Four', authors: ['George Orwell'], editionCount: 37, popularity: { readinglog: 484 } },
+      { id: 'adaptation', title: '1984 (adaptation)', authors: ['Michael Dean', 'George Orwell'], editionCount: 4, popularity: { readinglog: 481 } },
+      { id: 'translation', title: '1984', authors: ['George Orwell', 'Amélie Audiberti'], editionCount: 8, popularity: { readinglog: 73 } },
+      { id: 'sparknotes', title: 'SparkNotes for 1984 by George Orwell', authors: ['Spark Publishing'], editionCount: 4, popularity: { readinglog: 55 } },
+    ]);
+    const order = rankWorks(list, '1984').map(w => w.id);
+    expect(order[0]).toBe('novel');
+    expect(order.indexOf('adaptation')).toBeGreaterThan(order.indexOf('translation'));
+    expect(order.at(-1)).toBe('sparknotes');
+  });
+
+  it('still rewards the exact title when nothing else separates two works', () => {
+    const [exact, contains] = ranked([
+      { id: 'exact', title: 'Beloved', authors: ['Toni Morrison'], popularity: { readinglog: 100 } },
+      { id: 'contains', title: 'Beloved Stranger', authors: ['Elizabeth Oldfield'], popularity: { readinglog: 100 } },
+    ]).map(w => ({ ...w, sourceRank: 0 }));
+    const ctx = rankContext([exact, contains]);
+    expect(relevance(exact, 'beloved', ctx)).toBeGreaterThan(relevance(contains, 'beloved', ctx));
+  });
+
+  it('falls back to edition count when no work has reader data', () => {
+    const list = ranked([
+      { id: 'small', title: 'X', editionCount: 1 },
+      { id: 'big', title: 'X', editionCount: 500 },
+    ]).map(w => ({ ...w, sourceRank: 0 }));
+    const ctx = rankContext(list);
+    expect(relevance(list[1], 'x', ctx)).toBeGreaterThan(relevance(list[0], 'x', ctx));
+  });
+});
+
+describe('derivativeIds', () => {
+  it('marks a work whose later author is the primary author of a much larger work', () => {
+    const list = [
+      work({ id: 'orwell', title: 'Nineteen Eighty-Four', authors: ['George Orwell'], editionCount: 537 }),
+      work({ id: 'dean', title: '1984', authors: ['Michael Dean', 'George Orwell'], editionCount: 4 }),
+    ];
+    expect([...derivativeIds(list)]).toEqual(['dean']);
+  });
+
+  it('leaves a co-authored work of comparable size alone', () => {
+    const list = [
+      work({ id: 'a', title: 'A', authors: ['Ann Author'], editionCount: 40 }),
+      work({ id: 'b', title: 'B', authors: ['Bob Writer', 'Ann Author'], editionCount: 30 }),
+    ];
+    expect(derivativeIds(list).size).toBe(0);
+  });
+
+  it('marks titles that announce themselves as an adaptation', () => {
+    const list = [
+      work({ id: 'austen', title: 'Pride and Prejudice', authors: ['Jane Austen'], editionCount: 4041 }),
+      work({ id: 'adapt', title: 'Pride and Prejudice [adaptation]', authors: ['Fern Siegel'], editionCount: 4 }),
+      work({ id: 'graphic', title: 'Pride and Prejudice: The Graphic Novel', authors: ['Nancy Butler'], editionCount: 3 }),
+    ];
+    expect([...derivativeIds(list)].sort()).toEqual(['adapt', 'graphic']);
+  });
+});
+
+describe('rankWorks stability', () => {
   it('is stable for equal scores', () => {
     const a = work({ id: 'a', title: 'X' });
     const b = work({ id: 'b', title: 'X' });

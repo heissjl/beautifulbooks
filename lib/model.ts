@@ -63,12 +63,28 @@ export interface SourceEdition extends Edition {
   authorKeys?: string[];
 }
 
+/**
+ * How many readers a work has at Open Library (SPEC §9.3 step 10).
+ *
+ * Open Library's own search ranks by this and gets `1984` right; our ranking
+ * ignored it and put an eight-edition record above the real work.
+ */
+export interface Popularity {
+  /** People who put the work on a reading list. The most telling of the three. */
+  readinglog?: number;
+  wantToRead?: number;
+  ratings?: number;
+}
+
 /** A work as it appears in search results: enough to render a card. */
 export interface WorkSummary extends Work {
   /** Up to 4 distinct cover URLs for the mosaic; first is the primary cover. */
   coverUrls: string[];
   /** ISO 639-1 codes of languages this work has editions in (from the source). */
   languages: string[];
+  popularity?: Popularity;
+  /** Position in the source's own ranking, 0-based. Absent for merged works. */
+  sourceRank?: number;
 }
 
 /** Covers of one work grouped for the detail page (SPEC §3 F2.3). */
