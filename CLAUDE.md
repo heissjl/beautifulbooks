@@ -12,6 +12,7 @@ The spec is written in German; code, comments, commit messages and this file are
 
 The data layer was rewritten per SPEC.md §7; the old aggregator and legacy clients are gone (step 5). The UI talks only to `/api/search` and `/api/works/[id]`; external APIs are called server-side only.
 
+- **Google Books quota (§8.7, step 13a done 2026-09-07):** a cold detail page costs **2** Google requests, not 11. The title search runs once, on page 0; the ISBN lookup that reveals the cover a shop currently ships runs only when a cover is selected (`lib/isbn.ts`, `components/useIsbnCovers.ts`). Never move it back into `getWorkPage`: the free quota is the binding constraint before launch, and an integration test asserts page 0 makes exactly one Google call.
 - **Paged cover loading (§9.3 step 11, done 2026-09-07):** `/api/works/[id]?offset=<0|100|…>&signatures=<0|1>` returns **one page** of editions, never the whole work. Open Library orders editions by record age, so page 0 is the newest printings only; loading just that page showed 43 of Gatsby's 379 covers. `getWorkPage` in `lib/work.ts` builds a page (Google Books runs on page 0 only, so the quota does not grow with the page count); `useWorkPages` in `components/` loads pages sequentially in the background; `lib/pages.ts` (`mergeWorkPages`, `orderGroups`) combines them and keeps the language tabs from reshuffling. **Folding happens in the browser**, over every page loaded so far, which is why `lib/imagesig.ts` (signature type, `hamming`, `BLANK_CONTRAST`) is split from `lib/imagehash.ts` (jpeg-js and pngjs decoders, server only). Never import `imagehash` from client code. `getWorkDetail` still exists as the whole-work path for tests.
 
 - Cover model (E8, step 6, done): `Cover` is its own entity in `lib/model.ts`; `assembleEditions` in `lib/works.ts` merges same-ISBN editions but never drops a cover. ISBN != cover: reprints change the cover under the same ISBN, so never dedupe by ISBN alone and never promise a cover at a purchase link.
@@ -37,6 +38,7 @@ Progress is tracked by the numbered steps in SPEC.md §7 (steps 1–9, done) and
 app/                Next.js App Router pages and API routes
   api/search/       GET ?q=&lang=  -> SearchResult (lib/search.ts)
   api/works/[id]/   GET ?offset=&signatures=  -> WorkPageResponse, one page (lib/work.ts + buy links)
+  api/isbn/[isbn]/  GET ?signatures=  -> IsbnCovers, what a shop shows for an ISBN (lib/isbn.ts)
   book/[id]/        detail page, id = Open Library work id
 components/         React components, Tailwind
 lib/                data layer, layout in SPEC.md §7; types in lib/model.ts

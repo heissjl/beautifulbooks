@@ -178,9 +178,14 @@ describe('getWorkPage', () => {
     expect(p!.signatures).toBeUndefined();
   });
 
-  it('asks Google Books on the first page only, so the quota does not grow with the page count', async () => {
+  it('asks Google Books once on the first page and never for ISBNs (SPEC 13a)', async () => {
     await getWorkPage(GATSBY, { offset: 0 });
-    expect(calls.filter(u => u.includes('googleapis')).length).toBeGreaterThan(0);
+    const google = calls.filter(u => u.includes('googleapis'));
+    // One title search. The ten ISBN lookups that used to run here now happen
+    // when a cover is selected (lib/isbn.ts), which is the whole point of 13a.
+    expect(google).toHaveLength(1);
+    expect(decodeURIComponent(google[0])).toContain('intitle:');
+    expect(google.some(u => u.includes('isbn:'))).toBe(false);
 
     calls.length = 0;
     const p = await getWorkPage(GATSBY, { offset: 100 });

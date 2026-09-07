@@ -85,14 +85,6 @@ export function candidatesToSourceEditions(
   return candidates.filter(c => identityKey(c) === key).map(c => toSourceEdition(work.id, c));
 }
 
-/** Candidates found by ISBN lookup already belong to the work; no title match needed. */
-export function isbnCandidatesToSourceEditions(
-  workId: string,
-  candidates: readonly EditionCandidate[],
-): SourceEdition[] {
-  return candidates.map(c => toSourceEdition(workId, c));
-}
-
 function toSourceEdition(workId: string, c: EditionCandidate): SourceEdition {
   const { authors, coverUrl, ...rest } = c;
   void authors;

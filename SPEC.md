@@ -549,7 +549,11 @@ Gatsby kalt: erste Wand nach 8 s, vollständig nach etwa 38 s; warm unter 5 s. D
 - Leere und Text-Scans (Kontrast unter Schwelle **oder** Hash aus ≤ 2 gesetzten Bytes) verschwinden aus der Wand, auch ohne Alternative; die Ausgabe bleibt in einer Liste „Editions without a usable cover“ mit ihren Links.
 - Tests: die Beloved- und Gatsby-Paare oben als Fixture (Hash + Metadaten, keine Bilder), pro Stufe ein Positiv- und ein Negativfall.
 
-**Schritt 13a – ISBN-Nachschau erst bei Auswahl (Kontingent, §8.7).** Klein, unabhängig, sollte vor 13 kommen und darf vorgezogen werden. `lookupByIsbns` verschwindet aus `getWorkPage`; stattdessen fragt die Detailseite beim Auswählen eines Covers nach. Verbrauch pro Seitenaufruf 7–11 → 2. Kosten: 2 bis 5 Cover pro Werk erscheinen erst beim Anklicken statt sofort in der Wand (Zahlen in §8.7).
+**Schritt 13a – ISBN-Nachschau erst bei Auswahl (Kontingent, §8.7).** *Erledigt 2026-09-07.* `lookupByIsbns` ist aus `getWorkPage` verschwunden; die neue Route `GET /api/isbn/<isbn13>?signatures=1` (`lib/isbn.ts`) liefert das Handelsbild einer ISBN, und die Detailseite fragt danach, sobald ein Cover ausgewählt ist (`useIsbnCovers`). Die Bilder kommen vor dem Falten in die Wand, damit ein Handelsbild, das dem Katalog-Scan gleicht, in ihn hineinfaltet statt doppelt zu erscheinen. Welche ISBN gefragt wird, entscheidet eine Auswahl allein auf den Katalogdaten (`buildWall` ohne Zusatz-Cover), sonst hinge die Frage von ihrer eigenen Antwort ab.
+
+- **Verbrauch pro Detailseite: 7–11 → 2** Google-Anfragen (eine Titelsuche beim Laden, eine Nachschau je ausgewähltem Cover), im Integrationstest festgehalten.
+- **Gemessen im Browser (Beloved):** 59 Cover beim Laden vorher, 57 nachher; ein Klick auf eine andere Ausgabe holt deren Handelsbild nach und die Wand wächst auf 58. Trägt ein gefaltetes Cover zwei Ausgaben mit verschiedenen ISBNs, werden beide gefragt.
+- Offen für Schritt 13: das geholte Bild wird bisher nur angezeigt, noch nicht mit dem gewählten Cover verglichen und als „verified / differs / unknown“ ausgewiesen.
 
 **Schritt 13 – Kauf-Links mit Verifikationsgrad (E).**
 - Beim Auswählen eines Covers prüft der Client `GET /api/isbn/<isbn13>`: Server holt Googles ISBN-Bild (gecacht 24 h) und OLs `/isbn/<isbn>.json`, hasht und vergleicht mit dem gezeigten Cover. Antwort: `verified` (Distanz ≤ 16), `differs` (mit URL des Handelsbildes), `unknown` (kein Bild). Ein Google-Call pro ISBN und Tag, nur auf Auswahl, das passt ins Kontingent.

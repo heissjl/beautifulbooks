@@ -7,21 +7,22 @@
  * Great Gatsby that was 43 of 379 covers. So the unit here is *one page*;
  * the client keeps asking for the next one and merges them (lib/pages.ts).
  *
- * Page 0 additionally carries the work itself, the Google Books candidates
- * for its title, and the current Google cover for the newest ISBNs; later
- * pages are Open Library only, so the Google quota does not grow with the
- * number of pages.
+ * Page 0 additionally carries the work itself and the Google Books
+ * candidates for its title; later pages are Open Library only, so the Google
+ * quota does not grow with the number of pages. What a shop currently shows
+ * for a given ISBN is asked separately, when a cover is selected (lib/isbn.ts,
+ * SPEC §9.3 step 13a).
  */
 import type { Cover, Edition, LanguageGroup, Work } from './model';
 import type { ImageSignature } from './imagesig';
 import type { PageInfo } from './pages';
 import { hashCovers } from './coverhash';
-import { lookupByIsbns, searchEditionCandidates } from './sources/googlebooks';
+import { searchEditionCandidates } from './sources/googlebooks';
 import { OL_EDITIONS_PAGE, getEditionsPage, getWork } from './sources/openlibrary';
 import { parseEditions } from './sources/openlibrary-parse';
 import {
   assembleEditions, candidatesToSourceEditions, foldDuplicateCovers, groupCoversByLanguage,
-  isbnCandidatesToSourceEditions, withoutTranslators,
+  withoutTranslators,
 } from './works';
 
 /** Never scan more edition records than this; beyond it works are anthologies and bibles. */
@@ -103,16 +104,9 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
   const olEditions = parseEditions(page.entries, work);
   const cleanWork = first ? withoutTranslators(work, olEditions) : work;
 
-  // Current Google cover for the newest ISBNs (reveals reprints under an old ISBN).
-  const newestIsbns = first
-    ? olEditions.filter(e => e.isbn13).sort((a, b) => (b.year ?? -1) - (a.year ?? -1)).map(e => e.isbn13!)
-    : [];
-  const isbnCandidates = first ? await lookupByIsbns(newestIsbns) : [];
-
   const { editions, covers } = assembleEditions([
     ...olEditions,
     ...candidatesToSourceEditions(work, gbCandidates),
-    ...isbnCandidatesToSourceEditions(work.id, isbnCandidates),
   ]);
 
   const result: WorkPage = {

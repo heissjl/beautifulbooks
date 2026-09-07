@@ -11,12 +11,14 @@ import SiteHeader from '@/components/SiteHeader';
 import { flyCovers } from '@/components/flyCovers';
 import { useLoadingScene } from '@/components/useLoadingScene';
 import { useMarket } from '@/components/useMarket';
+import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor } from '@/lib/buylinks';
 import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
+import type { ImageSignature } from '@/lib/imagesig';
 import { orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { foldDuplicateCovers, groupCoversByLanguage } from '@/lib/works';
 
@@ -80,6 +82,48 @@ function TitleBlock({ title, authors, meta }: { title?: string; authors?: string
 }
 
 /**
+ * Folds and groups the covers of a wall.
+ *
+ * Folding cannot happen on the server: it only ever sees one page of
+ * editions, and duplicates sit across pages (SPEC §9.3 step 11). `extra`
+ * carries the retail covers fetched for a selected ISBN (step 13a); they
+ * join before folding, so a retail image identical to the catalogue scan
+ * folds into it instead of showing up twice.
+ */
+function buildWall(
+  merged: MergedWork<EditionView>,
+  extra: readonly Cover[],
+  extraSignatures: ReadonlyMap<string, ImageSignature>,
+  preferred: string | undefined,
+) {
+  const all = [...merged.covers, ...extra];
+  const signatures = new Map(merged.signatures);
+  for (const [id, sig] of extraSignatures) signatures.set(id, sig);
+
+  const covers = foldDuplicateCovers(all, signatures);
+  const coversById = new Map(covers.map(c => [c.id, c]));
+  const ordered = orderGroups(
+    groupCoversByLanguage(covers, merged.editions, preferred),
+    all.map(c => c.id),
+    preferred,
+  );
+  const groups: CoverTab[] = ordered.map(g => ({
+    language: g.language,
+    covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
+  }));
+  return { covers, coversById, groups };
+}
+
+/** The cover the URL points at, else the first one on the wall (SPEC F2.6). */
+function selectCoverFrom(wall: ReturnType<typeof buildWall>, selectedId: string | null): Cover | null {
+  const byId = wall.coversById.get(selectedId ?? '');
+  if (byId) return byId;
+  // A folded duplicate may be in the URL: resolve to its representative.
+  const folded = wall.covers.find(c => c.similarIds?.includes(selectedId ?? ''));
+  return folded ?? wall.groups[0]?.covers[0] ?? null;
+}
+
+/**
  * What the wall is showing and how much of the catalogue it has seen
  * (SPEC §9.3 step 11, F). Open Library knows far more editions than carry a
  * cover, so the honest statement is "n covers out of m edition records
@@ -138,6 +182,33 @@ function BookDetail() {
 
   // The selected cover lives in the URL (?cover=) so it can be shared (SPEC F2.6).
   const selectedId = searchParams.get('cover');
+
+  const editionIdsByIsbn = useMemo(() => {
+    const map = new Map<string, string[]>();
+    for (const e of pages.merged?.editions ?? []) {
+      if (!e.isbn13) continue;
+      const list = map.get(e.isbn13) ?? [];
+      list.push(e.id);
+      map.set(e.isbn13, list);
+    }
+    return map;
+  }, [pages.merged]);
+
+  // Which ISBN to ask about is decided on the catalogue alone. Retail covers
+  // never change *which edition* is being looked at, and deriving the
+  // question from an answer that depends on it would chase its own tail.
+  const lookupIsbns = useMemo(() => {
+    if (!pages.merged) return [];
+    const wall = buildWall(pages.merged, [], new Map(), lang || undefined);
+    const cover = selectCoverFrom(wall, selectedId);
+    if (!cover) return [];
+    const byId = new Map(pages.merged.editions.map(e => [e.id, e]));
+    return cover.editionIds.map(id => byId.get(id)?.isbn13).filter((i): i is string => !!i);
+  }, [pages.merged, lang, selectedId]);
+
+  // What a shop shows for that ISBN, asked on selection rather than while the
+  // work loads: 7-11 Google requests per page view become 2 (SPEC §9.3 13a).
+  const isbnCovers = useIsbnCovers(requestKey, lookupIsbns, editionIdsByIsbn);
   const selectCover = (coverId: string) => {
     const next = new URLSearchParams(searchParams.toString());
     next.set('cover', coverId);
@@ -152,29 +223,14 @@ function BookDetail() {
   const view = useMemo(() => {
     const { merged, work, market } = pages;
     if (!merged || !work || !market) return null;
-
-    // Folding runs here, over every page loaded so far: the server cannot do
-    // it, because it only ever sees one page (SPEC §9.3 step 11).
-    const covers = foldDuplicateCovers(merged.covers, merged.signatures);
+    const wall = buildWall(merged, isbnCovers.covers, isbnCovers.signatures, lang || undefined);
     const editionsById = new Map(merged.editions.map(e => [e.id, e]));
-    const coversById = new Map(covers.map(c => [c.id, c]));
-    // Tabs in order of first appearance, so they do not reshuffle while
-    // later pages arrive (lib/pages.ts).
-    const ordered = orderGroups(
-      groupCoversByLanguage(covers, merged.editions, lang || undefined),
-      merged.covers.map(c => c.id),
-      lang || undefined,
-    );
-    const groups: CoverTab[] = ordered.map(g => ({
-      language: g.language,
-      covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
-    }));
-    const captions = new Map(covers.map(c => [c.id, captionFor(c, editionsById)]));
+    const captions = new Map(wall.covers.map(c => [c.id, captionFor(c, editionsById)]));
     // How many covers each edition appears with (to flag reprints, SPEC F2.5).
     const coversPerEdition = new Map<string, number>();
-    for (const c of covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
-    return { work, market, merged, covers, editionsById, coversById, groups, captions, coversPerEdition };
-  }, [pages, lang]);
+    for (const c of wall.covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
+    return { work, market, merged, ...wall, editionsById, captions, coversPerEdition };
+  }, [pages, lang, isbnCovers]);
 
   // When the scene ends, fly the staged covers to their gallery tiles.
   const flownFor = useRef('');
@@ -185,14 +241,7 @@ function BookDetail() {
     return () => cancelAnimationFrame(raf);
   }, [inScene, view, scene.staged, requestKey]);
 
-  const selected = useMemo<Cover | null>(() => {
-    if (!view) return null;
-    const byId = view.coversById.get(selectedId ?? '');
-    if (byId) return byId;
-    // A folded duplicate may be in the URL: resolve to its representative.
-    const folded = view.covers.find(c => c.similarIds?.includes(selectedId ?? ''));
-    return folded ?? view.groups[0]?.covers[0] ?? null;
-  }, [view, selectedId]);
+  const selected = useMemo<Cover | null>(() => (view ? selectCoverFrom(view, selectedId) : null), [view, selectedId]);
 
   if (pages.status === 'notfound' || pages.status === 'error') {
     return (
