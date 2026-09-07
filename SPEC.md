@@ -497,7 +497,15 @@ Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil s
 
      **Dabei gefunden und mitbehoben: eine falsche Aussage an den Leser.** `VerdictNote` behandelte alles, was nicht `verified` oder `differs` war, gleich — auch `pending`. Wer ein Cover auswählte, las also ein bis zwei Sekunden lang „No current publisher image is on record for this ISBN", obwohl noch gar nicht gefragt worden war; bei leerem Kontingent hätte dieser Satz den ganzen Tag dort gestanden und wäre den ganzen Tag falsch gewesen. `IsbnVerdict` hat jetzt den Status `unavailable`, und es gibt eigene Sätze für „wird gerade geprüft" und „die Quelle hat nicht geantwortet". Gegen §9.2 verstieß das an genau der Stelle, an der es weh tut.
 
-- [ ] **Entscheidung über den Verfügbarkeits-Button vor dem Deployment** (Julian, 2026-09-07: Button bleibt vorerst drin, Entscheidung vor dem Start).
+- [ ] **Abrechnung im Cloud-Projekt aktivieren — der einzige unerprobte Weg zu mehr als 1.000 Anfragen** (Julian, 2026-09-07). Im Projekt `beautifulbooks` ist heute **keine Abrechnung aktiviert**; die Konsole wirbt noch mit dem Startguthaben von 300 USD. Bei mehreren Google-APIs hängt das höhere Kontingent an einer aktivierten Abrechnung, für die Books API ist es **unbelegt** — und da der Selbstbedienungsweg zur Erhöhung tot ist (Frage 2 oben), ist dies die letzte Möglichkeit, die keine Fremdquelle braucht.
+
+  **Kosten:** die Books API wird nicht pro Anfrage verkauft, es gibt also keinen Tarif, in den man hineinwachsen könnte. Ein aktiviertes Abrechnungskonto allein löst für diese API keine Gebühr aus. Das Risiko ist nicht der Preis, sondern die hinterlegte Zahlungsmethode und alles, was sonst noch im selben Projekt landen könnte.
+
+  **Vorgehen, falls Julian es versucht:** Abrechnungskonto verknüpfen, danach `Queries per day` auf der Kontingentseite erneut ablesen. Ändert sich die Zahl nicht innerhalb weniger Minuten, hat es nichts gebracht und die Verknüpfung kann bleiben oder wieder gelöst werden. Das Ergebnis gehört hierher, so oder so — es ist die Antwort auf eine Frage, die im Netz niemand belastbar beantwortet.
+
+  **Wenn auch das nichts bringt,** bleiben nur die Wege aus Frage 3: ISBNdb (kostenpflichtig, ersetzt die ISBN-Nachschau eins zu eins), die Amazon Product Advertising API (kostenlos, aber erst nach drei qualifizierten Verkäufen) oder Verzicht auf die Handelsbilder.
+
+- [ ] **Entscheidung über den Verfügbarkeits-Button
 
   Der Button aus §9.3 Schritt 16 fragt bei jedem Klick eines Lesers jeden Händler des Marktes einmal an. Gemessen am 2026-09-07 verbieten die meisten genau diesen Pfad:
 
