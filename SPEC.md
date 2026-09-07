@@ -735,8 +735,13 @@ Die Vertrauensarbeit aus §9 ist bis auf zwei Schritte erledigt. Was jetzt zähl
 
 ### D. Reichweite (§8.4)
 
-10. **Statische Work-Seiten mit ISR.** Der größte Hebel und fast geschenkt: jede besuchte Detailseite wird indexierbar. Dazu das Titelmuster („Alle Cover von *1984* …“), Schema.org `Book`, und das Cover-Mosaik als Open-Graph-Bild — Letzteres ist der Grund, warum solche Links geteilt werden.
-11. **Sitemap aus ~500 kuratierten Works, Search Console ab Tag 1.**
+10. ~~Statische Work-Seiten mit ISR~~ *erledigt 2026-09-07.* `app/book/[id]/page.tsx` ist jetzt eine Server-Komponente (die Interaktion liegt unverändert in `components/BookDetail.tsx`), mit `revalidate = 86400` und `generateStaticParams` über die kuratierten Werke. Dazu:
+    - **Titelmuster** „The covers of *Nineteen Eighty-Four* by George Orwell“, Beschreibung mit der Ausgabenzahl der Quelle („Open Library lists 537 edition records … See the ones that carry a cover“). Kein „all“, kein „every“ — die Regel aus CLAUDE.md gilt in den Meta-Tags besonders, weil ein falscher Anspruch dort am längsten unbemerkt überlebt.
+    - **Schema.org `Book`** mit `name`, `author`, `datePublished`, bis zu vier `image` und `sameAs` auf den Open-Library-Datensatz. Bewusst **ohne** `aggregateRating` und `offers`: wir haben weder eigene Bewertungen noch eigene Preise, und beides zu erfinden verstößt gegen Googles Richtlinien wie gegen §9.2.
+    - **Open-Graph-Bild** `opengraph-image.tsx`, 1200×630, vier Cover nebeneinander plus Titel und Autor. Kostet keine Google-Anfrage (`googleBooks: false`), damit ein Crawler die Sitemap nicht in Kontingent umrechnet.
+    - Kosten pro kalter Seite: zwei Open-Library-Anfragen, beide gecacht, null Google.
+    - **Grenze, die hier stehen muss:** der sichtbare Text bleibt clientseitig, die Wand lädt ihre Seiten weiter im Browser. Google rendert JavaScript, und Titel, JSON-LD und OG-Bild stehen im HTML. Bleibt die Indexierung trotzdem schwach, ist der nächste Schritt, Seite 0 serverseitig mitzurendern — ein eigener Schritt, kein Nebenbei.
+11. **Sitemap** *(teilweise erledigt 2026-09-07)*: `app/sitemap.ts` und `app/robots.ts` stehen, `/api/` ist für Crawler gesperrt, weil jeder Aufruf dort eine externe Anfrage kostet. Enthalten sind die zwölf kuratierten Werke — die ~500 aus der ursprünglichen Planung brauchen eine Liste, die es noch nicht gibt, und erfundene IDs wären schlechter als eine kurze Sitemap. **Search Console ab Tag 1** bleibt offen und braucht die Domain (Punkt 6).
 
 ### E. Qualität, jederzeit dazwischen
 
