@@ -596,3 +596,26 @@ Der Plan für ROADMAP 1.1 steht in [plans/PLAN-1.1-keine-vorauswahl.md](plans/PL
 | Mumbo Jumbo | 10 | 2 | 8 | 1972–2017 |
 
 Jedes Werk hat mindestens einen Klappentext, aber nur 10 bis 18 Prozent der Ausgaben tragen einen. Jahresspanne und Verlagszahl sind dagegen immer vorhanden und stehen bisher nirgends auf der Seite. Seitenzahl (14 von 26 bei *Wolf Hall*, 40 von 51 bei *Beloved*) und Format sind zu dünn für eine Aussage über das Werk. Nebenbei bestätigt: der erste Abruf von *Mumbo Jumbo* kam leer zurück und beim zweiten mit 10 Ausgaben — dieselbe Unzuverlässigkeit von Open Library, die 1.4 auf der Suchseite behandelt.
+
+---
+
+## 2026-09-07 · Die kuratierte Wand wird eigensinniger (Julians Auswahl)
+
+Julian wollte Neuromancer, Pynchon, Arno Schmidt, *Berlin Alexanderplatz* und Clausewitz' *Vom Kriege* auf der Startseite und „ein paar der anderen langweiligen" heraus. Pynchon stand mit *Gravity's Rainbow* schon drin.
+
+**Geprüft, bevor geändert wurde**, denn die Wand verspricht Cover zum Vergleichen:
+
+| Werk | Ausgaben | Cover auf Seite 0 |
+|---|---|---|
+| Neuromancer (OL27258W) | 65 | 50 |
+| Berlin Alexanderplatz (OL1434640W) | 68 | 43 |
+| Vom Kriege (OL62744W) | 194 | 30 |
+| Aus julianischen Tagen (OL2298782W) | **1** | **2** |
+
+**Arno Schmidts *Aus julianischen Tagen* konnte nicht auf die Wand.** Der Datensatz hat eine einzige Ausgabe, und beide verfügbaren Bilder sind gescannte Innenseiten: Open Library zeigt die Impressumsseite mit einem Bibliotheksstempel, Google Books den Schmutztitel. Kein Umschlag, den man vergleichen könnte. Eine Durchsicht aller Arno-Schmidt-Werke mit Cover ergab, dass keines mehr als drei Ausgaben hat; das beste echte Titelbild trägt **KAFF auch Mare Crisium** (OL3801690W, Fischer, Mondlandschaft), und das steht jetzt für Arno Schmidt auf der Wand — mit zwei Covern dahinter.
+
+**Damit wurde die Zeile über der Wand falsch.** Sie versprach „Books with dozens of covers to compare"; sie sagt jetzt „Some have hundreds of covers, some only a few". Das ist dieselbe Regel wie überall (N12): lieber die ungleiche Wahrheit als ein Versprechen, das eine Kachel nicht hält.
+
+**Heraus** flogen die vier vorhersehbarsten Einträge einer Klassikerliste: *Pride and Prejudice*, *The Hobbit*, *Dracula*, *Frankenstein*. **Herein** kamen Neuromancer, Berlin Alexanderplatz, Vom Kriege und KAFF. Geblieben sind 1984, Gatsby, Dune, Ulysses, Lolita, Moby Dick, Beloved und Gravity's Rainbow. Die Reihenfolge ist fürs Auge gesetzt, nicht nach Rang: hell neben dunkel, keine zwei roten Cover nebeneinander.
+
+Nebenbei festgehalten, weil es sich schon einmal verwechselt hat: `lib/curated.ts` ist **nicht** die Liste aus ROADMAP 5.1. Diese zwölf sind nach Aussehen gewählt, jene 500 nach Ausgabenzahl für die Sitemap.
