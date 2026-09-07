@@ -71,7 +71,8 @@ lib/                data layer; types in lib/model.ts
   sources/          Open Library and Google Books clients and parsers
   __fixtures__/     recorded API responses for tests
 scripts/            record-fixtures.ts, check-buylinks.ts
-docs/               history.md (what was built and measured), plans/ (finished plans), spine-research.md
+docs/               history.md (what was built and measured), plans/ (finished plans),
+                    tests/ (test-session findings), spine-research.md
 ```
 
 ## Commands
@@ -84,6 +85,8 @@ npm run build      # must pass before a step is considered done
 ```
 
 ## Working rules
+
+- **A failure must never be reported as a finding.** A source that times out is not "no results", an unasked question is not "nothing on record", and a hint must not name a setting that is not set. `searchWorks` still swallows every error into an empty list, which reaches the reader as "No books found"; that is ROADMAP 1.4 and the pattern to avoid everywhere else (SPEC F1.7, F3.3, N12).
 
 - **No copy claims completeness.** The site shows what two open catalogues happen to hold, which is a fraction of what was printed: never "every", "all" or "complete" about covers or editions, in the UI, the metadata or the README. The detail page's counter states what was actually seen, and the surrounding text must not contradict it (SPEC §9.3 step 15).
 

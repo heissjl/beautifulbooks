@@ -117,9 +117,11 @@ Zwei Ebenen:
 - **F1.2** Sprachfilter `all | en | de | fr | es | it | …`, Default `all` (E2). Der Filter wirkt auf die Ausgaben, nicht auf die Works: ein Work erscheint, wenn es mindestens eine Ausgabe in der Sprache hat.
 - **F1.3** Ergebnis: Works nach Relevanz. Pro Work Titel, Autor(en), Erstveröffentlichung, Ausgabenzahl, das Cover aus der Suche; das **Mosaik** lädt jede Karte selbst nach (`/api/works/[id]?summary=1`, bis zu vier Cover verschiedener Ausgaben aus Seite 0, acht Anfragen gleichzeitig, ein Tag Cache, **keine Google-Anfrage**). Das Mosaik ist sprachneutral (E15).
 - **F1.4** Relevanz (`relevance` mit `rankContext`, `lib/works.ts`): Ausgangspunkt `100 − 5 · sourceRank`, denn Open Library reiht bei allen geprüften Queries richtig. Dazu bis zu 40 Punkte Popularität, **relativ zum meistgelesenen Werk desselben Ergebnisses**; Titeltreffer nur 20/10/5. **Ableitungen** verlieren 60 Punkte: Titel mit „(adaptation)“, „graphic novel“, „stage“, „retold by“ usw. (`MARKED_DERIVATIVE`), Sekundärliteratur (`SECONDARY_LITERATURE`: Study Guide, Book Analysis, Trivia, …) und Werke, deren Nicht-Erstautor Erstautor eines Werks mit ≥ 10-facher Ausgabenzahl im selben Ergebnis ist. Relevanz ist relational; ohne Kontext ist die Funktion nur für ein einzelnes Werk sinnvoll. Ein „exakter Titel gewinnt“-Bonus darf nie zurückkehren (§7).
+
+  **Offene Lücke:** die Ableitungsregel greift nicht, wenn eine Ableitung denselben Titel trägt und einen **eigenen Erstautor** hat. Gemessen am 2026-09-07: `alice in wonderland` liefert „Alice in Wonderland in Five Acts“ (eine Ausgabe, Bühnenfassung) vor Carrolls Original mit 3.547; bei `the great gatsby` sind elf von fünfzehn Karten Bücher *über* Gatsby, auf Platz 2 eine Penguin-Critical-Study. Der Vergleich, der das entscheidet — gleicher normalisierter Titel, anderer Erstautor, ein Bruchteil der Ausgaben — liegt im `RankContext` bereits vor. Siehe [ROADMAP](ROADMAP.md) 6.1.
 - **F1.5** URL-Zustand `/?q=…&lang=…`; Back-Button und Teilen funktionieren.
 - **F1.6** Kürzlich gesucht (localStorage, max. 5) und eine kuratierte Cover-Wand aus zwölf Klassikern als leerer Zustand (`lib/curated.ts`).
-- **F1.7** Zustände: leer, lädt, Fehler, keine Treffer.
+- **F1.7** Zustände: leer, lädt, Fehler, keine Treffer. **Ein Ausfall der Quelle ist kein leeres Ergebnis.** Antwortet Open Library nicht oder läuft in den Timeout, zeigt die Seite den Fehlerzustand mit einem Weg zum erneuten Versuch — nie „No books found“ — und die Antwort wird nicht gecacht. Der Leerzustand nennt den Sprachfilter nur, wenn einer gesetzt ist. *Beides ist heute verletzt, siehe [Durchklick 2026-09-07](docs/tests/2026-09-07-durchklick.md) Punkte 1 und 2 und [ROADMAP](ROADMAP.md) 1.4.*
 
 **Akzeptanzkriterien** (`lib/__tests__/acceptance.test.ts`, gegen aufgezeichnete Fixtures; im Browser vor jedem abgeschlossenen Schritt):
 
@@ -134,13 +136,14 @@ Zwei Ebenen:
 ### F2 – Detailseite `/book/[workId]`
 
 - **F2.1** Die Route nimmt eine Work-ID.
-- **F2.2 Seitenweises Laden.** Open Library liefert Ausgaben in Hundertern, nach Anlagedatum des Datensatzes absteigend; eine Seite zeigt also nur die zuletzt katalogisierten Drucke, und Seite 0 ist ein Sprachengemisch. `GET /api/works/[id]?offset=<0|100|…>&signatures=<0|1>` liefert **eine Seite** (`getWorkPage`, `lib/work.ts`); der Browser (`useWorkPages`) lädt Seite 0, zeigt die Wand und holt die Folgeseiten nacheinander nach, bis `page.nextOffset` fehlt oder 1.500 Datensätze erreicht sind (`MAX_EDITIONS_SCANNED`). Google Books läuft nur auf Seite 0 (F3.2). Seite 0 wird zweimal geholt: ungehasht für den sofortigen Start, dann gehasht. Ein Fehler auf einer Folgeseite wird einmal wiederholt und beendet sonst das Nachladen, ohne die Wand zu leeren.
+- **F2.1a** Eine unbekannte, aber wohlgeformte Work-ID antwortet mit **404**, nicht mit 200 und einer leeren Seite. Ein Soft-404 wird sonst indexiert (F2.13). *Heute 200, siehe [Durchklick](docs/tests/2026-09-07-durchklick.md) Punkt 4.*
+- **F2.2 Seitenweises Laden.** Open Library liefert Ausgaben in Hundertern, nach Anlagedatum des Datensatzes absteigend; eine Seite zeigt also nur die zuletzt katalogisierten Drucke, und Seite 0 ist ein Sprachengemisch. `GET /api/works/[id]?offset=<0|100|…>&signatures=<0|1>` liefert **eine Seite** (`getWorkPage`, `lib/work.ts`); der Browser (`useWorkPages`) lädt Seite 0, zeigt die Wand und holt die Folgeseiten nacheinander nach, bis `page.nextOffset` fehlt oder 1.500 Datensätze erreicht sind (`MAX_EDITIONS_SCANNED`). Google Books läuft nur auf Seite 0 (F3.2). Seite 0 wird zweimal geholt: ungehasht für den sofortigen Start, dann gehasht. Ein Fehler auf einer Folgeseite wird einmal wiederholt und beendet sonst das Nachladen, ohne die Wand zu leeren. Die Antwort meldet den Offset, den sie **tatsächlich geliefert** hat; ein Offset jenseits der Kappung ergibt eine leere Seite, nicht stillschweigend die letzte. *Heute liefert `?offset=1500` die Seite 1400 und meldet 1400 (Durchklick, Punkt 6).*
 - **F2.3 Zähler statt Versprechen.** Während des Ladens „N covers · M of K editions checked“, danach „N covers from K editions“, bei Kappung „first 1,500 of K editions checked“, bei Abbruch „…, the source stopped answering“. Ein 1-px-Balken zeigt den Fortschritt. Darunter der Hinweis, dass die meisten Datensätze keinen Scan tragen.
 - **F2.4 Sprach-Tabs.** Cover gruppiert nach Sprache der Ausgaben, die sie tragen. Reihenfolge: die im Suchfilter gewählte Sprache zuerst, dann Englisch, dann Deutsch (`LEAD_LANGUAGES`), dann nach Häufigkeit, „Unknown“ zuletzt. Die Ladeszene wartet, bis die gewünschte Sprache (sonst Englisch) da ist, längstens bis 300 Ausgaben geprüft sind, damit die vorderen Reiter nicht unter dem Mauszeiger nachrücken. Unterhalb von `sm` stehen die Reiter in einer seitlich scrollbaren Zeile.
 - **F2.5** Innerhalb eines Tabs Jahr absteigend, unbekanntes Jahr dahinter, Bilder, die nach Textseite aussehen, ganz hinten (2.3).
 - **F2.6 Auswahl.** Klick auf ein Cover zeigt es groß mit den Ausgaben, die es tragen: Verlag, Jahr, Seiten, ISBN, Beschreibung, Vorschau-Link, Kauf-Links (2.4), Such-Links, Verfügbarkeits-Button (F2.10). Trägt eine ISBN mehrere Cover, steht das an der Ausgabe („also printed with 1 other cover“). Beim Öffnen ist heute das erste Cover der ersten Gruppe ausgewählt; das ist ein offener Punkt ([ROADMAP](ROADMAP.md)).
-- **F2.7** Ausgewähltes Cover in der URL (`?cover=…`), Suche und Sprache bleiben erhalten (`?q=&lang=`); der Zurück-Link führt zur Suche mit Query.
-- **F2.8 ISBN-Nachschau erst bei Auswahl.** `GET /api/isbn/<isbn13>?signatures=1` (`lib/isbn.ts`) liefert das Bild, das der Verlag bei Google zu dieser ISBN hinterlegt hat. Gefragt wird **nur** für ein ausgewähltes Cover (`useIsbnCovers`), nie beim Laden. Das Bild geht vor dem Falten in die Wand, damit es in den Katalog-Scan hineinfaltet, wenn es dasselbe Design ist. Trägt ein gefaltetes Cover mehrere ISBNs, werden alle gefragt.
+- **F2.7** Ausgewähltes Cover in der URL (`?cover=…`), Suche und Sprache bleiben erhalten (`?q=&lang=`); der Zurück-Link führt zur Suche mit Query. Nur eine **Auswahl des Lesers** steht in der URL: die automatische Vorauswahl aus F2.6 schreibt sich nicht hinein, sonst teilte ein Link ein Cover, das niemand gewählt hat. Solange es sie gibt, zeigt ein geteilter Link dem Empfänger deshalb möglicherweise eine andere Ausgabe als dem Absender; das endet mit [ROADMAP](ROADMAP.md) 1.1.
+- **F2.8 ISBN-Nachschau erst bei Auswahl.** `GET /api/isbn/<isbn13>?signatures=1` (`lib/isbn.ts`) liefert das Bild, das der Verlag bei Google zu dieser ISBN hinterlegt hat. Gefragt wird **nur** für ein ausgewähltes Cover (`useIsbnCovers`), nie beim Laden. Das Bild geht vor dem Falten in die Wand, damit es in den Katalog-Scan hineinfaltet, wenn es dasselbe Design ist. Trägt ein gefaltetes Cover mehrere ISBNs, werden alle gefragt — **eine Auswahl kostet also so viele Anfragen, wie das Cover ISBNs trägt, nicht eine** (gemessen am 2026-09-07: ein Klick auf ein Cover mit vier Ausgaben löste fünf Anfragen aus, ein anderer zwei). Je besser die Faltung, desto teurer der Klick; N9 rechnet das ein.
 - **F2.9 Verdikt an den Kauf-Links** (`verifyIsbnCover`, `lib/works.ts`). Kein zweiter Schwellenwert: das Urteil benutzt die Faltung der Wand selbst, damit Seitenleiste und Wand sich nie widersprechen.
 
   | Zustand | Text | Verhalten |
@@ -157,6 +160,8 @@ Zwei Ebenen:
 - **F2.12 Ladeszene.** Karten geben Titel, Autor und Cover per sessionStorage mit (`useWorkPreview`); die Seite zeigt sofort Titel und Hero-Cover, setzt die ersten eintreffenden Cover als Fächer in Szene (`LoadingStage`, bis zu vier) und lässt sie per FLIP auf ihre Kacheln fliegen (`flyCovers`, respektiert `prefers-reduced-motion`). Bei warmem Cache endet die Szene sofort.
 - **F2.13 Auffindbar und teilbar.** `app/book/[id]/page.tsx` ist eine Server-Komponente mit `revalidate = 86400` und `generateStaticParams` über die kuratierten Werke; Titel „The covers of *Titel* by *Autor*“, Beschreibung mit der Ausgabenzahl der Quelle, Schema.org `Book` (`name`, `author`, `datePublished`, bis zu vier `image`, `sameAs` auf Open Library; **ohne** `aggregateRating` und `offers`), Open-Graph-Bild 1200×630 als Cover-Mosaik. Alles aus `lib/seo.ts`, kostet zwei gecachte Open-Library-Anfragen und **null** Google. Der sichtbare Text bleibt clientseitig.
 
+  Das OG-Bild ist das, was über einen geteilten Link entscheidet, und zeigt deshalb **vier erkennbar verschiedene Cover**. `coverImages` nimmt heute die ersten vier der Wand, ungefaltet; bei *Wolf Hall* sind zwei davon dieselbe spanische Ausgabe (Durchklick, Punkt 8).
+
 ### F3 – Datenquellen
 
 - **F3.1 Open Library** (primär): Suche `/search.json` (mit den Popularitätsfeldern), Work `/works/{id}.json`, Ausgaben `/works/{id}/editions.json?offset=&limit=100`, Cover `covers.openlibrary.org/b/id/{id}-{S|M|L}.jpg`.
@@ -170,12 +175,15 @@ Zwei Ebenen:
   - Google antwortet häufig mit transienten 503; die ISBN-Nachschau wiederholt einmal und meldet sonst `unavailable`, nie „kein Cover“.
   - **Kontingent** (N9): eigener Schlüssel `GOOGLE_BOOKS_API_KEY`, 1.000 Anfragen pro Tag. Ohne Schlüssel läuft die Seite auf Open Library allein.
 - **F3.3 Ausfallsicherheit.** Jede Quelle fällt unabhängig aus: ein Fehler bei Google führt zu Teilergebnissen, nie zu einem Seitenfehler. Timeouts (`OL_TIMEOUTS`, `GB_TIMEOUT_MS`): Suche 8 s, Work 5 s, Editions 12 s, Google 5 s. Seite 0 wird bei Fehler einmal wiederholt; der zweite Versuch trifft den Cache. Die Detailseite unterscheidet „nicht gefunden“ (404) von „nicht erreichbar“ (503).
+
+  **Die Suche muss dieselbe Unterscheidung treffen, tut es aber nicht.** `searchWorks` fängt jeden Fehler ab und gibt eine leere Liste zurück; die Route antwortet daraufhin 200 mit `works: []`. Der Leser bekommt „No books found“, obwohl die Quelle nur geschwiegen hat. Gemessen am 2026-09-07: vier von rund vierzehn kalten Suchen liefen in den 8-Sekunden-Timeout, darunter zweimal *Norwegian Wood*, das bei Open Library 124 Werke hat. Der vorhandene Fehlerzustand ist auf diesem Weg unerreichbar, und `s-maxage=3600` würde die leere Antwort in Produktion eine Stunde lang ausliefern. Open Library ist an dieser Stelle nicht zuverlässiger zu machen, die Antwort darauf schon.
 - **F3.4** Hörbücher, Zeitschriften, Proceedings werden herausgefiltert.
 
 ### F4 – Cover-Mosaik
 
 - 1 Cover: voll. 2: nebeneinander. 3: eines groß links, zwei rechts. ≥ 4: 2×2.
-- Bevorzugt werden Cover **verschiedener** Ausgaben mit unterschiedlichen Cover-IDs. Das Mosaik hasht nicht; vereinzelt landet eine gescannte Textseite in einer Kachel.
+- **Keine Kachel schneidet mehr weg, als ihr Seitenverhältnis verlangt.** Ein Cover ist 2:3; eine Kachel, die schmaler ist als 2:3, zeigt nur einen Streifen davon. Bei zwei Covern ergibt „nebeneinander“ in einem 2:3-Rahmen zwei Kacheln von 1:3, und `object-fit: cover` zeigt dann rund ein Drittel jedes Bildes. Der Zwei-Cover-Fall braucht deshalb ein anderes Layout (übereinander, oder eines groß und eines klein, oder gar nur eines). *Heute verletzt, siehe [Durchklick](docs/tests/2026-09-07-durchklick.md) Punkt 7 und [das Bild dazu](docs/tests/2026-09-07-mosaik.png).*
+- Bevorzugt werden Cover **verschiedener** Ausgaben mit unterschiedlichen Cover-IDs. Das Mosaik hasht nicht; vereinzelt landet eine gescannte Textseite in einer Kachel, und zwei Kacheln können dasselbe Design in zwei Scans zeigen (Punkt 8 im Durchklick). Verschiedene Cover-IDs sind eine schwächere Bedingung als verschiedene Bilder, und dabei bleibt es, solange der Kurzpfad nicht hasht.
 - Fallback ohne Cover: Platzhalter; ein fehlgeschlagenes Bild zeigt nie Alt-Text in einem grauen Kasten (`CoverImage`).
 
 ### F5 – Klick-Zählung `/go/[provider]/[isbn]?market=`
@@ -185,7 +193,7 @@ Jeder Kauf-Link führt über diese Route, die den Klick festhält und weiterleit
 ### F6 – Seiten und Rahmen
 
 - **Startseite** `/`: Hero („Judge a book by its covers.“), Suchfeld, Sprache als Chips, kuratierte Wand; mit `?q=` die Trefferliste.
-- **About** `/about`: was die Seite tut, woher die Bilder kommen, was fehlt und warum, was die Verdikte bedeuten (inklusive „kein Händler wird gefragt“), Kauf-Links und Provision, Klickzählung ohne Kennung.
+- **About** `/about`: was die Seite tut, woher die Bilder kommen, was fehlt und warum, was die Verdikte bedeuten (inklusive „kein Händler wird gefragt“), Kauf-Links und Provision, Klickzählung ohne Kennung. **Die About-Seite zitiert die Verdikte im Wortlaut, den die Oberfläche zeigt, und alle fünf Zustände aus F2.9.** Sie erklärt sie heute als „Shops show this cover“ — genau die Formulierung, die zurückgezogen wurde, weil sie mehr behauptet als geprüft wird, und die zwei Absätze weiter von „No shop is contacted for this“ widerlegt wird (Durchklick, Punkt 5). Wer den Text der Verdikte ändert, ändert die About-Seite mit.
 - **Fußzeile** (`SiteFooter`) unter jeder Seite: Quellen, Bildrechte, Provisionshinweis, Link auf About. Impressum und Datenschutzerklärung fehlen noch ([ROADMAP](ROADMAP.md)).
 - `sitemap.xml` (Startseite, About, kuratierte Werke) und `robots.txt` (`/api/` gesperrt, weil jeder Aufruf dort eine externe Anfrage kostet).
 
@@ -220,13 +228,15 @@ Jeder Kauf-Link führt über diese Route, die den Klick festhält und weiterleit
   | Suche | 0 |
   | Suchkarten-Mosaik, Metadaten, OG-Bild | 0 |
   | Detailseite, Seite 0 | 1 (Titelsuche) |
-  | Auswahl eines Covers | 1 pro ISBN (Nachschau) |
+  | Auswahl eines Covers | 1 **pro ISBN des gewählten Covers** (F2.8), gemessen 2 bis 5 |
   | jede weitere Seite | 0 |
 
-  Also rund **500 kalte Detailseiten pro Tag**. `lib/googlequota.ts` hört auf, Google zu fragen, sobald Google selbst `dailyLimitExceeded` oder `quotaExceeded` meldet, bis zur nächsten Zurücksetzung um Mitternacht **pazifischer** Zeit; bei `rateLimitExceeded` 90 s Pause; bei jedem anderen 403 **kein** Automat (E11). Kein Tageszähler: wegen des Datencaches weiß der Code nicht, welche Aufrufe das Haus verlassen haben. Derselbe Schlüssel bedient heute Entwicklung und Betrieb (ROADMAP).
+  Also rund **500 kalte Detailseiten pro Tag**, solange niemand ein Cover auswählt. Mit einer Auswahl kostet ein Seitenbesuch 3 bis 6 statt 2 — die Schätzung „500“ ist die Obergrenze für reines Stöbern, nicht für einen Besuch, der bis zu den Kauf-Links führt (gemessen im [Durchklick](docs/tests/2026-09-07-durchklick.md), Punkt 3). `lib/googlequota.ts` hört auf, Google zu fragen, sobald Google selbst `dailyLimitExceeded` oder `quotaExceeded` meldet, bis zur nächsten Zurücksetzung um Mitternacht **pazifischer** Zeit; bei `rateLimitExceeded` 90 s Pause; bei jedem anderen 403 **kein** Automat (E11). Kein Tageszähler: wegen des Datencaches weiß der Code nicht, welche Aufrufe das Haus verlassen haben. Derselbe Schlüssel bedient heute Entwicklung und Betrieb (ROADMAP).
 - **N10 Rate-Limit** (`lib/ratelimit.ts`, `app/api/rate.ts`): Token-Bucket pro IP und Route, im Speicher, ohne Abhängigkeit. `search` 30/20 pro Minute, `works` 120/60, `isbn` 40/20, `availability` 6/3, dazu ein gemeinsamer Eimer `google` 20/5 für alle Anfragen, die ein Kontingent kosten können (Seite 0, ISBN-Nachschau; nie ein Mosaik). Antwort 429 mit `Retry-After`. **Es bremst den Stoß, nicht den Tag** (5 pro Minute sind 7.200 pro Tag) und zählt pro Instanz; es ist kein Sicherheitsmerkmal.
 - **N11 Datensparsamkeit.** Die Seite speichert nichts über den Leser: kein Konto, keine Kennung, kein Tracking-Cookie. Im Browser liegen nur die letzten Suchen und die Marktwahl (localStorage, Cookie `market`), der Ladeszene-Vorschau in sessionStorage. Die Klickzählung (F5) und jede spätere Analyse arbeiten mit Aggregaten (E14).
-- **N12 Ehrliche Texte.** Jede Aussage im UI folgt aus Daten, die gemessen wurden; wo die Seite etwas nicht weiß, steht das da. Konkret: nie „every / all / complete“ (§1), Verdikte nennen ihre Quelle (F2.9), `can't tell` heißt nicht „nicht vorrätig“ (F2.10), Zähler und umgebender Text widersprechen sich nicht (F2.3). Tests in `lib/__tests__/seo.test.ts` weisen die drei Wörter zurück.
+- **N12 Ehrliche Texte.** Jede Aussage im UI folgt aus Daten, die gemessen wurden; wo die Seite etwas nicht weiß, steht das da. Konkret: nie „every / all / complete“ (§1), Verdikte nennen ihre Quelle (F2.9), `can't tell` heißt nicht „nicht vorrätig“ (F2.10), Zähler und umgebender Text widersprechen sich nicht (F2.3), ein Ausfall heißt nicht „nichts gefunden“ (F1.7, F3.3), und ein Hinweis nennt keine Einstellung, die nicht gesetzt ist. Tests in `lib/__tests__/seo.test.ts` weisen die drei Wörter zurück.
+
+  **Zahlen aus den Quellen sind Zitate, keine Tatsachen.** Open Librarys `first_publish_year` gibt für *The Great Gatsby* 1920 an, erschienen ist er 1925; die Seite zeigt es heute als „first published 1920“ und schreibt es als `datePublished` ins JSON-LD. Entweder die Zeile nennt ihre Quelle, oder der Wert wird gegen eine zweite geprüft (Durchklick, Punkt 14).
 
 ---
 
@@ -268,10 +278,15 @@ Leitidee: **Galerie, nicht Shop.** Tokens in `app/globals.css` (Tailwind 4, `@th
 
 ## 7. Gemessene Grenzen (Stand 2026-09-07)
 
-Die Zahlen, die den Entwurf bestimmen. Herkunft und Messaufbau in [docs/history.md](docs/history.md).
+Die Zahlen, die den Entwurf bestimmen. Herkunft und Messaufbau in [docs/history.md](docs/history.md); die mit ¹ markierten stammen aus dem [Durchklick vom 2026-09-07](docs/tests/2026-09-07-durchklick.md).
 
 | Grenze | Zahl | Folge |
 |---|---|---|
+| Verlässlichkeit der Suche¹ | 4 von rund 14 kalten Suchen liefen in den 8-Sekunden-Timeout | Der Ausfall muss als Ausfall erscheinen (F1.7, F3.3) |
+| Kosten einer Auswahl¹ | 2 bis 5 Google-Anfragen pro Klick, je nach Zahl der ISBNs am gefalteten Cover | N9; entscheidet ROADMAP 0.7 mit |
+| Ladeszene mit Sprachfilter¹ | *1984* mit `lang=de`: über 20 s Bühne, weil deutsche Ausgaben erst auf Seite 3–4 liegen; ohne Filter 8 s | Die Wartegrenze aus F2.4 greift, fühlt sich aber wie ein Hänger an |
+| Ranking bei gleichnamigen Ableitungen¹ | `alice in wonderland`: Bühnenfassung mit 1 Ausgabe vor dem Original mit 3.547; `the great gatsby`: 11 von 15 Karten Sekundärliteratur. 10 andere Suchen lagen richtig | F1.4, offene Lücke |
+| Titel in der Sprache des Katalogs¹ | `crime and punishment` → «Преступление и наказание»; `die verwandlung` → „Metamorphosis“ | Richtiges Werk, fremde Sprache auf der Karte; ROADMAP 6.2 |
 | Abdeckung | *The Great Gatsby*: 1.180 Datensätze bei Open Library, 379 mit Bild, 293 Cover nach dem Falten. *Nineteen Eighty-Four*: 537 / 272 / 226. | Die Seite zeigt, was die Kataloge haben; F2.3 sagt es, §1 verbietet mehr. |
 | Was Google beisteuert | Cover: *1984* 4 von 282, *Beloved* 12 von 72, *Mumbo Jumbo* 3 von 13; dazu Beschreibungen und Vorschau-Links. Fürs Mosaik: nichts, was Open Library nicht hat. | Google ist für die Menge zweitrangig, für das Verdikt (F2.9) unersetzlich. |
 | Kontingent | 1.000 Google-Anfragen pro Tag, Entwicklung und Betrieb am selben Schlüssel. | ~500 kalte Detailseiten pro Tag (N9). |

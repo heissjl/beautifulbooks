@@ -1,6 +1,8 @@
 # Beautiful Books – Roadmap
 
-Stand: 2026-09-07. **Jeder offene Punkt steht hier genau einmal.** Was die Seite ist, steht in [SPEC.md](SPEC.md); was schon gebaut und gemessen wurde, in [docs/history.md](docs/history.md). Ein erledigter Punkt verschwindet von hier und bekommt seinen Eintrag in der Historie.
+Stand: 2026-09-07, nach dem [Durchklick als Nutzer](docs/tests/2026-09-07-durchklick.md). **Jeder offene Punkt steht hier genau einmal.** Was die Seite ist, steht in [SPEC.md](SPEC.md); was schon gebaut und gemessen wurde, in [docs/history.md](docs/history.md). Ein erledigter Punkt verschwindet von hier und bekommt seinen Eintrag in der Historie.
+
+Punkte mit **[T*n*]** kommen aus dem Testbericht und nennen dessen Nummer.
 
 Die Phasen folgen Abhängigkeiten, nicht Aufwand: Provision braucht eine öffentliche Seite, Reichweite braucht Inhalte, Messen braucht Besucher. Innerhalb einer Phase gilt die Reihenfolge der Liste. *Wer* steht bei jedem Punkt: **Julian** (Konten, Geld, Recht, Produktentscheidungen), **Claude** (Code, Messung, Text) oder beide.
 
@@ -8,12 +10,16 @@ Die Phasen folgen Abhängigkeiten, nicht Aufwand: Provision braucht eine öffent
 
 | # | Was | Wer | Aufwand |
 |---|---|---|---|
-| 1 | Phase 0, Punkte 0.1–0.4: Verfügbarkeits-Button, zweiter Google-Schlüssel, Abrechnungsversuch, Angaben fürs Impressum | Julian | eine halbe Stunde plus Wartezeit |
-| 2 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links | Claude | eine Sitzung |
-| 3 | Phase 1, Punkt 1.3: Bild-Cache vor Open Library und Google | Claude | eine Sitzung, mit Messung |
-| 4 | Phase 2: Vercel, Domain, Impressum und Datenschutz, Search Console | beide | eine Sitzung |
-| 5 | Phase 4, Punkt 4.1: Bookshop.org beantragen, sobald die Seite erreichbar ist | Julian | zehn Minuten plus Tage Wartezeit |
-| 6 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
+| 1 | Phase 1, Punkt 1.4: ein Ausfall der Suche darf nicht „nichts gefunden“ heißen | Claude | zwei Stunden |
+| 2 | Phase 0, Punkte 0.1–0.4 und 0.8: Verfügbarkeits-Button, zweiter Google-Schlüssel, Abrechnungsversuch, Angaben fürs Impressum, Enter im Suchfeld | Julian | eine halbe Stunde plus Wartezeit |
+| 3 | Phase 1, Punkte 1.5 und 1.6: die falschen Sätze (About, Leerzustand) und die zwei kaputten Bilder (Mosaik, OG) | Claude | eine Sitzung |
+| 4 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links | Claude | eine Sitzung |
+| 5 | Phase 1, Punkt 1.3: Bild-Cache vor Open Library und Google | Claude | eine Sitzung, mit Messung |
+| 6 | Phase 2: Vercel, Domain, Impressum und Datenschutz, Search Console | beide | eine Sitzung |
+| 7 | Phase 4, Punkt 4.1: Bookshop.org beantragen, sobald die Seite erreichbar ist | Julian | zehn Minuten plus Tage Wartezeit |
+| 8 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
+
+Punkt 1 steht vorn, weil er das Kernversprechen betrifft und heute jeden vierten neuen Besucher trifft. Die Ranking-Punkte aus Phase 6 sind bewusst nicht in dieser Liste: sie sind Qualität, kein Fehler, und sie brauchen mehr Messung als eine Sitzung hergibt.
 
 Danach entscheidet sich anhand der Zahlen aus Phase 3, ob Phase 4 (Geld) oder Phase 5 (Reichweite) zuerst weitergeht. Ohne Besucher bringen Kauf-Links nichts, ohne Kauf-Links kostet Reichweite nur.
 
@@ -21,7 +27,7 @@ Danach entscheidet sich anhand der Zahlen aus Phase 3, ob Phase 4 (Geld) oder Ph
 
 ## Phase 0 — Entscheidungen, die nur Julian treffen kann
 
-Keine davon ist Code. Alle vier ersten stehen vor dem Deployment.
+Keine davon ist Code. 0.1 bis 0.4 und 0.8 stehen vor dem Deployment; 0.5 bis 0.7 gehören dazu, dulden aber Aufschub.
 
 - [ ] **0.1 Verfügbarkeits-Button** (SPEC F2.10, E12). Vor dem ersten Deployment entscheiden, denn auf `localhost` schadet er niemandem, öffentlich schon: vier von sechs Händlern verbieten den abgefragten Pfad in ihrer robots.txt, Amazons Partnerbedingungen untersagen automatisierte Zugriffe, und er sagt nur für etwa zwei von sechs Händlern überhaupt etwas.
 
@@ -43,7 +49,13 @@ Keine davon ist Code. Alle vier ersten stehen vor dem Deployment.
 
 - [ ] **0.6 Vercel-Plan.** Hobby ist laut Nutzungsbedingungen nur für nicht-kommerzielle Nutzung. Vorschlag: Hobby bis zum ersten Affiliate-Link, dann Pro (20 USD/Monat) oder Cloudflare Pages (kostenlos, kommerziell erlaubt, Next.js über OpenNext) oder ein Hetzner-VPS mit Coolify. Serverstandort ändert an Impressum und Datenschutz nichts (Betreiber in Deutschland, EU-Nutzer); Frankfurt hält nur den Drittland-Absatz kürzer.
 
-- [ ] **0.7 Produktentscheidung, erst mit echten Besuchern: kostet eine Detailseite eine oder zwei Google-Anfragen?** Fiele die Titelsuche auf Seite 0 weg (`WorkPageOptions.googleBooks`, eine Zeile), verdoppelte sich die Kapazität von rund 500 auf rund 1.000 kalte Detailseiten pro Tag. Preis, gemessen über das ganze Werk: bei *1984* 4 von 282 Covern (1,4 %), bei *Beloved* 12 von 72 (17 %), dazu Beschreibungen und Vorschau-Links überall. Empfehlung: erst 0.2, 1.1 und die Cache-Verlängerung wirken lassen und den Verbrauch aus Phase 3 ansehen, bevor Cover geopfert werden.
+- [ ] **0.7 Produktentscheidung, erst mit echten Besuchern: kostet eine Detailseite eine oder zwei Google-Anfragen?** Fiele die Titelsuche auf Seite 0 weg (`WorkPageOptions.googleBooks`, eine Zeile), verdoppelte sich die Kapazität von rund 500 auf rund 1.000 kalte Detailseiten pro Tag.
+
+  **Die Rechnung ist enger, als sie aussah [T3].** Am 2026-09-07 gemessen: ein Klick auf ein Cover kostet **eine Anfrage pro ISBN, die dieses Cover trägt** — bei einem Cover mit vier Ausgaben waren es fünf, bei einem anderen zwei. Ein Besuch, der bis zu den Kauf-Links führt, kostet also 3 bis 6 Anfragen, nicht 2. Die „500 kalten Detailseiten“ gelten für reines Stöbern. Zwei Hebel entschärfen das, bevor Cover geopfert werden: Punkt 1.1 (keine automatische Auswahl) spart die Anfrage bei jedem, der nur schaut, und eine Deckelung auf die erste ISBN eines gefalteten Covers spart den Rest — zum Preis, dass das Verdikt für die übrigen ISBNs desselben Covers unbekannt bleibt. Beides ist billiger als der Verzicht auf die Titelsuche, denn deren Preis wären Cover: gemessen über das ganze Werk bei *1984* 4 von 282 (1,4 %), bei *Beloved* 12 von 72 (17 %), dazu die Beschreibungen und Vorschau-Links überall.
+
+  **Empfehlung:** erst 0.2 und 1.1 wirken lassen, dann den Verbrauch aus Phase 3 ansehen, und erst danach entscheiden.
+
+- [ ] **0.8 Zwei Minuten von Hand: geht Enter im Suchfeld?** Der Durchklick konnte es nicht prüfen — das Automatisierungs-Panel schickt Tastendrücke ohne Tastenwert, deshalb löste weder Enter noch ein Zeilenumbruch ein Absenden aus. Das Formular hat `onSubmit` und einen `type="submit"`-Knopf, im echten Browser sollte es also gehen. Es ist der häufigste Weg, eine Suche abzuschicken, deshalb gehört es geprüft und nicht angenommen. Gleich mitprüfen: Tab-Reihenfolge, Enter auf einer Cover-Kachel, Sichtbarkeit der Fokus-Ringe. Kommt dabei etwas heraus, wird daraus ein Punkt in Phase 1.
 
 ---
 
@@ -53,6 +65,8 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
 
 - [ ] **1.1 Beim Öffnen eines Buchs kein Cover automatisch auswählen.** (Julian, 2026-09-07.) Heute fällt `selectCoverFrom` auf das erste Cover der ersten Gruppe zurück: der neueste Datensatz der führenden Sprache, nicht das schönste und nicht das bekannteste. Zwei Gründe: das Produkt („Judge a book by its covers“ heißt, auf einer Wand zu landen, nicht auf einer getroffenen Entscheidung) und das Kontingent (die Auswahl löst die ISBN-Nachschau aus, **eine Google-Anfrage pro geöffnetem Buch**, ob jemand die Seitenleiste ansieht oder nicht; eine kalte Detailseite fiele von 2 auf 1, ohne ein einziges Cover zu kosten).
 
+  **Wie beliebig, im Durchklick gesehen [T11]:** *The Great Gatsby* öffnet mit einer Ausgabe von „100 MustReads“, 2026, unter ISBN 9789388843089 — eine indische Print-on-Demand-Ausgabe, auf die dann auch die Kauf-Links zeigen. Auf dem Telefon steht die Peek-Leiste dadurch **sofort beim Laden** am unteren Rand und verdeckt eine Kachelreihe, ohne dass jemand etwas ausgewählt hat.
+
   Unberührt: geteilte Links mit `?cover=`, die Peek-Leiste auf dem Telefon, die Ladeszene. Zu gestalten ist die breite Ansicht, denn eine leere zweite Spalte wäre schlechter als das Problem. Drei Kandidaten, unentschieden:
   1. Die Wand läuft bis zur ersten Auswahl über die volle Breite und rückt dann zusammen. Ehrlich zur Sache, kostet ein Umspringen des Layouts.
   2. Die Spalte trägt bis zur Auswahl eine kurze Erklärung, was ein Klick bringt.
@@ -60,13 +74,39 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
 
 - [ ] **1.2 Die Kauf-Links sind in der Seitenleiste nicht auffindbar.** (Julian, 2026-09-07: „man weiß erst gar nicht, dass man scrollen muss“.) Gemessen auf 1440 × 900 bei *Beloved*: sichtbare Höhe der Seitenleiste 804 px, Inhalt 2.351 px, davon das Cover allein 554 px; „Buy this ISBN“ liegt 437 px unter dem Fensterrand, ohne sichtbaren Hinweis, dass unterhalb des Covers etwas kommt.
 
+  **Im Durchklick am 2026-09-07 auf einem frischen Buch bestätigt [T10]:** *Wolf Hall*, dieselbe Auflösung, Seitenleiste 804 px sichtbar bei 1.256 px Inhalt, „Buy this ISBN“ bei y = 1.051, also 151 px unter der Kante. Am Fenster sieht man das große Cover und darunter „Title“ und „Published“, sonst nichts ([Bild](docs/tests/2026-09-07-seitenleiste.png)). Der Abstand hängt an der Zahl der Metadatenzeilen — 437 px bei *Beloved*, 151 px hier — das Fehlen jedes Hinweises nicht.
+
   Kandidaten: (a) Kauf-Links **über** das Cover; (b) das Cover in der Höhe deckeln, wie es die Telefon-Schublade schon tut (180 px), damit Bild und Links zusammen ins Fenster passen; (c) eine festgeklebte Leiste am unteren Rand der Seitenleiste mit den ersten Links, analog zur Peek-Leiste; (d) eine Verlaufskante als Hinweis, das Billigste und Schwächste.
 
   **Julians Zusatzidee, nur die zwei provisionsfähigen Links hochzuziehen, hat heute zwei Haken:** beide (Amazon, Bookshop) sind unkonfiguriert, es gibt also null Links zum Nudgen (Phase 4); und die About-Seite sagt „The order of the shops is not sorted by what they pay“. Vertretbar wäre eine Ordnung nach `BuyLink.kind` (Buchseite vor Trefferliste), die zufällig dieselben Links begünstigt und dem Leser nachweisbar nützt; oder der Satz auf About wird geändert. Unausgesprochen geht es nicht.
 
-- [ ] **1.3 Bild-Cache vor Open Library und Google** (SPEC N8). Cover laden heute direkt von `covers.openlibrary.org`, das auf archive.org weiterleitet und unter Last langsam oder gar nicht liefert (bei 18 gleichzeitigen Anfragen kamen nach 15 s nur die Google-Bilder); Open Library dokumentiert außerdem Rate-Limits für Cover. Optionen: `next/image` ohne `unoptimized` mit `remotePatterns` (Vercels Bildoptimierung, Kontingent des Plans prüfen) oder eine eigene Proxy-Route mit CDN-Cache. Vorher messen, wie viele verschiedene Bilder eine Detailseite lädt, damit das Kontingent der Optimierung nicht die nächste Grenze wird.
+- [ ] **1.3 Bild-Cache vor Open Library und Google** (SPEC N8). Cover laden heute direkt von `covers.openlibrary.org`, das auf archive.org weiterleitet und unter Last langsam oder gar nicht liefert (bei 18 gleichzeitigen Anfragen kamen nach 15 s nur die Google-Bilder); Open Library dokumentiert außerdem Rate-Limits für Cover. Optionen: `next/image` ohne `unoptimized` mit `remotePatterns` (Vercels Bildoptimierung, Kontingent des Plans prüfen) oder eine eigene Proxy-Route mit CDN-Cache. Vorher messen, wie viele verschiedene Bilder eine Detailseite lädt, damit das Kontingent der Optimierung nicht die nächste Grenze wird. *Im Durchklick bestätigt [T16]: die Konsole meldet auf jeder Seite mehrfach LCP-Warnungen zu `covers.openlibrary.org`; das `priority` auf den ersten Kacheln gehört mit dazu (6.5).*
 
-- [ ] **1.4 Händler-URLs Hugendubel und genialokal von Hand im Browser prüfen.** Beide antworten dem Skript mit 200 und rendern die Treffer erst im Browser; ihre URL-Muster sind weder bestätigt noch widerlegt. Zehn Minuten, beim Prüfen im sichtbaren Browser-Panel.
+- [ ] **1.4 Ein Ausfall der Suche darf nicht „No books found“ heißen. [T1, T2]** Der schwerste Fund des Durchklicks und der einzige, der das Kernversprechen direkt verletzt: `searchWorks` fängt jeden Fehler ab und gibt `[]` zurück, die Route antwortet 200 mit `works: []`, die Oberfläche sagt, es gebe das Buch nicht. Vier von rund vierzehn kalten Suchen liefen am 2026-09-07 in den 8-Sekunden-Timeout, darunter zweimal *Norwegian Wood*, das bei Open Library 124 Werke hat.
+
+  **Zu ändern:**
+  1. `searchWorks` unterscheidet: bei Timeout oder Netzfehler **werfen**, `[]` nur bei einer echten Antwort ohne Treffer. Der Kommentar „never throws“ fällt mit.
+  2. `app/api/search/route.ts` antwortet auf diesen Fehler mit **503 und ohne `Cache-Control`** — heute trägt auch die leere Antwort `s-maxage=3600`, das CDN würde sie in Produktion eine Stunde ausliefern.
+  3. `BookGrid` zeigt den vorhandenen Fehlerzustand (heute nur bei Netzfehlern erreichbar) mit einem Knopf „nochmal versuchen“, statt ihn ins Leere laufen zu lassen.
+  4. Der Leerzustand nennt den Sprachfilter **nur, wenn einer gesetzt ist** (`BookGrid.tsx:80`, heute fest verdrahtet).
+  5. Ein Test, der einen Timeout der Quelle nachstellt und belegt, dass die Route 503 sagt und nicht 200 mit leerer Liste.
+
+  Zu bedenken: ein zweiter Versuch im Server wäre verlockend, verdoppelt aber die Wartezeit auf 16 s, bevor der Leser irgendetwas erfährt. Besser einmal schnell scheitern und den Knopf anbieten.
+
+- [ ] **1.5 Die Sätze, die etwas Falsches sagen. [T5, T14, T2, T11]** Klein, aber es sind genau die Stellen, an denen die Seite ihr eigenes Versprechen bricht.
+  - **About-Seite:** erklärt die Verdikte als „Shops show this cover“ / „Shops show a different cover“ (`app/about/page.tsx:97,101`) — die zurückgezogene Formulierung, die zwei Absätze weiter von „No shop is contacted for this“ widerlegt wird. Auf den Wortlaut der Oberfläche bringen und die beiden fehlenden Zustände ergänzen (wird geprüft / Quelle antwortete nicht). Danach sind es fünf, nicht drei.
+  - **Erscheinungsjahr:** „first published 1920“ bei *The Great Gatsby* (erschienen 1925). Der Wert kommt aus Open Library und steht auch als `datePublished` im JSON-LD. Entweder die Zeile nennt ihre Quelle („Open Library says 1920“) oder der Wert wird gegen die früheste Ausgabe der Wand geprüft. Letzteres ist ehrlicher und kostet nichts, weil die Jahre ohnehin geladen werden.
+  - **Geteilter Link:** solange 1.1 offen ist, zeigt ein Link ohne `?cover=` dem Empfänger möglicherweise eine andere Ausgabe. Mit 1.1 erledigt sich das; bis dahin hier notiert, damit es nicht vergessen wird.
+
+- [ ] **1.6 Die zwei Bilder, die nach einem Fehler aussehen. [T7, T8]**
+  - **Zwei-Cover-Mosaik:** jede Hälfte bekommt eine Kachel von 113 × 341 px für ein Bild von 333 × 500, mit `object-fit: cover` bleibt rund ein Drittel der Breite übrig. Bei *The Manningtree Witches* steht zweimal derselbe Ausschnitt nebeneinander ([Bild](docs/tests/2026-09-07-mosaik.png)). Kandidaten: die beiden Cover **übereinander** statt nebeneinander (dann sind die Kacheln 4:3 und der Zuschnitt fällt oben und unten an, wo bei Covern weniger steht), eines groß und eines als Ecke, oder bei genau zwei schlicht nur das erste zeigen. Die Layouts für 1, 3 und 4 Cover sind korrekt und bleiben.
+  - **OG-Bild:** `coverImages` in `lib/seo.ts` nimmt die ersten vier Cover der Wand; bei *Wolf Hall* sind zwei davon dieselbe spanische Ausgabe. Vier **verschieden aussehende** Cover wählen. Ohne Hashes geht das nicht exakt, aber eine billige Heuristik (verschiedene Ausgaben, verschiedene Verlage, sonst verschiedene Jahre) reicht für ein Teilbild.
+
+- [ ] **1.7 Zwei Antworten, die nicht stimmen. [T4, T6]** Beides klein, beides sauber prüfbar.
+  - Eine unbekannte, aber wohlgeformte Work-ID (`/book/OL99999999W`) antwortet mit **200** statt 404; `notFound()` läuft nur für ein kaputtes ID-Muster. Vor Phase 5 beheben, sonst indexiert Google den Soft-404.
+  - `?offset=1500` liefert die Seite 1400 und meldet 1400. Die Route soll den Offset melden, den sie geliefert hat, und jenseits der Kappung eine leere Seite geben.
+
+- [ ] **1.8 Händler-URLs Hugendubel und genialokal von Hand im Browser prüfen.** Beide antworten dem Skript mit 200 und rendern die Treffer erst im Browser; ihre URL-Muster sind weder bestätigt noch widerlegt. Zehn Minuten, beim Prüfen im sichtbaren Browser-Panel.
 
 ---
 
@@ -129,7 +169,19 @@ Eine Suchseite ohne eigene Inhalte bekommt keinen organischen Traffic. Die Grund
 
 ## Phase 6 — Qualität, jederzeit dazwischen
 
-Kleine Punkte aus dem Design-Durchgang, jeder eine Stunde bis einen halben Tag, ohne Abhängigkeit.
+Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis einen halben Tag, ohne Abhängigkeit. Die ersten vier sind Qualität, kein Fehler: die Seite tut, was sie soll, nur nicht gut genug.
+
+- [ ] **6.1 Gleichnamige Ableitungen und Sekundärliteratur nach hinten. [T12]** Die Regel aus Schritt 10 greift nicht, wenn eine Ableitung denselben Titel trägt und einen eigenen Erstautor hat. Gemessen: `alice in wonderland` liefert „Alice in Wonderland in Five Acts“ (eine Ausgabe, Bühnenfassung) vor Carrolls Original mit 3.547 Ausgaben; bei `the great gatsby` sind elf von fünfzehn Karten Bücher über Gatsby, auf Platz 2 eine Penguin-Critical-Study von Stephen Matterson; `klara and the sun` hat auf Platz 2 „Alice's Adventures in Wonderland“. Zehn andere Suchen lagen richtig, das Ranking ist also nicht kaputt, nur blind für diesen Fall.
+
+  Der entscheidende Vergleich liegt im `RankContext` schon vor: gleicher normalisierter Titel, **anderer** Erstautor, ein Bruchteil der Ausgaben des größten Werks im selben Ergebnis. `MARKED_DERIVATIVE` um „in N acts“, „a play“, „an opera“ ergänzen. Vorsicht bei echten Namensgleichheiten (Lars Myttings *Norwegian Wood* ist ein eigenes Buch, kein Ableger von Murakami) — deshalb muss die Ausgabenzahl mit hineinspielen, nicht nur der Titel. Vorher die zehn Suchen aus dem Durchklick als Regressionsschutz festhalten.
+
+- [ ] **6.2 Den Titel zeigen, nach dem gesucht wurde. [T13]** `crime and punishment` zeigt «Преступление и наказание» von „Fiódor Dostoievski“, `die verwandlung` zeigt „Metamorphosis“, `the master and margarita` zeigt «Мастер и Маргарита». Jeweils das richtige Werk, aber in einer Sprache, die der Leser nicht gesucht hat, und bei Dostojewski steht auf Platz 2 ein Übersetzer als Autor. Billigste Lösung ohne Eingriff ins Ranking: die Karte zeigt den Katalogtitel und darunter den Titel der Ausgabe, die zur Suchsprache passt („Metamorphosis · Die Verwandlung“). Die Ausgabentitel liegen auf der Detailseite ohnehin vor; für die Karte wären sie neu und müssten aus der ohnehin geladenen Seite 0 kommen.
+
+- [ ] **6.3 Die Ladeszene endet zu spät, wenn ein Sprachfilter gesetzt ist. [T15]** *1984* mit `lang=de`: über 20 Sekunden Bühne, weil `leadLanguagesSettled` auf die deutsche Gruppe wartet und deutsche Ausgaben bei Open Library erst auf Seite 3 bis 4 liegen; ohne Filter war dieselbe Seite nach 8 Sekunden da. Die Obergrenze greift, aber 20 Sekunden fühlen sich wie ein Hänger an. Kandidaten: die Wand früher zeigen und den gewünschten Reiter nachrücken lassen, sobald er da ist (das war genau das, was 2026-09-07 abgestellt wurde, also nur mit ruhigem Übergang); oder die Grenze von 300 geprüften Ausgaben auf 200 senken; oder während der Wartezeit sagen, worauf gewartet wird.
+
+- [ ] **6.4 Wiederholungen in der Wand kennzeichnen. [T9]** *Wolf Hall* zeigt im englischen Reiter dreimal dasselbe rote Rosen-Cover und zweimal dasselbe weiße ([Bild](docs/tests/2026-09-07-seitenleiste.png)). Das ist die Regel aus Schritt 12 — über Verlagsgrenzen wird oberhalb Distanz 8 nie gefaltet — und sie ist gut begründet. Für den Leser sieht es trotzdem nach einem Fehler aus. Ein Hinweis an der Kachel („anderer Verlag, gleiches Motiv“) wäre ehrlicher als beides: als stilles Falten und als stilles Wiederholen. Kein Eingriff in die Schwellen.
+
+- [ ] **6.5 Kleinigkeiten aus dem Durchklick.** Tippfehler-Toleranz (`gatsbee` liefert null Treffer ohne Vorschlag; ein Abgleich gegen die kuratierten Titel und die letzten Suchen wäre billig). Ein sichtbares Label „about this book“ auf Karten mit Sekundärliteratur, statt sie nur nach hinten zu rechnen. Eine Verlaufskante an der seitlich scrollbaren Reiterzeile auf dem Telefon. Ein Weg von der Telefon-Schublade zurück zur Wand, ohne zu schließen, zu scrollen und neu zu tippen. `priority` auf den ersten Kacheln, die Konsole meldet auf jeder Seite LCP-Warnungen.
 
 - [ ] Cover-Vergleich: zwei Ausgaben nebeneinander.
 - [ ] View Transitions zwischen Karte und Detailseite (das Cover „fliegt“ mit).

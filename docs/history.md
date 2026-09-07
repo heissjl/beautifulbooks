@@ -485,3 +485,15 @@ Umsetzungsplan und Messungen in [plans/PLAN-B.md](plans/PLAN-B.md), B2 bis B5.
 Gemessen über fünf Suchen und 82 Werke: Google steuerte Cover zu sechs Karten bei, und für jede dieser Karten füllte Open Library allein bereits alle vier Mosaik-Kacheln, seit jede Karte ihr Mosaik aus Seite 0 nachlädt (Schritt 14). Übrig blieb eine gewonnene Sprache pro fünf Suchen (bei *Dune* Schwedisch). Dafür kostete der Aufruf eine von 1.000 Tagesanfragen pro kalter Suche.
 
 `lib/search.ts` macht seitdem genau einen externen Aufruf (Open Library); `searchVolumes` und das seit Schritt 13a tote `lookupByIsbns` wurden gelöscht, `attachCandidates` ebenso. Ein Integrationstest belegt, dass eine Suche keine Anfrage an `googleapis.com` stellt. Ein Besuch aus einer Suche und zwei geöffneten Büchern kostet seitdem 4 statt 5 Google-Anfragen; eine reine Suchsitzung kostet null. Die Titelsuche auf Seite 0 der Detailseite blieb: sie bringt bei *Beloved* jedes sechste Cover und überall die Klappentexte. Details in [plans/PLAN-B.md](plans/PLAN-B.md), B8.
+
+---
+
+## 2026-09-07 · Ein Durchklick als Nutzer (Testbericht)
+
+Vollständiger Befund in [tests/2026-09-07-durchklick.md](tests/2026-09-07-durchklick.md), gefahren gegen den Dev-Server mit bewusst frischen Titeln statt der bekannten Klassiker, damit die Caches kalt sind. Was daraus als Anforderung folgt, steht in SPEC.md (F1.7, F2.1a, F2.2, F2.7, F2.8, F2.13, F3.3, F4, F6, N9, N12, §7); was daraus zu tun ist, in ROADMAP.md unter 1.4 bis 1.7 und 6.1 bis 6.5.
+
+**Sechs Fehler**, in der Reihenfolge ihrer Schwere: ein Timeout bei Open Library erreicht den Leser als „No books found" (vier von rund vierzehn kalten Suchen); der Leerzustand nennt einen Sprachfilter, der nicht gesetzt ist; eine Cover-Auswahl kostet eine Google-Anfrage je ISBN des gefalteten Covers, gemessen zwei bis fünf statt der veranschlagten einen; eine unbekannte Work-ID antwortet mit 200 statt 404; die About-Seite zitiert die zurückgezogene Verdikt-Formulierung „Shops show this cover"; `?offset=1500` liefert die Seite 1400.
+
+**Was hielt**, und damit als geprüft gilt: `/go` baut das Ziel neu und ignoriert ein untergeschobenes `url=` (kein offener Redirect); das Rate-Limit lässt 20 Anfragen durch und antwortet dann mit 429, `Retry-After` und `no-store`; leere Query 400, kaputte ISBN 400, unbekannte Sprache fällt auf `all`, die Query ist bei 200 Zeichen gedeckelt und Markup wird escaped; die Telefon-Schublade öffnet, setzt den Fokus auf „Close", schließt per Escape und gibt den Bildlauf wieder frei; der Marktwechsel setzt Cookie und Händlerliste; der Zurück-Knopf stellt Query, Suchfeld und Karten wieder her; Titel, Beschreibung, Canonical, JSON-LD, OG-Bild, robots.txt und Sitemap stimmen; die Seitenleiste scrollt eigenständig; die Verdikte `verified` und `unknown` nennen ihre Quelle.
+
+**Nicht prüfbar:** Enter im Suchfeld und die Tastaturbedienung insgesamt — das Automatisierungs-Panel schickt Tastendrücke ohne Tastenwert. Steht als ROADMAP 0.8 zur Handprüfung.
