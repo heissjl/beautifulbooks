@@ -313,7 +313,7 @@ Reihenfolge ist Vorschlag: erst 8.1 und 8.2 (sichtbar und online), dann 8.3 (Gel
   - [ ] DNS bei Cloudflare, Proxy **aus** für Vercel-Records (sonst doppelte Caching-Schicht mit Problemen).
 - [ ] **Vercel-Projekt**
   - [ ] GitHub-Repo verbinden, `main` = Production, jeder Branch = Preview-URL.
-  - [ ] Environment-Variablen: Affiliate-IDs (8.3), optional Google-Books-API-Key (höheres Rate-Limit), `DEBUG`.
+  - [ ] Environment-Variablen: Affiliate-IDs (8.3), Google-Books-API-Key (**Pflicht**, nicht optional, siehe 8.7), `DEBUG`.
   - [ ] Region: `fra1` (Frankfurt), da Open Library aus Europa ohnehin langsam ist und die Nutzer vermutlich hier sind.
   - [ ] Vercel Analytics (kostenlos, cookie-frei) und Speed Insights aktivieren.
 - [ ] **Caching in Produktion**
@@ -401,6 +401,46 @@ Drei Beobachtungen nach dem ersten Durchgang mit der neuen Oberfläche. Reihenfo
   - Kurzfristig, ohne Bildvergleich: Cover, deren Ausgaben in Titel + Verlag + Jahr + Sprache übereinstimmen, zu **einer Kachel mit „+2 ähnliche“** zusammenfassen; die Kachel zeigt das erste Bild, die Details listen alle. Falsch-positiv möglich (echte Neugestaltung im selben Jahr beim selben Verlag), deshalb aufklappbar statt verworfen.
   - Richtig: perzeptueller Hash (dHash/pHash) serverseitig pro Cover-ID, gecacht; Hamming-Distanz ≤ Schwelle = dasselbe Bild. Schließt auch den Fall „Scan bei OL, Verlagsbild bei Google“ ab. Damit zieht Phase 2 aus E8 nach vorn.
   - Nebeneffekt: mit dem Hash lassen sich auch leere Scans erkennen (geringe Varianz) und ausblenden.
+
+### 8.7 Klärungsliste vor dem Start mit echten Nutzern (Julian, 2026-09-07)
+
+Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil sie Geld, Recht oder Verfügbarkeit betreffen. Anders als 8.1–8.4 sind das keine Aufgaben, sondern Entscheidungen mit offenem Ausgang.
+
+- [ ] **Google-Books-Kontingent: reicht es, kann man es kaufen?** (Anlass: Schritt 11 macht die Kosten pro Seitenaufruf sichtbar.)
+
+  **Gemessen 2026-09-07, Aufrufe pro Vorgang bei kaltem Cache:**
+
+  | Vorgang | Google-Aufrufe |
+  |---|---|
+  | Eine Suche | 1 |
+  | Detailseite, Seite 0 | 7 (Gatsby) bis 11 (Obergrenze: 1 Titelsuche + 10 ISBN-Nachschauen) |
+  | Detailseite, jede weitere Seite | 0 |
+
+  Bei einem Tageskontingent von 1.000 Anfragen sind das etwa **90 kalt aufgerufene Detailseiten pro Tag**. Der Next-Cache fängt Wiederholungen ab (Titelsuche 1 h, ISBN-Nachschau 24 h), ein Deploy löscht ihn aber. Suchen fallen kaum ins Gewicht.
+
+  **Was Google nach Schritt 11 überhaupt noch beiträgt** (gemessen, ganzes Werk, vor der Faltung):
+
+  | Werk | Cover gesamt | davon Google | Ausgaben gesamt | davon Google | mit Beschreibung | mit Vorschau-Link |
+  |---|---|---|---|---|---|---|
+  | Beloved | 72 | 12 | 51 | 3 | 9 | 11 |
+  | Mumbo Jumbo | 13 | 3 | 10 | 2 | 2 | 3 |
+  | 1984 | 282 | 4 | 246 | 2 | 4 | 4 |
+
+  Für die **Menge** an Covern ist Google seit Schritt 11 zweitrangig: 1 bis 23 Prozent, bei 1984 vier Bilder von 282. Unverzichtbar ist es für etwas anderes: die ISBN-Nachschau liefert das Bild, das der **Handel heute** zu einer ISBN zeigt. Nur damit lässt sich Schritt 13 bauen („Sellers show a different cover for this ISBN“), und genau das ist das Vertrauensversprechen aus §9.2. Beschreibungen und Vorschau-Links sind angenehm, aber ersetzbar.
+
+  **Zu klären, in dieser Reihenfolge:**
+  1. Wie hoch ist das Kontingent 2026 tatsächlich? Die Angaben widersprechen sich (1.000 vs. 10.000 Anfragen/Tag); die offizielle Dokumentation nennt keine Zahl. Im Google-Cloud-Dashboard des eigenen Projekts nachsehen, das ist die einzige verlässliche Quelle.
+  2. Lässt sich das Kontingent erhöhen, und kostet das etwas? Die Books API wird, anders als Maps, **nicht** pro Anfrage verkauft. Es gibt ein Formular für eine Kontingenterhöhung; Berichte von Entwicklern sprechen von langer Bearbeitung und häufigen Ablehnungen. Zu prüfen, ob Abrechnung im Projekt zu aktivieren die Grenze anhebt.
+  3. Wenn beides nicht trägt: welcher Ersatz? Kandidaten in der Reihenfolge ihrer Eignung:
+     - **ISBNdb** (kostenpflichtig, ab ~15 USD/Monat) liefert Cover und Metadaten pro ISBN und ersetzt die Nachschau eins zu eins.
+     - **Amazon Product Advertising API** (kostenlos, aber erst nach drei qualifizierten Verkäufen freigeschaltet, siehe 8.3) liefert genau das Bild, das der Käufer sieht — inhaltlich die beste Quelle, aber ein Henne-Ei-Problem beim Start.
+     - **Verzicht:** Schritt 13 zeigt dann nur „unknown“ statt eines Vergleichs. Die Seite funktioniert, das Versprechen wird kleiner.
+  4. Eigenen Schutz einbauen, unabhängig vom Ausgang: die ISBN-Nachschau erst beim Auswählen eines Covers auslösen statt beim Laden von Seite 0 (heute 6 bis 10 Aufrufe, die niemand angesehen hat), und einen Tageszähler mit sauberem Abschalten, damit ein leeres Kontingent die Seite nicht in Fehler laufen lässt (F3.3 deckt den Ausfall ab, aber ungebremst).
+
+- [ ] **Vercel-Plan.** Hobby ist nicht-kommerziell; mit dem ersten Affiliate-Link ist ein Wechsel fällig (8.2).
+- [ ] **Impressum und Datenschutzerklärung** stehen und sind verlinkt (8.2).
+- [ ] **Rate-Limit auf den API-Routen**, sonst zahlen Bots dein Google-Kontingent leer (8.2).
+- [ ] **Händler-URLs geprüft:** Hugendubel und genialokal sind noch nie gegen echte ISBNs getestet worden (8.3).
 
 ### 8.6 Funktionale Erweiterungen (aus Entscheidungen zurückgestellt)
 
