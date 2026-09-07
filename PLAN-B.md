@@ -107,3 +107,49 @@ Die CDN-Antworten (`s-maxage`) erreichen die Funktion gar nicht erst; das Limit 
 2. Im Browser eine Suche und eine Detailseite: keine 429 im Normalbetrieb (Netzwerk-Panel).
 3. Von Hand: 40 schnelle Anfragen an `/api/search` → die letzten kommen als 429 mit `Retry-After`.
 4. `npm run build`.
+
+---
+
+## B2 — SEO-Grundlage: die Detailseite wird auffindbar und teilbar
+
+### Ausgangslage
+
+`app/book/[id]/page.tsx` ist eine reine Client-Komponente. Daraus folgt dreierlei: es gibt **kein `generateMetadata`**, also trägt jede Buchseite denselben Titel „Beautiful Books" und dieselbe Beschreibung; es gibt **keine strukturierten Daten**; und ein geteilter Link zeigt in Slack, WhatsApp oder Mastodon **keine Vorschau**. Genau das ist §10 D10: „der größte Hebel und fast geschenkt".
+
+### Umbau
+
+| Datei | Was |
+|---|---|
+| `components/BookDetail.tsx` | **neu**: der heutige Inhalt von `page.tsx`, unverändert, weiterhin `'use client'`. |
+| `app/book/[id]/page.tsx` | **wird Server-Komponente**: `generateMetadata`, JSON-LD, `revalidate = 86400`, `generateStaticParams` über die kuratierten Werke. Rendert `<BookDetail />`. |
+| `app/book/[id]/opengraph-image.tsx` | **neu**: 1200×630, Mosaik aus bis zu vier Covern plus Titel und Autor, via `next/og`. |
+| `lib/seo.ts` | **neu**: reine Funktionen `workPageTitle`, `workDescription`, `bookJsonLd`, mit Unit-Tests. |
+| `app/sitemap.ts`, `app/robots.ts` | **neu**: Startseite plus die kuratierten Werke; `/api/` gesperrt. |
+| `app/layout.tsx` | `metadataBase` aus `NEXT_PUBLIC_SITE_URL`, damit Bild- und Canonical-URLs absolut werden. |
+
+### Texte
+
+Titelmuster: **„The covers of *Nineteen Eighty-Four* by George Orwell"**, durch die Vorlage in `layout.tsx` zu „… · Beautiful Books". Kein „all", kein „every" — die Regel aus CLAUDE.md gilt auch für Meta-Tags, die niemand liest, weil sonst genau dort der falsche Anspruch überlebt.
+
+Beschreibung: **„Open Library lists 1,180 edition records for Nineteen Eighty-Four. See the ones that carry a cover side by side, by language and year, with the publisher of each."** Die Zahl kommt aus dem Datensatz und ist damit nachprüfbar; die Formulierung sagt zugleich, dass nicht jeder Datensatz ein Bild hat.
+
+### Strukturierte Daten
+
+`Book` nach schema.org, bewusst knapp: `name`, `author` (`Person`), `datePublished` (Erstveröffentlichung), `image` (bis zu vier Cover), `url`, `sameAs` (Open-Library-Werkseite), `inLanguage` weggelassen — ein Werk hat viele. Keine `aggregateRating`, keine `offers`: wir haben weder Bewertungen noch eigene Preise, und erfundene Auszeichnungen sind ein Verstoß gegen Googles Richtlinien und gegen §9.2.
+
+### Was das kostet
+
+`generateMetadata` und das OG-Bild brauchen den Werkdatensatz und Seite 0 — zwei Open-Library-Anfragen, beide im Next-Cache, **keine Google-Anfrage** (`googleBooks: false` aus B1a). Mit `revalidate = 86400` zahlt das nur der erste Besucher eines Buches pro Tag.
+
+### Bekannte Grenze, die dokumentiert wird
+
+Der sichtbare Text bleibt clientseitig: die Wand lädt ihre Seiten weiter im Browser. Google rendert JavaScript, und die maschinenlesbaren Angaben (Titel, JSON-LD, OG-Bild) stehen im HTML. Sollte die Indexierung schwach bleiben, ist der nächste Schritt, Seite 0 serverseitig mitzurendern — das ist ein eigener Schritt, kein Nebenbei.
+
+Die Sitemap enthält vorerst die zwölf kuratierten Werke, nicht die 500 aus §10 D11: die Liste gibt es noch nicht, und erfundene IDs wären schlechter als eine kurze Sitemap.
+
+### Prüfen
+
+1. `curl` auf eine Buchseite: `<title>`, `og:title`, `og:image`, JSON-LD im HTML.
+2. Das OG-Bild im Browser öffnen und ansehen.
+3. `/sitemap.xml` und `/robots.txt`.
+4. Unit-Tests für `lib/seo.ts`, `npm run build`, Sichtprüfung der Detailseite.

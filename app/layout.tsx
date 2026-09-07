@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SITE_URL } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,6 +22,9 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
+  // Absolute URLs for canonical links and Open Graph images; set
+  // NEXT_PUBLIC_SITE_URL in the deployment (SPEC §10 D10).
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Beautiful Books",
     template: "%s · Beautiful Books",
