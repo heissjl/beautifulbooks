@@ -6,11 +6,13 @@ import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigat
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
 import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
+import CoverSheet from '@/components/CoverSheet';
 import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
 import SiteHeader from '@/components/SiteHeader';
 import { flyCovers } from '@/components/flyCovers';
 import { useLoadingScene } from '@/components/useLoadingScene';
+import { useIsDesktop } from '@/components/useIsDesktop';
 import { useMarket } from '@/components/useMarket';
 import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
@@ -172,6 +174,9 @@ function BookDetail() {
 
   // Market for buy links (E9): the user's choice, else detected by the server.
   const [chosenMarket, setMarket] = useMarket();
+  // Sidebar or bottom sheet; the two are exclusive so the cover image is
+  // fetched once (SPEC §10 E13).
+  const isDesktop = useIsDesktop();
   const requestKey = `${params.id} ${lang} ${chosenMarket ?? ''}`;
 
   // Editions arrive page by page and keep arriving while the user looks
@@ -280,6 +285,23 @@ function BookDetail() {
   }
 
   const { work, merged } = view;
+  // One instance, placed either in the sidebar or in the sheet.
+  const details = selected && (
+    <CoverDetails
+      cover={selected}
+      editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
+      coversPerEdition={view.coversPerEdition}
+      author={work.authors[0]}
+      market={view.market}
+      onMarketChange={setMarket}
+      verdictFor={isbn13 => verifyIsbnCover(
+        selected,
+        isbnCovers.byIsbn.get(isbn13) ?? [],
+        view.covers,
+        isbnCovers.asked.has(isbn13),
+      )}
+    />
+  );
   const meta = [
     work.firstPublishYear ? `first published ${work.firstPublishYear}` : undefined,
     progressLabel(view.covers.length, merged),
@@ -294,7 +316,8 @@ function BookDetail() {
         <p className="text-ink-2">No cover images were found for this book.</p>
       ) : (
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
-          <div className="lg:col-span-2">
+          {/* Room for the sheet's peek bar, so the last row stays reachable. */}
+          <div className="min-w-0 pb-20 lg:col-span-2 lg:pb-0">
             <CoverGallery
               groups={view.groups}
               selectedCover={selected}
@@ -313,25 +336,17 @@ function BookDetail() {
             Giving it its own scroll area makes the links reachable at once;
             the wheel scrolls the sidebar first and then the page.
           */}
-          <aside className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
-            {selected && (
-              <CoverDetails
-                cover={selected}
-                editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
-                coversPerEdition={view.coversPerEdition}
-                author={work.authors[0]}
-                market={view.market}
-                onMarketChange={setMarket}
-                verdictFor={isbn13 => verifyIsbnCover(
-                  selected,
-                  isbnCovers.byIsbn.get(isbn13) ?? [],
-                  view.covers,
-                  isbnCovers.asked.has(isbn13),
-                )}
-              />
-            )}
-          </aside>
+          {isDesktop && (
+            <aside className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
+              {details}
+            </aside>
+          )}
         </div>
+      )}
+      {!isDesktop && selected && (
+        <CoverSheet coverUrl={selected.url} caption={view.captions.get(selected.id) ?? ''}>
+          {details}
+        </CoverSheet>
       )}
     </Shell>
   );
@@ -369,8 +384,13 @@ interface CoverDetailsProps {
 function CoverDetails({ cover, editions, coversPerEdition, author, market, onMarketChange, verdictFor }: CoverDetailsProps) {
   return (
     <div>
-      <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-xs overflow-hidden rounded-card bg-surface-2 lg:mx-0 lg:max-w-none">
-        <CoverImage src={cover.url} alt="Selected cover" sizes="(max-width: 1024px) 320px, 30vw" priority />
+      {/*
+        In the phone sheet the cover shares the screen with the very links the
+        reader opened the sheet for, so it stays small enough that the first
+        buy link is a short scroll away rather than a screen away.
+      */}
+      <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 lg:max-w-none">
+        <CoverImage src={cover.url} alt="Selected cover" sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
       </div>
       <p className="mt-2 text-xs text-ink-3">
         Image from {cover.source === 'openlibrary' ? 'Open Library' : 'Google Books'}

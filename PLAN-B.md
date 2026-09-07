@@ -153,3 +153,43 @@ Die Sitemap enthält vorerst die zwölf kuratierten Werke, nicht die 500 aus §1
 2. Das OG-Bild im Browser öffnen und ansehen.
 3. `/sitemap.xml` und `/robots.txt`.
 4. Unit-Tests für `lib/seo.ts`, `npm run build`, Sichtprüfung der Detailseite.
+
+---
+
+## B3 — die Detailseite auf dem Telefon
+
+### Befund (Emulation 375×812, *The Great Gatsby*, 2026-09-07)
+
+| Beobachtung | Folge |
+|---|---|
+| 17 Sprach-Pillen brechen in **sechs Zeilen** um | Vor dem ersten Cover steht ein halber Bildschirm Navigation. |
+| Die Seitenleiste liegt **unter** der Wand | Bei 329 Covern in drei Spalten sind das rund 110 Zeilen Bildlauf bis zu den Kauf-Links. Auf dem Telefon ist die Auswahl eines Covers damit folgenlos: man sieht nie, was man ausgewählt hat. |
+| Kein Hinweis, dass eine Auswahl etwas bewirkt hat | Der Ring um die Kachel ist der einzige Rückmeldung. |
+
+Das ist dieselbe Sache, die Julian am 2026-09-07 auf dem Desktop gemeldet hat („man muss erst zum Ende der Cover kommen"), auf dem Telefon nur unlösbar: eine eigene Scrollfläche wie in der Desktop-Seitenleiste gibt es hier nicht, weil es keine zweite Spalte gibt.
+
+### Lösung: Peek-Leiste und Schublade
+
+1. **Peek-Leiste**, fest am unteren Rand, sobald ein Cover ausgewählt ist: Miniatur, Verlag und Jahr, ein „Details"-Knopf. Sie beantwortet die Frage „habe ich gerade etwas ausgewählt?" ohne einen einzigen Bildlauf und ist gleichzeitig der Griff der Schublade.
+2. **Schublade** (Bottom Sheet) über die volle Höhe, geöffnet über die Peek-Leiste: darin unverändert `CoverDetails` mit Metadaten, Kauf-Links, Suchlinks und dem Verfügbarkeits-Knopf. Schließen über Kreuz, Rückwärtswischen im Verlauf ist nicht nötig, weil sich die Auswahl weiterhin nur in der URL ändert.
+3. **Sprach-Pillen in einer Zeile**, seitlich scrollbar (`overflow-x-auto`, `flex-nowrap`) unterhalb von `sm`. Die Reihenfolge bleibt wie in B0 und Julians Entscheidung vom 2026-09-07; nur der Umbruch entfällt. Die aktive Pille wird beim Wechsel in den Blick gescrollt.
+
+Ab `lg` ändert sich nichts: dort bleibt die Seitenleiste mit ihrer eigenen Scrollfläche.
+
+### Bewusste Abweichung von §10 E13
+
+Dort steht „Cover-Wand horizontal". Ich baue sie **vertikal weiter**. Eine horizontale Wand zeigt auf 375 px zwei Cover nebeneinander, das dreispaltige Raster neun bis zwölf gleichzeitig — auf einer Seite, deren einziger Zweck der Vergleich vieler Cover ist, wäre das ein Rückschritt. Der Grund, aus dem die horizontale Wand geplant war, ist die unerreichbare Seitenleiste, und den löst die Schublade direkter. Julian kann das umstoßen, dann ist es eine Stunde Arbeit.
+
+### Barrierefreiheit und Technik
+
+- Schublade als `role="dialog" aria-modal="true"`, Escape schließt, Klick auf den Hintergrund schließt, der Schließen-Knopf bekommt beim Öffnen den Fokus.
+- Bildlauf des Hintergrunds wird gesperrt, solange die Schublade offen ist (Klasse am `body`, in einem Effekt, kein `setState` — die Regel `react-hooks/set-state-in-effect` ist in diesem Repo ein Fehler).
+- Die Peek-Leiste liegt über der Wand, deshalb bekommt die Wand unten Platz (`pb`), damit die letzte Kachelreihe nicht darunter verschwindet.
+
+### Prüfen
+
+1. Emulation 375×812: Cover antippen → Peek-Leiste; „Details" → Schublade; Kauf-Link sichtbar ohne Bildlauf durch die Wand.
+2. Escape und Hintergrundklick schließen; der Bildlauf steht dahinter still.
+3. Sprach-Pillen: eine Zeile, seitlich scrollbar, aktive Pille sichtbar.
+4. Desktop 1440: unverändert.
+5. `npm run build`, `npm run lint`.

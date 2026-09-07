@@ -21,6 +21,16 @@ interface CoverGalleryProps {
 
 const tabKey = (g: CoverTab) => g.language ?? 'unknown';
 
+/**
+ * Keeps the active tab in view in the scrolling row. A ref callback rather
+ * than an effect: it runs when the active tab changes, which is exactly when
+ * the row may need to move, and it never reads a ref during render (that rule
+ * is an error in this repo).
+ */
+function scrollIntoView(node: HTMLButtonElement | null): void {
+  node?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+
 export default function CoverGallery({ groups, selectedCover, onSelectCover, captions }: CoverGalleryProps) {
   // The tab follows the selected cover unless the user picked a tab since
   // the selection last changed (derived state, no effect needed).
@@ -37,20 +47,30 @@ export default function CoverGallery({ groups, selectedCover, onSelectCover, cap
 
   return (
     <section aria-label="Covers">
-      <div className="mb-4 flex flex-wrap items-center gap-2" role="tablist" aria-label="Language">
-        <span className="kicker mr-2">{total} cover{total !== 1 ? 's' : ''}</span>
-        {groups.map(g => (
-          <button
-            key={tabKey(g)}
-            role="tab"
-            aria-selected={tabKey(g) === activeKey}
-            onClick={() => setPicked({ key: tabKey(g), forSelectedId: selectedId })}
-            className="chip"
-          >
-            {languageName(g.language)}
-            <span className="text-xs opacity-70">{g.covers.length}</span>
-          </button>
-        ))}
+      {/*
+        A book with many translations has seventeen tabs, which wrap into six
+        rows on a phone and push the first cover off the screen (measured
+        375 px, 2026-09-07). Below `sm` the row scrolls sideways instead;
+        `sm:contents` dissolves the scroller again so the wide layout is
+        exactly what it was.
+      */}
+      <div className="mb-4 sm:flex sm:flex-wrap sm:items-center sm:gap-2" role="tablist" aria-label="Language">
+        <span className="kicker mb-2 block sm:mb-0 sm:mr-2 sm:inline">{total} cover{total !== 1 ? 's' : ''}</span>
+        <div className="flex min-w-0 gap-2 overflow-x-auto pb-1 sm:contents">
+          {groups.map(g => (
+            <button
+              key={tabKey(g)}
+              role="tab"
+              aria-selected={tabKey(g) === activeKey}
+              onClick={() => setPicked({ key: tabKey(g), forSelectedId: selectedId })}
+              className="chip shrink-0"
+              ref={tabKey(g) === activeKey ? scrollIntoView : undefined}
+            >
+              {languageName(g.language)}
+              <span className="text-xs opacity-70">{g.covers.length}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5" role="tabpanel">

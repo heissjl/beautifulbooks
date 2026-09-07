@@ -746,7 +746,13 @@ Die Vertrauensarbeit aus §9 ist bis auf zwei Schritte erledigt. Was jetzt zähl
 ### E. Qualität, jederzeit dazwischen
 
 12. ~~Schritt 14, Mosaik auf den Suchkarten~~ *erledigt 2026-09-07, siehe §9.3.*
-13. **§8.1 zweiter Durchgang**, in dieser Reihenfolge: Detailseite mobil (Cover-Wand horizontal, Seitenleiste als Drawer), Sticky-Suchfeld mobil, Cover-Vergleich zweier Ausgaben, View Transitions.
+13. **§8.1 zweiter Durchgang.** *Detailseite mobil erledigt 2026-09-07*, Rest offen: Sticky-Suchfeld mobil, Cover-Vergleich zweier Ausgaben, View Transitions.
+
+    **Detailseite mobil.** Gemessen bei 375×812 auf *The Great Gatsby*: siebzehn Sprach-Pillen brachen in sechs Zeilen um, und die Seitenleiste lag unter der Wand — bei 329 Covern in drei Spalten rund 110 Zeilen Bildlauf bis zu den Kauf-Links. Ein Cover auszuwählen blieb auf dem Telefon damit folgenlos. Neu:
+    - **Peek-Leiste** am unteren Rand, sobald ein Cover gewählt ist (Miniatur, Verlag und Jahr, „Details"), und darüber eine **Schublade** mit `CoverDetails`. Escape und Hintergrundklick schließen, der Hintergrund scrollt nicht mit. Gemessen: „Buy this ISBN" steht danach bei y = 647 in einem 812 hohen Fenster, also ohne Bildlauf sichtbar.
+    - Seitenleiste und Schublade sind **exklusiv** (`useIsDesktop`, `matchMedia`), damit das Coverbild nicht auf der Verbindung doppelt geladen wird, die es am wenigsten verträgt.
+    - **Sprach-Pillen** unterhalb von `sm` in einer seitlich scrollbaren Zeile; `sm:contents` löst den Scroller auf, die breite Ansicht ist unverändert.
+    - **Abweichung von der ursprünglichen Planung:** die Cover-Wand bleibt vertikal. Horizontal zeigt sie auf 375 px zwei Cover, das dreispaltige Raster neun bis zwölf; auf einer Seite, deren Zweck der Vergleich vieler Cover ist, wäre das ein Rückschritt. Der Grund für die horizontale Idee war die unerreichbare Seitenleiste, und den löst die Schublade direkter.
 
 ### Was bewusst liegen bleibt
 
