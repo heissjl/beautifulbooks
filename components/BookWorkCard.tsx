@@ -2,69 +2,61 @@
 
 import Link from 'next/link';
 import CoverMosaic from './CoverMosaic';
-import type { NormalizedBook } from '@/lib/sources/base';
+import { storeWorkPreview } from './useWorkPreview';
+import type { WorkSummary } from '@/lib/model';
 
 interface BookWorkCardProps {
-  work: NormalizedBook;
+  work: WorkSummary;
+  /** Current search state, carried to the detail page for its back link (SPEC F2.7). */
+  query?: string;
+  language?: string;
 }
 
-export default function BookWorkCard({ work }: BookWorkCardProps) {
-  // Safety check: ensure work has editions
-  if (!work.editions || work.editions.length === 0) {
-    return null;
-  }
+/**
+ * Search results carry no edition data, so translators cannot be detected
+ * there (SPEC §2.1). Lists of three or more names on Open Library are almost
+ * always author + translators, so the card shows the primary author alone.
+ */
+export function displayAuthors(authors: readonly string[]): string {
+  return authors.length > 2 ? authors[0] : authors.join(', ');
+}
 
-  // Use primaryEdition for linking (the edition that defined this work)
-  // Fall back to first edition if primaryEdition is not set
-  const linkEdition = work.primaryEdition || work.editions[0];
-  const firstEdition = work.editions[0];
+export function detailHref(workId: string, query?: string, language?: string): string {
+  const params = new URLSearchParams();
+  if (query) params.set('q', query);
+  if (language && language !== 'all') params.set('lang', language);
+  const qs = params.toString();
+  return qs ? `/book/${workId}?${qs}` : `/book/${workId}`;
+}
+
+export default function BookWorkCard({ work, query, language }: BookWorkCardProps) {
+  const editionCount = work.editionCount ?? work.coverUrls.length;
+  const href = detailHref(work.id, query, language);
+  const facts = [
+    editionCount > 1 ? `${editionCount} editions` : undefined,
+    work.languages.length > 1 ? `${work.languages.length} languages` : undefined,
+  ].filter(Boolean).join(' · ');
 
   return (
     <Link
-      href={`/book/${linkEdition.id}`}
-      className="group block"
+      href={href}
+      className="group block focus-visible:outline-none"
+      onClick={() => storeWorkPreview(work.id, { title: work.title, authors: [displayAuthors(work.authors)], coverUrls: work.coverUrls })}
     >
-      <div className="relative aspect-[2/3] bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02]">
-        <CoverMosaic editions={work.editions} title={work.title} />
-
-        {/* Edition count badge */}
-        {work.editions.length > 1 && (
-          <div className="absolute top-2 right-2 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
-            {work.editions.length} editions
+      <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
+        <CoverMosaic coverUrls={work.coverUrls} title={work.title} />
+        {facts && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-1 bg-gradient-to-t from-black/70 to-transparent px-3 pb-2.5 pt-8 text-xs font-medium text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+            {facts}
           </div>
         )}
-
-        {/* Overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="absolute bottom-0 left-0 right-0 p-3">
-            <p className="text-white text-xs font-medium">
-              Click to explore {work.editions.length} edition{work.editions.length > 1 ? 's' : ''}
-            </p>
-          </div>
-        </div>
       </div>
-
-      {/* Book Info */}
-      <div className="mt-3 space-y-1">
-        <h3 className="font-semibold text-sm text-gray-900 line-clamp-2 group-hover:text-amber-600 transition-colors">
+      <div className="mt-3 space-y-0.5">
+        <h3 className="line-clamp-2 font-sans text-[15px] font-medium leading-snug text-ink group-hover:text-accent transition-colors">
           {work.title}
         </h3>
-        {work.authors && work.authors.length > 0 && (
-          <p className="text-xs text-gray-600 line-clamp-1">
-            {work.authors.join(', ')}
-          </p>
-        )}
-        <div className="flex items-center gap-2 text-xs text-gray-500">
-          {firstEdition.publishedDate && (
-            <span>{firstEdition.publishedDate.split('-')[0]}</span>
-          )}
-          {firstEdition.publisher && firstEdition.publishedDate && (
-            <span>•</span>
-          )}
-          {firstEdition.publisher && (
-            <span className="line-clamp-1">{firstEdition.publisher}</span>
-          )}
-        </div>
+        <p className="line-clamp-1 text-sm text-ink-2">{displayAuthors(work.authors)}</p>
+        {work.firstPublishYear && <p className="text-xs text-ink-3">{work.firstPublishYear}</p>}
       </div>
     </Link>
   );

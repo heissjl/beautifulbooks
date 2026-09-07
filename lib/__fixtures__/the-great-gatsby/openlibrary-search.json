@@ -1,0 +1,729 @@
+{
+  "numFound": 481,
+  "start": 0,
+  "numFoundExact": true,
+  "num_found": 481,
+  "documentation_url": "https://openlibrary.org/dev/docs/api/search",
+  "q": "the great gatsby",
+  "offset": null,
+  "docs": [
+    {
+      "author_key": [
+        "OL27349A"
+      ],
+      "author_name": [
+        "F. Scott Fitzgerald"
+      ],
+      "cover_edition_key": "OL22570129M",
+      "cover_i": 10590366,
+      "edition_count": 1180,
+      "first_publish_year": 1920,
+      "key": "/works/OL468431W",
+      "language": [
+        "jpn",
+        "dut",
+        "ita",
+        "chi",
+        "por",
+        "dan",
+        "swe",
+        "ind",
+        "ger",
+        "fre",
+        "kor",
+        "pol",
+        "rum",
+        "spa",
+        "heb",
+        "eng"
+      ],
+      "title": "The Great Gatsby",
+      "subject": [
+        "Married people, fiction",
+        "American fiction (fictional works by one author)",
+        "Fiction, psychological",
+        "Long island (n.y.), fiction",
+        "Fiction",
+        "Rich people",
+        "Mistresses",
+        "Married women",
+        "Traffic accidents",
+        "First loves",
+        "Revenge",
+        "American Manuscripts",
+        "Facsimiles",
+        "Manuscripts",
+        "Antiheroes, l fiction",
+        "Man-woman relationships, fiction",
+        "Upper class",
+        "American literature",
+        "Young adult fiction, comics & graphic novels, classic adaptation",
+        "Young adult fiction, social themes, class differences",
+        "Young adult fiction, classics",
+        "Fiction, historical,  New york (n.y.)",
+        "fiction\"",
+        "Comic books, strips",
+        "Love",
+        "YOUNG ADULT FICTION",
+        "Comics & Graphic Novels",
+        "Classic Adaptation",
+        "Social Themes",
+        "Class Differences",
+        "Historical",
+        "Literary",
+        "Rich",
+        "Criticism and interpretation",
+        "Drama",
+        "Modern fiction",
+        "Classics",
+        "Literature",
+        "Open Library Staff Picks",
+        "Wealth",
+        "Readers",
+        "Economic conditions",
+        "American fiction",
+        "Social life and customs",
+        "Long Now Manual for Civilization",
+        "Fictional Works Publication Type",
+        "Rich people -- Fiction",
+        "Romance fiction",
+        "Long Island (N.Y.) -- Fiction",
+        "Psychological fiction",
+        "Love stories",
+        "Novela",
+        "Relaciones hombre-mujer",
+        "Spanish language materials",
+        "Nouveau riche",
+        "Reading Level-Grade 11",
+        "Reading Level-Grade 12",
+        "FICTION / General",
+        "Moral conditions",
+        "Manners and customs",
+        "Fitzgerald, f. scott (francis scott), 1896-1940",
+        "Large type books",
+        "Nineteen twenties",
+        "English fiction",
+        "New york (state), fiction",
+        "Wives",
+        "Relations entre hommes et femmes",
+        "Romans, nouvelles",
+        "Classes supérieures",
+        "Nouveaux riches",
+        "Premier amour",
+        "Riches",
+        "Maîtresses",
+        "Vengeance",
+        "Roman américain",
+        "Textual Criticism",
+        "Great Gatsby (Fitzgerald, F. Scott)",
+        "Romance Norte Americano",
+        "Fiction, friendship",
+        "Fiction, classics",
+        "Adultery",
+        "Accidents de la route",
+        "Millionaires",
+        "American Dream",
+        "Millionnaires",
+        "Rêve américain",
+        "Années vingt (Vingtième siècle)",
+        "Tránsito",
+        "Accidentes",
+        "Mujeres casadas",
+        "Primer amor",
+        "Cuentos de amor",
+        "Fiction, city life",
+        "Fiction, romance, historical, american",
+        "Fiction, romance, historical, 20th century",
+        "Fiction, historical, world war i",
+        "Traffic accidents--Fiction",
+        "First loves--Fiction",
+        "Rich people--Fiction",
+        "Mistresses--Fiction",
+        "Revenge--Fiction",
+        "Long Island (N.Y.)--Fiction",
+        "Novel",
+        "American fiction (collections), 20th century",
+        "Fiction, action & adventure",
+        "Translations into Chinese",
+        "American literature, history and criticism, 19th century",
+        "Chang pian xiao shuo",
+        "New York (State)",
+        "First loves -- Fiction",
+        "Rich people -- New York (State) -- New York -- Fiction",
+        "New York (State) -- Long Island",
+        "New York (State) -- New York",
+        "Fictional works [publication type]",
+        "Man-woman relationships--new york (state)--long island--fiction",
+        "Upper class--new york (state)--long island--fiction",
+        "Ps3511.i9 g7 1995b",
+        "813/.52",
+        "Fiction, general",
+        "Fiction, romance, general",
+        "Man-woman relationships",
+        "Romance",
+        "Fiction, historical"
+      ],
+      "ratings_count": 244,
+      "readinglog_count": 3301,
+      "want_to_read_count": 2586
+    },
+    {
+      "author_key": [
+        "OL27349A"
+      ],
+      "author_name": [
+        "F. Scott Fitzgerald"
+      ],
+      "cover_edition_key": "OL46773254M",
+      "cover_i": 14314120,
+      "edition_count": 14,
+      "first_publish_year": 1951,
+      "key": "/works/OL34381078W",
+      "language": [
+        "eng"
+      ],
+      "title": "Great Gatsby",
+      "subject": [
+        "Modern fiction",
+        "Traffic accidents",
+        "First loves",
+        "Classics",
+        "Literature",
+        "Fiction",
+        "Manuscripts",
+        "Facsimiles",
+        "Rich people",
+        "Mistresses",
+        "Open library staff picks",
+        "Revenge",
+        "Man-woman relationships",
+        "Wealth",
+        "Readers",
+        "Economic conditions",
+        "American fiction",
+        "Upper class",
+        "Social life and customs",
+        "American manuscripts",
+        "Married women",
+        "Long now manual for civilization",
+        "Fictional works publication type",
+        "Man-woman relationship",
+        "Rich people -- fiction",
+        "Romance fiction",
+        "Long island (n.y.) -- fiction",
+        "Psychological fiction",
+        "Love stories",
+        "Novela",
+        "Relaciones hombre-mujer",
+        "Spanish language materials",
+        "Literary",
+        "Nouveau riche",
+        "Reading level-grade 11",
+        "Reading level-grade 12",
+        "Fiction / general",
+        "Moral conditions",
+        "Manners and customs",
+        "American fiction (fictional works by one author)",
+        "New york (n.y.), fiction",
+        "Long island (n.y.), fiction",
+        "Married people, fiction",
+        "Fiction, psychological",
+        "Fiction, general",
+        "Fitzgerald, f. scott (francis scott), 1896-1940",
+        "Man-woman relationships, fiction",
+        "Large type books",
+        "Nineteen twenties",
+        "English fiction",
+        "Rich"
+      ],
+      "ratings_count": 8,
+      "readinglog_count": 173,
+      "want_to_read_count": 152
+    },
+    {
+      "author_key": [
+        "OL27349A"
+      ],
+      "author_name": [
+        "F. Scott Fitzgerald"
+      ],
+      "edition_count": 64,
+      "first_publish_year": 1973,
+      "key": "/works/OL37629951W",
+      "language": [
+        "chi",
+        "eng",
+        "vie",
+        "rus"
+      ],
+      "title": "Great Gatsby",
+      "subject": [
+        "American literature"
+      ],
+      "readinglog_count": 6,
+      "want_to_read_count": 5
+    },
+    {
+      "author_key": [
+        "OL27349A"
+      ],
+      "author_name": [
+        "F. Scott Fitzgerald"
+      ],
+      "cover_edition_key": "OL26579001M",
+      "cover_i": 8759261,
+      "edition_count": 7,
+      "first_publish_year": 1951,
+      "key": "/works/OL468517W",
+      "language": [
+        "eng"
+      ],
+      "title": "The Great Gatsby / The Last Tycoon",
+      "subject": [
+        "fiction",
+        "social life and customs",
+        "Manners and customs",
+        "Modern fiction",
+        "Traffic accidents",
+        "First loves",
+        "Classics",
+        "Literature",
+        "Manuscripts",
+        "Facsimiles",
+        "Rich people",
+        "Mistresses",
+        "Open Library Staff Picks",
+        "Revenge",
+        "Man-woman relationships",
+        "Wealth",
+        "Readers",
+        "Economic conditions",
+        "American fiction",
+        "Upper class",
+        "American Manuscripts",
+        "Married women",
+        "Fictional Works Publication Type",
+        "Man-woman relationship",
+        "Rich people -- Fiction",
+        "Romance fiction",
+        "Long Island (N.Y.) -- Fiction",
+        "Psychological fiction",
+        "Love stories",
+        "American fiction (fictional works by one author)",
+        "Correspondence",
+        "Motion picture industry",
+        "Psychiatrists",
+        "Moral and ethical aspects"
+      ],
+      "ratings_count": 0,
+      "readinglog_count": 10,
+      "want_to_read_count": 8
+    },
+    {
+      "author_key": [
+        "OL846869A"
+      ],
+      "author_name": [
+        "Stephen Matterson"
+      ],
+      "cover_edition_key": "OL16693953M",
+      "cover_i": 5348653,
+      "edition_count": 3,
+      "first_publish_year": 1990,
+      "key": "/works/OL4336529W",
+      "language": [
+        "eng"
+      ],
+      "title": "The Great Gatsby",
+      "subject": [
+        "American fiction (fictional works by one author)"
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 10,
+      "want_to_read_count": 8
+    },
+    {
+      "author_key": [
+        "OL382809A"
+      ],
+      "author_name": [
+        "Richard Daniel Lehan"
+      ],
+      "cover_edition_key": "OL2195911M",
+      "cover_i": 5513762,
+      "edition_count": 3,
+      "first_publish_year": 1990,
+      "key": "/works/OL2627398W",
+      "language": [
+        "eng"
+      ],
+      "title": "The great Gatsby",
+      "subject": [
+        "Fitzgerald, F. Scott (Francis Scott), 1896-1940",
+        "Criticism and interpretation",
+        "American Authors",
+        "Great Gatsby (Fitzgerald, F. Scott)",
+        "Great Gatsby"
+      ],
+      "readinglog_count": 8,
+      "want_to_read_count": 8
+    },
+    {
+      "author_key": [
+        "OL1393657A"
+      ],
+      "author_name": [
+        "Sarah Bartlett Churchwell"
+      ],
+      "cover_edition_key": "OL26917691M",
+      "cover_i": 9322092,
+      "edition_count": 4,
+      "first_publish_year": 2013,
+      "key": "/works/OL19704513W",
+      "language": [
+        "eng"
+      ],
+      "title": "Careless people",
+      "subject": [
+        "Social life and customs",
+        "Murder",
+        "History",
+        "Homicide",
+        "TRUE CRIME",
+        "General",
+        "Literary",
+        "Great Gatsby (Fitzgerald, F. Scott)",
+        "BIOGRAPHY & AUTOBIOGRAPHY",
+        "Manners and customs",
+        "BIOGRAPHY & AUTOBIOGRAPHY / Literary",
+        "TRUE CRIME / General",
+        "Fitzgerald, f. scott (francis scott), 1896-1940",
+        "Fitzgerald, zelda, 1900-1948",
+        "New york (n.y.), social life and customs",
+        "Murder, new jersey"
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 10,
+      "want_to_read_count": 9
+    },
+    {
+      "author_key": [
+        "OL391951A"
+      ],
+      "author_name": [
+        "Morris Dickstein"
+      ],
+      "cover_edition_key": "OL24061256M",
+      "cover_i": 9439720,
+      "edition_count": 2,
+      "first_publish_year": 2009,
+      "key": "/works/OL18557078W",
+      "language": [
+        "eng"
+      ],
+      "title": "The great Gatsby, by F. Scott Fitzgerald",
+      "subject": [
+        "American literature"
+      ],
+      "readinglog_count": 12,
+      "want_to_read_count": 11
+    },
+    {
+      "author_key": [
+        "OL2676111A"
+      ],
+      "author_name": [
+        "John W. Campbell"
+      ],
+      "cover_edition_key": "OL24746597M",
+      "cover_i": 6800270,
+      "edition_count": 2,
+      "first_publish_year": 1984,
+      "key": "/works/OL15712935W",
+      "language": [
+        "eng"
+      ],
+      "title": "F. Scott Fitzgerald's the great Gatsby",
+      "subject": [
+        "American Novelists",
+        "Criticism and interpretation"
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 7,
+      "want_to_read_count": 5
+    },
+    {
+      "author_key": [
+        "OL27349A"
+      ],
+      "author_name": [
+        "F. Scott Fitzgerald"
+      ],
+      "cover_edition_key": "OL15566079M",
+      "cover_i": 5412044,
+      "edition_count": 63,
+      "first_publish_year": 1941,
+      "key": "/works/OL468451W",
+      "language": [
+        "ger",
+        "fre",
+        "spa",
+        "eng"
+      ],
+      "subtitle": "an unfinished novel",
+      "title": "The last tycoon",
+      "subject": [
+        "Fiction",
+        "Facsimiles",
+        "Motion picture industry",
+        "American Manuscripts",
+        "Manuscripts",
+        "Fiction in English",
+        "American fiction",
+        "Man-woman relationships",
+        "American fiction (fictional works by one author)",
+        "Motion picture industry, fiction",
+        "Hollywood (los angeles, calif.), fiction",
+        "California, fiction",
+        "Los angeles (calif.), fiction",
+        "Man-woman relationships, fiction",
+        "Fiction, general",
+        "Open Library Staff Picks",
+        "Fiction, classics",
+        "Fiction, media tie-in",
+        "Communism",
+        "Alcoholics",
+        "Spanish language",
+        "Man-woman relationships in fiction",
+        "Motion picture industry in fiction",
+        "American literature"
+      ],
+      "ratings_count": 3,
+      "readinglog_count": 42,
+      "want_to_read_count": 32
+    },
+    {
+      "author_key": [
+        "OL2659399A"
+      ],
+      "author_name": [
+        "Kathleen Parkinson"
+      ],
+      "cover_edition_key": "OL7357471M",
+      "cover_i": 106149,
+      "edition_count": 1,
+      "first_publish_year": 2003,
+      "key": "/works/OL7985367W",
+      "language": [
+        "eng"
+      ],
+      "title": "The Great Gatsby",
+      "ratings_count": 1,
+      "readinglog_count": 6,
+      "want_to_read_count": 6
+    },
+    {
+      "author_key": [
+        "OL2002396A"
+      ],
+      "author_name": [
+        "Ernest Lockridge"
+      ],
+      "cover_edition_key": "OL5608068M",
+      "cover_i": 6648001,
+      "edition_count": 10,
+      "first_publish_year": 1968,
+      "key": "/works/OL146808W",
+      "language": [
+        "eng"
+      ],
+      "title": "Twentieth Century Interpretations of the Great Gatsby",
+      "subject": [
+        "Great Gatsby (Fitzgerald, F. Scott)",
+        "Fitzgerald, F. Scott (Francis). \"The great Gatsby",
+        "Fitzgerald, f. scott (francis scott), 1896-1940",
+        "American Authors",
+        "Criticism and interpretation"
+      ],
+      "ratings_count": 0,
+      "readinglog_count": 3,
+      "want_to_read_count": 2
+    },
+    {
+      "author_key": [
+        "OL8065306A"
+      ],
+      "author_name": [
+        "Cliffs Notes Staff"
+      ],
+      "cover_edition_key": "OL8051894M",
+      "cover_i": 523009,
+      "edition_count": 1,
+      "first_publish_year": 2000,
+      "key": "/works/OL15420238W",
+      "language": [
+        "eng"
+      ],
+      "title": "Fitzgerald's The Great Gatsby",
+      "subject": [
+        "Study guides",
+        "Examinations"
+      ],
+      "readinglog_count": 5,
+      "want_to_read_count": 4
+    },
+    {
+      "author_key": [
+        "OL2661252A"
+      ],
+      "author_name": [
+        "Matthew Joseph Bruccoli"
+      ],
+      "cover_edition_key": "OL3027374M",
+      "cover_i": 333318,
+      "edition_count": 1,
+      "first_publish_year": 1985,
+      "key": "/works/OL18225153W",
+      "language": [
+        "eng"
+      ],
+      "title": "New essays on The great Gatsby",
+      "subject": [
+        "The great Gatsby (Fitzgerald)",
+        "Great Gatsby (Fitzgerald, F. Scott)",
+        "Aufsatzsammlung",
+        "Fitzgerald, f. scott (francis scott), 1896-1940"
+      ],
+      "readinglog_count": 7,
+      "want_to_read_count": 7
+    },
+    {
+      "author_key": [
+        "OL4290327A"
+      ],
+      "author_name": [
+        "Phillip Northman"
+      ],
+      "cover_edition_key": "OL24208679M",
+      "cover_i": 6505941,
+      "edition_count": 1,
+      "first_publish_year": 1994,
+      "key": "/works/OL15141199W",
+      "language": [
+        "eng"
+      ],
+      "subtitle": "Notes",
+      "title": "The Great Gatsby",
+      "subject": [
+        "Fitzgerald, f. scott (francis scott), 1896-1940"
+      ],
+      "readinglog_count": 4,
+      "want_to_read_count": 3
+    },
+    {
+      "author_key": [
+        "OL27349A"
+      ],
+      "author_name": [
+        "F. Scott Fitzgerald"
+      ],
+      "cover_edition_key": "OL47323377M",
+      "cover_i": 13869870,
+      "edition_count": 4,
+      "first_publish_year": 2004,
+      "key": "/works/OL34613639W",
+      "title": "The Great Gatsby",
+      "subject": [
+        "Fiction, psychological",
+        "Long island (n.y.), fiction",
+        "Married people, fiction",
+        "American fiction (fictional works by one author)",
+        "Man-woman relationships, fiction"
+      ],
+      "ratings_count": 0,
+      "readinglog_count": 2,
+      "want_to_read_count": 2
+    },
+    {
+      "author_key": [
+        "OL27349A"
+      ],
+      "author_name": [
+        "F. Scott Fitzgerald"
+      ],
+      "cover_edition_key": "OL58647868M",
+      "cover_i": 14972791,
+      "edition_count": 1,
+      "first_publish_year": 1925,
+      "key": "/works/OL43053311W",
+      "language": [
+        "eng"
+      ],
+      "title": "THE GREAT GATSBY",
+      "readinglog_count": 3,
+      "want_to_read_count": 0
+    },
+    {
+      "author_key": [
+        "OL492827A"
+      ],
+      "author_name": [
+        "Nicolas Tredell"
+      ],
+      "cover_edition_key": "OL372266M",
+      "cover_i": 144614,
+      "edition_count": 1,
+      "first_publish_year": 1999,
+      "key": "/works/OL16500768W",
+      "language": [
+        "eng"
+      ],
+      "title": "F. Scott Fitzgerald",
+      "subject": [
+        "Fitzgerald, f. scott (francis scott), 1896-1940"
+      ],
+      "readinglog_count": 5,
+      "want_to_read_count": 4
+    },
+    {
+      "author_key": [
+        "OL2080804A",
+        "OL27349A"
+      ],
+      "author_name": [
+        "Celia Turvey",
+        "F. Scott Fitzgerald"
+      ],
+      "cover_edition_key": "OL7880082M",
+      "cover_i": 381159,
+      "edition_count": 2,
+      "first_publish_year": 1993,
+      "key": "/works/OL468429W",
+      "language": [
+        "eng"
+      ],
+      "title": "The Great Gatsby",
+      "subject": [
+        "American fiction (fictional works by one author)"
+      ],
+      "readinglog_count": 2,
+      "want_to_read_count": 2
+    },
+    {
+      "cover_edition_key": "OL32102028M",
+      "cover_i": 10758722,
+      "edition_count": 1,
+      "first_publish_year": 2021,
+      "key": "/works/OL24267195W",
+      "subtitle": "But Nick has Scoliosis",
+      "title": "The Great Gatsby",
+      "subject": [
+        "the great gatsby",
+        "scoliosis"
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 4,
+      "want_to_read_count": 2
+    }
+  ]
+}

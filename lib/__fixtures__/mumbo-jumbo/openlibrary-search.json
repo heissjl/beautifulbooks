@@ -1,0 +1,412 @@
+{
+  "numFound": 73,
+  "start": 0,
+  "numFoundExact": true,
+  "num_found": 73,
+  "documentation_url": "https://openlibrary.org/dev/docs/api/search",
+  "q": "mumbo jumbo",
+  "offset": null,
+  "docs": [
+    {
+      "author_key": [
+        "OL27626A",
+        "OL11412010A",
+        "OL10828018A",
+        "OL6284880A"
+      ],
+      "author_name": [
+        "Ishmael Reed",
+        "Ishmael Reed",
+        "Inga Pellisa Díaz",
+        "Juan Francisco Ferré"
+      ],
+      "cover_edition_key": "OL9005192M",
+      "cover_i": 992726,
+      "edition_count": 23,
+      "first_publish_year": 1972,
+      "key": "/works/OL30751W",
+      "language": [
+        "eng",
+        "fre"
+      ],
+      "title": "Mumbo jumbo",
+      "subject": [
+        "Fiction",
+        "African Americans",
+        "History",
+        "Fiction, general",
+        "Fiction, historical, general",
+        "African americans, fiction",
+        "New york (state), fiction",
+        "United states, social life and customs, fiction"
+      ],
+      "ratings_count": 3,
+      "readinglog_count": 40,
+      "want_to_read_count": 36
+    },
+    {
+      "author_key": [
+        "OL19258A"
+      ],
+      "author_name": [
+        "Kathryn Lasky"
+      ],
+      "cover_edition_key": "OL2026602M",
+      "cover_i": 6992314,
+      "edition_count": 2,
+      "first_publish_year": 1991,
+      "key": "/works/OL3452786W",
+      "language": [
+        "eng"
+      ],
+      "title": "Mumbo jumbo",
+      "subject": [
+        "Fiction",
+        "Mothers and sons",
+        "Women artists",
+        "Calista Jacobs (Fictitious character)",
+        "Teenage boys",
+        "Charley Jacobs (Fictitious character)",
+        "Detective and mystery stories",
+        "Jacobs, calista (fictitious character), fiction",
+        "Mothers and sons, fiction",
+        "Jacobs, charley (fictitious character), fiction",
+        "Boston (mass.), fiction",
+        "Fiction, mystery & detective, women sleuths",
+        "Archaeologists, fiction",
+        "Massachusetts, fiction",
+        "Women artists, fiction"
+      ],
+      "ratings_count": 0,
+      "readinglog_count": 4,
+      "want_to_read_count": 4
+    },
+    {
+      "author_key": [
+        "OL781858A"
+      ],
+      "author_name": [
+        "Francis Wheen"
+      ],
+      "cover_edition_key": "OL9216854M",
+      "cover_i": 10227,
+      "edition_count": 3,
+      "first_publish_year": 2004,
+      "key": "/works/OL4150248W",
+      "language": [
+        "eng"
+      ],
+      "title": "How Mumbo-jumbo Conquered the World",
+      "subject": [
+        "Modern History",
+        "Superstition",
+        "Reason",
+        "Modern Civilization",
+        "History",
+        "Verlichting (cultuurgeschiedenis)",
+        "Bijgeloof",
+        "Irrationalisme",
+        "Civilization, modern, 1950-",
+        "History, modern, 20th century",
+        "Intellectual life",
+        "Thought and thinking"
+      ],
+      "ratings_count": 1,
+      "readinglog_count": 2,
+      "want_to_read_count": 1
+    },
+    {
+      "author_key": [
+        "OL4350627A"
+      ],
+      "author_name": [
+        "Emrys Hughes"
+      ],
+      "edition_count": 4,
+      "first_publish_year": 1966,
+      "key": "/works/OL10485846W",
+      "language": [
+        "eng"
+      ],
+      "title": "Parliament and mumbo-jumbo",
+      "subject": [
+        "Great Britain",
+        "Great Britain. Parliament",
+        "Reform"
+      ]
+    },
+    {
+      "author_key": [
+        "OL396372A"
+      ],
+      "author_name": [
+        "Roberts, Michael"
+      ],
+      "cover_edition_key": "OL6792021M",
+      "cover_i": 713745,
+      "edition_count": 1,
+      "first_publish_year": 2000,
+      "key": "/works/OL2710491W",
+      "language": [
+        "eng"
+      ],
+      "title": "Mumbo jumbo",
+      "subject": [
+        "Horror",
+        "American poetry",
+        "Juvenile poetry",
+        "Alphabet",
+        "Poetry",
+        "Children's poetry, American"
+      ],
+      "ratings_count": 0,
+      "readinglog_count": 1,
+      "want_to_read_count": 0
+    },
+    {
+      "author_key": [
+        "OL348416A"
+      ],
+      "author_name": [
+        "Clews, Henry"
+      ],
+      "cover_edition_key": "OL6654039M",
+      "cover_i": 11847876,
+      "edition_count": 2,
+      "first_publish_year": 1923,
+      "key": "/works/OL2489307W",
+      "language": [
+        "eng"
+      ],
+      "title": "Mumbo jumbo",
+      "subject": [
+        "Art",
+        "Fiction"
+      ]
+    },
+    {
+      "author_key": [
+        "OL8155018A"
+      ],
+      "author_name": [
+        "Jane George"
+      ],
+      "edition_count": 2,
+      "first_publish_year": 2011,
+      "key": "/works/OL36840211W",
+      "language": [
+        "eng"
+      ],
+      "title": "Mumbo Jumbo Circus",
+      "subject": [
+        "Fiction, fantasy, general"
+      ]
+    },
+    {
+      "author_key": [
+        "OL1480101A"
+      ],
+      "author_name": [
+        "Christine D'Amico"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 2010,
+      "key": "/works/OL33812655W",
+      "title": "Mumbo Jumbo"
+    },
+    {
+      "author_key": [
+        "OL7685778A"
+      ],
+      "author_name": [
+        "Ben Gilbert"
+      ],
+      "cover_edition_key": "OL27508389M",
+      "cover_i": 8965139,
+      "edition_count": 1,
+      "first_publish_year": 2015,
+      "key": "/works/OL20305238W",
+      "title": "Mumbo Jumbo"
+    },
+    {
+      "author_key": [
+        "OL3737081A"
+      ],
+      "author_name": [
+        "John H. Schumacher"
+      ],
+      "cover_edition_key": "OL11774512M",
+      "cover_i": 5159364,
+      "edition_count": 1,
+      "first_publish_year": 2001,
+      "key": "/works/OL9746330W",
+      "title": "Mumbo Jumbo"
+    },
+    {
+      "author_key": [
+        "OL3390997A"
+      ],
+      "author_name": [
+        "Robin Glendinning"
+      ],
+      "cover_edition_key": "OL11653788M",
+      "cover_i": 13135002,
+      "edition_count": 1,
+      "first_publish_year": 1987,
+      "key": "/works/OL9346088W",
+      "title": "Mumbo Jumbo"
+    },
+    {
+      "author_key": [
+        "OL4352495A"
+      ],
+      "author_name": [
+        "Marie Hynds"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 1976,
+      "key": "/works/OL10488909W",
+      "language": [
+        "eng"
+      ],
+      "title": "Mumbo Jumbo",
+      "subject": [
+        "Children's stories"
+      ]
+    },
+    {
+      "edition_count": 1,
+      "first_publish_year": 2013,
+      "key": "/works/OL35990320W",
+      "title": "Mumbo Jumbo"
+    },
+    {
+      "author_key": [
+        "OL6273240A"
+      ],
+      "author_name": [
+        "Robin Glendinning"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 1987,
+      "key": "/works/OL13382083W",
+      "language": [
+        "eng"
+      ],
+      "title": "Mumbo Jumbo"
+    },
+    {
+      "author_key": [
+        "OL1743824A"
+      ],
+      "author_name": [
+        "Emrys Hughes"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 1966,
+      "key": "/works/OL6526050W",
+      "language": [
+        "eng"
+      ],
+      "title": "Parliament and mumbo-jumbo",
+      "subject": [
+        "Great Britain",
+        "Great Britain. Parliament",
+        "Reform"
+      ]
+    },
+    {
+      "author_key": [
+        "OL3249814A"
+      ],
+      "author_name": [
+        "Mike Grace"
+      ],
+      "cover_edition_key": "OL38402426M",
+      "cover_i": 14850970,
+      "edition_count": 2,
+      "first_publish_year": 2021,
+      "key": "/works/OL28059475W",
+      "language": [
+        "eng"
+      ],
+      "title": "Mumbo Jumbo Fix",
+      "subject": [
+        "Medicine"
+      ]
+    },
+    {
+      "author_key": [
+        "OL7862212A"
+      ],
+      "author_name": [
+        "A. Furnham"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 2006,
+      "key": "/works/OL27324803W",
+      "language": [
+        "eng"
+      ],
+      "title": "Management Mumbo-Jumbo",
+      "subject": [
+        "Management"
+      ]
+    },
+    {
+      "author_key": [
+        "OL234609A"
+      ],
+      "author_name": [
+        "Furnham, Adrian."
+      ],
+      "cover_edition_key": "OL3431942M",
+      "cover_i": 1745897,
+      "edition_count": 1,
+      "first_publish_year": 2006,
+      "key": "/works/OL1955601W",
+      "language": [
+        "eng"
+      ],
+      "title": "Management mumbo-jumbo",
+      "subject": [
+        "Management",
+        "Methode",
+        "Business",
+        "Leadership"
+      ]
+    },
+    {
+      "author_key": [
+        "OL5109455A"
+      ],
+      "author_name": [
+        "Adrian Furnham"
+      ],
+      "edition_count": 1,
+      "first_publish_year": 2006,
+      "key": "/works/OL28784499W",
+      "language": [
+        "eng"
+      ],
+      "title": "Management Mumbo-Jumbo"
+    },
+    {
+      "author_key": [
+        "OL12261228A"
+      ],
+      "author_name": [
+        "james saxon childers"
+      ],
+      "cover_edition_key": "OL45858823M",
+      "cover_i": 15021590,
+      "edition_count": 1,
+      "first_publish_year": 1941,
+      "key": "/works/OL33875378W",
+      "language": [
+        "eng"
+      ],
+      "title": "mumbo jumbo, esquire"
+    }
+  ]
+}

@@ -1,0 +1,1240 @@
+{
+  "workId": "OL2636675W",
+  "offset": 0,
+  "size": 44,
+  "entries": [
+    {
+      "key": "/books/OL58857511M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Bantam"
+      ],
+      "publish_date": "1973",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        15222495
+      ],
+      "number_of_pages": 898
+    },
+    {
+      "key": "/books/OL58922210M",
+      "title": " Gravity's  Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Picador"
+      ],
+      "publish_date": "1981",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "number_of_pages": 836
+    },
+    {
+      "key": "/books/OL59248218M",
+      "title": "Gravity's Rainbow",
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Viking"
+      ],
+      "publish_date": "1973",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        15091663
+      ],
+      "number_of_pages": 760
+    },
+    {
+      "key": "/books/OL40344421M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Penguin Random House"
+      ],
+      "publish_date": "1973",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780224009621"
+      ]
+    },
+    {
+      "key": "/books/OL40421808M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Penguin Random House"
+      ],
+      "publish_date": "1995",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781784701260"
+      ]
+    },
+    {
+      "key": "/books/OL43067474M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Bantam, 1979"
+      ],
+      "publish_date": "1979-01-01",
+      "isbn_10": [
+        "0553125044"
+      ],
+      "isbn_13": [
+        "9780553125047"
+      ]
+    },
+    {
+      "key": "/books/OL43439574M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        },
+        {
+          "key": "/authors/OL11018231A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Penguin Audio"
+      ],
+      "publish_date": "Oct 16, 2014",
+      "isbn_10": [
+        "1611762502"
+      ],
+      "isbn_13": [
+        "9781611762501"
+      ],
+      "physical_format": "audio cd"
+    },
+    {
+      "key": "/books/OL9048116M",
+      "title": "Die Enden der Parabel. Roman.",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Rowohlt Tb."
+      ],
+      "publish_date": "January 1, 1989",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3499135140"
+      ],
+      "isbn_13": [
+        "9783499135149"
+      ],
+      "covers": [
+        1013862
+      ],
+      "number_of_pages": 1193,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL9047892M",
+      "title": "Die Enden der Parabel.",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Rowohlt, Reinbek"
+      ],
+      "publish_date": "September 1, 1998",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3498093320"
+      ],
+      "isbn_13": [
+        "9783498093327"
+      ],
+      "covers": [
+        1013652
+      ],
+      "number_of_pages": 1193,
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL38566894M",
+      "title": "Arco-Íris da Gravidade",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Bertrand Editora"
+      ],
+      "publish_date": "Jun 22, 2012",
+      "isbn_10": [
+        "9722525123"
+      ],
+      "isbn_13": [
+        "9789722525121"
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL37865693M",
+      "title": "ARCO IRIS DE GRAVEDAD, EL",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "TUSQUETS"
+      ],
+      "publish_date": "Jan 01, 2010",
+      "isbn_10": [
+        "6074211272"
+      ],
+      "isbn_13": [
+        "9786074211276"
+      ],
+      "number_of_pages": 1152,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL31848738M",
+      "title": "El arco iris de gravedad",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        },
+        {
+          "key": "/authors/OL9081553A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Maxi-Tusquets"
+      ],
+      "publish_date": "Nov 10, 2015",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "849066160X"
+      ],
+      "isbn_13": [
+        "9788490661604"
+      ],
+      "covers": [
+        10540177
+      ],
+      "number_of_pages": 1160,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL39807970M",
+      "title": "El arco iris de gravedad",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        },
+        {
+          "key": "/authors/OL9081553A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Maxi-Tusquets"
+      ],
+      "publish_date": "Mar 31, 2021",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "8490669406"
+      ],
+      "isbn_13": [
+        "9788490669402"
+      ],
+      "covers": [
+        12924606
+      ],
+      "number_of_pages": 1160,
+      "physical_format": "mass market paperback"
+    },
+    {
+      "key": "/books/OL27140354M",
+      "title": "L'arc-en-ciel de la gravité",
+      "subtitle": "roman",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Seuil"
+      ],
+      "publish_date": "1988",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_10": [
+        "2020327937"
+      ],
+      "isbn_13": [
+        "9782020327930"
+      ],
+      "covers": [
+        14615008
+      ],
+      "number_of_pages": 761
+    },
+    {
+      "key": "/books/OL39817910M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "The Viking Press"
+      ],
+      "publish_date": "Oct 09, 1973",
+      "isbn_10": [
+        "1857152212"
+      ],
+      "isbn_13": [
+        "9781857152210"
+      ],
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL37890773M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Viking Press"
+      ],
+      "publish_date": "1973",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "number_of_pages": 760
+    },
+    {
+      "key": "/books/OL25430188M",
+      "title": "El arco iris de gravedad",
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Tusquets"
+      ],
+      "publish_date": "2012",
+      "isbn_13": [
+        "9788483831892"
+      ],
+      "covers": [
+        7261193
+      ]
+    },
+    {
+      "key": "/books/OL9144156M",
+      "title": "El Arco Iris De Gravedad / Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Tusquets"
+      ],
+      "publish_date": "June 2002",
+      "languages": [
+        {
+          "key": "/languages/spa"
+        }
+      ],
+      "isbn_10": [
+        "8483102234"
+      ],
+      "isbn_13": [
+        "9788483102237"
+      ],
+      "covers": [
+        10673397,
+        10673395
+      ],
+      "number_of_pages": 1148,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL7818426M",
+      "title": "Gravity's Rainbow",
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Bantam Books"
+      ],
+      "publish_date": "1980",
+      "isbn_10": [
+        "0553138944"
+      ],
+      "isbn_13": [
+        "9780553138948"
+      ],
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL32237113M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Viking Press"
+      ],
+      "publish_date": "Apr 25, 1973",
+      "isbn_10": [
+        "0553102710"
+      ],
+      "isbn_13": [
+        "9780553102710"
+      ],
+      "covers": [
+        10871146
+      ],
+      "number_of_pages": 887,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL27314360M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Vintage Classics"
+      ],
+      "publish_date": "Sep 18, 2013",
+      "isbn_10": [
+        "0099511754"
+      ],
+      "isbn_13": [
+        "9780099511755"
+      ],
+      "covers": [
+        8785051
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL27314358M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Bantam Books"
+      ],
+      "publish_date": "Mar 18, 1974",
+      "isbn_10": [
+        "0553147617"
+      ],
+      "isbn_13": [
+        "9780553147612"
+      ],
+      "covers": [
+        8785040
+      ],
+      "number_of_pages": 887,
+      "physical_format": "mass market paperback"
+    },
+    {
+      "key": "/books/OL27312371M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Bantam Books"
+      ],
+      "publish_date": "1974",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        15091661,
+        13107215,
+        8783782
+      ],
+      "number_of_pages": 887
+    },
+    {
+      "key": "/books/OL27284941M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Viking Compass Edition"
+      ],
+      "publish_date": "Aug 26, 1973",
+      "isbn_10": [
+        "0670003743"
+      ],
+      "isbn_13": [
+        "9780670003747"
+      ],
+      "covers": [
+        8765692
+      ],
+      "number_of_pages": 760,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL15219527M",
+      "title": "L' arc-en-ciel de la gravité",
+      "subtitle": "roman",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Seuil"
+      ],
+      "publish_date": "1988",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_10": [
+        "202009858X"
+      ]
+    },
+    {
+      "key": "/books/OL17853458M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Pan Books"
+      ],
+      "publish_date": "1975",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0330242814"
+      ],
+      "number_of_pages": 760
+    },
+    {
+      "key": "/books/OL19765385M",
+      "title": "Gravity's rainbow.",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Bantam"
+      ],
+      "publish_date": "1974",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ]
+    },
+    {
+      "key": "/books/OL20396972M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Cape"
+      ],
+      "publish_date": "1973",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ]
+    },
+    {
+      "key": "/books/OL22633189M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Vintage"
+      ],
+      "publish_date": "1995",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0099533219"
+      ],
+      "covers": [
+        13107208,
+        12771915
+      ],
+      "number_of_pages": 760
+    },
+    {
+      "key": "/books/OL9486215M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Random House Inc (T)"
+      ],
+      "publish_date": "February 1999",
+      "isbn_10": [
+        "067943724X"
+      ],
+      "isbn_13": [
+        "9780679437246"
+      ],
+      "physical_format": "Hardcover"
+    },
+    {
+      "key": "/books/OL16444827M",
+      "title": "Gravity's rainbow",
+      "subtitle": "Thomas Pynchon.",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Bantam Books"
+      ],
+      "publish_date": "1974",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "number_of_pages": 887
+    },
+    {
+      "key": "/books/OL5230169M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Cape",
+        "Brand: Penguin Books Australia Ltd"
+      ],
+      "publish_date": "1973",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0224009605"
+      ],
+      "covers": [
+        13856746
+      ],
+      "number_of_pages": 760
+    },
+    {
+      "key": "/books/OL7319358M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Vintage"
+      ],
+      "publish_date": "December 6, 2007",
+      "isbn_10": [
+        "0099533219"
+      ],
+      "isbn_13": [
+        "9780099533214"
+      ],
+      "covers": [
+        77299
+      ],
+      "number_of_pages": 768
+    },
+    {
+      "key": "/books/OL7822020M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Bantam"
+      ],
+      "publish_date": "June 1, 1984",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0553246844"
+      ],
+      "isbn_13": [
+        "9780553246841"
+      ],
+      "number_of_pages": 887,
+      "physical_format": "Mass Market Paperback"
+    },
+    {
+      "key": "/books/OL7357919M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Penguin Books"
+      ],
+      "publish_date": "February 1991",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0140996990"
+      ],
+      "isbn_13": [
+        "9780140996999"
+      ]
+    },
+    {
+      "key": "/books/OL6900801M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Penguin Books"
+      ],
+      "publish_date": "2000",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0140283382"
+      ],
+      "covers": [
+        100548
+      ],
+      "number_of_pages": 776
+    },
+    {
+      "key": "/books/OL7361806M",
+      "title": "Gravity's Rainbow (Penguin Classics Deluxe Edition)",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Penguin Classics"
+      ],
+      "publish_date": "October 31, 2006",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0143039946"
+      ],
+      "isbn_13": [
+        "9780143039945"
+      ],
+      "covers": [
+        111560
+      ],
+      "number_of_pages": 784
+    },
+    {
+      "key": "/books/OL19523087M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Bantam Books"
+      ],
+      "publish_date": "1974",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "number_of_pages": 887
+    },
+    {
+      "key": "/books/OL922236M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Penguin Books"
+      ],
+      "publish_date": "1995",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0140188592"
+      ],
+      "covers": [
+        97894
+      ],
+      "number_of_pages": 760
+    },
+    {
+      "key": "/books/OL7347740M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Penguin (Non-Classics)"
+      ],
+      "publish_date": "September 1, 1987",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0140106618"
+      ],
+      "isbn_13": [
+        "9780140106619"
+      ],
+      "number_of_pages": 768
+    },
+    {
+      "key": "/books/OL9302392M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Penguin (Non-Classics)"
+      ],
+      "publish_date": "September 1, 1987",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0140106618"
+      ],
+      "isbn_13": [
+        "9780140106619"
+      ],
+      "number_of_pages": 768,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL9274011M",
+      "title": "Gravity's Rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Vintage"
+      ],
+      "publish_date": "December 6, 2007",
+      "isbn_10": [
+        "0099533219"
+      ],
+      "isbn_13": [
+        "9780099533214"
+      ],
+      "covers": [
+        77298
+      ],
+      "number_of_pages": 768,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL18357757M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Penguin Books"
+      ],
+      "publish_date": "Sep 01, 1987",
+      "isbn_10": [
+        "0140106618"
+      ],
+      "covers": [
+        13833692
+      ],
+      "number_of_pages": 760
+    },
+    {
+      "key": "/books/OL5301957M",
+      "title": "Gravity's rainbow",
+      "authors": [
+        {
+          "key": "/authors/OL384171A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL2636675W"
+        }
+      ],
+      "publishers": [
+        "Viking Press"
+      ],
+      "publish_date": "1980",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0670348325"
+      ],
+      "covers": [
+        4497665
+      ],
+      "number_of_pages": 900
+    }
+  ]
+}

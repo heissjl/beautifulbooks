@@ -1,0 +1,2689 @@
+{
+  "workId": "OL66554W",
+  "offset": 0,
+  "size": 4041,
+  "entries": [
+    {
+      "key": "/books/OL49198652M",
+      "title": "Pride and Prejudice (Heron Faux-Leather Literary Heritage Collection) by Jane Austen (November 1, 1978) Hardcover",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ]
+    },
+    {
+      "key": "/books/OL49836838M",
+      "title": "Pride and Prejudice, 1946 Fine Editions Press, Cleveland",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "FINE EDITIONS PRESS"
+      ],
+      "publish_date": "1946",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        15043406
+      ],
+      "number_of_pages": 446
+    },
+    {
+      "key": "/books/OL51673567M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Dell Publishing Co. Inc."
+      ],
+      "publish_date": "1960-09",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        14619629
+      ],
+      "number_of_pages": 383,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL51004537M",
+      "title": "Pride and Prejudice complete and unabriged",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Dell - Laurel"
+      ],
+      "publish_date": "1959"
+    },
+    {
+      "key": "/books/OL51651979M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "New American Library"
+      ],
+      "publish_date": "1980",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        14617366
+      ],
+      "number_of_pages": 333,
+      "physical_format": "mass market paperback"
+    },
+    {
+      "key": "/books/OL50971605M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Heron"
+      ],
+      "publish_date": "1968"
+    },
+    {
+      "key": "/books/OL50990674M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Fine Editions Press"
+      ],
+      "publish_date": "1946"
+    },
+    {
+      "key": "/books/OL50998784M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "New American Library"
+      ],
+      "publish_date": "1961",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        14858485,
+        14855252,
+        14844065,
+        14619627
+      ],
+      "number_of_pages": 334,
+      "physical_format": "mass market paperback"
+    },
+    {
+      "key": "/books/OL51047237M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        },
+        {
+          "key": "/authors/OL2658836A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Cambridge University Press"
+      ],
+      "publish_date": "2024",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781009432580"
+      ]
+    },
+    {
+      "key": "/books/OL51095752M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Oxford University Press, Incorporated"
+      ],
+      "publish_date": "2024",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781382052344"
+      ]
+    },
+    {
+      "key": "/books/OL51113754M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Page Publications"
+      ],
+      "publish_date": "2024",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781648337093"
+      ],
+      "covers": [
+        14665299
+      ]
+    },
+    {
+      "key": "/books/OL51318418M",
+      "title": "Pride and Prejudice",
+      "subtitle": "the Wild and Wanton Edition",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        },
+        {
+          "key": "/authors/OL7798230A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Adams Media Corporation"
+      ],
+      "publish_date": "2014",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781283474832"
+      ]
+    },
+    {
+      "key": "/books/OL50552339M",
+      "title": "Stolz und Vorurteil",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Anaconda"
+      ],
+      "publish_date": "September 30, 2018",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_10": [
+        "3730606492"
+      ],
+      "isbn_13": [
+        "9783730606490"
+      ],
+      "covers": [
+        14568556
+      ],
+      "number_of_pages": 448,
+      "physical_format": "gebundene Ausgabe"
+    },
+    {
+      "key": "/books/OL50489267M",
+      "title": "Pride and prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Harcourt, Brace & World"
+      ],
+      "publish_date": "1962",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "number_of_pages": 298
+    },
+    {
+      "key": "/books/OL50444320M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "T. Nelson & Sons"
+      ],
+      "publish_date": "xxxx",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        15095637,
+        14618738,
+        14589724,
+        14554092
+      ],
+      "number_of_pages": 345,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL50444263M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Guild Publishing"
+      ],
+      "publish_date": "1979",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        14554089
+      ],
+      "number_of_pages": 282,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL50424069M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Nelson Doubleday"
+      ],
+      "publish_date": "1813",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        14553953
+      ],
+      "number_of_pages": 282,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL50339981M",
+      "title": "Pride and prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Dutton"
+      ],
+      "publish_date": "1933",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "number_of_pages": 337
+    },
+    {
+      "key": "/books/OL50293431M",
+      "title": "오만과 편견",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Brown Hill Publishing Co"
+      ],
+      "publish_date": "2014",
+      "languages": [
+        {
+          "key": "/languages/kor"
+        }
+      ],
+      "isbn_13": [
+        "9788990324788"
+      ],
+      "covers": [
+        14552693
+      ],
+      "number_of_pages": 431,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL50293430M",
+      "title": "Orgoglio e pregiudizio",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Newton Compton editori"
+      ],
+      "publish_date": "2014",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_13": [
+        "9788854165052"
+      ],
+      "covers": [
+        14552692
+      ],
+      "number_of_pages": 256,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL42197035M",
+      "title": "Orgoglio e Pregiudizio Di Jane Austen",
+      "subtitle": "Un'opera Classica Divertente e Interessante, Dotata Di una Modernità e un Tocco Di Femminismo Che Piacerà Al Lettore",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        },
+        {
+          "key": "/authors/OL11185934A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/ita"
+        }
+      ],
+      "isbn_13": [
+        "9798667127451"
+      ]
+    },
+    {
+      "key": "/books/OL43294729M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Dolphin Books"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        },
+        {
+          "key": "/languages/chi"
+        }
+      ],
+      "isbn_10": [
+        "7511024831"
+      ],
+      "isbn_13": [
+        "9787511024831"
+      ],
+      "covers": [
+        14543311
+      ],
+      "number_of_pages": 456,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL49837260M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Macmillan Popular Classics"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781509896370"
+      ],
+      "covers": [
+        14543309
+      ],
+      "number_of_pages": 307,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL49693317M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Lulu Press, Inc."
+      ],
+      "publish_date": "2014",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781312324619"
+      ]
+    },
+    {
+      "key": "/books/OL43374576M",
+      "title": "Pride & Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Stage Partners"
+      ],
+      "publish_date": "2023"
+    },
+    {
+      "key": "/books/OL27253989M",
+      "title": "Level 5: Pride and Prejudice (2nd Edition) (Penguin Readers, Level 5)",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Pearson Elt"
+      ],
+      "publish_date": "Oct 03, 2008",
+      "isbn_10": [
+        "1405862467"
+      ],
+      "isbn_13": [
+        "9781405862462"
+      ],
+      "covers": [
+        8748572
+      ],
+      "number_of_pages": 152,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL43119408M",
+      "title": "Pride & Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Invincible Publishers"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "9388333063"
+      ],
+      "isbn_13": [
+        "9789388333061"
+      ],
+      "covers": [
+        14534701
+      ]
+    },
+    {
+      "key": "/books/OL49707924M",
+      "title": "Pride and Prejudice Illustrated",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Lulu Press, Inc."
+      ],
+      "publish_date": "2019",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780359374564"
+      ]
+    },
+    {
+      "key": "/books/OL49533016M",
+      "title": "Pride and Prejudice",
+      "subtitle": "The Jane Austen's Literary Masterpiece",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Books on Demand GmbH"
+      ],
+      "publish_date": "2016",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9782322156337"
+      ]
+    },
+    {
+      "key": "/books/OL49576872M",
+      "title": "Pride and Prejudice",
+      "subtitle": "Unabridged - Original Text of the Third Edition  - with Numerous Illustrations by Hugh Thomson",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        },
+        {
+          "key": "/authors/OL1478696A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Books on Demand GmbH"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9783750436978"
+      ]
+    },
+    {
+      "key": "/books/OL49694726M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Lulu Press, Inc."
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781716833595"
+      ]
+    },
+    {
+      "key": "/books/OL49709180M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Lulu Press, Inc."
+      ],
+      "publish_date": "2011",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781257968190"
+      ]
+    },
+    {
+      "key": "/books/OL49717411M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Lulu Press, Inc."
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781365964893"
+      ]
+    },
+    {
+      "key": "/books/OL49741403M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Lulu Press, Inc."
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781365964886"
+      ]
+    },
+    {
+      "key": "/books/OL49747895M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Lulu Press, Inc."
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780244617783"
+      ]
+    },
+    {
+      "key": "/books/OL49750451M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Lulu Press, Inc."
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781716833724"
+      ]
+    },
+    {
+      "key": "/books/OL49764478M",
+      "title": "Pride and Prejudice",
+      "subtitle": "A Historium Press Classic",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        },
+        {
+          "key": "/authors/OL10476794A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Historium Press"
+      ],
+      "publish_date": "2022",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780578280943"
+      ]
+    },
+    {
+      "key": "/books/OL45815348M",
+      "title": "Pride and Prejudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "HarperCollins Children's Books"
+      ],
+      "publish_date": "2009",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9780007874699"
+      ],
+      "covers": [
+        14534676
+      ],
+      "number_of_pages": 464,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL42064624M",
+      "title": "Jane Austen's Pride and Prejudice. a Romantic Novel",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798618899659"
+      ]
+    },
+    {
+      "key": "/books/OL40694369M",
+      "title": "Pride and Prejudice (Illustrated) - Francson Classics",
+      "authors": [
+        {
+          "key": "/authors/OL10872575A"
+        },
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781522002154"
+      ]
+    },
+    {
+      "key": "/books/OL39792078M",
+      "title": "Pride and Prejudice : (English Rose Edition)",
+      "authors": [
+        {
+          "key": "/authors/OL10412114A"
+        },
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Ballard Classics"
+      ],
+      "publish_date": "2022",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798844238420"
+      ]
+    },
+    {
+      "key": "/books/OL49821105M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Planet Three Publishing Network"
+      ],
+      "publish_date": "2003",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        14534674
+      ],
+      "number_of_pages": 284,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL49646782M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Washington Square Press"
+      ],
+      "publish_date": "1960-12",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        14429767
+      ],
+      "number_of_pages": 436,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL48948184M",
+      "title": "Pride and Prejudice - the World's Masterpieces of All Time",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9798543183663"
+      ]
+    },
+    {
+      "key": "/books/OL46889511M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Books, Inc."
+      ],
+      "publish_date": "xxxx",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        14423695
+      ]
+    },
+    {
+      "key": "/books/OL49574287M",
+      "title": "Pride & Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Folio Society"
+      ],
+      "publish_date": "1989",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        14423694
+      ],
+      "number_of_pages": 308,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL45615714M",
+      "title": "Pride & Prejudice : Written by Jane Austen, 1975 Edition,  Publisher",
+      "subtitle": "Folio Society [Hardcover]",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ]
+    },
+    {
+      "key": "/books/OL49563312M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Holt, Rinehart and Winston"
+      ],
+      "publish_date": "1963-07",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "covers": [
+        14590600
+      ],
+      "number_of_pages": 367,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL49359464M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Pan Books Ltd"
+      ],
+      "publish_date": "1968",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_10": [
+        "0330106899"
+      ],
+      "isbn_13": [
+        "9780330106894"
+      ],
+      "covers": [
+        14417865
+      ],
+      "number_of_pages": 311,
+      "physical_format": "Paperback"
+    },
+    {
+      "key": "/books/OL49359454M",
+      "title": "Pride and Prejudice",
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "[publisher not identified]"
+      ],
+      "publish_date": "/1993",
+      "languages": [
+        {
+          "key": "/languages/eng"
+        }
+      ],
+      "isbn_13": [
+        "9781478107163"
+      ],
+      "covers": [
+        14417861
+      ],
+      "number_of_pages": 450,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35656853M",
+      "title": "Aşk ve Gurur",
+      "subtitle": "Tam Metin",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Can Yayınları",
+        "Can Yaynlar"
+      ],
+      "publish_date": "Jun 15, 2017",
+      "isbn_10": [
+        "9750734726"
+      ],
+      "isbn_13": [
+        "9789750734724"
+      ],
+      "covers": [
+        12363920
+      ],
+      "number_of_pages": 792,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35654160M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Bilge Kültür Sanat"
+      ],
+      "publish_date": "Nov 06, 2005",
+      "isbn_10": [
+        "9756316624"
+      ],
+      "isbn_13": [
+        "9789756316627"
+      ],
+      "covers": [
+        12360499
+      ],
+      "number_of_pages": 1,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35566499M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Can Yayinlari"
+      ],
+      "publish_date": "Nov 03, 2014",
+      "isbn_10": [
+        "975070861X"
+      ],
+      "isbn_13": [
+        "9789750708619"
+      ],
+      "covers": [
+        12295509
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35604263M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Oda Yayinlari"
+      ],
+      "publish_date": "Nov 04, 2006",
+      "isbn_10": [
+        "9753853521"
+      ],
+      "isbn_13": [
+        "9789753853521"
+      ],
+      "covers": [
+        12310309
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35432088M",
+      "title": "Aşk ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Can Yayınları"
+      ],
+      "publish_date": "Feb 10, 2019",
+      "isbn_10": [
+        "9750739906"
+      ],
+      "isbn_13": [
+        "9789750739903"
+      ],
+      "covers": [
+        12273548
+      ],
+      "number_of_pages": 456,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35408845M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Tutku Yayinevi"
+      ],
+      "publish_date": "Oct 30, 2018",
+      "isbn_10": [
+        "6059734340"
+      ],
+      "isbn_13": [
+        "9786059734349"
+      ],
+      "covers": [
+        12250970
+      ],
+      "number_of_pages": 368,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35410036M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Alter Yayinlari"
+      ],
+      "publish_date": "Oct 30, 2015",
+      "isbn_10": [
+        "6059870309"
+      ],
+      "isbn_13": [
+        "9786059870306"
+      ],
+      "covers": [
+        12252114
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35415645M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Dokuz Yayinlari"
+      ],
+      "publish_date": "Oct 31, 2021",
+      "isbn_10": [
+        "6257642116"
+      ],
+      "isbn_13": [
+        "9786257642118"
+      ],
+      "covers": [
+        12257577
+      ],
+      "number_of_pages": 448,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35445724M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Antik Kitap"
+      ],
+      "publish_date": "Nov 01, 2013",
+      "isbn_10": [
+        "9944184926"
+      ],
+      "isbn_13": [
+        "9789944184922"
+      ],
+      "covers": [
+        12288207
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35306519M",
+      "title": "Aşk ve Gurur",
+      "subtitle": "Dünyanın neredeyse bütün dillerine çevrilen 200 yıllık bir gerçek aşk masalı",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Artemis Yaynlar",
+        "Artemis Yayınları"
+      ],
+      "publish_date": "Jan 11, 2016",
+      "isbn_10": [
+        "6051428747"
+      ],
+      "isbn_13": [
+        "9786051428741"
+      ],
+      "covers": [
+        12117459
+      ],
+      "number_of_pages": 450,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL35308566M",
+      "title": "Aşk ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Dorlion Yayinevi"
+      ],
+      "publish_date": "Oct 19, 2018",
+      "isbn_10": [
+        "6052491515"
+      ],
+      "isbn_13": [
+        "9786052491515"
+      ],
+      "covers": [
+        12119485
+      ],
+      "number_of_pages": 411,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35303367M",
+      "title": "Ask Ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Artemis Yayinlari"
+      ],
+      "publish_date": "Oct 17, 2016",
+      "isbn_10": [
+        "6051428763"
+      ],
+      "isbn_13": [
+        "9786051428765"
+      ],
+      "covers": [
+        12114381
+      ],
+      "number_of_pages": 450,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35311026M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Ayrinti Yayinlari"
+      ],
+      "publish_date": "Oct 17, 2017",
+      "isbn_10": [
+        "6053142174"
+      ],
+      "isbn_13": [
+        "9786053142171"
+      ],
+      "covers": [
+        12121912
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35320476M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Altin Post Yayincilik"
+      ],
+      "publish_date": "Oct 19, 2012",
+      "isbn_10": [
+        "6055248344"
+      ],
+      "isbn_13": [
+        "9786055248345"
+      ],
+      "covers": [
+        12131689
+      ],
+      "number_of_pages": 472,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35372910M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Ren Kitap"
+      ],
+      "publish_date": "Oct 28, 2018",
+      "isbn_10": [
+        "6052398698"
+      ],
+      "isbn_13": [
+        "9786052398692"
+      ],
+      "covers": [
+        12216106
+      ],
+      "number_of_pages": 400,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35382883M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Gece Kitapligi"
+      ],
+      "publish_date": "Oct 28, 2014",
+      "isbn_10": [
+        "6053243221"
+      ],
+      "isbn_13": [
+        "9786053243229"
+      ],
+      "covers": [
+        12225611
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35393499M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Marti Yayinlari",
+        "Mart Yaynlar"
+      ],
+      "publish_date": "Oct 29, 2012",
+      "isbn_10": [
+        "6055420813"
+      ],
+      "isbn_13": [
+        "9786055420819"
+      ],
+      "covers": [
+        12236069
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35398918M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Koridor Yayincilik"
+      ],
+      "publish_date": "Oct 30, 2019",
+      "isbn_10": [
+        "6057572149"
+      ],
+      "isbn_13": [
+        "9786057572141"
+      ],
+      "covers": [
+        12241227
+      ],
+      "number_of_pages": 472,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL35408227M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Armada"
+      ],
+      "publish_date": "Oct 30, 2016",
+      "isbn_10": [
+        "6059660029"
+      ],
+      "isbn_13": [
+        "9786059660020"
+      ],
+      "covers": [
+        12250350
+      ],
+      "number_of_pages": 384,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL32202559M",
+      "title": "Ask ve Gurur - Klasik Kadinlar",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Can Yayinlari"
+      ],
+      "publish_date": "Apr 13, 2021",
+      "isbn_10": [
+        "9750738179"
+      ],
+      "isbn_13": [
+        "9789750738173"
+      ],
+      "covers": [
+        10851733
+      ],
+      "number_of_pages": 456,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL32200520M",
+      "title": "Aşk ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Fark Yayinlari"
+      ],
+      "publish_date": "Apr 13, 2019",
+      "isbn_10": [
+        "6052240741"
+      ],
+      "isbn_13": [
+        "9786052240748"
+      ],
+      "covers": [
+        10849692
+      ],
+      "number_of_pages": 416,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL32199743M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Koridor Yayincilik"
+      ],
+      "publish_date": "Apr 13, 2016",
+      "isbn_10": [
+        "6059702236"
+      ],
+      "isbn_13": [
+        "9786059702232"
+      ],
+      "covers": [
+        10848960
+      ],
+      "number_of_pages": 448,
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL32200855M",
+      "title": "Ask ve Gurur",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Tima Yaynlar",
+        "Timas Yayinlari"
+      ],
+      "publish_date": "Apr 13, 2014",
+      "isbn_10": [
+        "605081662X"
+      ],
+      "isbn_13": [
+        "9786050816624"
+      ],
+      "covers": [
+        10850027
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL41955224M",
+      "title": "Orgueil et Prévention",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9798637085361"
+      ]
+    },
+    {
+      "key": "/books/OL40860217M",
+      "title": "Orgueil et Prévention",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9781549784767"
+      ]
+    },
+    {
+      "key": "/books/OL35661393M",
+      "title": "Orgueil et préjugé",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "MOTIFS"
+      ],
+      "publish_date": "Jun 24, 2004",
+      "isbn_10": [
+        "2907573047"
+      ],
+      "isbn_13": [
+        "9782907573047"
+      ],
+      "covers": [
+        12367115
+      ],
+      "number_of_pages": 622,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL30518691M",
+      "title": "Orgueil et prejuges",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Archipoche"
+      ],
+      "publish_date": "2013",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_10": [
+        "2352875102"
+      ],
+      "isbn_13": [
+        "9782352875109"
+      ],
+      "covers": [
+        14534647
+      ],
+      "number_of_pages": 477,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL48372286M",
+      "title": "Orgueil et Préjugés",
+      "subtitle": "Elizabeth Bennet, Qui Se Croit dédaignée Par Darcy, Jeune Homme Riche et Hautain, S'amourache d'un Bel Officier, Wickham...",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9798644666454"
+      ]
+    },
+    {
+      "key": "/books/OL48393435M",
+      "title": "Orgueil et Préjugés",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9798694050326"
+      ]
+    },
+    {
+      "key": "/books/OL37738866M",
+      "title": "Orgueil et préjugés",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        },
+        {
+          "key": "/authors/OL1393245A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "FLAMMARION"
+      ],
+      "publish_date": "Aug 15, 2010",
+      "isbn_10": [
+        "208122951X"
+      ],
+      "isbn_13": [
+        "9782081229518"
+      ],
+      "number_of_pages": 432,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL42155129M",
+      "title": "Orgulho e Preconceito",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_13": [
+        "9798671220674"
+      ]
+    },
+    {
+      "key": "/books/OL42145515M",
+      "title": "Orgulho e Preconceito de Jane Austen",
+      "subtitle": "Uma Obra Clássica Divertida e Interessante, Dotada de Uma Modernidade e Um Toque de Feminismo Que Agradarão Ao Leitor",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        },
+        {
+          "key": "/authors/OL11185934A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/por"
+        }
+      ],
+      "isbn_13": [
+        "9798667132899"
+      ]
+    },
+    {
+      "key": "/books/OL30376847M",
+      "title": "Orgulho e Preconceito",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Relógio D''Água"
+      ],
+      "publish_date": "Sep 20, 2012",
+      "isbn_10": [
+        "9896413231"
+      ],
+      "isbn_13": [
+        "9789896413231"
+      ],
+      "covers": [
+        10452728
+      ],
+      "physical_format": "unknown binding"
+    },
+    {
+      "key": "/books/OL46963701M",
+      "title": "Pride and Predjudice (54)",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "YBM Si-sa"
+      ],
+      "publish_date": "2006-01-01",
+      "isbn_10": [
+        "8917161375"
+      ],
+      "isbn_13": [
+        "9788917161373"
+      ]
+    },
+    {
+      "key": "/books/OL37745834M",
+      "title": "Pride and Predjudice",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "Aug 13, 2016",
+      "isbn_10": [
+        "1537091298"
+      ],
+      "isbn_13": [
+        "9781537091297"
+      ],
+      "covers": [
+        14121925
+      ],
+      "number_of_pages": 482,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL46527093M",
+      "title": "Stolz und Vorurteil",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Coppenrath F"
+      ],
+      "publish_date": "Aug 01, 2018",
+      "isbn_10": [
+        "3649629720"
+      ],
+      "isbn_13": [
+        "9783649629726"
+      ],
+      "covers": [
+        13158217
+      ],
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL42093587M",
+      "title": "Jane Austens Stolz und Vorurteile",
+      "subtitle": "Ein Unterhaltsames und Interessantes Klassisches Werk, das Mit Einer Modernität und Einem Hauch Von Feminismus Ausgestattet Ist und Den Leser Ansprechen Wird",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        },
+        {
+          "key": "/authors/OL11185934A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/ger"
+        }
+      ],
+      "isbn_13": [
+        "9798667141747"
+      ]
+    },
+    {
+      "key": "/books/OL36171224M",
+      "title": "Stolz und Vorurteil",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Createspace Independent Publishing Platform",
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "Apr 26, 2013",
+      "isbn_10": [
+        "1484803531"
+      ],
+      "isbn_13": [
+        "9781484803530"
+      ],
+      "covers": [
+        12503110
+      ],
+      "number_of_pages": 322,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL32608524M",
+      "title": "Stolz und Vorurteil",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Createspace Independent Publishing Platform",
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "Oct 01, 2016",
+      "isbn_10": [
+        "1535233249"
+      ],
+      "isbn_13": [
+        "9781535233248"
+      ],
+      "covers": [
+        11245359
+      ],
+      "number_of_pages": 500,
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL27966554M",
+      "title": "Stolz und Vorurteil",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "FISCHER Taschenbuch"
+      ],
+      "publish_date": "May 15, 2012",
+      "isbn_10": [
+        "3596512069"
+      ],
+      "isbn_13": [
+        "9783596512065"
+      ],
+      "covers": [
+        9354933
+      ],
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL28169471M",
+      "title": "Stolz und Vorurteil",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "FISCHER Taschenbuch"
+      ],
+      "publish_date": "Mar 01, 2008",
+      "isbn_10": [
+        "3596900042"
+      ],
+      "isbn_13": [
+        "9783596900046"
+      ],
+      "covers": [
+        10107685
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL28180723M",
+      "title": "Stolz und Vorurteil",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "FISCHER Taschenbuch"
+      ],
+      "publish_date": "Jul 24, 2019",
+      "isbn_10": [
+        "3596907209"
+      ],
+      "isbn_13": [
+        "9783596907205"
+      ],
+      "covers": [
+        10117616
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL28222073M",
+      "title": "Stolz und Vorurteil",
+      "subtitle": "Roman. Mit einem Nachwort von Felicitas von Lovenberg",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "FISCHER Taschenbuch"
+      ],
+      "publish_date": "May 21, 2015",
+      "isbn_10": [
+        "3596906032"
+      ],
+      "isbn_13": [
+        "9783596906031"
+      ],
+      "covers": [
+        10154845
+      ],
+      "physical_format": "paperback"
+    },
+    {
+      "key": "/books/OL28244595M",
+      "title": "Stolz und Vorurteil",
+      "subtitle": "Mit einem Nachwort von Felicitas von Lovenberg",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "FISCHER Taschenbuch"
+      ],
+      "publish_date": "Oct 23, 2014",
+      "isbn_10": [
+        "3596950147"
+      ],
+      "isbn_13": [
+        "9783596950140"
+      ],
+      "covers": [
+        10175262
+      ],
+      "physical_format": "hardcover"
+    },
+    {
+      "key": "/books/OL48773459M",
+      "title": "Cinq Filles de Mrs Bennet",
+      "subtitle": "Orgueil et Préjugés",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2019",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9781695203310"
+      ]
+    },
+    {
+      "key": "/books/OL42110260M",
+      "title": "Cinq Filles de Mrs Bennet",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2020",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9798646848711"
+      ]
+    },
+    {
+      "key": "/books/OL41240438M",
+      "title": "Cinq Filles de Mrs Bennet",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2018",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9781731281777"
+      ]
+    },
+    {
+      "key": "/books/OL40740648M",
+      "title": "CINQ FILLES de Mrs BENNET",
+      "subtitle": "Orgueil et Préjugés",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2017",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9781520941370"
+      ]
+    },
+    {
+      "key": "/books/OL38142782M",
+      "title": "Cinq Filles de Mrs Bennet (Orgueil et Préjugés) (Annoté)",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "Independently Published"
+      ],
+      "publish_date": "2021",
+      "languages": [
+        {
+          "key": "/languages/fre"
+        }
+      ],
+      "isbn_13": [
+        "9798472496179"
+      ]
+    },
+    {
+      "key": "/books/OL32227392M",
+      "title": "Orgueil et préjugés",
+      "subtitle": "Les cinq filles de Mrs. Bennet",
+      "authors": [
+        {
+          "key": "/authors/OL21594A"
+        },
+        {
+          "key": "/authors/OL9158817A"
+        }
+      ],
+      "works": [
+        {
+          "key": "/works/OL66554W"
+        }
+      ],
+      "publishers": [
+        "CreateSpace Independent Publishing Platform"
+      ],
+      "publish_date": "Mar 11, 2018",
+      "isbn_10": [
+        "1986122387"
+      ],
+      "isbn_13": [
+        "9781986122382"
+      ],
+      "covers": [
+        10866118
+      ],
+      "number_of_pages": 288,
+      "physical_format": "paperback"
+    }
+  ]
+}

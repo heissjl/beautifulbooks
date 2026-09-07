@@ -1,161 +1,99 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import BookWorkCard from './BookWorkCard';
-import { bookAggregator } from '@/lib/aggregator';
-import type { NormalizedBook } from '@/lib/sources/base';
+import CuratedWall from './CuratedWall';
+import type { SearchResult } from '@/lib/search';
 
 interface BookGridProps {
   searchQuery: string;
   language: string;
 }
 
+/** Outcome of the most recent request, tagged with the request it answers. */
+type Outcome = { key: string; result?: SearchResult; error?: string };
+
+function Notice({ title, children, tone = 'neutral' }: { title: string; children: React.ReactNode; tone?: 'neutral' | 'error' }) {
+  return (
+    <div className="py-16 text-center">
+      <p className={`font-display text-2xl ${tone === 'error' ? 'text-accent' : 'text-ink'}`}>{title}</p>
+      <p className="mt-2 text-sm text-ink-2">{children}</p>
+    </div>
+  );
+}
+
+export function GridSkeleton({ count = 10 }: { count?: number }) {
+  return (
+    <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" aria-busy="true" aria-label="Loading results">
+      {[...Array(count)].map((_, i) => (
+        <div key={i} className="animate-pulse">
+          <div className="aspect-[2/3] rounded-card bg-surface-2"></div>
+          <div className="mt-3 h-3.5 w-4/5 rounded bg-surface-2"></div>
+          <div className="mt-2 h-3 w-1/2 rounded bg-surface-2"></div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function BookGrid({ searchQuery, language }: BookGridProps) {
-  const [works, setWorks] = useState<NormalizedBook[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const key = searchQuery ? `${searchQuery} ${language}` : '';
+  const [outcome, setOutcome] = useState<Outcome | null>(null);
 
   useEffect(() => {
-    if (!searchQuery) {
-      setWorks([]);
-      return;
-    }
+    if (!key) return;
+    const controller = new AbortController();
+    const params = new URLSearchParams({ q: searchQuery });
+    if (language && language !== 'all') params.set('lang', language);
 
-    const fetchBooks = async () => {
-      setLoading(true);
-      setError(null);
+    fetch(`/api/search?${params}`, { signal: controller.signal })
+      .then(async res => {
+        if (!res.ok) throw new Error(`Search failed (${res.status})`);
+        setOutcome({ key, result: (await res.json()) as SearchResult });
+      })
+      .catch(err => {
+        if (controller.signal.aborted) return;
+        setOutcome({ key, error: err instanceof Error ? err.message : 'Search failed' });
+      });
 
-      try {
-        const results = await bookAggregator.search(searchQuery, {
-          language: language || undefined,
-          includeAudiobooks: false,
-        });
-        setWorks(results);
-      } catch (err) {
-        setError('Failed to fetch books. Please try again.');
-        console.error('Error fetching books:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    return () => controller.abort();
+  }, [key, searchQuery, language]);
 
-    fetchBooks();
-  }, [searchQuery, language]);
+  if (!key) return <CuratedWall />;
 
-  if (!searchQuery) {
+  // Loading = the latest outcome does not answer the current request.
+  const current = outcome?.key === key ? outcome : null;
+  if (!current) return <GridSkeleton />;
+
+  if (current.error || !current.result) {
     return (
-      <div className="text-center py-20">
-        <div className="inline-block p-8 bg-white rounded-2xl shadow-sm border border-amber-100">
-          <svg
-            className="w-16 h-16 mx-auto mb-4 text-amber-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-            />
-          </svg>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">
-            Start Your Search
-          </h2>
-          <p className="text-gray-600 text-sm">
-            Enter a book title or author to discover different editions and covers
-          </p>
-        </div>
-      </div>
+      <Notice title="Something went wrong" tone="error">
+        {current.error ?? 'Search failed'}. Please try again in a moment.
+      </Notice>
     );
   }
 
-  if (loading) {
-    return (
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {[...Array(10)].map((_, i) => (
-          <div
-            key={i}
-            className="animate-pulse"
-          >
-            <div className="aspect-[2/3] bg-gray-200 rounded-lg mb-3"></div>
-            <div className="h-4 bg-gray-200 rounded mb-2"></div>
-            <div className="h-3 bg-gray-200 rounded w-2/3"></div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-20">
-        <div className="inline-block p-8 bg-red-50 rounded-2xl border border-red-200">
-          <svg
-            className="w-16 h-16 mx-auto mb-4 text-red-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-            />
-          </svg>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">
-            Something went wrong
-          </h2>
-          <p className="text-gray-600 text-sm">{error}</p>
-        </div>
-      </div>
-    );
-  }
-
+  const { works } = current.result;
   if (works.length === 0) {
     return (
-      <div className="text-center py-20">
-        <div className="inline-block p-8 bg-white rounded-2xl shadow-sm border border-amber-100">
-          <svg
-            className="w-16 h-16 mx-auto mb-4 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">
-            No books found
-          </h2>
-          <p className="text-gray-600 text-sm">
-            Try searching for a different title or author
-          </p>
-        </div>
-      </div>
+      <Notice title="No books found">
+        Try another title, or remove the language filter.
+      </Notice>
     );
   }
 
-  const totalEditions = works.reduce((sum, work) => sum + work.editions.length, 0);
+  const totalEditions = works.reduce((sum, w) => sum + (w.editionCount ?? 0), 0);
 
   return (
-    <div>
-      <div className="mb-6">
-        <p className="text-sm text-gray-600">
-          Found <span className="font-semibold text-gray-900">{works.length}</span> {works.length === 1 ? 'book' : 'books'} with{' '}
-          <span className="font-semibold text-gray-900">{totalEditions}</span> total editions
-        </p>
-      </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {works.map((work) => (
-          <BookWorkCard key={work.workId} work={work} />
+    <section aria-label="Search results">
+      <p className="kicker mb-5">
+        {works.length} {works.length === 1 ? 'book' : 'books'} · {totalEditions.toLocaleString('en')} editions
+      </p>
+      <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {works.map(work => (
+          <BookWorkCard key={work.id} work={work} query={searchQuery} language={language} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }

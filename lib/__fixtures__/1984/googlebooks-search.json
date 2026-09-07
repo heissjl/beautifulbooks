@@ -1,0 +1,1093 @@
+{
+  "totalItems": 300,
+  "items": [
+    {
+      "id": "tcFyzwEACAAJ",
+      "volumeInfo": {
+        "title": "George Orwell: 1984",
+        "subtitle": "Neuübersetzung",
+        "authors": [
+          "George Orwell"
+        ],
+        "publishedDate": "2021",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "386820895X"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9783868208955"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 0,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=tcFyzwEACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&cd=1&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=tcFyzwEACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/George_Orwell_1984.html?hl=&id=tcFyzwEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "oitVV-PQg4wC",
+      "volumeInfo": {
+        "title": "Gegenüberstellung von „V wie Vendetta“ und „1984“",
+        "subtitle": "Parallelen und Unterschiede, sowie ein Bezug zu heute",
+        "authors": [
+          "Hannah Siebern"
+        ],
+        "publisher": "GRIN Verlag",
+        "publishedDate": "2012-02-28",
+        "description": "Studienarbeit aus dem Jahr 2009 im Fachbereich Pädagogik - Sonstiges, Note: 1,7, Westfälische Wilhelms-Universität Münster, Veranstaltung: Informationelle Selbstbestimmung, Sprache: Deutsch, Abstract: Die Hausarbeit befasst sich mit der Gegenüberstellung des Filmes \"V wie Vendetta\" und dem Buch \"1984\" von George Orwell. In Bezug auf das Recht auf individuelle Persönlichkeit sovie informationelle Selbstbestimmung soll die Hausarbeit die Gemeinsamkeiten und Unterschiede zwischen den Geschichten herausstellen und einen Bogen zu heute ziehen.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783656141822"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "3656141827"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": true
+        },
+        "pageCount": 32,
+        "printType": "BOOK",
+        "categories": [
+          "Education"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "2.18.15.0.preview.3",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=oitVV-PQg4wC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=oitVV-PQg4wC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=oitVV-PQg4wC&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=2&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=oitVV-PQg4wC&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=oitVV-PQg4wC"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 15.99,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 15.99,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=oitVV-PQg4wC&rdid=book-oitVV-PQg4wC&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 15990000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 15990000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "kDR3DwAAQBAJ",
+      "volumeInfo": {
+        "title": "George Orwell: 1984",
+        "subtitle": "Ellenrieder, Kathleen – Lektürehilfe; Vorbereitung auf Klausur, Abitur und Matura",
+        "authors": [
+          "George Orwell",
+          "Kathleen Ellenrieder"
+        ],
+        "publisher": "Reclam Verlag",
+        "publishedDate": "2012-06-22",
+        "description": "Reclams »Fremdsprachen-Lektüreschlüssel» folgen dem bewährten Aufbau- und Darstellungsprinzip der Lektüreschlüssel zur deutschen Literatur. Sie beziehen sich auf den fremdsprachigen Originaltext (wenn möglich in Reclams Roter Reihe), sind aber auf Deutsch verfasst und unterstützen ebenso die Lektüre der deutschen Übersetzung. Eine »Checkliste» enthält Aufgaben zur Verständniskontrolle in der Fremdsprache. Unter dem Darstellungstext stehen Übersetzungshilfen und Schlüsselbegriffe in der Fremdsprache, um die Bearbeitung dieser Aufgaben und ein fremdsprachiges Referieren über das Werk zu erleichtern. Lektüreschlüssel für Schüler erschließen einzelne literarische Werke. Um eine Interpretation als Zentrum gruppieren sich 10 wichtige Verständniszugänge: * Erstinformation zum Werk * Inhaltsangabe * Personen (Konstellationen) * Werk-Aufbau (Strukturskizze) * Wortkommentar * Interpretation * Autor und Zeit * Rezeption * »Checkliste» zur Verständniskontrolle * Lektüretipps mit Filmempfehlungen * Raum für Notizen",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783159600673"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "315960067X"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": true
+        },
+        "pageCount": 73,
+        "printType": "BOOK",
+        "categories": [
+          "Education"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": true,
+        "contentVersion": "1.5.5.0.preview.3",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=kDR3DwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=kDR3DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=kDR3DwAAQBAJ&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=3&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=kDR3DwAAQBAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/George_Orwell_1984.html?hl=&id=kDR3DwAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "VvsuEQAAQBAJ",
+      "volumeInfo": {
+        "title": "Orwells Einsamkeit",
+        "subtitle": "Sein Leben, «1984» und mein Weg zu einem persönlichen Denken",
+        "authors": [
+          "Nicolas Lindt"
+        ],
+        "publisher": "BoD – Books on Demand",
+        "publishedDate": "2024-11-04",
+        "description": "\"Im schicksalhaften Jahr 1984 reiste ich auf die schottische Insel Jura, wo George Orwell sein letztes Werk schrieb - den düsteren und zugleich prophetischen Zukunftsroman «1984». Ich fühlte mich Orwell geistesverwandt. Sein bewegtes Leben und die tragische Entstehungsgeschichte des Buches standen am Anfang meines eigenen Weges. Es war der Weg zu einem persönlichen Denken.» Aus dem Inhalt: ORWELLS EINSAMKEIT ARTHUR KOESTLERS TÖDLICHE ENTTÄUSCHUNG DIE BEFREIUNG Mein Bruch mit der Linken und der Weg zu einem persönlichen Denken DIE PERSÖNLICHE SICHT DER DINGE 126 Texte und Aufsätze aus den Jahren 1982 Brief aus dem Exil Wenn die Sonne nicht wiederkäme Die Kientaler haben auch eine Meinung und nicht einmal die gleiche Der Hauptfeind E.T. tut gut «Niemand darf Dich daran hindern, umzukehren und zu sagen: Ich bereue, was ich getan habe» Die Berliner Mauer und die Schweizer Armee Vom Neid der Besitzenden Die Stunde vor dem Krieg Beklemmung Die Zeichen, die wir uns wünschen GEDANKENGÄNGE Zukunftsgedanken Über den Pessimismus Über den Techniker und den Künstlerr Über Expertendenken und persönliches Denken Das seltsam leere Gefühl der Freiheit Wilhelm Tell für Fortgeschrittene Sternenberg gibt es nur einmal Unser Kampf mit der Zeit Die Spinne Sachzwang Die Verletzung der Sprache Aufstieg und Fall der Geranien Ein Abenteuerspielplatz der Seele Die Heiserkeit der Vernunft Das Ende des Schuldgefühls Ein unsichtbarer Feiertag Selber Schuld Die Vorfreude auf den Montag Es lohnt sich Süchtig nach Melodie Wofür steht die Schweiz? Kap Horn",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783758336249"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "3758336244"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": true
+        },
+        "pageCount": 382,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=VvsuEQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=VvsuEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=VvsuEQAAQBAJ&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=4&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=VvsuEQAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=VvsuEQAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 9.99,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 9.99,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=VvsuEQAAQBAJ&rdid=book-VvsuEQAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 9990000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 9990000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "_Z4B4RpH4gMC",
+      "volumeInfo": {
+        "title": "George Orwells \"1984\" im Vergleich zu \"Minority Report\" von Steven Spielberg",
+        "authors": [
+          "Kathrin Puhl"
+        ],
+        "publisher": "GRIN Verlag",
+        "publishedDate": "2011",
+        "description": "Studienarbeit aus dem Jahr 2003 im Fachbereich Soziologie - Medien, Kunst, Musik, Note: 2,0, Carl von Ossietzky Universität Oldenburg, Sprache: Deutsch, Abstract: George Orwells \"1984\" im Vergleich zu \"Minority Report\" von Steven Spielberg",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783640923847"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "3640923847"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": true
+        },
+        "pageCount": 29,
+        "printType": "BOOK",
+        "categories": [
+          "Social Science"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "1.3.3.0.preview.1",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=_Z4B4RpH4gMC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=_Z4B4RpH4gMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=_Z4B4RpH4gMC&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=5&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=_Z4B4RpH4gMC&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/George_Orwells_1984_im_Vergleich_zu_Mino.html?hl=&id=_Z4B4RpH4gMC"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "xuJtRdYvNF4C",
+      "volumeInfo": {
+        "title": "Die perfekte totalitäre Herrschaft.",
+        "subtitle": "Elemente des Totalitarismus nach Orwells '1984'",
+        "authors": [
+          "Carl Sulz"
+        ],
+        "publisher": "GRIN Verlag",
+        "publishedDate": "2008",
+        "description": "Studienarbeit aus dem Jahr 2006 im Fachbereich Politik - Sonstige Themen, Note: 1.0, Justus-Liebig-Universit t Gie en (Institut f r Politikwissenschaft), Veranstaltung: Utopien und Dystopien des 20. Jahrhunderts, 11 Quellen im Literaturverzeichnis, Sprache: Deutsch, Abstract: Orwells Dystopie \"1984\" ist eines der bedeutendsten Werke des 20. Jahrhunderts, denn es zeigt auf, wozu es nie h tte kommen d rfen: Den perfekten Totalitarismus. Diese Arbeit geht der Frage nach, wie sich - nach Orwell - ein perfektes totalit res System verhalten muss, welche Institutionen und welche Menschen es braucht, um das Ende der Geschichte einzul uten, jeglichen Fortschritt zum Erliegen zu bringen und die Menschheit in ihr schlimmstes (und letztes?) Kapitel einzuf hren. Um die gew hlte Fragestellung zu analysieren, wurde das orwellsche System in seine pr gnantesten Elemente aufgeteilt, die als S ulen eines perfekten Totalitarismus betrachtet werden k nnen; dabei werden auch Referenzen zur realen Totalitarismusforschung hergestellt. Es soll auch gekl rt werden, in wie weit der von Orwell geschilderte Totalitarismus eine reale Bedrohung der heutigen Zivilisation darstellen k nnte, also in wieweit die Warnung Orwells ernst genommen werden muss.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783638927628"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "3638927628"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": true
+        },
+        "pageCount": 29,
+        "printType": "BOOK",
+        "categories": [
+          "Political Science"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "1.5.2.0.preview.1",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=xuJtRdYvNF4C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=xuJtRdYvNF4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=xuJtRdYvNF4C&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=6&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=xuJtRdYvNF4C&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Die_perfekte_totalit%C3%A4re_Herrschaft.html?hl=&id=xuJtRdYvNF4C"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "2aXBFm3M1MkC",
+      "volumeInfo": {
+        "title": "Festschrift für Winfried Werner zum 65. Geburtstag am 17. Oktober 1984",
+        "subtitle": "Handelsrecht und Wirtschaftsrecht in der Bankpraxis",
+        "authors": [
+          "Winfried Werner"
+        ],
+        "publisher": "Walter de Gruyter",
+        "publishedDate": "1984",
+        "description": "Keine ausführliche Beschreibung für \"Festschrift für Winfried Werner zum 65. Geburtstag am 17. Oktober 1984\" verfügbar.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "3110097427"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9783110097429"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": true
+        },
+        "pageCount": 1028,
+        "printType": "BOOK",
+        "categories": [
+          "Business & Economics"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.14.11.0.preview.1",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=2aXBFm3M1MkC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=2aXBFm3M1MkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=2aXBFm3M1MkC&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=7&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=2aXBFm3M1MkC&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Festschrift_f%C3%BCr_Winfried_Werner_zum_65.html?hl=&id=2aXBFm3M1MkC"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "ide8zwEACAAJ",
+      "volumeInfo": {
+        "title": "Zusammenhänge, Einflüsse, Wirkungen",
+        "subtitle": "in Tübingen 1984",
+        "authors": [
+          "Joerg O. Fichte"
+        ],
+        "publishedDate": "1986",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "3110104474"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9783110104479"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 0,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=ide8zwEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=ide8zwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=ide8zwEACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&cd=8&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=ide8zwEACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Zusammenh%C3%A4nge_Einfl%C3%BCsse_Wirkungen.html?hl=&id=ide8zwEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "2LjWEAAAQBAJ",
+      "volumeInfo": {
+        "title": "Machwerk",
+        "subtitle": "Gedichteband von 1984 - 2020",
+        "authors": [
+          "Stefan Reich"
+        ],
+        "publisher": "BoD – Books on Demand",
+        "publishedDate": "2023-09-13",
+        "description": "Der erste Gedichtband des Volksschriftstellers Stefan Reich erscheint nun als Nachlese seiner Schaffenskraft. In der Zeit Mitte der 80er Jahre, wo die deutschsprachige Lyrik ihre populäre Kraft bei der großen Leserschaft eingebüßt hatte, schuf er lyrische Perlen von unvergänglichem Wert und begann seine Reise als junger Schriftsteller. Stefan Reich muss daher unbestritten mit zu den wichtigsten deutschen Lyrikern dazu gezählt werden. Freuen Sie sich auf seine sehr unterhaltsame, zeitlose und präzise Dichtkunst.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783757880729"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "3757880722"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": true
+        },
+        "pageCount": 88,
+        "printType": "BOOK",
+        "categories": [
+          "Poetry"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.1.1.0.preview.3",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=2LjWEAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=2LjWEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=2LjWEAAAQBAJ&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=9&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=2LjWEAAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=2LjWEAAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 4.99,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 4.99,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=2LjWEAAAQBAJ&rdid=book-2LjWEAAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 4990000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 4990000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "oQaBEQAAQBAJ",
+      "volumeInfo": {
+        "title": "Vertrau nicht Seifenblasen im November",
+        "subtitle": "Gereimtes und Ungereimtes (1984-2024)",
+        "authors": [
+          "Wolf Querbeck"
+        ],
+        "publisher": "BoD – Books on Demand",
+        "publishedDate": "2025-08-25",
+        "description": "Wolf Querbecks Texte, über vier Jahrzehnte zusammengetragen, legen Zeugnis ab von einem schmerzhaften Prozess der Ernüchterung und Desillusionierung des einstmals liebeshungrigen und lebensfreudigen Protagonisten. Verrat und Verlust, Einsamkeit und Enttäuschung, Abschied und Aufbruch - wie ein roter Faden ziehen sich diese Erlebnisse durch sein Oeuvre. Nur in der Natur findet Querbeck Harmonie und inneren Frieden - und nimmt bilanzierend schon die eigene Endlichkeit in den Blick.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783911384018"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "3911384017"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": true
+        },
+        "pageCount": 111,
+        "printType": "BOOK",
+        "categories": [
+          "Poetry"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.0.1.0.preview.1",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=oQaBEQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=oQaBEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=oQaBEQAAQBAJ&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=10&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=oQaBEQAAQBAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Vertrau_nicht_Seifenblasen_im_November.html?hl=&id=oQaBEQAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "R9JWIQAACAAJ",
+      "volumeInfo": {
+        "title": "François Truffaut",
+        "subtitle": "Filmautor 1932-1984",
+        "authors": [
+          "Robert Ingram"
+        ],
+        "publishedDate": "2008",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "3822832081"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9783822832080"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 96,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=R9JWIQAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=R9JWIQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=R9JWIQAACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&cd=11&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=R9JWIQAACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Fran%C3%A7ois_Truffaut.html?hl=&id=R9JWIQAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "h5x3PQAACAAJ",
+      "volumeInfo": {
+        "title": "Weiche Ziele",
+        "subtitle": "Gedichte 1984 - 1994",
+        "authors": [
+          "Robert Gernhardt"
+        ],
+        "publishedDate": "1998",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "3596129869"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9783596129867"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 205,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=h5x3PQAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=h5x3PQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=h5x3PQAACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&cd=12&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=h5x3PQAACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Weiche_Ziele.html?hl=&id=h5x3PQAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "IWIazQEACAAJ",
+      "volumeInfo": {
+        "title": "Tagebücher 1984 - 1989",
+        "authors": [
+          "Márai Sándor"
+        ],
+        "publishedDate": "2002",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:1087816720"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 154,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=IWIazQEACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&cd=13&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=IWIazQEACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Tageb%C3%BCcher_1984_1989.html?hl=&id=IWIazQEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "r6OAEQAAQBAJ",
+      "volumeInfo": {
+        "title": "März 1984",
+        "authors": [
+          "J. Mühlenpfordt"
+        ],
+        "publisher": "Walter de Gruyter GmbH & Co KG",
+        "publishedDate": "2022-02-07",
+        "description": "Keine ausführliche Beschreibung für \"März 1984\" verfügbar.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783112524329"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "3112524322"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": true
+        },
+        "pageCount": 51,
+        "printType": "BOOK",
+        "categories": [
+          "Science"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=r6OAEQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=r6OAEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=r6OAEQAAQBAJ&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=14&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=r6OAEQAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=r6OAEQAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 119.95,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 119.95,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=r6OAEQAAQBAJ&rdid=book-r6OAEQAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 119950000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 119950000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "hKqBBwAAQBAJ",
+      "volumeInfo": {
+        "title": "Mani und sein Religionssystem",
+        "subtitle": "289. Sitzung am 19. Dezember 1984 in Düsseldorf",
+        "authors": [
+          "Reinhold Merkelbach"
+        ],
+        "publisher": "Springer-Verlag",
+        "publishedDate": "2013-03-09",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783663053330"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "3663053334"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": true
+        },
+        "pageCount": 65,
+        "printType": "BOOK",
+        "categories": [
+          "Religion"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "1.5.1.0.preview.1",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=hKqBBwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=hKqBBwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=hKqBBwAAQBAJ&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=15&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=hKqBBwAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=hKqBBwAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 42.99,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 30.09,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=hKqBBwAAQBAJ&rdid=book-hKqBBwAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 42990000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 30090000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "u94-PwAACAAJ",
+      "volumeInfo": {
+        "title": "Die Bibel mit Apokryphen",
+        "publishedDate": "1985",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "3438017261"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9783438017260"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 1485,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=u94-PwAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=u94-PwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=u94-PwAACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&cd=16&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=u94-PwAACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Die_Bibel_mit_Apokryphen.html?hl=&id=u94-PwAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "NS4hAQAAIAAJ",
+      "volumeInfo": {
+        "title": "Arno Schmidt Preis 1984 für Wolfgang Koeppen",
+        "publishedDate": "1984",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "STANFORD:36105039716811"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 48,
+        "printType": "BOOK",
+        "categories": [
+          "Arno Schmidt Preis"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "1.6.3.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=NS4hAQAAIAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=NS4hAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=NS4hAQAAIAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&cd=17&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=NS4hAQAAIAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Arno_Schmidt_Preis_1984_f%C3%BCr_Wolfgang_Ko.html?hl=&id=NS4hAQAAIAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "if5ZAQAACAAJ",
+      "volumeInfo": {
+        "title": "Tagebücher",
+        "authors": [
+          "Sándor Márai"
+        ],
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:643020955"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=if5ZAQAACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&cd=18&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=if5ZAQAACAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Tageb%C3%BCcher.html?hl=&id=if5ZAQAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "7oWtEAAAQBAJ",
+      "volumeInfo": {
+        "title": "1984",
+        "publisher": "Walter de Gruyter GmbH & Co KG",
+        "publishedDate": "2021-06-21",
+        "description": "Keine ausführliche Beschreibung für \"1984\" verfügbar.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9783112417126"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "3112417127"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": true
+        },
+        "pageCount": 549,
+        "printType": "BOOK",
+        "categories": [
+          "Social Science"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.1.0.0.preview.1",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=7oWtEAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=7oWtEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=7oWtEAAAQBAJ&printsec=frontcover&dq=intitle:1984&hl=&as_pt=BOOKS&cd=19&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=7oWtEAAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=7oWtEAAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 159.95,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 159.95,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=7oWtEAAAQBAJ&rdid=book-7oWtEAAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 159950000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 159950000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "CsnlAAAAMAAJ",
+      "volumeInfo": {
+        "title": "Aktuelle Probleme der Phraseologie",
+        "subtitle": "Symposium 27.-29.9.1984 in Zürich",
+        "authors": [
+          "Harald Burger",
+          "Robert Zett"
+        ],
+        "publisher": "Peter Lang Group Ag, International Academic Publishers",
+        "publishedDate": "1987",
+        "description": "Im September 1984 fand in Zürich ein internationales Symposium statt, bei dem zentrale Probleme der Phraseologie erörtert wurden. Teilnehmer waren in erster Linie Germanisten und Slavisten, da die Phraseologie-Forschung in diesen Fachbereichen bereits relativ weit entwickelt ist. Die Referate, die in diesem Band veröffentlicht werden, befassen sich einerseits mit allgemeinen Themen des Gebiets - etwa dem spezifischen Zeichencharakter der Phraseologismen, ihren Vertextungsmustern oder den psycholinguistischen Mechanismen ihrer Verarbeitung, - andererseits mit einzelsprachlichen und sprachvergleichenden Themen, an denen Gemeinsamkeiten wie Differenzen innerhalb einer europäischen Phraseologie exemplarisch sichtbar werden.",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "IND:39000001519243"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 328,
+        "printType": "BOOK",
+        "categories": [
+          "Foreign Language Study"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "1.5.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=CsnlAAAAMAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=CsnlAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "de",
+        "previewLink": "http://books.google.de/books?id=CsnlAAAAMAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&cd=20&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=CsnlAAAAMAAJ&dq=intitle:1984&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Aktuelle_Probleme_der_Phraseologie.html?hl=&id=CsnlAAAAMAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    }
+  ]
+}

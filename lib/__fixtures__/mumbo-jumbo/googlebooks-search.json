@@ -1,0 +1,898 @@
+{
+  "totalItems": 300,
+  "items": [
+    {
+      "id": "lJ0uEQAAQBAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "authors": [
+          "Ishmael Reed"
+        ],
+        "publisher": "minimum fax",
+        "publishedDate": "2016-02-25",
+        "description": "Brillante ed eccentrico, Mumbo Jumbo è un'elegia e una rivendicazione della cultura africana in tutte le sue manifestazioni e latitudini, dalla mitologia egizia al VooDoo, al blues e al dixieland. È una fiera rivendicazione del ruolo africano nella storia della cultura occidentale, dall'antichità a oggi. È anche un trattato di controstoria degli Stati Uniti, un hard-boiled mistico che si svolge ad Harlem negli anni Venti – l'epoca della Black Renaissance – e ha come protagonista un detective animista, Papa LaBas, aiutato nell'indagine da Black Herman, mago e illusionista, alle prese con un'epidemia di Jes Grew, virus diffuso tramite il jazz che spinge i bianchi a ballare fino allo sfinimento. Sullo sfondo, la guerra sporca degli Stati Uniti contro Haiti. L'intera civiltà moderna viene analizzata attraverso un capovolgimento di prospettiva, in cui la storia incrocia l'allucinarsi della verità. Mumbo Jumbo, che torna ai lettori dopo una lunghissima assenza, è un giallo VooDoo, un libro di black fantasy, una satira: un'opera di puro genio che diverte, sorprende e stupisce, e probabilmente uno dei più clamorosi libri di culto di sempre. Con una nota di Elémire Zolla",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9788875217419"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "8875217416"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": true
+        },
+        "pageCount": 160,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "1.3.2.0.preview.3",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=lJ0uEQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=lJ0uEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "it",
+        "previewLink": "http://books.google.de/books?id=lJ0uEQAAQBAJ&printsec=frontcover&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=1&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=lJ0uEQAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=lJ0uEQAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 6.99,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 6.99,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=lJ0uEQAAQBAJ&rdid=book-lJ0uEQAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 6990000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 6990000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "5cunngEACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "authors": [
+          "Ishmael Reed"
+        ],
+        "publishedDate": "1981",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:44020470"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 226,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "it",
+        "previewLink": "http://books.google.de/books?id=5cunngEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=2&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=5cunngEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo.html?hl=&id=5cunngEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "yRMCYAAACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "authors": [
+          "Marie Hynds"
+        ],
+        "publishedDate": "1975",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0216900573"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780216900578"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=yRMCYAAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=3&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=yRMCYAAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo.html?hl=&id=yRMCYAAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "i2DjMgEACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo. [A Play.].",
+        "authors": [
+          "Henry CLEWS (the Younger.)"
+        ],
+        "publishedDate": "1923",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:557803869"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 279,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=i2DjMgEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=4&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=i2DjMgEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo_A_Play.html?hl=&id=i2DjMgEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "nYg7PgAACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "authors": [
+          "Ishmael Reed",
+          "Anne Mersevey"
+        ],
+        "publishedDate": "1991",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "8817110361"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9788817110365"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 226,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "it",
+        "previewLink": "http://books.google.de/books?id=nYg7PgAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=5&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=nYg7PgAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo.html?hl=&id=nYg7PgAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "2jbSoQEACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "subtitle": "roman",
+        "authors": [
+          "Ishmael Reed"
+        ],
+        "publishedDate": "1975",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:370753509"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 281,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "fr",
+        "previewLink": "http://books.google.de/books?id=2jbSoQEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=6&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=2jbSoQEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo.html?hl=&id=2jbSoQEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "pRZp0QEACAAJ",
+      "volumeInfo": {
+        "title": "No More Mumbo Jumbo",
+        "authors": [
+          "Sangeeta Mulay"
+        ],
+        "publishedDate": "2020-06-29",
+        "description": "This is the story of a tiny, isolated (fictional) village in India. A village that chants MUMBO JUMBO, MUMBO JUMBO, MUMBO JUMBO to solve all their problems. Until a Science teacher comes along and changes the village in no time at all. A fun and diverse book that aims to promote a love for Science.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "1838039430"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9781838039431"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 0,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=pRZp0QEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=pRZp0QEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=pRZp0QEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=7&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=pRZp0QEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/No_More_Mumbo_Jumbo.html?hl=&id=pRZp0QEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "sOTmAAAACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "authors": [
+          "Robin Glendinning"
+        ],
+        "publishedDate": "1987",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0856761338"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780856761331"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 109,
+        "printType": "BOOK",
+        "categories": [
+          "Belfast (Northern Ireland)"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=sOTmAAAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=8&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=sOTmAAAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo.html?hl=&id=sOTmAAAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "KWMDzQEACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo Gumbo",
+        "subtitle": "Original Politiverse",
+        "authors": [
+          "Tom Hipps"
+        ],
+        "publishedDate": "1994",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:500983608"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=KWMDzQEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=9&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=KWMDzQEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo_Gumbo.html?hl=&id=KWMDzQEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "7sbb36Zw5IMC",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "subtitle": "A Novel",
+        "authors": [
+          "Ishmael Reed"
+        ],
+        "publisher": "Open Road Media",
+        "publishedDate": "2013-01-29",
+        "description": "Ishmael Reed's inspired fable of the ragtime era, in which a social movement threatens to suppress the spread of black culture—hailed by Harold Bloom as one of the five hundred greatest books of the Western canon In 1920s America, a plague is spreading fast. From New Orleans to Chicago to New York, the \"Jes Grew\" epidemic makes people desperate to dance, overturning social norms in the process. Anyone is vulnerable and when they catch it, they'll bump and grind into a frenzy. Working to combat the Jes Grew infection are the puritanical Atonists, a group bent on cultivating a \"Talking Android,\" an African American who will infiltrate the unruly black communities and help crush the outbreak. But PaPa LaBas, a houngan voodoo priest, is determined to keep his ancient culture—including a key spiritual text—alive. Spanning a dizzying host of genres, from cinema to academia to mythology, Mumbo Jumbo is a lively ride through a key decade of American history. In addition to ragtime, blues, and jazz, Reed's allegory draws on the Harlem Renaissance, the Back to Africa movement, and America's occupation of Haiti. His style throughout is as avant-garde and vibrant as the music at its center. This ebook features an illustrated biography of Ishmael Reed including rare images of the author.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9781453287972"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "1453287973"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": true
+        },
+        "pageCount": 358,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "averageRating": 1,
+        "ratingsCount": 1,
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": true,
+        "contentVersion": "1.26.26.0.preview.3",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=7sbb36Zw5IMC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=7sbb36Zw5IMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=7sbb36Zw5IMC&printsec=frontcover&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=10&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=7sbb36Zw5IMC&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=7sbb36Zw5IMC"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 18.18,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 18.18,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=7sbb36Zw5IMC&rdid=book-7sbb36Zw5IMC&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 18180000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 18180000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "THAuQwAACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo jumbo",
+        "authors": [
+          "Ronald Zuurmond",
+          "METISN̲L (Amsterdam).",
+          "Holden Translations & Texts"
+        ],
+        "publishedDate": "2009",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "9077340130"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9789077340134"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 30,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=THAuQwAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=11&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=THAuQwAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_jumbo.html?hl=&id=THAuQwAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "-wUOEAAAQBAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "authors": [
+          "Ben Gilbert"
+        ],
+        "publisher": "Garuda Books",
+        "publishedDate": "2015-01-10",
+        "description": "An Anthology of modern short stories. Fiction and non=fiction: A diverse collection of dark stories and travel journals. If you enjoy reading about weird experiences and eccentric perceptions, then Mumbo Jumbo is for you! \"Cold crystal particles beautifully shaped and delicately formed into the soft snow or harsh ice of hiking and climbing. This is what the word crystal conjures for me. For others it may be a cure in crystal healing, the devil calling in crystal meth, an expensive cut glass thing or just a pretty stone. Once I even knew a girl called Crystal who had the magic of a piece of crystal rock. Berlin. November 9th 2014. The bar was dimly lit, in fact from the outside it barely looked open....\" Crystal Night. \"The ceremony was repeated the next night, but this time Miguel bypassed the ritual and clothing and went straight to the point. There were only about six people in the tipi besides Miguel and Fish, and Miguel seemed animated, immediately dishing out the ayahuasca after the tobacco splutter. For some reason he gave me a glass, like a whisky glass but without the shot or two. It was a full glass, I heard him tell Fish in Spanish that it was really strong and Fish physically tried to stop him from giving it to me. Miguel shrugged him off. I ended up drinking the lot. Nothing could have prepared me for what happened next...\" Mumbo Jumbo",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9780692569078"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "0692569073"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": true
+        },
+        "pageCount": 402,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "1.3.3.0.preview.3",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=-wUOEAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=-wUOEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=-wUOEAAAQBAJ&printsec=frontcover&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=12&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=-wUOEAAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=-wUOEAAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 2.79,
+          "currencyCode": "EUR"
+        },
+        "retailPrice": {
+          "amount": 2.79,
+          "currencyCode": "EUR"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=-wUOEAAAQBAJ&rdid=book--wUOEAAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 2790000,
+              "currencyCode": "EUR"
+            },
+            "retailPrice": {
+              "amountInMicros": 2790000,
+              "currencyCode": "EUR"
+            },
+            "giftable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "NSFkzgEACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo-jumbo",
+        "subtitle": "A Mystery Farce in Three Acts",
+        "authors": [
+          "Jack Barnard"
+        ],
+        "publisher": "Samuel French, Inc.",
+        "publishedDate": "1967",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0573602174"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780573602177"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 98,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=NSFkzgEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=13&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=NSFkzgEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_jumbo.html?hl=&id=NSFkzgEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "FAXDwAEACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo-Jumbo",
+        "subtitle": "A Farce in Three Acts",
+        "authors": [
+          "Jack Barnard"
+        ],
+        "publishedDate": "1940",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:1810118"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 98,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=FAXDwAEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=14&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=FAXDwAEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo.html?hl=&id=FAXDwAEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "AKHfMgEACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo Or Mambo, the Heart Eater",
+        "authors": [
+          "Mervyn David Waldegrave JEFFREYS"
+        ],
+        "publishedDate": "1962",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:498086501"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=AKHfMgEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=15&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=AKHfMgEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo_Or_Mambo_the_Heart_Eater.html?hl=&id=AKHfMgEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "9yOmngEACAAJ",
+      "volumeInfo": {
+        "title": "Further Reflections on Our Mumbo Jumbo Hapless Sociological Age",
+        "authors": [
+          "Otto P. Cherdron"
+        ],
+        "publishedDate": "2013-07",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "1258775182"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9781258775186"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 98,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=9yOmngEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=9yOmngEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=9yOmngEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=16&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=9yOmngEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Further_Reflections_on_Our_Mumbo_Jumbo_H.html?hl=&id=9yOmngEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "QEs-PgAACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "authors": [
+          "Ishmael Reed"
+        ],
+        "publishedDate": "1998",
+        "description": "S'il est un livre auquel s'applique le terme de \" carnavalesque \", c'est bien celui-ci. Car le personnage principal de ce polar délirant est l'âme de la danse/musique noire américaine. Née au début du siècle à la Nouvelle-Orléans, changeant de nom selon les époques - ragtime, blues, jazz, boogie, soul, funk, hip-hop-, elle s'incarne ici sous les traits d'un homme nommé PaPa LaBas. A la fois sorcier et détective, militant et grand initié, agitateur et héritier des traditions magiques de l'Afrique animiste, PaPa LaBas engage la lutte contre les extrémistes blancs de l'Ordre de la Fleur de muraille et les grands maîtres de la Voie atoniste, qui voient dans la musique noire une menace pour la civilisation. Mêlant constamment réel et surréel, action et érudition, accumulant les digressions - sur Malcom X, le vaudou ou le culte d'Osiris dans l'Egypte pharaonique-, Mumbo Jumbo est un roman étourdissant où la \" rage de vivre \" éclate à chaque page.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "2879291488"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9782879291482"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 292,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "fr",
+        "previewLink": "http://books.google.de/books?id=QEs-PgAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=17&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=QEs-PgAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo.html?hl=&id=QEs-PgAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "e85HtwAACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo-jumbo: Or, the Mountains of the Moon, Near the Gaboon!",
+        "authors": [
+          "Female School of Art (London)"
+        ],
+        "publishedDate": "1864",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:37988791"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 16,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=e85HtwAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=18&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=e85HtwAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_jumbo_Or_the_Mountains_of_the_Moon.html?hl=&id=e85HtwAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "k2Zk0QEACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "authors": [
+          "Tumbleweed (Musical group)"
+        ],
+        "publishedDate": "2000",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "OCLC:1232218780"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 0,
+        "printType": "BOOK",
+        "categories": [
+          "Rock music"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=k2Zk0QEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=19&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=k2Zk0QEACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo.html?hl=&id=k2Zk0QEACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    },
+    {
+      "id": "Z6oGAAAACAAJ",
+      "volumeInfo": {
+        "title": "Mumbo Jumbo",
+        "authors": [
+          "Michael Roberts"
+        ],
+        "publisher": "Callaway Editions",
+        "publishedDate": "2000",
+        "description": "From acclaimed artist Michael Roberts comes this concoction of handmade paper cutout collages and original verse that is both an ideal ABC primer and joyful read. Younger kids can learn the alphabet by matching up letters with pictures, while older children can read it as a book of verse. Full-color illustrations.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0935112499"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780935112498"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 0,
+        "printType": "BOOK",
+        "categories": [
+          "Children's poetry, American"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=Z6oGAAAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=Z6oGAAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.de/books?id=Z6oGAAAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&cd=20&source=gbs_api",
+        "infoLink": "http://books.google.de/books?id=Z6oGAAAACAAJ&dq=intitle:mumbo+jumbo&hl=&as_pt=BOOKS&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Mumbo_Jumbo.html?hl=&id=Z6oGAAAACAAJ"
+      },
+      "saleInfo": {
+        "country": "DE",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      }
+    }
+  ]
+}
