@@ -6,6 +6,7 @@
  * the app keeps working on Open Library alone (F3.3).
  */
 import { debug } from '../debug';
+import { googleAvailable, noteGoogleFailure } from '../googlequota';
 import { fetchJson } from './http';
 import { parseVolumes, type EditionCandidate, type GbVolume } from './googlebooks-parse';
 
@@ -27,11 +28,13 @@ function apiKeyParam(): string {
 
 /** Title search. Never throws. */
 export async function searchVolumes(query: string, limit = GB_SEARCH_LIMIT): Promise<EditionCandidate[]> {
+  if (!googleAvailable()) return [];
   const url = `${BASE}?q=intitle:${encodeURIComponent(query)}&maxResults=${limit}&printType=books&orderBy=relevance${apiKeyParam()}`;
   try {
     const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: GB_REVALIDATE });
     return parseVolumes(data.items);
   } catch (err) {
+    noteGoogleFailure(err);
     debug('googlebooks', `search failed: ${(err as Error).message}`);
     return [];
   }
@@ -42,12 +45,14 @@ export async function searchVolumes(query: string, limit = GB_SEARCH_LIMIT): Pro
  * Assignment to the work happens in works.ts (candidatesToEditions).
  */
 export async function searchEditionCandidates(title: string, author: string | undefined): Promise<EditionCandidate[]> {
+  if (!googleAvailable()) return [];
   const q = author ? `intitle:${title} inauthor:${author}` : `intitle:${title}`;
   const url = `${BASE}?q=${encodeURIComponent(q)}&maxResults=40&printType=books&orderBy=relevance${apiKeyParam()}`;
   try {
     const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: GB_REVALIDATE });
     return parseVolumes(data.items);
   } catch (err) {
+    noteGoogleFailure(err);
     debug('googlebooks', `editions failed: ${(err as Error).message}`);
     return [];
   }
@@ -62,7 +67,7 @@ export const GB_ISBN_LOOKUP_MAX = 10;
  * runs when an API key is configured because the anonymous quota is tiny.
  */
 export async function lookupByIsbns(isbns: readonly string[], max = GB_ISBN_LOOKUP_MAX): Promise<EditionCandidate[]> {
-  if (!process.env.GOOGLE_BOOKS_API_KEY) return [];
+  if (!process.env.GOOGLE_BOOKS_API_KEY || !googleAvailable()) return [];
   const unique = Array.from(new Set(isbns)).slice(0, max);
   const results = await Promise.all(unique.map(async isbn => {
     const url = `${BASE}?q=isbn:${encodeURIComponent(isbn)}&maxResults=3${apiKeyParam()}`;
@@ -71,6 +76,7 @@ export async function lookupByIsbns(isbns: readonly string[], max = GB_ISBN_LOOK
       // Keep only volumes that really carry the ISBN; Google sometimes pads results.
       return parseVolumes(data.items).filter(c => c.isbn13 === isbn);
     } catch (err) {
+      noteGoogleFailure(err);
       debug('googlebooks', `isbn ${isbn} failed: ${(err as Error).message}`);
       return [];
     }
@@ -90,8 +96,16 @@ export async function lookupByIsbns(isbns: readonly string[], max = GB_ISBN_LOOK
  */
 export async function lookupIsbnOrThrow(isbn13: string): Promise<EditionCandidate[] | null> {
   if (!process.env.GOOGLE_BOOKS_API_KEY) return null;
+  // The day's quota is gone: "not known" is the honest answer, and it is the
+  // one `null` already stands for. Asking anyway would only collect errors.
+  if (!googleAvailable()) return null;
   const url = `${BASE}?q=isbn:${encodeURIComponent(isbn13)}&maxResults=3${apiKeyParam()}`;
-  const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: 24 * 60 * 60 });
-  // Google pads results; keep only volumes that really carry the ISBN.
-  return parseVolumes(data.items).filter(c => c.isbn13 === isbn13);
+  try {
+    const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: 24 * 60 * 60 });
+    // Google pads results; keep only volumes that really carry the ISBN.
+    return parseVolumes(data.items).filter(c => c.isbn13 === isbn13);
+  } catch (err) {
+    noteGoogleFailure(err);
+    throw err;
+  }
 }

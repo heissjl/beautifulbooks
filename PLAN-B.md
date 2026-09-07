@@ -277,3 +277,52 @@ Kein „Team", keine Entstehungsgeschichte, kein Kontaktformular. Was fehlt, geh
 ### Prüfen
 
 `npm run build`, Sichtprüfung auf 375 und 1440, `grep` auf „every/all/complete", Links in der Fußzeile auf beiden Seitentypen.
+
+---
+
+## B6 — das Kontingent ist abgelesen, und es ist klein
+
+### Der Befund (Google-Cloud-Konsole, Projekt `beautifulbooks`, 2026-09-07)
+
+| | |
+|---|---|
+| **Queries per day** | **1.000**, anpassbar |
+| Queries per minute per user | 100, anpassbar |
+| Verbrauch heute | 298 (29,8 %) |
+| Sieben-Tage-Spitze über 90 % | keine |
+| Antworten in den letzten 30 Tagen | 200 bei 0,0075/s, **503 bei 0,001/s** |
+
+Damit ist die untere Schätzung aus §8.7 die richtige. Nach dem heutigen Fix kostet eine Suche 1 Anfrage und eine kalte Detailseite 2, also **500 kalte Detailseiten pro Tag** oder rund **200 Besuche** aus einer Suche und zwei geöffneten Büchern. Vor dem Fix wären es 47 Trefferlisten gewesen.
+
+Zwei Nebenbefunde: die 503-Kurve bestätigt, dass Google regelmäßig grundlos ablehnt — der Retry aus Schritt 13 war keine Vorsicht, sondern nötig. Und die 298 von heute stammen **allein aus der Entwicklung**: derselbe Schlüssel bedient Arbeit und Betrieb. Ein zweiter Schlüssel für die Entwicklung gehört auf die Liste.
+
+### Was daraus folgt: §8.7 Punkt 5, aber anders gebaut als geplant
+
+Geplant war ein **Tageszähler**. Der geht nicht sauber: dank des Next-Datencaches (Titelsuche 1 h, ISBN-Nachschau 24 h) weiß unser Code nicht, welche seiner Aufrufe das Haus überhaupt verlassen haben. Ein Zähler würde Treffer aus dem Cache mitzählen und die Seite lange vor dem echten Limit drosseln — bei einem Kontingent von 1.000 ein teurer Irrtum in die falsche Richtung.
+
+**Stattdessen ein Sicherungsautomat auf Googles eigener Fehlermeldung.** Google sagt selbst, wann Schluss ist; das ist genau, kostenlos und braucht kein Zählen.
+
+- **403 oder 429 mit `dailyLimitExceeded` / `quotaExceeded`** → Google wird bis zur nächsten Kontingent-Zurücksetzung nicht mehr gefragt. Die liegt bei Mitternacht **pazifischer Zeit**, nicht bei unserer.
+- **403 mit `rateLimitExceeded` / `userRateLimitExceeded`** → 60 Sekunden Pause, kein ganzer Tag.
+- **403 aus einem anderen Grund** (falscher Schlüssel, gesperrter Referrer) → **kein** Automat. Sonst legt eine Fehlkonfiguration Google für einen Tag still, und niemand fände heraus, warum.
+
+Dafür muss `HttpError` den Antworttext mitführen; heute wirft es nur den Status, und aus „403" allein lässt sich das nicht auseinanderhalten.
+
+Während der Automat offen ist, liefert die Titelsuche eine leere Liste (F3.3, die Seite läuft auf Open Library weiter) und die ISBN-Nachschau meldet `unavailable` — den Zustand gibt es schon, seit Google 503er wirft.
+
+### Dabei aufgefallen: der Leser bekommt heute eine falsche Aussage
+
+`VerdictNote` behandelt alles, was nicht `verified` oder `differs` ist, gleich — auch `pending`. Wer ein Cover auswählt, liest also für ein bis zwei Sekunden **„No current publisher image is on record for this ISBN"**, obwohl noch gar nicht gefragt wurde. Bei leerem Kontingent stünde dieser Satz den ganzen Tag da, und er wäre den ganzen Tag falsch. Das verstößt gegen §9.2 an genau der Stelle, an der es weh tut.
+
+Deshalb gehört zu B6:
+
+- `IsbnVerdict` bekommt den Status `unavailable`.
+- `VerdictNote` bekommt eigene Sätze für „wird gerade geprüft" und für „die Quelle hat nicht geantwortet".
+- `useIsbnCovers` merkt sich die ISBNs, bei denen die Quelle ausfiel, statt sie nur zu verwerfen.
+
+### Prüfen
+
+1. Unit-Tests: Fehlerklassifikation (drei Fälle plus der Nicht-Fall), `pacificMsUntilReset`, und dass ein offener Automat keine Anfrage stellt.
+2. Ein Test, der belegt: offener Automat ⇒ `getIsbnCovers` meldet `unavailable`, nicht „keine Cover".
+3. Im Browser: Verdikt beim Auswählen — kein falscher Satz mehr in der Wartezeit.
+4. `npm run build`.

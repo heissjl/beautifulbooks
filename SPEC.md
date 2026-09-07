@@ -446,7 +446,21 @@ Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil s
   Für die **Menge** an Covern ist Google seit Schritt 11 zweitrangig: 1 bis 23 Prozent, bei 1984 vier Bilder von 282. Unverzichtbar ist es für etwas anderes: die ISBN-Nachschau liefert das Bild, das der **Handel heute** zu einer ISBN zeigt. Nur damit lässt sich Schritt 13 bauen („Sellers show a different cover for this ISBN“), und genau das ist das Vertrauensversprechen aus §9.2. Beschreibungen und Vorschau-Links sind angenehm, aber ersetzbar.
 
   **Zu klären, in dieser Reihenfolge:**
-  1. Wie hoch ist das Kontingent 2026 tatsächlich? **Recherchiert am 2026-09-07, ohne belastbares Ergebnis:** die [offizielle Dokumentation](https://developers.google.com/books/docs/v1/using) nennt keine Zahl, Drittquellen widersprechen sich zwischen 1.000 und 10.000 Anfragen pro Tag. Einzige verlässliche Quelle ist das Kontingent-Dashboard des eigenen Google-Cloud-Projekts. Dort nachsehen, Zahl hier eintragen, danach erst weiterentscheiden.
+  1. ~~Wie hoch ist das Kontingent 2026 tatsächlich?~~ **Abgelesen am 2026-09-07 in der Google-Cloud-Konsole, Projekt `beautifulbooks`:**
+
+     | | |
+     |---|---|
+     | **Queries per day** | **1.000**, als anpassbar markiert |
+     | Queries per minute per user | 100, anpassbar |
+     | Verbrauch am 2026-09-07 | 298 (29,8 %) |
+     | Sieben-Tage-Spitze über 90 % | keine |
+     | Antwortverteilung, 30 Tage | 200 bei 0,0075/s, **503 bei 0,001/s** |
+
+     Damit gilt die untere der beiden kursierenden Zahlen. Die offizielle Dokumentation nennt weiterhin keine; die Konsole des eigenen Projekts ist die einzige verlässliche Quelle, und für andere Projekte kann der Wert abweichen.
+
+     **Was das bedeutet, nach dem Mosaik-Fix vom selben Tag:** eine Suche kostet 1 Anfrage, eine kalte Detailseite 2. Das sind rund **500 kalte Detailseiten pro Tag** oder etwa **200 Besuche** aus einer Suche und zwei geöffneten Büchern. Ohne den Fix wären es 47 Trefferlisten gewesen.
+
+     Zwei Nebenbefunde. Erstens bestätigt die 503-Kurve, dass Google regelmäßig grundlos ablehnt — der Retry aus Schritt 13 war nötig, nicht vorsichtig; am 2026-09-07 antwortete dieselbe ISBN-Anfrage im Abstand von Sekunden einmal mit 503 und einmal mit 200. Zweitens stammen die 298 Anfragen des Tages **allein aus der Entwicklung**: derselbe Schlüssel bedient Arbeit und Betrieb. **Offen: ein zweiter API-Schlüssel (oder ein zweites Projekt) für die Entwicklung**, sonst konkurriert jede Testsitzung mit den Besuchern um dieselben 1.000.
   2. Lässt sich das Kontingent erhöhen, und kostet das etwas? Die Books API wird, anders als Maps, **nicht** pro Anfrage verkauft; es gibt keinen Preis, den man einfach bezahlen kann. Es gibt ein [Formular für eine Kontingenterhöhung](https://discuss.google.dev/t/requesting-higher-quota-for-google-books-api-bookquest-app/286093); Entwicklerberichte sprechen von langer Bearbeitung und häufigen Ablehnungen. Zu prüfen, ob [Abrechnung im Projekt zu aktivieren](https://support.google.com/googleapi/answer/7035610?hl=en) die Grenze anhebt — bei manchen Google-APIs ist ein höheres Kontingent an aktivierte Abrechnung gebunden, ob das für die Books API gilt, ist offen.
   3. Wenn beides nicht trägt: welcher Ersatz? Kandidaten in der Reihenfolge ihrer Eignung:
      - **ISBNdb** (kostenpflichtig, ab ~15 USD/Monat) liefert Cover und Metadaten pro ISBN und ersetzt die Nachschau eins zu eins.
@@ -463,7 +477,18 @@ Fragen, die vor dem ersten öffentlichen Nutzer beantwortet sein müssen, weil s
      | 1984 | 2 | 10 |
 
      Diese 2 bis 5 Bilder verschwinden zunächst aus der Wand und tauchen erst beim Anklicken der jeweiligen Ausgabe auf. Verschmerzbar, denn die Auswahl ist ohnehin willkürlich: nachgeschlagen werden nur die zehn neuesten ISBNs von Seite 0, bei Beloved zehn von 37 ISBN-tragenden Ausgaben allein auf dieser Seite und von weit über hundert im ganzen Werk. Eine vollständige Abdeckung war das nie, sondern eine Stichprobe zum Preis von zehn Anfragen pro Seitenaufruf.
-  5. **Tageszähler mit sauberem Abschalten.** Ein leeres Kontingent darf die Seite nicht in Fehler laufen lassen. F3.3 deckt den Ausfall einer Quelle bereits ab, aber ungebremst: heute wird bei jedem Aufruf weiter angefragt und jede Anfrage läuft in einen 429. Zähler pro Tag, danach Google überspringen und im UI sagen, dass die Handelsbilder heute nicht verfügbar sind.
+  5. ~~**Tageszähler mit sauberem Abschalten.**~~ *Erledigt 2026-09-07 als `lib/googlequota.ts`, allerdings anders gebaut als geplant.*
+
+     **Ein Zähler wäre unehrlich gewesen.** Der Next-Datencache bedient die Titelsuche eine Stunde und die ISBN-Nachschau einen Tag lang; unser Code weiß nicht, welche seiner Aufrufe das Haus überhaupt verlassen haben. Ein Zähler hätte Cache-Treffer mitgezählt und die Seite lange vor dem echten Limit gedrosselt — bei einem Kontingent von 1.000 ein teurer Irrtum in die falsche Richtung.
+
+     **Stattdessen ein Sicherungsautomat auf Googles eigener Antwort.** Google sagt selbst, wann Schluss ist:
+     - `403`/`429` mit `dailyLimitExceeded` oder `quotaExceeded` → Google wird bis zur nächsten Zurücksetzung nicht mehr gefragt. Die liegt bei **Mitternacht pazifischer Zeit**, nicht bei unserer.
+     - `403`/`429` mit `rateLimitExceeded` → 90 Sekunden Pause, kein ganzer Tag.
+     - `403` aus einem anderen Grund (falscher Schlüssel, gesperrter Referrer) → **kein** Automat, sonst legt eine Fehlkonfiguration Google für einen Tag still und niemand fände heraus, warum.
+
+     Dafür führt `HttpError` jetzt den Anfang des Antworttextes mit; aus dem Status allein ist das nicht zu unterscheiden. Bei offenem Automaten liefert die Titelsuche eine leere Liste (F3.3, die Seite läuft auf Open Library weiter) und die ISBN-Nachschau meldet `unavailable`.
+
+     **Dabei gefunden und mitbehoben: eine falsche Aussage an den Leser.** `VerdictNote` behandelte alles, was nicht `verified` oder `differs` war, gleich — auch `pending`. Wer ein Cover auswählte, las also ein bis zwei Sekunden lang „No current publisher image is on record for this ISBN", obwohl noch gar nicht gefragt worden war; bei leerem Kontingent hätte dieser Satz den ganzen Tag dort gestanden und wäre den ganzen Tag falsch gewesen. `IsbnVerdict` hat jetzt den Status `unavailable`, und es gibt eigene Sätze für „wird gerade geprüft" und „die Quelle hat nicht geantwortet". Gegen §9.2 verstieß das an genau der Stelle, an der es weh tut.
 
 - [ ] **Entscheidung über den Verfügbarkeits-Button vor dem Deployment** (Julian, 2026-09-07: Button bleibt vorerst drin, Entscheidung vor dem Start).
 

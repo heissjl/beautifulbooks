@@ -3,6 +3,7 @@
  * Google Books is mocked; no image is ever fetched.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { resetGoogleQuota } from '../googlequota';
 import { getIsbnCovers, isIsbn13 } from '../isbn';
 
 const BELOVED = '9780307388629';
@@ -23,6 +24,9 @@ function volume(id: string, isbn13: string) {
 }
 
 beforeEach(() => {
+  // The Google breaker is module state: one test that provokes a 429 would
+  // otherwise silence Google for every test after it (lib/googlequota.ts).
+  resetGoogleQuota();
   calls.length = 0;
   vi.stubEnv('GOOGLE_BOOKS_API_KEY', 'test-key');
   handler = () => ({ body: { items: [volume('v1', BELOVED)] } });
@@ -99,6 +103,24 @@ describe('getIsbnCovers when Google is flaky', () => {
     const r = await getIsbnCovers(BELOVED);
     expect(calls).toHaveLength(2);
     expect(r).toMatchObject({ isbn13: BELOVED, covers: [], unavailable: true });
+  });
+
+  it('reports unavailable, and asks nobody, once the day\'s quota is gone', async () => {
+    // The quota read on 2026-09-07 is 1,000 a day, so this is a day that will
+    // come. What must not happen is telling the reader no cover is on record
+    // (SPEC §8.7 point 5).
+    handler = () => ({
+      status: 403,
+      body: { error: { code: 403, errors: [{ reason: 'dailyLimitExceeded' }] } },
+    });
+    const first = await getIsbnCovers(BELOVED);
+    expect(first).toMatchObject({ covers: [], unavailable: true });
+
+    calls.length = 0;
+    const second = await getIsbnCovers('9780141036144');
+    expect(second).toMatchObject({ covers: [], unavailable: true });
+    // Not one further request: an exhausted quota only collects errors.
+    expect(calls).toHaveLength(0);
   });
 
   it('reports unavailable without an API key instead of an empty answer', async () => {

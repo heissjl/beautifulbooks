@@ -5,6 +5,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { resetGoogleQuota } from '../googlequota';
 import { searchVolumes, searchEditionCandidates } from '../sources/googlebooks';
 import { HttpError, fetchJson } from '../sources/http';
 import { getEditionsPage, getWork, searchWorks } from '../sources/openlibrary';
@@ -18,6 +19,9 @@ let handler: Handler;
 const calls: string[] = [];
 
 beforeEach(() => {
+  // The Google breaker is module state: one test that provokes a 429 would
+  // otherwise silence Google for every test after it (lib/googlequota.ts).
+  resetGoogleQuota();
   calls.length = 0;
   handler = () => ({ status: 500 });
   vi.stubGlobal('fetch', vi.fn(async (input: string | URL) => {
@@ -127,6 +131,10 @@ describe('googlebooks', () => {
     handler = () => ({ status: 429 });
     await expect(searchVolumes('1984')).resolves.toEqual([]);
     expect(calls[0]).not.toContain('key=');
+
+    // That 429 legitimately opened the quota breaker; the rest of this test
+    // is about the key, not about the pause (lib/googlequota.ts).
+    resetGoogleQuota();
 
     vi.stubEnv('GOOGLE_BOOKS_API_KEY', 'abc');
     handler = () => ({ body: { items: [{ id: 'v1', volumeInfo: { title: '1984', authors: ['George Orwell'], imageLinks: { thumbnail: 'http://books.google.com/x?zoom=1&edge=curl' }, language: 'en' } }] } });

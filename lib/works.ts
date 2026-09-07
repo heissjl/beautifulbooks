@@ -564,7 +564,10 @@ export function foldDuplicateCovers(
 export type IsbnVerdict =
   | { status: 'verified' }
   | { status: 'differs'; cover: Cover }
+  /** Asked, and Google has no image for this ISBN. */
   | { status: 'unknown' }
+  /** Asked, and the source did not answer: nothing may be concluded. */
+  | { status: 'unavailable' }
   | { status: 'pending' };
 
 export function verifyIsbnCover(
@@ -572,7 +575,11 @@ export function verifyIsbnCover(
   retailCoverIds: readonly string[],
   wall: readonly Cover[],
   asked: boolean,
+  /** The lookup was attempted and failed, or the day's quota is gone. */
+  unavailable = false,
 ): IsbnVerdict {
+  // Order matters: a failed lookup must never read as "no image on record".
+  if (unavailable) return { status: 'unavailable' };
   if (!asked) return { status: 'pending' };
   if (retailCoverIds.length === 0) return { status: 'unknown' };
 

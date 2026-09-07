@@ -7,6 +7,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { resetGoogleQuota } from '../googlequota';
 import { search } from '../search';
 import { MAX_EDITIONS_SCANNED, getWorkDetail, getWorkPage } from '../work';
 import { authorMatchKey, normalizeTitle } from '../normalize';
@@ -73,6 +74,9 @@ function route(url: URL): { status?: number; body?: unknown } {
 }
 
 beforeEach(() => {
+  // The Google breaker is module state: one test that provokes a 429 would
+  // otherwise silence Google for every test after it (lib/googlequota.ts).
+  resetGoogleQuota();
   calls.length = 0;
   googleBooks = googleFixture;
   vi.stubGlobal('fetch', vi.fn(async (input: string | URL) => {
@@ -282,6 +286,10 @@ describe('getWorkDetail', () => {
 
   it('puts the preferred language first, merges Google Books editions by ISBN and keeps both covers (E8)', async () => {
     const without = await getWorkDetail('OL1168083W', { dedupeCovers: false });
+    // The first call hit the mock's "nothing recorded" 429, which the quota
+    // breaker rightly reads as a rate limit. Here it stands for a missing
+    // fixture, not for a busy Google, so the pause is cleared.
+    resetGoogleQuota();
     googleBooks = () => ({
       body: {
         items: [

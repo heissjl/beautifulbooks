@@ -4,13 +4,31 @@
  */
 import { debug } from '../debug';
 
+/** How much of an error response to keep; enough to read a reason code. */
+export const ERROR_BODY_MAX = 500;
+
 export class HttpError extends Error {
   constructor(
     public readonly status: number,
     public readonly url: string,
+    /**
+     * The start of the error response, when it could be read. Google answers
+     * 403 both for an exhausted quota and for a bad key, and only the body
+     * says which (lib/googlequota.ts).
+     */
+    public readonly body = '',
   ) {
     super(`HTTP ${status} for ${url}`);
     this.name = 'HttpError';
+  }
+}
+
+/** Reads an error body without letting that reading become the failure. */
+async function errorBody(res: Response): Promise<string> {
+  try {
+    return (await res.text()).slice(0, ERROR_BODY_MAX);
+  } catch {
+    return '';
   }
 }
 
@@ -35,7 +53,7 @@ export async function fetchJson<T>(url: string, { timeoutMs, revalidate }: Fetch
     next: { revalidate },
   });
   debug('http', `${res.status} ${Date.now() - started}ms ${url}`);
-  if (!res.ok) throw new HttpError(res.status, url);
+  if (!res.ok) throw new HttpError(res.status, url, await errorBody(res));
   return (await res.json()) as T;
 }
 

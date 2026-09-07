@@ -301,6 +301,7 @@ function BookDetail() {
         isbnCovers.byIsbn.get(isbn13) ?? [],
         view.covers,
         isbnCovers.asked.has(isbn13),
+        isbnCovers.unavailable.has(isbn13),
       )}
     />
   );
@@ -512,6 +513,28 @@ function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) 
           {hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
         </p>
       </div>
+    );
+  }
+  /*
+    Everything that is not verified or differs used to fall through to the
+    "no image on record" paragraph, including `pending` — so for the second
+    or two while the lookup ran, the reader was told something we had not yet
+    checked, and on a day with the Google quota spent it would have stood
+    there permanently (2026-09-07).
+  */
+  if (verdict.status === 'pending') {
+    return (
+      <p className="mt-2 text-xs leading-relaxed text-ink-3">
+        Checking which cover the publisher has registered for this ISBN&hellip;
+      </p>
+    );
+  }
+  if (verdict.status === 'unavailable') {
+    return (
+      <p className="mt-2 text-xs leading-relaxed text-ink-3">
+        The catalogue that holds publishers&rsquo; current images did not answer, so nothing can be
+        said about which cover ships.{hint ? ` Look for ${hint}.` : ''}
+      </p>
     );
   }
   return (
