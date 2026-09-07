@@ -653,6 +653,8 @@ Die Vertrauensarbeit aus §9 ist bis auf zwei Schritte erledigt. Was jetzt zähl
 
 ### A. Bevor die Seite jemand sieht
 
+*Detailplan in [PLAN-A.md](PLAN-A.md).*
+
 1. **PR #1 aktualisieren und mergen.** 30 Commits liegen auf `rewrite-data-layer`, `origin/main` ist entsprechend alt. Titel und Beschreibung passen nicht mehr, der PR enthält inzwischen §9 Schritte 10–16. Vercel deployt später `main`, also muss das zuerst aufgeräumt sein.
 2. **Schritt 15, ehrliche Sprache** (§9.3). Eine Stunde. „Every cover of every edition“ steht noch im Header, in der Wortmarke und in der Meta-Description, während die Seite nachweislich einen Teil zeigt. Das ist der einzige verbliebene Punkt, an dem die Seite dem Nutzer etwas Falsches sagt.
 3. **Drei Entscheidungen aus §8.7, die zusammen eine halbe Stunde kosten:** Google-Kontingent im Cloud-Dashboard ablesen und dort eintragen; über den Verfügbarkeits-Button entscheiden; Bookshop-ID beantragen (siehe C1).
