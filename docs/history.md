@@ -575,3 +575,13 @@ Anlass war Julians Vermutung, andere Datenbanken könnten mehrere Probleme auf e
 - **LibraryThing Covers**: `covers.librarything.com/devkey/KEY/large/isbn/…`, **1.000 Cover am Tag**, höchstens eines je Sekunde bei automatischem Abruf, fehlendes Bild kommt als transparentes 1×1-GIF ([Free covers](https://wiki.librarything.com/index.php/Free_covers)).
 - **K10plus / DNB**: SRU unter `sru.k10plus.de/opac-de-627`, rund 80 Millionen Titel aus über 1.000 Bibliotheken, DNB-Titeldaten unter CC0 ([K10plus SRU](https://wiki.k10plus.de/display/K10PLUS/SRU)). Keine Schutzumschläge, aber die sauberste kostenlose Quelle für Verlag, Imprint und Jahr — also für genau die Felder, an denen die Faltung scheitert.
 - **Open-Library-Dumps**: monatlich, Editions-Datei 45 GB entpackt, rund 250 GB für den vollständigen Import, **für Cover gibt es keinen laufenden Dump** ([Data Dumps](https://openlibrary.org/developers/dumps)). Würde Paging, Latenz und Ratenbegrenzung erledigen, verlangt aber eine Datenbank und damit die Infrastruktur, die E6 bisher bewusst vermeidet.
+
+---
+
+## 2026-09-07 · Beim Planen von 1.1 gefunden: die Signaturen kennen keine Farbe
+
+Der Plan für ROADMAP 1.1 steht in [plans/PLAN-1.1-keine-vorauswahl.md](plans/PLAN-1.1-keine-vorauswahl.md). Zwei Befunde daraus gehören hierher, weil sie unabhängig vom Punkt selbst gelten.
+
+**`decodeToGray` verwirft die Farbe in der ersten Schleife.** `lib/imagehash.ts` rechnet jedes Bild sofort in Graustufen um; `signature()` liefert danach `hash`, `contrast` und `mean`, alle drei ohne Farbe. Ein Maß für „farbenfroh" — Julians Vorschlag vom selben Tag — ist daraus **nicht** ableitbar. Nachrüstbar ist es billig: ein zweiter Akkumulator für die Sättigung in derselben Schleife, und da die Signaturen bei jeder Anfrage aus den 30 Tage lang gecachten Bytes neu gerechnet werden (`lib/coverhash.ts` cacht die Bytes, nicht die Signatur), kostet es keine zusätzliche Ladung. Der Vorschlag ist deshalb nicht verworfen, sondern nach ROADMAP 1.9 gewandert, wo ein auffälliges Cover die Startseite illustrieren soll, statt für den Leser eine Ausgabe auszuwählen.
+
+**Klappentexte sind dünn und oft in der falschen Sprache.** *Wolf Hall*, Seite 0: von 26 Ausgaben tragen **3** eine Beschreibung, und die längste davon (927 Zeichen) gehört zu Editorial Presença — sie ist portugiesisch. Ein Panel, das schlicht die längste Beschreibung zeigt, setzt also einen portugiesischen Text unter ein englisches Buch. Der Plan sieht deshalb `blurbFor(editions, language)` vor: erst die gewünschte Sprache, dann der Rest, und die Sprache wird genannt, wenn ausgewichen wurde.

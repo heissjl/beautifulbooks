@@ -80,14 +80,18 @@ Keine davon ist Code. 0.1 bis 0.4 und 0.8 stehen vor dem Deployment; 0.5 bis 0.7
 
 Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Messung.
 
-- [ ] **1.1 Beim Öffnen eines Buchs kein Cover automatisch auswählen.** (Julian, 2026-09-07.) Heute fällt `selectCoverFrom` auf das erste Cover der ersten Gruppe zurück: der neueste Datensatz der führenden Sprache, nicht das schönste und nicht das bekannteste. Zwei Gründe: das Produkt („Judge a book by its covers“ heißt, auf einer Wand zu landen, nicht auf einer getroffenen Entscheidung) und das Kontingent (die Auswahl löst die ISBN-Nachschau aus, **eine Google-Anfrage pro geöffnetem Buch**, ob jemand die Seitenleiste ansieht oder nicht; eine kalte Detailseite fiele von 2 auf 1, ohne ein einziges Cover zu kosten).
+- [ ] **1.1 Beim Öffnen eines Buchs kein Cover automatisch auswählen.** (Julian, 2026-09-07.) *Umsetzungsplan: [docs/plans/PLAN-1.1-keine-vorauswahl.md](docs/plans/PLAN-1.1-keine-vorauswahl.md).* Heute fällt `selectCoverFrom` auf das erste Cover der ersten Gruppe zurück: der neueste Datensatz der führenden Sprache, nicht das schönste und nicht das bekannteste. Zwei Gründe: das Produkt („Judge a book by its covers“ heißt, auf einer Wand zu landen, nicht auf einer getroffenen Entscheidung) und das Kontingent (die Auswahl löst die ISBN-Nachschau aus, **eine Google-Anfrage pro geöffnetem Buch**, ob jemand die Seitenleiste ansieht oder nicht; eine kalte Detailseite fiele von 2 auf 1, ohne ein einziges Cover zu kosten).
 
   **Wie beliebig, im Durchklick gesehen [T11]:** *The Great Gatsby* öffnet mit einer Ausgabe von „100 MustReads“, 2026, unter ISBN 9789388843089 — eine indische Print-on-Demand-Ausgabe, auf die dann auch die Kauf-Links zeigen. Auf dem Telefon steht die Peek-Leiste dadurch **sofort beim Laden** am unteren Rand und verdeckt eine Kachelreihe, ohne dass jemand etwas ausgewählt hat.
 
   Unberührt: geteilte Links mit `?cover=`, die Peek-Leiste auf dem Telefon, die Ladeszene. Zu gestalten ist die breite Ansicht, denn eine leere zweite Spalte wäre schlechter als das Problem. Drei Kandidaten, unentschieden:
   1. Die Wand läuft bis zur ersten Auswahl über die volle Breite und rückt dann zusammen. Ehrlich zur Sache, kostet ein Umspringen des Layouts.
   2. Die Spalte trägt bis zur Auswahl eine kurze Erklärung, was ein Klick bringt.
-  3. **Julians Vorschlag:** ein Algorithmus wählt ein **farbenfrohes** Cover automatisch, und das kleine Google-Cover darunter lädt erst, **wenn die Seitenleiste gescrollt wurde**. Die Auswahl bliebe automatisch, wäre aber nicht mehr willkürlich, und die Google-Anfrage fiele erst an, wenn jemand in Richtung der Kauf-Links liest. Unbewertet festgehalten; die Signaturen (Kontrast, Helligkeit) liegen für ein Farbmaß bereits pro Cover vor.
+  3. **Julians Vorschlag:** ein Algorithmus wählt ein **farbenfrohes** Cover automatisch, und das kleine Google-Cover darunter lädt erst, **wenn die Seitenleiste gescrollt wurde**.
+
+  **Der Plan entscheidet sich für Kandidat 2**, größer gefasst als hier beschrieben: die Spalte zeigt bis zur ersten Auswahl *das Werk* statt *einer Ausgabe* — einen Ort, den die Seite bisher gar nicht hat. Kandidat 1 fällt weg, weil ein Umbruch des Rasters bei *Gatsby* alle 293 Kacheln unter dem Finger wegsortiert.
+
+  **Kandidat 3 ist beim Planen geprüft und als Standard verworfen**, aus zwei Gründen, die vorher nicht sichtbar waren. Erstens **gibt es das Farbmaß nicht**: `decodeToGray` rechnet jedes Bild in der ersten Schleife auf Graustufen um, die Signatur trägt nur Hash, Kontrast und Helligkeit. „Farbenfroh" müsste als Sättigungsmaß nachgerüstet werden. Zweitens fällt der zweite Teil von selbst weg: ohne automatische Auswahl wird gar nichts nachgeschlagen, bis jemand klickt — dieselbe Ersparnis, vollständig und ohne einen neuen Auslöser, der nach 1.2 ohnehin wackelig wäre. **Die Idee behält ihren Wert für 1.9**, wo ein auffälliges Cover gesucht wird, ohne dem Leser eine Wahl abzunehmen; dort ist sie notiert.
 
 - [ ] **1.2 Die Kauf-Links sind in der Seitenleiste nicht auffindbar.** (Julian, 2026-09-07: „man weiß erst gar nicht, dass man scrollen muss“.) Gemessen auf 1440 × 900 bei *Beloved*: sichtbare Höhe der Seitenleiste 804 px, Inhalt 2.351 px, davon das Cover allein 554 px; „Buy this ISBN“ liegt 437 px unter dem Fensterrand, ohne sichtbaren Hinweis, dass unterhalb des Covers etwas kommt.
 
@@ -131,6 +135,8 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
   4. **„Zuletzt gesucht"** aus dem localStorage (`useRecentSearches` gibt es bereits) als kleine Cover-Reihe. Nützlich für Wiederkehrer, aber **beim ersten Besuch leer** — und das ist der Besuch, der zählt. Nur als Ergänzung zu einem der ersten drei, nie allein.
 
   **Empfehlung: Vorschlag 1**, mit 3 als Rückfallposition, wenn der Fächer auf 1.280 px zu laut wirkt. Vorschlag 4 später dazu, wenn es Wiederkehrer gibt.
+
+  **Julians Algorithmus für ein farbenfrohes Cover gehört hierher**, nicht zu 1.1: hier wählt er kein Buch für den Leser aus, sondern illustriert eines. Zu bauen wäre ein Sättigungsmaß — die Signaturen sind heute reine Graustufen (`decodeToGray` in `lib/imagehash.ts` verwirft die Farbe in der ersten Schleife), ein zweiter Akkumulator in derselben Schleife genügt, und da Signaturen ohnehin bei jeder Anfrage aus den 30 Tage gecachten Bytes neu gerechnet werden, kostet es keine zusätzliche Ladung. Begründung in [PLAN-1.1](docs/plans/PLAN-1.1-keine-vorauswahl.md) §3.
 
   **Bedingungen, die für jede Variante gelten:** keine Google-Anfrage und kein Nachladen beim ersten Rendern (die Cover-IDs stehen fest, wie in `lib/curated.ts`); auf schmalen Bildschirmen darf das Element das Suchfeld nicht unter die Kante schieben, dort entfällt es oder rückt unter die Wand; und es darf nichts behaupten, was §1 verbietet — „vier von 226 Covern" ist erlaubt, „alle Cover" nicht.
 
