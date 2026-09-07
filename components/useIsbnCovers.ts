@@ -11,9 +11,11 @@ export interface IsbnCoverResult {
   signatures: Map<string, ImageSignature>;
   /** ISBNs asked for so far, so callers can tell "no image" from "not asked". */
   asked: Set<string>;
+  /** Cover ids the shop shows, per ISBN; empty when it shows none. */
+  byIsbn: Map<string, string[]>;
 }
 
-const EMPTY: IsbnCoverResult = { covers: [], signatures: new Map(), asked: new Set() };
+const EMPTY: IsbnCoverResult = { covers: [], signatures: new Map(), asked: new Set(), byIsbn: new Map() };
 
 interface Store {
   key: string;
@@ -48,6 +50,9 @@ export function useIsbnCovers(resetKey: string, isbns: readonly string[], editio
           if (!res.ok) continue;
           const data = (await res.json()) as IsbnCoversResponse;
           if (controller.signal.aborted) return;
+          // The source was down, not silent: forget it so a later selection
+          // asks again instead of reporting "no cover on record".
+          if (data.unavailable) continue;
           setStore(prev => {
             const byIsbn = new Map(prev.key === resetKey ? prev.byIsbn : []);
             if (byIsbn.has(data.isbn13)) return prev;
@@ -70,11 +75,13 @@ export function useIsbnCovers(resetKey: string, isbns: readonly string[], editio
 
   const covers: Cover[] = [];
   const signatures = new Map<string, ImageSignature>();
+  const byIsbn = new Map<string, string[]>();
   for (const [isbn, data] of store.byIsbn) {
     const editionIds = store.editionsByIsbn.get(isbn) ?? [];
+    byIsbn.set(isbn, data.covers.map(c => c.id));
     if (editionIds.length === 0) continue;
     for (const cover of data.covers) covers.push({ ...cover, editionIds });
     for (const [id, sig] of Object.entries(data.signatures ?? {})) signatures.set(id, sig);
   }
-  return { covers, signatures, asked: new Set(store.byIsbn.keys()) };
+  return { covers, signatures, asked: new Set(store.byIsbn.keys()), byIsbn };
 }

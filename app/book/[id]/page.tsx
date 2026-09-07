@@ -20,7 +20,7 @@ import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 import type { ImageSignature } from '@/lib/imagesig';
 import { leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
-import { foldDuplicateCovers, groupCoversByLanguage } from '@/lib/works';
+import { foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
 
 function BackLink({ href }: { href: string }) {
   return (
@@ -312,6 +312,12 @@ function BookDetail() {
                 author={work.authors[0]}
                 market={view.market}
                 onMarketChange={setMarket}
+                verdictFor={isbn13 => verifyIsbnCover(
+                  selected,
+                  isbnCovers.byIsbn.get(isbn13) ?? [],
+                  view.covers,
+                  isbnCovers.asked.has(isbn13),
+                )}
               />
             )}
           </aside>
@@ -346,9 +352,11 @@ interface CoverDetailsProps {
   author?: string;
   market: Market;
   onMarketChange: (market: Market) => void;
+  /** What a shop shows for an ISBN, compared with the cover on screen. */
+  verdictFor: (isbn13: string) => IsbnVerdict;
 }
 
-function CoverDetails({ cover, editions, coversPerEdition, author, market, onMarketChange }: CoverDetailsProps) {
+function CoverDetails({ cover, editions, coversPerEdition, author, market, onMarketChange, verdictFor }: CoverDetailsProps) {
   return (
     <div>
       <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-xs overflow-hidden rounded-card bg-surface-2 lg:mx-0 lg:max-w-none">
@@ -369,6 +377,7 @@ function CoverDetails({ cover, editions, coversPerEdition, author, market, onMar
             searchLinks={searchLinksFor({ title: edition.title, author, publisher: edition.publisher, year: edition.year, coverUrl: cover.url, editionId: edition.id }, market)}
             market={market}
             onMarketChange={onMarketChange}
+            verdict={edition.isbn13 ? verdictFor(edition.isbn13) : { status: 'unknown' }}
           />
         ))}
       </div>
@@ -382,9 +391,10 @@ interface EditionBlockProps {
   searchLinks: EditionView['buyLinks'];
   market: Market;
   onMarketChange: (market: Market) => void;
+  verdict: IsbnVerdict;
 }
 
-function EditionBlock({ edition, otherCovers, searchLinks, market, onMarketChange }: EditionBlockProps) {
+function EditionBlock({ edition, otherCovers, searchLinks, market, onMarketChange, verdict }: EditionBlockProps) {
   const rows: Array<[string, string | undefined]> = [
     ['Title', edition.title],
     ['Published', edition.publishedDate],
@@ -396,6 +406,9 @@ function EditionBlock({ edition, otherCovers, searchLinks, market, onMarketChang
     ['Also printed with', otherCovers > 0 ? `${otherCovers} other cover${otherCovers > 1 ? 's' : ''}` : undefined],
   ];
   const hint = [edition.publisher, edition.year].filter(Boolean).join(' ');
+  // When the shop shows another jacket, the searches that find *this* one
+  // matter more than the ISBN links, so they go first (SPEC §9.3 step 13).
+  const buyFirst = verdict.status !== 'differs';
   return (
     <div>
       <dl className="divide-y divide-line border-y border-line text-sm">
@@ -411,12 +424,80 @@ function EditionBlock({ edition, otherCovers, searchLinks, market, onMarketChang
         <p className="mt-4 line-clamp-6 text-sm leading-relaxed text-ink-2">{edition.description}</p>
       )}
 
-      <div className="mt-5">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <p className="kicker">{edition.isbn13 ? 'Buy this ISBN' : 'No ISBN on record'}</p>
-          <MarketSwitcher market={market} onChange={onMarketChange} compact />
-        </div>
-        {edition.buyLinks.length > 0 ? (
+      {buyFirst ? (
+        <>
+          <BuyBlock edition={edition} hint={hint} verdict={verdict} market={market} onMarketChange={onMarketChange} />
+          <SearchBlock links={searchLinks} lead={false} />
+        </>
+      ) : (
+        <>
+          <SearchBlock links={searchLinks} lead />
+          <BuyBlock edition={edition} hint={hint} verdict={verdict} market={market} onMarketChange={onMarketChange} />
+        </>
+      )}
+
+      {edition.previewUrl && (
+        <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm text-accent hover:underline">
+          Preview on Google Books
+        </a>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Says whether the ISBN below will actually arrive with the cover on screen
+ * (SPEC §9.3 step 13). Measured on *Beloved*: for half the ISBNs where Google
+ * has an image, the shop shows a different jacket than the catalogue scan.
+ */
+function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) {
+  if (verdict.status === 'verified') {
+    return (
+      <p className="mt-2 text-xs leading-relaxed text-ink-3">
+        <span className="text-ink-2">Shops list this ISBN with this cover.</span>{' '}
+        Checked against the publisher&rsquo;s current image.
+      </p>
+    );
+  }
+  if (verdict.status === 'differs') {
+    return (
+      <div className="mt-2 flex items-start gap-3">
+        <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the cover shops show">
+          <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
+            <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="Cover shops currently show" sizes="55px" />
+          </span>
+        </a>
+        <p className="text-xs leading-relaxed text-ink-3">
+          <span className="text-ink-2">Shops currently show a different cover for this ISBN.</span>{' '}
+          The picture beside this note is what a new copy is likely to look like.
+          {hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
+        </p>
+      </div>
+    );
+  }
+  return (
+    <p className="mt-2 text-xs leading-relaxed text-ink-3">
+      We cannot tell which cover ships with this ISBN. Sellers list by number and send the current
+      printing.{hint ? ` Look for ${hint}.` : ''}
+    </p>
+  );
+}
+
+function BuyBlock({ edition, hint, verdict, market, onMarketChange }: {
+  edition: EditionView;
+  hint: string;
+  verdict: IsbnVerdict;
+  market: Market;
+  onMarketChange: (market: Market) => void;
+}) {
+  return (
+    <div className="mt-5">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <p className="kicker">{edition.isbn13 ? 'Buy this ISBN' : 'No ISBN on record'}</p>
+        <MarketSwitcher market={market} onChange={onMarketChange} compact />
+      </div>
+      {edition.buyLinks.length > 0 ? (
+        <>
           <div className="mt-2 flex flex-wrap gap-2">
             {edition.buyLinks.map(link => (
               <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer sponsored" className="btn">
@@ -424,38 +505,33 @@ function EditionBlock({ edition, otherCovers, searchLinks, market, onMarketChang
               </a>
             ))}
           </div>
-        ) : (
-          <p className="mt-2 text-xs leading-relaxed text-ink-3">
-            This edition predates ISBNs or has none on record, so shops cannot look it up directly. Use the searches below.
-          </p>
-        )}
-        {edition.buyLinks.length > 0 && (
-          <p className="mt-2 text-xs leading-relaxed text-ink-3">
-            Sellers list by ISBN and ship the current printing, so the cover may differ from the one shown.
-            {hint ? ` Look for ${hint}.` : ''}
-          </p>
-        )}
-      </div>
-
-      <div className="mt-5">
-        <p className="kicker">Find this exact cover</p>
-        <div className="mt-2 flex flex-wrap gap-2">
-          {searchLinks.map(link => (
-            <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
-              {link.label}
-            </a>
-          ))}
-        </div>
+          <VerdictNote verdict={verdict} hint={hint} />
+        </>
+      ) : (
         <p className="mt-2 text-xs leading-relaxed text-ink-3">
-          Title, publisher and year at antiquarian and auction sites; Google Lens and TinEye search by the cover image.
+          This edition predates ISBNs or has none on record, so shops cannot look it up directly. Use the searches below.
         </p>
-      </div>
-
-      {edition.previewUrl && (
-        <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm text-accent hover:underline">
-          Preview on Google Books
-        </a>
       )}
+    </div>
+  );
+}
+
+function SearchBlock({ links, lead }: { links: EditionView['buyLinks']; lead: boolean }) {
+  return (
+    <div className="mt-5">
+      <p className="kicker">Find this exact cover</p>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {links.map(link => (
+          <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
+            {link.label}
+          </a>
+        ))}
+      </div>
+      <p className="mt-2 text-xs leading-relaxed text-ink-3">
+        {lead
+          ? 'These search for the printing shown above by title, publisher and year, or by the cover image itself.'
+          : 'Title, publisher and year at antiquarian and auction sites; Google Lens and TinEye search by the cover image.'}
+      </p>
     </div>
   );
 }

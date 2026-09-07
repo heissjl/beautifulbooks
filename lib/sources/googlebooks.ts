@@ -77,3 +77,21 @@ export async function lookupByIsbns(isbns: readonly string[], max = GB_ISBN_LOOK
   }));
   return results.flat();
 }
+
+/**
+ * The volumes Google lists for one ISBN. Unlike `lookupByIsbns` this reports
+ * failure instead of swallowing it: Google Books answers a transient 503 for
+ * roughly one request in three at times (measured 2026-09-07), and a failed
+ * request must not be shown to the reader as "no cover on record"
+ * (SPEC §9.3 step 13).
+ *
+ * Returns null when no API key is configured, because the anonymous quota is
+ * too small to ask per ISBN.
+ */
+export async function lookupIsbnOrThrow(isbn13: string): Promise<EditionCandidate[] | null> {
+  if (!process.env.GOOGLE_BOOKS_API_KEY) return null;
+  const url = `${BASE}?q=isbn:${encodeURIComponent(isbn13)}&maxResults=3${apiKeyParam()}`;
+  const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: 24 * 60 * 60 });
+  // Google pads results; keep only volumes that really carry the ISBN.
+  return parseVolumes(data.items).filter(c => c.isbn13 === isbn13);
+}

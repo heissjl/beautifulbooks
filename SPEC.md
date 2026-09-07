@@ -572,11 +572,21 @@ Die neue Regel `looksLikeScannedPage` verlangt alle drei Bedingungen zugleich: n
 - **Gemessen im Browser (Beloved):** 59 Cover beim Laden vorher, 57 nachher; ein Klick auf eine andere Ausgabe holt deren Handelsbild nach und die Wand wächst auf 58. Trägt ein gefaltetes Cover zwei Ausgaben mit verschiedenen ISBNs, werden beide gefragt.
 - Offen für Schritt 13: das geholte Bild wird bisher nur angezeigt, noch nicht mit dem gewählten Cover verglichen und als „verified / differs / unknown“ ausgewiesen.
 
-**Schritt 13 – Kauf-Links mit Verifikationsgrad (E).**
-- Beim Auswählen eines Covers prüft der Client `GET /api/isbn/<isbn13>`: Server holt Googles ISBN-Bild (gecacht 24 h) und OLs `/isbn/<isbn>.json`, hasht und vergleicht mit dem gezeigten Cover. Antwort: `verified` (Distanz ≤ 16), `differs` (mit URL des Handelsbildes), `unknown` (kein Bild). Ein Google-Call pro ISBN und Tag, nur auf Auswahl, das passt ins Kontingent.
-- Anzeige über den Links: „Sellers list this ISBN with this cover“ / „Sellers currently show a different cover for this ISBN“ mit dem anderen Bild daneben, dann kommen die Suchwege (AbeBooks/eBay nach Titel, Verlag, Jahr) **vor** den ISBN-Links / „We can't tell which cover ships with this ISBN“.
-- Amazon bleibt `/dp/<ISBN-10>`; die Übergabe zusätzlicher Metadaten an Händler-URLs bringt nichts, die Händler suchen ohnehin nach ISBN. Metadaten gehören in die Suchwege, die haben sie schon.
-- ISBN-13 aus einem OL-Datensatz mit mehreren ISBNs: alle behalten (`isbns: string[]`), Links für die erste, die anderen als „also as ISBN …“ mit eigenen Links. Selten, aber dann richtig.
+**Schritt 13 – Kauf-Links mit Verifikationsgrad (E).** *Erledigt 2026-09-07.*
+
+Beim Auswählen eines Covers holt die Seite über die Route aus 13a das Bild, das der Handel zu dieser ISBN führt, und vergleicht es mit dem gezeigten Cover. Der Vergleich benutzt **nicht** eine zweite Schwelle, sondern die Faltung der Wand selbst (`verifyIsbnCover` in `lib/works.ts`): Ist das Handelsbild in das gewählte Cover hineingefaltet, zeigt der Handel dieses Design; blieb es eine eigene Kachel, zeigt er ein anderes, und genau diese Kachel bekommt der Käufer. Das hält Urteil und Wand konsistent und nutzt die Metadaten-Stufen aus Schritt 12 mit.
+
+| Urteil | Text über den Links | Verhalten |
+|---|---|---|
+| `verified` | „Shops list this ISBN with this cover.“ | Kauf-Links zuerst |
+| `differs` | „Shops currently show a different cover for this ISBN.“ mit dem Handelsbild daneben, verlinkt auf dessen Kachel | **Suchwege zuerst**, dann die Kauf-Links |
+| `unknown` | „We cannot tell which cover ships with this ISBN.“ | Kauf-Links zuerst |
+
+**Gemessen an 20 ISBNs von *Beloved* (2026-09-07):** 4 `verified`, 4 `differs`, 12 `unknown`. Wo Google überhaupt ein Bild hat, zeigt der Handel also in der Hälfte der Fälle ein anderes Cover — der Befund aus §9.1 E, jetzt an der Oberfläche.
+
+**Nebenbefund, behoben:** Google Books antwortete während der Messung auf etwa jede dritte Anfrage mit einem transienten 503. Das machte aus einem Ausfall stillschweigend die Aussage „kein Cover bekannt“ — eine falsche Auskunft im Gewand eines Befundes. `getIsbnCovers` wiederholt jetzt einmal und meldet sonst `unavailable`; der Client merkt sich diese Antwort nicht, fragt also später erneut. Vorher und nachher an denselben 20 ISBNs: 3/3/14 mit zwei stillen Ausfällen, danach 4/4/12 ohne.
+
+**Nicht umgesetzt:** mehrere ISBN-13 an einem Datensatz („also as ISBN …“). Das betrifft 1 von 300 geprüften Gatsby-Einträgen; der Aufwand (Modell, Merge, Links, UI) steht nicht dafür. Amazon bleibt wie geplant beim Direktlink `/dp/<ISBN-10>`; zusätzliche Metadaten in Händler-URLs bringen nichts, weil die Händler ohnehin nach ISBN suchen.
 
 **Schritt 14 – Mosaik durch nachgeladene Cover je Karte (D).**
 - Karte fordert nach dem Rendern `GET /api/works/[id]?offset=0&summary=1` an (dieselbe gecachte Seite 0 aus Schritt 11, verkürzt auf bis zu 4 unterschiedliche Cover-URLs), nur für sichtbare Karten, maximal 8 parallel. Das wärmt zugleich die Detailseite, der Klick wird schneller.
@@ -588,4 +598,4 @@ Die neue Regel `looksLikeScannedPage` verlangt alle drei Bedingungen zugleich: n
 - Zähler auf der Detailseite aus Schritt 11 („42 covers · 300 of 1180 editions checked“), Fußnote unter der Wand: „Cover images come from Open Library and Google Books. Editions without a scan are listed below.“
 - About-Seite (8.1) erklärt Quellen, Lücken und die Verifikationsgrade aus Schritt 13 in drei Absätzen.
 
-Reihenfolge: 11, 13a, 10 und 12 sind erledigt; es folgen 15, 13, 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).
+Reihenfolge: 11, 13a, 10, 12 und 13 sind erledigt; es folgen 15 und 14. 10 und 15 zuerst, weil sie ohne Umbau sofort Vertrauen zurückholen; 12 nach 11, weil die Dedupe ohne vollständige Daten und Hashes nicht messbar war; 13a vor 13 und notfalls sofort, weil es das Google-Kontingent um den Faktor fünf entlastet (§8.7).

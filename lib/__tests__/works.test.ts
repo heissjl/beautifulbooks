@@ -4,7 +4,7 @@ import type { EditionCandidate } from '../sources/googlebooks-parse';
 import {
   assembleEditions, attachCandidates, candidatesToSourceEditions, editionKey, filterWorksByLanguage,
   derivativeIds, foldDuplicateCovers, groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks,
-  relevance, rankContext, samePublisher, withoutTranslators,
+  relevance, rankContext, samePublisher, verifyIsbnCover, withoutTranslators,
 } from '../works';
 import type { Cover } from '../model';
 
@@ -430,5 +430,47 @@ describe('samePublisher', () => {
   it('matches nothing when the publisher is unknown or only noise words', () => {
     expect(samePublisher(undefined, 'Knopf')).toBe(false);
     expect(samePublisher('Books', 'Books')).toBe(false);
+  });
+});
+
+describe('verifyIsbnCover', () => {
+  const cover = (id: string, similarIds?: string[]): Cover =>
+    ({ id, url: `https://x/${id}`, source: 'openlibrary', editionIds: ['e1'], ...(similarIds ? { similarIds } : {}) });
+
+  it('waits while the shop has not been asked yet', () => {
+    expect(verifyIsbnCover(cover('ol:a'), [], [cover('ol:a')], false)).toEqual({ status: 'pending' });
+  });
+
+  it('says nothing is known when the shop has no image for the ISBN', () => {
+    expect(verifyIsbnCover(cover('ol:a'), [], [cover('ol:a')], true)).toEqual({ status: 'unknown' });
+  });
+
+  it('confirms the cover when the shop image folded into it', () => {
+    const selected = cover('ol:a', ['gb:shop']);
+    expect(verifyIsbnCover(selected, ['gb:shop'], [selected], true)).toEqual({ status: 'verified' });
+  });
+
+  it('confirms it when the shop image is the selected cover itself', () => {
+    const selected = cover('gb:shop');
+    expect(verifyIsbnCover(selected, ['gb:shop'], [selected], true)).toEqual({ status: 'verified' });
+  });
+
+  it('reports the other design when the shop image stayed its own tile', () => {
+    const selected = cover('ol:scan');
+    const shop = cover('gb:shop');
+    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true);
+    expect(verdict).toMatchObject({ status: 'differs' });
+    expect((verdict as { cover: Cover }).cover.id).toBe('gb:shop');
+  });
+
+  it('follows the shop image into whatever tile it folded into', () => {
+    const selected = cover('ol:scan');
+    const other = cover('ol:other', ['gb:shop']);
+    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, other], true);
+    expect((verdict as { cover: Cover }).cover.id).toBe('ol:other');
+  });
+
+  it('falls back to unknown when the shop image is nowhere on the wall', () => {
+    expect(verifyIsbnCover(cover('ol:a'), ['gb:gone'], [cover('ol:a')], true)).toEqual({ status: 'unknown' });
   });
 });

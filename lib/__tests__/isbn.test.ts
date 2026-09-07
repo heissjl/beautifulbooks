@@ -80,12 +80,30 @@ describe('getIsbnCovers', () => {
 
   it('survives Google failing', async () => {
     handler = () => ({ status: 429 });
-    await expect(getIsbnCovers(BELOVED)).resolves.toEqual({ isbn13: BELOVED, covers: [] });
+    await expect(getIsbnCovers(BELOVED)).resolves.toMatchObject({ isbn13: BELOVED, covers: [] });
+  });
+});
+
+describe('getIsbnCovers when Google is flaky', () => {
+  it('retries once, because Google answers a transient 503 often enough to matter', async () => {
+    let n = 0;
+    handler = () => (++n === 1 ? { status: 503 } : { body: { items: [volume('v1', BELOVED)] } });
+    const r = await getIsbnCovers(BELOVED);
+    expect(calls).toHaveLength(2);
+    expect(r!.covers).toHaveLength(1);
+    expect(r!.unavailable).toBeUndefined();
   });
 
-  it('asks for nothing without an API key, because the anonymous quota is tiny', async () => {
+  it('says the source was unavailable rather than pretending there is no cover', async () => {
+    handler = () => ({ status: 503 });
+    const r = await getIsbnCovers(BELOVED);
+    expect(calls).toHaveLength(2);
+    expect(r).toMatchObject({ isbn13: BELOVED, covers: [], unavailable: true });
+  });
+
+  it('reports unavailable without an API key instead of an empty answer', async () => {
     vi.stubEnv('GOOGLE_BOOKS_API_KEY', '');
-    await expect(getIsbnCovers(BELOVED)).resolves.toEqual({ isbn13: BELOVED, covers: [] });
+    expect(await getIsbnCovers(BELOVED)).toMatchObject({ unavailable: true });
     expect(calls).toHaveLength(0);
   });
 });

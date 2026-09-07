@@ -16,8 +16,9 @@
 import type { Cover } from './model';
 import type { ImageSignature } from './imagesig';
 import { hashCovers } from './coverhash';
+import { debug } from './debug';
 import { cleanIsbn } from './normalize';
-import { lookupByIsbns } from './sources/googlebooks';
+import { lookupIsbnOrThrow } from './sources/googlebooks';
 
 /** Covers the trade shows for an ISBN, without the editions they belong to. */
 export type IsbnCover = Omit<Cover, 'editionIds'>;
@@ -27,6 +28,12 @@ export interface IsbnCovers {
   /** Empty when Google has no image, which is common for older printings. */
   covers: IsbnCover[];
   signatures?: Record<string, ImageSignature>;
+  /**
+   * True when the source could not be reached, so an empty list means
+   * "not known" rather than "no cover". Callers must not remember this
+   * answer: asking again later may well succeed.
+   */
+  unavailable?: boolean;
 }
 
 export interface IsbnCoversOptions {
@@ -50,7 +57,21 @@ export async function getIsbnCovers(raw: string, options: IsbnCoversOptions = {}
   const isbn13 = cleanIsbn(raw);
   if (!isIsbn13(isbn13)) return null;
 
-  const candidates = await lookupByIsbns([isbn13], 1);
+  // Google answers a transient 503 often enough that one retry is worth it;
+  // without it a reader is told the cover is unknown when it is merely late.
+  let candidates: Awaited<ReturnType<typeof lookupIsbnOrThrow>>;
+  try {
+    candidates = await lookupIsbnOrThrow(isbn13);
+  } catch {
+    try {
+      candidates = await lookupIsbnOrThrow(isbn13);
+    } catch (err) {
+      debug('isbn', `${isbn13} unavailable: ${(err as Error).message}`);
+      return { isbn13, covers: [], unavailable: true };
+    }
+  }
+  if (candidates === null) return { isbn13, covers: [], unavailable: true };
+
   const covers: IsbnCover[] = [];
   for (const candidate of candidates) {
     for (const cover of candidate.covers) {

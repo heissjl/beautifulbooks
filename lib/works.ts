@@ -547,3 +547,43 @@ export function foldDuplicateCovers(
   });
 }
 
+/**
+ * What a shop will actually send under an ISBN (SPEC §9.3 step 13).
+ *
+ * A purchase link goes to an ISBN, never to a cover: publishers reprint a
+ * backlist title with a new jacket under the unchanged number, so the picture
+ * on the wall and the book in the parcel can be different (§2.3). Measured on
+ * *Beloved*, that is not a corner case: of the ISBNs where Google has an
+ * image, half showed a different cover than the catalogue scan.
+ *
+ * The verdict reuses the wall's own folding rather than a second threshold.
+ * If the shop's image folded into the selected cover, the shop is showing
+ * this design; if it survived as its own tile, it is showing another one, and
+ * that tile is what the buyer would get.
+ */
+export type IsbnVerdict =
+  | { status: 'verified' }
+  | { status: 'differs'; cover: Cover }
+  | { status: 'unknown' }
+  | { status: 'pending' };
+
+export function verifyIsbnCover(
+  selected: Cover,
+  retailCoverIds: readonly string[],
+  wall: readonly Cover[],
+  asked: boolean,
+): IsbnVerdict {
+  if (!asked) return { status: 'pending' };
+  if (retailCoverIds.length === 0) return { status: 'unknown' };
+
+  const isSelected = (id: string) => id === selected.id || (selected.similarIds ?? []).includes(id);
+  if (retailCoverIds.some(isSelected)) return { status: 'verified' };
+
+  // The shop's image survived folding, or folded into some other cover: that
+  // is the design on the shelf.
+  for (const id of retailCoverIds) {
+    const shown = wall.find(c => c.id === id || (c.similarIds ?? []).includes(id));
+    if (shown) return { status: 'differs', cover: shown };
+  }
+  return { status: 'unknown' };
+}
