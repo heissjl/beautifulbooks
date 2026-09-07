@@ -731,7 +731,15 @@ Die Vertrauensarbeit aus §9 ist bis auf zwei Schritte erledigt. Was jetzt zähl
 
 7. **Bookshop.org zuerst.** Höchste Provision (~10 %), passt zur Zielgruppe, und die ID repariert nebenbei einen kaputten Link: ohne sie zeigt Bookshop auf eine Suchseite, die per robots.txt gesperrt ist und nichts einbringt, mit ID auf eine Produktseite.
 8. **Amazon erst mit etwas Traffic.** Drei qualifizierte Verkäufe in 180 Tagen, sonst wird das Konto geschlossen. Zweiter Grund für das Konto: die Product Advertising API liefert das Bild, das der Handel wirklich ausliefert, und würde Schritt 13 von „unbekannt“ auf eine echte Aussage heben (heute 12 von 20 ISBNs unbekannt).
-9. **Klick-Tracking `/go/[provider]/[isbn]`.** Ohne Zahlen lässt sich die Händlerreihenfolge nicht optimieren, und die Reihenfolge ist der einzige Hebel, den wir selbst in der Hand haben.
+9. ~~Klick-Tracking `/go/[provider]/[isbn]`~~ *erledigt 2026-09-07.* Die Route baut das Ziel serverseitig aus `lib/buylinks.ts` neu und übernimmt es nie aus der Anfrage — sie kann damit nur auf Adressen zeigen, die in unserer eigenen Tabelle stehen, und ist kein offener Redirect; ein unbekannter Anbieter oder eine kaputte ISBN führt auf die Startseite. Nur die Kauf-Links laufen darüber, die Suchlinks bleiben direkt.
+
+    **Aufgezeichnet wird** Anbieter, Markt, ISBN, Linkart und Zeit; **nicht** IP, Cookie, User-Agent, Referrer oder irgendeine Kennung des Lesers. Es entsteht nichts Personenbezogenes, das ist auch der Satz für die Datenschutzerklärung. Geschrieben wird vorerst eine strukturierte Zeile (`bb.click {…}`) in die Plattform-Logs; `lib/clicks.ts` ist die einzige Stelle in `lib/`, die absichtlich ohne `DEBUG`-Schranke schreibt.
+
+9a. **Eine Analyse-Seite für diese Website** (aufgenommen 2026-09-07 auf Julians Wunsch; vorläufiger Plan in [PLAN-B.md](PLAN-B.md)). Die Logs aus Punkt 9 zeigen, *dass* geklickt wird, mehr nicht: sie sind kurzlebig und nicht auswertbar.
+
+    Fertige Werkzeuge (Vercel Analytics, Plausible) beantworten „wie viele Besucher, woher, welche Seite". Die Fragen dieser Seite sind andere und keine davon ist eine Seitenzahl: **wie viele Cover ein Leser tatsächlich gesehen hat**, bevor er ging (eine nach Seite 0 verlassene Detailseite hat versagt, zählt aber als Aufruf); **wie oft eine Suche ohne Klick endet** und auf welcher Trefferposition geklickt wird (das ist §9.2 direkt gemessen); **welcher Händler je Markt und Linkart geklickt wird** (der einzige Hebel für die Reihenfolge und die Grundlage jeder Partnerbewerbung); **wie oft ein Cover gewählt wird, dessen ISBN der Handel anders zeigt** (wird Schritt 13 gelesen?); **wie viele Google-Anfragen ein Tag wirklich kostet** (§8.7 Punkt 5); **welche Werke gesucht werden, die wir schlecht bedienen** (die Liste der nächsten Verbesserungen und die Grundlage für die kuratierten 500 aus D11).
+
+    Technisch: Zähler in einem Schlüssel-Wert-Speicher, ein enger Ereignis-Endpunkt mit fester Liste erlaubter Typen, ein Sender über `navigator.sendBeacon`, **keine Kennung des Lesers** — alle sechs Fragen lassen sich mit Aggregaten beantworten, und eine Sitzungskennung brächte Einwilligung und Cookie-Banner für Erkenntnisse, die wir nicht brauchen. Zwei Tage, sinnvoll erst nach dem Deployment: auf `localhost` misst man sich selbst.
 
 ### D. Reichweite (§8.4)
 

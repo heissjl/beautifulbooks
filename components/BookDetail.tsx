@@ -17,7 +17,7 @@ import { useMarket } from '@/components/useMarket';
 import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
 import { useWorkPreview } from '@/components/useWorkPreview';
-import { searchLinksFor } from '@/lib/buylinks';
+import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import type { ShopStatus } from '@/lib/availability';
 import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
@@ -547,7 +547,8 @@ function BuyBlock({ edition, hint, verdict, market, onMarketChange }: {
               return (
                 <a
                   key={link.provider}
-                  href={link.url}
+                  // Through our own redirect, which counts the click (SPEC §10 C9).
+                  href={edition.isbn13 ? trackedBuyHref(link.provider, edition.isbn13, market) : link.url}
                   target="_blank"
                   rel="noopener noreferrer sponsored"
                   className="btn"

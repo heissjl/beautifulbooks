@@ -117,6 +117,17 @@ export function buyLinksFor(edition: Pick<Edition, 'isbn13'>, market: Market = D
   });
 }
 
+/**
+ * The link a reader actually clicks: our own redirect, which counts the click
+ * and forwards to the shop (SPEC §10 C9, `app/go/[provider]/[isbn]`).
+ *
+ * The shop URL itself never travels through it; the redirect rebuilds the
+ * target from the table above, so this cannot become an open redirect.
+ */
+export function trackedBuyHref(provider: string, isbn13: string, market: Market): string {
+  return `/go/${encodeURIComponent(provider)}/${encodeURIComponent(isbn13)}?market=${market}`;
+}
+
 export interface SearchLinkInput {
   title: string;
   publisher?: string;

@@ -193,3 +193,59 @@ Dort steht „Cover-Wand horizontal". Ich baue sie **vertikal weiter**. Eine hor
 3. Sprach-Pillen: eine Zeile, seitlich scrollbar, aktive Pille sichtbar.
 4. Desktop 1440: unverändert.
 5. `npm run build`, `npm run lint`.
+
+---
+
+## B4 — Klick-Tracking, und was daraus eine Analyse-Seite bräuchte
+
+### Warum
+
+§10 C9: die Reihenfolge der Händler ist der einzige Hebel, den wir selbst in der Hand haben, und ohne Zahlen lässt sie sich nicht begründen. Heute wissen wir von elf Kauf-Links nur, dass neun nichts verdienen (§8.7) — nicht, welche überhaupt jemand anklickt.
+
+### Aufbau
+
+- **`/go/[provider]/[isbn]?market=<us|uk|de>`**, eine Route, die den Klick festhält und weiterleitet.
+- Die Ziel-URL wird **serverseitig neu gebaut** aus `buyLinksFor`, nicht aus der Anfrage übernommen. Damit ist die Route **kein offener Redirect**: sie kann nur auf Adressen zeigen, die in unserer eigenen Tabelle stehen. Ein unbekannter Anbieter oder eine kaputte ISBN führt zurück auf die Startseite, nicht irgendwohin.
+- **Nur die Kauf-Links** laufen darüber. Die Suchlinks („Find this exact cover") bleiben direkt: ihre Ziele hängen an Titel, Verlag und Jahr, die müssten alle durch die URL, und Google Lens misst man ohnehin nicht.
+- **Aufgezeichnet wird**: Anbieter, Markt, ISBN, Linkart (`product`/`search`), Zeitstempel. **Nicht**: IP, Cookie, User-Agent, Referrer, irgendeine Kennung des Lesers. Es gibt nichts zu pseudonymisieren, weil nichts Personenbezogenes entsteht — das ist auch der Satz, der so in die Datenschutzerklärung kann.
+- **Wohin**: vorerst eine strukturierte Zeile auf stdout (`bb.click {...}`), die Vercel in seinen Logs sammelt. Kein Speicher, keine Datenbank, keine Abhängigkeit. `lib/clicks.ts` ist damit die einzige Stelle in `lib/`, die absichtlich schreibt, ohne unter `DEBUG` zu stehen; der Kommentar dort sagt, warum.
+
+### Grenze, die dabei bleibt
+
+Vercel-Logs sind kurzlebig und nicht auswertbar. Das reicht, um zu sehen, *dass* geklickt wird, und um die Route zu prüfen. Für „welcher Händler trägt" braucht es einen Speicher — und den beschreibt der folgende Plan, der bewusst noch nichts baut.
+
+---
+
+## Vorläufiger Plan: eine Analyse-Seite für *diese* Website
+
+Nicht Teil von B4, sondern die Vorlage für die Entscheidung danach. Geschrieben, nachdem das Tracking stand.
+
+### Warum ein fertiges Werkzeug nicht reicht
+
+Vercel Analytics oder Plausible beantworten „wie viele Besucher, woher, welche Seite". Die Fragen dieser Seite sind andere, und keine davon ist eine Seitenzahl:
+
+| Frage | Warum sie hier zählt | Woher die Daten kämen |
+|---|---|---|
+| **Wie viele Cover hat ein Leser tatsächlich gesehen, bevor er wegging?** | Das ganze Produkt ist die Wand. Eine Detailseite, die nach Seite 0 verlassen wird, hat versagt, auch wenn sie als Aufruf zählt. | Client: geladene Seiten pro Besuch, letzter sichtbarer Kachelindex. |
+| **Wie oft endet eine Suche ohne Klick?** | Das ist das Vertrauensversprechen aus §9.2, direkt gemessen: Ranking gut heißt, der erste Treffer wird geöffnet. | Position des geöffneten Treffers, oder „keiner". |
+| **Welcher Händler wird geklickt, je Markt und Linkart?** | Der einzige Hebel für die Reihenfolge, und die Grundlage jeder Partnerbewerbung. | `/go/…` aus B4. |
+| **Wie oft wird ein Cover ausgewählt, dessen ISBN der Handel anders zeigt?** | Misst, ob Schritt 13 überhaupt gelesen wird — und ob „differs" Leute abschreckt oder erst recht neugierig macht. | Verdikt zum ausgewählten Cover. |
+| **Wie viele Google-Anfragen kostet ein Tag wirklich?** | §8.7 Punkt 5. Ohne diese Zahl bleibt der Tageszähler eine Schätzung. | Serverseitiger Zähler pro Tag und Quelle. |
+| **Welche Werke werden gesucht, die wir schlecht bedienen?** | Suchen ohne Treffer oder ohne Cover sind die Liste der nächsten Verbesserungen — und die Grundlage für die kuratierten 500 aus §10 D11. | Suchbegriff, Trefferzahl, Coverzahl. |
+
+Kein Produkt von der Stange kennt „Cover", „Ausgabe" oder „Händler". Deshalb eine eigene Seite, nicht ein weiteres Dashboard.
+
+### Was die Seite wäre
+
+Eine Seite unter `/admin/insights`, hinter einem einfachen Schutz (ein Token in der URL oder Basic Auth über eine Umgebungsvariable — kein Login, kein Konto, es gibt genau einen Leser). Darauf sechs Blöcke, in der Reihenfolge der Tabelle oben, jeder mit einer Zahl, einem Verlauf über 30 Tage und einem Satz, was zu tun wäre, wenn die Zahl schlecht ist.
+
+### Was sie an Technik braucht
+
+1. **Ein Speicher.** Kandidaten in dieser Reihenfolge: Vercel KV / Upstash Redis (Zähler, billig, passt zum ohnehin vorgesehenen Redis aus §8.6), Vercel Postgres (Ereignisse einzeln, erlaubt spätere Fragen, mehr Aufwand), oder eine Datei im Blob-Speicher pro Tag (billigst, unbequem). **Empfehlung: Zähler in KV.** Die sechs Fragen oben brauchen Aggregate, keine Einzelereignisse.
+2. **Ein Ereignis-Endpunkt** `/api/event`, `POST`, mit einer knappen Liste erlaubter Ereignistypen. Alles andere wird verworfen — ein offener Zähler-Endpunkt wird sonst zum Spielzeug.
+3. **Ein Client-Sender**, der `navigator.sendBeacon` benutzt und beim Verlassen der Seite genau einmal feuert, nicht bei jedem Bildlauf.
+4. **Keine Kennung des Lesers.** Alle sechs Fragen lassen sich mit Aggregaten beantworten. Sobald eine Sitzungskennung dazukäme, bräuchte es Einwilligung, Cookie-Banner und einen Absatz Datenschutzerklärung — für Erkenntnisse, die wir nicht brauchen.
+
+### Aufwand und Reihenfolge
+
+Ein Tag für Speicher, Endpunkt und die drei serverseitigen Zahlen (Händlerklicks, Google-Anfragen, Suchen ohne Treffer); ein zweiter für die drei clientseitigen (gesehene Cover, geöffnete Trefferposition, Verdikt). **Sinnvoll erst nach dem Deployment (§10 B6)** — auf `localhost` misst man sich selbst.
