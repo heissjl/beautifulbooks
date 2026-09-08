@@ -73,6 +73,8 @@ lib/                data layer; types in lib/model.ts
   sources/          Open Library and Google Books clients and parsers
   __fixtures__/     recorded API responses for tests
 scripts/            record-fixtures.ts, check-buylinks.ts
+lab/                experiments beside the website (rules in lab/README.md);
+                    may import lib/, is never imported by the website
 docs/               history.md (what was built and measured), plans/ (implementation
                     plans, finished and open), tests/ (test-session findings),
                     spine-research.md
@@ -98,3 +100,5 @@ npm run build      # must pass before a step is considered done
 - New logic in `lib/` gets a unit test next to it or under `lib/__tests__/`. Tests that need API data use recorded fixtures under `lib/__fixtures__/`, never live calls.
 - Verify UI changes in the browser with the five acceptance queries from SPEC.md §3 F1 before calling a step done.
 - Work ROADMAP.md in phase order. Do not start a later phase while an earlier one has items that do not wait on Julian.
+
+- **`lab/` is for experiments that are not the website** (decision 0.11, 2026-09-08; rules in `lab/README.md`). One folder per experiment with a README (question, measure, status). `lab/` may import from `lib/`, which has no import from `next` and runs under `npx tsx`; `app/`, `components/`, `lib/` and `scripts/` never import from `lab/`, and an ESLint rule enforces it. Tests under `lab/<name>/__tests__/`, no network. `lab/` is exempt from the phase order, but every experiment has a roadmap line, nothing reaches the website without its own roadmap item, and no experiment asks Google Books without a measurement (E10). No scratch files in the repository root: `/scratch-*` is git-ignored.

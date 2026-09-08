@@ -11,4 +11,4 @@ Stand: 2026-09-08. Ein Plan ist die ausführliche Fassung eines Roadmap-Punkts, 
 | [PLAN-speicher.md](PLAN-speicher.md) | 0.9 (entschieden als E18), Bauanleitung für 6.10, 6.9, 5.1; §5 ist 6.12 | Entscheidung erledigt; Bauteile offen, 6.10 in Arbeit |
 | [PLAN-5-reichweite.md](PLAN-5-reichweite.md) | Phase 5: Seitengattungen, Agenten-Kette, Regeln gegen Slop | offen, wartet auf Phase 2–4 |
 | [PLAN-4-einnahmen.md](PLAN-4-einnahmen.md) | 4.6–4.8: Einnahmen jenseits der Affiliate-Links | Analyse fertig, Regeln als E19; Bau wartet auf Reichweite |
-| [PLAN-struktur.md](PLAN-struktur.md) | 0.11: Ordnerstruktur, `lab/`, der Clip als erstes Experiment | Vorschlag, wartet auf Julian |
+| [PLAN-struktur.md](PLAN-struktur.md) | 0.11: Ordnerstruktur, `lab/`, der Clip als erstes Experiment | **entschieden** 2026-09-08: Option A, `lab/` angelegt; der Clip wartet |

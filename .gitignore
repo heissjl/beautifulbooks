@@ -42,3 +42,6 @@ next-env.d.ts
 
 # claude code local settings
 .claude/settings.local.json
+
+# scratch files belong in lab/<name>/ or the session scratchpad (lab/README.md rule 7)
+/scratch-*

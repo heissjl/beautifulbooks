@@ -13,6 +13,24 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  // lab/ may import from lib/; the website must never import from lab/
+  // (lab/README.md rule 2, ROADMAP 0.11).
+  {
+    files: ["app/**", "components/**", "lib/**", "scripts/**"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["**/lab/**", "@/lab/**", "lab/**"],
+              message: "The website must not import from lab/ (experiments). Promote the code via a roadmap item first.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 ]);
 
 export default eslintConfig;

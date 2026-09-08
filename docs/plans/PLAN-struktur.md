@@ -1,6 +1,6 @@
 # Vorschlag: Ordnung des Projekts, bevor es weitergeht
 
-Stand: 2026-09-08. Anlass: Julian will vor dem Weitermachen wissen, ob die Ordnerstruktur angepasst werden muss — auch, um Dinge wie einen automatisierten TikTok-Clip im selben Projekt zu erproben, „nicht zu sehr mit der Website vermischt, aber trotzdem hier im Kontext“. Das hier ist ein **Vorschlag**; die Entscheidung ist [ROADMAP](../../ROADMAP.md) 0.11. Nichts wurde verschoben.
+Stand: 2026-09-08. Anlass: Julian will vor dem Weitermachen wissen, ob die Ordnerstruktur angepasst werden muss — auch, um Dinge wie einen automatisierten TikTok-Clip im selben Projekt zu erproben, „nicht zu sehr mit der Website vermischt, aber trotzdem hier im Kontext“. Die Entscheidung ist [ROADMAP](../../ROADMAP.md) 0.11: **Julian hat am 2026-09-08 Option A gewählt** und `lab/` ist angelegt (README mit den Regeln, Lint-Regel, `.gitignore`); der Clip aus §4 wartet auf sein Startzeichen. Nichts wurde verschoben.
 
 ---
 
