@@ -34,7 +34,8 @@ Vor dem Deployment stehen damit noch 1.1, 1.2, 1.3, 1.7, 1.8 und 1.9, dazu Julia
 | # | Was | Wer | Aufwand |
 |---|---|---|---|
 | 1 | Phase 0, Punkte 0.1–0.4 und 0.8: Verfügbarkeits-Button, zweiter Google-Schlüssel, Abrechnungsversuch, Angaben fürs Impressum, Enter im Suchfeld | Julian | eine halbe Stunde plus Wartezeit |
-| 2 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links | Claude | eine Sitzung |
+| 2 | **Phase 1, Punkt 1.10 und Phase 6, Punkt 6.1: die Suche vor dem MVP** — Wiederholungsversuch gegen die Ausfälle, dann das Ausgabenverhältnis gegen gleichnamige Ableitungen | Claude | eine Sitzung |
+| 3 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links | Claude | eine Sitzung |
 | 3 | Phase 1, Punkt 1.3: Bild-Cache vor Open Library und Google | Claude | eine Sitzung, mit Messung |
 | 4 | Phase 1, Punkt 1.7: die zwei Antworten, die nicht stimmen | Claude | eine Stunde |
 | 5 | Phase 2: Vercel, Domain, Impressum und Datenschutz, Search Console | beide | eine Sitzung |
@@ -179,6 +180,15 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
 
   **Bedingungen, die für jede Variante gelten:** keine Google-Anfrage und kein Nachladen beim ersten Rendern (die Cover-IDs stehen fest, wie in `lib/curated.ts`); auf schmalen Bildschirmen darf das Element das Suchfeld nicht unter die Kante schieben, dort entfällt es oder rückt unter die Wand; und es darf nichts behaupten, was §1 verbietet — „vier von 226 Covern" ist erlaubt, „alle Cover" nicht.
 
+
+- [ ] **1.10 Eine gescheiterte Suche einmal wiederholen.** (Gemessen 2026-09-08 aus Deutschland, vier kalte Suchen über `lib/search.ts`.) **Im ersten Anlauf scheiterten drei von vier**: `the great gatsby` und `alice in wonderland` mit `fetch failed`, `crime and punishment` im Timeout nach 12 s. Derselbe Aufruf unmittelbar danach lieferte **alle vier** vollständig. Eine nackte `curl`-Suche mit `limit=3` brauchte dazwischen **10,5 s** — der Deckel steht bei 12 s, es ist also kein weiter Abstand.
+
+  **Warum das vor dem Ranking kommt.** 1.4 hat den Ausfall ehrlich gemacht: die Route antwortet 503 und die Oberfläche sagt „The catalogue did not answer" mit einem Knopf „Try again". Der Leser drückt diesen Knopf, und dann geht es. Genau diesen Druck kann der Server selbst ausführen, bevor er aufgibt. Ein Ranking-Fehler zeigt das falsche Buch; ein Ausfall zeigt gar keins, und er trifft nach dieser Messung die Mehrzahl der kalten Suchen.
+
+  **Der Beleg liegt im eigenen Repo:** `scripts/build-cover-index.ts` hat für 6.10 genau das gemacht — drei Versuche je Seite und behalten, was vor dem Abbruch da war. Damit fielen im ersten Durchgang neun von fünfzig Werken aus, im zweiten **keines**. In `lib/sources/http.ts` und `lib/sources/openlibrary.ts` steht heute **kein einziger** Wiederholungsversuch.
+
+  **Zu bauen:** ein zweiter Versuch im Suchpfad, nur bei Netzfehler und Timeout, nie bei 4xx (422 unter drei Zeichen darf nicht wiederholt werden), mit kurzer Pause; der Deckel gilt je Versuch, die Gesamtzeit braucht eine eigene Obergrenze, sonst wartet der Leser 24 s statt 12. Danach dieselben vier Suchen zehnmal kalt messen und die Ausfallquote vorher/nachher hier eintragen. **Diese Zahl gehört auch zu 0.10**, wo „Ausfallquote der Quellen" eine der drei Zahlen ist, nach denen über einen eigenen Datenbestand entschieden wird. Eine Stunde, Claude.
+
 ---
 
 ## Phase 2 — Online gehen
@@ -271,6 +281,16 @@ Eine Suchseite ohne eigene Inhalte bekommt keinen organischen Traffic. Die Grund
 Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis einen halben Tag, ohne Abhängigkeit. Die ersten vier sind Qualität, kein Fehler: die Seite tut, was sie soll, nur nicht gut genug.
 
 - [ ] **6.1 Gleichnamige Ableitungen und Sekundärliteratur nach hinten. [T12]** Die Regel aus Schritt 10 greift nicht, wenn eine Ableitung denselben Titel trägt und einen eigenen Erstautor hat. Gemessen: `alice in wonderland` liefert „Alice in Wonderland in Five Acts“ (eine Ausgabe, Bühnenfassung) vor Carrolls Original mit 3.547 Ausgaben; bei `the great gatsby` sind elf von fünfzehn Karten Bücher über Gatsby, auf Platz 2 eine Penguin-Critical-Study von Stephen Matterson; `klara and the sun` hat auf Platz 2 „Alice's Adventures in Wonderland“. Zehn andere Suchen lagen richtig, das Ranking ist also nicht kaputt, nur blind für diesen Fall.
+
+  **Am 2026-09-08 nachgemessen, und der Fall ist enger zu fassen als gedacht.** `alice in wonderland` liefert weiterhin „Alice in Wonderland in Five Acts" mit **einer** Ausgabe auf Platz 1, vor Carrolls Original mit 3.547 — aber die Bühnenfassung ist dort **unter Lewis Carroll selbst** geführt. Die Regel aus 6.1 „gleicher Titel, *anderer* Erstautor" greift also nicht, und `MARKED_DERIVATIVE` um „in five acts" zu ergänzen behandelt nur diesen einen Titel. Was in allen Fällen trägt, ist das **Ausgabenverhältnis bei gleichem normalisiertem Titel**, unabhängig vom Autor:
+
+  | Suche | Platz 2 (bzw. 1) | Ausgaben | gegen das größte Werk |
+  |---|---|---|---|
+  | `alice in wonderland` | Alice in Wonderland in Five Acts (Platz **1**) | 1 | 3.547× |
+  | `the great gatsby` | Stephen Matterson | 3 | 400× |
+  | `crime and punishment` | Michael R. Katz (Übersetzer) | 18 | 65× |
+
+  **Die Gegenprobe, die die Schwelle setzt:** Lars Myttings *Norwegian Wood* ist ein eigenes Buch und liegt bei rund einem Zwölftel von Murakami. Ein Faktor irgendwo zwischen **25 und 50** trennt die drei Zeilen oben von Mytting; welcher, ist zu messen und nicht zu raten. Ebenfalls neu gesehen: „Crime and Punishment Notes" (Cliffs Notes, 8 Ausgaben) steht auf Platz 3, `SECONDARY_LITERATURE` erkennt „Notes" also nicht.
 
   Der entscheidende Vergleich liegt im `RankContext` schon vor: gleicher normalisierter Titel, **anderer** Erstautor, ein Bruchteil der Ausgaben des größten Werks im selben Ergebnis. `MARKED_DERIVATIVE` um „in N acts“, „a play“, „an opera“ ergänzen. Vorsicht bei echten Namensgleichheiten (Lars Myttings *Norwegian Wood* ist ein eigenes Buch, kein Ableger von Murakami) — deshalb muss die Ausgabenzahl mit hineinspielen, nicht nur der Titel. Vorher die zehn Suchen aus dem Durchklick als Regressionsschutz festhalten.
 
@@ -405,13 +425,55 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Einklang bringt, und weil die Geschwistersuche zugleich 6.9 („mehr von diesem Autor") und die Reihen-Seiten aus 5.4b bedient. Vorher messen, wie viele Werke im Schnitt zusammengefasst werden — bei einem Schnitt von eins wäre der Aufwand vergebens.
 
-  **Als Testfall festhalten:** OL279833W. Karte und Wand müssen dieselbe Ausgabenzahl nennen, und jedes Cover der Karte muss auf der Wand erreichbar sein.
+  **„Geschwisterwerke" heißt hier nichts Fachliches:** mehrere Werk-Datensätze bei Open Library, die dasselbe Buch beschreiben. Sie entstehen, weil Datensätze aus verschiedenen Bibliotheksbeständen importiert und nie zusammengeführt wurden. Bei Böll sind es sechs für einen Roman.
+
+  **Als Testfall festhalten:** OL279833W. Karte und Wand müssen dieselbe Ausgabenzahl nennen, und jedes Cover der Karte muss auf der Wand erreichbar sein. Verwandt mit **6.15**, wo dieselben Datensätze *verschiedene* Titel tragen und deshalb gar nicht erst zusammengefasst werden.
 
 - [ ] **6.14 Ein gefaltetes Cover ist nirgends zu sehen.** (Beim Nachgehen von 6.13 am 2026-09-08 gefunden.) Das „+N" auf einer Kachel ist `pointer-events-none`, also reine Zierde; die Seitenleiste nennt die Faltung nur als Text („· 1 duplicate scan folded"); und `selectCoverFrom` löst einen Link, der die ID eines gefalteten Covers trägt, auf dessen **Vertreter** auf. Es gibt keinen Weg, ein gefaltetes Bild anzusehen.
 
   Bei *Ansichten eines Clowns* trifft das die beiden dtv-Fassungen der Zeichnung mit der Gitarre (1967 und 1984, Bilddistanz 6): dieselbe Gestaltung, aber sichtbar verschieden gedruckt — cremefarbener gegen weißen Grund, anderer Anschnitt. Eine davon ist unsichtbar.
 
   **Das widerspricht E16**, wo festgehalten ist, dass ein Cover nie gelöscht wird, weil es leer aussieht, sondern nur ans Ende sortiert — ein Fehlurteil soll eine Position kosten, kein Cover. Das Falten tut aus einem anderen Grund genau das, was E16 verbietet. Falten bleibt auf der Wand richtig (sonst besteht Gatsby aus 293 fast gleichen Kacheln), aber es muss umkehrbar sein: das „+N" anklickbar machen, oder die Seitenleiste zeigt die gefalteten Fassungen als kleine Kacheln unter dem gewählten Cover — dieselbe Bauform wie „Looks like this". Ein bis zwei Stunden.
+
+- [ ] **6.15 Fünf von sechs Karten sind dasselbe Buch. [Testfall „ansichten böll"]** (Julian, 2026-09-08: „von 5 Ergebnissen sind 4 das richtige Buch, nur in einer anderen Sprache, das sollte so auch nicht passieren.") **Das widerspricht der Spec ausdrücklich**: §2.1 sagt, Sprache sei kein Teil der Werk-Identität und Übersetzungen seien Ausgaben desselben Werks. Die Umsetzung hält das nicht ein.
+
+  **Gemessen am 2026-09-08**, Suche „ansichten böll", sechs Karten:
+
+  | Karte | Was es ist |
+  |---|---|
+  | Ansichten eines Clowns (14 Ausg.) | das Werk, aus fünf OL-Datensätzen zusammengefasst |
+  | The clown (2) | **dasselbe Buch**, englisch |
+  | Opinioni di un clown (1) | **dasselbe Buch**, italienisch |
+  | Opiniones de un payaso (2) | **dasselbe Buch**, spanisch |
+  | Ansichten eines Clowns (Methuen's Twentieth Century German Texts) (2) | **dasselbe Buch**, kommentierte Schulausgabe |
+  | Heinrich Böll–Ansichten eines Clowns, Bernd Balzer (1) | ein Buch **über** das Werk, zu Recht getrennt |
+
+  Von 22 gefundenen Ausgaben gehören 21 zu einem einzigen Roman.
+
+  **Warum die Regel nicht greift.** Identitätsregel 2 vergleicht normalisierten Titel **und** Erstautor. Eine Übersetzung hat einen anderen Titel, also greift sie nie. Der Fall der Schulausgabe scheitert an etwas Kleinerem: die Normalisierung schneidet Untertitel nach `:` ab, aber keine Klammerzusätze — „Ansichten eines Clowns (Methuen's …)" bleibt ein anderer Titel.
+
+  **Was es an Verbindungen tatsächlich gibt, geprüft:**
+
+  | Signal | Befund |
+  |---|---|
+  | Autoren-Key | **Bei allen fünf gleich** (`OL2633288A`). Notwendig, aber weit davon entfernt, hinreichend zu sein — sonst verschmölze Bölls ganzes Werk. |
+  | `id_wikidata` | auf keinem Datensatz vorhanden |
+  | Erstjahr | 1963, 1963, 1972, 1990 — Übersetzungen tragen das Jahr **ihrer** Ausgabe |
+  | ISBN | keine Überschneidung, es sind verschiedene Bücher im Regal |
+  | `id_librarything` | nur auf einem der fünf (`65736`) — LibraryThing gruppiert Übersetzungen sonst gut |
+  | **LCC** | OL279833W: `PT-2603.00000000.O394 **A7**`, The clown: `PT-2603.00000000.O394 **A513**` — **gleiche Autoren-Cutter-Basis**, und die Ziffernfolge unterscheidet Original von Übersetzung. Die italienische Ausgabe hat gar keine LCC. |
+
+  **Vorschlag, in drei Schritten und nach Sicherheit geordnet:**
+
+  1. **Klammerzusätze normalisieren** (`lib/normalize.ts`): ein Titel, dem nur ein Reihen- oder Ausgabenzusatz in Klammern anhängt, ist derselbe Titel. Fängt die Methuen-Ausgabe, ist risikoarm und in einer Stunde erledigt. **Zuerst machen.**
+  2. **Nach Autoren-Key statt Autorennamen zusammenfassen.** Regel 2 vergleicht heute normalisierte Namen; der Key ist strenger und stabiler (Open Library führt dieselbe Person allerdings unter mehreren Keys, das bleibt zu beachten). Ändert an Böll nichts, macht aber 6.13 sicherer.
+  3. **Übersetzungen: messen, dann entscheiden — und im Zweifel nicht verschmelzen.** Es gibt **keine verlässliche maschinelle Verbindung** zwischen diesen Datensätzen. Jede Regel, die stark genug wäre, „The clown" an „Ansichten eines Clowns" zu binden, bindet auch zwei verschiedene Bücher desselben Autors aneinander, und eine falsche Verschmelzung ist schlimmer als eine verpasste. Zu messen wäre, über eine Stichprobe von etwa dreißig übersetzten Werken:
+     - wie oft die **LCC-Cutter-Basis** bei Original und Übersetzung übereinstimmt (die Hypothese, dass `A7` und `A513` systematisch zusammengehören, ist **zu prüfen**, nicht zu glauben),
+     - wie oft `id_librarything` auf beiden Seiten steht.
+
+     Trägt eines davon, wird es zur dritten Identitätsregel. Trägt keines, bleiben Übersetzungen **eigene Karten** — dann muss aber **§2.1 ehrlich umgeschrieben werden**, statt eine Regel zu behaupten, die der Code nicht einlöst, und die Werkseite bekommt eine Zeile „Auch erschienen als" mit den Karten, die denselben Autoren-Key und einen ähnlichen Erstveröffentlichungszeitraum haben.
+
+  **Zusammenhang mit 6.13:** dort geht es um Datensätze mit **demselben** Titel, die die Karte bereits zusammenfasst und die Wand nicht lädt. Hier geht es um Datensätze mit **anderem** Titel, die niemand zusammenfasst. Schritt 1 und 2 gehören zu beiden.
 
 - [ ] **6.11 Goodreads: was geht, was nicht.** (Julian, 2026-09-07: bessere Anbindung, Editionsdaten, Rezensionen, Bewertungen.) Recherchiert am selben Tag, und die Antwort fällt klarer aus als erhofft.
 

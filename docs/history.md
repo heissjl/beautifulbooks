@@ -873,3 +873,28 @@ Die Detailseite öffnet `/book/OL279833W` und lädt nur dessen Ausgaben. Die and
 **Eine Asymmetrie im Entwurf, nicht ein Zufall dieses Buchs:** zusammengefasst wird bei der Suche, geladen wird auf der Detailseite je Werk-ID. Jedes Buch, das Open Library mehrfach führt, zeigt auf der Karte mehr, als seine Seite einlösen kann. Aufgenommen als ROADMAP 6.13 mit drei Wegen; der unsichtbare gefaltete Scan ist davon abgetrennt und steht jetzt als 6.14.
 
 **Für mich die Lehre dieses Durchgangs:** ich hatte zweimal zu früh eine Erklärung, die zu den Daten passte, die ich gerade angesehen hatte. Die erste Messung verglich Mosaik und Seite 0 desselben Werks — dort stimmte alles, also musste die Faltung schuld sein. Erst Julians Widerspruch führte zu der Frage, woher die Kacheln der Karte überhaupt stammen, und die Antwort lag eine Ebene höher.
+
+---
+
+## 2026-09-08 · Fünf von sechs Karten sind ein Roman (Testfall „ansichten böll")
+
+Julian, nachdem 6.13 stand: „von 5 Ergebnissen sind 4 das richtige Buch, nur in einer anderen Sprache, das sollte so auch nicht passieren."
+
+Er hat recht, und es widerspricht der Spec ausdrücklich: §2.1 sagt seit dem 2026-09-06, Sprache sei kein Teil der Werk-Identität und Übersetzungen seien Ausgaben desselben Werks. Der Code löst das nicht ein, weil Identitätsregel 2 den **Titel** vergleicht — und eine Übersetzung hat einen anderen.
+
+Sechs Karten für „ansichten böll", 22 Ausgaben, davon **21 zu einem einzigen Roman**: das zusammengefasste deutsche Werk (14), die englische *The clown* (2), die italienische *Opinioni di un clown* (1), die spanische *Opiniones de un payaso* (2) und eine kommentierte Schulausgabe (2). Nur die Studie von Bernd Balzer ist zu Recht getrennt.
+
+**Was es an Verbindungen gibt, geprüft statt vermutet:**
+
+| Signal | Befund |
+|---|---|
+| Autoren-Key | bei allen fünf gleich (`OL2633288A`) — notwendig, längst nicht hinreichend |
+| `id_wikidata` | auf keinem Datensatz |
+| Erstjahr | 1963, 1963, 1972, 1990 — Übersetzungen tragen das Jahr ihrer eigenen Ausgabe |
+| ISBN | keine Überschneidung |
+| `id_librarything` | nur auf einem von fünf |
+| LCC | Original `PT-2603.00000000.O394 A7`, englische Ausgabe `… A513` — gleiche Autoren-Cutter-Basis; die italienische hat gar keine LCC |
+
+**Das Ergebnis ist unbequem und gehört so festgehalten: eine verlässliche maschinelle Verbindung zwischen diesen Datensätzen gibt es nicht.** Jede Regel, die stark genug wäre, *The clown* an *Ansichten eines Clowns* zu binden, bindet auch zwei verschiedene Bücher desselben Autors aneinander — und eine falsche Verschmelzung ist schlimmer als eine verpasste.
+
+Aufgenommen als ROADMAP 6.15 mit drei Schritten: Klammerzusätze normalisieren (fängt die Schulausgabe, risikoarm), nach Autoren-Key statt Namen zusammenfassen, und für Übersetzungen erst über dreißig Werke messen, ob LCC-Cutter oder LibraryThing-ID tragen. Tut es keines, bleiben Übersetzungen eigene Karten — **dann muss aber §2.1 umgeschrieben werden**, statt eine Regel zu behaupten, die der Code nicht einlöst. In SPEC §2.1 steht dieser Vorbehalt jetzt.

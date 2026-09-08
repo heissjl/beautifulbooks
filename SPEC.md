@@ -47,7 +47,11 @@ Ein Work ist das abstrakte Buch, unabhängig von Ausgabe, Sprache und Format.
 
 Sprache ist **kein** Teil der Work-Identität. Übersetzungen sind Ausgaben desselben Works.
 
-**Die Zusammenfassung gilt heute nur für die Suche, nicht für die Detailseite.** Open Library führt dasselbe Buch oft als mehrere Werk-Datensätze (*Ansichten eines Clowns*: sechs). Die Suche fasst sie nach Regel 2 zu einer Karte zusammen, die Detailseite lädt aber nur die Ausgaben **einer** ID. Folge: die Karte zeigt Cover und eine Ausgabenzahl, die die Wand nicht einlösen kann (14 gegen 8). **Beide Seiten müssen dieselbe Gruppe meinen**; wie, entscheidet [ROADMAP](ROADMAP.md) 6.13.
+**Zwei Stellen, an denen die Umsetzung hinter dieser Regel zurückbleibt.** Beide sind gemessen und in der Roadmap eingetragen; bis sie behoben sind, beschreibt dieser Absatz das Soll und nicht das Ist.
+
+**Erstens: Übersetzungen bleiben eigene Karten.** Regel 2 vergleicht Titel *und* Autor, und eine Übersetzung hat einen anderen Titel — die Regel greift also nie, obwohl der Satz oben genau das verlangt. Bei der Suche „ansichten böll" sind fünf von sechs Karten derselbe Roman (ROADMAP 6.15). Eine verlässliche maschinelle Verbindung zwischen den Datensätzen gibt es nicht; welche Regel dazukommt oder ob dieser Absatz umgeschrieben werden muss, entscheidet die Messung dort.
+
+**Zweitens: die Zusammenfassung gilt nur für die Suche, nicht für die Detailseite.** Open Library führt dasselbe Buch oft als mehrere Werk-Datensätze (*Ansichten eines Clowns*: sechs). Die Suche fasst sie nach Regel 2 zu einer Karte zusammen, die Detailseite lädt aber nur die Ausgaben **einer** ID. Folge: die Karte zeigt Cover und eine Ausgabenzahl, die die Wand nicht einlösen kann (14 gegen 8). **Beide Seiten müssen dieselbe Gruppe meinen**; wie, entscheidet [ROADMAP](ROADMAP.md) 6.13.
 
 Normalisierung: lowercase, Diakritika entfernen, Satzzeichen entfernen, Whitespace zusammenfassen, führende Artikel (`the`, `a`, `der`, `die`, `das`, `le`, `la`) entfernen, Untertitel nach `:` abschneiden.
 
