@@ -29,8 +29,25 @@ const OUT_FILE = join(ROOT, 'data', 'curated.json');
 const YEARS_FILE = join(import.meta.dirname, 'years.json');
 const PORT = Number(process.env.PORT ?? 4321);
 
-/** Works dropped by hand. 1984 is out on Julian's instruction (ROADMAP 6.17). */
-const EXCLUDED = new Set(['OL1168083W']);
+/**
+ * Works dropped by hand: 1984 on Julian's instruction (ROADMAP 6.17), and
+ * two he took back out of the curated set on 2026-09-08.
+ */
+const EXCLUDED = new Set([
+  'OL1168083W', // Nineteen Eighty-Four
+  'OL1095427W', // Jane Eyre
+  'OL267096W',  // Анна Каренина
+]);
+
+/**
+ * Works Julian wants in the set that the cover index does not know, because
+ * it was built from a different list (ROADMAP 6.17). Their covers are fetched
+ * once from Open Library and cached beside this file — the only place where
+ * this tool loads a cover list over the network, and it is a handful of works.
+ */
+const EXTRA_WORKS: Array<{ id: string; title: string; author: string }> = [
+  { id: 'OL63055W', title: 'The Garden of Eden', author: 'Ernest Hemingway' },
+];
 
 interface RawIndex {
   builtAt: string;
@@ -71,9 +88,17 @@ for (const [workIdx, coverId] of index.covers) {
   else coversByWork.set(workIdx, [coverId]);
 }
 
-const works = index.works
-  .map(([id, title, author], i) => ({ id, title, author, covers: coversByWork.get(i) ?? [] }))
-  .filter(w => !EXCLUDED.has(w.id));
+const EXTRA_COVERS_FILE = join(import.meta.dirname, 'extra-covers.json');
+const extraCovers: Record<string, string[]> = existsSync(EXTRA_COVERS_FILE)
+  ? JSON.parse(readFileSync(EXTRA_COVERS_FILE, 'utf8'))
+  : {};
+
+const works = [
+  ...index.works
+    .map(([id, title, author], i) => ({ id, title, author, covers: coversByWork.get(i) ?? [] }))
+    .filter(w => !EXCLUDED.has(w.id)),
+  ...EXTRA_WORKS.map(w => ({ ...w, covers: extraCovers[w.id] ?? [] })),
+];
 
 function writeAtomically(file: string, content: string) {
   const tmp = `${file}.tmp`;
@@ -82,7 +107,13 @@ function writeAtomically(file: string, content: string) {
 }
 
 function savePicks() {
-  const ordered = works.map(w => picks[w.id]).filter(Boolean);
+  // Works order first, then anything picked for a work this run does not know
+  // about — dropping those silently would delete choices nobody made again.
+  const known = new Set(works.map(w => w.id));
+  const ordered = [
+    ...works.map(w => picks[w.id]).filter(Boolean),
+    ...Object.values(picks).filter(p => !known.has(p.id)),
+  ];
   writeAtomically(OUT_FILE, `${JSON.stringify({ curatedAt: new Date().toISOString().slice(0, 10), works: ordered }, null, 2)}\n`);
 }
 
@@ -106,6 +137,30 @@ async function yearsFor(workId: string): Promise<YearInfo> {
   years[workId] = info;
   writeAtomically(YEARS_FILE, `${JSON.stringify(years, null, 1)}\n`);
   return info;
+}
+
+/** Covers for a work the index does not carry; fetched once, then cached. */
+async function loadExtraCovers() {
+  for (const w of EXTRA_WORKS) {
+    if (extraCovers[w.id]?.length) continue;
+    try {
+      const res = await fetch(`https://openlibrary.org/works/${w.id}/editions.json?limit=200`, {
+        signal: AbortSignal.timeout(25_000),
+      });
+      const body = (await res.json()) as { entries?: Array<{ covers?: number[] }> };
+      const ids: string[] = [];
+      for (const e of body.entries ?? []) {
+        for (const c of e.covers ?? []) if (c > 0 && !ids.includes(`ol:${c}`)) ids.push(`ol:${c}`);
+      }
+      extraCovers[w.id] = ids;
+      const at = works.findIndex(x => x.id === w.id);
+      if (at >= 0) works[at].covers = ids;
+      writeAtomically(EXTRA_COVERS_FILE, `${JSON.stringify(extraCovers, null, 1)}\n`);
+      console.log(`curate: ${w.title} has ${ids.length} covers on record`);
+    } catch {
+      console.log(`curate: could not load covers for ${w.title}; it will show empty`);
+    }
+  }
 }
 
 const HTML = readFileSync(join(import.meta.dirname, 'index.html'), 'utf8');
@@ -164,8 +219,12 @@ const server = createServer(async (req, res) => {
   send(404, { error: 'not found' });
 });
 
-server.listen(PORT, () => {
-  const done = Object.values(picks).filter(p => !p.skipped).length;
-  console.log(`curate: ${works.length} works, ${done} already picked`);
-  console.log(`open http://localhost:${PORT}`);
+// Covers for the extra works first, so the list is complete before the first
+// request; `tsx` compiles this file as CommonJS, where top-level await is out.
+void loadExtraCovers().then(() => {
+  server.listen(PORT, () => {
+    const done = Object.values(picks).filter(p => !p.skipped).length;
+    console.log(`curate: ${works.length} works, ${done} already picked`);
+    console.log(`open http://localhost:${PORT}`);
+  });
 });

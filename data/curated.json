@@ -49,27 +49,12 @@
       "pickedAt": "2026-09-08T20:30:07.186Z"
     },
     {
-      "id": "OL1095427W",
-      "title": "Jane Eyre",
-      "author": "Charlotte Brontë",
-      "coverId": "ol:10865744",
-      "firstPublished": 1847,
-      "pickedAt": "2026-09-08T20:30:24.454Z"
-    },
-    {
       "id": "OL21177W",
       "title": "Wuthering Heights",
       "author": "Emily Brontë",
       "coverId": "",
       "skipped": true,
       "pickedAt": "2026-09-08T20:30:32.119Z"
-    },
-    {
-      "id": "OL267096W",
-      "title": "Анна Каренина",
-      "author": "Лев Толстой",
-      "coverId": "ol:15228735",
-      "pickedAt": "2026-09-08T20:30:37.982Z"
     },
     {
       "id": "OL893707W",
@@ -392,6 +377,97 @@
       "coverId": "ol:15154653",
       "firstPublished": 1985,
       "pickedAt": "2026-09-08T20:50:27.931Z"
+    },
+    {
+      "id": "OL3501723W",
+      "title": "A Confederacy of Dunces",
+      "author": "John Kennedy Toole",
+      "coverId": "ol:8363519",
+      "firstPublished": 1980,
+      "pickedAt": "2026-09-08T20:56:14.375Z"
+    },
+    {
+      "id": "OL15321W",
+      "title": "Se una notte d'inverno un viaggiatore",
+      "author": "Italo Calvino",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:56:16.548Z"
+    },
+    {
+      "id": "OL5731542W",
+      "title": "Half of a Yellow Sun",
+      "author": "Chimamanda Ngozi Adichie",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:56:25.205Z"
+    },
+    {
+      "id": "OL498463W",
+      "title": "Der Proceß",
+      "author": "Franz Kafka",
+      "coverId": "ol:977617",
+      "firstPublished": 2006,
+      "pickedAt": "2026-09-08T20:56:38.494Z"
+    },
+    {
+      "id": "OL455327W",
+      "title": "Lord of the Flies",
+      "author": "William Golding",
+      "coverId": "ol:15008590",
+      "pickedAt": "2026-09-08T20:56:54.663Z"
+    },
+    {
+      "id": "OL3335245W",
+      "title": "The Catcher in the Rye",
+      "author": "J. D. Salinger",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:56:59.284Z"
+    },
+    {
+      "id": "OL61982W",
+      "title": "Ὀδύσσεια",
+      "author": "Όμηρος",
+      "coverId": "ol:15161047",
+      "pickedAt": "2026-09-08T20:57:03.933Z"
+    },
+    {
+      "id": "OL93082W",
+      "title": "La Divina Commedia",
+      "author": "Dante Alighieri",
+      "coverId": "ol:15201202",
+      "pickedAt": "2026-09-08T20:57:08.270Z"
+    },
+    {
+      "id": "OL9170454W",
+      "title": "Hamlet",
+      "author": "William Shakespeare",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:57:12.882Z"
+    },
+    {
+      "id": "OL52556W",
+      "title": "Die Leiden des jungen Werthers",
+      "author": "Johann Wolfgang von Goethe",
+      "coverId": "ol:12446569",
+      "pickedAt": "2026-09-08T20:58:26.997Z"
+    },
+    {
+      "id": "OL1095427W",
+      "title": "Jane Eyre",
+      "author": "Charlotte Brontë",
+      "coverId": "ol:10865744",
+      "firstPublished": 1847,
+      "pickedAt": "2026-09-08T20:30:24.454Z"
+    },
+    {
+      "id": "OL267096W",
+      "title": "Анна Каренина",
+      "author": "Лев Толстой",
+      "coverId": "ol:15228735",
+      "pickedAt": "2026-09-08T20:30:37.982Z"
     }
   ]
 }
