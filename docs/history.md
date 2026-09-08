@@ -980,3 +980,22 @@ Branch `mvp-hobby`. Julian wollte „schnell zu einem deployten MVP", als Hobby-
 **Recherche zum Recht** ([docs/recht-hobbyseite.md](recht-hobbyseite.md)): Name und ladungsfähige Anschrift sind nach § 18 Abs. 1 MStV Pflicht für jede öffentliche Seite; § 5 DDG verlangt für eine Privatperson nur die E-Mail dazu; Vercel Hobby hält Logs eine Stunde und hat **keinen** Auftragsverarbeitungsvertrag (der DPA gilt für Pro und Enterprise) — Julian trägt das Restrisiko, ROADMAP 0.12.
 
 **Nachgelesen für die Einrichtung (2026-09-08 abends):** Vercel Hobby erlaubt Funktionen 300 s (Default und Maximum, Fluid compute), Pro 800 s; die 20 s der Suche sind kein Thema. Die drei Commits (1.7, 6.15, 2.0) sind per Fast-Forward auf `main` und bei GitHub; Vercel gibt es noch nicht, Julian legt das Konto an.
+
+## 2026-09-08 · Der erste Deploy, und die fremde Seite, auf die wir gezeigt haben (ROADMAP 2.1, 2.6)
+
+Julian hat das Vercel-Projekt am Abend zusammen mit Claude im Browser eingerichtet. Was dabei gemessen und gelernt wurde, gehört hierher, weil es beim zweiten Mal Zeit spart.
+
+**Die Seite ist online:** https://beautifulbooks-kappa.vercel.app, Build 1 min 49 s, Funktions-Region nachträglich von Washington (`iad1`, Vercels Voreinstellung) auf **Frankfurt (`fra1`)** gestellt.
+
+**Der schwerste Fund war ein geratener Name.** `NEXT_PUBLIC_SITE_URL` wurde beim Import auf `https://beautifulbooks.vercel.app` gesetzt, weil der Projektname das nahelegt. Vercel vergab aber `beautifulbooks-kappa.vercel.app` — denn **`beautifulbooks.vercel.app` gehört jemand anderem**, einer fremden Vite-Anwendung, die sich ebenfalls „Beautiful Books" nennt. Die Folge stand eine Viertelstunde lang live: `<link rel="canonical">`, das OG-Bild, die Sitemap und der `Host` in der robots.txt zeigten alle auf **die fremde Seite**. Für einen Crawler heißt das, unsere Seiten seien Kopien von deren Seite. Behoben durch Korrektur der Variablen; die Lehre ist, **die Produktionsadresse nach dem ersten Deploy abzulesen und nicht aus dem Projektnamen zu schließen** — und sie ist ein Argument, die eigene Domain (0.5) bald zu kaufen.
+
+**Die Abnahme lief sonst sauber** (Tabelle in ROADMAP 2.6). Zwei Ergebnisse sind mehr als Häkchen:
+
+- **`/book/OL99999999W` antwortet mit 404**, gemessen in 5,1 s. Lokal war dieser Nachweis am selben Tag an einer Open-Library-Ausfall-Episode gescheitert; in Produktion, mit warmem Cache und schneller Quelle, ist er erbracht. ROADMAP 1.7 ist damit belegt und nicht nur behauptet.
+- **78 Kauf-Links auf Seite 0 von *Gatsby*, kein einziger mit Provisionsparameter**, und `/go/thalia/<isbn>` leitet ohne Parameter weiter. Der Hobby-Modus (E20) tut in Produktion, was er verspricht.
+
+Antwortzeiten der statischen Seiten 0,33–0,72 s; die Suche nach *1984* kam vollständig und mit *Nineteen Eighty-Four* auf Platz 1.
+
+**Web Analytics: der `<script>`-Tag genügt nicht.** `/_vercel/insights/script.js` antwortet mit **404**, solange die Funktion im Dashboard nicht eingeschaltet ist — der Tag steht im HTML, gezählt wird nichts. Nach dem Einschalten gilt der Hobby-Umfang: 50.000 Ereignisse im Monat, 30 Tage Verlauf, **keine Custom Events**. Damit beantwortet Vercels Zählung keine der sechs Fragen aus 3.1; sie zählt Aufrufe. Der eigene Endpunkt bleibt also nötig.
+
+**Beim Einrichten hat sich noch dies gezeigt:** Vercel liest `.env.example` und legt alle zwölf Schlüssel als leere Variablen an — die fünf `AFFILIATE_*` wurden entfernt statt leer gelassen, damit im Hobby-Modus gar nichts danebenliegen kann. Die Laufzeitgrenze ist unkritisch (Hobby 300 s je Funktion gegen 20 s im schlechtesten Fall der Suche). Und der Import zeigt nur Repositories, für die die GitHub-App freigegeben ist; `beautifulbooks` musste erst in den App-Rechten ergänzt werden.

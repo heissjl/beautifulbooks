@@ -65,7 +65,7 @@ Was vor dem ersten Deploy wahr sein muss, in Reihenfolge der Prüfbarkeit:
 
 ## 5. Die Schritte
 
-### Sitzung 1 — Claude, ein halber bis ganzer Tag, auf `mvp-hobby`
+### Sitzung 1 — Claude, ein halber bis ganzer Tag, auf `mvp-hobby` — *erledigt 2026-09-08, nach `main` gemerged*
 
 1. `lib/sitemode.ts`: `siteMode()` liest `NEXT_PUBLIC_SITE_MODE`, kennt `hobby` und `shop`, Default `hobby`; alles andere ist ein Fehler beim Start, kein stilles `hobby`. Unit-Test.
 2. `buyLinksFor` ignoriert `AFFILIATE_*` im Hobby-Modus; Test mit gesetzten Variablen in beiden Modi. `/api/availability` antwortet 404 im Hobby-Modus; `/go/` bleibt (es zählt ohne Kennung und leitet auf den neutralen Link).
@@ -79,14 +79,14 @@ Was vor dem ersten Deploy wahr sein muss, in Reihenfolge der Prüfbarkeit:
 10. Build, Tests, Lint, `tsc`; fünf Akzeptanz-Queries und 0.8 im Browser-Panel; Screenshots nach `docs/tests/`.
 11. Spec nachziehen (§7 dieses Plans), Roadmap abhaken, Historie ergänzen. Ein Commit je Roadmap-Punkt (2.0, 1.7, 6.15).
 
-### Parallel — Julian, eine halbe Stunde plus Wartezeit
+### Parallel — Julian, eine halbe Stunde plus Wartezeit — *erledigt 2026-09-08 (0.2 offen), Einrichtung zusammen im Browser*
 
 - **0.2** zweiter Google-Schlüssel für die Entwicklung; der bisherige wird zum Produktionsschlüssel. Ohne das teilt sich der Betrieb das Kontingent mit jeder Entwicklungssitzung (305 von 1.000 am 2026-09-07).
 - **2.1** Vercel-Konto, GitHub-Repo `heissjl/beautifulbooks` verbinden, Region `fra1`, Production = `main`. Variablen: `GOOGLE_BOOKS_API_KEY` (Pflicht), `NEXT_PUBLIC_SITE_URL` (erst die `*.vercel.app`-Adresse), `NEXT_PUBLIC_SITE_MODE` leer lassen oder `hobby`; für Preview optional `shop`. **Keine** `AFFILIATE_*`. Web Analytics im Dashboard einschalten. Die Laufzeitgrenze des Plans ablesen und in ROADMAP 2.1 eintragen.
 - **0.4 in klein:** Name und E-Mail-Adresse für `/contact`, und die Entscheidungen 1–3 aus §3.
 - **0.5 Domain**, wenn gewünscht; nicht blockierend.
 
-### Sitzung 2 — beide, eine Stunde: online
+### Sitzung 2 — beide, eine Stunde: online — *am 2026-09-08 abends gelaufen; Abnahme zum Teil erledigt, Reste in ROADMAP 2.6*
 
 1. `mvp-hobby` nach `main` mergen, Vercel baut.
 2. **2.6 Abnahme live:** fünf Akzeptanz-Queries, eine kalte Detailseite mit Zähler, das OG-Bild in einem Messenger, Privacy und Contact erreichbar, kein Händler-Link auf der ganzen Seite. Abends den Google-Verbrauch in der Cloud-Konsole ablesen und in die Historie schreiben — die erste Zahl, die nicht aus der Entwicklung stammt.
