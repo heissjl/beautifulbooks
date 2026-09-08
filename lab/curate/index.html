@@ -36,6 +36,19 @@
   button.btn.danger { color:var(--ink2); }
   button.btn.danger:hover { border-color:#c0392b; color:#c0392b; }
   .hint { color:var(--ink3); font-size:12px; margin-top:20px; }
+  .picked { margin-top:36px; border-top:1px solid var(--line); padding-top:16px; }
+  .picked h3 { font-size:14px; margin:0 0 10px; font-weight:600; color:var(--ink2); }
+  .picked ul { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:6px 14px; }
+  .picked li { display:flex; align-items:center; gap:8px; padding:3px 4px; border-radius:6px; }
+  .picked li:hover { background:var(--surface); }
+  .picked li.here { background:var(--surface); outline:1px solid var(--accent); }
+  .picked img { width:22px; height:33px; object-fit:cover; border-radius:2px; background:var(--line); flex:none; }
+  .picked .none { width:22px; height:33px; border:1px dashed var(--line); border-radius:2px; flex:none; }
+  .picked button.jump { flex:1; text-align:left; background:none; border:0; padding:0; font:inherit; color:var(--ink); cursor:pointer; overflow:hidden; }
+  .picked button.jump span { color:var(--ink3); font-size:12px; }
+  .picked button.jump b { font-weight:500; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .picked button.x { background:none; border:0; color:var(--ink3); cursor:pointer; font-size:15px; line-height:1; padding:2px 6px; border-radius:4px; }
+  .picked button.x:hover { color:#c0392b; background:color-mix(in srgb, #c0392b 12%, transparent); }
   .done { padding:40px 0; text-align:center; }
 </style>
 </head>
@@ -106,6 +119,7 @@ function render() {
       <button class="btn" id="next">weiter →</button>
     </div>
     <div class="grid" id="grid">${tiles}</div>
+    <section class="picked" id="picked"></section>
     <p class="hint">Klick wählt und springt weiter. Pfeiltasten bewegen den Rahmen, Enter wählt, Backspace zurück.
        Das Jahr wird mit der Wahl gespeichert; leer heißt „nicht geprüft".
        „Überspringen" behält das Buch für später, „streichen" nimmt es dauerhaft aus der Liste und von der Startseite.</p>`;
@@ -118,6 +132,8 @@ function render() {
   $('next').onclick = () => { state.i = Math.min(state.works.length - 1, state.i + 1); render(); };
   $('skip').onclick = () => save({ skipped: true });
   $('drop').onclick = () => save({ dropped: true });
+
+  renderPicked();
 
   fetchYears(w).then(info => {
     const el = $('yearinfo');
@@ -133,6 +149,53 @@ function render() {
 }
 
 function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }
+
+/**
+ * Everything already seen, at the foot of the page: click a row to go back
+ * and choose again, or the × to strike the book off the list. Skipped works
+ * are in here too — they are exactly the ones worth a second look.
+ */
+function renderPicked() {
+  const el = $('picked');
+  if (!el) return;
+  const rows = state.works
+    .map((w, n) => ({ w, n }))
+    .filter(({ w }) => w.pick);
+  if (rows.length === 0) { el.innerHTML = ''; return; }
+
+  el.innerHTML = `<h3>Schon angesehen (${rows.length}) — anklicken, um zurückzuspringen</h3>
+    <ul>${rows.map(({ w, n }) => `
+      <li class="${n === state.i ? 'here' : ''}">
+        ${w.pick.coverId ? `<img loading="lazy" src="${cover(w.pick.coverId, 'S')}" alt="">` : '<span class="none"></span>'}
+        <button class="jump" data-n="${n}" title="${escapeHtml(w.title)}">
+          <b>${escapeHtml(w.title)}</b>
+          <span>${escapeHtml(w.author)}${w.pick.skipped ? ' · übersprungen' : ''}${w.pick.firstPublished ? ' · ' + w.pick.firstPublished : ''}</span>
+        </button>
+        <button class="x" data-drop="${n}" title="aus der Liste streichen">×</button>
+      </li>`).join('')}</ul>`;
+
+  el.addEventListener('click', e => {
+    const jump = e.target.closest('.jump');
+    if (jump) { state.i = Number(jump.dataset.n); render(); window.scrollTo({ top: 0 }); return; }
+    const x = e.target.closest('.x');
+    if (x) dropAt(Number(x.dataset.drop));
+  });
+}
+
+/** Strike a work off from the list at the foot, without leaving the one on screen. */
+async function dropAt(n) {
+  const w = state.works[n];
+  if (!w) return;
+  await fetch('/api/pick', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: w.id, dropped: true }),
+  });
+  const current = state.works[state.i];
+  state.works.splice(n, 1);
+  state.dropped += 1;
+  const at = state.works.indexOf(current);
+  state.i = at >= 0 ? at : Math.min(state.i, state.works.length - 1);
+  render();
+}
 
 async function choose(coverId) { await save({ coverId }); }
 
