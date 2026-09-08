@@ -5,10 +5,14 @@ Julian, 2026-09-08: "Riesenmosaik. Wir schauen, ob wir ein schemenhaftes Motiv, 
 **Status: it works.** Built and measured on 2026-09-08 — the numbers and what they cost are in "What came of it" at the end. Nothing has been posted anywhere, and the rights question below is still open.
 
 ```bash
-npx tsx lab/mosaic/render.ts --work OL1168083W \
+# an author's face out of the covers of everything he wrote
+npx tsx lab/mosaic/render.ts --author "george orwell" \
   --target "https://commons.wikimedia.org/wiki/Special:FilePath/George_Orwell_press_photo.jpg" \
   --cols 48 --colour-weight 0.15 --width 1600 --out lab/mosaic/out/orwell.png
 node lab/mosaic/preview.mjs lab/mosaic/out/orwell.png lab/mosaic/out/preview.png 360
+
+# or one book only
+npx tsx lab/mosaic/render.ts --work OL1168083W --cols 48
 ```
 
 ## The question
@@ -54,13 +58,26 @@ Built as planned: `mosaic.ts` is pure with 15 tests on synthetic pictures, `rend
 |---|---|---|
 | Recognition | a motif at no more than 25 % blend | a face at **0 % blend**, still readable shrunk to 150 px wide |
 | Variety | most-used cover under 5 % of cells | **0.8 %**; 175 of 222 covers used; **no** cell had to repeat a neighbour |
-| Cost | under 30 s for 1,000 cells | **12 s** for 2,064 cells with the image cache warm, 40 s cold; 6 Open Library requests, **zero Google** |
+| Cost | under 30 s for 1,000 cells | **12 s** for 2,064 cells with the image cache warm, 40 s cold; 6 Open Library requests, **zero Google**. Eight books: 57 s, still no Google |
 | Looks | Julian wants to post it | his call |
 
 **Two things were wrong in the plan and are fixed in the code.**
 
 1. **The target must be picked by contrast, not by how many editions carry it.** The best-known jacket of *1984* spans luminance 57.5 to 90.2 of 255 — nearly flat. A mosaic of it is a handsome wall of covers with no motif in it whatsoever, which is exactly what the first render produced. `--target auto` now takes the most contrasted jacket instead.
 2. **The grid must follow the target's shape.** A square grid of 2:3 cells over a 3:4 portrait stretched the head by half. Rows are now worked out from the target unless `--rows` says otherwise.
+
+**Several books beat one book, and that is the way to build it** (Julian, 2026-09-08: fewer repeated covers). `--author` asks Open Library for the name, keeps only the works whose **primary author is that person** and drops study guides — both filters the site already uses — and takes the eight with the most editions. For Orwell that is *Animal Farm*, *Nineteen Eighty-Four*, *Homage to Catalonia*, *The Road to Wigan Pier*, *Burmese Days*, *Down and Out in Paris and London*, *Keep the Aspidistra Flying* and *Coming Up for Air*. Same portrait, same 48 x 43 grid, 2,064 cells:
+
+| | one book | eight books |
+|---|---|---|
+| Tiles | 222 | **509** |
+| Cells per cover used | 11.8 | **5.9** |
+| Mean distance to the picture | 866 | **653** |
+| Worst cell | 2,963 | **2,208** |
+| Most-used cover | 0.8 % of cells | **0.4 %** |
+| Cells the palette cannot reach | 2.6 % | **0 %** |
+
+A quarter closer to the picture and half the repetition, for one extra Open Library search and seven more books' worth of edition pages. It is also the better idea: a portrait of the author made of the author's whole work says something, where a portrait made of one novel is just a bigger wall of it.
 
 **Three findings for whoever picks the next picture.**
 
@@ -71,6 +88,7 @@ Built as planned: `mosaic.ts` is pure with 15 tests on synthetic pictures, `rend
 ## Still open
 
 - A **silhouette** rather than a photograph: fewer mid-tones should read better at 40 cells across. Untried.
+- **More than eight books**, or an author with many short works. `--max-works` raises the cap; the palette grows and the run gets slower, and nobody has measured where that stops paying.
 - The **lower bound on the palette**: *Beloved* has 72 covers to *1984*'s 222. At what point does a book stop being able to carry a picture? `paletteReport` answers it per book without rendering anything.
 - **Whether 6.10's colour signature helps.** It was not needed: mean RGB per sub-cell, measured here, is a different and better-suited measure than a hue histogram. Nothing to do unless a colour target proves otherwise.
 - **The rights question**, before anything is posted anywhere.

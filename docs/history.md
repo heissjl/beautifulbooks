@@ -787,7 +787,22 @@ Julians zweites Experiment (`lab/mosaic/`, ROADMAP 5.5): ob sich aus den Covern 
 
 **Was 6.10 dazu beiträgt: nichts, und das ist in Ordnung.** Das Mosaik misst mittleres RGB je Unterzelle, ein anderes und für diesen Zweck besseres Maß als das Farbhistogramm des Index. Ein grauer Zielbild braucht `--colour-weight 0.15` statt der voreingestellten 0,6, sonst werden gesättigte Cover teuer und das Motiv wird matschig.
 
-Offen: eine Silhouette statt eines Fotos, die Untergrenze der Palette (*Beloved* hat 72 Cover gegen 222), und die Rechtefrage vor dem Posten — dieselbe wie beim Clip.
+**Nachtrag am selben Tag: ein Autorengesicht aus mehreren Werken.** Julians Vorschlag, gegen die Wiederholung von Covern. `--author` fragt Open Library nach dem Namen, behält nur die Werke, deren **Erstautor** diese Person ist, wirft Sekundärliteratur über dieselbe Regel wie das Ranking heraus und nimmt die acht ausgabenstärksten — für Orwell *Animal Farm*, *1984*, *Homage to Catalonia*, *The Road to Wigan Pier*, *Burmese Days*, *Down and Out in Paris and London*, *Keep the Aspidistra Flying*, *Coming Up for Air*. Gegen dasselbe Porträt im selben Raster aus 2.064 Zellen:
+
+| | ein Buch | acht Bücher |
+|---|---|---|
+| Kacheln | 222 | **509** |
+| Zellen je benutztem Cover | 11,8 | **5,9** |
+| Mittlerer Abstand zum Bild | 866 | **653** |
+| Schlechteste Zelle | 2.963 | **2.208** |
+| Meistbenutztes Cover | 0,8 % der Zellen | **0,4 %** |
+| Unerreichbare Zellen | 2,6 % | **0 %** |
+
+Ein Viertel näher am Bild und halb so viel Wiederholung, für eine zusätzliche Suchanfrage und sieben weitere Werke an Ausgabenseiten; 57 s, weiterhin keine Google-Anfrage.
+
+**Dabei ist Open Library mitten im Lauf ausgestiegen** (*The Road to Wigan Pier*), was das Skript zuerst ganz abbrach. Jetzt wird jede Seite einmal wiederholt, ein Werk, das trotzdem nicht antwortet, wird übersprungen oder unvollständig verwendet — und in beiden Fällen **gesagt**. Eine unvollständige Ladung wandert nicht in den Plattencache, sonst würde die Lücke beim nächsten Lauf zur Tatsache. Dieselbe Regel wie überall: ein Ausfall ist kein Befund.
+
+Offen: eine Silhouette statt eines Fotos, mehr als acht Werke, die Untergrenze der Palette (*Beloved* hat 72 Cover gegen 222), und die Rechtefrage vor dem Posten — dieselbe wie beim Clip.
 
 
 ---
