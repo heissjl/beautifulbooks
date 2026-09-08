@@ -7,6 +7,7 @@ import type { Edition, SourceEdition, Work, WorkSummary } from '../model';
 import {
   cleanAuthorEntries, cleanIsbn, isbn10to13, looksLikeNonBook, parseYear, toIsoLanguage,
 } from '../normalize';
+import { robustFirstPublishYear } from '../firstyear';
 
 /** Subset of a `/search.json` doc as requested via `fields=` in the client. */
 export interface OlSearchDoc {
@@ -16,6 +17,8 @@ export interface OlSearchDoc {
   author_name?: string[];
   author_key?: string[];
   first_publish_year?: number;
+  /** Every year an edition of this work carries; the guard in firstyear.ts needs it. */
+  publish_year?: number[];
   edition_count?: number;
   cover_i?: number;
   cover_edition_key?: string;
@@ -77,7 +80,7 @@ export function parseSearchDocs(docs: readonly OlSearchDoc[]): WorkSummary[] {
       title: doc.title,
       authors,
       authorKeys,
-      firstPublishYear: doc.first_publish_year,
+      firstPublishYear: robustFirstPublishYear(doc.first_publish_year, doc.publish_year),
       editionCount: doc.edition_count,
       coverUrls: [olCoverUrl(doc.cover_i)],
       languages,

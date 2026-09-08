@@ -8,6 +8,7 @@
 import type { Work, WorkSummary } from '../model';
 import { cleanAuthorEntries, cleanAuthors } from '../normalize';
 import { debug } from '../debug';
+import { robustFirstPublishYear } from '../firstyear';
 import { HttpError, SourceUnavailableError, fetchJson, isSilence } from './http';
 import { olWorkId, parseSearchDocs, type OlEditionEntry, type OlSearchDoc } from './openlibrary-parse';
 
@@ -74,6 +75,9 @@ export const SEARCH_RETRY = {
 
 const SEARCH_FIELDS = [
   'key', 'title', 'subtitle', 'author_name', 'author_key', 'first_publish_year',
+  // The whole year list, so a single bad record cannot date a book to 1777
+  // (ROADMAP 6.16). It rides along in the same request and costs nothing.
+  'publish_year',
   'edition_count', 'cover_i', 'cover_edition_key', 'language',
   // Popularity: Open Library ranks by these and we use them too (SPEC §9.3 step 10).
   'readinglog_count', 'want_to_read_count', 'ratings_count',
@@ -198,7 +202,8 @@ async function getWorkViaSearch(workId: string): Promise<Work | null> {
       title: doc.title,
       authors: entries.map(a => a.name),
       authorKeys: entries.every(a => a.key) ? entries.map(a => a.key!) : undefined,
-      firstPublishYear: doc.first_publish_year,
+      // Same guard as the search path: one bad record must not date a work (6.16).
+      firstPublishYear: robustFirstPublishYear(doc.first_publish_year, doc.publish_year),
       editionCount: doc.edition_count,
     };
   } catch (err) {

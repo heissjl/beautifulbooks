@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Cover kuratieren</title>
+<style>
+  :root { --bg:#f4f0e8; --ink:#1a1714; --ink2:#5d554e; --ink3:#8b8179; --line:#ddd5c8; --accent:#b1502b; --surface:#fffdf8; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131110; --ink:#f0ece4; --ink2:#b5ada4; --ink3:#7d746c; --line:#2e2a26; --accent:#e6a677; --surface:#1c1917; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  header { position:sticky; top:0; z-index:5; background:color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter:blur(8px);
+           border-bottom:1px solid var(--line); padding:10px 16px; display:flex; gap:16px; align-items:baseline; flex-wrap:wrap; }
+  h1 { font-size:17px; margin:0; font-weight:600; }
+  .meta { color:var(--ink3); font-size:13px; }
+  .bar { flex:1; min-width:120px; height:4px; background:var(--line); border-radius:2px; overflow:hidden; }
+  .bar i { display:block; height:100%; background:var(--accent); }
+  main { padding:16px; }
+  .work { display:flex; gap:12px; align-items:baseline; flex-wrap:wrap; margin-bottom:4px; }
+  .work h2 { font-size:22px; margin:0; }
+  .work .author { color:var(--ink2); }
+  .yearline { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:10px 0 14px; font-size:13px; color:var(--ink2); }
+  .yearline input { width:6em; padding:4px 6px; border:1px solid var(--line); border-radius:6px; background:var(--surface); color:var(--ink); font:inherit; }
+  .warn { color:var(--accent); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); gap:10px; }
+  .tile { border:0; padding:0; background:none; cursor:pointer; position:relative; }
+  .tile img { width:100%; aspect-ratio:2/3; object-fit:contain; background:var(--surface);
+              border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.18); display:block; }
+  .tile:hover img, .tile:focus-visible img { outline:3px solid var(--accent); outline-offset:2px; }
+  .tile.chosen img { outline:3px solid var(--accent); outline-offset:2px; }
+  .tile.cursor img { outline:2px dashed var(--ink3); outline-offset:2px; }
+  .actions { display:flex; gap:8px; margin:14px 0; flex-wrap:wrap; }
+  button.btn { font:inherit; padding:6px 12px; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); cursor:pointer; }
+  button.btn:hover { border-color:var(--accent); color:var(--accent); }
+  .hint { color:var(--ink3); font-size:12px; margin-top:20px; }
+  .done { padding:40px 0; text-align:center; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Cover kuratieren</h1>
+  <span class="meta" id="progress">…</span>
+  <span class="bar"><i id="barfill" style="width:0"></i></span>
+  <span class="meta" id="position"></span>
+</header>
+<main id="main">Lade …</main>
+
+<script>
+const state = { works: [], i: 0, cursor: 0, years: {} };
+const $ = id => document.getElementById(id);
+const cover = (id, size) => id.startsWith('ol:')
+  ? `https://covers.openlibrary.org/b/id/${id.slice(3)}-${size}.jpg` : '';
+
+async function load() {
+  const data = await (await fetch('/api/works')).json();
+  state.works = data.works;
+  const firstOpen = state.works.findIndex(w => !w.pick);
+  state.i = firstOpen < 0 ? 0 : firstOpen;
+  render();
+}
+
+function progress() {
+  const done = state.works.filter(w => w.pick && !w.pick.skipped).length;
+  $('progress').textContent = `${done} von ${state.works.length} gewählt`;
+  $('barfill').style.width = `${(done / state.works.length) * 100}%`;
+  $('position').textContent = `Nr. ${state.i + 1}`;
+}
+
+async function fetchYears(work) {
+  if (state.years[work.id]) return state.years[work.id];
+  const info = await (await fetch(`/api/years?id=${work.id}`)).json();
+  state.years[work.id] = info;
+  return info;
+}
+
+function render() {
+  const w = state.works[state.i];
+  if (!w) { $('main').innerHTML = '<p class="done">Fertig.</p>'; return; }
+  state.cursor = Math.max(0, w.covers.findIndex(c => c === w.pick?.coverId));
+  progress();
+
+  const tiles = w.covers.map((c, n) => `
+    <button class="tile ${w.pick?.coverId === c ? 'chosen' : ''} ${n === state.cursor ? 'cursor' : ''}"
+            data-cover="${c}" data-n="${n}" title="${c}">
+      <img loading="lazy" src="${cover(c, 'M')}" alt="">
+    </button>`).join('');
+
+  $('main').innerHTML = `
+    <div class="work">
+      <h2>${escapeHtml(w.title)}</h2><span class="author">${escapeHtml(w.author)}</span>
+      <span class="meta">${w.covers.length} Cover</span>
+    </div>
+    <div class="yearline">
+      <label>Erstausgabe <input id="year" type="number" inputmode="numeric" value="${w.pick?.firstPublished ?? ''}" placeholder="Jahr"></label>
+      <span id="yearinfo" class="meta">Jahre werden geholt …</span>
+    </div>
+    <div class="actions">
+      <button class="btn" id="prev">← zurück</button>
+      <button class="btn" id="skip">überspringen</button>
+      <button class="btn" id="next">weiter →</button>
+    </div>
+    <div class="grid" id="grid">${tiles}</div>
+    <p class="hint">Klick wählt und springt weiter. Pfeiltasten bewegen den Rahmen, Enter wählt, Backspace zurück.
+       Das Jahr wird mit der Wahl gespeichert; leer heißt „nicht geprüft".</p>`;
+
+  $('grid').addEventListener('click', e => {
+    const t = e.target.closest('.tile');
+    if (t) choose(t.dataset.cover);
+  });
+  $('prev').onclick = () => { state.i = Math.max(0, state.i - 1); render(); };
+  $('next').onclick = () => { state.i = Math.min(state.works.length - 1, state.i + 1); render(); };
+  $('skip').onclick = () => save({ skipped: true });
+
+  fetchYears(w).then(info => {
+    const el = $('yearinfo');
+    if (!el) return;
+    const differs = info.reported !== info.guarded;
+    el.innerHTML = info.reported == null
+      ? 'Open Library nennt kein Jahr.'
+      : `Open Library: <b>${info.reported}</b>${differs ? ` <span class="warn">→ nach Ausreißerprüfung ${info.guarded}</span>` : ''}
+         · älteste Jahre: ${info.years.slice(0, 5).join(', ') || '–'}`;
+    const field = $('year');
+    if (field && !field.value && info.guarded) field.value = info.guarded;
+  });
+}
+
+function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }
+
+async function choose(coverId) { await save({ coverId }); }
+
+async function save(extra) {
+  const w = state.works[state.i];
+  const yearField = $('year');
+  const year = yearField && yearField.value ? Number(yearField.value) : undefined;
+  const body = { id: w.id, firstPublished: year, ...extra };
+  const res = await (await fetch('/api/pick', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+  })).json();
+  if (res.error) { alert(res.error); return; }
+  w.pick = { ...(extra.skipped ? { skipped: true, coverId: '' } : { coverId: extra.coverId }), firstPublished: year };
+  state.i = Math.min(state.works.length - 1, state.i + 1);
+  render();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  const w = state.works[state.i];
+  if (!w) return;
+  const cols = Math.max(1, Math.floor(document.getElementById('grid').clientWidth / 120));
+  const move = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: cols, ArrowUp: -cols }[e.key];
+  if (move) {
+    e.preventDefault();
+    state.cursor = Math.max(0, Math.min(w.covers.length - 1, state.cursor + move));
+    document.querySelectorAll('.tile').forEach((t, n) => t.classList.toggle('cursor', n === state.cursor));
+    document.querySelectorAll('.tile')[state.cursor]?.scrollIntoView({ block: 'nearest' });
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    choose(w.covers[state.cursor]);
+  } else if (e.key === 'Backspace') {
+    e.preventDefault();
+    state.i = Math.max(0, state.i - 1); render();
+  }
+});
+
+load();
+</script>
+</body>
+</html>
