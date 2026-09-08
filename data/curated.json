@@ -26,35 +26,12 @@
       "pickedAt": "2026-09-08T20:29:19.709Z"
     },
     {
-      "id": "OL66554W",
-      "title": "Pride and Prejudice",
-      "author": "Jane Austen",
-      "coverId": "ol:14855252",
-      "pickedAt": "2026-09-08T20:29:28.766Z"
-    },
-    {
       "id": "OL450063W",
       "title": "Frankenstein; or, The Modern Prometheus",
       "author": "Mary Shelley",
       "coverId": "ol:13498737",
       "firstPublished": 1818,
       "pickedAt": "2026-09-08T20:29:57.527Z"
-    },
-    {
-      "id": "OL85892W",
-      "title": "Dracula",
-      "author": "Bram Stoker",
-      "coverId": "",
-      "dropped": true,
-      "pickedAt": "2026-09-08T21:10:21.645Z"
-    },
-    {
-      "id": "OL21177W",
-      "title": "Wuthering Heights",
-      "author": "Emily Brontë",
-      "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:30:32.119Z"
     },
     {
       "id": "OL893707W",
@@ -65,29 +42,6 @@
       "pickedAt": "2026-09-08T20:30:50.318Z"
     },
     {
-      "id": "OL14866824W",
-      "title": "Der Zauberberg",
-      "author": "Thomas Mann",
-      "coverId": "ol:10498442",
-      "firstPublished": 1924,
-      "pickedAt": "2026-09-08T20:31:07.123Z"
-    },
-    {
-      "id": "OL872773W",
-      "title": "Der Steppenwolf",
-      "author": "Hermann Hesse",
-      "coverId": "ol:14592525",
-      "firstPublished": 1927,
-      "pickedAt": "2026-09-08T20:31:27.901Z"
-    },
-    {
-      "id": "OL872932W",
-      "title": "Siddhartha",
-      "author": "Hermann Hesse",
-      "coverId": "ol:15182521",
-      "pickedAt": "2026-09-08T20:31:34.998Z"
-    },
-    {
       "id": "OL1230613W",
       "title": "L’étranger",
       "author": "Albert Camus",
@@ -96,12 +50,20 @@
       "pickedAt": "2026-09-08T20:31:44.941Z"
     },
     {
-      "id": "OL274505W",
-      "title": "Cien años de soledad",
-      "author": "Gabriel García Márquez",
-      "coverId": "ol:12931898",
-      "firstPublished": 1967,
-      "pickedAt": "2026-09-08T20:31:57.968Z"
+      "id": "OL498463W",
+      "title": "Der Proceß",
+      "author": "Franz Kafka",
+      "coverId": "ol:13114886",
+      "firstPublished": 2006,
+      "pickedAt": "2026-09-08T21:19:25.008Z"
+    },
+    {
+      "id": "OL1434640W",
+      "title": "Berlin Alexanderplatz",
+      "author": "Alfred Döblin",
+      "coverId": "ol:967534",
+      "firstPublished": 1929,
+      "pickedAt": "2026-09-08T20:47:09.943Z"
     },
     {
       "id": "OL891786W",
@@ -112,34 +74,12 @@
       "pickedAt": "2026-09-08T20:32:05.426Z"
     },
     {
-      "id": "OL495470W",
-      "title": "Invisible Man",
-      "author": "Ralph Ellison",
-      "coverId": "ol:228067",
-      "firstPublished": 1952,
-      "pickedAt": "2026-09-08T20:32:18.570Z"
-    },
-    {
-      "id": "OL3140822W",
-      "title": "To Kill a Mockingbird",
-      "author": "Harper Lee",
-      "coverId": "ol:15162569",
-      "pickedAt": "2026-09-08T20:32:25.223Z"
-    },
-    {
-      "id": "OL276798W",
-      "title": "Catch-22",
-      "author": "Joseph Heller",
-      "coverId": "ol:13961422",
-      "firstPublished": 1961,
-      "pickedAt": "2026-09-08T20:32:40.677Z"
-    },
-    {
-      "id": "OL98459W",
-      "title": "Slaughterhouse-Five",
-      "author": "Kurt Vonnegut",
-      "coverId": "ol:14899989",
-      "pickedAt": "2026-09-08T20:32:49.004Z"
+      "id": "OL872773W",
+      "title": "Der Steppenwolf",
+      "author": "Hermann Hesse",
+      "coverId": "ol:14592525",
+      "firstPublished": 1927,
+      "pickedAt": "2026-09-08T20:31:27.901Z"
     },
     {
       "id": "OL64365W",
@@ -150,12 +90,58 @@
       "pickedAt": "2026-09-08T20:32:59.242Z"
     },
     {
+      "id": "OL495470W",
+      "title": "Invisible Man",
+      "author": "Ralph Ellison",
+      "coverId": "ol:228067",
+      "firstPublished": 1952,
+      "pickedAt": "2026-09-08T20:32:18.570Z"
+    },
+    {
+      "id": "OL98459W",
+      "title": "Slaughterhouse-Five",
+      "author": "Kurt Vonnegut",
+      "coverId": "ol:14899989",
+      "pickedAt": "2026-09-08T20:32:49.004Z"
+    },
+    {
+      "id": "OL872932W",
+      "title": "Siddhartha",
+      "author": "Hermann Hesse",
+      "coverId": "ol:15182521",
+      "pickedAt": "2026-09-08T20:31:34.998Z"
+    },
+    {
       "id": "OL103123W",
       "title": "Fahrenheit 451",
       "author": "Ray Bradbury",
       "coverId": "ol:15110801",
       "firstPublished": 1953,
       "pickedAt": "2026-09-08T20:33:09.911Z"
+    },
+    {
+      "id": "OL59048W",
+      "title": "The Remains of the Day",
+      "author": "Kazuo Ishiguro",
+      "coverId": "ol:15241866",
+      "firstPublished": 1989,
+      "pickedAt": "2026-09-08T20:37:03.848Z"
+    },
+    {
+      "id": "OL258134W",
+      "title": "Naked Lunch",
+      "author": "William S. Burroughs",
+      "coverId": "ol:10298340",
+      "firstPublished": 1959,
+      "pickedAt": "2026-09-08T20:34:17.652Z"
+    },
+    {
+      "id": "OL468431W",
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "coverId": "ol:13853193",
+      "firstPublished": 1920,
+      "pickedAt": "2026-09-08T20:48:51.397Z"
     },
     {
       "id": "OL59800W",
@@ -171,14 +157,6 @@
       "coverId": "ol:14825022",
       "firstPublished": 1968,
       "pickedAt": "2026-09-08T20:33:27.203Z"
-    },
-    {
-      "id": "OL27513W",
-      "title": "The Fellowship of the Ring",
-      "author": "J.R.R. Tolkien",
-      "coverId": "ol:14625938",
-      "firstPublished": 1954,
-      "pickedAt": "2026-09-08T20:33:46.957Z"
     },
     {
       "id": "OL38663W",
@@ -197,36 +175,20 @@
       "pickedAt": "2026-09-08T20:34:11.558Z"
     },
     {
-      "id": "OL258134W",
-      "title": "Naked Lunch",
-      "author": "William S. Burroughs",
-      "coverId": "ol:10298340",
-      "firstPublished": 1959,
-      "pickedAt": "2026-09-08T20:34:17.652Z"
-    },
-    {
-      "id": "OL1865528W",
-      "title": "The Bell Jar",
-      "author": "Sylvia Plath",
-      "coverId": "",
-      "dropped": true,
-      "pickedAt": "2026-09-08T21:11:00.064Z"
-    },
-    {
-      "id": "OL39349W",
-      "title": "Mrs. Dalloway",
-      "author": "Virginia Woolf",
-      "coverId": "",
-      "dropped": true,
-      "pickedAt": "2026-09-08T21:11:03.684Z"
+      "id": "OL276798W",
+      "title": "Catch-22",
+      "author": "Joseph Heller",
+      "coverId": "ol:13961422",
+      "firstPublished": 1961,
+      "pickedAt": "2026-09-08T20:32:40.677Z"
     },
     {
       "id": "OL98130W",
       "title": "Also sprach Zarathustra",
       "author": "Friedrich Nietzsche",
-      "coverId": "ol:1010782",
+      "coverId": "ol:756116",
       "firstPublished": 1883,
-      "pickedAt": "2026-09-08T20:36:03.351Z"
+      "pickedAt": "2026-09-08T21:23:05.338Z"
     },
     {
       "id": "OL67334W",
@@ -245,14 +207,6 @@
       "pickedAt": "2026-09-08T20:36:52.696Z"
     },
     {
-      "id": "OL59048W",
-      "title": "The Remains of the Day",
-      "author": "Kazuo Ishiguro",
-      "coverId": "ol:15241866",
-      "firstPublished": 1989,
-      "pickedAt": "2026-09-08T20:37:03.848Z"
-    },
-    {
       "id": "OL2625457W",
       "title": "Norwegian Wood",
       "author": "村上春樹",
@@ -261,28 +215,12 @@
       "pickedAt": "2026-09-08T20:37:15.429Z"
     },
     {
-      "id": "OL464512W",
-      "title": "Wolf Hall",
-      "author": "Hilary Mantel",
-      "coverId": "",
-      "dropped": true,
-      "pickedAt": "2026-09-08T21:11:02.480Z"
-    },
-    {
-      "id": "OL676009W",
-      "title": "Мастер и Маргарита",
-      "author": "Михаил Афанасьевич Булгаков",
-      "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:46:52.108Z"
-    },
-    {
-      "id": "OL1434640W",
-      "title": "Berlin Alexanderplatz",
-      "author": "Alfred Döblin",
-      "coverId": "ol:967534",
-      "firstPublished": 1929,
-      "pickedAt": "2026-09-08T20:47:09.943Z"
+      "id": "OL274505W",
+      "title": "Cien años de soledad",
+      "author": "Gabriel García Márquez",
+      "coverId": "ol:12931898",
+      "firstPublished": 1967,
+      "pickedAt": "2026-09-08T20:31:57.968Z"
     },
     {
       "id": "OL893414W",
@@ -290,6 +228,14 @@
       "author": "Frank Herbert",
       "coverId": "ol:10535009",
       "pickedAt": "2026-09-08T20:47:52.850Z"
+    },
+    {
+      "id": "OL27513W",
+      "title": "The Fellowship of the Ring",
+      "author": "J.R.R. Tolkien",
+      "coverId": "ol:14625938",
+      "firstPublished": 1954,
+      "pickedAt": "2026-09-08T20:33:46.957Z"
     },
     {
       "id": "OL86318W",
@@ -300,36 +246,19 @@
       "pickedAt": "2026-09-08T20:48:01.030Z"
     },
     {
+      "id": "OL3140822W",
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "coverId": "ol:15162569",
+      "pickedAt": "2026-09-08T20:32:25.223Z"
+    },
+    {
       "id": "OL62744W",
       "title": "Vom Kriege",
       "author": "Carl von Clausewitz",
       "coverId": "ol:3360233",
       "firstPublished": 1835,
       "pickedAt": "2026-09-08T20:48:43.740Z"
-    },
-    {
-      "id": "OL468431W",
-      "title": "The Great Gatsby",
-      "author": "F. Scott Fitzgerald",
-      "coverId": "ol:13853193",
-      "firstPublished": 1920,
-      "pickedAt": "2026-09-08T20:48:51.397Z"
-    },
-    {
-      "id": "OL102749W",
-      "title": "Moby Dick",
-      "author": "Herman Melville",
-      "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:49:09.825Z"
-    },
-    {
-      "id": "OL3801690W",
-      "title": "KAFF auch Mare Crisium",
-      "author": "Arno Schmidt",
-      "coverId": "",
-      "dropped": true,
-      "pickedAt": "2026-09-08T21:10:39.550Z"
     },
     {
       "id": "OL50548W",
@@ -355,12 +284,12 @@
       "pickedAt": "2026-09-08T20:50:02.831Z"
     },
     {
-      "id": "OL27482W",
-      "title": "The Hobbit",
-      "author": "J.R.R. Tolkien",
-      "coverId": "",
-      "dropped": true,
-      "pickedAt": "2026-09-08T21:10:32.787Z"
+      "id": "OL14866824W",
+      "title": "Der Zauberberg",
+      "author": "Thomas Mann",
+      "coverId": "ol:10498442",
+      "firstPublished": 1924,
+      "pickedAt": "2026-09-08T20:31:07.123Z"
     },
     {
       "id": "OL65906W",
@@ -387,43 +316,11 @@
       "pickedAt": "2026-09-08T20:56:14.375Z"
     },
     {
-      "id": "OL15321W",
-      "title": "Se una notte d'inverno un viaggiatore",
-      "author": "Italo Calvino",
-      "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:56:16.548Z"
-    },
-    {
-      "id": "OL5731542W",
-      "title": "Half of a Yellow Sun",
-      "author": "Chimamanda Ngozi Adichie",
-      "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:56:25.205Z"
-    },
-    {
-      "id": "OL498463W",
-      "title": "Der Proceß",
-      "author": "Franz Kafka",
-      "coverId": "ol:977617",
-      "firstPublished": 2006,
-      "pickedAt": "2026-09-08T20:56:38.494Z"
-    },
-    {
       "id": "OL455327W",
       "title": "Lord of the Flies",
       "author": "William Golding",
       "coverId": "ol:15008590",
       "pickedAt": "2026-09-08T20:56:54.663Z"
-    },
-    {
-      "id": "OL3335245W",
-      "title": "The Catcher in the Rye",
-      "author": "J. D. Salinger",
-      "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:56:59.284Z"
     },
     {
       "id": "OL61982W",
@@ -438,14 +335,6 @@
       "author": "Dante Alighieri",
       "coverId": "ol:15201202",
       "pickedAt": "2026-09-08T20:57:08.270Z"
-    },
-    {
-      "id": "OL9170454W",
-      "title": "Hamlet",
-      "author": "William Shakespeare",
-      "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:57:12.882Z"
     },
     {
       "id": "OL52556W",
@@ -476,6 +365,218 @@
       "coverId": "ol:12922317",
       "firstPublished": 1928,
       "pickedAt": "2026-09-08T20:59:13.330Z"
+    },
+    {
+      "id": "OL584333W",
+      "title": "Bonjour tristesse",
+      "author": "Françoise Sagan",
+      "coverId": "ol:4978661",
+      "pickedAt": "2026-09-08T21:09:08.670Z"
+    },
+    {
+      "id": "OL36287W",
+      "title": "Hrabě Monte Cristo. Díl 1 a 2 (třísvazkové vydání)",
+      "author": "Alexandre Dumas",
+      "coverId": "ol:14566144",
+      "firstPublished": 1830,
+      "pickedAt": "2026-09-08T21:09:24.499Z"
+    },
+    {
+      "id": "OL10432709W",
+      "title": "Братья Карамазовы",
+      "author": "Fiódor Dostoievski",
+      "coverId": "ol:15167288",
+      "pickedAt": "2026-09-08T21:09:30.702Z"
+    },
+    {
+      "id": "OL258301W",
+      "title": "Доктор Живаго",
+      "author": "Boris Leonidovich Pasternak",
+      "coverId": "ol:12713390",
+      "firstPublished": 1957,
+      "pickedAt": "2026-09-08T21:09:57.966Z"
+    },
+    {
+      "id": "OL272388W",
+      "title": "Архипелаг ГУЛАГ",
+      "author": "Александр Солженицын",
+      "coverId": "ol:4943043",
+      "pickedAt": "2026-09-08T21:10:05.951Z"
+    },
+    {
+      "id": "OL2564006W",
+      "title": "Genji monogatari",
+      "author": "Murasaki Shikibu",
+      "coverId": "ol:578998",
+      "firstPublished": 1900,
+      "pickedAt": "2026-09-08T21:13:19.247Z"
+    },
+    {
+      "id": "OL2625431W",
+      "title": "海辺のカフカ",
+      "author": "村上春樹",
+      "coverId": "ol:13524034",
+      "firstPublished": 2001,
+      "pickedAt": "2026-09-08T21:13:25.428Z"
+    },
+    {
+      "id": "OL2045111W",
+      "title": "雪国",
+      "author": "川端康成",
+      "coverId": "ol:11365593",
+      "firstPublished": 1937,
+      "pickedAt": "2026-09-08T21:13:30.431Z"
+    },
+    {
+      "id": "OL2384132W",
+      "title": "Cry, the Beloved Country",
+      "author": "Alan Paton",
+      "coverId": "ol:15237188",
+      "firstPublished": 1940,
+      "pickedAt": "2026-09-08T21:13:49.031Z"
+    },
+    {
+      "id": "OL2980902W",
+      "title": "A Fine Balance",
+      "author": "Rohinton Mistry",
+      "coverId": "ol:530581",
+      "pickedAt": "2026-09-08T21:14:17.943Z"
+    },
+    {
+      "id": "OL481143W",
+      "title": "White Teeth",
+      "author": "Zadie Smith",
+      "coverId": "ol:9512724",
+      "firstPublished": 2000,
+      "pickedAt": "2026-09-08T21:14:49.545Z"
+    },
+    {
+      "id": "OL40873W",
+      "title": "The Road",
+      "author": "Cormac McCarthy",
+      "coverId": "ol:15114913",
+      "firstPublished": 2006,
+      "pickedAt": "2026-09-08T21:14:57.376Z"
+    },
+    {
+      "id": "OL40879W",
+      "title": "Blood Meridian",
+      "author": "Cormac McCarthy",
+      "coverId": "ol:15110244",
+      "firstPublished": 1985,
+      "pickedAt": "2026-09-08T21:15:05.096Z"
+    },
+    {
+      "id": "OL66554W",
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:15:41.156Z"
+    },
+    {
+      "id": "OL85892W",
+      "title": "Dracula",
+      "author": "Bram Stoker",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:10:21.645Z"
+    },
+    {
+      "id": "OL21177W",
+      "title": "Wuthering Heights",
+      "author": "Emily Brontë",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:30:32.119Z"
+    },
+    {
+      "id": "OL1865528W",
+      "title": "The Bell Jar",
+      "author": "Sylvia Plath",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:11:00.064Z"
+    },
+    {
+      "id": "OL39349W",
+      "title": "Mrs. Dalloway",
+      "author": "Virginia Woolf",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:11:03.684Z"
+    },
+    {
+      "id": "OL464512W",
+      "title": "Wolf Hall",
+      "author": "Hilary Mantel",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:11:02.480Z"
+    },
+    {
+      "id": "OL676009W",
+      "title": "Мастер и Маргарита",
+      "author": "Михаил Афанасьевич Булгаков",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:46:52.108Z"
+    },
+    {
+      "id": "OL102749W",
+      "title": "Moby Dick",
+      "author": "Herman Melville",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:49:09.825Z"
+    },
+    {
+      "id": "OL3801690W",
+      "title": "KAFF auch Mare Crisium",
+      "author": "Arno Schmidt",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:10:39.550Z"
+    },
+    {
+      "id": "OL27482W",
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:10:32.787Z"
+    },
+    {
+      "id": "OL15321W",
+      "title": "Se una notte d'inverno un viaggiatore",
+      "author": "Italo Calvino",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:56:16.548Z"
+    },
+    {
+      "id": "OL5731542W",
+      "title": "Half of a Yellow Sun",
+      "author": "Chimamanda Ngozi Adichie",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:56:25.205Z"
+    },
+    {
+      "id": "OL3335245W",
+      "title": "The Catcher in the Rye",
+      "author": "J. D. Salinger",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:56:59.284Z"
+    },
+    {
+      "id": "OL9170454W",
+      "title": "Hamlet",
+      "author": "William Shakespeare",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:57:12.882Z"
     },
     {
       "id": "OL10834W",
@@ -510,26 +611,44 @@
       "pickedAt": "2026-09-08T21:08:34.102Z"
     },
     {
-      "id": "OL584333W",
-      "title": "Bonjour tristesse",
-      "author": "Françoise Sagan",
-      "coverId": "ol:4978661",
-      "pickedAt": "2026-09-08T21:09:08.670Z"
+      "id": "OL2568879W",
+      "title": "Where the Wild Things Are",
+      "author": "Maurice Sendak",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:13:35.858Z"
     },
     {
-      "id": "OL36287W",
-      "title": "Hrabě Monte Cristo. Díl 1 a 2 (třísvazkové vydání)",
-      "author": "Alexandre Dumas",
-      "coverId": "ol:14566144",
-      "firstPublished": 1830,
-      "pickedAt": "2026-09-08T21:09:24.499Z"
+      "id": "OL457179W",
+      "title": "Midnight's Children",
+      "author": "Salman Rushdie",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:14:05.140Z"
     },
     {
-      "id": "OL10432709W",
-      "title": "Братья Карамазовы",
-      "author": "Fiódor Dostoievski",
-      "coverId": "ol:15167288",
-      "pickedAt": "2026-09-08T21:09:30.702Z"
+      "id": "OL1052133W",
+      "title": "The God of Small Things",
+      "author": "Arundhati Roy",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:14:07.857Z"
+    },
+    {
+      "id": "OL5781992W",
+      "title": "The Kite Runner",
+      "author": "Khaled Hosseini",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:14:22.191Z"
+    },
+    {
+      "id": "OL59038W",
+      "title": "Never Let Me Go",
+      "author": "Kazuo Ishiguro",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:14:25.574Z"
     },
     {
       "id": "OL1095427W",
@@ -545,21 +664,6 @@
       "author": "Лев Толстой",
       "coverId": "ol:15228735",
       "pickedAt": "2026-09-08T20:30:37.982Z"
-    },
-    {
-      "id": "OL258301W",
-      "title": "Доктор Живаго",
-      "author": "Boris Leonidovich Pasternak",
-      "coverId": "ol:12713390",
-      "firstPublished": 1957,
-      "pickedAt": "2026-09-08T21:09:57.966Z"
-    },
-    {
-      "id": "OL272388W",
-      "title": "Архипелаг ГУЛАГ",
-      "author": "Александр Солженицын",
-      "coverId": "ol:4943043",
-      "pickedAt": "2026-09-08T21:10:05.951Z"
     }
   ]
 }
