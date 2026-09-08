@@ -855,3 +855,21 @@ Aufgenommen als ROADMAP 6.13 mit drei Wegen: nur bei gleichem Verlag zusätzlich
 **Nachtrag am selben Tag, auf Julians Rückfrage („aber es war eine Karte im Mosaik zu sehen, die dann gar nicht mehr in der Wand aufgetaucht ist?").** Er hat recht, und meine erste Erklärung war zu großzügig. „Es steckt im +1" stimmt nur für die **Zahl**, nicht für das **Bild**. Im Code nachgesehen: das Abzeichen in `CoverGallery` ist `pointer-events-none`, die Seitenleiste nennt die Faltung nur als Text, und `selectCoverFrom` löst einen Link auf ein gefaltetes Cover auf dessen Vertreter auf. **Es gibt keinen Weg, ein gefaltetes Cover anzusehen.** Bei Böll sind die beiden dtv-Fassungen dieselbe Zeichnung, aber sichtbar verschieden gedruckt — cremefarbener gegen weißen Grund, anderer Anschnitt.
 
 Damit ist der eigentliche Fehler nicht die Ungleichheit der beiden Regeln, sondern dass das Falten eine Einbahnstraße ist. Das widerspricht E16, wo genau festgehalten ist, dass ein Fehlurteil eine Position kosten soll und kein Cover. In SPEC §2.3 steht die Anforderung jetzt, in ROADMAP 6.13 der Weg.
+
+**Zweiter Nachtrag, nach Julians Widerspruch („das Bild unten rechts im Mosaik ist nicht in der Wand, das ist ein anderer Fall als zwei Scans").** Er hatte wieder recht, und diesmal lag ich an der falschen Stelle: es ist nicht die Faltung.
+
+Open Library führt *Ansichten eines Clowns* als **sechs getrennte Werk-Datensätze**. Unsere Suche fasst sie nach Identitätsregel 2 korrekt zu **einer** Karte zusammen, und die Karte trägt die Cover aller sechs:
+
+| Werk | Ausgaben | Cover | wo |
+|---|---|---|---|
+| OL279833W | 8 | K&W, blass, Junge mit Leiter | Karte und Wand |
+| OL8114847W | 3 | KiWi, Foto zweier Menschen | nur Karte |
+| OL9063200W | 1 | dtv, weiß mit dunklem Foto | nur Karte |
+| OL24570496W | 2 | SAGA, graublau mit rotem Kreis | nur Karte |
+| OL34685576W, OL37792362W | 3 + 1 | ohne Cover | — |
+
+Die Detailseite öffnet `/book/OL279833W` und lädt nur dessen Ausgaben. Die anderen fünf Datensätze werden nie geholt. Die Zahlen bestätigen es: die Karte meldet **14 Ausgaben**, die Wand **8**, und 8 + 3 + 1 + 2 = 14.
+
+**Eine Asymmetrie im Entwurf, nicht ein Zufall dieses Buchs:** zusammengefasst wird bei der Suche, geladen wird auf der Detailseite je Werk-ID. Jedes Buch, das Open Library mehrfach führt, zeigt auf der Karte mehr, als seine Seite einlösen kann. Aufgenommen als ROADMAP 6.13 mit drei Wegen; der unsichtbare gefaltete Scan ist davon abgetrennt und steht jetzt als 6.14.
+
+**Für mich die Lehre dieses Durchgangs:** ich hatte zweimal zu früh eine Erklärung, die zu den Daten passte, die ich gerade angesehen hatte. Die erste Messung verglich Mosaik und Seite 0 desselben Werks — dort stimmte alles, also musste die Faltung schuld sein. Erst Julians Widerspruch führte zu der Frage, woher die Kacheln der Karte überhaupt stammen, und die Antwort lag eine Ebene höher.
