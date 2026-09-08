@@ -33,6 +33,8 @@
   .actions { display:flex; gap:8px; margin:14px 0; flex-wrap:wrap; }
   button.btn { font:inherit; padding:6px 12px; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); cursor:pointer; }
   button.btn:hover { border-color:var(--accent); color:var(--accent); }
+  button.btn.danger { color:var(--ink2); }
+  button.btn.danger:hover { border-color:#c0392b; color:#c0392b; }
   .hint { color:var(--ink3); font-size:12px; margin-top:20px; }
   .done { padding:40px 0; text-align:center; }
 </style>
@@ -47,14 +49,16 @@
 <main id="main">Lade …</main>
 
 <script>
-const state = { works: [], i: 0, cursor: 0, years: {} };
+const state = { works: [], i: 0, cursor: 0, years: {}, dropped: 0 };
 const $ = id => document.getElementById(id);
 const cover = (id, size) => id.startsWith('ol:')
   ? `https://covers.openlibrary.org/b/id/${id.slice(3)}-${size}.jpg` : '';
 
 async function load() {
   const data = await (await fetch('/api/works')).json();
-  state.works = data.works;
+  // Struck-off works leave the run entirely; the choice itself stays on disk.
+  state.dropped = data.works.filter(w => w.pick?.dropped).length;
+  state.works = data.works.filter(w => !w.pick?.dropped);
   const firstOpen = state.works.findIndex(w => !w.pick);
   state.i = firstOpen < 0 ? 0 : firstOpen;
   render();
@@ -62,7 +66,7 @@ async function load() {
 
 function progress() {
   const done = state.works.filter(w => w.pick && !w.pick.skipped).length;
-  $('progress').textContent = `${done} von ${state.works.length} gewählt`;
+  $('progress').textContent = `${done} von ${state.works.length} gewählt${state.dropped ? ` · ${state.dropped} gestrichen` : ''}`;
   $('barfill').style.width = `${(done / state.works.length) * 100}%`;
   $('position').textContent = `Nr. ${state.i + 1}`;
 }
@@ -98,11 +102,13 @@ function render() {
     <div class="actions">
       <button class="btn" id="prev">← zurück</button>
       <button class="btn" id="skip">überspringen</button>
+      <button class="btn danger" id="drop">aus der Liste streichen</button>
       <button class="btn" id="next">weiter →</button>
     </div>
     <div class="grid" id="grid">${tiles}</div>
     <p class="hint">Klick wählt und springt weiter. Pfeiltasten bewegen den Rahmen, Enter wählt, Backspace zurück.
-       Das Jahr wird mit der Wahl gespeichert; leer heißt „nicht geprüft".</p>`;
+       Das Jahr wird mit der Wahl gespeichert; leer heißt „nicht geprüft".
+       „Überspringen" behält das Buch für später, „streichen" nimmt es dauerhaft aus der Liste und von der Startseite.</p>`;
 
   $('grid').addEventListener('click', e => {
     const t = e.target.closest('.tile');
@@ -111,6 +117,7 @@ function render() {
   $('prev').onclick = () => { state.i = Math.max(0, state.i - 1); render(); };
   $('next').onclick = () => { state.i = Math.min(state.works.length - 1, state.i + 1); render(); };
   $('skip').onclick = () => save({ skipped: true });
+  $('drop').onclick = () => save({ dropped: true });
 
   fetchYears(w).then(info => {
     const el = $('yearinfo');
@@ -138,8 +145,16 @@ async function save(extra) {
     method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
   })).json();
   if (res.error) { alert(res.error); return; }
-  w.pick = { ...(extra.skipped ? { skipped: true, coverId: '' } : { coverId: extra.coverId }), firstPublished: year };
-  state.i = Math.min(state.works.length - 1, state.i + 1);
+  if (extra.dropped) {
+    // Out of the run: drop it from the list and stay put, which now shows the
+    // next work. The entry itself is kept on disk so it never comes back.
+    state.works.splice(state.i, 1);
+    state.dropped += 1;
+    state.i = Math.min(state.i, state.works.length - 1);
+  } else {
+    w.pick = { ...(extra.skipped ? { skipped: true, coverId: '' } : { coverId: extra.coverId }), firstPublished: year };
+    state.i = Math.min(state.works.length - 1, state.i + 1);
+  }
   render();
 }
 

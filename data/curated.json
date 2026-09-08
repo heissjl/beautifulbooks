@@ -455,6 +455,45 @@
       "pickedAt": "2026-09-08T20:58:26.997Z"
     },
     {
+      "id": "OL857189W",
+      "title": "Effi Briest",
+      "author": "Theodor Fontane",
+      "coverId": "ol:10940634",
+      "pickedAt": "2026-09-08T20:58:41.786Z"
+    },
+    {
+      "id": "OL14867081W",
+      "title": "Buddenbrooks",
+      "author": "Thomas Mann",
+      "coverId": "ol:6514553",
+      "firstPublished": 1909,
+      "pickedAt": "2026-09-08T20:58:52.105Z"
+    },
+    {
+      "id": "OL1209288W",
+      "title": "Im Westen nichts Neues",
+      "author": "Erich Maria Remarque",
+      "coverId": "ol:12922317",
+      "firstPublished": 1928,
+      "pickedAt": "2026-09-08T20:59:13.330Z"
+    },
+    {
+      "id": "OL10834W",
+      "title": "Das Parfum",
+      "author": "Patrick Süskind",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:59:21.476Z"
+    },
+    {
+      "id": "OL14871157W",
+      "title": "Der Vorleser",
+      "author": "Bernhard Schlink",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:59:26.531Z"
+    },
+    {
       "id": "OL1095427W",
       "title": "Jane Eyre",
       "author": "Charlotte Brontë",

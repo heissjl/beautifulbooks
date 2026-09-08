@@ -62,7 +62,10 @@ export interface Pick {
   coverId: string;
   /** Checked by hand; absent means "not looked at yet". */
   firstPublished?: number;
+  /** Seen, no cover chosen — the work stays in the run and comes back. */
   skipped?: boolean;
+  /** Struck off the list: never shown again, never on the wall. */
+  dropped?: boolean;
   pickedAt: string;
 }
 
@@ -198,7 +201,9 @@ const server = createServer(async (req, res) => {
     const body = JSON.parse(Buffer.concat(chunks).toString('utf8')) as Partial<Pick> & { id?: string };
     const work = works.find(w => w.id === body.id);
     if (!work) return send(400, { error: 'unknown work' });
-    if (body.skipped) {
+    if (body.dropped) {
+      picks[work.id] = { id: work.id, title: work.title, author: work.author, coverId: '', dropped: true, pickedAt: new Date().toISOString() };
+    } else if (body.skipped) {
       picks[work.id] = { id: work.id, title: work.title, author: work.author, coverId: '', skipped: true, pickedAt: new Date().toISOString() };
     } else {
       if (!body.coverId) return send(400, { error: 'no cover' });
@@ -212,7 +217,7 @@ const server = createServer(async (req, res) => {
       };
     }
     savePicks();
-    send(200, { ok: true, done: Object.values(picks).filter(p => !p.skipped).length, total: works.length });
+    send(200, { ok: true, done: Object.values(picks).filter(p => !p.skipped && !p.dropped).length, total: works.length });
     return;
   }
 
@@ -223,7 +228,7 @@ const server = createServer(async (req, res) => {
 // request; `tsx` compiles this file as CommonJS, where top-level await is out.
 void loadExtraCovers().then(() => {
   server.listen(PORT, () => {
-    const done = Object.values(picks).filter(p => !p.skipped).length;
+    const done = Object.values(picks).filter(p => !p.skipped && !p.dropped).length;
     console.log(`curate: ${works.length} works, ${done} already picked`);
     console.log(`open http://localhost:${PORT}`);
   });

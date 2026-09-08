@@ -65,10 +65,26 @@ export const WALL_SIZE = 18;
  * the browser and React would tear it down. Order is therefore fixed until
  * the rotation has a server to come from.
  */
+/**
+ * One row of `data/curated.json`, as the tool writes it. The JSON is typed
+ * here rather than inferred: TypeScript reads the file as literals, so a flag
+ * no row carries yet — `dropped`, until the first work is struck off — would
+ * not exist on the inferred type at all.
+ */
+interface CuratedPick {
+  id: string;
+  title: string;
+  author: string;
+  coverId: string;
+  firstPublished?: number;
+  skipped?: boolean;
+  dropped?: boolean;
+}
+
 function pickedWorks(): CuratedWork[] {
   const out: CuratedWork[] = [];
-  for (const p of curatedFile.works) {
-    if (p.skipped || !p.coverId.startsWith('ol:')) continue;
+  for (const p of (curatedFile as { works: CuratedPick[] }).works) {
+    if (p.skipped || p.dropped || !p.coverId.startsWith('ol:')) continue;
     const coverId = Number(p.coverId.slice(3));
     if (!Number.isFinite(coverId) || coverId <= 0) continue;
     out.push({ id: p.id, title: p.title, author: p.author, coverId });
