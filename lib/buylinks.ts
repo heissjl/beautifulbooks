@@ -12,11 +12,14 @@
  *
  * Affiliate parameters come from environment variables per market. Without
  * them the neutral link is produced so the site works before any program
- * is approved.
+ * is approved. In hobby mode (SPEC E20) they are ignored even when set: the
+ * public site promises that no link earns anything, and a promise that
+ * depends on nobody having typed a variable is not one.
  */
 import type { BuyLink, Edition } from './model';
 import { DEFAULT_MARKET, type Market } from './market';
 import { isbn13to10 } from './normalize';
+import { commerceEnabled } from './sitemode';
 
 type Env = Record<string, string | undefined>;
 
@@ -106,8 +109,10 @@ export function retailersFor(market: Market): ReadonlyArray<Pick<Retailer, 'id' 
 export function buyLinksFor(edition: Pick<Edition, 'isbn13'>, market: Market = DEFAULT_MARKET, env: Env = process.env): BuyLink[] {
   if (!edition.isbn13) return [];
   const isbn13 = edition.isbn13;
+  // The mode is read from the same env so a test can set both at once.
+  const commerce = commerceEnabled(env.NEXT_PUBLIC_SITE_MODE);
   return RETAILERS[market].map(r => {
-    const affiliate = r.affiliateEnv ? env[r.affiliateEnv] || undefined : undefined;
+    const affiliate = commerce && r.affiliateEnv ? env[r.affiliateEnv] || undefined : undefined;
     return {
       provider: r.id,
       label: r.label,

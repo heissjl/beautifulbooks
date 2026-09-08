@@ -19,13 +19,20 @@ npm run test:run   # unit tests
 npm run build      # type-check and production build
 ```
 
-No environment variables are required for local development; without them the app runs on Open Library alone. Optional variables, put them in `.env.local` (git-ignored):
+Copy `.env.example` to `.env.local` (git-ignored) and fill in what you have. Without any of it the app runs on Open Library alone, except that the legal pages (`/contact`, `/privacy`) refuse to render until the `IMPRINT_*` values are set — a legal notice with blank lines is worse than an error.
 
 | Variable | Purpose |
 |---|---|
-| `GOOGLE_BOOKS_API_KEY` | Enables Google Books as a cover source. Without a key the shared anonymous quota is used, which is exhausted most of the time (HTTP 429). |
-| `AFFILIATE_AMAZON_TAG_US`, `_UK`, `_DE`, `AFFILIATE_BOOKSHOP_ID_US`, `_UK` | Affiliate parameters for purchase links, per market (SPEC.md §2.4, ROADMAP.md phase 4). |
+| `GOOGLE_BOOKS_API_KEY` | Enables Google Books as a cover source. Without a key the shared anonymous quota is used, which is exhausted most of the time (HTTP 429). Use a second key for development so a working session cannot spend the production quota (ROADMAP.md 0.2). |
+| `NEXT_PUBLIC_SITE_URL` | Absolute origin of the deployment for canonical URLs, sitemap and Open Graph image. |
+| `NEXT_PUBLIC_SITE_MODE` | `hobby` (default when unset) or `shop`, see below. Any other value fails the build. |
+| `IMPRINT_NAME`, `IMPRINT_STREET`, `IMPRINT_CITY`, `IMPRINT_EMAIL` | Name, address and e-mail for the legal notice and the privacy notice. Read on the server only; never in the repository. |
+| `AFFILIATE_AMAZON_TAG_US`, `_UK`, `_DE`, `AFFILIATE_BOOKSHOP_ID_US`, `_UK` | Affiliate parameters for purchase links, per market (SPEC.md §2.4, ROADMAP.md phase 4). Ignored unless `NEXT_PUBLIC_SITE_MODE=shop`. |
 | `DEBUG` | Any value enables request logging in `lib/`. |
+
+### Hobby and shop mode
+
+The public site runs in **hobby mode** (SPEC.md E20, `docs/plans/PLAN-2-mvp-hobby.md`): the retailer links are there but neutral — affiliate variables are ignored even if set — the availability check is off, and no page says a link can earn anything. **Shop mode** turns those on; it runs locally or on a preview deployment until the full legal notice and a commercial hosting plan are in place. One code, one variable; `main` is production and is hobby.
 
 ### Getting a Google Books API key
 

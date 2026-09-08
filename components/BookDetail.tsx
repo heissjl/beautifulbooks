@@ -21,6 +21,7 @@ import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { VERDICT_LEAD } from '@/lib/verdicts';
+import { commerceEnabled } from '@/lib/sitemode';
 import type { ShopStatus } from '@/lib/availability';
 import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
@@ -631,7 +632,8 @@ function BuyBlock({ edition, hint, verdict, market, onMarketChange }: {
                   // Through our own redirect, which counts the click (SPEC §10 C9).
                   href={edition.isbn13 ? trackedBuyHref(link.provider, edition.isbn13, market) : link.url}
                   target="_blank"
-                  rel="noopener noreferrer sponsored"
+                  // `sponsored` states a paid relationship; in hobby mode there is none (E20).
+                  rel={commerceEnabled() ? 'noopener noreferrer sponsored' : 'noopener noreferrer'}
                   className="btn"
                   title={status
                     ? SHOP_STATUS_TITLE[status]
@@ -647,7 +649,8 @@ function BuyBlock({ edition, hint, verdict, market, onMarketChange }: {
               );
             })}
           </div>
-          {edition.isbn13 && (
+          {/* Off in hobby mode (E20): the probe is not cleared for the public site (ROADMAP 0.1). */}
+          {commerceEnabled() && edition.isbn13 && (
             <AvailabilityCheck
               isbn13={edition.isbn13}
               checked={!!shops}

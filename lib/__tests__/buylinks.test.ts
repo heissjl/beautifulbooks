@@ -40,10 +40,23 @@ describe('buyLinksFor per market', () => {
   const amazon = (market: 'us' | 'uk' | 'de', env: Record<string, string | undefined> = {}) =>
     buyLinksFor(isbn, market, env).find(l => l.provider === 'amazon')!.url;
 
-  it('links straight to the Amazon product page on the market domain, with the market tag', () => {
+  const shop = { NEXT_PUBLIC_SITE_MODE: 'shop' };
+
+  it('links straight to the Amazon product page on the market domain, with the market tag in shop mode', () => {
     expect(amazon('us')).toBe('https://www.amazon.com/dp/0684824779');
     expect(amazon('uk')).toBe('https://www.amazon.co.uk/dp/0684824779');
-    expect(amazon('de', { AFFILIATE_AMAZON_TAG_DE: 'bb-21', AFFILIATE_AMAZON_TAG_US: 'wrong' })).toBe('https://www.amazon.de/dp/0684824779?tag=bb-21');
+    expect(amazon('de', { ...shop, AFFILIATE_AMAZON_TAG_DE: 'bb-21', AFFILIATE_AMAZON_TAG_US: 'wrong' })).toBe('https://www.amazon.de/dp/0684824779?tag=bb-21');
+  });
+  it('ignores affiliate variables in hobby mode, set or not (E20)', () => {
+    const env = { AFFILIATE_AMAZON_TAG_DE: 'bb-21', AFFILIATE_BOOKSHOP_ID_US: 'shop1', AFFILIATE_BOOKSHOP_ID_UK: 'shop1' };
+    for (const mode of [undefined, '', 'hobby']) {
+      for (const market of ['us', 'uk', 'de'] as const) {
+        for (const link of buyLinksFor(isbn, market, { ...env, NEXT_PUBLIC_SITE_MODE: mode })) {
+          expect(link.url, `${market} ${link.provider}`).not.toMatch(/[?&]tag=|\/a\//);
+        }
+      }
+    }
+    expect(buyLinksFor(isbn, 'us', { ...env, NEXT_PUBLIC_SITE_MODE: 'shop' })[0].url).toContain('/a/shop1/');
   });
   it('falls back to a books-only search for 979 ISBNs', () => {
     expect(buyLinksFor({ isbn13: '9798472370790' }, 'us', {}).find(l => l.provider === 'amazon')!.url)
@@ -57,7 +70,7 @@ describe('buyLinksFor per market', () => {
   });
   it('uses the Bookshop affiliate storefront only when configured', () => {
     expect(buyLinksFor(isbn, 'uk', {})[0].url).toBe('https://uk.bookshop.org/search?keywords=9780684824772');
-    expect(buyLinksFor(isbn, 'uk', { AFFILIATE_BOOKSHOP_ID_UK: 'shop1' })[0].url).toBe('https://uk.bookshop.org/a/shop1/9780684824772');
+    expect(buyLinksFor(isbn, 'uk', { ...shop, AFFILIATE_BOOKSHOP_ID_UK: 'shop1' })[0].url).toBe('https://uk.bookshop.org/a/shop1/9780684824772');
   });
   it('returns no buy links without an ISBN', () => {
     expect(buyLinksFor({ isbn13: undefined })).toEqual([]);
@@ -96,7 +109,7 @@ describe('link kind (SPEC §9.3 step 16)', () => {
   it('marks Bookshop as a product only once an affiliate id makes it one', () => {
     const without = buyLinksFor({ isbn13: '9780307388629' }, 'us', {}).find(l => l.provider === 'bookshop');
     expect(without).toMatchObject({ kind: 'search' });
-    const with_ = buyLinksFor({ isbn13: '9780307388629' }, 'us', { AFFILIATE_BOOKSHOP_ID_US: '12345' }).find(l => l.provider === 'bookshop');
+    const with_ = buyLinksFor({ isbn13: '9780307388629' }, 'us', { NEXT_PUBLIC_SITE_MODE: 'shop', AFFILIATE_BOOKSHOP_ID_US: '12345' }).find(l => l.provider === 'bookshop');
     expect(with_).toMatchObject({ kind: 'product' });
   });
 

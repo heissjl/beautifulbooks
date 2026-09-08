@@ -13,6 +13,14 @@ import { rateLimited } from '@/app/api/rate';
  * Only the 200 carries a cache header — an outage cached for an hour would go
  * on telling every visitor that the book does not exist.
  */
+/*
+  Worst case since ROADMAP 1.10: two attempts at Open Library, 20 s in all.
+  A platform limit below that would turn a slow but valid answer into an
+  error — the failure the 12 s cap in F3.3 was meant to avoid. Read the
+  plan's limit in the dashboard before trusting this (ROADMAP 2.1).
+*/
+export const maxDuration = 30;
+
 export async function GET(request: NextRequest) {
   const limited = rateLimited(request, 'search', 'google');
   if (limited) return limited;

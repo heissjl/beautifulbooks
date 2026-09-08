@@ -4,6 +4,7 @@ import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import { VERDICT_LEAD, VERDICT_MEANING, VERDICT_ORDER } from '@/lib/verdicts';
 import { indexBuiltAt, indexSize } from '@/lib/coverindex';
+import { commerceEnabled } from '@/lib/sitemode';
 
 /**
  * What the site knows, what it does not, and what its judgements mean
@@ -142,14 +143,29 @@ export default function AboutPage() {
         </Section>
 
         <Section title="Buy links, commission and counting">
-          <p>
-            Some links can earn a commission. The order of the shops is not sorted by what they pay,
-            and no shop pays to appear.
-          </p>
+          {/*
+            Hobby mode (E20): the public site carries neutral links and says
+            so. The shop-mode paragraph is the one Phase 4 will need, kept
+            here so the two never drift apart.
+          */}
+          {commerceEnabled() ? (
+            <p>
+              Some links can earn a commission. The order of the shops is not sorted by what they pay,
+              and no shop pays to appear.
+            </p>
+          ) : (
+            <p>
+              No link on this site earns anything: there are no affiliate parameters, no advertising
+              and no paid placement. The shops are listed because they are where a printed book can be
+              found, in an order that is not sorted by anyone&rsquo;s interest, and no shop pays to appear.
+            </p>
+          )}
           <p>
             A click on a buy link passes through this site so it can be counted. Recorded are the
             shop, the market, the ISBN and the time &mdash; nothing about you. No cookie, no address,
-            no identifier, nothing that could be traced back to a person.
+            no identifier, nothing that could be traced back to a person. The{' '}
+            <Link href="/privacy" className="underline underline-offset-2 hover:text-accent">privacy notice</Link>{' '}
+            lists everything else the site does with data, which is little.
           </p>
         </Section>
 
