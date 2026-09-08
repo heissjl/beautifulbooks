@@ -1001,3 +1001,15 @@ Antwortzeiten der statischen Seiten 0,33–0,72 s; die Suche nach *1984* kam vol
 **Die Region ließ sich nicht im ersten Anlauf umstellen, und das Dashboard sagte nicht, warum.** Frankfurt anzuhaken genügt nicht: Vercel hält die alte Region (`iad1`) angehakt, der Hobby-Plan erlaubt aber **eine**, und der Speichern-Knopf bleibt deshalb stumm ausgegraut — ohne Fehlermeldung, nur mit dem allgemeinen Hinweis „limited to 1" weiter unten. Erst das Abwählen von Washington machte ihn klickbar. Der erste Versuch sah aus wie ein Erfolg (der Knopf war ausgegraut, was hier „nichts zu speichern" hieß und nicht „gespeichert"), und die Kontrolle, die es aufdeckte, war der Antwort-Header der laufenden Seite: `x-vercel-id: fra1::iad1::…` — der erste Teil ist der Eingangsknoten, der zweite die Region, in der die Funktion wirklich lief. **Diese Zeile ist die Prüfung, nicht das Häkchen im Dashboard.**
 
 **Beim Einrichten hat sich noch dies gezeigt:** Vercel liest `.env.example` und legt alle zwölf Schlüssel als leere Variablen an — die fünf `AFFILIATE_*` wurden entfernt statt leer gelassen, damit im Hobby-Modus gar nichts danebenliegen kann. Die Laufzeitgrenze ist unkritisch (Hobby 300 s je Funktion gegen 20 s im schlechtesten Fall der Suche). Und der Import zeigt nur Repositories, für die die GitHub-App freigegeben ist; `beautifulbooks` musste erst in den App-Rechten ergänzt werden.
+
+**Nach der Umstellung auf Frankfurt gemessen** (2026-09-08, spät):
+
+| | |
+|---|---|
+| Statische Seiten | 0,24–0,49 s |
+| Suche, kalt | *ansichten böll* 1,2 s, *beloved* 1,1 s, *wolf hall* 13,4 s (dort griff die Wiederholung aus 1.10) |
+| Unbekannte Work-ID | **fünf von fünf mit 404**, 1,6 bis 9,3 s |
+
+**Ein sechster Versuch antwortete allerdings mit 200 nach 20,6 s**, und das ist kein Fehler, sondern die Regel aus 1.7 bei der Arbeit: schweigt der Katalog, wird die Seite gerendert, weil ein Ausfall keine Abwesenheit ist. In diesem Moment brauchte Open Library für dasselbe Werkdokument direkt gemessen 13,3 s. **Der Preis ist ein Soft-404 während einer Ausfall-Episode** — Google sieht dann eine 200 für eine Seite, die es nicht gibt. Kein Anlass, die Regel umzudrehen (die Alternative wäre, jede langsame Antwort zu einem 404 zu erklären, und das wäre die schlimmere Lüge), aber es gehört gemessen und nicht angenommen.
+
+**Böll in Produktion, der Testfall aus 6.15:** die Suche „ansichten boell" liefert **4 Karten statt 6**, und *Ansichten eines Clowns* trägt jetzt **16 Ausgaben statt 14** — die Methuen-Schulausgabe ist in die Karte des Romans gefallen, wie Schritt 1 es vorsah. Übrig bleiben die drei Übersetzungen als eigene Karten; das ist Schritt 3 und ausdrücklich offen.

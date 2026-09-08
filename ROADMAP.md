@@ -301,6 +301,8 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
   | OG-Bild | 200, PNG, 914 KB |
   | robots.txt | sperrt `/api/` und `/go/` |
 
+  **Nach der Umstellung auf Frankfurt nachgemessen:** statische Seiten 0,24–0,49 s; kalte Suchen 1,1–1,2 s, einmal 13,4 s mit greifender Wiederholung; unbekannte Work-ID fünf von fünf mit 404 (1,6–9,3 s), ein sechster Versuch aber **200 nach 20,6 s**, weil Open Library gerade schwieg — der von 1.7 gewollte Soft-404 während einer Ausfall-Episode, gemessen und in der [Historie](docs/history.md) begründet. Der Böll-Testfall aus 6.15 liefert live **4 Karten statt 6**.
+
   **Offen:** das OG-Bild in einem Messenger ansehen; abends den Google-Verbrauch in der Cloud-Konsole ablesen und in die Historie schreiben; Enter im Suchfeld am echten Gerät (0.8); und nach dem nächsten Deploy prüfen, dass Canonical und Sitemap die richtige Adresse tragen und Analytics zählt.
 
 ---
@@ -544,7 +546,7 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   **Das widerspricht E16**, wo festgehalten ist, dass ein Cover nie gelöscht wird, weil es leer aussieht, sondern nur ans Ende sortiert — ein Fehlurteil soll eine Position kosten, kein Cover. Das Falten tut aus einem anderen Grund genau das, was E16 verbietet. Falten bleibt auf der Wand richtig (sonst besteht Gatsby aus 293 fast gleichen Kacheln), aber es muss umkehrbar sein: das „+N" anklickbar machen, oder die Seitenleiste zeigt die gefalteten Fassungen als kleine Kacheln unter dem gewählten Cover — dieselbe Bauform wie „Looks like this". Ein bis zwei Stunden.
 
-- [ ] **6.15 Fünf von sechs Karten sind dasselbe Buch. [Testfall „ansichten böll"]** *Schritt 1 und 2 erledigt 2026-09-08 auf `mvp-hobby` ([Historie](docs/history.md)): Klammerzusätze am Titelende fallen weg, der Autoren-Key führt zusammen — und trennt ausdrücklich nicht, weil Open Library Reed unter zwei Keys führt und die Trennung Mumbo Jumbo gespalten hätte. Offen: Schritt 3, die Stichprobe zu Übersetzungen.* (Julian, 2026-09-08: „von 5 Ergebnissen sind 4 das richtige Buch, nur in einer anderen Sprache, das sollte so auch nicht passieren.") **Das widerspricht der Spec ausdrücklich**: §2.1 sagt, Sprache sei kein Teil der Werk-Identität und Übersetzungen seien Ausgaben desselben Werks. Die Umsetzung hält das nicht ein.
+- [ ] **6.15 Fünf von sechs Karten sind dasselbe Buch. [Testfall „ansichten böll"]** *In Produktion am 2026-09-08 nachgemessen: **4 Karten statt 6**, der Roman trägt 16 statt 14 Ausgaben. Schritt 1 und 2 erledigt auf `mvp-hobby` ([Historie](docs/history.md)): Klammerzusätze am Titelende fallen weg, der Autoren-Key führt zusammen — und trennt ausdrücklich nicht, weil Open Library Reed unter zwei Keys führt und die Trennung Mumbo Jumbo gespalten hätte. Offen: Schritt 3, die Stichprobe zu Übersetzungen.* (Julian, 2026-09-08: „von 5 Ergebnissen sind 4 das richtige Buch, nur in einer anderen Sprache, das sollte so auch nicht passieren.") **Das widerspricht der Spec ausdrücklich**: §2.1 sagt, Sprache sei kein Teil der Werk-Identität und Übersetzungen seien Ausgaben desselben Werks. Die Umsetzung hält das nicht ein.
 
   **Gemessen am 2026-09-08**, Suche „ansichten böll", sechs Karten:
 
