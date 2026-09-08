@@ -822,3 +822,17 @@ Vorher am **Fuß der Seitenleiste**, hinter Metadaten, Kauf-Links und Suchwegen 
 Der Preis dafür ist ehrlich zu nennen: die Reihe schiebt die Kauf-Links nach unten, die ohnehin zu weit unten stehen (1.2). Deshalb **drei Kacheln statt sechs und kein erklärender Absatz** — und weil sie nur bei etwa jedem sechsten Cover erscheint, ändert sich in fünf von sechs Fällen gar nichts.
 
 Die Erklärung steht stattdessen auf der **About-Seite**, wie PLAN-speicher §3.5 es verlangt: was gemessen wird, dass **kein Bild gespeichert wird, nur Zahlen**, dass die Prüfung absichtlich schwer zu bestehen ist, und **wann der Index gebaut wurde**. Die Zahlen dort kommen aus dem Index selbst, nicht aus dem Text, und veralten damit nicht.
+
+---
+
+## 2026-09-08 · Warum ein Cover auf der Karte steht, aber nicht auf der Wand (Testfall Böll)
+
+Julian: „Ansichten eines Clowns ist ein Testcase, wo Cover im Vorschau-Mosaik auftauchen, aber dann nicht in der Anzeige." Nachgemessen an OL279833W.
+
+**Die Karte** zeigt vier Kacheln: dtv 1984, dtv 1967, Kiepenheuer & Witsch 2002, Reclam 1998. **Die Wand** zeigt fünf Cover, und die zweite Kachel ist keines davon: `ol:12587579` (dtv 1967) wird beim Falten in `ol:10527677` (dtv 1984) hineingezogen, Hamming-Distanz **6**. Sie ist nicht verloren — sie steckt im „+1" der ersten Kachel — aber wer die Karte gesehen hat, sucht ein Bild, das auf der Wand keine eigene Kachel mehr hat.
+
+**Die Ursache ist nicht ein Fehler, sondern zwei Regeln für dieselbe Frage.** Die Karte fasst nach *Verlag und Jahr* zusammen (`coverImages`), die Wand nach *Bild* (`foldDuplicateCovers`). Zwei Scans derselben dtv-Gestaltung, siebzehn Jahre auseinander neu aufgelegt, sind für die Metadaten zwei Drucke und für das Auge einer.
+
+**Die Wand hat recht.** Und die Grenze ist enger, als SPEC F4 sie bisher beschrieb: dort stand, zwei *Verlage* mit einer lizenzierten Gestaltung blieben nebeneinander. Es reicht schon **ein** Verlag mit zwei Jahreszahlen.
+
+Aufgenommen als ROADMAP 6.13 mit drei Wegen: nur bei gleichem Verlag zusätzlich hashen (billig, behebt den Fall), den gebauten Index fragen (umsonst, aber nur für die 100 indizierten Werke — Böll gehört nicht dazu), oder es auf der Karte benennen. Der Spiegelfall zu 6.7, wo die Wand zu wenig faltet.

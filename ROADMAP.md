@@ -382,6 +382,26 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   **Was jetzt daran hängt und billiger geworden ist:** 6.9 (mehr von diesem Autor) und 5.1 (die Sitemap-Liste) lesen denselben Index nur anders; `data/index-works.json` mit den 50 Werken ist der erste Zuschnitt der Liste aus 5.1.
 
+- [ ] **6.13 Karte und Wand zählen Cover verschieden. [Testfall *Ansichten eines Clowns*]** (Julian, 2026-09-08: „cover tauchen im Vorschau-Mosaik auf, aber dann nicht in der Anzeige".) Gemessen am selben Tag, und die Ursache ist sauber zu benennen.
+
+  **Der Befund.** Die Karte für *Ansichten eines Clowns* (OL279833W) zeigt vier Kacheln: dtv 1984, dtv 1967, Kiepenheuer & Witsch 2002, Reclam 1998. Die Detailseite zeigt fünf Cover — und **die zweite Kachel ist keine davon**. `ol:12587579` (dtv 1967) wird beim Falten in `ol:10527677` (dtv 1984) hineingezogen, **Hamming-Distanz 6**. Verloren ist sie nicht, sie steckt im „+1" auf der ersten Kachel; aber wer die Karte gesehen hat, sucht auf der Wand nach einem Bild, das dort keine eigene Kachel mehr hat.
+
+  **Die Ursache: zwei Oberflächen, zwei Regeln für dieselbe Frage.**
+
+  | | Regel | Ergebnis hier |
+  |---|---|---|
+  | Karte (`?summary=1`, `coverImages`) | ein Cover je **Druck**, erkannt an Verlag + Jahr | dtv 1967 ≠ dtv 1984 → zwei Kacheln |
+  | Wand (`foldDuplicateCovers`) | ein Cover je **Bild**, erkannt am Hash | Distanz 6 ≤ 8 → eine Kachel |
+
+  **Die Wand hat recht, die Karte irrt.** Es sind zwei Scans derselben dtv-Gestaltung, siebzehn Jahre auseinander neu aufgelegt — genau der Fall, den eine Regel aus Verlag und Jahr nicht sehen kann. Das ist dieselbe Grenze, die in SPEC F4 schon steht, nur schärfer: dort war von zwei Verlagen mit einer lizenzierten Gestaltung die Rede, hier reicht **ein** Verlag und ein anderes Jahr.
+
+  **Drei Wege, in der Reihenfolge, wie ich sie empfehlen würde:**
+  1. **Nur bei Verdacht hashen.** Wenn zwei Kandidaten denselben Verlag tragen, die Bilder dieser beiden vergleichen, sonst nicht. Für Böll wären das zwei zusätzliche Bildabrufe je Karte, meistens null. Behebt den Fall vollständig und bleibt beim Kostenargument, das den Kurzpfad überhaupt hash-frei gemacht hat.
+  2. **Den gebauten Index fragen** (6.10). Für indizierte Werke liegen die Hashes bereits als Datei vor, das Falten wäre dort umsonst. Böll gehört heute nicht zu den 100, hilft also erst, wenn die Liste wächst — aber es ist der saubere Weg für alles, was drin ist.
+  3. **Nichts tun und es benennen.** Die Karte sagt nirgends, dass ihre vier Kacheln vier verschiedene Gestaltungen sind. Das ist die billigste Lösung und die schlechteste, weil sie den Leser mit der Verwirrung allein lässt.
+
+  **Als Testfall festhalten:** OL279833W muss nach jeder Änderung an einer der beiden Regeln geprüft werden — Karte und Wand müssen dieselbe Zahl unterschiedlicher Gestaltungen zeigen. Verwandt mit 6.7 (dort faltet die Wand zu wenig), aber der Spiegelfall: hier faltet die Karte zu wenig.
+
 - [ ] **6.11 Goodreads: was geht, was nicht.** (Julian, 2026-09-07: bessere Anbindung, Editionsdaten, Rezensionen, Bewertungen.) Recherchiert am selben Tag, und die Antwort fällt klarer aus als erhofft.
 
   **Eine Schnittstelle gibt es nicht mehr.** Goodreads gibt seit dem 8. Dezember 2020 keine neuen Entwicklerschlüssel aus und hat die öffentliche API zurückgezogen. Was es gibt, sind Scraper von Dritten — die aber genau das tun, was die Nutzungsbedingungen untersagen.
