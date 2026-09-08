@@ -193,6 +193,25 @@ export const RANK_BASE = 100;
 /** An edition count this many times larger marks the other work as the original. */
 export const DERIVATIVE_EDITION_RATIO = 10;
 
+/**
+ * How many times more editions the other work needs before a work carrying its
+ * title is treated as being *about* it (SPEC §3 F1.4, ROADMAP 6.1).
+ *
+ * **Read off data on 2026-09-08, not chosen.** Over fifteen searches, the ratio
+ * against the work whose title they carry:
+ *
+ *   must be caught: Katz's translator record of *Crime and Punishment* 65x,
+ *   Matterson's Penguin critical study of *The Great Gatsby* 400x, Kemp's stage
+ *   version of *The Master and Margarita* 117x, Bloom on *The Bell Jar* 177x
+ *   must be spared: Randall Kennedy's *Sellout* 16x and Lars Mytting's
+ *   *Norwegian Wood* 12x, both books of their own that happen to share a title
+ *
+ * So the window is 17 to 65, and 30 sits inside it with better than a factor of
+ * two to either edge. Below 17 real books start falling, above 65 the
+ * translator record survives.
+ */
+export const SAME_TITLE_EDITION_RATIO = 30;
+
 /** Context a work is ranked in: its competitors decide what "popular" means here. */
 export interface RankContext {
   /** log2 of the highest reading-list count in the result set. */
@@ -221,23 +240,81 @@ export function rankContext(works: readonly WorkSummary[]): RankContext {
  */
 export function derivativeIds(works: readonly WorkSummary[]): Set<string> {
   const out = new Set<string>();
+  // Two identities per author, because neither alone is enough. The name is
+  // all there is when a record carries no keys; the Open Library key survives
+  // a different transliteration, and that decides a real case: the translator
+  // record of *Crime and Punishment* lists Dostoevsky second as `OL22242A`,
+  // the same key as the 1,179-edition work, while his name is spelled
+  // "Fyodor Dostoevsky" there and "Fiódor Dostoievski" on the work.
   const primaries = new Map<string, number>();
   for (const w of works) {
-    const key = authorMatchKey(w.authors[0] ?? '');
-    if (key) primaries.set(key, Math.max(primaries.get(key) ?? 0, w.editionCount ?? 0));
+    const editions = w.editionCount ?? 0;
+    for (const id of [authorMatchKey(w.authors[0] ?? ''), w.authorKeys?.[0]]) {
+      if (id) primaries.set(id, Math.max(primaries.get(id) ?? 0, editions));
+    }
   }
+  // Normalized title padded with spaces, so containment lands on whole words:
+  // a work called "It" must not match every title with "it" inside a word.
+  const titled = works.map(w => ({
+    words: ` ${normalizeTitle(w.title)} `,
+    editions: w.editionCount ?? 0,
+    author: authorMatchKey(w.authors[0] ?? ''),
+  }));
+
   for (const w of works) {
     if (MARKED_DERIVATIVE.test(w.title)) { out.add(w.id); continue; }
     const mine = w.editionCount ?? 0;
-    for (const author of w.authors.slice(1)) {
-      const biggest = primaries.get(authorMatchKey(author));
+    let isDerivative = false;
+    const laterAuthors = [
+      ...w.authors.slice(1).map(authorMatchKey),
+      ...(w.authorKeys?.slice(1) ?? []),
+    ];
+    for (const id of laterAuthors) {
+      const biggest = id ? primaries.get(id) : undefined;
       if (biggest !== undefined && biggest >= Math.max(1, mine) * DERIVATIVE_EDITION_RATIO) {
-        out.add(w.id);
+        isDerivative = true;
         break;
       }
     }
+    if (!isDerivative) isDerivative = carriesAnotherWorksTitle(w, titled);
+    if (isDerivative) out.add(w.id);
   }
   return out;
+}
+
+/**
+ * A work that carries a far larger work's title and belongs to somebody else
+ * is a book *about* that work, not that work (ROADMAP 6.1).
+ *
+ * This is the case the author rule above cannot see, because a critical study
+ * lists only its own author: "The Great Gatsby" by Stephen Matterson, three
+ * editions against Fitzgerald's 1,199, sat at position 2 on 2026-09-07.
+ *
+ * **Two guards, and both are load-bearing.** The primary author must differ, or
+ * the rule would bury Kafka's German *Die Verwandlung* (9 editions) under the
+ * English *Metamorphosis* (955) and Bulgakov's own Russian record under his
+ * translations — measured, both survive because the author matches. And the
+ * edition ratio must clear SAME_TITLE_EDITION_RATIO, or a book that merely
+ * shares a title with a famous one would fall.
+ *
+ * It errs in one direction, knowingly: an obscure book with a famous title
+ * loses places to the famous one. That costs a position and hides nothing
+ * (E16), and the reader who typed the famous title wanted that order anyway.
+ */
+function carriesAnotherWorksTitle(
+  work: WorkSummary,
+  titled: ReadonlyArray<{ words: string; editions: number; author: string }>,
+): boolean {
+  const mine = ` ${normalizeTitle(work.title)} `;
+  const editions = work.editionCount ?? 0;
+  const author = authorMatchKey(work.authors[0] ?? '');
+  // The work itself never matches: it shares its own author key.
+  return titled.some(other =>
+    other.author !== author
+    && other.words.trim().length > 0
+    && mine.includes(other.words)
+    && other.editions >= Math.max(1, editions) * SAME_TITLE_EDITION_RATIO,
+  );
 }
 
 /**

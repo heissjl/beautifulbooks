@@ -175,6 +175,74 @@ describe('derivativeIds', () => {
     ];
     expect([...derivativeIds(list)].sort()).toEqual(['adapt', 'graphic']);
   });
+
+  // ROADMAP 6.1, all five with the edition counts measured on 2026-09-08.
+  it('marks a study that carries the title of a far larger work', () => {
+    const list = [
+      work({ id: 'novel', title: 'The Great Gatsby', authors: ['F. Scott Fitzgerald'], editionCount: 1199 }),
+      work({ id: 'study', title: 'The Great Gatsby', authors: ['Stephen Matterson'], editionCount: 3 }),
+      work({ id: 'about', title: "F. Scott Fitzgerald's the great Gatsby", authors: ['John W. Campbell'], editionCount: 2 }),
+    ];
+    expect([...derivativeIds(list)].sort()).toEqual(['about', 'study']);
+  });
+
+  it('spares a book of its own that happens to share a title', () => {
+    // Lars Mytting's Norwegian Wood is about firewood, not about Murakami:
+    // five editions against sixty is a twelfth, far under the ratio.
+    const list = [
+      work({ id: 'murakami', title: 'Norwegian Wood', authors: ['Haruki Murakami'], editionCount: 60 }),
+      work({ id: 'mytting', title: 'Norwegian Wood', authors: ['Lars Mytting'], editionCount: 5 }),
+      work({ id: 'kennedy', title: 'Sellout', authors: ['Randall Kennedy'], editionCount: 2 }),
+      work({ id: 'beatty', title: 'The Sellout', authors: ['Paul Beatty'], editionCount: 10 }),
+    ];
+    expect(derivativeIds(list).size).toBe(0);
+  });
+
+  it('spares the same author writing under another title, however small the record', () => {
+    // Kafka's German original has nine editions against 955 for the English
+    // Metamorphosis. Only the matching author name keeps it off the pile.
+    const list = [
+      work({ id: 'en', title: 'Metamorphosis', authors: ['Franz Kafka'], editionCount: 955 }),
+      work({ id: 'de', title: 'Die Verwandlung', authors: ['Franz Kafka'], editionCount: 9 }),
+      work({ id: 'about', title: 'Franz Kafka, Die Verwandlung', authors: ['Peter U. Beicken'], editionCount: 2 }),
+    ];
+    expect(derivativeIds(list).has('de')).toBe(false);
+  });
+
+  it('recognises the same author under a different transliteration by key', () => {
+    // The translator record of Crime and Punishment lists Dostoevsky second
+    // and spells him differently from the work it derives from; only the
+    // Open Library key ties the two together.
+    const list = [
+      work({
+        id: 'work', title: 'Преступление и наказание', authors: ['Fiódor Dostoievski'],
+        authorKeys: ['OL22242A'], editionCount: 1179,
+      }),
+      work({
+        id: 'translator', title: 'Crime and Punishment', authors: ['Michael R. Katz', 'Fyodor Dostoevsky'],
+        authorKeys: ['OL1350915A', 'OL22242A'], editionCount: 18,
+      }),
+      work({
+        id: 'english', title: 'Crime and Punishment', authors: ['Fyodor Dostoevsky'],
+        authorKeys: ['OL16224933A'], editionCount: 19,
+      }),
+    ];
+    const ids = derivativeIds(list);
+    expect(ids.has('translator')).toBe(true);
+    // The author's own English record has one key and no second author: it
+    // must survive, or the fix would bury the edition it was meant to raise.
+    expect(ids.has('english')).toBe(false);
+  });
+
+  it('marks a stage version filed under the novelist himself', () => {
+    // Alice in Wonderland in Five Acts, one edition, stood first for
+    // `alice in wonderland` above Carroll's own 3,547.
+    const list = [
+      work({ id: 'novel', title: "Alice's Adventures in Wonderland", authors: ['Lewis Carroll'], editionCount: 3547 }),
+      work({ id: 'play', title: 'Alice in Wonderland in Five Acts', authors: ['Lewis Carroll'], editionCount: 1 }),
+    ];
+    expect([...derivativeIds(list)]).toEqual(['play']);
+  });
 });
 
 describe('rankWorks stability', () => {

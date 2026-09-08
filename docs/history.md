@@ -925,3 +925,40 @@ Es heißt: **die Ausfallquote von Open Library ist keine Quote, sondern eine Fol
 Für **ROADMAP 0.10** — die Frage nach einem eigenen Datenbestand — ist das die wichtigere Erkenntnis: „Ausfallquote der Quellen" ist dort eine der drei Zahlen, nach denen entschieden werden soll, und sie lässt sich in einer Sitzung nicht ermitteln. Sie braucht die Woche echter Besucher aus Phase 3. Die drei Messungen zusammen — 4/14, 3/4, 0/80 — sind das Argument dafür, in Phase 3 pro Tag zu messen und nicht pro Sitzung.
 
 Nebenbefund fürs Deployment: der schlechteste Fall der Suche liegt jetzt bei 20 s. Ob die Serverless-Funktion so lange laufen darf, ist bei Phase 2 zu prüfen und steht dort als Zeile in 2.1.
+
+---
+
+## 2026-09-08 · Vier Regeln gegen gleichnamige Ableitungen (ROADMAP 6.1)
+
+Julian: „mache mit 6.1 weiter."
+
+**Gemessen zuerst, gebaut danach.** Fünfzehn Suchen — die vier aus dem Durchklick, die falsch lagen, die zehn, die richtig lagen, und *norwegian wood* als Gegenprobe — mit allen Signalen, die eine Regel benutzen könnte: Ausgabenzahl, Leserzahl, Position bei Open Library, Titelverhältnis zur Anfrage. Das Ergebnis widerlegte gleich zwei Annahmen aus dem Roadmap-Punkt.
+
+**Erstens: die Leserzahl trennt nicht.** *Alice in Wonderland in Five Acts* hat **eine** Ausgabe gegen Carrolls 3.547, aber 1.010 Leser gegen 2.307 — nur Faktor zwei. Wer nach Popularität sortiert, findet die Bühnenfassung nicht. Nur die Ausgabenzahl zeigt den Unterschied, und zwar mit Faktor 3.547.
+
+**Zweitens: der Autorenschlüssel schützt bei Dostojewski genau den falschen Datensatz.** Die Vermutung war, Open Librarys `author_key` sei die verlässlichere Identität als der Name. Gemessen bei `crime and punishment`:
+
+| Platz | Ausgaben | Autorenschlüssel | Was es ist |
+|---|---|---|---|
+| 1 | 1.179 | `OL22242A` | Der Roman, unter «Преступление и наказание» |
+| 2 | 18 | `OL1350915A`, **`OL22242A`** | Der Übersetzer-Datensatz von Michael R. Katz |
+| 7 | 19 | `OL16224933A` | Dostojewskis eigener englischer Datensatz |
+
+Derselbe Mensch trägt zwei Schlüssel, und der Datensatz, der weg sollte, teilt seinen Schlüssel mit dem Roman, während der, der bleiben sollte, es nicht tut. Als *Schutz* ist der Schlüssel damit unbrauchbar. Als *Fund* ist er genau richtig: die bestehende Regel „ein Zweitautor ist Erstautor eines viel größeren Werks" scheiterte hier nur an der Transkription — „Fyodor Dostoevsky" auf dem einen, „Fiódor Dostoievski" auf dem anderen. Sie vergleicht jetzt Namen **und** Schlüssel, und damit fällt Katz und Dostojewskis englischer Datensatz steigt von Platz 7 auf Platz 5.
+
+**Die Schwelle wurde abgelesen, nicht gewählt.** Ausgabenverhältnis zum gleichnamigen größeren Werk:
+
+| Muss fallen | | Muss bleiben | |
+|---|---|---|---|
+| Katz, *Crime and Punishment* | 65x | Randall Kennedy, *Sellout* | 16x |
+| Kemp, Bühnenfassung *Master and Margarita* | 117x | Lars Mytting, *Norwegian Wood* | 12x |
+| Bloom über *The Bell Jar* | 177x | | |
+| Matterson, Penguin-Studie *Great Gatsby* | 400x | | |
+
+Fenster 17 bis 65, gewählt 30, Abstand besser als Faktor zwei nach beiden Seiten. Der Roadmap-Punkt hatte 25 bis 50 geschätzt; die Messung bestätigt die Größenordnung und engt sie ein.
+
+**Das Ergebnis über alle fünfzehn Suchen: sieben verbessert, acht unverändert, keine verschlechtert.** Verbessert: `alice in wonderland` (Carroll von Platz 2 auf 1, die Bühnenfassung von 1 auf 7), `the great gatsby` (Matterson 2 → 5, Lehan 4 → 6, Parkinson aus den ersten acht), `crime and punishment` (Katz und die Cliffs Notes aus den ersten acht), `die blechtrommel` (vier Bände über den Roman von den Plätzen 2–5 auf 5–8), `the bell jar`, `a confederacy of dunces`, `things fall apart`. Unverändert und damit als Regressionsschutz bestanden: `wolf hall`, `the sellout`, `half of a yellow sun`, `if on a winter's night a traveler`, `ursula k le guin`, `norwegian wood`, `the hunger games`, `klara and the sun`. **Nur ein erster Treffer änderte sich überhaupt, und es war der falsche.**
+
+**Ein Fund nebenbei, gemessen und behoben.** Das bestehende Muster `notes on` hielt Zoë Hellers Roman *Notes on a Scandal* für einen Studienführer. Bei der Suche nach seinem eigenen Titel stand er auf **Platz 4**, hinter Sheridan und den *Brüdern Karamasow*. `notes on` zählt jetzt nur noch, wenn etwas davor steht — „Barron's Notes on Macbeth" ja, „Notes on a Scandal" nein. Danach steht der Roman auf Platz 1. Aufgegeben wird damit ein Studienführer, der genau „Notes on <Titel>" heißt; CliffsNotes und SparkNotes fangen ihre eigenen Namen ohnehin.
+
+**Was offen bleibt, und warum es nicht ins Ranking gehört.** Bei `crime and punishment` steht Harold Blooms Band jetzt auf Platz 2. Er trägt den Titel des Romans, aber der Roman ist bei Open Library als «Преступление и наказание» geführt und sein englischer Datensatz hat nur 19 Ausgaben — es gibt kein gleichnamiges großes Werk, gegen das Bloom gemessen werden könnte. **Das ist dieselbe Wurzel wie 6.13 und 6.15:** ein Buch, das Open Library auf mehrere Werk-Datensätze verteilt. Im Ranking ist es nicht zu reparieren, ohne die Schutzregel aufzugeben, die Kafkas deutsches Original trägt. Ebenso unverändert: `klara and the sun` hat auf Platz 2 *Alice's Adventures in Wonderland*, ein Werk ohne jede Titel- oder Autorenbeziehung zur Anfrage, das allein von seiner Leserzahl lebt. Eine Regel dagegen wurde geprüft und **verworfen**: sie hätte bei `crime and punishment` und `die verwandlung` den richtigen Treffer auf Platz 1 gelöscht, weil dessen Titel ebenfalls nicht zur Anfrage passt.

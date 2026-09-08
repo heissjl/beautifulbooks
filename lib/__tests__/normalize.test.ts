@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   authorMatchKey, cleanAuthorEntries, cleanAuthors, cleanIsbn, isbn10to13, languageName, looksLikeNonBook,
-  looksLikeSecondaryLiterature, normalizeAuthor, normalizeTitle, parseYear, stripHtml,
+  looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeAuthor, normalizeTitle, parseYear, stripHtml,
   titleAuthorKey, toIsoLanguage,
 } from '../normalize';
 
@@ -95,6 +95,29 @@ describe('filters', () => {
     expect(looksLikeSecondaryLiterature('SparkNotes for 1984 by George Orwell')).toBe(true);
     expect(looksLikeSecondaryLiterature("A Gravity's rainbow companion")).toBe(true);
     expect(looksLikeSecondaryLiterature("Gravity's Rainbow")).toBe(false);
+  });
+
+  // ROADMAP 6.1: "Crime and Punishment Notes" stood at position 3 of its own
+  // search, and "Things Fall Apart, notes" at position 3 of its own.
+  it('reads a title ending in "notes" as being about a book, but not one that merely contains the word', () => {
+    expect(looksLikeSecondaryLiterature('Crime and Punishment Notes')).toBe(true);
+    expect(looksLikeSecondaryLiterature('Things Fall Apart, notes')).toBe(true);
+    // Two real novels that must not be swept up with the study aids. Measured
+    // 2026-09-08: `notes on a scandal` put Heller's novel at position 4,
+    // behind Sheridan and The Brothers Karamazov, because of the old rule.
+    expect(looksLikeSecondaryLiterature('Notes from Underground')).toBe(false);
+    expect(looksLikeSecondaryLiterature('Notes on a Scandal')).toBe(false);
+    // A study guide still reads as one when something precedes "notes on".
+    expect(looksLikeSecondaryLiterature("Barron's Notes on Macbeth")).toBe(true);
+    expect(looksLikeSecondaryLiterature('CliffsNotes on Hamlet')).toBe(true);
+  });
+
+  it('reads a theatre version as a derivative', () => {
+    expect(MARKED_DERIVATIVE.test('Alice in Wonderland in Five Acts')).toBe(true);
+    expect(MARKED_DERIVATIVE.test('Hamlet: a play in 5 acts')).toBe(true);
+    expect(MARKED_DERIVATIVE.test('Wozzeck, an opera')).toBe(true);
+    expect(MARKED_DERIVATIVE.test("Alice's Adventures in Wonderland")).toBe(false);
+    expect(MARKED_DERIVATIVE.test('Things Fall Apart')).toBe(false);
   });
   it('strips html', () => {
     expect(stripHtml('<p>Hello <b>world</b></p>')).toBe('Hello world');

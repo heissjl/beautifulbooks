@@ -192,7 +192,28 @@ export function looksLikeNonBook(title: string, description?: string): boolean {
 }
 
 const SECONDARY_LITERATURE =
-  /\b(study guide|summary|summaries|analysis|book analysis|cliffsnotes|cliff's notes|sparknotes|companion|reader'?s guide|notes on|critical essays|lesson plans|a guide to|casebook|teacher'?s guide|and philosophy|for dummies|for fans|trivia|quiz|questions and answers|festschrift|in plain and simple english)\b/i;
+  /\b(study guide|summary|summaries|analysis|book analysis|cliffsnotes|cliff's notes|sparknotes|companion|reader'?s guide|critical essays|lesson plans|a guide to|casebook|teacher'?s guide|and philosophy|for dummies|for fans|trivia|quiz|questions and answers|festschrift|in plain and simple english)\b/i;
+
+/**
+ * A title that *ends* in "notes" is a set of notes about a book: "Crime and
+ * Punishment Notes" (Cliffs Notes, 8 editions) sat at position 3 of `crime and
+ * punishment` on 2026-09-07, and "Things Fall Apart, notes" at position 3 of
+ * its own search. It must be the end of the title, not a word inside it, or
+ * the rule would swallow Dostoevsky's own *Notes from Underground*.
+ */
+const NOTES_ABOUT = /(?:,\s*notes|\snotes)\s*$/i;
+
+/**
+ * "Notes on X" only counts as being *about* X when something precedes it:
+ * "Barron's Notes on Macbeth" yes, "Notes on a Scandal" no.
+ *
+ * The plain `notes on` this replaces was measured wrong on 2026-09-08: a
+ * search for `notes on a scandal` put Zoë Heller's novel at position 4,
+ * behind Sheridan and *The Brothers Karamazov*, because its own title read
+ * as a study guide. What the anchor gives up is a study guide called exactly
+ * "Notes on <title>"; CliffsNotes and SparkNotes are caught by name anyway.
+ */
+const NOTES_ON_MIDWAY = /\S\s+notes on\b/i;
 
 /**
  * Titles that announce themselves as a version of another work (SPEC §9.3
@@ -201,9 +222,10 @@ const SECONDARY_LITERATURE =
  * not the book someone searched for.
  */
 export const MARKED_DERIVATIVE =
-  /[([](\s*)(adaptation|adapted|abridged|graphic novel|comic|illustrated|stage|play|script|screenplay|retold)\b|\b(graphic novel|stage adaptation|a play in|retold by|adapted by)\b/i;
+  /[([](\s*)(adaptation|adapted|abridged|graphic novel|comic|illustrated|stage|play|script|screenplay|retold)\b|\b(graphic novel|stage adaptation|a play in|retold by|adapted by)\b|\bin (one|two|three|four|five|six|seven|\d+) acts?\b|\b(a play|an opera)\b/i;
 
 /** Titles that are about a work rather than the work itself (SPEC §3 F1.4). */
 export function looksLikeSecondaryLiterature(title: string): boolean {
-  return SECONDARY_LITERATURE.test(title);
+  const t = title.trim();
+  return SECONDARY_LITERATURE.test(t) || NOTES_ABOUT.test(t) || NOTES_ON_MIDWAY.test(t);
 }
