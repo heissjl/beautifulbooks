@@ -764,3 +764,28 @@ Die Lehre, die über diesen Fall hinausgeht: eine Schwelle für ein Wahrnehmungs
 ### Was daran hängt
 
 6.9 („mehr von diesem Autor") und 5.1 (die Sitemap-Liste) lesen denselben Index nur anders; `data/index-works.json` ist der erste Zuschnitt der 5.1-Liste.
+
+---
+
+## 2026-09-08 · Das Riesenmosaik: ein Buch, das sein eigenes Bild ergibt
+
+Julians zweites Experiment (`lab/mosaic/`, ROADMAP 5.5): ob sich aus den Covern **eines** Buchs ein schemenhaftes Motiv zusammensetzen lässt, das als Bild für Instagram oder Pinterest taugt. Gebaut wie im Plan: `mosaic.ts` rein und mit 15 Tests auf synthetischen Bildern, `render.ts` für Laden, Falten und Zeichnen. Ausführlich in [lab/mosaic/README.md](../lab/mosaic/README.md).
+
+**Es funktioniert, und zwar ohne den üblichen Trick.** Gemessen an *Nineteen Eighty-Four* (OL1168083W): 278 Cover im Katalog, **224 Motive nach dem Falten, 222 Kacheln** nach dem Aussortieren gescannter Innenseiten.
+
+| Messlatte | Gefordert | Erreicht |
+|---|---|---|
+| Erkennbarkeit | Motiv bei höchstens 25 % Überblendung | ein Gesicht bei **0 %**, auch auf 150 px Breite noch lesbar |
+| Streuung | meistbenutztes Cover unter 5 % der Zellen | **0,8 %**; 175 von 222 Covern benutzt; **keine** Zelle musste einen Nachbarn wiederholen |
+| Kosten | unter 30 s für 1.000 Zellen | **12 s** für 2.064 Zellen bei warmem Bildcache, 40 s kalt; 6 Open-Library-Anfragen, **null Google** |
+
+**Zwei Dinge standen im Plan falsch und sind im Code behoben.** Das Zielbild nach Ausgabenzahl zu wählen ergab bei *1984* eine fast einfarbige Jacke (Helligkeit 57,5 bis 90,2 von 255) — der erste Render war eine hübsche Coverwand ohne jedes Motiv; `--target auto` nimmt jetzt die kontrastreichste Jacke. Und ein quadratisches Raster aus 2:3-Kacheln über ein 3:4-Porträt zog den Kopf um die Hälfte in die Länge; die Zeilenzahl folgt jetzt der Form des Ziels.
+
+**Der Befund, der die Auswahl künftig steuert: ein Foto ergibt ein Gesicht, ein Buchumschlag ein Plakat.** Mit dem gemeinfreien Orwell-Pressefoto kommen Augen, Schnurrbart und Kragen durch. Mit der kontrastreichsten Jacke des Buchs entstehen Blöcke aus Orange und Schwarz — schön, vielleicht sogar das bessere Pinterest-Bild, aber ohne Gegenstand, weil ein Umschlag schon Grafik ist und kein Bild von etwas.
+
+**Nebenbei belegt, wozu das relative Vergleichen gut ist:** gegen das Foto lagen nur 2,6 % der Zellen außerhalb dessen, was die Cover an Helligkeit hergeben; gegen die Jacke mit echtem Schwarz und Weiß waren es 54,8 % — und nach dem Strecken der Palette null. Gestreckt wird dabei nur die *Auswahl*, nie ein Pixel: die Cover erscheinen, wie sie sind.
+
+**Was 6.10 dazu beiträgt: nichts, und das ist in Ordnung.** Das Mosaik misst mittleres RGB je Unterzelle, ein anderes und für diesen Zweck besseres Maß als das Farbhistogramm des Index. Ein grauer Zielbild braucht `--colour-weight 0.15` statt der voreingestellten 0,6, sonst werden gesättigte Cover teuer und das Motiv wird matschig.
+
+Offen: eine Silhouette statt eines Fotos, die Untergrenze der Palette (*Beloved* hat 72 Cover gegen 222), und die Rechtefrage vor dem Posten — dieselbe wie beim Clip.
+

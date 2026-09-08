@@ -45,3 +45,6 @@ next-env.d.ts
 
 # scratch files belong in lab/<name>/ or the session scratchpad (lab/README.md rule 7)
 /scratch-*
+
+# rendered experiment output (lab/README.md rule 7)
+lab/*/out/

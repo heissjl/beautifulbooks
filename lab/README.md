@@ -17,4 +17,4 @@ Experiments:
 | Folder | Question | Roadmap | Status |
 |---|---|---|---|
 | `video/` | Can a 15-second clip of a book's covers be built from the data alone? Storyboard pure and tested, render via ffmpeg. | 5.5 | not started; plan in PLAN-struktur §4 |
-| `mosaic/` | Can one picture — a shadowy motif — be built from a book's covers as tiles, good enough for Instagram or Pinterest? Assignment pure and tested, render with pngjs. | 5.5 | not started; plan in [mosaic/README.md](mosaic/README.md) |
+| `mosaic/` | Can one picture — a shadowy motif — be built from a book's covers as tiles, good enough for Instagram or Pinterest? Assignment pure and tested, render with pngjs. | 5.5 | **works**, measured 2026-09-08; see [mosaic/README.md](mosaic/README.md) |
