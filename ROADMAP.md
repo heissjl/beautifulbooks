@@ -384,7 +384,11 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
 - [ ] **6.13 Karte und Wand zählen Cover verschieden. [Testfall *Ansichten eines Clowns*]** (Julian, 2026-09-08: „cover tauchen im Vorschau-Mosaik auf, aber dann nicht in der Anzeige".) Gemessen am selben Tag, und die Ursache ist sauber zu benennen.
 
-  **Der Befund.** Die Karte für *Ansichten eines Clowns* (OL279833W) zeigt vier Kacheln: dtv 1984, dtv 1967, Kiepenheuer & Witsch 2002, Reclam 1998. Die Detailseite zeigt fünf Cover — und **die zweite Kachel ist keine davon**. `ol:12587579` (dtv 1967) wird beim Falten in `ol:10527677` (dtv 1984) hineingezogen, **Hamming-Distanz 6**. Verloren ist sie nicht, sie steckt im „+1" auf der ersten Kachel; aber wer die Karte gesehen hat, sucht auf der Wand nach einem Bild, das dort keine eigene Kachel mehr hat.
+  **Der Befund.** Die Karte für *Ansichten eines Clowns* (OL279833W) zeigt vier Kacheln: dtv 1984, dtv 1967, Kiepenheuer & Witsch 2002, Reclam 1998. Die Detailseite zeigt fünf Cover — und **die zweite Kachel ist keine davon**. `ol:12587579` (dtv 1967) wird beim Falten in `ol:10527677` (dtv 1984) hineingezogen, **Hamming-Distanz 6**.
+
+  **Und damit ist es nirgends mehr zu sehen.** Das ist der eigentliche Fehler, schärfer als die Regel-Ungleichheit unten. Am 2026-09-08 im Code nachgesehen: das „+1" auf der Kachel ist `pointer-events-none`, also reine Zierde; die Seitenleiste schreibt „· 1 duplicate scan folded" als Text; und ein geteilter Link mit der ID des gefalteten Covers löst in `selectCoverFrom` auf den **Vertreter** auf. Es gibt keinen Weg, das gefaltete Bild anzusehen. Bei Böll sind die beiden dtv-Ausgaben dieselbe Zeichnung, aber sichtbar verschieden gedruckt — cremefarbener gegen weißen Grund, anderer Anschnitt. Der Leser sieht auf der Karte ein Cover und findet es auf der Wand nicht wieder.
+
+  **Das widerspricht einem Grundsatz, den das Projekt schon hat.** E16 sagt: ein Cover wird nie gelöscht, weil es leer aussieht, sondern nur ans Ende sortiert — ein Fehlurteil soll eine Position kosten, kein Cover. Das Falten tut genau das, was E16 verbietet, nur aus einem anderen Grund. Falten ist auf der Wand richtig (sonst besteht Gatsby aus 293 fast gleichen Kacheln), aber es muss **umkehrbar** sein: das „+1" gehört anklickbar, oder die Seitenleiste zeigt die gefalteten Fassungen als kleine Kacheln unter dem gewählten Cover — dieselbe Bauform wie „Looks like this". Das ist der erste Schritt, unabhängig von allem Weiteren.
 
   **Die Ursache: zwei Oberflächen, zwei Regeln für dieselbe Frage.**
 
@@ -395,12 +399,12 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   **Die Wand hat recht, die Karte irrt.** Es sind zwei Scans derselben dtv-Gestaltung, siebzehn Jahre auseinander neu aufgelegt — genau der Fall, den eine Regel aus Verlag und Jahr nicht sehen kann. Das ist dieselbe Grenze, die in SPEC F4 schon steht, nur schärfer: dort war von zwei Verlagen mit einer lizenzierten Gestaltung die Rede, hier reicht **ein** Verlag und ein anderes Jahr.
 
-  **Drei Wege, in der Reihenfolge, wie ich sie empfehlen würde:**
+  **Danach die Regel-Ungleichheit, drei Wege in der Reihenfolge, wie ich sie empfehlen würde:**
   1. **Nur bei Verdacht hashen.** Wenn zwei Kandidaten denselben Verlag tragen, die Bilder dieser beiden vergleichen, sonst nicht. Für Böll wären das zwei zusätzliche Bildabrufe je Karte, meistens null. Behebt den Fall vollständig und bleibt beim Kostenargument, das den Kurzpfad überhaupt hash-frei gemacht hat.
   2. **Den gebauten Index fragen** (6.10). Für indizierte Werke liegen die Hashes bereits als Datei vor, das Falten wäre dort umsonst. Böll gehört heute nicht zu den 100, hilft also erst, wenn die Liste wächst — aber es ist der saubere Weg für alles, was drin ist.
   3. **Nichts tun und es benennen.** Die Karte sagt nirgends, dass ihre vier Kacheln vier verschiedene Gestaltungen sind. Das ist die billigste Lösung und die schlechteste, weil sie den Leser mit der Verwirrung allein lässt.
 
-  **Als Testfall festhalten:** OL279833W muss nach jeder Änderung an einer der beiden Regeln geprüft werden — Karte und Wand müssen dieselbe Zahl unterschiedlicher Gestaltungen zeigen. Verwandt mit 6.7 (dort faltet die Wand zu wenig), aber der Spiegelfall: hier faltet die Karte zu wenig.
+  **Als Testfall festhalten:** OL279833W muss nach jeder Änderung an einer der beiden Regeln geprüft werden — jedes Cover der Karte muss auf der Wand **erreichbar** sein, als eigene Kachel oder über ein aufklappbares „+N". Verwandt mit 6.7 (dort faltet die Wand zu wenig), aber der Spiegelfall: hier faltet die Karte zu wenig.
 
 - [ ] **6.11 Goodreads: was geht, was nicht.** (Julian, 2026-09-07: bessere Anbindung, Editionsdaten, Rezensionen, Bewertungen.) Recherchiert am selben Tag, und die Antwort fällt klarer aus als erhofft.
 
