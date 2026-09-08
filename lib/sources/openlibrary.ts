@@ -8,7 +8,7 @@
 import type { Work, WorkSummary } from '../model';
 import { cleanAuthorEntries, cleanAuthors } from '../normalize';
 import { debug } from '../debug';
-import { HttpError, SourceUnavailableError, fetchJson } from './http';
+import { HttpError, SourceUnavailableError, fetchJson, isSilence } from './http';
 import { olWorkId, parseSearchDocs, type OlEditionEntry, type OlSearchDoc } from './openlibrary-parse';
 
 const BASE = 'https://openlibrary.org';
@@ -29,9 +29,47 @@ export const OL_TIMEOUTS = {
 } as const;
 
 export const OL_REVALIDATE = {
-  search: 60 * 60,
+  /**
+   * 24 h, not 1 h (ROADMAP 1.10, 2026-09-08). The result list for a title is
+   * as stable as the book metadata behind it, which is why the work, the
+   * editions and the Google title search were already cached for a day or
+   * more. An hour bought freshness nobody asked for and paid for it in the
+   * one currency this source is short of: a cold search from Germany fails
+   * more often than it succeeds. A day means the retry below has to rescue
+   * only the first reader of a query, not every reader in the next hour.
+   * Price: a newly catalogued work shows up a day late.
+   */
+  search: 24 * 60 * 60,
   work: 24 * 60 * 60,
   editions: 24 * 60 * 60,
+} as const;
+
+/**
+ * A failed search is asked again once (ROADMAP 1.10, SPEC §3 F3.3).
+ *
+ * Measured 2026-09-08 from Germany over four cold searches: **three failed**,
+ * two with `fetch failed` and one in the 12 s timeout, and the very same call
+ * immediately afterwards returned all four in full. The reader was already
+ * doing this by hand — F1.7 gives them a "Try again" button and it works —
+ * so the server can spend that press itself before it gives up.
+ */
+export const SEARCH_RETRY = {
+  /** Attempts in total, not retries: 2 means one second chance. */
+  attempts: 2,
+  /** Breath between the attempts. The manual retry that worked was immediate. */
+  pauseMs: 300,
+  /**
+   * Cap on all attempts together. Two full timeouts would be 24 s of staring
+   * at a skeleton; the cap keeps the worst case near 20 s, and the per-attempt
+   * timeout is trimmed to what is left.
+   */
+  totalMs: 20_000,
+  /**
+   * With less than this left, a second attempt is a worse bet than an honest
+   * failure: ten of eleven answered searches arrived inside 10 s (SPEC §7), so
+   * a five-second window mostly buys another timeout and a longer wait.
+   */
+  minAttemptMs: 5_000,
 } as const;
 
 const SEARCH_FIELDS = [
@@ -81,26 +119,53 @@ export const OL_EDITIONS_PAGE = 100;
  * a book with hundreds of editions: four of roughly fourteen cold searches on
  * 2026-09-07 ran into the timeout and said exactly that (SPEC §3 F3.3).
  *
- * A missing `docs` array counts as no answer too. Open Library replies 200
- * with a body that has no `docs` when it is unhappy in ways it does not spell
- * out, and reading that as "nothing found" is the same lie in a smaller hat.
+ * A missing `docs` array counts as no answer too (`searchOnce`).
+ *
+ * Silence is asked once more before it is reported (`SEARCH_RETRY`), because
+ * silence here is the common case and not the exception.
  */
 export async function searchWorks(query: string, limit = OL_SEARCH_LIMIT): Promise<WorkSummary[]> {
   const url = `${BASE}/search.json?q=${encodeURIComponent(query)}&limit=${limit}&fields=${SEARCH_FIELDS}`;
-  let data: OlSearchResponse;
-  try {
-    data = await fetchJson<OlSearchResponse>(url, {
-      timeoutMs: OL_TIMEOUTS.search, revalidate: OL_REVALIDATE.search,
-    });
-  } catch (err) {
-    debug('openlibrary', `search failed: ${(err as Error).message}`);
-    throw new SourceUnavailableError('openlibrary', err);
+  const started = Date.now();
+  let failure: unknown;
+
+  for (let attempt = 1; attempt <= SEARCH_RETRY.attempts; attempt++) {
+    const left = SEARCH_RETRY.totalMs - (Date.now() - started);
+    try {
+      const docs = await searchOnce(url, Math.min(OL_TIMEOUTS.search, left));
+      if (attempt > 1) debug('openlibrary', `search answered on attempt ${attempt}`);
+      return parseSearchDocs(docs);
+    } catch (err) {
+      failure = err;
+      debug('openlibrary', `search attempt ${attempt} failed: ${(err as Error).message}`);
+      // A 4xx is an answer about this request; asking again repeats the fault.
+      if (!isSilence(err)) break;
+      if (attempt === SEARCH_RETRY.attempts) break;
+      await sleep(SEARCH_RETRY.pauseMs);
+      if (SEARCH_RETRY.totalMs - (Date.now() - started) < SEARCH_RETRY.minAttemptMs) {
+        debug('openlibrary', 'no time left for another attempt');
+        break;
+      }
+    }
   }
-  if (!Array.isArray(data.docs)) {
-    debug('openlibrary', 'search answered without a docs array');
-    throw new SourceUnavailableError('openlibrary', new Error('response had no docs array'));
-  }
-  return parseSearchDocs(data.docs);
+  throw new SourceUnavailableError('openlibrary', failure);
+}
+
+/**
+ * One attempt. A 200 whose body has no `docs` array counts as no answer:
+ * Open Library replies that way when it is unhappy in ways it does not spell
+ * out, and reading it as "nothing found" is the same lie in a smaller hat.
+ */
+async function searchOnce(url: string, timeoutMs: number): Promise<OlSearchDoc[]> {
+  const data = await fetchJson<OlSearchResponse>(url, {
+    timeoutMs, revalidate: OL_REVALIDATE.search,
+  });
+  if (!Array.isArray(data.docs)) throw new Error('response had no docs array');
+  return data.docs;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /**

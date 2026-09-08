@@ -42,7 +42,7 @@ Alle drei haben feste Testfälle (`OL279833W`, Suche „ansichten böll"). 6.13 
 | # | Was | Wer | Aufwand |
 |---|---|---|---|
 | 1 | Phase 0, Punkte 0.1–0.4 und 0.8: Verfügbarkeits-Button, zweiter Google-Schlüssel, Abrechnungsversuch, Angaben fürs Impressum, Enter im Suchfeld | Julian | eine halbe Stunde plus Wartezeit |
-| 2 | **Phase 1, Punkt 1.10 und Phase 6, Punkt 6.1: die Suche vor dem MVP** — Wiederholungsversuch gegen die Ausfälle, dann das Ausgabenverhältnis gegen gleichnamige Ableitungen | Claude | eine Sitzung |
+| 2 | **Phase 6, Punkt 6.1: das Ausgabenverhältnis gegen gleichnamige Ableitungen** (1.10 ist am 2026-09-08 erledigt) | Claude | eine Sitzung |
 | 3 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links | Claude | eine Sitzung |
 | 3 | Phase 1, Punkt 1.3: Bild-Cache vor Open Library und Google | Claude | eine Sitzung, mit Messung |
 | 4 | Phase 1, Punkt 1.7: die zwei Antworten, die nicht stimmen | Claude | eine Stunde |
@@ -53,6 +53,19 @@ Alle drei haben feste Testfälle (`OL279833W`, Suche „ansichten böll"). 6.13 
 | 9 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
 
 Die Ranking-Punkte aus Phase 6 stehen bewusst nicht in dieser Liste: sie sind Qualität, kein Fehler, und sie brauchen mehr Messung als eine Sitzung hergibt.
+
+**Die Suche vor dem MVP, Einschätzung vom 2026-09-08** (Julian: „ich will bald eine MVP-Version deployen, aber dazu muss die Suche noch besser funktionieren"). Die Suche hat nicht *ein* Problem, sondern vier von sehr verschiedenem Gewicht, und nur zwei davon gehören vor das Deployment:
+
+| Problem | Gemessen | Punkt | Vor dem MVP? |
+|---|---|---|---|
+| **Ausfall**: kalte Suchen scheitern mehrheitlich, der zweite Versuch geht | 3 von 4 (2026-09-08 mittags), 4 von 14 (2026-09-07) — **aber 0 von 80 am Abend des 2026-09-08** | 1.10 ✅ | **Erledigt.** Die Wiederholung steht; die Messung zeigt, dass die Ausfälle in Episoden kommen und nicht als Quote |
+| **Ranking** blind für gleichnamige Ableitungen und Sekundärliteratur | 3 von 13 Suchen falsch, 10 richtig | 6.1 | **Ja.** Die Ausgabenverhältnis-Regel ist ausformuliert, die Schwelle (25–50) ist zu messen, die 13 Suchen werden zum Regressionstest |
+| **Identität**: dasselbe Buch als mehrere Karten; die Karte verspricht, was die Wand nie lädt | Böll: 5 von 6 Karten, 14 gegen 8 Ausgaben | 6.15, 6.13 | Nur die billigen Schritte aus 6.15 (Klammerzusätze normalisieren, nach Autoren-Key zusammenfassen). Übersetzungen (6.15 Schritt 3) und die Geschwisterwerke (6.13) bleiben auf Platz 7 |
+| **Langsam**: 2–10 s je Open-Library-Anfrage | SPEC §7 | — | An der Quelle nicht behebbar. Abgefedert durch 1.10 und einen längeren Such-Cache (s. u.) |
+
+**Reihenfolge und Aufwand:** (1) 1.10 — *erledigt 2026-09-08*; (2) 6.1, ein halber Tag mit Messung der Schwelle; (3) 6.15 Schritt 1 und 2, zwei Stunden; (4) 6.2 nur, wenn danach noch Zeit ist — es ist ein Anzeigeproblem, kein Suchproblem. **Ausdrücklich nicht vor dem MVP:** 6.6 (zwei Tage, Geld), 6.15 Schritt 3 (braucht eine Stichprobe von dreißig Werken), 0.10 (eigener Datenbestand) und 6.13 Weg (1). Der Grund: alle vier verbessern Fälle, die messbar selten sind, während der Ausfall die Mehrzahl der kalten Suchen trifft.
+
+**Eine Entscheidung dazu, weil sie N4 ändert** (*von Julian am 2026-09-08 getroffen und umgesetzt*)**:** der Such-Cache steht bei **1 h** (`OL_REVALIDATE.search`); Work und Editions bei 24 h, die Google-Titelsuche bei 7 Tagen mit der Begründung, dass Buchmetadaten sich nicht stündlich ändern. Dasselbe Argument gilt für die Trefferliste eines Titels. Mit **24 h** wäre jede Suche, die an diesem Tag schon einmal jemand gestellt hat, schnell und ausfallfrei, und die Wiederholung aus 1.10 müsste nur noch die erste Suche des Tages retten. Preis: ein neu angelegtes Werk erscheint einen Tag später. Vorschlag: mit 1.10 zusammen umsetzen, N4 anpassen.
 
 Danach entscheidet sich anhand der Zahlen aus Phase 3, ob Phase 4 (Geld) oder Phase 5 (Reichweite) zuerst weitergeht. Ohne Besucher bringen Kauf-Links nichts, ohne Kauf-Links kostet Reichweite nur.
 
@@ -190,7 +203,7 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
   **Bedingungen, die für jede Variante gelten:** keine Google-Anfrage und kein Nachladen beim ersten Rendern (die Cover-IDs stehen fest, wie in `lib/curated.ts`); auf schmalen Bildschirmen darf das Element das Suchfeld nicht unter die Kante schieben, dort entfällt es oder rückt unter die Wand; und es darf nichts behaupten, was §1 verbietet — „vier von 226 Covern" ist erlaubt, „alle Cover" nicht.
 
 
-- [ ] **1.10 Eine gescheiterte Suche einmal wiederholen.** (Gemessen 2026-09-08 aus Deutschland, vier kalte Suchen über `lib/search.ts`.) **Im ersten Anlauf scheiterten drei von vier**: `the great gatsby` und `alice in wonderland` mit `fetch failed`, `crime and punishment` im Timeout nach 12 s. Derselbe Aufruf unmittelbar danach lieferte **alle vier** vollständig. Eine nackte `curl`-Suche mit `limit=3` brauchte dazwischen **10,5 s** — der Deckel steht bei 12 s, es ist also kein weiter Abstand.
+- [x] **1.10 Eine gescheiterte Suche einmal wiederholen.** *Erledigt 2026-09-08: `searchWorks` fragt bei Schweigen (Timeout, Netzfehler, 5xx, Rumpf ohne `docs`) ein zweites Mal, nie bei 4xx; beide Versuche zusammen auf 20 s gedeckelt. Der Such-Cache steht bei 24 h statt 1 h (Julians Entscheidung am selben Tag). **Die Messung danach fiel anders aus als erwartet: 80 Suchen am Abend, kein einziger Ausfall, Median 0,9 s** — die Wiederholung hat kein einziges Mal ausgelöst und ist nur durch Unit-Tests belegt. Die Lehre steht in der [Historie](docs/history.md): die Ausfallquote von Open Library ist keine Quote, sondern eine Folge von Episoden, und sie lässt sich in einer Sitzung nicht ermitteln. Das ist ein Argument für Phase 3 und gegen jede Entscheidung zu 0.10 auf dieser Grundlage.* (Gemessen 2026-09-08 aus Deutschland, vier kalte Suchen über `lib/search.ts`.) **Im ersten Anlauf scheiterten drei von vier**: `the great gatsby` und `alice in wonderland` mit `fetch failed`, `crime and punishment` im Timeout nach 12 s. Derselbe Aufruf unmittelbar danach lieferte **alle vier** vollständig. Eine nackte `curl`-Suche mit `limit=3` brauchte dazwischen **10,5 s** — der Deckel steht bei 12 s, es ist also kein weiter Abstand.
 
   **Warum das vor dem Ranking kommt.** 1.4 hat den Ausfall ehrlich gemacht: die Route antwortet 503 und die Oberfläche sagt „The catalogue did not answer" mit einem Knopf „Try again". Der Leser drückt diesen Knopf, und dann geht es. Genau diesen Druck kann der Server selbst ausführen, bevor er aufgibt. Ein Ranking-Fehler zeigt das falsche Buch; ein Ausfall zeigt gar keins, und er trifft nach dieser Messung die Mehrzahl der kalten Suchen.
 
@@ -202,7 +215,7 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
 
 ## Phase 2 — Online gehen
 
-- [ ] **2.1 Vercel-Projekt.** GitHub-Repo verbinden, `main` = Production, jeder Branch eine Preview-URL, Region `fra1`. Umgebungsvariablen: `GOOGLE_BOOKS_API_KEY` (**Pflicht**, sonst teilt sich die Seite das anonyme Kontingent, das fast immer erschöpft ist), `NEXT_PUBLIC_SITE_URL` (absolute URLs für Canonical und Open-Graph-Bild), `AFFILIATE_*` sobald vorhanden. Vercel Analytics (cookiefrei) und Speed Insights einschalten.
+- [ ] **2.1 Vercel-Projekt.** GitHub-Repo verbinden, `main` = Production, jeder Branch eine Preview-URL, Region `fra1`. Umgebungsvariablen: `GOOGLE_BOOKS_API_KEY` (**Pflicht**, sonst teilt sich die Seite das anonyme Kontingent, das fast immer erschöpft ist), `NEXT_PUBLIC_SITE_URL` (absolute URLs für Canonical und Open-Graph-Bild), `AFFILIATE_*` sobald vorhanden. Vercel Analytics (cookiefrei) und Speed Insights einschalten. **Dabei die Laufzeitgrenze der Funktionen gegen die Suche halten:** seit 1.10 liegt der schlechteste Fall von `/api/search` bei 20 s (zwei Versuche à 12 s, gedeckelt), und eine Detailseite lädt Seiten mit 12 s Deckel. Schneidet die Grenze des Plans darunter ab, wird aus einer langsamen, aber gültigen Antwort ein Fehler — genau das, was der 12-Sekunden-Deckel aus F3.3 vermeiden sollte. Ablesen, nicht annehmen, und den Wert hier eintragen; nötigenfalls `maxDuration` in der Route setzen oder die 20 s senken.
 - [ ] **2.2 Domain und DNS** aus 0.5 verbinden.
 - [ ] **2.3 Impressum, Datenschutzerklärung, Affiliate-Hinweis** als Seiten mit Links in der Fußzeile (Angaben aus 0.4). Inhalt der Datenschutzerklärung: Hosting und IP-Adressen, Vercel Analytics, Cover-Bilder von Drittservern (Open Library, Google), localStorage und Cookie `market`, die Klickzählung ohne jede Kennung (SPEC F5), ggf. Drittlandtransfer (Vercel ist im EU-US Data Privacy Framework). Generator: e-recht24 oder IHK. Kein Cookie-Banner nötig, solange nur Vercel Analytics läuft. Amazon verlangt für den Affiliate-Hinweis einen konkreten Wortlaut (Phase 4).
 - [ ] **2.4 Betrieb.** UptimeRobot (kostenlos) auf `/api/search?q=1984`; Fehler vorerst über die Vercel-Logs, Sentry erst bei Bedarf.

@@ -898,3 +898,30 @@ Sechs Karten für „ansichten böll", 22 Ausgaben, davon **21 zu einem einzigen
 **Das Ergebnis ist unbequem und gehört so festgehalten: eine verlässliche maschinelle Verbindung zwischen diesen Datensätzen gibt es nicht.** Jede Regel, die stark genug wäre, *The clown* an *Ansichten eines Clowns* zu binden, bindet auch zwei verschiedene Bücher desselben Autors aneinander — und eine falsche Verschmelzung ist schlimmer als eine verpasste.
 
 Aufgenommen als ROADMAP 6.15 mit drei Schritten: Klammerzusätze normalisieren (fängt die Schulausgabe, risikoarm), nach Autoren-Key statt Namen zusammenfassen, und für Übersetzungen erst über dreißig Werke messen, ob LCC-Cutter oder LibraryThing-ID tragen. Tut es keines, bleiben Übersetzungen eigene Karten — **dann muss aber §2.1 umgeschrieben werden**, statt eine Regel zu behaupten, die der Code nicht einlöst. In SPEC §2.1 steht dieser Vorbehalt jetzt.
+
+---
+
+## 2026-09-08 · Die Suche wiederholt sich einmal, und der Cache hält einen Tag (ROADMAP 1.10)
+
+Julian, nach der Einschätzung zur Suche vor dem MVP: „Ja, Cache auf 24h, fang mit 1.10."
+
+**Gebaut.** `searchWorks` fragt Open Library ein zweites Mal, wenn der erste Versuch geschwiegen hat. `isSilence` in `lib/sources/http.ts` entscheidet, was Schweigen ist: Timeout, Netzfehler, ein Rumpf, der sich nicht lesen ließ, und **5xx**. Ein **4xx nie** — es ist eine Antwort über genau diese Anfrage, und ein zweiter Versuch wiederholte den Fehler. Das ist keine Feinheit: 422 ist Open Librarys Absage an eine Anfrage unter drei Zeichen und 429 kommt aus einem Rate-Limit; beides zu wiederholen fügte nur Last hinzu. Ein 200 mit einem Rumpf ohne `docs` zählt weiterhin als Schweigen und wird deshalb wiederholt.
+
+`SEARCH_RETRY` deckelt beide Versuche zusammen auf **20 s** und kürzt den Deckel des zweiten Versuchs auf den Rest; bleiben weniger als 5 s, unterbleibt er. Zwei volle Timeouts wären 24 s vor einem Skelett, und unterhalb von fünf Sekunden kauft ein zweiter Versuch meist nur einen weiteren Timeout. Der Cache der Suche steht jetzt bei 24 h statt 1 h, im Datencache wie im `s-maxage` der Route.
+
+**Gemessen, und die Messung sagt etwas anderes als erwartet.** 80 Suchen am Abend des 2026-09-08 aus Deutschland, außerhalb von Next, also ohne Datencache: 40 verschiedene Titel je einmal, dazu die vier Titel der Mittagsmessung je zehnmal.
+
+| Satz | Suchen | im ersten Versuch gescheitert | nach der Wiederholung gescheitert | Median | langsamste |
+|---|---|---|---|---|---|
+| 40 verschiedene Titel, kalt | 40 | 0 | 0 | 894 ms | 5.045 ms |
+| 4 Titel, zehn Runden | 40 | 0 | 0 | 567 ms | 4.430 ms |
+
+**Kein einziger Ausfall.** Am selben Tag, mittags, waren drei von vier Suchen gescheitert; am Vortag vier von rund vierzehn. Derselbe Code-Pfad, derselbe Ort, dieselbe Quelle.
+
+**Was das heißt, und was es nicht heißt.** Es heißt nicht, dass die Wiederholung das Problem gelöst hat — sie hat in diesen 80 Suchen kein einziges Mal ausgelöst, es gibt also keinen Vorher-Nachher-Vergleich. Belegt ist sie nur durch die Unit-Tests in `lib/__tests__/sources.test.ts`, die den Netzfehler, den Timeout, den Rumpf ohne `docs`, den nicht wiederholten 4xx und den Abbruch nach dem zweiten Versuch abdecken.
+
+Es heißt: **die Ausfallquote von Open Library ist keine Quote, sondern eine Folge von Episoden.** Eine Messung an einem Nachmittag beschreibt den Nachmittag. Die 20-Sekunden-Obergrenze ist damit auch keine übliche Wartezeit, sondern der schlechteste Fall einer schlechten Episode; üblich ist knapp eine Sekunde.
+
+Für **ROADMAP 0.10** — die Frage nach einem eigenen Datenbestand — ist das die wichtigere Erkenntnis: „Ausfallquote der Quellen" ist dort eine der drei Zahlen, nach denen entschieden werden soll, und sie lässt sich in einer Sitzung nicht ermitteln. Sie braucht die Woche echter Besucher aus Phase 3. Die drei Messungen zusammen — 4/14, 3/4, 0/80 — sind das Argument dafür, in Phase 3 pro Tag zu messen und nicht pro Sitzung.
+
+Nebenbefund fürs Deployment: der schlechteste Fall der Suche liegt jetzt bei 20 s. Ob die Serverless-Funktion so lange laufen darf, ist bei Phase 2 zu prüfen und steht dort als Zeile in 2.1.

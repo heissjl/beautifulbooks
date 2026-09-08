@@ -76,6 +76,58 @@ describe('searchWorks', () => {
   it('returns [] only when the catalogue answered and had nothing', async () => {
     handler = () => ({ body: { docs: [] } });
     await expect(searchWorks('x')).resolves.toEqual([]);
+    expect(calls).toHaveLength(1);
+  });
+});
+
+/**
+ * ROADMAP 1.10. Three of four cold searches failed on 2026-09-08 and the very
+ * same call right afterwards returned all four, so the second attempt is the
+ * difference between a reader seeing a book and seeing an error.
+ */
+describe('searchWorks retry', () => {
+  it('asks a second time after a network failure and returns the answer', async () => {
+    let first = true;
+    handler = () => {
+      if (first) { first = false; throw new TypeError('fetch failed'); }
+      return { body: fixture('1984', 'openlibrary-search.json') };
+    };
+    const works = await searchWorks('1984');
+    expect(works.length).toBeGreaterThan(5);
+    expect(calls).toHaveLength(2);
+  });
+
+  it('asks a second time after a timeout and after a body with no docs array', async () => {
+    for (const fail of [
+      () => { const e = new Error('timed out'); e.name = 'TimeoutError'; throw e; },
+      () => ({ body: { numFound: 0 } }),
+    ]) {
+      calls.length = 0;
+      let first = true;
+      handler = () => {
+        if (first) { first = false; return fail() as never; }
+        return { body: fixture('1984', 'openlibrary-search.json') };
+      };
+      await expect(searchWorks('1984')).resolves.not.toHaveLength(0);
+      expect(calls).toHaveLength(2);
+    }
+  });
+
+  it('does not repeat a request the catalogue answered about: no second try on 4xx', async () => {
+    // 422 is Open Library refusing a query under three characters and 429 is a
+    // rate limit. Both are answers; asking again repeats the fault and adds load.
+    for (const status of [422, 429, 404]) {
+      calls.length = 0;
+      handler = () => ({ status });
+      await expect(searchWorks('it')).rejects.toBeInstanceOf(SourceUnavailableError);
+      expect(calls).toHaveLength(1);
+    }
+  });
+
+  it('gives up after the second attempt instead of asking forever', async () => {
+    handler = () => ({ status: 503 });
+    await expect(searchWorks('x')).rejects.toBeInstanceOf(SourceUnavailableError);
+    expect(calls).toHaveLength(2);
   });
 });
 

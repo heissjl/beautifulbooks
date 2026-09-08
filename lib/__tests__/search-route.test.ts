@@ -4,7 +4,7 @@
  * A 200 means Open Library answered; an empty `works` inside one means it had
  * nothing. Anything else is a status. This is tested at the route rather than
  * in `lib/` because the cache header is part of the promise: an outage cached
- * for an hour would keep telling every visitor that the book does not exist.
+ * for a day would keep telling every visitor that the book does not exist.
  */
 import { NextRequest } from 'next/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -51,7 +51,7 @@ describe('GET /api/search', () => {
     expect(res.status).toBe(200);
     expect((await res.json()).works).toEqual([]);
     // Only a real answer is worth caching.
-    expect(res.headers.get('Cache-Control')).toContain('s-maxage=3600');
+    expect(res.headers.get('Cache-Control')).toContain('s-maxage=86400');
   });
 
   it('refuses a query too short to ask instead of reporting it as nothing found', async () => {

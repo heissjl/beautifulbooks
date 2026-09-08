@@ -198,6 +198,8 @@ Zwei Ebenen:
 
   **Die Suche trifft dieselbe Unterscheidung.** `searchWorks` wirft `SourceUnavailableError`, wenn Open Library schweigt, einen Fehlerstatus liefert oder mit einem Rumpf ohne `docs` antwortet; eine leere Liste bedeutet ausschließlich, dass Open Library geantwortet hat und nichts hatte. Die Route macht daraus 503 ohne Cache-Header, und nur die 200 trägt `s-maxage`. Vorher verschluckte der Client jeden Fehler, die Route antwortete 200 mit leerer Liste, und der Leser las „No books found“ für ein Buch mit hunderten Ausgaben.
 
+  **Eine gescheiterte Suche wird einmal wiederholt** (`SEARCH_RETRY` in `lib/sources/openlibrary.ts`). Wiederholt wird nur **Schweigen**: Timeout, Netzfehler, ein Rumpf, der sich nicht lesen ließ, und 5xx. Ein **4xx wird nie wiederholt** — es ist eine Antwort über genau diese Anfrage, und ein zweiter Versuch wiederholte den Fehler (422 unter drei Zeichen, 429 aus dem Rate-Limit). Beide Versuche zusammen sind auf 20 s gedeckelt, der Deckel je Versuch wird auf den Rest gekürzt, und unterhalb von 5 s Rest unterbleibt der zweite Versuch: er brächte dann meist nur einen weiteren Timeout und eine längere Wartezeit. Der Leser drückt diesen Knopf ohnehin — F1.7 gibt ihm „Try again" —, also drückt ihn der Server einmal selbst.
+
   **Der Deckel liegt bei 12 s, nicht bei 8.** Gemessen am 2026-09-07 über zwölf kalte Suchen direkt bei Open Library, ohne Deckel: sieben antworteten unter 8 s, **drei zwischen 9 und 10 s**, eine nach 24 s, eine gar nicht. Acht Sekunden machten also aus einem Drittel der langsamen, aber gültigen Antworten einen Fehler. Der Preis ist eine längere Wartezeit im schlechten Fall; das Skelett steht so lange auf dem Schirm, und die Wartezeit endet jetzt in einer Auskunft statt in einer falschen.
 - **F3.4** Hörbücher, Zeitschriften, Proceedings werden herausgefiltert.
 
@@ -230,13 +232,15 @@ Jeder Kauf-Link führt über diese Route, die den Klick festhält und weiterleit
 
   | Was | Dauer |
   |---|---|
-  | Open-Library-Suche | 1 h |
+  | Open-Library-Suche | 24 h (seit 2026-09-08; vorher 1 h) |
   | Work und Editions-Seite | 24 h |
   | Google-Titelsuche | 7 Tage (Buchmetadaten ändern sich nicht stündlich) |
   | Google-ISBN-Nachschau | 24 h (beantwortet „welches Bild zeigt der Verlag *heute*“, muss frisch sein) |
   | Cover-Bilder fürs Hashing | 30 Tage |
   | Verfügbarkeitsantwort / Kontrollantwort | 6 h / 24 h |
   | Detailseite (ISR) | 24 h |
+
+  **Die Suche wurde am 2026-09-08 von 1 h auf 24 h gehoben** (ROADMAP 1.10), mit demselben Argument, das für Work, Editions und die Google-Titelsuche längst galt: die Trefferliste zu einem Titel ändert sich nicht stündlich. Der Preis ist, dass ein neu angelegtes Werk einen Tag später erscheint; der Gewinn ist, dass die Wiederholung aus F3.3 nur noch den ersten Leser einer Anfrage retten muss und nicht jeden Leser der nächsten Stunde. Der `s-maxage` der Route folgt dem Wert.
 
   Ein Deploy löscht den Cache; das ist bekannt und bis zu einem Auslöser hingenommen (ROADMAP, zurückgestellt).
 - **N5 Kein Logging im Produktpfad**, nur über `DEBUG` (`lib/debug.ts`). Einzige bewusste Ausnahme: die Klickzeile aus `lib/clicks.ts` (F5).
@@ -306,7 +310,7 @@ Die Zahlen, die den Entwurf bestimmen. Herkunft und Messaufbau in [docs/history.
 
 | Grenze | Zahl | Folge |
 |---|---|---|
-| Verlässlichkeit der Suche¹ | 4 von rund 14 kalten Suchen liefen in den damaligen 8-Sekunden-Timeout. Direkt gemessen über 12 Suchen ohne Deckel: 7 unter 8 s, 3 zwischen 9 und 10 s, eine nach 24 s, eine gar nicht | Deckel auf 12 s, und der Ausfall erscheint als Ausfall (F1.7, F3.3) |
+| Verlässlichkeit der Suche¹ | **Sie schwankt in Episoden, sie ist keine Quote.** 2026-09-07: 4 von rund 14 kalten Suchen im damaligen 8-Sekunden-Timeout; 12 Suchen ohne Deckel: 7 unter 8 s, 3 zwischen 9 und 10 s, eine nach 24 s, eine gar nicht. 2026-09-08 mittags: 3 von 4 gescheitert. 2026-09-08 abends, 80 Suchen (40 verschiedene Titel kalt, dazu 4 Titel zehnmal): **kein einziger Ausfall**, Median 0,9 s, langsamste 5,0 s | Deckel auf 12 s, ein Ausfall erscheint als Ausfall (F1.7), und die Wiederholung aus F3.3 kostet in einer guten Episode nichts, weil sie nicht auslöst |
 | Kosten einer Auswahl¹ | 2 bis 5 Google-Anfragen pro Klick, je nach Zahl der ISBNs am gefalteten Cover | N9; entscheidet ROADMAP 0.7 mit |
 | Ladeszene mit Sprachfilter¹ | *1984* mit `lang=de`: über 20 s Bühne, weil deutsche Ausgaben erst auf Seite 3–4 liegen; ohne Filter 8 s | Die Wartegrenze aus F2.4 greift, fühlt sich aber wie ein Hänger an |
 | Ranking bei gleichnamigen Ableitungen¹ | `alice in wonderland`: Bühnenfassung mit 1 Ausgabe vor dem Original mit 3.547; `the great gatsby`: 11 von 15 Karten Sekundärliteratur. 10 andere Suchen lagen richtig | F1.4, offene Lücke |
@@ -315,7 +319,7 @@ Die Zahlen, die den Entwurf bestimmen. Herkunft und Messaufbau in [docs/history.
 | Was Google beisteuert | Cover: *1984* 4 von 282, *Beloved* 12 von 72, *Mumbo Jumbo* 3 von 13; dazu Beschreibungen und Vorschau-Links. Fürs Mosaik: nichts, was Open Library nicht hat. | Google ist für die Menge zweitrangig, für das Verdikt (F2.9) unersetzlich. |
 | Kontingent | 1.000 Google-Anfragen pro Tag, Entwicklung und Betrieb am selben Schlüssel. | ~500 kalte Detailseiten pro Tag (N9). |
 | Google-Ausfälle | 503 bei etwa jeder dritten ISBN-Anfrage in der Messung; 30-Tage-Kurve bestätigt es. | Retry plus `unavailable`, nie „kein Cover“. |
-| Open-Library-Latenz | 2–7 s Suche, 3–10 s pro Editions-Seite aus Deutschland, gelegentlich über 12 s. | Timeouts F3.3, Wiederholung von Seite 0, Cache N4. |
+| Open-Library-Latenz | 2–7 s Suche, 3–10 s pro Editions-Seite aus Deutschland, gelegentlich über 12 s. In einer guten Episode dagegen 0,9 s im Median über 80 Suchen (2026-09-08 abends). | Timeouts F3.3, Wiederholung der Suche und von Seite 0, Cache N4. |
 | Seite 0 | Sprachengemisch, meist ohne Sprachangabe; bei *1984* keine deutsche Ausgabe auf Seite 0. | Mosaik sprachneutral (E15); Ladeszene wartet auf die Sprache (F2.4). |
 | Dedupe-Schwellen | Verschiedene Designs mit gemeinsamem Public-Domain-Motiv liegen bei Distanz 17–22; echte Duplikate desselben Verlags bei 5–16, gleiche ISBN bis 20. | Drei Stufen (2.3); oberhalb von 8 nur mit Metadaten. |
 | Was die Stufen nicht fangen¹ | *Mason & Dixon*: 12 gezeigte Kacheln, davon 7 dasselbe Motiv. Gleiche ISBN bei Distanz 22 (Stufe faltet bis 20); „Henry Holt" gegen „Holt Paperbacks" bei 10 (Wortmengen-Vergleich erkennt das Haus nicht); fehlende Sprachangabe bei 11. | [ROADMAP](ROADMAP.md) 6.7, nach der Quellenprüfung 6.6 |

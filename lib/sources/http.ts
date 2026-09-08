@@ -82,6 +82,21 @@ export function isTimeout(err: unknown): boolean {
 }
 
 /**
+ * Whether a failure means "the source gave no answer", and asking again could
+ * therefore produce one: a timeout, a network error, a body that could not be
+ * read, or a 5xx, which is the server saying it is having trouble.
+ *
+ * A 4xx is **never** silence. The request itself was wrong, so a second one
+ * would be wrong in the same way — a 422 for a query under three characters
+ * (SPEC §3 F1.7) or a 429 from a rate limit are answers, not outages, and
+ * repeating them only adds load.
+ */
+export function isSilence(err: unknown): boolean {
+  if (err instanceof HttpError) return err.status >= 500;
+  return true;
+}
+
+/**
  * Fetches raw bytes (cover images) with a timeout and the Next data cache.
  * Follows redirects (Open Library covers redirect to archive.org).
  */
