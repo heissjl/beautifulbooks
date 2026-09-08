@@ -714,3 +714,53 @@ Auf Julians Anstoß steht die dahinterliegende Frage als ROADMAP 0.10 daneben: o
 
 **Umgesetzt am selben Tag** (Julian: „setze den Plan um, aber beginne noch nicht mit dem Video“): Option A. `lab/README.md` trägt die sieben Regeln und eine Tabelle der Experimente; `eslint.config.mjs` verbietet `app/`, `components/`, `lib/` und `scripts/` jeden Import aus `lab/` (geprüft: eine Probedatei in `lib/` mit einem Import aus `lab/` löst genau einen `no-restricted-imports`-Fehler aus, die Website selbst lintet sauber); `/scratch-*` steht in `.gitignore`, was die beiden Arbeitsdateien im Root aus dem Status nimmt; die Regeln stehen in CLAUDE.md. `lab/video/` ist nicht angelegt — der Clip wartet auf Julians Startzeichen, seine Zeile steht bei 5.5. Dazu am selben Tag ein zweites Experiment auf Julians Wunsch: **`lab/mosaic/`**, ein Photomosaik aus den Covern eines Buchs, das aus der Ferne ein Motiv zeigt; angelegt ist die README mit Ansatz (Zuordnung rein, Render mit pngjs, keine neue Abhängigkeit), Messlatte (Erkennbarkeit bei höchstens 25 % Überblendung, Streuung der Kacheln, unter 30 s je Render, null Google-Anfragen) und der Rechtefrage vor dem Posten.
 
+
+---
+
+## 2026-09-08 · Der gebaute Cover-Index, und was er über „sieht aus wie" gelehrt hat (Roadmap 6.10)
+
+Umgesetzt nach [PLAN-speicher](plans/PLAN-speicher.md), Variante A, auf Julians Vorgabe „starte mit einem Index von 50 Büchern".
+
+### Was entstanden ist
+
+| | |
+|---|---|
+| `data/index-works.json` | 50 Werke, aus einer Setzliste über die eigene Suche aufgelöst; die zwölf der Startseite immer dabei, höchstens zwei je Autor, mindestens 25 Ausgaben |
+| `data/cover-index.json` | **50 Werke, 5.621 Cover, 410 KB** |
+| `scripts/build-cover-index.ts` | baut ihn, ohne Google (E10), fortsetzbar, ein Werk nach dem anderen |
+| `lib/coverindex.ts` | liest ihn einmal in typisierte Arrays; Suche = linearer Durchlauf |
+| `/api/similar/[coverId]` | bis zu sechs Nachbarn, kein externer Aufruf, eigener Rate-Limit-Eimer |
+| Seitenleiste | Abschnitt „Looks like this" am Fuß, je Buch ein Cover |
+
+Die Signatur trägt dafür neu **Sättigung und ein 16-Eimer-Farbhistogramm**, berechnet im selben Durchlauf wie der dHash und nur, wo sie gebraucht wird — die Seitenantworten wachsen nicht.
+
+### Der Farbton ist ein Kreis, das Histogramm war es nicht
+
+Erster Fehler, beim Testen mit reinen Farben gefunden: Rot bei 0° und Karmin bei 355° sind Nachbarn für das Auge, landeten aber an entgegengesetzten Enden des Arrays und maßen 0,77 Abstand — weiter auseinander als Rot und Türkis. Behoben durch beides: jeder Farbton verteilt sich beim Bauen auf seine Nachbareimer, und beim Vergleichen werden drei Ausrichtungen probiert (unverschoben und je einen Eimer nach links und rechts). Danach 0,019 statt 0,77.
+
+### Die Schwelle musste erlaufen werden
+
+Der Entwurf mischte Struktur und Farbe zu einer Zahl und ließ alles unter 0,45 durch. **Gemessen an 58.000 zufälligen Coverpaaren aus verschiedenen Büchern:**
+
+| Perzentil | Farbabstand | Strukturabstand |
+|---|---|---|
+| 0,1 % | 0,03 | 0,20 |
+| 1 % | 0,09 | 0,28 |
+| 5 % | 0,17 | 0,36 |
+| 50 % | 0,51 | 0,48 |
+
+Damit ließ die Schwelle **100 % aller Cover** einen Nachbarn finden. Beim Ansehen von sechs Stichproben war in vier nur Rauschen — ein schwarzweißes *1984* neben einem cremefarbenen *L'étranger*. Auch die Ein-Prozent-Marke reichte nicht: die Hälfte aller Cover behielt einen Nachbarn, und die Paare überzeugten weiterhin nicht.
+
+Jetzt sind es **zwei Tore statt einer Mischung**: Farbe ≤ 0,055 **und** Struktur ≤ 0,28. Damit haben **11 % der Cover überhaupt einen Nachbarn**, und diese Paare halten stand: das cremefarbene Gallimard-*1984* findet den cremefarbenen Gallimard-*Camus*, der braune Leineneinband findet *Brave New World* und *Ulysses* im selben Ton, das dunkelblaue Voyager-*Neuromancer* findet drei dunkelblaue Bände. **Die meisten Cover zeigen gar keine Reihe** — für eine Fundsache ist das richtig.
+
+Die Lehre, die über diesen Fall hinausgeht: eine Schwelle für ein Wahrnehmungsmaß lässt sich nicht ausrechnen. Sie muss an Bildern geprüft werden, und die erste Zahl, die plausibel klingt, ist um ein Vielfaches zu weit.
+
+### Zwei Nebenbefunde aus dem Lauf
+
+**Open Library ließ im ersten Durchgang neun von fünfzig Werken an je einem Timeout scheitern** — dieselbe Flakigkeit, die 1.4 bei der Suche behoben hat. Mit drei Versuchen je Seite und dem Behalten dessen, was vor einem Abbruch da war, fiel im zweiten Durchgang **kein einziges** Werk aus. Gesamtdauer 16 plus 6 Minuten.
+
+**Die Größenrechnung aus dem Plan stimmt je Cover, nicht je Werk.** 73 Byte je Cover wie veranschlagt, aber 112 Cover je Werk statt der angenommenen 50. 500 Werke ergäben damit rund **4 MB** statt 1,8 — nah an der Grenze aus PLAN-speicher §3.6, ab der SQLite der nächste Schritt wäre. Wer die Liste auf 500 erweitert, prüft das vorher.
+
+### Was daran hängt
+
+6.9 („mehr von diesem Autor") und 5.1 (die Sitemap-Liste) lesen denselben Index nur anders; `data/index-works.json` ist der erste Zuschnitt der 5.1-Liste.

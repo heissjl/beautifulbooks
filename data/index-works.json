@@ -1,0 +1,355 @@
+{
+  "pickedAt": "2026-09-08",
+  "works": [
+    {
+      "id": "OL1168083W",
+      "title": "Nineteen Eighty-Four",
+      "author": "George Orwell",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL27258W",
+      "title": "Neuromancer",
+      "author": "William Gibson",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL1434640W",
+      "title": "Berlin Alexanderplatz",
+      "author": "Alfred Döblin",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL893414W",
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL86318W",
+      "title": "Ulysses",
+      "author": "James Joyce",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL627084W",
+      "title": "Lolita",
+      "author": "Vladimir Nabokov",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL62744W",
+      "title": "Vom Kriege",
+      "author": "Carl von Clausewitz",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL468431W",
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL102749W",
+      "title": "Moby Dick",
+      "author": "Herman Melville",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL3801690W",
+      "title": "KAFF auch Mare Crisium",
+      "author": "Arno Schmidt",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL50548W",
+      "title": "Beloved",
+      "author": "Toni Morrison",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL2636675W",
+      "title": "Gravity's Rainbow",
+      "author": "Thomas Pynchon",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL66554W",
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "editionCount": 4173,
+      "source": "seed"
+    },
+    {
+      "id": "OL450063W",
+      "title": "Frankenstein; or, The Modern Prometheus",
+      "author": "Mary Shelley",
+      "editionCount": 2188,
+      "source": "seed"
+    },
+    {
+      "id": "OL85892W",
+      "title": "Dracula",
+      "author": "Bram Stoker",
+      "editionCount": 1918,
+      "source": "seed"
+    },
+    {
+      "id": "OL1095427W",
+      "title": "Jane Eyre",
+      "author": "Charlotte Brontë",
+      "editionCount": 1881,
+      "source": "seed"
+    },
+    {
+      "id": "OL21177W",
+      "title": "Wuthering Heights",
+      "author": "Emily Brontë",
+      "editionCount": 2888,
+      "source": "seed"
+    },
+    {
+      "id": "OL267096W",
+      "title": "Анна Каренина",
+      "author": "Лев Толстой",
+      "editionCount": 1316,
+      "source": "seed"
+    },
+    {
+      "id": "OL893707W",
+      "title": "Madame Bovary",
+      "author": "Gustave Flaubert",
+      "editionCount": 1581,
+      "source": "seed"
+    },
+    {
+      "id": "OL498556W",
+      "title": "Metamorphosis",
+      "author": "Franz Kafka",
+      "editionCount": 955,
+      "source": "seed"
+    },
+    {
+      "id": "OL14866824W",
+      "title": "Der Zauberberg",
+      "author": "Thomas Mann",
+      "editionCount": 190,
+      "source": "seed"
+    },
+    {
+      "id": "OL872773W",
+      "title": "Der Steppenwolf",
+      "author": "Hermann Hesse",
+      "editionCount": 239,
+      "source": "seed"
+    },
+    {
+      "id": "OL872932W",
+      "title": "Siddhartha",
+      "author": "Hermann Hesse",
+      "editionCount": 292,
+      "source": "seed"
+    },
+    {
+      "id": "OL1230613W",
+      "title": "L’étranger",
+      "author": "Albert Camus",
+      "editionCount": 468,
+      "source": "seed"
+    },
+    {
+      "id": "OL274505W",
+      "title": "Cien años de soledad",
+      "author": "Gabriel García Márquez",
+      "editionCount": 208,
+      "source": "seed"
+    },
+    {
+      "id": "OL891786W",
+      "title": "Things Fall Apart",
+      "author": "Chinua Achebe",
+      "editionCount": 94,
+      "source": "seed"
+    },
+    {
+      "id": "OL495470W",
+      "title": "Invisible Man",
+      "author": "Ralph Ellison",
+      "editionCount": 71,
+      "source": "seed"
+    },
+    {
+      "id": "OL3140822W",
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "editionCount": 213,
+      "source": "seed"
+    },
+    {
+      "id": "OL276798W",
+      "title": "Catch-22",
+      "author": "Joseph Heller",
+      "editionCount": 134,
+      "source": "seed"
+    },
+    {
+      "id": "OL98459W",
+      "title": "Slaughterhouse-Five",
+      "author": "Kurt Vonnegut",
+      "editionCount": 141,
+      "source": "seed"
+    },
+    {
+      "id": "OL64365W",
+      "title": "Brave New World",
+      "author": "Aldous Huxley",
+      "editionCount": 726,
+      "source": "seed"
+    },
+    {
+      "id": "OL103123W",
+      "title": "Fahrenheit 451",
+      "author": "Ray Bradbury",
+      "editionCount": 266,
+      "source": "seed"
+    },
+    {
+      "id": "OL59800W",
+      "title": "The Left Hand of Darkness",
+      "author": "Ursula K. Le Guin",
+      "editionCount": 91,
+      "source": "seed"
+    },
+    {
+      "id": "OL46125W",
+      "title": "Foundation",
+      "author": "Isaac Asimov",
+      "editionCount": 99,
+      "source": "seed"
+    },
+    {
+      "id": "OL2172356W",
+      "title": "Do Androids Dream of Electric Sheep?",
+      "author": "Philip K. Dick",
+      "editionCount": 95,
+      "source": "seed"
+    },
+    {
+      "id": "OL27482W",
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "editionCount": 481,
+      "source": "seed"
+    },
+    {
+      "id": "OL27513W",
+      "title": "The Fellowship of the Ring",
+      "author": "J.R.R. Tolkien",
+      "editionCount": 317,
+      "source": "seed"
+    },
+    {
+      "id": "OL38663W",
+      "title": "Heart of Darkness",
+      "author": "Joseph Conrad",
+      "editionCount": 600,
+      "source": "seed"
+    },
+    {
+      "id": "OL63073W",
+      "title": "The Old Man and the Sea",
+      "author": "Ernest Hemingway",
+      "editionCount": 311,
+      "source": "seed"
+    },
+    {
+      "id": "OL65906W",
+      "title": "On The Road",
+      "author": "Jack Kerouac",
+      "editionCount": 152,
+      "source": "seed"
+    },
+    {
+      "id": "OL258134W",
+      "title": "Naked Lunch",
+      "author": "William S. Burroughs",
+      "editionCount": 70,
+      "source": "seed"
+    },
+    {
+      "id": "OL1865528W",
+      "title": "The Bell Jar",
+      "author": "Sylvia Plath",
+      "editionCount": 177,
+      "source": "seed"
+    },
+    {
+      "id": "OL39349W",
+      "title": "Mrs. Dalloway",
+      "author": "Virginia Woolf",
+      "editionCount": 753,
+      "source": "seed"
+    },
+    {
+      "id": "OL98130W",
+      "title": "Also sprach Zarathustra",
+      "author": "Friedrich Nietzsche",
+      "editionCount": 557,
+      "source": "seed"
+    },
+    {
+      "id": "OL67334W",
+      "title": "Die Blechtrommel",
+      "author": "Günter Grass",
+      "editionCount": 111,
+      "source": "seed"
+    },
+    {
+      "id": "OL8972751W",
+      "title": "Nesnesitelná lehkost bytí",
+      "author": "Milan Kundera",
+      "editionCount": 81,
+      "source": "seed"
+    },
+    {
+      "id": "OL59048W",
+      "title": "The Remains of the Day",
+      "author": "Kazuo Ishiguro",
+      "editionCount": 87,
+      "source": "seed"
+    },
+    {
+      "id": "OL2625457W",
+      "title": "Norwegian Wood",
+      "author": "村上春樹",
+      "editionCount": 60,
+      "source": "seed"
+    },
+    {
+      "id": "OL464512W",
+      "title": "Wolf Hall",
+      "author": "Hilary Mantel",
+      "editionCount": 43,
+      "source": "seed"
+    },
+    {
+      "id": "OL676009W",
+      "title": "Мастер и Маргарита",
+      "author": "Михаил Афанасьевич Булгаков",
+      "editionCount": 235,
+      "source": "seed"
+    }
+  ]
+}

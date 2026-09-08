@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { PNG } from 'pngjs';
 import jpeg from 'jpeg-js';
 import { decodeToGray, dhash, hamming, looksLikeScannedPage, signature } from '../imagehash';
+import { colourDistance, decodeHues } from '../imagesig';
 
 /**
  * Synthetic "covers" with horizontal structure (dHash compares left/right
@@ -78,5 +79,64 @@ describe('imagehash', () => {
     expect(hamming('0000000000000000', '0000000000000000')).toBe(0);
     expect(hamming('ffffffffffffffff', '0000000000000000')).toBe(64);
     expect(hamming('f', '0000000000000000')).toBe(64);
+  });
+});
+
+/**
+ * Colour signatures (ROADMAP 6.10, PLAN-speicher §3.1).
+ *
+ * The dHash sees only structure, so "looks like this one" — a statement
+ * about colour — needs its own measure. Verified on real jackets on
+ * 2026-09-08: the beige linen 1984 and the orange Lolita came out at 0.18,
+ * the cyan Neuromancer and the red Berlin Alexanderplatz at 0.88.
+ */
+function flood(hex: [number, number, number], width = 40, height = 60): Uint8Array {
+  const png = new PNG({ width, height });
+  for (let i = 0; i < width * height; i++) {
+    png.data[i * 4] = hex[0];
+    png.data[i * 4 + 1] = hex[1];
+    png.data[i * 4 + 2] = hex[2];
+    png.data[i * 4 + 3] = 255;
+  }
+  return new Uint8Array(PNG.sync.write(png));
+}
+
+describe('colour signature', () => {
+  const sigOf = (rgb: [number, number, number]) => signature(flood(rgb), { colour: true })!;
+  const red = sigOf([220, 30, 30]);
+  const crimson = sigOf([190, 40, 60]);
+  const teal = sigOf([20, 170, 180]);
+  const grey = sigOf([128, 128, 128]);
+
+  it('is measured only when asked for', () => {
+    const plain = signature(flood([220, 30, 30]))!;
+    expect(plain.hues).toBeUndefined();
+    expect(plain.saturation).toBeUndefined();
+    expect(red.hues).toBeTruthy();
+  });
+
+  it('puts two reds closer together than a red and a teal', () => {
+    const near = colourDistance(red, crimson)!;
+    const far = colourDistance(red, teal)!;
+    expect(near).toBeLessThan(0.2);
+    expect(far).toBeGreaterThan(0.7);
+    expect(near).toBeLessThan(far);
+  });
+
+  it('scores grey as unsaturated, and keeps it away from vivid colour', () => {
+    expect(grey.saturation).toBe(0);
+    expect(red.saturation).toBeGreaterThan(200);
+    // A grey image has no hue at all, so only the vividness penalty separates
+    // them — without that penalty a photograph would match every jacket.
+    expect(colourDistance(grey, red)!).toBeGreaterThan(0.2);
+  });
+
+  it('answers null rather than guessing when a signature has no colour', () => {
+    expect(colourDistance(signature(flood([220, 30, 30]))!, red)).toBeNull();
+  });
+
+  it('survives a malformed histogram instead of throwing', () => {
+    expect(colourDistance({ ...red, hues: 'not base64!!' }, red)).toBeNull();
+    expect(decodeHues('AAAA')).toBeNull();
   });
 });

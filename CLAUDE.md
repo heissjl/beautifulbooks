@@ -91,6 +91,10 @@ npm run build      # must pass before a step is considered done
 
 ## Working rules
 
+- **`lib/coverindex.ts` and `data/cover-index.json` are server-only.** The file is 410 KB at fifty works and would go to the browser whole if a client component imported it; the client asks `/api/similar/<coverId>` instead. Same trap as `lib/imagehash.ts`. The index is built by `scripts/build-cover-index.ts` and committed — never rebuilt in a request handler, which would call Open Library thousands of times.
+
+- **Similarity thresholds were set by looking, not by arithmetic** (SPEC §2.5, ROADMAP 6.10). Colour ≤ 0.055 and structure ≤ 0.28 are two gates, not a weighted blend: measured over 58,000 random pairs the median is 0.51 colour and 0.48 structure, so any blended threshold loose enough to be interesting admits everything. At the current gates 11% of covers have any neighbour at all. If you change them, look at the pairs again — the numbers alone will mislead you.
+
 - **A failure must never be reported as a finding.** A source that times out is not "no results", an unasked question is not "nothing on record", and a hint must not name a setting that is not set. `searchWorks` still swallows every error into an empty list, which reaches the reader as "No books found"; that is ROADMAP 1.4 and the pattern to avoid everywhere else (SPEC F1.7, F3.3, N12).
 
 - **No copy claims completeness.** The site shows what two open catalogues happen to hold, which is a fraction of what was printed: never "every", "all" or "complete" about covers or editions, in the UI, the metadata or the README. The detail page's counter states what was actually seen, and the surrounding text must not contradict it (SPEC §9.3 step 15).

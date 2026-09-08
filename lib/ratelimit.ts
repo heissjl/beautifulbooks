@@ -46,6 +46,13 @@ export const RATE_RULES = {
   isbn: { capacity: 40, refillPerMinute: 20 },
   /** The dearest route: every click asks every shop twice (SPEC §9.3 step 16). */
   availability: { capacity: 6, refillPerMinute: 3 },
+  /**
+   * Similar covers: a scan over the built index, no external request at all
+   * (ROADMAP 6.10). Generous on purpose — it costs CPU measured in
+   * microseconds and nobody else's quota — but not unbounded, because a
+   * crawler that walks every cover would still occupy a function.
+   */
+  similar: { capacity: 60, refillPerMinute: 60 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

@@ -109,6 +109,15 @@ Zwei Ebenen:
 
 **Werbung** neben den Kauf-Links regelt E19: höchstens ein Platz je Seite, automatisch von einem Netzwerk gefüllt, ohne Kennung des Lesers, nie in Wand, Ergebnis oder Händlerliste. Heute gibt es keinen.
 
+### 2.5 Der gebaute Cover-Index (Entscheidung E18)
+
+`data/cover-index.json` hält für jedes Cover einer festen Werkliste dessen **abgeleitete Zahlen** — dHash, Kontrast, Helligkeit, Sättigung, Farbhistogramm — und die Zuordnung zu Werk und Titel. **Kein Bild wird gespeichert**, nur Messwerte; das ist der Unterschied zwischen einem Index und einem Archiv.
+
+- Er wird **vor dem Deploy von einem Skript erzeugt** (`scripts/build-cover-index.ts`) und mitcommittet, ist also keine Infrastruktur im Sinne von E6, sondern eine Datei (E18).
+- Er ist **nur lesbar und serverseitig**. `lib/coverindex.ts` liest ihn einmal beim Modulstart in typisierte Arrays; eine Ähnlichkeitssuche ist danach ein linearer Durchlauf über wenige tausend XOR-Operationen. **Nie aus Client-Code importieren** — die Datei ginge vollständig an den Browser.
+- Er ist eine **Momentaufnahme** und veraltet, sobald ein Katalog sich ändert. Das ist tragbar, weil er nichts trägt, was stimmen muss: er beantwortet „was sieht ähnlich aus", nie „welche Ausgabe kaufe ich". `builtAt` steht in der Datei.
+- Welche Werke er kennt, steht in `data/index-works.json` (50, Stand 2026-09-08; erster Zuschnitt der Liste aus ROADMAP 5.1).
+
 ---
 
 ## 3. Funktionale Anforderungen
@@ -163,6 +172,8 @@ Zwei Ebenen:
 - **F2.13 Auffindbar und teilbar.** `app/book/[id]/page.tsx` ist eine Server-Komponente mit `revalidate = 86400` und `generateStaticParams` über die kuratierten Werke; Titel „The covers of *Titel* by *Autor*“, Beschreibung mit der Ausgabenzahl der Quelle, Schema.org `Book` (`name`, `author`, `datePublished`, bis zu vier `image`, `sameAs` auf Open Library; **ohne** `aggregateRating` und `offers`), Open-Graph-Bild 1200×630 als Cover-Mosaik. Alles aus `lib/seo.ts`, kostet zwei gecachte Open-Library-Anfragen und **null** Google. Der sichtbare Text bleibt clientseitig.
 
   Das OG-Bild entscheidet darüber, ob ein geteilter Link geöffnet wird, und zeigt deshalb **vier erkennbar verschiedene Cover** nach der Regel aus F4. Vorher nahm es die ersten vier der Wand: bei *Wolf Hall* war zweimal dieselbe spanische Ausgabe darunter.
+
+- **F2.14 „Looks like this".** Am Fuß der Seitenleiste stehen bis zu sechs Cover **anderer** Bücher, deren Umschläge dem gewählten in Farbe und Aufbau nahekommen (`/api/similar/<coverId>`, Daten aus dem gebauten Index, §2.5). Je Buch höchstens ein Cover; das eigene Werk bleibt draußen, dessen Wand ist einen Klick entfernt. **Kennt der Index ein Cover nicht, erscheint der Abschnitt gar nicht** — er deckt 50 Werke ab, nicht den Katalog, und Schweigen ist die ehrliche Form von „nicht indiziert". Der Platz am Fuß ist bewusst: die Kauf-Links stehen ohnehin zu weit unten (ROADMAP 1.2), ein Streifzug darf sie nicht weiter verdrängen.
 
 ### F3 – Datenquellen
 

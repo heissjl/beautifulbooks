@@ -17,6 +17,7 @@ import { useIsDesktop } from '@/components/useIsDesktop';
 import { useMarket } from '@/components/useMarket';
 import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
+import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { VERDICT_LEAD } from '@/lib/verdicts';
@@ -295,6 +296,7 @@ function BookDetail() {
       editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
       coversPerEdition={view.coversPerEdition}
       author={work.authors[0]}
+      query={searchParams.get('q') ?? ''}
       market={view.market}
       onMarketChange={setMarket}
       verdictFor={isbn13 => verifyIsbnCover(
@@ -387,13 +389,56 @@ interface CoverDetailsProps {
   editions: EditionView[];
   coversPerEdition: ReadonlyMap<string, number>;
   author?: string;
+  /** Carried into the links of the "looks like this" row so Back still works. */
+  query: string;
   market: Market;
   onMarketChange: (market: Market) => void;
   /** What a shop shows for an ISBN, compared with the cover on screen. */
   verdictFor: (isbn13: string) => IsbnVerdict;
 }
 
-function CoverDetails({ cover, editions, coversPerEdition, author, market, onMarketChange, verdictFor }: CoverDetailsProps) {
+/**
+ * Covers of *other* books that look like this one (ROADMAP 6.10).
+ *
+ * Answered from the built index, so it costs no request to anyone. It sits at
+ * the foot of the sidebar on purpose: the buy links are already further down
+ * than they should be (ROADMAP 1.2), and a browsing detour must not push them
+ * further. When the index does not know this cover the section is absent
+ * rather than empty — fifty works are indexed, not the catalogue.
+ */
+function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
+  const similar = useSimilarCovers(coverId);
+  if (similar.length === 0) return null;
+  return (
+    <section className="mt-10 border-t border-line pt-6" aria-label="Covers that look like this one">
+      <p className="kicker">Looks like this</p>
+      <p className="mt-1 text-xs leading-relaxed text-ink-3">
+        Other books whose jackets share this one&rsquo;s colours and layout, found by comparing the
+        images themselves across the books we have indexed.
+      </p>
+      <ul className="mt-3 grid grid-cols-3 gap-3">
+        {similar.map(match => (
+          <li key={match.coverId}>
+            <Link
+              href={`/book/${match.workId}?cover=${encodeURIComponent(match.coverId)}${query ? `&q=${encodeURIComponent(query)}` : ''}`}
+              className="group block"
+              title={`${match.title} — ${match.author}`}
+            >
+              <span className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-[3px] bg-surface-2">
+                <CoverImage src={match.urlSmall} alt={`${match.title} by ${match.author}`} sizes="90px" />
+              </span>
+              <span className="mt-1 block truncate text-[11px] leading-tight text-ink-3 group-hover:text-ink-2">
+                {match.title}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function CoverDetails({ cover, editions, coversPerEdition, author, query, market, onMarketChange, verdictFor }: CoverDetailsProps) {
   return (
     <div>
       {/*
@@ -423,6 +468,8 @@ function CoverDetails({ cover, editions, coversPerEdition, author, market, onMar
           />
         ))}
       </div>
+
+      <SimilarCovers coverId={cover.id} query={query} />
     </div>
   );
 }
