@@ -49,3 +49,6 @@ next-env.d.ts
 
 # rendered experiment output (lab/README.md rule 7)
 lab/*/out/
+
+# curation tool: the year cache is rebuilt on demand (lab/curate)
+lab/curate/years.json
