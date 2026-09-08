@@ -8,6 +8,7 @@ Stand: 2026-09-08. Ein Plan ist die ausführliche Fassung eines Roadmap-Punkts, 
 | [PLAN-B.md](PLAN-B.md) | alte Spec §10 B: Sprache, Rate-Limit, SEO, mobil, Klicks, About, Kontingent | **erledigt** 2026-09-07; der Abschnitt „Analyse-Seite“ ist die Vorlage für 3.1 |
 | [PLAN-11.md](PLAN-11.md) | alte Spec §9.3 Schritt 11: seitenweise Cover-Wand | **erledigt** 2026-09-07 |
 | [PLAN-1.1-keine-vorauswahl.md](PLAN-1.1-keine-vorauswahl.md) | 1.1: kein automatisch gewähltes Cover, Werk-Ansicht in der Spalte | offen, baureif |
+| [PLAN-1.11-kauflinks-ux.md](PLAN-1.11-kauflinks-ux.md) | 1.11: Kauf-Links, die ins Leere laufen, und ihr Platz in der Spalte | offen, baureif; Schritte 1–4 sind reine Logik |
 | [PLAN-speicher.md](PLAN-speicher.md) | 0.9 (entschieden als E18), Bauanleitung für 6.10, 6.9, 5.1; §5 ist 6.12 | Entscheidung erledigt; Bauteile offen, 6.10 in Arbeit |
 | [PLAN-5-reichweite.md](PLAN-5-reichweite.md) | Phase 5: Seitengattungen, Agenten-Kette, Regeln gegen Slop | offen, wartet auf Phase 2–4 |
 | [PLAN-4-einnahmen.md](PLAN-4-einnahmen.md) | 4.6–4.8: Einnahmen jenseits der Affiliate-Links | Analyse fertig, Regeln als E19; Bau wartet auf Reichweite |

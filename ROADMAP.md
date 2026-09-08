@@ -42,15 +42,16 @@ Alle drei haben feste Testfälle (`OL279833W`, Suche „ansichten böll"). 6.13 
 | # | Was | Wer | Aufwand |
 |---|---|---|---|
 | 1 | Phase 0, Punkte 0.1–0.4 und 0.8: Verfügbarkeits-Button, zweiter Google-Schlüssel, Abrechnungsversuch, Angaben fürs Impressum, Enter im Suchfeld | Julian | eine halbe Stunde plus Wartezeit |
-| 2 | **Phase 6, Punkt 6.1: das Ausgabenverhältnis gegen gleichnamige Ableitungen** (1.10 ist am 2026-09-08 erledigt) | Claude | eine Sitzung |
-| 3 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links | Claude | eine Sitzung |
-| 3 | Phase 1, Punkt 1.3: Bild-Cache vor Open Library und Google | Claude | eine Sitzung, mit Messung |
-| 4 | Phase 1, Punkt 1.7: die zwei Antworten, die nicht stimmen | Claude | eine Stunde |
-| 5 | Phase 2: Vercel, Domain, Impressum und Datenschutz, Search Console | beide | eine Sitzung |
-| 6 | Phase 4, Punkt 4.1: Bookshop.org beantragen, sobald die Seite erreichbar ist | Julian | zehn Minuten plus Tage Wartezeit |
-| 7 | Phase 6, Punkte 6.13 und 6.15: Karte und Wand meinen dasselbe Werk (Böll-Testfälle) | Claude | eine bis zwei Sitzungen |
-| 8 | Phase 6, Punkt 6.6: andere Datenbanken messen, danach 6.7 (Dubletten) | Claude | zwei Tage, ~15 USD |
-| 9 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
+| 2 | **Phase 1, Punkt 1.11: Kauf-Links, die ins Leere laufen** — Händlerreihenfolge aus dem Sprachraum der ISBN statt blind aus dem Markt | Claude | ein halber Tag |
+| 3 | **Phase 6, Punkt 6.1: das Ausgabenverhältnis gegen gleichnamige Ableitungen** (1.10 ist am 2026-09-08 erledigt) | Claude | eine Sitzung |
+| 4 | Phase 1, Punkte 1.1 und 1.2: kein automatisch gewähltes Cover, auffindbare Kauf-Links (1.2 lohnt erst nach 1.11) | Claude | eine Sitzung |
+| 5 | Phase 1, Punkt 1.3: Bild-Cache vor Open Library und Google | Claude | eine Sitzung, mit Messung |
+| 6 | Phase 1, Punkt 1.7: die zwei Antworten, die nicht stimmen | Claude | eine Stunde |
+| 7 | Phase 2: Vercel, Domain, Impressum und Datenschutz, Search Console | beide | eine Sitzung |
+| 8 | Phase 4, Punkt 4.1: Bookshop.org beantragen, sobald die Seite erreichbar ist | Julian | zehn Minuten plus Tage Wartezeit |
+| 9 | Phase 6, Punkte 6.13 und 6.15: Karte und Wand meinen dasselbe Werk (Böll-Testfälle) | Claude | eine bis zwei Sitzungen |
+| 10 | Phase 6, Punkt 6.6: andere Datenbanken messen, danach 6.7 (Dubletten) | Claude | zwei Tage, ~15 USD |
+| 11 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
 
 Die Ranking-Punkte aus Phase 6 stehen bewusst nicht in dieser Liste: sie sind Qualität, kein Fehler, und sie brauchen mehr Messung als eine Sitzung hergibt.
 
@@ -210,6 +211,61 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
   **Der Beleg liegt im eigenen Repo:** `scripts/build-cover-index.ts` hat für 6.10 genau das gemacht — drei Versuche je Seite und behalten, was vor dem Abbruch da war. Damit fielen im ersten Durchgang neun von fünfzig Werken aus, im zweiten **keines**. In `lib/sources/http.ts` und `lib/sources/openlibrary.ts` steht heute **kein einziger** Wiederholungsversuch.
 
   **Zu bauen:** ein zweiter Versuch im Suchpfad, nur bei Netzfehler und Timeout, nie bei 4xx (422 unter drei Zeichen darf nicht wiederholt werden), mit kurzer Pause; der Deckel gilt je Versuch, die Gesamtzeit braucht eine eigene Obergrenze, sonst wartet der Leser 24 s statt 12. Danach dieselben vier Suchen zehnmal kalt messen und die Ausfallquote vorher/nachher hier eintragen. **Diese Zahl gehört auch zu 0.10**, wo „Ausfallquote der Quellen" eine der drei Zahlen ist, nach denen über einen eigenen Datenbestand entschieden wird. Eine Stunde, Claude.
+
+
+- [ ] **1.11 Kauf-Links, die ins Leere laufen: die ISBN weiß vorher, welcher Laden eine Chance hat.** *Umsetzungsplan: [docs/plans/PLAN-1.11-kauflinks-ux.md](docs/plans/PLAN-1.11-kauflinks-ux.md).* (Julian, 2026-09-08: „damit weniger Links ins Leere laufen“.) Gemessen am 2026-09-08 über die fünf Fixture-Werke (*1984*, *Gravity's Rainbow*, *Mumbo Jumbo*, *Pride and Prejudice*, *The Great Gatsby*), 567 Ausgaben, offline, ohne eine einzige Anfrage.
+
+  **Drei Vermutungen sind zuerst gefallen, und das ist Teil des Ergebnisses:**
+
+  | Vermutung | Messung | Folge |
+  |---|---|---|
+  | Kaputte ISBNs erzeugen tote Links | **0 von 526** ISBNs mit falscher Prüfziffer, 0 mit falscher Länge | Eine Prüfziffernprüfung in `cleanIsbn` wäre richtig, bringt aber nichts. Nicht bauen |
+  | Die KDP-Flut (979-8, „Independently Published“) füllt die Wand mit Unverkäuflichem | **182 der 526 ISBNs sind 979-8** — aber **181 davon tragen gar kein Cover** | Erreicht die Wand nicht. Erklärt nebenbei die Lücke aus Schritt 11 (Gatsby: 379 Cover auf 1.180 Datensätzen) |
+  | Alte, vergriffene Ausgaben sind das Hauptproblem | **82 % der Cover-Ausgaben sind von 2005 oder jünger**, nur 7 % vor 1990 | Das Alter ist der zweite Hebel, nicht der erste |
+
+  **Was übrig bleibt, ist größer als alle drei: der Sprachraum der ISBN passt nicht zum Laden.** Von den **243 Ausgaben, die tatsächlich ein Cover tragen** und damit auf der Wand landen:
+
+  | Sprachraum der ISBN | Ausgaben | Anteil |
+  |---|---|---|
+  | **andere** (Türkei 47, Spanien 18, Italien 14, Indien 9, Tschechien 5, Kolumbien 4, Portugal 4, Brasilien 4, Schweden 3, Taiwan 3, …) | 107 | **44 %** |
+  | englisch (978-0/1) | 60 | 24 % |
+  | deutsch (978-3) | 26 | 10 % |
+  | spanisch/portugiesisch | 22 | 9 % |
+  | **ohne ISBN** — gar keine Kauf-Links, nur Suchlinks | 18 | 7 % |
+  | französisch (978-2) | 9 | 3 % |
+
+  Der voreingestellte Markt ist **US**. Für einen Leser dort zeigt die Seitenleiste bei rund **drei Vierteln** der Cover fünf Links auf Bookshop.org, Amazon.com, AbeBooks, ThriftBooks und eBay — zu einer ISBN, die in der Türkei, in Serbien oder in Dänemark vergeben wurde. Bookshop.org und ThriftBooks führen solche Titel praktisch nie; Amazons `/dp/<ISBN-10>` landet auf einer 404, wenn der Marktplatz die ISBN nie geführt hat. **Und das sind nicht die schlechten Cover, sondern die interessanten** — die türkischen und serbischen Umschläge sind der Grund, warum die Wand sehenswert ist. Es darf also nichts ausgeblendet werden; die Links müssen anders geführt werden.
+
+  **Vier Hebel, keiner kostet eine Anfrage:**
+
+  1. **Die Registrierungsgruppe aus der ISBN lesen** (`978-3…` = deutschsprachig, `978-0/1…` = englisch, `979-8…` = Amazon-KDP) und die Händlerreihenfolge danach bestimmen, nicht allein nach dem Markt des Lesers. Für eine fremde ISBN führen die Läden, die überhaupt eine Chance haben — **AbeBooks und eBay** sind Marktplätze und international; Bookshop, ThriftBooks, Thalia und Hugendubel sind Katalog-Händler und haben keine. Eine reine Tabelle, offline, testbar. **Das ist der Hauptteil des Punkts.**
+  2. **Die Reihenfolge der Ausgaben unter einem Cover.** Nach dem Falten ist `editionIds` die Ankunftsreihenfolge von Open Library, also **nach Alter des Datensatzes**, und der erste Block liefert die Links, die der Leser zuerst sieht. Bei 44 % fremden ISBNs führt oft die falsche. Sortieren nach: ISBN im Sprachraum des Marktes zuerst, dann ISBN überhaupt vorhanden, dann Jahr. *(In den Fixtures trägt kein einziges rohes Cover mehr als eine Ausgabe — die Mehrfachzuordnung entsteht erst beim Falten, `foldDuplicateCovers` in `lib/works.ts` hängt die `editionIds` der Mitglieder aneinander.)*
+  3. **`kind` ehrlich machen.** `kind: 'product'` heißt heute nur „diese URL hat die Form einer Produktseite“ — Blackwell's `/bookshop/product/<isbn>` und Amazons `/dp/` bekommen es für **jede** ISBN, auch für eine, die der Laden nie geführt hat. Das ist dieselbe Sorte Behauptung, die §9.2 sonst verbietet, eine Ebene tiefer. Entweder `kind` an die Gruppe koppeln oder das Wort in der Oberfläche zurücknehmen.
+  4. **Das Verdikt weiterverwenden, das ohnehin schon geholt wird.** Bei `differs` rücken die Suchlinks heute schon über die Kauf-Links. Bei **`unknown`** — Google kennt zu dieser ISBN gar keinen Datensatz — ist die Wahrscheinlichkeit, dass ein Katalog-Händler sie führt, klein; auch dort gehören die Suchlinks (Titel + Verlag + Jahr, antiquarisch) nach oben. **Nur die Reihenfolge, nie ein Satz**: „unknown“ heißt weiterhin nicht „nicht zu kaufen“, und die Wortlaute in `lib/verdicts.ts` bleiben unangetastet.
+
+  5. **Die angereicherte Suche ist der fünfte Hebel — aber als eigene Zeile, nicht im Kauf-Link.** (Julians Frage am 2026-09-08: „Aber die ISBN-Suchen durch andere Suchbegriffe anzureichern würde nicht helfen?“) Sie hilft, und die Daten dafür sind da: von den 243 Cover-Ausgaben tragen **97 % Verlag *und* Jahr**, 99 % einen Verlag, 98 % ein Jahr. Aber sie beantwortet eine **andere Frage** als der Kauf-Link, und die zwei dürfen nicht in denselben Knopf:
+
+     | | Was der Link verspricht | Woraus er gebaut wird |
+     |---|---|---|
+     | **Kauf-Link** | „genau dieses Exemplar“ | ISBN allein |
+     | **Suchlink** | „irgendein Exemplar dieses Drucks“ | Titel + Verlag + Jahr |
+
+     **Terme in den ISBN-Link zu mischen macht es schlechter, nicht besser.** Der Leser hat ein türkisches Cover angeklickt; eine Titelsuche bei Bookshop US liefert dann zwar Treffer, aber ein Penguin-Taschenbuch — der Link läuft nicht mehr ins Leere, er führt in die Irre, und das ist der Fehler, den §9.2 und die Verdikte gerade verhindern sollen. Dazu der mechanische Haken: die meisten Suchfelder verknüpfen mit UND, `9789944… gatsby` findet also **null**, weil kein Datensatz beides enthält. (Mit in die Stichprobe unten nehmen.)
+
+     **Was stattdessen zu tun ist, und es ist eine echte Lücke:** `searchLinksFor` bietet heute nur AbeBooks, eBay, Google Lens, TinEye, WorldCat und Open Library. **Für Bookshop, ThriftBooks, Thalia, Hugendubel und Booklooker gibt es gar keine Titelsuche** — also ausgerechnet für die Katalog-Händler, bei denen der ISBN-Link bei fremder ISBN sicher leer ausgeht. Diese Zeile fehlt und ist billig nachzurüsten.
+
+     **Welcher Titel, ist dabei die eigentliche Entscheidung: 56 % der Cover-Ausgaben tragen einen anderen Titel als das Werk** — „Die Enden der Parabel“, „El arco iris de gravedad“, „L'arc-en-ciel de la gravité“. Für AbeBooks und eBay (international, antiquarisch) ist der **Ausgabentitel** richtig, denn gesucht wird dieser Druck; antiquarische Angebote tragen ohnehin oft keine ISBN, dort ist Titel + Verlag + Jahr die **bessere** Abfrage als die ISBN. Für einen Katalog-Händler im Markt des Lesers ist der **Werktitel** richtig — und der Link muss dann auch so heißen („find another edition“), nie wie ein Kauf-Link für das gezeigte Cover.
+
+  **Was gemessen werden muss, bevor das gebaut wird**, denn zwei Annahmen oben sind begründet und nicht belegt: dass Bookshop.org und ThriftBooks fremdsprachige ISBNs nicht führen, und dass Amazons `/dp/` bei einer nie geführten ISBN auf 404 geht. Beides sind **Stichproben von Hand im Browser**, zehn Minuten, zusammen mit 1.8 — kein Skript, denn genau dieser Pfad ist bei vier von sechs Händlern per robots.txt untersagt (0.1). Je Händler drei ISBNs: eine englische, eine türkische, eine deutsche.
+
+  **Beim Planen der Spalte am 2026-09-08 dazugekommen** (Julian: „das muss sinnvoll in die Cover-Wall-Seite integriert werden und darf aus einer UX-Perspektive nicht zu sehr verwirren“), zwei reine Oberflächenfehler, beide im Plan gelöst:
+
+  - **„AbeBooks“ steht im US-Markt zweimal in derselben Spalte, „eBay“ ebenfalls** — einmal als ISBN-Link, einmal als Suchlink, gleiches Label, wenige Zeilen auseinander, kein sichtbarer Unterschied. Im DE-Markt betrifft es AbeBooks.
+  - **Die zwei Überschriften beantworten dieselbe Frage.** „Buy this ISBN“ und „Find this exact cover“ zielen beide auf *dieses Exemplar*; die Frage „ich will das Buch einfach lesen“ hat keinen Ort und wird stillschweigend von den Händler-Knöpfen mitbeantwortet, die dafür nicht gebaut sind.
+
+  Dazu die Zählung, die erklärt, warum hier nichts hinzugefügt werden darf: **14 Bedienelemente** für eine einzige Ausgabe im US-Markt (15 im DE), plus zwei Erklärabsätze und acht Metadatenzeilen — und der ganze Apparat wiederholt sich je Ausgabe, die ein gefaltetes Cover trägt. Das ist die Ursache der in 1.2 gemessenen 2.351 px. **Der Entwurf kommt auf 5 sichtbare Elemente** und erledigt damit die Hälfte von 1.2.
+
+  **Zusammenhang mit anderen Punkten:** 1.2 macht die Kauf-Links auffindbar — das lohnt erst, wenn sie auch irgendwohin führen, also 1.11 zuerst oder zusammen. 4.1 (Bookshop-ID) repariert einen anderen toten Link derselben Familie. Der Nebenbefund zu 979-8 gehört zu 1.1: die Vorauswahl bei *Gatsby* traf eine indische Print-on-Demand-Ausgabe (978-93), und Hebel 2 ist genau die Sortierung, die das verhindert. Ein halber Tag, Claude — plus Julians zehn Minuten Stichprobe.
 
 ---
 
