@@ -16,6 +16,7 @@ Kann ein Mensch in einer Sitzung für hundert Bücher je ein Cover wählen, ohne
 - **Google Books wird nie gefragt** (lab-Regel 6).
 - **Das Jahr** wird je Werk einmal bei Open Library geholt (`first_publish_year` plus die Liste aller Jahre) und in `lab/curate/years.json` zwischengespeichert. Angezeigt wird beides: was der Katalog sagt und was die Ausreißerprüfung aus `lib/firstyear.ts` daraus macht — bei *Lolita* etwa 1777 gegen 1954. Das Feld ist vorbelegt und wird von Hand bestätigt oder korrigiert; leer heißt „nicht geprüft", nicht „unbekannt".
 - **Geschrieben wird nach jeder Wahl** in `data/curated.json`, atomar (erst `.tmp`, dann umbenannt). Abbrechen ist folgenlos, die App springt beim nächsten Start zum ersten offenen Werk.
+- **Nachzügler**, die der Index nicht kennt, stehen in `EXTRA_WORKS` in `serve.ts` und bekommen ihre Cover einmal von Open Library: *The Garden of Eden* (7 Cover), *East of Eden* (78), *Stoner* (54). Sie stehen am Ende des Durchlaufs.
 - **1984 ist ausgeschlossen** (`EXCLUDED` in `serve.ts`), auf Julians Anweisung. Damit sind es 99; das hundertste kommt beim nächsten Bau des Index dazu.
 
 ## Zwei Ansichten

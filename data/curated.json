@@ -526,9 +526,9 @@
       "id": "OL102749W",
       "title": "Moby Dick",
       "author": "Herman Melville",
-      "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:49:09.825Z"
+      "coverId": "ol:13603831",
+      "firstPublished": 1851,
+      "pickedAt": "2026-09-08T21:28:49.552Z"
     },
     {
       "id": "OL3801690W",
@@ -551,48 +551,48 @@
       "title": "Se una notte d'inverno un viaggiatore",
       "author": "Italo Calvino",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:56:16.548Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:28:19.454Z"
     },
     {
       "id": "OL5731542W",
       "title": "Half of a Yellow Sun",
       "author": "Chimamanda Ngozi Adichie",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:56:25.205Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:28:52.829Z"
     },
     {
       "id": "OL3335245W",
       "title": "The Catcher in the Rye",
       "author": "J. D. Salinger",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:56:59.284Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:28:55.042Z"
     },
     {
       "id": "OL9170454W",
       "title": "Hamlet",
       "author": "William Shakespeare",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:57:12.882Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:28:18.024Z"
     },
     {
       "id": "OL10834W",
       "title": "Das Parfum",
       "author": "Patrick Süskind",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:59:21.476Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:28:16.925Z"
     },
     {
       "id": "OL14871157W",
       "title": "Der Vorleser",
       "author": "Bernhard Schlink",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:59:26.531Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:28:16.090Z"
     },
     {
       "id": "OL2271626W",
@@ -607,8 +607,8 @@
       "title": "Die unendliche Geschichte",
       "author": "Michael Ende",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T21:08:34.102Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:28:57.459Z"
     },
     {
       "id": "OL2568879W",
@@ -664,6 +664,93 @@
       "author": "Лев Толстой",
       "coverId": "ol:15228735",
       "pickedAt": "2026-09-08T20:30:37.982Z"
+    },
+    {
+      "id": "OL1812933W",
+      "title": "American Psycho",
+      "author": "Bret Easton Ellis",
+      "coverId": "ol:10586258",
+      "firstPublished": 1991,
+      "pickedAt": "2026-09-08T21:25:49.070Z"
+    },
+    {
+      "id": "OL18941W",
+      "title": "Fight Club",
+      "author": "Chuck Palahniuk",
+      "coverId": "ol:13926391",
+      "firstPublished": 1996,
+      "pickedAt": "2026-09-08T21:25:57.559Z"
+    },
+    {
+      "id": "OL261794W",
+      "title": "A Clockwork Orange",
+      "author": "Anthony Burgess",
+      "coverId": "ol:3372879",
+      "pickedAt": "2026-09-08T21:26:15.081Z"
+    },
+    {
+      "id": "OL8193416W",
+      "title": "The Picture of Dorian Gray",
+      "author": "Oscar Wilde",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:26:19.995Z"
+    },
+    {
+      "id": "OL138052W",
+      "title": "Alice's Adventures in Wonderland",
+      "author": "Lewis Carroll",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:26:21.228Z"
+    },
+    {
+      "id": "OL28570037W",
+      "title": "The Wind in the Willows",
+      "author": "Kenneth Grahame",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:26:24.548Z"
+    },
+    {
+      "id": "OL476641W",
+      "title": "Winnie-the-Pooh",
+      "author": "A. A. Milne",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:26:25.609Z"
+    },
+    {
+      "id": "OL483391W",
+      "title": "Charlotte's Web",
+      "author": "E. B. White",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:26:27.319Z"
+    },
+    {
+      "id": "OL63055W",
+      "title": "The Garden of Eden",
+      "author": "Ernest Hemingway",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T21:27:59.334Z"
+    },
+    {
+      "id": "OL258902W",
+      "title": "Macbeth",
+      "author": "William Shakespeare",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:28:12.815Z"
+    },
+    {
+      "id": "OL52456W",
+      "title": "Faust",
+      "author": "Johann Wolfgang von Goethe",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:29:03.892Z"
     }
   ]
 }

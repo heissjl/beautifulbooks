@@ -47,6 +47,8 @@ const EXCLUDED = new Set([
  */
 const EXTRA_WORKS: Array<{ id: string; title: string; author: string }> = [
   { id: 'OL63055W', title: 'The Garden of Eden', author: 'Ernest Hemingway' },
+  { id: 'OL23166W', title: 'East of Eden', author: 'John Steinbeck' },
+  { id: 'OL3511459W', title: 'Stoner', author: 'John Williams' },
 ];
 
 interface RawIndex {
