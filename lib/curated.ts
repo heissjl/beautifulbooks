@@ -13,6 +13,11 @@
  * The list is deliberately uneven since 2026-09-07 (Julian): most of these
  * have dozens of covers, *KAFF auch Mare Crisium* has two. The caption on the
  * wall says so rather than promising what one tile cannot deliver.
+ *
+ * Eleven since 2026-09-08: *Nineteen Eighty-Four* is out on Julian's
+ * instruction, here and from the hundred behind ROADMAP 6.17. The wall is a
+ * plain grid and does not care about the count; the list itself is on its way
+ * out, replaced by the curated hundred in rotation.
  */
 export interface CuratedWork {
   id: string;
@@ -23,7 +28,6 @@ export interface CuratedWork {
 
 export const CURATED_WORKS: CuratedWork[] = [
   // Ordered for the wall, not by rank: light next to dark, no two reds side by side.
-  { id: 'OL1168083W', title: 'Nineteen Eighty-Four', author: 'George Orwell', coverId: 9267242 },
   { id: 'OL27258W', title: 'Neuromancer', author: 'William Gibson', coverId: 283860 },
   { id: 'OL1434640W', title: 'Berlin Alexanderplatz', author: 'Alfred Döblin', coverId: 577140 },
   { id: 'OL893414W', title: 'Dune', author: 'Frank Herbert', coverId: 11481354 },

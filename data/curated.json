@@ -1,0 +1,44 @@
+{
+  "curatedAt": "2026-09-08",
+  "works": [
+    {
+      "id": "OL27258W",
+      "title": "Neuromancer",
+      "author": "William Gibson",
+      "coverId": "ol:12236619",
+      "firstPublished": 1984,
+      "pickedAt": "2026-09-08T20:28:29.212Z"
+    },
+    {
+      "id": "OL627084W",
+      "title": "Lolita",
+      "author": "Vladimir Nabokov",
+      "coverId": "ol:13524656",
+      "firstPublished": 1954,
+      "pickedAt": "2026-09-08T20:28:56.204Z"
+    },
+    {
+      "id": "OL2636675W",
+      "title": "Gravity's Rainbow",
+      "author": "Thomas Pynchon",
+      "coverId": "ol:8785051",
+      "firstPublished": 1973,
+      "pickedAt": "2026-09-08T20:29:19.709Z"
+    },
+    {
+      "id": "OL66554W",
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "coverId": "ol:14855252",
+      "pickedAt": "2026-09-08T20:29:28.766Z"
+    },
+    {
+      "id": "OL450063W",
+      "title": "Frankenstein; or, The Modern Prometheus",
+      "author": "Mary Shelley",
+      "coverId": "ol:13498737",
+      "firstPublished": 1818,
+      "pickedAt": "2026-09-08T20:29:57.527Z"
+    }
+  ]
+}
