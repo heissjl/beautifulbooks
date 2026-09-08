@@ -58,7 +58,9 @@ Das ist der wichtigste Abschnitt. Ohne diese Regeln entsteht in zwei Wochen eine
 
 ## 3. Die Inhalte, nach Nutzen pro Aufwand
 
-### 5.4a Reihen-Seiten `/reihe/<slug>` — der stärkste Hebel
+Die Buchstaben sind die der Roadmap (5.4a Jahrzehnte, b Reihen, c Sprachen, d Kaufen, e Motiv); die Reihenfolge hier folgt dem Hebel, nicht dem Alphabet. Angeglichen 2026-09-08, vorher zählten beide Dokumente verschieden.
+
+### 5.4b Reihen-Seiten `/reihe/<slug>` — der stärkste Hebel
 
 **Was:** Eine Seite pro Buchreihe mit einer Wand aller Cover, die wir dazu kennen, gruppiert nach Werk, dazu drei Sätze und eine Tabelle (Werke, Cover, Jahre, Sprachen).
 
@@ -72,7 +74,7 @@ Das ist der wichtigste Abschnitt. Ohne diese Regeln entsteht in zwei Wochen eine
 
 **Warum kein Slop:** Der Wert ist die Wand. Der Text sagt: wann die Reihe beginnt, wie viele Werke wir davon kennen, was ihr Gestaltungsmuster ist (nur, wenn es sich aus den Bildern zeigen lässt — sonst weg).
 
-### 5.4b Ein Buch durch die Jahrzehnte `/book/<id>/jahrzehnte`
+### 5.4a Ein Buch durch die Jahrzehnte `/book/<id>/jahrzehnte`
 
 **Was:** Dieselben Cover wie auf der Werkseite, aber nach Jahrzehnt gruppiert statt nach Sprache, mit einer Zeile je Jahrzehnt.
 
@@ -84,7 +86,7 @@ Das ist der wichtigste Abschnitt. Ohne diese Regeln entsteht in zwei Wochen eine
 
 **Schwelle:** mindestens 20 Cover über mindestens vier Jahrzehnte.
 
-### 5.4c „Welche Ausgabe soll ich kaufen?" `/kaufen/<slug>`
+### 5.4d „Welche Ausgabe soll ich kaufen?" `/kaufen/<slug>`
 
 **Was:** Pro bekanntem Buch ein Vergleich der Ausgaben, die heute im Handel sind: Cover, Verlag, Jahr, Format, Seitenzahl, und das Urteil aus F2.9 — zeigt der Verlag zu dieser ISBN dieses Cover oder ein anderes.
 
@@ -94,7 +96,7 @@ Das ist der wichtigste Abschnitt. Ohne diese Regeln entsteht in zwei Wochen eine
 
 **Automatisierbar:** der Datenteil ja, die Empfehlung nein. Eine Maschine soll nicht sagen, welche Ausgabe schöner ist. Sie stellt die Fakten nebeneinander, Julian schreibt zwei Sätze Urteil oder lässt sie weg.
 
-### 5.4d Sprachvergleich `/book/<id>/sprachen`
+### 5.4c Sprachvergleich `/book/<id>/sprachen`
 
 **Was:** Ein Cover je Sprache, nebeneinander, mit Titel in der jeweiligen Sprache.
 
@@ -205,10 +207,10 @@ Die Seite landet als JSON oder MDX unter `content/`, eine Route rendert sie mit 
 ## 6. Reihenfolge
 
 1. **5.1 zuerst** — ohne die Liste der ~500 Werke gibt es keine Kandidaten. Sie ist eine schlichte Liste von Work-IDs, die drei Zwecken dient (Sitemap, Vorrendern der vordersten Seiten, Kandidaten für die Gattungen hier) und aus Ausgabenzahl, Coverzahl und Leserzahl gefiltert wird; Einzelheiten im Roadmap-Punkt 5.1.
-2. **5.4b Jahrzehnte-Seiten** als erste Gattung: vollständig aus vorhandenen Daten, kein Google-Aufruf, kein Modell nötig. Damit lässt sich die Kette bauen und messen, bevor Prosa ins Spiel kommt.
-3. **5.4a Reihen-Seiten** danach, weil sie den größten Sucherfolg versprechen und die Aliaslisten Julians Zeit kosten.
+2. **5.4a Jahrzehnte-Seiten** als erste Gattung: vollständig aus vorhandenen Daten, kein Google-Aufruf, kein Modell nötig. Damit lässt sich die Kette bauen und messen, bevor Prosa ins Spiel kommt.
+3. **5.4b Reihen-Seiten** danach, weil sie den größten Sucherfolg versprechen und die Aliaslisten Julians Zeit kosten.
 4. **5.5 Pinterest** parallel, sobald es Seiten zum Verlinken gibt.
-5. **5.4c Kaufberatung** erst nach Phase 4, sonst zeigt die Seite Kauf-Links ohne Provision.
+5. **5.4d Kaufberatung** erst nach Phase 4, sonst zeigt die Seite Kauf-Links ohne Provision.
 6. **5.2 Serverseitiges Rendern** nur, wenn die Search Console zeigt, dass die Wand nicht indexiert wird. Nicht auf Verdacht.
 7. **5.4e Gleiches Motiv** ganz zuletzt, nach dem Signatur-Index.
 

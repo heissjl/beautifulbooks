@@ -1,5 +1,7 @@
 # Ein pragmatisches Speichermodell für dieses Projekt
 
+> **Stand 2026-09-08.** Die Entscheidung aus §6 ist als **E18** in der Spec (ROADMAP 0.9 erledigt). Offen und weiter gültig: §3 als Bauanleitung für den Index (ROADMAP 6.10, in Arbeit: `data/`, `scripts/build-cover-index.ts`), §4 für die Zähler (3.1), §5 als eigener Punkt **6.12**.
+
 Geschrieben 2026-09-07 auf Julians Frage nach „einem pragmatischen Datenbank-Modell oder Server-side-File-Ansatz, das im Scope dieses Projektes gilt". Betrifft [ROADMAP](../../ROADMAP.md) 6.10 (ähnliche Cover), 6.9 (interne Verlinkung), 5.1 (Sitemap), 3.1 (Analyse-Seite) und die Entscheidung E6.
 
 ## 1. Die Frage, richtig gestellt

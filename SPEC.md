@@ -1,6 +1,6 @@
 # Beautiful Books – Spezifikation
 
-Stand: 2026-09-07. Diese Datei sagt, **was die Seite ist und sein soll**. Sie enthält keine Historie und keine offenen Aufgaben:
+Stand: 2026-09-08. Diese Datei sagt, **was die Seite ist und sein soll**. Sie enthält keine Historie und keine offenen Aufgaben:
 
 - Was noch zu tun ist, mit Reihenfolge und Zuständigkeit: [ROADMAP.md](ROADMAP.md).
 - Was wann gebaut, gemessen und warum entschieden wurde: [docs/history.md](docs/history.md). Die Umsetzungspläne dazu: [docs/plans/](docs/plans/).
@@ -106,6 +106,8 @@ Zwei Ebenen:
 **Affiliate-Parameter** kommen aus Umgebungsvariablen pro Markt (`AFFILIATE_AMAZON_TAG_US|UK|DE`, `AFFILIATE_BOOKSHOP_ID_US|UK`); ohne Variable entsteht der neutrale Link. Nur Amazon und Bookshop.org haben überhaupt einen Provisionsparameter; die übrigen neun Links sind Servicelinks. Die Reihenfolge der Händler ist **nicht** nach Provision sortiert, und die About-Seite sagt das.
 
 **Ein Kauf-Link führt zur ISBN, nicht zum Cover** (2.3). Die Seite sagt deshalb pro ausgewähltem Cover, ob das Bild, das der Verlag zu dieser ISBN hinterlegt hat, dieses Cover ist (F2.9). Kauf-Links laufen über `/go/<provider>/<isbn>` (F5); die Such-Links bleiben direkt.
+
+**Werbung** neben den Kauf-Links regelt E19: höchstens ein Platz je Seite, automatisch von einem Netzwerk gefüllt, ohne Kennung des Lesers, nie in Wand, Ergebnis oder Händlerliste. Heute gibt es keinen.
 
 ---
 
@@ -276,6 +278,7 @@ Leitidee: **Galerie, nicht Shop.** Tokens in `app/globals.css` (Tailwind 4, `@th
 | E16 | 2026-09-07 | Leer aussehende Cover | Werden nie gelöscht, nur ans Ende sortiert; eine Löschregel traf vier echte Cover von acht. |
 | E17 | 2026-09-07 | Reihenfolge der Sprach-Tabs | Gesuchte Sprache, dann Englisch, dann Deutsch, dann Häufigkeit, Unbekannt zuletzt; Reihenfolge wird nach dem ersten Auftauchen eingefroren. |
 | E18 | 2026-09-07 | Was E6 mit „Speicher“ meint | **Gebaute, nur lesbare Daten im Repo sind kein Speicher im Sinne von E6.** Ein Index, den ein Skript vor dem Deploy erzeugt und der mit dem Deploy ausgeliefert wird, ist erlaubt; ein Speicher, in den die **laufende Seite schreibt**, bleibt zurückgestellt. Abgrenzung zu §1: ein solcher Index hält **abgeleitete Werte** (Signaturen, Farbmaße) und Kennungen, keine Katalogdatensätze — die „eigene Buchdatenbank“, die §1 ausschließt, bleibt ausgeschlossen. Begründung und Größenrechnung in [docs/plans/PLAN-speicher.md](docs/plans/PLAN-speicher.md). |
+| E19 | 2026-09-08 | Werbung | **Höchstens ein Platz je Seite, und nur, wenn ein Netzwerk ihn automatisch füllt** — kein von Hand verkaufter oder belegter Platz (Julian: zu viel Arbeit). Der Platz liegt außerhalb von Cover-Wand, Ergebnisraster und Händlerliste; das Netzwerk darf keine Kennung des Lesers setzen (N11, E14) und muss Kategorien ausschließen können, sonst gibt es den Platz nicht; gekennzeichnet; kein Anzeigenkunde beeinflusst Wand, Ranking, Verdikt oder Händlerliste. Programmatic Display mit Einwilligung, Direktvermarktung, Bezahlfunktionen auf Google-Daten und Merch aus Covern sind ausgeschlossen. Analyse in [docs/plans/PLAN-4-einnahmen.md](docs/plans/PLAN-4-einnahmen.md). |
 
 ---
 
@@ -298,7 +301,7 @@ Die Zahlen, die den Entwurf bestimmen. Herkunft und Messaufbau in [docs/history.
 | Seite 0 | Sprachengemisch, meist ohne Sprachangabe; bei *1984* keine deutsche Ausgabe auf Seite 0. | Mosaik sprachneutral (E15); Ladeszene wartet auf die Sprache (F2.4). |
 | Dedupe-Schwellen | Verschiedene Designs mit gemeinsamem Public-Domain-Motiv liegen bei Distanz 17–22; echte Duplikate desselben Verlags bei 5–16, gleiche ISBN bis 20. | Drei Stufen (2.3); oberhalb von 8 nur mit Metadaten. |
 | Was die Stufen nicht fangen¹ | *Mason & Dixon*: 12 gezeigte Kacheln, davon 7 dasselbe Motiv. Gleiche ISBN bei Distanz 22 (Stufe faltet bis 20); „Henry Holt" gegen „Holt Paperbacks" bei 10 (Wortmengen-Vergleich erkennt das Haus nicht); fehlende Sprachangabe bei 11. | [ROADMAP](ROADMAP.md) 6.7, nach der Quellenprüfung 6.6 |
-| Kaltes Hashing | 4 s Budget pro Seite reichen beim ersten Aufruf nur für einen Teil der Bilder. | Cover-Zahl sinkt beim zweiten Besuch; hingenommen. |
+| Kaltes Hashing | 4 s Budget pro Seite reichen beim ersten Aufruf nur für einen Teil der Bilder; das Signatur-Memo lebt je Serverinstanz. | Cover-Zahl sinkt beim zweiten Besuch; hingenommen, bis [ROADMAP](ROADMAP.md) 6.12 die Signaturen in den Datencache legt. |
 | Verdikt | Von 20 ISBNs bei *Beloved*: 4 `verified`, 4 `differs`, 12 `unknown`. | Wo Google ein Bild hat, zeigt der Handel in der Hälfte der Fälle ein anderes; ohne Amazon-PA-API bleibt die Mehrheit unbekannt. |
 | Verfügbarkeitsprüfung | Aussage für etwa zwei von sechs Händlern; vier verbieten den Pfad per robots.txt. | Vier Zustände, nicht freigegeben (F2.10, E12). |
 | Provision | Nur 2 von 11 Kauf-Links haben einen Provisionsparameter; keiner ist konfiguriert. | Nichts verdient, bevor die Programme stehen (ROADMAP). |

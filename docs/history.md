@@ -691,3 +691,24 @@ Vollständig in [plans/PLAN-speicher.md](plans/PLAN-speicher.md). Der Kern und d
 **E18 aufgenommen (2026-09-07).** Julian hat die Präzisierung abgenickt: gebaute, nur lesbare Daten im Repo sind kein Speicher im Sinne von E6, ein Speicher, in den die laufende Seite schreibt, bleibt zurückgestellt. Dazu die Abgrenzung, die sonst ein Widerspruch geworden wäre: ein solcher Index hält **abgeleitete Werte** — Signaturen, Farbmaße — und Kennungen, keine Katalogdatensätze; die „eigene Buchdatenbank“, die §1 ausschließt, bleibt ausgeschlossen. §1 sagt das jetzt selbst, damit der nächste Leser den Index nicht für einen Regelbruch hält.
 
 Auf Julians Anstoß steht die dahinterliegende Frage als ROADMAP 0.10 daneben: ob der Zuschnitt des Projekts insgesamt zu überdenken ist. E6 und der Ausschluss der eigenen Datenbank stammen vom 2026-09-06, als das Produkt eine Suchmaske über zwei fremde Kataloge war; seitdem sind ein Cover-Index, Autoren- und Verlagsregister, 500 kuratierte Werke, redaktionelle Seiten, Zähler und ein Bild-Cache dazugekommen. Der Punkt trägt die Argumente beider Seiten und die Bedingung, unter der er zu entscheiden ist — nach 6.6 und nach Phase 3, an drei Zahlen: Ausfallquote der Quellen über eine Woche, tatsächlicher Kontingentverbrauch, und wie viele Leser gehen, bevor die Wand steht.
+
+---
+
+## 2026-09-08 · Einnahmen: die Entscheidung, und ein Durchgang durch Pläne, Spec und Code
+
+**Einnahmen jenseits der Affiliate-Links.** Die Analyse vom Vortag ([plans/PLAN-4-einnahmen.md](plans/PLAN-4-einnahmen.md)) hatte einen von Hand belegten Platz empfohlen — erst unbezahlt für Open Library, später an Direktsponsoren verkauft. Julian: „ein einziger stiller Platz ist zu viel Arbeit, wenn ich selbst auswählen muss. Wenn es einen Marktplatz dafür gibt, wo das automatisch passiert, ist das ok.“ Damit ist Direktvermarktung gestrichen und die guten Zwecke auf einen möglichen Fußzeilen-Satz geschrumpft; was bleibt, ist ein Platz, den ein Netzwerk ohne Kennung des Lesers füllt (Carbon Ads, EthicalAds, BuySellAds — Passung mittel, 0,50–1,10 USD CPM laut Netzwerk, also erst bei fünfstelligen Aufrufen mehr als Taschengeld). Als **E19** in der Spec; ROADMAP 4.6 erledigt, 4.7 und 4.8 neu gefasst. Die Rechnung dahinter bleibt: Affiliate bringt pro Aufruf mindestens so viel wie jede Werbung, die mit N11 vereinbar ist, und die Seite trägt sich ab etwa 30–50 EUR im Monat, also grob 5.000–15.000 Detailseiten-Aufrufen. Annahmen, keine Messungen; Phase 3 ersetzt sie.
+
+**Der Durchgang.** Julian: „gehe nochmal das Projekt durch, vergleiche Pläne mit Umgesetztem und dem Spec, räume auf.“ Geprüft: acht Pläne gegen Roadmap, Spec, Historie und Code; Tests (204, grün) und Typprüfung auf dem Arbeitsstand.
+
+| Fund | Was daraus wurde |
+|---|---|
+| PLAN-A, PLAN-B, PLAN-11 stimmen mit Historie und Code überein; ihr Kopf sagt, dass sie Geschichte sind | nichts, außer einem Index in [plans/README.md](plans/README.md), der Stand und Roadmap-Punkt jedes Plans nennt |
+| PLAN-5 zählte die Seitengattungen anders als die Roadmap (dort a Jahrzehnte, b Reihen; im Plan umgekehrt), und 6.6 sowie 6.9 zitieren „5.4b“ nach der Roadmap | PLAN-5 auf die Buchstaben der Roadmap umgestellt, Reihenfolge nach Hebel beibehalten |
+| 6.9 und 6.10 sprachen noch von einer offenen Entscheidung 0.9 und einem „Speicher aus Phase 3“; beides ist mit E18 entschieden | Sätze angepasst; PLAN-speicher trägt einen Kopf mit dem Stand |
+| PLAN-speicher §2/§5 hatten die Ursache der sinkenden Cover-Zahl beim zweiten Besuch gefunden (Signatur-Memo je Instanz, ohne Obergrenze) samt billigem Ausweg — aber kein Roadmap-Punkt trug das | **6.12** neu; SPEC §7 verweist statt „hingenommen“ darauf |
+| README: „1,000 requests per day by default, more on request“ — der Erhöhungsweg ist seit B7 tot | Satz ersetzt, Verweis auf 0.3 |
+| `public/` enthielt fünf Next-Boilerplate-SVGs, nirgends benutzt | gelöscht |
+| Zwei `scratch-*.ts` im Root, dazu `data/`, `scripts/build-cover-index.ts`, `scripts/pick-index-works.ts`, `lib/coverindex.ts`, `app/api/similar/` und Änderungen an `imagehash`/`imagesig` — nicht committet, aus einer parallel laufenden Sitzung zu 6.10 | nicht angefasst; in der Roadmap als „in Arbeit“ vermerkt |
+
+**Ordnerstruktur.** Julians Frage, ob das Projekt neu geordnet werden muss, damit ein automatisierter TikTok-Clip im selben Projekt entstehen kann, ohne mit der Website vermischt zu werden: Vorschlag in [plans/PLAN-struktur.md](plans/PLAN-struktur.md), Entscheidung ROADMAP 0.11. Kern: `lib/` importiert nichts aus `next` (geprüft), also kann ein `lab/<name>/` es per `npx tsx` benutzen; eine Lint-Regel verbietet die Gegenrichtung. Ein Monorepo mit Workspaces kostete einen Tag und 273 Pfadangaben für eine Trennung, die die Lint-Regel auch leistet. Der Clip zerfällt in ein reines, getestetes Storyboard und einen ffmpeg-Render; ffmpeg ist auf dem Rechner nicht installiert.
+

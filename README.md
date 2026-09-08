@@ -4,7 +4,7 @@ A visual book search: type a title, get one card per book with a mosaic of its c
 
 Data comes from [Open Library](https://openlibrary.org/developers/api) (primary) and [Google Books](https://developers.google.com/books) (supplementary covers and descriptions).
 
-**Status:** the data layer and the trust pass are done; the site is not deployed yet. What the site is: [SPEC.md](SPEC.md). What remains, in order: [ROADMAP.md](ROADMAP.md). What was built and measured: [docs/history.md](docs/history.md).
+**Status:** the data layer and the trust pass are done; the site is not deployed yet. What the site is: [SPEC.md](SPEC.md). What remains, in order: [ROADMAP.md](ROADMAP.md). What was built and measured: [docs/history.md](docs/history.md). The detailed plans, open and finished: [docs/plans/README.md](docs/plans/README.md).
 
 ## Stack
 
@@ -29,7 +29,7 @@ No environment variables are required for local development; without them the ap
 
 ### Getting a Google Books API key
 
-The Books API is free; the key only identifies your project so you get your own quota (1,000 requests per day by default, more on request).
+The Books API is free; the key only identifies your project so you get your own quota: 1,000 requests per day. There is no self-service way to raise it (the "adjustable" path ends in the Google Search help pages); the last untried route is enabling billing, see ROADMAP.md 0.3.
 
 1. Open https://console.cloud.google.com/ and sign in with a Google account.
 2. Create a project (top bar, project picker, "New project"), e.g. `beautifulbooks`.
