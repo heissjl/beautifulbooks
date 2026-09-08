@@ -15,7 +15,7 @@ Die Phasen folgen Abhängigkeiten, nicht Aufwand: Provision braucht eine öffent
 | Sechs Fehler (T1–T6) | T1, T2, T5 → 1.4 und 1.5 | T4, T6 → 1.7. T3 war keine Reparatur, sondern eine Messung; sie geht in Entscheidung 0.7 ein |
 | Zehn Qualitätsfunde (T7–T16) | T7, T14, und T8 zum Teil → 1.5 und 1.6 | T9 → 6.4, T10 → 1.2, T11 → 1.1, T12 → 6.1, T13 → 6.2, T15 → 6.3, T16 → 1.3 |
 
-Vor dem Deployment stehen damit noch 1.1, 1.2, 1.3, 1.7, 1.8 und 1.9, dazu Julians Phase 0.
+Vor dem Deployment stehen damit noch 1.1, 1.2, 1.3, 1.7, 1.8 und 1.9, dazu Julians Phase 0 — und seit dem 2026-09-08 die Frage, ob **6.13** nicht davorgehört: eine Karte, die 14 Ausgaben verspricht und auf eine Seite mit 8 führt, ist ein gebrochenes Versprechen, kein Schönheitsfehler.
 
 **Dazugekommen am 2026-09-07 abends** (Julian beim Ansehen der eigenen Seite): der leere Platz oben rechts auf der Startseite (**1.9**, mit vier Vorschlägen), eine Prüfung anderer Datenbanken, bevor weiter an der Faltung geschraubt wird (**6.6**), die gemessenen Dubletten bei *Mason & Dixon* und in den Mosaiken (**6.7**), und eine „All languages"-Pille hinter „Unknown" auf der Detailseite (**6.8**). 6.6 steht ausdrücklich **vor** 6.7 und 6.4: löst eine andere Quelle die Dubletten an der Wurzel, ist jede Schwellenwert-Arbeit davor verschwendet.
 
@@ -24,6 +24,14 @@ Vor dem Deployment stehen damit noch 1.1, 1.2, 1.3, 1.7, 1.8 und 1.9, dazu Julia
 **Einnahmen jenseits der Affiliate-Links** (Julian, 2026-09-07: „Geld verdienen, ohne komplett seine Ehre aufzugeben“): Analyse in [docs/plans/PLAN-4-einnahmen.md](docs/plans/PLAN-4-einnahmen.md). Affiliate bleibt die Hauptquelle und ist pro Aufruf mindestens so ergiebig wie jede Werbung, die mit N11 (kein Tracking, kein Cookie-Banner) vereinbar ist; Programmatic Display fällt deshalb weg. **Entschieden am 2026-09-08** (Julian): ein von Hand verkaufter oder belegter Platz ist zu viel Arbeit; ein Platz ist nur in Ordnung, wenn ein Marktplatz ihn automatisch füllt. Die Regeln dazu sind **E19**; offen bleiben 4.7 (Netzwerk anfragen, sobald es Reichweite gibt) und 4.8 (messen), dazu buch7 in 4.3.
 
 **Durchgang durch Pläne, Spec und Code am 2026-09-08** (Julian: „vergleiche Pläne mit Umgesetztem und dem Spec, räume auf“). Ergebnis: die drei historischen Pläne stimmen mit Historie und Code überein; die offenen Pläne hatten vier Stellen, die die Entscheidung E18 noch nicht kannten (6.9, 6.10, PLAN-speicher) oder andere Buchstaben als die Roadmap benutzten (PLAN-5, 5.4a–e). Ein Fund aus PLAN-speicher stand in keinem Punkt: das Signatur-Memo lebt je Serverinstanz, was die sinkende Cover-Zahl beim zweiten Besuch erklärt und billig zu beheben ist — jetzt **6.12**. Das README versprach ein Kontingent „auf Anfrage mehr“, das es nicht gibt. Neu: ein Index der Pläne in [docs/plans/README.md](docs/plans/README.md) und der Vorschlag zur Ordnerstruktur in [docs/plans/PLAN-struktur.md](docs/plans/PLAN-struktur.md), Entscheidung **0.11**. Parallel dazu in Arbeit, nicht committet: das Farbmaß und der Cover-Index für 6.10 (`data/`, `scripts/build-cover-index.ts`).
+
+**Der Böll-Durchgang am 2026-09-08** (Julian: „Ansichten Böll ist ein Testcase, wo Cover im Vorschau-Mosaik auftauchen, aber dann nicht in der Anzeige"). Aus einer Beobachtung wurden drei getrennte Befunde, und zwei davon sitzen tiefer als gedacht:
+
+- **6.13 — die Karte fasst Werk-Datensätze zusammen, die die Wand nie lädt.** Open Library führt *Ansichten eines Clowns* sechsmal; die Suche macht daraus eine Karte mit 14 Ausgaben, die Detailseite lädt einen Datensatz mit 8. **Der schwerste offene Fehler in der Datenschicht**, und er trifft jedes mehrfach geführte Buch.
+- **6.14 — ein gefaltetes Cover ist nirgends anzusehen.** Das „+N" ist nicht anklickbar, ein Link darauf löst auf den Vertreter auf. Widerspricht E16, wonach ein Fehlurteil eine Position kosten soll und kein Cover.
+- **6.15 — Übersetzungen sind eigene Karten**, obwohl SPEC §2.1 das Gegenteil verlangt: bei „ansichten böll" gehören 21 von 22 Ausgaben zu einem Roman. Eine verlässliche maschinelle Verbindung zwischen den Datensätzen **gibt es nicht**; erst messen, dann entscheiden, ob eine dritte Identitätsregel dazukommt oder §2.1 umgeschrieben werden muss.
+
+Alle drei haben feste Testfälle (`OL279833W`, Suche „ansichten böll"). 6.13 gehört vor 6.15 und beide vor jede weitere Arbeit an der Zusammenfassung.
 
 **Phase 5 neu gefasst am 2026-09-07** (Julian): ausführlicher Plan in [docs/plans/PLAN-5-reichweite.md](docs/plans/PLAN-5-reichweite.md), mit den Seitengattungen, der Kette aus Claude-Agenten, die sie herstellt, und den zehn Regeln gegen Slop. Der Newsletter ist gestrichen, die interne Verlinkung nach **6.9** gewandert, weil sie zuerst der Seite selbst nützt und einen Index braucht, den es noch nicht gibt.
 
@@ -40,8 +48,9 @@ Vor dem Deployment stehen damit noch 1.1, 1.2, 1.3, 1.7, 1.8 und 1.9, dazu Julia
 | 4 | Phase 1, Punkt 1.7: die zwei Antworten, die nicht stimmen | Claude | eine Stunde |
 | 5 | Phase 2: Vercel, Domain, Impressum und Datenschutz, Search Console | beide | eine Sitzung |
 | 6 | Phase 4, Punkt 4.1: Bookshop.org beantragen, sobald die Seite erreichbar ist | Julian | zehn Minuten plus Tage Wartezeit |
-| 7 | Phase 6, Punkt 6.6: andere Datenbanken messen, danach 6.7 (Dubletten) | Claude | zwei Tage, ~15 USD |
-| 8 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
+| 7 | Phase 6, Punkte 6.13 und 6.15: Karte und Wand meinen dasselbe Werk (Böll-Testfälle) | Claude | eine bis zwei Sitzungen |
+| 8 | Phase 6, Punkt 6.6: andere Datenbanken messen, danach 6.7 (Dubletten) | Claude | zwei Tage, ~15 USD |
+| 9 | Phase 3: Analyse-Seite, nach einer Woche echter Besucher | Claude | zwei Tage |
 
 Die Ranking-Punkte aus Phase 6 stehen bewusst nicht in dieser Liste: sie sind Qualität, kein Fehler, und sie brauchen mehr Messung als eine Sitzung hergibt.
 
