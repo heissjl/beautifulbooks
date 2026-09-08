@@ -6,6 +6,7 @@ import { CURATED_WORKS } from '@/lib/curated';
 import type { Cover, Edition, Work } from '@/lib/model';
 import { bookJsonLd, workDescription, workPageTitle, workUrl } from '@/lib/seo';
 import { getWorkPage, isWorkId } from '@/lib/work';
+import { getWork } from '@/lib/sources/openlibrary';
 
 /**
  * The work page (SPEC §3 F2, §10 D10).
@@ -80,6 +81,21 @@ async function WorkJsonLd({ id }: { id: string }) {
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
   if (!isWorkId(id)) notFound();
+  /*
+    A well-formed id that the catalogue does not know is a 404, not a page
+    that says "Book not found" with status 200 (ROADMAP 1.7): a crawler
+    indexes the latter. The lookup is the same cached request that
+    `generateMetadata` has already made, so it costs no second wait. Only a
+    definite "no such work" is a 404; a silent catalogue renders the page and
+    lets the client report the outage, because an outage is not an absence.
+  */
+  let known = true;
+  try {
+    known = (await getWork(id)) !== null;
+  } catch {
+    known = true;
+  }
+  if (!known) notFound();
 
   return (
     <>

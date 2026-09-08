@@ -105,6 +105,14 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
   const work = await getWork(workId);
   if (!work) return null;
 
+  // Past the scan cap the answer is an empty page that says where it is,
+  // not the last page under the cap wearing the wrong offset (ROADMAP 1.7).
+  // One record is fetched so the source's total can still be reported.
+  if (offset >= MAX_EDITIONS_SCANNED) {
+    const probe = await getEditionsPage(workId, offset, 1);
+    return { work, editions: [], covers: [], page: { offset, limit: OL_EDITIONS_PAGE, total: probe.size } };
+  }
+
   const first = offset === 0;
   // Google Books runs on page 0 only, and only when the caller wants it: its
   // quota must not grow with the page count nor with the size of a result list.

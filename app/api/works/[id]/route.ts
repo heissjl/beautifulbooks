@@ -6,7 +6,7 @@ import type { Cover, EditionView, Work } from '@/lib/model';
 import type { ImageSignature } from '@/lib/imagesig';
 import type { PageInfo } from '@/lib/pages';
 import { OL_EDITIONS_PAGE } from '@/lib/sources/openlibrary';
-import { getWorkPage, isWorkId, MAX_EDITIONS_SCANNED } from '@/lib/work';
+import { getWorkPage, isWorkId } from '@/lib/work';
 import { MOSAIC_COVERS } from '@/lib/works';
 import { rateLimited } from '@/app/api/rate';
 
@@ -48,11 +48,16 @@ export function marketFromRequest(request: NextRequest): Market {
   });
 }
 
-/** Offsets are page-aligned and bounded; anything else is treated as page 0. */
+/**
+ * Offsets are page-aligned; anything unusable is page 0. An offset past the
+ * scan cap is *not* pulled back to the last page: `getWorkPage` answers it
+ * with an empty page at that offset, so the reply reports what was asked
+ * for rather than a page the caller already has (ROADMAP 1.7).
+ */
 export function offsetFromRequest(raw: string | null): number {
   const n = Number(raw ?? 0);
   if (!Number.isFinite(n) || n <= 0) return 0;
-  return Math.min(Math.floor(n / OL_EDITIONS_PAGE) * OL_EDITIONS_PAGE, MAX_EDITIONS_SCANNED - OL_EDITIONS_PAGE);
+  return Math.floor(n / OL_EDITIONS_PAGE) * OL_EDITIONS_PAGE;
 }
 
 /**
@@ -67,6 +72,9 @@ export function offsetFromRequest(raw: string | null): number {
  *
  * 400 malformed id, 404 unknown work, 503 Open Library unreachable.
  */
+// An editions page has a 12 s cap and the hashing another 4 s (ROADMAP 2.1).
+export const maxDuration = 30;
+
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
   if (!isWorkId(id)) {

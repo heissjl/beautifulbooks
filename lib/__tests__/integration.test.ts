@@ -227,6 +227,14 @@ describe('getWorkPage', () => {
     expect(below!.page.nextOffset).toBe(MAX_EDITIONS_SCANNED - 100);
   });
 
+  it('answers an offset past the scan cap with an empty page at that offset (ROADMAP 1.7)', async () => {
+    const beyond = await getWorkPage(GATSBY, { offset: MAX_EDITIONS_SCANNED });
+    expect(beyond!.editions).toEqual([]);
+    expect(beyond!.covers).toEqual([]);
+    expect(beyond!.page).toEqual({ offset: MAX_EDITIONS_SCANNED, limit: 100, total: 1180 });
+    expect(beyond!.work.id).toBe(GATSBY);
+  });
+
   it('rejects malformed ids and unknown works', async () => {
     await expect(getWorkPage('../etc/passwd')).resolves.toBeNull();
     await expect(getWorkPage('OL999999999W')).resolves.toBeNull();
