@@ -19,6 +19,8 @@
  * plain grid and does not care about the count; the list itself is on its way
  * out, replaced by the curated hundred in rotation.
  */
+import curatedFile from '@/data/curated.json';
+
 export interface CuratedWork {
   id: string;
   title: string;
@@ -44,3 +46,39 @@ export const CURATED_WORKS: CuratedWork[] = [
 export function olCover(coverId: number, size: 'S' | 'M' | 'L' = 'M'): string {
   return `https://covers.openlibrary.org/b/id/${coverId}-${size}.jpg`;
 }
+
+/** How many tiles the home page shows: three full rows of six (ROADMAP 6.17). */
+export const WALL_SIZE = 18;
+
+/**
+ * The wall the home page actually renders.
+ *
+ * Julian's own picks from `data/curated.json` come first — one cover chosen
+ * by eye per work in the curation tool (ROADMAP 6.18) — and the hand-written
+ * list above fills up whatever is missing, so the wall is full from the first
+ * day of curating rather than the last. Works picked in both places appear
+ * once, with the chosen cover winning.
+ *
+ * **Deterministic on purpose.** Rotating the eighteen per page load is
+ * ROADMAP 6.17 and needs a decision this file cannot make: the home page is
+ * prerendered, so a rotation computed here would differ between the HTML and
+ * the browser and React would tear it down. Order is therefore fixed until
+ * the rotation has a server to come from.
+ */
+function pickedWorks(): CuratedWork[] {
+  const out: CuratedWork[] = [];
+  for (const p of curatedFile.works) {
+    if (p.skipped || !p.coverId.startsWith('ol:')) continue;
+    const coverId = Number(p.coverId.slice(3));
+    if (!Number.isFinite(coverId) || coverId <= 0) continue;
+    out.push({ id: p.id, title: p.title, author: p.author, coverId });
+  }
+  return out;
+}
+
+export const WALL_WORKS: CuratedWork[] = (() => {
+  const picked = pickedWorks();
+  const seen = new Set(picked.map(w => w.id));
+  const filler = CURATED_WORKS.filter(w => !seen.has(w.id));
+  return [...picked, ...filler].slice(0, WALL_SIZE);
+})();

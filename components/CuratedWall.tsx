@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import CoverImage from './CoverImage';
 import { storeWorkPreview } from './useWorkPreview';
-import { CURATED_WORKS, olCover } from '@/lib/curated';
+import { WALL_WORKS, olCover } from '@/lib/curated';
 
 /** Empty-state cover wall on the home page (SPEC §8.1). */
 export default function CuratedWall() {
@@ -11,10 +11,10 @@ export default function CuratedWall() {
     <section aria-labelledby="curated-heading">
       <div className="mb-5 flex items-baseline justify-between">
         <h2 id="curated-heading" className="text-2xl text-ink">Start with a classic</h2>
-        <p className="hidden text-sm text-ink-3 sm:block">Twelve books, picked by eye</p>
+        <p className="hidden text-sm text-ink-3 sm:block">{WALL_WORKS.length} books, one cover each, picked by eye</p>
       </div>
       <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6">
-        {CURATED_WORKS.map(w => (
+        {WALL_WORKS.map(w => (
           <li key={w.id}>
             <Link
               href={`/book/${w.id}`}
