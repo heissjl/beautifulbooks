@@ -18,6 +18,15 @@ describe('normalizeTitle', () => {
   it('keeps a title that is only an article', () => {
     expect(normalizeTitle('The')).toBe('the');
   });
+  it('drops series and edition notes in trailing brackets (ROADMAP 6.15 step 1)', () => {
+    expect(normalizeTitle("Ansichten eines Clowns (Methuen's Twentieth Century German Texts)")).toBe('ansichten eines clowns');
+    expect(normalizeTitle('Nineteen Eighty-Four [Penguin Modern Classics] (annotated)')).toBe('nineteen eighty four');
+    expect(normalizeTitle('Beloved (Vintage International): A Novel')).toBe('beloved');
+  });
+  it('keeps brackets that are not a trailing note', () => {
+    expect(normalizeTitle('(Untitled)')).toBe('untitled');
+    expect(normalizeTitle('Catch-22 (and) other stories')).toBe('catch 22 and other stories');
+  });
 });
 
 describe('normalizeAuthor / authorMatchKey', () => {

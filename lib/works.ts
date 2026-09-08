@@ -18,25 +18,49 @@ function uniq<T>(xs: readonly T[]): T[] {
 }
 
 /**
+ * Same primary author, for identity rule 2 (ROADMAP 6.15 step 2).
+ *
+ * The Open Library author key joins; it never splits. Equal keys make one
+ * author out of spellings the loose name key would not connect ("Heinrich
+ * Böll" and "H. T. Boll"). But a *different* key is no evidence of a
+ * different person: Open Library files Reed under OL27626A and OL11412010A,
+ * and refusing the name match there would split Mumbo Jumbo, one of the
+ * acceptance queries. Two namesakes with the same title therefore still
+ * merge, as they did before; keeping them apart needs a signal the records
+ * do not carry (measured 2026-09-08, ROADMAP 6.15).
+ */
+function samePrimaryAuthor(a: WorkSummary, b: WorkSummary): boolean {
+  const ka = a.authorKeys?.[0];
+  const kb = b.authorKeys?.[0];
+  if (ka && kb && ka === kb) return true;
+  return authorMatchKey(a.authors[0] ?? '') === authorMatchKey(b.authors[0] ?? '');
+}
+
+/**
  * Identity rule 2 (SPEC §2.1): works with the same normalized title and
  * primary author are one work, even if Open Library has several ids for it.
  * The id of the member with the most editions survives; edition counts add
  * up, covers and languages are unioned.
  */
 export function mergeWorks(works: readonly WorkSummary[]): WorkSummary[] {
-  const byKey = new Map<string, WorkSummary>();
+  // Grouped by title first; within a title, the author decides (see above).
+  const byTitle = new Map<string, WorkSummary[]>();
   for (const w of works) {
-    const key = identityKey(w);
-    const existing = byKey.get(key);
-    if (!existing) {
-      byKey.set(key, { ...w, coverUrls: [...w.coverUrls], languages: [...w.languages] });
+    const title = normalizeTitle(w.title);
+    const members = byTitle.get(title) ?? [];
+    if (!byTitle.has(title)) byTitle.set(title, members);
+    const at = members.findIndex(m => samePrimaryAuthor(m, w));
+    if (at < 0) {
+      members.push({ ...w, coverUrls: [...w.coverUrls], languages: [...w.languages] });
       continue;
     }
+    const existing = members[at];
     const takeIdFrom = (w.editionCount ?? 0) > (existing.editionCount ?? 0) ? w : existing;
-    byKey.set(key, {
+    members[at] = {
       id: takeIdFrom.id,
       title: takeIdFrom.title,
       authors: takeIdFrom.authors,
+      authorKeys: takeIdFrom.authorKeys,
       firstPublishYear: minDefined(existing.firstPublishYear, w.firstPublishYear),
       editionCount: (existing.editionCount ?? 0) + (w.editionCount ?? 0) || undefined,
       coverUrls: uniq([...existing.coverUrls, ...w.coverUrls]),
@@ -48,9 +72,9 @@ export function mergeWorks(works: readonly WorkSummary[]): WorkSummary[] {
         ratings: maxDefined(existing.popularity?.ratings, w.popularity?.ratings),
       },
       sourceRank: minDefined(existing.sourceRank, w.sourceRank),
-    });
+    };
   }
-  return Array.from(byKey.values());
+  return Array.from(byTitle.values()).flat();
 }
 
 function minDefined(a?: number, b?: number): number | undefined {

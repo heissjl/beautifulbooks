@@ -46,6 +46,30 @@ describe('mergeWorks', () => {
     ]);
     expect(merged).toHaveLength(2);
   });
+  it('joins by Open Library author key as well as by name, and never splits on a key alone (6.15 step 2)', () => {
+    const merged = mergeWorks([
+      // Reed under two keys (OL27626A, OL11412010A): the names agree, so the
+      // works still merge. A key mismatch must not split what the name joins.
+      work({ id: 'D', title: 'Mumbo Jumbo', authors: ['Ishmael Reed'], authorKeys: ['OL27626A'], editionCount: 30 }),
+      work({ id: 'E', title: 'Mumbo Jumbo', authors: ['Reed, Ishmael'], authorKeys: ['OL11412010A'], editionCount: 1 }),
+      // A spelling the loose name key would not join, but the key does.
+      work({ id: 'F', title: 'Clown', authors: ['Heinrich Böll'], authorKeys: ['OL2633288A'], editionCount: 8 }),
+      work({ id: 'G', title: 'Der Clown', authors: ['H. T. Boll'], authorKeys: ['OL2633288A'], editionCount: 2 }),
+      // Different people, different keys, different names: apart.
+      work({ id: 'H', title: 'Clown', authors: ['Ann Miller'], authorKeys: ['OL9A'], editionCount: 1 }),
+    ]);
+    expect(merged.map(w => w.id).sort()).toEqual(['D', 'F', 'H']);
+    expect(merged.find(w => w.id === 'D')!.editionCount).toBe(31);
+    expect(merged.find(w => w.id === 'F')).toMatchObject({ editionCount: 10, authorKeys: ['OL2633288A'] });
+  });
+  it('folds a bracketed edition note into the plain title (6.15 step 1)', () => {
+    const merged = mergeWorks([
+      work({ id: 'A', title: 'Ansichten eines Clowns', authors: ['Heinrich Böll'], editionCount: 8 }),
+      work({ id: 'B', title: "Ansichten eines Clowns (Methuen's Twentieth Century German Texts)", authors: ['Heinrich Böll'], editionCount: 2 }),
+    ]);
+    expect(merged.map(w => w.id)).toEqual(['A']);
+    expect(merged[0].editionCount).toBe(10);
+  });
 });
 
 describe('candidatesToSourceEditions', () => {

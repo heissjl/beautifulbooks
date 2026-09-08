@@ -18,17 +18,33 @@ function basicNormalize(s: string): string {
 
 /**
  * Title key for work identity: lowercase, no diacritics, subtitle after ":"
- * removed, punctuation removed, leading article removed.
+ * removed, trailing bracketed additions removed, punctuation removed,
+ * leading article removed.
  *
- *   "The Great Gatsby: A Novel" -> "great gatsby"
- *   "Gravity's Rainbow"          -> "gravitys rainbow"
+ *   "The Great Gatsby: A Novel"                                  -> "great gatsby"
+ *   "Gravity's Rainbow"                                           -> "gravitys rainbow"
+ *   "Ansichten eines Clowns (Methuen's Twentieth Century Texts)" -> "ansichten eines clowns"
+ *
+ * The bracket rule is ROADMAP 6.15 step 1: a series or edition note in
+ * brackets at the end of a title does not make it another title. Only
+ * trailing groups go, and only when something is left in front of them —
+ * "(Untitled)" stays what it is.
  */
 export function normalizeTitle(title: string): string {
-  const main = title.split(':')[0];
+  const main = stripTrailingBrackets(title.split(':')[0]);
   // Remove apostrophes without inserting a space so "Gravity's" -> "gravitys".
   const words = basicNormalize(main.replace(/['’]/g, '')).split(' ');
   if (words.length > 1 && LEADING_ARTICLES.has(words[0])) words.shift();
   return words.join(' ');
+}
+
+function stripTrailingBrackets(s: string): string {
+  let out = s.trim();
+  for (;;) {
+    const next = out.replace(/\s*(\([^()]*\)|\[[^\[\]]*\])\s*$/, '');
+    if (next === out || next.trim() === '') return out;
+    out = next.trim();
+  }
 }
 
 /**
