@@ -2,6 +2,14 @@
   "curatedAt": "2026-09-08",
   "works": [
     {
+      "id": "OL27258W",
+      "title": "Neuromancer",
+      "author": "William Gibson",
+      "coverId": "ol:15251791",
+      "firstPublished": 1984,
+      "pickedAt": "2026-09-08T20:41:50.399Z"
+    },
+    {
       "id": "OL627084W",
       "title": "Lolita",
       "author": "Vladimir Nabokov",
@@ -274,6 +282,116 @@
       "coverId": "",
       "skipped": true,
       "pickedAt": "2026-09-08T20:37:17.867Z"
+    },
+    {
+      "id": "OL676009W",
+      "title": "Мастер и Маргарита",
+      "author": "Михаил Афанасьевич Булгаков",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:46:52.108Z"
+    },
+    {
+      "id": "OL1434640W",
+      "title": "Berlin Alexanderplatz",
+      "author": "Alfred Döblin",
+      "coverId": "ol:967534",
+      "firstPublished": 1929,
+      "pickedAt": "2026-09-08T20:47:09.943Z"
+    },
+    {
+      "id": "OL893414W",
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "coverId": "ol:10535009",
+      "pickedAt": "2026-09-08T20:47:52.850Z"
+    },
+    {
+      "id": "OL86318W",
+      "title": "Ulysses",
+      "author": "James Joyce",
+      "coverId": "ol:13136689",
+      "firstPublished": 1914,
+      "pickedAt": "2026-09-08T20:48:01.030Z"
+    },
+    {
+      "id": "OL62744W",
+      "title": "Vom Kriege",
+      "author": "Carl von Clausewitz",
+      "coverId": "ol:3360233",
+      "firstPublished": 1835,
+      "pickedAt": "2026-09-08T20:48:43.740Z"
+    },
+    {
+      "id": "OL468431W",
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "coverId": "ol:13853193",
+      "firstPublished": 1920,
+      "pickedAt": "2026-09-08T20:48:51.397Z"
+    },
+    {
+      "id": "OL102749W",
+      "title": "Moby Dick",
+      "author": "Herman Melville",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:49:09.825Z"
+    },
+    {
+      "id": "OL3801690W",
+      "title": "KAFF auch Mare Crisium",
+      "author": "Arno Schmidt",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:49:13.480Z"
+    },
+    {
+      "id": "OL50548W",
+      "title": "Beloved",
+      "author": "Toni Morrison",
+      "coverId": "ol:8261367",
+      "firstPublished": 1987,
+      "pickedAt": "2026-09-08T20:49:44.707Z"
+    },
+    {
+      "id": "OL498556W",
+      "title": "Metamorphosis",
+      "author": "Franz Kafka",
+      "coverId": "ol:4997371",
+      "pickedAt": "2026-09-08T20:49:52.226Z"
+    },
+    {
+      "id": "OL46125W",
+      "title": "Foundation",
+      "author": "Isaac Asimov",
+      "coverId": "ol:12518966",
+      "firstPublished": 1915,
+      "pickedAt": "2026-09-08T20:50:02.831Z"
+    },
+    {
+      "id": "OL27482W",
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T20:50:08.911Z"
+    },
+    {
+      "id": "OL65906W",
+      "title": "On The Road",
+      "author": "Jack Kerouac",
+      "coverId": "ol:297600",
+      "firstPublished": 1957,
+      "pickedAt": "2026-09-08T20:50:19.127Z"
+    },
+    {
+      "id": "OL675783W",
+      "title": "The Handmaid's Tale",
+      "author": "Margaret Atwood",
+      "coverId": "ol:15154653",
+      "firstPublished": 1985,
+      "pickedAt": "2026-09-08T20:50:27.931Z"
     }
   ]
 }

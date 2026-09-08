@@ -22,6 +22,12 @@ Kann ein Mensch in einer Sitzung für hundert Bücher je ein Cover wählen, ohne
 
 Klick auf ein Cover wählt es und springt zum nächsten Werk. Pfeiltasten bewegen den Rahmen, Enter wählt, Backspace geht ein Werk zurück. „Überspringen" merkt sich, dass das Werk angesehen und keines gewählt wurde.
 
+## Was beim ersten Durchgang herauskam (2026-09-08)
+
+35 Werke angesehen, 30 Cover gewählt, fünf übersprungen — rund zwanzig Sekunden je Buch. Ein harter Neustart des Servers kostete nichts: alle Einträge lagen da, die App sprang zum ersten offenen Werk.
+
+**Offen und wichtig:** ein Test gegen die laufende App schreibt in dieselbe Datei wie ein Mensch. Beim ersten Durchgang sind so zwei erfundene Wahlen in Julians Daten gelandet und mussten von Hand entfernt werden. Die Datei gehört hinter eine Umgebungsvariable (`CURATE_FILE`), bevor das nächste Mal jemand gegen die App testet.
+
 ## Status
 
 Gebaut am 2026-09-08. Was daraus wird — die Rotation auf der Startseite — ist Roadmap 6.17 und ein eigener Punkt; `data/curated.json` ist die Schnittstelle dorthin.
