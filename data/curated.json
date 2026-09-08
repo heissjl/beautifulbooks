@@ -5,9 +5,9 @@
       "id": "OL27258W",
       "title": "Neuromancer",
       "author": "William Gibson",
-      "coverId": "ol:15251791",
+      "coverId": "ol:13116772",
       "firstPublished": 1984,
-      "pickedAt": "2026-09-08T20:41:50.399Z"
+      "pickedAt": "2026-09-08T21:11:13.161Z"
     },
     {
       "id": "OL627084W",
@@ -45,8 +45,8 @@
       "title": "Dracula",
       "author": "Bram Stoker",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:30:07.186Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:10:21.645Z"
     },
     {
       "id": "OL21177W",
@@ -209,16 +209,16 @@
       "title": "The Bell Jar",
       "author": "Sylvia Plath",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:35:32.146Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:11:00.064Z"
     },
     {
       "id": "OL39349W",
       "title": "Mrs. Dalloway",
       "author": "Virginia Woolf",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:35:33.176Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:11:03.684Z"
     },
     {
       "id": "OL98130W",
@@ -265,8 +265,8 @@
       "title": "Wolf Hall",
       "author": "Hilary Mantel",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:37:17.867Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:11:02.480Z"
     },
     {
       "id": "OL676009W",
@@ -328,8 +328,8 @@
       "title": "KAFF auch Mare Crisium",
       "author": "Arno Schmidt",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:49:13.480Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:10:39.550Z"
     },
     {
       "id": "OL50548W",
@@ -359,8 +359,8 @@
       "title": "The Hobbit",
       "author": "J.R.R. Tolkien",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:50:08.911Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:10:32.787Z"
     },
     {
       "id": "OL65906W",
@@ -494,6 +494,44 @@
       "pickedAt": "2026-09-08T20:59:26.531Z"
     },
     {
+      "id": "OL2271626W",
+      "title": "Momo oder Die seltsame Geschichte von den Zeit-Dieben und von dem Kind, das den Menschen die gestohlene Zeit zurückbrachte",
+      "author": "Michael Ende",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T21:08:28.766Z"
+    },
+    {
+      "id": "OL2271589W",
+      "title": "Die unendliche Geschichte",
+      "author": "Michael Ende",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-09-08T21:08:34.102Z"
+    },
+    {
+      "id": "OL584333W",
+      "title": "Bonjour tristesse",
+      "author": "Françoise Sagan",
+      "coverId": "ol:4978661",
+      "pickedAt": "2026-09-08T21:09:08.670Z"
+    },
+    {
+      "id": "OL36287W",
+      "title": "Hrabě Monte Cristo. Díl 1 a 2 (třísvazkové vydání)",
+      "author": "Alexandre Dumas",
+      "coverId": "ol:14566144",
+      "firstPublished": 1830,
+      "pickedAt": "2026-09-08T21:09:24.499Z"
+    },
+    {
+      "id": "OL10432709W",
+      "title": "Братья Карамазовы",
+      "author": "Fiódor Dostoievski",
+      "coverId": "ol:15167288",
+      "pickedAt": "2026-09-08T21:09:30.702Z"
+    },
+    {
       "id": "OL1095427W",
       "title": "Jane Eyre",
       "author": "Charlotte Brontë",
@@ -507,6 +545,21 @@
       "author": "Лев Толстой",
       "coverId": "ol:15228735",
       "pickedAt": "2026-09-08T20:30:37.982Z"
+    },
+    {
+      "id": "OL258301W",
+      "title": "Доктор Живаго",
+      "author": "Boris Leonidovich Pasternak",
+      "coverId": "ol:12713390",
+      "firstPublished": 1957,
+      "pickedAt": "2026-09-08T21:09:57.966Z"
+    },
+    {
+      "id": "OL272388W",
+      "title": "Архипелаг ГУЛАГ",
+      "author": "Александр Солженицын",
+      "coverId": "ol:4943043",
+      "pickedAt": "2026-09-08T21:10:05.951Z"
     }
   ]
 }

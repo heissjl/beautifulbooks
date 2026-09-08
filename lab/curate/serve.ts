@@ -79,9 +79,16 @@ const index = JSON.parse(readFileSync(INDEX_FILE, 'utf8')) as RawIndex;
 const years: Record<string, YearInfo> = existsSync(YEARS_FILE)
   ? JSON.parse(readFileSync(YEARS_FILE, 'utf8'))
   : {};
-const picks: Record<string, Pick> = existsSync(OUT_FILE)
-  ? Object.fromEntries((JSON.parse(readFileSync(OUT_FILE, 'utf8')).works as Pick[]).map(p => [p.id, p]))
-  : {};
+const savedWorks: Pick[] = existsSync(OUT_FILE) ? (JSON.parse(readFileSync(OUT_FILE, 'utf8')).works as Pick[]) : [];
+const picks: Record<string, Pick> = Object.fromEntries(savedWorks.map(p => [p.id, p]));
+
+/**
+ * The order of the file *is* the order of the wall (`lib/curated.ts` reads it
+ * straight through), so it is state in its own right and must survive every
+ * save. Before the ordering view existed this was the index's order, and a
+ * hand-made arrangement would have been overwritten by the next pick.
+ */
+let order: string[] = savedWorks.map(p => p.id);
 
 /** Cover ids per work, in index order (which is Open Library's own order). */
 const coversByWork = new Map<number, string[]>();
@@ -110,13 +117,19 @@ function writeAtomically(file: string, content: string) {
 }
 
 function savePicks() {
-  // Works order first, then anything picked for a work this run does not know
-  // about — dropping those silently would delete choices nobody made again.
-  const known = new Set(works.map(w => w.id));
-  const ordered = [
-    ...works.map(w => picks[w.id]).filter(Boolean),
-    ...Object.values(picks).filter(p => !known.has(p.id)),
-  ];
+  // The arranged order first; then anything picked but not yet placed, in the
+  // order the run walks the works; then whatever is left, so that no choice
+  // can be dropped by a list this run happens not to know about.
+  const seen = new Set<string>();
+  const ordered: Pick[] = [];
+  const take = (id: string) => {
+    const p = picks[id];
+    if (p && !seen.has(id)) { ordered.push(p); seen.add(id); }
+  };
+  for (const id of order) take(id);
+  for (const w of works) take(w.id);
+  for (const id of Object.keys(picks)) take(id);
+  order = ordered.map(p => p.id);
   writeAtomically(OUT_FILE, `${JSON.stringify({ curatedAt: new Date().toISOString().slice(0, 10), works: ordered }, null, 2)}\n`);
 }
 
@@ -166,7 +179,7 @@ async function loadExtraCovers() {
   }
 }
 
-const HTML = readFileSync(join(import.meta.dirname, 'index.html'), 'utf8');
+const HTML_FILE = join(import.meta.dirname, 'index.html');
 
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://localhost:${PORT}`);
@@ -176,16 +189,31 @@ const server = createServer(async (req, res) => {
   };
 
   if (url.pathname === '/') {
-    res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
-    res.end(HTML);
+    // Read per request, not once at start: this is a tool being changed while
+    // it runs, and a stale page that looks wrong costs more than a file read.
+    res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
+    res.end(readFileSync(HTML_FILE, 'utf8'));
     return;
   }
 
   if (url.pathname === '/api/works') {
     send(200, {
       builtAt: index.builtAt,
+      order,
       works: works.map(w => ({ ...w, pick: picks[w.id] ?? null })),
     });
+    return;
+  }
+
+  if (url.pathname === '/api/order' && req.method === 'POST') {
+    const chunks: Buffer[] = [];
+    for await (const chunk of req) chunks.push(chunk as Buffer);
+    const body = JSON.parse(Buffer.concat(chunks).toString('utf8')) as { ids?: string[] };
+    if (!Array.isArray(body.ids)) return send(400, { error: 'no order' });
+    // Only ids that actually have a pick; savePicks appends whatever is missing.
+    order = body.ids.filter(id => picks[id]);
+    savePicks();
+    send(200, { ok: true, order });
     return;
   }
 
@@ -216,6 +244,7 @@ const server = createServer(async (req, res) => {
         pickedAt: new Date().toISOString(),
       };
     }
+    if (!order.includes(work.id)) order.push(work.id);
     savePicks();
     send(200, { ok: true, done: Object.values(picks).filter(p => !p.skipped && !p.dropped).length, total: works.length });
     return;

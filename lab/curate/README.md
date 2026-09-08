@@ -18,6 +18,14 @@ Kann ein Mensch in einer Sitzung für hundert Bücher je ein Cover wählen, ohne
 - **Geschrieben wird nach jeder Wahl** in `data/curated.json`, atomar (erst `.tmp`, dann umbenannt). Abbrechen ist folgenlos, die App springt beim nächsten Start zum ersten offenen Werk.
 - **1984 ist ausgeschlossen** (`EXCLUDED` in `serve.ts`), auf Julians Anweisung. Damit sind es 99; das hundertste kommt beim nächsten Bau des Index dazu.
 
+## Zwei Ansichten
+
+**Kuratieren** — ein Werk je Bildschirm, alle seine Cover, Wahl und Jahr. Unten steht alles, was schon angesehen wurde: anklicken springt zurück, das × streicht das Buch.
+
+**Reihenfolge** — dieselbe Auswahl als Wand, links im **Sechser-Raster wie am Rechner**, rechts daneben im **Dreier-Raster wie auf dem Telefon**, beide in derselben Reihenfolge. Ziehen im linken Raster sortiert um, und eine gestrichelte Linie zeigt, wo die achtzehn aufhören, die es auf die Startseite schaffen. Damit lässt sich sehen, was sonst nur zu ahnen ist: dass zwei helle Cover nebeneinander sich gegenseitig löschen, und dass die zweite Reihe am Telefon eine andere ist als am Rechner.
+
+**Die Reihenfolge der Datei ist die Reihenfolge der Wand.** `lib/curated.ts` liest `data/curated.json` von oben nach unten; was hier gezogen wird, steht nach dem nächsten Deploy so auf der Startseite.
+
 ## Bedienung
 
 Klick auf ein Cover wählt es und springt zum nächsten Werk. Pfeiltasten bewegen den Rahmen, Enter wählt, Backspace geht ein Werk zurück. „Überspringen" merkt sich, dass das Werk angesehen und keines gewählt wurde.

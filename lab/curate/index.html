@@ -50,6 +50,30 @@
   .picked button.x { background:none; border:0; color:var(--ink3); cursor:pointer; font-size:15px; line-height:1; padding:2px 6px; border-radius:4px; }
   .picked button.x:hover { color:#c0392b; background:color-mix(in srgb, #c0392b 12%, transparent); }
   .done { padding:40px 0; text-align:center; }
+  .tabs { display:flex; gap:4px; }
+  .tabs button { font:inherit; font-size:13px; padding:4px 10px; border:1px solid var(--line); background:var(--surface);
+                 color:var(--ink2); border-radius:999px; cursor:pointer; }
+  .tabs button[aria-current="true"] { border-color:var(--accent); color:var(--accent); }
+  .order { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:28px; align-items:start; }
+  @media (max-width: 900px) { .order { grid-template-columns:minmax(0,1fr); } }
+  .order h3 { font-size:13px; font-weight:600; color:var(--ink2); margin:0 0 8px; text-transform:uppercase; letter-spacing:.04em; }
+  /* minmax(0,…), not 1fr: a bare 1fr never goes below the image's own width,
+     which pulls the columns to different sizes and the wall out of true. */
+  .desk { display:grid; grid-template-columns:repeat(6, minmax(0, 1fr)); gap:14px; align-items:start; }
+  .phone { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:8px; align-items:start; border:1px solid var(--line);
+           border-radius:14px; padding:10px; background:var(--surface); }
+  .side { position:sticky; top:64px; }
+  .cell { position:relative; cursor:grab; }
+  .cell.dragging { opacity:.35; }
+  .cell.over { outline:2px dashed var(--accent); outline-offset:3px; border-radius:4px; }
+  .cell img { width:100%; aspect-ratio:2/3; object-fit:cover; border-radius:3px; background:var(--surface);
+              box-shadow:0 1px 3px rgba(0,0,0,.2); display:block; pointer-events:none; }
+  .cell .n { position:absolute; top:2px; left:2px; font-size:10px; padding:1px 4px; border-radius:3px;
+             background:color-mix(in srgb, var(--bg) 80%, transparent); color:var(--ink3); }
+  .cell .t { font-size:11px; color:var(--ink3); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .cut { grid-column:1/-1; border-top:1px dashed var(--accent); margin:2px 0 6px; position:relative; }
+  .cut span { position:absolute; top:-9px; left:0; font-size:10px; color:var(--accent);
+              background:var(--bg); padding:0 6px; }
 </style>
 </head>
 <body>
@@ -58,11 +82,15 @@
   <span class="meta" id="progress">…</span>
   <span class="bar"><i id="barfill" style="width:0"></i></span>
   <span class="meta" id="position"></span>
+  <span class="tabs">
+    <button id="tab-pick" aria-current="true">Kuratieren</button>
+    <button id="tab-order" aria-current="false">Reihenfolge</button>
+  </span>
 </header>
 <main id="main">Lade …</main>
 
 <script>
-const state = { works: [], i: 0, cursor: 0, years: {}, dropped: 0 };
+const state = { works: [], i: 0, cursor: 0, years: {}, dropped: 0, view: 'pick', order: [], drag: null };
 const $ = id => document.getElementById(id);
 const cover = (id, size) => id.startsWith('ol:')
   ? `https://covers.openlibrary.org/b/id/${id.slice(3)}-${size}.jpg` : '';
@@ -72,6 +100,7 @@ async function load() {
   // Struck-off works leave the run entirely; the choice itself stays on disk.
   state.dropped = data.works.filter(w => w.pick?.dropped).length;
   state.works = data.works.filter(w => !w.pick?.dropped);
+  state.order = data.order ?? [];
   const firstOpen = state.works.findIndex(w => !w.pick);
   state.i = firstOpen < 0 ? 0 : firstOpen;
   render();
@@ -91,7 +120,95 @@ async function fetchYears(work) {
   return info;
 }
 
+/** How many tiles the home page shows; the line in the previews marks it. */
+const WALL_SIZE = 18;
+
+/** The arranged order, as the works that actually carry a cover. */
+function orderedPicks() {
+  const byId = new Map(state.works.map(w => [w.id, w]));
+  const out = [];
+  const seen = new Set();
+  for (const id of state.order) {
+    const w = byId.get(id);
+    if (w && w.pick && !w.pick.skipped && w.pick.coverId && !seen.has(id)) { out.push(w); seen.add(id); }
+  }
+  for (const w of state.works) {
+    if (w.pick && !w.pick.skipped && w.pick.coverId && !seen.has(w.id)) { out.push(w); seen.add(w.id); }
+  }
+  return out;
+}
+
+function renderOrder() {
+  const list = orderedPicks();
+  const cell = (w, n, withTitle) => `
+    ${n === WALL_SIZE ? `<div class="cut"><span>ab hier nicht mehr auf der Startseite</span></div>` : ''}
+    <div class="cell" draggable="${withTitle}" data-id="${w.id}" data-n="${n}" title="${escapeHtml(w.title)}">
+      <img loading="lazy" src="${cover(w.pick.coverId, 'M')}" alt="">
+      ${withTitle ? `<span class="n">${n + 1}</span><div class="t">${escapeHtml(w.title)}</div>` : ''}
+    </div>`;
+
+  $('main').innerHTML = `
+    <div class="order">
+      <div>
+        <h3>Desktop · sechs je Reihe — ziehen zum Umsortieren</h3>
+        <div class="desk" id="desk">${list.map((w, n) => cell(w, n, true)).join('')}</div>
+        <p class="hint">Die ersten ${WALL_SIZE} stehen auf der Startseite, in genau dieser Reihenfolge.
+           Rechts dieselbe Reihenfolge, wie sie auf dem Telefon ankommt.</p>
+      </div>
+      <div class="side">
+        <h3>Telefon · drei je Reihe</h3>
+        <div class="phone">${list.map((w, n) => cell(w, n, false)).join('')}</div>
+      </div>
+    </div>`;
+
+  const desk = $('desk');
+  desk.addEventListener('dragstart', e => {
+    const c = e.target.closest('.cell');
+    if (!c) return;
+    state.drag = c.dataset.id;
+    c.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  desk.addEventListener('dragend', () => {
+    state.drag = null;
+    desk.querySelectorAll('.cell').forEach(c => c.classList.remove('dragging', 'over'));
+  });
+  desk.addEventListener('dragover', e => {
+    e.preventDefault();
+    const c = e.target.closest('.cell');
+    desk.querySelectorAll('.cell').forEach(x => x.classList.toggle('over', x === c));
+  });
+  desk.addEventListener('drop', e => {
+    e.preventDefault();
+    const target = e.target.closest('.cell');
+    if (!target || !state.drag) return;
+    moveTo(state.drag, Number(target.dataset.n));
+  });
+}
+
+/** Move one work to a position and persist the whole order. */
+async function moveTo(id, to) {
+  const ids = orderedPicks().map(w => w.id);
+  const from = ids.indexOf(id);
+  if (from < 0 || from === to) return;
+  ids.splice(to, 0, ids.splice(from, 1)[0]);
+  state.order = ids;
+  renderOrder();
+  await fetch('/api/order', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ids }),
+  });
+}
+
 function render() {
+  if (state.view === 'order') {
+    progress();
+    $('tab-pick').setAttribute('aria-current', 'false');
+    $('tab-order').setAttribute('aria-current', 'true');
+    renderOrder();
+    return;
+  }
+  $('tab-pick').setAttribute('aria-current', 'true');
+  $('tab-order').setAttribute('aria-current', 'false');
   const w = state.works[state.i];
   if (!w) { $('main').innerHTML = '<p class="done">Fertig.</p>'; return; }
   state.cursor = Math.max(0, w.covers.findIndex(c => c === w.pick?.coverId));
@@ -221,8 +338,11 @@ async function save(extra) {
   render();
 }
 
+document.getElementById('tab-pick').onclick = () => { state.view = 'pick'; render(); };
+document.getElementById('tab-order').onclick = () => { state.view = 'order'; render(); };
+
 document.addEventListener('keydown', e => {
-  if (e.target.tagName === 'INPUT') return;
+  if (e.target.tagName === 'INPUT' || state.view === 'order') return;
   const w = state.works[state.i];
   if (!w) return;
   const cols = Math.max(1, Math.floor(document.getElementById('grid').clientWidth / 120));
