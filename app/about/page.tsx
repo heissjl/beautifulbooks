@@ -3,6 +3,7 @@ import Link from 'next/link';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import { VERDICT_LEAD, VERDICT_MEANING, VERDICT_ORDER } from '@/lib/verdicts';
+import { indexBuiltAt, indexSize } from '@/lib/coverindex';
 
 /**
  * What the site knows, what it does not, and what its judgements mean
@@ -17,6 +18,9 @@ export const metadata: Metadata = {
   description:
     'Where the cover images come from, what is missing from them, and what the notes under each buy link mean.',
 };
+
+const INDEXED = indexSize();
+const INDEX_BUILT_AT = indexBuiltAt();
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -56,6 +60,28 @@ export default function AboutPage() {
             Both catalogues together know a fraction of what has been printed. Nothing here is a
             complete record of a book&rsquo;s editions, and it cannot become one: the covers you see
             are the ones somebody took the trouble to scan and upload.
+          </p>
+        </Section>
+
+        <Section title="“Looks like this”">
+          <p>
+            Pick a cover and, now and then, a row of three appears under it: covers of{' '}
+            <em>other</em> books whose jackets share its colours and its layout. Nothing is asked of
+            anyone to work that out. Every cover of {INDEXED.works} books &mdash; {INDEXED.covers.toLocaleString('en')}{' '}
+            of them &mdash; has been measured once and reduced to a handful of numbers: a hash of
+            its light and dark, its colourfulness, and where its colours sit on the wheel. Those
+            numbers live in a file that ships with the site. No image is stored, only measurements.
+          </p>
+          <p>
+            The comparison is deliberately hard to pass, so most covers show no row at all. Setting
+            it loosely made every cover match something, and the matches were nonsense. Two covers
+            now have to agree on both colour and layout before either sees the other, which about
+            one cover in nine manages.
+          </p>
+          <p>
+            The measurements were taken on {INDEX_BUILT_AT}, and they cover those {INDEXED.works}{' '}
+            books rather than the catalogue. So the row is a find when it appears, and its absence
+            means only that nothing indexed resembles what you are looking at.
           </p>
         </Section>
 

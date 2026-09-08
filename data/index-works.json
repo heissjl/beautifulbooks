@@ -350,6 +350,356 @@
       "author": "Михаил Афанасьевич Булгаков",
       "editionCount": 235,
       "source": "seed"
+    },
+    {
+      "id": "OL675783W",
+      "title": "The Handmaid's Tale",
+      "author": "Margaret Atwood",
+      "editionCount": 174,
+      "source": "seed"
+    },
+    {
+      "id": "OL3501723W",
+      "title": "A Confederacy of Dunces",
+      "author": "John Kennedy Toole",
+      "editionCount": 69,
+      "source": "seed"
+    },
+    {
+      "id": "OL15321W",
+      "title": "Se una notte d'inverno un viaggiatore",
+      "author": "Italo Calvino",
+      "editionCount": 31,
+      "source": "seed"
+    },
+    {
+      "id": "OL5731542W",
+      "title": "Half of a Yellow Sun",
+      "author": "Chimamanda Ngozi Adichie",
+      "editionCount": 43,
+      "source": "seed"
+    },
+    {
+      "id": "OL498463W",
+      "title": "Der Proceß",
+      "author": "Franz Kafka",
+      "editionCount": 783,
+      "source": "seed"
+    },
+    {
+      "id": "OL455327W",
+      "title": "Lord of the Flies",
+      "author": "William Golding",
+      "editionCount": 191,
+      "source": "seed"
+    },
+    {
+      "id": "OL3335245W",
+      "title": "The Catcher in the Rye",
+      "author": "J. D. Salinger",
+      "editionCount": 204,
+      "source": "seed"
+    },
+    {
+      "id": "OL61982W",
+      "title": "Ὀδύσσεια",
+      "author": "Όμηρος",
+      "editionCount": 1064,
+      "source": "seed"
+    },
+    {
+      "id": "OL93082W",
+      "title": "La Divina Commedia",
+      "author": "Dante Alighieri",
+      "editionCount": 1339,
+      "source": "seed"
+    },
+    {
+      "id": "OL9170454W",
+      "title": "Hamlet",
+      "author": "William Shakespeare",
+      "editionCount": 2377,
+      "source": "seed"
+    },
+    {
+      "id": "OL258902W",
+      "title": "Macbeth",
+      "author": "William Shakespeare",
+      "editionCount": 2022,
+      "source": "seed"
+    },
+    {
+      "id": "OL52456W",
+      "title": "Faust",
+      "author": "Johann Wolfgang von Goethe",
+      "editionCount": 649,
+      "source": "seed"
+    },
+    {
+      "id": "OL52556W",
+      "title": "Die Leiden des jungen Werthers",
+      "author": "Johann Wolfgang von Goethe",
+      "editionCount": 249,
+      "source": "seed"
+    },
+    {
+      "id": "OL857189W",
+      "title": "Effi Briest",
+      "author": "Theodor Fontane",
+      "editionCount": 171,
+      "source": "seed"
+    },
+    {
+      "id": "OL14867081W",
+      "title": "Buddenbrooks",
+      "author": "Thomas Mann",
+      "editionCount": 106,
+      "source": "seed"
+    },
+    {
+      "id": "OL1209288W",
+      "title": "Im Westen nichts Neues",
+      "author": "Erich Maria Remarque",
+      "editionCount": 225,
+      "source": "seed"
+    },
+    {
+      "id": "OL10834W",
+      "title": "Das Parfum",
+      "author": "Patrick Süskind",
+      "editionCount": 111,
+      "source": "seed"
+    },
+    {
+      "id": "OL14871157W",
+      "title": "Der Vorleser",
+      "author": "Bernhard Schlink",
+      "editionCount": 89,
+      "source": "seed"
+    },
+    {
+      "id": "OL2271626W",
+      "title": "Momo oder Die seltsame Geschichte von den Zeit-Dieben und von dem Kind, das den Menschen die gestohlene Zeit zurückbrachte",
+      "author": "Michael Ende",
+      "editionCount": 108,
+      "source": "seed"
+    },
+    {
+      "id": "OL2271589W",
+      "title": "Die unendliche Geschichte",
+      "author": "Michael Ende",
+      "editionCount": 58,
+      "source": "seed"
+    },
+    {
+      "id": "OL1063588W",
+      "title": "Les Misérables",
+      "author": "Victor Hugo",
+      "editionCount": 540,
+      "source": "seed"
+    },
+    {
+      "id": "OL10263W",
+      "title": "Le petit prince",
+      "author": "Antoine de Saint-Exupéry",
+      "editionCount": 689,
+      "source": "seed"
+    },
+    {
+      "id": "OL1190289W",
+      "title": "À la recherche du temps perdu",
+      "author": "Marcel Proust",
+      "editionCount": 83,
+      "source": "seed"
+    },
+    {
+      "id": "OL584333W",
+      "title": "Bonjour tristesse",
+      "author": "Françoise Sagan",
+      "editionCount": 96,
+      "source": "seed"
+    },
+    {
+      "id": "OL36287W",
+      "title": "Hrabě Monte Cristo. Díl 1 a 2 (třísvazkové vydání)",
+      "author": "Alexandre Dumas",
+      "editionCount": 736,
+      "source": "seed"
+    },
+    {
+      "id": "OL10432709W",
+      "title": "Братья Карамазовы",
+      "author": "Fiódor Dostoievski",
+      "editionCount": 393,
+      "source": "seed"
+    },
+    {
+      "id": "OL258301W",
+      "title": "Доктор Живаго",
+      "author": "Boris Leonidovich Pasternak",
+      "editionCount": 176,
+      "source": "seed"
+    },
+    {
+      "id": "OL272388W",
+      "title": "Архипелаг ГУЛАГ",
+      "author": "Александр Солженицын",
+      "editionCount": 88,
+      "source": "seed"
+    },
+    {
+      "id": "OL2564006W",
+      "title": "Genji monogatari",
+      "author": "Murasaki Shikibu",
+      "editionCount": 121,
+      "source": "seed"
+    },
+    {
+      "id": "OL2625431W",
+      "title": "海辺のカフカ",
+      "author": "村上春樹",
+      "editionCount": 61,
+      "source": "seed"
+    },
+    {
+      "id": "OL2045111W",
+      "title": "雪国",
+      "author": "川端康成",
+      "editionCount": 64,
+      "source": "seed"
+    },
+    {
+      "id": "OL2568879W",
+      "title": "Where the Wild Things Are",
+      "author": "Maurice Sendak",
+      "editionCount": 125,
+      "source": "seed"
+    },
+    {
+      "id": "OL2384132W",
+      "title": "Cry, the Beloved Country",
+      "author": "Alan Paton",
+      "editionCount": 86,
+      "source": "seed"
+    },
+    {
+      "id": "OL457179W",
+      "title": "Midnight's Children",
+      "author": "Salman Rushdie",
+      "editionCount": 86,
+      "source": "seed"
+    },
+    {
+      "id": "OL1052133W",
+      "title": "The God of Small Things",
+      "author": "Arundhati Roy",
+      "editionCount": 65,
+      "source": "seed"
+    },
+    {
+      "id": "OL2980902W",
+      "title": "A Fine Balance",
+      "author": "Rohinton Mistry",
+      "editionCount": 41,
+      "source": "seed"
+    },
+    {
+      "id": "OL5781992W",
+      "title": "The Kite Runner",
+      "author": "Khaled Hosseini",
+      "editionCount": 126,
+      "source": "seed"
+    },
+    {
+      "id": "OL59038W",
+      "title": "Never Let Me Go",
+      "author": "Kazuo Ishiguro",
+      "editionCount": 61,
+      "source": "seed"
+    },
+    {
+      "id": "OL1855944W",
+      "title": "Atonement",
+      "author": "Ian McEwan",
+      "editionCount": 76,
+      "source": "seed"
+    },
+    {
+      "id": "OL481143W",
+      "title": "White Teeth",
+      "author": "Zadie Smith",
+      "editionCount": 48,
+      "source": "seed"
+    },
+    {
+      "id": "OL40873W",
+      "title": "The Road",
+      "author": "Cormac McCarthy",
+      "editionCount": 84,
+      "source": "seed"
+    },
+    {
+      "id": "OL40879W",
+      "title": "Blood Meridian",
+      "author": "Cormac McCarthy",
+      "editionCount": 37,
+      "source": "seed"
+    },
+    {
+      "id": "OL1812933W",
+      "title": "American Psycho",
+      "author": "Bret Easton Ellis",
+      "editionCount": 46,
+      "source": "seed"
+    },
+    {
+      "id": "OL18941W",
+      "title": "Fight Club",
+      "author": "Chuck Palahniuk",
+      "editionCount": 40,
+      "source": "seed"
+    },
+    {
+      "id": "OL261794W",
+      "title": "A Clockwork Orange",
+      "author": "Anthony Burgess",
+      "editionCount": 137,
+      "source": "seed"
+    },
+    {
+      "id": "OL8193416W",
+      "title": "The Picture of Dorian Gray",
+      "author": "Oscar Wilde",
+      "editionCount": 3020,
+      "source": "seed"
+    },
+    {
+      "id": "OL138052W",
+      "title": "Alice's Adventures in Wonderland",
+      "author": "Lewis Carroll",
+      "editionCount": 3547,
+      "source": "seed"
+    },
+    {
+      "id": "OL28570037W",
+      "title": "The Wind in the Willows",
+      "author": "Kenneth Grahame",
+      "editionCount": 1396,
+      "source": "seed"
+    },
+    {
+      "id": "OL476641W",
+      "title": "Winnie-the-Pooh",
+      "author": "A. A. Milne",
+      "editionCount": 187,
+      "source": "seed"
+    },
+    {
+      "id": "OL483391W",
+      "title": "Charlotte's Web",
+      "author": "E. B. White",
+      "editionCount": 211,
+      "source": "seed"
     }
   ]
 }

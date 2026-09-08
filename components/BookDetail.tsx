@@ -400,32 +400,35 @@ interface CoverDetailsProps {
 /**
  * Covers of *other* books that look like this one (ROADMAP 6.10).
  *
- * Answered from the built index, so it costs no request to anyone. It sits at
- * the foot of the sidebar on purpose: the buy links are already further down
- * than they should be (ROADMAP 1.2), and a browsing detour must not push them
- * further. When the index does not know this cover the section is absent
- * rather than empty — fifty works are indexed, not the catalogue.
+ * Answered from the built index (SPEC §2.5), so it costs no request to
+ * anyone. It sits directly under the cover it describes, because a lateral
+ * jump only makes sense next to the thing jumped from — at the foot of the
+ * sidebar, where it started, nobody found it.
+ *
+ * Three covers, not six, and no explanatory paragraph: the row appears for
+ * about one cover in nine, and in those cases it pushes the buy links down,
+ * which are already further from the top than they should be (ROADMAP 1.2).
+ * Small is the price of standing here.
+ *
+ * When the index does not know this cover the section is absent rather than
+ * empty. A hundred works are indexed, not the catalogue.
  */
 function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
-  const similar = useSimilarCovers(coverId);
+  const similar = useSimilarCovers(coverId).slice(0, 3);
   if (similar.length === 0) return null;
   return (
-    <section className="mt-10 border-t border-line pt-6" aria-label="Covers that look like this one">
+    <section className="mt-4" aria-label="Covers that look like this one">
       <p className="kicker">Looks like this</p>
-      <p className="mt-1 text-xs leading-relaxed text-ink-3">
-        Other books whose jackets share this one&rsquo;s colours and layout, found by comparing the
-        images themselves across the books we have indexed.
-      </p>
-      <ul className="mt-3 grid grid-cols-3 gap-3">
+      <ul className="mt-2 flex gap-2">
         {similar.map(match => (
-          <li key={match.coverId}>
+          <li key={match.coverId} className="min-w-0 flex-1">
             <Link
               href={`/book/${match.workId}?cover=${encodeURIComponent(match.coverId)}${query ? `&q=${encodeURIComponent(query)}` : ''}`}
               className="group block"
               title={`${match.title} — ${match.author}`}
             >
               <span className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-[3px] bg-surface-2">
-                <CoverImage src={match.urlSmall} alt={`${match.title} by ${match.author}`} sizes="90px" />
+                <CoverImage src={match.urlSmall} alt={`${match.title} by ${match.author}`} sizes="80px" />
               </span>
               <span className="mt-1 block truncate text-[11px] leading-tight text-ink-3 group-hover:text-ink-2">
                 {match.title}
@@ -455,6 +458,8 @@ function CoverDetails({ cover, editions, coversPerEdition, author, query, market
         {cover.similarIds?.length ? ` · ${cover.similarIds.length} duplicate scan${cover.similarIds.length > 1 ? 's' : ''} folded` : ''}
       </p>
 
+      <SimilarCovers coverId={cover.id} query={query} />
+
       <div className="mt-6 space-y-8">
         {editions.map(edition => (
           <EditionBlock
@@ -469,7 +474,6 @@ function CoverDetails({ cover, editions, coversPerEdition, author, query, market
         ))}
       </div>
 
-      <SimilarCovers coverId={cover.id} query={query} />
     </div>
   );
 }

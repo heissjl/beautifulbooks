@@ -789,3 +789,36 @@ Julians zweites Experiment (`lab/mosaic/`, ROADMAP 5.5): ob sich aus den Covern 
 
 Offen: eine Silhouette statt eines Fotos, die Untergrenze der Palette (*Beloved* hat 72 Cover gegen 222), und die Rechtefrage vor dem Posten — dieselbe wie beim Clip.
 
+
+---
+
+## 2026-09-08 · Hundert Bücher im Index, und die Reihe an eine sichtbare Stelle (Branch `cover-index`)
+
+Fortsetzung von 6.10 auf Julians Wunsch: „füge weitere 50 Werke hinzu und baue die Funktion ‚Cover wie dieses' in die Website ein."
+
+### Der Index verdoppelt
+
+| | erste Runde | jetzt |
+|---|---|---|
+| Werke | 50 | **100** |
+| Cover | 5.621 | **10.362** |
+| Datei | 410 KB | **757 KB** |
+| Cover mit mindestens einem Nachbarn | 11 % | **17 %** |
+
+Die zweite Setzliste geht bewusst weiter weg vom englischen Roman: Homer, Dante, Goethe, Fontane, Remarque, Ende, Proust, Saint-Exupéry, Dostojewski, Murasaki Shikibu, Kawabata, Rushdie, Roy, Satrapi, dazu Kinderbücher und einige Sachbücher. Fünf Titel fielen an der Schwelle von 25 Ausgaben, darunter *Infinite Jest* mit 24 und ein *War and Peace*, das die Suche auf einen Datensatz mit zwei Ausgaben legte — dieselbe Ranking-Schwäche, die 6.1 beschreibt.
+
+`scripts/pick-index-works.ts` ist jetzt **additiv**: es liest die vorhandene Liste, behält sie und füllt bis `--target` auf. Damit bleibt der schon gebaute Index gültig, und der Bauer holt nur die neuen Werke.
+
+**Der Lauf über die 50 neuen Werke verlor kein einziges** (26 Minuten). In der ersten Runde waren es noch neun Ausfälle; die drei Versuche je Seite tragen.
+
+### Die Schwellen halten bei doppeltem Umfang
+
+Mit doppelt so vielen Kandidaten steigt der Anteil der Cover mit Nachbarn von 11 auf 17 Prozent — die Tore mussten also nicht nachgezogen werden, und die Qualität steigt sogar sichtbar. Der schönste Fund der zweiten Runde: der schwarze Band mit goldenem Kranz von *Also sprach Zarathustra* findet drei weitere schwarze Bände mit goldenem Kranz (*Jane Eyre*, *Alice*, *La Divina Commedia*) — **eine ganze Verlagsreihe, allein am Bild erkannt**, ohne dass irgendwo ein Reihenname steht. Genau das ist der Fall, für den 5.4b sonst eine Verlagsfacette bräuchte.
+
+### Die Reihe steht jetzt, wo man sie sieht
+
+Vorher am **Fuß der Seitenleiste**, hinter Metadaten, Kauf-Links und Suchwegen — also dort, wo sie niemand findet. Jetzt **direkt unter dem gewählten Cover und seiner Bildunterschrift**: ein seitlicher Sprung ergibt nur neben dem Sinn, wovon gesprungen wird.
+
+Der Preis dafür ist ehrlich zu nennen: die Reihe schiebt die Kauf-Links nach unten, die ohnehin zu weit unten stehen (1.2). Deshalb **drei Kacheln statt sechs und kein erklärender Absatz** — und weil sie nur bei etwa jedem sechsten Cover erscheint, ändert sich in fünf von sechs Fällen gar nichts.
+
+Die Erklärung steht stattdessen auf der **About-Seite**, wie PLAN-speicher §3.5 es verlangt: was gemessen wird, dass **kein Bild gespeichert wird, nur Zahlen**, dass die Prüfung absichtlich schwer zu bestehen ist, und **wann der Index gebaut wurde**. Die Zahlen dort kommen aus dem Index selbst, nicht aus dem Text, und veralten damit nicht.

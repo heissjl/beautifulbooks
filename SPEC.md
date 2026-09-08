@@ -116,7 +116,7 @@ Zwei Ebenen:
 - Er wird **vor dem Deploy von einem Skript erzeugt** (`scripts/build-cover-index.ts`) und mitcommittet, ist also keine Infrastruktur im Sinne von E6, sondern eine Datei (E18).
 - Er ist **nur lesbar und serverseitig**. `lib/coverindex.ts` liest ihn einmal beim Modulstart in typisierte Arrays; eine Ähnlichkeitssuche ist danach ein linearer Durchlauf über wenige tausend XOR-Operationen. **Nie aus Client-Code importieren** — die Datei ginge vollständig an den Browser.
 - Er ist eine **Momentaufnahme** und veraltet, sobald ein Katalog sich ändert. Das ist tragbar, weil er nichts trägt, was stimmen muss: er beantwortet „was sieht ähnlich aus", nie „welche Ausgabe kaufe ich". `builtAt` steht in der Datei.
-- Welche Werke er kennt, steht in `data/index-works.json` (50, Stand 2026-09-08; erster Zuschnitt der Liste aus ROADMAP 5.1).
+- Welche Werke er kennt, steht in `data/index-works.json` (**100**, Stand 2026-09-08; erster Zuschnitt der Liste aus ROADMAP 5.1). Umfang heute: 10.362 Cover, 757 KB.
 
 ---
 
@@ -173,7 +173,7 @@ Zwei Ebenen:
 
   Das OG-Bild entscheidet darüber, ob ein geteilter Link geöffnet wird, und zeigt deshalb **vier erkennbar verschiedene Cover** nach der Regel aus F4. Vorher nahm es die ersten vier der Wand: bei *Wolf Hall* war zweimal dieselbe spanische Ausgabe darunter.
 
-- **F2.14 „Looks like this".** Am Fuß der Seitenleiste stehen bis zu sechs Cover **anderer** Bücher, deren Umschläge dem gewählten in Farbe und Aufbau nahekommen (`/api/similar/<coverId>`, Daten aus dem gebauten Index, §2.5). Je Buch höchstens ein Cover; das eigene Werk bleibt draußen, dessen Wand ist einen Klick entfernt. **Kennt der Index ein Cover nicht, erscheint der Abschnitt gar nicht** — er deckt 50 Werke ab, nicht den Katalog, und Schweigen ist die ehrliche Form von „nicht indiziert". Der Platz am Fuß ist bewusst: die Kauf-Links stehen ohnehin zu weit unten (ROADMAP 1.2), ein Streifzug darf sie nicht weiter verdrängen.
+- **F2.14 „Looks like this".** **Direkt unter dem gewählten Cover** stehen bis zu drei Cover **anderer** Bücher, deren Umschläge dem gewählten in Farbe und Aufbau nahekommen (`/api/similar/<coverId>`, Daten aus dem gebauten Index, §2.5). Je Buch höchstens ein Cover; das eigene Werk bleibt draußen, dessen Wand ist einen Klick entfernt. **Kennt der Index ein Cover nicht, erscheint der Abschnitt gar nicht** — er deckt 100 Werke ab, nicht den Katalog, und Schweigen ist die ehrliche Form von „nicht indiziert". Die Reihe ist bewusst klein und ohne erklärenden Absatz: sie erscheint bei etwa jedem sechsten Cover und schiebt dann die Kauf-Links nach unten, die ohnehin zu weit unten stehen (ROADMAP 1.2). Ausführlich erklärt sie die About-Seite, die auch nennt, wann der Index gebaut wurde.
 
 ### F3 – Datenquellen
 
