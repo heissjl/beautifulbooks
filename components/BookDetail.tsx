@@ -22,6 +22,7 @@ import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { coverIdFromSegment } from '@/lib/coverurl';
+import decadePages from '@/data/decade-pages.json';
 import { VERDICT_LEAD } from '@/lib/verdicts';
 import { commerceEnabled } from '@/lib/sitemode';
 import type { ShopStatus } from '@/lib/availability';
@@ -305,6 +306,11 @@ function BookDetail() {
     first, so the earliest edition on screen is not the earliest edition. So
     the line names who says it and leaves the reader to weigh that.
   */
+  /*
+    The decade page exists only where the data carries it (ROADMAP 5.4a), so
+    the link appears only there — a link to a 404 is worse than no link.
+  */
+  const hasDecades = decadePages.pages.some(p => p.id === work.id);
   const meta = [
     work.firstPublishYear ? `Open Library dates it to ${work.firstPublishYear}` : undefined,
     progressLabel(view.covers.length, merged),
@@ -322,6 +328,13 @@ function BookDetail() {
     >
       <TitleBlock title={work.title} authors={work.authors} meta={meta} />
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
+      {hasDecades && (
+        <p className="mt-1">
+          <Link href={`/book/${work.id}/decades`} className="text-sm text-accent hover:underline">
+            See these covers by decade →
+          </Link>
+        </p>
+      )}
 
       {view.groups.length === 0 ? (
         <p className="text-ink-2">Neither catalogue has a cover for this book.</p>

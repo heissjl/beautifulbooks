@@ -1051,3 +1051,19 @@ Der zweite Lauf des Vorschlagsskripts lieferte zwanzig Bücher, von denen fast k
 Behoben, indem der Treffer jetzt *dasselbe Buch* sein muss: normalisierter Titel und Autorenschlüssel müssen zum Startpunkt passen, Sammelbände (`/` im Titel, „collected", „gesammelte", eckige Klammern) und Sekundärliteratur fallen weg, und ein Startpunkt, dessen Buch die Liste schon kennt, wird **übersprungen** statt ersetzt. Der Lauf danach lieferte zwanzig echte Bücher: *A Wizard of Earthsea*, *Solaris*, *The Woman in White*, *Candide*, *Robinson Crusoe*, *Emma*, *The Sound and the Fury*.
 
 **Ein zweiter Fehler kam dabei heraus:** das Skript schrieb seine Funde, statt sie anzuhängen. Weil die schon bekannten Ids ausgeschlossen werden, fand der zweite Lauf nur die neuen — und überschrieb damit die fünfzig des ersten. Aufgefallen ist es nur, weil die Datei committet war und sich aus der Historie zurückholen ließ. Sie wird jetzt ergänzt, nie ersetzt.
+
+## 2026-09-09 · Die erste erzeugte Seitengattung (ROADMAP 5.4a)
+
+`/book/<id>/decades` zeigt dieselben Cover wie die Wand, aber nach dem Jahrzehnt ihres frühesten Drucks gruppiert, mit einer gezählten Zeile je Jahrzehnt. Sie ist die erste der Gattungen aus PLAN-5, und sie war es aus einem Grund: **sie braucht kein Modell und keine Google-Anfrage.** Alles auf ihr ist aus Ausgaben-Datensätzen gezählt, die die Seite ohnehin lädt.
+
+**Was die Zeile darf und was nicht.** „8 von 50 Drucken sagen ebook · 21 Verlage, Scribner und Charles Scribner's Sons darunter · 2 Sprachen" — jede Angabe gezählt, keine charakterisiert. Ein Jahrzehnt, über das sich nichts zählen lässt, bekommt nur seine Coverzahl; ein Satz, der nichts hinzufügt, entfällt, statt gefüllt zu werden. Ein Fund beim Schreiben der Tests: die Formulierung „alle von Signet" wäre eine Vollständigkeitsbehauptung über ein Jahrzehnt gewesen, obwohl sie nur über unsere Datensätze gilt — sie heißt jetzt „1 Verlag, Signet".
+
+**Die Schwelle entscheidet, nicht die Lust zu veröffentlichen** (R6): unter 20 Covern oder vier Jahrzehnten gibt es keine Seite, sondern einen 404. `scripts/find-decade-pages.ts` hat die 105 kuratierten Werke durchgezählt — **90 tragen eine Seite, 15 nicht**, und der Katalog schwieg bei keinem einzigen. Zu dünn sind die jüngeren Bücher: *The Road* hat 89 Cover, aber nur drei Jahrzehnte; *海辺のカフカ* 44 über drei. Genau dafür ist die Schwelle da.
+
+Nur die 90 stehen in der Sitemap und nur bei ihnen erscheint der Link auf der Werkseite — eine Adresse, die einen Crawler auf einen 404 schickt, ist schlimmer als keine. **Die Sitemap ist damit von 22 auf 199 Adressen gewachsen**, an einem Tag, an dem sie morgens noch 22 hatte.
+
+## 2026-09-09 · Ein Prototyp für das Duell (ROADMAP 5.8)
+
+`lab/duel/` spielt die zweite Spielart: zwei Menschen, ein Link, dieselbe Runde. Der Startwert im Link bestimmt die zehn Bücher, ihre Reihenfolge und die sechs Cover je Buch, **ohne dass etwas gespeichert werden muss** — der Generator ist rein und mit drei festgenagelten Zahlen getestet, damit eine Änderung daran als roter Test auffällt und nicht als zwei Freunde, die verschiedene Runden sehen.
+
+**Die Frage des Experiments ist nicht, ob es sich bauen lässt**, sondern ob genug Uneinigkeit entsteht. Bei sechs Covern trifft der Zufall 17 %; die App rechnet das jedes Mal mit und zeigt es neben dem Ergebnis, damit „30 %" nicht nach viel aussieht, wenn es wenig ist. Unter 25 % ist die Spielart tot, über 70 % langweilig. Die Zahl steht noch aus: erspielen kann sie nur ein Mensch mit einem anderen.

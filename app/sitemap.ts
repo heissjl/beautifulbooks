@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { CURATED_LIST } from '@/lib/curated';
+import decadePages from '@/data/decade-pages.json';
 import { SITE_URL } from '@/lib/seo';
 
 /**
@@ -25,6 +26,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
+    })),
+    /*
+      Only the works that actually carry a decade page (ROADMAP 5.4a): the
+      threshold is 20 covers across 4 decades, and `scripts/find-decade-pages.ts`
+      checked which of the curated ones clear it — 90 of 105 at 2026-09-09.
+      Putting the other 15 in here would send a crawler to a 404.
+    */
+    ...decadePages.pages.map(page => ({
+      url: `${SITE_URL}/book/${page.id}/decades`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
     })),
   ];
 }

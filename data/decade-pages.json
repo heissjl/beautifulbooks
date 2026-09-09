@@ -1,0 +1,725 @@
+{
+  "builtAt": "2026-09-09",
+  "pages": [
+    {
+      "id": "OL27258W",
+      "title": "Neuromancer",
+      "coverCount": 46,
+      "decades": 5,
+      "from": 1980,
+      "to": 2020
+    },
+    {
+      "id": "OL627084W",
+      "title": "Lolita",
+      "coverCount": 121,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL2636675W",
+      "title": "Gravity's Rainbow",
+      "coverCount": 27,
+      "decades": 6,
+      "from": 1970,
+      "to": 2020
+    },
+    {
+      "id": "OL893707W",
+      "title": "Madame Bovary",
+      "coverCount": 42,
+      "decades": 5,
+      "from": 1970,
+      "to": 2020
+    },
+    {
+      "id": "OL1230613W",
+      "title": "L’étranger",
+      "coverCount": 163,
+      "decades": 9,
+      "from": 1940,
+      "to": 2020
+    },
+    {
+      "id": "OL498463W",
+      "title": "Der Proceß",
+      "coverCount": 135,
+      "decades": 9,
+      "from": 1920,
+      "to": 2020
+    },
+    {
+      "id": "OL1434640W",
+      "title": "Berlin Alexanderplatz",
+      "coverCount": 35,
+      "decades": 7,
+      "from": 1930,
+      "to": 2010
+    },
+    {
+      "id": "OL891786W",
+      "title": "Things Fall Apart",
+      "coverCount": 53,
+      "decades": 7,
+      "from": 1950,
+      "to": 2010
+    },
+    {
+      "id": "OL872773W",
+      "title": "Der Steppenwolf",
+      "coverCount": 82,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL64365W",
+      "title": "Brave New World",
+      "coverCount": 148,
+      "decades": 10,
+      "from": 1930,
+      "to": 2020
+    },
+    {
+      "id": "OL495470W",
+      "title": "Invisible Man",
+      "coverCount": 24,
+      "decades": 7,
+      "from": 1950,
+      "to": 2010
+    },
+    {
+      "id": "OL98459W",
+      "title": "Slaughterhouse-Five",
+      "coverCount": 67,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL872932W",
+      "title": "Siddhartha",
+      "coverCount": 115,
+      "decades": 9,
+      "from": 1920,
+      "to": 2020
+    },
+    {
+      "id": "OL103123W",
+      "title": "Fahrenheit 451",
+      "coverCount": 191,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL59048W",
+      "title": "The Remains of the Day",
+      "coverCount": 56,
+      "decades": 5,
+      "from": 1980,
+      "to": 2020
+    },
+    {
+      "id": "OL258134W",
+      "title": "Naked Lunch",
+      "coverCount": 22,
+      "decades": 7,
+      "from": 1950,
+      "to": 2010
+    },
+    {
+      "id": "OL468431W",
+      "title": "The Great Gatsby",
+      "coverCount": 198,
+      "decades": 10,
+      "from": 1920,
+      "to": 2020
+    },
+    {
+      "id": "OL59800W",
+      "title": "The Left Hand of Darkness",
+      "coverCount": 60,
+      "decades": 7,
+      "from": 1960,
+      "to": 2020
+    },
+    {
+      "id": "OL2172356W",
+      "title": "Do Androids Dream of Electric Sheep?",
+      "coverCount": 80,
+      "decades": 7,
+      "from": 1960,
+      "to": 2020
+    },
+    {
+      "id": "OL38663W",
+      "title": "Heart of Darkness",
+      "coverCount": 224,
+      "decades": 8,
+      "from": 1890,
+      "to": 2020
+    },
+    {
+      "id": "OL63073W",
+      "title": "The Old Man and the Sea",
+      "coverCount": 144,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL276798W",
+      "title": "Catch-22",
+      "coverCount": 50,
+      "decades": 5,
+      "from": 1960,
+      "to": 2010
+    },
+    {
+      "id": "OL98130W",
+      "title": "Also sprach Zarathustra",
+      "coverCount": 121,
+      "decades": 11,
+      "from": 1890,
+      "to": 2010
+    },
+    {
+      "id": "OL67334W",
+      "title": "Die Blechtrommel",
+      "coverCount": 46,
+      "decades": 7,
+      "from": 1950,
+      "to": 2010
+    },
+    {
+      "id": "OL8972751W",
+      "title": "Nesnesitelná lehkost bytí",
+      "coverCount": 60,
+      "decades": 4,
+      "from": 1980,
+      "to": 2010
+    },
+    {
+      "id": "OL2625457W",
+      "title": "Norwegian Wood",
+      "coverCount": 46,
+      "decades": 5,
+      "from": 1980,
+      "to": 2020
+    },
+    {
+      "id": "OL274505W",
+      "title": "Cien años de soledad",
+      "coverCount": 138,
+      "decades": 7,
+      "from": 1960,
+      "to": 2020
+    },
+    {
+      "id": "OL893414W",
+      "title": "Dune",
+      "coverCount": 133,
+      "decades": 7,
+      "from": 1960,
+      "to": 2020
+    },
+    {
+      "id": "OL27513W",
+      "title": "The Fellowship of the Ring",
+      "coverCount": 277,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL86318W",
+      "title": "Ulysses",
+      "coverCount": 226,
+      "decades": 11,
+      "from": 1920,
+      "to": 2020
+    },
+    {
+      "id": "OL3140822W",
+      "title": "To Kill a Mockingbird",
+      "coverCount": 190,
+      "decades": 7,
+      "from": 1960,
+      "to": 2020
+    },
+    {
+      "id": "OL62744W",
+      "title": "Vom Kriege",
+      "coverCount": 72,
+      "decades": 11,
+      "from": 1830,
+      "to": 2020
+    },
+    {
+      "id": "OL50548W",
+      "title": "Beloved",
+      "coverCount": 60,
+      "decades": 5,
+      "from": 1980,
+      "to": 2020
+    },
+    {
+      "id": "OL498556W",
+      "title": "Metamorphosis",
+      "coverCount": 153,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL46125W",
+      "title": "Foundation",
+      "coverCount": 71,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL14866824W",
+      "title": "Der Zauberberg",
+      "coverCount": 70,
+      "decades": 10,
+      "from": 1920,
+      "to": 2020
+    },
+    {
+      "id": "OL65906W",
+      "title": "On The Road",
+      "coverCount": 69,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL675783W",
+      "title": "The Handmaid's Tale",
+      "coverCount": 115,
+      "decades": 5,
+      "from": 1980,
+      "to": 2020
+    },
+    {
+      "id": "OL3501723W",
+      "title": "A Confederacy of Dunces",
+      "coverCount": 51,
+      "decades": 5,
+      "from": 1980,
+      "to": 2020
+    },
+    {
+      "id": "OL455327W",
+      "title": "Lord of the Flies",
+      "coverCount": 116,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL61982W",
+      "title": "Ὀδύσσεια",
+      "coverCount": 275,
+      "decades": 21,
+      "from": 1800,
+      "to": 2010
+    },
+    {
+      "id": "OL93082W",
+      "title": "La Divina Commedia",
+      "coverCount": 246,
+      "decades": 22,
+      "from": 1800,
+      "to": 2020
+    },
+    {
+      "id": "OL52556W",
+      "title": "Die Leiden des jungen Werthers",
+      "coverCount": 121,
+      "decades": 18,
+      "from": 1770,
+      "to": 2020
+    },
+    {
+      "id": "OL857189W",
+      "title": "Effi Briest",
+      "coverCount": 43,
+      "decades": 10,
+      "from": 1890,
+      "to": 2010
+    },
+    {
+      "id": "OL14867081W",
+      "title": "Buddenbrooks",
+      "coverCount": 21,
+      "decades": 8,
+      "from": 1900,
+      "to": 1990
+    },
+    {
+      "id": "OL1209288W",
+      "title": "Im Westen nichts Neues",
+      "coverCount": 92,
+      "decades": 10,
+      "from": 1920,
+      "to": 2020
+    },
+    {
+      "id": "OL584333W",
+      "title": "Bonjour tristesse",
+      "coverCount": 34,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL10432709W",
+      "title": "Братья Карамазовы",
+      "coverCount": 135,
+      "decades": 14,
+      "from": 1880,
+      "to": 2020
+    },
+    {
+      "id": "OL258301W",
+      "title": "Доктор Живаго",
+      "coverCount": 81,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL272388W",
+      "title": "Архипелаг ГУЛАГ",
+      "coverCount": 26,
+      "decades": 5,
+      "from": 1970,
+      "to": 2010
+    },
+    {
+      "id": "OL2564006W",
+      "title": "Genji monogatari",
+      "coverCount": 42,
+      "decades": 9,
+      "from": 1920,
+      "to": 2010
+    },
+    {
+      "id": "OL2045111W",
+      "title": "雪国",
+      "coverCount": 20,
+      "decades": 7,
+      "from": 1960,
+      "to": 2020
+    },
+    {
+      "id": "OL2384132W",
+      "title": "Cry, the Beloved Country",
+      "coverCount": 29,
+      "decades": 7,
+      "from": 1940,
+      "to": 2000
+    },
+    {
+      "id": "OL40879W",
+      "title": "Blood Meridian",
+      "coverCount": 28,
+      "decades": 5,
+      "from": 1980,
+      "to": 2020
+    },
+    {
+      "id": "OL102749W",
+      "title": "Moby Dick",
+      "coverCount": 127,
+      "decades": 10,
+      "from": 1890,
+      "to": 2020
+    },
+    {
+      "id": "OL1095427W",
+      "title": "Jane Eyre",
+      "coverCount": 104,
+      "decades": 9,
+      "from": 1840,
+      "to": 2020
+    },
+    {
+      "id": "OL267096W",
+      "title": "Анна Каренина",
+      "coverCount": 75,
+      "decades": 9,
+      "from": 1930,
+      "to": 2020
+    },
+    {
+      "id": "OL1812933W",
+      "title": "American Psycho",
+      "coverCount": 34,
+      "decades": 4,
+      "from": 1990,
+      "to": 2020
+    },
+    {
+      "id": "OL18941W",
+      "title": "Fight Club",
+      "coverCount": 29,
+      "decades": 4,
+      "from": 1990,
+      "to": 2020
+    },
+    {
+      "id": "OL261794W",
+      "title": "A Clockwork Orange",
+      "coverCount": 92,
+      "decades": 7,
+      "from": 1960,
+      "to": 2020
+    },
+    {
+      "id": "OL23166W",
+      "title": "East of Eden",
+      "coverCount": 75,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL3511459W",
+      "title": "Stoner",
+      "coverCount": 48,
+      "decades": 5,
+      "from": 1970,
+      "to": 2020
+    },
+    {
+      "id": "OL275128W",
+      "title": "Native Son",
+      "coverCount": 27,
+      "decades": 7,
+      "from": 1940,
+      "to": 2010
+    },
+    {
+      "id": "OL228705W",
+      "title": "Go Tell It on the Mountain",
+      "coverCount": 31,
+      "decades": 7,
+      "from": 1950,
+      "to": 2010
+    },
+    {
+      "id": "OL50564W",
+      "title": "Song of Solomon",
+      "coverCount": 31,
+      "decades": 5,
+      "from": 1970,
+      "to": 2020
+    },
+    {
+      "id": "OL5721394W",
+      "title": "Brideshead Revisited",
+      "coverCount": 23,
+      "decades": 7,
+      "from": 1940,
+      "to": 2010
+    },
+    {
+      "id": "OL23205W",
+      "title": "The Grapes of Wrath",
+      "coverCount": 186,
+      "decades": 10,
+      "from": 1930,
+      "to": 2020
+    },
+    {
+      "id": "OL468485W",
+      "title": "Tender is the Night",
+      "coverCount": 48,
+      "decades": 8,
+      "from": 1930,
+      "to": 2020
+    },
+    {
+      "id": "OL36633W",
+      "title": "Rebecca",
+      "coverCount": 54,
+      "decades": 8,
+      "from": 1930,
+      "to": 2020
+    },
+    {
+      "id": "OL59434W",
+      "title": "The Talented Mr. Ripley",
+      "coverCount": 44,
+      "decades": 7,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL1992198W",
+      "title": "In Cold Blood",
+      "coverCount": 54,
+      "decades": 7,
+      "from": 1960,
+      "to": 2020
+    },
+    {
+      "id": "OL1992167W",
+      "title": "Breakfast at Tiffany's",
+      "coverCount": 62,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL2944469W",
+      "title": "One Flew Over the Cuckoo's Nest",
+      "coverCount": 85,
+      "decades": 6,
+      "from": 1960,
+      "to": 2010
+    },
+    {
+      "id": "OL2636665W",
+      "title": "The Crying of Lot 49",
+      "coverCount": 23,
+      "decades": 5,
+      "from": 1960,
+      "to": 2010
+    },
+    {
+      "id": "OL1921196W",
+      "title": "White Noise",
+      "coverCount": 23,
+      "decades": 4,
+      "from": 1980,
+      "to": 2010
+    },
+    {
+      "id": "OL463709W",
+      "title": "Rabbit, Run",
+      "coverCount": 37,
+      "decades": 6,
+      "from": 1960,
+      "to": 2010
+    },
+    {
+      "id": "OL74676W",
+      "title": "Portnoy's Complaint",
+      "coverCount": 46,
+      "decades": 6,
+      "from": 1960,
+      "to": 2010
+    },
+    {
+      "id": "OL457175W",
+      "title": "The Satanic Verses",
+      "coverCount": 45,
+      "decades": 5,
+      "from": 1980,
+      "to": 2020
+    },
+    {
+      "id": "OL1599742W",
+      "title": "بين القصرين",
+      "coverCount": 25,
+      "decades": 5,
+      "from": 1980,
+      "to": 2020
+    },
+    {
+      "id": "OL258329W",
+      "title": "Один день Ивана Денисовича",
+      "coverCount": 72,
+      "decades": 6,
+      "from": 1960,
+      "to": 2010
+    },
+    {
+      "id": "OL627081W",
+      "title": "Pale Fire",
+      "coverCount": 29,
+      "decades": 6,
+      "from": 1960,
+      "to": 2010
+    },
+    {
+      "id": "OL865476W",
+      "title": "Stiller",
+      "coverCount": 25,
+      "decades": 8,
+      "from": 1900,
+      "to": 2010
+    },
+    {
+      "id": "OL2163649W",
+      "title": "The Hitchhiker's Guide to the Galaxy",
+      "coverCount": 86,
+      "decades": 6,
+      "from": 1970,
+      "to": 2020
+    },
+    {
+      "id": "OL46241W",
+      "title": "I, Robot",
+      "coverCount": 67,
+      "decades": 8,
+      "from": 1950,
+      "to": 2020
+    },
+    {
+      "id": "OL109524W",
+      "title": "Solaris",
+      "coverCount": 61,
+      "decades": 7,
+      "from": 1960,
+      "to": 2020
+    },
+    {
+      "id": "OL38501W",
+      "title": "Snow Crash",
+      "coverCount": 35,
+      "decades": 4,
+      "from": 1990,
+      "to": 2020
+    },
+    {
+      "id": "OL52114W",
+      "title": "The War of the Worlds",
+      "coverCount": 249,
+      "decades": 12,
+      "from": 1890,
+      "to": 2020
+    },
+    {
+      "id": "OL82929W",
+      "title": "As I Lay Dying",
+      "coverCount": 24,
+      "decades": 6,
+      "from": 1960,
+      "to": 2010
+    },
+    {
+      "id": "OL1287903W",
+      "title": "Voyage au bout de la nuit",
+      "coverCount": 55,
+      "decades": 7,
+      "from": 1960,
+      "to": 2020
+    },
+    {
+      "id": "OL1858668W",
+      "title": "Wide Sargasso Sea",
+      "coverCount": 27,
+      "decades": 6,
+      "from": 1960,
+      "to": 2010
+    }
+  ]
+}
