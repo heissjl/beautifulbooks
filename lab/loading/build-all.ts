@@ -138,7 +138,7 @@ async function main() {
       // The catalogue's spelling for the search, ours for the caption.
       author: t.openLibrary ?? t.author,
       name: t.author,
-      works: [], id: t.id, target: t.target, credit: t.credit,
+      works: [], id: t.id, target: t.target, credit: t.credit, crop: t.crop,
     };
     try {
       const manifest = await buildTemplate(options);

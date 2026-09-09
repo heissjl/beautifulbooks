@@ -45,6 +45,21 @@ export function pickImage(grid, frameWidth, dpr = window.devicePixelRatio || 1) 
   return sorted.find(image => image.width >= wanted) ?? sorted[sorted.length - 1];
 }
 
+/**
+ * Gives the frame its size before the picture is there.
+ *
+ * A cell is a cover, so it is 2:3, and the grid says how many of each — which
+ * means the shape of the finished picture is known from the manifest alone,
+ * without a byte of JPEG. On a cold search the file takes two to four tenths
+ * of a second on a phone, and without this the page would reflow when it
+ * lands, under a reader who is already waiting.
+ */
+export function reserveFrame(frame, grid, frameWidth) {
+  const aspect = grid.cols / (grid.rows * 1.5);
+  frame.style.width = `${frameWidth}px`;
+  frame.style.height = `${Math.round(frameWidth / aspect)}px`;
+}
+
 /** One ticker for every animation on the page — the way the site would run it. */
 export const ticker = {
   running: new Set(),

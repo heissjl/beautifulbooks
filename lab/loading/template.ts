@@ -22,6 +22,7 @@ import { PNG } from 'pngjs';
 import { loadPalette, targetImage, worksOfAuthor, type WorkRef } from '../mosaic/covers';
 import { assign, compose, cropToAspect, patchesOf, type Mosaic, type Target } from '../mosaic/mosaic';
 import { quantiseLuminance, revealOrder, shuffledSources, toBase64 } from './orders';
+import type { RgbaImage } from '../../lib/imagehash';
 import type { Log } from '../mosaic/covers';
 import type { Tile } from '../mosaic/mosaic';
 
@@ -56,6 +57,8 @@ export interface Options {
    * a portrait cut to the head spends its cells on a face instead of a coat.
    */
   aspect: number;
+  /** The part of the portrait to use, as fractions: `[x, y, width, height]`. */
+  crop?: [number, number, number, number];
 }
 
 /** What the browser gets: one image per size, and the orders to draw it in. */
@@ -198,6 +201,20 @@ async function updateIndex(manifest: Manifest, log: Log) {
   log(`rotation: ${next.length} mosaic${next.length === 1 ? '' : 's'} in ${file}`);
 }
 
+/** The part of a picture a template's `crop` names, in fractions. */
+function cut(img: RgbaImage, [fx, fy, fw, fh]: [number, number, number, number]): RgbaImage {
+  const x0 = Math.max(0, Math.round(fx * img.width));
+  const y0 = Math.max(0, Math.round(fy * img.height));
+  const width = Math.max(1, Math.min(img.width - x0, Math.round(fw * img.width)));
+  const height = Math.max(1, Math.min(img.height - y0, Math.round(fh * img.height)));
+  const rgba = new Uint8Array(width * height * 4);
+  for (let y = 0; y < height; y++) {
+    const s = ((y0 + y) * img.width + x0) * 4;
+    rgba.set(img.rgba.subarray(s, s + width * 4), y * width * 4);
+  }
+  return { width, height, rgba };
+}
+
 /** Builds one template end to end: covers, target, grids, files, manifest. */
 export async function buildTemplate(options: Options, log: Log = line => console.log(line)): Promise<Manifest> {
   await mkdir(OUT_DIR, { recursive: true });
@@ -212,10 +229,13 @@ export async function buildTemplate(options: Options, log: Log = line => console
   );
 
   const { image: full, what } = await targetImage(options.target, covers, signatures);
-  const target = options.aspect > 0 ? cropToAspect(full, options.aspect) : full;
+  // A hand-set frame first, where the portrait needed one, then the ratio.
+  const framed = options.crop ? cut(full, options.crop) : full;
+  const target = options.aspect > 0 ? cropToAspect(framed, options.aspect) : framed;
   log(
     `target: ${what}, ${full.width}x${full.height}`
-    + (target === full ? '' : ` cut to ${target.width}x${target.height}`),
+    + (options.crop ? ` framed to ${framed.width}x${framed.height}` : '')
+    + (target === framed ? '' : ` cut to ${target.width}x${target.height}`),
   );
 
   const grids: GridVariant[] = [];

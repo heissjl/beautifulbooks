@@ -57,6 +57,18 @@ export interface Template {
   /** In the twenty that are built, or held in reserve behind them. */
   rotation?: boolean;
   /**
+   * The part of the portrait the mosaic is built from, as fractions of the
+   * source: `[x, y, width, height]`.
+   *
+   * Set by hand for the portraits that are not head-and-shoulders. Tolstoy's
+   * colour photograph of 1908 has him seated among trees, and his head is a
+   * twentieth of the picture: cutting it to 3:4 keeps the head and spends
+   * 1,400 cells on a garden. Nothing here detects a face — twenty pictures
+   * were looked at, and the handful that needed a frame got one.
+   */
+  crop?: [number, number, number, number];
+
+  /**
    * What to ask Open Library, when it files the author under another name.
    *
    * Tolstoy's works are under „Лев Толстой"; searching „Leo Tolstoy" finds

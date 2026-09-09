@@ -22,7 +22,13 @@
   "target": "https://commons.wikimedia.org/wiki/Special:FilePath/L.N.Tolstoy%20Prokudin-Gorsky.jpg?width=1200",
   "credit": "Sergei Prokudin-Gorskii, 23 May 1908, gemeinfrei (Wikimedia Commons)",
   "rotation": true,
-  "openLibrary": "Лев Толстой"
+  "openLibrary": "Лев Толстой",
+  "crop": [
+   0.3,
+   0.09,
+   0.48,
+   0.42
+  ]
  },
  {
   "id": "oscar-wilde",
@@ -30,7 +36,13 @@
   "item": "Q30875",
   "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Oscar%20Wilde%20by%20Napoleon%20Sarony.%20Three-quarter-length%20photograph%2C%20seated.jpg?width=1200",
   "credit": "Napoleon Sarony / Adam Cuerden, 1882, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
+  "rotation": true,
+  "crop": [
+   0.25,
+   0.02,
+   0.6,
+   0.5
+  ]
  },
  {
   "id": "edgar-allan-poe",
@@ -46,7 +58,13 @@
   "item": "Q35610",
   "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Arthur%20Conan%20Doyle%20by%20Walter%20Benington%2C%201914.png?width=1200",
   "credit": "Walter Benington, 1914, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
+  "rotation": true,
+  "crop": [
+   0.2,
+   0.02,
+   0.62,
+   0.5
+  ]
  },
  {
   "id": "jules-verne",
@@ -62,7 +80,13 @@
   "item": "Q535",
   "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Victor%20Hugo%20by%20%C3%89tienne%20Carjat%201876%20-%20full.jpg?width=1200",
   "credit": "Étienne Carjat, 1876, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
+  "rotation": true,
+  "crop": [
+   0.25,
+   0.03,
+   0.55,
+   0.5
+  ]
  },
  {
   "id": "h-g-wells",
@@ -86,7 +110,13 @@
   "item": "Q38082",
   "target": "https://commons.wikimedia.org/wiki/Special:FilePath/LewisCarrollSelfPhoto.jpg?width=1200",
   "credit": "Lewis Carroll, Taken on 2 June 1857, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
+  "rotation": true,
+  "crop": [
+   0.28,
+   0.04,
+   0.58,
+   0.5
+  ]
  },
  {
   "id": "joseph-conrad",
@@ -118,7 +148,13 @@
   "item": "Q36184",
   "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Bram%20Stoker%201906.jpg?width=1200",
   "credit": "unidentified photographer, circa 1906, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
+  "rotation": true,
+  "crop": [
+   0.3,
+   0.03,
+   0.52,
+   0.48
+  ]
  },
  {
   "id": "rudyard-kipling",
@@ -142,7 +178,13 @@
   "item": "Q38337",
   "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Alexander%20Dumas%20p%C3%A8re%20par%20Nadar%20-%20Google%20Art%20Project.jpg?width=1200",
   "credit": "Nadar, 1855, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
+  "rotation": true,
+  "crop": [
+   0.28,
+   0.02,
+   0.55,
+   0.5
+  ]
  },
  {
   "id": "mary-shelley",
@@ -150,7 +192,13 @@
   "item": "Q47152",
   "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Richard%20Rothwell%20(1800-1868)%20-%20Mary%20Wollstonecraft%20Shelley%20-%20NPG%201235%20-%20National%20Portrait%20Gallery.jpg?width=1200",
   "credit": "Richard Rothwell, 1830s, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
+  "rotation": true,
+  "crop": [
+   0.25,
+   0.04,
+   0.55,
+   0.55
+  ]
  },
  {
   "id": "jack-london",
@@ -158,7 +206,13 @@
   "item": "Q45765",
   "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Jack%20London%20young.jpg?width=1200",
   "credit": "published by L C Page and Company Boston 1903, 1903, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
+  "rotation": true,
+  "crop": [
+   0.2,
+   0.04,
+   0.65,
+   0.6
+  ]
  },
  {
   "id": "fyodor-dostoevsky",

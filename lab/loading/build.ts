@@ -53,6 +53,9 @@ function parseArgs(argv: string[]): Options {
     maxWorks: num('max-works', 8),
     maxPages: num('max-pages', 12),
     aspect: num('aspect', 0),
+    crop: flags.get('crop')
+      ? (flags.get('crop')!.split(',').map(Number) as [number, number, number, number])
+      : undefined,
   };
 }
 

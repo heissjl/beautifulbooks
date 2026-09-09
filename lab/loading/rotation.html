@@ -126,7 +126,7 @@
 </main>
 
 <script type="module">
-import { Clearing, loadScene, pickImage } from './animations.js';
+import { Clearing, loadScene, pickImage, reserveFrame } from './animations.js';
 
 const $ = id => document.getElementById(id);
 const PHONE = 260;
@@ -134,7 +134,10 @@ const DESKTOP = 420;
 
 const phone = new Clearing($('canvas-phone'), $('frame-phone'), $('cost-phone'));
 const desktop = new Clearing($('canvas-desktop'), $('frame-desktop'), $('cost-desktop'));
-const stages = [[phone, PHONE, 'cap-phone', 'title-phone'], [desktop, DESKTOP, 'cap-desktop', 'title-desktop']];
+const stages = [
+  [phone, PHONE, 'cap-phone', 'title-phone', 'frame-phone'],
+  [desktop, DESKTOP, 'cap-desktop', 'title-desktop', 'frame-desktop'],
+];
 
 const state = { index: [], manifests: new Map(), manifest: null, timer: 0 };
 
@@ -172,6 +175,14 @@ async function search() {
   const chosen = Number($('wait').value);
   // The measured span of a search against Open Library (ROADMAP 2.6).
   const waitMs = chosen > 0 ? chosen : 1000 + Math.random() * 12_000;
+
+  // The frame gets its size from the manifest first, so nothing moves when
+  // the picture lands a few tenths of a second later.
+  for (const [, width, capId, titleId, frameId] of stages) {
+    reserveFrame($(frameId), manifest.grids[0], width);
+    $(capId).textContent = 'Looking for \u201ceast of eden\u201d in Open Library';
+    $(titleId).textContent = `${manifest.author} · lädt …`;
+  }
 
   for (const [anim, width, capId, titleId] of stages) {
     /*

@@ -2,20 +2,33 @@
 
 Julian, 2026-09-09: „wenn man einen buchtitel sucht wird statt der wavenden Startseite ein riesenmosaik eingeblendet, wie das von Orwell. Dazu sollten mehrere solcher Mosaike existieren, damit man rotieren kann zwischen denen bei verschiedenen Anfragen. Aber der Ladebildschirm soll animiert sein, also den Prozess zeigen, wie das Konterfei aus den Titeln aufgebaut wird." Roadmap 6.19a, and Julian's own limit from 2026-09-08: **„es darf clientseitig nicht zu ressourcenverbrauchend sein."**
 
-**Status: four animations built and measured on 2026-09-09, on a second author (Mark Twain).** Which one goes on the site is Julian's choice; the rights question from 5.5 is still unanswered, and until it is, nothing here reaches the website.
+**Status, 2026-09-09: four animations built and measured, 3b chosen** (Julian: „3b ist perfekt so"), **and a rotation of twenty templates built with it.** The rights question from 5.5 is still unanswered, and until it is, nothing here reaches the website.
 
 ```bash
-# build a mosaic and its manifest (Open Library only, zero Google requests)
-npx tsx lab/loading/build.ts --author "mark twain" \
-  --target "https://commons.wikimedia.org/wiki/Special:FilePath/Mark_Twain_by_AF_Bradley.jpg?width=1200" \
-  --credit "A. F. Bradley, New York 1907 — public domain"
+npx tsx lab/loading/portraits.ts       # find each author's public-domain portrait (Wikidata + Commons)
+npx tsx lab/loading/portrait-sheet.ts  # look at all twenty, with the frame each is built from
+npx tsx lab/loading/build-all.ts     # build the rotation from templates.json (Open Library only, zero Google)
+npx tsx lab/loading/sheet.ts         # all twenty on one contact sheet
+npx tsx lab/loading/serve.ts         # http://localhost:4323 — /rotation.html and /index.html
 
-# the three proposals, moving, with their cost under each
-npx tsx lab/loading/serve.ts        # http://localhost:4323
-
-# the same three as stills, five moments each, without a browser
-npx tsx lab/loading/filmstrip.ts --id mark-twain --grid 1 --size 1
+# one template on its own, or one setting tried out
+npx tsx lab/loading/build.ts --author "mark twain" --target <portrait url> --cols 40 --width 480
+# the four proposals as stills, five moments each, without a browser
+npx tsx lab/loading/filmstrip.ts --id mark-twain --grid 0 --size 0
 ```
+
+| File | What it is |
+|---|---|
+| `templates.json` | the twenty of the rotation and eleven in reserve — **committed**; the pictures are not |
+| `portraits.ts` | Wikidata `P18` and Commons' licence field, per author |
+| `portrait-sheet.ts` | the twenty portraits with their frames drawn on — **the step that cannot be automated** |
+| `orders.ts` | pure, tested: the fill orders and the shuffle |
+| `template.ts` | building one picture: covers, target, grid, files, manifest |
+| `build-all.ts` | the rotation, and **the settings it is all built with** |
+| `animations.js` | the four animations, shared by both pages so 3b cannot drift |
+| `rotation.html` | the loading screen as it would be: phone frame, desktop frame, a search that cuts it off |
+| `index.html` | the four proposals side by side, with a scrubber |
+| `sheet.ts`, `filmstrip.ts` | contact sheets, for judging without a browser |
 
 ## The question
 
