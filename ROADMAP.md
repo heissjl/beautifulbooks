@@ -46,16 +46,19 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt — nicht nach Auf
 
 *Stand 2026-09-09 abends, nach dem Merge mit `main`. Erste Fassung am selben Tag auf Julians Frage; sechs der neun Zeilen sind seither abgehakt (1.11, 1.2, 1.3, 6.14, 6.10a, 6.22), deshalb hier die nachgezogene Liste.* Gefiltert auf das, was die Seite für einen Leser besser macht und ohne eine Entscheidung von Julian gebaut werden kann. Die Phasenregel bleibt: Phase 1 zuerst, Phase 6 darf jederzeit dazwischen.
 
-**Phase 1 ist bis auf zwei Punkte leer.** Offen sind nur noch **1.8** (Julians zehn Minuten Stichprobe von Hand) und **1.9** — damit ist 1.9 der letzte Punkt der Phase, der nicht auf Julian wartet, und nach der eigenen Regel dieser Datei der nächste.
+**Phase 1 ist fast leer.** Offen sind **1.8** (Julians zehn Minuten Stichprobe von Hand), **1.9** und seit dem Abend des 2026-09-09 **1.11a**. Zwei davon sind Claudes, und nach der eigenen Regel dieser Datei kommen sie vor allem aus Phase 6.
 
 | | Punkt | Aufwand | Was ein Leser danach anders erlebt |
 |---|---|---|---|
 | 1 | **1.9 Der leere Platz oben rechts** | halber Tag | Der erste Bildschirm zeigt endlich, was die Seite kann, statt einer leeren Hälfte neben der Überschrift. Die Empfehlung steht seit dem 2026-09-07 (Fächer aus drei bis vier Covern desselben Buchs), die Cover-IDs stehen fest, **null Anfragen** |
-| 2 | **Deployen und 2.6 zu Ende bringen** *(braucht Julian: push)* | eine halbe Stunde | Nichts von heute ist in Produktion belegt — und **1.3 ist dort überhaupt erst wirksam**: der CDN-Treffer, der aus 7 Sekunden Millisekunden macht, existiert lokal nicht. Dazu die Reste aus 2.6 (OG-Bild in einem Messenger, Google-Verbrauch eines Tages) |
-| 3 | **6.13, dazu 6.15 Schritt 3** | ein bis zwei Sitzungen | Der schwerste offene Datenfehler, unverändert: die Karte verspricht 14 Ausgaben, die Wand lädt 8, und die Cover der Geschwisterwerke sind nirgends erreichbar. Vorher messen, wie viele Werke im Schnitt zusammengefasst werden |
-| 4 | **6.5, Teil „Mosaik-Ausfall"** | ein bis zwei Stunden | Eine Karte, deren Mosaik-Anfrage mit 503 scheitert, sieht heute aus wie ein Buch ohne Cover. Derselbe Riss wie 1.4, eine Ebene tiefer, und die Wiederholung aus 1.10 sitzt allein im Suchpfad |
-| 5 | **6.8 „All languages"-Pille** | ein bis zwei Stunden | Die Wand als Ganzes ansehen zu können, ohne sich durch die Reiter zu klicken. Klar spezifiziert, keine Abhängigkeit |
-| 6 | **6.2 Den Titel zeigen, nach dem gesucht wurde** | eine Sitzung | `crime and punishment` zeigt «Преступление и наказание». Zu klären ist zuerst, woher die Ausgabentitel für die Karte kommen — `?summary=1` trägt sie heute nicht |
+| 2 | **1.11a Der ISBN-Link bei einer lebenden ISBN** | eine Stunde | Bei `verified` ist die Nummer nachweislich in Umlauf, und trotzdem führt heute eine Verlagssuche, die alles von Simon & Schuster aus 2012 zeigt statt dieses einen Buchs. Benutzt nur das Verdikt, das ohnehin schon geholt wird |
+| 3 | **Deployen und 2.6 zu Ende bringen** *(braucht Julian: push)* | eine halbe Stunde | Nichts von heute ist in Produktion belegt — und **1.3 ist dort überhaupt erst wirksam**: der CDN-Treffer, der aus 7 Sekunden Millisekunden macht, existiert lokal nicht. Dazu die Reste aus 2.6 (OG-Bild in einem Messenger, Google-Verbrauch eines Tages) |
+| 4 | **6.13, dazu 6.15 Schritt 3** | ein bis zwei Sitzungen | Der schwerste offene Datenfehler, unverändert: die Karte verspricht 14 Ausgaben, die Wand lädt 8, und die Cover der Geschwisterwerke sind nirgends erreichbar. Vorher messen, wie viele Werke im Schnitt zusammengefasst werden |
+| 5 | **6.5, Teil „Mosaik-Ausfall"** | ein bis zwei Stunden | Eine Karte, deren Mosaik-Anfrage mit 503 scheitert, sieht heute aus wie ein Buch ohne Cover. Derselbe Riss wie 1.4, eine Ebene tiefer, und die Wiederholung aus 1.10 sitzt allein im Suchpfad |
+| 6 | **6.8 „All languages"-Pille** | ein bis zwei Stunden | Die Wand als Ganzes ansehen zu können, ohne sich durch die Reiter zu klicken. Klar spezifiziert, keine Abhängigkeit |
+| 7 | **6.2 Den Titel zeigen, nach dem gesucht wurde** | eine Sitzung | `crime and punishment` zeigt «Преступление и наказание». Zu klären ist zuerst, woher die Ausgabentitel für die Karte kommen — `?summary=1` trägt sie heute nicht |
+
+**Sieben Punkte sind am Abend des 2026-09-09 dazugekommen**, alle aus Julians Blick auf den lokalen Stand: **1.11a** (ISBN-Link statt Verlagssuche), **6.14a** (die Scan-Reihe scrollt seitwärts, kürzerer Satz), **6.24** (Zurück von der Jahrzehnte-Seite spielt die Ladeszene erneut ab), **6.25** (leere Kacheln — mit dem Mechanismus, den 1.3 heute neu geschaffen hat), **6.26** (die kuratierte Liste muss sich perfekt anfühlen) und **4.9** (Spendenseite mit offengelegten Kosten). **6.25 ist der dringendste davon**, weil er als einziger auf einen Fehler zeigt, den heute niemand ausschließen kann.
 
 **Zwei Punkte haben heute an Wert verloren, ohne dass jemand sie angefasst hat** — das gehört festgehalten, sonst werden sie nach altem Stand eingeplant:
 
@@ -299,6 +302,16 @@ Braucht keine Entscheidung von Julian; jeder Punkt ist ein eigener Commit mit Me
 
   **Zusammenhang mit anderen Punkten:** 1.2 macht die Kauf-Links auffindbar — das lohnt erst, wenn sie auch irgendwohin führen, also 1.11 zuerst oder zusammen. 4.1 (Bookshop-ID) repariert einen anderen toten Link derselben Familie. Der Nebenbefund zu 979-8 gehört zu 1.1: die Vorauswahl bei *Gatsby* traf eine indische Print-on-Demand-Ausgabe (978-93), und Hebel 2 ist genau die Sortierung, die das verhindert. Ein halber Tag, Claude — plus Julians zehn Minuten Stichprobe.
 
+- [ ] **1.11a Bei einer lebenden ISBN soll der ISBN-Link führen, nicht die Verlagssuche.** (Julian, 2026-09-09, an einem Screenshot: „erklär mir warum die suche in abebooks … nach … schuster incorporated, also mit verlag geht statt über isbn.")
+
+  **Was passiert, und es ist so gebaut.** Der Fall im Screenshot: Markt **DE**, ISBN `9781439142677` — das ist `978-1`, also der englische Sprachraum, für den deutschen Markt somit `foreign`. In diesem Fall führen nach [PLAN-1.11](docs/plans/PLAN-1.11-kauflinks-ux.md) §2.3 **AbeBooks und Booklooker als Titelsuche**, gebaut aus Titel, Autor, Verlag und Jahr (`searchLinksFor` setzt `tn`, `an`, `pn`, `yrl`/`yrh`), nicht aus der Nummer. Die Begründung dort: antiquarische Angebote tragen oft gar keine ISBN, und dann ist Titel + Verlag + Jahr die bessere Frage.
+
+  **Für diesen Fall ist die Begründung falsch, und das ist der Punkt.** Sie trägt für vergriffene Drucke. Hier steht daneben das Verdikt **`verified`** — der Verlag führt zu dieser Nummer aktuell genau dieses Bild, die ISBN ist also lebendig und katalogisiert. AbeBooks, eBay und Booklooker schlagen ISBNs international nach; „nicht mein Markt" heißt für einen Marktplatz nichts. Die Verlagssuche liefert dann alles von Simon & Schuster aus 2012 statt dieses einen Buchs — **unschärfer als der Link, den wir weggelassen haben.**
+
+  **Vorschlag, und er benutzt nur, was ohnehin schon geholt wird:** das Verdikt entscheidet über die Abfrageform. Bei **`verified`** führt der ISBN-Link, auch im Fall `foreign` — die Nummer ist nachweislich in Umlauf. Bei **`unknown`** (kein Verlagsbild auf dem Datensatz, typisch für alte Drucke), bei **`differs`** und **ohne ISBN** bleibt es bei der Titelsuche. `pending` und `unavailable` verhalten sich wie heute, also wie `unknown`, weil eine unbeantwortete Frage nichts bewegen darf. Eine Stunde, plus Tests je Fall.
+
+  **Was dabei nicht verrutschen darf:** die Reihenfolge der Läden bleibt, wie sie ist — hier geht es allein darum, **womit** der führende Laden gefragt wird. Und der Satz darunter behält seinen Wortlaut: er nennt die Registrierungsgruppe und nie einen Laden.
+
 ---
 
 ## Phase 2 — Online gehen
@@ -362,8 +375,19 @@ Prinzip (SPEC 2.4): Affiliate-Parameter aus Umgebungsvariablen pro Markt; ohne V
 - [ ] **4.4 Steuer und Gewerbe.** Affiliate-Einnahmen sind Einkünfte aus Gewerbebetrieb; ab Absicht Gewerbeanmeldung, Kleinunternehmerregelung prüfen.
 - [ ] **4.5 Falls das Google-Kontingent nicht trägt** (nach 0.3 und 3.2): Ersatz für die ISBN-Nachschau, in dieser Reihenfolge: **ISBNdb** (ab ~15 USD/Monat, ersetzt sie eins zu eins), **Amazon PA-API** (kostenlos, aber erst nach 4.2), oder **Verzicht**, dann zeigt das Verdikt nur noch „unknown“ und die Seite funktioniert mit kleinerem Versprechen.
 - [x] **4.6 Werberegeln in die Spec.** *Erledigt 2026-09-08 als **E19**, nach Julians Entscheidung: kein von Hand verkaufter oder belegter Platz; ein Platz nur, wenn ein Marktplatz ihn automatisch füllt.* Die Regeln: höchstens ein Platz je Seite, außerhalb von Wand, Ergebnis und Händlerliste; automatisch gefüllt; keine Kennung des Lesers, sonst kein Platz; gekennzeichnet; Kategorien ausschließbar; niemand zahlt mit Funktion. Ausführlich in [PLAN-4-einnahmen.md](docs/plans/PLAN-4-einnahmen.md) §4.
-- [ ] **4.7 Ein Werbenetzwerk ohne Kennung anfragen, sobald es Reichweite gibt** (fünfstellige Impressionen in der Search Console, aus 3.1 / Phase 3). Kandidaten: Carbon Ads, EthicalAds, BuySellAds. **Vorher die entscheidende Frage klären** (PLAN-4-einnahmen, Frage 6.4): liefert das Netzwerk ohne Cookie und ohne Wiedererkennung, was verlässt den Browser des Lesers, reicht ein Satz in der Datenschutzerklärung, lassen sich Kategorien ausschließen? Fällt eine Antwort negativ aus, gibt es den Platz nicht (E19). Bei Zusage baut Claude Komponente, Platz (unterhalb der Seitenleiste und in der Fußzeilen-Zone der Startseite, nie in der Schublade, **nicht** der Platz aus 1.9), Datenschutztext und About-Satz; ein halber Tag. Dazu, mit 2.3 und je zwei Minuten: ob die Fußzeile einen Satz mit Spendenlink zu Open Library bekommt, und ob eine Spendenzeile für die Seite selbst (Ko-fi, Liberapay) mitläuft. Julian fragt an, Claude baut.
+- [ ] **4.7 Ein Werbenetzwerk ohne Kennung anfragen, sobald es Reichweite gibt** (fünfstellige Impressionen in der Search Console, aus 3.1 / Phase 3). Kandidaten: Carbon Ads, EthicalAds, BuySellAds. **Vorher die entscheidende Frage klären** (PLAN-4-einnahmen, Frage 6.4): liefert das Netzwerk ohne Cookie und ohne Wiedererkennung, was verlässt den Browser des Lesers, reicht ein Satz in der Datenschutzerklärung, lassen sich Kategorien ausschließen? Fällt eine Antwort negativ aus, gibt es den Platz nicht (E19). Bei Zusage baut Claude Komponente, Platz (unterhalb der Seitenleiste und in der Fußzeilen-Zone der Startseite, nie in der Schublade, **nicht** der Platz aus 1.9), Datenschutztext und About-Satz; ein halber Tag. Dazu, mit 2.3 und zwei Minuten: ob die Fußzeile einen Satz mit Spendenlink zu **Open Library** bekommt. *Die Spendenzeile für die Seite selbst stand hier bis 2026-09-09 als halber Satz; sie ist zu **4.9** geworden, weil Julian eine eigene Seite dafür will.* Julian fragt an, Claude baut.
 - [ ] **4.8 Den Platz messen** (drei Monate nach 4.7). Auszahlung und Klickrate; bringt der Platz weniger, als er an Aufmerksamkeit kostet, wird er entfernt, nicht die Regeln. Die Spendenzeile im selben Zeitraum behalten oder streichen. **Programmatic Display, Direktvermarktung, Bezahlfunktionen mit Google-Daten und Merch aus Cover-Wänden bleiben ausgeschlossen**, solange N11, E19, die Google-Bedingungen und die Bildrechte gelten; die Begründung steht im Plan.
+
+- [ ] **4.9 Ein Spenden-Knopf neben „Privacy", und eine Seite, die die Kosten offenlegt.** (Julian, 2026-09-09: „donation button neben privacy. führt zu einer unterseite, die unsere monatlichen kosten auflistet und anzeigt, wie viel diesen monat schon gespendet wurde.")
+
+  **Warum das zu dieser Seite passt und nicht bloß ein Knopf ist:** die Seite lebt von zwei offenen Katalogen und sagt an jeder Stelle, woher sie etwas weiß und was sie nicht weiß. Eine Kostenseite ist dieselbe Haltung, auf den Betrieb angewandt — und sie ist der einzige ehrliche Grund, um Geld zu bitten: nicht „unterstütze uns", sondern „das kostet der Betrieb, so viel ist zusammengekommen". Sie ersetzt damit die halbe Zeile in 4.7 („ob eine Spendenzeile mitläuft"), die hiermit hierher wandert.
+
+  **Drei Fragen, die vor dem Bauen zu beantworten sind, zwei davon von Julian:**
+  1. **Über wen?** Ko-fi, Liberapay, GitHub Sponsors, Stripe. Zu prüfen ist, ob der Anbieter ohne fremdes Skript und ohne Cookie auf **unserer** Seite auskommt — ein Knopf, der zu ihm führt, ist ein Link; ein eingebettetes Widget wäre das Ende von N11 und der Anfang eines Cookie-Banners, genau wie bei den Teilen-Knöpfen (6.21). **Nur die Link-Variante kommt in Frage.**
+  2. **Welche Zahlen stehen drauf?** Die Kosten sind bekannt und klein (Vercel Hobby 0, Domain ~12 USD/Jahr, Google Books 0). Sie zu nennen ist leicht; sie *aktuell* zu halten ist die eigentliche Arbeit. Vorschlag: eine von Hand gepflegte Datei im Repo mit Posten, Betrag und Stand — kein Speicher, kein Abgleich mit einem Zahlungsdienst, ein Deploy hält sie fest.
+  3. **Und der Spendenstand?** Das ist die Frage, die es schwer macht. Eine Zahl „diesen Monat" muss von irgendwoher kommen. **Von Hand eintragen** ist ehrlich, aber veraltet (und N12 verlangt dann ein sichtbares Datum: „Stand 1. März"). **Automatisch abrufen** hieße eine API des Anbieters bei jedem Aufruf oder ein Speicher — der Auslöser für E6, den 5.8 schon einmal berührt hat. *Empfehlung: von Hand, mit Datum daneben.* Erst wenn jemand spendet, lohnt die Frage nach Automatik.
+
+  **Was die Seite nicht tun darf:** keine Zahl behaupten, die niemand geprüft hat, kein Fortschrittsbalken auf ein erfundenes Ziel, und kein Wort, das nach Not klingt, solange der Betrieb 12 USD im Jahr kostet. Ein halber Tag Claude, sobald 1 und 2 entschieden sind.
 
 ---
 
@@ -621,6 +645,37 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   Vorher: 6.6 (andere Datenbanken) kann dieselbe Frage billiger lösen, falls ein Katalog Ausgaben sauberer führt als Open Library — das steht dort schon als „bevor wir weiter an der Faltung schrauben" und gilt hier unverändert.
 
+- [ ] **6.24 Der Zurück-Knopf von der Jahrzehnte-Seite spielt die Ladeszene noch einmal ab.** (Julian, 2026-09-09: „wenn ich per browser zurück-taste von der decade wall zurück zur cover wall komme, will ich nicht erneut den ladebildschirm mit den 4 covern sehen.")
+
+  **Für die Suche ist das seit `49a3453` gelöst, für diesen Weg nicht.** `useWorkPages` merkt sich einen fertigen Durchlauf (`FINISHED`) und liest ihn beim Rendern, damit ein Zurück zur Wand sofort steht. Warum das hier nicht greift, ist **vor dem Bauen zu klären** — die Jahrzehnte-Seite ist eine eigene Route, also wird die Komponente neu montiert und der Modulzustand müsste eigentlich überleben. Kandidaten: die Seite ist serverseitig gerendert und ihr Zurück ist eine echte Navigation, kein `router.back()` im selben Baum; oder `FINISHED` ist an einen `requestKey` gebunden, der beim Wiedereintritt anders lautet (Markt, Sprache). Erst nachsehen, welches von beidem, dann beheben — die Ursache steht nicht fest.
+
+- [ ] **6.25 Kacheln bleiben leer, obwohl im Ladebildschirm Cover zu sehen waren.** (Julian, 2026-09-09: „es bleiben einfach oft kacheln leer … vllt ein problem mit vercel? vielleicht werden wir von der openlibrary api absichtlich abgefangen, weil zu viele anfragen?")
+
+  **Am 2026-09-09 gegen den Dev-Server nachgesehen, und drei Dinge stehen fest, bevor jemand rät:**
+
+  | Geprüft | Ergebnis |
+  |---|---|
+  | 429 auf `/img` in der ganzen Sitzung | **keiner** (429 gab es nur auf `/api/isbn`, aus dem automatisierten Durchklicken) |
+  | 502 auf `/img` | nur der absichtliche Test mit einer erfundenen Cover-ID |
+  | Antwortzeit von `/img` | **2,6 bis 7,6 s** je Bild |
+
+  **Julians Vermutung hat einen Mechanismus, und er ist seit heute Nachmittag neu.** Vor 1.3 holte **jeder Leser** die Cover von seiner eigenen IP; seit 1.3 holt sie **ein Server** für alle. Open Library dokumentiert Rate-Limits für Cover, und die galten vorher pro Leser, jetzt gelten sie für uns zusammen. Das ist kein Beleg, dass es passiert — aber es ist genau der Weg, auf dem es passieren würde, und er ist durch meine eigene Änderung entstanden. **Was ihn entschärft, sobald deployt ist:** der CDN vor der Route holt jedes Cover nur einmal für alle Leser, was die Zahl der Abrufe bei Open Library *senkt*. Der gefährliche Zustand ist der kalte Cache, nicht der warme.
+
+  **Drei Ursachen, die auseinanderzuhalten sind, mit dem, was sie unterscheidet:**
+  1. **Der Dev-Server selbst.** Ein Node-Prozess bedient Seite, API und 308 Bilder zugleich; 2,6–7,6 s je Bild sind damit erklärt und sagen über Produktion nichts. **Unterscheidet sich dadurch, dass es in Produktion verschwindet.**
+  2. **Das eigene Rate-Limit** (`img`, 400 Burst / 300 pro Minute). Eine Wand mit 308 Covern passt knapp; eine Wand plus die Mosaike einer Trefferliste passt nicht mehr. **Unterscheidet sich durch 429 im Log** — heute keine, aber die Grenze ist zu knapp für die großen Werke und gehört angehoben oder an die Wandgröße gekoppelt.
+  3. **Open Library drosselt uns.** **Unterscheidet sich durch 429 oder 403 *von dort*, im `X-Cover-Source`-Pfad** — dafür muss die Route den Statuscode der Gegenseite protokollieren, was sie heute nicht tut. Das ist die erste zu bauende Kleinigkeit, denn ohne sie bleibt die Frage unbeantwortbar.
+
+  **Nicht zu verwechseln mit einem Bild, das nur noch nicht geladen ist:** Kacheln laden faul, und ein Vollseiten-Screenshot löst das Laden unterhalb des Bildschirms nicht aus. Beim nächsten Auftreten deshalb festhalten: hat die Kachel das Buch-Symbol (dann ist die Anfrage **gescheitert**) oder ist sie einfarbig leer (dann wurde sie **nie gestellt**)?
+
+- [ ] **6.26 Die kuratierte Liste muss sich perfekt anfühlen.** (Julian, 2026-09-09: „die UX für alles was mit der kuratierten liste passiert muss perfekt sein. ich weiß nicht warum da manchmal noch lange ladezeiten sind oder einzelne kacheln leer bleiben.")
+
+  **Warum dieser Punkt eigener ist als 6.25:** die kuratierten Werke sind die, die in der Sitemap stehen, die die Startseite zeigt und die eine Suchmaschine zuerst findet. Bei ihnen darf nichts hakeln, und bei ihnen **muss es auch nicht**: für sie liegt alles vorgerechnet bereit — Cover-IDs und Signaturen im gebauten Index (E18, seit `5385ddd` liest `getWorkPage` sie von dort, ohne ein Bild zu holen), das gewählte Cover in `data/curated.json`.
+
+  **Zu messen, bevor gebaut wird, und zwar getrennt nach kuratiert und nicht kuratiert:** Zeit bis zur ersten Kachel, Zeit bis die Wand steht, Zahl der Kacheln ohne Bild. Wenn ein kuratiertes Werk sich messbar besser verhält als ein beliebiges, ist der Weg klar — mehr vorrechnen. Verhält es sich gleich, liegt es nicht am Index, sondern an 6.25, und dieser Punkt löst sich dort auf.
+
+  **Ein bekannter Kandidat steckt schon in der Liste:** von den kuratierten Werken werden nur die achtzehn der Startseite vorgerendert (5.1); alle übrigen entstehen beim ersten Abruf. Für eine Liste, die klein und bekannt ist, ist das die falsche Sparsamkeit — hier wäre `generateStaticParams` über alle hundert zu messen, gegen die Bauzeit, die 5.1 als Grund dagegen nennt.
+
 - [ ] **6.11 Goodreads: was geht, was nicht.** (Julian, 2026-09-07: bessere Anbindung, Editionsdaten, Rezensionen, Bewertungen.) Recherchiert am selben Tag, und die Antwort fällt klarer aus als erhofft.
 
   **Eine Schnittstelle gibt es nicht mehr.** Goodreads gibt seit dem 8. Dezember 2020 keine neuen Entwicklerschlüssel aus und hat die öffentliche API zurückgezogen. Was es gibt, sind Scraper von Dritten — die aber genau das tun, was die Nutzungsbedingungen untersagen.
@@ -673,6 +728,11 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
   Bei *Ansichten eines Clowns* trifft das die beiden dtv-Fassungen der Zeichnung mit der Gitarre (1967 und 1984, Bilddistanz 6): dieselbe Gestaltung, aber sichtbar verschieden gedruckt — cremefarbener gegen weißen Grund, anderer Anschnitt. Eine davon ist unsichtbar.
 
   **Das widerspricht E16**, wo festgehalten ist, dass ein Cover nie gelöscht wird, weil es leer aussieht, sondern nur ans Ende sortiert — ein Fehlurteil soll eine Position kosten, kein Cover. Das Falten tut aus einem anderen Grund genau das, was E16 verbietet. Falten bleibt auf der Wand richtig (sonst besteht Gatsby aus 293 fast gleichen Kacheln), aber es muss umkehrbar sein: das „+N" anklickbar machen, oder die Seitenleiste zeigt die gefalteten Fassungen als kleine Kacheln unter dem gewählten Cover — dieselbe Bauform wie „Looks like this". Ein bis zwei Stunden.
+
+- [ ] **6.14a Die Scan-Reihe: seitwärts scrollen statt umbrechen, und ein kürzerer Satz.** (Julian, 2026-09-09, an *Fahrenheit 451* mit **acht** Scans.)
+
+  - **Umbruch kostet Platz, den die Spalte nicht hat.** Acht Kacheln passen bei `flex-wrap` nicht in eine Reihe und erzeugen eine zweite — in einer Spalte, die 1.2 gerade erst von 2.351 auf 851 px gebracht hat. Stattdessen **eine Reihe mit seitlichem Scrollen** (`overflow-x: auto`, `scroll-snap`), wie es die Sprachreiter auf dem Telefon schon tun. Dabei mitnehmen, was 6.5 für die Reiterzeile notiert: eine Verlaufskante am Rand, sonst sieht niemand, dass es weitergeht.
+  - **Der Erklärsatz ist zu lang.** „The wall shows one tile for these, because the images are the same design. They are different scans, and sometimes different printings of it." — zwei Sätze für eine Reihe von Daumennägeln, die sich selbst erklären, sobald man sie sieht. Kürzen auf einen Halbsatz; die Überschrift „The same cover, N scans" trägt die Aussage ohnehin schon. **Nicht wegfallen darf**, dass es *verschiedene Scans und manchmal verschiedene Drucke* sind — genau das ist der Grund, warum die Reihe existiert (E16).
 
 - [ ] **6.15 Fünf von sechs Karten sind dasselbe Buch. [Testfall „ansichten böll"]** *In Produktion am 2026-09-08 nachgemessen: **4 Karten statt 6**, der Roman trägt 16 statt 14 Ausgaben. Schritt 1 und 2 erledigt auf `mvp-hobby` ([Historie](docs/history.md)): Klammerzusätze am Titelende fallen weg, der Autoren-Key führt zusammen — und trennt ausdrücklich nicht, weil Open Library Reed unter zwei Keys führt und die Trennung Mumbo Jumbo gespalten hätte. Offen: Schritt 3, die Stichprobe zu Übersetzungen.* (Julian, 2026-09-08: „von 5 Ergebnissen sind 4 das richtige Buch, nur in einer anderen Sprache, das sollte so auch nicht passieren.") **Das widerspricht der Spec ausdrücklich**: §2.1 sagt, Sprache sei kein Teil der Werk-Identität und Übersetzungen seien Ausgaben desselben Werks. Die Umsetzung hält das nicht ein.
 
