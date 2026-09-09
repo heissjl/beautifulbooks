@@ -18,6 +18,7 @@ import type { ImageSignature } from './imagesig';
 import type { PageInfo } from './pages';
 import { hashCovers } from './coverhash';
 import { searchEditionCandidates } from './sources/googlebooks';
+import { indexSignatures } from './coverindex';
 import { OL_EDITIONS_PAGE, getEditionsPage, getWork } from './sources/openlibrary';
 import { parseEditions } from './sources/openlibrary-parse';
 import {
@@ -148,8 +149,23 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
   };
 
   if (options.signatures) {
-    const signatures = await hashCovers(covers, { deadlineMs: options.hashDeadlineMs ?? DEFAULT_HASH_DEADLINE_MS });
-    result.signatures = Object.fromEntries(signatures);
+    /*
+      The built index first, and it is free: no image is fetched and nothing
+      is decoded, because these signatures were computed before the deploy
+      (E18). Only what the index does not know is hashed here.
+
+      Measured 2026-09-09 on *Fahrenheit 451*, cold: hashing alone returned
+      signatures for 63-79 % of a page's covers inside the 4 s budget, and a
+      cover without a signature **cannot fold** — which is why the wall showed
+      three copies of the same jacket on a first visit and folded them on the
+      second. For a curated work the index closes that gap outright.
+    */
+    const known = indexSignatures(covers.map(c => c.id));
+    const missing = covers.filter(c => !known.has(c.id));
+    const hashed = missing.length > 0
+      ? await hashCovers(missing, { deadlineMs: options.hashDeadlineMs ?? DEFAULT_HASH_DEADLINE_MS })
+      : new Map();
+    result.signatures = Object.fromEntries([...known, ...hashed]);
   }
   return result;
 }
