@@ -23,7 +23,7 @@ import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
-import { coverIdFromSegment } from '@/lib/coverurl';
+import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
 import { VERDICT_LEAD } from '@/lib/verdicts';
 import { commerceEnabled } from '@/lib/sitemode';
@@ -93,6 +93,13 @@ function buildWall(
   const signatures = new Map(merged.signatures);
   for (const [id, sig] of extraSignatures) signatures.set(id, sig);
 
+  /*
+    Which editions carried each scan *before* folding (ROADMAP 6.14, and the
+    ordering in `orderEditionsForMarket`). Folding merges the members' edition
+    ids into the representative, so afterwards a tile lists printings that
+    never had that picture; this map remembers who did.
+  */
+  const editionsByScan = new Map<string, readonly string[]>(all.map(c => [c.id, c.editionIds]));
   const covers = foldDuplicateCovers(all, signatures, merged.editions);
   const coversById = new Map(covers.map(c => [c.id, c]));
   const ordered = orderGroups(groupCoversByLanguage(covers, merged.editions, preferred, signatures), preferred);
@@ -100,7 +107,7 @@ function buildWall(
     language: g.language,
     covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
   }));
-  return { covers, coversById, groups };
+  return { covers, coversById, groups, editionsByScan };
 }
 
 /**
@@ -279,6 +286,7 @@ function BookDetail() {
       coversPerEdition={view.coversPerEdition}
       workTitle={work.title}
       anyEditionLinks={pages.anyEditionLinks}
+      editionsByScan={view.editionsByScan}
       author={work.authors[0]}
       query={searchParams.get('q') ?? ''}
       market={view.market}
@@ -418,6 +426,8 @@ interface CoverDetailsProps {
   workTitle: string;
   /** The market's shops searched by the work's title (ROADMAP 1.11). */
   anyEditionLinks: BuyLink[];
+  /** Edition ids per scan, from before folding (ROADMAP 6.14). */
+  editionsByScan: ReadonlyMap<string, readonly string[]>;
   author?: string;
   /** Carried into the links of the "looks like this" row so Back still works. */
   query: string;
@@ -451,16 +461,26 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   return (
     <section className="mt-4" aria-label="Covers that look like this one">
       <p className="kicker">Looks like this</p>
-      <ul className="mt-2 flex gap-2">
+      {/*
+        A fixed three-column grid, not `flex-1` per item (ROADMAP 6.10a).
+        With three matches the two are the same; with one, `flex-1` gave that
+        one the whole column — some 370 px at 1440 — and Open Library's `-S`
+        thumbnail, which is about 45 px wide, arrived as a blur. The row is
+        about *how a cover looks*, so a soft picture is not a cosmetic fault.
+        The source is `url` (`-M`, 180 px) for the same reason: `CoverImage`
+        runs `unoptimized`, so `sizes` is a hint to the browser and changes
+        nothing about the file that is fetched.
+      */}
+      <ul className="mt-2 grid grid-cols-3 gap-2">
         {similar.map(match => (
-          <li key={match.coverId} className="min-w-0 flex-1">
+          <li key={match.coverId} className="min-w-0">
             <Link
               href={`/book/${match.workId}?cover=${encodeURIComponent(match.coverId)}${query ? `&q=${encodeURIComponent(query)}` : ''}`}
               className="group block"
               title={`${match.title} — ${match.author}`}
             >
               <span className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-[3px] bg-surface-2">
-                <CoverImage src={match.urlSmall} alt={`${match.title} by ${match.author}`} sizes="80px" />
+                <CoverImage src={match.url} alt={`${match.title} by ${match.author}`} sizes="125px" />
               </span>
               <span className="mt-1 block truncate text-[11px] leading-tight text-ink-3 group-hover:text-ink-2">
                 {match.title}
@@ -473,18 +493,36 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   );
 }
 
-function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEditionLinks, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+  /*
+    Every scan that was folded into this tile, the representative first
+    (ROADMAP 6.14). Folding is right on the wall — without it *The Great
+    Gatsby* is 293 nearly identical tiles — but it was one-way: the "+N" badge
+    is decoration, the sidebar only mentioned the count in passing, and
+    `coverForId` resolves a folded id back to its representative, so even a
+    hand-written `?cover=` could not reach one. That is what E16 forbids one
+    reason further along: a misjudgement may cost a position, never a cover.
+    Measured on *Ansichten eines Clowns*: two dtv printings of the same
+    drawing, 1967 and 1984, distance 6 — the same design, visibly different
+    printings, and one of them was invisible.
+
+    The URLs are rebuilt from the ids (`coverUrlFor`, pure), so nothing had to
+    be carried through the model for this.
+  */
+  const scans = [cover.id, ...(cover.similarIds ?? [])].filter(id => coverUrlFor(id, 'L'));
+  const [pickedScan, setPickedScan] = useState<string | null>(null);
+  // Derived, like the printing above it: another cover replaces the list.
+  const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : cover.id;
+  const shownUrl = shownScan === cover.id ? cover.url : coverUrlFor(shownScan, 'L') ?? cover.url;
+
   /*
     Which printing leads is a decision now, not the catalogue's arrival order
-    (ROADMAP 1.11 lever 2). After folding, `Cover.editionIds` came in the
-    order Open Library handed the records over — by age of the record — and
-    the first one supplies the links a reader sees first. Two things beat that
-    order: whether this printing still ships the cover on screen (the verdict,
-    Julian 2026-09-09) and whether a shop in the reader's market can look its
-    number up. Not memoised: it depends on verdicts that arrive after the
-    selection, and sorting a handful of editions costs nothing.
+    (ROADMAP 1.11 lever 2, sharpened by Julian on 2026-09-09). It follows the
+    scan on screen: pick another scan of the same design above, and the
+    printing that carried *that* one comes to the front.
   */
-  const ordered = orderEditionsForMarket(editions, market, isbn13 => verdictFor(isbn13).status);
+  const carriedBy = new Set(editionsByScan.get(shownScan) ?? []);
+  const ordered = orderEditionsForMarket(editions, market, { carriedBy, verdictOf: isbn13 => verdictFor(isbn13).status });
   const [pickedId, setPicked] = useState<string | null>(null);
   /*
     Derived, never corrected from an effect: picking another cover replaces
@@ -517,13 +555,40 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
         with it (ROADMAP 1.2, candidate b).
       */}
       <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 lg:max-w-[min(100%,31vh)]">
-        <CoverImage src={cover.url} alt="Selected cover" sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
+        <CoverImage src={shownUrl} alt="Selected cover" sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
       </div>
       <p className="mt-2 text-xs text-ink-3">
-        Image from {cover.source === 'openlibrary' ? 'Open Library' : 'Google Books'}
+        {/* Named for the scan on screen, not for the tile it was folded into. */}
+        Image from {shownScan.startsWith('gb:') ? 'Google Books' : 'Open Library'}
         {editions.length > 1 ? ` · on ${editions.length} editions` : ''}
-        {cover.similarIds?.length ? ` · ${cover.similarIds.length} duplicate scan${cover.similarIds.length > 1 ? 's' : ''} folded` : ''}
       </p>
+
+      {scans.length > 1 && (
+        <section className="mt-4" aria-label="Scans folded into this tile">
+          <p className="kicker">The same cover, {scans.length} scans</p>
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {scans.map((id, i) => (
+              <li key={id}>
+                <button
+                  type="button"
+                  onClick={() => setPickedScan(id)}
+                  aria-pressed={id === shownScan}
+                  title={i === 0 ? 'The scan the wall shows' : 'Another scan of the same cover'}
+                  className={`cover-shadow relative block h-16 w-[2.7rem] overflow-hidden rounded-[3px] bg-surface-2 transition-opacity ${
+                    id === shownScan ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  <CoverImage src={coverUrlFor(id, 'M') ?? ''} alt={i === 0 ? 'The scan the wall shows' : `Scan ${i + 1} of this cover`} sizes="44px" />
+                </button>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs leading-relaxed text-ink-3">
+            The wall shows one tile for these, because the images are the same design.
+            They are different scans, and sometimes different printings of it.
+          </p>
+        </section>
+      )}
 
       <SimilarCovers coverId={cover.id} query={query} />
 

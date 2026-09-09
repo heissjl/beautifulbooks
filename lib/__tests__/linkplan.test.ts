@@ -196,7 +196,7 @@ describe('orderEditionsForMarket (lever 2)', () => {
       { id: '2004', isbn13: '9780307388629', year: 2004 },
     ];
     const verdict = (isbn: string) => (isbn === '9780307388629' ? 'verified' as const : 'differs' as const);
-    expect(orderEditionsForMarket(vintage, 'us', verdict).map(e => e.id)).toEqual(['2004', '2025']);
+    expect(orderEditionsForMarket(vintage, 'us', { verdictOf: verdict }).map(e => e.id)).toEqual(['2004', '2025']);
     // Without an answer yet, the year decides as before.
     expect(orderEditionsForMarket(vintage, 'us').map(e => e.id)).toEqual(['2025', '2004']);
   });
@@ -204,14 +204,40 @@ describe('orderEditionsForMarket (lever 2)', () => {
   it('does not reorder on an answer that has not arrived', () => {
     const two = [{ id: 'new', isbn13: EN, year: 2020 }, { id: 'old', isbn13: '9780307388629', year: 1999 }];
     for (const status of ['pending', 'unavailable', 'unknown'] as const) {
-      expect(orderEditionsForMarket(two, 'us', () => status).map(e => e.id)).toEqual(['new', 'old']);
+      expect(orderEditionsForMarket(two, 'us', { verdictOf: () => status }).map(e => e.id)).toEqual(['new', 'old']);
     }
   });
 
   it('lets the verdict outrank the market, because the reader picked a picture', () => {
     const mixed = [{ id: 'home', isbn13: EN, year: 2010 }, { id: 'foreign', isbn13: TR, year: 2013 }];
     const verdict = (isbn: string) => (isbn === TR ? 'verified' as const : 'unknown' as const);
-    expect(orderEditionsForMarket(mixed, 'us', verdict).map(e => e.id)).toEqual(['foreign', 'home']);
+    expect(orderEditionsForMarket(mixed, 'us', { verdictOf: verdict }).map(e => e.id)).toEqual(['foreign', 'home']);
+  });
+
+  it('leads with the printing that actually carried the scan on screen', () => {
+    /*
+      The case Julian's screenshot showed, and the one the verdict cannot
+      answer: *Beloved* folds Vintage International 2025 and 2004 onto one
+      tile, and both records carry **the same ISBN** — so both get the same
+      verdict, and the year led with 2025. Only the pre-fold record of who
+      carried the scan separates them.
+    */
+    const vintage = [
+      { id: 'ol:OL1M', isbn13: EN, year: 2025 },
+      { id: 'ol:OL2M', isbn13: EN, year: 2004 },
+    ];
+    const verdictOf = () => 'verified' as const;
+    const carriedBy = new Set(['ol:OL2M']);
+    expect(orderEditionsForMarket(vintage, 'us', { carriedBy, verdictOf }).map(e => e.id)).toEqual(['ol:OL2M', 'ol:OL1M']);
+    // Pick the other scan above and the other printing leads.
+    expect(orderEditionsForMarket(vintage, 'us', { carriedBy: new Set(['ol:OL1M']), verdictOf }).map(e => e.id))
+      .toEqual(['ol:OL1M', 'ol:OL2M']);
+  });
+
+  it('skips the scan criterion when it knows nothing, rather than reshuffling', () => {
+    const two = [{ id: 'a', isbn13: EN, year: 2025 }, { id: 'b', isbn13: EN, year: 2004 }];
+    expect(orderEditionsForMarket(two, 'us', { carriedBy: new Set(['somewhere-else']) }).map(e => e.id)).toEqual(['a', 'b']);
+    expect(orderEditionsForMarket(two, 'us', { carriedBy: new Set() }).map(e => e.id)).toEqual(['a', 'b']);
   });
 
   it('keeps the catalogue’s order among equals', () => {

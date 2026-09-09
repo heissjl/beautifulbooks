@@ -1195,3 +1195,38 @@ Mitgeliefert: **Hebel 4 aus ROADMAP 1.11, den der erste Umbau übersehen hatte.*
 `orderEditionsForMarket` sortiert deshalb zuerst nach dem Verdikt (`verified` vor allem, `differs` zuletzt), dann nach Markt und Jahr. **Das Verdikt schlägt den Markt**, und das ist die eigentliche Entscheidung dahinter: der Leser hat ein Bild angeklickt, nicht eine Kaufgelegenheit, also ist der Druck, der dieses Bild trägt, die ehrliche Voreinstellung — auch wenn seine ISBN aus einem anderen Sprachraum kommt und die Händlerreihenfolge sich daraufhin umstellt. Der Preis ist, dass die Chip-Reihe sich einmal umsortiert, wenn die Verdikte eintreffen; `pending` und `unavailable` bewegen deshalb nichts.
 
 **Live geprüft** an *Beloved* über die ersten fünf Cover: `verified` führt mit Bookshop.org und Amazon, `differs` mit AbeBooks, eBay und Google Lens. Die Chip-Reihenfolge ließ sich am Dev-Server **nicht** live nachstellen — auf einer kalten Instanz trägt kein Cover mehr als eine Ausgabe, weil die Faltung Signaturen braucht, die erst beim zweiten Besuch da sind (SPEC §7). Sie ist durch Unit-Tests mit genau dem Vintage-Fall belegt.
+
+## 2026-09-09 · Ein Cover, das man nicht sehen konnte, und eines, das man zu groß sah (ROADMAP 6.14 und 6.10a)
+
+Zwei kleine Punkte aus einem Screenshot, und der kleinere von beiden hat die Sortierfrage vom Vormittag erst wirklich beantwortet.
+
+### 6.10a — die unscharfe Riesenkachel
+
+„Looks like this" gibt jeder Kachel `min-w-0 flex-1`. Bei drei Treffern ist das ein Drittel der Spalte, bei **einem** die ganze — rund 370 px bei 1440 —, und das Bild dahinter ist Open Librarys `-S`-Miniatur mit etwa 45 px. `CoverImage` läuft mit `unoptimized`, `sizes="80px"` ist also nur eine Angabe an den Browser und ändert die geladene Datei nicht. Auf einer Seite, die vom Aussehen der Cover handelt, ist das kein Schönheitsfehler.
+
+Jetzt drei feste Spalten und `-M` (180 px) als Quelle. **Gemessen bei 1440 × 900:** die Kachel eines einzelnen Treffers ist **118 px** breit in einer 373 px breiten Spalte. Der Titel unter der Kachel war entgegen der ersten Vermutung immer da — live gesehen „Cien años de soledad", genau der Treffer aus dem Screenshot; er ging im unscharfen Bild unter.
+
+**Der zweite Befund aus demselben Screenshot ließ sich nicht reproduzieren, und die naheliegende Vermutung ist widerlegt.** Die Spalte zeigte dort gar keinen Ausgaben-Block. Vermutet hatte ich Cover, deren `editionIds` ins Leere zeigen — namentlich die, die die ISBN-Nachschau nachträglich in die Wand setzt. Gemessen: über alle fünf Seiten von *Beloved* **0 von 66** Covern ohne auflösbare Ausgabe; und `useIsbnCovers` überspringt ohnehin jedes Cover, dem keine Ausgabe zugeordnet ist. 14 Cover im Browser durchgeklickt, der Block erschien jedes Mal. Der Punkt bleibt in 6.10a offen, mit dem, was ausgeschlossen ist — das ist mehr wert als eine plausible Ursache, die nicht stimmt.
+
+### 6.14 — ein gefaltetes Cover war nirgends zu sehen
+
+Das Falten ist auf der Wand richtig; ohne es besteht *The Great Gatsby* aus 293 fast gleichen Kacheln. Aber es war einseitig: das „+N" auf der Kachel ist `pointer-events-none`, die Seitenleiste erwähnte nur eine Zahl im Vorbeigehen, und `coverForId` löst die ID eines gefalteten Covers auf den Vertreter auf — auch ein von Hand geschriebenes `?cover=` kam nicht hin. Das ist genau, was E16 eine Ursache weiter verbietet.
+
+Der Weg ist **nicht** das Abzeichen geworden, sondern die Seitenleiste: unter dem großen Cover steht „The same cover, N scans" mit allen Scans als kleinen Kacheln, der Vertreter zuerst, die gewählte mit Ring. Ein Klick tauscht das große Bild. Die Bild-URLs werden aus den Cover-IDs neu gebaut (`coverUrlFor`, rein), es musste nichts durchs Modell getragen werden. Und die Zeile „Image from …" nennt jetzt die Quelle **des gezeigten Scans**: an *Gatsby* live gesehen, wo ein Google-Cover in ein Open-Library-Cover gefaltet ist und die Zeile beim Umschalten mitwechselt.
+
+### Dabei kam heraus, dass die Sortierung vom Vormittag den gemeldeten Fall gar nicht traf
+
+Julians Fall war *Beloved*: eine gefaltete Kachel mit Vintage International 2025 und 2004, 2025 vorn. Am Vormittag hatte ich das Verdikt vor das Jahr gestellt — „die Ausgabe, deren registriertes Bild dieses Cover ist, zuerst". Beim Nachmessen am Dev-Server stellte sich heraus: **beide Datensätze führen dieselbe ISBN, 9781400033416.** Also dasselbe Verdikt, und das Jahr entschied weiter. Die Regel war richtig gemeint und für diesen Fall wirkungslos.
+
+Was die beiden trennt, ist etwas anderes: **wer den gezeigten Scan vor dem Falten getragen hat.** `foldDuplicateCovers` hängt die Ausgaben der Mitglieder an den Vertreter, danach nennt eine Kachel Drucke, die dieses Bild nie hatten. `buildWall` merkt sich das jetzt vor dem Falten, und `orderEditionsForMarket` sortiert danach — vor dem Verdikt, vor dem Markt, vor dem Jahr.
+
+Damit folgt der führende Druck dem Bild. Live gemessen an derselben Kachel:
+
+| | Chips | gezeigte Ausgabe |
+|---|---|---|
+| Scan 1 (Vertreter) | Vintage International · 2025 ←, · 2004 | 2025 |
+| Scan 2 angeklickt | Vintage International · 2004 ←, · 2025 | 2004, mit eigener ISBN und eigenen Links |
+
+Die drei Vintage-Datensätze, die das erklären (aus der API geholt): 2025 unter 9781400033416 trägt `ol:15248310` und `ol:15169554`; 2004 unter 9780307388629 trägt `ol:14342620` und `gb:sfmp6gjZGP8C`; ein zweiter 2004er unter derselben ISBN wie 2025 trägt `ol:10653442`. Ein Katalog, in dem dasselbe Buch dreimal steht, zweimal mit derselben Nummer und verschiedenen Jahren — das ist der Normalfall, nicht die Ausnahme, und jede Sortierregel muss damit rechnen.
+
+**Nebenbei gelernt, für die nächste Sitzung:** die Faltung ist am Dev-Server nicht verlässlich zu sehen. Beim ersten Laden eines Werks faltet sie nichts, weil die Signaturen das 4-Sekunden-Budget nicht schaffen; erst nach mehreren Besuchen desselben Werks erscheinen die „+N"-Abzeichen. Wer 6.14 oder 6.7 prüft, lädt die Seite ein paarmal, bevor er misst.

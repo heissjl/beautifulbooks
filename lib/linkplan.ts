@@ -232,22 +232,26 @@ function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, 
  * 44 % of cover-bearing editions carrying a foreign ISBN, the first was often
  * the least useful.
  *
- * Two criteria, in this order:
+ * Julian, 2026-09-09: „die version die das gleiche aktuelle cover hat wie die
+ * isbn sollte zuerst vorgeschlagen werden, nicht nach jahr sortiert." Three
+ * criteria answer that, in this order:
  *
- * 1. **Does this printing still ship the cover on screen?** That is exactly
- *    what the verdict answers, and it beats everything else — Julian,
- *    2026-09-09: „die version die das gleiche aktuelle cover hat wie die isbn
- *    sollte zuerst vorgeschlagen werden, nicht nach jahr sortiert". Measured
- *    on *Beloved*: the fold carries Vintage International 2025 and 2004, the
- *    year put 2025 first, and it is the 2004 number whose registered image is
- *    the picture the reader clicked.
- * 2. **Can a shop in the reader's market look the number up?** An ISBN from
+ * 1. **Which printing actually carries the scan on screen?** Folding merges
+ *    the members' edition ids into the representative, so afterwards the tile
+ *    lists printings that never had that picture in the catalogue. The one
+ *    that did is the honest lead. Measured on *Beloved*: the tile carries
+ *    Vintage International 2025 and 2004, **both under the same ISBN**
+ *    9781400033416 — so the verdict below cannot separate them and the year
+ *    led with 2025. Only this criterion answers that case.
+ * 2. **Does the ISBN still ship it?** The verdict, for printings the first
+ *    criterion cannot tell apart.
+ * 3. **Can a shop in the reader's market look the number up?** An ISBN from
  *    their own registration area first, then any ISBN, then the newest year.
  *
- * The verdict outranking the market means a foreign ISBN can lead, and then
- * the shop order adapts to it (`linkPlan` case `foreign`). That is the right
- * way round: the reader picked a *picture*, and the printing that carries it
- * is the honest lead even when it is harder to buy.
+ * Both of the first two outrank the market, so a foreign ISBN can lead and
+ * the shop order then adapts to it (`linkPlan` case `foreign`). That is the
+ * right way round: the reader picked a *picture*, and the printing that
+ * carries it is the honest lead even when it is harder to buy.
  *
  * Verdicts arrive a moment after the selection, so the row reorders once when
  * they land. `pending` and `unavailable` rank with `unknown` on purpose — an
@@ -255,12 +259,27 @@ function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, 
  *
  * Stable, so equal ranks keep the catalogue's own order.
  */
-export function orderEditionsForMarket<E extends Pick<Edition, 'isbn13' | 'year'>>(
+export interface EditionOrder {
+  /**
+   * Edition ids that carry the scan currently on screen, from the cover list
+   * *before* folding. Empty or absent means the question cannot be asked and
+   * the criterion is skipped.
+   */
+  carriedBy?: ReadonlySet<string>;
+  /** What the publisher's registered image for an ISBN turned out to be. */
+  verdictOf?: (isbn13: string) => VerdictStatus | undefined;
+}
+
+export function orderEditionsForMarket<E extends Pick<Edition, 'id' | 'isbn13' | 'year'>>(
   editions: readonly E[],
   market: Market = DEFAULT_MARKET,
-  verdictOf?: (isbn13: string) => VerdictStatus | undefined,
+  { carriedBy, verdictOf }: EditionOrder = {},
 ): E[] {
   const area = MARKET_AREA[market];
+  // Skipped entirely when nothing on screen is known to be carried by anyone,
+  // so a missing answer never reshuffles the row.
+  const known = carriedBy && editions.some(e => carriedBy.has(e.id));
+  const byScan = (e: E): number => (known && carriedBy ? (carriedBy.has(e.id) ? 0 : 1) : 0);
   const byVerdict = (e: E): number => {
     if (!e.isbn13 || !verdictOf) return 1;
     const status = verdictOf(e.isbn13);
@@ -273,9 +292,10 @@ export function orderEditionsForMarket<E extends Pick<Edition, 'isbn13' | 'year'
     return registration && registration.area === area ? 0 : 1;
   };
   return [...editions]
-    .map((edition, index) => ({ edition, index, verdict: byVerdict(edition), market: byMarket(edition) }))
+    .map((edition, index) => ({ edition, index, scan: byScan(edition), verdict: byVerdict(edition), market: byMarket(edition) }))
     .sort((a, b) =>
-      a.verdict - b.verdict
+      a.scan - b.scan
+      || a.verdict - b.verdict
       || a.market - b.market
       || (b.edition.year ?? 0) - (a.edition.year ?? 0)
       || a.index - b.index)

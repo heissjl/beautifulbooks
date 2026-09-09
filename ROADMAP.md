@@ -526,7 +526,7 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   **Was jetzt daran hängt und billiger geworden ist:** 6.9 (mehr von diesem Autor) und 5.1 (die Sitemap-Liste) lesen denselben Index nur anders; `data/index-works.json` mit den 50 Werken ist der erste Zuschnitt der Liste aus 5.1.
 
-- [ ] **6.10a Ein einzelnes „Looks like this" wird zur unscharfen Riesenkachel.** (Julian, 2026-09-09, mit Screenshot von *Beloved*.) Die Reihe soll bis zu drei kleine Cover zeigen. Findet der Index **eines**, füllt es die ganze Spaltenbreite — bei 1440 px rund 370 px — und ist dabei sichtbar verwaschen.
+- [x] **6.10a Ein einzelnes „Looks like this" wird zur unscharfen Riesenkachel.** *Erledigt 2026-09-09: drei feste Spalten statt `flex-1`, und das Bild kommt als `-M` (180 px) statt `-S` (~45 px). **Gemessen bei 1440 × 900:** die Kachel eines einzelnen Treffers ist jetzt **118 px** breit in einer 373 px breiten Spalte — vorher die volle Spaltenbreite. Der Titel unter der Kachel war entgegen der ersten Vermutung immer da (live gesehen: „Cien años de soledad“, genau der Treffer aus dem Screenshot); er ging im unscharfen Bild unter.* (Julian, 2026-09-09, mit Screenshot von *Beloved*.) Die Reihe soll bis zu drei kleine Cover zeigen. Findet der Index **eines**, füllt es die ganze Spaltenbreite — bei 1440 px rund 370 px — und ist dabei sichtbar verwaschen.
 
   **Ursache, im Code nachgesehen und nicht vermutet**, zwei Dinge, die einzeln harmlos sind:
   - `SimilarCovers` in `components/BookDetail.tsx` gibt jedem `<li>` ein `min-w-0 flex-1`. Bei drei Treffern ist das ein Drittel, bei einem die volle Breite. Es gibt keine Obergrenze.
@@ -534,7 +534,15 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   **Zu tun:** die Kachelbreite festhalten statt sie verteilen zu lassen (ein Raster mit drei Spalten, in dem eine einzelne Kachel links steht, statt `flex-1`), und bei größerer Darstellung `url` statt `urlSmall` nehmen. Eine halbe Stunde. **Gleich mitprüfen:** ob unter der Kachel der Titel steht — im Screenshot ist keiner zu sehen, obwohl die Komponente eine Zeile rendert.
 
-  **Zweiter Befund aus demselben Screenshot, noch nicht reproduziert:** die Spalte zeigte über der Reihe ein leeres Coverfeld und **gar keinen Ausgaben-Block** — kein Verlag, keine ISBN, keine Händler. Das passiert, wenn die `editionIds` des gewählten Covers auf keine geladene Ausgabe zeigen; auf Seite 0 von *Beloved* ist das für kein einziges der 58 Cover der Fall (geprüft 2026-09-09), also kommt es von den Covern, die die ISBN-Nachschau nachträglich in die Wand einsetzt (F2.8) — deren Ausgaben stehen nicht in `merged.editions`. Genau darauf zeigt der Daumennagel im `differs`-Hinweis. Vor dem Beheben reproduzieren: ein Cover mit `differs` wählen und den Daumennagel neben dem Hinweis anklicken.
+  **Zweiter Befund aus demselben Screenshot — Ursache gesucht, nicht gefunden, und die naheliegende Vermutung widerlegt.** Die Spalte zeigte über der Reihe ein leeres Coverfeld und **gar keinen Ausgaben-Block**: kein Verlag, keine ISBN, keine Händler. Das passiert, wenn die `editionIds` des gewählten Covers auf keine geladene Ausgabe zeigen. Am 2026-09-09 dazu gemessen:
+
+  | Geprüft | Ergebnis |
+  |---|---|
+  | Cover ohne auflösbare Ausgabe, alle fünf Seiten von *Beloved* | **0** von 66 Covern bei 51 Ausgaben |
+  | Die Cover, die die ISBN-Nachschau nachträglich einsetzt (F2.8) | Können es nicht sein: `useIsbnCovers` überspringt jedes Cover, dem keine Ausgabe zugeordnet ist (`if (editionIds.length === 0) continue`) |
+  | 14 Cover von *Beloved* im Browser durchgeklickt | Der Ausgaben-Block erschien **jedes Mal** |
+
+  Bleibt offen. Der Screenshot trägt die Vercel-Leiste, stammt also vermutlich von der **ausgelieferten** Seite, die den Stand vor dem 2026-09-09 fährt; dann wäre es möglicherweise schon behoben. Wer den Fehler wiedersieht, hält fest: welches Werk, welches Cover, und ob die Seite noch lud.
 
 - [ ] **6.11 Goodreads: was geht, was nicht.** (Julian, 2026-09-07: bessere Anbindung, Editionsdaten, Rezensionen, Bewertungen.) Recherchiert am selben Tag, und die Antwort fällt klarer aus als erhofft.
 
@@ -579,7 +587,11 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   **Als Testfall festhalten:** OL279833W. Karte und Wand müssen dieselbe Ausgabenzahl nennen, und jedes Cover der Karte muss auf der Wand erreichbar sein. Verwandt mit **6.15**, wo dieselben Datensätze *verschiedene* Titel tragen und deshalb gar nicht erst zusammengefasst werden.
 
-- [ ] **6.14 Ein gefaltetes Cover ist nirgends zu sehen.** (Beim Nachgehen von 6.13 am 2026-09-08 gefunden.) Das „+N" auf einer Kachel ist `pointer-events-none`, also reine Zierde; die Seitenleiste nennt die Faltung nur als Text („· 1 duplicate scan folded"); und `selectCoverFrom` löst einen Link, der die ID eines gefalteten Covers trägt, auf dessen **Vertreter** auf. Es gibt keinen Weg, ein gefaltetes Bild anzusehen. *(Am 2026-09-09 nachgesehen: das Abzeichen ist `components/CoverGallery.tsx:103`, ein `pointer-events-none`-Span, dessen einzige Auskunft ein `title`-Attribut ist — auf dem Telefon also gar keine.)*
+- [x] **6.14 Ein gefaltetes Cover ist nirgends zu sehen.** *Erledigt 2026-09-09, über die Seitenleiste statt über das „+N“ — das Abzeichen bleibt Zierde, weil es auf dem Telefon kein Hover gibt. Unter dem großen Cover steht **„The same cover, N scans“**: alle Scans desselben Motivs als kleine Kacheln, der Vertreter zuerst, die gewählte mit Ring, ein Klick tauscht das große Bild. Die URLs werden aus den Cover-IDs neu gebaut (`coverUrlFor`), es musste nichts durchs Modell getragen werden. Die Zeile "Image from ..." nennt jetzt die Quelle **des gezeigten Scans** — live geprüft an *Gatsby*, wo ein Google-Cover in ein Open-Library-Cover gefaltet ist und die Zeile beim Umschalten von „Open Library“ auf „Google Books“ wechselt.*
+
+  ***Dabei ist Julians Sortierfrage erst wirklich gelöst worden.*** Beim Bauen fiel auf, dass die Kachel nach dem Falten Drucke nennt, die den gezeigten Scan nie trugen — `foldDuplicateCovers` hängt die Ausgaben der Mitglieder an den Vertreter. `buildWall` merkt sich deshalb, **wer welchen Scan vor dem Falten trug**, und `orderEditionsForMarket` stellt diesen Druck nach vorn. **Das war nötig, weil das Verdikt allein den Fall aus Julians Screenshot nicht löst:** die gefaltete Kachel von *Beloved* trägt Vintage International 2025 und 2004, und **beide Datensätze führen dieselbe ISBN** 9781400033416 — gleiches Verdikt, also entschied wieder das Jahr. Jetzt folgt der führende Druck dem Bild: einen anderen Scan anklicken, und 2004 rückt mit eigener ISBN und eigenen Links nach vorn (live gemessen).
+
+  (Beim Nachgehen von 6.13 am 2026-09-08 gefunden.) Das „+N" auf einer Kachel ist `pointer-events-none`, also reine Zierde; die Seitenleiste nennt die Faltung nur als Text („· 1 duplicate scan folded"); und `selectCoverFrom` löst einen Link, der die ID eines gefalteten Covers trägt, auf dessen **Vertreter** auf. Es gibt keinen Weg, ein gefaltetes Bild anzusehen. *(Am 2026-09-09 nachgesehen: das Abzeichen ist `components/CoverGallery.tsx:103`, ein `pointer-events-none`-Span, dessen einzige Auskunft ein `title`-Attribut ist — auf dem Telefon also gar keine.)*
 
   Bei *Ansichten eines Clowns* trifft das die beiden dtv-Fassungen der Zeichnung mit der Gitarre (1967 und 1984, Bilddistanz 6): dieselbe Gestaltung, aber sichtbar verschieden gedruckt — cremefarbener gegen weißen Grund, anderer Anschnitt. Eine davon ist unsichtbar.
 
