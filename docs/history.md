@@ -1145,3 +1145,13 @@ Die Rauschmaske — nur Bits zählen, bei denen beide Bilder einen deutlichen He
 **Also bleibt die 8, und oberhalb entscheidet weiter die Metadatenlage** (ISBN, Verlag, Jahr) statt des Abstands. Das war schon der Befund vom 2026-09-07; neu ist, dass jetzt auch die naheliegenden Auswege durchgemessen und ausgeschlossen sind. Wer es besser machen will, braucht einen anderen Deskriptor — und zuerst mehr als siebzehn beurteilte Paare.
 
 **Die Lehre:** eine Beobachtung am Bildschirm ist ein verlässlicher Hinweis darauf, *dass* etwas nicht stimmt, und ein unzuverlässiger darauf, *warum*. Hier wäre das Anheben der Schwelle nicht nur wirkungslos gewesen — es hätte echte Unterschiede zusammengefaltet, während die eigentliche Ursache stehen bleibt.
+
+## 2026-09-09 · Was das Falten die Jahrzehnte-Seiten kostet (ROADMAP 5.4a)
+
+Nachdem die Seite faltet, entscheidet die Schwelle über die **gefalteten** Zahlen — über die, die der Leser sieht, nicht über die Zahl der Datensätze. Der Kandidatenlauf wurde deshalb wiederholt: **84 der 105 kuratierten Werke tragen eine Seite, 21 nicht.** Sechs Werke sind unter die Schwelle gerutscht; sie hätten vorher eine Seite bekommen, auf der ein Teil der zwanzig Kacheln dasselbe Cover zweimal gewesen wäre. Die Sitemap steht damit bei **193** Adressen statt 199.
+
+**Ein Fund im Lauf, der wichtiger ist als die Zahl.** Bei *White Noise* antwortete Open Library dreimal hintereinander nicht — und das Werk fiel damit aus der Liste, aus einem Grund, der nichts mit seinen Daten zu tun hat. Es wäre still aus der Sitemap verschwunden, und niemand hätte gesehen, warum. Das ist genau der Fehler, den CLAUDE.md verbietet: **ein Ausfall darf nicht als Befund erscheinen.**
+
+`scripts/find-decade-pages.ts` liest jetzt die vorherige Liste ein, bevor er sie überschreibt: ein Werk, dessen Katalog schweigt, **behält seinen alten Eintrag**, und nur ein Werk, das geantwortet hat, kann seine Seite verlieren. Der Lauf sagt am Ende, wie viele Einträge so übernommen wurden. *White Noise* selbst steht mit den Zahlen drin, die sich vor dem Ausfall messen ließen (23 Cover gefaltet auf 22, weiterhin 4 Jahrzehnte).
+
+Geprüft, dass Liste, Sitemap und Seite dieselbe Rechnung machen: kein Eintrag unter der Schwelle, keiner außerhalb der Kuration, keiner ohne Signaturen im Index, keine Dublette.

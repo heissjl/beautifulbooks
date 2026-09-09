@@ -26,7 +26,8 @@ async function main() {
       `  covers ${before.coverCount} -> ${after.coverCount} (-${before.coverCount - after.coverCount})` +
       `  signatures known ${sigs.size}/${detail.covers.length}` +
       `  decades ${before.groups.length} -> ${after.groups.length}` +
-      `  page ${worthAPage(before) ? 'yes' : 'no'} -> ${worthAPage(after) ? 'yes' : 'no'}`,
+      `  page ${worthAPage(before) ? 'yes' : 'no'} -> ${worthAPage(after) ? 'yes' : 'no'}\n` +
+      `  entry: ${JSON.stringify({ id, title: detail.work.title, coverCount: after.coverCount, decades: after.groups.length, from: after.from, to: after.to })}`,
     );
   }
 }
