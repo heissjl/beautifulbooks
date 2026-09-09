@@ -158,10 +158,11 @@ async function main() {
   const built = rows.filter(r => !r.failed);
   const totalBytes = built.reduce((sum, r) => sum + r.bytes.reduce((a, b) => a + b, 0), 0);
   console.log(`\n${table(rows)}`);
+  const phone = built.map(r => r.bytes[0]).filter(b => b > 0);
   console.log(
-    `\n${built.length} of ${wanted.length} built in ${round((Date.now() - started) / 60_000)} min. `
-    + `On disk ${round(totalBytes / 1024 / 1024, 2)} MB for all of them; `
-    + `a reader fetches **one**, ${round(Math.min(...built.map(r => r.bytes[0])) / 1024)}–${round(Math.max(...built.map(r => r.bytes[0])) / 1024)} KB on a phone.`,
+    `\n${built.length} of ${wanted.length} built in ${round((Date.now() - started) / 60_000)} min.`
+    + (phone.length === 0 ? '' : ` On disk ${round(totalBytes / 1024 / 1024, 2)} MB for all of them; `
+      + `a reader fetches one, ${round(Math.min(...phone) / 1024)}–${round(Math.max(...phone) / 1024)} KB on a phone.`),
   );
   const failed = rows.filter(r => r.failed);
   if (failed.length > 0) console.log(`${failed.length} failed: ${failed.map(r => r.id).join(', ')}`);
