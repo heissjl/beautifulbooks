@@ -1292,3 +1292,22 @@ Julian am selben Tag: „baue ein sanfteres terrakotta." Der Ton ist `#945138` h
 Der Unterschied zwischen Zeile 2 und Zeile 5 ist allein die Helligkeit. Weicher geht also nur über sie — und der Umweg bringt dem Akzent zum ersten Mal Reserve statt der knappen 0,06 über der Schwelle. Wer den Ton später weiter beruhigen will, muss ihn weiter abdunkeln.
 
 Nebenbei zeigt die Suche, warum „sanft" allein kein Ziel ist: die entsättigtsten Töne, die AA mit Reserve halten, liegen bei Sättigung 22 und Helligkeit 30 (`#5d413c` und Nachbarn) — die lesen sich nicht mehr als Terrakotta, sondern als Braun.
+
+### Entschieden: das sanftere Terrakotta, und ink-3 dazu
+
+Julian, 2026-09-09: „nimm das sanftere terrakotta und korrigiere ink-3." Ausgeliefert in `app/globals.css`:
+
+| Token | vorher | jetzt | Kontrast vorher → jetzt |
+|---|---|---|---|
+| `--accent` hell | `#b1502b` | `#945138` | 4,56 → **5,29** |
+| `--accent` dunkel | `#e6a677` | `#dbac94` | 9,04 → 9,27 |
+| `--ink-3` hell | `#8c8377` | `#746c62` | **3,28** → 4,55 |
+| `--ink-3` dunkel | `#7d7569` | `#837b6f` | **4,14** → 4,51 |
+
+Grundfarbe, Flächen, Linien und Schriften bleiben, wie sie waren: die Frage war der Akzent, und die Wand bleibt die Bühne. Beide Modi im Browser nachgesehen — hell trägt `#945138` / `#746c62`, dunkel `#dbac94` / `#837b6f`.
+
+**Der eigentliche Ertrag dieser Sitzung ist aber nicht die Farbe, sondern dass sie ab jetzt geprüft wird.** Die Rechnung ist von `lab/` nach `lib/contrast.ts` gewandert, und `lib/__tests__/contrast.test.ts` liest `app/globals.css` selbst — nicht eine Kopie der Werte, denn das Auseinanderlaufen von Kopie und Wirklichkeit war genau der Fehler bei `ink-3`. Geprüft werden sechs Paare in beiden Modi: `ink`, `ink-2` und `ink-3` auf dem Grund, der Akzent auf dem Grund, `on-accent` auf dem Akzent, und Text auf einer Kachel.
+
+**Gegenprobe, damit der Test nicht hohl ist:** mit dem alten `#8c8377` wieder eingesetzt fällt er (`ink-3 on bg`, hell), mit dem neuen Wert steht er. Ein Test, der nie fehlschlagen kann, hätte hier gar nichts bewiesen.
+
+Die Kandidaten in `lab/palette/` bleiben liegen; „Vorher" heißt jetzt, was es ist, und zeigt weiter seine rote Zeile — als Beleg dafür, wie lange so etwas unbemerkt bleibt, wenn niemand nachrechnet.

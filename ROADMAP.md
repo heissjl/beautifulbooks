@@ -420,7 +420,11 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   </details>
 
-- [ ] **6.22 Das Farbschema ändern.** (Julian, 2026-09-09.) Heute: warmes Papier `#f4f0e8` mit Off-Black, dunkel als warmes Schwarz `#131110`, eine Akzentfarbe Terrakotta `#b1502b` hell und `#e6a677` dunkel, Fraunces für Titel, Geist für die Oberfläche (SPEC §5). Die Tokens stehen an einer Stelle, in `app/globals.css` unter `@theme inline`; ein Wechsel ist also eine kleine Änderung, sobald entschieden ist, **was** sich ändern soll.
+- [x] **6.22 Das Farbschema ändern.** *Erledigt 2026-09-09: Julian hat nach den Mockups das **sanftere Terrakotta** gewählt und die **ink-3-Korrektur** mitgenommen. Ausgeliefert: Akzent `#945138` hell und `#dbac94` dunkel (Farbwinkel unverändert 16, Sättigung 61 → 45, Helligkeit 43 → 40), `ink-3` `#746c62` und `#837b6f`. Grundfarbe, Schriften und alles Übrige unverändert — die Wand bleibt die Bühne. **Der Kontrast des Akzents steigt dabei von 4,56 auf 5,29**, `ink-3` von 3,28 / 4,14 auf 4,55 / 4,51. Beide Modi im Browser nachgesehen.*
+
+  ***Damit das nicht wieder unbemerkt kaputtgeht:*** die Rechnung steht jetzt in `lib/contrast.ts`, und `lib/__tests__/contrast.test.ts` liest `app/globals.css` selbst und prüft **sechs Paare in beiden Modi** gegen AA — keine Kopie der Werte, weil genau das Auseinanderlaufen der Fehler war. Gegenprobe gemacht: mit dem alten `ink-3` fällt der Test. Die Kandidaten in `lab/palette/` bleiben stehen, „Vorher" zeigt den alten Stand samt seiner roten Zeile.*
+
+  *(Julian, 2026-09-09.)* Heute: warmes Papier `#f4f0e8` mit Off-Black, dunkel als warmes Schwarz `#131110`, eine Akzentfarbe Terrakotta `#b1502b` hell und `#e6a677` dunkel, Fraunces für Titel, Geist für die Oberfläche (SPEC §5). Die Tokens stehen an einer Stelle, in `app/globals.css` unter `@theme inline`; ein Wechsel ist also eine kleine Änderung, sobald entschieden ist, **was** sich ändern soll.
 
   **Es geht vor allem um die Akzentfarbe** (Julian, 2026-09-09). Terrakotta `#b1502b` steht heute auf dem Suchknopf, den Sprach-Pillen, den Fokus-Ringen, den Links und dem Verdikt-Hinweis — es ist die einzige Farbe der Oberfläche und damit die einzige, die mit den Covern konkurriert. Wer sie ändert, ändert den Charakter der Seite; wer nur den Hintergrund ändert, ändert die Bühne.
 

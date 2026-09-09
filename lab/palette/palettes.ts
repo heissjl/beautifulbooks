@@ -17,6 +17,13 @@
  * Nothing in this folder reaches the website; it draws mock-ups (lab/README).
  */
 
+/*
+ * Die Rechnung selbst steht in `lib/contrast.ts`, weil die ausgelieferten
+ * Tokens gegen sie getestet werden (`lib/__tests__/contrast.test.ts`). `lab/`
+ * darf aus `lib/` importieren, nie umgekehrt (lab/README).
+ */
+import { contrastRatio, CONTRAST_AA } from '../../lib/contrast';
+
 export interface Scheme {
   bg: string;
   surface: string;
@@ -54,7 +61,11 @@ export interface Candidate {
 const INK3_AA_LIGHT = '#746c62';
 const INK3_AA_DARK = '#837b6f';
 
-/** Today's tokens, copied from `app/globals.css`. The reference, not a proposal. */
+/**
+ * The palette as it stood before 2026-09-09 — sharp terracotta and the
+ * `ink-3` that failed AA. Kept as the reference the proposals are read
+ * against; `app/globals.css` no longer looks like this.
+ */
 const TODAY_LIGHT: Scheme = {
   bg: '#f4f0e8', surface: '#fbf9f4', surface2: '#ebe5da',
   ink: '#1a1714', ink2: '#5a534a', ink3: '#8c8377',
@@ -69,8 +80,8 @@ const TODAY_DARK: Scheme = {
 
 export const CANDIDATES: Candidate[] = [
   {
-    id: 'today',
-    name: 'Heute · Terrakotta',
+    id: 'before',
+    name: 'Vorher · scharfes Terrakotta (bis 2026-09-09)',
     claim:
       'Der Stand. Terrakotta ist warm und nah an den Rot- und Ockertönen, die auf Buchrücken '
       + 'häufig sind — es fällt auf der Wand deshalb weniger als Fremdkörper auf, konkurriert dort '
@@ -81,7 +92,7 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: 'terracotta-soft',
-    name: 'Terrakotta, sanfter',
+    name: 'Terrakotta, sanfter — seit 2026-09-09 ausgeliefert',
     claim:
       'Julians Wunsch vom 2026-09-09: derselbe Ton, nur weicher. Die Sättigung fällt von 61 auf 45 '
       + 'und die Helligkeit von 43 auf 40, der Farbwinkel bleibt bei 16 — es ist erkennbar dasselbe '
@@ -136,24 +147,6 @@ export const CANDIDATES: Candidate[] = [
   },
 ];
 
-/** sRGB channel to linear, for the WCAG relative luminance. */
-function channel(value: number): number {
-  const c = value / 255;
-  return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
-}
-
-function luminance(hex: string): number {
-  const m = hex.replace('#', '');
-  const [r, g, b] = [0, 2, 4].map(i => parseInt(m.slice(i, i + 2), 16));
-  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
-}
-
-/** WCAG 2.1 contrast ratio, 1 to 21. */
-export function contrast(a: string, b: string): number {
-  const [x, y] = [luminance(a), luminance(b)].sort((p, q) => q - p);
-  return (x + 0.05) / (y + 0.05);
-}
-
 export interface ContrastRow {
   pair: string;
   ratio: number;
@@ -169,14 +162,14 @@ export interface ContrastRow {
  */
 export function contrastRows(scheme: Scheme): ContrastRow[] {
   const pairs: Array<[string, string, string, number]> = [
-    ['ink auf bg', scheme.ink, scheme.bg, 4.5],
-    ['ink-2 auf bg', scheme.ink2, scheme.bg, 4.5],
+    ['ink auf bg', scheme.ink, scheme.bg, CONTRAST_AA],
+    ['ink-2 auf bg', scheme.ink2, scheme.bg, CONTRAST_AA],
     // `ink-3` trägt Metadaten und Verdikt-Hinweise bei 11–12 px, also gilt
     // die Schwelle für normalen Text, nicht die für großen.
-    ['ink-3 auf bg', scheme.ink3, scheme.bg, 4.5],
-    ['accent auf bg', scheme.accent, scheme.bg, 4.5],
-    ['on-accent auf accent', scheme.onAccent, scheme.accent, 4.5],
-    ['ink auf surface-2', scheme.ink, scheme.surface2, 4.5],
+    ['ink-3 auf bg', scheme.ink3, scheme.bg, CONTRAST_AA],
+    ['accent auf bg', scheme.accent, scheme.bg, CONTRAST_AA],
+    ['on-accent auf accent', scheme.onAccent, scheme.accent, CONTRAST_AA],
+    ['ink auf surface-2', scheme.ink, scheme.surface2, CONTRAST_AA],
     /*
       Eine 1-px-Trennlinie ist kein Text und keine Bedienelementgrenze, die
       etwas bedeutet; WCAG verlangt dafür nichts. Die Zeile steht hier zur
@@ -186,7 +179,7 @@ export function contrastRows(scheme: Scheme): ContrastRow[] {
     ['line auf bg (nur zur Anschauung)', scheme.line, scheme.bg, 1],
   ];
   return pairs.map(([pair, a, b, needs]) => {
-    const ratio = Math.round(contrast(a, b) * 100) / 100;
+    const ratio = Math.round(contrastRatio(a, b) * 100) / 100;
     return { pair, ratio, needs, passes: ratio >= needs };
   });
 }
