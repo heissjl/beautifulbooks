@@ -1408,3 +1408,22 @@ Nach dem Merge im Browser gegengeprüft, dass die beiden Stränge zusammenspiele
 - **6.5, Teil `priority`**: die LCP-Warnungen zeigten auf `covers.openlibrary.org`. Seit 1.3 kommen die Bilder von der eigenen Herkunft mit CDN davor. Der Punkt ist damit **verschoben, nicht gelöst** — und vor dem Anfassen neu zu messen, sonst wird ein Problem behoben, das es so nicht mehr gibt.
 
 **Was die Liste jetzt sagt:** Phase 1 ist bis auf 1.8 (Julian) und 1.9 leer, also ist 1.9 nach der eigenen Regel dieser Datei der nächste Punkt. Direkt danach steht kein Bau, sondern ein Deploy: **1.3 ist in Produktion überhaupt erst wirksam**, und die Zahl, die den Punkt belegt, kann nur dort entstehen.
+
+## 2026-09-09 · Eine Sprachregelung für Erklärtexte (SPEC N13)
+
+Julian, an der Fußzeile der Jahrzehnte-Seite: „wir brauchen eine neue sprachregelung für solche stellen. Die beschreibung ist zu wissenschaftlich. die nutzer interessieren sich nicht für die schwellen. maximal darf dort stehen, was zu sehen ist und woher es kommt und der rückverweis auf die wand."
+
+Der Satz, um den es ging, hatte fünf Teile: Herkunft, Einordnungsregel, „counted, not estimated", Sortierrichtung, Behandlung von Datensätzen ohne Jahr, die Vollständigkeits-Einschränkung, die Schwelle „mindestens 20 Cover über 4 Jahrzehnte" — und zuletzt den Rückverweis. Jeder einzelne Teil war wahr und belegt. Zusammen war es ein Methodenkapitel unter einer Bilderwand.
+
+**N13 sagt jetzt, was in einen Erklärtext gehört:** was auf dem Schirm ist, woher es kommt, der Weg zurück — und, wo nötig, der Satz, der eine Vollständigkeit verneint. Der ist keine Erklärung, sondern eine Einschränkung, und bleibt.
+
+**Der Unterschied zu N12 ist der Grund, die Regel überhaupt aufzuschreiben:** N12 verbietet, mehr zu behaupten, als geprüft wurde, und hat über Monate dazu geführt, dass jede Einschränkung ausformuliert im Text landete. N13 verbietet, das Geprüfte auszubreiten. Die beiden ziehen in verschiedene Richtungen, und ohne die zweite Regel gewinnt immer die erste. Ausgenommen ist die About-Seite — dort gehört die Arbeitsweise hin, und was aus der Oberfläche verschwindet, muss dort auffindbar bleiben.
+
+Umgeschrieben wurden am selben Tag zwei Stellen:
+
+| | vorher | jetzt |
+|---|---|---|
+| Fußzeile der Jahrzehnte-Seite | fünf Sätze mit Schwelle, Sortierrichtung und „counted, not estimated" | „Covers from Open Library, each in the decade of the earliest printing that carries it. What the catalogues never scanned is missing here too. **See the whole wall.**" |
+| Satz unter der Scan-Reihe (6.14a) | „The wall shows one tile for these, because the images are the same design. They are different scans, and sometimes different printings of it." | „Different scans of the same design, sometimes of different printings." |
+
+Die Schwellen `MIN_COVERS` und `MIN_DECADES` werden auf der Seite dadurch nicht mehr gebraucht; sie stehen weiter in `lib/decades.ts` und in der Spec, wo sie hingehören. Der Rest ist als **6.27** notiert, mit einer Tabelle, welche Stelle wie stark verstößt — der Verfügbarkeits-Absatz zuerst, aber erst nach 0.1, weil der Punkt ihn womöglich ganz entfernt.

@@ -5,7 +5,7 @@ import CoverImage from '@/components/CoverImage';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import { indexSignatures } from '@/lib/coverindex';
-import { decadeLine, groupByDecade, worthAPage, MIN_COVERS, MIN_DECADES } from '@/lib/decades';
+import { decadeLine, groupByDecade, worthAPage } from '@/lib/decades';
 import { authorLine, SITE_URL } from '@/lib/seo';
 import { getWorkDetail, isWorkId } from '@/lib/work';
 import { foldDuplicateCovers } from '@/lib/works';
@@ -178,18 +178,18 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         {/*
-          R10: the page says what it is and what it is made of. It also says
-          what it is not — a decade here is the decade of the records that
-          exist, and plenty of printings never reached a catalogue.
+          R10, and SPEC N13 (Julian, 2026-09-09: „die beschreibung ist zu
+          wissenschaftlich. die nutzer interessieren sich nicht für die
+          schwellen"). What is on screen, where it came from, what is missing,
+          and the way back. The thresholds that decide whether this page
+          exists at all, the sort order and the handling of records without a
+          year were all in here; they are rules of the machine, and they
+          belong in SPEC §9.3, not under a reader's eyes.
         */}
         <p className="mt-16 border-t border-line pt-4 text-xs leading-relaxed text-ink-3">
-          This page is assembled from Open Library edition records: a cover sits in the decade of the
-          earliest printing that carries it, and every count above is counted, not estimated. Decades
-          run from the most recent backwards. Records without a year are shown at the end rather than
-          left out. What is missing from the
-          catalogues is missing here too, so this is a view of what was scanned, not of what was
-          printed. Pages like this exist only where there are at least {MIN_COVERS} covers across{' '}
-          {MIN_DECADES} decades. <Link href={`/book/${id}`} className="underline underline-offset-2 hover:text-accent">See the whole wall</Link>.
+          Covers from Open Library, each in the decade of the earliest printing that carries it.
+          What the catalogues never scanned is missing here too.{' '}
+          <Link href={`/book/${id}`} className="underline underline-offset-2 hover:text-accent">See the whole wall</Link>.
         </p>
       </main>
       <SiteFooter />

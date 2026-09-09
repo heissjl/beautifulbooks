@@ -595,9 +595,9 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
               </li>
             ))}
           </ul>
+          {/* N13: what is on screen, not the rule that put it there. */}
           <p className="mt-2 text-xs leading-relaxed text-ink-3">
-            The wall shows one tile for these, because the images are the same design.
-            They are different scans, and sometimes different printings of it.
+            Different scans of the same design, sometimes of different printings.
           </p>
         </section>
       )}
