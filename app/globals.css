@@ -13,9 +13,26 @@
   --surface-2: #ebe5da;
   --ink: #1a1714;
   --ink-2: #5a534a;
-  --ink-3: #8c8377;
+  /*
+   * `ink-3` carries the metadata lines and the verdict notes at 11-12px, so
+   * WCAG AA's 4.5 applies and not the large-text exception. The old #8c8377
+   * reached 3.28 on this ground and had failed since the day it was written
+   * (measured 2026-09-09 while drawing the palette mock-ups, ROADMAP 6.22).
+   * This is the nearest passing shade: 4.55, and barely a step darker, which
+   * is exactly why nobody caught it by eye.
+   */
+  --ink-3: #746c62;
   --line: #ddd5c8;
-  --accent: #b1502b;
+  /*
+   * Terracotta, softened on Julian's ask (2026-09-09): same hue at 16,
+   * saturation 61 -> 45, lightness 43 -> 40. The darkening is not taste but
+   * arithmetic — the old #b1502b cleared AA by 0.06 (4.56), and desaturating
+   * alone drops under it every time (#a85c40 4.33, #a1614a 4.27). Going
+   * through lightness lands at 5.29 and gives the accent headroom for the
+   * first time. Soften it further and it has to darken further, or it stops
+   * being readable; below saturation ~22 it stops being terracotta at all.
+   */
+  --accent: #945138;
   --on-accent: #fff8f2;
   --shadow-color: 20 16 12;
 }
@@ -27,9 +44,11 @@
     --surface-2: #26221e;
     --ink: #efe8dd;
     --ink-2: #b2a99b;
-    --ink-3: #7d7569;
+    /* 4.51; the old #7d7569 reached 4.14. Same reason as in light. */
+    --ink-3: #837b6f;
     --line: #2e2925;
-    --accent: #e6a677;
+    /* The same movement: saturation 69 -> 50, less orange. */
+    --accent: #dbac94;
     --on-accent: #1a1210;
     --shadow-color: 0 0 0;
   }

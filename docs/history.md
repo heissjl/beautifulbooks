@@ -1194,6 +1194,221 @@ Julians Frage, aus der das hier entstand: für welche Werke wird eine Jahrzehnte
 
 **Was noch fehlt, damit die Schleife sich schließt:** die Quelle. Vercel Web Analytics zählt Pfade, also `/book/<id>`, 30 Tage weit — daraus ließe sich lesen, welche Bücher tatsächlich gesucht werden. Nur gibt es dafür heute keinen Verkehr. Bis dahin bleibt der Weg aus 5.1 der tragende: Werke nach Katalogpopularität wählen, was keinen Besucher braucht.
 
+## 2026-09-09 · Ein Durchgang durch die Roadmap nach Funktionsverbesserungen
+
+Julian: „geh die Roadmap durch und suche Funktionsverbesserungen, die wir angehen können." Kein Bau, eine Sichtung — mit der Regel, dass jede genannte Ursache im Code nachgesehen wird, statt die Roadmap nachzuerzählen. Das Ergebnis, die gefilterte Reihenfolge, steht in [ROADMAP.md](../ROADMAP.md) unter „Dieselbe Liste, gefiltert auf Funktionsverbesserungen". Hier steht nur, was beim Nachsehen dazukam.
+
+**Vier Ursachen im Code verortet**, alle vorher nur als Beobachtung notiert:
+
+| Punkt | Was der Code sagt |
+|---|---|
+| 6.15 (Titelanzeige) | Die Bereinigung existiert, aber nur für den Vergleich: `stripTrailingBrackets` ist modulprivat in `lib/normalize.ts` und wird allein von `normalizeTitle` benutzt. Der Anzeigeweg reicht den Rohtitel durch |
+| 6.14 (gefaltete Cover) | Das „+N" ist `components/CoverGallery.tsx:103`, ein `pointer-events-none`-Span mit einem `title`-Attribut als einziger Auskunft — auf dem Telefon also gar keiner |
+| 6.5 (Mosaik-Ausfall) | `components/useCardCovers.ts` fängt jeden Fehler in ein leeres `catch` mit dem Kommentar „never surface it" und kennt keinen zweiten Versuch. Die Wiederholung aus 1.10 sitzt allein in `searchWorks` |
+| 6.12 (Signaturen) | `lib/coverhash.ts:26` ist eine nackte Modul-`Map`, ohne Obergrenze und ohne Anbindung an den Next-Datencache — wie in PLAN-speicher beschrieben, jetzt an der Zeile belegt |
+
+**Der Gatsby-Titel ist live bestätigt.** `openlibrary.org/works/OL468431W.json` trägt als Titel wörtlich `The Great Gatsby(Published In 1925)`, samt fehlendem Leerzeichen. Das ist der erste Satz, den ein Besucher auf dem meistbenutzten Testwerk der Spec liest.
+
+**Und der Abruf dazu ist selbst eine Messung:** der erste Versuch antwortete **503**, der zweite unmittelbar danach **200**. Zwei Abrufe sind keine Quote, aber es ist dasselbe Muster wie am 2026-09-08 bei 1.10 — Open Library fällt in Episoden aus, nicht mit einer Rate, und ein zweiter Versuch trägt darüber hinweg. Für 0.10 zählt das als weiterer Beleg, dass die Ausfallquote nur über Wochen zu haben ist und nicht in einer Sitzung.
+
+**Was die Sichtung nicht ergeben hat:** keinen neuen Punkt. Alles, was der Durchgang fand, stand bereits irgendwo in der Roadmap — was für den Zustand der Liste spricht und dagegen, sie weiter zu verlängern, bevor die vorderen Punkte gebaut sind.
+
+## 2026-09-09 · Die Spalte, die einer türkischen ISBN fünf amerikanische Läden anbot (ROADMAP 1.11 und 1.2)
+
+Zwei Punkte, eine Sitzung, weil der eine den anderen zur Hälfte erledigt: 1.11 wollte die Kauf-Links irgendwohin führen lassen, 1.2 wollte sie überhaupt sichtbar machen. Gebaut nach [PLAN-1.11](plans/PLAN-1.11-kauflinks-ux.md), mit einer Abweichung und einem Fund.
+
+### Was die ISBN vorher weiß
+
+`registrationArea` (lib/normalize.ts) liest die Registrierungsgruppe aus der Nummer — 978-3 deutschsprachig, 978-975 und 978-9944 Türkei, 979-8 Amazons eigener Bereich. Eine Tabelle, offline, keine Anfrage. Sie beantwortet genau eine Frage: gehört diese Nummer in den Markt des Lesers? Alles Weitere entscheidet `linkPlan` (lib/linkplan.ts) in vier Fällen statt der drei des Plans:
+
+| Fall | Vorn | Warum |
+|---|---|---|
+| `home` | Bookshop.org, Amazon (DE: Thalia, Amazon) | Die Nummer gehört hierher, die Läden haben eine Chance |
+| `foreign` | AbeBooks, eBay (DE: Booklooker), als **Titel**-Suche mit Verlag und Jahr | Marktplätze führen Angebote von überall, und antiquarische Angebote tragen oft gar keine ISBN — dann ist Titel + Verlag + Jahr die bessere Frage |
+| `kdp` | Amazon | **Neu gegenüber dem Plan.** 182 der 526 gemessenen ISBNs sind 979-8, Amazons eigener Print-on-Demand-Bereich. Als `foreign` behandelt hätten sie AbeBooks und eBay bekommen — also die zwei Läden, die solche Titel gerade nicht führen |
+| `no-isbn` | Titelsuchen | 7 % der Cover-Ausgaben |
+
+Der Satz, der die Reihenfolge begründet, nennt eine Tatsache über die Nummer und **nie** etwas über einen Laden: „This printing's ISBN was registered in India. Marketplaces that list copies from anywhere come first; no shop was asked." Das ist dieselbe Grenze, die `lib/verdicts.ts` eine Ebene höher zieht.
+
+### Julians Entscheidung, und was sie am Entwurf änderte
+
+Auf die Frage, ob es die Zone „Or read it in another edition" geben soll: *„wenn es aber die Möglichkeit gibt, einen Affiliate-Link zu setzen zu genau dieser Edition, sollte das Vorrang haben. ansonsten füge aber die Option unter der Trennlinie hinzu wie vorgeschlagen."*
+
+Das ist schärfer als der Plan und hat ihn vereinfacht. Die Zone erscheint **nur** bei `foreign` und `no-isbn` — genau dann, wenn kein provisionsfähiger Link auf diese Ausgabe möglich ist. Und weil die Läden des Marktes dann dort stehen, verschwindet ihr ISBN-Link aus der Klappe, statt daneben ein zweites Mal mit demselben Etikett zu erscheinen. Damit löst sich die Regel „ein Label steht genau einmal" ohne Ausnahme auf; ein Test prüft sie über zwölf Kombinationen aus ISBN und Markt.
+
+Was dabei **nicht** verlorengeht, prüft ein zweiter Test: jeder Händler, den die Tabelle für einen Markt kennt, ist in jedem Fall irgendwo erreichbar. Verschoben wird, nicht versteckt.
+
+### Der Fund, der die Zone beinahe wertlos gemacht hätte
+
+Beim ersten Blick auf die fertige Spalte stand dort: *These search for „The Great Gatsby(Published In 1925)" by title.* Der Werktitel von OL468431W lautet bei Open Library wörtlich so, samt fehlendem Leerzeichen — und wäre als Suchabfrage bei Bookshop.org gelandet, wo er null Treffer ergibt. Die Bereinigung existierte längst, aber modulprivat und nur für den **Vergleich**: `stripTrailingBrackets` wurde allein von `normalizeTitle` benutzt. Jetzt gibt es `displayTitle`, und die Suchabfrage benutzt sie. Der Seitenkopf zeigt den Rohtitel weiterhin — das ist 6.15 und bekommt einen eigenen Commit.
+
+### Die Messung, die 1.2 abschließt
+
+Bei 1440 × 900, gegen `npm run dev`:
+
+| | Inhalt der Spalte | erster Kauf-Knopf, Seite oben | angeheftete Leiste |
+|---|---|---|---|
+| *Beloved*, vorher | 2.351 px | 437 px **unter** der Fensterkante | — |
+| *Beloved*, jetzt | **851 px** | y = 870 von 900 | 828 |
+| *Wolf Hall*, vorher | 1.256 px | 151 px **unter** der Kante | — |
+| *Wolf Hall*, jetzt | **766 px** | y = 847 von 900 | 586 |
+| *Gatsby*, indische ISBN, Verdikt `differs` | 959 px | y = 945, also 45 px darunter | 692 |
+
+Sichtbare Bedienelemente in der Spalte: **5 statt 14** (Marktumschalter, zwei bis drei Läden, die Klappe). Auf dem Telefon steht der erste Knopf in der Schublade bei y = 565 von 812, also **ohne zu scrollen** — der Teil von 1.2, den die Peek-Leiste nicht löste.
+
+**Zwei Eingriffe waren nötig, nicht einer.** Die Kürzung des Blocks allein brachte den Knopf bei *Beloved* von 437 px unter der Kante auf 105 px darunter; erst die Deckelung des Covers auf 31vh Breite (46vh Höhe) holte ihn ins Fenster. In einer 400 px breiten Spalte war das Bild 600 px hoch und damit für sich genommen größer als der ganze übrige Block. Der schlechteste Fall bleibt eine Seite mit zweizeiliger Sprachleiste, langem Titel und `differs`-Verdikt: dort fehlen bei ganz oben stehender Seite noch 45 px. Sobald der Leser in die Wand gescrollt hat — und ohne das klickt er kein Cover an — ist die Leiste angeheftet und alles steht.
+
+### Was offen bleibt
+
+Die Zuordnung im Fall `foreign` ruht auf einer begründeten, nicht belegten Annahme: dass Bookshop.org und ThriftBooks fremdsprachige ISBNs nicht führen und Amazons `/dp/` bei einer nie geführten ISBN ins Leere geht. Das ist Julians Stichprobe von Hand aus Plan §7, zehn Minuten, zusammen mit 1.8. Fällt sie anders aus, ändert sich `CATALOGUE_SHOPS` in `lib/linkplan.ts` und sonst nichts — der Aufbau hängt nicht daran.
+
+Ebenfalls notiert: die Links der Zone B laufen **nicht** über `/go/`, weil dort keine ISBN steht, gegen die gezählt werden könnte. Für 3.1 heißt das, dass diese Klicks heute unsichtbar sind. Und für Bookshop.org ist kein Affiliate-Format für eine Suchseite bekannt — nur `/a/<id>/<isbn>`, das eine ISBN braucht; die Zeile trägt dort bis auf Weiteres keinen Parameter (gehört zu 4.1).
+
+### Nachtrag am selben Tag: was Julian an der fertigen Spalte sah
+
+Zwei Korrekturen, beide aus einem Blick auf den gebauten Zustand, und eine davon repariert etwas, das der Umbau selbst kaputt gemacht hatte.
+
+**1. Bei `differs` führen wieder die Suchen — und zwar ganz.** Julian: *„dann müssen suchen mit autor und jahr leichter vorgeschlagen werden als nur zig buttons wo immer ein anderes cover dahinter liegt."* Der Hinweis stand daneben und sagte „To get the one on screen, look for Vintage 1999 second-hand", und darunter standen Bookshop.org und Amazon — Links, die genau das andere Cover liefern. Vor dem Umbau hatte `EditionBlock` bei `differs` die Such-Links über die Kauf-Links geschoben (`buyFirst`); in `linkPlan` war davon nur noch Google Lens in der ersten Reihe übrig. **Das war eine Regression gegen SPEC F2.9**, eingeführt am selben Tag und nach einer Stunde wieder heraus.
+
+Jetzt ersetzt `differs` die erste Reihe vollständig: AbeBooks und eBay mit Titel, Autor, Verlag und Jahr, dazu Google Lens. Die Händler stehen hinter der Klappe, die Überschrift heißt „Find the cover you picked", und der Verdikt-Hinweis steht **über** der Reihe statt darunter — er ist ihr Grund, nicht ihre Fußnote. Sein letzter Satz zeigt dorthin: „The searches below look for Vintage 1999 second-hand instead."
+
+Mitgeliefert: **Hebel 4 aus ROADMAP 1.11, den der erste Umbau übersehen hatte.** Bei `unknown` — Google führt zu dieser Nummer gar kein Bild — hängt sich die antiquarische Suche hinten an die Reihe. Nur die Reihenfolge, kein Satz; „unknown" heißt weiterhin nicht „nicht zu kaufen".
+
+**2. Die Ausgabe mit dem passenden Cover steht vorn, nicht die neueste.** Julian: *„die version die das gleiche aktuelle cover hat wie die isbn sollte zuerst vorgeschlagen werden, nicht nach jahr sortiert."* Der Fall aus seinem Screenshot: ein gefaltetes Cover von *Beloved* trägt Vintage International 2025 und 2004; die Sortierung nach Jahr stellte 2025 voran, und es ist die **2004er** ISBN, zu der der Verlag dieses Bild führt.
+
+`orderEditionsForMarket` sortiert deshalb zuerst nach dem Verdikt (`verified` vor allem, `differs` zuletzt), dann nach Markt und Jahr. **Das Verdikt schlägt den Markt**, und das ist die eigentliche Entscheidung dahinter: der Leser hat ein Bild angeklickt, nicht eine Kaufgelegenheit, also ist der Druck, der dieses Bild trägt, die ehrliche Voreinstellung — auch wenn seine ISBN aus einem anderen Sprachraum kommt und die Händlerreihenfolge sich daraufhin umstellt. Der Preis ist, dass die Chip-Reihe sich einmal umsortiert, wenn die Verdikte eintreffen; `pending` und `unavailable` bewegen deshalb nichts.
+
+**Live geprüft** an *Beloved* über die ersten fünf Cover: `verified` führt mit Bookshop.org und Amazon, `differs` mit AbeBooks, eBay und Google Lens. Die Chip-Reihenfolge ließ sich am Dev-Server **nicht** live nachstellen — auf einer kalten Instanz trägt kein Cover mehr als eine Ausgabe, weil die Faltung Signaturen braucht, die erst beim zweiten Besuch da sind (SPEC §7). Sie ist durch Unit-Tests mit genau dem Vintage-Fall belegt.
+
+## 2026-09-09 · Ein Cover, das man nicht sehen konnte, und eines, das man zu groß sah (ROADMAP 6.14 und 6.10a)
+
+Zwei kleine Punkte aus einem Screenshot, und der kleinere von beiden hat die Sortierfrage vom Vormittag erst wirklich beantwortet.
+
+### 6.10a — die unscharfe Riesenkachel
+
+„Looks like this" gibt jeder Kachel `min-w-0 flex-1`. Bei drei Treffern ist das ein Drittel der Spalte, bei **einem** die ganze — rund 370 px bei 1440 —, und das Bild dahinter ist Open Librarys `-S`-Miniatur mit etwa 45 px. `CoverImage` läuft mit `unoptimized`, `sizes="80px"` ist also nur eine Angabe an den Browser und ändert die geladene Datei nicht. Auf einer Seite, die vom Aussehen der Cover handelt, ist das kein Schönheitsfehler.
+
+Jetzt drei feste Spalten und `-M` (180 px) als Quelle. **Gemessen bei 1440 × 900:** die Kachel eines einzelnen Treffers ist **118 px** breit in einer 373 px breiten Spalte. Der Titel unter der Kachel war entgegen der ersten Vermutung immer da — live gesehen „Cien años de soledad", genau der Treffer aus dem Screenshot; er ging im unscharfen Bild unter.
+
+**Der zweite Befund aus demselben Screenshot ließ sich nicht reproduzieren, und die naheliegende Vermutung ist widerlegt.** Die Spalte zeigte dort gar keinen Ausgaben-Block. Vermutet hatte ich Cover, deren `editionIds` ins Leere zeigen — namentlich die, die die ISBN-Nachschau nachträglich in die Wand setzt. Gemessen: über alle fünf Seiten von *Beloved* **0 von 66** Covern ohne auflösbare Ausgabe; und `useIsbnCovers` überspringt ohnehin jedes Cover, dem keine Ausgabe zugeordnet ist. 14 Cover im Browser durchgeklickt, der Block erschien jedes Mal. Der Punkt bleibt in 6.10a offen, mit dem, was ausgeschlossen ist — das ist mehr wert als eine plausible Ursache, die nicht stimmt.
+
+### 6.14 — ein gefaltetes Cover war nirgends zu sehen
+
+Das Falten ist auf der Wand richtig; ohne es besteht *The Great Gatsby* aus 293 fast gleichen Kacheln. Aber es war einseitig: das „+N" auf der Kachel ist `pointer-events-none`, die Seitenleiste erwähnte nur eine Zahl im Vorbeigehen, und `coverForId` löst die ID eines gefalteten Covers auf den Vertreter auf — auch ein von Hand geschriebenes `?cover=` kam nicht hin. Das ist genau, was E16 eine Ursache weiter verbietet.
+
+Der Weg ist **nicht** das Abzeichen geworden, sondern die Seitenleiste: unter dem großen Cover steht „The same cover, N scans" mit allen Scans als kleinen Kacheln, der Vertreter zuerst, die gewählte mit Ring. Ein Klick tauscht das große Bild. Die Bild-URLs werden aus den Cover-IDs neu gebaut (`coverUrlFor`, rein), es musste nichts durchs Modell getragen werden. Und die Zeile „Image from …" nennt jetzt die Quelle **des gezeigten Scans**: an *Gatsby* live gesehen, wo ein Google-Cover in ein Open-Library-Cover gefaltet ist und die Zeile beim Umschalten mitwechselt.
+
+### Dabei kam heraus, dass die Sortierung vom Vormittag den gemeldeten Fall gar nicht traf
+
+Julians Fall war *Beloved*: eine gefaltete Kachel mit Vintage International 2025 und 2004, 2025 vorn. Am Vormittag hatte ich das Verdikt vor das Jahr gestellt — „die Ausgabe, deren registriertes Bild dieses Cover ist, zuerst". Beim Nachmessen am Dev-Server stellte sich heraus: **beide Datensätze führen dieselbe ISBN, 9781400033416.** Also dasselbe Verdikt, und das Jahr entschied weiter. Die Regel war richtig gemeint und für diesen Fall wirkungslos.
+
+Was die beiden trennt, ist etwas anderes: **wer den gezeigten Scan vor dem Falten getragen hat.** `foldDuplicateCovers` hängt die Ausgaben der Mitglieder an den Vertreter, danach nennt eine Kachel Drucke, die dieses Bild nie hatten. `buildWall` merkt sich das jetzt vor dem Falten, und `orderEditionsForMarket` sortiert danach — vor dem Verdikt, vor dem Markt, vor dem Jahr.
+
+Damit folgt der führende Druck dem Bild. Live gemessen an derselben Kachel:
+
+| | Chips | gezeigte Ausgabe |
+|---|---|---|
+| Scan 1 (Vertreter) | Vintage International · 2025 ←, · 2004 | 2025 |
+| Scan 2 angeklickt | Vintage International · 2004 ←, · 2025 | 2004, mit eigener ISBN und eigenen Links |
+
+Die drei Vintage-Datensätze, die das erklären (aus der API geholt): 2025 unter 9781400033416 trägt `ol:15248310` und `ol:15169554`; 2004 unter 9780307388629 trägt `ol:14342620` und `gb:sfmp6gjZGP8C`; ein zweiter 2004er unter derselben ISBN wie 2025 trägt `ol:10653442`. Ein Katalog, in dem dasselbe Buch dreimal steht, zweimal mit derselben Nummer und verschiedenen Jahren — das ist der Normalfall, nicht die Ausnahme, und jede Sortierregel muss damit rechnen.
+
+**Nebenbei gelernt, für die nächste Sitzung:** die Faltung ist am Dev-Server nicht verlässlich zu sehen. Beim ersten Laden eines Werks faltet sie nichts, weil die Signaturen das 4-Sekunden-Budget nicht schaffen; erst nach mehreren Besuchen desselben Werks erscheinen die „+N"-Abzeichen. Wer 6.14 oder 6.7 prüft, lädt die Seite ein paarmal, bevor er misst.
+
+## 2026-09-09 · Ein Bild in sechzehn Sekunden (ROADMAP 1.3)
+
+Der Punkt verlangte eine Messung vorab — „wie viele verschiedene Bilder lädt eine Detailseite, damit das Kontingent der Optimierung nicht die nächste Grenze wird". Die Antwort hat die Entscheidung allein getroffen.
+
+**Gemessen aus Deutschland, 2026-09-09**, an einer kalten Detailseite von *The Great Gatsby*:
+
+| | |
+|---|---|
+| Verschiedene Bilder, die die Seite anfordert | **151** — 146 von `covers.openlibrary.org`, 5 von Google |
+| Größe je Bild (`-M.jpg`) | 12–29 KB |
+| **Zeit für ein einzelnes Bild** | **5,9 / 6,0 / 9,5 / 10,8 / 13,7 / 16,0 s** (sechs Abrufe) |
+| `-L.jpg`, zum Vergleich | 24–79 KB, 2,5–2,9 s |
+
+Damit war die zweite Option des Punkts erledigt, ohne dass ein Preisblatt nötig war: 151 Quellbilder je Detailseite verbrauchen das Transformationskontingent des Hobby-Plans in wenigen Aufrufen — und die Cover werden ohnehin in der Größe geholt, in der sie stehen, es gäbe also nichts zu transformieren.
+
+**Gebaut wurde die andere Option:** `/img/<S|M|L>/<ol-123|gb-abc>`, davor der CDN, 30 Tage `s-maxage`.
+
+**Der Pfad trägt eine Cover-ID, keine URL**, und das ist die eigentliche Entwurfsentscheidung. Die Zieladresse baut `coverUrlFor` neu — dieselbe Regel, aus der `/go/[provider]/[isbn]` den Händler-Link aus der Tabelle statt aus der Anfrage baut. Ein Bild-Proxy, der eine URL aus der Anfrage nimmt, ist ein offener Proxy und lässt sich auf jedes Ziel im Netz richten.
+
+Auf dem Rückweg schreibt `proxiedCoverSrc` nur Adressen um, die dieser Code selbst gebaut hat; alles andere läuft direkt weiter. **Ein Test hat dabei eine Unsauberkeit gefangen**, die ohne ihn lange unentdeckt geblieben wäre: die Breitenzuordnung für Google stand als `width >= 800 ? 'L'` da, hätte also eine `w999`-Adresse auf die Route abgebildet, die w800 ausliefert — ein anderes Bild unter derselben Adresse. Jetzt sind es exakt die drei Breiten, die dieser Code anfragt (128, 300, 800).
+
+**Geprüft am Dev-Server:** alle 66 Bilder einer Gatsby-Seite kommen von der eigenen Herkunft, kein einziges mehr von einem fremden Host; die Antwort trägt `image/jpeg` und `public, max-age=3600, s-maxage=2592000, stale-while-revalidate=86400`. `/img/M/http-evil.example` antwortet 400, `/img/XL/ol-…` 400, eine unbekannte Cover-ID 502 — und Fehlschläge tragen `no-store`, weil ein schweigendes archive.org eine Episode ist und keine Tatsache über das Cover (dieselbe Regel wie F1.7).
+
+**Was hier nicht zu messen war, und das ist der Punkt.** Lokal steht kein CDN vor der Route, ein zweiter Abruf dauert deshalb weiter rund 7 s. Der gesamte Gewinn liegt in Produktion, und dort ist er nach dem nächsten Deploy zu messen: der zweite Abruf desselben Covers muss `x-vercel-cache: HIT` tragen und zweistellige Millisekunden brauchen. **Bis dahin ist der Punkt gebaut, aber nicht belegt.** Die Kehrseite gehört mitgemessen: bei kaltem CDN sind 151 Bilder 151 Funktionsaufrufe — allerdings einmal für alle Leser, nicht je Leser.
+
+## 2026-09-09 · Vier Färbungen derselben Wand, und ein Kontrast, der schon durchfällt (ROADMAP 6.22)
+
+Julian: „mache screenshot mockups für 6.22." Gebaut als [`lab/palette/`](plans/../../lab/palette/README.md) — kein Vergleich von Farbfeldern, sondern **dieselbe Wand und dieselben Bedienelemente in jeder Färbung**, hell und dunkel nebeneinander, weil `prefers-color-scheme` beides ausliefert und ein Schema, das nur in einem Modus trägt, keins ist. Unter jeder Wand die Kontrasttabelle der Paare, die in der Oberfläche wirklich vorkommen.
+
+Vier Kandidaten: **Heute** (Terrakotta, als Referenz), **Tinte** (gar keine Akzentfarbe — alle Farbe kommt von den Covern), **Indigo** (kühler Akzent auf demselben Papier), **Olive** (gedämpfter Akzent und kühleres Papier, der einzige, der die Grundfarbe anfasst). Drei lassen das Papier in Ruhe, weil der Hintergrund hinter hunderten Covern steht und Papierweiß genau dafür gewählt war. Entschieden ist nichts; die Wahl trifft Julian.
+
+**Der Befund, der die Farbfrage überholt.** Beim ersten Lauf der Kontrasttabelle fiel eine Zeile für *alle* Kandidaten durch — auch für den heutigen Stand:
+
+| | ink-3 auf bg | AA verlangt |
+|---|---|---|
+| hell (`#8c8377` auf `#f4f0e8`) | **3,28** | 4,5 |
+| dunkel (`#7d7569` auf `#131110`) | **4,14** | 4,5 |
+
+`ink-3` trägt die Metadatenzeilen und die Verdikt-Hinweise bei 11–12 px, die WCAG-Ausnahme für großen Text greift also nicht. Die nächstliegenden bestehenden Werte sind `#746c62` (4,55) und `#837b6f` (4,51) — kaum ein Schattenunterschied, weshalb es nie jemandem aufgefallen ist. **Das gehört korrigiert, unabhängig davon, welcher Akzent gewinnt.** Die drei Vorschläge tragen es bereits; „Heute" behält absichtlich den durchfallenden Wert, sonst zeigte die Tabelle nicht, was ausgeliefert wird.
+
+Nebenbei hat die Tabelle mich selbst korrigiert: die erste Fassung prüfte auch `line auf bg` gegen eine erfundene Schwelle von 1,5 und meldete sie als Durchfaller. Eine 1-px-Trennlinie ist kein Text und keine bedeutungstragende Bedienelementgrenze; WCAG verlangt dafür nichts. Sie steht jetzt zur Anschauung da, nicht als Prüfung — sonst hätte ein erfundener Fehler den echten überdeckt.
+
+**Was das Werkzeug kostet: nichts.** Die Cover kommen aus `data/cover-index.json`, es wird nichts gesucht und Google gar nicht gefragt (E10). Mit `--base http://localhost:3000/img` laufen die Bilder über die eigene Bildroute aus 1.3 und die Seite steht sofort; ohne sie lädt der Browser direkt von Open Library, was 6 bis 16 Sekunden je Bild dauern kann — das ist der Preis dafür, dass die committete Fassung ohne laufenden Server funktioniert. `--embed` legt die Bilder als Data-URIs hinein und macht die Datei verschickbar (2,6 MB).
+
+### Nachtrag: ein sanfteres Terrakotta, und warum es dunkler sein muss
+
+Julian am selben Tag: „baue ein sanfteres terrakotta." Der Ton ist `#945138` hell und `#dbac94` dunkel — Farbwinkel unverändert bei 16, Sättigung von 61 auf 45, Helligkeit von 43 auf 40. Erkennbar dasselbe Terrakotta, nur ohne die Schärfe.
+
+**Dass es dabei dunkler wird, ist kein Geschmacksurteil, sondern Zwang.** Das heutige `#b1502b` hält mit **4,56** nur knapp WCAG AA auf Papier. Jedes reine Entsättigen fällt darunter, gemessen an vier Zwischenschritten:
+
+| | Sättigung | Kontrast auf Papier |
+|---|---|---|
+| `#b1502b` (heute) | 61 | 4,56 |
+| `#a85c40` | 45 | **4,33** |
+| `#a1614a` | 37 | **4,27** |
+| `#9d6552` | 31 | **4,18** |
+| `#945138` (Vorschlag) | 45 | **5,29** |
+
+Der Unterschied zwischen Zeile 2 und Zeile 5 ist allein die Helligkeit. Weicher geht also nur über sie — und der Umweg bringt dem Akzent zum ersten Mal Reserve statt der knappen 0,06 über der Schwelle. Wer den Ton später weiter beruhigen will, muss ihn weiter abdunkeln.
+
+Nebenbei zeigt die Suche, warum „sanft" allein kein Ziel ist: die entsättigtsten Töne, die AA mit Reserve halten, liegen bei Sättigung 22 und Helligkeit 30 (`#5d413c` und Nachbarn) — die lesen sich nicht mehr als Terrakotta, sondern als Braun.
+
+### Entschieden: das sanftere Terrakotta, und ink-3 dazu
+
+Julian, 2026-09-09: „nimm das sanftere terrakotta und korrigiere ink-3." Ausgeliefert in `app/globals.css`:
+
+| Token | vorher | jetzt | Kontrast vorher → jetzt |
+|---|---|---|---|
+| `--accent` hell | `#b1502b` | `#945138` | 4,56 → **5,29** |
+| `--accent` dunkel | `#e6a677` | `#dbac94` | 9,04 → 9,27 |
+| `--ink-3` hell | `#8c8377` | `#746c62` | **3,28** → 4,55 |
+| `--ink-3` dunkel | `#7d7569` | `#837b6f` | **4,14** → 4,51 |
+
+Grundfarbe, Flächen, Linien und Schriften bleiben, wie sie waren: die Frage war der Akzent, und die Wand bleibt die Bühne. Beide Modi im Browser nachgesehen — hell trägt `#945138` / `#746c62`, dunkel `#dbac94` / `#837b6f`.
+
+**Der eigentliche Ertrag dieser Sitzung ist aber nicht die Farbe, sondern dass sie ab jetzt geprüft wird.** Die Rechnung ist von `lab/` nach `lib/contrast.ts` gewandert, und `lib/__tests__/contrast.test.ts` liest `app/globals.css` selbst — nicht eine Kopie der Werte, denn das Auseinanderlaufen von Kopie und Wirklichkeit war genau der Fehler bei `ink-3`. Geprüft werden sechs Paare in beiden Modi: `ink`, `ink-2` und `ink-3` auf dem Grund, der Akzent auf dem Grund, `on-accent` auf dem Akzent, und Text auf einer Kachel.
+
+**Gegenprobe, damit der Test nicht hohl ist:** mit dem alten `#8c8377` wieder eingesetzt fällt er (`ink-3 on bg`, hell), mit dem neuen Wert steht er. Ein Test, der nie fehlschlagen kann, hätte hier gar nichts bewiesen.
+
+Die Kandidaten in `lab/palette/` bleiben liegen; „Vorher" heißt jetzt, was es ist, und zeigt weiter seine rote Zeile — als Beleg dafür, wie lange so etwas unbemerkt bleibt, wenn niemand nachrechnet.
+
+## 2026-09-09 · Zusammengeführt, und die Liste nachgezogen
+
+Der Tagesstand (1.11, 1.2, 1.3, 6.10a, 6.14, 6.22) ist mit `main` zusammengeführt. Der Branch lag **7 Commits voraus und 12 zurück** — parallel war auf `main` die Jahrzehnte-Seite, der gedeckelte Cover-Index und `lab/fold` gelandet. Drei Konflikte, alle harmlos: `useWorkPages.ts` (dort war `progress` in `known` umbenannt worden, meine Zeile `anyEditionLinks` zieht mit), sowie `ROADMAP.md` und `docs/history.md`, wo beide Seiten angehängt hatten. `main` danach im Schnellvorlauf auf `b53818b`; **nicht gepusht**, weil ein Push in Produktion deployt und danach nicht gefragt war.
+
+Nach dem Merge im Browser gegengeprüft, dass die beiden Stränge zusammenspielen: Seitenleiste mit neuem Akzent `#945138`, die Scan-Reihe aus 6.14, der Fremd-ISBN-Satz aus 1.11, alle 66 Bilder über die eigene Route aus 1.3 — und der Jahrzehnte-Link von `main`. 372 Tests grün.
+
+**Beim Nachziehen der Empfehlungsliste sind zwei Punkte aufgefallen, die heute an Wert verloren haben, ohne dass jemand sie angefasst hat.** Das ist der Grund, eine solche Liste überhaupt nachzuziehen, statt sie stehen zu lassen:
+
+- **6.12** („Signaturen überleben eine Serverinstanz nicht") war in der Vormittagsliste noch ein halber Tag Gewinn. Seit `5385ddd` liest `getWorkPage` die Signaturen aus dem gebauten Index — kostenlos, ohne ein Bild zu holen. Für kuratierte Werke, und das sind die in der Sitemap, ist der Punkt damit erledigt; offen bleibt er nur für Werke, die im Index fehlen. Ein Randfall, kein Hebel.
+- **6.5, Teil `priority`**: die LCP-Warnungen zeigten auf `covers.openlibrary.org`. Seit 1.3 kommen die Bilder von der eigenen Herkunft mit CDN davor. Der Punkt ist damit **verschoben, nicht gelöst** — und vor dem Anfassen neu zu messen, sonst wird ein Problem behoben, das es so nicht mehr gibt.
+
+**Was die Liste jetzt sagt:** Phase 1 ist bis auf 1.8 (Julian) und 1.9 leer, also ist 1.9 nach der eigenen Regel dieser Datei der nächste Punkt. Direkt danach steht kein Bau, sondern ein Deploy: **1.3 ist in Produktion überhaupt erst wirksam**, und die Zahl, die den Punkt belegt, kann nur dort entstehen.
+
 ## 2026-09-09 · Drei Ladebilder aus einem Bild (ROADMAP 6.19a)
 
 Julians Vorschlag, die Suche mit dem Riesenmosaik warten zu lassen — „wie sich langsam das Bild von Orwell aus seinen Editionen aufbaut" — plus die Bitte, für **einen zweiten Autor** drei Animationen vorzuschlagen. Gebaut als `lab/loading/`, ausführlich in [lab/loading/README.md](../lab/loading/README.md); der Kontaktbogen mit allen drei Vorschlägen in je fünf Momenten liegt als `lab/loading/out/mark-twain-filmstrip.png`.

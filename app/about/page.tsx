@@ -160,6 +160,21 @@ export default function AboutPage() {
               found, in an order that is not sorted by anyone&rsquo;s interest, and no shop pays to appear.
             </p>
           )}
+          {/*
+            There is now one sorting, and saying "no order" while sorting would
+            be the same kind of quiet claim the verdicts exist to prevent
+            (ROADMAP 1.11, plan §4). What it rests on is a fact about the
+            number, never about a shop: no shop is asked anything.
+          */}
+          <p>
+            There is one thing the order does follow, and it is not money. The first digits of an
+            ISBN say where the number was registered &mdash; 978-3 in the German-language area,
+            978-975 and 978-9944 in Turkey &mdash; and most covers here carry a number from
+            somewhere other than your own market. When they do, the marketplaces that list copies
+            from anywhere come first and the shops around you move down, because a shop can only
+            look up a number it was given. That is read off the ISBN alone. No shop is asked, and
+            what any of them actually has is not something this site knows.
+          </p>
           <p>
             A click on a buy link passes through this site so it can be counted. Recorded are the
             shop, the market, the ISBN and the time &mdash; nothing about you. No cookie, no address,

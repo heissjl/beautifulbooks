@@ -34,7 +34,17 @@ interface Retailer {
    * Defaults to a search, which is what most retailers give for an ISBN.
    */
   kind?: (isbn13: string, affiliate: string | undefined) => BuyLink['kind'];
+  /**
+   * The same shop searched by words instead of by number (ROADMAP 1.11
+   * lever 5). Only defined where the retailer's own ISBN endpoint above
+   * already takes free text, so no URL shape is invented here: Blackwell's
+   * has product URLs only, and Booklooker's `isbn=` path segment has no
+   * confirmed `titel=` sibling. Those two are simply absent (ROADMAP 1.8).
+   */
+  searchUrl?: (terms: string, affiliate: string | undefined) => string;
 }
+
+const enc = encodeURIComponent;
 
 const withTag = (url: string, key: string, value: string | undefined) =>
   value ? `${url}${url.includes('?') ? '&' : '?'}${key}=${encodeURIComponent(value)}` : url;
@@ -52,6 +62,7 @@ function amazon(domain: string, affiliateEnv: string): Retailer {
     },
     // 979-prefixed ISBNs have no ISBN-10, so those fall back to a search.
     kind: isbn => (isbn13to10(isbn) ? 'product' : 'search'),
+    searchUrl: (terms, tag) => withTag(`https://www.amazon.${domain}/s?k=${enc(terms)}&i=stripbooks`, 'tag', tag),
   };
 }
 
@@ -71,11 +82,22 @@ const RETAILERS: Record<Market, Retailer[]> = {
       affiliateEnv: 'AFFILIATE_BOOKSHOP_ID_US',
       url: (isbn, aff) => (aff ? `https://bookshop.org/a/${aff}/${isbn}` : `https://bookshop.org/search?keywords=${isbn}`),
       kind: (_isbn, aff) => (aff ? 'product' : 'search'),
+      // No tag: the affiliate form we know is `/a/<id>/<isbn>`, which needs an
+      // ISBN. A search that earns is open work in 4.1, not something to guess.
+      searchUrl: terms => `https://bookshop.org/search?keywords=${enc(terms)}`,
     },
     amazon('com', 'AFFILIATE_AMAZON_TAG_US'),
     abebooks('com'),
-    { id: 'thriftbooks', label: 'ThriftBooks', url: isbn => `https://www.thriftbooks.com/browse/?b.search=${isbn}` },
-    { id: 'ebay', label: 'eBay', url: isbn => `https://www.ebay.com/sch/i.html?_nkw=${isbn}&_sacat=267` },
+    {
+      id: 'thriftbooks', label: 'ThriftBooks',
+      url: isbn => `https://www.thriftbooks.com/browse/?b.search=${isbn}`,
+      searchUrl: terms => `https://www.thriftbooks.com/browse/?b.search=${enc(terms)}`,
+    },
+    {
+      id: 'ebay', label: 'eBay',
+      url: isbn => `https://www.ebay.com/sch/i.html?_nkw=${isbn}&_sacat=267`,
+      searchUrl: terms => `https://www.ebay.com/sch/i.html?_nkw=${enc(terms)}&_sacat=267`,
+    },
   ],
   uk: [
     {
@@ -84,18 +106,39 @@ const RETAILERS: Record<Market, Retailer[]> = {
       affiliateEnv: 'AFFILIATE_BOOKSHOP_ID_UK',
       url: (isbn, aff) => (aff ? `https://uk.bookshop.org/a/${aff}/${isbn}` : `https://uk.bookshop.org/search?keywords=${isbn}`),
       kind: (_isbn, aff) => (aff ? 'product' : 'search'),
+      searchUrl: terms => `https://uk.bookshop.org/search?keywords=${enc(terms)}`,
     },
     amazon('co.uk', 'AFFILIATE_AMAZON_TAG_UK'),
     { id: 'blackwells', label: "Blackwell's", url: isbn => `https://blackwells.co.uk/bookshop/product/${isbn}`, kind: () => 'product' },
-    { id: 'waterstones', label: 'Waterstones', url: isbn => `https://www.waterstones.com/books/search/term/${isbn}` },
+    {
+      id: 'waterstones', label: 'Waterstones',
+      url: isbn => `https://www.waterstones.com/books/search/term/${isbn}`,
+      searchUrl: terms => `https://www.waterstones.com/books/search/term/${enc(terms)}`,
+    },
     abebooks('co.uk'),
-    { id: 'ebay', label: 'eBay', url: isbn => `https://www.ebay.co.uk/sch/i.html?_nkw=${isbn}&_sacat=267` },
+    {
+      id: 'ebay', label: 'eBay',
+      url: isbn => `https://www.ebay.co.uk/sch/i.html?_nkw=${isbn}&_sacat=267`,
+      searchUrl: terms => `https://www.ebay.co.uk/sch/i.html?_nkw=${enc(terms)}&_sacat=267`,
+    },
   ],
   de: [
-    { id: 'thalia', label: 'Thalia', url: isbn => `https://www.thalia.de/suche?sq=${isbn}` },
-    { id: 'genialokal', label: 'genialokal', url: isbn => `https://www.genialokal.de/Suche/?q=${isbn}` },
+    {
+      id: 'thalia', label: 'Thalia',
+      url: isbn => `https://www.thalia.de/suche?sq=${isbn}`,
+      searchUrl: terms => `https://www.thalia.de/suche?sq=${enc(terms)}`,
+    },
+    {
+      id: 'genialokal', label: 'genialokal',
+      url: isbn => `https://www.genialokal.de/Suche/?q=${isbn}`,
+      searchUrl: terms => `https://www.genialokal.de/Suche/?q=${enc(terms)}`,
+    },
     amazon('de', 'AFFILIATE_AMAZON_TAG_DE'),
-    { id: 'hugendubel', label: 'Hugendubel', url: isbn => `https://www.hugendubel.de/de/search?searchString=${isbn}` },
+    {
+      id: 'hugendubel', label: 'Hugendubel',
+      url: isbn => `https://www.hugendubel.de/de/search?searchString=${isbn}`,
+      searchUrl: terms => `https://www.hugendubel.de/de/search?searchString=${enc(terms)}`,
+    },
     abebooks('de'),
     { id: 'booklooker', label: 'Booklooker', url: isbn => `https://www.booklooker.de/B%C3%BCcher/Angebote/isbn=${isbn}` },
   ],
@@ -103,6 +146,43 @@ const RETAILERS: Record<Market, Retailer[]> = {
 
 export function retailersFor(market: Market): ReadonlyArray<Pick<Retailer, 'id' | 'label'>> {
   return RETAILERS[market];
+}
+
+/**
+ * Providers in this market that run a programme we could join (Phase 4).
+ *
+ * It says nothing about whether a link *currently* earns anything — in hobby
+ * mode none do (E20). It answers one question only: is there a shop here that
+ * could ever pay for a link to *this* ISBN? Julian's rule on 2026-09-09: if
+ * there is, that link takes precedence and the "read it in another edition"
+ * row is not offered at all.
+ */
+export function earningProviders(market: Market): ReadonlySet<string> {
+  return new Set(RETAILERS[market].filter(r => r.affiliateEnv).map(r => r.id));
+}
+
+/**
+ * The same shops searched by words instead of by number (ROADMAP 1.11
+ * lever 5) — the row that answers "I just want to read the book".
+ *
+ * Only the retailers whose ISBN endpoint already takes free text appear; see
+ * `Retailer.searchUrl`. The provider ids carry a `-title` suffix so they can
+ * never be confused with the ISBN links, which are the ones that go through
+ * the counting redirect (a search has no ISBN to count against).
+ */
+export function titleSearchLinksFor(
+  terms: { title: string; author?: string },
+  market: Market = DEFAULT_MARKET,
+  env: Env = process.env,
+): BuyLink[] {
+  const query = [terms.title, terms.author].filter(Boolean).join(' ');
+  if (!query.trim()) return [];
+  const commerce = commerceEnabled(env.NEXT_PUBLIC_SITE_MODE);
+  return RETAILERS[market].flatMap(r => {
+    if (!r.searchUrl) return [];
+    const affiliate = commerce && r.affiliateEnv ? env[r.affiliateEnv] || undefined : undefined;
+    return [{ provider: `${r.id}-title`, label: r.label, url: r.searchUrl(query, affiliate), kind: 'search' as const }];
+  });
 }
 
 /** Buy links for an edition in a market. Empty without an ISBN. */

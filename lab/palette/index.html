@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Farbschema-Kandidaten · ROADMAP 6.22</title>
+<style>
+  :root { color-scheme: light; font-family: ui-sans-serif, system-ui, sans-serif; }
+  body { margin: 0; background: #6e6e6e; color: #111; padding: 24px; }
+  header { max-width: 70ch; margin: 0 auto 28px; color: #fff; }
+  header h1 { font-family: Georgia, serif; font-weight: 500; margin: 0 0 8px; }
+  header p { margin: 0 0 6px; line-height: 1.5; font-size: 14px; opacity: .92; }
+  .candidate { max-width: 1360px; margin: 0 auto 34px; }
+  .candidate h2 { font-family: Georgia, serif; font-weight: 500; color: #fff; margin: 0 0 4px; font-size: 20px; }
+  .claim { color: #f0f0f0; font-size: 13px; line-height: 1.55; margin: 0 0 12px; max-width: 90ch; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .panel { background: var(--bg); color: var(--ink); border-radius: 10px; padding: 16px; }
+  .mode { margin: 0 0 10px; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .searchbar { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 8px 8px 14px; }
+  .searchbar span { flex: 1; color: var(--ink-3); font-size: 13px; }
+  .primary { background: var(--accent); color: var(--on-accent); border: 0; border-radius: 6px; padding: 7px 14px; font-size: 13px; font-weight: 500; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 12px; }
+  .pill { border: 1px solid var(--line); color: var(--ink-2); border-radius: 999px; padding: 3px 10px; font-size: 11px; }
+  .pill.on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .wall { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .tile { aspect-ratio: 2/3; background: var(--surface-2); border-radius: 3px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.18); }
+  .tile[data-selected="true"] { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .meta { font-size: 11px; color: var(--ink-3); margin: 10px 0 8px; }
+  .meta a { color: var(--accent); }
+  .note { font-size: 11px; line-height: 1.55; color: var(--ink-3); margin: 0 0 12px; }
+  .note .lead { color: var(--ink-2); }
+  .contrast { width: 100%; border-collapse: collapse; font-size: 10px; color: var(--ink-3); }
+  .contrast td { padding: 2px 0; border-top: 1px solid var(--line); }
+  .contrast td:nth-child(2), .contrast td:nth-child(3) { text-align: right; width: 3.2rem; font-variant-numeric: tabular-nums; }
+  .contrast .bad td { color: #c0392b; font-weight: 600; }
+</style></head>
+<body>
+<header>
+  <h1>Farbschema-Kandidaten</h1>
+  <p>ROADMAP 6.22. Dieselbe Wand, dieselben Bedienelemente, vier F&auml;rbungen &mdash; jeweils hell und dunkel,
+  weil <code>prefers-color-scheme</code> beide ausliefert. Cover: Beloved — Toni Morrison.</p>
+  <p>Die Frage ist die <strong>Akzentfarbe</strong>: sie steht heute auf Suchknopf, Sprach-Pillen, Fokusringen,
+  Links und dem Verdikt-Hinweis und ist damit die einzige Farbe, die mit den Covern konkurriert. Der Hintergrund
+  steht hinter hunderten Covern &mdash; je bunter er ist, desto mehr streitet er mit ihnen.</p>
+  <p>Unter jeder Wand die Kontrasttabelle. Rot hei&szlig;t: f&auml;llt durch WCAG AA und ist damit raus,
+  unabh&auml;ngig davon, wie es aussieht.</p>
+</header>
+
+  <article class="candidate">
+    <h2>Vorher · scharfes Terrakotta (bis 2026-09-09)</h2>
+    <p class="claim">Der Stand. Terrakotta ist warm und nah an den Rot- und Ockertönen, die auf Buchrücken häufig sind — es fällt auf der Wand deshalb weniger als Fremdkörper auf, konkurriert dort aber auch am ehesten mit den Covern selbst. Unverändert übernommen, samt dem ink-3, das WCAG AA verfehlt — daher die rote Zeile in seiner Tabelle.</p>
+    <div class="pair">
+      
+  <section class="panel" style="--bg:#f4f0e8;--surface:#fbf9f4;--surface-2:#ebe5da;--ink:#1a1714;--ink-2:#5a534a;--ink-3:#8c8377;--line:#ddd5c8;--accent:#b1502b;--on-accent:#fff8f2">
+    <p class="mode">hell</p>
+    <div class="chrome">
+      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="pills">
+        <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
+      </div>
+    </div>
+    <div class="wall"><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169563-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15204261-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169562-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15241467-M.jpg" alt="" loading="eager"></div><div class="tile" data-selected="true"><img src="https://covers.openlibrary.org/b/id/15248310-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169554-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12360707-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10849625-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13582714-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342655-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342722-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13947146-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342620-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12907359-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12585716-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12638483-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13130220-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10659339-M.jpg" alt="" loading="eager"></div></div>
+    <p class="meta">55 covers from 110 editions · <a href="#">See these covers by decade &rarr;</a></p>
+    <p class="note"><span class="lead">The publisher&rsquo;s current image for this ISBN is this cover.</span> Shops list by number and mostly use that image.</p>
+    <table class="contrast"><tbody><tr class="ok"><td>ink auf bg</td><td>15.70</td><td>AA</td></tr><tr class="ok"><td>ink-2 auf bg</td><td>6.67</td><td>AA</td></tr><tr class="bad"><td>ink-3 auf bg</td><td>3.28</td><td>< 4.5</td></tr><tr class="ok"><td>accent auf bg</td><td>4.56</td><td>AA</td></tr><tr class="ok"><td>on-accent auf accent</td><td>4.93</td><td>AA</td></tr><tr class="ok"><td>ink auf surface-2</td><td>14.24</td><td>AA</td></tr><tr class="ok"><td>line auf bg (nur zur Anschauung)</td><td>1.28</td><td>AA</td></tr></tbody></table>
+  </section>
+      
+  <section class="panel" style="--bg:#131110;--surface:#1b1815;--surface-2:#26221e;--ink:#efe8dd;--ink-2:#b2a99b;--ink-3:#7d7569;--line:#2e2925;--accent:#e6a677;--on-accent:#1a1210">
+    <p class="mode">dunkel</p>
+    <div class="chrome">
+      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="pills">
+        <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
+      </div>
+    </div>
+    <div class="wall"><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169563-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15204261-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169562-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15241467-M.jpg" alt="" loading="eager"></div><div class="tile" data-selected="true"><img src="https://covers.openlibrary.org/b/id/15248310-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169554-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12360707-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10849625-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13582714-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342655-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342722-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13947146-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342620-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12907359-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12585716-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12638483-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13130220-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10659339-M.jpg" alt="" loading="eager"></div></div>
+    <p class="meta">55 covers from 110 editions · <a href="#">See these covers by decade &rarr;</a></p>
+    <p class="note"><span class="lead">The publisher&rsquo;s current image for this ISBN is this cover.</span> Shops list by number and mostly use that image.</p>
+    <table class="contrast"><tbody><tr class="ok"><td>ink auf bg</td><td>15.47</td><td>AA</td></tr><tr class="ok"><td>ink-2 auf bg</td><td>8.11</td><td>AA</td></tr><tr class="bad"><td>ink-3 auf bg</td><td>4.14</td><td>< 4.5</td></tr><tr class="ok"><td>accent auf bg</td><td>9.04</td><td>AA</td></tr><tr class="ok"><td>on-accent auf accent</td><td>8.86</td><td>AA</td></tr><tr class="ok"><td>ink auf surface-2</td><td>12.98</td><td>AA</td></tr><tr class="ok"><td>line auf bg (nur zur Anschauung)</td><td>1.31</td><td>AA</td></tr></tbody></table>
+  </section>
+    </div>
+  </article>
+  <article class="candidate">
+    <h2>Terrakotta, sanfter — seit 2026-09-09 ausgeliefert</h2>
+    <p class="claim">Julians Wunsch vom 2026-09-09: derselbe Ton, nur weicher. Die Sättigung fällt von 61 auf 45 und die Helligkeit von 43 auf 40, der Farbwinkel bleibt bei 16 — es ist erkennbar dasselbe Terrakotta, nur ohne die Schärfe. Dass es dabei etwas dunkler wird, ist kein Geschmack, sondern Zwang: das heutige #b1502b hält mit 4,56 nur knapp WCAG AA, jedes reine Entsättigen fällt darunter. Der Umweg über die Helligkeit bringt den Kontrast auf 5,29 und damit zum ersten Mal Reserve. Dunkel dieselbe Bewegung: Sättigung 69 auf 50, weniger Orange.</p>
+    <div class="pair">
+      
+  <section class="panel" style="--bg:#f4f0e8;--surface:#fbf9f4;--surface-2:#ebe5da;--ink:#1a1714;--ink-2:#5a534a;--ink-3:#746c62;--line:#ddd5c8;--accent:#945138;--on-accent:#fff8f2">
+    <p class="mode">hell</p>
+    <div class="chrome">
+      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="pills">
+        <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
+      </div>
+    </div>
+    <div class="wall"><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169563-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15204261-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169562-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15241467-M.jpg" alt="" loading="eager"></div><div class="tile" data-selected="true"><img src="https://covers.openlibrary.org/b/id/15248310-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169554-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12360707-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10849625-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13582714-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342655-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342722-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13947146-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342620-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12907359-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12585716-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12638483-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13130220-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10659339-M.jpg" alt="" loading="eager"></div></div>
+    <p class="meta">55 covers from 110 editions · <a href="#">See these covers by decade &rarr;</a></p>
+    <p class="note"><span class="lead">The publisher&rsquo;s current image for this ISBN is this cover.</span> Shops list by number and mostly use that image.</p>
+    <table class="contrast"><tbody><tr class="ok"><td>ink auf bg</td><td>15.70</td><td>AA</td></tr><tr class="ok"><td>ink-2 auf bg</td><td>6.67</td><td>AA</td></tr><tr class="ok"><td>ink-3 auf bg</td><td>4.55</td><td>AA</td></tr><tr class="ok"><td>accent auf bg</td><td>5.29</td><td>AA</td></tr><tr class="ok"><td>on-accent auf accent</td><td>5.71</td><td>AA</td></tr><tr class="ok"><td>ink auf surface-2</td><td>14.24</td><td>AA</td></tr><tr class="ok"><td>line auf bg (nur zur Anschauung)</td><td>1.28</td><td>AA</td></tr></tbody></table>
+  </section>
+      
+  <section class="panel" style="--bg:#131110;--surface:#1b1815;--surface-2:#26221e;--ink:#efe8dd;--ink-2:#b2a99b;--ink-3:#837b6f;--line:#2e2925;--accent:#dbac94;--on-accent:#1a1210">
+    <p class="mode">dunkel</p>
+    <div class="chrome">
+      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="pills">
+        <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
+      </div>
+    </div>
+    <div class="wall"><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169563-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15204261-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169562-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15241467-M.jpg" alt="" loading="eager"></div><div class="tile" data-selected="true"><img src="https://covers.openlibrary.org/b/id/15248310-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169554-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12360707-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10849625-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13582714-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342655-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342722-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13947146-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342620-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12907359-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12585716-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12638483-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13130220-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10659339-M.jpg" alt="" loading="eager"></div></div>
+    <p class="meta">55 covers from 110 editions · <a href="#">See these covers by decade &rarr;</a></p>
+    <p class="note"><span class="lead">The publisher&rsquo;s current image for this ISBN is this cover.</span> Shops list by number and mostly use that image.</p>
+    <table class="contrast"><tbody><tr class="ok"><td>ink auf bg</td><td>15.47</td><td>AA</td></tr><tr class="ok"><td>ink-2 auf bg</td><td>8.11</td><td>AA</td></tr><tr class="ok"><td>ink-3 auf bg</td><td>4.51</td><td>AA</td></tr><tr class="ok"><td>accent auf bg</td><td>9.27</td><td>AA</td></tr><tr class="ok"><td>on-accent auf accent</td><td>9.09</td><td>AA</td></tr><tr class="ok"><td>ink auf surface-2</td><td>12.98</td><td>AA</td></tr><tr class="ok"><td>line auf bg (nur zur Anschauung)</td><td>1.31</td><td>AA</td></tr></tbody></table>
+  </section>
+    </div>
+  </article>
+  <article class="candidate">
+    <h2>Tinte · gar keine Akzentfarbe</h2>
+    <p class="claim">Die radikale Antwort: die Oberfläche hat keine eigene Farbe, der Akzent ist dieselbe Tinte wie der Text, unterschieden nur durch Unterstreichung und Gewicht. Alle Farbe auf der Seite kommt dann von den Covern — was das Produktversprechen ist. Preis: Knöpfe und Fokusringe müssen ihre Sichtbarkeit aus Form statt aus Farbe holen, und die Seite wirkt strenger. Enthält, wie alle Vorschläge, das korrigierte ink-3.</p>
+    <div class="pair">
+      
+  <section class="panel" style="--bg:#f4f0e8;--surface:#fbf9f4;--surface-2:#ebe5da;--ink:#1a1714;--ink-2:#5a534a;--ink-3:#746c62;--line:#ddd5c8;--accent:#2c2622;--on-accent:#f7f4ee">
+    <p class="mode">hell</p>
+    <div class="chrome">
+      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="pills">
+        <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
+      </div>
+    </div>
+    <div class="wall"><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169563-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15204261-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169562-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15241467-M.jpg" alt="" loading="eager"></div><div class="tile" data-selected="true"><img src="https://covers.openlibrary.org/b/id/15248310-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169554-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12360707-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10849625-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13582714-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342655-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342722-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13947146-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342620-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12907359-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12585716-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12638483-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13130220-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10659339-M.jpg" alt="" loading="eager"></div></div>
+    <p class="meta">55 covers from 110 editions · <a href="#">See these covers by decade &rarr;</a></p>
+    <p class="note"><span class="lead">The publisher&rsquo;s current image for this ISBN is this cover.</span> Shops list by number and mostly use that image.</p>
+    <table class="contrast"><tbody><tr class="ok"><td>ink auf bg</td><td>15.70</td><td>AA</td></tr><tr class="ok"><td>ink-2 auf bg</td><td>6.67</td><td>AA</td></tr><tr class="ok"><td>ink-3 auf bg</td><td>4.55</td><td>AA</td></tr><tr class="ok"><td>accent auf bg</td><td>13.13</td><td>AA</td></tr><tr class="ok"><td>on-accent auf accent</td><td>13.59</td><td>AA</td></tr><tr class="ok"><td>ink auf surface-2</td><td>14.24</td><td>AA</td></tr><tr class="ok"><td>line auf bg (nur zur Anschauung)</td><td>1.28</td><td>AA</td></tr></tbody></table>
+  </section>
+      
+  <section class="panel" style="--bg:#131110;--surface:#1b1815;--surface-2:#26221e;--ink:#efe8dd;--ink-2:#b2a99b;--ink-3:#837b6f;--line:#2e2925;--accent:#e8e1d6;--on-accent:#17130f">
+    <p class="mode">dunkel</p>
+    <div class="chrome">
+      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="pills">
+        <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
+      </div>
+    </div>
+    <div class="wall"><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169563-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15204261-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169562-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15241467-M.jpg" alt="" loading="eager"></div><div class="tile" data-selected="true"><img src="https://covers.openlibrary.org/b/id/15248310-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169554-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12360707-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10849625-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13582714-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342655-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342722-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13947146-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342620-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12907359-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12585716-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12638483-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13130220-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10659339-M.jpg" alt="" loading="eager"></div></div>
+    <p class="meta">55 covers from 110 editions · <a href="#">See these covers by decade &rarr;</a></p>
+    <p class="note"><span class="lead">The publisher&rsquo;s current image for this ISBN is this cover.</span> Shops list by number and mostly use that image.</p>
+    <table class="contrast"><tbody><tr class="ok"><td>ink auf bg</td><td>15.47</td><td>AA</td></tr><tr class="ok"><td>ink-2 auf bg</td><td>8.11</td><td>AA</td></tr><tr class="ok"><td>ink-3 auf bg</td><td>4.51</td><td>AA</td></tr><tr class="ok"><td>accent auf bg</td><td>14.50</td><td>AA</td></tr><tr class="ok"><td>on-accent auf accent</td><td>14.23</td><td>AA</td></tr><tr class="ok"><td>ink auf surface-2</td><td>12.98</td><td>AA</td></tr><tr class="ok"><td>line auf bg (nur zur Anschauung)</td><td>1.31</td><td>AA</td></tr></tbody></table>
+  </section>
+    </div>
+  </article>
+  <article class="candidate">
+    <h2>Indigo · kühler Akzent auf warmem Papier</h2>
+    <p class="claim">Ein Blau, das kein Cover je trägt, auf demselben Papier. Es tritt hinter die Wand zurück, weil es mit nichts auf ihr verwandt ist, und der Kontrast warm/kalt macht die Bedienelemente sofort als Bedienelemente lesbar. Preis: die Seite wird sachlicher und verliert die Wärme, die heute Papier und Akzent gemeinsam erzeugen. Enthält das korrigierte ink-3.</p>
+    <div class="pair">
+      
+  <section class="panel" style="--bg:#f4f0e8;--surface:#fbf9f4;--surface-2:#ebe5da;--ink:#1a1714;--ink-2:#5a534a;--ink-3:#746c62;--line:#ddd5c8;--accent:#2f4b7c;--on-accent:#f5f7fb">
+    <p class="mode">hell</p>
+    <div class="chrome">
+      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="pills">
+        <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
+      </div>
+    </div>
+    <div class="wall"><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169563-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15204261-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169562-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15241467-M.jpg" alt="" loading="eager"></div><div class="tile" data-selected="true"><img src="https://covers.openlibrary.org/b/id/15248310-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169554-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12360707-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10849625-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13582714-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342655-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342722-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13947146-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342620-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12907359-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12585716-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12638483-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13130220-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10659339-M.jpg" alt="" loading="eager"></div></div>
+    <p class="meta">55 covers from 110 editions · <a href="#">See these covers by decade &rarr;</a></p>
+    <p class="note"><span class="lead">The publisher&rsquo;s current image for this ISBN is this cover.</span> Shops list by number and mostly use that image.</p>
+    <table class="contrast"><tbody><tr class="ok"><td>ink auf bg</td><td>15.70</td><td>AA</td></tr><tr class="ok"><td>ink-2 auf bg</td><td>6.67</td><td>AA</td></tr><tr class="ok"><td>ink-3 auf bg</td><td>4.55</td><td>AA</td></tr><tr class="ok"><td>accent auf bg</td><td>7.64</td><td>AA</td></tr><tr class="ok"><td>on-accent auf accent</td><td>8.10</td><td>AA</td></tr><tr class="ok"><td>ink auf surface-2</td><td>14.24</td><td>AA</td></tr><tr class="ok"><td>line auf bg (nur zur Anschauung)</td><td>1.28</td><td>AA</td></tr></tbody></table>
+  </section>
+      
+  <section class="panel" style="--bg:#131110;--surface:#1b1815;--surface-2:#26221e;--ink:#efe8dd;--ink-2:#b2a99b;--ink-3:#837b6f;--line:#2e2925;--accent:#9db6e0;--on-accent:#10141c">
+    <p class="mode">dunkel</p>
+    <div class="chrome">
+      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="pills">
+        <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
+      </div>
+    </div>
+    <div class="wall"><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169563-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15204261-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169562-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15241467-M.jpg" alt="" loading="eager"></div><div class="tile" data-selected="true"><img src="https://covers.openlibrary.org/b/id/15248310-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169554-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12360707-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10849625-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13582714-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342655-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342722-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13947146-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342620-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12907359-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12585716-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12638483-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13130220-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10659339-M.jpg" alt="" loading="eager"></div></div>
+    <p class="meta">55 covers from 110 editions · <a href="#">See these covers by decade &rarr;</a></p>
+    <p class="note"><span class="lead">The publisher&rsquo;s current image for this ISBN is this cover.</span> Shops list by number and mostly use that image.</p>
+    <table class="contrast"><tbody><tr class="ok"><td>ink auf bg</td><td>15.47</td><td>AA</td></tr><tr class="ok"><td>ink-2 auf bg</td><td>8.11</td><td>AA</td></tr><tr class="ok"><td>ink-3 auf bg</td><td>4.51</td><td>AA</td></tr><tr class="ok"><td>accent auf bg</td><td>9.15</td><td>AA</td></tr><tr class="ok"><td>on-accent auf accent</td><td>8.96</td><td>AA</td></tr><tr class="ok"><td>ink auf surface-2</td><td>12.98</td><td>AA</td></tr><tr class="ok"><td>line auf bg (nur zur Anschauung)</td><td>1.31</td><td>AA</td></tr></tbody></table>
+  </section>
+    </div>
+  </article>
+  <article class="candidate">
+    <h2>Olive · gedämpft, dazu kühleres Papier</h2>
+    <p class="claim">Der einzige Kandidat, der auch die Grundfarbe anfasst: ein Papier mit weniger Gelb, dazu ein stumpfes Oliv. Beides tritt zurück; die Wand wird kühler beleuchtet und die Cover wirken wärmer, als sie sind. Preis: das Papier verliert seinen Charakter und nähert sich Weiß. Enthält das korrigierte ink-3.</p>
+    <div class="pair">
+      
+  <section class="panel" style="--bg:#f2f1ec;--surface:#faf9f6;--surface-2:#e8e7e1;--ink:#191a17;--ink-2:#54564f;--ink-3:#6d6f67;--line:#d9d9d2;--accent:#5c6b3c;--on-accent:#f7f8f3">
+    <p class="mode">hell</p>
+    <div class="chrome">
+      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="pills">
+        <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
+      </div>
+    </div>
+    <div class="wall"><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169563-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15204261-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169562-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15241467-M.jpg" alt="" loading="eager"></div><div class="tile" data-selected="true"><img src="https://covers.openlibrary.org/b/id/15248310-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169554-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12360707-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10849625-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13582714-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342655-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342722-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13947146-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342620-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12907359-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12585716-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12638483-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13130220-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10659339-M.jpg" alt="" loading="eager"></div></div>
+    <p class="meta">55 covers from 110 editions · <a href="#">See these covers by decade &rarr;</a></p>
+    <p class="note"><span class="lead">The publisher&rsquo;s current image for this ISBN is this cover.</span> Shops list by number and mostly use that image.</p>
+    <table class="contrast"><tbody><tr class="ok"><td>ink auf bg</td><td>15.46</td><td>AA</td></tr><tr class="ok"><td>ink-2 auf bg</td><td>6.58</td><td>AA</td></tr><tr class="ok"><td>ink-3 auf bg</td><td>4.51</td><td>AA</td></tr><tr class="ok"><td>accent auf bg</td><td>5.12</td><td>AA</td></tr><tr class="ok"><td>on-accent auf accent</td><td>5.43</td><td>AA</td></tr><tr class="ok"><td>ink auf surface-2</td><td>14.11</td><td>AA</td></tr><tr class="ok"><td>line auf bg (nur zur Anschauung)</td><td>1.25</td><td>AA</td></tr></tbody></table>
+  </section>
+      
+  <section class="panel" style="--bg:#111210;--surface:#191a17;--surface-2:#232520;--ink:#e9eae4;--ink-2:#a9aba2;--ink-3:#7c7e75;--line:#2b2d28;--accent:#a8bd7c;--on-accent:#12140f">
+    <p class="mode">dunkel</p>
+    <div class="chrome">
+      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="pills">
+        <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
+      </div>
+    </div>
+    <div class="wall"><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169563-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15204261-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169562-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15241467-M.jpg" alt="" loading="eager"></div><div class="tile" data-selected="true"><img src="https://covers.openlibrary.org/b/id/15248310-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/15169554-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12360707-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10849625-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13582714-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342655-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342722-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13947146-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/14342620-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12907359-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12585716-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/12638483-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/13130220-M.jpg" alt="" loading="eager"></div><div class="tile"><img src="https://covers.openlibrary.org/b/id/10659339-M.jpg" alt="" loading="eager"></div></div>
+    <p class="meta">55 covers from 110 editions · <a href="#">See these covers by decade &rarr;</a></p>
+    <p class="note"><span class="lead">The publisher&rsquo;s current image for this ISBN is this cover.</span> Shops list by number and mostly use that image.</p>
+    <table class="contrast"><tbody><tr class="ok"><td>ink auf bg</td><td>15.52</td><td>AA</td></tr><tr class="ok"><td>ink-2 auf bg</td><td>8.08</td><td>AA</td></tr><tr class="ok"><td>ink-3 auf bg</td><td>4.56</td><td>AA</td></tr><tr class="ok"><td>accent auf bg</td><td>9.16</td><td>AA</td></tr><tr class="ok"><td>on-accent auf accent</td><td>9.04</td><td>AA</td></tr><tr class="ok"><td>ink auf surface-2</td><td>12.79</td><td>AA</td></tr><tr class="ok"><td>line auf bg (nur zur Anschauung)</td><td>1.35</td><td>AA</td></tr></tbody></table>
+  </section>
+    </div>
+  </article>
+</body></html>

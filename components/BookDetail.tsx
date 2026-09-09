@@ -23,14 +23,15 @@ import { useWorkPages } from '@/components/useWorkPages';
 import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
-import { coverIdFromSegment } from '@/lib/coverurl';
+import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
+import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
 import { VERDICT_LEAD } from '@/lib/verdicts';
 import { commerceEnabled } from '@/lib/sitemode';
 import type { ShopStatus } from '@/lib/availability';
 import type { Market } from '@/lib/market';
-import type { Cover, EditionView } from '@/lib/model';
-import { languageName } from '@/lib/normalize';
+import type { BuyLink, Cover, EditionView } from '@/lib/model';
+import { displayTitle, languageName, normalizeTitle } from '@/lib/normalize';
 import type { ImageSignature } from '@/lib/imagesig';
 import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
@@ -94,6 +95,13 @@ function buildWall(
   const signatures = new Map(merged.signatures);
   for (const [id, sig] of extraSignatures) signatures.set(id, sig);
 
+  /*
+    Which editions carried each scan *before* folding (ROADMAP 6.14, and the
+    ordering in `orderEditionsForMarket`). Folding merges the members' edition
+    ids into the representative, so afterwards a tile lists printings that
+    never had that picture; this map remembers who did.
+  */
+  const editionsByScan = new Map<string, readonly string[]>(all.map(c => [c.id, c.editionIds]));
   const covers = foldDuplicateCovers(all, signatures, merged.editions);
   const coversById = new Map(covers.map(c => [c.id, c]));
   const ordered = orderGroups(groupCoversByLanguage(covers, merged.editions, preferred, signatures), preferred);
@@ -101,7 +109,7 @@ function buildWall(
     language: g.language,
     covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
   }));
-  return { covers, coversById, groups };
+  return { covers, coversById, groups, editionsByScan };
 }
 
 /**
@@ -278,6 +286,9 @@ function BookDetail() {
       cover={selected}
       editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
       coversPerEdition={view.coversPerEdition}
+      workTitle={work.title}
+      anyEditionLinks={pages.anyEditionLinks}
+      editionsByScan={view.editionsByScan}
       author={work.authors[0]}
       query={searchParams.get('q') ?? ''}
       market={view.market}
@@ -423,6 +434,12 @@ interface CoverDetailsProps {
   cover: Cover;
   editions: EditionView[];
   coversPerEdition: ReadonlyMap<string, number>;
+  /** The work's own title, to tell a printing's own title apart from it. */
+  workTitle: string;
+  /** The market's shops searched by the work's title (ROADMAP 1.11). */
+  anyEditionLinks: BuyLink[];
+  /** Edition ids per scan, from before folding (ROADMAP 6.14). */
+  editionsByScan: ReadonlyMap<string, readonly string[]>;
   author?: string;
   /** Carried into the links of the "looks like this" row so Back still works. */
   query: string;
@@ -456,16 +473,26 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   return (
     <section className="mt-4" aria-label="Covers that look like this one">
       <p className="kicker">Looks like this</p>
-      <ul className="mt-2 flex gap-2">
+      {/*
+        A fixed three-column grid, not `flex-1` per item (ROADMAP 6.10a).
+        With three matches the two are the same; with one, `flex-1` gave that
+        one the whole column — some 370 px at 1440 — and Open Library's `-S`
+        thumbnail, which is about 45 px wide, arrived as a blur. The row is
+        about *how a cover looks*, so a soft picture is not a cosmetic fault.
+        The source is `url` (`-M`, 180 px) for the same reason: `CoverImage`
+        runs `unoptimized`, so `sizes` is a hint to the browser and changes
+        nothing about the file that is fetched.
+      */}
+      <ul className="mt-2 grid grid-cols-3 gap-2">
         {similar.map(match => (
-          <li key={match.coverId} className="min-w-0 flex-1">
+          <li key={match.coverId} className="min-w-0">
             <Link
               href={`/book/${match.workId}?cover=${encodeURIComponent(match.coverId)}${query ? `&q=${encodeURIComponent(query)}` : ''}`}
               className="group block"
               title={`${match.title} — ${match.author}`}
             >
               <span className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-[3px] bg-surface-2">
-                <CoverImage src={match.urlSmall} alt={`${match.title} by ${match.author}`} sizes="80px" />
+                <CoverImage src={match.url} alt={`${match.title} by ${match.author}`} sizes="125px" />
               </span>
               <span className="mt-1 block truncate text-[11px] leading-tight text-ink-3 group-hover:text-ink-2">
                 {match.title}
@@ -478,107 +505,323 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   );
 }
 
-function CoverDetails({ cover, editions, coversPerEdition, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+  /*
+    Every scan that was folded into this tile, the representative first
+    (ROADMAP 6.14). Folding is right on the wall — without it *The Great
+    Gatsby* is 293 nearly identical tiles — but it was one-way: the "+N" badge
+    is decoration, the sidebar only mentioned the count in passing, and
+    `coverForId` resolves a folded id back to its representative, so even a
+    hand-written `?cover=` could not reach one. That is what E16 forbids one
+    reason further along: a misjudgement may cost a position, never a cover.
+    Measured on *Ansichten eines Clowns*: two dtv printings of the same
+    drawing, 1967 and 1984, distance 6 — the same design, visibly different
+    printings, and one of them was invisible.
+
+    The URLs are rebuilt from the ids (`coverUrlFor`, pure), so nothing had to
+    be carried through the model for this.
+  */
+  const scans = [cover.id, ...(cover.similarIds ?? [])].filter(id => coverUrlFor(id, 'L'));
+  const [pickedScan, setPickedScan] = useState<string | null>(null);
+  // Derived, like the printing above it: another cover replaces the list.
+  const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : cover.id;
+  const shownUrl = shownScan === cover.id ? cover.url : coverUrlFor(shownScan, 'L') ?? cover.url;
+
+  /*
+    Which printing leads is a decision now, not the catalogue's arrival order
+    (ROADMAP 1.11 lever 2, sharpened by Julian on 2026-09-09). It follows the
+    scan on screen: pick another scan of the same design above, and the
+    printing that carried *that* one comes to the front.
+  */
+  const carriedBy = new Set(editionsByScan.get(shownScan) ?? []);
+  const ordered = orderEditionsForMarket(editions, market, { carriedBy, verdictOf: isbn13 => verdictFor(isbn13).status });
+  const [pickedId, setPicked] = useState<string | null>(null);
+  /*
+    Derived, never corrected from an effect: picking another cover replaces
+    the list under this component, and an id that is no longer in it falls
+    back to the first (the repo's set-state-in-effect rule).
+  */
+  const shown = ordered.find(e => e.id === pickedId) ?? ordered[0];
+
   return (
     <div>
       {/*
         Sharing sits above the cover, not below it and not up in the header:
         what a reader wants to send is the picture they just picked, and the
-        space under it is already the scarcest on the page — the buy links are
-        437px below the fold there (ROADMAP 1.2). On a phone the same control
-        is in the bar beside "Details", so it is hidden here rather than shown
-        twice. (Julian, 2026-09-09.)
+        space under it is the scarcest on the page (ROADMAP 1.2). On a phone
+        the same control is in the bar beside "Details", so it is hidden here
+        rather than shown twice. (Julian, 2026-09-09.)
       */}
       {share && <div className="mb-3 hidden justify-end lg:flex">{share}</div>}
       {/*
         In the phone sheet the cover shares the screen with the very links the
         reader opened the sheet for, so it stays small enough that the first
         buy link is a short scroll away rather than a screen away.
+
+        On a wide screen the same problem had the same cause and no cap: in a
+        400 px column the cover ran 600 px tall, which by itself pushed the
+        first shop button 105 px below the window edge even after this block
+        had been cut from fourteen controls to five. So the width is capped at
+        a share of the *window height* — 31vh of width is 46vh of cover, the
+        picture stays the largest thing in the column, and the shops arrive
+        with it (ROADMAP 1.2, candidate b).
       */}
-      <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 lg:max-w-none">
-        <CoverImage src={cover.url} alt="Selected cover" sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
+      <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 lg:max-w-[min(100%,31vh)]">
+        <CoverImage src={shownUrl} alt="Selected cover" sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
       </div>
       <p className="mt-2 text-xs text-ink-3">
-        Image from {cover.source === 'openlibrary' ? 'Open Library' : 'Google Books'}
+        {/* Named for the scan on screen, not for the tile it was folded into. */}
+        Image from {shownScan.startsWith('gb:') ? 'Google Books' : 'Open Library'}
         {editions.length > 1 ? ` · on ${editions.length} editions` : ''}
-        {cover.similarIds?.length ? ` · ${cover.similarIds.length} duplicate scan${cover.similarIds.length > 1 ? 's' : ''} folded` : ''}
       </p>
+
+      {scans.length > 1 && (
+        <section className="mt-4" aria-label="Scans folded into this tile">
+          <p className="kicker">The same cover, {scans.length} scans</p>
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {scans.map((id, i) => (
+              <li key={id}>
+                <button
+                  type="button"
+                  onClick={() => setPickedScan(id)}
+                  aria-pressed={id === shownScan}
+                  title={i === 0 ? 'The scan the wall shows' : 'Another scan of the same cover'}
+                  className={`cover-shadow relative block h-16 w-[2.7rem] overflow-hidden rounded-[3px] bg-surface-2 transition-opacity ${
+                    id === shownScan ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  <CoverImage src={coverUrlFor(id, 'M') ?? ''} alt={i === 0 ? 'The scan the wall shows' : `Scan ${i + 1} of this cover`} sizes="44px" />
+                </button>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs leading-relaxed text-ink-3">
+            The wall shows one tile for these, because the images are the same design.
+            They are different scans, and sometimes different printings of it.
+          </p>
+        </section>
+      )}
 
       <SimilarCovers coverId={cover.id} query={query} />
 
-      <div className="mt-6 space-y-8">
-        {editions.map(edition => (
-          <EditionBlock
-            key={edition.id}
-            edition={edition}
-            otherCovers={(coversPerEdition.get(edition.id) ?? 1) - 1}
-            searchLinks={searchLinksFor({ title: edition.title, author, publisher: edition.publisher, year: edition.year, coverUrl: cover.url, editionId: edition.id }, market)}
-            market={market}
-            onMarketChange={onMarketChange}
-            verdict={edition.isbn13 ? verdictFor(edition.isbn13) : { status: 'unknown' }}
-          />
-        ))}
-      </div>
+      {/*
+        A folded cover can sit on several printings, and the whole apparatus
+        below used to repeat for every one of them — the 2,351 px of content
+        in an 804 px column measured in ROADMAP 1.2. One printing is open,
+        the others are one chip each.
+      */}
+      {ordered.length > 1 && (
+        <div className="mt-6 flex flex-wrap gap-1.5" role="group" aria-label="Printings that carry this cover">
+          {ordered.map(edition => (
+            <button
+              key={edition.id}
+              type="button"
+              onClick={() => setPicked(edition.id)}
+              aria-pressed={edition.id === shown?.id}
+              className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                edition.id === shown?.id ? 'border-accent text-accent' : 'border-line text-ink-3 hover:text-ink-2'
+              }`}
+            >
+              {[edition.publisher, edition.year].filter(Boolean).join(' · ') || 'This printing'}
+            </button>
+          ))}
+        </div>
+      )}
 
+      {shown && (
+        <EditionBlock
+          key={shown.id}
+          edition={shown}
+          workTitle={workTitle}
+          otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
+          searchLinks={searchLinksFor({ title: shown.title, author, publisher: shown.publisher, year: shown.year, coverUrl: cover.url, editionId: shown.id }, market)}
+          anyEditionLinks={anyEditionLinks}
+          market={market}
+          onMarketChange={onMarketChange}
+          verdict={shown.isbn13 ? verdictFor(shown.isbn13) : { status: 'unknown' }}
+        />
+      )}
     </div>
   );
 }
 
 interface EditionBlockProps {
   edition: EditionView;
+  /** To decide whether this printing's own title is worth a line (56 % differ). */
+  workTitle: string;
   otherCovers: number;
   searchLinks: EditionView['buyLinks'];
+  anyEditionLinks: BuyLink[];
   market: Market;
   onMarketChange: (market: Market) => void;
   verdict: IsbnVerdict;
 }
 
-function EditionBlock({ edition, otherCovers, searchLinks, market, onMarketChange, verdict }: EditionBlockProps) {
-  const rows: Array<[string, string | undefined]> = [
-    ['Title', edition.title],
+/**
+ * One printing: what it is, and where it can be had (ROADMAP 1.11 / 1.2).
+ *
+ * The old block put fourteen controls in one column for a single edition —
+ * five buy buttons, six search buttons, the market switcher, the availability
+ * probe and the preview link — under two headings that asked the same
+ * question, with "AbeBooks" and "eBay" each appearing twice. `linkPlan` sorts
+ * them into three zones instead, and everything that is not one of the two or
+ * three shops with a chance goes behind a fold.
+ */
+function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict }: EditionBlockProps) {
+  // Reset whenever the edition or the market changes: an answer belongs to
+  // one ISBN in one market's shops.
+  const [checked, setChecked] = useState<{ key: string; byProvider: Map<string, ShopStatus> } | null>(null);
+  const key = `${edition.id} ${market}`;
+  const shops = checked?.key === key ? checked.byProvider : null;
+
+  const plan = useMemo(
+    () => linkPlan({ edition, buyLinks: edition.buyLinks, searchLinks, anyEditionLinks, market, verdict: verdict.status }),
+    [edition, searchLinks, anyEditionLinks, market, verdict.status],
+  );
+  // Which of the links were built from the ISBN, and so go through the count.
+  const fromIsbn = useMemo(() => new Set(edition.buyLinks.map(l => l.provider)), [edition.buyLinks]);
+
+  const hint = [edition.publisher, edition.year].filter(Boolean).join(' ');
+  const head = [edition.publisher, edition.year ? String(edition.year) : undefined, languageName(edition.language)].filter(Boolean).join(' · ');
+  /*
+    56 % of cover-bearing editions carry a title of their own — "Die Enden der
+    Parabel", "El arco iris de gravedad". That is worth a line; repeating the
+    work's title one line under the work's title is not.
+  */
+  const ownTitle = normalizeTitle(edition.title) === normalizeTitle(workTitle) ? undefined : edition.title;
+  const details: Array<[string, string | undefined]> = [
     ['Published', edition.publishedDate],
-    ['Publisher', edition.publisher],
     ['Format', edition.format],
     ['Pages', edition.pageCount ? String(edition.pageCount) : undefined],
-    ['Language', languageName(edition.language)],
-    ['ISBN', edition.isbn13],
     ['Also printed with', otherCovers > 0 ? `${otherCovers} other cover${otherCovers > 1 ? 's' : ''}` : undefined],
   ];
-  const hint = [edition.publisher, edition.year].filter(Boolean).join(' ');
-  // When the shop shows another jacket, the searches that find *this* one
-  // matter more than the ISBN links, so they go first (SPEC §9.3 step 13).
-  const buyFirst = verdict.status !== 'differs';
+  const rows = details.filter(([, v]) => v);
+  const moreLinks = plan.rest.length + (edition.previewUrl ? 1 : 0);
+  const hasFold = moreLinks > 0 || rows.length > 0 || !!edition.description;
+
   return (
-    <div>
-      <dl className="divide-y divide-line border-y border-line text-sm">
-        {rows.filter(([, v]) => v).map(([k, v]) => (
-          <div key={k} className="grid grid-cols-[7.5rem_1fr] gap-3 py-2">
-            <dt className="text-ink-3">{k}</dt>
-            <dd className={`text-ink ${k === 'ISBN' ? 'font-mono text-[13px]' : ''}`}>{v}</dd>
+    <div className="mt-6">
+      <p className="text-sm text-ink">{head || 'Publisher and year unknown'}</p>
+      {ownTitle && <p className="mt-0.5 text-sm text-ink-2">{ownTitle}</p>}
+      {edition.isbn13 && <p className="mt-0.5 font-mono text-[13px] text-ink-3">ISBN {edition.isbn13}</p>}
+
+      <div className="mt-5">
+        {/*
+          On `differs` the verdict comes *before* the buttons, because it is
+          the reason they are searches and not shops: whatever the ISBN opens
+          ships the other jacket, so the row hunts the picture on screen by
+          title, author, publisher and year (SPEC F2.9).
+        */}
+        {edition.isbn13 && verdict.status === 'differs' && <VerdictNote verdict={verdict} hint={hint} lead />}
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <p className="kicker">
+            {verdict.status === 'differs'
+              ? 'Find the cover you picked'
+              : edition.isbn13 ? 'Get this printing' : 'Find this printing'}
+          </p>
+          <MarketSwitcher market={market} onChange={onMarketChange} compact />
+        </div>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {plan.lead.map(link => (
+            <ShopLink
+              key={link.provider}
+              link={link}
+              isbn13={edition.isbn13}
+              market={market}
+              counted={fromIsbn.has(link.provider)}
+              status={shops?.get(link.provider)}
+            />
+          ))}
+        </div>
+        {/*
+          The one sentence that justifies the order. It states a fact about the
+          number — its registration group — and nothing about any shop, which
+          is the same line `lib/verdicts.ts` holds one level up.
+        */}
+        {plan.note && <p className="mt-2 text-xs leading-relaxed text-ink-3">{plan.note}</p>}
+        {edition.isbn13 && verdict.status !== 'differs' && <VerdictNote verdict={verdict} hint={hint} />}
+      </div>
+
+      {hasFold && (
+        <details className="group mt-4 border-t border-line pt-3">
+          <summary className="cursor-pointer list-none text-sm text-ink-2 transition-colors hover:text-ink">
+            <span className="mr-1 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
+            {moreLinks > 0 ? `Other ways to find it (${moreLinks})` : 'About this printing'}
+          </summary>
+          <div className="mt-3 space-y-4">
+            {plan.rest.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {plan.rest.map(link => (
+                  <ShopLink
+                    key={link.provider}
+                    link={link}
+                    isbn13={edition.isbn13}
+                    market={market}
+                    counted={fromIsbn.has(link.provider)}
+                    status={shops?.get(link.provider)}
+                  />
+                ))}
+              </div>
+            )}
+            {edition.previewUrl && (
+              <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-sm text-accent hover:underline">
+                Preview on Google Books
+              </a>
+            )}
+            {/* Off in hobby mode (E20): the probe is not cleared for the public site (ROADMAP 0.1). */}
+            {commerceEnabled() && edition.isbn13 && (
+              <AvailabilityCheck
+                isbn13={edition.isbn13}
+                checked={!!shops}
+                onResult={byProvider => setChecked({ key, byProvider })}
+              />
+            )}
+            {shops && (
+              <p className="text-xs leading-relaxed text-ink-3">
+                Each shop was asked whether its page for this ISBN differs from its page for an ISBN
+                that cannot exist. Only &ldquo;found it&rdquo; tells you anything: some shops refuse the
+                question, and others build their results in the browser, where this check cannot follow.
+                Nothing here is a stock check.
+              </p>
+            )}
+            {rows.length > 0 && (
+              <dl className="divide-y divide-line border-y border-line text-sm">
+                {rows.map(([k, v]) => (
+                  <div key={k} className="grid grid-cols-[7.5rem_1fr] gap-3 py-2">
+                    <dt className="text-ink-3">{k}</dt>
+                    <dd className="text-ink">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+            {edition.description && (
+              <p className="line-clamp-6 text-sm leading-relaxed text-ink-2">{edition.description}</p>
+            )}
           </div>
-        ))}
-      </dl>
-
-      {edition.description && (
-        <p className="mt-4 line-clamp-6 text-sm leading-relaxed text-ink-2">{edition.description}</p>
+        </details>
       )}
 
-      {buyFirst ? (
-        <>
-          <BuyBlock edition={edition} hint={hint} verdict={verdict} market={market} onMarketChange={onMarketChange} />
-          <SearchBlock links={searchLinks} lead={false} />
-        </>
-      ) : (
-        <>
-          <SearchBlock links={searchLinks} lead />
-          <BuyBlock edition={edition} hint={hint} verdict={verdict} market={market} onMarketChange={onMarketChange} />
-        </>
-      )}
-
-      {edition.previewUrl && (
-        <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm text-accent hover:underline">
-          Preview on Google Books
-        </a>
+      {/*
+        Julian, 2026-09-09: where a shop that could pay commission has a link
+        to exactly this printing, that link wins and this row does not appear
+        at all. It shows up only when no such link is possible — a foreign
+        ISBN, or none — and it says plainly that it leads somewhere else.
+      */}
+      {plan.anyEdition.length > 0 && (
+        <div className="mt-5 border-t border-line pt-4">
+          <p className="kicker">Or read it in another edition</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {plan.anyEdition.map(link => (
+              <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <p className="mt-2 text-xs leading-relaxed text-ink-3">
+            These search for &ldquo;{displayTitle(workTitle)}&rdquo; by title. Whatever they carry
+            is a different printing from the one above, with a cover of its own.
+          </p>
+        </div>
       )}
     </div>
   );
@@ -596,7 +839,7 @@ function EditionBlock({ edition, otherCovers, searchLinks, market, onMarketChang
  * for what will arrive, but it is not a reading of any shop's page, and the
  * text must not claim otherwise (Julian, 2026-09-07).
  */
-function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) {
+function VerdictNote({ verdict, hint, lead = false }: { verdict: IsbnVerdict; hint: string; lead?: boolean }) {
   if (verdict.status === 'verified') {
     return (
       <p className="mt-2 text-xs leading-relaxed text-ink-3">
@@ -607,7 +850,7 @@ function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) 
   }
   if (verdict.status === 'differs') {
     return (
-      <div className="mt-2 flex items-start gap-3">
+      <div className={`flex items-start gap-3 ${lead ? 'mb-4' : 'mt-2'}`}>
         <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the publisher's current image for this ISBN">
           <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
             <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="The publisher's current image for this ISBN" sizes="55px" />
@@ -616,7 +859,16 @@ function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) 
         <p className="text-xs leading-relaxed text-ink-3">
           <span className="text-ink-2">{VERDICT_LEAD.differs}</span>{' '}
           It is the one beside this note, so that is what a new copy is likely to be.
-          {hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
+          {/*
+            When this note leads, the row underneath *is* the answer to it, so
+            the sentence points at it instead of leaving the reader to work out
+            which of the buttons hunts the picture they clicked.
+          */}
+          {lead
+            ? hint
+              ? ` The searches below look for ${hint} second-hand instead.`
+              : ' The searches below look for this printing instead.'
+            : hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
         </p>
       </div>
     );
@@ -647,98 +899,51 @@ function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) 
   );
 }
 
-function BuyBlock({ edition, hint, verdict, market, onMarketChange }: {
-  edition: EditionView;
-  hint: string;
-  verdict: IsbnVerdict;
+/**
+ * One shop button.
+ *
+ * A link built from the ISBN goes through our own redirect, which counts the
+ * click and rebuilds the target from the table, so it can never become an
+ * open redirect (SPEC §10 C9). A search by title has no ISBN to count
+ * against and is a plain link.
+ */
+function ShopLink({ link, isbn13, market, counted, status }: {
+  link: BuyLink;
+  isbn13?: string;
   market: Market;
-  onMarketChange: (market: Market) => void;
+  /** Built from the ISBN, so the counting redirect applies. */
+  counted: boolean;
+  status?: ShopStatus;
 }) {
-  // Reset whenever the edition or the market changes: an answer belongs to
-  // one ISBN in one market's shops.
-  const [checked, setChecked] = useState<{ key: string; byProvider: Map<string, ShopStatus> } | null>(null);
-  const key = `${edition.id} ${market}`;
-  const shops = checked?.key === key ? checked.byProvider : null;
-
   return (
-    <div className="mt-5">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <p className="kicker">{edition.isbn13 ? 'Buy this ISBN' : 'No ISBN on record'}</p>
-        <MarketSwitcher market={market} onChange={onMarketChange} compact />
-      </div>
-      {edition.buyLinks.length > 0 ? (
-        <>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {edition.buyLinks.map(link => {
-              const status = shops?.get(link.provider);
-              return (
-                <a
-                  key={link.provider}
-                  // Through our own redirect, which counts the click (SPEC §10 C9).
-                  href={edition.isbn13 ? trackedBuyHref(link.provider, edition.isbn13, market) : link.url}
-                  target="_blank"
-                  // `sponsored` states a paid relationship; in hobby mode there is none (E20).
-                  rel={commerceEnabled() ? 'noopener noreferrer sponsored' : 'noopener noreferrer'}
-                  className="btn"
-                  title={status
-                    ? SHOP_STATUS_TITLE[status]
-                    : link.kind === 'product' ? `${link.label}: this book's page` : `${link.label}: search results for this ISBN`}
-                >
-                  {link.label}
-                  {status ? (
-                    <span className="ml-1 text-[10px] uppercase tracking-wide opacity-60">{SHOP_STATUS_LABEL[status]}</span>
-                  ) : (
-                    link.kind === 'search' && <span className="ml-1 text-[10px] uppercase tracking-wide opacity-50">search</span>
-                  )}
-                </a>
-              );
-            })}
-          </div>
-          {/* Off in hobby mode (E20): the probe is not cleared for the public site (ROADMAP 0.1). */}
-          {commerceEnabled() && edition.isbn13 && (
-            <AvailabilityCheck
-              isbn13={edition.isbn13}
-              checked={!!shops}
-              onResult={byProvider => setChecked({ key, byProvider })}
-            />
-          )}
-          {shops && (
-            <p className="mt-2 text-xs leading-relaxed text-ink-3">
-              Each shop was asked whether its page for this ISBN differs from its page for an ISBN
-              that cannot exist. Only &ldquo;found it&rdquo; tells you anything: some shops refuse the
-              question, and others build their results in the browser, where this check cannot follow.
-              Nothing here is a stock check.
-            </p>
-          )}
-          <VerdictNote verdict={verdict} hint={hint} />
-        </>
+    <a
+      href={counted && isbn13 ? trackedBuyHref(link.provider, isbn13, market) : link.url}
+      target="_blank"
+      // `sponsored` states a paid relationship; in hobby mode there is none (E20).
+      rel={counted && commerceEnabled() ? 'noopener noreferrer sponsored' : 'noopener noreferrer'}
+      className="btn"
+      title={status ? SHOP_STATUS_TITLE[status] : shopLinkTitle(link)}
+    >
+      {link.label}
+      {status ? (
+        <span className="ml-1 text-[10px] uppercase tracking-wide opacity-60">{SHOP_STATUS_LABEL[status]}</span>
       ) : (
-        <p className="mt-2 text-xs leading-relaxed text-ink-3">
-          This edition predates ISBNs or has none on record, so shops cannot look it up directly. Use the searches below.
-        </p>
+        link.kind === 'search' && <span className="ml-1 text-[10px] uppercase tracking-wide opacity-50">search</span>
       )}
-    </div>
+    </a>
   );
 }
 
-function SearchBlock({ links, lead }: { links: EditionView['buyLinks']; lead: boolean }) {
-  return (
-    <div className="mt-5">
-      <p className="kicker">Find this exact cover</p>
-      <div className="mt-2 flex flex-wrap gap-2">
-        {links.map(link => (
-          <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
-            {link.label}
-          </a>
-        ))}
-      </div>
-      <p className="mt-2 text-xs leading-relaxed text-ink-3">
-        {lead
-          ? 'These search for the printing shown above by title, publisher and year, or by the cover image itself.'
-          : 'Title, publisher and year at antiquarian and auction sites; Google Lens and TinEye search by the cover image.'}
-      </p>
-    </div>
-  );
+/*
+  What the button opens, as far as the URL itself says. `linkPlan` withdraws
+  `kind` where the number was not issued in this market's registration area,
+  so a foreign ISBN never gets "this book's page" written under it — that
+  would be a claim about a shop nobody asked (ROADMAP 1.11 lever 3).
+*/
+function shopLinkTitle(link: BuyLink): string {
+  if (link.kind === 'product') return `${link.label}: this book’s page`;
+  if (link.kind === 'search') return `${link.label}: search results`;
+  return link.label;
 }
 
 /**
