@@ -1155,3 +1155,13 @@ Nachdem die Seite faltet, entscheidet die Schwelle über die **gefalteten** Zahl
 `scripts/find-decade-pages.ts` liest jetzt die vorherige Liste ein, bevor er sie überschreibt: ein Werk, dessen Katalog schweigt, **behält seinen alten Eintrag**, und nur ein Werk, das geantwortet hat, kann seine Seite verlieren. Der Lauf sagt am Ende, wie viele Einträge so übernommen wurden. *White Noise* selbst steht mit den Zahlen drin, die sich vor dem Ausfall messen ließen (23 Cover gefaltet auf 22, weiterhin 4 Jahrzehnte).
 
 Geprüft, dass Liste, Sitemap und Seite dieselbe Rechnung machen: kein Eintrag unter der Schwelle, keiner außerhalb der Kuration, keiner ohne Signaturen im Index, keine Dublette.
+
+## 2026-09-09 · Ein Drittel des Buchs, einen Tag lang festgehalten (ROADMAP 5.4a)
+
+Die Prüfung nach dem Deploy: 404 für die sechs abgefallenen Werke wie vorgesehen, Sitemap mit 193 Adressen und 84 Jahrzehnte-Seiten, keine der abgefallenen mehr darin. Aber *Brave New World* rendert in Produktion **36 Cover aus 41 Ausgaben-Datensätzen**, wo lokal 114 aus 130 stehen.
+
+**Das ist mein eigener Fix von heute früh, eine Ebene weiter.** Damals warf der Ladepfad das ganze Werk weg, sobald eine spätere Ausgabenseite nicht antwortete — das ergab den 404. Seitdem endet der Lauf mit dem, was angekommen ist. Eine Ausgabenseite umfasst 100 Datensätze, 41 Ausgaben heißt also: **Seite 0 kam an, die zweite nicht**, und der Lauf gab auf. `revalidate = 86400` hat dieses Drittel dann für einen Tag eingefroren.
+
+Der Fehler war nicht, mit Teildaten weiterzumachen — das ist richtig. Der Fehler war, **beim ersten Nein aufzugeben**: der Client versucht es seit 1.10 ein zweites Mal, der Server nicht. Open Library antwortet aus Frankfurt oft genug jenseits der 12 s, dass ein einziger Versuch nichts misst. `fetchPageWithRetry` holt eine gescheiterte Seite nach 2 s noch einmal, bevor der Lauf endet; ein Test hält fest, dass ein einzelner Fehlschlag den Lauf nicht mehr verkürzt.
+
+**Was daran offen bleibt:** die Liste in `data/decade-pages.json` sagt für dieses Werk 114 Cover, die Seite zeigte 36. Die Schwelle wurde also über Daten entschieden, die der Leser nicht sah. Solange das nur die angezeigte Menge betrifft, ist es eine dünne Seite und keine Unwahrheit — die Kopfzeile zählt, was sie hat. Fällt ein Lauf aber so weit zurück, dass die Seite unter die Schwelle rutscht, antwortet sie 404, obwohl die Sitemap sie führt. **Der Wiederholungsversuch macht das unwahrscheinlicher, nicht unmöglich.** Der saubere Weg wäre, dass `getWorkDetail` sagt, ob der Lauf vollständig war, und ein unvollständiger Lauf nicht für 24 Stunden gecacht wird.

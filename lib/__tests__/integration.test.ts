@@ -287,6 +287,28 @@ describe('getWorkDetail', () => {
     expect(partial!.editions.length).toBeLessThan(ok!.editions.length);
   });
 
+  it('gives a failing later page a second attempt before ending the walk', async () => {
+    // Production, 2026-09-09: Brave New World's decade page came out of 41
+    // edition records instead of 130 because one page did not answer and the
+    // walk stopped there — then ISR froze that third of a book for a day.
+    const ok = await getWorkDetail('OL468431W', { dedupeCovers: false });
+    const good = vi.mocked(fetch);
+    let failures = 0;
+    vi.stubGlobal('fetch', vi.fn(async (input: string | URL, init?: RequestInit) => {
+      const url = new URL(String(input));
+      const isPage100 = url.pathname.includes('/editions.json') && url.searchParams.get('offset') === '100';
+      if (isPage100 && failures === 0) {
+        failures += 1;
+        throw new Error('connection reset');
+      }
+      return good(input, init);
+    }));
+    const retried = await getWorkDetail('OL468431W', { dedupeCovers: false });
+    expect(failures).toBe(1);
+    // The second attempt succeeded, so the walk is whole again.
+    expect(retried!.editions.length).toBe(ok!.editions.length);
+  });
+
   it('does not ask Google when the caller says not to (E10)', async () => {
     // The decade page counts years; a Google request per cold render would
     // spend the daily thousand on data it never reads.
