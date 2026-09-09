@@ -92,8 +92,21 @@ function pickedWorks(): CuratedWork[] {
   return out;
 }
 
+/**
+ * Every work Julian has picked a cover for — the list ROADMAP 5.1 asks for,
+ * as far as it goes today (a hundred at 2026-09-09).
+ *
+ * Three jobs, and the sitemap is the one that matters first: a work page
+ * exists for a crawler only once something points at it, and nothing does.
+ * With eighteen in the sitemap, seventeen of a hundred walls were invisible.
+ *
+ * **Not the same as `WALL_WORKS`**, which is the eighteen on the home page.
+ * This is the whole shelf.
+ */
+export const CURATED_LIST: CuratedWork[] = pickedWorks();
+
 export const WALL_WORKS: CuratedWork[] = (() => {
-  const picked = pickedWorks();
+  const picked = CURATED_LIST;
   const seen = new Set(picked.map(w => w.id));
   const filler = CURATED_WORKS.filter(w => !seen.has(w.id));
   return [...picked, ...filler].slice(0, WALL_SIZE);

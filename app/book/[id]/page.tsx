@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import BookDetailPage from '@/components/BookDetail';
-import { CURATED_WORKS } from '@/lib/curated';
+import { WALL_WORKS } from '@/lib/curated';
 import type { Cover, Edition, Work } from '@/lib/model';
 import { bookJsonLd, workDescription, workPageTitle, workUrl } from '@/lib/seo';
 import { getWorkPage, isWorkId } from '@/lib/work';
@@ -23,9 +23,16 @@ import { getWork } from '@/lib/sources/openlibrary';
  */
 export const revalidate = 86400;
 
-/** Prerender the works the home page already links to. */
+/**
+ * Prerender the eighteen the home page links to, not all hundred of the
+ * sitemap (ROADMAP 5.1). A hundred would mean a hundred Open Library page-0
+ * requests inside the build, and a build that runs during one of the
+ * catalogue's silent episodes would ship a hundred pages without titles,
+ * cached for a day. The rest are generated when first asked for and then
+ * revalidate like everything else.
+ */
 export function generateStaticParams() {
-  return CURATED_WORKS.map(w => ({ id: w.id }));
+  return WALL_WORKS.map(w => ({ id: w.id }));
 }
 
 interface PageProps {
