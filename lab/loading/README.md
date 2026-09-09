@@ -108,6 +108,22 @@ The settings live in `build-all.ts`, one place, each argued for where it stands:
 - **Preload on the first keystroke, not on submit.** Whoever never searches never fetches a mosaic.
 - **`prefers-reduced-motion`** gets the finished picture, standing still.
 
+### The twenty, measured
+
+All twenty come out on the same grid, **40 × 36 = 1,440 cells**, because the 3:4 cut makes them the same shape — which is the point: the frame does not change when the rotation turns. Together they are **10,532 covers from 160 works**.
+
+| | |
+|---|---|
+| On disk | **4.56 MB** for all forty files; 1.79 MB of that is the phone size, 2.78 MB the desktop one |
+| A reader fetches **one** | **83–102 KB** on a phone, 124–159 KB on a desktop |
+| Manifests | 18 KB each, 362 KB for all twenty — and **that is the one thing still worth shrinking** (see below) |
+| Palette | 146 covers (Mary Shelley) to 1,368 (Dickens); the median is 435 |
+| Build | **17 min** for twenty from cold, 3.8 min from the cover cache, **zero Google requests** |
+
+The full table is what `build-all.ts` prints; the short version is that the palette size stops mattering surprisingly early. Mary Shelley's 146 covers carry a face; Dickens's 1,368 carry a better one, but not nine times better.
+
+**What does not decide it is the fit.** Tolstoy's first portrait — Prokudin-Gorsky's colour photograph of 1908 — sat at a mean distance of **285, the second best of the twenty, and showed no face**: a soft old picture of a grey man against grey trees, and the mosaic fitted every grey of it perfectly. Swapping it for Sass's studio portrait of the 1880s, contrast 63 instead of 42, fixed it. But Whitman has the lowest contrast of all twenty (35.8) and reads perfectly, because his light and dark are in his beard and Tolstoy's were in a tree. **The number is a reason to look; it was right about one of five.**
+
 ## Measured, 2026-09-09
 
 Mark Twain, 897 tiles, grid 40 × 37 = 1,480 cells, 480 px image, in the Browser pane on this Mac (**not** on a phone — the numbers below are a floor, not a promise).
@@ -130,8 +146,16 @@ Mark Twain, 897 tiles, grid 40 × 37 = 1,480 cells, 480 px image, in the Browser
 3. **A scrambled wall of covers and a sorted one look alike.** Proposal 3 was invisible in its first version: the sweep changed nothing the eye could find until the picture was nearly complete. Dimming what is not yet sorted gives the front a line, and costs one `fillRect`.
 4. **A second author is not interchangeable.** Same grid, same settings: Twain sits at a mean distance of 470, Virginia Woolf at 861, and her face barely reads at loading-screen size. Two reasons, both worth knowing before picking the next one — Twain's eight books gave **897** covers to Woolf's **335**, and Bradley's photograph has true black and true white where Beresford's 1902 portrait is soft all through. **A loading screen needs more contrast than a poster does**, because it is small and it is over in seconds.
 5. **A flat rate makes the first third of an animation look still.** With cells resolving at a constant rate, 3b's frames at 10 % and 30 % are hard to tell apart — and a search that comes back in 1.5 seconds never shows anything else. Easing the rate out puts the visible clearing where the reader is and leaves the rest as a settling. The same probably applies to proposals 2 and 3; it has not been tried on them.
-6. **Precomputing the orders costs more than it saves.** Each order is two bytes per cell, 3.9 KB at this grid; computing it in the browser from the 2 KB luminance map takes **0.92 ms, once**. The site should ship `lum` and sort — `orders.ts` is the function it would use.
+6. **Precomputing the orders costs more than it saves.** Each order is two bytes per cell, 3.9 KB at this grid; computing it in the browser from the 2 KB luminance map takes **0.92 ms, once**. A manifest is 18 KB today and could be about 3: ship `lum`, and derive the three orders and the shuffle from it and a seed — `orders.ts` already is that function, and the shuffle is already seeded. The site would then fetch 3 KB of JSON and one 90 KB picture.
 7. **A hidden browser pane runs no animation frames.** `requestAnimationFrame` never fires while the pane is hidden, which made all three animations look broken when they were not. The page therefore has a scrubber that renders any moment deterministically, which is also what makes two proposals comparable at all.
+
+### What the set showed that one picture could not
+
+Twenty pictures cannot be judged one at a time — `sheet.ts` puts them on one page, because the weakest is the one that decides what the site looks like. Three things only came out that way:
+
+- **Every one of them has to be a head.** Nine of twenty needed a hand-set crop, and the one that was wrong was wrong in a way no number caught.
+- **The set is more uniform than the numbers suggest.** Mean distance runs from 207 to 859 and the pictures do not vary nearly that much; the palette runs from 146 covers to 1,368 and, above roughly 300, the difference is decoration.
+- **Colour is the thing that varies.** Twain, Dickens and Conrad come out in browns and greys; Poe sits in a field of red; Alcott in violet. Nothing in the assignment asks for that — it is what those particular books were printed with, which is a nice thing for a site about covers to be showing while it waits.
 
 ## The recommendation
 
@@ -143,7 +167,9 @@ On a wait longer than the animation: hold the finished picture, or start the nex
 
 - **The rights question from 5.5**, unchanged and prior to everything: showing someone's cover is one thing, a derived work built out of hundreds of them as a page element is another. Nothing here goes on the site before that is answered.
 - **N12: a loading screen must not look like an answer.** A large portrait of Mark Twain while somebody searches for *East of Eden* is a picture with a subject, and the current `AssemblingWall` is deliberately small, dimmed and unlabelled for exactly that reason. Size, dimming and a caption that names what the picture is are a design decision, not a detail.
-- **Measure it on a phone**, on the mid-range Android that everything else on this site was measured on. 0.16 ms per frame on a Mac says little about a phone that also has a search in flight.
+- **Measure it on a phone**, on the mid-range Android that everything else on this site was measured on. 0.19 ms per frame on a Mac says little about a phone that also has a search in flight. The first frames after a decode cost ten times the steady state (2–3 ms against 0.19), and that is the moment a phone would show it.
+- **Shrink the manifest from 18 KB to about 3** by shipping the luminance map alone and deriving the orders in the browser (finding 6).
+- **`--max-pages` was never tried below 12.** A build of twenty is 17 minutes and a few thousand Open Library requests, most of them edition pages; halving the page cap would halve both and cost some palette. Nobody has measured how much.
 - **How many mosaics the rotation needs**, and whether they should follow the query (an author's own face when their book is searched for) rather than being random. Following the query would mean building a mosaic per curated author, which is 30 s and 8 Open Library searches each.
 - **Whether 3b should follow the picture instead of chance.** Resolving the cells whose tone changes most first would bring the face up faster than a random order does, at the price of a faint structure in the clearing. Untried.
 - **A silhouette instead of a photograph** (still open from `lab/mosaic` too) — fewer mid-tones should survive 40 columns better.

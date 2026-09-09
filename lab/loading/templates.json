@@ -19,16 +19,10 @@
   "id": "leo-tolstoy",
   "author": "Leo Tolstoi",
   "item": "Q7243",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/L.N.Tolstoy%20Prokudin-Gorsky.jpg?width=1200",
-  "credit": "Sergei Prokudin-Gorskii, 23 May 1908, gemeinfrei (Wikimedia Commons)",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Leo%20Tolstoy%2C%20portrait%20%28cropped%29.jpg?width=1200",
+  "credit": "Sass, Moscow., between 1880 and 1886, gemeinfrei (Wikimedia Commons)",
   "rotation": true,
-  "openLibrary": "Лев Толстой",
-  "crop": [
-   0.3,
-   0.09,
-   0.48,
-   0.42
-  ]
+  "openLibrary": "Лев Толстой"
  },
  {
   "id": "oscar-wilde",

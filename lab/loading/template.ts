@@ -20,7 +20,7 @@ import path from 'node:path';
 import jpeg from 'jpeg-js';
 import { PNG } from 'pngjs';
 import { loadPalette, targetImage, worksOfAuthor, type WorkRef } from '../mosaic/covers';
-import { assign, compose, cropToAspect, patchesOf, type Mosaic, type Target } from '../mosaic/mosaic';
+import { assign, compose, cropToAspect, paletteReport, patchesOf, type Mosaic, type Target } from '../mosaic/mosaic';
 import { quantiseLuminance, revealOrder, shuffledSources, toBase64 } from './orders';
 import type { RgbaImage } from '../../lib/imagehash';
 import type { Log } from '../mosaic/covers';
@@ -85,6 +85,19 @@ export interface GridVariant {
   images: ImageVariant[];
   /** How well the covers sit on the picture, for the notes. */
   meanDistance: number;
+  /**
+   * How much light and dark the **target** has, as the standard deviation of
+   * cell brightness.
+   *
+   * The number that decides whether a portrait can carry a mosaic at all, and
+   * it is not the same as `meanDistance`. Tolstoy's colour photograph of 1908
+   * fits its covers beautifully — mean distance 285, the second best of the
+   * twenty — and shows no face, because there is nothing in the picture to
+   * show: a soft old photograph of a grey man against grey trees. Measured
+   * over the twenty, a portrait under about 45 reads badly however well the
+   * covers sit on it.
+   */
+  targetContrast: number;
   coversUsed: number;
   mostUsedShare: number;
 }
@@ -134,10 +147,12 @@ async function buildGrid(
   const rows = Math.max(1, Math.round((cols / CELL_ASPECT) * (target.height / target.width)));
   const grid: Target = patchesOf(target, cols, rows);
   const mosaic = assign(grid, tiles, { colourWeight: options.colourWeight });
+  const palette = paletteReport(grid, tiles);
   const usage = [...mosaic.usage.values()];
   const cells = cols * rows;
   log(
-    `  ${cols}x${rows} (${cells} cells): mean distance ${round(mosaic.meanDistance)}, `
+    `  ${cols}x${rows} (${cells} cells): target contrast ${round(palette.cellLum.sd)}, `
+    + `mean distance ${round(mosaic.meanDistance)}, `
     + `${usage.filter(n => n > 0).length} of ${tiles.length} covers used, `
     + `most-used holds ${round((Math.max(...usage) / cells) * 100)}%`,
   );
@@ -181,6 +196,7 @@ async function buildGrid(
     shuffle: toBase64(shuffledSources(cells, cells)),
     images: images_,
     meanDistance: round(mosaic.meanDistance),
+    targetContrast: round(palette.cellLum.sd),
     coversUsed: usage.filter(n => n > 0).length,
     mostUsedShare: round((Math.max(...usage) / cells) * 100, 2),
   };

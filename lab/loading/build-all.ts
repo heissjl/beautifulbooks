@@ -69,6 +69,7 @@ interface Row {
   id: string;
   author: string;
   tiles: number;
+  contrast: number;
   meanDistance: number;
   coversUsed: number;
   bytes: number[];
@@ -78,10 +79,11 @@ interface Row {
 function table(rows: Row[]): string {
   const line = (r: Row) => (r.failed
     ? `${r.id.padEnd(22)} ${'—'.padStart(6)} ${r.failed}`
-    : `${r.id.padEnd(22)} ${String(r.tiles).padStart(6)} ${String(r.meanDistance).padStart(8)} `
+    : `${r.id.padEnd(22)} ${String(r.tiles).padStart(6)} ${String(r.contrast).padStart(8)}`
+      + `${r.contrast < 45 ? ' !' : '  '}${String(r.meanDistance).padStart(8)} `
       + `${String(r.coversUsed).padStart(7)} ${r.bytes.map(b => `${round(b / 1024)} KB`).join(' / ').padStart(18)}`);
   return [
-    `${'id'.padEnd(22)} ${'tiles'.padStart(6)} ${'distance'.padStart(8)} ${'used'.padStart(7)} ${'bytes'.padStart(18)}`,
+    `${'id'.padEnd(22)} ${'tiles'.padStart(6)} ${'contrast'.padStart(8)}  ${'distance'.padStart(8)} ${'used'.padStart(7)} ${'bytes'.padStart(18)}`,
     ...rows.map(line),
   ].join('\n');
 }
@@ -126,8 +128,8 @@ async function main() {
       const manifest = JSON.parse(await readFile(path.join(OUT_DIR, `${t.id}.json`), 'utf8')) as Manifest;
       rows.push({
         id: t.id, author: manifest.author, tiles: manifest.tiles,
-        meanDistance: manifest.grids[0].meanDistance, coversUsed: manifest.grids[0].coversUsed,
-        bytes: manifest.grids[0].images.map(im => im.bytes),
+        contrast: manifest.grids[0].targetContrast, meanDistance: manifest.grids[0].meanDistance,
+        coversUsed: manifest.grids[0].coversUsed, bytes: manifest.grids[0].images.map(im => im.bytes),
       });
       console.log(`\n[${i + 1}/${wanted.length}] ${t.id}: already built`);
       continue;
@@ -144,13 +146,13 @@ async function main() {
       const manifest = await buildTemplate(options);
       rows.push({
         id: t.id, author: manifest.author, tiles: manifest.tiles,
-        meanDistance: manifest.grids[0].meanDistance, coversUsed: manifest.grids[0].coversUsed,
-        bytes: manifest.grids[0].images.map(im => im.bytes),
+        contrast: manifest.grids[0].targetContrast, meanDistance: manifest.grids[0].meanDistance,
+        coversUsed: manifest.grids[0].coversUsed, bytes: manifest.grids[0].images.map(im => im.bytes),
       });
     } catch (err) {
       // A source that said nothing is not a template that cannot be built;
       // it is a template we do not know about yet, and the summary says so.
-      rows.push({ id: t.id, author: t.author, tiles: 0, meanDistance: 0, coversUsed: 0, bytes: [], failed: (err as Error).message });
+      rows.push({ id: t.id, author: t.author, tiles: 0, contrast: 0, meanDistance: 0, coversUsed: 0, bytes: [], failed: (err as Error).message });
       console.log(`  FAILED: ${(err as Error).message}`);
     }
   }
@@ -164,6 +166,23 @@ async function main() {
     + (phone.length === 0 ? '' : ` On disk ${round(totalBytes / 1024 / 1024, 2)} MB for all of them; `
       + `a reader fetches one, ${round(Math.min(...phone) / 1024)}–${round(Math.max(...phone) / 1024)} KB on a phone.`),
   );
+  const thin = built.filter(r => r.contrast < 45);
+  if (thin.length > 0) {
+    /*
+      A reason to look, not a verdict.
+
+      Measured over the twenty: Tolstoy's colour photograph of 1908 sat at 42
+      and showed no face, and swapping it for a portrait at 63 fixed it — but
+      Whitman sits at 36, the lowest of all, and reads perfectly, because his
+      contrast is in his beard and Tolstoy's was in a tree. **What matters is
+      whether the light and dark are in the face**, and no number here knows
+      that. Four of the twenty are marked and three of them are fine.
+    */
+    console.log(
+      `marked !: ${thin.map(r => r.id).join(', ')} — little light and dark in the portrait. `
+      + 'A reason to look at them, not a verdict: it was right about one of five.',
+    );
+  }
   const failed = rows.filter(r => r.failed);
   if (failed.length > 0) console.log(`${failed.length} failed: ${failed.map(r => r.id).join(', ')}`);
 }
