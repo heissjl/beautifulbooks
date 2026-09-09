@@ -176,13 +176,14 @@ async function yearsFor(workId: string): Promise<YearInfo> {
  * Covers for a work the index does not carry, fetched once and then cached
  * beside this file.
  *
- * **On demand, not at startup.** With fifty suggestions in the run, loading
- * them all up front would mean a minute of Open Library before the first
- * cover appears, for works Julian may never reach.
+ * Two things ask for them: the page, when a work is opened, and the trickle
+ * below, which walks the rest of the run in the background. `inFlight` keeps
+ * the two from fetching the same work twice — without it, opening a work the
+ * trickle had just started would ask Open Library for it a second time.
  */
-async function coversFor(workId: string): Promise<string[]> {
-  const cached = extraCovers[workId];
-  if (cached?.length) return cached;
+const inFlight = new Map<string, Promise<string[]>>();
+
+async function fetchCovers(workId: string): Promise<string[]> {
   const ids: string[] = [];
   try {
     const res = await fetch(`https://openlibrary.org/works/${workId}/editions.json?limit=200`, {
@@ -200,6 +201,44 @@ async function coversFor(workId: string): Promise<string[]> {
   if (at >= 0) works[at].covers = ids;
   writeAtomically(EXTRA_COVERS_FILE, `${JSON.stringify(extraCovers, null, 1)}\n`);
   return ids;
+}
+
+function coversFor(workId: string): Promise<string[]> {
+  const cached = extraCovers[workId];
+  if (cached?.length) return Promise.resolve(cached);
+  const running = inFlight.get(workId);
+  if (running) return running;
+  const task = fetchCovers(workId).finally(() => inFlight.delete(workId));
+  inFlight.set(workId, task);
+  return task;
+}
+
+/**
+ * Fills the rest of the run while Julian works on the first of it
+ * (Julian, 2026-09-09: „die restlichen Cover sollen im Hintergrund laden, so
+ * muss ich jedesmal beim Weiterklicken laden").
+ *
+ * One work at a time with a pause between: fifty at once would be rude to a
+ * catalogue that gives us everything for free, and there is no hurry — the
+ * reader is looking at a wall of covers meanwhile. Whatever it finishes lands
+ * in the cache file, so the next start has it already.
+ */
+const PREFETCH_PAUSE_MS = 1200;
+
+async function prefetchRest() {
+  const todo = works.filter(w => w.covers.length === 0).map(w => w.id);
+  if (todo.length === 0) return;
+  console.log(`curate: fetching covers for ${todo.length} works in the background`);
+  let done = 0;
+  for (const id of todo) {
+    if (extraCovers[id]?.length) continue;
+    const found = await coversFor(id);
+    done += 1;
+    if (found.length === 0) console.log(`curate: no covers on record for ${id}`);
+    if (done % 10 === 0) console.log(`curate: ${done} of ${todo.length} fetched`);
+    await new Promise(r => setTimeout(r, PREFETCH_PAUSE_MS));
+  }
+  console.log('curate: background covers done');
 }
 
 const HTML_FILE = join(import.meta.dirname, 'index.html');
@@ -287,4 +326,6 @@ server.listen(PORT, () => {
   const done = Object.values(picks).filter(p => !p.skipped && !p.dropped).length;
   console.log(`curate: ${works.length} works (${SUGGESTED.length} suggestions), ${done} already picked`);
   console.log(`open http://localhost:${PORT}`);
+  // After the server is up, never before: the page must not wait on it.
+  void prefetchRest();
 });

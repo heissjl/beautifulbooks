@@ -242,9 +242,11 @@ function render() {
        Das Jahr wird mit der Wahl gespeichert; leer heißt „nicht geprüft".
        „Überspringen" behält das Buch für später, „streichen" nimmt es dauerhaft aus der Liste und von der Startseite.</p>`;
 
-  // Ein Vorschlag bringt seine Cover nicht mit: sie werden beim Aufschlagen
-  // geholt, damit fünfzig davon den Start nicht um eine Minute verzögern.
+  // Ein Vorschlag bringt seine Cover nicht mit. Fehlen sie, werden sie geholt;
+  // und die nächsten drei Werke gleich mit, still im Hintergrund, damit das
+  // Weiterklicken nicht jedes Mal wartet (Julian, 2026-09-09).
   if (w.covers.length === 0) loadCovers(w);
+  prefetchNext(3);
 
   $('grid').addEventListener('click', e => {
     const t = e.target.closest('.tile');
@@ -270,16 +272,35 @@ function render() {
   });
 }
 
-async function loadCovers(w) {
+const fetching = new Set();
+
+/** Holt die Cover eines Werks; zeichnet neu, wenn es noch das offene ist. */
+async function loadCovers(w, quiet = false) {
+  if (fetching.has(w.id)) return;
+  fetching.add(w.id);
   const grid = $('grid');
-  if (grid) grid.innerHTML = '<p class="hint">Cover werden geholt …</p>';
+  if (!quiet && grid) grid.innerHTML = '<p class="hint">Cover werden geholt …</p>';
   try {
     const res = await (await fetch(`/api/covers?id=${w.id}`)).json();
     w.covers = res.covers ?? [];
   } catch {
     w.covers = [];
+  } finally {
+    fetching.delete(w.id);
   }
-  if (state.works[state.i]?.id === w.id) render();
+  if (!quiet && state.works[state.i]?.id === w.id) render();
+}
+
+/**
+ * Zieht die nächsten Werke vor, ohne etwas anzuzeigen. Der Server holt
+ * parallel den ganzen Rest; das hier ist nur die Versicherung, dass genau
+ * das nächste Buch schon da ist, wenn es aufgeschlagen wird.
+ */
+function prefetchNext(n) {
+  for (let k = 1; k <= n; k++) {
+    const next = state.works[state.i + k];
+    if (next && next.covers.length === 0) void loadCovers(next, true);
+  }
 }
 
 function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }

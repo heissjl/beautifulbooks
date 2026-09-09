@@ -1,5 +1,5 @@
 {
-  "curatedAt": "2026-09-08",
+  "curatedAt": "2026-09-09",
   "works": [
     {
       "id": "OL27258W",
@@ -487,8 +487,8 @@
       "title": "Wuthering Heights",
       "author": "Emily Brontë",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:30:32.119Z"
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:19:14.130Z"
     },
     {
       "id": "OL1865528W",
@@ -599,8 +599,8 @@
       "title": "Momo oder Die seltsame Geschichte von den Zeit-Dieben und von dem Kind, das den Menschen die gestohlene Zeit zurückbrachte",
       "author": "Michael Ende",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T21:08:28.766Z"
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:17:53.937Z"
     },
     {
       "id": "OL2271589W",
@@ -733,8 +733,8 @@
       "title": "The Garden of Eden",
       "author": "Ernest Hemingway",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T21:27:59.334Z"
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:19:20.527Z"
     },
     {
       "id": "OL258902W",
@@ -766,6 +766,148 @@
       "coverId": "ol:8132151",
       "firstPublished": 1965,
       "pickedAt": "2026-09-08T21:35:02.115Z"
+    },
+    {
+      "id": "OL20867W",
+      "title": "Middlemarch",
+      "author": "George Eliot",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:16:38.703Z"
+    },
+    {
+      "id": "OL8721462W",
+      "title": "Great Expectations",
+      "author": "Charles Dickens",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:16:54.667Z"
+    },
+    {
+      "id": "OL8193465W",
+      "title": "A Tale of Two Cities",
+      "author": "Charles Dickens",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:17:10.312Z"
+    },
+    {
+      "id": "OL53908W",
+      "title": "Adventures of Huckleberry Finn",
+      "author": "Mark Twain",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:17:11.444Z"
+    },
+    {
+      "id": "OL455305W",
+      "title": "The Scarlet Letter",
+      "author": "Nathaniel Hawthorne",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:17:13.122Z"
+    },
+    {
+      "id": "OL65430W",
+      "title": "The Awakening",
+      "author": "Kate Chopin",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:17:14.908Z"
+    },
+    {
+      "id": "OL27778127W",
+      "title": "Their Eyes Were Watching God",
+      "author": "Zora Neale Hurston",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:17:26.114Z"
+    },
+    {
+      "id": "OL275128W",
+      "title": "Native Son",
+      "author": "Richard Wright",
+      "coverId": "ol:27895",
+      "firstPublished": 1940,
+      "pickedAt": "2026-09-09T06:17:46.264Z"
+    },
+    {
+      "id": "OL228705W",
+      "title": "Go Tell It on the Mountain",
+      "author": "James Baldwin",
+      "coverId": "ol:15208323",
+      "pickedAt": "2026-09-09T06:18:20.012Z"
+    },
+    {
+      "id": "OL273644W",
+      "title": "The Color Purple",
+      "author": "Alice Walker",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:18:46.215Z"
+    },
+    {
+      "id": "OL50564W",
+      "title": "Song of Solomon",
+      "author": "Toni Morrison",
+      "coverId": "ol:9317271",
+      "firstPublished": 1977,
+      "pickedAt": "2026-09-09T06:18:59.246Z"
+    },
+    {
+      "id": "OL5721394W",
+      "title": "Brideshead Revisited",
+      "author": "Evelyn Waugh",
+      "coverId": "ol:445043",
+      "firstPublished": 1945,
+      "pickedAt": "2026-09-09T06:19:28.647Z"
+    },
+    {
+      "id": "OL23205W",
+      "title": "The Grapes of Wrath",
+      "author": "John Steinbeck",
+      "coverId": "ol:14951077",
+      "pickedAt": "2026-09-09T06:19:47.549Z"
+    },
+    {
+      "id": "OL468485W",
+      "title": "Tender is the Night",
+      "author": "F. Scott Fitzgerald",
+      "coverId": "ol:12349909",
+      "firstPublished": 1933,
+      "pickedAt": "2026-09-09T06:22:00.533Z"
+    },
+    {
+      "id": "OL36633W",
+      "title": "Rebecca",
+      "author": "Daphne du Maurier",
+      "coverId": "ol:14539364",
+      "firstPublished": 1938,
+      "pickedAt": "2026-09-09T06:22:22.831Z"
+    },
+    {
+      "id": "OL59434W",
+      "title": "The Talented Mr. Ripley",
+      "author": "Patricia Highsmith",
+      "coverId": "ol:7237053",
+      "firstPublished": 1955,
+      "pickedAt": "2026-09-09T06:22:45.264Z"
+    },
+    {
+      "id": "OL1992198W",
+      "title": "In Cold Blood",
+      "author": "Truman Capote",
+      "coverId": "ol:107798",
+      "firstPublished": 1965,
+      "pickedAt": "2026-09-09T06:22:52.876Z"
+    },
+    {
+      "id": "OL1992167W",
+      "title": "Breakfast at Tiffany's",
+      "author": "Truman Capote",
+      "coverId": "ol:15215685",
+      "firstPublished": 1956,
+      "pickedAt": "2026-09-09T06:22:57.251Z"
     }
   ]
 }

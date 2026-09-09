@@ -387,6 +387,8 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
 - [ ] **6.22 Das Farbschema ändern.** (Julian, 2026-09-09.) Heute: warmes Papier `#f4f0e8` mit Off-Black, dunkel als warmes Schwarz `#131110`, eine Akzentfarbe Terrakotta `#b1502b` hell und `#e6a677` dunkel, Fraunces für Titel, Geist für die Oberfläche (SPEC §5). Die Tokens stehen an einer Stelle, in `app/globals.css` unter `@theme inline`; ein Wechsel ist also eine kleine Änderung, sobald entschieden ist, **was** sich ändern soll.
 
+  **Es geht vor allem um die Akzentfarbe** (Julian, 2026-09-09). Terrakotta `#b1502b` steht heute auf dem Suchknopf, den Sprach-Pillen, den Fokus-Ringen, den Links und dem Verdikt-Hinweis — es ist die einzige Farbe der Oberfläche und damit die einzige, die mit den Covern konkurriert. Wer sie ändert, ändert den Charakter der Seite; wer nur den Hintergrund ändert, ändert die Bühne.
+
   **Zu klären, bevor etwas gebaut wird:** stört die Grundfarbe, der Akzent oder beides? Soll es wärmer, kälter, dunkler, ruhiger werden? Und vor allem — **die Wand ist der Grund für jede Farbentscheidung**: der Hintergrund steht hinter hunderten Covern in allen Farben, und je bunter er ist, desto mehr streitet er mit ihnen. Papierweiß war genau deshalb gewählt. Ein Vorschlag lässt sich billig zeigen: dieselbe Wand in drei Färbungen nebeneinander, entweder in der Kuratier-App oder als kleine Seite unter `lab/`.
 
   **Was dabei nicht verhandelbar ist:** der Kontrast muss WCAG AA halten (die Verdikte und die Metadaten stehen heute in `ink-2` und `ink-3` auf Papier), und heller wie dunkler Modus müssen beide stimmen, weil `prefers-color-scheme` beide ausliefert.
