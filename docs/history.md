@@ -1080,4 +1080,6 @@ Lokal 200, in Produktion 404 — dieselbe Adresse, dieselbe Version. `/book/OL46
 
 Zwei Tests halten das fest: eine mittlere Seite, die wirft, kostet die Seiten danach und keine davor, und ein Aufruf mit `googleBooks: false` erreicht `googleapis.com` nicht. Nach der Reparatur rendert eine kalte Jahrzehnte-Seite lokal in **4,5 s** (*Der Proceß*, 135 Cover aus 128 Datensätzen), eine warme in 0,9 s.
 
+**In Produktion nachgemessen** (einmal, nach dem Deploy): dieselbe Adresse antwortet jetzt **200 in 18,0 s** statt 404 in 10,5 s. Der erste Aufruf ist teuer, weil er sechs Ausgabenseiten aus Frankfurt holt; `revalidate = 86400` sorgt dafür, dass ihn nur der erste Besucher eines Tages bezahlt. Weit unter der 300-Sekunden-Grenze der Funktion, aber die Zahl gehört im Blick behalten, wenn die Gattung wächst.
+
 **Die Lehre, die über diese Seite hinausgeht:** ein Fehlschlag darf nicht als Befund erscheinen (N12) — und ein 404 ist ein Befund. Wo eine Schwelle über Veröffentlichen entscheidet, muss der Unterschied zwischen „zu dünn“ und „nicht geladen“ im Code stehen, nicht im Zufall der Antwortzeit.
