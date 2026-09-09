@@ -6,35 +6,17 @@
  *   npx tsx lab/mosaic/render.ts --author "george orwell" --target <portrait url>
  *   npx tsx lab/mosaic/render.ts --work OL1168083W,OL27258W --cols 48
  *
- * This is the half that touches the world: Open Library for the editions,
- * covers.openlibrary.org for the images, the file system for the result.
- * The decisions live in mosaic.ts, which is pure and tested.
- *
- * **No Google Books** (lab/README.md rule 6, E10): every page is loaded with
- * `googleBooks: false`, so a run costs nothing from the 1,000 a day. It does
- * cost Open Library one request per hundred edition records plus one image
- * per cover, which is why this is a script run by hand and not a route, and
- * why both are cached on disk under `out/`.
+ * The loading and caching live in `covers.ts`, the decisions in `mosaic.ts`,
+ * which is pure and tested. This file is the command line and the PNG.
  */
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { PNG } from 'pngjs';
-import { decode, signature } from '../../lib/imagehash';
-import { looksLikeScannedPage, type ImageSignature } from '../../lib/imagesig';
-import type { Cover, Edition } from '../../lib/model';
-import { authorMatchKey, looksLikeSecondaryLiterature } from '../../lib/normalize';
-import { searchWorks } from '../../lib/sources/openlibrary';
-import { fetchBytes } from '../../lib/sources/http';
-import { getWorkPage } from '../../lib/work';
-import { foldDuplicateCovers } from '../../lib/works';
-import { assign, compose, paletteReport, patchesOf, tileOf, type Tile } from './mosaic';
-
-interface RgbaImage { width: number; height: number; rgba: Uint8Array }
+import { loadPalette, targetImage, worksOfAuthor } from './covers';
+import { assign, compose, paletteReport, patchesOf } from './mosaic';
 
 /** A cover is half again as tall as it is wide, and so is a cell. */
 const CELL_ASPECT = 1.5;
-
-const CACHE_DIR = path.join('lab', 'mosaic', 'out', 'cache');
 
 interface Options {
   works: string[];
@@ -91,165 +73,6 @@ function parseArgs(argv: string[]): Options {
   };
 }
 
-/**
- * The works whose covers become tiles.
- *
- * `--author` asks Open Library for the name and then keeps only the works
- * whose **primary author is that person**, which is what separates Orwell's
- * books from the shelf of books about Orwell; study guides go too. Both
- * filters are the ones the site itself uses, and every work that survives is
- * printed, because a mosaic that quietly included a Cliffs Notes cover would
- * be a small lie about whose book this is.
- */
-async function resolveWorks(options: Options): Promise<string[]> {
-  if (!options.author) return options.works;
-  const wanted = authorMatchKey(options.author);
-  const found = await searchWorks(options.author);
-  const mine = found
-    .filter(w => authorMatchKey(w.authors[0] ?? '') === wanted)
-    .filter(w => !looksLikeSecondaryLiterature(w.title))
-    .sort((a, b) => (b.editionCount ?? 0) - (a.editionCount ?? 0))
-    .slice(0, options.maxWorks);
-  if (mine.length === 0) throw new Error(`no works found whose author is ${options.author}`);
-  console.log(`${mine.length} works by ${mine[0].authors[0]}:`);
-  for (const w of mine) console.log(`  ${w.id}  ${w.title} (${w.editionCount ?? 0} editions)`);
-  return mine.map(w => w.id);
-}
-
-interface WorkCovers { title: string; covers: Cover[]; editions: Edition[] }
-
-/** One page, with a single retry: Open Library times out often enough to matter. */
-async function pageWithRetry(workId: string, offset: number) {
-  try {
-    return await getWorkPage(workId, { offset, googleBooks: false });
-  } catch {
-    return await getWorkPage(workId, { offset, googleBooks: false });
-  }
-}
-
-/**
- * Every edition page of one work, Open Library only, remembered on disk.
- *
- * When Open Library stops answering part-way the run keeps the pages it got
- * and **says so**, because a mosaic built from half a book is fine but
- * pretending that half is the whole book is not (the rule in CLAUDE.md: a
- * failure is never a finding). An incomplete work is therefore not written to
- * the cache either, so the next run asks again instead of freezing the gap.
- */
-async function workCovers(workId: string, maxPages: number): Promise<WorkCovers & { complete: boolean }> {
-  const file = path.join(CACHE_DIR, `work_${workId}.json`);
-  try {
-    return { ...JSON.parse(await readFile(file, 'utf8')) as WorkCovers, complete: true };
-  } catch {
-    // Not cached yet; ask Open Library.
-  }
-  const byCover = new Map<string, Cover>();
-  const editions: Edition[] = [];
-  let offset: number | undefined = 0;
-  let title = workId;
-  let complete = true;
-  for (let page = 0; page < maxPages && offset !== undefined; page++) {
-    let loaded;
-    try {
-      loaded = await pageWithRetry(workId, offset);
-    } catch (err) {
-      console.log(`    Open Library stopped answering at page ${page}: ${(err as Error).message}`);
-      complete = false;
-      break;
-    }
-    if (!loaded) throw new Error(`no such work: ${workId}`);
-    title = loaded.work.title;
-    editions.push(...loaded.editions);
-    for (const cover of loaded.covers) {
-      const seen = byCover.get(cover.id);
-      if (!seen) byCover.set(cover.id, { ...cover, editionIds: [...cover.editionIds] });
-      else for (const id of cover.editionIds) if (!seen.editionIds.includes(id)) seen.editionIds.push(id);
-    }
-    offset = loaded.page.nextOffset;
-  }
-  const result: WorkCovers = { title, covers: [...byCover.values()], editions };
-  if (complete) await writeFile(file, JSON.stringify(result));
-  return { ...result, complete };
-}
-
-/**
- * The cover image, from disk if we have already asked for it.
- *
- * Outside Next there is no data cache, and trying three grids on one book
- * would otherwise download the same few hundred images three times. Open
- * Library redirects covers to archive.org and documents a rate limit, so
- * asking twice for what has not changed is rude as well as slow. The cache
- * lives under `out/`, which is git-ignored; deleting it costs one refetch.
- */
-async function coverBytes(cover: Cover): Promise<Uint8Array> {
-  const file = path.join(CACHE_DIR, `${cover.id.replace(/[^a-z0-9]/gi, '_')}.img`);
-  try {
-    return new Uint8Array(await readFile(file));
-  } catch {
-    const bytes = await fetchBytes(cover.urlSmall ?? cover.url, { timeoutMs: 15_000, revalidate: 0 });
-    await writeFile(file, bytes);
-    return bytes;
-  }
-}
-
-/** Downloads with a small pool; a cover that will not load is simply left out. */
-async function fetchAll(covers: readonly Cover[], concurrency = 8): Promise<Map<string, Uint8Array>> {
-  const out = new Map<string, Uint8Array>();
-  const queue = [...covers];
-  const worker = async () => {
-    while (queue.length > 0) {
-      const cover = queue.shift()!;
-      try {
-        out.set(cover.id, await coverBytes(cover));
-      } catch {
-        // Left out on purpose: a missing cover costs one tile, and stopping
-        // the run over it would cost the picture.
-      }
-    }
-  };
-  await Promise.all(Array.from({ length: Math.min(concurrency, covers.length) }, worker));
-  return out;
-}
-
-/**
- * The picture the covers have to add up to.
- *
- * `auto` takes the most contrasted jacket at full size — deliberately
- * refetched rather than reused from the tiles, whose medium images are six
- * pixels per cell and would leave the target a blur.
- */
-async function targetImage(
-  option: string,
-  covers: readonly Cover[],
-  signatures: ReadonlyMap<string, ImageSignature>,
-): Promise<{ image: RgbaImage; what: string }> {
-  let bytes: Uint8Array;
-  let what: string;
-  if (option === 'auto') {
-    // **Contrast decides**, not how many editions carry it. Picking by
-    // edition count on Nineteen Eighty-Four chose a jacket whose luminance
-    // spans 57 to 90 of 255 (measured 2026-09-08): a nearly flat picture, and
-    // a mosaic of it is a wall of covers with no motif in it. A target has to
-    // have light and dark.
-    const ranked = [...covers]
-      .filter(c => (signatures.get(c.id)?.contrast ?? 0) > 0)
-      .sort((a, b) => (signatures.get(b.id)!.contrast) - (signatures.get(a.id)!.contrast));
-    const best = ranked[0];
-    if (!best) throw new Error('no covers to pick a target from');
-    bytes = await fetchBytes(best.url, { timeoutMs: 15_000, revalidate: 0 });
-    what = `${best.id} (the most contrasted jacket, contrast ${Math.round(signatures.get(best.id)!.contrast)})`;
-  } else if (/^https?:/.test(option)) {
-    bytes = await fetchBytes(option, { timeoutMs: 20_000, revalidate: 0 });
-    what = option;
-  } else {
-    bytes = new Uint8Array(await readFile(option));
-    what = option;
-  }
-  const image = decode(bytes);
-  if (!image) throw new Error(`could not decode the target picture: ${what}`);
-  return { image, what };
-}
-
 function round(value: number, digits = 1): number {
   const f = 10 ** digits;
   return Math.round(value * f) / f;
@@ -258,57 +81,18 @@ function round(value: number, digits = 1): number {
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   const started = Date.now();
-  await mkdir(CACHE_DIR, { recursive: true });
+  const log = (line: string) => console.log(line);
 
-  const workIds = await resolveWorks(options);
-  const tiles: Tile[] = [];
-  const decoded = new Map<string, RgbaImage>();
-  const signatures = new Map<string, ImageSignature>();
-  const allCovers: Cover[] = [];
-
-  let incomplete = 0;
-  for (const workId of workIds) {
-    let loaded;
-    try {
-      loaded = await workCovers(workId, options.maxPages);
-    } catch (err) {
-      console.log(`  ${workId}: skipped, Open Library did not answer (${(err as Error).message})`);
-      incomplete++;
-      continue;
-    }
-    const { title, covers, editions, complete } = loaded;
-    if (!complete) incomplete++;
-    const bytes = await fetchAll(covers);
-    const sigs = new Map<string, ImageSignature>();
-    for (const [id, data] of bytes) {
-      const sig = signature(data);
-      if (sig) sigs.set(id, sig);
-    }
-    // One tile per design, not per scan: the same rule the cover wall uses.
-    // Folded per work, because the rules compare publisher, ISBN and year of
-    // editions, and two different books never share those.
-    const folded = foldDuplicateCovers(covers.filter(c => bytes.has(c.id)), sigs, editions);
-    const usable = folded.filter(c => !looksLikeScannedPage(sigs.get(c.id)));
-    let added = 0;
-    for (const cover of usable) {
-      if (decoded.has(cover.id)) continue;
-      const image = decode(bytes.get(cover.id)!);
-      if (!image) continue;
-      decoded.set(cover.id, image);
-      signatures.set(cover.id, sigs.get(cover.id)!);
-      allCovers.push(cover);
-      tiles.push(tileOf(cover.id, image));
-      added++;
-    }
-    console.log(`  ${title}: ${covers.length} covers, ${folded.length} designs, ${added} tiles${complete ? '' : ' (partial)'}`);
-  }
-  if (tiles.length === 0) throw new Error('no covers loaded; Open Library answered nothing');
+  const workIds = options.author
+    ? (await worksOfAuthor(options.author, options.maxWorks, log)).map(w => w.id)
+    : options.works;
+  const { tiles, images, covers, signatures, incomplete } = await loadPalette(workIds, options.maxPages, log);
   console.log(
     `${tiles.length} tiles from ${workIds.length} work${workIds.length === 1 ? '' : 's'}`
     + (incomplete > 0 ? `, ${incomplete} of them incomplete because Open Library stopped answering` : ''),
   );
 
-  const { image: target, what } = await targetImage(options.target, allCovers, signatures);
+  const { image: target, what } = await targetImage(options.target, covers, signatures);
   console.log(`target: ${what}`);
 
   // A cell is one cover, so it is 2:3. The number of rows that keeps the
@@ -349,7 +133,7 @@ async function main() {
 
   const cellWidth = Math.max(1, Math.round(options.width / options.cols));
   const cellHeight = Math.round(cellWidth * CELL_ASPECT);
-  const picture = compose(mosaic, decoded, { cellWidth, cellHeight, blend: options.blend, target });
+  const picture = compose(mosaic, images, { cellWidth, cellHeight, blend: options.blend, target });
 
   const png = new PNG({ width: picture.width, height: picture.height });
   png.data = Buffer.from(picture.rgba);

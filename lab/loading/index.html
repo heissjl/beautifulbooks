@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ladebild: drei Animationen</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f4f0e8; --surface: #fbf9f4; --surface-2: #ebe5da;
+    --ink: #1a1714; --ink-2: #5a534a; --ink-3: #8c8377;
+    --line: #ddd5c8; --accent: #b1502b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131110; --surface: #1b1815; --surface-2: #26221e;
+      --ink: #efe8dd; --ink-2: #b2a99b; --ink-3: #7d7569;
+      --line: #2e2925; --accent: #e6a677;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 ui-sans-serif, system-ui, sans-serif;
+  }
+  main { max-width: 1180px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font: 600 1.6rem/1.2 Georgia, serif; margin: 0 0 .35rem; }
+  h2 { font: 600 1.05rem/1.3 Georgia, serif; margin: 0 0 .2rem; }
+  .lede { color: var(--ink-2); max-width: 62ch; margin: 0 0 1.25rem; }
+  .controls {
+    display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: center;
+    background: var(--surface); border: 1px solid var(--line); border-radius: .5rem;
+    padding: .75rem 1rem; margin-bottom: 1.5rem;
+  }
+  .controls label { display: flex; align-items: center; gap: .4rem; font-size: .85rem; color: var(--ink-2); }
+  select, button { font: inherit; font-size: .85rem; color: var(--ink); background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: .35rem; padding: .25rem .5rem; }
+  button { cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--surface); border-color: transparent; }
+  .panels { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: .5rem; padding: 1rem; }
+  .panel p { color: var(--ink-2); font-size: .85rem; margin: .35rem 0 .75rem; }
+  .kicker { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  /* The frame is what the site would show: a fixed area a search waits in. */
+  .frame {
+    position: relative; overflow: hidden; margin: 0 auto;
+    background: var(--surface-2); border-radius: .25rem;
+  }
+  .frame img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; will-change: transform; }
+  .frame canvas { display: block; width: 100%; height: 100%; }
+  .caption { text-align: center; font-size: .8rem; color: var(--ink-3); margin-top: .6rem; min-height: 1.2em; }
+  .pulse { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: .4 } 50% { opacity: .9 } }
+  .cost { font: .72rem/1.5 ui-monospace, monospace; color: var(--ink-3); margin-top: .5rem; white-space: pre-line; }
+  .notes { margin-top: 2.5rem; border-top: 1px solid var(--line); padding-top: 1.25rem; color: var(--ink-2); font-size: .85rem; }
+  .notes h2 { color: var(--ink); }
+  .notes li { margin-bottom: .4rem; }
+  code { font-family: ui-monospace, monospace; font-size: .85em; background: var(--surface-2); padding: 0 .25em; border-radius: .2em; }
+  .warn { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ladebild: drei Animationen für dasselbe Mosaik</h1>
+  <p class="lede">
+    Was die Suche zeigen könnte, während Open Library 1 bis 13 Sekunden braucht (ROADMAP 6.19a).
+    Alle drei Vorschläge arbeiten auf <strong>einer</strong> vorgerechneten JPEG-Datei und einem
+    Manifest von wenigen Kilobyte; kein Cover wird einzeln geladen.
+  </p>
+
+  <div class="controls">
+    <label>Autor <select id="author"></select></label>
+    <label>Raster <select id="grid"></select></label>
+    <label>Bild <select id="size"></select></label>
+    <label>Dauer <select id="duration">
+      <option value="2500">2,5 s</option>
+      <option value="4000" selected>4 s</option>
+      <option value="6000">6 s</option>
+      <option value="9000">9 s</option>
+    </select></label>
+    <label>Breite <select id="frame">
+      <option value="300">300 px (Telefon)</option>
+      <option value="360" selected>360 px</option>
+      <option value="440">440 px (Rechner)</option>
+    </select></label>
+    <label>Zeitpunkt <input type="range" id="scrub" min="0" max="100" value="100" step="1"><span id="scrubOut" class="kicker">–</span></label>
+    <button id="replay" class="primary">Neu abspielen</button>
+    <button id="interrupt">Suche ist fertig (abbrechen)</button>
+    <label><input type="checkbox" id="reduced"> reduced motion</label>
+  </div>
+
+  <div class="panels">
+    <section class="panel">
+      <span class="kicker">Vorschlag 1</span>
+      <h2>Rückzug</h2>
+      <p>
+        Erst vier Cover, dann sechzehn, dann das ganze Bild: die Kamera geht zurück, und im letzten
+        Drittel kippt die Wand in ein Gesicht. Sagt, was ein Mosaik ist — eine Frage des Abstands.
+      </p>
+      <div class="frame" id="frame-zoom"><img id="img-zoom" alt=""></div>
+      <p class="caption pulse" id="cap-zoom"></p>
+      <p class="cost" id="cost-zoom"></p>
+    </section>
+
+    <section class="panel">
+      <span class="kicker">Vorschlag 2</span>
+      <h2>Schwerste Zelle zuerst</h2>
+      <p>
+        Die Kacheln erscheinen in der Reihenfolge, in der das Mosaik gerechnet wurde: die dunkelsten
+        und hellsten Zellen zuerst. Das Gesicht steht als Schemen da, lange bevor die Fläche voll ist.
+      </p>
+      <div class="frame" id="frame-reveal"><canvas id="canvas-reveal"></canvas></div>
+      <p class="caption pulse" id="cap-reveal"></p>
+      <p class="cost" id="cost-reveal"></p>
+    </section>
+
+    <section class="panel">
+      <span class="kicker">Vorschlag 3</span>
+      <h2>Umsortieren</h2>
+      <p>
+        Die Wand steht sofort — aber in der falschen Reihenfolge, also als das, was die Suche heute
+        zeigt. Dann tauschen die Kacheln wellenweise auf ihren Platz, und das Gesicht fällt aus dem
+        Rauschen. Dieselben Cover, andere Anordnung: das ist der ganze Trick.
+      </p>
+      <div class="frame" id="frame-sort"><canvas id="canvas-sort"></canvas></div>
+      <p class="caption pulse" id="cap-sort"></p>
+      <p class="cost" id="cost-sort"></p>
+    </section>
+  </div>
+
+  <div class="notes">
+    <h2>Was hier zu sehen ist</h2>
+    <p id="about"></p>
+    <ul>
+      <li><strong>Kosten:</strong> unter jedem Bild steht, was es den Browser kostet — Bytes, Dekodierzeit,
+        gemessene Bildabstände während der Animation und wie viele <code>drawImage</code>-Aufrufe je Bild anfallen.</li>
+      <li><strong>Abbruch:</strong> „Suche ist fertig“ friert alle drei mitten in der Bewegung ein — so sieht es aus,
+        wenn Open Library nach 1,2 s antwortet, was der häufigste Fall ist.</li>
+      <li><strong>reduced motion</strong> zeigt in allen drei Feldern sofort das fertige Bild, ohne Bewegung.</li>
+    </ul>
+  </div>
+</main>
+
+<script type="module">
+/*
+ * The three animations. Everything they need is the manifest: one JPEG per
+ * size, the fill orders as Uint16 arrays, and the shuffle. Nothing is sorted,
+ * measured or decoded here beyond the image itself.
+ */
+const $ = id => document.getElementById(id);
+
+function unpack16(base64) {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new Uint16Array(bytes.buffer);
+}
+
+const state = {
+  manifests: new Map(),
+  manifest: null,
+  grid: null,
+  image: null,
+  bitmap: null,
+  bytes: 0,
+  decodeMs: 0,
+  duration: 4000,
+  frameWidth: 360,
+};
+
+/** One ticker for all of them — the way the real component would run. */
+const ticker = {
+  running: new Set(),
+  raf: 0,
+  last: 0,
+  add(anim) {
+    this.running.add(anim);
+    if (!this.raf) { this.last = performance.now(); this.raf = requestAnimationFrame(t => this.tick(t)); }
+  },
+  remove(anim) { this.running.delete(anim); },
+  tick(now) {
+    const delta = now - this.last;
+    this.last = now;
+    for (const anim of [...this.running]) anim.tick(now, delta);
+    this.raf = this.running.size > 0 ? requestAnimationFrame(t => this.tick(t)) : 0;
+  },
+};
+
+/** Frame intervals and draw calls, so a proposal can be argued about in numbers. */
+class Cost {
+  constructor(el) { this.el = el; this.reset(); }
+  reset() { this.frames = 0; this.worst = 0; this.total = 0; this.late = 0; this.draws = 0; }
+  frame(delta, draws) {
+    if (this.frames > 0) { // the first interval after a start is not a frame time
+      this.total += delta;
+      if (delta > this.worst) this.worst = delta;
+      if (delta > 20) this.late++;
+    }
+    this.frames++;
+    this.draws += draws;
+  }
+  render(extra = '') {
+    const mean = this.frames > 1 ? this.total / (this.frames - 1) : 0;
+    this.el.textContent =
+      `${Math.round(state.bytes / 1024)} KB Bild, ${Math.round(state.decodeMs)} ms dekodiert\n`
+      + `${this.frames} Bilder, im Mittel ${mean.toFixed(1)} ms, schlechtestes ${this.worst.toFixed(1)} ms, ${this.late} über 20 ms\n`
+      + `${this.frames ? (this.draws / this.frames).toFixed(1) : 0} drawImage je Bild${extra ? `\n${extra}` : ''}`;
+  }
+}
+
+/**
+ * Vorschlag 1: the pull-back. One <img>, one transform, no per-frame work on
+ * the main thread — the browser animates it on the compositor.
+ */
+class ZoomOut {
+  constructor(img, frame, costEl) { this.img = img; this.frame = frame; this.cost = new Cost(costEl); }
+  layout() {
+    this.img.src = `out/${state.image.file}`;
+    this.frame.style.width = `${state.frameWidth}px`;
+    this.frame.style.height = `${Math.round(state.frameWidth * state.image.height / state.image.width)}px`;
+  }
+  start() {
+    // Start close enough to read a cover, not so close that the JPEG shows:
+    // at most twice the pixels the file actually has.
+    const maxScale = Math.max(2, (state.image.width / state.frameWidth) * 2);
+    // A face is in the upper third of a portrait; that is where to begin.
+    this.img.style.transformOrigin = '52% 30%';
+    /*
+      Scale falls **geometrically**, not linearly: halving the zoom looks the
+      same whether it goes 8 to 4 or 2 to 1, so a linear tween spends three
+      quarters of its time in the last, least interesting doubling. Twenty
+      keyframes are enough for the compositor to run this without the main
+      thread doing anything per frame.
+    */
+    const steps = 20;
+    const frames = Array.from({ length: steps + 1 }, (_, i) => ({
+      offset: i / steps,
+      transform: `scale(${(maxScale ** (1 - i / steps)).toFixed(3)})`,
+    }));
+    this.animation?.cancel();
+    this.animation = this.img.animate(frames, { duration: state.duration, easing: 'linear', fill: 'forwards' });
+    this.cost.reset();
+    this.cost.render('läuft auf dem Compositor, keine Arbeit je Bild');
+  }
+  stop() {
+    // Freeze where it is: what an interrupted animation actually looks like.
+    this.animation?.pause();
+    this.cost.render('eingefroren, wo die Suche fertig wurde');
+  }
+  finish() {
+    this.animation?.cancel();
+    this.img.style.transform = 'scale(1)';
+    this.cost.render('reduced motion: das fertige Bild, keine Bewegung');
+  }
+  /** The same animation held still at one moment, for looking and comparing. */
+  renderAt(progress) {
+    this.start();
+    this.animation.currentTime = progress * state.duration;
+    this.animation.pause();
+    this.cost.render(`stehend bei ${Math.round(progress * 100)} %`);
+  }
+  tick() {}
+}
+
+/** Shared canvas work: a cell of the sprite drawn into a cell of the frame. */
+class TileCanvas {
+  constructor(canvas, frame, costEl) {
+    this.canvas = canvas; this.frame = frame; this.cost = new Cost(costEl);
+  }
+  layout() {
+    const w = state.frameWidth;
+    const h = Math.round(w * state.image.height / state.image.width);
+    // A loading screen is not a photograph: two device pixels are plenty and
+    // four would double the fill cost for nothing.
+    this.dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.frame.style.width = `${w}px`;
+    this.frame.style.height = `${h}px`;
+    this.canvas.width = Math.round(w * this.dpr);
+    this.canvas.height = Math.round(h * this.dpr);
+    this.ctx = this.canvas.getContext('2d', { alpha: false });
+    this.dw = this.canvas.width / state.grid.cols;
+    this.dh = this.canvas.height / state.grid.rows;
+    this.cells = state.grid.cols * state.grid.rows;
+  }
+  clear() {
+    this.ctx.globalAlpha = 1;
+    this.ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--surface-2') || '#eee';
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+  /** Draws cell `from` of the sprite at the place of cell `at`. */
+  draw(at, from = at, alpha = 1) {
+    const { cols } = state.grid;
+    const { cellWidth, cellHeight } = state.image;
+    const sc = from % cols, sr = (from - sc) / cols;
+    const dc = at % cols, dr = (at - dc) / cols;
+    this.ctx.globalAlpha = alpha;
+    this.ctx.drawImage(
+      state.bitmap,
+      sc * cellWidth, sr * cellHeight, cellWidth, cellHeight,
+      Math.floor(dc * this.dw), Math.floor(dr * this.dh),
+      Math.ceil(this.dw) + 1, Math.ceil(this.dh) + 1,
+    );
+  }
+  drawAll() {
+    this.ctx.globalAlpha = 1;
+    this.ctx.drawImage(state.bitmap, 0, 0, this.canvas.width, this.canvas.height);
+  }
+  /**
+   * The same animation held still at one moment.
+   *
+   * Simulated at 60 frames a second rather than played, so the picture at
+   * 30 % is the same picture every time — which is what makes two proposals
+   * comparable at all, and what lets a screenshot mean something.
+   */
+  renderAt(progress) {
+    this.start();
+    ticker.remove(this);
+    const frames = Math.max(1, Math.round((progress * state.duration) / 16.7));
+    for (let i = 1; i <= frames; i++) this.tick(this.t0 + i * 16.7, 16.7);
+    this.cost.render(`stehend bei ${Math.round(progress * 100)} %`);
+  }
+}
+
+/** How many frames a single tile takes to fade in. */
+const FADE_FRAMES = 9;
+/** How long the flash lasts where a tile lands, in frames. */
+const FLASH_FRAMES = 8;
+
+/**
+ * Vorschlag 2: the assignment's own order. Cells arrive furthest-from-average
+ * first, each fading over nine frames; the picture is a shadow long before it
+ * is a wall.
+ */
+class Reveal extends TileCanvas {
+  start() {
+    this.layout();
+    this.clear();
+    this.order = state.orderExtreme;
+    this.placed = 0;
+    this.active = [];
+    this.t0 = performance.now();
+    this.cost.reset();
+    ticker.add(this);
+  }
+  tick(now, delta) {
+    const progress = Math.min(1, (now - this.t0) / state.duration);
+    const target = Math.round(progress * this.cells);
+    while (this.placed < target) this.active.push({ cell: this.order[this.placed++], age: 0 });
+    let draws = 0;
+    for (const tile of this.active) {
+      tile.age++;
+      // The last draw is opaque, so a tile always ends exactly right rather
+      // than at 95 % of itself.
+      this.draw(tile.cell, tile.cell, tile.age >= FADE_FRAMES ? 1 : 1 / FADE_FRAMES);
+      draws++;
+    }
+    this.active = this.active.filter(t => t.age < FADE_FRAMES);
+    this.cost.frame(delta, draws);
+    if (this.cost.frames % 10 === 0) this.cost.render();
+    if (progress >= 1 && this.active.length === 0) { ticker.remove(this); this.cost.render('fertig'); }
+  }
+  stop() { ticker.remove(this); this.cost.render(`abgebrochen bei ${Math.round(100 * this.placed / this.cells)} % der Kacheln`); }
+  finish() { this.layout(); this.drawAll(); this.cost.render('reduced motion: das fertige Bild, keine Bewegung'); }
+}
+
+/**
+ * Vorschlag 3: the wall sorts itself out. It starts complete but scrambled —
+ * today's loading screen — and each cell swaps to its own cover in a diagonal
+ * wave, with a short flash where it lands.
+ */
+class Sort extends TileCanvas {
+  start() {
+    this.layout();
+    this.ctx.globalAlpha = 1;
+    // The wrong wall, in one frame: every cell shows another cell's cover.
+    for (let i = 0; i < this.cells; i++) this.draw(i, state.shuffle[i]);
+    /*
+      And then dimmed, in one more.
+
+      Measured on 2026-09-09: without this the animation is invisible. A wall
+      of covers in the wrong order and the same wall in the right order look
+      alike until enough of the picture is right, so a sweep across it shows
+      nothing until it is nearly over. Dimming what is not yet sorted gives
+      the sweep a front line, and it costs one fillRect.
+    */
+    this.ctx.globalAlpha = 0.55;
+    this.ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--surface') || '#fff';
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.order = state.orderWave;
+    this.placed = 0;
+    this.active = [];
+    this.flashes = [];
+    this.t0 = performance.now();
+    this.cost.reset();
+    ticker.add(this);
+  }
+  tick(now, delta) {
+    const progress = Math.min(1, (now - this.t0) / state.duration);
+    const target = Math.round(progress * this.cells);
+    while (this.placed < target) this.active.push({ cell: this.order[this.placed++], age: 0 });
+    let draws = 0;
+    for (const tile of this.active) {
+      tile.age++;
+      this.draw(tile.cell, tile.cell, tile.age >= FADE_FRAMES ? 1 : 1 / FADE_FRAMES);
+      draws++;
+      if (tile.age === FADE_FRAMES) this.flashes.push({ cell: tile.cell, age: 0 });
+    }
+    this.active = this.active.filter(t => t.age < FADE_FRAMES);
+    for (const flash of this.flashes) {
+      flash.age++;
+      const alpha = 0.3 * (1 - flash.age / FLASH_FRAMES);
+      if (alpha <= 0) continue;
+      this.draw(flash.cell, flash.cell, 1);
+      const dc = flash.cell % state.grid.cols, dr = (flash.cell - dc) / state.grid.cols;
+      this.ctx.globalAlpha = alpha;
+      this.ctx.fillStyle = '#fff';
+      this.ctx.fillRect(Math.floor(dc * this.dw), Math.floor(dr * this.dh), Math.ceil(this.dw) + 1, Math.ceil(this.dh) + 1);
+      draws += 1;
+    }
+    this.flashes = this.flashes.filter(f => f.age < FLASH_FRAMES);
+    this.cost.frame(delta, draws);
+    if (this.cost.frames % 10 === 0) this.cost.render();
+    if (progress >= 1 && this.active.length === 0 && this.flashes.length === 0) {
+      ticker.remove(this);
+      this.cost.render('fertig');
+    }
+  }
+  stop() { ticker.remove(this); this.cost.render(`abgebrochen bei ${Math.round(100 * this.placed / this.cells)} % der Kacheln`); }
+  finish() { this.layout(); this.drawAll(); this.cost.render('reduced motion: das fertige Bild, keine Bewegung'); }
+}
+
+const zoom = new ZoomOut($('img-zoom'), $('frame-zoom'), $('cost-zoom'));
+const reveal = new Reveal($('canvas-reveal'), $('frame-reveal'), $('cost-reveal'));
+const sort = new Sort($('canvas-sort'), $('frame-sort'), $('cost-sort'));
+const all = [zoom, reveal, sort];
+
+async function loadImage() {
+  const url = `out/${state.image.file}`;
+  const started = performance.now();
+  const response = await fetch(url);
+  const blob = await response.blob();
+  state.bytes = blob.size;
+  state.bitmap = await createImageBitmap(blob);
+  state.decodeMs = performance.now() - started;
+}
+
+function captions() {
+  const query = 'east of eden';
+  const text = `Looking for “${query}” in Open Library`;
+  for (const id of ['cap-zoom', 'cap-reveal', 'cap-sort']) $(id).textContent = text;
+  const m = state.manifest;
+  const titles = m.works.map(w => w.title).join(', ');
+  $('about').innerHTML =
+    `<strong>${m.author}</strong>, gebaut am ${m.built} aus <strong>${m.tiles} Covern</strong> von `
+    + `${m.works.length} Büchern (${titles}). Vorlage: ein gemeinfreies Porträt`
+    + (m.portrait.credit ? ` — ${m.portrait.credit}` : '')
+    + `. Raster ${state.grid.cols}×${state.grid.rows} = ${state.grid.cols * state.grid.rows} Zellen, `
+    + `${state.grid.coversUsed} verschiedene Cover benutzt, das häufigste auf ${state.grid.mostUsedShare} % der Zellen.`;
+}
+
+async function play() {
+  state.duration = Number($('duration').value);
+  state.frameWidth = Number($('frame').value);
+  const grid = state.manifest.grids[Number($('grid').value)];
+  state.grid = grid;
+  state.image = grid.images[Number($('size').value)];
+  state.orderExtreme = unpack16(grid.orders.extreme);
+  state.orderWave = unpack16(grid.orders.wave);
+  state.shuffle = unpack16(grid.shuffle);
+  await loadImage();
+  zoom.layout();
+  captions();
+  for (const anim of all) {
+    if ($('reduced').checked) anim.finish();
+    else anim.start();
+  }
+}
+
+function fillSelect(select, options, selected = 0) {
+  select.innerHTML = '';
+  options.forEach((label, i) => {
+    const option = document.createElement('option');
+    option.value = String(i);
+    option.textContent = label;
+    if (i === selected) option.selected = true;
+    select.append(option);
+  });
+}
+
+async function chooseAuthor() {
+  const entry = state.index[Number($('author').value)];
+  let manifest = state.manifests.get(entry.file);
+  if (!manifest) {
+    manifest = await (await fetch(`out/${entry.file}`)).json();
+    state.manifests.set(entry.file, manifest);
+  }
+  state.manifest = manifest;
+  fillSelect($('grid'), manifest.grids.map(g => `${g.cols}×${g.rows}`), 0);
+  fillSelect($('size'), manifest.grids[0].images.map(i => `${i.width} px · ${Math.round(i.bytes / 1024)} KB`), 1);
+  await play();
+}
+
+async function main() {
+  try {
+    state.index = await (await fetch('out/index.json')).json();
+  } catch {
+    document.querySelector('.lede').innerHTML =
+      '<span class="warn">Kein Mosaik gebaut.</span> Erst <code>npx tsx lab/loading/build.ts --author "…" --target "…"</code> laufen lassen.';
+    return;
+  }
+  // The site would read this, not a checkbox; here it only sets the default,
+  // so the box stays a way to see both without changing a system setting.
+  $('reduced').checked = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  fillSelect($('author'), state.index.map(e => e.author), 0);
+  $('author').addEventListener('change', chooseAuthor);
+  $('grid').addEventListener('change', () => {
+    fillSelect($('size'), state.manifest.grids[Number($('grid').value)].images.map(i => `${i.width} px · ${Math.round(i.bytes / 1024)} KB`), 1);
+    play();
+  });
+  for (const id of ['size', 'duration', 'frame', 'reduced']) $(id).addEventListener('change', play);
+  $('replay').addEventListener('click', () => { $('scrubOut').textContent = '–'; play(); });
+  $('scrub').addEventListener('input', () => {
+    const progress = Number($('scrub').value) / 100;
+    $('scrubOut').textContent = `${Math.round(progress * 100)} %`;
+    for (const anim of all) anim.renderAt(progress);
+  });
+  $('interrupt').addEventListener('click', () => { for (const anim of all) anim.stop(); });
+  await chooseAuthor();
+}
+
+// The Browser pane runs no animation frames while it is hidden, so the lab
+// needs a way to reach a given moment without a clock (2026-09-09).
+window.__loading = { state, all, renderAt: p => { for (const anim of all) anim.renderAt(p); } };
+
+main();
+</script>
+</body>
+</html>
