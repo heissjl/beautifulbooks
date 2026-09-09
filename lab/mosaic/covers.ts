@@ -47,6 +47,23 @@ export interface WorkRef {
  * cover would be a small lie about whose book this is.
  */
 export async function worksOfAuthor(author: string, maxWorks: number, log: Log = () => {}): Promise<WorkRef[]> {
+  /*
+    Remembered on disk like the edition pages, and for the same reason: the
+    search is the **only** live call a rebuild makes, and on 2026-09-09
+    openlibrary.org was unreachable for a quarter of an hour while the covers
+    it redirects to answered normally. A build of twenty pictures should not
+    depend on that.
+  */
+  await mkdir(CACHE_DIR, { recursive: true });
+  const file = path.join(CACHE_DIR, `author_${author.replace(/[^a-z0-9]+/gi, '_').toLowerCase()}_${maxWorks}.json`);
+  try {
+    const cached = JSON.parse(await readFile(file, 'utf8')) as WorkRef[];
+    log(`${cached.length} works by ${cached[0]?.author ?? author} (remembered):`);
+    for (const w of cached) log(`  ${w.id}  ${w.title} (${w.editionCount} editions)`);
+    return cached;
+  } catch {
+    // Not asked before; ask Open Library.
+  }
   const wanted = authorMatchKey(author);
   const found = await searchWorks(author);
   const mine = found
@@ -57,7 +74,9 @@ export async function worksOfAuthor(author: string, maxWorks: number, log: Log =
   if (mine.length === 0) throw new Error(`no works found whose author is ${author}`);
   log(`${mine.length} works by ${mine[0].authors[0]}:`);
   for (const w of mine) log(`  ${w.id}  ${w.title} (${w.editionCount ?? 0} editions)`);
-  return mine.map(w => ({ id: w.id, title: w.title, editionCount: w.editionCount ?? 0, author: w.authors[0] ?? author }));
+  const refs = mine.map(w => ({ id: w.id, title: w.title, editionCount: w.editionCount ?? 0, author: w.authors[0] ?? author }));
+  await writeFile(file, JSON.stringify(refs));
+  return refs;
 }
 
 interface WorkCovers { title: string; covers: Cover[]; editions: Edition[] }

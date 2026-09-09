@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Rotation: zwanzig Ladebilder</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f4f0e8; --surface: #fbf9f4; --surface-2: #ebe5da;
+    --ink: #1a1714; --ink-2: #5a534a; --ink-3: #8c8377;
+    --line: #ddd5c8; --accent: #b1502b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131110; --surface: #1b1815; --surface-2: #26221e;
+      --ink: #efe8dd; --ink-2: #b2a99b; --ink-3: #7d7569;
+      --line: #2e2925; --accent: #e6a677;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 ui-sans-serif, system-ui, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font: 600 1.6rem/1.2 Georgia, serif; margin: 0 0 .35rem; }
+  h2 { font: 600 1.05rem/1.3 Georgia, serif; margin: 0 0 .5rem; }
+  a { color: var(--accent); }
+  .lede { color: var(--ink-2); max-width: 64ch; margin: 0 0 1.25rem; }
+  .controls {
+    display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: center;
+    background: var(--surface); border: 1px solid var(--line); border-radius: .5rem;
+    padding: .75rem 1rem; margin-bottom: 1.5rem;
+  }
+  label { display: flex; align-items: center; gap: .4rem; font-size: .85rem; color: var(--ink-2); }
+  select, button { font: inherit; font-size: .85rem; color: var(--ink); background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: .35rem; padding: .25rem .5rem; }
+  button { cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--surface); border-color: transparent; }
+  .stages { display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start; }
+  .stage { background: var(--surface); border: 1px solid var(--line); border-radius: .5rem; padding: 1rem; }
+  .kicker { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  /* The frame the site would keep free while a search runs. */
+  .frame { position: relative; overflow: hidden; margin: .5rem auto 0; background: var(--surface-2); border-radius: .25rem; }
+  .frame canvas { display: block; width: 100%; height: 100%; }
+  .caption { text-align: center; font-size: .8rem; color: var(--ink-3); margin-top: .6rem; min-height: 1.2em; }
+  .pulse { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: .4 } 50% { opacity: .9 } }
+  .cost { font: .72rem/1.5 ui-monospace, monospace; color: var(--ink-3); margin-top: .5rem; white-space: pre-line; }
+  table { border-collapse: collapse; font-size: .8rem; margin-top: .75rem; width: 100%; }
+  th, td { text-align: left; padding: .25rem .6rem .25rem 0; border-bottom: 1px solid var(--line); }
+  td.num { text-align: right; font-family: ui-monospace, monospace; }
+  .notes { margin-top: 2.5rem; border-top: 1px solid var(--line); padding-top: 1.25rem; color: var(--ink-2); font-size: .85rem; }
+  .notes h2 { color: var(--ink); }
+  .notes li { margin-bottom: .45rem; }
+  code { font-family: ui-monospace, monospace; font-size: .85em; background: var(--surface-2); padding: 0 .25em; border-radius: .2em; }
+  .warn { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Die Rotation: zwanzig Ladebilder</h1>
+  <p style="margin:0 0 .75rem"><a href="index.html">← Die vier Animationen im Vergleich</a></p>
+  <p class="lede">
+    Vorschlag 3b, so wie er auf der Seite liefe: bei jeder Suche eine andere Vorlage,
+    <strong>eine</strong> JPEG-Datei, in der Breite, die zum Gerät passt. „Suche starten“ nimmt eine
+    zufällige Wartezeit zwischen 1 und 13 Sekunden — das ist die gemessene Spanne von Open Library —
+    und bricht die Animation ab, wenn die Antwort da ist.
+  </p>
+
+  <div class="controls">
+    <label>Vorlage <select id="author"></select></label>
+    <label>Wartezeit <select id="wait">
+      <option value="0" selected>zufällig 1–13 s</option>
+      <option value="1200">1,2 s (der häufigste Fall)</option>
+      <option value="3000">3 s</option>
+      <option value="13000">13 s (der schlimmste)</option>
+    </select></label>
+    <button id="search" class="primary">Suche starten</button>
+    <button id="shuffle">Andere Vorlage</button>
+    <label><input type="checkbox" id="reduced"> reduced motion</label>
+    <label><input type="checkbox" id="session" checked> eine Vorlage je Sitzung</label>
+  </div>
+
+  <div class="stages">
+    <section class="stage">
+      <span class="kicker">Telefon · 260 px</span>
+      <h2 id="title-phone">–</h2>
+      <div class="frame" id="frame-phone"><canvas id="canvas-phone"></canvas></div>
+      <p class="caption pulse" id="cap-phone"></p>
+      <p class="cost" id="cost-phone"></p>
+    </section>
+    <section class="stage">
+      <span class="kicker">Rechner · 420 px</span>
+      <h2 id="title-desktop">–</h2>
+      <div class="frame" id="frame-desktop"><canvas id="canvas-desktop"></canvas></div>
+      <p class="caption pulse" id="cap-desktop"></p>
+      <p class="cost" id="cost-desktop"></p>
+    </section>
+  </div>
+
+  <div class="notes">
+    <h2>Was das kostet</h2>
+    <p id="traffic">–</p>
+    <table id="templates"><tbody></tbody></table>
+  </div>
+
+  <div class="notes">
+    <h2>Worauf beim Einbau zu achten ist</h2>
+    <ul>
+      <li><strong>Ein Bild je Suche, nicht zwanzig.</strong> Die Vorlage wird einmal je Sitzung gewürfelt und
+        im <code>sessionStorage</code> gemerkt — sonst zieht jede zweite Suche eine neue Datei, und der
+        Browser-Cache ist nutzlos. Der Schalter oben zeigt beide Fälle.</li>
+      <li><strong>Vorladen beim ersten Tastendruck</strong>, nicht beim Absenden: die Datei braucht auf 4G
+        zwei bis drei Zehntelsekunden, und die will man nicht am Anfang der Wartezeit haben. Wer nie
+        sucht, lädt nichts.</li>
+      <li><strong>Die Breite entscheidet über die Datei</strong>, nicht das Gerät: 480 px bis 360 px Rahmen,
+        darüber 640 px, jeweils höchstens bei doppelter Pixeldichte. Eine dritte Gerätepixelreihe
+        kauft in einem Bild aus Rauschen nichts.</li>
+      <li><strong>Das Feld darf nicht springen.</strong> Alle zwanzig Bilder haben dasselbe Seitenverhältnis
+        (3:4), also steht die Höhe fest, bevor das Bild da ist.</li>
+      <li><strong><code>prefers-reduced-motion</code></strong> bekommt das fertige Bild ohne Bewegung.</li>
+      <li><strong>Das Bild darf nichts behaupten.</strong> Ein Porträt von Mark Twain, während jemand
+        <em>East of Eden</em> sucht, ist ein Bild, kein Suchergebnis (SPEC N12) — darunter steht, wonach
+        gesucht wird, und daneben, wer das ist.</li>
+    </ul>
+  </div>
+</main>
+
+<script type="module">
+import { Clearing, loadScene, pickImage } from './animations.js';
+
+const $ = id => document.getElementById(id);
+const PHONE = 260;
+const DESKTOP = 420;
+
+const phone = new Clearing($('canvas-phone'), $('frame-phone'), $('cost-phone'));
+const desktop = new Clearing($('canvas-desktop'), $('frame-desktop'), $('cost-desktop'));
+const stages = [[phone, PHONE, 'cap-phone', 'title-phone'], [desktop, DESKTOP, 'cap-desktop', 'title-desktop']];
+
+const state = { index: [], manifests: new Map(), manifest: null, timer: 0 };
+
+/**
+ * Which template this reader sees.
+ *
+ * Once per session, remembered — twenty templates and a fresh throw per
+ * search would mean nineteen out of twenty searches pay for a new file. The
+ * rotation is meant to vary between readers and days, not between keystrokes.
+ */
+function pick() {
+  if (!$('session').checked) return Math.floor(Math.random() * state.index.length);
+  const kept = sessionStorage.getItem('loading-template');
+  const known = state.index.findIndex(e => e.id === kept);
+  if (known >= 0) return known;
+  const chosen = Math.floor(Math.random() * state.index.length);
+  sessionStorage.setItem('loading-template', state.index[chosen].id);
+  return chosen;
+}
+
+async function manifestFor(entry) {
+  let manifest = state.manifests.get(entry.file);
+  if (!manifest) {
+    manifest = await (await fetch(`out/${entry.file}`)).json();
+    state.manifests.set(entry.file, manifest);
+  }
+  return manifest;
+}
+
+async function search() {
+  clearTimeout(state.timer);
+  const entry = state.index[Number($('author').value)];
+  const manifest = await manifestFor(entry);
+  state.manifest = manifest;
+  const chosen = Number($('wait').value);
+  // The measured span of a search against Open Library (ROADMAP 2.6).
+  const waitMs = chosen > 0 ? chosen : 1000 + Math.random() * 12_000;
+
+  for (const [anim, width, capId, titleId] of stages) {
+    /*
+      The animation lasts as long as the wait is expected to, not as long as
+      it actually will: nothing here knows the future, and a picture that
+      finishes early simply stands still until the answer comes.
+    */
+    const scene = await loadScene(manifest, { frameWidth: width, duration: 4000 });
+    anim.configure(scene);
+    $(capId).textContent = 'Looking for “east of eden” in Open Library';
+    $(titleId).textContent = `${manifest.author} · ${Math.round(scene.bytes / 1024)} KB`;
+    if ($('reduced').checked) anim.finish(); else anim.start();
+  }
+  traffic(manifest, waitMs);
+  state.timer = setTimeout(() => {
+    for (const [anim, , capId] of stages) {
+      anim.stop();
+      $(capId).textContent = `Antwort nach ${(waitMs / 1000).toFixed(1)} s — hier verschwände das Bild`;
+      $(capId).classList.remove('pulse');
+    }
+  }, waitMs);
+  for (const [, , capId] of stages) $(capId).classList.add('pulse');
+}
+
+function traffic(manifest, waitMs) {
+  const forPhone = pickImage(manifest.grids[0], PHONE, 2);
+  const forDesktop = pickImage(manifest.grids[0], DESKTOP, 2);
+  $('traffic').innerHTML =
+    `Diese Vorlage: <strong>${Math.round(forPhone.bytes / 1024)} KB</strong> auf dem Telefon `
+    + `(${forPhone.width} px), <strong>${Math.round(forDesktop.bytes / 1024)} KB</strong> am Rechner `
+    + `(${forDesktop.width} px) — <strong>eine</strong> davon je Suche, danach im Browser-Cache. `
+    + `Wartezeit dieser Runde: ${(waitMs / 1000).toFixed(1)} s.`;
+}
+
+async function table() {
+  const rows = [];
+  let phoneTotal = 0, desktopTotal = 0;
+  for (const entry of state.index) {
+    const m = await manifestFor(entry);
+    const grid = m.grids[0];
+    const small = pickImage(grid, PHONE, 2), large = pickImage(grid, DESKTOP, 2);
+    phoneTotal += small.bytes;
+    desktopTotal += large.bytes;
+    rows.push(
+      `<tr><td>${m.author}</td><td class="num">${m.tiles}</td>`
+      + `<td class="num">${grid.meanDistance}</td>`
+      + `<td class="num">${Math.round(small.bytes / 1024)} KB</td>`
+      + `<td class="num">${Math.round(large.bytes / 1024)} KB</td></tr>`,
+    );
+  }
+  $('templates').innerHTML =
+    '<thead><tr><th>Vorlage</th><th class="num">Kacheln</th><th class="num">Abstand</th>'
+    + '<th class="num">Telefon</th><th class="num">Rechner</th></tr></thead><tbody>'
+    + rows.join('')
+    + `<tr><td><strong>${state.index.length} zusammen</strong></td><td></td><td></td>`
+    + `<td class="num"><strong>${Math.round(phoneTotal / 1024 / 102.4) / 10} MB</strong></td>`
+    + `<td class="num"><strong>${Math.round(desktopTotal / 1024 / 102.4) / 10} MB</strong></td></tr></tbody>`;
+}
+
+async function main() {
+  try {
+    state.index = await (await fetch('out/index.json')).json();
+  } catch {
+    document.querySelector('.lede').innerHTML =
+      '<span class="warn">Nichts gebaut.</span> Erst <code>npx tsx lab/loading/build-all.ts</code> laufen lassen.';
+    return;
+  }
+  $('reduced').checked = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const select = $('author');
+  state.index.forEach((entry, i) => {
+    const option = document.createElement('option');
+    option.value = String(i);
+    option.textContent = entry.author;
+    select.append(option);
+  });
+  select.value = String(pick());
+  select.addEventListener('change', search);
+  $('search').addEventListener('click', search);
+  $('shuffle').addEventListener('click', () => {
+    sessionStorage.removeItem('loading-template');
+    select.value = String(Math.floor(Math.random() * state.index.length));
+    sessionStorage.setItem('loading-template', state.index[Number(select.value)].id);
+    search();
+  });
+  $('reduced').addEventListener('change', search);
+  await search();
+  await table();
+}
+
+window.__rotation = { state, stages, search };
+main();
+</script>
+</body>
+</html>
