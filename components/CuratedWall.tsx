@@ -9,9 +9,8 @@ import { WALL_WORKS, olCover } from '@/lib/curated';
 export default function CuratedWall() {
   return (
     <section aria-labelledby="curated-heading">
-      <div className="mb-5 flex items-baseline justify-between">
+      <div className="mb-5">
         <h2 id="curated-heading" className="text-2xl text-ink">Start with a classic</h2>
-        <p className="hidden text-sm text-ink-3 sm:block">{WALL_WORKS.length} books, one cover each, picked by eye</p>
       </div>
       <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6">
         {WALL_WORKS.map(w => (
