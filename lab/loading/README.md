@@ -108,6 +108,14 @@ The settings live in `build-all.ts`, one place, each argued for where it stands:
 - **Preload on the first keystroke, not on submit.** Whoever never searches never fetches a mosaic.
 - **`prefers-reduced-motion`** gets the finished picture, standing still.
 
+### Ten and ten
+
+Julian, 2026-09-09: „nimm Jack Kerouac mit auf. Wir brauchen noch ein paar Heartthrobs in unserer Rotation. Und es sollten 50% Autorinnen sein." The rotation is now half women — Austen, Montgomery, Alcott, Shelley, Cather, Woolf, Emily Brontë, George Eliot, Wharton, Burnett — and eight men moved to the reserve to make room. `templates.json` keeps 26 reserves, enough women among them to hold the balance when one is swapped out.
+
+**Kerouac has exactly one public-domain portrait**: his US Navy enlistment photograph of 1943, public domain as a work of the United States government. Everything else of him on Commons is CC BY-SA, and a mosaic is a derived work, so that would be a share-alike obligation rather than an attribution line. The Navy photograph is also the better picture — a young face in hard light against a height scale, which 144 tiles are enough for.
+
+**Two rules changed while the women were being built.** The minimum size for a portrait was 500 px and was simply wrong: the grid is 40 × 36, so 300 px is eight pixels per cell, and the old bar had thrown out Kafka, Katherine Mansfield, Willa Cather and Christina Rossetti for a difference no reader could see. And the number of works was fixed at eight — plenty for Dickens, thin for Frances Hodgson Burnett, whose books were printed often under few jackets. **A palette under about 250 covers shows in the face**, and the cheapest cure is more of the author's shelf, not a better portrait: Burnett 161 → 281 tiles, Cather 226 → 406, Wharton 82 → 431. The thinnest that remain are Emily Brontë (183 — she has only six works) and Burnett, and they are the two softest pictures of the twenty.
+
 ### The twenty, measured
 
 All twenty come out on the same grid, **40 × 36 = 1,440 cells**, because the 3:4 cut makes them the same shape — which is the point: the frame does not change when the rotation turns. Together they are **10,532 covers from 160 works**.
@@ -139,15 +147,16 @@ Mark Twain, 897 tiles, grid 40 × 37 = 1,480 cells, 480 px image, in the Browser
 | DOM | **4 nodes** for all four panels — one `<img>` and three `<canvas>` |
 | Build | 17 s for two grids and six JPEGs with the cover cache warm, **zero Google requests** |
 
-## Seven things that were not obvious
+## Eight things that were not obvious
 
 1. **40 columns, not 24.** At 24 columns a cell is comfortably a book you can recognise — and the face is nearly gone. At 40 both just work. This is the whole trade-off of the thing and it has one answer per picture, not one answer in general.
 2. **The background decides which half of the picture you see first.** Proposal 2 fills the extremes, and only the extreme that contrasts with the ground is visible: on the site's light surface the dark cells arrive first, which for a portrait is the good half (hair, eyes, shoulders). In dark mode it inverts and the highlights come first. Neither is wrong, but it is not the same animation.
 3. **A scrambled wall of covers and a sorted one look alike.** Proposal 3 was invisible in its first version: the sweep changed nothing the eye could find until the picture was nearly complete. Dimming what is not yet sorted gives the front a line, and costs one `fillRect`.
 4. **A second author is not interchangeable.** Same grid, same settings: Twain sits at a mean distance of 470, Virginia Woolf at 861, and her face barely reads at loading-screen size. Two reasons, both worth knowing before picking the next one — Twain's eight books gave **897** covers to Woolf's **335**, and Bradley's photograph has true black and true white where Beresford's 1902 portrait is soft all through. **A loading screen needs more contrast than a poster does**, because it is small and it is over in seconds.
 5. **A flat rate makes the first third of an animation look still.** With cells resolving at a constant rate, 3b's frames at 10 % and 30 % are hard to tell apart — and a search that comes back in 1.5 seconds never shows anything else. Easing the rate out puts the visible clearing where the reader is and leaves the rest as a settling. The same probably applies to proposals 2 and 3; it has not been tried on them.
-6. **Precomputing the orders costs more than it saves.** Each order is two bytes per cell, 3.9 KB at this grid; computing it in the browser from the 2 KB luminance map takes **0.92 ms, once**. A manifest is 18 KB today and could be about 3: ship `lum`, and derive the three orders and the shuffle from it and a seed — `orders.ts` already is that function, and the shuffle is already seeded. The site would then fetch 3 KB of JSON and one 90 KB picture.
-7. **A hidden browser pane runs no animation frames.** `requestAnimationFrame` never fires while the pane is hidden, which made all three animations look broken when they were not. The page therefore has a scrubber that renders any moment deterministically, which is also what makes two proposals comparable at all.
+6. **A failure will look like a finding unless something counts it.** Under a rate limit the cover CDN refused most requests, `fetchAll` swallowed each one on its own („a missing cover costs one tile"), and a George Eliot mosaic came out of **two** covers while the log read „101 covers, 1 designs" — which reads like a book with a single jacket. Missing images are counted now, appear in the line for each work, and a build stops when fewer than half arrive: „that is an outage, not a palette."
+7. **Precomputing the orders costs more than it saves.** Each order is two bytes per cell, 3.9 KB at this grid; computing it in the browser from the 2 KB luminance map takes **0.92 ms, once**. A manifest is 18 KB today and could be about 3: ship `lum`, and derive the three orders and the shuffle from it and a seed — `orders.ts` already is that function, and the shuffle is already seeded. The site would then fetch 3 KB of JSON and one 90 KB picture.
+8. **A hidden browser pane runs no animation frames.** `requestAnimationFrame` never fires while the pane is hidden, which made all three animations look broken when they were not. The page therefore has a scrubber that renders any moment deterministically, which is also what makes two proposals comparable at all.
 
 ### What the set showed that one picture could not
 

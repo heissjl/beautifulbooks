@@ -1468,3 +1468,17 @@ Julian, nachdem die zwanzig Vorlagen standen: „die beiden Einwände können wi
 **Gemessen im Dev-Server**, Telefonbreite 375 px: Rahmen 260 px, geholt wird die 480er Datei mit **83 KB**, Canvas 520×702 bei doppelter Pixeldichte, kein seitliches Scrollen. Am Rechner 420 px Rahmen und die 640er Datei. Drei Anfragen zusammen: `index.json`, ein Manifest, ein Bild.
 
 **Und eine Zurückhaltung, die geblieben ist:** kommt das Bild nicht oder noch nicht, steht dort die Cover-Wand von vorher. Ein fehlendes Bild ist kein leeres Feld, und ein Ladebildschirm, der selbst lädt, wäre ein schlechter Witz.
+
+## 2026-09-09 · Zehn Autorinnen, Kerouac, und ein Ausfall, der wie ein Befund aussah (ROADMAP 6.19a)
+
+Julian nach dem ersten Deploy: die Suchzeile gehört auf das Bild, und „nimm Jack Kerouac mit auf. Wir brauchen noch ein paar Heartthrobs in unserer Rotation. Und es sollten 50% Autorinnen sein."
+
+**Die Zeile steht jetzt auf dem Mosaik**, mittig und eine Stufe größer, auf einem Grund in `--surface` bei 90 % — derselben Farbe, zu der hin die Wand am Anfang gedimmt ist, weshalb sie über die ganze Animation lesbar bleibt.
+
+**Die Rotation ist zehn zu zehn.** Acht Männer gingen in die Reserve, zehn Autorinnen kamen dazu, ausgewählt nach Ausgabenzahl: Austen (12.483 Ausgaben), Montgomery, Alcott, Shelley, Cather, Woolf, Emily Brontë, George Eliot, Wharton, Burnett.
+
+**Kerouac hat genau ein gemeinfreies Porträt.** Alles auf Commons steht unter CC BY-SA — bis auf seine **Musterungsaufnahme der US-Marine von 1943**, gemeinfrei als Werk der US-Regierung. Sie ist obendrein das beste Bild dafür: ein junges Gesicht mit hartem Kontrast vor einer Messlatte, aus der ein Mosaik von 144 Kacheln ein erkennbares Porträt macht. Eine CC-BY-SA-Vorlage wäre hier nicht bloß eine Namensnennung gewesen, sondern eine Share-alike-Pflicht auf einem abgeleiteten Werk.
+
+**Der Fehler des Abends war der, den CLAUDE.md ausdrücklich verbietet.** *George Eliots* Mosaik entstand aus **zwei** Covern. Unter einer Ratenbegrenzung lieferte `covers.openlibrary.org` die meisten Bilder nicht; `fetchAll` verschluckte jeden Fehlschlag einzeln („ein fehlendes Cover kostet eine Kachel"), und der Lauf meldete für *The Mill on the Floss* „101 covers, 1 designs" — was sich liest wie ein Buch mit einem einzigen Umschlag und ein Ausfall war. **Ein Ausfall darf nicht als Befund erscheinen.** Fehlende Bilder werden jetzt gezählt, stehen in der Zeile je Werk, und ein Bau bricht ab, sobald weniger als die Hälfte ankommt: „only 276 of 564 cover images arrived — that is an outage, not a palette." Edith Wharton scheiterte daran und wurde eine Viertelstunde später sauber gebaut, mit 431 statt 82 Kacheln.
+
+**Zwei Schwellen waren falsch gesetzt.** Die Mindestgröße eines Porträts lag bei 500 px, obwohl das Raster 40 × 36 Zellen hat — 300 px sind acht Pixel je Zelle, und die alte Schranke hatte Kafka, Katherine Mansfield, Willa Cather und Christina Rossetti aussortiert, ohne dass ein Leser den Unterschied je gesehen hätte. Und die Werkzahl war fest auf acht: für Dickens reichlich, für Frances Hodgson Burnett zu wenig, weil ihre Bücher oft gedruckt wurden, aber unter wenigen Umschlägen. Eine Palette unter etwa 250 Covern sieht man dem Gesicht an; `maxWorks` je Vorlage ist das billigste Gegenmittel. Burnett 161 → 281, Cather 226 → 406.

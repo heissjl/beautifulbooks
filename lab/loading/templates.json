@@ -16,13 +16,18 @@
   "rotation": true
  },
  {
-  "id": "leo-tolstoy",
-  "author": "Leo Tolstoi",
-  "item": "Q7243",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Leo%20Tolstoy%2C%20portrait%20%28cropped%29.jpg?width=1200",
-  "credit": "Sass, Moscow., between 1880 and 1886, gemeinfrei (Wikimedia Commons)",
+  "id": "arthur-conan-doyle",
+  "author": "Arthur Conan Doyle",
+  "item": "Q35610",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Arthur%20Conan%20Doyle%20by%20Walter%20Benington%2C%201914.png?width=1200",
+  "credit": "Walter Benington, 1914, gemeinfrei (Wikimedia Commons)",
   "rotation": true,
-  "openLibrary": "Лев Толстой"
+  "crop": [
+   0.22,
+   0.06,
+   0.56,
+   0.46
+  ]
  },
  {
   "id": "oscar-wilde",
@@ -36,162 +41,6 @@
    0.02,
    0.6,
    0.5
-  ]
- },
- {
-  "id": "edgar-allan-poe",
-  "author": "Edgar Allan Poe",
-  "item": "Q16867",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Edgar%20Allan%20Poe%2C%20circa%201849%2C%20restored%2C%20squared%20off.jpg?width=1200",
-  "credit": "Unknown author Unknown author ; Restored by Yann Forget and Adam Cuerden, 1849-06, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
- },
- {
-  "id": "arthur-conan-doyle",
-  "author": "Arthur Conan Doyle",
-  "item": "Q35610",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Arthur%20Conan%20Doyle%20by%20Walter%20Benington%2C%201914.png?width=1200",
-  "credit": "Walter Benington, 1914, gemeinfrei (Wikimedia Commons)",
-  "rotation": true,
-  "crop": [
-   0.2,
-   0.02,
-   0.62,
-   0.5
-  ]
- },
- {
-  "id": "jules-verne",
-  "author": "Jules Verne",
-  "item": "Q33977",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/F%C3%A9lix%20Nadar%201820-1910%20portraits%20Jules%20Verne.jpg?width=1200",
-  "credit": "Nadar, circa 1878, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
- },
- {
-  "id": "victor-hugo",
-  "author": "Victor Hugo",
-  "item": "Q535",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Victor%20Hugo%20by%20%C3%89tienne%20Carjat%201876%20-%20full.jpg?width=1200",
-  "credit": "Étienne Carjat, 1876, gemeinfrei (Wikimedia Commons)",
-  "rotation": true,
-  "crop": [
-   0.25,
-   0.03,
-   0.55,
-   0.5
-  ]
- },
- {
-  "id": "h-g-wells",
-  "author": "H. G. Wells",
-  "item": "Q42511",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/H.G.%20Wells%20by%20Beresford.jpg?width=1200",
-  "credit": "George Charles Beresford, 1920, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
- },
- {
-  "id": "robert-louis-stevenson",
-  "author": "Robert Louis Stevenson",
-  "item": "Q1512",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Robert%20Louis%20Stevenson%20by%20Henry%20Walter%20Barnett%20bw.jpg?width=1200",
-  "credit": "Henry Walter Barnett, 1893, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
- },
- {
-  "id": "lewis-carroll",
-  "author": "Lewis Carroll",
-  "item": "Q38082",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/LewisCarrollSelfPhoto.jpg?width=1200",
-  "credit": "Lewis Carroll, Taken on 2 June 1857, gemeinfrei (Wikimedia Commons)",
-  "rotation": true,
-  "crop": [
-   0.28,
-   0.04,
-   0.58,
-   0.5
-  ]
- },
- {
-  "id": "joseph-conrad",
-  "author": "Joseph Conrad",
-  "item": "Q82925",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Joseph%20Conrad-remastered%20to%20black%20and%20white.png?width=1200",
-  "credit": "George Charles Beresford, 1904, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
- },
- {
-  "id": "virginia-woolf",
-  "author": "Virginia Woolf",
-  "item": "Q40909",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Charles%20Beresford%20-%20Virginia%20Woolf%20in%201902%20-%20Restoration.jpg?width=1200",
-  "credit": "George Charles Beresford / Adam Cuerden, 1902, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
- },
- {
-  "id": "walt-whitman",
-  "author": "Walt Whitman",
-  "item": "Q81438",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Walt%20Whitman%20-%20George%20Collins%20Cox.jpg?width=1200",
-  "credit": "George Collins Cox / Adam Cuerden, 1887, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
- },
- {
-  "id": "bram-stoker",
-  "author": "Bram Stoker",
-  "item": "Q36184",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Bram%20Stoker%201906.jpg?width=1200",
-  "credit": "unidentified photographer, circa 1906, gemeinfrei (Wikimedia Commons)",
-  "rotation": true,
-  "crop": [
-   0.3,
-   0.03,
-   0.52,
-   0.48
-  ]
- },
- {
-  "id": "rudyard-kipling",
-  "author": "Rudyard Kipling",
-  "item": "Q34743",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Kipling%20nd.jpg?width=1200",
-  "credit": "Bain News Service, publisher, Undated, but judging by this circa 1899, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
- },
- {
-  "id": "louisa-may-alcott",
-  "author": "Louisa May Alcott",
-  "item": "Q185696",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Louisa%20May%20Alcott%2C%20c.%201870%20-%20Warren's%20Portraits%2C%20Boston.jpg?width=1200",
-  "credit": "Adam Cuerden, 1870, gemeinfrei (Wikimedia Commons)",
-  "rotation": true
- },
- {
-  "id": "alexandre-dumas",
-  "author": "Alexandre Dumas",
-  "item": "Q38337",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Alexander%20Dumas%20p%C3%A8re%20par%20Nadar%20-%20Google%20Art%20Project.jpg?width=1200",
-  "credit": "Nadar, 1855, gemeinfrei (Wikimedia Commons)",
-  "rotation": true,
-  "crop": [
-   0.28,
-   0.02,
-   0.55,
-   0.5
-  ]
- },
- {
-  "id": "mary-shelley",
-  "author": "Mary Shelley",
-  "item": "Q47152",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Richard%20Rothwell%20(1800-1868)%20-%20Mary%20Wollstonecraft%20Shelley%20-%20NPG%201235%20-%20National%20Portrait%20Gallery.jpg?width=1200",
-  "credit": "Richard Rothwell, 1830s, gemeinfrei (Wikimedia Commons)",
-  "rotation": true,
-  "crop": [
-   0.25,
-   0.04,
-   0.55,
-   0.55
   ]
  },
  {
@@ -209,6 +58,249 @@
   ]
  },
  {
+  "id": "robert-louis-stevenson",
+  "author": "Robert Louis Stevenson",
+  "item": "Q1512",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Robert%20Louis%20Stevenson%20by%20Henry%20Walter%20Barnett%20bw.jpg?width=1200",
+  "credit": "Henry Walter Barnett, 1893, gemeinfrei (Wikimedia Commons)",
+  "rotation": true
+ },
+ {
+  "id": "leo-tolstoy",
+  "author": "Leo Tolstoi",
+  "item": "Q7243",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Leo%20Tolstoy%2C%20portrait%20%28cropped%29.jpg?width=1200",
+  "credit": "Sass, Moscow., between 1880 and 1886, gemeinfrei (Wikimedia Commons)",
+  "rotation": true,
+  "openLibrary": "Лев Толстой"
+ },
+ {
+  "id": "edgar-allan-poe",
+  "author": "Edgar Allan Poe",
+  "item": "Q16867",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Edgar%20Allan%20Poe%2C%20circa%201849%2C%20restored%2C%20squared%20off.jpg?width=1200",
+  "credit": "Unknown author Unknown author ; Restored by Yann Forget and Adam Cuerden, 1849-06, gemeinfrei (Wikimedia Commons)",
+  "rotation": true
+ },
+ {
+  "id": "jules-verne",
+  "author": "Jules Verne",
+  "item": "Q33977",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/F%C3%A9lix%20Nadar%201820-1910%20portraits%20Jules%20Verne.jpg?width=1200",
+  "credit": "Nadar, circa 1878, gemeinfrei (Wikimedia Commons)",
+  "rotation": true
+ },
+ {
+  "id": "jack-kerouac",
+  "author": "Jack Kerouac",
+  "item": "",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Jack%20Kerouac%20Naval%20Reserve%20Enlistment%2C%201943.png?width=1200",
+  "credit": "United States Navy, 1943 — gemeinfrei (Wikimedia Commons)",
+  "rotation": true,
+  "crop": [
+   0.04,
+   0.03,
+   0.92,
+   0.85
+  ]
+ },
+ {
+  "id": "jane-austen",
+  "author": "Jane Austen",
+  "item": "Q36322",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/JaneAusten-1870-cropped.jpg?width=1200",
+  "credit": "Nach Cassandra Austen, Stich von 1870 — gemeinfrei (Wikimedia Commons)",
+  "rotation": true
+ },
+ {
+  "id": "lucy-maud-montgomery",
+  "author": "Lucy Maud Montgomery",
+  "item": "Q273034",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/LMM%20signed%20photo.jpg?width=1200",
+  "credit": "Unknown author, between circa 1920 and circa 1930, gemeinfrei (Wikimedia Commons)",
+  "rotation": true,
+  "crop": [
+   0.22,
+   0.03,
+   0.56,
+   0.52
+  ]
+ },
+ {
+  "id": "louisa-may-alcott",
+  "author": "Louisa May Alcott",
+  "item": "Q185696",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Louisa%20May%20Alcott%2C%20c.%201870%20-%20Warren's%20Portraits%2C%20Boston.jpg?width=1200",
+  "credit": "Adam Cuerden, 1870, gemeinfrei (Wikimedia Commons)",
+  "rotation": true
+ },
+ {
+  "id": "mary-shelley",
+  "author": "Mary Shelley",
+  "item": "Q47152",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Richard%20Rothwell%20(1800-1868)%20-%20Mary%20Wollstonecraft%20Shelley%20-%20NPG%201235%20-%20National%20Portrait%20Gallery.jpg?width=1200",
+  "credit": "Richard Rothwell, 1830s, gemeinfrei (Wikimedia Commons)",
+  "rotation": true,
+  "crop": [
+   0.25,
+   0.04,
+   0.55,
+   0.55
+  ],
+  "maxWorks": 16
+ },
+ {
+  "id": "willa-cather",
+  "author": "Willa Cather",
+  "item": "Q229480",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Willa%20Cather%20ca.%201912%20wearing%20necklace%20from%20Sarah%20Orne%20Jewett%20(cropped).jpg?width=1200",
+  "credit": "Photographer: Aime Dupont Studio, New York, 1912, gemeinfrei (Wikimedia Commons)",
+  "rotation": true,
+  "crop": [
+   0.18,
+   0.02,
+   0.66,
+   0.58
+  ],
+  "maxWorks": 16
+ },
+ {
+  "id": "virginia-woolf",
+  "author": "Virginia Woolf",
+  "item": "Q40909",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Charles%20Beresford%20-%20Virginia%20Woolf%20in%201902%20-%20Restoration.jpg?width=1200",
+  "credit": "George Charles Beresford / Adam Cuerden, 1902, gemeinfrei (Wikimedia Commons)",
+  "rotation": true
+ },
+ {
+  "id": "emily-bronte",
+  "author": "Emily Brontë",
+  "item": "Q80137",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Emily%20Bront%C3%AB%20by%20Patrick%20Branwell%20Bront%C3%AB%20restored.jpg?width=1200",
+  "credit": "Patrick Branwell Brontë, um 1833, restauriert — gemeinfrei (Wikimedia Commons)",
+  "rotation": true,
+  "maxWorks": 16
+ },
+ {
+  "id": "george-eliot",
+  "author": "George Eliot",
+  "item": "Q131333",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Eliot%2C%20por%20Fran%C3%A7ois%20D'Albert%20Durade.jpg?width=1200",
+  "credit": "replica by François D’Albert Durade (1804–1886), 1849–1886, based on a work of 1849, gemeinfrei (Wikimedia Commons)",
+  "rotation": true,
+  "crop": [
+   0.25,
+   0.04,
+   0.5,
+   0.5
+  ]
+ },
+ {
+  "id": "edith-wharton",
+  "author": "Edith Wharton",
+  "item": "Q276032",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Edith%20Newbold%20Jones%20Wharton%20(cropped%2003).jpg?width=1200",
+  "credit": "E. F. Cooper, Newport, Rhode Island, between circa 1889 and circa 1890, gemeinfrei (Wikimedia Commons)",
+  "rotation": true
+ },
+ {
+  "id": "frances-hodgson-burnett",
+  "author": "Frances Hodgson Burnett",
+  "item": "Q276028",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Frances%20Burnett.jpg?width=1200",
+  "credit": "Herbert Rose Barraud (1845-1896), gemeinfrei (Wikimedia Commons)",
+  "rotation": true,
+  "maxWorks": 16
+ },
+ {
+  "id": "victor-hugo",
+  "author": "Victor Hugo",
+  "item": "Q535",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Victor%20Hugo%20by%20%C3%89tienne%20Carjat%201876%20-%20full.jpg?width=1200",
+  "credit": "Étienne Carjat, 1876, gemeinfrei (Wikimedia Commons)",
+  "rotation": false,
+  "crop": [
+   0.25,
+   0.03,
+   0.55,
+   0.5
+  ]
+ },
+ {
+  "id": "h-g-wells",
+  "author": "H. G. Wells",
+  "item": "Q42511",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/H.G.%20Wells%20by%20Beresford.jpg?width=1200",
+  "credit": "George Charles Beresford, 1920, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "lewis-carroll",
+  "author": "Lewis Carroll",
+  "item": "Q38082",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/LewisCarrollSelfPhoto.jpg?width=1200",
+  "credit": "Lewis Carroll, Taken on 2 June 1857, gemeinfrei (Wikimedia Commons)",
+  "rotation": false,
+  "crop": [
+   0.28,
+   0.04,
+   0.58,
+   0.5
+  ]
+ },
+ {
+  "id": "joseph-conrad",
+  "author": "Joseph Conrad",
+  "item": "Q82925",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Joseph%20Conrad-remastered%20to%20black%20and%20white.png?width=1200",
+  "credit": "George Charles Beresford, 1904, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "walt-whitman",
+  "author": "Walt Whitman",
+  "item": "Q81438",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Walt%20Whitman%20-%20George%20Collins%20Cox.jpg?width=1200",
+  "credit": "George Collins Cox / Adam Cuerden, 1887, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "bram-stoker",
+  "author": "Bram Stoker",
+  "item": "Q36184",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Bram%20Stoker%201906.jpg?width=1200",
+  "credit": "unidentified photographer, circa 1906, gemeinfrei (Wikimedia Commons)",
+  "rotation": false,
+  "crop": [
+   0.3,
+   0.03,
+   0.52,
+   0.48
+  ]
+ },
+ {
+  "id": "rudyard-kipling",
+  "author": "Rudyard Kipling",
+  "item": "Q34743",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Kipling%20nd.jpg?width=1200",
+  "credit": "Bain News Service, publisher, Undated, but judging by this circa 1899, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "alexandre-dumas",
+  "author": "Alexandre Dumas",
+  "item": "Q38337",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Alexander%20Dumas%20p%C3%A8re%20par%20Nadar%20-%20Google%20Art%20Project.jpg?width=1200",
+  "credit": "Nadar, 1855, gemeinfrei (Wikimedia Commons)",
+  "rotation": false,
+  "crop": [
+   0.28,
+   0.02,
+   0.55,
+   0.5
+  ]
+ },
+ {
   "id": "fyodor-dostoevsky",
   "author": "Fyodor Dostoevsky",
   "item": "Q991",
@@ -219,10 +311,9 @@
  {
   "id": "franz-kafka",
   "author": "Franz Kafka",
-  "item": "",
-  "target": "",
-  "credit": "",
-  "skipped": "too small (330x440)",
+  "item": "Q905",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Kafka1906%20cropped.jpg?width=1200",
+  "credit": "Atelier Jacobi: Sigismund Jacobi (1860–1935), circa 1906, gemeinfrei (Wikimedia Commons)",
   "rotation": false
  },
  {
@@ -234,20 +325,11 @@
   "rotation": false
  },
  {
-  "id": "jane-austen",
-  "author": "Jane Austen",
-  "item": "Q36322",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/CassandraAusten-JaneAusten(c.1810)%20hires.jpg?width=1200",
-  "credit": "Cassandra Austen, circa 1810, gemeinfrei (Wikimedia Commons)",
-  "rotation": false
- },
- {
   "id": "emily-dickinson",
   "author": "Emily Dickinson",
-  "item": "",
-  "target": "",
-  "credit": "",
-  "skipped": "too small (352x432)",
+  "item": "Q4441",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Emily%20Dickinson%20daguerreotype%20(Restored%2C%20cropped%2C%20blown%20up%2C%20sepia).jpg?width=1200",
+  "credit": "Unknown author, circa 1848, gemeinfrei (Wikimedia Commons)",
   "rotation": false
  },
  {
@@ -262,10 +344,9 @@
  {
   "id": "anton-chekhov",
   "author": "Anton Chekhov",
-  "item": "",
-  "target": "",
-  "credit": "",
-  "skipped": "too small (332x470)",
+  "item": "Q5685",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Anton%20Chekhov%20with%20bow-tie%20sepia%20image.jpg?width=1200",
+  "credit": "Unknown author, 1900, gemeinfrei (Wikimedia Commons)",
   "rotation": false
  },
  {
@@ -293,11 +374,76 @@
   "rotation": false
  },
  {
-  "id": "edith-wharton",
-  "author": "Edith Wharton",
-  "item": "Q276032",
-  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Edith%20Newbold%20Jones%20Wharton%20(cropped%2003).jpg?width=1200",
-  "credit": "E. F. Cooper, Newport, Rhode Island, between circa 1889 and circa 1890, gemeinfrei (Wikimedia Commons)",
+  "id": "elizabeth-gaskell",
+  "author": "Elizabeth Gaskell",
+  "item": "Q229226",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Elizabeth%20Gaskell.jpg?width=1200",
+  "credit": "George Richmond, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "beatrix-potter",
+  "author": "Beatrix Potter",
+  "item": "Q214565",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Beatrix%20Potter%20by%20King%20cropped.jpg?width=1200",
+  "credit": "Charles G.Y. King (1854-1937), 1913-05, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "kate-chopin",
+  "author": "Kate Chopin",
+  "item": "",
+  "target": "",
+  "credit": "",
+  "rotation": false,
+  "skipped": "too small (207x296)"
+ },
+ {
+  "id": "harriet-beecher-stowe",
+  "author": "Harriet Beecher Stowe",
+  "item": "Q102513",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Beecher-Stowe.jpg?width=1200",
+  "credit": "not specified, circa 1870, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "katherine-mansfield",
+  "author": "Katherine Mansfield",
+  "item": "Q270632",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Mansfield%201917%20cropped.jpg?width=1200",
+  "credit": "Ottoline Morrell (1873-1938), between 1916 and 1917, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "selma-lagerlof",
+  "author": "Selma Lagerlöf",
+  "item": "Q44519",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Atelje%20Jaeger%20-%20Selma%20Lagerl%C3%B6f%201928.jpeg?width=1200",
+  "credit": "Atelier Jaeger, 1922, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "christina-rossetti",
+  "author": "Christina Rossetti",
+  "item": "Q236596",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Christina%20Rossetti%204.jpg?width=1200",
+  "credit": "Dante Gabriel Rossetti, 1877, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "anna-sewell",
+  "author": "Anna Sewell",
+  "item": "Q258741",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Anna%20Sewell%20Jugendbild.PNG?width=1200",
+  "credit": "Unknown author, circa 1840, gemeinfrei (Wikimedia Commons)",
+  "rotation": false
+ },
+ {
+  "id": "edna-st-vincent-millay",
+  "author": "Edna St. Vincent Millay",
+  "item": "Q62134",
+  "target": "https://commons.wikimedia.org/wiki/Special:FilePath/Edna%20St.%20Vincent%20Millay.jpg?width=1200",
+  "credit": "en:Carl Van Vechten (1880-1964), 1933-01-14, gemeinfrei (Wikimedia Commons)",
   "rotation": false
  }
 ]

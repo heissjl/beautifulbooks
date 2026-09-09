@@ -155,23 +155,34 @@ async function coverBytes(cover: Cover): Promise<Uint8Array> {
   }
 }
 
-/** Downloads with a small pool; a cover that will not load is simply left out. */
-async function fetchAll(covers: readonly Cover[], concurrency = 8): Promise<Map<string, Uint8Array>> {
-  const out = new Map<string, Uint8Array>();
+/**
+ * Downloads with a small pool. **A cover that will not load is left out and
+ * counted.**
+ *
+ * One missing cover costs one tile and is not worth stopping over. Two
+ * hundred missing covers are not a thin book, they are an outage — measured
+ * on 2026-09-09, a run under a rate limit produced „101 covers, 1 design"
+ * for *The Mill on the Floss* and a George Eliot mosaic made of **two**
+ * pictures, and nothing in the run said so. That is the failure-as-finding
+ * this repository is not allowed to make, so the count comes back with the
+ * bytes and the caller decides.
+ */
+async function fetchAll(covers: readonly Cover[], concurrency = 8): Promise<{ bytes: Map<string, Uint8Array>; failed: number }> {
+  const bytes = new Map<string, Uint8Array>();
+  let failed = 0;
   const queue = [...covers];
   const worker = async () => {
     while (queue.length > 0) {
       const cover = queue.shift()!;
       try {
-        out.set(cover.id, await coverBytes(cover));
+        bytes.set(cover.id, await coverBytes(cover));
       } catch {
-        // Left out on purpose: a missing cover costs one tile, and stopping
-        // the run over it would cost the picture.
+        failed++;
       }
     }
   };
   await Promise.all(Array.from({ length: Math.min(concurrency, covers.length) }, worker));
-  return out;
+  return { bytes, failed };
 }
 
 export interface Palette {
@@ -181,6 +192,10 @@ export interface Palette {
   signatures: Map<string, ImageSignature>;
   /** How many works could not be loaded in full because Open Library stopped answering. */
   incomplete: number;
+  /** Cover images that were listed and then did not arrive. */
+  failedImages: number;
+  /** Cover images that did arrive, whether or not they became a tile. */
+  fetchedImages: number;
 }
 
 /**
@@ -192,7 +207,7 @@ export interface Palette {
  */
 async function fetchWork(workId: string, maxPages: number, log: Log) {
   const loaded = await workCovers(workId, maxPages, log);
-  return { loaded, bytes: await fetchAll(loaded.covers) };
+  return { loaded, ...await fetchAll(loaded.covers) };
 }
 
 /**
@@ -218,6 +233,8 @@ export async function loadPalette(workIds: readonly string[], maxPages = 12, log
   const signatures = new Map<string, ImageSignature>();
   const covers: Cover[] = [];
   let incomplete = 0;
+  let failedImages = 0;
+  let fetchedImages = 0;
 
   const fetched = new Array<Awaited<ReturnType<typeof fetchWork>> | { error: string }>(workIds.length);
   const queue = workIds.map((id, index) => ({ id, index }));
@@ -239,8 +256,10 @@ export async function loadPalette(workIds: readonly string[], maxPages = 12, log
       incomplete++;
       continue;
     }
-    const { loaded: { title, covers: workCoverList, editions, complete }, bytes } = result;
+    const { loaded: { title, covers: workCoverList, editions, complete }, bytes, failed } = result;
     if (!complete) incomplete++;
+    failedImages += failed;
+    fetchedImages += bytes.size;
     const sigs = new Map<string, ImageSignature>();
     for (const [id, data] of bytes) {
       const sig = signature(data);
@@ -262,10 +281,14 @@ export async function loadPalette(workIds: readonly string[], maxPages = 12, log
       tiles.push(tileOf(cover.id, image));
       added++;
     }
-    log(`  ${title}: ${workCoverList.length} covers, ${folded.length} designs, ${added} tiles${complete ? '' : ' (partial)'}`);
+    log(
+      `  ${title}: ${workCoverList.length} covers, ${folded.length} designs, ${added} tiles`
+      + (failed > 0 ? `, ${failed} images did not arrive` : '')
+      + (complete ? '' : ' (partial)'),
+    );
   }
   if (tiles.length === 0) throw new Error('no covers loaded; Open Library answered nothing');
-  return { tiles, images, covers, signatures, incomplete };
+  return { tiles, images, covers, signatures, incomplete, failedImages, fetchedImages };
 }
 
 /**

@@ -57,6 +57,16 @@ export interface Template {
   /** In the twenty that are built, or held in reserve behind them. */
   rotation?: boolean;
   /**
+   * How many of the author's works to take, when eight is not enough.
+   *
+   * Eight is plenty for Dickens and thin for Frances Hodgson Burnett, whose
+   * books were printed often but under few different jackets. A palette
+   * under about 250 covers shows in the picture (2026-09-09), and the
+   * cheapest way to widen it is to read further down the author's shelf.
+   */
+  maxWorks?: number;
+
+  /**
    * The part of the portrait the mosaic is built from, as fractions of the
    * source: `[x, y, width, height]`.
    *
@@ -156,8 +166,14 @@ async function licenceOf(file: string): Promise<{ credit: string } | { skipped: 
   const meta = info.extmetadata ?? {};
   const licence = meta.LicenseShortName?.value ?? '';
   if (!isPublicDomain(licence)) return { skipped: `not public domain (${licence || 'no licence field'})` };
-  // A portrait smaller than the mosaic's own grid has nothing to give it.
-  if (info.width < 500 || info.height < 500) return { skipped: `too small (${info.width}x${info.height})` };
+  /*
+    A portrait smaller than the mosaic's own grid has nothing to give it — and
+    that grid is 40 by 36 cells, so 300 px is already eight pixels per cell,
+    which is more than the mean of a cell can use. The first threshold here
+    was 500 and it threw out Kafka, Katherine Mansfield, Willa Cather and
+    Christina Rossetti for no reason a reader could have seen (2026-09-09).
+  */
+  if (info.width < 300 || info.height < 300) return { skipped: `too small (${info.width}x${info.height})` };
   return { credit: [plain(meta.Artist?.value), plain(meta.DateTimeOriginal?.value), 'gemeinfrei (Wikimedia Commons)'].filter(Boolean).join(', ') };
 }
 

@@ -16,7 +16,7 @@
  * is that person — is **reported and skipped**, never quietly left out of the
  * summary. The rotation is only as long as the summary says it is.
  */
-import { readFile, stat } from 'node:fs/promises';
+import { readFile, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { worksOfAuthor } from '../mosaic/covers';
 import { buildTemplate, type Manifest, type Options } from './template';
@@ -91,7 +91,7 @@ function table(rows: Row[]): string {
 async function check(templates: Template[]) {
   for (const t of templates) {
     try {
-      const works = await worksOfAuthor(t.openLibrary ?? t.author, SETTINGS.maxWorks, () => {});
+      const works = await worksOfAuthor(t.openLibrary ?? t.author, t.maxWorks ?? SETTINGS.maxWorks, () => {});
       const editions = works.reduce((sum, w) => sum + w.editionCount, 0);
       console.log(
         `${t.id.padEnd(22)} ${String(works.length).padStart(2)} works, `
@@ -141,6 +141,7 @@ async function main() {
       author: t.openLibrary ?? t.author,
       name: t.author,
       works: [], id: t.id, target: t.target, credit: t.credit, crop: t.crop,
+      maxWorks: t.maxWorks ?? SETTINGS.maxWorks,
     };
     try {
       const manifest = await buildTemplate(options);
@@ -158,6 +159,16 @@ async function main() {
   }
 
   const built = rows.filter(r => !r.failed);
+  /*
+    The index **is** the rotation, so it is written from what this run built
+    rather than added to. A template taken out of `templates.json` has to
+    disappear from the rotation, or the site keeps offering a picture that
+    nothing points at any more.
+  */
+  await writeFile(
+    path.join(OUT_DIR, 'index.json'),
+    `${JSON.stringify(built.map(r => ({ id: r.id, author: r.author, file: `${r.id}.json` })), null, 1)}\n`,
+  );
   const totalBytes = built.reduce((sum, r) => sum + r.bytes.reduce((a, b) => a + b, 0), 0);
   console.log(`\n${table(rows)}`);
   const phone = built.map(r => r.bytes[0]).filter(b => b > 0);

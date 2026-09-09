@@ -238,11 +238,29 @@ export async function buildTemplate(options: Options, log: Log = line => console
   const works: WorkRef[] = options.author
     ? await worksOfAuthor(options.author, options.maxWorks, log)
     : options.works.map(id => ({ id, title: id, editionCount: 0, author: '' }));
-  const { tiles, images, covers, signatures, incomplete } = await loadPalette(works.map(w => w.id), options.maxPages, log);
+  const { tiles, images, covers, signatures, incomplete, failedImages, fetchedImages } =
+    await loadPalette(works.map(w => w.id), options.maxPages, log);
   log(
     `${tiles.length} tiles from ${works.length} work${works.length === 1 ? '' : 's'}`
-    + (incomplete > 0 ? `, ${incomplete} of them incomplete because Open Library stopped answering` : ''),
+    + (failedImages > 0 ? `, ${failedImages} cover images did not arrive` : '')
+    + (incomplete > 0 ? `, ${incomplete} works incomplete because Open Library stopped answering` : ''),
   );
+  /*
+    **A picture is not built out of an outage.**
+
+    Measured on 2026-09-09: under a rate limit the cover CDN refused most of
+    the requests, and a George Eliot mosaic came out of **two** covers with
+    nothing in the run saying so — the log read "101 covers, 1 design" and
+    the summary read like a thin book. Half is a generous line; a healthy run
+    loses a few per cent.
+  */
+  const listed = fetchedImages + failedImages;
+  if (listed > 0 && fetchedImages / listed < 0.5) {
+    throw new Error(
+      `only ${fetchedImages} of ${listed} cover images arrived — that is an outage, not a palette. `
+      + 'Wait for the source to recover and build this template again.',
+    );
+  }
 
   const { image: full, what } = await targetImage(options.target, covers, signatures);
   // A hand-set frame first, where the portrait needed one, then the ratio.
