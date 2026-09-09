@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { quantiseLuminance, revealOrder, rng, shuffledSources, toBase64 } from '../orders';
+import { frameHeight, pickImage, pickTemplate, revealOrder, rng, shuffledSources, unpackBytes } from '../loading';
 
 /** A 4x3 grid: dark on the left, bright on the right, mid in between. */
 const lum = new Uint8Array([
@@ -60,15 +60,53 @@ describe('shuffledSources', () => {
   });
 });
 
-describe('packing', () => {
-  it('quantises luminance into a byte and clamps what does not fit', () => {
-    expect([...quantiseLuminance([-4, 0.4, 127.6, 255, 300])]).toEqual([0, 0, 128, 255, 255]);
+describe('unpackBytes', () => {
+  it('reads back what a manifest carries', () => {
+    expect([...unpackBytes(btoa('\u0000\u0001\u00ff'))]).toEqual([0, 1, 255]);
+  });
+});
+
+describe('pickImage', () => {
+  const images = [480, 640].map(width => ({
+    file: `x-${width}.jpg`, width, height: width, cellWidth: 12, cellHeight: 18, bytes: width * 200,
+  }));
+
+  it('takes the small file for a phone frame, even at two device pixels', () => {
+    // 260 x 2 x 0.8 = 416, and 480 covers that. Without the tolerance this
+    // would ask for 520 and pay 60 % more for pixels nobody can point at.
+    expect(pickImage(images, 260, 2).width).toBe(480);
   });
 
-  it('round-trips through base64', () => {
-    const data = revealOrder('extreme', lum, 4, 3);
-    const bytes = Uint8Array.from(atob(toBase64(data)), c => c.charCodeAt(0));
-    expect([...new Uint16Array(bytes.buffer)]).toEqual([...data]);
+  it('takes the large file for a desktop frame', () => {
+    expect(pickImage(images, 420, 2).width).toBe(640);
+  });
+
+  it('never asks for more than two device pixels', () => {
+    expect(pickImage(images, 260, 3).width).toBe(480);
+  });
+
+  it('falls back to the largest when nothing is big enough', () => {
+    expect(pickImage(images, 900, 2).width).toBe(640);
+  });
+});
+
+describe('frameHeight', () => {
+  it('gets the shape from the grid alone, before any picture is loaded', () => {
+    // 40 cells across, 36 down, each 2:3 -> 4:3 tall.
+    expect(frameHeight(40, 36, 260)).toBe(351);
+  });
+});
+
+describe('pickTemplate', () => {
+  const rotation = [{ id: 'a', author: 'A' }, { id: 'b', author: 'B' }, { id: 'c', author: 'C' }];
+
+  it('picks by the number it is given', () => {
+    expect(pickTemplate(rotation, () => 0)?.id).toBe('a');
+    expect(pickTemplate(rotation, () => 0.99)?.id).toBe('c');
+  });
+
+  it('has nothing to pick from an empty rotation', () => {
+    expect(pickTemplate([], () => 0)).toBeUndefined();
   });
 });
 

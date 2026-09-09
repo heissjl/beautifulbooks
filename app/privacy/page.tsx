@@ -118,13 +118,14 @@ export default function PrivacyPage() {
 
         <Section title="What is kept in your browser">
           <p>
-            Three small things, all of them only on your device and none of them sent anywhere:
+            Four small things, all of them only on your device and none of them sent anywhere:
             your last searches (so the box can offer them again), the covers shown in the loading
-            animation of the page you are on (cleared when the tab closes), and the market you chose
-            for the shop links, which is also set as a cookie named &ldquo;market&rdquo; so the
-            server can build the right links. Each exists only to provide something you asked for,
-            which is why no consent is required (§ 25(2) TDDDG). Clearing your browser&rsquo;s site
-            data removes all three.
+            animation of the page you are on (cleared when the tab closes), which of the loading
+            pictures you were shown (also cleared when the tab closes, so a search does not fetch
+            a new picture every time), and the market you chose for the shop links, which is also
+            set as a cookie named &ldquo;market&rdquo; so the server can build the right links.
+            Each exists only to provide something you asked for, which is why no consent is
+            required (§ 25(2) TDDDG). Clearing your browser&rsquo;s site data removes all four.
           </p>
         </Section>
 
