@@ -58,7 +58,7 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt — nicht nach Auf
 | 6 | **6.8 „All languages"-Pille** | ein bis zwei Stunden | Die Wand als Ganzes ansehen zu können, ohne sich durch die Reiter zu klicken. Klar spezifiziert, keine Abhängigkeit |
 | 7 | **6.2 Den Titel zeigen, nach dem gesucht wurde** | eine Sitzung | `crime and punishment` zeigt «Преступление и наказание». Zu klären ist zuerst, woher die Ausgabentitel für die Karte kommen — `?summary=1` trägt sie heute nicht |
 
-**Sieben Punkte sind am Abend des 2026-09-09 dazugekommen**, alle aus Julians Blick auf den lokalen Stand: **1.11a** (ISBN-Link statt Verlagssuche), **6.14a** (die Scan-Reihe scrollt seitwärts, kürzerer Satz), **6.24** (Zurück von der Jahrzehnte-Seite spielt die Ladeszene erneut ab), **6.25** (leere Kacheln — mit dem Mechanismus, den 1.3 heute neu geschaffen hat), **6.26** (die kuratierte Liste muss sich perfekt anfühlen) und **4.9** (Spendenseite mit offengelegten Kosten). **6.25 ist der dringendste davon**, weil er als einziger auf einen Fehler zeigt, den heute niemand ausschließen kann.
+**Acht Punkte sind am Abend des 2026-09-09 dazugekommen**, alle aus Julians Blick auf den lokalen Stand: **1.11a** (ISBN-Link statt Verlagssuche), **6.14a** (die Scan-Reihe scrollt seitwärts, kürzerer Satz), **6.24** (Zurück von der Jahrzehnte-Seite spielt die Ladeszene erneut ab), **6.25** (leere Kacheln — mit dem Mechanismus, den 1.3 heute neu geschaffen hat), **6.26** (die kuratierte Liste muss sich perfekt anfühlen) **4.9** (Spendenseite mit offengelegten Kosten) und **6.28** (Suchfeld in der Kopfzeile, das den alten Einzeiler zum Sticky-Suchfeld ersetzt). **6.25 ist der dringendste davon**, weil er als einziger auf einen Fehler zeigt, den heute niemand ausschließen kann.
 
 **Zwei Punkte haben heute an Wert verloren, ohne dass jemand sie angefasst hat** — das gehört festgehalten, sonst werden sie nach altem Stand eingeplant:
 
@@ -589,7 +589,6 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
 - [ ] Cover-Vergleich: zwei Ausgaben nebeneinander.
 - [ ] View Transitions zwischen Karte und Detailseite (das Cover „fliegt“ mit).
-- [ ] Sticky-Suchfeld auf dem Telefon.
 - [ ] Ladeszene: sanfter Übergang, wenn das Falten Kacheln umsortiert, sobald Signaturen eintreffen.
 - [ ] Feinjustierung nach Nutzung: Größe der Kacheln auf der Detailseite, Kontrast der Chips im Dark Mode.
 - [ ] Mosaik: gescannte Textseiten erkennen (bei *Dune* zwei von achtzig Bildern), nur wenn es sichtbar stört; die Kurzantwort hasht absichtlich nicht.
@@ -657,6 +656,20 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
   | Der Satz unter der Wand | „Covers come from Open Library and Google Books. Most edition records carry no scan…" — hält N13 bereits ein, dient als Muster |
 
   **Nicht betroffen ist die About-Seite** (N13 nimmt sie ausdrücklich aus): dort gehört die Arbeitsweise hin, und was aus der Oberfläche verschwindet, muss dort auffindbar bleiben. **Beim Durchgang mitprüfen**, dass keine Aussage ersatzlos wegfällt, die N12 verlangt — die Verneinung von Vollständigkeit ist keine Erklärung, sondern eine Einschränkung, und bleibt.
+
+- [ ] **6.28 Ein Suchfeld in der Kopfzeile, auf jeder Seite.** (Julian, 2026-09-09: „wenn man innerhalb einer buchseite, einer cover wall oder decade ist, muss es ganz oben in der leiste die suchleiste geben, damit man nicht erst zur startseite zurückwechseln muss vor einer neuen suche. spricht da was dagegen? auf mobil muss es vielleicht anders aussehen." *Der frühere Einzeiler „Sticky-Suchfeld auf dem Telefon" ist hierin aufgegangen.*)
+
+  **Dagegen spricht nichts Grundsätzliches, und ein Nebengewinn ist größer als der genannte Anlass:** `SiteHeader` ist bereits `sticky top-0`. Ein Feld dort ist also nicht nur ohne Umweg über die Startseite erreichbar, sondern **mitten aus einer Wand von 300 Covern heraus**, ohne hundert Reihen nach oben zu scrollen. Es bleibt außerdem während der Ladeszene bedienbar, weil die Kopfzeile durchgehend gerendert wird.
+
+  **Drei Dinge sind zu entscheiden, und eines davon ist ein echter Fund:**
+
+  1. **Der Zurück-Link heißt heute „‹ Search" — das geht dann nicht mehr.** Er führt zur *Trefferliste, aus der man kam, samt Query* (`backHrefFrom`), ein Suchfeld daneben fängt dagegen von vorn an. Zwei Bedienelemente, dasselbe Wort, verschiedene Wirkung: genau die Sorte stiller Doppeldeutigkeit, die 1.11 gerade bei „AbeBooks" beseitigt hat. Der Link muss umbenannt werden — „‹ Results" oder „‹ Back to results" —, sonst ist das Feld eine Verschlechterung.
+  2. **Auf dem Telefon passt es nicht daneben.** Bei 375 px trägt die Kopfzeile schon Zurück-Link, Wortmarke und Teilen-Knopf. Drei Wege: ein Lupensymbol, das das Feld über die Kopfzeile aufklappt; das Feld ersetzt auf inneren Seiten die Wortmarke; oder das Feld sitzt als zweite, ebenfalls angeheftete Zeile unter der Kopfzeile — das war der ursprüngliche Einzeiler. **Mitzudenken:** auf der Detailseite ist unten bereits die Peek-Leiste angeheftet (F2.11); mit einer zweiten Zeile oben hätte die Wand dann Möbel an beiden Rändern.
+  3. **Platz auf dem Rechner** ist da, sobald die Zeile „Covers, side by side." weicht — sie ist Zierde und unterhalb von `md` ohnehin ausgeblendet.
+
+  **Was vorher billig zu klären ist:** **0.8** (geht Enter im Suchfeld überhaupt?) ist bis heute unbeantwortet. Ein Feld auf jeder Seite vervielfacht, was dabei herauskommt — also erst prüfen, dann verteilen. Der Preis an Client-Code ist dagegen klein: `SearchBar` ist eine Client-Komponente mit `useRecentSearches` (localStorage), und die Jahrzehnte-Seite hydriert wegen `CoverImage` ohnehin schon.
+
+  **Nicht mit hineinnehmen:** die Sprach-Pillen. Auf der Startseite gehören sie zum Feld, in einer Kopfzeile wären sie eine zweite Reihe für eine Einstellung, die auf einer Detailseite nichts tut. Ein halber Tag, Claude — nach 0.8.
 
 - [ ] **6.24 Der Zurück-Knopf von der Jahrzehnte-Seite spielt die Ladeszene noch einmal ab.** (Julian, 2026-09-09: „wenn ich per browser zurück-taste von der decade wall zurück zur cover wall komme, will ich nicht erneut den ladebildschirm mit den 4 covern sehen.")
 
