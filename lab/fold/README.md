@@ -47,6 +47,10 @@ Warum die Bitmaske sogar schadet: auf flächigen Umschlägen bleibt fast kein �
 2. **Was Julian sah, war kein Schwellenproblem.** Die Jahrzehnte-Seite faltete **gar nicht** (`dedupeCovers: false`, weil serverseitiges Hashen die Seite in Produktion umbrachte). Sie faltet jetzt aus dem gebauten Index — dieselbe Regel wie die Wand, ohne eine einzige Anfrage.
 3. **Offen bleibt** ein Deskriptor, der Gestaltung von Motivähnlichkeit trennt. Diese Messung sagt nur, welche vier Wege es nicht sind. **17 beurteilte Paare sind wenig** — wer hier weitergeht, labelt zuerst mehr, bevor er baut.
 
+## Wie es weitergeht
+
+Julian sieht die Dubletten weiterhin (2026-09-09, nach dieser Messung): „ich sehe zu oft gleiche cover in leicht verschiedenen farbtönen oder mit scan-fehlern. Eine möglichkeit wäre ein sehr kleines neuronales netzwerk, dass nur für diese cover-unterscheidung zuständig ist." Das ist **ROADMAP 6.23** und beginnt nicht mit einem Modell, sondern mit zwei billigeren Schritten: nachsehen, ob es das Hash-Zeitbudget statt der Schwelle ist (6.12), und Labels sammeln — 17 Paare sind eine Stichprobe, keine Trainingsmenge. Erst danach ein vortrainiertes Embedding, und erst wenn das nicht reicht, ein eigenes Netz.
+
 ## Stand
 
 Gemessen am 2026-09-09. Kein Code der Website stammt aus diesem Ordner; die Folge dieser Messung war eine Zeile in `app/book/[id]/decades/page.tsx` und eine in `scripts/find-decade-pages.ts`.
