@@ -433,9 +433,12 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
   | Kandidat | Was sich ändert | Was es kostet |
   |---|---|---|
   | **Heute · Terrakotta** | nichts, die Referenz | steht am nächsten an den Rot- und Ockertönen der Cover und konkurriert dort am ehesten mit ihnen |
+  | **Terrakotta, sanfter** (Julian, 2026-09-09: „baue ein sanfteres terrakotta") | `#945138` hell, `#dbac94` dunkel: Sättigung 61 → 45, Helligkeit 43 → 40, Farbwinkel unverändert bei 16 | nichts — im Gegenteil: der Kontrast steigt von **4,56 auf 5,29** |
   | **Tinte** | gar keine Akzentfarbe; der Akzent ist dieselbe Tinte wie der Text | alle Farbe kommt von den Covern, was das Produktversprechen ist — aber Knöpfe und Fokusringe müssen ihre Sichtbarkeit aus Form holen, und die Seite wird strenger |
   | **Indigo** | kühler Akzent auf demselben Papier | tritt hinter die Wand zurück, weil kein Cover dieses Blau trägt; verliert die Wärme, die Papier und Akzent heute gemeinsam erzeugen |
   | **Olive** | gedämpfter Akzent **und** kühleres Papier — der einzige, der die Grundfarbe anfasst | die Wand wirkt kühler beleuchtet und die Cover wärmer; das Papier verliert seinen Charakter und nähert sich Weiß |
+
+  **Warum das sanftere Terrakotta zugleich dunkler ist, und das ist kein Geschmack:** das heutige `#b1502b` hält mit **4,56** nur knapp WCAG AA. Reines Entsättigen fällt darunter — gemessen: `#a85c40` 4,33, `#a1614a` 4,27, `#9d6552` 4,18. Weicher wird es also nur über die Helligkeit, und der Umweg bringt zum ersten Mal Reserve. Wer den Ton später noch weiter beruhigen will, muss ihn weiter abdunkeln, sonst wird aus dem Akzent ein Barrierefreiheitsfehler.
 
   **Ein Befund beim Bauen der Mockups überholt die Farbfrage: `ink-3` verfehlt heute WCAG AA.** Gemessen 3,28 im hellen und 4,14 im dunklen Modus gegen die 4,5, die normaler Text braucht — und `ink-3` trägt die Metadatenzeilen und die Verdikt-Hinweise bei 11–12 px, die Ausnahme für großen Text greift also nicht. Die nächstliegenden bestehenden Werte sind `#746c62` (4,55) und `#837b6f` (4,51), kaum ein Schattenunterschied; deshalb ist es nie jemandem aufgefallen. **Das gehört korrigiert, welcher Akzent auch immer gewinnt.** Die drei Vorschläge tragen es bereits, „Heute" absichtlich nicht — sonst zeigte die Tabelle nicht, was ausgeliefert wird.
 

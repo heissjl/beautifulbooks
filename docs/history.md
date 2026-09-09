@@ -1274,3 +1274,21 @@ Vier Kandidaten: **Heute** (Terrakotta, als Referenz), **Tinte** (gar keine Akze
 Nebenbei hat die Tabelle mich selbst korrigiert: die erste Fassung prüfte auch `line auf bg` gegen eine erfundene Schwelle von 1,5 und meldete sie als Durchfaller. Eine 1-px-Trennlinie ist kein Text und keine bedeutungstragende Bedienelementgrenze; WCAG verlangt dafür nichts. Sie steht jetzt zur Anschauung da, nicht als Prüfung — sonst hätte ein erfundener Fehler den echten überdeckt.
 
 **Was das Werkzeug kostet: nichts.** Die Cover kommen aus `data/cover-index.json`, es wird nichts gesucht und Google gar nicht gefragt (E10). Mit `--base http://localhost:3000/img` laufen die Bilder über die eigene Bildroute aus 1.3 und die Seite steht sofort; ohne sie lädt der Browser direkt von Open Library, was 6 bis 16 Sekunden je Bild dauern kann — das ist der Preis dafür, dass die committete Fassung ohne laufenden Server funktioniert. `--embed` legt die Bilder als Data-URIs hinein und macht die Datei verschickbar (2,6 MB).
+
+### Nachtrag: ein sanfteres Terrakotta, und warum es dunkler sein muss
+
+Julian am selben Tag: „baue ein sanfteres terrakotta." Der Ton ist `#945138` hell und `#dbac94` dunkel — Farbwinkel unverändert bei 16, Sättigung von 61 auf 45, Helligkeit von 43 auf 40. Erkennbar dasselbe Terrakotta, nur ohne die Schärfe.
+
+**Dass es dabei dunkler wird, ist kein Geschmacksurteil, sondern Zwang.** Das heutige `#b1502b` hält mit **4,56** nur knapp WCAG AA auf Papier. Jedes reine Entsättigen fällt darunter, gemessen an vier Zwischenschritten:
+
+| | Sättigung | Kontrast auf Papier |
+|---|---|---|
+| `#b1502b` (heute) | 61 | 4,56 |
+| `#a85c40` | 45 | **4,33** |
+| `#a1614a` | 37 | **4,27** |
+| `#9d6552` | 31 | **4,18** |
+| `#945138` (Vorschlag) | 45 | **5,29** |
+
+Der Unterschied zwischen Zeile 2 und Zeile 5 ist allein die Helligkeit. Weicher geht also nur über sie — und der Umweg bringt dem Akzent zum ersten Mal Reserve statt der knappen 0,06 über der Schwelle. Wer den Ton später weiter beruhigen will, muss ihn weiter abdunkeln.
+
+Nebenbei zeigt die Suche, warum „sanft" allein kein Ziel ist: die entsättigtsten Töne, die AA mit Reserve halten, liegen bei Sättigung 22 und Helligkeit 30 (`#5d413c` und Nachbarn) — die lesen sich nicht mehr als Terrakotta, sondern als Braun.

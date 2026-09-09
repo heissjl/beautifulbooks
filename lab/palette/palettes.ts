@@ -80,6 +80,19 @@ export const CANDIDATES: Candidate[] = [
     dark: TODAY_DARK,
   },
   {
+    id: 'terracotta-soft',
+    name: 'Terrakotta, sanfter',
+    claim:
+      'Julians Wunsch vom 2026-09-09: derselbe Ton, nur weicher. Die Sättigung fällt von 61 auf 45 '
+      + 'und die Helligkeit von 43 auf 40, der Farbwinkel bleibt bei 16 — es ist erkennbar dasselbe '
+      + 'Terrakotta, nur ohne die Schärfe. Dass es dabei etwas dunkler wird, ist kein Geschmack, '
+      + 'sondern Zwang: das heutige #b1502b hält mit 4,56 nur knapp WCAG AA, jedes reine Entsättigen '
+      + 'fällt darunter. Der Umweg über die Helligkeit bringt den Kontrast auf 5,29 und damit zum '
+      + 'ersten Mal Reserve. Dunkel dieselbe Bewegung: Sättigung 69 auf 50, weniger Orange.',
+    light: { ...TODAY_LIGHT, ink3: INK3_AA_LIGHT, accent: '#945138', onAccent: '#fff8f2' },
+    dark: { ...TODAY_DARK, ink3: INK3_AA_DARK, accent: '#dbac94', onAccent: '#1a1210' },
+  },
+  {
     id: 'ink',
     name: 'Tinte · gar keine Akzentfarbe',
     claim:
