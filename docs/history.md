@@ -1041,3 +1041,13 @@ Julian wollte beide Wartezeiten angehen, für Rechner und Telefon. Das Messen vo
 **Warum die Kacheln klein, gedimmt und ohne Titel sind:** was während einer Suche auf dem Schirm steht, darf nicht wie deren Ergebnis aussehen. Das ist dieselbe Regel, nach der ein Ausfall nicht „nichts gefunden" heißen darf (N12), einen Schritt früher.
 
 **Das Riesenmosaik, Julians ursprünglicher Vorschlag, ist bewusst nicht gebaut.** Es bräuchte ein vorgerechnetes Bild im Bündel und wirft die Rechtefrage aus 5.5 auf: ein Mosaik ist ein abgeleitetes Werk aus fremden Covern, ihre Anzeige ist es nicht. Es bleibt als 6.19a offen und würde die Kacheln in genau einer Komponente ersetzen.
+
+## 2026-09-09 · Zwanzig Vorschläge, die keine waren (ROADMAP 6.18)
+
+Der zweite Lauf des Vorschlagsskripts lieferte zwanzig Bücher, von denen fast keines eines war: *Anne of Avonlea* statt *Anne of Green Gables*, *The Marvelous Land of Oz* statt *Oz*, „Gesammelte Werke in zeitlicher Folge", ein Kasten „The Hobbit & The Lord of the Rings [collection/set]" — und ein **Study Guide zu Zimbardos Luzifer-Effekt**, ausgerechnet auf einer Seite, deren Ranking Sekundärliteratur eigens nach hinten sortiert.
+
+**Die Ursache stand in einer Zeile:** das Skript nahm den besten *unbekannten* Treffer statt des gesuchten Buchs. Solange das Buch neu war, stimmte das. War es längst in der Liste, stieg die Suche zum Nächstbesten ab — und das ist bei einem bekannten Titel per Definition sein Beiwerk. **Ein Filter, der „schon bekannt" mit „nimm etwas anderes" beantwortet, erzeugt genau den Müll, den das Ranking mühsam nach unten sortiert.**
+
+Behoben, indem der Treffer jetzt *dasselbe Buch* sein muss: normalisierter Titel und Autorenschlüssel müssen zum Startpunkt passen, Sammelbände (`/` im Titel, „collected", „gesammelte", eckige Klammern) und Sekundärliteratur fallen weg, und ein Startpunkt, dessen Buch die Liste schon kennt, wird **übersprungen** statt ersetzt. Der Lauf danach lieferte zwanzig echte Bücher: *A Wizard of Earthsea*, *Solaris*, *The Woman in White*, *Candide*, *Robinson Crusoe*, *Emma*, *The Sound and the Fury*.
+
+**Ein zweiter Fehler kam dabei heraus:** das Skript schrieb seine Funde, statt sie anzuhängen. Weil die schon bekannten Ids ausgeschlossen werden, fand der zweite Lauf nur die neuen — und überschrieb damit die fünfzig des ersten. Aufgefallen ist es nur, weil die Datei committet war und sich aus der Historie zurückholen ließ. Sie wird jetzt ergänzt, nie ersetzt.

@@ -448,5 +448,185 @@
     "readers": 415,
     "firstPublished": 1945,
     "note": "116 Ausgaben · 415 Leser · ab 1945"
+  },
+  {
+    "id": "OL59798W",
+    "title": "A Wizard of Earthsea",
+    "author": "Ursula K. Le Guin",
+    "editionCount": 87,
+    "readers": 1069,
+    "firstPublished": 1968,
+    "note": "87 Ausgaben · 1.069 Leser · ab 1968"
+  },
+  {
+    "id": "OL2163649W",
+    "title": "The Hitchhiker's Guide to the Galaxy",
+    "author": "Douglas Adams",
+    "editionCount": 132,
+    "readers": 2550,
+    "firstPublished": 1979,
+    "note": "132 Ausgaben · 2.550 Leser · ab 1979"
+  },
+  {
+    "id": "OL46241W",
+    "title": "I, Robot",
+    "author": "Isaac Asimov",
+    "editionCount": 99,
+    "readers": 1917,
+    "firstPublished": 1950,
+    "note": "99 Ausgaben · 1.917 Leser · ab 1950"
+  },
+  {
+    "id": "OL109524W",
+    "title": "Solaris",
+    "author": "Stanisław Lem",
+    "editionCount": 86,
+    "readers": 452,
+    "firstPublished": 1961,
+    "note": "86 Ausgaben · 452 Leser · ab 1961"
+  },
+  {
+    "id": "OL38501W",
+    "title": "Snow Crash",
+    "author": "Neal Stephenson",
+    "editionCount": 41,
+    "readers": 661,
+    "firstPublished": 1992,
+    "note": "41 Ausgaben · 661 Leser · ab 1992"
+  },
+  {
+    "id": "OL35616W",
+    "title": "Kindred",
+    "author": "Octavia E. Butler",
+    "editionCount": 34,
+    "readers": 643,
+    "firstPublished": 1979,
+    "note": "34 Ausgaben · 643 Leser · ab 1979"
+  },
+  {
+    "id": "OL35623W",
+    "title": "Parable of the Sower",
+    "author": "Octavia E. Butler",
+    "editionCount": 23,
+    "readers": 941,
+    "firstPublished": 1993,
+    "note": "23 Ausgaben · 941 Leser · ab 1993"
+  },
+  {
+    "id": "OL176045W",
+    "title": "The Woman in White",
+    "author": "Wilkie Collins",
+    "editionCount": 734,
+    "readers": 417,
+    "firstPublished": 1859,
+    "note": "734 Ausgaben · 417 Leser · ab 1859"
+  },
+  {
+    "id": "OL176092W",
+    "title": "The Moonstone",
+    "author": "Wilkie Collins",
+    "editionCount": 977,
+    "readers": 417,
+    "firstPublished": 1864,
+    "note": "977 Ausgaben · 417 Leser · ab 1864"
+  },
+  {
+    "id": "OL24156W",
+    "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+    "author": "Robert Louis Stevenson",
+    "editionCount": 428,
+    "readers": 1634,
+    "firstPublished": 1875,
+    "note": "428 Ausgaben · 1.634 Leser · ab 1875"
+  },
+  {
+    "id": "OL24034W",
+    "title": "Treasure Island",
+    "author": "Robert Louis Stevenson",
+    "editionCount": 2125,
+    "readers": 1246,
+    "firstPublished": 1880,
+    "note": "2.125 Ausgaben · 1.246 Leser · ab 1880"
+  },
+  {
+    "id": "OL52114W",
+    "title": "The War of the Worlds",
+    "author": "H. G. Wells",
+    "editionCount": 480,
+    "readers": 1447,
+    "firstPublished": 1898,
+    "note": "480 Ausgaben · 1.447 Leser · ab 1898"
+  },
+  {
+    "id": "OL52267W",
+    "title": "The Time Machine",
+    "author": "H. G. Wells",
+    "editionCount": 1151,
+    "readers": 1917,
+    "firstPublished": 1895,
+    "note": "1.151 Ausgaben · 1.917 Leser · ab 1895"
+  },
+  {
+    "id": "OL20201553W",
+    "title": "The Count of Monte Cristo",
+    "author": "Alexandre Dumas",
+    "editionCount": 26,
+    "readers": 13,
+    "firstPublished": 1888,
+    "note": "26 Ausgaben · 13 Leser · ab 1888"
+  },
+  {
+    "id": "OL15202030W",
+    "title": "Notre Dame de Paris",
+    "author": "Victor Hugo",
+    "editionCount": 268,
+    "readers": 388,
+    "firstPublished": 1831,
+    "note": "268 Ausgaben · 388 Leser · ab 1831"
+  },
+  {
+    "id": "OL100672W",
+    "title": "Candide",
+    "author": "Voltaire",
+    "editionCount": 1079,
+    "readers": 618,
+    "firstPublished": 1746,
+    "note": "1.079 Ausgaben · 618 Leser · ab 1746"
+  },
+  {
+    "id": "OL45089W",
+    "title": "Robinson Crusoe",
+    "author": "Daniel Defoe",
+    "editionCount": 2421,
+    "readers": 747,
+    "firstPublished": 1686,
+    "note": "2.421 Ausgaben · 747 Leser · ab 1686"
+  },
+  {
+    "id": "OL20600W",
+    "title": "Gulliver's Travels",
+    "author": "Jonathan Swift",
+    "editionCount": 1857,
+    "readers": 956,
+    "firstPublished": 1726,
+    "note": "1.857 Ausgaben · 956 Leser · ab 1726"
+  },
+  {
+    "id": "OL66513W",
+    "title": "Emma",
+    "author": "Jane Austen",
+    "editionCount": 2276,
+    "readers": 1324,
+    "firstPublished": 1815,
+    "note": "2.276 Ausgaben · 1.324 Leser · ab 1815"
+  },
+  {
+    "id": "OL82870W",
+    "title": "The Sound and the Fury",
+    "author": "William Faulkner",
+    "editionCount": 94,
+    "readers": 263,
+    "firstPublished": 1929,
+    "note": "94 Ausgaben · 263 Leser · ab 1929"
   }
 ]

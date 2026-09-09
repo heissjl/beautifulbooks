@@ -23,7 +23,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { search } from '../../lib/search';
-import { authorMatchKey } from '../../lib/normalize';
+import { authorMatchKey, looksLikeSecondaryLiterature, normalizeTitle } from '../../lib/normalize';
 
 const ROOT = join(import.meta.dirname, '..', '..');
 const OUT = join(import.meta.dirname, 'suggestions.json');
@@ -113,6 +113,28 @@ const SEEDS: Array<[title: string, author: string]> = [
   ['The Count of Monte Cristo', 'Alexandre Dumas'],
   ['Les Misérables', 'Victor Hugo'],
   ['Notre-Dame de Paris', 'Victor Hugo'],
+  // Zweite Runde, 2026-09-09: Klassiker, die noch fehlten, dazu Bildromane,
+  // deren Umschläge selbst Gestaltung sind.
+  ['Candide', 'Voltaire'],
+  ['Robinson Crusoe', 'Daniel Defoe'],
+  ["Gulliver's Travels", 'Jonathan Swift'],
+  ['Emma', 'Jane Austen'],
+  ['The Sound and the Fury', 'William Faulkner'],
+  ['As I Lay Dying', 'William Faulkner'],
+  ['Cry, the Beloved Country', 'Alan Paton'],
+  ['Voyage au bout de la nuit', 'Louis-Ferdinand Céline'],
+  ['La sombra del viento', 'Carlos Ruiz Zafón'],
+  ['Kafka on the Shore', 'Haruki Murakami'],
+  ['The Wind-Up Bird Chronicle', 'Haruki Murakami'],
+  ['Wide Sargasso Sea', 'Jean Rhys'],
+  ['The Golden Notebook', 'Doris Lessing'],
+  ['To the Lighthouse', 'Virginia Woolf'],
+  ['Le Deuxième Sexe', 'Simone de Beauvoir'],
+  ['Persepolis', 'Marjane Satrapi'],
+  ['Maus', 'Art Spiegelman'],
+  ['Watchmen', 'Alan Moore'],
+  ['The Handmaid’s Tale', 'Margaret Atwood'],
+  ['Oryx and Crake', 'Margaret Atwood'],
 ];
 
 export interface Suggestion {
@@ -157,11 +179,37 @@ async function main() {
       console.log(`  ? ${title}: ${(err as Error).message}`);
       continue;
     }
-    const hit = works.find(w => !skip.has(w.id) && (w.editionCount ?? 0) >= MIN_EDITIONS);
-    if (!hit) {
-      console.log(`  - ${title}: nothing new above ${MIN_EDITIONS} editions`);
+    /*
+      The hit must be *this* book, not merely the best thing the search had
+      left. The first version took the top unknown result, so a seed whose
+      book the list already knew descended to its leftovers: sequels, boxed
+      sets, collected works, and once a study guide (measured 2026-09-09).
+      A seed whose book is already in the list is now simply skipped.
+    */
+    const seedKey = normalizeTitle(title);
+    const authorKey = authorMatchKey(author);
+    const sameBook = (w: (typeof works)[number]) => {
+      const t = normalizeTitle(w.title);
+      const sameTitle = t === seedKey || t.startsWith(`${seedKey} `) || seedKey.startsWith(`${t} `);
+      const sameAuthor = authorMatchKey(w.authors[0] ?? '') === authorKey;
+      const collection = w.title.includes('/') || /\[|collected|gesammelte|works \(/i.test(w.title);
+      return sameTitle && sameAuthor && !collection && !looksLikeSecondaryLiterature(w.title);
+    };
+
+    const match = works.find(sameBook);
+    if (!match) {
+      console.log(`  - ${title}: no confident match`);
       continue;
     }
+    if (skip.has(match.id)) {
+      console.log(`  = ${title}: already in the list`);
+      continue;
+    }
+    if ((match.editionCount ?? 0) < MIN_EDITIONS) {
+      console.log(`  - ${title}: only ${match.editionCount} editions`);
+      continue;
+    }
+    const hit = match;
 
     skip.add(hit.id);
     perAuthor.set(key, (perAuthor.get(key) ?? 0) + 1);
@@ -182,8 +230,18 @@ async function main() {
     console.log(`  + ${hit.title} — ${hit.authors[0]} (${hit.editionCount} Ausgaben)`);
   }
 
-  writeFileSync(OUT, `${JSON.stringify(out, null, 2)}\n`);
-  console.log(`suggest: ${out.length} written to ${OUT}`);
+  /*
+    Appended, never replaced. The first version wrote only the run's own
+    finds, so a second run with --target=20 quietly threw away the fifty
+    before it — the ids were in `known()` and therefore not found again
+    (2026-09-09). New suggestions go to the end, which is also where the tool
+    shows them.
+  */
+  const before: Suggestion[] = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : [];
+  const seen = new Set(before.map(s => s.id));
+  const all = [...before, ...out.filter(s => !seen.has(s.id))];
+  writeFileSync(OUT, `${JSON.stringify(all, null, 2)}\n`);
+  console.log(`suggest: ${out.length} new, ${all.length} in ${OUT}`);
 }
 
 void main();

@@ -908,6 +908,262 @@
       "coverId": "ol:15215685",
       "firstPublished": 1956,
       "pickedAt": "2026-09-09T06:22:57.251Z"
+    },
+    {
+      "id": "OL65935W",
+      "title": "The town and the city",
+      "author": "Jack Kerouac",
+      "coverId": "ol:9253481",
+      "firstPublished": 1950,
+      "pickedAt": "2026-09-09T06:23:02.260Z"
+    },
+    {
+      "id": "OL2944469W",
+      "title": "One Flew Over the Cuckoo's Nest",
+      "author": "Ken Kesey",
+      "coverId": "ol:11327653",
+      "firstPublished": 1962,
+      "pickedAt": "2026-09-09T06:23:12.849Z"
+    },
+    {
+      "id": "OL2636665W",
+      "title": "The Crying of Lot 49",
+      "author": "Thomas Pynchon",
+      "coverId": "ol:10741556",
+      "firstPublished": 1965,
+      "pickedAt": "2026-09-09T06:23:20.521Z"
+    },
+    {
+      "id": "OL1921196W",
+      "title": "White Noise",
+      "author": "Don DeLillo",
+      "coverId": "ol:985690",
+      "firstPublished": 1984,
+      "pickedAt": "2026-09-09T06:23:30.438Z"
+    },
+    {
+      "id": "OL1921185W",
+      "title": "Underworld",
+      "author": "Don DeLillo",
+      "coverId": "ol:10420065",
+      "firstPublished": 1997,
+      "pickedAt": "2026-09-09T06:23:50.104Z"
+    },
+    {
+      "id": "OL463709W",
+      "title": "Rabbit, Run",
+      "author": "John Updike",
+      "coverId": "ol:14895482",
+      "firstPublished": 1960,
+      "pickedAt": "2026-09-09T06:24:00.233Z"
+    },
+    {
+      "id": "OL74676W",
+      "title": "Portnoy's Complaint",
+      "author": "Philip Roth",
+      "coverId": "ol:15141020",
+      "firstPublished": 1969,
+      "pickedAt": "2026-09-09T06:24:05.838Z"
+    },
+    {
+      "id": "OL74666W",
+      "title": "American Pastoral",
+      "author": "Philip Roth",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:24:10.132Z"
+    },
+    {
+      "id": "OL3951517W",
+      "title": "The Virgin Suicides (Bloomsbury Classic)",
+      "author": "Jeffrey Eugenides",
+      "coverId": "ol:9268227",
+      "firstPublished": 1993,
+      "pickedAt": "2026-09-09T06:24:20.365Z"
+    },
+    {
+      "id": "OL3951520W",
+      "title": "Middlesex",
+      "author": "Jeffrey Eugenides",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:24:24.035Z"
+    },
+    {
+      "id": "OL457126W",
+      "title": "Imaginary Homelands",
+      "author": "Salman Rushdie",
+      "coverId": "ol:4037542",
+      "firstPublished": 1991,
+      "pickedAt": "2026-09-09T06:24:29.354Z"
+    },
+    {
+      "id": "OL457175W",
+      "title": "The Satanic Verses",
+      "author": "Salman Rushdie",
+      "coverId": "ol:4990312",
+      "firstPublished": 1988,
+      "pickedAt": "2026-09-09T06:24:37.935Z"
+    },
+    {
+      "id": "OL16805415W",
+      "title": "Americanah",
+      "author": "Chimamanda Ngozi Adichie",
+      "coverId": "ol:13558291",
+      "firstPublished": 1969,
+      "pickedAt": "2026-09-09T06:24:42.836Z"
+    },
+    {
+      "id": "OL2970107W",
+      "title": "Mawsim al-hijrah ilá al-shamāl",
+      "author": "al-Ṭayyib Ṣāliḥ",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:24:45.603Z"
+    },
+    {
+      "id": "OL1599742W",
+      "title": "بين القصرين",
+      "author": "نجيب محفوظ",
+      "coverId": "ol:14813542",
+      "firstPublished": 1960,
+      "pickedAt": "2026-09-09T06:24:54.453Z"
+    },
+    {
+      "id": "OL16064734W",
+      "title": "Snow",
+      "author": "Orhan Pamuk",
+      "coverId": "ol:378819",
+      "firstPublished": 2002,
+      "pickedAt": "2026-09-09T06:25:08.702Z"
+    },
+    {
+      "id": "OL1019598W",
+      "title": "Benim Adım Kırmızı",
+      "author": "Orhan Pamuk",
+      "coverId": "ol:12630674",
+      "firstPublished": 1998,
+      "pickedAt": "2026-09-09T06:25:11.933Z"
+    },
+    {
+      "id": "OL258329W",
+      "title": "Один день Ивана Денисовича",
+      "author": "Александр Солженицын",
+      "coverId": "ol:12725568",
+      "firstPublished": 1960,
+      "pickedAt": "2026-09-09T06:25:21.458Z"
+    },
+    {
+      "id": "OL627081W",
+      "title": "Pale Fire",
+      "author": "Vladimir Nabokov",
+      "coverId": "ol:15135257",
+      "firstPublished": 1945,
+      "pickedAt": "2026-09-09T06:25:45.058Z"
+    },
+    {
+      "id": "OL15297W",
+      "title": "Le città invisibili",
+      "author": "Italo Calvino",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:25:51.222Z"
+    },
+    {
+      "id": "OL8996439W",
+      "title": "Il nome della rosa",
+      "author": "Umberto Eco",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:25:55.409Z"
+    },
+    {
+      "id": "OL8996438W",
+      "title": "Il pendolo di Foucault",
+      "author": "Umberto Eco",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:25:57.086Z"
+    },
+    {
+      "id": "OL865560W",
+      "title": "Homo Faber",
+      "author": "Max Frisch",
+      "coverId": "ol:2627061",
+      "firstPublished": 1957,
+      "pickedAt": "2026-09-09T06:26:04.348Z"
+    },
+    {
+      "id": "OL865476W",
+      "title": "Stiller",
+      "author": "Max Frisch",
+      "coverId": "ol:801756",
+      "firstPublished": 1954,
+      "pickedAt": "2026-09-09T06:26:23.243Z"
+    },
+    {
+      "id": "OL15681224W",
+      "title": "Der Besuch der alten Dame",
+      "author": "Friedrich Dürrenmatt",
+      "coverId": "ol:12656640",
+      "firstPublished": 1956,
+      "pickedAt": "2026-09-09T06:26:31.385Z"
+    },
+    {
+      "id": "OL15116693W",
+      "title": "Goethe's Werke",
+      "author": "Johann Wolfgang von Goethe",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:26:33.711Z"
+    },
+    {
+      "id": "OL969604W",
+      "title": "Das Fraülein von Scudeṙi",
+      "author": "E. T. A. Hoffmann",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:26:35.022Z"
+    },
+    {
+      "id": "OL18417W",
+      "title": "The Wonderful Wizard of Oz",
+      "author": "L. Frank Baum",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:26:36.312Z"
+    },
+    {
+      "id": "OL462007W",
+      "title": "Peter Pan",
+      "author": "J. M. Barrie",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:26:37.193Z"
+    },
+    {
+      "id": "OL69612W",
+      "title": "The Secret Garden",
+      "author": "Frances Hodgson Burnett",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:26:40.676Z"
+    },
+    {
+      "id": "OL77746W",
+      "title": "Anne of Green Gables",
+      "author": "Lucy Maud Montgomery",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:26:47.372Z"
+    },
+    {
+      "id": "OL14872925W",
+      "title": "Pippi Långstrump",
+      "author": "Astrid Lindgren",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:26:48.312Z"
     }
   ]
 }
