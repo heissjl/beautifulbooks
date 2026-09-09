@@ -4,6 +4,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
+import DecadeLink from '@/components/DecadeLink';
 import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
 import CoverSheet from '@/components/CoverSheet';
@@ -320,13 +321,6 @@ function BookDetail() {
     >
       <TitleBlock title={work.title} authors={work.authors} meta={meta} />
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
-      {hasDecades && (
-        <p className="mt-1">
-          <Link href={`/book/${work.id}/decades`} className="text-sm text-accent hover:underline">
-            See these covers by decade →
-          </Link>
-        </p>
-      )}
 
       {view.groups.length === 0 ? (
         <p className="text-ink-2">Neither catalogue has a cover for this book.</p>
@@ -343,6 +337,7 @@ function BookDetail() {
               selectedCover={selected}
               onSelectCover={c => selectCover(c.id)}
               captions={view.captions}
+              belowTabs={hasDecades ? <DecadeLink workId={work.id} /> : undefined}
             />
             <p className="mt-6 max-w-prose text-xs leading-relaxed text-ink-3">
               Covers come from Open Library and Google Books. Most edition records carry no

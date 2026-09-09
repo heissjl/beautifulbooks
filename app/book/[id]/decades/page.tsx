@@ -35,6 +35,9 @@ import { foldDuplicateCovers } from '@/lib/works';
  */
 export const revalidate = 86400;
 
+/** Covers loaded eagerly at the top of the page; the rest lazy-load on scroll. */
+const EAGER_TILES = 12;
+
 interface PageProps {
   params: Promise<{ id: string }>;
 }
@@ -98,6 +101,17 @@ export default async function Page({ params }: PageProps) {
   if (!loaded || !worthAPage(loaded.decades)) notFound();
   const { work, editions, decades } = loaded;
   const author = authorLine(work.authors);
+  /*
+    The first screenful loads eagerly, the rest stays lazy (Julian,
+    2026-09-09). Counted across the decades rather than within one, because
+    the newest decade may hold two covers and the eager dozen would then be
+    two. Twelve is two rows of six on a desktop, four rows of three on a
+    phone — enough that the top of the page is there on arrival, few enough
+    that nothing is fetched for a reader who never scrolls.
+  */
+  const eagerIds = new Set(
+    decades.groups.flatMap(g => g.covers).slice(0, EAGER_TILES).map(c => c.id),
+  );
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -126,15 +140,18 @@ export default async function Page({ params }: PageProps) {
                 <p className="text-sm text-ink-3">{decadeLine(group)}</p>
               </div>
               <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
-                {group.covers.map(cover => (
-                  <li key={cover.id}>
-                    <Link href={`/book/${id}?cover=${encodeURIComponent(cover.id)}`} className="group block">
-                      <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 group-hover:-translate-y-1">
-                        <CoverImage src={cover.urlSmall ?? cover.url} alt="" sizes="(max-width: 640px) 30vw, 15vw" />
-                      </div>
-                    </Link>
-                  </li>
-                ))}
+                {group.covers.map(cover => {
+                  const eager = eagerIds.has(cover.id);
+                  return (
+                    <li key={cover.id}>
+                      <Link href={`/book/${id}?cover=${encodeURIComponent(cover.id)}`} className="group block">
+                        <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 group-hover:-translate-y-1">
+                          <CoverImage src={cover.urlSmall ?? cover.url} alt="" sizes="(max-width: 640px) 30vw, 15vw" priority={eager} />
+                        </div>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           ))}
