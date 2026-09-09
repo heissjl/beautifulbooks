@@ -40,7 +40,7 @@ async function main() {
   for (const [i, work] of CURATED_LIST.entries()) {
     let detail;
     try {
-      detail = await getWorkDetail(work.id, { maxEntries: MAX_ENTRIES, dedupeCovers: false });
+      detail = await getWorkDetail(work.id, { maxEntries: MAX_ENTRIES, dedupeCovers: false, googleBooks: false });
     } catch (err) {
       silent += 1;
       console.log(`  ? ${work.title}: ${(err as Error).message}`);

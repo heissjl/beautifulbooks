@@ -268,6 +268,32 @@ describe('getWorkDetail', () => {
     expect(calls.filter(u => u.includes('/editions.json')).length).toBeGreaterThanOrEqual(4);
   });
 
+  it('keeps the pages that arrived when a later one fails (ROADMAP 5.4a)', async () => {
+    // Measured 2026-09-09: the decade page answered 404 in production for a
+    // work whose wall renders fine, because one page in the middle did not
+    // answer and the whole walk threw. A page that fails ends the walk.
+    const ok = await getWorkDetail('OL468431W', { dedupeCovers: false });
+    const good = vi.mocked(fetch);
+    vi.stubGlobal('fetch', vi.fn(async (input: string | URL, init?: RequestInit) => {
+      const url = new URL(String(input));
+      if (url.pathname.includes('/editions.json') && url.searchParams.get('offset') === '100') {
+        throw new Error('connection reset');
+      }
+      return good(input, init);
+    }));
+    const partial = await getWorkDetail('OL468431W', { dedupeCovers: false });
+    expect(partial).not.toBeNull();
+    expect(partial!.editions.length).toBeGreaterThan(0);
+    expect(partial!.editions.length).toBeLessThan(ok!.editions.length);
+  });
+
+  it('does not ask Google when the caller says not to (E10)', async () => {
+    // The decade page counts years; a Google request per cold render would
+    // spend the daily thousand on data it never reads.
+    await getWorkDetail('OL1168083W', { dedupeCovers: false, googleBooks: false });
+    expect(calls.some(u => u.includes('googleapis.com'))).toBe(false);
+  });
+
 
   it('loads work, editions and language groups', async () => {
     const d = await getWorkDetail('OL1168083W', { dedupeCovers: false });

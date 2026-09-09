@@ -1067,3 +1067,17 @@ Nur die 90 stehen in der Sitemap und nur bei ihnen erscheint der Link auf der We
 `lab/duel/` spielt die zweite Spielart: zwei Menschen, ein Link, dieselbe Runde. Der Startwert im Link bestimmt die zehn Bücher, ihre Reihenfolge und die sechs Cover je Buch, **ohne dass etwas gespeichert werden muss** — der Generator ist rein und mit drei festgenagelten Zahlen getestet, damit eine Änderung daran als roter Test auffällt und nicht als zwei Freunde, die verschiedene Runden sehen.
 
 **Die Frage des Experiments ist nicht, ob es sich bauen lässt**, sondern ob genug Uneinigkeit entsteht. Bei sechs Covern trifft der Zufall 17 %; die App rechnet das jedes Mal mit und zeigt es neben dem Ergebnis, damit „30 %" nicht nach viel aussieht, wenn es wenig ist. Unter 25 % ist die Spielart tot, über 70 % langweilig. Die Zahl steht noch aus: erspielen kann sie nur ein Mensch mit einem anderen.
+
+## 2026-09-09 · Warum die Jahrzehnte-Seite in Produktion 404 antwortete (ROADMAP 5.4a)
+
+Lokal 200, in Produktion 404 — dieselbe Adresse, dieselbe Version. `/book/OL468431W/decades` brauchte lokal 6,9 s und antwortete, in Produktion 10,5 s und antwortete mit „nicht gefunden“. Das ist der schlechteste Fehler, den diese Seite haben kann: der 404 ist ihre **Schwellenregel** (unter 20 Covern über vier Jahrzehnte keine Seite), und hier log er.
+
+**Drei Ursachen, alle im Ladepfad, keine in der Seite selbst:**
+
+1. `getWorkDetail` warf, sobald **irgendeine** spätere Ausgabenseite nicht antwortete. Ein Werk mit sechs Seiten war komplett verloren, wenn die dritte in den Timeout lief — und in Produktion, mit einer Funktion in Frankfurt und einem Katalog, der von dort 3–10 s braucht, passiert das. Jetzt endet der Lauf mit dem, was angekommen ist. Dasselbe Prinzip wie der Wiederholungsversuch in 1.10, eine Ebene höher.
+2. Die Seite lud mit `dedupeCovers: true`. Das Falten **lädt und hasht jedes Cover** — im Browser richtig, in einem Server-Render eine Rechnung, die keine Seite bezahlen kann.
+3. Sie fragte Google Books, entgegen dem Kommentar, der im selben Block „ohne Google-Aufruf“ behauptete. `getWorkDetail` gab die Voreinstellung von `getWorkPage` durch, und die ist *an*. Ein kaltes Render hätte eine Anfrage des Tageskontingents für Daten ausgegeben, die die Seite nie liest (E10). `WorkDetailOptions.googleBooks` macht das jetzt zur Angabe des Aufrufers; das Kandidaten-Skript sagt dasselbe.
+
+Zwei Tests halten das fest: eine mittlere Seite, die wirft, kostet die Seiten danach und keine davor, und ein Aufruf mit `googleBooks: false` erreicht `googleapis.com` nicht. Nach der Reparatur rendert eine kalte Jahrzehnte-Seite lokal in **4,5 s** (*Der Proceß*, 135 Cover aus 128 Datensätzen), eine warme in 0,9 s.
+
+**Die Lehre, die über diese Seite hinausgeht:** ein Fehlschlag darf nicht als Befund erscheinen (N12) — und ein 404 ist ein Befund. Wo eine Schwelle über Veröffentlichen entscheidet, muss der Unterschied zwischen „zu dünn“ und „nicht geladen“ im Code stehen, nicht im Zufall der Antwortzeit.

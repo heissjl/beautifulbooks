@@ -76,6 +76,12 @@ export interface WorkDetailOptions {
   hashDeadlineMs?: number;
   /** Stop after this many edition records. Default MAX_EDITIONS_SCANNED. */
   maxEntries?: number;
+  /**
+   * Ask Google Books on page 0. Default true, as for a single page — but a
+   * caller that only counts years has no use for it and must say so, or it
+   * spends a request per cold render (E10, ROADMAP 5.4a).
+   */
+  googleBooks?: boolean;
 }
 
 const WORK_ID = /^OL\d+W$/;
@@ -155,13 +161,29 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
  */
 export async function getWorkDetail(workId: string, options: WorkDetailOptions = {}): Promise<WorkDetail | null> {
   const cap = options.maxEntries ?? MAX_EDITIONS_SCANNED;
-  const first = await getWorkPage(workId, { offset: 0, hashDeadlineMs: options.hashDeadlineMs });
+  const first = await getWorkPage(workId, {
+    offset: 0, hashDeadlineMs: options.hashDeadlineMs, googleBooks: options.googleBooks,
+  });
   if (!first) return null;
 
   const pages: WorkPage[] = [first];
   let next = first.page.nextOffset;
   while (next !== undefined && next < cap) {
-    const page = await getWorkPage(workId, { offset: next, hashDeadlineMs: options.hashDeadlineMs });
+    /*
+      A later page that fails ends the walk with what has arrived, instead of
+      throwing the whole work away. Measured 2026-09-09: the decade page
+      answered 404 in production for a work whose wall renders fine, because
+      one page in the middle timed out — the same lesson as the retry in 1.10,
+      one level up.
+    */
+    let page: WorkPage | null;
+    try {
+      page = await getWorkPage(workId, {
+        offset: next, hashDeadlineMs: options.hashDeadlineMs, googleBooks: false,
+      });
+    } catch {
+      break;
+    }
     if (!page) break;
     pages.push(page);
     next = page.page.nextOffset;

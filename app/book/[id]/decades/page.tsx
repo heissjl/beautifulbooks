@@ -40,8 +40,17 @@ interface PageProps {
 async function load(id: string) {
   if (!isWorkId(id)) return null;
   try {
-    // Google is never asked here (E10); the years come from Open Library.
-    const detail = await getWorkDetail(id, { dedupeCovers: true });
+    /*
+      Three deliberate limits, all measured on 2026-09-09:
+      - `googleBooks: false`, or a cold render spends a request of the daily
+        thousand for data this page does not use (E10);
+      - `dedupeCovers: false`, because folding downloads and hashes every
+        cover server-side, which is seconds a page render cannot afford — the
+        wall folds in the browser instead (SPEC §9.3 step 11);
+      - 600 records, the same cap the candidate scan used, so a work cannot
+        qualify there and come up short here.
+    */
+    const detail = await getWorkDetail(id, { maxEntries: 600, dedupeCovers: false, googleBooks: false });
     if (!detail) return null;
     const decades = groupByDecade(detail.covers, detail.editions);
     return { work: detail.work, editions: detail.editions, decades };
