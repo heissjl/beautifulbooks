@@ -370,23 +370,24 @@
       "id": "OL584333W",
       "title": "Bonjour tristesse",
       "author": "Françoise Sagan",
-      "coverId": "ol:4978661",
-      "pickedAt": "2026-09-08T21:09:08.670Z"
+      "coverId": "ol:6650195",
+      "pickedAt": "2026-09-09T06:42:16.678Z"
     },
     {
       "id": "OL36287W",
       "title": "Hrabě Monte Cristo. Díl 1 a 2 (třísvazkové vydání)",
       "author": "Alexandre Dumas",
-      "coverId": "ol:14566144",
-      "firstPublished": 1830,
-      "pickedAt": "2026-09-08T21:09:24.499Z"
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:38:50.719Z"
     },
     {
       "id": "OL10432709W",
       "title": "Братья Карамазовы",
       "author": "Fiódor Dostoievski",
       "coverId": "ol:15167288",
-      "pickedAt": "2026-09-08T21:09:30.702Z"
+      "firstPublished": 1880,
+      "pickedAt": "2026-09-09T06:42:06.685Z"
     },
     {
       "id": "OL258301W",
@@ -1164,6 +1165,228 @@
       "coverId": "",
       "dropped": true,
       "pickedAt": "2026-09-09T06:26:48.312Z"
+    },
+    {
+      "id": "OL1063588W",
+      "title": "Les Misérables",
+      "author": "Victor Hugo",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:38:23.843Z"
+    },
+    {
+      "id": "OL10263W",
+      "title": "Le petit prince",
+      "author": "Antoine de Saint-Exupéry",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:38:26.528Z"
+    },
+    {
+      "id": "OL1190289W",
+      "title": "À la recherche du temps perdu",
+      "author": "Marcel Proust",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:38:30.373Z"
+    },
+    {
+      "id": "OL59798W",
+      "title": "A Wizard of Earthsea",
+      "author": "Ursula K. Le Guin",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:39:21.358Z"
+    },
+    {
+      "id": "OL2163649W",
+      "title": "The Hitchhiker's Guide to the Galaxy",
+      "author": "Douglas Adams",
+      "coverId": "ol:14672370",
+      "firstPublished": 1979,
+      "pickedAt": "2026-09-09T06:39:36.218Z"
+    },
+    {
+      "id": "OL46241W",
+      "title": "I, Robot",
+      "author": "Isaac Asimov",
+      "coverId": "ol:8566247",
+      "firstPublished": 1950,
+      "pickedAt": "2026-09-09T06:39:58.690Z"
+    },
+    {
+      "id": "OL109524W",
+      "title": "Solaris",
+      "author": "Stanisław Lem",
+      "coverId": "ol:15235932",
+      "firstPublished": 1961,
+      "pickedAt": "2026-09-09T06:40:12.344Z"
+    },
+    {
+      "id": "OL38501W",
+      "title": "Snow Crash",
+      "author": "Neal Stephenson",
+      "coverId": "ol:6851423",
+      "firstPublished": 1992,
+      "pickedAt": "2026-09-09T06:40:20.214Z"
+    },
+    {
+      "id": "OL35616W",
+      "title": "Kindred",
+      "author": "Octavia E. Butler",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:40:23.494Z"
+    },
+    {
+      "id": "OL35623W",
+      "title": "Parable of the Sower",
+      "author": "Octavia E. Butler",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:40:31.734Z"
+    },
+    {
+      "id": "OL176045W",
+      "title": "The Woman in White",
+      "author": "Wilkie Collins",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:40:36.862Z"
+    },
+    {
+      "id": "OL176092W",
+      "title": "The Moonstone",
+      "author": "Wilkie Collins",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:40:40.748Z"
+    },
+    {
+      "id": "OL24156W",
+      "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+      "author": "Robert Louis Stevenson",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:40:52.938Z"
+    },
+    {
+      "id": "OL24034W",
+      "title": "Treasure Island",
+      "author": "Robert Louis Stevenson",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:40:55.256Z"
+    },
+    {
+      "id": "OL52114W",
+      "title": "The War of the Worlds",
+      "author": "H. G. Wells",
+      "coverId": "ol:15066825",
+      "pickedAt": "2026-09-09T06:41:02.804Z"
+    },
+    {
+      "id": "OL52267W",
+      "title": "The Time Machine",
+      "author": "H. G. Wells",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:41:07.082Z"
+    },
+    {
+      "id": "OL20201553W",
+      "title": "The Count of Monte Cristo",
+      "author": "Alexandre Dumas",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:41:10.008Z"
+    },
+    {
+      "id": "OL15202030W",
+      "title": "Notre Dame de Paris",
+      "author": "Victor Hugo",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:41:12.782Z"
+    },
+    {
+      "id": "OL100672W",
+      "title": "Candide",
+      "author": "Voltaire",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:41:15.318Z"
+    },
+    {
+      "id": "OL45089W",
+      "title": "Robinson Crusoe",
+      "author": "Daniel Defoe",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:41:17.207Z"
+    },
+    {
+      "id": "OL20600W",
+      "title": "Gulliver's Travels",
+      "author": "Jonathan Swift",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:41:20.398Z"
+    },
+    {
+      "id": "OL66513W",
+      "title": "Emma",
+      "author": "Jane Austen",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:41:21.947Z"
+    },
+    {
+      "id": "OL82870W",
+      "title": "The Sound and the Fury",
+      "author": "William Faulkner",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:41:23.786Z"
+    },
+    {
+      "id": "OL1855944W",
+      "title": "Atonement",
+      "author": "Ian McEwan",
+      "coverId": "ol:15140644",
+      "pickedAt": "2026-09-09T06:43:38.804Z"
+    },
+    {
+      "id": "OL82929W",
+      "title": "As I Lay Dying",
+      "author": "William Faulkner",
+      "coverId": "ol:12620040",
+      "firstPublished": 1915,
+      "pickedAt": "2026-09-09T06:44:32.440Z"
+    },
+    {
+      "id": "OL1287903W",
+      "title": "Voyage au bout de la nuit",
+      "author": "Louis-Ferdinand Céline",
+      "coverId": "ol:15230656",
+      "firstPublished": 1932,
+      "pickedAt": "2026-09-09T06:44:36.942Z"
+    },
+    {
+      "id": "OL278437W",
+      "title": "La sombra del viento",
+      "author": "Carlos Ruiz Zafón",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-09-09T06:44:42.014Z"
+    },
+    {
+      "id": "OL1858668W",
+      "title": "Wide Sargasso Sea",
+      "author": "Jean Rhys",
+      "coverId": "ol:10191445",
+      "firstPublished": 1966,
+      "pickedAt": "2026-09-09T06:44:49.515Z"
     }
   ]
 }

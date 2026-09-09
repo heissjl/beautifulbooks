@@ -628,5 +628,185 @@
     "readers": 263,
     "firstPublished": 1929,
     "note": "94 Ausgaben · 263 Leser · ab 1929"
+  },
+  {
+    "id": "OL82929W",
+    "title": "As I Lay Dying",
+    "author": "William Faulkner",
+    "editionCount": 70,
+    "readers": 231,
+    "firstPublished": 1915,
+    "note": "70 Ausgaben · 231 Leser · ab 1915"
+  },
+  {
+    "id": "OL1287903W",
+    "title": "Voyage au bout de la nuit",
+    "author": "Louis-Ferdinand Céline",
+    "editionCount": 115,
+    "readers": 231,
+    "firstPublished": 1932,
+    "note": "115 Ausgaben · 231 Leser · ab 1932"
+  },
+  {
+    "id": "OL278437W",
+    "title": "La sombra del viento",
+    "author": "Carlos Ruiz Zafón",
+    "editionCount": 103,
+    "readers": 943,
+    "firstPublished": 2001,
+    "note": "103 Ausgaben · 943 Leser · ab 2001"
+  },
+  {
+    "id": "OL1858668W",
+    "title": "Wide Sargasso Sea",
+    "author": "Jean Rhys",
+    "editionCount": 53,
+    "readers": 592,
+    "firstPublished": 1966,
+    "note": "53 Ausgaben · 592 Leser · ab 1966"
+  },
+  {
+    "id": "OL31259W",
+    "title": "The Golden Notebook",
+    "author": "Doris Lessing",
+    "editionCount": 67,
+    "readers": 114,
+    "firstPublished": 1962,
+    "note": "67 Ausgaben · 114 Leser · ab 1962"
+  },
+  {
+    "id": "OL39396W",
+    "title": "To the Lighthouse",
+    "author": "Virginia Woolf",
+    "editionCount": 537,
+    "readers": 548,
+    "firstPublished": 1927,
+    "note": "537 Ausgaben · 548 Leser · ab 1927"
+  },
+  {
+    "id": "OL767941W",
+    "title": "Le Deuxième Sexe",
+    "author": "Simone de Beauvoir",
+    "editionCount": 90,
+    "readers": 915,
+    "firstPublished": 1949,
+    "note": "90 Ausgaben · 915 Leser · ab 1949"
+  },
+  {
+    "id": "OL5735175W",
+    "title": "Persepolis 1-4",
+    "author": "Marjane Satrapi",
+    "editionCount": 21,
+    "readers": 440,
+    "firstPublished": 2000,
+    "note": "21 Ausgaben · 440 Leser · ab 2000"
+  },
+  {
+    "id": "OL2056818W",
+    "title": "Maus I",
+    "author": "Art Spiegelman",
+    "editionCount": 66,
+    "readers": 1115,
+    "firstPublished": 1986,
+    "note": "66 Ausgaben · 1.115 Leser · ab 1986"
+  },
+  {
+    "id": "OL2897798W",
+    "title": "Watchmen",
+    "author": "Alan Moore",
+    "editionCount": 43,
+    "readers": 912,
+    "firstPublished": 1986,
+    "note": "43 Ausgaben · 912 Leser · ab 1986"
+  },
+  {
+    "id": "OL675722W",
+    "title": "Oryx and Crake",
+    "author": "Margaret Atwood",
+    "editionCount": 49,
+    "readers": 360,
+    "firstPublished": 2002,
+    "note": "49 Ausgaben · 360 Leser · ab 2002"
+  },
+  {
+    "id": "OL505439W",
+    "title": "Under the Volcano",
+    "author": "Malcolm Lowry",
+    "editionCount": 71,
+    "readers": 89,
+    "firstPublished": 1947,
+    "note": "71 Ausgaben · 89 Leser · ab 1947"
+  },
+  {
+    "id": "OL88813W",
+    "title": "A Room with a View",
+    "author": "E. M. Forster",
+    "editionCount": 757,
+    "readers": 332,
+    "firstPublished": 1905,
+    "note": "757 Ausgaben · 332 Leser · ab 1905"
+  },
+  {
+    "id": "OL88881W",
+    "title": "Howards End",
+    "author": "E. M. Forster",
+    "editionCount": 498,
+    "readers": 125,
+    "firstPublished": 1910,
+    "note": "498 Ausgaben · 125 Leser · ab 1910"
+  },
+  {
+    "id": "OL38684W",
+    "title": "Lord Jim",
+    "author": "Joseph Conrad",
+    "editionCount": 380,
+    "readers": 128,
+    "firstPublished": 1899,
+    "note": "380 Ausgaben · 128 Leser · ab 1899"
+  },
+  {
+    "id": "OL98491W",
+    "title": "The Age of Innocence",
+    "author": "Edith Wharton",
+    "editionCount": 316,
+    "readers": 654,
+    "firstPublished": 1920,
+    "note": "316 Ausgaben · 654 Leser · ab 1920"
+  },
+  {
+    "id": "OL98587W",
+    "title": "The House of Mirth",
+    "author": "Edith Wharton",
+    "editionCount": 714,
+    "readers": 205,
+    "firstPublished": 1905,
+    "note": "714 Ausgaben · 205 Leser · ab 1905"
+  },
+  {
+    "id": "OL12791W",
+    "title": "My Ántonia",
+    "author": "Willa Cather",
+    "editionCount": 832,
+    "readers": 186,
+    "firstPublished": 1918,
+    "note": "832 Ausgaben · 186 Leser · ab 1918"
+  },
+  {
+    "id": "OL114967W",
+    "title": "The Jungle",
+    "author": "Upton Sinclair",
+    "editionCount": 698,
+    "readers": 793,
+    "firstPublished": 1905,
+    "note": "698 Ausgaben · 793 Leser · ab 1905"
+  },
+  {
+    "id": "OL63072W",
+    "title": "A Farewell to Arms",
+    "author": "Ernest Hemingway",
+    "editionCount": 192,
+    "readers": 610,
+    "firstPublished": 1929,
+    "note": "192 Ausgaben · 610 Leser · ab 1929"
   }
 ]
