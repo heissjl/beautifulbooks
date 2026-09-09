@@ -147,25 +147,22 @@ export default function MosaicLoader({ caption }: { caption: string }) {
 
   return (
     <div className="py-10 sm:py-14" aria-busy="true" aria-live="polite" aria-label={caption}>
+      {/*
+        What is being waited for, **above** the picture and set like a heading
+        (Julian, 2026-09-09: „beim Lademosaik sollte der Ladetext grafisch
+        über dem Mosaik stehen, nicht als Overlay"). A line laid on the mosaic
+        needs a ground of its own and then reads as a label stuck to a
+        picture; standing over it, in the display face the rest of the site
+        uses for headings, it reads as what the page is doing.
+      */}
+      <p className="stage-pulse mx-auto mb-4 max-w-md text-balance text-center font-display text-xl leading-snug text-ink sm:mb-5 sm:text-2xl">
+        {caption}
+      </p>
       <div
-        className="relative mx-auto overflow-hidden rounded-[3px] bg-surface-2"
+        className="mx-auto overflow-hidden rounded-[3px] bg-surface-2"
         style={{ width, height }}
       >
         <canvas ref={canvasRef} className="block h-full w-full" />
-        {/*
-          What is being waited for, **on** the picture (Julian, 2026-09-09:
-          „das ‚looking for …‘ im Ladezustand einfach über das Mosaik
-          schreiben und etwas größer, dann ist niemand verwirrt"). A mosaic is
-          busy at every point, so the line needs a ground of its own; it sits
-          on the site's surface colour at 90 %, which keeps it readable
-          through the whole animation — the wall starts dimmed towards that
-          same colour and clears out from under it.
-        */}
-        <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 px-3">
-          <p className="stage-pulse mx-auto w-fit rounded bg-surface/90 px-3 py-2 text-center text-base leading-snug text-ink shadow-[0_1px_3px_rgb(0_0_0/0.08)] sm:text-lg">
-            {caption}
-          </p>
-        </div>
       </div>
       {/*
         What the picture is, so nobody takes it for an answer to their search
