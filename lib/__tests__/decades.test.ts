@@ -19,12 +19,21 @@ describe('groupByDecade (ROADMAP 5.4a)', () => {
   ];
   const covers = [cov('c1', ['a']), cov('c2', ['b']), cov('c3', ['c']), cov('c4', ['d']), cov('c5', ['e'])];
 
-  it('puts each cover in the decade of its earliest printing', () => {
+  it('puts each cover in the decade of its earliest printing, newest decade first', () => {
     const d = groupByDecade(covers, editions);
-    expect(d.groups.map(g => g.decade)).toEqual([1940, 1950, 1980]);
+    expect(d.groups.map(g => g.decade)).toEqual([1980, 1950, 1940]);
     expect(d.groups[1].covers.map(c => c.id)).toEqual(['c2', 'c3']);
+  });
+
+  it('reports the ends of time, not the ends of the list', () => {
+    // groups reads newest first, so from is the last group and to the first.
+    // Reading them off the order would have swapped every range recorded in
+    // data/decade-pages.json.
+    const d = groupByDecade(covers, editions);
     expect(d.from).toBe(1940);
     expect(d.to).toBe(1980);
+    expect(d.groups[0].decade).toBe(d.to);
+    expect(d.groups.at(-1)!.decade).toBe(d.from);
   });
 
   it('dates a folded cover by its earliest edition, not its latest reprint', () => {

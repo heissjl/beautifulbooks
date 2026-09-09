@@ -8,12 +8,12 @@
  * not which cover comes back, which is a matter of taste and of whichever
  * snapshot is committed.
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
   MAX_DISTANCE, SAME_DESIGN_BITS, STRUCTURE_WEIGHT,
-  bitsApart, coverUrlFor, indexBuiltAt, indexSize, lookDistance, similarTo,
+  bitsApart, coverUrlFor, indexBuiltAt, indexSignatures, indexSize, lookDistance, similarTo,
 } from '../coverindex';
 import type { ImageSignature } from '../imagesig';
 
@@ -124,5 +124,57 @@ describe('the index that is committed', () => {
   it('never offers a cover that is simply the same design', () => {
     expect(SAME_DESIGN_BITS).toBeGreaterThan(0);
     expect(MAX_DISTANCE).toBeLessThan(1);
+  });
+});
+
+describe('signatures handed out for folding (ROADMAP 5.4a)', () => {
+  /* Taken from the committed file rather than pinned, so a rebuilt index does
+     not turn into a red test about nothing. */
+  const known = (
+    JSON.parse(readFileSync(path.join(process.cwd(), 'data', 'cover-index.json'), 'utf8')) as {
+      covers: Array<[number, string]>;
+    }
+  ).covers[0][1];
+
+  it('returns a usable signature for a cover it knows', () => {
+    const sigs = indexSignatures([known]);
+    const sig = sigs.get(known);
+    expect(sig).toBeDefined();
+    // 64 bits as 16 hex characters, the shape `hamming` expects.
+    expect(sig!.hash).toMatch(/^[0-9a-f]{16}$/);
+    expect(sig!.contrast).toBeGreaterThanOrEqual(0);
+  });
+
+  it('is silent about a cover it has never seen, rather than guessing one', () => {
+    // A missing signature must read as "not folded", never as "no duplicate".
+    const sigs = indexSignatures([known, 'ol:999999999']);
+    expect(sigs.has(known)).toBe(true);
+    expect(sigs.has('ol:999999999')).toBe(false);
+    expect(sigs.size).toBe(1);
+  });
+
+  it('agrees with the packed halves the index searches on', () => {
+    const sig = indexSignatures([known]).get(known)!;
+    const hi = parseInt(sig.hash.slice(0, 8), 16);
+    const lo = parseInt(sig.hash.slice(8, 16), 16);
+    expect(bitsApart(hi, lo, hi, lo)).toBe(0);
+  });
+});
+
+describe('how large the index may get', () => {
+  /*
+    A ceiling Julian set on 2026-09-09: promote up to 10 MB, then think again
+    rather than keep appending. The file is parsed at every cold start and
+    rides in the function bundle, so growing past this is a decision — split
+    per work, another format, or a real store (E6/E18) — not a default.
+
+    Measured the same day: 6.4 KB per work, so the ceiling is around 1,600
+    works. A failing test here is not a defect; it is the moment to decide.
+  */
+  const MAX_BYTES = 10 * 1024 * 1024;
+
+  it('stays under the 10 MB ceiling', () => {
+    const bytes = statSync(path.join(process.cwd(), 'data', 'cover-index.json')).size;
+    expect(bytes).toBeLessThan(MAX_BYTES);
   });
 });

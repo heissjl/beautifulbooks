@@ -6,7 +6,7 @@
  * here is that the breaker opens on the right refusal and stays shut on the
  * wrong one: a bad API key must not disable Google for a day.
  */
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   classifyQuotaError, googleAvailable, googlePausedFor, noteGoogleFailure,
   pacificMsUntilReset, RATE_PAUSE_MS, resetGoogleQuota,
@@ -23,7 +23,20 @@ const BAD_KEY = JSON.stringify({
   error: { code: 403, errors: [{ reason: 'forbidden', message: 'API key not valid' }] },
 });
 
-afterEach(() => resetGoogleQuota());
+/**
+ * The breaker writes an ungated line when it opens, so every test that opens
+ * it would print into the run. The spy keeps the output readable and gives the
+ * log test something to look at.
+ */
+let warn: ReturnType<typeof vi.spyOn>;
+beforeEach(() => {
+  warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+});
+
+afterEach(() => {
+  warn.mockRestore();
+  resetGoogleQuota();
+});
 
 describe('classifyQuotaError', () => {
   it('tells an exhausted day from a busy minute, by the reason not the status', () => {
@@ -75,6 +88,27 @@ describe('noteGoogleFailure', () => {
     const remaining = googlePausedFor(now);
     noteGoogleFailure(new HttpError(403, 'u', RATE), now);
     expect(googlePausedFor(now)).toBe(remaining);
+  });
+});
+
+describe('the line the breaker writes', () => {
+  it('says which limit and how long, once per opening', () => {
+    const now = Date.UTC(2026, 8, 7, 12, 0, 0);
+    noteGoogleFailure(new HttpError(403, 'u', DAILY), now);
+    expect(warn).toHaveBeenCalledTimes(1);
+    const line = warn.mock.calls[0][0] as string;
+    expect(line.startsWith('bb.google ')).toBe(true);
+    const payload = JSON.parse(line.slice('bb.google '.length));
+    expect(payload.event).toBe('daily-limit');
+    expect(payload.pausedForS).toBe(Math.round(pacificMsUntilReset(new Date(now)) / 1000));
+    // A second refusal inside the same pause is the same event, not a new one.
+    noteGoogleFailure(new HttpError(403, 'u', DAILY), now + 1000);
+    expect(warn).toHaveBeenCalledTimes(1);
+  });
+
+  it('stays quiet for a refusal that is not about the quota', () => {
+    noteGoogleFailure(new HttpError(403, 'u', BAD_KEY), 3_000_000);
+    expect(warn).not.toHaveBeenCalled();
   });
 });
 

@@ -240,11 +240,31 @@ describe('getWorkPage', () => {
     await expect(getWorkPage('OL999999999W')).resolves.toBeNull();
   });
 
-  it('asks for signatures without failing when the images cannot be hashed', async () => {
+  it('takes signatures from the built index before hashing anything (ROADMAP 5.4a)', async () => {
+    /*
+      The mocked fetch serves JSON, not images, so nothing here can be hashed
+      — and the page still comes back with signatures, because Gatsby is a
+      curated work and its signatures were computed before the deploy.
+
+      This is what makes the wall fold on a first visit. Measured on
+      *Fahrenheit 451* 2026-09-09: hashing alone reached 63-79 % of a page's
+      covers inside the budget, the index reaches all of them, and the wall
+      fell from 178 tiles to 140.
+    */
     const p = await getWorkPage(GATSBY, { offset: 100, signatures: true, hashDeadlineMs: 200 });
-    // The mocked fetch serves JSON, not images, so nothing hashes; the page still loads.
-    expect(p!.signatures).toEqual({});
     expect(p!.covers.length).toBeGreaterThan(0);
+    const withSignature = p!.covers.filter(c => p!.signatures?.[c.id]).length;
+    expect(withSignature).toBeGreaterThan(0);
+    // No image left the process: every signature came off the disk.
+    expect(calls.some(u => u.includes('covers.openlibrary.org'))).toBe(false);
+  });
+
+  it('still answers when a cover is in no index and cannot be hashed', async () => {
+    // A cover the index does not know simply has no signature and does not
+    // fold; it must never fail the page (SPEC §2.3).
+    const p = await getWorkPage('OL30751W', { offset: 0, signatures: true, hashDeadlineMs: 200 });
+    expect(p!.covers.length).toBeGreaterThan(0);
+    expect(p!.signatures).toBeDefined();
   });
 });
 
@@ -285,6 +305,28 @@ describe('getWorkDetail', () => {
     expect(partial).not.toBeNull();
     expect(partial!.editions.length).toBeGreaterThan(0);
     expect(partial!.editions.length).toBeLessThan(ok!.editions.length);
+  });
+
+  it('gives a failing later page a second attempt before ending the walk', async () => {
+    // Production, 2026-09-09: Brave New World's decade page came out of 41
+    // edition records instead of 130 because one page did not answer and the
+    // walk stopped there — then ISR froze that third of a book for a day.
+    const ok = await getWorkDetail('OL468431W', { dedupeCovers: false });
+    const good = vi.mocked(fetch);
+    let failures = 0;
+    vi.stubGlobal('fetch', vi.fn(async (input: string | URL, init?: RequestInit) => {
+      const url = new URL(String(input));
+      const isPage100 = url.pathname.includes('/editions.json') && url.searchParams.get('offset') === '100';
+      if (isPage100 && failures === 0) {
+        failures += 1;
+        throw new Error('connection reset');
+      }
+      return good(input, init);
+    }));
+    const retried = await getWorkDetail('OL468431W', { dedupeCovers: false });
+    expect(failures).toBe(1);
+    // The second attempt succeeded, so the walk is whole again.
+    expect(retried!.editions.length).toBe(ok!.editions.length);
   });
 
   it('does not ask Google when the caller says not to (E10)', async () => {

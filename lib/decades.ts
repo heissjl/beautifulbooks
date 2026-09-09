@@ -30,11 +30,19 @@ export interface DecadeGroup {
 }
 
 export interface Decades {
+  /** Newest decade first (Julian, 2026-09-09). */
   groups: DecadeGroup[];
   /** Covers whose editions carry no year at all; shown last, never hidden. */
   undated: Cover[];
   coverCount: number;
-  /** First and last decade with a cover, for the page's own sentence. */
+  /**
+   * Earliest and latest decade with a cover, for the page's own sentence.
+   *
+   * These keep pointing at the ends of time, not at the ends of the list:
+   * `groups` reads newest first, so `from` is the **last** group and `to` the
+   * first. Deriving them from the order would have silently swapped every
+   * range in `data/decade-pages.json`.
+   */
   from?: number;
   to?: number;
 }
@@ -77,8 +85,14 @@ export function groupByDecade(covers: readonly Cover[], editions: readonly Editi
     else buckets.set(decade, [cover]);
   }
 
+  /*
+    Newest first (Julian, 2026-09-09: „baue die decades page mit anzeige von
+    jetzt zu vergangenheit statt wie bisher"). A reader arrives knowing the
+    covers of today and works backwards from them; starting in the 1890s
+    asked them to scroll past a century to reach anything they recognise.
+  */
   const groups: DecadeGroup[] = [...buckets.entries()]
-    .sort((a, b) => a[0] - b[0])
+    .sort((a, b) => b[0] - a[0])
     .map(([decade, list]) => {
       const eds = list.flatMap(c => c.editionIds.map(id => byId.get(id)).filter((e): e is Edition => !!e));
       const publishers = Object.entries(countBy(eds.map(e => e.publisher)))
@@ -94,12 +108,13 @@ export function groupByDecade(covers: readonly Cover[], editions: readonly Editi
       };
     });
 
+  const decades = groups.map(g => g.decade);
   return {
     groups,
     undated,
     coverCount: covers.length,
-    from: groups[0]?.decade,
-    to: groups[groups.length - 1]?.decade,
+    from: decades.length ? Math.min(...decades) : undefined,
+    to: decades.length ? Math.max(...decades) : undefined,
   };
 }
 

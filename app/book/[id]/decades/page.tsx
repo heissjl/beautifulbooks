@@ -4,9 +4,11 @@ import { notFound } from 'next/navigation';
 import CoverImage from '@/components/CoverImage';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
+import { indexSignatures } from '@/lib/coverindex';
 import { decadeLine, groupByDecade, worthAPage, MIN_COVERS, MIN_DECADES } from '@/lib/decades';
 import { authorLine, SITE_URL } from '@/lib/seo';
 import { getWorkDetail, isWorkId } from '@/lib/work';
+import { foldDuplicateCovers } from '@/lib/works';
 
 /**
  * One book through the decades (ROADMAP 5.4a, PLAN-5 §3).
@@ -33,6 +35,9 @@ import { getWorkDetail, isWorkId } from '@/lib/work';
  */
 export const revalidate = 86400;
 
+/** Covers loaded eagerly at the top of the page; the rest lazy-load on scroll. */
+const EAGER_TILES = 12;
+
 interface PageProps {
   params: Promise<{ id: string }>;
 }
@@ -52,7 +57,20 @@ async function load(id: string) {
     */
     const detail = await getWorkDetail(id, { maxEntries: 600, dedupeCovers: false, googleBooks: false });
     if (!detail) return null;
-    const decades = groupByDecade(detail.covers, detail.editions);
+    /*
+      Folded from the **built index** rather than by hashing here (Julian,
+      2026-09-09: „hier fallen ähnliche cover schneller auf"). A decade group
+      puts printings of one era side by side, so two scans of one jacket land
+      next to each other where the wall would have spread them out.
+
+      `indexSignatures` reads signatures that are already on disk, so this
+      costs no request and no decoding — unlike `dedupeCovers: true`, which
+      downloads and hashes every cover and is what made this page time out.
+      Covers the index does not know keep their own tile; that is a gap, not
+      a claim of uniqueness (N12).
+    */
+    const covers = foldDuplicateCovers(detail.covers, indexSignatures(detail.covers.map(c => c.id)), detail.editions);
+    const decades = groupByDecade(covers, detail.editions);
     return { work: detail.work, editions: detail.editions, decades };
   } catch {
     return null;
@@ -68,7 +86,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `${work.title} covers by decade`;
   const description =
     `${decades.coverCount} covers of ${work.title}${author ? ` by ${author}` : ''}, grouped by the decade of the printing they belong to` +
-    `${decades.from && decades.to ? `, from the ${decades.from}s to the ${decades.to}s` : ''}. Counted from Open Library edition records.`;
+    `${decades.from && decades.to ? `, from the ${decades.to}s back to the ${decades.from}s` : ''}. Counted from Open Library edition records.`;
   return {
     title,
     description,
@@ -83,6 +101,17 @@ export default async function Page({ params }: PageProps) {
   if (!loaded || !worthAPage(loaded.decades)) notFound();
   const { work, editions, decades } = loaded;
   const author = authorLine(work.authors);
+  /*
+    The first screenful loads eagerly, the rest stays lazy (Julian,
+    2026-09-09). Counted across the decades rather than within one, because
+    the newest decade may hold two covers and the eager dozen would then be
+    two. Twelve is two rows of six on a desktop, four rows of three on a
+    phone — enough that the top of the page is there on arrival, few enough
+    that nothing is fetched for a reader who never scrolls.
+  */
+  const eagerIds = new Set(
+    decades.groups.flatMap(g => g.covers).slice(0, EAGER_TILES).map(c => c.id),
+  );
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -100,7 +129,7 @@ export default async function Page({ params }: PageProps) {
         <p className="mt-2 text-ink-2">{author}</p>
         <p className="mt-1 text-sm text-ink-3">
           {decades.coverCount} covers from {editions.length.toLocaleString('en')} edition records
-          {decades.from && decades.to ? `, ${decades.from}s to ${decades.to}s` : ''}
+          {decades.from && decades.to ? `, ${decades.to}s back to ${decades.from}s` : ''}
         </p>
 
         <div className="mt-10 space-y-12">
@@ -111,15 +140,18 @@ export default async function Page({ params }: PageProps) {
                 <p className="text-sm text-ink-3">{decadeLine(group)}</p>
               </div>
               <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
-                {group.covers.map(cover => (
-                  <li key={cover.id}>
-                    <Link href={`/book/${id}?cover=${encodeURIComponent(cover.id)}`} className="group block">
-                      <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 group-hover:-translate-y-1">
-                        <CoverImage src={cover.urlSmall ?? cover.url} alt="" sizes="(max-width: 640px) 30vw, 15vw" />
-                      </div>
-                    </Link>
-                  </li>
-                ))}
+                {group.covers.map(cover => {
+                  const eager = eagerIds.has(cover.id);
+                  return (
+                    <li key={cover.id}>
+                      <Link href={`/book/${id}?cover=${encodeURIComponent(cover.id)}`} className="group block">
+                        <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 group-hover:-translate-y-1">
+                          <CoverImage src={cover.urlSmall ?? cover.url} alt="" sizes="(max-width: 640px) 30vw, 15vw" priority={eager} />
+                        </div>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           ))}
@@ -152,8 +184,9 @@ export default async function Page({ params }: PageProps) {
         */}
         <p className="mt-16 border-t border-line pt-4 text-xs leading-relaxed text-ink-3">
           This page is assembled from Open Library edition records: a cover sits in the decade of the
-          earliest printing that carries it, and every count above is counted, not estimated. Records
-          without a year are shown at the end rather than left out. What is missing from the
+          earliest printing that carries it, and every count above is counted, not estimated. Decades
+          run from the most recent backwards. Records without a year are shown at the end rather than
+          left out. What is missing from the
           catalogues is missing here too, so this is a view of what was scanned, not of what was
           printed. Pages like this exist only where there are at least {MIN_COVERS} covers across{' '}
           {MIN_DECADES} decades. <Link href={`/book/${id}`} className="underline underline-offset-2 hover:text-accent">See the whole wall</Link>.

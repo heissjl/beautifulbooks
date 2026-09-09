@@ -17,6 +17,15 @@ interface CoverGalleryProps {
   onSelectCover: (cover: Cover) => void;
   /** Caption per cover id, e.g. "Scribner 1996". */
   captions: ReadonlyMap<string, string>;
+  /**
+   * Rendered directly under the language pills (Julian, 2026-09-09: „den link
+   * unter die pillen, nicht darüber").
+   *
+   * A slot rather than the link itself, so the gallery keeps knowing nothing
+   * about decade pages — which of them exist is `data/decade-pages.json`, and
+   * that belongs to the page, not to a list of covers.
+   */
+  belowTabs?: React.ReactNode;
 }
 
 const tabKey = (g: CoverTab) => g.language ?? 'unknown';
@@ -31,7 +40,7 @@ function scrollIntoView(node: HTMLButtonElement | null): void {
   node?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 
-export default function CoverGallery({ groups, selectedCover, onSelectCover, captions }: CoverGalleryProps) {
+export default function CoverGallery({ groups, selectedCover, onSelectCover, captions, belowTabs }: CoverGalleryProps) {
   // The tab follows the selected cover unless the user picked a tab since
   // the selection last changed (derived state, no effect needed).
   const [picked, setPicked] = useState<{ key: string; forSelectedId: string | null } | null>(null);
@@ -54,7 +63,8 @@ export default function CoverGallery({ groups, selectedCover, onSelectCover, cap
         `sm:contents` dissolves the scroller again so the wide layout is
         exactly what it was.
       */}
-      <div className="mb-4 sm:flex sm:flex-wrap sm:items-center sm:gap-2" role="tablist" aria-label="Language">
+      <div className="mb-4">
+      <div className="sm:flex sm:flex-wrap sm:items-center sm:gap-2" role="tablist" aria-label="Language">
         <span className="kicker mb-2 block sm:mb-0 sm:mr-2 sm:inline">{total} cover{total !== 1 ? 's' : ''}</span>
         <div className="flex min-w-0 gap-2 overflow-x-auto pb-1 sm:contents">
           {groups.map(g => (
@@ -71,6 +81,9 @@ export default function CoverGallery({ groups, selectedCover, onSelectCover, cap
             </button>
           ))}
         </div>
+      </div>
+      {/* 5 px, one more than the 4 the link had above the pills. */}
+      {belowTabs && <div className="mt-[5px]">{belowTabs}</div>}
       </div>
 
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5" role="tabpanel">

@@ -1110,6 +1110,90 @@ Nebenbei erledigt: auf dem Telefon stand die Peek-Leiste bisher **sofort beim La
 
 **Julians Vorschlag, ein farbenfrohes Cover automatisch zu wählen**, ist beim Planen geprüft und als Vorauswahl verworfen worden, hat aber einen Platz behalten: ein Farbmaß gibt es gar nicht, weil `decodeToGray` in der ersten Schleife auf Graustufen rechnet; nachrüstbar wäre es billig. Für eine Vorauswahl war es falsch, für das Cover, das in 1.9 oben rechts auf der Startseite ins Auge fallen soll, ist es das richtige Kriterium — dort ist es notiert.
 
+## 2026-09-09 · Die Schwelle war nicht das Problem (ROADMAP 5.4a, 6.10)
+
+Julian, auf die Jahrzehnte-Seite: „für decades-seite sollte die faltung-schwelle hochgesetzt werden. hier fallen ähnliche cover schneller auf. oft sind es gleiche cover nur mit einer anderen grundfarbe des scans. das ist auch ein problem für die generelle faltung."
+
+**Die Beobachtung stimmt, die Diagnose lag daneben — und zwar zu unseren Ungunsten: die Seite faltete überhaupt nicht.** `dedupeCovers: false` stand seit der Reparatur vom selben Tag drin, weil serverseitiges Falten jedes Cover herunterlädt und hasht und die Seite damit in Produktion umbrachte. Was Julian sah, waren also nicht zu eng gefaltete Cover, sondern ungefaltete.
+
+**Die Reparatur kostet keine einzige Anfrage.** Die Signaturen liegen längst auf der Platte: der gebaute Cover-Index (E18) kennt für die kuratierten Werke jedes Cover mit dHash, Kontrast und Farbe. `indexSignatures` in `lib/coverindex.ts` reicht sie heraus, die Seite faltet damit nach derselben Regel wie die Wand — ohne Bild, ohne Decoder, ohne Netz. Gemessen: *Brave New World* 148 → 114 Kacheln, *Lolita* 121 → 94, *Der Proceß* 135 → 123, *Gravity's Rainbow* 27 → 22. Die Signaturabdeckung ist praktisch vollständig (135/135, 148/148, 121/121), weil der Index mehr Cover kennt, als die Seite lädt.
+
+Ein Cover, das der Index nicht kennt, behält seine Kachel. Das ist eine Lücke und wird nicht als Einzigartigkeit ausgegeben (N12).
+
+### Und die Schwelle selbst? Gemessen, und sie bleibt
+
+Die eigentliche Frage — lässt sich die 8 anheben oder der Hash gegen den Scan-Grundton unempfindlich machen — hat ein eigenes Experiment bekommen ([lab/fold](../lab/fold/README.md)), weil sie die ganze Seite betrifft und nicht nur diese eine.
+
+**Erst die Verteilung:** über 846.779 Paare innerhalb eines Werks liegen 0,7 % unter Abstand 8, 0,4 % bei 9–12, 1,1 % bei 13–16.
+
+**Dann der Blick,** zwanzig Paare aus den beiden interessanten Bändern, von Hand einsortiert: sieben gleiche Gestaltung, zehn verschiedene, drei nicht beurteilbar. Julians Fall steht im Material — *The Outsider* bei Abstand 11 mit Scan-Helligkeit 53 gegen 29, *Catch-22* bei 12 mit 52 gegen 42, *The Catcher in the Rye* bei 16 als dieselbe Illustration einmal rot und einmal orange. **Aber in denselben Bändern liegen echte Unterschiede:** *Herr der Ringe* gegen *Lord of the Rings* bei 11, zwei verschiedene *Lord of the Flies* bei 12, zwei verschiedene *Siddhartha*-Umschläge bei 14.
+
+**Kein Maß trennt die sieben von den zehn:**
+
+| Maß | gleiche, schlechtestes | verschiedene, bestes | trennt? |
+|---|---|---|---|
+| dHash wie bisher | 21 | 10 | nein |
+| nach Autokontrast | 23 | 13 | nein |
+| nach Histogrammausgleich | 18 | 11 | nein |
+| Rauschmaske über den Bits | 64 | 0 | nein, schlechter |
+| 16×16 statt 8×8 | 0,422 | 0,152 | nein |
+| 32×32 | 0,435 | 0,227 | nein |
+| Farbschranke 4×4 RGB | 0,303 | 0,055 | nein |
+
+Die Rauschmaske — nur Bits zählen, bei denen beide Bilder einen deutlichen Helligkeitssprung hatten — schadet sogar: auf flächigen Umschlägen bleibt kein sicheres Bit übrig, bei drei Paaren null, und dann meldet das Maß 0 oder 64 statt einer Aussage.
+
+**Also bleibt die 8, und oberhalb entscheidet weiter die Metadatenlage** (ISBN, Verlag, Jahr) statt des Abstands. Das war schon der Befund vom 2026-09-07; neu ist, dass jetzt auch die naheliegenden Auswege durchgemessen und ausgeschlossen sind. Wer es besser machen will, braucht einen anderen Deskriptor — und zuerst mehr als siebzehn beurteilte Paare.
+
+**Die Lehre:** eine Beobachtung am Bildschirm ist ein verlässlicher Hinweis darauf, *dass* etwas nicht stimmt, und ein unzuverlässiger darauf, *warum*. Hier wäre das Anheben der Schwelle nicht nur wirkungslos gewesen — es hätte echte Unterschiede zusammengefaltet, während die eigentliche Ursache stehen bleibt.
+
+## 2026-09-09 · Was das Falten die Jahrzehnte-Seiten kostet (ROADMAP 5.4a)
+
+Nachdem die Seite faltet, entscheidet die Schwelle über die **gefalteten** Zahlen — über die, die der Leser sieht, nicht über die Zahl der Datensätze. Der Kandidatenlauf wurde deshalb wiederholt: **84 der 105 kuratierten Werke tragen eine Seite, 21 nicht.** Sechs Werke sind unter die Schwelle gerutscht; sie hätten vorher eine Seite bekommen, auf der ein Teil der zwanzig Kacheln dasselbe Cover zweimal gewesen wäre. Die Sitemap steht damit bei **193** Adressen statt 199.
+
+**Ein Fund im Lauf, der wichtiger ist als die Zahl.** Bei *White Noise* antwortete Open Library dreimal hintereinander nicht — und das Werk fiel damit aus der Liste, aus einem Grund, der nichts mit seinen Daten zu tun hat. Es wäre still aus der Sitemap verschwunden, und niemand hätte gesehen, warum. Das ist genau der Fehler, den CLAUDE.md verbietet: **ein Ausfall darf nicht als Befund erscheinen.**
+
+`scripts/find-decade-pages.ts` liest jetzt die vorherige Liste ein, bevor er sie überschreibt: ein Werk, dessen Katalog schweigt, **behält seinen alten Eintrag**, und nur ein Werk, das geantwortet hat, kann seine Seite verlieren. Der Lauf sagt am Ende, wie viele Einträge so übernommen wurden. *White Noise* selbst steht mit den Zahlen drin, die sich vor dem Ausfall messen ließen (23 Cover gefaltet auf 22, weiterhin 4 Jahrzehnte).
+
+Geprüft, dass Liste, Sitemap und Seite dieselbe Rechnung machen: kein Eintrag unter der Schwelle, keiner außerhalb der Kuration, keiner ohne Signaturen im Index, keine Dublette.
+
+## 2026-09-09 · Ein Drittel des Buchs, einen Tag lang festgehalten (ROADMAP 5.4a)
+
+Die Prüfung nach dem Deploy: 404 für die sechs abgefallenen Werke wie vorgesehen, Sitemap mit 193 Adressen und 84 Jahrzehnte-Seiten, keine der abgefallenen mehr darin. Aber *Brave New World* rendert in Produktion **36 Cover aus 41 Ausgaben-Datensätzen**, wo lokal 114 aus 130 stehen.
+
+**Das ist mein eigener Fix von heute früh, eine Ebene weiter.** Damals warf der Ladepfad das ganze Werk weg, sobald eine spätere Ausgabenseite nicht antwortete — das ergab den 404. Seitdem endet der Lauf mit dem, was angekommen ist. Eine Ausgabenseite umfasst 100 Datensätze, 41 Ausgaben heißt also: **Seite 0 kam an, die zweite nicht**, und der Lauf gab auf. `revalidate = 86400` hat dieses Drittel dann für einen Tag eingefroren.
+
+Der Fehler war nicht, mit Teildaten weiterzumachen — das ist richtig. Der Fehler war, **beim ersten Nein aufzugeben**: der Client versucht es seit 1.10 ein zweites Mal, der Server nicht. Open Library antwortet aus Frankfurt oft genug jenseits der 12 s, dass ein einziger Versuch nichts misst. `fetchPageWithRetry` holt eine gescheiterte Seite nach 2 s noch einmal, bevor der Lauf endet; ein Test hält fest, dass ein einzelner Fehlschlag den Lauf nicht mehr verkürzt.
+
+**Was daran offen bleibt:** die Liste in `data/decade-pages.json` sagt für dieses Werk 114 Cover, die Seite zeigte 36. Die Schwelle wurde also über Daten entschieden, die der Leser nicht sah. Solange das nur die angezeigte Menge betrifft, ist es eine dünne Seite und keine Unwahrheit — die Kopfzeile zählt, was sie hat. Fällt ein Lauf aber so weit zurück, dass die Seite unter die Schwelle rutscht, antwortet sie 404, obwohl die Sitemap sie führt. **Der Wiederholungsversuch macht das unwahrscheinlicher, nicht unmöglich.** Der saubere Weg wäre, dass `getWorkDetail` sagt, ob der Lauf vollständig war, und ein unvollständiger Lauf nicht für 24 Stunden gecacht wird.
+
+## 2026-09-09 · Nach dem Deploy: was die Reparaturen in Produktion tun (ROADMAP 5.4a)
+
+Zwei Dinge waren lokal nicht beweisbar und wurden nach dem Deploy je **einmal** geprüft.
+
+**Der abgebrochene Ausgabenlauf ist geheilt.** *Brave New World* rendert jetzt **114 Cover aus 130 Ausgaben-Datensätzen** — genau die lokale Zahl. Vor dem Deploy waren es 36 aus 41, weil der Lauf bei der ersten stummen Seite aufgab und ISR das für einen Tag festhielt. Der zweite Versuch je Seite (`fetchPageWithRetry`) trägt also in genau der Lage, für die er gebaut wurde. Die Seite antwortet in 6,9 s.
+
+Im selben Abruf mitbestätigt: die Jahrzehnte laufen **„2020s back to 1930s"**, und im ausgelieferten HTML steht „Sorting these covers by decade" — die Ladeseite wird vor dem Seiteninhalt ausgeliefert, wie vorgesehen.
+
+**Das Vorladen bei Absicht greift.** Vor dem Hover kein einziger Request auf `/book/<id>/decades`; sobald der Mauszeiger auf dem Link liegt: `GET /book/OL64365W/decades?_rsc=… → 200`. Damit ist beides belegt — Nexts automatisches Vorladen ist aus, und der Hover ersetzt es. Auf einem Telefon meldet `matchMedia('(hover: hover) and (pointer: fine)')` false (unter Emulation geprüft, 5 Berührungspunkte), der Handler steigt vor der Anfrage aus.
+
+**Ein Fehler von mir beim Messen, der hierher gehört:** der erste Produktionsaufruf lief acht Minuten ohne Antwort, und ich hielt das kurz für ein Problem der Seite. Es war mein `curl` ohne `--max-time`, gestartet bevor der Deploy fertig war. Mit Zeitgrenze antwortete dieselbe Adresse in 6,9 s. Ein Messwerkzeug ohne Timeout misst nicht die Seite, sondern sich selbst.
+
+## 2026-09-09 · Die Liste, auf die die Seite zeigt, wächst jetzt aus dem Betrieb (ROADMAP 5.1, 5.4a)
+
+Julians Frage, aus der das hier entstand: für welche Werke wird eine Jahrzehnte-Seite gebaut — nur für die kuratierten, oder auch für ein Buch, bei dem sich nach einer Suche herausstellt, dass genug Cover da sind?
+
+**Die Antwort war überraschend: für alle, aber sichtbar nur für wenige.** Die Route rechnet die Schwelle beim Laden aus und liefert die Seite jedem Werk, das sie trägt. *Nineteen Eighty-Four* hatte damit längst eine Seite mit 224 Covern über neun Jahrzehnte — und *Pride and Prejudice* eine mit 114 über zehn —, nur zeigte nichts darauf. Kein Link, kein Sitemap-Eintrag. Die vorab gemessene Liste entschied nicht, **ob** es die Seite gibt, sondern nur, **wo wir darauf zeigen.**
+
+**Der Link folgt jetzt den Daten statt der Liste** (Julian: „der link soll natürlich immer gezeigt werden, wenn eine decade wall möglich ist"). Der Browser hat ohnehin jede Seite des Werks geladen und jedes Cover gefaltet, also wendet er dieselbe Schwellenfunktion an wie die Seite selbst — `lib/decades.ts` ist rein und ohne I/O, es gibt also keine zweite Regel, die auseinanderlaufen könnte. Kosten: keine Anfrage. Zwei Bedingungen halten ihn ehrlich: die vorab gemessene Liste bleibt als Schnellweg, damit ein bekanntes Werk den Link sofort zeigt statt nach dem vollen Durchlauf, und der gerechnete Fall greift **erst wenn der Durchlauf fertig ist** — eine halb geladene Wand kann die Schwelle vorübergehend reißen und auf einen 404 zeigen. Geprüft: *1984* bekommt den Link nach 3 s, *Mumbo Jumbo* mit 12 Covern bekommt keinen.
+
+**Beförderung ist jetzt ein Befehl.** `scripts/promote.ts` nimmt Work-IDs und macht die drei Schritte, die nötig sind, damit eine Adresse etwas taugt: das Werk kommt in `data/index-works.json`, seine Cover-Signaturen werden gebaut, und die Schwelle wird gemessen. Schritt 2 ist der, den man vergisst — **ein Werk ohne Signaturen faltet nichts** und zeigt auf seiner Jahrzehnte-Seite genau die Dubletten, die am selben Tag abgestellt wurden. Deshalb sind Indexliste und Publikationsliste seit heute **dieselbe Datei** (`lib/published.ts`), und ein Test hält fest, dass kein veröffentlichtes Werk ohne Signaturen ist.
+
+**Was der erste Lauf brachte:** die Sitemap wächst von 193 auf **253 Adressen** — 139 Werkseiten statt 105, **110 Jahrzehnte-Seiten statt 84**. Von 139 Werken tragen 110 eine Seite, 29 sind zu dünn, und der Katalog schwieg bei keinem. *White Noise*, das im Lauf davor an einem Timeout ausfiel und von Hand mit abgeleiteten Zahlen wieder eingesetzt wurde, ist diesmal echt gemessen worden — 22 Cover über 4 Jahrzehnte, exakt die abgeleiteten Werte.
+
+**Kosten, gemessen:** 6,4 KB je Werk im Cover-Index (890 KB bei 139 Werken, also rund 3 MB bei fünfhundert), 156 Byte je Jahrzehnte-Eintrag, eine Open-Library-Anfrage je neuem Werk für den Titel, **keine Google-Anfrage** (E10). Der Index geht nie an den Browser; er wird serverseitig einmal in typisierte Arrays entpackt. Ab etwa tausend Werken (6 MB) wäre das neu zu bewerten.
+
+**Was noch fehlt, damit die Schleife sich schließt:** die Quelle. Vercel Web Analytics zählt Pfade, also `/book/<id>`, 30 Tage weit — daraus ließe sich lesen, welche Bücher tatsächlich gesucht werden. Nur gibt es dafür heute keinen Verkehr. Bis dahin bleibt der Weg aus 5.1 der tragende: Werke nach Katalogpopularität wählen, was keinen Besucher braucht.
+
 ## 2026-09-09 · Ein Durchgang durch die Roadmap nach Funktionsverbesserungen
 
 Julian: „geh die Roadmap durch und suche Funktionsverbesserungen, die wir angehen können." Kein Bau, eine Sichtung — mit der Regel, dass jede genannte Ursache im Code nachgesehen wird, statt die Roadmap nachzuerzählen. Das Ergebnis, die gefilterte Reihenfolge, steht in [ROADMAP.md](../ROADMAP.md) unter „Dieselbe Liste, gefiltert auf Funktionsverbesserungen". Hier steht nur, was beim Nachsehen dazukam.
