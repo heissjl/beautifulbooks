@@ -1395,3 +1395,16 @@ Grundfarbe, Flächen, Linien und Schriften bleiben, wie sie waren: die Frage war
 **Gegenprobe, damit der Test nicht hohl ist:** mit dem alten `#8c8377` wieder eingesetzt fällt er (`ink-3 on bg`, hell), mit dem neuen Wert steht er. Ein Test, der nie fehlschlagen kann, hätte hier gar nichts bewiesen.
 
 Die Kandidaten in `lab/palette/` bleiben liegen; „Vorher" heißt jetzt, was es ist, und zeigt weiter seine rote Zeile — als Beleg dafür, wie lange so etwas unbemerkt bleibt, wenn niemand nachrechnet.
+
+## 2026-09-09 · Zusammengeführt, und die Liste nachgezogen
+
+Der Tagesstand (1.11, 1.2, 1.3, 6.10a, 6.14, 6.22) ist mit `main` zusammengeführt. Der Branch lag **7 Commits voraus und 12 zurück** — parallel war auf `main` die Jahrzehnte-Seite, der gedeckelte Cover-Index und `lab/fold` gelandet. Drei Konflikte, alle harmlos: `useWorkPages.ts` (dort war `progress` in `known` umbenannt worden, meine Zeile `anyEditionLinks` zieht mit), sowie `ROADMAP.md` und `docs/history.md`, wo beide Seiten angehängt hatten. `main` danach im Schnellvorlauf auf `b53818b`; **nicht gepusht**, weil ein Push in Produktion deployt und danach nicht gefragt war.
+
+Nach dem Merge im Browser gegengeprüft, dass die beiden Stränge zusammenspielen: Seitenleiste mit neuem Akzent `#945138`, die Scan-Reihe aus 6.14, der Fremd-ISBN-Satz aus 1.11, alle 66 Bilder über die eigene Route aus 1.3 — und der Jahrzehnte-Link von `main`. 372 Tests grün.
+
+**Beim Nachziehen der Empfehlungsliste sind zwei Punkte aufgefallen, die heute an Wert verloren haben, ohne dass jemand sie angefasst hat.** Das ist der Grund, eine solche Liste überhaupt nachzuziehen, statt sie stehen zu lassen:
+
+- **6.12** („Signaturen überleben eine Serverinstanz nicht") war in der Vormittagsliste noch ein halber Tag Gewinn. Seit `5385ddd` liest `getWorkPage` die Signaturen aus dem gebauten Index — kostenlos, ohne ein Bild zu holen. Für kuratierte Werke, und das sind die in der Sitemap, ist der Punkt damit erledigt; offen bleibt er nur für Werke, die im Index fehlen. Ein Randfall, kein Hebel.
+- **6.5, Teil `priority`**: die LCP-Warnungen zeigten auf `covers.openlibrary.org`. Seit 1.3 kommen die Bilder von der eigenen Herkunft mit CDN davor. Der Punkt ist damit **verschoben, nicht gelöst** — und vor dem Anfassen neu zu messen, sonst wird ein Problem behoben, das es so nicht mehr gibt.
+
+**Was die Liste jetzt sagt:** Phase 1 ist bis auf 1.8 (Julian) und 1.9 leer, also ist 1.9 nach der eigenen Regel dieser Datei der nächste Punkt. Direkt danach steht kein Bau, sondern ein Deploy: **1.3 ist in Produktion überhaupt erst wirksam**, und die Zahl, die den Punkt belegt, kann nur dort entstehen.

@@ -18,7 +18,7 @@ Die Phasen folgen Abhängigkeiten, nicht Aufwand: Provision braucht eine öffent
 |---|---|---|
 | **Kuratierung** (6.17, 6.18) | Werkzeug fertig, rund zwei Drittel der hundert Werke gewählt, Reihenfolge von Hand gelegt | Julian klickt zu Ende; danach baut Claude die Rotation |
 | **Erstausgabedatum** (6.16) | Die Ausreißerprüfung ist live, *Lolita* steht nicht mehr auf 1777 | Die vier Fälle, die kein Algorithmus sieht, brauchen ein geprüftes Jahr aus der Kuratier-App |
-| **Abnahme nach dem Deployment** (2.6) | Das meiste geprüft und gemessen | OG-Bild in einem Messenger, Google-Verbrauch eines echten Tages, Enter am Gerät |
+| **Abnahme nach dem Deployment** (2.6) | Das meiste geprüft und gemessen | OG-Bild in einem Messenger, Google-Verbrauch eines echten Tages, Enter am Gerät — **und seit 2026-09-09 der CDN-Treffer der Bildroute (1.3), der lokal gar nicht existiert** |
 
 **Was aus dem Testbericht vom 2026-09-07 offen blieb:** T9 → 6.4, T10 → 1.2, T11 → 1.1, T12 → 6.1 *(erledigt)*, T13 → 6.2, T15 → 6.3, T16 → 1.3. Die vollständige Vorgeschichte — der Durchklick, der Böll-Fall, die Speicher- und Werbe-Entscheidungen — steht in der [Historie](docs/history.md) und in den [Plänen](docs/plans/README.md); dieser Kopf hält nur den heutigen Stand.
 
@@ -35,7 +35,7 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt — nicht nach Auf
 | 3 | **6.18 Kuratierung zu Ende**, danach **6.17 Rotation** | Julian, dann Claude | ein Abend, dann eine Sitzung | Die Startseite ist das Erste, was ein Besucher sieht, und sie ist erst zu zwei Dritteln von Hand |
 | 4 | **6.20 / 6.21 Teilen** | Claude | ein halber Tag | Der billigste Hebel für Reichweite, den es gibt: die Seite ist zum Zeigen gebaut, aber ein geteilter Link zeigt heute das allgemeine Mosaik statt des gewählten Covers |
 | 5 | ~~**1.1 Kein Cover vorauswählen**~~ ✅ *erledigt 2026-09-09* | Claude | — | Spart eine Google-Anfrage bei jedem, der nur schaut (gemessen: 0 statt mindestens 1), und die zweite Spalte spricht jetzt vom Buch statt von einer Ausgabe, die niemand gewählt hat |
-| 6 | ~~**1.3 Bild-Cache**~~ ✅ *erledigt 2026-09-09* | Claude | — | Muss vor echtem Verkehr stehen (N8), und es nimmt nebenbei den Abfluss der Leser-IP an Google und archive.org weg |
+| 6 | ~~**1.3 Bild-Cache**~~ ✅ *erledigt 2026-09-09; der CDN-Gewinn ist erst nach einem Deploy messbar (2.6)* | Claude | — | Muss vor echtem Verkehr stehen (N8), und es nimmt nebenbei den Abfluss der Leser-IP an Google und archive.org weg |
 | 7 | **6.13 und 6.15 Schritt 3** | Claude | ein bis zwei Sitzungen | Der schwerste offene Datenfehler: die Karte verspricht Ausgaben, die die Wand nie lädt |
 | 8 | **3.1 Analyse-Seite** | Claude | zwei Tage | Erst sinnvoll, wenn es eine Woche echte Besucher gab; Vercels eigene Zählung beantwortet keine der sechs Fragen |
 | 9 | **Phase 5, beginnend mit 5.1** | beide | Wochen | Die eigentliche Reichweite. Die kuratierten hundert sind der Anfang der Liste, die 5.1 braucht |
@@ -44,18 +44,25 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt — nicht nach Auf
 
 ### Dieselbe Liste, gefiltert auf Funktionsverbesserungen
 
-*(Julian, 2026-09-09: „geh die Roadmap durch und suche Funktionsverbesserungen, die wir angehen können".)* Die Tabelle darüber mischt Konten, Recht und Reichweite mit dem Produkt und wird von Julians zwanzig Minuten angeführt. Dies ist dieselbe Roadmap, gefiltert auf das, was die **Seite für einen Leser besser macht** und heute ohne eine Entscheidung von Julian gebaut werden kann. Neue Punkte entstehen dabei keine; die Nummern verweisen auf die Einträge unten. Die Phasenregel bleibt: Phase 1 zuerst, Phase 6 darf jederzeit dazwischen.
+*Stand 2026-09-09 abends, nach dem Merge mit `main`. Erste Fassung am selben Tag auf Julians Frage; sechs der neun Zeilen sind seither abgehakt (1.11, 1.2, 1.3, 6.14, 6.10a, 6.22), deshalb hier die nachgezogene Liste.* Gefiltert auf das, was die Seite für einen Leser besser macht und ohne eine Entscheidung von Julian gebaut werden kann. Die Phasenregel bleibt: Phase 1 zuerst, Phase 6 darf jederzeit dazwischen.
+
+**Phase 1 ist bis auf zwei Punkte leer.** Offen sind nur noch **1.8** (Julians zehn Minuten Stichprobe von Hand) und **1.9** — damit ist 1.9 der letzte Punkt der Phase, der nicht auf Julian wartet, und nach der eigenen Regel dieser Datei der nächste.
 
 | | Punkt | Aufwand | Was ein Leser danach anders erlebt |
 |---|---|---|---|
-| 1 | ~~**1.11 zusammen mit 1.2**~~ ✅ *erledigt 2026-09-09* | — | Der stärkste Einzelgewinn der Detailseite. Bei rund drei Vierteln der Cover zeigt die Seitenleiste heute fünf Links auf Läden, die diese ISBN nie geführt haben; der Plan ordnet sie nach der Registrierungsgruppe der ISBN, ergänzt die fehlenden Titelsuchen und kommt dabei von **14 auf 5 Bedienelemente** — womit die Hälfte von 1.2 miterledigt ist. Der Hauptteil ist eine reine Tabelle, offline und testbar; Julians zehn Minuten Stichprobe betreffen nur zwei Annahmen und blockieren den Bau nicht |
-| 2 | ~~**1.3 Bild-Cache**~~ ✅ *erledigt 2026-09-09* | — | Die Wand baut sich schneller auf und bricht unter Last nicht ein (N8); nebenbei fällt der Abfluss der Leser-IP an archive.org und Google weg, und die LCP-Warnungen aus 6.5 verschwinden mit |
-| 3 | **1.9 Der Platz oben rechts** | halber Tag | Der erste Bildschirm zeigt endlich, was die Seite kann, statt einer leeren Hälfte neben der Überschrift. Empfehlung steht (Fächer aus drei bis vier Covern desselben Buchs), Cover-IDs fest, **null Anfragen** |
-| — | **Der billige Vierer aus Phase 6**, je ein Commit: 6.15-Nachtrag (der Titel „The Great Gatsby(Published In 1925)"), 6.14 (das „+N" anklickbar), 6.5-Teil (die Mosaik-Anfrage einmal wiederholen, `priority` auf den ersten Kacheln), 6.8 („All languages"-Pille) | je ein bis drei Stunden | Vier sichtbare Ärgernisse weniger, keines davon mit einer Abhängigkeit. Am besten zwischen 1 und 2 |
-| 4 | **6.13, dazu 6.15 Schritt 3** | ein bis zwei Sitzungen | Der schwerste offene Datenfehler: die Karte verspricht 14 Ausgaben, die Wand lädt 8, und die Cover der Geschwisterwerke sind auf der Wand nicht erreichbar. Vorher messen, wie viele Werke im Schnitt zusammengefasst werden |
-| 5 | **6.12 Signaturen in den Datencache** | halber Tag | Der **erste** Besucher sieht, was heute erst der zweite sieht — die Cover-Zahl fällt nicht mehr sichtbar zwischen zwei Besuchen |
+| 1 | **1.9 Der leere Platz oben rechts** | halber Tag | Der erste Bildschirm zeigt endlich, was die Seite kann, statt einer leeren Hälfte neben der Überschrift. Die Empfehlung steht seit dem 2026-09-07 (Fächer aus drei bis vier Covern desselben Buchs), die Cover-IDs stehen fest, **null Anfragen** |
+| 2 | **Deployen und 2.6 zu Ende bringen** *(braucht Julian: push)* | eine halbe Stunde | Nichts von heute ist in Produktion belegt — und **1.3 ist dort überhaupt erst wirksam**: der CDN-Treffer, der aus 7 Sekunden Millisekunden macht, existiert lokal nicht. Dazu die Reste aus 2.6 (OG-Bild in einem Messenger, Google-Verbrauch eines Tages) |
+| 3 | **6.13, dazu 6.15 Schritt 3** | ein bis zwei Sitzungen | Der schwerste offene Datenfehler, unverändert: die Karte verspricht 14 Ausgaben, die Wand lädt 8, und die Cover der Geschwisterwerke sind nirgends erreichbar. Vorher messen, wie viele Werke im Schnitt zusammengefasst werden |
+| 4 | **6.5, Teil „Mosaik-Ausfall"** | ein bis zwei Stunden | Eine Karte, deren Mosaik-Anfrage mit 503 scheitert, sieht heute aus wie ein Buch ohne Cover. Derselbe Riss wie 1.4, eine Ebene tiefer, und die Wiederholung aus 1.10 sitzt allein im Suchpfad |
+| 5 | **6.8 „All languages"-Pille** | ein bis zwei Stunden | Die Wand als Ganzes ansehen zu können, ohne sich durch die Reiter zu klicken. Klar spezifiziert, keine Abhängigkeit |
+| 6 | **6.2 Den Titel zeigen, nach dem gesucht wurde** | eine Sitzung | `crime and punishment` zeigt «Преступление и наказание». Zu klären ist zuerst, woher die Ausgabentitel für die Karte kommen — `?summary=1` trägt sie heute nicht |
 
-**Nicht in dieser Spur, mit Grund:** 6.2 (Ausgabentitel auf der Karte — gut, aber die Karte lädt heute nur `?summary=1`, das trägt keine Titel; erst zu klären, woher sie kommen), 6.3 (die 20-Sekunden-Bühne bei gesetztem Sprachfilter hängt an einer Abwägung, die 6.13 verschieben könnte), 6.4 (Wiederholungen zu **kennzeichnen** lohnt erst, wenn 6.7 entschieden hat, welche davon überhaupt stehen bleiben — und 6.7 wartet auf 6.6), 6.17 (die Rotation wartet auf Julians Kuratierung), 6.22 (das Farbschema wartet auf Julians Antwort, was sich ändern soll).
+**Zwei Punkte haben heute an Wert verloren, ohne dass jemand sie angefasst hat** — das gehört festgehalten, sonst werden sie nach altem Stand eingeplant:
+
+- **6.12 (Signaturen überleben keine Instanz)** ist für die Werke, auf die es ankommt, erledigt: seit `5385ddd` liest `getWorkPage` die Signaturen aus dem gebauten Index, kostenlos und ohne ein Bild zu holen. Offen bleibt es nur für Werke, die **nicht** im Index stehen — und in der Sitemap stehen die kuratierten. Der Punkt ist damit kein halber Tag Gewinn mehr, sondern ein Randfall.
+- **6.5, Teil `priority`** wurde von 1.3 verschoben, nicht gelöst: die LCP-Warnungen zeigten auf `covers.openlibrary.org`, und die Bilder kommen jetzt von der eigenen Herkunft mit CDN davor. **Vor dem Anfassen neu messen**, sonst wird ein Problem behoben, das es so nicht mehr gibt.
+
+**Nicht in dieser Spur, mit Grund:** 6.23 (das gelernte Faltungsmaß — der eigene Text sagt, dass zuerst zu prüfen ist, ob es überhaupt die Schwelle ist, und 6.6 steht davor), 6.6 (zwei Tage und ein ISBNdb-Monat, also Julians Geld), 6.4 (Wiederholungen zu kennzeichnen lohnt erst, wenn 6.7 entschieden hat, welche stehen bleiben — und 6.7 wartet auf 6.6), 6.3 (die 20-Sekunden-Bühne hängt an einer Abwägung, die 6.13 verschieben könnte), 6.17 (die Rotation wartet auf Julians Kuratierung), 6.16 (das geprüfte Erstausgabejahr fällt bei 6.18 mit ab, also bei Julian), 1.8 und alles in Phase 0 (Julian).
 
 ---
 
