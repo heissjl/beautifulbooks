@@ -672,3 +672,70 @@ export function verifyIsbnCover(
   }
   return { status: 'unknown' };
 }
+
+/**
+ * The blurb to show for a work, and the edition it belongs to (ROADMAP 1.1).
+ *
+ * Not simply the longest: measured on Wolf Hall 2026-09-07, 3 of 26 editions
+ * carry a description and the longest of them (927 characters) belongs to
+ * Editorial Presença — it is Portuguese. So the wanted language wins over
+ * length, and only when no edition in it has a blurb does any language do.
+ * The caller names the language in that case, or the reader is left guessing
+ * why an English book is described in Portuguese.
+ *
+ * A blurb is publisher copy for *one* edition, never a description of the
+ * work, which is why the edition travels with it and gets named.
+ */
+export function blurbFor(
+  editions: readonly Edition[],
+  language: string | undefined,
+): { text: string; edition: Edition } | null {
+  const withText = editions
+    .map(e => ({ edition: e, text: (e.description ?? '').trim() }))
+    .filter(e => e.text.length > 0);
+  if (withText.length === 0) return null;
+
+  const wanted = language && language !== 'all' ? language : mostCommonLanguage(editions);
+  const inWanted = withText.filter(e => e.edition.language === wanted);
+  const pool = inWanted.length > 0 ? inWanted : withText;
+  return pool.reduce((best, e) => (e.text.length > best.text.length ? e : best));
+}
+
+/** The language most editions of a work are in; undefined if none says. */
+function mostCommonLanguage(editions: readonly Edition[]): string | undefined {
+  const counts = new Map<string, number>();
+  for (const e of editions) if (e.language) counts.set(e.language, (counts.get(e.language) ?? 0) + 1);
+  let best: string | undefined;
+  let bestN = 0;
+  for (const [lang, n] of counts) if (n > bestN) { best = lang; bestN = n; }
+  return best;
+}
+
+/**
+ * "Editions here run from 1987 to 2025, from 37 publishers." (ROADMAP 1.1)
+ *
+ * The two numbers a wall of covers is actually about, and the two the meta
+ * line does not carry. Both describe **the editions loaded**, which is why
+ * the sentence says "here" and why the caller only shows it once the pages
+ * have stopped arriving: after page 0 alone, Wolf Hall would claim a span of
+ * 2009 to 2020 and then correct itself (SPEC §4 N12).
+ */
+export function editionSpan(editions: readonly Edition[]): string | null {
+  const years = editions.map(e => e.year).filter((y): y is number => !!y && y > 1000);
+  const publishers = new Set(
+    editions.map(e => e.publisher?.trim().toLowerCase()).filter((p): p is string => !!p),
+  );
+  if (years.length === 0 && publishers.size === 0) return null;
+
+  const parts: string[] = [];
+  if (years.length > 0) {
+    const from = Math.min(...years);
+    const to = Math.max(...years);
+    parts.push(from === to ? `Editions here are from ${from}` : `Editions here run from ${from} to ${to}`);
+  }
+  if (publishers.size > 0) {
+    const n = `${publishers.size} publisher${publishers.size === 1 ? '' : 's'}`;
+    parts.push(parts.length > 0 ? `from ${n}` : `Editions here come from ${n}`);
+  }
+  return `${parts.join(', ')}.`;
+}

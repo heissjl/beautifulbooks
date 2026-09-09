@@ -7,6 +7,7 @@ import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
 import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
 import CoverSheet from '@/components/CoverSheet';
+import WorkPanel from '@/components/WorkPanel';
 import ShareMenu from '@/components/ShareMenu';
 import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
@@ -30,7 +31,7 @@ import type { Market } from '@/lib/market';
 import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 import type { ImageSignature } from '@/lib/imagesig';
-import { leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
+import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
 
 function BackLink({ href }: { href: string }) {
@@ -99,15 +100,6 @@ function buildWall(
     covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
   }));
   return { covers, coversById, groups };
-}
-
-/** The cover the URL points at, else the first one on the wall (SPEC F2.6). */
-function selectCoverFrom(wall: ReturnType<typeof buildWall>, selectedId: string | null): Cover | null {
-  const byId = wall.coversById.get(selectedId ?? '');
-  if (byId) return byId;
-  // A folded duplicate may be in the URL: resolve to its representative.
-  const folded = wall.covers.find(c => c.similarIds?.includes(selectedId ?? ''));
-  return folded ?? wall.groups[0]?.covers[0] ?? null;
 }
 
 /**
@@ -196,7 +188,7 @@ function BookDetail() {
   const lookupIsbns = useMemo(() => {
     if (!pages.merged) return [];
     const wall = buildWall(pages.merged, [], new Map(), lang || undefined);
-    const cover = selectCoverFrom(wall, selectedId);
+    const cover = coverForId(wall, selectedId);
     if (!cover) return [];
     const byId = new Map(pages.merged.editions.map(e => [e.id, e]));
     return cover.editionIds.map(id => byId.get(id)?.isbn13).filter((i): i is string => !!i);
@@ -243,7 +235,7 @@ function BookDetail() {
     return () => cancelAnimationFrame(raf);
   }, [inScene, view, scene.staged, requestKey]);
 
-  const selected = useMemo<Cover | null>(() => (view ? selectCoverFrom(view, selectedId) : null), [view, selectedId]);
+  const selected = useMemo<Cover | null>(() => (view ? coverForId(view, selectedId) : null), [view, selectedId]);
 
 
   if (pages.status === 'notfound' || pages.status === 'error') {
@@ -340,8 +332,12 @@ function BookDetail() {
         <p className="text-ink-2">Neither catalogue has a cover for this book.</p>
       ) : (
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
-          {/* Room for the sheet's peek bar, so the last row stays reachable. */}
-          <div className="min-w-0 pb-20 lg:col-span-2 lg:pb-0">
+          {/*
+            Room for the sheet's peek bar, so the last row stays reachable —
+            but only when a cover is picked, or a phone shows a dead strip
+            under the last row of tiles from the moment the page opens.
+          */}
+          <div className={`min-w-0 lg:col-span-2 lg:pb-0 ${selected ? 'pb-20' : ''}`}>
             <CoverGallery
               groups={view.groups}
               selectedCover={selected}
@@ -362,7 +358,20 @@ function BookDetail() {
           */}
           {isDesktop && (
             <aside className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
-              {details}
+              {/*
+                Nothing picked yet: the column speaks about the book instead of
+                about an edition nobody chose (ROADMAP 1.1). The span of years
+                waits for the pages to stop arriving, otherwise it states a
+                range and corrects itself a moment later.
+              */}
+              {details ?? (
+                <WorkPanel
+                  work={work}
+                  editions={merged.editions}
+                  language={lang || undefined}
+                  settled={merged.done || pages.pagesLoaded > 1}
+                />
+              )}
             </aside>
           )}
         </div>

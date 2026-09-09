@@ -19,6 +19,12 @@ export interface WorkPagesState {
   firstCovers: WorkPageData['covers'] | null;
   /** Page 0 has been hashed, so the scene may end (SPEC 8.1). */
   page0Hashed: boolean;
+  /**
+   * How many pages have arrived. A statement about the whole work — the span
+   * of years, the number of publishers — is only safe once more than one is
+   * in, because page 0 holds the newest records alone (ROADMAP 1.1).
+   */
+  pagesLoaded: number;
 }
 
 interface Progress {
@@ -34,7 +40,7 @@ interface Progress {
 }
 
 const EMPTY: WorkPagesState = {
-  status: 'loading', merged: null, firstCovers: null, page0Hashed: false,
+  status: 'loading', merged: null, firstCovers: null, page0Hashed: false, pagesLoaded: 0,
 };
 
 /**
@@ -184,6 +190,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       merged: mergeWorkPages(pages, { done: progress.done, truncated: progress.truncated }),
       firstCovers: progress.pages[0]?.covers ?? null,
       page0Hashed: progress.page0Hashed,
+      pagesLoaded: pages.length,
     };
   }, [progress, requestKey]);
 }

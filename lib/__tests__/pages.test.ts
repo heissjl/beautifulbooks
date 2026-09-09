@@ -3,7 +3,7 @@
  * (SPEC §9.3 step 11, lib/pages.ts).
  */
 import { describe, expect, it } from 'vitest';
-import { leadLanguagesSettled, mergeWorkPages, orderGroups, type WorkPageData } from '../pages';
+import { coverForId, leadLanguagesSettled, mergeWorkPages, orderGroups, type WorkPageData } from '../pages';
 import type { Cover, Edition, LanguageGroup } from '../model';
 
 function edition(id: string, extra: Partial<Edition> = {}): Edition {
@@ -161,5 +161,33 @@ describe('leadLanguagesSettled', () => {
     expect(leadLanguagesSettled([], true)).toBe(true);
     // A language the work does not have must not hold the scene for ever.
     expect(leadLanguagesSettled([group('en', 12)], true, 'ja')).toBe(true);
+  });
+});
+
+describe('coverForId', () => {
+  const first = cover('ol:1', ['ol:A']);
+  const folded = { ...cover('ol:2', ['ol:B']), similarIds: ['ol:9'] };
+  const wall = { covers: [first, folded], coversById: new Map([[first.id, first], [folded.id, folded]]) };
+
+  it('picks nothing when the reader has picked nothing (ROADMAP 1.1)', () => {
+    /*
+      The point of the item: no fallback to the first cover. It used to show
+      an edition nobody chose and spent a Google request on it. If this test
+      fails because a fallback came back, read the comment on coverForId.
+    */
+    expect(coverForId(wall, null)).toBeNull();
+    expect(coverForId(wall, '')).toBeNull();
+  });
+
+  it('finds the cover a shared address names', () => {
+    expect(coverForId(wall, 'ol:1')).toBe(first);
+  });
+
+  it('resolves a folded duplicate to the cover it was folded into', () => {
+    expect(coverForId(wall, 'ol:9')).toBe(folded);
+  });
+
+  it('answers null for an id the wall does not know, not the first cover', () => {
+    expect(coverForId(wall, 'ol:404')).toBeNull();
   });
 });

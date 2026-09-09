@@ -1083,3 +1083,29 @@ Zwei Tests halten das fest: eine mittlere Seite, die wirft, kostet die Seiten da
 **In Produktion nachgemessen** (einmal, nach dem Deploy): dieselbe Adresse antwortet jetzt **200 in 18,0 s** statt 404 in 10,5 s. Der erste Aufruf ist teuer, weil er sechs Ausgabenseiten aus Frankfurt holt; `revalidate = 86400` sorgt dafür, dass ihn nur der erste Besucher eines Tages bezahlt. Weit unter der 300-Sekunden-Grenze der Funktion, aber die Zahl gehört im Blick behalten, wenn die Gattung wächst.
 
 **Die Lehre, die über diese Seite hinausgeht:** ein Fehlschlag darf nicht als Befund erscheinen (N12) — und ein 404 ist ein Befund. Wo eine Schwelle über Veröffentlichen entscheidet, muss der Unterschied zwischen „zu dünn“ und „nicht geladen“ im Code stehen, nicht im Zufall der Antwortzeit.
+
+## 2026-09-09 · Beim Öffnen ist nichts mehr ausgewählt (ROADMAP 1.1)
+
+Eine Zeile hielt das Problem: `selectCoverFrom` fiel auf `groups[0].covers[0]` zurück. Die Wand ist nach Datensatzalter sortiert, also war das nicht das schönste und nicht das bekannteste Cover, sondern die **jüngste Erfassung** — bei *The Great Gatsby* eine Print-on-Demand-Ausgabe von 2026, auf die dann auch die Kauf-Links zeigten. Der Leser landete auf einer Entscheidung, die niemand getroffen hatte, und bezahlte sie mit einer Google-Anfrage.
+
+**Gemessen am 2026-09-09** im Headless-Browser gegen den Dev-Server, gezählt aus Chromes eigenem Netzwerkprotokoll (`--log-net-log`), damit nicht das Server-Log einer fremden Sitzung mitzählt:
+
+| Aufruf | Anfragen an `/api/isbn` |
+|---|---|
+| `/book/OL468431W` kalt geöffnet, nichts angeklickt | **0** (vorher mindestens 1, gemessen bis 5) |
+| `/book/OL468431W?cover=ol:14369845` (geteilter Link) | **1**, für die eine ISBN des Covers |
+
+Eine kalte Detailseite kostet damit **1 statt 2** Google-Anfragen, solange niemand auswählt: rund 1.000 statt 500 Seiten am Tag. Kein einziges Cover geht dafür verloren — das ist der Unterschied zu dem Hebel, den 0.7 abwägt, dessen Preis Cover wären.
+
+**Die zweite Spalte wäre dadurch leer geworden, und das war die eigentliche Arbeit.** Sie zeigt jetzt bis zur ersten Auswahl das *Werk* statt einer *Ausgabe* — einen Ort, den die Seite vorher nicht hatte. Vier Dinge, alle aus geladenen Ausgaben gezählt, keine einzige Anfrage:
+
+- **Jahresspanne und Zahl der Verlage** („Editions here run from 1925 to 2026, from 238 publishers.“). Die Zeile erscheint erst ab der zweiten geladenen Seite: Open Library liefert die jüngsten Datensätze zuerst, nach Seite 0 allein behauptete *Wolf Hall* eine Spanne von 2009 bis 2020 und korrigierte sich danach. „here“ ist wörtlich — beide Zahlen beschreiben die geladenen Ausgaben, nicht alles je Gedruckte (N12).
+- **Der Klappentext mit seiner Ausgabe.** `blurbFor` wählt Sprache vor Länge, weil der längste sonst der falsche ist: bei *Wolf Hall* tragen 3 von 26 Ausgaben eine Beschreibung, und die längste (927 Zeichen) gehört Editorial Presença — sie ist portugiesisch. Weicht die Sprache trotzdem ab, wird sie genannt. Ein Klappentext ist Verlagswerbung für **eine** Ausgabe, nie eine Beschreibung des Werks; wer das weiß, liest ihn richtig, deshalb steht die Ausgabe daneben.
+- **Die Einladung**, zuletzt und leise: vor einer Wand aus Covern muss niemandem erklärt werden, dass man Cover anklicken kann — beantwortet wird nur, was danach passiert.
+- **Der Link auf den Open-Library-Datensatz** mit dem Satz, dass er dort korrigiert werden kann. Open Library ist ein Wiki, und die Seite zeigt sichtbar falsche Angaben (Gatsby, dort auf 1920 datiert). Die Adresse stand bisher nur im JSON-LD und war für Leser unsichtbar.
+
+Nebenbei erledigt: auf dem Telefon stand die Peek-Leiste bisher **sofort beim Laden** am unteren Rand und verdeckte eine Kachelreihe. Ohne Auswahl gibt es sie nicht mehr, und der Platz dafür (`pb-20`) wird erst mit einer Auswahl reserviert, sonst bliebe ein toter Streifen unter der letzten Reihe.
+
+**Was nicht zurückkommen darf:** der Rückfall. Wer später findet, die Spalte wirke leer, und sie mit einem automatisch gewählten Cover füllt, holt sich beides zurück — die fremde Entscheidung und die Anfrage. Der Kommentar an `coverForId` und der Test „picks nothing when the reader has picked nothing“ sind die Bremse.
+
+**Julians Vorschlag, ein farbenfrohes Cover automatisch zu wählen**, ist beim Planen geprüft und als Vorauswahl verworfen worden, hat aber einen Platz behalten: ein Farbmaß gibt es gar nicht, weil `decodeToGray` in der ersten Schleife auf Graustufen rechnet; nachrüstbar wäre es billig. Für eine Vorauswahl war es falsch, für das Cover, das in 1.9 oben rechts auf der Startseite ins Auge fallen soll, ist es das richtige Kriterium — dort ist es notiert.

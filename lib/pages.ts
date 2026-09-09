@@ -177,3 +177,28 @@ export function leadLanguagesSettled(
   const wanted = preferred && preferred !== 'all' ? preferred : LEAD_LANGUAGES[0];
   return groups.some(g => g.language === wanted);
 }
+
+/**
+ * The cover the URL points at, or null when the reader has not chosen one
+ * (SPEC §3 F2.6).
+ *
+ * There is deliberately **no fallback to the first cover on the wall**. Until
+ * 2026-09-09 there was one, and it put an edition nobody had chosen in front
+ * of the reader: the wall is ordered by record age, so the first cover of the
+ * leading group is the newest record Open Library holds — for The Great
+ * Gatsby a 2026 print-on-demand volume, which the buy links then pointed at.
+ * It also spent a Google request on every opened book, whether or not anyone
+ * looked at the sidebar (ROADMAP 1.1). If the second column ever looks empty
+ * again, fill it with something about the work — not with a cover.
+ */
+export function coverForId(
+  wall: { coversById: ReadonlyMap<string, Cover>; covers: readonly Cover[] },
+  selectedId: string | null,
+): Cover | null {
+  if (!selectedId) return null;
+  const byId = wall.coversById.get(selectedId);
+  if (byId) return byId;
+  // A folded duplicate may be in a shared address: resolve it to the cover it
+  // was folded into, so the link still lands on the design it named.
+  return wall.covers.find(c => c.similarIds?.includes(selectedId)) ?? null;
+}

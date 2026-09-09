@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest';
 import type { SourceEdition, WorkSummary } from '../model';
 import type { EditionCandidate } from '../sources/googlebooks-parse';
 import {
-  assembleEditions, candidatesToSourceEditions, editionKey, filterWorksByLanguage,
+  assembleEditions, blurbFor, candidatesToSourceEditions, editionKey, editionSpan, filterWorksByLanguage,
   derivativeIds, foldDuplicateCovers, groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks,
   relevance, rankContext, samePublisher, verifyIsbnCover, withoutTranslators,
 } from '../works';
-import type { Cover } from '../model';
+import type { Cover, Edition } from '../model';
 
 const work = (over: Partial<WorkSummary> & { id: string }): WorkSummary => ({
   title: 'Test Book',
@@ -550,5 +550,70 @@ describe('verifyIsbnCover', () => {
 
   it('falls back to unknown when the shop image is nowhere on the wall', () => {
     expect(verifyIsbnCover(cover('ol:a'), ['gb:gone'], [cover('ol:a')], true)).toEqual({ status: 'unknown' });
+  });
+});
+
+describe('blurbFor', () => {
+  const ed = (id: string, language: string | undefined, description?: string): Edition => ({
+    id, workId: 'OL1W', source: 'openlibrary', title: 'Wolf Hall', language, description,
+  });
+
+  it('prefers the wanted language over a longer blurb in another', () => {
+    // The measured Wolf Hall case: the longest description is Portuguese.
+    const eds = [ed('a', 'pt', 'x'.repeat(927)), ed('b', 'en', 'Thomas Cromwell rises.')];
+    expect(blurbFor(eds, 'en')?.edition.id).toBe('b');
+  });
+
+  it('falls back to any language when the wanted one has no blurb', () => {
+    const eds = [ed('a', 'pt', 'Uma história.'), ed('b', 'en', undefined)];
+    const found = blurbFor(eds, 'en');
+    expect(found?.edition.id).toBe('a');
+    // The caller needs the language to say whose words these are.
+    expect(found?.edition.language).toBe('pt');
+  });
+
+  it('uses the most common language of the work when none was asked for', () => {
+    const eds = [ed('a', 'de', 'Die Geschichte.'), ed('b', 'en', 'The story.'), ed('c', 'en')];
+    expect(blurbFor(eds, undefined)?.edition.id).toBe('b');
+  });
+
+  it('takes the longest among editions of the same language', () => {
+    const eds = [ed('a', 'en', 'Short.'), ed('b', 'en', 'A good deal longer than the other one.')];
+    expect(blurbFor(eds, 'en')?.text).toContain('longer');
+  });
+
+  it('answers null when no edition carries a description', () => {
+    expect(blurbFor([ed('a', 'en'), ed('b', 'de', '   ')], 'en')).toBeNull();
+  });
+});
+
+describe('editionSpan', () => {
+  const ed = (id: string, year?: number, publisher?: string): Edition => ({
+    id, workId: 'OL1W', source: 'openlibrary', title: 'Beloved', year, publisher,
+  });
+
+  it('names the years and the number of publishers', () => {
+    const eds = [ed('a', 1987, 'Knopf'), ed('b', 2025, 'Vintage'), ed('c', 1998, 'Vintage')];
+    expect(editionSpan(eds)).toBe('Editions here run from 1987 to 2025, from 2 publishers.');
+  });
+
+  it('counts a publisher once however it is spelled around the edges', () => {
+    expect(editionSpan([ed('a', 1990, 'Knopf'), ed('b', 1991, ' knopf ')])).toContain('1 publisher.');
+  });
+
+  it('does not claim a range when there is only one year', () => {
+    // "all from 1987" would be a completeness claim about editions (N12).
+    const line = editionSpan([ed('a', 1987, 'Knopf')]);
+    expect(line).toBe('Editions here are from 1987, from 1 publisher.');
+    expect(line).not.toMatch(/\ball\b|\bevery\b|\bcomplete\b/i);
+  });
+
+  it('works with publishers but no years, and with neither', () => {
+    expect(editionSpan([ed('a', undefined, 'Knopf')])).toBe('Editions here come from 1 publisher.');
+    expect(editionSpan([ed('a')])).toBeNull();
+  });
+
+  it('ignores a year that cannot be one', () => {
+    expect(editionSpan([ed('a', 12, 'Knopf'), ed('b', 1999, 'Knopf')])).toContain('from 1999');
   });
 });
