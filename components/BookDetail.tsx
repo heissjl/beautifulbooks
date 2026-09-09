@@ -287,6 +287,7 @@ function BookDetail() {
       query={searchParams.get('q') ?? ''}
       market={view.market}
       onMarketChange={setMarket}
+      share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} />}
       verdictFor={isbn13 => verifyIsbnCover(
         selected,
         isbnCovers.byIsbn.get(isbn13) ?? [],
@@ -312,7 +313,12 @@ function BookDetail() {
   return (
     <Shell
       backHref={backHref}
-      right={<ShareMenu workId={work.id} coverId={selected?.id} title={work.title} author={work.authors[0]} />}
+      /*
+        With a cover picked, sharing lives beside it — in the sidebar on a wide
+        screen, in the phone bar next to "Details". Without one there is
+        nothing beside, so the header keeps the button for the book itself.
+      */
+      right={selected ? undefined : <ShareMenu workId={work.id} title={work.title} author={work.authors[0]} />}
     >
       <TitleBlock title={work.title} authors={work.authors} meta={meta} />
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
@@ -349,7 +355,11 @@ function BookDetail() {
         </div>
       )}
       {!isDesktop && selected && (
-        <CoverSheet coverUrl={selected.url} caption={view.captions.get(selected.id) ?? ''}>
+        <CoverSheet
+          coverUrl={selected.url}
+          caption={view.captions.get(selected.id) ?? ''}
+          share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} placement="up" compact />}
+        >
           {details}
         </CoverSheet>
       )}
@@ -386,6 +396,8 @@ interface CoverDetailsProps {
   onMarketChange: (market: Market) => void;
   /** What a shop shows for an ISBN, compared with the cover on screen. */
   verdictFor: (isbn13: string) => IsbnVerdict;
+  /** Rendered under the big cover on wide screens (Julian, 2026-09-09). */
+  share?: React.ReactNode;
 }
 
 /**
@@ -432,9 +444,18 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   );
 }
 
-function CoverDetails({ cover, editions, coversPerEdition, author, query, market, onMarketChange, verdictFor }: CoverDetailsProps) {
+function CoverDetails({ cover, editions, coversPerEdition, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
   return (
     <div>
+      {/*
+        Sharing sits above the cover, not below it and not up in the header:
+        what a reader wants to send is the picture they just picked, and the
+        space under it is already the scarcest on the page — the buy links are
+        437px below the fold there (ROADMAP 1.2). On a phone the same control
+        is in the bar beside "Details", so it is hidden here rather than shown
+        twice. (Julian, 2026-09-09.)
+      */}
+      {share && <div className="mb-3 hidden justify-end lg:flex">{share}</div>}
       {/*
         In the phone sheet the cover shares the screen with the very links the
         reader opened the sheet for, so it stays small enough that the first

@@ -22,6 +22,9 @@ interface ShareMenuProps {
   coverId?: string | null;
   title: string;
   author?: string;
+  /** 'up' when the button sits at the bottom of the screen (the phone bar). */
+  placement?: 'down' | 'up';
+  compact?: boolean;
 }
 
 function shareUrlFor(workId: string, coverId: string | null | undefined): string {
@@ -31,7 +34,7 @@ function shareUrlFor(workId: string, coverId: string | null | undefined): string
     : `${origin}/book/${workId}`;
 }
 
-export default function ShareMenu({ workId, coverId, title, author }: ShareMenuProps) {
+export default function ShareMenu({ workId, coverId, title, author, placement = 'down', compact = false }: ShareMenuProps) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const box = useRef<HTMLDivElement>(null);
@@ -92,7 +95,7 @@ export default function ShareMenu({ workId, coverId, title, author }: ShareMenuP
     <div className="relative" ref={box}>
       <button
         type="button"
-        className="btn py-1.5"
+        className={`btn ${compact ? 'py-1.5 text-xs' : 'py-1.5'}`}
         aria-expanded={open}
         aria-haspopup="menu"
         onClick={() => setOpen(o => !o)}
@@ -103,7 +106,9 @@ export default function ShareMenu({ workId, coverId, title, author }: ShareMenuP
       {open && (
         <div
           role="menu"
-          className="absolute right-0 z-30 mt-2 w-56 rounded-card border border-line bg-surface p-1.5 shadow-lg"
+          className={`absolute right-0 z-50 w-56 rounded-card border border-line bg-surface p-1.5 shadow-lg ${
+            placement === 'up' ? 'bottom-full mb-2' : 'mt-2'
+          }`}
         >
           <p className="px-2.5 pb-1.5 pt-1 text-xs text-ink-3">
             {coverId ? 'Shares this cover' : 'Shares this book'}

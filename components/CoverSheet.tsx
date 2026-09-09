@@ -7,6 +7,8 @@ interface CoverSheetProps {
   coverUrl: string;
   /** "Scribner 1996" style line for the selected cover. */
   caption: string;
+  /** Sits beside "Details" in the bar: sharing belongs where the cover is. */
+  share?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -23,7 +25,7 @@ interface CoverSheetProps {
  * So: a bar pinned to the bottom answers "did my tap do anything?" without a
  * single scroll, and doubles as the handle of a sheet holding the details.
  */
-export default function CoverSheet({ coverUrl, caption, children }: CoverSheetProps) {
+export default function CoverSheet({ coverUrl, caption, share, children }: CoverSheetProps) {
   const [open, setOpen] = useState(false);
   const closeButton = useRef<HTMLButtonElement>(null);
 
@@ -45,11 +47,16 @@ export default function CoverSheet({ coverUrl, caption, children }: CoverSheetPr
 
   return (
     <>
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/95 backdrop-blur-sm lg:hidden">
+      {/*
+        The bar is a row, not one big button: the share control has to sit
+        beside "Details" (Julian, 2026-09-09) and a button cannot live inside
+        a button. The tappable area keeps everything except that control.
+      */}
+      <div className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-2 border-t border-line bg-bg/95 px-4 py-2.5 backdrop-blur-sm lg:hidden">
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="flex w-full items-center gap-3 px-4 py-2.5 text-left"
+          className="flex min-w-0 flex-1 items-center gap-3 text-left"
           aria-haspopup="dialog"
           aria-expanded={open}
         >
@@ -62,6 +69,7 @@ export default function CoverSheet({ coverUrl, caption, children }: CoverSheetPr
           </span>
           <span className="btn shrink-0 py-1.5 text-xs">Details</span>
         </button>
+        {share}
       </div>
 
       {open && (
