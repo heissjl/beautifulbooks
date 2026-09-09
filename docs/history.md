@@ -1165,3 +1165,15 @@ Die Prüfung nach dem Deploy: 404 für die sechs abgefallenen Werke wie vorgeseh
 Der Fehler war nicht, mit Teildaten weiterzumachen — das ist richtig. Der Fehler war, **beim ersten Nein aufzugeben**: der Client versucht es seit 1.10 ein zweites Mal, der Server nicht. Open Library antwortet aus Frankfurt oft genug jenseits der 12 s, dass ein einziger Versuch nichts misst. `fetchPageWithRetry` holt eine gescheiterte Seite nach 2 s noch einmal, bevor der Lauf endet; ein Test hält fest, dass ein einzelner Fehlschlag den Lauf nicht mehr verkürzt.
 
 **Was daran offen bleibt:** die Liste in `data/decade-pages.json` sagt für dieses Werk 114 Cover, die Seite zeigte 36. Die Schwelle wurde also über Daten entschieden, die der Leser nicht sah. Solange das nur die angezeigte Menge betrifft, ist es eine dünne Seite und keine Unwahrheit — die Kopfzeile zählt, was sie hat. Fällt ein Lauf aber so weit zurück, dass die Seite unter die Schwelle rutscht, antwortet sie 404, obwohl die Sitemap sie führt. **Der Wiederholungsversuch macht das unwahrscheinlicher, nicht unmöglich.** Der saubere Weg wäre, dass `getWorkDetail` sagt, ob der Lauf vollständig war, und ein unvollständiger Lauf nicht für 24 Stunden gecacht wird.
+
+## 2026-09-09 · Nach dem Deploy: was die Reparaturen in Produktion tun (ROADMAP 5.4a)
+
+Zwei Dinge waren lokal nicht beweisbar und wurden nach dem Deploy je **einmal** geprüft.
+
+**Der abgebrochene Ausgabenlauf ist geheilt.** *Brave New World* rendert jetzt **114 Cover aus 130 Ausgaben-Datensätzen** — genau die lokale Zahl. Vor dem Deploy waren es 36 aus 41, weil der Lauf bei der ersten stummen Seite aufgab und ISR das für einen Tag festhielt. Der zweite Versuch je Seite (`fetchPageWithRetry`) trägt also in genau der Lage, für die er gebaut wurde. Die Seite antwortet in 6,9 s.
+
+Im selben Abruf mitbestätigt: die Jahrzehnte laufen **„2020s back to 1930s"**, und im ausgelieferten HTML steht „Sorting these covers by decade" — die Ladeseite wird vor dem Seiteninhalt ausgeliefert, wie vorgesehen.
+
+**Das Vorladen bei Absicht greift.** Vor dem Hover kein einziger Request auf `/book/<id>/decades`; sobald der Mauszeiger auf dem Link liegt: `GET /book/OL64365W/decades?_rsc=… → 200`. Damit ist beides belegt — Nexts automatisches Vorladen ist aus, und der Hover ersetzt es. Auf einem Telefon meldet `matchMedia('(hover: hover) and (pointer: fine)')` false (unter Emulation geprüft, 5 Berührungspunkte), der Handler steigt vor der Anfrage aus.
+
+**Ein Fehler von mir beim Messen, der hierher gehört:** der erste Produktionsaufruf lief acht Minuten ohne Antwort, und ich hielt das kurz für ein Problem der Seite. Es war mein `curl` ohne `--max-time`, gestartet bevor der Deploy fertig war. Mit Zeitgrenze antwortete dieselbe Adresse in 6,9 s. Ein Messwerkzeug ohne Timeout misst nicht die Seite, sondern sich selbst.
