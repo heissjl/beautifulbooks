@@ -478,11 +478,13 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
     Which printing leads is a decision now, not the catalogue's arrival order
     (ROADMAP 1.11 lever 2). After folding, `Cover.editionIds` came in the
     order Open Library handed the records over — by age of the record — and
-    the first one supplies the links a reader sees first. With 44 % of
-    cover-bearing editions carrying an ISBN from outside the reader's market,
-    that first one was often the one whose links go nowhere.
+    the first one supplies the links a reader sees first. Two things beat that
+    order: whether this printing still ships the cover on screen (the verdict,
+    Julian 2026-09-09) and whether a shop in the reader's market can look its
+    number up. Not memoised: it depends on verdicts that arrive after the
+    selection, and sorting a handful of editions costs nothing.
   */
-  const ordered = useMemo(() => orderEditionsForMarket(editions, market), [editions, market]);
+  const ordered = orderEditionsForMarket(editions, market, isbn13 => verdictFor(isbn13).status);
   const [pickedId, setPicked] = useState<string | null>(null);
   /*
     Derived, never corrected from an effect: picking another cover replaces
@@ -627,8 +629,19 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
       {edition.isbn13 && <p className="mt-0.5 font-mono text-[13px] text-ink-3">ISBN {edition.isbn13}</p>}
 
       <div className="mt-5">
+        {/*
+          On `differs` the verdict comes *before* the buttons, because it is
+          the reason they are searches and not shops: whatever the ISBN opens
+          ships the other jacket, so the row hunts the picture on screen by
+          title, author, publisher and year (SPEC F2.9).
+        */}
+        {edition.isbn13 && verdict.status === 'differs' && <VerdictNote verdict={verdict} hint={hint} lead />}
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <p className="kicker">{edition.isbn13 ? 'Get this printing' : 'Find this printing'}</p>
+          <p className="kicker">
+            {verdict.status === 'differs'
+              ? 'Find the cover you picked'
+              : edition.isbn13 ? 'Get this printing' : 'Find this printing'}
+          </p>
           <MarketSwitcher market={market} onChange={onMarketChange} compact />
         </div>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -649,7 +662,7 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
           is the same line `lib/verdicts.ts` holds one level up.
         */}
         {plan.note && <p className="mt-2 text-xs leading-relaxed text-ink-3">{plan.note}</p>}
-        {edition.isbn13 && <VerdictNote verdict={verdict} hint={hint} />}
+        {edition.isbn13 && verdict.status !== 'differs' && <VerdictNote verdict={verdict} hint={hint} />}
       </div>
 
       {hasFold && (
@@ -749,7 +762,7 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
  * for what will arrive, but it is not a reading of any shop's page, and the
  * text must not claim otherwise (Julian, 2026-09-07).
  */
-function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) {
+function VerdictNote({ verdict, hint, lead = false }: { verdict: IsbnVerdict; hint: string; lead?: boolean }) {
   if (verdict.status === 'verified') {
     return (
       <p className="mt-2 text-xs leading-relaxed text-ink-3">
@@ -760,7 +773,7 @@ function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) 
   }
   if (verdict.status === 'differs') {
     return (
-      <div className="mt-2 flex items-start gap-3">
+      <div className={`flex items-start gap-3 ${lead ? 'mb-4' : 'mt-2'}`}>
         <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the publisher's current image for this ISBN">
           <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
             <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="The publisher's current image for this ISBN" sizes="55px" />
@@ -769,7 +782,16 @@ function VerdictNote({ verdict, hint }: { verdict: IsbnVerdict; hint: string }) 
         <p className="text-xs leading-relaxed text-ink-3">
           <span className="text-ink-2">{VERDICT_LEAD.differs}</span>{' '}
           It is the one beside this note, so that is what a new copy is likely to be.
-          {hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
+          {/*
+            When this note leads, the row underneath *is* the answer to it, so
+            the sentence points at it instead of leaving the reader to work out
+            which of the buttons hunts the picture they clicked.
+          */}
+          {lead
+            ? hint
+              ? ` The searches below look for ${hint} second-hand instead.`
+              : ' The searches below look for this printing instead.'
+            : hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
         </p>
       </div>
     );

@@ -67,9 +67,33 @@ describe('linkPlan order', () => {
     expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks', 'Booklooker']);
   });
 
-  it('puts the image search up front when the publisher’s image differs', () => {
-    expect(plan(TR, 'us', { verdict: 'differs' }).lead.map(l => l.label)).toContain('Google Lens');
-    expect(plan(TR, 'us', { verdict: 'verified' }).lead.map(l => l.label)).not.toContain('Google Lens');
+  it('hands the row to the searches when the publisher’s image differs', () => {
+    /*
+      Julian, 2026-09-09: „dann müssen suchen mit autor und jahr leichter
+      vorgeschlagen werden als nur zig buttons wo immer ein anderes cover
+      dahinter liegt." An ISBN link ships the other jacket, so it cannot lead.
+    */
+    for (const isbn of [EN, TR, DE]) {
+      const lead = plan(isbn, 'us', { verdict: 'differs' }).lead;
+      expect(lead.map(l => l.label)).toEqual(['AbeBooks', 'eBay', 'Google Lens']);
+      // Every one of them searches by title, author, publisher and year.
+      for (const link of lead.slice(0, 2)) {
+        expect(decodeURIComponent(link.url)).toContain('Everest');
+        expect(decodeURIComponent(link.url)).toContain('2013');
+      }
+    }
+  });
+
+  it('moves the market’s shops behind the fold on differs, without losing them', () => {
+    const p = plan(EN, 'us', { verdict: 'differs' });
+    expect(p.lead.map(l => l.label)).not.toContain('Bookshop.org');
+    expect(p.rest.map(l => l.label)).toEqual(expect.arrayContaining(['Bookshop.org', 'Amazon']));
+  });
+
+  it('adds the antiquarian search when no publisher image is on record (lever 4)', () => {
+    // Only the order changes; "unknown" still says nothing about buying.
+    expect(plan(EN, 'us', { verdict: 'unknown' }).lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon', 'AbeBooks']);
+    expect(plan(EN, 'us', { verdict: 'verified' }).lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);
   });
 
   it('says nothing in the home case, where there is no order to explain', () => {
@@ -157,6 +181,37 @@ describe('orderEditionsForMarket (lever 2)', () => {
   it('puts an edition without any ISBN last, never drops it', () => {
     expect(orderEditionsForMarket(editions, 'us')).toHaveLength(editions.length);
     expect(orderEditionsForMarket(editions, 'us').at(-1)?.id).toBe('b');
+  });
+
+  it('leads with the printing whose registered image is this cover', () => {
+    /*
+      Julian, 2026-09-09: „die version die das gleiche aktuelle cover hat wie
+      die isbn sollte zuerst vorgeschlagen werden, nicht nach jahr sortiert."
+      Measured on Beloved: Vintage International 2025 and 2004 carry the same
+      folded cover, the year led with 2025, and it is 2004 whose ISBN the
+      publisher still shows this jacket for.
+    */
+    const vintage = [
+      { id: '2025', isbn13: EN, year: 2025 },
+      { id: '2004', isbn13: '9780307388629', year: 2004 },
+    ];
+    const verdict = (isbn: string) => (isbn === '9780307388629' ? 'verified' as const : 'differs' as const);
+    expect(orderEditionsForMarket(vintage, 'us', verdict).map(e => e.id)).toEqual(['2004', '2025']);
+    // Without an answer yet, the year decides as before.
+    expect(orderEditionsForMarket(vintage, 'us').map(e => e.id)).toEqual(['2025', '2004']);
+  });
+
+  it('does not reorder on an answer that has not arrived', () => {
+    const two = [{ id: 'new', isbn13: EN, year: 2020 }, { id: 'old', isbn13: '9780307388629', year: 1999 }];
+    for (const status of ['pending', 'unavailable', 'unknown'] as const) {
+      expect(orderEditionsForMarket(two, 'us', () => status).map(e => e.id)).toEqual(['new', 'old']);
+    }
+  });
+
+  it('lets the verdict outrank the market, because the reader picked a picture', () => {
+    const mixed = [{ id: 'home', isbn13: EN, year: 2010 }, { id: 'foreign', isbn13: TR, year: 2013 }];
+    const verdict = (isbn: string) => (isbn === TR ? 'verified' as const : 'unknown' as const);
+    expect(orderEditionsForMarket(mixed, 'us', verdict).map(e => e.id)).toEqual(['foreign', 'home']);
   });
 
   it('keeps the catalogue’s order among equals', () => {

@@ -62,6 +62,19 @@ const AREA_NAME: Record<'en' | 'de', string> = {
  * and they lead as *title* searches, because second-hand listings often carry
  * no ISBN at all, which makes title + publisher + year the better question.
  */
+/**
+ * When the publisher's registered image is a *different* jacket, the ISBN
+ * links stop being the answer: whatever they open ships the other cover
+ * (SPEC F2.9). What finds the picture on screen is a search built from the
+ * printing itself — title, author, publisher, year — and the reverse image
+ * search. Those lead in every market, and the shops move behind the fold.
+ *
+ * Julian, 2026-09-09: „dann müssen suchen mit autor und jahr leichter
+ * vorgeschlagen werden als nur zig buttons wo immer ein anderes cover
+ * dahinter liegt."
+ */
+const LEAD_DIFFERS: readonly string[] = ['abebooks-search', 'ebay-search', 'google-lens'];
+
 const LEAD: Record<Market, Record<LinkCase, readonly string[]>> = {
   us: {
     home: ['bookshop', 'amazon'],
@@ -158,20 +171,22 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
     unclaimed && fromIsbn.has(l.provider) && l.kind === 'product' ? { ...l, kind: undefined } : l;
 
   const pool = [...input.buyLinks.filter(l => !withdrawn.has(l.provider)).map(honest), ...input.searchLinks];
-  const wanted = LEAD[market][linkCase];
+  /*
+    The verdict outranks the case. `differs` replaces the row outright; on
+    `unknown` — Google holds no image for this number at all — the antiquarian
+    search joins the end of it, which is lever 4 of ROADMAP 1.11: only the
+    order changes, never a sentence. "unknown" still does not mean "not for
+    sale", and the wording in `lib/verdicts.ts` is untouched.
+  */
+  const wanted = input.verdict === 'differs'
+    ? LEAD_DIFFERS
+    : input.verdict === 'unknown'
+      ? [...LEAD[market][linkCase], 'abebooks-search']
+      : LEAD[market][linkCase];
   const lead: BuyLink[] = [];
   for (const id of wanted) {
     const hit = pool.find(l => l.provider === id);
-    if (hit) lead.push(hit);
-  }
-  /*
-    When the publisher's registered image is a different jacket, the reader is
-    hunting *this* picture, so the search that works from the picture belongs
-    in the first row rather than behind the fold (SPEC §9.3 step 13).
-  */
-  if (input.verdict === 'differs') {
-    const lens = pool.find(l => l.provider === 'google-lens');
-    if (lens) lead.push(lens);
+    if (hit && !lead.includes(hit)) lead.push(hit);
   }
 
   // Rule 2: one label, one place. Labels spoken for by `lead` or by the
@@ -215,25 +230,54 @@ function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, 
  * records over in — that is, by age of the *record*, which is close to
  * arbitrary. The first one supplies the links a reader sees first, so with
  * 44 % of cover-bearing editions carrying a foreign ISBN, the first was often
- * the least useful. Sorted here by what a reader in this market can act on:
- * an ISBN from their own area first, then any ISBN at all, then the newest
- * printing. Stable, so equal ranks keep the catalogue's own order.
+ * the least useful.
  *
- * This is not a claim that the first edition is the best one — it is the one
- * whose links have somewhere to go.
+ * Two criteria, in this order:
+ *
+ * 1. **Does this printing still ship the cover on screen?** That is exactly
+ *    what the verdict answers, and it beats everything else — Julian,
+ *    2026-09-09: „die version die das gleiche aktuelle cover hat wie die isbn
+ *    sollte zuerst vorgeschlagen werden, nicht nach jahr sortiert". Measured
+ *    on *Beloved*: the fold carries Vintage International 2025 and 2004, the
+ *    year put 2025 first, and it is the 2004 number whose registered image is
+ *    the picture the reader clicked.
+ * 2. **Can a shop in the reader's market look the number up?** An ISBN from
+ *    their own registration area first, then any ISBN, then the newest year.
+ *
+ * The verdict outranking the market means a foreign ISBN can lead, and then
+ * the shop order adapts to it (`linkPlan` case `foreign`). That is the right
+ * way round: the reader picked a *picture*, and the printing that carries it
+ * is the honest lead even when it is harder to buy.
+ *
+ * Verdicts arrive a moment after the selection, so the row reorders once when
+ * they land. `pending` and `unavailable` rank with `unknown` on purpose — an
+ * answer that has not come back yet must not move anything.
+ *
+ * Stable, so equal ranks keep the catalogue's own order.
  */
 export function orderEditionsForMarket<E extends Pick<Edition, 'isbn13' | 'year'>>(
   editions: readonly E[],
   market: Market = DEFAULT_MARKET,
+  verdictOf?: (isbn13: string) => VerdictStatus | undefined,
 ): E[] {
   const area = MARKET_AREA[market];
-  const rank = (e: E): number => {
+  const byVerdict = (e: E): number => {
+    if (!e.isbn13 || !verdictOf) return 1;
+    const status = verdictOf(e.isbn13);
+    if (status === 'verified') return 0;
+    return status === 'differs' ? 2 : 1;
+  };
+  const byMarket = (e: E): number => {
     if (!e.isbn13) return 2;
     const registration = registrationArea(e.isbn13);
     return registration && registration.area === area ? 0 : 1;
   };
   return [...editions]
-    .map((edition, index) => ({ edition, index, rank: rank(edition) }))
-    .sort((a, b) => a.rank - b.rank || (b.edition.year ?? 0) - (a.edition.year ?? 0) || a.index - b.index)
+    .map((edition, index) => ({ edition, index, verdict: byVerdict(edition), market: byMarket(edition) }))
+    .sort((a, b) =>
+      a.verdict - b.verdict
+      || a.market - b.market
+      || (b.edition.year ?? 0) - (a.edition.year ?? 0)
+      || a.index - b.index)
     .map(e => e.edition);
 }

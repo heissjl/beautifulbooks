@@ -1179,3 +1179,19 @@ Sichtbare Bedienelemente in der Spalte: **5 statt 14** (Marktumschalter, zwei bi
 Die Zuordnung im Fall `foreign` ruht auf einer begründeten, nicht belegten Annahme: dass Bookshop.org und ThriftBooks fremdsprachige ISBNs nicht führen und Amazons `/dp/` bei einer nie geführten ISBN ins Leere geht. Das ist Julians Stichprobe von Hand aus Plan §7, zehn Minuten, zusammen mit 1.8. Fällt sie anders aus, ändert sich `CATALOGUE_SHOPS` in `lib/linkplan.ts` und sonst nichts — der Aufbau hängt nicht daran.
 
 Ebenfalls notiert: die Links der Zone B laufen **nicht** über `/go/`, weil dort keine ISBN steht, gegen die gezählt werden könnte. Für 3.1 heißt das, dass diese Klicks heute unsichtbar sind. Und für Bookshop.org ist kein Affiliate-Format für eine Suchseite bekannt — nur `/a/<id>/<isbn>`, das eine ISBN braucht; die Zeile trägt dort bis auf Weiteres keinen Parameter (gehört zu 4.1).
+
+### Nachtrag am selben Tag: was Julian an der fertigen Spalte sah
+
+Zwei Korrekturen, beide aus einem Blick auf den gebauten Zustand, und eine davon repariert etwas, das der Umbau selbst kaputt gemacht hatte.
+
+**1. Bei `differs` führen wieder die Suchen — und zwar ganz.** Julian: *„dann müssen suchen mit autor und jahr leichter vorgeschlagen werden als nur zig buttons wo immer ein anderes cover dahinter liegt."* Der Hinweis stand daneben und sagte „To get the one on screen, look for Vintage 1999 second-hand", und darunter standen Bookshop.org und Amazon — Links, die genau das andere Cover liefern. Vor dem Umbau hatte `EditionBlock` bei `differs` die Such-Links über die Kauf-Links geschoben (`buyFirst`); in `linkPlan` war davon nur noch Google Lens in der ersten Reihe übrig. **Das war eine Regression gegen SPEC F2.9**, eingeführt am selben Tag und nach einer Stunde wieder heraus.
+
+Jetzt ersetzt `differs` die erste Reihe vollständig: AbeBooks und eBay mit Titel, Autor, Verlag und Jahr, dazu Google Lens. Die Händler stehen hinter der Klappe, die Überschrift heißt „Find the cover you picked", und der Verdikt-Hinweis steht **über** der Reihe statt darunter — er ist ihr Grund, nicht ihre Fußnote. Sein letzter Satz zeigt dorthin: „The searches below look for Vintage 1999 second-hand instead."
+
+Mitgeliefert: **Hebel 4 aus ROADMAP 1.11, den der erste Umbau übersehen hatte.** Bei `unknown` — Google führt zu dieser Nummer gar kein Bild — hängt sich die antiquarische Suche hinten an die Reihe. Nur die Reihenfolge, kein Satz; „unknown" heißt weiterhin nicht „nicht zu kaufen".
+
+**2. Die Ausgabe mit dem passenden Cover steht vorn, nicht die neueste.** Julian: *„die version die das gleiche aktuelle cover hat wie die isbn sollte zuerst vorgeschlagen werden, nicht nach jahr sortiert."* Der Fall aus seinem Screenshot: ein gefaltetes Cover von *Beloved* trägt Vintage International 2025 und 2004; die Sortierung nach Jahr stellte 2025 voran, und es ist die **2004er** ISBN, zu der der Verlag dieses Bild führt.
+
+`orderEditionsForMarket` sortiert deshalb zuerst nach dem Verdikt (`verified` vor allem, `differs` zuletzt), dann nach Markt und Jahr. **Das Verdikt schlägt den Markt**, und das ist die eigentliche Entscheidung dahinter: der Leser hat ein Bild angeklickt, nicht eine Kaufgelegenheit, also ist der Druck, der dieses Bild trägt, die ehrliche Voreinstellung — auch wenn seine ISBN aus einem anderen Sprachraum kommt und die Händlerreihenfolge sich daraufhin umstellt. Der Preis ist, dass die Chip-Reihe sich einmal umsortiert, wenn die Verdikte eintreffen; `pending` und `unavailable` bewegen deshalb nichts.
+
+**Live geprüft** an *Beloved* über die ersten fünf Cover: `verified` führt mit Bookshop.org und Amazon, `differs` mit AbeBooks, eBay und Google Lens. Die Chip-Reihenfolge ließ sich am Dev-Server **nicht** live nachstellen — auf einer kalten Instanz trägt kein Cover mehr als eine Ausgabe, weil die Faltung Signaturen braucht, die erst beim zweiten Besuch da sind (SPEC §7). Sie ist durch Unit-Tests mit genau dem Vintage-Fall belegt.
