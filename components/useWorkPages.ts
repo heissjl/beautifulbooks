@@ -44,6 +44,35 @@ const EMPTY: WorkPagesState = {
 };
 
 /**
+ * Walks that finished, kept for the length of the tab (Julian, 2026-09-09:
+ * „wenn ich von decade zu cover wall zurückgehe brauche ich den
+ * ladebildschirm nicht, die bilder sollten schnell da stehen").
+ *
+ * Going back used to replay the whole sequence — every page fetched again,
+ * the loading scene again, and the folding built up from nothing again, even
+ * though the browser still had every image. Only a **finished** walk is kept,
+ * so a run abandoned half way is not mistaken for the whole work.
+ *
+ * Deliberately not `sessionStorage`: this holds parsed objects worth
+ * megabytes, it is worthless after a reload (the images are re-fetched
+ * anyway), and a quota error in the middle of a navigation would be a poor
+ * trade for a cache that is only a convenience.
+ */
+const FINISHED = new Map<string, Progress>();
+/** Enough for a few books' worth of going back and forth; the oldest goes first. */
+const FINISHED_LIMIT = 5;
+
+function remember(key: string, p: Progress) {
+  if (FINISHED.has(key)) FINISHED.delete(key);
+  FINISHED.set(key, p);
+  while (FINISHED.size > FINISHED_LIMIT) {
+    const oldest = FINISHED.keys().next().value;
+    if (oldest === undefined) break;
+    FINISHED.delete(oldest);
+  }
+}
+
+/**
  * Loads a work page by page (SPEC §9.3 step 11).
  *
  * Open Library orders editions by record age, so page 0 holds the most
@@ -101,9 +130,26 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       }
     };
 
-    const update = (fn: (p: Progress) => Progress) => {
+    // Already walked in this tab: nothing to fetch, nothing to assemble.
+    if (FINISHED.has(key)) return;
+
+    /*
+      The walk owns this key, so it can keep the progress locally and hand
+      React a finished object each time. That also gives the end of the walk
+      something to remember without reading state back out of React.
+    */
+    let state: Progress | null = null;
+    const put = (p: Progress) => {
       if (controller.signal.aborted) return;
-      setProgress(prev => (prev && prev.key === key ? fn(prev) : prev));
+      state = p;
+      setProgress(p);
+    };
+    const update = (fn: (p: Progress) => Progress) => {
+      if (!state || controller.signal.aborted) return;
+      put(fn(state));
+    };
+    const finish = () => {
+      if (state && state.status === 'ready' && !controller.signal.aborted) remember(key, state);
     };
 
     (async () => {
@@ -112,7 +158,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
         first = await loadFirstPage();
       } catch (err) {
         if (controller.signal.aborted) return;
-        setProgress({
+        put({
           key, status: 'error', message: err instanceof Error ? err.message : 'Request failed',
           pages: [], page0Hashed: false, done: true, truncated: 'error',
         });
@@ -120,10 +166,10 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       }
       if (controller.signal.aborted) return;
       if (!first) {
-        setProgress({ key, status: 'notfound', pages: [], page0Hashed: false, done: true, truncated: null });
+        put({ key, status: 'notfound', pages: [], page0Hashed: false, done: true, truncated: null });
         return;
       }
-      setProgress({
+      put({
         key, status: 'ready', work: first.work, market: first.market, pages: [first],
         page0Hashed: false, done: first.page.nextOffset === undefined, truncated: null,
       });
@@ -156,6 +202,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
           }
           // Twice in a row: stop loading, keep what we have and say so.
           update(p => ({ ...p, done: true, truncated: 'error' }));
+          finish();
           return;
         }
         if (controller.signal.aborted) return;
@@ -172,24 +219,32 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
         next = following;
       }
       update(p => ({ ...p, done: true }));
+      finish();
     })();
 
     return () => controller.abort();
   }, [requestKey, workId, market]);
 
   return useMemo<WorkPagesState>(() => {
-    if (!progress || progress.key !== requestKey) return EMPTY;
-    if (progress.status !== 'ready') {
-      return { ...EMPTY, status: progress.status, message: progress.message };
+    /*
+      A finished walk from earlier in this tab counts as the current one, so
+      going back to a book shows it whole and folded immediately instead of
+      replaying the loading scene. Read during render rather than copied into
+      state: a walk this hook did not start has nothing to set.
+    */
+    const known = progress && progress.key === requestKey ? progress : FINISHED.get(requestKey);
+    if (!known) return EMPTY;
+    if (known.status !== 'ready') {
+      return { ...EMPTY, status: known.status, message: known.message };
     }
-    const pages: WorkPageData<EditionView>[] = progress.pages;
+    const pages: WorkPageData<EditionView>[] = known.pages;
     return {
       status: 'ready',
-      work: progress.work,
-      market: progress.market,
-      merged: mergeWorkPages(pages, { done: progress.done, truncated: progress.truncated }),
-      firstCovers: progress.pages[0]?.covers ?? null,
-      page0Hashed: progress.page0Hashed,
+      work: known.work,
+      market: known.market,
+      merged: mergeWorkPages(pages, { done: known.done, truncated: known.truncated }),
+      firstCovers: known.pages[0]?.covers ?? null,
+      page0Hashed: known.page0Hashed,
       pagesLoaded: pages.length,
     };
   }, [progress, requestKey]);
