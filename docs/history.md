@@ -1166,6 +1166,34 @@ Der Fehler war nicht, mit Teildaten weiterzumachen — das ist richtig. Der Fehl
 
 **Was daran offen bleibt:** die Liste in `data/decade-pages.json` sagt für dieses Werk 114 Cover, die Seite zeigte 36. Die Schwelle wurde also über Daten entschieden, die der Leser nicht sah. Solange das nur die angezeigte Menge betrifft, ist es eine dünne Seite und keine Unwahrheit — die Kopfzeile zählt, was sie hat. Fällt ein Lauf aber so weit zurück, dass die Seite unter die Schwelle rutscht, antwortet sie 404, obwohl die Sitemap sie führt. **Der Wiederholungsversuch macht das unwahrscheinlicher, nicht unmöglich.** Der saubere Weg wäre, dass `getWorkDetail` sagt, ob der Lauf vollständig war, und ein unvollständiger Lauf nicht für 24 Stunden gecacht wird.
 
+## 2026-09-09 · Nach dem Deploy: was die Reparaturen in Produktion tun (ROADMAP 5.4a)
+
+Zwei Dinge waren lokal nicht beweisbar und wurden nach dem Deploy je **einmal** geprüft.
+
+**Der abgebrochene Ausgabenlauf ist geheilt.** *Brave New World* rendert jetzt **114 Cover aus 130 Ausgaben-Datensätzen** — genau die lokale Zahl. Vor dem Deploy waren es 36 aus 41, weil der Lauf bei der ersten stummen Seite aufgab und ISR das für einen Tag festhielt. Der zweite Versuch je Seite (`fetchPageWithRetry`) trägt also in genau der Lage, für die er gebaut wurde. Die Seite antwortet in 6,9 s.
+
+Im selben Abruf mitbestätigt: die Jahrzehnte laufen **„2020s back to 1930s"**, und im ausgelieferten HTML steht „Sorting these covers by decade" — die Ladeseite wird vor dem Seiteninhalt ausgeliefert, wie vorgesehen.
+
+**Das Vorladen bei Absicht greift.** Vor dem Hover kein einziger Request auf `/book/<id>/decades`; sobald der Mauszeiger auf dem Link liegt: `GET /book/OL64365W/decades?_rsc=… → 200`. Damit ist beides belegt — Nexts automatisches Vorladen ist aus, und der Hover ersetzt es. Auf einem Telefon meldet `matchMedia('(hover: hover) and (pointer: fine)')` false (unter Emulation geprüft, 5 Berührungspunkte), der Handler steigt vor der Anfrage aus.
+
+**Ein Fehler von mir beim Messen, der hierher gehört:** der erste Produktionsaufruf lief acht Minuten ohne Antwort, und ich hielt das kurz für ein Problem der Seite. Es war mein `curl` ohne `--max-time`, gestartet bevor der Deploy fertig war. Mit Zeitgrenze antwortete dieselbe Adresse in 6,9 s. Ein Messwerkzeug ohne Timeout misst nicht die Seite, sondern sich selbst.
+
+## 2026-09-09 · Die Liste, auf die die Seite zeigt, wächst jetzt aus dem Betrieb (ROADMAP 5.1, 5.4a)
+
+Julians Frage, aus der das hier entstand: für welche Werke wird eine Jahrzehnte-Seite gebaut — nur für die kuratierten, oder auch für ein Buch, bei dem sich nach einer Suche herausstellt, dass genug Cover da sind?
+
+**Die Antwort war überraschend: für alle, aber sichtbar nur für wenige.** Die Route rechnet die Schwelle beim Laden aus und liefert die Seite jedem Werk, das sie trägt. *Nineteen Eighty-Four* hatte damit längst eine Seite mit 224 Covern über neun Jahrzehnte — und *Pride and Prejudice* eine mit 114 über zehn —, nur zeigte nichts darauf. Kein Link, kein Sitemap-Eintrag. Die vorab gemessene Liste entschied nicht, **ob** es die Seite gibt, sondern nur, **wo wir darauf zeigen.**
+
+**Der Link folgt jetzt den Daten statt der Liste** (Julian: „der link soll natürlich immer gezeigt werden, wenn eine decade wall möglich ist"). Der Browser hat ohnehin jede Seite des Werks geladen und jedes Cover gefaltet, also wendet er dieselbe Schwellenfunktion an wie die Seite selbst — `lib/decades.ts` ist rein und ohne I/O, es gibt also keine zweite Regel, die auseinanderlaufen könnte. Kosten: keine Anfrage. Zwei Bedingungen halten ihn ehrlich: die vorab gemessene Liste bleibt als Schnellweg, damit ein bekanntes Werk den Link sofort zeigt statt nach dem vollen Durchlauf, und der gerechnete Fall greift **erst wenn der Durchlauf fertig ist** — eine halb geladene Wand kann die Schwelle vorübergehend reißen und auf einen 404 zeigen. Geprüft: *1984* bekommt den Link nach 3 s, *Mumbo Jumbo* mit 12 Covern bekommt keinen.
+
+**Beförderung ist jetzt ein Befehl.** `scripts/promote.ts` nimmt Work-IDs und macht die drei Schritte, die nötig sind, damit eine Adresse etwas taugt: das Werk kommt in `data/index-works.json`, seine Cover-Signaturen werden gebaut, und die Schwelle wird gemessen. Schritt 2 ist der, den man vergisst — **ein Werk ohne Signaturen faltet nichts** und zeigt auf seiner Jahrzehnte-Seite genau die Dubletten, die am selben Tag abgestellt wurden. Deshalb sind Indexliste und Publikationsliste seit heute **dieselbe Datei** (`lib/published.ts`), und ein Test hält fest, dass kein veröffentlichtes Werk ohne Signaturen ist.
+
+**Was der erste Lauf brachte:** die Sitemap wächst von 193 auf **253 Adressen** — 139 Werkseiten statt 105, **110 Jahrzehnte-Seiten statt 84**. Von 139 Werken tragen 110 eine Seite, 29 sind zu dünn, und der Katalog schwieg bei keinem. *White Noise*, das im Lauf davor an einem Timeout ausfiel und von Hand mit abgeleiteten Zahlen wieder eingesetzt wurde, ist diesmal echt gemessen worden — 22 Cover über 4 Jahrzehnte, exakt die abgeleiteten Werte.
+
+**Kosten, gemessen:** 6,4 KB je Werk im Cover-Index (890 KB bei 139 Werken, also rund 3 MB bei fünfhundert), 156 Byte je Jahrzehnte-Eintrag, eine Open-Library-Anfrage je neuem Werk für den Titel, **keine Google-Anfrage** (E10). Der Index geht nie an den Browser; er wird serverseitig einmal in typisierte Arrays entpackt. Ab etwa tausend Werken (6 MB) wäre das neu zu bewerten.
+
+**Was noch fehlt, damit die Schleife sich schließt:** die Quelle. Vercel Web Analytics zählt Pfade, also `/book/<id>`, 30 Tage weit — daraus ließe sich lesen, welche Bücher tatsächlich gesucht werden. Nur gibt es dafür heute keinen Verkehr. Bis dahin bleibt der Weg aus 5.1 der tragende: Werke nach Katalogpopularität wählen, was keinen Besucher braucht.
+
 ## 2026-09-09 · Drei Ladebilder aus einem Bild (ROADMAP 6.19a)
 
 Julians Vorschlag, die Suche mit dem Riesenmosaik warten zu lassen — „wie sich langsam das Bild von Orwell aus seinen Editionen aufbaut" — plus die Bitte, für **einen zweiten Autor** drei Animationen vorzuschlagen. Gebaut als `lab/loading/`, ausführlich in [lab/loading/README.md](../lab/loading/README.md); der Kontaktbogen mit allen drei Vorschlägen in je fünf Momenten liegt als `lab/loading/out/mark-twain-filmstrip.png`.

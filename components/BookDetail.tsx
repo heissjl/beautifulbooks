@@ -4,6 +4,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
+import DecadeLink from '@/components/DecadeLink';
 import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
 import CoverSheet from '@/components/CoverSheet';
@@ -32,6 +33,7 @@ import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 import type { ImageSignature } from '@/lib/imagesig';
 import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
+import { groupByDecade, worthAPage } from '@/lib/decades';
 import { foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
 
 function BackLink({ href }: { href: string }) {
@@ -299,10 +301,26 @@ function BookDetail() {
     the line names who says it and leaves the reader to weigh that.
   */
   /*
-    The decade page exists only where the data carries it (ROADMAP 5.4a), so
-    the link appears only there — a link to a 404 is worse than no link.
+    The link shows wherever a decade page is possible, not only where the
+    pre-measured list happens to know one (Julian, 2026-09-09: „der link soll
+    natürlich immer gezeigt werden, wenn eine decade wall möglich ist").
+
+    Two sources, and they answer different halves of the problem:
+
+    - `data/decade-pages.json` answers **at once**, before a single cover has
+      arrived, for the works measured before the deploy.
+    - Everything else is decided **here**, from what the browser already
+      holds. It has loaded every page of the work and folded every cover, so
+      it can apply the page's own threshold with the page's own function
+      (`lib/decades.ts` is pure and has no I/O). No request, and no second
+      rule that could drift from the first.
+
+    Only once the walk is **done**: a partial wall would clear the threshold
+    early on a work that ends up below it, and offer a link into a 404 — the
+    one thing this must not do (R6).
   */
-  const hasDecades = decadePages.pages.some(p => p.id === work.id);
+  const decadesPossible = merged.done && worthAPage(groupByDecade(view.covers, merged.editions));
+  const hasDecades = decadesPossible || decadePages.pages.some(p => p.id === work.id);
   const meta = [
     work.firstPublishYear ? `Open Library dates it to ${work.firstPublishYear}` : undefined,
     progressLabel(view.covers.length, merged),
@@ -320,13 +338,6 @@ function BookDetail() {
     >
       <TitleBlock title={work.title} authors={work.authors} meta={meta} />
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
-      {hasDecades && (
-        <p className="mt-1">
-          <Link href={`/book/${work.id}/decades`} className="text-sm text-accent hover:underline">
-            See these covers by decade →
-          </Link>
-        </p>
-      )}
 
       {view.groups.length === 0 ? (
         <p className="text-ink-2">Neither catalogue has a cover for this book.</p>
@@ -343,6 +354,7 @@ function BookDetail() {
               selectedCover={selected}
               onSelectCover={c => selectCover(c.id)}
               captions={view.captions}
+              belowTabs={hasDecades ? <DecadeLink workId={work.id} /> : undefined}
             />
             <p className="mt-6 max-w-prose text-xs leading-relaxed text-ink-3">
               Covers come from Open Library and Google Books. Most edition records carry no

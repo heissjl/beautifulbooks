@@ -16,7 +16,7 @@
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { CURATED_LIST } from '../lib/curated';
+import { PUBLISHED_WORKS } from '../lib/published';
 import { groupByDecade, worthAPage } from '../lib/decades';
 import { getWorkDetail } from '../lib/work';
 import { indexSignatures } from '../lib/coverindex';
@@ -55,7 +55,7 @@ async function main() {
       : [],
   );
 
-  for (const [i, work] of CURATED_LIST.entries()) {
+  for (const [i, work] of PUBLISHED_WORKS.entries()) {
     let detail;
     try {
       detail = await getWorkDetail(work.id, { maxEntries: MAX_ENTRIES, dedupeCovers: false, googleBooks: false });
@@ -92,12 +92,12 @@ async function main() {
       from: d.from,
       to: d.to,
     });
-    console.log(`  + ${work.title}: ${d.coverCount} covers, ${d.groups.length} decades (${d.from}s–${d.to}s)  [${i + 1}/${CURATED_LIST.length}]`);
+    console.log(`  + ${work.title}: ${d.coverCount} covers, ${d.groups.length} decades (${d.from}s–${d.to}s)  [${i + 1}/${PUBLISHED_WORKS.length}]`);
   }
 
   writeFileSync(OUT_FILE, `${JSON.stringify({ builtAt: new Date().toISOString().slice(0, 10), pages: out }, null, 2)}\n`);
   console.log(
-    `\ndecade pages: ${out.length} of ${CURATED_LIST.length} qualify, ${thin} too thin, ` +
+    `\ndecade pages: ${out.length} of ${PUBLISHED_WORKS.length} qualify, ${thin} too thin, ` +
     `${silent} the catalogue did not answer (${carried} of those kept their previous entry)`,
   );
 }

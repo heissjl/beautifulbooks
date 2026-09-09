@@ -8,7 +8,7 @@
  * not which cover comes back, which is a matter of taste and of whichever
  * snapshot is committed.
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
@@ -158,5 +158,23 @@ describe('signatures handed out for folding (ROADMAP 5.4a)', () => {
     const hi = parseInt(sig.hash.slice(0, 8), 16);
     const lo = parseInt(sig.hash.slice(8, 16), 16);
     expect(bitsApart(hi, lo, hi, lo)).toBe(0);
+  });
+});
+
+describe('how large the index may get', () => {
+  /*
+    A ceiling Julian set on 2026-09-09: promote up to 10 MB, then think again
+    rather than keep appending. The file is parsed at every cold start and
+    rides in the function bundle, so growing past this is a decision — split
+    per work, another format, or a real store (E6/E18) — not a default.
+
+    Measured the same day: 6.4 KB per work, so the ceiling is around 1,600
+    works. A failing test here is not a defect; it is the moment to decide.
+  */
+  const MAX_BYTES = 10 * 1024 * 1024;
+
+  it('stays under the 10 MB ceiling', () => {
+    const bytes = statSync(path.join(process.cwd(), 'data', 'cover-index.json')).size;
+    expect(bytes).toBeLessThan(MAX_BYTES);
   });
 });

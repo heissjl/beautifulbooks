@@ -123,6 +123,7 @@ Zwei Ebenen:
 
 - Er wird **vor dem Deploy von einem Skript erzeugt** (`scripts/build-cover-index.ts`) und mitcommittet, ist also keine Infrastruktur im Sinne von E6, sondern eine Datei (E18).
 - Er ist **nur lesbar und serverseitig**. `lib/coverindex.ts` liest ihn einmal beim Modulstart in typisierte Arrays; eine Ähnlichkeitssuche ist danach ein linearer Durchlauf über wenige tausend XOR-Operationen. **Nie aus Client-Code importieren** — die Datei ginge vollständig an den Browser.
+- **Er darf auf 10 MB wachsen, nicht weiter** (Julian, 2026-09-09). Gemessen am selben Tag: **6,4 KB je Werk** (890 KB bei 139 Werken), die Grenze liegt also bei rund **1.600 Werken**. Ein Test bricht, wenn die Datei sie überschreitet — das ist kein Defekt, sondern der Zeitpunkt, an dem zwischen Aufteilen, anderem Format und einem echten Speicher zu entscheiden ist (ROADMAP 5.1). Bis dahin ist die Liste, auf die die Seite zeigt, **dieselbe Datei wie die Indexliste** (`lib/published.ts`): ein Werk ohne Signaturen rendert eine Jahrzehnte-Seite, die nichts faltet.
 - Er ist eine **Momentaufnahme** und veraltet, sobald ein Katalog sich ändert. Das ist tragbar, weil er nichts trägt, was stimmen muss: er beantwortet „was sieht ähnlich aus", nie „welche Ausgabe kaufe ich". `builtAt` steht in der Datei.
 - Welche Werke er kennt, steht in `data/index-works.json` (**100**, Stand 2026-09-08; erster Zuschnitt der Liste aus ROADMAP 5.1). Umfang heute: 10.362 Cover, 757 KB.
 
