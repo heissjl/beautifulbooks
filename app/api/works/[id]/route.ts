@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { buyLinksFor } from '@/lib/buylinks';
+import { buyLinksFor, titleSearchLinksFor } from '@/lib/buylinks';
 import { coverImages } from '@/lib/seo';
 import { cookieValue, detectMarket, MARKET_KEY, type Market } from '@/lib/market';
-import type { Cover, EditionView, Work } from '@/lib/model';
+import type { BuyLink, Cover, EditionView, Work } from '@/lib/model';
 import type { ImageSignature } from '@/lib/imagesig';
 import type { PageInfo } from '@/lib/pages';
 import { OL_EDITIONS_PAGE } from '@/lib/sources/openlibrary';
+import { displayTitle } from '@/lib/normalize';
 import { getWorkPage, isWorkId } from '@/lib/work';
 import { MOSAIC_COVERS } from '@/lib/works';
 import { rateLimited } from '@/app/api/rate';
@@ -27,6 +28,17 @@ export interface WorkPageResponse {
   page: PageInfo;
   /** Market the buy links were generated for (E9). */
   market: Market;
+  /**
+   * The market's own shops searched by the *work's* title — the row that
+   * answers "I just want to read this book" when the printing on screen has
+   * a foreign ISBN or none (ROADMAP 1.11, `lib/linkplan.ts`).
+   *
+   * Built here rather than in the browser for one reason: an affiliate tag
+   * lives in a server-only variable, and a link that could earn must be able
+   * to (Phase 4). It follows a market switch because the client refetches
+   * with `?market=`.
+   */
+  anyEditionLinks: BuyLink[];
 }
 
 /**
@@ -125,6 +137,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
       signatures: page.signatures,
       page: page.page,
       market,
+      anyEditionLinks: titleSearchLinksFor({ title: displayTitle(page.work.title), author: page.work.authors[0] }, market),
     };
     return NextResponse.json(body, {
       // Varies by market, so shared caches must key on the cookie and country too.

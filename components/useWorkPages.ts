@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { WorkPageResponse } from '@/app/api/works/[id]/route';
 import type { Market } from '@/lib/market';
-import type { EditionView, Work } from '@/lib/model';
+import type { BuyLink, EditionView, Work } from '@/lib/model';
 import { mergeWorkPages, type MergedWork, type Truncation, type WorkPageData } from '@/lib/pages';
 
 /** Wait before retrying a page that failed once. */
@@ -14,6 +14,8 @@ export interface WorkPagesState {
   message?: string;
   work?: Work;
   market?: Market;
+  /** The market's own shops searched by the work's title (ROADMAP 1.11). */
+  anyEditionLinks: BuyLink[];
   merged: MergedWork<EditionView> | null;
   /** Covers of page 0, for the loading scene. */
   firstCovers: WorkPageData['covers'] | null;
@@ -40,7 +42,7 @@ interface Progress {
 }
 
 const EMPTY: WorkPagesState = {
-  status: 'loading', merged: null, firstCovers: null, page0Hashed: false, pagesLoaded: 0,
+  status: 'loading', anyEditionLinks: [], merged: null, firstCovers: null, page0Hashed: false, pagesLoaded: 0,
 };
 
 /**
@@ -187,6 +189,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       status: 'ready',
       work: progress.work,
       market: progress.market,
+      anyEditionLinks: progress.pages[0]?.anyEditionLinks ?? [],
       merged: mergeWorkPages(pages, { done: progress.done, truncated: progress.truncated }),
       firstCovers: progress.pages[0]?.covers ?? null,
       page0Hashed: progress.page0Hashed,

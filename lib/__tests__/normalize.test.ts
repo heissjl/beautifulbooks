@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
-  authorMatchKey, cleanAuthorEntries, cleanAuthors, cleanIsbn, isbn10to13, languageName, looksLikeNonBook,
+  authorMatchKey, cleanAuthorEntries, cleanAuthors, cleanIsbn, displayTitle, isbn10to13, languageName, looksLikeNonBook,
   looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeAuthor, normalizeTitle, parseYear, stripHtml,
-  titleAuthorKey, toIsoLanguage,
+  registrationArea, titleAuthorKey, toIsoLanguage,
 } from '../normalize';
 
 describe('normalizeTitle', () => {
@@ -131,5 +131,53 @@ describe('filters', () => {
   it('strips html', () => {
     expect(stripHtml('<p>Hello <b>world</b></p>')).toBe('Hello world');
     expect(stripHtml('')).toBeUndefined();
+  });
+});
+
+describe('registrationArea (ROADMAP 1.11 lever 1)', () => {
+  it('reads the language areas that decide the market question', () => {
+    // Nineteen Eighty-Four, Penguin UK.
+    expect(registrationArea('9780141036144')?.area).toBe('en');
+    // Fischer Taschenbuch, the long-tail test case from ROADMAP 6.6.
+    expect(registrationArea('9783596219261')).toEqual({ area: 'de', place: 'the German-language area' });
+    expect(registrationArea('9782070360024')?.area).toBe('fr');
+  });
+  it('names the places the measurement actually met', () => {
+    expect(registrationArea('9789944886321')?.place).toBe('Turkey');
+    expect(registrationArea('9788497592208')?.place).toBe('Spain');
+    expect(registrationArea('9788804668237')?.place).toBe('Italy');
+    expect(registrationArea('9789388843089')?.place).toBe('India');
+    expect(registrationArea('9789722033459')?.place).toBe('Portugal');
+  });
+  it('keeps 979-8 apart: that range is Amazon\'s own', () => {
+    expect(registrationArea('9798575362159')?.area).toBe('kdp');
+  });
+  it('prefers the longest group, so 979-8 is never read as 979-80', () => {
+    // 979-10 is French, 979-8 is not: both start with 979.
+    expect(registrationArea('9791036000201')?.area).toBe('fr');
+    expect(registrationArea('9798000000009')?.area).toBe('kdp');
+  });
+  it('says other without a name rather than inventing a country', () => {
+    // 978-632 is a valid registration group that is not in the table.
+    expect(registrationArea('9786320000000')).toEqual({ area: 'other' });
+  });
+  it('refuses anything that is not a 13-digit 978/979 ISBN', () => {
+    expect(registrationArea(undefined)).toBeUndefined();
+    expect(registrationArea('0141036141')).toBeUndefined();
+    expect(registrationArea('1234567890123')).toBeUndefined();
+  });
+});
+
+describe('displayTitle', () => {
+  it('removes the bracketed note Open Library leaves on a title', () => {
+    // OL468431W, verbatim, missing space and all (checked 2026-09-09).
+    expect(displayTitle('The Great Gatsby(Published In 1925)')).toBe('The Great Gatsby');
+    expect(displayTitle("Ansichten eines Clowns (Methuen's Twentieth Century German Texts)")).toBe('Ansichten eines Clowns');
+  });
+  it('keeps the subtitle, which a shop can find', () => {
+    expect(displayTitle('Beloved: A Novel')).toBe('Beloved: A Novel');
+  });
+  it('never empties a title that is only a bracket', () => {
+    expect(displayTitle('(Untitled)')).toBe('(Untitled)');
   });
 });

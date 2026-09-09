@@ -38,6 +38,25 @@ export function normalizeTitle(title: string): string {
   return words.join(' ');
 }
 
+/**
+ * A work title fit to be *used*: the trailing bracketed note removed, the
+ * subtitle kept.
+ *
+ * Open Library is a wiki and its titles show it — OL468431W, the work this
+ * spec leans on most, is called literally `The Great Gatsby(Published In
+ * 1925)`, missing space included. The same cleanup already ran inside
+ * `normalizeTitle`, but only for *comparing*; nothing cleaned a title that
+ * was going to be shown or searched with. It surfaced when the "read it in
+ * another edition" row started searching shops by the work's title (ROADMAP
+ * 1.11): the query would have been that string, and no shop answers it.
+ *
+ * Unlike `normalizeTitle` the subtitle stays — "Beloved: A Novel" is a title
+ * a shop can find, and this is a display string, not a key.
+ */
+export function displayTitle(title: string): string {
+  return stripTrailingBrackets(title).trim() || title;
+}
+
 function stripTrailingBrackets(s: string): string {
   let out = s.trim();
   for (;;) {
@@ -244,4 +263,194 @@ export const MARKED_DERIVATIVE =
 export function looksLikeSecondaryLiterature(title: string): boolean {
   const t = title.trim();
   return SECONDARY_LITERATURE.test(t) || NOTES_ABOUT.test(t) || NOTES_ON_MIDWAY.test(t);
+}
+
+/**
+ * What an ISBN's registration group says about where the printing was
+ * registered (ROADMAP 1.11, lever 1).
+ *
+ * Measured over 567 editions from the five fixture works on 2026-09-08: of
+ * the 243 editions that carry a cover, **44 % have an ISBN from neither the
+ * English- nor the German-language area** — Turkey 47, Spain 18, Italy 14,
+ * India 9, and a long tail. Those are not the bad covers, they are the
+ * interesting ones, so nothing is hidden; but a Bookshop.org link built from
+ * a Turkish ISBN is a link into the void, and this table is what lets the
+ * shops be ordered by which of them has a chance.
+ *
+ * `area` is deliberately coarse — it only has to answer "does this belong to
+ * the reader's market?". `place` exists for the sentence that explains the
+ * order, and it is absent rather than guessed: a group outside the table
+ * yields `other` with no name, and the wording then says what it knows
+ * ("outside the English-language area") instead of inventing a country.
+ *
+ * 979-8 is its own area: Amazon issues that range for its own print-on-demand
+ * titles. 182 of the 526 ISBNs in the measurement were 979-8 — but 181 of
+ * them carry no cover at all, so they barely reach the wall.
+ */
+export interface IsbnRegistration {
+  /** `en`, `de`, `fr`, `kdp` or `other`. Compared against the market's own area. */
+  area: 'en' | 'de' | 'fr' | 'kdp' | 'other';
+  /** The place the group stands for. Absent when the group is not in the table. */
+  place?: string;
+}
+
+/** Leading digits of an ISBN-13 (prefix + registration group) -> what they mean. */
+const REGISTRATION_GROUPS: Record<string, IsbnRegistration> = {
+  // Language areas that span many countries; named as areas, not countries.
+  '9780': { area: 'en', place: 'the English-language area' },
+  '9781': { area: 'en', place: 'the English-language area' },
+  '9782': { area: 'fr', place: 'the French-language area' },
+  '9783': { area: 'de', place: 'the German-language area' },
+  '97910': { area: 'fr', place: 'the French-language area' },
+  '9784': { area: 'other', place: 'Japan' },
+  '9785': { area: 'other', place: 'the Russian-language area' },
+  '9787': { area: 'other', place: 'China' },
+  '9798': { area: 'kdp', place: 'Amazon’s own 979-8 range' },
+  '97911': { area: 'other', place: 'South Korea' },
+  '97912': { area: 'other', place: 'Italy' },
+  '97913': { area: 'other', place: 'Spain' },
+  // Two-digit groups.
+  '97880': { area: 'other', place: 'Czechia and Slovakia' },
+  '97881': { area: 'other', place: 'India' },
+  '97882': { area: 'other', place: 'Norway' },
+  '97883': { area: 'other', place: 'Poland' },
+  '97884': { area: 'other', place: 'Spain' },
+  '97885': { area: 'other', place: 'Brazil' },
+  '97886': { area: 'other', place: 'Serbia and Montenegro' },
+  '97887': { area: 'other', place: 'Denmark' },
+  '97888': { area: 'other', place: 'Italy' },
+  '97889': { area: 'other', place: 'South Korea' },
+  '97890': { area: 'other', place: 'the Dutch-language area' },
+  '97891': { area: 'other', place: 'Sweden' },
+  '97892': { area: 'other', place: 'an international organisation' },
+  '97893': { area: 'other', place: 'India' },
+  '97894': { area: 'other', place: 'the Dutch-language area' },
+  // Three-digit groups.
+  '978600': { area: 'other', place: 'Iran' },
+  '978601': { area: 'other', place: 'Kazakhstan' },
+  '978602': { area: 'other', place: 'Indonesia' },
+  '978603': { area: 'other', place: 'Saudi Arabia' },
+  '978604': { area: 'other', place: 'Vietnam' },
+  '978605': { area: 'other', place: 'Turkey' },
+  '978606': { area: 'other', place: 'Romania' },
+  '978607': { area: 'other', place: 'Mexico' },
+  '978608': { area: 'other', place: 'North Macedonia' },
+  '978609': { area: 'other', place: 'Lithuania' },
+  '978611': { area: 'other', place: 'Thailand' },
+  '978612': { area: 'other', place: 'Peru' },
+  '978613': { area: 'other', place: 'Mauritius' },
+  '978614': { area: 'other', place: 'Lebanon' },
+  '978615': { area: 'other', place: 'Hungary' },
+  '978616': { area: 'other', place: 'Thailand' },
+  '978617': { area: 'other', place: 'Ukraine' },
+  '978618': { area: 'other', place: 'Greece' },
+  '978619': { area: 'other', place: 'Bulgaria' },
+  '978620': { area: 'other', place: 'Mauritius' },
+  '978621': { area: 'other', place: 'the Philippines' },
+  '978622': { area: 'other', place: 'Iran' },
+  '978623': { area: 'other', place: 'Indonesia' },
+  '978624': { area: 'other', place: 'Sri Lanka' },
+  '978625': { area: 'other', place: 'Turkey' },
+  '978626': { area: 'other', place: 'Taiwan' },
+  '978627': { area: 'other', place: 'Pakistan' },
+  '978628': { area: 'other', place: 'Colombia' },
+  '978629': { area: 'other', place: 'Malaysia' },
+  '978630': { area: 'other', place: 'Romania' },
+  '978631': { area: 'other', place: 'Argentina' },
+  '978950': { area: 'other', place: 'Argentina' },
+  '978951': { area: 'other', place: 'Finland' },
+  '978952': { area: 'other', place: 'Finland' },
+  '978953': { area: 'other', place: 'Croatia' },
+  '978954': { area: 'other', place: 'Bulgaria' },
+  '978955': { area: 'other', place: 'Sri Lanka' },
+  '978956': { area: 'other', place: 'Chile' },
+  '978957': { area: 'other', place: 'Taiwan' },
+  '978958': { area: 'other', place: 'Colombia' },
+  '978959': { area: 'other', place: 'Cuba' },
+  '978960': { area: 'other', place: 'Greece' },
+  '978961': { area: 'other', place: 'Slovenia' },
+  '978962': { area: 'other', place: 'Hong Kong' },
+  '978963': { area: 'other', place: 'Hungary' },
+  '978964': { area: 'other', place: 'Iran' },
+  '978965': { area: 'other', place: 'Israel' },
+  '978966': { area: 'other', place: 'Ukraine' },
+  '978967': { area: 'other', place: 'Malaysia' },
+  '978968': { area: 'other', place: 'Mexico' },
+  '978969': { area: 'other', place: 'Pakistan' },
+  '978970': { area: 'other', place: 'Mexico' },
+  '978971': { area: 'other', place: 'the Philippines' },
+  '978972': { area: 'other', place: 'Portugal' },
+  '978973': { area: 'other', place: 'Romania' },
+  '978974': { area: 'other', place: 'Thailand' },
+  '978975': { area: 'other', place: 'Turkey' },
+  '978976': { area: 'other', place: 'the Caribbean Community' },
+  '978977': { area: 'other', place: 'Egypt' },
+  '978978': { area: 'other', place: 'Nigeria' },
+  '978979': { area: 'other', place: 'Indonesia' },
+  '978980': { area: 'other', place: 'Venezuela' },
+  '978981': { area: 'other', place: 'Singapore' },
+  '978982': { area: 'other', place: 'the South Pacific' },
+  '978983': { area: 'other', place: 'Malaysia' },
+  '978984': { area: 'other', place: 'Bangladesh' },
+  '978985': { area: 'other', place: 'Belarus' },
+  '978986': { area: 'other', place: 'Taiwan' },
+  '978987': { area: 'other', place: 'Argentina' },
+  '978988': { area: 'other', place: 'Hong Kong' },
+  '978989': { area: 'other', place: 'Portugal' },
+  // Four-digit groups: only those the measurement actually met, plus their
+  // neighbours. The rest fall through to `other` without a name, which is
+  // the honest answer.
+  '9789934': { area: 'other', place: 'Latvia' },
+  '9789935': { area: 'other', place: 'Iceland' },
+  '9789941': { area: 'other', place: 'Georgia' },
+  '9789942': { area: 'other', place: 'Ecuador' },
+  '9789943': { area: 'other', place: 'Uzbekistan' },
+  '9789944': { area: 'other', place: 'Turkey' },
+  '9789945': { area: 'other', place: 'the Dominican Republic' },
+  '9789947': { area: 'other', place: 'Algeria' },
+  '9789948': { area: 'other', place: 'the United Arab Emirates' },
+  '9789949': { area: 'other', place: 'Estonia' },
+  '9789952': { area: 'other', place: 'Azerbaijan' },
+  '9789953': { area: 'other', place: 'Lebanon' },
+  '9789954': { area: 'other', place: 'Morocco' },
+  '9789955': { area: 'other', place: 'Lithuania' },
+  '9789957': { area: 'other', place: 'Jordan' },
+  '9789958': { area: 'other', place: 'Bosnia and Herzegovina' },
+  '9789960': { area: 'other', place: 'Saudi Arabia' },
+  '9789961': { area: 'other', place: 'Algeria' },
+  '9789963': { area: 'other', place: 'Cyprus' },
+  '9789965': { area: 'other', place: 'Kazakhstan' },
+  '9789966': { area: 'other', place: 'Kenya' },
+  '9789968': { area: 'other', place: 'Costa Rica' },
+  '9789971': { area: 'other', place: 'Singapore' },
+  '9789972': { area: 'other', place: 'Peru' },
+  '9789973': { area: 'other', place: 'Tunisia' },
+  '9789974': { area: 'other', place: 'Uruguay' },
+  '9789975': { area: 'other', place: 'Moldova' },
+  '9789976': { area: 'other', place: 'Tanzania' },
+  '9789977': { area: 'other', place: 'Costa Rica' },
+  '9789978': { area: 'other', place: 'Ecuador' },
+  '9789979': { area: 'other', place: 'Iceland' },
+  '9789984': { area: 'other', place: 'Latvia' },
+  '9789985': { area: 'other', place: 'Estonia' },
+  '9789986': { area: 'other', place: 'Lithuania' },
+  '9789989': { area: 'other', place: 'North Macedonia' },
+};
+
+const UNNAMED: IsbnRegistration = { area: 'other' };
+
+/**
+ * Reads the registration group of an ISBN-13. Offline, no request, no guess.
+ * Returns `undefined` for anything that is not a 13-digit 978/979 ISBN.
+ */
+export function registrationArea(isbn: string | undefined): IsbnRegistration | undefined {
+  const s = cleanIsbn(isbn);
+  if (!s || s.length !== 13) return undefined;
+  if (!s.startsWith('978') && !s.startsWith('979')) return undefined;
+  // Longest match wins: 979-8 must not be read as 979-80.
+  for (let len = 8; len >= 4; len--) {
+    const hit = REGISTRATION_GROUPS[s.slice(0, len)];
+    if (hit) return hit;
+  }
+  return UNNAMED;
 }

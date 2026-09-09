@@ -8,7 +8,7 @@ Stand: 2026-09-08. Ein Plan ist die ausführliche Fassung eines Roadmap-Punkts, 
 | [PLAN-B.md](PLAN-B.md) | alte Spec §10 B: Sprache, Rate-Limit, SEO, mobil, Klicks, About, Kontingent | **erledigt** 2026-09-07; der Abschnitt „Analyse-Seite“ ist die Vorlage für 3.1 |
 | [PLAN-11.md](PLAN-11.md) | alte Spec §9.3 Schritt 11: seitenweise Cover-Wand | **erledigt** 2026-09-07 |
 | [PLAN-1.1-keine-vorauswahl.md](PLAN-1.1-keine-vorauswahl.md) | 1.1: kein automatisch gewähltes Cover, Werk-Ansicht in der Spalte | **erledigt** 2026-09-09, wie geplant nach Kandidat 2; gemessen 0 statt 1 ISBN-Nachschau beim kalten Öffnen |
-| [PLAN-1.11-kauflinks-ux.md](PLAN-1.11-kauflinks-ux.md) | 1.11: Kauf-Links, die ins Leere laufen, und ihr Platz in der Spalte | offen, baureif; Schritte 1–4 sind reine Logik |
+| [PLAN-1.11-kauflinks-ux.md](PLAN-1.11-kauflinks-ux.md) | 1.11 (und die Hälfte von 1.2): Kauf-Links, die ins Leere laufen, und ihr Platz in der Spalte | **erledigt** 2026-09-09; vier Fälle statt drei (`kdp` kam dazu), Zone B nur ohne provisionsfähigen Link auf diese Ausgabe (Julians Entscheidung); offen ist die Stichprobe aus §7 |
 | [PLAN-2-mvp-hobby.md](PLAN-2-mvp-hobby.md) | 2.0: der Hobby-MVP ohne Provision, Schalter `NEXT_PUBLIC_SITE_MODE`, Weg zum ersten Deploy | **online seit 2026-09-08** unter beautifulcovers.vercel.app; offen: Reste der Abnahme (2.6), zweiter Google-Schlüssel (0.2), Domain (0.5) |
 | [PLAN-speicher.md](PLAN-speicher.md) | 0.9 (entschieden als E18), Bauanleitung für 6.10, 6.9, 5.1; §5 ist 6.12 | Entscheidung erledigt; Bauteile offen, 6.10 in Arbeit |
 | [PLAN-5-reichweite.md](PLAN-5-reichweite.md) | Phase 5: Seitengattungen, Agenten-Kette, Regeln gegen Slop | offen, wartet auf Phase 2–4 |

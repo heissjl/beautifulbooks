@@ -1109,3 +1109,73 @@ Nebenbei erledigt: auf dem Telefon stand die Peek-Leiste bisher **sofort beim La
 **Was nicht zurückkommen darf:** der Rückfall. Wer später findet, die Spalte wirke leer, und sie mit einem automatisch gewählten Cover füllt, holt sich beides zurück — die fremde Entscheidung und die Anfrage. Der Kommentar an `coverForId` und der Test „picks nothing when the reader has picked nothing“ sind die Bremse.
 
 **Julians Vorschlag, ein farbenfrohes Cover automatisch zu wählen**, ist beim Planen geprüft und als Vorauswahl verworfen worden, hat aber einen Platz behalten: ein Farbmaß gibt es gar nicht, weil `decodeToGray` in der ersten Schleife auf Graustufen rechnet; nachrüstbar wäre es billig. Für eine Vorauswahl war es falsch, für das Cover, das in 1.9 oben rechts auf der Startseite ins Auge fallen soll, ist es das richtige Kriterium — dort ist es notiert.
+
+## 2026-09-09 · Ein Durchgang durch die Roadmap nach Funktionsverbesserungen
+
+Julian: „geh die Roadmap durch und suche Funktionsverbesserungen, die wir angehen können." Kein Bau, eine Sichtung — mit der Regel, dass jede genannte Ursache im Code nachgesehen wird, statt die Roadmap nachzuerzählen. Das Ergebnis, die gefilterte Reihenfolge, steht in [ROADMAP.md](../ROADMAP.md) unter „Dieselbe Liste, gefiltert auf Funktionsverbesserungen". Hier steht nur, was beim Nachsehen dazukam.
+
+**Vier Ursachen im Code verortet**, alle vorher nur als Beobachtung notiert:
+
+| Punkt | Was der Code sagt |
+|---|---|
+| 6.15 (Titelanzeige) | Die Bereinigung existiert, aber nur für den Vergleich: `stripTrailingBrackets` ist modulprivat in `lib/normalize.ts` und wird allein von `normalizeTitle` benutzt. Der Anzeigeweg reicht den Rohtitel durch |
+| 6.14 (gefaltete Cover) | Das „+N" ist `components/CoverGallery.tsx:103`, ein `pointer-events-none`-Span mit einem `title`-Attribut als einziger Auskunft — auf dem Telefon also gar keiner |
+| 6.5 (Mosaik-Ausfall) | `components/useCardCovers.ts` fängt jeden Fehler in ein leeres `catch` mit dem Kommentar „never surface it" und kennt keinen zweiten Versuch. Die Wiederholung aus 1.10 sitzt allein in `searchWorks` |
+| 6.12 (Signaturen) | `lib/coverhash.ts:26` ist eine nackte Modul-`Map`, ohne Obergrenze und ohne Anbindung an den Next-Datencache — wie in PLAN-speicher beschrieben, jetzt an der Zeile belegt |
+
+**Der Gatsby-Titel ist live bestätigt.** `openlibrary.org/works/OL468431W.json` trägt als Titel wörtlich `The Great Gatsby(Published In 1925)`, samt fehlendem Leerzeichen. Das ist der erste Satz, den ein Besucher auf dem meistbenutzten Testwerk der Spec liest.
+
+**Und der Abruf dazu ist selbst eine Messung:** der erste Versuch antwortete **503**, der zweite unmittelbar danach **200**. Zwei Abrufe sind keine Quote, aber es ist dasselbe Muster wie am 2026-09-08 bei 1.10 — Open Library fällt in Episoden aus, nicht mit einer Rate, und ein zweiter Versuch trägt darüber hinweg. Für 0.10 zählt das als weiterer Beleg, dass die Ausfallquote nur über Wochen zu haben ist und nicht in einer Sitzung.
+
+**Was die Sichtung nicht ergeben hat:** keinen neuen Punkt. Alles, was der Durchgang fand, stand bereits irgendwo in der Roadmap — was für den Zustand der Liste spricht und dagegen, sie weiter zu verlängern, bevor die vorderen Punkte gebaut sind.
+
+## 2026-09-09 · Die Spalte, die einer türkischen ISBN fünf amerikanische Läden anbot (ROADMAP 1.11 und 1.2)
+
+Zwei Punkte, eine Sitzung, weil der eine den anderen zur Hälfte erledigt: 1.11 wollte die Kauf-Links irgendwohin führen lassen, 1.2 wollte sie überhaupt sichtbar machen. Gebaut nach [PLAN-1.11](plans/PLAN-1.11-kauflinks-ux.md), mit einer Abweichung und einem Fund.
+
+### Was die ISBN vorher weiß
+
+`registrationArea` (lib/normalize.ts) liest die Registrierungsgruppe aus der Nummer — 978-3 deutschsprachig, 978-975 und 978-9944 Türkei, 979-8 Amazons eigener Bereich. Eine Tabelle, offline, keine Anfrage. Sie beantwortet genau eine Frage: gehört diese Nummer in den Markt des Lesers? Alles Weitere entscheidet `linkPlan` (lib/linkplan.ts) in vier Fällen statt der drei des Plans:
+
+| Fall | Vorn | Warum |
+|---|---|---|
+| `home` | Bookshop.org, Amazon (DE: Thalia, Amazon) | Die Nummer gehört hierher, die Läden haben eine Chance |
+| `foreign` | AbeBooks, eBay (DE: Booklooker), als **Titel**-Suche mit Verlag und Jahr | Marktplätze führen Angebote von überall, und antiquarische Angebote tragen oft gar keine ISBN — dann ist Titel + Verlag + Jahr die bessere Frage |
+| `kdp` | Amazon | **Neu gegenüber dem Plan.** 182 der 526 gemessenen ISBNs sind 979-8, Amazons eigener Print-on-Demand-Bereich. Als `foreign` behandelt hätten sie AbeBooks und eBay bekommen — also die zwei Läden, die solche Titel gerade nicht führen |
+| `no-isbn` | Titelsuchen | 7 % der Cover-Ausgaben |
+
+Der Satz, der die Reihenfolge begründet, nennt eine Tatsache über die Nummer und **nie** etwas über einen Laden: „This printing's ISBN was registered in India. Marketplaces that list copies from anywhere come first; no shop was asked." Das ist dieselbe Grenze, die `lib/verdicts.ts` eine Ebene höher zieht.
+
+### Julians Entscheidung, und was sie am Entwurf änderte
+
+Auf die Frage, ob es die Zone „Or read it in another edition" geben soll: *„wenn es aber die Möglichkeit gibt, einen Affiliate-Link zu setzen zu genau dieser Edition, sollte das Vorrang haben. ansonsten füge aber die Option unter der Trennlinie hinzu wie vorgeschlagen."*
+
+Das ist schärfer als der Plan und hat ihn vereinfacht. Die Zone erscheint **nur** bei `foreign` und `no-isbn` — genau dann, wenn kein provisionsfähiger Link auf diese Ausgabe möglich ist. Und weil die Läden des Marktes dann dort stehen, verschwindet ihr ISBN-Link aus der Klappe, statt daneben ein zweites Mal mit demselben Etikett zu erscheinen. Damit löst sich die Regel „ein Label steht genau einmal" ohne Ausnahme auf; ein Test prüft sie über zwölf Kombinationen aus ISBN und Markt.
+
+Was dabei **nicht** verlorengeht, prüft ein zweiter Test: jeder Händler, den die Tabelle für einen Markt kennt, ist in jedem Fall irgendwo erreichbar. Verschoben wird, nicht versteckt.
+
+### Der Fund, der die Zone beinahe wertlos gemacht hätte
+
+Beim ersten Blick auf die fertige Spalte stand dort: *These search for „The Great Gatsby(Published In 1925)" by title.* Der Werktitel von OL468431W lautet bei Open Library wörtlich so, samt fehlendem Leerzeichen — und wäre als Suchabfrage bei Bookshop.org gelandet, wo er null Treffer ergibt. Die Bereinigung existierte längst, aber modulprivat und nur für den **Vergleich**: `stripTrailingBrackets` wurde allein von `normalizeTitle` benutzt. Jetzt gibt es `displayTitle`, und die Suchabfrage benutzt sie. Der Seitenkopf zeigt den Rohtitel weiterhin — das ist 6.15 und bekommt einen eigenen Commit.
+
+### Die Messung, die 1.2 abschließt
+
+Bei 1440 × 900, gegen `npm run dev`:
+
+| | Inhalt der Spalte | erster Kauf-Knopf, Seite oben | angeheftete Leiste |
+|---|---|---|---|
+| *Beloved*, vorher | 2.351 px | 437 px **unter** der Fensterkante | — |
+| *Beloved*, jetzt | **851 px** | y = 870 von 900 | 828 |
+| *Wolf Hall*, vorher | 1.256 px | 151 px **unter** der Kante | — |
+| *Wolf Hall*, jetzt | **766 px** | y = 847 von 900 | 586 |
+| *Gatsby*, indische ISBN, Verdikt `differs` | 959 px | y = 945, also 45 px darunter | 692 |
+
+Sichtbare Bedienelemente in der Spalte: **5 statt 14** (Marktumschalter, zwei bis drei Läden, die Klappe). Auf dem Telefon steht der erste Knopf in der Schublade bei y = 565 von 812, also **ohne zu scrollen** — der Teil von 1.2, den die Peek-Leiste nicht löste.
+
+**Zwei Eingriffe waren nötig, nicht einer.** Die Kürzung des Blocks allein brachte den Knopf bei *Beloved* von 437 px unter der Kante auf 105 px darunter; erst die Deckelung des Covers auf 31vh Breite (46vh Höhe) holte ihn ins Fenster. In einer 400 px breiten Spalte war das Bild 600 px hoch und damit für sich genommen größer als der ganze übrige Block. Der schlechteste Fall bleibt eine Seite mit zweizeiliger Sprachleiste, langem Titel und `differs`-Verdikt: dort fehlen bei ganz oben stehender Seite noch 45 px. Sobald der Leser in die Wand gescrollt hat — und ohne das klickt er kein Cover an — ist die Leiste angeheftet und alles steht.
+
+### Was offen bleibt
+
+Die Zuordnung im Fall `foreign` ruht auf einer begründeten, nicht belegten Annahme: dass Bookshop.org und ThriftBooks fremdsprachige ISBNs nicht führen und Amazons `/dp/` bei einer nie geführten ISBN ins Leere geht. Das ist Julians Stichprobe von Hand aus Plan §7, zehn Minuten, zusammen mit 1.8. Fällt sie anders aus, ändert sich `CATALOGUE_SHOPS` in `lib/linkplan.ts` und sonst nichts — der Aufbau hängt nicht daran.
+
+Ebenfalls notiert: die Links der Zone B laufen **nicht** über `/go/`, weil dort keine ISBN steht, gegen die gezählt werden könnte. Für 3.1 heißt das, dass diese Klicks heute unsichtbar sind. Und für Bookshop.org ist kein Affiliate-Format für eine Suchseite bekannt — nur `/a/<id>/<isbn>`, das eine ISBN braucht; die Zeile trägt dort bis auf Weiteres keinen Parameter (gehört zu 4.1).

@@ -1,5 +1,7 @@
 # Plan 1.11 — Kauf-Links, die ins Leere laufen, und wie sie in die Cover-Wand passen
 
+> **Erledigt am 2026-09-09**, zusammen mit 1.2. Was dabei anders kam als hier geplant: ein **vierter Fall `kdp`** für Amazons 979-8-Bereich (als `foreign` behandelt hätte er AbeBooks und eBay bekommen, also die zwei Läden, die solche Titel gerade nicht führen); die Zone „Or read it in another edition" erscheint **nur**, wenn kein provisionsfähiger Link auf diese Ausgabe möglich ist (Julians Entscheidung, siehe §7 Frage 1), wodurch die Läden des Marktes dort einmal statt zweimal stehen; und `displayTitle` musste dazukommen, weil der Werktitel von OL468431W wörtlich `The Great Gatsby(Published In 1925)` lautet und so in die Suchabfrage gegangen wäre. Messungen in [docs/history.md](../history.md). **Offen bleibt allein die Stichprobe aus §7 / §6**, die die Zuordnung im Fall `foreign` belegt oder widerlegt.
+
 Stand: 2026-09-08. Roadmap-Punkt **1.11**, Auslöser: Julian am 2026-09-08 — „damit weniger Links ins Leere laufen", und danach: „das muss sinnvoll in die Cover-Wall-Seite integriert werden und darf aus einer UX-Perspektive nicht zu sehr verwirren."
 
 Die Messungen, auf denen alles hier steht, sind in Roadmap 1.11 festgehalten (567 Ausgaben aus fünf Fixture-Werken, offline). Dieser Plan wiederholt nur die vier Zahlen, die den Entwurf tragen, und beschäftigt sich sonst mit der Spalte.
