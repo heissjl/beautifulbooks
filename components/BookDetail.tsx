@@ -33,6 +33,7 @@ import type { Cover, EditionView } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 import type { ImageSignature } from '@/lib/imagesig';
 import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
+import { groupByDecade, worthAPage } from '@/lib/decades';
 import { foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
 
 function BackLink({ href }: { href: string }) {
@@ -300,10 +301,26 @@ function BookDetail() {
     the line names who says it and leaves the reader to weigh that.
   */
   /*
-    The decade page exists only where the data carries it (ROADMAP 5.4a), so
-    the link appears only there — a link to a 404 is worse than no link.
+    The link shows wherever a decade page is possible, not only where the
+    pre-measured list happens to know one (Julian, 2026-09-09: „der link soll
+    natürlich immer gezeigt werden, wenn eine decade wall möglich ist").
+
+    Two sources, and they answer different halves of the problem:
+
+    - `data/decade-pages.json` answers **at once**, before a single cover has
+      arrived, for the works measured before the deploy.
+    - Everything else is decided **here**, from what the browser already
+      holds. It has loaded every page of the work and folded every cover, so
+      it can apply the page's own threshold with the page's own function
+      (`lib/decades.ts` is pure and has no I/O). No request, and no second
+      rule that could drift from the first.
+
+    Only once the walk is **done**: a partial wall would clear the threshold
+    early on a work that ends up below it, and offer a link into a 404 — the
+    one thing this must not do (R6).
   */
-  const hasDecades = decadePages.pages.some(p => p.id === work.id);
+  const decadesPossible = merged.done && worthAPage(groupByDecade(view.covers, merged.editions));
+  const hasDecades = decadesPossible || decadePages.pages.some(p => p.id === work.id);
   const meta = [
     work.firstPublishYear ? `Open Library dates it to ${work.firstPublishYear}` : undefined,
     progressLabel(view.covers.length, merged),

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { CURATED_LIST } from '@/lib/curated';
+import { PUBLISHED_WORKS } from '@/lib/published';
 import decadePages from '@/data/decade-pages.json';
 import { SITE_URL } from '@/lib/seo';
 
@@ -21,7 +21,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: 'yearly', priority: 0.1 },
     { url: `${SITE_URL}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.1 },
-    ...CURATED_LIST.map(work => ({
+    /*
+      Every work we point at, not only the curated ones (ROADMAP 5.1): a work
+      page exists for a crawler once something links to it, and nothing did
+      for the works outside the curation — *Nineteen Eighty-Four* among them,
+      with a full wall and a decade page nobody could find (2026-09-09).
+      `PUBLISHED_WORKS` is the index list, so every entry here has cover
+      signatures on disk and folds like the rest of the site.
+    */
+    ...PUBLISHED_WORKS.map(work => ({
       url: `${SITE_URL}/book/${work.id}`,
       lastModified: now,
       changeFrequency: 'weekly' as const,
@@ -30,8 +38,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     /*
       Only the works that actually carry a decade page (ROADMAP 5.4a): the
       threshold is 20 covers across 4 decades, and `scripts/find-decade-pages.ts`
-      checked which of the curated ones clear it — 90 of 105 at 2026-09-09.
-      Putting the other 15 in here would send a crawler to a 404.
+      measures which of the published works clear it. Putting the others in
+      here would send a crawler to a 404.
     */
     ...decadePages.pages.map(page => ({
       url: `${SITE_URL}/book/${page.id}/decades`,
