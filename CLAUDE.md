@@ -102,6 +102,7 @@ npm run build      # must pass before a step is considered done
 - One commit per roadmap item; the commit message names it.
 - `lib/` must have no `any` and no `console.log` outside a `DEBUG` guard.
 - New logic in `lib/` gets a unit test next to it or under `lib/__tests__/`. Tests that need API data use recorded fixtures under `lib/__fixtures__/`, never live calls.
+- **Verify against `npm run dev`, not against production** (Julian, 2026-09-09). Loading states are easier to catch locally anyway, and every request to the live site spends the Google quota. After a deploy, check production **once** — the one page, the one search, the thing that changed — and never poll it: repeated automated requests trip Vercel's bot mitigation, which answers 403 with `x-vercel-mitigated: challenge` and looks exactly like an outage (ROADMAP 2.4).
 - Verify UI changes in the browser with the five acceptance queries from SPEC.md §3 F1 before calling a step done.
 - Work ROADMAP.md in phase order. Do not start a later phase while an earlier one has items that do not wait on Julian.
 
