@@ -8,7 +8,8 @@
  * the animations moving, this shows what they look like at 10, 30, 50, 75 and
  * 100 per cent, which is the part a still can carry.
  *
- * Row 1 Rückzug, row 2 Schwerste Zelle zuerst, row 3 Umsortieren.
+ * Row 1 Rückzug, row 2 Schwerste Zelle zuerst, row 3 Umsortieren, row 4 Das
+ * Rauschen klärt sich (3b).
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -104,11 +105,12 @@ async function main() {
   const cols = grid.cols, cells = grid.cols * grid.rows;
   const extreme = unpack16(grid.orders.extreme);
   const wave = unpack16(grid.orders.wave);
+  const random = unpack16(grid.orders.random);
   const shuffle = unpack16(grid.shuffle);
   // The same start the page uses: twice the pixels of the file, at a 360 px frame.
   const maxScale = Math.max(2, (image.width / 360) * 2);
 
-  const stills: RgbaImage[][] = [[], [], []];
+  const stills: RgbaImage[][] = [[], [], [], []];
   for (const progress of MOMENTS) {
     stills[0].push(zoomStill(mosaic, progress, maxScale));
 
@@ -124,13 +126,27 @@ async function main() {
       copyCell(sort, mosaic, wave[i], wave[i], cols, image.cellWidth, image.cellHeight);
     }
     stills[2].push(sort);
+
+    /*
+      3b: the same wall, but the cells land in random order and the dimming
+      lifts with the wait. No front, so nothing travels across the picture —
+      it only gets clearer.
+    */
+    const clear = blank(mosaic.width, mosaic.height, GROUND);
+    for (let i = 0; i < cells; i++) copyCell(clear, mosaic, i, shuffle[i], cols, image.cellWidth, image.cellHeight);
+    const eased = 1 - (1 - progress) ** 2;
+    for (let i = 0; i < Math.round(eased * cells); i++) {
+      copyCell(clear, mosaic, random[i], random[i], cols, image.cellWidth, image.cellHeight);
+    }
+    dim(clear, 0.5 * (1 - eased), [0xfb, 0xf9, 0xf4]);
+    stills[3].push(clear);
   }
 
   const stillHeight = Math.round((STILL_WIDTH * mosaic.height) / mosaic.width);
   const width = MOMENTS.length * STILL_WIDTH + (MOMENTS.length + 1) * GAP;
-  const height = 3 * stillHeight + 4 * GAP;
+  const height = stills.length * stillHeight + (stills.length + 1) * GAP;
   const sheet = blank(width, height, [0xf4, 0xf0, 0xe8]);
-  for (let row = 0; row < 3; row++) {
+  for (let row = 0; row < stills.length; row++) {
     for (let col = 0; col < MOMENTS.length; col++) {
       const small = resizeRgba(stills[row][col], STILL_WIDTH, stillHeight);
       const x0 = GAP + col * (STILL_WIDTH + GAP);
@@ -147,7 +163,10 @@ async function main() {
   const out = path.join(OUT_DIR, `${id}-filmstrip.png`);
   await writeFile(out, PNG.sync.write(png));
   console.log(`wrote ${out}, ${width}x${height}`);
-  console.log(`rows: Rückzug / Schwerste Zelle zuerst / Umsortieren; columns ${MOMENTS.map(m => `${m * 100}%`).join(', ')}`);
+  console.log(
+    'rows: Rückzug / Schwerste Zelle zuerst / Umsortieren / Das Rauschen klärt sich; '
+    + `columns ${MOMENTS.map(m => `${m * 100}%`).join(', ')}`,
+  );
 }
 
 main().catch(err => {

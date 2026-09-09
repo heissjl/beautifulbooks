@@ -193,7 +193,7 @@ async function buildGrid(
     rows,
     lum: toBase64(lum),
     /*
-      Only the two orders the animations use. Every extra order is two bytes
+      Only the orders the animations use. Every extra order is two bytes
       per cell on the wire (3.8 KB at 40 columns) to save a sort of 1,440
       numbers in the browser — which is why the site would ship `lum` alone
       and sort once (lab/loading/README.md).
@@ -201,6 +201,7 @@ async function buildGrid(
     orders: {
       extreme: toBase64(revealOrder('extreme', lum, cols, rows)),
       wave: toBase64(revealOrder('wave', lum, cols, rows)),
+      random: toBase64(revealOrder('random', lum, cols, rows, cells)),
     },
     shuffle: toBase64(shuffledSources(cells, cells)),
     images: images_,

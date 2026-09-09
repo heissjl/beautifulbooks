@@ -126,6 +126,20 @@
       <p class="caption pulse" id="cap-sort"></p>
       <p class="cost" id="cost-sort"></p>
     </section>
+
+    <section class="panel">
+      <span class="kicker">Vorschlag 3b</span>
+      <h2>Das Rauschen klärt sich</h2>
+      <p>
+        Dieselbe falsch sortierte Wand, aber ohne Welle und ohne Kante: die Kacheln finden in
+        zufälliger Reihenfolge ihren Platz, und gleichzeitig hebt sich die Dämpfung. Das Gesicht
+        kommt aus dem Rauschen wie ein Bild aus dem Entwicklerbad — nichts läuft von einer Seite
+        zur anderen.
+      </p>
+      <div class="frame" id="frame-clear"><canvas id="canvas-clear"></canvas></div>
+      <p class="caption pulse" id="cap-clear"></p>
+      <p class="cost" id="cost-clear"></p>
+    </section>
   </div>
 
   <div class="notes">
@@ -288,13 +302,13 @@ class TileCanvas {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
   /** Draws cell `from` of the sprite at the place of cell `at`. */
-  draw(at, from = at, alpha = 1) {
+  draw(at, from = at, alpha = 1, ctx = this.ctx) {
     const { cols } = state.grid;
     const { cellWidth, cellHeight } = state.image;
     const sc = from % cols, sr = (from - sc) / cols;
     const dc = at % cols, dr = (at - dc) / cols;
-    this.ctx.globalAlpha = alpha;
-    this.ctx.drawImage(
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(
       state.bitmap,
       sc * cellWidth, sr * cellHeight, cellWidth, cellHeight,
       Math.floor(dc * this.dw), Math.floor(dr * this.dh),
@@ -429,10 +443,91 @@ class Sort extends TileCanvas {
   finish() { this.layout(); this.drawAll(); this.cost.render('reduced motion: das fertige Bild, keine Bewegung'); }
 }
 
+/** A tile settles more slowly when the point is clearing, not sweeping. */
+const CLEAR_FADE_FRAMES = 20;
+/** How far the wall is dimmed at the start, in a fraction of the ground colour. */
+const CLEAR_DIM = 0.5;
+
+/**
+ * Vorschlag 3b: the noise clears (Julian, 2026-09-09: „weniger Kante im
+ * Effekt, sondern ein langsames Klären des Rauschens").
+ *
+ * The same scrambled wall as proposal 3, but the cells find their place in
+ * **random** order, so nothing travels across the picture and there is no
+ * front to see. The dimming lifts as the wait goes on, which is the second
+ * half of the clearing: the picture comes up out of the noise the way one
+ * comes up in a developing bath.
+ *
+ * An off-screen canvas holds the true state of the wall and the visible one
+ * is that plus the dimming — otherwise lifting the dim would mean redrawing
+ * 1,480 cells every frame instead of one image.
+ */
+class Clear extends TileCanvas {
+  layout() {
+    super.layout();
+    this.buffer = this.buffer ?? document.createElement('canvas');
+    this.buffer.width = this.canvas.width;
+    this.buffer.height = this.canvas.height;
+    this.bctx = this.buffer.getContext('2d', { alpha: false });
+    // Read once: asking for a computed style every frame forces a recalc.
+    this.ground = getComputedStyle(document.body).getPropertyValue('--surface') || '#fff';
+  }
+  start() {
+    this.layout();
+    for (let i = 0; i < this.cells; i++) this.draw(i, state.shuffle[i], 1, this.bctx);
+    this.order = state.orderRandom;
+    this.placed = 0;
+    this.active = [];
+    this.t0 = performance.now();
+    this.cost.reset();
+    this.present(0);
+    ticker.add(this);
+  }
+  /** The wall as it stands, under what is left of the dimming. */
+  present(progress) {
+    this.ctx.globalAlpha = 1;
+    this.ctx.drawImage(this.buffer, 0, 0);
+    const dim = CLEAR_DIM * (1 - progress);
+    if (dim <= 0) return;
+    this.ctx.globalAlpha = dim;
+    this.ctx.fillStyle = this.ground;
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+  tick(now, delta) {
+    const progress = Math.min(1, (now - this.t0) / state.duration);
+    /*
+      Cells resolve fastest at the beginning.
+
+      Measured on the contact sheet: with a flat rate the first third of the
+      animation looks identical to the frame before it — and the first
+      seconds are exactly where a reader is, because most searches come back
+      in one or two. Easing out puts the visible clearing there and leaves
+      the rest as a settling.
+    */
+    const eased = 1 - (1 - progress) ** 2;
+    const target = Math.round(eased * this.cells);
+    while (this.placed < target) this.active.push({ cell: this.order[this.placed++], age: 0 });
+    let draws = 0;
+    for (const tile of this.active) {
+      tile.age++;
+      this.draw(tile.cell, tile.cell, tile.age >= CLEAR_FADE_FRAMES ? 1 : 1 / CLEAR_FADE_FRAMES, this.bctx);
+      draws++;
+    }
+    this.active = this.active.filter(t => t.age < CLEAR_FADE_FRAMES);
+    this.present(eased);
+    this.cost.frame(delta, draws + 1);
+    if (this.cost.frames % 10 === 0) this.cost.render();
+    if (progress >= 1 && this.active.length === 0) { ticker.remove(this); this.cost.render('fertig'); }
+  }
+  stop() { ticker.remove(this); this.cost.render(`abgebrochen bei ${Math.round(100 * this.placed / this.cells)} % der Kacheln`); }
+  finish() { this.layout(); this.drawAll(); this.cost.render('reduced motion: das fertige Bild, keine Bewegung'); }
+}
+
 const zoom = new ZoomOut($('img-zoom'), $('frame-zoom'), $('cost-zoom'));
 const reveal = new Reveal($('canvas-reveal'), $('frame-reveal'), $('cost-reveal'));
 const sort = new Sort($('canvas-sort'), $('frame-sort'), $('cost-sort'));
-const all = [zoom, reveal, sort];
+const clear = new Clear($('canvas-clear'), $('frame-clear'), $('cost-clear'));
+const all = [zoom, reveal, sort, clear];
 
 async function loadImage() {
   const url = `out/${state.image.file}`;
@@ -447,7 +542,7 @@ async function loadImage() {
 function captions() {
   const query = 'east of eden';
   const text = `Looking for “${query}” in Open Library`;
-  for (const id of ['cap-zoom', 'cap-reveal', 'cap-sort']) $(id).textContent = text;
+  for (const id of ['cap-zoom', 'cap-reveal', 'cap-sort', 'cap-clear']) $(id).textContent = text;
   const m = state.manifest;
   const titles = m.works.map(w => w.title).join(', ');
   $('about').innerHTML =
@@ -466,6 +561,7 @@ async function play() {
   state.image = grid.images[Number($('size').value)];
   state.orderExtreme = unpack16(grid.orders.extreme);
   state.orderWave = unpack16(grid.orders.wave);
+  state.orderRandom = unpack16(grid.orders.random);
   state.shuffle = unpack16(grid.shuffle);
   await loadImage();
   zoom.layout();
