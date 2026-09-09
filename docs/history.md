@@ -1427,3 +1427,11 @@ Umgeschrieben wurden am selben Tag zwei Stellen:
 | Satz unter der Scan-Reihe (6.14a) | „The wall shows one tile for these, because the images are the same design. They are different scans, and sometimes different printings of it." | „Different scans of the same design, sometimes of different printings." |
 
 Die Schwellen `MIN_COVERS` und `MIN_DECADES` werden auf der Seite dadurch nicht mehr gebraucht; sie stehen weiter in `lib/decades.ts` und in der Spec, wo sie hingehören. Der Rest ist als **6.27** notiert, mit einer Tabelle, welche Stelle wie stark verstößt — der Verfügbarkeits-Absatz zuerst, aber erst nach 0.1, weil der Punkt ihn womöglich ganz entfernt.
+
+### Der Ladetext steht jetzt über dem Bild
+
+Julian: „beim lademosaik sollte der ladetext grafisch über dem mosaik stehen, nicht als overlay." Betroffen waren beide Wartebilder, auf zwei verschiedene Weisen: im **Fächer** (`LoadingStage`) hing die Zeile `absolute bottom-0` über der Bühne und kreuzte auf schmalen Schirmen die Cover; in der **sich bauenden Wand** (`AssemblingWall`) stand sie zwar im Fluss, aber darunter. Jetzt beide oberhalb und im Fluss.
+
+Der Grund ist nicht nur Anordnung: eine Zeile Text über einem Bild liest sich als **Bildunterschrift dazu** — und genau das darf dieser Satz nicht sein. Er sagt, worauf gewartet wird, nicht, was zu sehen ist. Die Kacheln der Wartewand sind bewusst klein, gedimmt und unbeschriftet, damit niemand sie für eine Antwort hält (N12); ein Satz, der wie ihre Unterschrift aussieht, hebelte das aus.
+
+Gemessen am Dev-Server: Suche nach „stoner williams" — Ladetext `position: static`, Unterkante 289 px, Raster beginnt bei 313 px. Werkseite *Neuromancer* — „1 of 40 covers here", `static`, Unterkante 299 px, Fächer beginnt bei 319 px. Das `relative` am Bühnen-Container konnte weg, weil die Kacheln selbst am inneren Kasten hängen, nicht an ihm.

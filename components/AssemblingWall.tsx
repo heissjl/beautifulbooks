@@ -24,6 +24,8 @@ export default function AssemblingWall({ caption, tiles = 12 }: { caption: strin
   const shown = WALL_WORKS.slice(0, tiles);
   return (
     <div className="py-10 sm:py-14" aria-busy="true" aria-live="polite" aria-label={caption}>
+      {/* Above the picture, and in the flow (Julian, 2026-09-09). */}
+      <p className="stage-pulse mb-6 text-center text-sm text-ink-3">{caption}</p>
       {/*
         Three across on a phone, six on a desktop — the same rhythm as the
         home page's wall, so what a reader watches being built has the shape
@@ -40,7 +42,6 @@ export default function AssemblingWall({ caption, tiles = 12 }: { caption: strin
           </div>
         ))}
       </div>
-      <p className="stage-pulse mt-6 text-center text-sm text-ink-3">{caption}</p>
     </div>
   );
 }

@@ -52,7 +52,17 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
   }
 
   return (
-    <div className="stage relative flex min-h-[26rem] items-center justify-center py-6 sm:min-h-[38rem]" aria-live="polite" aria-busy="true" aria-label="Loading covers">
+    /*
+      The caption sits above the picture and in the flow, not laid over it
+      (Julian, 2026-09-09: „der ladetext sollte grafisch über dem mosaik
+      stehen, nicht als overlay"). It used to be pinned to the bottom of the
+      stage, where it crossed the fanned covers on a narrow screen — and a
+      line of type over a picture reads as a label for it, which is the one
+      thing this text must not be: it says what is being waited for, not what
+      is shown.
+    */
+    <div className="stage flex min-h-[26rem] flex-col items-center justify-center gap-5 py-6 sm:min-h-[38rem]" aria-live="polite" aria-busy="true" aria-label="Loading covers">
+      <p className="stage-pulse text-center text-sm text-ink-3">{caption}</p>
       <div className="relative h-[20rem] w-full max-w-3xl sm:h-[30rem]">
         {shown.length === 0 && hero && (
           <div className="stage-tile stage-in" style={{ ['--dx' as string]: '0px', ['--tilt' as string]: '0deg' }}>
@@ -77,7 +87,6 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
           );
         })}
       </div>
-      <p className="stage-pulse absolute bottom-0 left-0 right-0 text-center text-sm text-ink-3">{caption}</p>
     </div>
   );
 }
