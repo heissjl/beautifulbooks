@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // A worktree holds a second copy of this repository; linting it reports
+    // problems that are not in the working tree (2026-09-09).
+    ".claude/worktrees/**",
   ]),
   // lab/ may import from lib/; the website must never import from lab/
   // (lab/README.md rule 2, ROADMAP 0.11).

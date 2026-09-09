@@ -1,0 +1,207 @@
+{
+ "labelledAt": "2026-09-09",
+ "labelledBy": "by eye, from the contact sheets lab/fold/sheet.py builds",
+ "sample": "random.seed(7), 10 pairs per band, out of the intra-work pairs of the committed cover index",
+ "pairs": [
+  {
+   "band": "13-16",
+   "a": "ol:11203874",
+   "b": "ol:10585485",
+   "indexDistance": 13,
+   "meanA": 15,
+   "meanB": 134,
+   "label": "skip",
+   "note": "second image did not load"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:13136567",
+   "b": "ol:9128466",
+   "indexDistance": 15,
+   "meanA": 170,
+   "meanB": 14,
+   "label": "diff",
+   "note": "Ulysses cream vs Ulysses black — different designs"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:13538527",
+   "b": "ol:10720415",
+   "indexDistance": 14,
+   "meanA": 54,
+   "meanB": 71,
+   "label": "diff",
+   "note": "Moby Dick dark binding vs blue binding"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:14617898",
+   "b": "ol:14534643",
+   "indexDistance": 14,
+   "meanA": 16,
+   "meanB": 59,
+   "label": "diff",
+   "note": "brown leather vs red Pride and Prejudice"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:14840569",
+   "b": "ol:14840578",
+   "indexDistance": 14,
+   "meanA": 73,
+   "meanB": 35,
+   "label": "diff",
+   "note": "Wuthering Heights green vs navy"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:15172399",
+   "b": "ol:14813219",
+   "indexDistance": 16,
+   "meanA": 85,
+   "meanB": 168,
+   "label": "same",
+   "note": "Catcher in the Rye — same illustration, red vs orange, mean 85 vs 168"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:5188341",
+   "b": "ol:2468329",
+   "indexDistance": 14,
+   "meanA": 246,
+   "meanB": 238,
+   "label": "diff",
+   "note": "two different Siddhartha layouts"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:5465722",
+   "b": "ol:1022021",
+   "indexDistance": 16,
+   "meanA": 254,
+   "meanB": 72,
+   "label": "diff",
+   "note": "blank page vs Kafka, Der Proceß"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:7446481",
+   "b": "ol:38161",
+   "indexDistance": 14,
+   "meanA": 209,
+   "meanB": 209,
+   "label": "same",
+   "note": "Brave New World, same design"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:8172081",
+   "b": "ol:14627060",
+   "indexDistance": 16,
+   "meanA": 193,
+   "meanB": 85,
+   "label": "skip",
+   "note": "first image did not load"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:10132567",
+   "b": "ol:12087099",
+   "indexDistance": 12,
+   "meanA": 207,
+   "meanB": 223,
+   "label": "diff",
+   "note": "Lord of the Flies, yellow vs white/red — different designs"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:10866007",
+   "b": "ol:7688710",
+   "indexDistance": 12,
+   "meanA": 133,
+   "meanB": 146,
+   "label": "same",
+   "note": "The Hobbit, second one a Pocket Edition with a sticker"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:12722998",
+   "b": "ol:12721852",
+   "indexDistance": 10,
+   "meanA": 175,
+   "meanB": 21,
+   "label": "skip",
+   "note": "second image did not load"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:12884331",
+   "b": "ol:14541593",
+   "indexDistance": 12,
+   "meanA": 53,
+   "meanB": 29,
+   "label": "same",
+   "note": "Camus, The Outsider — same design, scan mean 53 vs 29"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:14846888",
+   "b": "ol:9248244",
+   "indexDistance": 12,
+   "meanA": 127,
+   "meanB": 128,
+   "label": "same",
+   "note": "Drageløperen / The Kite Runner — same photo, different title"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:15172443",
+   "b": "ol:12619797",
+   "indexDistance": 11,
+   "meanA": 33,
+   "meanB": 57,
+   "label": "diff",
+   "note": "plain dark blue binding vs plain red binding"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:1757604",
+   "b": "ol:1757605",
+   "indexDistance": 12,
+   "meanA": 38,
+   "meanB": 38,
+   "label": "same",
+   "note": "Anna Karenina Vol II and Vol I, identical green cloth"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:6468653",
+   "b": "ol:9367162",
+   "indexDistance": 11,
+   "meanA": 52,
+   "meanB": 42,
+   "label": "same",
+   "note": "Catch-22 — same design, scan mean 52 vs 42"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:7183508",
+   "b": "ol:6527684",
+   "indexDistance": 12,
+   "meanA": 222,
+   "meanB": 240,
+   "label": "diff",
+   "note": "two different Dante title pages"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:8175190",
+   "b": "ol:14624693",
+   "indexDistance": 11,
+   "meanA": 126,
+   "meanB": 79,
+   "label": "diff",
+   "note": "Herr der Ringe (Klett-Cotta) vs Lord of the Rings — different artwork"
+  }
+ ]
+}

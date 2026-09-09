@@ -13,7 +13,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
   MAX_DISTANCE, SAME_DESIGN_BITS, STRUCTURE_WEIGHT,
-  bitsApart, coverUrlFor, indexBuiltAt, indexSize, lookDistance, similarTo,
+  bitsApart, coverUrlFor, indexBuiltAt, indexSignatures, indexSize, lookDistance, similarTo,
 } from '../coverindex';
 import type { ImageSignature } from '../imagesig';
 
@@ -124,5 +124,39 @@ describe('the index that is committed', () => {
   it('never offers a cover that is simply the same design', () => {
     expect(SAME_DESIGN_BITS).toBeGreaterThan(0);
     expect(MAX_DISTANCE).toBeLessThan(1);
+  });
+});
+
+describe('signatures handed out for folding (ROADMAP 5.4a)', () => {
+  /* Taken from the committed file rather than pinned, so a rebuilt index does
+     not turn into a red test about nothing. */
+  const known = (
+    JSON.parse(readFileSync(path.join(process.cwd(), 'data', 'cover-index.json'), 'utf8')) as {
+      covers: Array<[number, string]>;
+    }
+  ).covers[0][1];
+
+  it('returns a usable signature for a cover it knows', () => {
+    const sigs = indexSignatures([known]);
+    const sig = sigs.get(known);
+    expect(sig).toBeDefined();
+    // 64 bits as 16 hex characters, the shape `hamming` expects.
+    expect(sig!.hash).toMatch(/^[0-9a-f]{16}$/);
+    expect(sig!.contrast).toBeGreaterThanOrEqual(0);
+  });
+
+  it('is silent about a cover it has never seen, rather than guessing one', () => {
+    // A missing signature must read as "not folded", never as "no duplicate".
+    const sigs = indexSignatures([known, 'ol:999999999']);
+    expect(sigs.has(known)).toBe(true);
+    expect(sigs.has('ol:999999999')).toBe(false);
+    expect(sigs.size).toBe(1);
+  });
+
+  it('agrees with the packed halves the index searches on', () => {
+    const sig = indexSignatures([known]).get(known)!;
+    const hi = parseInt(sig.hash.slice(0, 8), 16);
+    const lo = parseInt(sig.hash.slice(8, 16), 16);
+    expect(bitsApart(hi, lo, hi, lo)).toBe(0);
   });
 });

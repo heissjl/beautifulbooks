@@ -1109,3 +1109,39 @@ Nebenbei erledigt: auf dem Telefon stand die Peek-Leiste bisher **sofort beim La
 **Was nicht zurückkommen darf:** der Rückfall. Wer später findet, die Spalte wirke leer, und sie mit einem automatisch gewählten Cover füllt, holt sich beides zurück — die fremde Entscheidung und die Anfrage. Der Kommentar an `coverForId` und der Test „picks nothing when the reader has picked nothing“ sind die Bremse.
 
 **Julians Vorschlag, ein farbenfrohes Cover automatisch zu wählen**, ist beim Planen geprüft und als Vorauswahl verworfen worden, hat aber einen Platz behalten: ein Farbmaß gibt es gar nicht, weil `decodeToGray` in der ersten Schleife auf Graustufen rechnet; nachrüstbar wäre es billig. Für eine Vorauswahl war es falsch, für das Cover, das in 1.9 oben rechts auf der Startseite ins Auge fallen soll, ist es das richtige Kriterium — dort ist es notiert.
+
+## 2026-09-09 · Die Schwelle war nicht das Problem (ROADMAP 5.4a, 6.10)
+
+Julian, auf die Jahrzehnte-Seite: „für decades-seite sollte die faltung-schwelle hochgesetzt werden. hier fallen ähnliche cover schneller auf. oft sind es gleiche cover nur mit einer anderen grundfarbe des scans. das ist auch ein problem für die generelle faltung."
+
+**Die Beobachtung stimmt, die Diagnose lag daneben — und zwar zu unseren Ungunsten: die Seite faltete überhaupt nicht.** `dedupeCovers: false` stand seit der Reparatur vom selben Tag drin, weil serverseitiges Falten jedes Cover herunterlädt und hasht und die Seite damit in Produktion umbrachte. Was Julian sah, waren also nicht zu eng gefaltete Cover, sondern ungefaltete.
+
+**Die Reparatur kostet keine einzige Anfrage.** Die Signaturen liegen längst auf der Platte: der gebaute Cover-Index (E18) kennt für die kuratierten Werke jedes Cover mit dHash, Kontrast und Farbe. `indexSignatures` in `lib/coverindex.ts` reicht sie heraus, die Seite faltet damit nach derselben Regel wie die Wand — ohne Bild, ohne Decoder, ohne Netz. Gemessen: *Brave New World* 148 → 114 Kacheln, *Lolita* 121 → 94, *Der Proceß* 135 → 123, *Gravity's Rainbow* 27 → 22. Die Signaturabdeckung ist praktisch vollständig (135/135, 148/148, 121/121), weil der Index mehr Cover kennt, als die Seite lädt.
+
+Ein Cover, das der Index nicht kennt, behält seine Kachel. Das ist eine Lücke und wird nicht als Einzigartigkeit ausgegeben (N12).
+
+### Und die Schwelle selbst? Gemessen, und sie bleibt
+
+Die eigentliche Frage — lässt sich die 8 anheben oder der Hash gegen den Scan-Grundton unempfindlich machen — hat ein eigenes Experiment bekommen ([lab/fold](../lab/fold/README.md)), weil sie die ganze Seite betrifft und nicht nur diese eine.
+
+**Erst die Verteilung:** über 846.779 Paare innerhalb eines Werks liegen 0,7 % unter Abstand 8, 0,4 % bei 9–12, 1,1 % bei 13–16.
+
+**Dann der Blick,** zwanzig Paare aus den beiden interessanten Bändern, von Hand einsortiert: sieben gleiche Gestaltung, zehn verschiedene, drei nicht beurteilbar. Julians Fall steht im Material — *The Outsider* bei Abstand 11 mit Scan-Helligkeit 53 gegen 29, *Catch-22* bei 12 mit 52 gegen 42, *The Catcher in the Rye* bei 16 als dieselbe Illustration einmal rot und einmal orange. **Aber in denselben Bändern liegen echte Unterschiede:** *Herr der Ringe* gegen *Lord of the Rings* bei 11, zwei verschiedene *Lord of the Flies* bei 12, zwei verschiedene *Siddhartha*-Umschläge bei 14.
+
+**Kein Maß trennt die sieben von den zehn:**
+
+| Maß | gleiche, schlechtestes | verschiedene, bestes | trennt? |
+|---|---|---|---|
+| dHash wie bisher | 21 | 10 | nein |
+| nach Autokontrast | 23 | 13 | nein |
+| nach Histogrammausgleich | 18 | 11 | nein |
+| Rauschmaske über den Bits | 64 | 0 | nein, schlechter |
+| 16×16 statt 8×8 | 0,422 | 0,152 | nein |
+| 32×32 | 0,435 | 0,227 | nein |
+| Farbschranke 4×4 RGB | 0,303 | 0,055 | nein |
+
+Die Rauschmaske — nur Bits zählen, bei denen beide Bilder einen deutlichen Helligkeitssprung hatten — schadet sogar: auf flächigen Umschlägen bleibt kein sicheres Bit übrig, bei drei Paaren null, und dann meldet das Maß 0 oder 64 statt einer Aussage.
+
+**Also bleibt die 8, und oberhalb entscheidet weiter die Metadatenlage** (ISBN, Verlag, Jahr) statt des Abstands. Das war schon der Befund vom 2026-09-07; neu ist, dass jetzt auch die naheliegenden Auswege durchgemessen und ausgeschlossen sind. Wer es besser machen will, braucht einen anderen Deskriptor — und zuerst mehr als siebzehn beurteilte Paare.
+
+**Die Lehre:** eine Beobachtung am Bildschirm ist ein verlässlicher Hinweis darauf, *dass* etwas nicht stimmt, und ein unzuverlässiger darauf, *warum*. Hier wäre das Anheben der Schwelle nicht nur wirkungslos gewesen — es hätte echte Unterschiede zusammengefaltet, während die eigentliche Ursache stehen bleibt.

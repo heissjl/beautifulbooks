@@ -18,3 +18,6 @@ Experiments:
 |---|---|---|---|
 | `video/` | Can a 15-second clip of a book's covers be built from the data alone? Storyboard pure and tested, render via ffmpeg. | 5.5 | not started; plan in PLAN-struktur §4 |
 | `mosaic/` | Can one picture — a shadowy motif — be built from a book's covers as tiles, good enough for Instagram or Pinterest? Assignment pure and tested, render with pngjs. | 5.5 | **works**, measured 2026-09-08; see [mosaic/README.md](mosaic/README.md) |
+| `curate/` | Which cover of a work is the good one? A local click-through tool; also the seed of the mini-game. | 6.18, 5.8 | in use since 2026-09-08; 105 works picked |
+| `duel/` | Two people, one link, the same round: does enough disagreement arise for it to be a game? | 5.8 | playable 2026-09-09, **not yet measured with two humans** |
+| `fold/` | Can the fold be sharpened — a higher distance, or a hash blind to the scan’s tone? | 5.4a, 6.10 | measured 2026-09-09: **no**, and four ways are ruled out |

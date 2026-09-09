@@ -4,9 +4,11 @@ import { notFound } from 'next/navigation';
 import CoverImage from '@/components/CoverImage';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
+import { indexSignatures } from '@/lib/coverindex';
 import { decadeLine, groupByDecade, worthAPage, MIN_COVERS, MIN_DECADES } from '@/lib/decades';
 import { authorLine, SITE_URL } from '@/lib/seo';
 import { getWorkDetail, isWorkId } from '@/lib/work';
+import { foldDuplicateCovers } from '@/lib/works';
 
 /**
  * One book through the decades (ROADMAP 5.4a, PLAN-5 §3).
@@ -52,7 +54,20 @@ async function load(id: string) {
     */
     const detail = await getWorkDetail(id, { maxEntries: 600, dedupeCovers: false, googleBooks: false });
     if (!detail) return null;
-    const decades = groupByDecade(detail.covers, detail.editions);
+    /*
+      Folded from the **built index** rather than by hashing here (Julian,
+      2026-09-09: „hier fallen ähnliche cover schneller auf"). A decade group
+      puts printings of one era side by side, so two scans of one jacket land
+      next to each other where the wall would have spread them out.
+
+      `indexSignatures` reads signatures that are already on disk, so this
+      costs no request and no decoding — unlike `dedupeCovers: true`, which
+      downloads and hashes every cover and is what made this page time out.
+      Covers the index does not know keep their own tile; that is a gap, not
+      a claim of uniqueness (N12).
+    */
+    const covers = foldDuplicateCovers(detail.covers, indexSignatures(detail.covers.map(c => c.id)), detail.editions);
+    const decades = groupByDecade(covers, detail.editions);
     return { work: detail.work, editions: detail.editions, decades };
   } catch {
     return null;

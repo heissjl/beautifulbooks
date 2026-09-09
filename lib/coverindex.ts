@@ -60,6 +60,8 @@ interface Unpacked {
   hashHi: Uint32Array;
   hashLo: Uint32Array;
   saturation: Uint8Array;
+  /** Luminance standard deviation, needed to hand out a full ImageSignature. */
+  contrast: Uint8Array;
   hues: string[];
   positionOf: Map<string, number>;
 }
@@ -78,16 +80,18 @@ function load(): Unpacked {
     hashHi: new Uint32Array(n),
     hashLo: new Uint32Array(n),
     saturation: new Uint8Array(n),
+    contrast: new Uint8Array(n),
     hues: new Array<string>(n),
     positionOf: new Map(),
   };
   for (let i = 0; i < n; i++) {
-    const [work, coverId, hash, , , saturation, hues] = raw.covers[i];
+    const [work, coverId, hash, contrast, , saturation, hues] = raw.covers[i];
     out.coverIds[i] = coverId;
     out.workOf[i] = work;
     out.hashHi[i] = parseInt(hash.slice(0, 8), 16);
     out.hashLo[i] = parseInt(hash.slice(8, 16), 16);
     out.saturation[i] = saturation;
+    out.contrast[i] = contrast;
     out.hues[i] = hues;
     out.positionOf.set(coverId, i);
   }
@@ -102,6 +106,31 @@ export function indexBuiltAt(): string {
 export function indexSize(): { works: number; covers: number } {
   const idx = load();
   return { works: idx.works.length, covers: idx.coverIds.length };
+}
+
+/**
+ * Signatures for these covers, out of the built index (ROADMAP 5.4a, 2026-09-09).
+ *
+ * The point is what it does **not** do: no image is fetched and nothing is
+ * hashed. A server-rendered page can therefore fold duplicates, which the
+ * normal path cannot afford — `dedupeCovers: true` downloads and hashes every
+ * cover, and that is what made the decade page answer 404 in production.
+ *
+ * Only covers the index knows come back. A caller must treat a missing
+ * signature as "not folded", never as "no duplicate": the index is a snapshot
+ * of the curated works and is silent about everything else.
+ */
+export function indexSignatures(coverIds: readonly string[]): Map<string, ImageSignature> {
+  const idx = load();
+  const out = new Map<string, ImageSignature>();
+  for (const id of coverIds) {
+    const at = idx.positionOf.get(id);
+    if (at === undefined) continue;
+    const hi = idx.hashHi[at].toString(16).padStart(8, '0');
+    const lo = idx.hashLo[at].toString(16).padStart(8, '0');
+    out.set(id, { hash: hi + lo, contrast: idx.contrast[at], saturation: idx.saturation[at], hues: idx.hues[at] });
+  }
+  return out;
 }
 
 /** Set bits in a 32-bit word, by the usual halving trick. */

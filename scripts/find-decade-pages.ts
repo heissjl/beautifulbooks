@@ -19,6 +19,8 @@ import path from 'node:path';
 import { CURATED_LIST } from '../lib/curated';
 import { groupByDecade, worthAPage } from '../lib/decades';
 import { getWorkDetail } from '../lib/work';
+import { indexSignatures } from '../lib/coverindex';
+import { foldDuplicateCovers } from '../lib/works';
 
 const OUT_FILE = path.join(process.cwd(), 'data', 'decade-pages.json');
 const MAX_ENTRIES = 600;
@@ -48,7 +50,12 @@ async function main() {
     }
     if (!detail) { silent += 1; continue; }
 
-    const d = groupByDecade(detail.covers, detail.editions);
+    /*
+      The same fold as the page, or the two disagree about the threshold and
+      the sitemap points at a 404 — the bug of 2026-09-09, one step upstream.
+    */
+    const covers = foldDuplicateCovers(detail.covers, indexSignatures(detail.covers.map(c => c.id)), detail.editions);
+    const d = groupByDecade(covers, detail.editions);
     if (!worthAPage(d) || d.from === undefined || d.to === undefined) {
       thin += 1;
       console.log(`  - ${work.title}: ${d.coverCount} covers over ${d.groups.length} decades`);
