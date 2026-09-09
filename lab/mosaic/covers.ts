@@ -183,7 +183,34 @@ export interface Palette {
   incomplete: number;
 }
 
-/** Every usable cover of these works, decoded, folded and reduced to tiles. */
+/**
+ * The covers of one work, fetched but not yet decoded.
+ *
+ * Split from the decoding because the two want opposite things: the network
+ * part is worth doing for several works at once, and the decoding is CPU
+ * work that gains nothing from it.
+ */
+async function fetchWork(workId: string, maxPages: number, log: Log) {
+  const loaded = await workCovers(workId, maxPages, log);
+  return { loaded, bytes: await fetchAll(loaded.covers) };
+}
+
+/**
+ * Every usable cover of these works, decoded, folded and reduced to tiles.
+ *
+ * **Works are fetched a few at a time.** A work's edition pages have to be
+ * asked for in order — each answer says where the next page starts — and Open
+ * Library takes 3 to 10 s per page from Germany, so eight works of a dozen
+ * pages each is five minutes of waiting in a row. Overlapping three of them
+ * cut a twenty-picture build from about two and a half hours to under one
+ * (measured 2026-09-09). Three, not eight: the covers themselves are already
+ * fetched eight at a time underneath, and the point is to stop waiting, not
+ * to lean on a free catalogue.
+ *
+ * The result keeps the order of `workIds` whatever order the answers arrive
+ * in, because the tile order decides ties in `assign` and a picture should
+ * not depend on which page came back first.
+ */
 export async function loadPalette(workIds: readonly string[], maxPages = 12, log: Log = () => {}): Promise<Palette> {
   await mkdir(CACHE_DIR, { recursive: true });
   const tiles: Tile[] = [];
@@ -192,18 +219,28 @@ export async function loadPalette(workIds: readonly string[], maxPages = 12, log
   const covers: Cover[] = [];
   let incomplete = 0;
 
-  for (const workId of workIds) {
-    let loaded;
-    try {
-      loaded = await workCovers(workId, maxPages, log);
-    } catch (err) {
-      log(`  ${workId}: skipped, Open Library did not answer (${(err as Error).message})`);
+  const fetched = new Array<Awaited<ReturnType<typeof fetchWork>> | { error: string }>(workIds.length);
+  const queue = workIds.map((id, index) => ({ id, index }));
+  const worker = async () => {
+    for (let next = queue.shift(); next; next = queue.shift()) {
+      try {
+        fetched[next.index] = await fetchWork(next.id, maxPages, log);
+      } catch (err) {
+        fetched[next.index] = { error: (err as Error).message };
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(3, queue.length) }, worker));
+
+  for (const [index, workId] of workIds.entries()) {
+    const result = fetched[index];
+    if ('error' in result) {
+      log(`  ${workId}: skipped, Open Library did not answer (${result.error})`);
       incomplete++;
       continue;
     }
-    const { title, covers: workCoverList, editions, complete } = loaded;
+    const { loaded: { title, covers: workCoverList, editions, complete }, bytes } = result;
     if (!complete) incomplete++;
-    const bytes = await fetchAll(workCoverList);
     const sigs = new Map<string, ImageSignature>();
     for (const [id, data] of bytes) {
       const sig = signature(data);

@@ -2,7 +2,7 @@
  * A contact sheet of the three proposals: three rows, five moments each
  * (lab/loading/README.md, ROADMAP 6.19a).
  *
- *   npx tsx lab/loading/filmstrip.ts --id mark-twain --grid 1 --size 1
+ *   npx tsx lab/loading/filmstrip.ts --id mark-twain
  *
  * The point is judging them without starting anything: the preview page shows
  * the animations moving, this shows what they look like at 10, 30, 50, 75 and
@@ -93,12 +93,16 @@ async function main() {
   const argv = process.argv.slice(2);
   for (let i = 0; i < argv.length; i += 2) flags.set(argv[i].replace(/^--/, ''), argv[i + 1] ?? '');
   const id = flags.get('id') ?? 'mark-twain';
-  const gridIndex = Number(flags.get('grid') ?? 1);
-  const sizeIndex = Number(flags.get('size') ?? 1);
+  // The rotation has one grid and two sizes; a hand-built template may have
+  // more, which is what the flags are for.
+  const gridIndex = Number(flags.get('grid') ?? 0);
+  const sizeIndex = Number(flags.get('size') ?? 0);
 
   const manifest = JSON.parse(await readFile(path.join(OUT_DIR, `${id}.json`), 'utf8')) as Manifest;
   const grid = manifest.grids[gridIndex];
+  if (!grid) throw new Error(`${id} has ${manifest.grids.length} grid(s), not ${gridIndex + 1}`);
   const image = grid.images[sizeIndex];
+  if (!image) throw new Error(`${id} has ${grid.images.length} size(s), not ${sizeIndex + 1}`);
   const mosaic = decode(new Uint8Array(await readFile(path.join(OUT_DIR, image.file))));
   if (!mosaic) throw new Error(`could not decode ${image.file}`);
 

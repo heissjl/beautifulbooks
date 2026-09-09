@@ -14,7 +14,7 @@ npx tsx lab/loading/serve.ts         # http://localhost:4323 — /rotation.html 
 # one template on its own, or one setting tried out
 npx tsx lab/loading/build.ts --author "mark twain" --target <portrait url> --cols 40 --width 480
 # the four proposals as stills, five moments each, without a browser
-npx tsx lab/loading/filmstrip.ts --id mark-twain --grid 0 --size 0
+npx tsx lab/loading/filmstrip.ts --id mark-twain
 ```
 
 | File | What it is |
@@ -73,6 +73,40 @@ Julian, 2026-09-09: „weniger Kante im Effekt, sondern ein langsames Klären de
 Two things make it work. **Cells resolve fastest at the beginning** (`1 - (1 - p)²`): at a flat rate the first third looks identical to the frame before it, and the first seconds are exactly where the reader is. And an **off-screen canvas** holds the true state of the wall while the visible one is that plus the dimming — otherwise lifting the dim would mean redrawing 1,480 cells a frame instead of one image.
 
 *Says:* the same thing 3 says, without a gesture. *Interrupted:* **the best of the four** — a full frame at every moment, and no half-finished sweep frozen across it. *Costs:* 0.29 ms of JS per frame, the most of the four and still under 2 % of a frame's budget; the extra is the longer per-tile fade and the one full-canvas draw.
+
+## The rotation: twenty templates
+
+Julian, 2026-09-09: „baue damit 20 Vorlagen, die als Ladebildschirm verwendet werden können, nimm Rücksicht auf die anderen Bedingungen bei mobile und desktop und darauf dass es schnell und flüssig bleiben muss und wenig Traffic produzieren sollte."
+
+**`templates.json` is committed; the pictures are not.** A build is one command and the covers are cached on disk, so 4 MB of derived cover images have no business in the repository while the rights question from 5.5 is open. What is committed is the recipe: twenty authors, the Wikidata item each portrait comes from, its licence, and the frame it is cut to. Eleven more sit in the same file as reserves, and four were dropped because their portrait on Commons is smaller than 500 px (Kafka, Dickinson, Brontë, Chekhov — all four are famous pictures and all four are thumbnails there).
+
+### How the twenty were chosen
+
+1. **A public-domain portrait.** Guessing file names on Commons does not work: of 26 plausible names tried by hand, two existed. `portraits.ts` goes through Wikidata instead — the author's item, its `P18`, and Commons' own licence field — and refuses anything not marked public domain. The tiles are still the open rights question from 5.5; the target picture at least is settled.
+2. **A photograph, not a painting**, wherever there was a choice: measured on 2026-09-08 in `lab/mosaic`, a photograph gives a face and a jacket gives a poster. Two painted portraits are in anyway (Mary Shelley, and Tolstoy is a colour photograph of 1908 that behaves like one).
+3. **Enough editions.** Every one of the twenty has eight works whose primary author is that person, from 966 editions (Whitman) to 12,431 (Dickens).
+4. **A head, not a garden.** This is the step that cannot be automated, and `portrait-sheet.ts` is how it was done: all twenty portraits on one sheet with the frame each is built from drawn on top. Nine of them are seated half-lengths whose head is a fifth of the picture; those got a `crop` by hand. Tolstoy is the extreme — seated among trees, his head a twentieth of the frame.
+
+### What every one of them is built with
+
+The settings live in `build-all.ts`, one place, each argued for where it stands:
+
+| Setting | Why |
+|---|---|
+| **40 columns** | at 24 a cell is comfortably a book and the face is gone; at 40 both just work, measured from 200 to 440 px wide |
+| **3:4, every picture** | the frame a search waits in must not change shape when the rotation turns, and the height can then be set before the file arrives |
+| **480 and 640 px** | one is fetched, never both: 480 for a phone frame of about 260 px, 640 for a desktop frame of about 420 |
+| **quality 50** | at 1:1 the difference to 65 is a slight softening for 25 % more bytes; at the size this is shown there is nothing in it |
+| **colour weight 0.15** | these are grey photographs, and the default 0.6 makes saturated covers expensive and the motif muddy |
+
+### Fast, smooth, and cheap — what that meant in practice
+
+- **One request per search, not twenty.** The template is drawn once per session and kept in `sessionStorage`. Without that, nineteen searches out of twenty pull a file the browser has never seen, and a rotation of twenty is a rotation of twenty *downloads*.
+- **A tolerance on the size choice.** `pickImage` accepts a file 20 % smaller than the screen asks for. A photograph would show that; a wall of cover thumbnails has no line in it that must stay straight. Without the tolerance a 260 px frame at two device pixels asks for 520 and gets the 640 px file — 60 % more bytes for pixels nobody can point at.
+- **Two device pixels, never three.** Same reasoning, and it is the difference between 105 KB and 240 KB.
+- **The frame is sized from the manifest, before the picture arrives** (`reserveFrame`): a cell is a cover, so the grid alone gives the shape. On a cold search the file takes two to four tenths of a second, and without this the page would reflow under a reader who is already waiting.
+- **Preload on the first keystroke, not on submit.** Whoever never searches never fetches a mosaic.
+- **`prefers-reduced-motion`** gets the finished picture, standing still.
 
 ## Measured, 2026-09-09
 
