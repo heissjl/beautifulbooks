@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { proxiedCoverSrc } from '@/lib/coverurl';
 import AssemblingWall from './AssemblingWall';
 
 export interface StageCover {
@@ -56,7 +57,7 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
         {shown.length === 0 && hero && (
           <div className="stage-tile stage-in" style={{ ['--dx' as string]: '0px', ['--tilt' as string]: '0deg' }}>
             <div className="cover-shadow relative h-full w-full animate-pulse overflow-hidden rounded-card bg-surface-2">
-              <Image src={hero} alt="" fill sizes="288px" className="object-cover" unoptimized priority />
+              <Image src={proxiedCoverSrc(hero)} alt="" fill sizes="288px" className="object-cover" unoptimized priority />
             </div>
           </div>
         )}
@@ -70,7 +71,7 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
               style={{ ['--i' as string]: `${i - (n - 1) / 2}`, ['--tilt' as string]: `${TILTS[i % TILTS.length]}deg`, zIndex: i }}
             >
               <div className="cover-shadow relative h-full w-full overflow-hidden rounded-card bg-surface-2">
-                <Image src={c.url} alt="" fill sizes="288px" className="object-cover" unoptimized priority />
+                <Image src={proxiedCoverSrc(c.url)} alt="" fill sizes="288px" className="object-cover" unoptimized priority />
               </div>
             </div>
           );

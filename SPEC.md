@@ -292,7 +292,13 @@ Jeder Kauf-Link führt über diese Route, die den Klick festhält und weiterleit
 - **N5 Kein Logging im Produktpfad**, nur über `DEBUG` (`lib/debug.ts`). Einzige bewusste Ausnahme: die Klickzeile aus `lib/clicks.ts` (F5).
 - **N6 Typen.** `tsc --noEmit` ohne Fehler, kein `any` in `lib/`.
 - **N7 Tests.** Unit-Tests für Normalisierung, Identität, Dedupe, Relevanz, Seiten-Merge, Rate-Limit, Kontingent-Automat, SEO-Texte; Integrations- und Akzeptanztests gegen aufgezeichnete Antworten in `lib/__fixtures__/` (`scripts/record-fixtures.ts`), nie gegen das Netz. Ein Test belegt, dass Seite 0 genau eine Google-Anfrage stellt, ein Mosaik keine und eine Suche keine.
-- **N8 Bilder.** Cover kommen heute **direkt** von Open Library und Google (`next/image` mit `unoptimized`), klein im Raster, groß nur in der Seitenleiste. `covers.openlibrary.org` leitet auf archive.org weiter, das unter Last langsam oder gar nicht liefert; deshalb der Bild-Fallback in der UI. Vor dem Start mit Besuchern gehört ein eigener Bild-Cache davor (ROADMAP).
+- **N8 Bilder.** Cover laufen seit dem 2026-09-09 über die **eigene Route `/img/<S|M|L>/<ol-123|gb-abc>`** (ROADMAP 1.3), davor der CDN. Der Pfad trägt eine **Cover-ID, nie eine URL**: die Zieladresse wird mit `coverUrlFor` neu gebaut, genau wie `/go/[provider]/[isbn]` den Händler-Link aus der Tabelle baut — eine Bild-Weiterleitung, die eine URL aus der Anfrage nimmt, ist ein offener Proxy. `proxiedCoverSrc` schreibt nur Adressen um, die dieser Code selbst gebaut hat, und lässt alles andere direkt laufen; das ist die sichere Richtung.
+
+  **Warum, gemessen aus Deutschland am 2026-09-09:** eine kalte Detailseite von *The Great Gatsby* will **151 verschiedene Bilder** (146 Open Library, 5 Google) zu je 12–29 KB — und ein einziges davon brauchte **5,9 bis 16,0 Sekunden**. `covers.openlibrary.org` leitet auf archive.org weiter, das unter Last langsam oder gar nicht liefert, und dokumentiert Rate-Limits für Cover. Mit der Route zahlt der erste Leser ein Cover einmal, alle weiteren bekommen es aus dem CDN (30 Tage `s-maxage`); nebenbei erreicht die IP des Lesers archive.org und Google nicht mehr, was zuvor 151-mal pro Seite geschah.
+
+  **Nicht `next/image`-Optimierung**, die zweite Option des Punkts: 151 Quellbilder je Detailseite verbrauchten das Transformationskontingent des Hobby-Plans in wenigen Seitenaufrufen, und die Cover werden ohnehin schon in der Größe geholt, in der sie stehen. Die Route transformiert nichts, sie bewegt Bytes und lässt sie zwischenspeichern. Der Bild-Fallback in der UI bleibt.
+
+  **Ein Fehlschlag wird nicht gecacht** (`no-store` auf 400 und 502): ein schweigendes archive.org ist eine Episode, keine Tatsache über das Cover — dieselbe Regel wie F1.7.
 - **N9 Google-Kontingent: 1.000 Anfragen pro Tag** (abgelesen 2026-09-07), nicht erhöhbar per Selbstbedienung. Kosten bei kaltem Cache:
 
   | Vorgang | Google-Anfragen |

@@ -1230,3 +1230,28 @@ Damit folgt der führende Druck dem Bild. Live gemessen an derselben Kachel:
 Die drei Vintage-Datensätze, die das erklären (aus der API geholt): 2025 unter 9781400033416 trägt `ol:15248310` und `ol:15169554`; 2004 unter 9780307388629 trägt `ol:14342620` und `gb:sfmp6gjZGP8C`; ein zweiter 2004er unter derselben ISBN wie 2025 trägt `ol:10653442`. Ein Katalog, in dem dasselbe Buch dreimal steht, zweimal mit derselben Nummer und verschiedenen Jahren — das ist der Normalfall, nicht die Ausnahme, und jede Sortierregel muss damit rechnen.
 
 **Nebenbei gelernt, für die nächste Sitzung:** die Faltung ist am Dev-Server nicht verlässlich zu sehen. Beim ersten Laden eines Werks faltet sie nichts, weil die Signaturen das 4-Sekunden-Budget nicht schaffen; erst nach mehreren Besuchen desselben Werks erscheinen die „+N"-Abzeichen. Wer 6.14 oder 6.7 prüft, lädt die Seite ein paarmal, bevor er misst.
+
+## 2026-09-09 · Ein Bild in sechzehn Sekunden (ROADMAP 1.3)
+
+Der Punkt verlangte eine Messung vorab — „wie viele verschiedene Bilder lädt eine Detailseite, damit das Kontingent der Optimierung nicht die nächste Grenze wird". Die Antwort hat die Entscheidung allein getroffen.
+
+**Gemessen aus Deutschland, 2026-09-09**, an einer kalten Detailseite von *The Great Gatsby*:
+
+| | |
+|---|---|
+| Verschiedene Bilder, die die Seite anfordert | **151** — 146 von `covers.openlibrary.org`, 5 von Google |
+| Größe je Bild (`-M.jpg`) | 12–29 KB |
+| **Zeit für ein einzelnes Bild** | **5,9 / 6,0 / 9,5 / 10,8 / 13,7 / 16,0 s** (sechs Abrufe) |
+| `-L.jpg`, zum Vergleich | 24–79 KB, 2,5–2,9 s |
+
+Damit war die zweite Option des Punkts erledigt, ohne dass ein Preisblatt nötig war: 151 Quellbilder je Detailseite verbrauchen das Transformationskontingent des Hobby-Plans in wenigen Aufrufen — und die Cover werden ohnehin in der Größe geholt, in der sie stehen, es gäbe also nichts zu transformieren.
+
+**Gebaut wurde die andere Option:** `/img/<S|M|L>/<ol-123|gb-abc>`, davor der CDN, 30 Tage `s-maxage`.
+
+**Der Pfad trägt eine Cover-ID, keine URL**, und das ist die eigentliche Entwurfsentscheidung. Die Zieladresse baut `coverUrlFor` neu — dieselbe Regel, aus der `/go/[provider]/[isbn]` den Händler-Link aus der Tabelle statt aus der Anfrage baut. Ein Bild-Proxy, der eine URL aus der Anfrage nimmt, ist ein offener Proxy und lässt sich auf jedes Ziel im Netz richten.
+
+Auf dem Rückweg schreibt `proxiedCoverSrc` nur Adressen um, die dieser Code selbst gebaut hat; alles andere läuft direkt weiter. **Ein Test hat dabei eine Unsauberkeit gefangen**, die ohne ihn lange unentdeckt geblieben wäre: die Breitenzuordnung für Google stand als `width >= 800 ? 'L'` da, hätte also eine `w999`-Adresse auf die Route abgebildet, die w800 ausliefert — ein anderes Bild unter derselben Adresse. Jetzt sind es exakt die drei Breiten, die dieser Code anfragt (128, 300, 800).
+
+**Geprüft am Dev-Server:** alle 66 Bilder einer Gatsby-Seite kommen von der eigenen Herkunft, kein einziges mehr von einem fremden Host; die Antwort trägt `image/jpeg` und `public, max-age=3600, s-maxage=2592000, stale-while-revalidate=86400`. `/img/M/http-evil.example` antwortet 400, `/img/XL/ol-…` 400, eine unbekannte Cover-ID 502 — und Fehlschläge tragen `no-store`, weil ein schweigendes archive.org eine Episode ist und keine Tatsache über das Cover (dieselbe Regel wie F1.7).
+
+**Was hier nicht zu messen war, und das ist der Punkt.** Lokal steht kein CDN vor der Route, ein zweiter Abruf dauert deshalb weiter rund 7 s. Der gesamte Gewinn liegt in Produktion, und dort ist er nach dem nächsten Deploy zu messen: der zweite Abruf desselben Covers muss `x-vercel-cache: HIT` tragen und zweistellige Millisekunden brauchen. **Bis dahin ist der Punkt gebaut, aber nicht belegt.** Die Kehrseite gehört mitgemessen: bei kaltem CDN sind 151 Bilder 151 Funktionsaufrufe — allerdings einmal für alle Leser, nicht je Leser.

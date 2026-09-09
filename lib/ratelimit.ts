@@ -53,6 +53,14 @@ export const RATE_RULES = {
    * crawler that walks every cover would still occupy a function.
    */
   similar: { capacity: 60, refillPerMinute: 60 },
+  /**
+   * Cover images through our own route (ROADMAP 1.3). A single detail page
+   * asks for up to 151 of them — measured on *The Great Gatsby* — so the
+   * burst has to clear two walls without a crawler being able to settle in.
+   * Most requests never reach the function at all: the CDN in front of it
+   * holds each cover for 30 days.
+   */
+  img: { capacity: 400, refillPerMinute: 300 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { proxiedCoverSrc } from '@/lib/coverurl';
 
 interface CoverImageProps {
   src: string;
@@ -20,11 +21,17 @@ interface CoverImageProps {
  * Cover image that fades in when loaded and degrades to a quiet placeholder
  * on error. Open Library covers redirect to archive.org, which is slow under
  * load; a failed image must never show alt text in a grey box (SPEC §3 F4).
+ *
+ * Every source goes through our own image route (`proxiedCoverSrc`, ROADMAP
+ * 1.3), so the CDN answers the second reader and archive.org never sees this
+ * one's IP. A URL the route cannot rebuild from an id is left alone and loads
+ * directly, which is the safe direction to fail in.
  */
 export default function CoverImage({ src, alt, sizes, priority, fit = 'cover' }: CoverImageProps) {
   const [status, setStatus] = useState<{ src: string; state: 'loaded' | 'failed' } | null>(null);
-  const loaded = status?.src === src && status.state === 'loaded';
-  const failed = status?.src === src && status.state === 'failed';
+  const href = proxiedCoverSrc(src);
+  const loaded = status?.src === href && status.state === 'loaded';
+  const failed = status?.src === href && status.state === 'failed';
 
   if (failed) {
     return (
@@ -38,15 +45,15 @@ export default function CoverImage({ src, alt, sizes, priority, fit = 'cover' }:
 
   return (
     <Image
-      src={src}
+      src={href}
       alt={alt}
       fill
       sizes={sizes}
       className={`cover-img ${fit === 'contain' ? 'object-contain' : 'object-cover'} ${loaded ? 'is-loaded' : ''}`}
       unoptimized
       priority={priority}
-      onLoad={() => setStatus({ src, state: 'loaded' })}
-      onError={() => setStatus({ src, state: 'failed' })}
+      onLoad={() => setStatus({ src: href, state: 'loaded' })}
+      onError={() => setStatus({ src: href, state: 'failed' })}
     />
   );
 }
