@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Cover-Duell</title>
+<style>
+  :root { --bg:#f4f0e8; --ink:#1a1714; --ink2:#5d554e; --ink3:#8b8179; --line:#ddd5c8; --accent:#b1502b; --surface:#fffdf8; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131110; --ink:#f0ece4; --ink2:#b5ada4; --ink3:#7d746c; --line:#2e2a26; --accent:#e6a677; --surface:#1c1917; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  header { border-bottom:1px solid var(--line); padding:10px 16px; display:flex; gap:14px; align-items:baseline; flex-wrap:wrap; }
+  h1 { font-size:17px; margin:0; font-weight:600; }
+  .meta { color:var(--ink3); font-size:13px; }
+  main { max-width:900px; margin:0 auto; padding:20px 16px 60px; }
+  .q { font-size:13px; color:var(--ink3); letter-spacing:.05em; text-transform:uppercase; }
+  h2 { font-size:26px; margin:4px 0 2px; }
+  .author { color:var(--ink2); margin:0 0 18px; }
+  .grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; }
+  @media (min-width:700px) { .grid { grid-template-columns:repeat(6, minmax(0,1fr)); } }
+  .pick { border:0; padding:0; background:none; cursor:pointer; }
+  .pick img { width:100%; aspect-ratio:2/3; object-fit:cover; border-radius:4px; background:var(--surface);
+              box-shadow:0 1px 4px rgba(0,0,0,.2); display:block; transition:transform .15s ease; }
+  .pick:hover img { transform:translateY(-3px); }
+  .pick.mine img { outline:3px solid var(--accent); outline-offset:2px; }
+  .bar { height:4px; background:var(--line); border-radius:2px; margin:16px 0 0; overflow:hidden; }
+  .bar i { display:block; height:100%; background:var(--accent); }
+  .row { display:flex; gap:10px; align-items:center; margin-top:18px; flex-wrap:wrap; }
+  button.btn { font:inherit; padding:6px 12px; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); cursor:pointer; }
+  input { font:inherit; padding:6px 8px; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); }
+  .result { margin-top:10px; }
+  .score { font-size:52px; line-height:1.05; }
+  .pairs { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px; margin-top:20px; }
+  @media (min-width:700px) { .pairs { grid-template-columns:repeat(4, minmax(0,1fr)); } }
+  .pair { border:1px solid var(--line); border-radius:10px; padding:8px; background:var(--surface); }
+  .pair .two { display:flex; gap:6px; }
+  .pair img { width:100%; aspect-ratio:2/3; object-fit:cover; border-radius:3px; }
+  .pair .t { font-size:12px; color:var(--ink2); margin-top:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .same { outline:2px solid var(--accent); }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Cover-Duell</h1>
+  <span class="meta" id="who"></span>
+  <span class="meta" id="progress"></span>
+</header>
+<main id="main">Lade …</main>
+
+<script>
+const p = new URLSearchParams(location.search);
+const seed = p.get('seed') || 'paperwhite';
+let me = p.get('me') || '';
+const state = { round: null, picks: {}, i: 0 };
+const $ = id => document.getElementById(id);
+const cover = (id, size) => id.startsWith('ol:') ? `https://covers.openlibrary.org/b/id/${id.slice(3)}-${size}.jpg` : '';
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+
+async function load() {
+  if (!me) return askName();
+  const d = await (await fetch(`/api/round?seed=${encodeURIComponent(seed)}&me=${encodeURIComponent(me)}`)).json();
+  state.round = d.round;
+  state.picks = d.picks || {};
+  state.i = state.round.books.findIndex(b => !state.picks[b.id]);
+  if (state.i < 0) state.i = state.round.books.length;
+  $('who').textContent = `${me} · Runde „${seed}"`;
+  render();
+}
+
+function askName() {
+  $('main').innerHTML = `
+    <p class="q">Wer spielt?</p>
+    <h2>Ein Name, damit euch beide etwas unterscheidet</h2>
+    <p class="author">Danach schickst du deinem Gegenüber genau diesen Link, nur mit einem anderen Namen dahinter.</p>
+    <div class="row"><input id="name" placeholder="dein Name" autofocus><button class="btn" id="go">Los</button></div>`;
+  const go = () => {
+    const v = $('name').value.trim();
+    if (!v) return;
+    location.search = `?seed=${encodeURIComponent(seed)}&me=${encodeURIComponent(v)}`;
+  };
+  $('go').onclick = go;
+  $('name').onkeydown = e => { if (e.key === 'Enter') go(); };
+}
+
+function render() {
+  const books = state.round.books;
+  $('progress').textContent = `${Object.keys(state.picks).length} von ${books.length}`;
+  if (state.i >= books.length) return renderResult();
+
+  const b = books[state.i];
+  $('main').innerHTML = `
+    <p class="q">Buch ${state.i + 1} von ${books.length}</p>
+    <h2>${esc(b.title)}</h2>
+    <p class="author">${esc(b.author)} — welches Cover würdest du ins Regal stellen?</p>
+    <div class="grid">${b.choices.map(c => `
+      <button class="pick ${state.picks[b.id] === c ? 'mine' : ''}" data-c="${c}">
+        <img loading="lazy" src="${cover(c, 'M')}" alt="">
+      </button>`).join('')}</div>
+    <div class="bar"><i style="width:${(state.i / books.length) * 100}%"></i></div>
+    <div class="row"><button class="btn" id="back">← zurück</button></div>`;
+  $('main').querySelector('.grid').addEventListener('click', e => {
+    const t = e.target.closest('.pick');
+    if (t) pick(b.id, t.dataset.c);
+  });
+  $('back').onclick = () => { state.i = Math.max(0, state.i - 1); render(); };
+}
+
+async function pick(bookId, coverId) {
+  state.picks[bookId] = coverId;
+  state.i += 1;
+  render();
+  await fetch('/api/pick', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ seed, me, bookId, coverId }),
+  });
+}
+
+async function renderResult() {
+  const d = await (await fetch(`/api/compare?seed=${encodeURIComponent(seed)}`)).json();
+  if (!d.ready) {
+    $('main').innerHTML = `
+      <p class="q">Fertig</p>
+      <h2>Jetzt fehlt nur noch der andere</h2>
+      <p class="author">Schick diesen Link weiter, mit einem anderen Namen dahinter:</p>
+      <p><code>${location.origin}/?seed=${encodeURIComponent(seed)}&me=NAME</code></p>
+      <div class="row"><button class="btn" onclick="location.reload()">Nachsehen</button></div>`;
+    return;
+  }
+  const a = d.agreement;
+  const pct = Math.round(a.rate * 100);
+  const chance = Math.round(a.chance * 100);
+  $('main').innerHTML = `
+    <p class="q">${esc(d.a)} gegen ${esc(d.b)}</p>
+    <div class="score">${pct} %</div>
+    <p class="author">${a.same} von ${a.answered} Büchern gleich gewählt. Zufall allein käme auf ${chance} %.</p>
+    <div class="pairs">${d.books.filter(b => d.picksA[b.id] && d.picksB[b.id]).map(b => {
+      const same = d.picksA[b.id] === d.picksB[b.id];
+      return `<div class="pair ${same ? 'same' : ''}">
+        <div class="two">
+          <img src="${cover(d.picksA[b.id], 'M')}" alt="">
+          ${same ? '' : `<img src="${cover(d.picksB[b.id], 'M')}" alt="">`}
+        </div>
+        <div class="t">${esc(b.title)}</div>
+      </div>`;
+    }).join('')}</div>`;
+}
+
+load();
+</script>
+</body>
+</html>
