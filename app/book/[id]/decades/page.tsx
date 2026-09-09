@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `${work.title} covers by decade`;
   const description =
     `${decades.coverCount} covers of ${work.title}${author ? ` by ${author}` : ''}, grouped by the decade of the printing they belong to` +
-    `${decades.from && decades.to ? `, from the ${decades.from}s to the ${decades.to}s` : ''}. Counted from Open Library edition records.`;
+    `${decades.from && decades.to ? `, from the ${decades.to}s back to the ${decades.from}s` : ''}. Counted from Open Library edition records.`;
   return {
     title,
     description,
@@ -115,7 +115,7 @@ export default async function Page({ params }: PageProps) {
         <p className="mt-2 text-ink-2">{author}</p>
         <p className="mt-1 text-sm text-ink-3">
           {decades.coverCount} covers from {editions.length.toLocaleString('en')} edition records
-          {decades.from && decades.to ? `, ${decades.from}s to ${decades.to}s` : ''}
+          {decades.from && decades.to ? `, ${decades.to}s back to ${decades.from}s` : ''}
         </p>
 
         <div className="mt-10 space-y-12">
@@ -167,8 +167,9 @@ export default async function Page({ params }: PageProps) {
         */}
         <p className="mt-16 border-t border-line pt-4 text-xs leading-relaxed text-ink-3">
           This page is assembled from Open Library edition records: a cover sits in the decade of the
-          earliest printing that carries it, and every count above is counted, not estimated. Records
-          without a year are shown at the end rather than left out. What is missing from the
+          earliest printing that carries it, and every count above is counted, not estimated. Decades
+          run from the most recent backwards. Records without a year are shown at the end rather than
+          left out. What is missing from the
           catalogues is missing here too, so this is a view of what was scanned, not of what was
           printed. Pages like this exist only where there are at least {MIN_COVERS} covers across{' '}
           {MIN_DECADES} decades. <Link href={`/book/${id}`} className="underline underline-offset-2 hover:text-accent">See the whole wall</Link>.
