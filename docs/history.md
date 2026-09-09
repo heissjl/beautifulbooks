@@ -1255,3 +1255,22 @@ Auf dem Rückweg schreibt `proxiedCoverSrc` nur Adressen um, die dieser Code sel
 **Geprüft am Dev-Server:** alle 66 Bilder einer Gatsby-Seite kommen von der eigenen Herkunft, kein einziges mehr von einem fremden Host; die Antwort trägt `image/jpeg` und `public, max-age=3600, s-maxage=2592000, stale-while-revalidate=86400`. `/img/M/http-evil.example` antwortet 400, `/img/XL/ol-…` 400, eine unbekannte Cover-ID 502 — und Fehlschläge tragen `no-store`, weil ein schweigendes archive.org eine Episode ist und keine Tatsache über das Cover (dieselbe Regel wie F1.7).
 
 **Was hier nicht zu messen war, und das ist der Punkt.** Lokal steht kein CDN vor der Route, ein zweiter Abruf dauert deshalb weiter rund 7 s. Der gesamte Gewinn liegt in Produktion, und dort ist er nach dem nächsten Deploy zu messen: der zweite Abruf desselben Covers muss `x-vercel-cache: HIT` tragen und zweistellige Millisekunden brauchen. **Bis dahin ist der Punkt gebaut, aber nicht belegt.** Die Kehrseite gehört mitgemessen: bei kaltem CDN sind 151 Bilder 151 Funktionsaufrufe — allerdings einmal für alle Leser, nicht je Leser.
+
+## 2026-09-09 · Vier Färbungen derselben Wand, und ein Kontrast, der schon durchfällt (ROADMAP 6.22)
+
+Julian: „mache screenshot mockups für 6.22." Gebaut als [`lab/palette/`](plans/../../lab/palette/README.md) — kein Vergleich von Farbfeldern, sondern **dieselbe Wand und dieselben Bedienelemente in jeder Färbung**, hell und dunkel nebeneinander, weil `prefers-color-scheme` beides ausliefert und ein Schema, das nur in einem Modus trägt, keins ist. Unter jeder Wand die Kontrasttabelle der Paare, die in der Oberfläche wirklich vorkommen.
+
+Vier Kandidaten: **Heute** (Terrakotta, als Referenz), **Tinte** (gar keine Akzentfarbe — alle Farbe kommt von den Covern), **Indigo** (kühler Akzent auf demselben Papier), **Olive** (gedämpfter Akzent und kühleres Papier, der einzige, der die Grundfarbe anfasst). Drei lassen das Papier in Ruhe, weil der Hintergrund hinter hunderten Covern steht und Papierweiß genau dafür gewählt war. Entschieden ist nichts; die Wahl trifft Julian.
+
+**Der Befund, der die Farbfrage überholt.** Beim ersten Lauf der Kontrasttabelle fiel eine Zeile für *alle* Kandidaten durch — auch für den heutigen Stand:
+
+| | ink-3 auf bg | AA verlangt |
+|---|---|---|
+| hell (`#8c8377` auf `#f4f0e8`) | **3,28** | 4,5 |
+| dunkel (`#7d7569` auf `#131110`) | **4,14** | 4,5 |
+
+`ink-3` trägt die Metadatenzeilen und die Verdikt-Hinweise bei 11–12 px, die WCAG-Ausnahme für großen Text greift also nicht. Die nächstliegenden bestehenden Werte sind `#746c62` (4,55) und `#837b6f` (4,51) — kaum ein Schattenunterschied, weshalb es nie jemandem aufgefallen ist. **Das gehört korrigiert, unabhängig davon, welcher Akzent gewinnt.** Die drei Vorschläge tragen es bereits; „Heute" behält absichtlich den durchfallenden Wert, sonst zeigte die Tabelle nicht, was ausgeliefert wird.
+
+Nebenbei hat die Tabelle mich selbst korrigiert: die erste Fassung prüfte auch `line auf bg` gegen eine erfundene Schwelle von 1,5 und meldete sie als Durchfaller. Eine 1-px-Trennlinie ist kein Text und keine bedeutungstragende Bedienelementgrenze; WCAG verlangt dafür nichts. Sie steht jetzt zur Anschauung da, nicht als Prüfung — sonst hätte ein erfundener Fehler den echten überdeckt.
+
+**Was das Werkzeug kostet: nichts.** Die Cover kommen aus `data/cover-index.json`, es wird nichts gesucht und Google gar nicht gefragt (E10). Mit `--base http://localhost:3000/img` laufen die Bilder über die eigene Bildroute aus 1.3 und die Seite steht sofort; ohne sie lädt der Browser direkt von Open Library, was 6 bis 16 Sekunden je Bild dauern kann — das ist der Preis dafür, dass die committete Fassung ohne laufenden Server funktioniert. `--embed` legt die Bilder als Data-URIs hinein und macht die Datei verschickbar (2,6 MB).

@@ -428,6 +428,19 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   **Was dabei nicht verhandelbar ist:** der Kontrast muss WCAG AA halten (die Verdikte und die Metadaten stehen heute in `ink-2` und `ink-3` auf Papier), und heller wie dunkler Modus müssen beide stimmen, weil `prefers-color-scheme` beide ausliefert.
 
+  **Mockups liegen seit dem 2026-09-09 in [`lab/palette/`](lab/palette/README.md)** (Julian: „mache screenshot mockups für 6.22"). Kein Farbfeld-Vergleich, sondern **dieselbe Wand und dieselben Bedienelemente in jeder Färbung, hell und dunkel**, darunter je die Kontrasttabelle der Paare, die in der Oberfläche wirklich vorkommen. Vier Kandidaten, entschieden ist nichts:
+
+  | Kandidat | Was sich ändert | Was es kostet |
+  |---|---|---|
+  | **Heute · Terrakotta** | nichts, die Referenz | steht am nächsten an den Rot- und Ockertönen der Cover und konkurriert dort am ehesten mit ihnen |
+  | **Tinte** | gar keine Akzentfarbe; der Akzent ist dieselbe Tinte wie der Text | alle Farbe kommt von den Covern, was das Produktversprechen ist — aber Knöpfe und Fokusringe müssen ihre Sichtbarkeit aus Form holen, und die Seite wird strenger |
+  | **Indigo** | kühler Akzent auf demselben Papier | tritt hinter die Wand zurück, weil kein Cover dieses Blau trägt; verliert die Wärme, die Papier und Akzent heute gemeinsam erzeugen |
+  | **Olive** | gedämpfter Akzent **und** kühleres Papier — der einzige, der die Grundfarbe anfasst | die Wand wirkt kühler beleuchtet und die Cover wärmer; das Papier verliert seinen Charakter und nähert sich Weiß |
+
+  **Ein Befund beim Bauen der Mockups überholt die Farbfrage: `ink-3` verfehlt heute WCAG AA.** Gemessen 3,28 im hellen und 4,14 im dunklen Modus gegen die 4,5, die normaler Text braucht — und `ink-3` trägt die Metadatenzeilen und die Verdikt-Hinweise bei 11–12 px, die Ausnahme für großen Text greift also nicht. Die nächstliegenden bestehenden Werte sind `#746c62` (4,55) und `#837b6f` (4,51), kaum ein Schattenunterschied; deshalb ist es nie jemandem aufgefallen. **Das gehört korrigiert, welcher Akzent auch immer gewinnt.** Die drei Vorschläge tragen es bereits, „Heute" absichtlich nicht — sonst zeigte die Tabelle nicht, was ausgeliefert wird.
+
+  **Zu entscheiden bleibt Julians Wahl**; danach sind es neun Zeilen in `app/globals.css` unter `@theme inline` und ein eigener Commit.
+
 - [ ] **6.2 Den Titel zeigen, nach dem gesucht wurde. [T13]** `crime and punishment` zeigt «Преступление и наказание» von „Fiódor Dostoievski“, `die verwandlung` zeigt „Metamorphosis“, `the master and margarita` zeigt «Мастер и Маргарита». Jeweils das richtige Werk, aber in einer Sprache, die der Leser nicht gesucht hat, und bei Dostojewski steht auf Platz 2 ein Übersetzer als Autor. Billigste Lösung ohne Eingriff ins Ranking: die Karte zeigt den Katalogtitel und darunter den Titel der Ausgabe, die zur Suchsprache passt („Metamorphosis · Die Verwandlung“). Die Ausgabentitel liegen auf der Detailseite ohnehin vor; für die Karte wären sie neu und müssten aus der ohnehin geladenen Seite 0 kommen.
 
 - [ ] **6.3 Die Ladeszene endet zu spät, wenn ein Sprachfilter gesetzt ist. [T15]** *1984* mit `lang=de`: über 20 Sekunden Bühne, weil `leadLanguagesSettled` auf die deutsche Gruppe wartet und deutsche Ausgaben bei Open Library erst auf Seite 3 bis 4 liegen; ohne Filter war dieselbe Seite nach 8 Sekunden da. Die Obergrenze greift, aber 20 Sekunden fühlen sich wie ein Hänger an. Kandidaten: die Wand früher zeigen und den gewünschten Reiter nachrücken lassen, sobald er da ist (das war genau das, was 2026-09-07 abgestellt wurde, also nur mit ruhigem Übergang); oder die Grenze von 300 geprüften Ausgaben auf 200 senken; oder während der Wartezeit sagen, worauf gewartet wird.
