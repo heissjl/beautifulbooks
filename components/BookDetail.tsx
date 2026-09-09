@@ -7,6 +7,7 @@ import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
 import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
 import CoverSheet from '@/components/CoverSheet';
+import ShareMenu from '@/components/ShareMenu';
 import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
 import SiteFooter from '@/components/SiteFooter';
@@ -20,6 +21,7 @@ import { useWorkPages } from '@/components/useWorkPages';
 import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
+import { coverIdFromSegment } from '@/lib/coverurl';
 import { VERDICT_LEAD } from '@/lib/verdicts';
 import { commerceEnabled } from '@/lib/sitemode';
 import type { ShopStatus } from '@/lib/availability';
@@ -38,27 +40,6 @@ function BackLink({ href }: { href: string }) {
       </svg>
       Search
     </Link>
-  );
-}
-
-function ShareButton() {
-  const [copied, setCopied] = useState(false);
-  return (
-    <button
-      type="button"
-      className="btn py-1.5"
-      onClick={async () => {
-        try {
-          await navigator.clipboard.writeText(window.location.href);
-          setCopied(true);
-          setTimeout(() => setCopied(false), 1800);
-        } catch {
-          // Clipboard unavailable: nothing to do, the URL is in the address bar.
-        }
-      }}
-    >
-      {copied ? 'Link copied' : 'Share'}
-    </button>
   );
 }
 
@@ -169,7 +150,7 @@ function backHrefFrom(searchParams: URLSearchParams): string {
 }
 
 function BookDetail() {
-  const params = useParams<{ id: string }>();
+  const params = useParams<{ id: string; coverId?: string }>();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -189,7 +170,13 @@ function BookDetail() {
   const pages = useWorkPages(params.id, lang, chosenMarket);
 
   // The selected cover lives in the URL (?cover=) so it can be shared (SPEC F2.6).
-  const selectedId = searchParams.get('cover');
+  /*
+    A share address carries the cover in the path (`/book/<id>/cover/<cover>`,
+    ROADMAP 6.20) so that its preview can show it; inside the page the query
+    stays the source of truth, and picking another cover goes back to it.
+  */
+  const routeCover = coverIdFromSegment(typeof params.coverId === 'string' ? params.coverId : undefined);
+  const selectedId = routeCover ?? searchParams.get('cover');
 
   const editionIdsByIsbn = useMemo(() => {
     const map = new Map<string, string[]>();
@@ -323,7 +310,10 @@ function BookDetail() {
   ].filter(Boolean).join(' · ');
 
   return (
-    <Shell backHref={backHref} right={<ShareButton />}>
+    <Shell
+      backHref={backHref}
+      right={<ShareMenu workId={work.id} coverId={selected?.id} title={work.title} author={work.authors[0]} />}
+    >
       <TitleBlock title={work.title} authors={work.authors} meta={meta} />
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
 

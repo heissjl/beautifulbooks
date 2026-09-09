@@ -24,7 +24,6 @@
  */
 import indexFile from '@/data/cover-index.json';
 import { HASH_BITS, colourDistance, type ImageSignature } from './imagesig';
-import { olCoverUrl } from './sources/openlibrary-parse';
 
 interface RawIndex {
   builtAt: string;
@@ -43,27 +42,13 @@ export interface SimilarCover {
   distance: number;
 }
 
-/**
- * The image behind a cover id, rebuilt rather than stored.
- *
- * Keeping URLs out of the index halves its size and costs nothing: both
- * forms are mechanical. Today every row is an `ol:` cover, because the
- * builder runs with `googleBooks: false` (E10); the Google form is here so
- * that stays true by construction rather than by luck.
- */
-export function coverUrlFor(coverId: string, size: 'S' | 'M' | 'L' = 'M'): string | null {
-  if (coverId.startsWith('ol:')) {
-    const id = Number(coverId.slice(3));
-    return Number.isFinite(id) && id > 0 ? olCoverUrl(id, size) : null;
-  }
-  if (coverId.startsWith('gb:')) {
-    const width = size === 'S' ? 128 : size === 'M' ? 400 : 800;
-    // zoom=1 is the cover; zoom=2 and up is a page out of the scan (F3.1).
-    return `https://books.google.com/books/content?id=${encodeURIComponent(coverId.slice(3))}` +
-      `&printsec=frontcover&img=1&zoom=1&source=gbs_api&fife=w${width}`;
-  }
-  return null;
-}
+/*
+  `coverUrlFor` lives in `lib/coverurl.ts` since 2026-09-09: the share route
+  needs one cover's URL and must not drag the whole index in to get it.
+  Re-exported here because callers of the index expect it.
+*/
+import { coverUrlFor } from './coverurl';
+export { coverUrlFor };
 
 interface Unpacked {
   builtAt: string;
