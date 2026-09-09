@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import BookWorkCard from './BookWorkCard';
 import CuratedWall from './CuratedWall';
+import AssemblingWall from './AssemblingWall';
 import { LANGUAGES } from './SearchBar';
 import type { SearchResult } from '@/lib/search';
 
@@ -72,18 +73,13 @@ function Notice({
   );
 }
 
-export function GridSkeleton({ count = 10 }: { count?: number }) {
-  return (
-    <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" aria-busy="true" aria-label="Loading results">
-      {[...Array(count)].map((_, i) => (
-        <div key={i} className="animate-pulse">
-          <div className="aspect-[2/3] rounded-card bg-surface-2"></div>
-          <div className="mt-3 h-3.5 w-4/5 rounded bg-surface-2"></div>
-          <div className="mt-2 h-3 w-1/2 rounded bg-surface-2"></div>
-        </div>
-      ))}
-    </div>
-  );
+/**
+ * What a search looks like while it runs (SPEC §8.1, ROADMAP 6.19): the wall
+ * assembling, with the query named under it. The picture itself is shared
+ * with the work page's first seconds, so both waits look like the same site.
+ */
+export function GridSkeleton({ query }: { query?: string }) {
+  return <AssemblingWall caption={query ? `Looking for \u201c${query}\u201d in Open Library` : 'Searching'} />;
 }
 
 export default function BookGrid({ searchQuery, language }: BookGridProps) {
@@ -122,7 +118,7 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
 
   // Loading = the latest outcome does not answer the current request.
   const current = outcome?.key === key ? outcome : null;
-  if (!current) return <GridSkeleton />;
+  if (!current) return <GridSkeleton query={searchQuery} />;
 
   // An outcome carries a result or a failure, never both and never neither.
   if (!current.result) {

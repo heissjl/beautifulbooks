@@ -519,8 +519,8 @@
       "title": "Мастер и Маргарита",
       "author": "Михаил Афанасьевич Булгаков",
       "coverId": "",
-      "skipped": true,
-      "pickedAt": "2026-09-08T20:46:52.108Z"
+      "dropped": true,
+      "pickedAt": "2026-09-08T21:34:48.474Z"
     },
     {
       "id": "OL102749W",
@@ -751,6 +751,21 @@
       "coverId": "",
       "dropped": true,
       "pickedAt": "2026-09-08T21:29:03.892Z"
+    },
+    {
+      "id": "OL23166W",
+      "title": "East of Eden",
+      "author": "John Steinbeck",
+      "coverId": "ol:9249662",
+      "pickedAt": "2026-09-08T21:34:03.475Z"
+    },
+    {
+      "id": "OL3511459W",
+      "title": "Stoner",
+      "author": "John Williams",
+      "coverId": "ol:8132151",
+      "firstPublished": 1965,
+      "pickedAt": "2026-09-08T21:35:02.115Z"
     }
   ]
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import AssemblingWall from './AssemblingWall';
 
 export interface StageCover {
   id: string;
@@ -18,8 +19,10 @@ interface LoadingStageProps {
 
 /** Slight alternating tilt so the fan reads as a stack of books. */
 const TILTS = [-4, 3, -2, 5];
-/** Horizontal spread between fanned covers, in px. */
-const SPREAD = 92;
+/*
+  The step between fanned covers lives in CSS (`--spread` on `.stage`), so it
+  can shrink on a phone; here a tile only says which step it sits on.
+*/
 
 /**
  * The loading scene (SPEC 8.1): instead of an empty grid filling up, the
@@ -37,9 +40,19 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
         ? `${covers.length} of ${expected} covers here`
         : `${covers.length} cover${covers.length === 1 ? '' : 's'} here`;
 
+  /*
+    Nothing of this book has arrived yet and no card sent a cover along, which
+    is what every visit from outside looks like. An empty stage with a caption
+    under it was measured as several seconds of blank page on a phone; the
+    assembling wall fills them with the site's own picture.
+  */
+  if (shown.length === 0 && !hero) {
+    return <AssemblingWall caption={caption} />;
+  }
+
   return (
-    <div className="relative flex min-h-[34rem] items-center justify-center py-6 sm:min-h-[38rem]" aria-live="polite" aria-busy="true" aria-label="Loading covers">
-      <div className="relative h-[26rem] w-full max-w-3xl sm:h-[30rem]">
+    <div className="stage relative flex min-h-[26rem] items-center justify-center py-6 sm:min-h-[38rem]" aria-live="polite" aria-busy="true" aria-label="Loading covers">
+      <div className="relative h-[20rem] w-full max-w-3xl sm:h-[30rem]">
         {shown.length === 0 && hero && (
           <div className="stage-tile stage-in" style={{ ['--dx' as string]: '0px', ['--tilt' as string]: '0deg' }}>
             <div className="cover-shadow relative h-full w-full animate-pulse overflow-hidden rounded-card bg-surface-2">
@@ -49,13 +62,12 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
         )}
         {shown.map((c, i) => {
           const n = shown.length;
-          const dx = (i - (n - 1) / 2) * SPREAD;
           return (
             <div
               key={c.id}
               data-stage-cover-id={c.id}
               className="stage-tile stage-in"
-              style={{ ['--dx' as string]: `${dx}px`, ['--tilt' as string]: `${TILTS[i % TILTS.length]}deg`, zIndex: i }}
+              style={{ ['--i' as string]: `${i - (n - 1) / 2}`, ['--tilt' as string]: `${TILTS[i % TILTS.length]}deg`, zIndex: i }}
             >
               <div className="cover-shadow relative h-full w-full overflow-hidden rounded-card bg-surface-2">
                 <Image src={c.url} alt="" fill sizes="288px" className="object-cover" unoptimized priority />

@@ -630,7 +630,25 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   **Was die App können muss:** ein Werk je Bildschirm, alle seine Cover als Raster, Klick wählt und springt weiter; Tastatur (Pfeile, Enter); ein Feld für das Erstausgabejahr, vorbelegt mit Open Librarys Wert und **markiert, wenn die Lücken-Regel aus 6.16 anschlägt**; Fortschritt sichtbar; jederzeit unterbrechbar, weil `data/curated.json` nach jeder Wahl geschrieben wird. Ein halber Tag, Claude.
 
-- [ ] **6.19 Ein Ladebildschirm für die Suche.** (Julian, 2026-09-08: „wir brauchen noch eine Idee für einen Ladebildschirm der Buch-Suche, nicht dem der Coverwall. Vielleicht können wir eine Animation von den vorher erstellten Riesenmosaiken nehmen? Wie sich langsam das Bild von Orwell aus seinen Editionen aufbaut. Es darf aber clientseitig nicht zu ressourcenverbrauchend sein.") Heute wartet die Suche ohne Bild; die Cover-Wand hat ihre Ladeszene (`LoadingStage`), die Suche nicht — und sie ist die längste Wartezeit der Seite (1–13 s, ROADMAP 2.6).
+- [x] **6.19 Ein Ladebildschirm für die Suche — und der der Cover-Wand, der auf dem Telefon nicht passte.** *Erledigt 2026-09-09 (Julian: „lass uns beide Ladebildschirme angehen, und zwar sowohl für Desktop als auch Mobile").*
+
+  **Zwei Messungen standen am Anfang, beide auf einem Telefon:**
+
+  | Gemessen | |
+  |---|---|
+  | Der Cover-Fächer der Wand | die vier Kacheln liefen von **−96 px bis 471 px** in einem 459 px breiten Fenster: die erste angeschnitten, die letzte über dem Rand, die Seite scrollte seitlich |
+  | Die ersten Sekunden einer Werkseite über einen Link von außen | **völlig leer**, nur „Collecting covers" unter einer leeren Fläche — genau der Weg, den jeder Besucher aus einer Suchmaschine nimmt |
+  | Die Suche selbst | zehn graue Kästen, 1 bis 13 Sekunden lang |
+
+  **Gebaut wurde eine Antwort für alle drei:** `components/AssemblingWall.tsx`, eine kleine Wand aus Covern, die Kachel für Kachel erscheint — **drei je Reihe auf dem Telefon, sechs am Rechner**, also im Rhythmus der Wand, die dabei entsteht. Sie zeigt die Cover, **die die Startseite ohnehin schon geladen hat** (`WALL_WORKS`, Daumennagelgröße): kein neues Bild im Bündel, keine zusätzliche Anfrage auf dem üblichen Weg, nichts, was mit der Kuratierung auseinanderlaufen kann. Die Bewegung ist reines CSS, `prefers-reduced-motion` bekommt den Block ohne sie.
+
+  **Klein, gedimmt und ohne Titel — mit Absicht:** was jemand beim Warten sieht, darf nicht wie eine Antwort auf seine Suche aussehen (N12). Darunter steht, worauf gewartet wird („Looking for »east of eden« in Open Library").
+
+  **Der Fächer rechnet jetzt in Bildschirmbreiten** statt in festen Pixeln (`--stage-w`, `--spread` in `app/globals.css`): bei höchstens vier Kacheln bleibt ab 320 px Breite auf jeder Seite Luft, gemessen 16 px bei 320, 19 px bei 375, 22 px bei 430; ab 640 px sind die alten Werte wieder da. `overflow-x: clip` verhindert das seitliche Scrollen selbst dann, wenn die Rechnung eines Tages nicht mehr aufgeht.
+
+  **Das Riesenmosaik ist damit nicht verbraucht.** Der ursprüngliche Vorschlag (Julian: „wie sich langsam das Bild von Orwell aus seinen Editionen aufbaut") bleibt als Ausbau offen: er bräuchte ein vorgerechnetes Bild im Bündel und wirft die Rechtefrage aus 5.5 auf, weil ein Mosaik ein abgeleitetes Werk aus fremden Covern ist und nicht bloß deren Anzeige. Die jetzige Lösung kommt ohne beides aus; wenn das Mosaik kommt, ersetzt es die Kacheln in genau einer Komponente.
+
+- [ ] **6.19a Das Mosaik als Ladebild** (aus 6.19, offen). Julians ursprünglicher Vorschlag: das Bild eines Autors, das sich langsam aus den Covern seiner Ausgaben aufbaut. `lab/mosaic` kann es bereits — ein erkennbares Gesicht aus 222 Covern, ohne Überblendung. **Zwei Dinge stehen davor:** ein vorgerechnetes Bild im Bündel (Sprite-Streifen oder Einzelbild mit Maske; Größe zu messen, das heutige PNG ist zu groß), und die Rechtefrage aus 5.5 — die Anzeige fremder Cover ist eine Sache, ein daraus abgeleitetes Werk als eigenes Seitenelement eine andere. Ersetzt bei Umsetzung die Kacheln in `AssemblingWall`, sonst nichts. (Julian, 2026-09-08: „wir brauchen noch eine Idee für einen Ladebildschirm der Buch-Suche, nicht dem der Coverwall. Vielleicht können wir eine Animation von den vorher erstellten Riesenmosaiken nehmen? Wie sich langsam das Bild von Orwell aus seinen Editionen aufbaut. Es darf aber clientseitig nicht zu ressourcenverbrauchend sein.") Heute wartet die Suche ohne Bild; die Cover-Wand hat ihre Ladeszene (`LoadingStage`), die Suche nicht — und sie ist die längste Wartezeit der Seite (1–13 s, ROADMAP 2.6).
 
   **Das Material liegt fertig in `lab/mosaic`:** ein Photomosaik baut aus 222 Covern ein erkennbares Gesicht, ohne Überblendung, in unter 30 s Rechenzeit — offline, einmal.
 

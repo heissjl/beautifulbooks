@@ -1027,3 +1027,17 @@ Antwortzeiten der statischen Seiten 0,33–0,72 s; die Suche nach *1984* kam vol
 **Die Startseite zeigt seitdem 18 Kacheln statt zwölf** (Julian: „ich will trotzdem eine volle Startseite"), drei volle Reihen zu sechs, und sie nimmt sie aus `data/curated.json`, aufgefüllt aus der alten Handliste. Live geprüft: die ersten Kacheln sind *Lolita*, *Gravity's Rainbow*, *Pride and Prejudice*, *Frankenstein*, *Jane Eyre*, *Анна Каренина* — Julians eigene Wahlen, nicht mehr die Vorauswahl.
 
 **Was dabei nicht ging, und warum es eine Entscheidung ist:** eine Rotation je Aufruf lässt sich in diesem Bauteil nicht machen. Die Startseite wird vorgerendert; eine hier gewürfelte Reihenfolge stünde im ausgelieferten HTML anders als im Browser, und React verwirft dann den ganzen Teilbaum. Die drei Auswege und ihr Preis stehen in 6.17 — der billigste ist eine stündliche Neuerzeugung, der teuerste eine dynamische Startseite, und genau die hatte Julian mit „vorgeladen, damit es schnell geht" ausgeschlossen.
+
+## 2026-09-09 · Beide Ladebildschirme, und was das Telefon dabei zeigte (ROADMAP 6.19)
+
+Julian wollte beide Wartezeiten angehen, für Rechner und Telefon. Das Messen vorher hat zwei Fehler gefunden, die niemand vermutet hatte, und einen dritten bestätigt.
+
+**Der Cover-Fächer passte nicht auf ein Telefon.** Vier Kacheln zu 16,5 rem mit 92 px Abstand ergaben in einem 459 px breiten Fenster eine Spanne von **−96 px bis 471 px**: die erste Kachel angeschnitten, die letzte über dem Rand, und die Seite ließ sich seitwärts schieben. Breite und Abstand rechnen jetzt in Bildschirmbreiten (54 vw und 12 vw, gedeckelt auf die alten Werte), womit ab 320 px auf jeder Seite Luft bleibt — 16 px bei 320, 19 px bei 375, 22 px bei 430. Dazu `overflow-x: clip`, damit ein künftiger Rechenfehler nicht wieder die ganze Seite verschiebt.
+
+**Die Werkseite war über einen Link von außen sekundenlang leer.** Die Ladeszene lebt von Covern, die entweder schon geladen sind oder von der Suchkarte mitgegeben werden; kommt jemand aus einer Suchmaschine, gibt es beides nicht, und übrig blieb eine leere Fläche mit den Worten „Collecting covers". Das ist der Weg, den Phase 5 gerade erst attraktiv machen soll.
+
+**Gebaut wurde eine Antwort für beide Wartezeiten und die Suche dazu:** eine kleine Wand aus Covern, die Kachel für Kachel erscheint, drei je Reihe auf dem Telefon und sechs am Rechner — im Rhythmus der Wand, die dabei entsteht. Die Kacheln sind die Cover der Startseite, die der Browser ohnehin hat: **kein neues Bild im Bündel, keine zusätzliche Anfrage, nichts, was mit der Kuratierung auseinanderlaufen kann**, weil es dieselbe Liste ist. Alles Bewegte ist CSS.
+
+**Warum die Kacheln klein, gedimmt und ohne Titel sind:** was während einer Suche auf dem Schirm steht, darf nicht wie deren Ergebnis aussehen. Das ist dieselbe Regel, nach der ein Ausfall nicht „nichts gefunden" heißen darf (N12), einen Schritt früher.
+
+**Das Riesenmosaik, Julians ursprünglicher Vorschlag, ist bewusst nicht gebaut.** Es bräuchte ein vorgerechnetes Bild im Bündel und wirft die Rechtefrage aus 5.5 auf: ein Mosaik ist ein abgeleitetes Werk aus fremden Covern, ihre Anzeige ist es nicht. Es bleibt als 6.19a offen und würde die Kacheln in genau einer Komponente ersetzen.
