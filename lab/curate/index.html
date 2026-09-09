@@ -224,6 +224,7 @@ function render() {
     <div class="work">
       <h2>${escapeHtml(w.title)}</h2><span class="author">${escapeHtml(w.author)}</span>
       <span class="meta">${w.covers.length} Cover</span>
+      ${w.note ? `<span class="meta">· ${escapeHtml(w.note)}</span>` : ''}
     </div>
     <div class="yearline">
       <label>Erstausgabe <input id="year" type="number" inputmode="numeric" value="${w.pick?.firstPublished ?? ''}" placeholder="Jahr"></label>
@@ -240,6 +241,10 @@ function render() {
     <p class="hint">Klick wählt und springt weiter. Pfeiltasten bewegen den Rahmen, Enter wählt, Backspace zurück.
        Das Jahr wird mit der Wahl gespeichert; leer heißt „nicht geprüft".
        „Überspringen" behält das Buch für später, „streichen" nimmt es dauerhaft aus der Liste und von der Startseite.</p>`;
+
+  // Ein Vorschlag bringt seine Cover nicht mit: sie werden beim Aufschlagen
+  // geholt, damit fünfzig davon den Start nicht um eine Minute verzögern.
+  if (w.covers.length === 0) loadCovers(w);
 
   $('grid').addEventListener('click', e => {
     const t = e.target.closest('.tile');
@@ -263,6 +268,18 @@ function render() {
     const field = $('year');
     if (field && !field.value && info.guarded) field.value = info.guarded;
   });
+}
+
+async function loadCovers(w) {
+  const grid = $('grid');
+  if (grid) grid.innerHTML = '<p class="hint">Cover werden geholt …</p>';
+  try {
+    const res = await (await fetch(`/api/covers?id=${w.id}`)).json();
+    w.covers = res.covers ?? [];
+  } catch {
+    w.covers = [];
+  }
+  if (state.works[state.i]?.id === w.id) render();
 }
 
 function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }

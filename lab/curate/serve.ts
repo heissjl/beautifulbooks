@@ -45,11 +45,24 @@ const EXCLUDED = new Set([
  * once from Open Library and cached beside this file — the only place where
  * this tool loads a cover list over the network, and it is a handful of works.
  */
-const EXTRA_WORKS: Array<{ id: string; title: string; author: string }> = [
+interface Extra { id: string; title: string; author: string; note?: string }
+
+const NAMED_EXTRAS: Extra[] = [
   { id: 'OL63055W', title: 'The Garden of Eden', author: 'Ernest Hemingway' },
   { id: 'OL23166W', title: 'East of Eden', author: 'John Steinbeck' },
   { id: 'OL3511459W', title: 'Stoner', author: 'John Williams' },
 ];
+
+/**
+ * Suggestions from `lab/curate/suggest.ts`, each with a line of numbers that
+ * argue for it. They come last in the run, after everything the index knows.
+ */
+const SUGGESTIONS_FILE = join(import.meta.dirname, 'suggestions.json');
+const SUGGESTED: Extra[] = existsSync(SUGGESTIONS_FILE)
+  ? (JSON.parse(readFileSync(SUGGESTIONS_FILE, 'utf8')) as Extra[])
+  : [];
+
+const EXTRA_WORKS: Extra[] = [...NAMED_EXTRAS, ...SUGGESTED.filter(x => !NAMED_EXTRAS.some(n => n.id === x.id))];
 
 interface RawIndex {
   builtAt: string;
@@ -105,11 +118,13 @@ const extraCovers: Record<string, string[]> = existsSync(EXTRA_COVERS_FILE)
   ? JSON.parse(readFileSync(EXTRA_COVERS_FILE, 'utf8'))
   : {};
 
-const works = [
+const works: Array<{ id: string; title: string; author: string; note?: string; covers: string[] }> = [
   ...index.works
     .map(([id, title, author], i) => ({ id, title, author, covers: coversByWork.get(i) ?? [] }))
     .filter(w => !EXCLUDED.has(w.id)),
-  ...EXTRA_WORKS.map(w => ({ ...w, covers: extraCovers[w.id] ?? [] })),
+  ...EXTRA_WORKS
+    .filter(w => !EXCLUDED.has(w.id) && !index.works.some(([id]) => id === w.id))
+    .map(w => ({ ...w, covers: extraCovers[w.id] ?? [] })),
 ];
 
 function writeAtomically(file: string, content: string) {
@@ -157,28 +172,34 @@ async function yearsFor(workId: string): Promise<YearInfo> {
   return info;
 }
 
-/** Covers for a work the index does not carry; fetched once, then cached. */
-async function loadExtraCovers() {
-  for (const w of EXTRA_WORKS) {
-    if (extraCovers[w.id]?.length) continue;
-    try {
-      const res = await fetch(`https://openlibrary.org/works/${w.id}/editions.json?limit=200`, {
-        signal: AbortSignal.timeout(25_000),
-      });
-      const body = (await res.json()) as { entries?: Array<{ covers?: number[] }> };
-      const ids: string[] = [];
-      for (const e of body.entries ?? []) {
-        for (const c of e.covers ?? []) if (c > 0 && !ids.includes(`ol:${c}`)) ids.push(`ol:${c}`);
-      }
-      extraCovers[w.id] = ids;
-      const at = works.findIndex(x => x.id === w.id);
-      if (at >= 0) works[at].covers = ids;
-      writeAtomically(EXTRA_COVERS_FILE, `${JSON.stringify(extraCovers, null, 1)}\n`);
-      console.log(`curate: ${w.title} has ${ids.length} covers on record`);
-    } catch {
-      console.log(`curate: could not load covers for ${w.title}; it will show empty`);
+/**
+ * Covers for a work the index does not carry, fetched once and then cached
+ * beside this file.
+ *
+ * **On demand, not at startup.** With fifty suggestions in the run, loading
+ * them all up front would mean a minute of Open Library before the first
+ * cover appears, for works Julian may never reach.
+ */
+async function coversFor(workId: string): Promise<string[]> {
+  const cached = extraCovers[workId];
+  if (cached?.length) return cached;
+  const ids: string[] = [];
+  try {
+    const res = await fetch(`https://openlibrary.org/works/${workId}/editions.json?limit=200`, {
+      signal: AbortSignal.timeout(25_000),
+    });
+    const body = (await res.json()) as { entries?: Array<{ covers?: number[] }> };
+    for (const e of body.entries ?? []) {
+      for (const c of e.covers ?? []) if (c > 0 && !ids.includes(`ol:${c}`)) ids.push(`ol:${c}`);
     }
+  } catch {
+    return [];
   }
+  extraCovers[workId] = ids;
+  const at = works.findIndex(x => x.id === workId);
+  if (at >= 0) works[at].covers = ids;
+  writeAtomically(EXTRA_COVERS_FILE, `${JSON.stringify(extraCovers, null, 1)}\n`);
+  return ids;
 }
 
 const HTML_FILE = join(import.meta.dirname, 'index.html');
@@ -219,6 +240,13 @@ const server = createServer(async (req, res) => {
     return;
   }
 
+  if (url.pathname === '/api/covers') {
+    const id = url.searchParams.get('id') ?? '';
+    if (!/^OL\d+W$/.test(id)) return send(400, { error: 'bad id' });
+    send(200, { covers: await coversFor(id) });
+    return;
+  }
+
   if (url.pathname === '/api/years') {
     const id = url.searchParams.get('id') ?? '';
     send(200, await yearsFor(id));
@@ -255,12 +283,8 @@ const server = createServer(async (req, res) => {
   send(404, { error: 'not found' });
 });
 
-// Covers for the extra works first, so the list is complete before the first
-// request; `tsx` compiles this file as CommonJS, where top-level await is out.
-void loadExtraCovers().then(() => {
-  server.listen(PORT, () => {
-    const done = Object.values(picks).filter(p => !p.skipped && !p.dropped).length;
-    console.log(`curate: ${works.length} works, ${done} already picked`);
-    console.log(`open http://localhost:${PORT}`);
-  });
+server.listen(PORT, () => {
+  const done = Object.values(picks).filter(p => !p.skipped && !p.dropped).length;
+  console.log(`curate: ${works.length} works (${SUGGESTED.length} suggestions), ${done} already picked`);
+  console.log(`open http://localhost:${PORT}`);
 });
