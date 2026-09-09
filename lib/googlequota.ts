@@ -19,8 +19,12 @@
  * must never do is mistake a misconfigured key for an exhausted quota: a 403
  * without a quota reason leaves the breaker shut, so a wrong key fails loudly
  * per request instead of silently disabling Google for a day.
+ *
+ * The breaker is the last line, not a warning: by the time it opens the day is
+ * already spent. It therefore writes one ungated `bb.google` line per opening,
+ * so that the Vercel log shows *that* it happened; the alarm that comes **in
+ * time** counts on Google's side and belongs in Cloud Monitoring (ROADMAP 0.13).
  */
-import { debug } from './debug';
 import { HttpError } from './sources/http';
 
 export type QuotaVerdict =
@@ -72,6 +76,33 @@ export function pacificMsUntilReset(now: Date = new Date()): number {
   return 24 * 60 * 60 * 1000 - elapsed;
 }
 
+/**
+ * One structured line when the breaker opens, written **without** a DEBUG
+ * guard. That is the same deliberate exception as `lib/clicks.ts`, for the
+ * same reason: this is the operation's telemetry, not debugging. In
+ * production DEBUG is unset, so a `debug()` line would be invisible and the
+ * day Google shut the door would leave no trace anywhere but the Cloud
+ * console.
+ *
+ * It is **not** a warning before the limit. Nothing on this machine can count
+ * the requests that actually left it (see the header), so the early alarm has
+ * to come from Google's own side — the quota alert in Cloud Monitoring
+ * (ROADMAP 0.13). This line says, in the Vercel log, that it has happened and
+ * when the pause lifts.
+ */
+function logQuotaEvent(verdict: 'daily' | 'rate', pauseMs: number, now: number): void {
+  try {
+    console.warn(`bb.google ${JSON.stringify({
+      event: verdict === 'daily' ? 'daily-limit' : 'rate-limit',
+      pausedForS: Math.round(pauseMs / 1000),
+      until: new Date(now + pauseMs).toISOString(),
+      at: new Date(now).toISOString(),
+    })}`);
+  } catch {
+    // A log line is not worth breaking a page over.
+  }
+}
+
 /** When the breaker opens, in ms since the epoch; 0 while it is shut. */
 let closedUntil = 0;
 
@@ -96,7 +127,7 @@ export function noteGoogleFailure(error: unknown, now = Date.now()): QuotaVerdic
   const until = now + pause;
   if (until > closedUntil) {
     closedUntil = until;
-    debug('googlequota', `${verdict} limit reached, not asking again for ${Math.round(pause / 1000)}s`);
+    logQuotaEvent(verdict, pause, now);
   }
   return verdict;
 }

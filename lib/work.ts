@@ -159,6 +159,36 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
  * tests and available for a server render; the detail page loads pages
  * itself so it can show the first covers within a second (SPEC §9.3).
  */
+/** A later page is worth a second attempt before the walk gives up. */
+const PAGE_RETRY_DELAY_MS = 2_000;
+
+/**
+ * One retry for a later edition page, the server-side twin of the retry in
+ * `useWorkPages` (ROADMAP 1.10).
+ *
+ * Measured in production 2026-09-09: *Brave New World* rendered its decade
+ * page from **41 edition records instead of 130**, because the walk gave up
+ * on the first page that did not answer — and `revalidate = 86400` then froze
+ * that third of a book for a day. Open Library answers a slow editions
+ * request past the 12 s timeout often enough from Frankfurt that one attempt
+ * is not a measurement of anything.
+ */
+async function fetchPageWithRetry(
+  workId: string,
+  offset: number,
+  options: WorkDetailOptions,
+): Promise<WorkPage | null> {
+  const ask = () => getWorkPage(workId, {
+    offset, hashDeadlineMs: options.hashDeadlineMs, googleBooks: false,
+  });
+  try {
+    return await ask();
+  } catch {
+    await new Promise(r => setTimeout(r, PAGE_RETRY_DELAY_MS));
+    return ask();
+  }
+}
+
 export async function getWorkDetail(workId: string, options: WorkDetailOptions = {}): Promise<WorkDetail | null> {
   const cap = options.maxEntries ?? MAX_EDITIONS_SCANNED;
   const first = await getWorkPage(workId, {
@@ -178,9 +208,7 @@ export async function getWorkDetail(workId: string, options: WorkDetailOptions =
     */
     let page: WorkPage | null;
     try {
-      page = await getWorkPage(workId, {
-        offset: next, hashDeadlineMs: options.hashDeadlineMs, googleBooks: false,
-      });
+      page = await fetchPageWithRetry(workId, next, options);
     } catch {
       break;
     }
