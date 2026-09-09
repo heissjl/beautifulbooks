@@ -148,10 +148,24 @@ export default function MosaicLoader({ caption }: { caption: string }) {
   return (
     <div className="py-10 sm:py-14" aria-busy="true" aria-live="polite" aria-label={caption}>
       <div
-        className="mx-auto overflow-hidden rounded-[3px] bg-surface-2"
+        className="relative mx-auto overflow-hidden rounded-[3px] bg-surface-2"
         style={{ width, height }}
       >
         <canvas ref={canvasRef} className="block h-full w-full" />
+        {/*
+          What is being waited for, **on** the picture (Julian, 2026-09-09:
+          „das ‚looking for …‘ im Ladezustand einfach über das Mosaik
+          schreiben und etwas größer, dann ist niemand verwirrt"). A mosaic is
+          busy at every point, so the line needs a ground of its own; it sits
+          on the site's surface colour at 90 %, which keeps it readable
+          through the whole animation — the wall starts dimmed towards that
+          same colour and clears out from under it.
+        */}
+        <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 px-3">
+          <p className="stage-pulse mx-auto w-fit rounded bg-surface/90 px-3 py-2 text-center text-base leading-snug text-ink shadow-[0_1px_3px_rgb(0_0_0/0.08)] sm:text-lg">
+            {caption}
+          </p>
+        </div>
       </div>
       {/*
         What the picture is, so nobody takes it for an answer to their search
@@ -161,7 +175,6 @@ export default function MosaicLoader({ caption }: { caption: string }) {
         {scene.manifest.author} &middot; made of {scene.manifest.tiles.toLocaleString('en')} covers
         of {scene.manifest.works} of their books
       </p>
-      <p className="stage-pulse mt-1 text-center text-sm text-ink-3">{caption}</p>
     </div>
   );
 }
