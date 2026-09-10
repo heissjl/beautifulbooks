@@ -83,6 +83,25 @@ export function useLoadingScene(key: string, covers: readonly Cover[] | null, da
     };
     c.dataDone = dataDone;
 
+    /*
+      **The wait was over before the scene began.**
+
+      `useWorkPages` keeps the last few books this tab has walked, so going
+      back to one returns it whole on the first render — covers known and
+      page 0 already hashed. Staging two of those covers at a 520 ms cadence
+      and flying them into a wall that is ready to be drawn is not a loading
+      scene, it is a four-second delay: measured on 2026-09-10 coming back
+      from the decade page, the fan appeared after 1 s and stood until 5 s.
+      SPEC F2.12 already promised this ends at once; now it does.
+
+      On a cold page this cannot fire: the covers are known long before
+      page 0 is hashed, so `dataDone` is false at this moment.
+    */
+    if (c.dataDone && covers.length > 0) {
+      end();
+      return;
+    }
+
     const tick = () => {
       c.cadenceTimer = undefined;
       if (c.ended || c.aborted) return;

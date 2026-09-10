@@ -805,9 +805,11 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
   | Ergebnis → Werkseite, mit Vorschau aus der Karte | **Cover-Fächer** (`LoadingStage`) — die Karte hat ein Cover mitgegeben, das ist die bessere Auskunft |
   | Werkseite direkt von außen aufgerufen | **Mosaik** (seit 2026-09-10; vorher die Cover-Wand) |
   | Werkseite → Jahrzehnte-Seite | **Mosaik** (`decades/loading.tsx`) |
-  | Jahrzehnte-Seite → zurück zur Werkseite | **Mosaik**, weil auf diesem Weg keine Vorschau vorliegt |
+  | Jahrzehnte-Seite → zurück zur Werkseite | **gar kein Ladebild** — die Wand steht sofort (seit 2026-09-10) |
   | Mosaik, solange die Datei unterwegs ist oder ausbleibt | **Cover-Wand** |
   | Leere Startseite | Cover-Wand der Kuration (kein Ladezustand) |
+
+  **Der Rückweg von der Jahrzehnte-Seite war ein eigener Fehler** (Julian, 2026-09-10: „wenn ich von der decade wall zur cover wall zurückgehe, bekomme ich immer noch den Cover-Fächer"). Er zeigte nicht das falsche Bild — er zeigte überhaupt eines: gemessen erschien der Fächer nach 1 s und stand bis 5 s, obwohl `useWorkPages` das Werk auf dem Rückweg **vollständig aus dem Gedächtnis** liefert (die letzten fünf Bücher dieses Tabs, siehe den Kommentar dort) und die Wand sofort gezeichnet werden könnte. `useLoadingScene` bestand trotzdem auf zwei Covern im Takt von 520 ms. **F2.12 versprach das seit jeher — „bei warmem Cache endet die Szene sofort" —, jetzt hält es.** Auf einer kalten Seite kann die neue Regel nicht greifen: dort sind die Cover lange bekannt, bevor Seite 0 gehasht ist.
 
   Damit wartet die Seite an **drei von vier** Stellen vor dem Mosaik; der Cover-Fächer bleibt nur dort, wo eine Karte ein Cover mitgegeben hat und die Seite also etwas über das gesuchte Buch zeigen kann statt über die Seite (Julian, 2026-09-10: „Werkseite von außen sollte ein Mosaik bekommen und Jahrzehnte-Seite → zurück auch").
 
