@@ -454,3 +454,62 @@ export function registrationArea(isbn: string | undefined): IsbnRegistration | u
   }
   return UNNAMED;
 }
+
+/**
+ * Imprints that mean "nobody published this in the usual sense".
+ *
+ * Measured over the 581 publisher mentions in the fixtures on 2026-09-10:
+ * **231 of them, 40 %, are one of these** — "Independently Published" alone
+ * is 193. As a search term the name does not narrow to the book, it narrows
+ * to a platform that carries millions of them, and every real result is
+ * pushed out. Better to ask without a publisher at all.
+ */
+const SELF_PUBLISHED =
+  /^(independently published|createspace\b.*|lulu(\s+press)?\b.*|kindle direct\b.*|amazon digital\b.*|books on demand\b.*)$/i;
+
+/** A legal form at the end of a name: ", Inc.", " Ltd", " GmbH & Co. KG". */
+const LEGAL_FORM =
+  /[,\s]+(inc|incorporated|ltd|limited|llc|plc|pty|corp|gmbh(\s*&\s*co\.?\s*kg)?|ag|kg|ohg|s\.?\s?a|s\.?\s?l|s\.?r\.?l|b\.?\s?v|n\.?\s?v)\.?$/i;
+
+/** A trailing word that describes the trade rather than naming the house. */
+const TRADE_WORD = /[,\s]+(publishers?|publishing(\s+(group|company|platform|house))?|publications?)$/i;
+
+/** "Penguin (Non-Classics)", "Random House Inc (T)". */
+const PARENTHETICAL = /\s*\([^)]*\)\s*$/;
+
+/**
+ * The publisher as a **search term**, or nothing when it would only get in
+ * the way (ROADMAP 1.11, Julian 2026-09-10: die gelieferten Verlagsnamen
+ * haben „zusätze oder andere schreibweisen, die die suche unnötig
+ * einschränken").
+ *
+ * Open Library hands over what a cataloguer typed, and a shop's search box
+ * takes it literally: "Penguin Books, Limited" finds nothing where "Penguin
+ * Books" finds the book. Measured over the fixtures' 265 distinct spellings,
+ * this folds twelve of them together — *HarperCollins Publishers* with
+ * *HarperCollins Publishers Limited*, *Arcturus* with *Arcturus Publishing*,
+ * *Pan Books* with *Pan Books Ltd*.
+ *
+ * **Only the question changes, never what the page says.** The sidebar keeps
+ * showing the name the catalogue holds; this decides what a shop is asked.
+ * A trimmed name is a broader question, and a broader question is the safe
+ * direction here — the year and the title do the narrowing.
+ *
+ * Deliberately kept: *Press* and *Books* where they are part of the name
+ * (*Viking Press*, *Bantam Books*), and *Verlag* (*Diogenes Verlag*).
+ */
+export function searchablePublisher(raw: string | undefined): string | undefined {
+  if (!raw) return undefined;
+  let s = raw.replace(/\s+/g, ' ').trim();
+  if (!s || SELF_PUBLISHED.test(s)) return undefined;
+
+  s = s.replace(PARENTHETICAL, '').trim();
+  // Twice around: "Dover Publications, Incorporated" sheds both in turn.
+  for (let i = 0; i < 3; i++) {
+    const before = s;
+    s = s.replace(LEGAL_FORM, '').replace(/[\s,.]+$/, '');
+    s = s.replace(TRADE_WORD, '').replace(/[\s,.]+$/, '');
+    if (s === before) break;
+  }
+  return s || undefined;
+}

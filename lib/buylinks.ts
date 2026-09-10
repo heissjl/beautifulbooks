@@ -18,7 +18,7 @@
  */
 import type { BuyLink, Edition } from './model';
 import { DEFAULT_MARKET, type Market } from './market';
-import { isbn13to10 } from './normalize';
+import { isbn13to10, searchablePublisher } from './normalize';
 import { commerceEnabled } from './sitemode';
 
 type Env = Record<string, string | undefined>;
@@ -235,12 +235,24 @@ const EBAY_DOMAIN: Record<Market, string> = { us: 'com', uk: 'co.uk', de: 'de' }
  */
 export function searchLinksFor(input: SearchLinkInput, market: Market = DEFAULT_MARKET): BuyLink[] {
   const q = (s: string) => encodeURIComponent(s);
-  const terms = [input.title, input.author, input.publisher, input.year ? String(input.year) : undefined].filter(Boolean).join(' ');
+  /*
+    The publisher is asked in the form a shop can answer, not in the form the
+    catalogue stores it (`searchablePublisher`, ROADMAP 1.11). "Penguin Books,
+    Limited" finds nothing where "Penguin Books" finds the book, and
+    "Independently Published" — 40 % of the publisher mentions measured on
+    2026-09-10 — buries every real result under a platform's catalogue.
+
+    **Only the question is trimmed.** What the sidebar prints above these
+    links is still the name Open Library holds; nothing here rewrites the
+    record.
+  */
+  const publisher = searchablePublisher(input.publisher);
+  const terms = [input.title, input.author, publisher, input.year ? String(input.year) : undefined].filter(Boolean).join(' ');
   const out: BuyLink[] = [];
 
   const abe = new URLSearchParams({ tn: input.title });
   if (input.author) abe.set('an', input.author);
-  if (input.publisher) abe.set('pn', input.publisher);
+  if (publisher) abe.set('pn', publisher);
   if (input.year) { abe.set('yrl', String(input.year)); abe.set('yrh', String(input.year)); }
   out.push({ provider: 'abebooks-search', label: 'AbeBooks', url: `https://www.abebooks.${ABEBOOKS_DOMAIN[market]}/servlet/SearchResults?${abe}` });
 
