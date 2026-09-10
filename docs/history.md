@@ -1637,6 +1637,8 @@ Der letzte Punkt in Phase 1, der nicht auf Julian wartete, nach seiner Beobachtu
 
 **Ein Werkzeugbefund, der Zeit gekostet hat:** solange das Browser-Panel verborgen ist, meldet die Seite `document.hidden`, und jedes `getBoundingClientRect()` liefert Nullen, obwohl die Bilder laden und der DOM steht; ein Screenshot ist dann eine leere Fläche. Erst das Vorholen des Tabs macht Layoutmessungen möglich. Wer Layout misst, prüft vorher `document.hidden`.
 
+**In Produktion seit `8bce202`** (gepusht am Abend des 2026-09-10, einmal geprüft): der Fächer steht, alle vier Bilder kommen über `/img` und sind geladen, die Startseite trägt kein Kopfzeilen-Suchfeld. **Ein `curl` auf die Startseite kann das nicht sehen:** der Hero hängt an `useSearchParams` und wird erst im Browser gerendert — das ausgelieferte HTML hat weder Überschrift noch Suchfeld noch Fächer (10,9 KB). Wer die Startseite nach einem Deploy prüft, tut es im Browser; für About, Werk- und Jahrzehnte-Seiten reicht `curl`.
+
 ## 2026-09-10 · Der Fächer fliegt auf leere Kacheln (ROADMAP 6.25a, 6.24)
 
 Julian: „der cover-fächer ist oft schneller in der animation als auf den animierten kacheln das bild angezeigt wird. Haben wir diesen Fehler schon in der Roadmap aufgenommen?" — Nein, dieser nicht. **6.25** stand da (Kacheln, die leer *bleiben*), und das ist ein anderer Fehler mit derselben Wurzel.
