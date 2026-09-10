@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
-import { COVER_UPSTREAM_HEADER, recordCoverFailure, type CoverFailure } from '@/lib/coverlog';
 import { rateLimited } from '@/app/api/rate';
+import { recordCoverFailure, type CoverFailure } from '@/lib/coverlog';
 
 /**
  * GET /img/<S|M|L>/<ol-12345 | gb-abc123> — one cover image, through us.
@@ -32,12 +32,14 @@ import { rateLimited } from '@/app/api/rate';
  * episode, not a fact about the cover (the same reasoning as F1.7), and
  * `CoverImage` already degrades to a quiet placeholder.
  *
- * **A failure says what the other side answered** (ROADMAP 6.25, since
- * 2026-09-10). Until then every failure came back as a bare 502 and the log
- * said nothing, so Julian's question — are we being throttled? — could not be
- * answered at all. Now the upstream status travels in `X-Cover-Upstream` and
- * one line per failure goes to the platform log (`lib/coverlog.ts`). That is
- * the measurement 6.25 asks for before anything is changed.
+ * **A failure says why, since 2026-09-10** (ROADMAP 6.25). Julian saw tiles
+ * stay empty and asked whether Open Library was throttling us — a question
+ * this route made unanswerable, because it turned every upstream answer into
+ * a bare 502. Now each failure writes one `bb.img` line (`lib/coverlog.ts`)
+ * with the upstream status or the reason there was none, and the 502 carries
+ * it in `X-Cover-Upstream` so a browser's network panel shows it too. A 429
+ * or 403 from upstream is the throttling signature; a 404 is a missing scan;
+ * a timeout is archive.org being archive.org.
  */
 const SIZES = new Set(['S', 'M', 'L']);
 
@@ -49,16 +51,8 @@ const CDN_SECONDS = 60 * 60 * 24 * 30;
 
 export const maxDuration = 25;
 
-function refuse(status: number, message: string, upstream?: string): NextResponse {
-  const headers: Record<string, string> = { 'Cache-Control': 'no-store' };
-  if (upstream) headers[COVER_UPSTREAM_HEADER] = upstream;
-  return new NextResponse(message, { status, headers });
-}
-
-/** Records the failure and answers with it, so both the log and the browser say the same. */
-function failed(failure: CoverFailure): NextResponse {
-  recordCoverFailure(failure);
-  return refuse(502, 'Cover image not available', String(failure.reason));
+function refuse(status: number, message: string): NextResponse {
+  return new NextResponse(message, { status, headers: { 'Cache-Control': 'no-store' } });
 }
 
 export async function GET(request: NextRequest, context: { params: Promise<{ size: string; cover: string }> }) {
@@ -72,8 +66,15 @@ export async function GET(request: NextRequest, context: { params: Promise<{ siz
   const upstream = coverUrlFor(coverId, size as 'S' | 'M' | 'L');
   if (!upstream) return refuse(400, 'Malformed cover reference');
 
+  const source: CoverFailure['source'] = coverId.startsWith('gb:') ? 'googlebooks' : 'openlibrary';
   const started = Date.now();
-  const asked = { coverId, size: size as 'S' | 'M' | 'L' };
+  const failed = (status: number | null, reason: CoverFailure['reason']): NextResponse => {
+    recordCoverFailure({ coverId, size: size as CoverFailure['size'], source, status, reason, ms: Date.now() - started });
+    const res = refuse(502, 'Cover image not available');
+    res.headers.set('X-Cover-Upstream', status === null ? reason : String(status));
+    return res;
+  };
+
   try {
     const res = await fetch(upstream, {
       headers: { Accept: 'image/*' },
@@ -84,27 +85,19 @@ export async function GET(request: NextRequest, context: { params: Promise<{ siz
       redirect: 'follow',
     });
     const type = res.headers.get('content-type') ?? '';
-    if (!res.ok || !res.body) {
-      return failed({ ...asked, reason: res.status, ms: Date.now() - started });
-    }
-    // A 200 that is not an image is an error page wearing a success code —
-    // the shape a throttle often takes, and worth telling apart from a 429.
-    if (!type.startsWith('image/')) {
-      return failed({ ...asked, reason: 'not-an-image', ms: Date.now() - started });
-    }
+    if (!res.ok || !res.body) return failed(res.status, 'status');
+    if (!type.startsWith('image/')) return failed(res.status, 'not-image');
     return new NextResponse(res.body, {
       headers: {
         'Content-Type': type,
         'Cache-Control': `public, max-age=3600, s-maxage=${CDN_SECONDS}, stale-while-revalidate=86400`,
         // Says nothing about the reader; useful when a wall is slow and the
         // question is which catalogue is answering.
-        'X-Cover-Source': coverId.startsWith('gb:') ? 'googlebooks' : 'openlibrary',
+        'X-Cover-Source': source,
       },
     });
-  } catch (err) {
-    // The two silences are worth telling apart: our own 15 s running out, and
-    // a connection that never answered at all.
-    const timedOut = err instanceof Error && (err.name === 'TimeoutError' || err.name === 'AbortError');
-    return failed({ ...asked, reason: timedOut ? 'timeout' : 'network', ms: Date.now() - started });
+  } catch (error) {
+    const name = error instanceof Error ? error.name : '';
+    return failed(null, name === 'TimeoutError' || name === 'AbortError' ? 'timeout' : 'error');
   }
 }

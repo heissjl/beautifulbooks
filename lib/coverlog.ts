@@ -1,46 +1,41 @@
 /**
- * What the other side answered when a cover did not arrive (ROADMAP 6.25).
- * Server-side only.
+ * What happened when a cover could not be fetched through `/img` (ROADMAP
+ * 6.25). Server-side only.
  *
- * Julian, 2026-09-09: „es bleiben einfach oft kacheln leer … vielleicht werden
- * wir von der openlibrary api absichtlich abgefangen?" The question cannot be
- * answered from here, because `/img` swallowed the upstream status: every
- * failure came back as a 502 and the log said nothing about whether Open
- * Library refused us, took too long, or was never asked.
+ * Since 1.3 every cover leaves from one server instead of from each reader's
+ * own address, which is exactly the shape under which Open Library's
+ * documented rate limits for covers would bite — and until 2026-09-10 the
+ * route answered 502 without saying *why*, so the question "are we being
+ * throttled?" could not be answered from the logs at all. This line answers
+ * it: the upstream status, or the reason there was none.
  *
- * This records **only failures**, and only what the failure was: the cover, the
- * size, what came back, and how long it took. Nothing about the reader — no
- * IP, no cookie, no user agent, no referrer — the same rule `lib/clicks.ts`
- * follows, and the same reason it may write to stdout without a DEBUG guard:
- * this is the product's telemetry, not debugging.
- *
- * Successes are not logged. A wall is three hundred images; a line each would
- * bury the twenty that matter.
+ * Like `lib/clicks.ts`, this writes without a DEBUG guard on purpose. It is
+ * written only on failure, so a healthy wall costs no log lines, and it says
+ * nothing about the reader: no IP, no user agent, no referrer — a cover id,
+ * a size, a status and a duration.
  */
-
 export interface CoverFailure {
-  /** `ol:12345` or `gb:abc`, as the route rebuilt it. */
   coverId: string;
   size: 'S' | 'M' | 'L';
-  /**
-   * What happened, in the words the question needs:
-   * a number is the upstream's HTTP status, `timeout` is our 15 s running out,
-   * `network` is a connection that never answered, and `not-an-image` is a
-   * 200 whose body was something else — an error page, usually.
-   */
-  reason: number | 'timeout' | 'network' | 'not-an-image';
-  /** Milliseconds spent before giving up. */
+  source: 'openlibrary' | 'googlebooks';
+  /** The upstream HTTP status, when there was a response at all. */
+  status: number | null;
+  /** Why the image was not served. `status` means the upstream answered but not with 2xx. */
+  reason: 'status' | 'not-image' | 'timeout' | 'error';
+  /** Milliseconds from the request to the failure. */
   ms: number;
 }
 
-/** Writes one structured line. Never throws: a missing cover is bad enough. */
+/** Writes one structured line. Never throws: a failing image must not fail twice. */
 export function recordCoverFailure(failure: CoverFailure): void {
   try {
-    console.warn(`bb.cover ${JSON.stringify({ ...failure, at: new Date().toISOString() })}`);
+    console.info(`bb.img ${JSON.stringify({ ...failure, at: new Date().toISOString() })}`);
   } catch {
     // A log line is not worth breaking a response over.
   }
 }
 
-/** The header that carries the same answer to whoever is measuring in a browser. */
-export const COVER_UPSTREAM_HEADER = 'X-Cover-Upstream';
+/** `429` and `403` from upstream are the two answers that would mean "you, specifically, are being refused". */
+export function looksLikeThrottling(failure: Pick<CoverFailure, 'status'>): boolean {
+  return failure.status === 429 || failure.status === 403;
+}
