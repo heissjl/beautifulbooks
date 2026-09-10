@@ -352,8 +352,10 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
 
   1. **Den Vorlauf auf die Adresse schicken, die auch gerendert wird** (`proxiedCoverSrc`). Eine Zeile, kein Risiko, und danach ist die Anfrage der Kachel ein Cache-Treffer.
   2. **Die Kachel es beweisen lassen, nicht den Vorlauf:** `LoadingStage` benutzt `CoverImage` (das genau das schon tut) oder blendet auf `onLoad` ein. Danach ist ein leerer Rahmen unmöglich, unabhängig von jedem Cache — das ist die Absicherung, falls 1 nicht reicht.
-  3. **Das Ende an die Wand knüpfen:** die Szene endet, wenn die erste Reihe der Wandkacheln geladen ist, mit der 4-s-Frist als Obergrenze. Sonst fliegt der FLIP weiterhin auf leere Kacheln.
-  4. **Die Frist muss ehrlich enden:** ist nach 4 s nichts da, endet die Szene **ohne Flug** statt auf eine leere Wand zu fliegen.
+  3. **Das Ende an die Wand knüpfen — und den Fächer dafür länger ziehen, nicht auf eine halbleere Wand gehen** (Julian, 2026-09-10: „warum wollen wir hier an eine halbleere Wand gehen und nicht lieber den Fächer noch länger ziehen?"). **Die Messung gibt ihm recht.** Kalt in Produktion, *Sylvia's Lovers*, ein Buch, das dieser Browser nie geöffnet hatte: der Fächer lief von 0 bis **7,0 s**, die erste Reihe der Wand (sechs Kacheln) stand bei **7,6 s**. Warten kostet also **sechs Zehntel**, nicht fünfzehn Sekunden — beide hängen an derselben Latenz von `/img`. Die Szene endet künftig, wenn die erste Reihe geladen ist.
+  4. **Die Obergrenze wird großzügiger und ehrlicher.** Die heutige Frist von 4 s ist ohnehin wirkungslos — gemessen lief der Fächer 7 s —, und ihre Aufgabe ist nur, einen endlosen Vorhang zu verhindern, wenn nie ein Bild kommt. Also eine deutlich höhere Grenze, und wenn sie greift, endet die Szene **ohne Flug**: Cover auf leere Kacheln fliegen zu lassen sieht kaputter aus als ein schlichter Wechsel.
+
+  **Der eigentliche Befund aus derselben Messung:** der Fächer lief bereits sieben Sekunden und stand einen Großteil davon **leer** (`0/1` bei 5,7 s, `0/2` bei 6,2 s). Er wird also längst „länger gezogen" — das Problem ist nicht seine Länge, sondern dass er dabei Rahmen ohne Bilder zeigt. **Nach 1 und 2 ist er bei jeder Länge ehrlich**, und erst dann lohnt 3.
 
   **Nach 1 und 2 in Produktion neu messen, bevor 3 gebaut wird** — gut möglich, dass 3 dann nicht mehr nötig ist, und 3 ist der einzige Schritt, der ein neues Signal von der Wand zur Seite braucht.
 

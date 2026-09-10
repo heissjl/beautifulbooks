@@ -1652,3 +1652,19 @@ Das erklärt beide Messungen des Tages. Im Dev-Server sah man dieselbe Cover-Adr
 **Es ist ein Rückschritt aus 1.3:** die Cover zogen hinter die eigene Route, der Vorlauf zog nicht mit. Solche Stellen findet keine Testsuite — die eine Seite kennt die andere nicht, und beide funktionieren für sich.
 
 **Der Plan steht in 6.25a**, vier Schritte, der erste eine Zeile. Bemerkenswert ist der Kontrast: die Wand macht es längst richtig (`CoverImage` blendet erst ein, wenn das eigene Bild geladen ist), nur die Ladeszene rendert `next/image` roh und ohne `onLoad`. Die Reparatur besteht zum Teil darin, der Szene beizubringen, was die Wand schon kann.
+
+## 2026-09-10 · Wie lange der Fächer wirklich läuft (ROADMAP 6.25a)
+
+Julian zum Plan: „warum wollen wir hier an eine halbleere Wand gehen und nicht lieber den Fächer noch länger ziehen?" Meine Sorge war, dass „warten, bis die Wand steht" bei `/img`-Zeiten von bis zu 15,6 s einen Vorhang von einer Viertelminute bedeutet. Also gemessen, kalt in Produktion, *Sylvia's Lovers* — ein Buch, das dieser Browser nie geöffnet hatte:
+
+| | |
+|---|---|
+| Fächer | läuft von 0 bis **7,0 s** |
+| Erste Reihe der Wand (sechs Kacheln) | steht bei **7,6 s** |
+| Erstes Wandbild / drei / zwölf | 0,1 s / 2,1 s / 7,7 s |
+
+**Warten kostet sechs Zehntelsekunden, nicht fünfzehn Sekunden.** Beide Enden hängen an derselben Latenz, also laufen sie fast zusammen. Julians Vorschlag ist damit der richtige, und meine Sorge war unbegründet — sie kam von der langsamsten Einzelanfrage statt von der Zeit, die zählt.
+
+**Der wichtigere Befund fiel nebenbei ab:** der Fächer lief bereits sieben Sekunden, also weit über seine nominellen 2,7 s, und stand einen Großteil davon **leer** — bei 5,7 s eine Kachel ohne Bild, bei 6,2 s zwei. Er wird längst „länger gezogen"; das Problem ist nicht seine Länge, sondern dass er dabei Rahmen ohne Bilder zeigt. Die Reihenfolge im Punkt bleibt deshalb: erst die Adresse (1) und das Einblenden auf `onLoad` (2), dann ist er bei jeder Länge ehrlich — und erst dann lohnt es, sein Ende an die Wand zu knüpfen.
+
+Und die 4-Sekunden-Frist ist ohnehin schon wirkungslos, wenn der Fächer sieben Sekunden läuft. Sie bleibt als Obergrenze gegen einen endlosen Vorhang, aber deutlich höher — und wenn sie greift, ohne Flug.
