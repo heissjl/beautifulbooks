@@ -717,6 +717,16 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   **Ein bekannter Kandidat steckt schon in der Liste:** von den kuratierten Werken werden nur die achtzehn der Startseite vorgerendert (5.1); alle übrigen entstehen beim ersten Abruf. Für eine Liste, die klein und bekannt ist, ist das die falsche Sparsamkeit — hier wäre `generateStaticParams` über alle hundert zu messen, gegen die Bauzeit, die 5.1 als Grund dagegen nennt.
 
+- [ ] **6.29 Eine ISBN führt nicht zu ihrer Ausgabe.** (Julian, 2026-09-10: „mache eine klare Übersicht wie die Suche nach ISBN und nach Stichworten funktioniert für welche Fälle, damit wir dort die beste Lösung finden.") *Gemessen und aufgeschrieben in [docs/suche-isbn-und-stichwort.md](docs/suche-isbn-und-stichwort.md), vierzehn Eingaben; Flussdiagramm als Artefakt.*
+
+  **Der Befund:** Open Librarys allgemeine Suche erkennt ISBNs von sich aus — mit Bindestrichen, mit Leerzeichen, als ISBN-10 —, antwortet mit genau einem Treffer in 0,4 bis 0,6 s und kostet dieselbe eine Anfrage wie jede Suche. **Die Kette reißt danach:** die Karte verlinkt auf `/book/<id>?q=9780451524935`, die ISBN steht also noch in der Adresse und wird von niemandem gelesen. Wer eine bestimmte Ausgabe in der Hand hält, bekommt 224 Cover ohne Markierung.
+
+  **Vorgeschlagen (Weg 2 im Dokument):** die Form der Eingabe erkennen, bevor gesucht wird — `cleanIsbn` und `isbn10to13` liegen in `lib/normalize.ts`, eine Work-ID ist `/^OL\d+W$/`. Die Suche bleibt, wie sie ist; neu sind zwei Kanten: bei genau einem Treffer `?isbn=…` statt `?q=…`, und die Detailseite wählt das Cover der Ausgabe mit dieser ISBN vor. Eine eingefügte Work-ID führt direkt auf ihre Seite statt auf „No books found". **Keine zusätzliche Anfrage, kein Google-Kontingent.**
+
+  **Dazu die Wortwahl:** eine falsche Prüfziffer und eine dem Katalog unbekannte ISBN sehen heute beide wie „No books found" aus — ein Satz über die Welt, wo einer über die Eingabe gemeint ist (N12, verwandt mit 1.4).
+
+  **Offene Frage an Julian:** ob die Vorwahl auch dann greifen soll, wenn die Ausgabe jenseits der Ladegrenze liegt und deshalb nicht gefunden wird — dann bleibt die Wand unmarkiert, und die Seite darf nichts anderes behaupten.
+
 - [ ] **6.11 Goodreads: was geht, was nicht.** (Julian, 2026-09-07: bessere Anbindung, Editionsdaten, Rezensionen, Bewertungen.) Recherchiert am selben Tag, und die Antwort fällt klarer aus als erhofft.
 
   **Eine Schnittstelle gibt es nicht mehr.** Goodreads gibt seit dem 8. Dezember 2020 keine neuen Entwicklerschlüssel aus und hat die öffentliche API zurückgezogen. Was es gibt, sind Scraper von Dritten — die aber genau das tun, was die Nutzungsbedingungen untersagen.
