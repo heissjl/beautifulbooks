@@ -1730,3 +1730,24 @@ Dazu als Absicherung: `LoadingStage` blendet eine Kachel erst ein, wenn ihr eige
 **Der erste Befund kam beim Prüfen der Route selbst:** `/img/S/ol-999999999` — ein Cover, das es nicht gibt — meldet `not-an-image`. Open Library antwortet also mit **200 und einem Körper, der kein Bild ist**, nicht mit 404. Ein Teil der leeren Kacheln kann schlicht ein fehlendes Cover sein, und das war von einer Drosselung bisher nicht zu unterscheiden.
 
 **Und das eigene Rate-Limit ist angehoben**, 800 Burst / 600 je Minute statt 400/300. Das ist ausdrücklich Arithmetik und keine Diagnose — ein 429 wurde hier nie gesehen —, aber 400 war eine Grenze von der Breite genau eines großen Buchs: zu eng, um ein Netz zu sein, und weit genug, um einen Leser zu treffen, der zwei davon hintereinander öffnet.
+
+## 2026-09-10 · Was `bb.img` in Produktion meldet: nichts (ROADMAP 6.25)
+
+Julian: „pushen und dann im Log nachsehen, was `bb.img` meldet." Gepusht, gewartet, nachgesehen — und die Antwort ist eine Entwarnung mit zwei Einschränkungen.
+
+**Das Log selbst konnte ich nicht lesen:** der Vercel-CLI ist auf dieser Maschine nicht installiert, der Vercel-MCP nicht autorisiert. Gemessen wurde daher über den Kopf `X-Cover-Upstream`, der genau dafür gebaut ist, und über den Zustand der Kacheln im Browser.
+
+**Eine große Wand in Produktion**, *The Great Gatsby*, 152 Kacheln, komplett durchgescrollt:
+
+| | |
+|---|---|
+| Bildanfragen abgeschlossen | 122 |
+| Fehlschläge, Platzhalter, gebrochene Bilder | **null** |
+| Antwortzeiten | Median **1,0 s**, p90 **5,0 s**, langsamste **6,6 s** |
+| Kacheln ohne Bild am Ende | 51 — **alle mit leerem `currentSrc`**, also nie angefragt |
+
+Die 51 sind faul geladene Kacheln unterhalb des Sichtbereichs. **Das ist genau die Verwechslung, vor der 6.25 selbst warnt** („nicht zu verwechseln mit einem Bild, das nur noch nicht geladen ist"), und es ist beruhigend, sie einmal in Zahlen zu haben: auf dieser Seite, zu dieser Stunde, ist die Ursache **Latenz, nicht Drosselung**.
+
+**Dass die Kette in Produktion schreibt, ist trotzdem geprüft:** `/img/S/ol-999999999` liefert dort 502 mit gesetztem Kopf. Wer `bb.img` sehen will, filtert im Vercel-Dashboard unter Logs darauf; solange nichts kommt, ist die Antwort die obige.
+
+**Und ein Schönheitsfehler fiel beim Benutzen auf.** Für das fehlende Cover meldete der Kopf `200` — der Status der Gegenseite —, was auf einer gescheiterten Antwort das Gegenteil dessen sagt, was passiert ist. Jetzt steht der Status nur da, wenn der Status die Antwort *ist*; sonst `not-image`, `timeout` oder `error`. Ein Diagnosewerkzeug, das man erst deuten muss, ist eines zu wenig.

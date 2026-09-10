@@ -71,7 +71,13 @@ export async function GET(request: NextRequest, context: { params: Promise<{ siz
   const failed = (status: number | null, reason: CoverFailure['reason']): NextResponse => {
     recordCoverFailure({ coverId, size: size as CoverFailure['size'], source, status, reason, ms: Date.now() - started });
     const res = refuse(502, 'Cover image not available');
-    res.headers.set('X-Cover-Upstream', status === null ? reason : String(status));
+    /*
+      The status only when the status *is* the answer. A missing cover comes
+      back from Open Library as a **200 whose body is not an image** (measured
+      in production 2026-09-10), and a header reading `200` on a failed
+      request says the opposite of what happened.
+    */
+    res.headers.set('X-Cover-Upstream', reason === 'status' && status !== null ? String(status) : reason);
     return res;
   };
 
