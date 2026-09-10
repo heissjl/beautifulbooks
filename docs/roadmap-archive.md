@@ -533,7 +533,11 @@ Damit wartet die Seite an **drei von vier** Stellen vor dem Mosaik; der Cover-F�
 
 ### 6.24
 
-*Stand beim Abhaken am 2026-09-10; das Ergebnis steht in der Roadmap.*
+*Stand beim Abhaken am 2026-09-10; das Ergebnis steht in der Roadmap. Die Ladebild-Session, die den Fehler behoben hat, hakte ihn am selben Tag in ihrer Fassung der Roadmap so ab:*
+
+> Erledigt 2026-09-10 (Julian meldete es an diesem Tag noch einmal aus einer anderen Session heraus). **Die Vermutung im Punkt war richtig und unvollständig:** `useWorkPages` liefert das Werk auf dem Rückweg tatsächlich vollständig aus `FINISHED` — die Ladeszene fragte nur nie, ob überhaupt noch gewartet wird. `useLoadingScene` bestand auf zwei Covern im Takt von 520 ms mit 650 ms Einlaufzeit; gemessen erschien der Fächer nach 1 s und stand bis **5 s** über einer Wand, die zum Zeichnen bereit war. Sind Cover und Hash beim Beginn der Szene schon da, endet sie jetzt im selben Augenblick — was F2.12 seit jeher versprach. Auf einer kalten Seite kann die Regel nicht greifen, weil die Cover dort lange vor dem Hash bekannt sind. → [Historie](history.md#2026-09-10--der-rückweg-spielte-vier-sekunden-einzug-die-niemand-brauchte-roadmap-619a-f212)
+
+*Ursprünglicher Punkt:*
 
 **6.24 Der Zurück-Knopf von der Jahrzehnte-Seite spielt die Ladeszene noch einmal ab.** (Julian, 2026-09-09: „wenn ich per browser zurück-taste von der decade wall zurück zur cover wall komme, will ich nicht erneut den ladebildschirm mit den 4 covern sehen.")
 
