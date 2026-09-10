@@ -25,6 +25,7 @@
  *    no such link is possible — a foreign ISBN, or none.
  */
 import type { BuyLink, Edition } from './model';
+import { twoQuestionShops } from './buylinks';
 import { DEFAULT_MARKET, type Market } from './market';
 import { isbn13to10, registrationArea } from './normalize';
 import type { VerdictStatus } from './verdicts';
@@ -232,14 +233,12 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
     heading with its own sentence, and a suffix there would explain something
     the heading already says.
   */
-  const anyEditionLabels = new Set(anyEdition.map(l => l.label));
-  const rest: BuyLink[] = [];
+  const candidates: BuyLink[] = [];
   const seen = new Set(lead.map(l => l.provider));
   for (const link of pool) {
     if (seen.has(link.provider)) continue;
-    if (anyEditionLabels.has(link.label)) continue;
     seen.add(link.provider);
-    rest.push(link);
+    candidates.push(link);
   }
 
   /*
@@ -253,24 +252,28 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
     Shops with only one question keep their plain label: naming a question
     nobody could ask differently explains nothing.
   */
+  const twoWays = twoQuestionShops(market);
   const name = (l: BuyLink): BuyLink =>
-    TWO_QUESTION_SHOPS.has(shopOf(l)) ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
+    twoWays.has(shopOf(l)) ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
   const namedLead = lead.map(name);
-  const namedRest = rest.map(name);
+
+  /*
+    Rule 2 is applied to the **named** labels, not the bare ones. A printing
+    search at Thalia reads "Thalia · title & year" and the work search under
+    the other heading reads "Thalia"; deduping before naming would have
+    swallowed the first because the second had spoken the shop's name.
+  */
+  const spoken = new Set([...namedLead, ...anyEdition].map(l => l.label));
+  const namedRest: BuyLink[] = [];
+  for (const link of candidates) {
+    const named = name(link);
+    if (spoken.has(named.label)) continue;
+    spoken.add(named.label);
+    namedRest.push(named);
+  }
 
   return { case: linkCase, place: registration?.place, lead: namedLead, rest: namedRest, anyEdition, note: noteFor(linkCase, market, registration?.place, isbn13) };
 }
-
-/**
- * Shops that can be asked two different things about one printing: their ISBN
- * field, or title, author, publisher and year. They are the only ones whose
- * buttons need to say which question they put.
- *
- * Everyone else is asked one way. Thalia and its like have a search field, but
- * it is only ever used for the *work* in the "another edition" row, which sits
- * under its own heading and explains itself.
- */
-const TWO_QUESTION_SHOPS: ReadonlySet<string> = new Set(['abebooks', 'ebay']);
 
 /** The shop behind a provider id, with the question stripped off. */
 function shopOf(link: BuyLink): string {

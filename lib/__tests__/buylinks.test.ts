@@ -78,21 +78,46 @@ describe('buyLinksFor per market', () => {
 });
 
 describe('searchLinksFor (no ISBN needed)', () => {
-  it('always offers title searches, adds image search with a cover and provenance for OL editions', () => {
+  it('asks every shop with a search form about this printing, not only the marketplaces', () => {
+    /*
+      Julian, 2026-09-10. Until then only AbeBooks, eBay and WorldCat were
+      asked about the printing; the shops' own search forms were used for the
+      *work* alone, in the "another edition" row. A foreign printing therefore
+      left the market's own shops with nothing to answer — their ISBN link is
+      withdrawn there, and nothing took its place.
+    */
     const links = searchLinksFor({ title: 'Mumbo Jumbo', author: 'Ishmael Reed', publisher: 'Doubleday', year: 1972, coverUrl: 'https://covers.openlibrary.org/b/id/1-L.jpg', editionId: 'ol:OL5468355M' }, 'us');
-    expect(links.map(l => l.provider)).toEqual(['abebooks-search', 'ebay-search', 'google-lens', 'tineye', 'worldcat', 'openlibrary']);
-    const abe = new URL(links[0].url);
+    expect(links.map(l => l.provider)).toEqual([
+      'abebooks-search', 'ebay-search',
+      'bookshop-search', 'amazon-search', 'thriftbooks-search',
+      'google-lens', 'tineye', 'worldcat', 'openlibrary',
+    ]);
+    const url = (provider: string) => links.find(l => l.provider === provider)!.url;
+
+    // AbeBooks alone is asked field by field; the rest get the word chain.
+    const abe = new URL(url('abebooks-search'));
     expect(abe.searchParams.get('tn')).toBe('Mumbo Jumbo');
     expect(abe.searchParams.get('pn')).toBe('Doubleday');
     expect(abe.searchParams.get('yrl')).toBe('1972');
-    expect(links[2].url).toContain('lens.google.com/uploadbyurl?url=https%3A%2F%2Fcovers');
-    expect(links[5].url).toBe('https://openlibrary.org/books/OL5468355M');
+    expect(url('bookshop-search')).toContain('Mumbo%20Jumbo%20Ishmael%20Reed%20Doubleday%201972');
+
+    expect(url('google-lens')).toContain('lens.google.com/uploadbyurl?url=https%3A%2F%2Fcovers');
+    expect(url('openlibrary')).toBe('https://openlibrary.org/books/OL5468355M');
   });
+
   it('uses market domains and skips what it cannot build', () => {
     const links = searchLinksFor({ title: 'Stolz und Vorurteil' }, 'de');
-    expect(links.map(l => l.provider)).toEqual(['abebooks-search', 'ebay-search', 'worldcat']);
-    expect(links[0].url).toContain('abebooks.de');
-    expect(links[1].url).toContain('ebay.de');
+    // Blackwell's and Booklooker have no confirmed search form, so they are
+    // absent rather than guessed at (ROADMAP 1.8).
+    expect(links.map(l => l.provider)).toEqual([
+      'abebooks-search', 'ebay-search',
+      'thalia-search', 'genialokal-search', 'amazon-search', 'hugendubel-search',
+      'worldcat',
+    ]);
+    const url = (provider: string) => links.find(l => l.provider === provider)!.url;
+    expect(url('abebooks-search')).toContain('abebooks.de');
+    expect(url('ebay-search')).toContain('ebay.de');
+    expect(url('amazon-search')).toContain('amazon.de');
   });
 });
 

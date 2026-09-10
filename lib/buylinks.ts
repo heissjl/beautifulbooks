@@ -144,6 +144,20 @@ const RETAILERS: Record<Market, Retailer[]> = {
   ],
 };
 
+/**
+ * Shops that can be asked two different things about one printing in this
+ * market: their ISBN field, and title/author/publisher/year.
+ *
+ * Read off the table rather than listed by hand, so a shop that gains a
+ * search form joins by itself. AbeBooks has no `searchUrl` — its search is
+ * the fielded one built in `searchLinksFor` — and is added here.
+ */
+export function twoQuestionShops(market: Market = DEFAULT_MARKET): ReadonlySet<string> {
+  const ids = RETAILERS[market].filter(r => r.searchUrl).map(r => r.id);
+  const withIsbnLink = new Set(RETAILERS[market].map(r => r.id));
+  return new Set([...ids, ...(withIsbnLink.has('abebooks') ? ['abebooks'] : [])]);
+}
+
 export function retailersFor(market: Market): ReadonlyArray<Pick<Retailer, 'id' | 'label'>> {
   return RETAILERS[market];
 }
@@ -257,6 +271,22 @@ export function searchLinksFor(input: SearchLinkInput, market: Market = DEFAULT_
   out.push({ provider: 'abebooks-search', label: 'AbeBooks', url: `https://www.abebooks.${ABEBOOKS_DOMAIN[market]}/servlet/SearchResults?${abe}` });
 
   out.push({ provider: 'ebay-search', label: 'eBay', url: `https://www.ebay.${EBAY_DOMAIN[market]}/sch/i.html?_nkw=${q(terms)}&_sacat=267` });
+
+  /*
+    Every shop with a search form is asked about *this printing* too, not only
+    about the work (Julian, 2026-09-10). Their `searchUrl` existed all along
+    and was used only for the "another edition" row, which asks a different
+    question — title and author, the work — so a foreign printing left the
+    market's own shops with nothing to answer at all: their ISBN link is
+    withdrawn there, and nothing took its place.
+
+    No affiliate tag: these are built on the client, where the ids are not
+    available. `titleSearchLinksFor` sets one where there is one.
+  */
+  for (const r of RETAILERS[market]) {
+    if (!r.searchUrl || out.some(l => l.provider === `${r.id}-search`)) continue;
+    out.push({ provider: `${r.id}-search`, label: r.label, url: r.searchUrl(terms, undefined), kind: 'search' });
+  }
 
   if (input.coverUrl) {
     out.push({ provider: 'google-lens', label: 'Google Lens', url: `https://lens.google.com/uploadbyurl?url=${q(input.coverUrl)}` });
