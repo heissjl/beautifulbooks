@@ -1,8 +1,10 @@
 # Beautiful Books – Spezifikation
 
-Stand: 2026-09-08. Diese Datei sagt, **was die Seite ist und sein soll**. Sie enthält keine Historie und keine offenen Aufgaben:
+Stand: 2026-09-10. Diese Datei sagt, **was die Seite ist und sein soll**. Sie enthält keine Historie und keine offenen Aufgaben:
 
-- Was noch zu tun ist, mit Reihenfolge und Zuständigkeit: [ROADMAP.md](ROADMAP.md).
+- Was noch zu tun ist, mit Reihenfolge und Zuständigkeit: [ROADMAP.md](ROADMAP.md); ihr Kopf („Steuerung“) verlinkt alle Dokumente und Abschnitte.
+- Was die Seite heute tatsächlich kann, als Bestandsliste mit Spec-Stelle und Code: [docs/features.md](docs/features.md).
+- Erledigte Roadmap-Punkte in voller Länge: [docs/roadmap-archive.md](docs/roadmap-archive.md).
 - Was wann gebaut, gemessen und warum entschieden wurde: [docs/history.md](docs/history.md). Die Umsetzungspläne dazu: [docs/plans/](docs/plans/).
 - Arbeitsregeln für Claude Code: [CLAUDE.md](CLAUDE.md).
 
@@ -426,3 +428,4 @@ Kommentare im Code zitieren Abschnitte der Spec, wie sie bis zum 2026-09-07 gegl
 | §8.7 Klärungsliste | Messungen in history, „alte §8.7“; Entscheidungen in ROADMAP Phase 0 |
 | §9 Analyse und Schritte 10–16 | [history](docs/history.md), „alte §9“ |
 | §10 Nächste Schritte | ROADMAP; Erledigtes in history, „alte §10“ |
+| Der Langtext eines abgehakten Roadmap-Punkts | [docs/roadmap-archive.md](docs/roadmap-archive.md), unter seiner Nummer (seit 2026-09-10) |

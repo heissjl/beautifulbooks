@@ -4,7 +4,7 @@ A visual book search: type a title, get one card per book with a mosaic of its c
 
 Data comes from [Open Library](https://openlibrary.org/developers/api) (primary) and [Google Books](https://developers.google.com/books) (supplementary covers and descriptions).
 
-**Status:** the data layer and the trust pass are done; the site is not deployed yet. What the site is: [SPEC.md](SPEC.md). What remains, in order: [ROADMAP.md](ROADMAP.md). What was built and measured: [docs/history.md](docs/history.md). The detailed plans, open and finished: [docs/plans/README.md](docs/plans/README.md).
+**Status:** live since 2026-09-08 at https://beautifulcovers.vercel.app, in hobby mode. What the site is: [SPEC.md](SPEC.md). What it can do today: [docs/features.md](docs/features.md). What remains, in order, with links to everything else: [ROADMAP.md](ROADMAP.md). What was built and measured: [docs/history.md](docs/history.md). The detailed plans: [docs/plans/README.md](docs/plans/README.md). Which session works on what: `npm run worktrees`.
 
 ## Stack
 

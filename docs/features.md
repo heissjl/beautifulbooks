@@ -15,7 +15,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Ein Ausfall heißt „The catalogue did not answer“ mit *Try again*, nie „No books found“; 503 ohne Cache | 2026-09-07 | F1.7, F3.3 | 1.4 | `lib/search.ts` (`SourceUnavailableError`), `app/api/search/` |
 | Eine schweigende Suche wird einmal wiederholt (nie bei 4xx), 20 s Gesamtdeckel; Such-Cache 24 h | 2026-09-08 | F3.3, N4 | 1.10 | `lib/sources/openlibrary.ts` (`SEARCH_RETRY`) |
 | Zuletzt gesucht (localStorage, 5) und kuratierte Wand als Leerzustand | 2026-09-06 / 09-08 | F1.6 | 6.17 (teilweise), 6.18 | `components/useRecentSearches.ts`, `lib/curated.ts`, `data/curated.json` |
-| Ladebild der Suche: ein Autorengesicht aus den Covern seiner Bücher, eine JPEG-Datei, zwanzig Vorlagen, Rückfall auf die kleine Cover-Wand | 2026-09-09 / 09-10 | F1.6a | 6.19a | `components/MosaicLoader.tsx`, `mosaicClearing.ts`, `lib/loading.ts`, `public/loading/` |
+| Ladebild: ein Autorengesicht aus den Covern seiner Bücher, eine JPEG-Datei je Anzeige, zwanzig Vorlagen, Rückfall auf die kleine Cover-Wand; vor der Suche, der Jahrzehnte-Seite und der von außen aufgerufenen Werkseite; atmet unter `prefers-reduced-motion` | 2026-09-09 / 09-10 | F1.6a | 6.19a | `components/MosaicLoader.tsx`, `mosaicClearing.ts`, `lib/loading.ts`, `public/loading/` |
 | Enter sendet ab (von Hand geprüft) | bestätigt 2026-09-10 | F1.5 | 0.8 | `components/SearchBar.tsx` |
 | Suchfeld in der Kopfzeile auf jeder Seite außer der Suche; ein Eingabefeld, Lupe auf dem Telefon; Zurück-Link heißt „Results“ / „Home“ | 2026-09-10 | F1.4a | 6.28 | `components/HeaderSearch.tsx`, `SiteHeader.tsx` |
 

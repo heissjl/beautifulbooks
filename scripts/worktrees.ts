@@ -108,7 +108,6 @@ function describe(name: string, worktree: string | null): Branch {
 }
 
 function shortPath(p: string): string {
-  const root = git(['rev-parse', '--show-toplevel']);
   const common = git(['rev-parse', '--git-common-dir']);
   const mainRoot = path.resolve(common, '..');
   if (p === mainRoot) return '(Hauptordner)';
