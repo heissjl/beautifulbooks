@@ -26,8 +26,8 @@ Stand: 2026-09-10, nach dem Umbau (Julian: „überprüfe die Abhängigkeiten, s
 ### Stand
 
 - **Online seit 2026-09-08: https://beautifulcovers.vercel.app**, Hobby-Modus (E20), Vercel Hobby, Funktionen in Frankfurt, Web Analytics an.
-- **Produktion ist `origin/main`.** Ein Push dorthin ist ein Deploy. Am 2026-09-10 arbeiteten **drei Sessions parallel**: eine schob 6.19a direkt nach `origin/main`, eine baute 6.29 auf dem lokalen `main`, eine baute 6.28 auf einem Branch — und das lokale `main` lag zeitweise sechs Commits vor und fünfzehn hinter Produktion, ohne dass es irgendwo stand. Seither zusammengeführt; `npm run worktrees` zeigt, ob das wieder passiert, und ist vor jedem Merge nach `main` zu lesen.
-- **56 Punkte offen, 29 erledigt.** Phase 1 ist bis auf drei Punkte leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
+- **Produktion ist `origin/main`.** Ein Push dorthin ist ein Deploy. Am 2026-09-10 arbeiteten **drei Sessions parallel**: eine schob 6.19a direkt nach `origin/main`, eine baute 6.29 auf dem lokalen `main`, eine baute 6.28 auf einem Branch — und das lokale `main` lag zeitweise sechs Commits vor und fünfzehn hinter Produktion, ohne dass es irgendwo stand. Seither zusammengeführt und am selben Abend deployt (`b43904b`); `npm run worktrees` zeigt, ob das wieder passiert, und ist vor jedem Merge nach `main` zu lesen.
+- **53 Punkte offen, 32 erledigt.** Phase 1 ist bis auf zwei Punkte leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
 - **Der Engpass ist nicht die Technik, sondern dass niemand die Seite kennt:** sie steht in keiner Suchmaschine (2.5) und unter einem Namen, den niemand behält (0.5).
 
 ### Nächste Schritte
@@ -36,11 +36,11 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt.
 
 | | Was | Wer | Aufwand | Warum jetzt |
 |---|---|---|---|---|
-| 1 | **Deployen** (push), dann **2.6** zu Ende: CDN-Treffer der Bildroute, OG-Bild im Messenger, Google-Verbrauch eines Tages | Julian, dann Claude | eine halbe Stunde | Seit dem 2026-09-09 ist nichts in Produktion belegt, und **1.3 wirkt erst dort** |
+| 1 | **2.6 zu Ende**: OG-Bild in einem Messenger, Google-Verbrauch eines Tages aus der Cloud-Konsole | Julian | zehn Minuten | Der Deploy vom 2026-09-10 ist geprüft, der CDN-Treffer gemessen; die zwei Reste kann nur Julian sehen |
 | 2 | **2.5 Search Console und Bing**, dazu **0.2** zweiter Google-Schlüssel und **0.13** Kontingent-Alarm | Julian | 30 Minuten | Jeder Tag ohne Sitemap ist ein verlorener Tag; ein Schlüssel für Arbeit *und* Betrieb verbraucht das Kontingent der Besucher |
 | 3 | **0.5 / 2.2 Domain** kaufen und verbinden | Julian | 20 Minuten plus DNS | Reichweite auf `vercel.app` muss später umgeleitet werden; Vorschläge in [docs/domain-recherche.md](docs/domain-recherche.md) |
-| 4 | **6.25 leere Kacheln** — zuerst den Status der Gegenseite in `/img` protokollieren | Claude | zwei Stunden | Der einzige offene Punkt, der auf einen Fehler zeigt, den heute niemand ausschließen kann, und 1.3 hat den Mechanismus dafür neu geschaffen |
-| 5 | **1.9** der leere Platz oben rechts, **1.11a** ISBN-Link bei lebender ISBN, **6.24** Zurück-Ladeszene, **6.14a** Scan-Reihe | Claude | je Stunden bis ein halber Tag | Alle ohne Wartezeit auf Julian, alle für einen Leser sichtbar |
+| 4 | **6.25 leere Kacheln** — nach einem Tag Produktion die `bb.img`-Zeilen lesen | Claude, nach einem Deploy | eine halbe Stunde | Das Protokoll ist gebaut; ob Open Library uns drosselt, sagt erst ein Tag Logs |
+| 5 | **1.9** der leere Platz oben rechts | Claude | ein halber Tag | Der letzte Punkt in Phase 1, der nicht auf Julian wartet; die Empfehlung (ein Fächer aus Covern desselben Buchs) steht seit dem 2026-09-07 |
 | 6 | **6.18 Kuratierung zu Ende**, danach **6.17 Rotation** und das Jahr für **6.16** | Julian, dann Claude | ein Abend, dann eine Sitzung | Die Startseite ist das Erste, was ein Besucher sieht |
 | 7 | **6.13 mit 6.15 Schritt 3** | Claude | ein bis zwei Sitzungen | Der schwerste offene Datenfehler: die Karte verspricht Ausgaben, die die Wand nie lädt |
 | 8 | **3.1 Analyse-Seite** | Claude | zwei Tage | Erst sinnvoll mit einer Woche echter Besucher |
@@ -58,7 +58,7 @@ Was auf was wartet, nur die offenen Punkte. Rechtecke sind Claudes, abgerundete 
 flowchart LR
   subgraph Julian
     direction TB
-    J_push(["Push = Deploy"])
+    J26(["2.6 Rest: OG-Bild, Google-Verbrauch"])
     J02(["0.2 zweiter Schlüssel"])
     J03(["0.3 Abrechnung"])
     J05(["0.5 / 2.2 Domain"])
@@ -69,8 +69,7 @@ flowchart LR
     J49(["4.9 Anbieter und Zahlen"])
     J01(["0.1 Verfügbarkeits-Button (Shop)"])
   end
-  J_push --> R26["2.6 Abnahme, CDN-Treffer von 1.3"]
-  J_push --> R625["6.25 leere Kacheln"]
+  Logs["ein Tag Produktionslogs"] --> R625["6.25 leere Kacheln"]
   R625 --> R626["6.26 kuratierte Liste"]
   J02 --> R013["0.13 Kontingent-Alarm"]
   J03 --> R013
@@ -106,8 +105,8 @@ In der Reihenfolge, in der sie hier stehen; die Regel bleibt: **die vorderste Ph
 |---|---|---|---|---|
 | [0 Entscheidungen](#phase-0--entscheidungen-die-nur-julian-treffen-kann) | Konten, Geld, Recht, Produktfragen | 10 | 4 | Julian |
 | [2 Betrieb](#phase-2--betrieb-domain-sichtbarkeit-abnahme) | Domain, Suchmaschinen, Überwachung, Abnahme | 4 | 3 | Julian (Konten), ein Deploy |
-| [1 Vor echtem Verkehr](#phase-1--vor-echtem-verkehr) | Was ein erster Besucher noch nicht sehen soll | 3 | 9 | nichts |
-| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 20 | 12 | teils 6.6 (Geld), teils 6.18 (Julian) |
+| [1 Vor echtem Verkehr](#phase-1--vor-echtem-verkehr) | Was ein erster Besucher noch nicht sehen soll | 2 | 10 | nichts |
+| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 18 | 14 | teils 6.6 (Geld), teils 6.18 (Julian) |
 | [3 Messen](#phase-3--messen) | Analyse-Seite, Verbrauch, Conversion | 3 | 0 | Besucher |
 | [5 Reichweite](#phase-5--reichweite) | Seitengattungen, Fabrik, Kanäle | 8 | 0 | Inhalte, Rechtefrage |
 | [4 Geld](#phase-4--geld) | Partnerprogramme, Werbung, Spenden | 8 | 1 | Besucher, Umschalttag |
@@ -230,7 +229,9 @@ Keine davon ist Code. Für den Hobby-Betrieb sind 0.1, 0.6, 0.9 und 0.11 beantwo
 
   **Nach der Umstellung auf Frankfurt nachgemessen:** statische Seiten 0,24–0,49 s; kalte Suchen 1,1–1,2 s, einmal 13,4 s mit greifender Wiederholung; unbekannte Work-ID fünf von fünf mit 404 (1,6–9,3 s), ein sechster Versuch aber **200 nach 20,6 s**, weil Open Library gerade schwieg — der von 1.7 gewollte Soft-404 während einer Ausfall-Episode, gemessen und in der [Historie](docs/history.md) begründet. Der Böll-Testfall aus 6.15 liefert live **4 Karten statt 6**.
 
-  **Offen:** das OG-Bild in einem Messenger ansehen; abends den Google-Verbrauch in der Cloud-Konsole ablesen und in die Historie schreiben; die restliche Tastaturprobe am Gerät (0.8a); und nach dem nächsten Deploy prüfen, dass Canonical und Sitemap die richtige Adresse tragen und Analytics zählt.
+  **Nach dem Deploy vom 2026-09-10 nachgemessen** (Stand `b43904b`, einmal, nicht in der Schleife): die Bildroute liefert dasselbe Cover beim zweiten Abruf aus dem CDN — **`x-vercel-cache: MISS` in 2,12 s, dann `HIT` in 0,24 s** (`/img/M/ol-13498737`, 24 KB, `age: 1`); damit ist 1.3 belegt. Canonical und OG-Bild der Werkseite tragen `beautifulcovers.vercel.app`, die Sitemap 253 Adressen, `/_vercel/insights/script.js` antwortet 200, About ist `PRERENDER` mit genau einem Suchfeld in der Kopfzeile (6.28 live).
+
+  **Offen:** das OG-Bild in einem Messenger ansehen; abends den Google-Verbrauch in der Cloud-Konsole ablesen und in die Historie schreiben; die restliche Tastaturprobe am Gerät (0.8a).
 
 ### Erledigt in Phase 2
 
@@ -263,16 +264,6 @@ Keine davon ist Code. Für den Hobby-Betrieb sind 0.1, 0.6, 0.9 und 0.11 beantwo
 
   **Bedingungen, die für jede Variante gelten:** keine Google-Anfrage und kein Nachladen beim ersten Rendern (die Cover-IDs stehen fest, wie in `lib/curated.ts`); auf schmalen Bildschirmen darf das Element das Suchfeld nicht unter die Kante schieben, dort entfällt es oder rückt unter die Wand; und es darf nichts behaupten, was §1 verbietet — „vier von 226 Covern" ist erlaubt, „alle Cover" nicht.
 
-- [ ] **1.11a Bei einer lebenden ISBN soll der ISBN-Link führen, nicht die Verlagssuche.** (Julian, 2026-09-09, an einem Screenshot: „erklär mir warum die suche in abebooks … nach … schuster incorporated, also mit verlag geht statt über isbn.")
-
-  **Was passiert, und es ist so gebaut.** Der Fall im Screenshot: Markt **DE**, ISBN `9781439142677` — das ist `978-1`, also der englische Sprachraum, für den deutschen Markt somit `foreign`. In diesem Fall führen nach [PLAN-1.11](docs/plans/PLAN-1.11-kauflinks-ux.md) §2.3 **AbeBooks und Booklooker als Titelsuche**, gebaut aus Titel, Autor, Verlag und Jahr (`searchLinksFor` setzt `tn`, `an`, `pn`, `yrl`/`yrh`), nicht aus der Nummer. Die Begründung dort: antiquarische Angebote tragen oft gar keine ISBN, und dann ist Titel + Verlag + Jahr die bessere Frage.
-
-  **Für diesen Fall ist die Begründung falsch, und das ist der Punkt.** Sie trägt für vergriffene Drucke. Hier steht daneben das Verdikt **`verified`** — der Verlag führt zu dieser Nummer aktuell genau dieses Bild, die ISBN ist also lebendig und katalogisiert. AbeBooks, eBay und Booklooker schlagen ISBNs international nach; „nicht mein Markt" heißt für einen Marktplatz nichts. Die Verlagssuche liefert dann alles von Simon & Schuster aus 2012 statt dieses einen Buchs — **unschärfer als der Link, den wir weggelassen haben.**
-
-  **Vorschlag, und er benutzt nur, was ohnehin schon geholt wird:** das Verdikt entscheidet über die Abfrageform. Bei **`verified`** führt der ISBN-Link, auch im Fall `foreign` — die Nummer ist nachweislich in Umlauf. Bei **`unknown`** (kein Verlagsbild auf dem Datensatz, typisch für alte Drucke), bei **`differs`** und **ohne ISBN** bleibt es bei der Titelsuche. `pending` und `unavailable` verhalten sich wie heute, also wie `unknown`, weil eine unbeantwortete Frage nichts bewegen darf. Eine Stunde, plus Tests je Fall.
-
-  **Was dabei nicht verrutschen darf:** die Reihenfolge der Läden bleibt, wie sie ist — hier geht es allein darum, **womit** der führende Laden gefragt wird. Und der Satz darunter behält seinen Wortlaut: er nennt die Registrierungsgruppe und nie einen Laden.
-
 - [ ] **1.8 Händler-URLs Hugendubel und genialokal von Hand im Browser prüfen.** Beide antworten dem Skript mit 200 und rendern die Treffer erst im Browser; ihre URL-Muster sind weder bestätigt noch widerlegt. Zehn Minuten, beim Prüfen im sichtbaren Browser-Panel.
 
 ### Erledigt in Phase 1
@@ -281,7 +272,7 @@ Keine davon ist Code. Für den Hobby-Betrieb sind 0.1, 0.6, 0.9 und 0.11 beantwo
 
 - [x] **1.2 Die Kauf-Links waren in der Seitenleiste nicht auffindbar.** Erledigt 2026-09-09 zusammen mit 1.11: **5 statt 14** sichtbare Bedienelemente, das Cover an der Fensterhöhe gedeckelt. Spalteninhalt bei *Beloved* 2.351 → 851 px, der erste Kauf-Knopf steht im Fenster statt 437 px darunter. → [Historie](docs/history.md#2026-09-09--die-spalte-die-einer-türkischen-isbn-fünf-amerikanische-läden-anbot-roadmap-111-und-12) · [Archiv](docs/roadmap-archive.md#12)
 
-- [x] **1.3 Bild-Cache vor Open Library und Google.** Erledigt 2026-09-09 als Route `/img/<S|M|L>/<ol-…|gb-…>` mit 30 Tagen CDN-Cache — die Cover-ID im Pfad, nie eine URL. Grund: 151 Bilder je *Gatsby*-Seite, 5,9–16 s je Bild aus Deutschland. **Der Gewinn ist erst nach einem Deploy belegbar** (`x-vercel-cache: HIT`, siehe 2.6); lokal gibt es kein CDN. → [Historie](docs/history.md#2026-09-09--ein-bild-in-sechzehn-sekunden-roadmap-13) · [Archiv](docs/roadmap-archive.md#13)
+- [x] **1.3 Bild-Cache vor Open Library und Google.** Erledigt 2026-09-09 als Route `/img/<S|M|L>/<ol-…|gb-…>` mit 30 Tagen CDN-Cache — die Cover-ID im Pfad, nie eine URL. Grund: 151 Bilder je *Gatsby*-Seite, 5,9–16 s je Bild aus Deutschland. **In Produktion belegt am 2026-09-10:** derselbe Abruf `MISS` in 2,12 s, dann `HIT` aus dem CDN in 0,24 s (2.6). → [Historie](docs/history.md#2026-09-09--ein-bild-in-sechzehn-sekunden-roadmap-13) · [Archiv](docs/roadmap-archive.md#13)
 
 - [x] **1.4 Ein Ausfall der Suche heißt nicht mehr „No books found“.** Erledigt 2026-09-07: `SourceUnavailableError`, 503 ohne Cache, „The catalogue did not answer“ mit *Try again*; Deckel 12 s statt 8, weil drei von zwölf gültigen Antworten zwischen 9 und 10 s lagen. → [Historie](docs/history.md#2026-09-07--ein-ausfall-der-suche-heißt-nicht-mehr-nichts-gefunden-roadmap-14) · [Archiv](docs/roadmap-archive.md#14)
 
@@ -292,6 +283,8 @@ Keine davon ist Code. Für den Hobby-Betrieb sind 0.1, 0.6, 0.9 und 0.11 beantwo
 - [x] **1.7 Zwei Antworten, die nicht stimmten.** Erledigt 2026-09-08: unbekannte Work-ID → 404, aber nur bei sicherem „gibt es nicht“; `?offset=` jenseits der Kappung → leere Seite mit dem gelieferten Offset. Live belegt am 2026-09-08 (2.6). → [Historie](docs/history.md#2026-09-08--der-hobby-modus-ein-schalter-statt-zweier-branches-roadmap-20-dazu-17-und-615-schritt-12) · [Archiv](docs/roadmap-archive.md#17)
 
 - [x] **1.10 Eine gescheiterte Suche einmal wiederholen.** Erledigt 2026-09-08: zweiter Versuch nur bei Schweigen, nie bei 4xx, 20 s Gesamtdeckel; Such-Cache 24 h statt 1 h. Die Messung danach — 80 Suchen, kein Ausfall, Median 0,9 s — zeigte, dass Ausfälle Episoden sind und keine Quote. → [Historie](docs/history.md#2026-09-08--die-suche-wiederholt-sich-einmal-und-der-cache-hält-einen-tag-roadmap-110) · [Archiv](docs/roadmap-archive.md#110)
+
+- [x] **1.11a Bei einer lebenden ISBN führt der ISBN-Link, nicht die Verlagssuche.** Erledigt 2026-09-10: bei `verified` fragt `linkPlan` die Marktplätze im Fall `foreign` **nach der Nummer** statt nach Titel, Verlag und Jahr — dieselben Läden, dieselbe Reihenfolge, nur die Frage ist eine andere; `unknown`, `pending`, `unavailable` und `differs` bleiben wie sie waren. Im Browser belegt an Julians Fall: Markt DE, *Fahrenheit 451* Simon & Schuster 2012, ISBN `9781451673319` mit bestätigtem Verlagsbild → AbeBooks und Booklooker über `/go/<shop>/9781451673319`, statt „Simon & Schuster 2012" zu suchen. → [Historie](docs/history.md#2026-09-10--nach-dem-deploy-der-cdn-treffer-ein-protokoll-für-leere-kacheln-der-isbn-link-bei-lebender-isbn-und-die-scan-reihe-in-einer-zeile) · [Archiv](docs/roadmap-archive.md#111a)
 
 - [x] **1.11 Kauf-Links, die ins Leere laufen.** Erledigt 2026-09-09 mit 1.2: die ISBN-Registrierungsgruppe entscheidet — vier Fälle **home / foreign / kdp / no-isbn** (`lib/linkplan.ts`), Marktplätze führen bei fremder ISBN, `differs` ersetzt die erste Reihe durch Suchen mit Titel, Autor, Verlag und Jahr, und unter einem gefalteten Cover führt der Druck, der den gezeigten Scan trug. Grundlage: **44 %** der Cover-Ausgaben tragen eine ISBN aus einem fremden Sprachraum. Offen bleibt allein Julians Stichprobe (1.8). → [Historie](docs/history.md#2026-09-09--die-spalte-die-einer-türkischen-isbn-fünf-amerikanische-läden-anbot-roadmap-111-und-12) · [PLAN-1.11](docs/plans/PLAN-1.11-kauflinks-ux.md) · [Archiv](docs/roadmap-archive.md#111)
 
@@ -320,6 +313,8 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
   2. **Das eigene Rate-Limit** (`img`, 400 Burst / 300 pro Minute). Eine Wand mit 308 Covern passt knapp; eine Wand plus die Mosaike einer Trefferliste passt nicht mehr. **Unterscheidet sich durch 429 im Log** — heute keine, aber die Grenze ist zu knapp für die großen Werke und gehört angehoben oder an die Wandgröße gekoppelt.
   3. **Open Library drosselt uns.** **Unterscheidet sich durch 429 oder 403 *von dort*, im `X-Cover-Source`-Pfad** — dafür muss die Route den Statuscode der Gegenseite protokollieren, was sie heute nicht tut. Das ist die erste zu bauende Kleinigkeit, denn ohne sie bleibt die Frage unbeantwortbar.
 
+  **Die erste Kleinigkeit ist gebaut (2026-09-10):** jeder Fehlschlag der Route schreibt eine Zeile `bb.img` (`lib/coverlog.ts`) mit Cover-ID, Größe, Quelle, dem Status der Gegenseite oder dem Grund, dass es keinen gab (`timeout`, `not-image`, `error`), und der Dauer; die 502 trägt dasselbe als `X-Cover-Upstream`. Ein 429 oder 403 von dort ist die Drossel-Signatur, ein 404 ein fehlender Scan, ein Timeout archive.org. Dazu ist der Eimer `img` von 400/300 auf **800/400** je Minute gehoben, damit eine große Wand plus die Mosaike einer Trefferliste nicht an der eigenen Grenze scheitern. **Offen bleibt die Frage selbst:** nach einem Tag Produktion die `bb.img`-Zeilen in den Vercel-Logs zählen — gibt es 429/403, ist es die Drossel; gibt es nur Timeouts, ist es archive.org; gibt es keine, war es der Dev-Server oder das faule Laden.
+
   **Nicht zu verwechseln mit einem Bild, das nur noch nicht geladen ist:** Kacheln laden faul, und ein Vollseiten-Screenshot löst das Laden unterhalb des Bildschirms nicht aus. Beim nächsten Auftreten deshalb festhalten: hat die Kachel das Buch-Symbol (dann ist die Anfrage **gescheitert**) oder ist sie einfarbig leer (dann wurde sie **nie gestellt**)?
 
 - [ ] **6.26 Die kuratierte Liste muss sich perfekt anfühlen.** (Julian, 2026-09-09: „die UX für alles was mit der kuratierten liste passiert muss perfekt sein. ich weiß nicht warum da manchmal noch lange ladezeiten sind oder einzelne kacheln leer bleiben.")
@@ -329,15 +324,6 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
   **Zu messen, bevor gebaut wird, und zwar getrennt nach kuratiert und nicht kuratiert:** Zeit bis zur ersten Kachel, Zeit bis die Wand steht, Zahl der Kacheln ohne Bild. Wenn ein kuratiertes Werk sich messbar besser verhält als ein beliebiges, ist der Weg klar — mehr vorrechnen. Verhält es sich gleich, liegt es nicht am Index, sondern an 6.25, und dieser Punkt löst sich dort auf.
 
   **Ein bekannter Kandidat steckt schon in der Liste:** von den kuratierten Werken werden nur die achtzehn der Startseite vorgerendert (5.1); alle übrigen entstehen beim ersten Abruf. Für eine Liste, die klein und bekannt ist, ist das die falsche Sparsamkeit — hier wäre `generateStaticParams` über alle hundert zu messen, gegen die Bauzeit, die 5.1 als Grund dagegen nennt.
-
-- [ ] **6.24 Der Zurück-Knopf von der Jahrzehnte-Seite spielt die Ladeszene noch einmal ab.** (Julian, 2026-09-09: „wenn ich per browser zurück-taste von der decade wall zurück zur cover wall komme, will ich nicht erneut den ladebildschirm mit den 4 covern sehen.")
-
-  **Für die Suche ist das seit `49a3453` gelöst, für diesen Weg nicht.** `useWorkPages` merkt sich einen fertigen Durchlauf (`FINISHED`) und liest ihn beim Rendern, damit ein Zurück zur Wand sofort steht. Warum das hier nicht greift, ist **vor dem Bauen zu klären** — die Jahrzehnte-Seite ist eine eigene Route, also wird die Komponente neu montiert und der Modulzustand müsste eigentlich überleben. Kandidaten: die Seite ist serverseitig gerendert und ihr Zurück ist eine echte Navigation, kein `router.back()` im selben Baum; oder `FINISHED` ist an einen `requestKey` gebunden, der beim Wiedereintritt anders lautet (Markt, Sprache). Erst nachsehen, welches von beidem, dann beheben — die Ursache steht nicht fest.
-
-- [ ] **6.14a Die Scan-Reihe: seitwärts scrollen statt umbrechen, und ein kürzerer Satz.** (Julian, 2026-09-09, an *Fahrenheit 451* mit **acht** Scans.)
-
-  - **Umbruch kostet Platz, den die Spalte nicht hat.** Acht Kacheln passen bei `flex-wrap` nicht in eine Reihe und erzeugen eine zweite — in einer Spalte, die 1.2 gerade erst von 2.351 auf 851 px gebracht hat. Stattdessen **eine Reihe mit seitlichem Scrollen** (`overflow-x: auto`, `scroll-snap`), wie es die Sprachreiter auf dem Telefon schon tun. Dabei mitnehmen, was 6.5 für die Reiterzeile notiert: eine Verlaufskante am Rand, sonst sieht niemand, dass es weitergeht.
-  - ~~**Der Erklärsatz ist zu lang.**~~ *Erledigt 2026-09-09 mit N13: aus zwei Sätzen wurde „Different scans of the same design, sometimes of different printings." Die Überschrift „The same cover, N scans" trug die Aussage ohnehin schon; geblieben ist, dass es verschiedene Scans und manchmal verschiedene Drucke sind — der Grund, warum die Reihe überhaupt existiert (E16).* Offen bleibt allein der seitliche Scroll darüber.
 
 - [ ] **6.5 Kleinigkeiten aus dem Durchklick.** *Dazu am 2026-09-08 beim Prüfen von 6.1 im Browser gesehen: bei `alice in wonderland` antwortete eine der Mosaik-Anfragen (`/api/works/<id>?summary=1`) mit **503**, und die Karte blieb leer, ohne dass irgendwo stand, warum. Das ist derselbe Riss wie 1.4, eine Ebene tiefer: der Ausfall einer Quelle sieht aus wie ein Buch ohne Cover. Die Wiederholung aus 1.10 sitzt nur im Suchpfad. Entweder wiederholt die Mosaik-Anfrage einmal, oder die Kachel sagt, dass sie nicht geladen werden konnte. **Am 2026-09-09 im Code bestätigt:** `components/useCardCovers.ts` fängt jeden Fehler in ein leeres `catch` („never surface it") und kennt keinen zweiten Versuch — die Wiederholung aus 1.10 sitzt allein in `searchWorks`.* Tippfehler-Toleranz (`gatsbee` liefert null Treffer ohne Vorschlag; ein Abgleich gegen die kuratierten Titel und die letzten Suchen wäre billig). Ein sichtbares Label „about this book“ auf Karten mit Sekundärliteratur, statt sie nur nach hinten zu rechnen. Eine Verlaufskante an der seitlich scrollbaren Reiterzeile auf dem Telefon. Ein Weg von der Telefon-Schublade zurück zur Wand, ohne zu schließen, zu scrollen und neu zu tippen. `priority` auf den ersten Kacheln, die Konsole meldet auf jeder Seite LCP-Warnungen.
 
@@ -592,6 +578,8 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 - [x] **6.14 Ein gefaltetes Cover war nirgends zu sehen.** Erledigt 2026-09-09: „The same cover, N scans“ unter dem großen Cover, jeder Scan anklickbar, die Quelle des gezeigten Scans wird genannt. Dabei erst wirklich gelöst: der Druck, der den gezeigten Scan trug, führt die Ausgabenliste (`carriedBy`), weil zwei Vintage-Datensätze dieselbe ISBN und damit dasselbe Verdikt tragen. → [Historie](docs/history.md#2026-09-09--ein-cover-das-man-nicht-sehen-konnte-und-eines-das-man-zu-groß-sah-roadmap-614-und-610a) · [Archiv](docs/roadmap-archive.md#614)
 
+- [x] **6.14a Die Scan-Reihe scrollt seitwärts statt umzubrechen.** Erledigt 2026-09-10 (der kürzere Satz schon am 2026-09-09 mit N13): eine Reihe mit `overflow-x: auto` und Scroll-Snap, dazu eine **Verlaufskante rechts, die nur erscheint, solange es weitergeht** und am Ende verschwindet (`components/useOverflowsX.ts`, ein `ResizeObserver` auf Kasten *und* Inhalt). Gemessen an *Fahrenheit 451* mit zehn Scans: Inhalt 504 px in einem 369 px breiten Kasten, eine Zeile von 64 px statt zwei. → [Historie](docs/history.md#2026-09-10--nach-dem-deploy-der-cdn-treffer-ein-protokoll-für-leere-kacheln-der-isbn-link-bei-lebender-isbn-und-die-scan-reihe-in-einer-zeile) · [Archiv](docs/roadmap-archive.md#614a)
+
 - [x] **6.18 Eine Kuratier-App zum Durchklicken.** Gebaut 2026-09-08 und in Benutzung (`lab/curate/`): 150 Werke im Werkzeug, Reihenfolge per Drag & Drop mit Dreier- und Sechser-Vorschau, Vorschläge aus der eigenen Suche, „streichen“ neben „überspringen“. Julians Durchgang ist zu rund zwei Dritteln fertig; daran hängen 6.17 und 6.16. → [Historie](docs/history.md#2026-09-08--kuratieren-und-was-daraus-für-die-startseite-folgt-roadmap-617-618) · [Historie](docs/history.md#2026-09-09--zwanzig-vorschläge-die-keine-waren-roadmap-618) · [Archiv](docs/roadmap-archive.md#618)
 
 - [x] **6.19 Ein Ladebildschirm für die Suche, und der der Wand, der auf dem Telefon nicht passte.** Erledigt 2026-09-09: `AssemblingWall` (kleine sich bauende Wand aus den Startseiten-Covern) für Suche und Werkseite ohne Vorschau; der Cover-Fächer rechnet in Bildschirmbreiten und scrollt nicht mehr seitlich. → [Historie](docs/history.md#2026-09-09--beide-ladebildschirme-und-was-das-telefon-dabei-zeigte-roadmap-619) · [Archiv](docs/roadmap-archive.md#619)
@@ -605,6 +593,8 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 - [x] **6.22 Das Farbschema.** Erledigt 2026-09-09: sanfteres Terrakotta `#945138` / `#dbac94` (Kontrast 4,56 → 5,29), und `ink-3` von 3,28 auf 4,55 — es verfehlte WCAG AA seit dem ersten Tag. `lib/__tests__/contrast.test.ts` liest `globals.css` selbst und prüft sechs Paare in beiden Modi. → [Historie](docs/history.md#2026-09-09--vier-färbungen-derselben-wand-und-ein-kontrast-der-schon-durchfällt-roadmap-622) · [lab/palette](lab/palette/README.md) · [Archiv](docs/roadmap-archive.md#622)
 
 - [x] **6.29 Eine ISBN führt zu ihrer Ausgabe.** Erledigt 2026-09-10 in einer eigenen Session, Weg 2 aus [docs/suche-isbn-und-stichwort.md](docs/suche-isbn-und-stichwort.md): die Form der Eingabe wird vor der Suche erkannt (`lib/queryshape.ts`, rein, ohne eigene Anfrage); bei **genau einem** Treffer führt die Karte mit `?isbn=` und die Detailseite wählt das Cover dieser Ausgabe vor, eine Work-ID führt direkt auf ihre Seite. Der Befund beim Bauen: eine unbekannte ISBN ergibt keine null Treffer, sondern eine Ziffernsuche mit acht Büchern — deshalb zählt nur der einzelne Treffer als gefunden (N12). → [Archiv](docs/roadmap-archive.md#629)
+
+- [x] **6.24 Der Zurück-Knopf von der Jahrzehnte-Seite spielte die Ladeszene noch einmal ab.** Erledigt 2026-09-10 in der Ladebild-Session, unter F2.12: die Ursache war nicht die Vorschau aus der Karte, sondern `useLoadingScene`, das zwei Cover im Takt verlangte, ehe es aufhören durfte — vier Sekunden Einzug über einer fertigen Wand. Sind die Cover bekannt und Seite 0 gehasht, endet die Szene jetzt sofort; der Rückweg landet ohne Ladebild auf der Wand. → [Historie](docs/history.md#2026-09-10--der-rückweg-spielte-vier-sekunden-einzug-die-niemand-brauchte-roadmap-619a-f212) · [Archiv](docs/roadmap-archive.md#624)
 
 - [x] **6.28 Ein Suchfeld in der Kopfzeile, auf jeder Seite außer der Suche.** Erledigt 2026-09-10: ein einziges Eingabefeld, per CSS sichtbar ab `sm`, auf dem Telefon über eine Lupe; der Zurück-Link heißt „Results“ bzw. „Home“. `useSearchParams` hätte About, Datenschutz und die Jahrzehnte-Seiten dynamisch gemacht — der Sprachfilter wird beim Absenden aus `window.location` gelesen. → [Historie](docs/history.md#2026-09-10--ein-suchfeld-in-der-kopfzeile-roadmap-628) · [Archiv](docs/roadmap-archive.md#628)
 

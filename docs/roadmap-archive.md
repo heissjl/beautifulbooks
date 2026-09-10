@@ -505,3 +505,36 @@ Damit wartet die Seite an **drei von vier** Stellen vor dem Mosaik; der Cover-F�
 **Dazu die Wortwahl:** eine falsche Prüfziffer und eine dem Katalog unbekannte ISBN sehen heute beide wie „No books found" aus — ein Satz über die Welt, wo einer über die Eingabe gemeint ist (N12, verwandt mit 1.4).
 
 **Offene Frage an Julian:** ob die Vorwahl auch dann greifen soll, wenn die Ausgabe jenseits der Ladegrenze liegt und deshalb nicht gefunden wird — dann bleibt die Wand unmarkiert, und die Seite darf nichts anderes behaupten.
+
+### 1.11a
+
+*Stand beim Abhaken am 2026-09-10; das Ergebnis steht in der Roadmap.*
+
+**1.11a Bei einer lebenden ISBN soll der ISBN-Link führen, nicht die Verlagssuche.** (Julian, 2026-09-09, an einem Screenshot: „erklär mir warum die suche in abebooks … nach … schuster incorporated, also mit verlag geht statt über isbn.")
+
+**Was passiert, und es ist so gebaut.** Der Fall im Screenshot: Markt **DE**, ISBN `9781439142677` — das ist `978-1`, also der englische Sprachraum, für den deutschen Markt somit `foreign`. In diesem Fall führen nach [PLAN-1.11](plans/PLAN-1.11-kauflinks-ux.md) §2.3 **AbeBooks und Booklooker als Titelsuche**, gebaut aus Titel, Autor, Verlag und Jahr (`searchLinksFor` setzt `tn`, `an`, `pn`, `yrl`/`yrh`), nicht aus der Nummer. Die Begründung dort: antiquarische Angebote tragen oft gar keine ISBN, und dann ist Titel + Verlag + Jahr die bessere Frage.
+
+**Für diesen Fall ist die Begründung falsch, und das ist der Punkt.** Sie trägt für vergriffene Drucke. Hier steht daneben das Verdikt **`verified`** — der Verlag führt zu dieser Nummer aktuell genau dieses Bild, die ISBN ist also lebendig und katalogisiert. AbeBooks, eBay und Booklooker schlagen ISBNs international nach; „nicht mein Markt" heißt für einen Marktplatz nichts. Die Verlagssuche liefert dann alles von Simon & Schuster aus 2012 statt dieses einen Buchs — **unschärfer als der Link, den wir weggelassen haben.**
+
+**Vorschlag, und er benutzt nur, was ohnehin schon geholt wird:** das Verdikt entscheidet über die Abfrageform. Bei **`verified`** führt der ISBN-Link, auch im Fall `foreign` — die Nummer ist nachweislich in Umlauf. Bei **`unknown`** (kein Verlagsbild auf dem Datensatz, typisch für alte Drucke), bei **`differs`** und **ohne ISBN** bleibt es bei der Titelsuche. `pending` und `unavailable` verhalten sich wie heute, also wie `unknown`, weil eine unbeantwortete Frage nichts bewegen darf. Eine Stunde, plus Tests je Fall.
+
+**Was dabei nicht verrutschen darf:** die Reihenfolge der Läden bleibt, wie sie ist — hier geht es allein darum, **womit** der führende Laden gefragt wird. Und der Satz darunter behält seinen Wortlaut: er nennt die Registrierungsgruppe und nie einen Laden.
+
+
+### 6.14a
+
+*Stand beim Abhaken am 2026-09-10; das Ergebnis steht in der Roadmap.*
+
+**6.14a Die Scan-Reihe: seitwärts scrollen statt umbrechen, und ein kürzerer Satz.** (Julian, 2026-09-09, an *Fahrenheit 451* mit **acht** Scans.)
+
+- **Umbruch kostet Platz, den die Spalte nicht hat.** Acht Kacheln passen bei `flex-wrap` nicht in eine Reihe und erzeugen eine zweite — in einer Spalte, die 1.2 gerade erst von 2.351 auf 851 px gebracht hat. Stattdessen **eine Reihe mit seitlichem Scrollen** (`overflow-x: auto`, `scroll-snap`), wie es die Sprachreiter auf dem Telefon schon tun. Dabei mitnehmen, was 6.5 für die Reiterzeile notiert: eine Verlaufskante am Rand, sonst sieht niemand, dass es weitergeht.
+- ~~**Der Erklärsatz ist zu lang.**~~ *Erledigt 2026-09-09 mit N13: aus zwei Sätzen wurde „Different scans of the same design, sometimes of different printings." Die Überschrift „The same cover, N scans" trug die Aussage ohnehin schon; geblieben ist, dass es verschiedene Scans und manchmal verschiedene Drucke sind — der Grund, warum die Reihe überhaupt existiert (E16).* Offen bleibt allein der seitliche Scroll darüber.
+
+
+### 6.24
+
+*Stand beim Abhaken am 2026-09-10; das Ergebnis steht in der Roadmap.*
+
+**6.24 Der Zurück-Knopf von der Jahrzehnte-Seite spielt die Ladeszene noch einmal ab.** (Julian, 2026-09-09: „wenn ich per browser zurück-taste von der decade wall zurück zur cover wall komme, will ich nicht erneut den ladebildschirm mit den 4 covern sehen.")
+
+**Für die Suche ist das seit `49a3453` gelöst, für diesen Weg nicht.** `useWorkPages` merkt sich einen fertigen Durchlauf (`FINISHED`) und liest ihn beim Rendern, damit ein Zurück zur Wand sofort steht. Warum das hier nicht greift, ist **vor dem Bauen zu klären** — die Jahrzehnte-Seite ist eine eigene Route, also wird die Komponente neu montiert und der Modulzustand müsste eigentlich überleben. Kandidaten: die Seite ist serverseitig gerendert und ihr Zurück ist eine echte Navigation, kein `router.back()` im selben Baum; oder `FINISHED` ist an einen `requestKey` gebunden, der beim Wiedereintritt anders lautet (Markt, Sprache). Erst nachsehen, welches von beidem, dann beheben — die Ursache steht nicht fest.

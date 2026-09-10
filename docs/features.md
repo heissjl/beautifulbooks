@@ -28,7 +28,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Sprach-Reiter in fester Reihenfolge (gesucht, en, de, Häufigkeit, Unknown), eingefroren nach dem ersten Auftauchen | 2026-09-07 | F2.4, E17 | Schritt 11 | `lib/pages.ts` (`orderGroups`) |
 | Faltung gleicher Scans im Browser, drei Stufen (≤ 8; ≤ 20 bei gleicher ISBN; ≤ 16 bei gleichem Verlag ± 1 Jahr); nie über Sprachen | 2026-09-07 | §2.3, E8 | Schritt 12 | `lib/works.ts` (`foldDuplicateCovers`), `lib/imagesig.ts`, `lib/imagehash.ts` (Server) |
 | Leer aussehende Scans werden ans Ende sortiert, nie gelöscht | 2026-09-07 | F2.5, E16 | Schritt 12 | `lib/imagehash.ts` (`looksLikeScannedPage`) |
-| Ladeszene: Titel und Hero sofort aus der Karte (sessionStorage), Cover-Fächer, FLIP auf die Kacheln; Ladetext über dem Bild | 2026-09-06 / 09-09 | F2.12 | alte §8.1, 6.19 | `components/LoadingStage.tsx`, `flyCovers`, `useWorkPreview.ts` |
+| Ladeszene: Titel und Hero sofort aus der Karte (sessionStorage), Cover-Fächer, FLIP auf die Kacheln; Ladetext über dem Bild; bei bekannten Covern (Rückweg von der Jahrzehnte-Seite) gar kein Ladebild | 2026-09-06 / 09-10 | F2.12 | alte §8.1, 6.19, 6.24 | `components/LoadingStage.tsx`, `flyCovers`, `useWorkPreview.ts` |
 | Kleine sich bauende Cover-Wand, wenn keine Vorschau vorliegt (Link von außen) | 2026-09-09 | F2.12 | 6.19 | `components/AssemblingWall.tsx` |
 | Beim Öffnen ist nichts ausgewählt; die zweite Spalte zeigt das **Werk** (Jahresspanne, Verlage, Klappentext mit Zuschreibung, Link zum Datensatz) | 2026-09-09 | F2.6, F2.6a | 1.1 (PLAN-1.1) | `components/BookDetail.tsx` (`WorkPanel`), `lib/pages.ts` (`coverForId`), `lib/works.ts` (`blurbFor`) |
 | Auswahl in der URL (`?cover=`), Suche und Sprache bleiben erhalten; gefaltete Duplikate lösen auf ihren Vertreter auf | 2026-09-06 | F2.7 | — | `components/BookDetail.tsx` |
@@ -42,9 +42,10 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | ISBN-Nachschau bei Google **nur** bei Auswahl; Verdikt `verified / differs / unknown / pending / unavailable`, Wortlaut an einer Stelle | 2026-09-07 | F2.8, F2.9 | Schritt 13, 13a, 1.5 | `lib/isbn.ts`, `components/useIsbnCovers.ts`, `lib/works.ts` (`verifyIsbnCover`), `lib/verdicts.ts` |
 | Erste Reihe nach ISBN-Registrierungsgruppe: **home / foreign / kdp / no-isbn**; Marktplätze führen bei fremder ISBN, Katalog-Händler bekommen Titelsuchen; `differs` ersetzt die Reihe durch Suchen | 2026-09-09 | §2.4, F2.9 | 1.11 (PLAN-1.11) | `lib/linkplan.ts`, `lib/normalize.ts` (`registrationArea`), `lib/buylinks.ts` |
 | „Or read it in another edition“ nur, wenn kein Link auf *diese* Ausgabe möglich ist | 2026-09-09 | §2.4 | 1.11 | `lib/linkplan.ts` |
+| Bestätigt der Verlag die ISBN (`verified`), fragen die Marktplätze auch bei fremder ISBN **nach der Nummer** statt nach Titel, Verlag und Jahr | 2026-09-10 | §2.4, F2.9 | 1.11a | `lib/linkplan.ts` |
 | Fünf sichtbare Bedienelemente statt vierzehn; alles Übrige hinter „Other ways to find it“; Cover an der Fensterhöhe gedeckelt | 2026-09-09 | F2.6 | 1.2 | `components/BookDetail.tsx` (`EditionBlock`) |
 | Unter einem gefalteten Cover führt der Druck, der den gezeigten Scan trug, dann das Verdikt, dann Markt und Jahr | 2026-09-09 | §2.4 | 6.14, 1.11 | `lib/linkplan.ts` (`orderEditionsForMarket`) |
-| „The same cover, N scans“: jeder gefaltete Scan ist anklickbar und tauscht das große Bild; Quelle des gezeigten Scans wird genannt | 2026-09-09 | §2.3 | 6.14 | `components/BookDetail.tsx` (`CoverDetails`) |
+| „The same cover, N scans“: jeder gefaltete Scan ist anklickbar und tauscht das große Bild; Quelle des gezeigten Scans wird genannt; eine Reihe, die seitwärts scrollt, mit Verlaufskante nur solange es weitergeht | 2026-09-09 / 09-10 | §2.3 | 6.14, 6.14a | `components/BookDetail.tsx` (`CoverDetails`), `useOverflowsX.ts` |
 | „Looks like this“: bis zu drei Cover **anderer** Bücher aus dem gebauten Index, drei feste Spalten | 2026-09-08 / 09-09 | F2.14, §2.5 | 6.10, 6.10a | `lib/coverindex.ts`, `data/cover-index.json`, `app/api/similar/`, `components/BookDetail.tsx` (`SimilarCovers`) |
 | Markt US/UK/DE aus Wahl, Länder-Header oder Accept-Language; Händlertabelle je Markt | 2026-09-06 | §2.4, E9 | — | `lib/market.ts`, `lib/buylinks.ts` |
 | Jeder Kauf-Link läuft über `/go/`, das Ziel wird aus der Tabelle neu gebaut; eine Logzeile ohne jede Kennung | 2026-09-07 | F5, E14 | PLAN-B B6 | `app/go/[provider]/[isbn]/`, `lib/clicks.ts` |
@@ -68,11 +69,11 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
 | Alle externen Aufrufe serverseitig; der Browser spricht nur mit `/api/*` und `/img/*` | 2026-09-06 | N1 | Schritt 1–5 | `lib/sources/`, `app/api/` |
-| Bildroute `/img/<S\|M\|L>/<ol-…\|gb-…>`: die ID im Pfad, nie eine URL; 30 Tage CDN, Fehlschläge `no-store` | 2026-09-09 | N8 | 1.3 | `app/img/[size]/[cover]/route.ts`, `lib/coverurl.ts`, `components/CoverImage.tsx` |
+| Bildroute `/img/<S\|M\|L>/<ol-…\|gb-…>`: die ID im Pfad, nie eine URL; 30 Tage CDN (belegt: MISS 2,1 s → HIT 0,24 s), Fehlschläge `no-store`; jeder Fehlschlag schreibt `bb.img` mit dem Status der Gegenseite und trägt ihn als `X-Cover-Upstream` | 2026-09-09 / 09-10 | N8 | 1.3, 6.25 | `app/img/[size]/[cover]/route.ts`, `lib/coverurl.ts`, `lib/coverlog.ts`, `components/CoverImage.tsx` |
 | Next-Datencache: Suche 24 h, Werk/Ausgaben 24 h, Google-Titelsuche 7 d, ISBN 24 h, Hash-Bilder 30 d, ISR 24 h | 2026-09-06 / 09-08 | N4, E6 | 1.10 | `lib/sources/*.ts` |
 | Google an genau zwei Stellen (Seite 0, ISBN-Nachschau); Mosaik, Metadaten, OG-Bild und Suche kosten null | 2026-09-07 | F3.2, E10, N9 | Schritt 13a, PLAN-B B8 | `lib/work.ts` (`WorkPageOptions.googleBooks`), Integrationstests |
 | Kontingent-Automat: Pause bei Googles eigener Meldung bis Mitternacht pazifisch, 90 s bei Rate-Limit, kein Zähler; eine Logzeile `bb.google` | 2026-09-07 / 09-09 | N9, E11 | alte §8.7, 0.13 | `lib/googlequota.ts` |
-| Rate-Limit je IP und Route, gemeinsamer Eimer `google`, Eimer `img` | 2026-09-07 / 09-09 | N10 | PLAN-B B2, 1.3 | `lib/ratelimit.ts`, `app/api/rate.ts` |
+| Rate-Limit je IP und Route, gemeinsamer Eimer `google`, Eimer `img` (800 Stoß, 400 je Minute) | 2026-09-07 / 09-10 | N10 | PLAN-B B2, 1.3, 6.25 | `lib/ratelimit.ts`, `app/api/rate.ts` |
 | Timeouts je Quelle (Suche 12 s, Ausgaben 12 s, Google 5 s); Seite 0 und Folgeseiten mit einem zweiten Versuch | 2026-09-06 / 09-09 | F3.3 | 1.10, 5.4a | `lib/sources/http.ts`, `OL_TIMEOUTS`, `fetchPageWithRetry` |
 | Keine Kennung des Lesers: kein Konto, kein Tracking-Cookie; localStorage nur für Suchen und Markt | 2026-09-06 | N11, E14 | — | — |
 | Gebauter Cover-Index (139 Werke, Signaturen, Farbmaße) als Datei im Repo; Obergrenze 10 MB, testgeprüft | 2026-09-08 / 09-09 | §2.5, E18 | 6.10, 5.1 | `scripts/build-cover-index.ts`, `lib/coverindex.ts`, `lib/__tests__/coverindex.test.ts` |
