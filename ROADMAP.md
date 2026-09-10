@@ -27,7 +27,7 @@ Stand: 2026-09-10, nach dem Umbau (Julian: „überprüfe die Abhängigkeiten, s
 
 - **Online seit 2026-09-08: https://beautifulcovers.vercel.app**, Hobby-Modus (E20), Vercel Hobby, Funktionen in Frankfurt, Web Analytics an.
 - **Produktion ist `origin/main`.** Ein Push dorthin ist ein Deploy. Am 2026-09-10 arbeiteten **drei Sessions parallel**: eine schob 6.19a direkt nach `origin/main`, eine baute 6.29 auf dem lokalen `main`, eine baute 6.28 auf einem Branch — und das lokale `main` lag zeitweise sechs Commits vor und fünfzehn hinter Produktion, ohne dass es irgendwo stand. Seither zusammengeführt und am selben Abend deployt (`b43904b`); `npm run worktrees` zeigt, ob das wieder passiert, und ist vor jedem Merge nach `main` zu lesen.
-- **53 Punkte offen, 32 erledigt.** Phase 1 ist bis auf zwei Punkte leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
+- **52 Punkte offen, 33 erledigt.** Phase 1 ist bis auf Julians Stichprobe (1.8) leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
 - **Der Engpass ist nicht die Technik, sondern dass niemand die Seite kennt:** sie steht in keiner Suchmaschine (2.5) und unter einem Namen, den niemand behält (0.5).
 
 ### Nächste Schritte
@@ -40,7 +40,7 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt.
 | 2 | **2.5 Search Console und Bing**, dazu **0.2** zweiter Google-Schlüssel und **0.13** Kontingent-Alarm | Julian | 30 Minuten | Jeder Tag ohne Sitemap ist ein verlorener Tag; ein Schlüssel für Arbeit *und* Betrieb verbraucht das Kontingent der Besucher |
 | 3 | **0.5 / 2.2 Domain** kaufen und verbinden | Julian | 20 Minuten plus DNS | Reichweite auf `vercel.app` muss später umgeleitet werden; Vorschläge in [docs/domain-recherche.md](docs/domain-recherche.md) |
 | 4 | **6.25 leere Kacheln** — nach einem Tag Produktion die `bb.img`-Zeilen lesen | Claude, nach einem Deploy | eine halbe Stunde | Das Protokoll ist gebaut; ob Open Library uns drosselt, sagt erst ein Tag Logs |
-| 5 | **1.9** der leere Platz oben rechts | Claude | ein halber Tag | Der letzte Punkt in Phase 1, der nicht auf Julian wartet; die Empfehlung (ein Fächer aus Covern desselben Buchs) steht seit dem 2026-09-07 |
+| 5 | **6.5** Mosaik-Ausfall sichtbar machen, **6.8** „All languages“-Pille | Claude | je ein bis zwei Stunden | Phase 1 ist leer; das sind die zwei kleinen Punkte aus 6.A und 6.C ohne Abhängigkeit |
 | 6 | **6.18 Kuratierung zu Ende**, danach **6.17 Rotation** und das Jahr für **6.16** | Julian, dann Claude | ein Abend, dann eine Sitzung | Die Startseite ist das Erste, was ein Besucher sieht |
 | 7 | **6.13 mit 6.15 Schritt 3** | Claude | ein bis zwei Sitzungen | Der schwerste offene Datenfehler: die Karte verspricht Ausgaben, die die Wand nie lädt |
 | 8 | **3.1 Analyse-Seite** | Claude | zwei Tage | Erst sinnvoll mit einer Woche echter Besucher |
@@ -105,7 +105,7 @@ In der Reihenfolge, in der sie hier stehen; die Regel bleibt: **die vorderste Ph
 |---|---|---|---|---|
 | [0 Entscheidungen](#phase-0--entscheidungen-die-nur-julian-treffen-kann) | Konten, Geld, Recht, Produktfragen | 10 | 4 | Julian |
 | [2 Betrieb](#phase-2--betrieb-domain-sichtbarkeit-abnahme) | Domain, Suchmaschinen, Überwachung, Abnahme | 4 | 3 | Julian (Konten), ein Deploy |
-| [1 Vor echtem Verkehr](#phase-1--vor-echtem-verkehr) | Was ein erster Besucher noch nicht sehen soll | 2 | 10 | nichts |
+| [1 Vor echtem Verkehr](#phase-1--vor-echtem-verkehr) | Was ein erster Besucher noch nicht sehen soll | 1 | 11 | Julian (1.8) |
 | [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 18 | 14 | teils 6.6 (Geld), teils 6.18 (Julian) |
 | [3 Messen](#phase-3--messen) | Analyse-Seite, Verbrauch, Conversion | 3 | 0 | Besucher |
 | [5 Reichweite](#phase-5--reichweite) | Seitengattungen, Fabrik, Kanäle | 8 | 0 | Inhalte, Rechtefrage |
@@ -245,28 +245,13 @@ Keine davon ist Code. Für den Hobby-Betrieb sind 0.1, 0.6, 0.9 und 0.11 beantwo
 
 ## Phase 1 — Vor echtem Verkehr
 
-*Bis zum 2026-09-08 hieß diese Phase „Vor dem Deployment bauen“.* Neun ihrer zwölf Punkte sind gebaut; die drei offenen sind das, was ein erster Besucher aus einer Suchmaschine noch nicht sehen soll. Keiner braucht eine Entscheidung; jeder ist ein eigener Commit mit Messung.
-
-- [ ] **1.9 Der leere Platz oben rechts auf der Startseite.** (Julian, 2026-09-07, nach einem Blick auf die eigene Startseite: „der Platz oben rechts ist perfekt für noch ein Design-Element".) Heute steht die Überschrift „Judge a book by its covers." links, daneben nichts; die rechte Hälfte über dem Suchfeld ist leer ([Startseite auf 1440 × 860](docs/tests/2026-09-07-startseite.png)). Das ist der erste Bildschirm, den ein Besucher sieht, und er zeigt gerade nichts von dem, was die Seite kann.
-
-  **Vorschläge, von stärkstem Argument zu billigstem:**
-
-  1. **Ein Fächer aus drei bis vier Covern *desselben* Buchs**, leicht gedreht und überlappt, mit einer kleinen Zeile darunter („Nineteen Eighty-Four · vier von 226 Covern"). Das ist das Produktversprechen als Bild statt als Satz: ein Buch, viele Gesichter. Die visuelle Sprache gibt es schon in `LoadingStage` und `flyCovers`, sie wäre also wiedererkennbar und nicht neu zu erfinden. Kostet nichts an Anfragen, wenn die Cover-IDs wie bei `lib/curated.ts` fest hinterlegt sind.
-  2. **Cover der Woche**, ein einzelnes großes Cover mit Verlag, Jahr und einem Satz, warum es bemerkenswert ist, verlinkt auf sein Buch. Ruhiger als Vorschlag 1 und der natürliche Anfang der redaktionellen Seiten aus 5.4; der Preis ist, dass jemand es pflegen muss.
-  3. **Zwei Cover desselben Buchs nebeneinander, mit Jahreszahlen** („1949 / 2021"). Zeigt die Zeitachse, die das Produkt eigentlich ausmacht, und braucht am wenigsten Platz.
-  4. **„Zuletzt gesucht"** aus dem localStorage (`useRecentSearches` gibt es bereits) als kleine Cover-Reihe. Nützlich für Wiederkehrer, aber **beim ersten Besuch leer** — und das ist der Besuch, der zählt. Nur als Ergänzung zu einem der ersten drei, nie allein.
-
-  **Empfehlung: Vorschlag 1**, mit 3 als Rückfallposition, wenn der Fächer auf 1.280 px zu laut wirkt. Vorschlag 4 später dazu, wenn es Wiederkehrer gibt.
-
-  **Hierher gehört Julians Farbmaß** (aus dem Plan zu 1.1, dort als Vorauswahl verworfen): ein Maß für „farbenfroh“ gibt es nicht, weil `decodeToGray` jedes Bild in der ersten Schleife auf Graustufen rechnet und die Signatur nur Hash, Kontrast und Helligkeit trägt. Ein zweiter Akkumulator für die Sättigung in derselben Schleife wäre billig und würde nichts zusätzlich laden. Für eine **Vorauswahl** war das falsch — sie nimmt dem Leser die Wahl ab —, für ein Cover, das hier oben ins Auge fallen soll, ist es genau das richtige Kriterium.
-
-  **Julians Algorithmus für ein farbenfrohes Cover gehört hierher**, nicht zu 1.1: hier wählt er kein Buch für den Leser aus, sondern illustriert eines. Zu bauen wäre ein Sättigungsmaß — die Signaturen sind heute reine Graustufen (`decodeToGray` in `lib/imagehash.ts` verwirft die Farbe in der ersten Schleife), ein zweiter Akkumulator in derselben Schleife genügt, und da Signaturen ohnehin bei jeder Anfrage aus den 30 Tage gecachten Bytes neu gerechnet werden, kostet es keine zusätzliche Ladung. Begründung in [PLAN-1.1](docs/plans/PLAN-1.1-keine-vorauswahl.md) §3.
-
-  **Bedingungen, die für jede Variante gelten:** keine Google-Anfrage und kein Nachladen beim ersten Rendern (die Cover-IDs stehen fest, wie in `lib/curated.ts`); auf schmalen Bildschirmen darf das Element das Suchfeld nicht unter die Kante schieben, dort entfällt es oder rückt unter die Wand; und es darf nichts behaupten, was §1 verbietet — „vier von 226 Covern" ist erlaubt, „alle Cover" nicht.
+*Bis zum 2026-09-08 hieß diese Phase „Vor dem Deployment bauen“.* Elf ihrer zwölf Punkte sind gebaut; offen ist nur noch Julians Stichprobe von Hand (1.8).
 
 - [ ] **1.8 Händler-URLs Hugendubel und genialokal von Hand im Browser prüfen.** Beide antworten dem Skript mit 200 und rendern die Treffer erst im Browser; ihre URL-Muster sind weder bestätigt noch widerlegt. Zehn Minuten, beim Prüfen im sichtbaren Browser-Panel.
 
 ### Erledigt in Phase 1
+
+- [x] **1.9 Der leere Platz oben rechts auf der Startseite.** Erledigt 2026-09-10 nach Vorschlag 1: ab `lg` steht rechts neben der Überschrift ein **Fächer aus vier Covern von *Dune***, in der Bildsprache der Ladeszene (`.stage-tile`, ein Drittel der Größe), als ein Link auf die Wand, darunter „Dune · four of its covers“ — **ohne Zahl**, weil die mit dem Katalog wandert (N12). Die vier sind nicht nach Auge gewählt, sondern aus dem Index nach Abstand: Farbabstand ≥ 0,53 (das „Looks like this“-Tor liegt bei 0,055), Hash ≥ 26 Bit (die Faltung bei 8), kein leer aussehender Scan — ein Test hält das fest, damit ein vertauschter Ausweis nie zwei gleiche Jacken nebeneinanderstellt. Null Anfragen, vier Bilder über `/img`. Unterhalb von `lg` gar nicht gerendert; auf 375 px steht das Suchfeld, wo es stand. → [Historie](docs/history.md#2026-09-10--der-leere-platz-oben-rechts-vier-gesichter-eines-buchs-roadmap-19) · [Archiv](docs/roadmap-archive.md#19)
 
 - [x] **1.1 Beim Öffnen kein Cover vorauswählen.** Erledigt 2026-09-09 nach Kandidat 2 des Plans: bis zur ersten Auswahl zeigt die zweite Spalte das **Werk** (`WorkPanel`). Gemessen: **0** statt mindestens 1 ISBN-Anfrage beim kalten Öffnen, eine Detailseite kostet damit 1 Google-Anfrage statt 2. → [Historie](docs/history.md#2026-09-09--beim-öffnen-ist-nichts-mehr-ausgewählt-roadmap-11) · [PLAN-1.1](docs/plans/PLAN-1.1-keine-vorauswahl.md) · [Archiv](docs/roadmap-archive.md#11)
 

@@ -1625,3 +1625,15 @@ Julian: „ich glaube dein stand wurde schon gepusht, gehe also die punkte an." 
 
 **Zweimal gesehen, nicht untersucht:** beim Auswählen eines Covers stellte der Dev-Server dieselbe ISBN-Nachschau (`/api/isbn/9780345342966`) fünfmal, drei davon abgebrochen. Im Dev-Modus rendert React Effekte doppelt, und der Server-Cache fängt die Wiederholungen ab, also kostet es dort kein Google-Kontingent — ob Produktion dasselbe Muster zeigt, wäre mit 3.1 zu sehen. Und zwei Anfragen einer Werkseite antworteten 503, ohne dass eine Kachel leer blieb; welche, hat das Protokoll nicht mehr hergegeben.
 
+## 2026-09-10 · Der leere Platz oben rechts: vier Gesichter eines Buchs (ROADMAP 1.9)
+
+Der letzte Punkt in Phase 1, der nicht auf Julian wartete, nach seiner Beobachtung vom 2026-09-07: „der Platz oben rechts ist perfekt für noch ein Design-Element." Gebaut nach Vorschlag 1 aus dem Punkt — ein Fächer aus Covern *desselben* Buchs, das Versprechen der Seite als Bild statt als Satz.
+
+**Die vier Cover hat kein Auge gewählt, sondern der Index.** Aus den 133 *Dune*-Covern im gebauten Index fielen zuerst die weg, die leer aussehen, wenig Farbe (< 40) oder wenig Kontrast (< 35) haben — 102 blieben. Daraus ein Greedy-Farthest-Point über Farbabstand plus dHash, vom farbigsten Cover aus: `ol:8570801`, `ol:12780703`, `ol:11481225`, `ol:11481333`. Paarweise liegen sie **mindestens 0,53 in der Farbe** auseinander (das „Looks like this"-Tor lässt bis 0,055 durch) und **26 Bit im Hash** (dieselbe Gestaltung faltet bei 8). Der Grund, das so zu tun, ist nicht Bequemlichkeit: ein Test (`lib/__tests__/herofan.test.ts`) prüft genau diese Abstände, und damit kann ein vertauschter Ausweis nie zwei fast gleiche Jacken nebeneinanderstellen — das erste Bild auf der Seite sagte sonst das Gegenteil dessen, wofür es da ist.
+
+**Bildsprache und Kosten.** Dieselben `.stage-tile` wie die Ladeszene, per Inline-Variablen auf ein Drittel gesetzt (`--stage-w: 6.25rem`, `--spread: 38px`), Neigungen −10°, −3°, 4°, 11°, das Ganze ein Link auf die Wand mit `aria-label`. Vier Bilder über `/img` mit `priority`, keine Anfrage an einen Katalog, nichts, was beim ersten Rendern nachlädt. Die Zeile darunter — „Dune · four of its covers" — nennt absichtlich keine Zahl: 133 im Index, 79 auf der Wand nach dem Falten, morgen anders; §1 verbietet eine Zahl, hinter der die Seite nicht steht.
+
+**Gesehen bei 1280 × 800:** der Fächer steht rechts der Überschrift, auf Höhe der ersten Zeile, die Seite scrollt nicht seitwärts, alle vier Bilder sind geladen (`is-loaded`, 180 px natürliche Breite). **Bei 375 px** ist er nicht gerendert (`display: none` über `hidden lg:block`), und das Suchfeld steht, wo es vorher stand — das war die Bedingung aus dem Punkt.
+
+**Ein Werkzeugbefund, der Zeit gekostet hat:** solange das Browser-Panel verborgen ist, meldet die Seite `document.hidden`, und jedes `getBoundingClientRect()` liefert Nullen, obwohl die Bilder laden und der DOM steht; ein Screenshot ist dann eine leere Fläche. Erst das Vorholen des Tabs macht Layoutmessungen möglich. Wer Layout misst, prüft vorher `document.hidden`.
+

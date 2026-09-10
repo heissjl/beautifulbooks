@@ -538,3 +538,24 @@ Damit wartet die Seite an **drei von vier** Stellen vor dem Mosaik; der Cover-F�
 **6.24 Der Zurück-Knopf von der Jahrzehnte-Seite spielt die Ladeszene noch einmal ab.** (Julian, 2026-09-09: „wenn ich per browser zurück-taste von der decade wall zurück zur cover wall komme, will ich nicht erneut den ladebildschirm mit den 4 covern sehen.")
 
 **Für die Suche ist das seit `49a3453` gelöst, für diesen Weg nicht.** `useWorkPages` merkt sich einen fertigen Durchlauf (`FINISHED`) und liest ihn beim Rendern, damit ein Zurück zur Wand sofort steht. Warum das hier nicht greift, ist **vor dem Bauen zu klären** — die Jahrzehnte-Seite ist eine eigene Route, also wird die Komponente neu montiert und der Modulzustand müsste eigentlich überleben. Kandidaten: die Seite ist serverseitig gerendert und ihr Zurück ist eine echte Navigation, kein `router.back()` im selben Baum; oder `FINISHED` ist an einen `requestKey` gebunden, der beim Wiedereintritt anders lautet (Markt, Sprache). Erst nachsehen, welches von beidem, dann beheben — die Ursache steht nicht fest.
+
+### 1.9
+
+*Stand beim Abhaken am 2026-09-10; das Ergebnis steht in der Roadmap.*
+
+**1.9 Der leere Platz oben rechts auf der Startseite.** (Julian, 2026-09-07, nach einem Blick auf die eigene Startseite: „der Platz oben rechts ist perfekt für noch ein Design-Element".) Heute steht die Überschrift „Judge a book by its covers." links, daneben nichts; die rechte Hälfte über dem Suchfeld ist leer ([Startseite auf 1440 × 860](tests/2026-09-07-startseite.png)). Das ist der erste Bildschirm, den ein Besucher sieht, und er zeigt gerade nichts von dem, was die Seite kann.
+
+**Vorschläge, von stärkstem Argument zu billigstem:**
+
+1. **Ein Fächer aus drei bis vier Covern *desselben* Buchs**, leicht gedreht und überlappt, mit einer kleinen Zeile darunter („Nineteen Eighty-Four · vier von 226 Covern"). Das ist das Produktversprechen als Bild statt als Satz: ein Buch, viele Gesichter. Die visuelle Sprache gibt es schon in `LoadingStage` und `flyCovers`, sie wäre also wiedererkennbar und nicht neu zu erfinden. Kostet nichts an Anfragen, wenn die Cover-IDs wie bei `lib/curated.ts` fest hinterlegt sind.
+2. **Cover der Woche**, ein einzelnes großes Cover mit Verlag, Jahr und einem Satz, warum es bemerkenswert ist, verlinkt auf sein Buch. Ruhiger als Vorschlag 1 und der natürliche Anfang der redaktionellen Seiten aus 5.4; der Preis ist, dass jemand es pflegen muss.
+3. **Zwei Cover desselben Buchs nebeneinander, mit Jahreszahlen** („1949 / 2021"). Zeigt die Zeitachse, die das Produkt eigentlich ausmacht, und braucht am wenigsten Platz.
+4. **„Zuletzt gesucht"** aus dem localStorage (`useRecentSearches` gibt es bereits) als kleine Cover-Reihe. Nützlich für Wiederkehrer, aber **beim ersten Besuch leer** — und das ist der Besuch, der zählt. Nur als Ergänzung zu einem der ersten drei, nie allein.
+
+**Empfehlung: Vorschlag 1**, mit 3 als Rückfallposition, wenn der Fächer auf 1.280 px zu laut wirkt. Vorschlag 4 später dazu, wenn es Wiederkehrer gibt.
+
+**Hierher gehört Julians Farbmaß** (aus dem Plan zu 1.1, dort als Vorauswahl verworfen): ein Maß für „farbenfroh“ gibt es nicht, weil `decodeToGray` jedes Bild in der ersten Schleife auf Graustufen rechnet und die Signatur nur Hash, Kontrast und Helligkeit trägt. Ein zweiter Akkumulator für die Sättigung in derselben Schleife wäre billig und würde nichts zusätzlich laden. Für eine **Vorauswahl** war das falsch — sie nimmt dem Leser die Wahl ab —, für ein Cover, das hier oben ins Auge fallen soll, ist es genau das richtige Kriterium.
+
+**Julians Algorithmus für ein farbenfrohes Cover gehört hierher**, nicht zu 1.1: hier wählt er kein Buch für den Leser aus, sondern illustriert eines. Zu bauen wäre ein Sättigungsmaß — die Signaturen sind heute reine Graustufen (`decodeToGray` in `lib/imagehash.ts` verwirft die Farbe in der ersten Schleife), ein zweiter Akkumulator in derselben Schleife genügt, und da Signaturen ohnehin bei jeder Anfrage aus den 30 Tage gecachten Bytes neu gerechnet werden, kostet es keine zusätzliche Ladung. Begründung in [PLAN-1.1](plans/PLAN-1.1-keine-vorauswahl.md) §3.
+
+**Bedingungen, die für jede Variante gelten:** keine Google-Anfrage und kein Nachladen beim ersten Rendern (die Cover-IDs stehen fest, wie in `lib/curated.ts`); auf schmalen Bildschirmen darf das Element das Suchfeld nicht unter die Kante schieben, dort entfällt es oder rückt unter die Wand; und es darf nichts behaupten, was §1 verbietet — „vier von 226 Covern" ist erlaubt, „alle Cover" nicht.
