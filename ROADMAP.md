@@ -347,7 +347,19 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
 
   **Der eigentliche Befund aus derselben Messung:** der Fächer lief bereits sieben Sekunden und stand einen Großteil davon **leer** (`0/1` bei 5,7 s, `0/2` bei 6,2 s). Er wird also längst „länger gezogen" — das Problem ist nicht seine Länge, sondern dass er dabei Rahmen ohne Bilder zeigt. **Nach 1 und 2 ist er bei jeder Länge ehrlich**, und erst dann lohnt 3.
 
-  **3 und 4 sind offen und warten auf eine Messung in Produktion.** Gut möglich, dass 3 nach 1 und 2 nicht mehr nötig ist; und 3 ist der einzige Schritt, der ein neues Signal bräuchte — die Wand ist während der Szene gar nicht gerendert, ihre Bilder sind also nur über den Vorlauf beobachtbar, der seit 1 dieselben Adressen holt.
+  **Nach 1 und 2 in Produktion nachgemessen** (2026-09-10, *Silas Marner*, kalter Klick aus dem Suchergebnis): **der Fächer ist repariert, die Übergabe nicht.**
+
+  | | |
+  |---|---|
+  | Fächer-Kacheln | `1/1` bei 82 ms, `2/2` bei 1.442 ms, `3/3` bei 2.001 ms — **keine einzige jemals leer** |
+  | Szenenende | 3.853 ms |
+  | Erste Reihe der Wand **in diesem Moment** | **2 von 6 mit Bild** |
+  | Dieselben Kacheln kurz darauf | 8 von 8 |
+
+  **3 wird also gebraucht, 4 nicht.**
+
+  - **3 bleibt offen und ist begründet:** die Szene endet, weil die *Daten* da sind (zwei Cover eingelaufen und Seite 0 gehasht) — nicht, weil Bilder da sind. Der FLIP übergibt an eine Reihe, die zu zwei Dritteln leer ist. **Und sie ist billiger geworden, als der Punkt annahm:** seit 1 lädt der Vorlauf genau die Adressen, die die Wand rendert, also ist „warten, bis die erste Reihe steht" gleichbedeutend mit „warten, bis N Vorladungen fertig sind". Kein neues Signal von der Wand nötig — die ist während der Szene ohnehin nicht gerendert.
+  - **4 ist erledigt, ohne gebaut zu werden.** Die Frist greift nur, wenn **weniger als zwei** Cover eingelaufen sind (`presenting < SCENE_MIN_COVERS`); dann steht keine Kachel, `measureStage()` liefert eine leere Liste und es fliegt ohnehin nichts. Der Fall „auf eine leere Wand fliegen" existiert nicht. Für ein Anheben der Frist gibt es keine Messung — im gemessenen Lauf beendete sie die Szene nicht, die normale Regel tat es.
 
   **In Produktion am selben Tag nachgemessen** (Julian: „ich habe den Effekt auch in der Produktion gesehen"), dieselbe Seite, kalter Klick aus dem Suchergebnis — und dort ist es **schlimmer**:
 

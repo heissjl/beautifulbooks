@@ -1751,3 +1751,22 @@ Die 51 sind faul geladene Kacheln unterhalb des Sichtbereichs. **Das ist genau d
 **Dass die Kette in Produktion schreibt, ist trotzdem geprüft:** `/img/S/ol-999999999` liefert dort 502 mit gesetztem Kopf. Wer `bb.img` sehen will, filtert im Vercel-Dashboard unter Logs darauf; solange nichts kommt, ist die Antwort die obige.
 
 **Und ein Schönheitsfehler fiel beim Benutzen auf.** Für das fehlende Cover meldete der Kopf `200` — der Status der Gegenseite —, was auf einer gescheiterten Antwort das Gegenteil dessen sagt, was passiert ist. Jetzt steht der Status nur da, wenn der Status die Antwort *ist*; sonst `not-image`, `timeout` oder `error`. Ein Diagnosewerkzeug, das man erst deuten muss, ist eines zu wenig.
+
+## 2026-09-10 · Der Fächer ist repariert, die Übergabe nicht (ROADMAP 6.25a)
+
+Julian: „brauchen wir jetzt Schritt 3 und 4 von 6.25a?" Die Frage ist messbar, und der Punkt verlangt die Messung ohnehin. Kalt in Produktion, *Silas Marner*, Klick aus dem Suchergebnis:
+
+| | |
+|---|---|
+| Fächer-Kacheln | `1/1` bei 82 ms, `2/2` bei 1.442 ms, `3/3` bei 2.001 ms — **nie leer** |
+| Szenenende | 3.853 ms |
+| Erste Reihe der Wand in diesem Moment | **2 von 6 mit Bild** |
+| kurz darauf | 8 von 8 |
+
+**Schritt 1 und 2 haben getan, was sie sollten:** keine Kachel des Fächers war jemals ein leerer Rahmen. **Die Übergabe ist der Rest des Problems:** die Szene endet, weil die *Daten* da sind — zwei Cover eingelaufen und Seite 0 gehasht —, nicht, weil Bilder da sind, und der FLIP setzt die Cover auf eine Reihe, die zu zwei Dritteln leer ist.
+
+**Also 3 ja, 4 nein.** Und 3 ist billiger geworden, als der Punkt annahm: seit Schritt 1 lädt der Vorlauf genau die Adressen, die die Wand rendert — „warten, bis die erste Reihe steht" heißt damit „warten, bis N Vorladungen fertig sind", und braucht kein neues Signal von einer Wand, die während der Szene gar nicht gerendert ist.
+
+**4 hat sich beim Nachlesen erledigt, ohne gebaut zu werden.** Die Frist greift nur, wenn weniger als zwei Cover eingelaufen sind; dann steht keine Kachel, `measureStage()` liefert eine leere Liste, und es fliegt nichts. Der Fall „auf eine leere Wand fliegen" existiert nicht, und für ein Anheben der Frist gibt es keine Messung — im gemessenen Lauf hat sie die Szene gar nicht beendet.
+
+**Nebenbei zur Messtechnik:** der erste Anlauf hatte einen falschen Detektor für das Szenenende — er feuerte, bevor die erste Kachel überhaupt da war, und meldete „3 von 8" für einen Zeitpunkt, den es nicht gab. Ein Zustandswechsel ist erst einer, wenn der Ausgangszustand einmal beobachtet wurde.
