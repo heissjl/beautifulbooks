@@ -913,12 +913,18 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
   | Übergang | Was wartet |
   |---|---|
   | Startseite → Suchergebnis | **Mosaik** (`BookGrid` → `GridSkeleton`) |
-  | Ergebnis → Werkseite, mit Vorschau aus der Karte | **Cover-Fächer** (`LoadingStage`) |
-  | Werkseite direkt von außen aufgerufen | **Cover-Wand** (`AssemblingWall`, weil keine Vorschau vorliegt) |
+  | Ergebnis → Werkseite, mit Vorschau aus der Karte | **Cover-Fächer** (`LoadingStage`) — die Karte hat ein Cover mitgegeben, das ist die bessere Auskunft |
+  | Werkseite direkt von außen aufgerufen | **Mosaik** (seit 2026-09-10; vorher die Cover-Wand) |
   | Werkseite → Jahrzehnte-Seite | **Mosaik** (`decades/loading.tsx`) |
-  | Jahrzehnte-Seite → zurück zur Werkseite | Cover-Fächer oder Cover-Wand, wie oben |
+  | Jahrzehnte-Seite → zurück zur Werkseite | **Mosaik**, weil auf diesem Weg keine Vorschau vorliegt |
   | Mosaik, solange die Datei unterwegs ist oder ausbleibt | **Cover-Wand** |
   | Leere Startseite | Cover-Wand der Kuration (kein Ladezustand) |
+
+  Damit wartet die Seite an **drei von vier** Stellen vor dem Mosaik; der Cover-Fächer bleibt nur dort, wo eine Karte ein Cover mitgegeben hat und die Seite also etwas über das gesuchte Buch zeigen kann statt über die Seite (Julian, 2026-09-10: „Werkseite von außen sollte ein Mosaik bekommen und Jahrzehnte-Seite → zurück auch").
+
+  **Unter `prefers-reduced-motion` atmet das fertige Bild** (Julian, 2026-09-10: „für reduced motion kann man vllt ein Pulsieren eines fertigen Mosaiks machen? Statt des Aufbaus"). Der Aufbau läuft auf diesem Weg nicht, und ein stehendes Bild sagt „fertig", während die Seite noch arbeitet; jetzt geht die Deckkraft in zweieinhalb Sekunden zwischen 0,7 und 1 hin und her, auf dem Compositor. **Eine bewusste Ausnahme** von der Regel in `globals.css`, die dort sonst jede Animation abschaltet: eine langsame Blende ist nicht die Bewegung, vor der die Einstellung schützen soll — nichts wandert, nichts skaliert —, und weil iOS sie auch im Stromsparmodus meldet, sind viele auf diesem Weg schlicht knapp bei Batterie, was eine Deckkraft-Animation nichts kostet.
+
+  **Nebenbei ein Fund über den Build:** eine von Hand geschriebene Regel für eine eigene Klasse in `globals.css` **landet nicht im ausgelieferten CSS** — die Regel direkt darunter schon, dieselbe Datei, dieselbe Ebene. Gemessen am 2026-09-10, zweimal mit Server-Neustart geprüft. Der Weg, der funktioniert, ist Tailwinds eigener: die Animation im `@theme` deklarieren und als `motion-reduce:animate-breathe` benutzen. Wer hier eine eigene Klasse anlegt, sollte nachsehen, ob sie ankommt.
 
   **Zum Telefon: das ist vermutlich kein Fehler, sondern eine Einstellung.** `prefers-reduced-motion: reduce` bekommt das fertige Bild ohne Bewegung — so steht es in F1.6a —, und **iOS meldet `reduce` sowohl bei „Bewegung reduzieren" als auch im Stromsparmodus**. Das ist genau das beobachtete Verhalten. Zu prüfen am Gerät: Einstellungen → Bedienungshilfen → Bewegung, und der Batterie-Schalter. **Eine zweite Ursache war trotzdem möglich und ist behoben:** die Uhr der Animation startete, *bevor* die verwürfelte Wand gezeichnet war (1.440 Kacheln) und bevor die Seite ihr Layout hatte. Auf einem Telefon mit laufender Suche sind das ein paar hundert Millisekunden, die als Animation zählten, die niemand sah — und ein langer Hänger hätte genau ein fertiges Mosaik ergeben. Gezeichnet wird jetzt sofort, gezählt ab dem **ersten Bild**.
 
