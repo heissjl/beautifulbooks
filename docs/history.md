@@ -1492,3 +1492,17 @@ Eine Suche kommt weit öfter nach ein oder zwei Sekunden zurück als nach zehn; 
 Zwei Dinge fielen dabei von selbst richtig aus: Die Vorlage gilt je Sitzung, wer also gesucht und dann eine Jahrzehnte-Seite geöffnet hat, sieht denselben Autor — und die Datei liegt bereits im Browser-Cache. Und weil `MosaicLoader` bis zum Eintreffen des Bildes ohnehin die alte Cover-Wand zeigt, ist der bisherige Zustand nicht verschwunden, sondern nur der erste Bruchteil einer Sekunde.
 
 Geprüft mit einer künstlichen Verzögerung von acht Sekunden im Seiten-Render, weil die Seite lokal aus dem Cache sofort da ist: Überschrift, Mosaik und Zeile darunter stehen unter dem Titel-Platzhalter, den die Ladeseite schon vorher hatte.
+
+## 2026-09-10 · Der Zufall war keiner, und was das Telefon zeigte (ROADMAP 6.19a)
+
+Vier Punkte von Julian nach einem Tag mit dem Ladebild: schneller, die Übergänge prüfen, den Zufall prüfen, und „mobile wurde bei mir die Animation nicht gezeigt sondern nur ein fertiges Mosaik (in Produktion)".
+
+**Der Zufall war keiner, und zwar mit Absicht.** Die Vorlage wurde einmal je Sitzung gewürfelt und im `sessionStorage` gemerkt — die Begründung stand hier am Vortag: zwanzig Vorlagen und ein frischer Wurf je Suche heißen, dass neunzehn von zwanzig Suchen für eine Datei zahlen, die der Browser noch nie gesehen hat. Julian erwartete etwas anderes, und das ist die bessere Entscheidung für ein Bild, das man mehrmals am Tag sieht: **bei jedem Anzeigen wird neu gewürfelt**, die zuletzt gezeigte Vorlage ausgeschlossen, weil zwei Würfe aus zwanzig oft genug dasselbe Gesicht treffen, dass es wie ein Fehler aussieht. Fünf Suchen hintereinander holten vier verschiedene Bilder, keines doppelt.
+
+**Die Messung dazu ging zweimal schief, und das ist die Lehre.** Der erste Versuch las nach jeder Suche den Namen unter dem Bild und sah viermal denselben — woraus ich fast geschlossen hätte, die Änderung wirke nicht. Sie wirkte: im Netzwerk-Protokoll standen neun verschiedene Manifeste. Die Suchen im Dev-Server kamen nur so schnell zurück, dass das Bild meist gar nicht erst erschien und der Name, den ich las, von der einen langsamen Suche stammte. **Was auf dem Schirm steht, ist bei kurzen Wartezeiten eine schlechte Auskunft darüber, was der Code tut** — die Anfragen sind die bessere.
+
+**Zum Telefon: vermutlich eine Einstellung, keine Störung.** `prefers-reduced-motion: reduce` bekommt das fertige Bild ohne Bewegung, so ist es in F1.6a festgehalten — und **iOS meldet `reduce` nicht nur bei „Bewegung reduzieren", sondern auch im Stromsparmodus**. Das ist genau das beschriebene Verhalten.
+
+**Eine zweite Ursache war trotzdem möglich und ist repariert.** Die Uhr der Animation startete, bevor die verwürfelte Wand gezeichnet war — 1.440 Kacheln — und bevor die Seite ihr Layout hatte. Auf einem Telefon, das nebenher eine Suche laufen hat, sind das leicht ein paar hundert Millisekunden, die als Animation zählten, die niemand gesehen hat; ein langer Hänger hätte genau ein fertiges Mosaik ergeben und sonst nichts. `paint()` und `begin()` sind jetzt getrennt: gezeichnet wird sofort, gezählt ab dem ersten Bild.
+
+**Und die Bestandsaufnahme der Übergänge**, weil bisher niemand sie an einer Stelle stehen hatte: Suche und Jahrzehnte-Seite zeigen das Mosaik; die Werkseite zeigt den Cover-Fächer, wenn die Karte eine Vorschau mitgegeben hat, und sonst die kleine Cover-Wand; und die Cover-Wand ist außerdem das, was im Mosaik-Feld steht, solange die Datei unterwegs ist. Die Tabelle steht in ROADMAP 6.19a.

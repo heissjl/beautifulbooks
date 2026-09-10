@@ -791,6 +791,26 @@ Kleine Punkte aus dem Design-Durchgang und dem Durchklick, jeder eine Stunde bis
 
   **Und ein Fehler, der genau das war, was CLAUDE.md verbietet:** *George Eliots* Mosaik entstand aus **zwei** Covern. Unter einer Ratenbegrenzung lieferte die Cover-CDN die meisten Bilder nicht, `fetchAll` verschluckte jeden einzelnen Fehlschlag, und der Lauf meldete „101 covers, 1 designs" — was wie ein dünnes Buch aussieht und ein Ausfall war. Fehlende Bilder werden jetzt **gezählt**, stehen in der Zeile je Werk, und ein Bau bricht ab, wenn weniger als die Hälfte ankommt: „that is an outage, not a palette". Edith Wharton ist beim ersten Versuch genau daran gescheitert und wurde danach neu gebaut.
 
+  **Drei Nachbesserungen und eine Bestandsaufnahme am 2026-09-10** (Julian: schneller, Übergänge prüfen, Zufall prüfen, und „mobile wurde bei mir die Animation nicht gezeigt sondern nur ein fertiges Mosaik").
+
+  **Die Animation läuft ein Viertel schneller**, 3 s statt 4. Weil das Einrasten mit `1 − (1 − p)²` gewichtet ist, passiert der sichtbare Teil ohnehin in der ersten Sekunde.
+
+  **Der Zufall war keiner.** Die Vorlage wurde **einmal je Sitzung** gewürfelt und gemerkt — das war Absicht (zwanzig Vorlagen und ein Wurf je Suche heißt neunzehn von zwanzig Suchen zahlen für eine Datei, die der Browser noch nie gesehen hat), aber nicht das, was Julian erwartete. Jetzt wird **bei jedem Anzeigen neu gewürfelt**, die zuletzt gezeigte ausgeschlossen, damit der Wechsel sichtbar ist. Gemessen an fünf Suchen hintereinander: vier verschiedene Bilder geholt, keines doppelt. Der Preis steht dabei: wer zehnmal sucht, zahlt für bis zu zehn Bilder à ~90 KB statt für eines — jedes danach im Browser-Cache. Der `sessionStorage`-Eintrag ist damit weg, und N11 und die Datenschutzseite zählen wieder drei Dinge statt vier.
+
+  **Welcher Ladebildschirm wo erscheint** (geprüft am 2026-09-10):
+
+  | Übergang | Was wartet |
+  |---|---|
+  | Startseite → Suchergebnis | **Mosaik** (`BookGrid` → `GridSkeleton`) |
+  | Ergebnis → Werkseite, mit Vorschau aus der Karte | **Cover-Fächer** (`LoadingStage`) |
+  | Werkseite direkt von außen aufgerufen | **Cover-Wand** (`AssemblingWall`, weil keine Vorschau vorliegt) |
+  | Werkseite → Jahrzehnte-Seite | **Mosaik** (`decades/loading.tsx`) |
+  | Jahrzehnte-Seite → zurück zur Werkseite | Cover-Fächer oder Cover-Wand, wie oben |
+  | Mosaik, solange die Datei unterwegs ist oder ausbleibt | **Cover-Wand** |
+  | Leere Startseite | Cover-Wand der Kuration (kein Ladezustand) |
+
+  **Zum Telefon: das ist vermutlich kein Fehler, sondern eine Einstellung.** `prefers-reduced-motion: reduce` bekommt das fertige Bild ohne Bewegung — so steht es in F1.6a —, und **iOS meldet `reduce` sowohl bei „Bewegung reduzieren" als auch im Stromsparmodus**. Das ist genau das beobachtete Verhalten. Zu prüfen am Gerät: Einstellungen → Bedienungshilfen → Bewegung, und der Batterie-Schalter. **Eine zweite Ursache war trotzdem möglich und ist behoben:** die Uhr der Animation startete, *bevor* die verwürfelte Wand gezeichnet war (1.440 Kacheln) und bevor die Seite ihr Layout hatte. Auf einem Telefon mit laufender Suche sind das ein paar hundert Millisekunden, die als Animation zählten, die niemand sah — und ein langer Hänger hätte genau ein fertiges Mosaik ergeben. Gezeichnet wird jetzt sofort, gezählt ab dem **ersten Bild**.
+
   **Auch beim Wechsel von der Cover-Wand zur Jahrzehnte-Seite** (Julian, 2026-09-10: „baue den Ladebildschirm auch ein für das Laden beim Wechsel von Coverwall zu Decade Wall"). `app/book/[id]/decades/loading.tsx` zeigt statt der Cover-Wand das Mosaik. **Das ist die Wartezeit, für die es gebaut wurde:** eine Suche kommt weit öfter nach ein, zwei Sekunden zurück als nach zehn, die Animation wird dort also meist abgeschnitten — hier hat sie 4,5 bis 12,9 s, läuft durch und hält danach das fertige Gesicht. Wer vorher gesucht hat, sieht dieselbe Vorlage, weil die Wahl je Sitzung gilt; und weil `MosaicLoader` bis zum Eintreffen des Bildes ohnehin die Cover-Wand zeigt, ist der Weg dorthin unverändert.
 
   **Nachgebessert nach dem ersten Deploy** (Julian, 2026-09-09): **„Looking for …" steht jetzt über dem Mosaik**, als Überschrift in der Display-Schrift — „dann ist niemand verwirrt". Erst lag die Zeile *auf* dem Bild, auf einem Grund in `--surface` bei 90 %; Julian am selben Abend: „der Ladetext sollte grafisch über dem Mosaik stehen, nicht als Overlay". Er hat recht — eine Zeile auf einem Mosaik braucht einen eigenen Grund und liest sich dann wie ein aufgeklebtes Etikett, während sie darüber gesetzt sagt, was die Seite gerade tut. Wer auf dem Bild zu sehen ist, steht weiterhin klein darunter.

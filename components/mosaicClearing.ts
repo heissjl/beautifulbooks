@@ -93,13 +93,27 @@ export class Clearing {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  /** The scrambled wall, dimmed: what the first frame shows. */
-  start(now: number) {
+  /**
+   * The scrambled wall, dimmed: what stands there before anything moves.
+   *
+   * Separate from `begin` because the two want different moments. This has to
+   * happen **at once**, or the frame is empty for as long as it takes to draw
+   * 1,440 tiles; the clock has to start on the **first animation frame**, or
+   * that drawing and the page's layout are counted as animation that nobody
+   * saw. On a phone with a search in flight the gap between them is a few
+   * hundred milliseconds, and a long enough one would leave nothing but the
+   * finished picture.
+   */
+  paint() {
     for (let i = 0; i < this.cells; i++) this.draw(i, this.scene.shuffle[i], 1, this.bctx);
-    this.t0 = now;
     this.placed = 0;
     this.active = [];
     this.present(0);
+  }
+
+  /** Starts the clock. */
+  begin(now: number) {
+    this.t0 = now;
   }
 
   /** One frame. Returns whether there is anything left to do. */

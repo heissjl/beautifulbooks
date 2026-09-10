@@ -28,40 +28,39 @@ import {
 /** How wide the picture is, by the site's own phone/desktop breakpoint. */
 const PHONE_WIDTH = 260;
 const DESKTOP_WIDTH = 420;
-/** Long enough to be a picture, short enough that most waits do not outlast it. */
-const DURATION_MS = 4000;
-/** Remembering the choice is what keeps a rotation of twenty to one download. */
-const SESSION_KEY = 'loading-mosaic';
+/**
+ * Long enough to be a picture, short enough that most waits do not outlast it.
+ *
+ * Four seconds at first, a quarter faster since 2026-09-10 (Julian:
+ * „verschnellere die Animation des Mosaik um 25%"). The clearing is eased, so
+ * the visible part of it happens in the first second either way.
+ */
+const DURATION_MS = 3000;
 
 function frameWidthFor(innerWidth: number): number {
   return innerWidth >= 640 ? DESKTOP_WIDTH : PHONE_WIDTH;
 }
 
+/** The one shown last, so the next throw is visibly a different picture. */
+let lastShown: string | null = null;
+
 /**
- * Which template this reader sees.
+ * Which template comes next.
  *
- * Drawn once per session and remembered: twenty templates with a fresh throw
- * per search would mean nineteen searches out of twenty pay for a file the
- * browser has never seen. The rotation is meant to vary between readers and
- * days, not between keystrokes.
+ * **A fresh throw every time the picture is shown** (Julian, 2026-09-10:
+ * „überprüfe ob wirklich random zwischen den 20 Autoren gewechselt wird bei
+ * jedem neuen Anzeigen der Animation" — it was not; it was drawn once per
+ * session and kept). The one just shown is excluded, because two throws in
+ * twenty land on the same author often enough to look like a bug.
+ *
+ * The price is bytes: a reader who searches ten times pays for up to ten
+ * pictures instead of one, about 90 KB each, and each is then in their
+ * browser cache for the rest of the session. That is the trade Julian asked
+ * for, and it is written down in ROADMAP 6.19a.
  */
 function chooseTemplate(rotation: MosaicEntry[]): MosaicEntry | undefined {
-  let kept: string | null = null;
-  try {
-    kept = sessionStorage.getItem(SESSION_KEY);
-  } catch {
-    // Private mode, or storage switched off. A random one per search is a
-    // worse deal, not a broken one.
-  }
-  const known = rotation.find(entry => entry.id === kept);
-  if (known) return known;
-  const chosen = pickTemplate(rotation);
-  try {
-    if (chosen) sessionStorage.setItem(SESSION_KEY, chosen.id);
-  } catch {
-    // As above.
-  }
-  return chosen;
+  const fresh = rotation.filter(entry => entry.id !== lastShown);
+  return pickTemplate(fresh.length > 0 ? fresh : rotation);
 }
 
 async function loadScene(frameWidth: number): Promise<MosaicScene> {
@@ -88,11 +87,12 @@ async function loadScene(frameWidth: number): Promise<MosaicScene> {
 }
 
 /**
- * The fetch, started early and shared.
+ * The next picture, fetched early and held until it is shown.
  *
  * A search is where this is needed, and a search starts with typing: by the
  * time the reader presses Enter the picture is usually there, and whoever
- * never searches never fetches one.
+ * never searches never fetches one. It is **consumed** when a loader mounts,
+ * so the next wait draws a new author rather than reusing this one.
  */
 let pending: Promise<MosaicScene> | null = null;
 
@@ -104,6 +104,14 @@ export function preloadMosaic() {
   });
 }
 
+/** The picture for the wait that is starting now, and the next one begins fresh. */
+function takeMosaic(): Promise<MosaicScene> {
+  preloadMosaic();
+  const taken = pending!;
+  pending = null;
+  return taken;
+}
+
 export default function MosaicLoader({ caption }: { caption: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [scene, setScene] = useState<MosaicScene | null>(null);
@@ -111,9 +119,11 @@ export default function MosaicLoader({ caption }: { caption: string }) {
 
   useEffect(() => {
     let alive = true;
-    preloadMosaic();
-    pending
-      ?.then(loaded => { if (alive) setScene(loaded); })
+    takeMosaic()
+      .then(loaded => {
+        lastShown = loaded.manifest.id;
+        if (alive) setScene(loaded);
+      })
       .catch(() => { if (alive) setFailed(true); });
     return () => { alive = false; };
   }, []);
@@ -126,10 +136,24 @@ export default function MosaicLoader({ caption }: { caption: string }) {
       clearing.finish();
       return;
     }
+    /*
+      The clock starts on the **first frame**, not here.
+
+      Between this line and the first animation frame the browser has to draw
+      the scrambled wall — 1,440 tiles — and lay the page out, and on a phone
+      that is a stall of a few hundred milliseconds with a search still in
+      flight. Timing from before it spends part of the animation before
+      anything is on screen, and a long enough stall would show the finished
+      picture and nothing else.
+    */
     let raf = 0;
-    const start = performance.now();
-    clearing.start(start);
+    let started = false;
+    clearing.paint();
     const step = (now: number) => {
+      if (!started) {
+        started = true;
+        clearing.begin(now);
+      }
       raf = clearing.tick(now) ? requestAnimationFrame(step) : 0;
     };
     raf = requestAnimationFrame(step);
