@@ -132,6 +132,8 @@ export default function MosaicLoader({ caption }: { caption: string }) {
     const canvas = canvasRef.current;
     if (!scene || !canvas) return;
     const clearing = new Clearing(canvas, scene, DURATION_MS);
+    // Less motion asked for: the finished picture at once, and CSS lets it
+    // breathe so that it still reads as a page that is working.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       clearing.finish();
       return;
@@ -186,7 +188,21 @@ export default function MosaicLoader({ caption }: { caption: string }) {
         className="mx-auto overflow-hidden rounded-[3px] bg-surface-2"
         style={{ width, height }}
       >
-        <canvas ref={canvasRef} className="block h-full w-full" />
+        {/*
+          Nothing in the normal case; under `prefers-reduced-motion` the
+          finished picture breathes (Julian, 2026-09-10: „für reduced motion
+          kann man vllt ein Pulsieren eines fertigen Mosaiks machen? Statt des
+          Aufbaus"). The clearing does not run on that path, and a still
+          picture says the page is done when it is still working.
+
+          **A deliberate exception** to the rule in `globals.css` that
+          switches every other animation off under that setting: a slow fade
+          is not the kind of motion it exists to spare anyone — nothing
+          travels, nothing scales — and on iOS the setting is reported for Low
+          Power Mode as well, so many readers on this path are simply low on
+          battery, which an opacity animation costs nothing.
+        */}
+        <canvas ref={canvasRef} className="block h-full w-full motion-reduce:animate-breathe" />
       </div>
       {/*
         What the picture is, so nobody takes it for an answer to their search

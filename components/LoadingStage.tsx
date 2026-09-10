@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { proxiedCoverSrc } from '@/lib/coverurl';
-import AssemblingWall from './AssemblingWall';
+import MosaicLoader from './MosaicLoader';
 
 export interface StageCover {
   id: string;
@@ -42,13 +42,19 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
         : `${covers.length} cover${covers.length === 1 ? '' : 's'} here`;
 
   /*
-    Nothing of this book has arrived yet and no card sent a cover along, which
-    is what every visit from outside looks like. An empty stage with a caption
-    under it was measured as several seconds of blank page on a phone; the
-    assembling wall fills them with the site's own picture.
+    Nothing of this book has arrived yet and no card sent a cover along.
+    **That is what every visit from outside looks like** — a search engine, a
+    shared link, or the way back from the decade page — and it was measured as
+    several seconds of blank page on a phone.
+    
+    Since 2026-09-10 those seconds get the mosaic (Julian: „Werkseite von
+    außen sollte ein Mosaik bekommen und Jahrzehnte-Seite → zurück auch"),
+    which is the same picture the search and the decade page wait in front of.
+    `MosaicLoader` itself falls back to the small cover wall until its file is
+    there, so nothing is lost on a slow connection.
   */
   if (shown.length === 0 && !hero) {
-    return <AssemblingWall caption={caption} />;
+    return <MosaicLoader caption={caption} />;
   }
 
   return (
