@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import CoverImage from '@/components/CoverImage';
 import SiteFooter from '@/components/SiteFooter';
+import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import { indexSignatures } from '@/lib/coverindex';
 import { decadeLine, groupByDecade, worthAPage } from '@/lib/decades';
@@ -121,6 +122,7 @@ export default async function Page({ params }: PageProps) {
             ← The wall
           </Link>
         }
+        search={<HeaderSearch />}
       />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-8 sm:px-6">
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import SiteFooter from '@/components/SiteFooter';
+import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 
 /**
@@ -10,7 +11,7 @@ import SiteHeader from '@/components/SiteHeader';
 export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
+      <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center px-4 py-24 text-center">
         <p className="font-display text-2xl text-ink">Nothing here</p>
         <p className="mt-2 text-sm text-ink-3">The page does not exist, or the book is not in the catalogue.</p>

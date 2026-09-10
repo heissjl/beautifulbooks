@@ -14,6 +14,7 @@ import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
+import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
 import { useLoadingScene } from '@/components/useLoadingScene';
 import { useIsDesktop } from '@/components/useIsDesktop';
@@ -37,21 +38,32 @@ import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Tr
 import { groupByDecade, worthAPage } from '@/lib/decades';
 import { foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
 
-function BackLink({ href }: { href: string }) {
+/*
+  It said "Search" until 2026-09-10, which stopped working the moment a search
+  field moved into the header beside it (ROADMAP 6.28): two controls, one
+  word, different things — this one goes back to the result list you came
+  from with your query intact, the field starts over. So it says what it does,
+  and it says something different when there is no result list to go back to.
+
+  What decides that is the **query**, not the address: `?lang=de` alone also
+  makes an address other than `/`, and it leads to the home page with a filter
+  rather than to results (caught on the dev server, 2026-09-10).
+*/
+function BackLink({ href, toResults }: { href: string; toResults: boolean }) {
   return (
     <Link href={href} className="inline-flex items-center gap-1.5 rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
       </svg>
-      Search
+      {toResults ? 'Results' : 'Home'}
     </Link>
   );
 }
 
-function Shell({ children, backHref, right }: { children: React.ReactNode; backHref: string; right?: React.ReactNode }) {
+function Shell({ children, backHref, toResults, right }: { children: React.ReactNode; backHref: string; toResults: boolean; right?: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader left={<BackLink href={backHref} />} right={right} />
+      <SiteHeader left={<BackLink href={backHref} toResults={toResults} />} right={right} search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
       <SiteFooter />
     </div>
@@ -159,6 +171,9 @@ function BookDetail() {
   const searchParams = useSearchParams();
   const lang = searchParams.get('lang') ?? '';
   const backHref = backHrefFrom(searchParams);
+  // A query means there is a result list behind the back link; a bare `?lang=`
+  // does not (ROADMAP 6.28).
+  const cameFromResults = !!searchParams.get('q');
   const preview = useWorkPreview(params.id);
 
   // Market for buy links (E9): the user's choice, else detected by the server.
@@ -250,7 +265,7 @@ function BookDetail() {
 
   if (pages.status === 'notfound' || pages.status === 'error') {
     return (
-      <Shell backHref={backHref}>
+      <Shell backHref={backHref} toResults={cameFromResults}>
         <div className="py-24 text-center">
           <p className="font-display text-2xl text-ink">
             {pages.status === 'notfound' ? 'Book not found' : pages.message}
@@ -264,7 +279,7 @@ function BookDetail() {
   if (inScene || !view) {
     const work = view?.work;
     return (
-      <Shell backHref={backHref}>
+      <Shell backHref={backHref} toResults={cameFromResults}>
         <TitleBlock
           title={work?.title ?? preview?.title}
           authors={work?.authors ?? preview?.authors}
@@ -340,6 +355,7 @@ function BookDetail() {
   return (
     <Shell
       backHref={backHref}
+      toResults={cameFromResults}
       /*
         With a cover picked, sharing lives beside it — in the sidebar on a wide
         screen, in the phone bar next to "Details". Without one there is

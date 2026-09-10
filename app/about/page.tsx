@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteFooter from '@/components/SiteFooter';
+import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import { VERDICT_LEAD, VERDICT_MEANING, VERDICT_ORDER } from '@/lib/verdicts';
 import { indexBuiltAt, indexSize } from '@/lib/coverindex';
@@ -35,7 +36,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 export default function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
+      <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 pb-24 pt-12 sm:px-6">
         <h1 className="text-4xl leading-[1.1] text-ink">About</h1>
 

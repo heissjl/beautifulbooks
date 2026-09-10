@@ -1447,3 +1447,21 @@ Das ist kein Werkzeugmangel, den man umgehen sollte, sondern eine Kategorie von 
 **Was der Satz nicht beantwortet hat**, und das ist bewusst getrennt: 0.8 trug drei weitere Prüfungen als „gleich mitprüfen" — Tab-Reihenfolge, Enter auf einer Cover-Kachel, Sichtbarkeit der Fokus-Ringe. Julian hat nur Enter im Suchfeld gemeldet. Der Rest steht als **0.8a**, statt still mit abgehakt zu werden; er braucht dieselbe Sorte Prüfung und ist dieselbe Sorte Frage, aber eben nicht dieselbe.
 
 **Freigeworden ist damit 6.28** (Suchfeld in der Kopfzeile): der Punkt hatte als Bedingung „erst 0.8 klären, sonst vervielfacht ein Feld auf jeder Seite, was dabei herauskommt". Es kommt nichts Kaputtes heraus.
+
+## 2026-09-10 · Ein Suchfeld in der Kopfzeile (ROADMAP 6.28)
+
+Gebaut, sobald 0.8 beantwortet war. Es steht auf Detailseite, Jahrzehnte-Seite, About, Kontakt, Datenschutz und 404 — **nicht** auf Startseite und Trefferliste, die ihr eigenes Feld haben. Im ausgelieferten HTML nachgezählt: dort null Felder in der Kopfzeile, überall sonst genau eines.
+
+**Ein einziges `<input>`, und das war die Entwurfsfrage.** Auf breiten Schirmen zeigt CSS es, ohne dass JavaScript gelaufen sein muss — es kann also nicht aufblitzen. Auf dem Telefon ist dasselbe Element ausgeblendet, und die Lupe legt es über die Kopfzeile, mit „Cancel" daneben. Zwei Felder mit derselben Beschriftung, von denen CSS eines versteckt, wären billiger zu schreiben und für einen Screenreader zwei Suchfelder gewesen.
+
+**Der Zurück-Link musste umbenannt werden**, und das war der vorhergesagte Teil: er hieß „Search" und führt zur Trefferliste zurück, aus der man kam. Neben einem Suchfeld trügen zwei Bedienelemente dasselbe Wort und täten Verschiedenes. Er heißt jetzt „Results", wenn eine Query vorliegt, sonst „Home".
+
+**Drei Dinge kamen erst in der Messung heraus:**
+
+| | Was passierte | Warum |
+|---|---|---|
+| Der Build brach an `/about` ab | `useSearchParams()` in einer Client-Komponente nimmt **jede Seite, die sie trägt, aus dem statischen Rendern** — Next sagt es wörtlich („should be wrapped in a suspense boundary") | Der Sprachfilter wird jetzt beim Absenden aus `window.location` gelesen. Im Ereignishandler ist das sicher, und die Frage stellt sich beim Rendern gar nicht. About, Datenschutz, Kontakt und die Jahrzehnte-Seiten bleiben statisch |
+| „Results" stand auch da, wo es keine gab | Die Bedingung hing an der Adresse (`href !== '/'`), und `?lang=de` allein ergibt ebenfalls eine Adresse ungleich `/` | Jetzt entscheidet die **Query**. Am Dev-Server gesehen: `/book/OL50548W?lang=de` zeigte „Results" und führte zur Startseite mit Filter |
+| Der Cursor landete nicht im Feld | Ein `requestAnimationFrame` nach dem Tippen auf die Lupe feuert, solange das Feld noch `display: none` ist — **ein nicht dargestelltes Element nimmt keinen Fokus** | Ein Effekt auf `open` läuft, nachdem die Klasse gewechselt hat |
+
+Der mittlere Punkt ist der, den ich am ehesten übersehen hätte: die Bedingung sah richtig aus und war es für den häufigen Fall auch. Sie fiel nur auf, weil die Prüfung eine Adresse mit `lang` und ohne `q` mitgenommen hat — ein Zustand, den man beim Klicken kaum erzeugt, aber jeder geteilte Link mit Sprachfilter.
