@@ -1435,3 +1435,15 @@ Julian: „beim lademosaik sollte der ladetext grafisch über dem mosaik stehen,
 Der Grund ist nicht nur Anordnung: eine Zeile Text über einem Bild liest sich als **Bildunterschrift dazu** — und genau das darf dieser Satz nicht sein. Er sagt, worauf gewartet wird, nicht, was zu sehen ist. Die Kacheln der Wartewand sind bewusst klein, gedimmt und unbeschriftet, damit niemand sie für eine Antwort hält (N12); ein Satz, der wie ihre Unterschrift aussieht, hebelte das aus.
 
 Gemessen am Dev-Server: Suche nach „stoner williams" — Ladetext `position: static`, Unterkante 289 px, Raster beginnt bei 313 px. Werkseite *Neuromancer* — „1 of 40 covers here", `static`, Unterkante 299 px, Fächer beginnt bei 319 px. Das `relative` am Bühnen-Container konnte weg, weil die Kacheln selbst am inneren Kasten hängen, nicht an ihm.
+
+## 2026-09-10 · Enter sendet ab
+
+Julian: „enter scheint im suchfeld problemlos zu klappen." Damit ist ROADMAP 0.8 erledigt — ein Punkt, der seit dem 2026-09-07 offenstand und zweimal an einer automatisierten Prüfung gescheitert war.
+
+**Warum das zwei Sitzungen gedauert hat, und was daraus zu lernen ist.** Das Browser-Panel schickt Tastendrücke ohne Tastenwert; weder Enter noch ein Zeilenumbruch löste je ein Absenden aus. Am 2026-09-08 kam die Prüfung so weit, `form.requestSubmit()` aufzurufen — das führte zur Trefferliste und belegte, dass das Formular absendbar *ist*. Es belegte nicht, dass **Enter** es auslöst, und genau das war die Frage. Die Lücke zwischen „das Formular lässt sich absenden" und „die Taste sendet es ab" ist klein und war nicht zu schließen: es brauchte einen Menschen an einer echten Tastatur.
+
+Das ist kein Werkzeugmangel, den man umgehen sollte, sondern eine Kategorie von Fragen, für die eine Automatisierung die falsche Antwort liefert — und für die ein „sollte laut Spezifikation gehen" keine Messung ist. In der Spec steht der Befund jetzt bei F1.5, mit dem Hinweis, dass ein Umbau des Formulars ihn wieder von Hand fällig macht.
+
+**Was der Satz nicht beantwortet hat**, und das ist bewusst getrennt: 0.8 trug drei weitere Prüfungen als „gleich mitprüfen" — Tab-Reihenfolge, Enter auf einer Cover-Kachel, Sichtbarkeit der Fokus-Ringe. Julian hat nur Enter im Suchfeld gemeldet. Der Rest steht als **0.8a**, statt still mit abgehakt zu werden; er braucht dieselbe Sorte Prüfung und ist dieselbe Sorte Frage, aber eben nicht dieselbe.
+
+**Freigeworden ist damit 6.28** (Suchfeld in der Kopfzeile): der Punkt hatte als Bedingung „erst 0.8 klären, sonst vervielfacht ein Feld auf jeder Seite, was dabei herauskommt". Es kommt nichts Kaputtes heraus.
