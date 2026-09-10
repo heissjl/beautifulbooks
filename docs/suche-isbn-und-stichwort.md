@@ -42,6 +42,25 @@ Drei Nebenbefunde:
 2. Eine **eingefügte Work-ID** findet nichts, obwohl genau diese Seite existiert.
 3. Die Wand zeigt seit 1.1 **absichtlich nichts vorgewählt** — was für eine Stichwortsuche richtig ist und für eine ISBN-Suche das Gegenteil dessen, was gefragt wurde.
 
+## Nachtrag beim Bauen: null Treffer ist der seltene Fall
+
+Beim Umsetzen fiel eine Annahme des ersten Befunds durch. Ich hatte angenommen, eine dem Katalog unbekannte ISBN ergebe null Treffer. **Das stimmt nur manchmal.** Gemessen am 2026-09-10 über acht ISBNs:
+
+| Eingabe | Treffer | Erste Karte |
+|---|---:|---|
+| `9780451524935` (Signet, *1984*) | 1 | Nineteen Eighty-Four |
+| `9780743273565` (Scribner, *Gatsby*) | 1 | The Great Gatsby |
+| `9780060850524` (*Brave New World*) | 1 | Brave New World |
+| `9781451673319` (*Fahrenheit 451*) | 1 | Fahrenheit 451 |
+| `9781400033416` (*Beloved*) | 1 | Beloved |
+| `9783161484100` (gültig, unbekannt) | **8** | Harry Potter and the Philosopher's Stone |
+| `9781234567897` (gültig, erfunden) | **15** | LE TESTAMENT |
+| `9790123456785` (gültig, erfunden) | 0 | — |
+
+**Fünf echte ISBNs ergeben exakt einen Treffer.** Findet Open Library nichts unter der Nummer, sucht es nach den Ziffern weiter — und liefert unpassende Bücher, ohne das kenntlich zu machen. Wer eine ISBN eintippt und *Harry Potter* bekommt, hat keinen Hinweis darauf, dass seine Nummer gar nicht gefunden wurde.
+
+Daraus folgt die Regel, die jetzt im Code steht: **genau ein Treffer** heißt, die ISBN wurde gefunden — nur dann wird ihr Cover vorgewählt. Mehr als einer heißt, sie wurde nicht gefunden, und das sagt die Seite auch. Acht Stichproben sind wenig; die Regel ist plausibel, weil ein Indextreffer auf genau ein Werk auflöst, aber wer sie ändert, misst sie neu.
+
 ## Drei Wege
 
 **1. Nichts ändern.** Kostet nichts. Preis: Wer mit einer ISBN kommt, sucht seine Ausgabe von Hand, und eine vertippte Prüfziffer sieht aus wie ein fehlendes Buch.

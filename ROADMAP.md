@@ -26,8 +26,8 @@ Stand: 2026-09-10, nach dem Umbau (Julian: „überprüfe die Abhängigkeiten, s
 ### Stand
 
 - **Online seit 2026-09-08: https://beautifulcovers.vercel.app**, Hobby-Modus (E20), Vercel Hobby, Funktionen in Frankfurt, Web Analytics an.
-- **Produktion ist `origin/main`.** Ein Push dorthin ist ein Deploy. Am 2026-09-10 arbeiteten **drei Sessions parallel**: eine schob 6.19a direkt nach `origin/main`, eine committete 6.29 auf das lokale `main`, eine baute 6.28 auf einem Branch — und das lokale `main` lag zeitweise sechs Commits vor und fünfzehn hinter Produktion, ohne dass es irgendwo stand. Seither zusammengeführt; `npm run worktrees` zeigt, ob das wieder passiert, und ist vor jedem Merge nach `main` zu lesen.
-- **57 Punkte offen, 28 erledigt.** Phase 1 ist bis auf drei Punkte leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
+- **Produktion ist `origin/main`.** Ein Push dorthin ist ein Deploy. Am 2026-09-10 arbeiteten **drei Sessions parallel**: eine schob 6.19a direkt nach `origin/main`, eine baute 6.29 auf dem lokalen `main`, eine baute 6.28 auf einem Branch — und das lokale `main` lag zeitweise sechs Commits vor und fünfzehn hinter Produktion, ohne dass es irgendwo stand. Seither zusammengeführt; `npm run worktrees` zeigt, ob das wieder passiert, und ist vor jedem Merge nach `main` zu lesen.
+- **56 Punkte offen, 29 erledigt.** Phase 1 ist bis auf drei Punkte leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
 - **Der Engpass ist nicht die Technik, sondern dass niemand die Seite kennt:** sie steht in keiner Suchmaschine (2.5) und unter einem Namen, den niemand behält (0.5).
 
 ### Nächste Schritte
@@ -40,7 +40,7 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt.
 | 2 | **2.5 Search Console und Bing**, dazu **0.2** zweiter Google-Schlüssel und **0.13** Kontingent-Alarm | Julian | 30 Minuten | Jeder Tag ohne Sitemap ist ein verlorener Tag; ein Schlüssel für Arbeit *und* Betrieb verbraucht das Kontingent der Besucher |
 | 3 | **0.5 / 2.2 Domain** kaufen und verbinden | Julian | 20 Minuten plus DNS | Reichweite auf `vercel.app` muss später umgeleitet werden; Vorschläge in [docs/domain-recherche.md](docs/domain-recherche.md) |
 | 4 | **6.25 leere Kacheln** — zuerst den Status der Gegenseite in `/img` protokollieren | Claude | zwei Stunden | Der einzige offene Punkt, der auf einen Fehler zeigt, den heute niemand ausschließen kann, und 1.3 hat den Mechanismus dafür neu geschaffen |
-| 5 | **1.9** der leere Platz oben rechts, **1.11a** ISBN-Link bei lebender ISBN, **6.29** eine ISBN führt zu ihrer Ausgabe, **6.24** Zurück-Ladeszene, **6.14a** Scan-Reihe | Claude | je Stunden bis ein halber Tag | Alle ohne Wartezeit auf Julian (6.29 trägt eine Frage an ihn, die den Bau nicht aufhält), alle für einen Leser sichtbar |
+| 5 | **1.9** der leere Platz oben rechts, **1.11a** ISBN-Link bei lebender ISBN, **6.24** Zurück-Ladeszene, **6.14a** Scan-Reihe | Claude | je Stunden bis ein halber Tag | Alle ohne Wartezeit auf Julian, alle für einen Leser sichtbar |
 | 6 | **6.18 Kuratierung zu Ende**, danach **6.17 Rotation** und das Jahr für **6.16** | Julian, dann Claude | ein Abend, dann eine Sitzung | Die Startseite ist das Erste, was ein Besucher sieht |
 | 7 | **6.13 mit 6.15 Schritt 3** | Claude | ein bis zwei Sitzungen | Der schwerste offene Datenfehler: die Karte verspricht Ausgaben, die die Wand nie lädt |
 | 8 | **3.1 Analyse-Seite** | Claude | zwei Tage | Erst sinnvoll mit einer Woche echter Besucher |
@@ -107,7 +107,7 @@ In der Reihenfolge, in der sie hier stehen; die Regel bleibt: **die vorderste Ph
 | [0 Entscheidungen](#phase-0--entscheidungen-die-nur-julian-treffen-kann) | Konten, Geld, Recht, Produktfragen | 10 | 4 | Julian |
 | [2 Betrieb](#phase-2--betrieb-domain-sichtbarkeit-abnahme) | Domain, Suchmaschinen, Überwachung, Abnahme | 4 | 3 | Julian (Konten), ein Deploy |
 | [1 Vor echtem Verkehr](#phase-1--vor-echtem-verkehr) | Was ein erster Besucher noch nicht sehen soll | 3 | 9 | nichts |
-| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 21 | 11 | teils 6.6 (Geld), teils 6.18 (Julian) |
+| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 20 | 12 | teils 6.6 (Geld), teils 6.18 (Julian) |
 | [3 Messen](#phase-3--messen) | Analyse-Seite, Verbrauch, Conversion | 3 | 0 | Besucher |
 | [5 Reichweite](#phase-5--reichweite) | Seitengattungen, Fabrik, Kanäle | 8 | 0 | Inhalte, Rechtefrage |
 | [4 Geld](#phase-4--geld) | Partnerprogramme, Werbung, Spenden | 8 | 1 | Besucher, Umschalttag |
@@ -333,16 +333,6 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
 - [ ] **6.24 Der Zurück-Knopf von der Jahrzehnte-Seite spielt die Ladeszene noch einmal ab.** (Julian, 2026-09-09: „wenn ich per browser zurück-taste von der decade wall zurück zur cover wall komme, will ich nicht erneut den ladebildschirm mit den 4 covern sehen.")
 
   **Für die Suche ist das seit `49a3453` gelöst, für diesen Weg nicht.** `useWorkPages` merkt sich einen fertigen Durchlauf (`FINISHED`) und liest ihn beim Rendern, damit ein Zurück zur Wand sofort steht. Warum das hier nicht greift, ist **vor dem Bauen zu klären** — die Jahrzehnte-Seite ist eine eigene Route, also wird die Komponente neu montiert und der Modulzustand müsste eigentlich überleben. Kandidaten: die Seite ist serverseitig gerendert und ihr Zurück ist eine echte Navigation, kein `router.back()` im selben Baum; oder `FINISHED` ist an einen `requestKey` gebunden, der beim Wiedereintritt anders lautet (Markt, Sprache). Erst nachsehen, welches von beidem, dann beheben — die Ursache steht nicht fest.
-
-- [ ] **6.29 Eine ISBN führt nicht zu ihrer Ausgabe.** (Julian, 2026-09-10: „mache eine klare Übersicht wie die Suche nach ISBN und nach Stichworten funktioniert für welche Fälle, damit wir dort die beste Lösung finden.") *Gemessen und aufgeschrieben in [docs/suche-isbn-und-stichwort.md](docs/suche-isbn-und-stichwort.md), vierzehn Eingaben; Flussdiagramm als Artefakt.*
-
-  **Der Befund:** Open Librarys allgemeine Suche erkennt ISBNs von sich aus — mit Bindestrichen, mit Leerzeichen, als ISBN-10 —, antwortet mit genau einem Treffer in 0,4 bis 0,6 s und kostet dieselbe eine Anfrage wie jede Suche. **Die Kette reißt danach:** die Karte verlinkt auf `/book/<id>?q=9780451524935`, die ISBN steht also noch in der Adresse und wird von niemandem gelesen. Wer eine bestimmte Ausgabe in der Hand hält, bekommt 224 Cover ohne Markierung.
-
-  **Vorgeschlagen (Weg 2 im Dokument):** die Form der Eingabe erkennen, bevor gesucht wird — `cleanIsbn` und `isbn10to13` liegen in `lib/normalize.ts`, eine Work-ID ist `/^OL\d+W$/`. Die Suche bleibt, wie sie ist; neu sind zwei Kanten: bei genau einem Treffer `?isbn=…` statt `?q=…`, und die Detailseite wählt das Cover der Ausgabe mit dieser ISBN vor. Eine eingefügte Work-ID führt direkt auf ihre Seite statt auf „No books found". **Keine zusätzliche Anfrage, kein Google-Kontingent.**
-
-  **Dazu die Wortwahl:** eine falsche Prüfziffer und eine dem Katalog unbekannte ISBN sehen heute beide wie „No books found" aus — ein Satz über die Welt, wo einer über die Eingabe gemeint ist (N12, verwandt mit 1.4).
-
-  **Offene Frage an Julian:** ob die Vorwahl auch dann greifen soll, wenn die Ausgabe jenseits der Ladegrenze liegt und deshalb nicht gefunden wird — dann bleibt die Wand unmarkiert, und die Seite darf nichts anderes behaupten.
 
 - [ ] **6.14a Die Scan-Reihe: seitwärts scrollen statt umbrechen, und ein kürzerer Satz.** (Julian, 2026-09-09, an *Fahrenheit 451* mit **acht** Scans.)
 
@@ -613,6 +603,8 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 - [x] **6.21 Teilen-Knöpfe für soziale Netze.** Erledigt 2026-09-09: ein Menü aus reinen Links — Link kopieren, `navigator.share`, Pinterest vorn, WhatsApp, Bluesky, X, E-Mail —, kein fremdes Skript, kein Cookie. Der Knopf steht am Cover, ohne Auswahl in der Kopfzeile. → [Archiv](docs/roadmap-archive.md#621)
 
 - [x] **6.22 Das Farbschema.** Erledigt 2026-09-09: sanfteres Terrakotta `#945138` / `#dbac94` (Kontrast 4,56 → 5,29), und `ink-3` von 3,28 auf 4,55 — es verfehlte WCAG AA seit dem ersten Tag. `lib/__tests__/contrast.test.ts` liest `globals.css` selbst und prüft sechs Paare in beiden Modi. → [Historie](docs/history.md#2026-09-09--vier-färbungen-derselben-wand-und-ein-kontrast-der-schon-durchfällt-roadmap-622) · [lab/palette](lab/palette/README.md) · [Archiv](docs/roadmap-archive.md#622)
+
+- [x] **6.29 Eine ISBN führt zu ihrer Ausgabe.** Erledigt 2026-09-10 in einer eigenen Session, Weg 2 aus [docs/suche-isbn-und-stichwort.md](docs/suche-isbn-und-stichwort.md): die Form der Eingabe wird vor der Suche erkannt (`lib/queryshape.ts`, rein, ohne eigene Anfrage); bei **genau einem** Treffer führt die Karte mit `?isbn=` und die Detailseite wählt das Cover dieser Ausgabe vor, eine Work-ID führt direkt auf ihre Seite. Der Befund beim Bauen: eine unbekannte ISBN ergibt keine null Treffer, sondern eine Ziffernsuche mit acht Büchern — deshalb zählt nur der einzelne Treffer als gefunden (N12). → [Archiv](docs/roadmap-archive.md#629)
 
 - [x] **6.28 Ein Suchfeld in der Kopfzeile, auf jeder Seite außer der Suche.** Erledigt 2026-09-10: ein einziges Eingabefeld, per CSS sichtbar ab `sm`, auf dem Telefon über eine Lupe; der Zurück-Link heißt „Results“ bzw. „Home“. `useSearchParams` hätte About, Datenschutz und die Jahrzehnte-Seiten dynamisch gemacht — der Sprachfilter wird beim Absenden aus `window.location` gelesen. → [Historie](docs/history.md#2026-09-10--ein-suchfeld-in-der-kopfzeile-roadmap-628) · [Archiv](docs/roadmap-archive.md#628)
 

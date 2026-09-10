@@ -1,7 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
 import BookWorkCard from './BookWorkCard';
+import { shapeOf } from '@/lib/queryshape';
 import CuratedWall from './CuratedWall';
 import MosaicLoader from './MosaicLoader';
 import { LANGUAGES } from './SearchBar';
@@ -90,9 +92,24 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
   const [attempt, setAttempt] = useState(0);
   const key = searchQuery ? `${searchQuery} ${language} #${attempt}` : '';
   const [outcome, setOutcome] = useState<Outcome | null>(null);
+  const router = useRouter();
+  // Memoised: the effect depends on it, and a fresh object each render would
+  // restart the search on every render.
+  const pasted = useMemo(() => shapeOf(searchQuery), [searchQuery]);
 
   useEffect(() => {
     if (!key) return;
+    /*
+      A pasted work id is an address, not a question (ROADMAP 6.29). Open
+      Library finds nothing for `OL1168083W` and the page used to answer "No
+      books found" about a work whose page exists — so go there instead of
+      asking. `replace`, not `push`: the search that was never really a search
+      has no business in the back button.
+    */
+    if (pasted.kind === 'work') {
+      router.replace(`/book/${pasted.workId}`);
+      return;
+    }
     const controller = new AbortController();
     const params = new URLSearchParams({ q: searchQuery });
     if (language && language !== 'all') params.set('lang', language);
@@ -114,7 +131,7 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
       });
 
     return () => controller.abort();
-  }, [key, searchQuery, language]);
+  }, [key, searchQuery, language, pasted, router]);
 
   if (!key) return <CuratedWall />;
 
@@ -133,7 +150,22 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
   }
 
   const { works } = current.result;
+  const shape = pasted;
   if (works.length === 0) {
+    /*
+      A sentence about the input, not about the world (N12, ROADMAP 6.29).
+      An ISBN that the catalogue does not hold is a different fact from a
+      title nobody wrote, and "try another spelling" is useless advice for a
+      thirteen-digit number.
+    */
+    if (shape.kind === 'isbn') {
+      return (
+        <Notice title="No book under this ISBN">
+          The number is a valid ISBN, but Open Library has no edition recorded under it. Searching
+          for the title and author usually finds the book anyway.
+        </Notice>
+      );
+    }
     // Name the language filter only when one is set: suggesting the reader
     // remove a filter they never applied sends them the wrong way.
     const filter = language && language !== 'all' ? LANGUAGES.find(l => l.code === language)?.label : undefined;
@@ -150,12 +182,38 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
 
   return (
     <section aria-label="Search results">
+      {/*
+        The number was an ISBN, and Open Library did not find an edition under
+        it — it fell back to searching for the digits (ROADMAP 6.29). Measured
+        2026-09-10 over eight ISBNs: five real ones returned **exactly one**
+        book each, while two valid but unknown ones returned 8 and 15 loose
+        matches and one returned none. So more than one hit means the number
+        was not found, and saying nothing would let a reader take *Harry
+        Potter* for the book in their hand (N12).
+      */}
+      {shape.kind === 'isbn' && works.length > 1 && (
+        <Notice title="No edition under this ISBN">
+          Open Library has nothing recorded under this number and searched for the digits instead.
+          What follows are text matches, not the book you are holding.
+        </Notice>
+      )}
       <p className="kicker mb-5">
         {works.length} {works.length === 1 ? 'book' : 'books'} · {totalEditions.toLocaleString('en')} editions
       </p>
       <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {works.map(work => (
-          <BookWorkCard key={work.id} work={work} query={searchQuery} language={language} />
+          <BookWorkCard
+            key={work.id}
+            work={work}
+            query={searchQuery}
+            language={language}
+            /*
+              Only when the ISBN picked out a single book: with several hits
+              the number did not identify one edition, and pointing at a cover
+              would claim more than was asked (ROADMAP 6.29).
+            */
+            isbn={shape.kind === 'isbn' && works.length === 1 ? shape.isbn13 : undefined}
+          />
         ))}
       </div>
     </section>
