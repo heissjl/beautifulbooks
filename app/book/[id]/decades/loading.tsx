@@ -1,3 +1,4 @@
+import HeaderSearch from '@/components/HeaderSearch';
 import MosaicLoader from '@/components/MosaicLoader';
 import SiteHeader from '@/components/SiteHeader';
 
@@ -28,7 +29,7 @@ import SiteHeader from '@/components/SiteHeader';
 export default function Loading() {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
+      <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-8 sm:px-6">
         {/* Same rhythm as the finished page: a title-sized block, then the picture. */}
         <div className="h-9 w-2/3 max-w-md animate-pulse rounded-md bg-surface-2 sm:h-10" />

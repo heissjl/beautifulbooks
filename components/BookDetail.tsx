@@ -14,6 +14,7 @@ import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
+import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
 import { useLoadingScene } from '@/components/useLoadingScene';
 import { useIsDesktop } from '@/components/useIsDesktop';
@@ -35,23 +36,35 @@ import { displayTitle, languageName, normalizeTitle } from '@/lib/normalize';
 import type { ImageSignature } from '@/lib/imagesig';
 import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
+import { shapeOf } from '@/lib/queryshape';
 import { foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
 
-function BackLink({ href }: { href: string }) {
+/*
+  It said "Search" until 2026-09-10, which stopped working the moment a search
+  field moved into the header beside it (ROADMAP 6.28): two controls, one
+  word, different things — this one goes back to the result list you came
+  from with your query intact, the field starts over. So it says what it does,
+  and it says something different when there is no result list to go back to.
+
+  What decides that is the **query**, not the address: `?lang=de` alone also
+  makes an address other than `/`, and it leads to the home page with a filter
+  rather than to results (caught on the dev server, 2026-09-10).
+*/
+function BackLink({ href, toResults }: { href: string; toResults: boolean }) {
   return (
     <Link href={href} className="inline-flex items-center gap-1.5 rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
       </svg>
-      Search
+      {toResults ? 'Results' : 'Home'}
     </Link>
   );
 }
 
-function Shell({ children, backHref, right }: { children: React.ReactNode; backHref: string; right?: React.ReactNode }) {
+function Shell({ children, backHref, toResults, right }: { children: React.ReactNode; backHref: string; toResults: boolean; right?: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader left={<BackLink href={backHref} />} right={right} />
+      <SiteHeader left={<BackLink href={backHref} toResults={toResults} />} right={right} search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
       <SiteFooter />
     </div>
@@ -159,6 +172,9 @@ function BookDetail() {
   const searchParams = useSearchParams();
   const lang = searchParams.get('lang') ?? '';
   const backHref = backHrefFrom(searchParams);
+  // A query means there is a result list behind the back link; a bare `?lang=`
+  // does not (ROADMAP 6.28).
+  const cameFromResults = !!searchParams.get('q');
   const preview = useWorkPreview(params.id);
 
   // Market for buy links (E9): the user's choice, else detected by the server.
@@ -179,7 +195,6 @@ function BookDetail() {
     stays the source of truth, and picking another cover goes back to it.
   */
   const routeCover = coverIdFromSegment(typeof params.coverId === 'string' ? params.coverId : undefined);
-  const selectedId = routeCover ?? searchParams.get('cover');
 
   const editionIdsByIsbn = useMemo(() => {
     const map = new Map<string, string[]>();
@@ -191,6 +206,38 @@ function BookDetail() {
     }
     return map;
   }, [pages.merged]);
+
+  /*
+    An ISBN in the address names one edition, so its cover is what the reader
+    came for (ROADMAP 6.29, measured in docs/suche-isbn-und-stichwort.md).
+    Until now the number reached this page as `q` and nobody read it: a search
+    for 9780451524935 landed on 224 covers with none of them marked.
+
+    Read off the merged pages rather than the wall, which is built further
+    down — folding does not lose the link, because `coverForId` resolves a
+    folded id to the tile it was folded into.
+
+    Only a fallback: an explicit `?cover=` always wins, so picking another
+    cover afterwards is not overruled on the next render. And when the edition
+    is not among those loaded — beyond the scan cap, or without a cover — this
+    stays null and the wall opens unmarked, which is the truth rather than a
+    guess (N12).
+  */
+  const isbnWanted = useMemo(() => {
+    const raw = searchParams.get('isbn');
+    if (!raw) return null;
+    const shape = shapeOf(raw);
+    return shape.kind === 'isbn' ? shape.isbn13 : null;
+  }, [searchParams]);
+
+  const coverForIsbn = useMemo(() => {
+    if (!isbnWanted || !pages.merged) return null;
+    const wanted = new Set(editionIdsByIsbn.get(isbnWanted) ?? []);
+    if (wanted.size === 0) return null;
+    return pages.merged.covers.find(c => c.editionIds.some(id => wanted.has(id)))?.id ?? null;
+  }, [isbnWanted, pages.merged, editionIdsByIsbn]);
+
+  const selectedId = routeCover ?? searchParams.get('cover') ?? coverForIsbn;
 
   // Which ISBN to ask about is decided on the catalogue alone. Retail covers
   // never change *which edition* is being looked at, and deriving the
@@ -250,7 +297,7 @@ function BookDetail() {
 
   if (pages.status === 'notfound' || pages.status === 'error') {
     return (
-      <Shell backHref={backHref}>
+      <Shell backHref={backHref} toResults={cameFromResults}>
         <div className="py-24 text-center">
           <p className="font-display text-2xl text-ink">
             {pages.status === 'notfound' ? 'Book not found' : pages.message}
@@ -264,7 +311,7 @@ function BookDetail() {
   if (inScene || !view) {
     const work = view?.work;
     return (
-      <Shell backHref={backHref}>
+      <Shell backHref={backHref} toResults={cameFromResults}>
         <TitleBlock
           title={work?.title ?? preview?.title}
           authors={work?.authors ?? preview?.authors}
@@ -340,6 +387,7 @@ function BookDetail() {
   return (
     <Shell
       backHref={backHref}
+      toResults={cameFromResults}
       /*
         With a cover picked, sharing lives beside it — in the sidebar on a wide
         screen, in the phone bar next to "Details". Without one there is
@@ -595,9 +643,9 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
               </li>
             ))}
           </ul>
+          {/* N13: what is on screen, not the rule that put it there. */}
           <p className="mt-2 text-xs leading-relaxed text-ink-3">
-            The wall shows one tile for these, because the images are the same design.
-            They are different scans, and sometimes different printings of it.
+            Different scans of the same design, sometimes of different printings.
           </p>
         </section>
       )}

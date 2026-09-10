@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteFooter from '@/components/SiteFooter';
+import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import { readImprint } from '@/lib/imprint';
 import { commerceEnabled } from '@/lib/sitemode';
@@ -41,7 +42,7 @@ export default function PrivacyPage() {
   const shop = commerceEnabled();
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
+      <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 pb-24 pt-12 sm:px-6">
         <h1 className="text-4xl leading-[1.1] text-ink">Privacy</h1>
         <p className="mt-2 text-sm text-ink-3">Datenschutzerklärung · last updated {UPDATED}</p>

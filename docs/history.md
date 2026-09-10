@@ -1483,6 +1483,63 @@ Julian nach dem ersten Deploy: die Suchzeile gehört auf das Bild, und „nimm J
 
 **Zwei Schwellen waren falsch gesetzt.** Die Mindestgröße eines Porträts lag bei 500 px, obwohl das Raster 40 × 36 Zellen hat — 300 px sind acht Pixel je Zelle, und die alte Schranke hatte Kafka, Katherine Mansfield, Willa Cather und Christina Rossetti aussortiert, ohne dass ein Leser den Unterschied je gesehen hätte. Und die Werkzahl war fest auf acht: für Dickens reichlich, für Frances Hodgson Burnett zu wenig, weil ihre Bücher oft gedruckt wurden, aber unter wenigen Umschlägen. Eine Palette unter etwa 250 Covern sieht man dem Gesicht an; `maxWorks` je Vorlage ist das billigste Gegenmittel. Burnett 161 → 281, Cather 226 → 406.
 
+## 2026-09-09 · Eine Sprachregelung für Erklärtexte (SPEC N13)
+
+Julian, an der Fußzeile der Jahrzehnte-Seite: „wir brauchen eine neue sprachregelung für solche stellen. Die beschreibung ist zu wissenschaftlich. die nutzer interessieren sich nicht für die schwellen. maximal darf dort stehen, was zu sehen ist und woher es kommt und der rückverweis auf die wand."
+
+Der Satz, um den es ging, hatte fünf Teile: Herkunft, Einordnungsregel, „counted, not estimated", Sortierrichtung, Behandlung von Datensätzen ohne Jahr, die Vollständigkeits-Einschränkung, die Schwelle „mindestens 20 Cover über 4 Jahrzehnte" — und zuletzt den Rückverweis. Jeder einzelne Teil war wahr und belegt. Zusammen war es ein Methodenkapitel unter einer Bilderwand.
+
+**N13 sagt jetzt, was in einen Erklärtext gehört:** was auf dem Schirm ist, woher es kommt, der Weg zurück — und, wo nötig, der Satz, der eine Vollständigkeit verneint. Der ist keine Erklärung, sondern eine Einschränkung, und bleibt.
+
+**Der Unterschied zu N12 ist der Grund, die Regel überhaupt aufzuschreiben:** N12 verbietet, mehr zu behaupten, als geprüft wurde, und hat über Monate dazu geführt, dass jede Einschränkung ausformuliert im Text landete. N13 verbietet, das Geprüfte auszubreiten. Die beiden ziehen in verschiedene Richtungen, und ohne die zweite Regel gewinnt immer die erste. Ausgenommen ist die About-Seite — dort gehört die Arbeitsweise hin, und was aus der Oberfläche verschwindet, muss dort auffindbar bleiben.
+
+Umgeschrieben wurden am selben Tag zwei Stellen:
+
+| | vorher | jetzt |
+|---|---|---|
+| Fußzeile der Jahrzehnte-Seite | fünf Sätze mit Schwelle, Sortierrichtung und „counted, not estimated" | „Covers from Open Library, each in the decade of the earliest printing that carries it. What the catalogues never scanned is missing here too. **See the whole wall.**" |
+| Satz unter der Scan-Reihe (6.14a) | „The wall shows one tile for these, because the images are the same design. They are different scans, and sometimes different printings of it." | „Different scans of the same design, sometimes of different printings." |
+
+Die Schwellen `MIN_COVERS` und `MIN_DECADES` werden auf der Seite dadurch nicht mehr gebraucht; sie stehen weiter in `lib/decades.ts` und in der Spec, wo sie hingehören. Der Rest ist als **6.27** notiert, mit einer Tabelle, welche Stelle wie stark verstößt — der Verfügbarkeits-Absatz zuerst, aber erst nach 0.1, weil der Punkt ihn womöglich ganz entfernt.
+
+### Der Ladetext steht jetzt über dem Bild
+
+Julian: „beim lademosaik sollte der ladetext grafisch über dem mosaik stehen, nicht als overlay." Betroffen waren beide Wartebilder, auf zwei verschiedene Weisen: im **Fächer** (`LoadingStage`) hing die Zeile `absolute bottom-0` über der Bühne und kreuzte auf schmalen Schirmen die Cover; in der **sich bauenden Wand** (`AssemblingWall`) stand sie zwar im Fluss, aber darunter. Jetzt beide oberhalb und im Fluss.
+
+Der Grund ist nicht nur Anordnung: eine Zeile Text über einem Bild liest sich als **Bildunterschrift dazu** — und genau das darf dieser Satz nicht sein. Er sagt, worauf gewartet wird, nicht, was zu sehen ist. Die Kacheln der Wartewand sind bewusst klein, gedimmt und unbeschriftet, damit niemand sie für eine Antwort hält (N12); ein Satz, der wie ihre Unterschrift aussieht, hebelte das aus.
+
+Gemessen am Dev-Server: Suche nach „stoner williams" — Ladetext `position: static`, Unterkante 289 px, Raster beginnt bei 313 px. Werkseite *Neuromancer* — „1 of 40 covers here", `static`, Unterkante 299 px, Fächer beginnt bei 319 px. Das `relative` am Bühnen-Container konnte weg, weil die Kacheln selbst am inneren Kasten hängen, nicht an ihm.
+
+## 2026-09-10 · Enter sendet ab
+
+Julian: „enter scheint im suchfeld problemlos zu klappen." Damit ist ROADMAP 0.8 erledigt — ein Punkt, der seit dem 2026-09-07 offenstand und zweimal an einer automatisierten Prüfung gescheitert war.
+
+**Warum das zwei Sitzungen gedauert hat, und was daraus zu lernen ist.** Das Browser-Panel schickt Tastendrücke ohne Tastenwert; weder Enter noch ein Zeilenumbruch löste je ein Absenden aus. Am 2026-09-08 kam die Prüfung so weit, `form.requestSubmit()` aufzurufen — das führte zur Trefferliste und belegte, dass das Formular absendbar *ist*. Es belegte nicht, dass **Enter** es auslöst, und genau das war die Frage. Die Lücke zwischen „das Formular lässt sich absenden" und „die Taste sendet es ab" ist klein und war nicht zu schließen: es brauchte einen Menschen an einer echten Tastatur.
+
+Das ist kein Werkzeugmangel, den man umgehen sollte, sondern eine Kategorie von Fragen, für die eine Automatisierung die falsche Antwort liefert — und für die ein „sollte laut Spezifikation gehen" keine Messung ist. In der Spec steht der Befund jetzt bei F1.5, mit dem Hinweis, dass ein Umbau des Formulars ihn wieder von Hand fällig macht.
+
+**Was der Satz nicht beantwortet hat**, und das ist bewusst getrennt: 0.8 trug drei weitere Prüfungen als „gleich mitprüfen" — Tab-Reihenfolge, Enter auf einer Cover-Kachel, Sichtbarkeit der Fokus-Ringe. Julian hat nur Enter im Suchfeld gemeldet. Der Rest steht als **0.8a**, statt still mit abgehakt zu werden; er braucht dieselbe Sorte Prüfung und ist dieselbe Sorte Frage, aber eben nicht dieselbe.
+
+**Freigeworden ist damit 6.28** (Suchfeld in der Kopfzeile): der Punkt hatte als Bedingung „erst 0.8 klären, sonst vervielfacht ein Feld auf jeder Seite, was dabei herauskommt". Es kommt nichts Kaputtes heraus.
+
+## 2026-09-10 · Ein Suchfeld in der Kopfzeile (ROADMAP 6.28)
+
+Gebaut, sobald 0.8 beantwortet war. Es steht auf Detailseite, Jahrzehnte-Seite, About, Kontakt, Datenschutz und 404 — **nicht** auf Startseite und Trefferliste, die ihr eigenes Feld haben. Im ausgelieferten HTML nachgezählt: dort null Felder in der Kopfzeile, überall sonst genau eines.
+
+**Ein einziges `<input>`, und das war die Entwurfsfrage.** Auf breiten Schirmen zeigt CSS es, ohne dass JavaScript gelaufen sein muss — es kann also nicht aufblitzen. Auf dem Telefon ist dasselbe Element ausgeblendet, und die Lupe legt es über die Kopfzeile, mit „Cancel" daneben. Zwei Felder mit derselben Beschriftung, von denen CSS eines versteckt, wären billiger zu schreiben und für einen Screenreader zwei Suchfelder gewesen.
+
+**Der Zurück-Link musste umbenannt werden**, und das war der vorhergesagte Teil: er hieß „Search" und führt zur Trefferliste zurück, aus der man kam. Neben einem Suchfeld trügen zwei Bedienelemente dasselbe Wort und täten Verschiedenes. Er heißt jetzt „Results", wenn eine Query vorliegt, sonst „Home".
+
+**Drei Dinge kamen erst in der Messung heraus:**
+
+| | Was passierte | Warum |
+|---|---|---|
+| Der Build brach an `/about` ab | `useSearchParams()` in einer Client-Komponente nimmt **jede Seite, die sie trägt, aus dem statischen Rendern** — Next sagt es wörtlich („should be wrapped in a suspense boundary") | Der Sprachfilter wird jetzt beim Absenden aus `window.location` gelesen. Im Ereignishandler ist das sicher, und die Frage stellt sich beim Rendern gar nicht. About, Datenschutz, Kontakt und die Jahrzehnte-Seiten bleiben statisch |
+| „Results" stand auch da, wo es keine gab | Die Bedingung hing an der Adresse (`href !== '/'`), und `?lang=de` allein ergibt ebenfalls eine Adresse ungleich `/` | Jetzt entscheidet die **Query**. Am Dev-Server gesehen: `/book/OL50548W?lang=de` zeigte „Results" und führte zur Startseite mit Filter |
+| Der Cursor landete nicht im Feld | Ein `requestAnimationFrame` nach dem Tippen auf die Lupe feuert, solange das Feld noch `display: none` ist — **ein nicht dargestelltes Element nimmt keinen Fokus** | Ein Effekt auf `open` läuft, nachdem die Klasse gewechselt hat |
+
+Der mittlere Punkt ist der, den ich am ehesten übersehen hätte: die Bedingung sah richtig aus und war es für den häufigen Fall auch. Sie fiel nur auf, weil die Prüfung eine Adresse mit `lang` und ohne `q` mitgenommen hat — ein Zustand, den man beim Klicken kaum erzeugt, aber jeder geteilte Link mit Sprachfilter.
+
 ## 2026-09-10 · Das Mosaik wartet jetzt auch vor der Jahrzehnte-Seite (ROADMAP 6.19a)
 
 Julian: „baue den Ladebildschirm auch ein für das Laden beim Wechsel von Coverwall zu Decade Wall." Eine Zeile Arbeit — `app/book/[id]/decades/loading.tsx` zeigt statt `AssemblingWall` den `MosaicLoader` —, aber die interessantere Hälfte ist, **warum das die passendere Stelle ist als die Suche**, für die das Bild gebaut wurde.
@@ -1516,6 +1573,27 @@ Julian nach der Übergangs-Tabelle: „Werkseite von außen sollte ein Mosaik be
 **Unter `prefers-reduced-motion` atmet das fertige Bild.** Der Aufbau läuft dort nicht, und ein stehendes Bild sagt „fertig", während die Seite noch arbeitet — Julians Vorschlag trifft genau die Lücke. Die Deckkraft geht in zweieinhalb Sekunden zwischen 0,7 und 1 hin und her, auf dem Compositor. Das ist eine **bewusste Ausnahme** von der Regel in `globals.css`, die dort sonst jede Animation abschaltet, und sie ist zu begründen: eine langsame Blende ist nicht die Bewegung, vor der die Einstellung schützen soll — nichts wandert, nichts skaliert, nichts parallaxt —, und weil iOS `reduce` auch im Stromsparmodus meldet, ist ein guter Teil der Leser auf diesem Weg schlicht knapp bei Batterie.
 
 **Und ein Fund über den Build, der einen halbe Stunde kosten kann.** Eine von Hand geschriebene Regel für eine eigene Klasse in `app/globals.css` **kam nicht im ausgelieferten CSS an** — die Regel unmittelbar darunter schon, dieselbe Datei, dieselbe Ebene, Klammern ausgezählt, Server zweimal neu gestartet. Der Weg, der funktioniert, ist Tailwinds eigener: die Animation im `@theme` deklarieren und über `motion-reduce:animate-breathe` benutzen; dann steht sie im CSS, mitsamt `@keyframes`. Wer hier eine eigene Klasse anlegt, prüfe im Browser, ob sie ankommt, statt sich auf die Datei zu verlassen.
+
+## 2026-09-10 · Die Roadmap umgebaut: Steuerung vorn, Phasen nach Abhängigkeit, Langtexte ins Archiv
+
+Julian: „Gehe nochmal alle Pläne, Roadmaps und das Dorf File durch. Überprüfe die Abhängigkeiten voneinander, sortiere die Phasen neu und sinnvoll. Fasse an manchen Stellen den Text kürzer (besonders bei angehakten Punkten, vielleicht braucht es auch ein History-file oder eine Sammlung an Funktionen, die es jetzt gibt). Dann baue eine Steuerungsübersicht am Anfang der Roadmap mit Verlinkungen zu den wichtigsten Dokumenten und Abschnitten. Und schaue ob du eine visuelle High-Level Übersicht der branches bzw worktrees machen kannst, die immer aktuell bleibt sodass ich weiß, welche Session an welchen Themen arbeitet." („Dorf File“ gelesen als die Dateien unter `docs/`.)
+
+**Der Befund, der nicht in der Aufgabe stand, kam zuerst.** `origin/main` — Produktion — lag fünfzehn Commits vor dem lokalen `main` und sechs dahinter: die Ladebild-Session hatte 6.19a direkt nach GitHub geschoben, während diese Session 6.28 auf das lokale `main` gelegt hatte, und nichts im Repository zeigte das. Der Merge hatte drei Konflikte, alle in Dokumenten oder der Ladeseite der Jahrzehnte-Seite (SPEC: N11-Wortlaut, und N12 stand hinter N13; `decades/loading.tsx`: Mosaik *und* Suchfeld; Historie: beide Eintragsreihen, jetzt nach Datum). **Während der Umbau lief, kam es noch einmal:** um 18:22 committete eine dritte Session 6.29 auf das lokale `main`, um 18:26 wuchs `origin/main` um einen weiteren 6.19a-Commit. Beides ist nachgezogen. Die Roadmap wurde deshalb aus dem *zusammengeführten* Stand neu gebaut, nicht aus dem eigenen — und die fünf Einzeiler ohne Nummer am Ende von Phase 6, die Nummern 6.29–6.33 bekommen sollten, bekamen keine: 6.29 war in derselben Stunde anderswo vergeben worden. Sie stehen jetzt unter „Zurückgestellt“, wo sie ohne Plan und Auslöser ohnehin hingehören.
+
+**Was daraus geworden ist:**
+
+| | vorher | jetzt |
+|---|---|---|
+| `ROADMAP.md` | 204 KB, drei Kopfabschnitte, die dreimal dasselbe erzählten, Phasen 0–6 in Nummernfolge, erledigte Punkte in voller Länge zwischen den offenen | 129 KB; vorn **„Steuerung“** (Dokumentenkarte mit Abschnitts-Links, Stand, nächste Schritte, ein Mermaid-Graph der Abhängigkeiten zwischen offenen Punkten, Phasentabelle mit Zählern), dann die Phasen in **Abhängigkeitsfolge 0, 2, 1, 6, 3, 5, 4**, Phase 6 in vier Gruppen (Fehler, Daten, Oberfläche, Startseite), erledigte Punkte je Phase gesammelt und auf wenige Zeilen gekürzt — Ergebnis, Datum, Links auf Historie, Plan und Archiv |
+| Langtexte der 28 abgehakten Punkte | in der Roadmap | **`docs/roadmap-archive.md`**, 91 KB, wortgleich verschoben, je Punkt unter seiner Nummer |
+| Was die Seite kann | nur aus Spec und abgehakten Punkten zu erschließen | **`docs/features.md`**: je Funktion seit wann, Spec-Stelle, Roadmap-Punkt, Code; dazu, was es ausdrücklich nicht gibt |
+| Wer woran arbeitet | nirgends | **`npm run worktrees`** (`scripts/worktrees.ts`) schreibt `docs/worktrees.md`: jeder Worktree und Branch mit Abstand zu Produktion, ungespeicherten Dateien und den Roadmap-Nummern aus seinen Betreffzeilen, als Tabelle und Mermaid-Diagramm. Die Datei ist **git-ignoriert** — sie ist aktuell, wenn man sie ansieht, und kann in keinem Commit veralten |
+
+Offene Punkte sind **wortgleich** übernommen, keine Nummer hat sich geändert, die Phasen-Überschriften 1 und 2 sind umbenannt („Vor echtem Verkehr“, „Betrieb“), weil „vor dem Deployment“ seit dem 2026-09-08 falsch war. Alle 57 offenen und 28 erledigten Punkte sind gezählt, jeder relative Link in Roadmap, Archiv, Features, Spec, Plänen und READMEs ist maschinell geprüft — dabei fiel ein Link `../SPEC.md` auf, der von der Roadmap aus nie funktioniert hatte.
+
+**Die Abhängigkeitsprüfung** änderte keinen Punkt, aber sie steht jetzt an einer Stelle: 6.6 (Julians ISBNdb-Monat) blockiert 6.7, 6.4 und 6.23; 6.18 (Kuratierung) blockiert 6.17 und 6.16; ein Deploy blockiert 2.6 und die Antwort auf 6.25; 6.13 und 6.15 teilen sich die ersten Schritte; 6.9 und 5.4b denselben Index; Phase 4 hängt an Besuchern, die Phase 5 bringen soll, und Phase 3 an denselben Besuchern — deshalb steht 4 jetzt zuletzt. Zwei Punkte hatten schon vorher an Wert verloren (6.12 nach dem Index, der `priority`-Teil von 6.5 nach 1.3); das steht weiter im Kopf.
+
+Mitgezogen: `CLAUDE.md` (Steuerung, Archiv, Features, die Regel zu parallelen Sessions und `origin/main`), der Kopf und §8 der Spec, `docs/plans/README.md`, `README.md` (dort stand noch „not deployed yet“).
 
 ## 2026-09-10 · Der Rückweg spielte vier Sekunden Einzug, die niemand brauchte (ROADMAP 6.19a, F2.12)
 

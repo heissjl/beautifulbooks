@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteFooter from '@/components/SiteFooter';
+import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import { readImprint } from '@/lib/imprint';
 
@@ -23,7 +24,7 @@ export default function ContactPage() {
   const imprint = readImprint();
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
+      <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 pb-24 pt-12 sm:px-6">
         <h1 className="text-4xl leading-[1.1] text-ink">Impressum</h1>
         <p className="mt-2 text-sm text-ink-3">Legal notice · Angaben gemäß § 5 DDG und § 18 Abs. 1 MStV</p>
