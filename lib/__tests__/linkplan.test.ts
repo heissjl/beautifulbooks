@@ -44,7 +44,7 @@ describe('linkPlan cases', () => {
   it('keeps Amazon’s own range apart and says why the link is a search', () => {
     const p = plan(KDP, 'us');
     expect(p.case).toBe('kdp');
-    expect(p.lead.map(l => l.label)).toEqual(['Amazon']);
+    expect(p.lead.map(l => l.label)).toEqual(['Amazon · ISBN']);
     expect(p.note).toContain('no ISBN-10');
   });
 
@@ -58,8 +58,10 @@ describe('linkPlan cases', () => {
 
 describe('linkPlan order', () => {
   it('leads with the market’s own shops at home', () => {
-    expect(plan(EN, 'us').lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);
-    expect(plan(DE, 'de').lead.map(l => l.label)).toEqual(['Thalia', 'Amazon']);
+    // Since 2026-09-10 every shop with a search form can be asked two ways,
+    // so every one of them names the question its button puts.
+    expect(plan(EN, 'us').lead.map(l => l.label)).toEqual(['Bookshop.org · ISBN', 'Amazon · ISBN']);
+    expect(plan(DE, 'de').lead.map(l => l.label)).toEqual(['Thalia · ISBN', 'Amazon · ISBN']);
   });
 
   it('leads with the marketplaces for a foreign number, and asks them by ISBN', () => {
@@ -85,9 +87,14 @@ describe('linkPlan order', () => {
   });
 
   it('leaves a shop with only one question alone', () => {
-    // Naming a question nobody could ask differently explains nothing.
-    expect(plan(EN, 'us').lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);
+    /*
+      Naming a question nobody could ask differently explains nothing.
+      Booklooker has no confirmed search form (ROADMAP 1.8), so its button
+      can only ever mean the number; eBay is not a German retailer at all,
+      so in `de` it exists as a word search and nothing else.
+    */
     expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'Booklooker']);
+    expect(plan(undefined, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · title & year', 'eBay']);
   });
 
   it('hands the row to the searches when the publisher’s image differs', () => {
@@ -111,14 +118,14 @@ describe('linkPlan order', () => {
 
   it('moves the market’s shops behind the fold on differs, without losing them', () => {
     const p = plan(EN, 'us', { verdict: 'differs' });
-    expect(p.lead.map(l => l.label)).not.toContain('Bookshop.org');
-    expect(p.rest.map(l => l.label)).toEqual(expect.arrayContaining(['Bookshop.org', 'Amazon']));
+    expect(p.lead.map(l => l.label)).not.toContain('Bookshop.org · ISBN');
+    expect(p.rest.map(l => l.label)).toEqual(expect.arrayContaining(['Bookshop.org · ISBN', 'Amazon · ISBN']));
   });
 
   it('adds the antiquarian search when no publisher image is on record (lever 4)', () => {
     // Only the order changes; "unknown" still says nothing about buying.
-    expect(plan(EN, 'us', { verdict: 'unknown' }).lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon', 'AbeBooks · ISBN']);
-    expect(plan(EN, 'us', { verdict: 'verified' }).lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);
+    expect(plan(EN, 'us', { verdict: 'unknown' }).lead.map(l => l.label)).toEqual(['Bookshop.org · ISBN', 'Amazon · ISBN', 'AbeBooks · ISBN']);
+    expect(plan(EN, 'us', { verdict: 'verified' }).lead.map(l => l.label)).toEqual(['Bookshop.org · ISBN', 'Amazon · ISBN']);
   });
 
   it('says nothing in the home case, where there is no order to explain', () => {
