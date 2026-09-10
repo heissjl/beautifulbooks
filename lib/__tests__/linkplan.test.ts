@@ -96,6 +96,33 @@ describe('linkPlan order', () => {
     expect(plan(EN, 'us', { verdict: 'verified' }).lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);
   });
 
+  it('asks the marketplaces by number once the publisher confirms the ISBN, even a foreign one (1.11a)', () => {
+    /*
+      Julian, 2026-09-09: the DE column searched AbeBooks for "Simon &
+      Schuster 2012" although the verdict beside it said the publisher ships
+      this very cover under this very number. A live ISBN is the better key.
+    */
+    const us = plan(TR, 'us', { verdict: 'verified' });
+    expect(us.lead.map(l => l.label)).toEqual(['AbeBooks', 'eBay']);
+    for (const link of us.lead) {
+      expect(link.url).toContain(TR);
+      expect(decodeURIComponent(link.url)).not.toContain('Everest');
+    }
+    const de = plan(TR, 'de', { verdict: 'verified' });
+    expect(de.lead.map(l => l.label)).toEqual(['AbeBooks', 'Booklooker']);
+    expect(de.lead.every(l => l.url.includes(TR))).toBe(true);
+    // The order of the shops is untouched; only the question changed.
+    expect(us.lead.map(l => l.label)).toEqual(plan(TR, 'us').lead.map(l => l.label));
+  });
+
+  it('keeps the title search while the question is open or the answer is silence', () => {
+    for (const verdict of ['pending', 'unavailable', 'unknown'] as const) {
+      const lead = plan(TR, 'us', { verdict }).lead;
+      expect(lead[0].label).toBe('AbeBooks');
+      expect(decodeURIComponent(lead[0].url)).toContain('Everest');
+    }
+  });
+
   it('says nothing in the home case, where there is no order to explain', () => {
     expect(plan(EN, 'us').note).toBe('');
   });

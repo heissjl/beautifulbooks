@@ -178,11 +178,25 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
     order changes, never a sentence. "unknown" still does not mean "not for
     sale", and the wording in `lib/verdicts.ts` is untouched.
   */
+  /*
+    ROADMAP 1.11a (Julian, 2026-09-09, at a Simon & Schuster ISBN in the DE
+    market: „erklär mir warum die suche in abebooks … mit verlag geht statt
+    über isbn"). The title search leads in the `foreign` case because
+    second-hand listings often carry no ISBN — a reason that holds for
+    out-of-print printings and fails for a number the publisher demonstrably
+    still ships under: then the search returns everything the house printed
+    that year, which is *less* precise than the link it replaced. So on
+    `verified` the same marketplaces lead, asked by number. The order of the
+    shops does not move; only what the leading shop is asked with.
+  */
+  const byNumber = (ids: readonly string[]): string[] => ids.map(id => id.replace(/-search$/, ''));
   const wanted = input.verdict === 'differs'
     ? LEAD_DIFFERS
     : input.verdict === 'unknown'
       ? [...LEAD[market][linkCase], 'abebooks-search']
-      : LEAD[market][linkCase];
+      : input.verdict === 'verified' && linkCase === 'foreign'
+        ? byNumber(LEAD[market].foreign)
+        : LEAD[market][linkCase];
   const lead: BuyLink[] = [];
   for (const id of wanted) {
     const hit = pool.find(l => l.provider === id);
