@@ -11,6 +11,8 @@ interface BookWorkCardProps {
   /** Current search state, carried to the detail page for its back link (SPEC F2.7). */
   query?: string;
   language?: string;
+  /** Set when the search was an ISBN that found exactly this one book. */
+  isbn?: string;
 }
 
 /**
@@ -22,20 +24,30 @@ export function displayAuthors(authors: readonly string[]): string {
   return authors.length > 2 ? authors[0] : authors.join(', ');
 }
 
-export function detailHref(workId: string, query?: string, language?: string): string {
+/**
+ * Where a result card points.
+ *
+ * `isbn` is set only when the search was an ISBN that found a single book
+ * (ROADMAP 6.29). It travels as its own parameter rather than being read back
+ * out of `q`: the query is the reader's words and belongs to the search, and
+ * a page that guessed at the shape of `q` a second time could disagree with
+ * the first reading.
+ */
+export function detailHref(workId: string, query?: string, language?: string, isbn?: string): string {
   const params = new URLSearchParams();
   if (query) params.set('q', query);
   if (language && language !== 'all') params.set('lang', language);
+  if (isbn) params.set('isbn', isbn);
   const qs = params.toString();
   return qs ? `/book/${workId}?${qs}` : `/book/${workId}`;
 }
 
-export default function BookWorkCard({ work, query, language }: BookWorkCardProps) {
+export default function BookWorkCard({ work, query, language, isbn }: BookWorkCardProps) {
   // The search gives one cover; the rest of the mosaic is fetched once the
   // card nears the viewport (SPEC §9.3 step 14).
   const coverUrls = useCardCovers(work.id, work.coverUrls);
   const editionCount = work.editionCount ?? work.coverUrls.length;
-  const href = detailHref(work.id, query, language);
+  const href = detailHref(work.id, query, language, isbn);
   const facts = [
     editionCount > 1 ? `${editionCount} editions` : undefined,
     work.languages.length > 1 ? `${work.languages.length} languages` : undefined,

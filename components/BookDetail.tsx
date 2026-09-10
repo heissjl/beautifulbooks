@@ -36,6 +36,7 @@ import { displayTitle, languageName, normalizeTitle } from '@/lib/normalize';
 import type { ImageSignature } from '@/lib/imagesig';
 import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
+import { shapeOf } from '@/lib/queryshape';
 import { foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
 
 /*
@@ -194,7 +195,6 @@ function BookDetail() {
     stays the source of truth, and picking another cover goes back to it.
   */
   const routeCover = coverIdFromSegment(typeof params.coverId === 'string' ? params.coverId : undefined);
-  const selectedId = routeCover ?? searchParams.get('cover');
 
   const editionIdsByIsbn = useMemo(() => {
     const map = new Map<string, string[]>();
@@ -206,6 +206,38 @@ function BookDetail() {
     }
     return map;
   }, [pages.merged]);
+
+  /*
+    An ISBN in the address names one edition, so its cover is what the reader
+    came for (ROADMAP 6.29, measured in docs/suche-isbn-und-stichwort.md).
+    Until now the number reached this page as `q` and nobody read it: a search
+    for 9780451524935 landed on 224 covers with none of them marked.
+
+    Read off the merged pages rather than the wall, which is built further
+    down — folding does not lose the link, because `coverForId` resolves a
+    folded id to the tile it was folded into.
+
+    Only a fallback: an explicit `?cover=` always wins, so picking another
+    cover afterwards is not overruled on the next render. And when the edition
+    is not among those loaded — beyond the scan cap, or without a cover — this
+    stays null and the wall opens unmarked, which is the truth rather than a
+    guess (N12).
+  */
+  const isbnWanted = useMemo(() => {
+    const raw = searchParams.get('isbn');
+    if (!raw) return null;
+    const shape = shapeOf(raw);
+    return shape.kind === 'isbn' ? shape.isbn13 : null;
+  }, [searchParams]);
+
+  const coverForIsbn = useMemo(() => {
+    if (!isbnWanted || !pages.merged) return null;
+    const wanted = new Set(editionIdsByIsbn.get(isbnWanted) ?? []);
+    if (wanted.size === 0) return null;
+    return pages.merged.covers.find(c => c.editionIds.some(id => wanted.has(id)))?.id ?? null;
+  }, [isbnWanted, pages.merged, editionIdsByIsbn]);
+
+  const selectedId = routeCover ?? searchParams.get('cover') ?? coverForIsbn;
 
   // Which ISBN to ask about is decided on the catalogue alone. Retail covers
   // never change *which edition* is being looked at, and deriving the
