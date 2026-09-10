@@ -1606,3 +1606,13 @@ Julian: „wenn ich von der decade wall zur cover wall zurückgehe, bekomme ich 
 Nach der Reparatur landet der Rückweg direkt auf der Wand, ohne Ladebild — gemessen über anderthalb Sekunden hinweg kein einziger Zwischenzustand. **Das ist besser als jedes Ladebild an dieser Stelle**, und es ist die Antwort auf Julians Beobachtung: nicht ein anderes Bild, sondern gar keines.
 
 **Eine Änderung unterwegs wurde wieder zurückgenommen.** Erst hatte ich die Cover-Vorschau nach dem ersten Gebrauch geleert, damit ein zweiter Besuch das Mosaik bekommt. Sie löste den Fall nicht — der Fächer kam nicht von dort — und hätte einen Reload verschlechtert, der bis dahin das Cover des gesuchten Buchs zeigte. Zurückgenommen.
+
+## 2026-09-10 · Der Fächer fliegt auf leere Kacheln (ROADMAP 6.25a, 6.24)
+
+Julian: „der cover-fächer ist oft schneller in der animation als auf den animierten kacheln das bild angezeigt wird. Haben wir diesen Fehler schon in der Roadmap aufgenommen?" — Nein, dieser nicht. **6.25** stand da (Kacheln, die leer *bleiben*), und das ist ein anderer Fehler mit derselben Wurzel.
+
+**Gemessen, bevor er notiert wurde**, kalter Klick von einem Suchergebnis auf *Candide*: nach **217 ms** steht eine Kachel im Fächer mit geladenem Bild — das Cover aus der Ergebniskarte —, und bei **4.217 ms** endet die Szene mit **null von zwei** Wandbildern geladen. Der FLIP setzt die Cover auf Kacheln, die noch leer sind. `SCENE_GRACE_MS` beendet die Szene nach vier Sekunden, gleichgültig ob etwas angekommen ist, und im gemessenen Fall kam in dieser Zeit kein einziges der acht vorgeladenen Bilder an — dieselbe Latenz von `/img`, die 6.25 mit 2,6 bis 7,6 s je Bild festhält. Als **6.25a** notiert, ausdrücklich hinter 6.25: wer hier eine Frist gegen eine Latenz tauscht, die danach anders aussieht, baut zweimal.
+
+**Beim Nachsehen fiel auf, dass 6.24 seit heute erledigt ist.** Der Punkt („der Zurück-Knopf von der Jahrzehnte-Seite spielt die Ladeszene noch einmal ab") war in einer anderen Session notiert worden, während ich in dieser Session denselben Fehler unter Julians zweiter Formulierung repariert habe. Die Vermutung im Punkt war richtig und unvollständig: `FINISHED` in `useWorkPages` griff sehr wohl — die Szene fragte nur nie, ob überhaupt noch gewartet wird. Abgehakt und verlinkt.
+
+**Die Lehre für drei parallele Sessions:** derselbe Fehler kann in zwei Formulierungen an zwei Stellen liegen, und wer nur seine eigene kennt, hakt den fremden Eintrag nicht ab. Vor dem Notieren eines Fehlers erst die Roadmap durchsuchen — hier hätte das eine Doppelung gespart und hat immerhin einen offenen Punkt geschlossen.
