@@ -463,6 +463,12 @@ export function registrationArea(isbn: string | undefined): IsbnRegistration | u
  * is 193. As a search term the name does not narrow to the book, it narrows
  * to a platform that carries millions of them, and every real result is
  * pushed out. Better to ask without a publisher at all.
+ *
+ * **This one is a list, and a list ages.** The rules below it — legal form,
+ * trade word, parenthetical — hold for houses nobody here has ever seen; this
+ * pattern only knows the platforms someone wrote down. A new one slips
+ * through until it is added, and the 40 % is a snapshot of these fixtures,
+ * not a constant (ROADMAP 1.11).
  */
 const SELF_PUBLISHED =
   /^(independently published|createspace\b.*|lulu(\s+press)?\b.*|kindle direct\b.*|amazon digital\b.*|books on demand\b.*)$/i;
