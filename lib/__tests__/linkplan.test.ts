@@ -62,9 +62,21 @@ describe('linkPlan order', () => {
     expect(plan(DE, 'de').lead.map(l => l.label)).toEqual(['Thalia', 'Amazon']);
   });
 
-  it('leads with the marketplaces for a foreign number', () => {
-    expect(plan(TR, 'us').lead.map(l => l.label)).toEqual(['AbeBooks', 'eBay']);
-    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks', 'Booklooker']);
+  it('leads with the marketplaces for a foreign number, and asks them by ISBN', () => {
+    /*
+      Julian, 2026-09-10: „isbn immer zuerst, wenn isbn existiert." Measured
+      the same day on a Mexican printing of Der Steppenwolf (9789681500955):
+      AbeBooks returned 11 offers for the number against 8 for title, author,
+      publisher and year. The suffix is there because the other question is
+      still offered, behind the fold — see the label rule below.
+    */
+    expect(plan(TR, 'us').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'eBay · ISBN']);
+    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'Booklooker']);
+  });
+
+  it('drops the suffix when there is no second question to tell it apart from', () => {
+    // Without an ISBN a shop is asked one way only, so nothing needs naming.
+    expect(plan(undefined, 'us').lead.map(l => l.label)).toEqual(['AbeBooks', 'eBay']);
   });
 
   it('hands the row to the searches when the publisher’s image differs', () => {
@@ -75,7 +87,9 @@ describe('linkPlan order', () => {
     */
     for (const isbn of [EN, TR, DE]) {
       const lead = plan(isbn, 'us', { verdict: 'differs' }).lead;
-      expect(lead.map(l => l.label)).toEqual(['AbeBooks', 'eBay', 'Google Lens']);
+      // The one case where the number does *not* lead, even though it exists:
+      // it opens the other jacket by construction.
+      expect(lead.map(l => l.label)).toEqual(['AbeBooks · title & year', 'eBay · title & year', 'Google Lens']);
       // Every one of them searches by title, author, publisher and year.
       for (const link of lead.slice(0, 2)) {
         expect(decodeURIComponent(link.url)).toContain('Everest');
@@ -92,7 +106,7 @@ describe('linkPlan order', () => {
 
   it('adds the antiquarian search when no publisher image is on record (lever 4)', () => {
     // Only the order changes; "unknown" still says nothing about buying.
-    expect(plan(EN, 'us', { verdict: 'unknown' }).lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon', 'AbeBooks']);
+    expect(plan(EN, 'us', { verdict: 'unknown' }).lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon', 'AbeBooks · ISBN']);
     expect(plan(EN, 'us', { verdict: 'verified' }).lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);
   });
 
@@ -142,23 +156,40 @@ describe('linkPlan: one label, one place', () => {
     expect(new Set(labels).size).toBe(labels.length);
   });
 
-  it('shows AbeBooks as the title search when it leads, and not again by ISBN', () => {
+  it('offers a shop both questions, and names which is which', () => {
+    /*
+      Until 2026-09-10 the second question was dropped: the label was spoken
+      for, so the AbeBooks ISBN link vanished from the fold entirely. Julian:
+      „ich finde aber auch wichtig, dass wir beide optionen anbieten, weil
+      beide in verschiedenen fällen gewinnbringend sein können. die ein label
+      ein platz regel sollte hart gehandhabt werden." So the rule holds — no
+      two identical labels — and the duplicate is renamed instead of dropped.
+    */
     const p = plan(TR, 'us');
-    const abe = [...p.lead, ...p.rest].filter(l => l.label === 'AbeBooks');
-    expect(abe).toHaveLength(1);
-    expect(abe[0].provider).toBe('abebooks-search');
+    const abe = [...p.lead, ...p.rest].filter(l => l.label.startsWith('AbeBooks'));
+    expect(abe.map(l => l.provider)).toEqual(['abebooks', 'abebooks-search']);
+    expect(abe.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'AbeBooks · title & year']);
+    // The number leads; the words stay one row behind it.
+    expect(p.lead.map(l => l.provider)).toContain('abebooks');
+    expect(p.rest.map(l => l.provider)).toContain('abebooks-search');
   });
 });
 
 describe('linkPlan: nothing is thrown away', () => {
   it.each(['us', 'uk', 'de'] as const)('keeps every shop reachable in %s', market => {
     const p = plan(TR, market);
-    const shown = new Set([...p.lead, ...p.rest, ...p.anyEdition].map(l => l.label));
+    /*
+      Compared by shop, not by label: since 2026-09-10 a shop asked two ways
+      carries a suffix that says which question a button puts ("AbeBooks ·
+      ISBN"). The claim here is unchanged and now stronger — no shop is lost.
+    */
+    const shopOf = (label: string) => label.split(' · ')[0];
+    const shown = new Set([...p.lead, ...p.rest, ...p.anyEdition].map(l => shopOf(l.label)));
     const offered = new Set([
-      ...buyLinksFor({ isbn13: TR }, market, ENV).map(l => l.label),
-      ...searchLinksFor({ title: 'Muhtesem Gatsby' }, market).map(l => l.label),
+      ...buyLinksFor({ isbn13: TR }, market, ENV).map(l => shopOf(l.label)),
+      ...searchLinksFor({ title: 'Muhtesem Gatsby' }, market).map(l => shopOf(l.label)),
     ]);
-    for (const label of offered) expect(shown).toContain(label);
+    for (const shop of offered) expect(shown).toContain(shop);
   });
 });
 

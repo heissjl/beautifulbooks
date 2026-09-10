@@ -56,11 +56,13 @@ const AREA_NAME: Record<'en' | 'de', string> = {
 /**
  * The shops that lead in each case, by provider id.
  *
+ * The tables name **shops**, not links. Which of a shop's two questions is
+ * put to it — its ISBN field or title, author, publisher and year — is one
+ * rule for the whole file, in `pick` below.
+ *
  * `home` and `kdp` lead with shops that can pay commission and have a link to
- * this exact number. `foreign` leads with the two marketplaces — AbeBooks and
- * eBay list copies from anywhere, and Booklooker does the same in German —
- * and they lead as *title* searches, because second-hand listings often carry
- * no ISBN at all, which makes title + publisher + year the better question.
+ * this exact number. `foreign` leads with the marketplaces: AbeBooks and eBay
+ * list copies from anywhere, and Booklooker does the same in German.
  */
 /**
  * When the publisher's registered image is a *different* jacket, the ISBN
@@ -73,26 +75,26 @@ const AREA_NAME: Record<'en' | 'de', string> = {
  * vorgeschlagen werden als nur zig buttons wo immer ein anderes cover
  * dahinter liegt."
  */
-const LEAD_DIFFERS: readonly string[] = ['abebooks-search', 'ebay-search', 'google-lens'];
+const LEAD_DIFFERS: readonly string[] = ['abebooks', 'ebay', 'google-lens'];
 
 const LEAD: Record<Market, Record<LinkCase, readonly string[]>> = {
   us: {
     home: ['bookshop', 'amazon'],
     kdp: ['amazon'],
-    foreign: ['abebooks-search', 'ebay-search'],
-    'no-isbn': ['abebooks-search', 'ebay-search'],
+    foreign: ['abebooks', 'ebay'],
+    'no-isbn': ['abebooks', 'ebay'],
   },
   uk: {
     home: ['bookshop', 'amazon'],
     kdp: ['amazon'],
-    foreign: ['abebooks-search', 'ebay-search'],
-    'no-isbn': ['abebooks-search', 'ebay-search'],
+    foreign: ['abebooks', 'ebay'],
+    'no-isbn': ['abebooks', 'ebay'],
   },
   de: {
     home: ['thalia', 'amazon'],
     kdp: ['amazon'],
-    foreign: ['abebooks-search', 'booklooker'],
-    'no-isbn': ['abebooks-search', 'ebay-search'],
+    foreign: ['abebooks', 'booklooker'],
+    'no-isbn': ['abebooks', 'ebay'],
   },
 };
 
@@ -181,25 +183,84 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
   const wanted = input.verdict === 'differs'
     ? LEAD_DIFFERS
     : input.verdict === 'unknown'
-      ? [...LEAD[market][linkCase], 'abebooks-search']
+      ? [...LEAD[market][linkCase], 'abebooks']
       : LEAD[market][linkCase];
+  /*
+    **The ISBN goes first whenever there is one** (Julian, 2026-09-10). A shop
+    can be asked two things — its ISBN field, or title, author, publisher and
+    year — and the number is the more exact question, so it leads and the
+    words follow behind the fold. Without an ISBN the words are all there is.
+
+    One exception, and it is the reason the verdict exists: on `differs` the
+    publisher's registered image for this number is a *different* jacket, so
+    an ISBN link opens the wrong cover by construction (SPEC F2.9). There the
+    words lead.
+  */
+  const pick = (shop: string): BuyLink | undefined => {
+    const byIsbn = pool.find(l => l.provider === shop);
+    const byWords = pool.find(l => l.provider === `${shop}-search`);
+    if (input.verdict === 'differs') return byWords ?? byIsbn;
+    return byIsbn ?? byWords;
+  };
+
   const lead: BuyLink[] = [];
-  for (const id of wanted) {
-    const hit = pool.find(l => l.provider === id);
+  for (const shop of wanted) {
+    const hit = pick(shop);
     if (hit && !lead.includes(hit)) lead.push(hit);
   }
 
-  // Rule 2: one label, one place. Labels spoken for by `lead` or by the
-  // "another edition" row never appear a second time behind the fold.
-  const spoken = new Set([...lead, ...anyEdition].map(l => l.label));
+  /*
+    Rule 2 holds, and that is exactly why the second question needs a name.
+
+    A shop can be asked two different things — its ISBN field, or title,
+    author, publisher and year — and the answers differ. Measured by Julian on
+    2026-09-10 for a Mexican printing of *Der Steppenwolf* (ISBN
+    9789681500955) on AbeBooks: **11 offers by ISBN against 8 by the fielded
+    search**. The number won, but not by so much that the other question is
+    worth throwing away — and until now it was thrown away silently, because
+    the label "AbeBooks" was already spoken and the ISBN link vanished from
+    the fold altogether.
+
+    So the rule stays hard — never two identical labels — and the duplicate is
+    **renamed instead of dropped** (Julian, 2026-09-10: „ich finde aber auch
+    wichtig, dass wir beide optionen anbieten, weil beide in verschiedenen
+    fällen gewinnbringend sein können. die ein label ein platz regel sollte
+    hart gehandhabt werden."). A reader then sees which question each button
+    asks rather than two buttons that look the same.
+
+    The "another edition" row keeps its plain label: it sits under its own
+    heading with its own sentence, and a suffix there would explain something
+    the heading already says.
+  */
+  const anyEditionLabels = new Set(anyEdition.map(l => l.label));
   const rest: BuyLink[] = [];
+  const seen = new Set(lead.map(l => l.provider));
   for (const link of pool) {
-    if (lead.includes(link) || spoken.has(link.label)) continue;
-    spoken.add(link.label);
+    if (seen.has(link.provider)) continue;
+    if (anyEditionLabels.has(link.label)) continue;
+    seen.add(link.provider);
     rest.push(link);
   }
 
-  return { case: linkCase, place: registration?.place, lead, rest, anyEdition, note: noteFor(linkCase, market, registration?.place, isbn13) };
+  /*
+    A shop that is asked both ways gets both buttons named — never one plain
+    and one qualified, which would read as the general case and an
+    afterthought. The rule itself is untouched: no two identical labels stand
+    in the column.
+  */
+  const timesShown = new Map<string, number>();
+  for (const l of [...lead, ...rest]) timesShown.set(l.label, (timesShown.get(l.label) ?? 0) + 1);
+  const name = (l: BuyLink): BuyLink =>
+    (timesShown.get(l.label) ?? 0) > 1 ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
+  const namedLead = lead.map(name);
+  const namedRest = rest.map(name);
+
+  return { case: linkCase, place: registration?.place, lead: namedLead, rest: namedRest, anyEdition, note: noteFor(linkCase, market, registration?.place, isbn13) };
+}
+
+/** Which question a link puts to a shop: its ISBN field, or words. */
+function questionOf(link: BuyLink): string {
+  return /-search$|-title$/.test(link.provider) ? 'title & year' : 'ISBN';
 }
 
 function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, isbn13: string | undefined): string {
