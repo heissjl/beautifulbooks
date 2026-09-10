@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import { rateLimited } from '@/app/api/rate';
+import { recordCoverFailure, type CoverFailure } from '@/lib/coverlog';
 
 /**
  * GET /img/<S|M|L>/<ol-12345 | gb-abc123> — one cover image, through us.
@@ -30,6 +31,15 @@ import { rateLimited } from '@/app/api/rate';
  * Failures are deliberately **not** cached: a silent archive.org is an
  * episode, not a fact about the cover (the same reasoning as F1.7), and
  * `CoverImage` already degrades to a quiet placeholder.
+ *
+ * **A failure says why, since 2026-09-10** (ROADMAP 6.25). Julian saw tiles
+ * stay empty and asked whether Open Library was throttling us — a question
+ * this route made unanswerable, because it turned every upstream answer into
+ * a bare 502. Now each failure writes one `bb.img` line (`lib/coverlog.ts`)
+ * with the upstream status or the reason there was none, and the 502 carries
+ * it in `X-Cover-Upstream` so a browser's network panel shows it too. A 429
+ * or 403 from upstream is the throttling signature; a 404 is a missing scan;
+ * a timeout is archive.org being archive.org.
  */
 const SIZES = new Set(['S', 'M', 'L']);
 
@@ -56,6 +66,15 @@ export async function GET(request: NextRequest, context: { params: Promise<{ siz
   const upstream = coverUrlFor(coverId, size as 'S' | 'M' | 'L');
   if (!upstream) return refuse(400, 'Malformed cover reference');
 
+  const source: CoverFailure['source'] = coverId.startsWith('gb:') ? 'googlebooks' : 'openlibrary';
+  const started = Date.now();
+  const failed = (status: number | null, reason: CoverFailure['reason']): NextResponse => {
+    recordCoverFailure({ coverId, size: size as CoverFailure['size'], source, status, reason, ms: Date.now() - started });
+    const res = refuse(502, 'Cover image not available');
+    res.headers.set('X-Cover-Upstream', status === null ? reason : String(status));
+    return res;
+  };
+
   try {
     const res = await fetch(upstream, {
       headers: { Accept: 'image/*' },
@@ -66,19 +85,19 @@ export async function GET(request: NextRequest, context: { params: Promise<{ siz
       redirect: 'follow',
     });
     const type = res.headers.get('content-type') ?? '';
-    if (!res.ok || !res.body || !type.startsWith('image/')) {
-      return refuse(502, 'Cover image not available');
-    }
+    if (!res.ok || !res.body) return failed(res.status, 'status');
+    if (!type.startsWith('image/')) return failed(res.status, 'not-image');
     return new NextResponse(res.body, {
       headers: {
         'Content-Type': type,
         'Cache-Control': `public, max-age=3600, s-maxage=${CDN_SECONDS}, stale-while-revalidate=86400`,
         // Says nothing about the reader; useful when a wall is slow and the
         // question is which catalogue is answering.
-        'X-Cover-Source': coverId.startsWith('gb:') ? 'googlebooks' : 'openlibrary',
+        'X-Cover-Source': source,
       },
     });
-  } catch {
-    return refuse(502, 'Cover image not available');
+  } catch (error) {
+    const name = error instanceof Error ? error.name : '';
+    return failed(null, name === 'TimeoutError' || name === 'AbortError' ? 'timeout' : 'error');
   }
 }

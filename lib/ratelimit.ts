@@ -60,7 +60,7 @@ export const RATE_RULES = {
    * Most requests never reach the function at all: the CDN in front of it
    * holds each cover for 30 days.
    */
-  img: { capacity: 400, refillPerMinute: 300 },
+  img: { capacity: 800, refillPerMinute: 400 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;
