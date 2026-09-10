@@ -322,13 +322,34 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
 
   **Nicht zu verwechseln mit einem Bild, das nur noch nicht geladen ist:** Kacheln laden faul, und ein Vollseiten-Screenshot löst das Laden unterhalb des Bildschirms nicht aus. Beim nächsten Auftreten deshalb festhalten: hat die Kachel das Buch-Symbol (dann ist die Anfrage **gescheitert**) oder ist sie einfarbig leer (dann wurde sie **nie gestellt**)?
 
-- [ ] **6.25a Der Fächer fliegt auf leere Kacheln.** (Julian, 2026-09-10: „der cover-fächer ist oft schneller in der animation als auf den animierten kacheln das bild angezeigt wird.")
+- [ ] **6.25a Die Ladeszene zeigt leere Kachelrahmen, und der Fächer fliegt auf leere Kacheln.** (Julian, 2026-09-10: „der cover-fächer ist oft schneller in der animation als auf den animierten kacheln das bild angezeigt wird … hier also auch das Skelett der Animation gemacht wird, ohne dass es mit einem Bild befüllt ist.")
 
-  **Gemessen am 2026-09-10 gegen den Dev-Server**, kalter Klick von einem Suchergebnis auf *Candide*: nach **217 ms** steht eine Kachel im Fächer mit geladenem Bild — das Cover aus der Karte —, und bei **4.217 ms** endet die Szene mit **null von zwei** Wandbildern geladen. Der FLIP setzt die Cover also auf Kacheln, die noch leer sind.
+  **Zwei Symptome, eine Ursache.** Der Rahmen einer Fächer-Kachel wird eingeblendet, bevor sein Bild da ist; und wenn die Szene endet, fliegen die Cover auf Wandkacheln, die noch leer sind.
 
-  **Der Mechanismus ist bekannt, nicht geraten.** `SCENE_GRACE_MS` beendet die Szene nach vier Sekunden, gleichgültig ob Cover eingetroffen sind; im gemessenen Fall kam in dieser Zeit **kein einziges** der acht vorgeladenen Bilder an. Das ist dieselbe Ursache wie bei 6.25 — `/img` brauchte dort 2,6 bis 7,6 s je Bild —, aber ein eigener Fehler: hier bleibt keine Kachel leer, hier **läuft die Animation der Ankunft davon**.
+  **Gemessen am 2026-09-10 gegen den Dev-Server** (*North and South*, kalter Klick aus dem Suchergebnis):
 
-  **Vor dem Bauen zu klären, in dieser Reihenfolge:** (1) ob 6.25 die Latenz von `/img` senkt — dann verschwindet das meiste von selbst; (2) ob die Übergabe auf das erste Wandbild warten sollte statt auf eine Frist; (3) ob die Kachel das bereits geladene Bild des Fächers als erste Anzeige übernehmen kann, statt eine zweite Anfrage zu beginnen. **Nicht zu bauen, bevor 6.25 gemessen ist** — sonst wird eine Frist gegen eine Latenz getauscht, die danach anders aussieht.
+  | | |
+  |---|---|
+  | Fächer-Kacheln über die Zeit | 776 ms gefüllt (das Cover aus der Karte) → **1.777 ms leer** → 2.775 ms wieder gefüllt |
+  | Szenenende | 4.2 s, mit **null von zwei** Wandbildern geladen |
+  | Anfragen an `/img` | **45 für 24 verschiedene Cover** — 21 also zweimal |
+  | Dieselbe Cover-Adresse, beide Anfragen | erste **aus dem Netz**, 436→2.474 ms, 47 KB; zweite **aus dem Cache**, 2.476→**5.794 ms**, 0 Byte |
+
+  **Der entscheidende Wert ist die letzte Zeile: ein Cache-Treffer, der 3,3 Sekunden braucht.** Die Datei liegt längst im Browser, aber die Anfrage steht in der Warteschlange hinter zwei Dutzend anderen Bildanfragen an denselben Host (sechs gleichzeitig, und `/img` braucht hier 2 bis 5 s je Bild). Der Vorlauf in `useLoadingScene` lädt das Cover mit einem eigenen `new Image()` und stellt die Kachel, sobald *dieses* Objekt fertig ist — das gerenderte `next/image` stellt aber **eine zweite Anfrage**, und die wartet. Die Kopfzeilen sind in Ordnung (`public, max-age=3600`), es ist kein Cache-Fehler, sondern ein Reihenfolge-Problem.
+
+  **Vier Wege, vom kleinsten zum größten:** (1) eine Kachel erst einblenden, wenn **ihr eigenes** `<img>` `load` gemeldet hat — behebt das leere Skelett unabhängig von jeder Latenz und ist ein paar Zeilen in `LoadingStage`; (2) `fetchpriority="high"` auf die Kacheln der Szene, damit ihre Anfrage die Schlange überholt; (3) `<link rel="preload" as="image">` statt `new Image()`, damit der Vorlauf und das Rendern **dieselbe** Anfrage benutzen; (4) 6.25 senkt die Latenz von `/img` und macht die Schlange kürzer. **(1) ist die einzige, die nicht auf die Latenz wettet** und deshalb der Anfang.
+
+  **In Produktion am selben Tag nachgemessen** (Julian: „ich habe den Effekt auch in der Produktion gesehen"), dieselbe Seite, kalter Klick aus dem Suchergebnis — und dort ist es **schlimmer**:
+
+  | | Dev | Produktion |
+  |---|---|---|
+  | Fächer-Kacheln mit Bild | zeitweise leer, dann gefüllt | **keine einzige**, von 101 ms bis zum Szenenende bei 3.401 ms alle vier leer |
+  | Anfragen an `/img` | 45 für 24 Cover (21 doppelt) | 38 für 38 Cover, **keine doppelt** |
+  | Langsamste `/img`-Anfrage | 5,4 s | **15,6 s** (drei Anfragen, alle bei 325 Byte übertragen) |
+
+  **Das Doppelholen ist also ein Dev-Effekt, das leere Skelett nicht.** Die naheliegende Erklärung für beides zugleich: die zweite Anfrage der gerenderten Kachel steht in Produktion noch **in der Schlange**, wenn die Szene endet und die Kachel abgebaut wird — abgebrochene Anfragen tauchen in `performance.getEntriesByType('resource')` gar nicht erst auf, deshalb sieht die Liste dort sauber aus. **Das ist die Erklärung, nicht die Messung**; wer den Punkt baut, prüft sie zuerst im Netzwerk-Panel mit sichtbaren Pending-Anfragen.
+
+  **Ein Fund für 6.25 fällt dabei ab:** drei `/img`-Anfragen brauchten 15,6 s bei 325 übertragenen Byte. Dieselbe Adresse einzeln nachgeholt kam in 679 ms mit 1.955 Byte echtem JPEG und `Cache-Control: public, max-age=3600` — **ohne** das `s-maxage`, das die Route sonst setzt. Ob das eine andere Antwort der Gegenseite ist oder ein anderer Zweig der Route, gehört in das Protokoll, das 6.25 als ersten Schritt verlangt.
 
 - [ ] **6.26 Die kuratierte Liste muss sich perfekt anfühlen.** (Julian, 2026-09-09: „die UX für alles was mit der kuratierten liste passiert muss perfekt sein. ich weiß nicht warum da manchmal noch lange ladezeiten sind oder einzelne kacheln leer bleiben.")
 

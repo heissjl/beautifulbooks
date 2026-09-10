@@ -1611,8 +1611,32 @@ Nach der Reparatur landet der Rückweg direkt auf der Wand, ohne Ladebild — ge
 
 Julian: „der cover-fächer ist oft schneller in der animation als auf den animierten kacheln das bild angezeigt wird. Haben wir diesen Fehler schon in der Roadmap aufgenommen?" — Nein, dieser nicht. **6.25** stand da (Kacheln, die leer *bleiben*), und das ist ein anderer Fehler mit derselben Wurzel.
 
-**Gemessen, bevor er notiert wurde**, kalter Klick von einem Suchergebnis auf *Candide*: nach **217 ms** steht eine Kachel im Fächer mit geladenem Bild — das Cover aus der Ergebniskarte —, und bei **4.217 ms** endet die Szene mit **null von zwei** Wandbildern geladen. Der FLIP setzt die Cover auf Kacheln, die noch leer sind. `SCENE_GRACE_MS` beendet die Szene nach vier Sekunden, gleichgültig ob etwas angekommen ist, und im gemessenen Fall kam in dieser Zeit kein einziges der acht vorgeladenen Bilder an — dieselbe Latenz von `/img`, die 6.25 mit 2,6 bis 7,6 s je Bild festhält. Als **6.25a** notiert, ausdrücklich hinter 6.25: wer hier eine Frist gegen eine Latenz tauscht, die danach anders aussieht, baut zweimal.
+**Gemessen, bevor er notiert wurde**, kalter Klick von einem Suchergebnis auf *Candide*: nach **217 ms** steht eine Kachel im Fächer mit geladenem Bild — das Cover aus der Ergebniskarte —, und bei **4.217 ms** endet die Szene mit **null von zwei** Wandbildern geladen. Der FLIP setzt die Cover auf Kacheln, die noch leer sind.
+
+**Julian hatte aber mehr gesehen als das, und das führte auf die eigentliche Ursache:** „hier also auch das Skelett der Animation gemacht wird, ohne dass es mit einem Bild befüllt ist" — auch der **Fächer selbst** zeigt leere Kachelrahmen. Das durfte nach dem Code nicht sein: `useLoadingScene` lädt jedes Cover mit einem eigenen `new Image()` vor und stellt die Kachel erst, wenn dieses Objekt fertig ist.
+
+**Die zweite Messung** (*North and South*) zeigt, warum es doch passiert. Fächer-Kacheln über die Zeit: 776 ms gefüllt, **1.777 ms leer**, 2.775 ms wieder gefüllt. `/img` bekam **45 Anfragen für 24 verschiedene Cover**. Und für dieselbe Adresse: die erste Anfrage aus dem Netz, 436→2.474 ms, 47 KB — die zweite **aus dem Cache**, 2.476→**5.794 ms**, null Byte. **Ein Cache-Treffer, der 3,3 Sekunden braucht.**
+
+Die Datei liegt also längst im Browser, aber die Anfrage steht in der Warteschlange hinter zwei Dutzend anderen an denselben Host, bei sechs gleichzeitigen Verbindungen und 2 bis 5 s je Bild. Der Vorlauf lädt mit `new Image()`, das gerenderte `next/image` stellt **eine zweite Anfrage**, und die wartet. Die Kopfzeilen sind in Ordnung (`public, max-age=3600`); es ist kein Cache-Fehler, sondern ein Reihenfolge-Problem.
+
+Als **6.25a** notiert, mit vier Wegen und einer Empfehlung: eine Kachel erst einblenden, wenn **ihr eigenes** `<img>` geladen hat. Das ist die einzige Lösung, die nicht auf eine Latenz wettet. Die Zahlen stammen aus dem Dev-Server ohne CDN; vor dem Bauen ist einmal in Produktion nachzumessen.
 
 **Beim Nachsehen fiel auf, dass 6.24 seit heute erledigt ist.** Der Punkt („der Zurück-Knopf von der Jahrzehnte-Seite spielt die Ladeszene noch einmal ab") war in einer anderen Session notiert worden, während ich in dieser Session denselben Fehler unter Julians zweiter Formulierung repariert habe. Die Vermutung im Punkt war richtig und unvollständig: `FINISHED` in `useWorkPages` griff sehr wohl — die Szene fragte nur nie, ob überhaupt noch gewartet wird. Abgehakt und verlinkt.
 
 **Die Lehre für drei parallele Sessions:** derselbe Fehler kann in zwei Formulierungen an zwei Stellen liegen, und wer nur seine eigene kennt, hakt den fremden Eintrag nicht ab. Vor dem Notieren eines Fehlers erst die Roadmap durchsuchen — hier hätte das eine Doppelung gespart und hat immerhin einen offenen Punkt geschlossen.
+
+## 2026-09-10 · Dasselbe Symptom, in Produktion eine andere Ursache (ROADMAP 6.25a)
+
+Julian, nachdem der Punkt aus Dev-Zahlen notiert war: „ich habe den Effekt auch in der Produktion gesehen." Also einmal dort gemessen, dieselbe Seite, derselbe kalte Klick.
+
+| | Dev | Produktion |
+|---|---|---|
+| Fächer-Kacheln mit Bild | zeitweise leer, dann gefüllt | **keine einzige**, 101 ms bis Szenenende 3.401 ms |
+| Anfragen an `/img` | 45 für 24 Cover, 21 doppelt | 38 für 38 Cover, **keine doppelt** |
+| Langsamste Anfrage | 5,4 s | **15,6 s** |
+
+**Das Doppelholen war ein Dev-Effekt.** Hätte ich den Punkt nach der ersten Messung gebaut, wäre die Reparatur an der Produktionsursache vorbeigegangen — dieselbe Falle wie beim Falten (SPEC §2.5) und beim Ranking: **eine Zahl aus der Entwicklungsumgebung sagt, dass etwas nicht stimmt, und selten warum.**
+
+Die naheliegende Erklärung für beide Messungen zugleich: die zweite Anfrage der gerenderten Kachel steht in Produktion noch in der Schlange, wenn die Szene endet und die Kachel abgebaut wird — **abgebrochene Anfragen erscheinen in `performance.getEntriesByType('resource')` gar nicht**, weshalb die Liste dort sauber aussieht. Das ist im Punkt ausdrücklich als Erklärung und nicht als Messung markiert.
+
+**Ein Fund für 6.25 fiel dabei ab:** drei `/img`-Anfragen brauchten 15,6 s bei 325 übertragenen Byte. Dieselbe Adresse einzeln nachgeholt kam in 679 ms mit 1.955 Byte echtem JPEG — und mit `Cache-Control: public, max-age=3600` **ohne** das `s-maxage`, das die Route sonst setzt. Ob da eine andere Antwort der Gegenseite durchkommt oder ein anderer Zweig der Route greift, gehört in das Protokoll, das 6.25 als ersten Schritt verlangt.
