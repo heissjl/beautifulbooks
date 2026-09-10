@@ -54,13 +54,19 @@ export const RATE_RULES = {
    */
   similar: { capacity: 60, refillPerMinute: 60 },
   /**
-   * Cover images through our own route (ROADMAP 1.3). A single detail page
-   * asks for up to 151 of them — measured on *The Great Gatsby* — so the
-   * burst has to clear two walls without a crawler being able to settle in.
-   * Most requests never reach the function at all: the CDN in front of it
+   * Cover images through our own route (ROADMAP 1.3, raised for 6.25 on
+   * 2026-09-10). A single detail page asks for up to 151 of them — measured
+   * on *The Great Gatsby* — and the largest walls run past three hundred;
+   * add the loading mosaic and the covers of a result page and 400 was a
+   * burst one big book wide, which is too narrow to be a safety net and wide
+   * enough to hurt a reader who opens two of them. **Nobody has seen a 429
+   * here** (measured 2026-09-09), so this is arithmetic, not a diagnosis: a
+   * reader who opens two large works inside a minute must not be throttled,
+   * and 6.25 will show from the log whether the empty tiles came from here
+   * at all. Most requests never reach the function: the CDN in front of it
    * holds each cover for 30 days.
    */
-  img: { capacity: 400, refillPerMinute: 300 },
+  img: { capacity: 800, refillPerMinute: 600 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

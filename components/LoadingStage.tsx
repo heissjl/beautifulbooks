@@ -1,11 +1,21 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { proxiedCoverSrc } from '@/lib/coverurl';
 import MosaicLoader from './MosaicLoader';
 
 export interface StageCover {
   id: string;
+  /**
+   * The address to render, **already through `/img`**.
+   *
+   * `useLoadingScene` proxies it before preloading it, so that the preload,
+   * this tile and the wall tile all ask for the same thing (ROADMAP 6.25a).
+   * Proxying it a second time here would be a no-op — `coverRefFromUrl`
+   * returns null for our own path — but saying so is better than relying on
+   * it.
+   */
   url: string;
 }
 
@@ -33,6 +43,18 @@ const TILTS = [-4, 3, -2, 5];
  * slots when the scene ends.
  */
 export default function LoadingStage({ covers, hero, expected }: LoadingStageProps) {
+  /*
+    Which staged covers have actually painted.
+
+    The scene stages a cover once **its own** preload has loaded, which since
+    2026-09-10 is the same address this tile renders — so this is normally
+    true on the first frame. It is here as the guarantee rather than the
+    mechanism: a frame without a picture in it is the thing Julian saw
+    („hier also auch das Skelett der Animation gemacht wird, ohne dass es mit
+    einem Bild befüllt ist"), and no cache reasoning should be able to bring
+    it back.
+  */
+  const [loaded, setLoaded] = useState<ReadonlySet<string>>(new Set());
   const shown = covers.slice(-4);
   const caption =
     covers.length === 0
@@ -87,7 +109,16 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
               style={{ ['--i' as string]: `${i - (n - 1) / 2}`, ['--tilt' as string]: `${TILTS[i % TILTS.length]}deg`, zIndex: i }}
             >
               <div className="cover-shadow relative h-full w-full overflow-hidden rounded-card bg-surface-2">
-                <Image src={proxiedCoverSrc(c.url)} alt="" fill sizes="288px" className="object-cover" unoptimized priority />
+                <Image
+                  src={c.url}
+                  alt=""
+                  fill
+                  sizes="288px"
+                  className={`object-cover transition-opacity duration-300 ${loaded.has(c.id) ? 'opacity-100' : 'opacity-0'}`}
+                  unoptimized
+                  priority
+                  onLoad={() => setLoaded(prev => (prev.has(c.id) ? prev : new Set(prev).add(c.id)))}
+                />
               </div>
             </div>
           );

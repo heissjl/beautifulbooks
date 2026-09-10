@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
+import { COVER_UPSTREAM_HEADER, recordCoverFailure, type CoverFailure } from '@/lib/coverlog';
 import { rateLimited } from '@/app/api/rate';
 
 /**
@@ -30,6 +31,13 @@ import { rateLimited } from '@/app/api/rate';
  * Failures are deliberately **not** cached: a silent archive.org is an
  * episode, not a fact about the cover (the same reasoning as F1.7), and
  * `CoverImage` already degrades to a quiet placeholder.
+ *
+ * **A failure says what the other side answered** (ROADMAP 6.25, since
+ * 2026-09-10). Until then every failure came back as a bare 502 and the log
+ * said nothing, so Julian's question — are we being throttled? — could not be
+ * answered at all. Now the upstream status travels in `X-Cover-Upstream` and
+ * one line per failure goes to the platform log (`lib/coverlog.ts`). That is
+ * the measurement 6.25 asks for before anything is changed.
  */
 const SIZES = new Set(['S', 'M', 'L']);
 
@@ -41,8 +49,16 @@ const CDN_SECONDS = 60 * 60 * 24 * 30;
 
 export const maxDuration = 25;
 
-function refuse(status: number, message: string): NextResponse {
-  return new NextResponse(message, { status, headers: { 'Cache-Control': 'no-store' } });
+function refuse(status: number, message: string, upstream?: string): NextResponse {
+  const headers: Record<string, string> = { 'Cache-Control': 'no-store' };
+  if (upstream) headers[COVER_UPSTREAM_HEADER] = upstream;
+  return new NextResponse(message, { status, headers });
+}
+
+/** Records the failure and answers with it, so both the log and the browser say the same. */
+function failed(failure: CoverFailure): NextResponse {
+  recordCoverFailure(failure);
+  return refuse(502, 'Cover image not available', String(failure.reason));
 }
 
 export async function GET(request: NextRequest, context: { params: Promise<{ size: string; cover: string }> }) {
@@ -56,6 +72,8 @@ export async function GET(request: NextRequest, context: { params: Promise<{ siz
   const upstream = coverUrlFor(coverId, size as 'S' | 'M' | 'L');
   if (!upstream) return refuse(400, 'Malformed cover reference');
 
+  const started = Date.now();
+  const asked = { coverId, size: size as 'S' | 'M' | 'L' };
   try {
     const res = await fetch(upstream, {
       headers: { Accept: 'image/*' },
@@ -66,8 +84,13 @@ export async function GET(request: NextRequest, context: { params: Promise<{ siz
       redirect: 'follow',
     });
     const type = res.headers.get('content-type') ?? '';
-    if (!res.ok || !res.body || !type.startsWith('image/')) {
-      return refuse(502, 'Cover image not available');
+    if (!res.ok || !res.body) {
+      return failed({ ...asked, reason: res.status, ms: Date.now() - started });
+    }
+    // A 200 that is not an image is an error page wearing a success code —
+    // the shape a throttle often takes, and worth telling apart from a 429.
+    if (!type.startsWith('image/')) {
+      return failed({ ...asked, reason: 'not-an-image', ms: Date.now() - started });
     }
     return new NextResponse(res.body, {
       headers: {
@@ -78,7 +101,10 @@ export async function GET(request: NextRequest, context: { params: Promise<{ siz
         'X-Cover-Source': coverId.startsWith('gb:') ? 'googlebooks' : 'openlibrary',
       },
     });
-  } catch {
-    return refuse(502, 'Cover image not available');
+  } catch (err) {
+    // The two silences are worth telling apart: our own 15 s running out, and
+    // a connection that never answered at all.
+    const timedOut = err instanceof Error && (err.name === 'TimeoutError' || err.name === 'AbortError');
+    return failed({ ...asked, reason: timedOut ? 'timeout' : 'network', ms: Date.now() - started });
   }
 }
