@@ -337,7 +337,25 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
 
   **Der entscheidende Wert ist die letzte Zeile: ein Cache-Treffer, der 3,3 Sekunden braucht.** Die Datei liegt längst im Browser, aber die Anfrage steht in der Warteschlange hinter zwei Dutzend anderen Bildanfragen an denselben Host (sechs gleichzeitig, und `/img` braucht hier 2 bis 5 s je Bild). Der Vorlauf in `useLoadingScene` lädt das Cover mit einem eigenen `new Image()` und stellt die Kachel, sobald *dieses* Objekt fertig ist — das gerenderte `next/image` stellt aber **eine zweite Anfrage**, und die wartet. Die Kopfzeilen sind in Ordnung (`public, max-age=3600`), es ist kein Cache-Fehler, sondern ein Reihenfolge-Problem.
 
-  **Vier Wege, vom kleinsten zum größten:** (1) eine Kachel erst einblenden, wenn **ihr eigenes** `<img>` `load` gemeldet hat — behebt das leere Skelett unabhängig von jeder Latenz und ist ein paar Zeilen in `LoadingStage`; (2) `fetchpriority="high"` auf die Kacheln der Szene, damit ihre Anfrage die Schlange überholt; (3) `<link rel="preload" as="image">` statt `new Image()`, damit der Vorlauf und das Rendern **dieselbe** Anfrage benutzen; (4) 6.25 senkt die Latenz von `/img` und macht die Schlange kürzer. **(1) ist die einzige, die nicht auf die Latenz wettet** und deshalb der Anfang.
+  **Die Ursache ist am 2026-09-10 gefunden und einzeilig: der Vorlauf lädt eine andere Adresse als die Kachel.** `useLoadingScene` holt `cover.urlSmall ?? cover.url` — die rohe Adresse bei `covers.openlibrary.org` —, die Kachel rendert seit 1.3 aber `proxiedCoverSrc(...)`, also `/img/S/ol-…`. **Zwei verschiedene Adressen, kein gemeinsamer Cache.** Der Vorlauf beweist damit nichts über die Kachel: er meldet „geladen", die Kachel beginnt ihre eigene Anfrage bei null, und ihr Rahmen steht leer, solange die läuft. Das ist ein Rückschritt aus 1.3 — die Cover zogen hinter `/img`, der Vorlauf zog nicht mit.
+
+  **Was heute woran hängt:**
+
+  | | Woran es hängt |
+  |---|---|
+  | **Anfang** einer Kachel | am `onload` des **Vorlauf-Objekts** (falsche Adresse, s. o.), getaktet mit 520 ms |
+  | **Dauer** | feste Konstanten: 520 ms Takt, 650 ms Einlauf, zwei bis vier Cover |
+  | **Ende** | zwei Cover eingelaufen **und** Seite 0 gehasht — oder die Frist von 4 s. **Nichts davon sieht die Bilder der Wand an** |
+  | Kacheln der **Wand** | machen es richtig: `CoverImage` blendet erst ein, wenn das eigene Bild geladen ist |
+
+  **Der Plan, in dieser Reihenfolge:**
+
+  1. **Den Vorlauf auf die Adresse schicken, die auch gerendert wird** (`proxiedCoverSrc`). Eine Zeile, kein Risiko, und danach ist die Anfrage der Kachel ein Cache-Treffer.
+  2. **Die Kachel es beweisen lassen, nicht den Vorlauf:** `LoadingStage` benutzt `CoverImage` (das genau das schon tut) oder blendet auf `onLoad` ein. Danach ist ein leerer Rahmen unmöglich, unabhängig von jedem Cache — das ist die Absicherung, falls 1 nicht reicht.
+  3. **Das Ende an die Wand knüpfen:** die Szene endet, wenn die erste Reihe der Wandkacheln geladen ist, mit der 4-s-Frist als Obergrenze. Sonst fliegt der FLIP weiterhin auf leere Kacheln.
+  4. **Die Frist muss ehrlich enden:** ist nach 4 s nichts da, endet die Szene **ohne Flug** statt auf eine leere Wand zu fliegen.
+
+  **Nach 1 und 2 in Produktion neu messen, bevor 3 gebaut wird** — gut möglich, dass 3 dann nicht mehr nötig ist, und 3 ist der einzige Schritt, der ein neues Signal von der Wand zur Seite braucht.
 
   **In Produktion am selben Tag nachgemessen** (Julian: „ich habe den Effekt auch in der Produktion gesehen"), dieselbe Seite, kalter Klick aus dem Suchergebnis — und dort ist es **schlimmer**:
 

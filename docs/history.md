@@ -1640,3 +1640,15 @@ Julian, nachdem der Punkt aus Dev-Zahlen notiert war: „ich habe den Effekt auc
 Die naheliegende Erklärung für beide Messungen zugleich: die zweite Anfrage der gerenderten Kachel steht in Produktion noch in der Schlange, wenn die Szene endet und die Kachel abgebaut wird — **abgebrochene Anfragen erscheinen in `performance.getEntriesByType('resource')` gar nicht**, weshalb die Liste dort sauber aussieht. Das ist im Punkt ausdrücklich als Erklärung und nicht als Messung markiert.
 
 **Ein Fund für 6.25 fiel dabei ab:** drei `/img`-Anfragen brauchten 15,6 s bei 325 übertragenen Byte. Dieselbe Adresse einzeln nachgeholt kam in 679 ms mit 1.955 Byte echtem JPEG — und mit `Cache-Control: public, max-age=3600` **ohne** das `s-maxage`, das die Route sonst setzt. Ob da eine andere Antwort der Gegenseite durchkommt oder ein anderer Zweig der Route greift, gehört in das Protokoll, das 6.25 als ersten Schritt verlangt.
+
+## 2026-09-10 · Der Vorlauf lud eine andere Adresse als die Kachel (ROADMAP 6.25a)
+
+Julian schickte einen Screenshot: drei Cover im Fächer, das vorderste ein leerer Rahmen — „hier also auch das Skelett der Animation gemacht wird, ohne dass es mit einem Bild befüllt ist" — und die Frage, woran Anfang, Dauer und Ende der Szene heute hängen.
+
+**Die Antwort auf die Frage brachte die Ursache.** `useLoadingScene` lädt jedes Cover mit `new Image()` vor und stellt die Kachel erst, wenn dieses Objekt fertig ist — soweit richtig. Aber es lädt `cover.urlSmall ?? cover.url`, die rohe Adresse bei `covers.openlibrary.org`, während die Kachel seit **1.3** `proxiedCoverSrc(...)` rendert, also `/img/S/ol-…`. **Zwei verschiedene Adressen, kein gemeinsamer Cache.** Der Vorlauf beweist nichts über die Kachel: er meldet „geladen", die Kachel beginnt ihre eigene Anfrage bei null, und ihr Rahmen steht leer, solange die läuft.
+
+Das erklärt beide Messungen des Tages. Im Dev-Server sah man dieselbe Cover-Adresse zweimal, weil dort beide Wege zufällig über `/img` liefen; in Produktion sah man **keine** Doppelung, weil der Vorlauf gar nicht bei `/img` anfragt — er geht direkt zu Open Library. Und es erklärt, warum ausgerechnet die Kacheln leer sind, die der Code für „geladen" hält.
+
+**Es ist ein Rückschritt aus 1.3:** die Cover zogen hinter die eigene Route, der Vorlauf zog nicht mit. Solche Stellen findet keine Testsuite — die eine Seite kennt die andere nicht, und beide funktionieren für sich.
+
+**Der Plan steht in 6.25a**, vier Schritte, der erste eine Zeile. Bemerkenswert ist der Kontrast: die Wand macht es längst richtig (`CoverImage` blendet erst ein, wenn das eigene Bild geladen ist), nur die Ladeszene rendert `next/image` roh und ohne `onLoad`. Die Reparatur besteht zum Teil darin, der Szene beizubringen, was die Wand schon kann.
