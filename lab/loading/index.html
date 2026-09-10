@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ladebild: vier Animationen</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f4f0e8; --surface: #fbf9f4; --surface-2: #ebe5da;
+    --ink: #1a1714; --ink-2: #5a534a; --ink-3: #8c8377;
+    --line: #ddd5c8; --accent: #b1502b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131110; --surface: #1b1815; --surface-2: #26221e;
+      --ink: #efe8dd; --ink-2: #b2a99b; --ink-3: #7d7569;
+      --line: #2e2925; --accent: #e6a677;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 ui-sans-serif, system-ui, sans-serif;
+  }
+  main { max-width: 1180px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font: 600 1.6rem/1.2 Georgia, serif; margin: 0 0 .35rem; }
+  h2 { font: 600 1.05rem/1.3 Georgia, serif; margin: 0 0 .2rem; }
+  .lede { color: var(--ink-2); max-width: 62ch; margin: 0 0 1.25rem; }
+  .controls {
+    display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: center;
+    background: var(--surface); border: 1px solid var(--line); border-radius: .5rem;
+    padding: .75rem 1rem; margin-bottom: 1.5rem;
+  }
+  .controls label { display: flex; align-items: center; gap: .4rem; font-size: .85rem; color: var(--ink-2); }
+  select, button { font: inherit; font-size: .85rem; color: var(--ink); background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: .35rem; padding: .25rem .5rem; }
+  button { cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--surface); border-color: transparent; }
+  .panels { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: .5rem; padding: 1rem; }
+  .panel p { color: var(--ink-2); font-size: .85rem; margin: .35rem 0 .75rem; }
+  .kicker { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  /* The frame is what the site would show: a fixed area a search waits in. */
+  .frame {
+    position: relative; overflow: hidden; margin: 0 auto;
+    background: var(--surface-2); border-radius: .25rem;
+  }
+  .frame img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; will-change: transform; }
+  .frame canvas { display: block; width: 100%; height: 100%; }
+  .caption { text-align: center; font-size: .8rem; color: var(--ink-3); margin-top: .6rem; min-height: 1.2em; }
+  .pulse { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: .4 } 50% { opacity: .9 } }
+  .cost { font: .72rem/1.5 ui-monospace, monospace; color: var(--ink-3); margin-top: .5rem; white-space: pre-line; }
+  .notes { margin-top: 2.5rem; border-top: 1px solid var(--line); padding-top: 1.25rem; color: var(--ink-2); font-size: .85rem; }
+  .notes h2 { color: var(--ink); }
+  .notes li { margin-bottom: .4rem; }
+  code { font-family: ui-monospace, monospace; font-size: .85em; background: var(--surface-2); padding: 0 .25em; border-radius: .2em; }
+  .warn { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ladebild: vier Animationen für dasselbe Mosaik</h1>
+  <p style="margin:0 0 .75rem"><a href="rotation.html">→ Die Rotation, so wie sie auf der Seite liefe</a></p>
+  <p class="lede">
+    Was die Suche zeigen könnte, während Open Library 1 bis 13 Sekunden braucht (ROADMAP 6.19a).
+    Alle vier Vorschläge arbeiten auf <strong>einer</strong> vorgerechneten JPEG-Datei und einem
+    Manifest von wenigen Kilobyte; kein Cover wird einzeln geladen. <strong>3b ist gewählt</strong>
+    (Julian, 2026-09-09); die anderen drei stehen als Vergleich daneben.
+  </p>
+
+  <div class="controls">
+    <label>Autor <select id="author"></select></label>
+    <label>Raster <select id="grid"></select></label>
+    <label>Bild <select id="size"></select></label>
+    <label>Dauer <select id="duration">
+      <option value="2500">2,5 s</option>
+      <option value="4000" selected>4 s</option>
+      <option value="6000">6 s</option>
+      <option value="9000">9 s</option>
+    </select></label>
+    <label>Breite <select id="frame">
+      <option value="300">300 px (Telefon)</option>
+      <option value="360" selected>360 px</option>
+      <option value="440">440 px (Rechner)</option>
+    </select></label>
+    <label>Zeitpunkt <input type="range" id="scrub" min="0" max="100" value="100" step="1"><span id="scrubOut" class="kicker">–</span></label>
+    <button id="replay" class="primary">Neu abspielen</button>
+    <button id="shuffle">Zufällige Vorlage</button>
+    <button id="interrupt">Suche ist fertig (abbrechen)</button>
+    <label><input type="checkbox" id="reduced"> reduced motion</label>
+  </div>
+
+  <div class="panels">
+    <section class="panel">
+      <span class="kicker">Vorschlag 1</span>
+      <h2>Rückzug</h2>
+      <p>
+        Erst vier Cover, dann sechzehn, dann das ganze Bild: die Kamera geht zurück, und im letzten
+        Drittel kippt die Wand in ein Gesicht. Sagt, was ein Mosaik ist — eine Frage des Abstands.
+      </p>
+      <div class="frame" id="frame-zoom"><img id="img-zoom" alt=""></div>
+      <p class="caption pulse" id="cap-zoom"></p>
+      <p class="cost" id="cost-zoom"></p>
+    </section>
+
+    <section class="panel">
+      <span class="kicker">Vorschlag 2</span>
+      <h2>Schwerste Zelle zuerst</h2>
+      <p>
+        Die Kacheln erscheinen in der Reihenfolge, in der das Mosaik gerechnet wurde: die dunkelsten
+        und hellsten Zellen zuerst. Das Gesicht steht als Schemen da, lange bevor die Fläche voll ist.
+      </p>
+      <div class="frame" id="frame-reveal"><canvas id="canvas-reveal"></canvas></div>
+      <p class="caption pulse" id="cap-reveal"></p>
+      <p class="cost" id="cost-reveal"></p>
+    </section>
+
+    <section class="panel">
+      <span class="kicker">Vorschlag 3</span>
+      <h2>Umsortieren</h2>
+      <p>
+        Die Wand steht sofort — aber in der falschen Reihenfolge, also als das, was die Suche heute
+        zeigt. Dann tauschen die Kacheln wellenweise auf ihren Platz, und das Gesicht fällt aus dem
+        Rauschen. Dieselben Cover, andere Anordnung: das ist der ganze Trick.
+      </p>
+      <div class="frame" id="frame-sort"><canvas id="canvas-sort"></canvas></div>
+      <p class="caption pulse" id="cap-sort"></p>
+      <p class="cost" id="cost-sort"></p>
+    </section>
+
+    <section class="panel">
+      <span class="kicker">Vorschlag 3b</span>
+      <h2>Das Rauschen klärt sich</h2>
+      <p>
+        Dieselbe falsch sortierte Wand, aber ohne Welle und ohne Kante: die Kacheln finden in
+        zufälliger Reihenfolge ihren Platz, und gleichzeitig hebt sich die Dämpfung. Das Gesicht
+        kommt aus dem Rauschen wie ein Bild aus dem Entwicklerbad — nichts läuft von einer Seite
+        zur anderen.
+      </p>
+      <div class="frame" id="frame-clear"><canvas id="canvas-clear"></canvas></div>
+      <p class="caption pulse" id="cap-clear"></p>
+      <p class="cost" id="cost-clear"></p>
+    </section>
+  </div>
+
+  <div class="notes">
+    <h2>Was hier zu sehen ist</h2>
+    <p id="about"></p>
+    <ul>
+      <li><strong>Kosten:</strong> unter jedem Bild steht, was es den Browser kostet — Bytes, Dekodierzeit,
+        gemessene Bildabstände während der Animation und wie viele <code>drawImage</code>-Aufrufe je Bild anfallen.</li>
+      <li><strong>Abbruch:</strong> „Suche ist fertig“ friert alle drei mitten in der Bewegung ein — so sieht es aus,
+        wenn Open Library nach 1,2 s antwortet, was der häufigste Fall ist.</li>
+      <li><strong>reduced motion</strong> zeigt in allen drei Feldern sofort das fertige Bild, ohne Bewegung.</li>
+    </ul>
+  </div>
+</main>
+
+<script type="module">
+/*
+ * The page: four animations of the same picture, side by side.
+ *
+ * The animations themselves live in `animations.js`, which `rotation.html`
+ * imports too — 3b is the one that was chosen, and it must be the same 3b in
+ * both places.
+ */
+import { Clearing, Reveal, Sort, ZoomOut, loadScene, ticker } from './animations.js';
+
+const $ = id => document.getElementById(id);
+
+const zoom = new ZoomOut($('img-zoom'), $('frame-zoom'), $('cost-zoom'));
+const reveal = new Reveal($('canvas-reveal'), $('frame-reveal'), $('cost-reveal'));
+const sort = new Sort($('canvas-sort'), $('frame-sort'), $('cost-sort'));
+const clearing = new Clearing($('canvas-clear'), $('frame-clear'), $('cost-clear'));
+const all = [zoom, reveal, sort, clearing];
+
+const state = { index: [], manifests: new Map(), manifest: null, scene: null };
+
+function captions() {
+  const text = 'Looking for \u201ceast of eden\u201d in Open Library';
+  for (const id of ['cap-zoom', 'cap-reveal', 'cap-sort', 'cap-clear']) $(id).textContent = text;
+  const m = state.manifest;
+  const grid = state.scene.grid;
+  $('about').innerHTML =
+    `<strong>${m.author}</strong>, gebaut am ${m.built} aus <strong>${m.tiles} Covern</strong> von `
+    + `${m.works.length} Büchern (${m.works.map(w => w.title).join(', ')}). Vorlage: ein gemeinfreies Porträt`
+    + (m.portrait.credit ? ` — ${m.portrait.credit}` : '')
+    + `. Raster ${grid.cols}×${grid.rows} = ${grid.cols * grid.rows} Zellen, `
+    + `${grid.coversUsed} verschiedene Cover benutzt, das häufigste auf ${grid.mostUsedShare} % der Zellen.`;
+}
+
+async function play() {
+  const grid = state.manifest.grids[Number($('grid').value)];
+  const sizeChoice = $('size').value;
+  state.scene = await loadScene(state.manifest, {
+    gridIndex: Number($('grid').value),
+    frameWidth: Number($('frame').value),
+    duration: Number($('duration').value),
+    image: sizeChoice === 'auto' ? undefined : grid.images[Number(sizeChoice)],
+  });
+  captions();
+  for (const anim of all) {
+    anim.configure(state.scene);
+    if ($('reduced').checked) anim.finish();
+    else anim.start();
+  }
+}
+
+function fillSelect(select, options, selected = 0, extra = null) {
+  select.innerHTML = '';
+  if (extra) {
+    const option = document.createElement('option');
+    option.value = extra.value;
+    option.textContent = extra.label;
+    select.append(option);
+  }
+  options.forEach((label, i) => {
+    const option = document.createElement('option');
+    option.value = String(i);
+    option.textContent = label;
+    if (i === selected && !extra) option.selected = true;
+    select.append(option);
+  });
+}
+
+function sizeOptions() {
+  const grid = state.manifest.grids[Number($('grid').value)];
+  fillSelect($('size'), grid.images.map(i => `${i.width} px · ${Math.round(i.bytes / 1024)} KB`), 0,
+    { value: 'auto', label: 'nach Breite' });
+}
+
+async function chooseAuthor() {
+  const entry = state.index[Number($('author').value)];
+  let manifest = state.manifests.get(entry.file);
+  if (!manifest) {
+    manifest = await (await fetch(`out/${entry.file}`)).json();
+    state.manifests.set(entry.file, manifest);
+  }
+  state.manifest = manifest;
+  fillSelect($('grid'), manifest.grids.map(g => `${g.cols}×${g.rows}`), 0);
+  sizeOptions();
+  await play();
+}
+
+async function main() {
+  try {
+    state.index = await (await fetch('out/index.json')).json();
+  } catch {
+    document.querySelector('.lede').innerHTML =
+      '<span class="warn">Kein Mosaik gebaut.</span> Erst <code>npx tsx lab/loading/build-all.ts</code> laufen lassen.';
+    return;
+  }
+  // The site would read this, not a checkbox; here it only sets the default,
+  // so the box stays a way to see both without changing a system setting.
+  $('reduced').checked = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  fillSelect($('author'), state.index.map(e => e.author), 0);
+  $('author').addEventListener('change', chooseAuthor);
+  $('grid').addEventListener('change', () => { sizeOptions(); play(); });
+  for (const id of ['size', 'duration', 'frame', 'reduced']) $(id).addEventListener('change', play);
+  $('replay').addEventListener('click', () => { $('scrubOut').textContent = '–'; play(); });
+  $('shuffle').addEventListener('click', () => {
+    $('author').value = String(Math.floor(Math.random() * state.index.length));
+    chooseAuthor();
+  });
+  $('scrub').addEventListener('input', () => {
+    const progress = Number($('scrub').value) / 100;
+    $('scrubOut').textContent = `${Math.round(progress * 100)} %`;
+    for (const anim of all) anim.renderAt(progress);
+  });
+  $('interrupt').addEventListener('click', () => { for (const anim of all) anim.stop(); });
+  await chooseAuthor();
+}
+
+// The Browser pane runs no animation frames while it is hidden, so the lab
+// needs a way to reach a given moment without a clock (2026-09-09).
+window.__loading = { state, all, ticker, renderAt: p => { for (const anim of all) anim.renderAt(p); } };
+
+main();
+</script>
+</body>
+</html>

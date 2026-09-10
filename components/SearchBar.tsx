@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { preloadMosaic } from './MosaicLoader';
 import { useRecentSearches } from './useRecentSearches';
 
 interface SearchBarProps {
@@ -83,7 +84,17 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
           ref={inputRef}
           type="search"
           value={inputValue}
-          onChange={e => setInputValue(e.target.value)}
+          onChange={e => {
+            setInputValue(e.target.value);
+            /*
+              The loading mosaic is fetched here, not when the search is sent:
+              the file is about 90 KB and takes two to four tenths of a second
+              on a phone, and that is time nobody should spend staring at an
+              empty frame. Whoever never types never fetches one, and the
+              second keystroke costs nothing — the promise is shared.
+            */
+            preloadMosaic();
+          }}
           onFocus={() => setShowSuggestions(true)}
           placeholder="A title, or a title and author"
           aria-label="Search a book title"

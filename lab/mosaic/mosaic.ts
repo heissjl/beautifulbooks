@@ -276,6 +276,36 @@ export function assign(target: Target, tiles: readonly Tile[], options: MosaicOp
   };
 }
 
+/**
+ * Cuts a picture down to a fixed width-to-height ratio.
+ *
+ * Two reasons, and only the second is about pictures. A loading screen shows
+ * a different mosaic every time, and a frame that changes shape with the
+ * portrait makes the page jump; one ratio for all of them fixes the frame
+ * (ROADMAP 6.19a). And a portrait that carries a whole body spends most of
+ * its cells on a coat: cutting to the head is what a mosaic of 1,480 cells
+ * can actually show.
+ *
+ * `topBias` is where the cut sits in the height it has to give up — 0 flush
+ * with the top, 1 flush with the bottom. A little below the top is right for
+ * a portrait, because a photographer leaves headroom and a mosaic should not
+ * keep it.
+ */
+export function cropToAspect(img: RgbaImage, aspect: number, topBias = 0.15): RgbaImage {
+  const wanted = Math.min(img.width, Math.round(img.height * aspect));
+  const height = Math.min(img.height, Math.round(wanted / aspect));
+  const width = Math.min(img.width, Math.round(height * aspect));
+  if (width === img.width && height === img.height) return img;
+  const x0 = Math.max(0, Math.round((img.width - width) / 2));
+  const y0 = Math.max(0, Math.round((img.height - height) * topBias));
+  const rgba = new Uint8Array(width * height * 4);
+  for (let y = 0; y < height; y++) {
+    const s = ((y0 + y) * img.width + x0) * 4;
+    rgba.set(img.rgba.subarray(s, s + width * 4), y * width * 4);
+  }
+  return { width, height, rgba };
+}
+
 /** Area-averaging resize of an RGBA image. */
 export function resizeRgba(img: RgbaImage, w: number, h: number): RgbaImage {
   const out = new Uint8Array(w * h * 4);

@@ -6,7 +6,8 @@
  * algorithm and never about a book. No network, no fixtures, no decoding.
  */
 import { describe, expect, it } from 'vitest';
-import { assign, compose, paletteReport, patchesOf, resizeRgba, tileOf, type Tile } from '../mosaic';
+import { assign, compose, cropToAspect, paletteReport, patchesOf, resizeRgba, tileOf, type Tile } from '../mosaic';
+import type { RgbaImage } from '../../../lib/imagehash';
 
 interface Img { width: number; height: number; rgba: Uint8Array }
 
@@ -198,5 +199,43 @@ describe('drawing the result', () => {
 
     expect(() => compose(mosaic, new Map([['black', flat(4, 6, 0)]]), { cellWidth: 2, cellHeight: 2 }))
       .toThrow(/no image for tile/);
+  });
+});
+
+describe('cropToAspect', () => {
+  const picture = (width: number, height: number): RgbaImage => {
+    const rgba = new Uint8Array(width * height * 4);
+    // Row number as the red channel, so a crop can be located afterwards.
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const p = (y * width + x) * 4;
+        rgba[p] = y; rgba[p + 1] = x; rgba[p + 3] = 255;
+      }
+    }
+    return { width, height, rgba };
+  };
+
+  it('cuts a tall picture down to the ratio, keeping the top', () => {
+    const out = cropToAspect(picture(300, 600), 0.75, 0);
+    expect([out.width, out.height]).toEqual([300, 400]);
+    expect(out.rgba[0]).toBe(0);
+  });
+
+  it('drops part of the headroom when asked to', () => {
+    const out = cropToAspect(picture(300, 600), 0.75, 0.5);
+    // 200 rows have to go, half of them off the top.
+    expect(out.rgba[0]).toBe(100);
+  });
+
+  it('cuts a wide picture in the middle', () => {
+    const out = cropToAspect(picture(800, 400), 0.75, 0);
+    expect([out.width, out.height]).toEqual([300, 400]);
+    // Column 250 is the first kept: (800 - 300) / 2.
+    expect(out.rgba[1]).toBe(250);
+  });
+
+  it('leaves a picture that already has the ratio alone', () => {
+    const source = picture(300, 400);
+    expect(cropToAspect(source, 0.75)).toBe(source);
   });
 });

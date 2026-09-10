@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import BookWorkCard from './BookWorkCard';
 import CuratedWall from './CuratedWall';
-import AssemblingWall from './AssemblingWall';
+import MosaicLoader from './MosaicLoader';
 import { LANGUAGES } from './SearchBar';
 import type { SearchResult } from '@/lib/search';
 
@@ -74,12 +74,14 @@ function Notice({
 }
 
 /**
- * What a search looks like while it runs (SPEC §8.1, ROADMAP 6.19): the wall
- * assembling, with the query named under it. The picture itself is shared
- * with the work page's first seconds, so both waits look like the same site.
+ * What a search looks like while it runs (SPEC §8.1, ROADMAP 6.19a): an
+ * author's face assembling out of the covers of their own books, with the
+ * query named under it. Falls back to the plain cover wall while the picture
+ * is on its way, and for good if it does not arrive — the work page's first
+ * seconds still use that wall, so both waits look like the same site.
  */
 export function GridSkeleton({ query }: { query?: string }) {
-  return <AssemblingWall caption={query ? `Looking for \u201c${query}\u201d in Open Library` : 'Searching'} />;
+  return <MosaicLoader caption={query ? `Looking for \u201c${query}\u201d in Open Library` : 'Searching'} />;
 }
 
 export default function BookGrid({ searchQuery, language }: BookGridProps) {

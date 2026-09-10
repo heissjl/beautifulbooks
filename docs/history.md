@@ -1409,6 +1409,80 @@ Nach dem Merge im Browser gegengeprüft, dass die beiden Stränge zusammenspiele
 
 **Was die Liste jetzt sagt:** Phase 1 ist bis auf 1.8 (Julian) und 1.9 leer, also ist 1.9 nach der eigenen Regel dieser Datei der nächste Punkt. Direkt danach steht kein Bau, sondern ein Deploy: **1.3 ist in Produktion überhaupt erst wirksam**, und die Zahl, die den Punkt belegt, kann nur dort entstehen.
 
+## 2026-09-09 · Drei Ladebilder aus einem Bild (ROADMAP 6.19a)
+
+Julians Vorschlag, die Suche mit dem Riesenmosaik warten zu lassen — „wie sich langsam das Bild von Orwell aus seinen Editionen aufbaut" — plus die Bitte, für **einen zweiten Autor** drei Animationen vorzuschlagen. Gebaut als `lab/loading/`, ausführlich in [lab/loading/README.md](../lab/loading/README.md); der Kontaktbogen mit allen drei Vorschlägen in je fünf Momenten liegt als `lab/loading/out/mark-twain-filmstrip.png`.
+
+**Der zweite Autor ist Mark Twain**, und die Wahl ist kein Geschmack. Mit demselben Raster und denselben Einstellungen sitzt Twain bei einem mittleren Abstand von 470, Virginia Woolf bei 861 — 897 Kacheln aus acht Büchern gegen 335, und A. F. Bradleys Foto von 1907 hat echtes Schwarz und echtes Weiß, wo Beresfords Porträt von 1902 durchweg weich ist. Woolfs Gesicht ist in Ladebildgröße kaum zu lesen. **Ein Ladebild braucht mehr Kontrast als ein Plakat**, weil es klein ist und nach Sekunden vorbei.
+
+**Der Weg ist nicht der Sprite-Streifen, den 6.19a empfahl, sondern ein JPEG plus Manifest.** Ein Bild, aus dem sich jede Animation zeichnen lässt: 105 KB bei 480 px (als PNG wären es 750 KB, als WebP 81 KB — ein Mosaik ist Rauschen, da hilft kein Format viel), 19 ms bis es dekodiert ist, **0,16 ms JavaScript je Bild** bei 1.480 Zellen, drei DOM-Knoten für alle drei Felder. Damit ist die Größenfrage beantwortet, die vor dem Punkt stand.
+
+**Die drei Vorschläge und was sie unterscheidet, ist nicht ihr Ende, sondern ihr Abbruch.** *Rückzug* fährt die Kamera zurück, bis die Wand in ein Gesicht kippt (läuft ganz auf dem Compositor, kostet je Bild nichts). *Schwerste Zelle zuerst* spielt die Reihenfolge nach, in der das Mosaik gerechnet wurde — Extremwerte vor Mitteltönen —, sodass das Gesicht bei 30 % als Schatten dasteht, während die halbe Fläche leer ist. *Umsortieren* stellt die Wand sofort hin, aber falsch sortiert und gedimmt, und lässt eine Diagonale sie sortieren. Weil eine Suche im häufigsten Fall nach ein bis zwei Sekunden zurückkommt, entscheidet nicht das fertige Bild, sondern wie es mittendrin aussieht — und da ist nur die dritte zu jedem Zeitpunkt ein volles Bild. **Empfehlung: Nummer 3.**
+
+**Drei Dinge, die beim Bauen falsch waren.** Bei 24 Spalten ist die Kachel ein erkennbares Buch und das Gesicht verschwunden; 40 sind das Minimum, bei dem beides geht. Bei Nummer 2 entscheidet der **Untergrund**, welche Hälfte man zuerst sieht — auf hellem Grund die dunklen Zellen (Haar, Augen, Schultern), im Dunkelmodus die hellen; dieselbe Animation, zwei Bilder. Und Nummer 3 war in der ersten Fassung schlicht unsichtbar: eine falsch sortierte Cover-Wand sieht aus wie eine richtig sortierte, bis das Bild fast vollständig ist. Erst das Dimmen des Unsortierten gibt der Welle eine Front.
+
+**Zwei Nebenbefunde.** Die Reihenfolgen vorzurechnen kostet mehr, als es spart: 3,9 KB je Reihenfolge auf der Leitung gegen 0,92 ms einmaliges Sortieren im Browser — die Seite sollte die Helligkeitskarte schicken und selbst sortieren. Und das Browser-Pane führt **keine Animationsbilder aus, solange es verborgen ist**; alle drei Animationen sahen kaputt aus, ohne es zu sein. Die Vorschauseite hat deshalb einen Regler, der jeden Zeitpunkt deterministisch zeichnet — was die Vorschläge überhaupt erst vergleichbar macht.
+
+**Nicht gebaut, mit Absicht:** nichts davon berührt die Website. Vor einer Umsetzung stehen die Rechtefrage aus 5.5 (ein abgeleitetes Werk aus fremden Covern als Seitenelement) und ein Einwand aus N12 — ein großes Porträt von Mark Twain, während jemand *East of Eden* sucht, ist ein Bild mit einem Gegenstand, und genau deshalb ist die heutige `AssemblingWall` klein, gedimmt und unbeschriftet.
+
+## 2026-09-09 · Ein vierter Ladebildvorschlag, ohne Kante (ROADMAP 6.19a)
+
+Julian zur dritten Animation: „kannst du Nummer 3 mal versuchen mit einem zufälligen Umsortieren? Weniger Kante im Effekt, sondern ein langsames Klären des Rauschens." Gebaut als **3b** neben die anderen drei, damit beide Fassungen von 3 nebeneinander stehen.
+
+Dieselbe falsch sortierte Wand, aber die Kacheln rasten in **zufälliger** Reihenfolge ein, und die Dämpfung hebt sich mit dem Fortschritt. Damit läuft nichts mehr quer über das Bild; es wird nur klarer. **Zwei Dinge waren dafür nötig.** Die Kacheln rasten mit `1 − (1 − p)²` ein statt gleichmäßig — bei gleichmäßiger Rate sieht das erste Drittel aus wie der Anfang, und das erste Drittel ist genau der Bereich, in dem die meisten Suchen zurückkommen. Und ein **Zweitcanvas** hält den wahren Stand der Wand, während das sichtbare daraus plus Dämpfung gezeichnet wird; sonst hieße „die Dämpfung hebt sich" 1.480 Kacheln je Bild statt eines Bildes. Kosten: **0,29 ms JavaScript je Bild**, das teuerste der vier Verfahren und weiterhin unter 2 % dessen, was ein Bild bei 60 Hz hat.
+
+**3b ersetzt 3 in der Empfehlung.** Beide halten die Fläche zu jedem Zeitpunkt voll, aber wenn die Suche mittendrin zurückkommt, bleibt bei 3 eine Diagonale stehen, die sichtbar unfertig ist; bei 3b bleibt ein leicht verrauschtes Bild, das niemand als Abbruch liest.
+
+**Nebenbei, und der Grund für einen Umweg:** `openlibrary.org` war während des Umbaus eine Viertelstunde lang nicht erreichbar, während `covers.openlibrary.org` normal antwortete. Die Ausgabenseiten lagen im Cache, die Autorensuche nicht — sie ist der einzige Live-Aufruf eines Neubaus. Die fehlende Reihenfolge ließ sich aus dem Manifest nachrechnen, weil sie eine reine Funktion der Helligkeitskarte ist; danach wurde regulär neu gebaut. Wert zu wissen für später: **eine gecachte Autorensuche würde einen Neubau ganz vom Netz lösen.**
+
+## 2026-09-09 · Zwanzig Ladebilder, und was ein Ladebild kosten darf (ROADMAP 6.19a)
+
+Nachdem 3b gewählt war, Julians nächster Schritt: „baue damit 20 Vorlagen, die als Ladebildschirm verwendet werden können, nimm Rücksicht auf die anderen Bedingungen bei mobile und desktop und darauf dass es schnell und flüssig bleiben muss und wenig Traffic produzieren sollte." Ausführlich in [lab/loading/README.md](../lab/loading/README.md).
+
+**Eingecheckt ist das Rezept, nicht das Ergebnis.** `lab/loading/templates.json` nennt zwanzig Autoren, das Wikidata-Objekt ihres Porträts, dessen Lizenz und den Ausschnitt, aus dem gebaut wird; die Bilder selbst entstehen mit einem Befehl neu. Fünf Megabyte abgeleiteter Cover-Bilder gehören nicht in ein Repository, solange die Rechtefrage aus 5.5 offen ist.
+
+**Porträts lassen sich nicht raten.** Von 26 plausiblen Commons-Dateinamen, von Hand geschrieben, existierten **zwei**. Der Weg ist Wikidata: das Objekt des Autors, sein `P18`, und das Lizenzfeld von Commons dazu. Wer dort nicht als gemeinfrei steht, kommt nicht in die Rotation — beim Zielbild ist die Rechtelage unsere Sache, und eine zweite offene Frage neben den Covern wäre nachlässig. Vier bekannte Gesichter fielen heraus, weil ihr Porträt auf Commons nur als Daumennagel liegt: Kafka (330×440), Dickinson, Brontë, Tschechow.
+
+**Der eine Schritt, der sich nicht automatisieren ließ, war der wichtigste.** Ein Mosaik aus 1.480 Zellen zeigt einen Kopf oder einen Garten, und was von beidem, entscheidet der Bildausschnitt. Tolstois Farbfoto von 1908 zeigt ihn sitzend zwischen Bäumen, sein Kopf ist ein Zwanzigstel des Bildes; auf 3:4 geschnitten bleibt der Kopf drin und 1.400 Zellen malen einen Garten. `portrait-sheet.ts` legt deshalb alle zwanzig Porträts auf einen Bogen und zeichnet den Rahmen ein, aus dem gebaut würde — **neun der zwanzig** sind sitzende Halbfiguren und haben von Hand einen Ausschnitt bekommen. Einmal hinsehen war billiger als jede Klugheit.
+
+**„Wenig Traffic" ist keine Frage der Kompression, sondern der Auswahl.** Ein Mosaik ist Rauschen: als PNG das Siebenfache, als WebP nur 12 % weniger, zwischen Qualität 50 und 65 liegt an dieser Größe nichts Sichtbares. Die Bytes fallen woanders: **eine** Datei je Suche statt zwanzig (die Vorlage wird einmal je Sitzung gewürfelt und im `sessionStorage` gemerkt — sonst zieht neunzehn von zwanzig Suchen eine Datei, die der Browser noch nie gesehen hat); **höchstens zwei Gerätepixel**, nie drei; und eine **Toleranz von 20 % bei der Größenwahl**, weil in einer Wand aus Cover-Daumennägeln keine Linie gerade bleiben muss — ohne sie verlangt ein 260-px-Rahmen 520 px und bekommt die 640er Datei, 60 % mehr Bytes für Pixel, auf die niemand zeigen kann.
+
+**Und ein Ladebild darf die Seite nicht ruckeln lassen, bevor es da ist.** Alle zwanzig Bilder haben dasselbe Seitenverhältnis, und weil eine Zelle ein Cover ist, steht die Form schon im Manifest: das Feld bekommt seine Höhe, bevor die Datei ankommt. Sonst springt die Seite unter jemandem, der ohnehin schon wartet.
+
+**Was dabei herauskam.** Zwanzig Bilder auf demselben Raster (40 × 36 = 1.440 Zellen), zusammen **10.532 Cover aus 160 Werken**, **4,56 MB** für alle vierzig Dateien auf der Platte — von denen ein Leser **eine** holt: 83 bis 102 KB auf dem Telefon. Ein Bau kostet 17 Minuten kalt und **null Google-Anfragen**. Die Palette reicht von 146 Covern bis 1.368 und hört früh auf, eine Rolle zu spielen; Mary Shelleys 146 tragen ein Gesicht.
+
+**Der teuerste Irrtum war, der Zahl zu glauben.** Tolstois erstes Porträt saß bei einem mittleren Abstand von 285 — dem zweitbesten der zwanzig — und zeigte kein Gesicht: ein weiches Farbfoto eines grauen Mannes vor grauen Bäumen, und das Mosaik traf jedes Grau davon perfekt. Der Abstand misst die Passung, nicht die Lesbarkeit. Der Kontrast des **Zielbildes** misst sie besser und steht jetzt in der Tabelle, aber auch er entscheidet nicht: Whitman hat den niedrigsten Kontrast aller zwanzig und liest sich einwandfrei, weil sein Hell und Dunkel im Bart sitzt und Tolstois in einem Baum. Von vier markierten Bildern waren drei in Ordnung. **Dieselbe Lehre wie bei den Ähnlichkeitsschwellen (SPEC §2.5): die Zahl sagt, wo man hinsehen soll, und mehr nicht.**
+
+**Nebenbei zwei Dinge über Open Library gelernt.** Die Ausgabenseiten eines Werks müssen **nacheinander** geholt werden — jede Antwort sagt, wo die nächste beginnt — und dauern aus Deutschland 3 bis 10 s; acht Werke zu je einem Dutzend Seiten sind fünf Minuten Wartezeit am Stück, und ein Bau von zwanzig Bildern lief auf zweieinhalb Stunden hinaus. Drei Werke gleichzeitig zu holen halbiert das, ohne ein Ergebnis zu ändern: die Reihenfolge der Kacheln bleibt die der Werkliste, weil sie in `assign` Gleichstände entscheidet. Und die **Autorensuche wird jetzt auf Platte gemerkt** — sie ist der einzige Live-Aufruf eines Neubaus, und am selben Tag war `openlibrary.org` eine Viertelstunde lang nicht erreichbar, während seine Cover-CDN normal antwortete.
+
+## 2026-09-09 · Das Mosaik erreicht die Suche (ROADMAP 6.19a)
+
+Julian, nachdem die zwanzig Vorlagen standen: „die beiden Einwände können wir nach hinten schieben. baue, committe, merge und deploye dann einen mvp und halte in der roadmap fest was er kann und was nicht." Die beiden Einwände sind die Rechtefrage aus 5.5 und N12; sie sind damit **vertagt, nicht beantwortet**, und stehen als solche in 6.19a.
+
+**Was hinüberging und was nicht.** `lab/` erreicht die Website nie durch einen Import — die Lint-Regel aus 0.11 verbietet es —, also wurde befördert: die reinen Funktionen (Reihenfolgen, Mischung, Größenwahl, Rahmenhöhe) liegen jetzt in `lib/loading.ts` mit ihren Tests, und `lab/loading/orders.ts` holt sie von dort statt umgekehrt. Die Animation ist `components/mosaicClearing.ts`, die Komponente `components/MosaicLoader.tsx`, und `scripts/build-loading-assets.ts` kopiert die Bilder aus `lab/loading/out` nach `public/loading`. Die Bilder selbst entstehen weiterhin offline im Labor; die Website braucht `lab/` zum Bauen nicht.
+
+**Beim Befördern fiel der eine Befund an, der Bytes spart.** Das Labor liefert die Füllreihenfolgen vorgerechnet mit, weil seine Seiten keinen Bundler haben — zwei Byte je Zelle, dreimal. Im Browser kostet dasselbe aus der Helligkeitskarte etwa eine Millisekunde. Das Manifest je Vorlage fiel damit von **18 KB auf 2,3**.
+
+**Zwei Stellen, die sonst still falsch geworden wären.** Die Datenschutzseite zählt auf, was im Browser liegt — jetzt vier Dinge statt drei, weil die gewählte Vorlage im sessionStorage gemerkt wird (und genau deshalb gemerkt wird: bei zwanzig Vorlagen und einem Wurf je Suche zöge neunzehn von zwanzig Suchen eine Datei, die der Browser noch nie gesehen hat). Und N11 in der Spec sagt dasselbe.
+
+**Gemessen im Dev-Server**, Telefonbreite 375 px: Rahmen 260 px, geholt wird die 480er Datei mit **83 KB**, Canvas 520×702 bei doppelter Pixeldichte, kein seitliches Scrollen. Am Rechner 420 px Rahmen und die 640er Datei. Drei Anfragen zusammen: `index.json`, ein Manifest, ein Bild.
+
+**Und eine Zurückhaltung, die geblieben ist:** kommt das Bild nicht oder noch nicht, steht dort die Cover-Wand von vorher. Ein fehlendes Bild ist kein leeres Feld, und ein Ladebildschirm, der selbst lädt, wäre ein schlechter Witz.
+
+## 2026-09-09 · Zehn Autorinnen, Kerouac, und ein Ausfall, der wie ein Befund aussah (ROADMAP 6.19a)
+
+Julian nach dem ersten Deploy: die Suchzeile gehört auf das Bild, und „nimm Jack Kerouac mit auf. Wir brauchen noch ein paar Heartthrobs in unserer Rotation. Und es sollten 50% Autorinnen sein."
+
+**Die Zeile steht jetzt auf dem Mosaik**, mittig und eine Stufe größer, auf einem Grund in `--surface` bei 90 % — derselben Farbe, zu der hin die Wand am Anfang gedimmt ist, weshalb sie über die ganze Animation lesbar bleibt.
+
+**Die Rotation ist zehn zu zehn.** Acht Männer gingen in die Reserve, zehn Autorinnen kamen dazu, ausgewählt nach Ausgabenzahl: Austen (12.483 Ausgaben), Montgomery, Alcott, Shelley, Cather, Woolf, Emily Brontë, George Eliot, Wharton, Burnett.
+
+**Kerouac hat genau ein gemeinfreies Porträt.** Alles auf Commons steht unter CC BY-SA — bis auf seine **Musterungsaufnahme der US-Marine von 1943**, gemeinfrei als Werk der US-Regierung. Sie ist obendrein das beste Bild dafür: ein junges Gesicht mit hartem Kontrast vor einer Messlatte, aus der ein Mosaik von 144 Kacheln ein erkennbares Porträt macht. Eine CC-BY-SA-Vorlage wäre hier nicht bloß eine Namensnennung gewesen, sondern eine Share-alike-Pflicht auf einem abgeleiteten Werk.
+
+**Der Fehler des Abends war der, den CLAUDE.md ausdrücklich verbietet.** *George Eliots* Mosaik entstand aus **zwei** Covern. Unter einer Ratenbegrenzung lieferte `covers.openlibrary.org` die meisten Bilder nicht; `fetchAll` verschluckte jeden Fehlschlag einzeln („ein fehlendes Cover kostet eine Kachel"), und der Lauf meldete für *The Mill on the Floss* „101 covers, 1 designs" — was sich liest wie ein Buch mit einem einzigen Umschlag und ein Ausfall war. **Ein Ausfall darf nicht als Befund erscheinen.** Fehlende Bilder werden jetzt gezählt, stehen in der Zeile je Werk, und ein Bau bricht ab, sobald weniger als die Hälfte ankommt: „only 276 of 564 cover images arrived — that is an outage, not a palette." Edith Wharton scheiterte daran und wurde eine Viertelstunde später sauber gebaut, mit 431 statt 82 Kacheln.
+
+**Zwei Schwellen waren falsch gesetzt.** Die Mindestgröße eines Porträts lag bei 500 px, obwohl das Raster 40 × 36 Zellen hat — 300 px sind acht Pixel je Zelle, und die alte Schranke hatte Kafka, Katherine Mansfield, Willa Cather und Christina Rossetti aussortiert, ohne dass ein Leser den Unterschied je gesehen hätte. Und die Werkzahl war fest auf acht: für Dickens reichlich, für Frances Hodgson Burnett zu wenig, weil ihre Bücher oft gedruckt wurden, aber unter wenigen Umschlägen. Eine Palette unter etwa 250 Covern sieht man dem Gesicht an; `maxWorks` je Vorlage ist das billigste Gegenmittel. Burnett 161 → 281, Cather 226 → 406.
+
 ## 2026-09-09 · Eine Sprachregelung für Erklärtexte (SPEC N13)
 
 Julian, an der Fußzeile der Jahrzehnte-Seite: „wir brauchen eine neue sprachregelung für solche stellen. Die beschreibung ist zu wissenschaftlich. die nutzer interessieren sich nicht für die schwellen. maximal darf dort stehen, was zu sehen ist und woher es kommt und der rückverweis auf die wand."
@@ -1465,3 +1539,27 @@ Gebaut, sobald 0.8 beantwortet war. Es steht auf Detailseite, Jahrzehnte-Seite, 
 | Der Cursor landete nicht im Feld | Ein `requestAnimationFrame` nach dem Tippen auf die Lupe feuert, solange das Feld noch `display: none` ist — **ein nicht dargestelltes Element nimmt keinen Fokus** | Ein Effekt auf `open` läuft, nachdem die Klasse gewechselt hat |
 
 Der mittlere Punkt ist der, den ich am ehesten übersehen hätte: die Bedingung sah richtig aus und war es für den häufigen Fall auch. Sie fiel nur auf, weil die Prüfung eine Adresse mit `lang` und ohne `q` mitgenommen hat — ein Zustand, den man beim Klicken kaum erzeugt, aber jeder geteilte Link mit Sprachfilter.
+
+## 2026-09-10 · Das Mosaik wartet jetzt auch vor der Jahrzehnte-Seite (ROADMAP 6.19a)
+
+Julian: „baue den Ladebildschirm auch ein für das Laden beim Wechsel von Coverwall zu Decade Wall." Eine Zeile Arbeit — `app/book/[id]/decades/loading.tsx` zeigt statt `AssemblingWall` den `MosaicLoader` —, aber die interessantere Hälfte ist, **warum das die passendere Stelle ist als die Suche**, für die das Bild gebaut wurde.
+
+Eine Suche kommt weit öfter nach ein oder zwei Sekunden zurück als nach zehn; die Animation wird dort fast immer abgeschnitten, und genau deshalb war die Wahl auf 3b gefallen — die einzige der vier, die zu jedem Zeitpunkt ein volles Bild zeigt. Die Jahrzehnte-Seite rendert auf dem Server und braucht kalt **4,5 s lokal und 12,9 s in Produktion** (gemessen 2026-09-09). Dort läuft die Animation zum ersten Mal ganz durch und hält danach das fertige Gesicht, bis die Seite da ist.
+
+Zwei Dinge fielen dabei von selbst richtig aus: Die Vorlage gilt je Sitzung, wer also gesucht und dann eine Jahrzehnte-Seite geöffnet hat, sieht denselben Autor — und die Datei liegt bereits im Browser-Cache. Und weil `MosaicLoader` bis zum Eintreffen des Bildes ohnehin die alte Cover-Wand zeigt, ist der bisherige Zustand nicht verschwunden, sondern nur der erste Bruchteil einer Sekunde.
+
+Geprüft mit einer künstlichen Verzögerung von acht Sekunden im Seiten-Render, weil die Seite lokal aus dem Cache sofort da ist: Überschrift, Mosaik und Zeile darunter stehen unter dem Titel-Platzhalter, den die Ladeseite schon vorher hatte.
+
+## 2026-09-10 · Der Zufall war keiner, und was das Telefon zeigte (ROADMAP 6.19a)
+
+Vier Punkte von Julian nach einem Tag mit dem Ladebild: schneller, die Übergänge prüfen, den Zufall prüfen, und „mobile wurde bei mir die Animation nicht gezeigt sondern nur ein fertiges Mosaik (in Produktion)".
+
+**Der Zufall war keiner, und zwar mit Absicht.** Die Vorlage wurde einmal je Sitzung gewürfelt und im `sessionStorage` gemerkt — die Begründung stand hier am Vortag: zwanzig Vorlagen und ein frischer Wurf je Suche heißen, dass neunzehn von zwanzig Suchen für eine Datei zahlen, die der Browser noch nie gesehen hat. Julian erwartete etwas anderes, und das ist die bessere Entscheidung für ein Bild, das man mehrmals am Tag sieht: **bei jedem Anzeigen wird neu gewürfelt**, die zuletzt gezeigte Vorlage ausgeschlossen, weil zwei Würfe aus zwanzig oft genug dasselbe Gesicht treffen, dass es wie ein Fehler aussieht. Fünf Suchen hintereinander holten vier verschiedene Bilder, keines doppelt.
+
+**Die Messung dazu ging zweimal schief, und das ist die Lehre.** Der erste Versuch las nach jeder Suche den Namen unter dem Bild und sah viermal denselben — woraus ich fast geschlossen hätte, die Änderung wirke nicht. Sie wirkte: im Netzwerk-Protokoll standen neun verschiedene Manifeste. Die Suchen im Dev-Server kamen nur so schnell zurück, dass das Bild meist gar nicht erst erschien und der Name, den ich las, von der einen langsamen Suche stammte. **Was auf dem Schirm steht, ist bei kurzen Wartezeiten eine schlechte Auskunft darüber, was der Code tut** — die Anfragen sind die bessere.
+
+**Zum Telefon: vermutlich eine Einstellung, keine Störung.** `prefers-reduced-motion: reduce` bekommt das fertige Bild ohne Bewegung, so ist es in F1.6a festgehalten — und **iOS meldet `reduce` nicht nur bei „Bewegung reduzieren", sondern auch im Stromsparmodus**. Das ist genau das beschriebene Verhalten.
+
+**Eine zweite Ursache war trotzdem möglich und ist repariert.** Die Uhr der Animation startete, bevor die verwürfelte Wand gezeichnet war — 1.440 Kacheln — und bevor die Seite ihr Layout hatte. Auf einem Telefon, das nebenher eine Suche laufen hat, sind das leicht ein paar hundert Millisekunden, die als Animation zählten, die niemand gesehen hat; ein langer Hänger hätte genau ein fertiges Mosaik ergeben und sonst nichts. `paint()` und `begin()` sind jetzt getrennt: gezeichnet wird sofort, gezählt ab dem ersten Bild.
+
+**Und die Bestandsaufnahme der Übergänge**, weil bisher niemand sie an einer Stelle stehen hatte: Suche und Jahrzehnte-Seite zeigen das Mosaik; die Werkseite zeigt den Cover-Fächer, wenn die Karte eine Vorschau mitgegeben hat, und sonst die kleine Cover-Wand; und die Cover-Wand ist außerdem das, was im Mosaik-Feld steht, solange die Datei unterwegs ist. Die Tabelle steht in ROADMAP 6.19a.

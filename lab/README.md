@@ -20,4 +20,5 @@ Experiments:
 | `mosaic/` | Can one picture — a shadowy motif — be built from a book's covers as tiles, good enough for Instagram or Pinterest? Assignment pure and tested, render with pngjs. | 5.5 | **works**, measured 2026-09-08; see [mosaic/README.md](mosaic/README.md) |
 | `curate/` | Which cover of a work is the good one? A local click-through tool; also the seed of the mini-game. | 6.18, 5.8 | in use since 2026-09-08; 105 works picked |
 | `duel/` | Two people, one link, the same round: does enough disagreement arise for it to be a game? | 5.8 | playable 2026-09-09, **not yet measured with two humans** |
+| `loading/` | Can the mosaic be the search's loading screen — assembled in front of the reader, out of one file? Four animations, measured; twenty templates built. | 6.19a | **3b chosen, rotation of 20 built** 2026-09-09, the choice is Julian's; see [loading/README.md](loading/README.md) |
 | `fold/` | Can the fold be sharpened — a higher distance, or a hash blind to the scan’s tone? | 5.4a, 6.10 | measured 2026-09-09: **no**, and four ways are ruled out |
