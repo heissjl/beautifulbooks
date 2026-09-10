@@ -23,6 +23,7 @@ import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
 import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
+import { useOverflowsX } from '@/components/useOverflowsX';
 import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
@@ -571,6 +572,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
   */
   const scans = [cover.id, ...(cover.similarIds ?? [])].filter(id => coverUrlFor(id, 'L'));
   const [pickedScan, setPickedScan] = useState<string | null>(null);
+  const { scroller: scanScroller, content: scanContent, overflows: scanOverflows, atEnd: scanAtEnd, onScroll: measureScanRow } = useOverflowsX();
   // Derived, like the printing above it: another cover replaces the list.
   const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : cover.id;
   const shownUrl = shownScan === cover.id ? cover.url : coverUrlFor(shownScan, 'L') ?? cover.url;
@@ -626,9 +628,18 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
       {scans.length > 1 && (
         <section className="mt-4" aria-label="Scans folded into this tile">
           <p className="kicker">The same cover, {scans.length} scans</p>
-          <ul className="mt-2 flex flex-wrap gap-2">
+          {/*
+            One row that scrolls sideways, never a second row (ROADMAP 6.14a):
+            *Fahrenheit 451* carries eight scans, and a wrapped second row
+            costs the column the height that 1.2 had just won back. The fading
+            edge appears only while there is more to the right — a fade over
+            a row that fits would hide a slice of the last tile for nothing.
+          */}
+          <div className="relative mt-2">
+            <div ref={scanScroller} onScroll={measureScanRow} className="snap-x overflow-x-auto pb-1 [scrollbar-width:thin]">
+            <ul ref={scanContent} className="flex w-max gap-2">
             {scans.map((id, i) => (
-              <li key={id}>
+              <li key={id} className="snap-start">
                 <button
                   type="button"
                   onClick={() => setPickedScan(id)}
@@ -642,7 +653,12 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
                 </button>
               </li>
             ))}
-          </ul>
+            </ul>
+            </div>
+            {scanOverflows && !scanAtEnd && (
+              <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-bg to-transparent" />
+            )}
+          </div>
           {/* N13: what is on screen, not the rule that put it there. */}
           <p className="mt-2 text-xs leading-relaxed text-ink-3">
             Different scans of the same design, sometimes of different printings.
