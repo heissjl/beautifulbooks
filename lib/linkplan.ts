@@ -243,19 +243,38 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
   }
 
   /*
-    A shop that is asked both ways gets both buttons named — never one plain
-    and one qualified, which would read as the general case and an
-    afterthought. The rule itself is untouched: no two identical labels stand
-    in the column.
+    A shop that can be asked two ways always says which one it is being asked
+    — even where only one of the two is possible (Julian, 2026-09-10: „nimm
+    hier trotzdem die labels wie davor, also mit title und year. dann sind wir
+    einheitlich und verständlich"). An edition without an ISBN would otherwise
+    show a bare "AbeBooks" that means something different from the "AbeBooks"
+    on the printing next to it.
+
+    Shops with only one question keep their plain label: naming a question
+    nobody could ask differently explains nothing.
   */
-  const timesShown = new Map<string, number>();
-  for (const l of [...lead, ...rest]) timesShown.set(l.label, (timesShown.get(l.label) ?? 0) + 1);
   const name = (l: BuyLink): BuyLink =>
-    (timesShown.get(l.label) ?? 0) > 1 ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
+    TWO_QUESTION_SHOPS.has(shopOf(l)) ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
   const namedLead = lead.map(name);
   const namedRest = rest.map(name);
 
   return { case: linkCase, place: registration?.place, lead: namedLead, rest: namedRest, anyEdition, note: noteFor(linkCase, market, registration?.place, isbn13) };
+}
+
+/**
+ * Shops that can be asked two different things about one printing: their ISBN
+ * field, or title, author, publisher and year. They are the only ones whose
+ * buttons need to say which question they put.
+ *
+ * Everyone else is asked one way. Thalia and its like have a search field, but
+ * it is only ever used for the *work* in the "another edition" row, which sits
+ * under its own heading and explains itself.
+ */
+const TWO_QUESTION_SHOPS: ReadonlySet<string> = new Set(['abebooks', 'ebay']);
+
+/** The shop behind a provider id, with the question stripped off. */
+function shopOf(link: BuyLink): string {
+  return link.provider.replace(/-search$|-title$/, '');
 }
 
 /** Which question a link puts to a shop: its ISBN field, or words. */

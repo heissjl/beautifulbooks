@@ -74,9 +74,20 @@ describe('linkPlan order', () => {
     expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'Booklooker']);
   });
 
-  it('drops the suffix when there is no second question to tell it apart from', () => {
-    // Without an ISBN a shop is asked one way only, so nothing needs naming.
-    expect(plan(undefined, 'us').lead.map(l => l.label)).toEqual(['AbeBooks', 'eBay']);
+  it('names the question even where only one of the two is possible', () => {
+    /*
+      Julian, 2026-09-10: „nimm hier trotzdem die labels wie davor, also mit
+      title und year. dann sind wir einheitlich und verständlich." A bare
+      "AbeBooks" on an edition without an ISBN would mean something different
+      from the "AbeBooks" on the printing beside it.
+    */
+    expect(plan(undefined, 'us').lead.map(l => l.label)).toEqual(['AbeBooks · title & year', 'eBay · title & year']);
+  });
+
+  it('leaves a shop with only one question alone', () => {
+    // Naming a question nobody could ask differently explains nothing.
+    expect(plan(EN, 'us').lead.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);
+    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'Booklooker']);
   });
 
   it('hands the row to the searches when the publisher’s image differs', () => {
