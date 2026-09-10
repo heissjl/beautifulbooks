@@ -116,6 +116,13 @@ export default function MosaicLoader({ caption }: { caption: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [scene, setScene] = useState<MosaicScene | null>(null);
   const [failed, setFailed] = useState(false);
+  /*
+    Which scene has finished clearing. Held as the scene itself rather than a
+    flag, so it needs no resetting when a new one starts — the same shape the
+    search results use for their request key, and it keeps every `setState`
+    out of an effect body (`react-hooks/set-state-in-effect` is an error here).
+  */
+  const [settledScene, setSettledScene] = useState<MosaicScene | null>(null);
 
   useEffect(() => {
     let alive = true;
@@ -156,7 +163,23 @@ export default function MosaicLoader({ caption }: { caption: string }) {
         started = true;
         clearing.begin(now);
       }
-      raf = clearing.tick(now) ? requestAnimationFrame(step) : 0;
+      if (clearing.tick(now)) {
+        raf = requestAnimationFrame(step);
+        return;
+      }
+      /*
+        The picture is finished and the page is not (Julian, 2026-09-10:
+        „wenn das Lademosaik fertig ist, bevor es weitergeht, sollte es auch
+        pulsieren wie im reduced Modus … damit wird das fertige Mosaik
+        gezeigt, aber immer noch signalisiert, dass es lädt"). A wait longer
+        than the clearing is the common case, not the exception: the search
+        runs 1 to 13 s and the clearing is over in 3.
+
+        The same breath the reduced-motion path uses, so a reader who sees
+        both sees one thing.
+      */
+      raf = 0;
+      setSettledScene(scene);
     };
     raf = requestAnimationFrame(step);
     return () => { if (raf) cancelAnimationFrame(raf); };
@@ -189,8 +212,15 @@ export default function MosaicLoader({ caption }: { caption: string }) {
         style={{ width, height }}
       >
         {/*
-          Nothing in the normal case; under `prefers-reduced-motion` the
-          finished picture breathes (Julian, 2026-09-10: „für reduced motion
+          The picture breathes in two cases, and it is the same breath in
+          both: under `prefers-reduced-motion`, where the clearing never runs,
+          and **once the clearing is over while the page is still loading**
+          (Julian, 2026-09-10: „damit wird das fertige Mosaik gezeigt, aber
+          immer noch signalisiert, dass es lädt"). The second is the common
+          case, not the exception — a search runs 1 to 13 s and the clearing
+          is over in 3.
+
+          Under `prefers-reduced-motion` the finished picture breathes (Julian, 2026-09-10: „für reduced motion
           kann man vllt ein Pulsieren eines fertigen Mosaiks machen? Statt des
           Aufbaus"). The clearing does not run on that path, and a still
           picture says the page is done when it is still working.
@@ -202,7 +232,10 @@ export default function MosaicLoader({ caption }: { caption: string }) {
           Power Mode as well, so many readers on this path are simply low on
           battery, which an opacity animation costs nothing.
         */}
-        <canvas ref={canvasRef} className="block h-full w-full motion-reduce:animate-breathe" />
+        <canvas
+          ref={canvasRef}
+          className={`block h-full w-full motion-reduce:animate-breathe ${settledScene === scene ? 'animate-breathe' : ''}`}
+        />
       </div>
       {/*
         What the picture is, so nobody takes it for an answer to their search

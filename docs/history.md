@@ -1668,3 +1668,13 @@ Julian zum Plan: „warum wollen wir hier an eine halbleere Wand gehen und nicht
 **Der wichtigere Befund fiel nebenbei ab:** der Fächer lief bereits sieben Sekunden, also weit über seine nominellen 2,7 s, und stand einen Großteil davon **leer** — bei 5,7 s eine Kachel ohne Bild, bei 6,2 s zwei. Er wird längst „länger gezogen"; das Problem ist nicht seine Länge, sondern dass er dabei Rahmen ohne Bilder zeigt. Die Reihenfolge im Punkt bleibt deshalb: erst die Adresse (1) und das Einblenden auf `onLoad` (2), dann ist er bei jeder Länge ehrlich — und erst dann lohnt es, sein Ende an die Wand zu knüpfen.
 
 Und die 4-Sekunden-Frist ist ohnehin schon wirkungslos, wenn der Fächer sieben Sekunden läuft. Sie bleibt als Obergrenze gegen einen endlosen Vorhang, aber deutlich höher — und wenn sie greift, ohne Flug.
+
+## 2026-09-10 · Das fertige Mosaik atmet weiter (ROADMAP 6.19a)
+
+Julian: „wenn das Lademosaik fertig ist, bevor es weitergeht, sollte es auch pulsieren wie im reduced Modus, bis die nächste Seite geladen hat. Damit wird das fertige Mosaik gezeigt, aber immer noch signalisiert, dass es lädt."
+
+**Das ist der Normalfall, nicht die Ausnahme:** eine Suche läuft 1 bis 13 s, der Aufbau ist nach 3 s vorbei. Dazwischen stand bisher ein fertiges Bild, das aussah wie eine fertige Seite. Jetzt atmet es weiter — dieselbe Blende wie auf dem `prefers-reduced-motion`-Weg, damit wer beides sieht, dasselbe sieht.
+
+**Zwei Kleinigkeiten am Weg dorthin sind für später wert.** Die erste: Tailwind gibt eine Utility-Klasse nur aus, wenn sie **als Literal im Quelltext** steht — `canvas.classList.add('animate-breathe')` genügte nicht, `motion-reduce:animate-breathe` im `className` schon. Gelöst, indem beide Literale im `className` stehen und ein Zustand zwischen ihnen umschaltet. Die zweite: dieser Zustand ist **die Szene selbst**, nicht ein Flag — `settledScene === scene` — damit er beim Wechsel der Vorlage kein Zurücksetzen braucht und kein `setState` in einem Effekt steht, was hier ein Lint-Fehler wäre. Dasselbe Muster wie der Anfrage-Schlüssel der Suchergebnisse.
+
+Gemessen an der Jahrzehnte-Seite mit künstlicher Verzögerung: bei 151 ms baut sich das Bild auf, bei **3.479 ms** meldet `getComputedStyle` die Animation `breathe`.
