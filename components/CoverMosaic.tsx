@@ -1,6 +1,7 @@
 'use client';
 
 import CoverImage from './CoverImage';
+import { mosaicTileSrc } from '@/lib/coverurl';
 
 interface CoverMosaicProps {
   /** Distinct cover URLs, at most four are shown (SPEC §3 F4). */
@@ -52,7 +53,7 @@ export default function CoverMosaic({ coverUrls, title }: CoverMosaicProps) {
     return (
       <div className="grid h-full w-full grid-cols-2 gap-0.5 bg-bg">
         {covers.map((src, i) => (
-          <Cover key={src} src={src} alt={`${title} edition ${i + 1}`} sizes={SIZES_HALF} fit="contain" />
+          <Cover key={src} src={mosaicTileSrc(src, i)} alt={`${title} edition ${i + 1}`} sizes={SIZES_HALF} fit="contain" />
         ))}
       </div>
     );
@@ -64,14 +65,15 @@ export default function CoverMosaic({ coverUrls, title }: CoverMosaicProps) {
         <div className="relative row-span-2">
           <Cover src={covers[0]} alt={`${title} edition 1`} sizes={SIZES_HALF} fit="contain" />
         </div>
-        {covers.slice(1).map((src, i) => <Cover key={src} src={src} alt={`${title} edition ${i + 2}`} sizes={SIZES_HALF} />)}
+        {covers.slice(1).map((src, i) => <Cover key={src} src={mosaicTileSrc(src, i + 1)} alt={`${title} edition ${i + 2}`} sizes={SIZES_HALF} />)}
       </div>
     );
   }
 
   return (
     <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5 bg-bg">
-      {covers.map((src, i) => <Cover key={src} src={src} alt={`${title} edition ${i + 1}`} sizes={SIZES_HALF} />)}
+      {/* Quarter tiles ask for the medium size; the first keeps its own (ROADMAP 6.34). */}
+      {covers.map((src, i) => <Cover key={src} src={mosaicTileSrc(src, i)} alt={`${title} edition ${i + 1}`} sizes={SIZES_HALF} />)}
     </div>
   );
 }

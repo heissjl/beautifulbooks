@@ -8,7 +8,7 @@ import type { PageInfo } from '@/lib/pages';
 import { OL_EDITIONS_PAGE } from '@/lib/sources/openlibrary';
 import { displayTitle } from '@/lib/normalize';
 import { getWorkPage, isWorkId } from '@/lib/work';
-import { MOSAIC_COVERS } from '@/lib/works';
+import { MOSAIC_CANDIDATES } from '@/lib/works';
 import { rateLimited } from '@/app/api/rate';
 
 /**
@@ -124,7 +124,9 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
         the same Spanish printing put the same picture on a card twice
         (2026-09-07). The same rule picks the covers for a shared link.
       */
-      const coverUrls = coverImages(page.covers, MOSAIC_COVERS, page.editions);
+      // Eight, not four: the card drops repeats by image and fills from the
+      // rest (ROADMAP 6.34).
+      const coverUrls = coverImages(page.covers, MOSAIC_CANDIDATES, page.editions);
       const body: WorkSummaryResponse = { id, coverUrls };
       return NextResponse.json(body, {
         headers: { 'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800' },

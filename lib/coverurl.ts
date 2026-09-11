@@ -120,3 +120,19 @@ export function retryCoverSrc(href: string): string {
   if (!href.startsWith('/img/')) return href;
   return `${href}${href.includes('?') ? '&' : '?'}retry=1`;
 }
+
+/**
+ * The address a search card's tile asks for (ROADMAP 6.34).
+ *
+ * The first tile keeps the size it came with — the large one — because the
+ * detail page stands exactly that picture up as the start of its loading scene
+ * (`lib/scene.ts`), and it should be in the browser already. Every other tile
+ * fills a quarter of a card, about 95 px wide on a phone, and asks for the
+ * medium size: 505 KB against 195 KB for the fourteen covers measured on
+ * 2026-09-11.
+ */
+export function mosaicTileSrc(url: string, index: number): string {
+  if (index === 0) return proxiedCoverSrc(url);
+  const ref = coverRefFromUrl(url);
+  return ref ? coverProxyPath(ref.coverId, 'M') : url;
+}
