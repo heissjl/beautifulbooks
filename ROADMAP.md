@@ -450,7 +450,7 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
   **Zusammenhang mit 6.13:** dort geht es um Datensätze mit **demselben** Titel, die die Karte bereits zusammenfasst und die Wand nicht lädt. Hier geht es um Datensätze mit **anderem** Titel, die niemand zusammenfasst. Schritt 1 und 2 gehören zu beiden.
 
-- [ ] **6.16 Das Erstausgabedatum stimmt bei einem Drittel der Bücher nicht.** (Julian, 2026-09-08: „bei Lolita steht 1777 als Erstausgabedatum drin. Es ist 1955.") **Gemessen am selben Abend an den zwölf kuratierten Werken, deren wahre Jahre bekannt sind:**
+- [ ] **6.16 Das Erstausgabedatum stimmt bei einem Drittel der Bücher nicht.** *Schritt 1 ist seit dem 2026-09-08 gebaut (Commit `03e5d48`, beim Umbau der Roadmap am 2026-09-10 übersehen und am 2026-09-11 nachgetragen): `lib/firstyear.ts` verwirft ein führendes Jahr, das mehr als 50 Jahre vor dem nächsten liegt; Suche und Werkseite benutzen es, `lib/__tests__/firstyear.test.ts` hält Lolita auf 1954. Offen sind Schritt 2 (ein von Hand geprüftes Jahr, hängt an Julians Kuratierung 6.18) und Schritt 3 (Wikidata, eine E10-Entscheidung).* (Julian, 2026-09-08: „bei Lolita steht 1777 als Erstausgabedatum drin. Es ist 1955.") **Gemessen am selben Abend an den zwölf kuratierten Werken, deren wahre Jahre bekannt sind:**
 
   | | wahr | Open Library | Lücken-Regel ≥50 J. |
   |---|---|---|---|
