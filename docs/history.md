@@ -2033,3 +2033,5 @@ Ein Screenshot zeigte das vordere *Underworld*-Cover leer. Es ist das farbkräft
 Die Blässe-Regel ist relativ zum Werk. Eine feste Untergrenze wäre ein neuer Schwellwert und gehört durch Hinsehen gesetzt.
 
 Tests 470, `tsc`, Lint und Build grün.
+
+**In Produktion einmal nachgesehen**, nach dem Deploy von `3da68e9` (Vercel meldete Erfolg): Die Startseite bei 1280 × 800 zog *Portnoy's Complaint · Philip Roth* (`/book/OL74676W`), mit 7 Plätzen, und alle 7 Cover waren geladen.
