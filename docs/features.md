@@ -85,7 +85,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 |---|---|---|---|
 | Kuratier-App: Cover je Werk wählen, Reihenfolge per Drag & Drop, Vorschläge, streichen | 6.18 | `lab/curate/` |
 | Duell-Prototyp: zwei Menschen, ein Link, dieselbe Runde | 5.8 | `lab/duel/` |
-| Hot or Not für Cover: zwei Cover, ein Klick, Rangliste mit Unsicherheit und einer Krone erst nach drei gehaltenen Runden; Simulation dazu. Auf der Seite als `/versus` hinter Schalter, bisher nur lokal (SPEC F7) | 5.8, 5.8a | `lab/hotornot/`, `lib/hotornot/`, `app/versus/` |
+| Hot or Not für Cover: zwei Cover, ein Klick, Rangliste mit Unsicherheit und einer Krone erst nach drei gehaltenen Runden; Simulation dazu. Auf der Seite als `/versus` hinter Schalter, bisher nur auf der Preview mit Speicher (SPEC F7). Im Spiel nur Cover, die groß scharf bleiben und kein Titel auf weißem Papier sind; zwischen zwei Paaren ein Stempel auf dem gewählten Cover, während die nächsten Bilder vorladen | 5.8, 5.8a | `lab/hotornot/`, `lib/hotornot/`, `app/versus/` |
 | Riesenmosaik aus Covern (Buch oder Autor) | 5.5 | `lab/mosaic/` |
 | Ladebild-Vorlagen: Porträtbogen, Filmstreifen, zwanzig Autoren | 6.19a | `lab/loading/` |
 | Faltungsmaß-Experiment (negativ: kein Maß trennt besser als dHash 8) | 6.10, 6.23 | `lab/fold/` |

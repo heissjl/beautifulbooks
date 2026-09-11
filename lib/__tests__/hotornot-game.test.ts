@@ -100,9 +100,12 @@ describe('the board', () => {
 });
 
 describe('the frozen pool', () => {
-  it('holds a hundred covers from a hundred books, and none of the excluded ones', () => {
-    expect(POOL.covers).toHaveLength(100);
-    expect(new Set(POOL.covers.map(c => c.workId)).size).toBe(100);
+  // 200 since 2026-09-11; it went online with 139 while the index was still growing.
+  it('holds one cover per book, at most two hundred, and none of the excluded ones', () => {
+    expect(POOL.name).toBe('mix-200-paperwhite');
+    expect(POOL.covers.length).toBeGreaterThan(100);
+    expect(POOL.covers.length).toBeLessThanOrEqual(200);
+    expect(new Set(POOL.covers.map(c => c.workId)).size).toBe(POOL.covers.length);
     const excluded = new Set(POOL.excluded.map(e => e.id));
     expect(excluded.has('ol:10942061')).toBe(true);
     expect(POOL.covers.some(c => excluded.has(c.id))).toBe(false);

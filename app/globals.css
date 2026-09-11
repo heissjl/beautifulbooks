@@ -238,9 +238,25 @@
     0%, 100% { opacity: 0.35; }
     50% { opacity: 0.8; }
   }
+  /*
+    The cover game: the next pair slides in after the chosen cover was stamped
+    (ROADMAP 5.8a, variant A; components/Versus.tsx). `backwards`, not `both`:
+    a finished animation must not hold `translate`, or it would pin the pair
+    in place when it later slides out.
+  */
+  .versus-in {
+    animation: versus-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  }
+  @keyframes versus-in {
+    from { opacity: 0; translate: 2.25rem 0; }
+  }
+  @keyframes versus-fade {
+    from { opacity: 0; }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .versus-in { animation: versus-fade 150ms ease-out backwards; }
   .tile-in, .stage-in, .stage-pulse { animation: none !important; }
   .cover-img, .transition-all, .transition-transform, .transition-colors, .transition-opacity {
     transition: none !important;
