@@ -291,15 +291,20 @@ function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, 
     return 'This edition has no ISBN on record, so no shop can look it up by number. These search by title, publisher and year instead.';
   }
   /*
-    A fact about the number and the limit of what was done, nothing more
-    (SPEC N13, ROADMAP 6.27): "registered in Turkey" is read off the
-    registration group, and "no shop was asked" keeps it from sounding like a
-    stock check. The rule behind the order of the links — marketplaces that
-    list copies from anywhere first — was a method, and lives on the About
-    page, which says why at length since 1.11.
+    The fact, what it means for the reader, and the limit of what was done
+    (SPEC N12, N13, ROADMAP 6.27): "registered in Turkey" is read off the
+    registration group; "may not carry it" is why the note is there at all;
+    "was not checked" keeps it from reading as a stock check. The rule behind
+    the order of the links — marketplaces that list copies from anywhere
+    first — is method and lives on the About page. A first cut to "…; no shop
+    was asked." was too short to say what had not been asked (Julian,
+    2026-09-11).
   */
-  const where = place ? `was registered in ${place}` : `was not registered in ${AREA_NAME[MARKET_AREA[market]]}`;
-  return `This printing’s ISBN ${where}; no shop was asked.`;
+  const area = AREA_NAME[MARKET_AREA[market]];
+  const where = place
+    ? `was registered in ${place}, so shops in ${area} may not carry it`
+    : `was not registered in ${area}, so shops there may not carry it`;
+  return `This printing’s ISBN ${where}. Whether any shop has a copy was not checked.`;
 }
 
 /**
