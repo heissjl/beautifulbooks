@@ -1994,3 +1994,40 @@ Konflikte gab es in neun Dateien, vier davon Code.
 - **Die Zählung im Kopf der Roadmap** war schon in Produktion nicht nachgeführt: Dort stand „53 offen, 33 erledigt" bei 42 abgehakten Punktzeilen. Nachgetragen ist nur 6.37; eine Neuzählung steht aus.
 
 Tests 466 in 43 Dateien, `tsc`, Lint und Build grün. Danach kam das Rondell (1.9) obenauf.
+
+## 2026-09-11 · Das Rondell wechselt das Buch (ROADMAP 1.9)
+
+Julian: „das rondell ist jetzt immer nur dune? es sollte wechseln zwischen werken aus der kuratierten liste, die mehr als 7 cover über der entsprechenden schwelle haben". Auf die Frage, wann: „Nur pro Besuch". Zur Wahl standen auch „nach jeder Runde" und beides zusammen.
+
+**Bau:**
+- **`lib/heroring.ts`** hält die Regeln und wählt je Werk sieben Cover:
+  - jedes Paar im Hash über der lockersten Schwelle der Seite (heute 20 Bit);
+  - jedes Paar in der Farbe über 0,22, dem Vierfachen des „Looks like this"-Tors;
+  - kein leer aussehender Scan.
+
+  Vorher fällt das untere Viertel des Werks an Sättigung und Kontrast weg. Dann wählt es greedy farthest-point, beginnend beim farbkräftigsten Cover. Das Modul liest den Index und läuft deshalb nur beim Bauen und in Tests.
+- **`scripts/build-hero-rings.ts`** schreibt `data/hero-rings.json`, 22 KB, ohne Zeitstempel. Ein Test vergleicht die Datei mit dem, was die Regeln für den eingecheckten Index und die kuratierte Liste ergeben. Eine veraltete Datei fällt so im Test auf, nicht erst auf der Startseite.
+- **`HeroFan`** zieht beim Mounten einen Ring (`useState` mit Initialisierer). Zufall ist hier unbedenklich, weil das Rondell nur im Browser gerendert wird. Die Bildunterschrift kürzt wie die Startwand mit `tileTitle`: „Frankenstein" statt „Frankenstein; or, The Modern Prometheus".
+
+**Eine Regel ist strenger geworden.** Ein Paar ohne Farbangabe galt im Test bisher als weit auseinander (`?? 1`). Jetzt zählt es nicht als verschieden, weil es das nicht zeigen kann.
+
+**Zahlen.** Die kuratierte Liste führt 176 Einträge, 71 davon verworfen. Von den 105 übrigen bekommen **90** einen Ring.
+
+Die 15 ohne Ring haben alle zu wenig passende Cover im Index: *Buddenbrooks*, *White Teeth*, *Fight Club*, *Stoner*, *Native Son*, *Go Tell It on the Mountain*, *Song of Solomon*, *Brideshead Revisited*, *The Town and the City*, *Imaginary Homelands*, *بين القصرين*, *Pale Fire*, *Homo Faber*, *Stiller* und *Der Besuch der alten Dame*.
+
+*Dune* bleibt dabei, aber mit anderen sieben Covern: Die Wahl beginnt jetzt beim farbkräftigsten Cover statt bei den vier des Fächers.
+
+**Gemessen am Dev-Server des Worktrees:**
+- Vier Aufrufe bei 1280 × 800 zeigten vier Bücher: *The Left Hand of Darkness*, *The Handmaid's Tale*, *The Grapes of Wrath* und *Underworld*. Jedes Mal standen 7 Plätze im Ring, und alle 7 Cover waren nach 0,7 bis 1,5 s geladen.
+- Bei 390 px gab es kein Rondell, keine Preloads und kein seitliches Scrollen.
+- Der Server meldete keine Fehler.
+
+Ein Screenshot zeigte das vordere *Underworld*-Cover leer. Es ist das farbkräftigste des Rings (Sättigung 209), der Screenshot fiel also in die Einblendung.
+
+**Offen: Julian sieht die 90 Ringe durch.** Zwei enthalten ein fast weißes Cover:
+- *La Divina Commedia* (`ol:6032287`): Sättigung 0, Helligkeit 234;
+- *Архипелаг ГУЛАГ* (`ol:4510932`): Sättigung 0, Helligkeit 241.
+
+Die Blässe-Regel ist relativ zum Werk. Eine feste Untergrenze wäre ein neuer Schwellwert und gehört durch Hinsehen gesetzt.
+
+Tests 470, `tsc`, Lint und Build grün.
