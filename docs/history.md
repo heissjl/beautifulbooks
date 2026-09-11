@@ -1929,6 +1929,8 @@ Julian verlangte: „der hash abstand zwischen den covern die in einem rondell l
 
 Tests 437, `tsc`, Lint und Build grün.
 
+**In Produktion einmal nachgesehen** (nach dem Deploy von `3bedc3c`, Vercel meldete Erfolg): Startseite bei 1280 × 800, das Rondell mit 7 Plätzen, alle 7 Cover nach 1,1 s geladen, darunter „Dune · Frank Herbert", Eigendrehung 9° in einer Sekunde, Text → Suchfeld 32 px, Suchfeld 768 px. Die Mausführung ist dort nicht geprüft; das Browser-Fenster gab keine Eingaben weiter.
+
 ## 2026-09-11 · Die ganze Wand auf einmal (ROADMAP 6.8)
 
 *Nie ausgeliefert. Als `main` am 2026-09-11 mit Produktion zusammengeführt wurde, stand dort schon eine andere Fassung von 6.8 (Eintrag „All languages auf beiden Geräten“ oben): die Reiter brechen um, „All languages“ ist eine Pille am Ende. Julian entschied, alles zusammenzuführen; es galt die ausgelieferte Fassung. Der Code dieser hier entfiel; ihr Test (`lib/__tests__/allLanguages.test.ts`) blieb, weil er die Ordnung von `coversNewestFirst` prüft, die beide Fassungen teilen, und gegen die ausgelieferte besteht.*
