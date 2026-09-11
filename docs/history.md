@@ -1850,6 +1850,6 @@ Gemessen am Dev-Server:
 | *Nineteen Eighty-Four*: Zeilen | **3** (6 Sprachen, „+11 more", „All languages 224"), erste Kachel bei 424 px | 3, alle 17 Sprachreiter und die Pille |
 | … nach „+11 more" | 7 Zeilen, erste Kachel bei 568 px | — |
 
-Zwei Beobachtungen für später: hinter „+11 more" steckt am Telefon auch **„Unknown 100"**, weil „Unknown" immer zuletzt steht — die größte Gruppe nach Englisch ist so einen Tipp entfernt. Und die Gesamtansicht zeigt Dubletten deutlicher als ein Sprachreiter: bei *Infinite Jest* stand das violette Einaudi-Cover zweimal da, einmal unter Italian, einmal unter Unknown — derselbe Befund wie M9 im [Testbericht](tests/2026-09-11-mobil.md), jetzt auf einen Blick.
+Zwei Beobachtungen: hinter „+11 more" steckte am Telefon zuerst auch **„Unknown 100"**, weil „Unknown" immer zuletzt steht. Julian, noch am selben Tag: *„Unknown und alle Sprachen sollten beide nicht weggeklappt werden, weil unter Unknown sich oft noch Sachen verstecken."* Seither steht „Unknown" immer sichtbar zwischen „+n more" und „All languages" — nachgemessen: weiterhin **3 Zeilen**, erste Kachel bei 416 px, am Desktop unverändert. Und die Gesamtansicht zeigt Dubletten deutlicher als ein Sprachreiter: bei *Infinite Jest* stand das violette Einaudi-Cover zweimal da, einmal unter Italian, einmal unter Unknown — derselbe Befund wie M9 im [Testbericht](tests/2026-09-11-mobil.md), jetzt auf einen Blick.
 
 Tests 435, `tsc`, Lint und Build grün.
