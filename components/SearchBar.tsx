@@ -99,8 +99,15 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
           placeholder="A title, or a title and author"
           aria-label="Search a book title"
           autoComplete="off"
-          className={`w-full rounded-lg border border-line bg-surface pl-12 pr-28 text-ink placeholder:text-ink-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-colors focus:border-ink-3 focus:outline-none ${
-            hero ? 'py-4 text-lg' : 'py-3 text-base'
+          /*
+            On a phone the hero field is set a size smaller and gives the
+            button a little less room, because at 18 px the placeholder needs
+            218 px and a 390 px screen left it 196 — it read "a title and
+            auth" (ROADMAP 6.30, SPEC N14). 16 px is also the smallest size
+            iOS does not zoom into on focus.
+          */
+          className={`w-full rounded-lg border border-line bg-surface pl-12 pr-24 text-ink placeholder:text-ink-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-colors focus:border-ink-3 focus:outline-none sm:pr-28 ${
+            hero ? 'py-4 text-base sm:text-lg' : 'py-3 text-base'
           }`}
         />
         <button type="submit" className="btn btn-accent absolute right-2 top-1/2 -translate-y-1/2 py-1.5">

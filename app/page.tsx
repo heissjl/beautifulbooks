@@ -65,7 +65,8 @@ function HomeContent() {
           </div>
         </section>
 
-        <section className="pb-24">
+        {/* Air before the footer on a desktop; on a phone 96 px was an eighth of the screen, empty (6.30). */}
+        <section className="pb-10 sm:pb-24">
           <BookGrid searchQuery={searchQuery} language={language} />
         </section>
       </main>
