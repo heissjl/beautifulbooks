@@ -22,3 +22,4 @@ Experiments:
 | `duel/` | Two people, one link, the same round: does enough disagreement arise for it to be a game? | 5.8 | playable 2026-09-09, **not yet measured with two humans** |
 | `loading/` | Can the mosaic be the search's loading screen — assembled in front of the reader, out of one file? Four animations, measured; twenty templates built. | 6.19a | **3b chosen, rotation of 20 built** 2026-09-09, the choice is Julian's; see [loading/README.md](loading/README.md) |
 | `fold/` | Can the fold be sharpened — a higher distance, or a hash blind to the scan’s tone? | 5.4a, 6.10 | measured 2026-09-09: **no**, and four ways are ruled out |
+| `wear/` | Can the wear of a photographed copy — creases, whitened edges, a torn corner — be lifted off a scan and laid onto a clean cover? | 5.9 | idea, Julian 2026-09-11; folder not created yet |
