@@ -1819,4 +1819,18 @@ Beim ersten Nachmessen blieb *Frankenstein; or, The Modern Prometheus* auf dem T
 
 **Die Vercel-Logs, zum ersten Mal lesbar.** Julian hat den CLI installiert und angemeldet (`vercel logs --project beautifulbooks`). Was sie nicht mehr enthalten: die Nacht der Aufnahme. **Vercel Hobby hält Laufzeit-Logs etwa eine Stunde** — `--since 2h --until 90m` antwortet 400, `--since 70m --until 55m` antwortet leer ohne Fehler. In der letzten Stunde vor der Abfrage: **0 Antworten mit 4xx, 0 mit 5xx**; eine Stichprobe der jüngsten 1.000 Zeilen (sechs Sekunden Verkehr) waren 940 `/img` mit 200 und 60 `/api` mit 200. Für 6.25 heißt das: mitlesen, während es passiert, nicht hinterher suchen.
 
+**Mitgelesen, eine Stunde später** (nach dem Deploy `2e08055`, 10:22). Julian öffnet *Infinite Jest* im Browser; die Logs von 11:00:13 bis 11:15:38, rückwärts geblättert bis nichts Neues kam:
+
+| | Anfragen |
+|---|---|
+| alle, entdoppelt | 290 |
+| `/img/M` frisch / aus dem CDN | 88 / 16 |
+| `/img/L` (Trefferkarten) | 16 |
+| `/img/S` | 12 |
+| `/img` mit Fehler, `bb.img`-Zeilen | **0** |
+| 4xx | 0 |
+| 5xx | 1 — `/api/works/OL6026940W`, „David Foster Wallace's Infinite jest", der Mosaik-Abruf einer Trefferkarte |
+
+Zwei Eigenheiten des CLI, die beim ersten Lesen täuschten: `--json` gibt **jede Anfrage etwa zwanzigmal** aus (1.000 Zeilen waren 50 Anfragen, entdoppelt über `id`), und `--limit` zählt diese rohen Zeilen — 1.000 deckten nur 28 Sekunden. Wer eine Viertelstunde sehen will, blättert mit `--until` rückwärts.
+
 Tests 432, `tsc`, Lint grün.
