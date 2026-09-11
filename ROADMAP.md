@@ -283,7 +283,7 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
 
 ### 6.A Was ein Leser als Fehler sieht
 
-- [ ] **6.25 Kacheln bleiben leer, obwohl im Ladebildschirm Cover zu sehen waren.** (Julian, 2026-09-09: „es bleiben einfach oft kacheln leer … vllt ein problem mit vercel? vielleicht werden wir von der openlibrary api absichtlich abgefangen, weil zu viele anfragen?")
+- [ ] **6.25 Kacheln bleiben leer, obwohl im Ladebildschirm Cover zu sehen waren.** *Erster Schritt gebaut 2026-09-10: die Route sagt jetzt, was die Gegenseite geantwortet hat.* (Julian, 2026-09-09: „es bleiben einfach oft kacheln leer … vllt ein problem mit vercel? vielleicht werden wir von der openlibrary api absichtlich abgefangen, weil zu viele anfragen?")
 
   **Am 2026-09-09 gegen den Dev-Server nachgesehen, und drei Dinge stehen fest, bevor jemand rät:**
 
@@ -301,6 +301,14 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
   3. **Open Library drosselt uns.** **Unterscheidet sich durch 429 oder 403 *von dort*, im `X-Cover-Source`-Pfad** — dafür muss die Route den Statuscode der Gegenseite protokollieren, was sie heute nicht tut. Das ist die erste zu bauende Kleinigkeit, denn ohne sie bleibt die Frage unbeantwortbar.
 
   **Die erste Kleinigkeit ist gebaut (2026-09-10):** jeder Fehlschlag der Route schreibt eine Zeile `bb.img` (`lib/coverlog.ts`) mit Cover-ID, Größe, Quelle, dem Status der Gegenseite oder dem Grund, dass es keinen gab (`timeout`, `not-image`, `error`), und der Dauer; die 502 trägt dasselbe als `X-Cover-Upstream`. Ein 429 oder 403 von dort ist die Drossel-Signatur, ein 404 ein fehlender Scan, ein Timeout archive.org. Dazu ist der Eimer `img` von 400/300 auf **800/400** je Minute gehoben, damit eine große Wand plus die Mosaike einer Trefferliste nicht an der eigenen Grenze scheitern. **Offen bleibt die Frage selbst:** nach einem Tag Produktion die `bb.img`-Zeilen in den Vercel-Logs zählen — gibt es 429/403, ist es die Drossel; gibt es nur Timeouts, ist es archive.org; gibt es keine, war es der Dev-Server oder das faule Laden.
+
+  **In Produktion nachgesehen, 2026-09-10 nach dem Deploy** — und das Ergebnis ist eine Entwarnung mit einer Einschränkung. Eine große Wand (*The Great Gatsby*, 152 Kacheln, 122 Bildanfragen, komplett durchgescrollt): **kein einziger Fehlschlag**, keine 429, keine Platzhalter, kein gebrochenes Bild. Die Zeiten: **Median 1,0 s, p90 5,0 s, langsamste 6,6 s.** Was auf einem Vollbild-Screenshot leer aussieht, waren hier **51 Kacheln, deren Anfrage nie gestellt wurde** — faul geladen, unterhalb des Sichtbereichs, `currentSrc` leer. Genau die Verwechslung, vor der der Absatz unten warnt.
+
+  **Das Log konnte ich nicht selbst lesen** — der Vercel-CLI ist auf dieser Maschine nicht installiert und der Vercel-MCP nicht autorisiert. Geprüft ist stattdessen über den Kopf, wofür er da ist: `/img/S/ol-999999999` in Produktion liefert 502 mit `X-Cover-Upstream`, die Kette schreibt also auch dort. **Wer `bb.img` sehen will, schaut im Vercel-Dashboard unter Logs und filtert auf `bb.img`** — solange dort nichts steht, ist die Ursache Latenz und nicht Drosselung.
+
+  **Beim Benutzen fiel ein Schönheitsfehler auf und ist behoben:** der Kopf meldete für ein fehlendes Cover `200`, weil dort der Status der Gegenseite stand — auf einer gescheiterten Antwort liest sich das wie das Gegenteil dessen, was passiert ist. Jetzt steht der Status nur da, wenn der Status die Antwort *ist*, sonst `not-image`, `timeout` oder `error`.
+
+  **Der erste Befund kam beim Prüfen der Route selbst** (2026-09-10, unabhängig gemessen): `/img/S/ol-999999999` — ein Cover, das es nicht gibt — meldet `not-image`. **Open Library antwortet auf ein fehlendes Cover mit 200 und einem Körper, der kein Bild ist**, nicht mit 404. Ein Teil der leeren Kacheln kann also schlicht ein fehlendes Cover sein, und das war von einer Drosselung bisher nicht zu unterscheiden — genau der Unterschied, den die neue Zeile im Log macht.
 
   **Nicht zu verwechseln mit einem Bild, das nur noch nicht geladen ist:** Kacheln laden faul, und ein Vollseiten-Screenshot löst das Laden unterhalb des Bildschirms nicht aus. Beim nächsten Auftreten deshalb festhalten: hat die Kachel das Buch-Symbol (dann ist die Anfrage **gescheitert**) oder ist sie einfarbig leer (dann wurde sie **nie gestellt**)?
 
@@ -330,16 +338,16 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
   | **Ende** | zwei Cover eingelaufen **und** Seite 0 gehasht — oder die Frist von 4 s. **Nichts davon sieht die Bilder der Wand an** |
   | Kacheln der **Wand** | machen es richtig: `CoverImage` blendet erst ein, wenn das eigene Bild geladen ist |
 
-  **Der Plan, in dieser Reihenfolge:**
+  **Der Plan, in dieser Reihenfolge — 1 und 2 sind am 2026-09-10 gebaut:**
 
-  1. **Den Vorlauf auf die Adresse schicken, die auch gerendert wird** (`proxiedCoverSrc`). Eine Zeile, kein Risiko, und danach ist die Anfrage der Kachel ein Cache-Treffer.
-  2. **Die Kachel es beweisen lassen, nicht den Vorlauf:** `LoadingStage` benutzt `CoverImage` (das genau das schon tut) oder blendet auf `onLoad` ein. Danach ist ein leerer Rahmen unmöglich, unabhängig von jedem Cache — das ist die Absicherung, falls 1 nicht reicht.
+  1. ✅ **Den Vorlauf auf die Adresse schicken, die auch gerendert wird** (`proxiedCoverSrc` in `useLoadingScene`). **Gemessen, derselbe kalte Klick wie vorher:** die Fächer-Kachel ist bei **829 ms gefüllt** und nie leer (vorher: leer bei 1.777 ms), und `/img` bekommt **32 Anfragen für 29 Cover** statt 45 für 24 — statt 21 Doppelungen bleiben 3.
+  2. ✅ **Die Kachel beweist es selbst:** `LoadingStage` blendet eine Kachel erst ein, wenn ihr eigenes `<img>` `load` gemeldet hat. Nach 1 ist das normalerweise schon im ersten Bild wahr; es steht als Garantie da, nicht als Mechanismus, damit kein Cache-Argument den leeren Rahmen zurückbringen kann.
   3. **Das Ende an die Wand knüpfen — und den Fächer dafür länger ziehen, nicht auf eine halbleere Wand gehen** (Julian, 2026-09-10: „warum wollen wir hier an eine halbleere Wand gehen und nicht lieber den Fächer noch länger ziehen?"). **Die Messung gibt ihm recht.** Kalt in Produktion, *Sylvia's Lovers*, ein Buch, das dieser Browser nie geöffnet hatte: der Fächer lief von 0 bis **7,0 s**, die erste Reihe der Wand (sechs Kacheln) stand bei **7,6 s**. Warten kostet also **sechs Zehntel**, nicht fünfzehn Sekunden — beide hängen an derselben Latenz von `/img`. Die Szene endet künftig, wenn die erste Reihe geladen ist.
   4. **Die Obergrenze wird großzügiger und ehrlicher.** Die heutige Frist von 4 s ist ohnehin wirkungslos — gemessen lief der Fächer 7 s —, und ihre Aufgabe ist nur, einen endlosen Vorhang zu verhindern, wenn nie ein Bild kommt. Also eine deutlich höhere Grenze, und wenn sie greift, endet die Szene **ohne Flug**: Cover auf leere Kacheln fliegen zu lassen sieht kaputter aus als ein schlichter Wechsel.
 
   **Der eigentliche Befund aus derselben Messung:** der Fächer lief bereits sieben Sekunden und stand einen Großteil davon **leer** (`0/1` bei 5,7 s, `0/2` bei 6,2 s). Er wird also längst „länger gezogen" — das Problem ist nicht seine Länge, sondern dass er dabei Rahmen ohne Bilder zeigt. **Nach 1 und 2 ist er bei jeder Länge ehrlich**, und erst dann lohnt 3.
 
-  **Nach 1 und 2 in Produktion neu messen, bevor 3 gebaut wird** — gut möglich, dass 3 dann nicht mehr nötig ist, und 3 ist der einzige Schritt, der ein neues Signal von der Wand zur Seite braucht.
+  **3 und 4 sind offen und warten auf eine Messung in Produktion.** Gut möglich, dass 3 nach 1 und 2 nicht mehr nötig ist; und 3 ist der einzige Schritt, der ein neues Signal bräuchte — die Wand ist während der Szene gar nicht gerendert, ihre Bilder sind also nur über den Vorlauf beobachtbar, der seit 1 dieselben Adressen holt.
 
   **In Produktion am selben Tag nachgemessen** (Julian: „ich habe den Effekt auch in der Produktion gesehen"), dieselbe Seite, kalter Klick aus dem Suchergebnis — und dort ist es **schlimmer**:
 

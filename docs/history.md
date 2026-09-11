@@ -1710,3 +1710,46 @@ Julian: „wenn das Lademosaik fertig ist, bevor es weitergeht, sollte es auch p
 **Zwei Kleinigkeiten am Weg dorthin sind für später wert.** Die erste: Tailwind gibt eine Utility-Klasse nur aus, wenn sie **als Literal im Quelltext** steht — `canvas.classList.add('animate-breathe')` genügte nicht, `motion-reduce:animate-breathe` im `className` schon. Gelöst, indem beide Literale im `className` stehen und ein Zustand zwischen ihnen umschaltet. Die zweite: dieser Zustand ist **die Szene selbst**, nicht ein Flag — `settledScene === scene` — damit er beim Wechsel der Vorlage kein Zurücksetzen braucht und kein `setState` in einem Effekt steht, was hier ein Lint-Fehler wäre. Dasselbe Muster wie der Anfrage-Schlüssel der Suchergebnisse.
 
 Gemessen an der Jahrzehnte-Seite mit künstlicher Verzögerung: bei 151 ms baut sich das Bild auf, bei **3.479 ms** meldet `getComputedStyle` die Animation `breathe`.
+
+## 2026-09-10 · Eine Adresse, drei Anfragen weniger — und `/img` sagt endlich, was die Gegenseite antwortet (ROADMAP 6.25a, 6.25)
+
+Julian: „baue 6.25a und gehe auch 6.25 an."
+
+**6.25a war eine Zeile.** `useLoadingScene` lud `cover.urlSmall ?? cover.url` vor — die rohe Adresse bei Open Library —, während die Kachel seit 1.3 `/img/…` rendert. Der Vorlauf bewies nichts über die Kachel. Jetzt lädt er `proxiedCoverSrc(...)`, also genau das, was Kachel **und** Wand anschließend anfragen.
+
+| Derselbe kalte Klick, *North and South* | vorher | nachher |
+|---|---|---|
+| Fächer-Kachel | **leer** bei 1.777 ms | **gefüllt** bei 829 ms, nie leer |
+| Anfragen an `/img` | 45 für 24 Cover | **32 für 29** |
+| davon doppelt geholt | 21 | **3** |
+
+Dazu als Absicherung: `LoadingStage` blendet eine Kachel erst ein, wenn ihr eigenes `<img>` geladen ist. Nach der ersten Änderung ist das meist schon im ersten Bild wahr — es steht da, damit kein Cache-Argument den leeren Rahmen zurückbringen kann.
+
+**Von 6.25 hat eine andere Session in derselben Stunde dasselbe gebaut** — `8d546ce`, „a failed cover says why". Ihre Fassung ist ein Superset meiner: derselbe Kopf `X-Cover-Upstream`, dazu die Quelle, `status` und `reason` getrennt und ein `looksLikeThrottling`. **Meine wurde beim Merge verworfen, ihre steht.** Das kostet eine Stunde doppelte Arbeit und ist die zweite Warnung desselben Tages: `npm run worktrees` vor dem Anfangen, nicht erst vor dem Mergen. Was von meiner Seite blieb, ist der Befund unten.
+
+**Der erste Schritt von 6.25 ist damit gebaut, und zwar der, den der Punkt selbst verlangt:** `/img` schluckte jeden Fehlschlag, alles kam als nacktes 502 zurück, und Julians Frage — werden wir gedrosselt? — war aus den Daten gar nicht zu beantworten. Jetzt trägt eine gescheiterte Antwort den Grund im Kopf `X-Cover-Upstream` (Statuscode der Gegenseite, `timeout`, `network` oder `not-an-image`), und `lib/coverlog.ts` schreibt eine Zeile je Fehlschlag ins Plattform-Log. Nur Fehlschläge — eine Wand sind dreihundert Bilder, eine Zeile je Bild begrübe die zwanzig, auf die es ankommt.
+
+**Der erste Befund kam beim Prüfen der Route selbst:** `/img/S/ol-999999999` — ein Cover, das es nicht gibt — meldet `not-an-image`. Open Library antwortet also mit **200 und einem Körper, der kein Bild ist**, nicht mit 404. Ein Teil der leeren Kacheln kann schlicht ein fehlendes Cover sein, und das war von einer Drosselung bisher nicht zu unterscheiden.
+
+**Und das eigene Rate-Limit ist angehoben**, 800 Burst / 600 je Minute statt 400/300. Das ist ausdrücklich Arithmetik und keine Diagnose — ein 429 wurde hier nie gesehen —, aber 400 war eine Grenze von der Breite genau eines großen Buchs: zu eng, um ein Netz zu sein, und weit genug, um einen Leser zu treffen, der zwei davon hintereinander öffnet.
+
+## 2026-09-10 · Was `bb.img` in Produktion meldet: nichts (ROADMAP 6.25)
+
+Julian: „pushen und dann im Log nachsehen, was `bb.img` meldet." Gepusht, gewartet, nachgesehen — und die Antwort ist eine Entwarnung mit zwei Einschränkungen.
+
+**Das Log selbst konnte ich nicht lesen:** der Vercel-CLI ist auf dieser Maschine nicht installiert, der Vercel-MCP nicht autorisiert. Gemessen wurde daher über den Kopf `X-Cover-Upstream`, der genau dafür gebaut ist, und über den Zustand der Kacheln im Browser.
+
+**Eine große Wand in Produktion**, *The Great Gatsby*, 152 Kacheln, komplett durchgescrollt:
+
+| | |
+|---|---|
+| Bildanfragen abgeschlossen | 122 |
+| Fehlschläge, Platzhalter, gebrochene Bilder | **null** |
+| Antwortzeiten | Median **1,0 s**, p90 **5,0 s**, langsamste **6,6 s** |
+| Kacheln ohne Bild am Ende | 51 — **alle mit leerem `currentSrc`**, also nie angefragt |
+
+Die 51 sind faul geladene Kacheln unterhalb des Sichtbereichs. **Das ist genau die Verwechslung, vor der 6.25 selbst warnt** („nicht zu verwechseln mit einem Bild, das nur noch nicht geladen ist"), und es ist beruhigend, sie einmal in Zahlen zu haben: auf dieser Seite, zu dieser Stunde, ist die Ursache **Latenz, nicht Drosselung**.
+
+**Dass die Kette in Produktion schreibt, ist trotzdem geprüft:** `/img/S/ol-999999999` liefert dort 502 mit gesetztem Kopf. Wer `bb.img` sehen will, filtert im Vercel-Dashboard unter Logs darauf; solange nichts kommt, ist die Antwort die obige.
+
+**Und ein Schönheitsfehler fiel beim Benutzen auf.** Für das fehlende Cover meldete der Kopf `200` — der Status der Gegenseite —, was auf einer gescheiterten Antwort das Gegenteil dessen sagt, was passiert ist. Jetzt steht der Status nur da, wenn der Status die Antwort *ist*; sonst `not-image`, `timeout` oder `error`. Ein Diagnosewerkzeug, das man erst deuten muss, ist eines zu wenig.

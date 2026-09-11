@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { StageCover } from './LoadingStage';
 import { measureStage, type StagedRect } from './flyCovers';
+import { proxiedCoverSrc } from '@/lib/coverurl';
 import type { Cover } from '@/lib/model';
 
 /** Covers enter the stage at this cadence, however fast they arrive. */
@@ -114,7 +115,18 @@ export function useLoadingScene(key: string, covers: readonly Cover[] | null, da
     };
 
     for (const cover of covers.slice(0, PRELOAD)) {
-      const url = cover.urlSmall ?? cover.url;
+      /*
+        **The address the tile will render, not the one the catalogue gave.**
+
+        Since 1.3 every cover goes through `/img`, and this preload was left
+        behind on `covers.openlibrary.org`: it loaded one address and the tile
+        requested another, so `onload` here proved nothing about the tile and
+        the staged frame stood empty while its own request ran (ROADMAP 6.25a,
+        measured 2026-09-10 — in production not one staged tile ever held an
+        image). The gallery renders the same address again, so one request now
+        serves the preload, the staged tile and the wall tile alike.
+      */
+      const url = proxiedCoverSrc(cover.urlSmall ?? cover.url);
       const img = new window.Image();
       img.onload = () => {
         if (c.aborted || c.ended || c.seen.has(cover.id)) return;
