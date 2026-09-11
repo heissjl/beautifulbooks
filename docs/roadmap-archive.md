@@ -563,3 +563,11 @@ Damit wartet die Seite an **drei von vier** Stellen vor dem Mosaik; der Cover-F�
 **Julians Algorithmus für ein farbenfrohes Cover gehört hierher**, nicht zu 1.1: hier wählt er kein Buch für den Leser aus, sondern illustriert eines. Zu bauen wäre ein Sättigungsmaß — die Signaturen sind heute reine Graustufen (`decodeToGray` in `lib/imagehash.ts` verwirft die Farbe in der ersten Schleife), ein zweiter Akkumulator in derselben Schleife genügt, und da Signaturen ohnehin bei jeder Anfrage aus den 30 Tage gecachten Bytes neu gerechnet werden, kostet es keine zusätzliche Ladung. Begründung in [PLAN-1.1](plans/PLAN-1.1-keine-vorauswahl.md) §3.
 
 **Bedingungen, die für jede Variante gelten:** keine Google-Anfrage und kein Nachladen beim ersten Rendern (die Cover-IDs stehen fest, wie in `lib/curated.ts`); auf schmalen Bildschirmen darf das Element das Suchfeld nicht unter die Kante schieben, dort entfällt es oder rückt unter die Wand; und es darf nichts behaupten, was §1 verbietet — „vier von 226 Covern" ist erlaubt, „alle Cover" nicht.
+
+### 6.8
+
+*Stand beim Abhaken am 2026-09-11; das Ergebnis steht in der Roadmap.*
+
+**6.8 Eine „All languages"-Pille am Ende der Sprachreiter.** (Julian, 2026-09-07.) Die Detailseite gruppiert Cover heute nach Sprache und hat keinen Weg, alle zusammen zu sehen; wer die Wand als Ganzes betrachten will, muss sich durch die Reiter klicken. Die Pille steht **am Ende, hinter „Unknown"** — vorne wäre sie die Vorauswahl und würde die Sprachordnung aus F2.4 aushebeln, die genau deshalb existiert, weil die gesuchte Sprache zuerst kommen soll.
+
+Zu klären beim Bauen: die Sortierung innerhalb der Gesamtansicht (Jahr absteigend über alle Sprachen hinweg, wie in F2.5, ist der naheliegende Weg), ob die Auswahl in die URL gehört (`?lang=all` neben dem bestehenden `?lang=`), und dass die Ladeszene aus F2.4 weiterhin auf die gewünschte Sprache wartet und nicht auf diese Pille.

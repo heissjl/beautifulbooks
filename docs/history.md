@@ -1753,3 +1753,12 @@ Die 51 sind faul geladene Kacheln unterhalb des Sichtbereichs. **Das ist genau d
 **Dass die Kette in Produktion schreibt, ist trotzdem geprüft:** `/img/S/ol-999999999` liefert dort 502 mit gesetztem Kopf. Wer `bb.img` sehen will, filtert im Vercel-Dashboard unter Logs darauf; solange nichts kommt, ist die Antwort die obige.
 
 **Und ein Schönheitsfehler fiel beim Benutzen auf.** Für das fehlende Cover meldete der Kopf `200` — der Status der Gegenseite —, was auf einer gescheiterten Antwort das Gegenteil dessen sagt, was passiert ist. Jetzt steht der Status nur da, wenn der Status die Antwort *ist*; sonst `not-image`, `timeout` oder `error`. Ein Diagnosewerkzeug, das man erst deuten muss, ist eines zu wenig.
+
+## 2026-09-11 · Die ganze Wand auf einmal (ROADMAP 6.8)
+
+Julians Wunsch vom 2026-09-07: die Cover eines Buchs auch ohne Sprachreiter sehen können. Gebaut als **letzter Reiter „All languages“**, hinter „Unknown“.
+
+**Drei Entscheidungen, die der Punkt offengelassen hatte.** *Ordnung:* dieselbe wie innerhalb eines Reiters (F2.5) — Jahr absteigend über alle Sprachen, unbekanntes Jahr dahinter, Scans, die nach Textseite aussehen, ganz hinten. Die Vergleichsfunktion ist dafür aus `groupCoversByLanguage` herausgelöst (`coversNewestFirst`), damit „zuerst“ in beiden Ansichten dasselbe heißt. *Adresse:* der Reiter steht **nicht** in der URL. `?lang=` ist dort der Suchfilter, und `all` heißt schon „kein Filter“; die anderen Reiter stehen auch nicht in der Adresse. Der Schlüssel ist `*`, damit er nie mit einem Sprachcode zusammenfällt. *Sichtbarkeit:* nur bei mehr als einer Sprache, sonst wiederholt er den einzigen Reiter. Die Ladeszene wartet weiter auf die gesuchte Sprache (`leadLanguagesSettled` kennt den neuen Reiter nicht), und ein ausgewähltes Cover öffnet weiter seinen Sprachreiter, weil der Gesamtreiter zuletzt gesucht wird.
+
+**Gesehen auf `npm run dev`, *Siddhartha* (OL872932W):** acht Sprachreiter — English 39, German 16, Spanish 10, GU 2, Russian 2, French 1, Italian 1, Unknown 28, zusammen 99 — und „All languages 99“ dahinter. Angeklickt: 99 Kacheln, vorne „Quickie Classics 2026“, „neobooks 2024“, hinten die Scans ohne Jahr. Ob die Zeile auf dem Telefon seitlich scrollt, ließ sich im verborgenen Browser-Panel nicht messen (`innerWidth` 0, wie am 2026-09-10 beschrieben); die Pille ist ein weiterer `chip` in derselben Zeile, die unterhalb von `sm` ohnehin seitlich scrollt.
+

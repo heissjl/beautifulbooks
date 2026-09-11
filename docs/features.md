@@ -27,6 +27,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 |---|---|---|---|---|
 | Seitenweises Laden der Ausgaben (100 je Seite, bis 1.500), Wand steht nach Seite 0, Zähler statt Versprechen | 2026-09-07 | F2.2, F2.3 | Schritt 11 (PLAN-11) | `lib/work.ts` (`getWorkPage`), `components/useWorkPages.ts`, `lib/pages.ts` |
 | Sprach-Reiter in fester Reihenfolge (gesucht, en, de, Häufigkeit, Unknown), eingefroren nach dem ersten Auftauchen | 2026-09-07 | F2.4, E17 | Schritt 11 | `lib/pages.ts` (`orderGroups`) |
+| „All languages“ als letzter Reiter: die ganze Wand in der Ordnung von F2.5, nur bei mehr als einer Sprache, nie vorausgewählt, nicht in der URL | 2026-09-11 | F2.4 | 6.8 | `components/CoverGallery.tsx` (`ALL_LANGUAGES`), `lib/works.ts` (`coversNewestFirst`) |
 | Faltung gleicher Scans im Browser, drei Stufen (≤ 8; ≤ 20 bei gleicher ISBN; ≤ 16 bei gleichem Verlag ± 1 Jahr); nie über Sprachen | 2026-09-07 | §2.3, E8 | Schritt 12 | `lib/works.ts` (`foldDuplicateCovers`), `lib/imagesig.ts`, `lib/imagehash.ts` (Server) |
 | Leer aussehende Scans werden ans Ende sortiert, nie gelöscht | 2026-09-07 | F2.5, E16 | Schritt 12 | `lib/imagehash.ts` (`looksLikeScannedPage`) |
 | Ladeszene: Titel und Hero sofort aus der Karte (sessionStorage), Cover-Fächer, FLIP auf die Kacheln; Ladetext über dem Bild; bei bekannten Covern (Rückweg von der Jahrzehnte-Seite) gar kein Ladebild | 2026-09-06 / 09-10 | F2.12 | alte §8.1, 6.19, 6.24 | `components/LoadingStage.tsx`, `flyCovers`, `useWorkPreview.ts` |

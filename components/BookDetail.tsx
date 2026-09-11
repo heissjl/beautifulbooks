@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
-import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
+import CoverGallery, { ALL_LANGUAGES, type CoverTab } from '@/components/CoverGallery';
 import DecadeLink from '@/components/DecadeLink';
 import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
@@ -38,7 +38,7 @@ import type { ImageSignature } from '@/lib/imagesig';
 import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
 import { shapeOf } from '@/lib/queryshape';
-import { foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
+import { coversNewestFirst, foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
 
 /*
   It said "Search" until 2026-09-10, which stopped working the moment a search
@@ -123,6 +123,14 @@ function buildWall(
     language: g.language,
     covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
   }));
+  /*
+    The whole wall as one more tab, last (ROADMAP 6.8): first it would be the
+    default and undo the language order of F2.4. Only when there is more than
+    one language, or it would repeat the one tab there is.
+  */
+  if (groups.length > 1) {
+    groups.push({ language: ALL_LANGUAGES, covers: coversNewestFirst(covers, merged.editions, signatures) });
+  }
   return { covers, coversById, groups, editionsByScan };
 }
 

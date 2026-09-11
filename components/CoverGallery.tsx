@@ -6,9 +6,19 @@ import type { Cover } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
 
 export interface CoverTab {
+  /** ISO 639-1, undefined for "Unknown", or `ALL_LANGUAGES` for the whole wall. */
   language?: string;
   covers: Cover[];
 }
+
+/**
+ * The tab that shows every cover at once (ROADMAP 6.8). Not a language code,
+ * so it can never collide with one, and never written to the address: `?lang=`
+ * there is the search filter, where `all` already means "no filter".
+ */
+export const ALL_LANGUAGES = '*';
+
+const tabLabel = (g: CoverTab) => (g.language === ALL_LANGUAGES ? 'All languages' : languageName(g.language));
 
 interface CoverGalleryProps {
   /** Already ordered by the server (SPEC §3 F2.3). */
@@ -76,7 +86,7 @@ export default function CoverGallery({ groups, selectedCover, onSelectCover, cap
               className="chip shrink-0"
               ref={tabKey(g) === activeKey ? scrollIntoView : undefined}
             >
-              {languageName(g.language)}
+              {tabLabel(g)}
               <span className="text-xs opacity-70">{g.covers.length}</span>
             </button>
           ))}

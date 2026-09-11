@@ -412,6 +412,32 @@ function coverYear(cover: Cover, editionsById: ReadonlyMap<string, Edition>): nu
   return Math.max(-1, ...cover.editionIds.map(id => editionsById.get(id)?.year ?? -1));
 }
 
+function newestFirstBy(
+  editionsById: ReadonlyMap<string, Edition>,
+  signatures?: ReadonlyMap<string, ImageSignature>,
+): (a: Cover, b: Cover) => number {
+  return (a, b) => {
+    // Title pages and blurb scans go last, however new the printing is.
+    const pageA = looksLikeScannedPage(signatures?.get(a.id)) ? 1 : 0;
+    const pageB = looksLikeScannedPage(signatures?.get(b.id)) ? 1 : 0;
+    return pageA - pageB || coverYear(b, editionsById) - coverYear(a, editionsById);
+  };
+}
+
+/**
+ * SPEC §3 F2.5 across every language, for the "All languages" tab (ROADMAP
+ * 6.8): newest first, unknown year after, page-like scans last. The same
+ * order as inside one language tab, so switching to the whole wall does not
+ * change what "first" means.
+ */
+export function coversNewestFirst(
+  covers: readonly Cover[],
+  editions: readonly Edition[],
+  signatures?: ReadonlyMap<string, ImageSignature>,
+): Cover[] {
+  return [...covers].sort(newestFirstBy(new Map(editions.map(e => [e.id, e])), signatures));
+}
+
 /**
  * SPEC §3 F2.3–F2.4: covers grouped by language, preferred language first,
  * then by size descending; unknown language last. Within a group newest first.
@@ -430,12 +456,7 @@ export function groupCoversByLanguage(
     list.push(c);
     groups.set(lang, list);
   }
-  const newestFirst = (a: Cover, b: Cover) => {
-    // Title pages and blurb scans go last, however new the printing is.
-    const pageA = looksLikeScannedPage(signatures?.get(a.id)) ? 1 : 0;
-    const pageB = looksLikeScannedPage(signatures?.get(b.id)) ? 1 : 0;
-    return pageA - pageB || coverYear(b, editionsById) - coverYear(a, editionsById);
-  };
+  const newestFirst = newestFirstBy(editionsById, signatures);
   return Array.from(groups.entries())
     .map(([language, cs]) => ({ language, covers: cs.sort(newestFirst) }))
     .sort((a, b) => {

@@ -27,7 +27,7 @@ Stand: 2026-09-10, nach dem Umbau (Julian: „überprüfe die Abhängigkeiten, s
 
 - **Online seit 2026-09-08: https://beautifulcovers.vercel.app**, Hobby-Modus (E20), Vercel Hobby, Funktionen in Frankfurt, Web Analytics an.
 - **Produktion ist `origin/main`.** Ein Push dorthin ist ein Deploy. Am 2026-09-10 arbeiteten **drei Sessions parallel**: eine schob 6.19a direkt nach `origin/main`, eine baute 6.29 auf dem lokalen `main`, eine baute 6.28 auf einem Branch — und das lokale `main` lag zeitweise sechs Commits vor und fünfzehn hinter Produktion, ohne dass es irgendwo stand. Seither zusammengeführt und am selben Abend deployt (`b43904b`); `npm run worktrees` zeigt, ob das wieder passiert, und ist vor jedem Merge nach `main` zu lesen.
-- **53 Punkte offen, 33 erledigt.** Phase 1 ist bis auf Julians Stichprobe (1.8) leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
+- **52 Punkte offen, 34 erledigt.** Phase 1 ist bis auf Julians Stichprobe (1.8) leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
 - **Der Engpass ist nicht die Technik, sondern dass niemand die Seite kennt:** sie steht in keiner Suchmaschine (2.5) und unter einem Namen, den niemand behält (0.5).
 
 ### Nächste Schritte
@@ -40,7 +40,7 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt.
 | 2 | **2.5 Search Console und Bing**, dazu **0.2** zweiter Google-Schlüssel und **0.13** Kontingent-Alarm | Julian | 30 Minuten | Jeder Tag ohne Sitemap ist ein verlorener Tag; ein Schlüssel für Arbeit *und* Betrieb verbraucht das Kontingent der Besucher |
 | 3 | **0.5 / 2.2 Domain** kaufen und verbinden | Julian | 20 Minuten plus DNS | Reichweite auf `vercel.app` muss später umgeleitet werden; Vorschläge in [docs/domain-recherche.md](docs/domain-recherche.md) |
 | 4 | **6.25 leere Kacheln** — nach einem Tag Produktion die `bb.img`-Zeilen lesen; dazu **6.25a**, der Fächer auf leeren Kacheln (Ursache gefunden, Schritte 1–2 gebaut, in Produktion neu zu messen) | Claude, nach einem Deploy | eine halbe Stunde plus Messung | Das Protokoll ist gebaut; ob Open Library uns drosselt, sagt erst ein Tag Logs — und drei `/img`-Antworten mit 15,6 s bei 325 Byte aus 6.25a gehören als Erstes hinein |
-| 5 | **6.5** Mosaik-Ausfall sichtbar machen, **6.8** „All languages“-Pille | Claude | je ein bis zwei Stunden | Phase 1 ist leer; das sind die zwei kleinen Punkte aus 6.A und 6.C ohne Abhängigkeit |
+| 5 | **6.5** Mosaik-Ausfall sichtbar machen | Claude, mit der Ladebild-Session abgesprochen | ein bis zwei Stunden | Eine Karte mit 503 sieht aus wie ein Buch ohne Cover; das berührt die leeren Kacheln, an denen eine andere Session arbeitet. 6.8 ist seit dem 2026-09-11 erledigt |
 | 6 | **6.18 Kuratierung zu Ende**, danach **6.17 Rotation** und das Jahr für **6.16** | Julian, dann Claude | ein Abend, dann eine Sitzung | Die Startseite ist das Erste, was ein Besucher sieht |
 | 7 | **6.13 mit 6.15 Schritt 3** | Claude | ein bis zwei Sitzungen | Der schwerste offene Datenfehler: die Karte verspricht Ausgaben, die die Wand nie lädt |
 | 8 | **3.1 Analyse-Seite** | Claude | zwei Tage | Erst sinnvoll mit einer Woche echter Besucher |
@@ -106,7 +106,7 @@ In der Reihenfolge, in der sie hier stehen; die Regel bleibt: **die vorderste Ph
 | [0 Entscheidungen](#phase-0--entscheidungen-die-nur-julian-treffen-kann) | Konten, Geld, Recht, Produktfragen | 10 | 4 | Julian |
 | [2 Betrieb](#phase-2--betrieb-domain-sichtbarkeit-abnahme) | Domain, Suchmaschinen, Überwachung, Abnahme | 4 | 3 | Julian (Konten), ein Deploy |
 | [1 Vor echtem Verkehr](#phase-1--vor-echtem-verkehr) | Was ein erster Besucher noch nicht sehen soll | 1 | 11 | Julian (1.8) |
-| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 19 | 14 | teils 6.6 (Geld), teils 6.18 (Julian) |
+| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 18 | 15 | teils 6.6 (Geld), teils 6.18 (Julian) |
 | [3 Messen](#phase-3--messen) | Analyse-Seite, Verbrauch, Conversion | 3 | 0 | Besucher |
 | [5 Reichweite](#phase-5--reichweite) | Seitengattungen, Fabrik, Kanäle | 8 | 0 | Inhalte, Rechtefrage |
 | [4 Geld](#phase-4--geld) | Partnerprogramme, Werbung, Spenden | 8 | 1 | Besucher, Umschalttag |
@@ -577,10 +577,6 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 ### 6.C Oberfläche und Texte
 
-- [ ] **6.8 Eine „All languages"-Pille am Ende der Sprachreiter.** (Julian, 2026-09-07.) Die Detailseite gruppiert Cover heute nach Sprache und hat keinen Weg, alle zusammen zu sehen; wer die Wand als Ganzes betrachten will, muss sich durch die Reiter klicken. Die Pille steht **am Ende, hinter „Unknown"** — vorne wäre sie die Vorauswahl und würde die Sprachordnung aus F2.4 aushebeln, die genau deshalb existiert, weil die gesuchte Sprache zuerst kommen soll.
-
-  Zu klären beim Bauen: die Sortierung innerhalb der Gesamtansicht (Jahr absteigend über alle Sprachen hinweg, wie in F2.5, ist der naheliegende Weg), ob die Auswahl in die URL gehört (`?lang=all` neben dem bestehenden `?lang=`), und dass die Ladeszene aus F2.4 weiterhin auf die gewünschte Sprache wartet und nicht auf diese Pille.
-
 - [ ] **6.27 Die übrigen Erklärtexte auf N13 durchgehen.** (Aus Julians Sprachregelung vom 2026-09-09, jetzt SPEC **N13**: in einem Erklärtext steht höchstens, was zu sehen ist, woher es kommt und der Weg zurück — keine Schwellen, keine Sortierordnungen, keine Beteuerungen über die eigene Arbeitsweise.)
 
   Zwei Stellen sind am selben Tag schon umgeschrieben: die **Fußzeile der Jahrzehnte-Seite** (aus fünf Sätzen mit Schwelle, Sortierordnung und „counted, not estimated" wurden zwei plus der Rückverweis) und der **Satz unter der Scan-Reihe** (6.14a). Die übrigen Kandidaten, absteigend nach Verstoß:
@@ -613,6 +609,8 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
   **Teilweise erledigt am 2026-09-08 spät:** die Wand zeigt **18 Kacheln statt zwölf** (drei volle Reihen zu sechs, Julian: „ich will trotzdem eine volle Startseite"), und sie nimmt sie aus `data/curated.json` — Julians eigenen Wahlen aus der Kuratier-App —, aufgefüllt aus der alten Handliste, damit die Wand vom ersten Tag des Kuratierens an voll ist. **Was noch fehlt, ist die Rotation**, und sie hängt an einer Entscheidung, nicht an Code: die Startseite wird vorgerendert, eine hier gewürfelte Reihenfolge stünde also im HTML anders als im Browser und React risse sie wieder ein. Drei Wege: (a) stündlich über ISR (`revalidate`), dann sieht ein Wiederkehrer alle Stunde etwas Neues, jeder Aufruf innerhalb der Stunde dasselbe — billig, statisch; (b) die Auswahl in einer Server-Komponente treffen und als Prop hineinreichen, dann rotiert es je Auslieferung, aber die Seite wird dynamisch und kostet je Aufruf eine Funktion; (c) nach dem Hydrieren im Browser tauschen — dann flackert die erste Reihe. **Empfehlung: (a)**, weil „vorgeladen und schnell" Julians eigene Bedingung war und (b) genau die aufgibt.
 
 ### Erledigt in Phase 6
+
+- [x] **6.8 Eine „All languages“-Pille am Ende der Sprachreiter.** Erledigt 2026-09-11: ein letzter Reiter „All languages“ zeigt die ganze Wand in der Ordnung von F2.5 (Jahr absteigend über alle Sprachen, unbekanntes Jahr dahinter, Textseiten-Scans ganz hinten). Er erscheint nur, wenn es mehr als eine Sprache gibt, ist nie vorausgewählt und steht **nicht in der URL**, weil `?lang=` dort der Suchfilter ist und `all` schon „kein Filter“ heißt. Die Ladeszene wartet weiter auf die gesuchte Sprache. *Siddhartha*: acht Sprachreiter mit zusammen 99 Covern, der neue Reiter 99. → [Historie](docs/history.md#2026-09-11--die-ganze-wand-auf-einmal-roadmap-68) · [Archiv](docs/roadmap-archive.md#68)
 
 - [x] **6.1 Gleichnamige Ableitungen und Sekundärliteratur nach hinten.** Erledigt 2026-09-08: vier Regeln statt einer, `SAME_TITLE_EDITION_RATIO` = 30 abgelesen (Fenster 17–65); über 15 Suchen 7 verbessert, 8 unverändert, keine verschlechtert. Offen bleibt der fremdsprachige Haupttitel (`crime and punishment`), dieselbe Wurzel wie 6.13/6.15. → [Historie](docs/history.md#2026-09-08--vier-regeln-gegen-gleichnamige-ableitungen-roadmap-61) · [Archiv](docs/roadmap-archive.md#61)
 
