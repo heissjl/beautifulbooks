@@ -16,13 +16,14 @@ import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
-import { useLoadingScene } from '@/components/useLoadingScene';
+import { SCENE_FIRST_ROW, useLoadingScene } from '@/components/useLoadingScene';
 import { useIsDesktop } from '@/components/useIsDesktop';
 import { useMarket } from '@/components/useMarket';
 import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
 import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
+import { leadCover } from '@/lib/scene';
 import { useOverflowsX } from '@/components/useOverflowsX';
 import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
@@ -263,8 +264,6 @@ function BookDetail() {
 
   // Loading scene (SPEC 8.1): paced by the hook; runs at least two covers long
   // and ends once page 0 has been hashed, so it never shows a cover twice.
-  const scene = useLoadingScene(requestKey, pages.firstCovers, pages.page0Hashed);
-
   const view = useMemo(() => {
     const { merged, work, market } = pages;
     if (!merged || !work || !market) return null;
@@ -276,6 +275,23 @@ function BookDetail() {
     for (const c of wall.covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
     return { work, market, merged, ...wall, editionsById, captions, coversPerEdition };
   }, [pages, lang, isbnCovers]);
+
+  /*
+    The scene opens with the cover the reader is already looking at, and hands
+    over only once the wall's first row has arrived (ROADMAP 6.25a).
+
+    `lead` is the card's cover as it is on the screen — its id and the address
+    already painted — so the fan begins with that picture instead of replacing
+    it with another (Julian, 2026-09-10: „so hat der Fächer irgendwie einen
+    Ladebildschirm vorm Ladebildschirm"). `wallFirst` is what the wall will
+    show first, in its own order, which is not page 0's order: the wall is
+    sorted by language. The view is built before the scene for that reason.
+  */
+  const lead = useMemo(() => leadCover(preview?.coverUrls[0]), [preview]);
+  const wallFirst = useMemo(() => view?.groups[0]?.covers.slice(0, SCENE_FIRST_ROW) ?? [], [view]);
+  const scene = useLoadingScene(requestKey, pages.firstCovers, pages.page0Hashed, { lead, wallFirst });
+
+
 
   // Hold the scene until the pinned tabs can no longer appear underneath the
   // reader's cursor: the searched language (else English) present, everything

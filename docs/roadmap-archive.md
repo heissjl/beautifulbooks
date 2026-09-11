@@ -563,3 +563,66 @@ Damit wartet die Seite an **drei von vier** Stellen vor dem Mosaik; der Cover-F�
 **Julians Algorithmus für ein farbenfrohes Cover gehört hierher**, nicht zu 1.1: hier wählt er kein Buch für den Leser aus, sondern illustriert eines. Zu bauen wäre ein Sättigungsmaß — die Signaturen sind heute reine Graustufen (`decodeToGray` in `lib/imagehash.ts` verwirft die Farbe in der ersten Schleife), ein zweiter Akkumulator in derselben Schleife genügt, und da Signaturen ohnehin bei jeder Anfrage aus den 30 Tage gecachten Bytes neu gerechnet werden, kostet es keine zusätzliche Ladung. Begründung in [PLAN-1.1](plans/PLAN-1.1-keine-vorauswahl.md) §3.
 
 **Bedingungen, die für jede Variante gelten:** keine Google-Anfrage und kein Nachladen beim ersten Rendern (die Cover-IDs stehen fest, wie in `lib/curated.ts`); auf schmalen Bildschirmen darf das Element das Suchfeld nicht unter die Kante schieben, dort entfällt es oder rückt unter die Wand; und es darf nichts behaupten, was §1 verbietet — „vier von 226 Covern" ist erlaubt, „alle Cover" nicht.
+
+### 6.25a
+
+**6.25a Die Ladeszene zeigt leere Kachelrahmen, und der Fächer fliegt auf leere Kacheln.** (Julian, 2026-09-10: „der cover-fächer ist oft schneller in der animation als auf den animierten kacheln das bild angezeigt wird … hier also auch das Skelett der Animation gemacht wird, ohne dass es mit einem Bild befüllt ist.")
+
+**Zwei Symptome, eine Ursache.** Der Rahmen einer Fächer-Kachel wird eingeblendet, bevor sein Bild da ist; und wenn die Szene endet, fliegen die Cover auf Wandkacheln, die noch leer sind.
+
+**Gemessen am 2026-09-10 gegen den Dev-Server** (*North and South*, kalter Klick aus dem Suchergebnis):
+
+| | |
+|---|---|
+| Fächer-Kacheln über die Zeit | 776 ms gefüllt (das Cover aus der Karte) → **1.777 ms leer** → 2.775 ms wieder gefüllt |
+| Szenenende | 4.2 s, mit **null von zwei** Wandbildern geladen |
+| Anfragen an `/img` | **45 für 24 verschiedene Cover** — 21 also zweimal |
+| Dieselbe Cover-Adresse, beide Anfragen | erste **aus dem Netz**, 436→2.474 ms, 47 KB; zweite **aus dem Cache**, 2.476→**5.794 ms**, 0 Byte |
+
+**Der entscheidende Wert ist die letzte Zeile: ein Cache-Treffer, der 3,3 Sekunden braucht.** Die Datei liegt längst im Browser, aber die Anfrage steht in der Warteschlange hinter zwei Dutzend anderen Bildanfragen an denselben Host (sechs gleichzeitig, und `/img` braucht hier 2 bis 5 s je Bild). Der Vorlauf in `useLoadingScene` lädt das Cover mit einem eigenen `new Image()` und stellt die Kachel, sobald *dieses* Objekt fertig ist — das gerenderte `next/image` stellt aber **eine zweite Anfrage**, und die wartet. Die Kopfzeilen sind in Ordnung (`public, max-age=3600`), es ist kein Cache-Fehler, sondern ein Reihenfolge-Problem.
+
+**Die Ursache ist am 2026-09-10 gefunden und einzeilig: der Vorlauf lädt eine andere Adresse als die Kachel.** `useLoadingScene` holt `cover.urlSmall ?? cover.url` — die rohe Adresse bei `covers.openlibrary.org` —, die Kachel rendert seit 1.3 aber `proxiedCoverSrc(...)`, also `/img/S/ol-…`. **Zwei verschiedene Adressen, kein gemeinsamer Cache.** Der Vorlauf beweist damit nichts über die Kachel: er meldet „geladen", die Kachel beginnt ihre eigene Anfrage bei null, und ihr Rahmen steht leer, solange die läuft. Das ist ein Rückschritt aus 1.3 — die Cover zogen hinter `/img`, der Vorlauf zog nicht mit.
+
+**Was heute woran hängt:**
+
+| | Woran es hängt |
+|---|---|
+| **Anfang** einer Kachel | am `onload` des **Vorlauf-Objekts** (falsche Adresse, s. o.), getaktet mit 520 ms |
+| **Dauer** | feste Konstanten: 520 ms Takt, 650 ms Einlauf, zwei bis vier Cover |
+| **Ende** | zwei Cover eingelaufen **und** Seite 0 gehasht — oder die Frist von 4 s. **Nichts davon sieht die Bilder der Wand an** |
+| Kacheln der **Wand** | machen es richtig: `CoverImage` blendet erst ein, wenn das eigene Bild geladen ist |
+
+**Der Plan, in dieser Reihenfolge — 1 und 2 sind am 2026-09-10 gebaut:**
+
+1. ✅ **Den Vorlauf auf die Adresse schicken, die auch gerendert wird** (`proxiedCoverSrc` in `useLoadingScene`). **Gemessen, derselbe kalte Klick wie vorher:** die Fächer-Kachel ist bei **829 ms gefüllt** und nie leer (vorher: leer bei 1.777 ms), und `/img` bekommt **32 Anfragen für 29 Cover** statt 45 für 24 — statt 21 Doppelungen bleiben 3.
+2. ✅ **Die Kachel beweist es selbst:** `LoadingStage` blendet eine Kachel erst ein, wenn ihr eigenes `<img>` `load` gemeldet hat. Nach 1 ist das normalerweise schon im ersten Bild wahr; es steht als Garantie da, nicht als Mechanismus, damit kein Cache-Argument den leeren Rahmen zurückbringen kann.
+3. **Das Ende an die Wand knüpfen — und den Fächer dafür länger ziehen, nicht auf eine halbleere Wand gehen** (Julian, 2026-09-10: „warum wollen wir hier an eine halbleere Wand gehen und nicht lieber den Fächer noch länger ziehen?"). **Die Messung gibt ihm recht.** Kalt in Produktion, *Sylvia's Lovers*, ein Buch, das dieser Browser nie geöffnet hatte: der Fächer lief von 0 bis **7,0 s**, die erste Reihe der Wand (sechs Kacheln) stand bei **7,6 s**. Warten kostet also **sechs Zehntel**, nicht fünfzehn Sekunden — beide hängen an derselben Latenz von `/img`. Die Szene endet künftig, wenn die erste Reihe geladen ist.
+4. **Die Obergrenze wird großzügiger und ehrlicher.** Die heutige Frist von 4 s ist ohnehin wirkungslos — gemessen lief der Fächer 7 s —, und ihre Aufgabe ist nur, einen endlosen Vorhang zu verhindern, wenn nie ein Bild kommt. Also eine deutlich höhere Grenze, und wenn sie greift, endet die Szene **ohne Flug**: Cover auf leere Kacheln fliegen zu lassen sieht kaputter aus als ein schlichter Wechsel.
+
+**Der eigentliche Befund aus derselben Messung:** der Fächer lief bereits sieben Sekunden und stand einen Großteil davon **leer** (`0/1` bei 5,7 s, `0/2` bei 6,2 s). Er wird also längst „länger gezogen" — das Problem ist nicht seine Länge, sondern dass er dabei Rahmen ohne Bilder zeigt. **Nach 1 und 2 ist er bei jeder Länge ehrlich**, und erst dann lohnt 3.
+
+**Nach 1 und 2 in Produktion nachgemessen** (2026-09-10, *Silas Marner*, kalter Klick aus dem Suchergebnis): **der Fächer ist repariert, die Übergabe nicht.**
+
+| | |
+|---|---|
+| Fächer-Kacheln | `1/1` bei 82 ms, `2/2` bei 1.442 ms, `3/3` bei 2.001 ms — **keine einzige jemals leer** |
+| Szenenende | 3.853 ms |
+| Erste Reihe der Wand **in diesem Moment** | **2 von 6 mit Bild** |
+| Dieselben Kacheln kurz darauf | 8 von 8 |
+
+**3 wird also gebraucht, 4 nicht.**
+
+- **3 bleibt offen und ist begründet:** die Szene endet, weil die *Daten* da sind (zwei Cover eingelaufen und Seite 0 gehasht) — nicht, weil Bilder da sind. Der FLIP übergibt an eine Reihe, die zu zwei Dritteln leer ist. **Und sie ist billiger geworden, als der Punkt annahm:** seit 1 lädt der Vorlauf genau die Adressen, die die Wand rendert, also ist „warten, bis die erste Reihe steht" gleichbedeutend mit „warten, bis N Vorladungen fertig sind". Kein neues Signal von der Wand nötig — die ist während der Szene ohnehin nicht gerendert.
+- **4 ist erledigt, ohne gebaut zu werden.** Die Frist greift nur, wenn **weniger als zwei** Cover eingelaufen sind (`presenting < SCENE_MIN_COVERS`); dann steht keine Kachel, `measureStage()` liefert eine leere Liste und es fliegt ohnehin nichts. Der Fall „auf eine leere Wand fliegen" existiert nicht. Für ein Anheben der Frist gibt es keine Messung — im gemessenen Lauf beendete sie die Szene nicht, die normale Regel tat es.
+
+**In Produktion am selben Tag nachgemessen** (Julian: „ich habe den Effekt auch in der Produktion gesehen"), dieselbe Seite, kalter Klick aus dem Suchergebnis — und dort ist es **schlimmer**:
+
+| | Dev | Produktion |
+|---|---|---|
+| Fächer-Kacheln mit Bild | zeitweise leer, dann gefüllt | **keine einzige**, von 101 ms bis zum Szenenende bei 3.401 ms alle vier leer |
+| Anfragen an `/img` | 45 für 24 Cover (21 doppelt) | 38 für 38 Cover, **keine doppelt** |
+| Langsamste `/img`-Anfrage | 5,4 s | **15,6 s** (drei Anfragen, alle bei 325 Byte übertragen) |
+
+**Das Doppelholen ist also ein Dev-Effekt, das leere Skelett nicht.** Die naheliegende Erklärung für beides zugleich: die zweite Anfrage der gerenderten Kachel steht in Produktion noch **in der Schlange**, wenn die Szene endet und die Kachel abgebaut wird — abgebrochene Anfragen tauchen in `performance.getEntriesByType('resource')` gar nicht erst auf, deshalb sieht die Liste dort sauber aus. **Das ist die Erklärung, nicht die Messung**; wer den Punkt baut, prüft sie zuerst im Netzwerk-Panel mit sichtbaren Pending-Anfragen.
+
+**Ein Fund für 6.25 fällt dabei ab:** drei `/img`-Anfragen brauchten 15,6 s bei 325 übertragenen Byte. Dieselbe Adresse einzeln nachgeholt kam in 679 ms mit 1.955 Byte echtem JPEG und `Cache-Control: public, max-age=3600` — **ohne** das `s-maxage`, das die Route sonst setzt. Ob das eine andere Antwort der Gegenseite ist oder ein anderer Zweig der Route, gehört in das Protokoll, das 6.25 als ersten Schritt verlangt.

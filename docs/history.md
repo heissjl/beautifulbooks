@@ -1770,3 +1770,28 @@ Julian: „brauchen wir jetzt Schritt 3 und 4 von 6.25a?" Die Frage ist messbar,
 **4 hat sich beim Nachlesen erledigt, ohne gebaut zu werden.** Die Frist greift nur, wenn weniger als zwei Cover eingelaufen sind; dann steht keine Kachel, `measureStage()` liefert eine leere Liste, und es fliegt nichts. Der Fall „auf eine leere Wand fliegen" existiert nicht, und für ein Anheben der Frist gibt es keine Messung — im gemessenen Lauf hat sie die Szene gar nicht beendet.
 
 **Nebenbei zur Messtechnik:** der erste Anlauf hatte einen falschen Detektor für das Szenenende — er feuerte, bevor die erste Kachel überhaupt da war, und meldete „3 von 8" für einen Zeitpunkt, den es nicht gab. Ein Zustandswechsel ist erst einer, wenn der Ausgangszustand einmal beobachtet wurde.
+
+## 2026-09-11 · Der Fächer beginnt mit dem Bild, das schon steht (ROADMAP 6.25a)
+
+Julian: „baue Schritt 3", und dazu: „das Bild, das angezeigt wird, bevor der Fächer losgeht, ist dann ein anderes als das erste im Fächer. So hat der Fächer irgendwie einen Ladebildschirm vorm Ladebildschirm. Sollte der Fächer nicht einfach mit genau dem Bild dann anfangen?"
+
+**Beide Anläufe gingen im ersten Versuch daneben, und beide aus demselben Grund: eine Annahme über Reihenfolge.**
+
+**Das Karten-Cover an den Anfang der Liste zu stellen, genügte nicht.** Gemessen an *Daniel Deronda*: zuerst stand das Karten-Cover `ol-8243960`, dann ersetzte es `ol-2821935`. Die Szene stellt Cover in der Reihenfolge aus, in der ihre **Vorladungen fertig werden**, nicht in der Reihenfolge der Liste — und sie lud das Karten-Cover in Größe S vor, während die Seite es längst in L zeigte. Das Argument „es liegt sicher im Cache" stimmte für die falsche Größe. Jetzt wird das Cover **so übergeben, wie es auf dem Schirm steht**: seine Id und genau die Adresse, die schon gemalt ist (`lib/scene.ts`, `leadCover`). Es wird sofort die erste Kachel, ohne Vorlauf, ohne neuen Einzug und ohne Einblenden.
+
+**Und Schritt 3 maß im ersten Versuch die falschen Cover.** Die Übergabe wartete auf „sechs Vorladungen fertig" — aber die Vorladungen sind die ersten acht von Seite 0 in der Reihenfolge des Katalogs, und die Wand ist nach Sprachen sortiert. Auf *Daniel Deronda* stand von den ersten sechs Wandcovern **ein einziges** unter den Vorladungen; das Ergebnis von 4 von 6 war Zufall. Jetzt reicht die Seite der Szene die sechs Cover, die die Wand wirklich zuerst zeigt (`view.groups[0]`), die Szene lädt genau die vor und übergibt erst, wenn alle angekommen sind — ein gescheitertes zählt als angekommen, weil Warten daran nichts ändert —, längstens nach 8 s. Dafür musste `view` in `BookDetail` vor die Szene rücken.
+
+**Gemessen am Dev-Server, *Romola*, kalter Klick aus dem Suchergebnis:**
+
+| | |
+|---|---|
+| Karten-Cover (Hero) | `ol-297937`, steht bei 3,3 s |
+| Erste Fächer-Kachel | **`ol-297937`**, bei 5,0 s, als stehende Kachel ohne neuen Einzug |
+| Weitere Kacheln | drei, alle mit Bild, keine leer |
+| Szenenende | 7,4 s |
+| Erste Reihe der Wand in diesem Moment | **6 von 6** (vorher 2 von 6) |
+
+Die Konsole blieb leer; die Meldung „Fast Refresh … runtime error" während der Arbeit stammte aus den Neuladungen mitten im Editieren. Der Produktions-Build lief durch, nachdem ein erster Versuch am Zwei-Minuten-Limit des Werkzeugs gestorben war (Exit 137 ist ein Kill, kein Fehler im Code).
+
+**Damit ist 6.25a abgeschlossen:** Adresse (1), Einblenden auf `onLoad` (2), Übergabe an die echte erste Reihe (3), Schritt 4 unnötig — und der Anfang des Fächers als vierte Reparatur, die in der ursprünglichen Liste gar nicht stand.
+
