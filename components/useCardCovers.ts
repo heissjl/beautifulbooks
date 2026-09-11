@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { WorkSummaryResponse } from '@/app/api/works/[id]/route';
 import { withSlot } from './coverQueue';
-
-const MOSAIC_MAX = 4;
+import { distinctCovers } from './coverHash';
+import { MOSAIC_CANDIDATES, MOSAIC_COVERS } from '@/lib/works';
 
 /**
  * Fills a search card's mosaic with covers of several editions
@@ -24,6 +24,14 @@ const MOSAIC_MAX = 4;
  * bought little and added a failure mode — the observer does not fire at all
  * in some embedded browsers, which left most cards with a single cover and
  * no way to tell why (2026-09-07).
+ *
+ * **No repeats by image** (ROADMAP 6.34). The route tells printings apart by
+ * publisher and year only, and on 2026-09-11 three of eight cards for "David
+ * Foster Wallace" showed one picture twice under two Open Library ids (hash
+ * distance 0, 2 and 8). So the route sends up to eight candidates, the browser
+ * hashes them as the wall would, and the card shows the first four that
+ * differ. Until that is decided the card keeps its single search cover, so no
+ * tile is swapped in front of the reader.
  */
 export function useCardCovers(workId: string, initial: readonly string[]): string[] {
   const [loaded, setLoaded] = useState<{ id: string; urls: string[] } | null>(null);
@@ -48,12 +56,36 @@ export function useCardCovers(workId: string, initial: readonly string[]): strin
 
   // The search's own cover leads: it is the one Open Library picked for the
   // work, and swapping it out after the fact would make the grid jump.
-  const merged = [...initial];
+  const candidates = [...initial];
   if (loaded?.id === workId) {
     for (const url of loaded.urls) {
-      if (merged.length >= MOSAIC_MAX) break;
-      if (!merged.includes(url)) merged.push(url);
+      if (candidates.length >= MOSAIC_CANDIDATES) break;
+      if (!candidates.includes(url)) candidates.push(url);
     }
   }
-  return merged.slice(0, MOSAIC_MAX);
+  const distinct = useDistinct(candidates.slice(0, MOSAIC_CANDIDATES));
+  return distinct ?? initial.slice(0, MOSAIC_COVERS);
+}
+
+/**
+ * The candidates without repeats, or null while they are being compared.
+ * Keyed by the list itself, so a new list starts over without an effect that
+ * resets state (`react-hooks/set-state-in-effect`).
+ */
+function useDistinct(candidates: readonly string[]): string[] | null {
+  const key = candidates.join('\n');
+  const [result, setResult] = useState<{ key: string; urls: string[] } | null>(null);
+
+  useEffect(() => {
+    const list = key ? key.split('\n') : [];
+    if (list.length <= 1) return;
+    let alive = true;
+    distinctCovers(list, MOSAIC_COVERS).then(urls => {
+      if (alive) setResult({ key, urls });
+    });
+    return () => { alive = false; };
+  }, [key]);
+
+  if (candidates.length <= 1) return [...candidates];
+  return result?.key === key ? result.urls : null;
 }

@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
-import CoverGallery, { ALL_LANGUAGES, type CoverTab } from '@/components/CoverGallery';
+import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
 import DecadeLink from '@/components/DecadeLink';
 import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
@@ -16,15 +16,16 @@ import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
-import { useLoadingScene } from '@/components/useLoadingScene';
+import { SCENE_FIRST_ROW, useLoadingScene } from '@/components/useLoadingScene';
 import { useIsDesktop } from '@/components/useIsDesktop';
 import { useMarket } from '@/components/useMarket';
 import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
 import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
+import { leadCover } from '@/lib/scene';
 import { useOverflowsX } from '@/components/useOverflowsX';
-import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
+import { searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
@@ -123,15 +124,11 @@ function buildWall(
     language: g.language,
     covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
   }));
-  /*
-    The whole wall as one more tab, last (ROADMAP 6.8): first it would be the
-    default and undo the language order of F2.4. Only when there is more than
-    one language, or it would repeat the one tab there is.
-  */
-  if (groups.length > 1) {
-    groups.push({ language: ALL_LANGUAGES, covers: coversNewestFirst(covers, merged.editions, signatures) });
-  }
-  return { covers, coversById, groups, editionsByScan };
+  // `signatures` goes out too: the verdict must know which pictures the fold
+  // could compare at all (ROADMAP 6.32).
+  // The whole wall in one list, for the "All languages" pill (ROADMAP 6.8).
+  const wholeWall = coversNewestFirst(covers, merged.editions, signatures);
+  return { covers, coversById, groups, all: wholeWall, editionsByScan, signatures };
 }
 
 /**
@@ -271,8 +268,6 @@ function BookDetail() {
 
   // Loading scene (SPEC 8.1): paced by the hook; runs at least two covers long
   // and ends once page 0 has been hashed, so it never shows a cover twice.
-  const scene = useLoadingScene(requestKey, pages.firstCovers, pages.page0Hashed);
-
   const view = useMemo(() => {
     const { merged, work, market } = pages;
     if (!merged || !work || !market) return null;
@@ -284,6 +279,23 @@ function BookDetail() {
     for (const c of wall.covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
     return { work, market, merged, ...wall, editionsById, captions, coversPerEdition };
   }, [pages, lang, isbnCovers]);
+
+  /*
+    The scene opens with the cover the reader is already looking at, and hands
+    over only once the wall's first row has arrived (ROADMAP 6.25a).
+
+    `lead` is the card's cover as it is on the screen — its id and the address
+    already painted — so the fan begins with that picture instead of replacing
+    it with another (Julian, 2026-09-10: „so hat der Fächer irgendwie einen
+    Ladebildschirm vorm Ladebildschirm"). `wallFirst` is what the wall will
+    show first, in its own order, which is not page 0's order: the wall is
+    sorted by language. The view is built before the scene for that reason.
+  */
+  const lead = useMemo(() => leadCover(preview?.coverUrls[0]), [preview]);
+  const wallFirst = useMemo(() => view?.groups[0]?.covers.slice(0, SCENE_FIRST_ROW) ?? [], [view]);
+  const scene = useLoadingScene(requestKey, pages.firstCovers, pages.page0Hashed, { lead, wallFirst });
+
+
 
   // Hold the scene until the pinned tabs can no longer appear underneath the
   // reader's cursor: the searched language (else English) present, everything
@@ -356,6 +368,7 @@ function BookDetail() {
         view.covers,
         isbnCovers.asked.has(isbn13),
         isbnCovers.unavailable.has(isbn13),
+        view.signatures,
       )}
     />
   );
@@ -419,6 +432,7 @@ function BookDetail() {
           <div className={`min-w-0 lg:col-span-2 lg:pb-0 ${selected ? 'pb-20' : ''}`}>
             <CoverGallery
               groups={view.groups}
+              allCovers={view.all}
               selectedCover={selected}
               onSelectCover={c => selectCover(c.id)}
               captions={view.captions}
@@ -706,7 +720,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
           edition={shown}
           workTitle={workTitle}
           otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
-          searchLinks={searchLinksFor({ title: shown.title, author, publisher: shown.publisher, year: shown.year, coverUrl: cover.url, editionId: shown.id }, market)}
+          searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
           anyEditionLinks={anyEditionLinks}
           market={market}
           onMarketChange={onMarketChange}
@@ -784,9 +798,13 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
           On `differs` the verdict comes *before* the buttons, because it is
           the reason they are searches and not shops: whatever the ISBN opens
           ships the other jacket, so the row hunts the picture on screen by
-          title, author, publisher and year (SPEC F2.9).
+          title, author, publisher and year (SPEC F2.9). On `uncompared` the
+          publisher's image stands in the same place for the reader to weigh
+          before clicking; the buttons stay the ISBN's (ROADMAP 6.32).
         */}
-        {edition.isbn13 && verdict.status === 'differs' && <VerdictNote verdict={verdict} hint={hint} />}
+        {edition.isbn13 && (verdict.status === 'differs' || verdict.status === 'uncompared') && (
+          <VerdictNote verdict={verdict} hint={hint} />
+        )}
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <p className="kicker">
             {verdict.status === 'differs'
@@ -925,14 +943,21 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
  * text must not claim otherwise (Julian, 2026-09-07).
  */
 /*
-  Only `differs` speaks (Julian, 2026-09-11: „es sollte nur eine anmerkung
-  geben bei differs"). It is the one state that changes what the reader
-  should do — the number ships another jacket, so the row above hunts the
-  picture instead. The others added a sentence under every printing that
-  changed nothing; saying nothing claims nothing (N12), and the About page
-  still explains all five states in the words of `lib/verdicts.ts`.
+  Two states speak, and both show a picture the reader has to weigh.
+  `differs` (Julian, 2026-09-11: „es sollte nur eine anmerkung geben bei
+  differs"): the number ships another jacket, so the row below hunts the
+  picture instead. `uncompared` (ROADMAP 6.32): the fold could not compare
+  the two, so the publisher's image stands beside the note and the reader
+  decides; the ISBN links keep their place. The other states added a
+  sentence under every printing that changed nothing; saying nothing claims
+  nothing (N12), and the About page still explains every state in the words
+  of `lib/verdicts.ts`. Both were kept when main met production on
+  2026-09-11, where 1.11 and 6.32 had each rewritten this function.
 */
-function VerdictNote({ verdict, hint }: { verdict: Extract<IsbnVerdict, { status: 'differs' }>; hint: string }) {
+function VerdictNote({ verdict, hint }: {
+  verdict: Extract<IsbnVerdict, { status: 'differs' | 'uncompared' }>;
+  hint: string;
+}) {
   return (
     <div className="mb-4 flex items-start gap-3">
       <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the publisher's current image for this ISBN">
@@ -941,9 +966,15 @@ function VerdictNote({ verdict, hint }: { verdict: Extract<IsbnVerdict, { status
         </span>
       </a>
       <p className="text-xs leading-relaxed text-ink-3">
-        <span className="text-ink-2">{VERDICT_LEAD.differs}</span>{' '}
-        It is the one beside this note, so that is what a new copy is likely to be.
-        {hint ? ` The searches below look for ${hint} second-hand instead.` : ' The searches below look for this printing instead.'}
+        <span className="text-ink-2">{VERDICT_LEAD[verdict.status]}</span>{' '}
+        {verdict.status === 'differs' ? (
+          <>
+            It is the one beside this note, so that is what a new copy is likely to be.
+            {hint ? ` The searches below look for ${hint} second-hand instead.` : ' The searches below look for this printing instead.'}
+          </>
+        ) : (
+          'It is the one beside this note; if it looks like the cover on screen, a new copy probably will too.'
+        )}
       </p>
     </div>
   );

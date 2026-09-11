@@ -56,6 +56,7 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
   */
   const [loaded, setLoaded] = useState<ReadonlySet<string>>(new Set());
   const shown = covers.slice(-4);
+  const heroSrc = hero ? proxiedCoverSrc(hero) : null;
   const caption =
     covers.length === 0
       ? 'Collecting covers'
@@ -101,11 +102,17 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
         )}
         {shown.map((c, i) => {
           const n = shown.length;
+          /*
+            The card's cover, taken over from the hero above: already painted,
+            so it neither enters again nor fades in from nothing — the fan
+            grows out of the picture that was standing there (ROADMAP 6.25a).
+          */
+          const standing = heroSrc !== null && c.url === heroSrc;
           return (
             <div
               key={c.id}
               data-stage-cover-id={c.id}
-              className="stage-tile stage-in"
+              className={`stage-tile ${standing ? '' : 'stage-in'}`}
               style={{ ['--i' as string]: `${i - (n - 1) / 2}`, ['--tilt' as string]: `${TILTS[i % TILTS.length]}deg`, zIndex: i }}
             >
               <div className="cover-shadow relative h-full w-full overflow-hidden rounded-card bg-surface-2">
@@ -114,7 +121,7 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
                   alt=""
                   fill
                   sizes="288px"
-                  className={`object-cover transition-opacity duration-300 ${loaded.has(c.id) ? 'opacity-100' : 'opacity-0'}`}
+                  className={`object-cover transition-opacity duration-300 ${standing || loaded.has(c.id) ? 'opacity-100' : 'opacity-0'}`}
                   unoptimized
                   priority
                   onLoad={() => setLoaded(prev => (prev.has(c.id) ? prev : new Set(prev).add(c.id)))}

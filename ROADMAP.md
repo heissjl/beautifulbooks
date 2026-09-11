@@ -27,7 +27,7 @@ Stand: 2026-09-10, nach dem Umbau (Julian: „überprüfe die Abhängigkeiten, s
 
 - **Online seit 2026-09-08: https://beautifulcovers.vercel.app**, Hobby-Modus (E20), Vercel Hobby, Funktionen in Frankfurt, Web Analytics an.
 - **Produktion ist `origin/main`.** Ein Push dorthin ist ein Deploy. Am 2026-09-10 arbeiteten **drei Sessions parallel**: eine schob 6.19a direkt nach `origin/main`, eine baute 6.29 auf dem lokalen `main`, eine baute 6.28 auf einem Branch — und das lokale `main` lag zeitweise sechs Commits vor und fünfzehn hinter Produktion, ohne dass es irgendwo stand. Seither zusammengeführt und am selben Abend deployt (`b43904b`); `npm run worktrees` zeigt, ob das wieder passiert, und ist vor jedem Merge nach `main` zu lesen.
-- **51 Punkte offen, 35 erledigt.** Phase 1 ist bis auf Julians Stichprobe (1.8) leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
+- **52 Punkte offen, 35 erledigt.** Phase 1 ist bis auf Julians Stichprobe (1.8) leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
 - **Der Engpass ist nicht die Technik, sondern dass niemand die Seite kennt:** sie steht in keiner Suchmaschine (2.5) und unter einem Namen, den niemand behält (0.5).
 
 ### Nächste Schritte
@@ -39,12 +39,25 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt.
 | 1 | **2.6 zu Ende**: OG-Bild in einem Messenger, Google-Verbrauch eines Tages aus der Cloud-Konsole | Julian | zehn Minuten | Der Deploy vom 2026-09-10 ist geprüft, der CDN-Treffer gemessen; die zwei Reste kann nur Julian sehen |
 | 2 | **2.5 Search Console und Bing**, dazu **0.2** zweiter Google-Schlüssel und **0.13** Kontingent-Alarm | Julian | 30 Minuten | Jeder Tag ohne Sitemap ist ein verlorener Tag; ein Schlüssel für Arbeit *und* Betrieb verbraucht das Kontingent der Besucher |
 | 3 | **0.5 / 2.2 Domain** kaufen und verbinden | Julian | 20 Minuten plus DNS | Reichweite auf `vercel.app` muss später umgeleitet werden; Vorschläge in [docs/domain-recherche.md](docs/domain-recherche.md) |
-| 4 | **6.25 leere Kacheln** — nach einem Tag Produktion die `bb.img`-Zeilen lesen; dazu **6.25a**, der Fächer auf leeren Kacheln (Ursache gefunden, Schritte 1–2 gebaut, in Produktion neu zu messen) | Claude, nach einem Deploy | eine halbe Stunde plus Messung | Das Protokoll ist gebaut; ob Open Library uns drosselt, sagt erst ein Tag Logs — und drei `/img`-Antworten mit 15,6 s bei 325 Byte aus 6.25a gehören als Erstes hinein |
-| 5 | **6.5** Mosaik-Ausfall sichtbar machen | Claude, mit der Ladebild-Session abgesprochen | ein bis zwei Stunden | Eine Karte mit 503 sieht aus wie ein Buch ohne Cover; das berührt die leeren Kacheln, an denen eine andere Session arbeitet. 6.8 ist seit dem 2026-09-11 erledigt |
+| 4 | ~~**6.25 leere Kacheln**~~ — erledigt 2026-09-11, mitgelesen: 132 Bildanfragen, keine gescheitert | — | — | Wieder offen, wenn Julian erneut leere Kacheln sieht |
+| 5 | **6.5** Mosaik-Ausfall sichtbar machen, ~~**6.8** „All languages“-Pille~~ (erledigt 2026-09-11) | Claude | je ein bis zwei Stunden | Phase 1 ist leer; das sind die zwei kleinen Punkte aus 6.A und 6.C ohne Abhängigkeit |
 | 6 | **6.18 Kuratierung zu Ende**, danach **6.17 Rotation** und das Jahr für **6.16** | Julian, dann Claude | ein Abend, dann eine Sitzung | Die Startseite ist das Erste, was ein Besucher sieht |
 | 7 | **6.15 Schritt 3**, die Stichprobe zu Übersetzungen | Claude | eine Sitzung | 6.13 ist seit dem 2026-09-11 erledigt: die Wand lädt, was die Karte zusammenfasst. Offen ist, ob etwas Datensätze mit **anderem** Titel zusammenführen darf |
 | 8 | **3.1 Analyse-Seite** | Claude | zwei Tage | Erst sinnvoll mit einer Woche echter Besucher |
 | 9 | **Phase 5**, beginnend mit 5.3 an der fertigen Gattung 5.4a | beide | Wochen | Die eigentliche Reichweite |
+
+**Aus dem Testbericht vom 2026-09-11** ([Telefon gegen Produktion](docs/tests/2026-09-11-mobil.md), elf Befunde) folgt diese Reihenfolge, die vor Zeile 5 der Tabelle geht:
+
+| | Was | Wer | Befund |
+|---|---|---|---|
+| a | **6.25a deployen** (`35b171d`, fertig, nicht gepusht) | Julian sagt ja | M6: die Wand übernimmt fast leer |
+| b | ~~**`bb.img` mitlesen**~~ — erledigt 2026-09-11: 132 Bildanfragen, keine gescheitert; 6.25 abgehakt. Ob die Wand-Dubletten (M9) damit seltener werden, zeigt die nächste Beobachtung | beide | M7 |
+| c | ~~**6.32** fehlende Signatur ergibt nie „anderes Cover"~~ — erledigt 2026-09-11 | Claude | M8 |
+| d | ~~**6.31** zweiter Versuch einer Kachel, **6.33** die alte Wand weg~~ — erledigt 2026-09-11 | Claude | M7, M11 |
+| e | ~~**6.30** Startseite auf dem Telefon~~ — erledigt 2026-09-11; offen **6.30a**, dieselbe Messung über die übrigen Seiten | Claude | M1–M3 |
+| f | ~~**6.34** Karten ohne Dubletten, Größe M~~ — erledigt 2026-09-11 | Claude | M4, M5 |
+| g | ~~**6.35** E-Books fallen weg (E21)~~ — erledigt 2026-09-11 | Claude | M10 |
+| h | **6.36** gleicher Entwurf, verschiedene Verlage | Julian entscheidet | M9 |
 
 **Nicht als Nächstes, mit Grund:** 6.6 (zwei Tage und ein ISBNdb-Monat, also Julians Geld — und 6.7, 6.4, 6.23 warten darauf), Phase 4 (ohne Besucher bringt ein Kauf-Link nichts, und der Umschalttag verlangt volles Impressum und Pro-Plan), 0.10 (nach 3.2 billiger zu entscheiden), 6.19a-Rest (die Rechtefrage aus 5.5 steht davor), 0.8a und 1.8 (brauchen Julian am Gerät, halten aber nichts auf).
 
@@ -106,7 +119,7 @@ In der Reihenfolge, in der sie hier stehen; die Regel bleibt: **die vorderste Ph
 | [0 Entscheidungen](#phase-0--entscheidungen-die-nur-julian-treffen-kann) | Konten, Geld, Recht, Produktfragen | 10 | 4 | Julian |
 | [2 Betrieb](#phase-2--betrieb-domain-sichtbarkeit-abnahme) | Domain, Suchmaschinen, Überwachung, Abnahme | 4 | 3 | Julian (Konten), ein Deploy |
 | [1 Vor echtem Verkehr](#phase-1--vor-echtem-verkehr) | Was ein erster Besucher noch nicht sehen soll | 1 | 11 | Julian (1.8) |
-| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 17 | 16 | teils 6.6 (Geld), teils 6.18 (Julian) |
+| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 18 | 16 | teils 6.6 (Geld), teils 6.18 (Julian) |
 | [3 Messen](#phase-3--messen) | Analyse-Seite, Verbrauch, Conversion | 3 | 0 | Besucher |
 | [5 Reichweite](#phase-5--reichweite) | Seitengattungen, Fabrik, Kanäle | 8 | 0 | Inhalte, Rechtefrage |
 | [4 Geld](#phase-4--geld) | Partnerprogramme, Werbung, Spenden | 8 | 1 | Besucher, Umschalttag |
@@ -285,83 +298,15 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
 
 ### 6.A Was ein Leser als Fehler sieht
 
-- [ ] **6.25 Kacheln bleiben leer, obwohl im Ladebildschirm Cover zu sehen waren.** *Erster Schritt gebaut 2026-09-10: die Route sagt jetzt, was die Gegenseite geantwortet hat.* (Julian, 2026-09-09: „es bleiben einfach oft kacheln leer … vllt ein problem mit vercel? vielleicht werden wir von der openlibrary api absichtlich abgefangen, weil zu viele anfragen?")
+- [x] **6.25 Kacheln bleiben leer, obwohl im Ladebildschirm Cover zu sehen waren.** Erledigt 2026-09-11, auf Julians Urteil („ich denke, es ist behoben. Ich melde mich, falls ich wieder Probleme sehe"). Jeder Fehlschlag der Bildroute schreibt seither `bb.img`; mitgelesen nach dem Deploy von 6.30–6.33: **132 Bildanfragen, keine gescheitert**. Die leeren Kacheln vom 2026-09-10 waren nicht mehr nachzulesen (Hobby hält Logs eine Stunde); einen vorübergehenden Aussetzer fängt jetzt 6.31 ab. **Wieder offen, sobald Julian erneut leere Kacheln sieht — dann sofort mitlesen** (`vercel logs`, CLAUDE.md). → [Historie](docs/history.md#2026-09-11--vier-befunde-vom-telefon-behoben-roadmap-630-bis-633) · [Archiv](docs/roadmap-archive.md#625)
 
-  **Am 2026-09-09 gegen den Dev-Server nachgesehen, und drei Dinge stehen fest, bevor jemand rät:**
+- [x] **6.31 Eine gescheiterte Kachel versucht es noch einmal.** Erledigt 2026-09-11. `CoverImage` fragt nach dem ersten Fehler 1,5 s später ein zweites Mal, bei der eigenen Route unter `?retry=1` (`retryCoverSrc`), und zeigt erst nach dem zweiten Fehler das Buch-Symbol. Gilt für jede Kachel, auch das Vorschaubild der Leiste. → [Historie](docs/history.md#2026-09-11--vier-befunde-vom-telefon-behoben-roadmap-630-bis-633) · [Archiv](docs/roadmap-archive.md#631)
 
-  | Geprüft | Ergebnis |
-  |---|---|
-  | 429 auf `/img` in der ganzen Sitzung | **keiner** (429 gab es nur auf `/api/isbn`, aus dem automatisierten Durchklicken) |
-  | 502 auf `/img` | nur der absichtliche Test mit einer erfundenen Cover-ID |
-  | Antwortzeit von `/img` | **2,6 bis 7,6 s** je Bild |
+- [x] **6.32 Eine fehlende Signatur ergibt nie „anderes Cover".** Erledigt 2026-09-11. Neuer Verdikt-Zustand `uncompared`: Googles Bild steht als eigene Kachel, aber einer der beiden Seiten fehlt die Signatur — dann zeigt die Seite das Bild und sagt, dass nicht verglichen werden konnte, statt `differs` zu behaupten. Die ISBN-Links behalten ihren Platz. Sechs neue Tests. → [Historie](docs/history.md#2026-09-11--vier-befunde-vom-telefon-behoben-roadmap-630-bis-633) · [Archiv](docs/roadmap-archive.md#632)
 
-  **Julians Vermutung hat einen Mechanismus, und er ist seit heute Nachmittag neu.** Vor 1.3 holte **jeder Leser** die Cover von seiner eigenen IP; seit 1.3 holt sie **ein Server** für alle. Open Library dokumentiert Rate-Limits für Cover, und die galten vorher pro Leser, jetzt gelten sie für uns zusammen. Das ist kein Beleg, dass es passiert — aber es ist genau der Weg, auf dem es passieren würde, und er ist durch meine eigene Änderung entstanden. **Was ihn entschärft, sobald deployt ist:** der CDN vor der Route holt jedes Cover nur einmal für alle Leser, was die Zahl der Abrufe bei Open Library *senkt*. Der gefährliche Zustand ist der kalte Cache, nicht der warme.
+- [x] **6.33 Die alte pulsierende Wand verschwindet überall.** Erledigt 2026-09-11. `AssemblingWall` ist gelöscht; bis das Mosaik decodiert ist, steht die Überschrift über einer Fläche in Mosaikgröße, **die im Atem des fertigen Mosaiks pulsiert** (Julian: „das stehende Mosaik leicht pulsierend … ist das nicht besser?"), auch wenn das Mosaik nie kommt. Julian: **nur** die kleine Wand war gemeint, die übrigen Pulse bleiben. Kein Vorladen auf jeder Seite — das hätte jeden Besuch rund 90 KB gekostet. → [Historie](docs/history.md#2026-09-11--vier-befunde-vom-telefon-behoben-roadmap-630-bis-633) · [Archiv](docs/roadmap-archive.md#633)
 
-  **Drei Ursachen, die auseinanderzuhalten sind, mit dem, was sie unterscheidet:**
-  1. **Der Dev-Server selbst.** Ein Node-Prozess bedient Seite, API und 308 Bilder zugleich; 2,6–7,6 s je Bild sind damit erklärt und sagen über Produktion nichts. **Unterscheidet sich dadurch, dass es in Produktion verschwindet.**
-  2. **Das eigene Rate-Limit** (`img`, 400 Burst / 300 pro Minute). Eine Wand mit 308 Covern passt knapp; eine Wand plus die Mosaike einer Trefferliste passt nicht mehr. **Unterscheidet sich durch 429 im Log** — heute keine, aber die Grenze ist zu knapp für die großen Werke und gehört angehoben oder an die Wandgröße gekoppelt.
-  3. **Open Library drosselt uns.** **Unterscheidet sich durch 429 oder 403 *von dort*, im `X-Cover-Source`-Pfad** — dafür muss die Route den Statuscode der Gegenseite protokollieren, was sie heute nicht tut. Das ist die erste zu bauende Kleinigkeit, denn ohne sie bleibt die Frage unbeantwortbar.
-
-  **Die erste Kleinigkeit ist gebaut (2026-09-10):** jeder Fehlschlag der Route schreibt eine Zeile `bb.img` (`lib/coverlog.ts`) mit Cover-ID, Größe, Quelle, dem Status der Gegenseite oder dem Grund, dass es keinen gab (`timeout`, `not-image`, `error`), und der Dauer; die 502 trägt dasselbe als `X-Cover-Upstream`. Ein 429 oder 403 von dort ist die Drossel-Signatur, ein 404 ein fehlender Scan, ein Timeout archive.org. Dazu ist der Eimer `img` von 400/300 auf **800/400** je Minute gehoben, damit eine große Wand plus die Mosaike einer Trefferliste nicht an der eigenen Grenze scheitern. **Offen bleibt die Frage selbst:** nach einem Tag Produktion die `bb.img`-Zeilen in den Vercel-Logs zählen — gibt es 429/403, ist es die Drossel; gibt es nur Timeouts, ist es archive.org; gibt es keine, war es der Dev-Server oder das faule Laden.
-
-  **In Produktion nachgesehen, 2026-09-10 nach dem Deploy** — und das Ergebnis ist eine Entwarnung mit einer Einschränkung. Eine große Wand (*The Great Gatsby*, 152 Kacheln, 122 Bildanfragen, komplett durchgescrollt): **kein einziger Fehlschlag**, keine 429, keine Platzhalter, kein gebrochenes Bild. Die Zeiten: **Median 1,0 s, p90 5,0 s, langsamste 6,6 s.** Was auf einem Vollbild-Screenshot leer aussieht, waren hier **51 Kacheln, deren Anfrage nie gestellt wurde** — faul geladen, unterhalb des Sichtbereichs, `currentSrc` leer. Genau die Verwechslung, vor der der Absatz unten warnt.
-
-  **Das Log konnte ich nicht selbst lesen** — der Vercel-CLI ist auf dieser Maschine nicht installiert und der Vercel-MCP nicht autorisiert. Geprüft ist stattdessen über den Kopf, wofür er da ist: `/img/S/ol-999999999` in Produktion liefert 502 mit `X-Cover-Upstream`, die Kette schreibt also auch dort. **Wer `bb.img` sehen will, schaut im Vercel-Dashboard unter Logs und filtert auf `bb.img`** — solange dort nichts steht, ist die Ursache Latenz und nicht Drosselung.
-
-  **Beim Benutzen fiel ein Schönheitsfehler auf und ist behoben:** der Kopf meldete für ein fehlendes Cover `200`, weil dort der Status der Gegenseite stand — auf einer gescheiterten Antwort liest sich das wie das Gegenteil dessen, was passiert ist. Jetzt steht der Status nur da, wenn der Status die Antwort *ist*, sonst `not-image`, `timeout` oder `error`.
-
-  **Der erste Befund kam beim Prüfen der Route selbst** (2026-09-10, unabhängig gemessen): `/img/S/ol-999999999` — ein Cover, das es nicht gibt — meldet `not-image`. **Open Library antwortet auf ein fehlendes Cover mit 200 und einem Körper, der kein Bild ist**, nicht mit 404. Ein Teil der leeren Kacheln kann also schlicht ein fehlendes Cover sein, und das war von einer Drosselung bisher nicht zu unterscheiden — genau der Unterschied, den die neue Zeile im Log macht.
-
-  **Nicht zu verwechseln mit einem Bild, das nur noch nicht geladen ist:** Kacheln laden faul, und ein Vollseiten-Screenshot löst das Laden unterhalb des Bildschirms nicht aus. Beim nächsten Auftreten deshalb festhalten: hat die Kachel das Buch-Symbol (dann ist die Anfrage **gescheitert**) oder ist sie einfarbig leer (dann wurde sie **nie gestellt**)?
-
-- [ ] **6.25a Die Ladeszene zeigt leere Kachelrahmen, und der Fächer fliegt auf leere Kacheln.** (Julian, 2026-09-10: „der cover-fächer ist oft schneller in der animation als auf den animierten kacheln das bild angezeigt wird … hier also auch das Skelett der Animation gemacht wird, ohne dass es mit einem Bild befüllt ist.")
-
-  **Zwei Symptome, eine Ursache.** Der Rahmen einer Fächer-Kachel wird eingeblendet, bevor sein Bild da ist; und wenn die Szene endet, fliegen die Cover auf Wandkacheln, die noch leer sind.
-
-  **Gemessen am 2026-09-10 gegen den Dev-Server** (*North and South*, kalter Klick aus dem Suchergebnis):
-
-  | | |
-  |---|---|
-  | Fächer-Kacheln über die Zeit | 776 ms gefüllt (das Cover aus der Karte) → **1.777 ms leer** → 2.775 ms wieder gefüllt |
-  | Szenenende | 4.2 s, mit **null von zwei** Wandbildern geladen |
-  | Anfragen an `/img` | **45 für 24 verschiedene Cover** — 21 also zweimal |
-  | Dieselbe Cover-Adresse, beide Anfragen | erste **aus dem Netz**, 436→2.474 ms, 47 KB; zweite **aus dem Cache**, 2.476→**5.794 ms**, 0 Byte |
-
-  **Der entscheidende Wert ist die letzte Zeile: ein Cache-Treffer, der 3,3 Sekunden braucht.** Die Datei liegt längst im Browser, aber die Anfrage steht in der Warteschlange hinter zwei Dutzend anderen Bildanfragen an denselben Host (sechs gleichzeitig, und `/img` braucht hier 2 bis 5 s je Bild). Der Vorlauf in `useLoadingScene` lädt das Cover mit einem eigenen `new Image()` und stellt die Kachel, sobald *dieses* Objekt fertig ist — das gerenderte `next/image` stellt aber **eine zweite Anfrage**, und die wartet. Die Kopfzeilen sind in Ordnung (`public, max-age=3600`), es ist kein Cache-Fehler, sondern ein Reihenfolge-Problem.
-
-  **Die Ursache ist am 2026-09-10 gefunden und einzeilig: der Vorlauf lädt eine andere Adresse als die Kachel.** `useLoadingScene` holt `cover.urlSmall ?? cover.url` — die rohe Adresse bei `covers.openlibrary.org` —, die Kachel rendert seit 1.3 aber `proxiedCoverSrc(...)`, also `/img/S/ol-…`. **Zwei verschiedene Adressen, kein gemeinsamer Cache.** Der Vorlauf beweist damit nichts über die Kachel: er meldet „geladen", die Kachel beginnt ihre eigene Anfrage bei null, und ihr Rahmen steht leer, solange die läuft. Das ist ein Rückschritt aus 1.3 — die Cover zogen hinter `/img`, der Vorlauf zog nicht mit.
-
-  **Was heute woran hängt:**
-
-  | | Woran es hängt |
-  |---|---|
-  | **Anfang** einer Kachel | am `onload` des **Vorlauf-Objekts** (falsche Adresse, s. o.), getaktet mit 520 ms |
-  | **Dauer** | feste Konstanten: 520 ms Takt, 650 ms Einlauf, zwei bis vier Cover |
-  | **Ende** | zwei Cover eingelaufen **und** Seite 0 gehasht — oder die Frist von 4 s. **Nichts davon sieht die Bilder der Wand an** |
-  | Kacheln der **Wand** | machen es richtig: `CoverImage` blendet erst ein, wenn das eigene Bild geladen ist |
-
-  **Der Plan, in dieser Reihenfolge — 1 und 2 sind am 2026-09-10 gebaut:**
-
-  1. ✅ **Den Vorlauf auf die Adresse schicken, die auch gerendert wird** (`proxiedCoverSrc` in `useLoadingScene`). **Gemessen, derselbe kalte Klick wie vorher:** die Fächer-Kachel ist bei **829 ms gefüllt** und nie leer (vorher: leer bei 1.777 ms), und `/img` bekommt **32 Anfragen für 29 Cover** statt 45 für 24 — statt 21 Doppelungen bleiben 3.
-  2. ✅ **Die Kachel beweist es selbst:** `LoadingStage` blendet eine Kachel erst ein, wenn ihr eigenes `<img>` `load` gemeldet hat. Nach 1 ist das normalerweise schon im ersten Bild wahr; es steht als Garantie da, nicht als Mechanismus, damit kein Cache-Argument den leeren Rahmen zurückbringen kann.
-  3. **Das Ende an die Wand knüpfen — und den Fächer dafür länger ziehen, nicht auf eine halbleere Wand gehen** (Julian, 2026-09-10: „warum wollen wir hier an eine halbleere Wand gehen und nicht lieber den Fächer noch länger ziehen?"). **Die Messung gibt ihm recht.** Kalt in Produktion, *Sylvia's Lovers*, ein Buch, das dieser Browser nie geöffnet hatte: der Fächer lief von 0 bis **7,0 s**, die erste Reihe der Wand (sechs Kacheln) stand bei **7,6 s**. Warten kostet also **sechs Zehntel**, nicht fünfzehn Sekunden — beide hängen an derselben Latenz von `/img`. Die Szene endet künftig, wenn die erste Reihe geladen ist.
-  4. **Die Obergrenze wird großzügiger und ehrlicher.** Die heutige Frist von 4 s ist ohnehin wirkungslos — gemessen lief der Fächer 7 s —, und ihre Aufgabe ist nur, einen endlosen Vorhang zu verhindern, wenn nie ein Bild kommt. Also eine deutlich höhere Grenze, und wenn sie greift, endet die Szene **ohne Flug**: Cover auf leere Kacheln fliegen zu lassen sieht kaputter aus als ein schlichter Wechsel.
-
-  **Der eigentliche Befund aus derselben Messung:** der Fächer lief bereits sieben Sekunden und stand einen Großteil davon **leer** (`0/1` bei 5,7 s, `0/2` bei 6,2 s). Er wird also längst „länger gezogen" — das Problem ist nicht seine Länge, sondern dass er dabei Rahmen ohne Bilder zeigt. **Nach 1 und 2 ist er bei jeder Länge ehrlich**, und erst dann lohnt 3.
-
-  **3 und 4 sind offen und warten auf eine Messung in Produktion.** Gut möglich, dass 3 nach 1 und 2 nicht mehr nötig ist; und 3 ist der einzige Schritt, der ein neues Signal bräuchte — die Wand ist während der Szene gar nicht gerendert, ihre Bilder sind also nur über den Vorlauf beobachtbar, der seit 1 dieselben Adressen holt.
-
-  **In Produktion am selben Tag nachgemessen** (Julian: „ich habe den Effekt auch in der Produktion gesehen"), dieselbe Seite, kalter Klick aus dem Suchergebnis — und dort ist es **schlimmer**:
-
-  | | Dev | Produktion |
-  |---|---|---|
-  | Fächer-Kacheln mit Bild | zeitweise leer, dann gefüllt | **keine einzige**, von 101 ms bis zum Szenenende bei 3.401 ms alle vier leer |
-  | Anfragen an `/img` | 45 für 24 Cover (21 doppelt) | 38 für 38 Cover, **keine doppelt** |
-  | Langsamste `/img`-Anfrage | 5,4 s | **15,6 s** (drei Anfragen, alle bei 325 Byte übertragen) |
-
-  **Das Doppelholen ist also ein Dev-Effekt, das leere Skelett nicht.** Die naheliegende Erklärung für beides zugleich: die zweite Anfrage der gerenderten Kachel steht in Produktion noch **in der Schlange**, wenn die Szene endet und die Kachel abgebaut wird — abgebrochene Anfragen tauchen in `performance.getEntriesByType('resource')` gar nicht erst auf, deshalb sieht die Liste dort sauber aus. **Das ist die Erklärung, nicht die Messung**; wer den Punkt baut, prüft sie zuerst im Netzwerk-Panel mit sichtbaren Pending-Anfragen.
-
-  **Ein Fund für 6.25 fällt dabei ab:** drei `/img`-Anfragen brauchten 15,6 s bei 325 übertragenen Byte. Dieselbe Adresse einzeln nachgeholt kam in 679 ms mit 1.955 Byte echtem JPEG und `Cache-Control: public, max-age=3600` — **ohne** das `s-maxage`, das die Route sonst setzt. Ob das eine andere Antwort der Gegenseite ist oder ein anderer Zweig der Route, gehört in das Protokoll, das 6.25 als ersten Schritt verlangt.
+- [x] **6.25a Die Ladeszene zeigte leere Kachelrahmen, und der Fächer flog auf leere Kacheln.** Erledigt 2026-09-11. Drei Ursachen, drei Reparaturen: der Vorlauf lud seit 1.3 eine **andere Adresse** als die Kachel (jetzt `proxiedCoverSrc`, 45 → 32 Anfragen, keine leere Fächer-Kachel mehr); die Übergabe wartete auf die **Daten** statt auf die Bilder der Wand (jetzt auf die ersten sechs Cover, die die Wand wirklich zeigt, mit 8 s Obergrenze — gemessen 6 von 6 statt 2 von 6); und der Fächer **begann mit einem anderen Bild** als dem, das die Karte schon hingestellt hatte (jetzt ist das Karten-Cover die erste Kachel, ohne neuen Einzug). Schritt 4 war unnötig. → [Historie](docs/history.md#2026-09-11--der-fächer-beginnt-mit-dem-bild-das-schon-steht-roadmap-625a) · [Archiv](docs/roadmap-archive.md#625a)
 
 - [ ] **6.26 Die kuratierte Liste muss sich perfekt anfühlen.** (Julian, 2026-09-09: „die UX für alles was mit der kuratierten liste passiert muss perfekt sein. ich weiß nicht warum da manchmal noch lange ladezeiten sind oder einzelne kacheln leer bleiben.")
 
@@ -378,6 +323,12 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
 - [ ] **6.2 Den Titel zeigen, nach dem gesucht wurde. [T13]** `crime and punishment` zeigt «Преступление и наказание» von „Fiódor Dostoievski“, `die verwandlung` zeigt „Metamorphosis“, `the master and margarita` zeigt «Мастер и Маргарита». Jeweils das richtige Werk, aber in einer Sprache, die der Leser nicht gesucht hat, und bei Dostojewski steht auf Platz 2 ein Übersetzer als Autor. Billigste Lösung ohne Eingriff ins Ranking: die Karte zeigt den Katalogtitel und darunter den Titel der Ausgabe, die zur Suchsprache passt („Metamorphosis · Die Verwandlung“). Die Ausgabentitel liegen auf der Detailseite ohnehin vor; für die Karte wären sie neu und müssten aus der ohnehin geladenen Seite 0 kommen.
 
 ### 6.B Daten: Werke, Faltung, Jahre
+
+- [x] **6.34 Die Trefferkarten zeigen keine Dubletten und laden kleine Bilder.** Erledigt 2026-09-11. Die Route schickt acht Kandidaten statt vier, der Browser hasht sie wie die Wand (`lib/dhash.ts`, dieselbe Rechnung wie der Server) und zeigt die ersten vier, die sich unterscheiden (Abstand > 8); bis dahin steht das Suchcover allein, keine Kachel wird vor den Augen getauscht. Bei „David Foster Wallace" fielen die drei Paare weg (*A supposedly fun thing*, *Oblivion*, *Consider the Lobster*). Viertelkacheln laden Größe M, die erste bleibt L (die Werkseite stellt sie als erstes Bild auf). → [Historie](docs/history.md#2026-09-11--karten-ohne-wiederholung-und-nur-gedruckte-bücher-roadmap-634-und-635) · [Archiv](docs/roadmap-archive.md#634)
+
+- [x] **6.35 E-Book-ISBNs fallen weg, das Bild bekommt die Druck-ISBN (E21).** Erledigt 2026-09-11. Gemessen zuerst: **Googles `isEbook` meint nicht den Band** (25 von 100 Bänden, alle gedruckte Bücher mit E-Book-Fassung) und wird nicht benutzt. Eine Ausgabe, die Open Library als E-Book führt, verliert ihre ISBN, dieselbe Nummer auch bei einem Google-Band; das Cover bleibt. Hörbücher warf der Parser schon heraus. Suchlinks nennen Verlag und Jahr nur aus einem gedruckten Open-Library-Datensatz (`searchFacts`) — M10s Suche nach „Hachette UK 2011" wird damit zu Titel und Autor. **Nicht erkannt** bleibt ein E-Book, das kein Katalog als solches führt, wie 9780748130986 selbst. → [Historie](docs/history.md#2026-09-11--karten-ohne-wiederholung-und-nur-gedruckte-bücher-roadmap-634-und-635) · [Archiv](docs/roadmap-archive.md#635)
+
+- [ ] **6.36 Soll derselbe Entwurf bei verschiedenen Verlagen eine Kachel sein?** — **Julian entscheidet.** ([Testbericht M8/M9](docs/tests/2026-09-11-mobil.md).) *Unendlicher Spaß* von Kiepenheuer & Witsch und dieselbe Gestaltung als Rowohlt-Taschenbuch liegen bei dHash 19 und 22; die Regel „nie über Verlagsgrenzen oberhalb von 8" hält sie getrennt, auch wenn alles funktioniert. Für Julian sind es Dubletten. Wer die Grenze lockert, riskiert, dass echte verschiedene Cover zusammenfallen — die Schwellen wurden durch Hinsehen gesetzt (6.10), also müsste man die Paare zwischen 8 und 22 über Verlagsgrenzen wieder ansehen. Nebenbei: die deutschen Ausgaben stehen unter „Unknown", weil Open Library ihnen keine Sprache gibt.
 
 Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, weil eine bessere Quelle die Dubletten an der Wurzel wegnehmen könnte und jede Schwellenarbeit davor verlorene Mühe wäre. 6.13 und 6.15 teilten sich die ersten Schritte; 6.13 ist erledigt, von 6.15 bleibt Schritt 3.
 
@@ -552,9 +503,15 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 ### 6.C Oberfläche und Texte
 
+- [x] **6.30 Das Telefon so gut wie der Desktop: Startseite (N14).** Erledigt 2026-09-11 für die Startseite. Gemessen bei 390 px: Platzhalter 194 px in 212 px Platz (vorher 218 in 196), **0 von 18 Titeln abgeschnitten** (vorher 9), 40 px vor der Fußzeile (vorher 96); der Desktop bei 1280 px unverändert, 0 abgeschnitten. Titel und Autor zweizeilig, der Alternativtitel („; or, …") fällt auf Kacheln weg (`tileTitle`). → [Historie](docs/history.md#2026-09-11--vier-befunde-vom-telefon-behoben-roadmap-630-bis-633) · [Archiv](docs/roadmap-archive.md#630)
+
+- [ ] **6.30a Dieselbe Messung über Suche, Werkseite und Jahrzehnte-Seite (N14).** Die Startseite ist nur die, die Julian fotografiert hat. Messen bei 390 und 1280 px: abgeschnittene Zeilen, Platzhalter gegen Feld, leere Flächen, Zustände, die nur ein Gerät hat. Die Messung aus 6.30 (ein Stück JavaScript im Browser, im [Historie-Eintrag](docs/history.md#2026-09-11--vier-befunde-vom-telefon-behoben-roadmap-630-bis-633) festgehalten) als wiederverwendbares Werkzeug. Zwei Stunden, Claude.
+
+- [x] **6.8 Eine „All languages"-Pille am Ende der Sprachreiter.** Erledigt 2026-09-11, nach Weg 1 (Julian): die Reiter **brechen auf beiden Geräten um**, statt auf dem Telefon seitlich zu scrollen, und „All languages" steht am Ende, auch am Telefon sichtbar (N14). Die Pille zeigt die ganze Wand, neuester Druck zuerst, Scans von Textseiten zuletzt (`coversNewestFirst`); ein Cover dort anzutippen bleibt in der Gesamtansicht. Die Pillen belegen **am Telefon höchstens zwei, am Desktop höchstens drei Zeilen** (Julian, 2026-09-11; gemessen, nicht gezählt: `lib/rowfit.ts`, `useRowFit`) — was nicht hineinpasst, steht hinter „+n more"; **„Unknown" und „All languages" werden nie weggeklappt** (Julian: „unter Unknown verstecken sich oft noch Sachen"). Nicht in der URL, wie kein Sprachreiter. → [Historie](docs/history.md#2026-09-11--all-languages-auf-beiden-geräten-roadmap-68) · [Archiv](docs/roadmap-archive.md#68)
+
 - [ ] **6.27 Die übrigen Erklärtexte auf N13 durchgehen.** (Aus Julians Sprachregelung vom 2026-09-09, jetzt SPEC **N13**: in einem Erklärtext steht höchstens, was zu sehen ist, woher es kommt und der Weg zurück — keine Schwellen, keine Sortierordnungen, keine Beteuerungen über die eigene Arbeitsweise.)
 
-  *Stand 2026-09-11: die zwei Verdikt-Zusätze aus der Tabelle entfernt der Branch `worktree-kauflink-leiste` (1.11, noch nicht in `main`). Der Satz zur Händlerreihenfolge wartet, bis dieser Branch gemergt ist, weil er `lib/linkplan.ts` umbaut; danach ist hier nur noch der Verfügbarkeits-Absatz offen, und der wartet auf 0.1.*
+  *Stand 2026-09-11: die zwei Verdikt-Zusätze aus der Tabelle entfernt der Branch `worktree-kauflink-leiste` (1.11, seit dem 2026-09-11 in `main`). Der Satz zur Händlerreihenfolge wartete auf diesen Branch, weil er `lib/linkplan.ts` umbaut, und ist jetzt dran; danach ist hier nur noch der Verfügbarkeits-Absatz offen, und der wartet auf 0.1.*
 
   Zwei Stellen sind am selben Tag schon umgeschrieben: die **Fußzeile der Jahrzehnte-Seite** (aus fünf Sätzen mit Schwelle, Sortierordnung und „counted, not estimated" wurden zwei plus der Rückverweis) und der **Satz unter der Scan-Reihe** (6.14a). Die übrigen Kandidaten, absteigend nach Verstoß:
 
@@ -589,8 +546,6 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 - [x] **6.13 Die Karte zeigt ein zusammengefasstes Werk, die Wand nur eines davon.** Erledigt 2026-09-11 nach Weg (1): Seite 0 sucht einmal gezielt nach Titel und Autoren-Key (0,5 s im Median, neben der Editions-Seite, also ohne zusätzliche Wartezeit), wendet Identitätsregel 2 an, und die Wand lädt die Ausgaben der Geschwister nach ihren eigenen — **ohne Google**, höchstens zwölf, die größten zuerst. Gemessen über 47 Suchen: 22 Karten fassen mehrere Datensätze zusammen, 2,9 % aller Ausgaben liegen in Geschwistern, bei *Siddhartha* aber 86 von 292. **Testfall hält:** *Ansichten eines Clowns* — Karte 16 Ausgaben, Wand „9 covers from 16 editions“ (vorher 8), jedes Cover der Karte auf der Wand. Grenzen: ein Datensatz unter einem anderen Autoren-Key wird nicht gefunden (3 von 47), und die Jahrzehnte-Seiten zählen weiter nur einen Datensatz. → [Historie](docs/history.md#2026-09-11--die-wand-lädt-was-die-karte-verspricht-roadmap-613) · [Archiv](docs/roadmap-archive.md#613)
 
-- [x] **6.8 Eine „All languages“-Pille am Ende der Sprachreiter.** Erledigt 2026-09-11: ein letzter Reiter „All languages“ zeigt die ganze Wand in der Ordnung von F2.5 (Jahr absteigend über alle Sprachen, unbekanntes Jahr dahinter, Textseiten-Scans ganz hinten). Er erscheint nur, wenn es mehr als eine Sprache gibt, ist nie vorausgewählt und steht **nicht in der URL**, weil `?lang=` dort der Suchfilter ist und `all` schon „kein Filter“ heißt. Die Ladeszene wartet weiter auf die gesuchte Sprache. *Siddhartha*: acht Sprachreiter mit zusammen 99 Covern, der neue Reiter 99. → [Historie](docs/history.md#2026-09-11--die-ganze-wand-auf-einmal-roadmap-68) · [Archiv](docs/roadmap-archive.md#68)
-
 - [x] **6.1 Gleichnamige Ableitungen und Sekundärliteratur nach hinten.** Erledigt 2026-09-08: vier Regeln statt einer, `SAME_TITLE_EDITION_RATIO` = 30 abgelesen (Fenster 17–65); über 15 Suchen 7 verbessert, 8 unverändert, keine verschlechtert. Offen bleibt der fremdsprachige Haupttitel (`crime and punishment`), dieselbe Wurzel wie 6.13/6.15. → [Historie](docs/history.md#2026-09-08--vier-regeln-gegen-gleichnamige-ableitungen-roadmap-61) · [Archiv](docs/roadmap-archive.md#61)
 
 - [x] **6.10 „Cover, die so aussehen wie dieses“.** Erledigt 2026-09-08, seither auf alle veröffentlichten Werke erweitert: ein gebauter Index (`data/cover-index.json`, E18) beantwortet `/api/similar/<coverId>` ohne externen Aufruf; zwei Tore (Farbe ≤ 0,055, Struktur ≤ 0,28), **erlaufen, nicht errechnet**. Dabei gemessen und verneint: ob ein anderes Maß die Faltung schärft ([lab/fold](lab/fold/README.md)) — es bleibt bei dHash 8. → [Historie](docs/history.md#2026-09-08--der-gebaute-cover-index-und-was-er-über-sieht-aus-wie-gelehrt-hat-roadmap-610) · [PLAN-speicher](docs/plans/PLAN-speicher.md) · [Archiv](docs/roadmap-archive.md#610)
@@ -615,7 +570,7 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 - [x] **6.29 Eine ISBN führt zu ihrer Ausgabe.** Erledigt 2026-09-10 in einer eigenen Session, Weg 2 aus [docs/suche-isbn-und-stichwort.md](docs/suche-isbn-und-stichwort.md): die Form der Eingabe wird vor der Suche erkannt (`lib/queryshape.ts`, rein, ohne eigene Anfrage); bei **genau einem** Treffer führt die Karte mit `?isbn=` und die Detailseite wählt das Cover dieser Ausgabe vor, eine Work-ID führt direkt auf ihre Seite. Der Befund beim Bauen: eine unbekannte ISBN ergibt keine null Treffer, sondern eine Ziffernsuche mit acht Büchern — deshalb zählt nur der einzelne Treffer als gefunden (N12). → [Archiv](docs/roadmap-archive.md#629)
 
-- [ ] **6.30 Doppelte React-Keys auf der Detailseite.** (Gefunden 2026-09-11 beim Browser-Check von 1.11.) Auf *Going Postal* (`/book/OL453733W?isbn=9780857525086`) meldet React zweimal „Encountered two children with the same key“ für `gb:WkePEAAAQBAJ`. Cover- und Ausgaben-IDs sind an zwei Stellen in `components/BookDetail.tsx` Keys: im Streifen „The same cover, N scans“ (`key={id}` über `[cover.id, ...similarIds]`) und in der Ausgabenliste (`key={edition.id}`). Vermutlich steht die Google-ID doppelt in `similarIds`, oder dieselbe Google-Ausgabe kommt zweimal an. **Nicht durch 1.11 verursacht** — dessen Diff fügt keinen Key hinzu. Folge laut React: Kinder können doppelt erscheinen oder fehlen. Erst die Ursache finden, dann entdoppeln, nicht umgekehrt: eine doppelte ID ist ein Hinweis auf eine doppelte Ausgabe.
+- [ ] **6.37 Doppelte React-Keys auf der Detailseite.** (Gefunden 2026-09-11 beim Browser-Check von 1.11.) Auf *Going Postal* (`/book/OL453733W?isbn=9780857525086`) meldet React zweimal „Encountered two children with the same key“ für `gb:WkePEAAAQBAJ`. Cover- und Ausgaben-IDs sind an zwei Stellen in `components/BookDetail.tsx` Keys: im Streifen „The same cover, N scans“ (`key={id}` über `[cover.id, ...similarIds]`) und in der Ausgabenliste (`key={edition.id}`). Vermutlich steht die Google-ID doppelt in `similarIds`, oder dieselbe Google-Ausgabe kommt zweimal an. **Nicht durch 1.11 verursacht** — dessen Diff fügt keinen Key hinzu. Folge laut React: Kinder können doppelt erscheinen oder fehlen. Erst die Ursache finden, dann entdoppeln, nicht umgekehrt: eine doppelte ID ist ein Hinweis auf eine doppelte Ausgabe.
 
 - [x] **6.24 Der Zurück-Knopf von der Jahrzehnte-Seite spielte die Ladeszene noch einmal ab.** Erledigt 2026-09-10 in der Ladebild-Session, unter F2.12: die Ursache war nicht die Vorschau aus der Karte, sondern `useLoadingScene`, das zwei Cover im Takt verlangte, ehe es aufhören durfte — vier Sekunden Einzug über einer fertigen Wand. Sind die Cover bekannt und Seite 0 gehasht, endet die Szene jetzt sofort; der Rückweg landet ohne Ladebild auf der Wand. → [Historie](docs/history.md#2026-09-10--der-rückweg-spielte-vier-sekunden-einzug-die-niemand-brauchte-roadmap-619a-f212) · [Archiv](docs/roadmap-archive.md#624)
 
@@ -700,6 +655,8 @@ Eine Suchseite ohne eigene Inhalte bekommt keinen organischen Traffic. Die Grund
   **Spielart 2 gibt es seit dem 2026-09-09 als Prototyp** in [`lab/duel/`](lab/duel/README.md), spielbar: `npx tsx lab/duel/serve.ts`, beide öffnen `/?seed=<wort>&me=<name>`. Der Startwert im Link bestimmt Bücher, Reihenfolge und die sechs Cover je Buch — **zwei Menschen sehen dasselbe, ohne dass etwas gespeichert werden muss**, und der Vorrat kommt offline aus dem Cover-Index. **Was fehlt, ist die eine Zahl, für die das Experiment da ist:** wie oft zwei Menschen dasselbe Cover wählen. Der Zufall liegt bei sechs Covern auf 17 %; unter 25 % ist die Spielart tot, über 70 % langweilig. Die simulierte Probe bestätigte nur die Rechnung, nicht das Spiel. Erspielen kann sie nur Julian mit jemandem.
 
   **Zu klären, bevor gebaut wird** (Julian hat die technischen Einwände ausdrücklich vertagt, sie sind hier nur notiert, nicht gewichtet): ein Vergleich zu zweit braucht einen Ort, an dem das Ergebnis des Ersten liegt, bis der Zweite fertig ist — das ist der Speicher, den E6 zurückstellt, und der Auslöser wäre genau dieser Punkt; Stimmen zählen heißt schreiben, und N11 erlaubt das nur ohne jede Kennung des Lesers; und die Cover verlassen dabei nichts, sie bleiben auf unserer Seite. Ein halber bis ein Tag je Spielart, Claude; die Entscheidung, *welche*, gehört zu Phase 5 und damit hinter die Inhalte.
+
+- [ ] **5.9 Gebrauchsspuren auf andere Cover legen — ein Lab-Experiment.** (Julian, 2026-09-11, an einem Open-Library-Scan des *Infinite Jest* mit Knicken, abgestoßenen Kanten und eingerissener Ecke: „Diesen Effekt auf andere Cover legen können → neues Lab-Projekt".) **Die Frage:** lässt sich die Abnutzung eines echten, fotografierten Exemplars — Knickfalten, Weißbruch an den Kanten, eine umgeschlagene Ecke — von einem Scan lösen und auf ein sauberes Cover übertragen, so dass es aussieht wie *dieses* Buch nach zwanzig Jahren im Regal? **Warum es passt:** die Wand zeigt Cover als Bilder aus Katalogen, fast alle sauber; ein abgegriffenes Exemplar ist das, was man tatsächlich in der Hand hatte, und es wäre ein teilbares Bild (5.5). **Zu messen im Lab:** ob eine Maske aus einem Scan (Helligkeitsabweichung gegen das saubere Cover desselben Entwurfs, das die Faltung ja findet) auf ein anderes Cover übertragen glaubwürdig wirkt, oder ob es eine gezeichnete Textur braucht. Ordner `lab/wear/`, noch nicht angelegt. **Vor jeder Veröffentlichung** gilt die Rechtefrage aus 5.5: ein verändertes Cover ist eine Bearbeitung eines fremden Werks. Claude, sobald Phase 5 dran ist; das Experiment selbst ist phasenfrei.
 
 ---
 

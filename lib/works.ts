@@ -8,6 +8,8 @@ import { authorMatchKey, looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normal
 import { hamming, looksLikeScannedPage, type ImageSignature } from './imagesig';
 
 export const MOSAIC_COVERS = 4;
+/** How many covers the card route sends, so a card can replace a repeat (ROADMAP 6.34). */
+export const MOSAIC_CANDIDATES = 8;
 
 function identityKey(w: { title: string; authors: string[] }): string {
   return titleAuthorKey(w.title, w.authors[0]);
@@ -211,17 +213,37 @@ export interface EditionsAndCovers {
   covers: Cover[];
 }
 
+/** An e-book keeps its record and its cover, never its ISBN (E21, ROADMAP 6.35). */
+function printOnly(e: Edition, ebookIsbns: ReadonlySet<string>): Edition {
+  const sharesEbookNumber = e.source === 'googlebooks' && [e.isbn13, e.isbn10].some(i => !!i && ebookIsbns.has(i));
+  return e.format === 'ebook' || sharesEbookNumber ? { ...e, isbn13: undefined, isbn10: undefined } : e;
+}
+
 /**
  * SPEC §2.2/§2.3 (E8): editions with the same ISBN become one edition with
  * merged metadata; every cover of every source survives and points at the
  * surviving edition. Cover identity is the image id, never the ISBN.
  */
 export function assembleEditions(sources: readonly SourceEdition[]): EditionsAndCovers {
+  /*
+    The site is about printed books (E21, Julian 2026-09-11): an e-book's ISBN
+    is never shown, linked or asked about. Open Library marks e-books in
+    `physical_format`, and the same number on a Google band loses it too.
+    Google's own `saleInfo.isEbook` is **not** used: measured on the recorded
+    fixtures it is true for 25 of 100 bands, all of them printed books that are
+    also sold as e-books (Reclam, 238 pages; Library of America, 751). The
+    cover stays: the image may be the printed jacket, and it folds like any
+    other. Audiobooks never get this far — the parser drops them.
+  */
+  const ebookIsbns = new Set(
+    sources.filter(s => s.format === 'ebook').flatMap(s => [s.isbn13, s.isbn10]).filter((i): i is string => !!i),
+  );
   const editionsByKey = new Map<string, Edition>();
   const coversById = new Map<string, Cover>();
   for (const src of sources) {
-    const { covers, authorKeys, ...edition } = src;
+    const { covers, authorKeys, ...raw } = src;
     void authorKeys;
+    const edition = printOnly(raw, ebookIsbns);
     const key = editionKey(edition);
     const existing = editionsByKey.get(key);
     const survivor = existing ? mergeEditionMeta(existing, edition) : edition;
@@ -448,12 +470,12 @@ function coverYear(cover: Cover, editionsById: ReadonlyMap<string, Edition>): nu
   return Math.max(-1, ...cover.editionIds.map(id => editionsById.get(id)?.year ?? -1));
 }
 
-function newestFirstBy(
+/** Newest printing first; title pages and blurb scans last, however new (SPEC F2.5). */
+function newestFirstOrder(
   editionsById: ReadonlyMap<string, Edition>,
   signatures?: ReadonlyMap<string, ImageSignature>,
 ): (a: Cover, b: Cover) => number {
   return (a, b) => {
-    // Title pages and blurb scans go last, however new the printing is.
     const pageA = looksLikeScannedPage(signatures?.get(a.id)) ? 1 : 0;
     const pageB = looksLikeScannedPage(signatures?.get(b.id)) ? 1 : 0;
     return pageA - pageB || coverYear(b, editionsById) - coverYear(a, editionsById);
@@ -461,17 +483,18 @@ function newestFirstBy(
 }
 
 /**
- * SPEC §3 F2.5 across every language, for the "All languages" tab (ROADMAP
- * 6.8): newest first, unknown year after, page-like scans last. The same
- * order as inside one language tab, so switching to the whole wall does not
- * change what "first" means.
+ * Every cover of the wall in one list, for the "All languages" pill
+ * (ROADMAP 6.8, Julian 2026-09-07): the same order a language tab uses —
+ * newest printing first, scanned pages last — across all languages at once,
+ * so the whole wall can be looked at without clicking through the tabs.
  */
 export function coversNewestFirst(
   covers: readonly Cover[],
   editions: readonly Edition[],
   signatures?: ReadonlyMap<string, ImageSignature>,
 ): Cover[] {
-  return [...covers].sort(newestFirstBy(new Map(editions.map(e => [e.id, e])), signatures));
+  const editionsById = new Map(editions.map(e => [e.id, e]));
+  return [...covers].sort(newestFirstOrder(editionsById, signatures));
 }
 
 /**
@@ -492,7 +515,7 @@ export function groupCoversByLanguage(
     list.push(c);
     groups.set(lang, list);
   }
-  const newestFirst = newestFirstBy(editionsById, signatures);
+  const newestFirst = newestFirstOrder(editionsById, signatures);
   return Array.from(groups.entries())
     .map(([language, cs]) => ({ language, covers: cs.sort(newestFirst) }))
     .sort((a, b) => {
@@ -699,6 +722,12 @@ export function foldDuplicateCovers(
 export type IsbnVerdict =
   | { status: 'verified' }
   | { status: 'differs'; cover: Cover }
+  /**
+   * The shop's image stands as its own tile, but one of the two pictures has
+   * no signature — so the fold never compared them, and "different" would be
+   * a guess (ROADMAP 6.32).
+   */
+  | { status: 'uncompared'; cover: Cover }
   /** Asked, and Google has no image for this ISBN. */
   | { status: 'unknown' }
   /** Asked, and the source did not answer: nothing may be concluded. */
@@ -712,6 +741,8 @@ export function verifyIsbnCover(
   asked: boolean,
   /** The lookup was attempted and failed, or the day's quota is gone. */
   unavailable = false,
+  /** Every signature the wall was folded with, the ISBN lookups' included. */
+  signatures: ReadonlyMap<string, ImageSignature> = new Map(),
 ): IsbnVerdict {
   // Order matters: a failed lookup must never read as "no image on record".
   if (unavailable) return { status: 'unavailable' };
@@ -721,11 +752,21 @@ export function verifyIsbnCover(
   const isSelected = (id: string) => id === selected.id || (selected.similarIds ?? []).includes(id);
   if (retailCoverIds.some(isSelected)) return { status: 'verified' };
 
-  // The shop's image survived folding, or folded into some other cover: that
-  // is the design on the shelf.
+  /*
+    The shop's image survived folding, or folded into some other cover: that
+    is the design on the shelf — **but only if the fold could have joined
+    them.** A picture that could not be fetched has no signature and folds
+    into nothing, so an unfolded tile is no evidence of a different design.
+    On Rowohlt's *Unendlicher Spaß* (2026-09-10) the page said "a different
+    cover" beside an image that was plainly the same one (SPEC N12).
+  */
+  const selectedSigned = [selected.id, ...(selected.similarIds ?? [])].some(id => signatures.has(id));
   for (const id of retailCoverIds) {
     const shown = wall.find(c => c.id === id || (c.similarIds ?? []).includes(id));
-    if (shown) return { status: 'differs', cover: shown };
+    if (!shown) continue;
+    return selectedSigned && signatures.has(id)
+      ? { status: 'differs', cover: shown }
+      : { status: 'uncompared', cover: shown };
   }
   return { status: 'unknown' };
 }

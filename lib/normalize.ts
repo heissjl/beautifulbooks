@@ -57,6 +57,18 @@ export function displayTitle(title: string): string {
   return stripTrailingBrackets(title).trim() || title;
 }
 
+/**
+ * The title as a small tile carries it: without the alternative title that
+ * older books have ("Frankenstein; or, The Modern Prometheus"). On a phone's
+ * three columns that half cut the line in two places at once, while the
+ * desktop showed it whole (ROADMAP 6.30, SPEC N14). The work page keeps the
+ * full title.
+ */
+export function tileTitle(title: string): string {
+  const shown = displayTitle(title);
+  return shown.replace(/\s*[;,:]\s*or,?\s+\S.*$/i, '').trim() || shown;
+}
+
 function stripTrailingBrackets(s: string): string {
   let out = s.trim();
   for (;;) {

@@ -196,27 +196,6 @@
     from { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + 32px)) scale(0.9) rotate(var(--tilt, 0deg)); }
     to { opacity: 1; transform: translate(calc(-50% + var(--dx)), -50%) scale(1) rotate(var(--tilt, 0deg)); }
   }
-  /*
-    The search wait (1-13 s, ROADMAP 6.19): the covers the home page already
-    carries, small and dimmed, assembling as a wall. They are the images the
-    browser has anyway, so the animation costs no request and no new asset -
-    and being unlabelled, small and half-lit, they cannot be mistaken for a
-    result. Motion is CSS only; `prefers-reduced-motion` gets the finished
-    block without any.
-  */
-  .searching-tile {
-    animation: searching-in 2.8s ease-in-out infinite both;
-    animation-delay: calc(var(--n, 0) * 0.12s);
-    opacity: 0;
-  }
-  @keyframes searching-in {
-    0% { opacity: 0; transform: translateY(6px) scale(0.96); }
-    18%, 62% { opacity: 0.55; transform: none; }
-    100% { opacity: 0; transform: translateY(-4px) scale(0.98); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .searching-tile { animation: none; opacity: 0.5; }
-  }
   /* One row of the share menu (ShareMenu). */
   .share-item {
     display: block;

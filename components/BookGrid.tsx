@@ -78,9 +78,8 @@ function Notice({
 /**
  * What a search looks like while it runs (SPEC §8.1, ROADMAP 6.19a): an
  * author's face assembling out of the covers of their own books, with the
- * query named under it. Falls back to the plain cover wall while the picture
- * is on its way, and for good if it does not arrive — the work page's first
- * seconds still use that wall, so both waits look like the same site.
+ * query named over it. Until the picture is there, the heading stands over a
+ * field of its size that breathes as the picture will (ROADMAP 6.33).
  */
 export function GridSkeleton({ query }: { query?: string }) {
   return <MosaicLoader caption={query ? `Looking for \u201c${query}\u201d in Open Library` : 'Searching'} />;

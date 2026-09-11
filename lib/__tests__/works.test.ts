@@ -533,10 +533,13 @@ describe('verifyIsbnCover', () => {
     expect(verifyIsbnCover(selected, ['gb:shop'], [selected], true)).toEqual({ status: 'verified' });
   });
 
+  const sig = {} as unknown as import('../imagesig').ImageSignature;
+  const signed = (...ids: string[]) => new Map(ids.map(id => [id, sig]));
+
   it('reports the other design when the shop image stayed its own tile', () => {
     const selected = cover('ol:scan');
     const shop = cover('gb:shop');
-    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true);
+    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true, false, signed('ol:scan', 'gb:shop'));
     expect(verdict).toMatchObject({ status: 'differs' });
     expect((verdict as { cover: Cover }).cover.id).toBe('gb:shop');
   });
@@ -544,8 +547,41 @@ describe('verifyIsbnCover', () => {
   it('follows the shop image into whatever tile it folded into', () => {
     const selected = cover('ol:scan');
     const other = cover('ol:other', ['gb:shop']);
-    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, other], true);
+    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, other], true, false, signed('ol:scan', 'gb:shop'));
     expect((verdict as { cover: Cover }).cover.id).toBe('ol:other');
+  });
+
+  /*
+    ROADMAP 6.32, Rowohlt 2011 on 2026-09-10: "a different cover" beside a
+    picture that was plainly the same one. Nothing folded because a picture
+    could not be fetched — and an unfolded tile read as a different design.
+  */
+  it('does not call it a different cover when the selected cover has no signature', () => {
+    const selected = cover('ol:scan');
+    const shop = cover('gb:shop');
+    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true, false, signed('gb:shop'));
+    expect(verdict).toMatchObject({ status: 'uncompared' });
+    expect((verdict as { cover: Cover }).cover.id).toBe('gb:shop');
+  });
+
+  it('does not call it a different cover when the shop image has no signature', () => {
+    const selected = cover('ol:scan');
+    const shop = cover('gb:shop');
+    expect(verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true, false, signed('ol:scan')))
+      .toMatchObject({ status: 'uncompared' });
+  });
+
+  it('compares nothing when no signatures are passed at all', () => {
+    const selected = cover('ol:scan');
+    const shop = cover('gb:shop');
+    expect(verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true)).toMatchObject({ status: 'uncompared' });
+  });
+
+  it('counts a signature of any scan folded into the selected cover', () => {
+    const selected = cover('ol:scan', ['ol:twin']);
+    const shop = cover('gb:shop');
+    expect(verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true, false, signed('ol:twin', 'gb:shop')))
+      .toMatchObject({ status: 'differs' });
   });
 
   it('falls back to unknown when the shop image is nowhere on the wall', () => {
