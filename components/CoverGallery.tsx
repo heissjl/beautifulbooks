@@ -161,20 +161,32 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       {/*
         One copy of every pill, invisible and out of the flow, so the widths of
         the ones currently tucked away are known too (`useRowFit`).
+
+        The probe is as wide as all the pills in one line — 806 px for *Going
+        Postal* — and `invisible` hides it without taking it out of the
+        page's width. Unclipped, it made the whole page 806 px wide on a
+        390 px phone: the page scrolled sideways, and the phone sheet, which
+        is `fixed inset-0` and takes its width from the page, cut its text off
+        at both edges (Julian, 2026-09-11: „ich hatte letztens ein problem
+        mit dem sizing"). The zero-height, clipping wrapper keeps it out of
+        the page's width; the widths it reports are the pills' own and do not
+        change with the clipping.
       */}
-      <div ref={pillProbe} aria-hidden="true" className="pointer-events-none invisible absolute left-0 top-0 flex w-max gap-2">
-        <span data-k="kicker" className="kicker">{total} cover{total !== 1 ? 's' : ''}</span>
-        {groups.map(g => (
-          <span key={tabKey(g)} data-k={tabKey(g)} className="chip shrink-0">
-            {languageName(g.language)}
-            <span className="text-xs opacity-70">{g.covers.length}</span>
+      <div aria-hidden="true" className="pointer-events-none invisible absolute inset-x-0 top-0 h-0 overflow-hidden">
+        <div ref={pillProbe} className="flex w-max gap-2">
+          <span data-k="kicker" className="kicker">{total} cover{total !== 1 ? 's' : ''}</span>
+          {groups.map(g => (
+            <span key={tabKey(g)} data-k={tabKey(g)} className="chip shrink-0">
+              {languageName(g.language)}
+              <span className="text-xs opacity-70">{g.covers.length}</span>
+            </span>
+          ))}
+          <span data-k={MORE} className="chip shrink-0">+99 more</span>
+          <span data-k={ALL} className="chip shrink-0">
+            All languages
+            <span className="text-xs opacity-70">{total}</span>
           </span>
-        ))}
-        <span data-k={MORE} className="chip shrink-0">+99 more</span>
-        <span data-k={ALL} className="chip shrink-0">
-          All languages
-          <span className="text-xs opacity-70">{total}</span>
-        </span>
+        </div>
       </div>
       {/* 5 px, one more than the 4 the link had above the pills. */}
       {belowTabs && <div className="mt-[5px]">{belowTabs}</div>}
