@@ -1883,6 +1883,52 @@ Tests 442, `tsc`, Lint grün.
 
 Tests 456, `tsc`, Lint und Build grün.
 
+## 2026-09-11 · Das Rondell: sieben Gesichter, die der Maus folgen (ROADMAP 1.9)
+
+Julian wollte den Fächer der Startseite etwas tiefer und fragte nach anderen Formen: „wie wäre es mit einem Rondell?"
+
+**Die Wahl.** Nebeneinander standen drei Formen: der Fächer 2 rem tiefer, ein Rondell und ein Stapel, der alle 3 s sein oberstes Cover wegspielt. Julian wählte das Rondell.
+
+**Die Maße.** Der erste Ring (Radius 7,5 rem, 12° von oben) war ein Haufen: Die Cover überdeckten sich, die hintere Reihe verschwand. Bei 18° steht die hintere Hälfte sichtbar über der vorderen. Danach schrumpfte der Ring zweimal auf Julians Wunsch: „minimal kleiner" auf 4,5 rem breite Cover mit Radius 8,5 rem, dann der Abstand zwischen den Covern um 10 % auf 7,65 rem.
+
+**Die Zahl.** Julian ließ 7, 8 und 9 vergleichen: Bei acht steht hinten immer ein Cover genau hinter dem vorderen, bei neun überdecken sich die vorderen gegenseitig. Er wählte sieben: „7 ist aber eine gute Zahl". Bei einer ungeraden Zahl steht die hintere Reihe versetzt zwischen den vorderen.
+
+**Die Maus.** Der erste Wunsch lautete: „wenn hover nicht stoppt, sondern das man damit das rondell hin und her bewegen kann". Die erste Umsetzung übersetzte die waagerechte Mausbewegung in eine Drehung, 240° über die volle Breite. Mit echter Maus gemessen: 256 px nach rechts ergaben −191,9°, erwartet waren −192°. Julian wollte mehr: „hover sensitiv nach region … der obere bereich muss wahrscheinlich entgegengesetzt reagieren", also den ganzen Kreis bewegen können.
+
+Seither liest `HeroRondell` den Zeiger als Winkel auf der Ellipse des Rings: 0° vorne, 180° hinten. Der Ring dreht sich um genau die Änderung dieses Winkels, so bleibt das Cover unter dem Zeiger am Zeiger. Dafür schreibt er einen Winkel `--turn` pro Frame, statt einer CSS-Animation zu folgen.
+
+**Zwei Fehler, im Messen gefunden:**
+1. **Durch die Mitte klappte der Ring um.** Von vorne rechts nach hinten links sprang er von −32° auf 138,8°, einen halben Umlauf. In der Mitte schwingt der Winkel von vorne nach hinten, und die tote Zone hielt den alten fest. Jetzt vergisst der Ring dort den letzten Winkel, und ein einzelnes Ereignis dreht höchstens 45°.
+2. **Das Telefon lud Cover, die es nie zeigte.** Unter `lg` war das Bild nur per CSS versteckt. Gemessen auf 390 px: das Rondell gemountet, seine Schleife lief unsichtbar weiter, **alle sieben Cover geladen**, dazu sieben Preload-Links. Beim Fächer vom 2026-09-10 galt dasselbe für vier; der Satz „unterhalb von `lg` gar nicht gerendert" im Roadmap-Eintrag stimmte nicht. Jetzt entscheidet `useIsDesktop(false)`: Der Server rendert das Rondell nie, der Browser nur ab `lg`. Ein leerer Platzhalter in seiner Größe steht von Anfang an da, damit beim Erscheinen nichts springt.
+
+**Das Layout.** Das Rondell stand in der Zeile der Überschrift, und seine Höhe schob das Suchfeld nach unten. Jetzt stehen Überschrift und Suchfeld links in einer Spalte, das Rondell senkrecht mittig daneben. Die Spalte gibt es in beiden Zuständen, damit das Suchfeld beim Absenden nicht neu gemountet wird.
+
+**Die Auswahl.** Zu den vier des Fächers kommen drei, nach derselben Methode wie am Vortag: greedy farthest-point, Pool ohne leere Scans und ohne das untere Viertel an Sättigung und Kontrast. Die drei sind `ol:15202652`, `ol:291296` und `ol:9256648`. Jedes Paar der sieben liegt ≥ 0,39 in der Farbe und ≥ 26 Bit im Hash auseinander.
+
+Julian verlangte: „der hash abstand zwischen den covern die in einem rondell landen, sollte höher sein als bei unseren sonstigen schwellen". Der Test prüft deshalb gegen die lockerste Hash-Schwelle der Seite. Das sind 20 Bit für zwei Cover mit derselben ISBN; die übrigen liegen bei 8 und 16 in der Faltung und bei 0,28 × 64 ≈ 18 Bit für „Looks like this". Diese Schwelle liest der Test aus den Konstanten, statt die Zahl abzuschreiben.
+
+**Die Bildunterschrift** nennt jetzt „Dune · Frank Herbert", auf Julians Wunsch Titel und Autor statt einer Anzahl.
+
+**Gemessen am Dev-Server des Worktrees:**
+
+| | Ergebnis |
+|---|---|
+| Strich nach rechts über die vorderen Cover | −40,6° (sie wandern mit nach rechts) |
+| derselbe Strich über die hinteren | +42,8°, entgegengesetzt |
+| von vorne rechts durch die Mitte nach hinten links | 2,2° (vor der Korrektur ein halber Umlauf) |
+| ein einzelner Sprung über die Mitte | 46,8° (Obergrenze 45° je Ereignis) |
+| ein Kreis mit der Maus um den Ring | −362° |
+| Zeiger ruht 1 s | −0,15° |
+| 1 s nach dem Verlassen | 8,1° (Eigendrehung 9°/s) |
+| 390 px, neu geladen | Rondell nicht gemountet, 0 der 7 Cover geladen, 0 Preloads; Suchfeld bei 320 px wie zuvor, kein seitliches Scrollen |
+| 1280 px | Platzhalter 304 × 228 px = Rondell samt Zeile; Text → Suchfeld 32 px; Suchfeld 768 px breit |
+| 1024 px (vor der 10-%-Verkleinerung) | Cover ragen 15 px über ihren Kasten, bleiben 41 px vor dem Fensterrand; kein seitliches Scrollen |
+| Suche absenden | dasselbe Eingabefeld-Element, Wert bleibt, `?q=dune`, Hero weg |
+
+**Wie gemessen wurde.** Das Browser-Fenster der Sitzung war ausgeblendet und gab keine Maus- und Tastaturereignisse an die Seite weiter: kein einziges `mousemove` am Dokument, und ein getippter Suchbegriff kam nicht an. Die Mausführung ist deshalb mit künstlichen `PointerEvent`s gemessen, die denselben Handler treffen, die Suche per `requestSubmit()`. Ein erster künstlicher Lauf mit Timer-Pausen ergab unplausible Werte, etwa +827° für einen kurzen Strich; eine Erklärung dafür habe ich nicht. Die Läufe danach, mit Pausen nach Frames, waren stimmig und wiederholbar. Ob sich die Drehung mit echter Hand gut anfühlt, hat nur Julian gesehen.
+
+Tests 437, `tsc`, Lint und Build grün.
+
 ## 2026-09-11 · Die ganze Wand auf einmal (ROADMAP 6.8)
 
 *Nie ausgeliefert. Als `main` am 2026-09-11 mit Produktion zusammengeführt wurde, stand dort schon eine andere Fassung von 6.8 (Eintrag „All languages auf beiden Geräten“ oben): die Reiter brechen um, „All languages“ ist eine Pille am Ende. Julian entschied, alles zusammenzuführen; es galt die ausgelieferte Fassung. Der Code dieser hier entfiel; ihr Test (`lib/__tests__/allLanguages.test.ts`) blieb, weil er die Ordnung von `coversNewestFirst` prüft, die beide Fassungen teilen, und gegen die ausgelieferte besteht.*

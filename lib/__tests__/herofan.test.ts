@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import index from '../../data/cover-index.json';
-import { HERO_FAN } from '../herofan';
-import { COLOUR_MAX, SAME_DESIGN_BITS } from '../coverindex';
-import { colourDistance, hamming, looksLikeScannedPage, type ImageSignature } from '../imagesig';
+import { HERO_FAN, HERO_RING_IDS } from '../herofan';
+import { COLOUR_MAX, SAME_DESIGN_BITS, STRUCTURE_MAX } from '../coverindex';
+import { colourDistance, hamming, HASH_BITS, looksLikeScannedPage, type ImageSignature } from '../imagesig';
+import { SAME_COVER_MAX_DISTANCE, SAME_ISBN_MAX_DISTANCE, SAME_PRINTING_MAX_DISTANCE } from '../works';
 
 type Raw = { works: [string, string, string][]; covers: [number, string, string, number, number, number, string][] };
 const raw = index as unknown as Raw;
@@ -40,5 +41,39 @@ describe('the home page fan (ROADMAP 1.9)', () => {
 
   it('shows no scan that looks like a blank page', () => {
     for (const p of picks) expect(looksLikeScannedPage(p.sig)).toBe(false);
+  });
+});
+
+/** The rondell makes the same promise with seven faces (1.9, 2026-09-11). */
+describe('the home page rondell', () => {
+  const ring = HERO_RING_IDS.map(signatureOf);
+
+  it("shows seven different covers of the one book, the fan's four among them", () => {
+    expect(HERO_RING_IDS).toHaveLength(7);
+    expect(new Set(HERO_RING_IDS).size).toBe(7);
+    for (const id of HERO_FAN.coverIds) expect(HERO_RING_IDS).toContain(id);
+    for (const p of ring) {
+      expect(p.work).toBe(HERO_FAN.workId);
+      expect(looksLikeScannedPage(p.sig)).toBe(false);
+    }
+  });
+
+  it('keeps every pair further apart in structure than any threshold the site uses', () => {
+    // Julian 2026-09-11: the ring's covers must differ by more than the loosest
+    // rule anywhere — the folding tiers and the "looks like this" structure gate.
+    const loosest = Math.max(
+      SAME_DESIGN_BITS,
+      SAME_COVER_MAX_DISTANCE,
+      SAME_PRINTING_MAX_DISTANCE,
+      SAME_ISBN_MAX_DISTANCE,
+      Math.ceil(STRUCTURE_MAX * HASH_BITS),
+    );
+    expect(loosest).toBe(SAME_ISBN_MAX_DISTANCE);
+    for (let i = 0; i < ring.length; i++) {
+      for (let j = i + 1; j < ring.length; j++) {
+        expect(hamming(ring[i].sig.hash, ring[j].sig.hash)).toBeGreaterThan(loosest);
+        expect(colourDistance(ring[i].sig, ring[j].sig) ?? 1).toBeGreaterThan(COLOUR_MAX * 4);
+      }
+    }
   });
 });

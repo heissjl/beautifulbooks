@@ -1,42 +1,54 @@
 /**
- * The four covers fanned out beside the home page's headline (ROADMAP 1.9).
+ * The covers on the ring beside the home page's headline (ROADMAP 1.9).
  *
  * Julian, 2026-09-07: „der Platz oben rechts ist perfekt für noch ein
  * Design-Element." The first screen said what the site does in a sentence
- * and showed none of it; this is the promise as a picture — one book, four
- * faces — in the visual language the loading stage already uses (`.stage-tile`).
+ * and showed none of it; this is the promise as a picture — one book, many
+ * faces. It began on 2026-09-10 as a fan of four in the loading stage's tiles
+ * and became a ring of seven on 2026-09-11 (Julian: „das Rondell … 7 ist aber
+ * eine gute Zahl"): at an odd count the far covers stand between the near
+ * ones instead of hidden right behind them.
  *
  * **Fixed ids, no request.** The covers are named here, like `lib/curated.ts`
- * names the wall's, so the first render costs nothing beyond four images
+ * names the wall's, so the first render costs nothing beyond seven images
  * from `/img`, which the CDN holds after the first reader.
  *
- * **Picked by distance, not by eye.** Chosen on 2026-09-10 from the 133 Dune
- * covers in the built index by greedy farthest-point over colour distance and
- * dHash, after dropping blank-looking, low-saturation and low-contrast scans:
- * the four are at least 0.53 apart in colour (the "looks like this" gate is
- * 0.055) and 26 bits apart in structure (same-design folds at 8). A test
- * holds that, so a swapped id cannot quietly put two near-identical jackets
- * side by side — which would make the picture say the opposite of what it
- * is for.
+ * **Picked by distance, not by eye.** From the 133 Dune covers in the built
+ * index by greedy farthest-point over colour distance and dHash, after
+ * dropping blank-looking scans and the lowest quarter in saturation and
+ * contrast: the fan's four on 2026-09-10, three more on 2026-09-11 seeded with
+ * them. Every pair is at least 0.39 apart in colour (the "looks like this"
+ * gate is 0.055) and 26 bits apart in structure. Julian asked that the ring's
+ * covers differ by more than any threshold the site uses elsewhere, so a
+ * test holds them above the loosest one — a swapped id cannot quietly put two
+ * near-identical jackets on the ring, which would make the picture say the
+ * opposite of what it is for.
  *
- * **The caption promises no number.** "four of its covers", not "four of
- * 133": the count moves with the catalogue and the folding, and §1 forbids
- * a figure the page cannot stand behind.
+ * **The caption names the book, not a count** (Julian, 2026-09-11): title and
+ * author. The number of covers on the ring is plain to see, and a count of
+ * the catalogue would move with it and the folding (§1, N12).
  */
-export interface HeroFan {
+export interface HeroBook {
   workId: string;
   title: string;
   author: string;
-  /** Four cover ids, left to right, in the index's `ol:<id>` form. */
+  /** The four covers the first fan showed and the ring was seeded with, in the index's `ol:<id>` form. */
   coverIds: readonly [string, string, string, string];
 }
 
-export const HERO_FAN: HeroFan = {
+export const HERO_FAN: HeroBook = {
   workId: 'OL893414W',
   title: 'Dune',
   author: 'Frank Herbert',
   coverIds: ['ol:8570801', 'ol:12780703', 'ol:11481225', 'ol:11481333'],
 };
 
-/** Degrees of tilt per tile, outer ones more, so the fan reads as held in a hand. */
-export const HERO_FAN_TILTS = [-10, -3, 4, 11] as const;
+/**
+ * The seven on the ring, in order round it: the fan's four and the three
+ * next-farthest taking turns, so the fan's covers are spread round the ring.
+ * The film jacket comes first because it faces the reader first.
+ */
+export const HERO_RING_IDS = [
+  'ol:11481333', 'ol:15202652', 'ol:8570801', 'ol:291296',
+  'ol:12780703', 'ol:9256648', 'ol:11481225',
+] as const;
