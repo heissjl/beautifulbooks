@@ -1853,3 +1853,14 @@ Gemessen am Dev-Server:
 Zwei Beobachtungen: hinter „+11 more" steckte am Telefon zuerst auch **„Unknown 100"**, weil „Unknown" immer zuletzt steht. Julian, noch am selben Tag: *„Unknown und alle Sprachen sollten beide nicht weggeklappt werden, weil unter Unknown sich oft noch Sachen verstecken."* Seither steht „Unknown" immer sichtbar zwischen „+n more" und „All languages" — nachgemessen: weiterhin **3 Zeilen**, erste Kachel bei 416 px, am Desktop unverändert. Und die Gesamtansicht zeigt Dubletten deutlicher als ein Sprachreiter: bei *Infinite Jest* stand das violette Einaudi-Cover zweimal da, einmal unter Italian, einmal unter Unknown — derselbe Befund wie M9 im [Testbericht](tests/2026-09-11-mobil.md), jetzt auf einen Blick.
 
 Tests 435, `tsc`, Lint und Build grün.
+
+**Zeilen statt Zahl** (Julian, am selben Tag: „lass es am Handy nur 2 Zeilen bei den Sprachpillen sein … am Desktop maximal 3 Zeilen"). Eine feste Zahl von Sprachen verspricht keine Zeilenzahl — sie hängt an Bildschirmbreite und Namen —, also misst eine unsichtbare Probe die Breite jeder Pille, und `lib/rowfit.ts` packt sie wie der Browser: links nach rechts, neue Zeile, wenn die nächste nicht passt, mit „+n more", „Unknown" und „All languages" am Ende der letzten Zeile. Der aktive Reiter bleibt immer sichtbar. Nachgemessen:
+
+| | sichtbar | Zeilen |
+|---|---|---|
+| *Nineteen Eighty-Four*, 390 px | English, German, Spanish, +13 more, Unknown 100, All languages 224 | **2** (erste Kachel bei 378 px statt 416) |
+| *Infinite Jest*, 390 px | alle vier Sprachen und All languages, kein „+n" | 2 |
+| *Nineteen Eighty-Four*, 1280 px | alle 17 Sprachen, Unknown, All languages | **3** |
+
+Tests 442, `tsc`, Lint grün.
+
