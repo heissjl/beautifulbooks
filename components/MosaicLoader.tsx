@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import AssemblingWall from './AssemblingWall';
 import { Clearing, type MosaicScene } from './mosaicClearing';
 import {
   frameHeight, pickImage, pickTemplate, revealOrder, shuffledSources, unpackBytes,
@@ -19,10 +18,12 @@ import {
  * that was the constraint the whole thing was built against (Julian,
  * 2026-09-08: „es darf clientseitig nicht zu ressourcenverbrauchend sein").
  *
- * **If anything is missing or slow, this is the old wall.** A picture that
- * has not arrived is not a reason to show an empty box: until the mosaic is
- * decoded — and for good if it fails — the reader sees `AssemblingWall`,
- * which is what the site showed before and needs nothing new.
+ * **Until the picture is decoded, the heading stands over a quiet field of
+ * the picture's size; if it never comes, the heading stands alone.** The
+ * small pulsing wall of home-page covers that used to fill this gap is gone
+ * (Julian, 2026-09-11: „der sollte nirgendwo mehr existieren", ROADMAP 6.33):
+ * for the fraction of a second it showed, it was a second, different picture
+ * of waiting before the real one.
  */
 
 /** How wide the picture is, by the site's own phone/desktop breakpoint. */
@@ -36,6 +37,10 @@ const DESKTOP_WIDTH = 420;
  * the visible part of it happens in the first second either way.
  */
 const DURATION_MS = 3000;
+
+/** The heading over the picture, and over the field that stands in for it. */
+const CAPTION_CLASS =
+  'stage-pulse mx-auto mb-4 max-w-md text-balance text-center font-display text-xl leading-snug text-ink sm:mb-5 sm:text-2xl';
 
 function frameWidthFor(innerWidth: number): number {
   return innerWidth >= 640 ? DESKTOP_WIDTH : PHONE_WIDTH;
@@ -185,9 +190,21 @@ export default function MosaicLoader({ caption }: { caption: string }) {
     return () => { if (raf) cancelAnimationFrame(raf); };
   }, [scene]);
 
-  // Nothing to draw yet, or nothing to draw at all: the wall the site had
-  // before, which costs no new request.
-  if (failed || !scene) return <AssemblingWall caption={caption} />;
+  /*
+    Nothing to draw yet: the heading, and a still field the size of the
+    picture so nothing jumps when it arrives (260 × 351 on a phone, 420 × 567
+    on a desktop — `frameHeight` for the 40 × 36 grid nineteen of the twenty
+    templates use). Nothing to draw at all: the heading alone, which still
+    says what is being waited for.
+  */
+  if (failed || !scene) {
+    return (
+      <div className="py-10 sm:py-14" aria-busy="true" aria-live="polite" aria-label={caption}>
+        <p className={CAPTION_CLASS}>{caption}</p>
+        {!failed && <div className="mx-auto h-[351px] w-[260px] rounded-[3px] bg-surface-2 sm:h-[567px] sm:w-[420px]" />}
+      </div>
+    );
+  }
 
   // Decided when the picture was chosen, not during render: the two must
   // agree, or the file fetched is not the size that is shown.
@@ -204,9 +221,7 @@ export default function MosaicLoader({ caption }: { caption: string }) {
         picture; standing over it, in the display face the rest of the site
         uses for headings, it reads as what the page is doing.
       */}
-      <p className="stage-pulse mx-auto mb-4 max-w-md text-balance text-center font-display text-xl leading-snug text-ink sm:mb-5 sm:text-2xl">
-        {caption}
-      </p>
+      <p className={CAPTION_CLASS}>{caption}</p>
       <div
         className="mx-auto overflow-hidden rounded-[3px] bg-surface-2"
         style={{ width, height }}
