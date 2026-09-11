@@ -761,3 +761,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **„Geschwisterwerke" heißt hier nichts Fachliches:** mehrere Werk-Datensätze bei Open Library, die dasselbe Buch beschreiben. Sie entstehen, weil Datensätze aus verschiedenen Bibliotheksbeständen importiert und nie zusammengeführt wurden. Bei Böll sind es sechs für einen Roman.
 
 **Als Testfall festhalten:** OL279833W. Karte und Wand müssen dieselbe Ausgabenzahl nennen, und jedes Cover der Karte muss auf der Wand erreichbar sein. Verwandt mit **6.15**, wo dieselben Datensätze *verschiedene* Titel tragen und deshalb gar nicht erst zusammengefasst werden.
+
+### 6.37
+
+*Stand beim Abhaken am 2026-09-11; das Ergebnis steht in der Roadmap.*
+
+**6.37 Doppelte React-Keys auf der Detailseite.** (Gefunden 2026-09-11 beim Browser-Check von 1.11.) Auf *Going Postal* (`/book/OL453733W?isbn=9780857525086`) meldet React zweimal „Encountered two children with the same key“ für `gb:WkePEAAAQBAJ`. Cover- und Ausgaben-IDs sind an zwei Stellen in `components/BookDetail.tsx` Keys: im Streifen „The same cover, N scans“ (`key={id}` über `[cover.id, ...similarIds]`) und in der Ausgabenliste (`key={edition.id}`). Vermutlich steht die Google-ID doppelt in `similarIds`, oder dieselbe Google-Ausgabe kommt zweimal an. **Nicht durch 1.11 verursacht** — dessen Diff fügt keinen Key hinzu. Folge laut React: Kinder können doppelt erscheinen oder fehlen. Erst die Ursache finden, dann entdoppeln, nicht umgekehrt: eine doppelte ID ist ein Hinweis auf eine doppelte Ausgabe.

@@ -39,7 +39,7 @@ import type { ImageSignature } from '@/lib/imagesig';
 import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
 import { shapeOf } from '@/lib/queryshape';
-import { coversNewestFirst, foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
+import { coversNewestFirst, foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, withRetailCovers, type IsbnVerdict } from '@/lib/works';
 
 /*
   It said "Search" until 2026-09-10, which stopped working the moment a search
@@ -106,7 +106,8 @@ function buildWall(
   extraSignatures: ReadonlyMap<string, ImageSignature>,
   preferred: string | undefined,
 ) {
-  const all = [...merged.covers, ...extra];
+  // Each id once: the shop's image is often a Google volume page 0 already has (6.37).
+  const all = withRetailCovers(merged.covers, extra);
   const signatures = new Map(merged.signatures);
   for (const [id, sig] of extraSignatures) signatures.set(id, sig);
 

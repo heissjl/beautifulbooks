@@ -2035,3 +2035,13 @@ Die Blässe-Regel ist relativ zum Werk. Eine feste Untergrenze wäre ein neuer S
 Tests 470, `tsc`, Lint und Build grün.
 
 **In Produktion einmal nachgesehen**, nach dem Deploy von `3da68e9` (Vercel meldete Erfolg): Die Startseite bei 1280 × 800 zog *Portnoy's Complaint · Philip Roth* (`/book/OL74676W`), mit 7 Plätzen, und alle 7 Cover waren geladen.
+
+## 2026-09-11 · Eine Google-ID zweimal in der Liste der Wand (ROADMAP 6.37)
+
+Gefunden beim Browser-Check von 1.11: React meldete auf *Going Postal* zwei Kinder mit dem Schlüssel `gb:WkePEAAAQBAJ`. Der Punkt verlangte, erst die Ursache zu finden und dann zu entdoppeln — eine doppelte ID hätte auch auf eine doppelte Ausgabe zeigen können.
+
+**Die Ursache, in den Daten nachgewiesen** (`npm run dev`, `/book/OL453733W?isbn=9780857525086`, das gewählte Cover `ol:8448550` mit einer einzigen Ausgabe `OL26794407M`): Seite 0 trägt vier Google-Kandidaten aus der Titelsuche, darunter `gb:WkePEAAAQBAJ`; die ISBN-Nachschau für 9780857525086 antwortet mit genau diesem Band. `buildWall` legte beides aneinander (`[...merged.covers, ...extra]`), die ID stand also zweimal in der Liste, die gefaltet wird. Faltet sie in ein Open-Library-Cover, steht sie zweimal unter dessen Scans; faltet sie nicht, stehen zwei Kacheln mit einem Schlüssel auf der Wand. Dasselbe passiert, wenn zwei ISBNs einer Ausgabe bei Google denselben Band ergeben. **Eine doppelte Ausgabe steckt nicht dahinter.**
+
+**Die Reparatur** sitzt dort, wo die Dopplung entsteht, nicht beim Falten: `withRetailCovers` in `lib/works.ts` fügt ein Händler-Cover nur an, wenn die Wand es noch nicht hat; sonst bekommt das vorhandene die Ausgaben, die die Nachschau nennt. Nichts fällt weg, und das Urteil der Seitenleiste bleibt gleich, weil es das Händlerbild an seiner ID sucht (in der Wand oder unter den gefalteten Scans). Vier Tests in `lib/__tests__/retailCovers.test.ts`, einer davon faltet das Ergebnis und prüft, dass nichts zweimal gelistet wird.
+
+**Gesehen nach der Reparatur:** die ganze Wand von *Going Postal* („All languages“) hat 16 Kacheln, keine ID doppelt. Die React-Warnung selbst ließ sich in dieser Sitzung weder vor noch nach der Reparatur auslösen — sie hängt daran, in welches Cover die Faltung den Band legt, und das hängt davon ab, welche Signaturen gerade im Cache sind. Die doppelte ID in der Eingabe des Faltens war dagegen vor der Reparatur in den Antworten zu sehen.
