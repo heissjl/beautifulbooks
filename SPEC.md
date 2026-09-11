@@ -215,6 +215,8 @@ Dass das Verdikt den Markt schlägt, ist Absicht: der Leser hat ein **Bild** ang
 
   **Das Verdikt bestimmt die erste Reihe** (`linkPlan`, seit 2026-09-09). **Die ISBN fragt zuerst, wo es eine gibt** (Julian, 2026-09-10) — mit einer Ausnahme, und sie ist der Grund, aus dem es das Verdikt gibt: bei `differs` besteht sie aus **AbeBooks, eBay und Google Lens** — Suchen nach Titel, Autor, Verlag und Jahr, plus Bildsuche —, die Händler rücken hinter die Klappe, die Überschrift heißt „Find the cover you picked", und der Verdikt-Hinweis steht **über** der Reihe, weil er ihr Grund ist. Ein ISBN-Link kann dort nicht führen: was er öffnet, liefert nachweislich das andere Bild (Julian, 2026-09-09: „nur zig buttons wo immer ein anderes cover dahinter liegt"). Bei `unknown` hängt sich die antiquarische Suche hinten an die Reihe — **nur die Reihenfolge, kein Satz**: „unknown" heißt weiterhin nicht „nicht zu kaufen", und die Wortlaute in `lib/verdicts.ts` bleiben unangetastet.
 
+  **In der Seitenleiste spricht nur `differs`** (Julian, 2026-09-11: „es sollte nur eine anmerkung geben bei differs“). Es ist der einzige Zustand, der ändert, was der Leser tun sollte — die Nummer liefert einen anderen Umschlag, also sucht die erste Reihe nach dem Bild. Die übrigen Zustände standen als Satz unter jedem Druck und änderten nichts; Schweigen behauptet nichts (N12). **Die Wortlaute unten gelten weiter**: die About-Seite zitiert alle fünf (F6), und `lib/verdicts.ts` bleibt ihre einzige Quelle.
+
   | Zustand | Text | Verhalten |
   |---|---|---|
   | `verified` | „The publisher's current image for this ISBN is this cover.“ | Kauf-Links zuerst |

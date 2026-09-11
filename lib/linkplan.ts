@@ -25,7 +25,6 @@
  *    no such link is possible — a foreign ISBN, or none.
  */
 import type { BuyLink, Edition } from './model';
-import { twoQuestionShops } from './buylinks';
 import { DEFAULT_MARKET, type Market } from './market';
 import { isbn13to10, registrationArea } from './normalize';
 import type { VerdictStatus } from './verdicts';
@@ -242,19 +241,19 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
   }
 
   /*
-    A shop that can be asked two ways always says which one it is being asked
-    — even where only one of the two is possible (Julian, 2026-09-10: „nimm
-    hier trotzdem die labels wie davor, also mit title und year. dann sind wir
-    einheitlich und verständlich"). An edition without an ISBN would otherwise
-    show a bare "AbeBooks" that means something different from the "AbeBooks"
-    on the printing next to it.
+    **Every shop button says which question it puts** — its ISBN field, or
+    title, author, publisher and year (Julian, 2026-09-10: „einheitlich und
+    verständlich"; 2026-09-11: „warum steht bei ebay nicht, was es sucht?").
+    A bare "eBay" in the German column, where eBay is only ever asked by
+    words, left the reader to guess; so did a bare "Booklooker", which only
+    ever takes the number.
 
-    Shops with only one question keep their plain label: naming a question
-    nobody could ask differently explains nothing.
+    Tools that are not shops — Google Lens, TinEye, WorldCat, Open Library —
+    keep their plain name: they ask by picture or point at a record, and a
+    suffix there would explain nothing.
   */
-  const twoWays = twoQuestionShops(market);
   const name = (l: BuyLink): BuyLink =>
-    twoWays.has(shopOf(l)) ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
+    fromIsbn.has(l.provider) || /-search$/.test(l.provider) ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
   const namedLead = lead.map(name);
 
   /*
@@ -273,11 +272,6 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
   }
 
   return { case: linkCase, place: registration?.place, lead: namedLead, rest: namedRest, anyEdition, note: noteFor(linkCase, market, registration?.place, isbn13) };
-}
-
-/** The shop behind a provider id, with the question stripped off. */
-function shopOf(link: BuyLink): string {
-  return link.provider.replace(/-search$|-title$/, '');
 }
 
 /** Which question a link puts to a shop: its ISBN field, or words. */

@@ -768,8 +768,10 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
     ['Also printed with', otherCovers > 0 ? `${otherCovers} other cover${otherCovers > 1 ? 's' : ''}` : undefined],
   ];
   const rows = details.filter(([, v]) => v);
-  const moreLinks = plan.rest.length + (edition.previewUrl ? 1 : 0);
-  const hasFold = moreLinks > 0 || rows.length > 0 || !!edition.description;
+  const moreLinks = plan.rest.length;
+  // In hobby mode the availability probe is off (E20), so the fold holds links only.
+  const hasFold = moreLinks > 0 || (commerceEnabled() && !!edition.isbn13);
+  const hasInfo = !!edition.previewUrl || rows.length > 0 || !!edition.description;
 
   return (
     <div className="mt-6">
@@ -784,7 +786,7 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
           ships the other jacket, so the row hunts the picture on screen by
           title, author, publisher and year (SPEC F2.9).
         */}
-        {edition.isbn13 && verdict.status === 'differs' && <VerdictNote verdict={verdict} hint={hint} lead />}
+        {edition.isbn13 && verdict.status === 'differs' && <VerdictNote verdict={verdict} hint={hint} />}
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <p className="kicker">
             {verdict.status === 'differs'
@@ -811,14 +813,13 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
           is the same line `lib/verdicts.ts` holds one level up.
         */}
         {plan.note && <p className="mt-2 text-xs leading-relaxed text-ink-3">{plan.note}</p>}
-        {edition.isbn13 && verdict.status !== 'differs' && <VerdictNote verdict={verdict} hint={hint} />}
       </div>
 
       {hasFold && (
         <details className="group mt-4 border-t border-line pt-3">
           <summary className="cursor-pointer list-none text-sm text-ink-2 transition-colors hover:text-ink">
             <span className="mr-1 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
-            {moreLinks > 0 ? `Other ways to find it (${moreLinks})` : 'About this printing'}
+            {moreLinks > 0 ? `Other ways to find it (${moreLinks})` : 'Check the shops'}
           </summary>
           <div className="mt-3 space-y-4">
             {plan.rest.length > 0 && (
@@ -834,11 +835,6 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
                   />
                 ))}
               </div>
-            )}
-            {edition.previewUrl && (
-              <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-sm text-accent hover:underline">
-                Preview on Google Books
-              </a>
             )}
             {/* Off in hobby mode (E20): the probe is not cleared for the public site (ROADMAP 0.1). */}
             {commerceEnabled() && edition.isbn13 && (
@@ -856,21 +852,38 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
                 Nothing here is a stock check.
               </p>
             )}
-            {rows.length > 0 && (
-              <dl className="divide-y divide-line border-y border-line text-sm">
-                {rows.map(([k, v]) => (
-                  <div key={k} className="grid grid-cols-[7.5rem_1fr] gap-3 py-2">
-                    <dt className="text-ink-3">{k}</dt>
-                    <dd className="text-ink">{v}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
-            {edition.description && (
-              <p className="line-clamp-6 text-sm leading-relaxed text-ink-2">{edition.description}</p>
-            )}
           </div>
         </details>
+      )}
+
+      {/*
+        What is known about this printing — the preview, the dates, the blurb —
+        stands open under its own line rather than behind "Other ways to find
+        it" (Julian, 2026-09-11). It is not a way to find the book, and folding
+        it in with the shop links hid the one part of the sidebar that is about
+        the book itself.
+      */}
+      {hasInfo && (
+        <div className="mt-5 space-y-3 border-t border-line pt-4">
+          {edition.previewUrl && (
+            <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-sm text-accent hover:underline">
+              Preview on Google Books
+            </a>
+          )}
+          {rows.length > 0 && (
+            <dl className="divide-y divide-line border-y border-line text-sm">
+              {rows.map(([k, v]) => (
+                <div key={k} className="grid grid-cols-[7.5rem_1fr] gap-3 py-2">
+                  <dt className="text-ink-3">{k}</dt>
+                  <dd className="text-ink">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          {edition.description && (
+            <p className="line-clamp-6 text-sm leading-relaxed text-ink-2">{edition.description}</p>
+          )}
+        </div>
       )}
 
       {/*
@@ -911,63 +924,28 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
  * for what will arrive, but it is not a reading of any shop's page, and the
  * text must not claim otherwise (Julian, 2026-09-07).
  */
-function VerdictNote({ verdict, hint, lead = false }: { verdict: IsbnVerdict; hint: string; lead?: boolean }) {
-  if (verdict.status === 'verified') {
-    return (
-      <p className="mt-2 text-xs leading-relaxed text-ink-3">
-        <span className="text-ink-2">{VERDICT_LEAD.verified}</span>{' '}
-        Shops list by number and mostly use that image, so a new copy should look like this.
-      </p>
-    );
-  }
-  if (verdict.status === 'differs') {
-    return (
-      <div className={`flex items-start gap-3 ${lead ? 'mb-4' : 'mt-2'}`}>
-        <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the publisher's current image for this ISBN">
-          <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
-            <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="The publisher's current image for this ISBN" sizes="55px" />
-          </span>
-        </a>
-        <p className="text-xs leading-relaxed text-ink-3">
-          <span className="text-ink-2">{VERDICT_LEAD.differs}</span>{' '}
-          It is the one beside this note, so that is what a new copy is likely to be.
-          {/*
-            When this note leads, the row underneath *is* the answer to it, so
-            the sentence points at it instead of leaving the reader to work out
-            which of the buttons hunts the picture they clicked.
-          */}
-          {lead
-            ? hint
-              ? ` The searches below look for ${hint} second-hand instead.`
-              : ' The searches below look for this printing instead.'
-            : hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
-        </p>
-      </div>
-    );
-  }
-  /*
-    Everything that is not verified or differs used to fall through to the
-    "no image on record" paragraph, including `pending` — so for the second
-    or two while the lookup ran, the reader was told something we had not yet
-    checked, and on a day with the Google quota spent it would have stood
-    there permanently (2026-09-07).
-  */
-  if (verdict.status === 'pending') {
-    return <p className="mt-2 text-xs leading-relaxed text-ink-3">{VERDICT_LEAD.pending}</p>;
-  }
-  if (verdict.status === 'unavailable') {
-    return (
-      <p className="mt-2 text-xs leading-relaxed text-ink-3">
-        {VERDICT_LEAD.unavailable} Nothing can be said about which cover ships.
-        {hint ? ` Look for ${hint}.` : ''}
-      </p>
-    );
-  }
+/*
+  Only `differs` speaks (Julian, 2026-09-11: „es sollte nur eine anmerkung
+  geben bei differs"). It is the one state that changes what the reader
+  should do — the number ships another jacket, so the row above hunts the
+  picture instead. The others added a sentence under every printing that
+  changed nothing; saying nothing claims nothing (N12), and the About page
+  still explains all five states in the words of `lib/verdicts.ts`.
+*/
+function VerdictNote({ verdict, hint }: { verdict: Extract<IsbnVerdict, { status: 'differs' }>; hint: string }) {
   return (
-    <p className="mt-2 text-xs leading-relaxed text-ink-3">
-      {VERDICT_LEAD.unknown} Shops list by number and send the current printing.
-      {hint ? ` Look for ${hint}.` : ''}
-    </p>
+    <div className="mb-4 flex items-start gap-3">
+      <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the publisher's current image for this ISBN">
+        <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
+          <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="The publisher's current image for this ISBN" sizes="55px" />
+        </span>
+      </a>
+      <p className="text-xs leading-relaxed text-ink-3">
+        <span className="text-ink-2">{VERDICT_LEAD.differs}</span>{' '}
+        It is the one beside this note, so that is what a new copy is likely to be.
+        {hint ? ` The searches below look for ${hint} second-hand instead.` : ' The searches below look for this printing instead.'}
+      </p>
+    </div>
   );
 }
 
@@ -997,11 +975,12 @@ function ShopLink({ link, isbn13, market, counted, status }: {
       title={status ? SHOP_STATUS_TITLE[status] : shopLinkTitle(link)}
     >
       {link.label}
-      {status ? (
-        <span className="ml-1 text-[10px] uppercase tracking-wide opacity-60">{SHOP_STATUS_LABEL[status]}</span>
-      ) : (
-        link.kind === 'search' && <span className="ml-1 text-[10px] uppercase tracking-wide opacity-50">search</span>
-      )}
+      {/*
+        No "search" tag any more (Julian, 2026-09-11: it costs room on every
+        button). The label names the question the button puts, and whether
+        the URL opens a results page or a book's page stays in the tooltip.
+      */}
+      {status && <span className="ml-1 text-[10px] uppercase tracking-wide opacity-60">{SHOP_STATUS_LABEL[status]}</span>}
     </a>
   );
 }
