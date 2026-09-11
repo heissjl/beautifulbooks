@@ -107,3 +107,16 @@ export function proxiedCoverSrc(url: string): string {
   const ref = coverRefFromUrl(url);
   return ref ? coverProxyPath(ref.coverId, ref.size) : url;
 }
+
+/**
+ * The address for the one retry of a cover that failed (ROADMAP 6.31).
+ *
+ * Our own route ignores the query, so a marker makes it an address the
+ * browser has never seen fail, and the CDN keys it apart from the first. A
+ * foreign URL is left as it is: a parameter could break a signed or
+ * size-encoded address, and the retry there is a fresh element instead.
+ */
+export function retryCoverSrc(href: string): string {
+  if (!href.startsWith('/img/')) return href;
+  return `${href}${href.includes('?') ? '&' : '?'}retry=1`;
+}
