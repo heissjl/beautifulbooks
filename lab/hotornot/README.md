@@ -36,7 +36,7 @@ Die zweite Frage können nur Menschen beantworten: **Sind sich Leute über Cover
 
 **Die Paarung** (`nextPair`) nimmt das am wenigsten gesehene Cover und gibt ihm einen Gegner mit ähnlicher Elo-Wertung; eine Stimme zwischen einem klaren Favoriten und einem klaren Außenseiter lehrt fast nichts. Hat jedes Cover drei Spiele, geht jede zweite Paarung an die Enden, denn um die Enden geht es.
 
-**Die Rangliste** (`crowns` in `rating.ts`) besteht aus vier Teilen:
+**Die Rangliste** (`crowns` in `lib/hotornot/rating.ts`) besteht aus vier Teilen. Rechnung und Vorrat liegen seit 5.8a mit ihren Tests in `lib/hotornot/`, damit dieses Lab und das Spiel auf der Seite (`/versus`, SPEC F7) dieselbe Rechnung benutzen; hier bleiben Simulation, lokaler Server und Spielseite.
 
 1. Bradley–Terry über alle Stimmen, unabhängig von ihrer Reihenfolge. Elo dient nur zum Paaren.
 2. Für jedes Cover eine Unsicherheit aus der Krümmung der Wahrscheinlichkeit (Laplace). Aus 100 plausiblen Ranglisten ergibt sich, wie oft ein Cover am Ende steht.

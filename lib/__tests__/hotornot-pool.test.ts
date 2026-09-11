@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildPool, poolName, type RawIndex } from '../pool';
+import { buildPool, poolName, type RawIndex } from '../hotornot/pool';
 
 const index: RawIndex = {
   builtAt: '2026-09-09',
@@ -58,6 +58,28 @@ describe('a mix pool', () => {
   it('carries title and author for the board, which the vote does not show', () => {
     const one = buildPool(index, { mode: 'work', workId: 'OL1W' })[0];
     expect(one).toEqual({ id: 'ol:1', workId: 'OL1W', title: 'One', author: 'Ann' });
+  });
+});
+
+// ROADMAP 5.8a: the Slaughterhouse-Five reading guide ("This is not the actual
+// book cover") sat in the default pool and was taken out by hand.
+describe('excluded covers', () => {
+  it('are never chosen, and their rescans stay out with them', () => {
+    // ol:2 is a one-bit rescan of ol:1; excluding ol:1 must not let ol:2 in.
+    expect(ids(buildPool(index, { mode: 'work', workId: 'OL1W', exclude: ['ol:1'] }))).toEqual(['ol:3']);
+  });
+
+  it('give the book another of its covers', () => {
+    for (const seed of ['a', 'b', 'c', 'd']) {
+      const one = buildPool(index, { mode: 'mix', size: 3, seed, exclude: ['ol:1'] }).find(c => c.workId === 'OL1W');
+      expect(one?.id).toBe('ol:3');
+    }
+  });
+
+  it('leave no hole when a book has nothing else to show', () => {
+    const pool = buildPool(index, { mode: 'mix', size: 2, seed: 'a', exclude: ['ol:6'] });
+    expect(pool).toHaveLength(2);
+    expect(pool.map(c => c.workId)).not.toContain('OL3W');
   });
 });
 

@@ -1,0 +1,613 @@
+{
+ "name": "mix-100-paperwhite",
+ "builtAt": "2026-09-11",
+ "indexBuiltAt": "2026-09-09",
+ "excluded": [
+  {
+   "id": "ol:10942061",
+   "reason": "A Slaughterhouse-Five reading guide with \"Note: This is not the actual book cover\" printed on it; taken out with the \"not a cover\" button in the lab test, 2026-09-11."
+  }
+ ],
+ "covers": [
+  {
+   "id": "ol:14858736",
+   "workId": "OL40873W",
+   "title": "The Road",
+   "author": "Cormac McCarthy"
+  },
+  {
+   "id": "ol:417455",
+   "workId": "OL676009W",
+   "title": "Мастер и Маргарита",
+   "author": "Михаил Афанасьевич Булгаков"
+  },
+  {
+   "id": "ol:6686757",
+   "workId": "OL50564W",
+   "title": "Song of Solomon",
+   "author": "Toni Morrison"
+  },
+  {
+   "id": "ol:7417870",
+   "workId": "OL258301W",
+   "title": "Доктор Живаго",
+   "author": "Boris Leonidovich Pasternak"
+  },
+  {
+   "id": "ol:10675470",
+   "workId": "OL3335245W",
+   "title": "The Catcher in the Rye",
+   "author": "J. D. Salinger"
+  },
+  {
+   "id": "ol:6303967",
+   "workId": "OL1019598W",
+   "title": "Benim Adım Kırmızı",
+   "author": "Orhan Pamuk"
+  },
+  {
+   "id": "ol:12331371",
+   "workId": "OL59048W",
+   "title": "The Remains of the Day",
+   "author": "Kazuo Ishiguro"
+  },
+  {
+   "id": "ol:15103349",
+   "workId": "OL584333W",
+   "title": "Bonjour tristesse",
+   "author": "Françoise Sagan"
+  },
+  {
+   "id": "ol:11527358",
+   "workId": "OL2625457W",
+   "title": "Norwegian Wood",
+   "author": "村上春樹"
+  },
+  {
+   "id": "ol:14848634",
+   "workId": "OL457175W",
+   "title": "The Satanic Verses",
+   "author": "Salman Rushdie"
+  },
+  {
+   "id": "ol:74040",
+   "workId": "OL15321W",
+   "title": "Se una notte d'inverno un viaggiatore",
+   "author": "Italo Calvino"
+  },
+  {
+   "id": "ol:12202821",
+   "workId": "OL450063W",
+   "title": "Frankenstein; or, The Modern Prometheus",
+   "author": "Mary Shelley"
+  },
+  {
+   "id": "ol:8132139",
+   "workId": "OL3511459W",
+   "title": "Stoner",
+   "author": "John Williams"
+  },
+  {
+   "id": "ol:12307870",
+   "workId": "OL10263W",
+   "title": "Le petit prince",
+   "author": "Antoine de Saint-Exupéry"
+  },
+  {
+   "id": "ol:15088491",
+   "workId": "OL52114W",
+   "title": "The War of the Worlds",
+   "author": "H. G. Wells"
+  },
+  {
+   "id": "ol:106201",
+   "workId": "OL38663W",
+   "title": "Heart of Darkness",
+   "author": "Joseph Conrad"
+  },
+  {
+   "id": "ol:15135237",
+   "workId": "OL627081W",
+   "title": "Pale Fire",
+   "author": "Vladimir Nabokov"
+  },
+  {
+   "id": "ol:8946392",
+   "workId": "OL103123W",
+   "title": "Fahrenheit 451",
+   "author": "Ray Bradbury"
+  },
+  {
+   "id": "ol:8745598",
+   "workId": "OL38501W",
+   "title": "Snow Crash",
+   "author": "Neal Stephenson"
+  },
+  {
+   "id": "ol:5121142",
+   "workId": "OL272388W",
+   "title": "Архипелаг ГУЛАГ",
+   "author": "Александр Солженицын"
+  },
+  {
+   "id": "ol:4917491",
+   "workId": "OL67334W",
+   "title": "Die Blechtrommel",
+   "author": "Günter Grass"
+  },
+  {
+   "id": "ol:8323543",
+   "workId": "OL15681224W",
+   "title": "Der Besuch der alten Dame",
+   "author": "Friedrich Dürrenmatt"
+  },
+  {
+   "id": "ol:13778786",
+   "workId": "OL1230613W",
+   "title": "L’étranger",
+   "author": "Albert Camus"
+  },
+  {
+   "id": "ol:15148253",
+   "workId": "OL261794W",
+   "title": "A Clockwork Orange",
+   "author": "Anthony Burgess"
+  },
+  {
+   "id": "ol:13482210",
+   "workId": "OL2271589W",
+   "title": "Die unendliche Geschichte",
+   "author": "Michael Ende"
+  },
+  {
+   "id": "ol:9200675",
+   "workId": "OL1063588W",
+   "title": "Les Misérables",
+   "author": "Victor Hugo"
+  },
+  {
+   "id": "ol:11145009",
+   "workId": "OL457179W",
+   "title": "Midnight's Children",
+   "author": "Salman Rushdie"
+  },
+  {
+   "id": "ol:15097243",
+   "workId": "OL1992198W",
+   "title": "In Cold Blood",
+   "author": "Truman Capote"
+  },
+  {
+   "id": "ol:13959205",
+   "workId": "OL498463W",
+   "title": "Der Proceß",
+   "author": "Franz Kafka"
+  },
+  {
+   "id": "ol:2136568",
+   "workId": "OL82929W",
+   "title": "As I Lay Dying",
+   "author": "William Faulkner"
+  },
+  {
+   "id": "ol:14604364",
+   "workId": "OL46125W",
+   "title": "Foundation",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:997231",
+   "workId": "OL63073W",
+   "title": "The Old Man and the Sea",
+   "author": "Ernest Hemingway"
+  },
+  {
+   "id": "ol:8540759",
+   "workId": "OL27258W",
+   "title": "Neuromancer",
+   "author": "William Gibson"
+  },
+  {
+   "id": "ol:7325150",
+   "workId": "OL872773W",
+   "title": "Der Steppenwolf",
+   "author": "Hermann Hesse"
+  },
+  {
+   "id": "ol:2385980",
+   "workId": "OL275128W",
+   "title": "Native Son",
+   "author": "Richard Wright"
+  },
+  {
+   "id": "ol:10513520",
+   "workId": "OL16064734W",
+   "title": "Snow",
+   "author": "Orhan Pamuk"
+  },
+  {
+   "id": "ol:15109297",
+   "workId": "OL891786W",
+   "title": "Things Fall Apart",
+   "author": "Chinua Achebe"
+  },
+  {
+   "id": "ol:6080957",
+   "workId": "OL52456W",
+   "title": "Faust",
+   "author": "Johann Wolfgang von Goethe"
+  },
+  {
+   "id": "ol:10832725",
+   "workId": "OL1095427W",
+   "title": "Jane Eyre",
+   "author": "Charlotte Brontë"
+  },
+  {
+   "id": "ol:14054465",
+   "workId": "OL1287903W",
+   "title": "Voyage au bout de la nuit",
+   "author": "Louis-Ferdinand Céline"
+  },
+  {
+   "id": "ol:107825",
+   "workId": "OL1858668W",
+   "title": "Wide Sargasso Sea",
+   "author": "Jean Rhys"
+  },
+  {
+   "id": "ol:14091256",
+   "workId": "OL1865528W",
+   "title": "The Bell Jar",
+   "author": "Sylvia Plath"
+  },
+  {
+   "id": "ol:8457081",
+   "workId": "OL1921196W",
+   "title": "White Noise",
+   "author": "Don DeLillo"
+  },
+  {
+   "id": "ol:15137562",
+   "workId": "OL675783W",
+   "title": "The Handmaid's Tale",
+   "author": "Margaret Atwood"
+  },
+  {
+   "id": "ol:10940634",
+   "workId": "OL857189W",
+   "title": "Effi Briest",
+   "author": "Theodor Fontane"
+  },
+  {
+   "id": "ol:15140643",
+   "workId": "OL1855944W",
+   "title": "Atonement",
+   "author": "Ian McEwan"
+  },
+  {
+   "id": "ol:14545949",
+   "workId": "OL138052W",
+   "title": "Alice's Adventures in Wonderland",
+   "author": "Lewis Carroll"
+  },
+  {
+   "id": "ol:14615774",
+   "workId": "OL3140822W",
+   "title": "To Kill a Mockingbird",
+   "author": "Harper Lee"
+  },
+  {
+   "id": "ol:11471241",
+   "workId": "OL28570037W",
+   "title": "The Wind in the Willows",
+   "author": "Kenneth Grahame"
+  },
+  {
+   "id": "ol:11733601",
+   "workId": "OL463709W",
+   "title": "Rabbit, Run",
+   "author": "John Updike"
+  },
+  {
+   "id": "ol:853659",
+   "workId": "OL481143W",
+   "title": "White Teeth",
+   "author": "Zadie Smith"
+  },
+  {
+   "id": "ol:12756296",
+   "workId": "OL267096W",
+   "title": "Анна Каренина",
+   "author": "Лев Толстой"
+  },
+  {
+   "id": "ol:6390550",
+   "workId": "OL36633W",
+   "title": "Rebecca",
+   "author": "Daphne du Maurier"
+  },
+  {
+   "id": "ol:2804840",
+   "workId": "OL61982W",
+   "title": "Ὀδύσσεια",
+   "author": "Όμηρος"
+  },
+  {
+   "id": "ol:10701860",
+   "workId": "OL872932W",
+   "title": "Siddhartha",
+   "author": "Hermann Hesse"
+  },
+  {
+   "id": "ol:11325154",
+   "workId": "OL5731542W",
+   "title": "Half of a Yellow Sun",
+   "author": "Chimamanda Ngozi Adichie"
+  },
+  {
+   "id": "ol:7984443",
+   "workId": "OL16805415W",
+   "title": "Americanah",
+   "author": "Chimamanda Ngozi Adichie"
+  },
+  {
+   "id": "ol:10131374",
+   "workId": "OL1812933W",
+   "title": "American Psycho",
+   "author": "Bret Easton Ellis"
+  },
+  {
+   "id": "ol:13835378",
+   "workId": "OL21177W",
+   "title": "Wuthering Heights",
+   "author": "Emily Brontë"
+  },
+  {
+   "id": "ol:255411",
+   "workId": "OL865560W",
+   "title": "Homo Faber",
+   "author": "Max Frisch"
+  },
+  {
+   "id": "ol:6565698",
+   "workId": "OL865476W",
+   "title": "Stiller",
+   "author": "Max Frisch"
+  },
+  {
+   "id": "ol:1048693",
+   "workId": "OL3501723W",
+   "title": "A Confederacy of Dunces",
+   "author": "John Kennedy Toole"
+  },
+  {
+   "id": "ol:14303933",
+   "workId": "OL276798W",
+   "title": "Catch-22",
+   "author": "Joseph Heller"
+  },
+  {
+   "id": "ol:13674957",
+   "workId": "OL1052133W",
+   "title": "The God of Small Things",
+   "author": "Arundhati Roy"
+  },
+  {
+   "id": "ol:10874127",
+   "workId": "OL2625431W",
+   "title": "海辺のカフカ",
+   "author": "村上春樹"
+  },
+  {
+   "id": "ol:8612187",
+   "workId": "OL476641W",
+   "title": "Winnie-the-Pooh",
+   "author": "A. A. Milne"
+  },
+  {
+   "id": "ol:7894463",
+   "workId": "OL274505W",
+   "title": "Cien años de soledad",
+   "author": "Gabriel García Márquez"
+  },
+  {
+   "id": "ol:12498486",
+   "workId": "OL2271626W",
+   "title": "Momo oder Die seltsame Geschichte von den Zeit-Dieben und von dem Kind, das den Menschen die gestohlene Zeit zurückbrachte",
+   "author": "Michael Ende"
+  },
+  {
+   "id": "ol:14070334",
+   "workId": "OL98459W",
+   "title": "Slaughterhouse-Five",
+   "author": "Kurt Vonnegut"
+  },
+  {
+   "id": "ol:12371458",
+   "workId": "OL39349W",
+   "title": "Mrs. Dalloway",
+   "author": "Virginia Woolf"
+  },
+  {
+   "id": "ol:13560277",
+   "workId": "OL27482W",
+   "title": "The Hobbit",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14920821",
+   "workId": "OL59800W",
+   "title": "The Left Hand of Darkness",
+   "author": "Ursula K. Le Guin"
+  },
+  {
+   "id": "ol:12845915",
+   "workId": "OL495470W",
+   "title": "Invisible Man",
+   "author": "Ralph Ellison"
+  },
+  {
+   "id": "ol:970171",
+   "workId": "OL1190289W",
+   "title": "À la recherche du temps perdu",
+   "author": "Marcel Proust"
+  },
+  {
+   "id": "ol:7013575",
+   "workId": "OL5781992W",
+   "title": "The Kite Runner",
+   "author": "Khaled Hosseini"
+  },
+  {
+   "id": "ol:15149076",
+   "workId": "OL258134W",
+   "title": "Naked Lunch",
+   "author": "William S. Burroughs"
+  },
+  {
+   "id": "ol:14619629",
+   "workId": "OL66554W",
+   "title": "Pride and Prejudice",
+   "author": "Jane Austen"
+  },
+  {
+   "id": "ol:7304774",
+   "workId": "OL2568879W",
+   "title": "Where the Wild Things Are",
+   "author": "Maurice Sendak"
+  },
+  {
+   "id": "ol:13440716",
+   "workId": "OL2163649W",
+   "title": "The Hitchhiker's Guide to the Galaxy",
+   "author": "Douglas Adams"
+  },
+  {
+   "id": "ol:15096618",
+   "workId": "OL23166W",
+   "title": "East of Eden",
+   "author": "John Steinbeck"
+  },
+  {
+   "id": "ol:11944509",
+   "workId": "OL14871157W",
+   "title": "Der Vorleser",
+   "author": "Bernhard Schlink"
+  },
+  {
+   "id": "ol:14031767",
+   "workId": "OL893707W",
+   "title": "Madame Bovary",
+   "author": "Gustave Flaubert"
+  },
+  {
+   "id": "ol:13288377",
+   "workId": "OL455327W",
+   "title": "Lord of the Flies",
+   "author": "William Golding"
+  },
+  {
+   "id": "ol:10522735",
+   "workId": "OL464512W",
+   "title": "Wolf Hall",
+   "author": "Hilary Mantel"
+  },
+  {
+   "id": "ol:14497496",
+   "workId": "OL102749W",
+   "title": "Moby Dick",
+   "author": "Herman Melville"
+  },
+  {
+   "id": "ol:15102517",
+   "workId": "OL8972751W",
+   "title": "Nesnesitelná lehkost bytí",
+   "author": "Milan Kundera"
+  },
+  {
+   "id": "ol:15228983",
+   "workId": "OL59434W",
+   "title": "The Talented Mr. Ripley",
+   "author": "Patricia Highsmith"
+  },
+  {
+   "id": "ol:381645",
+   "workId": "OL2384132W",
+   "title": "Cry, the Beloved Country",
+   "author": "Alan Paton"
+  },
+  {
+   "id": "ol:3237602",
+   "workId": "OL10834W",
+   "title": "Das Parfum",
+   "author": "Patrick Süskind"
+  },
+  {
+   "id": "ol:417695",
+   "workId": "OL23205W",
+   "title": "The Grapes of Wrath",
+   "author": "John Steinbeck"
+  },
+  {
+   "id": "ol:11685000",
+   "workId": "OL59038W",
+   "title": "Never Let Me Go",
+   "author": "Kazuo Ishiguro"
+  },
+  {
+   "id": "ol:12550462",
+   "workId": "OL3801690W",
+   "title": "KAFF auch Mare Crisium",
+   "author": "Arno Schmidt"
+  },
+  {
+   "id": "ol:14910123",
+   "workId": "OL10432709W",
+   "title": "Братья Карамазовы",
+   "author": "Fiódor Dostoievski"
+  },
+  {
+   "id": "ol:8084692",
+   "workId": "OL2172356W",
+   "title": "Do Androids Dream of Electric Sheep?",
+   "author": "Philip K. Dick"
+  },
+  {
+   "id": "ol:964446",
+   "workId": "OL40879W",
+   "title": "Blood Meridian",
+   "author": "Cormac McCarthy"
+  },
+  {
+   "id": "ol:12638483",
+   "workId": "OL50548W",
+   "title": "Beloved",
+   "author": "Toni Morrison"
+  },
+  {
+   "id": "ol:9841460",
+   "workId": "OL62744W",
+   "title": "Vom Kriege",
+   "author": "Carl von Clausewitz"
+  },
+  {
+   "id": "ol:13107208",
+   "workId": "OL2636675W",
+   "title": "Gravity's Rainbow",
+   "author": "Thomas Pynchon"
+  },
+  {
+   "id": "ol:8174301",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:1333449",
+   "workId": "OL65906W",
+   "title": "On The Road",
+   "author": "Jack Kerouac"
+  }
+ ]
+}

@@ -19,7 +19,7 @@
  *     allow. That share, not the crown, is what a claim may rest on (SPEC
  *     N12). "The ugliest cover" after sixty votes is noise with a headline.
  */
-import { rng } from '../../lib/loading';
+import { rng } from '../loading';
 
 /** Where every cover starts, and the step size — the chess conventions Facemash used. */
 export const ELO_START = 1500;

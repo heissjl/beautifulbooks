@@ -1,5 +1,5 @@
 /**
- * Which covers play (ROADMAP 5.8, Spielart 4). Pure; the caller reads the index.
+ * Which covers play (ROADMAP 5.8, Spielart 4; 5.8a). Pure; the caller reads the index.
  *
  * Two kinds of pool:
  *
@@ -20,14 +20,19 @@
  *     because the same numbers describe a plain white first edition — only
  *     passed over when one cover is chosen for the book. In a work pool it
  *     stays, and the player's "not a cover" button decides.
+ *
+ * `exclude` names covers a person has already judged not to be covers — the
+ * *Slaughterhouse-Five* reading guide that says "This is not the actual book
+ * cover" was the first. An excluded cover is never chosen, but it still folds
+ * away its own rescans, and a book that loses its cover to it gets another.
  */
-import { hamming, looksLikeScannedPage } from '../../lib/imagesig';
-import { rng } from '../../lib/loading';
+import { hamming, looksLikeScannedPage } from '../imagesig';
+import { rng } from '../loading';
 import { seedNumber, shuffled } from './rating';
 
 /**
  * Mirrors `SAME_DESIGN_BITS` in lib/coverindex.ts, which cannot be imported
- * from here without loading the whole index through the `@/` alias.
+ * from here without loading the whole index along with it.
  */
 export const SAME_DESIGN = 8;
 
@@ -45,8 +50,8 @@ export interface PoolCover {
 }
 
 export type PoolOptions =
-  | { mode: 'mix'; size: number; seed: string }
-  | { mode: 'work'; workId: string };
+  | { mode: 'mix'; size: number; seed: string; exclude?: readonly string[] }
+  | { mode: 'work'; workId: string; exclude?: readonly string[] };
 
 /** The pool's name, which is also its votes file: `mix-100-paperwhite`, `work-ol468431w`. */
 export function poolName(options: PoolOptions): string {
@@ -54,10 +59,18 @@ export function poolName(options: PoolOptions): string {
   return options.mode === 'work' ? `work-${safe(options.workId)}` : `mix-${options.size}-${safe(options.seed)}`;
 }
 
+interface Design {
+  cover: PoolCover;
+  hash: string;
+  blank: boolean;
+  excluded: boolean;
+}
+
 export function buildPool(index: RawIndex, options: PoolOptions): PoolCover[] {
-  const designs = new Map<number, Array<{ cover: PoolCover; blank: boolean; hash: string }>>();
+  const excluded = new Set(options.exclude ?? []);
+  const designs = new Map<number, Design[]>();
   for (const [work, id, hash, contrast, mean] of index.covers) {
-    // Open Library only: its CDN is what the browser loads the images from.
+    // Open Library only: its CDN is what the images come from.
     if (!id.startsWith('ol:')) continue;
     const meta = index.works[work];
     if (!meta) continue;
@@ -69,18 +82,23 @@ export function buildPool(index: RawIndex, options: PoolOptions): PoolCover[] {
       cover: { id, workId, title, author },
       hash,
       blank: looksLikeScannedPage({ hash, contrast, mean }),
+      excluded: excluded.has(id),
     });
     designs.set(work, list);
   }
 
-  if (options.mode === 'work') return [...designs.values()].flat().map(d => d.cover);
+  if (options.mode === 'work') {
+    return [...designs.values()].flat().filter(d => !d.excluded).map(d => d.cover);
+  }
 
   const random = rng(seedNumber(options.seed));
-  const works = shuffled([...designs.keys()].sort((x, y) => x - y), random).slice(0, options.size);
-  return works.map(work => {
-    const list = designs.get(work) ?? [];
-    const faces = list.filter(d => !d.blank);
-    const from = faces.length > 0 ? faces : list;
+  const eligible = [...designs.keys()]
+    .sort((x, y) => x - y)
+    .filter(work => (designs.get(work) ?? []).some(d => !d.excluded));
+  return shuffled(eligible, random).slice(0, options.size).map(work => {
+    const usable = (designs.get(work) ?? []).filter(d => !d.excluded);
+    const faces = usable.filter(d => !d.blank);
+    const from = faces.length > 0 ? faces : usable;
     return from[Math.floor(random() * from.length)].cover;
   });
 }

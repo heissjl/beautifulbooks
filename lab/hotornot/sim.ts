@@ -25,7 +25,7 @@ import { rng } from '../../lib/loading';
 import {
   applyVote, crownHeld, fitBradleyTerry, gaussian, newElo, nextPair, randomPair, standings, verdictFor,
   type Vote,
-} from './rating';
+} from '../../lib/hotornot/rating';
 
 export interface SimOptions {
   /** Covers in the pool. */

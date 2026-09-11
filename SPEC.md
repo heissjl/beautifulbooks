@@ -281,6 +281,17 @@ Jeder Kauf-Link führt über diese Route, die den Klick festhält und weiterleit
 
 ---
 
+### F7 – Das Cover-Spiel `/versus` (hinter Schalter, ROADMAP 5.8a)
+
+Zwei Cover, ein Klick für das, das man lieber ansieht. Die Titel erscheinen erst auf der Rangliste `/versus/board`: beim Abstimmen wird das Cover beurteilt, nicht das Buch. Hervorgegangen aus `lab/hotornot` (5.8, Spielart 4); die Rechnung liegt in `lib/hotornot/`, damit Lab-Simulation und Seite dieselbe benutzen.
+
+- **F7.1 Schalter.** `HOTORNOT=on` oder `off`; ungesetzt ist das Spiel an, außer auf Vercels Produktion (`VERCEL_ENV=production`). Jeder andere Wert bricht mit einem Fehler ab. Aus heißt 404 für Seite und API.
+- **F7.2 Vorrat.** Eingefroren in `data/versus-pool.json` (E18), gebaut von `scripts/build-versus-pool.ts`: je ein Cover aus 100 Büchern, gezogen wie im Lab (`mix-100-paperwhite`), ohne die Cover, die ein Mensch schon als Nicht-Cover erkannt hat (`excluded`, mit Grund). Eingefroren, weil ein neuer Index sonst die Cover unter bereits abgegebenen Stimmen austauschen würde.
+- **F7.3 Speicher.** Upstash Redis über dessen REST-API, mit Zeitlimit wie jeder externe Aufruf. Die Variablen tragen das Präfix `STORAGE_`; erkannt wird die Endung (`…REST_API_URL`, `…REST_API_TOKEN`), nie der Read-only-Token. Ohne Speicher spielt `next dev` aus dem Arbeitsspeicher; ein Produktions-Build antwortet 503 und nennt die gesuchten Namen, nie Werte. **Eine Stimme ist zwei Cover, der Sieger und ein Tag, und nichts über den Spieler** (N11).
+- **F7.4 Signierte Paare.** Jedes ausgegebene Paar trägt die Sekunde, einen Zufallsteil und eine HMAC-Signatur; der Schlüssel wird aus dem Speicher-Token abgeleitet. Eine Stimme oder eine „Not a cover"-Meldung wird nur für ein ausgegebenes Paar angenommen, einmal (beim zweiten Mal 409), eine Stunde lang.
+- **F7.5 Paarung und Rangliste** wie im Lab: Elo wählt das nächste Paar, Bradley–Terry ordnet, jedes Cover trägt seine Unsicherheit, das Vorwissen folgt aus den Stimmen. **Eine Krone ist erst ein Befund, wenn dasselbe Cover sie `CROWN_HOLD` = 3 Runden in Folge bei 90 % der plausiblen Ranglisten hält**; vorher sagt die Rangliste „Ahead, but only for one round" (N12). In der Simulation lagen so 6 % der Urteile falsch, beim ersten Überschreiten 13 % ([Historie](docs/history.md)).
+- **F7.6 Rahmen.** Bilder über `/img` (1.3), die Cover verlassen die Seite also nicht. Seite und Rangliste sind `noindex`. Rate-Limits: `versus` für Paar und Rangliste, `vote` für Stimme und Meldung.
+
 ## 4. Nicht-funktionale Anforderungen
 
 - **N1 Server-seitig fetchen.** Externe APIs werden nur vom Server aufgerufen; der Browser spricht nur mit `/api/search`, `/api/works/[id]`, `/api/isbn/[isbn]`, `/api/availability`. Schlüssel bleiben auf dem Server.

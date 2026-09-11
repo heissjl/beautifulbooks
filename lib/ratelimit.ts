@@ -54,6 +54,16 @@ export const RATE_RULES = {
    */
   similar: { capacity: 60, refillPerMinute: 60 },
   /**
+   * The cover game (ROADMAP 5.8a): the next pair and the board. A pair a
+   * click, and nobody clicks faster than once a second for long.
+   */
+  versus: { capacity: 60, refillPerMinute: 60 },
+  /**
+   * Votes and "not a cover" reports. Tighter than the pairs, because each one
+   * writes to the store; the signed pair already stops a vote without a pair.
+   */
+  vote: { capacity: 40, refillPerMinute: 40 },
+  /**
    * Cover images through our own route (ROADMAP 1.3). A single detail page
    * asks for up to 151 of them — measured on *The Great Gatsby* — so the
    * burst has to clear two walls without a crawler being able to settle in.

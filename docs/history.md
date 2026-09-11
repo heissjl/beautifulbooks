@@ -1791,3 +1791,28 @@ Die Schwelle von 90 % verspricht höchstens jedes zehnte Urteil falsch. **Erst d
 **Werkzeugnotiz für spätere Sitzungen:** In einem Worktree startete `preview_start` den Dev-Server aus der `launch.json` des Hauptordners statt des Eintrags im Worktree. Ein Lab-Server läuft deshalb mit `npx tsx` im Hintergrund und wird mit `navigate` geöffnet.
 
 **Offen:** wie einig sich echte Menschen sind — nur spielbar; ein geteilter Online-Link braucht den Speicher, den E6 zurückstellt; Pool 400 unter der Regel des Bretts; die Rechtefrage aus 5.5 und die Regel aus 5.6 vor jedem Posten.
+
+---
+
+## 2026-09-11 · Das Cover-Spiel auf der Seite, lokal fertig (ROADMAP 5.8a)
+
+Julian, in dieser Reihenfolge: „ja, bau die teilbare Seite für Freunde" — „aber erstmal nur im dev" — „kann man option 2 dann so vorbereiten, dass man das einigermaßen schnell in die produktion zieht wenn es klappt?" — „du bist mit vercel verbunden, kannst du es anlegen?" — „die neuen variablen sollten das prefix STORAGE haben".
+
+**Erst geprüft, was nicht geht, bevor etwas gebaut wurde.** Eine Claude-Artifact-Seite mit geteiltem Speicher ist nach ihrer eigenen Schnittstelle auf die claude.ai-Organisation des Besitzers beschränkt; Freunde von außen könnten nicht abstimmen. Der Vercel-Connector liest Projekte, Deployments und den Deployment-Schutz, legt aber keinen Marketplace-Speicher an und setzt keine Variablen. Gelesen hat er: Projekt `beautifulbooks` im Team auf dem Hobby-Plan; **Vercel Authentication ist an für alle Deployments außer den eigenen Domains**, eine Preview verlangt also eine Vercel-Anmeldung. Er kann aber für eine einzelne Preview einen befristeten Freigabe-Link erzeugen, und das löst es, ohne den Schutz abzuschalten.
+
+**Gebaut** (SPEC F7): Rechnung und Vorrat sind mit ihren Tests aus `lab/hotornot/` nach `lib/hotornot/` gezogen, damit Simulation und Seite dieselbe Rechnung benutzen. Dazu kommen:
+- ein Schalter (an außer auf Vercels Produktion, dort erst mit `HOTORNOT=on`);
+- ein eingefrorener Vorrat `data/versus-pool.json`: 100 Bücher; *Slaughterhouse-Five* behält ein echtes Cover, der Platzhalter ist mit Grund ausgeschlossen;
+- eine Speicher-Schnittstelle: Upstash per REST mit Zeitlimit, Variablen unter `STORAGE_`, die Endung wird erkannt; lokal Arbeitsspeicher, ohne Speicher in einem Produktions-Build 503 mit den gesuchten Namen;
+- signierte Paare, jede Stimme und jede Meldung genau einmal;
+- zwei Rate-Limit-Töpfe, die Spielseite `/versus` und die Rangliste `/versus/board`, beide `noindex`.
+
+**Drei Fehler, die erst beim Ausprobieren auffielen:**
+
+1. **Zwei Spieler, ein Token.** Das Token bestand aus Paar und Sekunde. Wer dasselbe Paar in derselben Sekunde in derselben Reihenfolge bekam, bekam dasselbe Token, und seine Stimme wurde als Doppelklick abgewiesen. Im Test mit sechs Covern ging so der größte Teil der Stimmen verloren, und die Rangliste kam nie zu ihrer Krone. Jetzt trägt jedes Token einen Zufallsteil; ein Test hält fest, dass dasselbe Paar in derselben Sekunde zwei gültige Tokens ergibt.
+2. **Zwei Arbeitsspeicher unter `next dev`.** API-Routen und Seiten werden in getrennte Bündel übersetzt, jedes mit einer eigenen Kopie des Moduls. Im Browser zählte das Spiel zwei Stimmen, die Rangliste keine. Speicher und lokaler Signierschlüssel liegen jetzt auf `globalThis`; danach zeigte die Rangliste 2 Stimmen und 1 aussortiertes Cover. Mit Upstash wäre das nie aufgetreten, lokal bei jedem Test.
+3. „1 votes" in Spiel und Rangliste.
+
+**Geprüft:** 483 Tests in 40 Dateien, Typecheck, Lint, Build (fünf dynamische Routen). Die API lehnt eine Stimme für Cover außerhalb des Spiels mit 400 ab. Im Browser lokal: Paar, zwei Stimmen, eine Meldung, Rangliste, keine Konsolenfehler.
+
+**Offen:** der Upstash-Speicher an der Preview-Umgebung (Julian), der Push des Branches (Julians Freigabe), der Freigabe-Link, E21 und ein Satz in der Datenschutzerklärung vor der Produktion.

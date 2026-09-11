@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { rng } from '../../../lib/loading';
+import { rng } from '../loading';
 import {
   ELO_START, MIN_APPEAL, applyVote, empiricalPrior, expectedScore, favouriteRate, fitBradleyTerry,
   newElo, nextPair, randomPair, standings, strengthSpread, verdictFor, type Standing, type Vote,
-} from '../rating';
+} from '../hotornot/rating';
 
 /** Votes from a known order: cover i beats cover j with the Bradley–Terry probability. */
 function votesFrom(strength: readonly number[], count: number, seed = 7): Vote[] {

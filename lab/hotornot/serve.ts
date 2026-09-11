@@ -23,11 +23,11 @@ import { createServer, type IncomingMessage } from 'node:http';
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { rng } from '../../lib/loading';
-import { buildPool, poolName, type PoolCover, type PoolOptions, type RawIndex } from './pool';
+import { buildPool, poolName, type PoolCover, type PoolOptions, type RawIndex } from '../../lib/hotornot/pool';
 import {
   CROWN_HOLD, applyVote, crowns, favouriteRate, newElo, nextPair, verdictFor,
   type Crown, type Standing, type Vote,
-} from './rating';
+} from '../../lib/hotornot/rating';
 
 const ROOT = join(import.meta.dirname, '..', '..');
 const HTML_FILE = join(import.meta.dirname, 'index.html');

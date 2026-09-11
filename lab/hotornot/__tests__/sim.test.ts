@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { rng } from '../../../lib/loading';
-import { CROWN_HOLD, crownHeld, crowns, randomPair, type Vote } from '../rating';
+import { CROWN_HOLD, crownHeld, crowns, randomPair, type Vote } from '../../../lib/hotornot/rating';
 import { consensusFor, simulate } from '../sim';
 
 const idsOf = (n: number) => Array.from({ length: n }, (_, i) => `c${i}`);
