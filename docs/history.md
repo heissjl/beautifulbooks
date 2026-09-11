@@ -1804,7 +1804,7 @@ Aus dem [Testbericht vom Tag](tests/2026-09-11-mobil.md), gebaut vor dem nächst
 
 **6.31, der zweite Versuch.** Nach dem ersten Fehler wartet eine Kachel 1,5 s und fragt unter `/img/…?retry=1` noch einmal; die Route liest keine Query, und ein Fehlschlag trägt `no-store`, also landet der zweite Versuch wirklich beim Server.
 
-**6.33, die alte Wand.** Gelöscht. Bis das Mosaik da ist, eine ruhige Fläche seiner Größe unter der Überschrift.
+**6.33, die alte Wand.** Gelöscht. Bis das Mosaik da ist, eine Fläche seiner Größe unter der Überschrift — zuerst ruhig, auf Julians Einwand („das stehende Mosaik leicht pulsierend … ist das nicht besser?") dann **atmend im Takt des fertigen Mosaiks**, so dass das Warten eine Bewegung ist: atmende Fläche, das Bild klärt sich, das Bild atmet. Geprüft am Dev-Server mit angehaltenen `/loading/`-Abrufen: die Fläche steht in 260 × 351 px und läuft `breathe 2.5s infinite`.
 
 **6.30, die Startseite am Telefon.** Gemessen im Browser, mit einem Stück JavaScript, das je Titel- und Autorzeile `scrollHeight > clientHeight` oder `scrollWidth > clientWidth` prüft, die Breite des Platzhalters per Canvas misst und den Abstand zwischen letzter Kachel und Fußzeile nimmt:
 

@@ -18,8 +18,8 @@ import {
  * that was the constraint the whole thing was built against (Julian,
  * 2026-09-08: „es darf clientseitig nicht zu ressourcenverbrauchend sein").
  *
- * **Until the picture is decoded, the heading stands over a quiet field of
- * the picture's size; if it never comes, the heading stands alone.** The
+ * **Until the picture is decoded, the heading stands over a field of the
+ * picture's size that breathes as the finished picture will.** The
  * small pulsing wall of home-page covers that used to fill this gap is gone
  * (Julian, 2026-09-11: „der sollte nirgendwo mehr existieren", ROADMAP 6.33):
  * for the fraction of a second it showed, it was a second, different picture
@@ -191,17 +191,21 @@ export default function MosaicLoader({ caption }: { caption: string }) {
   }, [scene]);
 
   /*
-    Nothing to draw yet: the heading, and a still field the size of the
-    picture so nothing jumps when it arrives (260 × 351 on a phone, 420 × 567
-    on a desktop — `frameHeight` for the 40 × 36 grid nineteen of the twenty
-    templates use). Nothing to draw at all: the heading alone, which still
-    says what is being waited for.
+    Nothing to draw yet: the heading over a field the size of the picture, so
+    nothing jumps when it arrives (260 × 351 on a phone, 420 × 567 on a
+    desktop — `frameHeight` for the 40 × 36 grid nineteen of the twenty
+    templates use). **The field breathes with the finished mosaic's breath**
+    (Julian, 2026-09-11: „das stehende Mosaik leicht pulsierend … ist das
+    nicht besser?"), so the whole wait is one motion — breathing field, the
+    picture clearing, the picture breathing. The mosaic itself cannot stand
+    here: this gap is the time its file takes to arrive. If it never does,
+    the field goes on breathing, which still says the page is working.
   */
   if (failed || !scene) {
     return (
       <div className="py-10 sm:py-14" aria-busy="true" aria-live="polite" aria-label={caption}>
         <p className={CAPTION_CLASS}>{caption}</p>
-        {!failed && <div className="mx-auto h-[351px] w-[260px] rounded-[3px] bg-surface-2 sm:h-[567px] sm:w-[420px]" />}
+        <div className="mx-auto h-[351px] w-[260px] animate-breathe rounded-[3px] bg-surface-2 sm:h-[567px] sm:w-[420px]" />
       </div>
     );
   }
