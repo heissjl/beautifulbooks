@@ -1881,3 +1881,14 @@ Tests 442, `tsc`, Lint grün.
 
 Tests 456, `tsc`, Lint und Build grün.
 
+**Nachgefragt (Julian: „macht das Sinn, das für Google-Daten so generell zu erweitern? Vielleicht war es nur bei diesem Werk ein Problem").** Gemessen an den 100 Google-Bänden der Fixtures (fünf Werke), mit grobem Verlagsvergleich — Kleinschreibung, ohne „Ltd", „Books", „Verlag" und dergleichen — gegen die Open-Library-Ausgaben desselben Werks:
+
+| Googles Verlagsangabe | Bände | Wirkung der Regel aus 6.35 |
+|---|---|---|
+| keine | 50 | keine — die Suche war schon Titel und Autor |
+| ein Verlag, den Open Library für das Werk nie führt | 40 | breiter; gemischt: Digital-Imprints und Dritte (Hachette UK, Open Road Media, GRIN, BrightSummaries) neben echten Druckverlagen, die Open Library nur fehlen (Reclam, Broadview, Anchor, Penguin) |
+| Verlag **und** Jahr (± 1) von Open Library bestätigt | 6 | unnötig breiter |
+| Verlag bekannt, Jahr daneben | 4 | hilft |
+
+Ein Teil der 100 sind Bücher über das Werk, die nie auf die Wand kommen; die Zahlen sind eine Tendenz. Für die pauschale Regel spricht, dass die Fehler ungleich teuer sind: zu eng heißt null Treffer, zu weit heißt eine Liste. **Claudes Vorschlag, genauer:** Googles Verlag und Jahr bleiben in der Suche, wenn Open Library für dasselbe Werk eine Ausgabe mit demselben Verlag und einem Jahr ± 1 führt (`samePublisher` gibt es schon); sonst Titel und Autor. Das behält die sechs bestätigten Fälle und löst M10 weiter, rettet aber nicht die Druckverlage, die Open Library fehlen. Entscheidung bei Julian.
+
