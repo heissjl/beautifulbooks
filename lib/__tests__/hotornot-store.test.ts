@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
-  STORE_LOOKED_FOR, StoreUnavailableError, memoryStore, storeConfig, storeFromEnv, upstashStore,
+  STORE_LOOKED_FOR, StoreUnavailableError, memoryStore, missingStoreMessage, storeConfig, storeFromEnv, upstashStore,
 } from '../hotornot/store';
 
 const vote = { a: 'ol:1', b: 'ol:2', winner: 'ol:1', on: '2026-09-11' };
@@ -106,6 +106,17 @@ describe('finding the store in the environment', () => {
   it('says what it looked for without ever saying a value', () => {
     expect(STORE_LOOKED_FOR.join(' ')).toContain('STORAGE_');
     expect(STORE_LOOKED_FOR.join(' ')).not.toMatch(/https?:/);
+  });
+
+  // The first preview said "not configured" although the store was connected (2026-09-11).
+  it('names the STORAGE_ variables a preview does have, never their values, and says nothing of them in production', () => {
+    const env = { VERCEL_ENV: 'preview', STORAGE_URL: 'rediss://default:secret@x.upstash.io:6379', OTHER: 'y' };
+    const message = missingStoreMessage(env);
+    expect(message).toContain('STORAGE_URL');
+    expect(message).not.toContain('secret');
+    expect(message).not.toContain('OTHER');
+    expect(missingStoreMessage({ VERCEL_ENV: 'preview' })).toContain('No variable');
+    expect(missingStoreMessage({ ...env, VERCEL_ENV: 'production' })).not.toContain('STORAGE_URL');
   });
 
   it('plays from memory on a laptop, and refuses to in a production build without a store', () => {

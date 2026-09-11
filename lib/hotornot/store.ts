@@ -192,6 +192,23 @@ export function storeConfig(env: Env = process.env): { url: string; token: strin
 }
 
 /**
+ * Why there is no store, in words a person can act on — names only, never a
+ * value. Outside production it also lists the variables that do start with
+ * the prefix: the first preview answered "not configured" although Julian had
+ * connected the store, and the only way to see why was to see what the
+ * integration had actually named them (2026-09-11). Production keeps it to
+ * what was looked for; a configuration listing has no business on the site.
+ */
+export function missingStoreMessage(env: Env = process.env): string {
+  const base = `The vote store is not configured here. Looked for ${STORE_LOOKED_FOR.join(' and ')}.`;
+  if (env.VERCEL_ENV === 'production') return base;
+  const found = Object.keys(env).filter(k => k.startsWith(STORE_PREFIX)).sort();
+  return found.length > 0
+    ? `${base} Variables starting with ${STORE_PREFIX} on this deployment: ${found.join(', ')}.`
+    : `${base} No variable on this deployment starts with ${STORE_PREFIX}.`;
+}
+
+/**
  * On `globalThis`, not in a module variable. `next dev` compiles the API
  * routes and the pages into separate bundles, each with its own copy of this
  * module, and a module-level store gave the game one memory and the standings

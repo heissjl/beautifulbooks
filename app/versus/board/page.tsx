@@ -6,7 +6,7 @@ import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import { board, type Board, type BoardEntry, type Verdict } from '@/lib/hotornot/game';
-import { STORE_LOOKED_FOR, StoreUnavailableError, storeFromEnv } from '@/lib/hotornot/store';
+import { StoreUnavailableError, missingStoreMessage, storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
 
 /**
@@ -65,7 +65,7 @@ export default async function BoardPage() {
   let result: Board | null = null;
   let problem: string | null = null;
   if (!store) {
-    problem = `The vote store is not configured on this deployment. Looked for ${STORE_LOOKED_FOR.join(' and ')}.`;
+    problem = missingStoreMessage();
   } else {
     try {
       result = await board(store);

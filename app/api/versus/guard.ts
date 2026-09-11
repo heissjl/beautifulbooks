@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { rateLimited } from '@/app/api/rate';
 import type { RateBucketName } from '@/lib/ratelimit';
 import { versusEnabled } from '@/lib/hotornot/switch';
-import { STORE_LOOKED_FOR, storeFromEnv, type VoteStore } from '@/lib/hotornot/store';
+import { missingStoreMessage, storeFromEnv, type VoteStore } from '@/lib/hotornot/store';
 
 /**
  * The three reasons the cover game may not run, each said as itself
@@ -20,9 +20,7 @@ export function openGame(request: NextRequest, bucket: RateBucketName): { store:
   const limited = rateLimited(request, bucket);
   if (limited) return { response: limited };
   const store = storeFromEnv();
-  if (!store) {
-    return { response: json({ error: `The vote store is not configured here. Looked for ${STORE_LOOKED_FOR.join(' and ')}.` }, 503) };
-  }
+  if (!store) return { response: json({ error: missingStoreMessage() }, 503) };
   return { store };
 }
 
