@@ -188,6 +188,31 @@ describe('the next pair', () => {
     expect(left).toBeGreaterThan(140);
     expect(left).toBeLessThan(260);
   });
+
+  // Julian, 2026-09-11: covers came back too often in a row. A player who keeps
+  // skipping — skipping plays no game — used to get the same least-seen cover at once.
+  it('shows no cover twice within twenty-five pairs of 200, even to a player who only skips', () => {
+    const ids = idsOf(200);
+    for (const warm of [false, true]) {
+      const random = rng(warm ? 17 : 19);
+      const state = newElo(ids);
+      if (warm) for (const id of ids) state.games.set(id, 5); // past the warm-up: the ends get attention
+      const seen: string[] = [];
+      for (let i = 0; i < 60; i++) {
+        const pair = nextPair(ids, state, random, { recent: seen.slice(-50) });
+        if (!pair) break;
+        for (const id of pair) expect(seen.slice(-50)).not.toContain(id);
+        seen.push(...pair);
+      }
+    }
+  });
+
+  it('shows a seen cover again rather than nothing, once every cover was seen', () => {
+    const random = rng(23);
+    const state = newElo(idsOf(4));
+    const pair = nextPair(idsOf(4), state, random, { recent: idsOf(4) });
+    expect(pair).not.toBeNull();
+  });
 });
 
 describe('consensus', () => {

@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
   const { a, b, winner, token } = await readBody(request);
   try {
     const outcome = await castVote(game.store, secretForEnv(), { a, b, winner, token });
-    return outcome.ok ? json({ ok: true }) : json({ error: outcome.error }, outcome.status);
+    return outcome.ok ? json({ ok: true, chosen: outcome.chosen ?? null }) : json({ error: outcome.error }, outcome.status);
   } catch (err) {
     if (err instanceof StoreUnavailableError) return storeDown();
     throw err;

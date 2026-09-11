@@ -406,6 +406,14 @@ export interface PairOptions {
   window?: number;
   /** The pair just shown, not to be shown again straight away. */
   last?: readonly [string, string];
+  /**
+   * Covers this player saw lately. Kept out of the next pair while at least
+   * two others are left (Julian, 2026-09-11: covers came back too often in a
+   * row). Without it, a skipped cover returned at once — skipping plays no
+   * game, so it stayed the least-seen — and after the warm-up every second
+   * pair started from the same twenty covers at the ends.
+   */
+  recent?: readonly string[];
 }
 
 /**
@@ -432,17 +440,28 @@ export function nextPair(
   const games = (id: string) => elo.games.get(id) ?? 0;
   const rating = (id: string) => elo.rating.get(id) ?? ELO_START;
 
-  const fewest = Math.min(...ids.map(games));
+  // The warm-up is a phase of the whole game; what this player just saw only narrows the choice.
+  const warming = Math.min(...ids.map(games)) < warmup;
+  const recent = new Set(options.recent ?? []);
+  const unseen = ids.filter(id => !recent.has(id));
+  const open = unseen.length >= 2 ? unseen : ids;
+  const openSet = new Set(open);
+  const leastSeen = () => {
+    const fewest = Math.min(...open.map(games));
+    return pickFrom(open.filter(id => games(id) === fewest), random);
+  };
+
   let a: string;
-  if (fewest < warmup || random() >= tailFocus) {
-    a = pickFrom(ids.filter(id => games(id) === fewest), random);
+  if (warming || random() >= tailFocus) {
+    a = leastSeen();
   } else {
     const byRating = [...ids].sort((x, y) => rating(y) - rating(x));
-    a = pickFrom([...byRating.slice(0, tail), ...byRating.slice(-tail)], random);
+    const ends = [...byRating.slice(0, tail), ...byRating.slice(-tail)].filter(id => openSet.has(id));
+    a = ends.length > 0 ? pickFrom(ends, random) : leastSeen();
   }
 
   const lastKey = options.last ? pairKey(options.last[0], options.last[1]) : '';
-  const fresh = ids.filter(id => id !== a && pairKey(a, id) !== lastKey);
+  const fresh = open.filter(id => id !== a && pairKey(a, id) !== lastKey);
   const rivals = fresh.length > 0 ? fresh : ids.filter(id => id !== a);
   // Shuffled first so that level ratings — every cover, at the start — do
   // not hand the first few ids every early game.

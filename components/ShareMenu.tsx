@@ -25,6 +25,10 @@ interface ShareMenuProps {
   /** 'up' when the button sits at the bottom of the screen (the phone bar). */
   placement?: 'down' | 'up';
   compact?: boolean;
+  /** Which edge the panel lines up with; 'left' for a button near the left of a phone screen. */
+  align?: 'left' | 'right';
+  /** The sentence that travels with the link, where the default does not fit (the cover game). */
+  text?: string;
 }
 
 function shareUrlFor(workId: string, coverId: string | null | undefined): string {
@@ -34,7 +38,9 @@ function shareUrlFor(workId: string, coverId: string | null | undefined): string
     : `${origin}/book/${workId}`;
 }
 
-export default function ShareMenu({ workId, coverId, title, author, placement = 'down', compact = false }: ShareMenuProps) {
+export default function ShareMenu({
+  workId, coverId, title, author, placement = 'down', compact = false, align = 'right', text: ownText,
+}: ShareMenuProps) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const box = useRef<HTMLDivElement>(null);
@@ -55,7 +61,7 @@ export default function ShareMenu({ workId, coverId, title, author, placement = 
 
   const url = shareUrlFor(workId, coverId);
   const line = author ? `${title} by ${author}` : title;
-  const text = coverId ? `${line} — one of its covers` : line;
+  const text = ownText ?? (coverId ? `${line} — one of its covers` : line);
   const q = encodeURIComponent;
   const image = coverId ? coverUrlFor(coverId, 'L') : null;
 
@@ -106,7 +112,7 @@ export default function ShareMenu({ workId, coverId, title, author, placement = 
       {open && (
         <div
           role="menu"
-          className={`absolute right-0 z-50 w-56 rounded-card border border-line bg-surface p-1.5 shadow-lg ${
+          className={`absolute ${align === 'left' ? 'left-0' : 'right-0'} z-50 w-56 rounded-card border border-line bg-surface p-1.5 shadow-lg ${
             placement === 'up' ? 'bottom-full mb-2' : 'mt-2'
           }`}
         >

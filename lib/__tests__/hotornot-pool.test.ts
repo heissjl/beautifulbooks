@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { buildPool, looksPlain, mixCandidates, poolName, sharpEnough, type RawIndex } from '../hotornot/pool';
+import {
+  buildPool, fitsGame, looksPlain, mixCandidates, poolName, sharpEnough, type CoverMeasure, type RawIndex,
+} from '../hotornot/pool';
 
 const index: RawIndex = {
   builtAt: '2026-09-09',
@@ -16,6 +18,9 @@ const index: RawIndex = {
 };
 
 const ids = (pool: Array<{ id: string }>) => pool.map(c => c.id);
+
+/** A measured cover: sharp and coloured unless told otherwise. */
+const m = (width: number, height: number, rest: Partial<CoverMeasure> = {}): CoverMeasure => ({ width, height, white: 0.1, yellow: 0, ...rest });
 
 describe('a work pool', () => {
   it('holds every distinct design of the book, and each only once', () => {
@@ -48,7 +53,7 @@ describe('a mix pool', () => {
       .toEqual(buildPool(index, { mode: 'mix', size: 3, seed: 'paperwhite' }));
   });
 
-  it('passes over a blank scan when the book has a real face', () => {
+  it('passes over a blank scan', () => {
     for (const seed of ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']) {
       const two = buildPool(index, { mode: 'mix', size: 3, seed }).find(c => c.workId === 'OL2W');
       expect(two?.id).toBe('ol:5');
@@ -83,26 +88,37 @@ describe('excluded covers', () => {
   });
 });
 
-// 2026-09-11, after the first votes on the preview: blurred covers and titles on
-// white out of the mix. Every number below is a cover from the contact sheets.
+// 2026-09-11, after the first votes on the preview and again after the 200-book
+// pool: blurred covers, titles on white, page scans and Reclam out of the mix.
+// Every number below is a cover from the contact sheets.
 describe('what a mix leaves out', () => {
   it('knows a title on plain paper from a bright cover that is designed', () => {
     expect(looksPlain({ mean: 247, contrast: 25, saturation: 6 })).toBe(true); // "Planet PDF" placeholder
     expect(looksPlain({ mean: 239, contrast: 23, saturation: 3 })).toBe(true); // black-and-white title page
     expect(looksPlain({ mean: 223, contrast: 8, saturation: 71 })).toBe(true); // Odyssey, title on cream
     expect(looksPlain({ mean: 239, contrast: 18, saturation: 38 })).toBe(true); // Webster's thesaurus edition
+    expect(looksPlain({ mean: 177, contrast: 11, saturation: 56 })).toBe(true); // Moby-Dick title page, aged paper
+    expect(looksPlain({ mean: 164, contrast: 9, saturation: 101 })).toBe(true); // A Room with a View, yellowed
     expect(looksPlain({ mean: 244, contrast: 21, saturation: 15 })).toBe(false); // Little Prince, illustrated
-    expect(looksPlain({ mean: 187, contrast: 11, saturation: 120 })).toBe(false); // Moby Dick, orange
-    expect(looksPlain({ mean: 212, contrast: 19, saturation: 207 })).toBe(false); // Reclam, yellow
+    expect(looksPlain({ mean: 187, contrast: 11, saturation: 120 + 1 })).toBe(false); // Moby Dick, orange
+    expect(looksPlain({ mean: 150, contrast: 13, saturation: 228 })).toBe(false); // Penguin, orange
     expect(looksPlain({ mean: 234, contrast: 28, saturation: 3 })).toBe(false); // Kundera, line drawing
   });
 
   it('takes only covers tall enough for the box and shaped like a cover', () => {
-    expect(sharpEnough([327, 500])).toBe(true);
-    expect(sharpEnough([300, 475])).toBe(true);
-    expect(sharpEnough([213, 352])).toBe(false); // blown up 1.5 times in a 540 px box
-    expect(sharpEnough([500, 281])).toBe(false); // a spread
+    expect(sharpEnough(m(327, 500))).toBe(true);
+    expect(sharpEnough(m(300, 475))).toBe(true);
+    expect(sharpEnough(m(213, 352))).toBe(false); // blown up 1.5 times in a 540 px box
+    expect(sharpEnough(m(500, 281))).toBe(false); // a spread
     expect(sharpEnough(undefined)).toBe(false); // never measured
+  });
+
+  it('leaves out a cover that is mostly paper, and a classic Reclam, but not a yellow one that is designed', () => {
+    expect(fitsGame(m(320, 500), 40)).toBe(true);
+    expect(fitsGame(m(320, 500, { white: 0.93 }), 16)).toBe(false); // The Time Machine, title on cream
+    expect(fitsGame(m(320, 500, { yellow: 0.977 }), 7)).toBe(false); // Reclam, Das Fräulein von Scuderi
+    expect(fitsGame(m(320, 500, { yellow: 0.868 }), 27)).toBe(true); // Pippi, yellow and illustrated
+    expect(fitsGame(undefined, 40)).toBe(false);
   });
 
   const bright: RawIndex = {
@@ -125,18 +141,18 @@ describe('what a mix leaves out', () => {
     expect(buildPool(onlyWhite, { mode: 'mix', size: 3, seed: 'a' }).map(c => c.workId)).not.toContain('OL1W');
   });
 
-  it('takes a sharp cover over a small one, and a book with none makes room for the next', () => {
-    const sizes = { 'ol:2': [327, 500], 'ol:3': [128, 192], 'ol:4': [318, 500], 'ol:5': [95, 143] } as const;
+  it('takes a cover that fits over one that does not, and a book with none makes room for the next', () => {
+    const measures = { 'ol:2': m(327, 500), 'ol:3': m(128, 192), 'ol:4': m(318, 500), 'ol:5': m(300, 475, { white: 0.9 }) };
     for (const seed of ['a', 'b', 'c', 'd', 'e', 'f']) {
-      const pool = buildPool(bright, { mode: 'mix', size: 3, seed, sizes });
+      const pool = buildPool(bright, { mode: 'mix', size: 3, seed, measures });
       expect(ids(pool).sort()).toEqual(['ol:2', 'ol:4']);
     }
-    expect(buildPool(bright, { mode: 'mix', size: 1, seed: 'a', sizes })).toHaveLength(1);
+    expect(buildPool(bright, { mode: 'mix', size: 1, seed: 'a', measures })).toHaveLength(1);
   });
 
   it('tries covers in the order it tells the script to measure them', () => {
-    const sizes = { 'ol:2': [327, 500], 'ol:3': [318, 500], 'ol:4': [318, 500], 'ol:5': [300, 475] } as const;
-    const options = { mode: 'mix', size: 3, seed: 'paperwhite', sizes } as const;
+    const measures = { 'ol:2': m(327, 500), 'ol:3': m(318, 500), 'ol:4': m(318, 500), 'ol:5': m(300, 475) };
+    const options = { mode: 'mix', size: 3, seed: 'paperwhite', measures } as const;
     const firsts = mixCandidates(bright, options).map(covers => covers[0].id);
     expect(ids(buildPool(bright, options))).toEqual(firsts);
   });
@@ -161,6 +177,32 @@ describe('what a mix leaves out', () => {
 
   it('leaves a work pool as it was: every design, for the players to judge', () => {
     expect(ids(buildPool(bright, { mode: 'work', workId: 'OL1W' }))).toEqual(['ol:1', 'ol:2']);
+  });
+});
+
+// Julian, 2026-09-11: "mach dann eine version mit 1000 covers" — more covers than the index has books.
+describe('more covers than books', () => {
+  const many: RawIndex = {
+    builtAt: '2026-09-11',
+    works: [['OL1W', 'One', 'Ann'], ['OL2W', 'Two', 'Ben']],
+    covers: [
+      [0, 'ol:1', '0000000000000000', 60, 120, 40, ''],
+      [0, 'ol:2', 'ffffffffffffffff', 60, 120, 40, ''],
+      [0, 'ol:3', '00000000ffffffff', 60, 120, 40, ''],
+      [1, 'ol:4', 'ffffffff00000000', 60, 120, 40, ''],
+    ],
+  };
+
+  it('lets a book bring several, every book its first before any its second', () => {
+    const pool = buildPool(many, { mode: 'mix', size: 4, seed: 'a', perBook: 3 });
+    expect(pool).toHaveLength(4);
+    expect(new Set(pool.slice(0, 2).map(c => c.workId)).size).toBe(2);
+    expect(pool.filter(c => c.workId === 'OL1W')).toHaveLength(3);
+  });
+
+  it('stops at the size and at the limit per book', () => {
+    expect(buildPool(many, { mode: 'mix', size: 3, seed: 'a', perBook: 3 })).toHaveLength(3);
+    expect(buildPool(many, { mode: 'mix', size: 9, seed: 'a', perBook: 2 })).toHaveLength(3);
   });
 });
 

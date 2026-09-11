@@ -25,9 +25,34 @@ describe('a pair from the server', () => {
     expect(pool.covers.map(c => c.id)).toContain(pair.a.id);
     expect(pair.a.src).toBe(imagePath(pair.a.id, 'L'));
     expect(pair.a.src.startsWith('/img/L/ol-')).toBe(true);
+    // Title and author under each cover since 2026-09-11.
+    const book = pool.covers.find(c => c.id === pair.a.id);
+    expect(pair.a).toMatchObject({ title: book?.title, author: book?.author, workId: book?.workId });
+    // What the share button under a cover passes on: the book page with this cover selected.
+    expect(pair.a.href).toBe(`/book/${book?.workId}/cover/${pair.a.id.replace(':', '-')}`);
     const outcome = await castVote(store, secret, { a: pair.a.id, b: pair.b.id, winner: pair.b.id, token: pair.token }, { pool, now });
-    expect(outcome).toEqual({ ok: true });
+    // Once the vote is in, the book behind the chosen cover may be named, with the way to it.
+    expect(outcome).toEqual({
+      ok: true,
+      chosen: expect.objectContaining({ id: pair.b.id, href: expect.stringMatching(/^\/book\/OL\d+W\/cover\/ol-\d+$/) }),
+    });
     expect(await store.votes('test')).toEqual([{ a: pair.a.id, b: pair.b.id, winner: pair.b.id, on: '2026-09-11' }]);
+  });
+});
+
+// The 1000-cover pool grew from the 200-book one after friends had cast 35 votes on it.
+describe('a pool that grew from another', () => {
+  it('counts the votes and reports of the pool it inherits, for the covers it still holds', async () => {
+    const store = memoryStore();
+    const grown: VersusPool = { ...pool, name: 'test-grown', inherits: ['test'] };
+    await store.add('test', { a: 'ol:1', b: 'ol:2', winner: 'ol:1', on: '2026-09-11' });
+    await store.add('test', { a: 'ol:1', b: 'ol:99', winner: 'ol:99', on: '2026-09-11' }); // a cover the new pool dropped
+    await store.flag('test', { id: 'ol:6', reason: 'reported' });
+    await store.add('test-grown', { a: 'ol:3', b: 'ol:4', winner: 'ol:4', on: '2026-09-11' });
+    const result = await board(store, { pool: grown });
+    expect(result.votes).toBe(2);
+    expect(result.covers).toBe(5);
+    expect(result.flagged).toBe(1);
   });
 });
 
@@ -53,7 +78,7 @@ describe('a vote the server did not ask for', () => {
   it('counts once, however often the same pair is sent', async () => {
     const { store, pair } = await fresh();
     const input = { a: pair.a.id, b: pair.b.id, winner: pair.a.id, token: pair.token };
-    expect(await castVote(store, secret, input, { pool, now })).toEqual({ ok: true });
+    expect((await castVote(store, secret, input, { pool, now })).ok).toBe(true);
     expect(await castVote(store, secret, input, { pool, now })).toEqual({ ok: false, status: 409, error: expect.any(String) });
     expect(await store.votes('test')).toHaveLength(1);
   });
@@ -100,12 +125,15 @@ describe('the board', () => {
 });
 
 describe('the frozen pool', () => {
-  // 200 since 2026-09-11; it went online with 139 while the index was still growing.
-  it('holds one cover per book, at most two hundred, and none of the excluded ones', () => {
-    expect(POOL.name).toBe('mix-200-paperwhite');
-    expect(POOL.covers.length).toBeGreaterThan(100);
-    expect(POOL.covers.length).toBeLessThanOrEqual(200);
-    expect(new Set(POOL.covers.map(c => c.workId)).size).toBe(POOL.covers.length);
+  // 1000 covers since 2026-09-11, up to five per book; it grew from the 200-book pool and inherits its votes.
+  it('holds a thousand distinct covers, at most five per book, and none of the excluded ones', () => {
+    expect(POOL.name).toBe('mix-1000-paperwhite');
+    expect(POOL.inherits).toEqual(['mix-200-paperwhite']);
+    expect(POOL.covers).toHaveLength(1000);
+    expect(new Set(POOL.covers.map(c => c.id)).size).toBe(1000);
+    const perBook = new Map<string, number>();
+    for (const c of POOL.covers) perBook.set(c.workId, (perBook.get(c.workId) ?? 0) + 1);
+    expect(Math.max(...perBook.values())).toBeLessThanOrEqual(5);
     const excluded = new Set(POOL.excluded.map(e => e.id));
     expect(excluded.has('ol:10942061')).toBe(true);
     expect(POOL.covers.some(c => excluded.has(c.id))).toBe(false);

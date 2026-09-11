@@ -30,6 +30,22 @@ export interface VersusPool {
   /** Covers a person judged not to be covers before the pool was frozen, with the reason. */
   excluded: Array<{ id: string; reason: string }>;
   covers: PoolCover[];
+  /**
+   * Pools this one grew from. Their votes and reports count here too, for the
+   * covers both hold: the 1000-cover pool kept the 35 votes friends had cast
+   * on the 200-book one (2026-09-11). New votes go to this pool's own name.
+   */
+  inherits?: string[];
+}
+
+/** Votes and reports under this pool's name and every name it inherits. */
+async function recorded(store: VoteStore, pool: VersusPool): Promise<{ votes: StoredVote[]; flags: Awaited<ReturnType<VoteStore['flags']>> }> {
+  const names = [pool.name, ...(pool.inherits ?? [])];
+  const [votes, flags] = await Promise.all([
+    Promise.all(names.map(name => store.votes(name))),
+    Promise.all(names.map(name => store.flags(name))),
+  ]);
+  return { votes: votes.flat(), flags: flags.flat() };
 }
 
 export const POOL = poolFile as VersusPool;
@@ -50,10 +66,34 @@ export function secretForEnv(env: Record<string, string | undefined> = process.e
 }
 
 async function activeCovers(store: VoteStore, pool: VersusPool): Promise<{ ids: string[]; votes: Vote[] }> {
-  const [votes, flags] = await Promise.all([store.votes(pool.name), store.flags(pool.name)]);
+  const { votes, flags } = await recorded(store, pool);
   const out = new Set(flags.map(f => f.id));
   const ids = pool.covers.map(c => c.id).filter(id => !out.has(id));
-  return { ids, votes: votes.filter(v => !out.has(v.a) && !out.has(v.b)) };
+  // A vote on a cover the pool no longer holds (a stricter rule took it out) counts for nothing.
+  const active = new Set(ids);
+  return { ids, votes: votes.filter(v => active.has(v.a) && active.has(v.b)) };
+}
+
+export interface PairSide {
+  id: string;
+  src: string;
+  title: string;
+  author: string;
+  workId: string;
+  /** The book page with this cover selected: what the share button under a cover passes on. */
+  href: string;
+}
+
+function side(pool: VersusPool, id: string): PairSide {
+  const cover = pool.covers.find(c => c.id === id);
+  return {
+    id,
+    workId: cover?.workId ?? '',
+    src: imagePath(id, 'L'),
+    title: cover?.title ?? '',
+    author: cover?.author ?? '',
+    href: cover ? bookPath(cover.workId, id) : '',
+  };
 }
 
 export interface PairResponse {
@@ -61,18 +101,21 @@ export interface PairResponse {
   store: VoteStore['kind'];
   votes: number;
   covers: number;
-  a: { id: string; src: string };
-  b: { id: string; src: string };
+  /** Title and author shown under each cover since 2026-09-11 (Julian: "wir müssen noch titel und autor anzeigen"). */
+  a: PairSide;
+  b: PairSide;
   token: string;
 }
 
 export async function nextPairFor(
   store: VoteStore,
   secret: Buffer,
-  { pool = POOL, last, random = rng(Date.now() >>> 0), now = Date.now() }: {
+  { pool = POOL, last, recent, random = rng(Date.now() >>> 0), now = Date.now() }: {
     pool?: VersusPool;
     /** The pair just shown, which the client sends back so it is not shown again at once. */
     last?: readonly [string, string];
+    /** Covers this player saw lately (`nextPair`); the browser keeps the list, the server nothing about the player. */
+    recent?: readonly string[];
     random?: () => number;
     now?: number;
   } = {},
@@ -80,7 +123,7 @@ export async function nextPairFor(
   const { ids, votes } = await activeCovers(store, pool);
   const elo = newElo(ids);
   for (const vote of votes) applyVote(elo, vote);
-  const pair = nextPair(ids, elo, random, { last });
+  const pair = nextPair(ids, elo, random, { last, recent });
   if (!pair) return null;
   const [a, b] = pair;
   return {
@@ -88,13 +131,26 @@ export async function nextPairFor(
     store: store.kind,
     votes: votes.length,
     covers: ids.length,
-    a: { id: a, src: imagePath(a, 'L') },
-    b: { id: b, src: imagePath(b, 'L') },
+    a: side(pool, a),
+    b: side(pool, b),
     token: signPair(secret, pool.name, a, b, now),
   };
 }
 
-export type Outcome = { ok: true } | { ok: false; status: 400 | 409; error: string };
+/**
+ * `chosen` names the book behind the cover just picked. The pair itself never
+ * says it — the cover is judged, not the book — but once the vote is in, the
+ * player may want to go to the book (Julian, 2026-09-11: "falls man es so
+ * schön findet, dass man es kaufen möchte").
+ */
+export type Outcome =
+  | { ok: true; chosen?: { id: string; workId: string; title: string; author: string; href: string } }
+  | { ok: false; status: 400 | 409; error: string };
+
+/** The detail page with this cover selected (ROADMAP 6.20): where its buy links are. */
+export function bookPath(workId: string, coverId: string): string {
+  return `/book/${workId}/cover/${coverPathSegment(coverId)}`;
+}
 
 interface PairInput {
   a: unknown;
@@ -134,7 +190,10 @@ export async function castVote(
   if (!claimed.ok || !claimed.a || !claimed.b) return claimed.ok ? { ok: false, status: 400, error: 'Not a vote.' } : claimed;
   const vote: StoredVote = { a: claimed.a, b: claimed.b, winner: input.winner as string, on: new Date(now).toISOString().slice(0, 10) };
   await store.add(pool.name, vote);
-  return { ok: true };
+  const cover = pool.covers.find(c => c.id === vote.winner);
+  if (!cover) return { ok: true };
+  const { id, workId, title, author } = cover;
+  return { ok: true, chosen: { id, workId, title, author, href: bookPath(workId, id) } };
 }
 
 /**
@@ -170,6 +229,8 @@ function judge(crown: Crown, standing: Standing | undefined, end: 'best' | 'wors
 
 export interface BoardEntry extends Standing, PoolCover {
   src: string;
+  /** Votes this cover won, out of `games`: what the standings page says instead of shares of rankings. */
+  wins: number;
 }
 
 export interface Board {
@@ -188,17 +249,23 @@ export interface Board {
   flagged: number;
 }
 
-export async function board(store: VoteStore, { pool = POOL }: { pool?: VersusPool } = {}): Promise<Board> {
-  const [{ ids, votes }, flags] = await Promise.all([activeCovers(store, pool), store.flags(pool.name)]);
+/** How many covers each end of the board lists: five, or twenty on request (Julian, 2026-09-11). */
+export async function board(
+  store: VoteStore,
+  { pool = POOL, top: topCount = 5, bottom: bottomCount = 5 }: { pool?: VersusPool; top?: number; bottom?: number } = {},
+): Promise<Board> {
+  const [{ ids, votes }, { flags }] = await Promise.all([activeCovers(store, pool), recorded(store, pool)]);
   // One round is as many votes as there are covers: the spacing the simulation judged at.
   const { table, best, worst } = crowns(ids, votes, { step: Math.max(1, ids.length) });
   const meta = new Map(pool.covers.map(c => [c.id, c]));
+  const wins = new Map<string, number>();
+  for (const v of votes) wins.set(v.winner, (wins.get(v.winner) ?? 0) + 1);
   const entry = (s: Standing): BoardEntry => {
     const c = meta.get(s.id) ?? { id: s.id, workId: '', title: '', author: '' };
-    return { ...c, ...s, src: imagePath(s.id, 'M') };
+    return { ...c, ...s, src: imagePath(s.id, 'M'), wins: wins.get(s.id) ?? 0 };
   };
-  const top = table.slice(0, 5);
-  const bottom = table.slice(-5).reverse();
+  const top = table.slice(0, topCount);
+  const bottom = table.slice(-bottomCount).reverse();
   return {
     pool: pool.name,
     store: store.kind,
