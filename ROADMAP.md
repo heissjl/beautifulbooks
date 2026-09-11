@@ -523,7 +523,7 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 - [ ] **6.27 Die übrigen Erklärtexte auf N13 durchgehen.** (Aus Julians Sprachregelung vom 2026-09-09, jetzt SPEC **N13**: in einem Erklärtext steht höchstens, was zu sehen ist, woher es kommt und der Weg zurück — keine Schwellen, keine Sortierordnungen, keine Beteuerungen über die eigene Arbeitsweise.)
 
-  *Stand 2026-09-11: die zwei Verdikt-Zusätze aus der Tabelle entfernt der Branch `worktree-kauflink-leiste` (1.11, seit dem 2026-09-11 in `main`). Der Satz zur Händlerreihenfolge wartete auf diesen Branch, weil er `lib/linkplan.ts` umbaut, und ist jetzt dran; danach ist hier nur noch der Verfügbarkeits-Absatz offen, und der wartet auf 0.1.*
+  *Stand 2026-09-11 abends: die zwei Verdikt-Zusätze sind mit 1.11 entfallen, und der Satz zur Händlerreihenfolge ist gekürzt — aus „This printing’s ISBN was registered in India. Marketplaces that list copies from anywhere come first; no shop was asked.“ wurde „… was registered in India; no shop was asked.“ Die Regel steht auf der About-Seite, Tatsache und Einschränkung (N12) bleiben. Offen ist nur noch der Verfügbarkeits-Absatz, und der wartet auf 0.1.*
 
   Zwei Stellen sind am selben Tag schon umgeschrieben: die **Fußzeile der Jahrzehnte-Seite** (aus fünf Sätzen mit Schwelle, Sortierordnung und „counted, not estimated" wurden zwei plus der Rückverweis) und der **Satz unter der Scan-Reihe** (6.14a). Die übrigen Kandidaten, absteigend nach Verstoß:
 

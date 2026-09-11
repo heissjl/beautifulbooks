@@ -291,13 +291,15 @@ function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, 
     return 'This edition has no ISBN on record, so no shop can look it up by number. These search by title, publisher and year instead.';
   }
   /*
-    The one sentence in the sidebar that justifies an order. It states a fact
-    about the number and nothing about any shop: "registered in Turkey" is
-    read off the registration group, while "Bookshop does not have it" would
-    be a claim nobody checked.
+    A fact about the number and the limit of what was done, nothing more
+    (SPEC N13, ROADMAP 6.27): "registered in Turkey" is read off the
+    registration group, and "no shop was asked" keeps it from sounding like a
+    stock check. The rule behind the order of the links — marketplaces that
+    list copies from anywhere first — was a method, and lives on the About
+    page, which says why at length since 1.11.
   */
   const where = place ? `was registered in ${place}` : `was not registered in ${AREA_NAME[MARKET_AREA[market]]}`;
-  return `This printing’s ISBN ${where}. Marketplaces that list copies from anywhere come first; no shop was asked.`;
+  return `This printing’s ISBN ${where}; no shop was asked.`;
 }
 
 /**
