@@ -39,9 +39,14 @@ export function imagePath(coverId: string, size: 'M' | 'L'): string {
   return `/img/${size}/${coverPathSegment(coverId)}`;
 }
 
-/** The key for this deployment's pair tokens. */
+/**
+ * The key for this deployment's pair tokens: from the REST token, or from the
+ * Redis address, whose password makes it just as secret and just as shared
+ * between the instances of one deployment.
+ */
 export function secretForEnv(env: Record<string, string | undefined> = process.env): Buffer {
-  return pairSecret(storeConfig(env)?.token);
+  const config = storeConfig(env);
+  return pairSecret(config ? (config.kind === 'rest' ? config.token : config.url) : undefined);
 }
 
 async function activeCovers(store: VoteStore, pool: VersusPool): Promise<{ ids: string[]; votes: Vote[] }> {

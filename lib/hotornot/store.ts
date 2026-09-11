@@ -4,14 +4,15 @@
  * The first store the running site writes to — the thing E6 deferred and E18
  * kept deferred. Whether it stays is decision E21, and Julian's. Everything
  * sits behind one small interface, so the tests run against memory (N7) and
- * a deployment against Upstash Redis from the Vercel Marketplace, and the
- * game never knows which.
+ * a deployment against Redis from the Vercel Marketplace, and the game never
+ * knows which.
  *
  * **A vote is two covers, a winner and a day.** Nothing about the voter is
  * written, ever (N11): no IP, no cookie, no session, no user agent. The same
  * holds for a "not a cover" report and for the pair tokens, which name covers
  * and a time, not a person.
  */
+import { createClient } from 'redis';
 
 export interface StoredVote {
   a: string;
@@ -29,7 +30,7 @@ export interface CoverFlag {
 
 export interface VoteStore {
   /** Which kind this is, so the page can say where its votes live. */
-  readonly kind: 'memory' | 'upstash';
+  readonly kind: 'memory' | 'upstash' | 'redis';
   votes(pool: string): Promise<StoredVote[]>;
   add(pool: string, vote: StoredVote): Promise<void>;
   flags(pool: string): Promise<CoverFlag[]>;
@@ -91,10 +92,71 @@ export function memoryStore(now: () => number = Date.now): VoteStore {
 }
 
 /**
+ * The five Redis commands the game needs, whoever speaks them — the REST API,
+ * a direct connection, or a test. Their answers are checked, not trusted: a
+ * client library's types and a JSON body are both claims about the wire.
+ */
+export interface RedisCommands {
+  rPush(key: string, value: string): Promise<unknown>;
+  lRange(key: string, start: number, stop: number): Promise<unknown>;
+  /** Field → value, as a plain object or a `Map`, however the transport delivers it. */
+  hGetAll(key: string): Promise<unknown>;
+  hSetNX(key: string, field: string, value: string): Promise<unknown>;
+  /** SET key value NX EX ttl: "OK" when set, anything else when the key was already there. */
+  setNx(key: string, value: string, ttlSeconds: number): Promise<unknown>;
+}
+
+/**
+ * A hash as field → value pairs. RESP3, which node-redis 6 speaks by default,
+ * can deliver a hash as a `Map`, and `Object.entries` of a `Map` is empty — the
+ * reports would have vanished without a word.
+ */
+function hashEntries(result: unknown): Array<[string, unknown]> {
+  if (result instanceof Map) return [...result.entries()].map(([k, v]) => [String(k), v]);
+  if (result && typeof result === 'object') return Object.entries(result as Record<string, unknown>);
+  return [];
+}
+
+/** The game on top of any Redis: a list of votes per pool, a hash of flags, a short-lived key per claimed token. */
+export function commandsStore(commands: RedisCommands, kind: 'upstash' | 'redis'): VoteStore {
+  return {
+    kind,
+    async votes(pool) {
+      const result = await commands.lRange(keyFor.votes(pool), 0, -1);
+      if (!Array.isArray(result)) return [];
+      return result.map(parseVote).filter((v): v is StoredVote => v !== null);
+    },
+    async add(pool, vote) {
+      await commands.rPush(keyFor.votes(pool), JSON.stringify(vote));
+    },
+    async flags(pool) {
+      return hashEntries(await commands.hGetAll(keyFor.flags(pool)))
+        .map(([id, reason]): CoverFlag => ({ id, reason: String(reason) === 'broken' ? 'broken' : 'reported' }));
+    },
+    async flag(pool, flag) {
+      await commands.hSetNX(keyFor.flags(pool), flag.id, flag.reason);
+    },
+    async claim(pairToken, ttlSeconds) {
+      return String(await commands.setNx(keyFor.token(pairToken), '1', ttlSeconds)) === 'OK';
+    },
+  };
+}
+
+function parseVote(raw: unknown): StoredVote | null {
+  if (typeof raw !== 'string') return null;
+  try {
+    const v = JSON.parse(raw) as Partial<StoredVote>;
+    if (typeof v.a !== 'string' || typeof v.b !== 'string' || typeof v.winner !== 'string') return null;
+    return { a: v.a, b: v.b, winner: v.winner, on: typeof v.on === 'string' ? v.on : '' };
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Upstash Redis over its REST API: one POST per command, the command as a
- * JSON array, the token as a bearer header. Plain `fetch` rather than the
- * SDK — five commands do not justify a dependency, and every external call
- * here gets the same timeout and the same error as the others (N3).
+ * JSON array, the token as a bearer header. Plain `fetch`, with the same
+ * timeout and the same error as every other external call here (N3).
  */
 export function upstashStore(url: string, token: string, fetchImpl: typeof fetch = fetch): VoteStore {
   async function command(args: Array<string | number>): Promise<unknown> {
@@ -121,74 +183,120 @@ export function upstashStore(url: string, token: string, fetchImpl: typeof fetch
     return body.result;
   }
 
-  return {
-    kind: 'upstash',
-    async votes(pool) {
-      const result = await command(['LRANGE', keyFor.votes(pool), 0, -1]);
-      if (!Array.isArray(result)) return [];
-      const out: StoredVote[] = [];
-      for (const raw of result) {
-        const vote = parseVote(raw);
-        if (vote) out.push(vote);
+  return commandsStore({
+    rPush: (key, value) => command(['RPUSH', key, value]),
+    lRange: (key, start, stop) => command(['LRANGE', key, start, stop]),
+    // HGETALL answers a flat list over REST: field, value, field, value, …
+    hGetAll: async key => {
+      const flat = await command(['HGETALL', key]);
+      const out: Record<string, unknown> = {};
+      if (Array.isArray(flat)) {
+        for (let i = 0; i + 1 < flat.length; i += 2) {
+          const field = flat[i];
+          if (typeof field === 'string') out[field] = flat[i + 1];
+        }
       }
       return out;
     },
-    async add(pool, vote) {
-      await command(['RPUSH', keyFor.votes(pool), JSON.stringify(vote)]);
-    },
-    async flags(pool) {
-      // HGETALL answers a flat list over REST: field, value, field, value, …
-      const result = await command(['HGETALL', keyFor.flags(pool)]);
-      if (!Array.isArray(result)) return [];
-      const out: CoverFlag[] = [];
-      for (let i = 0; i + 1 < result.length; i += 2) {
-        const id = result[i];
-        const reason = result[i + 1];
-        if (typeof id === 'string') out.push({ id, reason: reason === 'broken' ? 'broken' : 'reported' });
-      }
-      return out;
-    },
-    async flag(pool, flag) {
-      await command(['HSETNX', keyFor.flags(pool), flag.id, flag.reason]);
-    },
-    async claim(pairToken, ttlSeconds) {
-      const result = await command(['SET', keyFor.token(pairToken), 1, 'NX', 'EX', ttlSeconds]);
-      return result === 'OK';
-    },
-  };
+    hSetNX: (key, field, value) => command(['HSETNX', key, field, value]),
+    setNx: (key, value, ttlSeconds) => command(['SET', key, value, 'NX', 'EX', ttlSeconds]),
+  }, 'upstash');
 }
 
-function parseVote(raw: unknown): StoredVote | null {
-  if (typeof raw !== 'string') return null;
+/**
+ * The client is built in exactly one place, and its type is taken from that
+ * call: `ReturnType<typeof createClient>` names the library's generic
+ * default, which node-redis 6 — RESP3 unless told otherwise — does not match.
+ */
+function newClient(url: string) {
+  return createClient({ url, socket: { connectTimeout: STORE_TIMEOUT_MS, reconnectStrategy: false } });
+}
+
+type RedisClient = ReturnType<typeof newClient>;
+
+/**
+ * One connection per address and function instance, kept between requests,
+ * on `globalThis` for the reason given at `shared` below. A connection that
+ * errors is dropped, and the next request connects afresh: no reconnect loop
+ * in the background of a serverless function.
+ */
+const connections = globalThis as typeof globalThis & { __versusRedis?: Map<string, Promise<RedisClient>> };
+
+function clientFor(url: string): Promise<RedisClient> {
+  const open = (connections.__versusRedis ??= new Map());
+  const existing = open.get(url);
+  if (existing) return existing;
+  const client = newClient(url);
+  // Without a listener a dropped connection would take the whole function down with it.
+  client.on('error', () => open.delete(url));
+  const ready = client.connect().then(() => client);
+  open.set(url, ready);
+  ready.catch(() => open.delete(url));
+  return ready;
+}
+
+async function withTimeout<T>(work: Promise<T>): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const late = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`no answer within ${STORE_TIMEOUT_MS} ms`)), STORE_TIMEOUT_MS);
+  });
   try {
-    const v = JSON.parse(raw) as Partial<StoredVote>;
-    if (typeof v.a !== 'string' || typeof v.b !== 'string' || typeof v.winner !== 'string') return null;
-    return { a: v.a, b: v.b, winner: v.winner, on: typeof v.on === 'string' ? v.on : '' };
-  } catch {
-    return null;
+    return await Promise.race([work, late]);
+  } finally {
+    clearTimeout(timer);
   }
 }
 
 /**
+ * Redis over its own protocol, `redis://` or `rediss://` (TLS). What the
+ * Marketplace store actually provided on 2026-09-11 was exactly one variable,
+ * `STORAGE_REDIS_URL` — no REST address and no token — so this is the path
+ * the preview takes. Connects on the first command, not on construction.
+ */
+export function redisStore(url: string): VoteStore {
+  const run = async (command: (client: RedisClient) => Promise<unknown>): Promise<unknown> => {
+    try {
+      return await withTimeout(clientFor(url).then(command));
+    } catch (err) {
+      connections.__versusRedis?.delete(url);
+      throw new StoreUnavailableError(err instanceof Error ? err.message : String(err));
+    }
+  };
+  return commandsStore({
+    rPush: (key, value) => run(client => client.rPush(key, value)),
+    lRange: (key, start, stop) => run(client => client.lRange(key, start, stop)),
+    hGetAll: key => run(client => client.hGetAll(key)),
+    hSetNX: (key, field, value) => run(client => client.hSetNX(key, field, value)),
+    setNx: (key, value, ttlSeconds) => run(client => client.set(key, value, { NX: true, EX: ttlSeconds })),
+  }, 'redis');
+}
+
+/**
  * The prefix Julian gave the store's variables when connecting it (2026-09-11).
- * What Upstash puts after it has differed between versions of the integration
- * (`KV_REST_API_URL`, `REST_API_URL`, `UPSTASH_REDIS_REST_URL`), so the end
- * of the name is matched rather than one full name assumed.
+ * What comes after it depends on the integration — Upstash's REST pair
+ * (`…KV_REST_API_URL`, `…REST_API_TOKEN`) or a plain Redis address
+ * (`…REDIS_URL`) — so the end of the name and the scheme of the value are
+ * matched rather than one full name assumed.
  */
 export const STORE_PREFIX = 'STORAGE_';
 
 /** What the store needs, and what to say when it is missing — names only, never a value. */
-export const STORE_LOOKED_FOR = [`${STORE_PREFIX}…REST_API_URL`, `${STORE_PREFIX}…REST_API_TOKEN`];
+export const STORE_LOOKED_FOR =
+  `${STORE_PREFIX}…REST_API_URL with ${STORE_PREFIX}…REST_API_TOKEN, or a ${STORE_PREFIX}…URL holding a redis:// address`;
 
 type Env = Record<string, string | undefined>;
 
-export function storeConfig(env: Env = process.env): { url: string; token: string } | null {
+export type StoreConfig = { kind: 'rest'; url: string; token: string } | { kind: 'redis'; url: string };
+
+export function storeConfig(env: Env = process.env): StoreConfig | null {
   const names = Object.keys(env).filter(k => k.startsWith(STORE_PREFIX) && env[k]).sort();
   const url = names.find(k => /REST(_API)?_URL$/.test(k));
   // The read-only token is useless here: a vote is a write.
   const token = names.find(k => /REST(_API)?_TOKEN$/.test(k) && !k.includes('READ_ONLY'));
-  if (!url || !token) return null;
-  return { url: env[url] ?? '', token: env[token] ?? '' };
+  if (url && token) return { kind: 'rest', url: env[url] ?? '', token: env[token] ?? '' };
+  const tcp = names.find(k => k.endsWith('URL') && /^rediss?:\/\//.test(env[k] ?? ''));
+  if (tcp) return { kind: 'redis', url: env[tcp] ?? '' };
+  return null;
 }
 
 /**
@@ -196,11 +304,11 @@ export function storeConfig(env: Env = process.env): { url: string; token: strin
  * value. Outside production it also lists the variables that do start with
  * the prefix: the first preview answered "not configured" although Julian had
  * connected the store, and the only way to see why was to see what the
- * integration had actually named them (2026-09-11). Production keeps it to
- * what was looked for; a configuration listing has no business on the site.
+ * integration had actually named them (2026-09-11). Production keeps to what
+ * was looked for; a configuration listing has no business on the site.
  */
 export function missingStoreMessage(env: Env = process.env): string {
-  const base = `The vote store is not configured here. Looked for ${STORE_LOOKED_FOR.join(' and ')}.`;
+  const base = `The vote store is not configured here. Looked for ${STORE_LOOKED_FOR}.`;
   if (env.VERCEL_ENV === 'production') return base;
   const found = Object.keys(env).filter(k => k.startsWith(STORE_PREFIX)).sort();
   return found.length > 0
@@ -218,15 +326,17 @@ export function missingStoreMessage(env: Env = process.env): string {
 const shared = globalThis as typeof globalThis & { __versusDevMemory?: VoteStore };
 
 /**
- * The store this deployment has: Upstash when its variables are set; memory
- * under `next dev`, so the game can be played on a laptop; and nothing at all
- * in a production build without the variables — the route says so instead
- * of keeping votes in one server instance's memory, where they would vanish
- * with it and differ between instances.
+ * The store this deployment has: Redis when its variables are set (REST
+ * first, a direct connection otherwise); memory under `next dev`, so the game
+ * can be played on a laptop; and nothing at all in a production build without
+ * the variables — the route says so instead of keeping votes in one server
+ * instance's memory, where they would vanish with it and differ between
+ * instances.
  */
 export function storeFromEnv(env: Env = process.env): VoteStore | null {
   const config = storeConfig(env);
-  if (config) return upstashStore(config.url, config.token);
+  if (config?.kind === 'rest') return upstashStore(config.url, config.token);
+  if (config?.kind === 'redis') return redisStore(config.url);
   if (env.NODE_ENV === 'production') return null;
   shared.__versusDevMemory ??= memoryStore();
   return shared.__versusDevMemory;
