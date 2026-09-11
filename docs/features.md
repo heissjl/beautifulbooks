@@ -40,6 +40,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
+| Sprachreiter brechen auf beiden Geräten um; „All languages" am Ende zeigt die ganze Wand, neuester Druck zuerst; am Telefon ab der siebten Sprache „+n more" | 2026-09-11 | F2.4, N14 | 6.8 | `components/CoverGallery.tsx`, `lib/works.ts` (`coversNewestFirst`) |
 | ISBN-Nachschau bei Google **nur** bei Auswahl; Verdikt `verified / differs / uncompared / unknown / pending / unavailable`, Wortlaut an einer Stelle; ohne Signatur nie „different" | 2026-09-07 / 09-11 | F2.8, F2.9 | Schritt 13, 13a, 1.5, 6.32 | `lib/isbn.ts`, `components/useIsbnCovers.ts`, `lib/works.ts` (`verifyIsbnCover`), `lib/verdicts.ts` |
 | Erste Reihe nach ISBN-Registrierungsgruppe: **home / foreign / kdp / no-isbn**; Marktplätze führen bei fremder ISBN, Katalog-Händler bekommen Titelsuchen; `differs` ersetzt die Reihe durch Suchen | 2026-09-09 | §2.4, F2.9 | 1.11 (PLAN-1.11) | `lib/linkplan.ts`, `lib/normalize.ts` (`registrationArea`), `lib/buylinks.ts` |
 | „Or read it in another edition“ nur, wenn kein Link auf *diese* Ausgabe möglich ist | 2026-09-09 | §2.4 | 1.11 | `lib/linkplan.ts` |

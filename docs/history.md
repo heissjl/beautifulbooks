@@ -1836,3 +1836,20 @@ Zwei Eigenheiten des CLI, die beim ersten Lesen täuschten: `--json` gibt **jede
 **Julian dazu:** keine leeren Kacheln auf dem Schirm — „ich denke, es ist behoben. Ich melde mich, falls ich wieder Probleme sehe." Damit ist 6.25 abgehakt: der Server lieferte jedes Bild, und für einen vorübergehenden Aussetzer wie in der Nacht zuvor gibt es jetzt den zweiten Versuch aus 6.31. Die Ursache jener Nacht bleibt unbelegt.
 
 Tests 432, `tsc`, Lint grün.
+
+## 2026-09-11 · All languages auf beiden Geräten (ROADMAP 6.8)
+
+Julian vermisste die Pille am Telefon — sie war nie gebaut. Beim Bauen stand die Frage, die der Plan übersehen hatte: am Telefon scrollte die Reiterzeile seitlich, eine Pille *am Ende* hätte dort außerhalb des Bildschirms gestanden, am Desktop sichtbar (N14). Julian wählte **Weg 1**: die Zeile bricht auch am Telefon um. Damit das nicht die sechs Zeilen zurückbringt, wegen derer sie am 2026-09-07 zu scrollen begann, zeigt ein Telefon sechs Sprachen plus den aktiven Reiter und dahinter „+n more".
+
+Gemessen am Dev-Server:
+
+| | 390 px | 1280 px |
+|---|---|---|
+| *Infinite Jest*: Zeilen, Pille | 2 Zeilen, „All languages 15" sichtbar | — |
+| *Infinite Jest*: Gesamtansicht | 15 Kacheln von 15; ein Cover antippen hält die Ansicht | — |
+| *Nineteen Eighty-Four*: Zeilen | **3** (6 Sprachen, „+11 more", „All languages 224"), erste Kachel bei 424 px | 3, alle 17 Sprachreiter und die Pille |
+| … nach „+11 more" | 7 Zeilen, erste Kachel bei 568 px | — |
+
+Zwei Beobachtungen für später: hinter „+11 more" steckt am Telefon auch **„Unknown 100"**, weil „Unknown" immer zuletzt steht — die größte Gruppe nach Englisch ist so einen Tipp entfernt. Und die Gesamtansicht zeigt Dubletten deutlicher als ein Sprachreiter: bei *Infinite Jest* stand das violette Einaudi-Cover zweimal da, einmal unter Italian, einmal unter Unknown — derselbe Befund wie M9 im [Testbericht](tests/2026-09-11-mobil.md), jetzt auf einen Blick.
+
+Tests 438, `tsc`, Lint und Build grün.
