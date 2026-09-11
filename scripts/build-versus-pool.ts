@@ -41,6 +41,23 @@ const EXCLUDED = [
     reason: 'A Slaughterhouse-Five reading guide with "Note: This is not the actual book cover" printed on it; '
       + 'taken out with the "not a cover" button in the lab test, 2026-09-11.',
   },
+  // The four below were seen on the contact sheet of the 61 books the pool grew by, 2026-09-11.
+  {
+    id: 'ol:13524082',
+    reason: 'The Scarlet Letter: a plain placeholder with "Note: This is not the actual book cover" printed on it.',
+  },
+  {
+    id: 'ol:13569803',
+    reason: 'The Moonstone: the same kind of placeholder, "Note: This is not the actual book cover".',
+  },
+  {
+    id: 'ol:6352405',
+    reason: 'The Woman in White: a page of text from inside the book, not its cover.',
+  },
+  {
+    id: 'ol:14051611',
+    reason: 'The Song of Achilles: a merchandise photo of the book beside a tote bag, not the cover itself.',
+  },
 ];
 
 const POOL_FILE = join(ROOT, 'data', 'versus-pool.json');

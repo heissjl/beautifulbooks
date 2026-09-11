@@ -1,7 +1,7 @@
 {
  "name": "mix-200-paperwhite",
  "builtAt": "2026-09-11",
- "indexBuiltAt": "2026-09-09",
+ "indexBuiltAt": "2026-09-11",
  "quality": {
   "minHeight": 450,
   "aspect": [
@@ -14,6 +14,22 @@
   {
    "id": "ol:10942061",
    "reason": "A Slaughterhouse-Five reading guide with \"Note: This is not the actual book cover\" printed on it; taken out with the \"not a cover\" button in the lab test, 2026-09-11."
+  },
+  {
+   "id": "ol:13524082",
+   "reason": "The Scarlet Letter: a plain placeholder with \"Note: This is not the actual book cover\" printed on it."
+  },
+  {
+   "id": "ol:13569803",
+   "reason": "The Moonstone: the same kind of placeholder, \"Note: This is not the actual book cover\"."
+  },
+  {
+   "id": "ol:6352405",
+   "reason": "The Woman in White: a page of text from inside the book, not its cover."
+  },
+  {
+   "id": "ol:14051611",
+   "reason": "The Song of Achilles: a merchandise photo of the book beside a tote bag, not the cover itself."
   }
  ],
  "covers": [
@@ -850,6 +866,372 @@
    "workId": "OL98130W",
    "title": "Also sprach Zarathustra",
    "author": "Friedrich Nietzsche"
+  },
+  {
+   "id": "ol:2140532",
+   "workId": "OL20600W",
+   "title": "Gulliver's Travels",
+   "author": "Jonathan Swift"
+  },
+  {
+   "id": "ol:1026567",
+   "workId": "OL14872925W",
+   "title": "Pippi Långstrump",
+   "author": "Astrid Lindgren"
+  },
+  {
+   "id": "ol:10764525",
+   "workId": "OL5735363W",
+   "title": "The Hunger Games",
+   "author": "Suzanne Collins"
+  },
+  {
+   "id": "ol:14083624",
+   "workId": "OL45089W",
+   "title": "Robinson Crusoe",
+   "author": "Daniel Defoe"
+  },
+  {
+   "id": "ol:10328019",
+   "workId": "OL17370186W",
+   "title": "A Little Life",
+   "author": "Hanya Yanagihara"
+  },
+  {
+   "id": "ol:8233574",
+   "workId": "OL16086747W",
+   "title": "The Night Circus",
+   "author": "Erin Morgenstern"
+  },
+  {
+   "id": "ol:13776206",
+   "workId": "OL35616W",
+   "title": "Kindred",
+   "author": "Octavia E. Butler"
+  },
+  {
+   "id": "ol:14326067",
+   "workId": "OL2056818W",
+   "title": "Maus I",
+   "author": "Art Spiegelman"
+  },
+  {
+   "id": "ol:253245",
+   "workId": "OL1103203W",
+   "title": "North and South",
+   "author": "Elizabeth Cleghorn Gaskell"
+  },
+  {
+   "id": "ol:11596077",
+   "workId": "OL15400582W",
+   "title": "The Big Sleep",
+   "author": "Raymond Chandler"
+  },
+  {
+   "id": "ol:2889411",
+   "workId": "OL44927W",
+   "title": "Tess of the d'Urbervilles",
+   "author": "Thomas Hardy"
+  },
+  {
+   "id": "ol:15172748",
+   "workId": "OL273644W",
+   "title": "The Color Purple",
+   "author": "Alice Walker"
+  },
+  {
+   "id": "ol:9255930",
+   "workId": "OL23481W",
+   "title": "The Silence of the Lambs",
+   "author": "Thomas Harris"
+  },
+  {
+   "id": "ol:12446879",
+   "workId": "OL969604W",
+   "title": "Das Fraülein von Scudeṙi",
+   "author": "E. T. A. Hoffmann"
+  },
+  {
+   "id": "ol:12529437",
+   "workId": "OL15297W",
+   "title": "Le città invisibili",
+   "author": "Italo Calvino"
+  },
+  {
+   "id": "ol:12460433",
+   "workId": "OL98491W",
+   "title": "The Age of Innocence",
+   "author": "Edith Wharton"
+  },
+  {
+   "id": "ol:2269756",
+   "workId": "OL2827199W",
+   "title": "Life of Pi",
+   "author": "Yann Martel"
+  },
+  {
+   "id": "ol:14654117",
+   "workId": "OL81613W",
+   "title": "It",
+   "author": "Stephen King"
+  },
+  {
+   "id": "ol:12370134",
+   "workId": "OL1100007W",
+   "title": "Le Tour du Monde en Quatre-Vingts Jours",
+   "author": "Jules Verne"
+  },
+  {
+   "id": "ol:8598317",
+   "workId": "OL8996438W",
+   "title": "Il pendolo di Foucault",
+   "author": "Umberto Eco"
+  },
+  {
+   "id": "ol:8598300",
+   "workId": "OL24156W",
+   "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+   "author": "Robert Louis Stevenson"
+  },
+  {
+   "id": "ol:12367197",
+   "workId": "OL3951520W",
+   "title": "Middlesex",
+   "author": "Jeffrey Eugenides"
+  },
+  {
+   "id": "ol:15180256",
+   "workId": "OL53908W",
+   "title": "Adventures of Huckleberry Finn",
+   "author": "Mark Twain"
+  },
+  {
+   "id": "ol:8954260",
+   "workId": "OL16809803W",
+   "title": "The Goldfinch",
+   "author": "Donna Tartt"
+  },
+  {
+   "id": "ol:112559",
+   "workId": "OL39396W",
+   "title": "To the Lighthouse",
+   "author": "Virginia Woolf"
+  },
+  {
+   "id": "ol:12459584",
+   "workId": "OL45790W",
+   "title": "Charlie and the Chocolate Factory",
+   "author": "Roald Dahl"
+  },
+  {
+   "id": "ol:13165354",
+   "workId": "OL29983W",
+   "title": "Little Women",
+   "author": "Louisa May Alcott"
+  },
+  {
+   "id": "ol:12377363",
+   "workId": "OL77746W",
+   "title": "Anne of Green Gables",
+   "author": "Lucy Maud Montgomery"
+  },
+  {
+   "id": "ol:10577737",
+   "workId": "OL63055W",
+   "title": "The Garden of Eden",
+   "author": "Ernest Hemingway"
+  },
+  {
+   "id": "ol:13682971",
+   "workId": "OL69612W",
+   "title": "The Secret Garden",
+   "author": "Frances Hodgson Burnett"
+  },
+  {
+   "id": "ol:2914282",
+   "workId": "OL8721462W",
+   "title": "Great Expectations",
+   "author": "Charles Dickens"
+  },
+  {
+   "id": "ol:8742476",
+   "workId": "OL59798W",
+   "title": "A Wizard of Earthsea",
+   "author": "Ursula K. Le Guin"
+  },
+  {
+   "id": "ol:996081",
+   "workId": "OL2718328W",
+   "title": "The Outsiders",
+   "author": "S. E. Hinton"
+  },
+  {
+   "id": "ol:9068058",
+   "workId": "OL482454W",
+   "title": "Cloud Atlas",
+   "author": "David Mitchell"
+  },
+  {
+   "id": "ol:10763645",
+   "workId": "OL262454W",
+   "title": "The Hound of the Baskervilles",
+   "author": "Arthur Conan Doyle"
+  },
+  {
+   "id": "ol:12796685",
+   "workId": "OL471576W",
+   "title": "Murder on the Orient Express",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:13989795",
+   "workId": "OL278437W",
+   "title": "La sombra del viento",
+   "author": "Carlos Ruiz Zafón"
+  },
+  {
+   "id": "ol:12116544",
+   "workId": "OL52267W",
+   "title": "The Time Machine",
+   "author": "H. G. Wells"
+  },
+  {
+   "id": "ol:6296161",
+   "workId": "OL8996439W",
+   "title": "Il nome della rosa",
+   "author": "Umberto Eco"
+  },
+  {
+   "id": "ol:11102350",
+   "workId": "OL65430W",
+   "title": "The Awakening",
+   "author": "Kate Chopin"
+  },
+  {
+   "id": "ol:15243825",
+   "workId": "OL267933W",
+   "title": "Gone With the Wind",
+   "author": "Margaret Mitchell"
+  },
+  {
+   "id": "ol:368991",
+   "workId": "OL103134W",
+   "title": "The Martian Chronicles",
+   "author": "Ray Bradbury"
+  },
+  {
+   "id": "ol:1983399",
+   "workId": "OL88813W",
+   "title": "A Room with a View",
+   "author": "E. M. Forster"
+  },
+  {
+   "id": "ol:8217911",
+   "workId": "OL38684W",
+   "title": "Lord Jim",
+   "author": "Joseph Conrad"
+  },
+  {
+   "id": "ol:9516065",
+   "workId": "OL15116693W",
+   "title": "Goethe's Werke",
+   "author": "Johann Wolfgang von Goethe"
+  },
+  {
+   "id": "ol:9158360",
+   "workId": "OL20150260W",
+   "title": "Normal People",
+   "author": "Sally Rooney"
+  },
+  {
+   "id": "ol:10028",
+   "workId": "OL471565W",
+   "title": "And Then There Were None",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:244186",
+   "workId": "OL1846076W",
+   "title": "The Giver",
+   "author": "Lois Lowry"
+  },
+  {
+   "id": "ol:11025439",
+   "workId": "OL816259W",
+   "title": "Trainspotting",
+   "author": "Irvine Welsh"
+  },
+  {
+   "id": "ol:15136940",
+   "workId": "OL24034W",
+   "title": "Treasure Island",
+   "author": "Robert Louis Stevenson"
+  },
+  {
+   "id": "ol:15132300",
+   "workId": "OL35623W",
+   "title": "Parable of the Sower",
+   "author": "Octavia E. Butler"
+  },
+  {
+   "id": "ol:10245373",
+   "workId": "OL20867W",
+   "title": "Middlemarch",
+   "author": "George Eliot"
+  },
+  {
+   "id": "ol:10500715",
+   "workId": "OL100672W",
+   "title": "Candide",
+   "author": "Voltaire"
+  },
+  {
+   "id": "ol:14631257",
+   "workId": "OL59688W",
+   "title": "Stranger in a Strange Land",
+   "author": "Robert A. Heinlein"
+  },
+  {
+   "id": "ol:7123225",
+   "workId": "OL47266W",
+   "title": "The Maltese Falcon",
+   "author": "Dashiell Hammett"
+  },
+  {
+   "id": "ol:12996365",
+   "workId": "OL875437W",
+   "title": "The Perks of Being a Wallflower",
+   "author": "Stephen Chbosky"
+  },
+  {
+   "id": "ol:10064266",
+   "workId": "OL31259W",
+   "title": "The Golden Notebook",
+   "author": "Doris Lessing"
+  },
+  {
+   "id": "ol:13865851",
+   "workId": "OL455305W",
+   "title": "The Scarlet Letter",
+   "author": "Nathaniel Hawthorne"
+  },
+  {
+   "id": "ol:6624842",
+   "workId": "OL176092W",
+   "title": "The Moonstone",
+   "author": "Wilkie Collins"
+  },
+  {
+   "id": "ol:11192315",
+   "workId": "OL16509148W",
+   "title": "The Song of Achilles",
+   "author": "Madeline Miller"
+  },
+  {
+   "id": "ol:13548651",
+   "workId": "OL176045W",
+   "title": "The Woman in White",
+   "author": "Wilkie Collins"
   }
  ]
 }
