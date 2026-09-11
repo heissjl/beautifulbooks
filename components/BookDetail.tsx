@@ -25,7 +25,7 @@ import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { leadCover } from '@/lib/scene';
 import { useOverflowsX } from '@/components/useOverflowsX';
-import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
+import { searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
@@ -720,7 +720,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
           edition={shown}
           workTitle={workTitle}
           otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
-          searchLinks={searchLinksFor({ title: shown.title, author, publisher: shown.publisher, year: shown.year, coverUrl: cover.url, editionId: shown.id }, market)}
+          searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
           anyEditionLinks={anyEditionLinks}
           market={market}
           onMarketChange={onMarketChange}

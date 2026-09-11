@@ -1854,6 +1854,33 @@ Zwei Beobachtungen: hinter „+11 more" steckte am Telefon zuerst auch **„Unkn
 
 Tests 435, `tsc`, Lint und Build grün.
 
+**Zeilen statt Zahl** (Julian, am selben Tag: „lass es am Handy nur 2 Zeilen bei den Sprachpillen sein … am Desktop maximal 3 Zeilen"). Eine feste Zahl von Sprachen verspricht keine Zeilenzahl — sie hängt an Bildschirmbreite und Namen —, also misst eine unsichtbare Probe die Breite jeder Pille, und `lib/rowfit.ts` packt sie wie der Browser: links nach rechts, neue Zeile, wenn die nächste nicht passt, mit „+n more", „Unknown" und „All languages" am Ende der letzten Zeile. Der aktive Reiter bleibt immer sichtbar. Nachgemessen:
+
+| | sichtbar | Zeilen |
+|---|---|---|
+| *Nineteen Eighty-Four*, 390 px | English, German, Spanish, +13 more, Unknown 100, All languages 224 | **2** (erste Kachel bei 378 px statt 416) |
+| *Infinite Jest*, 390 px | alle vier Sprachen und All languages, kein „+n" | 2 |
+| *Nineteen Eighty-Four*, 1280 px | alle 17 Sprachen, Unknown, All languages | **3** |
+
+Tests 442, `tsc`, Lint grün.
+
+## 2026-09-11 · Karten ohne Wiederholung und nur gedruckte Bücher (ROADMAP 6.34 und 6.35)
+
+**6.34.** Die Karte vergleicht jetzt Bilder, nicht nur Verlag und Jahr: bis zu acht Kandidaten von der Route, der Hash im Browser mit derselben Rechnung wie auf dem Server (`lib/dhash.ts`), die ersten vier, die weiter als 8 auseinanderliegen. Am Dev-Server, „David Foster Wallace", 390 px:
+
+| Karte | vorher | nachher |
+|---|---|---|
+| *A supposedly fun thing* | 3 Kacheln, zwei gleiche (Abstand 0) | 2 |
+| *Oblivion* | 4, ein Paar mit Abstand 2 | 3 |
+| *Consider the Lobster* | 4, ein Paar mit Abstand 8 | 3 |
+| *String Theory* | Paar mit Abstand 32 und eine Textseite | unverändert — die Grenze des Hashs |
+| *Infinite Jest* | zwei Einaudi-Scans, Abstand 22 | unverändert — über Verlagsgrenzen faltet auch die Wand erst bis 8 (6.36) |
+| Größen | alle Kacheln L | erste L, übrige M (`/img/M/…`) |
+
+**6.35.** Zuerst gemessen, wie zugesagt: Googles `saleInfo.isEbook` steht in den Fixtures bei 25 von 100 Bänden, und die Beispiele sind gedruckte Bücher, die es *auch* als E-Book gibt — Reclam 238 Seiten, Broadview 322, Library of America 751. Das Feld meint das Angebot, nicht den Band; ein Filter darauf hätte Druckausgaben entfernt. Gebaut ist deshalb: eine Ausgabe, die Open Library als E-Book führt, verliert ihre ISBN, dieselbe Nummer auf einem Google-Band ebenso, das Cover bleibt; Hörbücher verwarf der Parser schon. Und die Suche nach einer Ausgabe nennt Verlag und Jahr nur, wenn ein gedruckter Open-Library-Datensatz sie trägt — die AbeBooks-Suche aus M10 hätte so statt null die 270 Treffer gefunden, unter denen Julian das blaue Cover fand. Nicht erkannt bleibt ein E-Book ohne Format im Katalog, wie 9780748130986 selbst.
+
+Tests 456, `tsc`, Lint und Build grün.
+
 ## 2026-09-11 · Das Rondell: sieben Gesichter, die der Maus folgen (ROADMAP 1.9)
 
 Julian wollte den Fächer der Startseite etwas tiefer und fragte nach anderen Formen: „wie wäre es mit einem Rondell?"
