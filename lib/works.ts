@@ -412,6 +412,33 @@ function coverYear(cover: Cover, editionsById: ReadonlyMap<string, Edition>): nu
   return Math.max(-1, ...cover.editionIds.map(id => editionsById.get(id)?.year ?? -1));
 }
 
+/** Newest printing first; title pages and blurb scans last, however new (SPEC F2.5). */
+function newestFirstOrder(
+  editionsById: ReadonlyMap<string, Edition>,
+  signatures?: ReadonlyMap<string, ImageSignature>,
+): (a: Cover, b: Cover) => number {
+  return (a, b) => {
+    const pageA = looksLikeScannedPage(signatures?.get(a.id)) ? 1 : 0;
+    const pageB = looksLikeScannedPage(signatures?.get(b.id)) ? 1 : 0;
+    return pageA - pageB || coverYear(b, editionsById) - coverYear(a, editionsById);
+  };
+}
+
+/**
+ * Every cover of the wall in one list, for the "All languages" pill
+ * (ROADMAP 6.8, Julian 2026-09-07): the same order a language tab uses —
+ * newest printing first, scanned pages last — across all languages at once,
+ * so the whole wall can be looked at without clicking through the tabs.
+ */
+export function coversNewestFirst(
+  covers: readonly Cover[],
+  editions: readonly Edition[],
+  signatures?: ReadonlyMap<string, ImageSignature>,
+): Cover[] {
+  const editionsById = new Map(editions.map(e => [e.id, e]));
+  return [...covers].sort(newestFirstOrder(editionsById, signatures));
+}
+
 /**
  * SPEC §3 F2.3–F2.4: covers grouped by language, preferred language first,
  * then by size descending; unknown language last. Within a group newest first.
@@ -430,12 +457,7 @@ export function groupCoversByLanguage(
     list.push(c);
     groups.set(lang, list);
   }
-  const newestFirst = (a: Cover, b: Cover) => {
-    // Title pages and blurb scans go last, however new the printing is.
-    const pageA = looksLikeScannedPage(signatures?.get(a.id)) ? 1 : 0;
-    const pageB = looksLikeScannedPage(signatures?.get(b.id)) ? 1 : 0;
-    return pageA - pageB || coverYear(b, editionsById) - coverYear(a, editionsById);
-  };
+  const newestFirst = newestFirstOrder(editionsById, signatures);
   return Array.from(groups.entries())
     .map(([language, cs]) => ({ language, covers: cs.sort(newestFirst) }))
     .sort((a, b) => {

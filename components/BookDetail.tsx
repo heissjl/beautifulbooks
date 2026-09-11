@@ -39,7 +39,7 @@ import type { ImageSignature } from '@/lib/imagesig';
 import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
 import { shapeOf } from '@/lib/queryshape';
-import { foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
+import { coversNewestFirst, foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
 
 /*
   It said "Search" until 2026-09-10, which stopped working the moment a search
@@ -126,7 +126,9 @@ function buildWall(
   }));
   // `signatures` goes out too: the verdict must know which pictures the fold
   // could compare at all (ROADMAP 6.32).
-  return { covers, coversById, groups, editionsByScan, signatures };
+  // The whole wall in one list, for the "All languages" pill (ROADMAP 6.8).
+  const wholeWall = coversNewestFirst(covers, merged.editions, signatures);
+  return { covers, coversById, groups, all: wholeWall, editionsByScan, signatures };
 }
 
 /**
@@ -430,6 +432,7 @@ function BookDetail() {
           <div className={`min-w-0 lg:col-span-2 lg:pb-0 ${selected ? 'pb-20' : ''}`}>
             <CoverGallery
               groups={view.groups}
+              allCovers={view.all}
               selectedCover={selected}
               onSelectCover={c => selectCover(c.id)}
               captions={view.captions}
