@@ -1816,3 +1816,25 @@ Julian, in dieser Reihenfolge: „ja, bau die teilbare Seite für Freunde" — �
 **Geprüft:** 483 Tests in 40 Dateien, Typecheck, Lint, Build (fünf dynamische Routen). Die API lehnt eine Stimme für Cover außerhalb des Spiels mit 400 ab. Im Browser lokal: Paar, zwei Stimmen, eine Meldung, Rangliste, keine Konsolenfehler.
 
 **Offen:** der Upstash-Speicher an der Preview-Umgebung (Julian), der Push des Branches (Julians Freigabe), der Freigabe-Link, E21 und ein Satz in der Datenschutzerklärung vor der Produktion.
+
+---
+
+## 2026-09-11 · Die erste Preview: der Speicher sprach kein REST (ROADMAP 5.8a)
+
+Julian: „das habe ich schon, du kannst pushen" — den Speicher hatte er mit dem Präfix `STORAGE` nur an die Preview-Umgebung gehängt.
+
+**Erste Preview (`6a44822`).** Build grün in 35 Sekunden, Funktionen in Frankfurt. `/api/versus/pair` antwortete mit 503 „The vote store is not configured here". Das war die gebaute Absicherung: kein Spiel, das Stimmen annimmt, die es nicht speichern kann. Welche Variablen die Preview hatte, ließ sich aber nicht sehen, denn der Vercel-Connector liest keine Umgebungsvariablen.
+
+**Zweite Preview (`c34b560`).** Außerhalb der Produktion nennt die Meldung jetzt die **Namen** der Variablen, die mit `STORAGE_` beginnen, nie ihre Werte. Die Antwort: **genau eine, `STORAGE_REDIS_URL`**, eine Redis-Adresse und kein REST-Paar. Meine Annahme, der Marketplace-Speicher bringe Upstashs REST-Paar mit, war falsch.
+
+**Dritte Preview (`1059578`).** Der Speicher spricht jetzt auch Redis direkt, über das Paket `redis` 6.2.1: TLS, Zeitlimit für den Aufbau, keine Wiederverbindungsschleife im Hintergrund, eine Verbindung je Funktionsinstanz, bei einem Fehler verworfen. Die Spiellogik liegt über fünf Befehlen, gleich für REST, Direktverbindung und Test. Beim Bauen fielen zwei Dinge auf:
+- `ReturnType<typeof createClient>` passt in node-redis 6 nicht zum tatsächlich erzeugten Client, der RESP3 als Voreinstellung spricht. Der Typ wird jetzt vom Aufruf selbst abgeleitet.
+- Unter RESP3 kann ein Hash als `Map` ankommen, und `Object.entries` einer `Map` ist leer. Jede „Not a cover"-Meldung wäre still verloren gegangen. Die Schicht nimmt beides an, ein Test hält es fest.
+
+Geprüft: 488 Tests, Typecheck, Lint, Build.
+
+**Zum Abrufen der geschützten Preview:** das Abrufwerkzeug des Connectors kam nur beim ersten Mal an der Vercel-Anmeldung vorbei. Zuverlässig ging es über den befristeten Freigabe-Link (23 Stunden) und `curl` mit einem Cookie-Speicher.
+
+**Ergebnis.** Mit einem neuen Freigabe-Link antwortete `/api/versus/pair` mit 200 in 0,65 Sekunden: `"store":"redis"`, 100 Cover, 0 Stimmen, ein signiertes Paar. Die Rangliste lud in 0,75 Sekunden aus dem Speicher, ohne „not configured" und ohne „did not answer". Geprüft ist damit das Lesen. Das Schreiben ist nur durch die Tests belegt, denn eine Stimme von mir wäre eine erfundene Stimme im Speicher, in dem die Freunde abstimmen. Die erste echte Stimme ist der erste Schreibtest.
+
+**Ein Freigabe-Link gilt für ein Deployment, nicht für den Branch.** Nach dem dritten Push lief der Cookie des vorigen Links ins Leere (302 zur Anmeldung). Nach jedem Push braucht es also einen neuen Link, und reine Doku-Commits gehen nicht auf diesen Branch, solange Freunde spielen.
