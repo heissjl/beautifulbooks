@@ -94,7 +94,7 @@ Die Regel des Bretts (Krone drei Runden gehalten), gezielte Paarung, 20 Läufe j
 ## Offen
 
 1. **Mit Menschen spielen.** Die Favoriten-Zahl über echte Stimmen entscheidet, welche Zeile der Tabelle gilt. Auch offen: ob Leute dreißig Paare durchhalten.
-2. **Ein geteilter Link.** Eine Online-Fassung braucht einen Ort für die Stimmen, also den Speicher, den E6 zurückstellt (5.8, „Zu klären"). Bis das entschieden ist, bleibt das Spiel lokal.
+2. **Ein geteilter Link.** Eine Online-Fassung braucht einen Ort für die Stimmen, also den Speicher, den E6 zurückstellt (5.8, „Zu klären"). Bis das entschieden ist, bleibt das Spiel lokal. **Geprüft am 2026-09-11, bevor etwas gebaut wurde:** eine Claude-Artifact-Seite mit geteiltem Speicher (`db`) ist laut ihrer eigenen Schnittstelle auf die claude.ai-Organisation des Besitzers beschränkt und lässt sich nicht öffentlich teilen. Eine Seite, die sich selbst neu veröffentlicht (`artifact`), nimmt nur Stimmen von Leuten mit Bearbeitungsrecht an. Für Freunde von außen taugt der Artifact-Weg also nicht. Übrig bleiben dasselbe WLAN mit dem Lab-Server, ein Tunnel vom Mac, oder ein Preview-Deployment mit eigenem Speicher — letzteres ist die E6-Frage. Julian will diesen letzten Weg, vorbereitet für einen schnellen Schritt in die Produktion (2026-09-11): Roadmap 5.8a.
 3. **Pool 400 unter der Regel des Bretts ist nicht gemessen**; der Lauf war zu lang. Für die Fundstelle allein gibt es Zahlen in der Historie.
 4. **Die Unsicherheit ist absichtlich zu breit geschätzt**, je Cover für sich (Diagonal-Laplace). Ob das zu vorsichtig ist, zeigt erst der Vergleich mit echten Stimmen.
 5. **Die Rechtefrage aus 5.5**, vor allem anderen, was nach außen geht.
