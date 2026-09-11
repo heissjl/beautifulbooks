@@ -564,6 +564,25 @@ Damit wartet die Seite an **drei von vier** Stellen vor dem Mosaik; der Cover-F�
 
 **Bedingungen, die für jede Variante gelten:** keine Google-Anfrage und kein Nachladen beim ersten Rendern (die Cover-IDs stehen fest, wie in `lib/curated.ts`); auf schmalen Bildschirmen darf das Element das Suchfeld nicht unter die Kante schieben, dort entfällt es oder rückt unter die Wand; und es darf nichts behaupten, was §1 verbietet — „vier von 226 Covern" ist erlaubt, „alle Cover" nicht.
 
+**Nachtrag 2026-09-11: vom Fächer zum Rondell.** Julian schrieb: „das sollte noch ein bisschen tiefer liegen. aber experimentiere noch mit anderen darstellungsformen. wie wäre es mit einem rondell?"
+
+Gebaut und nebeneinandergestellt wurden drei Varianten: der Fächer 2 rem tiefer, ein Rondell und ein Stapel, der alle 3 s sein oberstes Cover wegspielt. Julian wählte das Rondell.
+
+Seine Wünsche für die weitere Arbeit, in seinen Worten:
+- „minimal kleiner“
+- eine ungerade Zahl prüfen
+- „wenn hover nicht stoppt, sondern das man damit das rondell hin und her bewegen kann“
+
+Nach dem ersten Stand kamen hinzu:
+- „7 passt“
+- weniger Abstand zwischen Text und Suchzeile, und das Rondell daneben
+- „hover sensitiv nach region … der obere bereich muss wahrscheinlich entgegengesetzt reagieren“
+- der Abstand zwischen den Covern 10 % kleiner
+- „der hash abstand zwischen den covern die in einem rondell landen, sollte höher sein als bei unseren sonstigen schwellen“
+- „die beschreibung sollte titel und autor haben statt titel und 'x of covers'“
+
+Was daraus wurde, steht in der [Historie unter 2026-09-11](history.md#2026-09-11--das-rondell-sieben-gesichter-die-der-maus-folgen-roadmap-19).
+
 ### 6.25a
 
 **6.25a Die Ladeszene zeigt leere Kachelrahmen, und der Fächer fliegt auf leere Kacheln.** (Julian, 2026-09-10: „der cover-fächer ist oft schneller in der animation als auf den animierten kacheln das bild angezeigt wird … hier also auch das Skelett der Animation gemacht wird, ohne dass es mit einem Bild befüllt ist.")
