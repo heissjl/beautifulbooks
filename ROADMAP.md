@@ -552,6 +552,8 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 - [ ] **6.27 Die übrigen Erklärtexte auf N13 durchgehen.** (Aus Julians Sprachregelung vom 2026-09-09, jetzt SPEC **N13**: in einem Erklärtext steht höchstens, was zu sehen ist, woher es kommt und der Weg zurück — keine Schwellen, keine Sortierordnungen, keine Beteuerungen über die eigene Arbeitsweise.)
 
+  *Stand 2026-09-11: die zwei Verdikt-Zusätze aus der Tabelle entfernt der Branch `worktree-kauflink-leiste` (1.11, noch nicht in `main`). Der Satz zur Händlerreihenfolge wartet, bis dieser Branch gemergt ist, weil er `lib/linkplan.ts` umbaut; danach ist hier nur noch der Verfügbarkeits-Absatz offen, und der wartet auf 0.1.*
+
   Zwei Stellen sind am selben Tag schon umgeschrieben: die **Fußzeile der Jahrzehnte-Seite** (aus fünf Sätzen mit Schwelle, Sortierordnung und „counted, not estimated" wurden zwei plus der Rückverweis) und der **Satz unter der Scan-Reihe** (6.14a). Die übrigen Kandidaten, absteigend nach Verstoß:
 
   | Stelle | Was daran Methode statt Anschauung ist |
