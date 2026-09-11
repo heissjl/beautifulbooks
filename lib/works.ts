@@ -8,6 +8,8 @@ import { authorMatchKey, looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normal
 import { hamming, looksLikeScannedPage, type ImageSignature } from './imagesig';
 
 export const MOSAIC_COVERS = 4;
+/** How many covers the card route sends, so a card can replace a repeat (ROADMAP 6.34). */
+export const MOSAIC_CANDIDATES = 8;
 
 function identityKey(w: { title: string; authors: string[] }): string {
   return titleAuthorKey(w.title, w.authors[0]);
@@ -175,17 +177,37 @@ export interface EditionsAndCovers {
   covers: Cover[];
 }
 
+/** An e-book keeps its record and its cover, never its ISBN (E21, ROADMAP 6.35). */
+function printOnly(e: Edition, ebookIsbns: ReadonlySet<string>): Edition {
+  const sharesEbookNumber = e.source === 'googlebooks' && [e.isbn13, e.isbn10].some(i => !!i && ebookIsbns.has(i));
+  return e.format === 'ebook' || sharesEbookNumber ? { ...e, isbn13: undefined, isbn10: undefined } : e;
+}
+
 /**
  * SPEC §2.2/§2.3 (E8): editions with the same ISBN become one edition with
  * merged metadata; every cover of every source survives and points at the
  * surviving edition. Cover identity is the image id, never the ISBN.
  */
 export function assembleEditions(sources: readonly SourceEdition[]): EditionsAndCovers {
+  /*
+    The site is about printed books (E21, Julian 2026-09-11): an e-book's ISBN
+    is never shown, linked or asked about. Open Library marks e-books in
+    `physical_format`, and the same number on a Google band loses it too.
+    Google's own `saleInfo.isEbook` is **not** used: measured on the recorded
+    fixtures it is true for 25 of 100 bands, all of them printed books that are
+    also sold as e-books (Reclam, 238 pages; Library of America, 751). The
+    cover stays: the image may be the printed jacket, and it folds like any
+    other. Audiobooks never get this far — the parser drops them.
+  */
+  const ebookIsbns = new Set(
+    sources.filter(s => s.format === 'ebook').flatMap(s => [s.isbn13, s.isbn10]).filter((i): i is string => !!i),
+  );
   const editionsByKey = new Map<string, Edition>();
   const coversById = new Map<string, Cover>();
   for (const src of sources) {
-    const { covers, authorKeys, ...edition } = src;
+    const { covers, authorKeys, ...raw } = src;
     void authorKeys;
+    const edition = printOnly(raw, ebookIsbns);
     const key = editionKey(edition);
     const existing = editionsByKey.get(key);
     const survivor = existing ? mergeEditionMeta(existing, edition) : edition;

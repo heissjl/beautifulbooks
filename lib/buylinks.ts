@@ -239,6 +239,23 @@ export interface SearchLinkInput {
   editionId?: string;
 }
 
+/**
+ * Publisher and year for a title search — only when a catalogue record of a
+ * printed edition vouches for them (ROADMAP 6.35, E21).
+ *
+ * On 2026-09-11 the blue *Infinite Jest* came from a Google band filed as
+ * "Hachette UK · 2011": the e-book's metadata. AbeBooks, asked for title,
+ * author, that publisher and that year, found nothing; without the publisher
+ * it found 270 copies, the blue one among them under Little, Brown 2006
+ * ([Testbericht M10]). A search that is too narrow is a dead end; one that is
+ * a little wide is a list. So a Google band, and an e-book record, search by
+ * title and author alone.
+ */
+export function searchFacts(edition: Pick<Edition, 'source' | 'format' | 'publisher' | 'year'>): { publisher?: string; year?: number } {
+  if (edition.source !== 'openlibrary' || edition.format === 'ebook') return {};
+  return { publisher: edition.publisher, year: edition.year };
+}
+
 const ABEBOOKS_DOMAIN: Record<Market, string> = { us: 'com', uk: 'co.uk', de: 'de' };
 const EBAY_DOMAIN: Record<Market, string> = { us: 'com', uk: 'co.uk', de: 'de' };
 
