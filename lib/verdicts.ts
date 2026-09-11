@@ -29,6 +29,7 @@ export type VerdictStatus = IsbnVerdict['status'];
 export const VERDICT_LEAD: Record<VerdictStatus, string> = {
   verified: 'The publisher’s current image for this ISBN is this cover.',
   differs: 'The publisher’s current image for this ISBN is a different cover.',
+  uncompared: 'The publisher has an image for this ISBN, but it could not be compared with this cover.',
   unknown: 'No current publisher image is on record for this ISBN.',
   pending: 'Checking which cover the publisher has registered for this ISBN…',
   unavailable: 'The catalogue that holds publishers’ current images did not answer.',
@@ -39,6 +40,8 @@ export const VERDICT_MEANING: Record<VerdictStatus, string> = {
   verified: 'The registered image matches the cover you picked, so a new copy should look like it.',
   differs:
     'The ISBN is right, but the printing you would receive probably looks like something else. The image is shown beside the note, and the search links move to the front so you can hunt the cover you actually chose.',
+  uncompared:
+    'One of the two pictures could not be fetched, so the site did not compare them — and says so rather than guessing either way. The publisher’s image is shown beside the note so you can compare them yourself.',
   unknown:
     'Common for older printings. It says nothing about whether a shop has the book, only that no image is filed under that number.',
   pending: 'The lookup is still running. It takes a second, and until it answers the page says nothing else.',
@@ -47,4 +50,4 @@ export const VERDICT_MEANING: Record<VerdictStatus, string> = {
 };
 
 /** Every state, in the order the About page lists them. */
-export const VERDICT_ORDER: readonly VerdictStatus[] = ['verified', 'differs', 'unknown', 'pending', 'unavailable'];
+export const VERDICT_ORDER: readonly VerdictStatus[] = ['verified', 'differs', 'uncompared', 'unknown', 'pending', 'unavailable'];

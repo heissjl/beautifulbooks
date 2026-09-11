@@ -642,6 +642,12 @@ export function foldDuplicateCovers(
 export type IsbnVerdict =
   | { status: 'verified' }
   | { status: 'differs'; cover: Cover }
+  /**
+   * The shop's image stands as its own tile, but one of the two pictures has
+   * no signature — so the fold never compared them, and "different" would be
+   * a guess (ROADMAP 6.32).
+   */
+  | { status: 'uncompared'; cover: Cover }
   /** Asked, and Google has no image for this ISBN. */
   | { status: 'unknown' }
   /** Asked, and the source did not answer: nothing may be concluded. */
@@ -655,6 +661,8 @@ export function verifyIsbnCover(
   asked: boolean,
   /** The lookup was attempted and failed, or the day's quota is gone. */
   unavailable = false,
+  /** Every signature the wall was folded with, the ISBN lookups' included. */
+  signatures: ReadonlyMap<string, ImageSignature> = new Map(),
 ): IsbnVerdict {
   // Order matters: a failed lookup must never read as "no image on record".
   if (unavailable) return { status: 'unavailable' };
@@ -664,11 +672,21 @@ export function verifyIsbnCover(
   const isSelected = (id: string) => id === selected.id || (selected.similarIds ?? []).includes(id);
   if (retailCoverIds.some(isSelected)) return { status: 'verified' };
 
-  // The shop's image survived folding, or folded into some other cover: that
-  // is the design on the shelf.
+  /*
+    The shop's image survived folding, or folded into some other cover: that
+    is the design on the shelf — **but only if the fold could have joined
+    them.** A picture that could not be fetched has no signature and folds
+    into nothing, so an unfolded tile is no evidence of a different design.
+    On Rowohlt's *Unendlicher Spaß* (2026-09-10) the page said "a different
+    cover" beside an image that was plainly the same one (SPEC N12).
+  */
+  const selectedSigned = [selected.id, ...(selected.similarIds ?? [])].some(id => signatures.has(id));
   for (const id of retailCoverIds) {
     const shown = wall.find(c => c.id === id || (c.similarIds ?? []).includes(id));
-    if (shown) return { status: 'differs', cover: shown };
+    if (!shown) continue;
+    return selectedSigned && signatures.has(id)
+      ? { status: 'differs', cover: shown }
+      : { status: 'uncompared', cover: shown };
   }
   return { status: 'unknown' };
 }

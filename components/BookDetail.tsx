@@ -124,7 +124,9 @@ function buildWall(
     language: g.language,
     covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
   }));
-  return { covers, coversById, groups, editionsByScan };
+  // `signatures` goes out too: the verdict must know which pictures the fold
+  // could compare at all (ROADMAP 6.32).
+  return { covers, coversById, groups, editionsByScan, signatures };
 }
 
 /**
@@ -364,6 +366,7 @@ function BookDetail() {
         view.covers,
         isbnCovers.asked.has(isbn13),
         isbnCovers.unavailable.has(isbn13),
+        view.signatures,
       )}
     />
   );
@@ -949,6 +952,26 @@ function VerdictNote({ verdict, hint, lead = false }: { verdict: IsbnVerdict; hi
               ? ` The searches below look for ${hint} second-hand instead.`
               : ' The searches below look for this printing instead.'
             : hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
+        </p>
+      </div>
+    );
+  }
+  /*
+    Not compared, so not judged: the picture goes beside the note and the
+    reader decides (ROADMAP 6.32). The ISBN links keep their place — nothing
+    has shown that the number ships another jacket.
+  */
+  if (verdict.status === 'uncompared') {
+    return (
+      <div className="mt-2 flex items-start gap-3">
+        <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the publisher's current image for this ISBN">
+          <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
+            <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="The publisher's current image for this ISBN" sizes="55px" />
+          </span>
+        </a>
+        <p className="text-xs leading-relaxed text-ink-3">
+          <span className="text-ink-2">{VERDICT_LEAD.uncompared}</span>{' '}
+          It is the one beside this note; if it looks like the cover on screen, a new copy probably will too.
         </p>
       </div>
     );
