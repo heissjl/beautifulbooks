@@ -73,7 +73,7 @@ describe('linkPlan order', () => {
       still offered, behind the fold — see the label rule below.
     */
     expect(plan(TR, 'us').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'eBay · ISBN']);
-    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'Booklooker']);
+    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'Booklooker · ISBN']);
   });
 
   it('names the question even where only one of the two is possible', () => {
@@ -86,15 +86,17 @@ describe('linkPlan order', () => {
     expect(plan(undefined, 'us').lead.map(l => l.label)).toEqual(['AbeBooks · title & year', 'eBay · title & year']);
   });
 
-  it('leaves a shop with only one question alone', () => {
+  it('names the question on every shop button, and on no tool', () => {
     /*
-      Naming a question nobody could ask differently explains nothing.
-      Booklooker has no confirmed search form (ROADMAP 1.8), so its button
-      can only ever mean the number; eBay is not a German retailer at all,
-      so in `de` it exists as a word search and nothing else.
+      Julian, 2026-09-11: „warum steht bei ebay nicht, was es sucht?" In the
+      German column eBay is only ever asked by words and Booklooker only ever
+      by number — and both used to stand there bare. Every shop now says which
+      question it puts; tools that are not shops keep their plain name.
     */
-    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'Booklooker']);
-    expect(plan(undefined, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · title & year', 'eBay']);
+    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'Booklooker · ISBN']);
+    expect(plan(undefined, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · title & year', 'eBay · title & year']);
+    const tools = plan(EN, 'us', { verdict: 'differs' }).lead.filter(l => l.provider === 'google-lens');
+    expect(tools.map(l => l.label)).toEqual(['Google Lens']);
   });
 
   it('hands the row to the searches when the publisher’s image differs', () => {
@@ -156,9 +158,13 @@ describe('linkPlan: a link to this printing wins (Julian, 2026-09-09)', () => {
   });
 
   it('does not also offer those shops the foreign number', () => {
-    const labels = plan(TR, 'us').rest.map(l => l.label);
-    expect(labels).not.toContain('Bookshop.org');
-    expect(labels).not.toContain('Amazon');
+    // By provider, not label: since 2026-09-10 a label carries its question,
+    // so a bare-label check passes whatever the plan does. What must be absent
+    // is the ISBN link; the same shops' printing searches are there on purpose.
+    const providers = plan(TR, 'us').rest.map(l => l.provider);
+    expect(providers).not.toContain('bookshop');
+    expect(providers).not.toContain('amazon');
+    expect(providers).toContain('bookshop-search');
   });
 });
 
@@ -299,9 +305,9 @@ describe('linkPlan: no product page is promised for a number the shop never had 
   it('withdraws the claim outside the home case', () => {
     // Blackwell's builds /bookshop/product/<isbn> for any number at all.
     const uk = plan(TR, 'uk');
-    expect(uk.rest.find(l => l.label === "Blackwell's")?.kind).toBeUndefined();
+    expect(uk.rest.find(l => l.provider === 'blackwells')!.kind).toBeUndefined();
   });
   it('keeps it where the number belongs to the market', () => {
-    expect(plan(EN, 'uk').rest.find(l => l.label === "Blackwell's")?.kind).toBe('product');
+    expect(plan(EN, 'uk').rest.find(l => l.provider === 'blackwells')!.kind).toBe('product');
   });
 });
