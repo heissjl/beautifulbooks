@@ -58,9 +58,28 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
   const showingAll = activeKey === ALL;
   const shown = showingAll ? allCovers : (groups.find(g => tabKey(g) === activeKey) ?? groups[0])?.covers ?? [];
   const total = groups.reduce((n, g) => n + g.covers.length, 0);
-  // Tabs a phone keeps behind "+n": past the first six, never the active one.
-  const tucked = expanded ? [] : groups.slice(PHONE_TABS).filter(g => tabKey(g) !== activeKey);
+  /*
+    Tabs a phone keeps behind "+n": named languages past the first six, never
+    the active one — and **never "Unknown"** (Julian, 2026-09-11: „unter
+    unknown verstecken sich oft noch Sachen"; on Nineteen Eighty-Four it holds
+    100 of 224 covers). It stands after "+n", just before "All languages".
+  */
+  const named = groups.filter(g => g.language !== undefined);
+  const unknown = groups.find(g => g.language === undefined);
+  const tucked = expanded ? [] : named.slice(PHONE_TABS).filter(g => tabKey(g) !== activeKey);
   const isTucked = (g: CoverTab) => tucked.includes(g);
+  const tab = (g: CoverTab) => (
+    <button
+      key={tabKey(g)}
+      role="tab"
+      aria-selected={tabKey(g) === activeKey}
+      onClick={() => setPicked({ key: tabKey(g), forSelectedId: selectedId })}
+      className={`chip shrink-0 ${isTucked(g) ? 'max-sm:hidden' : ''}`}
+    >
+      {languageName(g.language)}
+      <span className="text-xs opacity-70">{g.covers.length}</span>
+    </button>
+  );
 
   return (
     <section aria-label="Covers">
@@ -75,23 +94,13 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       <div className="mb-4">
       <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Language">
         <span className="kicker mr-2 w-full sm:w-auto">{total} cover{total !== 1 ? 's' : ''}</span>
-        {groups.map(g => (
-          <button
-            key={tabKey(g)}
-            role="tab"
-            aria-selected={tabKey(g) === activeKey}
-            onClick={() => setPicked({ key: tabKey(g), forSelectedId: selectedId })}
-            className={`chip shrink-0 ${isTucked(g) ? 'max-sm:hidden' : ''}`}
-          >
-            {languageName(g.language)}
-            <span className="text-xs opacity-70">{g.covers.length}</span>
-          </button>
-        ))}
+        {named.map(tab)}
         {tucked.length > 0 && (
           <button type="button" onClick={() => setExpanded(true)} className="chip shrink-0 sm:hidden" aria-label={`Show ${tucked.length} more languages`}>
             +{tucked.length} more
           </button>
         )}
+        {unknown && tab(unknown)}
         {/*
           At the end, behind "Unknown": in front it would read as the default
           and undo the language order of F2.4, which exists so that the
