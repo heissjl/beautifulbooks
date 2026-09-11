@@ -1833,4 +1833,6 @@ Beim ersten Nachmessen blieb *Frankenstein; or, The Modern Prometheus* auf dem T
 
 Zwei Eigenheiten des CLI, die beim ersten Lesen täuschten: `--json` gibt **jede Anfrage etwa zwanzigmal** aus (1.000 Zeilen waren 50 Anfragen, entdoppelt über `id`), und `--limit` zählt diese rohen Zeilen — 1.000 deckten nur 28 Sekunden. Wer eine Viertelstunde sehen will, blättert mit `--until` rückwärts.
 
+**Julian dazu:** keine leeren Kacheln auf dem Schirm — „ich denke, es ist behoben. Ich melde mich, falls ich wieder Probleme sehe." Damit ist 6.25 abgehakt: der Server lieferte jedes Bild, und für einen vorübergehenden Aussetzer wie in der Nacht zuvor gibt es jetzt den zweiten Versuch aus 6.31. Die Ursache jener Nacht bleibt unbelegt.
+
 Tests 432, `tsc`, Lint grün.
