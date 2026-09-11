@@ -2073,3 +2073,18 @@ Julian: „checke mal, ob die anzeige bei mobile passt. ich hatte letztens ein p
 **Nachher, bei 390 px:** *Going Postal* 390 px breit; die Pillen in zwei Zeilen wie vorher (English, German, Spanish / Polish, Unknown, All languages); die Schublade 390 px, der Hinweis 358 px breit in drei Zeilen, vollständig lesbar. Bei 1280 px unverändert: *Siddhartha* in zwei Zeilen, keine Überbreite.
 
 **Was die Reparatur nebenbei zum ersten Mal ausführt:** die Zwei-Zeilen-Regel am Telefon. Solange die Seite 806 px breit war, hatte die Pillenzeile 774 px statt 358, und die Rechnung in `lib/rowfit.ts` lief bei echter Telefonbreite nie. Nachgerechnet an *Siddhartha* mit den gemessenen Breiten (English 90,7, German 93,9, Spanish 96,1, GU 58,9 … „+n more“ 86,5, Unknown 106,8, All languages 134,5; Zeile 358, Abstand 8): drei Sprachen, dann „+4 more“, Unknown und All languages ergeben zwei Zeilen, eine vierte Sprache ergäbe drei — und genau so steht es auf dem Bildschirm. Während weitere Seiten eintreffen und Sprachen dazukommen, war einmal kurz ein Zwischenstand mit drei Zeilen zu sehen („+1 more“), eine Sekunde später wieder zwei.
+
+**Nachgemessen über weitere Breiten** (Julian: „funktioniert es auch für andere mobil-breiten sauber?“). *Siddhartha*, nach jeder Größenänderung ein Frame erzwungen:
+
+| Breite | Seite | Pillen | Zeilen (Soll) |
+|---|---|---|---|
+| 320, 360, 375 | so breit wie der Schirm | English, German, +5 more / Unknown, All languages | 2 (≤ 2) |
+| 414, 430 | so breit wie der Schirm | English, German, Spanish, GU / +3 more, Unknown, All languages | 2 (≤ 2) |
+| 600 | so breit wie der Schirm | – | 2 (≤ 2) |
+| 640, 768 | so breit wie der Schirm | alle sieben Sprachen, Unknown, All languages | 2 (≤ 3) |
+
+Bei 320 px außerdem Startseite, Trefferliste und Jahrzehnte-Seite ohne Überbreite; die Schublade auf *Going Postal* 320 px breit, der ISBN-Hinweis 288 px in vier Zeilen, nichts darin ragt über den Rand. Bei 768 px (Tablet, dort gibt es die Schublade noch) 768 px und der Hinweis in zwei Zeilen.
+
+**Ein Messfehler, der beinahe als Befund durchgegangen wäre:** ohne erzwungenen Frame standen die Pillen bei allen Telefonbreiten in drei bis vier Zeilen mit „+1 more“. Das verborgene Browser-Panel malt keine Frames, und ohne Frame liefert der `ResizeObserver` keine neuen Maße — die Pillen blieben beim Stand der letzten gemalten Frame. Ein Screenshot vor jeder Messung erzwingt den Frame. Wer im Panel Layout nach einer Größenänderung misst, macht vorher einen.
+
+**Nebenbei gesehen, nicht behoben:** bei 320 px bricht auf der Werkseite der Seitentitel „Beautiful Books“ in der Kopfzeile auf zwei Zeilen um, sobald rechts „Share“ steht. Kein Überlauf, aber unschön; eingetragen bei 6.30a.
