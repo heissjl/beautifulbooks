@@ -1795,3 +1795,28 @@ Die Konsole blieb leer; die Meldung „Fast Refresh … runtime error" während 
 
 **Damit ist 6.25a abgeschlossen:** Adresse (1), Einblenden auf `onLoad` (2), Übergabe an die echte erste Reihe (3), Schritt 4 unnötig — und der Anfang des Fächers als vierte Reparatur, die in der ursprünglichen Liste gar nicht stand.
 
+
+## 2026-09-11 · Vier Befunde vom Telefon behoben (ROADMAP 6.30 bis 6.33)
+
+Aus dem [Testbericht vom Tag](tests/2026-09-11-mobil.md), gebaut vor dem nächsten Deploy, in der Reihenfolge des Plans.
+
+**6.32, das falsche Urteil.** `verifyIsbnCover` bekommt die Signaturen, mit denen die Wand gefaltet wurde, und sagt `differs` nur noch, wenn beide Seiten eine haben. Sonst `uncompared`: das Bild daneben, der Satz *„…could not be compared with this cover"*. Sechs neue Tests, darunter der Fall, dass der gefaltete Zwilling des gewählten Covers die Signatur trägt. Am Rowohlt-Fall selbst nicht nachgestellt — Google antwortete an dem Tag auch anonym mit „Quota exceeded".
+
+**6.31, der zweite Versuch.** Nach dem ersten Fehler wartet eine Kachel 1,5 s und fragt unter `/img/…?retry=1` noch einmal; die Route liest keine Query, und ein Fehlschlag trägt `no-store`, also landet der zweite Versuch wirklich beim Server.
+
+**6.33, die alte Wand.** Gelöscht. Bis das Mosaik da ist, eine ruhige Fläche seiner Größe unter der Überschrift.
+
+**6.30, die Startseite am Telefon.** Gemessen im Browser, mit einem Stück JavaScript, das je Titel- und Autorzeile `scrollHeight > clientHeight` oder `scrollWidth > clientWidth` prüft, die Breite des Platzhalters per Canvas misst und den Abstand zwischen letzter Kachel und Fußzeile nimmt:
+
+| | 390 px vorher | 390 px nachher | 1280 px nachher |
+|---|---|---|---|
+| Platzhalter / Platz im Feld | 218 / 196 px | **194 / 212 px** (16 px Schrift) | 218 / 606 px |
+| abgeschnittene Titel | 9 von 18 | **0** | 0 |
+| abgeschnittene Autoren | 1 | 0 | 0 |
+| Abstand vor der Fußzeile | 96 px | **40 px** | 96 px |
+
+Beim ersten Nachmessen blieb *Frankenstein; or, The Modern Prometheus* auf dem Telefon auch zweizeilig abgeschnitten, auf dem Desktop nicht — genau der Fall, den N14 verbietet. Deshalb `tileTitle`: Kacheln tragen den Titel ohne Alternativtitel.
+
+**Die Vercel-Logs, zum ersten Mal lesbar.** Julian hat den CLI installiert und angemeldet (`vercel logs --project beautifulbooks`). Was sie nicht mehr enthalten: die Nacht der Aufnahme. **Vercel Hobby hält Laufzeit-Logs etwa eine Stunde** — `--since 2h --until 90m` antwortet 400, `--since 70m --until 55m` antwortet leer ohne Fehler. In der letzten Stunde vor der Abfrage: **0 Antworten mit 4xx, 0 mit 5xx**; eine Stichprobe der jüngsten 1.000 Zeilen (sechs Sekunden Verkehr) waren 940 `/img` mit 200 und 60 `/api` mit 200. Für 6.25 heißt das: mitlesen, während es passiert, nicht hinterher suchen.
+
+Tests 432, `tsc`, Lint grün.
