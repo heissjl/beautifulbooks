@@ -1852,4 +1852,4 @@ Gemessen am Dev-Server:
 
 Zwei Beobachtungen für später: hinter „+11 more" steckt am Telefon auch **„Unknown 100"**, weil „Unknown" immer zuletzt steht — die größte Gruppe nach Englisch ist so einen Tipp entfernt. Und die Gesamtansicht zeigt Dubletten deutlicher als ein Sprachreiter: bei *Infinite Jest* stand das violette Einaudi-Cover zweimal da, einmal unter Italian, einmal unter Unknown — derselbe Befund wie M9 im [Testbericht](tests/2026-09-11-mobil.md), jetzt auf einen Blick.
 
-Tests 438, `tsc`, Lint und Build grün.
+Tests 435, `tsc`, Lint und Build grün.
