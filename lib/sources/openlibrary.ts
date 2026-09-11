@@ -6,7 +6,7 @@
  * page can tell "not found" from "temporarily unavailable".
  */
 import type { Work, WorkSummary } from '../model';
-import { cleanAuthorEntries, cleanAuthors } from '../normalize';
+import { cleanAuthorEntries, cleanAuthors, normalizeTitle } from '../normalize';
 import { debug } from '../debug';
 import { robustFirstPublishYear } from '../firstyear';
 import { HttpError, SourceUnavailableError, fetchJson, isSilence } from './http';
@@ -27,6 +27,13 @@ export const OL_TIMEOUTS = {
   search: 12_000,
   work: 5_000,
   editions: 12_000,
+  /**
+   * The search for other records of the same book (ROADMAP 6.13). Measured
+   * at 0.5 s median and 1.6 s at worst over 47 works; it runs beside the
+   * editions page, and past 6 s it would start to hold that page up for
+   * something that is a bonus, not the page.
+   */
+  siblings: 6_000,
 } as const;
 
 export const OL_REVALIDATE = {
@@ -249,6 +256,33 @@ async function getAuthorName(key: string): Promise<string | undefined> {
     debug('openlibrary', `author ${key} failed: ${(err as Error).message}`);
     return undefined;
   }
+}
+
+/**
+ * Candidates for other records of the same book (ROADMAP 6.13): one search
+ * narrowed to the work's normalized title and its primary author's key, or
+ * the author's name when the key is unknown. The caller decides which of the
+ * answers are the same work (`siblingsOf`); this only asks.
+ *
+ * Measured 2026-09-11 over 47 works: median 524 ms, slowest 1.6 s — well
+ * inside the editions page it runs beside, so it adds no wait. It found the
+ * same records the result list had merged in 28 cases, more in 18 (*The Great
+ * Gatsby*: eight the list never showed) and missed one in 3.
+ *
+ * Throws when Open Library does not answer. A missing sibling costs covers,
+ * not truth, so the caller swallows that and says nothing about siblings.
+ */
+export async function searchSiblingWorks(work: Pick<Work, 'title' | 'authors' | 'authorKeys'>): Promise<WorkSummary[]> {
+  const title = normalizeTitle(work.title);
+  const key = work.authorKeys?.[0];
+  if (!title) return [];
+  const q = key ? `title:(${title}) author_key:${key}` : `title:(${title}) author:(${work.authors[0] ?? ''})`;
+  const url = `${BASE}/search.json?q=${encodeURIComponent(q)}&limit=50&fields=${SEARCH_FIELDS}`;
+  const data = await fetchJson<OlSearchResponse>(url, {
+    timeoutMs: OL_TIMEOUTS.siblings, revalidate: OL_REVALIDATE.search,
+  });
+  if (!Array.isArray(data.docs)) throw new Error('response had no docs array');
+  return parseSearchDocs(data.docs);
 }
 
 /** One page of raw edition entries. Returns an empty page on 404, throws otherwise. */

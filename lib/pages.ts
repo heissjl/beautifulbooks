@@ -17,6 +17,8 @@ import type { ImageSignature } from './imagesig';
  * (editions with their buy links) without losing them to `Edition`.
  */
 export interface WorkPageData<E extends Edition = Edition> {
+  /** The record the page belongs to; a wall can span several (ROADMAP 6.13). */
+  work?: { id: string };
   editions: E[];
   covers: Cover[];
   /** Perceptual signature per cover id, for the covers of this page. */
@@ -67,7 +69,9 @@ export function mergeWorkPages<E extends Edition>(pages: readonly WorkPageData<E
   const covers = new Map<string, Cover>();
   const signatures = new Map<string, ImageSignature>();
   let checked = 0;
-  let total = 0;
+  // Each record reports its own total; a wall that spans the siblings of one
+  // book (ROADMAP 6.13) has the sum of them.
+  const totals = new Map<string, number>();
 
   for (const page of pages) {
     for (const edition of page.editions) {
@@ -85,8 +89,11 @@ export function mergeWorkPages<E extends Edition>(pages: readonly WorkPageData<E
     }
     for (const [id, sig] of Object.entries(page.signatures ?? {})) signatures.set(id, sig);
     checked += Math.min(page.page.limit, Math.max(0, page.page.total - page.page.offset));
-    total = Math.max(total, page.page.total);
+    const record = page.work?.id ?? '';
+    totals.set(record, Math.max(totals.get(record) ?? 0, page.page.total));
   }
+  let total = 0;
+  for (const t of totals.values()) total += t;
 
   return {
     editions: Array.from(editions.values()),

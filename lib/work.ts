@@ -19,11 +19,11 @@ import type { PageInfo } from './pages';
 import { hashCovers } from './coverhash';
 import { searchEditionCandidates } from './sources/googlebooks';
 import { indexSignatures } from './coverindex';
-import { OL_EDITIONS_PAGE, getEditionsPage, getWork } from './sources/openlibrary';
+import { OL_EDITIONS_PAGE, getEditionsPage, getWork, searchSiblingWorks } from './sources/openlibrary';
 import { parseEditions } from './sources/openlibrary-parse';
 import {
   assembleEditions, candidatesToSourceEditions, foldDuplicateCovers, groupCoversByLanguage,
-  withoutTranslators,
+  siblingsOf, withoutTranslators, type SiblingWork,
 } from './works';
 
 /** Never scan more edition records than this; beyond it works are anthologies and bibles. */
@@ -48,9 +48,22 @@ export interface WorkPage {
   /** Perceptual signature per cover id, when `signatures` was requested. */
   signatures?: Record<string, ImageSignature>;
   page: PageInfo;
+  /**
+   * Page 0 only: the other Open Library records of the same book, whose
+   * editions the wall loads after this work's own (ROADMAP 6.13). Absent
+   * when not asked or when the search did not answer; empty when it answered
+   * and there are none.
+   */
+  siblings?: SiblingWork[];
 }
 
 export interface WorkPageOptions {
+  /**
+   * Look for other records of the same book on page 0. Default true. Off for
+   * a mosaic, for a sibling's own pages (a sibling's siblings are the lead
+   * and each other) and for the whole-work path, which counts years.
+   */
+  siblings?: boolean;
   /** Record offset, a multiple of 100. Default 0. */
   offset?: number;
   /** Hash this page's covers so the client can fold duplicates. */
@@ -124,9 +137,15 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
   // Google Books runs on page 0 only, and only when the caller wants it: its
   // quota must not grow with the page count nor with the size of a result list.
   const askGoogle = first && (options.googleBooks ?? true);
-  const [page, gbCandidates] = await Promise.all([
+  // Other records of the same book, beside the editions page so they add no
+  // wait (ROADMAP 6.13). A failure means no siblings, never a failed page.
+  const askSiblings = first && (options.siblings ?? true);
+  const [page, gbCandidates, siblings] = await Promise.all([
     getEditionsPage(workId, offset, OL_EDITIONS_PAGE),
     askGoogle ? searchEditionCandidates(work.title, work.authors[0]) : Promise.resolve([]),
+    askSiblings
+      ? searchSiblingWorks(work).then(cs => siblingsOf(work, cs), () => undefined)
+      : Promise.resolve(undefined),
   ]);
   const olEditions = parseEditions(page.entries, work);
   const cleanWork = first ? withoutTranslators(work, olEditions) : work;
@@ -147,6 +166,7 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
       nextOffset: nextOffsetFor(offset, page.entries.length, page.size, MAX_EDITIONS_SCANNED),
     },
   };
+  if (siblings) result.siblings = siblings;
 
   if (options.signatures) {
     /*
@@ -207,8 +227,10 @@ async function fetchPageWithRetry(
 
 export async function getWorkDetail(workId: string, options: WorkDetailOptions = {}): Promise<WorkDetail | null> {
   const cap = options.maxEntries ?? MAX_EDITIONS_SCANNED;
+  // One record only: the decade pages were built and thresholded on it, and
+  // loading siblings here would move their counts (ROADMAP 6.13, 5.4a).
   const first = await getWorkPage(workId, {
-    offset: 0, hashDeadlineMs: options.hashDeadlineMs, googleBooks: options.googleBooks,
+    offset: 0, hashDeadlineMs: options.hashDeadlineMs, googleBooks: options.googleBooks, siblings: false,
   });
   if (!first) return null;
 

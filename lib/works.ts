@@ -29,11 +29,47 @@ function uniq<T>(xs: readonly T[]): T[] {
  * merge, as they did before; keeping them apart needs a signal the records
  * do not carry (measured 2026-09-08, ROADMAP 6.15).
  */
-function samePrimaryAuthor(a: WorkSummary, b: WorkSummary): boolean {
+function samePrimaryAuthor(a: Pick<Work, 'authors' | 'authorKeys'>, b: Pick<Work, 'authors' | 'authorKeys'>): boolean {
   const ka = a.authorKeys?.[0];
   const kb = b.authorKeys?.[0];
   if (ka && kb && ka === kb) return true;
   return authorMatchKey(a.authors[0] ?? '') === authorMatchKey(b.authors[0] ?? '');
+}
+
+/** Never walk more sibling records than this for one wall. */
+export const MAX_SIBLINGS = 12;
+
+/** Another Open Library record of the same book (ROADMAP 6.13). */
+export interface SiblingWork {
+  id: string;
+  /** Edition records Open Library reports for it. */
+  editionCount?: number;
+}
+
+/**
+ * The other Open Library records that identity rule 2 makes one work with
+ * `work` (ROADMAP 6.13): same normalized title, same primary author — the
+ * rule `mergeWorks` applies to a result list, applied here to the answer of
+ * a targeted search so that the detail page loads what its card promised.
+ *
+ * Measured 2026-09-11 over 47 searches: 22 cards merge more than one record,
+ * 2.06 on average, and the siblings hold 2.9 % of all editions — little on
+ * average, most of the book where it matters (*Ansichten eines Clowns*: 6 of
+ * 14 editions sat in siblings, *Siddhartha* 86 of 292). Largest first, so
+ * the cap drops the one-edition stubs, never the record with 181 editions.
+ */
+export function siblingsOf(work: Pick<Work, 'id' | 'title' | 'authors' | 'authorKeys'>, candidates: readonly WorkSummary[]): SiblingWork[] {
+  const title = normalizeTitle(work.title);
+  const seen = new Set([work.id]);
+  const out: SiblingWork[] = [];
+  for (const c of candidates) {
+    if (seen.has(c.id) || normalizeTitle(c.title) !== title || !samePrimaryAuthor(work, c)) continue;
+    seen.add(c.id);
+    out.push({ id: c.id, editionCount: c.editionCount });
+  }
+  return out
+    .sort((a, b) => (b.editionCount ?? 0) - (a.editionCount ?? 0))
+    .slice(0, MAX_SIBLINGS);
 }
 
 /**

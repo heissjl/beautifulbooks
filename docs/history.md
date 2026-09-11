@@ -1762,3 +1762,26 @@ Julians Wunsch vom 2026-09-07: die Cover eines Buchs auch ohne Sprachreiter sehe
 
 **Gesehen auf `npm run dev`, *Siddhartha* (OL872932W):** acht Sprachreiter — English 39, German 16, Spanish 10, GU 2, Russian 2, French 1, Italian 1, Unknown 28, zusammen 99 — und „All languages 99“ dahinter. Angeklickt: 99 Kacheln, vorne „Quickie Classics 2026“, „neobooks 2024“, hinten die Scans ohne Jahr. Ob die Zeile auf dem Telefon seitlich scrollt, ließ sich im verborgenen Browser-Panel nicht messen (`innerWidth` 0, wie am 2026-09-10 beschrieben); die Pille ist ein weiterer `chip` in derselben Zeile, die unterhalb von `sm` ohnehin seitlich scrollt.
 
+## 2026-09-11 · Die Wand lädt, was die Karte verspricht (ROADMAP 6.13)
+
+Julians Beobachtung vom 2026-09-08: „das Bild unten rechts im Mosaik ist nicht in der Wand." Die Ursache stand seitdem fest — die Suche fasst mehrere Open-Library-Datensätze eines Buchs zu einer Karte zusammen, die Detailseite lud nur einen. Offen war, ob sich der Aufwand lohnt; der Punkt verlangte, vorher zu messen.
+
+**Gemessen über 47 Suchen** (die 40 ersten kuratierten Werke mit Titel und Autor, Böll zweimal, die fünf Akzeptanzsuchen und `crime and punishment`), jede gegen Open Library und mit derselben Gruppierung wie `mergeWorks`:
+
+| | |
+|---|---|
+| Karten, die mehr als einen Datensatz zusammenfassen | **22 von 47** |
+| Datensätze je Karte | 2,06 im Schnitt |
+| Ausgaben, die in Geschwistern liegen | **612 von 21.453 (2,9 %)** |
+| wo es weh tut | *Ansichten eines Clowns* 6 von 14, *Siddhartha* 86 von 292, *Ulysses* ein Geschwister mit 181 Ausgaben, *Heart of Darkness* eines mit 47 |
+
+Im Schnitt wenig, aber genau dort viel, wo eine Karte ein Cover zeigt, das die Wand nie laden kann. Also Weg (1) aus dem Punkt: **die Detailseite sucht die Geschwister selbst**, statt sie von der Suche mitgegeben zu bekommen — ein Link von außen soll dieselbe Wand zeigen.
+
+**Wie sie gesucht werden, und was das kostet.** Eine Suche `title:(<normalisierter Titel>) author_key:<Key>` (ohne Key der Autorname), bis 50 Treffer, danach dieselbe Identitätsregel wie in der Trefferliste (`siblingsOf`). Gemessen: **524 ms im Median, 1,6 s im schlimmsten Fall** — sie läuft neben der Editions-Seite, die 3 bis 10 s braucht, und kostet deshalb keine Wartezeit; ein eigener Timeout von 6 s sorgt dafür, dass sie die Seite nie aufhält. Sie fand dieselben Datensätze wie die Trefferliste in 28 Fällen, **mehr in 18** (*The Great Gatsby*: acht, die die Liste nie zeigte; *Frankenstein* sieben) und **weniger in 3**: *Invisible Man* hat ein Geschwister mit 11 Ausgaben unter einem anderen Autoren-Key, bei *Siddhartha* und *Ulysses* fehlt je eines. Das ist die Kehrseite des Keys, derselbe Befund wie bei Reed in 6.15: er führt zusammen, aber wer unter einem zweiten Key steht, wird nicht gefunden. Kosten: eine Open-Library-Suche je kalter Detailseite, 24 h gecacht, **keine Google-Anfrage**.
+
+**Wie sie geladen werden.** Seite 0 liefert die Liste der Geschwister (höchstens zwölf, die größten zuerst, damit die Kappung die Ein-Ausgaben-Stummel trifft und nie den Datensatz mit 181 Ausgaben). `useWorkPages` läuft zuerst die eigenen Seiten des Werks durch, dann die jedes Geschwisters mit `?sibling=1`; das schaltet auf dem Server Google und eine zweite Geschwistersuche ab — der Titel eines Geschwisters kann anders geschrieben sein als der des Werks, und eine Google-Suche dafür wäre eine Anfrage, die kein Cache abfängt. Die Geschwister kommen zuletzt, weil sie meist eine Seite lang sind, das Werk selbst aber tausend Ausgaben haben kann, derentwegen der Leser gekommen ist. `mergeWorkPages` addiert die Gesamtzahl je Datensatz, statt das Maximum zu nehmen, und die Zeile unter dem Titel zählt die Geschwister mit. Antwortet die Geschwistersuche nicht, lädt die Wand wie bisher einen Datensatz und sagt nichts über andere. **Nicht geändert** sind die Jahrzehnte-Seiten (`getWorkDetail`, 5.4a): ihre Schwelle ist auf einem Datensatz gemessen, und mehr Ausgaben würden ihre Zahlen verschieben.
+
+**Gesehen auf `npm run dev`, Testfall OL279833W:** Seite 0, Seite 0 mit Signaturen, dann vier Geschwister (`OL8114847W`, `OL24570496W`, `OL15394832W`, `OL9063200W`, jeweils `?signatures=1&sibling=1`). Die Wand sagt **„9 covers from 16 editions“** (vorher 8 Ausgaben); die Karte in der Suche „ansichten böll" sagt **16 editions**, und **alle vier Cover ihres Mosaiks liegen auf der Wand**. Das waren die zwei Bedingungen des Punkts. Die zwei Datensätze aus der Tabelle von 2026-09-08, die ohne Titelbild im Suchindex stehen (OL34685576W, OL37792362W), findet die Geschwistersuche nicht, weil `parseSearchDocs` Werke ohne Cover verwirft — ob deren Ausgaben Bilder tragen, ist nicht gemessen.
+
+**Was 6.15 davon hat:** die Methuen-Schulausgabe ist seit 6.15 Schritt 1 derselbe Titel und damit jetzt auch auf der Wand. Übersetzungen tragen einen anderen Titel und bleiben eigene Karten; das ist 6.15 Schritt 3.
+

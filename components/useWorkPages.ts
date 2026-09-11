@@ -96,19 +96,22 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
   useEffect(() => {
     const controller = new AbortController();
     const key = requestKey;
-    const base = `/api/works/${encodeURIComponent(workId)}`;
-    const query = (offset: number, signatures: boolean) => {
+    const query = (id: string, offset: number, signatures: boolean, sibling: boolean) => {
+      const base = `/api/works/${encodeURIComponent(id)}`;
       const params = new URLSearchParams();
       if (offset > 0) params.set('offset', String(offset));
       if (signatures) params.set('signatures', '1');
+      if (sibling) params.set('sibling', '1');
       if (market) params.set('market', market);
       const qs = params.toString();
       return qs ? `${base}?${qs}` : base;
     };
 
     /** Resolves to the page, or null when the work is gone; throws on transport errors. */
-    const loadPage = async (offset: number, signatures: boolean): Promise<WorkPageResponse | null> => {
-      const res = await fetch(query(offset, signatures), { signal: controller.signal });
+    const loadPage = async (
+      offset: number, signatures: boolean, id = workId, sibling = false,
+    ): Promise<WorkPageResponse | null> => {
+      const res = await fetch(query(id, offset, signatures, sibling), { signal: controller.signal });
       if (res.status === 404 || res.status === 400) return null;
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `Request failed (${res.status})`);
       return (await res.json()) as WorkPageResponse;
@@ -188,39 +191,56 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       }
       if (controller.signal.aborted) return;
 
-      let next = first.page.nextOffset;
-      let retried = false;
-      while (next !== undefined && !controller.signal.aborted) {
-        let page: WorkPageResponse | null;
-        try {
-          page = await loadPage(next, true);
-          retried = false;
-        } catch {
-          if (controller.signal.aborted) return;
-          if (!retried) {
-            retried = true;
-            await new Promise(r => setTimeout(r, RETRY_DELAY_MS));
-            continue;
+      /** One record's pages from `start` on; false when it stopped on errors. */
+      const walk = async (id: string, start: number | undefined, sibling: boolean): Promise<boolean> => {
+        let next = start;
+        let retried = false;
+        while (next !== undefined && !controller.signal.aborted) {
+          let page: WorkPageResponse | null;
+          try {
+            page = await loadPage(next, true, id, sibling);
+            retried = false;
+          } catch {
+            if (controller.signal.aborted) return true;
+            if (!retried) {
+              retried = true;
+              await new Promise(r => setTimeout(r, RETRY_DELAY_MS));
+              continue;
+            }
+            return false;
           }
-          // Twice in a row: stop loading, keep what we have and say so.
-          update(p => ({ ...p, done: true, truncated: 'error' }));
-          finish();
-          return;
+          if (controller.signal.aborted || !page) return true;
+          const loaded = page;
+          const offset: number = next;
+          const following = loaded.page.nextOffset;
+          update(p => ({
+            ...p,
+            pages: p.pages.some(q => q.work.id === loaded.work.id && q.page.offset === offset) ? p.pages : [...p.pages, loaded],
+            // No next offset while records remain means the scan cap stopped us.
+            truncated: following === undefined && offset + loaded.page.limit < loaded.page.total ? 'cap' : p.truncated,
+          }));
+          next = following;
         }
-        if (controller.signal.aborted) return;
-        if (!page) break;
-        const offset: number = next;
-        const following = page.page.nextOffset;
-        update(p => ({
-          ...p,
-          pages: p.pages.some(q => q.page.offset === offset) ? p.pages : [...p.pages, page],
-          done: following === undefined,
-          // No next offset while records remain means the scan cap stopped us.
-          truncated: following === undefined && offset + page.page.limit < page.page.total ? 'cap' : p.truncated,
-        }));
-        next = following;
-      }
-      update(p => ({ ...p, done: true }));
+        return true;
+      };
+
+      /*
+        The work's own pages first, then the other records of the same book
+        (ROADMAP 6.13): the card that led here merged them, and a wall that
+        loaded only this record showed 8 of the 14 editions its card named.
+        Siblings come last because they are mostly a page each, while the
+        lead can hold a thousand editions the reader came for.
+      */
+      const complete = await walk(workId, first.page.nextOffset, false)
+        && await (async () => {
+          for (const s of first.siblings ?? []) {
+            if (!(await walk(s.id, 0, true))) return false;
+          }
+          return true;
+        })();
+      if (controller.signal.aborted) return;
+      // Twice in a row without an answer: stop loading, keep what we have and say so.
+      update(p => ({ ...p, done: true, truncated: complete ? p.truncated : 'error' }));
       finish();
     })();
 
@@ -240,9 +260,15 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       return { ...EMPTY, status: known.status, message: known.message };
     }
     const pages: WorkPageData<EditionView>[] = known.pages;
+    // The count under the title names the book, not the record: the card
+    // that led here added its siblings' editions too (ROADMAP 6.13).
+    const siblings = known.pages[0]?.siblings ?? [];
+    const work = known.work && siblings.length > 0
+      ? { ...known.work, editionCount: siblings.reduce((n, s) => n + (s.editionCount ?? 0), known.work.editionCount ?? 0) || undefined }
+      : known.work;
     return {
       status: 'ready',
-      work: known.work,
+      work,
       market: known.market,
       anyEditionLinks: known.pages[0]?.anyEditionLinks ?? [],
       merged: mergeWorkPages(pages, { done: known.done, truncated: known.truncated }),

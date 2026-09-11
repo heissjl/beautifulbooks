@@ -571,3 +571,34 @@ Damit wartet die Seite an **drei von vier** Stellen vor dem Mosaik; der Cover-F�
 **6.8 Eine „All languages"-Pille am Ende der Sprachreiter.** (Julian, 2026-09-07.) Die Detailseite gruppiert Cover heute nach Sprache und hat keinen Weg, alle zusammen zu sehen; wer die Wand als Ganzes betrachten will, muss sich durch die Reiter klicken. Die Pille steht **am Ende, hinter „Unknown"** — vorne wäre sie die Vorauswahl und würde die Sprachordnung aus F2.4 aushebeln, die genau deshalb existiert, weil die gesuchte Sprache zuerst kommen soll.
 
 Zu klären beim Bauen: die Sortierung innerhalb der Gesamtansicht (Jahr absteigend über alle Sprachen hinweg, wie in F2.5, ist der naheliegende Weg), ob die Auswahl in die URL gehört (`?lang=all` neben dem bestehenden `?lang=`), und dass die Ladeszene aus F2.4 weiterhin auf die gewünschte Sprache wartet und nicht auf diese Pille.
+
+### 6.13
+
+*Stand beim Abhaken am 2026-09-11; das Ergebnis steht in der Roadmap.*
+
+**6.13 Die Karte zeigt ein zusammengefasstes Werk, die Wand nur eines davon. [Testfall *Ansichten eines Clowns*]** (Julian, 2026-09-08: „das Bild unten rechts im Mosaik ist nicht in der Wand.") **Der schwerste offene Fehler in der Datenschicht**, und er betrifft nicht nur dieses Buch.
+
+**Der Befund.** Open Library führt *Ansichten eines Clowns* von Böll als **sechs getrennte Werk-Datensätze**. Unsere Suche fasst sie nach Identitätsregel 2 (normalisierter Titel + Erstautor) korrekt zu **einer** Karte zusammen, und diese Karte trägt die Cover aller sechs:
+
+| Werk | Ausgaben | Cover | wo es erscheint |
+|---|---|---|---|
+| OL279833W | 8 | K&W, blass, Junge mit Leiter | Karte **und** Wand |
+| OL8114847W | 3 | KiWi, Foto zweier Menschen | **nur Karte** |
+| OL9063200W | 1 | dtv, weiß mit dunklem Foto | **nur Karte** |
+| OL24570496W | 2 | SAGA, graublau mit rotem Kreis | **nur Karte** |
+| OL34685576W, OL37792362W | 3 + 1 | ohne Cover | — |
+
+Die Detailseite öffnet `/book/OL279833W` und lädt die Ausgaben **dieses einen** Datensatzes. Die Ausgaben der anderen fünf werden nie geholt, ihre Cover können also gar nicht auf der Wand erscheinen. Die Zahlen sagen es selbst: die Karte meldet **14 Ausgaben**, die Wand **8** — und 8 + 3 + 1 + 2 = 14.
+
+**Das ist keine Faltung und kein Zufall, sondern eine Asymmetrie im Entwurf:** zusammengefasst wird bei der Suche, geladen wird auf der Detailseite je Werk-ID. Jedes Buch, das Open Library mehrfach führt — und das sind viele —, zeigt auf der Karte mehr, als seine Seite je zeigen kann.
+
+**Wege, alle mit Kosten:**
+1. **Die Geschwister mitladen.** `getWorkPage` sucht einmal nach Titel + Erstautor, nimmt die Werke, die Identitätsregel 2 erfüllt, und holt deren Ausgabenseiten dazu. Ehrlich und vollständig, kostet aber je Detailseite eine Suchanfrage plus je Geschwisterwerk mindestens eine Editions-Seite. Bei Böll wären das fünf zusätzliche Abrufe.
+2. **Die zusammengefassten IDs mitgeben.** Die Suche kennt die Gruppe bereits; sie könnte sie im `WorkSummary` führen und die Karte sie in den Link schreiben (`/book/OL279833W?also=OL8114847W,…`). Kostet keine zusätzliche Suche, aber die Detailseite wird von der Suche abhängig — wer den Link direkt aufruft, sieht wieder nur ein Werk.
+3. **Die Karte auf das führende Werk beschränken.** Billig und ehrlich, verschenkt aber genau die Cover, die den Reiz ausmachen — und die Ausgabenzahl der Karte müsste mitschrumpfen.
+
+Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Einklang bringt, und weil die Geschwistersuche zugleich 6.9 („mehr von diesem Autor") und die Reihen-Seiten aus 5.4b bedient. Vorher messen, wie viele Werke im Schnitt zusammengefasst werden — bei einem Schnitt von eins wäre der Aufwand vergebens.
+
+**„Geschwisterwerke" heißt hier nichts Fachliches:** mehrere Werk-Datensätze bei Open Library, die dasselbe Buch beschreiben. Sie entstehen, weil Datensätze aus verschiedenen Bibliotheksbeständen importiert und nie zusammengeführt wurden. Bei Böll sind es sechs für einen Roman.
+
+**Als Testfall festhalten:** OL279833W. Karte und Wand müssen dieselbe Ausgabenzahl nennen, und jedes Cover der Karte muss auf der Wand erreichbar sein. Verwandt mit **6.15**, wo dieselben Datensätze *verschiedene* Titel tragen und deshalb gar nicht erst zusammengefasst werden.

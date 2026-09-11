@@ -27,7 +27,7 @@ Stand: 2026-09-10, nach dem Umbau (Julian: „überprüfe die Abhängigkeiten, s
 
 - **Online seit 2026-09-08: https://beautifulcovers.vercel.app**, Hobby-Modus (E20), Vercel Hobby, Funktionen in Frankfurt, Web Analytics an.
 - **Produktion ist `origin/main`.** Ein Push dorthin ist ein Deploy. Am 2026-09-10 arbeiteten **drei Sessions parallel**: eine schob 6.19a direkt nach `origin/main`, eine baute 6.29 auf dem lokalen `main`, eine baute 6.28 auf einem Branch — und das lokale `main` lag zeitweise sechs Commits vor und fünfzehn hinter Produktion, ohne dass es irgendwo stand. Seither zusammengeführt und am selben Abend deployt (`b43904b`); `npm run worktrees` zeigt, ob das wieder passiert, und ist vor jedem Merge nach `main` zu lesen.
-- **52 Punkte offen, 34 erledigt.** Phase 1 ist bis auf Julians Stichprobe (1.8) leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
+- **51 Punkte offen, 35 erledigt.** Phase 1 ist bis auf Julians Stichprobe (1.8) leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
 - **Der Engpass ist nicht die Technik, sondern dass niemand die Seite kennt:** sie steht in keiner Suchmaschine (2.5) und unter einem Namen, den niemand behält (0.5).
 
 ### Nächste Schritte
@@ -42,7 +42,7 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt.
 | 4 | **6.25 leere Kacheln** — nach einem Tag Produktion die `bb.img`-Zeilen lesen; dazu **6.25a**, der Fächer auf leeren Kacheln (Ursache gefunden, Schritte 1–2 gebaut, in Produktion neu zu messen) | Claude, nach einem Deploy | eine halbe Stunde plus Messung | Das Protokoll ist gebaut; ob Open Library uns drosselt, sagt erst ein Tag Logs — und drei `/img`-Antworten mit 15,6 s bei 325 Byte aus 6.25a gehören als Erstes hinein |
 | 5 | **6.5** Mosaik-Ausfall sichtbar machen | Claude, mit der Ladebild-Session abgesprochen | ein bis zwei Stunden | Eine Karte mit 503 sieht aus wie ein Buch ohne Cover; das berührt die leeren Kacheln, an denen eine andere Session arbeitet. 6.8 ist seit dem 2026-09-11 erledigt |
 | 6 | **6.18 Kuratierung zu Ende**, danach **6.17 Rotation** und das Jahr für **6.16** | Julian, dann Claude | ein Abend, dann eine Sitzung | Die Startseite ist das Erste, was ein Besucher sieht |
-| 7 | **6.13 mit 6.15 Schritt 3** | Claude | ein bis zwei Sitzungen | Der schwerste offene Datenfehler: die Karte verspricht Ausgaben, die die Wand nie lädt |
+| 7 | **6.15 Schritt 3**, die Stichprobe zu Übersetzungen | Claude | eine Sitzung | 6.13 ist seit dem 2026-09-11 erledigt: die Wand lädt, was die Karte zusammenfasst. Offen ist, ob etwas Datensätze mit **anderem** Titel zusammenführen darf |
 | 8 | **3.1 Analyse-Seite** | Claude | zwei Tage | Erst sinnvoll mit einer Woche echter Besucher |
 | 9 | **Phase 5**, beginnend mit 5.3 an der fertigen Gattung 5.4a | beide | Wochen | Die eigentliche Reichweite |
 
@@ -77,8 +77,8 @@ flowchart LR
   J618 --> R616["6.16 Erstausgabejahr"]
   J66 --> R67["6.7 Dubletten"] --> R64["6.4 Wiederholungen kennzeichnen"]
   J66 --> R623["6.23 gelerntes Faltungsmaß"]
-  R613["6.13 Geschwisterwerke"] <--> R615["6.15 Übersetzungen"]
-  R613 --> R63["6.3 Ladeszene mit Sprachfilter"]
+  R615["6.15 Schritt 3 Übersetzungen"]
+  R63["6.3 Ladeszene mit Sprachfilter"]
   R69["6.9 interne Verlinkung"] <--> R54b["5.4b Reihen-Seiten"]
   J55 --> R619["6.19a Rest, 5.5 Clip und Pins"]
   J49 --> R49["4.9 Spendenseite"]
@@ -106,7 +106,7 @@ In der Reihenfolge, in der sie hier stehen; die Regel bleibt: **die vorderste Ph
 | [0 Entscheidungen](#phase-0--entscheidungen-die-nur-julian-treffen-kann) | Konten, Geld, Recht, Produktfragen | 10 | 4 | Julian |
 | [2 Betrieb](#phase-2--betrieb-domain-sichtbarkeit-abnahme) | Domain, Suchmaschinen, Überwachung, Abnahme | 4 | 3 | Julian (Konten), ein Deploy |
 | [1 Vor echtem Verkehr](#phase-1--vor-echtem-verkehr) | Was ein erster Besucher noch nicht sehen soll | 1 | 11 | Julian (1.8) |
-| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 18 | 15 | teils 6.6 (Geld), teils 6.18 (Julian) |
+| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 17 | 16 | teils 6.6 (Geld), teils 6.18 (Julian) |
 | [3 Messen](#phase-3--messen) | Analyse-Seite, Verbrauch, Conversion | 3 | 0 | Besucher |
 | [5 Reichweite](#phase-5--reichweite) | Seitengattungen, Fabrik, Kanäle | 8 | 0 | Inhalte, Rechtefrage |
 | [4 Geld](#phase-4--geld) | Partnerprogramme, Werbung, Spenden | 8 | 1 | Besucher, Umschalttag |
@@ -377,34 +377,7 @@ Jeder Punkt eine Stunde bis einen halben Tag, ohne Phasenzwang. Seit dem Umbau a
 
 ### 6.B Daten: Werke, Faltung, Jahre
 
-Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, weil eine bessere Quelle die Dubletten an der Wurzel wegnehmen könnte und jede Schwellenarbeit davor verlorene Mühe wäre. 6.13 und 6.15 teilen sich die ersten Schritte.
-
-- [ ] **6.13 Die Karte zeigt ein zusammengefasstes Werk, die Wand nur eines davon. [Testfall *Ansichten eines Clowns*]** (Julian, 2026-09-08: „das Bild unten rechts im Mosaik ist nicht in der Wand.") **Der schwerste offene Fehler in der Datenschicht**, und er betrifft nicht nur dieses Buch.
-
-  **Der Befund.** Open Library führt *Ansichten eines Clowns* von Böll als **sechs getrennte Werk-Datensätze**. Unsere Suche fasst sie nach Identitätsregel 2 (normalisierter Titel + Erstautor) korrekt zu **einer** Karte zusammen, und diese Karte trägt die Cover aller sechs:
-
-  | Werk | Ausgaben | Cover | wo es erscheint |
-  |---|---|---|---|
-  | OL279833W | 8 | K&W, blass, Junge mit Leiter | Karte **und** Wand |
-  | OL8114847W | 3 | KiWi, Foto zweier Menschen | **nur Karte** |
-  | OL9063200W | 1 | dtv, weiß mit dunklem Foto | **nur Karte** |
-  | OL24570496W | 2 | SAGA, graublau mit rotem Kreis | **nur Karte** |
-  | OL34685576W, OL37792362W | 3 + 1 | ohne Cover | — |
-
-  Die Detailseite öffnet `/book/OL279833W` und lädt die Ausgaben **dieses einen** Datensatzes. Die Ausgaben der anderen fünf werden nie geholt, ihre Cover können also gar nicht auf der Wand erscheinen. Die Zahlen sagen es selbst: die Karte meldet **14 Ausgaben**, die Wand **8** — und 8 + 3 + 1 + 2 = 14.
-
-  **Das ist keine Faltung und kein Zufall, sondern eine Asymmetrie im Entwurf:** zusammengefasst wird bei der Suche, geladen wird auf der Detailseite je Werk-ID. Jedes Buch, das Open Library mehrfach führt — und das sind viele —, zeigt auf der Karte mehr, als seine Seite je zeigen kann.
-
-  **Wege, alle mit Kosten:**
-  1. **Die Geschwister mitladen.** `getWorkPage` sucht einmal nach Titel + Erstautor, nimmt die Werke, die Identitätsregel 2 erfüllt, und holt deren Ausgabenseiten dazu. Ehrlich und vollständig, kostet aber je Detailseite eine Suchanfrage plus je Geschwisterwerk mindestens eine Editions-Seite. Bei Böll wären das fünf zusätzliche Abrufe.
-  2. **Die zusammengefassten IDs mitgeben.** Die Suche kennt die Gruppe bereits; sie könnte sie im `WorkSummary` führen und die Karte sie in den Link schreiben (`/book/OL279833W?also=OL8114847W,…`). Kostet keine zusätzliche Suche, aber die Detailseite wird von der Suche abhängig — wer den Link direkt aufruft, sieht wieder nur ein Werk.
-  3. **Die Karte auf das führende Werk beschränken.** Billig und ehrlich, verschenkt aber genau die Cover, die den Reiz ausmachen — und die Ausgabenzahl der Karte müsste mitschrumpfen.
-
-  Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Einklang bringt, und weil die Geschwistersuche zugleich 6.9 („mehr von diesem Autor") und die Reihen-Seiten aus 5.4b bedient. Vorher messen, wie viele Werke im Schnitt zusammengefasst werden — bei einem Schnitt von eins wäre der Aufwand vergebens.
-
-  **„Geschwisterwerke" heißt hier nichts Fachliches:** mehrere Werk-Datensätze bei Open Library, die dasselbe Buch beschreiben. Sie entstehen, weil Datensätze aus verschiedenen Bibliotheksbeständen importiert und nie zusammengeführt wurden. Bei Böll sind es sechs für einen Roman.
-
-  **Als Testfall festhalten:** OL279833W. Karte und Wand müssen dieselbe Ausgabenzahl nennen, und jedes Cover der Karte muss auf der Wand erreichbar sein. Verwandt mit **6.15**, wo dieselben Datensätze *verschiedene* Titel tragen und deshalb gar nicht erst zusammengefasst werden.
+Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, weil eine bessere Quelle die Dubletten an der Wurzel wegnehmen könnte und jede Schwellenarbeit davor verlorene Mühe wäre. 6.13 und 6.15 teilten sich die ersten Schritte; 6.13 ist erledigt, von 6.15 bleibt Schritt 3.
 
 - [ ] **6.15 Fünf von sechs Karten sind dasselbe Buch. [Testfall „ansichten böll"]** *In Produktion am 2026-09-08 nachgemessen: **4 Karten statt 6**, der Roman trägt 16 statt 14 Ausgaben. Schritt 1 und 2 erledigt auf `mvp-hobby` ([Historie](docs/history.md)): Klammerzusätze am Titelende fallen weg, der Autoren-Key führt zusammen — und trennt ausdrücklich nicht, weil Open Library Reed unter zwei Keys führt und die Trennung Mumbo Jumbo gespalten hätte. Offen: Schritt 3, die Stichprobe zu Übersetzungen.* (Julian, 2026-09-08: „von 5 Ergebnissen sind 4 das richtige Buch, nur in einer anderen Sprache, das sollte so auch nicht passieren.") **Das widerspricht der Spec ausdrücklich**: §2.1 sagt, Sprache sei kein Teil der Werk-Identität und Übersetzungen seien Ausgaben desselben Werks. Die Umsetzung hält das nicht ein.
 
@@ -609,6 +582,8 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
   **Teilweise erledigt am 2026-09-08 spät:** die Wand zeigt **18 Kacheln statt zwölf** (drei volle Reihen zu sechs, Julian: „ich will trotzdem eine volle Startseite"), und sie nimmt sie aus `data/curated.json` — Julians eigenen Wahlen aus der Kuratier-App —, aufgefüllt aus der alten Handliste, damit die Wand vom ersten Tag des Kuratierens an voll ist. **Was noch fehlt, ist die Rotation**, und sie hängt an einer Entscheidung, nicht an Code: die Startseite wird vorgerendert, eine hier gewürfelte Reihenfolge stünde also im HTML anders als im Browser und React risse sie wieder ein. Drei Wege: (a) stündlich über ISR (`revalidate`), dann sieht ein Wiederkehrer alle Stunde etwas Neues, jeder Aufruf innerhalb der Stunde dasselbe — billig, statisch; (b) die Auswahl in einer Server-Komponente treffen und als Prop hineinreichen, dann rotiert es je Auslieferung, aber die Seite wird dynamisch und kostet je Aufruf eine Funktion; (c) nach dem Hydrieren im Browser tauschen — dann flackert die erste Reihe. **Empfehlung: (a)**, weil „vorgeladen und schnell" Julians eigene Bedingung war und (b) genau die aufgibt.
 
 ### Erledigt in Phase 6
+
+- [x] **6.13 Die Karte zeigt ein zusammengefasstes Werk, die Wand nur eines davon.** Erledigt 2026-09-11 nach Weg (1): Seite 0 sucht einmal gezielt nach Titel und Autoren-Key (0,5 s im Median, neben der Editions-Seite, also ohne zusätzliche Wartezeit), wendet Identitätsregel 2 an, und die Wand lädt die Ausgaben der Geschwister nach ihren eigenen — **ohne Google**, höchstens zwölf, die größten zuerst. Gemessen über 47 Suchen: 22 Karten fassen mehrere Datensätze zusammen, 2,9 % aller Ausgaben liegen in Geschwistern, bei *Siddhartha* aber 86 von 292. **Testfall hält:** *Ansichten eines Clowns* — Karte 16 Ausgaben, Wand „9 covers from 16 editions“ (vorher 8), jedes Cover der Karte auf der Wand. Grenzen: ein Datensatz unter einem anderen Autoren-Key wird nicht gefunden (3 von 47), und die Jahrzehnte-Seiten zählen weiter nur einen Datensatz. → [Historie](docs/history.md#2026-09-11--die-wand-lädt-was-die-karte-verspricht-roadmap-613) · [Archiv](docs/roadmap-archive.md#613)
 
 - [x] **6.8 Eine „All languages“-Pille am Ende der Sprachreiter.** Erledigt 2026-09-11: ein letzter Reiter „All languages“ zeigt die ganze Wand in der Ordnung von F2.5 (Jahr absteigend über alle Sprachen, unbekanntes Jahr dahinter, Textseiten-Scans ganz hinten). Er erscheint nur, wenn es mehr als eine Sprache gibt, ist nie vorausgewählt und steht **nicht in der URL**, weil `?lang=` dort der Suchfilter ist und `all` schon „kein Filter“ heißt. Die Ladeszene wartet weiter auf die gesuchte Sprache. *Siddhartha*: acht Sprachreiter mit zusammen 99 Covern, der neue Reiter 99. → [Historie](docs/history.md#2026-09-11--die-ganze-wand-auf-einmal-roadmap-68) · [Archiv](docs/roadmap-archive.md#68)
 
