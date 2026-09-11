@@ -1751,3 +1751,43 @@ Die 51 sind faul geladene Kacheln unterhalb des Sichtbereichs. **Das ist genau d
 **Dass die Kette in Produktion schreibt, ist trotzdem geprüft:** `/img/S/ol-999999999` liefert dort 502 mit gesetztem Kopf. Wer `bb.img` sehen will, filtert im Vercel-Dashboard unter Logs darauf; solange nichts kommt, ist die Antwort die obige.
 
 **Und ein Schönheitsfehler fiel beim Benutzen auf.** Für das fehlende Cover meldete der Kopf `200` — der Status der Gegenseite —, was auf einer gescheiterten Antwort das Gegenteil dessen sagt, was passiert ist. Jetzt steht der Status nur da, wenn der Status die Antwort *ist*; sonst `not-image`, `timeout` oder `error`. Ein Diagnosewerkzeug, das man erst deuten muss, ist eines zu wenig.
+
+---
+
+## 2026-09-11 · Hot or Not für Cover: wann das Brett „das hässlichste" sagen darf (ROADMAP 5.8, Spielart 4)
+
+Julian: „Ich will das hot or not spiel mit covern nachbauen. so wie damals facebook gestartet ist als zuckerberg noch an harvard war. wir wollen viral gehen können auf booktok indem wir das hässlichste und das schönste buchcover finden."
+
+**Gebaut** in [`lab/hotornot/`](../lab/hotornot/README.md): zwei Cover nebeneinander, ein Klick. Der Titel bleibt beim Abstimmen verborgen, das Bild wird nie beschnitten, und welches Cover links steht, ist Zufall. Elo wählt das nächste Paar (das am wenigsten gesehene Cover gegen einen nahen Gegner, nach drei Spielen jede zweite Paarung an die Enden). Bradley–Terry über alle Stimmen ergibt die Rangliste. Die Stimmen enthalten keine Kennung (N11), Google wird nie gefragt, und die Rechnung ist rein und mit 37 Tests abgedeckt. Übernommen ist die Mechanik von Facemash, nicht sein Gegenstand: ein Cover ist gemacht, um beurteilt zu werden.
+
+**Der Vorrat, gemessen am Index vom 2026-09-09:** 12.132 Cover zu 139 Werken, alle von Open Library, davon 63 leer aussehend (0,5 %). Nach der Faltung bei dHash ≤ 8 innerhalb eines Werks bleiben **9.939 Gestaltungen**; 18 % der Cover sind also Nachscans derselben Jacke. Je Werk im Median 48 Gestaltungen, höchstens 280 (*Odyssee*, *Göttliche Komödie*), dann *Der kleine Prinz* 265, *Der Hobbit* 248, *1984* 230. Fünf Werke haben weniger als zehn, 68 mindestens fünfzig. Der Standardvorrat `mix-100-paperwhite` hat 100 Bücher und keinen leeren Scan, **aber einen generierten Platzhalter**: eine *Reading Guide* zu *Slaughterhouse-Five* (`ol:10942061`) mit dem Aufdruck „Note: This is not the actual book cover".
+
+**Die Laborfrage war die Krone, nicht das Spiel.** Wann darf die Seite „das hässlichste Cover" sagen, und wie oft läge sie dann falsch? Nur eine Simulation kennt die Wahrheit. Jedes Cover bekommt eine verborgene Anziehung, normalverteilt; simulierte Spieler wählen das anziehendere nach dem Bradley–Terry-Modell, mit einem Rauschen, das die Einigkeit bestimmt. Das Spiel läuft wie auf dem Server, und nach jeder Runde (so viele Stimmen wie Cover) fällt das Brett sein Urteil mit genau dem Code, den die Seite benutzt. Drei Fassungen dieses Urteils krönten zu früh:
+
+| Fassung | Was schiefging |
+|---|---|
+| Bootstrap über die Stimmen | Krönte nach 15 Stimmen über 10 Cover („eines der drei hässlichsten"). Ein Cover mit drei Niederlagen in drei Spielen verliert sie in fast jeder Neuziehung wieder; gemessen war die Stabilität dieser Stimmen, nicht die Sicherheit über das Cover |
+| Unsicherheit je Cover (Laplace), ein virtuelles Spiel als Vorwissen | Krönte noch immer auf der Handvoll, weil ein virtuelles Spiel zwei Einheiten Abstand erlaubt |
+| Vorwissen aus den Stimmen geschätzt (Streuung der Wertungen minus Messfehler) | Behob die Handvoll, aber nicht die vielen Stimmen: das Brett wird nach jeder Runde neu gefragt, und das erste Überschreiten von 90 % ist oft ein Zufallstreffer |
+
+Gezählt über dieselben 16 Zeilen (gezielte Paarung, Pools 50, 100 und 200, 20 Läufe je Zeile, höchstens 60 Stimmen je Cover):
+
+| Regel | erste Urteile | davon falsch |
+|---|---|---|
+| festes Vorwissen, erste Krone | 201 | 26 (13 %) |
+| geschätztes Vorwissen, erste Krone | 200 | 25 (12,5 %) |
+| **geschätztes Vorwissen, Krone drei Runden gehalten** | 172 | **11 (6,4 %)** |
+
+Die Schwelle von 90 % verspricht höchstens jedes zehnte Urteil falsch. **Erst die gehaltene Krone hält das Versprechen.** Über alle Zeilen der Pools 50 bis 200 sind es gezielt 11 von 182 (6,0 %), zufällig 4 von 59 (7 %). Über das ganze Gitter mit festem Vorwissen und erster Krone waren es 35 von 311 (11 %) und 24 von 144 (17 %). Der Preis der gehaltenen Krone: Urteile kommen später, bei 100 Covern und 83 % Einigkeit nach 1.600 statt 1.400 Stimmen, bei 200 Covern nach 6.200 statt 3.800.
+
+**Die Vorhersage unter der Regel des Bretts** (gezielt): 100 Cover, 73 % Einigkeit → „das hässlichste" nach **2.900 Stimmen** (29 je Cover), „das schönste" nicht innerhalb von 60 je Cover. Bei 83 % sind es 1.600 und 3.700, bei 63 % keines von beiden. 200 Cover, 83 % → 6.200 und 5.800. Die ganze Tabelle steht im [README](../lab/hotornot/README.md).
+
+**Pool 400 ist nur für die erste Krone gemessen** (festes Vorwissen), weil der Lauf unter der Regel des Bretts zu lang war und abgebrochen wurde. Gezielt, 83 % Einigkeit: gefunden nach 1.200, gekrönt nach 2.400 Stimmen, 3 von 19 Urteilen falsch; 73 %: 4.000 und 6.000, 2 von 17; 63 %: 15.600 und 13.200, 0 von 11. Je Cover bleibt der Aufwand für die Fundstelle etwa gleich (3 bis 10 Stimmen je Cover bei 83 bis 73 %); in Summe wächst er mit dem Vorrat.
+
+**Gezielte Paarung findet das Ende zwei- bis fünfmal früher als zufällige:** bei 100 Covern und 73 % Einigkeit steht das wahre hässlichste Cover nach 1.100 statt 3.000 Stimmen am Ende der Wertung, bei 200 Covern nach 5.000 statt 12.000. Die Spalte „Favorit gewinnt" hängt deshalb an der Paarung: gezielte Paare liegen nah beieinander, und bei 73 % Einigkeit gewinnt der Favorit dort nur 58 % der späteren Stimmen statt 71 %. Echte Stimmen sind nur mit der gezielten Spalte zu vergleichen.
+
+**Im Browser geprüft** (lokaler Server, Stimmen im Scratchpad): Paare, drei Klick-Stimmen, Rangliste mit „noch kein Befund", Telefon-Ansicht. Der Platzhalter zu *Slaughterhouse-Five* erschien in der Telefon-Ansicht und wurde über den Knopf „ist kein Cover" aussortiert — nicht durch einen meiner Klicks, sondern im sichtbaren Browser-Bereich. Ein leeres Bild beim ersten Paar war das langsame CDN, kein fehlendes Cover. Ein gestoppter Server ließ die Seite zunächst still mit „Failed to fetch" hängen; jetzt sagt sie, dass der Server nicht antwortet.
+
+**Werkzeugnotiz für spätere Sitzungen:** In einem Worktree startete `preview_start` den Dev-Server aus der `launch.json` des Hauptordners statt des Eintrags im Worktree. Ein Lab-Server läuft deshalb mit `npx tsx` im Hintergrund und wird mit `navigate` geöffnet.
+
+**Offen:** wie einig sich echte Menschen sind — nur spielbar; ein geteilter Online-Link braucht den Speicher, den E6 zurückstellt; Pool 400 unter der Regel des Bretts; die Rechtefrage aus 5.5 und die Regel aus 5.6 vor jedem Posten.
