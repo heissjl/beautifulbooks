@@ -47,7 +47,7 @@ Sortiert danach, was am meisten kostet, wenn es liegen bleibt.
 | 8 | **3.1 Analyse-Seite** | Claude | zwei Tage | Erst sinnvoll mit einer Woche echter Besucher |
 | 9 | **Phase 5**, beginnend mit 5.3 an der fertigen Gattung 5.4a | beide | Wochen | Die eigentliche Reichweite |
 
-**Nicht als Nächstes, mit Grund:** 6.6 (zwei Tage und ein ISBNdb-Monat, also Julians Geld — und 6.7, 6.4, 6.23 warten darauf), Phase 4 (ohne Besucher bringt ein Kauf-Link nichts, und der Umschalttag verlangt volles Impressum und Pro-Plan), 0.10 (nach 3.2 billiger zu entscheiden), 6.19a-Rest (die Rechtefrage aus 5.5 steht davor), 0.8a und 1.8 (brauchen Julian am Gerät, halten aber nichts auf).
+**Nicht als Nächstes, mit Grund:** 5.8b (was die Stimmen des Cover-Spiels dem Rest der Seite bringen — der Weg steht, aber mit 51 Stimmen trägt keine Auswertung; er beginnt mit dem Export nach `data/cover-ranking.json`, damit die Produktion nie den Speicher fragt), 6.6 (zwei Tage und ein ISBNdb-Monat, also Julians Geld — und 6.7, 6.4, 6.23 warten darauf), Phase 4 (ohne Besucher bringt ein Kauf-Link nichts, und der Umschalttag verlangt volles Impressum und Pro-Plan), 0.10 (nach 3.2 billiger zu entscheiden), 6.19a-Rest (die Rechtefrage aus 5.5 steht davor), 0.8a und 1.8 (brauchen Julian am Gerät, halten aber nichts auf).
 
 **Zwei Punkte haben an Wert verloren, ohne angefasst zu werden:** 6.12 ist seit dem gebauten Index nur noch ein Randfall für Werke außerhalb der Liste; der `priority`-Teil von 6.5 wurde von 1.3 verschoben, nicht gelöst — vor dem Anfassen neu messen.
 
@@ -757,6 +757,19 @@ Eine Suchseite ohne eigene Inhalte bekommt keinen organischen Traffic. Die Grund
   1. **Die Rangliste zeigt gemeldete Cover noch nicht mit Grund** (aus dem Stand davor).
   2. **Mehr Bücher statt mehr Cover je Buch**, falls Julian 1000 verschiedene Bücher will: der Index müsste um 760 Werke wachsen (Stunden, und die Sitemap wächst mit).
   3. E21, der Satz in der Datenschutzerklärung, der Weg in die Produktion.
+
+- [ ] **5.8b Was die Stimmen dem Rest der Seite bringen.** (Julian, 2026-09-12: „Wie können wir die Daten, die wir hier sammeln sinnvoll für den rest der website nutzen?") Das Spiel sammelt dreierlei: **Stimmen** (zwei Cover, ein Sieger, ein Tag, nichts über den Spieler, N11), **Meldungen** („Not a cover") und daraus die **Rangliste mit Unsicherheit**. Nutzbar ist das nur außerhalb des Spiels, wenn die Produktion dafür nicht den Speicher abfragen muss.
+
+  **Der Schlüssel ist ein Export, kein Live-Zugriff.** `scripts/export-cover-ranking.ts` schreibt `data/cover-ranking.json` (je Cover: Spiele, Siege, Stärke, Streuung; dazu die gemeldeten Cover mit Grund), gebaut und committet wie der Cover-Index (E18). Dann liest die Seite gebaute Daten statt eines Speichers — **damit hängt nichts davon ab, ob das Spiel selbst je in Produktion geht** (entschärft E21). Regel im Export: ein Cover ohne genug Spiele kommt nicht vor, sonst veröffentlicht die Seite Rauschen (N12).
+
+  Danach, in dieser Reihenfolge:
+  1. **Das Gesicht eines Werks wählen.** Suchkarten-Mosaik, OG-Bild und Startseiten-Wand nehmen heute ein kuratiertes oder das erstbeste Cover; wo Stimmen vorliegen, nehmen sie das bestbewertete. Betrifft genau die Stelle, an der ein Leser entscheidet, ob er klickt (messbar mit 3.1).
+  2. **Eine öffentliche Ergebnisseite.** „Die schönsten Cover, von Lesern gewählt“, indexierbar, mit Links auf die Buchseiten — das Spiel selbst bleibt `noindex`. Das ist Reichweite aus eigenen Daten (Gattung für 5.4) und führt in dieselben Kauflinks. Zahlen und Unsicherheit dazuschreiben, nie „das schönste Cover“ ohne die Kronenregel (F7.5, N12).
+  3. **Die Wand eines Buchs sortieren.** Wo Stimmen da sind, die meistgewählten Cover zuerst — die Frage, die nur diese Seite beantworten kann.
+  4. **Die Meldungen zurückgeben.** „Not a cover“ ist das Urteil eines Menschen: solche Bilder überall ans Ende sortieren (nie löschen, §9.3 Schritt 12) und als Prüfdaten für die automatischen Regeln aus 5.8a (weiß, Reclam, Seiten-Scan) benutzen.
+  5. **Lab, erst messen:** Sagt eine Stimme etwas über Farbe, Kontrast, Jahrzehnt? Wenn ja, eine Heuristik für die 20.526 Cover im Index, die nie im Spiel waren; wenn nein, verworfen und notiert.
+
+  **Voraussetzung:** genug Stimmen. Mit 51 ist noch nichts davon belastbar; die Schwelle je Cover gehört in den Export, nicht in die Seiten.
 
 ---
 
