@@ -23,13 +23,13 @@ Stand: 2026-09-12, geordnet (neun erledigte Punkte aus den offenen Abschnitten d
 | **Was offen ist, als Brett** | `npm run kanban` schreibt [docs/kanban.html](kanban.html) und veröffentlicht ist es als [Roadmap-Brett](https://claude.ai/code/artifact/3871e261-34bc-4e25-976e-f858406046fa): Spalten aus Zuständigkeit, Blockaden und laufenden Branches. **Eine Ansicht, kein zweiter Ort** — eine Karte bewegt sich, indem der Punkt hier bearbeitet und das Skript erneut ausgeführt wird (git-ignoriert, also nie veraltet) |
 | **Welche Session woran arbeitet** | `npm run worktrees` schreibt [docs/worktrees.md](docs/worktrees.md): alle Worktrees und Branches, Stand gegen Produktion, Themen aus den Commits (git-ignoriert, also nie veraltet) |
 | **Arbeitsregeln** | [CLAUDE.md](CLAUDE.md) |
-| **Recherchen** | [Best Practices Websites und Claude Code](docs/best-practices-2026-09-12.md) · [Recht der Hobbyseite](docs/recht-hobbyseite.md) · [Domain-Namen](docs/domain-recherche.md) · [Suche nach ISBN und Stichwort](docs/suche-isbn-und-stichwort.md) · [Buchrücken](docs/spine-research.md) · [Testbericht 2026-09-07](docs/tests/2026-09-07-durchklick.md) |
+| **Recherchen** | [Risikoregister: was das Projekt kaputt machen könnte](docs/risiken-2026-09-12.md) · [Best Practices Websites und Claude Code](docs/best-practices-2026-09-12.md) · [Recht der Hobbyseite](docs/recht-hobbyseite.md) · [Domain-Namen](docs/domain-recherche.md) · [Suche nach ISBN und Stichwort](docs/suche-isbn-und-stichwort.md) · [Buchrücken](docs/spine-research.md) · [Testbericht 2026-09-07](docs/tests/2026-09-07-durchklick.md) |
 
 ### Stand
 
 - **Online seit 2026-09-08: https://beautifulcovers.vercel.app**, Hobby-Modus (E20), Vercel Hobby, Funktionen in Frankfurt, Web Analytics an.
 - **Produktion ist `origin/main`.** Ein Push dorthin ist ein Deploy. Am 2026-09-10 arbeiteten **drei Sessions parallel**: eine schob 6.19a direkt nach `origin/main`, eine baute 6.29 auf dem lokalen `main`, eine baute 6.28 auf einem Branch — und das lokale `main` lag zeitweise sechs Commits vor und fünfzehn hinter Produktion, ohne dass es irgendwo stand. Seither zusammengeführt und am selben Abend deployt (`b43904b`); `npm run worktrees` zeigt, ob das wieder passiert, und ist vor jedem Merge nach `main` zu lesen.
-- **61 Punkte offen, 44 erledigt** (gezählt am 2026-09-12 beim Ordnen; sechs davon sind die neuen Werkzeug-Punkte 6.39–6.44). Phase 1 ist bis auf Julians Stichprobe (1.8) und den Rondell-Rest (1.9a) leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
+- **63 Punkte offen, 44 erledigt** (gezählt am 2026-09-12; acht davon sind neu aus Recherche und Risikoregister: 6.39–6.45 und 2.7). Phase 1 ist bis auf Julians Stichprobe (1.8) und den Rondell-Rest (1.9a) leer, Phase 2 hat nur noch Julians Konten und die Abnahme. Der größte offene Block ist Phase 6, und dort zuerst die Fehler, die ein Leser sieht.
 - **Der Engpass ist nicht die Technik, sondern dass niemand die Seite kennt:** sie steht in keiner Suchmaschine (2.5) und unter einem Namen, den niemand behält (0.5).
 
 ### Nächste Schritte
@@ -123,6 +123,8 @@ Die Urteile sind ein festes Vokabular, weil das [Brett](kanban.html) sie liest: 
 | 6.42 | entscheiden | 30 min | Der Ort der Arbeitskopie ist Julians; der `tsc`-Ausschluss ist der Behelf, bis sie umzieht |
 | 6.43 | tun | 1 h | Ein Fehler, der als Feature-Rest getarnt war: ein Ausfall als Befund, 24 Stunden lang (N12) |
 | 6.44 | tun | 1 h | 3.571 Wörter, und die Anleitung sagt, dass Regeln in einem langen CLAUDE.md verloren gehen — was schon passiert ist |
+| 2.7 | tun | 10 min/Monat | Harte Kappung ohne Nachkauf: die Seite stünde bis zum Monatsersten. Niemand hat die Zähler je abgelesen |
+| 6.45 | tun | 1 Tag | Open Library ist die Lebensader und hat keinen Plan B; die Sitemap-Seiten sollten einen Ausfall überleben |
 | 4.9 | zurückstellen | ½ Tag | Julians Wunsch — aber der Punkt sagt selbst: kein Wort nach Not bei 12 USD im Jahr. Auslöser: die ersten echten Kosten (Pro-Plan, ISBNdb) |
 
 **Drei Dinge, die aus der Tabelle folgen und nicht in einer Zeile stehen:**
@@ -188,9 +190,9 @@ In der Reihenfolge, in der sie hier stehen; die Regel bleibt: **die vorderste Ph
 | Phase | Was | offen | erledigt | wartet vor allem auf |
 |---|---|---|---|---|
 | [0 Entscheidungen](#phase-0--entscheidungen-die-nur-julian-treffen-kann) | Konten, Geld, Recht, Produktfragen | 10 | 4 | Julian |
-| [2 Betrieb](#phase-2--betrieb-domain-sichtbarkeit-abnahme) | Domain, Suchmaschinen, Überwachung, Abnahme | 4 | 3 | Julian (Konten), ein Deploy |
+| [2 Betrieb](#phase-2--betrieb-domain-sichtbarkeit-abnahme) | Domain, Suchmaschinen, Überwachung, Abnahme | 5 | 3 | Julian (Konten), ein Deploy |
 | [1 Vor echtem Verkehr](#phase-1--vor-echtem-verkehr) | Was ein erster Besucher noch nicht sehen soll | 2 | 11 | Julian (1.8) |
-| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 24 | 25 | teils 6.6 (Geld), teils 6.18 (Julian) |
+| [6 Qualität](#phase-6--qualität-jederzeit-dazwischen) | Fehler, Daten, Oberfläche, Startseite | 25 | 25 | teils 6.6 (Geld), teils 6.18 (Julian) |
 | [3 Messen](#phase-3--messen) | Analyse-Seite, Verbrauch, Conversion | 3 | 0 | Besucher |
 | [5 Reichweite](#phase-5--reichweite) | Seitengattungen, Fabrik, Kanäle | 10 | 0 | Inhalte, Rechtefrage |
 | [4 Geld](#phase-4--geld) | Partnerprogramme, Werbung, Spenden | 8 | 1 | Besucher, Umschalttag |
@@ -316,6 +318,8 @@ Keine davon ist Code. Für den Hobby-Betrieb sind 0.1, 0.6, 0.9 und 0.11 beantwo
   **Nach dem Deploy vom 2026-09-10 nachgemessen** (Stand `b43904b`, einmal, nicht in der Schleife): die Bildroute liefert dasselbe Cover beim zweiten Abruf aus dem CDN — **`x-vercel-cache: MISS` in 2,12 s, dann `HIT` in 0,24 s** (`/img/M/ol-13498737`, 24 KB, `age: 1`); damit ist 1.3 belegt. Canonical und OG-Bild der Werkseite tragen `beautifulcovers.vercel.app`, die Sitemap 253 Adressen, `/_vercel/insights/script.js` antwortet 200, About ist `PRERENDER` mit genau einem Suchfeld in der Kopfzeile (6.28 live).
 
   **Offen:** das OG-Bild in einem Messenger ansehen; abends den Google-Verbrauch in der Cloud-Konsole ablesen und in die Historie schreiben; die restliche Tastaturprobe am Gerät (0.8a).
+
+- [ ] **2.7 Die harten Grenzen des Hobby-Plans lesen und je Wand umrechnen.** (Aus dem [Risikoregister](docs/risiken-2026-09-12.md) vom 2026-09-12, Julians Frage nach den Blockern.) Vercel Hobby kappt **hart und ohne Nachkauf**: 1 Mio. Anfragen, 1 Mio. Funktionsaufrufe, 100 GB Übertragung und **4 CPU-Stunden** aktiver Funktionszeit im Monat — danach steht die Seite bis zum Monatsersten. Eine Wand löst rund 132 Bildanfragen aus (gemessen 2026-09-11), ein Cover in M wiegt 12–29 KB; Überschlag: 7.500 volle Wände oder 15.000–20.000 Besuche im Monat, **und die CPU-Stunden sind die unbekannte Zahl**, weil das Hashen nicht kuratierter Werke in der Funktion läuft. **Julian:** die vier Zähler im Dashboard einmal im Monat ablesen und hier eintragen (Vercel mailt bei 80 %, aber niemand hat je hingesehen); **Claude:** je Zähler den Verbrauch je Wand ausrechnen, damit die Zahl etwas heißt. Handeln ab 50 % eines Monats: Pro (20 USD) oder Cloudflare Pages. **Nebenbei, fünf Minuten:** der User-Agent gegenüber Open Library (`lib/sources/http.ts`) nennt `github.com/julianheiss/beautifulbooks`; das Repo heißt `heissjl/…` — eine tote Kontaktadresse ist schlechter als keine, eine E-Mail dazu.
 
 ### Erledigt in Phase 2
 
@@ -613,6 +617,8 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 - [ ] **6.44 CLAUDE.md auf ein Drittel kürzen, ohne eine Regel zu verlieren.** 3.571 Wörter am 2026-09-12; die offizielle Anleitung: „Bloated CLAUDE.md files cause Claude to ignore your actual instructions“ — für jede Zeile fragen, ob ihr Fehlen einen Fehler verursachen würde. Der Abschnitt „Current state“ ändert sich täglich und hat in `docs/features.md` ein besseres Zuhause; „Facts about the APIs“ wird eine Doku-Seite; die Regeln (Google an zwei Stellen, keine Vollständigkeit, kein Ausfall als Befund, erzeugte Dateien nie von Hand, N14) bleiben. Claude kürzt, Julian liest gegen; Messlatte: `/doctor` schlägt nichts mehr vor, und jede Regel steht noch. Eine Stunde. Hängt mit 6.39 zusammen — was ein Hook wird, verschwindet aus dem Text.
 
+- [ ] **6.45 Kaltreserve: die kuratierten Werke als gebaute Daten, damit ein Open-Library-Ausfall die Sitemap-Seiten nicht mitnimmt.** (Aus dem [Risikoregister](docs/risiken-2026-09-12.md) vom 2026-09-12.) Open Library ist die Lebensader — ohne sie keine Suche, keine Ausgaben, keine Cover —, sie fällt in Episoden aus (3 von 4 kalten Suchen an einem Mittag) und ist ein gemeinnütziges Projekt ohne Zusage; **dagegen gibt es heute keinen Plan B** außer dem 24-Stunden-Cache und den achtzehn vorgerenderten Wänden. Zu bauen, nach dem Muster des Cover-Index (E18 erlaubt gebaute, nur lesbare Daten): für die veröffentlichten Werke (`lib/published.ts`, 139 heute) Titel, Autor, Ausgaben mit Verlag, Jahr, ISBN und Cover-IDs als Datei im Repo, von `scripts/promote.ts` mitgebaut; `getWorkPage` fällt darauf zurück, wenn der Katalog nicht antwortet, und die Seite sagt dann „Stand vom …" statt eines Zählers, der aktuell klingt (N12); die Suche findet diese Werke auch bei schweigendem Katalog. Zu messen: Größe je Werk (Signaturen kosten 6,4 KB, Ausgabendaten kommen dazu; die 10-MB-Grenze aus 5.1 gilt), und ein Test, der Open Library abschaltet und die Wand trotzdem sieht. Ein Tag, Claude. Nicht dasselbe wie 0.10 (eigener Datenbestand für alles) — das hier sind nur die Seiten, die wir selbst in die Sitemap gestellt haben.
+
 ### Erledigt in Phase 6
 
 - [x] **6.1 Gleichnamige Ableitungen und Sekundärliteratur nach hinten.** Erledigt 2026-09-08: vier Regeln statt einer, `SAME_TITLE_EDITION_RATIO` = 30 abgelesen (Fenster 17–65); über 15 Suchen 7 verbessert, 8 unverändert, keine verschlechtert. Offen bleibt der fremdsprachige Haupttitel (`crime and punishment`), dieselbe Wurzel wie 6.13/6.15. → [Historie](docs/history.md#2026-09-08--vier-regeln-gegen-gleichnamige-ableitungen-roadmap-61) · [Archiv](docs/roadmap-archive.md#61)
@@ -809,3 +815,20 @@ Nichts davon wird begonnen, bevor sein Auslöser eintritt.
 | Mosaik: gescannte Textseiten erkennen (bei *Dune* zwei von achtzig Bildern), nur wenn es sichtbar stört; die Kurzantwort hasht absichtlich nicht | Julian stößt es an, oder es stört nach Nutzung sichtbar |
 
 *Die letzten fünf Zeilen standen bis zum 2026-09-10 als Einzeiler ohne Nummer am Ende von Phase 6; sie haben weder Plan noch Auslöser und gehören deshalb hierher.*
+
+### Ideen vom 2026-09-12, unbewertet
+
+Julian: „Hast du noch andere Ideen für die Website?" Jede baut auf etwas, das die Seite schon kann — Signaturen, Index, Jahrzehnte, ISBN-Suche, OG-Bilder — und keine braucht ein Konto, einen Speicher oder eine neue Quelle. Auslöser für alle: Julian greift eine auf; dann bekommt sie eine Nummer und eine Bewertung.
+
+| Idee | Was sie nutzt | Warum sie zur Seite passt |
+|---|---|---|
+| **„Welche Ausgabe habe ich?"** — ein Foto des eigenen Exemplars, die Seite findet Ausgabe und ISBN über den Bildabstand gegen den Index | `lib/imagehash.ts`, `data/cover-index.json`, die Faltung | Die eine Frage, die kein Katalog beantwortet, mit der Technik, die wir für die Wand ohnehin haben; das Bild wird verglichen und nie gespeichert (N11) |
+| **Barcode im Suchfeld** — die Kamera liest die ISBN, die Suche aus 6.29 übernimmt | `BarcodeDetector` im Browser, 6.29 | Im Laden vor dem Regal: „welche anderen Cover hatte dieses Buch?" |
+| **Farbsuche** — „blaue Cover", als Pille in der Suche oder als Seite `/farbe/blau` | die Farbmaße im Index (6.10) | Cover werden nach Farbe erinnert; eine Gattung für 5.4, die nur aus vorhandenen Zahlen besteht |
+| **Ein Jahrzehnt über alle Bücher** `/jahrzehnt/1970` — was die kuratierten Werke in einem Jahrzehnt trugen | `data/decade-pages.json` | Dieselben Daten wie die Jahrzehnte-Seite, quer statt längs; sichtbar für Suchen wie „70s book covers" |
+| **RSS-Feed „Cover der Woche"** aus Julians Kuratierung | `data/curated.json`, eine Route | Reichweite ohne Konto und ohne Plattform; Pinterest und Feed-Leser nehmen ihn direkt |
+| **„Damals und heute"** — Erstausgabe neben der jüngsten, als Teilbild | die OG-Bild-Maschinerie (6.20) | Das Produktversprechen in einem Bild, das man weiterschickt |
+| **Einbettbare Wand** für Blogs und BookTok — ein Bild oder `<iframe>` einer Wand mit Rückweg | OG-Route, `/book/<id>` | Der Kanal aus 5.6, ohne dass ein Mensch posten muss — Rechtefrage aus 5.5 vorher |
+| **„Dieses Cover ist falsch"** — ein Link auf die Bearbeitungsseite der Ausgabe bei Open Library | der Datensatz-Link aus 1.1, je Ausgabe | Die Quelle wird besser statt eine zweite Datenbank; passt zu N12 |
+| **Zufälliges Buch** — ein Knopf auf der Startseite | `lib/published.ts` | Billig, und die einzige Art, die hundert kuratierten Wände zu entdecken, ohne einen Titel zu wissen |
+
