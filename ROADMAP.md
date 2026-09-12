@@ -19,6 +19,7 @@ Stand: 2026-09-12, geordnet (neun erledigte Punkte aus den offenen Abschnitten d
 | **Erledigte Punkte in voller Länge** | [docs/roadmap-archive.md](docs/roadmap-archive.md) |
 | **Die Pläne** (ausführliche Fassung eines Punkts) | [docs/plans/README.md](docs/plans/README.md) — offen: [Phase 5](docs/plans/PLAN-5-reichweite.md), [Einnahmen](docs/plans/PLAN-4-einnahmen.md), [Speicher §3–5](docs/plans/PLAN-speicher.md) |
 | **Experimente neben der Seite** | [lab/README.md](lab/README.md) — Kuratieren, Duell, Mosaik, Ladebilder, Faltung, Palette |
+| **Was offen ist, als Brett** | `npm run kanban` schreibt [docs/kanban.html](kanban.html) und veröffentlicht ist es als [Roadmap-Brett](https://claude.ai/code/artifact/3871e261-34bc-4e25-976e-f858406046fa): Spalten aus Zuständigkeit, Blockaden und laufenden Branches. **Eine Ansicht, kein zweiter Ort** — eine Karte bewegt sich, indem der Punkt hier bearbeitet und das Skript erneut ausgeführt wird (git-ignoriert, also nie veraltet) |
 | **Welche Session woran arbeitet** | `npm run worktrees` schreibt [docs/worktrees.md](docs/worktrees.md): alle Worktrees und Branches, Stand gegen Produktion, Themen aus den Commits (git-ignoriert, also nie veraltet) |
 | **Arbeitsregeln** | [CLAUDE.md](CLAUDE.md) |
 | **Recherchen** | [Recht der Hobbyseite](docs/recht-hobbyseite.md) · [Domain-Namen](docs/domain-recherche.md) · [Suche nach ISBN und Stichwort](docs/suche-isbn-und-stichwort.md) · [Buchrücken](docs/spine-research.md) · [Testbericht 2026-09-07](docs/tests/2026-09-07-durchklick.md) |

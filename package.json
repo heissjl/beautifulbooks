@@ -10,7 +10,8 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
-    "worktrees": "npx tsx scripts/worktrees.ts"
+    "worktrees": "npx tsx scripts/worktrees.ts",
+    "kanban": "npx tsx scripts/kanban.ts"
   },
   "dependencies": {
     "jpeg-js": "^0.4.4",
