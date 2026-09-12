@@ -12,8 +12,13 @@
  * and from git, the output is git-ignored like docs/worktrees.md, and moving
  * a card means editing the roadmap and running this again.
  *
- * Three sources, no invention:
- *   - **the item lines** `- [ ] **6.5 …**` give number, title, state, phase;
+ * Four sources, no invention:
+ *   - **the item lines** `- [ ] **6.5 …**` give number, title, state, phase,
+ *     and the whole block underneath is the card's full text;
+ *   - **the assessment table** under "### Bewertung der offenen Punkte" gives
+ *     verdict, effort and reason per item — Julian asked for the assessment
+ *     the same day, and the board shows it on the card rather than in a
+ *     second document;
  *   - **the mermaid graph** under "### Abhängigkeiten" gives what waits on
  *     what — it already encodes the dependencies, so the board reads them
  *     rather than keeping a second list;
@@ -39,8 +44,19 @@ const ROOT = process.cwd();
 const ROADMAP = path.join(ROOT, 'ROADMAP.md');
 const OUT_FILE = path.join(ROOT, 'docs', 'kanban.html');
 const PRODUCTION = 'origin/main';
+/** Relative links in the roadmap resolve here, so a card can open the file it cites. */
+const REPO_BLOB = 'https://github.com/heissjl/beautifulbooks/blob/main/';
 
 type Owner = 'Julian' | 'Claude' | 'beide';
+
+interface Assessment {
+  /** The first word of the verdict cell, lower-cased: tun, entscheiden, zurückstellen, … */
+  verdict: string;
+  /** The cell as written, e.g. "tun, kleiner" — the verdict keeps its nuance. */
+  verdictRaw: string;
+  effort: string;
+  why: string;
+}
 
 interface Item {
   /** "6.10a" */
@@ -58,8 +74,11 @@ interface Item {
   waitsOn: string[];
   /** Branches that name this item in a commit subject beyond production. */
   branches: string[];
-  /** First sentence of the item, as the card's second line. */
+  /** The first sentences of the item, as the card's second line. */
   gist: string;
+  /** The whole block from the roadmap, raw markdown lines. */
+  body: string[];
+  assessment: Assessment | null;
 }
 
 /* ------------------------------------------------------------------ roadmap */
@@ -68,6 +87,8 @@ const ITEM_LINE = /^- \[([ x])\] \*\*(\d+)\.(\d+)([a-z]?)\s+([^*]+?)\*\*/;
 const PHASE_HEAD = /^## Phase (\d+)/;
 const GROUP_HEAD = /^### (6\.[A-D] .+)$/;
 const DONE_HEAD = /^### Erledigt in Phase/;
+const ANY_HEAD = /^#{2,3} /;
+const LIST_LINE = /^(\s*)(?:[-*]|\d+\.)\s+(.*)$/;
 
 /** Owner where the text does not say and the phase default would be wrong. */
 const OWNER_EXCEPTIONS: Record<string, Owner> = {
@@ -103,15 +124,24 @@ function parseRoadmap(): Item[] {
     const m = ITEM_LINE.exec(line);
     if (!m) continue;
 
+    // The block: this line and everything up to the next item, heading or rule.
+    const body = [line];
+    for (let j = i + 1; j < lines.length; j++) {
+      if (ITEM_LINE.test(lines[j]) || ANY_HEAD.test(lines[j]) || lines[j].trim() === '---') break;
+      body.push(lines[j]);
+    }
+    while (body.length > 1 && body[body.length - 1].trim() === '') body.pop();
+
     const num = `${m[2]}.${m[3]}${m[4]}`;
     const title = m[5].replace(/[.:\s]+$/, '').trim();
-    // The gist: the sentence after the bold title, cut to something readable.
+    // The gist: what follows the bold title, two sentences of it.
     const rest = line.slice(m[0].length).replace(/^[\s.:—-]+/, '');
-    const gist = rest
+    const plain = rest
       .replace(/\*\*/g, '').replace(/[`*_]/g, '')
       .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-      .split(/(?<=[.!?])\s/)[0]
       .trim();
+    const sentences = plain.split(/(?<=[.!?])\s+(?=[A-ZÄÖÜ„«(])/);
+    const gist = cut(sentences.slice(0, 2).join(' '), 260);
 
     items.push({
       num,
@@ -123,7 +153,9 @@ function parseRoadmap(): Item[] {
       owner: 'Claude',
       waitsOn: [],
       branches: [],
-      gist: cut(gist, 150),
+      gist,
+      body,
+      assessment: null,
     });
   }
   return items;
@@ -131,15 +163,35 @@ function parseRoadmap(): Item[] {
 
 /** Owner from the item's own text, else the exceptions, else the phase. */
 function assignOwners(items: Item[]): void {
-  const body = readFileSync(ROADMAP, 'utf8');
   for (const item of items) {
-    const start = body.indexOf(`**${item.num} `);
-    const text = start === -1 ? '' : body.slice(start, start + 2500);
+    const text = item.body.join('\n');
     if (/\*\*Wer:\*\*\s*Claude baut, Julian/.test(text)) { item.owner = 'beide'; continue; }
     if (/—\s*\*\*Julian entscheidet/.test(text)) { item.owner = 'Julian'; continue; }
     if (OWNER_EXCEPTIONS[item.num]) { item.owner = OWNER_EXCEPTIONS[item.num]; continue; }
     item.owner = item.phase === '0' || item.phase === '4' ? 'Julian' : 'Claude';
   }
+}
+
+/**
+ * The assessment table: `| 6.5 | aufteilen | je 1 h | … |`. The first word of
+ * the verdict cell is the vocabulary word; the cell as written is kept too,
+ * because "tun, kleiner" says more than "tun".
+ */
+function parseAssessment(): Map<string, Assessment> {
+  const body = readFileSync(ROADMAP, 'utf8');
+  const out = new Map<string, Assessment>();
+  const start = body.indexOf('### Bewertung der offenen Punkte');
+  if (start === -1) return out;
+  const end = body.indexOf('\n### ', start + 10);
+  const section = body.slice(start, end === -1 ? undefined : end);
+  for (const line of section.split('\n')) {
+    const m = /^\|\s*(\d+\.\d+[a-z]?)\s*\|\s*([^|]+?)\s*\|\s*([^|]*?)\s*\|\s*(.+?)\s*\|\s*$/.exec(line);
+    if (!m) continue;
+    const verdictRaw = m[2];
+    const verdict = verdictRaw.split(/[\s,/]/)[0].toLowerCase();
+    out.set(m[1], { verdict, verdictRaw, effort: m[3] === '—' ? '' : m[3], why: m[4] });
+  }
+  return out;
 }
 
 /**
@@ -170,7 +222,6 @@ function parseDependencies(): Map<string, string[]> {
   for (const raw of block[1].split('\n')) {
     const line = raw.trim();
     if (!/-[.-]*->/.test(line)) continue;
-    const ids = [...line.matchAll(/(\w+)(?:\[|\(|$|\s)/g)].map(m => m[1]);
     const parts = line.split(/\s*-[.-]*->\s*/).map(seg => {
       const m = /^(\w+)/.exec(seg.trim());
       return m ? m[1] : null;
@@ -183,7 +234,6 @@ function parseDependencies(): Map<string, string[]> {
       if (!list.includes(from)) list.push(from);
       waits.set(to, list);
     }
-    void ids;
   }
   return waits;
 }
@@ -219,13 +269,14 @@ function branchesByItem(): Map<string, string[]> {
 
 /* -------------------------------------------------------------------- board */
 
-type Column = 'julian' | 'ready' | 'blocked' | 'wip' | 'done';
+type Column = 'julian' | 'wip' | 'ready' | 'blocked' | 'deferred' | 'done';
 
 const COLUMNS: Array<{ id: Column; title: string; note: string }> = [
   { id: 'julian', title: 'Wartet auf Julian', note: 'Konten, Geld, Recht, Entscheidungen — Claude kann hier nichts tun' },
   { id: 'wip', title: 'In Arbeit', note: 'ein Branch nennt den Punkt in einer Betreffzeile, noch nicht in Produktion' },
-  { id: 'ready', title: 'Bereit', note: 'offen, nichts blockiert — hier wird das Nächste genommen' },
+  { id: 'ready', title: 'Bereit', note: 'offen, nichts blockiert, laut Bewertung zu tun — hier wird das Nächste genommen' },
   { id: 'blocked', title: 'Wartet auf etwas', note: 'laut dem Abhängigkeits-Graphen der Roadmap' },
+  { id: 'deferred', title: 'Zurückgestellt', note: 'richtig, aber der Auslöser fehlt noch — laut Bewertung vom 2026-09-12' },
   { id: 'done', title: 'Erledigt', note: 'bleibt stehen, Langtext im Archiv' },
 ];
 
@@ -237,6 +288,11 @@ const PHASE_NAME: Record<string, string> = {
 function columnOf(item: Item): Column {
   if (item.done) return 'done';
   if (item.branches.length > 0) return 'wip';
+  const v = item.assessment?.verdict;
+  // The assessment knows more than the graph: an item whose trigger has not
+  // come is not "blocked" on a number, it is parked.
+  if (v === 'zurückstellen') return 'deferred';
+  if (v === 'entscheiden' || v === 'streichen' || v === 'erledigt?') return 'julian';
   // Blocked beats owner on purpose. Most of phase 4 is Julian's, but it waits
   // on visitors, not on him; putting it in his column would tell him he has
   // thirty things to do when the roadmap says the opposite.
@@ -259,19 +315,118 @@ function esc(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+/** Inline markdown of the roadmap: bold, italics, code, links. Escapes first. */
+function inline(md: string): string {
+  let s = esc(md);
+  s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/(^|[^*\w])\*([^*\n]+)\*(?![\w*])/g, '$1<em>$2</em>');
+  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_m, text: string, href: string) => {
+    const url = /^https?:\/\//.test(href) ? href : href.startsWith('#') ? REPO_BLOB + 'ROADMAP.md' + href : REPO_BLOB + href.replace(/^\.\//, '');
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+  });
+  return s;
+}
+
+/**
+ * The item's whole block as HTML: paragraphs, bullets (one level of nesting),
+ * numbered steps, and the small tables the roadmap uses for measurements.
+ * This is a reader for one document's habits, not a markdown engine.
+ */
+function renderBody(body: string[]): string {
+  const out: string[] = [];
+  const first = body[0].replace(ITEM_LINE, '').replace(/^[\s.:—-]+/, '');
+  if (first.trim()) out.push(`<p>${inline(first)}</p>`);
+
+  let i = 1;
+  while (i < body.length) {
+    const t = body[i].trim();
+    if (t === '') { i++; continue; }
+
+    if (t.startsWith('|')) {
+      const rows: string[] = [];
+      while (i < body.length && body[i].trim().startsWith('|')) { rows.push(body[i].trim()); i++; }
+      const cells = (r: string) => r.replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+      const head = cells(rows[0]);
+      const data = rows.slice(1).filter(r => !/^\|\s*:?-{2,}/.test(r));
+      out.push('<table><thead><tr>' + head.map(h => `<th>${inline(h)}</th>`).join('') + '</tr></thead><tbody>'
+        + data.map(r => '<tr>' + cells(r).map(c => `<td>${inline(c)}</td>`).join('') + '</tr>').join('')
+        + '</tbody></table>');
+      continue;
+    }
+
+    const li = LIST_LINE.exec(body[i]);
+    if (li) {
+      const indent = li[1].length;
+      const tag = /^\s*\d+\./.test(body[i]) ? 'ol' : 'ul';
+      out.push(`<${tag}>`);
+      while (i < body.length) {
+        const m = LIST_LINE.exec(body[i]);
+        if (m && m[1].length === indent) {
+          // the bullet and its continuation lines (deeper indent, no marker)
+          let text = m[2].replace(/^\[ \]\s*/, '☐ ');
+          i++;
+          const nested: string[] = [];
+          while (i < body.length && body[i].trim() !== '') {
+            const n = LIST_LINE.exec(body[i]);
+            if (n && n[1].length === indent) break;
+            if (n && n[1].length > indent) { nested.push(body[i].slice(indent + 2)); i++; continue; }
+            if (nested.length) { nested.push(body[i].slice(indent + 2)); i++; continue; }
+            if (body[i].trim().startsWith('|')) break;
+            text += ' ' + body[i].trim(); i++;
+          }
+          const sub = nested.length ? renderBody(['- [ ] **0.0 x** ', ...nested]).replace(/^<p>[^]*?<\/p>\n?/, '') : '';
+          out.push(`<li>${inline(text)}${sub}</li>`);
+        } else if (body[i].trim() === '') {
+          // a blank line ends the list unless the next non-blank is a same-level item
+          let k = i + 1;
+          while (k < body.length && body[k].trim() === '') k++;
+          const n = k < body.length ? LIST_LINE.exec(body[k]) : null;
+          if (n && n[1].length === indent) { i = k; continue; }
+          break;
+        } else break;
+      }
+      out.push(`</${tag}>`);
+      continue;
+    }
+
+    // paragraph: consecutive lines that are not blank, not a table, not a list
+    let text = t;
+    i++;
+    while (i < body.length && body[i].trim() !== '' && !body[i].trim().startsWith('|') && !LIST_LINE.test(body[i])) {
+      text += ' ' + body[i].trim(); i++;
+    }
+    out.push(`<p>${inline(text)}</p>`);
+  }
+  return out.join('\n');
+}
+
 function card(item: Item): string {
+  const a = item.assessment;
   const waits = item.waitsOn.length
     ? `<p class="waits">wartet auf ${item.waitsOn.map(w => `<span>${esc(w)}</span>`).join(', ')}</p>`
     : '';
   const branch = item.branches.length
     ? `<p class="branch">${item.branches.map(b => esc(b)).join(', ')}</p>`
     : '';
-  const group = item.group ? `<span class="group">${esc(item.group.slice(0, 3))}</span>` : '';
-  return `<article class="card" data-phase="${item.phase}" data-owner="${item.owner}">
-  <header><span class="num">${esc(item.num)}</span><span class="phase">P${item.phase} ${esc(PHASE_NAME[item.phase] ?? '')}</span>${group}</header>
+  const group = item.group ? `<span class="group" title="${esc(item.group)}">${esc(item.group.slice(0, 3))}</span>` : '';
+  const verdict = a
+    ? `<span class="verdict v-${esc(a.verdict.replace('?', 'q'))}" title="Bewertung 2026-09-12">${esc(a.verdictRaw)}</span>`
+    : '';
+  const effort = a?.effort ? `<span class="effort">${esc(a.effort)}</span>` : '';
+  const why = a ? `<p class="why">${inline(a.why)}</p>` : '';
+  return `<article class="card" data-phase="${item.phase}" data-owner="${item.owner}" data-verdict="${esc(a?.verdict ?? '')}">
+  <header>
+    <span class="num">${esc(item.num)}</span>
+    <span class="phase">P${item.phase} ${esc(PHASE_NAME[item.phase] ?? '')}</span>
+    ${group}
+    <span class="owner owner-${item.owner}">${item.owner}</span>
+  </header>
   <h3>${esc(item.title)}</h3>
-  ${item.gist ? `<p class="gist">${esc(item.gist)}</p>` : ''}
+  ${item.done ? '' : `<p class="gist">${esc(item.gist)}</p>`}
+  ${a ? `<div class="assessment"><div class="chips">${verdict}${effort}</div>${why}</div>` : ''}
   ${waits}${branch}
+  ${item.done ? '' : `<details><summary>Ganzer Text aus ROADMAP.md</summary><div class="body">${renderBody(item.body)}</div></details>`}
 </article>`;
 }
 
@@ -285,6 +440,7 @@ function render(items: Item[], stamp: string, production: string): string {
 
   const open = items.filter(i => !i.done).length;
   const done = items.length - open;
+  const n = (c: Column) => byColumn.get(c)!.length;
   const columns = COLUMNS.map(col => {
     const list = byColumn.get(col.id)!;
     const cards = col.id === 'done' ? list.slice().reverse() : list;
@@ -298,9 +454,13 @@ function render(items: Item[], stamp: string, production: string): string {
   }).join('\n');
 
   const phaseFilters = Object.entries(PHASE_NAME)
-    .map(([n, name]) => `<button type="button" data-filter-phase="${n}">P${n} ${name}</button>`).join('');
+    .map(([num, name]) => `<button type="button" data-filter="phase" data-value="${num}">P${num} ${name}</button>`).join('');
 
+  // The published page gets a viewport meta from its host; the local file
+  // needs its own, or a phone lays it out at 980 px and every measurement
+  // at 390 px is a picture of the wrong page (seen 2026-09-12).
   return `<title>Beautiful Books Roadmap-Brett</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap">
@@ -312,24 +472,21 @@ function render(items: Item[], stamp: string, production: string): string {
     --bg: #f4f0e8; --surface: #fbf9f4; --surface-2: #ebe5da;
     --ink: #1a1714; --ink-2: #5a534a; --ink-3: #746c62;
     --line: #ddd5c8; --accent: #945138; --on-accent: #fff8f2;
-    --wait: #7a6a3f; --go: #3f6a52;
-    --shadow: 20 16 12;
+    --wait: #7a6a3f; --go: #3f6a52; --park: #6b6560;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #131110; --surface: #1b1815; --surface-2: #26221e;
       --ink: #efe8dd; --ink-2: #b2a99b; --ink-3: #837b6f;
       --line: #2e2925; --accent: #dbac94; --on-accent: #1a1210;
-      --wait: #c4b283; --go: #8fbba1;
-      --shadow: 0 0 0;
+      --wait: #c4b283; --go: #8fbba1; --park: #9a938c;
     }
   }
   :root[data-theme="dark"] {
     --bg: #131110; --surface: #1b1815; --surface-2: #26221e;
     --ink: #efe8dd; --ink-2: #b2a99b; --ink-3: #837b6f;
     --line: #2e2925; --accent: #dbac94; --on-accent: #1a1210;
-    --wait: #c4b283; --go: #8fbba1;
-    --shadow: 0 0 0;
+    --wait: #c4b283; --go: #8fbba1; --park: #9a938c;
   }
 
   * { box-sizing: border-box; }
@@ -338,7 +495,7 @@ function render(items: Item[], stamp: string, production: string): string {
     font-family: Geist, system-ui, -apple-system, "Segoe UI", sans-serif;
     font-size: 15px; line-height: 1.5;
   }
-  .wrap { max-width: 1500px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .wrap { max-width: 1700px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 
   header.top { display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: baseline; }
   h1 {
@@ -350,7 +507,7 @@ function render(items: Item[], stamp: string, production: string): string {
   .lede { max-width: 62ch; color: var(--ink-2); margin: 0.75rem 0 0; }
   /* A long commit subject in a code span would otherwise widen the whole
      page: measured at 390 px, the body scrolled sideways (SPEC N14). */
-  .lede code { font-family: "Geist Mono", ui-monospace, monospace; font-size: 0.85em; overflow-wrap: anywhere; }
+  code { font-family: "Geist Mono", ui-monospace, monospace; font-size: 0.85em; overflow-wrap: anywhere; }
 
   .tally { display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
   .tally li { display: flex; align-items: baseline; gap: 0.4rem; color: var(--ink-2); font-size: 0.85rem; }
@@ -359,8 +516,8 @@ function render(items: Item[], stamp: string, production: string): string {
     font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums;
   }
 
-  .filters { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1.5rem 0 0; align-items: center; }
-  .filters span { color: var(--ink-3); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; margin-right: 0.3rem; }
+  .filters { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 0; align-items: center; }
+  .filters .label { color: var(--ink-3); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; margin-right: 0.3rem; min-width: 3.2rem; }
   .filters button {
     font: inherit; font-size: 0.8rem; cursor: pointer;
     background: var(--surface); color: var(--ink-2);
@@ -371,12 +528,12 @@ function render(items: Item[], stamp: string, production: string): string {
   .filters button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .board {
-    display: grid; grid-auto-flow: column; grid-auto-columns: minmax(17.5rem, 1fr);
+    display: grid; grid-auto-flow: column; grid-auto-columns: minmax(19rem, 1fr);
     gap: 1.25rem; margin-top: 1.75rem; overflow-x: auto; padding-bottom: 1rem;
     align-items: start;
   }
-  /* Stacked on a phone, and the 17.5rem minimum must not survive the switch,
-     or the lanes keep forcing a 280 px page wider than the screen. */
+  /* Stacked on a phone, and the minimum must not survive the switch, or the
+     lanes keep forcing a page wider than the screen. */
   @media (max-width: 900px) {
     .board { grid-auto-flow: row; grid-auto-columns: minmax(0, 1fr); overflow-x: visible; }
   }
@@ -385,6 +542,7 @@ function render(items: Item[], stamp: string, production: string): string {
   .lane-julian .lane-head { border-top-color: var(--wait); }
   .lane-wip .lane-head { border-top-color: var(--accent); }
   .lane-ready .lane-head { border-top-color: var(--go); }
+  .lane-deferred .lane-head { border-top-color: var(--park); }
   .lane-head h2 {
     font-family: Fraunces, Georgia, serif; font-size: 1.05rem; font-weight: 600;
     margin: 0; display: flex; align-items: baseline; gap: 0.5rem;
@@ -398,9 +556,9 @@ function render(items: Item[], stamp: string, production: string): string {
 
   .card {
     background: var(--surface); border: 1px solid var(--line); border-radius: 3px;
-    padding: 0.7rem 0.8rem;
+    padding: 0.7rem 0.8rem; overflow-wrap: anywhere;
   }
-  .card header { display: flex; align-items: center; gap: 0.5rem; }
+  .card header { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
   /* The number is set like a call number on a spine label: this is a
      catalogue of covers, and the numbers never change (CLAUDE.md). */
   .num {
@@ -409,25 +567,64 @@ function render(items: Item[], stamp: string, production: string): string {
     padding: 0.1rem 0.4rem; border-radius: 2px; font-variant-numeric: tabular-nums;
   }
   .phase, .group { color: var(--ink-3); font-size: 0.7rem; letter-spacing: 0.04em; }
-  .group { margin-left: auto; font-family: "Geist Mono", ui-monospace, monospace; }
-  .card { overflow-wrap: anywhere; }
+  .group { font-family: "Geist Mono", ui-monospace, monospace; }
+  .owner {
+    margin-left: auto; font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.05rem 0.45rem; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2);
+  }
+  .owner-Julian { border-color: var(--wait); color: var(--wait); }
+  .owner-beide { border-style: dashed; }
   .card h3 { margin: 0.45rem 0 0; font-size: 0.92rem; font-weight: 600; line-height: 1.35; text-wrap: balance; }
   .gist { margin: 0.3rem 0 0; color: var(--ink-2); font-size: 0.8rem; line-height: 1.45; }
+
+  .assessment { margin-top: 0.55rem; padding-top: 0.5rem; border-top: 1px dashed var(--line); }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+  .verdict {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
+    padding: 0.1rem 0.5rem; border-radius: 2px; background: var(--surface-2); color: var(--ink);
+  }
+  .v-tun { background: var(--go); color: var(--on-accent); }
+  .v-entscheiden, .v-erledigtq { background: var(--wait); color: var(--on-accent); }
+  .v-zurückstellen { background: var(--park); color: var(--on-accent); }
+  .v-streichen { background: var(--accent); color: var(--on-accent); }
+  .effort {
+    font-family: "Geist Mono", ui-monospace, monospace; font-size: 0.72rem; color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .why { margin: 0.35rem 0 0; font-size: 0.78rem; line-height: 1.45; color: var(--ink-2); }
+  .why a { color: var(--accent); }
+
   .waits, .branch { margin: 0.45rem 0 0; font-size: 0.72rem; color: var(--ink-3); }
   .waits span {
     font-family: "Geist Mono", ui-monospace, monospace;
     background: var(--surface-2); padding: 0.05rem 0.3rem; border-radius: 2px;
   }
-  .branch { font-family: "Geist Mono", ui-monospace, monospace; color: var(--accent); word-break: break-all; }
+  .branch { font-family: "Geist Mono", ui-monospace, monospace; color: var(--accent); }
+
+  details { margin-top: 0.55rem; }
+  summary { cursor: pointer; font-size: 0.74rem; color: var(--ink-3); list-style: none; display: flex; align-items: center; gap: 0.35rem; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: ""; width: 0; height: 0; border: 4px solid transparent; border-left: 5px solid var(--ink-3); transition: transform 0.15s; }
+  details[open] summary::before { transform: rotate(90deg); }
+  summary:hover { color: var(--ink); }
+  summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .body { margin-top: 0.5rem; font-size: 0.8rem; line-height: 1.5; color: var(--ink-2); }
+  .body p { margin: 0.4rem 0; }
+  .body ul, .body ol { margin: 0.3rem 0; padding-left: 1.2rem; }
+  .body li { margin: 0.2rem 0; }
+  .body table { border-collapse: collapse; margin: 0.5rem 0; font-size: 0.75rem; display: block; overflow-x: auto; max-width: 100%; }
+  .body th, .body td { border: 1px solid var(--line); padding: 0.2rem 0.45rem; text-align: left; vertical-align: top; }
+  .body th { color: var(--ink); font-weight: 600; background: var(--surface-2); }
+  .body a { color: var(--accent); }
+  .body strong { color: var(--ink); }
 
   .lane-done .card { background: transparent; border-style: dashed; }
   .lane-done .card h3 { font-weight: 500; color: var(--ink-2); }
   .lane-done .num { background: var(--surface-2); color: var(--ink-3); }
-  .lane-done .gist { display: none; }
 
   .hidden { display: none !important; }
-  footer.note { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 0.78rem; max-width: 70ch; }
-  footer.note code { font-family: "Geist Mono", ui-monospace, monospace; }
+  footer.note { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 0.78rem; max-width: 70ch; line-height: 1.6; }
+  @media (prefers-reduced-motion: reduce) { summary::before { transition: none; } }
 </style>
 
 <div class="wrap">
@@ -443,16 +640,24 @@ function render(items: Item[], stamp: string, production: string): string {
 
   <ul class="tally">
     <li><b>${open}</b> offen</li>
+    <li><b>${n('ready')}</b> bereit</li>
+    <li><b>${n('wip')}</b> in Arbeit</li>
+    <li><b>${n('julian')}</b> bei Julian</li>
+    <li><b>${n('blocked') + n('deferred')}</b> warten</li>
     <li><b>${done}</b> erledigt</li>
-    <li><b>${items.filter(i => columnOf(i) === 'julian').length}</b> warten auf Julian</li>
-    <li><b>${items.filter(i => columnOf(i) === 'wip').length}</b> in Arbeit</li>
-    <li><b>${items.filter(i => columnOf(i) === 'ready').length}</b> bereit</li>
   </ul>
 
   <div class="filters">
-    <span>Phase</span>
-    <button type="button" data-filter-phase="alle" aria-pressed="true">alle</button>
+    <span class="label">Phase</span>
+    <button type="button" data-filter="phase" data-value="alle" aria-pressed="true">alle</button>
     ${phaseFilters}
+  </div>
+  <div class="filters">
+    <span class="label">Wer</span>
+    <button type="button" data-filter="owner" data-value="alle" aria-pressed="true">alle</button>
+    <button type="button" data-filter="owner" data-value="Julian">Julian</button>
+    <button type="button" data-filter="owner" data-value="Claude">Claude</button>
+    <button type="button" data-filter="owner" data-value="beide">beide</button>
   </div>
 
   <div class="board">
@@ -460,29 +665,35 @@ ${columns}
   </div>
 
   <footer class="note">
-    Spalten: <b>Wartet auf Julian</b> sind Konten, Geld, Recht und Entscheidungen; <b>In Arbeit</b>
-    heißt, ein Branch nennt den Punkt in einer Betreffzeile und ist noch nicht in Produktion;
-    <b>Wartet auf etwas</b> kommt aus dem Abhängigkeits-Graphen der Roadmap. Wer eine Karte für
-    falsch einsortiert hält, ändert den Punkt in <code>ROADMAP.md</code> — das Brett hat kein
-    eigenes Gedächtnis.
+    Jede offene Karte trägt die <b>Bewertung vom 2026-09-12</b> aus der Roadmap: das Urteil
+    (<span class="verdict v-tun">tun</span> <span class="verdict v-entscheiden">entscheiden</span>
+    <span class="verdict v-zurückstellen">zurückstellen</span> <span class="verdict v-streichen">streichen</span>
+    <span class="verdict">zusammenlegen · aufteilen · erledigt?</span>), den geschätzten Aufwand und den Grund.
+    „Ganzer Text" klappt den Punkt auf, wie er in <code>ROADMAP.md</code> steht. Wer eine Karte für falsch
+    einsortiert hält, ändert den Punkt oder seine Bewertungszeile dort — das Brett hat kein eigenes Gedächtnis.
   </footer>
 </div>
 
 <script>
-  // One filter, phase only: the board is small enough that anything more
-  // would be chrome. "alle" is the resting state, so the page at rest shows
-  // everything (no filter to discover before the board makes sense).
-  const buttons = [...document.querySelectorAll('[data-filter-phase]')];
-  buttons.forEach(btn => btn.addEventListener('click', () => {
-    const want = btn.dataset.filterPhase;
-    buttons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+  // Two filters, phase and owner, combined; "alle" is the resting state, so
+  // the page at rest shows everything.
+  const state = { phase: 'alle', owner: 'alle' };
+  const buttons = [...document.querySelectorAll('[data-filter]')];
+  const apply = () => {
     document.querySelectorAll('.card').forEach(card => {
-      card.classList.toggle('hidden', want !== 'alle' && card.dataset.phase !== want);
+      const hide = (state.phase !== 'alle' && card.dataset.phase !== state.phase)
+        || (state.owner !== 'alle' && card.dataset.owner !== state.owner);
+      card.classList.toggle('hidden', hide);
     });
     document.querySelectorAll('.lane').forEach(lane => {
-      const visible = lane.querySelectorAll('.card:not(.hidden)').length;
-      lane.querySelector('.count').textContent = String(visible);
+      lane.querySelector('.count').textContent = String(lane.querySelectorAll('.card:not(.hidden)').length);
     });
+  };
+  buttons.forEach(btn => btn.addEventListener('click', () => {
+    const kind = btn.dataset.filter;
+    state[kind] = btn.dataset.value;
+    buttons.filter(b => b.dataset.filter === kind).forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    apply();
   }));
 </script>`;
 }
@@ -497,11 +708,13 @@ function main(): void {
 
   const waits = parseDependencies();
   const branches = branchesByItem();
+  const assessment = parseAssessment();
   for (const item of items) {
     item.waitsOn = (waits.get(item.num) ?? []).filter(w => w !== item.num);
     item.branches = branches.get(item.num) ?? [];
     // A finished item that a branch still names is finished, not in progress.
     if (item.done) item.branches = [];
+    item.assessment = assessment.get(item.num) ?? null;
   }
 
   const stamp = new Date().toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' });
@@ -510,8 +723,10 @@ function main(): void {
 
   const tally: Record<string, number> = {};
   for (const item of items) tally[columnOf(item)] = (tally[columnOf(item)] ?? 0) + 1;
+  const unassessed = items.filter(i => !i.done && !i.assessment).map(i => i.num);
   console.log(`geschrieben: ${path.relative(ROOT, OUT_FILE)}`);
   console.log(COLUMNS.map(c => `${c.title}: ${tally[c.id] ?? 0}`).join(' · '));
+  if (unassessed.length) console.log(`ohne Bewertung: ${unassessed.join(', ')}`);
 }
 
 main();
