@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
-  buildPool, fitsGame, looksPlain, mixCandidates, poolName, sharpEnough, type CoverMeasure, type RawIndex,
+  buildPool, fitsGame, jacketColourLimit, looksPlain, mixCandidates, poolName, sameJacket, sharpEnough,
+  type CoverMeasure, type RawIndex,
 } from '../hotornot/pool';
 
 const index: RawIndex = {
@@ -203,6 +204,61 @@ describe('more covers than books', () => {
   it('stops at the size and at the limit per book', () => {
     expect(buildPool(many, { mode: 'mix', size: 3, seed: 'a', perBook: 3 })).toHaveLength(3);
     expect(buildPool(many, { mode: 'mix', size: 9, seed: 'a', perBook: 2 })).toHaveLength(3);
+  });
+});
+
+// Julian, 2026-09-12, before pairs from one book: "wichtig vorher nochmal zu checken, dass es
+// wirklich nicht zwei verschiedene scans vom gleichen cover sind". Numbers from the 1629
+// same-book pairs of the 1000-cover pool.
+describe('one jacket, scanned twice', () => {
+  /** A colour signature with its weight on one hue. */
+  const hues = (peak: number) => {
+    const bytes = new Uint8Array(16);
+    bytes[peak] = 255;
+    bytes[(peak + 1) % 16] = 120;
+    bytes[(peak + 15) % 16] = 120;
+    return Buffer.from(bytes).toString('base64');
+  };
+  const red = { hash: 'ffff0000ffff0000', saturation: 120, hues: hues(0) };
+  const thirteenBitsOff = '000e0000ffff0000';
+  const farOff = '0000000000ff0000'; // 24 bits
+
+  it('allows less colour drift the further the structure drifts', () => {
+    // The wedge the contact sheets drew: 0.45 at 10 bits, 0.20 at 20, nothing past it.
+    expect(jacketColourLimit(8)).toBeCloseTo(0.45, 5);
+    expect(jacketColourLimit(10)).toBeCloseTo(0.45, 5);
+    expect(jacketColourLimit(15)).toBeCloseTo(0.325, 5);
+    expect(jacketColourLimit(20)).toBeCloseTo(0.2, 5);
+    // A Proust bound twice the same way sat at 19 bits and 0.13; Underworld against
+    // another Underworld at 19 bits and 0.63.
+    expect(0.13).toBeLessThan(jacketColourLimit(19));
+    expect(0.63).toBeGreaterThan(jacketColourLimit(19));
+  });
+
+  it('takes structure and colour together, because neither alone tells them apart', () => {
+    // 13 bits apart and the same red: Portnoy's Complaint, scanned twice (colour 0.01).
+    expect(sameJacket(red, { hash: thirteenBitsOff, saturation: 118, hues: hues(0) })).toBe(true);
+    // 13 bits apart and nothing shared by colour: the red Catcher in the Rye against the white one (0.81).
+    expect(sameJacket(red, { hash: thirteenBitsOff, saturation: 30, hues: hues(8) })).toBe(false);
+    // Far apart in structure: two designs, however alike the colours.
+    expect(sameJacket(red, { hash: farOff, saturation: 120, hues: hues(0) })).toBe(false);
+    // Just past the last band, where the sheets found no jacket twice any more.
+    expect(sameJacket(red, { hash: '000000000ffe0000', saturation: 120, hues: hues(0) })).toBe(false); // 21 bits
+    // A few bits apart is one jacket whatever the colour, as it always was.
+    expect(sameJacket(red, { hash: 'ffff0000ffff0001', saturation: 10, hues: hues(8) })).toBe(true);
+  });
+
+  it('leaves a book only one of two scans of its jacket', () => {
+    const twice: RawIndex = {
+      builtAt: '2026-09-12',
+      works: [['OL1W', 'One', 'Ann']],
+      covers: [
+        [0, 'ol:1', red.hash, 60, 120, 120, hues(0)],
+        [0, 'ol:2', thirteenBitsOff, 60, 120, 118, hues(0)], // the same jacket again
+        [0, 'ol:3', thirteenBitsOff, 60, 120, 30, hues(8)], // another design of the book
+      ],
+    };
+    expect(ids(buildPool(twice, { mode: 'work', workId: 'OL1W' }))).toEqual(['ol:1', 'ol:3']);
   });
 });
 

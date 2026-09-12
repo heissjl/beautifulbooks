@@ -123,7 +123,8 @@ export async function nextPairFor(
   const { ids, votes } = await activeCovers(store, pool);
   const elo = newElo(ids);
   for (const vote of votes) applyVote(elo, vote);
-  const pair = nextPair(ids, elo, random, { last, recent });
+  const book = new Map(pool.covers.map(c => [c.id, c.workId]));
+  const pair = nextPair(ids, elo, random, { last, recent, bookOf: id => book.get(id) ?? id });
   if (!pair) return null;
   const [a, b] = pair;
   return {

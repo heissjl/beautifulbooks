@@ -43,7 +43,7 @@
  * cover" was the first. An excluded cover is never chosen, but it still folds
  * away its own rescans, and a book that loses its cover to it gets another.
  */
-import { hamming, looksLikeScannedPage } from '../imagesig';
+import { colourDistance, hamming, looksLikeScannedPage } from '../imagesig';
 import { rng } from '../loading';
 import type { CoverMeasure } from './quality';
 import { seedNumber, shuffled } from './rating';
@@ -55,6 +55,57 @@ export type { CoverMeasure };
  * from here without loading the whole index along with it.
  */
 export const SAME_DESIGN = 8;
+
+/**
+ * One jacket scanned twice, which the game must never put up against itself
+ * (Julian, 2026-09-12, asking for pairs from one book: "wichtig vorher nochmal
+ * zu checken, dass es wirklich nicht zwei verschiedene scans vom gleichen
+ * cover sind").
+ *
+ * Measured over the same-book pairs of the 1000-cover pool and looked at on
+ * contact sheets: **structure alone does not tell them apart.** At 13 bits sit
+ * both a *Portnoy's Complaint* scanned twice (colour 0.01) and a red *Catcher
+ * in the Rye* against a white Japanese one (0.81); at 19 bits both a Proust
+ * bound twice the same way (0.13) and *Underworld* against another
+ * *Underworld* (0.63).
+ *
+ * So the colour budget shrinks as the structure drifts: **0.45 at 10 bits
+ * falling to 0.20 at 20**, and past 20 bits nothing counts as one jacket any
+ * more. Every pair the sheets showed as one jacket falls inside that wedge —
+ * a recoloured *Slaughterhouse-Five* (10 bits, 0.36), *Der Vorleser* twice
+ * (11, 0.29), *The Garden of Eden* twice (16, 0.24), *Charlotte's Web* (18,
+ * 0.21), the Proust (19, 0.13) — and every pair that was two designs falls
+ * outside it.
+ *
+ * It folds a few genuinely different covers that are simply both dark — two
+ * *Dune*s, a Spanish *Gone Girl* against the English one — and that is the
+ * cheaper mistake: each book brings four or five designs anyway, and a pair
+ * showing one cover twice would look broken. The site's cover wall keeps its
+ * own tiers (E8); this is the game's rule.
+ */
+export const SAME_JACKET_BITS = 20;
+export const JACKET_COLOUR_NEAR = 0.45;
+export const JACKET_COLOUR_FAR = 0.2;
+
+/** How unlike in colour two covers may be and still be one jacket, at `bits` of structure apart. */
+export function jacketColourLimit(bits: number): number {
+  const drift = Math.min(1, Math.max(0, (bits - 10) / (SAME_JACKET_BITS - 10)));
+  return JACKET_COLOUR_NEAR + (JACKET_COLOUR_FAR - JACKET_COLOUR_NEAR) * drift;
+}
+
+export interface DesignSignature {
+  hash: string;
+  saturation?: number;
+  hues?: string;
+}
+
+export function sameJacket(a: DesignSignature, b: DesignSignature): boolean {
+  const bits = hamming(a.hash, b.hash);
+  if (bits <= SAME_DESIGN) return true;
+  if (bits > SAME_JACKET_BITS) return false;
+  const colour = colourDistance({ ...a, contrast: 0 }, { ...b, contrast: 0 });
+  return colour !== null && colour <= jacketColourLimit(bits);
+}
 
 export interface RawIndex {
   builtAt: string;
@@ -181,7 +232,7 @@ export function looksPlain({ mean, contrast, saturation }: { mean: number; contr
 
 interface Design {
   cover: PoolCover;
-  hash: string;
+  signature: DesignSignature;
   blank: boolean;
   plain: boolean;
   excluded: boolean;
@@ -190,7 +241,7 @@ interface Design {
 function designsOf(index: RawIndex, options: PoolOptions): Map<number, Design[]> {
   const excluded = new Set(options.exclude ?? []);
   const designs = new Map<number, Design[]>();
-  for (const [work, id, hash, contrast, mean, saturation] of index.covers) {
+  for (const [work, id, hash, contrast, mean, saturation, hues] of index.covers) {
     // Open Library only: its CDN is what the images come from.
     if (!id.startsWith('ol:')) continue;
     const meta = index.works[work];
@@ -198,10 +249,11 @@ function designsOf(index: RawIndex, options: PoolOptions): Map<number, Design[]>
     const [workId, title, author] = meta;
     if (options.mode === 'work' && workId !== options.workId) continue;
     const list = designs.get(work) ?? [];
-    if (list.some(d => hamming(d.hash, hash) <= SAME_DESIGN)) continue;
+    const signature: DesignSignature = { hash, saturation, hues };
+    if (list.some(d => sameJacket(d.signature, signature))) continue;
     list.push({
       cover: { id, workId, title, author },
-      hash,
+      signature,
       blank: looksLikeScannedPage({ hash, contrast, mean }),
       plain: looksPlain({ mean, contrast, saturation }),
       excluded: excluded.has(id),

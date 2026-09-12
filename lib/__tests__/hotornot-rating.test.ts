@@ -215,6 +215,44 @@ describe('the next pair', () => {
   });
 });
 
+// Julian, 2026-09-12: "es sollten ab und zu zwei cover vom gleichen buch kommen."
+describe('a pair from one book', () => {
+  /** Twenty covers, two of each book. */
+  const bookOf = (id: string) => `W${Math.floor(Number(id.slice(1)) / 2)}`;
+  const share = (sameBook: number, seed: number) => {
+    const ids = idsOf(20);
+    const random = rng(seed);
+    const state = newElo(ids);
+    let together = 0;
+    for (let i = 0; i < 200; i++) {
+      const pair = nextPair(ids, state, random, { bookOf, sameBook });
+      if (!pair) break;
+      if (bookOf(pair[0]) === bookOf(pair[1])) together += 1;
+      applyVote(state, { a: pair[0], b: pair[1], winner: pair[0] });
+    }
+    return together / 200;
+  };
+
+  it('comes up as often as it is asked for, and hardly ever otherwise', () => {
+    expect(share(1, 41)).toBeGreaterThan(0.8);
+    expect(share(0, 43)).toBeLessThan(0.2);
+  });
+
+  it('is not drawn at all without knowing which book a cover belongs to', () => {
+    const ids = idsOf(20);
+    const random = rng(47);
+    const state = newElo(ids);
+    let together = 0;
+    for (let i = 0; i < 200; i++) {
+      const pair = nextPair(ids, state, random);
+      if (!pair) break;
+      if (bookOf(pair[0]) === bookOf(pair[1])) together += 1;
+      applyVote(state, { a: pair[0], b: pair[1], winner: pair[0] });
+    }
+    expect(together / 200).toBeLessThan(0.2);
+  });
+});
+
 describe('consensus', () => {
   it('is near one when the better cover always wins, and near a half when nobody agrees', () => {
     const strength = Array.from({ length: 20 }, (_, i) => i);

@@ -414,7 +414,20 @@ export interface PairOptions {
    * pair started from the same twenty covers at the ends.
    */
   recent?: readonly string[];
+  /**
+   * Which book a cover belongs to. Given, `sameBook` of the pairs are two
+   * covers of one book — "which *Gatsby* is nicer", the question only this
+   * site can ask (Julian, 2026-09-12: "es sollten ab und zu zwei cover vom
+   * gleichen buch kommen"). The pool makes sure a book never holds one jacket
+   * twice (`sameJacket` in pool.ts), so such a pair is never a cover against
+   * its own second scan.
+   */
+  bookOf?: (id: string) => string;
+  sameBook?: number;
 }
+
+/** How often a pair comes from one book, when the book has another cover in play. */
+export const SAME_BOOK_SHARE = 0.15;
 
 /**
  * The next pair to show.
@@ -462,7 +475,12 @@ export function nextPair(
 
   const lastKey = options.last ? pairKey(options.last[0], options.last[1]) : '';
   const fresh = open.filter(id => id !== a && pairKey(a, id) !== lastKey);
-  const rivals = fresh.length > 0 ? fresh : ids.filter(id => id !== a);
+  const field = fresh.length > 0 ? fresh : ids.filter(id => id !== a);
+  // Now and then both covers come from one book, where the book has another in play.
+  const { bookOf } = options;
+  const together = bookOf ? random() < (options.sameBook ?? SAME_BOOK_SHARE) : false;
+  const siblings = together && bookOf ? field.filter(id => bookOf(id) === bookOf(a)) : [];
+  const rivals = siblings.length > 0 ? siblings : field;
   // Shuffled first so that level ratings — every cover, at the start — do
   // not hand the first few ids every early game.
   const nearest = shuffled(rivals, random)
