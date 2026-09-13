@@ -770,6 +770,19 @@ Eine Suchseite ohne eigene Inhalte bekommt keinen organischen Traffic. Die Grund
   2. **Mehr Bücher statt mehr Cover je Buch**, falls Julian 1000 verschiedene Bücher will: der Index müsste um 760 Werke wachsen (Stunden, und die Sitemap wächst mit).
   3. E21, der Satz in der Datenschutzerklärung, der Weg in die Produktion.
 
+  **Was gegen „live" spricht, geprüft am 2026-09-13** (Julian: „spricht was dagegen, die hotornot seite live zu schalten? also in die produktion"). Grundsätzlich nichts — die Seite läuft seit zwei Tagen auf der Preview mit echtem Speicher und echten Spielern. Zu tun ist:
+
+  1. **Den Speicher an die Umgebung Production hängen** (Julian, im Dashboard). **Denselben**, nicht einen neuen, sonst bleiben die Stimmen der Freunde in der Preview. Ohne Speicher antwortet die Produktion bewusst mit 503 statt aus dem Arbeitsspeicher zu spielen.
+  2. **`HOTORNOT=on` in Production setzen** (F7.1; ungesetzt ist das Spiel dort dunkel).
+  3. **Der Satz in der Datenschutzerklärung** (Stimmen ohne Kennung, N11) und **E21** — die Entscheidung, dass die laufende Seite in diesen Speicher schreiben darf.
+  4. **Merge nach `main`** ist der Deploy; vorher `npm run worktrees -- --fetch`. Er bringt zugleich die 100 neuen Werke in die Sitemap.
+
+  **Zwei Punkte, die vorher eine Entscheidung verdienen:**
+  - **Die Leseart skaliert nicht.** `votes()` holt mit `LRANGE 0 -1` die ganze Liste — bei **jeder** Paar-Anfrage und jedem Aufruf der Rangliste (dazu `HGETALL` für die Meldungen). Bei 51 Stimmen egal, bei 50.000 zieht jede Anfrage 50.000 Datensätze: langsam, und bei Upstash auch teuer. **Vor echtem Andrang zu ändern**, ein halber Tag: laufende Summen je Cover in einem Hash mitschreiben und für die Paarung nur die lesen; die volle Liste nur für die Rangliste, und die für 30–60 s cachen (sie ist heute `force-dynamic`).
+  - **Stimmen lassen sich häufen.** Signiertes Paar, einmal einlösbar, 60 Paare und 40 Stimmen je Minute und Instanz — das bremst ein Skript, hält es aber nicht auf. Die gehaltene Krone (drei Runden) federt es ab. Wer das härter will: Vercel BotID, oder engere Grenzen.
+  - Dazu die Rechtsfrage aus **0.12**: die Seite nimmt mit einer Stimme erstmals etwas vom Leser entgegen — der Auslöser, den 0.12 selbst nennt.
+  - **Sichtbarkeit:** `/versus` bleibt zunächst `noindex` (F7.6). Die indexierbare Fläche ist die Ergebnisseite aus 5.8b, nicht das Spiel.
+
 - [ ] **5.8b Was die Stimmen dem Rest der Seite bringen.** (Julian, 2026-09-12: „Wie können wir die Daten, die wir hier sammeln sinnvoll für den rest der website nutzen?") Das Spiel sammelt dreierlei: **Stimmen** (zwei Cover, ein Sieger, ein Tag, nichts über den Spieler, N11), **Meldungen** („Not a cover") und daraus die **Rangliste mit Unsicherheit**. Nutzbar ist das nur außerhalb des Spiels, wenn die Produktion dafür nicht den Speicher abfragen muss.
 
   **Der Schlüssel ist ein Export, kein Live-Zugriff.** `scripts/export-cover-ranking.ts` schreibt `data/cover-ranking.json` (je Cover: Spiele, Siege, Stärke, Streuung; dazu die gemeldeten Cover mit Grund), gebaut und committet wie der Cover-Index (E18). Dann liest die Seite gebaute Daten statt eines Speichers — **damit hängt nichts davon ab, ob das Spiel selbst je in Produktion geht** (entschärft E21). Regel im Export: ein Cover ohne genug Spiele kommt nicht vor, sonst veröffentlicht die Seite Rauschen (N12).
