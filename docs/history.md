@@ -1754,6 +1754,24 @@ Die 51 sind faul geladene Kacheln unterhalb des Sichtbereichs. **Das ist genau d
 
 **Und ein Schönheitsfehler fiel beim Benutzen auf.** Für das fehlende Cover meldete der Kopf `200` — der Status der Gegenseite —, was auf einer gescheiterten Antwort das Gegenteil dessen sagt, was passiert ist. Jetzt steht der Status nur da, wenn der Status die Antwort *ist*; sonst `not-image`, `timeout` oder `error`. Ein Diagnosewerkzeug, das man erst deuten muss, ist eines zu wenig.
 
+## 2026-09-11 · Firewall: was der Hobby-Plan kann, und dass Attack Mode aus ist (ROADMAP 2.4)
+
+Julian bat um einen Vorschlag für die Firewall-Einstellungen; der Vorschlag steht in [PLAN-2.4-firewall.md](plans/PLAN-2.4-firewall.md). Hier die Messung und was aus Vercels Doku für diese Seite folgt.
+
+| Gemessen / nachgelesen | Ergebnis |
+|---|---|
+| Ein `curl` auf `https://beautifulcovers.vercel.app/about`, einmal | **200**, `x-vercel-cache: PRERENDER`, kein `x-vercel-mitigated` — **Attack Mode ist aus** |
+| Herkunft der 403 vom 2026-09-09 | damit die **automatische DDoS-Abwehr** nach wiederholten Abrufen, keine Projekteinstellung |
+| Eigene Regeln auf Hobby | **3**, davon **1** Rate-Limit (10 s bis 10 min, Schlüssel IP oder JA4) |
+| System-Bypass auf Hobby | **keiner** (ab Pro 25) — eine Ausnahme für einen Monitor ist auf Hobby nicht möglich |
+| Bot Protection, AI Bots | auf allen Plänen frei; aus bzw. *Allow* per Voreinstellung |
+| `vercel.json` `routes[].mitigate` | nur `deny` und `challenge`, kein *Log*, kein Rate-Limit |
+| Verzeichnis verifizierter Bots | enthält `uptime-robot`, `googlebot`, `bingbot`, `facebookexternalhit`, `twitterbot`, `linkedinbot`; **nicht** WhatsApp, Telegram, Discord, Slack |
+
+**Was daraus folgt.** Die Sorge in 2.4, Attack Mode träfe jeden Crawler, war zu groß — verifizierte Bots kommen durch. Treffen würde er die Link-Vorschauen der vier Messenger, die im Verzeichnis fehlen, und damit das Teilen (6.20, 6.21). Und eine Rate-Limit-Regel in der Firewall kann das Google-Kontingent so wenig schützen wie das eingebaute Rate-Limit: 1.000 am Tag sind 0,7 in der Minute, jede Grenze, die ein Leser verträgt, lässt eine hartnäckige Adresse den Tag in unter einer Stunde aufbrauchen. Ihr Wert ist, dass sie je Region statt je Instanz zählt und abweist, bevor eine Funktion läuft.
+
+Nicht abgelesen: Bot Protection, AI Bots und eigene Regeln im Projekt — keine Vercel-CLI, Connector nicht angemeldet. Julian sieht beim Einstellen nach.
+
 ## 2026-09-10 · Der Fächer ist repariert, die Übergabe nicht (ROADMAP 6.25a)
 
 Julian: „brauchen wir jetzt Schritt 3 und 4 von 6.25a?" Die Frage ist messbar, und der Punkt verlangt die Messung ohnehin. Kalt in Produktion, *Silas Marner*, Klick aus dem Suchergebnis:
