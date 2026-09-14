@@ -1,6 +1,6 @@
 # Plan 2.4: Firewall-Einstellungen für den Betrieb
 
-Stand: 2026-09-11. Offen, Julian stellt im Vercel-Dashboard ein (Firewall → Rules / Bot Management), Claude schreibt danach die Messungen in die Historie. Anlass: Julian, 2026-09-11: „mache einen Vorschlag, welche Firewall-Einstellungen wir machen müssen." Grundlage ist ROADMAP 2.4 und die Messung vom 2026-09-09 (403 mit `x-vercel-mitigated: challenge` nach wiederholten automatischen Abrufen).
+Stand: 2026-09-11, **fortgeschrieben 2026-09-14**. Die Rate-Limit-Regel (§3.4) liegt als unveröffentlichter Entwurf bei Vercel, von Claude über die CLI angelegt. Veröffentlichen, die zwei verwalteten Regelsätze umstellen und UptimeRobot einrichten tut Julian (§5); Claude schreibt danach die Messungen in die Historie. Anlass: Julian, 2026-09-11: „mache einen Vorschlag, welche Firewall-Einstellungen wir machen müssen." Grundlage ist ROADMAP 2.4 und die Messung vom 2026-09-09 (403 mit `x-vercel-mitigated: challenge` nach wiederholten automatischen Abrufen).
 
 ## 1. Was der Hobby-Plan überhaupt erlaubt
 
@@ -23,7 +23,9 @@ Was die Firewall abweist, kostet weder CDN-Anfragen noch Datentransfer. Eine Reg
 
 - **Attack Mode ist aus.** Ein einzelner `curl` auf `/about` am 2026-09-11 kam mit **200**, `x-vercel-cache: PRERENDER`, ohne Challenge. Attack Mode hätte jeden Client ohne Browser und ohne Verifizierung vor die Aufgabe gestellt.
 - **Die Challenge vom 2026-09-09 kam also von der automatischen Abwehr**, ausgelöst durch *wiederholte* Abrufe derselben Adresse, nicht von einer Projekteinstellung. Auf Hobby lässt sie sich für eine einzelne Adresse nicht abschalten (kein System-Bypass).
-- Die übrigen Einstellungen (Bot Protection, AI Bots, eigene Regeln) konnte Claude nicht ablesen: die Vercel-CLI ist nicht installiert und der Vercel-Connector nicht angemeldet. **Julian sieht beim Einstellen nach, ob dort schon etwas steht**, und trägt es hier ein.
+- **Abgelesen am 2026-09-14** mit der inzwischen angemeldeten Vercel-CLI (`vercel firewall status` und `overview --project beautifulbooks`): keine eigenen Regeln („Firewall: Not configured"), Mitigations *Active*, Attack Mode *Off*, Bot Protection *Off*, AI Bots *Allow*, OWASP *Off* (erst mit Security+), System-Bypass „Requires Pro or Enterprise". Keine IP-Sperren. Die Voreinstellungen stehen also unberührt.
+- **Traffic und Alarme liest die CLI auf Hobby nicht** („Traffic and alerts need Observability Plus"). Die Woche im Modus *Log* wird deshalb im Dashboard gelesen, nicht mit `vc metrics`.
+- **Die CLI kann eigene Regeln anlegen, aber die verwalteten Regelsätze nicht umstellen**: Bot Protection und AI Bots gehen nur im Dashboard.
 
 ## 3. Der Vorschlag
 
@@ -48,11 +50,14 @@ Der einzige Rate-Limit-Platz, den Hobby hat. Er gehört dorthin, wo das knappe G
 | Feld | Wert |
 |---|---|
 | Name | `api-google-burst` |
-| Bedingung (ODER) | Pfad beginnt mit `/api/isbn/` **oder** (Pfad beginnt mit `/api/works/` **und** Query `summary` ist nicht `1`) |
+| Bedingung (ODER) | Pfad beginnt mit `/api/isbn/` **oder** (Pfad beginnt mit `/api/works/` **und** Query `summary` ist nicht `1` **und** Query `sibling` ist nicht `1`) |
+| Stand | **Entwurf seit 2026-09-14**, Kennung `rule_api_google_burst_HfssuN`; bei Überschreitung vorerst `log` |
 | Zeitraum / Grenze | **600 s, 300 Anfragen**, Schlüssel **IP** |
 | Aktion | zuerst **Log**, nach einer Woche **Rate Limit (429)** |
 
 *Warum diese Bedingung.* Google kosten nur Seite 0 eines Werks und die ISBN-Nachschau (`app/api/works/[id]/route.ts`: `spendsGoogle = !summary && offset === 0`; `app/api/isbn/`). Seite 0 lässt sich in der Firewall nicht sauber erkennen: der Client schickt dafür *gar keinen* `offset`, und der Server macht aus jedem unbrauchbaren Wert Seite 0 (`offset=-5`, `offset=50`, `offset=abc`, siehe `offsetFromRequest`). Eine Regel auf `offset` wäre also mit einem Zeichen zu umgehen. Deshalb zählt die Regel alle Wandseiten mit, nur die Mosaike (`summary=1`, bis zu zwanzig je Trefferliste, kosten nichts) nicht. `/api/search` bleibt draußen: eine Suche kostet seit dem 2026-09-07 keine Google-Anfrage mehr.
+
+*Nachtrag 2026-09-14: auch `sibling=1` bleibt draußen.* Seit 6.13 lädt eine Wand zusätzlich die Seiten ihrer Geschwisterwerke mit `?sibling=1`, und die Route fragt dafür nie Google (`spendsGoogle = !summary && !sibling && offset === 0`). Anders als `offset` lassen sich diese beiden Ausnahmen nicht zum Umgehen nutzen: wer `summary=1` oder `sibling=1` anhängt, schaltet Google auf dem Server tatsächlich ab und kann das Kontingent damit nicht verbrauchen.
 
 *Warum 300 in 10 Minuten.* Eine Detailseite lädt bis zu **16** Seiten ihrer Wand, ein Klick auf ein Cover kostet **1 Anfrage je ISBN**, gemessen 2 bis 5 (SPEC N9). Wer in zehn Minuten fünf Bücher öffnet und zehn Cover anklickt, kommt auf rund 5 × 16 + 10 × 4 = **120**. 300 lässt das Zweieinhalbfache Luft; die Woche im Log zeigt, ob das stimmt.
 
@@ -80,14 +85,18 @@ Die Frage aus 2.4, ob der Monitor eine Ausnahme braucht: **auf Hobby gibt es kei
 
 ## 5. Ablauf
 
-1. **Julian** (15 Minuten): Dashboard → Firewall. Zuerst nachsehen und hier notieren, was schon steht. Dann 3.2, 3.3, 3.4 im Modus *Log* anlegen, *Review Changes* → *Publish*. UptimeRobot nach 3.7.
+0. ✅ **Claude, 2026-09-14:** Stand abgelesen (§2), Regel 3.4 als Entwurf angelegt. `vercel firewall diff` zeigt genau eine Änderung: „Added rule api-google-burst".
+1. **Julian** (10 Minuten):
+   - Den Entwurf veröffentlichen: im Dashboard unter Firewall → *Review Changes* → *Publish*, oder im Terminal `vercel firewall publish --project beautifulbooks --yes`.
+   - Im Dashboard 3.2 Bot Protection auf *Log* und 3.3 AI Bots auf *Log* stellen, dann veröffentlichen.
+   - UptimeRobot nach 3.7 einrichten.
 2. **Eine Woche warten.**
-3. **Claude** mit Julian: Firewall-Traffic je Regel lesen (Dashboard → Firewall → Traffic, nach Regel gefiltert), Zahlen in die Historie. Entscheiden: Regel 1 auf 429 und die Grenze nachziehen; Bot Protection *Log* oder *Challenge*; AI Bots (Julians Entscheidung).
+3. **Claude** mit Julian: Firewall-Traffic je Regel lesen, im Dashboard unter <https://vercel.com/julian-heiss-projects/beautifulbooks/firewall/traffic?filter=rule_api_google_burst_HfssuN> für Regel 3.4, die Regelsätze entsprechend; Zahlen in die Historie. Entscheiden: Regel 1 auf 429 und die Grenze nachziehen; Bot Protection *Log* oder *Challenge*; AI Bots (Julians Entscheidung).
 4. Geltende Einstellungen in SPEC N10, 2.4 abhaken.
 
 ## 6. Nebenbefund
 
-`app/api/search/route.ts` belastet noch den gemeinsamen `google`-Eimer (`rateLimited(request, 'search', 'google')`), obwohl `lib/search.ts` seit dem 2026-09-07 keine Google-Anfrage mehr stellt; CLAUDE.md nennt die Suche in derselben Regel noch als Google-Aufrufer. Das bremst zu früh, nicht zu spät, ist also harmlos, widerspricht aber der Regel „charge `google` only where a Google request is actually possible". Gehört als kleiner Punkt in Phase 6, nicht in diesen Plan.
+`app/api/search/route.ts` belastet noch den gemeinsamen `google`-Eimer (`rateLimited(request, 'search', 'google')`), obwohl `lib/search.ts` seit dem 2026-09-07 keine Google-Anfrage mehr stellt; CLAUDE.md nennt die Suche in derselben Regel noch als Google-Aufrufer. Das bremst zu früh, nicht zu spät, ist also harmlos, widerspricht aber der Regel „charge `google` only where a Google request is actually possible". Gehört als kleiner Punkt in Phase 6, nicht in diesen Plan. *Seit 2026-09-14 ROADMAP 6.47.*
 
 ## Quellen
 

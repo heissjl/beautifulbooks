@@ -1772,6 +1772,26 @@ Julian bat um einen Vorschlag für die Firewall-Einstellungen; der Vorschlag ste
 
 Nicht abgelesen: Bot Protection, AI Bots und eigene Regeln im Projekt — keine Vercel-CLI, Connector nicht angemeldet. Julian sieht beim Einstellen nach.
 
+**Nachtrag 2026-09-14, mit der Vercel-CLI (59.15.1, angemeldet als `heissjl`) abgelesen** (`vercel firewall status`, `overview` und `rules list`, jeweils mit `--project beautifulbooks`):
+
+| Einstellung | Stand |
+|---|---|
+| eigene Regeln | keine („Firewall: Not configured") |
+| Mitigations | *Active* |
+| Attack Mode | *Off* |
+| Bot Protection | *Off* |
+| AI Bots | *Allow* |
+| OWASP | *Off*, erst mit Security+ |
+| System-Bypass | „Requires Pro or Enterprise" |
+
+Alles steht also auf Voreinstellung. Traffic und Alarme gibt die CLI auf Hobby nicht heraus („need Observability Plus"). Die verwalteten Regelsätze kann sie nicht umstellen.
+
+Angelegt als **Entwurf, nicht veröffentlicht**: die Regel `api-google-burst` (`rule_api_google_burst_HfssuN`).
+- **Bedingung:** `/api/isbn/…` oder `/api/works/…` ohne `summary=1` und ohne `sibling=1`.
+- **Grenze:** 300 Anfragen je 600 s und IP, fester Zeitraum; bei Überschreitung `log`.
+
+`vercel firewall diff` zeigte genau diese eine Änderung. Gegenüber dem Plan vom 2026-09-11 ist `sibling=1` hinzugekommen, weil Geschwisterseiten seit 6.13 ebenfalls nie Google fragen (`spendsGoogle` in `app/api/works/[id]/route.ts`).
+
 ## 2026-09-10 · Der Fächer ist repariert, die Übergabe nicht (ROADMAP 6.25a)
 
 Julian: „brauchen wir jetzt Schritt 3 und 4 von 6.25a?" Die Frage ist messbar, und der Punkt verlangt die Messung ohnehin. Kalt in Produktion, *Silas Marner*, Klick aus dem Suchergebnis:
