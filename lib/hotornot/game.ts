@@ -7,10 +7,12 @@
  * signed pairs. Each function takes the store and the pool as arguments, so
  * the tests play whole games against memory.
  *
- * Stateless on purpose: every request reads the votes and recomputes. That is
- * fine up to a few thousand votes — the friends test this is built for — and
- * it means any instance answers like any other. Past that, the votes would
- * want an incremental rating in the store.
+ * **A pair costs the same whatever the number of votes** (2026-09-14). Until
+ * then every request for a pair read every vote ever cast and replayed them —
+ * 403 records a click on the preview, and growing with each vote, so it would
+ * have failed exactly when the game worked. The pairing now keeps a running
+ * tally (`pairingTally`); only the board still reads every vote, because its
+ * uncertainty needs them all, and it does so once a minute (`cachedBoard`).
  */
 import poolFile from '@/data/versus-pool.json';
 import { coverPathSegment } from '../coverurl';
@@ -18,9 +20,9 @@ import { rng } from '../loading';
 import type { PoolCover } from './pool';
 import {
   CROWN_HOLD, applyVote, crowns, favouriteRate, newElo, nextPair, verdictFor,
-  type Crown, type Standing, type Vote,
+  type Crown, type EloState, type Standing,
 } from './rating';
-import { storeConfig, type StoredVote, type VoteStore } from './store';
+import { storeConfig, type CoverFlag, type StoredVote, type VoteStore } from './store';
 import { PAIR_TTL_SECONDS, pairSecret, signPair, verifyPair } from './token';
 
 export interface VersusPool {
@@ -38,14 +40,32 @@ export interface VersusPool {
   inherits?: string[];
 }
 
-/** Votes and reports under this pool's name and every name it inherits. */
-async function recorded(store: VoteStore, pool: VersusPool): Promise<{ votes: StoredVote[]; flags: Awaited<ReturnType<VoteStore['flags']>> }> {
-  const names = [pool.name, ...(pool.inherits ?? [])];
+/** Every log whose votes count for this pool, oldest first: the pools it grew from, then its own. */
+function logsOf(pool: VersusPool): string[] {
+  return [...(pool.inherits ?? []), pool.name];
+}
+
+/** Reports under this pool's name and every name it inherits, each cover once. */
+async function flagsOf(store: VoteStore, pool: VersusPool): Promise<CoverFlag[]> {
+  const lists = await Promise.all(logsOf(pool).map(name => store.flags(name)));
+  const byCover = new Map<string, CoverFlag>();
+  for (const flag of lists.flat()) if (!byCover.has(flag.id)) byCover.set(flag.id, flag);
+  return [...byCover.values()];
+}
+
+/** Every vote and every report. Reads the whole log: for the board, not for a click. */
+async function recorded(store: VoteStore, pool: VersusPool): Promise<{ votes: StoredVote[]; flags: CoverFlag[] }> {
   const [votes, flags] = await Promise.all([
-    Promise.all(names.map(name => store.votes(name))),
-    Promise.all(names.map(name => store.flags(name))),
+    Promise.all(logsOf(pool).map(name => store.votes(name))),
+    flagsOf(store, pool),
   ]);
-  return { votes: votes.flat(), flags: flags.flat() };
+  return { votes: votes.flat(), flags };
+}
+
+/** The pool's covers minus the ones people reported. */
+function activeIds(pool: VersusPool, flags: readonly CoverFlag[]): string[] {
+  const out = new Set(flags.map(f => f.id));
+  return pool.covers.map(c => c.id).filter(id => !out.has(id));
 }
 
 export const POOL = poolFile as VersusPool;
@@ -65,13 +85,137 @@ export function secretForEnv(env: Record<string, string | undefined> = process.e
   return pairSecret(config ? (config.kind === 'rest' ? config.token : config.url) : undefined);
 }
 
-async function activeCovers(store: VoteStore, pool: VersusPool): Promise<{ ids: string[]; votes: Vote[] }> {
-  const { votes, flags } = await recorded(store, pool);
-  const out = new Set(flags.map(f => f.id));
-  const ids = pool.covers.map(c => c.id).filter(id => !out.has(id));
-  // A vote on a cover the pool no longer holds (a stricter rule took it out) counts for nothing.
-  const active = new Set(ids);
-  return { ids, votes: votes.filter(v => active.has(v.a) && active.has(v.b)) };
+/**
+ * The running tally behind the pairing.
+ *
+ * A tally is always **the first N votes of each log, counted**. A request for
+ * a pair asks the store how many votes there are (LLEN, a few bytes), fetches
+ * only those past N and counts them on. Each instance keeps its tally in
+ * memory; every `TALLY_SAVE_EVERY` votes it also writes it beside the votes,
+ * so a fresh instance starts there instead of at the first vote.
+ *
+ * Because it is always a whole prefix, two instances cannot corrupt it:
+ * whichever saves last saves a consistent state — at worst an older one, and
+ * the next request counts the difference again. No lock and no script. On one
+ * instance the updates queue, so two clicks at once never count the same new
+ * votes twice.
+ *
+ * Two small differences from recounting, both harmless for choosing a pair and
+ * both absent from the board, which recounts: votes are counted in the order
+ * the logs were written (inherited first), and a vote on a cover reported
+ * later still moved its opponent's rating.
+ */
+export const TALLY_SAVE_EVERY = 25;
+
+interface TallyEntry {
+  /** The pool it was counted for; a rebuilt pool under the same name starts over. */
+  pool: string;
+  upto: Record<string, number>;
+  elo: EloState;
+  /** Votes that moved a rating: the ones on two covers this pool holds. */
+  applied: number;
+  /** Votes counted when it was last written to the store. */
+  saved: number;
+  loaded: boolean;
+  queue: Promise<void>;
+}
+
+const tallies = new Map<string, TallyEntry>();
+
+/** For tests: every tally is forgotten, as on a fresh instance. */
+export function forgetTallies(): void {
+  tallies.clear();
+}
+
+/** Which pool a tally or a board belongs to: its name and every cover id, FNV-1a. */
+function fingerprint(pool: VersusPool): string {
+  let h = 0x811c9dc5;
+  for (const part of [pool.name, ...pool.covers.map(c => c.id)]) {
+    for (let i = 0; i < part.length; i++) h = Math.imul(h ^ part.charCodeAt(i), 0x01000193) >>> 0;
+    h = Math.imul(h ^ 0x7c, 0x01000193) >>> 0;
+  }
+  return `${pool.name}#${h.toString(16)}`;
+}
+
+const counted = (upto: Record<string, number>) => Object.values(upto).reduce((sum, n) => sum + n, 0);
+
+function freshEntry(pool: string): TallyEntry {
+  return { pool, upto: {}, elo: newElo([]), applied: 0, saved: 0, loaded: false, queue: Promise.resolve() };
+}
+
+function readTally(raw: string | null, pool: string): Pick<TallyEntry, 'upto' | 'elo' | 'applied'> | null {
+  if (!raw) return null;
+  try {
+    const t = JSON.parse(raw) as { pool?: unknown; upto?: unknown; covers?: unknown; applied?: unknown };
+    if (t.pool !== pool || !t.upto || typeof t.upto !== 'object' || !t.covers || typeof t.covers !== 'object') return null;
+    if (typeof t.applied !== 'number' || t.applied < 0) return null;
+    const elo = newElo([]);
+    for (const [id, value] of Object.entries(t.covers as Record<string, unknown>)) {
+      if (!Array.isArray(value) || typeof value[0] !== 'number' || typeof value[1] !== 'number') return null;
+      elo.rating.set(id, value[0]);
+      elo.games.set(id, value[1]);
+    }
+    const upto: Record<string, number> = {};
+    for (const [name, n] of Object.entries(t.upto as Record<string, unknown>)) {
+      if (typeof n !== 'number' || n < 0) return null;
+      upto[name] = n;
+    }
+    return { upto, elo, applied: t.applied };
+  } catch {
+    return null;
+  }
+}
+
+function writeTally(entry: TallyEntry): string {
+  const covers: Record<string, [number, number]> = {};
+  for (const [id, rating] of entry.elo.rating) covers[id] = [Math.round(rating * 100) / 100, entry.elo.games.get(id) ?? 0];
+  return JSON.stringify({ pool: entry.pool, upto: entry.upto, applied: entry.applied, covers });
+}
+
+async function catchUp(store: VoteStore, pool: VersusPool, entry: TallyEntry): Promise<void> {
+  const logs = logsOf(pool);
+  const counts = await Promise.all(logs.map(name => store.count(name)));
+  // A log shorter than what was counted means the store was emptied or replaced: count again from nothing.
+  if (logs.some((name, i) => counts[i] < (entry.upto[name] ?? 0))) Object.assign(entry, freshEntry(entry.pool), { loaded: true, queue: entry.queue });
+  if (!entry.loaded) {
+    const saved = readTally(await store.tally(pool.name), entry.pool);
+    if (saved && logs.every((name, i) => counts[i] >= (saved.upto[name] ?? 0))) {
+      entry.upto = saved.upto;
+      entry.elo = saved.elo;
+      entry.applied = saved.applied;
+      entry.saved = counted(saved.upto);
+    }
+    entry.loaded = true;
+  }
+  const known = new Set(pool.covers.map(c => c.id));
+  for (const [i, name] of logs.entries()) {
+    const from = entry.upto[name] ?? 0;
+    if (counts[i] <= from) continue;
+    const { votes, seen } = await store.votesFrom(name, from);
+    // Counted and advanced together, after the fetch: a store that fails mid-way leaves the tally as it was.
+    for (const vote of votes) {
+      if (!known.has(vote.a) || !known.has(vote.b)) continue;
+      applyVote(entry.elo, vote);
+      entry.applied++;
+    }
+    entry.upto[name] = from + seen;
+  }
+  const total = counted(entry.upto);
+  if (total - entry.saved >= TALLY_SAVE_EVERY) {
+    await store.saveTally(pool.name, writeTally(entry));
+    entry.saved = total;
+  }
+}
+
+/** The ratings and games the pairing needs, brought up to the last vote. */
+export async function pairingTally(store: VoteStore, pool: VersusPool = POOL): Promise<{ elo: EloState; votes: number }> {
+  const id = fingerprint(pool);
+  const entry = tallies.get(id) ?? freshEntry(id);
+  tallies.set(id, entry);
+  const work = entry.queue.then(() => catchUp(store, pool, entry));
+  entry.queue = work.catch(() => undefined);
+  await work;
+  return { elo: entry.elo, votes: entry.applied };
 }
 
 export interface PairSide {
@@ -120,9 +264,8 @@ export async function nextPairFor(
     now?: number;
   } = {},
 ): Promise<PairResponse | null> {
-  const { ids, votes } = await activeCovers(store, pool);
-  const elo = newElo(ids);
-  for (const vote of votes) applyVote(elo, vote);
+  const [{ elo, votes }, flags] = await Promise.all([pairingTally(store, pool), flagsOf(store, pool)]);
+  const ids = activeIds(pool, flags);
   const book = new Map(pool.covers.map(c => [c.id, c.workId]));
   const pair = nextPair(ids, elo, random, { last, recent, bookOf: id => book.get(id) ?? id });
   if (!pair) return null;
@@ -130,7 +273,7 @@ export async function nextPairFor(
   return {
     pool: pool.name,
     store: store.kind,
-    votes: votes.length,
+    votes,
     covers: ids.length,
     a: side(pool, a),
     b: side(pool, b),
@@ -255,7 +398,11 @@ export async function board(
   store: VoteStore,
   { pool = POOL, top: topCount = 5, bottom: bottomCount = 5 }: { pool?: VersusPool; top?: number; bottom?: number } = {},
 ): Promise<Board> {
-  const [{ ids, votes }, { flags }] = await Promise.all([activeCovers(store, pool), recorded(store, pool)]);
+  const { votes: all, flags } = await recorded(store, pool);
+  const ids = activeIds(pool, flags);
+  // A vote on a cover the pool no longer holds, or one people reported, counts for nothing here.
+  const active = new Set(ids);
+  const votes = all.filter(v => active.has(v.a) && active.has(v.b));
   // One round is as many votes as there are covers: the spacing the simulation judged at.
   const { table, best, worst } = crowns(ids, votes, { step: Math.max(1, ids.length) });
   const meta = new Map(pool.covers.map(c => [c.id, c]));
@@ -281,4 +428,34 @@ export async function board(
     bottom: bottom.map(entry),
     flagged: flags.length,
   };
+}
+
+/**
+ * The board for everyone who opens it within a minute. It still reads every
+ * vote — the uncertainty of the standings needs them all — so it is counted
+ * once a minute per instance instead of once per visitor, and a crawler that
+ * comes by often costs nothing extra. Two visitors in the same second share
+ * one count.
+ */
+export const BOARD_SECONDS = 60;
+
+const boards = new Map<string, { at: number; board: Promise<Board> }>();
+
+/** For tests: the next board is counted afresh. */
+export function forgetBoards(): void {
+  boards.clear();
+}
+
+export function cachedBoard(
+  store: VoteStore,
+  { pool = POOL, top = 5, bottom = 5, now = Date.now() }: { pool?: VersusPool; top?: number; bottom?: number; now?: number } = {},
+): Promise<Board> {
+  const key = `${fingerprint(pool)}|${store.kind}|${top}|${bottom}`;
+  const hit = boards.get(key);
+  if (hit && now - hit.at < BOARD_SECONDS * 1000) return hit.board;
+  const counting = board(store, { pool, top, bottom });
+  boards.set(key, { at: now, board: counting });
+  // A store that did not answer is not a board to keep for a minute.
+  counting.catch(() => boards.delete(key));
+  return counting;
 }

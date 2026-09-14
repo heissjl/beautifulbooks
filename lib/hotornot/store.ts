@@ -32,6 +32,17 @@ export interface VoteStore {
   /** Which kind this is, so the page can say where its votes live. */
   readonly kind: 'memory' | 'upstash' | 'redis';
   votes(pool: string): Promise<StoredVote[]>;
+  /** How many votes a pool holds — LLEN, a few bytes, however many there are. */
+  count(pool: string): Promise<number>;
+  /**
+   * The votes from position `start` on: the tail a running tally has not seen.
+   * `seen` counts the entries read, including any that did not parse, so a
+   * damaged entry is stepped over once instead of fetched forever.
+   */
+  votesFrom(pool: string, start: number): Promise<{ votes: StoredVote[]; seen: number }>;
+  /** The running tally kept beside the votes, as one string (`lib/hotornot/game.ts`); null when there is none. */
+  tally(pool: string): Promise<string | null>;
+  saveTally(pool: string, value: string): Promise<void>;
   add(pool: string, vote: StoredVote): Promise<void>;
   flags(pool: string): Promise<CoverFlag[]>;
   /** Keeps the first reason given for a cover; a second report changes nothing. */
@@ -58,6 +69,7 @@ export const STORE_TIMEOUT_MS = 4000;
 const keyFor = {
   votes: (pool: string) => `versus:${pool}:votes`,
   flags: (pool: string) => `versus:${pool}:flags`,
+  tally: (pool: string) => `versus:${pool}:tally`,
   token: (token: string) => `versus:token:${token}`,
 };
 
@@ -66,10 +78,24 @@ export function memoryStore(now: () => number = Date.now): VoteStore {
   const votes = new Map<string, StoredVote[]>();
   const flags = new Map<string, Map<string, CoverFlag['reason']>>();
   const claimed = new Map<string, number>();
+  const tallies = new Map<string, string>();
   return {
     kind: 'memory',
     async votes(pool) {
       return [...(votes.get(pool) ?? [])];
+    },
+    async count(pool) {
+      return votes.get(pool)?.length ?? 0;
+    },
+    async votesFrom(pool, start) {
+      const tail = (votes.get(pool) ?? []).slice(start);
+      return { votes: tail, seen: tail.length };
+    },
+    async tally(pool) {
+      return tallies.get(pool) ?? null;
+    },
+    async saveTally(pool, value) {
+      tallies.set(pool, value);
     },
     async add(pool, vote) {
       votes.set(pool, [...(votes.get(pool) ?? []), vote]);
@@ -99,6 +125,9 @@ export function memoryStore(now: () => number = Date.now): VoteStore {
 export interface RedisCommands {
   rPush(key: string, value: string): Promise<unknown>;
   lRange(key: string, start: number, stop: number): Promise<unknown>;
+  lLen(key: string): Promise<unknown>;
+  get(key: string): Promise<unknown>;
+  set(key: string, value: string): Promise<unknown>;
   /** Field → value, as a plain object or a `Map`, however the transport delivers it. */
   hGetAll(key: string): Promise<unknown>;
   hSetNX(key: string, field: string, value: string): Promise<unknown>;
@@ -125,6 +154,22 @@ export function commandsStore(commands: RedisCommands, kind: 'upstash' | 'redis'
       const result = await commands.lRange(keyFor.votes(pool), 0, -1);
       if (!Array.isArray(result)) return [];
       return result.map(parseVote).filter((v): v is StoredVote => v !== null);
+    },
+    async count(pool) {
+      const n = Number(await commands.lLen(keyFor.votes(pool)));
+      return Number.isFinite(n) && n > 0 ? n : 0;
+    },
+    async votesFrom(pool, start) {
+      const result = await commands.lRange(keyFor.votes(pool), start, -1);
+      if (!Array.isArray(result)) return { votes: [], seen: 0 };
+      return { votes: result.map(parseVote).filter((v): v is StoredVote => v !== null), seen: result.length };
+    },
+    async tally(pool) {
+      const value = await commands.get(keyFor.tally(pool));
+      return typeof value === 'string' ? value : null;
+    },
+    async saveTally(pool, value) {
+      await commands.set(keyFor.tally(pool), value);
     },
     async add(pool, vote) {
       await commands.rPush(keyFor.votes(pool), JSON.stringify(vote));
@@ -186,6 +231,9 @@ export function upstashStore(url: string, token: string, fetchImpl: typeof fetch
   return commandsStore({
     rPush: (key, value) => command(['RPUSH', key, value]),
     lRange: (key, start, stop) => command(['LRANGE', key, start, stop]),
+    lLen: key => command(['LLEN', key]),
+    get: key => command(['GET', key]),
+    set: (key, value) => command(['SET', key, value]),
     // HGETALL answers a flat list over REST: field, value, field, value, …
     hGetAll: async key => {
       const flat = await command(['HGETALL', key]);
@@ -265,6 +313,9 @@ export function redisStore(url: string): VoteStore {
   return commandsStore({
     rPush: (key, value) => run(client => client.rPush(key, value)),
     lRange: (key, start, stop) => run(client => client.lRange(key, start, stop)),
+    lLen: key => run(client => client.lLen(key)),
+    get: key => run(client => client.get(key)),
+    set: (key, value) => run(client => client.set(key, value)),
     hGetAll: key => run(client => client.hGetAll(key)),
     hSetNX: (key, field, value) => run(client => client.hSetNX(key, field, value)),
     setNx: (key, value, ttlSeconds) => run(client => client.set(key, value, { NX: true, EX: ttlSeconds })),

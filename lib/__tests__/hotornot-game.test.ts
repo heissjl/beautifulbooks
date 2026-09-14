@@ -1,8 +1,17 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { rng } from '../loading';
-import { CROWN_HOLD } from '../hotornot/rating';
-import { POOL, board, castVote, flagCover, imagePath, nextPairFor, type VersusPool } from '../hotornot/game';
-import { memoryStore } from '../hotornot/store';
+import { CROWN_HOLD, ELO_START, applyVote, newElo } from '../hotornot/rating';
+import {
+  BOARD_SECONDS, POOL, TALLY_SAVE_EVERY, board, cachedBoard, castVote, flagCover, forgetBoards, forgetTallies, imagePath,
+  nextPairFor, pairingTally, type VersusPool,
+} from '../hotornot/game';
+import { StoreUnavailableError, memoryStore, type VoteStore } from '../hotornot/store';
+
+// Tallies and boards live per instance; every test starts on a fresh one.
+beforeEach(() => {
+  forgetTallies();
+  forgetBoards();
+});
 import { pairSecret } from '../hotornot/token';
 
 const pool: VersusPool = {
@@ -53,6 +62,134 @@ describe('a pool that grew from another', () => {
     expect(result.votes).toBe(2);
     expect(result.covers).toBe(5);
     expect(result.flagged).toBe(1);
+  });
+});
+
+/** `n` votes between random covers of the test pool, under `name`. */
+async function fill(store: VoteStore, name: string, n: number, seed: number) {
+  const random = rng(seed);
+  const ids = pool.covers.map(c => c.id);
+  for (let i = 0; i < n; i++) {
+    const a = ids[Math.floor(random() * ids.length)];
+    let b = ids[Math.floor(random() * ids.length)];
+    if (b === a) b = ids[(ids.indexOf(a) + 1) % ids.length];
+    await store.add(name, { a, b, winner: random() < 0.5 ? a : b, on: '2026-09-14' });
+  }
+}
+
+/** A store that records where each tail was read from, and how often every vote was read. */
+function watched(store: VoteStore) {
+  const starts: number[] = [];
+  let full = 0;
+  const spy: VoteStore = {
+    ...store,
+    votesFrom: (p, start) => {
+      starts.push(start);
+      return store.votesFrom(p, start);
+    },
+    votes: p => {
+      full += 1;
+      return store.votes(p);
+    },
+  };
+  return { spy, starts, full: () => full };
+}
+
+// 2026-09-14: a pair used to read and replay every vote ever cast; 403 records a click on the preview.
+describe('the running tally behind the pairing', () => {
+  it('rates every cover exactly as counting every vote again would', async () => {
+    const store = memoryStore();
+    await fill(store, 'test', 60, 3);
+    const { elo, votes } = await pairingTally(store, pool);
+    const again = newElo(pool.covers.map(c => c.id));
+    for (const v of await store.votes('test')) applyVote(again, v);
+    expect(votes).toBe(60);
+    for (const c of pool.covers) {
+      expect(elo.rating.get(c.id) ?? ELO_START).toBeCloseTo(again.rating.get(c.id) ?? ELO_START, 9);
+      expect(elo.games.get(c.id) ?? 0).toBe(again.games.get(c.id));
+    }
+  });
+
+  it('fetches only the votes it has not counted yet, and never all of them', async () => {
+    const store = memoryStore();
+    await fill(store, 'test', 30, 5);
+    const { spy, starts, full } = watched(store);
+    await pairingTally(spy, pool);
+    await fill(store, 'test', 4, 7);
+    await pairingTally(spy, pool);
+    await pairingTally(spy, pool); // nothing new: not even a tail
+    expect(starts).toEqual([0, 30]);
+    expect(full()).toBe(0);
+  });
+
+  it('writes the tally beside the votes, and a fresh instance goes on from there', async () => {
+    const store = memoryStore();
+    await fill(store, 'test', TALLY_SAVE_EVERY + 5, 9);
+    await pairingTally(store, pool);
+    expect(await store.tally('test')).not.toBeNull();
+    forgetTallies(); // a new instance
+    await fill(store, 'test', 2, 11);
+    const { spy, starts } = watched(store);
+    const { votes } = await pairingTally(spy, pool);
+    expect(starts).toEqual([TALLY_SAVE_EVERY + 5]);
+    expect(votes).toBe(TALLY_SAVE_EVERY + 7);
+  });
+
+  it('counts again from the first vote when the saved tally was for another pool, or the votes were emptied', async () => {
+    const store = memoryStore();
+    await fill(store, 'test', 30, 13);
+    await pairingTally(store, pool); // this instance has counted 30
+
+    // The same pool, but a store holding only 3: the log is shorter than what was counted.
+    const emptied = memoryStore();
+    await fill(emptied, 'test', 3, 17);
+    expect((await pairingTally(emptied, pool)).votes).toBe(3);
+
+    forgetTallies();
+    const rebuilt: VersusPool = { ...pool, covers: pool.covers.slice(0, 5) }; // same name, other covers
+    const { spy, starts } = watched(store);
+    await pairingTally(spy, rebuilt);
+    expect(starts).toEqual([0]); // the saved tally was counted for the other pool
+  });
+
+  it('never counts the same new votes twice when two clicks arrive at once', async () => {
+    const store = memoryStore();
+    await fill(store, 'test', 20, 19);
+    const [one, two] = await Promise.all([pairingTally(store, pool), pairingTally(store, pool)]);
+    expect(one.votes).toBe(20);
+    expect(two.votes).toBe(20);
+    expect([...two.elo.games.values()].reduce((sum, n) => sum + n, 0)).toBe(40);
+  });
+
+  it('counts the pool it grew from first, and only votes on covers it still holds', async () => {
+    const store = memoryStore();
+    const grown: VersusPool = { ...pool, name: 'test-grown', inherits: ['test'] };
+    await store.add('test', { a: 'ol:1', b: 'ol:2', winner: 'ol:1', on: '2026-09-11' });
+    await store.add('test', { a: 'ol:1', b: 'ol:99', winner: 'ol:99', on: '2026-09-11' });
+    await store.add('test-grown', { a: 'ol:3', b: 'ol:4', winner: 'ol:4', on: '2026-09-12' });
+    expect((await pairingTally(store, grown)).votes).toBe(2);
+  });
+});
+
+describe('the board, once a minute', () => {
+  it('is counted once for everyone within a minute, and again after it', async () => {
+    const store = memoryStore();
+    await fill(store, 'test', 10, 23);
+    const { spy, full } = watched(store);
+    const t = 1_000_000;
+    const first = await cachedBoard(spy, { pool, now: t });
+    await cachedBoard(spy, { pool, now: t + 30_000 });
+    expect(full()).toBe(1);
+    await fill(store, 'test', 1, 29);
+    const later = await cachedBoard(spy, { pool, now: t + BOARD_SECONDS * 1000 + 1 });
+    expect(full()).toBe(2);
+    expect(later.votes).toBe(first.votes + 1);
+  });
+
+  it('does not keep a store that did not answer for a minute', async () => {
+    const down: VoteStore = { ...memoryStore(), votes: async () => { throw new StoreUnavailableError('silent'); } };
+    await expect(cachedBoard(down, { pool, now: 1 })).rejects.toBeInstanceOf(StoreUnavailableError);
+    await expect(cachedBoard(memoryStore(), { pool, now: 2 })).resolves.toMatchObject({ votes: 0 });
   });
 });
 

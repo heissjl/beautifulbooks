@@ -38,13 +38,25 @@ function fakeRedis(): RedisCommands {
   const lists = new Map<string, string[]>();
   const hashes = new Map<string, Map<string, string>>();
   const keys = new Set<string>();
+  const strings = new Map<string, string>();
   return {
     async rPush(key, value) {
       lists.set(key, [...(lists.get(key) ?? []), value]);
       return lists.get(key)?.length;
     },
-    async lRange(key) {
-      return [...(lists.get(key) ?? [])];
+    async lRange(key, start, stop) {
+      const list = lists.get(key) ?? [];
+      return list.slice(start, stop === -1 ? undefined : stop + 1);
+    },
+    async lLen(key) {
+      return lists.get(key)?.length ?? 0;
+    },
+    async get(key) {
+      return strings.get(key) ?? null;
+    },
+    async set(key, value) {
+      strings.set(key, value);
+      return 'OK';
     },
     async hGetAll(key) {
       return Object.fromEntries(hashes.get(key) ?? []);
@@ -93,6 +105,35 @@ describe('the game on top of any Redis', () => {
   });
 });
 
+// 2026-09-14: a pair used to read every vote; now only the count and what is new.
+describe('reading only what is new', () => {
+  it('counts the votes and hands over the tail from a position, alike in memory and on Redis', async () => {
+    for (const store of [memoryStore(), commandsStore(fakeRedis(), 'redis')]) {
+      for (let i = 0; i < 5; i++) await store.add('p', { ...vote, on: `2026-09-1${i}` });
+      expect(await store.count('p')).toBe(5);
+      expect(await store.count('empty')).toBe(0);
+      const { votes, seen } = await store.votesFrom('p', 3);
+      expect(seen).toBe(2);
+      expect(votes.map(v => v.on)).toEqual(['2026-09-13', '2026-09-14']);
+      expect(await store.votesFrom('p', 5)).toEqual({ votes: [], seen: 0 });
+    }
+  });
+
+  it('steps over an entry it cannot read instead of fetching it again forever', async () => {
+    const odd: RedisCommands = { ...fakeRedis(), lRange: async () => [JSON.stringify(vote), 'not json'] };
+    expect(await commandsStore(odd, 'redis').votesFrom('p', 0)).toEqual({ votes: [vote], seen: 2 });
+  });
+
+  it('keeps the tally as one string beside the votes', async () => {
+    for (const store of [memoryStore(), commandsStore(fakeRedis(), 'redis')]) {
+      expect(await store.tally('p')).toBeNull();
+      await store.saveTally('p', '{"pool":"p"}');
+      expect(await store.tally('p')).toBe('{"pool":"p"}');
+      expect(await store.tally('q')).toBeNull();
+    }
+  });
+});
+
 describe('the Upstash REST store', () => {
   function recorder(answer: (body: unknown[]) => unknown, status = 200) {
     const calls: Array<{ url: string; body: unknown[]; auth: string | null }> = [];
@@ -110,6 +151,21 @@ describe('the Upstash REST store', () => {
     expect(calls[0].url).toBe('https://x.upstash.io');
     expect(calls[0].auth).toBe('Bearer secret');
     expect(calls[0].body).toEqual(['RPUSH', 'versus:p:votes', JSON.stringify(vote)]);
+  });
+
+  it('asks for a count, a tail and the tally with LLEN, LRANGE from a position, GET and SET', async () => {
+    const { calls, fetchImpl } = recorder(body => ({ result: body[0] === 'LLEN' ? 7 : body[0] === 'LRANGE' ? [] : null }));
+    const store = upstashStore('u', 't', fetchImpl);
+    expect(await store.count('p')).toBe(7);
+    await store.votesFrom('p', 4);
+    await store.tally('p');
+    await store.saveTally('p', 'x');
+    expect(calls.map(c => c.body)).toEqual([
+      ['LLEN', 'versus:p:votes'],
+      ['LRANGE', 'versus:p:votes', 4, -1],
+      ['GET', 'versus:p:tally'],
+      ['SET', 'versus:p:tally', 'x'],
+    ]);
   });
 
   it('reads the votes back and skips a line it cannot read', async () => {

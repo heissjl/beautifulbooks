@@ -5,14 +5,14 @@ import CoverImage from '@/components/CoverImage';
 import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
-import { board, bookPath, type Board, type BoardEntry, type Verdict } from '@/lib/hotornot/game';
+import { bookPath, cachedBoard, type Board, type BoardEntry, type Verdict } from '@/lib/hotornot/game';
 import { StoreUnavailableError, missingStoreMessage, storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
 
 /**
  * The standings of the cover game (ROADMAP 5.8a). Rendered on the server from
- * the store at request time. Titles appear here and only here: while voting,
- * the cover is judged and not the book.
+ * the store, counted once a minute (`cachedBoard`): the standings need every
+ * vote, and a minute of lag costs nothing a player would notice.
  *
  * Every sentence says what the votes support and nothing more (SPEC N12):
  * a crown is a finding only when the same cover has held it for CROWN_HOLD
@@ -96,7 +96,7 @@ export default async function BoardPage({ searchParams }: { searchParams: Promis
     problem = missingStoreMessage();
   } else {
     try {
-      result = await board(store, { top, bottom: flop });
+      result = await cachedBoard(store, { top, bottom: flop });
     } catch (err) {
       if (!(err instanceof StoreUnavailableError)) throw err;
       problem = 'The vote store did not answer. Reload in a moment.';
@@ -143,7 +143,8 @@ export default async function BoardPage({ searchParams }: { searchParams: Promis
             </section>
 
             <p className="mt-10 text-sm text-ink-3">
-              {result.flagged} {result.flagged === 1 ? 'cover was' : 'covers were'} reported as not a cover and taken out.
+              {result.flagged} {result.flagged === 1 ? 'cover was' : 'covers were'} reported as not a cover and taken out. The standings
+              are counted once a minute.
             </p>
           </>
         )}
