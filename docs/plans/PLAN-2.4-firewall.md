@@ -89,7 +89,7 @@ Die Frage aus 2.4, ob der Monitor eine Ausnahme braucht: **auf Hobby gibt es kei
 1. **Julian** (10 Minuten):
    - Den Entwurf veröffentlichen: im Dashboard unter Firewall → *Review Changes* → *Publish*, oder im Terminal `vercel firewall publish --project beautifulbooks --yes`.
    - Im Dashboard 3.2 Bot Protection auf *Log* und 3.3 AI Bots auf *Log* stellen, dann veröffentlichen.
-   - UptimeRobot nach 3.7 einrichten.
+   - UptimeRobot nach 3.7 einrichten — **später**, eigener Schritt (Julian, 2026-09-14: „das mit uptime robot mache ich später"). Die Woche im Log beginnt mit dem Veröffentlichen, nicht mit dem Monitor.
 2. **Eine Woche warten.**
 3. **Claude** mit Julian: Firewall-Traffic je Regel lesen, im Dashboard unter <https://vercel.com/julian-heiss-projects/beautifulbooks/firewall/traffic?filter=rule_api_google_burst_HfssuN> für Regel 3.4, die Regelsätze entsprechend; Zahlen in die Historie. Entscheiden: Regel 1 auf 429 und die Grenze nachziehen; Bot Protection *Log* oder *Challenge*; AI Bots (Julians Entscheidung).
 4. Geltende Einstellungen in SPEC N10, 2.4 abhaken.
