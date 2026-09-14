@@ -21,6 +21,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Eine ISBN oder eine Work-ID im Suchfeld führt zu ihrer Ausgabe: bei genau einem Treffer `?isbn=` auf der Karte und vorgewähltes Cover auf der Detailseite; mehr als ein Treffer heißt „nicht gefunden“ | 2026-09-10 | — | 6.29 | `lib/queryshape.ts`, `components/BookGrid.tsx`, `BookWorkCard.tsx`, `BookDetail.tsx` |
 | Enter sendet ab (von Hand geprüft) | bestätigt 2026-09-10 | F1.5 | 0.8 | `components/SearchBar.tsx` |
 | Suchfeld in der Kopfzeile auf jeder Seite außer der Suche; ein Eingabefeld, Lupe auf dem Telefon; Zurück-Link heißt „Results“ / „Home“ | 2026-09-10 | F1.4a | 6.28 | `components/HeaderSearch.tsx`, `SiteHeader.tsx` |
+| Die Mosaik-Anfrage einer Karte fragt nach einer stummen Antwort (5xx, Netzfehler) nach 1,5 s ein zweites Mal; ein 404 oder 429 nicht | 2026-09-11 | F1.7, F3.3 | 6.5 | `components/useCardCovers.ts` |
 
 ## Detailseite: die Cover-Wand
 

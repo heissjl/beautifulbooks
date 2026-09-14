@@ -39,6 +39,11 @@ describe('linkPlan cases', () => {
     expect(p.case).toBe('foreign');
     expect(p.place).toBe('Turkey');
     expect(p.note).toContain('registered in Turkey');
+    // Why it matters to the reader, and the limit of what was done (6.27).
+    expect(p.note).toContain('shops in the English-language area may not carry it');
+    expect(p.note).toContain('was not checked');
+    // The sorting rule is method and lives on the About page (N13).
+    expect(p.note).not.toContain('come first');
   });
 
   it('keeps Amazon’s own range apart and says why the link is a search', () => {

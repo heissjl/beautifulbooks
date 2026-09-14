@@ -2073,3 +2073,56 @@ Die Blässe-Regel ist relativ zum Werk. Eine feste Untergrenze wäre ein neuer S
 Tests 470, `tsc`, Lint und Build grün.
 
 **In Produktion einmal nachgesehen**, nach dem Deploy von `3da68e9` (Vercel meldete Erfolg): Die Startseite bei 1280 × 800 zog *Portnoy's Complaint · Philip Roth* (`/book/OL74676W`), mit 7 Plätzen, und alle 7 Cover waren geladen.
+
+## 2026-09-11 · Eine Google-ID zweimal in der Liste der Wand (ROADMAP 6.37)
+
+Gefunden beim Browser-Check von 1.11: React meldete auf *Going Postal* zwei Kinder mit dem Schlüssel `gb:WkePEAAAQBAJ`. Der Punkt verlangte, erst die Ursache zu finden und dann zu entdoppeln — eine doppelte ID hätte auch auf eine doppelte Ausgabe zeigen können.
+
+**Die Ursache, in den Daten nachgewiesen** (`npm run dev`, `/book/OL453733W?isbn=9780857525086`, das gewählte Cover `ol:8448550` mit einer einzigen Ausgabe `OL26794407M`): Seite 0 trägt vier Google-Kandidaten aus der Titelsuche, darunter `gb:WkePEAAAQBAJ`; die ISBN-Nachschau für 9780857525086 antwortet mit genau diesem Band. `buildWall` legte beides aneinander (`[...merged.covers, ...extra]`), die ID stand also zweimal in der Liste, die gefaltet wird. Faltet sie in ein Open-Library-Cover, steht sie zweimal unter dessen Scans; faltet sie nicht, stehen zwei Kacheln mit einem Schlüssel auf der Wand. Dasselbe passiert, wenn zwei ISBNs einer Ausgabe bei Google denselben Band ergeben. **Eine doppelte Ausgabe steckt nicht dahinter.**
+
+**Die Reparatur** sitzt dort, wo die Dopplung entsteht, nicht beim Falten: `withRetailCovers` in `lib/works.ts` fügt ein Händler-Cover nur an, wenn die Wand es noch nicht hat; sonst bekommt das vorhandene die Ausgaben, die die Nachschau nennt. Nichts fällt weg, und das Urteil der Seitenleiste bleibt gleich, weil es das Händlerbild an seiner ID sucht (in der Wand oder unter den gefalteten Scans). Vier Tests in `lib/__tests__/retailCovers.test.ts`, einer davon faltet das Ergebnis und prüft, dass nichts zweimal gelistet wird.
+
+**Gesehen nach der Reparatur:** die ganze Wand von *Going Postal* („All languages“) hat 16 Kacheln, keine ID doppelt. Die React-Warnung selbst ließ sich in dieser Sitzung weder vor noch nach der Reparatur auslösen — sie hängt daran, in welches Cover die Faltung den Band legt, und das hängt davon ab, welche Signaturen gerade im Cache sind. Die doppelte ID in der Eingabe des Faltens war dagegen vor der Reparatur in den Antworten zu sehen.
+
+## 2026-09-11 · Der Satz zur Händlerreihenfolge wird kürzer (ROADMAP 6.27)
+
+Der letzte Satz aus der Tabelle in 6.27, der nicht auf 0.1 wartet. Er stand unter den Kauf-Links, wenn die ISBN einer Ausgabe nicht aus dem eigenen Markt stammt: „This printing’s ISBN was registered in India. Marketplaces that list copies from anywhere come first; no shop was asked.“ Der mittlere Teil ist die Regel, nach der die Links sortiert sind — Methode, nicht Anschauung, also nach N13 kein Satz für die Seitenleiste. Die About-Seite erklärt sie seit 1.11 ausführlich.
+
+Jetzt: „This printing’s ISBN was registered in India, so shops in the German-language area may not carry it. Whether any shop has a copy was not checked.“ Drei Teile, jeder mit Grund: die Tatsache ist aus der Registrierungsgruppe abgelesen; die Folge („may not carry it“) ist der Grund, weshalb der Satz überhaupt dasteht; die Einschränkung verhindert, dass er nach einer Bestandsprüfung klingt (N12). Ohne bekanntes Land lautet er „… was not registered in the German-language area, so shops there may not carry it. …“. **Eine erste Fassung war zu knapp:** „This printing’s ISBN was registered in India; no shop was asked.“ — Julian am selben Abend: „zu kurz/kontextlos“. Sie sagte weder, wonach nicht gefragt wurde, noch, warum die Herkunft der Nummer den Leser angeht; beides stand vorher im gestrichenen Mittelteil mit drin. Die Tests prüfen weiter „registered in Turkey“; der Satz wartete bis heute, weil der Branch von 1.11 `lib/linkplan.ts` umbaute. Von 6.27 bleibt der Absatz zum Verfügbarkeits-Button, der erst nach der Entscheidung 0.1 angefasst wird.
+
+## 2026-09-11 · Eine Karte fragt zweimal, bevor sie sich mit einem Cover begnügt (ROADMAP 6.5)
+
+Seit dem 2026-09-08 bekannt, am 2026-09-09 im Code bestätigt: bei `alice in wonderland` antwortete eine Mosaik-Anfrage (`/api/works/<id>?summary=1`) mit 503, und die Karte blieb bei einem einzigen Cover — `useCardCovers` fing jeden Fehler stumm ab und kannte keinen zweiten Versuch. Für den Leser sah das aus wie ein Buch mit einem Cover, nicht wie eine Quelle, die nicht geantwortet hat. Die Wiederholung aus 1.10 sitzt nur in der Suche, die aus 6.31 nur beim Laden der Bilder.
+
+**Jetzt:** nach 5xx oder einem Netzfehler fragt die Karte nach 1,5 s ein zweites Mal, dieselbe Pause wie eine Kachel in 6.31. Ein 404 oder ein 429 ist eine Antwort und wird nicht wiederholt. Die Pause verbringt die Karte außerhalb der Warteschlange (`coverQueue`, acht Plätze), damit eine schweigende Quelle keinen Platz belegt. Scheitert auch der zweite Versuch, behält die Karte ihr Suchcover — ein echtes Cover dieses Buchs, nie eine leere Kachel.
+
+**Nachgestellt auf `npm run dev`:** im Browser `fetch` so ersetzt, dass die **erste** Mosaik-Anfrage jeder Karte 503 bekommt, dann die Suche `gravity's rainbow` über den Router geöffnet (ein Neuladen hätte den Ersatz verworfen). **Alle zwölf Karten fragten genau zweimal**, und die Mosaike standen: die ersten drei Karten mit vier Kacheln. Die Simulation ersetzt die Antwort im Browser, nicht einen echten Ausfall von Open Library; der Pfad im Code ist derselbe.
+
+Von 6.5 bleiben die übrigen Kleinigkeiten: Tippfehler-Toleranz, ein Label „about this book“ auf Sekundärliteratur, ein Weg aus der Telefon-Schublade zurück zur Wand und `priority` auf den ersten Kacheln (vorher neu messen, 1.3 hat es verschoben). Im Kopf der Roadmap sind dabei zwei veraltete Zeilen nachgezogen: 6.25a stand noch als „nicht gepusht“, Zeile 5 nannte den Mosaik-Ausfall.
+
+## 2026-09-11 · Die Messleiste der Sprach-Pillen machte die Seite am Telefon 806 px breit (ROADMAP 6.8, N14)
+
+Julian: „checke mal, ob die anzeige bei mobile passt. ich hatte letztens ein problem mit dem sizing.“ Gemessen auf `npm run dev` bei 390 × 844, deutscher Markt, *Going Postal* mit der englischen ISBN 9780857525086.
+
+**Der Befund.** Startseite, Trefferliste (`gravity's rainbow`) und Jahrzehnte-Seite (*Gravity's Rainbow*) waren genau 390 px breit. **Die Werkseite war 806 px breit.** Die Ursache ist die Messleiste aus 6.8 (`useRowFit`): eine unsichtbare Kopie aller Sprach-Pillen in einer Zeile, damit auch die Breiten der weggeklappten bekannt sind. Sie war `absolute … w-max` und `invisible` — unsichtbar, aber nicht aus der Breite der Seite genommen. Die Folgen: die Seite ließ sich seitlich schieben, und die Telefon-Schublade, die `fixed inset-0` ist und ihre Breite von der Seite nimmt, war ebenfalls 806 px breit. Der neue Hinweis zur ISBN stand dort in einer Zeile von 775 px und war an beiden Rändern abgeschnitten. Seit 6.8 in Produktion.
+
+**Die Reparatur.** Die Messleiste steckt jetzt in einer Hülle mit Höhe 0 und `overflow-hidden` über der vollen Breite. Die Breiten, die `useRowFit` liest, sind die der Pillen selbst (`getBoundingClientRect`) und ändern sich durch das Abschneiden nicht.
+
+**Nachher, bei 390 px:** *Going Postal* 390 px breit; die Pillen in zwei Zeilen wie vorher (English, German, Spanish / Polish, Unknown, All languages); die Schublade 390 px, der Hinweis 358 px breit in drei Zeilen, vollständig lesbar. Bei 1280 px unverändert: *Siddhartha* in zwei Zeilen, keine Überbreite.
+
+**Was die Reparatur nebenbei zum ersten Mal ausführt:** die Zwei-Zeilen-Regel am Telefon. Solange die Seite 806 px breit war, hatte die Pillenzeile 774 px statt 358, und die Rechnung in `lib/rowfit.ts` lief bei echter Telefonbreite nie. Nachgerechnet an *Siddhartha* mit den gemessenen Breiten (English 90,7, German 93,9, Spanish 96,1, GU 58,9 … „+n more“ 86,5, Unknown 106,8, All languages 134,5; Zeile 358, Abstand 8): drei Sprachen, dann „+4 more“, Unknown und All languages ergeben zwei Zeilen, eine vierte Sprache ergäbe drei — und genau so steht es auf dem Bildschirm. Während weitere Seiten eintreffen und Sprachen dazukommen, war einmal kurz ein Zwischenstand mit drei Zeilen zu sehen („+1 more“), eine Sekunde später wieder zwei.
+
+**Nachgemessen über weitere Breiten** (Julian: „funktioniert es auch für andere mobil-breiten sauber?“). *Siddhartha*, nach jeder Größenänderung ein Frame erzwungen:
+
+| Breite | Seite | Pillen | Zeilen (Soll) |
+|---|---|---|---|
+| 320, 360, 375 | so breit wie der Schirm | English, German, +5 more / Unknown, All languages | 2 (≤ 2) |
+| 414, 430 | so breit wie der Schirm | English, German, Spanish, GU / +3 more, Unknown, All languages | 2 (≤ 2) |
+| 600 | so breit wie der Schirm | – | 2 (≤ 2) |
+| 640, 768 | so breit wie der Schirm | alle sieben Sprachen, Unknown, All languages | 2 (≤ 3) |
+
+Bei 320 px außerdem Startseite, Trefferliste und Jahrzehnte-Seite ohne Überbreite; die Schublade auf *Going Postal* 320 px breit, der ISBN-Hinweis 288 px in vier Zeilen, nichts darin ragt über den Rand. Bei 768 px (Tablet, dort gibt es die Schublade noch) 768 px und der Hinweis in zwei Zeilen.
+
+**Ein Messfehler, der beinahe als Befund durchgegangen wäre:** ohne erzwungenen Frame standen die Pillen bei allen Telefonbreiten in drei bis vier Zeilen mit „+1 more“. Das verborgene Browser-Panel malt keine Frames, und ohne Frame liefert der `ResizeObserver` keine neuen Maße — die Pillen blieben beim Stand der letzten gemalten Frame. Ein Screenshot vor jeder Messung erzwingt den Frame. Wer im Panel Layout nach einer Größenänderung misst, macht vorher einen.
+
+**Nebenbei gesehen, nicht behoben:** bei 320 px bricht auf der Werkseite der Seitentitel „Beautiful Books“ in der Kopfzeile auf zwei Zeilen um, sobald rechts „Share“ steht. Kein Überlauf, aber unschön; eingetragen bei 6.30a.

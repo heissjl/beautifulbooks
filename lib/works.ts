@@ -666,6 +666,38 @@ export function sameCover(
  * edition), then the first seen. Edition ids are unioned; folded ids are
  * kept in `similarIds` so the UI can say "+2 similar".
  */
+/**
+ * The wall's covers with the retail covers of a selected ISBN joined in
+ * (SPEC §9.3 step 13a), each id once (ROADMAP 6.37).
+ *
+ * Google's image for an ISBN is often a volume the title search on page 0
+ * already put on the wall: on *Going Postal* (2026-09-11) `gb:WkePEAAAQBAJ`
+ * was both a page-0 candidate and the answer for ISBN 9780857525086.
+ * Appended as it came, it stood in the list twice, and folding then either
+ * put two tiles with one key on the wall or listed the id twice among the
+ * scans of the cover it folded into — React reported the duplicate key. Two
+ * ISBNs of one printing that Google answers with the same volume do the same.
+ *
+ * A cover that is already there keeps its place and gains the editions the
+ * lookup names; nothing is dropped, so the verdict still finds the shop's
+ * image by its id.
+ */
+export function withRetailCovers(covers: readonly Cover[], extra: readonly Cover[]): Cover[] {
+  const out = [...covers];
+  const at = new Map(covers.map((c, i) => [c.id, i]));
+  for (const e of extra) {
+    const i = at.get(e.id);
+    if (i === undefined) {
+      at.set(e.id, out.length);
+      out.push(e);
+      continue;
+    }
+    const editionIds = uniq([...out[i].editionIds, ...e.editionIds]);
+    if (editionIds.length !== out[i].editionIds.length) out[i] = { ...out[i], editionIds };
+  }
+  return out;
+}
+
 export function foldDuplicateCovers(
   covers: readonly Cover[],
   signatures: ReadonlyMap<string, ImageSignature>,

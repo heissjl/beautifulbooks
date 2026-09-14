@@ -6,6 +6,9 @@ import { withSlot } from './coverQueue';
 import { distinctCovers } from './coverHash';
 import { MOSAIC_CANDIDATES, MOSAIC_COVERS } from '@/lib/works';
 
+/** Pause before the second attempt at a card's mosaic, the same as a tile's (6.31). */
+const MOSAIC_RETRY_MS = 1500;
+
 /**
  * Fills a search card's mosaic with covers of several editions
  * (SPEC §9.3 step 14).
@@ -40,17 +43,32 @@ export function useCardCovers(workId: string, initial: readonly string[]): strin
   useEffect(() => {
     if (asked.current === workId) return;
     asked.current = workId;
-    withSlot(async () => {
-      // Deliberately not abortable: the answer is cheap, cached, and warms
-      // the detail page even when the reader has moved on.
+    // Deliberately not abortable: the answer is cheap, cached, and warms the
+    // detail page even when the reader has moved on.
+    const ask = () => withSlot(async () => {
       const res = await fetch(`/api/works/${encodeURIComponent(workId)}?summary=1`);
-      return res.ok ? ((await res.json()) as WorkSummaryResponse) : null;
-    })
+      if (res.ok) return (await res.json()) as WorkSummaryResponse;
+      // Silence from the catalogue is worth a second attempt; a 404 or a 429
+      // is an answer, and asking again would only repeat it.
+      if (res.status >= 500) throw new Error(`mosaic answered ${res.status}`);
+      return null;
+    });
+    /*
+      One more attempt after a pause (ROADMAP 6.5). Seen on "alice in
+      wonderland", 2026-09-08: one mosaic request answered 503 and the card
+      kept a single cover, which reads as a book with one cover rather than a
+      source that did not answer. The retry from 1.10 sat in the search path
+      only. The pause is spent outside the queue, so a failing card does not
+      hold one of its eight places while it waits.
+    */
+    ask()
+      .catch(() => new Promise(resolve => setTimeout(resolve, MOSAIC_RETRY_MS)).then(ask))
       .then(data => {
         if (data?.coverUrls?.length) setLoaded({ id: workId, urls: data.coverUrls });
       })
       .catch(() => {
-        // A card that keeps its single cover is a small loss; never surface it.
+        // Twice without an answer: the card keeps its search cover, which is
+        // a real cover of this book — never an empty tile.
       });
   }, [workId]);
 
