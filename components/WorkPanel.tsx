@@ -30,7 +30,7 @@ interface WorkPanelProps {
 }
 
 export default function WorkPanel({ work, editions, language, settled }: WorkPanelProps) {
-  const blurb = blurbFor(editions, language);
+  const blurb = blurbFor(editions, language, work);
   const span = settled ? editionSpan(editions) : null;
 
   return (
@@ -57,13 +57,26 @@ export default function WorkPanel({ work, editions, language, settled }: WorkPan
             reader asked for, the language is named rather than left to puzzle
             over (the Wolf Hall case: the longest blurb is Portuguese).
           */}
-          <p className="mt-2 text-xs text-ink-3">
-            Description from the {[blurb.edition.publisher, blurb.edition.year].filter(Boolean).join(' ') || 'unnamed'} edition
-            {language && blurb.edition.language && blurb.edition.language !== language
-              ? `, in ${languageName(blurb.edition.language)}`
-              : ''}
-            , via {blurb.edition.source === 'openlibrary' ? 'Open Library' : 'Google Books'}.
-          </p>
+          {/*
+            The work's own text (ROADMAP 6.46) is attributed to who wrote it:
+            a description that names Wikipedia is CC BY-SA and must say so;
+            the rest was entered by an Open Library contributor.
+          */}
+          {blurb.edition ? (
+            <p className="mt-2 text-xs text-ink-3">
+              Description from the {[blurb.edition.publisher, blurb.edition.year].filter(Boolean).join(' ') || 'unnamed'} edition
+              {language && blurb.edition.language && blurb.edition.language !== language
+                ? `, in ${languageName(blurb.edition.language)}`
+                : ''}
+              , via {blurb.edition.source === 'openlibrary' ? 'Open Library' : 'Google Books'}.
+            </p>
+          ) : (
+            <p className="mt-2 text-xs text-ink-3">
+              {blurb.source === 'wikipedia'
+                ? 'Description from Wikipedia (CC BY-SA), via the Open Library record of this book.'
+                : 'Description from the Open Library record of this book.'}
+            </p>
+          )}
         </div>
       )}
 

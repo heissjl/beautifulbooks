@@ -1,0 +1,43 @@
+{
+  "key": "/works/OL30751W",
+  "title": "Mumbo jumbo",
+  "authors": [
+    {
+      "type": {
+        "key": "/type/author_role"
+      },
+      "author": {
+        "key": "/authors/OL27626A"
+      }
+    },
+    {
+      "type": {
+        "key": "/type/author_role"
+      },
+      "author": {
+        "key": "/authors/OL11412010A"
+      }
+    },
+    {
+      "type": {
+        "key": "/type/author_role"
+      },
+      "author": {
+        "key": "/authors/OL10828018A"
+      }
+    },
+    {
+      "type": {
+        "key": "/type/author_role"
+      },
+      "author": {
+        "key": "/authors/OL6284880A"
+      }
+    }
+  ],
+  "first_publish_date": "1972",
+  "description": {
+    "type": "/type/text",
+    "value": "Spanning a dizzying host of genres, from cinema to academia to mythology, Mumbo Jumbo is a lively ride through a key decade of American history the 1920's. In addition to ragtime, blues, and jazz, Reed's allegory draws on the Harlem Renaissance, the Back to Africa movement, and America's occupation of Haiti. His style throughout is as avant-garde and vibrant as the music at its center. From New Orleans to Chicago to New York, the \"Jes Grew\" epidemic makes people desperate to dance, overturning social norms in the process."
+  }
+}

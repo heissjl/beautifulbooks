@@ -108,6 +108,13 @@ async function record({ slug, query, expectAuthor, extraPages }: (typeof QUERIES
     return;
   }
   const workId = primary.key.replace('/works/', '');
+  // The work record, for its description (ROADMAP 6.46): trimmed to the
+  // fields the parser reads, so the fixture stays small and free of noise.
+  const workRecord = (await getJsonWithRetry(`https://openlibrary.org/works/${workId}.json`)) as Record<string, unknown>;
+  await writeFile(
+    path.join(dir, 'openlibrary-work.json'),
+    JSON.stringify(pick(workRecord, ['key', 'title', 'authors', 'first_publish_date', 'description']), null, 2),
+  );
   for (const offset of [0, ...(extraPages ?? [])]) {
     const editions = (await getJsonWithRetry(
       `https://openlibrary.org/works/${workId}/editions.json?limit=100&offset=${offset}`,

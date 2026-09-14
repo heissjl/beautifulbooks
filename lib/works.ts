@@ -816,10 +816,20 @@ export function verifyIsbnCover(
  * A blurb is publisher copy for *one* edition, never a description of the
  * work, which is why the edition travels with it and gets named.
  */
+export type Blurb =
+  | { text: string; edition: Edition; source?: undefined }
+  | { text: string; edition?: undefined; source: 'openlibrary' | 'wikipedia' };
+
 export function blurbFor(
   editions: readonly Edition[],
   language: string | undefined,
-): { text: string; edition: Edition } | null {
+  work?: Pick<Work, 'description' | 'descriptionSource'>,
+): Blurb | null {
+  // The work's own text is there only when the server decided it should be —
+  // as the fallback when no edition had one, or always under the switch — so
+  // its presence is the decision (ROADMAP 6.46).
+  if (work?.description) return { text: work.description, source: work.descriptionSource ?? 'openlibrary' };
+
   const withText = editions
     .map(e => ({ edition: e, text: (e.description ?? '').trim() }))
     .filter(e => e.text.length > 0);

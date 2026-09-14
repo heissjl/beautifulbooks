@@ -597,20 +597,20 @@ describe('blurbFor', () => {
   it('prefers the wanted language over a longer blurb in another', () => {
     // The measured Wolf Hall case: the longest description is Portuguese.
     const eds = [ed('a', 'pt', 'x'.repeat(927)), ed('b', 'en', 'Thomas Cromwell rises.')];
-    expect(blurbFor(eds, 'en')?.edition.id).toBe('b');
+    expect(blurbFor(eds, 'en')?.edition?.id).toBe('b');
   });
 
   it('falls back to any language when the wanted one has no blurb', () => {
     const eds = [ed('a', 'pt', 'Uma história.'), ed('b', 'en', undefined)];
     const found = blurbFor(eds, 'en');
-    expect(found?.edition.id).toBe('a');
+    expect(found?.edition?.id).toBe('a');
     // The caller needs the language to say whose words these are.
-    expect(found?.edition.language).toBe('pt');
+    expect(found?.edition?.language).toBe('pt');
   });
 
   it('uses the most common language of the work when none was asked for', () => {
     const eds = [ed('a', 'de', 'Die Geschichte.'), ed('b', 'en', 'The story.'), ed('c', 'en')];
-    expect(blurbFor(eds, undefined)?.edition.id).toBe('b');
+    expect(blurbFor(eds, undefined)?.edition?.id).toBe('b');
   });
 
   it('takes the longest among editions of the same language', () => {
@@ -620,6 +620,15 @@ describe('blurbFor', () => {
 
   it('answers null when no edition carries a description', () => {
     expect(blurbFor([ed('a', 'en'), ed('b', 'de', '   ')], 'en')).toBeNull();
+  });
+
+  it('takes the work description when the server sent one (ROADMAP 6.46)', () => {
+    const eds = [ed('a', 'en', 'Publisher copy for one edition.')];
+    const found = blurbFor(eds, 'en', { description: 'What the book is.', descriptionSource: 'wikipedia' });
+    expect(found).toEqual({ text: 'What the book is.', source: 'wikipedia' });
+    // Without one, the edition blurb as before.
+    expect(blurbFor(eds, 'en', { description: undefined })?.edition?.id).toBe('a');
+    expect(blurbFor([ed('a', 'en')], 'en', { description: 'Only the work has text.' })?.text).toBe('Only the work has text.');
   });
 });
 

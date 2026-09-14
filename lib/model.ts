@@ -18,6 +18,15 @@ export interface Work {
   firstPublishYear?: number;
   /** Total edition count reported by the source, not just what was loaded. */
   editionCount?: number;
+  /**
+   * The work's own description from Open Library, cleaned of markdown
+   * (ROADMAP 6.46). Present only when the server decided to ask for it: as a
+   * fallback when no edition on page 0 has a blurb, or always when
+   * BLURB_SOURCE=work. Its presence is the signal the panel reads.
+   */
+  description?: string;
+  /** Who the text names as its origin; Wikipedia is CC BY-SA and gets named. */
+  descriptionSource?: 'openlibrary' | 'wikipedia';
 }
 
 export interface Edition {

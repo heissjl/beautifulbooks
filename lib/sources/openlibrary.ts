@@ -5,6 +5,7 @@
  * throw on transport errors and return null / empty on 404, so the detail
  * page can tell "not found" from "temporarily unavailable".
  */
+import { cleanDescription, descriptionSource, type DescriptionSource, type RawDescription } from '../blurb';
 import type { Work, WorkSummary } from '../model';
 import { cleanAuthorEntries, cleanAuthors, normalizeTitle } from '../normalize';
 import { debug } from '../debug';
@@ -100,6 +101,8 @@ interface OlWorkResponse {
   title?: string;
   authors?: Array<{ author?: { key: string } }>;
   first_publish_date?: string;
+  /** A string or `{type: '/type/text', value}` — both occur (fixtures 2026-09-13). */
+  description?: RawDescription;
 }
 
 interface OlAuthorResponse {
@@ -238,12 +241,34 @@ async function getWorkViaDocument(workId: string): Promise<Work | null> {
   const names = await Promise.all(authorKeys.map(getAuthorName));
   const authors = cleanAuthors(names.filter((n): n is string => !!n));
 
+  const description = cleanDescription(work.description);
   return {
     id: workId,
     title: work.title,
     authors: authors.length ? authors : ['Unknown'],
     firstPublishYear: work.first_publish_date ? Number(work.first_publish_date.match(/\d{4}/)?.[0]) || undefined : undefined,
+    ...(description ? { description, descriptionSource: descriptionSource(work.description) } : {}),
   };
+}
+
+/**
+ * The work's own description (ROADMAP 6.46): one request to the work record,
+ * cached like the work. Never throws — a record that does not answer means
+ * no blurb, not a failed page (SPEC F3.3), and the panel simply shows none.
+ */
+export async function getWorkDescription(
+  workId: string,
+): Promise<{ text: string; source: DescriptionSource } | undefined> {
+  try {
+    const work = await fetchJson<OlWorkResponse>(`${BASE}/works/${encodeURIComponent(workId)}.json`, {
+      timeoutMs: OL_TIMEOUTS.work, revalidate: OL_REVALIDATE.work,
+    });
+    const text = cleanDescription(work.description);
+    return text ? { text, source: descriptionSource(work.description) } : undefined;
+  } catch (err) {
+    debug('openlibrary', `work description ${workId} failed: ${(err as Error).message}`);
+    return undefined;
+  }
 }
 
 async function getAuthorName(key: string): Promise<string | undefined> {
