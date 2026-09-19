@@ -127,6 +127,7 @@ Die Urteile sind ein festes Vokabular, weil das [Brett](kanban.html) sie liest: 
 | 6.45 | tun | 1 Tag | Open Library ist die Lebensader und hat keinen Plan B; die Sitemap-Seiten sollten einen Ausfall überleben |
 | 6.46 | erledigt | — | Erledigt 2026-09-14: Fallback und Schalter `BLURB_SOURCE`; eine Open-Library-Anfrage nur, wenn sie einen Text kauft |
 | 4.9 | zurückstellen | ½ Tag | Julians Wunsch — aber der Punkt sagt selbst: kein Wort nach Not bei 12 USD im Jahr. Auslöser: die ersten echten Kosten (Pro-Plan, ISBNdb) |
+| 6.47 | tun | 30 min | Die Suche belastet den `google`-Eimer, obwohl sie seit dem 2026-09-07 keine Google-Anfrage stellt: bremst zu früh, nicht zu spät, widerspricht aber N10. Kam mit dem Firewall-Zweig, bewertet am 2026-09-19 |
 
 **Drei Dinge, die aus der Tabelle folgen und nicht in einer Zeile stehen:**
 
