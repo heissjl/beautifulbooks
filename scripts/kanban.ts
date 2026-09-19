@@ -456,10 +456,15 @@ function render(items: Item[], stamp: string, production: string): string {
   const phaseFilters = Object.entries(PHASE_NAME)
     .map(([num, name]) => `<button type="button" data-filter="phase" data-value="${num}">P${num} ${name}</button>`).join('');
 
-  // The published page gets a viewport meta from its host; the local file
-  // needs its own, or a phone lays it out at 980 px and every measurement
-  // at 390 px is a picture of the wrong page (seen 2026-09-12).
-  return `<title>Beautiful Books Roadmap-Brett</title>
+  // The published page gets charset and viewport metas from its host; the
+  // local file needs its own. Without the viewport a phone lays it out at
+  // 980 px and every measurement at 390 px is a picture of the wrong page
+  // (seen 2026-09-12). Without the charset a browser falls back to
+  // windows-1252 and every umlaut on the board breaks - over a local server
+  // and from disk alike, which is exactly how the board is read here; as an
+  // artifact it looked right, so it went unnoticed until 2026-09-19.
+  return `<meta charset="utf-8">
+<title>Beautiful Books Roadmap-Brett</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
