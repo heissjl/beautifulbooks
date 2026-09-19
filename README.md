@@ -25,6 +25,7 @@ Copy `.env.example` to `.env.local` (git-ignored) and fill in what you have. Wit
 |---|---|
 | `GOOGLE_BOOKS_API_KEY` | Enables Google Books as a cover source. Without a key the shared anonymous quota is used, which is exhausted most of the time (HTTP 429). Use a second key for development so a working session cannot spend the production quota (ROADMAP.md 0.2). |
 | `NEXT_PUBLIC_SITE_URL` | Absolute origin of the deployment for canonical URLs, sitemap and Open Graph image. |
+| `BLURB_SOURCE` | `editions` (default when unset): the work panel shows an edition's blurb, almost always Google's, and asks Open Library for the work's own description only when no edition has one. `work`: always prefer the Open Library work description — the switch away from Google Books for blurbs. `off`: never ask. Any other value fails loudly (ROADMAP 6.46). |
 | `NEXT_PUBLIC_SITE_MODE` | `hobby` (default when unset) or `shop`, see below. Any other value fails the build. |
 | `IMPRINT_NAME`, `IMPRINT_STREET`, `IMPRINT_CITY`, `IMPRINT_EMAIL` | Name, address and e-mail for the legal notice and the privacy notice. Read on the server only; never in the repository. |
 | `AFFILIATE_AMAZON_TAG_US`, `_UK`, `_DE`, `AFFILIATE_BOOKSHOP_ID_US`, `_UK` | Affiliate parameters for purchase links, per market (SPEC.md §2.4, ROADMAP.md phase 4). Ignored unless `NEXT_PUBLIC_SITE_MODE=shop`. |

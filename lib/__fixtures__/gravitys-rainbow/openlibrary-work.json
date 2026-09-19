@@ -1,0 +1,15 @@
+{
+  "key": "/works/OL2636675W",
+  "title": "Gravity's Rainbow",
+  "authors": [
+    {
+      "author": {
+        "key": "/authors/OL384171A"
+      },
+      "type": {
+        "key": "/type/author_role"
+      }
+    }
+  ],
+  "first_publish_date": "1973"
+}

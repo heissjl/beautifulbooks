@@ -533,10 +533,13 @@ describe('verifyIsbnCover', () => {
     expect(verifyIsbnCover(selected, ['gb:shop'], [selected], true)).toEqual({ status: 'verified' });
   });
 
+  const sig = {} as unknown as import('../imagesig').ImageSignature;
+  const signed = (...ids: string[]) => new Map(ids.map(id => [id, sig]));
+
   it('reports the other design when the shop image stayed its own tile', () => {
     const selected = cover('ol:scan');
     const shop = cover('gb:shop');
-    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true);
+    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true, false, signed('ol:scan', 'gb:shop'));
     expect(verdict).toMatchObject({ status: 'differs' });
     expect((verdict as { cover: Cover }).cover.id).toBe('gb:shop');
   });
@@ -544,8 +547,41 @@ describe('verifyIsbnCover', () => {
   it('follows the shop image into whatever tile it folded into', () => {
     const selected = cover('ol:scan');
     const other = cover('ol:other', ['gb:shop']);
-    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, other], true);
+    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, other], true, false, signed('ol:scan', 'gb:shop'));
     expect((verdict as { cover: Cover }).cover.id).toBe('ol:other');
+  });
+
+  /*
+    ROADMAP 6.32, Rowohlt 2011 on 2026-09-10: "a different cover" beside a
+    picture that was plainly the same one. Nothing folded because a picture
+    could not be fetched — and an unfolded tile read as a different design.
+  */
+  it('does not call it a different cover when the selected cover has no signature', () => {
+    const selected = cover('ol:scan');
+    const shop = cover('gb:shop');
+    const verdict = verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true, false, signed('gb:shop'));
+    expect(verdict).toMatchObject({ status: 'uncompared' });
+    expect((verdict as { cover: Cover }).cover.id).toBe('gb:shop');
+  });
+
+  it('does not call it a different cover when the shop image has no signature', () => {
+    const selected = cover('ol:scan');
+    const shop = cover('gb:shop');
+    expect(verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true, false, signed('ol:scan')))
+      .toMatchObject({ status: 'uncompared' });
+  });
+
+  it('compares nothing when no signatures are passed at all', () => {
+    const selected = cover('ol:scan');
+    const shop = cover('gb:shop');
+    expect(verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true)).toMatchObject({ status: 'uncompared' });
+  });
+
+  it('counts a signature of any scan folded into the selected cover', () => {
+    const selected = cover('ol:scan', ['ol:twin']);
+    const shop = cover('gb:shop');
+    expect(verifyIsbnCover(selected, ['gb:shop'], [selected, shop], true, false, signed('ol:twin', 'gb:shop')))
+      .toMatchObject({ status: 'differs' });
   });
 
   it('falls back to unknown when the shop image is nowhere on the wall', () => {
@@ -561,20 +597,20 @@ describe('blurbFor', () => {
   it('prefers the wanted language over a longer blurb in another', () => {
     // The measured Wolf Hall case: the longest description is Portuguese.
     const eds = [ed('a', 'pt', 'x'.repeat(927)), ed('b', 'en', 'Thomas Cromwell rises.')];
-    expect(blurbFor(eds, 'en')?.edition.id).toBe('b');
+    expect(blurbFor(eds, 'en')?.edition?.id).toBe('b');
   });
 
   it('falls back to any language when the wanted one has no blurb', () => {
     const eds = [ed('a', 'pt', 'Uma história.'), ed('b', 'en', undefined)];
     const found = blurbFor(eds, 'en');
-    expect(found?.edition.id).toBe('a');
+    expect(found?.edition?.id).toBe('a');
     // The caller needs the language to say whose words these are.
-    expect(found?.edition.language).toBe('pt');
+    expect(found?.edition?.language).toBe('pt');
   });
 
   it('uses the most common language of the work when none was asked for', () => {
     const eds = [ed('a', 'de', 'Die Geschichte.'), ed('b', 'en', 'The story.'), ed('c', 'en')];
-    expect(blurbFor(eds, undefined)?.edition.id).toBe('b');
+    expect(blurbFor(eds, undefined)?.edition?.id).toBe('b');
   });
 
   it('takes the longest among editions of the same language', () => {
@@ -584,6 +620,15 @@ describe('blurbFor', () => {
 
   it('answers null when no edition carries a description', () => {
     expect(blurbFor([ed('a', 'en'), ed('b', 'de', '   ')], 'en')).toBeNull();
+  });
+
+  it('takes the work description when the server sent one (ROADMAP 6.46)', () => {
+    const eds = [ed('a', 'en', 'Publisher copy for one edition.')];
+    const found = blurbFor(eds, 'en', { description: 'What the book is.', descriptionSource: 'wikipedia' });
+    expect(found).toEqual({ text: 'What the book is.', source: 'wikipedia' });
+    // Without one, the edition blurb as before.
+    expect(blurbFor(eds, 'en', { description: undefined })?.edition?.id).toBe('a');
+    expect(blurbFor([ed('a', 'en')], 'en', { description: 'Only the work has text.' })?.text).toBe('Only the work has text.');
   });
 });
 

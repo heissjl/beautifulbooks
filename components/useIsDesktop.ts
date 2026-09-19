@@ -13,10 +13,13 @@ const DESKTOP = '(min-width: 1024px)';
  * and hiding one with CSS would load the cover image twice on the connection
  * that can least afford it, so the two are exclusive and this decides.
  *
- * The server answer is "desktop", which is never seen: the wall exists only
- * after the first edition page has arrived in the browser.
+ * The server answer is "desktop" by default, which is never seen: the wall
+ * exists only after the first edition page has arrived in the browser. The
+ * home page's ring of covers asks for "not desktop" instead, so the server
+ * never renders it: its seven covers carry preload links, and a phone fetched
+ * all seven for a picture it never showed (measured 2026-09-11, ROADMAP 1.9).
  */
-export function useIsDesktop(): boolean {
+export function useIsDesktop(serverAnswer = true): boolean {
   return useSyncExternalStore(
     onChange => {
       const query = window.matchMedia(DESKTOP);
@@ -24,6 +27,6 @@ export function useIsDesktop(): boolean {
       return () => query.removeEventListener('change', onChange);
     },
     () => window.matchMedia(DESKTOP).matches,
-    () => true,
+    () => serverAnswer,
   );
 }

@@ -1,42 +1,33 @@
 /**
- * The four covers fanned out beside the home page's headline (ROADMAP 1.9).
+ * The ring of covers beside the home page's headline (ROADMAP 1.9).
  *
  * Julian, 2026-09-07: „der Platz oben rechts ist perfekt für noch ein
  * Design-Element." The first screen said what the site does in a sentence
- * and showed none of it; this is the promise as a picture — one book, four
- * faces — in the visual language the loading stage already uses (`.stage-tile`).
+ * and showed none of it; this is the promise as a picture — one book, many
+ * faces. It began on 2026-09-10 as a fan of four *Dune* covers and became a
+ * ring of seven on 2026-09-11 (Julian: „7 ist aber eine gute Zahl"): at an
+ * odd count the far covers stand between the near ones instead of hidden
+ * right behind them.
  *
- * **Fixed ids, no request.** The covers are named here, like `lib/curated.ts`
- * names the wall's, so the first render costs nothing beyond four images
- * from `/img`, which the CDN holds after the first reader.
+ * **Which book: a curated one, drawn anew on every visit** (Julian,
+ * 2026-09-11: „es sollte wechseln zwischen werken aus der kuratierten liste,
+ * die mehr als 7 cover über der entsprechenden schwelle haben", and „nur pro
+ * Besuch"). The candidates are every curated work the cover index can fill
+ * with seven covers that clear the rules in `lib/heroring.ts`. Those rings are
+ * computed at build time into `data/hero-rings.json`
+ * (`scripts/build-hero-rings.ts`), so the browser gets ids and names, never
+ * the index, and a visit costs nothing beyond seven images from `/img`.
  *
- * **Picked by distance, not by eye.** Chosen on 2026-09-10 from the 133 Dune
- * covers in the built index by greedy farthest-point over colour distance and
- * dHash, after dropping blank-looking, low-saturation and low-contrast scans:
- * the four are at least 0.53 apart in colour (the "looks like this" gate is
- * 0.055) and 26 bits apart in structure (same-design folds at 8). A test
- * holds that, so a swapped id cannot quietly put two near-identical jackets
- * side by side — which would make the picture say the opposite of what it
- * is for.
- *
- * **The caption promises no number.** "four of its covers", not "four of
- * 133": the count moves with the catalogue and the folding, and §1 forbids
- * a figure the page cannot stand behind.
+ * **The caption names the book, not a count** (Julian, 2026-09-11): title and
+ * author. The number of covers on the ring is plain to see, and a count of
+ * the catalogue would move with it and the folding (§1, N12).
  */
-export interface HeroFan {
-  workId: string;
-  title: string;
-  author: string;
-  /** Four cover ids, left to right, in the index's `ol:<id>` form. */
-  coverIds: readonly [string, string, string, string];
+import ringsFile from '@/data/hero-rings.json';
+import type { HeroRing } from './heroring';
+
+export const HERO_RINGS: readonly HeroRing[] = (ringsFile as { rings: HeroRing[] }).rings;
+
+/** The ring for this visit; `random` is a parameter so a test can pin it. */
+export function pickHeroRing(random: () => number = Math.random): HeroRing {
+  return HERO_RINGS[Math.min(HERO_RINGS.length - 1, Math.floor(random() * HERO_RINGS.length))];
 }
-
-export const HERO_FAN: HeroFan = {
-  workId: 'OL893414W',
-  title: 'Dune',
-  author: 'Frank Herbert',
-  coverIds: ['ol:8570801', 'ol:12780703', 'ol:11481225', 'ol:11481333'],
-};
-
-/** Degrees of tilt per tile, outer ones more, so the fan reads as held in a hand. */
-export const HERO_FAN_TILTS = [-10, -3, 4, 11] as const;

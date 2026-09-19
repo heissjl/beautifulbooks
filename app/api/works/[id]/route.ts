@@ -8,7 +8,7 @@ import type { PageInfo } from '@/lib/pages';
 import { OL_EDITIONS_PAGE } from '@/lib/sources/openlibrary';
 import { displayTitle } from '@/lib/normalize';
 import { getWorkPage, isWorkId } from '@/lib/work';
-import { MOSAIC_COVERS } from '@/lib/works';
+import { MOSAIC_CANDIDATES, type SiblingWork } from '@/lib/works';
 import { rateLimited } from '@/app/api/rate';
 
 /**
@@ -39,6 +39,8 @@ export interface WorkPageResponse {
    * with `?market=`.
    */
   anyEditionLinks: BuyLink[];
+  /** Page 0: other records of the same book, to be walked with `?sibling=1` (ROADMAP 6.13). */
+  siblings?: SiblingWork[];
 }
 
 /**
@@ -96,10 +98,14 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
   const offset = offsetFromRequest(request.nextUrl.searchParams.get('offset'));
   const signatures = request.nextUrl.searchParams.get('signatures') === '1';
   const summary = request.nextUrl.searchParams.get('summary') === '1';
+  // A sibling's pages, walked for another work's wall (ROADMAP 6.13): Open
+  // Library only. Its title may differ in form from the lead's, so a Google
+  // search for it would be a second request that the cache cannot absorb.
+  const sibling = request.nextUrl.searchParams.get('sibling') === '1';
 
-  // Only a full page 0 asks Google; a mosaic and every later page do not, so
-  // they must not be charged against the shared quota bucket.
-  const spendsGoogle = !summary && offset === 0;
+  // Only a full page 0 asks Google; a mosaic, a sibling and every later page
+  // do not, so they must not be charged against the shared quota bucket.
+  const spendsGoogle = !summary && !sibling && offset === 0;
   const limited = spendsGoogle ? rateLimited(request, 'works', 'google') : rateLimited(request, 'works');
   if (limited) return limited;
 
@@ -108,7 +114,8 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
       offset: summary ? 0 : offset,
       signatures: summary ? false : signatures,
       // A mosaic never spends a Google request (SPEC §8.7, measured 2026-09-07).
-      googleBooks: !summary,
+      googleBooks: !summary && !sibling,
+      siblings: !summary && !sibling,
     });
     if (!page) {
       return NextResponse.json({ error: 'Work not found' }, { status: 404 });
@@ -124,7 +131,9 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
         the same Spanish printing put the same picture on a card twice
         (2026-09-07). The same rule picks the covers for a shared link.
       */
-      const coverUrls = coverImages(page.covers, MOSAIC_COVERS, page.editions);
+      // Eight, not four: the card drops repeats by image and fills from the
+      // rest (ROADMAP 6.34).
+      const coverUrls = coverImages(page.covers, MOSAIC_CANDIDATES, page.editions);
       const body: WorkSummaryResponse = { id, coverUrls };
       return NextResponse.json(body, {
         headers: { 'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800' },
@@ -138,6 +147,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
       page: page.page,
       market,
       anyEditionLinks: titleSearchLinksFor({ title: displayTitle(page.work.title), author: page.work.authors[0] }, market),
+      siblings: page.siblings,
     };
     return NextResponse.json(body, {
       // Varies by market, so shared caches must key on the cookie and country too.

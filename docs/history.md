@@ -1637,6 +1637,8 @@ Der letzte Punkt in Phase 1, der nicht auf Julian wartete, nach seiner Beobachtu
 
 **Ein Werkzeugbefund, der Zeit gekostet hat:** solange das Browser-Panel verborgen ist, meldet die Seite `document.hidden`, und jedes `getBoundingClientRect()` liefert Nullen, obwohl die Bilder laden und der DOM steht; ein Screenshot ist dann eine leere Fläche. Erst das Vorholen des Tabs macht Layoutmessungen möglich. Wer Layout misst, prüft vorher `document.hidden`.
 
+**In Produktion seit `8bce202`** (gepusht am Abend des 2026-09-10, einmal geprüft): der Fächer steht, alle vier Bilder kommen über `/img` und sind geladen, die Startseite trägt kein Kopfzeilen-Suchfeld. **Ein `curl` auf die Startseite kann das nicht sehen:** der Hero hängt an `useSearchParams` und wird erst im Browser gerendert — das ausgelieferte HTML hat weder Überschrift noch Suchfeld noch Fächer (10,9 KB). Wer die Startseite nach einem Deploy prüft, tut es im Browser; für About, Werk- und Jahrzehnte-Seiten reicht `curl`.
+
 ## 2026-09-10 · Der Fächer fliegt auf leere Kacheln (ROADMAP 6.25a, 6.24)
 
 Julian: „der cover-fächer ist oft schneller in der animation als auf den animierten kacheln das bild angezeigt wird. Haben wir diesen Fehler schon in der Roadmap aufgenommen?" — Nein, dieser nicht. **6.25** stand da (Kacheln, die leer *bleiben*), und das ist ein anderer Fehler mit derselben Wurzel.
@@ -1751,6 +1753,411 @@ Die 51 sind faul geladene Kacheln unterhalb des Sichtbereichs. **Das ist genau d
 **Dass die Kette in Produktion schreibt, ist trotzdem geprüft:** `/img/S/ol-999999999` liefert dort 502 mit gesetztem Kopf. Wer `bb.img` sehen will, filtert im Vercel-Dashboard unter Logs darauf; solange nichts kommt, ist die Antwort die obige.
 
 **Und ein Schönheitsfehler fiel beim Benutzen auf.** Für das fehlende Cover meldete der Kopf `200` — der Status der Gegenseite —, was auf einer gescheiterten Antwort das Gegenteil dessen sagt, was passiert ist. Jetzt steht der Status nur da, wenn der Status die Antwort *ist*; sonst `not-image`, `timeout` oder `error`. Ein Diagnosewerkzeug, das man erst deuten muss, ist eines zu wenig.
+
+---
+
+## 2026-09-11 · Firewall: was der Hobby-Plan kann, und dass Attack Mode aus ist (ROADMAP 2.4)
+
+Julian bat um einen Vorschlag für die Firewall-Einstellungen; der Vorschlag steht in [PLAN-2.4-firewall.md](plans/PLAN-2.4-firewall.md). Hier die Messung und was aus Vercels Doku für diese Seite folgt.
+
+| Gemessen / nachgelesen | Ergebnis |
+|---|---|
+| Ein `curl` auf `https://beautifulcovers.vercel.app/about`, einmal | **200**, `x-vercel-cache: PRERENDER`, kein `x-vercel-mitigated` — **Attack Mode ist aus** |
+| Herkunft der 403 vom 2026-09-09 | damit die **automatische DDoS-Abwehr** nach wiederholten Abrufen, keine Projekteinstellung |
+| Eigene Regeln auf Hobby | **3**, davon **1** Rate-Limit (10 s bis 10 min, Schlüssel IP oder JA4) |
+| System-Bypass auf Hobby | **keiner** (ab Pro 25) — eine Ausnahme für einen Monitor ist auf Hobby nicht möglich |
+| Bot Protection, AI Bots | auf allen Plänen frei; aus bzw. *Allow* per Voreinstellung |
+| `vercel.json` `routes[].mitigate` | nur `deny` und `challenge`, kein *Log*, kein Rate-Limit |
+| Verzeichnis verifizierter Bots | enthält `uptime-robot`, `googlebot`, `bingbot`, `facebookexternalhit`, `twitterbot`, `linkedinbot`; **nicht** WhatsApp, Telegram, Discord, Slack |
+
+**Was daraus folgt.** Die Sorge in 2.4, Attack Mode träfe jeden Crawler, war zu groß — verifizierte Bots kommen durch. Treffen würde er die Link-Vorschauen der vier Messenger, die im Verzeichnis fehlen, und damit das Teilen (6.20, 6.21). Und eine Rate-Limit-Regel in der Firewall kann das Google-Kontingent so wenig schützen wie das eingebaute Rate-Limit: 1.000 am Tag sind 0,7 in der Minute, jede Grenze, die ein Leser verträgt, lässt eine hartnäckige Adresse den Tag in unter einer Stunde aufbrauchen. Ihr Wert ist, dass sie je Region statt je Instanz zählt und abweist, bevor eine Funktion läuft.
+
+Nicht abgelesen: Bot Protection, AI Bots und eigene Regeln im Projekt — keine Vercel-CLI, Connector nicht angemeldet. Julian sieht beim Einstellen nach.
+
+**Nachtrag 2026-09-14, mit der Vercel-CLI (59.15.1, angemeldet als `heissjl`) abgelesen** (`vercel firewall status`, `overview` und `rules list`, jeweils mit `--project beautifulbooks`):
+
+| Einstellung | Stand |
+|---|---|
+| eigene Regeln | keine („Firewall: Not configured") |
+| Mitigations | *Active* |
+| Attack Mode | *Off* |
+| Bot Protection | *Off* |
+| AI Bots | *Allow* |
+| OWASP | *Off*, erst mit Security+ |
+| System-Bypass | „Requires Pro or Enterprise" |
+
+Alles steht also auf Voreinstellung. Traffic und Alarme gibt die CLI auf Hobby nicht heraus („need Observability Plus"). Die verwalteten Regelsätze kann sie nicht umstellen.
+
+Angelegt als **Entwurf, nicht veröffentlicht**: die Regel `api-google-burst` (`rule_api_google_burst_HfssuN`).
+- **Bedingung:** `/api/isbn/…` oder `/api/works/…` ohne `summary=1` und ohne `sibling=1`.
+- **Grenze:** 300 Anfragen je 600 s und IP, fester Zeitraum; bei Überschreitung `log`.
+
+`vercel firewall diff` zeigte genau diese eine Änderung. Gegenüber dem Plan vom 2026-09-11 ist `sibling=1` hinzugekommen, weil Geschwisterseiten seit 6.13 ebenfalls nie Google fragen (`spendsGoogle` in `app/api/works/[id]/route.ts`).
+
+## 2026-09-10 · Der Fächer ist repariert, die Übergabe nicht (ROADMAP 6.25a)
+
+Julian: „brauchen wir jetzt Schritt 3 und 4 von 6.25a?" Die Frage ist messbar, und der Punkt verlangt die Messung ohnehin. Kalt in Produktion, *Silas Marner*, Klick aus dem Suchergebnis:
+
+| | |
+|---|---|
+| Fächer-Kacheln | `1/1` bei 82 ms, `2/2` bei 1.442 ms, `3/3` bei 2.001 ms — **nie leer** |
+| Szenenende | 3.853 ms |
+| Erste Reihe der Wand in diesem Moment | **2 von 6 mit Bild** |
+| kurz darauf | 8 von 8 |
+
+**Schritt 1 und 2 haben getan, was sie sollten:** keine Kachel des Fächers war jemals ein leerer Rahmen. **Die Übergabe ist der Rest des Problems:** die Szene endet, weil die *Daten* da sind — zwei Cover eingelaufen und Seite 0 gehasht —, nicht, weil Bilder da sind, und der FLIP setzt die Cover auf eine Reihe, die zu zwei Dritteln leer ist.
+
+**Also 3 ja, 4 nein.** Und 3 ist billiger geworden, als der Punkt annahm: seit Schritt 1 lädt der Vorlauf genau die Adressen, die die Wand rendert — „warten, bis die erste Reihe steht" heißt damit „warten, bis N Vorladungen fertig sind", und braucht kein neues Signal von einer Wand, die während der Szene gar nicht gerendert ist.
+
+**4 hat sich beim Nachlesen erledigt, ohne gebaut zu werden.** Die Frist greift nur, wenn weniger als zwei Cover eingelaufen sind; dann steht keine Kachel, `measureStage()` liefert eine leere Liste, und es fliegt nichts. Der Fall „auf eine leere Wand fliegen" existiert nicht, und für ein Anheben der Frist gibt es keine Messung — im gemessenen Lauf hat sie die Szene gar nicht beendet.
+
+**Nebenbei zur Messtechnik:** der erste Anlauf hatte einen falschen Detektor für das Szenenende — er feuerte, bevor die erste Kachel überhaupt da war, und meldete „3 von 8" für einen Zeitpunkt, den es nicht gab. Ein Zustandswechsel ist erst einer, wenn der Ausgangszustand einmal beobachtet wurde.
+
+## 2026-09-11 · Der Fächer beginnt mit dem Bild, das schon steht (ROADMAP 6.25a)
+
+Julian: „baue Schritt 3", und dazu: „das Bild, das angezeigt wird, bevor der Fächer losgeht, ist dann ein anderes als das erste im Fächer. So hat der Fächer irgendwie einen Ladebildschirm vorm Ladebildschirm. Sollte der Fächer nicht einfach mit genau dem Bild dann anfangen?"
+
+**Beide Anläufe gingen im ersten Versuch daneben, und beide aus demselben Grund: eine Annahme über Reihenfolge.**
+
+**Das Karten-Cover an den Anfang der Liste zu stellen, genügte nicht.** Gemessen an *Daniel Deronda*: zuerst stand das Karten-Cover `ol-8243960`, dann ersetzte es `ol-2821935`. Die Szene stellt Cover in der Reihenfolge aus, in der ihre **Vorladungen fertig werden**, nicht in der Reihenfolge der Liste — und sie lud das Karten-Cover in Größe S vor, während die Seite es längst in L zeigte. Das Argument „es liegt sicher im Cache" stimmte für die falsche Größe. Jetzt wird das Cover **so übergeben, wie es auf dem Schirm steht**: seine Id und genau die Adresse, die schon gemalt ist (`lib/scene.ts`, `leadCover`). Es wird sofort die erste Kachel, ohne Vorlauf, ohne neuen Einzug und ohne Einblenden.
+
+**Und Schritt 3 maß im ersten Versuch die falschen Cover.** Die Übergabe wartete auf „sechs Vorladungen fertig" — aber die Vorladungen sind die ersten acht von Seite 0 in der Reihenfolge des Katalogs, und die Wand ist nach Sprachen sortiert. Auf *Daniel Deronda* stand von den ersten sechs Wandcovern **ein einziges** unter den Vorladungen; das Ergebnis von 4 von 6 war Zufall. Jetzt reicht die Seite der Szene die sechs Cover, die die Wand wirklich zuerst zeigt (`view.groups[0]`), die Szene lädt genau die vor und übergibt erst, wenn alle angekommen sind — ein gescheitertes zählt als angekommen, weil Warten daran nichts ändert —, längstens nach 8 s. Dafür musste `view` in `BookDetail` vor die Szene rücken.
+
+**Gemessen am Dev-Server, *Romola*, kalter Klick aus dem Suchergebnis:**
+
+| | |
+|---|---|
+| Karten-Cover (Hero) | `ol-297937`, steht bei 3,3 s |
+| Erste Fächer-Kachel | **`ol-297937`**, bei 5,0 s, als stehende Kachel ohne neuen Einzug |
+| Weitere Kacheln | drei, alle mit Bild, keine leer |
+| Szenenende | 7,4 s |
+| Erste Reihe der Wand in diesem Moment | **6 von 6** (vorher 2 von 6) |
+
+Die Konsole blieb leer; die Meldung „Fast Refresh … runtime error" während der Arbeit stammte aus den Neuladungen mitten im Editieren. Der Produktions-Build lief durch, nachdem ein erster Versuch am Zwei-Minuten-Limit des Werkzeugs gestorben war (Exit 137 ist ein Kill, kein Fehler im Code).
+
+**Damit ist 6.25a abgeschlossen:** Adresse (1), Einblenden auf `onLoad` (2), Übergabe an die echte erste Reihe (3), Schritt 4 unnötig — und der Anfang des Fächers als vierte Reparatur, die in der ursprünglichen Liste gar nicht stand.
+
+
+## 2026-09-11 · Vier Befunde vom Telefon behoben (ROADMAP 6.30 bis 6.33)
+
+Aus dem [Testbericht vom Tag](tests/2026-09-11-mobil.md), gebaut vor dem nächsten Deploy, in der Reihenfolge des Plans.
+
+**6.32, das falsche Urteil.** `verifyIsbnCover` bekommt die Signaturen, mit denen die Wand gefaltet wurde, und sagt `differs` nur noch, wenn beide Seiten eine haben. Sonst `uncompared`: das Bild daneben, der Satz *„…could not be compared with this cover"*. Sechs neue Tests, darunter der Fall, dass der gefaltete Zwilling des gewählten Covers die Signatur trägt. Am Rowohlt-Fall selbst nicht nachgestellt — Google antwortete an dem Tag auch anonym mit „Quota exceeded".
+
+**6.31, der zweite Versuch.** Nach dem ersten Fehler wartet eine Kachel 1,5 s und fragt unter `/img/…?retry=1` noch einmal; die Route liest keine Query, und ein Fehlschlag trägt `no-store`, also landet der zweite Versuch wirklich beim Server.
+
+**6.33, die alte Wand.** Gelöscht. Bis das Mosaik da ist, eine Fläche seiner Größe unter der Überschrift — zuerst ruhig, auf Julians Einwand („das stehende Mosaik leicht pulsierend … ist das nicht besser?") dann **atmend im Takt des fertigen Mosaiks**, so dass das Warten eine Bewegung ist: atmende Fläche, das Bild klärt sich, das Bild atmet. Geprüft am Dev-Server mit angehaltenen `/loading/`-Abrufen: die Fläche steht in 260 × 351 px und läuft `breathe 2.5s infinite`.
+
+**6.30, die Startseite am Telefon.** Gemessen im Browser, mit einem Stück JavaScript, das je Titel- und Autorzeile `scrollHeight > clientHeight` oder `scrollWidth > clientWidth` prüft, die Breite des Platzhalters per Canvas misst und den Abstand zwischen letzter Kachel und Fußzeile nimmt:
+
+| | 390 px vorher | 390 px nachher | 1280 px nachher |
+|---|---|---|---|
+| Platzhalter / Platz im Feld | 218 / 196 px | **194 / 212 px** (16 px Schrift) | 218 / 606 px |
+| abgeschnittene Titel | 9 von 18 | **0** | 0 |
+| abgeschnittene Autoren | 1 | 0 | 0 |
+| Abstand vor der Fußzeile | 96 px | **40 px** | 96 px |
+
+Beim ersten Nachmessen blieb *Frankenstein; or, The Modern Prometheus* auf dem Telefon auch zweizeilig abgeschnitten, auf dem Desktop nicht — genau der Fall, den N14 verbietet. Deshalb `tileTitle`: Kacheln tragen den Titel ohne Alternativtitel.
+
+**Die Vercel-Logs, zum ersten Mal lesbar.** Julian hat den CLI installiert und angemeldet (`vercel logs --project beautifulbooks`). Was sie nicht mehr enthalten: die Nacht der Aufnahme. **Vercel Hobby hält Laufzeit-Logs etwa eine Stunde** — `--since 2h --until 90m` antwortet 400, `--since 70m --until 55m` antwortet leer ohne Fehler. In der letzten Stunde vor der Abfrage: **0 Antworten mit 4xx, 0 mit 5xx**; eine Stichprobe der jüngsten 1.000 Zeilen (sechs Sekunden Verkehr) waren 940 `/img` mit 200 und 60 `/api` mit 200. Für 6.25 heißt das: mitlesen, während es passiert, nicht hinterher suchen.
+
+**Mitgelesen, eine Stunde später** (nach dem Deploy `2e08055`, 10:22). Julian öffnet *Infinite Jest* im Browser; die Logs von 11:00:13 bis 11:15:38, rückwärts geblättert bis nichts Neues kam:
+
+| | Anfragen |
+|---|---|
+| alle, entdoppelt | 290 |
+| `/img/M` frisch / aus dem CDN | 88 / 16 |
+| `/img/L` (Trefferkarten) | 16 |
+| `/img/S` | 12 |
+| `/img` mit Fehler, `bb.img`-Zeilen | **0** |
+| 4xx | 0 |
+| 5xx | 1 — `/api/works/OL6026940W`, „David Foster Wallace's Infinite jest", der Mosaik-Abruf einer Trefferkarte |
+
+Zwei Eigenheiten des CLI, die beim ersten Lesen täuschten: `--json` gibt **jede Anfrage etwa zwanzigmal** aus (1.000 Zeilen waren 50 Anfragen, entdoppelt über `id`), und `--limit` zählt diese rohen Zeilen — 1.000 deckten nur 28 Sekunden. Wer eine Viertelstunde sehen will, blättert mit `--until` rückwärts.
+
+**Julian dazu:** keine leeren Kacheln auf dem Schirm — „ich denke, es ist behoben. Ich melde mich, falls ich wieder Probleme sehe." Damit ist 6.25 abgehakt: der Server lieferte jedes Bild, und für einen vorübergehenden Aussetzer wie in der Nacht zuvor gibt es jetzt den zweiten Versuch aus 6.31. Die Ursache jener Nacht bleibt unbelegt.
+
+Tests 432, `tsc`, Lint grün.
+
+## 2026-09-11 · All languages auf beiden Geräten (ROADMAP 6.8)
+
+Julian vermisste die Pille am Telefon — sie war nie gebaut. Beim Bauen stand die Frage, die der Plan übersehen hatte: am Telefon scrollte die Reiterzeile seitlich, eine Pille *am Ende* hätte dort außerhalb des Bildschirms gestanden, am Desktop sichtbar (N14). Julian wählte **Weg 1**: die Zeile bricht auch am Telefon um. Damit das nicht die sechs Zeilen zurückbringt, wegen derer sie am 2026-09-07 zu scrollen begann, zeigt ein Telefon sechs Sprachen plus den aktiven Reiter und dahinter „+n more".
+
+Gemessen am Dev-Server:
+
+| | 390 px | 1280 px |
+|---|---|---|
+| *Infinite Jest*: Zeilen, Pille | 2 Zeilen, „All languages 15" sichtbar | — |
+| *Infinite Jest*: Gesamtansicht | 15 Kacheln von 15; ein Cover antippen hält die Ansicht | — |
+| *Nineteen Eighty-Four*: Zeilen | **3** (6 Sprachen, „+11 more", „All languages 224"), erste Kachel bei 424 px | 3, alle 17 Sprachreiter und die Pille |
+| … nach „+11 more" | 7 Zeilen, erste Kachel bei 568 px | — |
+
+Zwei Beobachtungen: hinter „+11 more" steckte am Telefon zuerst auch **„Unknown 100"**, weil „Unknown" immer zuletzt steht. Julian, noch am selben Tag: *„Unknown und alle Sprachen sollten beide nicht weggeklappt werden, weil unter Unknown sich oft noch Sachen verstecken."* Seither steht „Unknown" immer sichtbar zwischen „+n more" und „All languages" — nachgemessen: weiterhin **3 Zeilen**, erste Kachel bei 416 px, am Desktop unverändert. Und die Gesamtansicht zeigt Dubletten deutlicher als ein Sprachreiter: bei *Infinite Jest* stand das violette Einaudi-Cover zweimal da, einmal unter Italian, einmal unter Unknown — derselbe Befund wie M9 im [Testbericht](tests/2026-09-11-mobil.md), jetzt auf einen Blick.
+
+Tests 435, `tsc`, Lint und Build grün.
+
+**Zeilen statt Zahl** (Julian, am selben Tag: „lass es am Handy nur 2 Zeilen bei den Sprachpillen sein … am Desktop maximal 3 Zeilen"). Eine feste Zahl von Sprachen verspricht keine Zeilenzahl — sie hängt an Bildschirmbreite und Namen —, also misst eine unsichtbare Probe die Breite jeder Pille, und `lib/rowfit.ts` packt sie wie der Browser: links nach rechts, neue Zeile, wenn die nächste nicht passt, mit „+n more", „Unknown" und „All languages" am Ende der letzten Zeile. Der aktive Reiter bleibt immer sichtbar. Nachgemessen:
+
+| | sichtbar | Zeilen |
+|---|---|---|
+| *Nineteen Eighty-Four*, 390 px | English, German, Spanish, +13 more, Unknown 100, All languages 224 | **2** (erste Kachel bei 378 px statt 416) |
+| *Infinite Jest*, 390 px | alle vier Sprachen und All languages, kein „+n" | 2 |
+| *Nineteen Eighty-Four*, 1280 px | alle 17 Sprachen, Unknown, All languages | **3** |
+
+Tests 442, `tsc`, Lint grün.
+
+## 2026-09-11 · Karten ohne Wiederholung und nur gedruckte Bücher (ROADMAP 6.34 und 6.35)
+
+**6.34.** Die Karte vergleicht jetzt Bilder, nicht nur Verlag und Jahr: bis zu acht Kandidaten von der Route, der Hash im Browser mit derselben Rechnung wie auf dem Server (`lib/dhash.ts`), die ersten vier, die weiter als 8 auseinanderliegen. Am Dev-Server, „David Foster Wallace", 390 px:
+
+| Karte | vorher | nachher |
+|---|---|---|
+| *A supposedly fun thing* | 3 Kacheln, zwei gleiche (Abstand 0) | 2 |
+| *Oblivion* | 4, ein Paar mit Abstand 2 | 3 |
+| *Consider the Lobster* | 4, ein Paar mit Abstand 8 | 3 |
+| *String Theory* | Paar mit Abstand 32 und eine Textseite | unverändert — die Grenze des Hashs |
+| *Infinite Jest* | zwei Einaudi-Scans, Abstand 22 | unverändert — über Verlagsgrenzen faltet auch die Wand erst bis 8 (6.36) |
+| Größen | alle Kacheln L | erste L, übrige M (`/img/M/…`) |
+
+**6.35.** Zuerst gemessen, wie zugesagt: Googles `saleInfo.isEbook` steht in den Fixtures bei 25 von 100 Bänden, und die Beispiele sind gedruckte Bücher, die es *auch* als E-Book gibt — Reclam 238 Seiten, Broadview 322, Library of America 751. Das Feld meint das Angebot, nicht den Band; ein Filter darauf hätte Druckausgaben entfernt. Gebaut ist deshalb: eine Ausgabe, die Open Library als E-Book führt, verliert ihre ISBN, dieselbe Nummer auf einem Google-Band ebenso, das Cover bleibt; Hörbücher verwarf der Parser schon. Und die Suche nach einer Ausgabe nennt Verlag und Jahr nur, wenn ein gedruckter Open-Library-Datensatz sie trägt — die AbeBooks-Suche aus M10 hätte so statt null die 270 Treffer gefunden, unter denen Julian das blaue Cover fand. Nicht erkannt bleibt ein E-Book ohne Format im Katalog, wie 9780748130986 selbst.
+
+Tests 456, `tsc`, Lint und Build grün.
+
+## 2026-09-11 · Das Rondell: sieben Gesichter, die der Maus folgen (ROADMAP 1.9)
+
+Julian wollte den Fächer der Startseite etwas tiefer und fragte nach anderen Formen: „wie wäre es mit einem Rondell?"
+
+**Die Wahl.** Nebeneinander standen drei Formen: der Fächer 2 rem tiefer, ein Rondell und ein Stapel, der alle 3 s sein oberstes Cover wegspielt. Julian wählte das Rondell.
+
+**Die Maße.** Der erste Ring (Radius 7,5 rem, 12° von oben) war ein Haufen: Die Cover überdeckten sich, die hintere Reihe verschwand. Bei 18° steht die hintere Hälfte sichtbar über der vorderen. Danach schrumpfte der Ring zweimal auf Julians Wunsch: „minimal kleiner" auf 4,5 rem breite Cover mit Radius 8,5 rem, dann der Abstand zwischen den Covern um 10 % auf 7,65 rem.
+
+**Die Zahl.** Julian ließ 7, 8 und 9 vergleichen: Bei acht steht hinten immer ein Cover genau hinter dem vorderen, bei neun überdecken sich die vorderen gegenseitig. Er wählte sieben: „7 ist aber eine gute Zahl". Bei einer ungeraden Zahl steht die hintere Reihe versetzt zwischen den vorderen.
+
+**Die Maus.** Der erste Wunsch lautete: „wenn hover nicht stoppt, sondern das man damit das rondell hin und her bewegen kann". Die erste Umsetzung übersetzte die waagerechte Mausbewegung in eine Drehung, 240° über die volle Breite. Mit echter Maus gemessen: 256 px nach rechts ergaben −191,9°, erwartet waren −192°. Julian wollte mehr: „hover sensitiv nach region … der obere bereich muss wahrscheinlich entgegengesetzt reagieren", also den ganzen Kreis bewegen können.
+
+Seither liest `HeroRondell` den Zeiger als Winkel auf der Ellipse des Rings: 0° vorne, 180° hinten. Der Ring dreht sich um genau die Änderung dieses Winkels, so bleibt das Cover unter dem Zeiger am Zeiger. Dafür schreibt er einen Winkel `--turn` pro Frame, statt einer CSS-Animation zu folgen.
+
+**Zwei Fehler, im Messen gefunden:**
+1. **Durch die Mitte klappte der Ring um.** Von vorne rechts nach hinten links sprang er von −32° auf 138,8°, einen halben Umlauf. In der Mitte schwingt der Winkel von vorne nach hinten, und die tote Zone hielt den alten fest. Jetzt vergisst der Ring dort den letzten Winkel, und ein einzelnes Ereignis dreht höchstens 45°.
+2. **Das Telefon lud Cover, die es nie zeigte.** Unter `lg` war das Bild nur per CSS versteckt. Gemessen auf 390 px: das Rondell gemountet, seine Schleife lief unsichtbar weiter, **alle sieben Cover geladen**, dazu sieben Preload-Links. Beim Fächer vom 2026-09-10 galt dasselbe für vier; der Satz „unterhalb von `lg` gar nicht gerendert" im Roadmap-Eintrag stimmte nicht. Jetzt entscheidet `useIsDesktop(false)`: Der Server rendert das Rondell nie, der Browser nur ab `lg`. Ein leerer Platzhalter in seiner Größe steht von Anfang an da, damit beim Erscheinen nichts springt.
+
+**Das Layout.** Das Rondell stand in der Zeile der Überschrift, und seine Höhe schob das Suchfeld nach unten. Jetzt stehen Überschrift und Suchfeld links in einer Spalte, das Rondell senkrecht mittig daneben. Die Spalte gibt es in beiden Zuständen, damit das Suchfeld beim Absenden nicht neu gemountet wird.
+
+**Die Auswahl.** Zu den vier des Fächers kommen drei, nach derselben Methode wie am Vortag: greedy farthest-point, Pool ohne leere Scans und ohne das untere Viertel an Sättigung und Kontrast. Die drei sind `ol:15202652`, `ol:291296` und `ol:9256648`. Jedes Paar der sieben liegt ≥ 0,39 in der Farbe und ≥ 26 Bit im Hash auseinander.
+
+Julian verlangte: „der hash abstand zwischen den covern die in einem rondell landen, sollte höher sein als bei unseren sonstigen schwellen". Der Test prüft deshalb gegen die lockerste Hash-Schwelle der Seite. Das sind 20 Bit für zwei Cover mit derselben ISBN; die übrigen liegen bei 8 und 16 in der Faltung und bei 0,28 × 64 ≈ 18 Bit für „Looks like this". Diese Schwelle liest der Test aus den Konstanten, statt die Zahl abzuschreiben.
+
+**Die Bildunterschrift** nennt jetzt „Dune · Frank Herbert", auf Julians Wunsch Titel und Autor statt einer Anzahl.
+
+**Gemessen am Dev-Server des Worktrees:**
+
+| | Ergebnis |
+|---|---|
+| Strich nach rechts über die vorderen Cover | −40,6° (sie wandern mit nach rechts) |
+| derselbe Strich über die hinteren | +42,8°, entgegengesetzt |
+| von vorne rechts durch die Mitte nach hinten links | 2,2° (vor der Korrektur ein halber Umlauf) |
+| ein einzelner Sprung über die Mitte | 46,8° (Obergrenze 45° je Ereignis) |
+| ein Kreis mit der Maus um den Ring | −362° |
+| Zeiger ruht 1 s | −0,15° |
+| 1 s nach dem Verlassen | 8,1° (Eigendrehung 9°/s) |
+| 390 px, neu geladen | Rondell nicht gemountet, 0 der 7 Cover geladen, 0 Preloads; Suchfeld bei 320 px wie zuvor, kein seitliches Scrollen |
+| 1280 px | Platzhalter 304 × 228 px = Rondell samt Zeile; Text → Suchfeld 32 px; Suchfeld 768 px breit |
+| 1024 px (vor der 10-%-Verkleinerung) | Cover ragen 15 px über ihren Kasten, bleiben 41 px vor dem Fensterrand; kein seitliches Scrollen |
+| Suche absenden | dasselbe Eingabefeld-Element, Wert bleibt, `?q=dune`, Hero weg |
+
+**Wie gemessen wurde.** Das Browser-Fenster der Sitzung war ausgeblendet und gab keine Maus- und Tastaturereignisse an die Seite weiter: kein einziges `mousemove` am Dokument, und ein getippter Suchbegriff kam nicht an. Die Mausführung ist deshalb mit künstlichen `PointerEvent`s gemessen, die denselben Handler treffen, die Suche per `requestSubmit()`. Ein erster künstlicher Lauf mit Timer-Pausen ergab unplausible Werte, etwa +827° für einen kurzen Strich; eine Erklärung dafür habe ich nicht. Die Läufe danach, mit Pausen nach Frames, waren stimmig und wiederholbar. Ob sich die Drehung mit echter Hand gut anfühlt, hat nur Julian gesehen.
+
+Tests 437, `tsc`, Lint und Build grün.
+
+**In Produktion einmal nachgesehen** (nach dem Deploy von `3bedc3c`, Vercel meldete Erfolg): Startseite bei 1280 × 800, das Rondell mit 7 Plätzen, alle 7 Cover nach 1,1 s geladen, darunter „Dune · Frank Herbert", Eigendrehung 9° in einer Sekunde, Text → Suchfeld 32 px, Suchfeld 768 px. Die Mausführung ist dort nicht geprüft; das Browser-Fenster gab keine Eingaben weiter.
+
+## 2026-09-11 · Die ganze Wand auf einmal (ROADMAP 6.8)
+
+*Nie ausgeliefert. Als `main` am 2026-09-11 mit Produktion zusammengeführt wurde, stand dort schon eine andere Fassung von 6.8 (Eintrag „All languages auf beiden Geräten“ oben): die Reiter brechen um, „All languages“ ist eine Pille am Ende. Julian entschied, alles zusammenzuführen; es galt die ausgelieferte Fassung. Der Code dieser hier entfiel; ihr Test (`lib/__tests__/allLanguages.test.ts`) blieb, weil er die Ordnung von `coversNewestFirst` prüft, die beide Fassungen teilen, und gegen die ausgelieferte besteht.*
+
+Julians Wunsch vom 2026-09-07: die Cover eines Buchs auch ohne Sprachreiter sehen können. Gebaut als **letzter Reiter „All languages“**, hinter „Unknown“.
+
+**Drei Entscheidungen, die der Punkt offengelassen hatte.** *Ordnung:* dieselbe wie innerhalb eines Reiters (F2.5) — Jahr absteigend über alle Sprachen, unbekanntes Jahr dahinter, Scans, die nach Textseite aussehen, ganz hinten. Die Vergleichsfunktion ist dafür aus `groupCoversByLanguage` herausgelöst (`coversNewestFirst`), damit „zuerst“ in beiden Ansichten dasselbe heißt. *Adresse:* der Reiter steht **nicht** in der URL. `?lang=` ist dort der Suchfilter, und `all` heißt schon „kein Filter“; die anderen Reiter stehen auch nicht in der Adresse. Der Schlüssel ist `*`, damit er nie mit einem Sprachcode zusammenfällt. *Sichtbarkeit:* nur bei mehr als einer Sprache, sonst wiederholt er den einzigen Reiter. Die Ladeszene wartet weiter auf die gesuchte Sprache (`leadLanguagesSettled` kennt den neuen Reiter nicht), und ein ausgewähltes Cover öffnet weiter seinen Sprachreiter, weil der Gesamtreiter zuletzt gesucht wird.
+
+**Gesehen auf `npm run dev`, *Siddhartha* (OL872932W):** acht Sprachreiter — English 39, German 16, Spanish 10, GU 2, Russian 2, French 1, Italian 1, Unknown 28, zusammen 99 — und „All languages 99“ dahinter. Angeklickt: 99 Kacheln, vorne „Quickie Classics 2026“, „neobooks 2024“, hinten die Scans ohne Jahr. Ob die Zeile auf dem Telefon seitlich scrollt, ließ sich im verborgenen Browser-Panel nicht messen (`innerWidth` 0, wie am 2026-09-10 beschrieben); die Pille ist ein weiterer `chip` in derselben Zeile, die unterhalb von `sm` ohnehin seitlich scrollt.
+
+## 2026-09-11 · Die Wand lädt, was die Karte verspricht (ROADMAP 6.13)
+
+Julians Beobachtung vom 2026-09-08: „das Bild unten rechts im Mosaik ist nicht in der Wand." Die Ursache stand seitdem fest — die Suche fasst mehrere Open-Library-Datensätze eines Buchs zu einer Karte zusammen, die Detailseite lud nur einen. Offen war, ob sich der Aufwand lohnt; der Punkt verlangte, vorher zu messen.
+
+**Gemessen über 47 Suchen** (die 40 ersten kuratierten Werke mit Titel und Autor, Böll zweimal, die fünf Akzeptanzsuchen und `crime and punishment`), jede gegen Open Library und mit derselben Gruppierung wie `mergeWorks`:
+
+| | |
+|---|---|
+| Karten, die mehr als einen Datensatz zusammenfassen | **22 von 47** |
+| Datensätze je Karte | 2,06 im Schnitt |
+| Ausgaben, die in Geschwistern liegen | **612 von 21.453 (2,9 %)** |
+| wo es weh tut | *Ansichten eines Clowns* 6 von 14, *Siddhartha* 86 von 292, *Ulysses* ein Geschwister mit 181 Ausgaben, *Heart of Darkness* eines mit 47 |
+
+Im Schnitt wenig, aber genau dort viel, wo eine Karte ein Cover zeigt, das die Wand nie laden kann. Also Weg (1) aus dem Punkt: **die Detailseite sucht die Geschwister selbst**, statt sie von der Suche mitgegeben zu bekommen — ein Link von außen soll dieselbe Wand zeigen.
+
+**Wie sie gesucht werden, und was das kostet.** Eine Suche `title:(<normalisierter Titel>) author_key:<Key>` (ohne Key der Autorname), bis 50 Treffer, danach dieselbe Identitätsregel wie in der Trefferliste (`siblingsOf`). Gemessen: **524 ms im Median, 1,6 s im schlimmsten Fall** — sie läuft neben der Editions-Seite, die 3 bis 10 s braucht, und kostet deshalb keine Wartezeit; ein eigener Timeout von 6 s sorgt dafür, dass sie die Seite nie aufhält. Sie fand dieselben Datensätze wie die Trefferliste in 28 Fällen, **mehr in 18** (*The Great Gatsby*: acht, die die Liste nie zeigte; *Frankenstein* sieben) und **weniger in 3**: *Invisible Man* hat ein Geschwister mit 11 Ausgaben unter einem anderen Autoren-Key, bei *Siddhartha* und *Ulysses* fehlt je eines. Das ist die Kehrseite des Keys, derselbe Befund wie bei Reed in 6.15: er führt zusammen, aber wer unter einem zweiten Key steht, wird nicht gefunden. Kosten: eine Open-Library-Suche je kalter Detailseite, 24 h gecacht, **keine Google-Anfrage**.
+
+**Wie sie geladen werden.** Seite 0 liefert die Liste der Geschwister (höchstens zwölf, die größten zuerst, damit die Kappung die Ein-Ausgaben-Stummel trifft und nie den Datensatz mit 181 Ausgaben). `useWorkPages` läuft zuerst die eigenen Seiten des Werks durch, dann die jedes Geschwisters mit `?sibling=1`; das schaltet auf dem Server Google und eine zweite Geschwistersuche ab — der Titel eines Geschwisters kann anders geschrieben sein als der des Werks, und eine Google-Suche dafür wäre eine Anfrage, die kein Cache abfängt. Die Geschwister kommen zuletzt, weil sie meist eine Seite lang sind, das Werk selbst aber tausend Ausgaben haben kann, derentwegen der Leser gekommen ist. `mergeWorkPages` addiert die Gesamtzahl je Datensatz, statt das Maximum zu nehmen, und die Zeile unter dem Titel zählt die Geschwister mit. Antwortet die Geschwistersuche nicht, lädt die Wand wie bisher einen Datensatz und sagt nichts über andere. **Nicht geändert** sind die Jahrzehnte-Seiten (`getWorkDetail`, 5.4a): ihre Schwelle ist auf einem Datensatz gemessen, und mehr Ausgaben würden ihre Zahlen verschieben.
+
+**Gesehen auf `npm run dev`, Testfall OL279833W:** Seite 0, Seite 0 mit Signaturen, dann vier Geschwister (`OL8114847W`, `OL24570496W`, `OL15394832W`, `OL9063200W`, jeweils `?signatures=1&sibling=1`). Die Wand sagt **„9 covers from 16 editions“** (vorher 8 Ausgaben); die Karte in der Suche „ansichten böll" sagt **16 editions**, und **alle vier Cover ihres Mosaiks liegen auf der Wand**. Das waren die zwei Bedingungen des Punkts. Die zwei Datensätze aus der Tabelle von 2026-09-08, die ohne Titelbild im Suchindex stehen (OL34685576W, OL37792362W), findet die Geschwistersuche nicht, weil `parseSearchDocs` Werke ohne Cover verwirft — ob deren Ausgaben Bilder tragen, ist nicht gemessen.
+
+**Was 6.15 davon hat:** die Methuen-Schulausgabe ist seit 6.15 Schritt 1 derselbe Titel und damit jetzt auch auf der Wand. Übersetzungen tragen einen anderen Titel und bleiben eigene Karten; das ist 6.15 Schritt 3.
+
+
+## 2026-09-11 · `main` mit Produktion zusammengeführt
+
+Julian entschied: „Alles zusammenführen".
+
+**Ausgangslage.** Das lokale `main` stand 9 Commits vor und 27 hinter Produktion. Darin lagen unveröffentlichte Commits zweier Sitzungen:
+- 1.11, die entschlackte Seitenleiste
+- 6.13, die Wand lädt die Geschwisterwerke
+- 6.16 und 6.27, zwei Roadmap-Notizen
+- ein 1.9-Nachtrag zur Historie
+- 6.30, der Befund zu doppelten React-Keys
+- eine zweite Fassung von 6.8
+
+Konflikte gab es in neun Dateien, vier davon Code.
+
+**Wie sie gelöst sind:**
+
+- **6.8 gab es zweimal.** Lokal war es ein letzter Reiter „All languages" (`9c4defa`). In Produktion, schon ausgeliefert, ist es eine Pille am Ende einer umbrechenden Reiterzeile mit „+n more" (`c3f800d`, `bc2443d`, `6cbd398`). Die ausgelieferte Fassung gilt:
+  - `CoverGallery.tsx` kommt ganz aus Produktion, in `lib/works.ts` und `BookDetail.tsx` gilt die Produktionsseite.
+  - Die lokale Roadmap-Zeile und ihr Archivabschnitt entfielen; ihr Historien-Eintrag trägt einen Vermerk.
+  - Ihr Test blieb. Er prüft die Ordnung von `coversNewestFirst`, die beide Fassungen teilen, und besteht gegen die ausgelieferte.
+- **6.13 gegen 6.34:**
+  - Im Code stieß nur der Import in `route.ts` zusammen, `MOSAIC_COVERS` gegen `MOSAIC_CANDIDATES`. Beide Konstanten gibt es, die Route braucht nur die neue.
+  - In SPEC gilt F2.3 aus 6.13 und F2.4 aus Produktion.
+  - Der offene 6.13-Text aus Produktion wich der abgehakten Zeile.
+- **1.11 gegen 6.32 in `VerdictNote`:**
+  - 1.11 ließ nur `differs` sprechen. 6.32 führte `uncompared` ein: Das Bild des Verlags steht daneben, und der Leser entscheidet.
+  - Beide Zustände bleiben, beide mit Bild über den Knöpfen; die Sätze bei `verified`, `pending` und `unavailable` bleiben weg. SPEC F2.9 sagt das jetzt.
+- **6.30 gab es doppelt.** In Produktion heißt 6.30 „Das Telefon so gut wie der Desktop". Der Befund zu doppelten React-Keys heißt jetzt **6.37**.
+- **Die Zählung im Kopf der Roadmap** war schon in Produktion nicht nachgeführt: Dort stand „53 offen, 33 erledigt" bei 42 abgehakten Punktzeilen. Nachgetragen ist nur 6.37; eine Neuzählung steht aus.
+
+Tests 466 in 43 Dateien, `tsc`, Lint und Build grün. Danach kam das Rondell (1.9) obenauf.
+
+## 2026-09-11 · Das Rondell wechselt das Buch (ROADMAP 1.9)
+
+Julian: „das rondell ist jetzt immer nur dune? es sollte wechseln zwischen werken aus der kuratierten liste, die mehr als 7 cover über der entsprechenden schwelle haben". Auf die Frage, wann: „Nur pro Besuch". Zur Wahl standen auch „nach jeder Runde" und beides zusammen.
+
+**Bau:**
+- **`lib/heroring.ts`** hält die Regeln und wählt je Werk sieben Cover:
+  - jedes Paar im Hash über der lockersten Schwelle der Seite (heute 20 Bit);
+  - jedes Paar in der Farbe über 0,22, dem Vierfachen des „Looks like this"-Tors;
+  - kein leer aussehender Scan.
+
+  Vorher fällt das untere Viertel des Werks an Sättigung und Kontrast weg. Dann wählt es greedy farthest-point, beginnend beim farbkräftigsten Cover. Das Modul liest den Index und läuft deshalb nur beim Bauen und in Tests.
+- **`scripts/build-hero-rings.ts`** schreibt `data/hero-rings.json`, 22 KB, ohne Zeitstempel. Ein Test vergleicht die Datei mit dem, was die Regeln für den eingecheckten Index und die kuratierte Liste ergeben. Eine veraltete Datei fällt so im Test auf, nicht erst auf der Startseite.
+- **`HeroFan`** zieht beim Mounten einen Ring (`useState` mit Initialisierer). Zufall ist hier unbedenklich, weil das Rondell nur im Browser gerendert wird. Die Bildunterschrift kürzt wie die Startwand mit `tileTitle`: „Frankenstein" statt „Frankenstein; or, The Modern Prometheus".
+
+**Eine Regel ist strenger geworden.** Ein Paar ohne Farbangabe galt im Test bisher als weit auseinander (`?? 1`). Jetzt zählt es nicht als verschieden, weil es das nicht zeigen kann.
+
+**Zahlen.** Die kuratierte Liste führt 176 Einträge, 71 davon verworfen. Von den 105 übrigen bekommen **90** einen Ring.
+
+Die 15 ohne Ring haben alle zu wenig passende Cover im Index: *Buddenbrooks*, *White Teeth*, *Fight Club*, *Stoner*, *Native Son*, *Go Tell It on the Mountain*, *Song of Solomon*, *Brideshead Revisited*, *The Town and the City*, *Imaginary Homelands*, *بين القصرين*, *Pale Fire*, *Homo Faber*, *Stiller* und *Der Besuch der alten Dame*.
+
+*Dune* bleibt dabei, aber mit anderen sieben Covern: Die Wahl beginnt jetzt beim farbkräftigsten Cover statt bei den vier des Fächers.
+
+**Gemessen am Dev-Server des Worktrees:**
+- Vier Aufrufe bei 1280 × 800 zeigten vier Bücher: *The Left Hand of Darkness*, *The Handmaid's Tale*, *The Grapes of Wrath* und *Underworld*. Jedes Mal standen 7 Plätze im Ring, und alle 7 Cover waren nach 0,7 bis 1,5 s geladen.
+- Bei 390 px gab es kein Rondell, keine Preloads und kein seitliches Scrollen.
+- Der Server meldete keine Fehler.
+
+Ein Screenshot zeigte das vordere *Underworld*-Cover leer. Es ist das farbkräftigste des Rings (Sättigung 209), der Screenshot fiel also in die Einblendung.
+
+**Offen: Julian sieht die 90 Ringe durch.** Zwei enthalten ein fast weißes Cover:
+- *La Divina Commedia* (`ol:6032287`): Sättigung 0, Helligkeit 234;
+- *Архипелаг ГУЛАГ* (`ol:4510932`): Sättigung 0, Helligkeit 241.
+
+Die Blässe-Regel ist relativ zum Werk. Eine feste Untergrenze wäre ein neuer Schwellwert und gehört durch Hinsehen gesetzt.
+
+Tests 470, `tsc`, Lint und Build grün.
+
+**In Produktion einmal nachgesehen**, nach dem Deploy von `3da68e9` (Vercel meldete Erfolg): Die Startseite bei 1280 × 800 zog *Portnoy's Complaint · Philip Roth* (`/book/OL74676W`), mit 7 Plätzen, und alle 7 Cover waren geladen.
+
+## 2026-09-11 · Eine Google-ID zweimal in der Liste der Wand (ROADMAP 6.37)
+
+Gefunden beim Browser-Check von 1.11: React meldete auf *Going Postal* zwei Kinder mit dem Schlüssel `gb:WkePEAAAQBAJ`. Der Punkt verlangte, erst die Ursache zu finden und dann zu entdoppeln — eine doppelte ID hätte auch auf eine doppelte Ausgabe zeigen können.
+
+**Die Ursache, in den Daten nachgewiesen** (`npm run dev`, `/book/OL453733W?isbn=9780857525086`, das gewählte Cover `ol:8448550` mit einer einzigen Ausgabe `OL26794407M`): Seite 0 trägt vier Google-Kandidaten aus der Titelsuche, darunter `gb:WkePEAAAQBAJ`; die ISBN-Nachschau für 9780857525086 antwortet mit genau diesem Band. `buildWall` legte beides aneinander (`[...merged.covers, ...extra]`), die ID stand also zweimal in der Liste, die gefaltet wird. Faltet sie in ein Open-Library-Cover, steht sie zweimal unter dessen Scans; faltet sie nicht, stehen zwei Kacheln mit einem Schlüssel auf der Wand. Dasselbe passiert, wenn zwei ISBNs einer Ausgabe bei Google denselben Band ergeben. **Eine doppelte Ausgabe steckt nicht dahinter.**
+
+**Die Reparatur** sitzt dort, wo die Dopplung entsteht, nicht beim Falten: `withRetailCovers` in `lib/works.ts` fügt ein Händler-Cover nur an, wenn die Wand es noch nicht hat; sonst bekommt das vorhandene die Ausgaben, die die Nachschau nennt. Nichts fällt weg, und das Urteil der Seitenleiste bleibt gleich, weil es das Händlerbild an seiner ID sucht (in der Wand oder unter den gefalteten Scans). Vier Tests in `lib/__tests__/retailCovers.test.ts`, einer davon faltet das Ergebnis und prüft, dass nichts zweimal gelistet wird.
+
+**Gesehen nach der Reparatur:** die ganze Wand von *Going Postal* („All languages“) hat 16 Kacheln, keine ID doppelt. Die React-Warnung selbst ließ sich in dieser Sitzung weder vor noch nach der Reparatur auslösen — sie hängt daran, in welches Cover die Faltung den Band legt, und das hängt davon ab, welche Signaturen gerade im Cache sind. Die doppelte ID in der Eingabe des Faltens war dagegen vor der Reparatur in den Antworten zu sehen.
+
+## 2026-09-11 · Der Satz zur Händlerreihenfolge wird kürzer (ROADMAP 6.27)
+
+Der letzte Satz aus der Tabelle in 6.27, der nicht auf 0.1 wartet. Er stand unter den Kauf-Links, wenn die ISBN einer Ausgabe nicht aus dem eigenen Markt stammt: „This printing’s ISBN was registered in India. Marketplaces that list copies from anywhere come first; no shop was asked.“ Der mittlere Teil ist die Regel, nach der die Links sortiert sind — Methode, nicht Anschauung, also nach N13 kein Satz für die Seitenleiste. Die About-Seite erklärt sie seit 1.11 ausführlich.
+
+Jetzt: „This printing’s ISBN was registered in India, so shops in the German-language area may not carry it. Whether any shop has a copy was not checked.“ Drei Teile, jeder mit Grund: die Tatsache ist aus der Registrierungsgruppe abgelesen; die Folge („may not carry it“) ist der Grund, weshalb der Satz überhaupt dasteht; die Einschränkung verhindert, dass er nach einer Bestandsprüfung klingt (N12). Ohne bekanntes Land lautet er „… was not registered in the German-language area, so shops there may not carry it. …“. **Eine erste Fassung war zu knapp:** „This printing’s ISBN was registered in India; no shop was asked.“ — Julian am selben Abend: „zu kurz/kontextlos“. Sie sagte weder, wonach nicht gefragt wurde, noch, warum die Herkunft der Nummer den Leser angeht; beides stand vorher im gestrichenen Mittelteil mit drin. Die Tests prüfen weiter „registered in Turkey“; der Satz wartete bis heute, weil der Branch von 1.11 `lib/linkplan.ts` umbaute. Von 6.27 bleibt der Absatz zum Verfügbarkeits-Button, der erst nach der Entscheidung 0.1 angefasst wird.
+
+## 2026-09-11 · Eine Karte fragt zweimal, bevor sie sich mit einem Cover begnügt (ROADMAP 6.5)
+
+Seit dem 2026-09-08 bekannt, am 2026-09-09 im Code bestätigt: bei `alice in wonderland` antwortete eine Mosaik-Anfrage (`/api/works/<id>?summary=1`) mit 503, und die Karte blieb bei einem einzigen Cover — `useCardCovers` fing jeden Fehler stumm ab und kannte keinen zweiten Versuch. Für den Leser sah das aus wie ein Buch mit einem Cover, nicht wie eine Quelle, die nicht geantwortet hat. Die Wiederholung aus 1.10 sitzt nur in der Suche, die aus 6.31 nur beim Laden der Bilder.
+
+**Jetzt:** nach 5xx oder einem Netzfehler fragt die Karte nach 1,5 s ein zweites Mal, dieselbe Pause wie eine Kachel in 6.31. Ein 404 oder ein 429 ist eine Antwort und wird nicht wiederholt. Die Pause verbringt die Karte außerhalb der Warteschlange (`coverQueue`, acht Plätze), damit eine schweigende Quelle keinen Platz belegt. Scheitert auch der zweite Versuch, behält die Karte ihr Suchcover — ein echtes Cover dieses Buchs, nie eine leere Kachel.
+
+**Nachgestellt auf `npm run dev`:** im Browser `fetch` so ersetzt, dass die **erste** Mosaik-Anfrage jeder Karte 503 bekommt, dann die Suche `gravity's rainbow` über den Router geöffnet (ein Neuladen hätte den Ersatz verworfen). **Alle zwölf Karten fragten genau zweimal**, und die Mosaike standen: die ersten drei Karten mit vier Kacheln. Die Simulation ersetzt die Antwort im Browser, nicht einen echten Ausfall von Open Library; der Pfad im Code ist derselbe.
+
+Von 6.5 bleiben die übrigen Kleinigkeiten: Tippfehler-Toleranz, ein Label „about this book“ auf Sekundärliteratur, ein Weg aus der Telefon-Schublade zurück zur Wand und `priority` auf den ersten Kacheln (vorher neu messen, 1.3 hat es verschoben). Im Kopf der Roadmap sind dabei zwei veraltete Zeilen nachgezogen: 6.25a stand noch als „nicht gepusht“, Zeile 5 nannte den Mosaik-Ausfall.
+
+## 2026-09-11 · Die Messleiste der Sprach-Pillen machte die Seite am Telefon 806 px breit (ROADMAP 6.8, N14)
+
+Julian: „checke mal, ob die anzeige bei mobile passt. ich hatte letztens ein problem mit dem sizing.“ Gemessen auf `npm run dev` bei 390 × 844, deutscher Markt, *Going Postal* mit der englischen ISBN 9780857525086.
+
+**Der Befund.** Startseite, Trefferliste (`gravity's rainbow`) und Jahrzehnte-Seite (*Gravity's Rainbow*) waren genau 390 px breit. **Die Werkseite war 806 px breit.** Die Ursache ist die Messleiste aus 6.8 (`useRowFit`): eine unsichtbare Kopie aller Sprach-Pillen in einer Zeile, damit auch die Breiten der weggeklappten bekannt sind. Sie war `absolute … w-max` und `invisible` — unsichtbar, aber nicht aus der Breite der Seite genommen. Die Folgen: die Seite ließ sich seitlich schieben, und die Telefon-Schublade, die `fixed inset-0` ist und ihre Breite von der Seite nimmt, war ebenfalls 806 px breit. Der neue Hinweis zur ISBN stand dort in einer Zeile von 775 px und war an beiden Rändern abgeschnitten. Seit 6.8 in Produktion.
+
+**Die Reparatur.** Die Messleiste steckt jetzt in einer Hülle mit Höhe 0 und `overflow-hidden` über der vollen Breite. Die Breiten, die `useRowFit` liest, sind die der Pillen selbst (`getBoundingClientRect`) und ändern sich durch das Abschneiden nicht.
+
+**Nachher, bei 390 px:** *Going Postal* 390 px breit; die Pillen in zwei Zeilen wie vorher (English, German, Spanish / Polish, Unknown, All languages); die Schublade 390 px, der Hinweis 358 px breit in drei Zeilen, vollständig lesbar. Bei 1280 px unverändert: *Siddhartha* in zwei Zeilen, keine Überbreite.
+
+**Was die Reparatur nebenbei zum ersten Mal ausführt:** die Zwei-Zeilen-Regel am Telefon. Solange die Seite 806 px breit war, hatte die Pillenzeile 774 px statt 358, und die Rechnung in `lib/rowfit.ts` lief bei echter Telefonbreite nie. Nachgerechnet an *Siddhartha* mit den gemessenen Breiten (English 90,7, German 93,9, Spanish 96,1, GU 58,9 … „+n more“ 86,5, Unknown 106,8, All languages 134,5; Zeile 358, Abstand 8): drei Sprachen, dann „+4 more“, Unknown und All languages ergeben zwei Zeilen, eine vierte Sprache ergäbe drei — und genau so steht es auf dem Bildschirm. Während weitere Seiten eintreffen und Sprachen dazukommen, war einmal kurz ein Zwischenstand mit drei Zeilen zu sehen („+1 more“), eine Sekunde später wieder zwei.
+
+**Nachgemessen über weitere Breiten** (Julian: „funktioniert es auch für andere mobil-breiten sauber?“). *Siddhartha*, nach jeder Größenänderung ein Frame erzwungen:
+
+| Breite | Seite | Pillen | Zeilen (Soll) |
+|---|---|---|---|
+| 320, 360, 375 | so breit wie der Schirm | English, German, +5 more / Unknown, All languages | 2 (≤ 2) |
+| 414, 430 | so breit wie der Schirm | English, German, Spanish, GU / +3 more, Unknown, All languages | 2 (≤ 2) |
+| 600 | so breit wie der Schirm | – | 2 (≤ 2) |
+| 640, 768 | so breit wie der Schirm | alle sieben Sprachen, Unknown, All languages | 2 (≤ 3) |
+
+Bei 320 px außerdem Startseite, Trefferliste und Jahrzehnte-Seite ohne Überbreite; die Schublade auf *Going Postal* 320 px breit, der ISBN-Hinweis 288 px in vier Zeilen, nichts darin ragt über den Rand. Bei 768 px (Tablet, dort gibt es die Schublade noch) 768 px und der Hinweis in zwei Zeilen.
+
+**Ein Messfehler, der beinahe als Befund durchgegangen wäre:** ohne erzwungenen Frame standen die Pillen bei allen Telefonbreiten in drei bis vier Zeilen mit „+1 more“. Das verborgene Browser-Panel malt keine Frames, und ohne Frame liefert der `ResizeObserver` keine neuen Maße — die Pillen blieben beim Stand der letzten gemalten Frame. Ein Screenshot vor jeder Messung erzwingt den Frame. Wer im Panel Layout nach einer Größenänderung misst, macht vorher einen.
+
+**Nebenbei gesehen, nicht behoben:** bei 320 px bricht auf der Werkseite der Seitentitel „Beautiful Books“ in der Kopfzeile auf zwei Zeilen um, sobald rechts „Share“ steht. Kein Überlauf, aber unschön; eingetragen bei 6.30a.
+
+## 2026-09-12 · Die Roadmap geordnet, bewertet und als Brett; Recherche zu Best Practices (ROADMAP 6.39–6.44)
+
+**Ordnen.** Neun erledigte Punkte standen in den offenen Abschnitten der Phase 6 (6.8, 6.25, 6.25a, 6.30–6.35), ein offener (6.38) im Erledigt-Abschnitt, zwei Arbeiten existierten nur in Commit-Betreffzeilen oder als eingerückte Kästchen in einem abgehakten Punkt (5.8a mit dreizehn Commits; der Rondell-Rest, jetzt 1.9a). Der Kopf zählte 52/36, richtig waren 55/44; der Verweis „E1–E20“ übersah E21. Kein Punkttext wurde umgeschrieben: 19.207 Wörter vorher wie nachher.
+
+**Bewerten.** Alle 55 offenen Punkte gegen SPEC §1, die gemessenen Grenzen und den Engpass „niemand kennt die Seite“: **22 zu tun, 4 zu entscheiden, 22 zurückzustellen** (ihr Auslöser fehlt), 7 Zusammenlegungen, Aufteilungen oder Fragezeichen. Die Tabelle steht in der Roadmap-Steuerung mit festem Vokabular, weil das Brett sie liest. Zwei Funde daraus: ein Fehler versteckte sich in einem Feature-Punkt (5.4a cacht einen unvollständigen Lauf 24 Stunden → 6.43), und sechs Punkte trugen ihren Auslöser schon im Text und zählten trotzdem als offen.
+
+**Das Brett.** `scripts/kanban.ts` erzeugt `docs/kanban.html` (git-ignoriert) aus vier Quellen — Punktzeilen, Bewertungstabelle, Abhängigkeits-Graph, Branches — und ist eine Ansicht, kein zweiter Ort. Spalten nach dem Umbau des Tages: Wartet auf Julian 18 · In Arbeit 5 · Bereit 12 · Wartet auf etwas 4 · Zurückgestellt 22 · Erledigt 44. Jede Karte trägt Urteil, Aufwand, Grund, Eigentümer und den ganzen Roadmap-Text aufklappbar. Erste Fassung des Tages hatte „Eigentümer vor Blockade“ sortiert und Julian 30 Punkte zugeschrieben, obwohl Phase 4 auf Besucher wartet — korrigiert.
+
+**Recherche** ([docs/best-practices-2026-09-12.md](best-practices-2026-09-12.md)): sechs übertragbare Befunde als 6.39–6.44 (Hooks für „jedes Mal“-Regeln, ein Skill fürs Abhaken, Claude in Chrome für die Tastaturprobe, das Repo aus iCloud holen, CLAUDE.md von 3.571 Wörtern auf ein Drittel), zwei Notizen an 2.5 (Felddaten der Search Console) und 6.5 (höchstens ein `priority`). Nebenbefund: iCloud legt in `.next/` „… 2“-Doppeldateien an, und weil `tsconfig.json` `.next/types/**` einschließt, ist `tsc` seit diesem Tag immer rot.
+
+**Ein Messfehler, zweimal gemacht, dann gemessen.** Zwei Telefon-Screenshots des Bretts sahen aus, als liefe die Seite bei 390 px seitwärts über; die erste „Reparatur“ (Umbruch im Code-Span, Spaltenbreite) änderte nichts. Ein Mess-Skript im DOM zeigte `innerWidth=500`: **Headless-Chrome erzwingt 500 px Mindestbreite**, `--window-size=390` wird ignoriert, und der Screenshot ist der linke Rand einer 500-px-Seite. Nichts lief über. Steht an 6.41 als Grund, warum eine Telefon-Messung einen echten Browser braucht.
+
+## 2026-09-13 · Open Library nachgeprüft: Cover-Limit, User-Agent, Lizenz, und 99 % der Werke tragen eine Beschreibung (ROADMAP 2.7, 6.46)
+
+Gestern war openlibrary.org zweimal nicht erreichbar (503, Verbindungsabbruch); heute antwortete es in 3 bis 10 Sekunden, und fünf von 139 Werk-Abrufen scheiterten trotzdem. Drei Sätze aus den Entwicklerseiten, jetzt wörtlich statt aus der Erinnerung: das Cover-Limit von 100 je IP und 5 Minuten gilt **nicht** für Cover-IDs und OLIDs — unser `/img` ist frei davon; ein User-Agent mit Name **und E-Mail** hebt das allgemeine Limit von 1 auf 3 Anfragen je Sekunde (unserer nennt eine tote Adresse und keine E-Mail, 2.7); eine Lizenz im formalen Sinn gibt es nicht, nur die Erklärung, keine Rechte zu beanspruchen, mit dem Vorbehalt fremder Rechte an Beiträgen.
+
+**Die Messung:** `/works/<id>.json` für alle 139 veröffentlichten Werke, drei parallel, eine Anfrage je Sekunde je Strang, identifiziert. 134 antworteten; **132 tragen eine Beschreibung (99 %)**, Median 631 Zeichen, 120 englisch, 3 deutsch, 9 unklar; ohne: *KAFF auch Mare Crisium* und *Gravity's Rainbow*. 15 nennen ihre Quelle (Wikipedia per Markdown-Link, Verlag). Gestern an den Fixtures gemessen: 0 von 567 **Ausgaben** tragen eine — der Klappentext liegt bei Open Library am Werk, nicht an der Ausgabe, und der Werk-Datensatz wird ohnehin geholt. Google ist damit als Klappentext-Quelle ersetzbar (6.46), mit zwei Auflagen aus der Messung: Markdown bereinigen, und Wikipedia nennen, wo der Text es tut.
+
+## 2026-09-14 · Der Klappentext aus dem Werk-Datensatz, als Fallback und als Schalter (ROADMAP 6.46)
+
+Julian: „baue das als fallback, falls google ausfällt oder wir darauf umschalten wollen.“ Ein Befund vorweg, der den Entwurf änderte: der normale Weg holt das Werk **über die Suche** (`search.json?q=key:/works/…`), nicht über `/works/<id>.json` — die Beschreibung kostet also eine zusätzliche Open-Library-Anfrage, nicht null. Deshalb stellt der Server sie nur, wenn sie einen Text kauft: auf Seite 0, nachdem die Ausgaben da sind und keine einen Klappentext trägt (`fallback`, Standard), oder parallel zur Ausgabenseite, wenn `BLURB_SOURCE=work` gesetzt ist (`always`); nie auf späteren Seiten. Ein Datensatz, der nicht antwortet, ist kein Klappentext und kein Fehler (F3.3).
+
+`lib/blurb.ts` liest beide Formen (String und `{value}`), streift Verweise, Fußnoten, Betonung und den Schwanz „Also contained in“, und erkennt Wikipedia: ein solcher Text ist CC BY-SA und wird im Panel Wikipedia zugeschrieben, „via the Open Library record“; jeder andere dem Open-Library-Datensatz. `blurbFor` nimmt die Werk-Beschreibung, wenn der Server eine schickte — ihre Anwesenheit ist die Entscheidung.
+
+**Gemessen.** Gegen die echte Open Library, ohne Google: *Gatsby* 994 bereinigte Zeichen aus 1.207 rohen in 6,0 s (kalt, samt Ausgabenseite), Quelle Open Library; *Gravity's Rainbow* nichts, kein Fehler, 2,1 s. Fixtures der fünf Werk-Datensätze aufgezeichnet (`openlibrary-work.json`, vier mit Beschreibung); `record-fixtures.ts` zeichnet sie künftig mit auf. Fünf Integrationstests: Fallback greift, schweigt bei Google-Klappentext, Schalter zieht vor, stummer und leerer Datensatz sind kein Fehler, spätere Seiten fragen nie. 488 Tests, Build grün.
+
+**Zwei Funde beim Testen.** Erstens: Googles zwanzig Gatsby-Bände im Fixture sind fast alle Bücher *über* Gatsby und ergeben nach dem Identitätsabgleich **keine einzige** Ausgabe — im Fixture gibt es für Gatsby gar keinen Google-Klappentext, der Fallback greift dort zu Recht; in Produktion sah dieselbe Seite am 2026-09-09 einen Google-Klappentext („BoD 2021“), Googles Antwort ist also nicht stabil. Zweitens: ein Google-Band ohne Bild ist keine Ausgabe (`googlebooks-parse.ts`, Zeile 64) — der Mock brauchte ein `imageLinks`, sonst blieb die Prämisse des Tests falsch.
+
+**Im Browser gesehen** (Dev-Server mit `BLURB_SOURCE=work`, 1280 × 800, Headless-Chrome): das Panel von *Gatsby* zeigt den Open-Library-Text ohne Markdown-Reste und darunter „Description from the Open Library record of this book.“ Das Panel gibt es nur auf breiten Bildschirmen, eine Telefon-Messung entfällt. Nebenbei: der Dev-Server startete zuerst nicht („Failed to open database … invalid digit found in string“) — Turbopacks Cache in `.next/dev/` war durch eine iCloud-Doppeldatei beschädigt, `rm -rf .next/dev` half; das ist 6.42 in Aktion.
 
 ---
 

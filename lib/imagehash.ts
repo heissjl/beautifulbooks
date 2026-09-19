@@ -16,12 +16,10 @@ import { HASH_BITS, HUE_BUCKETS, colourDistance, hamming, looksLikeScannedPage, 
 export { HASH_BITS, HUE_BUCKETS, colourDistance, hamming, looksLikeScannedPage };
 export type { ImageSignature };
 
-export interface GrayImage {
-  width: number;
-  height: number;
-  /** Row-major luminance 0..255. */
-  data: Uint8Array;
-}
+// The hash itself lives in `dhash.ts`, which the browser may import too
+// (ROADMAP 6.34); re-exported so nothing that used it from here changes.
+import { dhash, resizeGray, toGray, type GrayImage } from './dhash';
+export { dhash, resizeGray, toGray, type GrayImage };
 
 export interface RgbaImage {
   width: number;
@@ -50,15 +48,6 @@ export function decode(bytes: Uint8Array): RgbaImage | null {
   }
   if (width < 2 || height < 2) return null;
   return { width, height, rgba };
-}
-
-/** Luminance of every pixel, the input to the structure hash. */
-export function toGray({ width, height, rgba }: RgbaImage): GrayImage {
-  const data = new Uint8Array(width * height);
-  for (let i = 0, p = 0; i < data.length; i++, p += 4) {
-    data[i] = (rgba[p] * 299 + rgba[p + 1] * 587 + rgba[p + 2] * 114) / 1000;
-  }
-  return { width, height, data };
 }
 
 /** Decodes JPEG or PNG bytes to grayscale. Returns null for unsupported data. */
@@ -121,40 +110,6 @@ export function colour({ width, height, rgba }: RgbaImage): { saturation: number
     saturation: n === 0 ? 0 : Math.round((saturationSum / n) * 255),
     hues: Buffer.from(scaled).toString('base64'),
   };
-}
-
-/** Area-averaging downscale to w x h. */
-export function resizeGray(img: GrayImage, w: number, h: number): GrayImage {
-  const out = new Uint8Array(w * h);
-  for (let y = 0; y < h; y++) {
-    const y0 = Math.floor((y * img.height) / h);
-    const y1 = Math.max(y0 + 1, Math.floor(((y + 1) * img.height) / h));
-    for (let x = 0; x < w; x++) {
-      const x0 = Math.floor((x * img.width) / w);
-      const x1 = Math.max(x0 + 1, Math.floor(((x + 1) * img.width) / w));
-      let sum = 0;
-      let n = 0;
-      for (let yy = y0; yy < y1; yy++) for (let xx = x0; xx < x1; xx++) { sum += img.data[yy * img.width + xx]; n++; }
-      out[y * w + x] = sum / n;
-    }
-  }
-  return { width: w, height: h, data: out };
-}
-
-/** dHash as 16 hex characters: each bit = left pixel brighter than its right neighbour on a 9x8 thumbnail. */
-export function dhash(img: GrayImage): string {
-  const t = resizeGray(img, 9, 8);
-  let hex = '';
-  let nibble = 0;
-  let count = 0;
-  for (let y = 0; y < 8; y++) {
-    for (let x = 0; x < 8; x++) {
-      const bit = t.data[y * 9 + x] > t.data[y * 9 + x + 1] ? 1 : 0;
-      nibble = (nibble << 1) | bit;
-      if (++count === 4) { hex += nibble.toString(16); nibble = 0; count = 0; }
-    }
-  }
-  return hex;
 }
 
 /** Mean and standard deviation of luminance on a 32x32 thumbnail. */

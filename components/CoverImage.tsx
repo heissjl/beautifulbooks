@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { proxiedCoverSrc } from '@/lib/coverurl';
+import { proxiedCoverSrc, retryCoverSrc } from '@/lib/coverurl';
 
 interface CoverImageProps {
   src: string;
@@ -17,6 +17,16 @@ interface CoverImageProps {
   fit?: 'cover' | 'contain';
 }
 
+/** How long a failed cover waits before it is asked for once more. */
+const RETRY_MS = 1500;
+
+interface Status {
+  src: string;
+  /** 0 on the first request, 1 on the one retry. */
+  attempt: 0 | 1;
+  state: 'loading' | 'loaded' | 'failed';
+}
+
 /**
  * Cover image that fades in when loaded and degrades to a quiet placeholder
  * on error. Open Library covers redirect to archive.org, which is slow under
@@ -26,14 +36,21 @@ interface CoverImageProps {
  * 1.3), so the CDN answers the second reader and archive.org never sees this
  * one's IP. A URL the route cannot rebuild from an id is left alone and loads
  * directly, which is the safe direction to fail in.
+ *
+ * **A failure is asked about twice** (ROADMAP 6.31). On Julian's phone on
+ * 2026-09-10 most of a wall stood as book symbols after twelve seconds, yet
+ * tapping one opened the same cover at once in the sheet: one bad answer from
+ * archive.org had emptied the tile for the whole visit. So the first error
+ * waits a moment and asks again, under an address the browser has not seen
+ * fail; only the second error shows the placeholder.
  */
 export default function CoverImage({ src, alt, sizes, priority, fit = 'cover' }: CoverImageProps) {
-  const [status, setStatus] = useState<{ src: string; state: 'loaded' | 'failed' } | null>(null);
+  const [status, setStatus] = useState<Status | null>(null);
   const href = proxiedCoverSrc(src);
-  const loaded = status?.src === href && status.state === 'loaded';
-  const failed = status?.src === href && status.state === 'failed';
+  // Keyed by the address, so a new `src` starts over without an effect.
+  const current: Status = status?.src === href ? status : { src: href, attempt: 0, state: 'loading' };
 
-  if (failed) {
+  if (current.state === 'failed') {
     return (
       <div className="flex h-full w-full items-center justify-center bg-surface-2" role="img" aria-label={alt}>
         <svg className="h-7 w-7 text-ink-3/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -43,17 +60,30 @@ export default function CoverImage({ src, alt, sizes, priority, fit = 'cover' }:
     );
   }
 
+  const onError = () => {
+    if (current.attempt === 1) {
+      setStatus({ ...current, state: 'failed' });
+      return;
+    }
+    window.setTimeout(() => {
+      // Only if the tile still shows this cover; a new `src` has moved on.
+      setStatus(prev => (prev && prev.src !== href ? prev : { src: href, attempt: 1, state: 'loading' }));
+    }, RETRY_MS);
+  };
+
   return (
     <Image
-      src={href}
+      // A new element for the retry, so the browser really asks again.
+      key={current.attempt}
+      src={current.attempt === 0 ? href : retryCoverSrc(href)}
       alt={alt}
       fill
       sizes={sizes}
-      className={`cover-img ${fit === 'contain' ? 'object-contain' : 'object-cover'} ${loaded ? 'is-loaded' : ''}`}
+      className={`cover-img ${fit === 'contain' ? 'object-contain' : 'object-cover'} ${current.state === 'loaded' ? 'is-loaded' : ''}`}
       unoptimized
       priority={priority}
-      onLoad={() => setStatus({ src: href, state: 'loaded' })}
-      onError={() => setStatus({ src: href, state: 'failed' })}
+      onLoad={() => setStatus({ ...current, state: 'loaded' })}
+      onError={onError}
     />
   );
 }

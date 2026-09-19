@@ -16,15 +16,16 @@ import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
-import { useLoadingScene } from '@/components/useLoadingScene';
+import { SCENE_FIRST_ROW, useLoadingScene } from '@/components/useLoadingScene';
 import { useIsDesktop } from '@/components/useIsDesktop';
 import { useMarket } from '@/components/useMarket';
 import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
 import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
+import { leadCover } from '@/lib/scene';
 import { useOverflowsX } from '@/components/useOverflowsX';
-import { searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
+import { searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
@@ -38,7 +39,7 @@ import type { ImageSignature } from '@/lib/imagesig';
 import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
 import { shapeOf } from '@/lib/queryshape';
-import { foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
+import { coversNewestFirst, foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, withRetailCovers, type IsbnVerdict } from '@/lib/works';
 
 /*
   It said "Search" until 2026-09-10, which stopped working the moment a search
@@ -105,7 +106,8 @@ function buildWall(
   extraSignatures: ReadonlyMap<string, ImageSignature>,
   preferred: string | undefined,
 ) {
-  const all = [...merged.covers, ...extra];
+  // Each id once: the shop's image is often a Google volume page 0 already has (6.37).
+  const all = withRetailCovers(merged.covers, extra);
   const signatures = new Map(merged.signatures);
   for (const [id, sig] of extraSignatures) signatures.set(id, sig);
 
@@ -123,7 +125,11 @@ function buildWall(
     language: g.language,
     covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
   }));
-  return { covers, coversById, groups, editionsByScan };
+  // `signatures` goes out too: the verdict must know which pictures the fold
+  // could compare at all (ROADMAP 6.32).
+  // The whole wall in one list, for the "All languages" pill (ROADMAP 6.8).
+  const wholeWall = coversNewestFirst(covers, merged.editions, signatures);
+  return { covers, coversById, groups, all: wholeWall, editionsByScan, signatures };
 }
 
 /**
@@ -263,8 +269,6 @@ function BookDetail() {
 
   // Loading scene (SPEC 8.1): paced by the hook; runs at least two covers long
   // and ends once page 0 has been hashed, so it never shows a cover twice.
-  const scene = useLoadingScene(requestKey, pages.firstCovers, pages.page0Hashed);
-
   const view = useMemo(() => {
     const { merged, work, market } = pages;
     if (!merged || !work || !market) return null;
@@ -276,6 +280,23 @@ function BookDetail() {
     for (const c of wall.covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
     return { work, market, merged, ...wall, editionsById, captions, coversPerEdition };
   }, [pages, lang, isbnCovers]);
+
+  /*
+    The scene opens with the cover the reader is already looking at, and hands
+    over only once the wall's first row has arrived (ROADMAP 6.25a).
+
+    `lead` is the card's cover as it is on the screen — its id and the address
+    already painted — so the fan begins with that picture instead of replacing
+    it with another (Julian, 2026-09-10: „so hat der Fächer irgendwie einen
+    Ladebildschirm vorm Ladebildschirm"). `wallFirst` is what the wall will
+    show first, in its own order, which is not page 0's order: the wall is
+    sorted by language. The view is built before the scene for that reason.
+  */
+  const lead = useMemo(() => leadCover(preview?.coverUrls[0]), [preview]);
+  const wallFirst = useMemo(() => view?.groups[0]?.covers.slice(0, SCENE_FIRST_ROW) ?? [], [view]);
+  const scene = useLoadingScene(requestKey, pages.firstCovers, pages.page0Hashed, { lead, wallFirst });
+
+
 
   // Hold the scene until the pinned tabs can no longer appear underneath the
   // reader's cursor: the searched language (else English) present, everything
@@ -348,6 +369,7 @@ function BookDetail() {
         view.covers,
         isbnCovers.asked.has(isbn13),
         isbnCovers.unavailable.has(isbn13),
+        view.signatures,
       )}
     />
   );
@@ -411,6 +433,7 @@ function BookDetail() {
           <div className={`min-w-0 lg:col-span-2 lg:pb-0 ${selected ? 'pb-20' : ''}`}>
             <CoverGallery
               groups={view.groups}
+              allCovers={view.all}
               selectedCover={selected}
               onSelectCover={c => selectCover(c.id)}
               captions={view.captions}
@@ -698,7 +721,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
           edition={shown}
           workTitle={workTitle}
           otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
-          searchLinks={searchLinksFor({ title: shown.title, author, publisher: shown.publisher, year: shown.year, coverUrl: cover.url, editionId: shown.id }, market)}
+          searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
           anyEditionLinks={anyEditionLinks}
           market={market}
           onMarketChange={onMarketChange}
@@ -760,8 +783,10 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
     ['Also printed with', otherCovers > 0 ? `${otherCovers} other cover${otherCovers > 1 ? 's' : ''}` : undefined],
   ];
   const rows = details.filter(([, v]) => v);
-  const moreLinks = plan.rest.length + (edition.previewUrl ? 1 : 0);
-  const hasFold = moreLinks > 0 || rows.length > 0 || !!edition.description;
+  const moreLinks = plan.rest.length;
+  // In hobby mode the availability probe is off (E20), so the fold holds links only.
+  const hasFold = moreLinks > 0 || (commerceEnabled() && !!edition.isbn13);
+  const hasInfo = !!edition.previewUrl || rows.length > 0 || !!edition.description;
 
   return (
     <div className="mt-6">
@@ -774,9 +799,13 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
           On `differs` the verdict comes *before* the buttons, because it is
           the reason they are searches and not shops: whatever the ISBN opens
           ships the other jacket, so the row hunts the picture on screen by
-          title, author, publisher and year (SPEC F2.9).
+          title, author, publisher and year (SPEC F2.9). On `uncompared` the
+          publisher's image stands in the same place for the reader to weigh
+          before clicking; the buttons stay the ISBN's (ROADMAP 6.32).
         */}
-        {edition.isbn13 && verdict.status === 'differs' && <VerdictNote verdict={verdict} hint={hint} lead />}
+        {edition.isbn13 && (verdict.status === 'differs' || verdict.status === 'uncompared') && (
+          <VerdictNote verdict={verdict} hint={hint} />
+        )}
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <p className="kicker">
             {verdict.status === 'differs'
@@ -803,14 +832,13 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
           is the same line `lib/verdicts.ts` holds one level up.
         */}
         {plan.note && <p className="mt-2 text-xs leading-relaxed text-ink-3">{plan.note}</p>}
-        {edition.isbn13 && verdict.status !== 'differs' && <VerdictNote verdict={verdict} hint={hint} />}
       </div>
 
       {hasFold && (
         <details className="group mt-4 border-t border-line pt-3">
           <summary className="cursor-pointer list-none text-sm text-ink-2 transition-colors hover:text-ink">
             <span className="mr-1 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
-            {moreLinks > 0 ? `Other ways to find it (${moreLinks})` : 'About this printing'}
+            {moreLinks > 0 ? `Other ways to find it (${moreLinks})` : 'Check the shops'}
           </summary>
           <div className="mt-3 space-y-4">
             {plan.rest.length > 0 && (
@@ -826,11 +854,6 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
                   />
                 ))}
               </div>
-            )}
-            {edition.previewUrl && (
-              <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-sm text-accent hover:underline">
-                Preview on Google Books
-              </a>
             )}
             {/* Off in hobby mode (E20): the probe is not cleared for the public site (ROADMAP 0.1). */}
             {commerceEnabled() && edition.isbn13 && (
@@ -848,21 +871,38 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
                 Nothing here is a stock check.
               </p>
             )}
-            {rows.length > 0 && (
-              <dl className="divide-y divide-line border-y border-line text-sm">
-                {rows.map(([k, v]) => (
-                  <div key={k} className="grid grid-cols-[7.5rem_1fr] gap-3 py-2">
-                    <dt className="text-ink-3">{k}</dt>
-                    <dd className="text-ink">{v}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
-            {edition.description && (
-              <p className="line-clamp-6 text-sm leading-relaxed text-ink-2">{edition.description}</p>
-            )}
           </div>
         </details>
+      )}
+
+      {/*
+        What is known about this printing — the preview, the dates, the blurb —
+        stands open under its own line rather than behind "Other ways to find
+        it" (Julian, 2026-09-11). It is not a way to find the book, and folding
+        it in with the shop links hid the one part of the sidebar that is about
+        the book itself.
+      */}
+      {hasInfo && (
+        <div className="mt-5 space-y-3 border-t border-line pt-4">
+          {edition.previewUrl && (
+            <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-sm text-accent hover:underline">
+              Preview on Google Books
+            </a>
+          )}
+          {rows.length > 0 && (
+            <dl className="divide-y divide-line border-y border-line text-sm">
+              {rows.map(([k, v]) => (
+                <div key={k} className="grid grid-cols-[7.5rem_1fr] gap-3 py-2">
+                  <dt className="text-ink-3">{k}</dt>
+                  <dd className="text-ink">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          {edition.description && (
+            <p className="line-clamp-6 text-sm leading-relaxed text-ink-2">{edition.description}</p>
+          )}
+        </div>
       )}
 
       {/*
@@ -903,63 +943,41 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
  * for what will arrive, but it is not a reading of any shop's page, and the
  * text must not claim otherwise (Julian, 2026-09-07).
  */
-function VerdictNote({ verdict, hint, lead = false }: { verdict: IsbnVerdict; hint: string; lead?: boolean }) {
-  if (verdict.status === 'verified') {
-    return (
-      <p className="mt-2 text-xs leading-relaxed text-ink-3">
-        <span className="text-ink-2">{VERDICT_LEAD.verified}</span>{' '}
-        Shops list by number and mostly use that image, so a new copy should look like this.
-      </p>
-    );
-  }
-  if (verdict.status === 'differs') {
-    return (
-      <div className={`flex items-start gap-3 ${lead ? 'mb-4' : 'mt-2'}`}>
-        <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the publisher's current image for this ISBN">
-          <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
-            <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="The publisher's current image for this ISBN" sizes="55px" />
-          </span>
-        </a>
-        <p className="text-xs leading-relaxed text-ink-3">
-          <span className="text-ink-2">{VERDICT_LEAD.differs}</span>{' '}
-          It is the one beside this note, so that is what a new copy is likely to be.
-          {/*
-            When this note leads, the row underneath *is* the answer to it, so
-            the sentence points at it instead of leaving the reader to work out
-            which of the buttons hunts the picture they clicked.
-          */}
-          {lead
-            ? hint
-              ? ` The searches below look for ${hint} second-hand instead.`
-              : ' The searches below look for this printing instead.'
-            : hint ? ` To get the one on screen, look for ${hint} second-hand.` : ''}
-        </p>
-      </div>
-    );
-  }
-  /*
-    Everything that is not verified or differs used to fall through to the
-    "no image on record" paragraph, including `pending` — so for the second
-    or two while the lookup ran, the reader was told something we had not yet
-    checked, and on a day with the Google quota spent it would have stood
-    there permanently (2026-09-07).
-  */
-  if (verdict.status === 'pending') {
-    return <p className="mt-2 text-xs leading-relaxed text-ink-3">{VERDICT_LEAD.pending}</p>;
-  }
-  if (verdict.status === 'unavailable') {
-    return (
-      <p className="mt-2 text-xs leading-relaxed text-ink-3">
-        {VERDICT_LEAD.unavailable} Nothing can be said about which cover ships.
-        {hint ? ` Look for ${hint}.` : ''}
-      </p>
-    );
-  }
+/*
+  Two states speak, and both show a picture the reader has to weigh.
+  `differs` (Julian, 2026-09-11: „es sollte nur eine anmerkung geben bei
+  differs"): the number ships another jacket, so the row below hunts the
+  picture instead. `uncompared` (ROADMAP 6.32): the fold could not compare
+  the two, so the publisher's image stands beside the note and the reader
+  decides; the ISBN links keep their place. The other states added a
+  sentence under every printing that changed nothing; saying nothing claims
+  nothing (N12), and the About page still explains every state in the words
+  of `lib/verdicts.ts`. Both were kept when main met production on
+  2026-09-11, where 1.11 and 6.32 had each rewritten this function.
+*/
+function VerdictNote({ verdict, hint }: {
+  verdict: Extract<IsbnVerdict, { status: 'differs' | 'uncompared' }>;
+  hint: string;
+}) {
   return (
-    <p className="mt-2 text-xs leading-relaxed text-ink-3">
-      {VERDICT_LEAD.unknown} Shops list by number and send the current printing.
-      {hint ? ` Look for ${hint}.` : ''}
-    </p>
+    <div className="mb-4 flex items-start gap-3">
+      <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the publisher's current image for this ISBN">
+        <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
+          <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="The publisher's current image for this ISBN" sizes="55px" />
+        </span>
+      </a>
+      <p className="text-xs leading-relaxed text-ink-3">
+        <span className="text-ink-2">{VERDICT_LEAD[verdict.status]}</span>{' '}
+        {verdict.status === 'differs' ? (
+          <>
+            It is the one beside this note, so that is what a new copy is likely to be.
+            {hint ? ` The searches below look for ${hint} second-hand instead.` : ' The searches below look for this printing instead.'}
+          </>
+        ) : (
+          'It is the one beside this note; if it looks like the cover on screen, a new copy probably will too.'
+        )}
+      </p>
+    </div>
   );
 }
 
@@ -989,11 +1007,12 @@ function ShopLink({ link, isbn13, market, counted, status }: {
       title={status ? SHOP_STATUS_TITLE[status] : shopLinkTitle(link)}
     >
       {link.label}
-      {status ? (
-        <span className="ml-1 text-[10px] uppercase tracking-wide opacity-60">{SHOP_STATUS_LABEL[status]}</span>
-      ) : (
-        link.kind === 'search' && <span className="ml-1 text-[10px] uppercase tracking-wide opacity-50">search</span>
-      )}
+      {/*
+        No "search" tag any more (Julian, 2026-09-11: it costs room on every
+        button). The label names the question the button puts, and whether
+        the URL opens a results page or a book's page stays in the tooltip.
+      */}
+      {status && <span className="ml-1 text-[10px] uppercase tracking-wide opacity-60">{SHOP_STATUS_LABEL[status]}</span>}
     </a>
   );
 }

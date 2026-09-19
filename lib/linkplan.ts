@@ -25,7 +25,6 @@
  *    no such link is possible — a foreign ISBN, or none.
  */
 import type { BuyLink, Edition } from './model';
-import { twoQuestionShops } from './buylinks';
 import { DEFAULT_MARKET, type Market } from './market';
 import { isbn13to10, registrationArea } from './normalize';
 import type { VerdictStatus } from './verdicts';
@@ -242,19 +241,19 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
   }
 
   /*
-    A shop that can be asked two ways always says which one it is being asked
-    — even where only one of the two is possible (Julian, 2026-09-10: „nimm
-    hier trotzdem die labels wie davor, also mit title und year. dann sind wir
-    einheitlich und verständlich"). An edition without an ISBN would otherwise
-    show a bare "AbeBooks" that means something different from the "AbeBooks"
-    on the printing next to it.
+    **Every shop button says which question it puts** — its ISBN field, or
+    title, author, publisher and year (Julian, 2026-09-10: „einheitlich und
+    verständlich"; 2026-09-11: „warum steht bei ebay nicht, was es sucht?").
+    A bare "eBay" in the German column, where eBay is only ever asked by
+    words, left the reader to guess; so did a bare "Booklooker", which only
+    ever takes the number.
 
-    Shops with only one question keep their plain label: naming a question
-    nobody could ask differently explains nothing.
+    Tools that are not shops — Google Lens, TinEye, WorldCat, Open Library —
+    keep their plain name: they ask by picture or point at a record, and a
+    suffix there would explain nothing.
   */
-  const twoWays = twoQuestionShops(market);
   const name = (l: BuyLink): BuyLink =>
-    twoWays.has(shopOf(l)) ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
+    fromIsbn.has(l.provider) || /-search$/.test(l.provider) ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
   const namedLead = lead.map(name);
 
   /*
@@ -275,11 +274,6 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
   return { case: linkCase, place: registration?.place, lead: namedLead, rest: namedRest, anyEdition, note: noteFor(linkCase, market, registration?.place, isbn13) };
 }
 
-/** The shop behind a provider id, with the question stripped off. */
-function shopOf(link: BuyLink): string {
-  return link.provider.replace(/-search$|-title$/, '');
-}
-
 /** Which question a link puts to a shop: its ISBN field, or words. */
 function questionOf(link: BuyLink): string {
   return /-search$|-title$/.test(link.provider) ? 'title & year' : 'ISBN';
@@ -297,13 +291,20 @@ function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, 
     return 'This edition has no ISBN on record, so no shop can look it up by number. These search by title, publisher and year instead.';
   }
   /*
-    The one sentence in the sidebar that justifies an order. It states a fact
-    about the number and nothing about any shop: "registered in Turkey" is
-    read off the registration group, while "Bookshop does not have it" would
-    be a claim nobody checked.
+    The fact, what it means for the reader, and the limit of what was done
+    (SPEC N12, N13, ROADMAP 6.27): "registered in Turkey" is read off the
+    registration group; "may not carry it" is why the note is there at all;
+    "was not checked" keeps it from reading as a stock check. The rule behind
+    the order of the links — marketplaces that list copies from anywhere
+    first — is method and lives on the About page. A first cut to "…; no shop
+    was asked." was too short to say what had not been asked (Julian,
+    2026-09-11).
   */
-  const where = place ? `was registered in ${place}` : `was not registered in ${AREA_NAME[MARKET_AREA[market]]}`;
-  return `This printing’s ISBN ${where}. Marketplaces that list copies from anywhere come first; no shop was asked.`;
+  const area = AREA_NAME[MARKET_AREA[market]];
+  const where = place
+    ? `was registered in ${place}, so shops in ${area} may not carry it`
+    : `was not registered in ${area}, so shops there may not carry it`;
+  return `This printing’s ISBN ${where}. Whether any shop has a copy was not checked.`;
 }
 
 /**

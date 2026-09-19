@@ -4,6 +4,7 @@ import Link from 'next/link';
 import CoverImage from './CoverImage';
 import { storeWorkPreview } from './useWorkPreview';
 import { WALL_WORKS, olCover } from '@/lib/curated';
+import { tileTitle } from '@/lib/normalize';
 
 /** Empty-state cover wall on the home page (SPEC §8.1). */
 export default function CuratedWall() {
@@ -23,8 +24,13 @@ export default function CuratedWall() {
               <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
                 <CoverImage src={olCover(w.coverId, 'M')} alt={`${w.title} by ${w.author}`} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
               </div>
-              <p className="mt-2 line-clamp-1 text-sm font-medium text-ink group-hover:text-accent transition-colors">{w.title}</p>
-              <p className="line-clamp-1 text-xs text-ink-3">{w.author}</p>
+              {/*
+                Two lines each, as on the result cards. One line cut 9 of 18
+                titles on a phone and 1 on a desktop — "Der…" is not a
+                shorter "Der Steppenwolf", it is no title (ROADMAP 6.30, N14).
+              */}
+              <p className="mt-2 line-clamp-2 text-sm font-medium leading-snug text-ink group-hover:text-accent transition-colors">{tileTitle(w.title)}</p>
+              <p className="mt-0.5 line-clamp-2 text-xs leading-snug text-ink-3">{w.author}</p>
             </Link>
           </li>
         ))}

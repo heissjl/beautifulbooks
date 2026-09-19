@@ -58,6 +58,14 @@ function route(url: URL): { status?: number; body?: unknown } {
     const slug = SLUG_BY_QUERY[q];
     return slug ? { body: fixture(slug, 'openlibrary-search.json') } : { body: { docs: [] } };
   }
+  const w = url.pathname.match(/^\/works\/(OL\d+W)\.json$/);
+  if (w) {
+    for (const slug of Object.values(SLUG_BY_QUERY)) {
+      if (fixture(slug, 'openlibrary-editions.json').workId !== w[1]) continue;
+      return { body: fixture(slug, 'openlibrary-work.json') };
+    }
+    return { status: 404 };
+  }
   const m = url.pathname.match(/^\/works\/(OL\d+W)\/editions\.json$/);
   if (m) {
     for (const slug of Object.values(SLUG_BY_QUERY)) {
@@ -383,5 +391,76 @@ describe('getWorkDetail', () => {
     expect(d!.covers.length).toBe(without!.covers.length + 2);
     expect(d!.covers.filter(c => c.editionIds.includes(dup!.id)).map(c => c.source).sort()).toEqual(['googlebooks', 'openlibrary']);
     expect(decodeURIComponent(calls.find(u => u.includes('googleapis'))!)).toContain('inauthor:George Orwell');
+  });
+});
+
+describe('the work description as a blurb (ROADMAP 6.46)', () => {
+  const workCalls = () => calls.filter(u => /\/works\/OL\d+W\.json/.test(u));
+
+  it('falls back to the work record when no edition has a blurb', async () => {
+    // Google off, so no edition carries a description: the one extra
+    // request buys the text (Gatsby's record has 1,207 characters of it).
+    const page = await getWorkPage('OL468431W', { googleBooks: false, siblings: false, workDescription: 'fallback' });
+    expect(page?.work.description).toMatch(/Jay Gatsby/);
+    expect(page?.work.descriptionSource).toBe('openlibrary');
+    expect(workCalls()).toHaveLength(1);
+  });
+
+  it('does not ask for the work record while Google supplies blurbs', async () => {
+    // The recorded Gatsby volumes are mostly books *about* Gatsby and match
+    // no edition of the work, so that fixture yields no Google blurb at all
+    // (found while writing this test). A volume that does match, with a
+    // description, is what production sees for most works — mocked here.
+    resetGoogleQuota();
+    googleBooks = () => ({
+      body: {
+        items: [{
+          id: 'g-blurb',
+          volumeInfo: {
+            title: 'Nineteen Eighty-Four', authors: ['George Orwell'],
+            description: '<p>Winston Smith rewrites the past.</p>',
+            // An ISBN no Open Library record carries: merging a Google volume
+            // into an existing edition keeps the catalogue's fields, not the
+            // blurb, so a shared ISBN would drop the very text this test needs.
+            industryIdentifiers: [{ type: 'ISBN_13', identifier: '9781234567897' }],
+            // A volume without an image is no edition here: the parser keeps
+            // only what has a cover, which is what the wall is for.
+            imageLinks: { thumbnail: 'http://books.google.com/books/content?id=g-blurb&printsec=frontcover&img=1&zoom=1' },
+          },
+        }],
+      },
+    });
+    const page = await getWorkPage('OL1168083W', { siblings: false, workDescription: 'fallback' });
+    expect(page?.editions.some(e => e.description)).toBe(true);
+    expect(page?.work.description).toBeUndefined();
+    expect(workCalls()).toHaveLength(0);
+  });
+
+  it('prefers the work record under the switch, beside the editions page', async () => {
+    const page = await getWorkPage('OL468431W', { siblings: false, workDescription: 'always' });
+    expect(page?.work.description).toMatch(/Jay Gatsby/);
+    expect(workCalls()).toHaveLength(1);
+  });
+
+  it('is no blurb, not an error, when the record has none or does not answer', async () => {
+    // Gravity's Rainbow: the record exists and carries no description.
+    const bare = await getWorkPage('OL2636675W', { googleBooks: false, siblings: false, workDescription: 'fallback' });
+    expect(bare).not.toBeNull();
+    expect(bare?.work.description).toBeUndefined();
+
+    // A silent record: the page still comes back, without a text.
+    const good = vi.mocked(fetch);
+    vi.stubGlobal('fetch', vi.fn(async (input: string | URL, init?: RequestInit) => {
+      if (/\/works\/OL\d+W\.json/.test(String(input))) return new Response('', { status: 503 });
+      return good(input, init);
+    }));
+    const silent = await getWorkPage('OL468431W', { googleBooks: false, siblings: false, workDescription: 'fallback' });
+    expect(silent).not.toBeNull();
+    expect(silent?.work.description).toBeUndefined();
+  });
+
+  it('never asks on a later page', async () => {
+    await getWorkPage('OL468431W', { offset: 100, siblings: false, workDescription: 'always' });
+    expect(workCalls()).toHaveLength(0);
   });
 });
