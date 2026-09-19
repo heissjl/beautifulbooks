@@ -5,6 +5,7 @@ import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import { readImprint } from '@/lib/imprint';
 import { commerceEnabled } from '@/lib/sitemode';
+import { versusEnabled } from '@/lib/hotornot/switch';
 
 /**
  * The privacy notice (Art. 13 GDPR), written from what the code does rather
@@ -13,7 +14,9 @@ import { commerceEnabled } from '@/lib/sitemode';
  * site does not perform (N12 applies to this page too).
  *
  * Mode-aware (E20): the availability check only exists in shop mode, and the
- * page must not mention a probe the public site never makes.
+ * page must not mention a probe the public site never makes. The cover game
+ * (ROADMAP 5.8a) works the same way: its paragraph appears only where the
+ * switch leaves the game on, because where the game is dark nothing is stored.
  *
  * The log retention below is Vercel's figure for the plan the site runs on
  * (one hour on Hobby, docs/logs/runtime, read 2026-09-08); update it with
@@ -24,7 +27,7 @@ export const metadata: Metadata = {
   description: 'What this site does with data, which is little, and who is responsible for it.',
 };
 
-const UPDATED = '8 September 2026';
+const UPDATED = '19 September 2026';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -40,6 +43,7 @@ const ext = 'underline underline-offset-2 hover:text-accent';
 export default function PrivacyPage() {
   const imprint = readImprint();
   const shop = commerceEnabled();
+  const game = versusEnabled();
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
@@ -147,6 +151,24 @@ export default function PrivacyPage() {
             </p>
           )}
         </Section>
+
+        {game && (
+          <Section title="The cover game">
+            <p>
+              Picking a cover in the game writes one line to a database: the two covers that were
+              shown, which of them you picked, and the day &mdash; not the minute. Nothing about you
+              is written with it: no IP address, no cookie, no browser details, no identifier of any
+              kind, so two picks of yours cannot be recognised as yours or as belonging together.
+              Reporting a cover as &ldquo;not a cover&rdquo; writes the cover and the reason, again
+              with nothing about you, and the game stores nothing in your browser. These lines are
+              what the ranking is counted from; they are kept while the game runs, because deleting
+              them would delete the ranking. They live in a Redis database that this site rents
+              from Redis through Vercel&rsquo;s marketplace; it holds the lines on this
+              site&rsquo;s behalf. Legal basis: legitimate interest in a ranking that reflects what
+              readers picked (Art. 6(1)(f) GDPR).
+            </p>
+          </Section>
+        )}
 
         <Section title="Your rights">
           <p>

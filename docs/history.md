@@ -2358,3 +2358,39 @@ Julian, nach der Erklärung, warum jede Paar-Anfrage mit jeder Stimme teurer wir
 **Zwei kleine Unterschiede zum Neuzählen**, beide nur für die Wahl des Paars und beide nicht auf der Rangliste: Stimmen werden in Schreibreihenfolge gezählt (geerbte zuerst), und eine Stimme auf ein später gemeldetes Cover hat die Wertung des Gegners schon bewegt.
 
 **Gemessen** mit einem Skript über 50.000 Stimmen im Arbeitsspeicher, 200 Klicks, nach jedem eine neue Stimme: **vorher 50.100 gelesene Stimmen je Klick (rund 3,7 MB), 16,7 ms Rechenzeit; jetzt 1 gelesene Stimme je Klick, 1,9 ms** — und davon ist fast alles die Wahl des Paars selbst. Die Übertragung aus Redis, im Betrieb der teure Teil, ist in dieser Messung noch gar nicht enthalten. Tests: Zwischenstand gleich Neuzählen bis auf die neunte Nachkommastelle, nur der Rest wird geholt, eine frische Instanz setzt am gespeicherten Stand an, zwei gleichzeitige Klicks zählen nichts doppelt, die Rangliste wird binnen einer Minute einmal gezählt. 523 Tests, Build grün.
+
+---
+
+## 2026-09-19 · Der Spielzweig und die Produktion zusammengeführt (ROADMAP 5.8a)
+
+Julian: „führe die branches zusammen und beschreibe wie ich in vercel vorgehen muss".
+
+**Der Stand vorher**, aus `npm run worktrees -- --fetch`: Produktion ist `origin/main` = `d5807bd` (2026-09-11). Das lokale `main` stand **20 Commits davor** — die Arbeit dreier anderer Sessions, schon dort zusammengeführt (Rondell 1.9, Klappentext 6.46, Firewall-Stand 2.4, die Telefon-Funde 6.30–6.37, Roadmap-Ordnung und Brett). Der Spielzweig `worktree-session-2026-09-11` stand **+20 / −47** gegen Produktion und **+20 / −67** gegen das lokale `main`.
+
+**Zusammengeführt in einem eigenen Worktree** (`.claude/worktrees/hotornot-merge`), nicht im Hauptordner: `main` in den Spielzweig, nicht umgekehrt, damit `main` nie in einem konfliktbehafteten Zustand steht (Regel aus CLAUDE.md). 94 Dateien, +6.099 / −679 Zeilen.
+
+**Drei Konflikte, alle in Dokumentation, keiner im Code.** Die geänderten Dateien beider Seiten überschnitten sich nur in acht Stücken (CLAUDE.md, ROADMAP.md, SPEC.md, `app/globals.css`, docs/features.md, docs/history.md, lab/README.md, package.json), und Git löste fünf davon selbst:
+
+| Datei | Was kollidierte | Wie aufgelöst |
+|---|---|---|
+| `ROADMAP.md` | Beide Seiten schrieben in die Steuerungstabelle, in den Stand und an die Stelle nach 5.8 | Beide Zeilen der Tabelle behalten (Hot or Not **und** Bewertung/Brett); die neuere Zählung „64 offen, 45 erledigt" behalten; die ausführliche 5.8a des Zweigs behalten und die Kurzfassung verworfen, die eine andere Session am 2026-09-12 aus den Commit-Betreffzeilen nachgetragen hatte; 5.9 (Gebrauchsspuren) übernommen |
+| `docs/history.md` | Beide Seiten hängten Einträge ans Dateiende | Beide Blöcke behalten: erst die der anderen Sessions (2026-09-10 bis 2026-09-14), dann die sieben des Spiels (2026-09-11 bis 2026-09-14) |
+| `lab/README.md` | Beide Seiten fügten dieselbe Tabellenzeile hinzu | Beide Zeilen behalten (`hotornot/` und `wear/`) |
+| `app/globals.css` | (kein Konflikt) | `main` ersetzte die `searching-tile`-Regeln durch das Rondell, die `share-item`-Regel des Spiels blieb stehen |
+
+**Geprüft nach dem Merge:** `npx tsc --noEmit` still, **594 Tests in 53 Dateien grün** (523 davon waren es im Spielzweig allein), `npm run build` durch; `/versus` und `/versus/board` stehen als dynamische Routen im Baum, `/api/versus/pair`, `/vote` und `/flag` als Funktionen.
+
+**Die Datenschutzerklärung hat jetzt einen Abschnitt zum Spiel** (`app/privacy/page.tsx`): eine Stimme ist zwei Cover, der Sieger und der Tag — nicht die Minute —, dazu nichts über den Spieler, keine Kennung, nichts im Browser; eine Meldung ist Cover und Grund; die Zeilen bleiben, solange das Spiel läuft, weil sie die Rangliste sind. Er erscheint **nur, wenn `versusEnabled()` wahr ist**, nach demselben Muster wie der Shop-Modus: wo das Spiel dunkel ist, wird nichts gespeichert, und die Seite darf nichts anderes behaupten (N12).
+
+**Was in Vercel tatsächlich steht, mit der CLI nachgesehen** (`vercel env ls`, `vercel integration list`, `vercel integration resource inspect`; nur Namen, nie Werte):
+
+| Gefragt | Antwort |
+|---|---|
+| Welcher Speicher? | **`redis-pink-yacht`**, Produkt **Redis** vom Anbieter **Redis** — **nicht Upstash**, wie beim Bauen angenommen und in älteren Einträgen geschrieben |
+| Tarif | **Free, 30 MB**. Eine Stimme ist als JSON **76 Byte** gemessen, also rund **400.000 Stimmen**, bevor der Tarif eng wird |
+| An welchen Umgebungen? | **nur Preview** („Connected projects: beautifulbooks (preview)"), entsprechend gibt es `STORAGE_REDIS_URL` auch nur dort |
+| Und der Schalter? | **`HOTORNOT` ist in keiner Umgebung gesetzt.** Das ist genau richtig: ungesetzt heißt an, außer in Vercels Produktion — die Preview spielt ohne eigene Variable, Produktion bleibt dunkel, bis jemand sie absichtlich anmacht |
+
+Damit nennt die Datenschutzerklärung den Anbieter (Redis, über Vercels Marketplace); **offen bleibt die Region**, die nur im Dashboard beim Speicher steht und nicht geraten wird.
+
+**Nicht gepusht.** Ein Push nach `origin/main` ist der Deploy, und er soll erst laufen, wenn in Vercel der Speicher an der Umgebung Production hängt und `HOTORNOT=on` gesetzt ist — sonst steht das Spiel in Produktion entweder dunkel (Schalter fehlt) oder antwortet mit 503 (Speicher fehlt). Die Schritte stehen in ROADMAP 5.8a.
