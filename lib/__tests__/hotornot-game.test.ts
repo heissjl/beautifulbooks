@@ -3,7 +3,7 @@ import { rng } from '../loading';
 import { CROWN_HOLD, ELO_START, applyVote, newElo } from '../hotornot/rating';
 import {
   BOARD_SECONDS, POOL, TALLY_SAVE_EVERY, board, cachedBoard, castVote, flagCover, forgetBoards, forgetTallies, imagePath,
-  nextPairFor, pairingTally, type VersusPool,
+  nextPairFor, pairingTally, poolBooks, someBooks, type VersusPool,
 } from '../hotornot/game';
 import { StoreUnavailableError, memoryStore, type VoteStore } from '../hotornot/store';
 
@@ -274,5 +274,40 @@ describe('the frozen pool', () => {
     const excluded = new Set(POOL.excluded.map(e => e.id));
     expect(excluded.has('ol:10942061')).toBe(true);
     expect(POOL.covers.some(c => excluded.has(c.id))).toBe(false);
+  });
+});
+
+describe('the books behind the pool (the page a crawler reads, SPEC F7.6)', () => {
+  const many: VersusPool = {
+    ...pool,
+    covers: [
+      { id: 'ol:1', workId: 'OL1W', title: 'Zeno', author: 'Z' },
+      { id: 'ol:2', workId: 'OL1W', title: 'Zeno', author: 'Z' },
+      { id: 'ol:3', workId: 'OL2W', title: 'Aeneid', author: 'V' },
+      { id: 'ol:4', workId: 'OL3W', title: 'Middlemarch', author: 'E' },
+    ],
+  };
+
+  it('names each book once, in title order, with how many of its covers play', () => {
+    expect(poolBooks(many)).toEqual([
+      { workId: 'OL2W', title: 'Aeneid', author: 'V', covers: 1 },
+      { workId: 'OL3W', title: 'Middlemarch', author: 'E', covers: 1 },
+      { workId: 'OL1W', title: 'Zeno', author: 'Z', covers: 2 },
+    ]);
+  });
+
+  it('spreads a sample over the whole list instead of taking the front of the alphabet', () => {
+    const sample = someBooks(2, many);
+    expect(sample.map(b => b.title)).toEqual(['Aeneid', 'Zeno']);
+    expect(someBooks(9, many)).toHaveLength(3);
+    expect(someBooks(0, many)).toEqual([]);
+  });
+
+  it('reads the real pool the page ships with', () => {
+    const books = poolBooks();
+    expect(books.length).toBeGreaterThan(200);
+    expect(books.reduce((sum, b) => sum + b.covers, 0)).toBe(POOL.covers.length);
+    // Every entry is a link the page writes: /book/<work>.
+    expect(books.every(b => /^OL\d+W$/.test(b.workId) && b.title.length > 0)).toBe(true);
   });
 });

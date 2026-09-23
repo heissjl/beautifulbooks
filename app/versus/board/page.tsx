@@ -8,6 +8,7 @@ import SiteHeader from '@/components/SiteHeader';
 import { bookPath, cachedBoard, type Board, type BoardEntry, type Verdict } from '@/lib/hotornot/game';
 import { StoreUnavailableError, missingStoreMessage, storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
+import { SITE_URL } from '@/lib/seo';
 
 /**
  * The standings of the cover game (ROADMAP 5.8a). Rendered on the server from
@@ -23,8 +24,16 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Which cover? · Standings',
-  description: 'The standings of the cover game, with how sure they are.',
-  robots: { index: false, follow: false },
+  description: 'Which book covers readers keep choosing, and which they do not — with how sure each of those is.',
+  // Indexed since 2026-09-23 (ROADMAP 5.8a, SPEC F7.6). The canonical drops
+  // `?top=20` and `?flop=20`: they are the same standings, unfolded.
+  alternates: { canonical: `${SITE_URL}/versus/board` },
+  openGraph: {
+    type: 'website',
+    title: 'Which cover? · Standings',
+    description: 'Which book covers readers keep choosing, and which they do not.',
+    url: `${SITE_URL}/versus/board`,
+  },
 };
 
 const pct = (x: number) => `${Math.round(x * 100)} %`;

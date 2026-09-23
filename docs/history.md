@@ -2432,4 +2432,22 @@ Julian: „when I am clicking on a link to a cover from either the decade or the
 
 **In Produktion seit `a3e264c`** (Deployment `8iy3o5mor`, gut eine Minute Bauzeit). **Einmal geprüft**, ohne abzustimmen: auf `/book/OL627084W/cover/ol-6532436` folgte das große Bild zwei Klicks (`ol-9266349` → `ol-13164723` → `ol-11192267`), und `/versus` zeigt unter beiden Covern den Link „All covers" mit `target=_blank`. Nebenbei abgelesen: **679 Stimmen auf 978 Covern** — 98 mehr als beim Freischalten am Vortag, zwei Cover sind inzwischen gemeldet.
 
-**Nachtrag 2026-09-23: die Startseite führt ins Spiel.** (Julian: „wir brauchen noch eine verlinkung auf die versus seite von der startseite aus") Eine Zeile unter dem Versprechen und über dem Suchfeld — „Or play: which cover would you rather look at? →" —, nur im Hero, also nicht über einer Trefferliste. Gemessen bei 1280 × 800 (Link bei 298 px) und 390 × 844 (308 px, einzeilig, 20 px hoch): auf beiden ohne Scrollen sichtbar, kein seitlicher Überstand. Damit ist auch die offene Frage aus 5.8a beantwortet — das Spiel ist in Produktion verlinkt, bleibt aber `noindex` (SPEC F7.6): der Link ist für Leser, nicht für Crawler.
+**Nachtrag 2026-09-23: die Startseite führt ins Spiel.** (Julian: „wir brauchen noch eine verlinkung auf die versus seite von der startseite aus") Eine Zeile unter dem Versprechen und über dem Suchfeld — „Or help us find the prettiest cover of all time! →" —, nur im Hero, also nicht über einer Trefferliste. Gemessen bei 1280 × 800 (Link bei 298 px) und 390 × 844 (308 px, einzeilig, 20 px hoch): auf beiden ohne Scrollen sichtbar, kein seitlicher Überstand. Damit ist auch die offene Frage aus 5.8a beantwortet — das Spiel ist in Produktion verlinkt, bleibt aber `noindex` (SPEC F7.6): der Link ist für Leser, nicht für Crawler.
+
+---
+
+## 2026-09-23 · Das Spiel wird indexiert, und die Startseite lädt dazu ein (ROADMAP 5.8a)
+
+Julian: „wir brauchen noch eine verlinkung auf die versus seite von der startseite aus" — und, auf meinen Satz, das Spiel bleibe `noindex`: „nein, indiziere das spiel auch".
+
+**Die Einladung** steht unter dem Versprechen und über dem Suchfeld: „Or help us find the prettiest cover of all time! →" (Julians Formulierung; mein Vorschlag „Or play: which cover would you rather look at?" war blasser). Nur im Hero, also nicht über einer Trefferliste. Gemessen bei 1280 × 800 und 390 × 844: einzeilig, ohne seitlichen Überstand, auf beiden ohne Scrollen sichtbar.
+
+**Warum die Spielseite für einen Crawler erst gebaut werden musste.** Gemessen an der Produktion, bevor etwas geändert wurde: `/versus` lieferte serverseitig **325 Zeichen** sichtbaren Text und **kein einziges Buch** — die Überschrift, „Judge the cover, not the book!" und die Knöpfe. Das Paar holt erst der Browser, und es ist bei jedem Abruf ein anderes. Eine Seite, die so in den Index geht, hat nichts zu zeigen.
+
+**Jetzt:** unter dem Spiel zwei Absätze („What this is"), die Größe des Vorrats und **24 Bücher daraus als Links** — gleichmäßig über die alphabetische Liste der 239 verteilt, nicht vom Anfang genommen, sonst läse es sich wie eine Ecke des Vorrats. Alles aus dem eingefrorenen `data/versus-pool.json` (E18), also **ohne eine einzige Anfrage**; zwei reine Funktionen `poolBooks` und `someBooks` in `lib/hotornot/game.ts` mit Tests. Gemessen nach dem Umbau: **1.746 Zeichen**, 24 Buchlinks.
+
+**Dazu, für beide Seiten:** kein `noindex` mehr, ein Canonical ohne Parameter (`?top=20` und `?flop=20` sind dieselbe Rangliste, nur ausgeklappt), OG-Angaben, und Einträge in der Sitemap — **nur wenn `HOTORNOT` das Spiel anlässt**, sonst schickte die Sitemap Crawler auf einen 404.
+
+**Was bewusst nicht passiert ist:** keine Überschrift und keine Beschreibung verspricht „die schönsten Cover". Meine eigene Schwelle vom 2026-09-13 („erst indexieren, wenn die Kronenregel etwas sagt") ist damit übersprungen — vertretbar, weil die Rangliste selbst „Too early to say" sagt, solange die Stimmen nichts hergeben (N12), und die Beschreibung nur behauptet, was dort steht: welche Cover Leser wählen und wie sicher das ist.
+
+597 Tests, `tsc`, Lint und Build grün.

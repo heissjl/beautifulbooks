@@ -71,7 +71,7 @@ function HomeContent() {
                       href="/versus"
                       className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
                     >
-                      Or play: which cover would you rather look at?
+                      Or help us find the prettiest cover of all time!
                       <span aria-hidden="true">&rarr;</span>
                     </Link>
                   </p>

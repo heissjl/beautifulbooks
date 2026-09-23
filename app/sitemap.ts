@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { PUBLISHED_WORKS } from '@/lib/published';
 import decadePages from '@/data/decade-pages.json';
 import { SITE_URL } from '@/lib/seo';
+import { versusEnabled } from '@/lib/hotornot/switch';
 
 /**
  * The sitemap (SPEC §10 D11, ROADMAP 5.1).
@@ -16,6 +17,18 @@ import { SITE_URL } from '@/lib/seo';
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
+  /*
+    The cover game only when it is switched on (ROADMAP 5.8a, SPEC F7.1): off,
+    both addresses answer 404, and a sitemap that names a 404 is worse than one
+    that is short. The standings change with every vote, the game page with the
+    pool, which is frozen — hence the different frequencies.
+  */
+  const game = versusEnabled()
+    ? [
+        { url: `${SITE_URL}/versus`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
+        { url: `${SITE_URL}/versus/board`, lastModified: now, changeFrequency: 'daily' as const, priority: 0.7 },
+      ]
+    : [];
   return [
     { url: SITE_URL, lastModified: now, changeFrequency: 'weekly', priority: 1 },
     { url: `${SITE_URL}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
@@ -47,5 +60,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
+    ...game,
   ];
 }

@@ -296,6 +296,47 @@ export function bookPath(workId: string, coverId: string): string {
   return `/book/${workId}/cover/${coverPathSegment(coverId)}`;
 }
 
+export interface PoolBook {
+  workId: string;
+  title: string;
+  author: string;
+  /** How many of this book's covers are in the pool. */
+  covers: number;
+}
+
+/**
+ * The books behind the pool, one entry each, ordered by title (SPEC F7.6).
+ *
+ * The game page is indexed since 2026-09-23, and a page a crawler is sent to
+ * must carry something to read: the pool is frozen in the repository (E18),
+ * so this costs no request and never changes between two visits.
+ */
+export function poolBooks(pool: VersusPool = POOL): PoolBook[] {
+  const byWork = new Map<string, PoolBook>();
+  for (const cover of pool.covers) {
+    if (!cover.workId) continue;
+    const seen = byWork.get(cover.workId);
+    if (seen) seen.covers += 1;
+    else byWork.set(cover.workId, { workId: cover.workId, title: cover.title, author: cover.author, covers: 1 });
+  }
+  return [...byWork.values()].sort((a, b) => a.title.localeCompare(b.title) || a.workId.localeCompare(b.workId));
+}
+
+/**
+ * `count` books spread evenly over that list rather than the first `count`:
+ * naming twenty books from the front of the alphabet would read as a corner
+ * of the pool, and the spread is stable because the pool is.
+ */
+export function someBooks(count: number, pool: VersusPool = POOL): PoolBook[] {
+  const all = poolBooks(pool);
+  if (count <= 0) return [];
+  if (all.length <= count) return all;
+  if (count === 1) return [all[0]];
+  // Both ends included, the rest evenly between them: the first and the last
+  // title of the alphabet are as much part of the pool as the middle.
+  return Array.from({ length: count }, (_, i) => all[Math.round((i * (all.length - 1)) / (count - 1))]);
+}
+
 interface PairInput {
   a: unknown;
   b: unknown;
