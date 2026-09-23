@@ -1,6 +1,6 @@
 {
  "name": "mix-1000-paperwhite",
- "builtAt": "2026-09-12",
+ "builtAt": "2026-09-23",
  "indexBuiltAt": "2026-09-11",
  "inherits": [
   "mix-200-paperwhite"
@@ -111,6 +111,50 @@
   {
    "id": "ol:9442803",
    "reason": "A flat board of one colour with nothing on it."
+  },
+  {
+   "id": "ol:8545160",
+   "reason": "Where the Wild Things Are: a photo of an audio CD lying on the book."
+  },
+  {
+   "id": "ol:14563855",
+   "reason": "The Count of Monte Cristo: a back cover of plain text."
+  },
+  {
+   "id": "ol:8132778",
+   "reason": "A Game of Thrones: the back cover, blurb and barcode."
+  },
+  {
+   "id": "ol:8133584",
+   "reason": "A Game of Thrones: the back cover of a French edition."
+  },
+  {
+   "id": "ol:12851994",
+   "reason": "Cry, the Beloved Country: a library date-due slip with stamps."
+  },
+  {
+   "id": "ol:8081781",
+   "reason": "Half of a Yellow Sun: the back cover, blurb and barcode."
+  },
+  {
+   "id": "ol:9628180",
+   "reason": "Buddenbrooks: a black library board with a barcode sticker."
+  },
+  {
+   "id": "ol:8235513",
+   "reason": "Faust: a green cloth board with nothing on it."
+  },
+  {
+   "id": "ol:15105776",
+   "reason": "Genji monogatari: the title page of the Waley translation, not a cover."
+  },
+  {
+   "id": "ol:12721859",
+   "reason": "Les Misérables: a dark board, the title barely visible."
+  },
+  {
+   "id": "ol:6755212",
+   "reason": "2001: A Space Odyssey: a library cloth binding with stamps."
   }
  ],
  "covers": [
@@ -275,12 +319,6 @@
    "workId": "OL891786W",
    "title": "Things Fall Apart",
    "author": "Chinua Achebe"
-  },
-  {
-   "id": "ol:8235513",
-   "workId": "OL52456W",
-   "title": "Faust",
-   "author": "Johann Wolfgang von Goethe"
   },
   {
    "id": "ol:10191445",
@@ -1417,12 +1455,6 @@
    "author": "Stephen King"
   },
   {
-   "id": "ol:9628180",
-   "workId": "OL14867081W",
-   "title": "Buddenbrooks",
-   "author": "Thomas Mann"
-  },
-  {
    "id": "ol:14350130",
    "workId": "OL8996438W",
    "title": "Il pendolo di Foucault",
@@ -2539,12 +2571,6 @@
    "author": "Ralph Ellison"
   },
   {
-   "id": "ol:12851994",
-   "workId": "OL2384132W",
-   "title": "Cry, the Beloved Country",
-   "author": "Alan Paton"
-  },
-  {
    "id": "ol:3329403",
    "workId": "OL39396W",
    "title": "To the Lighthouse",
@@ -2615,12 +2641,6 @@
    "workId": "OL2636675W",
    "title": "Gravity's Rainbow",
    "author": "Thomas Pynchon"
-  },
-  {
-   "id": "ol:14563855",
-   "workId": "OL36287W",
-   "title": "Hrabě Monte Cristo. Díl 1 a 2 (třísvazkové vydání)",
-   "author": "Alexandre Dumas"
   },
   {
    "id": "ol:425089",
@@ -3151,12 +3171,6 @@
    "author": "A. A. Milne"
   },
   {
-   "id": "ol:8132778",
-   "workId": "OL257943W",
-   "title": "A Game of Thrones",
-   "author": "George R. R. Martin"
-  },
-  {
    "id": "ol:9322630",
    "workId": "OL74666W",
    "title": "American Pastoral",
@@ -3203,12 +3217,6 @@
    "workId": "OL62744W",
    "title": "Vom Kriege",
    "author": "Carl von Clausewitz"
-  },
-  {
-   "id": "ol:6755212",
-   "workId": "OL17365W",
-   "title": "2001",
-   "author": "Arthur C. Clarke"
   },
   {
    "id": "ol:12496807",
@@ -3311,12 +3319,6 @@
    "workId": "OL114967W",
    "title": "The Jungle",
    "author": "Upton Sinclair"
-  },
-  {
-   "id": "ol:8545160",
-   "workId": "OL2568879W",
-   "title": "Where the Wild Things Are",
-   "author": "Maurice Sendak"
   },
   {
    "id": "ol:14083397",
@@ -4951,18 +4953,6 @@
    "author": "Bret Easton Ellis"
   },
   {
-   "id": "ol:8133584",
-   "workId": "OL257943W",
-   "title": "A Game of Thrones",
-   "author": "George R. R. Martin"
-  },
-  {
-   "id": "ol:12721859",
-   "workId": "OL1063588W",
-   "title": "Les Misérables",
-   "author": "Victor Hugo"
-  },
-  {
    "id": "ol:12123644",
    "workId": "OL16444438W",
    "title": "The Fault in Our Stars",
@@ -5731,12 +5721,6 @@
    "author": "James Joyce"
   },
   {
-   "id": "ol:15105776",
-   "workId": "OL2564006W",
-   "title": "Genji monogatari",
-   "author": "Murasaki Shikibu"
-  },
-  {
    "id": "ol:13660924",
    "workId": "OL1855944W",
    "title": "Atonement",
@@ -6001,12 +5985,6 @@
    "author": "Stephenie Meyer"
   },
   {
-   "id": "ol:8081781",
-   "workId": "OL5731542W",
-   "title": "Half of a Yellow Sun",
-   "author": "Chimamanda Ngozi Adichie"
-  },
-  {
    "id": "ol:12370631",
    "workId": "OL86318W",
    "title": "Ulysses",
@@ -6113,6 +6091,72 @@
    "workId": "OL24156W",
    "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
    "author": "Robert Louis Stevenson"
+  },
+  {
+   "id": "ol:11293305",
+   "workId": "OL257943W",
+   "title": "A Game of Thrones",
+   "author": "George R. R. Martin"
+  },
+  {
+   "id": "ol:8235289",
+   "workId": "OL2384132W",
+   "title": "Cry, the Beloved Country",
+   "author": "Alan Paton"
+  },
+  {
+   "id": "ol:119387",
+   "workId": "OL52456W",
+   "title": "Faust",
+   "author": "Johann Wolfgang von Goethe"
+  },
+  {
+   "id": "ol:14564033",
+   "workId": "OL36287W",
+   "title": "Hrabě Monte Cristo. Díl 1 a 2 (třísvazkové vydání)",
+   "author": "Alexandre Dumas"
+  },
+  {
+   "id": "ol:15127390",
+   "workId": "OL257943W",
+   "title": "A Game of Thrones",
+   "author": "George R. R. Martin"
+  },
+  {
+   "id": "ol:14312325",
+   "workId": "OL17365W",
+   "title": "2001",
+   "author": "Arthur C. Clarke"
+  },
+  {
+   "id": "ol:11669680",
+   "workId": "OL1063588W",
+   "title": "Les Misérables",
+   "author": "Victor Hugo"
+  },
+  {
+   "id": "ol:11945873",
+   "workId": "OL5731542W",
+   "title": "Half of a Yellow Sun",
+   "author": "Chimamanda Ngozi Adichie"
+  },
+  {
+   "id": "ol:15111579",
+   "workId": "OL2564006W",
+   "title": "Genji monogatari",
+   "author": "Murasaki Shikibu"
+  },
+  {
+   "id": "ol:8766431",
+   "workId": "OL14867081W",
+   "title": "Buddenbrooks",
+   "author": "Thomas Mann"
+  },
+  {
+   "id": "ol:6547173",
+   "workId": "OL258329W",
+   "title": "Один день Ивана Денисовича",
+   "author": "Александр Солженицын"
   }
  ]
 }

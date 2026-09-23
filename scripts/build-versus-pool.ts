@@ -86,6 +86,20 @@ const EXCLUDED = [
     id: `ol:${n}`,
     reason: 'A flat board of one colour with nothing on it.',
   })),
+  // Found by CLIP (lab/clip, ROADMAP 6.48): the top of its "not a cover" ranking over this pool, looked at
+  // and confirmed by Julian, 2026-09-23. Two he kept: a Göttliche Komödie and a Goethes Werke that may be
+  // old covers rather than title pages.
+  { id: 'ol:8545160', reason: 'Where the Wild Things Are: a photo of an audio CD lying on the book.' },
+  { id: 'ol:14563855', reason: 'The Count of Monte Cristo: a back cover of plain text.' },
+  { id: 'ol:8132778', reason: 'A Game of Thrones: the back cover, blurb and barcode.' },
+  { id: 'ol:8133584', reason: 'A Game of Thrones: the back cover of a French edition.' },
+  { id: 'ol:12851994', reason: 'Cry, the Beloved Country: a library date-due slip with stamps.' },
+  { id: 'ol:8081781', reason: 'Half of a Yellow Sun: the back cover, blurb and barcode.' },
+  { id: 'ol:9628180', reason: 'Buddenbrooks: a black library board with a barcode sticker.' },
+  { id: 'ol:8235513', reason: 'Faust: a green cloth board with nothing on it.' },
+  { id: 'ol:15105776', reason: 'Genji monogatari: the title page of the Waley translation, not a cover.' },
+  { id: 'ol:12721859', reason: 'Les Misérables: a dark board, the title barely visible.' },
+  { id: 'ol:6755212', reason: '2001: A Space Odyssey: a library cloth binding with stamps.' },
 ];
 
 const base: MixOptions = { mode: 'mix', size: 1000, seed: 'paperwhite', perBook: PER_BOOK, exclude: EXCLUDED.map(e => e.id) };
