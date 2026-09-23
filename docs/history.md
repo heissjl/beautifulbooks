@@ -2413,3 +2413,19 @@ Damit nennt die Datenschutzerklärung den Anbieter (Redis, über Vercels Marketp
 **Nachtrag 2026-09-22: live.** Julian hat den Speicher im Dashboard auch mit Production verbunden; `vercel integration resource inspect` zeigte danach „beautifulbooks (production, preview)“, `vercel env ls` `STORAGE_REDIS_URL` unter Production und Preview und nicht unter Development — der Laptop spricht also weiter mit dem Arbeitsspeicher. `origin/main` stand noch auf `d5807bd`, `main` +47 / −0; gepusht als `d5807bd..9ad93c5`, Deployment `aez1wqv47` nach gut zwei Minuten „Ready“. **Einmal geprüft**, ohne abzustimmen: `/versus`, `/versus/board`, `/privacy` je 200; `/api/versus/pair` antwortete mit `"store":"redis"`, `"votes":581`, `"covers":980` — derselbe Speicher wie in der Preview, die 403 Stimmen vom 2026-09-14 sind inzwischen 581 —, und die Datenschutzerklärung trägt den Abschnitt „The cover game“, weil der Schalter an ist.
 
 Ein Fallstrick beim Warten: `vercel ls` schreibt die Tabelle nur auf ein Terminal; durch eine Pipe kommen allein die URLs, ein `grep Ready` wartet dann ewig. `vercel inspect <url>` gibt den Status auch in einer Pipe.
+
+---
+
+## 2026-09-23 · Ein geteiltes Cover fror die Wand ein (ROADMAP 6.48, 5.8a)
+
+Julian: „when I am clicking on a link to a cover from either the decade or the versus page, it gets stuck on that cover in the normal cover wall and i can't select another one".
+
+**Nachgestellt am Dev-Server**, an *Lolita* (OL627084W, 230 Ausgaben), mit dem Link, den das Spiel ausgibt (`/book/OL627084W/cover/ol-6532436`): drei Klicks auf drei verschiedene Kacheln, und das große Bild in der Seitenleiste blieb dreimal dasselbe (`/img/L/ol-9266349`, die Kachel, in die das Cover aus dem Pfad gefaltet wurde), während die Adresse brav `?cover=ol:13164723`, `?cover=ol:8316992`, `?cover=ol:9266349` mitschrieb. Dieselbe Wand über `/book/OL627084W?cover=ol:6532436` folgte jedem Klick. Damit war der Fehler eingegrenzt, ohne im Code zu raten.
+
+**Die Ursache steht in einer Zeile** (`components/BookDetail.tsx`): `selectedId = routeCover ?? searchParams.get('cover')`. Die Auswahl schreibt `?cover=`, gelesen wurde aber zuerst der Pfad — und der Pfad ändert sich nie. Der Kommentar darüber behauptete seit 6.20 das Gegenteil („inside the page the query stays the source of truth"); die Reihenfolge sagte etwas anderes. **Betroffen war jede Wand, die aus einem geteilten Link, aus dem Spiel oder von der Rangliste geöffnet wurde** — also genau der Weg, den ein neuer Leser nimmt. Die Jahrzehnte-Seite verlinkt `?cover=` und war nie betroffen; Julians „decade or versus" bezog sich auf beide Wege in die Wand, kaputt war der aus dem Spiel.
+
+**Behoben** durch Vertauschen: die Query hat Vorrang, der Pfad ist der Anfang (SPEC F2.7). Danach folgte das große Bild jedem der drei Klicks. **Der Pfad bleibt in der Adresse stehen**, es entsteht also `/book/…/cover/a?cover=b`: ihn wegzuschreiben hieße, auf die andere Route zu wechseln, und damit die Ladeszene ein zweites Mal zu zeigen. Wer teilt, nimmt den „Share"-Knopf, und der baut die Adresse aus der aktuellen Auswahl.
+
+**Dazu ein Weg vom Spiel zur ganzen Wand** (Julian: „in the versus page, I want a direct link to the cover wall of a book whose edition is shown"). Er steht **unter jedem Cover neben dem „Share"-Knopf** („All covers") und in der Zeile des letzten Picks („all its covers"), beide in einem neuen Tab. Nicht auf dem Titel: ein Link, den man nur beim Darüberfahren erkennt, ist auf einem Telefon keiner, und die Zeile unter dem Paar ist ohnehin schon die Zeile der Wege aus dem Spiel heraus. Angesehen bei 1280 × 800 und 390 × 844, kein seitlicher Überstand, die Zeile unter dem Paar bleibt einzeilig.
+
+594 Tests, `tsc`, Lint und Build grün.

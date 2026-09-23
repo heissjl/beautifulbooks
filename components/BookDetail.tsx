@@ -200,6 +200,13 @@ function BookDetail() {
     A share address carries the cover in the path (`/book/<id>/cover/<cover>`,
     ROADMAP 6.20) so that its preview can show it; inside the page the query
     stays the source of truth, and picking another cover goes back to it.
+
+    **The path is a starting point, never the answer** (ROADMAP 6.48): it says
+    which cover the link was about, and `?cover=` says which one the reader
+    has picked since. Reading the path first froze the wall — every shared
+    link, and every cover opened from the game, showed one cover and ignored
+    every click after that, because `selectCover` writes the query while the
+    path kept winning.
   */
   const routeCover = coverIdFromSegment(typeof params.coverId === 'string' ? params.coverId : undefined);
 
@@ -244,7 +251,7 @@ function BookDetail() {
     return pages.merged.covers.find(c => c.editionIds.some(id => wanted.has(id)))?.id ?? null;
   }, [isbnWanted, pages.merged, editionIdsByIsbn]);
 
-  const selectedId = routeCover ?? searchParams.get('cover') ?? coverForIsbn;
+  const selectedId = searchParams.get('cover') ?? routeCover ?? coverForIsbn;
 
   // Which ISBN to ask about is decided on the catalogue alone. Retail covers
   // never change *which edition* is being looked at, and deriving the

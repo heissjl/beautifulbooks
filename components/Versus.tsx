@@ -14,6 +14,9 @@ import ShareMenu from '@/components/ShareMenu';
  * changes the verdict. Which cover lands on which side is the server's coin
  * toss (`nextPair`). After a pick, a link leads to the book page with that
  * cover selected: someone who finds it beautiful enough may want to buy it.
+ * Under each cover, beside its share button, a second link opens the book's
+ * whole wall — the game shows one edition, the wall shows what else exists.
+ * Both open a new tab, so a game in progress survives the detour.
  *
  * Loading follows the rule of this codebase: the state belongs to a request
  * number, and "loading" is simply the latest answer not being for the latest
@@ -329,12 +332,17 @@ export default function Versus() {
             One share button under each cover, for the one that is funny-ugly (Julian, 2026-09-11). Outside the
             clipped area above, or the panel would be cut off; the left one opens to the right so it stays on a
             phone screen. It passes on the book page with this cover selected, whose preview is the cover itself.
+
+            Beside it, the way to the whole wall (Julian, 2026-09-23: „ich will einen direkten link zur cover wall
+            eines buches, dessen ausgabe angezeigt wird"). Here rather than on the title, because a link under the
+            cover must be found without hovering — a phone has no hover — and because this row is already the row
+            of things that lead away from the game. A new tab, so a game in progress is never lost.
           */}
           {shown && (
             <div className="mt-2 grid grid-cols-2 gap-3 sm:gap-6">
               {[shown.a, shown.b].map((side, i) =>
                 side.workId ? (
-                  <div key={side.id} className="flex justify-center">
+                  <div key={side.id} className="flex items-center justify-center gap-3">
                     <ShareMenu
                       workId={side.workId}
                       coverId={side.id}
@@ -344,6 +352,15 @@ export default function Versus() {
                       align={i === 0 ? 'left' : 'right'}
                       text={`Beautiful or ugly? ${side.title}${side.author ? ` by ${side.author}` : ''}`}
                     />
+                    <Link
+                      href={`/book/${side.workId}`}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={`All covers of ${side.title}`}
+                      className="whitespace-nowrap text-xs text-ink-3 underline underline-offset-2 hover:text-accent"
+                    >
+                      All covers
+                    </Link>
                   </div>
                 ) : (
                   <div key={side.id} />
@@ -374,6 +391,14 @@ export default function Versus() {
                   <Link href={lastPick.href} target="_blank" rel="noopener" className="whitespace-nowrap text-accent underline underline-offset-2">
                     See this edition
                   </Link>
+                  {lastPick.workId ? (
+                    <>
+                      {' · '}
+                      <Link href={`/book/${lastPick.workId}`} target="_blank" rel="noopener" className="whitespace-nowrap text-accent underline underline-offset-2">
+                        all its covers
+                      </Link>
+                    </>
+                  ) : null}
                 </p>
               </div>
             )}
