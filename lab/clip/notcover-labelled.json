@@ -1,0 +1,1417 @@
+{
+ "labelledAt": "2026-09-22",
+ "labelledBy": "Claude, by eye, from the contact sheets sheet.py builds",
+ "note": "Only the top of each ranking was looked at, so these labels say nothing about what the ranking missed; recall comes from the random sample (seenIn: outsideRandom).",
+ "covers": [
+  {
+   "id": "ol:15172768",
+   "label": "cover",
+   "title": "The Color Purple",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:9597134",
+   "label": "notcover",
+   "title": "Goethe's Werke",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12523910",
+   "label": "notcover",
+   "title": "Kindred",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14493167",
+   "label": "notcover",
+   "title": "Macbeth",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13141203",
+   "label": "notcover",
+   "title": "Das Parfum",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:6006016",
+   "label": "notcover",
+   "title": "La Divina Commedia",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13319729",
+   "label": "notcover",
+   "title": "Great Expectations",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14829110",
+   "label": "notcover",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12930702",
+   "label": "cover",
+   "title": "Where the Wild Things Are",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12296200",
+   "label": "cover",
+   "title": "Metamorphosis",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:15154839",
+   "label": "notcover",
+   "title": "And Then There Were None",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12810595",
+   "label": "notcover",
+   "title": "Le petit prince",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10328106",
+   "label": "notcover",
+   "title": "The Color Purple",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:8231818",
+   "label": "cover",
+   "title": "Things Fall Apart",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13504101",
+   "label": "notcover",
+   "title": "Metamorphosis",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14950084",
+   "label": "notcover",
+   "title": "East of Eden",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:7036559",
+   "label": "notcover",
+   "title": "Also sprach Zarathustra",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:7048152",
+   "label": "notcover",
+   "title": "La Divina Commedia",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:9976157",
+   "label": "notcover",
+   "title": "Ὀδύσσεια",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10854642",
+   "label": "notcover",
+   "title": "The Great Gatsby",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:15244251",
+   "label": "notcover",
+   "title": "Gone With the Wind",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10009129",
+   "label": "notcover",
+   "title": "Howards End",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:8247968",
+   "label": "cover",
+   "title": "The Great Gatsby",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:5203712",
+   "label": "notcover",
+   "title": "The Hobbit",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13904637",
+   "label": "unsure",
+   "title": "Where the Wild Things Are",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13673708",
+   "label": "cover",
+   "title": "And Then There Were None",
+   "seenIn": "outsideTop, zero-shot v1 + outsideRandom"
+  },
+  {
+   "id": "ol:12819484",
+   "label": "cover",
+   "title": "Treasure Island",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:8133591",
+   "label": "notcover",
+   "title": "A Game of Thrones",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13488656",
+   "label": "cover",
+   "title": "Peter Pan",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:8242783",
+   "label": "notcover",
+   "title": "Ὀδύσσεια",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12242133",
+   "label": "cover",
+   "title": "Nineteen Eighty-Four",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14305415",
+   "label": "cover",
+   "title": "Things Fall Apart",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:7183506",
+   "label": "notcover",
+   "title": "La Divina Commedia",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:11003229",
+   "label": "unsure",
+   "title": "Jane Eyre",
+   "seenIn": "outsideTop, zero-shot v1 + outsideRandom"
+  },
+  {
+   "id": "ol:12360499",
+   "label": "notcover",
+   "title": "Pride and Prejudice",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14561973",
+   "label": "cover",
+   "title": "Murder on the Orient Express",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:6363109",
+   "label": "notcover",
+   "title": "Faust",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:15156773",
+   "label": "cover",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:6073629",
+   "label": "notcover",
+   "title": "Ὀδύσσεια",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14851504",
+   "label": "cover",
+   "title": "Der Steppenwolf",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12639903",
+   "label": "cover",
+   "title": "The Fellowship of the Ring",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:11047019",
+   "label": "cover",
+   "title": "Murder on the Orient Express",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:15204639",
+   "label": "notcover",
+   "title": "The Kite Runner",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:5914912",
+   "label": "notcover",
+   "title": "Faust",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14497496",
+   "label": "notcover",
+   "title": "Moby Dick",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:9482787",
+   "label": "notcover",
+   "title": "La Divina Commedia",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:15156818",
+   "label": "cover",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13276139",
+   "label": "notcover",
+   "title": "L’étranger",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:9548594",
+   "label": "notcover",
+   "title": "Also sprach Zarathustra",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:5439147",
+   "label": "notcover",
+   "title": "Hamlet",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13204562",
+   "label": "cover",
+   "title": "Charlie and the Chocolate Factory",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:7319010",
+   "label": "cover",
+   "title": "The Hunger Games",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:4652166",
+   "label": "notcover",
+   "title": "Ὀδύσσεια",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12715880",
+   "label": "notcover",
+   "title": "The Grapes of Wrath",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13211196",
+   "label": "cover",
+   "title": "Das Parfum",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:4077296",
+   "label": "notcover",
+   "title": "La Divina Commedia",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12070939",
+   "label": "cover",
+   "title": "The War of the Worlds",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14847064",
+   "label": "notcover",
+   "title": "Brave New World",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:11690971",
+   "label": "cover",
+   "title": "The Remains of the Day",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:5305859",
+   "label": "notcover",
+   "title": "The Fellowship of the Ring",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:5999456",
+   "label": "notcover",
+   "title": "Faust",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:15152729",
+   "label": "cover",
+   "title": "The Perks of Being a Wallflower",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12962724",
+   "label": "unsure",
+   "title": "Macbeth",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:9723562",
+   "label": "notcover",
+   "title": "La Divina Commedia",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:11481200",
+   "label": "cover",
+   "title": "Dune",
+   "seenIn": "outsideTop, zero-shot v1 + outsideRandom"
+  },
+  {
+   "id": "ol:8133585",
+   "label": "cover",
+   "title": "A Game of Thrones",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12186523",
+   "label": "cover",
+   "title": "The Sound and the Fury",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:5018310",
+   "label": "cover",
+   "title": "Where the Wild Things Are",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14625785",
+   "label": "cover",
+   "title": "2001",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:7335045",
+   "label": "cover",
+   "title": "Do Androids Dream of Electric Sheep?",
+   "seenIn": "outsideTop, zero-shot v1 + outsideRandom"
+  },
+  {
+   "id": "ol:12607063",
+   "label": "cover",
+   "title": "The Fellowship of the Ring",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14097112",
+   "label": "cover",
+   "title": "The Hobbit",
+   "seenIn": "outsideTop, zero-shot v1 + outsideRandom"
+  },
+  {
+   "id": "ol:297595",
+   "label": "cover",
+   "title": "Les Misérables",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10524531",
+   "label": "notcover",
+   "title": "Nineteen Eighty-Four",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10524527",
+   "label": "notcover",
+   "title": "Nineteen Eighty-Four",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:5585341",
+   "label": "unsure",
+   "title": "Faust",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:15115656",
+   "label": "cover",
+   "title": "Metamorphosis",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:15207590",
+   "label": "cover",
+   "title": "Things Fall Apart",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14654006",
+   "label": "cover",
+   "title": "The Shining",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:5601773",
+   "label": "notcover",
+   "title": "La Divina Commedia",
+   "seenIn": "outsideTop, zero-shot v1"
+  },
+  {
+   "id": "ol:8545160",
+   "label": "notcover",
+   "title": "Where the Wild Things Are",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14563855",
+   "label": "notcover",
+   "title": "Hrabě Monte Cristo. Díl 1 a 2 (třísvazkové vydání)",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10185885",
+   "label": "cover",
+   "title": "Cloud Atlas",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:8132140",
+   "label": "cover",
+   "title": "Stoner",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:8132778",
+   "label": "notcover",
+   "title": "A Game of Thrones",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10740752",
+   "label": "cover",
+   "title": "Cloud Atlas",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12851994",
+   "label": "notcover",
+   "title": "Cry, the Beloved Country",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14921257",
+   "label": "cover",
+   "title": "One Flew Over the Cuckoo's Nest",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:5979889",
+   "label": "unsure",
+   "title": "La Divina Commedia",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:8081781",
+   "label": "notcover",
+   "title": "Half of a Yellow Sun",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:7891417",
+   "label": "cover",
+   "title": "Trainspotting",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:107770",
+   "label": "cover",
+   "title": "The town and the city",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:1472467",
+   "label": "cover",
+   "title": "The Sound and the Fury",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12605664",
+   "label": "cover",
+   "title": "The Awakening",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:9628180",
+   "label": "notcover",
+   "title": "Buddenbrooks",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:11669342",
+   "label": "cover",
+   "title": "Hamlet",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12446638",
+   "label": "cover",
+   "title": "The Song of Achilles",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:254106",
+   "label": "cover",
+   "title": "À la recherche du temps perdu",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:6589767",
+   "label": "unsure",
+   "title": "Goethe's Werke",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10376604",
+   "label": "cover",
+   "title": "Foundation",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12569451",
+   "label": "cover",
+   "title": "A Game of Thrones",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:108111",
+   "label": "cover",
+   "title": "Mawsim al-hijrah ilá al-shamāl",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10398539",
+   "label": "cover",
+   "title": "Twilight",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10169609",
+   "label": "cover",
+   "title": "White Noise",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14533914",
+   "label": "cover",
+   "title": "The Godfather",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:10673676",
+   "label": "cover",
+   "title": "La sombra del viento",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12303957",
+   "label": "cover",
+   "title": "Peter Pan",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:1013862",
+   "label": "cover",
+   "title": "Gravity's Rainbow",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:6544266",
+   "label": "cover",
+   "title": "The Wonderful Wizard of Oz",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:5749461",
+   "label": "cover",
+   "title": "Das Fraülein von Scudeṙi",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:11727865",
+   "label": "cover",
+   "title": "The Left Hand of Darkness",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:14559979",
+   "label": "cover",
+   "title": "Один день Ивана Денисовича",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13737713",
+   "label": "cover",
+   "title": "Frankenstein; or, The Modern Prometheus",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12313764",
+   "label": "cover",
+   "title": "Solaris",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:8235513",
+   "label": "notcover",
+   "title": "Faust",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:8133584",
+   "label": "notcover",
+   "title": "A Game of Thrones",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:15105776",
+   "label": "notcover",
+   "title": "Genji monogatari",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:13719053",
+   "label": "cover",
+   "title": "Der Vorleser",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12721859",
+   "label": "notcover",
+   "title": "Les Misérables",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:6755212",
+   "label": "unsure",
+   "title": "2001",
+   "seenIn": "gameTop, zero-shot v1"
+  },
+  {
+   "id": "ol:12375234",
+   "label": "cover",
+   "title": "A Tale of Two Cities",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14641098",
+   "label": "cover",
+   "title": "Anne of Green Gables",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13395641",
+   "label": "cover",
+   "title": "The Awakening",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:7276955",
+   "label": "cover",
+   "title": "Americanah",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:11311838",
+   "label": "cover",
+   "title": "Hamlet",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12443837",
+   "label": "cover",
+   "title": "Jane Eyre",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14212066",
+   "label": "cover",
+   "title": "Little Women",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:3222767",
+   "label": "cover",
+   "title": "Momo oder Die seltsame Geschichte von den Zeit-Dieben und von dem Kind, das den Menschen die gestohlene Zeit zurückbrachte",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:1470930",
+   "label": "cover",
+   "title": "Le Tour du Monde en Quatre-Vingts Jours",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10704443",
+   "label": "cover",
+   "title": "Ὀδύσσεια",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15007994",
+   "label": "cover",
+   "title": "Lolita",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12718807",
+   "label": "cover",
+   "title": "Gulliver's Travels",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8347174",
+   "label": "cover",
+   "title": "Gone With the Wind",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15167833",
+   "label": "cover",
+   "title": "The Hunger Games",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14385206",
+   "label": "cover",
+   "title": "Lolita",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14638524",
+   "label": "cover",
+   "title": "Anne of Green Gables",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14817063",
+   "label": "cover",
+   "title": "Gone With the Wind",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12268868",
+   "label": "cover",
+   "title": "The Hound of the Baskervilles",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12218879",
+   "label": "cover",
+   "title": "Hamlet",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8823616",
+   "label": "cover",
+   "title": "My Ántonia",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:11355219",
+   "label": "cover",
+   "title": "Vingt mille lieues sous les mers",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13234513",
+   "label": "cover",
+   "title": "海辺のカフカ",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14471779",
+   "label": "notcover",
+   "title": "The Great Gatsby",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13573016",
+   "label": "cover",
+   "title": "The Wonderful Wizard of Oz",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10586121",
+   "label": "cover",
+   "title": "A Clockwork Orange",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:34451",
+   "label": "cover",
+   "title": "Cien años de soledad",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:5234723",
+   "label": "cover",
+   "title": "Vingt mille lieues sous les mers",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10451354",
+   "label": "cover",
+   "title": "Matilda",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12348690",
+   "label": "cover",
+   "title": "The Maltese Falcon",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:981905",
+   "label": "cover",
+   "title": "Ender's Game",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10395974",
+   "label": "cover",
+   "title": "Far from the Madding Crowd",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12717055",
+   "label": "cover",
+   "title": "Gulliver's Travels",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:41885",
+   "label": "cover",
+   "title": "Under the Volcano",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8245471",
+   "label": "cover",
+   "title": "Vom Kriege",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10534855",
+   "label": "cover",
+   "title": "Solaris",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8241390",
+   "label": "cover",
+   "title": "The Great Gatsby",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:24078",
+   "label": "cover",
+   "title": "Where the Wild Things Are",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12420431",
+   "label": "cover",
+   "title": "Benim Adım Kırmızı",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8310845",
+   "label": "cover",
+   "title": "The Book Thief",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12231292",
+   "label": "cover",
+   "title": "Der Proceß",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15223642",
+   "label": "cover",
+   "title": "Great Expectations",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12502017",
+   "label": "cover",
+   "title": "Momo oder Die seltsame Geschichte von den Zeit-Dieben und von dem Kind, das den Menschen die gestohlene Zeit zurückbrachte",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8448321",
+   "label": "notcover",
+   "title": "Hamlet",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:6564029",
+   "label": "cover",
+   "title": "Die Leiden des jungen Werthers",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10201248",
+   "label": "cover",
+   "title": "La sombra del viento",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13173828",
+   "label": "cover",
+   "title": "Middlemarch",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14811155",
+   "label": "cover",
+   "title": "The Great Gatsby",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:418677",
+   "label": "cover",
+   "title": "My Ántonia",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14656139",
+   "label": "cover",
+   "title": "The Shining",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:11942927",
+   "label": "cover",
+   "title": "La Divina Commedia",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10814028",
+   "label": "cover",
+   "title": "The Time Machine",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15234466",
+   "label": "cover",
+   "title": "The Road",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10011516",
+   "label": "notcover",
+   "title": "Ὀδύσσεια",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13847908",
+   "label": "cover",
+   "title": "To the Lighthouse",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8598280",
+   "label": "cover",
+   "title": "The Grapes of Wrath",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15203682",
+   "label": "cover",
+   "title": "Adventures of Huckleberry Finn",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8991419",
+   "label": "cover",
+   "title": "Tess of the d'Urbervilles",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15173811",
+   "label": "cover",
+   "title": "Adventures of Huckleberry Finn",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12336984",
+   "label": "cover",
+   "title": "Fahrenheit 451",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:252273",
+   "label": "cover",
+   "title": "Heart of Darkness",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8150253",
+   "label": "cover",
+   "title": "Fahrenheit 451",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14818101",
+   "label": "cover",
+   "title": "The Road",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:2270969",
+   "label": "cover",
+   "title": "Benim Adım Kırmızı",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:9717935",
+   "label": "cover",
+   "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14399839",
+   "label": "cover",
+   "title": "Genji monogatari",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8787131",
+   "label": "cover",
+   "title": "Snow Crash",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:1260604",
+   "label": "cover",
+   "title": "Heart of Darkness",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:115308",
+   "label": "cover",
+   "title": "Mrs. Dalloway",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8417066",
+   "label": "notcover",
+   "title": "Faust",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14656144",
+   "label": "cover",
+   "title": "Heart of Darkness",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12722850",
+   "label": "cover",
+   "title": "L’étranger",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8461884",
+   "label": "cover",
+   "title": "Charlotte's Web",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15136386",
+   "label": "cover",
+   "title": "Nineteen Eighty-Four",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14525922",
+   "label": "cover",
+   "title": "The Time Machine",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13133161",
+   "label": "cover",
+   "title": "Great Expectations",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:5418250",
+   "label": "cover",
+   "title": "The Outsiders",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:2111099",
+   "label": "cover",
+   "title": "The Age of Innocence",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14631283",
+   "label": "cover",
+   "title": "Stranger in a Strange Land",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13482119",
+   "label": "cover",
+   "title": "The Moonstone",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8477259",
+   "label": "cover",
+   "title": "The Bell Jar",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:2890085",
+   "label": "cover",
+   "title": "Gulliver's Travels",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14579079",
+   "label": "cover",
+   "title": "In Cold Blood",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13526322",
+   "label": "cover",
+   "title": "The Hunger Games",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15104716",
+   "label": "cover",
+   "title": "The Fault in Our Stars",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14546101",
+   "label": "cover",
+   "title": "Alice's Adventures in Wonderland",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8237050",
+   "label": "cover",
+   "title": "Peter Pan",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:9107359",
+   "label": "cover",
+   "title": "Candide",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:11196113",
+   "label": "cover",
+   "title": "Heart of Darkness",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10515410",
+   "label": "cover",
+   "title": "I, Robot",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:11822173",
+   "label": "unsure",
+   "title": "Buddenbrooks",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:997309",
+   "label": "cover",
+   "title": "Fahrenheit 451",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:780738",
+   "label": "cover",
+   "title": "Vingt mille lieues sous les mers",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:1051730",
+   "label": "cover",
+   "title": "Hrabě Monte Cristo. Díl 1 a 2 (třísvazkové vydání)",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13303988",
+   "label": "cover",
+   "title": "The Scarlet Letter",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:2435252",
+   "label": "cover",
+   "title": "Ὀδύσσεια",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10561909",
+   "label": "cover",
+   "title": "Der Proceß",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15182499",
+   "label": "cover",
+   "title": "Fahrenheit 451",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14383494",
+   "label": "cover",
+   "title": "Maus I",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15246891",
+   "label": "cover",
+   "title": "Pride and Prejudice",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:6278254",
+   "label": "cover",
+   "title": "The Hobbit",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:11458636",
+   "label": "cover",
+   "title": "Lord of the Flies",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:12819547",
+   "label": "cover",
+   "title": "Treasure Island",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:1016500",
+   "label": "cover",
+   "title": "Der Steppenwolf",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:7253512",
+   "label": "cover",
+   "title": "Cloud Atlas",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14906119",
+   "label": "cover",
+   "title": "Alice's Adventures in Wonderland",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:6609382",
+   "label": "cover",
+   "title": "The Secret History",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:5423842",
+   "label": "cover",
+   "title": "O Alquimista",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:14648858",
+   "label": "cover",
+   "title": "Genji monogatari",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:10500872",
+   "label": "cover",
+   "title": "I, Robot",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8000257",
+   "label": "cover",
+   "title": "Benim Adım Kırmızı",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13980094",
+   "label": "cover",
+   "title": "بين القصرين",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:6596203",
+   "label": "cover",
+   "title": "Atonement",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:13474402",
+   "label": "cover",
+   "title": "La Divina Commedia",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:8890705",
+   "label": "cover",
+   "title": "My Ántonia",
+   "seenIn": "outsideRandom, blind"
+  },
+  {
+   "id": "ol:15162945",
+   "label": "cover",
+   "title": "海辺のカフカ",
+   "seenIn": "outsideRandom, blind"
+  }
+ ]
+}

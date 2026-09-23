@@ -1,0 +1,808 @@
+{
+ "labelledAt": "2026-09-22",
+ "labelledBy": "Claude, by eye and blind to both measures (sheet.py fold --blind)",
+ "sample": "fold.ts --sample: rng(9), 25 pairs per dHash band 9-12, 13-16, 17-20, 21-24, one per work and band, inside one work",
+ "rule": "same = the same design (artwork and layout); a translation with the same artwork counts as same and says so in its note; same art in a different layout is diff",
+ "pairs": [
+  {
+   "band": "9-12",
+   "a": "ol:12369645",
+   "b": "ol:13620610",
+   "indexDistance": 11,
+   "label": "same",
+   "note": "translation: same artwork, title in another language"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:15244296",
+   "b": "ol:14816260",
+   "indexDistance": 12,
+   "label": "diff",
+   "note": "Gone With the Wind"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:5203712",
+   "b": "ol:14626075",
+   "indexDistance": 10,
+   "label": "diff",
+   "note": "The Hobbit"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:15116019",
+   "b": "ol:12646545",
+   "indexDistance": 11,
+   "label": "same",
+   "note": "The Hunger Games"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:14351163",
+   "b": "ol:12641984",
+   "indexDistance": 11,
+   "label": "same",
+   "note": "translation: same artwork, title in another language"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:6082593",
+   "b": "ol:14947054",
+   "indexDistance": 12,
+   "label": "diff",
+   "note": "La Divina Commedia"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:9338285",
+   "b": "ol:10680521",
+   "indexDistance": 12,
+   "label": "diff",
+   "note": "Moby Dick"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:14982778",
+   "b": "ol:8235207",
+   "indexDistance": 12,
+   "label": "same",
+   "note": "price sticker"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:12193007",
+   "b": "ol:12718778",
+   "indexDistance": 11,
+   "label": "diff",
+   "note": "Gulliver's Travels"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:6056274",
+   "b": "ol:9590897",
+   "indexDistance": 11,
+   "label": "diff",
+   "note": "Faust"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:15168707",
+   "b": "ol:14320051",
+   "indexDistance": 11,
+   "label": "same",
+   "note": "translation: same artwork, title in another language"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:1260492",
+   "b": "ol:2468342",
+   "indexDistance": 10,
+   "label": "diff",
+   "note": "Lord Jim"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:14589632",
+   "b": "ol:9276325",
+   "indexDistance": 12,
+   "label": "same",
+   "note": "translation: same artwork, title in another language"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:13196767",
+   "b": "ol:403890",
+   "indexDistance": 12,
+   "label": "diff",
+   "note": "The Color Purple"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:13314010",
+   "b": "ol:14168111",
+   "indexDistance": 11,
+   "label": "diff",
+   "note": "Great Expectations"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:12713387",
+   "b": "ol:12711735",
+   "indexDistance": 9,
+   "label": "diff",
+   "note": "Доктор Живаго"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:15170703",
+   "b": "ol:12645100",
+   "indexDistance": 11,
+   "label": "same",
+   "note": "Brave New World"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:12903585",
+   "b": "ol:12903529",
+   "indexDistance": 12,
+   "label": "diff",
+   "note": "Adventures of Huckleberry Finn"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:8172081",
+   "b": "ol:14627526",
+   "indexDistance": 11,
+   "label": "same",
+   "note": "The Fellowship of the Ring"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:15144535",
+   "b": "ol:7903377",
+   "indexDistance": 12,
+   "label": "diff",
+   "note": "Le petit prince"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:12370415",
+   "b": "ol:7267111",
+   "indexDistance": 9,
+   "label": "same",
+   "note": "translation: same artwork, title in another language"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:1118013",
+   "b": "ol:11693946",
+   "indexDistance": 9,
+   "label": "diff",
+   "note": "same painting, different layout"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:12819532",
+   "b": "ol:12819418",
+   "indexDistance": 11,
+   "label": "skip",
+   "note": "two near-black boards, cannot tell"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:14849318",
+   "b": "ol:8504766",
+   "indexDistance": 11,
+   "label": "same",
+   "note": "tie-in, small tag differs"
+  },
+  {
+   "band": "9-12",
+   "a": "ol:12038046",
+   "b": "ol:12050440",
+   "indexDistance": 9,
+   "label": "same",
+   "note": "Hrabě Monte Cristo. Díl 1 a 2 (třísvazkové vydání)"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:15241436",
+   "b": "ol:15241416",
+   "indexDistance": 16,
+   "label": "diff",
+   "note": "The Hitchhiker's Guide to the Galaxy"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:15154777",
+   "b": "ol:7356020",
+   "indexDistance": 14,
+   "label": "same",
+   "note": "translation: same artwork, title in another language"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:13323725",
+   "b": "ol:13312663",
+   "indexDistance": 14,
+   "label": "diff",
+   "note": "A Tale of Two Cities"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:12903606",
+   "b": "ol:12903599",
+   "indexDistance": 14,
+   "label": "diff",
+   "note": "Adventures of Huckleberry Finn"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:4089548",
+   "b": "ol:14813542",
+   "indexDistance": 13,
+   "label": "same",
+   "note": "بين القصرين"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:12819456",
+   "b": "ol:12819342",
+   "indexDistance": 15,
+   "label": "diff",
+   "note": "Treasure Island"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:8612628",
+   "b": "ol:8742996",
+   "indexDistance": 13,
+   "label": "same",
+   "note": "Winnie-the-Pooh"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:14339083",
+   "b": "ol:15154103",
+   "indexDistance": 13,
+   "label": "diff",
+   "note": "The Handmaid's Tale"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:15243635",
+   "b": "ol:14817029",
+   "indexDistance": 14,
+   "label": "diff",
+   "note": "Gone With the Wind"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:11330537",
+   "b": "ol:4030081",
+   "indexDistance": 15,
+   "label": "diff",
+   "note": "The Strange Case of Dr. Jekyll and Mr. Hyde"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:13775277",
+   "b": "ol:13772182",
+   "indexDistance": 15,
+   "label": "diff",
+   "note": "Great Expectations"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:13112791",
+   "b": "ol:13109101",
+   "indexDistance": 15,
+   "label": "diff",
+   "note": "Tess of the d'Urbervilles"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:14840570",
+   "b": "ol:14836764",
+   "indexDistance": 16,
+   "label": "diff",
+   "note": "Wuthering Heights"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:8231791",
+   "b": "ol:8809570",
+   "indexDistance": 15,
+   "label": "diff",
+   "note": "The Jungle"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:1260571",
+   "b": "ol:2468550",
+   "indexDistance": 16,
+   "label": "diff",
+   "note": "Heart of Darkness"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:2746102",
+   "b": "ol:2468369",
+   "indexDistance": 16,
+   "label": "diff",
+   "note": "Notre Dame de Paris"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:10681306",
+   "b": "ol:2841260",
+   "indexDistance": 16,
+   "label": "diff",
+   "note": "first one is an MP3-CD audiobook"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:9129415",
+   "b": "ol:9385358",
+   "indexDistance": 14,
+   "label": "diff",
+   "note": "Le Tour du Monde en Quatre-Vingts Jours"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:13613679",
+   "b": "ol:9159185",
+   "indexDistance": 16,
+   "label": "diff",
+   "note": "same art, different layout"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:9276479",
+   "b": "ol:10701049",
+   "indexDistance": 13,
+   "label": "diff",
+   "note": "Ὀδύσσεια"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:13012842",
+   "b": "ol:12717089",
+   "indexDistance": 13,
+   "label": "diff",
+   "note": "Gulliver's Travels"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:13136638",
+   "b": "ol:13136640",
+   "indexDistance": 15,
+   "label": "diff",
+   "note": "Ulysses"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:8287396",
+   "b": "ol:8757410",
+   "indexDistance": 16,
+   "label": "diff",
+   "note": "Hamlet"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:14564960",
+   "b": "ol:7256617",
+   "indexDistance": 16,
+   "label": "diff",
+   "note": "The Hunger Games"
+  },
+  {
+   "band": "13-16",
+   "a": "ol:7034622",
+   "b": "ol:9570418",
+   "indexDistance": 13,
+   "label": "diff",
+   "note": "La Divina Commedia"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:6857488",
+   "b": "ol:8329292",
+   "indexDistance": 19,
+   "label": "diff",
+   "note": "The Strange Case of Dr. Jekyll and Mr. Hyde"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:15106307",
+   "b": "ol:8995688",
+   "indexDistance": 20,
+   "label": "same",
+   "note": "translation: same artwork, title in another language; French adds a film still"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:15153388",
+   "b": "ol:15153490",
+   "indexDistance": 18,
+   "label": "diff",
+   "note": "To Kill a Mockingbird"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:8139279",
+   "b": "ol:12080527",
+   "indexDistance": 18,
+   "label": "diff",
+   "note": "same art, different layout"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:15235160",
+   "b": "ol:14818101",
+   "indexDistance": 17,
+   "label": "same",
+   "note": "translation: same artwork, title in another language"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:5662277",
+   "b": "ol:5998292",
+   "indexDistance": 20,
+   "label": "diff",
+   "note": "Ὀδύσσεια"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:14556592",
+   "b": "ol:3129430",
+   "indexDistance": 17,
+   "label": "diff",
+   "note": "Братья Карамазовы"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:12208619",
+   "b": "ol:8575350",
+   "indexDistance": 20,
+   "label": "diff",
+   "note": "Le petit prince"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:13263945",
+   "b": "ol:13495186",
+   "indexDistance": 18,
+   "label": "diff",
+   "note": "The Great Gatsby"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:10455181",
+   "b": "ol:10544868",
+   "indexDistance": 20,
+   "label": "same",
+   "note": "translation: same artwork, title in another language"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:7059151",
+   "b": "ol:2476296",
+   "indexDistance": 18,
+   "label": "diff",
+   "note": "Goethe's Werke"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:14601990",
+   "b": "ol:12540685",
+   "indexDistance": 20,
+   "label": "diff",
+   "note": "Alice's Adventures in Wonderland"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:15244295",
+   "b": "ol:14817152",
+   "indexDistance": 19,
+   "label": "diff",
+   "note": "Gone With the Wind"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:14532860",
+   "b": "ol:8541971",
+   "indexDistance": 19,
+   "label": "diff",
+   "note": "Harry Potter and the Philosopher's Stone"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:10870957",
+   "b": "ol:11256948",
+   "indexDistance": 20,
+   "label": "diff",
+   "note": "Jane Eyre"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:12377428",
+   "b": "ol:592158",
+   "indexDistance": 19,
+   "label": "diff",
+   "note": "The Hobbit"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:14971561",
+   "b": "ol:14971563",
+   "indexDistance": 20,
+   "label": "diff",
+   "note": "Go Tell It on the Mountain"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:11514561",
+   "b": "ol:8750288",
+   "indexDistance": 19,
+   "label": "same",
+   "note": "price sticker"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:12359063",
+   "b": "ol:12282975",
+   "indexDistance": 17,
+   "label": "diff",
+   "note": "Metamorphosis"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:8179786",
+   "b": "ol:8569281",
+   "indexDistance": 19,
+   "label": "diff",
+   "note": "It"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:13350650",
+   "b": "ol:13029793",
+   "indexDistance": 20,
+   "label": "diff",
+   "note": "Great Expectations"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:12919044",
+   "b": "ol:14656453",
+   "indexDistance": 18,
+   "label": "diff",
+   "note": "Nineteen Eighty-Four"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:12446467",
+   "b": "ol:12446431",
+   "indexDistance": 18,
+   "label": "diff",
+   "note": "Die Leiden des jungen Werthers"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:14158758",
+   "b": "ol:13633165",
+   "indexDistance": 20,
+   "label": "diff",
+   "note": "Fahrenheit 451"
+  },
+  {
+   "band": "17-20",
+   "a": "ol:2273670",
+   "b": "ol:9081166",
+   "indexDistance": 20,
+   "label": "diff",
+   "note": "Moby Dick"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:8152463",
+   "b": "ol:12460599",
+   "indexDistance": 24,
+   "label": "diff",
+   "note": "Fahrenheit 451"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:7822383",
+   "b": "ol:14578763",
+   "indexDistance": 22,
+   "label": "diff",
+   "note": "Norwegian Wood"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:13136638",
+   "b": "ol:13136103",
+   "indexDistance": 23,
+   "label": "diff",
+   "note": "Ulysses"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:15140535",
+   "b": "ol:15082861",
+   "indexDistance": 23,
+   "label": "diff",
+   "note": "Der Proceß"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:4790976",
+   "b": "ol:2468312",
+   "indexDistance": 21,
+   "label": "diff",
+   "note": "The Jungle"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:1260571",
+   "b": "ol:9010051",
+   "indexDistance": 23,
+   "label": "diff",
+   "note": "Heart of Darkness"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:12023652",
+   "b": "ol:2583771",
+   "indexDistance": 24,
+   "label": "diff",
+   "note": "Harry Potter and the Philosopher's Stone"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:12903609",
+   "b": "ol:12903585",
+   "indexDistance": 23,
+   "label": "diff",
+   "note": "Adventures of Huckleberry Finn"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:13775630",
+   "b": "ol:12907445",
+   "indexDistance": 23,
+   "label": "diff",
+   "note": "Twilight"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:6034114",
+   "b": "ol:5966669",
+   "indexDistance": 24,
+   "label": "diff",
+   "note": "La Divina Commedia"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:13415603",
+   "b": "ol:11283874",
+   "indexDistance": 24,
+   "label": "diff",
+   "note": "The Hound of the Baskervilles"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:12307870",
+   "b": "ol:10463587",
+   "indexDistance": 22,
+   "label": "diff",
+   "note": "Le petit prince"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:10249381",
+   "b": "ol:14586814",
+   "indexDistance": 24,
+   "label": "diff",
+   "note": "Murder on the Orient Express"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:10548004",
+   "b": "ol:8015614",
+   "indexDistance": 24,
+   "label": "diff",
+   "note": "Der Vorleser"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:15104103",
+   "b": "ol:7276056",
+   "indexDistance": 24,
+   "label": "diff",
+   "note": "The Hobbit"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:15244222",
+   "b": "ol:10541728",
+   "indexDistance": 21,
+   "label": "diff",
+   "note": "Gone With the Wind"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:12563855",
+   "b": "ol:15097339",
+   "indexDistance": 21,
+   "label": "same",
+   "note": "translation: same artwork, title in another language"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:13921056",
+   "b": "ol:4735703",
+   "indexDistance": 22,
+   "label": "diff",
+   "note": "To Kill a Mockingbird"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:40839",
+   "b": "ol:6116760",
+   "indexDistance": 22,
+   "label": "diff",
+   "note": "Ὀδύσσεια"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:10485896",
+   "b": "ol:6562294",
+   "indexDistance": 21,
+   "label": "diff",
+   "note": "The Shining"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:10916204",
+   "b": "ol:10915532",
+   "indexDistance": 24,
+   "label": "diff",
+   "note": "Hamlet"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:14907071",
+   "b": "ol:745074",
+   "indexDistance": 23,
+   "label": "diff",
+   "note": "My Ántonia"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:13924917",
+   "b": "ol:12819529",
+   "indexDistance": 24,
+   "label": "diff",
+   "note": "Treasure Island"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:9412082",
+   "b": "ol:9172139",
+   "indexDistance": 23,
+   "label": "diff",
+   "note": "Братья Карамазовы"
+  },
+  {
+   "band": "21-24",
+   "a": "ol:12884330",
+   "b": "ol:997265",
+   "indexDistance": 23,
+   "label": "diff",
+   "note": "L’étranger"
+  }
+ ]
+}
