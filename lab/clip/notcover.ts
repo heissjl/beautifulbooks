@@ -188,4 +188,4 @@ async function main() {
   console.log(`\nwritten: ${join(OUT, 'notcover.json')} — python3 lab/clip/sheet.py notcover`);
 }
 
-main();
+if (require.main === module) main();
