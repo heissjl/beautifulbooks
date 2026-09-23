@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useCallback } from 'react';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import SearchBar from '@/components/SearchBar';
 import BookGrid from '@/components/BookGrid';
@@ -58,6 +59,21 @@ function HomeContent() {
                   <p className="mt-4 max-w-xl text-base text-ink-2 sm:text-lg">
                     Type a title and see the covers it has been printed with, by language and year.
                     Then find the edition you&rsquo;d actually want on your shelf.
+                  </p>
+                  {/*
+                    The way into the cover game (ROADMAP 5.8a, SPEC F7): under the promise,
+                    not in the header — it is an invitation, not a part of the search. One
+                    line, so the search field keeps the page. The game itself stays noindex
+                    (F7.6); a link from here is how a reader finds it, not a crawler.
+                  */}
+                  <p className="mt-5 text-sm">
+                    <Link
+                      href="/versus"
+                      className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
+                    >
+                      Or play: which cover would you rather look at?
+                      <span aria-hidden="true">&rarr;</span>
+                    </Link>
                   </p>
                 </div>
               )}
