@@ -6,45 +6,31 @@
  },
  "rings": [
   {
-   "workId": "OL27258W",
-   "title": "Neuromancer",
-   "author": "William Gibson",
+   "workId": "OL39396W",
+   "title": "To the Lighthouse",
+   "author": "Virginia Woolf",
    "coverIds": [
-    "ol:12301888",
-    "ol:10154308",
-    "ol:12993489",
-    "ol:12861533",
-    "ol:8753569",
-    "ol:12928682",
-    "ol:283491"
+    "ol:12264478",
+    "ol:2111097",
+    "ol:8231846",
+    "ol:902061",
+    "ol:105881",
+    "ol:11730428",
+    "ol:1473036"
    ]
   },
   {
-   "workId": "OL627084W",
-   "title": "Lolita",
-   "author": "Vladimir Nabokov",
+   "workId": "OL109524W",
+   "title": "Solaris",
+   "author": "Stanisław Lem",
    "coverIds": [
-    "ol:14650024",
-    "ol:11116827",
-    "ol:14274581",
-    "ol:11192267",
-    "ol:10540262",
-    "ol:15135046",
-    "ol:14385206"
-   ]
-  },
-  {
-   "workId": "OL2636675W",
-   "title": "Gravity's Rainbow",
-   "author": "Thomas Pynchon",
-   "coverIds": [
-    "ol:8765692",
-    "ol:13107208",
-    "ol:97894",
-    "ol:1013652",
-    "ol:10673397",
-    "ol:8785051",
-    "ol:12924606"
+    "ol:6390415",
+    "ol:15235945",
+    "ol:12649331",
+    "ol:10534852",
+    "ol:15235931",
+    "ol:15235946",
+    "ol:15235935"
    ]
   },
   {
@@ -188,20 +174,6 @@
    ]
   },
   {
-   "workId": "OL872932W",
-   "title": "Siddhartha",
-   "author": "Hermann Hesse",
-   "coverIds": [
-    "ol:13743192",
-    "ol:312710",
-    "ol:2889842",
-    "ol:8930016",
-    "ol:1054075",
-    "ol:195186",
-    "ol:8812382"
-   ]
-  },
-  {
    "workId": "OL103123W",
    "title": "Fahrenheit 451",
    "author": "Ray Bradbury",
@@ -258,6 +230,34 @@
    ]
   },
   {
+   "workId": "OL872932W",
+   "title": "Siddhartha",
+   "author": "Hermann Hesse",
+   "coverIds": [
+    "ol:13743192",
+    "ol:312710",
+    "ol:2889842",
+    "ol:8930016",
+    "ol:1054075",
+    "ol:195186",
+    "ol:8812382"
+   ]
+  },
+  {
+   "workId": "OL27258W",
+   "title": "Neuromancer",
+   "author": "William Gibson",
+   "coverIds": [
+    "ol:12301888",
+    "ol:10154308",
+    "ol:12993489",
+    "ol:12861533",
+    "ol:8753569",
+    "ol:12928682",
+    "ol:283491"
+   ]
+  },
+  {
    "workId": "OL59800W",
    "title": "The Left Hand of Darkness",
    "author": "Ursula K. Le Guin",
@@ -269,6 +269,20 @@
     "ol:11408788",
     "ol:11477279",
     "ol:15002117"
+   ]
+  },
+  {
+   "workId": "OL2636675W",
+   "title": "Gravity's Rainbow",
+   "author": "Thomas Pynchon",
+   "coverIds": [
+    "ol:8765692",
+    "ol:13107208",
+    "ol:97894",
+    "ol:1013652",
+    "ol:10673397",
+    "ol:8785051",
+    "ol:12924606"
    ]
   },
   {
@@ -566,6 +580,20 @@
    ]
   },
   {
+   "workId": "OL627084W",
+   "title": "Lolita",
+   "author": "Vladimir Nabokov",
+   "coverIds": [
+    "ol:14650024",
+    "ol:11116827",
+    "ol:14274581",
+    "ol:11192267",
+    "ol:10540262",
+    "ol:15135046",
+    "ol:14385206"
+   ]
+  },
+  {
    "workId": "OL455327W",
    "title": "Lord of the Flies",
    "author": "William Golding",
@@ -815,34 +843,6 @@
     "ol:3180610",
     "ol:9338111",
     "ol:297782"
-   ]
-  },
-  {
-   "workId": "OL1095427W",
-   "title": "Jane Eyre",
-   "author": "Charlotte Brontë",
-   "coverIds": [
-    "ol:10510748",
-    "ol:12243950",
-    "ol:12543898",
-    "ol:15098734",
-    "ol:12622143",
-    "ol:9353814",
-    "ol:11193054"
-   ]
-  },
-  {
-   "workId": "OL267096W",
-   "title": "Анна Каренина",
-   "author": "Лев Толстой",
-   "coverIds": [
-    "ol:13765006",
-    "ol:13927107",
-    "ol:13949445",
-    "ol:14083370",
-    "ol:12369923",
-    "ol:13515944",
-    "ol:15126320"
    ]
   },
   {
@@ -1168,20 +1168,6 @@
    ]
   },
   {
-   "workId": "OL109524W",
-   "title": "Solaris",
-   "author": "Stanisław Lem",
-   "coverIds": [
-    "ol:6390415",
-    "ol:15235945",
-    "ol:12649331",
-    "ol:10534852",
-    "ol:15235931",
-    "ol:15235946",
-    "ol:15235935"
-   ]
-  },
-  {
    "workId": "OL38501W",
    "title": "Snow Crash",
    "author": "Neal Stephenson",
@@ -1263,6 +1249,76 @@
     "ol:10191445",
     "ol:13848855",
     "ol:3198851"
+   ]
+  },
+  {
+   "workId": "OL31259W",
+   "title": "The Golden Notebook",
+   "author": "Doris Lessing",
+   "coverIds": [
+    "ol:42601",
+    "ol:9552417",
+    "ol:15146824",
+    "ol:2148174",
+    "ol:7647826",
+    "ol:7893961",
+    "ol:9931478"
+   ]
+  },
+  {
+   "workId": "OL675722W",
+   "title": "Oryx and Crake",
+   "author": "Margaret Atwood",
+   "coverIds": [
+    "ol:12117264",
+    "ol:13208276",
+    "ol:13835855",
+    "ol:12508457",
+    "ol:10098885",
+    "ol:7393458",
+    "ol:13215236"
+   ]
+  },
+  {
+   "workId": "OL12791W",
+   "title": "My Ántonia",
+   "author": "Willa Cather",
+   "coverIds": [
+    "ol:2959127",
+    "ol:11637788",
+    "ol:13342070",
+    "ol:8889738",
+    "ol:12584207",
+    "ol:9658480",
+    "ol:14669624"
+   ]
+  },
+  {
+   "workId": "OL1095427W",
+   "title": "Jane Eyre",
+   "author": "Charlotte Brontë",
+   "coverIds": [
+    "ol:10510748",
+    "ol:12243950",
+    "ol:12543898",
+    "ol:15098734",
+    "ol:12622143",
+    "ol:9353814",
+    "ol:11193054"
+   ]
+  },
+  {
+   "workId": "OL267096W",
+   "title": "Анна Каренина",
+   "author": "Лев Толстой",
+   "coverIds": [
+    "ol:13765006",
+    "ol:13927107",
+    "ol:13949445",
+    "ol:14083370",
+    "ol:12369923",
+    "ol:13515944",
+    "ol:15126320"
    ]
   }
  ]
