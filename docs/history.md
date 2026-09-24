@@ -2465,3 +2465,28 @@ Julian: „wir brauchen noch eine verlinkung auf die versus seite von der starts
 | zurückgestellt und neu gebaut | 9.838 | 0 | 0 |
 
 Sonst wurde nichts geändert — kein Text, keine Komponente. Die Überschrift, das Versprechen, die Einladung ins Spiel und die **18 kuratierten Kacheln mit ihren Buchlinks** sind also da; sie gehen nur verloren, weil der eine Aufruf den ganzen Teilbaum vom Server auf den Browser verschiebt. Zum Vergleich: `/about`, eine Server-Seite ohne diesen Aufruf, rendert 32.348 Byte vor. **Damit ist 6.49 keine Vermutung mehr, sondern eine gemessene Ursache mit bekanntem Gewinn: dreimal so viel HTML und 18 Buchlinks, ohne eine Zeile neuen Inhalt.**
+
+---
+
+## 2026-09-23 · Die Startseite rendert wieder auf dem Server (ROADMAP 6.49)
+
+Julian: „ja, bau die trennung".
+
+**Was getrennt wurde.** `app/page.tsx` war ganz und gar eine Client-Komponente; jetzt ist es eine Server-Komponente, die `searchParams` aus der Anfrage liest. Im Browser laufen nur noch zwei kleine Teile: `HomeSearchBar` (das Suchfeld, denn nur der Browser kann die Adresse beim Tippen ändern) und `HeroSlot` (der Ring, den es erst ab `lg` gibt). Alles andere — Überschrift, Versprechen, die Einladung ins Spiel, die kuratierten Kacheln — entsteht auf dem Server.
+
+**Gemessen am Produktions-Server (`next start`), nicht am Dev-Server:**
+
+| | vorher | jetzt |
+|---|---|---|
+| `/` als HTML | **9.838 Byte** | **31.617 Byte** |
+| sichtbarer Text darin | praktisch keiner | **1.019 Zeichen** |
+| „Judge a book" | 0 | 1 |
+| Links auf Buchseiten | **0** | **18** |
+| Link ins Spiel | 0 | 1 |
+| Route im Build | `○` statisch | `ƒ` dynamisch |
+
+`/?q=lolita` liefert weiterhin nur die Hülle und holt die Treffer im Browser — richtig so: eine Suchseite ist eine Frage, kein Dokument, und sie steht deshalb auch nicht in der Sitemap.
+
+**Der Preis ist die statische Auslieferung.** Wer `searchParams` liest, rendert je Besuch. Das kostet hier eine Funktion ohne externe Anfrage — die Kacheln holen ihre Cover wie bisher aus dem Browser —, und es ist der Grund, warum die Trennung überhaupt möglich war, ohne die Überschrift zweimal zu schreiben (einmal als Suspense-Fallback, einmal im Client).
+
+**Im Browser geprüft** (1280 × 800 und 390 × 844): die fünf Abnahmefragen aus SPEC §3 F1 zeigen weiterhin das Erwartete (*Mumbo Jumbo* von Reed, *Nineteen Eighty-Four*, Pynchon, Fitzgerald, Austen jeweils zuerst); Tippen führt nach `/?q=…` und lässt den Hero verschwinden, der Zurück-Knopf bringt ihn samt leerem Feld zurück; auf dem Telefon weiterhin kein Ring und kein seitlicher Überstand. 597 Tests, `tsc`, Lint und Build grün.

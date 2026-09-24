@@ -1,34 +1,39 @@
-'use client';
-
-import { Suspense, useCallback } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import SearchBar from '@/components/SearchBar';
 import BookGrid from '@/components/BookGrid';
-import HeroFan from '@/components/HeroFan';
-import { useIsDesktop } from '@/components/useIsDesktop';
+import HeroSlot from '@/components/HeroSlot';
+import HomeSearchBar from '@/components/HomeSearchBar';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 
 /**
  * The URL is the single source of truth for search state (SPEC §3 F1.5):
  * /?q=<query>&lang=<iso>. Back button and sharing work by construction.
+ *
+ * **The page reads that URL on the server** (ROADMAP 6.49). It used to be a
+ * client component calling `useSearchParams` inside a `<Suspense>` without a
+ * fallback, and Next then skips the whole subtree while prerendering: measured
+ * on 2026-09-23, the built page was 9,838 bytes with no headline and not one
+ * link to a book, while the same page with that single call removed was 29,774
+ * bytes with eighteen. Everything a reader or a crawler reads — headline,
+ * promise, the way into the cover game, the curated wall — is rendered here,
+ * and only what needs the browser is a client component: `HomeSearchBar` (it
+ * changes the address while someone types) and `HeroSlot` (the ring belongs to
+ * wide screens only). Reading `searchParams` makes this route dynamic; it
+ * costs one render per visit and no external request, because the tiles fetch
+ * their covers from the browser as before.
  */
-function HomeContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const searchQuery = searchParams.get('q') ?? '';
-  const language = searchParams.get('lang') ?? '';
-  const isHero = !searchQuery;
-  const isDesktop = useIsDesktop(false);
+interface HomeProps {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
 
-  const navigate = useCallback((q: string, lang: string) => {
-    const params = new URLSearchParams();
-    if (q) params.set('q', q);
-    if (lang && lang !== 'all') params.set('lang', lang);
-    const qs = params.toString();
-    router.push(qs ? `/?${qs}` : '/', { scroll: false });
-  }, [router]);
+const first = (value: string | string[] | undefined): string =>
+  (Array.isArray(value) ? value[0] : value) ?? '';
+
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+  const searchQuery = first(params.q);
+  const language = first(params.lang);
+  const isHero = !searchQuery;
 
   return (
     <div className="min-h-screen">
@@ -63,8 +68,7 @@ function HomeContent() {
                   {/*
                     The way into the cover game (ROADMAP 5.8a, SPEC F7): under the promise,
                     not in the header — it is an invitation, not a part of the search. One
-                    line, so the search field keeps the page. The game itself stays noindex
-                    (F7.6); a link from here is how a reader finds it, not a crawler.
+                    line, so the search field keeps the page.
                   */}
                   <p className="mt-5 text-sm">
                     <Link
@@ -78,18 +82,12 @@ function HomeContent() {
                 </div>
               )}
               <div className="max-w-3xl">
-                <SearchBar
-                  searchQuery={searchQuery}
-                  setSearchQuery={q => navigate(q, language)}
-                  language={language}
-                  setLanguage={lang => navigate(searchQuery, lang)}
-                  hero={isHero}
-                />
+                <HomeSearchBar searchQuery={searchQuery} language={language} hero={isHero} />
               </div>
             </div>
             {isHero && (
               <div className="hidden min-h-[14.25rem] w-[19rem] shrink-0 lg:mr-6 lg:block xl:mr-16">
-                {isDesktop && <HeroFan />}
+                <HeroSlot />
               </div>
             )}
           </div>
@@ -103,14 +101,5 @@ function HomeContent() {
 
       <SiteFooter />
     </div>
-  );
-}
-
-// useSearchParams() requires a Suspense boundary for static prerendering.
-export default function Home() {
-  return (
-    <Suspense>
-      <HomeContent />
-    </Suspense>
   );
 }
