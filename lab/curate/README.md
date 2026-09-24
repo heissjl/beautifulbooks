@@ -20,11 +20,13 @@ Kann ein Mensch in einer Sitzung für hundert Bücher je ein Cover wählen, ohne
 - **Nachzügler**, die der Index nicht kennt, stehen in `EXTRA_WORKS` in `serve.ts` und bekommen ihre Cover einmal von Open Library: *The Garden of Eden* (7 Cover), *East of Eden* (78), *Stoner* (54). Sie stehen am Ende des Durchlaufs.
 - **1984 ist ausgeschlossen** (`EXCLUDED` in `serve.ts`), auf Julians Anweisung. Damit sind es 99; das hundertste kommt beim nächsten Bau des Index dazu.
 
-## Zwei Ansichten
+## Drei Ansichten
 
 **Kuratieren** — ein Werk je Bildschirm, alle seine Cover, Wahl und Jahr. Unten steht alles, was schon angesehen wurde: anklicken springt zurück, das × streicht das Buch.
 
 **Reihenfolge** — dieselbe Auswahl als Wand, links im **Sechser-Raster wie am Rechner**, rechts daneben im **Dreier-Raster wie auf dem Telefon**, beide in derselben Reihenfolge. Ziehen im linken Raster sortiert um, und eine gestrichelte Linie zeigt, wo die achtzehn aufhören, die es auf die Startseite schaffen. Damit lässt sich sehen, was sonst nur zu ahnen ist: dass zwei helle Cover nebeneinander sich gegenseitig löschen, und dass die zweite Reihe am Telefon eine andere ist als am Rechner.
+
+**Offen** (seit 2026-09-24, Julian: „dass ich leichter durch die liste scrollen kann von denen, die ich noch nicht kuratiert hab") — alle Werke ohne Wahl als Raster zum Durchscrollen, mit Cover, Titel, Autor und Zahl der Cover; übersprungene stehen mit dabei und sind markiert, gestrichene nicht. Ein Klick springt in die Kuratieren-Ansicht auf genau dieses Buch. Die Zahl im Reiter sagt, wie viele offen sind, und in der Kuratieren-Ansicht führt „nächstes offenes" von hier aus weiter, ohne die gewählten durchzublättern.
 
 **Die Reihenfolge der Datei ist die Reihenfolge der Wand.** `lib/curated.ts` liest `data/curated.json` von oben nach unten; was hier gezogen wird, steht nach dem nächsten Deploy so auf der Startseite.
 
@@ -37,6 +39,16 @@ Klick auf ein Cover wählt es und springt zum nächsten Werk. Pfeiltasten bewege
 35 Werke angesehen, 30 Cover gewählt, fünf übersprungen — rund zwanzig Sekunden je Buch. Ein harter Neustart des Servers kostete nichts: alle Einträge lagen da, die App sprang zum ersten offenen Werk.
 
 **Offen und wichtig:** ein Test gegen die laufende App schreibt in dieselbe Datei wie ein Mensch. Beim ersten Durchgang sind so zwei erfundene Wahlen in Julians Daten gelandet und mussten von Hand entfernt werden. Die Datei gehört hinter eine Umgebungsvariable (`CURATE_FILE`), bevor das nächste Mal jemand gegen die App testet.
+
+## Die Saatrunden
+
+`suggest.ts` hat drei: die erste vom 2026-09-09 (50 Vorschläge quer durch die Literatur), dann zwei vom 2026-09-24 auf Julians Bitte — **zwanzig Werke von Autorinnen des 20. Jahrhunderts**, danach **zehn weitere aus dem 20. und zehn aus dem 21.** Die neueste Runde läuft zuerst, damit ein `--target` ihre Bücher kauft und nicht die der alten Liste.
+
+Zwei Dinge, die dabei auffielen und beim nächsten Mal Zeit sparen:
+
+1. **Der Abgleich vergleicht Titel.** Wo Open Library ein Buch unter einem anderen Titel führt als die Saat — *The Lover* als `L'Amant`, *Memoirs of Hadrian* als `Mémoires d'Hadrien`, das Tagebuch als `Het Achterhuis` —, findet das Skript nichts Sicheres. Solche Werke stehen mit von Hand nachgeschlagener ID in `NAMED_EXTRAS` in `serve.ts`.
+2. **Ein `--target` wird aufgefüllt.** Bleiben von der neuen Runde Plätze übrig, nimmt das Skript sie aus der alten Liste — beim ersten Lauf kamen so fünf Bücher von Männern in eine Runde, die nach Autorinnen gefragt hatte. Sie wurden wieder entfernt; wer eine thematische Runde fährt, liest den Schluss des Laufs.
+3. **Nicht in `head` pipen.** Ein `| head -20` schließt die Pipe, das Skript stirbt an SIGPIPE, bevor es die Datei schreibt — ein Lauf von zehn Minuten war damit umsonst (2026-09-24). In eine Datei schreiben und die lesen.
 
 ## Status
 

@@ -216,8 +216,53 @@ const SEEDS_WOMEN_20C: Array<[title: string, author: string]> = [
   ['Une si longue lettre', 'Mariama Bâ'],
 ];
 
+/**
+ * Julian, 2026-09-24, nach der ersten Runde: „suche dann noch weitere 10 aus
+ * dem 20. und 10 aus dem 21. jhdt (von frauen)".
+ *
+ * Ten and ten, all of them looked up through our own search first, so the
+ * edition counts here are real: the twentieth century from Dinesen 1937 to
+ * Lahiri 1999, the twenty-first from Smith 2000 to Rooney 2018.
+ */
+const SEEDS_WOMEN_MORE: Array<[title: string, author: string]> = [
+  // Twentieth century
+  ['Out of Africa', 'Isak Dinesen'],
+  ['The Good Earth', 'Pearl S. Buck'],
+  ['Silent Spring', 'Rachel Carson'],
+  ['La storia', 'Elsa Morante'],
+  ['Lessico famigliare', 'Natalia Ginzburg'],
+  ['The Garden Party', 'Katherine Mansfield'],
+  ['Lives of Girls and Women', 'Alice Munro'],
+  ['The Joys of Motherhood', 'Buchi Emecheta'],
+  ['Annie John', 'Jamaica Kincaid'],
+  ['Interpreter of Maladies', 'Jhumpa Lahiri'],
+  // Twenty-first century
+  ['White Teeth', 'Zadie Smith'],
+  ['Wolf Hall', 'Hilary Mantel'],
+  ['Gone Girl', 'Gillian Flynn'],
+  ["L'amica geniale", 'Elena Ferrante'],
+  ['Homegoing', 'Yaa Gyasi'],
+  ['Normal People', 'Sally Rooney'],
+  ['Bieguni', 'Olga Tokarczuk'],
+  ['My Year of Rest and Relaxation', 'Ottessa Moshfegh'],
+  ['Her Body and Other Parties', 'Carmen Maria Machado'],
+  ['Outline', 'Rachel Cusk'],
+  /*
+    Six more from this century, because four of the ten above were already in
+    the list (White Teeth, Wolf Hall, Gone Girl, Normal People) and two are
+    under the edition floor (Cusk 13, Machado 10).
+  */
+  ['Purple Hibiscus', 'Chimamanda Ngozi Adichie'],
+  ['Where the Crawdads Sing', 'Delia Owens'],
+  ['Olive Kitteridge', 'Elizabeth Strout'],
+  ['Gilead', 'Marilynne Robinson'],
+  ['Circe', 'Madeline Miller'],
+  ['A Visit from the Goon Squad', 'Jennifer Egan'],
+  ['Chanson douce', 'Leïla Slimani'],
+];
+
 /** The run order: the newest round first, so its books are the ones a target buys. */
-const RUN: Array<[title: string, author: string]> = [...SEEDS_WOMEN_20C, ...SEEDS];
+const RUN: Array<[title: string, author: string]> = [...SEEDS_WOMEN_MORE, ...SEEDS_WOMEN_20C, ...SEEDS];
 
 export interface Suggestion {
   id: string;
