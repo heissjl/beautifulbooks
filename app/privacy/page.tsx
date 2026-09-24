@@ -174,7 +174,8 @@ export default function PrivacyPage() {
         {/*
           The suggestion tool (ROADMAP 5.10a) only where its password is set:
           where it is off, there is no cookie and nothing is stored. Written
-          2026-09-24 from lib/suggest/; Julian has not reviewed it yet.
+          2026-09-24 from lib/suggest/; Julian chose to carry the risk for a
+          circle of friends rather than take up 0.12 first (ROADMAP 5.10a).
         */}
         {suggestEnabled() && (
           <Section title="Suggestions for collections (invitation only)">
