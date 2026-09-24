@@ -105,7 +105,7 @@
 <main id="main">Lade …</main>
 
 <script>
-const state = { works: [], i: 0, cursor: 0, years: {}, dropped: 0, view: 'pick', order: [], drag: null };
+const state = { works: [], struck: [], i: 0, cursor: 0, years: {}, dropped: 0, view: 'pick', order: [], drag: null };
 const $ = id => document.getElementById(id);
 const cover = (id, size) => id.startsWith('ol:')
   ? `https://covers.openlibrary.org/b/id/${id.slice(3)}-${size}.jpg` : '';
@@ -113,7 +113,8 @@ const cover = (id, size) => id.startsWith('ol:')
 async function load() {
   const data = await (await fetch('/api/works')).json();
   // Struck-off works leave the run entirely; the choice itself stays on disk.
-  state.dropped = data.works.filter(w => w.pick?.dropped).length;
+  state.struck = data.works.filter(w => w.pick?.dropped);
+  state.dropped = state.struck.length;
   state.works = data.works.filter(w => !w.pick?.dropped);
   state.order = data.order ?? [];
   const firstOpen = state.works.findIndex(w => !w.pick);
@@ -242,10 +243,38 @@ function renderOpen() {
       <span class="tag${w.pick?.skipped ? ' skipped' : ''}">${w.pick?.skipped ? 'übersprungen · ' : ''}${w.covers.length} Cover${w.note ? ` · ${escapeHtml(w.note)}` : ''}</span>
     </button>`).join('');
 
+  // Gestrichene stehen hier, weil sie sonst nirgends stehen: ein Strich war
+  // bis zum 2026-09-24 nur durch Editieren der Datei umkehrbar.
+  const struck = state.struck.map(w => `
+    <button data-restore="${w.id}" title="zurück in den Durchlauf">
+      <span class="thumb">${w.covers.length
+        ? `<img loading="lazy" src="${cover(w.covers[0], 'M')}" alt="">`
+        : '<span>kein Cover geladen</span>'}</span>
+      <b>${escapeHtml(w.title)}</b>
+      <span class="who">${escapeHtml(w.author)}</span>
+      <span class="tag">gestrichen · zurückholen</span>
+    </button>`).join('');
+
   $('main').innerHTML = `
     <p class="hint" style="margin-top:12px"><b>${open.length}</b> von ${state.works.length} Werken sind noch offen.
-       Klick springt zum Buch. Übersprungene stehen mit dabei, gestrichene nicht.</p>
-    <div class="open" id="openlist">${cards || '<p class="done">Nichts mehr offen.</p>'}</div>`;
+       Klick springt zum Buch. Übersprungene stehen mit dabei.</p>
+    <div class="open" id="openlist">${cards || '<p class="done">Nichts mehr offen.</p>'}</div>
+    ${state.struck.length ? `
+      <h2 style="font-size:15px; margin:28px 0 0">Gestrichen (${state.struck.length})</h2>
+      <p class="hint">Ein Klick holt das Buch als offenes zurück.</p>
+      <div class="open" id="strucklist">${struck}</div>` : ''}`;
+
+  $('strucklist')?.addEventListener('click', async e => {
+    const b = e.target.closest('button[data-restore]');
+    if (!b) return;
+    await fetch('/api/pick', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id: b.dataset.restore, restore: true }),
+    });
+    await load();
+    state.view = 'open';
+    render();
+  });
 
   $('openlist')?.addEventListener('click', e => {
     const b = e.target.closest('button[data-i]');
