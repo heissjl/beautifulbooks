@@ -111,6 +111,8 @@ Die Urteile sind ein festes Vokabular, weil das [Brett](kanban.html) sie liest: 
 | 5.8 | zusammenlegen | — | mit 5.8a: Spielart 1 ist gebaut, Spielart 2 ist Prototyp. Offen ist nur, welche live geht |
 | 5.8a | entscheiden | Julian, dann Merge | Der größte fertige Hebel für Reichweite liegt unzusammengeführt auf einem Branch. Zu klären: der Speicher (Vorschau-Redis gegen Produktion, E6) und die „hässlichste"-Regel |
 | 5.9 | zurückstellen | — | Lab-Idee, phasenfrei, Rechtefrage; wenn Julian Lust hat |
+| 5.10 | Julian | ein Abend | Gebaut 2026-09-24, Entwurf; wartet auf Julians Wand, Anne Brontë und `published` |
+| 5.10a | Julian | 15 min | Gebaut 2026-09-24; wartet auf zwei Passwörter in Vercel und Julians Blick auf die Datenschutzerklärung (0.12) |
 | 4.1 | tun, klein | 10 min | Die Bewerbung ist heute möglich; die ID wirkt erst im Shop-Modus, kostet aber nichts vorab |
 | 4.2 | zurückstellen | — | Drei Verkäufe in 180 Tagen ohne Traffic sind ein Kontoverlust |
 | 4.3 | zurückstellen | — | nach 4.1 und 4.2 |
@@ -169,6 +171,9 @@ flowchart LR
   R615["6.15 Schritt 3 Übersetzungen"]
   R63["6.3 Ladeszene mit Sprachfilter"]
   R69["6.9 interne Verlinkung"] <--> R54b["5.4b Reihen-Seiten"]
+  R510["5.10 Sammlungen"] --> R54b
+  R510 --> R510a["5.10a Vorschläge von Freunden"]
+  R510a -.-> R012["0.12 Auftragsverarbeitung"]
   J55 --> R619["6.19a Rest, 5.5 Clip und Pins"]
   J49 --> R49["4.9 Spendenseite"]
   J01 --> R627["6.27 Erklärtexte, Verfügbarkeits-Absatz"]
@@ -878,6 +883,11 @@ Eine Suchseite ohne eigene Inhalte bekommt keinen organischen Traffic. Die Grund
   **Voraussetzung:** genug Stimmen. Mit 51 ist noch nichts davon belastbar; die Schwelle je Cover gehört in den Export, nicht in die Seiten.
 
 - [ ] **5.9 Gebrauchsspuren auf andere Cover legen — ein Lab-Experiment.** (Julian, 2026-09-11, an einem Open-Library-Scan des *Infinite Jest* mit Knicken, abgestoßenen Kanten und eingerissener Ecke: „Diesen Effekt auf andere Cover legen können → neues Lab-Projekt".) **Die Frage:** lässt sich die Abnutzung eines echten, fotografierten Exemplars — Knickfalten, Weißbruch an den Kanten, eine umgeschlagene Ecke — von einem Scan lösen und auf ein sauberes Cover übertragen, so dass es aussieht wie *dieses* Buch nach zwanzig Jahren im Regal? **Warum es passt:** die Wand zeigt Cover als Bilder aus Katalogen, fast alle sauber; ein abgegriffenes Exemplar ist das, was man tatsächlich in der Hand hatte, und es wäre ein teilbares Bild (5.5). **Zu messen im Lab:** ob eine Maske aus einem Scan (Helligkeitsabweichung gegen das saubere Cover desselben Entwurfs, das die Faltung ja findet) auf ein anderes Cover übertragen glaubwürdig wirkt, oder ob es eine gezeichnete Textur braucht. Ordner `lab/wear/`, noch nicht angelegt. **Vor jeder Veröffentlichung** gilt die Rechtefrage aus 5.5: ein verändertes Cover ist eine Bearbeitung eines fremden Werks. Claude, sobald Phase 5 dran ist; das Experiment selbst ist phasenfrei.
+
+- [ ] **5.10 Thematische Sammlungen, und eine zweite Kuratier-App dafür.** (Julian, 2026-09-24: „baue eine neue funktion der website: thematische sammlungen. wir hatten das zb schon bei verlagsreihen überlegt. das will ich jetzt umsetzen, aber gleichzeitig will ich eine sammlung weiblicher und feministischer autorinnen haben … füge keine weiteren dazu ohne mein ok. am besten wir haben eine zweite kuratier-app für diese art von sammlungen".) **Gebaut 2026-09-24 auf `claude/thematic-collections-feature-ac1405`, nicht deployt** ([SPEC F8](SPEC.md), [Historie](docs/history.md)). Seiten `/collections` und `/collections/<slug>`, Daten in `data/collections.json`, Kuratier-App `lab/collections/` (Port 4322) für Autorensammlungen **und** Verlagsreihen — damit ist 5.4b eine Sammlungsart und wartet nur noch auf Julians bestätigte Verlagsschreibweisen. **Erste Sammlung „Women writers", Entwurf:** die zwölf Namen aus Julians Liste, als 14 Autorinnen, weil „Brontë" drei Schwestern sind (Charlotte, Emily, Anne — **Anne ist Claudes Lesart, Julian bestätigt oder streicht sie**) und „Shelley" als Mary Shelley gelesen ist. Auf der Wand stehen fünf Werke, die Julian auf der Startseite schon mit Cover gewählt hatte (*Malina*, *Frankenstein*, *The Handmaid's Tale*, *Oryx and Crake*, *Jane Eyre*); alles Weitere wählt er in der App. **Offen, Julian:** (1) Anne Brontë ja/nein, (2) die Wand füllen und den Titel/Absatz prüfen, (3) `published` setzen, dann deployen.
+
+- [ ] **5.10a Vorschläge von Freunden hinter einem Passwort.** (Julian, 2026-09-24: „baue auch eine version der kuratier-app hinter einer passwort-schranke, damit freunde von mir vorschläge für sammlungen bauen können"; dazu „bei der suggest-seite schreibe oben als Hinweis: Für Caitlin".) **Gebaut 2026-09-24, lokal durchgespielt, nicht deployt** ([SPEC F8.4](SPEC.md)): `/suggest` mit Passwort-Cookie, Buchsuche, Coverwahl ohne Google, Absenden in die Redis des Cover-Spiels; Julians App holt die Vorschläge ab und übernimmt oder lehnt ab. **Das ist die zweite Sache, die die Seite zur Laufzeit schreibt, und eine Eingabe vom Leser** — genau der Auslöser, den 0.12 (Auftragsverarbeitung) und der Umstiegs-Absatz bei 0.x nennen; E21 ist ohnehin noch offen. **Vor dem Deploy, Julian:** `SUGGEST_PASSWORD` und `SUGGEST_ADMIN_PASSWORD` in Vercel setzen (Production), den neuen Absatz der Datenschutzerklärung lesen (ein Name wird gespeichert, wenn ein Freund einen angibt; Grundlage Einwilligung), und entscheiden, ob 0.12 damit fällig ist. Ohne die Variable ist die Funktion in Produktion aus.
+
 
 ---
 

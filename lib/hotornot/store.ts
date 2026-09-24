@@ -204,6 +204,15 @@ function parseVote(raw: unknown): StoredVote | null {
  * timeout and the same error as every other external call here (N3).
  */
 export function upstashStore(url: string, token: string, fetchImpl: typeof fetch = fetch): VoteStore {
+  return commandsStore(upstashCommands(url, token, fetchImpl), 'upstash');
+}
+
+/**
+ * The commands behind `upstashStore`, on their own so that a second store —
+ * the suggestions of `lib/suggest/store.ts` — can speak to the same Redis
+ * without a second client.
+ */
+export function upstashCommands(url: string, token: string, fetchImpl: typeof fetch = fetch): RedisCommands {
   async function command(args: Array<string | number>): Promise<unknown> {
     let res: Response;
     try {
@@ -228,7 +237,7 @@ export function upstashStore(url: string, token: string, fetchImpl: typeof fetch
     return body.result;
   }
 
-  return commandsStore({
+  return {
     rPush: (key, value) => command(['RPUSH', key, value]),
     lRange: (key, start, stop) => command(['LRANGE', key, start, stop]),
     lLen: key => command(['LLEN', key]),
@@ -248,7 +257,7 @@ export function upstashStore(url: string, token: string, fetchImpl: typeof fetch
     },
     hSetNX: (key, field, value) => command(['HSETNX', key, field, value]),
     setNx: (key, value, ttlSeconds) => command(['SET', key, value, 'NX', 'EX', ttlSeconds]),
-  }, 'upstash');
+  };
 }
 
 /**
@@ -302,6 +311,11 @@ async function withTimeout<T>(work: Promise<T>): Promise<T> {
  * the preview takes. Connects on the first command, not on construction.
  */
 export function redisStore(url: string): VoteStore {
+  return commandsStore(redisCommands(url), 'redis');
+}
+
+/** The commands behind `redisStore`, shared the same way as `upstashCommands`. */
+export function redisCommands(url: string): RedisCommands {
   const run = async (command: (client: RedisClient) => Promise<unknown>): Promise<unknown> => {
     try {
       return await withTimeout(clientFor(url).then(command));
@@ -310,7 +324,7 @@ export function redisStore(url: string): VoteStore {
       throw new StoreUnavailableError(err instanceof Error ? err.message : String(err));
     }
   };
-  return commandsStore({
+  return {
     rPush: (key, value) => run(client => client.rPush(key, value)),
     lRange: (key, start, stop) => run(client => client.lRange(key, start, stop)),
     lLen: key => run(client => client.lLen(key)),
@@ -319,7 +333,7 @@ export function redisStore(url: string): VoteStore {
     hGetAll: key => run(client => client.hGetAll(key)),
     hSetNX: (key, field, value) => run(client => client.hSetNX(key, field, value)),
     setNx: (key, value, ttlSeconds) => run(client => client.set(key, value, { NX: true, EX: ttlSeconds })),
-  }, 'redis');
+  };
 }
 
 /**
@@ -391,4 +405,16 @@ export function storeFromEnv(env: Env = process.env): VoteStore | null {
   if (env.NODE_ENV === 'production') return null;
   shared.__versusDevMemory ??= memoryStore();
   return shared.__versusDevMemory;
+}
+
+/**
+ * The Redis commands this deployment has, or null: the same choice as
+ * `storeFromEnv` (REST first, then a direct connection), without the dev
+ * memory fallback, which each store keeps for itself.
+ */
+export function commandsFromEnv(env: Env = process.env): RedisCommands | null {
+  const config = storeConfig(env);
+  if (config?.kind === 'rest') return upstashCommands(config.url, config.token);
+  if (config?.kind === 'redis') return redisCommands(config.url);
+  return null;
 }

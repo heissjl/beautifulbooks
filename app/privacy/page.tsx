@@ -6,6 +6,7 @@ import SiteHeader from '@/components/SiteHeader';
 import { readImprint } from '@/lib/imprint';
 import { commerceEnabled } from '@/lib/sitemode';
 import { versusEnabled } from '@/lib/hotornot/switch';
+import { suggestEnabled } from '@/lib/suggest/auth';
 
 /**
  * The privacy notice (Art. 13 GDPR), written from what the code does rather
@@ -166,6 +167,27 @@ export default function PrivacyPage() {
               from Redis through Vercel&rsquo;s marketplace; it holds the lines on this
               site&rsquo;s behalf. Legal basis: legitimate interest in a ranking that reflects what
               readers picked (Art. 6(1)(f) GDPR).
+            </p>
+          </Section>
+        )}
+
+        {/*
+          The suggestion tool (ROADMAP 5.10a) only where its password is set:
+          where it is off, there is no cookie and nothing is stored. Written
+          2026-09-24 from lib/suggest/; Julian has not reviewed it yet.
+        */}
+        {suggestEnabled() && (
+          <Section title="Suggestions for collections (invitation only)">
+            <p>
+              Friends of the site can suggest books for its collections on a page protected by a
+              password. Entering the password sets one cookie, &ldquo;bb_suggest&rdquo;, for 30 days:
+              it holds an expiry date and a signature and nothing about you, and exists only to keep
+              you signed in (§ 25(2) TDDDG). A suggestion stores what you chose and typed &mdash; the
+              collection, the book, the cover, your note, the day, and a name only if you give one
+              &mdash; in the same Redis database as the cover game, and nothing else: no IP address,
+              no browser details. Suggestions are kept until they have been looked at; ask via the
+              contact page to have one removed. Legal basis: your consent in sending it (Art. 6(1)(a)
+              GDPR).
             </p>
           </Section>
         )}

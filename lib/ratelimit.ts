@@ -71,6 +71,13 @@ export const RATE_RULES = {
    * holds each cover for 30 days.
    */
   img: { capacity: 800, refillPerMinute: 400 },
+  /**
+   * The suggestion tool behind its password (ROADMAP 5.10a): covers of a
+   * book, and sending a suggestion. A friend picks a few books an evening.
+   */
+  suggest: { capacity: 40, refillPerMinute: 20 },
+  /** Password attempts: few, so the shared password cannot be guessed at speed. */
+  login: { capacity: 5, refillPerMinute: 2 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;
