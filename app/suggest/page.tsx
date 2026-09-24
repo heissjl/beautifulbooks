@@ -49,8 +49,12 @@ export default async function SuggestPage() {
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-16 pt-8 sm:px-6 sm:pb-24">
-        {/* Julian, 2026-09-24: „schreibe oben als Hinweis: Für Caitlin". Worded as he asked, in German. */}
-        <p className="mb-4 inline-block rounded-md border border-accent/40 px-3 py-1 text-sm text-accent" lang="de">Für Caitlin</p>
+        {/*
+          Julian, 2026-09-24: „schreibe oben als Hinweis: Für Caitlin", worded as
+          he asked, in German — and „erst nach dem login zu sehen": a stranger
+          at the password field learns no name.
+        */}
+        {signedIn && <p className="mb-4 inline-block rounded-md border border-accent/40 px-3 py-1 text-sm text-accent" lang="de">Für Caitlin</p>}
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">Suggest a book for a collection</h1>
         <p className="mt-4 max-w-2xl text-base text-ink-2">
           Pick a collection, find a book, choose the cover you would put on the wall. Julian looks at every
