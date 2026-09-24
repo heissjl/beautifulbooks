@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import SiteFooter from '@/components/SiteFooter';
@@ -53,7 +54,8 @@ export default async function SuggestPage() {
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">Suggest a book for a collection</h1>
         <p className="mt-4 max-w-2xl text-base text-ink-2">
           Pick a collection, find a book, choose the cover you would put on the wall. Julian looks at every
-          suggestion and decides what goes in; nothing you send appears on the site by itself.
+          suggestion and decides what goes in; nothing you send appears on the site by itself. To build a whole
+          collection instead, <Link href="/curate" className="text-accent underline underline-offset-4">curate one</Link>.
         </p>
         <div className="mt-8">{signedIn ? <SuggestTool collections={forTool()} /> : <SuggestLogin />}</div>
       </main>

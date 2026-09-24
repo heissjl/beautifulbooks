@@ -83,7 +83,7 @@
   <h1>Sammlungen kuratieren</h1>
   <span class="tabs" id="tabs"></span>
   <button class="btn" id="new">+ Neue Sammlung</button>
-  <span class="tabs"><button id="tab-suggest" aria-current="false">Vorschläge</button></span>
+  <span class="tabs"><button id="tab-drafts" aria-current="false">Entwürfe</button><button id="tab-suggest" aria-current="false">Vorschläge</button></span>
   <span class="meta" id="status"></span>
 </header>
 <main id="main">Lade …</main>
@@ -111,7 +111,7 @@
 
 <script>
 const $ = id => document.getElementById(id);
-const state = { collections: [], slug: localStorage.getItem('collections.slug') || null, candidates: {}, drag: null, view: 'edit', suggestions: null, remote: null };
+const state = { collections: [], slug: localStorage.getItem('collections.slug') || null, candidates: {}, drag: null, view: 'edit', suggestions: null, drafts: null, remote: null };
 const cover = (id, size = 'M') => id && id.startsWith('ol:') ? `https://covers.openlibrary.org/b/id/${id.slice(3)}-${size}.jpg` : '';
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const current = () => state.collections.find(c => c.slug === state.slug);
@@ -150,7 +150,7 @@ async function load() {
 
 function renderTabs() {
   $('tabs').innerHTML = state.collections.map(c =>
-    `<button data-slug="${esc(c.slug)}" aria-current="${c.slug === state.slug && state.view !== 'suggest'}">${esc(c.title)} <small>${c.works.length}${c.published ? '' : ' · Entwurf'}</small></button>`).join('');
+    `<button data-slug="${esc(c.slug)}" aria-current="${c.slug === state.slug && state.view === 'edit'}">${esc(c.title)} <small>${c.works.length}${c.published ? '' : ' · Entwurf'}</small></button>`).join('');
   for (const b of $('tabs').querySelectorAll('button')) b.onclick = () => {
     state.view = 'edit';
     state.slug = b.dataset.slug;
@@ -162,7 +162,9 @@ function renderTabs() {
 function render() {
   renderTabs();
   $('tab-suggest').setAttribute('aria-current', String(state.view === 'suggest'));
+  $('tab-drafts').setAttribute('aria-current', String(state.view === 'drafts'));
   if (state.view === 'suggest') return renderSuggestions();
+  if (state.view === 'drafts') return renderDrafts();
   const c = current();
   if (!c) { $('main').innerHTML = '<p>Noch keine Sammlung. Oben „+ Neue Sammlung".</p>'; return; }
   const isAuthors = c.kind === 'authors';
@@ -352,6 +354,62 @@ $('p-close').onclick = () => $('picker').close();
   route as a pick here, so an author outside the collection's list is refused
   until Julian adds her above; then the suggestion is marked taken.
 */
+/*
+  Friends' drafts from /curate (ROADMAP 5.10b). Fetched when the tab opens.
+  "Übernehmen" writes the draft into data/collections.json as a collection —
+  new, or replacing the one with the same address — never published; the
+  list of authors that are new against the file is shown first, because
+  taking a draft over is Julian's OK for them (SPEC F8.2).
+*/
+$('tab-drafts').onclick = () => { state.view = 'drafts'; state.drafts = null; render(); };
+
+async function renderDrafts() {
+  if (!state.drafts) {
+    $('main').innerHTML = '<p class="meta">Lade Entwürfe …</p>';
+    try { state.drafts = await api('/api/drafts'); }
+    catch (e) { $('main').innerHTML = `<p class="error">${esc(e.message)}</p>`; return; }
+  }
+  const data = state.drafts;
+  if (data.off) {
+    $('main').innerHTML = `<p>Keine Quelle eingestellt. Starten mit<br><code>SUGGEST_REMOTE=https://beautifulcovers.vercel.app SUGGEST_ADMIN_PASSWORD=… npx tsx lab/collections/serve.ts</code></p>`;
+    return;
+  }
+  $('main').innerHTML = `<section><h2>Entwürfe von Freunden (${data.drafts.length})</h2>
+    <p class="note">Aus ${esc(state.remote || '')}, Speicher: ${esc(data.store)}. <button class="btn" id="d-reload">Neu laden</button></p>
+    ${data.drafts.map((d, i) => {
+      const existing = state.collections.find(c => c.slug === d.slug);
+      const names = d.kind === 'authors' ? (d.authors || []).map(a => a.name) : (d.publishers || []);
+      const known = existing ? (existing.kind === 'authors' ? (existing.authors || []).map(a => a.name) : (existing.publishers || [])) : [];
+      const fresh = names.filter(n => !known.includes(n));
+      return `<div style="border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:14px;background:var(--surface)">
+        <div class="row"><b style="font-size:17px">${esc(d.title)}</b>
+          <span class="meta">/${esc(d.slug)} · ${d.works.length} Werke${d.by ? ` · von ${esc(d.by)}` : ''} · ${esc(d.updatedAt.slice(0, 16).replace('T', ' '))}${d.importedOn ? ` · übernommen ${esc(d.importedOn)}` : ''}</span></div>
+        ${d.intro ? `<p class="note" style="font-size:13px">${esc(d.intro)}</p>` : ''}
+        <p class="note">${d.kind === 'authors' ? 'Autorinnen' : 'Verlage'}: ${names.map(esc).join(', ') || '—'}</p>
+        ${fresh.length && existing ? `<p class="error">Neu gegenüber „${esc(existing.title)}“: ${fresh.map(esc).join(', ')}</p>` : ''}
+        ${fresh.length && !existing ? `<p class="error">Übernehmen setzt diese Namen auf eine neue Sammlung: ${fresh.map(esc).join(', ')}</p>` : ''}
+        <div class="wall" style="margin:10px 0">${d.works.map(w => `<div class="cell" style="cursor:default"><img src="${cover(w.coverId)}" alt="" loading="lazy"><div class="t">${esc(w.title)}</div><div class="a">${esc(w.author)}</div></div>`).join('')}</div>
+        <div class="row">
+          ${existing ? `<button class="btn" data-replace="${i}">„${esc(existing.title)}“ ersetzen</button>` : ''}
+          <button class="btn" data-new="${i}">Als neue Sammlung übernehmen</button>
+        </div></div>`;
+    }).join('') || '<p class="note">Noch keine Entwürfe.</p>'}</section>`;
+  $('d-reload').onclick = () => { state.drafts = null; render(); };
+  const importDraft = async (d, mode) => {
+    const existing = state.collections.find(c => c.slug === d.slug);
+    if (mode === 'replace' && !confirm(`„${existing.title}“ durch den Entwurf ersetzen? Wand, Liste und Text der Sammlung werden überschrieben; „veröffentlicht“ bleibt, wie es ist.`)) return;
+    try {
+      const res = await api('/api/import', { draft: d, mode });
+      state.collections = res.collections;
+      state.drafts = null;
+      status(`${d.title} übernommen`);
+      render();
+    } catch (e) { status(e.message, true); }
+  };
+  for (const b of $('main').querySelectorAll('[data-replace]')) b.onclick = () => importDraft(data.drafts[Number(b.dataset.replace)], 'replace');
+  for (const b of $('main').querySelectorAll('[data-new]')) b.onclick = () => importDraft(data.drafts[Number(b.dataset.new)], 'new');
+}
+
 $('tab-suggest').onclick = () => { state.view = 'suggest'; state.suggestions = null; render(); };
 
 async function renderSuggestions() {

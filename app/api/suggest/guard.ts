@@ -42,3 +42,18 @@ export function adminGate(request: NextRequest): Gate {
 }
 
 export const storeDown = () => json({ error: 'The suggestion store did not answer. Try again in a moment.' }, 503);
+
+/**
+ * A friend with the cookie **or** Julian's tool with the admin password —
+ * the online curation tool (ROADMAP 5.10b) is used by both. A request with
+ * neither spends from the narrow login bucket, like a wrong password.
+ */
+export function memberGate(request: NextRequest): { admin: boolean } | { response: NextResponse } {
+  if (!suggestEnabled()) return { response: json({ error: 'Not found' }, 404) };
+  const friend = sessionValid(request.cookies.get(SESSION_COOKIE)?.value);
+  const admin = adminMatches((request.headers.get('authorization') ?? '').replace(/^Bearer\s+/i, ''));
+  const limited = rateLimited(request, friend || admin ? 'suggest' : 'login');
+  if (limited) return { response: limited };
+  if (!friend && !admin) return { response: json({ error: 'Sign in first.' }, 401) };
+  return { admin };
+}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { CollectionRecord } from '../../../lib/collections';
-import { addAuthor, authorCandidates, inSeries, newCollection, removeAuthor, reorder, slugify, upsertPick } from '../model';
+import type { CollectionRecord } from '../collections';
+import { addAuthor, authorCandidates, inSeries, newCollection, removeAuthor, reorder, slugify, upsertPick } from '../collectionedit';
 
 const base = (): CollectionRecord => ({
   slug: 'women-writers',
@@ -70,7 +70,7 @@ describe('upsertPick', () => {
   });
 
   it('refuses a work by an author who is not on the list', () => {
-    expect(() => upsertPick(base(), { id: 'OL5W', title: 'E', author: 'Virginia Woolf', coverId: 'ol:5' })).toThrow(/Autorinnenliste/);
+    expect(() => upsertPick(base(), { id: 'OL5W', title: 'E', author: 'Virginia Woolf', coverId: 'ol:5' })).toThrow(/list of authors/);
   });
 });
 

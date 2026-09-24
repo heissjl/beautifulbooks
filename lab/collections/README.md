@@ -30,6 +30,10 @@ SUGGEST_REMOTE=https://beautifulcovers.vercel.app SUGGEST_ADMIN_PASSWORD=… npx
 
 „Übernehmen" setzt Buch und Cover auf die Wand der Sammlung — bei einer Autorin, die nicht auf der Liste steht, erst nachdem Julian sie oben hinzugefügt hat — und markiert den Vorschlag; „Ablehnen" markiert nur. Vorschläge für eine neue Sammlung werden als „erledigt" markiert, anlegen muss Julian sie selbst. Die Produktion wird nur beim Öffnen des Reiters und bei jeder Entscheidung gefragt, nie in einer Schleife.
 
+## Entwürfe von Freunden (5.10b)
+
+Unter `/curate` bauen Freunde ganze Sammlungen, als Entwürfe in der Redis. Der Reiter **Entwürfe** holt sie ab (dieselben zwei Variablen wie oben) und zeigt je Entwurf die Namen, die gegenüber der Sammlung in der Datei neu sind. „Ersetzen" überschreibt die gleichnamige Sammlung (Wand, Liste, Text; „veröffentlicht" bleibt), „Als neue Sammlung übernehmen" legt eine an (Slug bei Bedarf mit `-2`). Beides veröffentlicht nichts. Die Logik, die beide Werkzeuge teilen, liegt seit 5.10b in `lib/collectionedit.ts`.
+
 ## Status
 
 Gebaut und durchgespielt am 2026-09-24 (Historie). Erste Sammlung „Women writers" als Entwurf mit fünf Werken; die Wand füllt Julian.

@@ -24,6 +24,7 @@ import { createServer } from 'node:http';
 import { existsSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { CollectionRecord } from '../../lib/collections';
+import { toRecord, type Draft } from '../../lib/curate/drafts';
 import {
   addAuthor,
   authorCandidates,
@@ -35,7 +36,7 @@ import {
   upsertPick,
   type Candidate,
   type SearchDoc,
-} from './model';
+} from '../../lib/collectionedit';
 
 const ROOT = join(import.meta.dirname, '..', '..');
 const OUT_FILE = process.env.COLLECTIONS_FILE ?? join(ROOT, 'data', 'collections.json');
@@ -261,6 +262,30 @@ const server = createServer(async (req, res) => {
     if (url.pathname === '/api/suggestions') {
       if (!SUGGEST_REMOTE || !SUGGEST_ADMIN) return send(200, { off: true });
       return send(200, await remote('/api/suggest'));
+    }
+
+    // Friends' drafts from /curate (ROADMAP 5.10b): read from the site, taken over by hand.
+    if (url.pathname === '/api/drafts') {
+      if (!SUGGEST_REMOTE || !SUGGEST_ADMIN) return send(200, { off: true });
+      return send(200, await remote('/api/curate/drafts'));
+    }
+
+    if (url.pathname === '/api/import' && req.method === 'POST') {
+      if (!SUGGEST_REMOTE || !SUGGEST_ADMIN) return send(400, { error: 'SUGGEST_REMOTE und SUGGEST_ADMIN_PASSWORD fehlen' });
+      const { draft, mode } = await readBody<{ draft: Draft; mode: 'new' | 'replace' }>(req);
+      const record = toRecord(draft);
+      const existing = collections.find(c => c.slug === record.slug);
+      if (existing && mode === 'replace') {
+        // The published flag stays Julian's: taking over a draft never publishes.
+        collections = collections.map(c => (c === existing ? { ...record, published: existing.published } : c));
+      } else {
+        let slug = record.slug;
+        for (let n = 2; collections.some(c => c.slug === slug); n++) slug = `${record.slug}-${n}`;
+        collections = [...collections, { ...record, slug }];
+      }
+      save();
+      await remote(`/api/curate/drafts/${draft.id}`, { op: 'imported' });
+      return send(200, { collections });
     }
 
     if (url.pathname === '/api/suggestions/decide' && req.method === 'POST') {

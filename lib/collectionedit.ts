@@ -1,11 +1,12 @@
 /**
- * The pure part of the collection tool (ROADMAP 5.10): which catalogue
- * records belong to a collection, and how the file changes when Julian adds,
- * removes or moves a work. No I/O here, so the rules are tested without a
+ * The pure part of both collection tools (ROADMAP 5.10, 5.10b): which
+ * catalogue records belong to a collection, and how a collection changes when
+ * someone adds, removes or moves a work — Julian in `lab/collections/`, a
+ * friend in a draft on `/curate`. No I/O here, so the rules are tested without a
  * server and without Open Library.
  */
-import type { CollectionAuthor, CollectionKind, CollectionPick, CollectionRecord } from '../../lib/collections';
-import { isCollectionSlug } from '../../lib/collections';
+import type { CollectionAuthor, CollectionKind, CollectionPick, CollectionRecord } from './collections';
+import { isCollectionSlug } from './collections';
 
 /** One work from an Open Library search, as far as this tool needs it. */
 export interface SearchDoc {
@@ -91,10 +92,10 @@ export function slugify(title: string): string {
 
 export function newCollection(input: { title: string; slug?: string; kind: CollectionKind; intro?: string }, existing: CollectionRecord[]): CollectionRecord {
   const title = input.title.trim();
-  if (!title) throw new Error('Titel fehlt');
+  if (!title) throw new Error('A title is needed.');
   const slug = (input.slug?.trim() || slugify(title));
-  if (!isCollectionSlug(slug)) throw new Error(`Ungültiger Slug: ${slug}`);
-  if (existing.some(c => c.slug === slug)) throw new Error(`Slug gibt es schon: ${slug}`);
+  if (!isCollectionSlug(slug)) throw new Error(`Not a usable address: ${slug}`);
+  if (existing.some(c => c.slug === slug)) throw new Error(`That address is taken: ${slug}`);
   return {
     slug,
     title,
@@ -112,7 +113,7 @@ export function newCollection(input: { title: string; slug?: string; kind: Colle
  */
 export function upsertPick(c: CollectionRecord, pick: CollectionPick): CollectionRecord {
   if (c.kind === 'authors' && !(c.authors ?? []).some(a => a.name === pick.author)) {
-    throw new Error(`${pick.author} steht nicht auf der Autorinnenliste dieser Sammlung`);
+    throw new Error(`${pick.author} is not on this collection's list of authors. Add them first.`);
   }
   const at = c.works.findIndex(w => w.id === pick.id);
   const works = at < 0 ? [...c.works, pick] : c.works.map((w, i) => (i === at ? { ...w, ...pick, addedAt: w.addedAt ?? pick.addedAt } : w));
@@ -149,7 +150,7 @@ export function removeAuthor(c: CollectionRecord, name: string): CollectionRecor
 
 export function addAuthor(c: CollectionRecord, author: CollectionAuthor): CollectionRecord {
   const name = author.name.normalize('NFC').trim();
-  if (!name || author.keys.length === 0) throw new Error('Name und Key nötig');
+  if (!name || author.keys.length === 0) throw new Error('A name and an Open Library key are needed.');
   const list = c.authors ?? [];
   const same = list.find(a => a.name === name);
   if (same) {
