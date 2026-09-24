@@ -173,6 +173,52 @@ const SEEDS: Array<[title: string, author: string]> = [
   ['The Shipping News', 'Annie Proulx'],
 ];
 
+/**
+ * Julian, 2026-09-24: „suche mit noch 20 wichtige werke von autorinnen des
+ * 20 jhdts heraus und bringe sie in die app."
+ *
+ * Twenty by hand, chosen for spread rather than for a canon: six languages,
+ * the 1920s to the 1980s, and each one a book that has been dressed again and
+ * again — which is what a wall of covers needs. Everything the list already
+ * knows is skipped by `known()`, so the Woolf here is the one that is missing
+ * and not the Plath, Morrison, Lee, Le Guin, Atwood, Lessing, Hurston,
+ * Walker, Butler, du Maurier, Rhys or Lindgren that are already in.
+ *
+ * They run before the older seeds, so a target of twenty spends itself here.
+ *
+ * **Seven of the twenty did not come through this script**, and the log says
+ * why: *To the Lighthouse* and *Le Deuxième Sexe* were already in the list;
+ * *The Bloody Chamber* has 9 and 10 edition records, under `MIN_EDITIONS`;
+ * and for Duras, Yourcenar and O'Connor the match fails because Open Library
+ * files the book under another title than the seed. The first three are
+ * settled; the others are in `NAMED_EXTRAS` in `serve.ts`, looked up by hand.
+ */
+const SEEDS_WOMEN_20C: Array<[title: string, author: string]> = [
+  ['Mrs. Dalloway', 'Virginia Woolf'],  // with the dot: Open Library files it that way
+  ['To the Lighthouse', 'Virginia Woolf'],
+  ['Nightwood', 'Djuna Barnes'],
+  ['Passing', 'Nella Larsen'],
+  ['The Heart Is a Lonely Hunter', 'Carson McCullers'],
+  ['Wise Blood', "Flannery O'Connor"],
+  ['We Have Always Lived in the Castle', 'Shirley Jackson'],
+  ['The Prime of Miss Jean Brodie', 'Muriel Spark'],
+  ['The Sea, the Sea', 'Iris Murdoch'],
+  ['The Bloody Chamber', 'Angela Carter'],
+  ['I Know Why the Caged Bird Sings', 'Maya Angelou'],
+  ['Le Deuxième Sexe', 'Simone de Beauvoir'],
+  ["L'Amant", 'Marguerite Duras'],
+  ["Mémoires d'Hadrien", 'Marguerite Yourcenar'],
+  ['Malina', 'Ingeborg Bachmann'],
+  ['Kassandra', 'Christa Wolf'],
+  ['Das siebte Kreuz', 'Anna Seghers'],
+  ['A hora da estrela', 'Clarice Lispector'],
+  ['La casa de los espíritus', 'Isabel Allende'],
+  ['Une si longue lettre', 'Mariama Bâ'],
+];
+
+/** The run order: the newest round first, so its books are the ones a target buys. */
+const RUN: Array<[title: string, author: string]> = [...SEEDS_WOMEN_20C, ...SEEDS];
+
 export interface Suggestion {
   id: string;
   title: string;
@@ -203,7 +249,7 @@ async function main() {
   const out: Suggestion[] = [];
   console.log(`suggest: ${skip.size} works already known, looking for ${TARGET} more`);
 
-  for (const [title, author] of SEEDS) {
+  for (const [title, author] of RUN) {
     if (out.length >= TARGET) break;
     const key = authorMatchKey(author);
     if ((perAuthor.get(key) ?? 0) >= MAX_PER_AUTHOR) continue;

@@ -51,6 +51,26 @@ const NAMED_EXTRAS: Extra[] = [
   { id: 'OL63055W', title: 'The Garden of Eden', author: 'Ernest Hemingway' },
   { id: 'OL23166W', title: 'East of Eden', author: 'John Steinbeck' },
   { id: 'OL3511459W', title: 'Stoner', author: 'John Williams' },
+  /*
+    Five of the twenty women that Julian asked for on 2026-09-24, and one book
+    by name. The suggestion script could not confirm them: it compares the
+    seed's title with the record's, and Open Library files these under another
+    one — *The Lover* as `L'Amant`, *Memoirs of Hadrian* as `Mémoires
+    d'Hadrien`, the diary as `Het Achterhuis`. Their ids were looked up through
+    our own search and read off by hand, which is what this list is for.
+  */
+  { id: 'OL39349W', title: 'Mrs. Dalloway', author: 'Virginia Woolf', note: '753 Ausgaben · ab 1925' },
+  { id: 'OL159382W', title: "L'Amant", author: 'Marguerite Duras', note: '35 Ausgaben · ab 1984' },
+  { id: 'OL106837W', title: "Mémoires d'Hadrien", author: 'Marguerite Yourcenar', note: '153 Ausgaben · ab 1951' },
+  { id: 'OL266178W', title: 'Het Achterhuis', author: 'Anne Frank', note: '295 Ausgaben · ab 1944' },
+  { id: 'OL471576W', title: 'Murder on the Orient Express', author: 'Agatha Christie', note: '251 Ausgaben · ab 1933' },
+  /*
+    Julian, 2026-09-24: „außerdem noch babysitter at rest". One edition record
+    at Open Library, so the suggestion script would have dropped it on the
+    edition count; it is here because he asked for it by name, and a thin wall
+    is his call to make.
+  */
+  { id: 'OL20042286W', title: 'The Babysitter at Rest', author: 'Jen George', note: '1 Ausgabe · ab 2016' },
 ];
 
 /**

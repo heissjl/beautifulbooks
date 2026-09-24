@@ -808,5 +808,140 @@
     "readers": 610,
     "firstPublished": 1929,
     "note": "192 Ausgaben · 610 Leser · ab 1929"
+  },
+  {
+    "id": "OL505583W",
+    "title": "Nightwood",
+    "author": "Djuna Barnes",
+    "editionCount": 54,
+    "readers": 109,
+    "firstPublished": 1936,
+    "note": "54 Ausgaben · 109 Leser · ab 1936"
+  },
+  {
+    "id": "OL2645476W",
+    "title": "Passing",
+    "author": "Nella Larsen",
+    "editionCount": 75,
+    "readers": 573,
+    "firstPublished": 1929,
+    "note": "75 Ausgaben · 573 Leser · ab 1929"
+  },
+  {
+    "id": "OL11081469W",
+    "title": "The Heart is a Lonely Hunter",
+    "author": "Carson McCullers",
+    "editionCount": 65,
+    "readers": 181,
+    "firstPublished": 1940,
+    "note": "65 Ausgaben · 181 Leser · ab 1940"
+  },
+  {
+    "id": "OL3171087W",
+    "title": "We Have Always Lived in the Castle",
+    "author": "Shirley Jackson",
+    "editionCount": 41,
+    "readers": 586,
+    "firstPublished": 1962,
+    "note": "41 Ausgaben · 586 Leser · ab 1962"
+  },
+  {
+    "id": "OL26437W",
+    "title": "The Prime of Miss Jean Brodie",
+    "author": "Muriel Spark",
+    "editionCount": 60,
+    "readers": 119,
+    "firstPublished": 1961,
+    "note": "60 Ausgaben · 119 Leser · ab 1961"
+  },
+  {
+    "id": "OL1326310W",
+    "title": "The Sea, the Sea",
+    "author": "Iris Murdoch",
+    "editionCount": 34,
+    "readers": 83,
+    "firstPublished": 1978,
+    "note": "34 Ausgaben · 83 Leser · ab 1978"
+  },
+  {
+    "id": "OL80021W",
+    "title": "I Know Why the Caged Bird Sings",
+    "author": "Maya Angelou",
+    "editionCount": 82,
+    "readers": 1335,
+    "firstPublished": 1969,
+    "note": "82 Ausgaben · 1.335 Leser · ab 1969"
+  },
+  {
+    "id": "OL472971W",
+    "title": "Malina",
+    "author": "Ingeborg Bachmann",
+    "editionCount": 26,
+    "readers": 33,
+    "firstPublished": 1971,
+    "note": "26 Ausgaben · 33 Leser · ab 1971"
+  },
+  {
+    "id": "OL751417W",
+    "title": "Kassandra",
+    "author": "Christa Wolf",
+    "editionCount": 28,
+    "readers": 29,
+    "firstPublished": 1983,
+    "note": "28 Ausgaben · 29 Leser · ab 1983"
+  },
+  {
+    "id": "OL8769634W",
+    "title": "Das siebte Kreuz",
+    "author": "Anna Seghers",
+    "editionCount": 43,
+    "readers": 8,
+    "firstPublished": 1942,
+    "note": "43 Ausgaben · 8 Leser · ab 1942"
+  },
+  {
+    "id": "OL1002120W",
+    "title": "A Hora da Estrela",
+    "author": "Clarice Lispector",
+    "editionCount": 35,
+    "readers": 324,
+    "firstPublished": 1977,
+    "note": "35 Ausgaben · 324 Leser · ab 1977"
+  },
+  {
+    "id": "OL1905255W",
+    "title": "La casa de los espíritus",
+    "author": "Isabel Allende",
+    "editionCount": 116,
+    "readers": 630,
+    "firstPublished": 1982,
+    "note": "116 Ausgaben · 630 Leser · ab 1982"
+  },
+  {
+    "id": "OL4672081W",
+    "title": "Une si longue lettre",
+    "author": "Mariama Bâ",
+    "editionCount": 34,
+    "readers": 274,
+    "firstPublished": 1980,
+    "note": "34 Ausgaben · 274 Leser · ab 1980"
+  },
+  {
+    "id": "OL50565W",
+    "title": "The Bluest Eye",
+    "author": "Toni Morrison",
+    "editionCount": 63,
+    "readers": 868,
+    "firstPublished": 1970,
+    "note": "63 Ausgaben · 868 Leser · ab 1970"
+  },
+  {
+    "id": "OL1843720W",
+    "title": "The Joy Luck Club",
+    "author": "Amy Tan",
+    "editionCount": 74,
+    "readers": 589,
+    "firstPublished": 1989,
+    "note": "74 Ausgaben · 589 Leser · ab 1989"
   }
 ]
