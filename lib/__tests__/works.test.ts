@@ -415,9 +415,11 @@ describe('foldDuplicateCovers (E8 phase 2, three tiers in SPEC 9.3 step 12)', ()
     expect(foldDuplicateCovers(covers, sigs, editions)).toHaveLength(1);
   });
 
-  it('never folds across publishers beyond tier 1, however alike the artwork', () => {
+  it('does not fold across publishers on the structure alone (tiers 1 to 3)', () => {
     // Scribner 2003 and Lulu 2021 both print the public-domain Celestial Eyes
-    // jacket of Gatsby; measured 19 bits apart, and they are different books.
+    // jacket of Gatsby; measured 19 bits apart. Without colour in the
+    // signatures the fourth tier cannot apply, and this is what a page that
+    // ships plain signatures still does.
     const covers = [cover('ol:scribner', ['e1']), cover('ol:lulu', ['e2'])];
     const sigs = new Map([['ol:scribner', sig(NEAR_A)], ['ol:lulu', sig(NEAR_B)]]);
     const editions = [
@@ -425,6 +427,55 @@ describe('foldDuplicateCovers (E8 phase 2, three tiers in SPEC 9.3 step 12)', ()
       ed({ id: 'e2', publisher: 'Lulu.com', year: 2021, language: 'en' }),
     ];
     expect(foldDuplicateCovers(covers, sigs, editions)).toHaveLength(2);
+  });
+
+  describe('the same design at two houses (tier 4, ROADMAP 6.36)', () => {
+    const hues = (bucket: number) => {
+      const bytes = new Uint8Array(16);
+      bytes[bucket] = 255;
+      return Buffer.from(bytes).toString('base64');
+    };
+    /** A cover with a design (contrast) and a colour world (one hue bucket). */
+    const designed = (hash: string, bucket: number, contrast = 40) =>
+      ({ hash, contrast, mean: 120, saturation: 140, hues: hues(bucket) });
+    const twoHouses = [
+      ed({ id: 'e1', publisher: 'Kiepenheuer & Witsch', year: 2009, language: 'de' }),
+      ed({ id: 'e2', publisher: 'Rowohlt Taschenbuch', year: 2011, language: 'de' }),
+    ];
+    const pair = [cover('ol:kiwi', ['e1']), cover('ol:rowohlt', ['e2'])];
+
+    it('folds when the structure agrees, both carry a design and the colours are one world', () => {
+      const sigs = new Map([['ol:kiwi', designed(NEAR_A, 3)], ['ol:rowohlt', designed(NEAR_B, 3)]]);
+      expect(foldDuplicateCovers(pair, sigs, twoHouses)).toHaveLength(1);
+    });
+
+    it('keeps a flat board or a text page apart, whatever its hash says', () => {
+      // The measured trap: a plain cloth board and an illustrated jacket 11
+      // bits apart, because neither hash has much to disagree about.
+      const sigs = new Map([['ol:kiwi', designed(NEAR_A, 3, 11)], ['ol:rowohlt', designed(NEAR_B, 3)]]);
+      expect(foldDuplicateCovers(pair, sigs, twoHouses)).toHaveLength(2);
+    });
+
+    it('keeps two colour worlds apart', () => {
+      // A red cloth board against a floral paperback: distance 13, colour 0.73.
+      const sigs = new Map([['ol:kiwi', designed(NEAR_A, 1)], ['ol:rowohlt', designed(NEAR_B, 9)]]);
+      expect(foldDuplicateCovers(pair, sigs, twoHouses)).toHaveLength(2);
+    });
+
+    it('stops at the measured distance, where different books start sharing layouts', () => {
+      const far = 'ffffff00000fffff'; // 20 bits from NEAR_A
+      const sigs = new Map([['ol:kiwi', designed(NEAR_A, 3)], ['ol:rowohlt', designed(far, 3)]]);
+      expect(foldDuplicateCovers(pair, sigs, twoHouses)).toHaveLength(2);
+    });
+
+    it('still never folds two known languages together', () => {
+      const sigs = new Map([['ol:kiwi', designed(NEAR_A, 3)], ['ol:rowohlt', designed(NEAR_B, 3)]]);
+      const editions = [
+        ed({ id: 'e1', publisher: 'Kiepenheuer & Witsch', year: 2009, language: 'de' }),
+        ed({ id: 'e2', publisher: 'Little, Brown', year: 2011, language: 'en' }),
+      ];
+      expect(foldDuplicateCovers(pair, sigs, editions)).toHaveLength(2);
+    });
   });
 
   it('never folds two known languages together', () => {

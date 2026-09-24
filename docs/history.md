@@ -2492,3 +2492,30 @@ Julian: „ja, bau die trennung".
 **Im Browser geprüft** (1280 × 800 und 390 × 844): die fünf Abnahmefragen aus SPEC §3 F1 zeigen weiterhin das Erwartete (*Mumbo Jumbo* von Reed, *Nineteen Eighty-Four*, Pynchon, Fitzgerald, Austen jeweils zuerst); Tippen führt nach `/?q=…` und lässt den Hero verschwinden, der Zurück-Knopf bringt ihn samt leerem Feld zurück; auf dem Telefon weiterhin kein Ring und kein seitlicher Überstand. 597 Tests, `tsc`, Lint und Build grün.
 
 **In Produktion seit `49831a5`** (Deployment `b39tzfwhp`). **Einmal geprüft**, mit derselben Messung wie zuvor: `curl https://beautifulcovers.vercel.app/` liefert **32.644 Byte** statt 10.865, darin **1.019 Zeichen** sichtbaren Text, die Überschrift, die Einladung ins Spiel und **18 Buchlinks** statt keinem. Die Startseite steht damit auch für alles im Netz, was kein JavaScript ausführt.
+
+---
+
+## 2026-09-24 · Dieselbe Gestaltung bei zwei Verlagen: die vierte Stufe der Faltung (ROADMAP 6.36)
+
+Julian: „es sollten auch gleiche cover von verschiedenen verlagen gefaltet werden, wir haben dafür ja die pillen der editionen in der detailansicht" — und auf die Rückfrage, ob technisch etwas dagegen spricht: „ja, bau die faltung über verlagsgrenzen".
+
+**Die Erwartung war falsch, und das ist der Befund.** Ich wollte den Farb-Keil des Spiels übernehmen (`sameJacket`: 0,45 Farbabstand bei 10 Bit, fallend auf 0,20 bei 20). Gegen die Wirklichkeit gehalten faltet dieser Keil **8 von 10 richtigen Paaren — und 10 von 16 falschen**. Er ist für diese Frage unbrauchbar: **zwei Scans derselben Jacke unterscheiden sich im Ton stärker als zwei schlichte Typo-Umschläge voneinander**, die Farbe zeigt also fast in die falsche Richtung.
+
+**Wie gemessen wurde.** `scripts/measure-publisher-fold.ts` sammelt aus 30 Werken alle Cover-Paare **innerhalb eines Werks, über Verlagsgrenzen, ohne gemeinsame ISBN, ohne Sprachkonflikt, Abstand 9 bis 22** — genau die Paare, die die drei bestehenden Stufen liegen lassen: **5.427 Paare**. `scripts/fold-sheet.ts` macht daraus Kontaktbögen; angesehen wurden **56 Paare in drei Runden** (erst die, die der Keil falten würde, dann die Treffer der Kandidatenregel, dann die der engeren Regel). Urteil je Paar von Hand: **34 dieselbe Gestaltung, 22 verschiedene.**
+
+**Was trennt, und was nicht.** Jedes einzelne Maß überlappt vollständig:
+
+| Maß | gleiche Gestaltung | verschiedene | trennt? |
+|---|---|---|---|
+| dHash-Abstand | 9–22 | 11–22 | nein |
+| Farbabstand | 0,005–0,512 | 0,049–0,363 | nein |
+| kleinerer Kontrast | 11–78 | 5–66 | nein |
+| kleinere Sättigung | 25–234 | 19–187 | nein |
+
+**Die drei zusammen aber schon:** Abstand ≤ 13 **und** Kontrast ≥ 30 auf beiden Seiten **und** Farbabstand ≤ 0,52 faltet **12 der 34 echten Dubletten und keine einzige der 22 verschiedenen**. Jede Bedingung hält andere Fälle draußen: der Kontrast die flachen Pappen und Typo-Umschläge, deren Hash sich nur einig ist, weil er nichts zu vergleichen hat (eine schlichte Leinenpappe und ein illustrierter Umschlag lagen 11 Bit auseinander); der Abstand die Gestaltungen, die sich bloß ein Layout teilen; die Farbschranke den Rest (eine rote Leinenpappe gegen ein geblümtes Taschenbuch bei Abstand 13, Farbe 0,73).
+
+**Der Preis ist Zurückhaltung:** 22 der 34 echten Dubletten bleiben ungefaltet — 15 wegen des Abstands, 7 wegen des Kontrasts. **Julians eigenes Beispiel gehört dazu:** *Unendlicher Spaß* bei Kiepenheuer & Witsch gegen Rowohlt liegt bei 19 und 22 Bit, und in diesem Band stehen zu viele verschiedene Cover, als dass man dort falten könnte, ohne echte Cover zu verlieren.
+
+**Gemessen, was es auf der Wand ändert** (`scripts/measure-fold-effect.ts`, Signaturen aus dem Index): über zwölf beliebige Werke **665 → 663 Kacheln**; über sieben Werke, in denen solche Dubletten vorkommen, **578 → 561 (−17, 2,9 %)** — *Fahrenheit 451* verliert sechs doppelte Kacheln, *To Kill a Mockingbird* drei.
+
+**Gebaut** ([SPEC §2.3](SPEC.md)): die vierte Stufe in `sameCover` bekommt die beiden Signaturen selbst, nicht nur ihren Abstand. Dafür rechnet `lib/coverhash.ts` die Farbe jetzt mit — das RGBA-Bild wird für den Hash ohnehin decodiert —, und die Seiten-Antwort trägt Sättigung und Hue-Histogramm mit: **gemessen 2.016 Byte auf 63 Signaturen**, rund 32 Byte je Cover. Für kuratierte Werke kommt die Farbe wie bisher kostenlos aus dem gebauten Index. **Ohne Farbe greift die Stufe nicht** — eine ältere Signatur faltet also wie zuvor, statt zu raten. Fünf neue Tests, 602 grün.

@@ -5,7 +5,7 @@
 import type { Cover, Edition, LanguageGroup, SourceEdition, Work, WorkSummary } from './model';
 import type { EditionCandidate } from './sources/googlebooks-parse';
 import { authorMatchKey, looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeTitle, titleAuthorKey } from './normalize';
-import { hamming, looksLikeScannedPage, type ImageSignature } from './imagesig';
+import { colourDistance, hamming, looksLikeScannedPage, type ImageSignature } from './imagesig';
 
 export const MOSAIC_COVERS = 4;
 /** How many covers the card route sends, so a card can replace a repeat (ROADMAP 6.34). */
@@ -538,10 +538,32 @@ export const SAME_PRINTING_MAX_DISTANCE = 16;
 /** Years this far apart still count as the same printing. */
 export const SAME_PRINTING_YEAR_SLACK = 1;
 
+/*
+  The same design at two houses (ROADMAP 6.36, Julian 2026-09-23). Measured by
+  looking at 56 cross-publisher pairs from 30 works, drawn from the 5,427 that
+  the other tiers leave apart: these three together fold 12 of the 34 pairs
+  that really are one design and **none** of the 22 that are not.
+
+  Each number earns its place, and the colour one is not the wedge the game
+  uses — two scans of one jacket differ in tone more than two plain typographic
+  covers do, so a tight colour bound would keep the true pairs out and let the
+  false ones in. It only rules out the far cases (a red cloth board against a
+  floral paperback at 0.73). Contrast is what removes plain boards and text
+  pages, whose dHash agrees for want of anything to disagree about.
+*/
+export const SAME_DESIGN_MAX_DISTANCE = 13;
+/** Both covers must carry a design; below this a cover is a flat board or a text page. */
+export const SAME_DESIGN_MIN_CONTRAST = 30;
+/** Above this the two live in different colour worlds, whatever the structure says. */
+export const SAME_DESIGN_MAX_COLOUR = 0.52;
+
 export interface FoldThresholds {
   sameImage?: number;
   sameIsbn?: number;
   samePrinting?: number;
+  sameDesign?: number;
+  designContrast?: number;
+  designColour?: number;
 }
 
 /** What the editions carrying a cover say about the printing it belongs to. */
@@ -638,6 +660,7 @@ export function sameCover(
   a: Printing,
   b: Printing,
   thresholds: Required<FoldThresholds>,
+  signatures?: { a: ImageSignature; b: ImageSignature },
 ): boolean {
   if (distance <= thresholds.sameImage) return true;
   if (languagesConflict(a, b)) return false;
@@ -645,7 +668,20 @@ export function sameCover(
   if (distance <= thresholds.sameIsbn && shares(a.isbns, b.isbns)) return true;
   // Same house, same year: scans of one printing rather than a redesign.
   if (distance <= thresholds.samePrinting && sharePublisher(a, b) && yearsClose(a, b)) return true;
+  // Licensed to another house: the same design, printed by someone else
+  // (ROADMAP 6.36). Needs the pictures themselves, not only their distance:
+  // both must carry a design, and the two must not live in different colour
+  // worlds. Without colour in the signatures the tier simply does not apply,
+  // which is why a page that ships plain signatures folds as it did before.
+  if (distance <= thresholds.sameDesign && signatures && sameDesign(signatures.a, signatures.b, thresholds)) return true;
   return false;
+}
+
+/** The picture half of the cross-publisher tier: a design on both sides, and one colour world. */
+function sameDesign(a: ImageSignature, b: ImageSignature, thresholds: Required<FoldThresholds>): boolean {
+  if (a.contrast < thresholds.designContrast || b.contrast < thresholds.designContrast) return false;
+  const colour = colourDistance(a, b);
+  return colour !== null && colour <= thresholds.designColour;
 }
 
 /**
@@ -708,6 +744,9 @@ export function foldDuplicateCovers(
     sameImage: thresholds.sameImage ?? SAME_COVER_MAX_DISTANCE,
     sameIsbn: thresholds.sameIsbn ?? SAME_ISBN_MAX_DISTANCE,
     samePrinting: thresholds.samePrinting ?? SAME_PRINTING_MAX_DISTANCE,
+    sameDesign: thresholds.sameDesign ?? SAME_DESIGN_MAX_DISTANCE,
+    designContrast: thresholds.designContrast ?? SAME_DESIGN_MIN_CONTRAST,
+    designColour: thresholds.designColour ?? SAME_DESIGN_MAX_COLOUR,
   };
   const editionsById = new Map(editions.map(e => [e.id, e]));
   const printings = new Map(covers.map(c => [c.id, printingOf(c, editionsById)]));
@@ -721,7 +760,7 @@ export function foldDuplicateCovers(
       target = groups.find(g => {
         const rs = signatures.get(g.rep.id);
         if (!rs) return false;
-        return sameCover(hamming(rs.hash, sig.hash), printings.get(g.rep.id)!, printings.get(c.id)!, limits);
+        return sameCover(hamming(rs.hash, sig.hash), printings.get(g.rep.id)!, printings.get(c.id)!, limits, { a: rs, b: sig });
       });
     }
     if (target) target.members.push(c);

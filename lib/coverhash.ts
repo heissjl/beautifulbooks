@@ -30,7 +30,13 @@ export async function signatureFor(cover: Pick<Cover, 'id' | 'url' | 'urlSmall'>
   if (cached !== undefined) return cached;
   try {
     const bytes = await fetchBytes(cover.urlSmall ?? cover.url, { timeoutMs, revalidate: IMAGE_REVALIDATE });
-    const sig = signature(bytes);
+    /*
+      With colour (ROADMAP 6.36): the cross-publisher tier of the fold needs
+      the hue histogram, and the RGBA image is decoded for the hash anyway.
+      It costs about 35 bytes per cover in the page's answer — 3.5 KB for a
+      page of a hundred — and buys the tier that folds a licensed design.
+    */
+    const sig = signature(bytes, { colour: true });
     memo.set(cover.id, sig);
     return sig;
   } catch (err) {
