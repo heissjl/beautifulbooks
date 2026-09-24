@@ -66,3 +66,4 @@ lab/curate/extra-covers.json
 /docs/tests/*.png
 /docs/tests/*.mov
 /docs/tests/*.mp4
+lab/collections/cache.json

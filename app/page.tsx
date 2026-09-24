@@ -4,6 +4,7 @@ import HeroSlot from '@/components/HeroSlot';
 import HomeSearchBar from '@/components/HomeSearchBar';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
+import { allCollections } from '@/lib/collections';
 
 /**
  * The URL is the single source of truth for search state (SPEC §3 F1.5):
@@ -34,6 +35,8 @@ export default async function Home({ searchParams }: HomeProps) {
   const searchQuery = first(params.q);
   const language = first(params.lang);
   const isHero = !searchQuery;
+  // Only when there is a shelf to go to: a draft is invisible in production (SPEC F8).
+  const hasCollections = allCollections().length > 0;
 
   return (
     <div className="min-h-screen">
@@ -79,6 +82,23 @@ export default async function Home({ searchParams }: HomeProps) {
                       <span aria-hidden="true">&rarr;</span>
                     </Link>
                   </p>
+                  {/*
+                    The way into the collections (ROADMAP 5.10, SPEC F8), here and
+                    not in the footer: the footer is also rendered inside the
+                    client-side detail page, and reading the collections file
+                    there would ship it to every browser.
+                  */}
+                  {hasCollections && (
+                    <p className="mt-2 text-sm">
+                      <Link
+                        href="/collections"
+                        className="inline-flex items-center gap-1.5 text-ink-2 underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+                      >
+                        Or browse a collection, one cover per book
+                        <span aria-hidden="true">&rarr;</span>
+                      </Link>
+                    </p>
+                  )}
                 </div>
               )}
               <div className="max-w-3xl">

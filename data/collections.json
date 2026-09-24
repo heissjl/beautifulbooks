@@ -1,0 +1,145 @@
+{
+  "curatedAt": "2026-09-24",
+  "collections": [
+    {
+      "slug": "women-writers",
+      "title": "Women writers",
+      "kind": "authors",
+      "intro": "Novels, poems and essays by women, from Jane Austen to Margaret Atwood: some of them founding texts of feminism, some simply books that changed what a woman could write about. Each tile is one cover, chosen by eye; the wall behind it shows the rest.",
+      "published": false,
+      "authors": [
+        {
+          "name": "Jane Austen",
+          "keys": [
+            "OL21594A"
+          ]
+        },
+        {
+          "name": "Charlotte Brontë",
+          "keys": [
+            "OL113362A"
+          ]
+        },
+        {
+          "name": "Emily Brontë",
+          "keys": [
+            "OL24529A"
+          ]
+        },
+        {
+          "name": "Anne Brontë",
+          "keys": [
+            "OL342487A"
+          ]
+        },
+        {
+          "name": "Margaret Atwood",
+          "keys": [
+            "OL52922A"
+          ]
+        },
+        {
+          "name": "Sylvia Plath",
+          "keys": [
+            "OL4327652A"
+          ]
+        },
+        {
+          "name": "Marlen Haushofer",
+          "keys": [
+            "OL404610A"
+          ]
+        },
+        {
+          "name": "Clarice Lispector",
+          "keys": [
+            "OL93118A"
+          ]
+        },
+        {
+          "name": "Emily Dickinson",
+          "keys": [
+            "OL19512A"
+          ]
+        },
+        {
+          "name": "Mary Shelley",
+          "keys": [
+            "OL25342A"
+          ]
+        },
+        {
+          "name": "Agatha Christie",
+          "keys": [
+            "OL27695A"
+          ]
+        },
+        {
+          "name": "Astrid Lindgren",
+          "keys": [
+            "OL24950A"
+          ]
+        },
+        {
+          "name": "Ingeborg Bachmann",
+          "keys": [
+            "OL27744A"
+          ]
+        },
+        {
+          "name": "Simone de Beauvoir",
+          "keys": [
+            "OL63285A"
+          ]
+        }
+      ],
+      "works": [
+        {
+          "id": "OL472971W",
+          "title": "Malina",
+          "author": "Ingeborg Bachmann",
+          "coverId": "ol:12273691",
+          "firstPublished": 1971,
+          "addedAt": "2026-09-24",
+          "from": "curated.json"
+        },
+        {
+          "id": "OL450063W",
+          "title": "Frankenstein; or, The Modern Prometheus",
+          "author": "Mary Shelley",
+          "coverId": "ol:13498737",
+          "firstPublished": 1818,
+          "addedAt": "2026-09-24",
+          "from": "curated.json"
+        },
+        {
+          "id": "OL675783W",
+          "title": "The Handmaid's Tale",
+          "author": "Margaret Atwood",
+          "coverId": "ol:15154653",
+          "firstPublished": 1985,
+          "addedAt": "2026-09-24",
+          "from": "curated.json"
+        },
+        {
+          "id": "OL675722W",
+          "title": "Oryx and Crake",
+          "author": "Margaret Atwood",
+          "coverId": "ol:14534480",
+          "firstPublished": 2002,
+          "addedAt": "2026-09-24",
+          "from": "curated.json"
+        },
+        {
+          "id": "OL1095427W",
+          "title": "Jane Eyre",
+          "author": "Charlotte Brontë",
+          "coverId": "ol:10865744",
+          "firstPublished": 1847,
+          "addedAt": "2026-09-24",
+          "from": "curated.json"
+        }
+      ]
+    }
+  ]
+}

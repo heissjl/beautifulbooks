@@ -3,6 +3,7 @@ import { PUBLISHED_WORKS } from '@/lib/published';
 import decadePages from '@/data/decade-pages.json';
 import { SITE_URL } from '@/lib/seo';
 import { versusEnabled } from '@/lib/hotornot/switch';
+import { allCollections } from '@/lib/collections';
 
 /**
  * The sitemap (SPEC §10 D11, ROADMAP 5.1).
@@ -27,6 +28,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ? [
         { url: `${SITE_URL}/versus`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
         { url: `${SITE_URL}/versus/board`, lastModified: now, changeFrequency: 'daily' as const, priority: 0.7 },
+      ]
+    : [];
+  const published = allCollections().filter(c => c.published);
+  const collections = published.length
+    ? [
+        { url: `${SITE_URL}/collections`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
+        ...published.map(c => ({
+          url: `${SITE_URL}/collections/${c.slug}`,
+          lastModified: now,
+          changeFrequency: 'monthly' as const,
+          priority: 0.7,
+        })),
       ]
     : [];
   return [
@@ -61,5 +74,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     })),
     ...game,
+    /*
+      Published collections only (ROADMAP 5.10, SPEC F8). A production build
+      never sees a draft, so `allCollections` is already the right list; the
+      filter says so for anyone who runs this under `next dev`.
+    */
+    ...collections,
   ];
 }
