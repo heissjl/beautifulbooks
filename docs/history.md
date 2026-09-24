@@ -2425,3 +2425,11 @@ Julian fragte, ob sich „Jev“ nutzen lässt, um Hörbuch-Cover und Seiten sta
 Alle neuen Labels sind von Claude; bevor etwas auf die Seite geht, liest Julian sie gegen.
 
 **Nachtrag 2026-09-23: die Prüfliste angewandt (ROADMAP 6.48).** Julian sah die 13 obersten Verdachtsfälle an und nahm 11 heraus; *Göttliche Komödie* (`ol:5979889`) und *Goethes Werke* (`ol:6589767`) bleiben. `scripts/build-versus-pool.ts` neu gelaufen: 989 von 1.000 Covern behalten, 11 nachgerückt (alle angesehen, alle echte Cover), 58 Bilder frisch vermessen, keins ohne Antwort. Die Stimmen der entfernten Cover bleiben gespeichert; die Rangliste zählt nur Paare, deren beide Cover noch im Vorrat sind.
+
+## 2026-09-23 · Ein Netz von einem halben Megabyte, von CLIP gelernt (ROADMAP 6.23, lab/distill)
+
+Julian wollte eine Alternative zum dHash für die Laufzeit, „so wie jev das für text wäre“. Gebaut in [lab/distill](../lab/distill/README.md): CLIP als Lehrer für alle 20.526 Index-Cover (rund 45 Minuten Rechenzeit, verteilt über eine Pause mit zugeklapptem Mac; 596 Downloads scheiterten dabei und wurden nachgeholt), dazu 43 Werke außerhalb des Index als reine Prüfmenge. Ein CNN mit 530.896 Parametern lernt 40 Epochen lang, CLIPs Vektoren nachzubilden, bei verschobenem Ton, Kontrast, Gamma, Ausschnitt und Unschärfe.
+
+**Zahlen:** 0,21 ms je Bild in onnxruntime, ONNX 2,1 MB in fp32. Auf den 106 gelabelten Paaren ohne Übersetzungen AUC 0,940 (CLIP 0,926, dHash 0,821); „kein Cover“ AUC 0,892 (CLIP 0,877). Bei 64×96 Pixeln liest das Netz keinen Text: Übersetzungen mit gleichem Motiv und zwei verschiedene Dante-Titelseiten (0,985) fallen für es zusammen. Mit einer Sperre über seinen eigenen „kein Cover“-Wert (≥ 0,3) faltet es bei 0,94 13 der 16 Dubletten gleicher Sprache mit 3 Fehlern; CLIP braucht für 13 Treffer 6 Fehler (≥ 0,85). Schwelle und Sperre sind an der Prüfmenge gewählt. Außerhalb des Index findet es CLIPs „gleiche Jacke“ mit AUC 0,940, ordnet das Mittelfeld aber nur mit Rangkorrelation 0,51 wie CLIP.
+
+**Zwei Fallen:** Die tiefenweisen Faltungen der ersten Bauart brauchten auf der CPU 417 s je Epoche (PyTorchs Rückwärtsschritt), gewöhnliche Faltungen 45 s. Und `pip install torch` in die globale Anaconda-Umgebung zog numpy auf 2.4 und brach scipy; zurückgesetzt, PyTorch liegt jetzt in `~/.venvs/bb-distill`.
