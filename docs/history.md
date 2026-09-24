@@ -2455,3 +2455,13 @@ Julian: „wir brauchen noch eine verlinkung auf die versus seite von der starts
 **In Produktion seit `ed48319`** (Deployment `74j0z0uuu`). **Einmal geprüft:** `/versus` liefert live **1.746 Zeichen**, kein `robots`-Meta mehr, Canonical `https://beautifulcovers.vercel.app/versus`, **24 Buchlinks**; die Sitemap führt `/versus` und `/versus/board`; im Browser steht auf der Startseite „Or help us find the prettiest cover of all time! →".
 
 **Dabei ein Fund, der größer ist als der Anlass** (ROADMAP 6.49): Die **Startseite** liefert einem Crawler fast nichts. `curl` auf `/` bringt 10.865 Byte, darin kein „Judge a book", keine Kachel und keinen Link auf `/versus` — nur Kopf, Fuß und Titel. Im Browser steht alles da, serverseitig nichts: `HomeContent` liest `useSearchParams` und steckt in einem `<Suspense>` ohne Fallback, Next rendert deshalb die leere Hülle und überlässt den Rest dem Browser. Das betrifft die Seite mit Priorität 1 in der Sitemap — und damit genau den Engpass, an dem das Projekt hängt. Der Fehler ist alt, nur ist er nie gemessen worden; gefunden wurde er, weil dieselbe Messung für das Spiel gemacht wurde.
+
+**Gegentest am selben Tag (Julian: „ja, prüfe"), und der Verdacht stimmt.** Gemessen wurde nicht am Browser, sondern an der Datei, die der Build vorrendert (`.next/server/app/index.html`) — dort steht genau das, was ein Crawler ohne JavaScript bekommt:
+
+| Startseite | Bytes | „Judge a book" | Links auf `/book/…` |
+|---|---|---|---|
+| wie gebaut (`useSearchParams`) | **9.838** | 0 | **0** |
+| ein Eingriff: `useSearchParams()` durch ein leeres `URLSearchParams` ersetzt | **29.774** | 1 | **18** |
+| zurückgestellt und neu gebaut | 9.838 | 0 | 0 |
+
+Sonst wurde nichts geändert — kein Text, keine Komponente. Die Überschrift, das Versprechen, die Einladung ins Spiel und die **18 kuratierten Kacheln mit ihren Buchlinks** sind also da; sie gehen nur verloren, weil der eine Aufruf den ganzen Teilbaum vom Server auf den Browser verschiebt. Zum Vergleich: `/about`, eine Server-Seite ohne diesen Aufruf, rendert 32.348 Byte vor. **Damit ist 6.49 keine Vermutung mehr, sondern eine gemessene Ursache mit bekanntem Gewinn: dreimal so viel HTML und 18 Buchlinks, ohne eine Zeile neuen Inhalt.**
