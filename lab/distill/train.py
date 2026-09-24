@@ -49,7 +49,8 @@ def load_json(*parts):
 
 # ---------------------------------------------------------------- data
 
-vectors_raw = load_json(CLIP_OUT, 'vectors-Xenova_clip_vit_base_patch32.json')
+# DISTILL_VECTORS points at a copy, for a smoke run while teacher.ts is still writing the real file
+vectors_raw = load_json(os.environ.get('DISTILL_VECTORS') or os.path.join(CLIP_OUT, 'vectors-Xenova_clip_vit_base_patch32.json'))
 teacher = {}
 for cid, b64 in vectors_raw.items():
     if b64:
@@ -58,7 +59,6 @@ for cid, b64 in vectors_raw.items():
 
 index = load_json(ROOT, 'data', 'cover-index.json')
 work_of = {row[1]: row[0] for row in index['covers']}
-dhash_of = {row[1]: row[2] for row in index['covers']}
 
 pairs = []
 for f in (os.path.join(ROOT, 'lab', 'fold', 'pairs-labelled.json'), os.path.join(ROOT, 'lab', 'clip', 'pairs-labelled.json')):
@@ -117,24 +117,30 @@ def gamma(x):
 
 # ---------------------------------------------------------------- model
 
-def dws(cin, cout, stride):
-    return nn.Sequential(
-        nn.Conv2d(cin, cin, 3, stride, 1, groups=cin, bias=False), nn.BatchNorm2d(cin), nn.ReLU6(inplace=True),
-        nn.Conv2d(cin, cout, 1, bias=False), nn.BatchNorm2d(cout), nn.ReLU6(inplace=True),
-    )
+def block(cin, cout, stride):
+    return nn.Sequential(nn.Conv2d(cin, cout, 3, stride, 1, bias=False), nn.BatchNorm2d(cout), nn.ReLU(inplace=True))
 
 
 class Student(nn.Module):
+    """Five strided 3×3 convolutions and one more, then a linear map into CLIP's 512 dimensions.
+
+    Plain convolutions, not depthwise-separable ones: the first draft used
+    MobileNet's depthwise blocks for their small size, and PyTorch's CPU
+    backward pass for them took 4.7 s per batch of 256 against 0.35 s for
+    these (2026-09-23) — 417 s an epoch. At run time either would be cheap.
+    """
+
     def __init__(self, width=1.0, dim=512):
         super().__init__()
         c = lambda n: max(8, int(round(n * width / 8)) * 8)
-        self.features = nn.Sequential(
-            nn.Conv2d(3, c(16), 3, 2, 1, bias=False), nn.BatchNorm2d(c(16)), nn.ReLU6(inplace=True),
-            dws(c(16), c(32), 1), dws(c(32), c(64), 2), dws(c(64), c(64), 1),
-            dws(c(64), c(128), 2), dws(c(128), c(128), 1),
-            dws(c(128), c(256), 2), dws(c(256), c(256), 1),
-        )
-        self.head = nn.Linear(c(256), dim)
+        widths = [c(n) for n in (16, 32, 64, 96, 160)]
+        layers, cin = [], 3
+        for w in widths:
+            layers.append(block(cin, w, 2))
+            cin = w
+        layers.append(block(cin, cin, 1))
+        self.features = nn.Sequential(*layers)
+        self.head = nn.Linear(cin, dim)
 
     def forward(self, x):
         x = self.features(x - MEAN)
@@ -163,10 +169,6 @@ def auc(pos, neg):
 def spearman(a, b):
     ra, rb = np.argsort(np.argsort(a)), np.argsort(np.argsort(b))
     return float(np.corrcoef(ra, rb)[0, 1])
-
-
-def hamming(a, b):
-    return bin(int(a, 16) ^ int(b, 16)).count('1')
 
 
 def evaluate(model):
@@ -210,6 +212,9 @@ def evaluate(model):
                 s, t = float(student[ids[i]] @ student[ids[j]]), float(teacher[ids[i]] @ teacher[ids[j]])
                 s_all.append(s); t_all.append(t)
     s_all, t_all = np.array(s_all), np.array(t_all)
+    if len(s_all) == 0:
+        m['outsidePairs'] = None  # outside.ts --embed has not run yet
+        return m | notcover_measures(student)
     m['outsidePairs'] = {
         'pairs': int(len(s_all)),
         'spearman': spearman(s_all, t_all),
@@ -218,7 +223,12 @@ def evaluate(model):
         'aucFindTeacherSame': auc(s_all[t_all >= 0.9], s_all[t_all < 0.9]),
     }
 
-    # question A: zero-shot with CLIP's prompts on the student's vectors
+    return m | notcover_measures(student)
+
+
+def notcover_measures(student):
+    """Question A: zero-shot with CLIP's prompts on the student's vectors."""
+    m = {}
     prompts = load_json(OUT, 'prompts.json')
     cover_t = np.array(prompts['cover']); other_t = np.array(prompts['other'])
     cover_t /= np.linalg.norm(cover_t, axis=1, keepdims=True); other_t /= np.linalg.norm(other_t, axis=1, keepdims=True)
