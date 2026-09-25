@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import CurateTool, { type StartingPoint } from '@/components/CurateTool';
 import SiteFooter from '@/components/SiteFooter';
+import SignOut from '@/components/SignOut';
 import SiteHeader from '@/components/SiteHeader';
 import SuggestLogin from '@/components/SuggestLogin';
 import { allCollections } from '@/lib/collections';
@@ -61,6 +62,7 @@ export default async function CuratePage({ searchParams }: PageProps) {
           at the password field learns no name.
         */}
         {signedIn && <p className="mb-4 inline-block rounded-md border border-accent/40 px-3 py-1 text-sm text-accent" lang="de">Für Caitlin</p>}
+        {signedIn && <div className="float-right"><SignOut /></div>}
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">Curate a collection</h1>
         <p className="mt-4 max-w-2xl text-base text-ink-2">
           Gather books around a theme and choose one cover for each. Everything you build here is a draft that
