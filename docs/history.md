@@ -2573,3 +2573,7 @@ Julian: „let's whip up the collection of sf masterworks as an example list", m
 **Hochgeladen und veröffentlicht (2026-09-25).** Julian lud die sechs Originale bei Open Library hoch: Claude legte je das Bild in die Zwischenablage und öffnete die Seite „Add cover", Julian drückte „Paste image from clipboard" und „Upload Image" (ohne seinen Klick verweigert der Browser das Lesen der Zwischenablage: „Document is not focused"). Neue Cover-IDs: 3 `15258698`, 4 `15258699`, 18 `15258700`, 24 `15258702`, 34 `15258703`, 67 `15258704`; alle sechs danach angesehen, jedes im Originaldesign. Die Wand: 73 von 73 im Originaldesign, Nummern 1–73 in Reihenfolge. `published: true`.
 
 **In Produktion geprüft, einmal:** `/collections/sf-masterworks` 200, `/collections/women-writers` 404 (Entwurf). Dabei gefunden: die Beschreibung für Suchmaschinen lautete „73 books by Gollancz, Millennium and Orion" — bei einer Reihe sind die Namen Verlage, keine Autoren. Behoben: bei einer Reihe nennt die Beschreibung keine Namen.
+
+## 2026-09-25 · Die Sammlungen auf der Startseite (ROADMAP 5.10d)
+
+Unter der kuratierten Wand je Sammlung eine Karte mit ihrer ersten Reihe; zwei nebeneinander ab `sm`, höchstens vier. Angesehen unter `next dev` mit drei Karten (zwei Entwürfe sichtbar, weil `next dev`): bei 1280 px zwei Spalten, bei 390 px gestapelt mit vier Covern je Karte, `scrollWidth` = 390. In Produktion erscheint nur SF Masterworks. Die Zeile „Or browse a collection" im Hero ist dafür entfallen.
