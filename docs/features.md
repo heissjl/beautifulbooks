@@ -69,7 +69,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Sitemap mit allen veröffentlichten Werken und ihren Jahrzehnte-Seiten (253 Adressen am 2026-09-09) | 2026-09-09 | F6 | 5.1 | `lib/published.ts`, `scripts/promote.ts` |
 | Hobby-/Shop-Modus per `NEXT_PUBLIC_SITE_MODE`; Hobby ignoriert Affiliate-Variablen, hat keinen Verfügbarkeits-Button und keinen Provisionssatz | 2026-09-08 | E20 | 2.0 (PLAN-2) | `lib/siteMode.ts`, Tests |
 | Farbschema: warmes Papier, sanfteres Terrakotta `#945138`, `ink-3` auf WCAG AA; ein Test liest `globals.css` und prüft sechs Paare in beiden Modi | 2026-09-09 | §5 | 6.22 | `app/globals.css`, `lib/contrast.ts`, `lib/__tests__/contrast.test.ts` |
-| Thematische Sammlungen `/collections`: Wände von Hand gewählter oder aus einer Reihe gebauter Cover | 2026-09-25 | F8 | 5.10, 5.10c | `app/collections/`, `lib/collections.ts`, `data/collections.json` |
+| Thematische Sammlungen `/collections`: Wände von Hand gewählter oder aus einer Reihe gebauter Cover; veröffentlicht: SF Masterworks 1–73 | 2026-09-25 | F8 | 5.10, 5.10c | `app/collections/`, `lib/collections.ts`, `data/collections.json` |
 
 ## Betrieb und Schutz
 

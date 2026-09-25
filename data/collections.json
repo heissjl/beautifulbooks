@@ -146,7 +146,7 @@
       "title": "SF Masterworks",
       "kind": "series",
       "intro": "The first, numbered run of the SF Masterworks (1999–2007): seventy-three science fiction novels that Millennium and Gollancz reprinted as classics of the genre, in the order of their numbers. Behind each cover is the wall of the other faces we found for the book.",
-      "published": false,
+      "published": true,
       "publishers": [
         "Gollancz",
         "Millennium",
@@ -173,17 +173,17 @@
           "id": "OL53400W",
           "title": "Cities in Flight",
           "author": "James Blish",
-          "coverId": "ol:14790877",
+          "coverId": "ol:15258698",
           "addedAt": "2026-09-25",
-          "from": "isbn:9780575094178"
+          "from": "uploaded to Open Library 2026-09-25 from ISFDB"
         },
         {
           "id": "OL2172356W",
           "title": "Do Androids Dream of Electric Sheep?",
           "author": "Philip K. Dick",
-          "coverId": "ol:8433100",
+          "coverId": "ol:15258699",
           "addedAt": "2026-09-25",
-          "from": "isbn:1857988132"
+          "from": "uploaded to Open Library 2026-09-25 from ISFDB"
         },
         {
           "id": "OL1819353W",
@@ -293,9 +293,9 @@
           "id": "OL98485W",
           "title": "The Sirens of Titan",
           "author": "Kurt Vonnegut",
-          "coverId": "ol:14602104",
+          "coverId": "ol:15258700",
           "addedAt": "2026-09-25",
-          "from": "isbn:1857988841"
+          "from": "uploaded to Open Library 2026-09-25 from ISFDB"
         },
         {
           "id": "OL2071382W",
@@ -339,11 +339,11 @@
         },
         {
           "id": "OL52267W",
-          "title": "The Time Machine",
+          "title": "The Time Machine / The War of the Worlds",
           "author": "H. G. Wells",
-          "coverId": "ol:8449966",
+          "coverId": "ol:15258702",
           "addedAt": "2026-09-25",
-          "from": "relaunch-design, no original on Open Library"
+          "from": "uploaded to Open Library 2026-09-25 from ISFDB"
         },
         {
           "id": "OL515754W",
@@ -421,9 +421,9 @@
           "id": "OL17403W",
           "title": "The Fountains of Paradise",
           "author": "Arthur C. Clarke",
-          "coverId": "ol:8435357",
+          "coverId": "ol:15258703",
           "addedAt": "2026-09-25",
-          "from": "isbn:1857987217"
+          "from": "uploaded to Open Library 2026-09-25 from ISFDB"
         },
         {
           "id": "OL27780752W",
@@ -685,9 +685,9 @@
           "id": "OL506264W",
           "title": "Where Late the Sweet Birds Sang",
           "author": "Kate Wilhelm",
-          "coverId": "ol:8436108",
+          "coverId": "ol:15258704",
           "addedAt": "2026-09-25",
-          "from": "isbn:0575079142"
+          "from": "uploaded to Open Library 2026-09-25 from ISFDB"
         },
         {
           "id": "OL7967812W",
