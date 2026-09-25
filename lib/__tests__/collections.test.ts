@@ -98,6 +98,11 @@ describe('data/collections.json', () => {
     expect(parseCollections(records, { includeDrafts: true })).toHaveLength(records.length);
   });
 
+  // A note to Julian in a draft's intro (2026-09-25) must never go live with it.
+  it('publishes no intro that still carries a note to Julian', () => {
+    for (const r of records.filter(x => x.published)) expect(r.intro, r.slug).not.toMatch(/NOTE FOR JULIAN/);
+  });
+
   it('has only works by the listed authors in an author collection', () => {
     for (const r of records.filter(x => x.kind === 'authors')) {
       const names = (r.authors ?? []).map(a => a.name);
