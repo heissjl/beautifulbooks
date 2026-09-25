@@ -38,7 +38,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const c = collectionBySlug(slug);
   if (!c) return {};
-  const names = c.kind === 'authors' ? authorsShown(c) : c.scope;
+  // Authors only: a series' scope is publishers, and "73 books by Gollancz" named them as writers (2026-09-25).
+  const names = c.kind === 'authors' ? authorsShown(c) : [];
   const description = `${c.works.length} ${c.works.length === 1 ? 'book' : 'books'}${names.length ? ` by ${nameLine(names)}` : ''}, ${coverLine(c.kind)}. ${c.intro}`.slice(0, 300);
   return {
     title: c.title,
