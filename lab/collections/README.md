@@ -20,6 +20,14 @@ Kann Julian eine Sammlung — die Bücher einer Liste von Autorinnen, oder die A
 - **Geschrieben wird nach jeder Änderung** in `data/collections.json`, atomar. Die Reihenfolge der Datei ist die Reihenfolge der Seite. `COLLECTIONS_FILE=<pfad>` lenkt das Schreiben um — beim Testen immer setzen, damit keine Testwahl in Julians Daten landet (die Lehre aus `lab/curate`).
 - **Entwurf und veröffentlicht**: ein Häkchen. Ein Entwurf ist nur unter `npm run dev` zu sehen; veröffentlicht erscheint die Sammlung nach dem nächsten Deploy.
 
+## Eine Reihe aus ISBNs (5.10c)
+
+```bash
+npx tsx lab/collections/from-isbns.ts lab/collections/lists/sf-masterworks-numbered.json sf-masterworks "SF Masterworks" Gollancz Millennium Orion
+```
+
+Die Liste ist ein Array `{ no, title, isbn, fallbackIsbns? }`, hier aus den ISBN-Spalten des Wikipedia-Artikels. Jede ISBN nennt Werk und Cover des Reihendrucks; ohne Bild wird die Ausweich-ISBN versucht, danach bleibt das Werk weg und wird gemeldet. Zwischenspeicher `isbn-cache.json` (git-ignoriert). Die laufende App liest die Datei vor jeder Änderung neu, das Skript darf also neben ihr laufen.
+
 ## Vorschläge von Freunden (5.10a)
 
 Freunde schlagen auf der Website unter `/suggest` Bücher vor (Passwort `SUGGEST_PASSWORD`). Der Reiter **Vorschläge** holt sie ab:

@@ -67,3 +67,4 @@ lab/curate/extra-covers.json
 /docs/tests/*.mov
 /docs/tests/*.mp4
 lab/collections/cache.json
+lab/collections/isbn-cache.json

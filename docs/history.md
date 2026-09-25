@@ -2547,3 +2547,11 @@ Julian: „ich wollte dass die kuratier-app auch online ist für meine freunde",
 
 **2026-09-25, „/curate seems not be behind any login wall“** (Julian): ohne Cookie abgerufen zeigte die Produktion die Passwortabfrage (`suggest-password` im HTML, keine Entwürfe); Julians Browser trug das 30-Tage-Cookie eines früheren Logins, das für beide Seiten gilt. Ein „Sign out“-Knopf war gebaut und deployt (`8cd5c51`) und ist auf Julians Wunsch wieder entfernt: „mit cookie ist für so wenige leute in ordnung“. Wer das Tor sehen will, nimmt ein privates Fenster.
 Die Rücknahme ist live (Deploy von `1341cde`, fertig am 2026-09-25): `POST /api/suggest/logout` antwortet in der Produktion 404, einmal geprüft.
+
+## 2026-09-25 · SF Masterworks, die erste Reihen-Sammlung (ROADMAP 5.10c)
+
+Julian: „let's whip up the collection of sf masterworks as an example list", mit Goodreads-Liste und Wikipedia-Artikel. **Quelle:** der Wikipedia-Artikel (Wikitext vom 2026-09-25), weil er je Band die ISBN trägt: 73 Bände der nummerierten Reihe 1999–2007, 182 der Neuauflage ab 2010, keine Zeile ohne ISBN. Für 61 der 73 fand sich derselbe Titel in der Neuauflage, deren ISBN als Ausweg für ein fehlendes Bild mitgegeben wurde.
+
+**Ergebnis** (`lab/collections/from-isbns.ts`, Open Library, eine Anfrage nach der anderen mit 0,4 s Pause, 2 min 29 s): **73 von 73 auf der Wand**, keiner brauchte die Ausweich-ISBN, alle 73 Werktitel stimmen mit den Wikipedia-Titeln überein (Vergleich der ersten zwölf Zeichen). Philip K. Dick stellt 14 Bände, Pohl und Clarke je 4. **Angesehen bei 1280 px:** 69 Cover zeigen das Masterworks-Design (die frühen Bildcover und die späteren mit gelbem Band), vier nicht: *Cities in Flight*, *Do Androids Dream of Electric Sheep?*, *The Dispossessed*, *Mockingbird*. Bei 390 px ist die Seite 390 px breit.
+
+**Zwei Befunde am Werkzeug:** (1) Die Zählzeile sagte „chosen by hand" auch hier, wo die Cover aus der ISBN kamen; jetzt je Art (`coverLine`, getestet). (2) `lab/collections/serve.ts` hielt die Datei im Speicher und hätte beim nächsten Speichern die neue Sammlung überschrieben, die das Skript daneben geschrieben hatte; es liest die Datei jetzt vor jeder Änderung neu.

@@ -126,3 +126,16 @@ export function authorsShown(collection: Collection): string[] {
   for (const w of collection.works) if (!out.includes(w.author)) out.push(w.author);
   return out;
 }
+
+/**
+ * How the covers on a wall were chosen, said as it is (N12). An author
+ * collection is picked by eye in the tool; a series built from its ISBNs
+ * (`lab/collections/from-isbns.ts`) shows the image Open Library holds for
+ * each series printing, which nobody looked at one by one — and for a few
+ * it is not the series design at all (SF Masterworks: 4 of 73, 2026-09-25).
+ */
+export function coverLine(kind: CollectionKind): string {
+  return kind === 'series'
+    ? 'each with the cover Open Library holds for its printing in the series'
+    : 'one cover each, chosen by hand';
+}

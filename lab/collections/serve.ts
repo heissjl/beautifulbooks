@@ -257,7 +257,10 @@ const server = createServer(async (req, res) => {
       return;
     }
 
-    if (url.pathname === '/api/collections') return send(200, { collections, remote: SUGGEST_REMOTE ?? null });
+    if (url.pathname === '/api/collections') {
+      collections = readJson<{ collections: CollectionRecord[] }>(OUT_FILE, { collections: [] }).collections;
+      return send(200, { collections, remote: SUGGEST_REMOTE ?? null });
+    }
 
     if (url.pathname === '/api/suggestions') {
       if (!SUGGEST_REMOTE || !SUGGEST_ADMIN) return send(200, { off: true });
@@ -273,6 +276,7 @@ const server = createServer(async (req, res) => {
     if (url.pathname === '/api/import' && req.method === 'POST') {
       if (!SUGGEST_REMOTE || !SUGGEST_ADMIN) return send(400, { error: 'SUGGEST_REMOTE und SUGGEST_ADMIN_PASSWORD fehlen' });
       const { draft, mode } = await readBody<{ draft: Draft; mode: 'new' | 'replace' }>(req);
+      collections = readJson<{ collections: CollectionRecord[] }>(OUT_FILE, { collections: [] }).collections;
       const record = toRecord(draft);
       const existing = collections.find(c => c.slug === record.slug);
       if (existing && mode === 'replace') {
@@ -314,6 +318,10 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method !== 'POST') return send(404, { error: 'not found' });
+    // Read the file afresh before every change: something else may have written
+    // it since the start (from-isbns.ts did on 2026-09-25), and a save from the
+    // copy in memory would silently drop that.
+    collections = readJson<{ collections: CollectionRecord[] }>(OUT_FILE, { collections: [] }).collections;
     const body = await readBody<Record<string, unknown>>(req);
 
     if (url.pathname === '/api/create') {

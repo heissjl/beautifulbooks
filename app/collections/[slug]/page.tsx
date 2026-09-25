@@ -5,7 +5,7 @@ import CoverWall from '@/components/CoverWall';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
-import { allCollections, authorsShown, collectionBySlug } from '@/lib/collections';
+import { allCollections, authorsShown, collectionBySlug, coverLine } from '@/lib/collections';
 import { SITE_URL } from '@/lib/seo';
 
 /**
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const c = collectionBySlug(slug);
   if (!c) return {};
   const names = c.kind === 'authors' ? authorsShown(c) : c.scope;
-  const description = `${c.works.length} ${c.works.length === 1 ? 'book' : 'books'}${names.length ? ` by ${nameLine(names)}` : ''}, one cover each, chosen by hand. ${c.intro}`.slice(0, 300);
+  const description = `${c.works.length} ${c.works.length === 1 ? 'book' : 'books'}${names.length ? ` by ${nameLine(names)}` : ''}, ${coverLine(c.kind)}. ${c.intro}`.slice(0, 300);
   return {
     title: c.title,
     description,
@@ -81,8 +81,7 @@ export default async function CollectionPage({ params }: PageProps) {
         <p className="mt-3 text-sm text-ink-3">
           {c.works.length} {c.works.length === 1 ? 'book' : 'books'}
           {names.length > 0 && <> by {names.length} {names.length === 1 ? 'author' : 'authors'}</>}
-          {c.kind === 'series' && c.scope.length > 0 && <> from {c.scope.join(', ')}</>}
-          , one cover each, chosen by hand.
+          , {coverLine(c.kind)}.
         </p>
         <div className="mt-8">
           <CoverWall works={c.works} />

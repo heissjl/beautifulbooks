@@ -1,7 +1,7 @@
 /** Thematic collections (ROADMAP 5.10, SPEC F8, lib/collections.ts). */
 import { describe, expect, it } from 'vitest';
 import collectionsFile from '@/data/collections.json';
-import { authorsShown, isCollectionSlug, parseCollections, type CollectionRecord } from '../collections';
+import { authorsShown, coverLine, isCollectionSlug, parseCollections, type CollectionRecord } from '../collections';
 
 const record = (over: Partial<CollectionRecord> = {}): CollectionRecord => ({
   slug: 'women-writers',
@@ -103,5 +103,12 @@ describe('data/collections.json', () => {
       const names = (r.authors ?? []).map(a => a.name);
       for (const w of r.works) expect(names, `${r.slug}: ${w.title}`).toContain(w.author.normalize('NFC'));
     }
+  });
+});
+
+describe('coverLine', () => {
+  it('claims a choice by hand only where one was made', () => {
+    expect(coverLine('authors')).toContain('chosen by hand');
+    expect(coverLine('series')).not.toContain('hand');
   });
 });

@@ -1,0 +1,550 @@
+[
+ {
+  "no": "1",
+  "title": "The Forever War",
+  "isbn": "1857988086",
+  "fallbackIsbns": [
+   "9780575094147"
+  ]
+ },
+ {
+  "no": "2",
+  "title": "I Am Legend",
+  "isbn": "1857988094",
+  "fallbackIsbns": [
+   "9780575094161"
+  ]
+ },
+ {
+  "no": "3",
+  "title": "Cities in Flight",
+  "isbn": "1857988116",
+  "fallbackIsbns": [
+   "9780575094178"
+  ]
+ },
+ {
+  "no": "4",
+  "title": "Do Androids Dream of Electric Sheep?",
+  "isbn": "1857988132",
+  "fallbackIsbns": [
+   "9780575094185"
+  ]
+ },
+ {
+  "no": "5",
+  "title": "The Stars My Destination",
+  "isbn": "1857988140",
+  "fallbackIsbns": [
+   "9780575094192"
+  ]
+ },
+ {
+  "no": "6",
+  "title": "Babel-17",
+  "isbn": "1857988051",
+  "fallbackIsbns": [
+   "9780575094208"
+  ]
+ },
+ {
+  "no": "7",
+  "title": "Lord of Light",
+  "isbn": "1857988205",
+  "fallbackIsbns": [
+   "9780575094215"
+  ]
+ },
+ {
+  "no": "8",
+  "title": "The Fifth Head of Cerberus",
+  "isbn": "1857988175",
+  "fallbackIsbns": [
+   "9780575094222"
+  ]
+ },
+ {
+  "no": "9",
+  "title": "Gateway",
+  "isbn": "1857988183",
+  "fallbackIsbns": [
+   "9780575094239"
+  ]
+ },
+ {
+  "no": "10",
+  "title": "The Rediscovery of Man",
+  "isbn": "1857988191",
+  "fallbackIsbns": [
+   "9780575094246"
+  ]
+ },
+ {
+  "no": "11",
+  "title": "Last and First Men",
+  "isbn": "185798806X",
+  "fallbackIsbns": [
+   "9781857988062"
+  ]
+ },
+ {
+  "no": "12",
+  "title": "Earth Abides",
+  "isbn": "1857988213",
+  "fallbackIsbns": [
+   "9781473214330"
+  ]
+ },
+ {
+  "no": "13",
+  "title": "Martian Time-Slip",
+  "isbn": "185798837X",
+  "fallbackIsbns": [
+   "9781857988376"
+  ]
+ },
+ {
+  "no": "14",
+  "title": "The Demolished Man",
+  "isbn": "1857988221"
+ },
+ {
+  "no": "15",
+  "title": "Stand on Zanzibar",
+  "isbn": "1857988361",
+  "fallbackIsbns": [
+   "9781473206373"
+  ]
+ },
+ {
+  "no": "16",
+  "title": "The Dispossessed",
+  "isbn": "1857988825",
+  "fallbackIsbns": [
+   "9781473206069"
+  ]
+ },
+ {
+  "no": "17",
+  "title": "The Drowned World",
+  "isbn": "1857988833"
+ },
+ {
+  "no": "18",
+  "title": "The Sirens of Titan",
+  "isbn": "1857988841"
+ },
+ {
+  "no": "19",
+  "title": "Emphyrio",
+  "isbn": "185798885X",
+  "fallbackIsbns": [
+   "9781857988857"
+  ]
+ },
+ {
+  "no": "20",
+  "title": "A Scanner Darkly",
+  "isbn": "1857988477",
+  "fallbackIsbns": [
+   "9781857988475"
+  ]
+ },
+ {
+  "no": "21",
+  "title": "Star Maker",
+  "isbn": "1857988078",
+  "fallbackIsbns": [
+   "9781857988079"
+  ]
+ },
+ {
+  "no": "22",
+  "title": "Behold the Man",
+  "isbn": "1857988485"
+ },
+ {
+  "no": "23",
+  "title": "The Book of Skulls",
+  "isbn": "1857989147",
+  "fallbackIsbns": [
+   "9781857989144"
+  ]
+ },
+ {
+  "no": "24",
+  "title": "The Time Machine",
+  "isbn": "1857988876",
+  "fallbackIsbns": [
+   "9781473217973"
+  ]
+ },
+ {
+  "no": "25",
+  "title": "Flowers for Algernon",
+  "isbn": "1857989384",
+  "fallbackIsbns": [
+   "9781857989380"
+  ]
+ },
+ {
+  "no": "26",
+  "title": "Ubik",
+  "isbn": "1857988531",
+  "fallbackIsbns": [
+   "9781857988536"
+  ]
+ },
+ {
+  "no": "27",
+  "title": "Timescape",
+  "isbn": "185798935X",
+  "fallbackIsbns": [
+   "9781857989359"
+  ]
+ },
+ {
+  "no": "28",
+  "title": "More Than Human",
+  "isbn": "1857988523"
+ },
+ {
+  "no": "29",
+  "title": "Man Plus",
+  "isbn": "1857989465"
+ },
+ {
+  "no": "30",
+  "title": "A Case of Conscience",
+  "isbn": "1857989244",
+  "fallbackIsbns": [
+   "9781473205437"
+  ]
+ },
+ {
+  "no": "31",
+  "title": "The Centauri Device",
+  "isbn": "185798997X",
+  "fallbackIsbns": [
+   "9781857989977"
+  ]
+ },
+ {
+  "no": "32",
+  "title": "Dr. Bloodmoney",
+  "isbn": "185798952X",
+  "fallbackIsbns": [
+   "9781473201682"
+  ]
+ },
+ {
+  "no": "33",
+  "title": "Non-Stop",
+  "isbn": "1857989988",
+  "fallbackIsbns": [
+   "9781857989984"
+  ]
+ },
+ {
+  "no": "34",
+  "title": "The Fountains of Paradise",
+  "isbn": "1857987217",
+  "fallbackIsbns": [
+   "9781857987218"
+  ]
+ },
+ {
+  "no": "35",
+  "title": "Pavane",
+  "isbn": "1857989376",
+  "fallbackIsbns": [
+   "9781857989373"
+  ]
+ },
+ {
+  "no": "36",
+  "title": "Now Wait for Last Year",
+  "isbn": "1857987012"
+ },
+ {
+  "no": "37",
+  "title": "Nova",
+  "isbn": "185798742X",
+  "fallbackIsbns": [
+   "9781473211919"
+  ]
+ },
+ {
+  "no": "38",
+  "title": "The First Men in the Moon",
+  "isbn": "1857987462",
+  "fallbackIsbns": [
+   "9781473218000"
+  ]
+ },
+ {
+  "no": "39",
+  "title": "The City and the Stars",
+  "isbn": "1857987632",
+  "fallbackIsbns": [
+   "9781857987638"
+  ]
+ },
+ {
+  "no": "40",
+  "title": "Blood Music",
+  "isbn": "1857987624",
+  "fallbackIsbns": [
+   "9781857987621"
+  ]
+ },
+ {
+  "no": "41",
+  "title": "Jem",
+  "isbn": "1857987896",
+  "fallbackIsbns": [
+   "9781473201705"
+  ]
+ },
+ {
+  "no": "42",
+  "title": "Bring the Jubilee",
+  "isbn": "1857987640",
+  "fallbackIsbns": [
+   "9781857987645"
+  ]
+ },
+ {
+  "no": "43",
+  "title": "VALIS",
+  "isbn": "1857983394",
+  "fallbackIsbns": [
+   "9781857983395"
+  ]
+ },
+ {
+  "no": "44",
+  "title": "The Lathe of Heaven",
+  "isbn": "1857989511",
+  "fallbackIsbns": [
+   "9781857989519"
+  ]
+ },
+ {
+  "no": "45",
+  "title": "The Complete Roderick",
+  "isbn": "1857983408",
+  "fallbackIsbns": [
+   "9781857983401"
+  ]
+ },
+ {
+  "no": "46",
+  "title": "Flow My Tears, the Policeman Said",
+  "isbn": "1857983416",
+  "fallbackIsbns": [
+   "9781857983418"
+  ]
+ },
+ {
+  "no": "47",
+  "title": "The Invisible Man",
+  "isbn": "185798949X",
+  "fallbackIsbns": [
+   "9781473217980"
+  ]
+ },
+ {
+  "no": "48",
+  "title": "Grass",
+  "isbn": "1857987985",
+  "fallbackIsbns": [
+   "9781857987980"
+  ]
+ },
+ {
+  "no": "49",
+  "title": "A Fall of Moondust",
+  "isbn": "0575073179",
+  "fallbackIsbns": [
+   "9780575073173"
+  ]
+ },
+ {
+  "no": "50",
+  "title": "Eon",
+  "isbn": "0575073160",
+  "fallbackIsbns": [
+   "9780575073166"
+  ]
+ },
+ {
+  "no": "51",
+  "title": "The Shrinking Man",
+  "isbn": "0575074639",
+  "fallbackIsbns": [
+   "9781473201699"
+  ]
+ },
+ {
+  "no": "52",
+  "title": "The Three Stigmata of Palmer Eldritch",
+  "isbn": "0575074809",
+  "fallbackIsbns": [
+   "9780575074804"
+  ]
+ },
+ {
+  "no": "53",
+  "title": "The Dancers at the End of Time",
+  "isbn": "0575074760"
+ },
+ {
+  "no": "54",
+  "title": "The Space Merchants",
+  "isbn": "0575075287"
+ },
+ {
+  "no": "55",
+  "title": "Time Out of Joint",
+  "isbn": "0575074582",
+  "fallbackIsbns": [
+   "9780575074583"
+  ]
+ },
+ {
+  "no": "56",
+  "title": "Downward to the Earth",
+  "isbn": "0575075236",
+  "fallbackIsbns": [
+   "9781473211926"
+  ]
+ },
+ {
+  "no": "57",
+  "title": "The Simulacra",
+  "isbn": "0575074604",
+  "fallbackIsbns": [
+   "9780575074606"
+  ]
+ },
+ {
+  "no": "58",
+  "title": "The Penultimate Truth",
+  "isbn": "0575074817",
+  "fallbackIsbns": [
+   "9780575074811"
+  ]
+ },
+ {
+  "no": "59",
+  "title": "Dying Inside",
+  "isbn": "0575075252",
+  "fallbackIsbns": [
+   "9780575075252"
+  ]
+ },
+ {
+  "no": "60",
+  "title": "Ringworld",
+  "isbn": "0575077026",
+  "fallbackIsbns": [
+   "9780575077027"
+  ]
+ },
+ {
+  "no": "61",
+  "title": "The Child Garden",
+  "isbn": "0575076909",
+  "fallbackIsbns": [
+   "9780575076907"
+  ]
+ },
+ {
+  "no": "62",
+  "title": "Mission of Gravity",
+  "isbn": "0575077085",
+  "fallbackIsbns": [
+   "9781473206380"
+  ]
+ },
+ {
+  "no": "63",
+  "title": "A Maze of Death",
+  "isbn": "0575074612",
+  "fallbackIsbns": [
+   "9780575074613"
+  ]
+ },
+ {
+  "no": "64",
+  "title": "Tau Zero",
+  "isbn": "0575077328",
+  "fallbackIsbns": [
+   "9780575077324"
+  ]
+ },
+ {
+  "no": "65",
+  "title": "Rendezvous with Rama",
+  "isbn": "0575077336",
+  "fallbackIsbns": [
+   "9780575077331"
+  ]
+ },
+ {
+  "no": "66",
+  "title": "Life During Wartime",
+  "isbn": "0575077344",
+  "fallbackIsbns": [
+   "9781473211933"
+  ]
+ },
+ {
+  "no": "67",
+  "title": "Where Late the Sweet Birds Sang",
+  "isbn": "0575079142",
+  "fallbackIsbns": [
+   "9780575079144"
+  ]
+ },
+ {
+  "no": "68",
+  "title": "Roadside Picnic",
+  "isbn": "9780575079786",
+  "fallbackIsbns": [
+   "9780575093133"
+  ]
+ },
+ {
+  "no": "69",
+  "title": "Dark Benediction",
+  "isbn": "9780575079779",
+  "fallbackIsbns": [
+   "9781473211940"
+  ]
+ },
+ {
+  "no": "70",
+  "title": "Mockingbird",
+  "isbn": "9780575079151",
+  "fallbackIsbns": [
+   "9781473213104"
+  ]
+ },
+ {
+  "no": "71",
+  "title": "Dune",
+  "isbn": "9780575081505"
+ },
+ {
+  "no": "72",
+  "title": "The Moon Is a Harsh Mistress",
+  "isbn": "9780575082410"
+ },
+ {
+  "no": "73",
+  "title": "The Man in the High Castle",
+  "isbn": "9780575082052"
+ }
+]

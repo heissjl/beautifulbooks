@@ -16,7 +16,7 @@ import { SITE_URL } from '@/lib/seo';
  */
 export const metadata: Metadata = {
   title: 'Collections',
-  description: 'Books gathered around a theme, one cover each, chosen by hand.',
+  description: 'Books gathered around a theme or a series, one cover each.',
   alternates: { canonical: `${SITE_URL}/collections` },
 };
 
@@ -33,7 +33,7 @@ export default function CollectionsPage() {
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">Collections</h1>
         <p className="mt-4 max-w-2xl text-base text-ink-2">
-          Books gathered around a theme, one cover each, chosen by hand. Every cover leads to the wall of all the others we found.
+          Books gathered around a theme or a series, one cover each. Every cover leads to the wall of the others we found.
         </p>
         <ul className="mt-10 space-y-12">
           {collections.map(c => (

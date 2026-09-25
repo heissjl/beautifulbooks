@@ -1,5 +1,5 @@
 {
-  "curatedAt": "2026-09-24",
+  "curatedAt": "2026-09-25",
   "collections": [
     {
       "slug": "women-writers",
@@ -138,6 +138,604 @@
           "firstPublished": 1847,
           "addedAt": "2026-09-24",
           "from": "curated.json"
+        }
+      ]
+    },
+    {
+      "slug": "sf-masterworks",
+      "title": "SF Masterworks",
+      "kind": "series",
+      "intro": "The first, numbered run of the SF Masterworks (1999–2007): seventy-three science fiction novels that Millennium and Gollancz reprinted as classics of the genre, in the order of their numbers. Behind each cover is the wall of the other faces we found for the book.",
+      "published": false,
+      "publishers": [
+        "Gollancz",
+        "Millennium",
+        "Orion"
+      ],
+      "works": [
+        {
+          "id": "OL271163W",
+          "title": "The Forever War",
+          "author": "Joe Haldeman",
+          "coverId": "ol:911108",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988086"
+        },
+        {
+          "id": "OL11374287W",
+          "title": "I am Legend",
+          "author": "Richard Matheson",
+          "coverId": "ol:6451288",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988094"
+        },
+        {
+          "id": "OL53400W",
+          "title": "Cities in Flight",
+          "author": "James Blish",
+          "coverId": "ol:911111",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988116"
+        },
+        {
+          "id": "OL2172356W",
+          "title": "Do Androids Dream of Electric Sheep?",
+          "author": "Philip K. Dick",
+          "coverId": "ol:11153218",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988132"
+        },
+        {
+          "id": "OL1819353W",
+          "title": "The Stars My Destination",
+          "author": "Alfred Bester",
+          "coverId": "ol:911114",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988140"
+        },
+        {
+          "id": "OL56834W",
+          "title": "Babel-17",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:911105",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988051"
+        },
+        {
+          "id": "OL13992W",
+          "title": "Lord of Light",
+          "author": "Roger Zelazny",
+          "coverId": "ol:911120",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988205"
+        },
+        {
+          "id": "OL14871904W",
+          "title": "The Fifth Head Of Cerberus",
+          "author": "Gene Wolfe",
+          "coverId": "ol:911117",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988175"
+        },
+        {
+          "id": "OL60924W",
+          "title": "Gateway",
+          "author": "Frederik Pohl",
+          "coverId": "ol:911118",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988183"
+        },
+        {
+          "id": "OL3535579W",
+          "title": "The Rediscovery of Man",
+          "author": "Paul Myron Anthony Linebarger",
+          "coverId": "ol:911119",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988191"
+        },
+        {
+          "id": "OL3290731W",
+          "title": "Last and First Men",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:911106",
+          "addedAt": "2026-09-25",
+          "from": "isbn:185798806X"
+        },
+        {
+          "id": "OL2321336W",
+          "title": "Earth abides",
+          "author": "George Rippey Stewart",
+          "coverId": "ol:911121",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988213"
+        },
+        {
+          "id": "OL2172408W",
+          "title": "Martian Time-Slip",
+          "author": "Philip K. Dick",
+          "coverId": "ol:911129",
+          "addedAt": "2026-09-25",
+          "from": "isbn:185798837X"
+        },
+        {
+          "id": "OL16027965W",
+          "title": "The Demolished Man",
+          "author": "Alfred Bester",
+          "coverId": "ol:911122",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988221"
+        },
+        {
+          "id": "OL3521966W",
+          "title": "Stand on Zanzibar",
+          "author": "John Brunner",
+          "coverId": "ol:911128",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988361"
+        },
+        {
+          "id": "OL59863W",
+          "title": "The Dispossessed",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:14817270",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988825"
+        },
+        {
+          "id": "OL2745976W",
+          "title": "The Drowned World",
+          "author": "J. G. Ballard",
+          "coverId": "ol:911158",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988833"
+        },
+        {
+          "id": "OL98485W",
+          "title": "The Sirens of Titan",
+          "author": "Kurt Vonnegut",
+          "coverId": "ol:14602104",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988841"
+        },
+        {
+          "id": "OL2071382W",
+          "title": "Emphyrio",
+          "author": "Jack Vance",
+          "coverId": "ol:911160",
+          "addedAt": "2026-09-25",
+          "from": "isbn:185798885X"
+        },
+        {
+          "id": "OL2172433W",
+          "title": "A Scanner Darkly",
+          "author": "Philip K. Dick",
+          "coverId": "ol:911131",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988477"
+        },
+        {
+          "id": "OL3290739W",
+          "title": "Star Maker",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:911107",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988078"
+        },
+        {
+          "id": "OL2697365W",
+          "title": "Behold the Man",
+          "author": "Michael Moorcock",
+          "coverId": "ol:911132",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988485"
+        },
+        {
+          "id": "OL1960643W",
+          "title": "The Book of Skulls",
+          "author": "Robert Silverberg",
+          "coverId": "ol:911179",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857989147"
+        },
+        {
+          "id": "OL52267W",
+          "title": "The Time Machine",
+          "author": "H. G. Wells",
+          "coverId": "ol:911161",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988876"
+        },
+        {
+          "id": "OL515754W",
+          "title": "Flowers for Algernon",
+          "author": "Daniel Keyes",
+          "coverId": "ol:911193",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857989384"
+        },
+        {
+          "id": "OL2172454W",
+          "title": "Ubik",
+          "author": "Philip K. Dick",
+          "coverId": "ol:911137",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988531"
+        },
+        {
+          "id": "OL108288W",
+          "title": "Timescape",
+          "author": "Gregory Benford",
+          "coverId": "ol:911191",
+          "addedAt": "2026-09-25",
+          "from": "isbn:185798935X"
+        },
+        {
+          "id": "OL14868264W",
+          "title": "More Than Human",
+          "author": "Theodore Sturgeon",
+          "coverId": "ol:911136",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857988523"
+        },
+        {
+          "id": "OL60939W",
+          "title": "Man Plus",
+          "author": "Frederik Pohl",
+          "coverId": "ol:911201",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857989465"
+        },
+        {
+          "id": "OL53404W",
+          "title": "A Case of Conscience",
+          "author": "James Blish",
+          "coverId": "ol:911181",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857989244"
+        },
+        {
+          "id": "OL261853W",
+          "title": "The Centauri Device",
+          "author": "M. John Harrison",
+          "coverId": "ol:911225",
+          "addedAt": "2026-09-25",
+          "from": "isbn:185798997X"
+        },
+        {
+          "id": "OL2172502W",
+          "title": "Dr. Bloodmoney",
+          "author": "Philip K. Dick",
+          "coverId": "ol:911207",
+          "addedAt": "2026-09-25",
+          "from": "isbn:185798952X"
+        },
+        {
+          "id": "OL892520W",
+          "title": "Non-Stop",
+          "author": "Brian W. Aldiss",
+          "coverId": "ol:911226",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857989988"
+        },
+        {
+          "id": "OL17403W",
+          "title": "The Fountains of Paradise",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:8435357",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857987217"
+        },
+        {
+          "id": "OL27780752W",
+          "title": "Pavane",
+          "author": "Keith Roberts",
+          "coverId": "ol:911192",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857989376"
+        },
+        {
+          "id": "OL2172519W",
+          "title": "Now Wait for Last Year",
+          "author": "Philip K. Dick",
+          "coverId": "ol:911053",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857987012"
+        },
+        {
+          "id": "OL56833W",
+          "title": "Nova",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:911065",
+          "addedAt": "2026-09-25",
+          "from": "isbn:185798742X"
+        },
+        {
+          "id": "OL52260W",
+          "title": "The First Men in the Moon",
+          "author": "H. G. Wells",
+          "coverId": "ol:8430838",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857987462"
+        },
+        {
+          "id": "OL14931580W",
+          "title": "The City and the Stars",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:911081",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857987632"
+        },
+        {
+          "id": "OL16513W",
+          "title": "Blood Music",
+          "author": "Greg Bear",
+          "coverId": "ol:911080",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857987624"
+        },
+        {
+          "id": "OL60942W",
+          "title": "Jem",
+          "author": "Frederik Pohl",
+          "coverId": "ol:911094",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857987896"
+        },
+        {
+          "id": "OL2778305W",
+          "title": "Bring the Jubilee",
+          "author": "Ward Moore",
+          "coverId": "ol:911082",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857987640"
+        },
+        {
+          "id": "OL2172524W",
+          "title": "Valis",
+          "author": "Philip K. Dick",
+          "coverId": "ol:910982",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857983394"
+        },
+        {
+          "id": "OL59858W",
+          "title": "The Lathe of Heaven",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:14602113",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857989511"
+        },
+        {
+          "id": "OL8260926W",
+          "title": "The Complete Roderick",
+          "author": "John Sladek",
+          "coverId": "ol:910983",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857983408"
+        },
+        {
+          "id": "OL2172518W",
+          "title": "Flow my tears, the policeman said",
+          "author": "Philip K. Dick",
+          "coverId": "ol:7998617",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857983416"
+        },
+        {
+          "id": "OL52266W",
+          "title": "The Invisible Man",
+          "author": "H. G. Wells",
+          "coverId": "ol:911204",
+          "addedAt": "2026-09-25",
+          "from": "isbn:185798949X"
+        },
+        {
+          "id": "OL104514W",
+          "title": "Grass",
+          "author": "Sheri S. Tepper",
+          "coverId": "ol:911101",
+          "addedAt": "2026-09-25",
+          "from": "isbn:1857987985"
+        },
+        {
+          "id": "OL17402W",
+          "title": "A Fall of Moondust",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:380082",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575073179"
+        },
+        {
+          "id": "OL16518W",
+          "title": "Eon",
+          "author": "Greg Bear",
+          "coverId": "ol:380081",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575073160"
+        },
+        {
+          "id": "OL64219W",
+          "title": "The Shrinking Man",
+          "author": "Richard Matheson",
+          "coverId": "ol:380197",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575074639"
+        },
+        {
+          "id": "OL2172402W",
+          "title": "The three stigmata of Palmer Eldritch",
+          "author": "Philip K. Dick",
+          "coverId": "ol:6255783",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575074809"
+        },
+        {
+          "id": "OL2697390W",
+          "title": "The Dancers at the End of Time",
+          "author": "Michael Moorcock",
+          "coverId": "ol:380207",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575074760"
+        },
+        {
+          "id": "OL60943W",
+          "title": "The Space Merchants",
+          "author": "Frederik Pohl",
+          "coverId": "ol:380246",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575075287"
+        },
+        {
+          "id": "OL2172523W",
+          "title": "Time out of joint",
+          "author": "Philip K. Dick",
+          "coverId": "ol:380192",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575074582"
+        },
+        {
+          "id": "OL1960368W",
+          "title": "Downward to the Earth",
+          "author": "Robert Silverberg",
+          "coverId": "ol:380242",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575075236"
+        },
+        {
+          "id": "OL2172517W",
+          "title": "The Simulacra",
+          "author": "Philip K. Dick",
+          "coverId": "ol:380194",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575074604"
+        },
+        {
+          "id": "OL2172396W",
+          "title": "The penultimate truth",
+          "author": "Philip K. Dick",
+          "coverId": "ol:380211",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575074817"
+        },
+        {
+          "id": "OL1960371W",
+          "title": "Dying Inside",
+          "author": "Robert Silverberg",
+          "coverId": "ol:380243",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575075252"
+        },
+        {
+          "id": "OL510405W",
+          "title": "Ringworld",
+          "author": "Larry Niven",
+          "coverId": "ol:380377",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575077026"
+        },
+        {
+          "id": "OL1920272W",
+          "title": "The Child Garden",
+          "author": "Geoff Ryman",
+          "coverId": "ol:380371",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575076909"
+        },
+        {
+          "id": "OL8400747W",
+          "title": "Mission of Gravity",
+          "author": "Hal Clement",
+          "coverId": "ol:380380",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575077085"
+        },
+        {
+          "id": "OL2172352W",
+          "title": "A maze of death",
+          "author": "Philip K. Dick",
+          "coverId": "ol:380195",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575074612"
+        },
+        {
+          "id": "OL90571W",
+          "title": "Tau Zero",
+          "author": "Poul Anderson",
+          "coverId": "ol:380391",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575077328"
+        },
+        {
+          "id": "OL17417W",
+          "title": "Rendezvous with Rama",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:1286944",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575077336"
+        },
+        {
+          "id": "OL54951W",
+          "title": "Life during wartime",
+          "author": "Lucius Shepard",
+          "coverId": "ol:380392",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575077344"
+        },
+        {
+          "id": "OL506264W",
+          "title": "Where Late the Sweet Birds Sang",
+          "author": "Kate Wilhelm",
+          "coverId": "ol:8436108",
+          "addedAt": "2026-09-25",
+          "from": "isbn:0575079142"
+        },
+        {
+          "id": "OL7967812W",
+          "title": "Roadside Picnic",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:8093840",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575079786"
+        },
+        {
+          "id": "OL19546464W",
+          "title": "Dark Benediction (S.F. Masterworks)",
+          "author": "Walter M. Miller Jr.",
+          "coverId": "ol:8512520",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575079779"
+        },
+        {
+          "id": "OL83885W",
+          "title": "Mockingbird",
+          "author": "Walter S. Tevis",
+          "coverId": "ol:8742239",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575079151"
+        },
+        {
+          "id": "OL893414W",
+          "title": "Dune",
+          "author": "Frank Herbert",
+          "coverId": "ol:8440265",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575081505"
+        },
+        {
+          "id": "OL59704W",
+          "title": "The moon is a harsh mistress",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:8429114",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575082410"
+        },
+        {
+          "id": "OL2172403W",
+          "title": "The Man in the High Castle",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8446439",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575082052"
         }
       ]
     }

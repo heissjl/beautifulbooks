@@ -113,6 +113,7 @@ Die Urteile sind ein festes Vokabular, weil das [Brett](kanban.html) sie liest: 
 | 5.9 | zurückstellen | — | Lab-Idee, phasenfrei, Rechtefrage; wenn Julian Lust hat |
 | 5.10 | Julian | ein Abend | Deployt 2026-09-24 als Entwurf; wartet auf Julians Wand, Titel und `published` |
 | 5.10a | erledigt bis auf Nutzung | — | Live seit 2026-09-24; Datenschutz entschieden (nur Freunde, 0.12 bleibt zurückgestellt) |
+| 5.10c | Julian | 15 min | SF Masterworks 1–73 als Entwurf gebaut; vier Cover tauschen, Verlagsnamen bestätigen, veröffentlichen |
 | 5.10b | erledigt bis auf Nutzung | — | `/curate` für Freunde, gebaut 2026-09-24; Julian übernimmt Entwürfe in seiner App |
 | 4.1 | tun, klein | 10 min | Die Bewerbung ist heute möglich; die ID wirkt erst im Shop-Modus, kostet aber nichts vorab |
 | 4.2 | zurückstellen | — | Drei Verkäufe in 180 Tagen ohne Traffic sind ein Kontoverlust |
@@ -175,6 +176,7 @@ flowchart LR
   R510["5.10 Sammlungen"] --> R54b
   R510 --> R510a["5.10a Vorschläge von Freunden"]
   R510a --> R510b["5.10b Kuratier-App online"]
+  R510 --> R510c["5.10c SF Masterworks"]
   R510a -.-> R012["0.12 Auftragsverarbeitung"]
   J55 --> R619["6.19a Rest, 5.5 Clip und Pins"]
   J49 --> R49["4.9 Spendenseite"]
@@ -891,6 +893,8 @@ Eine Suchseite ohne eigene Inhalte bekommt keinen organischen Traffic. Die Grund
 - [ ] **5.10a Vorschläge von Freunden hinter einem Passwort.** (Julian, 2026-09-24: „baue auch eine version der kuratier-app hinter einer passwort-schranke, damit freunde von mir vorschläge für sammlungen bauen können"; dazu „bei der suggest-seite schreibe oben als Hinweis: Für Caitlin".) **Gebaut 2026-09-24, lokal durchgespielt, nicht deployt** ([SPEC F8.4](SPEC.md)): `/suggest` mit Passwort-Cookie, Buchsuche, Coverwahl ohne Google, Absenden in die Redis des Cover-Spiels; Julians App holt die Vorschläge ab und übernimmt oder lehnt ab. **Das ist die zweite Sache, die die Seite zur Laufzeit schreibt, und eine Eingabe vom Leser** — genau der Auslöser, den 0.12 (Auftragsverarbeitung) und der Umstiegs-Absatz bei 0.x nennen; E21 ist ohnehin noch offen. **`SUGGEST_PASSWORD` und `SUGGEST_ADMIN_PASSWORD` stehen seit 2026-09-24 in Vercel** (Production und Preview, „sensitive“, von Claude zufällig erzeugt; die Werte liegen nur in Julians `.env.local` im Hauptordner und im Chat). Mit dem nächsten Deploy ist `/suggest` also an. **Deployt am 2026-09-24** (`561b49c`). **Julians Entscheidung zum Datenschutz, 2026-09-24: nur Freunde, das Restrisiko tragen.** Die Seite ist nur mit Passwort für wenige Bekannte erreichbar, nirgends verlinkt und nicht indexiert; der Absatz in der Datenschutzerklärung bleibt (Einwilligung, Löschung auf Anfrage), das Namensfeld bleibt freiwillig, und 0.12 bleibt zurückgestellt. **Neu zu prüfen**, sobald `/suggest` über den Freundeskreis hinaus geht — ein öffentlicher Link, ein Konto, mehr als eine Handvoll Menschen: dann ist 0.12 fällig.
 
 - [ ] **5.10b Die Kuratier-App für Sammlungen online, für Freunde.** (Julian, 2026-09-24: „ich wollte dass die kuratier-app auch online ist für meine freunde … ich meinte die kuratier-app für sammlungen!" — 5.10a war ein Formular für einzelne Bücher und hatte die Bitte zu eng gelesen.) **Gebaut 2026-09-24** ([SPEC F8.5](SPEC.md)): `/curate` hinter dem Passwort aus 5.10a, dieselben Schritte wie `lab/collections/`, alles als Entwurf in der Redis; Julians App übernimmt einen Entwurf per Klick in die Datei und zeigt vorher, welche Namen neu sind. Die reine Logik ist dafür von `lab/collections/model.ts` nach `lib/collectionedit.ts` umgezogen (die Website darf nicht aus `lab/` importieren). `/suggest` bleibt als schnelles Formular für ein Buch und verweist auf `/curate`. Dieselbe Datenschutz-Entscheidung wie 5.10a (nur Freunde).
+
+- [ ] **5.10c SF Masterworks als Beispiel einer Reihen-Sammlung.** (Julian, 2026-09-25: „let's whip up the collection of sf masterworks as an example list", mit der Goodreads-Liste und dem Wikipedia-Artikel.) **Gebaut 2026-09-25, Entwurf** ([Historie](docs/history.md)): die nummerierte erste Reihe 1–73 (1999–2007) aus den ISBN-Spalten des Wikipedia-Artikels, aufgelöst über Open Library von ISBN zu Ausgabe, Cover und Werk (`lab/collections/from-isbns.ts`, Liste in `lab/collections/lists/`). 73 von 73 auf der Wand, alle Titel stimmen mit der Liste überein; 69 zeigen das Masterworks-Design, **vier nicht** (*Cities in Flight*, *Do Androids Dream of Electric Sheep?*, *The Dispossessed*, *Mockingbird*), weil Open Library unter der ISBN ein anderes Bild führt. Goodreads nicht benutzt: die Wikipedia-Tabelle trägt je Band die ISBN, die Goodreads-Liste nicht. **Offen, Julian:** die vier Cover in der App tauschen (sie bietet dort nur Cover von Gollancz-, Millennium- und Orion-Ausgaben — diese drei Verlagsschreibweisen bestätigen oder ändern), Absatz prüfen, `published` setzen. **Möglich danach:** die Neuauflage ab 2010 (182 Bände mit ISBN, dieselbe Liste) als zweite Sammlung.
 
 
 ---
