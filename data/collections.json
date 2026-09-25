@@ -173,15 +173,15 @@
           "id": "OL53400W",
           "title": "Cities in Flight",
           "author": "James Blish",
-          "coverId": "ol:911111",
+          "coverId": "ol:14790877",
           "addedAt": "2026-09-25",
-          "from": "isbn:1857988116"
+          "from": "isbn:9780575094178"
         },
         {
           "id": "OL2172356W",
           "title": "Do Androids Dream of Electric Sheep?",
           "author": "Philip K. Dick",
-          "coverId": "ol:11153218",
+          "coverId": "ol:8433100",
           "addedAt": "2026-09-25",
           "from": "isbn:1857988132"
         },
@@ -277,9 +277,9 @@
           "id": "OL59863W",
           "title": "The Dispossessed",
           "author": "Ursula K. Le Guin",
-          "coverId": "ol:14817270",
+          "coverId": "ol:6979680",
           "addedAt": "2026-09-25",
-          "from": "isbn:1857988825"
+          "from": "checked:original-design"
         },
         {
           "id": "OL2745976W",
@@ -341,9 +341,9 @@
           "id": "OL52267W",
           "title": "The Time Machine",
           "author": "H. G. Wells",
-          "coverId": "ol:911161",
+          "coverId": "ol:8449966",
           "addedAt": "2026-09-25",
-          "from": "isbn:1857988876"
+          "from": "relaunch-design, no original on Open Library"
         },
         {
           "id": "OL515754W",
@@ -717,25 +717,1238 @@
           "id": "OL893414W",
           "title": "Dune",
           "author": "Frank Herbert",
-          "coverId": "ol:8440265",
+          "coverId": "ol:380097",
           "addedAt": "2026-09-25",
-          "from": "isbn:9780575081505"
+          "from": "checked:original-design"
         },
         {
           "id": "OL59704W",
           "title": "The moon is a harsh mistress",
           "author": "Robert A. Heinlein",
-          "coverId": "ol:8429114",
+          "coverId": "ol:380099",
           "addedAt": "2026-09-25",
-          "from": "isbn:9780575082410"
+          "from": "checked:original-design"
         },
         {
           "id": "OL2172403W",
           "title": "The Man in the High Castle",
           "author": "Philip K. Dick",
-          "coverId": "ol:8446439",
+          "coverId": "ol:380098",
           "addedAt": "2026-09-25",
-          "from": "isbn:9780575082052"
+          "from": "checked:original-design"
+        }
+      ]
+    },
+    {
+      "slug": "sf-masterworks-relaunch",
+      "title": "SF Masterworks, the relaunch",
+      "kind": "series",
+      "intro": "",
+      "published": false,
+      "publishers": [
+        "Gollancz",
+        "Orion"
+      ],
+      "works": [
+        {
+          "id": "OL56834W",
+          "title": "Babel-17",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:8435327",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094208"
+        },
+        {
+          "id": "OL53400W",
+          "title": "Cities in Flight",
+          "author": "James Blish",
+          "coverId": "ol:14790877",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094178"
+        },
+        {
+          "id": "OL2172356W",
+          "title": "Do Androids Dream of Electric Sheep?",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8433100",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094185"
+        },
+        {
+          "id": "OL14871904W",
+          "title": "The Fifth Head Of Cerberus",
+          "author": "Gene Wolfe",
+          "coverId": "ol:8416315",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094222"
+        },
+        {
+          "id": "OL271163W",
+          "title": "The Forever War",
+          "author": "Joe Haldeman",
+          "coverId": "ol:8433990",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094147"
+        },
+        {
+          "id": "OL60924W",
+          "title": "Gateway",
+          "author": "Frederik Pohl",
+          "coverId": "ol:8778404",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094239"
+        },
+        {
+          "id": "OL11374287W",
+          "title": "I am Legend",
+          "author": "Richard Matheson",
+          "coverId": "ol:8436206",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094161"
+        },
+        {
+          "id": "OL13992W",
+          "title": "Lord of Light",
+          "author": "Roger Zelazny",
+          "coverId": "ol:8446198",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094215"
+        },
+        {
+          "id": "OL19799863W",
+          "title": "The Rediscovery of Man (S.F. Masterworks)",
+          "author": "Cordwainer Smith",
+          "coverId": "ol:8600460",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094246"
+        },
+        {
+          "id": "OL1819353W",
+          "title": "The Stars My Destination",
+          "author": "Alfred Bester",
+          "coverId": "ol:8599758",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094192"
+        },
+        {
+          "id": "OL2172402W",
+          "title": "The three stigmata of Palmer Eldritch",
+          "author": "Philip K. Dick",
+          "coverId": "ol:10450677",
+          "addedAt": "2026-09-25",
+          "from": "checked:relaunch-design"
+        },
+        {
+          "id": "OL2172454W",
+          "title": "Ubik",
+          "author": "Philip K. Dick",
+          "coverId": "ol:911137",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857988536"
+        },
+        {
+          "id": "OL166496W",
+          "title": "The inverted world",
+          "author": "Christopher Priest",
+          "coverId": "ol:8428033",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575082106"
+        },
+        {
+          "id": "OL2172518W",
+          "title": "Flow my tears, the policeman said",
+          "author": "Philip K. Dick",
+          "coverId": "ol:7998617",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857983418"
+        },
+        {
+          "id": "OL2172517W",
+          "title": "The Simulacra",
+          "author": "Philip K. Dick",
+          "coverId": "ol:380194",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575074606"
+        },
+        {
+          "id": "OL2172523W",
+          "title": "Time out of joint",
+          "author": "Philip K. Dick",
+          "coverId": "ol:380192",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575074583"
+        },
+        {
+          "id": "OL2172524W",
+          "title": "Valis",
+          "author": "Philip K. Dick",
+          "coverId": "ol:10142455",
+          "addedAt": "2026-09-25",
+          "from": "checked:relaunch-design"
+        },
+        {
+          "id": "OL2778305W",
+          "title": "Bring the Jubilee",
+          "author": "Ward Moore",
+          "coverId": "ol:911082",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857987645"
+        },
+        {
+          "id": "OL56835W",
+          "title": "Dhalgren",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:8457001",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575090996"
+        },
+        {
+          "id": "OL19242119W",
+          "title": "Helliconia",
+          "author": "Brian W. Aldiss",
+          "coverId": "ol:8431035",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575086159"
+        },
+        {
+          "id": "OL59858W",
+          "title": "The Lathe of Heaven",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:14602113",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857989519"
+        },
+        {
+          "id": "OL19332770W",
+          "title": "Body Snatchers",
+          "author": "George Finney",
+          "coverId": "ol:8443633",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575085312"
+        },
+        {
+          "id": "OL8260926W",
+          "title": "The Complete Roderick",
+          "author": "John Sladek",
+          "coverId": "ol:910983",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857983401"
+        },
+        {
+          "id": "OL3332541W",
+          "title": "The Female Man",
+          "author": "Joanna Russ",
+          "coverId": "ol:7545405",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575094994"
+        },
+        {
+          "id": "OL19208208W",
+          "title": "Arslan (SF Masterworks)",
+          "author": "M. J. Engh",
+          "coverId": "ol:8429167",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575095014"
+        },
+        {
+          "id": "OL90571W",
+          "title": "Tau Zero",
+          "author": "Poul Anderson",
+          "coverId": "ol:13035836",
+          "addedAt": "2026-09-25",
+          "from": "checked:relaunch-design"
+        },
+        {
+          "id": "OL261853W",
+          "title": "The Centauri Device",
+          "author": "M. John Harrison",
+          "coverId": "ol:911225",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857989977"
+        },
+        {
+          "id": "OL27252W",
+          "title": "The Difference Engine",
+          "author": "William Gibson",
+          "coverId": "ol:8746083",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575099401"
+        },
+        {
+          "id": "OL166497W",
+          "title": "The Prestige",
+          "author": "Christopher Priest",
+          "coverId": "ol:8443260",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575099418"
+        },
+        {
+          "id": "OL892515W",
+          "title": "Greybeard",
+          "author": "Brian W. Aldiss",
+          "coverId": "ol:8439948",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575071131"
+        },
+        {
+          "id": "OL2172408W",
+          "title": "Martian Time-Slip",
+          "author": "Philip K. Dick",
+          "coverId": "ol:911129",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857988376"
+        },
+        {
+          "id": "OL3290738W",
+          "title": "Sirius",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:8420373",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575099425"
+        },
+        {
+          "id": "OL1963268W",
+          "title": "Hyperion",
+          "author": "Dan Simmons",
+          "coverId": "ol:8416770",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575099432"
+        },
+        {
+          "id": "OL892520W",
+          "title": "Non-Stop",
+          "author": "Brian W. Aldiss",
+          "coverId": "ol:911226",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857989984"
+        },
+        {
+          "id": "OL14931580W",
+          "title": "The City and the Stars",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:911081",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857987638"
+        },
+        {
+          "id": "OL4088358W",
+          "title": "City",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:8443047",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575105232"
+        },
+        {
+          "id": "OL893521W",
+          "title": "Hellstrom's Hive",
+          "author": "Frank Herbert",
+          "coverId": "ol:8448552",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575101081"
+        },
+        {
+          "id": "OL19345375W",
+          "title": "Of Men and Monsters",
+          "author": "William Tenn",
+          "coverId": "ol:8457872",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575099449"
+        },
+        {
+          "id": "OL1960371W",
+          "title": "Dying Inside",
+          "author": "Robert Silverberg",
+          "coverId": "ol:380243",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575075252"
+        },
+        {
+          "id": "OL104514W",
+          "title": "Grass",
+          "author": "Sheri S. Tepper",
+          "coverId": "ol:911101",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857987980"
+        },
+        {
+          "id": "OL27780752W",
+          "title": "Pavane",
+          "author": "Keith Roberts",
+          "coverId": "ol:911192",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857989373"
+        },
+        {
+          "id": "OL510405W",
+          "title": "Ringworld",
+          "author": "Larry Niven",
+          "coverId": "ol:380377",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575077027"
+        },
+        {
+          "id": "OL108288W",
+          "title": "Timescape",
+          "author": "Gregory Benford",
+          "coverId": "ol:911191",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857989359"
+        },
+        {
+          "id": "OL166482W",
+          "title": "The Affirmation",
+          "author": "Christopher Priest",
+          "coverId": "ol:8430242",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575099463"
+        },
+        {
+          "id": "OL19330505W",
+          "title": "R.U.R.",
+          "author": "Karel Čapek",
+          "coverId": "ol:8441780",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575099456"
+        },
+        {
+          "id": "OL1960643W",
+          "title": "The Book of Skulls",
+          "author": "Robert Silverberg",
+          "coverId": "ol:911179",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857989144"
+        },
+        {
+          "id": "OL2071382W",
+          "title": "Emphyrio",
+          "author": "Jack Vance",
+          "coverId": "ol:911160",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857988857"
+        },
+        {
+          "id": "OL3290739W",
+          "title": "Star Maker",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:8640542",
+          "addedAt": "2026-09-25",
+          "from": "checked:relaunch-design"
+        },
+        {
+          "id": "OL20074002W",
+          "title": "Floating Worlds",
+          "author": "Cecelia Holland",
+          "coverId": "ol:9089417",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575108233"
+        },
+        {
+          "id": "OL16513W",
+          "title": "Blood Music",
+          "author": "Greg Bear",
+          "coverId": "ol:911080",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857987621"
+        },
+        {
+          "id": "OL2454690W",
+          "title": "Rogue moon",
+          "author": "Algis Budrys",
+          "coverId": "ol:8651995",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575108004"
+        },
+        {
+          "id": "OL19268447W",
+          "title": "Dangerous Visions (SF Masterworks)",
+          "author": "Harlan Ellison",
+          "coverId": "ol:8432279",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575108028"
+        },
+        {
+          "id": "OL16518W",
+          "title": "Eon",
+          "author": "Greg Bear",
+          "coverId": "ol:380081",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575073166"
+        },
+        {
+          "id": "OL17417W",
+          "title": "Rendezvous with Rama",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:1286944",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575077331"
+        },
+        {
+          "id": "OL3290749W",
+          "title": "Philosophy and living",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:8431496",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575072244"
+        },
+        {
+          "id": "OL17403W",
+          "title": "The Fountains of Paradise",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:8435357",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857987218"
+        },
+        {
+          "id": "OL3290731W",
+          "title": "Last and First Men",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:911106",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781857988062"
+        },
+        {
+          "id": "OL506264W",
+          "title": "Where Late the Sweet Birds Sang",
+          "author": "Kate Wilhelm",
+          "coverId": "ol:8436108",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575079144"
+        },
+        {
+          "id": "OL7967812W",
+          "title": "Roadside Picnic",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:8446949",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575093133"
+        },
+        {
+          "id": "OL12098201W",
+          "title": "Synners",
+          "author": "Pat Cadigan",
+          "coverId": "ol:8414795",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575119543"
+        },
+        {
+          "id": "OL2737410W",
+          "title": "Ammonite",
+          "author": "Nicola Griffith",
+          "coverId": "ol:8435325",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575118232"
+        },
+        {
+          "id": "OL2657126W",
+          "title": "Sarah Canary",
+          "author": "Karen Joy Fowler",
+          "coverId": "ol:10520392",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575131361"
+        },
+        {
+          "id": "OL19186717W",
+          "title": "The Continuous Katherine Mortenhoe (SF Masterworks)",
+          "author": "D. G. Compton",
+          "coverId": "ol:8427222",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575118317"
+        },
+        {
+          "id": "OL450063W",
+          "title": "Frankenstein; or, The Modern Prometheus",
+          "author": "Mary Shelley",
+          "coverId": "ol:8436414",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575099609"
+        },
+        {
+          "id": "OL14858406W",
+          "title": "Doomsday book",
+          "author": "Connie Willis",
+          "coverId": "ol:8449282",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575131095"
+        },
+        {
+          "id": "OL515754W",
+          "title": "Flowers for Algernon",
+          "author": "Daniel Keyes",
+          "coverId": "ol:10320442",
+          "addedAt": "2026-09-25",
+          "from": "checked:relaunch-design"
+        },
+        {
+          "id": "OL19882938W",
+          "title": "The Caltraps of Time (S.F. Masterworks)",
+          "author": "David I. Masson",
+          "coverId": "ol:8686744",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575118287"
+        },
+        {
+          "id": "OL11441065W",
+          "title": "Unquenchable fire",
+          "author": "Rachel Pollack",
+          "coverId": "ol:9062927",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575118546"
+        },
+        {
+          "id": "OL482569W",
+          "title": "Engine Summer",
+          "author": "John Crowley",
+          "coverId": "ol:15177987",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575082816"
+        },
+        {
+          "id": "OL19330783W",
+          "title": "Take Back Plenty (SF Masterworks)",
+          "author": "Colin Greenland",
+          "coverId": "ol:8442724",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575119529"
+        },
+        {
+          "id": "OL2737402W",
+          "title": "Rio Lento",
+          "author": "Nicola Griffith",
+          "coverId": "ol:8421067",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575118256"
+        },
+        {
+          "id": "OL104515W",
+          "title": "The Gate to Women's Country",
+          "author": "Sheri S. Tepper",
+          "coverId": "ol:8443845",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575131040"
+        },
+        {
+          "id": "OL19209380W",
+          "title": "The Sea and Summer (SF Masterworks)",
+          "author": "George Turner",
+          "coverId": "ol:8429265",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575118690"
+        },
+        {
+          "id": "OL14858392W",
+          "title": "To Say Nothing of the Dog",
+          "author": "Connie Willis",
+          "coverId": "ol:8435933",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575113121"
+        },
+        {
+          "id": "OL46395W",
+          "title": "The Gods Themselves",
+          "author": "Isaac Asimov",
+          "coverId": "ol:8446297",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575129054"
+        },
+        {
+          "id": "OL20070897W",
+          "title": "This Is the Way the World Ends (S.F. Masterworks)",
+          "author": "James Morrow",
+          "coverId": "ol:8747466",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575081185"
+        },
+        {
+          "id": "OL19323674W",
+          "title": "The Deep (S.F. Masterworks)",
+          "author": "John Crowley",
+          "coverId": "ol:8435336",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575082649"
+        },
+        {
+          "id": "OL20866308W",
+          "title": "No Enemy But Time",
+          "author": "Michael Bishop",
+          "coverId": "ol:10183977",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575093119"
+        },
+        {
+          "id": "OL21478785W",
+          "title": "Time Is the Fire",
+          "author": "Connie Willis",
+          "coverId": "ol:14761739",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575131149"
+        },
+        {
+          "id": "OL59715W",
+          "title": "Double Star",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:8444514",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575122031"
+        },
+        {
+          "id": "OL5724837W",
+          "title": "Revelation Space",
+          "author": "Alastair Reynolds",
+          "coverId": "ol:8443309",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575129061"
+        },
+        {
+          "id": "OL17402W",
+          "title": "A Fall of Moondust",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:380082",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575073173"
+        },
+        {
+          "id": "OL2172352W",
+          "title": "A maze of death",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8741524",
+          "addedAt": "2026-09-25",
+          "from": "checked:relaunch-design"
+        },
+        {
+          "id": "OL2172396W",
+          "title": "The penultimate truth",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8430002",
+          "addedAt": "2026-09-25",
+          "from": "checked:relaunch-design"
+        },
+        {
+          "id": "OL2753431W",
+          "title": "Random acts of senseless violence",
+          "author": "Jack Womack",
+          "coverId": "ol:10119047",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575132306"
+        },
+        {
+          "id": "OL19325351W",
+          "title": "Transfigurations (S.F. Masterworks)",
+          "author": "Michael Bishop",
+          "coverId": "ol:8436149",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575093096"
+        },
+        {
+          "id": "OL59733W",
+          "title": "The Door into Summer",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:8415734",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575120723"
+        },
+        {
+          "id": "OL2172502W",
+          "title": "Dr. Bloodmoney",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8422913",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473201682"
+        },
+        {
+          "id": "OL7117373W",
+          "title": "Half Past Human",
+          "author": "T. J. Bass",
+          "coverId": "ol:8753551",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575129627"
+        },
+        {
+          "id": "OL7117372W",
+          "title": "The godwhale",
+          "author": "T. J. Bass",
+          "coverId": "ol:8415082",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575129931"
+        },
+        {
+          "id": "OL60942W",
+          "title": "Jem",
+          "author": "Frederik Pohl",
+          "coverId": "ol:14784485",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473201705"
+        },
+        {
+          "id": "OL21118741W",
+          "title": "Shrinking Man",
+          "author": "Ted Adams",
+          "coverId": "ol:14709971",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473201699"
+        },
+        {
+          "id": "OL53404W",
+          "title": "A Case of Conscience",
+          "author": "James Blish",
+          "coverId": "ol:8431207",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473205437"
+        },
+        {
+          "id": "OL7910223W",
+          "title": "Her Smoke Rose Up Forever",
+          "author": "James Tiptree, Jr.",
+          "coverId": "ol:8690824",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473203242"
+        },
+        {
+          "id": "OL2172433W",
+          "title": "A Scanner Darkly",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8435850",
+          "addedAt": "2026-09-25",
+          "from": "checked:relaunch-design"
+        },
+        {
+          "id": "OL3521966W",
+          "title": "Stand on Zanzibar",
+          "author": "John Brunner",
+          "coverId": "ol:10483532",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473206373"
+        },
+        {
+          "id": "OL1920272W",
+          "title": "The Child Garden",
+          "author": "Geoff Ryman",
+          "coverId": "ol:380371",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9780575076907"
+        },
+        {
+          "id": "OL20119339W",
+          "title": "Mission Of Gravity: Mesklinite Book 1 (S.F. Masterworks)",
+          "author": "Hal Clement",
+          "coverId": "ol:8775098",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473206380"
+        },
+        {
+          "id": "OL59797W",
+          "title": "The Word for World is Forest",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:8439697",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473205789"
+        },
+        {
+          "id": "OL1960368W",
+          "title": "Downward to the Earth",
+          "author": "Robert Silverberg",
+          "coverId": "ol:7400190",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473211926"
+        },
+        {
+          "id": "OL19137945W",
+          "title": "Hard To Be A God (S.F. Masterworks)",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:8422857",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473208292"
+        },
+        {
+          "id": "OL2071423W",
+          "title": "Nachtlicht",
+          "author": "Jack Vance",
+          "coverId": "ol:7382178",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473208926"
+        },
+        {
+          "id": "OL19213764W",
+          "title": "Life During Wartime (S.F. Masterworks)",
+          "author": "Lucius Shepard",
+          "coverId": "ol:8429603",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473211933"
+        },
+        {
+          "id": "OL19218549W",
+          "title": "The Wind's Twelve Quarters and The Compass Rose",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:8429914",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473205765"
+        },
+        {
+          "id": "OL257947W",
+          "title": "Dying of the Light",
+          "author": "George R. R. Martin",
+          "coverId": "ol:11563021",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473212527"
+        },
+        {
+          "id": "OL59863W",
+          "title": "The Dispossessed",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:11943531",
+          "addedAt": "2026-09-25",
+          "from": "checked:relaunch-design"
+        },
+        {
+          "id": "OL83886W",
+          "title": "The Man Who Fell to Earth",
+          "author": "Walter S. Tevis",
+          "coverId": "ol:8432194",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473213111"
+        },
+        {
+          "id": "OL56833W",
+          "title": "Nova",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:8445696",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473211919"
+        },
+        {
+          "id": "OL1975714W",
+          "title": "A Fire upon the Deep",
+          "author": "Vernor Vinge",
+          "coverId": "ol:8446469",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473211957"
+        },
+        {
+          "id": "OL20122863W",
+          "title": "Norstrilia (S.F. Masterworks)",
+          "author": "Cordwainer Smith",
+          "coverId": "ol:8776854",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473212534"
+        },
+        {
+          "id": "OL17415602W",
+          "title": "Monday Begins on Saturday",
+          "author": "Борис Стругацкий",
+          "coverId": "ol:7533808",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473202214"
+        },
+        {
+          "id": "OL19323672W",
+          "title": "Fairyland (S.F. Masterworks)",
+          "author": "Paul J. McAuley",
+          "coverId": "ol:8435334",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473215160"
+        },
+        {
+          "id": "OL59846W",
+          "title": "Always Coming Home",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:8425414",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473205802"
+        },
+        {
+          "id": "OL1975705W",
+          "title": "A Deepness in the Sky (Zones of Thought)",
+          "author": "Vernor Vinge",
+          "coverId": "ol:10363583",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473211964"
+        },
+        {
+          "id": "OL3928956W",
+          "title": "Swastika Night",
+          "author": "Katharine Burdekin",
+          "coverId": "ol:8440705",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473214668"
+        },
+        {
+          "id": "OL20126875W",
+          "title": "China Mountain Zhang",
+          "author": "Maureen F. McHugh",
+          "coverId": "ol:8779578",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473214620"
+        },
+        {
+          "id": "OL14871968W",
+          "title": "Sword & citadel",
+          "author": "Gene Wolfe",
+          "coverId": "ol:8443272",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473212008"
+        },
+        {
+          "id": "OL7015488W",
+          "title": "Limbo",
+          "author": "Bernard Wolfe",
+          "coverId": "ol:8417074",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473212473"
+        },
+        {
+          "id": "OL52260W",
+          "title": "The First Men in the Moon",
+          "author": "H. G. Wells",
+          "coverId": "ol:10376412",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473218000"
+        },
+        {
+          "id": "OL52195W",
+          "title": "The food of the gods and how it came to earth",
+          "author": "H. G. Wells",
+          "coverId": "ol:8448615",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473218017"
+        },
+        {
+          "id": "OL52266W",
+          "title": "The Invisible Man",
+          "author": "H. G. Wells",
+          "coverId": "ol:8443536",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473217980"
+        },
+        {
+          "id": "OL381550W",
+          "title": "The Island of Dr. Moreau",
+          "author": "H. G. Wells",
+          "coverId": "ol:8429503",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473217997"
+        },
+        {
+          "id": "OL52246W",
+          "title": "The Shape of Things to Come",
+          "author": "H. G. Wells",
+          "coverId": "ol:8446727",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473221659"
+        },
+        {
+          "id": "OL52267W",
+          "title": "The Time Machine",
+          "author": "H. G. Wells",
+          "coverId": "ol:8449966",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473217973"
+        },
+        {
+          "id": "OL52114W",
+          "title": "The War of the Worlds",
+          "author": "H. G. Wells",
+          "coverId": "ol:8442992",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473218024"
+        },
+        {
+          "id": "OL59800W",
+          "title": "The Left Hand of Darkness",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:15169835",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473221628"
+        },
+        {
+          "id": "OL104510W",
+          "title": "Raising the stones",
+          "author": "Sheri S. Tepper",
+          "coverId": "ol:8757941",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473222656"
+        },
+        {
+          "id": "OL3055283W",
+          "title": "The embedding",
+          "author": "Ian Watson",
+          "coverId": "ol:10376415",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473222670"
+        },
+        {
+          "id": "OL19334472W",
+          "title": "Cryptozoic",
+          "author": "Brian W. Aldiss",
+          "coverId": "ol:8446565",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473222731"
+        },
+        {
+          "id": "OL72847W",
+          "title": "Raft",
+          "author": "Stephen Baxter",
+          "coverId": "ol:8487280",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473224056"
+        },
+        {
+          "id": "OL20061187W",
+          "title": "Dreaming In Smoke (Gateway Essentials,S.F. MASTERWORKS)",
+          "author": "Tricia Sullivan",
+          "coverId": "ol:8744996",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473224742"
+        },
+        {
+          "id": "OL14858865W",
+          "title": "Fools",
+          "author": "Pat Cadigan",
+          "coverId": "ol:8449247",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473226029"
+        },
+        {
+          "id": "OL20119856W",
+          "title": "The Best of R. A. Lafferty",
+          "author": "R. A. Lafferty",
+          "coverId": "ol:8775235",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473213449"
+        },
+        {
+          "id": "OL492354W",
+          "title": "Native Tongue",
+          "author": "Suzette Haden Elgin",
+          "coverId": "ol:10198097",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473227569"
+        },
+        {
+          "id": "OL10560082W",
+          "title": "Улитка на склоне",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:10885941",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473228283"
+        },
+        {
+          "id": "OL1960375W",
+          "title": "Lord Valentine's Castle",
+          "author": "Robert Silverberg",
+          "coverId": "ol:9427611",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473229228"
+        },
+        {
+          "id": "OL19921558W",
+          "title": "River of Gods",
+          "author": "Ian McDonald",
+          "coverId": "ol:10105723",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473229501"
+        },
+        {
+          "id": "OL21696977W",
+          "title": "Bold As Love",
+          "author": "Gwyneth Jones",
+          "coverId": "ol:12435082",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473230194"
+        },
+        {
+          "id": "OL25764282W",
+          "title": "Best of Greg Egan",
+          "author": "Greg Egan",
+          "coverId": "ol:14791280",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473232297"
+        },
+        {
+          "id": "OL20812466W",
+          "title": "The Inhabited Island",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:12383317",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473232440"
+        },
+        {
+          "id": "OL1960610W",
+          "title": "Needle in a timestack",
+          "author": "Robert Silverberg",
+          "coverId": "ol:11392701",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473229204"
+        },
+        {
+          "id": "OL2354527W",
+          "title": "White Queen",
+          "author": "Gwyneth Jones",
+          "coverId": "ol:12427189",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473234659"
+        },
+        {
+          "id": "OL1168083W",
+          "title": "Nineteen Eighty-Four",
+          "author": "George Orwell",
+          "coverId": "ol:13170618",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473234802"
+        },
+        {
+          "id": "OL2354520W",
+          "title": "Life",
+          "author": "Gwyneth Jones",
+          "coverId": "ol:14757135",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473234673"
+        },
+        {
+          "id": "OL27813227W",
+          "title": "Second Chronicles of Amber",
+          "author": "Roger Zelazny",
+          "coverId": "ol:14771268",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473222151"
+        },
+        {
+          "id": "OL26349155W",
+          "title": "Growing up Weightless",
+          "author": "John M. Ford",
+          "coverId": "ol:12411358",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473232822"
+        },
+        {
+          "id": "OL28017615W",
+          "title": "Secret of Life",
+          "author": "Paul McAuley",
+          "coverId": "ol:14788123",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781399603775"
+        },
+        {
+          "id": "OL13978W",
+          "title": "Roadmarks",
+          "author": "Roger Zelazny",
+          "coverId": "ol:14730990",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473235038"
+        },
+        {
+          "id": "OL28628670W",
+          "title": "Hammer of God",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:14710506",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781473201408"
+        },
+        {
+          "id": "OL37834465W",
+          "title": "First Born",
+          "author": "Maureen Duffy",
+          "coverId": "ol:14746818",
+          "addedAt": "2026-09-25",
+          "from": "isbn:9781399623353"
         }
       ]
     }
