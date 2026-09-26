@@ -30,7 +30,7 @@ export default function CollectionsShelf({ collections }: { collections: Collect
       <div className="mb-5 flex items-baseline justify-between gap-4">
         <h2 id="collections-heading" className="text-2xl text-ink">Collections</h2>
         <Link href="/collections" className="text-sm text-ink-2 underline decoration-line underline-offset-4 hover:text-accent hover:decoration-accent">
-          {collections.length > SHELF_MAX ? `All ${collections.length}` : 'Browse'} <span aria-hidden="true">&rarr;</span>
+          See all <span aria-hidden="true">&rarr;</span>
         </Link>
       </div>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-8">
