@@ -6096,12 +6096,13 @@
           "from": "isbn:9780241284674"
         },
         {
-          "id": "OL21021259W",
+          "id": "OL8193387W",
           "title": "Hard Times",
-          "author": "Gill Tavner",
+          "author": "Charles Dickens",
           "coverId": "ol:14419636",
           "addedAt": "2026-09-26",
-          "from": "isbn:9780141198347"
+          "from": "isbn:9780141198347",
+          "coverIsbn": "9780141198347"
         },
         {
           "id": "OL1100007W",
