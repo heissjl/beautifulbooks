@@ -46,6 +46,8 @@ const NAME_FIXES: Record<string, string> = {
   'Gr\uFFFDgoire H\uFFFDnon': 'Grégoire Hénon',
   '\uFFFDric Seigaud': 'Éric Seigaud',
   'Sevin\uFFFD Altan': 'Sevinç Altan',
+  'Aur\uFFFDlien Police': 'Aurélien Police',
+  'F. J\uFFFDrgen Rogner': 'F. Jürgen Rogner',
 };
 
 /** A name as ISFDB sent it, with a lost letter put right, or null when it cannot be. */

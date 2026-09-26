@@ -1,0 +1,3011 @@
+{
+ "25": {
+  "order": 25,
+  "id": "OL19208208W",
+  "title": "Arslan (SF Masterworks)",
+  "author": "M. J. Engh",
+  "en": [
+   "Arslan"
+  ],
+  "surname": "Engh",
+  "dnbQueries": [
+   "tit=\"Arslan\" and per=Engh"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Arslan\" and bib.author all \"Engh\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9782207131336",
+    "lang": "fre",
+    "title": "Arslan / M. J. Engh ; traduit de l'anglais (États-Unis) par Jacques Collin",
+    "publisher": "Denoël (Paris)",
+    "year": "2016",
+    "source": "bnf",
+    "ol": null
+   }
+  ],
+  "failed": [
+   "isfdb 9782207131336: Error: https://www.isfdb.org/cgi-bin/rest/getpub.cgi?9782207131336: 522"
+  ]
+ },
+ "38": {
+  "order": 38,
+  "id": "OL19345375W",
+  "title": "Of Men and Monsters",
+  "author": "William Tenn",
+  "en": [
+   "Of Men and Monsters"
+  ],
+  "surname": "Tenn",
+  "dnbQueries": [
+   "tit=\"Of Men and Monsters\" and per=Tenn"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Des hommes et des monstres\" and bib.author all \"Tenn\"",
+   "bib.title all \"Of Men and Monsters\" and bib.author all \"Tenn\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "44": {
+  "order": 44,
+  "id": "OL166482W",
+  "title": "The Affirmation",
+  "author": "Christopher Priest",
+  "en": [
+   "The Affirmation"
+  ],
+  "surname": "Priest",
+  "dnbQueries": [
+   "tit=\"The Affirmation\" and per=Priest"
+  ],
+  "bnfQueries": [
+   "bib.title all \"La Fontaine pétrifiante\" and bib.author all \"Priest\"",
+   "bib.title all \"The Affirmation\" and bib.author all \"Priest\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2070423514",
+    "lang": "fre",
+    "title": "La fontaine pétrifiante / Christopher Priest ; trad. de l'anglais par Jacques Chambon",
+    "publisher": "Gallimard (Paris)",
+    "year": "2003",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "827876",
+      "title": "La fontaine p�trifiante",
+      "year": "2003-02-20",
+      "publisher": "Gallimard",
+      "artists": [
+       "�ric Scala"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/d/da/LFNTNPTRFN2003.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL8839734M",
+     "covers": [
+      969012
+     ]
+    }
+   },
+   {
+    "isbn": "2266031694",
+    "lang": "fre",
+    "title": "La Fontaine pétrifiante / Christopher Priest ; trad. de l'anglais par Jacques Chambon",
+    "publisher": "Presses pocket (Paris)",
+    "year": "1990",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "338908",
+      "title": "La fontaine p�trifiante",
+      "year": "1990-03-00",
+      "publisher": "Presses Pocket",
+      "artists": [
+       "W. Siudmak"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/d/db/LFNTNPTRFN1990.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL37045478M",
+     "works": [
+      {
+       "key": "/works/OL27292778W"
+      }
+     ],
+     "covers": []
+    }
+   },
+   {
+    "isbn": "2702104339",
+    "lang": "fre",
+    "title": "La Fontaine pétrifiante / Christopher Priest ; traduit de l'anglais par Jacques Chambon",
+    "publisher": "Calmann-Lévy (Paris)",
+    "year": "1981",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": null
+   },
+   {
+    "isbn": "9783453310377",
+    "lang": "ger",
+    "title": "Der weisse Raum : Science-fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1984",
+    "source": "dnb:840943997",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "604878",
+      "title": "Der wei�e Raum",
+      "year": "1984-05-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Jobst Teltschik"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/e/ef/DRWRMGTKVT1984.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL30791868M",
+     "works": [
+      {
+       "key": "/works/OL22869894W"
+      }
+     ],
+     "covers": [
+      10502502
+     ]
+    },
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "49": {
+  "order": 49,
+  "id": "OL20074002W",
+  "title": "Floating Worlds",
+  "author": "Cecelia Holland",
+  "en": [
+   "Floating Worlds"
+  ],
+  "surname": "Holland",
+  "dnbQueries": [
+   "tit=\"Floating Worlds\" and per=Holland"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Floating Worlds\" and bib.author all \"Holland\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783453305731",
+    "lang": "ger",
+    "title": "Wandernde Welten : Science-fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1979",
+    "source": "dnb:790455838",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "977370",
+      "title": "Wandernde Welten",
+      "year": "1979-00-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Chris Foss"
+      ],
+      "image": "https://isfdb.org/wiki/images/f/ff/WNDRNDWLTN1979.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "50": {
+  "order": 50,
+  "id": "OL16513W",
+  "title": "Blood Music",
+  "author": "Greg Bear",
+  "en": [
+   "Blood Music"
+  ],
+  "surname": "Bear",
+  "dnbQueries": [
+   "tit=\"Blood Music\" and per=Bear"
+  ],
+  "bnfQueries": [
+   "bib.title all \"La Musique du sang\" and bib.author all \"Bear\"",
+   "bib.title all \"Blood Music\" and bib.author all \"Bear\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2070316432",
+    "lang": "fre",
+    "title": "La musique du sang / Greg Bear ; trad. de l'américain par Monique Lebailly",
+    "publisher": "Gallimard (Paris)",
+    "year": "2005",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "426708",
+      "title": "La musique du sang",
+      "year": "2005-01-24",
+      "publisher": "Gallimard",
+      "artists": [
+       "Benjamin Carr�"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/7/7d/LMSQDSNGTT2005.jpg"
+     }
+    ],
+    "ol": null
+   },
+   {
+    "isbn": "2277223557",
+    "lang": "fre",
+    "title": "La Musique du sang / Greg Bear ; trad. de l'américain par Monique Lebailly",
+    "publisher": "J'ai lu (Paris)",
+    "year": "1988",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "372286",
+      "title": "La musique du sang",
+      "year": "1988-03-25",
+      "publisher": "J'ai Lu",
+      "artists": [
+       "Barclay Shaw"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/8/85/LMSQDSNGST1988.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL45665062M",
+     "works": [
+      {
+       "key": "/works/OL33700867W"
+      }
+     ],
+     "covers": []
+    }
+   },
+   {
+    "isbn": "2707115754",
+    "lang": "fre",
+    "title": "La Musique du sang : roman / Greg Bear ; trad. de l'américain par Monique Lebailly",
+    "publisher": "la Découverte (Paris)",
+    "year": "1985",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "435782",
+      "title": "La musique du sang",
+      "year": "1985-11-00",
+      "publisher": "Editions La D�couverte",
+      "artists": [
+       "�ric Provoost"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/5/50/LMSQDSNGLF1985.jpg"
+     }
+    ],
+    "ol": null
+   },
+   {
+    "isbn": "9783453523654",
+    "lang": "ger",
+    "title": "Blutmusik : Roman",
+    "publisher": "Heyne",
+    "year": "2008",
+    "source": "dnb:98434666X",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "367176",
+      "title": "Blutmusik",
+      "year": "2008-05-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Hauptmann & Kompanie Werbeagentur"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/5/5e/BLTMSKSZCZ2008.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL27297733M",
+     "works": [
+      {
+       "key": "/works/OL20117790W"
+      }
+     ],
+     "covers": [
+      8774527
+     ]
+    },
+    "dnbCover": 32506
+   },
+   {
+    "isbn": "9783453010147",
+    "lang": "ger",
+    "title": "Blutmusik : Roman",
+    "publisher": "Heyne",
+    "year": "1988",
+    "source": "dnb:880698500",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "616203",
+      "title": "Blutmusik",
+      "year": "1988-00-00",
+      "publisher": "Heyne",
+      "artists": [
+       "R. Michael Payne"
+      ],
+      "image": "https://images-na.ssl-images-amazon.com/images/I/71jduq%2BS2mL.jpg"
+     },
+     {
+      "record": "616208",
+      "title": "Blutmusik",
+      "year": "1990-00-00",
+      "publisher": "Heyne",
+      "artists": [
+       "R. Michael Payne"
+      ],
+      "image": "https://images-na.ssl-images-amazon.com/images/I/71jduq%2BS2mL.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL15263451M",
+     "works": [
+      {
+       "key": "/works/OL11480766W"
+      }
+     ],
+     "covers": [
+      14951810
+     ]
+    },
+    "dnbCover": false
+   },
+   {
+    "isbn": "9782382671306",
+    "lang": "fre",
+    "title": "La musique du sang / Greg Bear ; traduction [révisée] de l'américain par Monique Lebailly ; [préface d'Olivier Bérenval]",
+    "publisher": "Mnémos (Saint-Laurent d'Oingt)",
+    "year": "2024",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": null
+   }
+  ],
+  "failed": []
+ },
+ "55": {
+  "order": 55,
+  "id": "OL3290749W",
+  "title": "Odd John",
+  "author": "Olaf Stapledon",
+  "en": [
+   "Odd John"
+  ],
+  "surname": "Stapledon",
+  "dnbQueries": [
+   "tit=\"Odd John\" and per=Stapledon"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Rien qu'un surhomme\" and bib.author all \"Stapledon\"",
+   "bib.title all \"Odd John\" and bib.author all \"Stapledon\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783911230131",
+    "lang": "ger",
+    "title": "Seltsamer John : eine Geschichte zwischen Spaß und Ernst",
+    "publisher": "Dieter von Reeken",
+    "year": "2025",
+    "source": "dnb:1352745860",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": 70802
+   },
+   {
+    "isbn": "9783453303928",
+    "lang": "ger",
+    "title": "Die Insel der Mutanten : e. klass. Science-Fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1977",
+    "source": "dnb:770139434",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "596542",
+      "title": "Wegweiser ins Nirgendwo",
+      "year": "1976-00-00",
+      "publisher": "Heyne",
+      "artists": [
+       "George Jones"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/d/d9/WGWSRNSNRG1976.jpg"
+     },
+     {
+      "record": "649825",
+      "title": "Die Insel der Mutanten",
+      "year": "1977-01-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Karl Stephan"
+      ],
+      "image": "https://images-na.ssl-images-amazon.com/images/I/51KX1ydvrDL.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL32153300M",
+     "works": [
+      {
+       "key": "/works/OL24307504W"
+      }
+     ],
+     "covers": [
+      14232905,
+      10821564
+     ]
+    },
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "63": {
+  "order": 63,
+  "id": "OL2657126W",
+  "title": "Sarah Canary",
+  "author": "Karen Joy Fowler",
+  "en": [
+   "Sarah Canary"
+  ],
+  "surname": "Fowler",
+  "dnbQueries": [
+   "tit=\"Sarah Canary\" and per=Fowler"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Sarah Canary\" and bib.author all \"Fowler\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783442542543",
+    "lang": "ger",
+    "title": "Das Geheimnis der Sarah Canary : Roman",
+    "publisher": "Goldmann",
+    "year": "2008",
+    "source": "dnb:986849693",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": 27931
+   },
+   {
+    "isbn": "9783442414772",
+    "lang": "ger",
+    "title": "Sarah Canary : Roman",
+    "publisher": "Goldmann",
+    "year": "1996",
+    "source": "dnb:947497447",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": false
+   },
+   {
+    "isbn": "9783822502372",
+    "lang": "ger",
+    "title": "Sarah Canary : Roman",
+    "publisher": "Kabel",
+    "year": "c 1993",
+    "source": "dnb:947153098",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "64": {
+  "order": 64,
+  "id": "OL19186717W",
+  "title": "The Continuous Katherine Mortenhoe (SF Masterworks)",
+  "author": "D. G. Compton",
+  "en": [
+   "The Continuous Katherine Mortenhoe",
+   "The Unsleeping Eye"
+  ],
+  "surname": "Compton",
+  "dnbQueries": [
+   "tit=\"The Continuous Katherine Mortenhoe\" and per=Compton",
+   "tit=\"The Unsleeping Eye\" and per=Compton"
+  ],
+  "bnfQueries": [
+   "bib.title all \"L'Incurable\" and bib.author all \"Compton\"",
+   "bib.title all \"The Continuous Katherine Mortenhoe\" and bib.author all \"Compton\"",
+   "bib.title all \"The Unsleeping Eye\" and bib.author all \"Compton\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2277217557",
+    "lang": "fre",
+    "title": "La mort en direct / D. G. Compton ; trad. de l'anglais par Barthélemy de Lesseps",
+    "publisher": "J'ai lu (Paris)",
+    "year": "1984",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "366444",
+      "title": "La mort en direct",
+      "year": "1984-12-10",
+      "publisher": "J'ai Lu",
+      "artists": [
+       "Barclay Shaw"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/f/ff/LMRTNDRCTJ1984.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL27097358M",
+     "works": [
+      {
+       "key": "/works/OL19912774W"
+      }
+     ],
+     "covers": [
+      8737267
+     ]
+    }
+   },
+   {
+    "isbn": "2702100740",
+    "lang": "fre",
+    "title": "L'incurable / D. G. Compton ; trad. de l'anglais par Barthélemy de Lesseps",
+    "publisher": "Calmann-Lévy (Paris)",
+    "year": "1975",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "366441",
+      "title": "L'incurable",
+      "year": "1975-09-15",
+      "publisher": "Calmann-L�vy",
+      "artists": [],
+      "image": "https://www.isfdb.org/wiki/images/7/76/LNCRBLBZTC1975.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL45776308M",
+     "works": [
+      {
+       "key": "/works/OL33803100W"
+      }
+     ],
+     "covers": []
+    }
+   },
+   {
+    "isbn": "9783442233694",
+    "lang": "ger",
+    "title": "Der gekaufte Tod : (schlaflose Augen) ; Science-fiction-Roman = Death watch",
+    "publisher": "Goldmann",
+    "year": "1980",
+    "source": "dnb:810684276",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "366442",
+      "title": "Der gekaufte Tod: (Schlaflose Augen)",
+      "year": "1980-04-00",
+      "publisher": "Goldmann",
+      "artists": [
+       "Eugen Bussinger"
+      ],
+      "image": "https://m.media-amazon.com/images/I/41h9igJneZL.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL43862129M",
+     "works": [
+      {
+       "key": "/works/OL32127684W"
+      }
+     ],
+     "covers": []
+    },
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "68": {
+  "order": 68,
+  "id": "OL19882938W",
+  "title": "The Caltraps of Time (S.F. Masterworks)",
+  "author": "David I. Masson",
+  "en": [
+   "The Caltraps of Time"
+  ],
+  "surname": "Masson",
+  "dnbQueries": [
+   "tit=\"The Caltraps of Time\" and per=Masson"
+  ],
+  "bnfQueries": [
+   "bib.title all \"The Caltraps of Time\" and bib.author all \"Masson\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783548310770",
+    "lang": "ger",
+    "title": "An den Grenzen der Zeit : [Stories]",
+    "publisher": "Ullstein",
+    "year": "1984",
+    "source": "dnb:840435568",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "591169",
+      "title": "An den Grenzen der Zeit",
+      "year": "1984-05-00",
+      "publisher": "Ullstein",
+      "artists": [
+       "Emsh"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/4/41/NDNGRNZNDR1984.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL27263597M",
+     "works": [
+      {
+       "key": "/works/OL20083573W"
+      }
+     ],
+     "covers": [
+      8753109
+     ]
+    },
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "69": {
+  "order": 69,
+  "id": "OL11441065W",
+  "title": "Unquenchable fire",
+  "author": "Rachel Pollack",
+  "en": [
+   "Unquenchable fire"
+  ],
+  "surname": "Pollack",
+  "dnbQueries": [
+   "tit=\"Unquenchable fire\" and per=Pollack"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Unquenchable fire\" and bib.author all \"Pollack\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "70": {
+  "order": 70,
+  "id": "OL482569W",
+  "title": "Engine Summer",
+  "author": "John Crowley",
+  "en": [
+   "Engine Summer"
+  ],
+  "surname": "Crowley",
+  "dnbQueries": [
+   "tit=\"Engine Summer\" and per=Crowley"
+  ],
+  "bnfQueries": [
+   "bib.title all \"L'Été-machine\" and bib.author all \"Crowley\"",
+   "bib.title all \"Engine Summer\" and bib.author all \"Crowley\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2714413994",
+    "lang": "fre",
+    "title": "L'Été-machine / John Crowley ; traduit de l'américain par Rémi Oliska",
+    "publisher": "P. Belfond (Paris)",
+    "year": "1981",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": null
+   },
+   {
+    "isbn": "2915793158",
+    "lang": "fre",
+    "title": "L'été-machine / John Crowley ; traduction de Rémi Oliska ; préface d'André-François Ruaud",
+    "publisher": "les Moutons électriques (Lyon)",
+    "year": "2006",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "1068237",
+      "title": "L'�t�-machine",
+      "year": "2006-04-00",
+      "publisher": "Les Moutons �lectriques",
+      "artists": [
+       "James Jean"
+      ],
+      "image": "https://m.media-amazon.com/images/I/41uwWoZk5xL.jpg"
+     }
+    ],
+    "ol": null
+   },
+   {
+    "isbn": "9783453308572",
+    "lang": "ger",
+    "title": "Maschinensommer : Science-fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1982",
+    "source": "dnb:850677203",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "575040",
+      "title": "Maschinensommer",
+      "year": "1982-11-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Steve R. Dodd"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/f/f5/MSCHNNSMMR1982.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL30518133M",
+     "works": [
+      {
+       "key": "/works/OL22427004W"
+      }
+     ],
+     "covers": [
+      10457833
+     ]
+    },
+    "dnbCover": false
+   },
+   {
+    "isbn": "9782757802366",
+    "lang": "fre",
+    "title": "L'été-machine : roman / John Crowley ; traduit de l'anglais (États-Unis) par Rémi Oliska ; préface d'André-François Ruaud",
+    "publisher": "Points (Paris)",
+    "year": "2007",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": null
+   }
+  ],
+  "failed": []
+ },
+ "78": {
+  "order": 78,
+  "id": "OL20070897W",
+  "title": "This Is the Way the World Ends (S.F. Masterworks)",
+  "author": "James Morrow",
+  "en": [
+   "This Is the Way the World Ends"
+  ],
+  "surname": "Morrow",
+  "dnbQueries": [
+   "tit=\"This Is the Way the World Ends\" and per=Morrow"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Ainsi finit le monde\" and bib.author all \"Morrow\"",
+   "bib.title all \"This Is the Way the World Ends\" and bib.author all \"Morrow\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2207304582",
+    "lang": "fre",
+    "title": "Ainsi finit le monde : roman / James Morrow ; trad. de l'américain par Luc Carissimo",
+    "publisher": "Denoël (Paris)",
+    "year": "1988",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "573754",
+      "title": "Ainsi finit le monde",
+      "year": "1988-03-00",
+      "publisher": "Deno�l",
+      "artists": [
+       "Serge Bihannic"
+      ],
+      "image": "https://images-na.ssl-images-amazon.com/images/I/51WPYR0TJ0L.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL8864582M",
+     "covers": [
+      973781
+     ]
+    }
+   }
+  ],
+  "failed": []
+ },
+ "81": {
+  "order": 81,
+  "id": "OL21478785W",
+  "title": "Time Is the Fire",
+  "author": "Connie Willis",
+  "en": [
+   "Time Is the Fire",
+   "The Best of Connie Willis"
+  ],
+  "surname": "Willis",
+  "dnbQueries": [
+   "tit=\"Time Is the Fire\" and per=Willis",
+   "tit=\"The Best of Connie Willis\" and per=Willis"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Time Is the Fire\" and bib.author all \"Willis\"",
+   "bib.title all \"The Best of Connie Willis\" and bib.author all \"Willis\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9782290097960",
+    "lang": "fre",
+    "title": "Les veilleurs : nouvelles / Connie Willis ; traduit de l'anglais (États-Unis) par Françoise Jamoul, Jean-Pierre Pugi, Philippe Hupp... [et al.] ; traductions harmonisées par Sébastien Guillot",
+    "publisher": "Éditions J'ai lu (Paris)",
+    "year": "2015",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "619841",
+      "title": "Les veilleurs",
+      "year": "2015-04-29",
+      "publisher": "J'ai Lu",
+      "artists": [],
+      "image": "https://images-na.ssl-images-amazon.com/images/I/61G1og9Q1aL.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL44908075M",
+     "works": [
+      {
+       "key": "/works/OL33045478W"
+      }
+     ],
+     "covers": [
+      13115711
+     ]
+    }
+   },
+   {
+    "isbn": "9782290097991",
+    "lang": "fre",
+    "title": "Les veilleurs / Connie Willis ; traduit de l'anglais (États-Unis) par Françoise Jamoul, Jean-Pierre Pugi, Philippe Hupp... [et al] ; traductions harmonisées par Sébastien Guillot",
+    "publisher": "J'ai lu (Paris)",
+    "year": "2016",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": null
+   }
+  ],
+  "failed": []
+ },
+ "88": {
+  "order": 88,
+  "id": "OL19325351W",
+  "title": "Transfigurations (S.F. Masterworks)",
+  "author": "Michael Bishop",
+  "en": [
+   "Transfigurations"
+  ],
+  "surname": "Bishop",
+  "dnbQueries": [
+   "tit=\"Transfigurations\" and per=Bishop"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Transfigurations\" and bib.author all \"Bishop\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783453313248",
+    "lang": "ger",
+    "title": "Transfigurationen : Science-fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1986",
+    "source": "dnb:861126483",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "389731",
+      "title": "Transfigurationen",
+      "year": "1986-10-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Klaus Holitzka"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/3/3f/TRNSFGRTNN1986.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "91": {
+  "order": 91,
+  "id": "OL7117373W",
+  "title": "Half Past Human",
+  "author": "T. J. Bass",
+  "en": [
+   "Half Past Human"
+  ],
+  "surname": "Bass",
+  "dnbQueries": [
+   "tit=\"Half Past Human\" and per=Bass",
+   "tit=\"Die Ameisenkultur\" and per=Bass"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Half Past Human\" and bib.author all \"Bass\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2720100358",
+    "lang": "fre",
+    "title": "Humanité et demie / T.J. Bass ; [traduit par Françoise Maillet ; illustré par Pierre Clément]",
+    "publisher": "Éditions Opta (Paris)",
+    "year": "1975",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "393877",
+      "title": "Humanit� et demie",
+      "year": "1975-12-01",
+      "publisher": "OPTA",
+      "artists": [],
+      "image": "https://www.isfdb.org/wiki/images/d/db/HMNTTDMJWD1975.jpg"
+     }
+    ],
+    "ol": null
+   },
+   {
+    "isbn": "9783442231638",
+    "lang": "ger",
+    "title": "Die Ameisenkultur : utop.-techn. Roman = Half past human",
+    "publisher": "Goldmann",
+    "year": "1972",
+    "source": "dnb:730414388",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "398775",
+      "title": "Die Ameisenkultur",
+      "year": "1973-03-00",
+      "publisher": "Goldmann",
+      "artists": [
+       "Eyke Volkmer"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/e/ea/DMSNKLTRWS1973.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL28367367M",
+     "works": [
+      {
+       "key": "/works/OL20937696W"
+      }
+     ],
+     "covers": [
+      10306627
+     ]
+    },
+    "dnbCover": false
+   },
+   {
+    "isbn": "225302208X",
+    "lang": "fre",
+    "title": "Humanité et demie / T.J. Bass ; traduit par François Maillet",
+    "publisher": "le Livre de poche (Paris)",
+    "year": "1979",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "349455",
+      "title": "Humanit� et demie",
+      "year": "1979-00-00",
+      "publisher": "Le Livre de Poche",
+      "artists": [
+       "G�rard Ruffin"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/b/b9/HMNTTDMZTW1979.jpg"
+     },
+     {
+      "record": "349456",
+      "title": "Humanit� et demie",
+      "year": "1987-11-00",
+      "publisher": "Le Livre de Poche",
+      "artists": [
+       "Manchu"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/6/61/HMNTTDMTRR1987.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL27104747M",
+     "works": [
+      {
+       "key": "/works/OL19920147W"
+      }
+     ],
+     "covers": [
+      8741665
+     ]
+    }
+   }
+  ],
+  "failed": []
+ },
+ "95": {
+  "order": 95,
+  "id": "OL21118741W",
+  "title": "Shrinking Man",
+  "author": "Ted Adams",
+  "en": [
+   "The Shrinking Man"
+  ],
+  "surname": "Matheson",
+  "dnbQueries": [
+   "tit=\"The Shrinking Man\" and per=Matheson"
+  ],
+  "bnfQueries": [
+   "bib.title all \"The Shrinking Man\" and bib.author all \"Matheson\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2070415813",
+    "lang": "fre",
+    "title": "L'homme qui rétrécit / Richard Matheson ; trad. de l'américain par Jacques Chambon",
+    "publisher": "Gallimard (Paris)",
+    "year": "2000",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "826446",
+      "title": "L'homme qui r�tr�cit",
+      "year": "2011-06-11",
+      "publisher": "Deno�l",
+      "artists": [],
+      "image": "https://www.isfdb.org/wiki/images/5/59/LHMMQRTRCT2011.jpg"
+     },
+     {
+      "record": "858813",
+      "title": "L'homme qui r�tr�cit",
+      "year": "2008-12-01",
+      "publisher": "Deno�l",
+      "artists": [],
+      "image": "https://www.isfdb.org/wiki/images/3/39/LHMMQRTRCT2008.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL12394442M",
+     "works": [
+      {
+       "key": "/works/OL64219W"
+      }
+     ],
+     "covers": [
+      3075987
+     ]
+    }
+   },
+   {
+    "isbn": "2207246981",
+    "lang": "fre",
+    "title": "L'homme qui rétrécit : roman / Richard Matheson ; trad. de l'américain par Jacques Chambon et Claude Elsen",
+    "publisher": "Denoël (Paris)",
+    "year": "1999",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": null
+   },
+   {
+    "isbn": "2207500187",
+    "lang": "fre",
+    "title": "L'Homme qui rétrécit / Richard Matheson ; traduit de l'américain par Claude Elsen",
+    "publisher": "Denoël (Paris)",
+    "year": "1975",
+    "source": "bnf",
+    "ol": null
+   },
+   {
+    "isbn": "9783986763077",
+    "lang": "ger",
+    "title": "Der schwindende Mann",
+    "publisher": "Festa",
+    "year": "2026",
+    "source": "dnb:1402373481",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "1121100",
+      "title": "Der schwindende Mann",
+      "year": "2026-07-15",
+      "publisher": "Festa",
+      "artists": [],
+      "image": "https://m.media-amazon.com/images/I/81SO8PsqkYL.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": 37666
+   },
+   {
+    "isbn": "9783453309616",
+    "lang": "ger",
+    "title": "Die seltsame Geschichte des M[iste]r C : Science-fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1983",
+    "source": "dnb:830992472",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "366495",
+      "title": "Die seltsame Geschichte des Mr. C",
+      "year": "1983-07-00",
+      "publisher": "Heyne",
+      "artists": [
+       "J. M. Paill�"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/3/3c/DSLTSMGSCH1983.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": false
+   },
+   {
+    "isbn": "9782070461578",
+    "lang": "fre",
+    "title": "Par-delà la légende : romans / Richard Matheson ; traduit de l'américain par Nathalie Serval, Jacques Chambon et Ronald Blunden",
+    "publisher": "Gallimard (Paris)",
+    "year": "2014",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": {
+     "edition": "/books/OL51006210M",
+     "works": [
+      {
+       "key": "/works/OL37802630W"
+      }
+     ],
+     "covers": [
+      14576635
+     ]
+    }
+   }
+  ],
+  "failed": [
+   "isfdb 2207500187: Error: https://www.isfdb.org/cgi-bin/rest/getpub.cgi?2207500187: The operation was aborted due to timeout"
+  ]
+ },
+ "97": {
+  "order": 97,
+  "id": "OL7910223W",
+  "title": "Her Smoke Rose Up Forever",
+  "author": "James Tiptree, Jr.",
+  "en": [
+   "Her Smoke Rose Up Forever"
+  ],
+  "surname": "Tiptree",
+  "dnbQueries": [
+   "tit=\"Her Smoke Rose Up Forever\" and per=Tiptree"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Her Smoke Rose Up Forever\" and bib.author all \"Tiptree\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "100": {
+  "order": 100,
+  "id": "OL1920272W",
+  "title": "The Child Garden",
+  "author": "Geoff Ryman",
+  "en": [
+   "The Child Garden"
+  ],
+  "surname": "Ryman",
+  "dnbQueries": [
+   "tit=\"The Child Garden\" and per=Ryman"
+  ],
+  "bnfQueries": [
+   "bib.title all \"The Child Garden\" and bib.author all \"Ryman\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "101": {
+  "order": 101,
+  "id": "OL20119339W",
+  "title": "Mission Of Gravity: Mesklinite Book 1 (S.F. Masterworks)",
+  "author": "Hal Clement",
+  "en": [
+   "Mission of Gravity"
+  ],
+  "surname": "Clement",
+  "dnbQueries": [
+   "tit=\"Mission of Gravity\" and per=Clement"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Question de poids\" and bib.author all \"Clement\"",
+   "bib.title all \"Mission of Gravity\" and bib.author all \"Clement\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2266011294",
+    "lang": "fre",
+    "title": "Mission Gravité : roman / Hal Clement ; traduit de l'américain par Pierre Versins et Martine Renaud...",
+    "publisher": "Presses pocket (Paris)",
+    "year": "1982",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "336164",
+      "title": "Mission Gravit�",
+      "year": "1982-03-00",
+      "publisher": "Presses Pocket",
+      "artists": [
+       "W. Siudmak"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/8/8c/MSSNGRVTND1982.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL47086381M",
+     "works": [
+      {
+       "key": "/works/OL34737746W"
+      }
+     ],
+     "covers": [
+      13452062
+     ]
+    }
+   },
+   {
+    "isbn": "9783453304895",
+    "lang": "ger",
+    "title": "Unternehmen Schwerkraft : Science-fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1978",
+    "source": "dnb:780180763",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "556535",
+      "title": "Unternehmen Schwerkraft",
+      "year": "1978-00-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Olof Feindt"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/6/69/NTRNHMNSCH1978.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "109": {
+  "order": 109,
+  "id": "OL19546464W",
+  "title": "Dark Benediction",
+  "author": "Walter M. Miller, Jr.",
+  "en": [
+   "Dark Benediction"
+  ],
+  "surname": "Miller",
+  "dnbQueries": [
+   "tit=\"Dark Benediction\" and per=Miller"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Dark Benediction\" and bib.author all \"Miller\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "122": {
+  "order": 122,
+  "id": "OL20126875W",
+  "title": "China Mountain Zhang",
+  "author": "Maureen F. McHugh",
+  "en": [
+   "China Mountain Zhang"
+  ],
+  "surname": "McHugh",
+  "dnbQueries": [
+   "tit=\"China Mountain Zhang\" and per=McHugh"
+  ],
+  "bnfQueries": [
+   "bib.title all \"China Mountain Zhang\" and bib.author all \"McHugh\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783886199532",
+    "lang": "ger",
+    "title": "ABC-Zhang : Roman",
+    "publisher": "Argument-Verl.",
+    "year": "2000",
+    "source": "dnb:966432940",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "473341",
+      "title": "ABC Zhang",
+      "year": "2000-00-00",
+      "publisher": "Argument",
+      "artists": [
+       "Martin Grundmann"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/0/0c/BCZHNGDXVT2000.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL27289826M",
+     "works": [
+      {
+       "key": "/works/OL20109830W"
+      }
+     ],
+     "covers": [
+      8769705
+     ]
+    },
+    "dnbCover": 31606
+   }
+  ],
+  "failed": []
+ },
+ "124": {
+  "order": 124,
+  "id": "OL14871968W",
+  "title": "Sword & citadel",
+  "author": "Gene Wolfe",
+  "en": [
+   "The Sword of the Lictor",
+   "The Citadel of the Autarch",
+   "Sword and Citadel"
+  ],
+  "surname": "Wolfe",
+  "dnbQueries": [
+   "tit=\"The Sword of the Lictor\" and per=Wolfe",
+   "tit=\"The Citadel of the Autarch\" and per=Wolfe",
+   "tit=\"Sword and Citadel\" and per=Wolfe"
+  ],
+  "bnfQueries": [
+   "bib.title all \"The Sword of the Lictor\" and bib.author all \"Wolfe\"",
+   "bib.title all \"The Citadel of the Autarch\" and bib.author all \"Wolfe\"",
+   "bib.title all \"Sword and Citadel\" and bib.author all \"Wolfe\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2207303616",
+    "lang": "fre",
+    "title": "L'Épée du licteur / Gene Wolfe ; traduit de l'américain par William Desmond",
+    "publisher": "Denoël (Paris)",
+    "year": "1983",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "333779",
+      "title": "L'�p�e du licteur",
+      "year": "1983-04-00",
+      "publisher": "Deno�l",
+      "artists": [
+       "Raymond Hermange"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/0/0e/LPDLCTRTBN1983.jpg"
+     }
+    ]
+   },
+   {
+    "isbn": "2207303756",
+    "lang": "fre",
+    "title": "La Citadelle de l'autarque / Gene Wolfe ; traduit de l'américain par William Desmond",
+    "publisher": "Denoël (Paris)",
+    "year": "1984",
+    "source": "bnf",
+    "ol": {
+     "edition": "/books/OL12452140M",
+     "works": [
+      {
+       "key": "/works/OL14871898W"
+      }
+     ],
+     "covers": [
+      3091873
+     ]
+    }
+   },
+   {
+    "isbn": "9783910914643",
+    "lang": "ger",
+    "title": "Das Buch der neuen Sonne II : Das Schwert des Liktors und Die Zitadelle des Autorachen in einem Band",
+    "publisher": "Carcosa Verlag",
+    "year": "2026",
+    "source": "dnb:138593302X",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": 25268
+   },
+   {
+    "isbn": "9782070406920",
+    "lang": "fre",
+    "title": "L'épée du licteur / Gene Wolfe ; traduit de l'américain par William Desmond ; édition définitive établie par Patrick Marcel",
+    "publisher": "Gallimard (Paris)",
+    "year": "2009",
+    "source": "bnf",
+    "ol": null
+   },
+   {
+    "isbn": "9782070429189",
+    "lang": "fre",
+    "title": "La citadelle de l'Autarch ; suivi de Le chat ; et La carte (Éd. définitive) Gene Wolfe",
+    "publisher": "Gallimard (Paris)",
+    "year": "2010",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "567831",
+      "title": "La citadelle de l'Autarque",
+      "year": "2010-02-10",
+      "publisher": "Deno�l",
+      "artists": [
+       "Anthony Wolff (Artist)"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/1/11/LCTDLLDLTR2010.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL27082478M",
+     "works": [
+      {
+       "key": "/works/OL14871898W"
+      }
+     ],
+     "covers": [
+      8709239
+     ]
+    }
+   }
+  ],
+  "failed": [
+   "ol 2207303616: Error: https://openlibrary.org/isbn/2207303616.json: fetch failed",
+   "isfdb 2207303756: Error: https://www.isfdb.org/cgi-bin/rest/getpub.cgi?2207303756: 522",
+   "isfdb 9782070406920: Error: https://www.isfdb.org/cgi-bin/rest/getpub.cgi?9782070406920: 522"
+  ]
+ },
+ "130": {
+  "order": 130,
+  "id": "OL52246W",
+  "title": "The Shape of Things to Come",
+  "author": "H. G. Wells",
+  "en": [
+   "The Shape of Things to Come"
+  ],
+  "surname": "Wells",
+  "dnbQueries": [
+   "tit=\"The Shape of Things to Come\" and per=Wells"
+  ],
+  "bnfQueries": [
+   "bib.title all \"The Shape of Things to Come\" and bib.author all \"Wells\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "135": {
+  "order": 135,
+  "id": "OL104510W",
+  "title": "Raising the stones",
+  "author": "Sheri S. Tepper",
+  "en": [
+   "Raising the stones"
+  ],
+  "surname": "Tepper",
+  "dnbQueries": [
+   "tit=\"Raising the stones\" and per=Tepper"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Raising the stones\" and bib.author all \"Tepper\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "138": {
+  "order": 138,
+  "id": "OL21631946W",
+  "title": "Land Under England",
+  "author": "Joseph O'Neill",
+  "en": [
+   "Land Under England"
+  ],
+  "surname": "O'Neill",
+  "dnbQueries": [
+   "tit=\"Land Under England\" and per=O'Neill"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Land Under England\" and bib.author all \"O'Neill\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9782379411960",
+    "lang": "fre",
+    "title": "La terre sous l'Angleterre (Éd. revue et corrigée) Joseph O'Neill ; traduction de l'anglais de Jacques Gans revue et corrigée ; préface de Guy Costes",
+    "publisher": "l'Arbre vengeur (Talence)",
+    "year": "2022",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": null
+   }
+  ],
+  "failed": []
+ },
+ "139": {
+  "order": 139,
+  "id": "OL72847W",
+  "title": "Raft",
+  "author": "Stephen Baxter",
+  "en": [
+   "Raft"
+  ],
+  "surname": "Baxter",
+  "dnbQueries": [
+   "tit=\"Raft\" and per=Baxter"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Gravité\" and bib.author all \"Baxter\"",
+   "bib.title all \"Raft\" and bib.author all \"Baxter\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9782843440878",
+    "lang": "fre",
+    "title": "Gravité / Stephen Baxter ; [traduit de l'anglais par Guillaume Fournier]",
+    "publisher": "le Bélial' (Saint-Mammès)",
+    "year": "2008",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "565341",
+      "title": "Gravit�",
+      "year": "2008-09-00",
+      "publisher": "Le B�lial'",
+      "artists": [
+       "Manchu"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/9/9c/GRVTXFVDFL2008.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL27141141M",
+     "works": [
+      {
+       "key": "/works/OL19960904W"
+      }
+     ],
+     "covers": []
+    }
+   },
+   {
+    "isbn": "9782266195386",
+    "lang": "fre",
+    "title": "Gravité / Stephen Baxter ; traduit de l'anglais par Guillaume Fournier",
+    "publisher": "Pocket (Paris)",
+    "year": "2013",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "623174",
+      "title": "Gravit�",
+      "year": "2013-01-00",
+      "publisher": "Presses Pocket",
+      "artists": [],
+      "image": "https://www.isfdb.org/wiki/images/f/f7/GRVTRCWTZK2013.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL26852810M",
+     "works": [
+      {
+       "key": "/works/OL19631871W"
+      }
+     ],
+     "covers": [
+      8540683
+     ]
+    }
+   }
+  ],
+  "failed": []
+ },
+ "140": {
+  "order": 140,
+  "id": "OL20061187W",
+  "title": "Dreaming In Smoke (Gateway Essentials,S.F. MASTERWORKS)",
+  "author": "Tricia Sullivan",
+  "en": [
+   "Dreaming in Smoke"
+  ],
+  "surname": "Sullivan",
+  "dnbQueries": [
+   "tit=\"Dreaming in Smoke\" and per=Sullivan"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Dreaming in Smoke\" and bib.author all \"Sullivan\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "142": {
+  "order": 142,
+  "id": "OL20119856W",
+  "title": "The Best of R. A. Lafferty",
+  "author": "R. A. Lafferty",
+  "en": [
+   "The Best of R. A. Lafferty"
+  ],
+  "surname": "Lafferty",
+  "dnbQueries": [
+   "tit=\"The Best of R. A. Lafferty\" and per=Lafferty"
+  ],
+  "bnfQueries": [
+   "bib.title all \"The Best of R. A. Lafferty\" and bib.author all \"Lafferty\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "143": {
+  "order": 143,
+  "id": "OL2643429W",
+  "title": "Light",
+  "author": "M. John Harrison",
+  "en": [
+   "Light"
+  ],
+  "surname": "Harrison",
+  "dnbQueries": [
+   "tit=\"Light\" and per=Harrison"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Light\" and bib.author all \"Harrison\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2070366219",
+    "lang": "fre",
+    "title": "Lumière d'août / William Faulkner ; traduit de l'anglais [et préfacé] par Maurice-Edgar Coindreau",
+    "publisher": "Gallimard (Paris)",
+    "year": "1974",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": {
+     "edition": "/books/OL8837968M",
+     "works": [
+      {
+       "key": "/works/OL82931W"
+      }
+     ],
+     "covers": [
+      967298
+     ]
+    }
+   },
+   {
+    "isbn": "2265077267",
+    "lang": "fre",
+    "title": "L'ombre du Shrander / M. John Harrison ; trad. de l'anglais par Bernard Sigaud",
+    "publisher": "Fleuve noir (Paris)",
+    "year": "2004",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "573615",
+      "title": "L'ombre du Shrander",
+      "year": "2004-05-00",
+      "publisher": "Fleuve Noir",
+      "artists": [
+       "Stephan Martiniere"
+      ],
+      "image": "https://images-na.ssl-images-amazon.com/images/I/61jpYtK%2BthL.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL27264574M",
+     "works": [
+      {
+       "key": "/works/OL20084554W"
+      }
+     ],
+     "covers": [
+      8753744
+     ]
+    }
+   },
+   {
+    "isbn": "9783492706353",
+    "lang": "ger",
+    "title": "Herr des Lichts : Roman",
+    "publisher": "Piper",
+    "year": "[2023]",
+    "source": "dnb:1285611314",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "979368",
+      "title": "Herr des Lichts",
+      "year": "2023-08-31",
+      "publisher": "Piper (Germany)",
+      "artists": [
+       "Markus Weber"
+      ],
+      "image": "https://isfdb.org/wiki/images/1/1c/HRRDSLCHTS2023.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": 55529
+   },
+   {
+    "isbn": "9783453520042",
+    "lang": "ger",
+    "title": "Licht : Roman",
+    "publisher": "Heyne",
+    "year": "2004",
+    "source": "dnb:971477124",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "400133",
+      "title": "Licht",
+      "year": "2004-12-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Chris Moore"
+      ],
+      "image": ""
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL27312062M",
+     "works": [
+      {
+       "key": "/works/OL20132087W"
+      }
+     ],
+     "covers": [
+      8783549
+     ]
+    },
+    "dnbCover": 41338
+   },
+   {
+    "isbn": "0820452742",
+    "lang": "eng",
+    "title": "Narrative based evaluation : wording toward the light",
+    "publisher": "Lang",
+    "year": "2002",
+    "source": "dnb:959858172",
+    "form": "tu",
+    "isfdb": [],
+    "ol": {
+     "edition": "/books/OL11396575M",
+     "works": [
+      {
+       "key": "/works/OL9621805W"
+      }
+     ],
+     "covers": [
+      5129313
+     ]
+    }
+   },
+   {
+    "isbn": "9783546000772",
+    "lang": "ger",
+    "title": "Im Licht des Südens : = The light of the south : [ein Essay]",
+    "publisher": "Claassen",
+    "year": "1994",
+    "source": "dnb:931501210",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": false
+   },
+   {
+    "isbn": "0226051854",
+    "lang": "eng",
+    "title": "Money and magic : a critique of the modern economy in the light of Goethe's Faust",
+    "publisher": "Univ. of Chicago Press",
+    "year": "1994",
+    "source": "dnb:945276486",
+    "form": "tu",
+    "isfdb": [],
+    "ol": {
+     "edition": "/books/OL1427334M",
+     "works": [
+      {
+       "key": "/works/OL3844450W"
+      }
+     ],
+     "covers": [
+      139783
+     ]
+    }
+   },
+   {
+    "isbn": "9783453311541",
+    "lang": "ger",
+    "title": "Herr des Lichts : Science-fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1985",
+    "source": "dnb:860685829",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "366602",
+      "title": "Herr des Lichts",
+      "year": "1985-05-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Karel Thole"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/9/90/HRRDSLCHTS1985.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL28278732M",
+     "works": [
+      {
+       "key": "/works/OL13992W"
+      }
+     ],
+     "covers": [
+      10205474
+     ]
+    },
+    "dnbCover": false
+   },
+   {
+    "isbn": "9783404220335",
+    "lang": "ger",
+    "title": "Götter aus Licht und Dunkelheit : Science-fiction-Roman",
+    "publisher": "Bastei-Verlag Lübbe",
+    "year": "1981",
+    "source": "dnb:810676060",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "716574",
+      "title": "G�tter aus Licht und Dunkelheit",
+      "year": "1981-06-00",
+      "publisher": "Bastei L�bbe",
+      "artists": [],
+      "image": "https://images-na.ssl-images-amazon.com/images/I/814hNWTB0SL.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": false
+   },
+   {
+    "isbn": "9783453303904",
+    "lang": "ger",
+    "title": "Herr des Lichts : Science-Fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1976",
+    "source": "dnb:760380503",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "374457",
+      "title": "Herr des Lichts",
+      "year": "1976-08-00",
+      "publisher": "Heyne",
+      "artists": [
+       "C. A. M. Thole"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/0/0a/HRRDSLCHTS1976.jpg"
+     },
+     {
+      "record": "936179",
+      "title": "Die b�se Macht",
+      "year": "1977-00-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Karl Stephan"
+      ],
+      "image": "https://isfdb.org/wiki/images/d/d6/DBSMCHTJBK1977.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL32104856M",
+     "works": [
+      {
+       "key": "/works/OL13992W"
+      }
+     ],
+     "covers": [
+      10762119
+     ]
+    },
+    "dnbCover": false
+   },
+   {
+    "isbn": "9783463005560",
+    "lang": "ger",
+    "title": "Gezeiten des Lichts : phantast. Science-Fiction",
+    "publisher": "Kindler",
+    "year": "1973",
+    "source": "dnb:730396517",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "151": {
+  "order": 151,
+  "id": "OL21696977W",
+  "title": "Bold As Love",
+  "author": "Gwyneth Jones",
+  "en": [
+   "Bold As Love"
+  ],
+  "surname": "Jones",
+  "dnbQueries": [
+   "tit=\"Bold As Love\" and per=Jones"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Bold As Love\" and bib.author all \"Jones\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "152": {
+  "order": 152,
+  "id": "OL19915743W",
+  "title": "Desolation Road",
+  "author": "Ian McDonald",
+  "en": [
+   "Desolation Road"
+  ],
+  "surname": "McDonald",
+  "dnbQueries": [
+   "tit=\"Desolation Road\" and per=McDonald"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Desolation Road\" and bib.author all \"McDonald\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2221059085",
+    "lang": "fre",
+    "title": "Desolation road / Ian McDonald ; trad. de l'anglais par Bernard Sigaud",
+    "publisher": "R. Laffont (Paris)",
+    "year": "1989",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "435480",
+      "title": "Desolation road",
+      "year": "1989-09-22",
+      "publisher": "Robert Laffont",
+      "artists": [],
+      "image": "https://www.isfdb.org/wiki/images/0/05/DSLTNRDTKT1989.jpg"
+     }
+    ],
+    "ol": null
+   },
+   {
+    "isbn": "2253071684",
+    "lang": "fre",
+    "title": "Desolation road / Ian McDonald ; trad. de l'anglais par Bernard Sigaud ; préf. de Gérard Klein",
+    "publisher": "Librairie générale française (Paris)",
+    "year": "1994",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "572456",
+      "title": "Desolation road",
+      "year": "1994-09-00",
+      "publisher": "Le Livre de Poche",
+      "artists": [
+       "Manchu"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/a/a1/DSLTNRDBFM1994.jpg"
+     }
+    ],
+    "ol": null
+   }
+  ],
+  "failed": []
+ },
+ "153": {
+  "order": 153,
+  "id": "OL2354512W",
+  "title": "Castles Made of Sand",
+  "author": "Gwyneth Jones",
+  "en": [
+   "Castles Made of Sand"
+  ],
+  "surname": "Jones",
+  "dnbQueries": [
+   "tit=\"Castles Made of Sand\" and per=Jones"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Castles Made of Sand\" and bib.author all \"Jones\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "157": {
+  "order": 157,
+  "id": "OL1960610W",
+  "title": "Needle in a timestack",
+  "author": "Robert Silverberg",
+  "en": [
+   "Needle in a timestack"
+  ],
+  "surname": "Silverberg",
+  "dnbQueries": [
+   "tit=\"Needle in a timestack\" and per=Silverberg"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Needle in a timestack\" and bib.author all \"Silverberg\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783442232123",
+    "lang": "ger",
+    "title": "Visum für den Sirius : Science Fiction-Erzählungen = Needle in a timestack",
+    "publisher": "Goldmann",
+    "year": "[1975]",
+    "source": "dnb:760005826",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "607321",
+      "title": "Visum f�r den Sirius",
+      "year": "1975-00-00",
+      "publisher": "Goldmann",
+      "artists": [
+       "F. J�rgen Rogner"
+      ],
+      "image": "https://images-na.ssl-images-amazon.com/images/I/51zRDwpa1XL.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "159": {
+  "order": 159,
+  "id": "OL25345681W",
+  "title": "Kairos",
+  "author": "Gwyneth Jones",
+  "en": [
+   "Kairos"
+  ],
+  "surname": "Jones",
+  "dnbQueries": [
+   "tit=\"Kairos\" and per=Jones"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Kairos\" and bib.author all \"Jones\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "161": {
+  "order": 161,
+  "id": "OL2354520W",
+  "title": "Life",
+  "author": "Gwyneth Jones",
+  "en": [
+   "Life"
+  ],
+  "surname": "Jones",
+  "dnbQueries": [
+   "tit=\"Life\" and per=Jones"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Life\" and bib.author all \"Jones\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783565679164",
+    "lang": "eng",
+    "title": "Co-Intelligence Handbook - Practical Teachings to Ethan Mollick Principles : Mastering Collaborative Thinking For Work and Life",
+    "publisher": "epubli",
+    "year": "2026",
+    "source": "dnb:141712959X",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": 50072
+   },
+   {
+    "isbn": "9783696777715",
+    "lang": "ger",
+    "title": "Easy Life",
+    "publisher": "BoD – Books on Demand",
+    "year": "2026",
+    "source": "dnb:141697752X",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": 28932
+   },
+   {
+    "isbn": "9783565678549",
+    "lang": "eng",
+    "title": "The Reverse Centaur's Guide to Life After Ai Handbook - Practical Teachings to Cory Doctorow Principles : A Field Guide to Agency, Creativity, and Digital Survival",
+    "publisher": "epubli",
+    "year": "2026",
+    "source": "dnb:1417129123",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": 77132
+   },
+   {
+    "isbn": "9783112215142",
+    "lang": "eng",
+    "title": "Fragile Families : Marriage and Domestic Life in the Age of Bourgeois Modernity (1750-1900)",
+    "publisher": "De Gruyter Oldenbourg",
+    "year": "2023",
+    "source": "dnb:1362096520",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": 41695
+   },
+   {
+    "isbn": "9781510777071",
+    "lang": "eng",
+    "title": "Don't stress about stress : tips and exercises for everyday life",
+    "publisher": "Sky Pony Press",
+    "year": "[2024]",
+    "source": "dnb:133368116X",
+    "form": "tu",
+    "isfdb": [],
+    "ol": {
+     "edition": "/books/OL50721407M",
+     "works": [
+      {
+       "key": "/works/OL37622454W"
+      }
+     ],
+     "covers": []
+    }
+   },
+   {
+    "isbn": "9781788842556",
+    "lang": "eng",
+    "title": "New York: High Life/Low Life",
+    "publisher": "ACC Art Books",
+    "year": "2024",
+    "source": "dnb:1312034769",
+    "form": "tu",
+    "isfdb": [],
+    "ol": {
+     "edition": "/books/OL50659584M",
+     "works": [
+      {
+       "key": "/works/OL37589043W"
+      }
+     ],
+     "covers": []
+    }
+   },
+   {
+    "isbn": "9783111080888",
+    "lang": "eng",
+    "title": "Fragile families : marriage and domestic life in the age of bourgeois modernity (1750-1900)",
+    "publisher": "De Gruyter Oldenbourg",
+    "year": "[2023]",
+    "source": "dnb:1287305113",
+    "form": "tu",
+    "isfdb": [],
+    "ol": {
+     "edition": "/books/OL48173381M",
+     "works": [
+      {
+       "key": "/works/OL35710492W"
+      }
+     ],
+     "covers": []
+    },
+    "dnbCover": 41695
+   },
+   {
+    "isbn": "0500014388",
+    "lang": "hun",
+    "title": "Haydn : his life and music... / H. C. Robbins Landon and David Wyn Jones",
+    "publisher": "Thames and Hudson (London)",
+    "year": "1988",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": {
+     "edition": "/books/OL7653170M",
+     "works": [
+      {
+       "key": "/works/OL34745198W"
+      }
+     ],
+     "covers": [
+      13465286
+     ]
+    }
+   },
+   {
+    "isbn": "9782017032052",
+    "lang": "fre",
+    "title": "George Lucas : une vie / Brian Jay Jones",
+    "publisher": "Hachette heroes (Paris)",
+    "year": "2017",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": null
+   }
+  ],
+  "failed": []
+ },
+ "164": {
+  "order": 164,
+  "id": "OL26349155W",
+  "title": "Growing up Weightless",
+  "author": "John M. Ford",
+  "en": [
+   "Growing up Weightless"
+  ],
+  "surname": "Ford",
+  "dnbQueries": [
+   "tit=\"Growing up Weightless\" and per=Ford"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Growing up Weightless\" and bib.author all \"Ford\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "165": {
+  "order": 165,
+  "id": "OL28017615W",
+  "title": "Secret of Life",
+  "author": "Paul McAuley",
+  "en": [
+   "The Secret of Life"
+  ],
+  "surname": "McAuley",
+  "dnbQueries": [
+   "tit=\"The Secret of Life\" and per=McAuley"
+  ],
+  "bnfQueries": [
+   "bib.title all \"The Secret of Life\" and bib.author all \"McAuley\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9782221107997",
+    "lang": "fre",
+    "title": "Une invasion martienne / Paul McAuley ; traduit de l'anglais par Bernard Sigaud",
+    "publisher": "R. Laffont (Paris)",
+    "year": "2008",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "573904",
+      "title": "Une invasion martienne",
+      "year": "2008-04-00",
+      "publisher": "Robert Laffont",
+      "artists": [
+       "Kaz Mori"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/9/94/NNVSNMRTNN2008.jpg"
+     }
+    ],
+    "ol": null
+   }
+  ],
+  "failed": []
+ },
+ "169": {
+  "order": 169,
+  "id": "OL28023844W",
+  "title": "The Best of Roger Zelazny",
+  "author": "Roger Zelazny",
+  "en": [
+   "The Best of Roger Zelazny"
+  ],
+  "surname": "Zelazny",
+  "dnbQueries": [
+   "tit=\"The Best of Roger Zelazny\" and per=Zelazny"
+  ],
+  "bnfQueries": [
+   "bib.title all \"The Best of Roger Zelazny\" and bib.author all \"Zelazny\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "170": {
+  "order": 170,
+  "id": "OL37574007W",
+  "title": "Hiero's Journey",
+  "author": "Sterling E. Lanier",
+  "en": [
+   "Hiero's Journey"
+  ],
+  "surname": "Lanier",
+  "dnbQueries": [
+   "tit=\"Hiero's Journey\" and per=Lanier"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Hiero's Journey\" and bib.author all \"Lanier\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783453310896",
+    "lang": "ger",
+    "title": "Hieros Reise : Science-fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1984",
+    "source": "dnb:860205568",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "366595",
+      "title": "Hieros Reise",
+      "year": "1984-11-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Karel Thole"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/e/e5/HRSRSBTNKD1989.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "171": {
+  "order": 171,
+  "id": "OL37834465W",
+  "title": "First Born",
+  "author": "Maureen Duffy",
+  "en": [
+   "First Born",
+   "Gor Saga"
+  ],
+  "surname": "Duffy",
+  "dnbQueries": [
+   "tit=\"First Born\" and per=Duffy",
+   "tit=\"Gor Saga\" and per=Duffy"
+  ],
+  "bnfQueries": [
+   "bib.title all \"First Born\" and bib.author all \"Duffy\"",
+   "bib.title all \"Gor Saga\" and bib.author all \"Duffy\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "172": {
+  "order": 172,
+  "id": "OL5045544W",
+  "title": "The Unforsaken Hiero",
+  "author": "Sterling E. Lanier",
+  "en": [
+   "The Unforsaken Hiero"
+  ],
+  "surname": "Lanier",
+  "dnbQueries": [
+   "tit=\"The Unforsaken Hiero\" and per=Lanier"
+  ],
+  "bnfQueries": [
+   "bib.title all \"The Unforsaken Hiero\" and bib.author all \"Lanier\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783453311725",
+    "lang": "ger",
+    "title": "Der unvergessene Hiero : Science-fiction-Roman",
+    "publisher": "Heyne",
+    "year": "1985",
+    "source": "dnb:870073230",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "506547",
+      "title": "Der unvergessene Hiero",
+      "year": "1985-06-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Karel Thole"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/8/85/DRNVRGSSNH1985.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL47326420M",
+     "works": [
+      {
+       "key": "/works/OL34964617W"
+      }
+     ],
+     "covers": [
+      13898210
+     ]
+    },
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "173": {
+  "order": 173,
+  "id": "OL44545553W",
+  "title": "Barefoot in the Head",
+  "author": "Brian Aldiss",
+  "en": [
+   "Barefoot in the Head"
+  ],
+  "surname": "Aldiss",
+  "dnbQueries": [
+   "tit=\"Barefoot in the Head\" and per=Aldiss"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Barefoot in the Head\" and bib.author all \"Aldiss\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783924959241",
+    "lang": "ger",
+    "title": "Barfuss im Kopf : e. psychedel. Roman",
+    "publisher": "Ed. Phantasia",
+    "year": "1988",
+    "source": "dnb:880879327",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": 25369
+   },
+   {
+    "isbn": "9783404241057",
+    "lang": "ger",
+    "title": "Barfuss im Kopf : Science-fiction-Roman",
+    "publisher": "Bastei-Verl. Lübbe",
+    "year": "1988",
+    "source": "dnb:880820187",
+    "form": "tu",
+    "isfdb": [],
+    "ol": null,
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "175": {
+  "order": 175,
+  "id": "OL18367649W",
+  "title": "Beginning Operations",
+  "author": "James White",
+  "en": [
+   "Beginning Operations",
+   "Hospital Station",
+   "Star Surgeon",
+   "Major Operation"
+  ],
+  "surname": "White",
+  "dnbQueries": [
+   "tit=\"Beginning Operations\" and per=White",
+   "tit=\"Hospital Station\" and per=White",
+   "tit=\"Star Surgeon\" and per=White",
+   "tit=\"Major Operation\" and per=White"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Beginning Operations\" and bib.author all \"White\"",
+   "bib.title all \"Hospital Station\" and bib.author all \"White\"",
+   "bib.title all \"Star Surgeon\" and bib.author all \"White\"",
+   "bib.title all \"Major Operation\" and bib.author all \"White\""
+  ],
+  "candidates": [
+   {
+    "isbn": "2702408990",
+    "lang": "fre",
+    "title": "L'Hôpital des étoiles / James White ; traduit de l'anglais par J.-P. Pugi",
+    "publisher": "Librairie des Champs-Élysées (Paris)",
+    "year": "1979",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "329196",
+      "title": "L'h�pital des �toiles",
+      "year": "1979-00-00",
+      "publisher": "Librairie des Champs-�lys�es",
+      "artists": [
+       "Philippe Caza"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/6/66/LHPTLDSTLS1979.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL26879482M",
+     "works": [
+      {
+       "key": "/works/OL19659917W"
+      }
+     ],
+     "covers": [
+      8572656
+     ]
+    }
+   },
+   {
+    "isbn": "2702412289",
+    "lang": "fre",
+    "title": "Chirurgien galactique / James White ; traduit de l'anglais par J.-P. Pugi",
+    "publisher": "Librairie des Champs-Élysées (Paris)",
+    "year": "1981",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "329261",
+      "title": "Chirurgien galactique",
+      "year": "1981-04-08",
+      "publisher": "Librairie des Champs-�lys�es",
+      "artists": [
+       "Philippe Caza"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/e/ec/CHRRGNGLCT1981.jpg"
+     }
+    ],
+    "ol": null
+   },
+   {
+    "isbn": "9783453062191",
+    "lang": "ger",
+    "title": "... Roman des Zyklus Orbit-Hospital",
+    "publisher": "Heyne",
+    "year": "1993",
+    "source": "dnb:930473639",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "835574",
+      "title": "Hospital Station",
+      "year": "1993-00-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Boros Zolt�n",
+       "Szikszai G�bor"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/5/58/HSPTLSTTNL1993.jpg"
+     },
+     {
+      "record": "852267",
+      "title": "Hospital Station",
+      "year": "1994-00-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Boros Zolt�n",
+       "Szikszai G�bor"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/5/58/HSPTLSTTNL1993.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL39219637M",
+     "works": [
+      {
+       "key": "/works/OL28604325W"
+      }
+     ],
+     "covers": []
+    },
+    "dnbCover": false
+   },
+   {
+    "isbn": "9783548033310",
+    "lang": "ger",
+    "title": "Die Weltraum-Mediziner : Science-fiction-Roman",
+    "publisher": "Ullstein",
+    "year": "1977",
+    "source": "dnb:770249175",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "634000",
+      "title": "Die Weltraum-Mediziner",
+      "year": "1977-05-00",
+      "publisher": "Ullstein",
+      "artists": [
+       "Kelley Freas"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/8/84/DWLTRMMDZN1977.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": false
+   },
+   {
+    "isbn": "9783548033969",
+    "lang": "ger",
+    "title": "Kampf der Weltraum-Mediziner : Science-fiction-Roman ; [aus d. Engl. übers.]",
+    "publisher": "Ullstein",
+    "year": "1978",
+    "source": "dnb:780168216",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "634001",
+      "title": "Kampf der Weltraum-Mediziner",
+      "year": "1978-02-00",
+      "publisher": "Ullstein",
+      "artists": [
+       "Paul Lehr"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/6/6e/KMPFDRWLTR1978.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL28332129M",
+     "works": [
+      {
+       "key": "/works/OL20914091W"
+      }
+     ],
+     "covers": [
+      10281329
+     ]
+    },
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ },
+ "177": {
+  "order": 177,
+  "id": "OL1888051W",
+  "title": "Distraction",
+  "author": "Bruce Sterling",
+  "en": [
+   "Distraction"
+  ],
+  "surname": "Sterling",
+  "dnbQueries": [
+   "tit=\"Distraction\" and per=Sterling"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Distraction\" and bib.author all \"Sterling\""
+  ],
+  "candidates": [],
+  "failed": []
+ },
+ "178": {
+  "order": 178,
+  "id": "OL45147605W",
+  "title": "Nova Swing",
+  "author": "M. John Harrison",
+  "en": [
+   "Nova Swing"
+  ],
+  "surname": "Harrison",
+  "dnbQueries": [
+   "tit=\"Nova Swing\" and per=Harrison"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Nova Swing\" and bib.author all \"Harrison\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783453315594",
+    "lang": "ger",
+    "title": "Licht : die Trilogie ; Roman",
+    "publisher": "Heyne",
+    "year": "2014",
+    "source": "dnb:1044706090",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "1113847",
+      "title": "Licht - Die Trilogie",
+      "year": "2014-09-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Thinkstock"
+      ],
+      "image": "https://m.media-amazon.com/images/I/811C+-H-KZL.jpg"
+     }
+    ],
+    "ol": null,
+    "dnbCover": 50190
+   },
+   {
+    "isbn": "9783453522916",
+    "lang": "ger",
+    "title": "Nova : Roman",
+    "publisher": "Heyne",
+    "year": "2007",
+    "source": "dnb:98254992X",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "400134",
+      "title": "Nova",
+      "year": "2007-00-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Dirk Schulz"
+      ],
+      "image": "https://m.media-amazon.com/images/I/51lr-zkoFeL.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL27312063M",
+     "works": [
+      {
+       "key": "/works/OL20132088W"
+      }
+     ],
+     "covers": [
+      8783550
+     ]
+    },
+    "dnbCover": 39175
+   }
+  ],
+  "failed": []
+ },
+ "179": {
+  "order": 179,
+  "id": "OL8698138W",
+  "title": "Thirteen",
+  "author": "Richard Morgan",
+  "en": [
+   "Thirteen",
+   "Black Man"
+  ],
+  "surname": "Morgan",
+  "dnbQueries": [
+   "tit=\"Thirteen\" and per=Morgan",
+   "tit=\"Black Man\" and per=Morgan"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Thirteen\" and bib.author all \"Morgan\"",
+   "bib.title all \"Black Man\" and bib.author all \"Morgan\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783453523562",
+    "lang": "ger",
+    "title": "Skorpion : Roman",
+    "publisher": "Heyne",
+    "year": "2007",
+    "source": "dnb:984311947",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "510717",
+      "title": "Skorpion",
+      "year": "2007-11-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Franz Vohwinkel"
+      ],
+      "image": "https://m.media-amazon.com/images/I/51H5QloHNtL.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL47318832M",
+     "works": [
+      {
+       "key": "/works/OL34957343W"
+      }
+     ],
+     "covers": [
+      13836365
+     ]
+    },
+    "dnbCover": 62020
+   },
+   {
+    "isbn": "9782811205058",
+    "lang": "fre",
+    "title": "Black man / Richard Morgan ; traduit de l'anglais (Grande-Bretagne) par Cédric Perdereau",
+    "publisher": "Milady (Paris)",
+    "year": "2011",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "494857",
+      "title": "Black man",
+      "year": "2011-02-00",
+      "publisher": "Milady",
+      "artists": [
+       "Jean-S�bastien Rossbach"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/d/dd/BLCKMNRSTN2001.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL38571536M",
+     "works": [
+      {
+       "key": "/works/OL6835839W"
+      }
+     ],
+     "covers": []
+    }
+   },
+   {
+    "isbn": "9782352942320",
+    "lang": "fre",
+    "title": "Black man / Richard Morgan ; traduit de l'anglais (Grande-Bretagne) par Cédric Perdereau",
+    "publisher": "Bragelonne (Paris)",
+    "year": "2008",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "562441",
+      "title": "Black man",
+      "year": "2008-10-24",
+      "publisher": "Bragelonne",
+      "artists": [
+       "Jean-S�bastien Rossbach"
+      ],
+      "image": "https://m.media-amazon.com/images/I/51URUN95YpL.jpg"
+     }
+    ],
+    "ol": null
+   },
+   {
+    "isbn": "9791028109899",
+    "lang": "fre",
+    "title": "Black man / Richard Morgan ; traduit de l'anglais (Grande-Bretagne) par Cédric Perdereau",
+    "publisher": "Bragelonne (Paris)",
+    "year": "2018",
+    "source": "bnf",
+    "isfdb": [],
+    "ol": null
+   },
+   {
+    "isbn": "9782352948933",
+    "lang": "fre",
+    "title": "Black man (Éd. anniversaire \"Bragelonne 10 ans\") Richard Morgan ; traduit de l'anglais (Grande-Bretagne) par Cédric Perdereau",
+    "publisher": "Bragelonne (Paris)",
+    "year": "2015",
+    "source": "bnf",
+    "isfdb": [
+     {
+      "record": "569212",
+      "title": "Black man",
+      "year": "2015-06-17",
+      "publisher": "Bragelonne",
+      "artists": [
+       "No�mie Chevalier"
+      ],
+      "image": "https://images-na.ssl-images-amazon.com/images/I/51RrtBQiXaL.jpg"
+     }
+    ],
+    "ol": null
+   }
+  ],
+  "failed": []
+ },
+ "181": {
+  "order": 181,
+  "id": "OL45912000W",
+  "title": "Alien Emergencies",
+  "author": "James White",
+  "en": [
+   "Alien Emergencies",
+   "Ambulance Ship",
+   "Sector General",
+   "Star Healer"
+  ],
+  "surname": "White",
+  "dnbQueries": [
+   "tit=\"Alien Emergencies\" and per=White",
+   "tit=\"Ambulance Ship\" and per=White",
+   "tit=\"Sector General\" and per=White",
+   "tit=\"Star Healer\" and per=White"
+  ],
+  "bnfQueries": [
+   "bib.title all \"Alien Emergencies\" and bib.author all \"White\"",
+   "bib.title all \"Ambulance Ship\" and bib.author all \"White\"",
+   "bib.title all \"Sector General\" and bib.author all \"White\"",
+   "bib.title all \"Star Healer\" and bib.author all \"White\""
+  ],
+  "candidates": [
+   {
+    "isbn": "9783811835078",
+    "lang": "ger",
+    "title": "Das Ambulanzschiff",
+    "publisher": "Moewig",
+    "year": "1980",
+    "source": "dnb:820083070",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "348638",
+      "title": "Das Ambulanzschiff",
+      "year": "1980-12-00",
+      "publisher": "Moewig",
+      "artists": [
+       "Giuseppe Festino"
+      ],
+      "image": "https://www.isfdb.org/wiki/images/8/8b/DSMBLNZSCH1980.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL30529696M",
+     "works": [
+      {
+       "key": "/works/OL22447119W"
+      }
+     ],
+     "covers": [
+      10462526
+     ]
+    },
+    "dnbCover": false
+   },
+   {
+    "isbn": "9783453065987",
+    "lang": "eng",
+    "title": "... Roman des Zyklus Orbit-Hospital",
+    "publisher": "Heyne",
+    "year": "1993",
+    "source": "dnb:931657334",
+    "form": "tu",
+    "isfdb": [
+     {
+      "record": "1113042",
+      "title": "Sector General",
+      "year": "1993-00-00",
+      "publisher": "Heyne",
+      "artists": [
+       "Boros Zolt�n",
+       "Szikszai G�bor"
+      ],
+      "image": "https://isfdb.org/wiki/images/1/19/SCTRGNRLGR1993.jpg"
+     }
+    ],
+    "ol": {
+     "edition": "/books/OL39219647M",
+     "works": [
+      {
+       "key": "/works/OL28604332W"
+      }
+     ],
+     "covers": []
+    },
+    "dnbCover": false
+   }
+  ],
+  "failed": []
+ }
+}

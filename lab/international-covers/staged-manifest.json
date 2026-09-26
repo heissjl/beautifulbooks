@@ -1,0 +1,977 @@
+[
+ {
+  "order": 25,
+  "relaunchWork": "OL19208208W",
+  "title": "Arslan (SF Masterworks)",
+  "author": "M. J. Engh",
+  "language": "fre",
+  "translatedTitle": "Arslan",
+  "isbn": "9782207131336",
+  "publisher": "Denoël (Lunes d'encre)",
+  "year": "2016",
+  "file": "025-fre-9782207131336.jpg",
+  "width": 1653,
+  "height": 2421,
+  "imageSource": "https://images-na.ssl-images-amazon.com/images/I/91AH2rOXSXL.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "621098",
+  "olEdition": null,
+  "olEditionWorks": [],
+  "olEditionCovers": [],
+  "action": "upload-new-edition",
+  "olWork": "OL19208208W",
+  "translationsJsonEntry": null,
+  "coverArtist": [
+   "Aurélien Police"
+  ],
+  "coverArtistFrom": "isfdb:621098 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 44,
+  "relaunchWork": "OL166482W",
+  "title": "The Affirmation",
+  "author": "Christopher Priest",
+  "language": "ger",
+  "translatedTitle": "Der weiße Raum",
+  "isbn": "9783453310377",
+  "publisher": "Heyne",
+  "year": "1984",
+  "file": "044-ger-9783453310377.jpg",
+  "width": 266,
+  "height": 425,
+  "imageSource": "https://www.isfdb.org/wiki/images/e/ef/DRWRMGTKVT1984.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "604878",
+  "olEdition": "/books/OL30791868M",
+  "olEditionWorks": [
+   "OL22869894W"
+  ],
+  "olEditionCovers": [
+   10502502
+  ],
+  "action": "upload-cover",
+  "olWork": "OL22869894W",
+  "translationsJsonEntry": {
+   "OL22869894W": "OL166482W"
+  },
+  "coverArtist": [
+   "Jobst Teltschik"
+  ],
+  "coverArtistFrom": "isfdb:604878 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": "OL's cover on this edition (10502502) is a photo of a copy on a table; this is ISFDB's scan."
+ },
+ {
+  "order": 49,
+  "relaunchWork": "OL20074002W",
+  "title": "Floating Worlds",
+  "author": "Cecelia Holland",
+  "language": "ger",
+  "translatedTitle": "Wandernde Welten",
+  "isbn": "9783453305731",
+  "publisher": "Heyne",
+  "year": "1979",
+  "file": "049-ger-9783453305731.jpg",
+  "width": 375,
+  "height": 600,
+  "imageSource": "https://isfdb.org/wiki/images/f/ff/WNDRNDWLTN1979.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "977370",
+  "olEdition": null,
+  "olEditionWorks": [],
+  "olEditionCovers": [],
+  "action": "upload-new-edition",
+  "olWork": "OL20074002W",
+  "translationsJsonEntry": null,
+  "coverArtist": [
+   "Chris Foss"
+  ],
+  "coverArtistFrom": "isfdb:977370 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 50,
+  "relaunchWork": "OL16513W",
+  "title": "Blood Music",
+  "author": "Greg Bear",
+  "language": "ger",
+  "translatedTitle": "Blutmusik",
+  "isbn": "9783453523654",
+  "publisher": "Heyne",
+  "year": "2008",
+  "file": "050-ger-9783453523654.jpg",
+  "width": 314,
+  "height": 500,
+  "imageSource": "https://covers.openlibrary.org/b/id/8774527-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "367176",
+  "olEdition": "/books/OL27297733M",
+  "olEditionWorks": [
+   "OL20117790W"
+  ],
+  "olEditionCovers": [
+   8774527
+  ],
+  "action": "map-work",
+  "olWork": "OL20117790W",
+  "translationsJsonEntry": {
+   "OL20117790W": "OL16513W"
+  },
+  "coverArtist": [
+   "Hauptmann & Kompanie Werbeagentur"
+  ],
+  "coverArtistFrom": "isfdb:367176 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 55,
+  "relaunchWork": "OL3290749W",
+  "title": "Odd John",
+  "author": "Olaf Stapledon",
+  "language": "ger",
+  "translatedTitle": "Die Insel der Mutanten",
+  "isbn": "9783453303928",
+  "publisher": "Heyne",
+  "year": "1977",
+  "file": "055-ger-9783453303928.jpg",
+  "width": 316,
+  "height": 500,
+  "imageSource": "https://images-na.ssl-images-amazon.com/images/I/51KX1ydvrDL.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "649825",
+  "olEdition": "/books/OL32153300M",
+  "olEditionWorks": [
+   "OL24307504W"
+  ],
+  "olEditionCovers": [
+   14232905,
+   10821564
+  ],
+  "action": "upload-cover",
+  "olWork": "OL24307504W",
+  "translationsJsonEntry": {
+   "OL24307504W": "OL3290749W"
+  },
+  "coverArtist": [
+   "Karl Stephan"
+  ],
+  "coverArtistFrom": "isfdb:649825 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": "Heyne used ISBN 3-453-30392-8 twice: for the anthology Wegweiser ins Nirgendwo (1976) and for Die Insel der Mutanten (1977, ISFDB 649825). Both covers on OL edition OL32153300M (14232905, 10821564) show Wegweiser ins Nirgendwo — wrong for this book; replace them with this one."
+ },
+ {
+  "order": 63,
+  "relaunchWork": "OL2657126W",
+  "title": "Sarah Canary",
+  "author": "Karen Joy Fowler",
+  "language": "ger",
+  "translatedTitle": "Das Geheimnis der Sarah Canary",
+  "isbn": "9783442542543",
+  "publisher": "Goldmann",
+  "year": "2008",
+  "file": "063-ger-9783442542543.jpg",
+  "width": 379,
+  "height": 599,
+  "imageSource": "https://portal.dnb.de/opac/mvb/cover?isbn=9783442542543",
+  "imageOrigin": "dnb",
+  "isfdbRecord": null,
+  "olEdition": null,
+  "olEditionWorks": [],
+  "olEditionCovers": [],
+  "action": "upload-new-edition",
+  "olWork": "OL2657126W",
+  "translationsJsonEntry": null,
+  "coverArtist": [],
+  "coverArtistFrom": null,
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 64,
+  "relaunchWork": "OL19186717W",
+  "title": "The Continuous Katherine Mortenhoe (SF Masterworks)",
+  "author": "D. G. Compton",
+  "language": "fre",
+  "translatedTitle": "La mort en direct",
+  "isbn": "2277217557",
+  "publisher": "J'ai lu",
+  "year": "1984",
+  "file": "064-fre-2277217557.jpg",
+  "width": 335,
+  "height": 497,
+  "imageSource": "https://covers.openlibrary.org/b/id/8737267-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "366444",
+  "olEdition": "/books/OL27097358M",
+  "olEditionWorks": [
+   "OL19912774W"
+  ],
+  "olEditionCovers": [
+   8737267
+  ],
+  "action": "map-work",
+  "olWork": "OL19912774W",
+  "translationsJsonEntry": {
+   "OL19912774W": "OL19186717W"
+  },
+  "coverArtist": [
+   "Barclay Shaw"
+  ],
+  "coverArtistFrom": "isfdb:366444 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": "French title of the film tie-in (Death Watch); same novel."
+ },
+ {
+  "order": 68,
+  "relaunchWork": "OL19882938W",
+  "title": "The Caltraps of Time (S.F. Masterworks)",
+  "author": "David I. Masson",
+  "language": "ger",
+  "translatedTitle": "An den Grenzen der Zeit",
+  "isbn": "9783548310770",
+  "publisher": "Ullstein",
+  "year": "1984",
+  "file": "068-ger-9783548310770.jpg",
+  "width": 329,
+  "height": 500,
+  "imageSource": "https://covers.openlibrary.org/b/id/8753109-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "591169",
+  "olEdition": "/books/OL27263597M",
+  "olEditionWorks": [
+   "OL20083573W"
+  ],
+  "olEditionCovers": [
+   8753109
+  ],
+  "action": "map-work",
+  "olWork": "OL20083573W",
+  "translationsJsonEntry": {
+   "OL20083573W": "OL19882938W"
+  },
+  "coverArtist": [
+   "Emsh"
+  ],
+  "coverArtistFrom": "isfdb:591169 (the printing under this ISBN)",
+  "sameContent": "Stories; ISFDB/DNB list it as the translation of The Caltraps of Time — contents not compared story by story.",
+  "note": null
+ },
+ {
+  "order": 70,
+  "relaunchWork": "OL482569W",
+  "title": "Engine Summer",
+  "author": "John Crowley",
+  "language": "ger",
+  "translatedTitle": "Maschinensommer",
+  "isbn": "9783453308572",
+  "publisher": "Heyne",
+  "year": "1982",
+  "file": "070-ger-9783453308572.jpg",
+  "width": 317,
+  "height": 500,
+  "imageSource": "https://isfdb.org/wiki/images/f/f5/MSCHNNSMMR1982.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "575040",
+  "olEdition": "/books/OL30518133M",
+  "olEditionWorks": [
+   "OL22427004W"
+  ],
+  "olEditionCovers": [
+   10457833
+  ],
+  "action": "upload-cover",
+  "olWork": "OL22427004W",
+  "translationsJsonEntry": {
+   "OL22427004W": "OL482569W"
+  },
+  "coverArtist": [
+   "Steve R. Dodd"
+  ],
+  "coverArtistFrom": "isfdb:575040 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": "OL's cover on this edition (10457833) is a small photo of the book on a table; this is ISFDB's scan."
+ },
+ {
+  "order": 78,
+  "relaunchWork": "OL20070897W",
+  "title": "This Is the Way the World Ends (S.F. Masterworks)",
+  "author": "James Morrow",
+  "language": "fre",
+  "translatedTitle": "Ainsi finit le monde",
+  "isbn": "2207304582",
+  "publisher": "Denoël (Présence du futur)",
+  "year": "1988",
+  "file": "078-fre-2207304582.jpg",
+  "width": 285,
+  "height": 475,
+  "imageSource": "https://covers.openlibrary.org/b/id/973781-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "573754",
+  "olEdition": "/books/OL8864582M",
+  "olEditionWorks": [],
+  "olEditionCovers": [
+   973781
+  ],
+  "action": "attach-edition",
+  "olWork": "OL20070897W",
+  "translationsJsonEntry": null,
+  "coverArtist": [
+   "Serge Bihannic"
+  ],
+  "coverArtistFrom": "isfdb:573754 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": "The OL edition OL8864582M has this cover but belongs to no work; attach it to the relaunch work."
+ },
+ {
+  "order": 81,
+  "relaunchWork": "OL21478785W",
+  "title": "Time Is the Fire",
+  "author": "Connie Willis",
+  "language": "fre",
+  "translatedTitle": "Les veilleurs",
+  "isbn": "9782290097960",
+  "publisher": "J'ai lu (Nouveaux Millénaires)",
+  "year": "2015",
+  "file": "081-fre-9782290097960.jpg",
+  "width": 325,
+  "height": 500,
+  "imageSource": "https://covers.openlibrary.org/b/id/13115711-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "619841",
+  "olEdition": "/books/OL44908075M",
+  "olEditionWorks": [
+   "OL33045478W"
+  ],
+  "olEditionCovers": [
+   13115711
+  ],
+  "action": "map-work",
+  "olWork": "OL33045478W",
+  "translationsJsonEntry": {
+   "OL33045478W": "OL21478785W"
+  },
+  "coverArtist": [],
+  "coverArtistFrom": null,
+  "sameContent": "Assumed to be the French edition of The Best of Connie Willis (= Time Is the Fire); not verified story by story.",
+  "note": null
+ },
+ {
+  "order": 88,
+  "relaunchWork": "OL19325351W",
+  "title": "Transfigurations (S.F. Masterworks)",
+  "author": "Michael Bishop",
+  "language": "ger",
+  "translatedTitle": "Transfigurationen",
+  "isbn": "9783453313248",
+  "publisher": "Heyne",
+  "year": "1986",
+  "file": "088-ger-9783453313248.jpg",
+  "width": 375,
+  "height": 594,
+  "imageSource": "https://isfdb.org/wiki/images/3/3f/TRNSFGRTNN1986.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "389731",
+  "olEdition": null,
+  "olEditionWorks": [],
+  "olEditionCovers": [],
+  "action": "upload-new-edition",
+  "olWork": "OL19325351W",
+  "translationsJsonEntry": null,
+  "coverArtist": [
+   "Klaus Holitzka"
+  ],
+  "coverArtistFrom": "isfdb:389731 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 91,
+  "relaunchWork": "OL7117373W",
+  "title": "Half Past Human",
+  "author": "T. J. Bass",
+  "language": "ger",
+  "translatedTitle": "Die Ameisenkultur",
+  "isbn": "9783442231638",
+  "publisher": "Goldmann",
+  "year": "1973",
+  "file": "091-ger-9783442231638.jpg",
+  "width": 379,
+  "height": 600,
+  "imageSource": "https://isfdb.org/wiki/images/e/ea/DMSNKLTRWS1973.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "398775",
+  "olEdition": "/books/OL28367367M",
+  "olEditionWorks": [
+   "OL20937696W"
+  ],
+  "olEditionCovers": [
+   10306627
+  ],
+  "action": "upload-cover",
+  "olWork": "OL20937696W",
+  "translationsJsonEntry": {
+   "OL20937696W": "OL7117373W"
+  },
+  "coverArtist": [
+   "Eyke Volkmer"
+  ],
+  "coverArtistFrom": "isfdb:398775 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": "OL's cover (10306627) is only 185 px wide; ISFDB's scan is 379 px."
+ },
+ {
+  "order": 95,
+  "relaunchWork": "OL21118741W",
+  "title": "Shrinking Man",
+  "author": "Ted Adams",
+  "language": "fre",
+  "translatedTitle": "L'homme qui rétrécit",
+  "isbn": "2070415813",
+  "publisher": "Gallimard (Folio SF)",
+  "year": "2000",
+  "file": "095-fre-2070415813.jpg",
+  "width": 288,
+  "height": 475,
+  "imageSource": "https://covers.openlibrary.org/b/id/3075987-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "858813",
+  "olEdition": "/books/OL12394442M",
+  "olEditionWorks": [
+   "OL64219W"
+  ],
+  "olEditionCovers": [
+   3075987
+  ],
+  "action": "map-work",
+  "olWork": "OL64219W",
+  "translationsJsonEntry": {
+   "OL64219W": "OL21118741W"
+  },
+  "coverArtist": [],
+  "coverArtistFrom": null,
+  "sameContent": null,
+  "note": "OL64219W looks like the real Matheson work; the relaunch work OL21118741W carries the wrong author (Ted Adams) and should be merged into it."
+ },
+ {
+  "order": 100,
+  "relaunchWork": "OL1920272W",
+  "title": "The Child Garden",
+  "author": "Geoff Ryman",
+  "language": "ger",
+  "translatedTitle": "Ein Garten für Kinder",
+  "isbn": "9783453058514",
+  "publisher": "Heyne",
+  "year": "1992",
+  "file": "100-ger-9783453058514.jpg",
+  "width": 373,
+  "height": 500,
+  "imageSource": "https://covers.openlibrary.org/b/id/13884464-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "403794",
+  "olEdition": "/books/OL47324631M",
+  "olEditionWorks": [
+   "OL34962867W"
+  ],
+  "olEditionCovers": [
+   13884464
+  ],
+  "action": "map-work",
+  "olWork": "OL34962867W",
+  "translationsJsonEntry": {
+   "OL34962867W": "OL1920272W"
+  },
+  "coverArtist": [
+   "Michael Hasted"
+  ],
+  "coverArtistFrom": "isfdb:403794 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": "A frontal photo of a worn copy, not a scan — the only picture found (ISFDB links to the same photo on Amazon)."
+ },
+ {
+  "order": 101,
+  "relaunchWork": "OL20119339W",
+  "title": "Mission Of Gravity: Mesklinite Book 1 (S.F. Masterworks)",
+  "author": "Hal Clement",
+  "language": "fre",
+  "translatedTitle": "Mission Gravité",
+  "isbn": "2266011294",
+  "publisher": "Presses Pocket",
+  "year": "1982",
+  "file": "101-fre-2266011294.jpg",
+  "width": 288,
+  "height": 480,
+  "imageSource": "https://covers.openlibrary.org/b/id/13452062-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "336164",
+  "olEdition": "/books/OL47086381M",
+  "olEditionWorks": [
+   "OL34737746W"
+  ],
+  "olEditionCovers": [
+   13452062
+  ],
+  "action": "map-work",
+  "olWork": "OL34737746W",
+  "translationsJsonEntry": {
+   "OL34737746W": "OL20119339W"
+  },
+  "coverArtist": [
+   "W. Siudmak"
+  ],
+  "coverArtistFrom": "isfdb:336164 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 109,
+  "relaunchWork": "OL19546464W",
+  "title": "Dark Benediction",
+  "author": "Walter M. Miller, Jr.",
+  "language": "ger",
+  "translatedTitle": "Bedingt menschlich",
+  "isbn": "9783453313057",
+  "publisher": "Heyne",
+  "year": "1986",
+  "file": "109-ger-9783453313057.jpg",
+  "width": 367,
+  "height": 568,
+  "imageSource": "https://www.isfdb.org/wiki/images/0/08/BDNGTMNSCH1986.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "565550",
+  "olEdition": null,
+  "olEditionWorks": [],
+  "olEditionCovers": [],
+  "action": "upload-new-edition",
+  "olWork": "OL19546464W",
+  "translationsJsonEntry": null,
+  "coverArtist": [
+   "Karel Thole"
+  ],
+  "coverArtistFrom": "isfdb:565550 (the printing under this ISBN)",
+  "sameContent": "Heyne collection, copyright 1980 to the author (The Best of Walter M. Miller, Jr.); Dark Benediction collects the same short fiction — overlap not checked story by story.",
+  "note": null
+ },
+ {
+  "order": 122,
+  "relaunchWork": "OL20126875W",
+  "title": "China Mountain Zhang",
+  "author": "Maureen F. McHugh",
+  "language": "ger",
+  "translatedTitle": "ABC-Zhang",
+  "isbn": "9783886199532",
+  "publisher": "Argument",
+  "year": "2000",
+  "file": "122-ger-9783886199532.jpg",
+  "width": 302,
+  "height": 475,
+  "imageSource": "https://covers.openlibrary.org/b/id/8769705-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "473341",
+  "olEdition": "/books/OL27289826M",
+  "olEditionWorks": [
+   "OL20109830W"
+  ],
+  "olEditionCovers": [
+   8769705
+  ],
+  "action": "map-work",
+  "olWork": "OL20109830W",
+  "translationsJsonEntry": {
+   "OL20109830W": "OL20126875W"
+  },
+  "coverArtist": [
+   "Martin Grundmann"
+  ],
+  "coverArtistFrom": "isfdb:473341 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 124,
+  "relaunchWork": "OL14871968W",
+  "title": "Sword & citadel",
+  "author": "Gene Wolfe",
+  "language": "ger",
+  "translatedTitle": "Das Buch der neuen Sonne II: Das Schwert des Liktors und Die Zitadelle des Autarchen",
+  "isbn": "9783910914643",
+  "publisher": "Carcosa",
+  "year": "2026",
+  "file": "124-ger-9783910914643.jpg",
+  "width": 398,
+  "height": 599,
+  "imageSource": "https://portal.dnb.de/opac/mvb/cover?isbn=9783910914643",
+  "imageOrigin": "dnb",
+  "isfdbRecord": null,
+  "olEdition": null,
+  "olEditionWorks": [],
+  "olEditionCovers": [],
+  "action": "upload-new-edition",
+  "olWork": "OL14871968W",
+  "translationsJsonEntry": null,
+  "coverArtist": [],
+  "coverArtistFrom": null,
+  "sameContent": "Same two novels as Sword & Citadel.",
+  "note": null
+ },
+ {
+  "order": 139,
+  "relaunchWork": "OL72847W",
+  "title": "Raft",
+  "author": "Stephen Baxter",
+  "language": "fre",
+  "translatedTitle": "Gravité",
+  "isbn": "9782266195386",
+  "publisher": "Pocket",
+  "year": "2013",
+  "file": "139-fre-9782266195386.jpg",
+  "width": 305,
+  "height": 500,
+  "imageSource": "https://covers.openlibrary.org/b/id/8540683-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "623174",
+  "olEdition": "/books/OL26852810M",
+  "olEditionWorks": [
+   "OL19631871W"
+  ],
+  "olEditionCovers": [
+   8540683
+  ],
+  "action": "map-work",
+  "olWork": "OL19631871W",
+  "translationsJsonEntry": {
+   "OL19631871W": "OL72847W"
+  },
+  "coverArtist": [],
+  "coverArtistFrom": null,
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 143,
+  "relaunchWork": "OL2643429W",
+  "title": "Light",
+  "author": "M. John Harrison",
+  "language": "ger",
+  "translatedTitle": "Licht",
+  "isbn": "9783453520042",
+  "publisher": "Heyne",
+  "year": "2004",
+  "file": "143-ger-9783453520042.jpg",
+  "width": 298,
+  "height": 475,
+  "imageSource": "https://covers.openlibrary.org/b/id/8783549-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "400133",
+  "olEdition": "/books/OL27312062M",
+  "olEditionWorks": [
+   "OL20132087W"
+  ],
+  "olEditionCovers": [
+   8783549
+  ],
+  "action": "map-work",
+  "olWork": "OL20132087W",
+  "translationsJsonEntry": {
+   "OL20132087W": "OL2643429W"
+  },
+  "coverArtist": [
+   "Chris Moore"
+  ],
+  "coverArtistFrom": "isfdb:400133 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 152,
+  "relaunchWork": "OL19915743W",
+  "title": "Desolation Road",
+  "author": "Ian McDonald",
+  "language": "fre",
+  "translatedTitle": "Desolation Road",
+  "isbn": "2221059085",
+  "publisher": "Robert Laffont (Ailleurs et demain)",
+  "year": "1989",
+  "file": "152-fre-2221059085.jpg",
+  "width": 377,
+  "height": 600,
+  "imageSource": "https://isfdb.org/wiki/images/0/05/DSLTNRDTKT1989.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "435480",
+  "olEdition": null,
+  "olEditionWorks": [],
+  "olEditionCovers": [],
+  "action": "upload-new-edition",
+  "olWork": "OL19915743W",
+  "translationsJsonEntry": null,
+  "coverArtist": [],
+  "coverArtistFrom": null,
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 157,
+  "relaunchWork": "OL1960610W",
+  "title": "Needle in a timestack",
+  "author": "Robert Silverberg",
+  "language": "ger",
+  "translatedTitle": "Visum für den Sirius",
+  "isbn": "9783442232123",
+  "publisher": "Goldmann",
+  "year": "1975",
+  "file": "157-ger-9783442232123.jpg",
+  "width": 325,
+  "height": 500,
+  "imageSource": "https://images-na.ssl-images-amazon.com/images/I/51zRDwpa1XL.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "607321",
+  "olEdition": null,
+  "olEditionWorks": [],
+  "olEditionCovers": [],
+  "action": "upload-new-edition",
+  "olWork": "OL1960610W",
+  "translationsJsonEntry": null,
+  "coverArtist": [
+   "F. Jürgen Rogner"
+  ],
+  "coverArtistFrom": "isfdb:607321 (the printing under this ISBN)",
+  "sameContent": "DNB gives \"Needle in a timestack\" as the original; contents not compared story by story.",
+  "note": null
+ },
+ {
+  "order": 165,
+  "relaunchWork": "OL28017615W",
+  "title": "Secret of Life",
+  "author": "Paul McAuley",
+  "language": "fre",
+  "translatedTitle": "Une invasion martienne",
+  "isbn": "9782221107997",
+  "publisher": "Robert Laffont (Ailleurs et demain)",
+  "year": "2008",
+  "file": "165-fre-9782221107997.jpg",
+  "width": 377,
+  "height": 600,
+  "imageSource": "https://isfdb.org/wiki/images/9/94/NNVSNMRTNN2008.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "573904",
+  "olEdition": null,
+  "olEditionWorks": [],
+  "olEditionCovers": [],
+  "action": "upload-new-edition",
+  "olWork": "OL28017615W",
+  "translationsJsonEntry": null,
+  "coverArtist": [
+   "Kaz Mori"
+  ],
+  "coverArtistFrom": "isfdb:573904 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 170,
+  "relaunchWork": "OL37574007W",
+  "title": "Hiero's Journey",
+  "author": "Sterling E. Lanier",
+  "language": "ger",
+  "translatedTitle": "Hieros Reise",
+  "isbn": "9783453310896",
+  "publisher": "Heyne",
+  "year": "1984",
+  "file": "170-ger-9783453310896.jpg",
+  "width": 362,
+  "height": 569,
+  "imageSource": "https://www.isfdb.org/wiki/images/e/e5/HRSRSBTNKD1989.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "366595",
+  "olEdition": null,
+  "olEditionWorks": [],
+  "olEditionCovers": [],
+  "action": "upload-new-edition",
+  "olWork": "OL37574007W",
+  "translationsJsonEntry": null,
+  "coverArtist": [
+   "Karel Thole"
+  ],
+  "coverArtistFrom": "isfdb:366595 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": "ISFDB file name says 1989; record is the 1984 printing."
+ },
+ {
+  "order": 172,
+  "relaunchWork": "OL5045544W",
+  "title": "The Unforsaken Hiero",
+  "author": "Sterling E. Lanier",
+  "language": "ger",
+  "translatedTitle": "Der unvergessene Hiero",
+  "isbn": "9783453311725",
+  "publisher": "Heyne",
+  "year": "1985",
+  "file": "172-ger-9783453311725.jpg",
+  "width": 368,
+  "height": 569,
+  "imageSource": "https://isfdb.org/wiki/images/8/85/DRNVRGSSNH1985.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "506547",
+  "olEdition": "/books/OL47326420M",
+  "olEditionWorks": [
+   "OL34964617W"
+  ],
+  "olEditionCovers": [
+   13898210
+  ],
+  "action": "upload-cover",
+  "olWork": "OL34964617W",
+  "translationsJsonEntry": {
+   "OL34964617W": "OL5045544W"
+  },
+  "coverArtist": [
+   "Karel Thole"
+  ],
+  "coverArtistFrom": "isfdb:506547 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": "OL's cover (13898210) is an angled photo of the book; this is ISFDB's scan."
+ },
+ {
+  "order": 175,
+  "relaunchWork": "OL18367649W",
+  "title": "Beginning Operations",
+  "author": "James White",
+  "language": "fre",
+  "translatedTitle": "L'Hôpital des étoiles",
+  "isbn": "2702408990",
+  "publisher": "Librairie des Champs-Élysées (Le Masque SF)",
+  "year": "1979",
+  "file": "175-fre-2702408990.jpg",
+  "width": 318,
+  "height": 500,
+  "imageSource": "https://covers.openlibrary.org/b/id/8572656-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "329196",
+  "olEdition": "/books/OL26879482M",
+  "olEditionWorks": [
+   "OL19659917W"
+  ],
+  "olEditionCovers": [
+   8572656
+  ],
+  "action": "map-work",
+  "olWork": "OL19659917W",
+  "translationsJsonEntry": {
+   "OL19659917W": "OL18367649W"
+  },
+  "coverArtist": [
+   "Philippe Caza"
+  ],
+  "coverArtistFrom": "isfdb:329196 (the printing under this ISBN)",
+  "sameContent": "Hospital Station only, the first of the three novels in Beginning Operations.",
+  "note": null
+ },
+ {
+  "order": 178,
+  "relaunchWork": "OL45147605W",
+  "title": "Nova Swing",
+  "author": "M. John Harrison",
+  "language": "ger",
+  "translatedTitle": "Nova",
+  "isbn": "9783453522916",
+  "publisher": "Heyne",
+  "year": "2007",
+  "file": "178-ger-9783453522916.jpg",
+  "width": 321,
+  "height": 500,
+  "imageSource": "https://covers.openlibrary.org/b/id/8783550-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "400134",
+  "olEdition": "/books/OL27312063M",
+  "olEditionWorks": [
+   "OL20132088W"
+  ],
+  "olEditionCovers": [
+   8783550
+  ],
+  "action": "map-work",
+  "olWork": "OL20132088W",
+  "translationsJsonEntry": {
+   "OL20132088W": "OL45147605W"
+  },
+  "coverArtist": [
+   "Dirk Schulz"
+  ],
+  "coverArtistFrom": "isfdb:400134 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": null
+ },
+ {
+  "order": 179,
+  "relaunchWork": "OL8698138W",
+  "title": "Thirteen",
+  "author": "Richard Morgan",
+  "language": "ger",
+  "translatedTitle": "Skorpion",
+  "isbn": "9783453523562",
+  "publisher": "Heyne",
+  "year": "2007",
+  "file": "179-ger-9783453523562.jpg",
+  "width": 316,
+  "height": 500,
+  "imageSource": "https://covers.openlibrary.org/b/id/13836365-L.jpg",
+  "imageOrigin": "openlibrary",
+  "isfdbRecord": "510717",
+  "olEdition": "/books/OL47318832M",
+  "olEditionWorks": [
+   "OL34957343W"
+  ],
+  "olEditionCovers": [
+   13836365
+  ],
+  "action": "map-work",
+  "olWork": "OL34957343W",
+  "translationsJsonEntry": {
+   "OL34957343W": "OL8698138W"
+  },
+  "coverArtist": [
+   "Franz Vohwinkel"
+  ],
+  "coverArtistFrom": "isfdb:510717 (the printing under this ISBN)",
+  "sameContent": null,
+  "note": "Thirteen was published as Black Man in the UK; Skorpion is its German translation."
+ },
+ {
+  "order": 181,
+  "relaunchWork": "OL45912000W",
+  "title": "Alien Emergencies",
+  "author": "James White",
+  "language": "ger",
+  "translatedTitle": "Das Ambulanzschiff",
+  "isbn": "9783811835078",
+  "publisher": "Moewig",
+  "year": "1980",
+  "file": "181-ger-9783811835078.jpg",
+  "width": 409,
+  "height": 589,
+  "imageSource": "https://isfdb.org/wiki/images/8/8b/DSMBLNZSCH1980.jpg",
+  "imageOrigin": "isfdb",
+  "isfdbRecord": "348638",
+  "olEdition": "/books/OL30529696M",
+  "olEditionWorks": [
+   "OL22447119W"
+  ],
+  "olEditionCovers": [
+   10462526
+  ],
+  "action": "upload-cover",
+  "olWork": "OL22447119W",
+  "translationsJsonEntry": {
+   "OL22447119W": "OL45912000W"
+  },
+  "coverArtist": [
+   "Giuseppe Festino"
+  ],
+  "coverArtistFrom": "isfdb:348638 (the printing under this ISBN)",
+  "sameContent": "Ambulance Ship only, the first of the three books in Alien Emergencies.",
+  "note": "OL's cover (10462526) is a photo with a shop's stand in front of the book; this is ISFDB's scan."
+ }
+]
