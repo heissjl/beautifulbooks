@@ -5,7 +5,7 @@ import CoverWall from '@/components/CoverWall';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
-import { allCollections, authorsShown, collectionBySlug, coverLine } from '@/lib/collections';
+import { authorsShown, collectionBySlug, coverLine } from '@/lib/collections';
 import { SITE_URL } from '@/lib/seo';
 import { friendSignedIn } from '@/lib/suggest/session';
 
@@ -19,11 +19,13 @@ import { friendSignedIn } from '@/lib/suggest/session';
  *
  * **A draft in production is shown only to a signed-in friend** (Julian,
  * 2026-09-25: „have the drafts also in production for the curation behind
- * login"). Published collections are built ahead; a draft's slug is not, so
- * it renders on request, reads the /curate cookie, and is a 404 without it —
- * never indexed either way.
+ * login"). So the page renders on every request and reads the /curate
+ * cookie; a draft is a 404 without it and never indexed. Built ahead with
+ * `generateStaticParams`, reading the cookie made every draft a 500 in the
+ * production build (DYNAMIC_SERVER_USAGE, measured 2026-09-25) — rendering
+ * per request costs nothing external, the file is read in memory.
  */
-export const dynamicParams = true;
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -36,9 +38,6 @@ async function findCollection(slug: string) {
   return (await friendSignedIn()) ? collectionBySlug(slug, { includeDrafts: true }) : null;
 }
 
-export function generateStaticParams() {
-  return allCollections().map(c => ({ slug: c.slug }));
-}
 
 /** "A, B and C" — or "A, B and 4 more" once the list stops being readable. */
 function nameLine(names: string[], max = 4): string {
@@ -53,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!c) return {};
   // Authors only: a series' scope is publishers, and "73 books by Gollancz" named them as writers (2026-09-25).
   const names = c.kind === 'authors' ? authorsShown(c) : [];
-  const description = `${c.works.length} ${c.works.length === 1 ? 'book' : 'books'}${names.length ? ` by ${nameLine(names)}` : ''}, ${coverLine(c.kind)}. ${c.intro}`.slice(0, 300);
+  const description = `${c.works.length} ${c.works.length === 1 ? 'book' : 'books'}${names.length ? ` by ${nameLine(names)}` : ''}, ${coverLine(c.kind, c.coverSource)}. ${c.intro}`.slice(0, 300);
   return {
     title: c.title,
     description,
@@ -95,11 +94,23 @@ export default async function CollectionPage({ params }: PageProps) {
         <p className="mt-3 text-sm text-ink-3">
           {c.works.length} {c.works.length === 1 ? 'book' : 'books'}
           {names.length > 0 && <> by {names.length} {names.length === 1 ? 'author' : 'authors'}</>}
-          , {coverLine(c.kind)}.
+          , {coverLine(c.kind, c.coverSource)}.
         </p>
         <div className="mt-8">
           <CoverWall works={c.works} />
         </div>
+        {/*
+          The source of the cover credits, required by its licence (CC BY 4.0)
+          and by N12: the names are ISFDB's, for the printing shown, and a tile
+          without a name means ISFDB names nobody for it, not that nobody made it.
+        */}
+        {c.coverCredits === 'isfdb' && (
+          <p className="mt-10 max-w-2xl text-xs text-ink-3">
+            Cover artists as named by the{' '}
+            <a href="https://www.isfdb.org/" className="underline underline-offset-2 hover:text-accent">Internet Speculative Fiction Database</a>{' '}
+            for the printing shown (<a href="https://creativecommons.org/licenses/by/4.0/" className="underline underline-offset-2 hover:text-accent">CC BY 4.0</a>). Where a tile names nobody, ISFDB does not credit that printing, or credits several artists.
+          </p>
+        )}
       </main>
       <SiteFooter />
     </div>
