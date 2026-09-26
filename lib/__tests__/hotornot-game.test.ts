@@ -335,3 +335,18 @@ describe('readyPairs (pairs handed out with the page)', () => {
   });
 });
 
+
+describe('series families for pairing', () => {
+  it('counts the SF Masterworks walls as one series and leaves author collections out', async () => {
+    const { seriesFamily, seriesIndex } = await import('../hotornot/game');
+    expect(seriesFamily('sf-masterworks-relaunch-international')).toBe('sf-masterworks');
+    expect(seriesFamily('suhrkamp-taschenbuch-images')).toBe('suhrkamp-taschenbuch');
+    const index = seriesIndex([
+      { slug: 'sf-masterworks', title: '', kind: 'series', intro: '', published: true, works: [{ id: 'OL1W', title: '', author: '', coverId: 'ol:1' }] },
+      { slug: 'sf-masterworks-relaunch', title: '', kind: 'series', intro: '', published: true, works: [{ id: 'OL1W', title: '', author: '', coverId: 'ol:1' }] },
+      { slug: 'hugo-award-novel', title: '', kind: 'authors', intro: '', published: true, works: [{ id: 'OL2W', title: '', author: '', coverId: 'ol:2' }] },
+    ]);
+    expect(index.get('ol:1')).toEqual(['sf-masterworks']);
+    expect(index.has('ol:2')).toBe(false);
+  });
+});

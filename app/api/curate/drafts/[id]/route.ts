@@ -52,6 +52,12 @@ export async function POST(request: NextRequest, { params }: Params) {
     const d = loaded.draft;
     if (!isCollectionSlug(d.slug)) return json({ error: `Not a usable address: ${d.slug}` }, 400);
     const file = collectionRecords().find(r => r.slug === d.slug);
+    // A wall of sets, or one work under several covers, is more than a draft can hold (it keeps each
+    // work once): publishing the draft would shrink the wall — Harry Potter went from 84 covers to 7
+    // on 2026-09-26. Such a collection is published with its switch, from the file.
+    if (file && (file.setSize || new Set(file.works.map(w => w.id)).size < file.works.length)) {
+      return json({ error: 'This collection has more than a draft can hold (sets, or one book under several covers). Publish it with its switch in the list of collections instead.' }, 400);
+    }
     const record = {
       ...toRecord(d),
       published: true,

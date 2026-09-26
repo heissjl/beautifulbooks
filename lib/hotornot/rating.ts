@@ -424,6 +424,13 @@ export interface PairOptions {
    */
   bookOf?: (id: string) => string;
   sameBook?: number;
+  /**
+   * The publisher's series a cover belongs to, if any. Two covers of one
+   * series never meet (Julian, 2026-09-26: „die collections von verlagsreihen
+   * sollten beim versus game nicht gegeneinander ausgespielt werden") — two
+   * SF Masterworks in one design ask nothing — unless nothing else is left.
+   */
+  seriesOf?: (id: string) => readonly string[];
 }
 
 /** How often a pair comes from one book, when the book has another cover in play. */
@@ -475,7 +482,10 @@ export function nextPair(
 
   const lastKey = options.last ? pairKey(options.last[0], options.last[1]) : '';
   const fresh = open.filter(id => id !== a && pairKey(a, id) !== lastKey);
-  const field = fresh.length > 0 ? fresh : ids.filter(id => id !== a);
+  const anyField = fresh.length > 0 ? fresh : ids.filter(id => id !== a);
+  const own = new Set(options.seriesOf?.(a) ?? []);
+  const apart = own.size > 0 ? anyField.filter(id => !(options.seriesOf!(id)).some(s => own.has(s))) : anyField;
+  const field = apart.length > 0 ? apart : anyField;
   // Now and then both covers come from one book, where the book has another in play.
   const { bookOf } = options;
   const together = bookOf ? random() < (options.sameBook ?? SAME_BOOK_SHARE) : false;

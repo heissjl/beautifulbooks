@@ -15,6 +15,7 @@
  * uncertainty needs them all, and it does so once a minute (`cachedBoard`).
  */
 import poolFile from '@/data/versus-pool.json';
+import { collectionRecords } from '../collections';
 import { coverPathSegment } from '../coverurl';
 import { rng } from '../loading';
 import type { PoolCover } from './pool';
@@ -69,6 +70,32 @@ function activeIds(pool: VersusPool, flags: readonly CoverFlag[]): string[] {
 }
 
 export const POOL = poolFile as VersusPool;
+
+/**
+ * The family of a series collection: its slug's first two words, so the
+ * four SF Masterworks walls count as one series, and the two suhrkamp
+ * taschenbuch and the two Verso walls as one each.
+ */
+export function seriesFamily(slug: string): string {
+  return slug.split('-').slice(0, 2).join('-');
+}
+
+/** Cover id → the series families it appears in, from the collections file (series walls only). */
+export function seriesIndex(records = collectionRecords()): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  for (const r of records) {
+    if (r.kind !== 'series') continue;
+    const family = seriesFamily(r.slug);
+    for (const w of r.works) {
+      const have = out.get(w.coverId) ?? [];
+      if (!have.includes(family)) out.set(w.coverId, [...have, family]);
+    }
+  }
+  return out;
+}
+
+let seriesCache: Map<string, string[]> | null = null;
+const seriesOf = (id: string): readonly string[] => (seriesCache ??= seriesIndex()).get(id) ?? [];
 
 /** Through our own image route (ROADMAP 1.3): the covers never leave the site. */
 export function imagePath(coverId: string, size: 'M' | 'L'): string {
@@ -268,7 +295,7 @@ export async function nextPairFor(
   const [{ elo, votes }, flags] = await Promise.all([pairingTally(store, pool), flagsOf(store, pool)]);
   const ids = activeIds(pool, flags);
   const book = new Map(pool.covers.map(c => [c.id, c.workId]));
-  const pair = nextPair(ids, elo, random, { last, recent, bookOf: id => book.get(id) ?? id });
+  const pair = nextPair(ids, elo, random, { last, recent, bookOf: id => book.get(id) ?? id, seriesOf });
   if (!pair) return null;
   const [a, b] = pair;
   return {
@@ -303,7 +330,7 @@ export function readyPairs(
   const out: PairResponse[] = [];
   const recent: string[] = [];
   for (let i = 0; i < count; i++) {
-    const pair = nextPair(ids, elo, random, { recent, bookOf: id => book.get(id) ?? id });
+    const pair = nextPair(ids, elo, random, { recent, bookOf: id => book.get(id) ?? id, seriesOf });
     if (!pair) break;
     const [a, b] = pair;
     recent.push(a, b);
