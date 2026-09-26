@@ -11,7 +11,8 @@
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
     "worktrees": "npx tsx scripts/worktrees.ts",
-    "kanban": "npx tsx scripts/kanban.ts"
+    "kanban": "npx tsx scripts/cockpit/main.ts --build --board",
+    "cockpit": "npx tsx scripts/cockpit/main.ts"
   },
   "dependencies": {
     "jpeg-js": "^0.4.4",

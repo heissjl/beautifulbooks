@@ -9,6 +9,31 @@ import { ADMIN_COOKIE, adminMatches, adminSessionValid, suggestEnabled } from '@
 import { json } from '../../suggest/guard';
 
 /**
+ * What the running site lays over the file: the publish switches and the
+ * drafts published from /curate, and the order of the collections (5.10h)
+ * (ROADMAP 6.54, the Cockpit's view of the
+ * collection layers). Read-only and Julian only, like POST; the Cockpit asks
+ * it once per generation with the admin password as a bearer token.
+ */
+export async function GET(request: NextRequest) {
+  if (!suggestEnabled()) return json({ error: 'Not found' }, 404);
+  const admin =
+    adminSessionValid(request.cookies.get(ADMIN_COOKIE)?.value) ||
+    adminMatches((request.headers.get('authorization') ?? '').replace(/^Bearer\s+/i, ''));
+  const limited = rateLimited(request, admin ? 'suggest' : 'login');
+  if (limited) return limited;
+  if (!admin) return json({ error: 'Only Julian can read this.' }, 403);
+  const store = publishStoreFromEnv();
+  if (!store) return json({ error: missingStoreMessage() }, 503);
+  try {
+    const [switches, content, order] = await Promise.all([store.get(), store.getContent(), store.getOrder()]);
+    return json({ switches, content, order });
+  } catch {
+    return json({ error: 'The store did not answer. Try again in a moment.' }, 503);
+  }
+}
+
+/**
  * Publish or unpublish a collection of the file on the running site
  * (ROADMAP 5.10g; Julian, 2026-09-25: „add an option in the online version
  * to publish a draft"). Julian only: the admin cookie from /curate, or the
