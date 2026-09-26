@@ -470,12 +470,26 @@ function coverYear(cover: Cover, editionsById: ReadonlyMap<string, Edition>): nu
   return Math.max(-1, ...cover.editionIds.map(id => editionsById.get(id)?.year ?? -1));
 }
 
-/** Newest printing first; title pages and blurb scans last, however new (SPEC F2.5). */
+/**
+ * Newest printing first; title pages and blurb scans last, however new (SPEC F2.5).
+ *
+ * With `arrival` (the page each cover was loaded on), that order holds within
+ * each page and the pages follow one another: a later page is appended, so a
+ * wall that is still loading never moves a cover the reader is looking at
+ * (Julian, 2026-09-26). The key is rank, not page number, so it is the same
+ * whichever id of a folded group is asked.
+ */
 function newestFirstOrder(
   editionsById: ReadonlyMap<string, Edition>,
   signatures?: ReadonlyMap<string, ImageSignature>,
+  arrival?: ReadonlyMap<string, number>,
 ): (a: Cover, b: Cover) => number {
+  // A cover no page brought (a shop's image for the selected ISBN) comes after every page.
+  const LAST = Number.MAX_SAFE_INTEGER;
+  const loadedOn = (c: Cover) => arrival ? Math.min(arrival.get(c.id) ?? LAST, ...(c.similarIds ?? []).map(id => arrival.get(id) ?? LAST)) : 0;
   return (a, b) => {
+    const byArrival = loadedOn(a) - loadedOn(b);
+    if (byArrival !== 0) return byArrival;
     const pageA = looksLikeScannedPage(signatures?.get(a.id)) ? 1 : 0;
     const pageB = looksLikeScannedPage(signatures?.get(b.id)) ? 1 : 0;
     return pageA - pageB || coverYear(b, editionsById) - coverYear(a, editionsById);
@@ -492,9 +506,10 @@ export function coversNewestFirst(
   covers: readonly Cover[],
   editions: readonly Edition[],
   signatures?: ReadonlyMap<string, ImageSignature>,
+  arrival?: ReadonlyMap<string, number>,
 ): Cover[] {
   const editionsById = new Map(editions.map(e => [e.id, e]));
-  return [...covers].sort(newestFirstOrder(editionsById, signatures));
+  return [...covers].sort(newestFirstOrder(editionsById, signatures, arrival));
 }
 
 /**
@@ -506,6 +521,7 @@ export function groupCoversByLanguage(
   editions: readonly Edition[],
   preferred?: string,
   signatures?: ReadonlyMap<string, ImageSignature>,
+  arrival?: ReadonlyMap<string, number>,
 ): LanguageGroup[] {
   const editionsById = new Map(editions.map(e => [e.id, e]));
   const groups = new Map<string | undefined, Cover[]>();
@@ -515,7 +531,7 @@ export function groupCoversByLanguage(
     list.push(c);
     groups.set(lang, list);
   }
-  const newestFirst = newestFirstOrder(editionsById, signatures);
+  const newestFirst = newestFirstOrder(editionsById, signatures, arrival);
   return Array.from(groups.entries())
     .map(([language, cs]) => ({ language, covers: cs.sort(newestFirst) }))
     .sort((a, b) => {

@@ -41,6 +41,13 @@ export type Truncation = 'cap' | 'error' | null;
 export interface MergedWork<E extends Edition = Edition> {
   editions: E[];
   covers: Cover[];
+  /**
+   * The page each cover first arrived on (0 = the first page loaded). The
+   * wall sorts by it before anything else, so a page that arrives later is
+   * appended and never moves a cover already on screen (Julian, 2026-09-26:
+   * „can we just append newly loaded covers at the end?").
+   */
+  coverPage: Map<string, number>;
   signatures: Map<string, ImageSignature>;
   /** Edition records scanned so far, i.e. the sum of the pages requested. */
   checked: number;
@@ -67,13 +74,14 @@ export interface MergeStatus {
 export function mergeWorkPages<E extends Edition>(pages: readonly WorkPageData<E>[], status: MergeStatus): MergedWork<E> {
   const editions = new Map<string, E>();
   const covers = new Map<string, Cover>();
+  const coverPage = new Map<string, number>();
   const signatures = new Map<string, ImageSignature>();
   let checked = 0;
   // Each record reports its own total; a wall that spans the siblings of one
   // book (ROADMAP 6.13) has the sum of them.
   const totals = new Map<string, number>();
 
-  for (const page of pages) {
+  for (const [pageIndex, page] of pages.entries()) {
     for (const edition of page.editions) {
       if (!editions.has(edition.id)) editions.set(edition.id, edition);
     }
@@ -81,6 +89,7 @@ export function mergeWorkPages<E extends Edition>(pages: readonly WorkPageData<E
       const existing = covers.get(cover.id);
       if (!existing) {
         covers.set(cover.id, { ...cover, editionIds: [...cover.editionIds] });
+        coverPage.set(cover.id, pageIndex);
         continue;
       }
       for (const id of cover.editionIds) {
@@ -98,6 +107,7 @@ export function mergeWorkPages<E extends Edition>(pages: readonly WorkPageData<E
   return {
     editions: Array.from(editions.values()),
     covers: Array.from(covers.values()),
+    coverPage,
     signatures,
     checked: Math.min(checked, total),
     total,

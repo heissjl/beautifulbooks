@@ -122,7 +122,7 @@ function buildWall(
   const editionsByScan = new Map<string, readonly string[]>(all.map(c => [c.id, c.editionIds]));
   const covers = foldDuplicateCovers(all, signatures, merged.editions, {}, pinnedId);
   const coversById = new Map(covers.map(c => [c.id, c]));
-  const ordered = orderGroups(groupCoversByLanguage(covers, merged.editions, preferred, signatures), preferred);
+  const ordered = orderGroups(groupCoversByLanguage(covers, merged.editions, preferred, signatures, merged.coverPage), preferred);
   const groups: CoverTab[] = ordered.map(g => ({
     language: g.language,
     covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
@@ -130,7 +130,7 @@ function buildWall(
   // `signatures` goes out too: the verdict must know which pictures the fold
   // could compare at all (ROADMAP 6.32).
   // The whole wall in one list, for the "All languages" pill (ROADMAP 6.8).
-  const wholeWall = coversNewestFirst(covers, merged.editions, signatures);
+  const wholeWall = coversNewestFirst(covers, merged.editions, signatures, merged.coverPage);
   return { covers, coversById, groups, all: wholeWall, editionsByScan, signatures };
 }
 
