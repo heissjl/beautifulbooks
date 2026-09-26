@@ -38,6 +38,18 @@ export const RING_MIN_BITS = Math.max(
 
 export const RING_MIN_COLOUR = COLOUR_MAX * 4;
 
+/**
+ * Covers looked at by hand that must not stand on a ring, with the reason.
+ * The measures cannot see these: an audiobook box with an orange frame round
+ * the paperback's design is 25 bits and a colour world away from it (Julian,
+ * 2026-09-25: „hier sind dubletten", on *One Flew Over the Cuckoo's Nest*),
+ * and the site is about printed books only (E21).
+ */
+export const RING_EXCLUDED: ReadonlyMap<string, string> = new Map([
+  ['ol:297599', "One Flew Over the Cuckoo's Nest: audio cassette box, the paperback's design in an orange frame"],
+  ['ol:8310631', "One Flew Over the Cuckoo's Nest: Viking Critical Library in navy, the same template as the blue one beside it"],
+]);
+
 export interface RingCandidate {
   id: string;
   sig: ImageSignature;
@@ -108,6 +120,7 @@ export function ringsFor(
 ): HeroRing[] {
   const byWork = new Map<number, RingCandidate[]>();
   for (const [work, id, hash, contrast, mean, saturation, hues] of index.covers) {
+    if (RING_EXCLUDED.has(id)) continue;
     const list = byWork.get(work) ?? [];
     list.push({ id, sig: { hash, contrast, mean, saturation, hues } });
     byWork.set(work, list);

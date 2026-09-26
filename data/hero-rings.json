@@ -981,8 +981,8 @@
     "ol:11327653",
     "ol:8257710",
     "ol:8315213",
-    "ol:297599",
-    "ol:8122207"
+    "ol:8122207",
+    "ol:8505959"
    ]
   },
   {
@@ -1294,6 +1294,20 @@
    ]
   },
   {
+   "workId": "OL39396W",
+   "title": "To the Lighthouse",
+   "author": "Virginia Woolf",
+   "coverIds": [
+    "ol:12264478",
+    "ol:2111097",
+    "ol:8231846",
+    "ol:902061",
+    "ol:105881",
+    "ol:11730428",
+    "ol:1473036"
+   ]
+  },
+  {
    "workId": "OL1095427W",
    "title": "Jane Eyre",
    "author": "Charlotte Brontë",
@@ -1319,20 +1333,6 @@
     "ol:12369923",
     "ol:13515944",
     "ol:15126320"
-   ]
-  },
-  {
-   "workId": "OL39396W",
-   "title": "To the Lighthouse",
-   "author": "Virginia Woolf",
-   "coverIds": [
-    "ol:12264478",
-    "ol:2111097",
-    "ol:8231846",
-    "ol:902061",
-    "ol:105881",
-    "ol:11730428",
-    "ol:1473036"
    ]
   }
  ]
