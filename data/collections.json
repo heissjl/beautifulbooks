@@ -11275,23 +11275,23 @@
       ]
     },
     {
-      "slug": "suhrkamp-taschenbuch",
-      "title": "suhrkamp taschenbuch",
+      "slug": "suhrkamp-taschenbuch-author-portraits",
+      "title": "suhrkamp taschenbuch — author portraits",
       "kind": "series",
-      "intro": "Suhrkamp’s paperback series in Willy Fleckhaus’s design of 1971: a coloured cover, author and title set large, and below them a small window that often holds the author’s portrait. One book per author, in series order, from the covers Open Library has for volumes 1 to 1499.",
+      "intro": "Suhrkamp’s paperback series in Willy Fleckhaus’s design of 1971: a coloured cover, author and title set large, and below them a small window. Here the window holds a portrait of the author. One book per author, in series order, from the covers Open Library has.",
       "published": false,
       "publishers": [
         "Suhrkamp"
       ],
       "works": [
         {
-          "id": "OL973172W",
-          "title": "Gedichte",
-          "author": "Hans Magnus Enzensberger",
-          "coverId": "ol:7161749",
+          "id": "OL15164672W",
+          "title": "En attendant Godot",
+          "author": "Samuel Beckett",
+          "coverId": "ol:13122704",
           "addedAt": "2026-09-26",
-          "from": "isbn:3518065041",
-          "coverIsbn": "3518065041"
+          "from": "isbn:3518365010",
+          "coverIsbn": "3518365010"
         },
         {
           "id": "OL873076W",
@@ -11303,58 +11303,13 @@
           "coverIsbn": "3518065076"
         },
         {
-          "id": "OL8001616W",
-          "title": "Die Angestellten",
-          "author": "Siegfried Kracauer",
-          "coverId": "ol:10452603",
+          "id": "OL542268W",
+          "title": "Erziehung zur Mündigkeit",
+          "author": "Theodor W. Adorno",
+          "coverId": "ol:1016462",
           "addedAt": "2026-09-26",
-          "from": "isbn:3518065130",
-          "coverIsbn": "3518065130"
-        },
-        {
-          "id": "OL20097584W",
-          "title": "Das leere Haus (Phantastische Bibliothek)",
-          "author": "",
-          "coverId": "ol:8760240",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065300",
-          "coverIsbn": "3518065300"
-        },
-        {
-          "id": "OL24338351W",
-          "title": "Indochina und die amerikanische Krise",
-          "author": "Noam Chomsky",
-          "coverId": "ol:10860376",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065327",
-          "coverIsbn": "3518065327"
-        },
-        {
-          "id": "OL1184986W",
-          "title": "Zen Buddhism & psychoanalysis",
-          "author": "Erich Fromm",
-          "coverId": "ol:1016468",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518365371",
-          "coverIsbn": "3518365371"
-        },
-        {
-          "id": "OL1382804W",
-          "title": "Manifest Ueber Die Armut In Der Welt",
-          "author": "Gunnar Myrdal",
-          "coverId": "ol:12179909",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065408",
-          "coverIsbn": "3518065408"
-        },
-        {
-          "id": "OL7172972W",
-          "title": "Der andere Hölderlin",
-          "author": "Thomas Beckermann",
-          "coverId": "ol:9543384",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065424",
-          "coverIsbn": "3518065424"
+          "from": "isbn:3518365118",
+          "coverIsbn": "3518365118"
         },
         {
           "id": "OL2399775W",
@@ -11366,24 +11321,6 @@
           "coverIsbn": "3518065475"
         },
         {
-          "id": "OL24243484W",
-          "title": "Unterbrochene Schulstunde",
-          "author": "Volker Michels",
-          "coverId": "ol:10722766",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518365487",
-          "coverIsbn": "3518365487"
-        },
-        {
-          "id": "OL1338568W",
-          "title": "Naturrecht und menschliche Würde",
-          "author": "Ernst Bloch",
-          "coverId": "ol:15024156",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065491",
-          "coverIsbn": "3518065491"
-        },
-        {
           "id": "OL9058273W",
           "title": "Белый пароход",
           "author": "Tschingis Aitmatow",
@@ -11393,15 +11330,6 @@
           "coverIsbn": "3518365517"
         },
         {
-          "id": "OL4851564W",
-          "title": "Der Lange Marsch",
-          "author": "Claude Hudelot",
-          "coverId": "ol:11617444",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065548",
-          "coverIsbn": "3518065548"
-        },
-        {
           "id": "OL8664856W",
           "title": "Ich Bin Ein Bewohner",
           "author": "Peter Handke",
@@ -11409,33 +11337,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518365568",
           "coverIsbn": "3518365568"
-        },
-        {
-          "id": "OL5574964W",
-          "title": "Wortelemente lateinisch-griechischer Fachausdrücke in der Biologie, Zoologie und vergleichenden Anatomie",
-          "author": "Fritz Cl Werner",
-          "coverId": "ol:8393476",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065645",
-          "coverIsbn": "3518065645"
-        },
-        {
-          "id": "OL1379089W",
-          "title": "Deutsches Namenlexikon",
-          "author": "Hans Bahlow",
-          "coverId": "ol:9288809",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065653",
-          "coverIsbn": "3518065653"
-        },
-        {
-          "id": "OL495652W",
-          "title": "Bandits",
-          "author": "Eric Hobsbawm",
-          "coverId": "ol:10409026",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065661",
-          "coverIsbn": "3518065661"
         },
         {
           "id": "OL9022730W",
@@ -11456,33 +11357,6 @@
           "coverIsbn": "3518065718"
         },
         {
-          "id": "OL542261W",
-          "title": "Versuch, das Endspiel zu verstehen",
-          "author": "Theodor W. Adorno",
-          "coverId": "ol:8393477",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065726",
-          "coverIsbn": "3518065726"
-        },
-        {
-          "id": "OL6160917W",
-          "title": "Vietnamesische Lehrjahre",
-          "author": "Erich Wulff",
-          "coverId": "ol:13564770",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065734",
-          "coverIsbn": "3518065734"
-        },
-        {
-          "id": "OL2054620W",
-          "title": "Ein Gedicht entsteht",
-          "author": "Karl Krolow",
-          "coverId": "ol:11491384",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518065955",
-          "coverIsbn": "3518065955"
-        },
-        {
           "id": "OL4540208W",
           "title": "Ein Kind unserer Zeit",
           "author": "Ödön von Horváth",
@@ -11490,15 +11364,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518365991",
           "coverIsbn": "3518365991"
-        },
-        {
-          "id": "OL11134478W",
-          "title": "Offener Brief an die Königin von Griechenland",
-          "author": "Kästner, Erhart",
-          "coverId": "ol:10758304",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518066064",
-          "coverIsbn": "3518066064"
         },
         {
           "id": "OL20904045W",
@@ -11519,15 +11384,6 @@
           "coverIsbn": "3518066218"
         },
         {
-          "id": "OL1414378W",
-          "title": "Kultur und Kritik",
-          "author": "Jürgen Habermas",
-          "coverId": "ol:9189635",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518066250",
-          "coverIsbn": "3518066250"
-        },
-        {
           "id": "OL2090334W",
           "title": "Der ju ngere Bruder",
           "author": "Hans Erich Nossack",
@@ -11535,24 +11391,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518366335",
           "coverIsbn": "3518366335"
-        },
-        {
-          "id": "OL6284531W",
-          "title": "Atomen, människan, universum",
-          "author": "Hannes Alfvén",
-          "coverId": "ol:12392007",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518066390",
-          "coverIsbn": "3518066390"
-        },
-        {
-          "id": "OL18460913W",
-          "title": "Bertolt Brecht",
-          "author": "Frederic Ewen",
-          "coverId": "ol:10415949",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518066412",
-          "coverIsbn": "3518066412"
         },
         {
           "id": "OL155603W",
@@ -11591,24 +11429,6 @@
           "coverIsbn": "3518066641"
         },
         {
-          "id": "OL815561W",
-          "title": "Psychoanalyse und Justiz",
-          "author": "Tilmann Moser",
-          "coverId": "ol:13215848",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518066676",
-          "coverIsbn": "3518066676"
-        },
-        {
-          "id": "OL15210975W",
-          "title": "Fin de partie",
-          "author": "Samuel Beckett",
-          "coverId": "ol:14477934",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518366718",
-          "coverIsbn": "3518366718"
-        },
-        {
           "id": "OL3802591W",
           "title": "Schriften zur Politik und Gesellschaft",
           "author": "Bertolt Brecht",
@@ -11616,15 +11436,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518066994",
           "coverIsbn": "3518066994"
-        },
-        {
-          "id": "OL31239211W",
-          "title": "Die Kontrolle des Luftverkehrs",
-          "author": "Werner Riedel",
-          "coverId": "ol:13027584",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518067036",
-          "coverIsbn": "3518067036"
         },
         {
           "id": "OL109524W",
@@ -11636,15 +11447,6 @@
           "coverIsbn": "3518067265"
         },
         {
-          "id": "OL4630215W",
-          "title": "Thomas Mann",
-          "author": "Erich Heller",
-          "coverId": "ol:10237614",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518067435",
-          "coverIsbn": "3518067435"
-        },
-        {
           "id": "OL2141773W",
           "title": "Der Weg nach Oobliadooh",
           "author": "Fritz Rudolf Fries",
@@ -11654,15 +11456,6 @@
           "coverIsbn": "3518067656"
         },
         {
-          "id": "OL19424991W",
-          "title": "Materialien zu Alfred Döblin, Berlin Alexanderplatz",
-          "author": "Matthias Prangel",
-          "coverId": "ol:12636078",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518067680",
-          "coverIsbn": "3518067680"
-        },
-        {
           "id": "OL2002469W",
           "title": "Irreführung der Behörden",
           "author": "Jurek Becker",
@@ -11670,51 +11463,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518067710",
           "coverIsbn": "3518067710"
-        },
-        {
-          "id": "OL19409116W",
-          "title": "Basis",
-          "author": "Reinhold Grimm",
-          "coverId": "ol:13061058",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518067761",
-          "coverIsbn": "3518067761"
-        },
-        {
-          "id": "OL136064W",
-          "title": "Zniewolony umysł",
-          "author": "Czesław Miłosz",
-          "coverId": "ol:14348540",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518367781",
-          "coverIsbn": "3518367781"
-        },
-        {
-          "id": "OL751154W",
-          "title": "Der Tod des Vergil",
-          "author": "Hermann Broch",
-          "coverId": "ol:15157127",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518067966",
-          "coverIsbn": "3518067966"
-        },
-        {
-          "id": "OL1386622W",
-          "title": "Die verborgene Tradition",
-          "author": "Hannah Arendt",
-          "coverId": "ol:8393487",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518068032",
-          "coverIsbn": "3518068032"
-        },
-        {
-          "id": "OL9073026W",
-          "title": "Das Leben Robert Walsers",
-          "author": "Robert Mächler",
-          "coverId": "ol:11444968",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518068210",
-          "coverIsbn": "3518068210"
         },
         {
           "id": "OL857541W",
@@ -11744,15 +11492,6 @@
           "coverIsbn": "351836846X"
         },
         {
-          "id": "OL2395425W",
-          "title": "Ypsilon minus",
-          "author": "Herbert W. Franke",
-          "coverId": "ol:14360849",
-          "addedAt": "2026-09-26",
-          "from": "isbn:351806858X",
-          "coverIsbn": "351806858X"
-        },
-        {
           "id": "OL2570901W",
           "title": "Theaterstücke ; Über das absurde Theater",
           "author": "Wolfgang Hildesheimer",
@@ -11760,24 +11499,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518068628",
           "coverIsbn": "3518068628"
-        },
-        {
-          "id": "OL26185768W",
-          "title": "Das Rätsel Ulysses",
-          "author": "Stuart Gilbert",
-          "coverId": "ol:12157787",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518068679",
-          "coverIsbn": "3518068679"
-        },
-        {
-          "id": "OL1459745W",
-          "title": "Die Powenzbande. Zoologie einer Familie",
-          "author": "Ernst Penzoldt",
-          "coverId": "ol:1016539",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518368729",
-          "coverIsbn": "3518368729"
         },
         {
           "id": "OL10423422W",
@@ -11789,15 +11510,6 @@
           "coverIsbn": "351836877X"
         },
         {
-          "id": "OL910426W",
-          "title": "Hermann Hesse",
-          "author": "Hugo Ball",
-          "coverId": "ol:14602636",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518068857",
-          "coverIsbn": "3518068857"
-        },
-        {
           "id": "OL1414417W",
           "title": "Der alte Garten",
           "author": "Marie Luise Kaschnitz",
@@ -11805,24 +11517,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518368877",
           "coverIsbn": "3518368877"
-        },
-        {
-          "id": "OL1088336W",
-          "title": "Eroberung des Glücks. Neue Wege zu einer besseren Lebensgestaltung",
-          "author": "Bertrand Russell",
-          "coverId": "ol:1016541",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518368893",
-          "coverIsbn": "3518368893"
-        },
-        {
-          "id": "OL19364435W",
-          "title": "Der Fall Charles Dexter Ward.",
-          "author": "H.P. Lovecraft",
-          "coverId": "ol:8481407",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518068911",
-          "coverIsbn": "3518068911"
         },
         {
           "id": "OL25070116W",
@@ -11834,51 +11528,6 @@
           "coverIsbn": "3518068946"
         },
         {
-          "id": "OL11067510W",
-          "title": "Wechseljahre oder See-Leben II",
-          "author": "Werner Koch",
-          "coverId": "ol:15252782",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518369121",
-          "coverIsbn": "3518369121"
-        },
-        {
-          "id": "OL6098712W",
-          "title": "Bewußtheit durch Bewegung",
-          "author": "Moshe Feldenkrais",
-          "coverId": "ol:14420162",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518369296",
-          "coverIsbn": "3518369296"
-        },
-        {
-          "id": "OL4160755W",
-          "title": "Franz Kafka, der Künstler",
-          "author": "Heinz Politzer",
-          "coverId": "ol:13886054",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518069330",
-          "coverIsbn": "3518069330"
-        },
-        {
-          "id": "OL20113647W",
-          "title": "Die Schnecke am Hang.",
-          "author": "",
-          "coverId": "ol:8772478",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518069349",
-          "coverIsbn": "3518069349"
-        },
-        {
-          "id": "OL1644577W",
-          "title": "Verlassene Zimmer",
-          "author": "Hermann Lenz",
-          "coverId": "ol:1016544",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518369369",
-          "coverIsbn": "3518369369"
-        },
-        {
           "id": "OL973439W",
           "title": "Stücke",
           "author": "Tankred Dorst",
@@ -11886,42 +11535,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518369377",
           "coverIsbn": "3518369377"
-        },
-        {
-          "id": "OL2172454W",
-          "title": "Ubik",
-          "author": "Philip K. Dick",
-          "coverId": "ol:12649180",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518069403",
-          "coverIsbn": "3518069403"
-        },
-        {
-          "id": "OL1706234W",
-          "title": "Die Stunde des Todes",
-          "author": "Herbert Achternbusch",
-          "coverId": "ol:10869586",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518069497",
-          "coverIsbn": "3518069497"
-        },
-        {
-          "id": "OL6879134W",
-          "title": "Nestroy",
-          "author": "Franz Heinrich Mautner",
-          "coverId": "ol:8443778",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518369652",
-          "coverIsbn": "3518369652"
-        },
-        {
-          "id": "OL45715314W",
-          "title": "Das unsichtbare Auge",
-          "author": "Kalju Kirde",
-          "coverId": "ol:15235536",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518369776",
-          "coverIsbn": "3518369776"
         },
         {
           "id": "OL1696162W",
@@ -11933,15 +11546,6 @@
           "coverIsbn": "3518369873"
         },
         {
-          "id": "OL2146695W",
-          "title": "Zeit-Gespräche",
-          "author": "Fritz Joachim Raddatz",
-          "coverId": "ol:2212457",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518370200",
-          "coverIsbn": "3518370200"
-        },
-        {
           "id": "OL2254887W",
           "title": "Der schöne Vogel Phönix",
           "author": "Jochen Schimmang",
@@ -11951,15 +11555,6 @@
           "coverIsbn": "3518370278"
         },
         {
-          "id": "OL9072658W",
-          "title": "Vom Nachteil, geboren zu sein",
-          "author": "Emil Michel Cioran",
-          "coverId": "ol:1016553",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518370499",
-          "coverIsbn": "3518370499"
-        },
-        {
           "id": "OL4315058W",
           "title": "Die Eiswand. Roman",
           "author": "Yasushi Inoue",
@@ -11967,15 +11562,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518370510",
           "coverIsbn": "3518370510"
-        },
-        {
-          "id": "OL873316W",
-          "title": "Lebenschancen",
-          "author": "Ralf Dahrendorf",
-          "coverId": "ol:2212460",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518370596",
-          "coverIsbn": "3518370596"
         },
         {
           "id": "OL11478833W",
@@ -11996,49 +11582,13 @@
           "coverIsbn": "3518370782"
         },
         {
-          "id": "OL18262798W",
-          "title": "Das Erbe Hegels",
-          "author": "Hans-Georg Gadamer",
-          "coverId": "ol:12451970",
+          "id": "OL11483978W",
+          "title": "Trennung",
+          "author": "Karin Struck",
+          "coverId": "ol:8445311",
           "addedAt": "2026-09-26",
-          "from": "isbn:3518370960",
-          "coverIsbn": "3518370960"
-        },
-        {
-          "id": "OL20109840W",
-          "title": "Das kommende Geschlecht : Roman",
-          "author": "",
-          "coverId": "ol:8769715",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518371096",
-          "coverIsbn": "3518371096"
-        },
-        {
-          "id": "OL18223088W",
-          "title": "Eltern und Kinder",
-          "author": "Helm Stierlin",
-          "coverId": "ol:2212461",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518371185",
-          "coverIsbn": "3518371185"
-        },
-        {
-          "id": "OL1174080W",
-          "title": "Dieu d'eau",
-          "author": "Marcel Griaule",
-          "coverId": "ol:7401393",
-          "addedAt": "2026-09-26",
-          "from": "isbn:351837124X",
-          "coverIsbn": "351837124X"
-        },
-        {
-          "id": "OL21490225W",
-          "title": "Der Weltraumfriseur. Science Fiction Stories aus Polaris 3.",
-          "author": "",
-          "coverId": "ol:10375755",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518371312",
-          "coverIsbn": "3518371312"
+          "from": "isbn:3518371134",
+          "coverIsbn": "3518371134"
         },
         {
           "id": "OL3691875W",
@@ -12050,58 +11600,13 @@
           "coverIsbn": "3518371428"
         },
         {
-          "id": "OL20117099W",
-          "title": "Der Unsichtbare Kreis: Utopische Erzählungen",
-          "author": "",
-          "coverId": "ol:8774341",
+          "id": "OL45895500W",
+          "title": "Die geheimen Waffen",
+          "author": "Julio Cortázar",
+          "coverId": "ol:15246573",
           "addedAt": "2026-09-26",
-          "from": "isbn:3518371525",
-          "coverIsbn": "3518371525"
-        },
-        {
-          "id": "OL1305856W",
-          "title": "Neue Musik",
-          "author": "Hans Heinz Stuckenschmidt",
-          "coverId": "ol:14539312",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518371576",
-          "coverIsbn": "3518371576"
-        },
-        {
-          "id": "OL31677379W",
-          "title": "The Wretched of the Earth",
-          "author": "Frantz Fanon",
-          "coverId": "ol:3221670",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518371681",
-          "coverIsbn": "3518371681"
-        },
-        {
-          "id": "OL3738171W",
-          "title": "Gespräch über Psychoanalyse zwischen Frau, Dichter und Arzt",
-          "author": "Hans Prinzhorn",
-          "coverId": "ol:14099040",
-          "addedAt": "2026-09-26",
-          "from": "isbn:351837169X",
-          "coverIsbn": "351837169X"
-        },
-        {
-          "id": "OL9072720W",
-          "title": "Stucke 2",
-          "author": "V. Braun",
-          "coverId": "ol:3221672",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518371800",
-          "coverIsbn": "3518371800"
-        },
-        {
-          "id": "OL2271657W",
-          "title": "Owls Do Cry",
-          "author": "Janet Frame",
-          "coverId": "ol:15214475",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518371924",
-          "coverIsbn": "3518371924"
+          "from": "isbn:351837172X",
+          "coverIsbn": "351837172X"
         },
         {
           "id": "OL26426176W",
@@ -12113,24 +11618,6 @@
           "coverIsbn": "3518372025"
         },
         {
-          "id": "OL24846618W",
-          "title": "Polaris 5",
-          "author": "Franz Rottensteiner",
-          "coverId": "ol:11696581",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518372130",
-          "coverIsbn": "3518372130"
-        },
-        {
-          "id": "OL19332476W",
-          "title": "Der besessene Baronet und andere Geistergeschichten",
-          "author": "Sheridan Le Fanu",
-          "coverId": "ol:8443485",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518372319",
-          "coverIsbn": "3518372319"
-        },
-        {
           "id": "OL4049726W",
           "title": "Außenseiter",
           "author": "Hans Mayer",
@@ -12138,24 +11625,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:351837236X",
           "coverIsbn": "351837236X"
-        },
-        {
-          "id": "OL4178811W",
-          "title": "Conviva Ludibundus",
-          "author": "Johanna Braun",
-          "coverId": "ol:14353275",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518372483",
-          "coverIsbn": "3518372483"
-        },
-        {
-          "id": "OL20128982W",
-          "title": "syn-code-7 - phantastische bibliothek band 764 [sf1t)",
-          "author": "weisser-michael",
-          "coverId": "ol:8781171",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518372645",
-          "coverIsbn": "3518372645"
         },
         {
           "id": "OL1405585W",
@@ -12167,33 +11636,6 @@
           "coverIsbn": "3518372750"
         },
         {
-          "id": "OL2169200W",
-          "title": "Der Fall Vukobrankovics",
-          "author": "Ernst Weiß",
-          "coverId": "ol:14943307",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518372904",
-          "coverIsbn": "3518372904"
-        },
-        {
-          "id": "OL20710933W",
-          "title": "Der unm�gliche Stern",
-          "author": "",
-          "coverId": "ol:9390136",
-          "addedAt": "2026-09-26",
-          "from": "isbn:351837334X",
-          "coverIsbn": "351837334X"
-        },
-        {
-          "id": "OL46020959W",
-          "title": "Liebesgeschichten",
-          "author": "Christel Göbelsmann",
-          "coverId": "ol:15257857",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518373471",
-          "coverIsbn": "3518373471"
-        },
-        {
           "id": "OL1398761W",
           "title": "Atemwende",
           "author": "Paul Celan",
@@ -12201,105 +11643,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518373501",
           "coverIsbn": "3518373501"
-        },
-        {
-          "id": "OL19191688W",
-          "title": "Nachwehen",
-          "author": "Michael Klaus",
-          "coverId": "ol:14616054",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518373552",
-          "coverIsbn": "3518373552"
-        },
-        {
-          "id": "OL8337201W",
-          "title": "Die Pflicht, glücklich zu sein",
-          "author": "Alain",
-          "coverId": "ol:2212470",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518373595",
-          "coverIsbn": "3518373595"
-        },
-        {
-          "id": "OL2090044W",
-          "title": "Reise ohne Ende",
-          "author": "Peter Rosei",
-          "coverId": "ol:13102845",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518373757",
-          "coverIsbn": "3518373757"
-        },
-        {
-          "id": "OL987015W",
-          "title": "Lexikon der phantastischen Literatur",
-          "author": "Rein A. Zondergeld",
-          "coverId": "ol:8393677",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518373803",
-          "coverIsbn": "3518373803"
-        },
-        {
-          "id": "OL10571541W",
-          "title": "Space Lords",
-          "author": "Cordwainer Smith",
-          "coverId": "ol:10862429",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518373889",
-          "coverIsbn": "3518373889"
-        },
-        {
-          "id": "OL9172854W",
-          "title": "Theodor Chindler",
-          "author": "Bernard von Brentano",
-          "coverId": "ol:13190247",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518373927",
-          "coverIsbn": "3518373927"
-        },
-        {
-          "id": "OL20104244W",
-          "title": "Billennium",
-          "author": "J. G. Ballard",
-          "coverId": "ol:10583957",
-          "addedAt": "2026-09-26",
-          "from": "isbn:351837396X",
-          "coverIsbn": "351837396X"
-        },
-        {
-          "id": "OL11484122W",
-          "title": "Rabenkrächzen",
-          "author": "Maria Beig",
-          "coverId": "ol:15213378",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518374117",
-          "coverIsbn": "3518374117"
-        },
-        {
-          "id": "OL4101098W",
-          "title": "Paul Celan. Eine Biographie seiner Jugend",
-          "author": "Israel Chalfen",
-          "coverId": "ol:2212471",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518374133",
-          "coverIsbn": "3518374133"
-        },
-        {
-          "id": "OL4920625W",
-          "title": "An den Grenzen des Staunens",
-          "author": "Martin Roda Becher",
-          "coverId": "ol:10526908",
-          "addedAt": "2026-09-26",
-          "from": "isbn:351837415X",
-          "coverIsbn": "351837415X"
-        },
-        {
-          "id": "OL1873230W",
-          "title": "Am Anfang war Erziehung",
-          "author": "Alice Miller",
-          "coverId": "ol:12600131",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518374516",
-          "coverIsbn": "3518374516"
         },
         {
           "id": "OL298445W",
@@ -12311,33 +11654,6 @@
           "coverIsbn": "3518374532"
         },
         {
-          "id": "OL22582363W",
-          "title": "Die absolute Maschine. Science-fiction-Erzählungen",
-          "author": "",
-          "coverId": "ol:10479115",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518374613",
-          "coverIsbn": "3518374613"
-        },
-        {
-          "id": "OL5392566W",
-          "title": "Krankheit als Anpassung",
-          "author": "Gerd Overbeck",
-          "coverId": "ol:2212476",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518374737",
-          "coverIsbn": "3518374737"
-        },
-        {
-          "id": "OL19191650W",
-          "title": "Die Mitte der Welt",
-          "author": "Hans Peter Duerr",
-          "coverId": "ol:14822617",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518374818",
-          "coverIsbn": "3518374818"
-        },
-        {
           "id": "OL619865W",
           "title": "Die Tessinerin",
           "author": "Thomas Hürlimann",
@@ -12347,31 +11663,13 @@
           "coverIsbn": "3518374850"
         },
         {
-          "id": "OL2384397W",
-          "title": "Ein Pfund Orangen",
-          "author": "Marieluise Fleißer",
-          "coverId": "ol:7268774",
+          "id": "OL11481262W",
+          "title": "Der Himalaya im Wintergarten",
+          "author": "Dieter Kühn",
+          "coverId": "ol:10618322",
           "addedAt": "2026-09-26",
-          "from": "isbn:3518374915",
-          "coverIsbn": "3518374915"
-        },
-        {
-          "id": "OL1521504W",
-          "title": "Kiss Daddy, Goodnight. Aussprache über Inzest",
-          "author": "Louise Armstrong",
-          "coverId": "ol:3221686",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518374958",
-          "coverIsbn": "3518374958"
-        },
-        {
-          "id": "OL24152854W",
-          "title": "Drei Wurzeln der Politik",
-          "author": "Dolf Sternberger",
-          "coverId": "ol:10552262",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518375326",
-          "coverIsbn": "3518375326"
+          "from": "isbn:3518375261",
+          "coverIsbn": "3518375261"
         },
         {
           "id": "OL24159844W",
@@ -12392,67 +11690,13 @@
           "coverIsbn": "3518375784"
         },
         {
-          "id": "OL159519W",
-          "title": "Le ravissement de Lol V. Stein",
-          "author": "Marguerite Duras",
-          "coverId": "ol:14814515",
+          "id": "OL14861184W",
+          "title": "Aufsätze",
+          "author": "Robert Walser",
+          "coverId": "ol:1016610",
           "addedAt": "2026-09-26",
-          "from": "isbn:3518375792",
-          "coverIsbn": "3518375792"
-        },
-        {
-          "id": "OL4020299W",
-          "title": "Tango",
-          "author": "Dieter Reichardt",
-          "coverId": "ol:14624397",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518375873",
-          "coverIsbn": "3518375873"
-        },
-        {
-          "id": "OL34317479W",
-          "title": "Der König mit der Goldmaske und andere phantastische Erzählungen aus Frankreich. .",
-          "author": "Helga Abret",
-          "coverId": "ol:13245453",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518376241",
-          "coverIsbn": "3518376241"
-        },
-        {
-          "id": "OL4016494W",
-          "title": "Krankheit als Selbstheilung",
-          "author": "Dieter Beck",
-          "coverId": "ol:2212489",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518376268",
-          "coverIsbn": "3518376268"
-        },
-        {
-          "id": "OL748597W",
-          "title": "Yoga: immortality and freedom",
-          "author": "Mircea Eliade",
-          "coverId": "ol:3221697",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518376276",
-          "coverIsbn": "3518376276"
-        },
-        {
-          "id": "OL27050057W",
-          "title": "Tiger in der Küche und andere ungefährliche Geschichten - bk1508",
-          "author": "Villy Sørensen",
-          "coverId": "ol:12561711",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518376306",
-          "coverIsbn": "3518376306"
-        },
-        {
-          "id": "OL2818716W",
-          "title": "Das Untier. Konturen einer Philosophie der Menschenflucht",
-          "author": "Ulrich Horstmann",
-          "coverId": "ol:1016623",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518376721",
-          "coverIsbn": "3518376721"
+          "from": "isbn:3518376039",
+          "coverIsbn": "3518376039"
         },
         {
           "id": "OL3266206W",
@@ -12462,24 +11706,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518377043",
           "coverIsbn": "3518377043"
-        },
-        {
-          "id": "OL4918870W",
-          "title": "Die Büchermacher",
-          "author": "Günther Rühle",
-          "coverId": "ol:13182594",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518377051",
-          "coverIsbn": "3518377051"
-        },
-        {
-          "id": "OL19077578W",
-          "title": "Wilhelm Busch. Das 19. Jahrhundert en miniature.",
-          "author": "ueding-gert",
-          "coverId": "ol:8393681",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518377469",
-          "coverIsbn": "3518377469"
         },
         {
           "id": "OL3667833W",
@@ -12500,24 +11726,6 @@
           "coverIsbn": "3518378112"
         },
         {
-          "id": "OL639764W",
-          "title": "Der Zauberbaum",
-          "author": "Peter Sloterdijk",
-          "coverId": "ol:10660246",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518379453",
-          "coverIsbn": "3518379453"
-        },
-        {
-          "id": "OL3415293W",
-          "title": "Eine Gesellschaft im Aufbruch",
-          "author": "Hermann Korte",
-          "coverId": "ol:12155974",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518379712",
-          "coverIsbn": "3518379712"
-        },
-        {
           "id": "OL1459779W",
           "title": "Fahrt ins Staublose",
           "author": "Nelly Sachs",
@@ -12525,6 +11733,60 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518379852",
           "coverIsbn": "3518379852"
+        },
+        {
+          "id": "OL1728694W",
+          "title": "Der Gottesbegriff nach Auschwitz. Eine jüdische Stimme",
+          "author": "Hans Jonas",
+          "coverId": "ol:1016682",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518380168",
+          "coverIsbn": "3518380168"
+        },
+        {
+          "id": "OL9072650W",
+          "title": "Werke I",
+          "author": "T. S. Eliot",
+          "coverId": "ol:1016694",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518380613",
+          "coverIsbn": "3518380613"
+        },
+        {
+          "id": "OL9072656W",
+          "title": "Gevierteilt",
+          "author": "Emil Michel Cioran",
+          "coverId": "ol:1016733",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518383388",
+          "coverIsbn": "3518383388"
+        },
+        {
+          "id": "OL8356749W",
+          "title": "Eine persönliche Erfahrung. Roman",
+          "author": "Kenzaburō Ōe",
+          "coverId": "ol:1016735",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518383426",
+          "coverIsbn": "3518383426"
+        },
+        {
+          "id": "OL2279731W",
+          "title": "Im Bauch des Wals. Caprichos",
+          "author": "Paul Nizon",
+          "coverId": "ol:2212521",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518384007",
+          "coverIsbn": "3518384007"
+        },
+        {
+          "id": "OL1580811W",
+          "title": "Bericht zur Lage des Staates Israel",
+          "author": "עמוס עוז",
+          "coverId": "ol:1016768",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518386921",
+          "coverIsbn": "3518386921"
         }
       ]
     },
@@ -16234,6 +15496,882 @@
           "addedAt": "2026-09-26",
           "from": "isbn:2070325555",
           "coverIsbn": "2070325555"
+        }
+      ]
+    },
+    {
+      "slug": "suhrkamp-taschenbuch-images",
+      "title": "suhrkamp taschenbuch — images",
+      "kind": "series",
+      "intro": "Suhrkamp’s paperback series in Willy Fleckhaus’s design of 1971: a coloured cover, author and title set large, and below them a small window. Here the window holds another picture: a drawing, a photograph, a painting, an emblem. One book per author, in series order, from the covers Open Library has.",
+      "published": false,
+      "publishers": [
+        "Suhrkamp"
+      ],
+      "works": [
+        {
+          "id": "OL865547W",
+          "title": "Wilhelm Tell für die Schule",
+          "author": "Max Frisch",
+          "coverId": "ol:10857641",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518065025",
+          "coverIsbn": "3518065025"
+        },
+        {
+          "id": "OL854411W",
+          "title": "Chronik der laufenden Ereignisse",
+          "author": "Peter Handke",
+          "coverId": "ol:13321548",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518065033",
+          "coverIsbn": "3518065033"
+        },
+        {
+          "id": "OL973172W",
+          "title": "Gedichte",
+          "author": "Hans Magnus Enzensberger",
+          "coverId": "ol:7161749",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518065041",
+          "coverIsbn": "3518065041"
+        },
+        {
+          "id": "OL4540213W",
+          "title": "Jugend ohne Gott",
+          "author": "Ödön von Horváth",
+          "coverId": "ol:10718853",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518065173",
+          "coverIsbn": "3518065173"
+        },
+        {
+          "id": "OL6110939W",
+          "title": "Bayrische Trilogie",
+          "author": "Martin Sperr",
+          "coverId": "ol:1016466",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518365282",
+          "coverIsbn": "3518365282"
+        },
+        {
+          "id": "OL20097584W",
+          "title": "Das leere Haus (Phantastische Bibliothek)",
+          "author": "",
+          "coverId": "ol:8760240",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518065300",
+          "coverIsbn": "3518065300"
+        },
+        {
+          "id": "OL1184986W",
+          "title": "Zen Buddhism & psychoanalysis",
+          "author": "Erich Fromm",
+          "coverId": "ol:1016468",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518365371",
+          "coverIsbn": "3518365371"
+        },
+        {
+          "id": "OL7172972W",
+          "title": "Der andere Hölderlin",
+          "author": "Thomas Beckermann",
+          "coverId": "ol:9543384",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518065424",
+          "coverIsbn": "3518065424"
+        },
+        {
+          "id": "OL4239085W",
+          "title": "Materialien zu Hermann Hesses Der Steppenwolf",
+          "author": "Volker Michels",
+          "coverId": "ol:11168635",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351806553X",
+          "coverIsbn": "351806553X"
+        },
+        {
+          "id": "OL4851564W",
+          "title": "Der Lange Marsch",
+          "author": "Claude Hudelot",
+          "coverId": "ol:11617444",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518065548",
+          "coverIsbn": "3518065548"
+        },
+        {
+          "id": "OL4049759W",
+          "title": "Suhrkamp Taschenbücher, Nr.58, Georg Büchner und seine Zeit",
+          "author": "Hans Mayer",
+          "coverId": "ol:1016475",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518365584",
+          "coverIsbn": "3518365584"
+        },
+        {
+          "id": "OL495652W",
+          "title": "Bandits",
+          "author": "Eric Hobsbawm",
+          "coverId": "ol:10409026",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518065661",
+          "coverIsbn": "3518065661"
+        },
+        {
+          "id": "OL15032974W",
+          "title": "Suhrkamp Taschenbücher, Nr.80, Materialien zu Hermann Hesse 'Das Glasperlenspiel'",
+          "author": "Hermann Hesse",
+          "coverId": "ol:1016481",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518365800",
+          "coverIsbn": "3518365800"
+        },
+        {
+          "id": "OL8001603W",
+          "title": "Kino. Essays, Studien, Glossen zum Film",
+          "author": "Siegfried Kracauer",
+          "coverId": "ol:1016489",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518366262",
+          "coverIsbn": "3518366262"
+        },
+        {
+          "id": "OL4009795W",
+          "title": "See- Leben I",
+          "author": "Werner Koch",
+          "coverId": "ol:3221650",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518366327",
+          "coverIsbn": "3518366327"
+        },
+        {
+          "id": "OL18460913W",
+          "title": "Bertolt Brecht",
+          "author": "Frederic Ewen",
+          "coverId": "ol:10415949",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518066412",
+          "coverIsbn": "3518066412"
+        },
+        {
+          "id": "OL3266200W",
+          "title": "Hermann Hesse",
+          "author": "Siegfried Unseld",
+          "coverId": "ol:9532554",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518066439",
+          "coverIsbn": "3518066439"
+        },
+        {
+          "id": "OL9072719W",
+          "title": "Stucke 1",
+          "author": "V. Braun",
+          "coverId": "ol:3221651",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351836698X",
+          "coverIsbn": "351836698X"
+        },
+        {
+          "id": "OL31239211W",
+          "title": "Die Kontrolle des Luftverkehrs",
+          "author": "Werner Riedel",
+          "coverId": "ol:13027584",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518067036",
+          "coverIsbn": "3518067036"
+        },
+        {
+          "id": "OL24811396W",
+          "title": "Berge des Wahnsinns. Zwei Horrorgeschichten",
+          "author": "",
+          "coverId": "ol:11581982",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351836720X",
+          "coverIsbn": "351836720X"
+        },
+        {
+          "id": "OL19424991W",
+          "title": "Materialien zu Alfred Döblin, Berlin Alexanderplatz",
+          "author": "Matthias Prangel",
+          "coverId": "ol:12636078",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518067680",
+          "coverIsbn": "3518067680"
+        },
+        {
+          "id": "OL2683599W",
+          "title": "Opowiadania",
+          "author": "Stanisław Lem",
+          "coverId": "ol:11131423",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518368567",
+          "coverIsbn": "3518368567"
+        },
+        {
+          "id": "OL2395425W",
+          "title": "Ypsilon minus",
+          "author": "Herbert W. Franke",
+          "coverId": "ol:14360849",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351806858X",
+          "coverIsbn": "351806858X"
+        },
+        {
+          "id": "OL35491330W",
+          "title": "Das Spukhaus",
+          "author": "Ambrose Bierce",
+          "coverId": "ol:14328342",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518368656",
+          "coverIsbn": "3518368656"
+        },
+        {
+          "id": "OL1459745W",
+          "title": "Die Powenzbande. Zoologie einer Familie",
+          "author": "Ernst Penzoldt",
+          "coverId": "ol:1016539",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518368729",
+          "coverIsbn": "3518368729"
+        },
+        {
+          "id": "OL910426W",
+          "title": "Hermann Hesse",
+          "author": "Hugo Ball",
+          "coverId": "ol:14602636",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518068857",
+          "coverIsbn": "3518068857"
+        },
+        {
+          "id": "OL1088336W",
+          "title": "Eroberung des Glücks. Neue Wege zu einer besseren Lebensgestaltung",
+          "author": "Bertrand Russell",
+          "coverId": "ol:1016541",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518368893",
+          "coverIsbn": "3518368893"
+        },
+        {
+          "id": "OL4160755W",
+          "title": "Franz Kafka, der Künstler",
+          "author": "Heinz Politzer",
+          "coverId": "ol:13886054",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518069330",
+          "coverIsbn": "3518069330"
+        },
+        {
+          "id": "OL20113647W",
+          "title": "Die Schnecke am Hang.",
+          "author": "",
+          "coverId": "ol:8772478",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518069349",
+          "coverIsbn": "3518069349"
+        },
+        {
+          "id": "OL1644577W",
+          "title": "Verlassene Zimmer",
+          "author": "Hermann Lenz",
+          "coverId": "ol:1016544",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518369369",
+          "coverIsbn": "3518369369"
+        },
+        {
+          "id": "OL2172454W",
+          "title": "Ubik",
+          "author": "Philip K. Dick",
+          "coverId": "ol:12649180",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518069403",
+          "coverIsbn": "3518069403"
+        },
+        {
+          "id": "OL1706234W",
+          "title": "Die Stunde des Todes",
+          "author": "Herbert Achternbusch",
+          "coverId": "ol:10869586",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518069497",
+          "coverIsbn": "3518069497"
+        },
+        {
+          "id": "OL45715314W",
+          "title": "Das unsichtbare Auge",
+          "author": "Kalju Kirde",
+          "coverId": "ol:15235536",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518369776",
+          "coverIsbn": "3518369776"
+        },
+        {
+          "id": "OL10402333W",
+          "title": "Žert",
+          "author": "Milan Kundera",
+          "coverId": "ol:14592041",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351838189X",
+          "coverIsbn": "351838189X"
+        },
+        {
+          "id": "OL9072885W",
+          "title": "Mozart",
+          "author": "Hildesheimer W",
+          "coverId": "ol:1016559",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518370987",
+          "coverIsbn": "3518370987"
+        },
+        {
+          "id": "OL165696W",
+          "title": "Ein fliehendes Pferd",
+          "author": "Martin Walser",
+          "coverId": "ol:10677796",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518371002",
+          "coverIsbn": "3518371002"
+        },
+        {
+          "id": "OL20109840W",
+          "title": "Das kommende Geschlecht : Roman",
+          "author": "",
+          "coverId": "ol:8769715",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518371096",
+          "coverIsbn": "3518371096"
+        },
+        {
+          "id": "OL1174080W",
+          "title": "Dieu d'eau",
+          "author": "Marcel Griaule",
+          "coverId": "ol:7401393",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351837124X",
+          "coverIsbn": "351837124X"
+        },
+        {
+          "id": "OL21490225W",
+          "title": "Der Weltraumfriseur. Science Fiction Stories aus Polaris 3.",
+          "author": "",
+          "coverId": "ol:10375755",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518371312",
+          "coverIsbn": "3518371312"
+        },
+        {
+          "id": "OL4178812W",
+          "title": "Unheimliche Erscheinungsformen auf Omega XI",
+          "author": "Johanna Braun",
+          "coverId": "ol:14352434",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518371460",
+          "coverIsbn": "3518371460"
+        },
+        {
+          "id": "OL20117099W",
+          "title": "Der Unsichtbare Kreis: Utopische Erzählungen",
+          "author": "",
+          "coverId": "ol:8774341",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518371525",
+          "coverIsbn": "3518371525"
+        },
+        {
+          "id": "OL5466285W",
+          "title": "Hermann Hesse und China",
+          "author": "Adrian Hsia",
+          "coverId": "ol:2212463",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518371738",
+          "coverIsbn": "3518371738"
+        },
+        {
+          "id": "OL24846618W",
+          "title": "Polaris 5",
+          "author": "Franz Rottensteiner",
+          "coverId": "ol:11696581",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518372130",
+          "coverIsbn": "3518372130"
+        },
+        {
+          "id": "OL19332476W",
+          "title": "Der besessene Baronet und andere Geistergeschichten",
+          "author": "Sheridan Le Fanu",
+          "coverId": "ol:8443485",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518372319",
+          "coverIsbn": "3518372319"
+        },
+        {
+          "id": "OL2254892W",
+          "title": "Das Ende der Berührbarkeit",
+          "author": "Jochen Schimmang",
+          "coverId": "ol:13009841",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518372394",
+          "coverIsbn": "3518372394"
+        },
+        {
+          "id": "OL2107647W",
+          "title": "Virginia Woolf",
+          "author": "Quentin Bell",
+          "coverId": "ol:14406492",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351837253X",
+          "coverIsbn": "351837253X"
+        },
+        {
+          "id": "OL20128982W",
+          "title": "syn-code-7 - phantastische bibliothek band 764 [sf1t)",
+          "author": "weisser-michael",
+          "coverId": "ol:8781171",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518372645",
+          "coverIsbn": "3518372645"
+        },
+        {
+          "id": "OL266834W",
+          "title": "Jakob der Lügner",
+          "author": "Jurek Becker",
+          "coverId": "ol:9736057",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518372742",
+          "coverIsbn": "3518372742"
+        },
+        {
+          "id": "OL2169200W",
+          "title": "Der Fall Vukobrankovics",
+          "author": "Ernst Weiß",
+          "coverId": "ol:14943307",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518372904",
+          "coverIsbn": "3518372904"
+        },
+        {
+          "id": "OL4638094W",
+          "title": "Delegation und Familie",
+          "author": "Helm Stierlin",
+          "coverId": "ol:8393675",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518373315",
+          "coverIsbn": "3518373315"
+        },
+        {
+          "id": "OL20710933W",
+          "title": "Der unm�gliche Stern",
+          "author": "",
+          "coverId": "ol:9390136",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351837334X",
+          "coverIsbn": "351837334X"
+        },
+        {
+          "id": "OL46020959W",
+          "title": "Liebesgeschichten",
+          "author": "Christel Göbelsmann",
+          "coverId": "ol:15257857",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518373471",
+          "coverIsbn": "3518373471"
+        },
+        {
+          "id": "OL19191688W",
+          "title": "Nachwehen",
+          "author": "Michael Klaus",
+          "coverId": "ol:14616054",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518373552",
+          "coverIsbn": "3518373552"
+        },
+        {
+          "id": "OL9539368W",
+          "title": "Anarchie in Der Regie",
+          "author": "Ruhle",
+          "coverId": "ol:11727841",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518373625",
+          "coverIsbn": "3518373625"
+        },
+        {
+          "id": "OL2090044W",
+          "title": "Reise ohne Ende",
+          "author": "Peter Rosei",
+          "coverId": "ol:13102845",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518373757",
+          "coverIsbn": "3518373757"
+        },
+        {
+          "id": "OL987015W",
+          "title": "Lexikon der phantastischen Literatur",
+          "author": "Rein A. Zondergeld",
+          "coverId": "ol:8393677",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518373803",
+          "coverIsbn": "3518373803"
+        },
+        {
+          "id": "OL10571541W",
+          "title": "Space Lords",
+          "author": "Cordwainer Smith",
+          "coverId": "ol:10862429",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518373889",
+          "coverIsbn": "3518373889"
+        },
+        {
+          "id": "OL9172854W",
+          "title": "Theodor Chindler",
+          "author": "Bernard von Brentano",
+          "coverId": "ol:13190247",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518373927",
+          "coverIsbn": "3518373927"
+        },
+        {
+          "id": "OL20104244W",
+          "title": "Billennium",
+          "author": "J. G. Ballard",
+          "coverId": "ol:10583957",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351837396X",
+          "coverIsbn": "351837396X"
+        },
+        {
+          "id": "OL11484122W",
+          "title": "Rabenkrächzen",
+          "author": "Maria Beig",
+          "coverId": "ol:15213378",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518374117",
+          "coverIsbn": "3518374117"
+        },
+        {
+          "id": "OL4101098W",
+          "title": "Paul Celan. Eine Biographie seiner Jugend",
+          "author": "Israel Chalfen",
+          "coverId": "ol:2212471",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518374133",
+          "coverIsbn": "3518374133"
+        },
+        {
+          "id": "OL4920625W",
+          "title": "An den Grenzen des Staunens",
+          "author": "Martin Roda Becher",
+          "coverId": "ol:10526908",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351837415X",
+          "coverIsbn": "351837415X"
+        },
+        {
+          "id": "OL22582363W",
+          "title": "Die absolute Maschine. Science-fiction-Erzählungen",
+          "author": "",
+          "coverId": "ol:10479115",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518374613",
+          "coverIsbn": "3518374613"
+        },
+        {
+          "id": "OL19191650W",
+          "title": "Die Mitte der Welt",
+          "author": "Hans Peter Duerr",
+          "coverId": "ol:14822617",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518374818",
+          "coverIsbn": "3518374818"
+        },
+        {
+          "id": "OL2384397W",
+          "title": "Ein Pfund Orangen",
+          "author": "Marieluise Fleißer",
+          "coverId": "ol:7268774",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518374915",
+          "coverIsbn": "3518374915"
+        },
+        {
+          "id": "OL31462288W",
+          "title": "Gedichte ber die Liebe.",
+          "author": "Bertolt Brecht",
+          "coverId": "ol:1016600",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518375016",
+          "coverIsbn": "3518375016"
+        },
+        {
+          "id": "OL159519W",
+          "title": "Le ravissement de Lol V. Stein",
+          "author": "Marguerite Duras",
+          "coverId": "ol:14814515",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518375792",
+          "coverIsbn": "3518375792"
+        },
+        {
+          "id": "OL1329478W",
+          "title": "August Strindberg",
+          "author": "Olof Lagercrantz",
+          "coverId": "ol:15237501",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518375865",
+          "coverIsbn": "3518375865"
+        },
+        {
+          "id": "OL4020299W",
+          "title": "Tango",
+          "author": "Dieter Reichardt",
+          "coverId": "ol:14624397",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518375873",
+          "coverIsbn": "3518375873"
+        },
+        {
+          "id": "OL34317479W",
+          "title": "Der König mit der Goldmaske und andere phantastische Erzählungen aus Frankreich. .",
+          "author": "Helga Abret",
+          "coverId": "ol:13245453",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518376241",
+          "coverIsbn": "3518376241"
+        },
+        {
+          "id": "OL4016494W",
+          "title": "Krankheit als Selbstheilung",
+          "author": "Dieter Beck",
+          "coverId": "ol:2212489",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518376268",
+          "coverIsbn": "3518376268"
+        },
+        {
+          "id": "OL748597W",
+          "title": "Yoga: immortality and freedom",
+          "author": "Mircea Eliade",
+          "coverId": "ol:3221697",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518376276",
+          "coverIsbn": "3518376276"
+        },
+        {
+          "id": "OL27050057W",
+          "title": "Tiger in der Küche und andere ungefährliche Geschichten - bk1508",
+          "author": "Villy Sørensen",
+          "coverId": "ol:12561711",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518376306",
+          "coverIsbn": "3518376306"
+        },
+        {
+          "id": "OL19077578W",
+          "title": "Wilhelm Busch. Das 19. Jahrhundert en miniature.",
+          "author": "ueding-gert",
+          "coverId": "ol:8393681",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518377469",
+          "coverIsbn": "3518377469"
+        },
+        {
+          "id": "OL11484066W",
+          "title": "Zwischen zwei Feuern",
+          "author": "Josef W. Janker",
+          "coverId": "ol:11749728",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518377515",
+          "coverIsbn": "3518377515"
+        },
+        {
+          "id": "OL24859563W",
+          "title": "Vom Übersetzen",
+          "author": "Karl Dedecius",
+          "coverId": "ol:11740159",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518377582",
+          "coverIsbn": "3518377582"
+        },
+        {
+          "id": "OL639764W",
+          "title": "Der Zauberbaum",
+          "author": "Peter Sloterdijk",
+          "coverId": "ol:10660246",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518379453",
+          "coverIsbn": "3518379453"
+        },
+        {
+          "id": "OL1721845W",
+          "title": "Dame Und Schwein Geschichten",
+          "author": "Bodo Kirchhoff",
+          "coverId": "ol:3221712",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518380494",
+          "coverIsbn": "3518380494"
+        },
+        {
+          "id": "OL3109404W",
+          "title": "Marina Zwetajewa",
+          "author": "Maria Razumovsky",
+          "coverId": "ol:10552178",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518380702",
+          "coverIsbn": "3518380702"
+        },
+        {
+          "id": "OL815538W",
+          "title": "Das erste Jahr. Eine psychoanalytische Behandlung",
+          "author": "Tilmann Moser",
+          "coverId": "ol:3221713",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518380737",
+          "coverIsbn": "3518380737"
+        },
+        {
+          "id": "OL18483074W",
+          "title": "Frauen Literatur Geschichte. Schreibende Frauen vom Mittelalter bis zur Gegenwart",
+          "author": "Hiltrud Gnüg",
+          "coverId": "ol:14647487",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518381032",
+          "coverIsbn": "3518381032"
+        },
+        {
+          "id": "OL35430743W",
+          "title": "Ein Fall von Liebe",
+          "author": "Ivy Litwinow",
+          "coverId": "ol:15221767",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518381067",
+          "coverIsbn": "3518381067"
+        },
+        {
+          "id": "OL11113858W",
+          "title": "La garçonne",
+          "author": "Victor Margueritte",
+          "coverId": "ol:14653285",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518381164",
+          "coverIsbn": "3518381164"
+        },
+        {
+          "id": "OL3037362W",
+          "title": "Gemeine und Lords",
+          "author": "Alexander Gauland",
+          "coverId": "ol:8393692",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518381504",
+          "coverIsbn": "3518381504"
+        },
+        {
+          "id": "OL847966W",
+          "title": "Ich habe den englischen König bedient. Roman",
+          "author": "Bohumil Hrabal",
+          "coverId": "ol:1016724",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518382543",
+          "coverIsbn": "3518382543"
+        },
+        {
+          "id": "OL7968129W",
+          "title": "George Orwell",
+          "author": "Bernard R. Crick",
+          "coverId": "ol:10232487",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518382780",
+          "coverIsbn": "3518382780"
+        },
+        {
+          "id": "OL19580234W",
+          "title": "Arráncame la vida",
+          "author": "Ángeles Mastretta",
+          "coverId": "ol:10826636",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351838287X",
+          "coverIsbn": "351838287X"
+        },
+        {
+          "id": "OL4355011W",
+          "title": "Mario Vargas Llosa",
+          "author": "Scheerer, Thomas M.",
+          "coverId": "ol:1016728",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518382896",
+          "coverIsbn": "3518382896"
+        },
+        {
+          "id": "OL1873214W",
+          "title": "Das verbannte Wissen",
+          "author": "Alice Miller",
+          "coverId": "ol:2212515",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351838290X",
+          "coverIsbn": "351838290X"
+        },
+        {
+          "id": "OL1992165W",
+          "title": "The Grass Harp",
+          "author": "Truman Capote",
+          "coverId": "ol:1016730",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518382969",
+          "coverIsbn": "3518382969"
+        },
+        {
+          "id": "OL2584131W",
+          "title": "Drei Wünsche frei",
+          "author": "Gerlind Reinshagen",
+          "coverId": "ol:2212518",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518383175",
+          "coverIsbn": "3518383175"
+        },
+        {
+          "id": "OL4275241W",
+          "title": "The Third Rose",
+          "author": "John Malcolm Brinnin",
+          "coverId": "ol:15253615",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518383205",
+          "coverIsbn": "3518383205"
+        },
+        {
+          "id": "OL742983W",
+          "title": "Gedichte",
+          "author": "Octavio Paz",
+          "coverId": "ol:3221733",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518383329",
+          "coverIsbn": "3518383329"
+        },
+        {
+          "id": "OL9072923W",
+          "title": "Kontrolliert Suhr",
+          "author": "Goetz",
+          "coverId": "ol:1016732",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518383361",
+          "coverIsbn": "3518383361"
+        },
+        {
+          "id": "OL643649W",
+          "title": "Das Paradies ist nebenan. Roman",
+          "author": "Cees Nooteboom",
+          "coverId": "ol:1016740",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518383671",
+          "coverIsbn": "3518383671"
+        },
+        {
+          "id": "OL18443995W",
+          "title": "WahnsinnsFrauen",
+          "author": "Sibylle Duda",
+          "coverId": "ol:11725943",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518383760",
+          "coverIsbn": "3518383760"
         }
       ]
     }
