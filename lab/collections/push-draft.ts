@@ -70,7 +70,10 @@ async function main() {
     console.log(`${slug}: the online draft ${draft.id} has what the file lacks:\n  ${delta.onlineOnly.join('\n  ')}`);
     if (!flags.includes('--force')) throw new Error('Take those into the file first, or pass --force to overwrite them.');
   }
-  for (const op of delta.ops) {
+  // The curate routes allow 40 steps at once, then 20 a minute (lib/ratelimit.ts, bucket `suggest`):
+  // pause after the first 30 so a long collection does not end in a 429 halfway.
+  for (const [i, op] of delta.ops.entries()) {
+    if (i >= 30) await new Promise(r => setTimeout(r, 3200));
     draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, op)).draft;
   }
   console.log(`${slug}: ${delta.ops.length} step(s) sent to draft ${draft.id} — ${delta.summary}`);
