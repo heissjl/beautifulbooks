@@ -111,6 +111,32 @@ async function coversOf(workId: string): Promise<Cover[]> {
   return [...covers.values()];
 }
 
+/**
+ * One image, with retries. On 2026-09-26 archive.org answered a third of the
+ * image requests of 71 works in a row with errors, within seconds, and the
+ * same images loaded fine a few minutes later; without a retry those works
+ * went into the index with a third of their covers. Three tries with a
+ * growing pause turn a throttled minute into a slow one.
+ */
+const failures = new Map<string, number>();
+
+async function imageWithRetry(url: string): Promise<Uint8Array | null> {
+  let why = '';
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt > 0) await sleep(5000 * attempt * attempt);
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(15_000) });
+      if (res.ok) return new Uint8Array(await res.arrayBuffer());
+      why = String(res.status);
+      if (res.status === 404) break;
+    } catch (err) {
+      why = (err as Error).name;
+    }
+  }
+  failures.set(why, (failures.get(why) ?? 0) + 1);
+  return null;
+}
+
 /** Signatures with colour, a few images at a time, no deadline. */
 async function hashAll(covers: readonly Cover[], workIndex: number): Promise<CoverRow[]> {
   const rows: CoverRow[] = [];
@@ -121,20 +147,15 @@ async function hashAll(covers: readonly Cover[], workIndex: number): Promise<Cov
     for (;;) {
       const cover = queue.shift();
       if (!cover) return;
-      try {
-        const res = await fetch(cover.urlSmall ?? cover.url, { signal: AbortSignal.timeout(15_000) });
-        if (res.ok) {
-          const sig = signature(new Uint8Array(await res.arrayBuffer()), { colour: true });
-          if (sig?.hues && sig.saturation !== undefined && sig.mean !== undefined) {
-            rows.push([
-              workIndex, cover.id, sig.hash,
-              Math.round(sig.contrast), Math.round(sig.mean), sig.saturation, sig.hues,
-            ]);
-          }
-        }
-      } catch {
-        // A cover that will not load is simply absent; the index never
-        // pretends to know an image it could not read.
+      // A cover that will not load is simply absent; the index never
+      // pretends to know an image it could not read.
+      const bytes = await imageWithRetry(cover.urlSmall ?? cover.url);
+      const sig = bytes ? signature(bytes, { colour: true }) : null;
+      if (sig?.hues && sig.saturation !== undefined && sig.mean !== undefined) {
+        rows.push([
+          workIndex, cover.id, sig.hash,
+          Math.round(sig.contrast), Math.round(sig.mean), sig.saturation, sig.hues,
+        ]);
       }
       if (++done % 25 === 0) process.stdout.write(`    ${done}/${covers.length}\r`);
     }
@@ -168,7 +189,9 @@ async function main() {
     const rows = await hashAll(covers, workIndex);
     index.covers.push(...rows);
     save(index);
-    console.log(`${String(rows.length).padStart(4)} von ${String(covers.length).padStart(4)} Covern gehasht  (${Math.round((Date.now() - t0) / 1000)} s)`);
+    const lost = [...failures].map(([why, n]) => `${n}× ${why}`).join(', ');
+    failures.clear();
+    console.log(`${String(rows.length).padStart(4)} von ${String(covers.length).padStart(4)} Covern gehasht  (${Math.round((Date.now() - t0) / 1000)} s)${lost ? `  nicht geladen: ${lost}` : ''}`);
   }
 
   const minutes = Math.round((Date.now() - startedAt) / 60000);

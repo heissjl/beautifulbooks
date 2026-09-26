@@ -20,6 +20,20 @@
    ]
   },
   {
+   "workId": "OL472971W",
+   "title": "Malina",
+   "author": "Ingeborg Bachmann",
+   "coverIds": [
+    "ol:2135061",
+    "ol:963146",
+    "ol:7090389",
+    "ol:15091362",
+    "ol:12273691",
+    "ol:1016886",
+    "ol:12725468"
+   ]
+  },
+  {
    "workId": "OL109524W",
    "title": "Solaris",
    "author": "Stanisław Lem",
@@ -171,6 +185,20 @@
     "ol:535133",
     "ol:6563198",
     "ol:12499164"
+   ]
+  },
+  {
+   "workId": "OL26437W",
+   "title": "The Prime of Miss Jean Brodie",
+   "author": "Muriel Spark",
+   "coverIds": [
+    "ol:745296",
+    "ol:14673633",
+    "ol:10655410",
+    "ol:13746451",
+    "ol:13641211",
+    "ol:13740071",
+    "ol:11411626"
    ]
   },
   {
@@ -1291,6 +1319,34 @@
     "ol:12584207",
     "ol:9658480",
     "ol:14669624"
+   ]
+  },
+  {
+   "workId": "OL80021W",
+   "title": "I Know Why the Caged Bird Sings",
+   "author": "Maya Angelou",
+   "coverIds": [
+    "ol:8749161",
+    "ol:13780720",
+    "ol:999466",
+    "ol:15204063",
+    "ol:8231882",
+    "ol:2319370",
+    "ol:13780727"
+   ]
+  },
+  {
+   "workId": "OL50565W",
+   "title": "The Bluest Eye",
+   "author": "Toni Morrison",
+   "coverIds": [
+    "ol:15076790",
+    "ol:8401723",
+    "ol:13460274",
+    "ol:15152766",
+    "ol:8401713",
+    "ol:3332556",
+    "ol:15152768"
    ]
   },
   {

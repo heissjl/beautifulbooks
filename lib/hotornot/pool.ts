@@ -6,7 +6,8 @@
  *   - **mix** — covers from many books: "the ugliest cover", in the sense
  *     Julian asked for, across books. One per book, or up to `perBook` taken
  *     round robin when a pool wants more covers than the index has books (the
- *     1000-cover pool of 2026-09-11 has 239 books to draw from).
+ *     1000-cover pool of 2026-09-11 had 239 books to draw from, the
+ *     2000-cover pool of 2026-09-26 has 500).
  *   - **work** — every distinct design of one book: "Gatsby's ugliest cover".
  *     The question only this site can ask, because only it has them side by side.
  *
@@ -32,6 +33,9 @@
  *   - **Not mostly white, not a classic Reclam** (`fitsGame`), measured on the
  *     L image (`lib/hotornot/quality.ts`).
  *   - **Not a title on plain paper** (`looksPlain`), from the index alone.
+ *   - **Crisp, if it is new** (`crispEnough`, since 2026-09-26): a cover a
+ *     pool adds must not be a soft or blown-up scan. A cover it keeps is not
+ *     asked, because votes name it.
  *
  * Thresholds set by looking at contact sheets (docs/history.md, 5.8a). This is
  * a game's choice of what to put up for a vote, not a verdict on the cover:
@@ -180,6 +184,32 @@ export const MAX_WHITE = 0.75;
 export const RECLAM_YELLOW = 0.5;
 export const RECLAM_CONTRAST = 20;
 
+/**
+ * The softest scan a pool may **add** (`blur` in lib/hotornot/quality.ts),
+ * set by looking (2026-09-26, the 2000-cover pool). The height rule cannot
+ * see an L image of 475 px that was blown up from a thumbnail. Of the 1000
+ * covers the pool added, before this rule, 15 lay above 0.40, and at full
+ * size twelve of them were soft or blocky scans (*The Prophet*, *Jaws*,
+ * *Brighton Rock*, *Père Goriot*, *The Canterbury Tales*, a *Villette*) and
+ * three were sharp prints of a soft photograph (Camus's ink in water, the
+ * Oxford *Babbitt*, Amis's clouds), which go too. Between 0.36 and 0.40 the
+ * sheet showed mostly designs — the grey *Coraline*, the *Legend of Sleepy
+ * Hollow* in branches — and one soft *Strangers on a Train*, so the line is
+ * at 0.40. On a third of the 1000-cover pool, 4 of 334 lay above it, all
+ * four soft; they stay, because their votes name them.
+ */
+export const MAX_BLUR = 0.4;
+
+/**
+ * Crisp enough to be one of the covers a pool adds. A cover a pool keeps from
+ * the one it grew from is not asked: its votes name it, and its measure was
+ * taken before this rule. A measure without `blur` predates the rule too and
+ * passes; the pool script measures every cover it may add again.
+ */
+export function crispEnough(measure: Pick<CoverMeasure, 'blur'> | undefined): boolean {
+  return !!measure && (measure.blur === undefined || measure.blur <= MAX_BLUR);
+}
+
 export function fitsGame(measure: CoverMeasure | undefined, contrast: number): boolean {
   if (!measure || !sharpEnough(measure)) return false;
   if (measure.white >= MAX_WHITE) return false;
@@ -307,8 +337,10 @@ export function buildPool(index: RawIndex, options: PoolOptions): PoolCover[] {
     if (cover && pool.length < options.size && !taken.has(id) && count(cover) < perBook && allowed(cover)) take(cover);
   }
   // Round robin: every book its first cover before any book its second. A book
-  // with nothing that fits makes room for the next one.
-  const queues = books.map(covers => covers.filter(allowed));
+  // with nothing that fits makes room for the next one. What is added must
+  // also be crisp; what was kept was not asked.
+  const added = (cover: PoolCover) => !measures || crispEnough(measures[cover.id]);
+  const queues = books.map(covers => covers.filter(c => allowed(c) && added(c)));
   for (let round = 0; round < perBook && pool.length < options.size; round++) {
     for (const queue of queues) {
       if (pool.length >= options.size) break;
