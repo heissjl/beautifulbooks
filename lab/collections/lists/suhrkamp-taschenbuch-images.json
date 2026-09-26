@@ -539,8 +539,9 @@
   "fallbackIsbns": [
    "3518365533"
   ],
-  "window": "image",
-  "source": "DNB SRU (720187982, 840239998, 850562147) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (720187982, 840239998, 850562147) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "54",
@@ -596,9 +597,10 @@
   "fallbackIsbns": [
    "3518065580"
   ],
-  "window": "image",
+  "window": "portrait",
   "note": "later printing: the image under the first-printing ISBN is not this cover (plain title cover)",
-  "source": "DNB SRU (730034364, 831181907, 860886778) ISBN in record"
+  "source": "DNB SRU (730034364, 831181907, 860886778) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "59",
@@ -827,9 +829,10 @@
   "fallbackIsbns": [
    "3518065807"
   ],
-  "window": "image",
+  "window": "portrait",
   "note": "later printing: the image under the first-printing ISBN is not this cover (not st)",
-  "source": "DNB SRU (730335623, 870868586, 920604374) ISBN in record"
+  "source": "DNB SRU (730335623, 870868586, 920604374) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "81",
@@ -1092,10 +1095,10 @@
   "fallbackIsbns": [
    "3518066080"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
-  "window": "image",
+  "window": "portrait",
   "note": "later printing: the image under the first-printing ISBN is not this cover (plain title cover)",
-  "source": "DNB SRU (861159799, 931709458) ISBN in record"
+  "source": "DNB SRU (861159799, 931709458) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "111",
@@ -1298,10 +1301,10 @@
   "fallbackIsbns": [
    "3518066293"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "note": "later printing: the image under the first-printing ISBN is not this cover (title page)",
-  "source": "DNB SRU (750520159, 870612514, 910350493) ISBN in record"
+  "source": "DNB SRU (750520159, 870612514, 910350493) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "130",
@@ -1331,9 +1334,10 @@
   "fallbackIsbns": [
    "3518066323"
   ],
-  "window": "image",
+  "window": "portrait",
   "note": "later printing: the image under the first-printing ISBN is not this cover (Sonderdruck edition suhrkamp)",
-  "source": "DNB SRU (100886000X, 840904126, 840944098) ISBN in record"
+  "source": "DNB SRU (100886000X, 840904126, 840944098) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "133",
@@ -1429,8 +1433,9 @@
   "fallbackIsbns": [
    "3518366416"
   ],
-  "window": "image",
-  "source": "DNB SRU (740089684, 850337852) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (740089684, 850337852) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "142",
@@ -1450,8 +1455,9 @@
   "fallbackIsbns": [
    "3518366432"
   ],
-  "window": "image",
-  "source": "DNB SRU (740088165) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (740088165) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "144",
@@ -1649,9 +1655,9 @@
   "fallbackIsbns": [
    "3518366610"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (740188712, 820756717, 830685057) ISBN in record"
+  "source": "DNB SRU (740188712, 820756717, 830685057) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "162",
@@ -2117,10 +2123,10 @@
   "fallbackIsbns": [
    "3518067060"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "note": "later printing: the image under the first-printing ISBN is not this cover (text page)",
-  "source": "DNB SRU (820743127, 831199512, 840694040) ISBN in record"
+  "source": "DNB SRU (820743127, 831199512, 840694040) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "207",
@@ -2343,9 +2349,9 @@
   "fallbackIsbns": [
    "3518367277"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (750166487, 850877202, 890510970) ISBN in record"
+  "source": "DNB SRU (750166487, 850877202, 890510970) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "228",
@@ -2469,10 +2475,10 @@
   "fallbackIsbns": [
    "3518067400"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "note": "later printing: the image under the first-printing ISBN is not this cover (another book (suhrkamp taschenbuch wissenschaft))",
-  "source": "DNB SRU (750337087, 820785679, 830716912) ISBN in record"
+  "source": "DNB SRU (750337087, 820785679, 830716912) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "241",
@@ -2768,8 +2774,9 @@
   "fallbackIsbns": [
    "3518367684"
   ],
-  "window": "image",
-  "source": "DNB SRU (750455969, 810385317) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (750455969, 810385317) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "269",
@@ -2920,10 +2927,10 @@
   "fallbackIsbns": [
    "3518067826"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "note": "cover from the later printing; Open Library files the first printing under another work",
-  "source": "DNB SRU (770010156, 860924939, 890492263) ISBN in record"
+  "source": "DNB SRU (770010156, 860924939, 890492263) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "283",
@@ -3938,10 +3945,10 @@
   "fallbackIsbns": [
    "3518068814"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "note": "cover from the later printing; Open Library files the first printing under another work",
-  "source": "DNB SRU (201307855, 550218335, 770307531) ISBN in record"
+  "source": "DNB SRU (201307855, 550218335, 770307531) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "382",
@@ -3961,10 +3968,10 @@
   "fallbackIsbns": [
    "3518068830"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "note": "cover from the later printing; Open Library files the first printing under another work",
-  "source": "DNB SRU (770307949, 830683798, 850550297) ISBN in record"
+  "source": "DNB SRU (770307949, 830683798, 850550297) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "384",
@@ -3984,8 +3991,9 @@
   "fallbackIsbns": [
    "3518368850"
   ],
-  "window": "image",
-  "source": "DNB SRU (770304796, 840128754, 860259471) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (770304796, 840128754, 860259471) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "386",
@@ -4264,9 +4272,9 @@
   "fallbackIsbns": [
    "3518369121"
   ],
-  "skip": "same author as st 132 (one work per author, Julian 2026-09-26)",
-  "window": "image",
-  "source": "DNB SRU (840904118, 840944101, 860886786) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (840904118, 840944101, 860886786) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "413",
@@ -4479,8 +4487,9 @@
   "fallbackIsbns": [
    "3518369334"
   ],
-  "window": "image",
-  "source": "DNB SRU (780320697, 860732525) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (780320697, 860732525) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "434",
@@ -6140,8 +6149,9 @@
   "fallbackIsbns": [
    "3518370987"
   ],
-  "window": "image",
-  "source": "DNB SRU (800481755, 840278829, 850307147) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (800481755, 840278829, 850307147) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "599",
@@ -7711,9 +7721,9 @@
   "fallbackIsbns": [
    "3518372505"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (820276227, 830901922, 850317339) ISBN in record"
+  "source": "DNB SRU (820276227, 830901922, 850317339) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "751",
@@ -7744,9 +7754,10 @@
   "fallbackIsbns": [
    "3518072536"
   ],
-  "window": "image",
+  "window": "portrait",
   "note": "later printing: the image under the first-printing ISBN is not this cover (edition suhrkamp)",
-  "source": "DNB SRU (820338338, 840072198, 910775079) ISBN in record"
+  "source": "DNB SRU (820338338, 840072198, 910775079) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "754",
@@ -9351,8 +9362,9 @@
   "fallbackIsbns": [
    "3518374133"
   ],
-  "window": "image",
-  "source": "DNB SRU (840536836, 871189941, 920501850) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (840536836, 871189941, 920501850) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "914",
@@ -10342,10 +10354,10 @@
   "fallbackIsbns": [
    "3518075098"
   ],
-  "skip": "same author as st 598 (one work per author, Julian 2026-09-26)",
-  "window": "image",
+  "window": "portrait",
   "note": "later printing: the image under the first-printing ISBN is not this cover (title page)",
-  "source": "DNB SRU (840728603, 870025384, 900252308) ISBN in record"
+  "source": "DNB SRU (840728603, 870025384, 900252308) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "1011",
@@ -11129,9 +11141,10 @@
   "fallbackIsbns": [
    "3518075861"
   ],
-  "window": "image",
+  "window": "portrait",
   "note": "later printing: the image under the first-printing ISBN is not this cover (another book)",
-  "source": "DNB SRU (850185149) ISBN in record"
+  "source": "DNB SRU (850185149) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "1087",
@@ -12242,10 +12255,10 @@
   "fallbackIsbns": [
    "3518076930"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "note": "later printing: the image under the first-printing ISBN is not this cover (not a series cover (title page, another book or stand-in))",
-  "source": "DNB SRU (850629322, 871181495, 891399437) ISBN in record"
+  "source": "DNB SRU (850629322, 871181495, 891399437) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1194",
@@ -12255,10 +12268,10 @@
   "fallbackIsbns": [
    "3518076949"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "note": "cover from the later printing; Open Library files the first printing under another work",
-  "source": "DNB SRU (850651972, 900731478, 930800532) ISBN in record"
+  "source": "DNB SRU (850651972, 900731478, 930800532) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1195",
@@ -12279,9 +12292,9 @@
   "fallbackIsbns": [
    "3518376969"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (850629268, 880568119, 930174941) ISBN in record"
+  "source": "DNB SRU (850629268, 880568119, 930174941) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1197",
@@ -12291,9 +12304,9 @@
   "fallbackIsbns": [
    "3518376977"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (850894603, 860925552, 880365048) ISBN in record"
+  "source": "DNB SRU (850894603, 860925552, 880365048) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1198",
@@ -12323,9 +12336,9 @@
   "fallbackIsbns": [
    "3518377000"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (1170697704, 850877695, 900366095) ISBN in record"
+  "source": "DNB SRU (1170697704, 850877695, 900366095) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1201",
@@ -12506,9 +12519,9 @@
   "fallbackIsbns": [
    "3518377175"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (860540391, 870037951, 881400513) ISBN in record"
+  "source": "DNB SRU (860540391, 870037951, 881400513) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1218",
@@ -12955,9 +12968,9 @@
   "fallbackIsbns": [
    "3518377612"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (860617416, 871199017, 910002096) ISBN in record"
+  "source": "DNB SRU (860617416, 871199017, 910002096) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1262",
@@ -13181,9 +13194,9 @@
   "fallbackIsbns": [
    "3518377841"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (860880796, 870417045, 880322624) ISBN in record"
+  "source": "DNB SRU (860880796, 870417045, 880322624) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1285",
@@ -14102,10 +14115,10 @@
   "fallbackIsbns": [
    "3518078763"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "note": "later printing: the image under the first-printing ISBN is not this cover (not a series cover (title page, another book, photo of the book or stand-in))",
-  "source": "DNB SRU (880543604, 940341204) ISBN in record"
+  "source": "DNB SRU (880543604, 940341204) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1377",
@@ -14125,10 +14138,10 @@
   "fallbackIsbns": [
    "351807878X"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "note": "later printing: the image under the first-printing ISBN is not this cover (another book (suhrkamp taschenbuch wissenschaft))",
-  "source": "DNB SRU (880543647) ISBN in record"
+  "source": "DNB SRU (880543647) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1379",
@@ -15907,8 +15920,9 @@
   "fallbackIsbns": [
    "3518380702"
   ],
-  "window": "image",
-  "source": "DNB SRU (891139249) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (891139249) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "1571",
@@ -18033,8 +18047,9 @@
   "fallbackIsbns": [
    "3518382780"
   ],
-  "window": "image",
-  "source": "DNB SRU (901501956) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (901501956) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "1779",
@@ -18149,8 +18164,9 @@
   "fallbackIsbns": [
    "3518382896"
   ],
-  "window": "image",
-  "source": "DNB SRU (911457674) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (911457674) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "1790",
@@ -18466,8 +18482,9 @@
   "fallbackIsbns": [
    "3518383205"
   ],
-  "window": "image",
-  "source": "DNB SRU (920136648, 947933107) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (920136648, 947933107) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "1821",
@@ -19932,9 +19949,9 @@
   "fallbackIsbns": [
    "3518384686"
   ],
-  "skip": "same author as st 598 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (921195540) ISBN in record"
+  "source": "DNB SRU (921195540) ISBN in record",
+  "skip": "same author as st 1009 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1969",
@@ -19954,9 +19971,9 @@
   "fallbackIsbns": [
    "3518384708"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (921219105) ISBN in record"
+  "source": "DNB SRU (921219105) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "1971",
@@ -21635,7 +21652,6 @@
   "fallbackIsbns": [
    "3518386743"
   ],
-  "skip": "same author as st 58 (one work per author, Julian 2026-09-26)",
   "window": "image",
   "source": "DNB SRU (930708482) ISBN in record"
  },
@@ -22136,9 +22152,9 @@
   "fallbackIsbns": [
    "3518387286"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (940035936) ISBN in record"
+  "source": "DNB SRU (940035936) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "2229",
@@ -24401,8 +24417,9 @@
   "fallbackIsbns": [
    "3518389580"
   ],
-  "window": "image",
-  "source": "DNB SRU (94467951X) ISBN in record"
+  "window": "portrait",
+  "source": "DNB SRU (94467951X) ISBN in record",
+  "skip": "portrait in the window: in the portraits draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
  },
  {
   "no": "2459",
@@ -24444,9 +24461,9 @@
   "fallbackIsbns": [
    "3518389629"
   ],
-  "skip": "same author as st 80 (one work per author, Julian 2026-09-26)",
   "window": "image",
-  "source": "DNB SRU (948753668) ISBN in record"
+  "source": "DNB SRU (948753668) ISBN in record",
+  "skip": "same author as st 108 (one work per author, Julian 2026-09-26)"
  },
  {
   "no": "2463",

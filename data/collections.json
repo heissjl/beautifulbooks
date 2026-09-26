@@ -11468,7 +11468,7 @@
       "slug": "suhrkamp-taschenbuch-author-portraits",
       "title": "suhrkamp taschenbuch — author portraits",
       "kind": "series",
-      "intro": "Suhrkamp’s paperback series in Willy Fleckhaus’s design of 1971: a coloured cover, author and title set large, and below them a small window. Here the window holds a portrait of the author. One book per author, in series order, from the covers Open Library has.",
+      "intro": "Suhrkamp’s paperback series in Willy Fleckhaus’s design of 1971: a coloured cover, author and title set large, and below them a small window. Here the window holds a portrait: of the author, or of the writer the book is about. One book per author, in series order, from the covers Open Library has.",
       "published": false,
       "publishers": [
         "Suhrkamp"
@@ -11518,6 +11518,15 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518365517",
           "coverIsbn": "3518365517"
+        },
+        {
+          "id": "OL4239085W",
+          "title": "Materialien zu Hermann Hesses Der Steppenwolf",
+          "author": "Volker Michels",
+          "coverId": "ol:11168635",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351806553X",
+          "coverIsbn": "351806553X"
         },
         {
           "id": "OL8664856W",
@@ -11574,6 +11583,15 @@
           "coverIsbn": "3518066218"
         },
         {
+          "id": "OL4009795W",
+          "title": "See- Leben I",
+          "author": "Werner Koch",
+          "coverId": "ol:3221650",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518366327",
+          "coverIsbn": "3518366327"
+        },
+        {
           "id": "OL2090334W",
           "title": "Der ju ngere Bruder",
           "author": "Hans Erich Nossack",
@@ -11581,6 +11599,15 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518366335",
           "coverIsbn": "3518366335"
+        },
+        {
+          "id": "OL18460913W",
+          "title": "Bertolt Brecht",
+          "author": "Frederic Ewen",
+          "coverId": "ol:10415949",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518066412",
+          "coverIsbn": "3518066412"
         },
         {
           "id": "OL155603W",
@@ -11646,6 +11673,15 @@
           "coverIsbn": "3518067656"
         },
         {
+          "id": "OL19424991W",
+          "title": "Materialien zu Alfred Döblin, Berlin Alexanderplatz",
+          "author": "Matthias Prangel",
+          "coverId": "ol:12636078",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518067680",
+          "coverIsbn": "3518067680"
+        },
+        {
           "id": "OL2002469W",
           "title": "Irreführung der Behörden",
           "author": "Jurek Becker",
@@ -11700,6 +11736,15 @@
           "coverIsbn": "351836877X"
         },
         {
+          "id": "OL910426W",
+          "title": "Hermann Hesse",
+          "author": "Hugo Ball",
+          "coverId": "ol:14602636",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518068857",
+          "coverIsbn": "3518068857"
+        },
+        {
           "id": "OL1414417W",
           "title": "Der alte Garten",
           "author": "Marie Luise Kaschnitz",
@@ -11716,6 +11761,15 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518068946",
           "coverIsbn": "3518068946"
+        },
+        {
+          "id": "OL4160755W",
+          "title": "Franz Kafka, der Künstler",
+          "author": "Heinz Politzer",
+          "coverId": "ol:13886054",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518069330",
+          "coverIsbn": "3518069330"
         },
         {
           "id": "OL973439W",
@@ -11772,6 +11826,15 @@
           "coverIsbn": "3518370782"
         },
         {
+          "id": "OL9072885W",
+          "title": "Mozart",
+          "author": "Hildesheimer W",
+          "coverId": "ol:1016559",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518370987",
+          "coverIsbn": "3518370987"
+        },
+        {
           "id": "OL11483978W",
           "title": "Trennung",
           "author": "Karin Struck",
@@ -11817,6 +11880,15 @@
           "coverIsbn": "351837236X"
         },
         {
+          "id": "OL2107647W",
+          "title": "Virginia Woolf",
+          "author": "Quentin Bell",
+          "coverId": "ol:14406492",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351837253X",
+          "coverIsbn": "351837253X"
+        },
+        {
           "id": "OL1405585W",
           "title": "Bakunin",
           "author": "Horst Bienek",
@@ -11833,6 +11905,15 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518373501",
           "coverIsbn": "3518373501"
+        },
+        {
+          "id": "OL4101098W",
+          "title": "Paul Celan. Eine Biographie seiner Jugend",
+          "author": "Israel Chalfen",
+          "coverId": "ol:2212471",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518374133",
+          "coverIsbn": "3518374133"
         },
         {
           "id": "OL298445W",
@@ -11878,6 +11959,15 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518375784",
           "coverIsbn": "3518375784"
+        },
+        {
+          "id": "OL1329478W",
+          "title": "August Strindberg",
+          "author": "Olof Lagercrantz",
+          "coverId": "ol:15237501",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518375865",
+          "coverIsbn": "3518375865"
         },
         {
           "id": "OL14861184W",
@@ -11943,6 +12033,42 @@
           "coverIsbn": "3518380613"
         },
         {
+          "id": "OL3109404W",
+          "title": "Marina Zwetajewa",
+          "author": "Maria Razumovsky",
+          "coverId": "ol:10552178",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518380702",
+          "coverIsbn": "3518380702"
+        },
+        {
+          "id": "OL7968129W",
+          "title": "George Orwell",
+          "author": "Bernard R. Crick",
+          "coverId": "ol:10232487",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518382780",
+          "coverIsbn": "3518382780"
+        },
+        {
+          "id": "OL4355011W",
+          "title": "Mario Vargas Llosa",
+          "author": "Scheerer, Thomas M.",
+          "coverId": "ol:1016728",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518382896",
+          "coverIsbn": "3518382896"
+        },
+        {
+          "id": "OL4275241W",
+          "title": "The Third Rose",
+          "author": "John Malcolm Brinnin",
+          "coverId": "ol:15253615",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518383205",
+          "coverIsbn": "3518383205"
+        },
+        {
           "id": "OL9072656W",
           "title": "Gevierteilt",
           "author": "Emil Michel Cioran",
@@ -11977,6 +12103,15 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518386921",
           "coverIsbn": "3518386921"
+        },
+        {
+          "id": "OL2554466W",
+          "title": "Das Individuelle gegen das Normierte verteidigen",
+          "author": "Eugen Drewermann",
+          "coverId": "ol:2212574",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518389580",
+          "coverIsbn": "3518389580"
         }
       ]
     },
@@ -15772,15 +15907,6 @@
           "coverIsbn": "3518065424"
         },
         {
-          "id": "OL4239085W",
-          "title": "Materialien zu Hermann Hesses Der Steppenwolf",
-          "author": "Volker Michels",
-          "coverId": "ol:11168635",
-          "addedAt": "2026-09-26",
-          "from": "isbn:351806553X",
-          "coverIsbn": "351806553X"
-        },
-        {
           "id": "OL4851564W",
           "title": "Der Lange Marsch",
           "author": "Claude Hudelot",
@@ -15788,15 +15914,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518065548",
           "coverIsbn": "3518065548"
-        },
-        {
-          "id": "OL4049759W",
-          "title": "Suhrkamp Taschenbücher, Nr.58, Georg Büchner und seine Zeit",
-          "author": "Hans Mayer",
-          "coverId": "ol:1016475",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518365584",
-          "coverIsbn": "3518365584"
         },
         {
           "id": "OL495652W",
@@ -15808,15 +15925,6 @@
           "coverIsbn": "3518065661"
         },
         {
-          "id": "OL15032974W",
-          "title": "Suhrkamp Taschenbücher, Nr.80, Materialien zu Hermann Hesse 'Das Glasperlenspiel'",
-          "author": "Hermann Hesse",
-          "coverId": "ol:1016481",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518365800",
-          "coverIsbn": "3518365800"
-        },
-        {
           "id": "OL8001603W",
           "title": "Kino. Essays, Studien, Glossen zum Film",
           "author": "Siegfried Kracauer",
@@ -15824,33 +15932,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518366262",
           "coverIsbn": "3518366262"
-        },
-        {
-          "id": "OL4009795W",
-          "title": "See- Leben I",
-          "author": "Werner Koch",
-          "coverId": "ol:3221650",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518366327",
-          "coverIsbn": "3518366327"
-        },
-        {
-          "id": "OL18460913W",
-          "title": "Bertolt Brecht",
-          "author": "Frederic Ewen",
-          "coverId": "ol:10415949",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518066412",
-          "coverIsbn": "3518066412"
-        },
-        {
-          "id": "OL3266200W",
-          "title": "Hermann Hesse",
-          "author": "Siegfried Unseld",
-          "coverId": "ol:9532554",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518066439",
-          "coverIsbn": "3518066439"
         },
         {
           "id": "OL9072719W",
@@ -15878,15 +15959,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:351836720X",
           "coverIsbn": "351836720X"
-        },
-        {
-          "id": "OL19424991W",
-          "title": "Materialien zu Alfred Döblin, Berlin Alexanderplatz",
-          "author": "Matthias Prangel",
-          "coverId": "ol:12636078",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518067680",
-          "coverIsbn": "3518067680"
         },
         {
           "id": "OL2683599W",
@@ -15925,15 +15997,6 @@
           "coverIsbn": "3518368729"
         },
         {
-          "id": "OL910426W",
-          "title": "Hermann Hesse",
-          "author": "Hugo Ball",
-          "coverId": "ol:14602636",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518068857",
-          "coverIsbn": "3518068857"
-        },
-        {
           "id": "OL1088336W",
           "title": "Eroberung des Glücks. Neue Wege zu einer besseren Lebensgestaltung",
           "author": "Bertrand Russell",
@@ -15941,15 +16004,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518368893",
           "coverIsbn": "3518368893"
-        },
-        {
-          "id": "OL4160755W",
-          "title": "Franz Kafka, der Künstler",
-          "author": "Heinz Politzer",
-          "coverId": "ol:13886054",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518069330",
-          "coverIsbn": "3518069330"
         },
         {
           "id": "OL20113647W",
@@ -16004,15 +16058,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:351838189X",
           "coverIsbn": "351838189X"
-        },
-        {
-          "id": "OL9072885W",
-          "title": "Mozart",
-          "author": "Hildesheimer W",
-          "coverId": "ol:1016559",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518370987",
-          "coverIsbn": "3518370987"
         },
         {
           "id": "OL165696W",
@@ -16103,15 +16148,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518372394",
           "coverIsbn": "3518372394"
-        },
-        {
-          "id": "OL2107647W",
-          "title": "Virginia Woolf",
-          "author": "Quentin Bell",
-          "coverId": "ol:14406492",
-          "addedAt": "2026-09-26",
-          "from": "isbn:351837253X",
-          "coverIsbn": "351837253X"
         },
         {
           "id": "OL20128982W",
@@ -16240,15 +16276,6 @@
           "coverIsbn": "3518374117"
         },
         {
-          "id": "OL4101098W",
-          "title": "Paul Celan. Eine Biographie seiner Jugend",
-          "author": "Israel Chalfen",
-          "coverId": "ol:2212471",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518374133",
-          "coverIsbn": "3518374133"
-        },
-        {
           "id": "OL4920625W",
           "title": "An den Grenzen des Staunens",
           "author": "Martin Roda Becher",
@@ -16301,15 +16328,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518375792",
           "coverIsbn": "3518375792"
-        },
-        {
-          "id": "OL1329478W",
-          "title": "August Strindberg",
-          "author": "Olof Lagercrantz",
-          "coverId": "ol:15237501",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518375865",
-          "coverIsbn": "3518375865"
         },
         {
           "id": "OL4020299W",
@@ -16402,15 +16420,6 @@
           "coverIsbn": "3518380494"
         },
         {
-          "id": "OL3109404W",
-          "title": "Marina Zwetajewa",
-          "author": "Maria Razumovsky",
-          "coverId": "ol:10552178",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518380702",
-          "coverIsbn": "3518380702"
-        },
-        {
           "id": "OL815538W",
           "title": "Das erste Jahr. Eine psychoanalytische Behandlung",
           "author": "Tilmann Moser",
@@ -16465,15 +16474,6 @@
           "coverIsbn": "3518382543"
         },
         {
-          "id": "OL7968129W",
-          "title": "George Orwell",
-          "author": "Bernard R. Crick",
-          "coverId": "ol:10232487",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518382780",
-          "coverIsbn": "3518382780"
-        },
-        {
           "id": "OL19580234W",
           "title": "Arráncame la vida",
           "author": "Ángeles Mastretta",
@@ -16481,15 +16481,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:351838287X",
           "coverIsbn": "351838287X"
-        },
-        {
-          "id": "OL4355011W",
-          "title": "Mario Vargas Llosa",
-          "author": "Scheerer, Thomas M.",
-          "coverId": "ol:1016728",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518382896",
-          "coverIsbn": "3518382896"
         },
         {
           "id": "OL1873214W",
@@ -16517,15 +16508,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518383175",
           "coverIsbn": "3518383175"
-        },
-        {
-          "id": "OL4275241W",
-          "title": "The Third Rose",
-          "author": "John Malcolm Brinnin",
-          "coverId": "ol:15253615",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518383205",
-          "coverIsbn": "3518383205"
         },
         {
           "id": "OL742983W",
@@ -16562,6 +16544,69 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518383760",
           "coverIsbn": "3518383760"
+        },
+        {
+          "id": "OL6098713W",
+          "title": "Das starke Selbst. Anleitung zur Spontaneität",
+          "author": "Moshe Feldenkrais",
+          "coverId": "ol:1016749",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518384570",
+          "coverIsbn": "3518384570"
+        },
+        {
+          "id": "OL8971526W",
+          "title": "Historias de cronopios y de famas",
+          "author": "Julio Cortázar",
+          "coverId": "ol:14818820",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518384813",
+          "coverIsbn": "3518384813"
+        },
+        {
+          "id": "OL1666749W",
+          "title": "Leib und Leben. Erzählungen",
+          "author": "Adolf Muschg",
+          "coverId": "ol:2212548",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518386530",
+          "coverIsbn": "3518386530"
+        },
+        {
+          "id": "OL4049729W",
+          "title": "Der Turm von Babel. Erinnerung an eine Deutsche Demokratische Republik",
+          "author": "Hans Mayer",
+          "coverId": "ol:2212549",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518386743",
+          "coverIsbn": "3518386743"
+        },
+        {
+          "id": "OL24422509W",
+          "title": "Juristische Weltkunde",
+          "author": "Uwe Wesel",
+          "coverId": "ol:10976918",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518387650",
+          "coverIsbn": "3518387650"
+        },
+        {
+          "id": "OL2262056W",
+          "title": "Das Wilde Karnten",
+          "author": "Josef Winkler",
+          "coverId": "ol:2212577",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518389777",
+          "coverIsbn": "3518389777"
+        },
+        {
+          "id": "OL3681088W",
+          "title": "Fasching",
+          "author": "Gerhard Fritsch",
+          "coverId": "ol:3221776",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518389785",
+          "coverIsbn": "3518389785"
         }
       ]
     }
