@@ -6105,12 +6105,12 @@
           "coverIsbn": "9780141198347"
         },
         {
-          "id": "OL1100007W",
-          "title": "Around the World in Eighty Days",
-          "author": "Jules Verne",
-          "coverId": "ol:12457803",
+          "id": "OL66513W",
+          "title": "Emma",
+          "author": "Jane Austen",
+          "coverId": "ol:12667806",
           "addedAt": "2026-09-26",
-          "from": "isbn:9780241468654"
+          "from": "isbn:9780141192475"
         },
         {
           "id": "OL20600W",
@@ -6121,12 +6121,20 @@
           "from": "isbn:9780141196640"
         },
         {
-          "id": "OL66513W",
-          "title": "Emma",
-          "author": "Jane Austen",
-          "coverId": "ol:12667806",
+          "id": "OL1100007W",
+          "title": "Around the World in Eighty Days",
+          "author": "Jules Verne",
+          "coverId": "ol:12457803",
           "addedAt": "2026-09-26",
-          "from": "isbn:9780141192475"
+          "from": "isbn:9780241468654"
+        },
+        {
+          "id": "OL53908W",
+          "title": "The Adventures of Huckleberry Finn",
+          "author": "Mark Twain",
+          "coverId": "ol:8996345",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199573"
         },
         {
           "id": "OL14868510W",
@@ -6263,14 +6271,6 @@
           "coverId": "ol:8834889",
           "addedAt": "2026-09-26",
           "from": "isbn:9780241347782"
-        },
-        {
-          "id": "OL53908W",
-          "title": "The Adventures of Huckleberry Finn",
-          "author": "Mark Twain",
-          "coverId": "ol:8996345",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9780141199573"
         },
         {
           "id": "OL85875W",
@@ -10681,7 +10681,7 @@
       "slug": "jules-verne-covers-by-heinz-edelmann",
       "title": "Jules Verne — covers by Heinz Edelmann",
       "kind": "series",
-      "intro": "Fischer published Jules Verne in twenty paperback volumes from 1968, in new translations by Lothar Maier, and Heinz Edelmann designed the covers of the whole edition. Shown in the order of the volume numbers. The photographs of nineteen volumes come from the Sammlung Keller (sammlungkeller.ch).",
+      "intro": "Fischer published Jules Verne in twenty paperback volumes from 1968, in new translations by Lothar Maier, and Heinz Edelmann designed the covers of the whole edition. Shown in the order of the volume numbers. The scans of nineteen volumes come from the Sammlung Keller (sammlungkeller.ch).",
       "published": false,
       "publishers": [
         "Fischer-Bücherei",
@@ -12676,13 +12676,58 @@
       ],
       "works": [
         {
-          "id": "OL14953686W",
-          "title": "Mardi / Omoo / Typee",
-          "author": "Herman Melville",
-          "coverId": "ol:717667",
+          "id": "OL15251656W",
+          "title": "Crime Novels",
+          "author": "Cornell Woolrich",
+          "coverId": "ol:929364",
           "addedAt": "2026-09-26",
-          "from": "isbn:9780940450004",
-          "coverIsbn": "9780940450004"
+          "from": "isbn:9781883011468",
+          "coverIsbn": "9781883011468"
+        },
+        {
+          "id": "OL228709W",
+          "title": "Nobody Knows My Name",
+          "author": "James Baldwin",
+          "coverId": "ol:929368",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011529",
+          "coverIsbn": "9781883011529"
+        },
+        {
+          "id": "OL14857116W",
+          "title": "Writings and drawings",
+          "author": "James Thurber",
+          "coverId": "ol:929349",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011222",
+          "coverIsbn": "9781883011222"
+        },
+        {
+          "id": "OL1217995W",
+          "title": "U.S.A",
+          "author": "John Dos Passos",
+          "coverId": "ol:929344",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011147",
+          "coverIsbn": "9781883011147"
+        },
+        {
+          "id": "OL16303411W",
+          "title": "Novels (Ada / Look at the Harlequins! / Transparent Things)",
+          "author": "Vladimir Nabokov",
+          "coverId": "ol:929348",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011208",
+          "coverIsbn": "9781883011208"
+        },
+        {
+          "id": "OL15061760W",
+          "title": "American Poetry: The Nineteenth Century, Vol. 1",
+          "author": "Various",
+          "coverId": "ol:717735",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450608",
+          "coverIsbn": "9780940450608"
         },
         {
           "id": "OL152161W",
@@ -12710,6 +12755,15 @@
           "addedAt": "2026-09-26",
           "from": "isbn:9780940450042",
           "coverIsbn": "9780940450042"
+        },
+        {
+          "id": "OL14953686W",
+          "title": "Mardi / Omoo / Typee",
+          "author": "Herman Melville",
+          "coverId": "ol:717667",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450004",
+          "coverIsbn": "9780940450004"
         },
         {
           "id": "OL455251W",
@@ -13081,15 +13135,6 @@
           "coverIsbn": "9780940450769"
         },
         {
-          "id": "OL15061760W",
-          "title": "American Poetry: The Nineteenth Century, Vol. 1",
-          "author": "Various",
-          "coverId": "ol:717735",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9780940450608",
-          "coverIsbn": "9780940450608"
-        },
-        {
           "id": "OL67206W",
           "title": "Novels and stories",
           "author": "Sarah Orne Jewett",
@@ -13189,15 +13234,6 @@
           "coverIsbn": "9781883011116"
         },
         {
-          "id": "OL1217995W",
-          "title": "U.S.A",
-          "author": "John Dos Passos",
-          "coverId": "ol:929344",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9781883011147",
-          "coverIsbn": "9781883011147"
-        },
-        {
           "id": "OL23164W",
           "title": "The grapes of wrath and other writings, 1936-1941 (Grapes of Wrath / Harvest Gypsies / Long Valley / Sea of Cortez)",
           "author": "John Steinbeck",
@@ -13223,24 +13259,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:9781883011192",
           "coverIsbn": "9781883011192"
-        },
-        {
-          "id": "OL16303411W",
-          "title": "Novels (Ada / Look at the Harlequins! / Transparent Things)",
-          "author": "Vladimir Nabokov",
-          "coverId": "ol:929348",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9781883011208",
-          "coverIsbn": "9781883011208"
-        },
-        {
-          "id": "OL14857116W",
-          "title": "Writings and drawings",
-          "author": "James Thurber",
-          "coverId": "ol:929349",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9781883011222",
-          "coverIsbn": "9781883011222"
         },
         {
           "id": "OL75351W",
@@ -13270,15 +13288,6 @@
           "coverIsbn": "9781883011284"
         },
         {
-          "id": "OL15251656W",
-          "title": "Crime Novels",
-          "author": "Cornell Woolrich",
-          "coverId": "ol:929364",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9781883011468",
-          "coverIsbn": "9781883011468"
-        },
-        {
           "id": "OL17824334W",
           "title": "Crime novels",
           "author": "Jim Thompson",
@@ -13304,15 +13313,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:9781883011512",
           "coverIsbn": "9781883011512"
-        },
-        {
-          "id": "OL228709W",
-          "title": "Nobody Knows My Name",
-          "author": "James Baldwin",
-          "coverId": "ol:929368",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9781883011529",
-          "coverIsbn": "9781883011529"
         },
         {
           "id": "OL35379W",
