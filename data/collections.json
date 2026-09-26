@@ -2209,11 +2209,14 @@
           "id": "OL2172454W",
           "title": "Ubik",
           "author": "Philip K. Dick",
-          "coverId": "ol:911137",
+          "coverId": "ol:15258740",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857988536",
           "coverIsbn": "9781857988536",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "766237"
         },
         {
           "id": "OL166496W",
@@ -2232,31 +2235,40 @@
           "id": "OL2172518W",
           "title": "Flow my tears, the policeman said",
           "author": "Philip K. Dick",
-          "coverId": "ol:7998617",
+          "coverId": "ol:15258741",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857983418",
           "coverIsbn": "9781857983418",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "430707"
         },
         {
           "id": "OL2172517W",
           "title": "The Simulacra",
           "author": "Philip K. Dick",
-          "coverId": "ol:380194",
+          "coverId": "ol:15258742",
           "addedAt": "2026-09-25",
           "from": "isbn:9780575074606",
           "coverIsbn": "9780575074606",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "428985"
         },
         {
           "id": "OL2172523W",
           "title": "Time out of joint",
           "author": "Philip K. Dick",
-          "coverId": "ol:380192",
+          "coverId": "ol:15258743",
           "addedAt": "2026-09-25",
           "from": "isbn:9780575074583",
           "coverIsbn": "9780575074583",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "952304"
         },
         {
           "id": "OL2172524W",
@@ -2275,11 +2287,14 @@
           "id": "OL2778305W",
           "title": "Bring the Jubilee",
           "author": "Ward Moore",
-          "coverId": "ol:911082",
+          "coverId": "ol:15258744",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857987645",
           "coverIsbn": "9781857987645",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "936263"
         },
         {
           "id": "OL56835W",
@@ -2311,11 +2326,14 @@
           "id": "OL59858W",
           "title": "The Lathe of Heaven",
           "author": "Ursula K. Le Guin",
-          "coverId": "ol:14602113",
+          "coverId": "ol:15258745",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857989519",
           "coverIsbn": "9781857989519",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "770896"
         },
         {
           "id": "OL19332770W",
@@ -2334,11 +2352,10 @@
           "id": "OL8260926W",
           "title": "The Complete Roderick",
           "author": "John Sladek",
-          "coverId": "ol:910983",
+          "coverId": "ol:15258746",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857983401",
-          "coverIsbn": "9781857983401",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverIsbn": "9781857983401"
         },
         {
           "id": "OL3332541W",
@@ -2383,11 +2400,14 @@
           "id": "OL261853W",
           "title": "The Centauri Device",
           "author": "M. John Harrison",
-          "coverId": "ol:911225",
+          "coverId": "ol:15258747",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857989977",
           "coverIsbn": "9781857989977",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "944275"
         },
         {
           "id": "OL27252W",
@@ -2432,11 +2452,14 @@
           "id": "OL2172408W",
           "title": "Martian Time-Slip",
           "author": "Philip K. Dick",
-          "coverId": "ol:911129",
+          "coverId": "ol:15258748",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857988376",
           "coverIsbn": "9781857988376",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "1115459"
         },
         {
           "id": "OL3290738W",
@@ -2468,21 +2491,27 @@
           "id": "OL892520W",
           "title": "Non-Stop",
           "author": "Brian W. Aldiss",
-          "coverId": "ol:911226",
+          "coverId": "ol:15258749",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857989984",
           "coverIsbn": "9781857989984",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Fred Gambino"
+          ],
+          "isfdbRecord": "430035"
         },
         {
           "id": "OL14931580W",
           "title": "The City and the Stars",
           "author": "Arthur C. Clarke",
-          "coverId": "ol:911081",
+          "coverId": "ol:15258750",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857987638",
           "coverIsbn": "9781857987638",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "1013219"
         },
         {
           "id": "OL4088358W",
@@ -2527,51 +2556,66 @@
           "id": "OL1960371W",
           "title": "Dying Inside",
           "author": "Robert Silverberg",
-          "coverId": "ol:380243",
+          "coverId": "ol:15258752",
           "addedAt": "2026-09-25",
           "from": "isbn:9780575075252",
           "coverIsbn": "9780575075252",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Dominic Harman"
+          ],
+          "isfdbRecord": "430705"
         },
         {
           "id": "OL104514W",
           "title": "Grass",
           "author": "Sheri S. Tepper",
-          "coverId": "ol:911101",
+          "coverId": "ol:15258753",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857987980",
           "coverIsbn": "9781857987980",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "507071"
         },
         {
           "id": "OL27780752W",
           "title": "Pavane",
           "author": "Keith Roberts",
-          "coverId": "ol:911192",
+          "coverId": "ol:15258754",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857989373",
           "coverIsbn": "9781857989373",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Arthur Haas"
+          ],
+          "isfdbRecord": "430021"
         },
         {
           "id": "OL510405W",
           "title": "Ringworld",
           "author": "Larry Niven",
-          "coverId": "ol:380377",
+          "coverId": "ol:15258755",
           "addedAt": "2026-09-25",
           "from": "isbn:9780575077027",
           "coverIsbn": "9780575077027",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Steven Vincent Johnson"
+          ],
+          "isfdbRecord": "768243"
         },
         {
           "id": "OL108288W",
           "title": "Timescape",
           "author": "Gregory Benford",
-          "coverId": "ol:911191",
+          "coverId": "ol:15258756",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857989359",
           "coverIsbn": "9781857989359",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "393883"
         },
         {
           "id": "OL166482W",
@@ -2603,21 +2647,27 @@
           "id": "OL1960643W",
           "title": "The Book of Skulls",
           "author": "Robert Silverberg",
-          "coverId": "ol:911179",
+          "coverId": "ol:15258757",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857989144",
           "coverIsbn": "9781857989144",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Jim Burns"
+          ],
+          "isfdbRecord": "430030"
         },
         {
           "id": "OL2071382W",
           "title": "Emphyrio",
           "author": "Jack Vance",
-          "coverId": "ol:911160",
+          "coverId": "ol:15258758",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857988857",
           "coverIsbn": "9781857988857",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "1090607"
         },
         {
           "id": "OL3290739W",
@@ -2645,11 +2695,10 @@
           "id": "OL16513W",
           "title": "Blood Music",
           "author": "Greg Bear",
-          "coverId": "ol:911080",
+          "coverId": "ol:15258759",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857987621",
-          "coverIsbn": "9781857987621",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverIsbn": "9781857987621"
         },
         {
           "id": "OL2454690W",
@@ -2681,21 +2730,27 @@
           "id": "OL16518W",
           "title": "Eon",
           "author": "Greg Bear",
-          "coverId": "ol:380081",
+          "coverId": "ol:15258760",
           "addedAt": "2026-09-25",
           "from": "isbn:9780575073166",
           "coverIsbn": "9780575073166",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Jim Burns"
+          ],
+          "isfdbRecord": "430613"
         },
         {
           "id": "OL17417W",
           "title": "Rendezvous with Rama",
           "author": "Arthur C. Clarke",
-          "coverId": "ol:1286944",
+          "coverId": "ol:15258761",
           "addedAt": "2026-09-25",
           "from": "isbn:9780575077331",
           "coverIsbn": "9780575077331",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Steve Stone"
+          ],
+          "isfdbRecord": "964956"
         },
         {
           "id": "OL3290749W",
@@ -2727,11 +2782,27 @@
           "id": "OL3290731W",
           "title": "Last and First Men",
           "author": "Olaf Stapledon",
-          "coverId": "ol:911106",
+          "coverId": "ol:15258762",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857988062",
           "coverIsbn": "9781857988062",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Les Edwards"
+          ],
+          "isfdbRecord": "431109"
+        },
+        {
+          "id": "OL1963251W",
+          "title": "The Fall of Hyperion",
+          "author": "Dan Simmons",
+          "coverId": "ol:15258763",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780575099487",
+          "coverIsbn": "9780575099487",
+          "coverArtists": [
+            "Larry Rostant"
+          ],
+          "isfdbRecord": "933825"
         },
         {
           "id": "OL506264W",
@@ -2951,6 +3022,19 @@
           "isfdbRecord": "413535"
         },
         {
+          "id": "OL21470287W",
+          "title": "Wasp",
+          "author": "Eric Frank Russell",
+          "coverId": "ol:15258764",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780575129047",
+          "coverIsbn": "9780575129047",
+          "coverArtists": [
+            "Dominic Harman"
+          ],
+          "isfdbRecord": "413533"
+        },
+        {
           "id": "OL46395W",
           "title": "The Gods Themselves",
           "author": "Isaac Asimov",
@@ -3045,11 +3129,10 @@
           "id": "OL17402W",
           "title": "A Fall of Moondust",
           "author": "Arthur C. Clarke",
-          "coverId": "ol:380082",
+          "coverId": "ol:15258765",
           "addedAt": "2026-09-25",
           "from": "isbn:9780575073173",
-          "coverIsbn": "9780575073173",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverIsbn": "9780575073173"
         },
         {
           "id": "OL2172352W",
@@ -3141,6 +3224,19 @@
             "Christopher Gibbs"
           ],
           "isfdbRecord": "420209"
+        },
+        {
+          "id": "OL2046154W",
+          "title": "The Long Tomorrow",
+          "author": "Leigh Brackett",
+          "coverId": "ol:15258766",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780575131569",
+          "coverIsbn": "9780575131569",
+          "coverArtists": [
+            "Christopher Gibbs"
+          ],
+          "isfdbRecord": "420585"
         },
         {
           "id": "OL7117372W",
@@ -3237,11 +3333,14 @@
           "id": "OL1920272W",
           "title": "The Child Garden",
           "author": "Geoff Ryman",
-          "coverId": "ol:380371",
+          "coverId": "ol:15258767",
           "addedAt": "2026-09-25",
           "from": "isbn:9780575076907",
           "coverIsbn": "9780575076907",
-          "creditWithheld": "image shows the earlier numbered design; the credit is for the relaunch printing (2026-09-25)"
+          "coverArtists": [
+            "Dominic Harman"
+          ],
+          "isfdbRecord": "431228"
         },
         {
           "id": "OL20119339W",
@@ -3255,6 +3354,19 @@
             "John Picacio"
           ],
           "isfdbRecord": "438120"
+        },
+        {
+          "id": "OL83885W",
+          "title": "Mockingbird",
+          "author": "Walter Tevis",
+          "coverId": "ol:15258768",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473213104",
+          "coverIsbn": "9781473213104",
+          "coverArtists": [
+            "Dominic Harman"
+          ],
+          "isfdbRecord": "509549"
         },
         {
           "id": "OL59797W",
@@ -3320,6 +3432,32 @@
             "Dominic Harman"
           ],
           "isfdbRecord": "513433"
+        },
+        {
+          "id": "OL35702190W",
+          "title": "Earth Abides",
+          "author": "George R. Stewart",
+          "coverId": "ol:15258769",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473214330",
+          "coverIsbn": "9781473214330",
+          "coverArtists": [
+            "Les Edwards"
+          ],
+          "isfdbRecord": "526761"
+        },
+        {
+          "id": "OL19546464W",
+          "title": "Dark Benediction",
+          "author": "Walter M. Miller, Jr.",
+          "coverId": "ol:15258770",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473211940",
+          "coverIsbn": "9781473211940",
+          "coverArtists": [
+            "Dominic Harman"
+          ],
+          "isfdbRecord": "521231"
         },
         {
           "id": "OL19218549W",
@@ -3487,6 +3625,19 @@
           "isfdbRecord": "583655"
         },
         {
+          "id": "OL26745098W",
+          "title": "Shadow",
+          "author": "Gene Wolfe",
+          "coverId": "ol:15258789",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473216495",
+          "coverIsbn": "9781473216495",
+          "coverArtists": [
+            "Laura Brett"
+          ],
+          "isfdbRecord": "1039050"
+        },
+        {
           "id": "OL14871968W",
           "title": "Sword & citadel",
           "author": "Gene Wolfe",
@@ -3617,6 +3768,19 @@
           "isfdbRecord": "602865"
         },
         {
+          "id": "OL20866833W",
+          "title": "The Doomed City",
+          "author": "Arkady Strugatsky & Boris Strugatsky",
+          "coverId": "ol:15258771",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473222281",
+          "coverIsbn": "9781473222281",
+          "coverArtists": [
+            "Eamon O'Donoghue"
+          ],
+          "isfdbRecord": "619498"
+        },
+        {
           "id": "OL104510W",
           "title": "Raising the stones",
           "author": "Sheri S. Tepper",
@@ -3654,6 +3818,19 @@
             "Sue Michniewicz"
           ],
           "isfdbRecord": "633905"
+        },
+        {
+          "id": "OL21631946W",
+          "title": "Land Under England",
+          "author": "Joseph O'Neill",
+          "coverId": "ol:15258772",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473224063",
+          "coverIsbn": "9781473224063",
+          "coverArtists": [
+            "Wallace Smith (I)"
+          ],
+          "isfdbRecord": "671647"
         },
         {
           "id": "OL72847W",
@@ -3704,6 +3881,19 @@
           "isfdbRecord": "698044"
         },
         {
+          "id": "OL2643429W",
+          "title": "Light",
+          "author": "M. John Harrison",
+          "coverId": "ol:15258773",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473227675",
+          "coverIsbn": "9781473227675",
+          "coverArtists": [
+            "Sam Green"
+          ],
+          "isfdbRecord": "716317"
+        },
+        {
           "id": "OL492354W",
           "title": "Native Tongue",
           "author": "Suzette Haden Elgin",
@@ -3720,6 +3910,19 @@
           "addedAt": "2026-09-25",
           "from": "isbn:9781473228283",
           "coverIsbn": "9781473228283"
+        },
+        {
+          "id": "OL7920689W",
+          "title": "The Shockwave Rider",
+          "author": "John Brunner",
+          "coverId": "ol:15258774",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473228306",
+          "coverIsbn": "9781473228306",
+          "coverArtists": [
+            "Getty Images"
+          ],
+          "isfdbRecord": "745999"
         },
         {
           "id": "OL1960375W",
@@ -3744,6 +3947,32 @@
           "isfdbRecord": "757299"
         },
         {
+          "id": "OL1960491W",
+          "title": "A Time of Changes",
+          "author": "Robert Silverberg",
+          "coverId": "ol:15258775",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473229235",
+          "coverIsbn": "9781473229235",
+          "coverArtists": [
+            "Getty Images"
+          ],
+          "isfdbRecord": "788243"
+        },
+        {
+          "id": "OL22138740W",
+          "title": "The Andromeda Anthology",
+          "author": "John Elliot & Fred Hoyle",
+          "coverId": "ol:15258776",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473230118",
+          "coverIsbn": "9781473230118",
+          "coverArtists": [
+            "Shutterstock"
+          ],
+          "isfdbRecord": "794343"
+        },
+        {
           "id": "OL21696977W",
           "title": "Bold As Love",
           "author": "Gwyneth Jones",
@@ -3751,6 +3980,32 @@
           "addedAt": "2026-09-25",
           "from": "isbn:9781473230194",
           "coverIsbn": "9781473230194"
+        },
+        {
+          "id": "OL19915743W",
+          "title": "Desolation Road",
+          "author": "Ian McDonald",
+          "coverId": "ol:15258777",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473230996",
+          "coverIsbn": "9781473230996",
+          "coverArtists": [
+            "Shutterstock"
+          ],
+          "isfdbRecord": "810578"
+        },
+        {
+          "id": "OL2354512W",
+          "title": "Castles Made of Sand",
+          "author": "Gwyneth Jones",
+          "coverId": "ol:15258778",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473230200",
+          "coverIsbn": "9781473230200",
+          "coverArtists": [
+            "Shutterstock"
+          ],
+          "isfdbRecord": "818207"
         },
         {
           "id": "OL25764282W",
@@ -3771,6 +4026,15 @@
           "coverIsbn": "9781473232440"
         },
         {
+          "id": "OL166491W",
+          "title": "The Separation",
+          "author": "Christopher Priest",
+          "coverId": "ol:15258779",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473233058",
+          "coverIsbn": "9781473233058"
+        },
+        {
           "id": "OL1960610W",
           "title": "Needle in a timestack",
           "author": "Robert Silverberg",
@@ -3789,6 +4053,15 @@
           "coverIsbn": "9781473234659"
         },
         {
+          "id": "OL25345681W",
+          "title": "Kairos",
+          "author": "Gwyneth Jones",
+          "coverId": "ol:15258780",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473234666",
+          "coverIsbn": "9781473234666"
+        },
+        {
           "id": "OL1168083W",
           "title": "Nineteen Eighty-Four",
           "author": "George Orwell",
@@ -3805,6 +4078,15 @@
           "addedAt": "2026-09-25",
           "from": "isbn:9781473234673",
           "coverIsbn": "9781473234673"
+        },
+        {
+          "id": "OL26340522W",
+          "title": "The Chronicles of Amber",
+          "author": "Roger Zelazny",
+          "coverId": "ol:15258781",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473222168",
+          "coverIsbn": "9781473222168"
         },
         {
           "id": "OL27813227W",
@@ -3847,6 +4129,15 @@
           "coverIsbn": "9781473235038"
         },
         {
+          "id": "OL28628669W",
+          "title": "Imperial Earth",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:15258782",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473201422",
+          "coverIsbn": "9781473201422"
+        },
+        {
           "id": "OL28628670W",
           "title": "Hammer of God",
           "author": "Arthur C. Clarke",
@@ -3860,6 +4151,24 @@
           "isfdbRecord": "943091"
         },
         {
+          "id": "OL28023844W",
+          "title": "The Best of Roger Zelazny",
+          "author": "Roger Zelazny",
+          "coverId": "ol:15258783",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781473235007",
+          "coverIsbn": "9781473235007"
+        },
+        {
+          "id": "OL37574007W",
+          "title": "Hiero's Journey",
+          "author": "Sterling E. Lanier",
+          "coverId": "ol:15258784",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399620512",
+          "coverIsbn": "9781399620512"
+        },
+        {
           "id": "OL37834465W",
           "title": "First Born",
           "author": "Maureen Duffy",
@@ -3867,6 +4176,42 @@
           "addedAt": "2026-09-25",
           "from": "isbn:9781399623353",
           "coverIsbn": "9781399623353"
+        },
+        {
+          "id": "OL44545553W",
+          "title": "Barefoot in the Head",
+          "author": "Brian Aldiss",
+          "coverId": "ol:15258785",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399635400",
+          "coverIsbn": "9781399635400"
+        },
+        {
+          "id": "OL45147605W",
+          "title": "Nova Swing",
+          "author": "M. John Harrison",
+          "coverId": "ol:15258786",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399640367",
+          "coverIsbn": "9781399640367"
+        },
+        {
+          "id": "OL45912000W",
+          "title": "Alien Emergencies",
+          "author": "James White",
+          "coverId": "ol:15258787",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399636261",
+          "coverIsbn": "9781399636261"
+        },
+        {
+          "id": "OL27025376W",
+          "title": "Paprika",
+          "author": "Yasutaka Tsutsui",
+          "coverId": "ol:15258788",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399623254",
+          "coverIsbn": "9781399623254"
         }
       ],
       "coverCredits": "isfdb"
