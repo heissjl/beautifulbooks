@@ -6,7 +6,7 @@
  */
 
 import { normalizeTitle } from '../../lib/normalize';
-import { isbnLanguage, publisherLanguage } from './evidence';
+import { isbnIsEnglish, isbnLanguage, publisherLanguage } from './evidence';
 
 export interface OlEdition {
   key: string;
@@ -71,6 +71,8 @@ export function pickLanguageEdition(editions: OlEdition[], language: string): La
   return { edition: withCover[0].edition, cover: withCover[0].covers[0], candidates };
 }
 
+export type TranslationMatch = 'by-hand' | 'wikipedia-langlink' | 'wikidata';
+
 /** How a candidate's language is known. */
 export type Evidence = 'tag' | 'isbn-group' | 'publisher' | 'separate-work';
 
@@ -84,8 +86,13 @@ export interface ForeignCandidate {
   via: Evidence;
   /** For `separate-work`: the unmerged translation's own work record. */
   work?: string;
-  /** For `separate-work`: matched through `translations.json` (a known translated title) rather than by the data. */
-  byHand?: boolean;
+  /**
+   * For `separate-work`, how the translation was tied to the book when not
+   * by the data itself (title or `translation_of`): an entry in
+   * `translations.json`, set by hand or from a Wikipedia interlanguage link
+   * or a Wikidata label.
+   */
+  match?: TranslationMatch;
   /** Set where the match to the book is not certain; such a candidate is never chosen. */
   needsCheck?: boolean;
   /** Why a person looking at the image ruled it out (`rejected.json`); never chosen. */
@@ -201,4 +208,56 @@ export function matchSeparateWork(
 ): string | null {
   const names = [doc.title, ...editions.map(e => e.translation_of ?? '')].filter(Boolean).map(normalizeTitle);
   return targets.find(t => names.includes(normalizeTitle(t.title)))?.id ?? null;
+}
+
+/**
+ * The covers of a translation work's editions. English-tagged editions are
+ * left out (a stray audiobook or reprint of the original), and so is an
+ * untagged one whose ISBN is in an English group. The language is the
+ * edition's own tag, else the work's.
+ */
+export function translationCandidates(
+  editions: EditionWithOriginal[],
+  workLanguage: string,
+  workKey: string,
+  match?: TranslationMatch,
+): ForeignCandidate[] {
+  const out: ForeignCandidate[] = [];
+  for (const e of editions) {
+    const langs = (e.languages ?? []).map(l => l.key.replace('/languages/', ''));
+    if (langs.includes('eng')) continue;
+    const isbns = [...(e.isbn_13 ?? []), ...(e.isbn_10 ?? [])];
+    if (langs.length === 0 && isbns.some(isbnIsEnglish)) continue;
+    const language = langs.find(NAMED_LANGUAGE) ?? workLanguage;
+    for (const cover of (e.covers ?? []).filter(c => c > 0)) {
+      if (out.some(c => c.cover === cover)) continue;
+      out.push({ cover, language, edition: e.key, publishDate: e.publish_date ?? null, isbn: isbns[0] ?? null, via: 'separate-work', work: workKey, ...(match ? { match } : {}) });
+    }
+  }
+  return out;
+}
+
+/** A title without trailing bracketed notes: "Blood Music (novel)", "Pavane (S.F. Masterworks)". */
+export function stripNote(title: string): string {
+  let t = title.trim();
+  for (let prev = ''; prev !== t; ) { prev = t; t = t.replace(/\s*[([][^()[\]]*[)\]]\s*$/, '').trim(); }
+  return t || title.trim();
+}
+
+/** The surname to search by: the last name word, without "Jr." and the like. */
+export function surnameOf(author: string): string {
+  const words = author.replace(/,?\s+(jr|sr|ii|iii)\.?$/i, '').trim().split(/\s+/);
+  return words[words.length - 1] ?? author;
+}
+
+/**
+ * Whether a catalogue title is the translated title: equal after
+ * `normalizeTitle`, or — for a translated title long enough not to be a
+ * common word — the catalogue title starts with it (a subtitle added).
+ */
+export function sameTitle(catalogue: string, translated: string): boolean {
+  const a = normalizeTitle(catalogue);
+  const b = normalizeTitle(translated);
+  if (!a || !b) return false;
+  return a === b || (b.length >= 12 && a.startsWith(`${b} `));
 }

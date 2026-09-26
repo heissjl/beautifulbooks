@@ -83,3 +83,20 @@ export function publisherLanguage(publishers: readonly string[] | undefined): st
   for (const p of publishers ?? []) for (const [re, lang] of PUBLISHERS) if (re.test(p)) return lang;
   return null;
 }
+
+/** An ISBN registered in an English-language group (0, 1, 979-8): a printing to leave out of a translation. */
+export function isbnIsEnglish(raw: string | undefined): boolean {
+  let isbn = cleanIsbn(raw);
+  if (!isbn) return false;
+  if (isbn.length === 10) isbn = isbn10to13(isbn);
+  return /^(9780|9781|9798)/.test(isbn);
+}
+
+/** Wikipedia language code → MARC language code, for the languages a translation of the series may be in. */
+export const WIKI_TO_MARC: Record<string, string> = {
+  de: 'ger', fr: 'fre', es: 'spa', it: 'ita', ru: 'rus', pl: 'pol', nl: 'dut', pt: 'por', ja: 'jpn', zh: 'chi',
+  cs: 'cze', hu: 'hun', sv: 'swe', da: 'dan', no: 'nor', nb: 'nor', nn: 'nor', fi: 'fin', tr: 'tur', el: 'gre',
+  sr: 'srp', hr: 'hrv', ro: 'rum', he: 'heb', ko: 'kor', uk: 'ukr', ca: 'cat', bg: 'bul', sk: 'slo', sl: 'slv',
+  et: 'est', lv: 'lav', lt: 'lit', fa: 'per', ar: 'ara', eo: 'epo', gl: 'glg', eu: 'baq', id: 'ind', vi: 'vie',
+  th: 'tha', is: 'ice', mk: 'mac', be: 'bel', ka: 'geo', hy: 'arm', az: 'aze', ms: 'may', hi: 'hin', bn: 'ben',
+};

@@ -972,14 +972,79 @@
   "id": "OL19799863W",
   "title": "The Rediscovery of Man (S.F. Masterworks)",
   "author": "Cordwainer Smith",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:8747508",
+  "language": "fre",
+  "via": "separate-work",
+  "edition": "/books/OL27251020M",
+  "publishDate": "Jul 27, 1987",
+  "isbn": "9782266020381",
+  "candidates": [
+   {
+    "cover": 13451528,
+    "language": "fre",
+    "edition": "/books/OL47086129M",
+    "publishDate": "Mar 15, 2004",
+    "isbn": "9782266027212",
+    "via": "separate-work",
+    "work": "OL34737489W",
+    "match": "wikipedia-langlink",
+    "rejected": "The Rediscovery of Man: \"La quête des trois mondes\", the volume of the French collected edition that holds Quest of the Three Worlds, not these stories (2026-09-26)"
+   },
+   {
+    "cover": 10470061,
+    "language": "fre",
+    "edition": "/books/OL30547164M",
+    "publishDate": "Oct 07, 2004",
+    "isbn": "9782266027182",
+    "via": "separate-work",
+    "work": "OL22482975W",
+    "match": "wikipedia-langlink",
+    "rejected": "The Rediscovery of Man: the image on this French edition record is Marilynne Robinson's Gilead (2026-09-26)"
+   },
+   {
+    "cover": 14490039,
+    "language": "fre",
+    "edition": "/books/OL45830864M",
+    "publishDate": "1987-01-01",
+    "isbn": "9782266020428",
+    "via": "separate-work",
+    "work": "OL33850444W",
+    "match": "wikipedia-langlink",
+    "rejected": "The Rediscovery of Man: \"Le sous-peuple\" is the French volume of Norstrilia (2026-09-26)"
+   },
+   {
+    "cover": 8747508,
+    "language": "fre",
+    "edition": "/books/OL27251020M",
+    "publishDate": "Jul 27, 1987",
+    "isbn": "9782266020381",
+    "via": "separate-work",
+    "work": "OL20071030W",
+    "match": "wikipedia-langlink"
+   },
+   {
+    "cover": 8690452,
+    "language": "fre",
+    "edition": "/books/OL27072355M",
+    "publishDate": "Jul 05, 1987",
+    "isbn": "9782724234046",
+    "via": "separate-work",
+    "work": "OL19885307W",
+    "match": "wikipedia-langlink"
+   },
+   {
+    "cover": 8447624,
+    "language": "fre",
+    "edition": "/books/OL26793568M",
+    "publishDate": "Mar 19, 1974",
+    "isbn": "9782720100024",
+    "via": "separate-work",
+    "work": "OL19335884W",
+    "match": "wikipedia-langlink",
+    "rejected": "The Rediscovery of Man: a scan of an illustration, not a cover (2026-09-26)"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 10,
@@ -1001,7 +1066,7 @@
     "isbn": "9783453164185",
     "via": "separate-work",
     "work": "OL1819342W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -1715,7 +1780,7 @@
     "isbn": "9782207250587",
     "via": "separate-work",
     "work": "OL7917371W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -1763,7 +1828,7 @@
     "isbn": "9788445074541",
     "via": "separate-work",
     "work": "OL261569W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 3327776,
@@ -1773,7 +1838,7 @@
     "isbn": "9788445071052",
     "via": "separate-work",
     "work": "OL261569W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 10761778,
@@ -1783,7 +1848,7 @@
     "isbn": "9782221011584",
     "via": "separate-work",
     "work": "OL24269145W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 10778521,
@@ -1793,7 +1858,7 @@
     "isbn": "9782221010204",
     "via": "separate-work",
     "work": "OL24280021W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 11484586,
@@ -1803,17 +1868,7 @@
     "isbn": "9789027471246",
     "via": "separate-work",
     "work": "OL24744170W",
-    "byHand": true
-   },
-   {
-    "cover": 4607888,
-    "language": "rus",
-    "edition": null,
-    "publishDate": null,
-    "isbn": null,
-    "via": "separate-work",
-    "work": "OL892517W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -1926,14 +1981,35 @@
   "id": "OL19332770W",
   "title": "Body Snatchers",
   "author": "George Finney",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:13803756",
+  "language": "ita",
+  "via": "separate-work",
+  "edition": "/books/OL47315733M",
+  "publishDate": "Aug 01, 2005",
+  "isbn": "9788871684079",
+  "candidates": [
+   {
+    "cover": 8763938,
+    "language": "ger",
+    "edition": "/books/OL27282488M",
+    "publishDate": "Oct 01, 2014",
+    "isbn": "9783937355825",
+    "via": "separate-work",
+    "work": "OL20102451W",
+    "match": "wikipedia-langlink"
+   },
+   {
+    "cover": 13803756,
+    "language": "ita",
+    "edition": "/books/OL47315733M",
+    "publishDate": "Aug 01, 2005",
+    "isbn": "9788871684079",
+    "via": "separate-work",
+    "work": "OL34954288W",
+    "match": "wikipedia-langlink"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 23,
@@ -1955,7 +2031,7 @@
     "isbn": "9783426057506",
     "via": "separate-work",
     "work": "OL26419808W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -2245,7 +2321,7 @@
     "isbn": "9782207500958",
     "via": "separate-work",
     "work": "OL892413W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -2341,12 +2417,12 @@
   "id": "OL1963268W",
   "title": "Hyperion",
   "author": "Dan Simmons",
-  "coverId": "ol:10543222",
-  "language": "ita",
+  "coverId": "ol:8288907",
+  "language": "pol",
   "via": "tag",
-  "edition": "/books/OL31855015M",
-  "publishDate": "2014",
-  "isbn": "9788834727119",
+  "edition": "/books/OL26604191M",
+  "publishDate": "2015",
+  "isbn": "9788374805575",
   "candidates": [
    {
     "cover": 15133839,
@@ -2652,7 +2728,7 @@
     "isbn": "9788445073292",
     "via": "separate-work",
     "work": "OL36009796W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -2662,12 +2738,12 @@
   "id": "OL510405W",
   "title": "Ringworld",
   "author": "Larry Niven",
-  "coverId": "ol:7241328",
-  "language": "fre",
+  "coverId": "ol:13766347",
+  "language": "ger",
   "via": "tag",
-  "edition": "/books/OL25417488M",
-  "publishDate": "2003",
-  "isbn": "9782290339169",
+  "edition": "/books/OL47301728M",
+  "publishDate": "1993-04",
+  "isbn": "3404241681",
   "candidates": [
    {
     "cover": 10944721,
@@ -2809,7 +2885,7 @@
     "isbn": "9788445074756",
     "via": "separate-work",
     "work": "OL7202570W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -2978,7 +3054,7 @@
     "isbn": null,
     "via": "separate-work",
     "work": "OL16803148W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 7255648,
@@ -2988,7 +3064,7 @@
     "isbn": null,
     "via": "separate-work",
     "work": "OL16803147W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -3122,7 +3198,7 @@
  {
   "order": 55,
   "id": "OL3290749W",
-  "title": "Philosophy and living",
+  "title": "Odd John",
   "author": "Olaf Stapledon",
   "coverId": null,
   "language": null,
@@ -4486,14 +4562,35 @@
   "id": "OL14858406W",
   "title": "Doomsday book",
   "author": "Connie Willis",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:8542109",
+  "language": "fre",
+  "via": "separate-work",
+  "edition": "/books/OL26855188M",
+  "publishDate": "Nov 12, 2014",
+  "isbn": "9782290105887",
+  "candidates": [
+   {
+    "cover": 8542109,
+    "language": "fre",
+    "edition": "/books/OL26855188M",
+    "publishDate": "Nov 12, 2014",
+    "isbn": "9782290105887",
+    "via": "separate-work",
+    "work": "OL19634262W",
+    "match": "wikipedia-langlink"
+   },
+   {
+    "cover": 981344,
+    "language": "fre",
+    "edition": "/books/OL8910324M",
+    "publishDate": "January 1, 1994",
+    "isbn": "9782277237617",
+    "via": "separate-work",
+    "work": "OL14914262W",
+    "match": "wikipedia-langlink"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 67,
@@ -4716,7 +4813,7 @@
     "isbn": "9782290316092",
     "via": "separate-work",
     "work": "OL29241351W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 12715324,
@@ -4726,7 +4823,7 @@
     "isbn": "9782228893282",
     "via": "separate-work",
     "work": "OL2434989W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -4775,16 +4872,6 @@
   "isbn": "9782277229070",
   "candidates": [
    {
-    "cover": 11515427,
-    "language": "fre",
-    "edition": "/books/OL32883572M",
-    "publishDate": "Jun 05, 2018",
-    "isbn": "9781541465084",
-    "via": "separate-work",
-    "work": "OL21679260W",
-    "rejected": "The Gate to Women's Country: an English audiobook cover inside a French-tagged work (2026-09-26)"
-   },
-   {
     "cover": 10393643,
     "language": "fre",
     "edition": "/books/OL29490486M",
@@ -4801,14 +4888,35 @@
   "id": "OL19209380W",
   "title": "The Sea and Summer (SF Masterworks)",
   "author": "George Turner",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:13719168",
+  "language": "cat",
+  "via": "separate-work",
+  "edition": "/books/OL47266545M",
+  "publishDate": "Sep 01, 2007",
+  "isbn": "9788466408417",
+  "candidates": [
+   {
+    "cover": 13719168,
+    "language": "cat",
+    "edition": "/books/OL47266545M",
+    "publishDate": "Sep 01, 2007",
+    "isbn": "9788466408417",
+    "via": "separate-work",
+    "work": "OL34909137W",
+    "match": "wikipedia-langlink"
+   },
+   {
+    "cover": 12340757,
+    "language": "spa",
+    "edition": "/books/OL35633806M",
+    "publishDate": "Dec 15, 2007",
+    "isbn": "9788466637411",
+    "via": "separate-work",
+    "work": "OL26393326W",
+    "match": "wikidata"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 75,
@@ -4861,7 +4969,7 @@
     "isbn": "9783870704391",
     "via": "separate-work",
     "work": "OL20124815W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -5036,28 +5144,50 @@
   "id": "OL19323674W",
   "title": "The Deep (S.F. Masterworks)",
   "author": "John Crowley",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:3101918",
+  "language": "fre",
+  "via": "separate-work",
+  "edition": "/books/OL12464779M",
+  "publishDate": "May 25, 2000",
+  "isbn": "9782228892445",
+  "candidates": [
+   {
+    "cover": 3101918,
+    "language": "fre",
+    "edition": "/books/OL12464779M",
+    "publishDate": "May 25, 2000",
+    "isbn": "9782228892445",
+    "via": "separate-work",
+    "work": "OL482548W",
+    "match": "wikidata"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 80,
   "id": "OL20866308W",
   "title": "No Enemy But Time",
   "author": "Michael Bishop",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:8762037",
+  "language": "spa",
+  "via": "separate-work",
+  "edition": "/books/OL27279869M",
+  "publishDate": "Aug 24, 2008",
+  "isbn": "9788498001488",
+  "candidates": [
+   {
+    "cover": 8762037,
+    "language": "spa",
+    "edition": "/books/OL27279869M",
+    "publishDate": "Aug 24, 2008",
+    "isbn": "9788498001488",
+    "via": "separate-work",
+    "work": "OL20099834W",
+    "match": "wikipedia-langlink"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 81,
@@ -5148,7 +5278,7 @@
     "isbn": "9783453521865",
     "via": "separate-work",
     "work": "OL5724838W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 10293554,
@@ -5158,7 +5288,7 @@
     "isbn": "9788498004298",
     "via": "separate-work",
     "work": "OL5724834W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 3104931,
@@ -5168,7 +5298,7 @@
     "isbn": "9782258058415",
     "via": "separate-work",
     "work": "OL5724834W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 1009445,
@@ -5178,7 +5308,7 @@
     "isbn": "9783453187870",
     "via": "separate-work",
     "work": "OL5724838W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 10445943,
@@ -5188,7 +5318,7 @@
     "isbn": "9788484219408",
     "via": "separate-work",
     "work": "OL5724834W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -5347,14 +5477,35 @@
   "id": "OL2753431W",
   "title": "Random acts of senseless violence",
   "author": "Jack Womack",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:13837608",
+  "language": "fre",
+  "via": "separate-work",
+  "edition": "/books/OL47318984M",
+  "publishDate": "Aug 27, 2015",
+  "isbn": "9782070465835",
+  "candidates": [
+   {
+    "cover": 13837608,
+    "language": "fre",
+    "edition": "/books/OL47318984M",
+    "publishDate": "Aug 27, 2015",
+    "isbn": "9782070465835",
+    "via": "separate-work",
+    "work": "OL34957510W",
+    "match": "wikidata"
+   },
+   {
+    "cover": 14140951,
+    "language": "fre",
+    "edition": "/books/OL12452186M",
+    "publishDate": "October 24, 1995",
+    "isbn": "9782207305546",
+    "via": "separate-work",
+    "work": "OL2753424W",
+    "match": "wikidata"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 88,
@@ -5538,14 +5689,35 @@
   "id": "OL7117372W",
   "title": "The godwhale",
   "author": "T. J. Bass",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:10183320",
+  "language": "fre",
+  "via": "separate-work",
+  "edition": "/books/OL28253582M",
+  "publishDate": "Jun 14, 1988",
+  "isbn": "9782253023081",
+  "candidates": [
+   {
+    "cover": 10183320,
+    "language": "fre",
+    "edition": "/books/OL28253582M",
+    "publishDate": "Jun 14, 1988",
+    "isbn": "9782253023081",
+    "via": "separate-work",
+    "work": "OL20865804W",
+    "match": "wikidata"
+   },
+   {
+    "cover": 10310708,
+    "language": "fre",
+    "edition": "/books/OL28374051M",
+    "publishDate": "Jul 25, 1975",
+    "isbn": "9782720100369",
+    "via": "separate-work",
+    "work": "OL20942345W",
+    "match": "wikidata"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 94,
@@ -5772,14 +5944,25 @@
   "id": "OL83885W",
   "title": "Mockingbird",
   "author": "Walter Tevis",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:14492013",
+  "language": "fre",
+  "via": "separate-work",
+  "edition": "/books/OL45612668M",
+  "publishDate": "2001-01-01",
+  "isbn": "9782277212461",
+  "candidates": [
+   {
+    "cover": 14492013,
+    "language": "fre",
+    "edition": "/books/OL45612668M",
+    "publishDate": "2001-01-01",
+    "isbn": "9782277212461",
+    "via": "separate-work",
+    "work": "OL33653580W",
+    "match": "wikipedia-langlink"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 103,
@@ -5959,7 +6142,7 @@
     "isbn": "978-5-17-050198-4",
     "via": "separate-work",
     "work": "OL37422079W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 15231897,
@@ -5969,7 +6152,7 @@
     "isbn": "9666964309",
     "via": "separate-work",
     "work": "OL37422079W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 15233482,
@@ -5979,7 +6162,7 @@
     "isbn": null,
     "via": "separate-work",
     "work": "OL10560080W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 6255220,
@@ -5989,17 +6172,7 @@
     "isbn": null,
     "via": "separate-work",
     "work": "OL10560080W",
-    "byHand": true
-   },
-   {
-    "cover": 6937838,
-    "language": "fre",
-    "edition": null,
-    "publishDate": null,
-    "isbn": null,
-    "via": "separate-work",
-    "work": "OL1639187W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -6032,14 +6205,35 @@
   "id": "OL19213764W",
   "title": "Life During Wartime (S.F. Masterworks)",
   "author": "Lucius Shepard",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:12905985",
+  "language": "ger",
+  "via": "separate-work",
+  "edition": "/books/OL39794905M",
+  "publishDate": "1989",
+  "isbn": "9783453031449",
+  "candidates": [
+   {
+    "cover": 8568367,
+    "language": "fre",
+    "edition": "/books/OL26872958M",
+    "publishDate": "Apr 19, 2018",
+    "isbn": "9782354082956",
+    "via": "separate-work",
+    "work": "OL19653244W",
+    "match": "wikidata"
+   },
+   {
+    "cover": 12905985,
+    "language": "ger",
+    "edition": "/books/OL39794905M",
+    "publishDate": "1989",
+    "isbn": "9783453031449",
+    "via": "separate-work",
+    "work": "OL28941628W",
+    "match": "wikidata"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 108,
@@ -6108,7 +6302,7 @@
     "isbn": "9782253242215",
     "via": "separate-work",
     "work": "OL24487027W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -6403,7 +6597,7 @@
     "isbn": "9785389134706",
     "via": "separate-work",
     "work": "OL19752852W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 13170109,
@@ -6413,7 +6607,7 @@
     "isbn": "9788494561214",
     "via": "separate-work",
     "work": "OL19737349W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 8689745,
@@ -6423,7 +6617,7 @@
     "isbn": "9788804337195",
     "via": "separate-work",
     "work": "OL19884897W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -6518,7 +6712,7 @@
     "isbn": "2266027204",
     "via": "separate-work",
     "work": "OL10571538W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -6543,7 +6737,7 @@
     "isbn": "9783453319615",
     "via": "separate-work",
     "work": "OL20805450W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 10498547,
@@ -6553,7 +6747,7 @@
     "isbn": "9785170416783",
     "via": "separate-work",
     "work": "OL22821620W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 1016825,
@@ -6563,7 +6757,57 @@
     "isbn": "9783518389522",
     "via": "separate-work",
     "work": "OL28482077W",
-    "byHand": true
+    "match": "by-hand"
+   },
+   {
+    "cover": 15233515,
+    "language": "rus",
+    "edition": "/books/OL21905224M",
+    "publishDate": "1992",
+    "isbn": "5792100071",
+    "via": "separate-work",
+    "work": "OL10560078W",
+    "match": "by-hand"
+   },
+   {
+    "cover": 15231877,
+    "language": "rus",
+    "edition": "/books/OL3110927M",
+    "publishDate": "1979",
+    "isbn": null,
+    "via": "separate-work",
+    "work": "OL10560077W",
+    "match": "by-hand"
+   },
+   {
+    "cover": 6255218,
+    "language": "rus",
+    "edition": "/books/OL13949274M",
+    "publishDate": "1979",
+    "isbn": null,
+    "via": "separate-work",
+    "work": "OL10560077W",
+    "match": "by-hand"
+   },
+   {
+    "cover": 6255217,
+    "language": "rus",
+    "edition": "/books/OL13949274M",
+    "publishDate": "1979",
+    "isbn": null,
+    "via": "separate-work",
+    "work": "OL10560077W",
+    "match": "by-hand"
+   },
+   {
+    "cover": 15231885,
+    "language": "fre",
+    "edition": "/books/OL5106612M",
+    "publishDate": "1974",
+    "isbn": null,
+    "via": "separate-work",
+    "work": "OL11765464W",
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -6573,14 +6817,25 @@
   "id": "OL19323672W",
   "title": "Fairyland (S.F. Masterworks)",
   "author": "Paul J. McAuley",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:3110137",
+  "language": "fre",
+  "via": "separate-work",
+  "edition": "/books/OL12512772M",
+  "publishDate": "January 7, 1999",
+  "isbn": "9782277260066",
+  "candidates": [
+   {
+    "cover": 3110137,
+    "language": "fre",
+    "edition": "/books/OL12512772M",
+    "publishDate": "January 7, 1999",
+    "isbn": "9782277260066",
+    "via": "separate-work",
+    "work": "OL15078160W",
+    "match": "wikidata"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 119,
@@ -6649,7 +6904,7 @@
     "isbn": "9785170025329",
     "via": "separate-work",
     "work": "OL24691708W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -6711,7 +6966,7 @@
     "isbn": "9788325001223",
     "via": "separate-work",
     "work": "OL26186453W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 9847297,
@@ -6721,7 +6976,7 @@
     "isbn": "9783453310094",
     "via": "separate-work",
     "work": "OL16930488W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -8615,7 +8870,7 @@
     "isbn": "5235012151",
     "via": "separate-work",
     "work": "OL11457373W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 14548387,
@@ -8625,7 +8880,17 @@
     "isbn": "5235012151",
     "via": "separate-work",
     "work": "OL11457373W",
-    "byHand": true
+    "match": "by-hand"
+   },
+   {
+    "cover": 15233507,
+    "language": "rus",
+    "edition": "/books/OL39865108M",
+    "publishDate": "1989",
+    "isbn": "9785280012905",
+    "via": "separate-work",
+    "work": "OL29000756W",
+    "match": "by-hand"
    },
    {
     "cover": 15233505,
@@ -8635,7 +8900,7 @@
     "isbn": "9785237018387",
     "via": "separate-work",
     "work": "OL9067429W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -8659,14 +8924,25 @@
   "id": "OL3055283W",
   "title": "The embedding",
   "author": "Ian Watson",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:8666867",
+  "language": "spa",
+  "via": "separate-work",
+  "edition": "/books/OL27047942M",
+  "publishDate": "Jul 01, 1977",
+  "isbn": "9788427004146",
+  "candidates": [
+   {
+    "cover": 8666867,
+    "language": "spa",
+    "edition": "/books/OL27047942M",
+    "publishDate": "Jul 01, 1977",
+    "isbn": "9788427004146",
+    "via": "separate-work",
+    "work": "OL19860234W",
+    "match": "wikidata"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 137,
@@ -8688,7 +8964,7 @@
     "isbn": "9782266018340",
     "via": "separate-work",
     "work": "OL24156109W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 14552103,
@@ -8698,7 +8974,7 @@
     "isbn": "8435004236",
     "via": "separate-work",
     "work": "OL15436161W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -8802,14 +9078,35 @@
   "id": "OL492354W",
   "title": "Native Tongue",
   "author": "Suzette Haden Elgin",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:14150199",
+  "language": "spa",
+  "via": "separate-work",
+  "edition": "/books/OL47533796M",
+  "publishDate": "Oct 21, 2020",
+  "isbn": "9788417525521",
+  "candidates": [
+   {
+    "cover": 14150199,
+    "language": "spa",
+    "edition": "/books/OL47533796M",
+    "publishDate": "Oct 21, 2020",
+    "isbn": "9788417525521",
+    "via": "separate-work",
+    "work": "OL35150880W",
+    "match": "wikipedia-langlink"
+   },
+   {
+    "cover": 14150198,
+    "language": "spa",
+    "edition": "/books/OL47533795M",
+    "publishDate": "Oct 21, 2020",
+    "isbn": "9788417525521",
+    "via": "separate-work",
+    "work": "OL35150881W",
+    "match": "wikipedia-langlink"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 145,
@@ -8941,7 +9238,7 @@
     "isbn": "9788498002508",
     "via": "separate-work",
     "work": "OL8112298W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -8966,7 +9263,7 @@
     "isbn": "9782253023104",
     "via": "separate-work",
     "work": "OL15056796W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -9099,7 +9396,7 @@
     "isbn": null,
     "via": "separate-work",
     "work": "OL11111034W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -10508,14 +10805,35 @@
   "id": "OL26340522W",
   "title": "The Chronicles of Amber",
   "author": "Roger Zelazny",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:13950598",
+  "language": "pol",
+  "via": "separate-work",
+  "edition": "/books/OL47358518M",
+  "publishDate": "Jan 01, 2018",
+  "isbn": "9788381163774",
+  "candidates": [
+   {
+    "cover": 13950598,
+    "language": "pol",
+    "edition": "/books/OL47358518M",
+    "publishDate": "Jan 01, 2018",
+    "isbn": "9788381163774",
+    "via": "separate-work",
+    "work": "OL34994425W",
+    "match": "wikipedia-langlink"
+   },
+   {
+    "cover": 13950592,
+    "language": "pol",
+    "edition": "/books/OL47358513M",
+    "publishDate": "Apr 13, 2015",
+    "isbn": "9788377855812",
+    "via": "separate-work",
+    "work": "OL34994425W",
+    "match": "wikipedia-langlink"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 163,
@@ -10537,7 +10855,7 @@
     "isbn": "9785040015214",
     "via": "separate-work",
     "work": "OL24724893W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 10425526,
@@ -10547,7 +10865,7 @@
     "isbn": "9785881323769",
     "via": "separate-work",
     "work": "OL22060239W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -10631,7 +10949,7 @@
     "isbn": "9782811211288",
     "via": "separate-work",
     "work": "OL34956414W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 981197,
@@ -10641,7 +10959,7 @@
     "isbn": "9782277119043",
     "via": "separate-work",
     "work": "OL9007246W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 14548758,
@@ -10651,7 +10969,7 @@
     "isbn": "9788435001403",
     "via": "separate-work",
     "work": "OL14931587W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"
@@ -10676,7 +10994,7 @@
     "isbn": "9783453161115",
     "via": "separate-work",
     "work": "OL14931601W",
-    "byHand": true
+    "match": "by-hand"
    },
    {
     "cover": 981361,
@@ -10686,7 +11004,7 @@
     "isbn": "9782277239734",
     "via": "separate-work",
     "work": "OL14931644W",
-    "byHand": true
+    "match": "by-hand"
    }
   ],
   "status": "found"

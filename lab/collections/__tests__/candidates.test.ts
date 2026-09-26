@@ -26,6 +26,10 @@ describe('draftFromCandidates', () => {
     expect(draftFromCandidates([row({})], spec).works[0]).not.toHaveProperty('coverIsbn');
   });
 
+  it('takes a title from the source wall where one is given', () => {
+    expect(draftFromCandidates([row({ id: 'OL1W', title: 'Philosophy and living' })], { ...spec, titles: { OL1W: 'Odd John' } }).works[0].title).toBe('Odd John');
+  });
+
   it('takes a work listed twice once', () => {
     expect(draftFromCandidates([row({ order: 1 }), row({ order: 2 })], spec).works).toHaveLength(1);
   });

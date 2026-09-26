@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { chooseVaried, foreignCandidates, foreignWorkLanguage, matchSeparateWork, pickLanguageEdition, sortCandidates, yearOf, type ForeignCandidate, type OlEdition } from '../pick';
+import { chooseVaried, foreignCandidates, foreignWorkLanguage, matchSeparateWork, pickLanguageEdition, sameTitle, sortCandidates, stripNote, surnameOf, translationCandidates, yearOf, type ForeignCandidate, type OlEdition } from '../pick';
 import { isbnLanguage, publisherLanguage } from '../evidence';
 
 const rus = [{ key: '/languages/rus' }];
@@ -132,5 +132,28 @@ describe('separate translation works', () => {
     expect(foreignWorkLanguage({ key: 'k', title: 't', language: ['ita'] })).toBe('ita');
     expect(foreignWorkLanguage({ key: 'k', title: 't', language: ['ita', 'eng'] })).toBeNull();
     expect(foreignWorkLanguage({ key: 'k', title: 't' })).toBeNull();
+  });
+});
+
+describe('translated titles', () => {
+  it('strips trailing notes, finds the surname, and compares titles strictly', () => {
+    expect(stripNote('Blood Music (novel)')).toBe('Blood Music');
+    expect(stripNote('Pavane (S.F. Masterworks)')).toBe('Pavane');
+    expect(surnameOf('Walter M. Miller, Jr.')).toBe('Miller');
+    expect(surnameOf('R. A. Lafferty')).toBe('Lafferty');
+    expect(sameTitle('Blutmusik', 'Blutmusik')).toBe(true);
+    expect(sameTitle('Licht und Schatten', 'Licht')).toBe(false);
+    expect(sameTitle('Le Dieu Baleine : roman', 'Le Dieu Baleine')).toBe(true);
+    expect(sameTitle('Die Zeit ist das Feuer. Roman', 'Die Zeit ist das Feuer')).toBe(true);
+  });
+
+  it('takes a translation work’s covers but not its English printings', () => {
+    const got = translationCandidates([
+      { key: '/books/A', covers: [1], languages: [{ key: '/languages/ger' }] },
+      { key: '/books/B', covers: [2], languages: eng },
+      { key: '/books/C', covers: [3], isbn_13: ['9780575094208'] },
+      { key: '/books/D', covers: [4], isbn_13: ['9783453317673'] },
+    ], 'ger', 'OL9W', 'wikipedia-langlink');
+    expect(got.map(c => [c.cover, c.language, c.match])).toEqual([[1, 'ger', 'wikipedia-langlink'], [4, 'ger', 'wikipedia-langlink']]);
   });
 });

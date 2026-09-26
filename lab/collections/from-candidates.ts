@@ -4,8 +4,12 @@
  * covers. try all russian covers first").
  *
  *   npx tsx lab/collections/from-candidates.ts lab/collections/lists/sf-relaunch-international.json \
- *     sf-masterworks-relaunch-international "SF Masterworks, the relaunch — international covers" openlibrary
+ *     sf-masterworks-relaunch-international "SF Masterworks, the relaunch — international covers" openlibrary \
+ *     --titles-from=sf-masterworks-relaunch
  *
+ * `--titles-from=<slug>` takes each pick's title from that collection (read
+ * from the same fresh file), so a title corrected on the source wall — "Odd
+ * John" — is not replaced by the catalogue's.
  * The list comes from `lab/international-covers/international.ts` (or
  * `russian.ts`, whose rows carry no language: pass `openlibrary:rus`). Only works with
  * a found cover go on the wall, in list order (`candidates.ts`). The data
@@ -22,14 +26,19 @@ const ROOT = join(import.meta.dirname, '..', '..');
 const OUT_FILE = process.env.COLLECTIONS_FILE ?? join(ROOT, 'data', 'collections.json');
 
 function main() {
-  const [listFile, slug, title, from = 'openlibrary'] = process.argv.slice(2);
+  const args = process.argv.slice(2);
+  const titlesFrom = args.find(a => a.startsWith('--titles-from='))?.slice('--titles-from='.length);
+  const [listFile, slug, title, from = 'openlibrary'] = args.filter(a => !a.startsWith('--'));
   if (!listFile || !slug || !title) throw new Error('usage: from-candidates.ts <list.json> <slug> "<title>" [from]');
   const rows = JSON.parse(readFileSync(listFile, 'utf8')) as CandidateRow[];
   const failed = rows.filter(r => r.status === 'failed');
 
   const file = JSON.parse(readFileSync(OUT_FILE, 'utf8')) as { curatedAt?: string; collections: CollectionRecord[] };
   const existing = file.collections.find(c => c.slug === slug);
-  const record = draftFromCandidates(rows, { slug, title, from, addedAt: new Date().toISOString().slice(0, 10) }, existing);
+  const source = titlesFrom ? file.collections.find(c => c.slug === titlesFrom) : undefined;
+  if (titlesFrom && !source) throw new Error(`no collection ${titlesFrom}`);
+  const titles = source ? Object.fromEntries(source.works.map(w => [w.id, w.title])) : undefined;
+  const record = draftFromCandidates(rows, { slug, title, from, addedAt: new Date().toISOString().slice(0, 10), titles }, existing);
   const collections = upsertCollection(file.collections, record);
   const tmp = `${OUT_FILE}.tmp`;
   writeFileSync(tmp, `${JSON.stringify({ ...file, curatedAt: new Date().toISOString().slice(0, 10), collections }, null, 2)}\n`);

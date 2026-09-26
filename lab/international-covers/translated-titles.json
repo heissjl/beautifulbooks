@@ -1,0 +1,1261 @@
+[
+ {
+  "order": 25,
+  "id": "OL19208208W",
+  "title": "Arslan (SF Masterworks)",
+  "author": "M. J. Engh",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 38,
+  "id": "OL19345375W",
+  "title": "Of Men and Monsters",
+  "author": "William Tenn",
+  "article": "Of Men and Monsters",
+  "searched": [
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "Des hommes et des monstres",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "it",
+    "lang": "ita",
+    "title": "Gli uomini nei muri",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Про людей і чудовиськ",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Обитатели стен",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 44,
+  "id": "OL166482W",
+  "title": "The Affirmation",
+  "author": "Christopher Priest",
+  "article": "The Affirmation",
+  "searched": [
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "La Fontaine pétrifiante",
+    "via": "wikipedia-langlink",
+    "works": [
+     "OL8839734M",
+     "OL27292778W"
+    ],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Підтвердження",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Лотерея",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 49,
+  "id": "OL20074002W",
+  "title": "Floating Worlds",
+  "author": "Cecelia Holland",
+  "article": "wikidata:Q122581048",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 50,
+  "id": "OL16513W",
+  "title": "Blood Music",
+  "author": "Greg Bear",
+  "article": "Blood Music (novel)",
+  "searched": [
+   {
+    "wiki": "ar",
+    "lang": "ara",
+    "title": "موسيقى الدم",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "bg",
+    "lang": "bul",
+    "title": "Кървава музика",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "es",
+    "lang": "spa",
+    "title": "Música en la sangre",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "La Musique du sang",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "hu",
+    "lang": "hun",
+    "title": "A vér zenéje",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "it",
+    "lang": "ita",
+    "title": "La musica del sangue",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ja",
+    "lang": "jpn",
+    "title": "ブラッド・ミュージック",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "zh",
+    "lang": "chi",
+    "title": "血音乐",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Музыка, звучащая в крови",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "he",
+    "lang": "heb",
+    "title": "מוסיקת דם",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "pl",
+    "lang": "pol",
+    "title": "Pieśń krwi",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ko",
+    "lang": "kor",
+    "title": "블러드뮤직",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 55,
+  "id": "OL3290749W",
+  "title": "Odd John",
+  "author": "Olaf Stapledon",
+  "article": "Odd John",
+  "searched": [
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "Rien qu'un surhomme",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Дивний Джон",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "es",
+    "lang": "spa",
+    "title": "Juan Raro",
+    "via": "wikidata",
+    "works": [
+     "OL3290729W",
+     "OL40560190W"
+    ],
+    "covers": 0
+   },
+   {
+    "wiki": "ko",
+    "lang": "kor",
+    "title": "이상한 존",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 63,
+  "id": "OL2657126W",
+  "title": "Sarah Canary",
+  "author": "Karen Joy Fowler",
+  "article": "wikidata:Q45321274",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 64,
+  "id": "OL19186717W",
+  "title": "The Continuous Katherine Mortenhoe (SF Masterworks)",
+  "author": "D. G. Compton",
+  "article": "The Unsleeping Eye (novel)",
+  "searched": [
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Тривала Кетрін Мортенгоу",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "nl",
+    "lang": "dut",
+    "title": "The Unsleeping Eye",
+    "via": "wikidata",
+    "works": [
+     "OL2789580W"
+    ],
+    "covers": 0
+   },
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "L'Incurable",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 68,
+  "id": "OL19882938W",
+  "title": "The Caltraps of Time (S.F. Masterworks)",
+  "author": "David I. Masson",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 69,
+  "id": "OL11441065W",
+  "title": "Unquenchable fire",
+  "author": "Rachel Pollack",
+  "article": "Unquenchable Fire",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 70,
+  "id": "OL482569W",
+  "title": "Engine Summer",
+  "author": "John Crowley",
+  "article": "Engine Summer",
+  "searched": [
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "L'Été-machine",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 78,
+  "id": "OL20070897W",
+  "title": "This Is the Way the World Ends (S.F. Masterworks)",
+  "author": "James Morrow",
+  "article": "This Is the Way the World Ends (novel)",
+  "searched": [
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "Ainsi finit le monde",
+    "via": "wikidata",
+    "works": [
+     "OL8864582M"
+    ],
+    "covers": 0
+   },
+   {
+    "wiki": "pl",
+    "lang": "pol",
+    "title": "Tak oto kończy się świat",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 81,
+  "id": "OL21478785W",
+  "title": "Time Is the Fire",
+  "author": "Connie Willis",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 88,
+  "id": "OL19325351W",
+  "title": "Transfigurations (S.F. Masterworks)",
+  "author": "Michael Bishop",
+  "article": "Transfigurations (novel)",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 91,
+  "id": "OL7117373W",
+  "title": "Half Past Human",
+  "author": "T. J. Bass",
+  "article": "Half Past Human",
+  "searched": [
+   {
+    "wiki": "de",
+    "lang": "ger",
+    "title": "Die Ameisenkultur",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Наполовину надлюдина",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Напівлюдина",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 95,
+  "id": "OL21118741W",
+  "title": "Shrinking Man",
+  "author": "Ted Adams",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 97,
+  "id": "OL7910223W",
+  "title": "Her Smoke Rose Up Forever",
+  "author": "James Tiptree, Jr.",
+  "article": "Her Smoke Rose Up Forever",
+  "searched": [
+   {
+    "wiki": "ko",
+    "lang": "kor",
+    "title": "그녀의 연기는 언제까지나 올라갔다",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "cs",
+    "lang": "cze",
+    "title": "Žena, kterou muži neviděli",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 100,
+  "id": "OL1920272W",
+  "title": "The Child Garden",
+  "author": "Geoff Ryman",
+  "article": "The Child Garden",
+  "searched": [
+   {
+    "wiki": "pl",
+    "lang": "pol",
+    "title": "Dziecięcy ogród",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "es",
+    "lang": "spa",
+    "title": "El jardín de infancia",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Дитсадок",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Детский сад",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 101,
+  "id": "OL20119339W",
+  "title": "Mission Of Gravity: Mesklinite Book 1 (S.F. Masterworks)",
+  "author": "Hal Clement",
+  "article": "Mission of Gravity",
+  "searched": [
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "Question de poids",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "it",
+    "lang": "ita",
+    "title": "Stella doppia 61 Cygni",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Экспедиция «Тяготение»",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Експедиція «Тяжіння»",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "zh",
+    "lang": "chi",
+    "title": "重力使命",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "es",
+    "lang": "spa",
+    "title": "Misión de gravedad",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ko",
+    "lang": "kor",
+    "title": "중력의 임무",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ja",
+    "lang": "jpn",
+    "title": "重力の使命",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "he",
+    "lang": "heb",
+    "title": "שליחות כבדת משקל",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 109,
+  "id": "OL19546464W",
+  "title": "Dark Benediction",
+  "author": "Walter M. Miller, Jr.",
+  "article": "Dark Benediction",
+  "searched": [
+   {
+    "wiki": "it",
+    "lang": "ita",
+    "title": "Benedizione oscura",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Тёмное благословение",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 118,
+  "id": "OL19323672W",
+  "title": "Fairyland (S.F. Masterworks)",
+  "author": "Paul J. McAuley",
+  "article": "wikidata:Q3092263",
+  "searched": [
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "Féerie",
+    "via": "wikidata",
+    "works": [
+     "OL15078160W"
+    ],
+    "covers": 1
+   },
+   {
+    "wiki": "nl",
+    "lang": "dut",
+    "title": "Féerie",
+    "via": "wikidata",
+    "works": [
+     "OL15078160W"
+    ],
+    "covers": 1
+   },
+   {
+    "wiki": "es",
+    "lang": "spa",
+    "title": "El beso de Milena",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "pl",
+    "lang": "pol",
+    "title": "Kraina baśni",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "found"
+ },
+ {
+  "order": 122,
+  "id": "OL20126875W",
+  "title": "China Mountain Zhang",
+  "author": "Maureen F. McHugh",
+  "article": "China Mountain Zhang",
+  "searched": [
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Китайська гора Чжан",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "es",
+    "lang": "spa",
+    "title": "China montaña Zhang",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Китайська гора Джан",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 124,
+  "id": "OL14871968W",
+  "title": "Sword & citadel",
+  "author": "Gene Wolfe",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 130,
+  "id": "OL52246W",
+  "title": "The Shape of Things to Come",
+  "author": "H. G. Wells",
+  "article": "The Shape of Things to Come",
+  "searched": [
+   {
+    "wiki": "ar",
+    "lang": "ara",
+    "title": "شكل الأشياء القادمة",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Форма прийдешнього",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "cs",
+    "lang": "cze",
+    "title": "Podoba toho, co přijde",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "eo",
+    "lang": "epo",
+    "title": "La formo de estontaĵoj",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ro",
+    "lang": "rum",
+    "title": "Înfățișarea viitorului",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "zh",
+    "lang": "chi",
+    "title": "未来互联网纾",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ja",
+    "lang": "jpn",
+    "title": "世界はこうなる",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 135,
+  "id": "OL104510W",
+  "title": "Raising the stones",
+  "author": "Sheri S. Tepper",
+  "article": "wikidata:Q131376416",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 136,
+  "id": "OL3055283W",
+  "title": "The embedding",
+  "author": "Ian Watson",
+  "article": "wikidata:Q3202927",
+  "searched": [
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "L'Enchâssement",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "nl",
+    "lang": "dut",
+    "title": "L'Enchâssement",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "es",
+    "lang": "spa",
+    "title": "Empotrados",
+    "via": "wikidata",
+    "works": [
+     "OL19860234W"
+    ],
+    "covers": 1
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Втручання",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Внедрение",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "found"
+ },
+ {
+  "order": 138,
+  "id": "OL21631946W",
+  "title": "Land Under England",
+  "author": "Joseph O'Neill",
+  "article": "Land Under England",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 139,
+  "id": "OL72847W",
+  "title": "Raft",
+  "author": "Stephen Baxter",
+  "article": "Raft (novel)",
+  "searched": [
+   {
+    "wiki": "fr",
+    "lang": "fre",
+    "title": "Gravité",
+    "via": "wikipedia-langlink",
+    "works": [
+     "OL19960904W"
+    ],
+    "covers": 0
+   },
+   {
+    "wiki": "ja",
+    "lang": "jpn",
+    "title": "天の筏",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "pl",
+    "lang": "pol",
+    "title": "Tratwa",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Пліт",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 140,
+  "id": "OL20061187W",
+  "title": "Dreaming In Smoke (Gateway Essentials,S.F. MASTERWORKS)",
+  "author": "Tricia Sullivan",
+  "article": "Dreaming in Smoke",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 142,
+  "id": "OL20119856W",
+  "title": "The Best of R. A. Lafferty",
+  "author": "R. A. Lafferty",
+  "article": "wikidata:Q135094543",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 143,
+  "id": "OL2643429W",
+  "title": "Light",
+  "author": "M. John Harrison",
+  "article": "Light (novel)",
+  "searched": [
+   {
+    "wiki": "fi",
+    "lang": "fin",
+    "title": "Valo",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "it",
+    "lang": "ita",
+    "title": "Luce dell'universo",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ja",
+    "lang": "jpn",
+    "title": "光",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "pl",
+    "lang": "pol",
+    "title": "Światło",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Свет",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 151,
+  "id": "OL21696977W",
+  "title": "Bold As Love",
+  "author": "Gwyneth Jones",
+  "article": "Bold as Love (novel)",
+  "searched": [
+   {
+    "wiki": "ar",
+    "lang": "ara",
+    "title": "جريء كالحب",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Зухвалий немов кохання",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 152,
+  "id": "OL19915743W",
+  "title": "Desolation Road",
+  "author": "Ian McDonald",
+  "article": "Desolation Road",
+  "searched": [
+   {
+    "wiki": "pl",
+    "lang": "pol",
+    "title": "Droga bez znaczenia",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "es",
+    "lang": "spa",
+    "title": "Camino Desolación",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ja",
+    "lang": "jpn",
+    "title": "火星夜想曲",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Дорога запустения",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 153,
+  "id": "OL2354512W",
+  "title": "Castles Made of Sand",
+  "author": "Gwyneth Jones",
+  "article": "Castles Made of Sand (novel)",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 157,
+  "id": "OL1960610W",
+  "title": "Needle in a timestack",
+  "author": "Robert Silverberg",
+  "article": "Needle in a Timestack",
+  "searched": [
+   {
+    "wiki": "fa",
+    "lang": "per",
+    "title": "سوزنی در انبار زمان",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Голка в копиці часу",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "zh",
+    "lang": "chi",
+    "title": "時光的指針",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Иголка в стогу времени",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "hu",
+    "lang": "hun",
+    "title": "Időtlen szerelem",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ro",
+    "lang": "rum",
+    "title": "Amintirile și timpul",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "pt",
+    "lang": "por",
+    "title": "Agulha no Palheiro Temporal",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 159,
+  "id": "OL25345681W",
+  "title": "Kairos",
+  "author": "Gwyneth Jones",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 161,
+  "id": "OL2354520W",
+  "title": "Life",
+  "author": "Gwyneth Jones",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 164,
+  "id": "OL26349155W",
+  "title": "Growing up Weightless",
+  "author": "John M. Ford",
+  "article": "wikidata:Q119691760",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 165,
+  "id": "OL28017615W",
+  "title": "Secret of Life",
+  "author": "Paul McAuley",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 169,
+  "id": "OL28023844W",
+  "title": "The Best of Roger Zelazny",
+  "author": "Roger Zelazny",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 170,
+  "id": "OL37574007W",
+  "title": "Hiero's Journey",
+  "author": "Sterling E. Lanier",
+  "article": "Hiero's Journey",
+  "searched": [
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Подорож Єро",
+    "via": "wikipedia-langlink",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Путешествие Иеро",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 171,
+  "id": "OL37834465W",
+  "title": "First Born",
+  "author": "Maureen Duffy",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 172,
+  "id": "OL5045544W",
+  "title": "The Unforsaken Hiero",
+  "author": "Sterling E. Lanier",
+  "article": "wikidata:Q134484476",
+  "searched": [],
+  "outcome": "no translation known"
+ },
+ {
+  "order": 173,
+  "id": "OL44545553W",
+  "title": "Barefoot in the Head",
+  "author": "Brian Aldiss",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 175,
+  "id": "OL18367649W",
+  "title": "Beginning Operations",
+  "author": "James White",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 177,
+  "id": "OL1888051W",
+  "title": "Distraction",
+  "author": "Bruce Sterling",
+  "article": "wikidata:Q21189972",
+  "searched": [
+   {
+    "wiki": "it",
+    "lang": "ita",
+    "title": "Caos USA",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "es",
+    "lang": "spa",
+    "title": "Distracción",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Распад",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   },
+   {
+    "wiki": "uk",
+    "lang": "ukr",
+    "title": "Розпад",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 178,
+  "id": "OL45147605W",
+  "title": "Nova Swing",
+  "author": "M. John Harrison",
+  "article": "Nova Swing",
+  "searched": [
+   {
+    "wiki": "ru",
+    "lang": "rus",
+    "title": "Нова Свинг",
+    "via": "wikidata",
+    "works": [],
+    "covers": 0
+   }
+  ],
+  "outcome": "translation not on Open Library"
+ },
+ {
+  "order": 179,
+  "id": "OL8698138W",
+  "title": "Thirteen",
+  "author": "Richard Morgan",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ },
+ {
+  "order": 181,
+  "id": "OL45912000W",
+  "title": "Alien Emergencies",
+  "author": "James White",
+  "article": null,
+  "searched": [],
+  "outcome": "no article"
+ }
+]

@@ -159,7 +159,7 @@
   "author": "Olaf Stapledon",
   "authorKey": "OL538087A",
   "books": [
-   "Philosophy and living"
+   "Odd John"
   ],
   "works": [
    {
@@ -691,39 +691,6 @@
     "title": "Histórias de Robôs - Volume 3",
     "language": "por",
     "cover": 8765218
-   }
-  ]
- },
- {
-  "author": "Paul J. McAuley",
-  "authorKey": "OL22866A",
-  "books": [
-   "Fairyland (S.F. Masterworks)"
-  ],
-  "works": [
-   {
-    "work": "OL26181639W",
-    "title": "Opgejaagd wild",
-    "language": "dut",
-    "cover": 12150372
-   },
-   {
-    "work": "OL26180735W",
-    "title": "Beeldtaal",
-    "language": "dut",
-    "cover": 12148796
-   },
-   {
-    "work": "OL15078158W",
-    "title": "Expressiv!",
-    "language": "ger",
-    "cover": 3252871
-   },
-   {
-    "work": "OL15078160W",
-    "title": "Féerie",
-    "language": "fre",
-    "cover": 3110137
    }
   ]
  },

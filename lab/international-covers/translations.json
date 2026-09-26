@@ -48,5 +48,161 @@
  "OL10571538W": "OL20122863W",
  "OL16803147W": "OL19268447W",
  "OL16803148W": "OL19268447W",
- "OL24487027W": "OL19218549W"
+ "OL24487027W": "OL19218549W",
+ "OL19335884W": {
+  "id": "OL19799863W",
+  "via": "wikipedia-langlink",
+  "lang": "fre",
+  "title": "Les Seigneurs de l'Instrumentalité - 2"
+ },
+ "OL33850444W": {
+  "id": "OL19799863W",
+  "via": "wikipedia-langlink",
+  "lang": "fre",
+  "title": "Les seigneurs de l'instrumentalité. Tome 5"
+ },
+ "OL22482975W": {
+  "id": "OL19799863W",
+  "via": "wikipedia-langlink",
+  "lang": "fre",
+  "title": "Les Seigneurs De L'Instrumentalite 3/Les Puissances De L'Espace"
+ },
+ "OL19885307W": {
+  "id": "OL19799863W",
+  "via": "wikipedia-langlink",
+  "lang": "fre",
+  "title": "Les seigneurs de l'Instrumentalité - Tome 1 - Le rêveur aux étoiles"
+ },
+ "OL34737489W": {
+  "id": "OL19799863W",
+  "via": "wikipedia-langlink",
+  "lang": "fre",
+  "title": "Les Seigneurs De L'Instrumentalite 6/LA Quete DES Trois Mondes"
+ },
+ "OL20071030W": {
+  "id": "OL19799863W",
+  "via": "wikipedia-langlink",
+  "lang": "fre",
+  "title": "Les seigneurs de l'instrumentalité tome 1 : Tu seras un autre"
+ },
+ "OL20102451W": {
+  "id": "OL19332770W",
+  "via": "wikipedia-langlink",
+  "lang": "ger",
+  "title": "Die Körperfresser kommen"
+ },
+ "OL34954288W": {
+  "id": "OL19332770W",
+  "via": "wikipedia-langlink",
+  "lang": "ita",
+  "title": "L'invasione degli ultracorpi"
+ },
+ "OL14914262W": {
+  "id": "OL14858406W",
+  "via": "wikipedia-langlink",
+  "lang": "fre",
+  "title": "Le Grand livre"
+ },
+ "OL19634262W": {
+  "id": "OL14858406W",
+  "via": "wikipedia-langlink",
+  "lang": "fre",
+  "title": "Le grand livre : Suivi de Sans parler du chien"
+ },
+ "OL34909137W": {
+  "id": "OL19209380W",
+  "via": "wikipedia-langlink",
+  "lang": "cat",
+  "title": "Les torres de l'oblit"
+ },
+ "OL26393326W": {
+  "id": "OL19209380W",
+  "via": "wikidata",
+  "lang": "spa",
+  "title": "LAS TORRES DEL OLVIDO"
+ },
+ "OL482548W": {
+  "id": "OL19323674W",
+  "via": "wikidata",
+  "lang": "fre",
+  "title": "L'abîme"
+ },
+ "OL20099834W": {
+  "id": "OL20866308W",
+  "via": "wikipedia-langlink",
+  "lang": "spa",
+  "title": "SOLO UN ENEMIGO: EL TIEMPO"
+ },
+ "OL2753424W": {
+  "id": "OL2753431W",
+  "via": "wikidata",
+  "lang": "fre",
+  "title": "Journal de nuit"
+ },
+ "OL34957510W": {
+  "id": "OL2753431W",
+  "via": "wikidata",
+  "lang": "fre",
+  "title": "Journal de nuit"
+ },
+ "OL20942345W": {
+  "id": "OL7117372W",
+  "via": "wikidata",
+  "lang": "fre",
+  "title": "le dieu baleine"
+ },
+ "OL20865804W": {
+  "id": "OL7117372W",
+  "via": "wikidata",
+  "lang": "fre",
+  "title": "Le Dieu-baleine"
+ },
+ "OL33653580W": {
+  "id": "OL83885W",
+  "via": "wikipedia-langlink",
+  "lang": "fre",
+  "title": "L'oiseau d'amerique"
+ },
+ "OL19653244W": {
+  "id": "OL19213764W",
+  "via": "wikidata",
+  "lang": "fre",
+  "title": "La vie en temps de guerre"
+ },
+ "OL28941628W": {
+  "id": "OL19213764W",
+  "via": "wikidata",
+  "lang": "ger",
+  "title": "Das Leben im Krieg"
+ },
+ "OL35150880W": {
+  "id": "OL492354W",
+  "via": "wikipedia-langlink",
+  "lang": "spa",
+  "title": "Lengua materna"
+ },
+ "OL35150881W": {
+  "id": "OL492354W",
+  "via": "wikipedia-langlink",
+  "lang": "spa",
+  "title": "Lengua materna"
+ },
+ "OL34994425W": {
+  "id": "OL26340522W",
+  "via": "wikipedia-langlink",
+  "lang": "pol",
+  "title": "Kroniki Amberu Tom 2"
+ },
+ "OL15078160W": {
+  "id": "OL19323672W",
+  "via": "wikidata",
+  "lang": "fre",
+  "title": "Féerie"
+ },
+ "OL19860234W": {
+  "id": "OL3055283W",
+  "via": "wikidata",
+  "lang": "spa",
+  "title": "Empotrados."
+ }
 }

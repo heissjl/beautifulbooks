@@ -29,6 +29,8 @@ export interface DraftSpec {
    */
   from: string;
   addedAt: string;
+  /** Titles to use by work id, e.g. the source wall's, where a person corrected a catalogue title there. */
+  titles?: Record<string, string>;
 }
 
 /**
@@ -53,7 +55,7 @@ export function draftFromCandidates(rows: CandidateRow[], spec: DraftSpec, exist
     const credit = before ? pickCredit(before) : {};
     works.push({
       id: r.id,
-      title: r.title,
+      title: spec.titles?.[r.id] ?? r.title,
       author: r.author,
       coverId: r.coverId,
       addedAt: spec.addedAt,

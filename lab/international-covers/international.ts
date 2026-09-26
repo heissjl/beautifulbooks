@@ -17,7 +17,8 @@
  *    (`search.json?q=author_key:…`). A record tagged only with other
  *    languages is an unmerged translation; it is taken when its title is the
  *    book's or an edition says `translation_of` the book (`matchSeparateWork`),
- *    or when `translations.json` (written by hand after looking) names it.
+ *    or when `translations.json` names it — by hand after looking, or from a
+ *    Wikipedia interlanguage link or Wikidata label (`translated-titles.ts`).
  *    Everything else is written to `unmatched.json` for a person to check.
  * 3. One cover per work, the wall in order (`chooseVaried`). A cover listed
  *    in `rejected.json` (a person looked and ruled it out) is never chosen.
@@ -30,8 +31,8 @@ import { join } from 'node:path';
 import type { CollectionRecord } from '../../lib/collections';
 import { allEditions, get, SourceFailed } from './ol';
 import {
-  chooseVaried, foreignCandidates, foreignWorkLanguage, matchSeparateWork, sortCandidates,
-  type AuthorWorkDoc, type EditionWithOriginal, type ForeignCandidate,
+  chooseVaried, foreignCandidates, foreignWorkLanguage, matchSeparateWork, sortCandidates, translationCandidates,
+  type AuthorWorkDoc, type EditionWithOriginal, type ForeignCandidate, type TranslationMatch,
 } from './pick';
 
 const ROOT = join(import.meta.dirname, '..', '..');
@@ -89,9 +90,24 @@ async function authorWorks(key: string): Promise<AuthorWorkDoc[]> {
 interface Unmatched { author: string; authorKey: string; books: string[]; works: Array<{ work: string; title: string; language: string; cover: number | null }> }
 
 /** Step 2: separate translation works for the works still without a candidate. */
+/** An entry of `translations.json`: foreign work → the relaunch work it translates, and how that is known. */
+interface TranslationEntry { id: string; via: TranslationMatch; lang?: string; title?: string }
+
+function readTranslations(): Record<string, TranslationEntry> {
+  if (!existsSync(HAND_FILE)) return {};
+  const raw = JSON.parse(readFileSync(HAND_FILE, 'utf8')) as Record<string, string | TranslationEntry>;
+  return Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, typeof v === 'string' ? { id: v, via: 'by-hand' as const } : v]));
+}
+
+function addAll(list: ForeignCandidate[], more: ForeignCandidate[]) {
+  for (const c of more) if (!list.some(x => x.cover === c.cover)) list.push(c);
+}
+
+/** Step 2: separate translation works for the works still without a candidate. */
 async function separateWorks(works: Work[], found: Found[], relaunchIds: Set<string>): Promise<Unmatched[]> {
-  const hand = existsSync(HAND_FILE) ? (JSON.parse(readFileSync(HAND_FILE, 'utf8')) as Record<string, string>) : {};
+  const hand = readTranslations();
   const open = works.map((w, i) => ({ w, i })).filter(({ i }) => found[i] !== 'failed' && (found[i] as ForeignCandidate[]).every(c => c.needsCheck));
+  const done = new Set<string>();
   const byAuthor = new Map<string, Array<{ w: Work; i: number }>>();
   for (const o of open) {
     try {
@@ -114,26 +130,16 @@ async function separateWorks(works: Work[], found: Found[], relaunchIds: Set<str
         const page = await get<{ entries?: EditionWithOriginal[] }>(`/works/${workKey}/editions.json?limit=50`);
         const editions = page?.entries ?? [];
         const auto = matchSeparateWork(doc, editions, targets.map(t => t.w));
-        const target = auto ?? (targets.some(t => t.w.id === hand[workKey]) ? hand[workKey] : null);
-        const byHand = auto ? {} : { byHand: true };
+        const entry = hand[workKey];
+        const target = auto ?? (entry && targets.some(t => t.w.id === entry.id) ? entry.id : null);
         const language = foreignWorkLanguage(doc) as string;
         if (!target) {
           left.push({ work: workKey, title: doc.title, language, cover: doc.cover_i ?? null });
           continue;
         }
-        const at = targets.find(t => t.w.id === target)!.i;
-        const list = found[at] as ForeignCandidate[];
-        for (const e of editions) {
-          // A translation work can hold a stray English printing (an audiobook, a reprint of the original).
-          if (e.languages?.some(l => l.key === '/languages/eng')) continue;
-          for (const cover of (e.covers ?? []).filter(c => c > 0)) {
-            if (list.some(c => c.cover === cover)) continue;
-            list.push({ cover, language: e.languages?.[0]?.key.replace('/languages/', '') ?? language, edition: e.key, publishDate: e.publish_date ?? null, isbn: e.isbn_13?.[0] ?? e.isbn_10?.[0] ?? null, via: 'separate-work', work: workKey, ...byHand });
-          }
-        }
-        if (!list.some(c => c.work === workKey) && doc.cover_i) {
-          list.push({ cover: doc.cover_i, language, edition: doc.cover_edition_key ? `/books/${doc.cover_edition_key}` : null, publishDate: null, isbn: null, via: 'separate-work', work: workKey, ...byHand });
-        }
+        done.add(workKey);
+        const list = found[targets.find(t => t.w.id === target)!.i] as ForeignCandidate[];
+        addAll(list, translationCandidates(editions, language, workKey, auto ? undefined : entry.via));
       }
       const stillOpen = targets.filter(t => (found[t.i] as ForeignCandidate[]).length === 0);
       if (stillOpen.length && left.length) unmatched.push({ author: targets[0].w.author, authorKey: key, books: stillOpen.map(t => t.w.title), works: left });
@@ -141,6 +147,21 @@ async function separateWorks(works: Work[], found: Found[], relaunchIds: Set<str
       if (!(err instanceof SourceFailed)) throw err;
       console.error(`\n${key}: ${err.message}`);
       for (const t of targets) if ((found[t.i] as ForeignCandidate[]).length === 0) found[t.i] = 'failed';
+    }
+  }
+  // Entries the author search did not reach (a different author record, or past the per-author bound).
+  for (const [workKey, entry] of Object.entries(hand)) {
+    if (done.has(workKey)) continue;
+    const target = open.find(o => o.w.id === entry.id);
+    if (!target || found[target.i] === 'failed') continue;
+    try {
+      const page = await get<{ entries?: EditionWithOriginal[] }>(`/works/${workKey}/editions.json?limit=50`);
+      const language = entry.lang ?? 'und';
+      addAll(found[target.i] as ForeignCandidate[], translationCandidates(page?.entries ?? [], language, workKey, entry.via));
+    } catch (err) {
+      if (!(err instanceof SourceFailed)) throw err;
+      console.error(`\n${workKey}: ${err.message}`);
+      if ((found[target.i] as ForeignCandidate[]).length === 0) found[target.i] = 'failed';
     }
   }
   return unmatched;

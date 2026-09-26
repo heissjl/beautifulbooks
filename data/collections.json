@@ -8360,6 +8360,7 @@
       "kind": "series",
       "intro": "",
       "published": false,
+      "coverCredits": "isfdb",
       "coverSource": "catalogue",
       "publishers": [],
       "works": [
@@ -8450,6 +8451,19 @@
             "Manchu"
           ],
           "isfdbRecord": "565326"
+        },
+        {
+          "id": "OL19799863W",
+          "title": "The Rediscovery of Man (S.F. Masterworks)",
+          "author": "Cordwainer Smith",
+          "coverId": "ol:8747508",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL27251020M",
+          "coverIsbn": "9782266020381",
+          "coverArtists": [
+            "W. Siudmak"
+          ],
+          "isfdbRecord": "338288"
         },
         {
           "id": "OL1819353W",
@@ -8593,6 +8607,15 @@
           "isfdbRecord": "1076605"
         },
         {
+          "id": "OL19332770W",
+          "title": "Body Snatchers",
+          "author": "George Finney",
+          "coverId": "ol:13803756",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ita:OL47315733M",
+          "coverIsbn": "9788871684079"
+        },
+        {
           "id": "OL8260926W",
           "title": "The Complete Roderick",
           "author": "John Sladek",
@@ -8701,10 +8724,10 @@
           "id": "OL1963268W",
           "title": "Hyperion",
           "author": "Dan Simmons",
-          "coverId": "ol:10543222",
+          "coverId": "ol:8288907",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:ita:OL31855015M",
-          "coverIsbn": "9788834727119"
+          "from": "openlibrary:pol:OL26604191M",
+          "coverIsbn": "9788374805575"
         },
         {
           "id": "OL892520W",
@@ -8784,14 +8807,10 @@
           "id": "OL510405W",
           "title": "Ringworld",
           "author": "Larry Niven",
-          "coverId": "ol:7241328",
+          "coverId": "ol:13766347",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:fre:OL25417488M",
-          "coverIsbn": "9782290339169",
-          "coverArtists": [
-            "Philippe Caza"
-          ],
-          "isfdbRecord": "653362"
+          "from": "openlibrary:ger:OL47301728M",
+          "coverIsbn": "3404241681"
         },
         {
           "id": "OL108288W",
@@ -8962,6 +8981,15 @@
           "coverIsbn": "9789463492515"
         },
         {
+          "id": "OL14858406W",
+          "title": "Doomsday book",
+          "author": "Connie Willis",
+          "coverId": "ol:8542109",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL26855188M",
+          "coverIsbn": "9782290105887"
+        },
+        {
           "id": "OL515754W",
           "title": "Flowers for Algernon",
           "author": "Daniel Keyes",
@@ -9006,6 +9034,15 @@
           "isfdbRecord": "593207"
         },
         {
+          "id": "OL19209380W",
+          "title": "The Sea and Summer (SF Masterworks)",
+          "author": "George Turner",
+          "coverId": "ol:13719168",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:cat:OL47266545M",
+          "coverIsbn": "9788466408417"
+        },
+        {
           "id": "OL14858392W",
           "title": "To Say Nothing of the Dog",
           "author": "Connie Willis",
@@ -9039,6 +9076,32 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:pol:OL36694999M",
           "coverIsbn": "9788376595443"
+        },
+        {
+          "id": "OL19323674W",
+          "title": "The Deep (S.F. Masterworks)",
+          "author": "John Crowley",
+          "coverId": "ol:3101918",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL12464779M",
+          "coverIsbn": "9782228892445",
+          "coverArtists": [
+            "Jeff Rey"
+          ],
+          "isfdbRecord": "588601"
+        },
+        {
+          "id": "OL20866308W",
+          "title": "No Enemy But Time",
+          "author": "Michael Bishop",
+          "coverId": "ol:8762037",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL27279869M",
+          "coverIsbn": "9788498001488",
+          "coverArtists": [
+            "Michael Whelan"
+          ],
+          "isfdbRecord": "493853"
         },
         {
           "id": "OL59715W",
@@ -9094,6 +9157,19 @@
           "coverIsbn": "9782221021231"
         },
         {
+          "id": "OL2753431W",
+          "title": "Random acts of senseless violence",
+          "author": "Jack Womack",
+          "coverId": "ol:13837608",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL47318984M",
+          "coverIsbn": "9782070465835",
+          "coverArtists": [
+            "Sam Van Olffen"
+          ],
+          "isfdbRecord": "669475"
+        },
+        {
           "id": "OL59733W",
           "title": "The Door into Summer",
           "author": "Robert A. Heinlein",
@@ -9122,6 +9198,15 @@
             "s.BENeï¿½"
           ],
           "isfdbRecord": "976694"
+        },
+        {
+          "id": "OL7117372W",
+          "title": "The godwhale",
+          "author": "T. J. Bass",
+          "coverId": "ol:10183320",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL28253582M",
+          "coverIsbn": "9782253023081"
         },
         {
           "id": "OL60942W",
@@ -9168,6 +9253,19 @@
           "isfdbRecord": "371611"
         },
         {
+          "id": "OL83885W",
+          "title": "Mockingbird",
+          "author": "Walter Tevis",
+          "coverId": "ol:14492013",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL45612668M",
+          "coverIsbn": "9782277212461",
+          "coverArtists": [
+            "Tibor Csernus"
+          ],
+          "isfdbRecord": "369652"
+        },
+        {
           "id": "OL59797W",
           "title": "The Word for World is Forest",
           "author": "Ursula K. Le Guin",
@@ -9210,6 +9308,19 @@
             "Mick van Houten"
           ],
           "isfdbRecord": "290565"
+        },
+        {
+          "id": "OL19213764W",
+          "title": "Life During Wartime (S.F. Masterworks)",
+          "author": "Lucius Shepard",
+          "coverId": "ol:12905985",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL39794905M",
+          "coverIsbn": "9783453031449",
+          "coverArtists": [
+            "Larry Noble"
+          ],
+          "isfdbRecord": "646470"
         },
         {
           "id": "OL35702190W",
@@ -9303,6 +9414,15 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:rus:OL30770789M",
           "coverIsbn": "9785170416783"
+        },
+        {
+          "id": "OL19323672W",
+          "title": "Fairyland (S.F. Masterworks)",
+          "author": "Paul J. McAuley",
+          "coverId": "ol:3110137",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL12512772M",
+          "coverIsbn": "9782277260066"
         },
         {
           "id": "OL59846W",
@@ -9433,6 +9553,19 @@
           "coverIsbn": "5235012151"
         },
         {
+          "id": "OL3055283W",
+          "title": "The embedding",
+          "author": "Ian Watson",
+          "coverId": "ol:8666867",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL27047942M",
+          "coverIsbn": "9788427004146",
+          "coverArtists": [
+            "Salinas Blanch"
+          ],
+          "isfdbRecord": "659170"
+        },
+        {
           "id": "OL19334472W",
           "title": "Cryptozoic",
           "author": "Brian W. Aldiss",
@@ -9453,6 +9586,15 @@
             "Hubert de Lartigue"
           ],
           "isfdbRecord": "374434"
+        },
+        {
+          "id": "OL492354W",
+          "title": "Native Tongue",
+          "author": "Suzette Haden Elgin",
+          "coverId": "ol:14150199",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL47533796M",
+          "coverIsbn": "9788417525521"
         },
         {
           "id": "OL10560082W",
@@ -9563,6 +9705,15 @@
           "coverIsbn": "9786020661988"
         },
         {
+          "id": "OL26340522W",
+          "title": "The Chronicles of Amber",
+          "author": "Roger Zelazny",
+          "coverId": "ol:13950598",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:pol:OL47358518M",
+          "coverIsbn": "9788381163774"
+        },
+        {
           "id": "OL27813227W",
           "title": "Second Chronicles of Amber",
           "author": "Roger Zelazny",
@@ -9641,8 +9792,7 @@
           "from": "openlibrary:spa:OL36635949M",
           "coverIsbn": "9788493724795"
         }
-      ],
-      "coverCredits": "isfdb"
+      ]
     }
   ]
 }
