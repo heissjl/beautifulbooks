@@ -1,0 +1,72 @@
+/**
+ * Brings a collection's online draft in /curate up to the file (Julian,
+ * 2026-09-26: „when you edit a collection like this, i want the newest
+ * version to show up in the online drafts, so i can go on from there").
+ *
+ *   set -a; source ../../../.env.local; set +a   # admin password, never printed
+ *   npx tsx lab/collections/push-draft.ts <slug> [--publish]
+ *
+ * Finds the newest online draft with that address (or creates one from the
+ * file), then sends the draft's own steps — title and intro, removals, covers
+ * and additions, the order — so the draft equals the file. `--publish` then
+ * publishes the draft, as the admin button on /curate does.
+ *
+ * Before it writes, it reports what the online draft has that the file lacks:
+ * a change Julian made online must be taken into the file first, not
+ * overwritten (5.10b). Without `--force` it stops when there is any.
+ */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import type { CollectionRecord } from '../../lib/collections';
+import { draftDelta, type DraftLike } from './draftdelta';
+
+const ROOT = join(import.meta.dirname, '..', '..');
+const REMOTE = (process.env.SUGGEST_REMOTE ?? 'https://beautifulcovers.vercel.app').replace(/\/$/, '');
+const TOKEN = process.env.SUGGEST_ADMIN_PASSWORD;
+
+async function call<T>(path: string, body?: unknown): Promise<T> {
+  const res = await fetch(`${REMOTE}${path}`, {
+    method: body === undefined ? 'GET' : 'POST',
+    headers: { authorization: `Bearer ${TOKEN}`, 'content-type': 'application/json', 'user-agent': 'beautifulbooks-lab' },
+    body: body === undefined ? undefined : JSON.stringify(body),
+    signal: AbortSignal.timeout(30_000),
+  });
+  const data = (await res.json().catch(() => ({}))) as T & { error?: string };
+  if (!res.ok) throw new Error(`${res.status} from ${path}: ${data.error ?? ''}`);
+  return data;
+}
+
+async function main() {
+  const [slug, ...flags] = process.argv.slice(2);
+  if (!slug) throw new Error('usage: push-draft.ts <slug> [--publish] [--force]');
+  if (!TOKEN) throw new Error('SUGGEST_ADMIN_PASSWORD is not set (source the main folder .env.local)');
+  const file = (JSON.parse(readFileSync(join(ROOT, 'data', 'collections.json'), 'utf8')) as { collections: CollectionRecord[] }).collections;
+  const record = file.find(c => c.slug === slug);
+  if (!record) throw new Error(`${slug} is not in data/collections.json`);
+
+  const { drafts } = await call<{ drafts: Array<DraftLike & { id: string; slug: string; updatedAt: string; deleted?: boolean }> }>('/api/curate/drafts');
+  let draft = drafts.filter(d => d.slug === slug && !d.deleted).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0];
+  if (!draft) {
+    draft = (await call<{ draft: typeof drafts[number] }>('/api/curate/drafts', { from: slug })).draft;
+    console.log(`${slug}: new online draft ${draft.id} from the file`);
+  }
+
+  const delta = draftDelta(draft, record);
+  if (delta.onlineOnly.length > 0) {
+    console.log(`${slug}: the online draft ${draft.id} has what the file lacks:\n  ${delta.onlineOnly.join('\n  ')}`);
+    if (!flags.includes('--force')) throw new Error('Take those into the file first, or pass --force to overwrite them.');
+  }
+  for (const op of delta.ops) {
+    draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, op)).draft;
+  }
+  console.log(`${slug}: ${delta.ops.length} step(s) sent to draft ${draft.id} — ${delta.summary}`);
+  if (flags.includes('--publish')) {
+    await call(`/api/curate/drafts/${draft.id}`, { op: 'publish' });
+    console.log(`${slug}: draft ${draft.id} published`);
+  }
+}
+
+main().catch(err => {
+  console.error(err instanceof Error ? err.message : err);
+  process.exit(1);
+});

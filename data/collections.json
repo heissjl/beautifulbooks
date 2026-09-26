@@ -2055,7 +2055,7 @@
       "slug": "sf-masterworks-relaunch",
       "title": "SF Masterworks — the relaunch",
       "kind": "series",
-      "intro": "",
+      "intro": "In 2010 Gollancz gave the SF Masterworks a new face: the numbers went, the series name turned sideways and climbed the left edge of the cover, and the list kept growing — past the classics of the first run to newer books that had earned the name. This wall holds 182 of them in the order of the list, each in its relaunch design. Where ISFDB names the cover artist, the name is under the tile.",
       "published": true,
       "publishers": [
         "Gollancz",
@@ -6072,12 +6072,20 @@
       ],
       "works": [
         {
-          "id": "OL66513W",
-          "title": "Emma",
-          "author": "Jane Austen",
-          "coverId": "ol:12667806",
+          "id": "OL503666W",
+          "title": "Don Quixote",
+          "author": "Miguel de Cervantes Saavedra",
+          "coverId": "ol:8834865",
           "addedAt": "2026-09-26",
-          "from": "isbn:9780141192475"
+          "from": "isbn:9780241347768"
+        },
+        {
+          "id": "OL65906W",
+          "title": "On the Road",
+          "author": "Jack Kerouac",
+          "coverId": "ol:12667804",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780241552643"
         },
         {
           "id": "OL1911336W",
@@ -6088,12 +6096,36 @@
           "from": "isbn:9780241284674"
         },
         {
+          "id": "OL21021259W",
+          "title": "Hard Times",
+          "author": "Gill Tavner",
+          "coverId": "ol:14419636",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141198347"
+        },
+        {
           "id": "OL1100007W",
           "title": "Around the World in Eighty Days",
           "author": "Jules Verne",
           "coverId": "ol:12457803",
           "addedAt": "2026-09-26",
           "from": "isbn:9780241468654"
+        },
+        {
+          "id": "OL20600W",
+          "title": "Gulliver's Travels",
+          "author": "Jonathan Swift",
+          "coverId": "ol:8753570",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141196640"
+        },
+        {
+          "id": "OL66513W",
+          "title": "Emma",
+          "author": "Jane Austen",
+          "coverId": "ol:12667806",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141192475"
         },
         {
           "id": "OL14868510W",
@@ -6264,14 +6296,6 @@
           "from": "isbn:9780241198964"
         },
         {
-          "id": "OL20600W",
-          "title": "Gulliver's Travels",
-          "author": "Jonathan Swift",
-          "coverId": "ol:8753570",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9780141196640"
-        },
-        {
           "id": "OL61982W",
           "title": "The Odyssey",
           "author": "Ὅμηρος",
@@ -6432,14 +6456,6 @@
           "from": "isbn:9780241455654"
         },
         {
-          "id": "OL503666W",
-          "title": "Don Quixote",
-          "author": "Miguel de Cervantes Saavedra",
-          "coverId": "ol:8834865",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9780241347768"
-        },
-        {
           "id": "OL81180W",
           "title": "Lady Chatterley's Lover",
           "author": "D. H. Lawrence",
@@ -6512,14 +6528,6 @@
           "from": "isbn:9780241382691"
         },
         {
-          "id": "OL21021259W",
-          "title": "Hard Times",
-          "author": "Gill Tavner",
-          "coverId": "ol:14419636",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9780141198347"
-        },
-        {
           "id": "OL8255058W",
           "title": "The Lonely Londoners",
           "author": "Sam Selvon",
@@ -6550,14 +6558,6 @@
           "coverId": "ol:12667809",
           "addedAt": "2026-09-26",
           "from": "isbn:9780141197692"
-        },
-        {
-          "id": "OL65906W",
-          "title": "On the Road",
-          "author": "Jack Kerouac",
-          "coverId": "ol:12667804",
-          "addedAt": "2026-09-26",
-          "from": "isbn:9780241552643"
         },
         {
           "id": "OL8662242W",
