@@ -7,6 +7,7 @@ import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import { allCollections, authorsShown, collectionBySlug, coverLine } from '@/lib/collections';
 import { SITE_URL } from '@/lib/seo';
+import { friendSignedIn } from '@/lib/suggest/session';
 
 /**
  * One thematic collection (ROADMAP 5.10, SPEC F8): a title, a paragraph and
@@ -14,13 +15,25 @@ import { SITE_URL } from '@/lib/seo';
  *
  * Everything comes from `data/collections.json`, so the page is built once
  * and asks nobody anything; the covers load in the browser like the home
- * page's. Only the slugs the file knows exist — anything else is a 404, and
- * so is a draft on a production build.
+ * page's. Only the slugs the file knows exist — anything else is a 404.
+ *
+ * **A draft in production is shown only to a signed-in friend** (Julian,
+ * 2026-09-25: „have the drafts also in production for the curation behind
+ * login"). Published collections are built ahead; a draft's slug is not, so
+ * it renders on request, reads the /curate cookie, and is a 404 without it —
+ * never indexed either way.
  */
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+/** The published collection, or — for a signed-in friend only — the draft. */
+async function findCollection(slug: string) {
+  const visible = collectionBySlug(slug);
+  if (visible) return visible;
+  return (await friendSignedIn()) ? collectionBySlug(slug, { includeDrafts: true }) : null;
 }
 
 export function generateStaticParams() {
@@ -36,7 +49,7 @@ function nameLine(names: string[], max = 4): string {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const c = collectionBySlug(slug);
+  const c = await findCollection(slug);
   if (!c) return {};
   // Authors only: a series' scope is publishers, and "73 books by Gollancz" named them as writers (2026-09-25).
   const names = c.kind === 'authors' ? authorsShown(c) : [];
@@ -52,7 +65,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CollectionPage({ params }: PageProps) {
   const { slug } = await params;
-  const c = collectionBySlug(slug);
+  const c = await findCollection(slug);
   if (!c) notFound();
   const names = c.kind === 'authors' ? authorsShown(c) : [];
 
@@ -69,7 +82,7 @@ export default async function CollectionPage({ params }: PageProps) {
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">
         {!c.published && (
           <p className="mb-6 inline-block rounded-md border border-accent/40 px-3 py-1 text-xs text-accent">
-            Draft — visible under <code>next dev</code> only
+            Draft — not on the public site; visible under <code>next dev</code> and to friends signed in on /curate
           </p>
         )}
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{c.title}</h1>

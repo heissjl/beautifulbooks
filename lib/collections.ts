@@ -111,8 +111,8 @@ export function allCollections({ includeDrafts = draftsVisible() }: { includeDra
   return parseCollections((collectionsFile as { collections: CollectionRecord[] }).collections, { includeDrafts });
 }
 
-export function collectionBySlug(slug: string): Collection | null {
-  return allCollections().find(c => c.slug === slug) ?? null;
+export function collectionBySlug(slug: string, options: { includeDrafts?: boolean } = {}): Collection | null {
+  return allCollections(options).find(c => c.slug === slug) ?? null;
 }
 
 /**

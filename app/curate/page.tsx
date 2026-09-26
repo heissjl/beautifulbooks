@@ -49,7 +49,8 @@ export default async function CuratePage({ searchParams }: PageProps) {
       }
     }
   }
-  const startingPoints: StartingPoint[] = allCollections({ includeDrafts: true }).map(c => ({ slug: c.slug, title: c.title, works: c.works.length }));
+  const fileCollections = allCollections({ includeDrafts: true });
+  const startingPoints: StartingPoint[] = fileCollections.map(c => ({ slug: c.slug, title: c.title, works: c.works.length }));
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -68,6 +69,24 @@ export default async function CuratePage({ searchParams }: PageProps) {
           site; nothing appears there by itself. For a single book, the{' '}
           <Link href="/suggest" className="text-accent underline underline-offset-4">quick suggestion form</Link> is faster.
         </p>
+        {/*
+          The collections in the site's file, drafts included, as pages a
+          signed-in friend can open (ROADMAP 5.10b; Julian, 2026-09-25: „have
+          the drafts also in production for the curation behind login").
+          Changing them happens through a draft below, which Julian takes over.
+        */}
+        {signedIn && fileCollections.length > 0 && (
+          <p className="mt-4 max-w-2xl text-sm text-ink-3">
+            On the site now:{' '}
+            {fileCollections.map((c, i) => (
+              <span key={c.slug}>
+                {i > 0 && ' · '}
+                <Link href={`/collections/${c.slug}`} className="text-ink-2 underline underline-offset-4 hover:text-accent">{c.title}</Link>
+                {!c.published && <span className="text-accent"> (draft)</span>}
+              </span>
+            ))}
+          </p>
+        )}
         <div className="mt-8">
           {!signedIn ? (
             <SuggestLogin />
