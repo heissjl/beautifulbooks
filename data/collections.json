@@ -9825,6 +9825,207 @@
           "coverIsbn": "9788493724795"
         }
       ]
+    },
+    {
+      "slug": "bibliothek-der-erinnerung",
+      "title": "Bibliothek der Erinnerung",
+      "kind": "series",
+      "intro": "Memoirs and testimonies by people persecuted under National Socialism, edited by the Centre for Research on Antisemitism at the Technical University of Berlin and published by Metropol in Berlin since 1997, in the order of their volume numbers.",
+      "published": false,
+      "publishers": [
+        "Metropol"
+      ],
+      "works": [
+        {
+          "id": "OL1654876W",
+          "title": "Theresienstadt",
+          "author": "Federica Spitzer",
+          "coverId": "ol:6596100",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783926893369",
+          "coverIsbn": "9783926893369"
+        },
+        {
+          "id": "OL8558433W",
+          "title": "Over the Green Hill",
+          "author": "Lotte Strauss",
+          "coverId": "ol:6608121",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783926893376",
+          "coverIsbn": "9783926893376"
+        },
+        {
+          "id": "OL15678712W",
+          "title": "Die Erfahrung des Exils",
+          "author": "Wolfgang Benz",
+          "coverId": "ol:6692623",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783926893390",
+          "coverIsbn": "9783926893390"
+        },
+        {
+          "id": "OL15678705W",
+          "title": "Jugend in Palästina",
+          "author": "Ernst Loewy",
+          "coverId": "ol:6889110",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783926893406",
+          "coverIsbn": "9783926893406"
+        },
+        {
+          "id": "OL15382794W",
+          "title": "Totenkopf und Zebrakleid",
+          "author": "Erwin R. Tichauer",
+          "coverId": "ol:6597259",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783932482243",
+          "coverIsbn": "9783932482243"
+        },
+        {
+          "id": "OL3049037W",
+          "title": "Ala z elementarza",
+          "author": "Alina Margolis-Edelman",
+          "coverId": "ol:6594105",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783932482335",
+          "coverIsbn": "9783932482335"
+        },
+        {
+          "id": "OL6002879W",
+          "title": "Mond über der Uhlandstraße",
+          "author": "Rachel Ron",
+          "coverId": "ol:6597260",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783932482427",
+          "coverIsbn": "9783932482427"
+        },
+        {
+          "id": "OL6071198W",
+          "title": "Mein Weg durch die Nacht",
+          "author": "Jakob Littner",
+          "coverId": "ol:6597267",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783936411102",
+          "coverIsbn": "9783936411102"
+        },
+        {
+          "id": "OL12966423W",
+          "title": "Und wieder blüht der Mandelbaum",
+          "author": "Edith Grötzinger",
+          "coverId": "ol:6597268",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783936411669",
+          "coverIsbn": "9783936411669"
+        },
+        {
+          "id": "OL13621387W",
+          "title": "Und ihr Geist lebt trotzdem weiter!",
+          "author": "Marie-Luise Schultze-Jahn",
+          "coverId": "ol:6619329",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783936411256",
+          "coverIsbn": "9783936411256"
+        },
+        {
+          "id": "OL3511696W",
+          "title": "In my father's study",
+          "author": "Benjamin S. Orlove",
+          "coverId": "ol:6597289",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783936411089",
+          "coverIsbn": "9783936411089"
+        },
+        {
+          "id": "OL6066923W",
+          "title": "Überleben unter der Erde",
+          "author": "Guta Trokenheim",
+          "coverId": "ol:6594107",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783936411317",
+          "coverIsbn": "9783936411317"
+        },
+        {
+          "id": "OL13281195W",
+          "title": "Zweimal verfolgt",
+          "author": "Johanna Krause",
+          "coverId": "ol:6597334",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783936411423",
+          "coverIsbn": "9783936411423"
+        },
+        {
+          "id": "OL12792223W",
+          "title": "Vom Bauhaus nach Jerusalem",
+          "author": "Ruth Cidor-Citroen",
+          "coverId": "ol:6597335",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783936411393",
+          "coverIsbn": "9783936411393"
+        },
+        {
+          "id": "OL4155743W",
+          "title": "Unter Hakenkreuz und Sowjetstern",
+          "author": "Jan Osers",
+          "coverId": "ol:6597339",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783936411676",
+          "coverIsbn": "9783936411676"
+        },
+        {
+          "id": "OL15397285W",
+          "title": "Der Dachdecker von Auschwitz-Birkenau",
+          "author": "Mordechai Ciechanower",
+          "coverId": "ol:6597342",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783938690536",
+          "coverIsbn": "9783938690536"
+        },
+        {
+          "id": "OL11783925W",
+          "title": "\"Wir wollen den Fluch in Segen verwandeln\"",
+          "author": "Alfred Neumeyer",
+          "coverId": "ol:6597343",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783938690635",
+          "coverIsbn": "9783938690635"
+        },
+        {
+          "id": "OL15383103W",
+          "title": "Als Kind in NS-Konzentrationslagern",
+          "author": "Heinrich Demerer",
+          "coverId": "ol:6597348",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783940938619",
+          "coverIsbn": "9783940938619"
+        },
+        {
+          "id": "OL15383104W",
+          "title": "Als ich in Auschwitz war",
+          "author": "Paul Schaffer",
+          "coverId": "ol:6597350",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783940938763",
+          "coverIsbn": "9783940938763"
+        },
+        {
+          "id": "OL15671888W",
+          "title": "Nach der Katastrophe",
+          "author": "Lucien Steinberg",
+          "coverId": "ol:6683916",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783863310035",
+          "coverIsbn": "9783863310035"
+        },
+        {
+          "id": "OL15671347W",
+          "title": "Ein Mädchen allein auf der Flucht",
+          "author": "Eva Szepesi",
+          "coverId": "ol:6683907",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783863310059",
+          "coverIsbn": "9783863310059"
+        }
+      ]
     }
   ]
 }
