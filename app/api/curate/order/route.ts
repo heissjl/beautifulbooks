@@ -8,7 +8,7 @@ import { json } from '../../suggest/guard';
 
 /**
  * The order of the collections on the site, set by Julian (5.10h): the home
- * page shows the first four published ones in this order. Admin only.
+ * page shows the first six published ones in this order. Admin only.
  */
 export async function POST(request: NextRequest) {
   if (!suggestEnabled()) return json({ error: 'Not found' }, 404);

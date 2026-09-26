@@ -4,7 +4,8 @@ import { wallCover } from '@/lib/curated';
 import type { Collection } from '@/lib/collections';
 
 /** At most two rows of two cards on the home page; the rest are one click away. */
-export const SHELF_MAX = 4;
+// Six since 2026-09-26 (Julian: „let's show 6 collections on the start page"), three rows of two.
+export const SHELF_MAX = 6;
 
 /** Covers per card: the first row of the collection's wall. */
 const PREVIEW = 6;

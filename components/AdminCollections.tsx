@@ -14,14 +14,14 @@ export interface AdminCollection {
 }
 
 /** How many published collections the home page shows (CollectionsShelf's SHELF_MAX). */
-const ON_HOME = 4;
+const ON_HOME = 6;
 
 /**
  * The collections on the site, on /curate (ROADMAP 5.10g, 5.10h). For Julian
  * as admin: publish or unpublish each, and arrange them by dragging (Julian,
  * 2026-09-26: „das hin und her schieben der collections muss per drag and
  * drop gehen"; the arrows stay for a phone, where a drag does not start). The
- * order here is the order on the site, and the first four published ones are
+ * order here is the order on the site, and the first six published ones are
  * the home page's. A drop is saved at once; no deploy.
  *
  * For a friend the same list without the controls. Either way each row says
