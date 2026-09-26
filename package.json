@@ -23,6 +23,7 @@
     "redis": "^6.2.1"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.128.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/pngjs": "^6.0.5",
