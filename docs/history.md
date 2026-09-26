@@ -2762,3 +2762,24 @@ Nachtrag: Nachweis, dass lokal der neue Schlüssel läuft — fünf direkte Anfr
 **6.57** wie im Roadmap-Punkt beschrieben; gemessen bei 375 × 812 auf *The Great Gatsby* mit gewähltem Cover: vorher Leiste ab 735 px, die Fußlinks bei 788 px darunter; nachher `padding-bottom: 77px`, keine verdeckten Links, `elementFromPoint` auf „Impressum" trifft den Link. Fokus: in Julians Chrome (800 px breit, die Leiste erscheint unter `lg`) sprang Tab ohne Auffangen nach dem letzten Element des Blatts auf den Fußlink „About"; mit dem `focusin`-Auffang bleibt der Fokus drin.
 
 **Sammlungstitel** (Julian: „the comma vs bindestrich regel ist noch nichts umgesetzt", Bildschirmfoto „SF Masterworks, the rounded-corner editions (2006)"): die Datei hatte die Gedankenstriche, aber vier aus /curate veröffentlichte Fassungen im Redis überdeckten sie (relaunch, rounded, Hugo, Suhrkamp). Die Online-Fassungen sind Julians neuester Stand (rounded: neue Reihenfolge; Hugo: 3 andere Cover; Suhrkamp: 2 Bände weniger, 198) und wurden in die Datei übernommen, mit den neuen Titeln und den reparierten ISFDB-Namen der Datei (die veröffentlichte Relaunch-Fassung zeigte noch drei „ï¿½"-Namen live); alle vier `published: true`. Nach dem Deploy werden die veröffentlichten Fassungen im Redis gelöscht, damit die Datei gilt.
+
+## 2026-09-26 · „Buy locally": Recherche und OSM-Messung (ROADMAP 5.12)
+
+Julian: „set up lab project: buy locally link … has to be non-chain bookshops. do research first whether a lookup page of local bookshops exists already". Ergebnisse je Land, Adressschemata, robots und Quellen in [lab/buy-local/README.md](../lab/buy-local/README.md); hier nur, was gemessen wurde.
+
+**Abrufe (2026-09-26):** robots.txt von 24 Diensten. Skripte weisen ab: Bookshop.org (US/UK, 403), Hive (403, Cloudflare), Place des Libraires (403), Libris (403), genialokal (Anubis-Botschutz; WebFetch 404). Bookdealer war nicht erreichbar (Zeitüberschreitung, 522). `es.bookshop.org` antwortet 301 auf `bookshop.org/` — Bookshop.org Spanien ist eingestellt. `buchhandlung-finden.de` leitet auf eine Börsenverein-Seite ohne Finder um. `librairiesindependantes.com/product/search/?query=9782070360024` zeigt *L'Étranger* (Folio) mit Standortwahl — das einzige ISBN-Adressschema, das hier mit einem Abruf bestätigt ist (genialokal ist es seit 6.41). Die „Base des librairies en France" (data.gouv.fr, Licence Ouverte 2.0, Stand 2026-04-20): 3.237 Zeilen, 502 LIR, 34 LR, Felder Name/Sortiment/Label/Gemeinde/PLZ/Département/Region — **ohne Website und ohne Koordinaten**.
+
+**OpenStreetMap:** vier Nominatim-Aufrufe (Postleitzahl → Punkt) und fünf Overpass-Abfragen `nwr[shop=books](around:15000,…)` mit eigenem User-Agent, je Abfrage 5 s Pause; eine (Lüchow) brach mit „runtime error … Dispatcher_Client" ab und ging nach 20 s durch. „Kette" = `brand` oder `brand:wikidata`, dazu eine Namensliste.
+
+| Postleitzahl | Radius | `shop=books` | mit Website | Ketten (nur am Namen) | Antiquariat | ohne Kette | ohne Kette mit Website |
+|---|---|---|---|---|---|---|---|
+| Berlin 10997 | 5 km | 135 | 91 | 10 (1) | 15 | 125 | 87 |
+| Berlin 10997 | 15 km | 295 | 196 | 29 (2) | 19 | 266 | 185 |
+| London WC1E 7HX | 5 km | 141 | 82 | 29 (1) | 7 | 112 | 61 |
+| London WC1E 7HX | 15 km | 283 | 167 | 78 (3) | 21 | 205 | 104 |
+| Lüchow 29439 | 5 km | 1 | 1 | 0 | 0 | 1 | 1 |
+| Lüchow 29439 | 15 km | 6 | 1 | 0 | 1 | 6 | 1 |
+| Northampton MA 01060 | 5 km | 6 | 4 | 0 | 1 | 6 | 4 |
+| Northampton MA 01060 | 15 km | 12 | 7 | 1 | 1 | 11 | 6 |
+
+Ketten in allen vier Abfragen: Waterstones 27, Thalia 17, Oxfam 15, The Works 12, WHSmith 8, Hugendubel 6, Daunt 5, TG Jones 5, Foyles 4, Walther König 3, Dussmann, Blackwell's, Barnes & Noble je 1. Die Namensliste traf einmal falsch („The Barnes Bookshop"). In Lüchow ist einer der sechs Einträge eine Druckerei; dem Odyssey Bookshop (South Hadley) fehlt in OSM die Website. Nominatim erlaubt vom Nutzer ausgelöste Anfragen in mäßiger Zahl; die öffentlichen Overpass-Server sind nach ihrer eigenen Dokumentation **kein App-Backend** — für die Website käme OSM nur als vorgebauter Auszug in Frage.

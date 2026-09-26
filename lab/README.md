@@ -29,3 +29,4 @@ Experiments:
 | `collection-mosaic/` | Ein Mosaik aus jeder Sammlungswand: was es zeigt, in welcher Ordnung, wofür. | 5.9a | idea, Julian 2026-09-25; folder not created yet |
 | `wear/` | Can the wear of a photographed copy — creases, whitened edges, a torn corner — be lifted off a scan and laid onto a clean cover? | 5.9 | idea, Julian 2026-09-11; folder not created yet |
 | `shelf/` | Vom Foto des eigenen Regals zur teilbaren Sammlung: erkennen, Werk und abgebildete Ausgabe zuordnen, Link teilen. | 5.11 | idea, Julian 2026-09-26; folder with README, nothing built; see [shelf/README.md](shelf/README.md) |
+| `buy-local/` | „Buy locally": zu einer unabhängigen Buchhandlung nahe der eigenen Postleitzahl, bei der man die Ausgabe bestellen kann — welche nationalen Dienste gibt es, und wo reicht OpenStreetMap? | 5.12 | Recherche 2026-09-26 (9 Länder, OSM an 4 Postleitzahlen gemessen), nichts gebaut; see [buy-local/README.md](buy-local/README.md) |
