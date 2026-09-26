@@ -8452,6 +8452,19 @@
           "isfdbRecord": "565326"
         },
         {
+          "id": "OL1819353W",
+          "title": "The Stars My Destination",
+          "author": "Alfred Bester",
+          "coverId": "ol:1009253",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL9041083M",
+          "coverIsbn": "9783453164185",
+          "coverArtists": [
+            "Jï¿½rgen Rogner"
+          ],
+          "isfdbRecord": "567199"
+        },
+        {
           "id": "OL2172402W",
           "title": "The three stigmata of Palmer Eldritch",
           "author": "Philip K. Dick",
@@ -8486,10 +8499,10 @@
           "id": "OL2172518W",
           "title": "Flow my tears, the policeman said",
           "author": "Philip K. Dick",
-          "coverId": "ol:8750384",
+          "coverId": "ol:10799477",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:ger:OL27258107M",
-          "coverIsbn": "9783596905614"
+          "from": "openlibrary:pol:OL32135924M",
+          "coverIsbn": "9788375100181"
         },
         {
           "id": "OL2172517W",
@@ -8528,6 +8541,19 @@
           "coverIsbn": "5170215495"
         },
         {
+          "id": "OL2778305W",
+          "title": "Bring the Jubilee",
+          "author": "Ward Moore",
+          "coverId": "ol:973612",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL8864496M",
+          "coverIsbn": "9782207250587",
+          "coverArtists": [
+            "Stï¿½phane Barry"
+          ],
+          "isfdbRecord": "332588"
+        },
+        {
           "id": "OL56835W",
           "title": "Dhalgren",
           "author": "Samuel R. Delany",
@@ -8541,6 +8567,19 @@
           "isfdbRecord": "371537"
         },
         {
+          "id": "OL19242119W",
+          "title": "Helliconia",
+          "author": "Brian W. Aldiss",
+          "coverId": "ol:11484586",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:dut:OL32851971M",
+          "coverIsbn": "9789027471246",
+          "coverArtists": [
+            "Han Pieko"
+          ],
+          "isfdbRecord": "366072"
+        },
+        {
           "id": "OL59858W",
           "title": "The Lathe of Heaven",
           "author": "Ursula K. Le Guin",
@@ -8552,6 +8591,19 @@
             "Emine Bora"
           ],
           "isfdbRecord": "1076605"
+        },
+        {
+          "id": "OL8260926W",
+          "title": "The Complete Roderick",
+          "author": "John Sladek",
+          "coverId": "ol:15253144",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL35674554M",
+          "coverIsbn": "9783426057506",
+          "coverArtists": [
+            "Stanislaw Fernandes"
+          ],
+          "isfdbRecord": "390186"
         },
         {
           "id": "OL3332541W",
@@ -8615,6 +8667,19 @@
           "coverIsbn": "9788445073193"
         },
         {
+          "id": "OL892515W",
+          "title": "Greybeard",
+          "author": "Brian W. Aldiss",
+          "coverId": "ol:973825",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL8864612M",
+          "coverIsbn": "9782207500958",
+          "coverArtists": [
+            "Thierry Mebarkhi"
+          ],
+          "isfdbRecord": "567839"
+        },
+        {
           "id": "OL2172408W",
           "title": "Martian Time-Slip",
           "author": "Philip K. Dick",
@@ -8636,10 +8701,10 @@
           "id": "OL1963268W",
           "title": "Hyperion",
           "author": "Dan Simmons",
-          "coverId": "ol:8288907",
+          "coverId": "ol:10543222",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:pol:OL26604191M",
-          "coverIsbn": "9788374805575"
+          "from": "openlibrary:ita:OL31855015M",
+          "coverIsbn": "9788834727119"
         },
         {
           "id": "OL892520W",
@@ -8648,6 +8713,15 @@
           "coverId": "ol:15245167",
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL62427472M"
+        },
+        {
+          "id": "OL14931580W",
+          "title": "The City and the Stars",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:14552041",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL13239567M",
+          "coverIsbn": "9788435001328"
         },
         {
           "id": "OL4088358W",
@@ -8698,6 +8772,15 @@
           "isfdbRecord": "397398"
         },
         {
+          "id": "OL27780752W",
+          "title": "Pavane",
+          "author": "Keith Roberts",
+          "coverId": "ol:3327829",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL13268240M",
+          "coverIsbn": "9788445073292"
+        },
+        {
           "id": "OL510405W",
           "title": "Ringworld",
           "author": "Larry Niven",
@@ -8720,6 +8803,15 @@
           "coverIsbn": "9782070417728"
         },
         {
+          "id": "OL19330505W",
+          "title": "R.U.R.",
+          "author": "Karel Čapek",
+          "coverId": "ol:4910679",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL9131966M",
+          "coverIsbn": "9788445074756"
+        },
+        {
           "id": "OL1960643W",
           "title": "The Book of Skulls",
           "author": "Robert Silverberg",
@@ -8738,6 +8830,15 @@
           "coverIsbn": "9788478130078"
         },
         {
+          "id": "OL3290739W",
+          "title": "Star Maker",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:13211489",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:tur:OL46533388M",
+          "coverIsbn": "9786257163460"
+        },
+        {
           "id": "OL2454690W",
           "title": "Rogue moon",
           "author": "Algis Budrys",
@@ -8749,6 +8850,14 @@
             "Mopic"
           ],
           "isfdbRecord": "575345"
+        },
+        {
+          "id": "OL19268447W",
+          "title": "Dangerous Visions (SF Masterworks)",
+          "author": "Harlan Ellison",
+          "coverId": "ol:7255649",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL25425935M"
         },
         {
           "id": "OL16518W",
@@ -8780,6 +8889,19 @@
             "Christopher Foss"
           ],
           "isfdbRecord": "369658"
+        },
+        {
+          "id": "OL3290731W",
+          "title": "Last and First Men",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:10209046",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL28283760M",
+          "coverIsbn": "9783492703628",
+          "coverArtists": [
+            "Phuoc Quan"
+          ],
+          "isfdbRecord": "544125"
         },
         {
           "id": "OL1963251W",
@@ -8849,6 +8971,15 @@
           "coverIsbn": "9784151101014"
         },
         {
+          "id": "OL19330783W",
+          "title": "Take Back Plenty (SF Masterworks)",
+          "author": "Colin Greenland",
+          "coverId": "ol:982045",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL8910910M",
+          "coverIsbn": "9782290316092"
+        },
+        {
           "id": "OL2737402W",
           "title": "Rio Lento",
           "author": "Nicola Griffith",
@@ -8862,6 +8993,19 @@
           "isfdbRecord": "651585"
         },
         {
+          "id": "OL104515W",
+          "title": "The Gate to Women's Country",
+          "author": "Sheri S. Tepper",
+          "coverId": "ol:10393643",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL29490486M",
+          "coverIsbn": "9782277229070",
+          "coverArtists": [
+            "Barclay Shaw"
+          ],
+          "isfdbRecord": "593207"
+        },
+        {
           "id": "OL14858392W",
           "title": "To Say Nothing of the Dog",
           "author": "Connie Willis",
@@ -8873,6 +9017,19 @@
             "Grï¿½goire Hï¿½non"
           ],
           "isfdbRecord": "613188"
+        },
+        {
+          "id": "OL21470287W",
+          "title": "Wasp",
+          "author": "Eric Frank Russell",
+          "coverId": "ol:8777832",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL27304754M",
+          "coverIsbn": "9783870704391",
+          "coverArtists": [
+            "Bob Atkins"
+          ],
+          "isfdbRecord": "425280"
         },
         {
           "id": "OL46395W",
@@ -8895,6 +9052,19 @@
             "Dick Bruna"
           ],
           "isfdbRecord": "388344"
+        },
+        {
+          "id": "OL5724837W",
+          "title": "Revelation Space",
+          "author": "Alastair Reynolds",
+          "coverId": "ol:8722316",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL27088950M",
+          "coverIsbn": "9783453521865",
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "421139"
         },
         {
           "id": "OL17402W",
@@ -8967,6 +9137,15 @@
           "isfdbRecord": "403370"
         },
         {
+          "id": "OL53404W",
+          "title": "A Case of Conscience",
+          "author": "James Blish",
+          "coverId": "ol:13724039",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL47269948M",
+          "coverIsbn": "9788415157090"
+        },
+        {
           "id": "OL2172433W",
           "title": "A Scanner Darkly",
           "author": "Philip K. Dick",
@@ -8974,6 +9153,19 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL9131944M",
           "coverIsbn": "9788445074060"
+        },
+        {
+          "id": "OL3521966W",
+          "title": "Stand on Zanzibar",
+          "author": "John Brunner",
+          "coverId": "ol:10453161",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:dut:OL30400980M",
+          "coverIsbn": "9789029012638",
+          "coverArtists": [
+            "Paul Lehr"
+          ],
+          "isfdbRecord": "371611"
         },
         {
           "id": "OL59797W",
@@ -8998,6 +9190,15 @@
           "coverIsbn": "9782253025771"
         },
         {
+          "id": "OL19137945W",
+          "title": "Hard To Be A God (S.F. Masterworks)",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:15231929",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL62190979M",
+          "coverIsbn": "978-5-17-050198-4"
+        },
+        {
           "id": "OL2071423W",
           "title": "Nachtlicht",
           "author": "Jack Vance",
@@ -9009,6 +9210,24 @@
             "Mick van Houten"
           ],
           "isfdbRecord": "290565"
+        },
+        {
+          "id": "OL35702190W",
+          "title": "Earth Abides",
+          "author": "George R. Stewart",
+          "coverId": "ol:8778666",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL27305730M",
+          "coverIsbn": "9788445074947"
+        },
+        {
+          "id": "OL19218549W",
+          "title": "The Wind's Twelve Quarters and The Compass Rose",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:11102336",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL32442780M",
+          "coverIsbn": "9782253242215"
         },
         {
           "id": "OL257947W",
@@ -9027,6 +9246,15 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:cat:OL47221190M",
           "coverIsbn": "9788419206688"
+        },
+        {
+          "id": "OL83886W",
+          "title": "The Man Who Fell to Earth",
+          "author": "Walter S. Tevis",
+          "coverId": "ol:13195151",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL26965894M",
+          "coverIsbn": "9785389134706"
         },
         {
           "id": "OL56833W",
@@ -9055,6 +9283,28 @@
           "isfdbRecord": "133271"
         },
         {
+          "id": "OL20122863W",
+          "title": "Norstrilia (S.F. Masterworks)",
+          "author": "Cordwainer Smith",
+          "coverId": "ol:15003416",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL16169786M",
+          "coverIsbn": "2266027204",
+          "coverArtists": [
+            "W. Siudmak"
+          ],
+          "isfdbRecord": "338704"
+        },
+        {
+          "id": "OL17415602W",
+          "title": "Monday Begins on Saturday",
+          "author": "Борис Стругацкий",
+          "coverId": "ol:10498547",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL30770789M",
+          "coverIsbn": "9785170416783"
+        },
+        {
           "id": "OL59846W",
           "title": "Always Coming Home",
           "author": "Ursula K. Le Guin",
@@ -9068,6 +9318,15 @@
           "isfdbRecord": "1045264"
         },
         {
+          "id": "OL1975705W",
+          "title": "A Deepness in the Sky (Zones of Thought)",
+          "author": "Vernor Vinge",
+          "coverId": "ol:11401731",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL32771879M",
+          "coverIsbn": "9785170025329"
+        },
+        {
           "id": "OL3928956W",
           "title": "Swastika Night",
           "author": "Katharine Burdekin",
@@ -9079,6 +9338,46 @@
             "ADGP"
           ],
           "isfdbRecord": "990810"
+        },
+        {
+          "id": "OL26745098W",
+          "title": "Shadow",
+          "author": "Gene Wolfe",
+          "coverId": "ol:12159129",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:pol:OL35336509M",
+          "coverIsbn": "9788325001223"
+        },
+        {
+          "id": "OL7015488W",
+          "title": "Limbo",
+          "author": "Bernard Wolfe",
+          "coverId": "ol:4910623",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL9131906M",
+          "coverIsbn": "9788445072844"
+        },
+        {
+          "id": "OL52260W",
+          "title": "The First Men in the Moon",
+          "author": "H. G. Wells",
+          "coverId": "ol:3189589",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL12699408M",
+          "coverIsbn": "9783423122375",
+          "coverArtists": [
+            "H. R. Giger"
+          ],
+          "isfdbRecord": "635817"
+        },
+        {
+          "id": "OL52195W",
+          "title": "The food of the gods and how it came to earth",
+          "author": "H. G. Wells",
+          "coverId": "ol:10849250",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:tur:OL32200034M",
+          "coverIsbn": "9786053758990"
         },
         {
           "id": "OL52266W",
@@ -9102,18 +9401,19 @@
           "id": "OL52267W",
           "title": "The Time Machine",
           "author": "H. G. Wells",
-          "coverId": "ol:14364508",
+          "coverId": "ol:15134663",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:rus:OL48581955M"
+          "from": "openlibrary:por:OL58755628M",
+          "coverIsbn": "9786555981230"
         },
         {
           "id": "OL52114W",
           "title": "The War of the Worlds",
           "author": "H. G. Wells",
-          "coverId": "ol:11740945",
+          "coverId": "ol:14821280",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:dut:OL33042326M",
-          "coverIsbn": "9789044606355"
+          "from": "openlibrary:ita:OL55932335M",
+          "coverIsbn": "9788807904301"
         },
         {
           "id": "OL59800W",
@@ -9124,12 +9424,56 @@
           "from": "openlibrary:heb:OL50179038M"
         },
         {
+          "id": "OL20866833W",
+          "title": "The Doomed City",
+          "author": "Arkady Strugatsky & Boris Strugatsky",
+          "coverId": "ol:14831807",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL22909237M",
+          "coverIsbn": "5235012151"
+        },
+        {
+          "id": "OL19334472W",
+          "title": "Cryptozoic",
+          "author": "Brian W. Aldiss",
+          "coverId": "ol:14552103",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL50216689M",
+          "coverIsbn": "8435004236"
+        },
+        {
+          "id": "OL14858865W",
+          "title": "Fools",
+          "author": "Pat Cadigan",
+          "coverId": "ol:6900536",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL24981328M",
+          "coverIsbn": "9782277241348",
+          "coverArtists": [
+            "Hubert de Lartigue"
+          ],
+          "isfdbRecord": "374434"
+        },
+        {
           "id": "OL10560082W",
           "title": "Улитка на склоне",
           "author": "Аркадий Стругацкий",
           "coverId": "ol:15232040",
           "addedAt": "2026-09-26",
           "from": "openlibrary:rus:OL19516261M"
+        },
+        {
+          "id": "OL7920689W",
+          "title": "The Shockwave Rider",
+          "author": "John Brunner",
+          "coverId": "ol:6678021",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL24335292M",
+          "coverIsbn": "3453305841",
+          "coverArtists": [
+            "Eddie Jones"
+          ],
+          "isfdbRecord": "470975"
         },
         {
           "id": "OL1960375W",
@@ -9143,6 +9487,49 @@
             "Jim Burns"
           ],
           "isfdbRecord": "387015"
+        },
+        {
+          "id": "OL19921558W",
+          "title": "River of Gods",
+          "author": "Ian McDonald",
+          "coverId": "ol:10584873",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL9155200M",
+          "coverIsbn": "9788498002508"
+        },
+        {
+          "id": "OL1960491W",
+          "title": "A Time of Changes",
+          "author": "Robert Silverberg",
+          "coverId": "ol:13504465",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL8887356M",
+          "coverIsbn": "9782253023104"
+        },
+        {
+          "id": "OL22138740W",
+          "title": "The Andromeda Anthology",
+          "author": "John Elliot & Fred Hoyle",
+          "coverId": "ol:13327968",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL20258567M"
+        },
+        {
+          "id": "OL25764282W",
+          "title": "Best of Greg Egan",
+          "author": "Greg Egan",
+          "coverId": "ol:14427359",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:chi:OL49638523M",
+          "coverIsbn": "9787513350761"
+        },
+        {
+          "id": "OL20812466W",
+          "title": "The Inhabited Island",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:15234483",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL14595085M"
         },
         {
           "id": "OL166491W",
@@ -9176,6 +9563,15 @@
           "coverIsbn": "9786020661988"
         },
         {
+          "id": "OL27813227W",
+          "title": "Second Chronicles of Amber",
+          "author": "Roger Zelazny",
+          "coverId": "ol:11455064",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL32822979M",
+          "coverIsbn": "9785040015214"
+        },
+        {
           "id": "OL13978W",
           "title": "Roadmarks",
           "author": "Roger Zelazny",
@@ -9187,6 +9583,28 @@
             "Serge Bihannic"
           ],
           "isfdbRecord": "834113"
+        },
+        {
+          "id": "OL28628669W",
+          "title": "Imperial Earth",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:14548758",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL13239569M",
+          "coverIsbn": "9788435001403"
+        },
+        {
+          "id": "OL28628670W",
+          "title": "Hammer of God",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:2205972",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL9041049M",
+          "coverIsbn": "9783453161115",
+          "coverArtists": [
+            "Ifa-Bilderteam"
+          ],
+          "isfdbRecord": "287933"
         },
         {
           "id": "OL261643W",
@@ -9204,6 +9622,24 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL13364687M",
           "coverIsbn": "9788498003062"
+        },
+        {
+          "id": "OL2172414W",
+          "title": "Minority Report",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8768765",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL27288886M",
+          "coverIsbn": "9783453217492"
+        },
+        {
+          "id": "OL27025376W",
+          "title": "Paprika",
+          "author": "Yasutaka Tsutsui",
+          "coverId": "ol:12529173",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL36635949M",
+          "coverIsbn": "9788493724795"
         }
       ],
       "coverCredits": "isfdb"

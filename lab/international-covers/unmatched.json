@@ -1,0 +1,1617 @@
+[
+ {
+  "author": "Cordwainer Smith",
+  "authorKey": "OL4392224A",
+  "books": [
+   "The Rediscovery of Man (S.F. Masterworks)"
+  ],
+  "works": [
+   {
+    "work": "OL16990772W",
+    "title": "Die besten Stories von Cordwainer Smith",
+    "language": "ger",
+    "cover": 9874880
+   },
+   {
+    "work": "OL19188918W",
+    "title": "Histoires de la Fin des Temps",
+    "language": "fre",
+    "cover": 8427460
+   }
+  ]
+ },
+ {
+  "author": "George Finney",
+  "authorKey": "OL2760432A",
+  "books": [
+   "Body Snatchers"
+  ],
+  "works": [
+   {
+    "work": "OL8307355W",
+    "title": "Calculo de Una Variable - 2 Edicion",
+    "language": "spa",
+    "cover": 10722897
+   }
+  ]
+ },
+ {
+  "author": "William Tenn",
+  "authorKey": "OL4767073A",
+  "books": [
+   "Of Men and Monsters"
+  ],
+  "works": [
+   {
+    "work": "OL26191562W",
+    "title": "Vuurwater",
+    "language": "dut",
+    "cover": 12169047
+   },
+   {
+    "work": "OL19800061W",
+    "title": "Faszination der Science Fiction",
+    "language": "ger",
+    "cover": 8600659
+   }
+  ]
+ },
+ {
+  "author": "Christopher Priest",
+  "authorKey": "OL22182A",
+  "books": [
+   "The Affirmation"
+  ],
+  "works": [
+   {
+    "work": "OL19920679W",
+    "title": "Futur interieur",
+    "language": "fre",
+    "cover": 8741912
+   },
+   {
+    "work": "OL16803137W",
+    "title": "Univers 05",
+    "language": "fre",
+    "cover": 7255628
+   },
+   {
+    "work": "OL16803141W",
+    "title": "Univers 03",
+    "language": "fre",
+    "cover": 7255632
+   },
+   {
+    "work": "OL16803143W",
+    "title": "Univers 02",
+    "language": "fre",
+    "cover": 7255633
+   },
+   {
+    "work": "OL8839734M",
+    "title": "La Fontaine pétrifiante",
+    "language": "fre",
+    "cover": 969012
+   },
+   {
+    "work": "OL9131917M",
+    "title": "El Glamour",
+    "language": "spa",
+    "cover": 15241493
+   },
+   {
+    "work": "OL35975599W",
+    "title": "SF international 3",
+    "language": "ger",
+    "cover": 14355339
+   }
+  ]
+ },
+ {
+  "author": "Cecelia Holland",
+  "authorKey": "OL28029A",
+  "books": [
+   "Floating Worlds"
+  ],
+  "works": [
+   {
+    "work": "OL14937862W",
+    "title": "Was wäre gewesen, wenn? Wendepunkte der Weltgeschichte",
+    "language": "ger",
+    "cover": 2203692
+   },
+   {
+    "work": "OL474220W",
+    "title": "En el Valle de Los Reyes",
+    "language": "spa",
+    "cover": 7965781
+   },
+   {
+    "work": "OL474225W",
+    "title": "La Muerte de Atila",
+    "language": "spa",
+    "cover": 8573992
+   }
+  ]
+ },
+ {
+  "author": "Greg Bear",
+  "authorKey": "OL23206A",
+  "books": [
+   "Blood Music"
+  ],
+  "works": [
+   {
+    "work": "OL16803151W",
+    "title": "Univers 1985",
+    "language": "fre",
+    "cover": 7255666
+   },
+   {
+    "work": "OL17743047W",
+    "title": "Hardfought / Heads / Short Stories",
+    "language": "rus",
+    "cover": 8023323
+   }
+  ]
+ },
+ {
+  "author": "Olaf Stapledon",
+  "authorKey": "OL538087A",
+  "books": [
+   "Philosophy and living"
+  ],
+  "works": [
+   {
+    "work": "OL3290727W",
+    "title": "Hacedor de Estrellas",
+    "language": "spa",
+    "cover": 1047603
+   },
+   {
+    "work": "OL3290729W",
+    "title": "Juan Raro",
+    "language": "spa",
+    "cover": 6943717
+   },
+   {
+    "work": "OL8984975W",
+    "title": "Sirius",
+    "language": "fre",
+    "cover": 973763
+   },
+   {
+    "work": "OL3290733W",
+    "title": "LA Ultima Y Primera Humanidad",
+    "language": "spa",
+    "cover": 4909994
+   }
+  ]
+ },
+ {
+  "author": "Karen Joy Fowler",
+  "authorKey": "OL387505A",
+  "books": [
+   "Sarah Canary"
+  ],
+  "works": [
+   {
+    "work": "OL2657122W",
+    "title": "El Club De Lectura De Jane Austen (Modernos Y Clasicos)",
+    "language": "spa",
+    "cover": 7411805
+   }
+  ]
+ },
+ {
+  "author": "Connie Willis",
+  "authorKey": "OL20934A",
+  "books": [
+   "Doomsday book",
+   "Time Is the Fire"
+  ],
+  "works": [
+   {
+    "work": "OL14914259W",
+    "title": "Aux confins de l'étrange",
+    "language": "fre",
+    "cover": 981362
+   },
+   {
+    "work": "OL14858382W",
+    "title": "Die Farben der Zeit. Oder ganz zu schweigen von dem Hunde",
+    "language": "ger",
+    "cover": 1009441
+   },
+   {
+    "work": "OL14858388W",
+    "title": "Les veilleurs du feu",
+    "language": "fre",
+    "cover": 981272
+   },
+   {
+    "work": "OL14858391W",
+    "title": "Oveja Mansa",
+    "language": "spa",
+    "cover": 8275394
+   },
+   {
+    "work": "OL16803150W",
+    "title": "Univers 1986",
+    "language": "fre",
+    "cover": 7255665
+   },
+   {
+    "work": "OL16803151W",
+    "title": "Univers 1985",
+    "language": "fre",
+    "cover": 7255666
+   },
+   {
+    "work": "OL21574067W",
+    "title": "All clear",
+    "language": "fre",
+    "cover": 10382491
+   },
+   {
+    "work": "OL20125591W",
+    "title": "Futurs pas possible",
+    "language": "fre",
+    "cover": 12374543
+   },
+   {
+    "work": "OL19330548W",
+    "title": "Brandwache",
+    "language": "ger",
+    "cover": 8441932
+   }
+  ]
+ },
+ {
+  "author": "Rachel Pollack",
+  "authorKey": "OL20317A",
+  "books": [
+   "Unquenchable fire"
+  ],
+  "works": [
+   {
+    "work": "OL12813294M",
+    "title": "Das Haindl- Tarot - Arbeitsbuch.",
+    "language": "ger",
+    "cover": 3234012
+   },
+   {
+    "work": "OL13327124M",
+    "title": "Tarot - Arcanos Menores y Lecturas",
+    "language": "spa",
+    "cover": 5540330
+   },
+   {
+    "work": "OL16962229W",
+    "title": "Im Ko rper der Go ttin",
+    "language": "ger",
+    "cover": 9506998
+   }
+  ]
+ },
+ {
+  "author": "John Crowley",
+  "authorKey": "OL30207A",
+  "books": [
+   "Engine Summer"
+  ],
+  "works": [
+   {
+    "work": "OL482570W",
+    "title": "Le parlement des fées",
+    "language": "fre",
+    "cover": 979774
+   },
+   {
+    "work": "OL482536W",
+    "title": "Amour et sommeil",
+    "language": "fre",
+    "cover": 12925586
+   },
+   {
+    "work": "OL8878597W",
+    "title": "Aegypt",
+    "language": "fre",
+    "cover": 979847
+   },
+   {
+    "work": "OL482534W",
+    "title": "Aegypto",
+    "language": "spa",
+    "cover": 3327782
+   },
+   {
+    "work": "OL482535W",
+    "title": "Amor y Sueño",
+    "language": "spa",
+    "cover": 3327810
+   },
+   {
+    "work": "OL482537W",
+    "title": "Antiguedades",
+    "language": "spa",
+    "cover": 3327809
+   },
+   {
+    "work": "OL482538W",
+    "title": "Bestias",
+    "language": "spa",
+    "cover": 1047616
+   },
+   {
+    "work": "OL482548W",
+    "title": "L'abîme",
+    "language": "fre",
+    "cover": 3101918
+   },
+   {
+    "work": "OL482549W",
+    "title": "L'animal découronné",
+    "language": "fre",
+    "cover": 3097989
+   },
+   {
+    "work": "OL482551W",
+    "title": "Magna Obra de Tiempo",
+    "language": "spa",
+    "cover": 3327792
+   },
+   {
+    "work": "OL482554W",
+    "title": "Pequeño, Grande",
+    "language": "spa",
+    "cover": 3327764
+   },
+   {
+    "work": "OL482555W",
+    "title": "Sans épines, la rose",
+    "language": "fre",
+    "cover": 2159422
+   },
+   {
+    "work": "OL482558W",
+    "title": "Traduciendo El Cielo",
+    "language": "spa",
+    "cover": 4910632
+   },
+   {
+    "work": "OL482559W",
+    "title": "Verano del Pequeño San John, El",
+    "language": "spa",
+    "cover": 3327108
+   }
+  ]
+ },
+ {
+  "author": "Sheri S. Tepper",
+  "authorKey": "OL18898A",
+  "books": [
+   "Raising the stones"
+  ],
+  "works": [
+   {
+    "work": "OL24438486W",
+    "title": "Prière à l'ange obscur",
+    "language": "fre",
+    "cover": 11020051
+   },
+   {
+    "work": "OL25068389W",
+    "title": "... Roman der Trilogie \"Das wahre Spiel\"",
+    "language": "ger",
+    "cover": 11955562
+   },
+   {
+    "work": "OL443941W",
+    "title": "La Bella Durmiente",
+    "language": "spa",
+    "cover": 3328897
+   },
+   {
+    "work": "OL20115542W",
+    "title": "La belle endormie",
+    "language": "fre",
+    "cover": 8773465
+   }
+  ]
+ },
+ {
+  "author": "George Turner",
+  "authorKey": "OL2596674A",
+  "books": [
+   "The Sea and Summer (SF Masterworks)"
+  ],
+  "works": [
+   {
+    "work": "OL20732974W",
+    "title": "Grundriß des Bergrechts",
+    "language": "ger",
+    "cover": 9424434
+   },
+   {
+    "work": "OL24909398W",
+    "title": "Dissertatio inauguralis, de nova doctrina phrenologica",
+    "language": "lat",
+    "cover": 11813930
+   },
+   {
+    "work": "OL26440832W",
+    "title": "Die Heimat nehmen wir mit",
+    "language": "ger",
+    "cover": 12463524
+   }
+  ]
+ },
+ {
+  "author": "James Morrow",
+  "authorKey": "OL2630654A",
+  "books": [
+   "This Is the Way the World Ends (S.F. Masterworks)"
+  ],
+  "works": [
+   {
+    "work": "OL12512648M",
+    "title": "L'Arbre à rêves",
+    "language": "fre",
+    "cover": 3110022
+   },
+   {
+    "work": "OL26184945W",
+    "title": "Der Wein des Frevels",
+    "language": "ger",
+    "cover": 12156195
+   },
+   {
+    "work": "OL28950063W",
+    "title": "Notre mère qui êtes aux cieux",
+    "language": "fre",
+    "cover": 12921948
+   },
+   {
+    "work": "OL17758132W",
+    "title": "Nebula '92",
+    "language": "pol",
+    "cover": 8039334
+   },
+   {
+    "work": "OL8910707M",
+    "title": "Notre mère qui êtes aux cieux",
+    "language": "fre",
+    "cover": 981865
+   },
+   {
+    "work": "OL8864586M",
+    "title": "Le vin de la violence",
+    "language": "fre",
+    "cover": 973793
+   }
+  ]
+ },
+ {
+  "author": "Jack Womack",
+  "authorKey": "OL404065A",
+  "books": [
+   "Random acts of senseless violence"
+  ],
+  "works": [
+   {
+    "work": "OL2753425W",
+    "title": "L'elvissée",
+    "language": "fre",
+    "cover": 13917785
+   }
+  ]
+ },
+ {
+  "author": "Michael Bishop",
+  "authorKey": "OL414752A",
+  "books": [
+   "Transfigurations (S.F. Masterworks)"
+  ],
+  "works": [
+   {
+    "work": "OL2798214W",
+    "title": "Gestohlene Gesichter",
+    "language": "ger",
+    "cover": 10206022
+   },
+   {
+    "work": "OL3474276W",
+    "title": "Los mejores relatos de fantasia II",
+    "language": "spa",
+    "cover": 15212721
+   },
+   {
+    "work": "OL16961936W",
+    "title": "Bru chige Siege",
+    "language": "ger",
+    "cover": 9944739
+   },
+   {
+    "work": "OL16803143W",
+    "title": "Univers 02",
+    "language": "fre",
+    "cover": 7255633
+   },
+   {
+    "work": "OL2798229W",
+    "title": "Rene Char. Les dernieres annees. (Collection Monographique Rodopi en Litterature Francaise Contemporaine 14)",
+    "language": "fre",
+    "cover": 3339684
+   },
+   {
+    "work": "OL25113456W",
+    "title": "Jean-Paul Michel",
+    "language": "fre",
+    "cover": 11971287
+   }
+  ]
+ },
+ {
+  "author": "T. J. Bass",
+  "authorKey": "OL2019600A",
+  "books": [
+   "Half Past Human",
+   "The godwhale"
+  ],
+  "works": [
+   {
+    "work": "OL21797559W",
+    "title": "Der Zeitläufer",
+    "language": "ger",
+    "cover": 10405380
+   }
+  ]
+ },
+ {
+  "author": "James Tiptree, Jr.",
+  "authorKey": "OL2628870A",
+  "books": [
+   "Her Smoke Rose Up Forever"
+  ],
+  "works": [
+   {
+    "work": "OL16803136W",
+    "title": "Univers 06",
+    "language": "fre",
+    "cover": 7255627
+   },
+   {
+    "work": "OL16803151W",
+    "title": "Univers 1985",
+    "language": "fre",
+    "cover": 7255666
+   },
+   {
+    "work": "OL20125591W",
+    "title": "Futurs pas possible",
+    "language": "fre",
+    "cover": 12374543
+   },
+   {
+    "work": "OL19915727W",
+    "title": "Futurs à gogos",
+    "language": "fre",
+    "cover": 8739299
+   },
+   {
+    "work": "OL16803127W",
+    "title": "Univers 19",
+    "language": "fre",
+    "cover": 7255618
+   },
+   {
+    "work": "OL21797559W",
+    "title": "Der Zeitläufer",
+    "language": "ger",
+    "cover": 10405380
+   }
+  ]
+ },
+ {
+  "author": "Geoff Ryman",
+  "authorKey": "OL230170A",
+  "books": [
+   "The Child Garden"
+  ],
+  "works": [
+   {
+    "work": "OL5112697W",
+    "title": "Crossing the Border",
+    "language": "ger",
+    "cover": 12175544
+   }
+  ]
+ },
+ {
+  "author": "Hal Clement",
+  "authorKey": "OL23361A",
+  "books": [
+   "Mission Of Gravity: Mesklinite Book 1 (S.F. Masterworks)"
+  ],
+  "works": [
+   {
+    "work": "OL24743330W",
+    "title": "Die Flüsse der Tiefe",
+    "language": "ger",
+    "cover": 11483143
+   },
+   {
+    "work": "OL24744360W",
+    "title": "Das Nadelöhr",
+    "language": "ger",
+    "cover": 11484908
+   },
+   {
+    "work": "OL15005185W",
+    "title": "Das Fossil",
+    "language": "ger",
+    "cover": 3182783
+   },
+   {
+    "work": "OL21773232W",
+    "title": "Small Changes",
+    "language": "ger",
+    "cover": 10653300
+   }
+  ]
+ },
+ {
+  "author": "Walter M. Miller, Jr.",
+  "authorKey": "OL382686A",
+  "books": [
+   "Dark Benediction"
+  ],
+  "works": [
+   {
+    "work": "OL20124936W",
+    "title": "Histoires de Robots",
+    "language": "fre",
+    "cover": 8777889
+   },
+   {
+    "work": "OL19337082W",
+    "title": "Histoires de Surhommes",
+    "language": "fre",
+    "cover": 8449166
+   },
+   {
+    "work": "OL19800061W",
+    "title": "Faszination der Science Fiction",
+    "language": "ger",
+    "cover": 8600659
+   },
+   {
+    "work": "OL20104471W",
+    "title": "Histórias de Robôs - Volume 3",
+    "language": "por",
+    "cover": 8765218
+   }
+  ]
+ },
+ {
+  "author": "Paul J. McAuley",
+  "authorKey": "OL22866A",
+  "books": [
+   "Fairyland (S.F. Masterworks)"
+  ],
+  "works": [
+   {
+    "work": "OL26181639W",
+    "title": "Opgejaagd wild",
+    "language": "dut",
+    "cover": 12150372
+   },
+   {
+    "work": "OL26180735W",
+    "title": "Beeldtaal",
+    "language": "dut",
+    "cover": 12148796
+   },
+   {
+    "work": "OL15078158W",
+    "title": "Expressiv!",
+    "language": "ger",
+    "cover": 3252871
+   },
+   {
+    "work": "OL15078160W",
+    "title": "Féerie",
+    "language": "fre",
+    "cover": 3110137
+   }
+  ]
+ },
+ {
+  "author": "Gene Wolfe",
+  "authorKey": "OL24856A",
+  "books": [
+   "Sword & citadel"
+  ],
+  "works": [
+   {
+    "work": "OL26437407W",
+    "title": "The Best of Galaxy 2",
+    "language": "dut",
+    "cover": 12456887
+   },
+   {
+    "work": "OL16803137W",
+    "title": "Univers 05",
+    "language": "fre",
+    "cover": 7255628
+   },
+   {
+    "work": "OL20098731W",
+    "title": "Science Fiction Story Reader 2",
+    "language": "ger",
+    "cover": 8761086
+   },
+   {
+    "work": "OL20104358W",
+    "title": "Isaac Asimovs Science Fiction Magazin 22. Folge",
+    "language": "ger",
+    "cover": 8765110
+   },
+   {
+    "work": "OL16803169W",
+    "title": "Fiction # 227",
+    "language": "fre",
+    "cover": 7255723
+   }
+  ]
+ },
+ {
+  "author": "H. G. Wells",
+  "authorKey": "OL13066A",
+  "books": [
+   "The Shape of Things to Come"
+  ],
+  "works": [
+   {
+    "work": "OL23538480W",
+    "title": "Miss Waters",
+    "language": "fre",
+    "cover": 10513458
+   },
+   {
+    "work": "OL27641051W",
+    "title": "Guerra de Los Mundos",
+    "language": "spa",
+    "cover": 14758301
+   },
+   {
+    "work": "OL24719315W",
+    "title": "Ugh-Lomi and Uya",
+    "language": "yid",
+    "cover": 11446896
+   },
+   {
+    "work": "OL29487780W",
+    "title": "Guerre des Mondes",
+    "language": "fre",
+    "cover": 14104393
+   },
+   {
+    "work": "OL29826368W",
+    "title": "Die Zeitmaschine",
+    "language": "ger",
+    "cover": 13816522
+   }
+  ]
+ },
+ {
+  "author": "Ian Watson",
+  "authorKey": "OL473882A",
+  "books": [
+   "The embedding"
+  ],
+  "works": [
+   {
+    "work": "OL42463644W",
+    "title": "Antología Z Vol. 5",
+    "language": "spa",
+    "cover": 14839577
+   }
+  ]
+ },
+ {
+  "author": "Stephen Baxter",
+  "authorKey": "OL19807A",
+  "books": [
+   "Raft"
+  ],
+  "works": [
+   {
+    "work": "OL16917465W",
+    "title": "Die letzte Flut",
+    "language": "ger",
+    "cover": 9408401
+   },
+   {
+    "work": "OL9267719W",
+    "title": "Voyage - 1",
+    "language": "fre",
+    "cover": 2155921
+   },
+   {
+    "work": "OL9267720W",
+    "title": "Voyage - 2",
+    "language": "fre",
+    "cover": 3110142
+   },
+   {
+    "work": "OL8029380W",
+    "title": "Antihielo",
+    "language": "spa",
+    "cover": 14822686
+   },
+   {
+    "work": "OL36640622W",
+    "title": "Les chroniques de Méduse",
+    "language": "fre",
+    "cover": 14423648
+   },
+   {
+    "work": "OL14912468W",
+    "title": "Les vaisseaux du temps",
+    "language": "fre",
+    "cover": 3098308
+   },
+   {
+    "work": "OL14912471W",
+    "title": "Lumière des jours enfuis",
+    "language": "fre",
+    "cover": 982166
+   },
+   {
+    "work": "OL14912487W",
+    "title": "Voyage, tome 1",
+    "language": "fre",
+    "cover": 3111957
+   },
+   {
+    "work": "OL14912491W",
+    "title": "Zeitschiffe",
+    "language": "ger",
+    "cover": 1009592
+   },
+   {
+    "work": "OL16458136W",
+    "title": "Poussière de Lune",
+    "language": "fre",
+    "cover": 7010423
+   },
+   {
+    "work": "OL19636183W",
+    "title": "L'Odyssée du Temps, Tome 1",
+    "language": "fre",
+    "cover": 8545141
+   },
+   {
+    "work": "OL38083597W",
+    "title": "World Engines",
+    "language": "ger",
+    "cover": 14634916
+   },
+   {
+    "work": "OL14912451W",
+    "title": "Manifold",
+    "language": "ger",
+    "cover": 3203580
+   }
+  ]
+ },
+ {
+  "author": "R. A. Lafferty",
+  "authorKey": "OL501502A",
+  "books": [
+   "The Best of R. A. Lafferty"
+  ],
+  "works": [
+   {
+    "work": "OL26437407W",
+    "title": "The Best of Galaxy 2",
+    "language": "dut",
+    "cover": 12456887
+   },
+   {
+    "work": "OL3474276W",
+    "title": "Los mejores relatos de fantasia II",
+    "language": "spa",
+    "cover": 15212721
+   },
+   {
+    "work": "OL16803131W",
+    "title": "Univers 12",
+    "language": "fre",
+    "cover": 7255622
+   },
+   {
+    "work": "OL16803137W",
+    "title": "Univers 05",
+    "language": "fre",
+    "cover": 7255628
+   },
+   {
+    "work": "OL16803150W",
+    "title": "Univers 1986",
+    "language": "fre",
+    "cover": 7255665
+   },
+   {
+    "work": "OL16803151W",
+    "title": "Univers 1985",
+    "language": "fre",
+    "cover": 7255666
+   },
+   {
+    "work": "OL16803174W",
+    "title": "galaxie # 53",
+    "language": "fre",
+    "cover": 7255728
+   }
+  ]
+ },
+ {
+  "author": "M. John Harrison",
+  "authorKey": "OL385254A",
+  "books": [
+   "Light",
+   "Nova Swing"
+  ],
+  "works": [
+   {
+    "work": "OL2643416W",
+    "title": "El Curso del Corazon",
+    "language": "spa",
+    "cover": 3327800
+   },
+   {
+    "work": "OL3474276W",
+    "title": "Los mejores relatos de fantasia II",
+    "language": "spa",
+    "cover": 15212721
+   },
+   {
+    "work": "OL15167280W",
+    "title": "Pastellikaupunki",
+    "language": "fin",
+    "cover": 6391532
+   },
+   {
+    "work": "OL8839807M",
+    "title": "La Mécanique du Centaure",
+    "language": "fre",
+    "cover": 969097
+   }
+  ]
+ },
+ {
+  "author": "Suzette Haden Elgin",
+  "authorKey": "OL30735A",
+  "books": [
+   "Native Tongue"
+  ],
+  "works": [
+   {
+    "work": "OL19841166W",
+    "title": "Der Q-Faktor",
+    "language": "ger",
+    "cover": 8636952
+   },
+   {
+    "work": "OL20140284W",
+    "title": "You hua hao hao shuo",
+    "language": "chi",
+    "cover": 8788560
+   }
+  ]
+ },
+ {
+  "author": "Ian McDonald",
+  "authorKey": "OL446486A",
+  "books": [
+   "Desolation Road"
+  ],
+  "works": [
+   {
+    "work": "OL24173357W",
+    "title": "Dni Cyberabadu",
+    "language": "pol",
+    "cover": 10590852
+   }
+  ]
+ },
+ {
+  "author": "Robert Silverberg",
+  "authorKey": "OL235327A",
+  "books": [
+   "Needle in a timestack"
+  ],
+  "works": [
+   {
+    "work": "OL1960430W",
+    "title": "Les Monades urbaines",
+    "language": "fre",
+    "cover": 976997
+   },
+   {
+    "work": "OL1960358W",
+    "title": "Cronicas de Majipur",
+    "language": "spa",
+    "cover": 14549018
+   },
+   {
+    "work": "OL1960503W",
+    "title": "Valentin de Majipoor",
+    "language": "fre",
+    "cover": 11737134
+   },
+   {
+    "work": "OL1960523W",
+    "title": "Ciel brûlant de minuit",
+    "language": "fre",
+    "cover": 976990
+   },
+   {
+    "work": "OL1960327W",
+    "title": "Alas Nocturnas",
+    "language": "spa",
+    "cover": 13206439
+   },
+   {
+    "work": "OL20158597W",
+    "title": "Invincible / Lord John and the Succubus / Threshold / Homecoming / The Book of Changes",
+    "language": "fre",
+    "cover": 8803680
+   },
+   {
+    "work": "OL27960568W",
+    "title": "Las puertas del cielo",
+    "language": "spa",
+    "cover": 12764688
+   },
+   {
+    "work": "OL24205039W",
+    "title": "Chroniken der Zukunft 3",
+    "language": "ger",
+    "cover": 10648291
+   },
+   {
+    "work": "OL24205525W",
+    "title": "Les vestiges de l'automne",
+    "language": "fre",
+    "cover": 10649096
+   },
+   {
+    "work": "OL24813977W",
+    "title": "Archeologische avonturen",
+    "language": "dut",
+    "cover": 11590145
+   },
+   {
+    "work": "OL24140414W",
+    "title": "Valley Beyond Time",
+    "language": "ger",
+    "cover": 10537792
+   },
+   {
+    "work": "OL26177283W",
+    "title": "Het verre Centaurus",
+    "language": "dut",
+    "cover": 12143231
+   },
+   {
+    "work": "OL15056780W",
+    "title": "Destination 3001",
+    "language": "fre",
+    "cover": 982172
+   },
+   {
+    "work": "OL15056795W",
+    "title": "Le Long Chemin du retour",
+    "language": "fre",
+    "cover": 3098609
+   },
+   {
+    "work": "OL15056801W",
+    "title": "Pavane au fil du temps",
+    "language": "fre",
+    "cover": 3110020
+   },
+   {
+    "work": "OL17318311W",
+    "title": "Prestimion le coronal, tome 6. Majipoor",
+    "language": "fre",
+    "cover": 3098419
+   },
+   {
+    "work": "OL33847179W",
+    "title": "Those Who Watch",
+    "language": "ger",
+    "cover": 14594664
+   },
+   {
+    "work": "OL16919621W",
+    "title": "Legenden",
+    "language": "ger",
+    "cover": 7399378
+   },
+   {
+    "work": "OL1960499W",
+    "title": "Trips",
+    "language": "fre",
+    "cover": 981225
+   },
+   {
+    "work": "OL20124936W",
+    "title": "Histoires de Robots",
+    "language": "fre",
+    "cover": 8777889
+   },
+   {
+    "work": "OL20125591W",
+    "title": "Futurs pas possible",
+    "language": "fre",
+    "cover": 12374543
+   },
+   {
+    "work": "OL19800061W",
+    "title": "Faszination der Science Fiction",
+    "language": "ger",
+    "cover": 8600659
+   },
+   {
+    "work": "OL19623973W",
+    "title": "The Seed of Earth",
+    "language": "ger",
+    "cover": 8537082
+   },
+   {
+    "work": "OL1960376W",
+    "title": "El Laberinto de Majipur",
+    "language": "spa",
+    "cover": 13881232
+   },
+   {
+    "work": "OL1960378W",
+    "title": "Es stirbt in mir",
+    "language": "ger",
+    "cover": 1009642
+   },
+   {
+    "work": "OL1960412W",
+    "title": "L'appel des ténèbres",
+    "language": "fre",
+    "cover": 973580
+   },
+   {
+    "work": "OL1960416W",
+    "title": "Le chemin de l'espace",
+    "language": "fre",
+    "cover": 3109986
+   },
+   {
+    "work": "OL1960426W",
+    "title": "Les Déportés du Cambrien",
+    "language": "fre",
+    "cover": 3103327
+   },
+   {
+    "work": "OL1960429W",
+    "title": "Les Eléphants d'Hannibal",
+    "language": "fre",
+    "cover": 968807
+   },
+   {
+    "work": "OL1960433W",
+    "title": "L'homme dans le labyrinthe",
+    "language": "fre",
+    "cover": 982246
+   },
+   {
+    "work": "OL1960446W",
+    "title": "Mascaras del Tiempo, Las",
+    "language": "spa",
+    "cover": 8261688
+   },
+   {
+    "work": "OL20104471W",
+    "title": "Histórias de Robôs - Volume 3",
+    "language": "por",
+    "cover": 8765218
+   },
+   {
+    "work": "OL20088602W",
+    "title": "Isaac Asimovs Science Fiction Magazin 17. Folge",
+    "language": "ger",
+    "cover": 13792689
+   },
+   {
+    "work": "OL17693236W",
+    "title": "Far Horizons",
+    "language": "rus",
+    "cover": 7967094
+   },
+   {
+    "work": "OL20084251W",
+    "title": "Kontinuum 2",
+    "language": "ger",
+    "cover": 8753514
+   },
+   {
+    "work": "OL20097844W",
+    "title": "Exotische Welten",
+    "language": "ger",
+    "cover": 8760401
+   },
+   {
+    "work": "OL34316409W",
+    "title": "Der 200 Jahre Mann",
+    "language": "ger",
+    "cover": 13238031
+   },
+   {
+    "work": "OL28586903W",
+    "title": "Drugie teni zemli",
+    "language": "rus",
+    "cover": 12825115
+   },
+   {
+    "work": "OL1960461W",
+    "title": "Nouvelles au fil du temps, 1981-1987, volume 3",
+    "language": "fre",
+    "cover": 3080405
+   },
+   {
+    "work": "OL1960425W",
+    "title": "Les Ailes de la nuit",
+    "language": "fre",
+    "cover": 3109963
+   },
+   {
+    "work": "OL1960377W",
+    "title": "Espinas",
+    "language": "spa",
+    "cover": 13843757
+   },
+   {
+    "work": "OL19884677W",
+    "title": "L'oreille interne",
+    "language": "fre",
+    "cover": 8689408
+   },
+   {
+    "work": "OL21773710W",
+    "title": "Phantom der Freiheit",
+    "language": "ger",
+    "cover": 10404405
+   },
+   {
+    "work": "OL22056443W",
+    "title": "Regans Satellit",
+    "language": "ger",
+    "cover": 10418804
+   },
+   {
+    "work": "OL45974139W",
+    "title": "Das Seelenregister",
+    "language": "ger",
+    "cover": 15253276
+   }
+  ]
+ },
+ {
+  "author": "Roger Zelazny",
+  "authorKey": "OL4587302A",
+  "books": [
+   "The Chronicles of Amber",
+   "The Best of Roger Zelazny"
+  ],
+  "works": [
+   {
+    "work": "OL15346044W",
+    "title": "If at Faust you don't succeed",
+    "language": "rus",
+    "cover": 12575366
+   },
+   {
+    "work": "OL26192068W",
+    "title": "Nochʹ v odinokom Okti͡abre",
+    "language": "rus",
+    "cover": 12170043
+   },
+   {
+    "work": "OL26194008W",
+    "title": "Месть роботов",
+    "language": "rus",
+    "cover": 12173092
+   },
+   {
+    "work": "OL24227754W",
+    "title": "Isaac Asimov präsentiert Märchenwelt der Fantasy. Die schönsten Geschichten [20 short stories]",
+    "language": "ger",
+    "cover": 13800241
+   },
+   {
+    "work": "OL24437430W",
+    "title": "Amber",
+    "language": "dut",
+    "cover": 11017408
+   },
+   {
+    "work": "OL22062706W",
+    "title": "Zvezdnyĭ spidveĭ",
+    "language": "rus",
+    "cover": 10430218
+   },
+   {
+    "work": "OL15345998W",
+    "title": "Coffret Zelazny, 5 volumes",
+    "language": "fre",
+    "cover": 969087
+   },
+   {
+    "work": "OL16803161W",
+    "title": "L'enfant de nulle part",
+    "language": "fre",
+    "cover": 7255699
+   },
+   {
+    "work": "OL16803170W",
+    "title": "Fiction # 222",
+    "language": "fre",
+    "cover": 7255724
+   },
+   {
+    "work": "OL16803171W",
+    "title": "Fiction # 169",
+    "language": "fre",
+    "cover": 7255725
+   },
+   {
+    "work": "OL16803173W",
+    "title": "Fiction # 157",
+    "language": "fre",
+    "cover": 7255727
+   },
+   {
+    "work": "OL16803174W",
+    "title": "galaxie # 53",
+    "language": "fre",
+    "cover": 7255728
+   },
+   {
+    "work": "OL16803175W",
+    "title": "Galaxie # 43",
+    "language": "fre",
+    "cover": 7255730
+   },
+   {
+    "work": "OL16803177W",
+    "title": "Galaxie # 33",
+    "language": "fre",
+    "cover": 7255731
+   },
+   {
+    "work": "OL16803181W",
+    "title": "Galaxie # 90",
+    "language": "fre",
+    "cover": 7255733
+   },
+   {
+    "work": "OL22053660W",
+    "title": "Остров мертвых ; Дзек-из-тени ; Этот бессмертный",
+    "language": "rus",
+    "cover": 10416856
+   },
+   {
+    "work": "OL19337082W",
+    "title": "Histoires de Surhommes",
+    "language": "fre",
+    "cover": 8449166
+   },
+   {
+    "work": "OL17727611W",
+    "title": "Теперь мы выбираем лица; Рассказы",
+    "language": "rus",
+    "cover": 8005206
+   },
+   {
+    "work": "OL16803169W",
+    "title": "Fiction # 227",
+    "language": "fre",
+    "cover": 7255723
+   }
+  ]
+ },
+ {
+  "author": "John M. Ford",
+  "authorKey": "OL714247A",
+  "books": [
+   "Growing up Weightless"
+  ],
+  "works": [
+   {
+    "work": "OL24280733W",
+    "title": "Les fileurs d'anges",
+    "language": "fre",
+    "cover": 10779319
+   },
+   {
+    "work": "OL34797727W",
+    "title": "Gurps Viagem No Tempo",
+    "language": "por",
+    "cover": 13552792
+   }
+  ]
+ },
+ {
+  "author": "Paul McAuley",
+  "authorKey": "OL7276210A",
+  "books": [
+   "Secret of Life"
+  ],
+  "works": [
+   {
+    "work": "OL17309522W",
+    "title": "Pautina",
+    "language": "rus",
+    "cover": 7388852
+   }
+  ]
+ },
+ {
+  "author": "James White",
+  "authorKey": "OL28372A",
+  "books": [
+   "Beginning Operations"
+  ],
+  "works": [
+   {
+    "work": "OL26437407W",
+    "title": "The Best of Galaxy 2",
+    "language": "dut",
+    "cover": 12456887
+   }
+  ]
+ },
+ {
+  "author": "Bruce Sterling",
+  "authorKey": "OL226057A",
+  "books": [
+   "Distraction"
+  ],
+  "works": [
+   {
+    "work": "OL15014912W",
+    "title": "Gros temps",
+    "language": "fre",
+    "cover": 968847
+   },
+   {
+    "work": "OL15014914W",
+    "title": "Les Mailles du réseau",
+    "language": "fre",
+    "cover": 969082
+   },
+   {
+    "work": "OL15727608W",
+    "title": "Libres enfants du savoir numérique",
+    "language": "fre",
+    "cover": 4864371
+   },
+   {
+    "work": "OL15014915W",
+    "title": "Mozart en verres miroirs",
+    "language": "fre",
+    "cover": 968819
+   },
+   {
+    "work": "OL1888019W",
+    "title": "Brennendes Land",
+    "language": "ger",
+    "cover": 1009435
+   },
+   {
+    "work": "OL1888021W",
+    "title": "Das Geheimnis der Matrix",
+    "language": "ger",
+    "cover": 1010010
+   },
+   {
+    "work": "OL19909744W",
+    "title": "Video-Kid",
+    "language": "ger",
+    "cover": 8732550
+   },
+   {
+    "work": "OL19915727W",
+    "title": "Futurs à gogos",
+    "language": "fre",
+    "cover": 8739299
+   },
+   {
+    "work": "OL19868662W",
+    "title": "Budushchee uzhe nachalosʹ",
+    "language": "rus",
+    "cover": 8672450
+   },
+   {
+    "work": "OL17887189W",
+    "title": "Piratas de Dados",
+    "language": "por",
+    "cover": 8198825
+   }
+  ]
+ },
+ {
+  "author": "Richard Morgan",
+  "authorKey": "OL2692915A",
+  "books": [
+   "Thirteen"
+  ],
+  "works": [
+   {
+    "work": "OL34970411W",
+    "title": "El gélido mando",
+    "language": "spa",
+    "cover": 13919265
+   },
+   {
+    "work": "OL20078003W",
+    "title": "Leyes de mercado",
+    "language": "spa",
+    "cover": 8750264
+   },
+   {
+    "work": "OL6835844W",
+    "title": "Carbono Alterado",
+    "language": "por",
+    "cover": 14103212
+   },
+   {
+    "work": "OL29914875W",
+    "title": "Angeli spezzati",
+    "language": "ita",
+    "cover": 13009002
+   },
+   {
+    "work": "OL29915076W",
+    "title": "Il ritorno delle furie",
+    "language": "ita",
+    "cover": 13009004
+   },
+   {
+    "work": "OL34970400W",
+    "title": "Furias desatadas",
+    "language": "spa",
+    "cover": 13919242
+   },
+   {
+    "work": "OL34970442W",
+    "title": "Sólo el acero",
+    "language": "spa",
+    "cover": 13919318
+   },
+   {
+    "work": "OL34956465W",
+    "title": "Mars Override",
+    "language": "ger",
+    "cover": 13826947
+   },
+   {
+    "work": "OL34974666W",
+    "title": "Black Widow",
+    "language": "spa",
+    "cover": 13925447
+   }
+  ]
+ }
+]
