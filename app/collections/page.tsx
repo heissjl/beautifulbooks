@@ -1,17 +1,16 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import CoverImage from '@/components/CoverImage';
+import CollectionRow from '@/components/CollectionRow';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import { liveCollections } from '@/lib/collections-live';
-import { olCover } from '@/lib/curated';
 import { SITE_URL } from '@/lib/seo';
 
 /**
- * Every collection the file holds (ROADMAP 5.10, SPEC F8), each as a strip of
- * its first covers. With none published this is a 404 on a production build,
+ * Every collection the file holds (ROADMAP 5.10, SPEC F8), each with its title
+ * link and a row of its covers that scrolls sideways (`CollectionRow`). With none published this is a 404 on a production build,
  * so the footer never points at an empty shelf.
  */
 export const metadata: Metadata = {
@@ -19,9 +18,6 @@ export const metadata: Metadata = {
   description: 'Books gathered around a theme or a series, one cover each.',
   alternates: { canonical: `${SITE_URL}/collections` },
 };
-
-/** Covers in a card's strip: one row of six on a desktop, cut to three on a phone. */
-const STRIP = 6;
 
 // Per request: a collection can be published from /curate without a deploy (5.10g).
 export const dynamic = 'force-dynamic';
@@ -52,16 +48,8 @@ export default async function CollectionsPage() {
                   </p>
                 </div>
                 <p className="mt-3 line-clamp-2 max-w-2xl text-sm text-ink-2">{c.intro}</p>
-                <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4" aria-hidden="true">
-                  {c.works.slice(0, STRIP).map((w, i) => (
-                    <li key={w.id} className={i >= 3 ? 'hidden sm:block' : undefined}>
-                      <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2">
-                        <CoverImage src={olCover(w.coverId, 'M')} alt="" sizes="(max-width: 640px) 33vw, 16vw" />
-                      </div>
-                    </li>
-                  ))}
-                </ul>
               </Link>
+              <CollectionRow slug={c.slug} title={c.title} works={c.works} total={c.works.length} />
             </li>
           ))}
         </ul>
