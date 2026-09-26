@@ -30,10 +30,12 @@ export function draftDelta(draft: DraftLike, record: Pick<CollectionRecord, 'tit
   for (const w of removed) ops.push({ op: 'remove', id: w.id });
   let added = 0;
   let covers = 0;
+  let renamed = 0;
   for (const w of record.works) {
     const o = online.get(w.id);
-    if (o && o.coverId === w.coverId) continue;
-    if (o) covers += 1; else added += 1;
+    // Titles and authors count too: a name corrected in the file must reach the draft (Poésie/Gallimard, 2026-09-26).
+    if (o && o.coverId === w.coverId && o.title === w.title && o.author === w.author) continue;
+    if (!o) added += 1; else if (o.coverId !== w.coverId) covers += 1; else renamed += 1;
     ops.push({ op: 'pick', id: w.id, title: w.title, author: w.author, coverId: w.coverId });
   }
   const wanted = record.works.map(w => w.id);
@@ -45,6 +47,6 @@ export function draftDelta(draft: DraftLike, record: Pick<CollectionRecord, 'tit
     ...removed.map(w => `${w.title} (not in the file)`),
     ...record.works.filter(w => online.has(w.id) && online.get(w.id)!.coverId !== w.coverId).map(w => `${w.title}: online ${online.get(w.id)!.coverId}, file ${w.coverId}`),
   ];
-  const summary = [meta.title !== undefined && 'title', meta.intro !== undefined && 'intro', removed.length && `${removed.length} removed`, added && `${added} added`, covers && `${covers} covers`, ops.some(o => o.op === 'order') && 'order'].filter(Boolean).join(', ') || 'already equal';
+  const summary = [meta.title !== undefined && 'title', meta.intro !== undefined && 'intro', removed.length && `${removed.length} removed`, added && `${added} added`, covers && `${covers} covers`, renamed && `${renamed} renamed`, ops.some(o => o.op === 'order') && 'order'].filter(Boolean).join(', ') || 'already equal';
   return { ops, onlineOnly, summary };
 }

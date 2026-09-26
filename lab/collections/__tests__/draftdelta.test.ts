@@ -24,4 +24,11 @@ describe('draftDelta', () => {
     expect(r.ops).toContainEqual({ op: 'pick', id: 'OL1W', title: 'T OL1W', author: 'A', coverId: 'ol:2' });
     expect(r.onlineOnly).toHaveLength(2);
   });
+
+  it('sends a renamed work even when its cover is unchanged', () => {
+    const r = draftDelta({ title: 'X', intro: '', works: [{ id: 'OL1W', title: 'Calligrams', author: 'A', coverId: 'ol:1' }] }, { title: 'X', intro: '', works: [{ id: 'OL1W', title: 'Calligrammes', author: 'A', coverId: 'ol:1' }] });
+    expect(r.ops).toEqual([{ op: 'pick', id: 'OL1W', title: 'Calligrammes', author: 'A', coverId: 'ol:1' }]);
+    expect(r.onlineOnly).toEqual([]);
+    expect(r.summary).toBe('1 renamed');
+  });
 });
