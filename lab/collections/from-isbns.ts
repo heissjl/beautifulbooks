@@ -13,6 +13,10 @@
  * never filled with some other printing's image, because the point of a
  * series wall is the series design.
  *
+ * `MAX_WORKS=<n>` stops once n works are on the wall, in list order — for a
+ * long series such as edition suhrkamp, where Julian wanted „the first 200 …
+ * that work … in order nonetheless" (2026-09-25).
+ *
  * Open Library only, never Google (lab rule 6); one request at a time with a
  * pause, cached beside this file in `isbn-cache.json` (git-ignored). Writes
  * the collection into `data/collections.json` (or `COLLECTIONS_FILE`) as a
@@ -31,6 +35,8 @@ interface Entry {
   no?: string | null;
   title: string;
   isbn: string;
+  /** Set by hand after looking: the image under this ISBN is not a cover (a title page, a photo, a stand-in). */
+  skip?: string;
   fallbackIsbns?: string[];
 }
 
@@ -80,7 +86,10 @@ async function main() {
   const noCover: string[] = [];
   const notFound: string[] = [];
 
+  const maxWorks = Number(process.env.MAX_WORKS) || Infinity;
   for (const e of entries) {
+    if (works.length >= maxWorks) break;
+    if (e.skip) continue;
     let hit = await resolve(e.isbn);
     let coverFrom = e.isbn;
     for (const alt of e.fallbackIsbns ?? []) {
@@ -103,6 +112,7 @@ async function main() {
       coverId: `ol:${hit.cover}`,
       addedAt: new Date().toISOString().slice(0, 10),
       from: `isbn:${coverFrom}`,
+      coverIsbn: coverFrom,
     });
     process.stdout.write(`${works.length} `);
   }
