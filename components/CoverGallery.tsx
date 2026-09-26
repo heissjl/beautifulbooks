@@ -209,10 +209,18 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
               }}
               aria-pressed={selected}
               aria-label={caption ? `Cover, ${caption}` : 'Cover'}
-              className={`tile-in group relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 text-left transition-transform duration-300 ease-out focus-visible:outline-none ${
+              /*
+                Selected and focused must look different (ROADMAP 6.55, found in a
+                real keyboard test on 2026-09-26): both drew the same accent ring,
+                so tabbing on lost which cover was chosen. Selected keeps the
+                accent ring and gains a check mark (not colour alone); keyboard
+                focus is a dark outline further out, so a focused selected tile
+                shows both.
+              */
+              className={`tile-in group relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 text-left transition-transform duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[5px] focus-visible:outline-ink ${
                 selected
                   ? 'cover-shadow ring-2 ring-accent ring-offset-2 ring-offset-bg'
-                  : 'cover-shadow hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
+                  : 'cover-shadow hover:-translate-y-1'
               }`}
             >
               <CoverImage
@@ -223,6 +231,11 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
               <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-2 pb-2 pt-8 text-left text-[11px] font-medium leading-tight text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
                 {caption}
               </div>
+              {selected && (
+                <span aria-hidden="true" className="pointer-events-none absolute left-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-white shadow">
+                  <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5l3 3 6-7" /></svg>
+                </span>
+              )}
               {cover.similarIds && cover.similarIds.length > 0 && (
                 <span className="pointer-events-none absolute right-1.5 top-1.5 rounded-full bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white" title={`${cover.similarIds.length} more scan${cover.similarIds.length > 1 ? 's' : ''} of this cover`}>
                   +{cover.similarIds.length}

@@ -76,7 +76,24 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
 
   return (
     <form onSubmit={e => { e.preventDefault(); submit(inputValue); }} className="w-full" role="search">
-      <div className="relative">
+      {/*
+        The list closes when focus leaves the field, its button and the list
+        itself (ROADMAP 6.56): after Tab it stayed open over the language
+        pills while focus was already on the result cards. Escape closes it too.
+      */}
+      <div
+        className="relative"
+        onBlur={e => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setShowSuggestions(false);
+        }}
+        onKeyDown={e => {
+          if (e.key !== 'Escape') return;
+          // Back to the field, so focus is not left on a suggestion that just vanished;
+          // the close comes after the field's own onFocus, so it wins.
+          inputRef.current?.focus();
+          setShowSuggestions(false);
+        }}
+      >
         <svg className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>

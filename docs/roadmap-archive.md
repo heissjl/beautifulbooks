@@ -787,3 +787,11 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 ## 6.41
 
 - [ ] **6.41 Claude in Chrome für die Prüfungen, die das Browser-Panel nicht kann.** Drei offene Punkte hängen an demselben Satz — „das Browser-Panel schickt Tastendrücke ohne Tastenwert“: **0.8a** (Tab-Reihenfolge, Enter auf einer Kachel, Fokus-Ring), **1.8** (Hugendubel und genialokal rendern erst im Browser), **6.38** (beide Varianten ansehen). Die Claude-in-Chrome-Erweiterung steuert einen echten Chrome aus VS Code heraus: Tasten, Konsole, Netzwerk, Screenshots auf Platte ([Doku](https://code.claude.com/docs/en/chrome); Pro/Max-Plan und `/login`). Playwright MCP wäre der Weg für Tests ohne Fenster. **Julian:** Erweiterung installieren, fünf Minuten. **Claude:** die drei Punkte abarbeiten, eine Stunde. Bis dahin bleibt Headless-Chrome mit `--screenshot` der Behelf (so entstanden die Brett-Screenshots am 2026-09-12) — **mit einer gemessenen Grenze: Headless-Chrome erzwingt eine Mindestfensterbreite von 500 px.** `--window-size=390,844` wird stillschweigend zu 500, die Seite wird auf 500 px gelegt, und ein 390 px breiter Screenshot zeigt nur den linken Rand davon; zweimal sah das am 2026-09-12 wie ein Überlauf aus, den es nicht gab (`innerWidth=500`, `scrollWidth=500`, per Mess-Skript im DOM). Eine Telefon-Messung braucht also Geräte-Emulation oder einen echten Browser — genau dieser Punkt.
+
+## 6.55
+
+- [ ] **6.55 Gewählt und fokussiert sehen gleich aus.** (Befund aus 0.8a, 2026-09-26, in Julians Chrome.) Auf der Werkseite tragen die gewählte Kachel und die mit dem Tastatur-Fokus denselben Akzent-Ring und dieselbe eingeblendete Zeile; wer mit Tab weitergeht, sieht nicht mehr, welches Cover gewählt ist. Zu bauen: ein zweites Zeichen für „gewählt“ (etwa ein dickerer Ring oder ein Haken) oder ein anderer Fokus-Stil, bei 390 und 1280 px angesehen. Eine Stunde, Claude.
+
+## 6.56
+
+- [ ] **6.56 Die Vorschlagsliste bleibt offen, wenn der Fokus das Suchfeld verlässt.** (Befund aus 0.8a, 2026-09-26.) Nach Tab aus dem Suchfeld liegt die Liste „Popular …“ weiter über den Sprach-Pillen und verdeckt sie, während der Fokus schon auf den Karten ist. Zu bauen: schließen bei `blur`, wenn der Fokus nicht in die Liste wandert; ein Test. Eine halbe Stunde, Claude.
