@@ -47,6 +47,14 @@ export function olCover(coverId: number, size: 'S' | 'M' | 'L' = 'M'): string {
   return `https://covers.openlibrary.org/b/id/${coverId}-${size}.jpg`;
 }
 
+/**
+ * The image of a wall tile: the collection's own file where it has one
+ * (`WallWork.image`), otherwise Open Library's cover.
+ */
+export function wallCover(w: { coverId: number; image?: string }, size: 'S' | 'M' | 'L' = 'M'): string {
+  return w.image ?? olCover(w.coverId, size);
+}
+
 /** How many tiles the home page shows: three full rows of six (ROADMAP 6.17). */
 export const WALL_SIZE = 18;
 

@@ -25,6 +25,16 @@ describe('parseCollections', () => {
     expect(c.scope).toEqual(['Mary Shelley', 'Ingeborg Bachmann']);
   });
 
+  it('shows a site-served image only from public/collection-covers, and never selects it on a book wall', () => {
+    const works = [
+      { id: 'OL1099513W', title: 'Reise zum Mittelpunkt der Erde', author: 'Jules Verne', coverId: 'local:vol-01', image: '/collection-covers/jules-verne/vol-01.jpg' },
+      { id: 'OL1W', title: 'Elsewhere', author: 'X', coverId: 'local:x', image: 'https://example.com/x.jpg' },
+      { id: 'OL2W', title: 'Climbing out', author: 'X', coverId: 'local:y', image: '/collection-covers/../secret.jpg' },
+    ];
+    const [c] = parseCollections([record({ works })], { includeDrafts: false });
+    expect(c.works).toEqual([{ id: 'OL1099513W', title: 'Reise zum Mittelpunkt der Erde', author: 'Jules Verne', coverId: 0, image: '/collection-covers/jules-verne/vol-01.jpg' }]);
+  });
+
   it('hides drafts unless asked for them', () => {
     const draft = record({ published: false });
     expect(parseCollections([draft], { includeDrafts: false })).toEqual([]);
@@ -125,6 +135,8 @@ describe('coverLine', () => {
     expect(coverLine('authors')).toContain('chosen by hand');
     expect(coverLine('series')).not.toContain('hand');
     expect(coverLine('authors', 'catalogue')).toContain('not all of them chosen by hand');
+    expect(coverLine('series', undefined, 19)).toContain('19 of them photographed');
+    expect(coverLine('series', undefined, 19)).not.toContain('Open Library holds');
   });
 });
 

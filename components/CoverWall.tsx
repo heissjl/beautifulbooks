@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import CoverImage from './CoverImage';
 import { storeWorkPreview } from './useWorkPreview';
-import { olCover, type CuratedWork } from '@/lib/curated';
+import { wallCover, type CuratedWork } from '@/lib/curated';
 import type { WallWork } from '@/lib/collections';
 import { tileTitle } from '@/lib/normalize';
 
@@ -28,15 +28,17 @@ export default function CoverWall({ works, selectCover = false }: CoverWallProps
     <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6">
       {works.map(w => {
         const target = ('coverWork' in w && w.coverWork) || w.id;
+        // A site-served image is on no wall of Open Library's, so there is no cover to select there.
+        const image = 'image' in w ? w.image : undefined;
         return (
         <li key={w.id}>
           <Link
-            href={selectCover ? `/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}` : `/book/${target}`}
+            href={selectCover && !image ? `/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}` : `/book/${target}`}
             className="group block focus-visible:outline-none"
-            onClick={() => storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [olCover(w.coverId, 'L')] })}
+            onClick={() => storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [wallCover({ coverId: w.coverId, image }, 'L')] })}
           >
             <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
-              <CoverImage src={olCover(w.coverId, 'M')} alt={`${w.title} by ${w.author}`} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
+              <CoverImage src={wallCover({ coverId: w.coverId, image }, 'M')} alt={`${w.title} by ${w.author}`} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
             </div>
             {/*
               Two lines each, as on the result cards. One line cut 9 of 18

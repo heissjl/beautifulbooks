@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
 import CoverImage from './CoverImage';
 import { useOverflowsX } from './useOverflowsX';
 import { storeWorkPreview } from './useWorkPreview';
-import { olCover } from '@/lib/curated';
+import { wallCover } from '@/lib/curated';
 import type { WallWork } from '@/lib/collections';
 import { coverProxyPath } from '@/lib/coverurl';
 
@@ -81,12 +81,12 @@ export default function CollectionRow({ slug, title, works, total }: { slug: str
             return (
               <li key={w.id} className={tile}>
                 <Link
-                  href={`/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}`}
-                  onClick={() => storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [olCover(w.coverId, 'L')] })}
+                  href={w.image ? `/book/${target}` : `/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}`}
+                  onClick={() => storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [wallCover(w, 'L')] })}
                   className="group block focus-visible:outline-none"
                 >
                   <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
-                    <CoverImage src={olCover(w.coverId, 'M')} alt={`${w.title} by ${w.author}`} sizes="160px" />
+                    <CoverImage src={wallCover(w, 'M')} alt={`${w.title} by ${w.author}`} sizes="160px" />
                   </div>
                 </Link>
               </li>
@@ -105,7 +105,7 @@ export default function CollectionRow({ slug, title, works, total }: { slug: str
                   <div aria-hidden className="grid h-full w-full gap-0.5" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)`, gridTemplateRows: `repeat(${rows}, 1fr)` }}>
                     {warm && minis.map((w, i) => (
                       // eslint-disable-next-line @next/next/no-img-element -- dozens of small thumbnails through the site's cached /img route (N8); next/image would add its own optimiser request per mini
-                      <img key={`${w.id}-${i}`} src={coverProxyPath(`ol:${w.coverId}`, 'S')} alt="" loading="eager" fetchPriority="low" decoding="async" className="h-full w-full rounded-[2px] object-cover" />
+                      <img key={`${w.id}-${i}`} src={w.image ?? coverProxyPath(`ol:${w.coverId}`, 'S')} alt="" loading="eager" fetchPriority="low" decoding="async" className="h-full w-full rounded-[2px] object-cover" />
                     ))}
                   </div>
                   <div className="absolute inset-0 flex items-center justify-center bg-black/45 transition-colors group-hover:bg-black/35">

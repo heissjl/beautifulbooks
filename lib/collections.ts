@@ -50,6 +50,14 @@ export interface CollectionPick {
    * where the cover exists, instead of the original's, where it does not.
    */
   coverWork?: string;
+  /**
+   * A cover served from the site itself, `/collection-covers/<slug>/<file>.jpg`,
+   * for a printing Open Library has no image of and cannot take one for yet
+   * (its cover store was down on 2026-09-26 when the Jules Verne collection
+   * was ready). `coverId` is then `local:<file>`. A stopgap: once the image is
+   * on Open Library, the pick gets its `ol:` id back and this goes.
+   */
+  image?: string;
 }
 
 /** A tile on a collection wall: a curated work, and its cover credit where the collection shows one. */
@@ -57,6 +65,8 @@ export interface WallWork extends CuratedWork {
   coverArtists?: string[];
   /** The work whose wall holds this cover, when it is not `id` (see CollectionPick). */
   coverWork?: string;
+  /** The site's own image, when the pick has one (see CollectionPick); `coverId` is then 0. */
+  image?: string;
 }
 
 export interface CollectionRecord {
@@ -105,6 +115,9 @@ export function isCollectionSlug(value: string): boolean {
   return SLUG.test(value);
 }
 
+/** The only form a site-served cover may take: a file under `public/collection-covers/`. */
+const LOCAL_IMAGE = /^\/collection-covers\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9-]+\.jpg$/;
+
 function coverNumber(coverId: string): number | null {
   if (!coverId.startsWith('ol:')) return null;
   const n = Number(coverId.slice(3));
@@ -130,10 +143,11 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
     const works: WallWork[] = [];
     for (const p of r.works) {
       const coverId = coverNumber(p.coverId);
-      if (coverId === null || seen.has(p.id)) continue;
+      const image = coverId === null && p.image && LOCAL_IMAGE.test(p.image) ? p.image : undefined;
+      if ((coverId === null && !image) || seen.has(p.id)) continue;
       seen.add(p.id);
       const credit = r.coverCredits === 'isfdb' && p.coverArtists?.length ? { coverArtists: p.coverArtists } : {};
-      works.push({ id: p.id, title: p.title, author: p.author, coverId, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}) });
+      works.push({ id: p.id, title: p.title, author: p.author, coverId: coverId ?? 0, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}), ...(image ? { image } : {}) });
     }
     const scope = r.kind === 'series' ? (r.publishers ?? []) : (r.authors ?? []).map(a => a.name);
     out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}) });
@@ -173,7 +187,11 @@ export function authorsShown(collection: Collection): string[] {
  * each series printing, which nobody looked at one by one — and for a few
  * it is not the series design at all (SF Masterworks: 4 of 73, 2026-09-25).
  */
-export function coverLine(kind: CollectionKind, coverSource?: 'catalogue'): string {
+export function coverLine(kind: CollectionKind, coverSource?: 'catalogue', ownImages = 0): string {
+  // A site-served image is not Open Library's, so the line must not say it is (see CollectionPick.image).
+  if (ownImages > 0 && kind === 'series') {
+    return `each with the cover of its printing in the series — ${ownImages === 1 ? 'one of them' : `${ownImages} of them`} photographed from a collector's copy, as Open Library has no image of ${ownImages === 1 ? 'it' : 'them'} yet`;
+  }
   if (coverSource === 'catalogue') return 'each with a cover from Open Library, not all of them chosen by hand yet';
   return kind === 'series'
     ? 'each with the cover Open Library holds for its printing in the series'

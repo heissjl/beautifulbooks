@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import CoverImage from './CoverImage';
-import { olCover } from '@/lib/curated';
+import { wallCover } from '@/lib/curated';
 import type { Collection } from '@/lib/collections';
 
 /** At most two rows of two cards on the home page; the rest are one click away. */
@@ -45,7 +45,7 @@ export default function CollectionsShelf({ collections }: { collections: Collect
                 {c.works.slice(0, PREVIEW).map((w, i) => (
                   <li key={w.id} className={i >= 4 ? 'hidden sm:block' : undefined}>
                     <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2">
-                      <CoverImage src={olCover(w.coverId, 'M')} alt="" sizes="(max-width: 640px) 25vw, 10vw" />
+                      <CoverImage src={wallCover(w, 'M')} alt="" sizes="(max-width: 640px) 25vw, 10vw" />
                     </div>
                   </li>
                 ))}
