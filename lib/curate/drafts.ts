@@ -52,7 +52,12 @@ export interface DraftStore {
   register(id: string): Promise<void>;
 }
 
-export const DRAFT_LIMITS = { title: 120, intro: 1200, by: 60, works: 120, authors: 40, publishers: 10 };
+/**
+ * Bounds on what a browser may put into a draft. `works` was 120 until
+ * 2026-09-25, below the 150 and 200 of the relaunch and Suhrkamp walls a
+ * draft continues — Julian could not add three volumes to his Suhrkamp draft.
+ */
+export const DRAFT_LIMITS = { title: 120, intro: 1200, by: 60, works: 400, authors: 200, publishers: 10 };
 
 const KEYS = { ids: 'curate:drafts', draft: (id: string) => `curate:draft:${id}` };
 
