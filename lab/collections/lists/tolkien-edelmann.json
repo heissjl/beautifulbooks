@@ -1,12 +1,9 @@
 [
- { "no": null, "title": "Der Herr der Ringe 1: Die Gefährten", "isbn": "3129081801", "fallbackIsbns": ["3608952128", "3129079211", "3129080805"] },
- { "no": null, "title": "Der Herr der Ringe 2: Die zwei Türme", "isbn": "3129081909", "fallbackIsbns": ["3608952136", "3129079319", "3129080902"] },
- { "no": null, "title": "Der Herr der Ringe 3: Die Rückkehr des Königs", "isbn": "312908200X", "fallbackIsbns": ["3608952144", "3129079416", "3129081003"] },
- { "no": null, "title": "Der Herr der Ringe: Anhänge und Register", "isbn": "3129079807", "fallbackIsbns": ["3608951490"] },
- { "no": null, "title": "Fabelhafte Geschichten", "isbn": "3129080503", "fallbackIsbns": ["3608950346"] },
- { "no": null, "title": "Das Silmarillion", "isbn": "312907970X", "fallbackIsbns": ["3608951318"] },
- { "no": null, "title": "Baum und Blatt", "isbn": "3548390390" },
- { "no": null, "title": "Nachrichten aus Mittelerde", "isbn": "3608951601" },
- { "no": null, "title": "Das Buch der verschollenen Geschichten 1", "isbn": "360895306X" },
- { "no": null, "title": "Das Buch der verschollenen Geschichten 2", "isbn": "3608953078" }
+ { "no": "1", "title": "Der Herr der Ringe 1: Die Gefährten (Taschenbuch)", "isbn": "3129081801", "fallbackIsbns": ["3608952128"] },
+ { "no": "2", "title": "Der Herr der Ringe 2: Die zwei Türme (Taschenbuch)", "isbn": "3129081909", "fallbackIsbns": ["3608952136"] },
+ { "no": "3", "title": "Der Herr der Ringe 3: Die Rückkehr des Königs (Taschenbuch)", "isbn": "312908200X", "fallbackIsbns": ["3608952144"] },
+ { "no": "4", "title": "Der Herr der Ringe 1: Die Gefährten (Ausgabe 1980)", "isbn": "3129079211", "skip": "same work as no. 1; a wall holds one cover per work (lib/collections.ts), and Open Library does not know the ISBN" },
+ { "no": "5", "title": "Der Herr der Ringe 2: Die zwei Türme (Ausgabe 1980)", "isbn": "3129079319", "skip": "same work as no. 2; one cover per work, ISBN unknown to Open Library" },
+ { "no": "6", "title": "Der Herr der Ringe 3: Die Rückkehr des Königs (Ausgabe 1980)", "isbn": "3129079416", "skip": "same work as no. 3; one cover per work, ISBN unknown to Open Library" },
+ { "no": "7", "title": "Baum und Blatt (Klett-Cotta im Ullstein Taschenbuch, 1982)", "isbn": "3548390390", "work": "OL27512W" }
 ]

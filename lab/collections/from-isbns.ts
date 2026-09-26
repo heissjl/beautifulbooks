@@ -46,6 +46,12 @@ interface Entry {
    * stray one as `coverWork`, the wall that holds the image.
    */
   work?: string;
+  /**
+   * Set by hand: an Open Library edition key (`OL…M`) for a printing without
+   * an ISBN — the pre-1970 volumes of a series, found by title, author,
+   * publisher and year. Used instead of `isbn` (which may then be empty).
+   */
+  edition?: string;
 }
 
 const cache: Record<string, unknown> = existsSync(CACHE_FILE) ? JSON.parse(readFileSync(CACHE_FILE, 'utf8')) : {};
@@ -78,8 +84,8 @@ async function getJson<T>(path: string): Promise<T | null> {
 interface Edition { covers?: number[]; works?: Array<{ key: string }>; title?: string }
 interface Work { title?: string; authors?: Array<{ author?: { key: string } }>; first_publish_date?: string }
 
-async function resolve(isbn: string) {
-  const edition = await getJson<Edition>(`/isbn/${isbn}.json`);
+async function resolve(isbn: string, editionKey?: string) {
+  const edition = await getJson<Edition>(editionKey ? `/books/${editionKey}.json` : `/isbn/${isbn}.json`);
   const workKey = edition?.works?.[0]?.key;
   if (!edition || !workKey) return null;
   const cover = (edition.covers ?? []).find(c => c > 0);
@@ -98,8 +104,8 @@ async function main() {
   for (const e of entries) {
     if (works.length >= maxWorks) break;
     if (e.skip) continue;
-    let hit = await resolve(e.isbn);
-    let coverFrom = e.isbn;
+    let hit = await resolve(e.isbn, e.edition);
+    let coverFrom = e.edition && !e.isbn ? '' : e.isbn;
     for (const alt of e.fallbackIsbns ?? []) {
       if (hit?.cover) break;
       const other = await resolve(alt);
@@ -120,8 +126,7 @@ async function main() {
       author: (author?.name ?? '').normalize('NFC'),
       coverId: `ol:${hit.cover}`,
       addedAt: new Date().toISOString().slice(0, 10),
-      from: `isbn:${coverFrom}`,
-      coverIsbn: coverFrom,
+      ...(coverFrom ? { from: `isbn:${coverFrom}`, coverIsbn: coverFrom } : { from: `edition:${e.edition}` }),
       ...(coverWork !== id ? { coverWork } : {}),
     });
     process.stdout.write(`${works.length} `);

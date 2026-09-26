@@ -10391,7 +10391,7 @@
       "slug": "tolkien-covers-by-heinz-edelmann",
       "title": "Tolkien — covers by Heinz Edelmann",
       "kind": "series",
-      "intro": "Heinz Edelmann designed the first German edition of The Lord of the Rings for Klett in 1969–70, and went on to design the covers of Tolkien's books there: the green paperbacks in their slipcase, the Silmarillion, Unfinished Tales.",
+      "intro": "Heinz Edelmann designed the first German edition of The Lord of the Rings for Klett in 1969–70 and the covers that followed: the green paperbacks, the Hobbit Presse edition of 1980, Baum und Blatt.",
       "published": false,
       "publishers": [
         "Klett-Cotta",
@@ -10426,33 +10426,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:312908200X",
           "coverIsbn": "312908200X"
-        },
-        {
-          "id": "OL8997777W",
-          "title": "Fabelhafte Geschichten",
-          "author": "J.R.R. Tolkien",
-          "coverId": "ol:14627059",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3608950346",
-          "coverIsbn": "3608950346"
-        },
-        {
-          "id": "OL27495W",
-          "title": "The Silmarillion",
-          "author": "J.R.R. Tolkien",
-          "coverId": "ol:8536129",
-          "addedAt": "2026-09-26",
-          "from": "isbn:312907970X",
-          "coverIsbn": "312907970X"
-        },
-        {
-          "id": "OL34942458W",
-          "title": "Nachrichten aus Mittelerde",
-          "author": "J.R.R. Tolkien",
-          "coverId": "ol:14627514",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3608951601",
-          "coverIsbn": "3608951601"
         }
       ]
     },
@@ -10467,6 +10440,14 @@
         "Carl Hanser"
       ],
       "works": [
+        {
+          "id": "OL1364647W",
+          "title": "Marx-Chronik",
+          "author": "Maximilien Rubel",
+          "coverId": "ol:10555558",
+          "addedAt": "2026-09-26",
+          "from": "edition:OL4958481M"
+        },
         {
           "id": "OL1411623W",
           "title": "Der andere Prozess",
@@ -10486,6 +10467,22 @@
           "coverIsbn": "3446111603"
         },
         {
+          "id": "OL18320188W",
+          "title": "Sprache und Stil Lenins",
+          "author": "Viktor Borisovič Šklovskij",
+          "coverId": "ol:9275703",
+          "addedAt": "2026-09-26",
+          "from": "edition:OL5732751M"
+        },
+        {
+          "id": "OL1411528W",
+          "title": "Alle vergeudete Verehrung",
+          "author": "Elias Canetti",
+          "coverId": "ol:9896796",
+          "addedAt": "2026-09-26",
+          "from": "edition:OL4576060M"
+        },
+        {
           "id": "OL6637377W",
           "title": "Europa: die Toten haben nichts zu lachen",
           "author": "Hermann Schürrer",
@@ -10493,6 +10490,15 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3446113991",
           "coverIsbn": "3446113991"
+        },
+        {
+          "id": "OL13476120W",
+          "title": "Ansichten einer künftigen Medizin",
+          "author": "Paul Lüth",
+          "coverId": "ol:10569797",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446113959",
+          "coverIsbn": "3446113959"
         },
         {
           "id": "OL2049197W",
@@ -10520,6 +10526,15 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3446114939",
           "coverIsbn": "3446114939"
+        },
+        {
+          "id": "OL11478151W",
+          "title": "Brecht-Chronik",
+          "author": "Klaus Völker",
+          "coverId": "ol:13535730",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446115056",
+          "coverIsbn": "3446115056"
         },
         {
           "id": "OL4683668W",
@@ -10642,6 +10657,63 @@
           "from": "isbn:3436012483",
           "coverIsbn": "3436012483",
           "coverWork": "OL20160863W"
+        }
+      ]
+    },
+    {
+      "slug": "heinz-edelmann-various-publishers",
+      "title": "Heinz Edelmann — various publishers",
+      "kind": "series",
+      "intro": "Book jackets Heinz Edelmann drew for publishers from Luchterhand and Scherz to Hanser, Middelhauve and Klett-Cotta, between 1962 and 1985, in the order a collector of his work shows them.",
+      "published": false,
+      "publishers": [
+        "Luchterhand",
+        "Scherz",
+        "Diogenes",
+        "Klett",
+        "Hanser",
+        "Bärmeier & Nikel",
+        "Jugenddienst-Verlag",
+        "Middelhauve",
+        "Bertelsmann",
+        "Klett-Cotta"
+      ],
+      "works": [
+        {
+          "id": "OL22058272W",
+          "title": "Der Wind in den Weiden oder der Dachs lässt schön grüssen, möchte aber auf keinen Fall gestört werden",
+          "author": "Kenneth Grahame",
+          "coverId": "ol:10421448",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3787681205",
+          "coverIsbn": "3787681205"
+        },
+        {
+          "id": "OL2440182W",
+          "title": "Vorstadtkrokodil",
+          "author": "Max von der Grün",
+          "coverId": "ol:1021133",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3570076989",
+          "coverIsbn": "3570076989"
+        },
+        {
+          "id": "OL4579254W",
+          "title": "Eichendorffs Untergang und andere Märchen",
+          "author": "Helmut Heissenbüttel",
+          "coverId": "ol:2195690",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3129035508",
+          "coverIsbn": "3129035508"
+        },
+        {
+          "id": "OL20920429W",
+          "title": "A Dark Horn Blowing",
+          "author": "Dahlov Ipcar",
+          "coverId": "ol:10290958",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3129036210",
+          "coverIsbn": "3129036210"
         }
       ]
     },

@@ -6,6 +6,24 @@
   "fallbackIsbns": []
  },
  {
+  "no": "2",
+  "title": "Die Grenze",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
+ },
+ {
+  "no": "3",
+  "title": "Marx-Chronik",
+  "isbn": "",
+  "edition": "OL4958481M"
+ },
+ {
+  "no": "4",
+  "title": "Nach dem Formalismus",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
+ },
+ {
   "no": "5",
   "title": "Zeitfragen",
   "isbn": "344611176X",
@@ -22,6 +40,12 @@
   "title": "Feinde",
   "isbn": "3446111972",
   "fallbackIsbns": []
+ },
+ {
+  "no": "8",
+  "title": "Entblössung",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
  },
  {
   "no": "9",
@@ -48,6 +72,12 @@
   "fallbackIsbns": []
  },
  {
+  "no": "13",
+  "title": "Professor Tutkas Geschichten",
+  "isbn": "",
+  "edition": "OL5763142M"
+ },
+ {
   "no": "14",
   "title": "Deutschland zwischen Demokratie und Faschismus",
   "isbn": "3446111905",
@@ -60,10 +90,40 @@
   "fallbackIsbns": []
  },
  {
+  "no": "16",
+  "title": "Das Denken von Sade",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
+ },
+ {
+  "no": "17",
+  "title": "Obwohl",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
+ },
+ {
+  "no": "18",
+  "title": "China, die Revolution der Literatur",
+  "isbn": "",
+  "edition": "OL4619167M"
+ },
+ {
+  "no": "20",
+  "title": "Die neue Linke in den USA",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
+ },
+ {
   "no": "21",
   "title": "Verärgerte Logik",
   "isbn": "3446111999",
   "fallbackIsbns": []
+ },
+ {
+  "no": "22",
+  "title": "Spielerei bei Tage",
+  "isbn": "",
+  "edition": "OL4365709M"
  },
  {
   "no": "23",
@@ -82,6 +142,12 @@
   "title": "Die Eroberung des Brotes und andere Schriften",
   "isbn": "3446111921",
   "fallbackIsbns": []
+ },
+ {
+  "no": "26",
+  "title": "Farabeuf oder Die Chronik eines Augenblicks",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
  },
  {
   "no": "27",
@@ -108,6 +174,90 @@
   "fallbackIsbns": []
  },
  {
+  "no": "34",
+  "title": "Kriegerdenkmal ganz hinten",
+  "isbn": "",
+  "edition": "OL5445371M"
+ },
+ {
+  "no": "35",
+  "title": "Handbuch für Einwohner",
+  "isbn": "",
+  "edition": "OL5699381M"
+ },
+ {
+  "no": "37",
+  "title": "Gespenster für den Alltag",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
+ },
+ {
+  "no": "38",
+  "title": "Bakunin, eine Invention",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
+ },
+ {
+  "no": "41",
+  "title": "Kritik und Zukunft des Sozialismus",
+  "isbn": "",
+  "edition": "OL5385852M"
+ },
+ {
+  "no": "43",
+  "title": "König Ubu",
+  "isbn": "",
+  "edition": "OL5161471M"
+ },
+ {
+  "no": "47",
+  "title": "Sprache und Stil Lenins",
+  "isbn": "",
+  "edition": "OL5732751M"
+ },
+ {
+  "no": "50",
+  "title": "Alle vergeudete Verehrung",
+  "isbn": "",
+  "edition": "OL4576060M"
+ },
+ {
+  "no": "51",
+  "title": "USA, die neue Linke am Ende?",
+  "isbn": "",
+  "edition": "OL4059522M"
+ },
+ {
+  "no": "52",
+  "title": "Kläranlage",
+  "isbn": "",
+  "edition": "OL4462048M"
+ },
+ {
+  "no": "53",
+  "title": "Utopien",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
+ },
+ {
+  "no": "54",
+  "title": "Weltbilder",
+  "isbn": "",
+  "skip": "first printing without ISBN, no Open Library edition found; staged"
+ },
+ {
+  "no": "56",
+  "title": "Roboter und Gartenlaube",
+  "isbn": "",
+  "edition": "OL5757951M"
+ },
+ {
+  "no": "57",
+  "title": "Politische Pädagogik",
+  "isbn": "",
+  "edition": "OL5162175M"
+ },
+ {
   "no": "58",
   "title": "Gespräche in Algier",
   "isbn": "3446113886",
@@ -123,7 +273,8 @@
   "no": "60",
   "title": "Ansichten einer künftigen Medizin",
   "isbn": "3446113959",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL21828585M"
  },
  {
   "no": "61",
@@ -201,7 +352,8 @@
   "no": "74",
   "title": "Brecht-Chronik",
   "isbn": "3446115056",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL21828599M"
  },
  {
   "no": "75",
