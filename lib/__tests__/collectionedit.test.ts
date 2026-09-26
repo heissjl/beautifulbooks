@@ -69,6 +69,16 @@ describe('upsertPick', () => {
     expect(c.works.map(w => w.coverId)).toEqual(['ol:1', 'ol:22', 'ol:3', 'ol:4']);
   });
 
+  it('drops the cover credit when the cover changes, keeps it when it does not', () => {
+    const credited = { ...base(), works: [{ id: 'OL2W', title: 'B', author: 'Mary Shelley', coverId: 'ol:2', coverIsbn: '1857988116', coverArtists: ['John Harris'], isfdbRecord: '7127' }] };
+    const same = upsertPick(credited, { id: 'OL2W', title: 'B', author: 'Mary Shelley', coverId: 'ol:2' });
+    expect(same.works[0]).toMatchObject({ coverArtists: ['John Harris'], coverIsbn: '1857988116' });
+    const swapped = upsertPick(credited, { id: 'OL2W', title: 'B', author: 'Mary Shelley', coverId: 'ol:99' });
+    expect(swapped.works[0].coverArtists).toBeUndefined();
+    expect(swapped.works[0].coverIsbn).toBeUndefined();
+    expect(swapped.works[0].isfdbRecord).toBeUndefined();
+  });
+
   it('refuses a work by an author who is not on the list', () => {
     expect(() => upsertPick(base(), { id: 'OL5W', title: 'E', author: 'Virginia Woolf', coverId: 'ol:5' })).toThrow(/list of authors/);
   });

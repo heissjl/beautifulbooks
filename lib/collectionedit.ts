@@ -116,8 +116,23 @@ export function upsertPick(c: CollectionRecord, pick: CollectionPick): Collectio
     throw new Error(`${pick.author} is not on this collection's list of authors. Add them first.`);
   }
   const at = c.works.findIndex(w => w.id === pick.id);
-  const works = at < 0 ? [...c.works, pick] : c.works.map((w, i) => (i === at ? { ...w, ...pick, addedAt: w.addedAt ?? pick.addedAt } : w));
+  const works = at < 0 ? [...c.works, pick] : c.works.map((w, i) => (i === at ? merged(w, pick) : w));
   return { ...c, works };
+}
+
+/**
+ * A known work with a new pick. A credit belongs to one printing's image
+ * (6.52): when the cover changes, the old cover's ISBN, artists and ISFDB
+ * record go with it rather than being carried onto a cover they never named.
+ */
+function merged(old: CollectionPick, pick: CollectionPick): CollectionPick {
+  const next: CollectionPick = { ...old, ...pick, addedAt: old.addedAt ?? pick.addedAt };
+  if (old.coverId !== pick.coverId) {
+    if (!pick.coverIsbn) delete next.coverIsbn;
+    if (!pick.coverArtists) delete next.coverArtists;
+    if (!pick.isfdbRecord) delete next.isfdbRecord;
+  }
+  return next;
 }
 
 export function removePick(c: CollectionRecord, id: string): CollectionRecord {

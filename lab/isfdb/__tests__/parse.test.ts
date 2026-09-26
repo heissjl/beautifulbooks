@@ -17,6 +17,11 @@ describe('parsePublications', () => {
     expect(pubs[0].image).toMatch(/CTSNLGHT1999\.jpg$/);
   });
 
+  it('decodes entities in names (Eamon O&apos;Donoghue, measured 2026-09-25)', () => {
+    const one = parsePublications('<Publication><Record>1</Record><CoverArtists><Artist>Eamon O&apos;Donoghue</Artist></CoverArtists></Publication>');
+    expect(one[0].artists).toEqual(["Eamon O'Donoghue"]);
+  });
+
   it('reads nothing from an answer without publications', () => {
     expect(parsePublications('<?xml version="1.0"?><ISFDB><Records>0</Records></ISFDB>')).toEqual([]);
   });

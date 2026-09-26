@@ -71,3 +71,5 @@ lab/collections/isbn-cache.json
 lab/collections/for-openlibrary/
 lab/isfdb/cache.json
 lab/isfdb/ol-cache.json
+lab/isfdb/credit-ol-cache.json
+lab/collections/ol-cache.json

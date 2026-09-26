@@ -36,6 +36,19 @@ export interface CollectionPick {
   addedAt?: string;
   /** Where the pick came from, e.g. `curated.json` when it was taken over from the home-page curation. */
   from?: string;
+  /** The ISBN of the printing whose image `coverId` is — what a cover credit is looked up by (6.52). */
+  coverIsbn?: string;
+  /** Cover artists for that printing, as ISFDB names them; set only where ISFDB agrees on one credit (6.52). */
+  coverArtists?: string[];
+  /** The ISFDB publication record the credit comes from, for the link beside it. */
+  isfdbRecord?: string;
+  /** Why a known credit is not shown, e.g. the image is of another printing than the ISBN's. */
+  creditWithheld?: string;
+}
+
+/** A tile on a collection wall: a curated work, and its cover credit where the collection shows one. */
+export interface WallWork extends CuratedWork {
+  coverArtists?: string[];
 }
 
 export interface CollectionRecord {
@@ -44,6 +57,20 @@ export interface CollectionRecord {
   kind: CollectionKind;
   intro: string;
   published: boolean;
+  /**
+   * Show the cover artist under each tile (Julian, 2026-09-25: „just for
+   * sf-related collections i want the cover artist data displayed on the
+   * wall itself"). Only `isfdb` exists: ISFDB is the one source that names
+   * artists per printing, and it covers science fiction and fantasy.
+   */
+  coverCredits?: 'isfdb';
+  /**
+   * Where the covers come from when not every one was picked by eye: a list
+   * or a tag brings the catalogue's image (5.10f). Absent means by hand for
+   * an author collection and the series printing for a series. Set back by
+   * hand once every cover has been looked at.
+   */
+  coverSource?: 'catalogue';
   authors?: CollectionAuthor[];
   /** Publisher spellings of a series, each confirmed by Julian (5.4b). */
   publishers?: string[];
@@ -58,7 +85,10 @@ export interface Collection {
   published: boolean;
   /** The names the collection is drawn from, in the tool's order: authors, or a series' publishers. */
   scope: string[];
-  works: CuratedWork[];
+  /** Set when the wall shows cover credits; the page then names the source. */
+  coverCredits?: 'isfdb';
+  coverSource?: 'catalogue';
+  works: WallWork[];
 }
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -89,15 +119,16 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
     if (!r.published && !includeDrafts) continue;
     slugs.add(r.slug);
     const seen = new Set<string>();
-    const works: CuratedWork[] = [];
+    const works: WallWork[] = [];
     for (const p of r.works) {
       const coverId = coverNumber(p.coverId);
       if (coverId === null || seen.has(p.id)) continue;
       seen.add(p.id);
-      works.push({ id: p.id, title: p.title, author: p.author, coverId });
+      const credit = r.coverCredits === 'isfdb' && p.coverArtists?.length ? { coverArtists: p.coverArtists } : {};
+      works.push({ id: p.id, title: p.title, author: p.author, coverId, ...credit });
     }
     const scope = r.kind === 'series' ? (r.publishers ?? []) : (r.authors ?? []).map(a => a.name);
-    out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works });
+    out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}) });
   }
   return out;
 }
@@ -134,7 +165,8 @@ export function authorsShown(collection: Collection): string[] {
  * each series printing, which nobody looked at one by one — and for a few
  * it is not the series design at all (SF Masterworks: 4 of 73, 2026-09-25).
  */
-export function coverLine(kind: CollectionKind): string {
+export function coverLine(kind: CollectionKind, coverSource?: 'catalogue'): string {
+  if (coverSource === 'catalogue') return 'each with a cover from Open Library, not all of them chosen by hand yet';
   return kind === 'series'
     ? 'each with the cover Open Library holds for its printing in the series'
     : 'one cover each, chosen by hand';

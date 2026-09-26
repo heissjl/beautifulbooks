@@ -36,6 +36,7 @@ function decode(s: string): string {
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
     .replace(/&#(\d+);/g, (_, n: string) => String.fromCharCode(Number(n)));
 }
 

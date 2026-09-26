@@ -115,5 +115,6 @@ describe('coverLine', () => {
   it('claims a choice by hand only where one was made', () => {
     expect(coverLine('authors')).toContain('chosen by hand');
     expect(coverLine('series')).not.toContain('hand');
+    expect(coverLine('authors', 'catalogue')).toContain('not all of them chosen by hand');
   });
 });

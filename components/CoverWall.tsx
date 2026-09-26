@@ -4,10 +4,11 @@ import Link from 'next/link';
 import CoverImage from './CoverImage';
 import { storeWorkPreview } from './useWorkPreview';
 import { olCover, type CuratedWork } from '@/lib/curated';
+import type { WallWork } from '@/lib/collections';
 import { tileTitle } from '@/lib/normalize';
 
 interface CoverWallProps {
-  works: CuratedWork[];
+  works: Array<CuratedWork | WallWork>;
 }
 
 /**
@@ -36,6 +37,14 @@ export default function CoverWall({ works }: CoverWallProps) {
             */}
             <p className="mt-2 line-clamp-2 text-sm font-medium leading-snug text-ink group-hover:text-accent transition-colors">{tileTitle(w.title)}</p>
             <p className="mt-0.5 line-clamp-2 text-xs leading-snug text-ink-3">{w.author}</p>
+            {/*
+              The cover artist, only on collections that show credits (6.52)
+              and only where ISFDB names one for this printing; the page says
+              where the names come from.
+            */}
+            {'coverArtists' in w && w.coverArtists && w.coverArtists.length > 0 && (
+              <p className="mt-0.5 line-clamp-1 text-[11px] italic leading-snug text-ink-3">Cover: {w.coverArtists.join(', ')}</p>
+            )}
           </Link>
         </li>
       ))}
