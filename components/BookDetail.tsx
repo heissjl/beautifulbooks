@@ -663,7 +663,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
 
       {scans.length > 1 && (
         <section className="mt-4" aria-label="Scans folded into this tile">
-          <p className="kicker">The same cover, {scans.length} scans</p>
+          <p className="kicker">{scans.length} scans of this cover</p>
           {/*
             One row that scrolls sideways, never a second row (ROADMAP 6.14a):
             *Fahrenheit 451* carries eight scans, and a wrapped second row

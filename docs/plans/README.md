@@ -12,6 +12,7 @@ Stand: 2026-09-10. Ein Plan ist die ausführliche Fassung eines *offenen* Roadma
 | [PLAN-2-mvp-hobby.md](PLAN-2-mvp-hobby.md) | 2.0: der Hobby-MVP ohne Provision, Schalter `NEXT_PUBLIC_SITE_MODE`, Weg zum ersten Deploy | **online seit 2026-09-08** unter beautifulcovers.vercel.app; offen: Reste der Abnahme (2.6), zweiter Google-Schlüssel (0.2), Domain (0.5) |
 | [PLAN-speicher.md](PLAN-speicher.md) | 0.9 (entschieden als E18), Bauanleitung für 6.10, 6.9, 5.1; §5 ist 6.12 | Entscheidung erledigt; **6.10 erledigt** 2026-09-08/09 nach §3; offen §4 (Zähler, 3.1) und 6.9; §5 (6.12) ist seit dem gebauten Index ein Randfall |
 | [PLAN-2.4-firewall.md](PLAN-2.4-firewall.md) | 2.4: Firewall-Einstellungen im Hobby-Plan, UptimeRobot ohne Ausnahmeregel | **offen**, Vorschlag 2026-09-11; Julian stellt im Dashboard auf *Log*, nach einer Woche entscheiden beide |
+| [PLAN-6.53-other-works.md](PLAN-6.53-other-works.md) | 6.53: „More by …" unter der Wand der Buchseite | **offen**, Plan 2026-09-26 mit Messung an acht Autoren-Keys; wartet auf Julians Antworten zu §9 |
 | [PLAN-5-reichweite.md](PLAN-5-reichweite.md) | Phase 5: Seitengattungen, Agenten-Kette, Regeln gegen Slop | offen, wartet auf Phase 2–4 |
 | [PLAN-4-einnahmen.md](PLAN-4-einnahmen.md) | 4.6–4.8: Einnahmen jenseits der Affiliate-Links | Analyse fertig, Regeln als E19; Bau wartet auf Reichweite |
 | [PLAN-struktur.md](PLAN-struktur.md) | 0.11: Ordnerstruktur, `lab/`, der Clip als erstes Experiment | **entschieden** 2026-09-08: Option A, `lab/` angelegt; der Clip wartet |

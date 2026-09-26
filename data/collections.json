@@ -2053,7 +2053,7 @@
     },
     {
       "slug": "sf-masterworks-relaunch",
-      "title": "SF Masterworks, the relaunch",
+      "title": "SF Masterworks — the relaunch",
       "kind": "series",
       "intro": "NOTE FOR JULIAN (replace before publishing): stays a draft for now (2026-09-25). 24 covers still show the old numbered design, because Open Library has no relaunch image for them: Ubik, Flow My Tears, The Simulacra, Time Out of Joint, Bring the Jubilee, The Lathe of Heaven, The Complete Roderick, The Centauri Device, Martian Time-Slip, Non-Stop, The City and the Stars, Dying Inside, Grass, Pavane, Ringworld, Timescape, The Book of Skulls, Emphyrio, Blood Music, Eon, Rendezvous with Rama, Last and First Men, A Fall of Moondust, The Child Garden. 32 of the 182 books are missing: 25 have no cover under their series ISBN, 7 ISBNs are unknown to Open Library. Details in docs/history.md, 2026-09-25.",
       "published": false,
@@ -7301,7 +7301,7 @@
     },
     {
       "slug": "hugo-award-novel",
-      "title": "Hugo Award, best novel",
+      "title": "Hugo Award — best novel",
       "kind": "authors",
       "intro": "",
       "published": false,
@@ -8213,7 +8213,7 @@
     },
     {
       "slug": "sf-masterworks-rounded",
-      "title": "SF Masterworks, the rounded-corner editions (2006)",
+      "title": "SF Masterworks — the rounded-corner editions (2006)",
       "kind": "series",
       "intro": "",
       "published": false,
@@ -8356,7 +8356,7 @@
     },
     {
       "slug": "sf-masterworks-relaunch-international",
-      "title": "SF Masterworks, the relaunch — international covers",
+      "title": "SF Masterworks — international relaunch covers",
       "kind": "series",
       "intro": "",
       "published": false,
