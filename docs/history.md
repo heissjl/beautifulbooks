@@ -2588,3 +2588,19 @@ Recherche durch einen Agenten, alle Zahlen live erhoben, keine Datei geändert, 
 - **DNB:** vereinzelte Angaben als Freitext („Umschlaggestaltung: …") oder als 700 mit Rolle `bkd`, fast nur bei Kleinverlagen 2025/26; in fünf Suhrkamp-Datensätzen zu *Homo faber* keine. **Library of Congress:** 0 von 4 Taschenbüchern.
 - **Verlagsseiten:** Penguin UK führt Rollen, aber für Umschläge nur als Werbetext („with cover art by Shepard Fairey"); Suhrkamp nur „Autor". ONIX kennt die Rolle A36, aber nur in geschlossenen Handelsdaten.
 - **Spezialseiten:** Book Cover Archive nennt je Buch den Gestalter (rund 1.200 Bücher, kein API, keine Lizenz); AIGA, bookcoverdesigners.org und LibraryThing hinter Cloudflare; Goodreads ohne API seit 2020. **Google Books:** keine Rollen.
+
+## 2026-09-25 · Welche Reihe als nächste? Gemessen (ROADMAP 5.10e)
+
+Recherche durch einen Agenten, je Reihe 20 zufällige ISBNs gegen `openlibrary.org/isbn/<isbn>.json` und den Cover-Endpunkt, 2–3,5 s Pause, Cover angesehen.
+
+| Reihe | ISBN-Quelle | Umfang | ISBN bei OL | mit Cover | im Reihendesign |
+|---|---|---|---|---|---|
+| edition suhrkamp | de.wikipedia, 2.056 mit ISBN (ab Bd. 471) | ca. 2.560 | 18/20 | 10/20 | 10/10 |
+| Penguin Clothbound Classics | Penguin-Shop `products.json`, 104 ISBNs | ca. 105–130 | 18/20 | 9/20 | 9/9 |
+| Penguin Modern Classics | Shop, nur 31 ISBNs | Tausende | 20/20 | 14/20 | ca. 10/13, Epochen gemischt |
+| Vintage Classics (roter Rücken) | keine vollständige; Shop 34 ISBNs | 200+ | 17/20 | 8/20 | 8/8, zwei Epochen, keine gemeinsame Front |
+| Reclam UB | keine Liste, ISBN aus der UB-Nummer errechenbar | über 20.000 | 13/20 | 9/20 | 9/9, einförmig gelb |
+| NYRB Classics | nyrb.com `products.json` | 600+ | 16/20 | effektiv 5/20 | 5/5 |
+| Bibliothek Suhrkamp | de.wikipedia, 1.528 mit ISBN | ca. 1.550 | 6/20 | 3/20 | 3/3 |
+
+Vintage Classics: Imprint von Vintage (Random House UK, seit 2013 Penguin Random House UK), roter Rücken seit dem Relaunch 2007, die Vorderseiten bewusst je Titel gestaltet. Ohne Messung, weil ohne ISBN-Liste: Fantasy Masterworks (ISFDB antwortete dem Agenten mit 403), Little Black Classics, Great Ideas, Everyman's, Oxford World's Classics, Folio, Insel-Bücherei, Die Andere Bibliothek, suhrkamp taschenbuch. Open Library verweigerte von hier rund 20 Minuten lang jede Verbindung; umgangen wurde nichts.
