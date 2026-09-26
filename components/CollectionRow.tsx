@@ -116,7 +116,7 @@ export default function CollectionRow({ slug, title, works, total }: { slug: str
         </ul>
       </div>
       {overflows && !atEnd && (
-        <div aria-hidden className={`pointer-events-none absolute inset-y-0 right-0 bg-gradient-to-l from-bg/80 via-bg/25 to-transparent ${FADE}`} />
+        <div aria-hidden className={`pointer-events-none absolute inset-y-0 right-0 bg-gradient-to-l from-bg/60 via-bg/15 to-transparent ${FADE}`} />
       )}
     </div>
   );
