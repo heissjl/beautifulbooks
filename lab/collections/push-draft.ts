@@ -65,6 +65,11 @@ async function main() {
     }
   }
 
+  // The boundary first: publishers or authors the file has and the draft lacks (a run cut short by a 429 can leave them out).
+  const d = draft as typeof draft & { publishers?: string[]; authors?: Array<{ name: string }> };
+  for (const name of (record.publishers ?? []).filter(n => !(d.publishers ?? []).includes(n))) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'addPublisher', name })).draft;
+  for (const a of (record.authors ?? []).filter(a => !(d.authors ?? []).some(x => x.name === a.name))) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'addAuthor', name: a.name, key: a.keys[0] ?? '' })).draft;
+
   const delta = draftDelta(draft, record);
   if (delta.onlineOnly.length > 0) {
     console.log(`${slug}: the online draft ${draft.id} has what the file lacks:\n  ${delta.onlineOnly.join('\n  ')}`);
