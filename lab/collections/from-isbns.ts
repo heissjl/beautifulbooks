@@ -52,6 +52,12 @@ interface Entry {
    * publisher and year. Used instead of `isbn` (which may then be empty).
    */
   edition?: string;
+  /**
+   * The set this volume belongs to, for a wall of sets (`setSize`): the same
+   * work may then appear once per set, and a set with any volume missing is
+   * dropped whole, because half a set is not the edition's design.
+   */
+  set?: string;
 }
 
 const cache: Record<string, unknown> = existsSync(CACHE_FILE) ? JSON.parse(readFileSync(CACHE_FILE, 'utf8')) : {};
@@ -97,6 +103,8 @@ async function main() {
   if (!listFile || !slug || !title) throw new Error('usage: from-isbns.ts <list.json> <slug> "<title>" [publisher …]');
   const entries = JSON.parse(readFileSync(listFile, 'utf8')) as Entry[];
   const works: CollectionPick[] = [];
+  const setOf = new Map<string, Set<string>>();
+  const pickSet = new Map<CollectionPick, string>();
   const noCover: string[] = [];
   const notFound: string[] = [];
 
@@ -115,7 +123,7 @@ async function main() {
     if (!hit) { notFound.push(`${e.no ?? '-'} ${e.title} (${e.isbn})`); continue; }
     const coverWork = hit.workKey.replace('/works/', '');
     const id = e.work ?? coverWork;
-    if (works.some(w => w.id === id)) continue;
+    if (e.set ? setOf.get(id)?.has(e.set) : works.some(w => w.id === id)) continue;
     const work = await getJson<Work>(`/works/${id}.json`);
     const authorKey = work?.authors?.[0]?.author?.key;
     const author = authorKey ? await getJson<{ name?: string }>(`${authorKey}.json`) : null;
@@ -129,8 +137,21 @@ async function main() {
       ...(coverFrom ? { from: `isbn:${coverFrom}`, coverIsbn: coverFrom } : { from: `edition:${e.edition}` }),
       ...(coverWork !== id ? { coverWork } : {}),
     });
+    if (e.set) {
+      pickSet.set(works[works.length - 1], e.set);
+      setOf.set(id, (setOf.get(id) ?? new Set()).add(e.set));
+    }
     process.stdout.write(`${works.length} `);
   }
+
+  const incomplete: string[] = [];
+  for (const set of new Set(entries.filter(e => e.set && !e.skip).map(e => e.set!))) {
+    const wanted = entries.filter(e => e.set === set && !e.skip).length;
+    const got = works.filter(w => pickSet.get(w) === set).length;
+    if (got < wanted) incomplete.push(`${set}: ${got} of ${wanted}`);
+  }
+  const dropped = new Set(incomplete.map(s => s.slice(0, s.lastIndexOf(':'))));
+  for (let i = works.length - 1; i >= 0; i--) if (dropped.has(pickSet.get(works[i]) ?? '')) works.splice(i, 1);
 
   const file = JSON.parse(readFileSync(OUT_FILE, 'utf8')) as { collections: CollectionRecord[] };
   const record: CollectionRecord = {
@@ -143,7 +164,8 @@ async function main() {
     works,
   };
   const at = file.collections.findIndex(c => c.slug === slug);
-  if (at >= 0) file.collections[at] = { ...record, published: file.collections[at].published };
+  // Keep what other tools added (credits, set size); the works and the boundary are this run's.
+  if (at >= 0) file.collections[at] = { ...file.collections[at], ...record, published: file.collections[at].published };
   else file.collections.push(record);
   const tmp = `${OUT_FILE}.tmp`;
   writeFileSync(tmp, `${JSON.stringify({ curatedAt: new Date().toISOString().slice(0, 10), collections: file.collections }, null, 2)}\n`);
@@ -151,6 +173,7 @@ async function main() {
 
   console.log(`\n${slug}: ${works.length} of ${entries.length} on the wall`);
   if (noCover.length) console.log(`no cover on record for the series printing (${noCover.length}):\n  ${noCover.join('\n  ')}`);
+  if (incomplete.length) console.log(`sets dropped, not every volume has a cover (${incomplete.length}):\n  ${incomplete.join('\n  ')}`);
   if (notFound.length) console.log(`ISBN unknown to Open Library (${notFound.length}):\n  ${notFound.join('\n  ')}`);
 }
 

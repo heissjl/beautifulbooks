@@ -104,7 +104,7 @@ export default async function CollectionPage({ params }: PageProps) {
           </p>
         )}
         <div className="mt-8">
-          <CoverWall works={c.works} selectCover />
+          <CoverWall works={c.works} selectCover setSize={c.setSize} />
         </div>
         {/*
           The source of the cover credits, required by its licence (CC BY 4.0)

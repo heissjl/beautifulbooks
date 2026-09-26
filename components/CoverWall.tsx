@@ -15,7 +15,16 @@ interface CoverWallProps {
    * that one, not the book in general (Julian, 2026-09-26).
    */
   selectCover?: boolean;
+  /** A wall of sets (`Collection.setSize`): each row starts a set; seven columns even on a phone, without captions there. */
+  setSize?: 3 | 7;
 }
+
+/* Literal class strings, so Tailwind sees them. */
+const GRID: Record<'default' | 3 | 7, string> = {
+  default: 'grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6',
+  3: 'grid grid-cols-3 gap-4 md:grid-cols-6 lg:gap-6',
+  7: 'grid grid-cols-7 gap-1.5 sm:gap-3 lg:gap-4',
+};
 
 /**
  * A wall of hand-picked covers, one per work, each linking to the work's own
@@ -23,9 +32,11 @@ interface CoverWallProps {
  * collection (SPEC F8) use the same grid, so a collection looks like the page
  * a reader already knows.
  */
-export default function CoverWall({ works, selectCover = false }: CoverWallProps) {
+export default function CoverWall({ works, selectCover = false, setSize }: CoverWallProps) {
+  // Seven tiles across a phone are about 45 px wide: no room for a caption.
+  const caption = setSize === 7 ? 'hidden sm:block' : '';
   return (
-    <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6">
+    <ul className={GRID[setSize ?? 'default']}>
       {works.map(w => {
         const target = ('coverWork' in w && w.coverWork) || w.id;
         // A site-served image is on no wall of Open Library's, so there is no cover to select there.
@@ -45,15 +56,15 @@ export default function CoverWall({ works, selectCover = false }: CoverWallProps
               titles on a phone and 1 on a desktop — "Der…" is not a
               shorter "Der Steppenwolf", it is no title (ROADMAP 6.30, N14).
             */}
-            <p className="mt-2 line-clamp-2 text-sm font-medium leading-snug text-ink group-hover:text-accent transition-colors">{tileTitle(w.title)}</p>
-            <p className="mt-0.5 line-clamp-2 text-xs leading-snug text-ink-3">{w.author}</p>
+            <p className={`${caption} mt-2 line-clamp-2 text-sm font-medium leading-snug text-ink group-hover:text-accent transition-colors`}>{tileTitle(w.title)}</p>
+            <p className={`${caption} mt-0.5 line-clamp-2 text-xs leading-snug text-ink-3`}>{w.author}</p>
             {/*
               The cover artist, only on collections that show credits (6.52)
               and only where ISFDB names one for this printing; the page says
               where the names come from.
             */}
             {'coverArtists' in w && w.coverArtists && w.coverArtists.length > 0 && (
-              <p className="mt-0.5 line-clamp-1 text-[11px] italic leading-snug text-ink-3">Cover: {w.coverArtists.join(', ')}</p>
+              <p className={`${caption} mt-0.5 line-clamp-1 text-[11px] italic leading-snug text-ink-3`}>Cover: {w.coverArtists.join(', ')}</p>
             )}
           </Link>
         </li>

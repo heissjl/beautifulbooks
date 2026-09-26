@@ -35,6 +35,13 @@ describe('parseCollections', () => {
     expect(c.works).toEqual([{ id: 'OL1099513W', title: 'Reise zum Mittelpunkt der Erde', author: 'Jules Verne', coverId: 0, image: '/collection-covers/jules-verne/vol-01.jpg' }]);
   });
 
+  it('carries a set size of 3 or 7 and nothing else, and keeps it under a /curate draft\'s content', () => {
+    expect(parseCollections([record({ setSize: 7 })], { includeDrafts: false })[0].setSize).toBe(7);
+    expect(parseCollections([record({ setSize: 5 as 7 })], { includeDrafts: false })[0].setSize).toBeUndefined();
+    const [merged] = applyContent([record({ setSize: 3 })], { 'women-writers': record({ title: 'Edited' }) });
+    expect(merged).toMatchObject({ title: 'Edited', setSize: 3 });
+  });
+
   it('hides drafts unless asked for them', () => {
     const draft = record({ published: false });
     expect(parseCollections([draft], { includeDrafts: false })).toEqual([]);

@@ -83,6 +83,13 @@ export interface CollectionRecord {
    */
   coverCredits?: 'isfdb';
   /**
+   * A wall of sets: every edition in `setSize` consecutive tiles, one set per
+   * row (Julian, 2026-09-26: „harry potter serien. hier ausnahmsweise 7 bücher
+   * nebeneinander. immer die 7 bücher einer serie"). Only 3 and 7 exist: 3
+   * puts two sets side by side on a desktop (Lord of the Rings), 7 one.
+   */
+  setSize?: 3 | 7;
+  /**
    * Where the covers come from when not every one was picked by eye: a list
    * or a tag brings the catalogue's image (5.10f). Absent means by hand for
    * an author collection and the series printing for a series. Set back by
@@ -106,6 +113,7 @@ export interface Collection {
   /** Set when the wall shows cover credits; the page then names the source. */
   coverCredits?: 'isfdb';
   coverSource?: 'catalogue';
+  setSize?: 3 | 7;
   works: WallWork[];
 }
 
@@ -154,7 +162,7 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
       works.push({ id: p.id, title: p.title, author: p.author, coverId: coverId ?? 0, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}), ...(image ? { image } : {}) });
     }
     const scope = r.kind === 'series' ? (r.publishers ?? []) : (r.authors ?? []).map(a => a.name);
-    out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}) });
+    out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}), ...(r.setSize === 3 || r.setSize === 7 ? { setSize: r.setSize } : {}) });
   }
   return out;
 }
@@ -236,7 +244,8 @@ export function collectionRecords(): CollectionRecord[] {
 export type ContentOverrides = Record<string, CollectionRecord>;
 
 export function applyContent(records: CollectionRecord[], content: ContentOverrides): CollectionRecord[] {
-  const out = records.map(r => content[r.slug] ?? r);
+  // A /curate draft knows no wall layout, so the file's set size survives its content.
+  const out = records.map(r => (content[r.slug] ? { ...content[r.slug], ...(r.setSize ? { setSize: r.setSize } : {}) } : r));
   for (const [slug, r] of Object.entries(content)) if (!records.some(x => x.slug === slug)) out.push(r);
   return out;
 }
