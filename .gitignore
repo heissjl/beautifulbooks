@@ -69,3 +69,5 @@ lab/curate/extra-covers.json
 lab/collections/cache.json
 lab/collections/isbn-cache.json
 lab/collections/for-openlibrary/
+lab/isfdb/cache.json
+lab/isfdb/ol-cache.json

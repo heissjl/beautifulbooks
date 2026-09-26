@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<ISFDB>
+  <Records>4</Records>
+  <Publications>
+    <Publication>
+      <Record>7127</Record>
+      <Title>Cities in Flight</Title>
+      <Authors>
+        <Author>James Blish</Author>
+      </Authors>
+      <Year>1999-02-00</Year>
+      <Isbn>1857988116</Isbn>
+      <Publisher>Millennium / Orion</Publisher>
+      <PubSeries>Millennium / Gollancz SF Masterworks</PubSeries>
+      <PubSeriesNum>3</PubSeriesNum>
+      <Price>�6.99</Price>
+      <Pages>607</Pages>
+      <Binding>tp</Binding>
+      <Type>OMNIBUS</Type>
+      <Tag>CTSNLGHT1999</Tag>
+      <Image>https://www.isfdb.org/wiki/images/7/72/CTSNLGHT1999.jpg</Image>
+      <CoverArtists>
+        <Artist>John Harris</Artist>
+      </CoverArtists>
+      <Note>First printing as per copyright page.&lt;br&gt;$14.95 in Australia.&lt;br&gt;</Note>
+    </Publication>
+    <Publication>
+      <Record>289340</Record>
+      <Title>Cities in Flight</Title>
+      <Authors>
+        <Author>James Blish</Author>
+      </Authors>
+      <Year>2002-11-00</Year>
+      <Isbn>1857988116</Isbn>
+      <Publisher>Gollancz / Orion</Publisher>
+      <PubSeries>Millennium / Gollancz SF Masterworks</PubSeries>
+      <PubSeriesNum>3</PubSeriesNum>
+      <Price>�7.99</Price>
+      <Pages>607</Pages>
+      <Binding>tp</Binding>
+      <Type>OMNIBUS</Type>
+      <Tag>CTSNFLGHTM2002</Tag>
+      <Image>https://www.isfdb.org/wiki/images/7/72/CTSNLGHT1999.jpg</Image>
+      <CoverArtists>
+        <Artist>John Harris</Artist>
+      </CoverArtists>
+      <Note>&lt;ul&gt;&lt;li&gt;Copyright page states &quot;Fifth impression published in Great Britain in November 2002&quot;.
+&lt;/ul&gt;</Note>
+    </Publication>
+    <Publication>
+      <Record>289371</Record>
+      <Title>Cities in Flight</Title>
+      <Authors>
+        <Author>James Blish</Author>
+      </Authors>
+      <Year>2004-00-00</Year>
+      <Isbn>1857988116</Isbn>
+      <Publisher>Gollancz / Orion</Publisher>
+      <PubSeries>Millennium / Gollancz SF Masterworks</PubSeries>
+      <PubSeriesNum>3</PubSeriesNum>
+      <Price>�7.99</Price>
+      <Pages>607</Pages>
+      <Binding>tp</Binding>
+      <Type>OMNIBUS</Type>
+      <Tag>CTSNFLGHTC2004</Tag>
+      <Image>https://www.isfdb.org/wiki/images/7/72/CTSNLGHT1999.jpg</Image>
+      <CoverArtists>
+        <Artist>John Harris</Artist>
+      </CoverArtists>
+      <Note>Volume 3 in the SF Masterworks series.&lt;br/&gt;
+Stated sixth impression 2004</Note>
+    </Publication>
+    <Publication>
+      <Record>900245</Record>
+      <Title>Cities in Flight</Title>
+      <Authors>
+        <Author>James Blish</Author>
+      </Authors>
+      <Year>date unknown</Year>
+      <Isbn>1857988116</Isbn>
+      <Publisher>Gollancz / Orion</Publisher>
+      <PubSeries>Millennium / Gollancz SF Masterworks</PubSeries>
+      <PubSeriesNum>3</PubSeriesNum>
+      <Price>�7.99</Price>
+      <Pages>607</Pages>
+      <Binding>tp</Binding>
+      <Type>OMNIBUS</Type>
+      <Tag>CTSNFLGHTP0000</Tag>
+      <Image>https://www.isfdb.org/wiki/images/7/72/CTSNLGHT1999.jpg</Image>
+      <CoverArtists>
+        <Artist>John Harris</Artist>
+      </CoverArtists>
+      <Note>First published in Great Britain in 1999 by Millennium an imprint of Orion Books Ltd.
+Reprinted by Gollancz an imprint of Orion Publishing Group
+Undated 9th printing by numberline.
+&quot;Illustration by John Harris&quot; on rear cover.</Note>
+    </Publication>
+  </Publications>
+</ISFDB>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a40dbe2fd8753356',t:'MTc5MDM3ODI1Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
