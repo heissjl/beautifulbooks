@@ -2216,7 +2216,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "766237"
+          "isfdbRecord": "115201"
         },
         {
           "id": "OL166496W",
@@ -2242,7 +2242,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "430707"
+          "isfdbRecord": "14032"
         },
         {
           "id": "OL2172517W",
@@ -2255,7 +2255,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "428985"
+          "isfdbRecord": "122261"
         },
         {
           "id": "OL2172523W",
@@ -2268,7 +2268,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "952304"
+          "isfdbRecord": "122271"
         },
         {
           "id": "OL2172524W",
@@ -2294,7 +2294,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "936263"
+          "isfdbRecord": "117241"
         },
         {
           "id": "OL56835W",
@@ -2333,7 +2333,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "770896"
+          "isfdbRecord": "42932"
         },
         {
           "id": "OL19332770W",
@@ -2355,7 +2355,11 @@
           "coverId": "ol:15258746",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857983401",
-          "coverIsbn": "9781857983401"
+          "coverIsbn": "9781857983401",
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "225205"
         },
         {
           "id": "OL3332541W",
@@ -2407,7 +2411,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "944275"
+          "isfdbRecord": "114271"
         },
         {
           "id": "OL27252W",
@@ -2459,7 +2463,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "1115459"
+          "isfdbRecord": "165001"
         },
         {
           "id": "OL3290738W",
@@ -2498,7 +2502,7 @@
           "coverArtists": [
             "Fred Gambino"
           ],
-          "isfdbRecord": "430035"
+          "isfdbRecord": "115231"
         },
         {
           "id": "OL14931580W",
@@ -2511,7 +2515,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "1013219"
+          "isfdbRecord": "117231"
         },
         {
           "id": "OL4088358W",
@@ -2563,7 +2567,7 @@
           "coverArtists": [
             "Dominic Harman"
           ],
-          "isfdbRecord": "430705"
+          "isfdbRecord": "122241"
         },
         {
           "id": "OL104514W",
@@ -2576,7 +2580,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "507071"
+          "isfdbRecord": "118931"
         },
         {
           "id": "OL27780752W",
@@ -2585,11 +2589,7 @@
           "coverId": "ol:15258754",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857989373",
-          "coverIsbn": "9781857989373",
-          "coverArtists": [
-            "Arthur Haas"
-          ],
-          "isfdbRecord": "430021"
+          "coverIsbn": "9781857989373"
         },
         {
           "id": "OL510405W",
@@ -2602,7 +2602,7 @@
           "coverArtists": [
             "Steven Vincent Johnson"
           ],
-          "isfdbRecord": "768243"
+          "isfdbRecord": "122251"
         },
         {
           "id": "OL108288W",
@@ -2615,7 +2615,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "393883"
+          "isfdbRecord": "115211"
         },
         {
           "id": "OL166482W",
@@ -2654,7 +2654,7 @@
           "coverArtists": [
             "Jim Burns"
           ],
-          "isfdbRecord": "430030"
+          "isfdbRecord": "115181"
         },
         {
           "id": "OL2071382W",
@@ -2667,7 +2667,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "1090607"
+          "isfdbRecord": "115131"
         },
         {
           "id": "OL3290739W",
@@ -2698,7 +2698,11 @@
           "coverId": "ol:15258759",
           "addedAt": "2026-09-25",
           "from": "isbn:9781857987621",
-          "coverIsbn": "9781857987621"
+          "coverIsbn": "9781857987621",
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "115501"
         },
         {
           "id": "OL2454690W",
@@ -2737,7 +2741,7 @@
           "coverArtists": [
             "Jim Burns"
           ],
-          "isfdbRecord": "430613"
+          "isfdbRecord": "252028"
         },
         {
           "id": "OL17417W",
@@ -2750,7 +2754,7 @@
           "coverArtists": [
             "Steve Stone"
           ],
-          "isfdbRecord": "964956"
+          "isfdbRecord": "252032"
         },
         {
           "id": "OL3290749W",
@@ -2789,7 +2793,7 @@
           "coverArtists": [
             "Les Edwards"
           ],
-          "isfdbRecord": "431109"
+          "isfdbRecord": "109861"
         },
         {
           "id": "OL1963251W",
@@ -2802,7 +2806,7 @@
           "coverArtists": [
             "Larry Rostant"
           ],
-          "isfdbRecord": "933825"
+          "isfdbRecord": "378735"
         },
         {
           "id": "OL506264W",
@@ -3132,7 +3136,11 @@
           "coverId": "ol:15258765",
           "addedAt": "2026-09-25",
           "from": "isbn:9780575073173",
-          "coverIsbn": "9780575073173"
+          "coverIsbn": "9780575073173",
+          "coverArtists": [
+            "Fred Gambino"
+          ],
+          "isfdbRecord": "114501"
         },
         {
           "id": "OL2172352W",
@@ -3340,7 +3348,7 @@
           "coverArtists": [
             "Dominic Harman"
           ],
-          "isfdbRecord": "431228"
+          "isfdbRecord": "252030"
         },
         {
           "id": "OL20119339W",
@@ -3635,7 +3643,7 @@
           "coverArtists": [
             "Laura Brett"
           ],
-          "isfdbRecord": "1039050"
+          "isfdbRecord": "587730"
         },
         {
           "id": "OL14871968W",
@@ -3776,7 +3784,7 @@
           "from": "isbn:9781473222281",
           "coverIsbn": "9781473222281",
           "coverArtists": [
-            "Eamon O'Donoghue"
+            "Eamon O&apos;Donoghue"
           ],
           "isfdbRecord": "619498"
         },
@@ -3918,11 +3926,7 @@
           "coverId": "ol:15258774",
           "addedAt": "2026-09-26",
           "from": "isbn:9781473228306",
-          "coverIsbn": "9781473228306",
-          "coverArtists": [
-            "Getty Images"
-          ],
-          "isfdbRecord": "745999"
+          "coverIsbn": "9781473228306"
         },
         {
           "id": "OL1960375W",
@@ -3953,11 +3957,7 @@
           "coverId": "ol:15258775",
           "addedAt": "2026-09-26",
           "from": "isbn:9781473229235",
-          "coverIsbn": "9781473229235",
-          "coverArtists": [
-            "Getty Images"
-          ],
-          "isfdbRecord": "788243"
+          "coverIsbn": "9781473229235"
         },
         {
           "id": "OL22138740W",
@@ -3966,11 +3966,7 @@
           "coverId": "ol:15258776",
           "addedAt": "2026-09-26",
           "from": "isbn:9781473230118",
-          "coverIsbn": "9781473230118",
-          "coverArtists": [
-            "Shutterstock"
-          ],
-          "isfdbRecord": "794343"
+          "coverIsbn": "9781473230118"
         },
         {
           "id": "OL21696977W",
@@ -3988,11 +3984,7 @@
           "coverId": "ol:15258777",
           "addedAt": "2026-09-26",
           "from": "isbn:9781473230996",
-          "coverIsbn": "9781473230996",
-          "coverArtists": [
-            "Shutterstock"
-          ],
-          "isfdbRecord": "810578"
+          "coverIsbn": "9781473230996"
         },
         {
           "id": "OL2354512W",
@@ -4001,11 +3993,7 @@
           "coverId": "ol:15258778",
           "addedAt": "2026-09-26",
           "from": "isbn:9781473230200",
-          "coverIsbn": "9781473230200",
-          "coverArtists": [
-            "Shutterstock"
-          ],
-          "isfdbRecord": "818207"
+          "coverIsbn": "9781473230200"
         },
         {
           "id": "OL25764282W",
@@ -4178,6 +4166,15 @@
           "coverIsbn": "9781399623353"
         },
         {
+          "id": "OL5045544W",
+          "title": "The Unforsaken Hiero",
+          "author": "Sterling E. Lanier",
+          "coverId": "ol:15258791",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399620574",
+          "coverIsbn": "9781399620574"
+        },
+        {
           "id": "OL44545553W",
           "title": "Barefoot in the Head",
           "author": "Brian Aldiss",
@@ -4187,6 +4184,42 @@
           "coverIsbn": "9781399635400"
         },
         {
+          "id": "OL261643W",
+          "title": "Galaxies Like Grains of Sand",
+          "author": "Brian Aldiss",
+          "coverId": "ol:15258792",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399635417",
+          "coverIsbn": "9781399635417"
+        },
+        {
+          "id": "OL18367649W",
+          "title": "Beginning Operations",
+          "author": "James White",
+          "coverId": "ol:15258793",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399636216",
+          "coverIsbn": "9781399636216"
+        },
+        {
+          "id": "OL1920269W",
+          "title": "Air",
+          "author": "Geoff Ryman",
+          "coverId": "ol:15258794",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399640398",
+          "coverIsbn": "9781399640398"
+        },
+        {
+          "id": "OL1888051W",
+          "title": "Distraction",
+          "author": "Bruce Sterling",
+          "coverId": "ol:15258795",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399640381",
+          "coverIsbn": "9781399640381"
+        },
+        {
           "id": "OL45147605W",
           "title": "Nova Swing",
           "author": "M. John Harrison",
@@ -4194,6 +4227,24 @@
           "addedAt": "2026-09-26",
           "from": "isbn:9781399640367",
           "coverIsbn": "9781399640367"
+        },
+        {
+          "id": "OL8698138W",
+          "title": "Thirteen",
+          "author": "Richard Morgan",
+          "coverId": "ol:15258804",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399640374",
+          "coverIsbn": "9781399640374"
+        },
+        {
+          "id": "OL2172414W",
+          "title": "Minority Report",
+          "author": "Philip K. Dick",
+          "coverId": "ol:15258805",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781399638180",
+          "coverIsbn": "9781399638180"
         },
         {
           "id": "OL45912000W",
@@ -6546,8 +6597,8 @@
       "slug": "tiptree-award",
       "title": "The Otherwise Award",
       "kind": "authors",
-      "intro": "",
-      "published": false,
+      "intro": "https://otherwiseaward.org/",
+      "published": true,
       "authors": [
         {
           "name": "Maureen F. McHugh",
@@ -6795,9 +6846,14 @@
           "id": "OL20126875W",
           "title": "China Mountain Zhang",
           "author": "Maureen F. McHugh",
-          "coverId": "ol:8779578",
+          "coverId": "ol:11423124",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780312852719",
+          "coverArtists": [
+            "Wayne Barlowe"
+          ],
+          "isfdbRecord": "6949"
         },
         {
           "id": "OL3512653W",
@@ -6805,15 +6861,25 @@
           "author": "Eleanor Arnason",
           "coverId": "ol:6922659",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "0688103758",
+          "coverArtists": [
+            "Gary Ruddell"
+          ],
+          "isfdbRecord": "1449"
         },
         {
           "id": "OL2737410W",
           "title": "Ammonite",
           "author": "Nicola Griffith",
-          "coverId": "ol:207945",
+          "coverId": "ol:10188783",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "0586216901",
+          "coverArtists": [
+            "Trevor Scobie"
+          ],
+          "isfdbRecord": "2413"
         },
         {
           "id": "OL1822408W",
@@ -6821,7 +6887,12 @@
           "author": "Elizabeth Hand",
           "coverId": "ol:10186566",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "0586217479",
+          "coverArtists": [
+            "Ian Miller"
+          ],
+          "isfdbRecord": "53631"
         },
         {
           "id": "OL2732491W",
@@ -6829,15 +6900,17 @@
           "author": "Mary Doria Russell",
           "coverId": "ol:809738",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781567401929"
         },
         {
           "id": "OL79740W",
           "title": "Wild life",
           "author": "Molly Gloss",
-          "coverId": "ol:393450",
+          "coverId": "ol:8795093",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781534414990"
         },
         {
           "id": "OL2643429W",
@@ -6845,7 +6918,12 @@
           "author": "M. John Harrison",
           "coverId": "ol:370096",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "0553382950",
+          "coverArtists": [
+            "Stephen Youll"
+          ],
+          "isfdbRecord": "63159"
         },
         {
           "id": "OL108828W",
@@ -6853,7 +6931,8 @@
           "author": "Nancy Springer",
           "coverId": "ol:7092337",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "0380972344"
         },
         {
           "id": "OL4906231W",
@@ -6861,15 +6940,25 @@
           "author": "Roszak, Theodore",
           "coverId": "ol:15122670",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "0679437320",
+          "coverArtists": [
+            "Honi Werner"
+          ],
+          "isfdbRecord": "44021"
         },
         {
           "id": "OL2354527W",
           "title": "White Queen",
           "author": "Gwyneth Jones",
-          "coverId": "ol:12427189",
+          "coverId": "ol:380707",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780575603783",
+          "coverArtists": [
+            "David Farren"
+          ],
+          "isfdbRecord": "287000"
         },
         {
           "id": "OL2898561W",
@@ -6877,7 +6966,8 @@
           "author": "Candas Jane Dorsey",
           "coverId": "ol:6710982",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "0312861818"
         },
         {
           "id": "OL17769752W",
@@ -6885,7 +6975,12 @@
           "author": "Suzy McKee Charnas",
           "coverId": "ol:183136",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780312869465",
+          "coverArtists": [
+            "Dominic D'Andrea"
+          ],
+          "isfdbRecord": "37486"
         },
         {
           "id": "OL19977804W",
@@ -6893,7 +6988,8 @@
           "author": "Jo Walton",
           "coverId": "ol:15123921",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9784488749033"
         },
         {
           "id": "OL3298264W",
@@ -6901,7 +6997,13 @@
           "author": "Matt Ruff",
           "coverId": "ol:5545276",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "006095485X",
+          "coverArtists": [
+            "Richard Bradley",
+            "Todd Robertson"
+          ],
+          "isfdbRecord": "64479"
         },
         {
           "id": "OL3615811W",
@@ -6909,7 +7011,13 @@
           "author": "Hiromi Goto",
           "coverId": "ol:686827",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780889952287",
+          "coverArtists": [
+            "Duncan Campbell (artist)",
+            "Pierre Arsenault"
+          ],
+          "isfdbRecord": "251184"
         },
         {
           "id": "OL5940199W",
@@ -6917,7 +7025,12 @@
           "author": "Johanna Sinisalo",
           "coverId": "ol:8668156",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780720613506",
+          "coverArtists": [
+            "Nick Pearson"
+          ],
+          "isfdbRecord": "532445"
         },
         {
           "id": "OL461302W",
@@ -6925,7 +7038,12 @@
           "author": "Joe Haldeman",
           "coverId": "ol:284158",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "0441011616",
+          "coverArtists": [
+            "Craig White"
+          ],
+          "isfdbRecord": "63142"
         },
         {
           "id": "OL1920269W",
@@ -6933,23 +7051,34 @@
           "author": "Geoff Ryman",
           "coverId": "ol:177168",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "0312261217",
+          "coverArtists": [
+            "Philip Pascuzzo"
+          ],
+          "isfdbRecord": "1868"
         },
         {
           "id": "OL13752009W",
           "title": "Baba Yaga Laid an Egg",
           "author": "Dubravka Ugrešić",
-          "coverId": "ol:7997242",
+          "coverId": "ol:14860178",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9788874522859"
         },
         {
           "id": "OL12284322W",
           "title": "In the night garden",
           "author": "Catherynne M. Valente",
-          "coverId": "ol:8266949",
+          "coverId": "ol:370170",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780553384031",
+          "coverArtists": [
+            "Jon Foster"
+          ],
+          "isfdbRecord": "89115"
         },
         {
           "id": "OL892345W",
@@ -6957,15 +7086,25 @@
           "author": "Shelley Jackson",
           "coverId": "ol:38916",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780060882358",
+          "coverArtists": [
+            "Roberto de Vicq de Cumptich"
+          ],
+          "isfdbRecord": "106671"
         },
         {
           "id": "OL9038096W",
           "title": "James Tiptree, Jr",
           "author": "Julie Phillips",
-          "coverId": "ol:175633",
+          "coverId": "ol:1170263",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780312426941",
+          "coverArtists": [
+            "Barbara Francisco"
+          ],
+          "isfdbRecord": "326364"
         },
         {
           "id": "OL5771058W",
@@ -6973,15 +7112,21 @@
           "author": "Sarah Hall",
           "coverId": "ol:11600899",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780571236596",
+          "coverArtists": [
+            "Lynne Henderson Illustration"
+          ],
+          "isfdbRecord": "226101"
         },
         {
           "id": "OL6073271W",
           "title": "The Knife of Never Letting Go",
           "author": "Patrick Ness",
-          "coverId": "ol:10200429",
+          "coverId": "ol:10670117",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781406320756"
         },
         {
           "id": "OL13778455W",
@@ -6989,15 +7134,21 @@
           "author": "Nisi Shawl",
           "coverId": "ol:8737177",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781933500515",
+          "coverArtists": [
+            "Per R. Flood"
+          ],
+          "isfdbRecord": "479512"
         },
         {
           "id": "OL8165957W",
           "title": "Cloud & ashes",
           "author": "Greer Ilene Gilman",
-          "coverId": "ol:15146195",
+          "coverId": "ol:12361233",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781618730145"
         },
         {
           "id": "OL17321210W",
@@ -7005,7 +7156,8 @@
           "author": "Fumi Yoshinaga",
           "coverId": "ol:7400198",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "1421527472"
         },
         {
           "id": "OL16686805W",
@@ -7013,7 +7165,12 @@
           "author": "Andrea Hairston",
           "coverId": "ol:13804823",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781933500522",
+          "coverArtists": [
+            "Nic Ularu"
+          ],
+          "isfdbRecord": "345733"
         },
         {
           "id": "OL16308052W",
@@ -7021,7 +7178,8 @@
           "author": "Caitlín R. Kiernan",
           "coverId": "ol:8742210",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781101577196"
         },
         {
           "id": "OL26411236W",
@@ -7035,9 +7193,14 @@
           "id": "OL17413625W",
           "title": "The Girl in the Road",
           "author": "Monica Byrne",
-          "coverId": "ol:7529915",
+          "coverId": "ol:8407332",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780349134215",
+          "coverArtists": [
+            "Christopher Brand"
+          ],
+          "isfdbRecord": "442987"
         },
         {
           "id": "OL17827358W",
@@ -7045,7 +7208,12 @@
           "author": "Pat Schmatz",
           "coverId": "ol:12357203",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780763676353",
+          "coverArtists": [
+            "Gary DeWitt"
+          ],
+          "isfdbRecord": "529381"
         },
         {
           "id": "OL20042288W",
@@ -7053,15 +7221,21 @@
           "author": "Ursula K. Le Guin",
           "coverId": "ol:12225374",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9786050951066"
         },
         {
           "id": "OL17934980W",
           "title": "When the Moon Was Ours",
           "author": "Anna-Marie McLemore",
-          "coverId": "ol:12303464",
+          "coverId": "ol:8577612",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781250160102",
+          "coverArtists": [
+            "Jonathan Bush"
+          ],
+          "isfdbRecord": "645862"
         },
         {
           "id": "OL19338108W",
@@ -7069,15 +7243,17 @@
           "author": "Virginia Bergin (author)",
           "coverId": "ol:8450152",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781509834037"
         },
         {
           "id": "OL19343569W",
           "title": "Freshwater",
           "author": "Akwaeke Emezi",
-          "coverId": "ol:8456947",
+          "coverId": "ol:15208573",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9789523520622"
         },
         {
           "id": "OL24167486W",
@@ -7086,7 +7262,11 @@
           "coverId": "ol:12166131",
           "addedAt": "2026-09-26",
           "from": "subject:collection:otherwise_tiptree_award=winner",
-          "coverIsbn": "9781250789068"
+          "coverIsbn": "9781250789068",
+          "coverArtists": [
+            "Jamie Stafford-Hill"
+          ],
+          "isfdbRecord": "855912"
         },
         {
           "id": "OL21443514W",
@@ -7094,7 +7274,8 @@
           "author": "Rivers Solomon",
           "coverId": "ol:11535467",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781529118735"
         },
         {
           "id": "OL28021938W",
@@ -7102,7 +7283,8 @@
           "author": "Dolki Min",
           "coverId": "ol:13177282",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9780063258617"
         },
         {
           "id": "OL37615535W",
@@ -7110,10 +7292,12 @@
           "author": "Vajra Chandrasekera",
           "coverId": "ol:15212956",
           "addedAt": "2026-09-26",
-          "from": "subject:collection:otherwise_tiptree_award=winner"
+          "from": "subject:collection:otherwise_tiptree_award=winner",
+          "coverIsbn": "9781250847690"
         }
       ],
-      "coverSource": "catalogue"
+      "coverSource": "catalogue",
+      "coverCredits": "isfdb"
     },
     {
       "slug": "hugo-award-novel",
@@ -8026,6 +8210,987 @@
         }
       ],
       "coverSource": "catalogue"
+    },
+    {
+      "slug": "sf-masterworks-rounded",
+      "title": "SF Masterworks, the rounded-corner editions (2006)",
+      "kind": "series",
+      "intro": "",
+      "published": false,
+      "publishers": [
+        "Gollancz"
+      ],
+      "works": [
+        {
+          "id": "OL53400W",
+          "title": "Cities in Flight",
+          "author": "James Blish",
+          "coverId": "ol:9811984",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575078987",
+          "coverIsbn": "0575078987",
+          "creditWithheld": "The Open Library image is an older picture cover, not the rounded-corner design this ISBN names; the right cover waits in lab/collections/for-openlibrary/rounded/."
+        },
+        {
+          "id": "OL59863W",
+          "title": "The Dispossessed",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:10205501",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079037",
+          "coverIsbn": "0575079037",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "151091"
+        },
+        {
+          "id": "OL515754W",
+          "title": "Flowers for Algernon",
+          "author": "Daniel Keyes",
+          "coverId": "ol:8757807",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079207",
+          "coverIsbn": "0575079207",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "151081"
+        },
+        {
+          "id": "OL271163W",
+          "title": "The Forever War",
+          "author": "Joe Haldeman",
+          "coverId": "ol:8703199",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079088",
+          "coverIsbn": "0575079088",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "150881"
+        },
+        {
+          "id": "OL60924W",
+          "title": "Gateway",
+          "author": "Frederik Pohl",
+          "coverId": "ol:10371240",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575078995",
+          "coverIsbn": "0575078995",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "116251"
+        },
+        {
+          "id": "OL11374287W",
+          "title": "I am Legend",
+          "author": "Richard Matheson",
+          "coverId": "ol:10403208",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079002",
+          "coverIsbn": "0575079002",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "279583"
+        },
+        {
+          "id": "OL98485W",
+          "title": "The Sirens of Titan",
+          "author": "Kurt Vonnegut",
+          "coverId": "ol:8760790",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079029",
+          "coverIsbn": "0575079029",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "279587"
+        },
+        {
+          "id": "OL1819353W",
+          "title": "The Stars My Destination",
+          "author": "Alfred Bester",
+          "coverId": "ol:8774916",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079096",
+          "coverIsbn": "0575079096",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "134761"
+        },
+        {
+          "id": "OL2172454W",
+          "title": "Ubik",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8756979",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079215",
+          "coverIsbn": "0575079215",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "150661"
+        }
+      ],
+      "coverCredits": "isfdb"
+    },
+    {
+      "slug": "sf-masterworks-relaunch-international",
+      "title": "SF Masterworks, the relaunch — international covers",
+      "kind": "series",
+      "intro": "",
+      "published": false,
+      "coverSource": "catalogue",
+      "publishers": [],
+      "works": [
+        {
+          "id": "OL56834W",
+          "title": "Babel-17",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:14543934",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL49845402M",
+          "coverIsbn": "9783910914025",
+          "coverArtists": [
+            "s.BENeï¿½"
+          ],
+          "isfdbRecord": "979344"
+        },
+        {
+          "id": "OL53400W",
+          "title": "Cities in Flight",
+          "author": "James Blish",
+          "coverId": "ol:3091913",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL12452205M",
+          "coverIsbn": "9782207500996",
+          "coverArtists": [
+            "Pascal Moret"
+          ],
+          "isfdbRecord": "529287"
+        },
+        {
+          "id": "OL2172356W",
+          "title": "Do Androids Dream of Electric Sheep?",
+          "author": "Philip K. Dick",
+          "coverId": "ol:15087606",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL59121051M",
+          "coverIsbn": "9785041141585"
+        },
+        {
+          "id": "OL14871904W",
+          "title": "The Fifth Head Of Cerberus",
+          "author": "Gene Wolfe",
+          "coverId": "ol:3327814",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL13268223M",
+          "coverIsbn": "9788445072479",
+          "coverArtists": [
+            "Julio Vivas"
+          ],
+          "isfdbRecord": "659153"
+        },
+        {
+          "id": "OL271163W",
+          "title": "The Forever War",
+          "author": "Joe Haldeman",
+          "coverId": "ol:15138695",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:por:OL60579749M",
+          "coverIsbn": "9788576573944"
+        },
+        {
+          "id": "OL60924W",
+          "title": "Gateway",
+          "author": "Frederik Pohl",
+          "coverId": "ol:1047886",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL9134341M",
+          "coverIsbn": "9788466622981"
+        },
+        {
+          "id": "OL11374287W",
+          "title": "I am Legend",
+          "author": "Richard Matheson",
+          "coverId": "ol:15207743",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ita:OL61523125M",
+          "coverIsbn": "9788804723974"
+        },
+        {
+          "id": "OL13992W",
+          "title": "Lord of Light",
+          "author": "Roger Zelazny",
+          "coverId": "ol:7255695",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL25425974M",
+          "coverIsbn": "9782207259139",
+          "coverArtists": [
+            "Manchu"
+          ],
+          "isfdbRecord": "565326"
+        },
+        {
+          "id": "OL2172402W",
+          "title": "The three stigmata of Palmer Eldritch",
+          "author": "Philip K. Dick",
+          "coverId": "ol:14627337",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:por:OL51709456M",
+          "coverIsbn": "9788576574989"
+        },
+        {
+          "id": "OL2172454W",
+          "title": "Ubik",
+          "author": "Philip K. Dick",
+          "coverId": "ol:9251901",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:pol:OL9109874M",
+          "coverIsbn": "9788371204791"
+        },
+        {
+          "id": "OL166496W",
+          "title": "The inverted world",
+          "author": "Christopher Priest",
+          "coverId": "ol:968941",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL8839658M",
+          "coverIsbn": "9782070421497",
+          "coverArtists": [
+            "Manchu"
+          ],
+          "isfdbRecord": "425695"
+        },
+        {
+          "id": "OL2172518W",
+          "title": "Flow my tears, the policeman said",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8750384",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL27258107M",
+          "coverIsbn": "9783596905614"
+        },
+        {
+          "id": "OL2172517W",
+          "title": "The Simulacra",
+          "author": "Philip K. Dick",
+          "coverId": "ol:4910614",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL9131963M",
+          "coverIsbn": "9788445074695",
+          "coverArtists": [
+            "Opalworks"
+          ],
+          "isfdbRecord": "65441"
+        },
+        {
+          "id": "OL2172523W",
+          "title": "Time out of joint",
+          "author": "Philip K. Dick",
+          "coverId": "ol:15133844",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:por:OL27309087M",
+          "coverIsbn": "9788556510662",
+          "coverArtists": [
+            "Celso Longe",
+            "Deco Farkas"
+          ],
+          "isfdbRecord": "667214"
+        },
+        {
+          "id": "OL2172524W",
+          "title": "Valis",
+          "author": "Philip K. Dick",
+          "coverId": "ol:9251937",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL23075758M",
+          "coverIsbn": "5170215495"
+        },
+        {
+          "id": "OL56835W",
+          "title": "Dhalgren",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:15098127",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL59413522M",
+          "coverIsbn": "9783404240111",
+          "coverArtists": [
+            "Dean Ellis"
+          ],
+          "isfdbRecord": "371537"
+        },
+        {
+          "id": "OL59858W",
+          "title": "The Lathe of Heaven",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:12309049",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:tur:OL35602947M",
+          "coverIsbn": "9789753427913",
+          "coverArtists": [
+            "Emine Bora"
+          ],
+          "isfdbRecord": "1076605"
+        },
+        {
+          "id": "OL3332541W",
+          "title": "The Female Man",
+          "author": "Joanna Russ",
+          "coverId": "ol:6925805",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL24990752M",
+          "coverIsbn": "3886199592",
+          "coverArtists": [
+            "Martin Grundmann"
+          ],
+          "isfdbRecord": "473271"
+        },
+        {
+          "id": "OL90571W",
+          "title": "Tau Zero",
+          "author": "Poul Anderson",
+          "coverId": "ol:7142851",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL25358305M",
+          "coverIsbn": "2843441137",
+          "coverArtists": [
+            "Manchu"
+          ],
+          "isfdbRecord": "567843"
+        },
+        {
+          "id": "OL261853W",
+          "title": "The Centauri Device",
+          "author": "M. John Harrison",
+          "coverId": "ol:15221704",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL61946991M",
+          "coverIsbn": "3404220315",
+          "coverArtists": [
+            "Robin Hidden"
+          ],
+          "isfdbRecord": "406347"
+        },
+        {
+          "id": "OL27252W",
+          "title": "The Difference Engine",
+          "author": "William Gibson",
+          "coverId": "ol:8784088",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:por:OL27312760M",
+          "coverIsbn": "9788576572145",
+          "coverArtists": [
+            "Pedro Inoue"
+          ],
+          "isfdbRecord": "672520"
+        },
+        {
+          "id": "OL166497W",
+          "title": "The Prestige",
+          "author": "Christopher Priest",
+          "coverId": "ol:4910466",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL9131915M",
+          "coverIsbn": "9788445073193"
+        },
+        {
+          "id": "OL2172408W",
+          "title": "Martian Time-Slip",
+          "author": "Philip K. Dick",
+          "coverId": "ol:4910114",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL9131921M",
+          "coverIsbn": "9788445073407"
+        },
+        {
+          "id": "OL3290738W",
+          "title": "Sirius",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:1047644",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL9131903M",
+          "coverIsbn": "9788445072721"
+        },
+        {
+          "id": "OL1963268W",
+          "title": "Hyperion",
+          "author": "Dan Simmons",
+          "coverId": "ol:8288907",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:pol:OL26604191M",
+          "coverIsbn": "9788374805575"
+        },
+        {
+          "id": "OL892520W",
+          "title": "Non-Stop",
+          "author": "Brian W. Aldiss",
+          "coverId": "ol:15245167",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL62427472M"
+        },
+        {
+          "id": "OL4088358W",
+          "title": "City",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:13541299",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:cat:OL47142622M",
+          "coverIsbn": "9788412119503",
+          "coverArtists": [
+            "Elsa Velasco"
+          ],
+          "isfdbRecord": "766037"
+        },
+        {
+          "id": "OL893521W",
+          "title": "Hellstrom's Hive",
+          "author": "Frank Herbert",
+          "coverId": "ol:10775565",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL32115348M",
+          "coverIsbn": "9782277211396"
+        },
+        {
+          "id": "OL1960371W",
+          "title": "Dying Inside",
+          "author": "Robert Silverberg",
+          "coverId": "ol:10836570",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL32180400M",
+          "coverIsbn": "3453215273",
+          "coverArtists": [
+            "Jim Burns"
+          ],
+          "isfdbRecord": "367187"
+        },
+        {
+          "id": "OL104514W",
+          "title": "Grass",
+          "author": "Sheri S. Tepper",
+          "coverId": "ol:8636090",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL27029765M",
+          "coverIsbn": "9782277232445",
+          "coverArtists": [
+            "Barclay Shaw"
+          ],
+          "isfdbRecord": "397398"
+        },
+        {
+          "id": "OL510405W",
+          "title": "Ringworld",
+          "author": "Larry Niven",
+          "coverId": "ol:7241328",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL25417488M",
+          "coverIsbn": "9782290339169",
+          "coverArtists": [
+            "Philippe Caza"
+          ],
+          "isfdbRecord": "653362"
+        },
+        {
+          "id": "OL108288W",
+          "title": "Timescape",
+          "author": "Gregory Benford",
+          "coverId": "ol:968826",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL8839536M",
+          "coverIsbn": "9782070417728"
+        },
+        {
+          "id": "OL1960643W",
+          "title": "The Book of Skulls",
+          "author": "Robert Silverberg",
+          "coverId": "ol:14549025",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL50103234M",
+          "coverIsbn": "8477350973"
+        },
+        {
+          "id": "OL2071382W",
+          "title": "Emphyrio",
+          "author": "Jack Vance",
+          "coverId": "ol:8644453",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL27035952M",
+          "coverIsbn": "9788478130078"
+        },
+        {
+          "id": "OL2454690W",
+          "title": "Rogue moon",
+          "author": "Algis Budrys",
+          "coverId": "ol:11689348",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL33021430M",
+          "coverIsbn": "9783453317673",
+          "coverArtists": [
+            "Mopic"
+          ],
+          "isfdbRecord": "575345"
+        },
+        {
+          "id": "OL16518W",
+          "title": "Eon",
+          "author": "Greg Bear",
+          "coverId": "ol:14413854",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:dut:OL47548308M",
+          "coverIsbn": "9029042206"
+        },
+        {
+          "id": "OL17417W",
+          "title": "Rendezvous with Rama",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:11272713",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:chi:OL32640632M",
+          "coverIsbn": "9787559416551"
+        },
+        {
+          "id": "OL17403W",
+          "title": "The Fountains of Paradise",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:8022431",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL26341020M",
+          "coverIsbn": "9782277213048",
+          "coverArtists": [
+            "Christopher Foss"
+          ],
+          "isfdbRecord": "369658"
+        },
+        {
+          "id": "OL1963251W",
+          "title": "The Fall of Hyperion",
+          "author": "Dan Simmons",
+          "coverId": "ol:10543219",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ita:OL31855007M",
+          "coverIsbn": "9788834731895"
+        },
+        {
+          "id": "OL506264W",
+          "title": "Where Late the Sweet Birds Sang",
+          "author": "Kate Wilhelm",
+          "coverId": "ol:7268608",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL24991499M",
+          "coverIsbn": "4453307909"
+        },
+        {
+          "id": "OL7967812W",
+          "title": "Roadside Picnic",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:15232311",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL27098420M",
+          "coverIsbn": "9789666963461"
+        },
+        {
+          "id": "OL12098201W",
+          "title": "Synners",
+          "author": "Pat Cadigan",
+          "coverId": "ol:973803",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL8864599M",
+          "coverIsbn": "9782207305393",
+          "coverArtists": [
+            "Mandy"
+          ],
+          "isfdbRecord": "334183"
+        },
+        {
+          "id": "OL2737410W",
+          "title": "Ammonite",
+          "author": "Nicola Griffith",
+          "coverId": "ol:6925162",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL24990580M",
+          "coverIsbn": "9783453119093"
+        },
+        {
+          "id": "OL450063W",
+          "title": "Frankenstein; or, The Modern Prometheus",
+          "author": "Mary Shelley",
+          "coverId": "ol:15165840",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:dut:OL61200468M",
+          "coverIsbn": "9789463492515"
+        },
+        {
+          "id": "OL515754W",
+          "title": "Flowers for Algernon",
+          "author": "Daniel Keyes",
+          "coverId": "ol:8434998",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:jpn:OL26387281M",
+          "coverIsbn": "9784151101014"
+        },
+        {
+          "id": "OL2737402W",
+          "title": "Rio Lento",
+          "author": "Nicola Griffith",
+          "coverId": "ol:8139253",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL13265368M",
+          "coverIsbn": "9788440681973",
+          "coverArtists": [
+            "Maya & Cardil"
+          ],
+          "isfdbRecord": "651585"
+        },
+        {
+          "id": "OL14858392W",
+          "title": "To Say Nothing of the Dog",
+          "author": "Connie Willis",
+          "coverId": "ol:982148",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL8910991M",
+          "coverIsbn": "9782290324912",
+          "coverArtists": [
+            "Grï¿½goire Hï¿½non"
+          ],
+          "isfdbRecord": "613188"
+        },
+        {
+          "id": "OL46395W",
+          "title": "The Gods Themselves",
+          "author": "Isaac Asimov",
+          "coverId": "ol:12582020",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:pol:OL36694999M",
+          "coverIsbn": "9788376595443"
+        },
+        {
+          "id": "OL59715W",
+          "title": "Double Star",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:11081418",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:dut:OL32419874M",
+          "coverIsbn": "9789022913888",
+          "coverArtists": [
+            "Dick Bruna"
+          ],
+          "isfdbRecord": "388344"
+        },
+        {
+          "id": "OL17402W",
+          "title": "A Fall of Moondust",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:12953953",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:por:OL39936974M",
+          "coverIsbn": "9788576575122"
+        },
+        {
+          "id": "OL2172352W",
+          "title": "A maze of death",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8286813",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:pol:OL26598230M",
+          "coverIsbn": "9788380622555"
+        },
+        {
+          "id": "OL2172396W",
+          "title": "The penultimate truth",
+          "author": "Philip K. Dick",
+          "coverId": "ol:3098014",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL12459158M",
+          "coverIsbn": "9782221021231"
+        },
+        {
+          "id": "OL59733W",
+          "title": "The Door into Summer",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:15249521",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:jpn:OL62500487M",
+          "coverIsbn": "9784150123093"
+        },
+        {
+          "id": "OL2172502W",
+          "title": "Dr. Bloodmoney",
+          "author": "Philip K. Dick",
+          "coverId": "ol:7255048",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL25425493M"
+        },
+        {
+          "id": "OL2046154W",
+          "title": "The Long Tomorrow",
+          "author": "Leigh Brackett",
+          "coverId": "ol:14543943",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL49845405M",
+          "coverIsbn": "9783910914049",
+          "coverArtists": [
+            "s.BENeï¿½"
+          ],
+          "isfdbRecord": "976694"
+        },
+        {
+          "id": "OL60942W",
+          "title": "Jem",
+          "author": "Frederik Pohl",
+          "coverId": "ol:12013128",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL33912706M",
+          "coverIsbn": "9783442233601",
+          "coverArtists": [
+            "Jï¿½rgen F. Rogner"
+          ],
+          "isfdbRecord": "403370"
+        },
+        {
+          "id": "OL2172433W",
+          "title": "A Scanner Darkly",
+          "author": "Philip K. Dick",
+          "coverId": "ol:4910656",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL9131944M",
+          "coverIsbn": "9788445074060"
+        },
+        {
+          "id": "OL59797W",
+          "title": "The Word for World is Forest",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:8761562",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:tur:OL27279330M",
+          "coverIsbn": "9789753421201",
+          "coverArtists": [
+            "Tim White"
+          ],
+          "isfdbRecord": "387870"
+        },
+        {
+          "id": "OL1960368W",
+          "title": "Downward to the Earth",
+          "author": "Robert Silverberg",
+          "coverId": "ol:8762558",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL27280548M",
+          "coverIsbn": "9782253025771"
+        },
+        {
+          "id": "OL2071423W",
+          "title": "Nachtlicht",
+          "author": "Jack Vance",
+          "coverId": "ol:3202398",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL12716838M",
+          "coverIsbn": "9783453161931",
+          "coverArtists": [
+            "Mick van Houten"
+          ],
+          "isfdbRecord": "290565"
+        },
+        {
+          "id": "OL257947W",
+          "title": "Dying of the Light",
+          "author": "George R. R. Martin",
+          "coverId": "ol:10546376",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ita:OL31860953M",
+          "coverIsbn": "9788898172054"
+        },
+        {
+          "id": "OL59863W",
+          "title": "The Dispossessed",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:13656440",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:cat:OL47221190M",
+          "coverIsbn": "9788419206688"
+        },
+        {
+          "id": "OL56833W",
+          "title": "Nova",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:2151555",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL8887572M",
+          "coverIsbn": "9782253046813",
+          "coverArtists": [
+            "ï¿½ric Seigaud"
+          ],
+          "isfdbRecord": "350579"
+        },
+        {
+          "id": "OL1975714W",
+          "title": "A Fire upon the Deep",
+          "author": "Vernor Vinge",
+          "coverId": "ol:976985",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL8887887M",
+          "coverIsbn": "9782253072089",
+          "coverArtists": [
+            "Manchu"
+          ],
+          "isfdbRecord": "133271"
+        },
+        {
+          "id": "OL59846W",
+          "title": "Always Coming Home",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:12317659",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:tur:OL35610908M",
+          "coverIsbn": "9789755392912",
+          "coverArtists": [
+            "Sevinï¿½ Altan"
+          ],
+          "isfdbRecord": "1045264"
+        },
+        {
+          "id": "OL3928956W",
+          "title": "Swastika Night",
+          "author": "Katharine Burdekin",
+          "coverId": "ol:13482981",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL47001334M",
+          "coverIsbn": "9782371190528",
+          "coverArtists": [
+            "ADGP"
+          ],
+          "isfdbRecord": "990810"
+        },
+        {
+          "id": "OL52266W",
+          "title": "The Invisible Man",
+          "author": "H. G. Wells",
+          "coverId": "ol:11475787",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:cat:OL32843418M",
+          "coverIsbn": "9788430762521"
+        },
+        {
+          "id": "OL381550W",
+          "title": "The Island of Dr. Moreau",
+          "author": "H. G. Wells",
+          "coverId": "ol:14821275",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ita:OL55931351M",
+          "coverIsbn": "9788807903274"
+        },
+        {
+          "id": "OL52267W",
+          "title": "The Time Machine",
+          "author": "H. G. Wells",
+          "coverId": "ol:14364508",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL48581955M"
+        },
+        {
+          "id": "OL52114W",
+          "title": "The War of the Worlds",
+          "author": "H. G. Wells",
+          "coverId": "ol:11740945",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:dut:OL33042326M",
+          "coverIsbn": "9789044606355"
+        },
+        {
+          "id": "OL59800W",
+          "title": "The Left Hand of Darkness",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:14638342",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:heb:OL50179038M"
+        },
+        {
+          "id": "OL10560082W",
+          "title": "Улитка на склоне",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:15232040",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:rus:OL19516261M"
+        },
+        {
+          "id": "OL1960375W",
+          "title": "Lord Valentine's Castle",
+          "author": "Robert Silverberg",
+          "coverId": "ol:11306921",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL32681253M",
+          "coverIsbn": "3811800906",
+          "coverArtists": [
+            "Jim Burns"
+          ],
+          "isfdbRecord": "387015"
+        },
+        {
+          "id": "OL166491W",
+          "title": "The Separation",
+          "author": "Christopher Priest",
+          "coverId": "ol:3327837",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL13268297M",
+          "coverIsbn": "9788445075357"
+        },
+        {
+          "id": "OL2354527W",
+          "title": "White Queen",
+          "author": "Gwyneth Jones",
+          "coverId": "ol:8790696",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL25435897M",
+          "coverIsbn": "9783453109223",
+          "coverArtists": [
+            "Karel Thole"
+          ],
+          "isfdbRecord": "407508"
+        },
+        {
+          "id": "OL1168083W",
+          "title": "Nineteen Eighty-Four",
+          "author": "George Orwell",
+          "coverId": "ol:14857956",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ind:OL58373101M",
+          "coverIsbn": "9786020661988"
+        },
+        {
+          "id": "OL13978W",
+          "title": "Roadmarks",
+          "author": "Roger Zelazny",
+          "coverId": "ol:3091863",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL12452124M",
+          "coverIsbn": "9782207303245",
+          "coverArtists": [
+            "Serge Bihannic"
+          ],
+          "isfdbRecord": "834113"
+        },
+        {
+          "id": "OL261643W",
+          "title": "Galaxies Like Grains of Sand",
+          "author": "Brian Aldiss",
+          "coverId": "ol:10438234",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL30115139M"
+        },
+        {
+          "id": "OL1920269W",
+          "title": "Air",
+          "author": "Geoff Ryman",
+          "coverId": "ol:5278051",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:spa:OL13364687M",
+          "coverIsbn": "9788498003062"
+        }
+      ],
+      "coverCredits": "isfdb"
     }
   ]
 }
