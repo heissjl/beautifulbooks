@@ -257,9 +257,12 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
   const report = useCallback((side: Side) => send('/api/versus/flag', { id: side.id, reason: 'reported' }, null), [send]);
 
   useEffect(() => {
-    if (!pair || leaving) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLElement && e.target.closest('input, textarea')) return;
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'ArrowDown') return;
+      // The arrows are the game's keys, never a scroll — also while a pair is leaving (Julian, 2026-09-26).
+      e.preventDefault();
+      if (!pair || leaving) return;
       if (e.key === 'ArrowLeft') vote(pair.a);
       else if (e.key === 'ArrowRight') vote(pair.b);
       else if (e.key === 'ArrowDown') skip(pair);
