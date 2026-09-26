@@ -27,6 +27,8 @@ export function mosaicGrid(total: number): { cols: number; rows: number } {
 /** Tile width: five covers and 5/6 of the sixth from `sm` (gap 1rem): row = 5⅚ tiles + 5 gaps; on a phone 2⅚ (gap 0.75rem). */
 const TILE = 'shrink-0 snap-start w-[calc((100cqw-1.5rem)/2.8333)] sm:w-[calc((100cqw-5rem)/5.8333)]';
 /** The fade: about one and a half tiles wide, so it starts on the fifth cover and deepens gently over the sixth. */
+/** Six or fewer covers: from `sm` they all fit side by side (six columns), so nothing scrolls or fades there; on a phone the row still scrolls. */
+const TILE_FEW = 'shrink-0 snap-start w-[calc((100cqw-1.5rem)/2.8333)] sm:w-[calc((100cqw-5rem)/6)]';
 const FADE = 'w-[calc((100cqw-1.5rem)/2.8333*1.3)] sm:w-[calc((100cqw-5rem)/5.8333*1.5)]';
 
 /**
@@ -41,6 +43,8 @@ const FADE = 'w-[calc((100cqw-1.5rem)/2.8333*1.3)] sm:w-[calc((100cqw-5rem)/5.83
  */
 export default function CollectionRow({ slug, title, works, total }: { slug: string; title: string; works: WallWork[]; total: number }) {
   const { scroller, content, overflows, atEnd, onScroll } = useOverflowsX();
+  // Julian, 2026-09-26: „when the collection is 6 covers or less, don't have a fading or scrolling. unless you are showing less items on a smaller screen".
+  const tile = total <= 6 ? TILE_FEW : TILE;
   /*
     The mosaic sits at the end of a row that scrolls sideways, where lazy
     images would wait until the reader has scrolled all the way (Julian,
@@ -75,7 +79,7 @@ export default function CollectionRow({ slug, title, works, total }: { slug: str
           {works.slice(0, ROW_MAX).map(w => {
             const target = w.coverWork ?? w.id;
             return (
-              <li key={w.id} className={TILE}>
+              <li key={w.id} className={tile}>
                 <Link
                   href={`/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}`}
                   onClick={() => storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [olCover(w.coverId, 'L')] })}
