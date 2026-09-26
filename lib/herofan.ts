@@ -23,11 +23,45 @@
  * the catalogue would move with it and the folding (§1, N12).
  */
 import ringsFile from '@/data/hero-rings.json';
-import type { HeroRing } from './heroring';
+import type { CollectionRing, HeroRing } from './heroring';
 
-export const HERO_RINGS: readonly HeroRing[] = (ringsFile as { rings: HeroRing[] }).rings;
+const file = ringsFile as { rings: HeroRing[]; collectionRings?: CollectionRing[] };
 
-/** The ring for this visit; `random` is a parameter so a test can pin it. */
+export const HERO_RINGS: readonly HeroRing[] = file.rings;
+
+/**
+ * **Collection rings (ROADMAP 6.59):** seven books of one published
+ * collection, chosen by the rules in `lib/heroring.ts` at build time. They
+ * take one visit in three; the other two keep the book ring, which is the
+ * site's promise ("one book, many faces") and stays the usual picture.
+ * Random per visit rather than a strict alternation, because remembering
+ * which kind came last would mean keeping something in the reader's browser
+ * that the reader did not ask for (privacy notice, § 25 TDDDG).
+ */
+export const COLLECTION_RINGS: readonly CollectionRing[] = file.collectionRings ?? [];
+
+/** The share of visits that show a collection ring, when one is live. */
+export const COLLECTION_RING_SHARE = 1 / 3;
+
+export type HeroPick = { kind: 'work'; ring: HeroRing } | { kind: 'collection'; ring: CollectionRing };
+
+function draw<T>(list: readonly T[], random: () => number): T {
+  return list[Math.min(list.length - 1, Math.floor(random() * list.length))];
+}
+
+/** The book ring for this visit; `random` is a parameter so a test can pin it. */
 export function pickHeroRing(random: () => number = Math.random): HeroRing {
-  return HERO_RINGS[Math.min(HERO_RINGS.length - 1, Math.floor(random() * HERO_RINGS.length))];
+  return draw(HERO_RINGS, random);
+}
+
+/**
+ * The ring for this visit, of either kind. A collection ring is drawn only
+ * among `liveSlugs`, the collections published on the running site now: the
+ * rings are built from data/collections.json, and a collection switched off
+ * on /curate must not be linked from the home page.
+ */
+export function pickHeroPick(liveSlugs: readonly string[], random: () => number = Math.random): HeroPick {
+  const live = COLLECTION_RINGS.filter(r => liveSlugs.includes(r.slug));
+  if (live.length > 0 && random() < COLLECTION_RING_SHARE) return { kind: 'collection', ring: draw(live, random) };
+  return { kind: 'work', ring: pickHeroRing(random) };
 }

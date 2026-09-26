@@ -203,6 +203,10 @@
     clear above the near one; the ring sits at 46 % because the near covers
     dip toward the caption. At 7.5rem and 12° the covers lay in a heap and
     the far half vanished.
+    Only the faces take the pointer (6.59): the ring and the seats are planes
+    of their own in 3D, and hit-testing found them in front of a face at most
+    angles, so a click meant for one cover of a collection ring reached none.
+    The box itself still gets every move, for turning by hand.
   */
   .rondell { perspective: 900px; --w: 4.5rem; --r: 7.65rem; --turn: 0deg; }
   .rondell-ring {
@@ -210,6 +214,7 @@
     inset: 0;
     transform-style: preserve-3d;
     transform: rotateX(-18deg) rotateY(calc(-1 * var(--turn)));
+    pointer-events: none;
   }
   .rondell-seat {
     position: absolute;
@@ -220,10 +225,12 @@
     margin: calc(var(--w) * -0.75) 0 0 calc(var(--w) * -0.5);
     transform-style: preserve-3d;
     transform: rotateY(var(--a)) translateZ(var(--r)) rotateY(calc(-1 * var(--a)));
+    pointer-events: none;
   }
   .rondell-face {
     width: 100%;
     height: 100%;
+    pointer-events: auto;
     transform: rotateY(var(--turn)) rotateX(18deg);
   }
   /* One row of the share menu (ShareMenu). */

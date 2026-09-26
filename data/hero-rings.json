@@ -4,6 +4,10 @@
   "minBits": 20,
   "minColour": 0.22
  },
+ "collectionRules": {
+  "minCovers": 14,
+  "minColour": 0.22
+ },
  "rings": [
   {
    "workId": "OL39349W",
@@ -1389,6 +1393,296 @@
     "ol:12369923",
     "ol:13515944",
     "ol:15126320"
+   ]
+  }
+ ],
+ "collectionRings": [
+  {
+   "slug": "feminist-press",
+   "title": "Feminist Press",
+   "covers": [
+    {
+     "coverId": "ol:1881521",
+     "workId": "OL17718634W",
+     "title": "Lillian D. Wald, progressive activist",
+     "author": "Clare Coss"
+    },
+    {
+     "coverId": "ol:784384",
+     "workId": "OL3928954W",
+     "title": "Proud man",
+     "author": "Katharine Burdekin"
+    },
+    {
+     "coverId": "ol:713935",
+     "workId": "OL3691201W",
+     "title": "Mother to Daughter Daughter to Mother",
+     "author": "Tillie Olsen"
+    },
+    {
+     "coverId": "ol:784477",
+     "workId": "OL6030571W",
+     "title": "What We Hold In Common",
+     "author": "Janet Zandy"
+    },
+    {
+     "coverId": "ol:683284",
+     "workId": "OL492309W",
+     "title": "Earthsong",
+     "author": "Suzette Haden Elgin"
+    },
+    {
+     "coverId": "ol:703857",
+     "workId": "OL4503061W",
+     "title": "But Some of Us Are Brave",
+     "author": "Akasha Hull"
+    },
+    {
+     "coverId": "ol:8296452",
+     "workId": "OL15587256W",
+     "title": "Hold onto the sun",
+     "author": "Michal Govrin"
+    }
+   ]
+  },
+  {
+   "slug": "sf-masterworks",
+   "title": "SF Masterworks",
+   "covers": [
+    {
+     "coverId": "ol:911114",
+     "workId": "OL1819353W",
+     "title": "The Stars My Destination",
+     "author": "Alfred Bester"
+    },
+    {
+     "coverId": "ol:910983",
+     "workId": "OL8260926W",
+     "title": "The Complete Roderick",
+     "author": "John Sladek"
+    },
+    {
+     "coverId": "ol:380371",
+     "workId": "OL1920272W",
+     "title": "The Child Garden",
+     "author": "Geoff Ryman"
+    },
+    {
+     "coverId": "ol:911132",
+     "workId": "OL2697365W",
+     "title": "Behold the Man",
+     "author": "Michael Moorcock"
+    },
+    {
+     "coverId": "ol:380392",
+     "workId": "OL54951W",
+     "title": "Life during wartime",
+     "author": "Lucius Shepard"
+    },
+    {
+     "coverId": "ol:380380",
+     "workId": "OL8400747W",
+     "title": "Mission of Gravity",
+     "author": "Hal Clement"
+    },
+    {
+     "coverId": "ol:911053",
+     "workId": "OL2172519W",
+     "title": "Now Wait for Last Year",
+     "author": "Philip K. Dick"
+    }
+   ]
+  },
+  {
+   "slug": "sf-masterworks-relaunch",
+   "title": "SF Masterworks — the relaunch",
+   "covers": [
+    {
+     "coverId": "ol:8414795",
+     "workId": "OL12098201W",
+     "title": "Synners",
+     "author": "Pat Cadigan"
+    },
+    {
+     "coverId": "ol:8651995",
+     "workId": "OL2454690W",
+     "title": "Rogue moon",
+     "author": "Algis Budrys"
+    },
+    {
+     "coverId": "ol:15258770",
+     "workId": "OL19546464W",
+     "title": "Dark Benediction",
+     "author": "Walter M. Miller, Jr."
+    },
+    {
+     "coverId": "ol:10363583",
+     "workId": "OL1975705W",
+     "title": "A Deepness in the Sky (Zones of Thought)",
+     "author": "Vernor Vinge"
+    },
+    {
+     "coverId": "ol:8433990",
+     "workId": "OL271163W",
+     "title": "The Forever War",
+     "author": "Joe Haldeman"
+    },
+    {
+     "coverId": "ol:8778404",
+     "workId": "OL60924W",
+     "title": "Gateway",
+     "author": "Frederik Pohl"
+    },
+    {
+     "coverId": "ol:8600460",
+     "workId": "OL19799863W",
+     "title": "The Rediscovery of Man (S.F. Masterworks)",
+     "author": "Cordwainer Smith"
+    }
+   ]
+  },
+  {
+   "slug": "edition-suhrkamp",
+   "title": "edition suhrkamp",
+   "covers": [
+    {
+     "coverId": "ol:4376333",
+     "workId": "OL4057472W",
+     "title": "Hospiz",
+     "author": "Franz Böni"
+    },
+    {
+     "coverId": "ol:1015893",
+     "workId": "OL4844642W",
+     "title": "Die Amerikanische Revolution 1763–1787",
+     "author": "Horst Dippel"
+    },
+    {
+     "coverId": "ol:1015864",
+     "workId": "OL165687W",
+     "title": "Das Sauspiel",
+     "author": "Martin Walser"
+    },
+    {
+     "coverId": "ol:2211748",
+     "workId": "OL3802331W",
+     "title": "Die Rundköpfe und die Spitzköpfe",
+     "author": "Bertolt Brecht"
+    },
+    {
+     "coverId": "ol:2211788",
+     "workId": "OL9072699W",
+     "title": "Liberlismus in Deutschland (Neue historische Bibliothek)",
+     "author": "D. Langewiesche"
+    },
+    {
+     "coverId": "ol:2211800",
+     "workId": "OL13478251W",
+     "title": "Liebe Not",
+     "author": "Hans Ulrich Treichel"
+    },
+    {
+     "coverId": "ol:2211767",
+     "workId": "OL22750764W",
+     "title": "Kindheit als Fiktion",
+     "author": "Heinz Hengst"
+    }
+   ]
+  },
+  {
+   "slug": "tiptree-award",
+   "title": "The Otherwise Award",
+   "covers": [
+    {
+     "coverId": "ol:8668156",
+     "workId": "OL5940199W",
+     "title": "Not before sundown",
+     "author": "Johanna Sinisalo"
+    },
+    {
+     "coverId": "ol:177168",
+     "workId": "OL1920269W",
+     "title": "Air",
+     "author": "Geoff Ryman"
+    },
+    {
+     "coverId": "ol:15212956",
+     "workId": "OL37615535W",
+     "title": "Rakesfall",
+     "author": "Vajra Chandrasekera"
+    },
+    {
+     "coverId": "ol:12357203",
+     "workId": "OL17827358W",
+     "title": "lizard radio",
+     "author": "Pat Schmatz"
+    },
+    {
+     "coverId": "ol:11535467",
+     "workId": "OL21443514W",
+     "title": "Sorrowland",
+     "author": "Rivers Solomon"
+    },
+    {
+     "coverId": "ol:686827",
+     "workId": "OL3615811W",
+     "title": "The Kappa Child",
+     "author": "Hiromi Goto"
+    },
+    {
+     "coverId": "ol:38916",
+     "workId": "OL892345W",
+     "title": "Half Life",
+     "author": "Shelley Jackson"
+    }
+   ]
+  },
+  {
+   "slug": "hugo-award-novel",
+   "title": "Hugo Award — best novel",
+   "covers": [
+    {
+     "coverId": "ol:3818726",
+     "workId": "OL81649W",
+     "title": "Blue Mars",
+     "author": "Kim Stanley Robinson"
+    },
+    {
+     "coverId": "ol:238001",
+     "workId": "OL56898W",
+     "title": "Paladin of Souls",
+     "author": "Lois McMaster Bujold"
+    },
+    {
+     "coverId": "ol:14632574",
+     "workId": "OL59740W",
+     "title": "Starship Troopers",
+     "author": "Robert A. Heinlein"
+    },
+    {
+     "coverId": "ol:420452",
+     "workId": "OL2172403W",
+     "title": "The Man in the High Castle",
+     "author": "Philip K. Dick"
+    },
+    {
+     "coverId": "ol:14169",
+     "workId": "OL4088396W",
+     "title": "Way station",
+     "author": "Clifford D. Simak"
+    },
+    {
+     "coverId": "ol:8455453",
+     "workId": "OL19341943W",
+     "title": "The City & The City",
+     "author": "China Miéville"
+    },
+    {
+     "coverId": "ol:10618463",
+     "workId": "OL59800W",
+     "title": "The Left Hand of Darkness",
+     "author": "Ursula K. Le Guin"
+    }
    ]
   }
  ]

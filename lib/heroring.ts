@@ -24,6 +24,7 @@
 import { colourDistance, hamming, HASH_BITS, looksLikeScannedPage, type ImageSignature } from './imagesig';
 import { COLOUR_MAX, SAME_DESIGN_BITS, STRUCTURE_MAX } from './coverindex';
 import { SAME_COVER_MAX_DISTANCE, SAME_ISBN_MAX_DISTANCE, SAME_PRINTING_MAX_DISTANCE } from './works';
+import type { Collection } from './collections';
 
 export const RING_SIZE = 7;
 
@@ -134,4 +135,136 @@ export function ringsFor(
     if (coverIds) rings.push({ workId: w.id, title: w.title, author: w.author, coverIds });
   }
   return rings;
+}
+
+/**
+ * Every signature the build knows, by cover id: the cover index first, then
+ * the file the build script measured collection covers into.
+ */
+export function signatureMap(index: CoverIndexFile, file: SignatureFile): Map<string, ImageSignature> {
+  const out = new Map<string, ImageSignature>();
+  for (const [id, [hash, contrast, mean, saturation, hues]] of Object.entries(file.covers)) {
+    out.set(id, { hash, contrast, mean, saturation, hues });
+  }
+  for (const [, id, hash, contrast, mean, saturation, hues] of index.covers) out.set(id, { hash, contrast, mean, saturation, hues });
+  return out;
+}
+
+/** data/hero-ring-signatures.json: collection covers the cover index does not hold, as the build measured them. */
+export interface SignatureFile {
+  covers: Record<string, [hash: string, contrast: number, mean: number, saturation: number, hues: string]>;
+}
+
+/*
+ * ---- Collection rings (ROADMAP 6.59) ----
+ *
+ * Julian, 2026-09-26: „add hero rings derived from the collections". A work
+ * ring says "one book, many faces"; a collection ring says "one theme, many
+ * books" — seven covers of seven different books of one published
+ * collection, in the same spirit: colourful, unlike each other, no blank
+ * scans.
+ *
+ * The rules differ from a work ring's where the question differs:
+ * - **structure:** only "not the same image" (more than the same-cover fold,
+ *   8 bits). Two books of a series share a template on purpose — the design
+ *   is what the collection is about — and cannot be duplicates of each other,
+ *   so the work ring's 20 bits would throw out exactly the covers that show
+ *   the series.
+ * - **colour:** known, and more than COLLECTION_RING_MIN_COLOUR apart.
+ * - **authors:** seven different ones, so a ring is not three Philip K. Dicks.
+ * - **not blank**, and the lowest quarter in saturation and contrast drops
+ *   out first, as for a work.
+ * A collection qualifies with at least COLLECTION_RING_MIN_COVERS covers that
+ * have a signature: at fewer, a ring of seven is half the wall and no longer
+ * a choice.
+ */
+export const COLLECTION_RING_MIN_COVERS = 14;
+export const COLLECTION_RING_MIN_COLOUR = RING_MIN_COLOUR;
+
+export interface CollectionRingCover {
+  /** `ol:<id>`. */
+  coverId: string;
+  /** The work whose wall holds this cover (the pick's `coverWork` if it has one), for `/book/<workId>?cover=`. */
+  workId: string;
+  title: string;
+  author: string;
+}
+
+export interface CollectionRing {
+  slug: string;
+  title: string;
+  covers: CollectionRingCover[];
+}
+
+interface CollectionCandidate extends RingCandidate {
+  cover: CollectionRingCover;
+}
+
+/** May these two books stand on the same collection ring? */
+export function collectionPairOk(a: CollectionCandidate, b: CollectionCandidate): boolean {
+  const colour = colourDistance(a.sig, b.sig);
+  return (
+    a.cover.author !== b.cover.author &&
+    hamming(a.sig.hash, b.sig.hash) > SAME_COVER_MAX_DISTANCE &&
+    colour !== null &&
+    colour > COLLECTION_RING_MIN_COLOUR
+  );
+}
+
+/** Seven covers of one collection, or null if the rules leave fewer. */
+export function pickCollectionRing(candidates: readonly CollectionCandidate[]): CollectionRingCover[] | null {
+  const signed = candidates.filter(c => c.sig.hues && c.sig.saturation !== undefined && !RING_EXCLUDED.has(c.id));
+  if (signed.length < COLLECTION_RING_MIN_COVERS) return null;
+  const saturationFloor = lowerQuarter(signed.map(c => c.sig.saturation ?? 0));
+  const contrastFloor = lowerQuarter(signed.map(c => c.sig.contrast));
+  const pool = signed.filter(
+    c => !looksLikeScannedPage(c.sig) && (c.sig.saturation ?? 0) >= saturationFloor && c.sig.contrast >= contrastFloor,
+  );
+  if (pool.length < RING_SIZE) return null;
+
+  const vivid = (c: RingCandidate) => (c.sig.saturation ?? 0) * c.sig.contrast;
+  const ring: CollectionCandidate[] = [pool.reduce((best, c) => (vivid(c) > vivid(best) ? c : best))];
+  while (ring.length < RING_SIZE) {
+    let next: CollectionCandidate | undefined;
+    let nextSpread = -1;
+    for (const c of pool) {
+      if (ring.includes(c) || !ring.every(r => collectionPairOk(c, r))) continue;
+      const d = Math.min(...ring.map(r => spread(c.sig, r.sig)));
+      if (d > nextSpread) {
+        nextSpread = d;
+        next = c;
+      }
+    }
+    if (!next) return null;
+    ring.push(next);
+  }
+  return ring.map(c => c.cover);
+}
+
+/** The collections a ring is built for: published in the file, and with enough picks to choose from. */
+export function ringCollections<C extends Pick<Collection, 'published' | 'works'>>(collections: readonly C[]): C[] {
+  return collections.filter(c => c.published && c.works.length >= COLLECTION_RING_MIN_COVERS);
+}
+
+/**
+ * A ring for every collection given that the rules can fill, in the given
+ * order. Pass `ringCollections(...)`; the build script does.
+ */
+export function collectionRingsFor(
+  collections: readonly Pick<Collection, 'slug' | 'title' | 'works'>[],
+  signatures: ReadonlyMap<string, ImageSignature>,
+): CollectionRing[] {
+  const out: CollectionRing[] = [];
+  for (const c of collections) {
+    const candidates: CollectionCandidate[] = [];
+    for (const w of c.works) {
+      const id = `ol:${w.coverId}`;
+      const sig = signatures.get(id);
+      if (!sig) continue;
+      candidates.push({ id, sig, cover: { coverId: id, workId: w.coverWork ?? w.id, title: w.title, author: w.author } });
+    }
+    const covers = pickCollectionRing(candidates);
+    if (covers) out.push({ slug: c.slug, title: c.title, covers });
+  }
+  return out;
 }

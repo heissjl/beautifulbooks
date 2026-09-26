@@ -38,6 +38,9 @@ export default async function Home({ searchParams }: HomeProps) {
   const isHero = !searchQuery;
   // Published collections only in production; drafts show under `next dev` (SPEC F8).
   const collections = isHero ? await liveCollections() : [];
+  // A collection ring on the hero only for what is published on the site now,
+  // switches from /curate included; `published` is false for a dev-only draft (6.59).
+  const liveSlugs = collections.filter(c => c.published).map(c => c.slug);
 
   return (
     <div className="min-h-screen">
@@ -91,7 +94,7 @@ export default async function Home({ searchParams }: HomeProps) {
             </div>
             {isHero && (
               <div className="hidden min-h-[14.25rem] w-[19rem] shrink-0 lg:mr-6 lg:block xl:mr-16">
-                <HeroSlot />
+                <HeroSlot liveSlugs={liveSlugs} />
               </div>
             )}
           </div>
