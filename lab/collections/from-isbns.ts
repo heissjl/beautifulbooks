@@ -38,6 +38,14 @@ interface Entry {
   /** Set by hand after looking: the image under this ISBN is not a cover (a title page, a photo, a stand-in). */
   skip?: string;
   fallbackIsbns?: string[];
+  /**
+   * Set by hand: the Open Library work this volume belongs to, when the ISBN's
+   * edition sits on a stray one-edition work whose title is not the book's
+   * („Ullstein Taschenbucher", „Suhrkamp BasisBibliothek (SBB), Nr.16, Demian").
+   * The pick then takes id, title and author from this work and keeps the
+   * stray one as `coverWork`, the wall that holds the image.
+   */
+  work?: string;
 }
 
 const cache: Record<string, unknown> = existsSync(CACHE_FILE) ? JSON.parse(readFileSync(CACHE_FILE, 'utf8')) : {};
@@ -99,9 +107,10 @@ async function main() {
       else if (!hit && other) hit = other;
     }
     if (!hit) { notFound.push(`${e.no ?? '-'} ${e.title} (${e.isbn})`); continue; }
-    const id = hit.workKey.replace('/works/', '');
+    const coverWork = hit.workKey.replace('/works/', '');
+    const id = e.work ?? coverWork;
     if (works.some(w => w.id === id)) continue;
-    const work = await getJson<Work>(`${hit.workKey}.json`);
+    const work = await getJson<Work>(`/works/${id}.json`);
     const authorKey = work?.authors?.[0]?.author?.key;
     const author = authorKey ? await getJson<{ name?: string }>(`${authorKey}.json`) : null;
     if (!hit.cover) { noCover.push(`${e.no ?? '-'} ${e.title} (${e.isbn})`); continue; }
@@ -113,6 +122,7 @@ async function main() {
       addedAt: new Date().toISOString().slice(0, 10),
       from: `isbn:${coverFrom}`,
       coverIsbn: coverFrom,
+      ...(coverWork !== id ? { coverWork } : {}),
     });
     process.stdout.write(`${works.length} `);
   }

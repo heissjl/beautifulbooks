@@ -10026,6 +10026,563 @@
           "coverIsbn": "9783863310059"
         }
       ]
+    },
+    {
+      "slug": "suhrkamp-basisbibliothek",
+      "title": "Suhrkamp BasisBibliothek",
+      "kind": "series",
+      "intro": "Suhrkamp's BasisBibliothek, begun in 1998: literary works printed with a commentary for school and university, shown here in the order of their numbers.",
+      "published": false,
+      "publishers": [
+        "Suhrkamp"
+      ],
+      "works": [
+        {
+          "id": "OL3802686W",
+          "title": "Leben des Galilei",
+          "author": "Bertolt Brecht",
+          "coverId": "ol:15160977",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188019",
+          "coverIsbn": "9783518188019"
+        },
+        {
+          "id": "OL872932W",
+          "title": "Siddhartha",
+          "author": "Hermann Hesse",
+          "coverId": "ol:1016084",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188026",
+          "coverIsbn": "9783518188026",
+          "coverWork": "OL6260556W"
+        },
+        {
+          "id": "OL9022722W",
+          "title": "Homo Faber",
+          "author": "Max Frisch",
+          "coverId": "ol:10721490",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188033",
+          "coverIsbn": "9783518188033"
+        },
+        {
+          "id": "OL771121W",
+          "title": "Lenz",
+          "author": "Georg Büchner",
+          "coverId": "ol:1016086",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188040",
+          "coverIsbn": "9783518188040",
+          "coverWork": "OL9055241W"
+        },
+        {
+          "id": "OL18407381W",
+          "title": "Grimms Märchen",
+          "author": "Jacob Grimm",
+          "coverId": "ol:3221284",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188064",
+          "coverIsbn": "9783518188064"
+        },
+        {
+          "id": "OL4540213W",
+          "title": "Jugend ohne Gott",
+          "author": "Ödön von Horváth",
+          "coverId": "ol:1016087",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188071",
+          "coverIsbn": "9783518188071"
+        },
+        {
+          "id": "OL865562W",
+          "title": "Andorra",
+          "author": "Max Frisch",
+          "coverId": "ol:1016088",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188088",
+          "coverIsbn": "9783518188088",
+          "coverWork": "OL9022723W"
+        },
+        {
+          "id": "OL8967323W",
+          "title": "Der Schimmelreiter",
+          "author": "Theodor Storm",
+          "coverId": "ol:12571381",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188095",
+          "coverIsbn": "9783518188095"
+        },
+        {
+          "id": "OL498556W",
+          "title": "Metamorphosis",
+          "author": "Franz Kafka",
+          "coverId": "ol:1016091",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188132",
+          "coverIsbn": "9783518188132",
+          "coverWork": "OL9055253W"
+        },
+        {
+          "id": "OL1456168W",
+          "title": "Die Judenbuche",
+          "author": "Annette von Droste-Hülshoff",
+          "coverId": "ol:1016092",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188149",
+          "coverIsbn": "9783518188149",
+          "coverWork": "OL9054000W"
+        },
+        {
+          "id": "OL266834W",
+          "title": "Jakob der Lügner",
+          "author": "Jurek Becker",
+          "coverId": "ol:1016093",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188156",
+          "coverIsbn": "9783518188156"
+        },
+        {
+          "id": "OL30457295W",
+          "title": "Demian",
+          "author": "Hermann Hesse",
+          "coverId": "ol:1016094",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188163",
+          "coverIsbn": "9783518188163",
+          "coverWork": "OL15032971W"
+        },
+        {
+          "id": "OL3801007W",
+          "title": "Die Aufzeichnungen des Malte Laurids Brigge",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:1016095",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188170",
+          "coverIsbn": "9783518188170",
+          "coverWork": "OL15069663W"
+        },
+        {
+          "id": "OL498463W",
+          "title": "Der Proceß",
+          "author": "Franz Kafka",
+          "coverId": "ol:1016096",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188187",
+          "coverIsbn": "9783518188187"
+        },
+        {
+          "id": "OL11478085W",
+          "title": "Das dicke Kind",
+          "author": "Marie Luise Kaschnitz",
+          "coverId": "ol:1016097",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188194",
+          "coverIsbn": "9783518188194"
+        },
+        {
+          "id": "OL1327807W",
+          "title": "Frühlings Erwachen",
+          "author": "Frank Wedekind",
+          "coverId": "ol:3221287",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188217",
+          "coverIsbn": "9783518188217",
+          "coverWork": "OL15682041W"
+        },
+        {
+          "id": "OL969604W",
+          "title": "Das Fraülein von Scudeṙi",
+          "author": "E. T. A. Hoffmann",
+          "coverId": "ol:3221288",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188224",
+          "coverIsbn": "9783518188224"
+        },
+        {
+          "id": "OL9072914W",
+          "title": "Erzählungen",
+          "author": "Thomas Bernhard",
+          "coverId": "ol:3221289",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188231",
+          "coverIsbn": "9783518188231",
+          "coverWork": "OL34553832W"
+        },
+        {
+          "id": "OL865561W",
+          "title": "Biedermann und die Brandstifter",
+          "author": "Max Frisch",
+          "coverId": "ol:1016098",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188248",
+          "coverIsbn": "9783518188248"
+        },
+        {
+          "id": "OL3802681W",
+          "title": "Der gute Mensch von Sezuan",
+          "author": "Bertolt Brecht",
+          "coverId": "ol:1016099",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188255",
+          "coverIsbn": "9783518188255"
+        },
+        {
+          "id": "OL4540211W",
+          "title": "Geschichten aus dem Wiener Wald",
+          "author": "Ödön von Horváth",
+          "coverId": "ol:12683150",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188262",
+          "coverIsbn": "9783518188262"
+        },
+        {
+          "id": "OL52500W",
+          "title": "Götz von Berlichingen",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:2212046",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188279",
+          "coverIsbn": "9783518188279"
+        },
+        {
+          "id": "OL33580645W",
+          "title": "Kasimir und Karoline",
+          "author": "Ödön von Horváth",
+          "coverId": "ol:2212047",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188286",
+          "coverIsbn": "9783518188286"
+        },
+        {
+          "id": "OL207638W",
+          "title": "Wilhelm Tell",
+          "author": "Friedrich Schiller",
+          "coverId": "ol:1016101",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188309",
+          "coverIsbn": "9783518188309",
+          "coverWork": "OL15381484W"
+        },
+        {
+          "id": "OL969612W",
+          "title": "Der goldene Topf, ein Märchen aus der neuen Zeit",
+          "author": "E. T. A. Hoffmann",
+          "coverId": "ol:3221290",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188316",
+          "coverIsbn": "9783518188316"
+        },
+        {
+          "id": "OL20274534W",
+          "title": "Leutnant Gustl",
+          "author": "Arthur Schnitzler",
+          "coverId": "ol:8932232",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188330",
+          "coverIsbn": "9783518188330"
+        },
+        {
+          "id": "OL165696W",
+          "title": "Ein fliehendes Pferd",
+          "author": "Martin Walser",
+          "coverId": "ol:2212048",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188354",
+          "coverIsbn": "9783518188354",
+          "coverWork": "OL15680850W"
+        },
+        {
+          "id": "OL498782W",
+          "title": "Das Urteil und andere Erzählungen",
+          "author": "Franz Kafka",
+          "coverId": "ol:3221291",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188361",
+          "coverIsbn": "9783518188361",
+          "coverWork": "OL498679W"
+        },
+        {
+          "id": "OL854276W",
+          "title": "Wunschloses Unglück",
+          "author": "Peter Handke",
+          "coverId": "ol:1016102",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188385",
+          "coverIsbn": "9783518188385"
+        },
+        {
+          "id": "OL24236486W",
+          "title": "Die neuen Leiden des jungen W",
+          "author": "Ulrich Plenzdorf",
+          "coverId": "ol:10718472",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188392",
+          "coverIsbn": "9783518188392"
+        },
+        {
+          "id": "OL19077527W",
+          "title": "Narziß und Goldmund",
+          "author": "Hermann Hesse",
+          "coverId": "ol:8393605",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188408",
+          "coverIsbn": "9783518188408"
+        },
+        {
+          "id": "OL13090304W",
+          "title": "Nathan der Weise: Ein dramatisches Gedicht in fünf Aufzügen",
+          "author": "Gotthold Ephraim Lessing",
+          "coverId": "ol:2212049",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188415",
+          "coverIsbn": "9783518188415"
+        },
+        {
+          "id": "OL15117127W",
+          "title": "Der kaukasische Kreidekreis",
+          "author": "Bertolt Brecht",
+          "coverId": "ol:14839568",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188422",
+          "coverIsbn": "9783518188422"
+        },
+        {
+          "id": "OL4540212W",
+          "title": "Italienische Nacht",
+          "author": "Ödön von Horváth",
+          "coverId": "ol:3221292",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188439",
+          "coverIsbn": "9783518188439",
+          "coverWork": "OL34553838W"
+        },
+        {
+          "id": "OL15394229W",
+          "title": "Der Sandmann. Text und Kommentar",
+          "author": "E. T. A. Hoffmann",
+          "coverId": "ol:1016106",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188453",
+          "coverIsbn": "9783518188453"
+        },
+        {
+          "id": "OL20286913W",
+          "title": "Geschichten vom Herrn Keuner",
+          "author": "Bertolt Brecht",
+          "coverId": "ol:8945016",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188460",
+          "coverIsbn": "9783518188460"
+        },
+        {
+          "id": "OL3802324W",
+          "title": "Die Dreigroschenoper:= The Threepenny Opera",
+          "author": "Bertolt Brecht",
+          "coverId": "ol:14561420",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188484",
+          "coverIsbn": "9783518188484"
+        },
+        {
+          "id": "OL19077528W",
+          "title": "Der Aufstieg des Arturo Ui",
+          "author": "Bertolt Brecht",
+          "coverId": "ol:8393606",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188552",
+          "coverIsbn": "9783518188552"
+        },
+        {
+          "id": "OL24144033W",
+          "title": "In der Sache J. Robert Oppenheimer",
+          "author": "Heinar Kipphardt",
+          "coverId": "ol:12361318",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188583",
+          "coverIsbn": "9783518188583"
+        },
+        {
+          "id": "OL24269113W",
+          "title": "Heinrich von Ofterdingen",
+          "author": "Novalis",
+          "coverId": "ol:12458798",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518188804",
+          "coverIsbn": "9783518188804"
+        },
+        {
+          "id": "OL20236070W",
+          "title": "Iphigenie auf Tauris",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:8922542",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189030",
+          "coverIsbn": "9783518189030"
+        },
+        {
+          "id": "OL20266190W",
+          "title": "Frau Jenny Treibel",
+          "author": "Theodor Fontane",
+          "coverId": "ol:8930498",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189092",
+          "coverIsbn": "9783518189092"
+        },
+        {
+          "id": "OL751386W",
+          "title": "Medea. Stimmen",
+          "author": "Christa Wolf",
+          "coverId": "ol:8930505",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189108",
+          "coverIsbn": "9783518189108"
+        },
+        {
+          "id": "OL466936W",
+          "title": "Hiob",
+          "author": "Joseph Roth",
+          "coverId": "ol:8923022",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189122",
+          "coverIsbn": "9783518189122"
+        },
+        {
+          "id": "OL20267109W",
+          "title": "Traumnovelle",
+          "author": "Arthur Schnitzler",
+          "coverId": "ol:8932315",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189139",
+          "coverIsbn": "9783518189139"
+        },
+        {
+          "id": "OL1451547W",
+          "title": "Michael Kohlhaas",
+          "author": "Heinrich von Kleist",
+          "coverId": "ol:9027561",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189146",
+          "coverIsbn": "9783518189146"
+        },
+        {
+          "id": "OL362427W",
+          "title": "Romeo and Juliet",
+          "author": "William Shakespeare",
+          "coverId": "ol:8924119",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189153",
+          "coverIsbn": "9783518189153"
+        },
+        {
+          "id": "OL1451540W",
+          "title": "Amphitryon",
+          "author": "Heinrich von Kleist",
+          "coverId": "ol:8393607",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189177",
+          "coverIsbn": "9783518189177",
+          "coverWork": "OL19077529W"
+        },
+        {
+          "id": "OL20357751W",
+          "title": "Der arme Spielmann",
+          "author": "Franz Grillparzer",
+          "coverId": "ol:9024395",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189184",
+          "coverIsbn": "9783518189184"
+        },
+        {
+          "id": "OL20249696W",
+          "title": "Montauk",
+          "author": "Max Frisch",
+          "coverId": "ol:9083322",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189207",
+          "coverIsbn": "9783518189207"
+        },
+        {
+          "id": "OL751417W",
+          "title": "Kassandra",
+          "author": "Christa Wolf",
+          "coverId": "ol:8393608",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189214",
+          "coverIsbn": "9783518189214"
+        },
+        {
+          "id": "OL20265558W",
+          "title": "Der eingebildete Kranke",
+          "author": "Molière",
+          "coverId": "ol:8922996",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189238",
+          "coverIsbn": "9783518189238"
+        },
+        {
+          "id": "OL1066524W",
+          "title": "Pygmalion",
+          "author": "George Bernard Shaw",
+          "coverId": "ol:9051145",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189283",
+          "coverIsbn": "9783518189283"
+        },
+        {
+          "id": "OL28429W",
+          "title": "Schachnovelle",
+          "author": "Stefan Zweig",
+          "coverId": "ol:9030142",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189290",
+          "coverIsbn": "9783518189290"
+        },
+        {
+          "id": "OL16335026W",
+          "title": "Die Verwirrungen des Zöglings Törless",
+          "author": "Robert Musil",
+          "coverId": "ol:9027386",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189306",
+          "coverIsbn": "9783518189306"
+        },
+        {
+          "id": "OL20278783W",
+          "title": "Nora oder Ein Puppenheim",
+          "author": "Henrik Ibsen",
+          "coverId": "ol:8936671",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189337",
+          "coverIsbn": "9783518189337"
+        },
+        {
+          "id": "OL258902W",
+          "title": "Macbeth",
+          "author": "William Shakespeare",
+          "coverId": "ol:8846759",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189382",
+          "coverIsbn": "9783518189382"
+        },
+        {
+          "id": "OL20237313W",
+          "title": "Die folgende Geschichte",
+          "author": "Cees Nooteboom",
+          "coverId": "ol:8891629",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189399",
+          "coverIsbn": "9783518189399"
+        },
+        {
+          "id": "OL14980292W",
+          "title": "Tristesse Royale",
+          "author": "Christian Kracht",
+          "coverId": "ol:13303517",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783518189436",
+          "coverIsbn": "9783518189436"
+        }
+      ]
     }
   ]
 }
