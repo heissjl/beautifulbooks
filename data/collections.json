@@ -16640,6 +16640,1149 @@
           "coverIsbn": "3518389785"
         }
       ]
+    },
+    {
+      "slug": "harry-potter-cover-sets",
+      "title": "Harry Potter — cover sets",
+      "kind": "series",
+      "intro": "Seven books, one design: each row is one Harry Potter edition as its publisher dressed it, from Bloomsbury's first children's covers and Mary GrandPré's American jackets to Jean-Claude Götting in France, Serena Riglietti in Italy, Sabine Wilharm in Germany, the photographic adult editions and Jonny Duddle's 2014 redesign. A set appears only when Open Library holds a front cover for each of its seven volumes.",
+      "published": false,
+      "publishers": [
+        "Bloomsbury",
+        "Scholastic",
+        "Carlsen",
+        "Gallimard",
+        "Salani",
+        "Salamandra",
+        "Rocco",
+        "Media Rodzina",
+        "Egmont"
+      ],
+      "works": [
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:7355968",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747532699",
+          "coverIsbn": "9780747532699",
+          "set": "Bloomsbury 1997–2007 (children's)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8237627",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747538486",
+          "coverIsbn": "9780747538486",
+          "set": "Bloomsbury 1997–2007 (children's)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15158668",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0747546290",
+          "coverIsbn": "0747546290",
+          "set": "Bloomsbury 1997–2007 (children's)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15158571",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747550990",
+          "coverIsbn": "9780747550990",
+          "set": "Bloomsbury 1997–2007 (children's)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15226832",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747551003",
+          "coverIsbn": "9780747551003",
+          "set": "Bloomsbury 1997–2007 (children's)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15156136",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747581086",
+          "coverIsbn": "9780747581086",
+          "set": "Bloomsbury 1997–2007 (children's)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15158660",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747591054",
+          "coverIsbn": "9780747591054",
+          "set": "Bloomsbury 1997–2007 (children's)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:969491",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070541270",
+          "coverIsbn": "9782070541270",
+          "set": "Gallimard 1998–2007 (Jean-Claude Götting, grand format)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:969492",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070541294",
+          "coverIsbn": "9782070541294",
+          "set": "Gallimard 1998–2007 (Jean-Claude Götting, grand format)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12728911",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070541300",
+          "coverIsbn": "9782070541300",
+          "set": "Gallimard 1998–2007 (Jean-Claude Götting, grand format)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12905137",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070543588",
+          "coverIsbn": "9782070543588",
+          "set": "Gallimard 1998–2007 (Jean-Claude Götting, grand format)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8458051",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070556854",
+          "coverIsbn": "9782070556854",
+          "set": "Gallimard 1998–2007 (Jean-Claude Götting, grand format)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:9326646",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070572670",
+          "coverIsbn": "9782070572670",
+          "set": "Gallimard 1998–2007 (Jean-Claude Götting, grand format)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:9262558",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070615360",
+          "coverIsbn": "9782070615360",
+          "set": "Gallimard 1998–2007 (Jean-Claude Götting, grand format)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12726695",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788877827029",
+          "coverIsbn": "9788877827029",
+          "set": "Salani 1998–2008 (Serena Riglietti)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:1049504",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788877827036",
+          "coverIsbn": "9788877827036",
+          "set": "Salani 1998–2008 (Serena Riglietti)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8132760",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788877828521",
+          "coverIsbn": "9788877828521",
+          "set": "Salani 1998–2008 (Serena Riglietti)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12728460",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788884510495",
+          "coverIsbn": "9788884510495",
+          "set": "Salani 1998–2008 (Serena Riglietti)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15101088",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788884513441",
+          "coverIsbn": "9788884513441",
+          "set": "Salani 1998–2008 (Serena Riglietti)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8129811",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788884516374",
+          "coverIsbn": "9788884516374",
+          "set": "Salani 1998–2008 (Serena Riglietti)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15158369",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788884518781",
+          "coverIsbn": "9788884518781",
+          "set": "Salani 1998–2008 (Serena Riglietti)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15235364",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0590353403",
+          "coverIsbn": "0590353403",
+          "set": "Scholastic 1998–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15235365",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780439064866",
+          "coverIsbn": "9780439064866",
+          "set": "Scholastic 1998–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15244794",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780439136358",
+          "coverIsbn": "9780439136358",
+          "set": "Scholastic 1998–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15246117",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780439139595",
+          "coverIsbn": "9780439139595",
+          "set": "Scholastic 1998–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15166468",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780439358064",
+          "coverIsbn": "9780439358064",
+          "set": "Scholastic 1998–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15244811",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780439784542",
+          "coverIsbn": "9780439784542",
+          "set": "Scholastic 1998–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15244822",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780545010221",
+          "coverIsbn": "9780545010221",
+          "set": "Scholastic 1998–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:14573304",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551354013",
+          "coverIsbn": "9783551354013",
+          "set": "Carlsen 1998–2007 (Sabine Wilharm, Taschenbuch)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:9346688",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551354020",
+          "coverIsbn": "9783551354020",
+          "set": "Carlsen 1998–2007 (Sabine Wilharm, Taschenbuch)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:9346696",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551354037",
+          "coverIsbn": "9783551354037",
+          "set": "Carlsen 1998–2007 (Sabine Wilharm, Taschenbuch)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:9346706",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551354044",
+          "coverIsbn": "9783551354044",
+          "set": "Carlsen 1998–2007 (Sabine Wilharm, Taschenbuch)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:9346719",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551354051",
+          "coverIsbn": "9783551354051",
+          "set": "Carlsen 1998–2007 (Sabine Wilharm, Taschenbuch)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:9346725",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551354068",
+          "coverIsbn": "9783551354068",
+          "set": "Carlsen 1998–2007 (Sabine Wilharm, Taschenbuch)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:9346749",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551354075",
+          "coverIsbn": "9783551354075",
+          "set": "Carlsen 1998–2007 (Sabine Wilharm, Taschenbuch)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:1048192",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788478889020",
+          "coverIsbn": "9788478889020",
+          "set": "Salamandra 1999–2008"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:1048187",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788478888627",
+          "coverIsbn": "9788478888627",
+          "set": "Salamandra 1999–2008"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:1048188",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788478888634",
+          "coverIsbn": "9788478888634",
+          "set": "Salamandra 1999–2008"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:1048189",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788478888641",
+          "coverIsbn": "9788478888641",
+          "set": "Salamandra 1999–2008"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8232747",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788478887446",
+          "coverIsbn": "9788478887446",
+          "set": "Salamandra 1999–2008"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:7360359",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788478889907",
+          "coverIsbn": "9788478889907",
+          "set": "Salamandra 1999–2008"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8183590",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788498381450",
+          "coverIsbn": "9788498381450",
+          "set": "Salamandra 1999–2008"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:13028227",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551552006",
+          "coverIsbn": "9783551552006",
+          "set": "Carlsen 2000–2007 (Ausgabe für Erwachsene)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157471",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551551092",
+          "coverIsbn": "9783551551092",
+          "set": "Carlsen 2000–2007 (Ausgabe für Erwachsene)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:14546261",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551552105",
+          "coverIsbn": "9783551552105",
+          "set": "Carlsen 2000–2007 (Ausgabe für Erwachsene)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:1020350",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551552532",
+          "coverIsbn": "9783551552532",
+          "set": "Carlsen 2000–2007 (Ausgabe für Erwachsene)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157559",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551552976",
+          "coverIsbn": "9783551552976",
+          "set": "Carlsen 2000–2007 (Ausgabe für Erwachsene)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15091536",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551556004",
+          "coverIsbn": "9783551556004",
+          "set": "Carlsen 2000–2007 (Ausgabe für Erwachsene)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157619",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551557001",
+          "coverIsbn": "9783551557001",
+          "set": "Carlsen 2000–2007 (Ausgabe für Erwachsene)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:13183874",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788532511010",
+          "coverIsbn": "9788532511010",
+          "set": "Rocco 2000–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:14512121",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788532511669",
+          "coverIsbn": "9788532511669",
+          "set": "Rocco 2000–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8125837",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788532512062",
+          "coverIsbn": "9788532512062",
+          "set": "Rocco 2000–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8120001",
+          "addedAt": "2026-09-26",
+          "from": "isbn:8532512526",
+          "coverIsbn": "8532512526",
+          "set": "Rocco 2000–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8232726",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788532516220",
+          "coverIsbn": "9788532516220",
+          "set": "Rocco 2000–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12728913",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788532519474",
+          "coverIsbn": "9788532519474",
+          "set": "Rocco 2000–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15129597",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788532522610",
+          "coverIsbn": "9788532522610",
+          "set": "Rocco 2000–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15155644",
+          "addedAt": "2026-09-26",
+          "from": "isbn:8372780110",
+          "coverIsbn": "8372780110",
+          "set": "Media Rodzina 2000–2008 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8353396",
+          "addedAt": "2026-09-26",
+          "from": "isbn:8372780072",
+          "coverIsbn": "8372780072",
+          "set": "Media Rodzina 2000–2008 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15156831",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788372780164",
+          "coverIsbn": "9788372780164",
+          "set": "Media Rodzina 2000–2008 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157256",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788372780225",
+          "coverIsbn": "9788372780225",
+          "set": "Media Rodzina 2000–2008 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8232735",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788372780966",
+          "coverIsbn": "9788372780966",
+          "set": "Media Rodzina 2000–2008 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157253",
+          "addedAt": "2026-09-26",
+          "from": "isbn:8372781680",
+          "coverIsbn": "8372781680",
+          "set": "Media Rodzina 2000–2008 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157254",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788372782816",
+          "coverIsbn": "9788372782816",
+          "set": "Media Rodzina 2000–2008 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:11223032",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9544464689",
+          "coverIsbn": "9544464689",
+          "set": "Egmont Bulgaria 2001–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:11223033",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9544464913",
+          "coverIsbn": "9544464913",
+          "set": "Egmont Bulgaria 2001–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:11223078",
+          "addedAt": "2026-09-26",
+          "from": "isbn:954446557X",
+          "coverIsbn": "954446557X",
+          "set": "Egmont Bulgaria 2001–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:11223040",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9544466215",
+          "coverIsbn": "9544466215",
+          "set": "Egmont Bulgaria 2001–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:11223042",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9544467610",
+          "coverIsbn": "9544467610",
+          "set": "Egmont Bulgaria 2001–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:11223045",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9544469303",
+          "coverIsbn": "9544469303",
+          "set": "Egmont Bulgaria 2001–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:11223051",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9789542701514",
+          "coverIsbn": "9789542701514",
+          "set": "Egmont Bulgaria 2001–2007 (Mary GrandPré)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:488304",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747574477",
+          "coverIsbn": "9780747574477",
+          "set": "Bloomsbury 2004 (adult, photographic)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15155864",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747574484",
+          "coverIsbn": "9780747574484",
+          "set": "Bloomsbury 2004 (adult, photographic)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12630812",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747574491",
+          "coverIsbn": "9780747574491",
+          "set": "Bloomsbury 2004 (adult, photographic)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15155866",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747574507",
+          "coverIsbn": "9780747574507",
+          "set": "Bloomsbury 2004 (adult, photographic)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15155868",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747570738",
+          "coverIsbn": "9780747570738",
+          "set": "Bloomsbury 2004 (adult, photographic)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15169535",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747581109",
+          "coverIsbn": "9780747581109",
+          "set": "Bloomsbury 2004 (adult, photographic)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:10082428",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780747591061",
+          "coverIsbn": "9780747591061",
+          "set": "Bloomsbury 2004 (adult, photographic)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:2137705",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070612369",
+          "coverIsbn": "9782070612369",
+          "set": "Folio Junior 2007 (Jean-Claude Götting)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:2137706",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070612376",
+          "coverIsbn": "9782070612376",
+          "set": "Folio Junior 2007 (Jean-Claude Götting)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:2137707",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070612383",
+          "coverIsbn": "9782070612383",
+          "set": "Folio Junior 2007 (Jean-Claude Götting)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:14333193",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070612390",
+          "coverIsbn": "9782070612390",
+          "set": "Folio Junior 2007 (Jean-Claude Götting)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:3078495",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070612406",
+          "coverIsbn": "9782070612406",
+          "set": "Folio Junior 2007 (Jean-Claude Götting)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12905145",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070612413",
+          "coverIsbn": "9782070612413",
+          "set": "Folio Junior 2007 (Jean-Claude Götting)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157040",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9782070615377",
+          "coverIsbn": "9782070615377",
+          "set": "Folio Junior 2007 (Jean-Claude Götting)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8565802",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408834961",
+          "coverIsbn": "9781408834961",
+          "set": "Bloomsbury 2013 (adult, Andrew Davidson)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8121036",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408834978",
+          "coverIsbn": "9781408834978",
+          "set": "Bloomsbury 2013 (adult, Andrew Davidson)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8772818",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408834985",
+          "coverIsbn": "9781408834985",
+          "set": "Bloomsbury 2013 (adult, Andrew Davidson)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15178361",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408834992",
+          "coverIsbn": "9781408834992",
+          "set": "Bloomsbury 2013 (adult, Andrew Davidson)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:10871428",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408835005",
+          "coverIsbn": "9781408835005",
+          "set": "Bloomsbury 2013 (adult, Andrew Davidson)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8131352",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408835012",
+          "coverIsbn": "9781408835012",
+          "set": "Bloomsbury 2013 (adult, Andrew Davidson)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8183663",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408835029",
+          "coverIsbn": "9781408835029",
+          "set": "Bloomsbury 2013 (adult, Andrew Davidson)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15159585",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408855652",
+          "coverIsbn": "9781408855652",
+          "set": "Bloomsbury 2014 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15159586",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408855669",
+          "coverIsbn": "9781408855669",
+          "set": "Bloomsbury 2014 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15159588",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408855676",
+          "coverIsbn": "9781408855676",
+          "set": "Bloomsbury 2014 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15159598",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408855683",
+          "coverIsbn": "9781408855683",
+          "set": "Bloomsbury 2014 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15159605",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408855690",
+          "coverIsbn": "9781408855690",
+          "set": "Bloomsbury 2014 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15159601",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408855706",
+          "coverIsbn": "9781408855706",
+          "set": "Bloomsbury 2014 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15159603",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781408855713",
+          "coverIsbn": "9781408855713",
+          "set": "Bloomsbury 2014 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8108734",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788380082120",
+          "coverIsbn": "9788380082120",
+          "set": "Media Rodzina 2016 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8108733",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788380082144",
+          "coverIsbn": "9788380082144",
+          "set": "Media Rodzina 2016 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8108731",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788380082168",
+          "coverIsbn": "9788380082168",
+          "set": "Media Rodzina 2016 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8108730",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788380082182",
+          "coverIsbn": "9788380082182",
+          "set": "Media Rodzina 2016 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8108729",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788380082205",
+          "coverIsbn": "9788380082205",
+          "set": "Media Rodzina 2016 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8108725",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788380082229",
+          "coverIsbn": "9788380082229",
+          "set": "Media Rodzina 2016 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8108721",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9788380082243",
+          "coverIsbn": "9788380082243",
+          "set": "Media Rodzina 2016 (Jonny Duddle)"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:10565554",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551557414",
+          "coverIsbn": "9783551557414",
+          "coverWork": "OL24159601W",
+          "set": "Carlsen 2018 (20th anniversary)"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:10487260",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551557421",
+          "coverIsbn": "9783551557421",
+          "set": "Carlsen 2018 (20th anniversary)"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:10565584",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551557438",
+          "coverIsbn": "9783551557438",
+          "coverWork": "OL24159611W",
+          "set": "Carlsen 2018 (20th anniversary)"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:14573310",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551557445",
+          "coverIsbn": "9783551557445",
+          "set": "Carlsen 2018 (20th anniversary)"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8233607",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551557452",
+          "coverIsbn": "9783551557452",
+          "set": "Carlsen 2018 (20th anniversary)"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:14569519",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551557469",
+          "coverIsbn": "9783551557469",
+          "set": "Carlsen 2018 (20th anniversary)"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157555",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783551557476",
+          "coverIsbn": "9783551557476",
+          "set": "Carlsen 2018 (20th anniversary)"
+        }
+      ],
+      "setSize": 7
     }
   ]
 }

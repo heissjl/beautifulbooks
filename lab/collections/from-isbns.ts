@@ -136,6 +136,7 @@ async function main() {
       addedAt: new Date().toISOString().slice(0, 10),
       ...(coverFrom ? { from: `isbn:${coverFrom}`, coverIsbn: coverFrom } : { from: `edition:${e.edition}` }),
       ...(coverWork !== id ? { coverWork } : {}),
+      ...(e.set ? { set: e.set } : {}),
     });
     if (e.set) {
       pickSet.set(works[works.length - 1], e.set);

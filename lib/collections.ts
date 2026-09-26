@@ -58,6 +58,8 @@ export interface CollectionPick {
    * on Open Library, the pick gets its `ol:` id back and this goes.
    */
   image?: string;
+  /** On a wall of sets (`setSize`): the edition this volume belongs to, shown once above its row. */
+  set?: string;
 }
 
 /** A tile on a collection wall: a curated work, and its cover credit where the collection shows one. */
@@ -67,6 +69,8 @@ export interface WallWork extends CuratedWork {
   coverWork?: string;
   /** The site's own image, when the pick has one (see CollectionPick); `coverId` is then 0. */
   image?: string;
+  /** The edition's name on a wall of sets. */
+  set?: string;
 }
 
 export interface CollectionRecord {
@@ -159,7 +163,7 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
       if ((coverId === null && !image) || seen.has(key)) continue;
       seen.add(key);
       const credit = r.coverCredits === 'isfdb' && p.coverArtists?.length ? { coverArtists: p.coverArtists } : {};
-      works.push({ id: p.id, title: p.title, author: p.author, coverId: coverId ?? 0, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}), ...(image ? { image } : {}) });
+      works.push({ id: p.id, title: p.title, author: p.author, coverId: coverId ?? 0, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}), ...(image ? { image } : {}), ...(r.setSize && p.set ? { set: p.set } : {}) });
     }
     const scope = r.kind === 'series' ? (r.publishers ?? []) : (r.authors ?? []).map(a => a.name);
     out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}), ...(r.setSize === 3 || r.setSize === 7 ? { setSize: r.setSize } : {}) });
