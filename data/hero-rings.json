@@ -6,17 +6,17 @@
  },
  "rings": [
   {
-   "workId": "OL39396W",
-   "title": "To the Lighthouse",
+   "workId": "OL39349W",
+   "title": "Mrs Dalloway",
    "author": "Virginia Woolf",
    "coverIds": [
-    "ol:12264478",
-    "ol:2111097",
-    "ol:8231846",
-    "ol:902061",
-    "ol:105881",
-    "ol:11730428",
-    "ol:1473036"
+    "ol:10653580",
+    "ol:6397580",
+    "ol:5251834",
+    "ol:13582487",
+    "ol:417698",
+    "ol:11381604",
+    "ol:9329992"
    ]
   },
   {
@@ -1319,6 +1319,20 @@
     "ol:12369923",
     "ol:13515944",
     "ol:15126320"
+   ]
+  },
+  {
+   "workId": "OL39396W",
+   "title": "To the Lighthouse",
+   "author": "Virginia Woolf",
+   "coverIds": [
+    "ol:12264478",
+    "ol:2111097",
+    "ol:8231846",
+    "ol:902061",
+    "ol:105881",
+    "ol:11730428",
+    "ol:1473036"
    ]
   }
  ]
