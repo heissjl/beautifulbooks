@@ -2055,8 +2055,8 @@
       "slug": "sf-masterworks-relaunch",
       "title": "SF Masterworks — the relaunch",
       "kind": "series",
-      "intro": "NOTE FOR JULIAN (replace before publishing): stays a draft for now (2026-09-25). 24 covers still show the old numbered design, because Open Library has no relaunch image for them: Ubik, Flow My Tears, The Simulacra, Time Out of Joint, Bring the Jubilee, The Lathe of Heaven, The Complete Roderick, The Centauri Device, Martian Time-Slip, Non-Stop, The City and the Stars, Dying Inside, Grass, Pavane, Ringworld, Timescape, The Book of Skulls, Emphyrio, Blood Music, Eon, Rendezvous with Rama, Last and First Men, A Fall of Moondust, The Child Garden. 32 of the 182 books are missing: 25 have no cover under their series ISBN, 7 ISBNs are unknown to Open Library. Details in docs/history.md, 2026-09-25.",
-      "published": false,
+      "intro": "",
+      "published": true,
       "publishers": [
         "Gollancz",
         "Orion"
@@ -2758,7 +2758,7 @@
         },
         {
           "id": "OL3290749W",
-          "title": "Odd John",
+          "title": "Philosophy and living",
           "author": "Olaf Stapledon",
           "coverId": "ol:8431496",
           "addedAt": "2026-09-25",
@@ -4272,21 +4272,12 @@
       "title": "edition suhrkamp",
       "kind": "series",
       "intro": "",
-      "published": false,
+      "published": true,
       "publishers": [
         "Suhrkamp",
         "Suhrkamp Verlag"
       ],
       "works": [
-        {
-          "id": "OL6068239W",
-          "title": "Eine Subgeschichte des Films",
-          "author": "Scheugl, Hans",
-          "coverId": "ol:8393420",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518004719",
-          "coverIsbn": "3518004719"
-        },
         {
           "id": "OL98198W",
           "title": "Counterrevolution and Revolt",
@@ -6064,13 +6055,6 @@
           "author": "Volker Braun",
           "coverId": "ol:14968765",
           "addedAt": "2026-09-26"
-        },
-        {
-          "id": "OL3664668W",
-          "title": "Die Grenzen der Verständigung",
-          "author": "Manfred Frank",
-          "coverId": "ol:3221117",
-          "addedAt": "2026-09-26"
         }
       ]
     },
@@ -7304,7 +7288,7 @@
       "title": "Hugo Award — best novel",
       "kind": "authors",
       "intro": "",
-      "published": false,
+      "published": true,
       "authors": [
         {
           "name": "Alfred Bester",
@@ -7612,7 +7596,7 @@
           "id": "OL16027965W",
           "title": "The Demolished Man",
           "author": "Alfred Bester",
-          "coverId": "ol:6874573",
+          "coverId": "ol:8719182",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -7644,7 +7628,7 @@
           "id": "OL101943W",
           "title": "The Big Time",
           "author": "Fritz Leiber",
-          "coverId": "ol:12373928",
+          "coverId": "ol:8784820",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -7652,7 +7636,7 @@
           "id": "OL59740W",
           "title": "Starship Troopers",
           "author": "Robert A. Heinlein",
-          "coverId": "ol:14630746",
+          "coverId": "ol:14632574",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -8216,114 +8200,23 @@
       "title": "SF Masterworks — the rounded-corner editions (2006)",
       "kind": "series",
       "intro": "",
-      "published": false,
+      "published": true,
       "publishers": [
         "Gollancz"
       ],
       "works": [
         {
-          "id": "OL53400W",
-          "title": "Cities in Flight",
-          "author": "James Blish",
-          "coverId": "ol:15258806",
+          "id": "OL2172454W",
+          "title": "Ubik",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8756979",
           "addedAt": "2026-09-26",
-          "from": "isbn:0575078987",
-          "coverIsbn": "0575078987",
+          "from": "isbn:0575079215",
+          "coverIsbn": "0575079215",
           "coverArtists": [
             "Marc Adams"
           ],
-          "isfdbRecord": "150491"
-        },
-        {
-          "id": "OL59863W",
-          "title": "The Dispossessed",
-          "author": "Ursula K. Le Guin",
-          "coverId": "ol:10205501",
-          "addedAt": "2026-09-26",
-          "from": "isbn:0575079037",
-          "coverIsbn": "0575079037",
-          "coverArtists": [
-            "Marc Adams"
-          ],
-          "isfdbRecord": "151091"
-        },
-        {
-          "id": "OL515754W",
-          "title": "Flowers for Algernon",
-          "author": "Daniel Keyes",
-          "coverId": "ol:8757807",
-          "addedAt": "2026-09-26",
-          "from": "isbn:0575079207",
-          "coverIsbn": "0575079207",
-          "coverArtists": [
-            "Marc Adams"
-          ],
-          "isfdbRecord": "151081"
-        },
-        {
-          "id": "OL271163W",
-          "title": "The Forever War",
-          "author": "Joe Haldeman",
-          "coverId": "ol:8703199",
-          "addedAt": "2026-09-26",
-          "from": "isbn:0575079088",
-          "coverIsbn": "0575079088",
-          "coverArtists": [
-            "Marc Adams"
-          ],
-          "isfdbRecord": "150881"
-        },
-        {
-          "id": "OL60924W",
-          "title": "Gateway",
-          "author": "Frederik Pohl",
-          "coverId": "ol:10371240",
-          "addedAt": "2026-09-26",
-          "from": "isbn:0575078995",
-          "coverIsbn": "0575078995",
-          "coverArtists": [
-            "Marc Adams"
-          ],
-          "isfdbRecord": "116251"
-        },
-        {
-          "id": "OL11374287W",
-          "title": "I am Legend",
-          "author": "Richard Matheson",
-          "coverId": "ol:10403208",
-          "addedAt": "2026-09-26",
-          "from": "isbn:0575079002",
-          "coverIsbn": "0575079002",
-          "coverArtists": [
-            "Marc Adams"
-          ],
-          "isfdbRecord": "279583"
-        },
-        {
-          "id": "OL13992W",
-          "title": "Lord of Light",
-          "author": "Roger Zelazny",
-          "coverId": "ol:15258807",
-          "addedAt": "2026-09-26",
-          "from": "isbn:0575079010",
-          "coverIsbn": "0575079010",
-          "coverArtists": [
-            "Marc Adams"
-          ],
-          "isfdbRecord": "279585"
-        },
-        {
-          "id": "OL98485W",
-          "title": "The Sirens of Titan",
-          "author": "Kurt Vonnegut",
-          "coverId": "ol:8760790",
-          "addedAt": "2026-09-26",
-          "from": "isbn:0575079029",
-          "coverIsbn": "0575079029",
-          "coverArtists": [
-            "Marc Adams"
-          ],
-          "isfdbRecord": "279587"
+          "isfdbRecord": "150661"
         },
         {
           "id": "OL1819353W",
@@ -8339,17 +8232,108 @@
           "isfdbRecord": "134761"
         },
         {
-          "id": "OL2172454W",
-          "title": "Ubik",
-          "author": "Philip K. Dick",
-          "coverId": "ol:8756979",
+          "id": "OL59863W",
+          "title": "The Dispossessed",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:10205501",
           "addedAt": "2026-09-26",
-          "from": "isbn:0575079215",
-          "coverIsbn": "0575079215",
+          "from": "isbn:0575079037",
+          "coverIsbn": "0575079037",
           "coverArtists": [
             "Marc Adams"
           ],
-          "isfdbRecord": "150661"
+          "isfdbRecord": "151091"
+        },
+        {
+          "id": "OL271163W",
+          "title": "The Forever War",
+          "author": "Joe Haldeman",
+          "coverId": "ol:8703199",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079088",
+          "coverIsbn": "0575079088",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "150881"
+        },
+        {
+          "id": "OL11374287W",
+          "title": "I am Legend",
+          "author": "Richard Matheson",
+          "coverId": "ol:10403208",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079002",
+          "coverIsbn": "0575079002",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "279583"
+        },
+        {
+          "id": "OL98485W",
+          "title": "The Sirens of Titan",
+          "author": "Kurt Vonnegut",
+          "coverId": "ol:8760790",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079029",
+          "coverIsbn": "0575079029",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "279587"
+        },
+        {
+          "id": "OL60924W",
+          "title": "Gateway",
+          "author": "Frederik Pohl",
+          "coverId": "ol:10371240",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575078995",
+          "coverIsbn": "0575078995",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "116251"
+        },
+        {
+          "id": "OL13992W",
+          "title": "Lord of Light",
+          "author": "Roger Zelazny",
+          "coverId": "ol:15258807",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079010",
+          "coverIsbn": "0575079010",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "279585"
+        },
+        {
+          "id": "OL515754W",
+          "title": "Flowers for Algernon",
+          "author": "Daniel Keyes",
+          "coverId": "ol:8757807",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079207",
+          "coverIsbn": "0575079207",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "151081"
+        },
+        {
+          "id": "OL53400W",
+          "title": "Cities in Flight",
+          "author": "James Blish",
+          "coverId": "ol:15258806",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575078987",
+          "coverIsbn": "0575078987",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "150491"
         }
       ],
       "coverCredits": "isfdb"

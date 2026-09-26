@@ -28,20 +28,78 @@ interface CoverSheetProps {
 export default function CoverSheet({ coverUrl, caption, share, children }: CoverSheetProps) {
   const [open, setOpen] = useState(false);
   const closeButton = useRef<HTMLButtonElement>(null);
+  const opener = useRef<HTMLButtonElement>(null);
+  const bar = useRef<HTMLDivElement>(null);
+  const dialog = useRef<HTMLDivElement>(null);
+
+  /*
+    The bar is fixed to the bottom and covered the footer — About, Impressum,
+    Privacy — even scrolled to the end: a tap on "Impressum" landed on the bar
+    (ROADMAP 6.57, browser test 2026-09-26). While the bar is there, the page
+    gets exactly its height as room at the bottom. On a wide screen the bar is
+    `lg:hidden`, so it measures 0 and the page gets nothing.
+  */
+  useEffect(() => {
+    const el = bar.current;
+    if (!el) return;
+    const body = document.body;
+    const measure = () => { body.style.paddingBottom = el.offsetHeight ? `${el.offsetHeight}px` : ''; };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+      body.style.paddingBottom = '';
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape') {
+        setOpen(false);
+        return;
+      }
+      /*
+        The sheet says aria-modal, so Tab must stay inside it (6.57): it used
+        to walk out into the page hidden behind the backdrop.
+      */
+      if (event.key !== 'Tab' || !dialog.current) return;
+      const focusable = Array.from(
+        dialog.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'),
+      ).filter(el => el.offsetParent !== null);
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey && (active === first || !dialog.current.contains(active))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || !dialog.current.contains(active))) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    // Whatever the list above misses (an element the browser tabs to that the
+    // selector does not name), focus that lands outside goes back to Close.
+    const onFocusIn = (event: FocusEvent) => {
+      if (dialog.current && event.target instanceof Node && !dialog.current.contains(event.target)) closeButton.current?.focus();
     };
     document.addEventListener('keydown', onKey);
+    document.addEventListener('focusin', onFocusIn);
     // The sheet covers the page; letting the wall scroll behind it means
     // closing the sheet lands somewhere else than where it was opened.
     document.body.style.overflow = 'hidden';
     closeButton.current?.focus();
+    const returnTo = opener.current;
     return () => {
       document.removeEventListener('keydown', onKey);
+      document.removeEventListener('focusin', onFocusIn);
       document.body.style.overflow = '';
+      // Back to the bar that opened it, not to <body> (6.57).
+      returnTo?.focus();
     };
   }, [open]);
 
@@ -52,8 +110,9 @@ export default function CoverSheet({ coverUrl, caption, share, children }: Cover
         beside "Details" (Julian, 2026-09-09) and a button cannot live inside
         a button. The tappable area keeps everything except that control.
       */}
-      <div className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-2 border-t border-line bg-bg/95 px-4 py-2.5 backdrop-blur-sm lg:hidden">
+      <div ref={bar} className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-2 border-t border-line bg-bg/95 px-4 py-2.5 backdrop-blur-sm lg:hidden">
         <button
+          ref={opener}
           type="button"
           onClick={() => setOpen(true)}
           className="flex min-w-0 flex-1 items-center gap-3 text-left"
@@ -73,7 +132,7 @@ export default function CoverSheet({ coverUrl, caption, share, children }: Cover
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Selected cover">
+        <div ref={dialog} className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Selected cover">
           <button
             type="button"
             aria-label="Close"
