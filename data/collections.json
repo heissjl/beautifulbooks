@@ -8225,11 +8225,14 @@
           "id": "OL53400W",
           "title": "Cities in Flight",
           "author": "James Blish",
-          "coverId": "ol:9811984",
+          "coverId": "ol:15258806",
           "addedAt": "2026-09-26",
           "from": "isbn:0575078987",
           "coverIsbn": "0575078987",
-          "creditWithheld": "The Open Library image is an older picture cover, not the rounded-corner design this ISBN names; the right cover waits in lab/collections/for-openlibrary/rounded/."
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "150491"
         },
         {
           "id": "OL59863W",
@@ -8295,6 +8298,19 @@
             "Marc Adams"
           ],
           "isfdbRecord": "279583"
+        },
+        {
+          "id": "OL13992W",
+          "title": "Lord of Light",
+          "author": "Roger Zelazny",
+          "coverId": "ol:15258807",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0575079010",
+          "coverIsbn": "0575079010",
+          "coverArtists": [
+            "Marc Adams"
+          ],
+          "isfdbRecord": "279585"
         },
         {
           "id": "OL98485W",
