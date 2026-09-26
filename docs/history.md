@@ -2867,3 +2867,84 @@ Julian: „drafte die anderen reihen von heinz edelmann", dazu „i think the ot
 **Fischer Bücherei 1966–68: kein Entwurf.** Die zehn Bände (758 Hutchins, 760 Bänkelbuch, 781 Jägersberg, 794 Gregor-Dellin, 796 Monica Dickens — bei Keller nur „zugeschrieben" und im Dateinamen Saroyan —, 807 Saroyan, 821 Jahn, 832 Divine, 849 Shaw, 861 Roth) sind vor der ISBN gedruckt (DNB-Sätze ohne ISBN), `from-isbns` kann sie nicht setzen, und Open Library führt vier davon als Ausgabe, keine mit Bild. Die zehn Umschläge (883–895 × 1500) liegen trotzdem in `lab/collections/for-openlibrary/fischer-buecherei-edelmann/` mit Manifest; eine Wand bräuchte einen Weg über Ausgaben-Schlüssel statt ISBNs.
 
 Alle Bilder in `lab/collections/for-openlibrary/<slug>/` (git-ignoriert), je mit `manifest.json` und README; hochgeladen ist nichts. Die Fotos der Sammlung Keller sind Aufnahmen der Exemplare des Sammlers — ob sie zu Open Library dürfen, entscheidet Julian.
+
+## 2026-09-26 · Verlagsreihen mit einheitlichem Coverkonzept: Recherche und Stichprobe (ROADMAP 5.10j)
+
+Julian: „start an agent to make deep research on publisher websites (german, english, french, uk) to find book series with a coherent cover concept". Drei Recherche-Agenten, je einer für DE, UK/US und FR, fanden 84 Reihen. Die Open-Library-Stichprobe hat Claude selbst gemacht: 441 ISBN-Abrufe (`/isbn/<isbn>.json`), einzeln nacheinander mit 1,5 s Pause, und die Cover danach auf Kontaktbögen angesehen. Google Books wurde nicht gefragt. Ergebnis und Rangliste: [docs/reihen-recherche.md](reihen-recherche.md).
+
+**Stichprobe** mit ISBNs aus der Quelle (meist bekannte Titel), angegeben als gefunden / mit Cover / davon im Reihendesign:
+
+| Reihe | Ergebnis |
+|---|---|
+| Library of America | 8/8, 8/8, 7/8 |
+| Semiotext(e) Intervention | 8/8, 8/8, 8/8 |
+| Verso Radical Thinkers, Set 1 | 8/8, 8/8, 8/8 |
+| Penguin Orange Collection | 8/8, 8/8, 8/8 |
+| insel taschenbuch | 8/8, 8/8, 8/8 |
+| Penguin Drop Caps | 8/8, 7/8, 7/7 |
+| Poésie/Gallimard | 6/7, 6/7, 6/6 |
+| Penguin English Library | 9/9, 6/9, 6/6 |
+| NYRB Children's | 8/8, 6/8, 5/6 |
+| Penguin Great Ideas | 8/8, 5/8, 5/5 |
+| Rivages/Noir | 7/8, 5/8, 5/5 |
+| Pléiade | 6/6, 5/6 |
+| Reclam UB, bekannte Klassiker | 10/10, 7/10, 7/7 |
+| Rowohlts Monographien | 6/6, 4/6, 3/4 |
+| Little Black Classics | 8/8, 4/8, 4/4 |
+| Virago Designer Collection | 8/8, 4/8, 4/4 |
+| Art of the Novella | 5/8, 4/8, 4/4 |
+| L'Imaginaire | 4/7, 4/7, 4/4 |
+| Découvertes Gallimard | 4/6, 4/6, 4/4 |
+| Minuit (Beckett) | 6/6, 4/6, 4/4 |
+| Terre humaine | 5/6, 4/6 |
+| Ballantine Adult Fantasy (ISBN aus der Katalognummer gerechnet) | 4/5, 3/5, 3/3 |
+| Diogenes detebe | 4/6, 3/6, 3/3 |
+| Persephone | 4/6, 3/6, 2/3 |
+| Présence du futur | 5/8, 3/8 |
+| Folio SF | 3/5, 3/5 |
+| Monsieur Toussaint Louverture | 4/6, 3/6 |
+| Heyne Bibliothek der SF-Literatur | 2/3, 2/3 |
+| Zulma | 4/8, 2/8 |
+| Série noire | 2/9, 2/9 |
+| Ailleurs et Demain | 4/8, 2/8 |
+| Du monde entier | 2/5, 2/5 |
+| Everyman's Library | 7/7, 2/7 |
+| Allia | 3/4, 2/4 |
+| Die Andere Bibliothek | 2/2, 1/2 |
+| Pelican 2014 | 2/2, 1/2 |
+| Penguin Galaxy | 2/2, 1/2 |
+| Faber Poetry | 8/8, 1/8 |
+| Les Cahiers rouges | 7/8, 1/8 |
+| P.O.L | 5/5, 1/5 |
+| Fleuve Noir Anticipation | 3/6, 1/6 |
+| Actes Sud Babel | 1/6, 1/6 |
+| Fitzcarraldo | 1/7, 1/7 |
+| Weiße Reihe (Volk und Welt) | 1/6, 1/6 |
+| Die Tollen Hefte | 2/8, 1/8 |
+| Wagenbach SALTO | 1/8, 1/8 |
+| Pushkin Vertigo | 3/6, 0/6 |
+| Merve | 2/3, 0/3 |
+| Notting Hill Editions | 2/7, 0/7 |
+| Naturkunden | 1/8, 0/8 |
+| Friedenauer Presse, Wolffs Broschur | 0/8 |
+| Insel-Bücherei, neue Bände | 0/8 |
+| NYRB Poets | 0/6 |
+| Manesse | 0/2 |
+
+**Zufällig gezogen** (12 je Reihe, aus einer vollständigen Liste oder aus dem Nummernraum), angegeben als gefunden / mit Cover:
+
+| Reihe | Ergebnis |
+|---|---|
+| Verso Radical Thinkers | 12/12, 11/12 |
+| Semiotext(e) | 12/12, 8/12 |
+| Library of America | 12/12, 7/12, davon 5 im Umschlagdesign |
+| Rowohlts Monographien | 11/12, 6/12 |
+| dtv | 6/12, 4/12, kaum Piatti |
+| insel taschenbuch | 6/12, 2/12 |
+| Reclam UB | 3/12, 2/12 |
+
+**Folgerung:** Bekannte Titel überschätzen die Abdeckung. Bei insel taschenbuch fiel sie von 8/8 auf 2/12, bei Reclam von 7/10 auf 2/12. Junge und kleine Verlage fehlen bei Open Library fast ganz.
+
+**Neue Listenquelle:** die SRU-Schnittstelle der BnF. Sie liefert über `bib.col2bib` zu jeder französischen Verlagsreihe alle Bände mit Nummer (225$v) und ISBN (010$a); die BnF verlangt 5 s Pause.
+
+**Nicht erreichbar:** ISFDB (403) und noosfere (robots.txt sperrt KI-Crawler; nach einer Seite aufgehört).
