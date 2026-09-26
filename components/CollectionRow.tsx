@@ -24,10 +24,10 @@ export function mosaicGrid(total: number): { cols: number; rows: number } {
   return { cols, rows: Math.round(cols * 1.5) };
 }
 
-/** Tile width: (row − gaps) / 2.5 on a phone (gap 0.75rem), / 5.5 from `sm` (gap 1rem). */
-const TILE = 'shrink-0 snap-start w-[calc((100cqw-1.5rem)/2.5)] sm:w-[calc((100cqw-5rem)/5.5)]';
-/** The fade lies over the half-visible last tile only: half a tile wide. */
-const FADE = 'w-[calc((100cqw-1.5rem)/5)] sm:w-[calc((100cqw-5rem)/11)]';
+/** Tile width: five covers and 5/6 of the sixth from `sm` (gap 1rem): row = 5⅚ tiles + 5 gaps; on a phone 2⅚ (gap 0.75rem). */
+const TILE = 'shrink-0 snap-start w-[calc((100cqw-1.5rem)/2.8333)] sm:w-[calc((100cqw-5rem)/5.8333)]';
+/** The fade: about one and a half tiles wide, so it starts on the fifth cover and deepens gently over the sixth. */
+const FADE = 'w-[calc((100cqw-1.5rem)/2.8333*1.3)] sm:w-[calc((100cqw-5rem)/5.8333*1.5)]';
 
 /**
  * One collection's covers as a row that scrolls sideways (Julian, 2026-09-26:
@@ -62,8 +62,9 @@ export default function CollectionRow({ slug, title, works, total }: { slug: str
   }, []);
   return (
     /*
-      Five covers and half of the sixth on a desktop, two and a half on a
-      phone, sized from the row's own width (container units), so the fading
+      Five covers and 5/6 of the sixth on a desktop, two and 5/6 on a phone
+      (Julian, 2026-09-26: „show 5/6 of the 6th book … make the fading wider,
+      more gradient, less sudden"), sized from the row's own width (container units), so the fading
       edge always lies over the sixth (third) cover (Julian, 2026-09-26: „make
       the fading less extreme on the collection row and make it happen on the
       6th book").
@@ -115,7 +116,7 @@ export default function CollectionRow({ slug, title, works, total }: { slug: str
         </ul>
       </div>
       {overflows && !atEnd && (
-        <div aria-hidden className={`pointer-events-none absolute inset-y-0 right-0 bg-gradient-to-l from-bg/75 via-bg/30 to-transparent ${FADE}`} />
+        <div aria-hidden className={`pointer-events-none absolute inset-y-0 right-0 bg-gradient-to-l from-bg/80 via-bg/25 to-transparent ${FADE}`} />
       )}
     </div>
   );
