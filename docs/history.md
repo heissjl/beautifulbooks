@@ -2577,3 +2577,14 @@ Julian: „let's whip up the collection of sf masterworks as an example list", m
 ## 2026-09-25 · Die Sammlungen auf der Startseite (ROADMAP 5.10d)
 
 Unter der kuratierten Wand je Sammlung eine Karte mit ihrer ersten Reihe; zwei nebeneinander ab `sm`, höchstens vier. Angesehen unter `next dev` mit drei Karten (zwei Entwürfe sichtbar, weil `next dev`): bei 1280 px zwei Spalten, bei 390 px gestapelt mit vier Covern je Karte, `scrollWidth` = 390. In Produktion erscheint nur SF Masterworks. Die Zeile „Or browse a collection" im Hero ist dafür entfallen.
+
+## 2026-09-25 · Wer hat das Cover gemacht? Quellen gemessen (ROADMAP 6.50)
+
+Recherche durch einen Agenten, alle Zahlen live erhoben, keine Datei geändert, keine Bot-Sperre umgangen.
+
+- **Open Library:** Ausgaben haben `contributors: [{role, name}]`, die Rollenliste in `/config/edition` kennt „Cover artist", „Book Designer" u. a., in der Praxis Freitext („Cover Art", „Cover Design"). Gemessen an 755 Ausgaben aus fünf Werken: 3–4 echte Umschlag-Angaben (rund 0,5 %); an 12 ausgewählten ISBNs (Masterworks, Penguin, Vintage): 0.
+- **ISFDB:** `getpub.cgi?<ISBN>` liefert `<CoverArtists>` je Druck. 10 von 10 zufälligen Masterworks-ISBNs der nummerierten Reihe, 10 von 10 der Neuauflage, 2 von 10 allgemeinen Titeln (Penguin *1984*: Shepard Fairey; Vintage: La Boca); Gatsby, Faber, Suhrkamp, Fischer ohne Datensatz. Der Künstler kann innerhalb einer ISBN zwischen Drucken wechseln, und manchmal steht eine Bildagentur da („Shutterstock"). Lizenz laut Fußzeile: CC BY 4.0. Die HTML-Seiten antworten mit einer Cloudflare-Prüfung, die REST-Schnittstelle nicht.
+- **Wikidata:** P736 in 10.947 Aussagen an 10.138 Objekten (2.290 Künstler), davon 3.082 Ausgaben und 2.829 Werke; 4.537 Objekte mit Open-Library-ID. An einem Werk meint P736 den Umschlag der Erstausgabe (Gatsby: Francis Cugat, 1925), und oft das reproduzierte Gemälde statt des Gestalters (Dalí, Picasso). P110 „illustrator" meint meist das Innere.
+- **DNB:** vereinzelte Angaben als Freitext („Umschlaggestaltung: …") oder als 700 mit Rolle `bkd`, fast nur bei Kleinverlagen 2025/26; in fünf Suhrkamp-Datensätzen zu *Homo faber* keine. **Library of Congress:** 0 von 4 Taschenbüchern.
+- **Verlagsseiten:** Penguin UK führt Rollen, aber für Umschläge nur als Werbetext („with cover art by Shepard Fairey"); Suhrkamp nur „Autor". ONIX kennt die Rolle A36, aber nur in geschlossenen Handelsdaten.
+- **Spezialseiten:** Book Cover Archive nennt je Buch den Gestalter (rund 1.200 Bücher, kein API, keine Lizenz); AIGA, bookcoverdesigners.org und LibraryThing hinter Cloudflare; Goodreads ohne API seit 2020. **Google Books:** keine Rollen.
