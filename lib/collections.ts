@@ -44,11 +44,19 @@ export interface CollectionPick {
   isfdbRecord?: string;
   /** Why a known credit is not shown, e.g. the image is of another printing than the ISBN's. */
   creditWithheld?: string;
+  /**
+   * The Open Library work that holds this cover, when it is not `id`: a
+   * translation filed as a work of its own (5.10i). The tile opens that wall,
+   * where the cover exists, instead of the original's, where it does not.
+   */
+  coverWork?: string;
 }
 
 /** A tile on a collection wall: a curated work, and its cover credit where the collection shows one. */
 export interface WallWork extends CuratedWork {
   coverArtists?: string[];
+  /** The work whose wall holds this cover, when it is not `id` (see CollectionPick). */
+  coverWork?: string;
 }
 
 export interface CollectionRecord {
@@ -125,7 +133,7 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
       if (coverId === null || seen.has(p.id)) continue;
       seen.add(p.id);
       const credit = r.coverCredits === 'isfdb' && p.coverArtists?.length ? { coverArtists: p.coverArtists } : {};
-      works.push({ id: p.id, title: p.title, author: p.author, coverId, ...credit });
+      works.push({ id: p.id, title: p.title, author: p.author, coverId, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}) });
     }
     const scope = r.kind === 'series' ? (r.publishers ?? []) : (r.authors ?? []).map(a => a.name);
     out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}) });

@@ -389,6 +389,16 @@ describe('foldDuplicateCovers (E8 phase 2, three tiers in SPEC 9.3 step 12)', ()
     expect(out[1].similarIds).toBeUndefined();
   });
 
+  it('lets a cover named by id lead its group instead of folding away', () => {
+    const covers = [cover('ol:relaunch', ['e1']), cover('ol:classic', ['e2'])];
+    const sigs = new Map([['ol:relaunch', sig('ffff000000000000')], ['ol:classic', sig('ffff000000000001')]]);
+    expect(foldDuplicateCovers(covers, sigs).map(c => c.id)).toEqual(['ol:relaunch']);
+    const pinned = foldDuplicateCovers(covers, sigs, [], {}, 'ol:classic');
+    expect(pinned.map(c => c.id)).toEqual(['ol:classic']);
+    expect(pinned[0].similarIds).toEqual(['ol:relaunch']);
+    expect(pinned[0].editionIds.sort()).toEqual(['e1', 'e2']);
+  });
+
   it('folds two images of one ISBN that tier 1 would keep apart (tier 2)', () => {
     // Beloved 9788497932653: the catalogue scan and Google's image of the same
     // Debolsillo printing measured 12-14 bits apart.

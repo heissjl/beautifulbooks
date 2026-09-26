@@ -739,6 +739,15 @@ export function foldDuplicateCovers(
   signatures: ReadonlyMap<string, ImageSignature>,
   editions: readonly Edition[] = [],
   thresholds: FoldThresholds = {},
+  /**
+   * A cover the reader asked for by id (`?cover=`, a collection tile): it
+   * leads its group instead of being folded away under another scan. On a
+   * series wall the clicked printing is the point — the blue SF Masterworks
+   * *Mockingbird* folded under the orange relaunch one with the same artwork
+   * (Julian, 2026-09-26: „clicking on a cover in the collection wall should
+   * lead to the detail view").
+   */
+  pinnedId: string | null = null,
 ): Cover[] {
   const limits: Required<FoldThresholds> = {
     sameImage: thresholds.sameImage ?? SAME_COVER_MAX_DISTANCE,
@@ -769,7 +778,7 @@ export function foldDuplicateCovers(
 
   return groups.map(g => {
     if (g.members.length === 1) return g.members[0];
-    const rep = g.members.find(m => m.source === 'openlibrary') ?? g.members[0];
+    const rep = g.members.find(m => m.id === pinnedId) ?? g.members.find(m => m.source === 'openlibrary') ?? g.members[0];
     const editionIds = uniq(g.members.flatMap(m => m.editionIds));
     const similarIds = g.members.filter(m => m.id !== rep.id).map(m => m.id);
     return { ...rep, editionIds, similarIds };

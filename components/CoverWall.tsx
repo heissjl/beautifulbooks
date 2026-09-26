@@ -9,6 +9,12 @@ import { tileTitle } from '@/lib/normalize';
 
 interface CoverWallProps {
   works: Array<CuratedWork | WallWork>;
+  /**
+   * Open the work's wall with this very cover selected (`?cover=`), as a
+   * collection wants: the tile is a chosen printing, and the reader clicked
+   * that one, not the book in general (Julian, 2026-09-26).
+   */
+  selectCover?: boolean;
 }
 
 /**
@@ -17,15 +23,17 @@ interface CoverWallProps {
  * collection (SPEC F8) use the same grid, so a collection looks like the page
  * a reader already knows.
  */
-export default function CoverWall({ works }: CoverWallProps) {
+export default function CoverWall({ works, selectCover = false }: CoverWallProps) {
   return (
     <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6">
-      {works.map(w => (
+      {works.map(w => {
+        const target = ('coverWork' in w && w.coverWork) || w.id;
+        return (
         <li key={w.id}>
           <Link
-            href={`/book/${w.id}`}
+            href={selectCover ? `/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}` : `/book/${target}`}
             className="group block focus-visible:outline-none"
-            onClick={() => storeWorkPreview(w.id, { title: w.title, authors: [w.author], coverUrls: [olCover(w.coverId, 'L')] })}
+            onClick={() => storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [olCover(w.coverId, 'L')] })}
           >
             <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
               <CoverImage src={olCover(w.coverId, 'M')} alt={`${w.title} by ${w.author}`} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
@@ -47,7 +55,8 @@ export default function CoverWall({ works }: CoverWallProps) {
             )}
           </Link>
         </li>
-      ))}
+        );
+      })}
     </ul>
   );
 }

@@ -98,7 +98,7 @@ export default async function CollectionPage({ params }: PageProps) {
           , {coverLine(c.kind, c.coverSource)}.
         </p>
         <div className="mt-8">
-          <CoverWall works={c.works} />
+          <CoverWall works={c.works} selectCover />
         </div>
         {/*
           The source of the cover credits, required by its licence (CC BY 4.0)

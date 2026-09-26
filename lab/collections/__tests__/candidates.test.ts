@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { CollectionRecord } from '../../../lib/collections';
-import { draftFromCandidates, upsertCollection, type CandidateRow } from '../candidates';
+import { coverWorkOf, draftFromCandidates, upsertCollection, type CandidateRow } from '../candidates';
 
 const row = (over: Partial<CandidateRow>): CandidateRow => ({
   order: 1, id: 'OL1W', title: 'A', author: 'X', coverId: 'ol:1', edition: '/books/OL1M', status: 'found', ...over,
@@ -69,5 +69,16 @@ describe('upsertCollection', () => {
     const next = upsertCollection([first, other], draftFromCandidates([row({})], spec));
     expect(next.map(c => c.slug)).toEqual(['sf-ru', 'other']);
     expect(next[0].works).toHaveLength(1);
+  });
+});
+
+describe('coverWorkOf', () => {
+  it('names the work that holds the cover when a translation is a work of its own', () => {
+    const r = { id: 'OL1W', coverId: 'ol:5', candidates: [{ cover: 4, work: 'OL1W' }, { cover: 5, work: 'OL9W' }] };
+    expect(coverWorkOf(r)).toBe('OL9W');
+  });
+  it('is null when the cover sits on the row\'s own work or nothing says where', () => {
+    expect(coverWorkOf({ id: 'OL1W', coverId: 'ol:4', candidates: [{ cover: 4, work: 'OL1W' }] })).toBeNull();
+    expect(coverWorkOf({ id: 'OL1W', coverId: 'ol:4' })).toBeNull();
   });
 });

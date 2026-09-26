@@ -17,7 +17,17 @@ export interface CandidateRow {
   language?: string | null;
   /** The chosen edition's ISBN, kept as `coverIsbn` for the ISFDB cover-artist lookup (6.52). */
   isbn?: string | null;
+  /** Every cover looked at, with the work that holds it (a translation may be a work of its own). */
+  candidates?: Array<{ cover: number; work?: string }>;
   status: 'found' | 'none' | 'failed';
+}
+
+/** The work that holds the chosen cover, when it is not the row's own (5.10i). */
+export function coverWorkOf(r: Pick<CandidateRow, 'id' | 'coverId' | 'candidates'>): string | null {
+  if (!r.coverId) return null;
+  const n = Number(r.coverId.replace('ol:', ''));
+  const work = r.candidates?.find(c => c.cover === n && c.work)?.work;
+  return work && work !== r.id ? work : null;
 }
 
 export interface DraftSpec {
@@ -61,6 +71,7 @@ export function draftFromCandidates(rows: CandidateRow[], spec: DraftSpec, exist
       addedAt: spec.addedAt,
       from: [spec.from, r.language, r.edition?.replace('/books/', '')].filter(Boolean).join(':'),
       ...(r.isbn ? { coverIsbn: r.isbn } : {}),
+      ...(coverWorkOf(r) ? { coverWork: coverWorkOf(r) as string } : {}),
       ...credit,
     });
   }

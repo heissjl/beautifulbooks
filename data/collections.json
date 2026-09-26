@@ -8463,7 +8463,8 @@
           "coverArtists": [
             "W. Siudmak"
           ],
-          "isfdbRecord": "338288"
+          "isfdbRecord": "338288",
+          "coverWork": "OL20071030W"
         },
         {
           "id": "OL1819353W",
@@ -8476,7 +8477,8 @@
           "coverArtists": [
             "Jï¿½rgen Rogner"
           ],
-          "isfdbRecord": "567199"
+          "isfdbRecord": "567199",
+          "coverWork": "OL1819342W"
         },
         {
           "id": "OL2172402W",
@@ -8565,7 +8567,8 @@
           "coverArtists": [
             "Stï¿½phane Barry"
           ],
-          "isfdbRecord": "332588"
+          "isfdbRecord": "332588",
+          "coverWork": "OL7917371W"
         },
         {
           "id": "OL56835W",
@@ -8591,7 +8594,8 @@
           "coverArtists": [
             "Han Pieko"
           ],
-          "isfdbRecord": "366072"
+          "isfdbRecord": "366072",
+          "coverWork": "OL24744170W"
         },
         {
           "id": "OL59858W",
@@ -8613,7 +8617,8 @@
           "coverId": "ol:13803756",
           "addedAt": "2026-09-26",
           "from": "openlibrary:ita:OL47315733M",
-          "coverIsbn": "9788871684079"
+          "coverIsbn": "9788871684079",
+          "coverWork": "OL34954288W"
         },
         {
           "id": "OL8260926W",
@@ -8626,7 +8631,8 @@
           "coverArtists": [
             "Stanislaw Fernandes"
           ],
-          "isfdbRecord": "390186"
+          "isfdbRecord": "390186",
+          "coverWork": "OL26419808W"
         },
         {
           "id": "OL3332541W",
@@ -8700,7 +8706,8 @@
           "coverArtists": [
             "Thierry Mebarkhi"
           ],
-          "isfdbRecord": "567839"
+          "isfdbRecord": "567839",
+          "coverWork": "OL892413W"
         },
         {
           "id": "OL2172408W",
@@ -8744,7 +8751,8 @@
           "coverId": "ol:14552041",
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL13239567M",
-          "coverIsbn": "9788435001328"
+          "coverIsbn": "9788435001328",
+          "coverWork": "OL14931722W"
         },
         {
           "id": "OL4088358W",
@@ -8801,7 +8809,8 @@
           "coverId": "ol:3327829",
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL13268240M",
-          "coverIsbn": "9788445073292"
+          "coverIsbn": "9788445073292",
+          "coverWork": "OL36009796W"
         },
         {
           "id": "OL510405W",
@@ -8828,7 +8837,8 @@
           "coverId": "ol:4910679",
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL9131966M",
-          "coverIsbn": "9788445074756"
+          "coverIsbn": "9788445074756",
+          "coverWork": "OL7202570W"
         },
         {
           "id": "OL1960643W",
@@ -8876,7 +8886,8 @@
           "author": "Harlan Ellison",
           "coverId": "ol:7255649",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:fre:OL25425935M"
+          "from": "openlibrary:fre:OL25425935M",
+          "coverWork": "OL16803148W"
         },
         {
           "id": "OL16518W",
@@ -8987,7 +8998,8 @@
           "coverId": "ol:8542109",
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL26855188M",
-          "coverIsbn": "9782290105887"
+          "coverIsbn": "9782290105887",
+          "coverWork": "OL19634262W"
         },
         {
           "id": "OL515754W",
@@ -9005,7 +9017,8 @@
           "coverId": "ol:982045",
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL8910910M",
-          "coverIsbn": "9782290316092"
+          "coverIsbn": "9782290316092",
+          "coverWork": "OL29241351W"
         },
         {
           "id": "OL2737402W",
@@ -9031,7 +9044,8 @@
           "coverArtists": [
             "Barclay Shaw"
           ],
-          "isfdbRecord": "593207"
+          "isfdbRecord": "593207",
+          "coverWork": "OL21679260W"
         },
         {
           "id": "OL19209380W",
@@ -9040,7 +9054,8 @@
           "coverId": "ol:13719168",
           "addedAt": "2026-09-26",
           "from": "openlibrary:cat:OL47266545M",
-          "coverIsbn": "9788466408417"
+          "coverIsbn": "9788466408417",
+          "coverWork": "OL34909137W"
         },
         {
           "id": "OL14858392W",
@@ -9066,7 +9081,8 @@
           "coverArtists": [
             "Bob Atkins"
           ],
-          "isfdbRecord": "425280"
+          "isfdbRecord": "425280",
+          "coverWork": "OL20124815W"
         },
         {
           "id": "OL46395W",
@@ -9088,7 +9104,8 @@
           "coverArtists": [
             "Jeff Rey"
           ],
-          "isfdbRecord": "588601"
+          "isfdbRecord": "588601",
+          "coverWork": "OL482548W"
         },
         {
           "id": "OL20866308W",
@@ -9101,7 +9118,8 @@
           "coverArtists": [
             "Michael Whelan"
           ],
-          "isfdbRecord": "493853"
+          "isfdbRecord": "493853",
+          "coverWork": "OL20099834W"
         },
         {
           "id": "OL59715W",
@@ -9127,7 +9145,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "421139"
+          "isfdbRecord": "421139",
+          "coverWork": "OL5724838W"
         },
         {
           "id": "OL17402W",
@@ -9167,7 +9186,8 @@
           "coverArtists": [
             "Sam Van Olffen"
           ],
-          "isfdbRecord": "669475"
+          "isfdbRecord": "669475",
+          "coverWork": "OL34957510W"
         },
         {
           "id": "OL59733W",
@@ -9206,7 +9226,8 @@
           "coverId": "ol:10183320",
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL28253582M",
-          "coverIsbn": "9782253023081"
+          "coverIsbn": "9782253023081",
+          "coverWork": "OL20865804W"
         },
         {
           "id": "OL60942W",
@@ -9263,7 +9284,8 @@
           "coverArtists": [
             "Tibor Csernus"
           ],
-          "isfdbRecord": "369652"
+          "isfdbRecord": "369652",
+          "coverWork": "OL33653580W"
         },
         {
           "id": "OL59797W",
@@ -9294,7 +9316,8 @@
           "coverId": "ol:15231929",
           "addedAt": "2026-09-26",
           "from": "openlibrary:rus:OL62190979M",
-          "coverIsbn": "978-5-17-050198-4"
+          "coverIsbn": "978-5-17-050198-4",
+          "coverWork": "OL37422079W"
         },
         {
           "id": "OL2071423W",
@@ -9320,7 +9343,8 @@
           "coverArtists": [
             "Larry Noble"
           ],
-          "isfdbRecord": "646470"
+          "isfdbRecord": "646470",
+          "coverWork": "OL28941628W"
         },
         {
           "id": "OL35702190W",
@@ -9329,7 +9353,8 @@
           "coverId": "ol:8778666",
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL27305730M",
-          "coverIsbn": "9788445074947"
+          "coverIsbn": "9788445074947",
+          "coverWork": "OL2994043W"
         },
         {
           "id": "OL19218549W",
@@ -9338,7 +9363,8 @@
           "coverId": "ol:11102336",
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL32442780M",
-          "coverIsbn": "9782253242215"
+          "coverIsbn": "9782253242215",
+          "coverWork": "OL24487027W"
         },
         {
           "id": "OL257947W",
@@ -9365,7 +9391,8 @@
           "coverId": "ol:13195151",
           "addedAt": "2026-09-26",
           "from": "openlibrary:rus:OL26965894M",
-          "coverIsbn": "9785389134706"
+          "coverIsbn": "9785389134706",
+          "coverWork": "OL19752852W"
         },
         {
           "id": "OL56833W",
@@ -9404,7 +9431,8 @@
           "coverArtists": [
             "W. Siudmak"
           ],
-          "isfdbRecord": "338704"
+          "isfdbRecord": "338704",
+          "coverWork": "OL10571538W"
         },
         {
           "id": "OL17415602W",
@@ -9413,7 +9441,8 @@
           "coverId": "ol:10498547",
           "addedAt": "2026-09-26",
           "from": "openlibrary:rus:OL30770789M",
-          "coverIsbn": "9785170416783"
+          "coverIsbn": "9785170416783",
+          "coverWork": "OL22821620W"
         },
         {
           "id": "OL19323672W",
@@ -9422,7 +9451,8 @@
           "coverId": "ol:3110137",
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL12512772M",
-          "coverIsbn": "9782277260066"
+          "coverIsbn": "9782277260066",
+          "coverWork": "OL15078160W"
         },
         {
           "id": "OL59846W",
@@ -9444,7 +9474,8 @@
           "coverId": "ol:11401731",
           "addedAt": "2026-09-26",
           "from": "openlibrary:rus:OL32771879M",
-          "coverIsbn": "9785170025329"
+          "coverIsbn": "9785170025329",
+          "coverWork": "OL24691708W"
         },
         {
           "id": "OL3928956W",
@@ -9466,7 +9497,8 @@
           "coverId": "ol:12159129",
           "addedAt": "2026-09-26",
           "from": "openlibrary:pol:OL35336509M",
-          "coverIsbn": "9788325001223"
+          "coverIsbn": "9788325001223",
+          "coverWork": "OL26186453W"
         },
         {
           "id": "OL7015488W",
@@ -9550,7 +9582,8 @@
           "coverId": "ol:14831807",
           "addedAt": "2026-09-26",
           "from": "openlibrary:rus:OL22909237M",
-          "coverIsbn": "5235012151"
+          "coverIsbn": "5235012151",
+          "coverWork": "OL11457373W"
         },
         {
           "id": "OL3055283W",
@@ -9563,7 +9596,8 @@
           "coverArtists": [
             "Salinas Blanch"
           ],
-          "isfdbRecord": "659170"
+          "isfdbRecord": "659170",
+          "coverWork": "OL19860234W"
         },
         {
           "id": "OL19334472W",
@@ -9572,7 +9606,8 @@
           "coverId": "ol:14552103",
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL50216689M",
-          "coverIsbn": "8435004236"
+          "coverIsbn": "8435004236",
+          "coverWork": "OL15436161W"
         },
         {
           "id": "OL14858865W",
@@ -9585,7 +9620,8 @@
           "coverArtists": [
             "Hubert de Lartigue"
           ],
-          "isfdbRecord": "374434"
+          "isfdbRecord": "374434",
+          "coverWork": "OL16084868W"
         },
         {
           "id": "OL492354W",
@@ -9594,7 +9630,8 @@
           "coverId": "ol:14150199",
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL47533796M",
-          "coverIsbn": "9788417525521"
+          "coverIsbn": "9788417525521",
+          "coverWork": "OL35150880W"
         },
         {
           "id": "OL10560082W",
@@ -9615,7 +9652,8 @@
           "coverArtists": [
             "Eddie Jones"
           ],
-          "isfdbRecord": "470975"
+          "isfdbRecord": "470975",
+          "coverWork": "OL15348351W"
         },
         {
           "id": "OL1960375W",
@@ -9637,7 +9675,8 @@
           "coverId": "ol:10584873",
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL9155200M",
-          "coverIsbn": "9788498002508"
+          "coverIsbn": "9788498002508",
+          "coverWork": "OL8112298W"
         },
         {
           "id": "OL1960491W",
@@ -9646,7 +9685,8 @@
           "coverId": "ol:13504465",
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL8887356M",
-          "coverIsbn": "9782253023104"
+          "coverIsbn": "9782253023104",
+          "coverWork": "OL15056796W"
         },
         {
           "id": "OL22138740W",
@@ -9654,7 +9694,8 @@
           "author": "John Elliot & Fred Hoyle",
           "coverId": "ol:13327968",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:ger:OL20258567M"
+          "from": "openlibrary:ger:OL20258567M",
+          "coverWork": "OL10414543W"
         },
         {
           "id": "OL25764282W",
@@ -9663,7 +9704,8 @@
           "coverId": "ol:14427359",
           "addedAt": "2026-09-26",
           "from": "openlibrary:chi:OL49638523M",
-          "coverIsbn": "9787513350761"
+          "coverIsbn": "9787513350761",
+          "coverWork": "OL36751942W"
         },
         {
           "id": "OL20812466W",
@@ -9671,7 +9713,8 @@
           "author": "Аркадий Стругацкий",
           "coverId": "ol:15234483",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:fre:OL14595085M"
+          "from": "openlibrary:fre:OL14595085M",
+          "coverWork": "OL11111034W"
         },
         {
           "id": "OL166491W",
@@ -9711,7 +9754,8 @@
           "coverId": "ol:13950598",
           "addedAt": "2026-09-26",
           "from": "openlibrary:pol:OL47358518M",
-          "coverIsbn": "9788381163774"
+          "coverIsbn": "9788381163774",
+          "coverWork": "OL34994425W"
         },
         {
           "id": "OL27813227W",
@@ -9720,7 +9764,8 @@
           "coverId": "ol:11455064",
           "addedAt": "2026-09-26",
           "from": "openlibrary:rus:OL32822979M",
-          "coverIsbn": "9785040015214"
+          "coverIsbn": "9785040015214",
+          "coverWork": "OL24724893W"
         },
         {
           "id": "OL13978W",
@@ -9742,7 +9787,8 @@
           "coverId": "ol:14548758",
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL13239569M",
-          "coverIsbn": "9788435001403"
+          "coverIsbn": "9788435001403",
+          "coverWork": "OL14931587W"
         },
         {
           "id": "OL28628670W",
@@ -9755,7 +9801,8 @@
           "coverArtists": [
             "Ifa-Bilderteam"
           ],
-          "isfdbRecord": "287933"
+          "isfdbRecord": "287933",
+          "coverWork": "OL14931601W"
         },
         {
           "id": "OL261643W",

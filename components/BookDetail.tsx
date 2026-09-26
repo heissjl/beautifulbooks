@@ -105,6 +105,8 @@ function buildWall(
   extra: readonly Cover[],
   extraSignatures: ReadonlyMap<string, ImageSignature>,
   preferred: string | undefined,
+  /** The cover the address names; it leads its fold group (see foldDuplicateCovers). */
+  pinnedId: string | null = null,
 ) {
   // Each id once: the shop's image is often a Google volume page 0 already has (6.37).
   const all = withRetailCovers(merged.covers, extra);
@@ -118,7 +120,7 @@ function buildWall(
     never had that picture; this map remembers who did.
   */
   const editionsByScan = new Map<string, readonly string[]>(all.map(c => [c.id, c.editionIds]));
-  const covers = foldDuplicateCovers(all, signatures, merged.editions);
+  const covers = foldDuplicateCovers(all, signatures, merged.editions, {}, pinnedId);
   const coversById = new Map(covers.map(c => [c.id, c]));
   const ordered = orderGroups(groupCoversByLanguage(covers, merged.editions, preferred, signatures), preferred);
   const groups: CoverTab[] = ordered.map(g => ({
@@ -252,18 +254,22 @@ function BookDetail() {
   }, [isbnWanted, pages.merged, editionIdsByIsbn]);
 
   const selectedId = searchParams.get('cover') ?? routeCover ?? coverForIsbn;
+  // The cover the page was opened with leads its fold group (a collection tile,
+  // a shared link). Only that one: a later click picks among the tiles already
+  // there, so the wall is not folded again on every selection.
+  const [openedWith] = useState<string | null>(() => searchParams.get('cover') ?? routeCover);
 
   // Which ISBN to ask about is decided on the catalogue alone. Retail covers
   // never change *which edition* is being looked at, and deriving the
   // question from an answer that depends on it would chase its own tail.
   const lookupIsbns = useMemo(() => {
     if (!pages.merged) return [];
-    const wall = buildWall(pages.merged, [], new Map(), lang || undefined);
+    const wall = buildWall(pages.merged, [], new Map(), lang || undefined, openedWith);
     const cover = coverForId(wall, selectedId);
     if (!cover) return [];
     const byId = new Map(pages.merged.editions.map(e => [e.id, e]));
     return cover.editionIds.map(id => byId.get(id)?.isbn13).filter((i): i is string => !!i);
-  }, [pages.merged, lang, selectedId]);
+  }, [pages.merged, lang, selectedId, openedWith]);
 
   // What a shop shows for that ISBN, asked on selection rather than while the
   // work loads: 7-11 Google requests per page view become 2 (SPEC §9.3 13a).
@@ -279,14 +285,14 @@ function BookDetail() {
   const view = useMemo(() => {
     const { merged, work, market } = pages;
     if (!merged || !work || !market) return null;
-    const wall = buildWall(merged, isbnCovers.covers, isbnCovers.signatures, lang || undefined);
+    const wall = buildWall(merged, isbnCovers.covers, isbnCovers.signatures, lang || undefined, openedWith);
     const editionsById = new Map(merged.editions.map(e => [e.id, e]));
     const captions = new Map(wall.covers.map(c => [c.id, captionFor(c, editionsById)]));
     // How many covers each edition appears with (to flag reprints, SPEC F2.5).
     const coversPerEdition = new Map<string, number>();
     for (const c of wall.covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
     return { work, market, merged, ...wall, editionsById, captions, coversPerEdition };
-  }, [pages, lang, isbnCovers]);
+  }, [pages, lang, isbnCovers, openedWith]);
 
   /*
     The scene opens with the cover the reader is already looking at, and hands
