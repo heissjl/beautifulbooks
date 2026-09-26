@@ -9972,6 +9972,15 @@
           "coverIsbn": "9783936411676"
         },
         {
+          "id": "OL19057987W",
+          "title": "Pécs – Auschwitz – Kaufering",
+          "author": "Jehuda Garai",
+          "coverId": "ol:15258994",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783938690260",
+          "coverIsbn": "9783938690260"
+        },
+        {
           "id": "OL15397285W",
           "title": "Der Dachdecker von Auschwitz-Birkenau",
           "author": "Mordechai Ciechanower",
@@ -10024,6 +10033,291 @@
           "addedAt": "2026-09-26",
           "from": "isbn:9783863310059",
           "coverIsbn": "9783863310059"
+        },
+        {
+          "id": "OL975520W",
+          "title": "Verweigerte Rückkehr",
+          "author": "Hans Frankenthal",
+          "coverId": "ol:15258993",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783863310899",
+          "coverIsbn": "9783863310899"
+        },
+        {
+          "id": "OL44301701W",
+          "title": "Sonjas Tagebuch",
+          "author": "Sonja Borus",
+          "coverId": "ol:15258992",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783863312046",
+          "coverIsbn": "9783863312046"
+        },
+        {
+          "id": "OL46026731W",
+          "title": "Auf der Flucht über den Balkan",
+          "author": "Mirano Cavaljeti-Richter",
+          "coverId": "ol:15258991",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9783863316242",
+          "coverIsbn": "9783863316242"
+        }
+      ]
+    },
+    {
+      "slug": "tolkien-covers-by-heinz-edelmann",
+      "title": "Tolkien — covers by Heinz Edelmann",
+      "kind": "series",
+      "intro": "Heinz Edelmann designed the first German edition of The Lord of the Rings for Klett in 1969–70, and went on to design the covers of Tolkien's books there: the green paperbacks in their slipcase, the Silmarillion, Unfinished Tales.",
+      "published": false,
+      "publishers": [
+        "Klett-Cotta",
+        "Klett",
+        "Hobbit Presse",
+        "Ullstein"
+      ],
+      "works": [
+        {
+          "id": "OL27513W",
+          "title": "The Fellowship of the Ring",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:14625548",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3129081801",
+          "coverIsbn": "3129081801"
+        },
+        {
+          "id": "OL27479W",
+          "title": "The Two Towers",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:8773923",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3129081909",
+          "coverIsbn": "3129081909"
+        },
+        {
+          "id": "OL27455W",
+          "title": "The Return of the King",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:8653741",
+          "addedAt": "2026-09-26",
+          "from": "isbn:312908200X",
+          "coverIsbn": "312908200X"
+        },
+        {
+          "id": "OL8997777W",
+          "title": "Fabelhafte Geschichten",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:14627059",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3608950346",
+          "coverIsbn": "3608950346"
+        },
+        {
+          "id": "OL27495W",
+          "title": "The Silmarillion",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:8536129",
+          "addedAt": "2026-09-26",
+          "from": "isbn:312907970X",
+          "coverIsbn": "312907970X"
+        },
+        {
+          "id": "OL34942458W",
+          "title": "Nachrichten aus Mittelerde",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:14627514",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3608951601",
+          "coverIsbn": "3608951601"
+        }
+      ]
+    },
+    {
+      "slug": "reihe-hanser-covers-by-heinz-edelmann",
+      "title": "Reihe Hanser — covers by Heinz Edelmann",
+      "kind": "series",
+      "intro": "Carl Hanser's paperback series of essays, poems and politics, begun in 1967 with Canetti's Die Stimmen von Marrakesch. Heinz Edelmann designed its yellow covers until the mid-1970s. Shown in the order of the volume numbers.",
+      "published": false,
+      "publishers": [
+        "Hanser",
+        "Carl Hanser"
+      ],
+      "works": [
+        {
+          "id": "OL1411623W",
+          "title": "Der andere Prozess",
+          "author": "Elias Canetti",
+          "coverId": "ol:9982321",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446111697",
+          "coverIsbn": "3446111697"
+        },
+        {
+          "id": "OL18833939W",
+          "title": "Ansichten einer künftigen Germanistik",
+          "author": "Jürgen Kolbe",
+          "coverId": "ol:13065592",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446111603",
+          "coverIsbn": "3446111603"
+        },
+        {
+          "id": "OL6637377W",
+          "title": "Europa: die Toten haben nichts zu lachen",
+          "author": "Hermann Schürrer",
+          "coverId": "ol:10967286",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446113991",
+          "coverIsbn": "3446113991"
+        },
+        {
+          "id": "OL2049197W",
+          "title": "Kritik der Anthropologie",
+          "author": "Wolf Lepenies",
+          "coverId": "ol:4493194",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446113940",
+          "coverIsbn": "3446113940"
+        },
+        {
+          "id": "OL19134843W",
+          "title": "Das Rechtskartell",
+          "author": "Klaus Antes",
+          "coverId": "ol:10645167",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446114246",
+          "coverIsbn": "3446114246"
+        },
+        {
+          "id": "OL1358965W",
+          "title": "Adventures in the skin trade",
+          "author": "Dylan Thomas",
+          "coverId": "ol:15171334",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446114939",
+          "coverIsbn": "3446114939"
+        },
+        {
+          "id": "OL4683668W",
+          "title": "Emanzipatorische Sinnlichkeit",
+          "author": "Alfred Schmidt",
+          "coverId": "ol:10555123",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446116524",
+          "coverIsbn": "3446116524"
+        },
+        {
+          "id": "OL18849848W",
+          "title": "Neue Ansichten einer Künftigen Germanistik",
+          "author": "Jürgen Kolbe",
+          "coverId": "ol:9312433",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446117172",
+          "coverIsbn": "3446117172"
+        },
+        {
+          "id": "OL3611619W",
+          "title": "Jungfer im Grünen",
+          "author": "Bernd Jentzsch",
+          "coverId": "ol:10445725",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446117857",
+          "coverIsbn": "3446117857"
+        },
+        {
+          "id": "OL1680941W",
+          "title": "Trotzki-Chronik",
+          "author": "Heinz Abosch",
+          "coverId": "ol:11732921",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446117881",
+          "coverIsbn": "3446117881"
+        },
+        {
+          "id": "OL804718W",
+          "title": "Potemkin",
+          "author": "Sergei Eisenstein",
+          "coverId": "ol:8389998",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446117938",
+          "coverIsbn": "3446117938"
+        },
+        {
+          "id": "OL2783755W",
+          "title": "Wollüstige Phantasie",
+          "author": "Horst Albert Glaser",
+          "coverId": "ol:4478574",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446118616",
+          "coverIsbn": "3446118616"
+        },
+        {
+          "id": "OL4683673W",
+          "title": "Zur Idee der kritischen Theorie",
+          "author": "Alfred Schmidt",
+          "coverId": "ol:13325443",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446118632",
+          "coverIsbn": "3446118632"
+        },
+        {
+          "id": "OL3570535W",
+          "title": "Flugblätter",
+          "author": "Klaus Kirchner",
+          "coverId": "ol:14550956",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446119302",
+          "coverIsbn": "3446119302"
+        },
+        {
+          "id": "OL18341606W",
+          "title": "Rainer Werner Fassbinder",
+          "author": "Yaak Karsunke",
+          "coverId": "ol:13663413",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3446119337",
+          "coverIsbn": "3446119337"
+        },
+        {
+          "id": "OL19139456W",
+          "title": "Sowjetische Fotografie 1928-1932",
+          "author": "Rosalinde Sartorti",
+          "coverId": "ol:12366822",
+          "addedAt": "2026-09-26",
+          "from": "isbn:344612084X",
+          "coverIsbn": "344612084X"
+        },
+        {
+          "id": "OL4683664W",
+          "title": "Die kritische Theorie als Geschichtsphilosophie",
+          "author": "Alfred Schmidt",
+          "coverId": "ol:10554986",
+          "addedAt": "2026-09-26",
+          "from": "isbn:344612201X",
+          "coverIsbn": "344612201X"
+        }
+      ]
+    },
+    {
+      "slug": "jules-verne-covers-by-heinz-edelmann",
+      "title": "Jules Verne — covers by Heinz Edelmann",
+      "kind": "series",
+      "intro": "Fischer published Jules Verne in twenty paperback volumes from 1968, in new translations by Lothar Maier, and Heinz Edelmann designed the covers of the whole edition. Shown in the order of the volume numbers.",
+      "published": false,
+      "publishers": [
+        "Fischer-Bücherei",
+        "Fischer Taschenbuch Verlag"
+      ],
+      "works": [
+        {
+          "id": "OL1099280W",
+          "title": "Vingt mille lieues sous les mers",
+          "author": "Jules Verne",
+          "coverId": "ol:8806397",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3436012483",
+          "coverIsbn": "3436012483",
+          "coverWork": "OL20160863W"
         }
       ]
     },
@@ -10581,29 +10875,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:9783518189436",
           "coverIsbn": "9783518189436"
-        }
-      ]
-    },
-    {
-      "slug": "jules-verne-covers-by-heinz-edelmann",
-      "title": "Jules Verne — covers by Heinz Edelmann",
-      "kind": "series",
-      "intro": "Fischer published Jules Verne in twenty paperback volumes from 1968, in new translations by Lothar Maier, and Heinz Edelmann designed the covers of the whole edition. Shown in the order of the volume numbers.",
-      "published": false,
-      "publishers": [
-        "Fischer-Bücherei",
-        "Fischer Taschenbuch Verlag"
-      ],
-      "works": [
-        {
-          "id": "OL1099280W",
-          "title": "Vingt mille lieues sous les mers",
-          "author": "Jules Verne",
-          "coverId": "ol:8806397",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3436012483",
-          "coverIsbn": "3436012483",
-          "coverWork": "OL20160863W"
         }
       ]
     }
