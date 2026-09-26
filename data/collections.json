@@ -14874,6 +14874,1368 @@
         }
       ],
       "coverCredits": "isfdb"
+    },
+    {
+      "slug": "poesie-gallimard",
+      "title": "Poésie/Gallimard",
+      "kind": "series",
+      "intro": "Gallimard's poetry paperbacks in Robert Massin's design from 1966, a white cover with a band that repeats the poet's portrait in changing colours, in number order where Open Library has the series cover.",
+      "published": false,
+      "publishers": [
+        "Gallimard"
+      ],
+      "works": [
+        {
+          "id": "OL1259775W",
+          "title": "Calligrammes",
+          "author": "Guillaume Apollinaire",
+          "coverId": "ol:966254",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300080",
+          "coverIsbn": "2070300080"
+        },
+        {
+          "id": "OL1098857W",
+          "title": "Cinq grandes odes",
+          "author": "Paul Claudel",
+          "coverId": "ol:966271",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300749",
+          "coverIsbn": "2070300749"
+        },
+        {
+          "id": "OL8328492W",
+          "title": "Poésies",
+          "author": "Paul Valéry",
+          "coverId": "ol:966339",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302822",
+          "coverIsbn": "2070302822"
+        },
+        {
+          "id": "OL1364449W",
+          "title": "L'instant fatal",
+          "author": "Raymond Queneau",
+          "coverId": "ol:966315",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302296",
+          "coverIsbn": "2070302296"
+        },
+        {
+          "id": "OL8971758W",
+          "title": "Gravitations",
+          "author": "Jules Supervielle",
+          "coverId": "ol:966332",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302652",
+          "coverIsbn": "2070302652"
+        },
+        {
+          "id": "OL1259624W",
+          "title": "Alcools",
+          "author": "Guillaume Apollinaire",
+          "coverId": "ol:966253",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300072",
+          "coverIsbn": "2070300072"
+        },
+        {
+          "id": "OL8971724W",
+          "title": "Clair de terre",
+          "author": "André Breton",
+          "coverId": "ol:966264",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300455",
+          "coverIsbn": "2070300455"
+        },
+        {
+          "id": "OL8971741W",
+          "title": "Les poésies de A.O. Barnabooth",
+          "author": "Valery Larbaud",
+          "coverId": "ol:966298",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070301575",
+          "coverIsbn": "2070301575"
+        },
+        {
+          "id": "OL8971737W",
+          "title": "Les noces",
+          "author": "Pierre Jean Jouve",
+          "coverId": "ol:966295",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070301478",
+          "coverIsbn": "2070301478"
+        },
+        {
+          "id": "OL1412783W",
+          "title": "Éloges",
+          "author": "Saint-John Perse",
+          "coverId": "ol:966323",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302466",
+          "coverIsbn": "2070302466"
+        },
+        {
+          "id": "OL1292446W",
+          "title": "Fureur et mystère",
+          "author": "René Char",
+          "coverId": "ol:966269",
+          "addedAt": "2026-09-26",
+          "from": "isbn:207030065X",
+          "coverIsbn": "207030065X"
+        },
+        {
+          "id": "OL8971747W",
+          "title": "Le Parti pris des choses",
+          "author": "Francis Ponge",
+          "coverId": "ol:966311",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302237",
+          "coverIsbn": "2070302237"
+        },
+        {
+          "id": "OL8971729W",
+          "title": "Du monde entier",
+          "author": "Blaise Cendrars",
+          "coverId": "ol:966266",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300617",
+          "coverIsbn": "2070300617"
+        },
+        {
+          "id": "OL1226448W",
+          "title": "La vie immédiate",
+          "author": "Paul Éluard",
+          "coverId": "ol:966281",
+          "addedAt": "2026-09-26",
+          "from": "isbn:207030096X",
+          "coverIsbn": "207030096X"
+        },
+        {
+          "id": "OL963322W",
+          "title": "Le Cap de Bonne-Espérance",
+          "author": "Jean Cocteau",
+          "coverId": "ol:2136402",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300765",
+          "coverIsbn": "2070300765"
+        },
+        {
+          "id": "OL722519W",
+          "title": "Poésies",
+          "author": "Federico García Lorca",
+          "coverId": "ol:966304",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070301710",
+          "coverIsbn": "2070301710"
+        },
+        {
+          "id": "OL9919075W",
+          "title": "La quête de joie",
+          "author": "Patrice de La Tour Du Pin",
+          "coverId": "ol:3074790",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070301583",
+          "coverIsbn": "2070301583"
+        },
+        {
+          "id": "OL8971441W",
+          "title": "Il n'y a pas de paradis",
+          "author": "André Frénaud",
+          "coverId": "ol:966287",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070301125",
+          "coverIsbn": "2070301125"
+        },
+        {
+          "id": "OL915203W",
+          "title": "Race des hommes",
+          "author": "Jacques Audiberti",
+          "coverId": "ol:3074785",
+          "addedAt": "2026-09-26",
+          "from": "isbn:207030020X",
+          "coverIsbn": "207030020X"
+        },
+        {
+          "id": "OL1261559W",
+          "title": "Au coeur du monde",
+          "author": "Blaise Cendrars",
+          "coverId": "ol:966267",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300625",
+          "coverIsbn": "2070300625"
+        },
+        {
+          "id": "OL8971761W",
+          "title": "Le fleuve caché",
+          "author": "Jean Tardieu",
+          "coverId": "ol:966334",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302687",
+          "coverIsbn": "2070302687"
+        },
+        {
+          "id": "OL8971721W",
+          "title": "L'ombilic des limbes",
+          "author": "Antonin Artaud",
+          "coverId": "ol:966261",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300196",
+          "coverIsbn": "2070300196"
+        },
+        {
+          "id": "OL8931699W",
+          "title": "Terraqué",
+          "author": "Eugène Guillevic",
+          "coverId": "ol:3074788",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070301338",
+          "coverIsbn": "2070301338"
+        },
+        {
+          "id": "OL8971131W",
+          "title": "Les tapisseries",
+          "author": "Charles Péguy",
+          "coverId": "ol:3074792",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302148",
+          "coverIsbn": "2070302148"
+        },
+        {
+          "id": "OL8386426W",
+          "title": "Vents",
+          "author": "Saint-John Perse",
+          "coverId": "ol:966324",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302474",
+          "coverIsbn": "2070302474"
+        },
+        {
+          "id": "OL10433984W",
+          "title": "Les Matinaux",
+          "author": "René Char",
+          "coverId": "ol:966270",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300668",
+          "coverIsbn": "2070300668"
+        },
+        {
+          "id": "OL638934W",
+          "title": "Haut mal",
+          "author": "Michel Leiris",
+          "coverId": "ol:966300",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070301664",
+          "coverIsbn": "2070301664"
+        },
+        {
+          "id": "OL940598W",
+          "title": "Le forçat innocent",
+          "author": "Jules Supervielle",
+          "coverId": "ol:966333",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302660",
+          "coverIsbn": "2070302660"
+        },
+        {
+          "id": "OL3050352W",
+          "title": "Fortunes",
+          "author": "Robert Desnos",
+          "coverId": "ol:13047183",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300862",
+          "coverIsbn": "2070300862"
+        },
+        {
+          "id": "OL8971745W",
+          "title": "Le grand jeu",
+          "author": "Benjamin Péret",
+          "coverId": "ol:966310",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302164",
+          "coverIsbn": "2070302164"
+        },
+        {
+          "id": "OL8871012W",
+          "title": "Poèmes à Lou",
+          "author": "Guillaume Apollinaire",
+          "coverId": "ol:966255",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300099",
+          "coverIsbn": "2070300099"
+        },
+        {
+          "id": "OL8971748W",
+          "title": "Chêne et chien",
+          "author": "Raymond Queneau",
+          "coverId": "ol:966317",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302318",
+          "coverIsbn": "2070302318"
+        },
+        {
+          "id": "OL14931752W",
+          "title": "Exister",
+          "author": "Jean Follain",
+          "coverId": "ol:966286",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070301052",
+          "coverIsbn": "2070301052"
+        },
+        {
+          "id": "OL8386425W",
+          "title": "Amers",
+          "author": "Saint-John Perse",
+          "coverId": "ol:966325",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302482",
+          "coverIsbn": "2070302482"
+        },
+        {
+          "id": "OL15320288W",
+          "title": "Le mouvement perpétuel",
+          "author": "Louis Aragon",
+          "coverId": "ol:966258",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300129",
+          "coverIsbn": "2070300129"
+        },
+        {
+          "id": "OL8312715W",
+          "title": "Eupalinos",
+          "author": "Paul Valéry",
+          "coverId": "ol:966340",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302830",
+          "coverIsbn": "2070302830"
+        },
+        {
+          "id": "OL8871008W",
+          "title": "Le Guetteur mélancolique",
+          "author": "Guillaume Apollinaire",
+          "coverId": "ol:966256",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300102",
+          "coverIsbn": "2070300102"
+        },
+        {
+          "id": "OL11910613W",
+          "title": "Les Armes miraculeuses",
+          "author": "Aimé Césaire",
+          "coverId": "ol:14586039",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300633",
+          "coverIsbn": "2070300633"
+        },
+        {
+          "id": "OL15057828W",
+          "title": "Poésies",
+          "author": "Claude Roy",
+          "coverId": "ol:966321",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070302431",
+          "coverIsbn": "2070302431"
+        },
+        {
+          "id": "OL8971734W",
+          "title": "Le Contre-ciel",
+          "author": "René Daumal",
+          "coverId": "ol:966275",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070300838",
+          "coverIsbn": "2070300838"
+        },
+        {
+          "id": "OL8594079W",
+          "title": "Poésies",
+          "author": "Paul Claudel",
+          "coverId": "ol:3074798",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070303756",
+          "coverIsbn": "2070303756"
+        },
+        {
+          "id": "OL1226490W",
+          "title": "Poésies",
+          "author": "Paul Éluard",
+          "coverId": "ol:966602",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070318087",
+          "coverIsbn": "2070318087"
+        },
+        {
+          "id": "OL8971586W",
+          "title": "Épaisseurs",
+          "author": "Léon-Paul Fargue",
+          "coverId": "ol:966597",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070317862",
+          "coverIsbn": "2070317862"
+        },
+        {
+          "id": "OL9919281W",
+          "title": "Pierres",
+          "author": "Roger Caillois",
+          "coverId": "ol:3074805",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070317854",
+          "coverIsbn": "2070317854"
+        },
+        {
+          "id": "OL8971763W",
+          "title": "De l'Angélus de l'aube à l'Angélus du soir",
+          "author": "Francis Jammes",
+          "coverId": "ol:966600",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070317951",
+          "coverIsbn": "2070317951"
+        },
+        {
+          "id": "OL11593242W",
+          "title": "Poésie",
+          "author": "Philippe Jaccottet",
+          "coverId": "ol:2136418",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070317870",
+          "coverIsbn": "2070317870"
+        },
+        {
+          "id": "OL4156325W",
+          "title": "Pièces",
+          "author": "Francis Ponge",
+          "coverId": "ol:966614",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070318737",
+          "coverIsbn": "2070318737"
+        },
+        {
+          "id": "OL19698612W",
+          "title": "Les Champs magnétiques",
+          "author": "André Breton",
+          "coverId": "ol:966615",
+          "addedAt": "2026-09-26",
+          "from": "isbn:207031877X",
+          "coverIsbn": "207031877X"
+        },
+        {
+          "id": "OL31307311W",
+          "title": "Liberté sur parole",
+          "author": "Octavio Paz",
+          "coverId": "ol:3074806",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070317897",
+          "coverIsbn": "2070317897"
+        },
+        {
+          "id": "OL4015742W",
+          "title": "Le Coffret de santal",
+          "author": "Charles Cros",
+          "coverId": "ol:966606",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070318338",
+          "coverIsbn": "2070318338"
+        },
+        {
+          "id": "OL979750W",
+          "title": "Résidence sur la terre",
+          "author": "Pablo Neruda",
+          "coverId": "ol:966616",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070318834",
+          "coverIsbn": "2070318834"
+        },
+        {
+          "id": "OL682092W",
+          "title": "Travaux d'approche",
+          "author": "Michel Butor",
+          "coverId": "ol:3074808",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070319547",
+          "coverIsbn": "2070319547"
+        },
+        {
+          "id": "OL684066W",
+          "title": "Hypérion ou l'Ermite de Grèce",
+          "author": "Friedrich Hölderlin",
+          "coverId": "ol:3074810",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070320324",
+          "coverIsbn": "2070320324"
+        },
+        {
+          "id": "OL156756W",
+          "title": "Poésies",
+          "author": "Arthur Rimbaud",
+          "coverId": "ol:966624",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070319555",
+          "coverIsbn": "2070319555"
+        },
+        {
+          "id": "OL7982472W",
+          "title": "Oeuvres complètes",
+          "author": "Lautréamont",
+          "coverId": "ol:966631",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070320006",
+          "coverIsbn": "2070320006"
+        },
+        {
+          "id": "OL8971764W",
+          "title": "Les Amours jaunes",
+          "author": "Tristan Corbière",
+          "coverId": "ol:966605",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070318311",
+          "coverIsbn": "2070318311"
+        },
+        {
+          "id": "OL1159105W",
+          "title": "Petits poèmes en prose",
+          "author": "Charles Baudelaire",
+          "coverId": "ol:966630",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070319997",
+          "coverIsbn": "2070319997"
+        },
+        {
+          "id": "OL8971770W",
+          "title": "Poésies",
+          "author": "François Villon",
+          "coverId": "ol:966641",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070320693",
+          "coverIsbn": "2070320693"
+        },
+        {
+          "id": "OL9182871W",
+          "title": "Stèles",
+          "author": "Victor Segalen",
+          "coverId": "ol:2136423",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070320707",
+          "coverIsbn": "2070320707"
+        },
+        {
+          "id": "OL8971776W",
+          "title": "Poésies et souvenirs",
+          "author": "Gérard de Nerval",
+          "coverId": "ol:966650",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321274",
+          "coverIsbn": "2070321274"
+        },
+        {
+          "id": "OL33655244W",
+          "title": "La jeune Parque",
+          "author": "Paul Valéry",
+          "coverId": "ol:966599",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070317927",
+          "coverIsbn": "2070317927"
+        },
+        {
+          "id": "OL2401830W",
+          "title": "Les Regrets",
+          "author": "Joachim Du Bellay",
+          "coverId": "ol:966655",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321479",
+          "coverIsbn": "2070321479"
+        },
+        {
+          "id": "OL362706W",
+          "title": "Sonnets",
+          "author": "William Shakespeare",
+          "coverId": "ol:3074814",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321495",
+          "coverIsbn": "2070321495"
+        },
+        {
+          "id": "OL1276103W",
+          "title": "Sagesse",
+          "author": "Paul Verlaine",
+          "coverId": "ol:966657",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321525",
+          "coverIsbn": "2070321525"
+        },
+        {
+          "id": "OL3050339W",
+          "title": "Destinée arbitraire",
+          "author": "Robert Desnos",
+          "coverId": "ol:966658",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321541",
+          "coverIsbn": "2070321541"
+        },
+        {
+          "id": "OL8971784W",
+          "title": "Igitur",
+          "author": "Stéphane Mallarmé",
+          "coverId": "ol:966660",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321576",
+          "coverIsbn": "2070321576"
+        },
+        {
+          "id": "OL8418222W",
+          "title": "Les Poètes",
+          "author": "Louis Aragon",
+          "coverId": "ol:2136425",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321614",
+          "coverIsbn": "2070321614"
+        },
+        {
+          "id": "OL8970654W",
+          "title": "Premières poésies",
+          "author": "Alfred de Musset",
+          "coverId": "ol:966659",
+          "addedAt": "2026-09-26",
+          "from": "isbn:207032155X",
+          "coverIsbn": "207032155X"
+        },
+        {
+          "id": "OL34575766W",
+          "title": "Les Minutes de sable mémorial",
+          "author": "Alfred Jarry",
+          "coverId": "ol:966608",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070318354",
+          "coverIsbn": "2070318354"
+        },
+        {
+          "id": "OL3790648W",
+          "title": "Sphère",
+          "author": "Eugène Guillevic",
+          "coverId": "ol:3074816",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321738",
+          "coverIsbn": "2070321738"
+        },
+        {
+          "id": "OL3800894W",
+          "title": "Vergers",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:966662",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321657",
+          "coverIsbn": "2070321657"
+        },
+        {
+          "id": "OL1226430W",
+          "title": "Donner à voir",
+          "author": "Paul Éluard",
+          "coverId": "ol:3074817",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321746",
+          "coverIsbn": "2070321746"
+        },
+        {
+          "id": "OL8971793W",
+          "title": "Le Nu perdu",
+          "author": "René Char",
+          "coverId": "ol:966665",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321789",
+          "coverIsbn": "2070321789"
+        },
+        {
+          "id": "OL8971785W",
+          "title": "Poèmes",
+          "author": "Constantin Cavafy",
+          "coverId": "ol:966664",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321754",
+          "coverIsbn": "2070321754"
+        },
+        {
+          "id": "OL8971812W",
+          "title": "Les Complaintes",
+          "author": "Jules Laforgue",
+          "coverId": "ol:966668",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321819",
+          "coverIsbn": "2070321819"
+        },
+        {
+          "id": "OL8971813W",
+          "title": "L'Imitation de Notre-Dame la Lune",
+          "author": "Jules Laforgue",
+          "coverId": "ol:966669",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321827",
+          "coverIsbn": "2070321827"
+        },
+        {
+          "id": "OL308639W",
+          "title": "Le jardinier d'amour",
+          "author": "Rabindranath Tagore",
+          "coverId": "ol:966656",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321517",
+          "coverIsbn": "2070321517"
+        },
+        {
+          "id": "OL4156334W",
+          "title": "Lyres",
+          "author": "Francis Ponge",
+          "coverId": "ol:13295108",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321886",
+          "coverIsbn": "2070321886"
+        },
+        {
+          "id": "OL674819W",
+          "title": "Le Crève-cœur",
+          "author": "Louis Aragon",
+          "coverId": "ol:3074819",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321894",
+          "coverIsbn": "2070321894"
+        },
+        {
+          "id": "OL8971816W",
+          "title": "Les Disciples à Saïs",
+          "author": "Novalis",
+          "coverId": "ol:966673",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321932",
+          "coverIsbn": "2070321932"
+        },
+        {
+          "id": "OL8971818W",
+          "title": "Le Laboratoire central",
+          "author": "Max Jacob",
+          "coverId": "ol:966674",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321940",
+          "coverIsbn": "2070321940"
+        },
+        {
+          "id": "OL9919283W",
+          "title": "Champs de Castille",
+          "author": "Antonio Machado",
+          "coverId": "ol:3074820",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070321916",
+          "coverIsbn": "2070321916"
+        },
+        {
+          "id": "OL75042W",
+          "title": "Méditations poétiques",
+          "author": "Alphonse de Lamartine",
+          "coverId": "ol:966677",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322009",
+          "coverIsbn": "2070322009"
+        },
+        {
+          "id": "OL34779033W",
+          "title": "La Connaissance du soir",
+          "author": "Joë Bousquet",
+          "coverId": "ol:13521663",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322017",
+          "coverIsbn": "2070322017"
+        },
+        {
+          "id": "OL2066804W",
+          "title": "Vie d'un homme",
+          "author": "Giuseppe Ungaretti",
+          "coverId": "ol:966678",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322025",
+          "coverIsbn": "2070322025"
+        },
+        {
+          "id": "OL9701364W",
+          "title": "La Doctrine de l'Amour",
+          "author": "Germain Nouveau",
+          "coverId": "ol:3074823",
+          "addedAt": "2026-09-26",
+          "from": "isbn:207032205X",
+          "coverIsbn": "207032205X"
+        },
+        {
+          "id": "OL8543771W",
+          "title": "Les Orientales",
+          "author": "Victor Hugo",
+          "coverId": "ol:966680",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322068",
+          "coverIsbn": "2070322068"
+        },
+        {
+          "id": "OL19698182W",
+          "title": "Émaux et camées",
+          "author": "Théophile Gautier",
+          "coverId": "ol:966682",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322092",
+          "coverIsbn": "2070322092"
+        },
+        {
+          "id": "OL9919284W",
+          "title": "Tristia",
+          "author": "Ossip Mandelstam",
+          "coverId": "ol:3074825",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322114",
+          "coverIsbn": "2070322114"
+        },
+        {
+          "id": "OL15101927W",
+          "title": "Canti",
+          "author": "Giacomo Leopardi",
+          "coverId": "ol:3074827",
+          "addedAt": "2026-09-26",
+          "from": "isbn:207032222X",
+          "coverIsbn": "207032222X"
+        },
+        {
+          "id": "OL523045W",
+          "title": "Derniers poèmes en vers et en prose",
+          "author": "Max Jacob",
+          "coverId": "ol:2136430",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322246",
+          "coverIsbn": "2070322246"
+        },
+        {
+          "id": "OL15646100W",
+          "title": "Les Poèmes",
+          "author": "Edgar Allan Poe",
+          "coverId": "ol:2136429",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322238",
+          "coverIsbn": "2070322238"
+        },
+        {
+          "id": "OL15202018W",
+          "title": "Les Chansons des rues et des bois",
+          "author": "Victor Hugo",
+          "coverId": "ol:2136431",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322254",
+          "coverIsbn": "2070322254"
+        },
+        {
+          "id": "OL437681W",
+          "title": "Les Campagnes hallucinées",
+          "author": "Émile Verhaeren",
+          "coverId": "ol:966687",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322270",
+          "coverIsbn": "2070322270"
+        },
+        {
+          "id": "OL1277469W",
+          "title": "Poésies documentaires complètes",
+          "author": "Pierre Mac Orlan",
+          "coverId": "ol:2136432",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322289",
+          "coverIsbn": "2070322289"
+        },
+        {
+          "id": "OL37328970W",
+          "title": "Poésies",
+          "author": "François de Malherbe",
+          "coverId": "ol:966686",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322262",
+          "coverIsbn": "2070322262"
+        },
+        {
+          "id": "OL9919285W",
+          "title": "Sonnets pour une fin de siècle",
+          "author": "Alain Bosquet",
+          "coverId": "ol:3074829",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322300",
+          "coverIsbn": "2070322300"
+        },
+        {
+          "id": "OL18903523W",
+          "title": "Anthologie de la poésie française du XXe siècle",
+          "author": "Michel Décaudin",
+          "coverId": "ol:966688",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322319",
+          "coverIsbn": "2070322319"
+        },
+        {
+          "id": "OL1063797W",
+          "title": "Les Chants du crépuscule",
+          "author": "Victor Hugo",
+          "coverId": "ol:966690",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322335",
+          "coverIsbn": "2070322335"
+        },
+        {
+          "id": "OL7987739W",
+          "title": "Poèmes",
+          "author": "Emily Brontë",
+          "coverId": "ol:3075827",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070409376",
+          "coverIsbn": "2070409376"
+        },
+        {
+          "id": "OL29284687W",
+          "title": "Canzoniere",
+          "author": "Pétrarque",
+          "coverId": "ol:3074830",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322378",
+          "coverIsbn": "2070322378"
+        },
+        {
+          "id": "OL3359813W",
+          "title": "Œuvres poétiques",
+          "author": "Louise Labé",
+          "coverId": "ol:966693",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322386",
+          "coverIsbn": "2070322386"
+        },
+        {
+          "id": "OL982161W",
+          "title": "Le Sel noir",
+          "author": "Édouard Glissant",
+          "coverId": "ol:2136434",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322408",
+          "coverIsbn": "2070322408"
+        },
+        {
+          "id": "OL963542W",
+          "title": "Vocabulaire",
+          "author": "Jean Cocteau",
+          "coverId": "ol:2136435",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322424",
+          "coverIsbn": "2070322424"
+        },
+        {
+          "id": "OL8972184W",
+          "title": "Sais-tu si nous sommes encore loin de la mer ?",
+          "author": "Claude Roy",
+          "coverId": "ol:3074831",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322416",
+          "coverIsbn": "2070322416"
+        },
+        {
+          "id": "OL8971821W",
+          "title": "Poésies",
+          "author": "Marceline Desbordes-Valmore",
+          "coverId": "ol:966694",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322432",
+          "coverIsbn": "2070322432"
+        },
+        {
+          "id": "OL9919288W",
+          "title": "Les chansons et les heures",
+          "author": "Marie Noël",
+          "coverId": "ol:3074832",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322467",
+          "coverIsbn": "2070322467"
+        },
+        {
+          "id": "OL734228W",
+          "title": "Serres chaudes",
+          "author": "Maurice Maeterlinck",
+          "coverId": "ol:2136438",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322459",
+          "coverIsbn": "2070322459"
+        },
+        {
+          "id": "OL979572W",
+          "title": "Chant général",
+          "author": "Pablo Neruda",
+          "coverId": "ol:966695",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322475",
+          "coverIsbn": "2070322475"
+        },
+        {
+          "id": "OL9919289W",
+          "title": "Poésie",
+          "author": "Maurice de Guérin",
+          "coverId": "ol:3074833",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322491",
+          "coverIsbn": "2070322491"
+        },
+        {
+          "id": "OL2462576W",
+          "title": "La Sorcière de Rome",
+          "author": "André Frénaud",
+          "coverId": "ol:2136439",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322505",
+          "coverIsbn": "2070322505"
+        },
+        {
+          "id": "OL28943530W",
+          "title": "Poésies",
+          "author": "Federico García Lorca",
+          "coverId": "ol:3074834",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322513",
+          "coverIsbn": "2070322513"
+        },
+        {
+          "id": "OL1064087W",
+          "title": "La Fin de Satan",
+          "author": "Victor Hugo",
+          "coverId": "ol:966698",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322548",
+          "coverIsbn": "2070322548"
+        },
+        {
+          "id": "OL382961W",
+          "title": "Le Divan",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:2136442",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322556",
+          "coverIsbn": "2070322556"
+        },
+        {
+          "id": "OL8971825W",
+          "title": "La Couronne et la lyre",
+          "author": "Marguerite Yourcenar",
+          "coverId": "ol:966699",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322564",
+          "coverIsbn": "2070322564"
+        },
+        {
+          "id": "OL22871256W",
+          "title": "Anthologie de la poésie française du XIXe siècle",
+          "author": "Bernard Leuilliot",
+          "coverId": "ol:966700",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322580",
+          "coverIsbn": "2070322580"
+        },
+        {
+          "id": "OL1099140W",
+          "title": "Art poétique",
+          "author": "Paul Claudel",
+          "coverId": "ol:2136443",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322734",
+          "coverIsbn": "2070322734"
+        },
+        {
+          "id": "OL1382656W",
+          "title": "Georgia",
+          "author": "Philippe Soupault",
+          "coverId": "ol:966701",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322742",
+          "coverIsbn": "2070322742"
+        },
+        {
+          "id": "OL1064080W",
+          "title": "L'Année terrible",
+          "author": "Victor Hugo",
+          "coverId": "ol:3074835",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322777",
+          "coverIsbn": "2070322777"
+        },
+        {
+          "id": "OL15724913W",
+          "title": "Satires",
+          "author": "Nicolas Boileau",
+          "coverId": "ol:966713",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322939",
+          "coverIsbn": "2070322939"
+        },
+        {
+          "id": "OL444868W",
+          "title": "Œuvre poétique",
+          "author": "Jorge Luis Borges",
+          "coverId": "ol:966712",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070322920",
+          "coverIsbn": "2070322920"
+        },
+        {
+          "id": "OL566491W",
+          "title": "Poèmes",
+          "author": "Alain Bosquet",
+          "coverId": "ol:3074837",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323072",
+          "coverIsbn": "2070323072"
+        },
+        {
+          "id": "OL2462585W",
+          "title": "La Sainte Face",
+          "author": "André Frénaud",
+          "coverId": "ol:2136447",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323099",
+          "coverIsbn": "2070323099"
+        },
+        {
+          "id": "OL3790646W",
+          "title": "Du domaine",
+          "author": "Eugène Guillevic",
+          "coverId": "ol:966723",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323161",
+          "coverIsbn": "2070323161"
+        },
+        {
+          "id": "OL1294957W",
+          "title": "Plume",
+          "author": "Henri Michaux",
+          "coverId": "ol:966724",
+          "addedAt": "2026-09-26",
+          "from": "isbn:207032317X",
+          "coverIsbn": "207032317X"
+        },
+        {
+          "id": "OL18889142W",
+          "title": "Odes",
+          "author": "Victor Segalen",
+          "coverId": "ol:2136451",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323366",
+          "coverIsbn": "2070323366"
+        },
+        {
+          "id": "OL8971130W",
+          "title": "Le Porche du mystère de la deuxième vertu",
+          "author": "Charles Péguy",
+          "coverId": "ol:3074842",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323455",
+          "coverIsbn": "2070323455"
+        },
+        {
+          "id": "OL2193611W",
+          "title": "Poèmes",
+          "author": "Michel Deguy",
+          "coverId": "ol:966738",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323463",
+          "coverIsbn": "2070323463"
+        },
+        {
+          "id": "OL9919292W",
+          "title": "Carreaux",
+          "author": "André Salmon",
+          "coverId": "ol:3074845",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323560",
+          "coverIsbn": "2070323560"
+        },
+        {
+          "id": "OL7681901W",
+          "title": "Quand le miroir s'étonne",
+          "author": "Robert Mallet",
+          "coverId": "ol:3074847",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323595",
+          "coverIsbn": "2070323595"
+        },
+        {
+          "id": "OL7966539W",
+          "title": "Les Cahiers et les Poésies d'André Walter",
+          "author": "André Gide",
+          "coverId": "ol:966745",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323609",
+          "coverIsbn": "2070323609"
+        },
+        {
+          "id": "OL15431602W",
+          "title": "Poèmes de l'infortune",
+          "author": "Rutebeuf",
+          "coverId": "ol:3074850",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323781",
+          "coverIsbn": "2070323781"
+        },
+        {
+          "id": "OL1294973W",
+          "title": "Ailleurs",
+          "author": "Henri Michaux",
+          "coverId": "ol:966746",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070323625",
+          "coverIsbn": "2070323625"
+        },
+        {
+          "id": "OL8971864W",
+          "title": "Jonas",
+          "author": "Jean-Paul de Dadelsen",
+          "coverId": "ol:966757",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324001",
+          "coverIsbn": "2070324001"
+        },
+        {
+          "id": "OL2486767W",
+          "title": "L'Adolescence clémentine",
+          "author": "Clément Marot",
+          "coverId": "ol:966760",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324052",
+          "coverIsbn": "2070324052"
+        },
+        {
+          "id": "OL847252W",
+          "title": "Poésies d'Alvaro de Campos",
+          "author": "Fernando Pessoa",
+          "coverId": "ol:966762",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324060",
+          "coverIsbn": "2070324060"
+        },
+        {
+          "id": "OL3146012W",
+          "title": "Ecce homo",
+          "author": "Georges Ribemont-Dessaignes",
+          "coverId": "ol:2136462",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324362",
+          "coverIsbn": "2070324362"
+        },
+        {
+          "id": "OL5152494W",
+          "title": "Anthologie de la poésie française du XVIIe siècle",
+          "author": "Jean-Pierre Chauveau",
+          "coverId": "ol:966773",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324370",
+          "coverIsbn": "2070324370"
+        },
+        {
+          "id": "OL1294975W",
+          "title": "La Nuit remue",
+          "author": "Henri Michaux",
+          "coverId": "ol:966774",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324389",
+          "coverIsbn": "2070324389"
+        },
+        {
+          "id": "OL23066140W",
+          "title": "La Fable du monde",
+          "author": "Jules Supervielle",
+          "coverId": "ol:2136463",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324419",
+          "coverIsbn": "2070324419"
+        },
+        {
+          "id": "OL8661789W",
+          "title": "Amen",
+          "author": "Jacques Réda",
+          "coverId": "ol:2136466",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324583",
+          "coverIsbn": "2070324583"
+        },
+        {
+          "id": "OL706212W",
+          "title": "Retouches",
+          "author": "Daniel Boulanger",
+          "coverId": "ol:2136467",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324591",
+          "coverIsbn": "2070324591"
+        },
+        {
+          "id": "OL1294970W",
+          "title": "Connaissance par les gouffres",
+          "author": "Henri Michaux",
+          "coverId": "ol:966781",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324605",
+          "coverIsbn": "2070324605"
+        },
+        {
+          "id": "OL8971869W",
+          "title": "Une Vie ordinaire",
+          "author": "Georges Perros",
+          "coverId": "ol:2136468",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070324613",
+          "coverIsbn": "2070324613"
+        },
+        {
+          "id": "OL8971889W",
+          "title": "∈",
+          "author": "Jacques Roubaud",
+          "coverId": "ol:966813",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070325245",
+          "coverIsbn": "2070325245"
+        },
+        {
+          "id": "OL1294870W",
+          "title": "Épreuves, exorcismes",
+          "author": "Henri Michaux",
+          "coverId": "ol:966802",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070325059",
+          "coverIsbn": "2070325059"
+        },
+        {
+          "id": "OL9919297W",
+          "title": "Poèmes",
+          "author": "Georges Séféris",
+          "coverId": "ol:3074866",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070325296",
+          "coverIsbn": "2070325296"
+        },
+        {
+          "id": "OL706214W",
+          "title": "Tchadiennes",
+          "author": "Daniel Boulanger",
+          "coverId": "ol:3074868",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070325342",
+          "coverIsbn": "2070325342"
+        },
+        {
+          "id": "OL8971788W",
+          "title": "Éloge d'une soupçonnée",
+          "author": "René Char",
+          "coverId": "ol:966818",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070325318",
+          "coverIsbn": "2070325318"
+        },
+        {
+          "id": "OL1294979W",
+          "title": "La Vie dans les plis",
+          "author": "Henri Michaux",
+          "coverId": "ol:966830",
+          "addedAt": "2026-09-26",
+          "from": "isbn:2070325555",
+          "coverIsbn": "2070325555"
+        }
+      ]
     }
   ]
 }

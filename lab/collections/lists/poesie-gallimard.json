@@ -1,0 +1,4186 @@
+[
+ {
+  "no": "1",
+  "title": "Capitale de la douleur",
+  "author": "Éluard Paul",
+  "isbn": "2070300951",
+  "fallbackIsbns": [
+   "9782073022769"
+  ],
+  "source": "BnF SRU col2bib 34234506 (cb376619668, cb374554680, cb472193031)"
+ },
+ {
+  "no": "4",
+  "title": "Calligrammes",
+  "author": "Apollinaire Guillaume",
+  "isbn": "2070300080",
+  "source": "BnF SRU col2bib 34234506 (cb371577694)"
+ },
+ {
+  "no": "5",
+  "title": "Cinq grandes odes",
+  "author": "Claudel Paul",
+  "isbn": "2070300749",
+  "source": "BnF SRU col2bib 34234506 (cb32905176x, cb37465508m)",
+  "bnfOtherTitles": [
+   "Le roman inachevé"
+  ]
+ },
+ {
+  "no": "6",
+  "title": "Poésies",
+  "author": "Valéry Paul",
+  "isbn": "2070302822",
+  "source": "BnF SRU col2bib 34234506 (cb315209248, cb374545848)"
+ },
+ {
+  "no": "7",
+  "title": "Le Roman inachevé",
+  "author": "Aragon Louis",
+  "isbn": "2070300110",
+  "source": "BnF SRU col2bib 34234506 (cb37592488w)",
+  "skip": "photo of the book, not a scan (checked 2026-09-26)"
+ },
+ {
+  "no": "8",
+  "title": "L' instant fatal",
+  "author": "Queneau Raymond",
+  "isbn": "2070302296",
+  "source": "BnF SRU col2bib 34234506 (cb37169714j, cb35534707v)"
+ },
+ {
+  "no": "9",
+  "title": "Gravitations",
+  "author": "Supervielle Jules",
+  "isbn": "2070302652",
+  "source": "BnF SRU col2bib 34234506 (cb37169685s, cb374012286)"
+ },
+ {
+  "no": "10",
+  "title": "Alcools",
+  "author": "Apollinaire Guillaume",
+  "isbn": "2070300072",
+  "source": "BnF SRU col2bib 34234506 (cb371695427, cb37452365z)"
+ },
+ {
+  "no": "11",
+  "title": "Clair de terre",
+  "author": "Breton André",
+  "isbn": "2070300455",
+  "source": "BnF SRU col2bib 34234506 (cb37455627z)"
+ },
+ {
+  "no": "12",
+  "title": "Les poésies de A.O. Barnabooth",
+  "author": "Larbaud Valery",
+  "isbn": "2070301575",
+  "source": "BnF SRU col2bib 34234506 (cb37158859b)"
+ },
+ {
+  "no": "13",
+  "title": "Les noces",
+  "author": "Jouve Pierre Jean",
+  "isbn": "2070301478",
+  "source": "BnF SRU col2bib 34234506 (cb355263745)"
+ },
+ {
+  "no": "14",
+  "title": "Éloges",
+  "author": "Saint-John Perse",
+  "isbn": "2070302466",
+  "source": "BnF SRU col2bib 34234506 (cb350094172, cb37420649f)",
+  "bnfOtherTitles": [
+   "Eloges"
+  ]
+ },
+ {
+  "no": "15",
+  "title": "Fureur et mystère",
+  "author": "Char René",
+  "isbn": "207030065X",
+  "source": "BnF SRU col2bib 34234506 (cb43422406n, cb376617401)"
+ },
+ {
+  "no": "16",
+  "title": "Le Parti pris des choses",
+  "author": "Ponge Francis",
+  "isbn": "2070302237",
+  "source": "BnF SRU col2bib 34234506 (cb373622422, cb35009491g)"
+ },
+ {
+  "no": "17",
+  "title": "Du monde entier",
+  "author": "Cendrars Blaise",
+  "isbn": "2070300617",
+  "source": "BnF SRU col2bib 34234506 (cb349492450)"
+ },
+ {
+  "no": "18",
+  "title": "La vie immédiate",
+  "author": "Éluard Paul",
+  "isbn": "207030096X",
+  "source": "BnF SRU col2bib 34234506 (cb37169543k, cb37455518q)"
+ },
+ {
+  "no": "19",
+  "title": "Le Cap de Bonne-Espérance",
+  "author": "Cocteau Jean",
+  "isbn": "2070300765",
+  "source": "BnF SRU col2bib 34234506 (cb37158595c)"
+ },
+ {
+  "no": "20",
+  "title": "Poésies",
+  "author": "García Lorca Federico",
+  "isbn": "2070301710",
+  "source": "BnF SRU col2bib 34234506 (cb34749626g)"
+ },
+ {
+  "no": "21",
+  "title": "La quête de joie",
+  "author": "La Tour Du Pin Patrice de",
+  "isbn": "2070301583",
+  "source": "BnF SRU col2bib 34234506 (cb35583416s)"
+ },
+ {
+  "no": "23",
+  "title": "Le deuil des primevères",
+  "author": "Jammes Francis",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb37438259s)"
+ },
+ {
+  "no": "24",
+  "title": "Il n'y a pas de paradis",
+  "author": "Frénaud André",
+  "isbn": "2070301125",
+  "source": "BnF SRU col2bib 34234506 (cb37399910p)"
+ },
+ {
+  "no": "25",
+  "title": "Race des hommes",
+  "author": "Audiberti Jacques",
+  "isbn": "207030020X",
+  "source": "BnF SRU col2bib 34234506 (cb374697111, cb37409923b, cb39065264v)",
+  "bnfOtherTitles": [
+   "Le cornet à dés"
+  ]
+ },
+ {
+  "no": "26",
+  "title": "Poésies",
+  "author": "Fargue Léon-Paul",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb37411037t)"
+ },
+ {
+  "no": "27",
+  "title": "Corps et biens",
+  "author": "Desnos Robert",
+  "isbn": "2070300854",
+  "source": "BnF SRU col2bib 34234506 (cb452806313, cb37402079s)",
+  "bnfOtherTitles": [
+   "Poésie ininterrompue"
+  ],
+  "skip": "photo of the book, not a scan (checked 2026-09-26)"
+ },
+ {
+  "no": "28",
+  "title": "L'homme approximatif",
+  "author": "Tzara Tristan",
+  "isbn": "2070302741",
+  "source": "BnF SRU col2bib 34234506 (cb35482105w, cb37454314j)"
+ },
+ {
+  "no": "29",
+  "title": "Au coeur du monde",
+  "author": "Cendrars Blaise",
+  "isbn": "2070300625",
+  "source": "BnF SRU col2bib 34234506 (cb454539948, cb35012466s)"
+ },
+ {
+  "no": "32",
+  "title": "Le fleuve caché",
+  "author": "Tardieu Jean",
+  "isbn": "2070302687",
+  "source": "BnF SRU col2bib 34234506 (cb37399864b)"
+ },
+ {
+  "no": "33",
+  "title": "L'ombilic des limbes",
+  "author": "Artaud Antonin",
+  "isbn": "2070300196",
+  "source": "BnF SRU col2bib 34234506 (cb35012501g, cb37454176j)"
+ },
+ {
+  "no": "34",
+  "title": "Terraqué",
+  "author": "Guillevic Eugène",
+  "isbn": "2070301338",
+  "source": "BnF SRU col2bib 34234506 (cb37484794r)"
+ },
+ {
+  "no": "35",
+  "title": "Les tapisseries",
+  "author": "Péguy Charles",
+  "isbn": "2070302148",
+  "source": "BnF SRU col2bib 34234506 (cb35050543r, cb374558474)"
+ },
+ {
+  "no": "36",
+  "title": "Vents",
+  "author": "Saint-John Perse",
+  "isbn": "2070302474",
+  "source": "BnF SRU col2bib 34234506 (cb347266657, cb37420650n)"
+ },
+ {
+  "no": "38",
+  "title": "Les Matinaux",
+  "author": "Char René",
+  "isbn": "2070300668",
+  "source": "BnF SRU col2bib 34234506 (cb329476669, cb45454029k, cb347666412, cb35020343k, cb37456069g)"
+ },
+ {
+  "no": "39",
+  "title": "Poésie ininterrompue",
+  "author": "Éluard Paul",
+  "isbn": "2070300978",
+  "source": "BnF SRU col2bib 34234506 (cb37169564j, cb37455503p)"
+ },
+ {
+  "no": "40",
+  "title": "Haut mal",
+  "author": "Leiris Michel",
+  "isbn": "2070301664",
+  "source": "BnF SRU col2bib 34234506 (cb373618712, cb37661741c)"
+ },
+ {
+  "no": "41",
+  "title": "Le forçat innocent",
+  "author": "Supervielle Jules",
+  "isbn": "2070302660",
+  "source": "BnF SRU col2bib 34234506 (cb37401226h)"
+ },
+ {
+  "no": "42",
+  "title": "Fortunes",
+  "author": "Desnos Robert",
+  "isbn": "2070300862",
+  "source": "BnF SRU col2bib 34234506 (cb37402081b)"
+ },
+ {
+  "no": "43",
+  "title": "Le grand jeu",
+  "author": "Péret Benjamin",
+  "isbn": "2070302164",
+  "source": "BnF SRU col2bib 34234506 (cb35505982s)"
+ },
+ {
+  "no": "44",
+  "title": "Poèmes à Lou",
+  "author": "Apollinaire Guillaume",
+  "isbn": "2070300099",
+  "source": "BnF SRU col2bib 34234506 (cb37169474k, cb37452512x)"
+ },
+ {
+  "no": "45",
+  "title": "La gloire",
+  "author": "Grosjean Jean",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb374009266)"
+ },
+ {
+  "no": "46",
+  "title": "Les Épiphanies",
+  "author": "Pichette Henri",
+  "isbn": "2070302210",
+  "fallbackIsbns": [
+   "2070404560"
+  ],
+  "source": "BnF SRU col2bib 34234506 (cb35202696d, cb361965064)",
+  "skip": "Open Library holds another book under this ISBN: the image and the work are Mandiargues' L'Âge de craie, no. 454 (checked 2026-09-26)"
+ },
+ {
+  "no": "47",
+  "title": "Chêne et chien",
+  "author": "Queneau Raymond",
+  "isbn": "2070302318",
+  "source": "BnF SRU col2bib 34234506 (cb35202697r, cb37416463p)"
+ },
+ {
+  "no": "48",
+  "title": "Exister",
+  "author": "Follain Jean",
+  "isbn": "2070301052",
+  "source": "BnF SRU col2bib 34234506 (cb35202700t)"
+ },
+ {
+  "no": "49",
+  "title": "Les Poésies",
+  "author": "Schéhadé Georges",
+  "isbn": "2070302571",
+  "source": "BnF SRU col2bib 34234506 (cb35202702h)"
+ },
+ {
+  "no": "50-51",
+  "title": "Plupart du temps",
+  "author": "Reverdy Pierre",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb35202705j)"
+ },
+ {
+  "no": "52",
+  "title": "Du Mouvement et de l'immobilité de Douve",
+  "author": "Bonnefoy Yves",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb35202706w)"
+ },
+ {
+  "no": "53",
+  "title": "Amers",
+  "author": "Saint-John Perse",
+  "isbn": "2070302482",
+  "source": "BnF SRU col2bib 34234506 (cb35202709x, cb371695516, cb374206483)"
+ },
+ {
+  "no": "54",
+  "title": "Le mouvement perpétuel",
+  "author": "Aragon Louis",
+  "isbn": "2070300129",
+  "source": "BnF SRU col2bib 34234506 (cb35202712t, cb37169711h)"
+ },
+ {
+  "no": "55",
+  "title": "Eupalinos",
+  "author": "Valéry Paul",
+  "isbn": "2070302830",
+  "source": "BnF SRU col2bib 34234506 (cb35202715v, cb374545759)"
+ },
+ {
+  "no": "56",
+  "title": "Poésies",
+  "author": "Thomas Henri",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb35202718w)"
+ },
+ {
+  "no": "57",
+  "title": "Le Guetteur mélancolique",
+  "author": "Apollinaire Guillaume",
+  "isbn": "2070300102",
+  "source": "BnF SRU col2bib 34234506 (cb352027197, cb37452494t)"
+ },
+ {
+  "no": "58",
+  "title": "Ma vie sans moi",
+  "author": "Robin Armand",
+  "isbn": "2070302350",
+  "source": "BnF SRU col2bib 34234506 (cb35202721s)"
+ },
+ {
+  "no": "59",
+  "title": "Les Armes miraculeuses",
+  "author": "Césaire Aimé",
+  "isbn": "2070300633",
+  "source": "BnF SRU col2bib 34234506 (cb35202723g, cb371569908)"
+ },
+ {
+  "no": "60",
+  "title": "Poésies",
+  "author": "Roy Claude",
+  "isbn": "2070302431",
+  "source": "BnF SRU col2bib 34234506 (cb35202724t, cb374649461)"
+ },
+ {
+  "no": "61",
+  "title": "Poèmes",
+  "author": "Vilmorin Louise de",
+  "isbn": "2070302857",
+  "source": "BnF SRU col2bib 34234506 (cb352027255)"
+ },
+ {
+  "no": "62",
+  "title": "Diadème",
+  "author": "Jouve Pierre Jean",
+  "isbn": "207301486",
+  "source": "BnF SRU col2bib 34234506 (cb35202726h)"
+ },
+ {
+  "no": "63",
+  "title": "Le Contre-ciel",
+  "author": "Daumal René",
+  "isbn": "2070300838",
+  "source": "BnF SRU col2bib 34234506 (cb352027286, cb374013917)"
+ },
+ {
+  "no": "64",
+  "title": "Poésies",
+  "author": "Claudel Paul",
+  "isbn": "2070303756",
+  "source": "BnF SRU col2bib 34234506 (cb35202730r)"
+ },
+ {
+  "no": "65",
+  "title": "Poésies",
+  "author": "Éluard Paul",
+  "isbn": "2070318087",
+  "source": "BnF SRU col2bib 34234506 (cb352027313, cb37455508d)"
+ },
+ {
+  "no": "66",
+  "title": "Épaisseurs",
+  "author": "Fargue Léon-Paul",
+  "isbn": "2070317862",
+  "source": "BnF SRU col2bib 34234506 (cb35202732f)"
+ },
+ {
+  "no": "67",
+  "title": "Pierres",
+  "author": "Caillois Roger",
+  "isbn": "2070317854",
+  "source": "BnF SRU col2bib 34234506 (cb352027344, cb37170004b, cb37480354f)"
+ },
+ {
+  "no": "68",
+  "title": "De l'angelus à l'aube à l'angelus du soir",
+  "author": "Jammes Francis",
+  "isbn": "2070317951",
+  "source": "BnF SRU col2bib 34234506 (cb35202735g, cb371697167, cb37438258f)",
+  "bnfOtherTitles": [
+   "De l'angélus de l'aube à l'angélus du soir"
+  ]
+ },
+ {
+  "no": "69",
+  "title": "À dos d'oiseau",
+  "author": "Fombeure Maurice",
+  "isbn": "207031796X",
+  "source": "BnF SRU col2bib 34234506 (cb35202736t)"
+ },
+ {
+  "no": "70",
+  "title": "L'Offrande lyrique",
+  "author": "Tagore Rabindranath",
+  "isbn": "2070317889",
+  "source": "BnF SRU col2bib 34234506 (cb352027375, cb37433938j)"
+ },
+ {
+  "no": "71",
+  "title": "Poésie",
+  "author": "Jaccottet Philippe",
+  "isbn": "2070317870",
+  "source": "BnF SRU col2bib 34234506 (cb35202739v, cb374379673)"
+ },
+ {
+  "no": "72",
+  "title": "Sources du vent",
+  "author": "Reverdy Pierre",
+  "isbn": "2070317919",
+  "source": "BnF SRU col2bib 34234506 (cb352027402, cb37413637z)"
+ },
+ {
+  "no": "73",
+  "title": "Pièces",
+  "author": "Ponge Francis",
+  "isbn": "2070318737",
+  "source": "BnF SRU col2bib 34234506 (cb35202742r, cb37169342p, cb37456761n)"
+ },
+ {
+  "no": "74",
+  "title": "Les Champs magnétiques",
+  "author": "Breton André",
+  "isbn": "207031877X",
+  "source": "BnF SRU col2bib 34234506 (cb352027433, cb371569443, cb37404350c)"
+ },
+ {
+  "no": "75",
+  "title": "Liberté sur parole",
+  "author": "Paz Octavio",
+  "isbn": "2070317897",
+  "source": "BnF SRU col2bib 34234506 (cb352027464, cb376622010, cb37488405f)"
+ },
+ {
+  "no": "76",
+  "title": "L'Embrasure",
+  "author": "Dupin Jacques",
+  "isbn": "2070318826",
+  "source": "BnF SRU col2bib 34234506 (cb35202747g)"
+ },
+ {
+  "no": "77",
+  "title": "Recherche de la base et du sommet",
+  "author": "Char René",
+  "isbn": "2070319180",
+  "source": "BnF SRU col2bib 34234506 (cb35202751q, cb37456076r)",
+  "skip": "small scan on a white canvas (checked 2026-09-26)"
+ },
+ {
+  "no": "78",
+  "title": "Le Coffret de santal",
+  "author": "Cros Charles",
+  "isbn": "2070318338",
+  "source": "BnF SRU col2bib 34234506 (cb352027522, cb37169705k)"
+ },
+ {
+  "no": "79",
+  "title": "Le Collier de griffes",
+  "author": "Cros Charles",
+  "isbn": "2070318346",
+  "source": "BnF SRU col2bib 34234506 (cb35202753d)"
+ },
+ {
+  "no": "80",
+  "title": "L'Enchanteur pourrissant",
+  "author": "Apollinaire Guillaume",
+  "isbn": "2070319482",
+  "source": "BnF SRU col2bib 34234506 (cb35202754r)",
+  "skip": "band shows an illustration, not the poet (checked 2026-09-26)"
+ },
+ {
+  "no": "81",
+  "title": "La Part de l'ombre",
+  "author": "Tardieu Jean",
+  "isbn": "2070318745",
+  "source": "BnF SRU col2bib 34234506 (cb35202756f, cb37157761c, cb37399868q)"
+ },
+ {
+  "no": "82",
+  "title": "Soleils bas",
+  "author": "Limbour Georges",
+  "isbn": "2070318796",
+  "source": "BnF SRU col2bib 34234506 (cb35202759g, cb37409470g)"
+ },
+ {
+  "no": "83",
+  "title": "Résidence sur la terre",
+  "author": "Neruda Pablo",
+  "isbn": "2070318834",
+  "source": "BnF SRU col2bib 34234506 (cb35202760p, cb375275042)"
+ },
+ {
+  "no": "84",
+  "title": "Travaux d'approche",
+  "author": "Butor Michel",
+  "isbn": "2070319547",
+  "source": "BnF SRU col2bib 34234506 (cb352027611, cb37483274h)"
+ },
+ {
+  "no": "85",
+  "title": "Les Fleurs du mal",
+  "author": "Baudelaire Charles",
+  "isbn": "2070319520",
+  "fallbackIsbns": [
+   "9782070348947"
+  ],
+  "source": "BnF SRU col2bib 34234506 (cb35202762c, cb41136122f)",
+  "skip": "photo of the book, not a scan (checked 2026-09-26)"
+ },
+ {
+  "no": "86",
+  "title": "Hypérion ou l'Ermite de Grèce",
+  "author": "Hölderlin Friedrich",
+  "isbn": "2070320324",
+  "source": "BnF SRU col2bib 34234506 (cb35202763q, cb37157759t)"
+ },
+ {
+  "no": "87",
+  "title": "Poésies",
+  "author": "Rimbaud Arthur",
+  "isbn": "2070319555",
+  "source": "BnF SRU col2bib 34234506 (cb352027642, cb34762174p, cb37367630c)"
+ },
+ {
+  "no": "88",
+  "title": "Oeuvres complètes...",
+  "author": "Lautréamont",
+  "isbn": "2070320006",
+  "source": "BnF SRU col2bib 34234506 (cb352027673, cb35092299v, cb37237602b)",
+  "bnfOtherTitles": [
+   "Oeuvres complètes"
+  ]
+ },
+ {
+  "no": "89",
+  "title": "Poèmes antiques et modernes",
+  "author": "Vigny Alfred de",
+  "isbn": "2070320499",
+  "source": "BnF SRU col2bib 34234506 (cb35202768f, cb37229984m)"
+ },
+ {
+  "no": "90",
+  "title": "Poèmes",
+  "author": "Deguy Michel",
+  "isbn": "2070320464",
+  "source": "BnF SRU col2bib 34234506 (cb352027700, cb354900280)"
+ },
+ {
+  "no": "91",
+  "title": "Les Contemplations",
+  "author": "Hugo Victor",
+  "isbn": "2070320502",
+  "source": "BnF SRU col2bib 34234506 (cb35202771b)"
+ },
+ {
+  "no": "92",
+  "title": "Les Amours jaunes",
+  "author": "Corbière Tristan",
+  "isbn": "2070318311",
+  "source": "BnF SRU col2bib 34234506 (cb35202772p, cb37169558m)"
+ },
+ {
+  "no": "93",
+  "title": "Fêtes galantes",
+  "author": "Verlaine Paul",
+  "isbn": "2070320537",
+  "source": "BnF SRU col2bib 34234506 (cb35202775q)"
+ },
+ {
+  "no": "94",
+  "title": "Poèmes",
+  "author": "Morand Paul",
+  "isbn": "2070320588",
+  "source": "BnF SRU col2bib 34234506 (cb35202778r, cb374282587)"
+ },
+ {
+  "no": "95",
+  "title": "Petits poèmes en prose",
+  "author": "Baudelaire Charles",
+  "isbn": "2070319997",
+  "source": "BnF SRU col2bib 34234506 (cb352027793, cb371694706, cb37456024h, cb39920346q)",
+  "bnfOtherTitles": [
+   "Petits poëmes en prose",
+   "Les fleurs du mal"
+  ]
+ },
+ {
+  "no": "96",
+  "title": "Poésies",
+  "author": "Villon François",
+  "isbn": "2070320693",
+  "source": "BnF SRU col2bib 34234506 (cb352027809)"
+ },
+ {
+  "no": "97",
+  "title": "Stèles",
+  "author": "Segalen Victor",
+  "isbn": "2070320707",
+  "source": "BnF SRU col2bib 34234506 (cb35202784p, cb37169937r)"
+ },
+ {
+  "no": "98",
+  "title": "Le mauvais sang",
+  "author": "Tchicaya U Tam'si",
+  "isbn": "9782073140876",
+  "source": "BnF SRU col2bib 34234506 (cb352027851, cb487319949)",
+  "bnfOtherTitles": [
+   "Psaumes du pèlerin"
+  ]
+ },
+ {
+  "no": "99",
+  "title": "Fleuve profond, sombre rivière",
+  "author": "",
+  "isbn": "2070321282",
+  "source": "BnF SRU col2bib 34234506 (cb35202786c)"
+ },
+ {
+  "no": "100",
+  "title": "Poésies et souvenirs",
+  "author": "Nerval Gérard de",
+  "isbn": "2070321274",
+  "source": "BnF SRU col2bib 34234506 (cb35202687f, cb372295119)"
+ },
+ {
+  "no": "101",
+  "title": "Le Livre ouvert",
+  "author": "Éluard Paul",
+  "isbn": "2070321320",
+  "source": "BnF SRU col2bib 34234506 (cb35202688s, cb371577601, cb37455476m)"
+ },
+ {
+  "no": "102",
+  "title": "La jeune Parque",
+  "author": "Valéry Paul",
+  "isbn": "2070317927",
+  "source": "BnF SRU col2bib 34234506 (cb352026894, cb37454579p)",
+  "bnfOtherTitles": [
+   "La jeune Parque..."
+  ]
+ },
+ {
+  "no": "103",
+  "title": "Connaissance de l'Est",
+  "author": "Claudel Paul",
+  "isbn": "2070321339",
+  "source": "BnF SRU col2bib 34234506 (cb35202693c, cb37465511h)"
+ },
+ {
+  "no": "104",
+  "title": "Les Amours...",
+  "author": "Ronsard Pierre de",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb352026952)"
+ },
+ {
+  "no": "105-106",
+  "title": "Fables...",
+  "author": "La Fontaine Jean de",
+  "isbn": "2070321371",
+  "fallbackIsbns": [
+   "207032138X"
+  ],
+  "source": "BnF SRU col2bib 34234506 (cb376969036)"
+ },
+ {
+  "no": "107",
+  "title": "Vita nova",
+  "author": "Dante Alighieri",
+  "isbn": "2070321401",
+  "source": "BnF SRU col2bib 34234506 (cb34559453p, cb375142885)"
+ },
+ {
+  "no": "108",
+  "title": "Énéide",
+  "author": "Virgile",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb34562237d)"
+ },
+ {
+  "no": "109",
+  "title": "Les Regrets",
+  "author": "Du Bellay Joachim",
+  "isbn": "2070321479",
+  "source": "BnF SRU col2bib 34234506 (cb345655071)"
+ },
+ {
+  "no": "110",
+  "title": "Sonnets",
+  "author": "Shakespeare William",
+  "isbn": "2070321495",
+  "source": "BnF SRU col2bib 34234506 (cb345678169)"
+ },
+ {
+  "no": "111",
+  "title": "Sagesse",
+  "author": "Verlaine Paul",
+  "isbn": "2070321525",
+  "source": "BnF SRU col2bib 34234506 (cb34572904k, cb37229982x, cb37398639b)"
+ },
+ {
+  "no": "112",
+  "title": "Destinée arbitraire",
+  "author": "Desnos Robert",
+  "isbn": "2070321541",
+  "source": "BnF SRU col2bib 34234506 (cb34549893t, cb374020800)"
+ },
+ {
+  "no": "113",
+  "title": "Igitur",
+  "author": "Mallarmé Stéphane",
+  "isbn": "2070321576",
+  "source": "BnF SRU col2bib 34234506 (cb34556729x)"
+ },
+ {
+  "no": "114",
+  "title": "Les Poètes...",
+  "author": "Aragon Louis",
+  "isbn": "2070321614",
+  "source": "BnF SRU col2bib 34234506 (cb34700507x)"
+ },
+ {
+  "no": "115",
+  "title": "Premières poésies",
+  "author": "Musset Alfred de",
+  "isbn": "207032155X",
+  "source": "BnF SRU col2bib 34234506 (cb345852215)"
+ },
+ {
+  "no": "116",
+  "title": "La Rage de l'expression",
+  "author": "Ponge Francis",
+  "isbn": "2070321673",
+  "source": "BnF SRU col2bib 34234506 (cb34695058b, cb37362243d)",
+  "skip": "title page, not the cover (checked 2026-09-26)"
+ },
+ {
+  "no": "117",
+  "title": "Mémorial de l'Île Noire",
+  "author": "Neruda Pablo",
+  "isbn": "207032169X",
+  "source": "BnF SRU col2bib 34234506 (cb34702745h)",
+  "skip": "title page, not the cover (checked 2026-09-26)"
+ },
+ {
+  "no": "118",
+  "title": "Les Châtiments",
+  "author": "Hugo Victor",
+  "isbn": "2070321703",
+  "fallbackIsbns": [
+   "2070406024"
+  ],
+  "source": "BnF SRU col2bib 34234506 (cb347088844, cb36710968q)"
+ },
+ {
+  "no": "119",
+  "title": "Les minutes de sable mémorial",
+  "author": "Jarry Alfred",
+  "isbn": "2070318354",
+  "source": "BnF SRU col2bib 34234506 (cb34586624j)"
+ },
+ {
+  "no": "120",
+  "title": "Sphère",
+  "author": "Guillevic Eugène",
+  "isbn": "2070321738",
+  "source": "BnF SRU col2bib 34234506 (cb34587495r, cb37484790c)"
+ },
+ {
+  "no": "121",
+  "title": "Vergers",
+  "author": "Rilke Rainer Maria",
+  "isbn": "2070321657",
+  "source": "BnF SRU col2bib 34234506 (cb34596853w, cb37403024r)"
+ },
+ {
+  "no": "122",
+  "title": "Donner à voir",
+  "author": "Éluard Paul",
+  "isbn": "2070321746",
+  "source": "BnF SRU col2bib 34234506 (cb346003134, cb37455469b)"
+ },
+ {
+  "no": "123",
+  "title": "Anthologie de la poésie japonaise classique",
+  "author": "",
+  "isbn": "2070321770",
+  "source": "BnF SRU col2bib 34234506 (cb346025940, cb37483897t)",
+  "skip": "band shows an artwork, not a poet (anthology) (checked 2026-09-26)"
+ },
+ {
+  "no": "124",
+  "title": "Le Nu perdu",
+  "author": "Char René",
+  "isbn": "2070321789",
+  "source": "BnF SRU col2bib 34234506 (cb34606948w)"
+ },
+ {
+  "no": "125",
+  "title": "Poèmes",
+  "author": "Kaváfīs Kōnstantínos P.",
+  "isbn": "2070321754",
+  "source": "BnF SRU col2bib 34234506 (cb346126965)"
+ },
+ {
+  "no": "126",
+  "title": "Versant est",
+  "author": "Paz Octavio",
+  "isbn": "2070321762",
+  "source": "BnF SRU col2bib 34234506 (cb34608928r, cb37510822x)"
+ },
+ {
+  "no": "127",
+  "title": "Le Poète assassiné",
+  "author": "Apollinaire Guillaume",
+  "isbn": "2070321797",
+  "source": "BnF SRU col2bib 34234506 (cb346167712, cb374525169)"
+ },
+ {
+  "no": "128",
+  "title": "Travailler fatigue",
+  "author": "Pavese Cesare",
+  "isbn": "2070321800",
+  "source": "BnF SRU col2bib 34234506 (cb34615797h)"
+ },
+ {
+  "no": "129",
+  "title": "Poésies complètes",
+  "author": "Laforgue Jules",
+  "isbn": "2070321819",
+  "source": "BnF SRU col2bib 34234506 (cb37158769c)"
+ },
+ {
+  "no": "129-130",
+  "title": "Poésies complètes",
+  "author": "Laforgue Jules",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb376975218)"
+ },
+ {
+  "no": "130",
+  "title": "Poésies complètes. 2., l'imitation de Notre-Dame la lune",
+  "author": "Laforgue Jules",
+  "isbn": "2070321827",
+  "source": "BnF SRU col2bib 34234506 (cb37158548v)"
+ },
+ {
+  "no": "131",
+  "title": "Les Contrerimes",
+  "author": "Toulet Paul-Jean",
+  "isbn": "2070321835",
+  "source": "BnF SRU col2bib 34234506 (cb346288920)"
+ },
+ {
+  "no": "132",
+  "title": "La Bonne chanson",
+  "author": "Verlaine Paul",
+  "isbn": "2070321843",
+  "source": "BnF SRU col2bib 34234506 (cb34651064g, cb37233150v, cb373986380)"
+ },
+ {
+  "no": "133",
+  "title": "Le Point où j'en suis",
+  "author": "Pieyre de Mandiargues André",
+  "isbn": "2070321851",
+  "source": "BnF SRU col2bib 34234506 (cb34650807m)"
+ },
+ {
+  "no": "134",
+  "title": "Le jardinier d'amour",
+  "author": "Tagore Rabindranath",
+  "isbn": "2070321517",
+  "source": "BnF SRU col2bib 34234506 (cb34650670t, cb35604359j)"
+ },
+ {
+  "no": "135",
+  "title": "Gaspard de la Nuit",
+  "author": "Bertrand Aloysius",
+  "isbn": "207032186X",
+  "source": "BnF SRU col2bib 34234506 (cb34632657p)",
+  "skip": "band shows a medieval drawing, not the poet (checked 2026-09-26)"
+ },
+ {
+  "no": "136",
+  "title": "Lyres",
+  "author": "Ponge Francis",
+  "isbn": "2070321886",
+  "source": "BnF SRU col2bib 34234506 (cb346313626)"
+ },
+ {
+  "no": "137",
+  "title": "Le Crève-cœur",
+  "author": "Aragon Louis",
+  "isbn": "2070321894",
+  "source": "BnF SRU col2bib 34234506 (cb34632392c)"
+ },
+ {
+  "no": "138",
+  "title": "Les Disciples à Saïs",
+  "author": "Novalis",
+  "isbn": "2070321932",
+  "source": "BnF SRU col2bib 34234506 (cb34634999x)"
+ },
+ {
+  "no": "139",
+  "title": "Le Laboratoire central",
+  "author": "Jacob Max",
+  "isbn": "2070321940",
+  "source": "BnF SRU col2bib 34234506 (cb346349857)"
+ },
+ {
+  "no": "140",
+  "title": "Poésies",
+  "author": "Pasolini Pier Paolo",
+  "isbn": "2070321959",
+  "source": "BnF SRU col2bib 34234506 (cb34676916q)"
+ },
+ {
+  "no": "141",
+  "title": "Odes et ballades",
+  "author": "Hugo Victor",
+  "isbn": "2070321908",
+  "source": "BnF SRU col2bib 34234506 (cb346426180)"
+ },
+ {
+  "no": "142",
+  "title": "Clairières dans le ciel",
+  "author": "Jammes Francis",
+  "isbn": "2070321991",
+  "source": "BnF SRU col2bib 34234506 (cb34642182q)"
+ },
+ {
+  "no": "143",
+  "title": "Gestes et opinions du docteur Faustroll, pataphysicien",
+  "author": "Jarry Alfred",
+  "isbn": "2070321983",
+  "source": "BnF SRU col2bib 34234506 (cb34676339q)"
+ },
+ {
+  "no": "144",
+  "title": "Champs de Castille",
+  "author": "Machado Antonio",
+  "isbn": "2070321916",
+  "source": "BnF SRU col2bib 34234506 (cb34678016q)"
+ },
+ {
+  "no": "145",
+  "title": "Méditations poétiques",
+  "author": "Lamartine Alphonse de",
+  "isbn": "2070322009",
+  "source": "BnF SRU col2bib 34234506 (cb34679472j)"
+ },
+ {
+  "no": "146",
+  "title": "La Connaissance du soir",
+  "author": "Bousquet Joë",
+  "isbn": "2070322017",
+  "source": "BnF SRU col2bib 34234506 (cb346794836)"
+ },
+ {
+  "no": "147",
+  "title": "Vie d'un homme",
+  "author": "Ungaretti Giuseppe",
+  "isbn": "2070322025",
+  "source": "BnF SRU col2bib 34234506 (cb34682104r, cb37493301s)"
+ },
+ {
+  "no": "148",
+  "title": "Des tonnes de semence",
+  "author": "Audiberti Jacques",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb34653991b)"
+ },
+ {
+  "no": "149",
+  "title": "La Doctrine de l'Amour",
+  "author": "Nouveau Germain",
+  "isbn": "207032205X",
+  "fallbackIsbns": [
+   "9782070322053"
+  ],
+  "source": "BnF SRU col2bib 34234506 (cb34656055q, cb468689637)"
+ },
+ {
+  "no": "150",
+  "title": "Courir les rues",
+  "author": "Queneau Raymond",
+  "isbn": "2070322041",
+  "source": "BnF SRU col2bib 34234506 (cb34658219w, cb37416481m)"
+ },
+ {
+  "no": "151",
+  "title": "Les Orientales",
+  "author": "Hugo Victor",
+  "isbn": "2070322068",
+  "source": "BnF SRU col2bib 34234506 (cb34660398k)"
+ },
+ {
+  "no": "152",
+  "title": "Ferraille",
+  "author": "Reverdy Pierre",
+  "isbn": "2070322076",
+  "source": "BnF SRU col2bib 34234506 (cb34662057n)"
+ },
+ {
+  "no": "153",
+  "title": "Les Trophées",
+  "author": "Heredia José Maria de",
+  "isbn": "2070322084",
+  "source": "BnF SRU col2bib 34234506 (cb346686285)"
+ },
+ {
+  "no": "154",
+  "title": "Émaux et camées",
+  "author": "Gautier Théophile",
+  "isbn": "2070322092",
+  "source": "BnF SRU col2bib 34234506 (cb34668626g)"
+ },
+ {
+  "no": "155",
+  "title": "Tristia",
+  "author": "Mandelstam Ossip",
+  "isbn": "2070322114",
+  "source": "BnF SRU col2bib 34234506 (cb34672000w, cb374660717)",
+  "bnfOtherTitles": [
+   "Tristia et autres poèmes"
+  ]
+ },
+ {
+  "no": "156",
+  "title": "Anthologie de la poésie chinoise classique",
+  "author": "",
+  "isbn": "207032219X",
+  "source": "BnF SRU col2bib 34234506 (cb34671584w, cb37474836n)",
+  "skip": "band shows an artwork, not a poet (anthology) (checked 2026-09-26)"
+ },
+ {
+  "no": "157",
+  "title": "Une Leçon de morale",
+  "author": "Éluard Paul",
+  "isbn": "207033106",
+  "source": "BnF SRU col2bib 34234506 (cb34664636t)"
+ },
+ {
+  "no": "158",
+  "title": "Poèmes",
+  "author": "Bonnefoy Yves",
+  "isbn": "2070322211",
+  "source": "BnF SRU col2bib 34234506 (cb34684932p, cb374804494)"
+ },
+ {
+  "no": "159",
+  "title": "Canti",
+  "author": "Leopardi Giacomo",
+  "isbn": "207032222X",
+  "source": "BnF SRU col2bib 34234506 (cb34683773g)"
+ },
+ {
+  "no": "160",
+  "title": "Derniers poèmes en vers et en prose",
+  "author": "Jacob Max",
+  "isbn": "2070322246",
+  "source": "BnF SRU col2bib 34234506 (cb346837488)"
+ },
+ {
+  "no": "161",
+  "title": "Les Poèmes",
+  "author": "Poe Edgar Allan",
+  "isbn": "2070322238",
+  "source": "BnF SRU col2bib 34234506 (cb34686104q)"
+ },
+ {
+  "no": "162",
+  "title": "Les Chansons des rues et des bois",
+  "author": "Hugo Victor",
+  "isbn": "2070322254",
+  "source": "BnF SRU col2bib 34234506 (cb346860618)"
+ },
+ {
+  "no": "163",
+  "title": "Les Campagnes hallucinées",
+  "author": "Verhaeren Émile",
+  "isbn": "2070322270",
+  "source": "BnF SRU col2bib 34234506 (cb347331791)"
+ },
+ {
+  "no": "164",
+  "title": "Poésies documentaires complètes...",
+  "author": "Mac Orlan Pierre",
+  "isbn": "2070322289",
+  "source": "BnF SRU col2bib 34234506 (cb34731188h)"
+ },
+ {
+  "no": "165",
+  "title": "Poésies",
+  "author": "Malherbe François de",
+  "isbn": "2070322262",
+  "source": "BnF SRU col2bib 34234506 (cb34731179j, cb37448694m)"
+ },
+ {
+  "no": "166",
+  "title": "Sonnets pour une fin de siècle",
+  "author": "Bosquet Alain",
+  "isbn": "2070322300",
+  "source": "BnF SRU col2bib 34234506 (cb348519769)"
+ },
+ {
+  "no": "167",
+  "title": "Sol absolu",
+  "author": "Gaspar Lorand",
+  "isbn": "2070322297",
+  "source": "BnF SRU col2bib 34234506 (cb34734418w)"
+ },
+ {
+  "no": "168",
+  "title": "Anthologie de la poésie française du XXe siècle",
+  "author": "",
+  "isbn": "2070322319",
+  "source": "BnF SRU col2bib 34234506 (cb347401545)"
+ },
+ {
+  "no": "169",
+  "title": "Les Chants du crépuscule",
+  "author": "Hugo Victor",
+  "isbn": "2070322335",
+  "source": "BnF SRU col2bib 34234506 (cb34740649z)"
+ },
+ {
+  "no": "170",
+  "title": "Les Étoiles brûlées",
+  "author": "Fombeure Maurice",
+  "isbn": "2070322343",
+  "source": "BnF SRU col2bib 34234506 (cb34740678j)",
+  "skip": "photo of the book, not a scan (checked 2026-09-26)"
+ },
+ {
+  "no": "171",
+  "title": "Poèmes",
+  "author": "Brontë Emily",
+  "isbn": "2070322351",
+  "fallbackIsbns": [
+   "2070409376"
+  ],
+  "source": "BnF SRU col2bib 34234506 (cb347406776, cb37460798r, cb370445204)"
+ },
+ {
+  "no": "172",
+  "title": "Canzoniere",
+  "author": "Pétrarque",
+  "isbn": "2070322378",
+  "source": "BnF SRU col2bib 34234506 (cb347133702)"
+ },
+ {
+  "no": "173",
+  "title": "Œuvres poétiques",
+  "author": "Labé Louise",
+  "isbn": "2070322386",
+  "source": "BnF SRU col2bib 34234506 (cb34715993v, cb374332498)",
+  "bnfOtherTitles": [
+   "Oeuvres poétiques"
+  ]
+ },
+ {
+  "no": "174",
+  "title": "La Vie unanime",
+  "author": "Romains Jules",
+  "isbn": "2070322394",
+  "source": "BnF SRU col2bib 34234506 (cb347165125)"
+ },
+ {
+  "no": "175",
+  "title": "Le Sel noir",
+  "author": "Glissant Édouard",
+  "isbn": "2070322408",
+  "source": "BnF SRU col2bib 34234506 (cb347165214)"
+ },
+ {
+  "no": "176",
+  "title": "Vocabulaire",
+  "author": "Cocteau Jean",
+  "isbn": "2070322424",
+  "source": "BnF SRU col2bib 34234506 (cb34724169r, cb37436494c)"
+ },
+ {
+  "no": "177",
+  "title": "Sais-tu si nous sommes encore loin de la mer ?",
+  "author": "Roy Claude",
+  "isbn": "2070322416",
+  "source": "BnF SRU col2bib 34234506 (cb34724364k)"
+ },
+ {
+  "no": "178",
+  "title": "Poésies",
+  "author": "Desbordes-Valmore Marceline",
+  "isbn": "2070322432",
+  "source": "BnF SRU col2bib 34234506 (cb34724205s)"
+ },
+ {
+  "no": "179",
+  "title": "Usage du temps",
+  "author": "Follain Jean",
+  "isbn": "2070322440",
+  "source": "BnF SRU col2bib 34234506 (cb347241672)"
+ },
+ {
+  "no": "180",
+  "title": "Les chansons et les heures",
+  "author": "Noël Marie",
+  "isbn": "2070322467",
+  "source": "BnF SRU col2bib 34234506 (cb34725747b)"
+ },
+ {
+  "no": "181",
+  "title": "Serres chaudes",
+  "author": "Maeterlinck Maurice",
+  "isbn": "2070322459",
+  "source": "BnF SRU col2bib 34234506 (cb34727761c)"
+ },
+ {
+  "no": "182",
+  "title": "Chant général",
+  "author": "Neruda Pablo",
+  "isbn": "2070322475",
+  "source": "BnF SRU col2bib 34234506 (cb347471405)"
+ },
+ {
+  "no": "183",
+  "title": "Poésie",
+  "author": "Guérin Maurice de",
+  "isbn": "2070322491",
+  "source": "BnF SRU col2bib 34234506 (cb347488979)"
+ },
+ {
+  "no": "184",
+  "title": "La Sorcière de Rome",
+  "author": "Frénaud André",
+  "isbn": "2070322505",
+  "source": "BnF SRU col2bib 34234506 (cb34747087j)"
+ },
+ {
+  "no": "185",
+  "title": "Poésies",
+  "author": "García Lorca Federico",
+  "isbn": "2070322513",
+  "source": "BnF SRU col2bib 34234506 (cb34758435v)"
+ },
+ {
+  "no": "186",
+  "title": "Délie",
+  "author": "Scève Maurice",
+  "isbn": "2070322521",
+  "source": "BnF SRU col2bib 34234506 (cb34754167p, cb374628704)",
+  "skip": "title page, not the cover (checked 2026-09-26)"
+ },
+ {
+  "no": "187",
+  "title": "Le Paysan céleste",
+  "author": "Clancier Georges-Emmanuel",
+  "isbn": "207032253X",
+  "fallbackIsbns": [
+   "9782070358229"
+  ],
+  "source": "BnF SRU col2bib 34234506 (cb34750750n, cb413736615)"
+ },
+ {
+  "no": "188",
+  "title": "La Fin de Satan",
+  "author": "Hugo Victor",
+  "isbn": "2070322548",
+  "source": "BnF SRU col2bib 34234506 (cb347621484)"
+ },
+ {
+  "no": "189",
+  "title": "Le Divan",
+  "author": "Goethe Johann Wolfgang von",
+  "isbn": "2070322556",
+  "source": "BnF SRU col2bib 34234506 (cb34755021b)"
+ },
+ {
+  "no": "190",
+  "title": "La Couronne et la lyre",
+  "author": "",
+  "isbn": "2070322564",
+  "source": "BnF SRU col2bib 34234506 (cb34766326b)"
+ },
+ {
+  "no": "191",
+  "title": "Anthologie de la poésie française du xixe siècle",
+  "author": "",
+  "isbn": "2070322580",
+  "source": "BnF SRU col2bib 34234506 (cb347671699, cb37413820s)"
+ },
+ {
+  "no": "192",
+  "title": "Art poétique...",
+  "author": "Claudel Paul",
+  "isbn": "2070322734",
+  "source": "BnF SRU col2bib 34234506 (cb34767474q)"
+ },
+ {
+  "no": "193",
+  "title": "Georgia",
+  "author": "Soupault Philippe",
+  "isbn": "2070322742",
+  "source": "BnF SRU col2bib 34234506 (cb34768858t)"
+ },
+ {
+  "no": "194",
+  "title": "L'Année terrible",
+  "author": "Hugo Victor",
+  "isbn": "2070322777",
+  "source": "BnF SRU col2bib 34234506 (cb34770719x)"
+ },
+ {
+  "no": "195",
+  "title": "Satires",
+  "author": "Boileau Nicolas",
+  "isbn": "2070322939",
+  "source": "BnF SRU col2bib 34234506 (cb348386444)"
+ },
+ {
+  "no": "196",
+  "title": "Oeuvre poétique 1925-1965",
+  "author": "Borges Jorge Luis",
+  "isbn": "2070322920",
+  "source": "BnF SRU col2bib 34234506 (cb347748718, cb35514883t)"
+ },
+ {
+  "no": "197",
+  "title": "Poèmes",
+  "author": "Bosquet Alain",
+  "isbn": "2070323072",
+  "source": "BnF SRU col2bib 34234506 (cb34862455d)"
+ },
+ {
+  "no": "198",
+  "title": "Les Quatre saisons",
+  "author": "Ronsard Pierre de",
+  "isbn": "2070323080",
+  "source": "BnF SRU col2bib 34234506 (cb34838694p)"
+ },
+ {
+  "no": "199",
+  "title": "La Sainte Face",
+  "author": "Frénaud André",
+  "isbn": "2070323099",
+  "source": "BnF SRU col2bib 34234506 (cb348386684)"
+ },
+ {
+  "no": "200",
+  "title": "Du domaine",
+  "author": "Guillevic Eugène",
+  "isbn": "2070323161",
+  "source": "BnF SRU col2bib 34234506 (cb34838673q)"
+ },
+ {
+  "no": "201",
+  "title": "Plume",
+  "author": "Michaux Henri",
+  "isbn": "207032317X",
+  "source": "BnF SRU col2bib 34234506 (cb348658646)"
+ },
+ {
+  "no": "202",
+  "title": "Poèmes barbares",
+  "author": "Leconte de Lisle Charles-Marie",
+  "isbn": "2070323269",
+  "source": "BnF SRU col2bib 34234506 (cb34911750d, cb35604300w)",
+  "skip": "band shows an ornament, not the poet (checked 2026-09-26)"
+ },
+ {
+  "no": "203",
+  "title": "Odes",
+  "author": "Segalen Victor",
+  "isbn": "2070323366",
+  "source": "BnF SRU col2bib 34234506 (cb34867651s)"
+ },
+ {
+  "no": "204",
+  "title": "Le Porche du mystère de la deuxième vertu",
+  "author": "Péguy Charles",
+  "isbn": "2070323455",
+  "source": "BnF SRU col2bib 34234506 (cb34915317f, cb37455834s)"
+ },
+ {
+  "no": "205",
+  "title": "Poèmes",
+  "author": "Deguy Michel",
+  "isbn": "2070323463",
+  "source": "BnF SRU col2bib 34234506 (cb34915302d)"
+ },
+ {
+  "no": "206",
+  "title": "Carreaux...",
+  "author": "Salmon André",
+  "isbn": "2070323560",
+  "source": "BnF SRU col2bib 34234506 (cb348685701)"
+ },
+ {
+  "no": "207",
+  "title": "Quand le miroir s'étonne",
+  "author": "Mallet Robert",
+  "isbn": "2070323595",
+  "source": "BnF SRU col2bib 34234506 (cb34872374m)"
+ },
+ {
+  "no": "208",
+  "title": "Les Cahiers et les Poésies d'André Walter",
+  "author": "Gide André",
+  "isbn": "2070323609",
+  "source": "BnF SRU col2bib 34234506 (cb34872353n)"
+ },
+ {
+  "no": "209",
+  "title": "Poèmes de l'infortune",
+  "author": "Rutebeuf",
+  "isbn": "2070323781",
+  "source": "BnF SRU col2bib 34234506 (cb348752297)"
+ },
+ {
+  "no": "210",
+  "title": "Ailleurs",
+  "author": "Michaux Henri",
+  "isbn": "2070323625",
+  "source": "BnF SRU col2bib 34234506 (cb34877299w)"
+ },
+ {
+  "no": "211",
+  "title": "L'accent grave et l'accent aigu",
+  "author": "Tardieu Jean",
+  "isbn": "2070323617",
+  "source": "BnF SRU col2bib 34234506 (cb34879477m, cb37399859r)"
+ },
+ {
+  "no": "212",
+  "title": "Jonas",
+  "author": "Dadelsen Jean-Paul de",
+  "isbn": "2070324001",
+  "source": "BnF SRU col2bib 34234506 (cb34901522d)"
+ },
+ {
+  "no": "213",
+  "title": "L'Adolescence clémentine",
+  "author": "Marot Clément",
+  "isbn": "2070324052",
+  "source": "BnF SRU col2bib 34234506 (cb34903431k)"
+ },
+ {
+  "no": "214",
+  "title": "Poésies d'Alvaro de Campos",
+  "author": "Pessoa Fernando",
+  "isbn": "2070324060",
+  "source": "BnF SRU col2bib 34234506 (cb349054103, cb37440399k)",
+  "bnfOtherTitles": [
+   "Le gardeur de troupeaux et les autres poèmes d'Alberto Caeiro"
+  ]
+ },
+ {
+  "no": "215",
+  "title": "Ecce homo",
+  "author": "Ribemont-Dessaignes Georges",
+  "isbn": "2070324362",
+  "source": "BnF SRU col2bib 34234506 (cb34907263m)"
+ },
+ {
+  "no": "216",
+  "title": "Anthologie de la poésie française du XVIIe siècle",
+  "author": "",
+  "isbn": "2070324370",
+  "source": "BnF SRU col2bib 34234506 (cb34908184j)"
+ },
+ {
+  "no": "217",
+  "title": "La Nuit remue",
+  "author": "Michaux Henri",
+  "isbn": "2070324389",
+  "source": "BnF SRU col2bib 34234506 (cb34964367s)"
+ },
+ {
+  "no": "218",
+  "title": "Géorgiques",
+  "author": "Virgile",
+  "isbn": "2070324397",
+  "source": "BnF SRU col2bib 34234506 (cb349718231)"
+ },
+ {
+  "no": "219",
+  "title": "La Fable du monde",
+  "author": "Supervielle Jules",
+  "isbn": "2070324419",
+  "source": "BnF SRU col2bib 34234506 (cb34971821b, cb374012255)"
+ },
+ {
+  "no": "220",
+  "title": "Les rois mages",
+  "author": "Frénaud André",
+  "isbn": "2070324230",
+  "source": "BnF SRU col2bib 34234506 (cb349728040)"
+ },
+ {
+  "no": "221",
+  "title": "Amen",
+  "author": "Réda Jacques",
+  "isbn": "2070324583",
+  "source": "BnF SRU col2bib 34234506 (cb34926431q)"
+ },
+ {
+  "no": "222",
+  "title": "Retouches",
+  "author": "Boulanger Daniel",
+  "isbn": "2070324591",
+  "source": "BnF SRU col2bib 34234506 (cb349273906)"
+ },
+ {
+  "no": "223",
+  "title": "Un jour après la vie",
+  "author": "Bosquet Alain",
+  "isbn": "2070324567",
+  "source": "BnF SRU col2bib 34234506 (cb34927613k)"
+ },
+ {
+  "no": "224",
+  "title": "Connaissance par les gouffres",
+  "author": "Michaux Henri",
+  "isbn": "2070324605",
+  "source": "BnF SRU col2bib 34234506 (cb34932656v)"
+ },
+ {
+  "no": "225",
+  "title": "Ma sœur la vie",
+  "author": "Pasternak Boris Leonidovič",
+  "isbn": "2070324400",
+  "source": "BnF SRU col2bib 34234506 (cb34941821q)"
+ },
+ {
+  "no": "226",
+  "title": "Une Vie ordinaire",
+  "author": "Perros Georges",
+  "isbn": "2070324613",
+  "source": "BnF SRU col2bib 34234506 (cb349580860)"
+ },
+ {
+  "no": "227",
+  "title": "E",
+  "author": "Roubaud Jacques",
+  "isbn": "2070325245",
+  "source": "BnF SRU col2bib 34234506 (cb349925811)"
+ },
+ {
+  "no": "228",
+  "title": "Épreuves, exorcismes",
+  "author": "Michaux Henri",
+  "isbn": "2070325059",
+  "source": "BnF SRU col2bib 34234506 (cb34999309f)"
+ },
+ {
+  "no": "229",
+  "title": "Poèmes",
+  "author": "Seférīs Giṓrgos",
+  "isbn": "2070325296",
+  "source": "BnF SRU col2bib 34234506 (cb35010109n, cb47103746k)"
+ },
+ {
+  "no": "230",
+  "title": "Plupart du temps",
+  "author": "Reverdy Pierre",
+  "isbn": "2070325326",
+  "source": "BnF SRU col2bib 34234506 (cb350103870)"
+ },
+ {
+  "no": "231",
+  "title": "Chansonnier révolutionnaire...",
+  "author": "",
+  "isbn": "207032530X",
+  "source": "BnF SRU col2bib 34234506 (cb350283278)",
+  "skip": "band shows drawings, not a poet (anthology) (checked 2026-09-26)"
+ },
+ {
+  "no": "232",
+  "title": "Anthologie de la poésie lyrique française des XIIe et XIIIe siècles",
+  "author": "",
+  "isbn": "2070324621",
+  "source": "BnF SRU col2bib 34234506 (cb35053081n)",
+  "skip": "band shows illuminations, not a poet (anthology) (checked 2026-09-26)"
+ },
+ {
+  "no": "233",
+  "title": "Tchadiennes",
+  "author": "Boulanger Daniel",
+  "isbn": "2070325342",
+  "source": "BnF SRU col2bib 34234506 (cb350475379)"
+ },
+ {
+  "no": "234",
+  "title": "Éloge d'une soupçonnée",
+  "author": "Char René",
+  "isbn": "2070325318",
+  "source": "BnF SRU col2bib 34234506 (cb350620401, cb37456063d)"
+ },
+ {
+  "no": "235",
+  "title": "La Vie dans les plis",
+  "author": "Michaux Henri",
+  "isbn": "2070325555",
+  "source": "BnF SRU col2bib 34234506 (cb35058976r)"
+ },
+ {
+  "no": "236",
+  "title": "Les Châteaux de millions d'années",
+  "author": "Sabatier Robert",
+  "isbn": "2070325539",
+  "source": "BnF SRU col2bib 34234506 (cb35081925s)"
+ },
+ {
+  "no": "237",
+  "title": "Poésies",
+  "author": "Norge",
+  "isbn": "2070325628",
+  "source": "BnF SRU col2bib 34234506 (cb350674034, cb37478233x)"
+ },
+ {
+  "no": "238",
+  "title": "Le Feu de chaque jour",
+  "author": "Paz Octavio",
+  "isbn": "2070325652",
+  "source": "BnF SRU col2bib 34234506 (cb35072345s)"
+ },
+ {
+  "no": "239",
+  "title": "À la lisière du temps",
+  "author": "Roy Claude",
+  "isbn": "2070325660",
+  "source": "BnF SRU col2bib 34234506 (cb350742063)"
+ },
+ {
+  "no": "240",
+  "title": "Le Seuil, le sable",
+  "author": "Jabès Edmond",
+  "isbn": "2070325733",
+  "source": "BnF SRU col2bib 34234506 (cb350808912)"
+ },
+ {
+  "no": "241",
+  "title": "Les Chansons de Bilitis",
+  "author": "Louÿs Pierre",
+  "isbn": "207032589X",
+  "source": "BnF SRU col2bib 34234506 (cb350982383)"
+ },
+ {
+  "no": "242",
+  "title": "Poèmes indiens",
+  "author": "Asturias Miguel Ángel",
+  "isbn": "2070325741",
+  "source": "BnF SRU col2bib 34234506 (cb35107727w)"
+ },
+ {
+  "no": "243",
+  "title": "Crépuscule et déclin",
+  "author": "Trakl Georg",
+  "isbn": "2070326020",
+  "source": "BnF SRU col2bib 34234506 (cb352798874)"
+ },
+ {
+  "no": "244",
+  "title": "Misérable miracle",
+  "author": "Michaux Henri",
+  "isbn": "207032608X",
+  "source": "BnF SRU col2bib 34234506 (cb35346295x)"
+ },
+ {
+  "no": "245",
+  "title": "Étier",
+  "author": "Guillevic Eugène",
+  "isbn": "2070326284",
+  "source": "BnF SRU col2bib 34234506 (cb35411118j)",
+  "skip": "band shows the signature, not the poet (checked 2026-09-26)"
+ },
+ {
+  "no": "246",
+  "title": "Mémoire du vent",
+  "author": "Adūnīs",
+  "isbn": "2070326276",
+  "source": "BnF SRU col2bib 34234506 (cb35418069v)"
+ },
+ {
+  "no": "247",
+  "title": "Poèmes de Morven le Gaélique",
+  "author": "Jacob Max",
+  "isbn": "2070325903",
+  "source": "BnF SRU col2bib 34234506 (cb354186894)"
+ },
+ {
+  "no": "248",
+  "title": "Vision et prière",
+  "author": "Thomas Dylan",
+  "isbn": "2070326306",
+  "source": "BnF SRU col2bib 34234506 (cb354559981)"
+ },
+ {
+  "no": "249",
+  "title": "Chansons françaises de la Renaissance",
+  "author": "",
+  "isbn": "2070326292",
+  "source": "BnF SRU col2bib 34234506 (cb35461611j)"
+ },
+ {
+  "no": "250",
+  "title": "Poèmes choisis",
+  "author": "Montale Eugenio",
+  "isbn": "2070326624",
+  "source": "BnF SRU col2bib 34234506 (cb35464167h)"
+ },
+ {
+  "no": "251",
+  "title": "Poèmes de guerre",
+  "author": "Melville Herman",
+  "isbn": "2070326616",
+  "source": "BnF SRU col2bib 34234506 (cb35472916j)"
+ },
+ {
+  "no": "252",
+  "title": "Dans la chaleur vacante",
+  "author": "Du Bouchet André",
+  "isbn": "2070326640",
+  "source": "BnF SRU col2bib 34234506 (cb35477045v)"
+ },
+ {
+  "no": "253",
+  "title": "Poèmes",
+  "author": "Stampa Gaspara",
+  "isbn": "2070326632",
+  "source": "BnF SRU col2bib 34234506 (cb35481511p)"
+ },
+ {
+  "no": "254",
+  "title": "Intailles",
+  "author": "Boulanger Daniel",
+  "isbn": "2070326667",
+  "source": "BnF SRU col2bib 34234506 (cb35480696x)"
+ },
+ {
+  "no": "255",
+  "title": "Épigrammes",
+  "author": "Martial",
+  "isbn": "2070327051",
+  "source": "BnF SRU col2bib 34234506 (cb355002981)"
+ },
+ {
+  "no": "256",
+  "title": "Poèmes",
+  "author": "Michel-Ange",
+  "isbn": "207032687X",
+  "source": "BnF SRU col2bib 34234506 (cb35495233b)",
+  "skip": "band shows an artwork, not the poet (checked 2026-09-26)"
+ },
+ {
+  "no": "257",
+  "title": "Poèmes",
+  "author": "Donne John",
+  "isbn": "2070326713",
+  "source": "BnF SRU col2bib 34234506 (cb35493917j)"
+ },
+ {
+  "no": "258",
+  "title": "Face aux verrous",
+  "author": "Michaux Henri",
+  "isbn": "207032706X",
+  "source": "BnF SRU col2bib 34234506 (cb355060429)",
+  "skip": "black cover, a different design (checked 2026-09-26)"
+ },
+ {
+  "no": "259",
+  "title": "Le faune de marbre",
+  "author": "Faulkner William",
+  "isbn": "2070327078",
+  "source": "BnF SRU col2bib 34234506 (cb35512791p)"
+ },
+ {
+  "no": "260",
+  "title": "Poèmes",
+  "author": "Whitman Walt",
+  "isbn": "2070327086",
+  "source": "BnF SRU col2bib 34234506 (cb355155163)"
+ },
+ {
+  "no": "261",
+  "title": "Poésies",
+  "author": "Mallarmé Stéphane",
+  "isbn": "2070327167",
+  "source": "BnF SRU col2bib 34234506 (cb35527488c)"
+ },
+ {
+  "no": "262",
+  "title": "Rue Traversière",
+  "author": "Bonnefoy Yves",
+  "isbn": "2070327183",
+  "source": "BnF SRU col2bib 34234506 (cb355323674, cb37480454q)"
+ },
+ {
+  "no": "263",
+  "title": "Anthologie de la poésie française du XIXe siècle",
+  "author": "",
+  "isbn": "2070327175",
+  "source": "BnF SRU col2bib 34234506 (cb35536862r)"
+ },
+ {
+  "no": "264",
+  "title": "Lettre de Lord Chandos",
+  "author": "Hofmannsthal Hugo von",
+  "isbn": "2070327191",
+  "source": "BnF SRU col2bib 34234506 (cb35538433j)"
+ },
+ {
+  "no": "265",
+  "title": "Poèmes et petits poèmes abstraits",
+  "author": "Valéry Paul",
+  "isbn": "2070327345",
+  "source": "BnF SRU col2bib 34234506 (cb35550664v)"
+ },
+ {
+  "no": "266",
+  "title": "Élégie de Marienbad",
+  "author": "Goethe Johann Wolfgang von",
+  "isbn": "2070327353",
+  "source": "BnF SRU col2bib 34234506 (cb35550880n)"
+ },
+ {
+  "no": "267",
+  "title": "Égée",
+  "author": "Gaspar Lorand",
+  "isbn": "2070327361",
+  "source": "BnF SRU col2bib 34234506 (cb355580853)",
+  "skip": "Goncourt band over the cover (checked 2026-09-26)"
+ },
+ {
+  "no": "268",
+  "title": "Les ruines de Paris",
+  "author": "Réda Jacques",
+  "isbn": "207032737X",
+  "source": "BnF SRU col2bib 34234506 (cb35562905v)"
+ },
+ {
+  "no": "269",
+  "title": "À la vieille Parque",
+  "author": "Stéfan Jude",
+  "isbn": "2070327388",
+  "source": "BnF SRU col2bib 34234506 (cb35569625b)"
+ },
+ {
+  "no": "270",
+  "title": "Lettres à un jeune poète",
+  "author": "Rilke Rainer Maria",
+  "isbn": "2070327884",
+  "source": "BnF SRU col2bib 34234506 (cb35579643g)",
+  "skip": "photo of the book, not a scan (checked 2026-09-26)"
+ },
+ {
+  "no": "271",
+  "title": "Denudare",
+  "author": "Torreilles Pierre",
+  "isbn": "207032740X",
+  "source": "BnF SRU col2bib 34234506 (cb355822985)"
+ },
+ {
+  "no": "272",
+  "title": "Odes, Élégies, hymnes",
+  "author": "Hölderlin Friedrich",
+  "isbn": "2070327396",
+  "source": "BnF SRU col2bib 34234506 (cb355939151)"
+ },
+ {
+  "no": "273",
+  "title": "Quarante-cinq poèmes",
+  "author": "Yeats W. B.",
+  "isbn": "2070327809",
+  "source": "BnF SRU col2bib 34234506 (cb35601389r)"
+ },
+ {
+  "no": "274",
+  "title": "La chute des temps",
+  "author": "Noël Bernard",
+  "isbn": "2070327736",
+  "source": "BnF SRU col2bib 34234506 (cb35604318z)"
+ },
+ {
+  "no": "275",
+  "title": "Anthologie de la poésie russe",
+  "author": "",
+  "isbn": "2070328147",
+  "source": "BnF SRU col2bib 34234506 (cb35607114r)"
+ },
+ {
+  "no": "276",
+  "title": "Poésies",
+  "author": "",
+  "isbn": "2070328120",
+  "source": "BnF SRU col2bib 34234506 (cb35619409p)"
+ },
+ {
+  "no": "277",
+  "title": "À la lumière d'hiver",
+  "author": "Jaccottet Philippe",
+  "isbn": "2070328228",
+  "source": "BnF SRU col2bib 34234506 (cb35680935w)"
+ },
+ {
+  "no": "278",
+  "title": "Hôtel de l'image",
+  "author": "Boulanger Daniel",
+  "isbn": "2070328333",
+  "source": "BnF SRU col2bib 34234506 (cb35683530s)"
+ },
+ {
+  "no": "279",
+  "title": "Poèmes antiques",
+  "author": "Leconte de Lisle Charles-Marie",
+  "isbn": "2070328139",
+  "source": "BnF SRU col2bib 34234506 (cb35689507q)"
+ },
+ {
+  "no": "280",
+  "title": "Poésies",
+  "author": "Puškin Aleksandr Sergeevič",
+  "isbn": "2070327922",
+  "source": "BnF SRU col2bib 34234506 (cb356960410)"
+ },
+ {
+  "no": "281",
+  "title": "Sonnets portugais",
+  "author": "Browning Elizabeth Barrett",
+  "isbn": "2070328198",
+  "source": "BnF SRU col2bib 34234506 (cb35719818x)"
+ },
+ {
+  "no": "282",
+  "title": "L'infini turbulent",
+  "author": "Michaux Henri",
+  "isbn": "2070328511",
+  "source": "BnF SRU col2bib 34234506 (cb357270816)",
+  "skip": "band shows a drawing, not the poet (checked 2026-09-26)"
+ },
+ {
+  "no": "283",
+  "title": "Elégies de Duino",
+  "author": "Rilke Rainer Maria",
+  "isbn": "2070327876",
+  "source": "BnF SRU col2bib 34234506 (cb35719752t)"
+ },
+ {
+  "no": "284",
+  "title": "Les barricades mystérieuses",
+  "author": "Blanchard Maurice",
+  "isbn": "2070327817",
+  "source": "BnF SRU col2bib 34234506 (cb357184355)"
+ },
+ {
+  "no": "285",
+  "title": "Rubayat",
+  "author": "H̱ayyām Nīšāpōrī Ġīāṯ al-Dīn abō al-Fatḥ ʿOmar bin Ibrāhīm",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb357291631)"
+ },
+ {
+  "no": "286",
+  "title": "Les tragiques",
+  "author": "Aubigné Théodore Agrippa d'",
+  "isbn": "2070737241",
+  "source": "BnF SRU col2bib 34234506 (cb35732890c)"
+ },
+ {
+  "no": "287",
+  "title": "Trente-trois sonnets composés au secret",
+  "author": "Cassou Jean",
+  "isbn": "2070328783",
+  "source": "BnF SRU col2bib 34234506 (cb35742754f)"
+ },
+ {
+  "no": "289",
+  "title": "Dans les années profondes",
+  "author": "Jouve Pierre Jean",
+  "isbn": "2070328090",
+  "source": "BnF SRU col2bib 34234506 (cb35749161r)"
+ },
+ {
+  "no": "290",
+  "title": "Le paradis perdu",
+  "author": "Milton John",
+  "isbn": "2070328384",
+  "source": "BnF SRU col2bib 34234506 (cb35766870b)"
+ },
+ {
+  "no": "291",
+  "title": "la centaine d'amour",
+  "author": "Neruda Pablo",
+  "isbn": "2070328929",
+  "source": "BnF SRU col2bib 34234506 (cb357879363)"
+ },
+ {
+  "no": "292",
+  "title": "Ce qui fut sans lumière",
+  "author": "Bonnefoy Yves",
+  "isbn": "2070328252",
+  "source": "BnF SRU col2bib 34234506 (cb357946791)"
+ },
+ {
+  "no": "293",
+  "title": "Poèmes de jeunesse et quelques autres",
+  "author": "Pasolini Pier Paolo",
+  "isbn": "2070328864",
+  "source": "BnF SRU col2bib 34234506 (cb357961434)"
+ },
+ {
+  "no": "294",
+  "title": "Ange aux entrailles",
+  "author": "Audiberti Jacques",
+  "isbn": "2070743578",
+  "source": "BnF SRU col2bib 34234506 (cb35821263j)"
+ },
+ {
+  "no": "295",
+  "title": "Apoèmes",
+  "author": "Pichette Henri",
+  "isbn": "2070329097",
+  "source": "BnF SRU col2bib 34234506 (cb35797892h)"
+ },
+ {
+  "no": "296",
+  "title": "Vers de circonstance",
+  "author": "Mallarmé Stéphane",
+  "isbn": "2070329062",
+  "source": "BnF SRU col2bib 34234506 (cb358041836)"
+ },
+ {
+  "no": "297",
+  "title": "Poèmes et poésies",
+  "author": "Keats John",
+  "isbn": "2070328708",
+  "source": "BnF SRU col2bib 34234506 (cb35808460b)"
+ },
+ {
+  "no": "298",
+  "title": "Cent phrases pour éventails",
+  "author": "Claudel Paul",
+  "isbn": "2070327795",
+  "source": "BnF SRU col2bib 34234506 (cb35804974f)",
+  "skip": "band shows calligraphy, not the poet (checked 2026-09-26)"
+ },
+ {
+  "no": "299",
+  "title": "Rag-time",
+  "author": "Calaferte Louis",
+  "isbn": "2070328910",
+  "source": "BnF SRU col2bib 34234506 (cb358159579)"
+ },
+ {
+  "no": "300",
+  "title": "Poisson soluble",
+  "author": "Breton André",
+  "isbn": "2070329178",
+  "source": "BnF SRU col2bib 34234506 (cb358216400)",
+  "skip": "band shows masks, not the poet (checked 2026-09-26)"
+ },
+ {
+  "no": "301",
+  "title": "Poèmes",
+  "author": "Lawrence David Herbert",
+  "isbn": "2070329364",
+  "source": "BnF SRU col2bib 34234506 (cb35821303z)"
+ },
+ {
+  "no": "302",
+  "title": "Les poètes du Chat noir",
+  "author": "",
+  "isbn": "2070328988",
+  "source": "BnF SRU col2bib 34234506 (cb35824513j)",
+  "skip": "band shows a poster, not a poet (anthology) (checked 2026-09-26)"
+ },
+ {
+  "no": "303",
+  "title": "Divers jeux rustiques",
+  "author": "Du Bellay Joachim",
+  "isbn": "2070328503",
+  "source": "BnF SRU col2bib 34234506 (cb35837857x)"
+ },
+ {
+  "no": "304",
+  "title": "Satires",
+  "author": "Juvénal",
+  "isbn": "2070327973",
+  "source": "BnF SRU col2bib 34234506 (cb358377131)"
+ },
+ {
+  "no": "305",
+  "title": "Axion Esti",
+  "author": "Elýtīs Odysséas",
+  "isbn": "2070717968",
+  "source": "BnF SRU col2bib 34234506 (cb371633516)"
+ },
+ {
+  "no": "306",
+  "title": "Un chant dans l'épaisseur du temps",
+  "author": "Júdice Nuno",
+  "isbn": "207032947X",
+  "source": "BnF SRU col2bib 34234506 (cb358488906)"
+ },
+ {
+  "no": "307",
+  "title": "Les mots longs",
+  "author": "Holappa Pentti",
+  "isbn": "2070329666",
+  "source": "BnF SRU col2bib 34234506 (cb35859352q)"
+ },
+ {
+  "no": "308",
+  "title": "La chanson de la rue Saint-Paul",
+  "author": "Elskamp Max",
+  "isbn": "2070329704",
+  "source": "BnF SRU col2bib 34234506 (cb35861915f)"
+ },
+ {
+  "no": "309",
+  "title": "Anthologie de la poésie religieuse française",
+  "author": "",
+  "isbn": "2070329836",
+  "source": "BnF SRU col2bib 34234506 (cb35864962p)",
+  "skip": "photo of the book, not a scan (checked 2026-09-26)"
+ },
+ {
+  "no": "310",
+  "title": "En trente-trois morceaux",
+  "author": "Char René",
+  "isbn": "2070329844",
+  "source": "BnF SRU col2bib 34234506 (cb361652200)"
+ },
+ {
+  "no": "311",
+  "title": "Poèmes",
+  "author": "Nietzsche Friedrich",
+  "isbn": "2070318435",
+  "source": "BnF SRU col2bib 34234506 (cb361686633)"
+ },
+ {
+  "no": "312",
+  "title": "Les dessous du ciel",
+  "author": "Boulanger Daniel",
+  "isbn": "2070329933",
+  "source": "BnF SRU col2bib 34234506 (cb36169976h)"
+ },
+ {
+  "no": "313",
+  "title": "La vie errante",
+  "author": "Bonnefoy Yves",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record (pre-ISBN printing)",
+  "source": "BnF SRU col2bib 34234506 (cb36177614v)"
+ },
+ {
+  "no": "314",
+  "title": "Nuit obscure",
+  "author": "Jean de la Croix",
+  "isbn": "2070329623",
+  "source": "BnF SRU col2bib 34234506 (cb36183567d)"
+ },
+ {
+  "no": "315",
+  "title": "La rose et les épines du chemin",
+  "author": "Saint-Pol-Roux",
+  "isbn": "2070327892",
+  "source": "BnF SRU col2bib 34234506 (cb36186703f)"
+ },
+ {
+  "no": "316",
+  "title": "Anthologie de la poésie française du XVIIIe siècle",
+  "author": "",
+  "isbn": "207032883X",
+  "source": "BnF SRU col2bib 34234506 (cb36190840p)",
+  "skip": "band shows a landscape, not a poet (anthology) (checked 2026-09-26)"
+ },
+ {
+  "no": "317",
+  "title": "Paysages avec figures absentes",
+  "author": "Jaccottet Philippe",
+  "isbn": "2070404277",
+  "source": "BnF SRU col2bib 34234506 (cb36195628g)"
+ },
+ {
+  "no": "318",
+  "title": "Nouveaux poèmes",
+  "author": "Heine Heinrich",
+  "isbn": "2070329410",
+  "source": "BnF SRU col2bib 34234506 (cb36199184j)"
+ },
+ {
+  "no": "319",
+  "title": "L'espace du dedans",
+  "author": "Michaux Henri",
+  "isbn": "207040465X",
+  "source": "BnF SRU col2bib 34234506 (cb36201181w)"
+ },
+ {
+  "no": "320",
+  "title": "Vingt poèmes d'amour et une chanson désespérée",
+  "author": "Neruda Pablo",
+  "isbn": "2070404218",
+  "source": "BnF SRU col2bib 34234506 (cb37025048z)"
+ },
+ {
+  "no": "321",
+  "title": "Trois leçons de ténèbres",
+  "author": "Valente José Ángel",
+  "isbn": "207074924X",
+  "source": "BnF SRU col2bib 34234506 (cb36984138b)"
+ },
+ {
+  "no": "322",
+  "title": "L'arrière-pays",
+  "author": "Bonnefoy Yves",
+  "isbn": "2070403823",
+  "fallbackIsbns": [
+   "2070319385"
+  ],
+  "source": "BnF SRU col2bib 34234506 (cb36987964t, cb40040149x)",
+  "skip": "band shows a landscape, not the poet (checked 2026-09-26)"
+ },
+ {
+  "no": "323",
+  "title": "L'ajour",
+  "author": "Du Bouchet André",
+  "isbn": "2070405869",
+  "source": "BnF SRU col2bib 34234506 (cb36997079k)"
+ },
+ {
+  "no": "324",
+  "title": "La cité Montgol",
+  "author": "Hardellet André",
+  "isbn": "2070329917",
+  "source": "BnF SRU col2bib 34234506 (cb36711636h)"
+ },
+ {
+  "no": "325",
+  "title": "Le cycle du cheval",
+  "author": "Rosa António Ramos",
+  "isbn": "2070403211",
+  "source": "BnF SRU col2bib 34234506 (cb369963106)"
+ },
+ {
+  "no": "326",
+  "title": "Choix de poèmes",
+  "author": "Celan Paul",
+  "isbn": "2070403114",
+  "source": "BnF SRU col2bib 34234506 (cb370293927)"
+ },
+ {
+  "no": "327",
+  "title": "Il neige dans la nuit",
+  "author": "Nâzım Hikmet",
+  "isbn": "2070329631",
+  "source": "BnF SRU col2bib 34234506 (cb36975140x)"
+ },
+ {
+  "no": "328",
+  "title": "Commune présence",
+  "author": "Char René",
+  "isbn": "207040739X",
+  "source": "BnF SRU col2bib 34234506 (cb36997801v)"
+ },
+ {
+  "no": "329",
+  "title": "L'homme rapaillé",
+  "author": "Miron Gaston",
+  "isbn": "2070407071",
+  "source": "BnF SRU col2bib 34234506 (cb370064435)"
+ },
+ {
+  "no": "330",
+  "title": "Signe ascendant...",
+  "author": "Breton André",
+  "isbn": "2070408574",
+  "source": "BnF SRU col2bib 34234506 (cb369732176)"
+ },
+ {
+  "no": "331",
+  "title": "Poèmes",
+  "author": "Deguy Michel",
+  "isbn": "2070407861",
+  "source": "BnF SRU col2bib 34234506 (cb369736895)"
+ },
+ {
+  "no": "332",
+  "title": "Le condamné à mort",
+  "author": "Genet Jean",
+  "isbn": "207040787X",
+  "source": "BnF SRU col2bib 34234506 (cb36973691q)"
+ },
+ {
+  "no": "333",
+  "title": "La Berline arrêtée dans la nuit",
+  "author": "Milosz Oscar Vladislas de Lubicz-",
+  "isbn": "2070406296",
+  "source": "BnF SRU col2bib 34234506 (cb36977817t)"
+ },
+ {
+  "no": "334",
+  "title": "Soleil du soleil",
+  "author": "",
+  "isbn": "2070406741",
+  "source": "BnF SRU col2bib 34234506 (cb37039636s)",
+  "skip": "band shows an artwork, not a poet (anthology) (checked 2026-09-26)"
+ },
+ {
+  "no": "335",
+  "title": "Cantiques spirituels",
+  "author": "Racine Jean",
+  "isbn": "2070409724",
+  "source": "BnF SRU col2bib 34234506 (cb37043727v)"
+ },
+ {
+  "no": "336",
+  "title": "Derrière son double",
+  "author": "Duprey Jean-Pierre",
+  "isbn": "2070406288",
+  "source": "BnF SRU col2bib 34234506 (cb37051258g)"
+ },
+ {
+  "no": "337",
+  "title": "Bréviaire poétique",
+  "author": "Claudel Paul",
+  "isbn": "2070410943",
+  "source": "BnF SRU col2bib 34234506 (cb37052015w)"
+ },
+ {
+  "no": "338",
+  "title": "Le ciel brûle",
+  "author": "Cvetaeva Marina Ivanovna",
+  "isbn": "2070403602",
+  "source": "BnF SRU col2bib 34234506 (cb37084720h)"
+ },
+ {
+  "no": "339",
+  "title": "Arbres d'hiver",
+  "author": "Plath Sylvia",
+  "isbn": "2070403793",
+  "source": "BnF SRU col2bib 34234506 (cb37082758q)"
+ },
+ {
+  "no": "340",
+  "title": "Le corps clairvoyant",
+  "author": "Dupin Jacques",
+  "isbn": "207041194X",
+  "source": "BnF SRU col2bib 34234506 (cb37088333q)"
+ },
+ {
+  "no": "341",
+  "title": "Une nuit avec Hamlet",
+  "author": "Holan Vladimír",
+  "isbn": "2070411524",
+  "source": "BnF SRU col2bib 34234506 (cb370943976)"
+ },
+ {
+  "no": "342",
+  "title": "Main d'oeuvre",
+  "author": "Reverdy Pierre",
+  "isbn": "2070412601",
+  "source": "BnF SRU col2bib 34234506 (cb37097682q)"
+ },
+ {
+  "no": "343",
+  "title": "Paysage du Tout",
+  "author": "Oster Pierre",
+  "isbn": "207041146X",
+  "source": "BnF SRU col2bib 34234506 (cb37107876n, cb37099202m)",
+  "bnfOtherTitles": [
+   "La terre nous est étroite"
+  ]
+ },
+ {
+  "no": "344",
+  "title": "Anthologie de la poésie française du XXe siècle",
+  "author": "",
+  "isbn": "2070413209",
+  "source": "BnF SRU col2bib 34234506 (cb37101751k)"
+ },
+ {
+  "no": "345",
+  "title": "Anthologie de la poésie française du XXe siècle",
+  "author": "",
+  "isbn": "2070413020",
+  "source": "BnF SRU col2bib 34234506 (cb37182749x)",
+  "skip": "band shows a painting, not a poet (anthology) (checked 2026-09-26)"
+ },
+ {
+  "no": "347",
+  "title": "Pays rêvé, pays réel",
+  "author": "Glissant Édouard",
+  "isbn": "2070414469",
+  "source": "BnF SRU col2bib 34234506 (cb371841608)"
+ },
+ {
+  "no": "348",
+  "title": "Quatrains",
+  "author": "Dickinson Emily",
+  "isbn": "2070329429",
+  "source": "BnF SRU col2bib 34234506 (cb371149485)"
+ },
+ {
+  "no": "349",
+  "title": "Qui je fus",
+  "author": "Michaux Henri",
+  "isbn": "2070412695",
+  "source": "BnF SRU col2bib 34234506 (cb37115132t)"
+ },
+ {
+  "no": "350",
+  "title": "Éloge pour une cuisine de province",
+  "author": "Goffette Guy",
+  "isbn": "2070414922",
+  "source": "BnF SRU col2bib 34234506 (cb371927223)"
+ },
+ {
+  "no": "351",
+  "title": "Poésie perdue",
+  "author": "Valéry Paul",
+  "isbn": "2070407578",
+  "source": "BnF SRU col2bib 34234506 (cb371955704)"
+ },
+ {
+  "no": "352",
+  "title": "Anthologie de la poésie yiddish",
+  "author": "",
+  "isbn": "2070415597",
+  "source": "BnF SRU col2bib 34234506 (cb37199694c)"
+ },
+ {
+  "no": "353",
+  "title": "Anthologie de la poésie grecque contemporaine",
+  "author": "",
+  "isbn": "2070412539",
+  "source": "BnF SRU col2bib 34234506 (cb371996900)"
+ },
+ {
+  "no": "354",
+  "title": "Le mur dans le miroir",
+  "author": "Rítsos Giánnīs",
+  "isbn": "2070416534",
+  "source": "BnF SRU col2bib 34234506 (cb372083682)"
+ },
+ {
+  "no": "355",
+  "title": "Ridiculum vitae",
+  "author": "Verheggen Jean-Pierre",
+  "isbn": "2070417077",
+  "source": "BnF SRU col2bib 34234506 (cb372126330)"
+ },
+ {
+  "no": "356",
+  "title": "L'arbre-seul",
+  "author": "Velter André",
+  "isbn": "2070414930",
+  "source": "BnF SRU col2bib 34234506 (cb37626489x)"
+ },
+ {
+  "no": "357",
+  "title": "Art poétique",
+  "author": "Guillevic Eugène",
+  "isbn": "2070417581",
+  "source": "BnF SRU col2bib 34234506 (cb37628441d)"
+ },
+ {
+  "no": "358",
+  "title": "Hors les murs",
+  "author": "Réda Jacques",
+  "isbn": "2070418804",
+  "source": "BnF SRU col2bib 34234506 (cb37642406v)"
+ },
+ {
+  "no": "359",
+  "title": "Poèmes",
+  "author": "Wordsworth William",
+  "isbn": "207032799X",
+  "source": "BnF SRU col2bib 34234506 (cb376341247)"
+ },
+ {
+  "no": "360",
+  "title": "L'enchantement simple",
+  "author": "Bobin Christian",
+  "isbn": "2070418103",
+  "source": "BnF SRU col2bib 34234506 (cb376517922)"
+ },
+ {
+  "no": "361",
+  "title": "Cartes postales",
+  "author": "Levet Henry J.-M.",
+  "isbn": "2070418383",
+  "source": "BnF SRU col2bib 34234506 (cb376424196)"
+ },
+ {
+  "no": "362",
+  "title": "Éros énergumène",
+  "author": "Roche Denis",
+  "isbn": "2070419940",
+  "source": "BnF SRU col2bib 34234506 (cb37651775g)"
+ },
+ {
+  "no": "363",
+  "title": "Les poésies",
+  "author": "Schéhadé Georges",
+  "isbn": "2070420620",
+  "source": "BnF SRU col2bib 34234506 (cb37689409d)"
+ },
+ {
+  "no": "364",
+  "title": "Héros-limite",
+  "author": "Luca Ghérasim",
+  "isbn": "2070410692",
+  "source": "BnF SRU col2bib 34234506 (cb37692807b)"
+ },
+ {
+  "no": "365",
+  "title": "En la forêt de longue attente",
+  "author": "Orléans Charles d'",
+  "isbn": "2070327957",
+  "source": "BnF SRU col2bib 34234506 (cb377090101)"
+ },
+ {
+  "no": "366",
+  "title": "Quelque chose noir",
+  "author": "Roubaud Jacques",
+  "isbn": "2070420817",
+  "source": "BnF SRU col2bib 34234506 (cb377050760)"
+ },
+ {
+  "no": "367",
+  "title": "La légende des siècles",
+  "author": "Hugo Victor",
+  "isbn": "2070418723",
+  "source": "BnF SRU col2bib 34234506 (cb38803507c)"
+ },
+ {
+  "no": "368",
+  "title": "Chants de Mihyar le Damascène",
+  "author": "Adūnīs",
+  "isbn": "2070421333",
+  "source": "BnF SRU col2bib 34234506 (cb38819569k)"
+ },
+ {
+  "no": "369",
+  "title": "Haiku",
+  "author": "",
+  "isbn": "2070413063",
+  "source": "BnF SRU col2bib 34234506 (cb389096225)"
+ },
+ {
+  "no": "370",
+  "title": "Bois dormant",
+  "author": "Macé Gérard",
+  "isbn": "207042345X",
+  "source": "BnF SRU col2bib 34234506 (cb38821947n)"
+ },
+ {
+  "no": "371",
+  "title": "L'art d'être grand-père",
+  "author": "Hugo Victor",
+  "isbn": "207042085X",
+  "source": "BnF SRU col2bib 34234506 (cb38832498m)"
+ },
+ {
+  "no": "372",
+  "title": "Feuilles d'herbe",
+  "author": "Whitman Walt",
+  "isbn": "2070415430",
+  "source": "BnF SRU col2bib 34234506 (cb38832487z)"
+ },
+ {
+  "no": "373",
+  "title": "Anthologie de la poésie tchèque contemporaine",
+  "author": "",
+  "isbn": "207042300X",
+  "source": "BnF SRU col2bib 34234506 (cb388635486)"
+ },
+ {
+  "no": "374",
+  "title": "Après m'avoir fait tant mourir",
+  "author": "Viau Théophile de",
+  "isbn": "2070419479",
+  "source": "BnF SRU col2bib 34234506 (cb388921710)"
+ },
+ {
+  "no": "375",
+  "title": "Le marteau sans maître",
+  "author": "Char René",
+  "isbn": "2070410684",
+  "source": "BnF SRU col2bib 34234506 (cb38895191b)"
+ },
+ {
+  "no": "376",
+  "title": "Le fou d'Elsa",
+  "author": "Aragon Louis",
+  "isbn": "2070424111",
+  "source": "BnF SRU col2bib 34234506 (cb38893439k)"
+ },
+ {
+  "no": "377",
+  "title": "Air de la solitude",
+  "author": "Roud Gustave",
+  "isbn": "2070419967",
+  "source": "BnF SRU col2bib 34234506 (cb38893891s)"
+ },
+ {
+  "no": "378",
+  "title": "Très haut amour",
+  "author": "Pozzi Catherine",
+  "isbn": "2070421058",
+  "source": "BnF SRU col2bib 34234506 (cb38959274b)"
+ },
+ {
+  "no": "379",
+  "title": "Au soleil du plafond",
+  "author": "Reverdy Pierre",
+  "isbn": "2070423743",
+  "source": "BnF SRU col2bib 34234506 (cb389591386)"
+ },
+ {
+  "no": "380",
+  "title": "Le drame de la vie",
+  "author": "Novarina Valère",
+  "isbn": "2070427757",
+  "source": "BnF SRU col2bib 34234506 (cb38969882t)"
+ },
+ {
+  "no": "381",
+  "title": "Les poètes du \"Grand jeu\"",
+  "author": "",
+  "isbn": "2070410951",
+  "source": "BnF SRU col2bib 34234506 (cb389904062)"
+ },
+ {
+  "no": "382",
+  "title": "Le monde terrible",
+  "author": "Blok Alexandre",
+  "isbn": "2070414140",
+  "source": "BnF SRU col2bib 34234506 (cb38990394w)"
+ },
+ {
+  "no": "383",
+  "title": "Cahier de verdure",
+  "author": "Jaccottet Philippe",
+  "isbn": "2070428613",
+  "source": "BnF SRU col2bib 34234506 (cb38991314n)"
+ },
+ {
+  "no": "384",
+  "title": "Les planches courbes",
+  "author": "Bonnefoy Yves",
+  "isbn": "2070427765",
+  "source": "BnF SRU col2bib 34234506 (cb390109171)"
+ },
+ {
+  "no": "385",
+  "title": "Pour en finir avec le jugement de dieu",
+  "author": "Artaud Antonin",
+  "isbn": "2070427331",
+  "source": "BnF SRU col2bib 34234506 (cb390212464)"
+ },
+ {
+  "no": "386",
+  "title": "En attendant les barbares",
+  "author": "Kaváfīs Kōnstantínos P.",
+  "isbn": "2070303055",
+  "source": "BnF SRU col2bib 34234506 (cb39060906d)"
+ },
+ {
+  "no": "387",
+  "title": "Igitur",
+  "author": "Mallarmé Stéphane",
+  "isbn": "2070421244",
+  "source": "BnF SRU col2bib 34234506 (cb390907817)"
+ },
+ {
+  "no": "388",
+  "title": "Anthologie de la poésie portugaise contemporaine",
+  "author": "",
+  "isbn": "2070423735",
+  "source": "BnF SRU col2bib 34234506 (cb39065558r)"
+ },
+ {
+  "no": "389",
+  "title": "Les chants de la Merci",
+  "author": "Noël Marie",
+  "isbn": "2070423751",
+  "source": "BnF SRU col2bib 34234506 (cb39084044v)"
+ },
+ {
+  "no": "390",
+  "title": "Patmos",
+  "author": "Gaspar Lorand",
+  "isbn": "2070313980",
+  "source": "BnF SRU col2bib 34234506 (cb391528204, cb39297935n)",
+  "bnfOtherTitles": [
+   "Odes"
+  ]
+ },
+ {
+  "no": "391",
+  "title": "Anthologie nomade",
+  "author": "Butor Michel",
+  "isbn": "2070313999",
+  "source": "BnF SRU col2bib 34234506 (cb39174696q)"
+ },
+ {
+  "no": "392",
+  "title": "Anthologie de la poésie lyrique latine de la Renaissance",
+  "author": "",
+  "isbn": "2070301249",
+  "source": "BnF SRU col2bib 34234506 (cb39174521j)"
+ },
+ {
+  "no": "393",
+  "title": "Anthologie de la poésie française du XVIe siècle",
+  "author": "",
+  "isbn": "2070425606",
+  "source": "BnF SRU col2bib 34234506 (cb39917139c)"
+ },
+ {
+  "no": "394",
+  "title": "La rose détachée",
+  "author": "Neruda Pablo",
+  "isbn": "2070316335",
+  "source": "BnF SRU col2bib 34234506 (cb39192504w)"
+ },
+ {
+  "no": "395",
+  "title": "Matière solaire",
+  "author": "Andrade Eugénio de",
+  "isbn": "2070314685",
+  "source": "BnF SRU col2bib 34234506 (cb39192506k)"
+ },
+ {
+  "no": "396",
+  "title": "Poèmes à l'autre moi",
+  "author": "Albert-Birot Pierre",
+  "isbn": "2070316319",
+  "source": "BnF SRU col2bib 34234506 (cb39264684p)"
+ },
+ {
+  "no": "397",
+  "title": "Baltiques",
+  "author": "Tranströmer Tomas",
+  "isbn": "2070317102",
+  "source": "BnF SRU col2bib 34234506 (cb392484375)"
+ },
+ {
+  "no": "398",
+  "title": "Comme un château défait",
+  "author": "Ray Lionel",
+  "isbn": "2070316602",
+  "source": "BnF SRU col2bib 34234506 (cb39278930r)"
+ },
+ {
+  "no": "400",
+  "title": "Poteaux d'angle",
+  "author": "Michaux Henri",
+  "isbn": "2070313972",
+  "source": "BnF SRU col2bib 34234506 (cb391536811)"
+ },
+ {
+  "no": "401",
+  "title": "Poésies choisies",
+  "author": "Auden W. H.",
+  "isbn": "2070317374",
+  "source": "BnF SRU col2bib 34234506 (cb399068402)"
+ },
+ {
+  "no": "402",
+  "title": "C'est aujourd'hui toujours",
+  "author": "Jouffroy Alain",
+  "isbn": "2070306224",
+  "source": "BnF SRU col2bib 34234506 (cb39937722q)"
+ },
+ {
+  "no": "403",
+  "title": "À l'orient de tout",
+  "author": "Cheng François",
+  "isbn": "2070307204",
+  "source": "BnF SRU col2bib 34234506 (cb40034768m)"
+ },
+ {
+  "no": "404",
+  "title": "Le passager clandestin",
+  "author": "Lubin Armen",
+  "isbn": "2070306801",
+  "source": "BnF SRU col2bib 34234506 (cb39934149c, cb399718540, cb41247262k)",
+  "bnfOtherTitles": [
+   "Prémices du désert",
+   "Ode pour hâter la venue du printemps"
+  ]
+ },
+ {
+  "no": "405",
+  "title": "Jonas",
+  "author": "Dadelsen Jean-Paul de",
+  "isbn": "2070307824",
+  "source": "BnF SRU col2bib 34234506 (cb400350380, cb39946826b)",
+  "bnfOtherTitles": [
+   "Odes et fragments"
+  ]
+ },
+ {
+  "no": "407",
+  "title": "Par les bois du Djinn, parle et bois du gin",
+  "author": "Allais Alphonse",
+  "isbn": "2070307735",
+  "source": "BnF SRU col2bib 34234506 (cb39996350v)"
+ },
+ {
+  "no": "409",
+  "title": "Les chimères",
+  "author": "Nerval Gérard de",
+  "isbn": "2070314782",
+  "source": "BnF SRU col2bib 34234506 (cb40152002v)"
+ },
+ {
+  "no": "410",
+  "title": "La machine du monde",
+  "author": "Andrade Carlos Drummond de",
+  "isbn": "2070318842",
+  "source": "BnF SRU col2bib 34234506 (cb40026755j)"
+ },
+ {
+  "no": "411",
+  "title": "L'or des tigres",
+  "author": "Borges Jorge Luis",
+  "isbn": "2070326799",
+  "source": "BnF SRU col2bib 34234506 (cb40075596c)"
+ },
+ {
+  "no": "412",
+  "title": "Une histoire de bleu",
+  "author": "Maulpoix Jean-Michel",
+  "isbn": "2070308308",
+  "source": "BnF SRU col2bib 34234506 (cb400756045)"
+ },
+ {
+  "no": "413",
+  "title": "Lénore",
+  "author": "",
+  "isbn": "2070314774",
+  "source": "BnF SRU col2bib 34234506 (cb40081560m)"
+ },
+ {
+  "no": "414",
+  "title": "À pleine voix",
+  "author": "Maïakovski Vladimir",
+  "isbn": "2070306720",
+  "source": "BnF SRU col2bib 34234506 (cb40075641c)"
+ },
+ {
+  "no": "415",
+  "title": "Le spleen de Paris",
+  "author": "Baudelaire Charles",
+  "isbn": "2070319598",
+  "source": "BnF SRU col2bib 34234506 (cb401006082)"
+ },
+ {
+  "no": "416",
+  "title": "Suppôts et suppliciations",
+  "author": "Artaud Antonin",
+  "isbn": "2070307417",
+  "source": "BnF SRU col2bib 34234506 (cb40115993c)"
+ },
+ {
+  "no": "417",
+  "title": "Nul ne s'égare",
+  "author": "Frénaud André",
+  "isbn": "207032026X",
+  "source": "BnF SRU col2bib 34234506 (cb401158875)"
+ },
+ {
+  "no": "418",
+  "title": "La forme d'une ville change plus vite, hélas, que le coeur des humains",
+  "author": "Roubaud Jacques",
+  "isbn": "2070336956",
+  "source": "BnF SRU col2bib 34234506 (cb401224281)"
+ },
+ {
+  "no": "419",
+  "title": "L'archangélique",
+  "author": "Bataille Georges",
+  "isbn": "9782070349814",
+  "source": "BnF SRU col2bib 34234506 (cb41270335w)"
+ },
+ {
+  "no": "420",
+  "title": "Extraits du corps",
+  "author": "Noël Bernard",
+  "isbn": "2070336964",
+  "source": "BnF SRU col2bib 34234506 (cb40179927s)"
+ },
+ {
+  "no": "421",
+  "title": "Du monde entier au coeur du monde",
+  "author": "Cendrars Blaise",
+  "isbn": "2070318990",
+  "source": "BnF SRU col2bib 34234506 (cb40139067q)"
+ },
+ {
+  "no": "422",
+  "title": "Les poètes du tango",
+  "author": "",
+  "isbn": "2070339009",
+  "source": "BnF SRU col2bib 34234506 (cb40236961k)"
+ },
+ {
+  "no": "423",
+  "title": "Donnant donnant",
+  "author": "Deguy Michel",
+  "isbn": "2070340805",
+  "source": "BnF SRU col2bib 34234506 (cb402377769)"
+ },
+ {
+  "no": "424",
+  "title": "La mer à boire",
+  "author": "Janvier Ludovic",
+  "isbn": "2070337235",
+  "source": "BnF SRU col2bib 34234506 (cb409284474)"
+ },
+ {
+  "no": "425",
+  "title": "Un monde ouvert",
+  "author": "White Kenneth",
+  "isbn": "9782070341511",
+  "source": "BnF SRU col2bib 34234506 (cb409733570)"
+ },
+ {
+  "no": "426",
+  "title": "Requiem",
+  "author": "Ahmatova Anna Andreevna",
+  "isbn": "9782070337224",
+  "source": "BnF SRU col2bib 34234506 (cb40971357h)"
+ },
+ {
+  "no": "427",
+  "title": "Le discours du chameau",
+  "author": "Ben Jelloun Tahar",
+  "isbn": "9782070342372",
+  "source": "BnF SRU col2bib 34234506 (cb40998714f)"
+ },
+ {
+  "no": "428",
+  "title": "L'horizon est en feu",
+  "author": "",
+  "isbn": "9782070309313",
+  "source": "BnF SRU col2bib 34234506 (cb40977691z, cb43768783q)",
+  "bnfOtherTitles": [
+   "Entrevoir"
+  ]
+ },
+ {
+  "no": "429",
+  "title": "L'amour extrême",
+  "author": "Velter André",
+  "isbn": "9782070344710",
+  "source": "BnF SRU col2bib 34234506 (cb40986996g)"
+ },
+ {
+  "no": "430",
+  "title": "Lettera amorosa",
+  "author": "Char René",
+  "isbn": "9782070344277",
+  "source": "BnF SRU col2bib 34234506 (cb409986056)"
+ },
+ {
+  "no": "430 [bis]",
+  "title": "Le pêcheur d'eau",
+  "author": "Goffette Guy",
+  "isbn": "9782070346158",
+  "source": "BnF SRU col2bib 34234506 (cb410293032)"
+ },
+ {
+  "no": "432",
+  "title": "Possibles futurs",
+  "author": "Guillevic Eugène",
+  "isbn": "9782070345779",
+  "fallbackIsbns": [
+   "9782070455898"
+  ],
+  "source": "BnF SRU col2bib 34234506 (cb410619148, cb44273223r)"
+ },
+ {
+  "no": "433",
+  "title": "Anthologie de l'épigramme",
+  "author": "",
+  "isbn": "9782070319893",
+  "source": "BnF SRU col2bib 34234506 (cb410877853)"
+ },
+ {
+  "no": "434",
+  "title": "Mausolée",
+  "author": "Enzensberger Hans Magnus",
+  "isbn": "9782070347605",
+  "source": "BnF SRU col2bib 34234506 (cb41109624m)"
+ },
+ {
+  "no": "435",
+  "title": "Car l'adieu, c'est la nuit",
+  "author": "Dickinson Emily",
+  "isbn": "9782070347599",
+  "source": "BnF SRU col2bib 34234506 (cb411696047)"
+ },
+ {
+  "no": "436",
+  "title": "La ballade du vieux marin",
+  "author": "Coleridge Samuel Taylor",
+  "isbn": "9782070319237",
+  "source": "BnF SRU col2bib 34234506 (cb41167890q)"
+ },
+ {
+  "no": "437",
+  "title": "Les sonnets",
+  "author": "Shakespeare William",
+  "isbn": "9782070342426",
+  "source": "BnF SRU col2bib 34234506 (cb411678405)"
+ },
+ {
+  "no": "438",
+  "title": "Haiku du XXe siècle",
+  "author": "",
+  "isbn": "9782070342402",
+  "source": "BnF SRU col2bib 34234506 (cb41177919t)"
+ },
+ {
+  "no": "439",
+  "title": "La présence pure",
+  "author": "Bobin Christian",
+  "isbn": "9782070349821",
+  "source": "BnF SRU col2bib 34234506 (cb41196880s)"
+ },
+ {
+  "no": "441",
+  "title": "Et comme disait Maqroll el Gaviero",
+  "author": "Mutis Álvaro",
+  "isbn": "9782070422418",
+  "source": "BnF SRU col2bib 34234506 (cb41342767n)"
+ },
+ {
+  "no": "442",
+  "title": "Les mégères de la mer",
+  "author": "Des Forêts Louis-René",
+  "isbn": "9782070356584",
+  "source": "BnF SRU col2bib 34234506 (cb41333048g)"
+ },
+ {
+  "no": "443",
+  "title": "Le Dîwân de la poésie arabe classique",
+  "author": "",
+  "isbn": "9782070358373",
+  "source": "BnF SRU col2bib 34234506 (cb41387855z)"
+ },
+ {
+  "no": "444",
+  "title": "Elsa",
+  "author": "Aragon Louis",
+  "isbn": "9782070359592",
+  "source": "BnF SRU col2bib 34234506 (cb41428710w)"
+ },
+ {
+  "no": "445",
+  "title": "Les mains libres",
+  "author": "Man Ray",
+  "isbn": "9782070337958",
+  "source": "BnF SRU col2bib 34234506 (cb41438364x)"
+ },
+ {
+  "no": "446",
+  "title": "Margeries",
+  "author": "Tardieu Jean",
+  "isbn": "9782070390007",
+  "source": "BnF SRU col2bib 34234506 (cb414494112)"
+ },
+ {
+  "no": "447",
+  "title": "J'ai un visage pour être aimé",
+  "author": "Éluard Paul",
+  "isbn": "9782070365715",
+  "source": "BnF SRU col2bib 34234506 (cb41450199h)"
+ },
+ {
+  "no": "448",
+  "title": "Anthologie de l'OuLiPo",
+  "author": "",
+  "isbn": "9782070355679",
+  "source": "BnF SRU col2bib 34234506 (cb420026435)"
+ },
+ {
+  "no": "449",
+  "title": "Cahier du nomade",
+  "author": "Segovia Tomás",
+  "isbn": "9782070379460",
+  "source": "BnF SRU col2bib 34234506 (cb41486978t)"
+ },
+ {
+  "no": "450",
+  "title": "Soleil arachnide",
+  "author": "H̱ayr al-Dīn Muḥammad",
+  "isbn": "9782070359608",
+  "source": "BnF SRU col2bib 34234506 (cb42055605c)"
+ },
+ {
+  "no": "451",
+  "title": "Ballast",
+  "author": "Dupin Jacques",
+  "isbn": "9782070379934",
+  "source": "BnF SRU col2bib 34234506 (cb420542725)"
+ },
+ {
+  "no": "452",
+  "title": "Odes à chacun",
+  "author": "Pichette Henri",
+  "isbn": "9782070358281",
+  "source": "BnF SRU col2bib 34234506 (cb420026644)"
+ },
+ {
+  "no": "453",
+  "title": "Le veilleur amoureux",
+  "author": "Delaveau Philippe",
+  "isbn": "9782070398911",
+  "source": "BnF SRU col2bib 34234506 (cb421035183)"
+ },
+ {
+  "no": "454",
+  "title": "L'âge de craie",
+  "author": "Pieyre de Mandiargues André",
+  "isbn": "9782070329977",
+  "source": "BnF SRU col2bib 34234506 (cb42133154g, cb42134752p)",
+  "bnfOtherTitles": [
+   "Écriture ineffable"
+  ]
+ },
+ {
+  "no": "456",
+  "title": "Alexandra",
+  "author": "Lycophron",
+  "isbn": "9782070410804",
+  "source": "BnF SRU col2bib 34234506 (cb421416250)"
+ },
+ {
+  "no": "457",
+  "title": "Le peu du monde",
+  "author": "Dīmoulá Kikī́",
+  "isbn": "9782070412334",
+  "source": "BnF SRU col2bib 34234506 (cb421966853)"
+ },
+ {
+  "no": "458",
+  "title": "Insomnie",
+  "author": "Cvetaeva Marina Ivanovna",
+  "isbn": "9782070358748",
+  "source": "BnF SRU col2bib 34234506 (cb424568155)"
+ },
+ {
+  "no": "459",
+  "title": "La descente de l'Escaut",
+  "author": "Venaille Franck",
+  "isbn": "9782070410828",
+  "source": "BnF SRU col2bib 34234506 (cb42218485j)"
+ },
+ {
+  "no": "460",
+  "title": "L'enterrement à Sabres",
+  "author": "Manciet Bernard",
+  "isbn": "9782070411252",
+  "source": "BnF SRU col2bib 34234506 (cb42276147x)"
+ },
+ {
+  "no": "461",
+  "title": "Quelqu'un plus tard se souviendra de nous",
+  "author": "",
+  "isbn": "9782070437368",
+  "source": "BnF SRU col2bib 34234506 (cb421586027)"
+ },
+ {
+  "no": "462",
+  "title": "Le poème continu",
+  "author": "Helder Herberto",
+  "isbn": "9782070379712",
+  "source": "BnF SRU col2bib 34234506 (cb42276116n)"
+ },
+ {
+  "no": "463",
+  "title": "Les furies et les peines",
+  "author": "Quevedo Francisco de",
+  "isbn": "9782070435968",
+  "source": "BnF SRU col2bib 34234506 (cb42356056c)"
+ },
+ {
+  "no": "465",
+  "title": "Effilage du sac de jute",
+  "author": "Char René",
+  "isbn": "9782070441471",
+  "source": "BnF SRU col2bib 34234506 (cb42396623w)"
+ },
+ {
+  "no": "466",
+  "title": "Poètes en partance",
+  "author": "",
+  "isbn": "9782070441488",
+  "source": "BnF SRU col2bib 34234506 (cb42394639s)"
+ },
+ {
+  "no": "467",
+  "title": "Ariel",
+  "author": "Plath Sylvia",
+  "isbn": "9782070441495",
+  "source": "BnF SRU col2bib 34234506 (cb42432451j)"
+ },
+ {
+  "no": "468",
+  "title": "Ici en deux",
+  "author": "Du Bouchet André",
+  "isbn": "9782070441501",
+  "source": "BnF SRU col2bib 34234506 (cb425581465)"
+ },
+ {
+  "no": "469",
+  "title": "Black-Label",
+  "author": "Damas Léon-Gontran",
+  "isbn": "9782070343966",
+  "source": "BnF SRU col2bib 34234506 (cb425174896)"
+ },
+ {
+  "no": "470",
+  "title": "L'encre serait de l'ombre",
+  "author": "Jaccottet Philippe",
+  "isbn": "9782070441457",
+  "source": "BnF SRU col2bib 34234506 (cb42558144g)"
+ },
+ {
+  "no": "471",
+  "title": "Mon beau navire, ô ma mémoire",
+  "author": "",
+  "isbn": "9782070444397",
+  "source": "BnF SRU col2bib 34234506 (cb42542862p)"
+ },
+ {
+  "no": "472",
+  "title": "Éros émerveillé",
+  "author": "",
+  "isbn": "9782070443550",
+  "source": "BnF SRU col2bib 34234506 (cb42610221h)"
+ },
+ {
+  "no": "473",
+  "title": "America",
+  "author": "Cliff William",
+  "isbn": "9782070445493",
+  "source": "BnF SRU col2bib 34234506 (cb42625788k)"
+ },
+ {
+  "no": "474",
+  "title": "Marin à terre",
+  "author": "Alberti Rafael",
+  "isbn": "9782070441518",
+  "source": "BnF SRU col2bib 34234506 (cb426413716)"
+ },
+ {
+  "no": "475",
+  "title": "Il pleut des étoiles dans notre lit",
+  "author": "",
+  "isbn": "9782070447060",
+  "source": "BnF SRU col2bib 34234506 (cb426232621)"
+ },
+ {
+  "no": "476",
+  "title": "Sonnets",
+  "author": "Pasolini Pier Paolo",
+  "isbn": "9782070349838",
+  "source": "BnF SRU col2bib 34234506 (cb42682153s)"
+ },
+ {
+  "no": "477",
+  "title": "Poèmes du Wessex",
+  "author": "Hardy Thomas",
+  "isbn": "9782070441525",
+  "source": "BnF SRU col2bib 34234506 (cb42730521x)"
+ },
+ {
+  "no": "478",
+  "title": "Comme si comme ça",
+  "author": "Deguy Michel",
+  "isbn": "9782070446049",
+  "source": "BnF SRU col2bib 34234506 (cb42759889z)"
+ },
+ {
+  "no": "479",
+  "title": "La flûte de l'infini",
+  "author": "Kabir",
+  "isbn": "9782070444687",
+  "source": "BnF SRU col2bib 34234506 (cb42777576q)"
+ },
+ {
+  "no": "480",
+  "title": "La comédie",
+  "author": "Dante Alighieri",
+  "isbn": "9782070387236",
+  "source": "BnF SRU col2bib 34234506 (cb435134165)"
+ },
+ {
+  "no": "481",
+  "title": "Le mariage du ciel et de l'enfer",
+  "author": "Blake William",
+  "isbn": "9782070448944",
+  "source": "BnF SRU col2bib 34234506 (cb43575208q)"
+ },
+ {
+  "no": "482",
+  "title": "Cellulairement",
+  "author": "Verlaine Paul",
+  "isbn": "9782070451357",
+  "source": "BnF SRU col2bib 34234506 (cb43609719f)"
+ },
+ {
+  "no": "483",
+  "title": "Poèmes à dire",
+  "author": "",
+  "isbn": "9782070452156",
+  "source": "BnF SRU col2bib 34234506 (cb43572289t)"
+ },
+ {
+  "no": "484",
+  "title": "Je voudrais tant que tu te souviennes",
+  "author": "",
+  "isbn": "9782070452163",
+  "source": "BnF SRU col2bib 34234506 (cb436279146)"
+ },
+ {
+  "no": "485",
+  "title": "Vaguedivague",
+  "author": "Neruda Pablo",
+  "isbn": "9782070450817",
+  "source": "BnF SRU col2bib 34234506 (cb436470938)"
+ },
+ {
+  "no": "486",
+  "title": "Contrée",
+  "author": "Desnos Robert",
+  "isbn": "9782070139538",
+  "source": "BnF SRU col2bib 34234506 (cb437016616)"
+ },
+ {
+  "no": "487",
+  "title": "Kala Ghoda",
+  "author": "Kolatkar Arun",
+  "isbn": "9782070448463",
+  "source": "BnF SRU col2bib 34234506 (cb43701665k)"
+ },
+ {
+  "no": "489",
+  "title": "Un manteau de fortune",
+  "author": "Goffette Guy",
+  "isbn": "9782070453375",
+  "source": "BnF SRU col2bib 34234506 (cb437687068)"
+ },
+ {
+  "no": "490",
+  "title": "L'heure présente",
+  "author": "Bonnefoy Yves",
+  "isbn": "9782070456253",
+  "source": "BnF SRU col2bib 34234506 (cb437767169, cb44335446s)",
+  "bnfOtherTitles": [
+   "Poèmes de Morven le Gaélique"
+  ]
+ },
+ {
+  "no": "491",
+  "title": "Vers le sud",
+  "author": "Gelman Juan",
+  "isbn": "9782070450824",
+  "source": "BnF SRU col2bib 34234506 (cb44258415g)"
+ },
+ {
+  "no": "492",
+  "title": "Glossaire j'y serre mes gloses",
+  "author": "Leiris Michel",
+  "isbn": "9782070466719",
+  "source": "BnF SRU col2bib 34234506 (cb438024403)"
+ },
+ {
+  "no": "493",
+  "title": "Non réconcilié",
+  "author": "Houellebecq Michel",
+  "isbn": "9782070456895",
+  "source": "BnF SRU col2bib 34234506 (cb43799226c)"
+ },
+ {
+  "no": "494",
+  "title": "À distance",
+  "author": "Michaux Henri",
+  "isbn": "9782070457236",
+  "source": "BnF SRU col2bib 34234506 (cb442187055)"
+ },
+ {
+  "no": "495",
+  "title": "Moments",
+  "author": "Michaux Henri",
+  "isbn": "9782070459797",
+  "source": "BnF SRU col2bib 34234506 (cb44221690g)"
+ },
+ {
+  "no": "496",
+  "title": "La vie, l'amour, la mort, le vide et le vent",
+  "author": "Gilbert-Lecomte Roger",
+  "isbn": "9782070463800",
+  "source": "BnF SRU col2bib 34234506 (cb44288978c)"
+ },
+ {
+  "no": "497",
+  "title": "Une transaction secrète",
+  "author": "Jaccottet Philippe",
+  "isbn": "9782070466573",
+  "source": "BnF SRU col2bib 34234506 (cb44425951q)"
+ },
+ {
+  "no": "498",
+  "title": "L'entretien des muses",
+  "author": "Jaccottet Philippe",
+  "isbn": "9782070466580",
+  "source": "BnF SRU col2bib 34234506 (cb44431583g)"
+ },
+ {
+  "no": "499",
+  "title": "Toute personne qui tombe a des ailes",
+  "author": "Bachmann Ingeborg",
+  "isbn": "9782070449286",
+  "source": "BnF SRU col2bib 34234506 (cb44431222f)"
+ },
+ {
+  "no": "500",
+  "title": "Les planches courbes",
+  "author": "Bonnefoy Yves",
+  "isbn": "9782070466559",
+  "source": "BnF SRU col2bib 34234506 (cb44449472p)"
+ },
+ {
+  "no": "501",
+  "title": "Birthday letters",
+  "author": "Hughes Ted",
+  "isbn": "9782070464562",
+  "source": "BnF SRU col2bib 34234506 (cb44431241q)"
+ },
+ {
+  "no": "502",
+  "title": "Les Lusiades",
+  "author": "Camões Luís de",
+  "isbn": "9782070466566",
+  "source": "BnF SRU col2bib 34234506 (cb44446194f)"
+ },
+ {
+  "no": "503",
+  "title": "La pierre amour",
+  "author": "Bordes Xavier",
+  "isbn": "9782070466252",
+  "source": "BnF SRU col2bib 34234506 (cb44471457g)"
+ },
+ {
+  "no": "504",
+  "title": "Où vont nos nuits perdues",
+  "author": "Duault Alain",
+  "isbn": "9782070467501",
+  "source": "BnF SRU col2bib 34234506 (cb44470474t)"
+ },
+ {
+  "no": "505",
+  "title": "Élégies pour le temps de vivre",
+  "author": "Rognet Richard",
+  "isbn": "9782070467471",
+  "source": "BnF SRU col2bib 34234506 (cb44468534k)"
+ },
+ {
+  "no": "506",
+  "title": "Somnambule du jour",
+  "author": "Koltz Anise",
+  "isbn": "9782070468621",
+  "source": "BnF SRU col2bib 34234506 (cb44522261j)"
+ },
+ {
+  "no": "507",
+  "title": "Infiniment proche",
+  "author": "Bianu Zéno",
+  "isbn": "9782070467235",
+  "source": "BnF SRU col2bib 34234506 (cb445223714)"
+ },
+ {
+  "no": "508",
+  "title": "L'indiscipline de l'eau",
+  "author": "Darras Jacques",
+  "isbn": "9782070467921",
+  "source": "BnF SRU col2bib 34234506 (cb445234097)"
+ },
+ {
+  "no": "509",
+  "title": "Le pays derrière les larmes",
+  "author": "Lemaire Jean-Pierre",
+  "isbn": "9782070467730",
+  "source": "BnF SRU col2bib 34234506 (cb45035769w)"
+ },
+ {
+  "no": "510",
+  "title": "Figures qui bougent un peu",
+  "author": "Sacré James",
+  "isbn": "9782070468638",
+  "source": "BnF SRU col2bib 34234506 (cb44522880g)"
+ },
+ {
+  "no": "511",
+  "title": "L'arbre à poèmes",
+  "author": "Laâbi Abdellatif",
+  "isbn": "9782070468652",
+  "source": "BnF SRU col2bib 34234506 (cb44523471n)"
+ },
+ {
+  "no": "512",
+  "title": "Odes dérisoires",
+  "author": "Barbarant Olivier",
+  "isbn": "9782070467853",
+  "source": "BnF SRU col2bib 34234506 (cb44523446f)"
+ },
+ {
+  "no": "513",
+  "title": "Les élégies",
+  "author": "Hocquard Emmanuel",
+  "isbn": "9782070468645",
+  "source": "BnF SRU col2bib 34234506 (cb450095419)"
+ },
+ {
+  "no": "514",
+  "title": "Les mots étaient des loups",
+  "author": "Khoury-Ghata Vénus",
+  "isbn": "9782070469635",
+  "source": "BnF SRU col2bib 34234506 (cb445238754)"
+ },
+ {
+  "no": "515",
+  "title": "Fable de Polyphème et Galatée",
+  "author": "Góngora y Argote Luis de",
+  "isbn": "9782070197484",
+  "source": "BnF SRU col2bib 34234506 (cb451740760)"
+ },
+ {
+  "no": "516",
+  "title": "Je suis un crabe ponctuel",
+  "author": "Roubaud Jacques",
+  "isbn": "9782070179268",
+  "source": "BnF SRU col2bib 34234506 (cb45056022z)"
+ },
+ {
+  "no": "517",
+  "title": "La révolte de l'islam",
+  "author": "Shelley Percy Bysshe",
+  "isbn": "9782070468614",
+  "source": "BnF SRU col2bib 34234506 (cb451354964)"
+ },
+ {
+  "no": "518",
+  "title": "Chants du désespéré",
+  "author": "Vildrac Charles",
+  "isbn": "9782070197835",
+  "source": "BnF SRU col2bib 34234506 (cb451788525)"
+ },
+ {
+  "no": "519",
+  "title": "Le chant des morts",
+  "author": "Reverdy Pierre",
+  "isbn": "9782072687549",
+  "source": "BnF SRU col2bib 34234506 (cb45174087n)"
+ },
+ {
+  "no": "520",
+  "title": "Feu nomade...",
+  "author": "Chaliand Gérard",
+  "isbn": "9782072696374",
+  "source": "BnF SRU col2bib 34234506 (cb451787955)"
+ },
+ {
+  "no": "521",
+  "title": "La vraie gloire est ici",
+  "author": "Cheng François",
+  "isbn": "9782072706455",
+  "source": "BnF SRU col2bib 34234506 (cb452251201)"
+ },
+ {
+  "no": "522",
+  "title": "J'aurais un royaume en bois flotté",
+  "author": "Nimrod",
+  "isbn": "9782072717178",
+  "source": "BnF SRU col2bib 34234506 (cb45260174k)"
+ },
+ {
+  "no": "523",
+  "title": "Furigraphie",
+  "author": "Hawad",
+  "isbn": "9782072717222",
+  "source": "BnF SRU col2bib 34234506 (cb452633725)"
+ },
+ {
+  "no": "524",
+  "title": "Du cloître à la place publique",
+  "author": "",
+  "isbn": "9782072718892",
+  "source": "BnF SRU col2bib 34234506 (cb45360215h)"
+ },
+ {
+  "no": "525",
+  "title": "Je est un Juif, roman",
+  "author": "Dobzynski Charles",
+  "isbn": "9782072739149",
+  "source": "BnF SRU col2bib 34234506 (cb45381281z)"
+ },
+ {
+  "no": "526",
+  "title": "Lettre à la femme aimée au sujet de la mort",
+  "author": "Siméon Jean-Pierre",
+  "isbn": "9782072750564",
+  "source": "BnF SRU col2bib 34234506 (cb45427165t)"
+ },
+ {
+  "no": "527",
+  "title": "Rythmes",
+  "author": "Chedid Andrée",
+  "isbn": "9782072750519",
+  "source": "BnF SRU col2bib 34234506 (cb45434614s)"
+ },
+ {
+  "no": "528",
+  "title": "Je dirai que je suis tombé",
+  "author": "Dubillard Roland",
+  "isbn": "9782072755101",
+  "source": "BnF SRU col2bib 34234506 (cb45434610d)"
+ },
+ {
+  "no": "529",
+  "title": "Ajoie",
+  "author": "Pirotte Jean-Claude",
+  "isbn": "9782072768545",
+  "source": "BnF SRU col2bib 34234506 (cb45453081f)"
+ },
+ {
+  "no": "530",
+  "title": "Mathématique générale de l'infini",
+  "author": "Pey Serge",
+  "isbn": "9782072768491",
+  "source": "BnF SRU col2bib 34234506 (cb45480536w)"
+ },
+ {
+  "no": "531",
+  "title": "Le visage nuptial",
+  "author": "Char René",
+  "isbn": "9782072786150",
+  "source": "BnF SRU col2bib 34234506 (cb45481711b)"
+ },
+ {
+  "no": "532",
+  "title": "De la mort sans exagérer",
+  "author": "Szymborska Wisława",
+  "isbn": "9782072706509",
+  "source": "BnF SRU col2bib 34234506 (cb45532329p)"
+ },
+ {
+  "no": "533",
+  "title": "Lexique amoureux",
+  "author": "Adūnīs",
+  "isbn": "9782072750465",
+  "source": "BnF SRU col2bib 34234506 (cb45588262q)"
+ },
+ {
+  "no": "534",
+  "title": "Canzoniere",
+  "author": "Pétrarque",
+  "isbn": "9782072743757",
+  "source": "BnF SRU col2bib 34234506 (cb45576781p)"
+ },
+ {
+  "no": "535",
+  "title": "Tout terriblement",
+  "author": "Apollinaire Guillaume",
+  "isbn": "9782072802454",
+  "source": "BnF SRU col2bib 34234506 (cb45611623z)"
+ },
+ {
+  "no": "536",
+  "title": "Poèmes choisis",
+  "author": "Braun Volker",
+  "isbn": "9782072820175",
+  "source": "BnF SRU col2bib 34234506 (cb45625517x)"
+ },
+ {
+  "no": "537",
+  "title": "La lucarne",
+  "author": "Heaney Seamus",
+  "isbn": "9782072801730",
+  "source": "BnF SRU col2bib 34234506 (cb456206128)"
+ },
+ {
+  "no": "538",
+  "title": "Le corsaire",
+  "author": "Byron George Gordon",
+  "isbn": "9782072738173",
+  "source": "BnF SRU col2bib 34234506 (cb45731169g)"
+ },
+ {
+  "no": "539",
+  "title": "Sous l'imperturbable clarté",
+  "author": "Barnaud Jean-Marie",
+  "isbn": "9782072859229",
+  "source": "BnF SRU col2bib 34234506 (cb45810736p)"
+ },
+ {
+  "no": "540",
+  "title": "Cent ballades d'amant et de dame",
+  "author": "Christine de Pizan",
+  "isbn": "9782072791406",
+  "source": "BnF SRU col2bib 34234506 (cb456587990)"
+ },
+ {
+  "no": "541",
+  "title": "Terre énergumène",
+  "author": "Bancquart Marie-Claire",
+  "isbn": "9782072834233",
+  "source": "BnF SRU col2bib 34234506 (cb45658825q)"
+ },
+ {
+  "no": "542",
+  "title": "Enfin le royaume",
+  "author": "Cheng François",
+  "isbn": "9782072834288",
+  "source": "BnF SRU col2bib 34234506 (cb456752321)"
+ },
+ {
+  "no": "543",
+  "title": "Défends-toi, beauté violente !",
+  "author": "Michel Jean-Paul",
+  "isbn": "9782072822186",
+  "source": "BnF SRU col2bib 34234506 (cb45688283v)"
+ },
+ {
+  "no": "544",
+  "title": "La grande gaîté",
+  "author": "Aragon Louis",
+  "isbn": "9782072845789",
+  "source": "BnF SRU col2bib 34234506 (cb45725119p)"
+ },
+ {
+  "no": "545",
+  "title": "Poèmes bleus",
+  "author": "Perros Georges",
+  "isbn": "9782072845734",
+  "source": "BnF SRU col2bib 34234506 (cb45750808c)"
+ },
+ {
+  "no": "546",
+  "title": "Comme battements d'ailes",
+  "author": "Gatti Armand",
+  "isbn": "9782072845833",
+  "source": "BnF SRU col2bib 34234506 (cb45751088w)"
+ },
+ {
+  "no": "547",
+  "title": "Le drageoir aux épices",
+  "author": "Huysmans Joris-Karl",
+  "isbn": "9782072859175",
+  "source": "BnF SRU col2bib 34234506 (cb45832865f)"
+ },
+ {
+  "no": "548",
+  "title": "La chasse infinie...",
+  "author": "Temple Frédéric Jacques",
+  "isbn": "9782072880469",
+  "source": "BnF SRU col2bib 34234506 (cb46516556t)"
+ },
+ {
+  "no": "549",
+  "title": "La parole qui me porte",
+  "author": "Valet Paul",
+  "isbn": "9782072884467",
+  "source": "BnF SRU col2bib 34234506 (cb46528255b)"
+ },
+ {
+  "no": "550",
+  "title": "La vie en dansant",
+  "author": "Velter André",
+  "isbn": "9782072884511",
+  "source": "BnF SRU col2bib 34234506 (cb46528318d)"
+ },
+ {
+  "no": "551",
+  "title": "Un feu au coeur du vent",
+  "author": "",
+  "isbn": "9782072866425",
+  "source": "BnF SRU col2bib 34234506 (cb46530183k)"
+ },
+ {
+  "no": "552",
+  "title": "Textes pour un poème",
+  "author": "Chedid Andrée",
+  "isbn": "9782072891434",
+  "source": "BnF SRU col2bib 34234506 (cb46572419m)"
+ },
+ {
+  "no": "553",
+  "title": "Le livre des anges",
+  "author": "Dattas Lydie",
+  "isbn": "9782072891489",
+  "source": "BnF SRU col2bib 34234506 (cb46569145t)"
+ },
+ {
+  "no": "554",
+  "title": "Pour plus de lumière",
+  "author": "Juliet Charles",
+  "isbn": "9782072894350",
+  "source": "BnF SRU col2bib 34234506 (cb46653076b)"
+ },
+ {
+  "no": "555",
+  "title": "Les soliloques du pauvre",
+  "author": "Rictus Jehan",
+  "isbn": "9782072864919",
+  "source": "BnF SRU col2bib 34234506 (cb466731045)"
+ },
+ {
+  "no": "556",
+  "title": "Cette lumière est mon désir",
+  "author": "Ǧalāl al-Dīn Rūmī",
+  "isbn": "9782072924361",
+  "source": "BnF SRU col2bib 34234506 (cb466732691)"
+ },
+ {
+  "no": "557",
+  "title": "La chanson de Passavant",
+  "author": "Sureau François",
+  "isbn": "9782072928659",
+  "source": "BnF SRU col2bib 34234506 (cb46736637k)"
+ },
+ {
+  "no": "558",
+  "title": "Sugar",
+  "author": "Sarner Éric",
+  "isbn": "9782072928604",
+  "source": "BnF SRU col2bib 34234506 (cb467415030)"
+ },
+ {
+  "no": "559",
+  "title": "Aller simple",
+  "author": "De Luca Erri",
+  "isbn": "9782072879074",
+  "source": "BnF SRU col2bib 34234506 (cb46787405p)"
+ },
+ {
+  "no": "560",
+  "title": "Ciel à perdre",
+  "author": "Mihajlova Aksiniâ",
+  "isbn": "9782072939723",
+  "source": "BnF SRU col2bib 34234506 (cb467975175)"
+ },
+ {
+  "no": "561",
+  "title": "Les épîtres",
+  "author": "Marot Clément",
+  "isbn": "9782072939877",
+  "source": "BnF SRU col2bib 34234506 (cb46830163g)"
+ },
+ {
+  "no": "562",
+  "title": "Le sommet de la route et l'ombre de la Croix",
+  "author": "",
+  "isbn": "9782072854323",
+  "source": "BnF SRU col2bib 34234506 (cb467975651)"
+ },
+ {
+  "no": "563",
+  "title": "L'autre moitié du songe m'appartient",
+  "author": "Gallienne Alicia",
+  "isbn": "9782072950674",
+  "source": "BnF SRU col2bib 34234506 (cb46898458w)"
+ },
+ {
+  "no": "564",
+  "title": "Les magiciennes",
+  "author": "Théocrite",
+  "isbn": "9782072891380",
+  "source": "BnF SRU col2bib 34234506 (cb468575959)"
+ },
+ {
+  "no": "566",
+  "title": "Poésies verticales",
+  "author": "Juarroz Roberto",
+  "isbn": "9782072916205",
+  "source": "BnF SRU col2bib 34234506 (cb46934106s)"
+ },
+ {
+  "no": "567",
+  "title": "Douleur et lumière du monde",
+  "author": "Ben Jelloun Tahar",
+  "isbn": "9782072971655",
+  "source": "BnF SRU col2bib 34234506 (cb46967168p)"
+ },
+ {
+  "no": "568",
+  "title": "L'angle noir de la joie",
+  "author": "Desautels Denise",
+  "isbn": "9782072971754",
+  "source": "BnF SRU col2bib 34234506 (cb469847232)"
+ },
+ {
+  "no": "569",
+  "title": "Mexico city blues",
+  "author": "Kerouac Jack",
+  "isbn": "9782072971709",
+  "source": "BnF SRU col2bib 34234506 (cb47010507f)"
+ },
+ {
+  "no": "570",
+  "title": "Le chien andalou",
+  "author": "Buñuel Luis",
+  "isbn": "9782072893858",
+  "source": "BnF SRU col2bib 34234506 (cb47057435x)"
+ },
+ {
+  "no": "571",
+  "title": "La vallée des papillons",
+  "author": "Christensen Inger",
+  "isbn": "9782072982279",
+  "source": "BnF SRU col2bib 34234506 (cb47121755g)"
+ },
+ {
+  "no": "572",
+  "title": "Les adieux",
+  "author": "Aragon Louis",
+  "isbn": "9782070456505",
+  "source": "BnF SRU col2bib 34234506 (cb47160568v)"
+ },
+ {
+  "no": "573",
+  "title": "L'île rebelle",
+  "author": "",
+  "isbn": "9782072879128",
+  "source": "BnF SRU col2bib 34234506 (cb471908460)"
+ },
+ {
+  "no": "574",
+  "title": "Comme un qui s'est perdu dans la forêt profonde",
+  "author": "Jodelle Étienne",
+  "isbn": "9782070328499",
+  "source": "BnF SRU col2bib 34234506 (cb47208803z)"
+ },
+ {
+  "no": "575",
+  "title": "Nous nous attendons",
+  "author": "Dreyfus Ariane",
+  "isbn": "9782073007483",
+  "source": "BnF SRU col2bib 34234506 (cb472180796)"
+ },
+ {
+  "no": "576",
+  "title": "Gens de l'eau",
+  "author": "Khoury-Ghata Vénus",
+  "isbn": "9782073007438",
+  "source": "BnF SRU col2bib 34234506 (cb47222695v)"
+ },
+ {
+  "no": "577",
+  "title": "La couleur du temps",
+  "author": "Nicoïdski Clarisse",
+  "isbn": "9782073022578",
+  "source": "BnF SRU col2bib 34234506 (cb472711520)"
+ },
+ {
+  "no": "578",
+  "title": "Exode et métamorphose",
+  "author": "Sachs Nelly",
+  "isbn": "9782073007384",
+  "source": "BnF SRU col2bib 34234506 (cb472459636)"
+ },
+ {
+  "no": "579",
+  "title": "De rose alors ne reste que l'épine",
+  "author": "Des Houlières Antoinette",
+  "isbn": "9782073027412",
+  "source": "BnF SRU col2bib 34234506 (cb47274428p)"
+ },
+ {
+  "no": "580",
+  "title": "Une saison en enfer",
+  "author": "Rimbaud Arthur",
+  "isbn": "9782073036056",
+  "source": "BnF SRU col2bib 34234506 (cb47458197k)"
+ },
+ {
+  "no": "581",
+  "title": "L'iris sauvage / Meadowlands / Averno",
+  "author": "Glück Louise",
+  "isbn": "9782072944130",
+  "source": "BnF SRU col2bib 34234506 (cb47367860z)"
+ },
+ {
+  "no": "582",
+  "title": "Je suis un volcan criblé de météores",
+  "author": "ʿAdnān Ītil",
+  "isbn": "9782073042163",
+  "source": "BnF SRU col2bib 34234506 (cb473828129)"
+ },
+ {
+  "no": "583",
+  "title": "Ombre pour ombre",
+  "author": "Le Brun Annie",
+  "isbn": "9782073051561",
+  "source": "BnF SRU col2bib 34234506 (cb47407784m)"
+ },
+ {
+  "no": "584",
+  "title": "Rue des fleurs",
+  "author": "Maulpoix Jean-Michel",
+  "isbn": "9782073054470",
+  "source": "BnF SRU col2bib 34234506 (cb474298854)"
+ },
+ {
+  "no": "585",
+  "title": "Hélène ou Le règne végétal",
+  "author": "Cadou René Guy",
+  "isbn": "9782073057723",
+  "source": "BnF SRU col2bib 34234506 (cb474692243)"
+ },
+ {
+  "no": "586",
+  "title": "Le souci de la terre",
+  "author": "Virgile",
+  "isbn": "9782073069801",
+  "source": "BnF SRU col2bib 34234506 (cb48539458n)"
+ },
+ {
+  "no": "587",
+  "title": "Journal d'un animal marin",
+  "author": "Depestre René",
+  "isbn": "9782073061843",
+  "source": "BnF SRU col2bib 34234506 (cb47512356f)"
+ },
+ {
+  "no": "588",
+  "title": "L'araignée pendue à un cil",
+  "author": "",
+  "isbn": "9782073022479",
+  "source": "BnF SRU col2bib 34234506 (cb47598774k)"
+ },
+ {
+  "no": "589",
+  "title": "Les grandes choses",
+  "author": "Dotremont Christian",
+  "isbn": "9782073087386",
+  "source": "BnF SRU col2bib 34234506 (cb476426024)"
+ },
+ {
+  "no": "591",
+  "title": "Un visage appuyé contre le monde",
+  "author": "Dorion Hélène",
+  "isbn": "9782073098153",
+  "source": "BnF SRU col2bib 34234506 (cb47644997z)"
+ },
+ {
+  "no": "592",
+  "title": "Labyrinthes",
+  "author": "Okigbo Christopher",
+  "isbn": "9782073104656",
+  "source": "BnF SRU col2bib 34234506 (cb47691181p)"
+ },
+ {
+  "no": "593",
+  "title": "L'âme blessée d'un éléphant noir",
+  "author": "Okoundji Gabriel",
+  "isbn": "9782073104700",
+  "source": "BnF SRU col2bib 34234506 (cb47687373v)"
+ },
+ {
+  "no": "594",
+  "title": "La chimie de l'âme",
+  "author": "Kopland Rutger",
+  "isbn": "9782073087331",
+  "source": "BnF SRU col2bib 34234506 (cb485161429)"
+ },
+ {
+  "no": "595",
+  "title": "La Clarté Notre-Dame",
+  "author": "Jaccottet Philippe",
+  "isbn": "9782073114228",
+  "source": "BnF SRU col2bib 34234506 (cb485340737)"
+ },
+ {
+  "no": "596",
+  "title": "Lettres à la bien-aimée",
+  "author": "Metz Thierry",
+  "isbn": "9782073110947",
+  "source": "BnF SRU col2bib 34234506 (cb48621968c)"
+ },
+ {
+  "no": "597",
+  "title": "Verdures de la nuit",
+  "author": "Chappaz Maurice",
+  "isbn": "9782073139955",
+  "source": "BnF SRU col2bib 34234506 (cb48707685b)"
+ }
+]
