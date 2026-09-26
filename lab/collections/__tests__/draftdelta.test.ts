@@ -38,4 +38,10 @@ describe('draftDelta', () => {
     expect(r.summary).toBe('already equal');
     expect(r.onlineOnly).toEqual([]);
   });
+
+  it('does not report the file\'s own site-image picks in a draft copied from the deployed file', () => {
+    const file = [w('OL1W'), w('OL2W', 'local:vol-02')];
+    const r = draftDelta({ title: 'X', intro: '', works: [w('OL1W'), w('OL2W', 'local:vol-02')] }, { title: 'X', intro: '', works: file });
+    expect(r.onlineOnly).toEqual([]);
+  });
 });

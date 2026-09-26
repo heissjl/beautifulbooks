@@ -37,7 +37,9 @@ export function draftDelta(draft: DraftLike, fileRecord: Pick<CollectionRecord, 
 
   const fileIds = new Set(record.works.map(w => w.id));
   const online = new Map(draft.works.map(w => [w.id, w]));
-  const removed = draft.works.filter(w => !fileIds.has(w.id));
+  // A draft copied from the deployed file on /curate carries the file's own picks, site images included; those are not extra.
+  const anyFileIds = new Set(fileRecord.works.map(w => w.id));
+  const removed = draft.works.filter(w => !anyFileIds.has(w.id));
   for (const w of removed) ops.push({ op: 'remove', id: w.id });
   let added = 0;
   let covers = 0;
@@ -50,7 +52,8 @@ export function draftDelta(draft: DraftLike, fileRecord: Pick<CollectionRecord, 
     ops.push({ op: 'pick', id: w.id, title: w.title, author: w.author, coverId: w.coverId });
   }
   const wanted = record.works.map(w => w.id);
-  const afterSteps = [...draft.works.filter(w => fileIds.has(w.id)).map(w => w.id), ...wanted.filter(id => !online.has(id))];
+  const kept = draft.works.filter(w => fileIds.has(w.id)).map(w => w.id);
+  const afterSteps = [...kept, ...wanted.filter(id => !online.has(id))];
   if (afterSteps.join() !== wanted.join()) ops.push({ op: 'order', ids: wanted });
 
   // What only the online draft has: works the file does not list, and other covers for the same work.
