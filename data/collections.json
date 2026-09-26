@@ -3,10 +3,10 @@
   "collections": [
     {
       "slug": "women-writers",
-      "title": "Women writers",
+      "title": "Feminist Press",
       "kind": "authors",
-      "intro": "Novels, poems and essays by women, from Jane Austen to Margaret Atwood: some of them founding texts of feminism, some simply books that changed what a woman could write about. Each tile is one cover, chosen by eye; the wall behind it shows the rest.",
-      "published": false,
+      "intro": "https://feministpress.org/",
+      "published": true,
       "authors": [
         {
           "name": "Jane Austen",
@@ -551,49 +551,40 @@
       ],
       "works": [
         {
-          "id": "OL472971W",
-          "title": "Malina",
-          "author": "Ingeborg Bachmann",
-          "coverId": "ol:12273691",
-          "firstPublished": 1971,
-          "addedAt": "2026-09-24",
-          "from": "curated.json"
+          "id": "OL492309W",
+          "title": "Earthsong",
+          "author": "Suzette Haden Elgin",
+          "coverId": "ol:683284",
+          "addedAt": "2026-09-26",
+          "from": "list:hopeevey/OL203409L",
+          "coverIsbn": "9780886775926"
         },
         {
-          "id": "OL450063W",
-          "title": "Frankenstein; or, The Modern Prometheus",
-          "author": "Mary Shelley",
-          "coverId": "ol:13498737",
-          "firstPublished": 1818,
-          "addedAt": "2026-09-24",
-          "from": "curated.json"
+          "id": "OL4622222W",
+          "title": "A Short Walk (Classic Feminist Writers)",
+          "author": "Alice Childress",
+          "coverId": "ol:1881670",
+          "addedAt": "2026-09-26",
+          "from": "list:hopeevey/OL203409L",
+          "coverIsbn": "9781558615328"
         },
         {
-          "id": "OL675783W",
-          "title": "The Handmaid's Tale",
-          "author": "Margaret Atwood",
-          "coverId": "ol:15154653",
-          "firstPublished": 1985,
-          "addedAt": "2026-09-24",
-          "from": "curated.json"
+          "id": "OL7105292W",
+          "title": "The wedding",
+          "author": "Dorothy West",
+          "coverId": "ol:7015558",
+          "addedAt": "2026-09-26",
+          "from": "list:hopeevey/OL203409L",
+          "coverIsbn": "0385471432"
         },
         {
-          "id": "OL675722W",
-          "title": "Oryx and Crake",
-          "author": "Margaret Atwood",
-          "coverId": "ol:14534480",
-          "firstPublished": 2002,
-          "addedAt": "2026-09-24",
-          "from": "curated.json"
-        },
-        {
-          "id": "OL1095427W",
-          "title": "Jane Eyre",
-          "author": "Charlotte Brontë",
-          "coverId": "ol:10865744",
-          "firstPublished": 1847,
-          "addedAt": "2026-09-24",
-          "from": "curated.json"
+          "id": "OL2431024W",
+          "title": "What Did Miss Darrington See?",
+          "author": "Jessica Amanda Salmonson",
+          "coverId": "ol:5415392",
+          "addedAt": "2026-09-26",
+          "from": "list:hopeevey/OL203409L",
+          "coverIsbn": "1558610065"
         },
         {
           "id": "OL492354W",
@@ -603,6 +594,14 @@
           "addedAt": "2026-09-26",
           "from": "list:hopeevey/OL203409L",
           "coverIsbn": "9780886771218"
+        },
+        {
+          "id": "OL7105290W",
+          "title": "The Living Is Easy",
+          "author": "Dorothy West",
+          "coverId": "ol:10405479",
+          "addedAt": "2026-09-26",
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL5278774W",
@@ -617,46 +616,25 @@
           "id": "OL1662932W",
           "title": "Weeds",
           "author": "Edith Summers Kelley",
-          "coverId": "ol:4323553",
+          "coverId": "ol:784428",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "0935312013"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL2520829W",
           "title": "Witches, midwives, and nurses",
           "author": "Barbara Ehrenreich",
-          "coverId": "ol:6604403",
+          "coverId": "ol:13760665",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "0912670134"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL1860049W",
           "title": "From Eve to Dawn",
           "author": "Marilyn French",
-          "coverId": "ol:8279857",
+          "coverId": "ol:772871",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1552782689"
-        },
-        {
-          "id": "OL2431024W",
-          "title": "What Did Miss Darrington See?",
-          "author": "Jessica Amanda Salmonson",
-          "coverId": "ol:5415392",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558610065"
-        },
-        {
-          "id": "OL492309W",
-          "title": "Earthsong",
-          "author": "Suzette Haden Elgin",
-          "coverId": "ol:683284",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "9780886775926"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL1492922W",
@@ -666,24 +644,6 @@
           "addedAt": "2026-09-26",
           "from": "list:hopeevey/OL203409L",
           "coverIsbn": "0935312722"
-        },
-        {
-          "id": "OL7105290W",
-          "title": "The Living Is Easy",
-          "author": "Dorothy West",
-          "coverId": "ol:9834390",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558611479"
-        },
-        {
-          "id": "OL7105292W",
-          "title": "The wedding",
-          "author": "Dorothy West",
-          "coverId": "ol:7015558",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "0385471432"
         },
         {
           "id": "OL7105286W",
@@ -779,10 +739,9 @@
           "id": "OL8856177W",
           "title": "Truth Tales",
           "author": "Kali for Women",
-          "coverId": "ol:1881523",
+          "coverId": "ol:784353",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "9781558610118"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL2659463W",
@@ -806,10 +765,9 @@
           "id": "OL335663W",
           "title": "Sultana's dream and selections from The secluded ones",
           "author": "Rokeya Begum.",
-          "coverId": "ol:713981",
+          "coverId": "ol:713977",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "0935312838"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL2335999W",
@@ -878,19 +836,17 @@
           "id": "OL4805088W",
           "title": "Women have always worked",
           "author": "Alice Kessler-Harris",
-          "coverId": "ol:6644372",
+          "coverId": "ol:4945948",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "091267086X"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL3928954W",
           "title": "Proud man",
           "author": "Katharine Burdekin",
-          "coverId": "ol:1881537",
+          "coverId": "ol:784384",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558610707"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL7014083W",
@@ -927,15 +883,6 @@
           "addedAt": "2026-09-26",
           "from": "list:hopeevey/OL203409L",
           "coverIsbn": "9781558612198"
-        },
-        {
-          "id": "OL4622222W",
-          "title": "A Short Walk (Classic Feminist Writers)",
-          "author": "Alice Childress",
-          "coverId": "ol:1881670",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "9781558615328"
         },
         {
           "id": "OL16342167W",
@@ -1031,10 +978,9 @@
           "id": "OL17195532W",
           "title": "German feminist poems from the Middle Ages to the present",
           "author": "Susan L. Cocalis",
-          "coverId": "ol:1677583",
+          "coverId": "ol:713953",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "0935312498"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL15145684W",
@@ -1109,15 +1055,6 @@
           "coverIsbn": "0935312595"
         },
         {
-          "id": "OL3376975W",
-          "title": "Ela Bhatt",
-          "author": "Jyotsna Sreenivasan",
-          "coverId": "ol:10047065",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "9781558612297"
-        },
-        {
           "id": "OL19514142W",
           "title": "Dutch and Flemish feminist poems from the Middle Ages to the present",
           "author": "Maaike Meijer",
@@ -1139,28 +1076,25 @@
           "id": "OL6556113W",
           "title": "The little locksmith",
           "author": "Katharine Butler Hathaway",
-          "coverId": "ol:1881612",
+          "coverId": "ol:784470",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558612386"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL1978559W",
           "title": "Umbertina",
           "author": "Helen Barolini",
-          "coverId": "ol:4394467",
+          "coverId": "ol:784450",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "087223536X"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL17789400W",
           "title": "Women writing in India",
           "author": "Susie Tharu",
-          "coverId": "ol:8069459",
+          "coverId": "ol:784364",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "155861026X"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL4642180W",
@@ -1201,19 +1135,9 @@
           "id": "OL17766016W",
           "title": "Holding up half the sky",
           "author": "Jie Tao",
-          "coverId": "ol:8048921",
+          "coverId": "ol:1881647",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558614656"
-        },
-        {
-          "id": "OL1876921W",
-          "title": "A lifetime of labor",
-          "author": "Alice Hanson Cook",
-          "coverId": "ol:1881586",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558611894"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL18341237W",
@@ -1228,10 +1152,9 @@
           "id": "OL1790002W",
           "title": "Coming to birth",
           "author": "Marjorie Oludhe Macgoye",
-          "coverId": "ol:784476",
+          "coverId": "ol:784474",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "155861253X"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL5839892W",
@@ -1264,7 +1187,7 @@
           "id": "OL4102362W",
           "title": "Anna Teller",
           "author": "Jo Sinclair",
-          "coverId": "ol:7948689",
+          "coverId": "ol:1881532",
           "addedAt": "2026-09-26",
           "from": "list:hopeevey/OL203409L"
         },
@@ -1272,10 +1195,9 @@
           "id": "OL683070W",
           "title": "Solution three",
           "author": "Naomi Mitchison",
-          "coverId": "ol:1881546",
+          "coverId": "ol:784408",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558610979"
+          "from": "list:hopeevey/OL203409L"
         },
         {
           "id": "OL17718634W",
@@ -1287,15 +1209,6 @@
           "coverIsbn": "1558610006"
         },
         {
-          "id": "OL18015947W",
-          "title": "Revenge",
-          "author": "Tasalima Nasarina",
-          "coverId": "ol:8286154",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "9781558616592"
-        },
-        {
           "id": "OL15587256W",
           "title": "Hold onto the sun",
           "author": "Michal Govrin",
@@ -1303,15 +1216,6 @@
           "addedAt": "2026-09-26",
           "from": "list:hopeevey/OL203409L",
           "coverIsbn": "9781558616738"
-        },
-        {
-          "id": "OL19240092W",
-          "title": "Mamphela Ramphele",
-          "author": "Judith Harlan",
-          "coverId": "ol:1881606",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558612270"
         },
         {
           "id": "OL2019793W",
@@ -1323,15 +1227,6 @@
           "coverIsbn": "1558610197"
         },
         {
-          "id": "OL1977895W",
-          "title": "Aung San Suu Kyi",
-          "author": "Bettina Ling",
-          "coverId": "ol:1881589",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558611967"
-        },
-        {
           "id": "OL5278823W",
           "title": "Harem years",
           "author": "Hudá Shaʻrāwī",
@@ -1341,31 +1236,12 @@
           "coverIsbn": "0935312714"
         },
         {
-          "id": "OL4771169W",
-          "title": "Always a sister",
-          "author": "Doris Daniels",
-          "coverId": "ol:4081596",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "0935312900"
-        },
-        {
           "id": "OL4085484W",
           "title": "Lion woman's legacy",
           "author": "Arlene Voski Avakian",
-          "coverId": "ol:1881530",
+          "coverId": "ol:784374",
           "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558610510"
-        },
-        {
-          "id": "OL4102360W",
-          "title": "The seasons",
-          "author": "Jo Sinclair",
-          "coverId": "ol:1881533",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "1558610561"
+          "from": "list:hopeevey/OL203409L"
         }
       ],
       "coverSource": "catalogue"
@@ -4244,15 +4120,6 @@
           "coverIsbn": "3518006452"
         },
         {
-          "id": "OL6872785W",
-          "title": "Wahlsystem und Parteienentwicklung in England",
-          "author": "Hans Setzer",
-          "coverId": "ol:8393424",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518006649",
-          "coverIsbn": "3518006649"
-        },
-        {
           "id": "OL6145256W",
           "title": "Konstitutionsbedingungen des bürgerlichen Staates und der sozialen Revolution bei Marx und Engels",
           "author": "Johann Frerichs",
@@ -4287,15 +4154,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:351800705X",
           "coverIsbn": "351800705X"
-        },
-        {
-          "id": "OL1277509W",
-          "title": "Aus den Memoiren eines deutschen Anarchisten",
-          "author": "Rudolf Rocker",
-          "coverId": "ol:8393425",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518007114",
-          "coverIsbn": "3518007114"
         },
         {
           "id": "OL4834788W",
@@ -4422,15 +4280,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518007971",
           "coverIsbn": "3518007971"
-        },
-        {
-          "id": "OL18353772W",
-          "title": "Gespräche mit Ernst Bloch",
-          "author": "Rainer Traub",
-          "coverId": "ol:8443564",
-          "addedAt": "2026-09-26",
-          "from": "isbn:351800798X",
-          "coverIsbn": "351800798X"
         },
         {
           "id": "OL2893272W",
@@ -5952,6 +5801,27 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518114735",
           "coverIsbn": "3518114735"
+        },
+        {
+          "id": "OL10054811W",
+          "title": "Bildlichkeit",
+          "author": "Volker Bohn",
+          "coverId": "ol:3221116",
+          "addedAt": "2026-09-26"
+        },
+        {
+          "id": "OL2270427W",
+          "title": "Gesammelte Stücke",
+          "author": "Volker Braun",
+          "coverId": "ol:14968765",
+          "addedAt": "2026-09-26"
+        },
+        {
+          "id": "OL3664668W",
+          "title": "Die Grenzen der Verständigung",
+          "author": "Manfred Frank",
+          "coverId": "ol:3221117",
+          "addedAt": "2026-09-26"
         }
       ]
     },
