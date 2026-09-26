@@ -13706,6 +13706,597 @@
           "coverIsbn": "9781883011406"
         }
       ]
+    },
+    {
+      "slug": "verso-radical-thinkers",
+      "title": "Verso Radical Thinkers",
+      "kind": "series",
+      "intro": "The first three sets of Verso's Radical Thinkers (2006–2008) share one design: the author's name in large capitals, the title beside a coloured brace and Verso's V, on kraft paper for set 1, grey for set 2 and black for set 3.",
+      "published": false,
+      "publishers": [
+        "Verso"
+      ],
+      "works": [
+        {
+          "id": "OL542175W",
+          "title": "Minima Moralia: Reflections on a Damaged Life",
+          "author": "Theodor Adorno",
+          "coverId": "ol:15147645",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670512",
+          "coverIsbn": "9781844670512"
+        },
+        {
+          "id": "OL637070W",
+          "title": "For Marx",
+          "author": "Louis Althusser",
+          "coverId": "ol:895541",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670529",
+          "coverIsbn": "9781844670529"
+        },
+        {
+          "id": "OL790285W",
+          "title": "The System of Objects",
+          "author": "Jean Baudrillard",
+          "coverId": "ol:895542",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670536",
+          "coverIsbn": "9781844670536"
+        },
+        {
+          "id": "OL718087W",
+          "title": "Liberalism and Democracy",
+          "author": "Norberto Bobbio",
+          "coverId": "ol:895551",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670628",
+          "coverIsbn": "9781844670628"
+        },
+        {
+          "id": "OL15257W",
+          "title": "The Politics of Friendship",
+          "author": "Jacques Derrida",
+          "coverId": "ol:6684921",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670543",
+          "coverIsbn": "9781844670543"
+        },
+        {
+          "id": "OL15031228W",
+          "title": "The Function of Criticism",
+          "author": "Terry Eagleton",
+          "coverId": "ol:895544",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670550",
+          "coverIsbn": "9781844670550"
+        },
+        {
+          "id": "OL16661205W",
+          "title": "Signs Taken for Wonders: Essays in the Sociology of Literary Forms",
+          "author": "Franco Moretti",
+          "coverId": "ol:895545",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670567",
+          "coverIsbn": "9781844670567"
+        },
+        {
+          "id": "OL3069851W",
+          "title": "The Return of the Political",
+          "author": "Chantal Mouffe",
+          "coverId": "ol:895546",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670574",
+          "coverIsbn": "9781844670574"
+        },
+        {
+          "id": "OL2964094W",
+          "title": "Sexuality in the Field of Vision",
+          "author": "Jacqueline Rose",
+          "coverId": "ol:895547",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670581",
+          "coverIsbn": "9781844670581"
+        },
+        {
+          "id": "OL542598W",
+          "title": "The Information Bomb",
+          "author": "Paul Virilio",
+          "coverId": "ol:895548",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670598",
+          "coverIsbn": "9781844670598"
+        },
+        {
+          "id": "OL3747403W",
+          "title": "Culture and Materialism",
+          "author": "Raymond Williams",
+          "coverId": "ol:895549",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670604",
+          "coverIsbn": "9781844670604"
+        },
+        {
+          "id": "OL8063437W",
+          "title": "The Metastases of Enjoyment: Six Essays on Women and Causality",
+          "author": "Slavoj Žižek",
+          "coverId": "ol:895550",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844670611",
+          "coverIsbn": "9781844670611"
+        },
+        {
+          "id": "OL61538W",
+          "title": "Infancy and History: On the Destruction of Experience",
+          "author": "Giorgio Agamben",
+          "coverId": "ol:895627",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675715",
+          "coverIsbn": "9781844675715"
+        },
+        {
+          "id": "OL11183479W",
+          "title": "Politics and History: Montesquieu, Rousseau, Marx",
+          "author": "Louis Althusser",
+          "coverId": "ol:895628",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675722",
+          "coverIsbn": "9781844675722"
+        },
+        {
+          "id": "OL790344W",
+          "title": "Fragments",
+          "author": "Jean Baudrillard",
+          "coverId": "ol:895629",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675739",
+          "coverIsbn": "9781844675739"
+        },
+        {
+          "id": "OL2955294W",
+          "title": "Logics of Disintegration",
+          "author": "Peter Dews",
+          "coverId": "ol:2031343",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675746",
+          "coverIsbn": "9781844675746"
+        },
+        {
+          "id": "OL24064693W",
+          "title": "Late Marxism: Adorno, or, The Persistence of the Dialectic",
+          "author": "Fredric Jameson",
+          "coverId": "ol:895630",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675753",
+          "coverIsbn": "9781844675753"
+        },
+        {
+          "id": "OL2501979W",
+          "title": "Emancipation(s)",
+          "author": "Ernesto Laclau",
+          "coverId": "ol:895631",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675760",
+          "coverIsbn": "9781844675760"
+        },
+        {
+          "id": "OL15078810W",
+          "title": "Political Descartes: Reason, Ideology and the Bourgeois Project",
+          "author": "Antonio Negri",
+          "coverId": "ol:895636",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675821",
+          "coverIsbn": "9781844675821"
+        },
+        {
+          "id": "OL8443921W",
+          "title": "On the Shores of Politics",
+          "author": "Jacques Rancière",
+          "coverId": "ol:895632",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675777",
+          "coverIsbn": "9781844675777"
+        },
+        {
+          "id": "OL542630W",
+          "title": "Strategy of Deception",
+          "author": "Paul Virilio",
+          "coverId": "ol:895633",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675784",
+          "coverIsbn": "9781844675784"
+        },
+        {
+          "id": "OL260927W",
+          "title": "Politics of Modernism: Against the New Conformists",
+          "author": "Raymond Williams",
+          "coverId": "ol:895634",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675807",
+          "coverIsbn": "9781844675807"
+        },
+        {
+          "id": "OL8063403W",
+          "title": "The Indivisible Remainder",
+          "author": "Slavoj Žižek",
+          "coverId": "ol:895635",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844675814",
+          "coverIsbn": "9781844675814"
+        },
+        {
+          "id": "OL3722940W",
+          "title": "In Theory: Nations, Classes, Literatures",
+          "author": "Aijaz Ahmad",
+          "coverId": "ol:2031334",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672134",
+          "coverIsbn": "9781844672134"
+        },
+        {
+          "id": "OL790299W",
+          "title": "The Perfect Crime",
+          "author": "Jean Baudrillard",
+          "coverId": "ol:2031326",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672035",
+          "coverIsbn": "9781844672035"
+        },
+        {
+          "id": "OL1944989W",
+          "title": "A Realist Theory of Science",
+          "author": "Roy Bhaskar",
+          "coverId": "ol:2031327",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672042",
+          "coverIsbn": "9781844672042"
+        },
+        {
+          "id": "OL18628754W",
+          "title": "A Study on Authority",
+          "author": "Herbert Marcuse",
+          "coverId": "ol:2994462",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672097",
+          "coverIsbn": "9781844672097"
+        },
+        {
+          "id": "OL2841248W",
+          "title": "Spinoza and Politics",
+          "author": "Étienne Balibar",
+          "coverId": "ol:2031328",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672059",
+          "coverIsbn": "9781844672059"
+        },
+        {
+          "id": "OL3481749W",
+          "title": "The Emergence of Social Space: Rimbaud and the Paris Commune",
+          "author": "Kristin Ross",
+          "coverId": "ol:2031329",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672066",
+          "coverIsbn": "9781844672066"
+        },
+        {
+          "id": "OL4488926W",
+          "title": "Between Existentialism and Marxism",
+          "author": "Jean-Paul Sartre",
+          "coverId": "ol:2031330",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672073",
+          "coverIsbn": "9781844672073"
+        },
+        {
+          "id": "OL15031229W",
+          "title": "Ghostly Demarcations: A Symposium on Jacques Derrida's Specters of Marx",
+          "author": "Michael Sprinker (editor)",
+          "coverId": "ol:2031333",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672110",
+          "coverIsbn": "9781844672110"
+        },
+        {
+          "id": "OL3540755W",
+          "title": "What Does the Ruling Class Do When It Rules?",
+          "author": "Göran Therborn",
+          "coverId": "ol:2031332",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672103",
+          "coverIsbn": "9781844672103"
+        },
+        {
+          "id": "OL542621W",
+          "title": "Open Sky",
+          "author": "Paul Virilio",
+          "coverId": "ol:2031331",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672080",
+          "coverIsbn": "9781844672080"
+        },
+        {
+          "id": "OL8063430W",
+          "title": "For They Know Not What They Do",
+          "author": "Slavoj Žižek",
+          "coverId": "ol:2994463",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844672127",
+          "coverIsbn": "9781844672127"
+        }
+      ]
+    },
+    {
+      "slug": "verso-radical-thinkers-later",
+      "title": "Verso Radical Thinkers, later",
+      "kind": "series",
+      "intro": "From set 4 in 2009, Verso's Radical Thinkers turned white, with author and title in one small line of serif type and a single thin line drawing across each cover.",
+      "published": false,
+      "publishers": [
+        "Verso"
+      ],
+      "works": [
+        {
+          "id": "OL17533332W",
+          "title": "In Search of Wagner",
+          "author": "Theodor Adorno",
+          "coverId": "ol:7768294",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844673445",
+          "coverIsbn": "9781844673445"
+        },
+        {
+          "id": "OL17527715W",
+          "title": "The Transparency of Evil: Essays on Extreme Phenomena",
+          "author": "Jean Baudrillard",
+          "coverId": "ol:7757084",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844673452",
+          "coverIsbn": "9781844673452"
+        },
+        {
+          "id": "OL17452214W",
+          "title": "War and Cinema: The Logistics of Perception",
+          "author": "Paul Virilio",
+          "coverId": "ol:7606646",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844673469",
+          "coverIsbn": "9781844673469"
+        },
+        {
+          "id": "OL17524098W",
+          "title": "The Origin of German Tragic Drama",
+          "author": "Walter Benjamin",
+          "coverId": "ol:7749856",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844673483",
+          "coverIsbn": "9781844673483"
+        },
+        {
+          "id": "OL16939537W",
+          "title": "The Cultural Turn: Selected Writings on the Postmodern, 1983–1998",
+          "author": "Fredric Jameson",
+          "coverId": "ol:7528350",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844673490",
+          "coverIsbn": "9781844673490"
+        },
+        {
+          "id": "OL94660W",
+          "title": "Ethics-Politics-Subjectivity: Derrida, Levinas and Contemporary French Thought",
+          "author": "Simon Critchley",
+          "coverId": "ol:7831436",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844673513",
+          "coverIsbn": "9781844673513"
+        },
+        {
+          "id": "OL17535233W",
+          "title": "Lenin: A Study on the Unity of His Thought",
+          "author": "György Lukács",
+          "coverId": "ol:7772097",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844673520",
+          "coverIsbn": "9781844673520"
+        },
+        {
+          "id": "OL28779165W",
+          "title": "Machiavelli and Us",
+          "author": "Louis Althusser and François Matheron",
+          "coverId": "ol:14396629",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844676750",
+          "coverIsbn": "9781844676750"
+        },
+        {
+          "id": "OL17441718W",
+          "title": "Race, Nation, Class: Ambiguous Identities",
+          "author": "Étienne Balibar and Immanuel Wallerstein",
+          "coverId": "ol:7585717",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844676712",
+          "coverIsbn": "9781844676712"
+        },
+        {
+          "id": "OL22089037W",
+          "title": "The Panopticon Writings",
+          "author": "Jeremy Bentham",
+          "coverId": "ol:10439620",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844676668",
+          "coverIsbn": "9781844676668"
+        },
+        {
+          "id": "OL1390040W",
+          "title": "Critique of Economic Reason",
+          "author": "André Gorz",
+          "coverId": "ol:8086754",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844676675",
+          "coverIsbn": "9781844676675"
+        },
+        {
+          "id": "OL17484930W",
+          "title": "The Politics of Time: Modernity and Avant-Garde",
+          "author": "Peter Osborne",
+          "coverId": "ol:7671649",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844676736",
+          "coverIsbn": "9781844676736"
+        },
+        {
+          "id": "OL17449227W",
+          "title": "Postmodern Geographies: The Reassertion of Space in Critical Social Theory",
+          "author": "Edward W. Soja",
+          "coverId": "ol:7600686",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844676699",
+          "coverIsbn": "9781844676699"
+        },
+        {
+          "id": "OL3160630W",
+          "title": "Freudian Slip: Psychoanalysis and Textual Criticism",
+          "author": "Sebastiano Timpanaro",
+          "coverId": "ol:7749913",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844676743",
+          "coverIsbn": "9781844676743"
+        },
+        {
+          "id": "OL17399693W",
+          "title": "Contingency, Hegemony, Universality: Contemporary Dialogues on the Left",
+          "author": "Slavoj Žižek, Ernesto Laclau, and Judith Butler",
+          "coverId": "ol:7502227",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844676682",
+          "coverIsbn": "9781844676682"
+        },
+        {
+          "id": "OL28244343W",
+          "title": "Quasi Una Fantasia: Essays on Modern Music",
+          "author": "Theodor Adorno",
+          "coverId": "ol:13794522",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844677924",
+          "coverIsbn": "9781844677924"
+        },
+        {
+          "id": "OL17428915W",
+          "title": "Metapolitics",
+          "author": "Alain Badiou",
+          "coverId": "ol:7560150",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844677818",
+          "coverIsbn": "9781844677818"
+        },
+        {
+          "id": "OL20912968W",
+          "title": "Impossible Exchange",
+          "author": "Jean Baudrillard",
+          "coverId": "ol:10279244",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844677917",
+          "coverIsbn": "9781844677917"
+        },
+        {
+          "id": "OL17514812W",
+          "title": "Politics and Ideology in Marxist Theory: Capitalism, Fascism, Populism",
+          "author": "Ernesto Laclau",
+          "coverId": "ol:7731321",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844677887",
+          "coverIsbn": "9781844677887"
+        },
+        {
+          "id": "OL1161244W",
+          "title": "War Diaries: Notebooks from a Phoney War 1939-40",
+          "author": "Jean-Paul Sartre",
+          "coverId": "ol:7817747",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844677849",
+          "coverIsbn": "9781844677849"
+        },
+        {
+          "id": "OL17400888W",
+          "title": "Ethics of the Real: Kant and Lacan",
+          "author": "Alenka Zupančič",
+          "coverId": "ol:7504611",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781844677870",
+          "coverIsbn": "9781844677870"
+        },
+        {
+          "id": "OL102188W",
+          "title": "Ethics: An Essay on the Understanding of Evil",
+          "author": "Alain Badiou",
+          "coverId": "ol:7830497",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781781680186",
+          "coverIsbn": "9781781680186"
+        },
+        {
+          "id": "OL17415948W",
+          "title": "The Spirit of Terrorism",
+          "author": "Jean Baudrillard",
+          "coverId": "ol:7534491",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781781680209",
+          "coverIsbn": "9781781680209"
+        },
+        {
+          "id": "OL24576028W",
+          "title": "The Fiery Brook: Selected Writings",
+          "author": "Ludwig Feuerbach",
+          "coverId": "ol:11230179",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781781680216",
+          "coverIsbn": "9781781680216"
+        },
+        {
+          "id": "OL17569398W",
+          "title": "Rationality and Irrationality in Economics",
+          "author": "Maurice Godelier",
+          "coverId": "ol:7840360",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781781680254",
+          "coverIsbn": "9781781680254"
+        },
+        {
+          "id": "OL1390037W",
+          "title": "Capitalism, Socialism, Ecology",
+          "author": "André Gorz",
+          "coverId": "ol:7672862",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781781680261",
+          "coverIsbn": "9781781680261"
+        },
+        {
+          "id": "OL1267979W",
+          "title": "Critique of Instrumental Reason",
+          "author": "Max Horkheimer",
+          "coverId": "ol:7464179",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781781680230",
+          "coverIsbn": "9781781680230"
+        },
+        {
+          "id": "OL10502561W",
+          "title": "Marxism and Philosophy",
+          "author": "Karl Korsch",
+          "coverId": "ol:7821986",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781781680278",
+          "coverIsbn": "9781781680278"
+        },
+        {
+          "id": "OL17447938W",
+          "title": "Freudianism: A Marxist Critique",
+          "author": "Valentin Voloshinov",
+          "coverId": "ol:7598118",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781781680285",
+          "coverIsbn": "9781781680285"
+        }
+      ]
     }
   ]
 }
