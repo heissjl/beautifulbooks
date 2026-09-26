@@ -5,7 +5,7 @@ import HomeSearchBar from '@/components/HomeSearchBar';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import CollectionsShelf from '@/components/CollectionsShelf';
-import { allCollections } from '@/lib/collections';
+import { liveCollections } from '@/lib/collections-live';
 
 /**
  * The URL is the single source of truth for search state (SPEC §3 F1.5):
@@ -37,7 +37,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const language = first(params.lang);
   const isHero = !searchQuery;
   // Published collections only in production; drafts show under `next dev` (SPEC F8).
-  const collections = isHero ? allCollections() : [];
+  const collections = isHero ? await liveCollections() : [];
 
   return (
     <div className="min-h-screen">

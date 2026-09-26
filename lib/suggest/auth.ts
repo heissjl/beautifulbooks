@@ -57,3 +57,32 @@ export function sessionValid(token: string | undefined, now = Date.now(), env: E
   const expected = mac(expires, env);
   return signature.length === expected.length && timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
 }
+
+/**
+ * Julian signed in as admin on /curate (ROADMAP 5.10g; Julian, 2026-09-25:
+ * „add an option in the online version to publish a draft"). A second
+ * cookie, signed with the admin password, so that changing either password
+ * signs out only its own holders, and a friend's cookie can never pass for
+ * Julian's. Admin days are fewer: this cookie can change the public site.
+ */
+export const ADMIN_COOKIE = 'bb_admin';
+export const ADMIN_DAYS = 7;
+
+function adminMac(expires: number, env: Env): string {
+  return createHmac('sha256', `admin-session:${env.SUGGEST_ADMIN_PASSWORD ?? ''}`).update(String(expires)).digest('base64url');
+}
+
+export function adminSessionToken(now = Date.now(), env: Env = process.env): string {
+  const expires = now + ADMIN_DAYS * 24 * 60 * 60 * 1000;
+  return `${expires}.${adminMac(expires, env)}`;
+}
+
+export function adminSessionValid(token: string | undefined, now = Date.now(), env: Env = process.env): boolean {
+  if (!token || !suggestEnabled(env) || !env.SUGGEST_ADMIN_PASSWORD?.trim()) return false;
+  const [raw, signature] = token.split('.');
+  const expires = Number(raw);
+  if (!Number.isInteger(expires) || expires < now || !signature) return false;
+  const expected = adminMac(expires, env);
+  return signature.length === expected.length && timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+}
+

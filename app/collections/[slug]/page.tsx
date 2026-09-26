@@ -5,7 +5,8 @@ import CoverWall from '@/components/CoverWall';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
-import { authorsShown, collectionBySlug, coverLine } from '@/lib/collections';
+import { authorsShown, coverLine } from '@/lib/collections';
+import { liveCollectionBySlug } from '@/lib/collections-live';
 import { SITE_URL } from '@/lib/seo';
 import { friendSignedIn } from '@/lib/suggest/session';
 
@@ -33,9 +34,9 @@ interface PageProps {
 
 /** The published collection, or — for a signed-in friend only — the draft. */
 async function findCollection(slug: string) {
-  const visible = collectionBySlug(slug);
+  const visible = await liveCollectionBySlug(slug);
   if (visible) return visible;
-  return (await friendSignedIn()) ? collectionBySlug(slug, { includeDrafts: true }) : null;
+  return (await friendSignedIn()) ? liveCollectionBySlug(slug, { includeDrafts: true }) : null;
 }
 
 

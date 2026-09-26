@@ -171,3 +171,29 @@ export function coverLine(kind: CollectionKind, coverSource?: 'catalogue'): stri
     ? 'each with the cover Open Library holds for its printing in the series'
     : 'one cover each, chosen by hand';
 }
+
+/**
+ * Publication switched on the running site (ROADMAP 5.10g): slug → published,
+ * kept in the store and winning over the file's `published`, so Julian can
+ * publish a draft from /curate without a deploy. Only differences from the
+ * file are kept; a switch back to what the file says removes the entry, so
+ * file and site never drift apart unnoticed.
+ */
+export type PublishOverrides = Record<string, boolean>;
+
+export function applyOverrides(records: CollectionRecord[], overrides: PublishOverrides): CollectionRecord[] {
+  return records.map(r => (r.slug in overrides ? { ...r, published: overrides[r.slug] } : r));
+}
+
+export function nextOverrides(current: PublishOverrides, record: Pick<CollectionRecord, 'slug' | 'published'>, published: boolean): PublishOverrides {
+  const next = { ...current };
+  if (published === record.published) delete next[record.slug];
+  else next[record.slug] = published;
+  return next;
+}
+
+/** The file's records, unparsed — for the server module that applies overrides. */
+export function collectionRecords(): CollectionRecord[] {
+  return (collectionsFile as { collections: CollectionRecord[] }).collections;
+}
+

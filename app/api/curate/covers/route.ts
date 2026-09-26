@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { inSeries } from '@/lib/collectionedit';
-import { getWorkPage, isWorkId } from '@/lib/work';
+import { getWorkPage, isWorkId, MAX_EDITIONS_SCANNED } from '@/lib/work';
 import { json, memberGate } from '../../suggest/guard';
 import { draftStore, loadDraft } from '../store';
 
@@ -35,5 +35,9 @@ export async function GET(request: NextRequest) {
     .filter(({ editions: es }) => draft.kind !== 'series' || es.some(e => inSeries(e.publisher ? [e.publisher] : undefined, draft.publishers ?? [])))
     .map(({ c, editions: es }) => ({ id: c.id, year: es[0]?.year, publisher: es[0]?.publisher }));
   const { offset: at, limit, total } = page.page;
-  return json({ covers, next: at + limit < (total ?? 0) ? at + limit : null });
+  // How far the search got, for the progress line in the window (5.10b): the
+  // editions Open Library reports, capped where the site stops scanning.
+  const all = Math.min(total ?? 0, MAX_EDITIONS_SCANNED);
+  const next = at + limit < all ? at + limit : null;
+  return json({ covers, next, scanned: Math.min(at + limit, all), total: all, capped: (total ?? 0) > MAX_EDITIONS_SCANNED });
 }

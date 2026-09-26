@@ -1,6 +1,6 @@
 /** The suggestion gate and store (ROADMAP 5.10a, SPEC F8.4). */
 import { describe, expect, it } from 'vitest';
-import { adminMatches, passwordMatches, sessionToken, sessionValid, suggestEnabled } from '../suggest/auth';
+import { adminMatches, adminSessionToken, adminSessionValid, passwordMatches, sessionToken, sessionValid, suggestEnabled } from '../suggest/auth';
 import { commandsSuggestStore, memorySuggestStore, parseSuggestion } from '../suggest/store';
 import type { RedisCommands } from '../hotornot/store';
 
@@ -34,6 +34,24 @@ describe('the gate', () => {
     expect(sessionValid(`${Number(expires) + 1}.${token.split('.')[1]}`, now, env)).toBe(false);
     expect(sessionValid('garbage', now, env)).toBe(false);
     expect(sessionValid(undefined, now, env)).toBe(false);
+  });
+});
+
+describe('the admin cookie (5.10g)', () => {
+  const now = 1_700_000_000_000;
+
+  it('is Julian\'s own and never a friend\'s', () => {
+    const admin = adminSessionToken(now, env);
+    expect(adminSessionValid(admin, now + 1000, env)).toBe(true);
+    expect(adminSessionValid(sessionToken(now, env), now + 1000, env)).toBe(false);
+    expect(sessionValid(admin, now + 1000, env)).toBe(false);
+  });
+
+  it('expires after a week and with a new admin password', () => {
+    const admin = adminSessionToken(now, env);
+    expect(adminSessionValid(admin, now + 8 * 24 * 3600 * 1000, env)).toBe(false);
+    expect(adminSessionValid(admin, now, { ...env, SUGGEST_ADMIN_PASSWORD: 'neu' })).toBe(false);
+    expect(adminSessionValid(admin, now, { SUGGEST_PASSWORD: 'x' })).toBe(false);
   });
 });
 

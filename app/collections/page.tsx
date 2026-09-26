@@ -5,7 +5,7 @@ import CoverImage from '@/components/CoverImage';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
-import { allCollections } from '@/lib/collections';
+import { liveCollections } from '@/lib/collections-live';
 import { olCover } from '@/lib/curated';
 import { SITE_URL } from '@/lib/seo';
 
@@ -23,8 +23,11 @@ export const metadata: Metadata = {
 /** Covers in a card's strip: one row of six on a desktop, cut to three on a phone. */
 const STRIP = 6;
 
-export default function CollectionsPage() {
-  const collections = allCollections();
+// Per request: a collection can be published from /curate without a deploy (5.10g).
+export const dynamic = 'force-dynamic';
+
+export default async function CollectionsPage() {
+  const collections = await liveCollections();
   if (collections.length === 0) notFound();
 
   return (

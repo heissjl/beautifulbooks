@@ -1,7 +1,7 @@
 /** Thematic collections (ROADMAP 5.10, SPEC F8, lib/collections.ts). */
 import { describe, expect, it } from 'vitest';
 import collectionsFile from '@/data/collections.json';
-import { authorsShown, coverLine, isCollectionSlug, parseCollections, type CollectionRecord } from '../collections';
+import { applyOverrides, authorsShown, coverLine, isCollectionSlug, nextOverrides, parseCollections, type CollectionRecord } from '../collections';
 
 const record = (over: Partial<CollectionRecord> = {}): CollectionRecord => ({
   slug: 'women-writers',
@@ -118,3 +118,23 @@ describe('coverLine', () => {
     expect(coverLine('authors', 'catalogue')).toContain('not all of them chosen by hand');
   });
 });
+
+describe('publishing from /curate (5.10g)', () => {
+  const draft = record({ slug: 'edition-suhrkamp', published: false });
+  const live = record({ slug: 'sf-masterworks', published: true });
+
+  it('lets a switch win over the file', () => {
+    const [a, b] = applyOverrides([draft, live], { 'edition-suhrkamp': true, 'sf-masterworks': false });
+    expect(a.published).toBe(true);
+    expect(b.published).toBe(false);
+    expect(applyOverrides([draft], {})[0].published).toBe(false);
+  });
+
+  it('keeps only differences from the file, so file and site cannot drift apart unnoticed', () => {
+    const on = nextOverrides({}, draft, true);
+    expect(on).toEqual({ 'edition-suhrkamp': true });
+    expect(nextOverrides(on, draft, false)).toEqual({});
+    expect(nextOverrides({}, live, true)).toEqual({});
+  });
+});
+

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import CoverImage from './CoverImage';
 import { olCover } from '@/lib/curated';
 import type { Candidate } from '@/lib/collectionedit';
@@ -27,6 +27,10 @@ interface Picking {
   next: number | null;
   loading: boolean;
   error: string;
+  /** Editions looked through so far, and how many there are to look through. */
+  scanned: number;
+  total: number | null;
+  capped: boolean;
 }
 
 const field = 'w-full rounded-md border border-line bg-surface px-3 py-2 text-ink focus:border-accent focus:outline-none';
@@ -75,6 +79,9 @@ export default function CurateTool({ initialDrafts, startingPoints, initialId }:
   const [candidates, setCandidates] = useState<Record<string, Candidate[] | 'loading' | { error: string }>>({});
   const [picking, setPicking] = useState<Picking | null>(null);
   const [drag, setDrag] = useState<string | null>(null);
+  // Which work the cover window is searching for; read only in handlers, so the
+  // background search stops when the window closes or another book opens.
+  const searching = useRef<string | null>(null);
 
   const draft = drafts.find(d => d.id === currentId) ?? null;
 
@@ -164,30 +171,61 @@ export default function CurateTool({ initialDrafts, startingPoints, initialId }:
     }
   }
 
+  /**
+   * Looks through a book's editions a hundred at a time and keeps going by
+   * itself until the last page (Julian, 2026-09-25: „show me a progress
+   * whether the site is still looking for more covers or whether it has ended
+   * the search"). A page that fails stops the search and says so; „Try again"
+   * resumes where it stopped.
+   */
   async function loadCovers(p: Picking, offset: number) {
     if (!draft) return;
-    setPicking({ ...p, loading: true, error: '' });
-    try {
-      const body = await call<{ covers: CoverChoice[]; next: number | null }>(
-        `/api/curate/covers?draft=${draft.id}&work=${p.work.id}&offset=${offset}`,
-      );
-      const known = new Set(p.covers.map(c => c.id));
-      setPicking({ ...p, covers: [...p.covers, ...body.covers.filter(c => !known.has(c.id))], next: body.next, loading: false, error: '' });
-    } catch (e) {
-      setPicking({ ...p, loading: false, error: e instanceof Error ? e.message : 'The covers did not load.' });
+    const workId = p.work.id;
+    searching.current = workId;
+    let state: Picking = { ...p, loading: true, error: '' };
+    setPicking(state);
+    let at: number | null = offset;
+    while (at !== null) {
+      try {
+        const body: { covers: CoverChoice[]; next: number | null; scanned: number; total: number; capped: boolean } = await call(
+          `/api/curate/covers?draft=${draft.id}&work=${workId}&offset=${at}`,
+        );
+        if (searching.current !== workId) return; // closed, or another book opened
+        const known = new Set(state.covers.map(c => c.id));
+        state = {
+          ...state,
+          covers: [...state.covers, ...body.covers.filter(c => !known.has(c.id))],
+          next: body.next,
+          scanned: body.scanned,
+          total: body.total,
+          capped: body.capped,
+          loading: body.next !== null,
+        };
+        setPicking(state);
+        at = body.next;
+      } catch (e) {
+        if (searching.current !== workId) return;
+        setPicking({ ...state, loading: false, error: e instanceof Error ? e.message : 'The covers did not load.' });
+        return;
+      }
     }
   }
 
   function startPicking(work: Picking['work'], chosen?: string) {
-    const p: Picking = { work, chosen, covers: [], next: null, loading: true, error: '' };
+    const p: Picking = { work, chosen, covers: [], next: 0, loading: true, error: '', scanned: 0, total: null, capped: false };
     setPicking(p);
     void loadCovers(p, 0);
+  }
+
+  function closePicking() {
+    searching.current = null;
+    setPicking(null);
   }
 
   async function choose(coverId: string) {
     if (!picking) return;
     const { work } = picking;
-    setPicking(null);
+    closePicking();
     await change({ op: 'pick', ...work, coverId });
   }
 
@@ -421,14 +459,35 @@ export default function CurateTool({ initialDrafts, startingPoints, initialId }:
       )}
 
       {picking && (
-        <div className="fixed inset-0 z-30 flex items-start justify-center overflow-y-auto bg-black/50 p-4 sm:p-8" role="dialog" aria-modal="true" aria-label={`Covers of ${picking.work.title}`} onClick={e => e.target === e.currentTarget && setPicking(null)}>
+        <div className="fixed inset-0 z-30 flex items-start justify-center overflow-y-auto bg-black/50 p-4 sm:p-8" role="dialog" aria-modal="true" aria-label={`Covers of ${picking.work.title}`} onClick={e => e.target === e.currentTarget && closePicking()}>
           <div className="w-full max-w-5xl rounded-lg border border-line bg-bg p-4 sm:p-6">
             <div className="flex items-baseline gap-3">
               <h3 className="min-w-0 flex-1 truncate font-display text-xl text-ink">{picking.work.title}</h3>
-              <button type="button" onClick={() => setPicking(null)} className={button}>Close</button>
+              <button type="button" onClick={closePicking} className={button}>Close</button>
             </div>
-            <p className="mt-1 text-sm text-ink-3">{picking.work.author} · {picking.covers.length} covers so far · tap one to put it on the wall</p>
-            {picking.error && <p className="mt-3 text-sm text-accent">{picking.error}</p>}
+            <p className="mt-1 text-sm text-ink-3">{picking.work.author} · {picking.covers.length} covers · tap one to put it on the wall</p>
+            {/* Where the search stands: still looking, done, or stopped by an error (N12: a stop is not an end). */}
+            <div className="mt-3" aria-live="polite">
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-2">
+                <div
+                  className={`h-full rounded-full transition-[width] duration-500 ${picking.error ? 'bg-accent/50' : 'bg-accent'}`}
+                  style={{ width: `${picking.total ? Math.round((100 * picking.scanned) / picking.total) : picking.loading ? 5 : 100}%` }}
+                />
+              </div>
+              <p className="mt-1.5 text-xs text-ink-3">
+                {picking.error
+                  ? `Search stopped after ${picking.scanned} of ${picking.total ?? '?'} editions. `
+                  : picking.loading
+                    ? `Still looking — ${picking.scanned}${picking.total ? ` of ${picking.total}` : ''} editions looked through…`
+                    : `Done — looked through ${picking.total === 0 ? 'the editions' : `all ${picking.total} editions`}${picking.capped ? ' (the site stops at 1,500)' : ''}.`}
+                {picking.error && (
+                  <button type="button" onClick={() => loadCovers(picking, picking.next ?? picking.scanned)} className="underline underline-offset-2 hover:text-accent">
+                    Try again
+                  </button>
+                )}
+              </p>
+            </div>
+            {picking.error && <p className="mt-2 text-sm text-accent">{picking.error}</p>}
             {!picking.loading && !picking.error && picking.covers.length === 0 && (
               <p className="mt-3 text-sm text-ink-3">{draft?.kind === 'series' ? 'No edition with a cover under these publisher names.' : 'No covers among these editions.'}</p>
             )}
@@ -444,10 +503,7 @@ export default function CurateTool({ initialDrafts, startingPoints, initialId }:
                 </li>
               ))}
             </ul>
-            {picking.loading && <p className="mt-3 text-sm text-ink-3">Loading covers…</p>}
-            {!picking.loading && picking.next !== null && (
-              <button type="button" onClick={() => loadCovers(picking, picking.next ?? 0)} className={`${button} mt-4`}>More covers</button>
-            )}
+
           </div>
         </div>
       )}

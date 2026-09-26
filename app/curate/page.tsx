@@ -5,10 +5,12 @@ import { notFound } from 'next/navigation';
 import CurateTool, { type StartingPoint } from '@/components/CurateTool';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
+import PublishToggle from '@/components/PublishToggle';
 import SuggestLogin from '@/components/SuggestLogin';
-import { allCollections } from '@/lib/collections';
+import { liveCollections } from '@/lib/collections-live';
 import { draftStoreFromEnv, listDrafts, type Draft } from '@/lib/curate/drafts';
 import { SESSION_COOKIE, sessionValid, suggestEnabled } from '@/lib/suggest/auth';
+import { adminSignedIn } from '@/lib/suggest/session';
 
 /**
  * The collection curation tool, online for friends (ROADMAP 5.10b, SPEC
@@ -49,7 +51,8 @@ export default async function CuratePage({ searchParams }: PageProps) {
       }
     }
   }
-  const fileCollections = allCollections({ includeDrafts: true });
+  const fileCollections = await liveCollections({ includeDrafts: true });
+  const admin = signedIn && (await adminSignedIn());
   const startingPoints: StartingPoint[] = fileCollections.map(c => ({ slug: c.slug, title: c.title, works: c.works.length }));
 
   return (
@@ -64,9 +67,8 @@ export default async function CuratePage({ searchParams }: PageProps) {
         {signedIn && <p className="mb-4 inline-block rounded-md border border-accent/40 px-3 py-1 text-sm text-accent" lang="de">Für Caitlin</p>}
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">Curate a collection</h1>
         <p className="mt-4 max-w-2xl text-base text-ink-2">
-          Gather books around a theme and choose one cover for each. Everything you build here is a draft that
-          everyone with the password can see and change. Julian looks at the drafts and decides what goes on the
-          site; nothing appears there by itself. For a single book, the{' '}
+          {/* Julian, 2026-09-25: only this sentence stays of the introduction. */}
+          For a single book, the{' '}
           <Link href="/suggest" className="text-accent underline underline-offset-4">quick suggestion form</Link> is faster.
         </p>
         {/*
@@ -75,7 +77,7 @@ export default async function CuratePage({ searchParams }: PageProps) {
           the drafts also in production for the curation behind login").
           Changing them happens through a draft below, which Julian takes over.
         */}
-        {signedIn && fileCollections.length > 0 && (
+        {signedIn && fileCollections.length > 0 && !admin && (
           <p className="mt-4 max-w-2xl text-sm text-ink-3">
             On the site now:{' '}
             {fileCollections.map((c, i) => (
@@ -86,6 +88,33 @@ export default async function CuratePage({ searchParams }: PageProps) {
               </span>
             ))}
           </p>
+        )}
+        {/*
+          Julian as admin (5.10g): each collection of the file with a switch
+          that publishes or unpublishes it on the running site at once. The
+          switch lives in the store and wins over the file until they agree.
+        */}
+        {admin && fileCollections.length > 0 && (
+          <section className="mt-6 max-w-2xl">
+            <h2 className="text-xs font-semibold uppercase tracking-wider text-ink-3">Collections on the site · admin</h2>
+            <ul className="mt-2 divide-y divide-line text-sm">
+              {fileCollections.map(c => (
+                <li key={c.slug} className="flex items-center gap-3 py-2">
+                  <Link href={`/collections/${c.slug}`} className="min-w-0 flex-1 truncate text-ink underline-offset-4 hover:text-accent hover:underline">{c.title}</Link>
+                  <span className="text-xs text-ink-3">{c.works.length} books</span>
+                  <span className={`text-xs ${c.published ? 'text-ink-2' : 'text-accent'}`}>{c.published ? 'published' : 'draft'}</span>
+                  <PublishToggle slug={c.slug} title={c.title} published={c.published} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {/* Signed in as a friend: the admin password can be entered here (5.10g). */}
+        {signedIn && !admin && (
+          <details className="mt-4 max-w-sm text-sm text-ink-3">
+            <summary className="cursor-pointer">Admin</summary>
+            <div className="mt-2"><SuggestLogin /></div>
+          </details>
         )}
         <div className="mt-8">
           {!signedIn ? (
