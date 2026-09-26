@@ -43,7 +43,7 @@ export default function CollectionsShelf({ collections }: { collections: Collect
               </div>
               <ul className="mt-4 grid grid-cols-4 gap-2 sm:grid-cols-6 sm:gap-3" aria-hidden="true">
                 {c.works.slice(0, PREVIEW).map((w, i) => (
-                  <li key={w.id} className={i >= 4 ? 'hidden sm:block' : undefined}>
+                  <li key={`${w.id}:${w.image ?? w.coverId}`} className={i >= 4 ? 'hidden sm:block' : undefined}>
                     <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2">
                       <CoverImage src={wallCover(w, 'M')} alt="" sizes="(max-width: 640px) 25vw, 10vw" />
                     </div>

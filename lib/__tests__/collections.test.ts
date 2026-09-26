@@ -54,10 +54,10 @@ describe('parseCollections', () => {
     expect(c.works.map(w => w.id)).toEqual(['OL4W']);
   });
 
-  it('shows a work listed twice once, in its first place', () => {
+  it('shows a cover listed twice once, in its first place, but the same work with another cover again', () => {
     const w = record().works;
-    const [c] = parseCollections([record({ works: [w[0], w[1], { ...w[0], coverId: 'ol:1' }] })], { includeDrafts: false });
-    expect(c.works.map(x => x.coverId)).toEqual([12273691, 13498737]);
+    const [c] = parseCollections([record({ works: [w[0], w[1], { ...w[0] }, { ...w[0], coverId: 'ol:1' }] })], { includeDrafts: false });
+    expect(c.works.map(x => x.coverId)).toEqual([12273691, 13498737, 1]);
   });
 
   it('skips a bad or repeated slug', () => {

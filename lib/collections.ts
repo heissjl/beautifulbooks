@@ -128,7 +128,8 @@ function coverNumber(coverId: string): number | null {
  * Turns the file into collections a page can render.
  *
  * A pick without a usable cover is left out rather than shown as a blank
- * tile, and a work listed twice keeps its first place. A record with a bad
+ * tile, and a cover listed twice keeps its first place; the same work with
+ * another cover is a second tile. A record with a bad
  * slug is skipped: the slug is a URL, and the tool validates it, so a bad one
  * means the file was edited by hand.
  */
@@ -144,8 +145,11 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
     for (const p of r.works) {
       const coverId = coverNumber(p.coverId);
       const image = coverId === null && p.image && LOCAL_IMAGE.test(p.image) ? p.image : undefined;
-      if ((coverId === null && !image) || seen.has(p.id)) continue;
-      seen.add(p.id);
+      // Once per cover, not once per work: a series can print one work in two
+      // designs (Tolkien's green paperbacks and the 1980 edition, Julian 2026-09-26).
+      const key = `${p.id}|${p.coverId}`;
+      if ((coverId === null && !image) || seen.has(key)) continue;
+      seen.add(key);
       const credit = r.coverCredits === 'isfdb' && p.coverArtists?.length ? { coverArtists: p.coverArtists } : {};
       works.push({ id: p.id, title: p.title, author: p.author, coverId: coverId ?? 0, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}), ...(image ? { image } : {}) });
     }

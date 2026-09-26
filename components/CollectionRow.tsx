@@ -79,7 +79,7 @@ export default function CollectionRow({ slug, title, works, total }: { slug: str
           {works.slice(0, ROW_MAX).map(w => {
             const target = w.coverWork ?? w.id;
             return (
-              <li key={w.id} className={tile}>
+              <li key={`${w.id}:${w.image ?? w.coverId}`} className={tile}>
                 <Link
                   href={w.image ? `/book/${target}` : `/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}`}
                   onClick={() => storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [wallCover(w, 'L')] })}

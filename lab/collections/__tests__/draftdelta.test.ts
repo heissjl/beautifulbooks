@@ -31,4 +31,11 @@ describe('draftDelta', () => {
     expect(r.onlineOnly).toEqual([]);
     expect(r.summary).toBe('1 renamed');
   });
+
+  it('leaves out what a draft cannot hold: site-served images and a second cover of the same work', () => {
+    const file = [w('OL1W'), w('OL2W', 'local:vol-02'), { ...w('OL1W'), coverId: 'ol:9' }];
+    const r = draftDelta({ title: 'X', intro: '', works: [w('OL1W')] }, { title: 'X', intro: '', works: file });
+    expect(r.summary).toBe('already equal');
+    expect(r.onlineOnly).toEqual([]);
+  });
 });

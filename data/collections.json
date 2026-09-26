@@ -10402,7 +10402,7 @@
       "works": [
         {
           "id": "OL27513W",
-          "title": "The Fellowship of the Ring",
+          "title": "Die Gefährten",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625548",
           "addedAt": "2026-09-26",
@@ -10411,7 +10411,7 @@
         },
         {
           "id": "OL27479W",
-          "title": "The Two Towers",
+          "title": "Die zwei Türme",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8773923",
           "addedAt": "2026-09-26",
@@ -10420,12 +10420,52 @@
         },
         {
           "id": "OL27455W",
-          "title": "The Return of the King",
+          "title": "Die Rückkehr des Königs",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8653741",
           "addedAt": "2026-09-26",
           "from": "isbn:312908200X",
           "coverIsbn": "312908200X"
+        },
+        {
+          "id": "OL27513W",
+          "title": "Die Gefährten (1980)",
+          "author": "J.R.R. Tolkien",
+          "coverId": "local:no-04",
+          "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-04.jpg",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3129079211",
+          "coverIsbn": "3129079211"
+        },
+        {
+          "id": "OL27479W",
+          "title": "Die zwei Türme (1980)",
+          "author": "J.R.R. Tolkien",
+          "coverId": "local:no-05",
+          "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-05.jpg",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3129079319",
+          "coverIsbn": "3129079319"
+        },
+        {
+          "id": "OL27455W",
+          "title": "Die Rückkehr des Königs (1980)",
+          "author": "J.R.R. Tolkien",
+          "coverId": "local:no-06",
+          "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-06.jpg",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3129079416",
+          "coverIsbn": "3129079416"
+        },
+        {
+          "id": "OL27512W",
+          "title": "Baum und Blatt",
+          "author": "J.R.R. Tolkien",
+          "coverId": "local:no-07",
+          "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-07.jpg",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3548390390",
+          "coverIsbn": "3548390390"
         }
       ]
     },

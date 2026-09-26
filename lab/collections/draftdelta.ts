@@ -17,7 +17,18 @@ export type Op =
   | { op: 'pick'; id: string; title: string; author: string; coverId: string }
   | { op: 'order'; ids: string[] };
 
-export function draftDelta(draft: DraftLike, record: Pick<CollectionRecord, 'title' | 'intro' | 'works'>): { ops: Op[]; onlineOnly: string[]; summary: string } {
+/**
+ * The file's picks a draft can hold: an `ol:` cover (a site-served image is
+ * refused by /curate) and each work once (a draft keys picks by work). The
+ * rest stays in the file only and is not reported as a difference.
+ */
+export function draftableWorks<T extends Pick<CollectionPick, 'id' | 'coverId'>>(works: T[]): T[] {
+  const seen = new Set<string>();
+  return works.filter(w => /^ol:\d+$/.test(w.coverId) && !seen.has(w.id) && (seen.add(w.id), true));
+}
+
+export function draftDelta(draft: DraftLike, fileRecord: Pick<CollectionRecord, 'title' | 'intro' | 'works'>): { ops: Op[]; onlineOnly: string[]; summary: string } {
+  const record = { ...fileRecord, works: draftableWorks(fileRecord.works) };
   const ops: Op[] = [];
   const meta: { op: 'meta'; title?: string; intro?: string } = { op: 'meta' };
   if (draft.title !== record.title) meta.title = record.title;

@@ -31,7 +31,7 @@ export default function CoverWall({ works, selectCover = false }: CoverWallProps
         // A site-served image is on no wall of Open Library's, so there is no cover to select there.
         const image = 'image' in w ? w.image : undefined;
         return (
-        <li key={w.id}>
+        <li key={`${w.id}:${'image' in w && w.image ? w.image : w.coverId}`}>
           <Link
             href={selectCover && !image ? `/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}` : `/book/${target}`}
             className="group block focus-visible:outline-none"

@@ -270,7 +270,7 @@ export default function CurateTool({ initialDrafts, startingPoints, initialId, a
                   <button type="button" onClick={() => open(d.id)} className="flex w-full gap-3 rounded-md border border-line p-3 text-left transition-colors hover:border-accent">
                     <span className="flex shrink-0 gap-1">
                       {d.works.slice(0, 3).map(w => (
-                        <span key={w.id} className="relative block aspect-[2/3] w-9 overflow-hidden rounded bg-surface-2">
+                        <span key={`${w.id}:${w.coverId}`} className="relative block aspect-[2/3] w-9 overflow-hidden rounded bg-surface-2">
                           <CoverImage src={olCover(coverNumber(w.coverId), 'S')} alt="" sizes="36px" />
                         </span>
                       ))}
