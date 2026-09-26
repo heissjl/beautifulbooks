@@ -2,96 +2,12 @@
   "curatedAt": "2026-09-26",
   "collections": [
     {
-      "slug": "women-writers",
+      "slug": "feminist-press",
       "title": "Feminist Press",
       "kind": "authors",
       "intro": "https://feministpress.org/",
       "published": true,
       "authors": [
-        {
-          "name": "Jane Austen",
-          "keys": [
-            "OL21594A"
-          ]
-        },
-        {
-          "name": "Charlotte Brontë",
-          "keys": [
-            "OL113362A"
-          ]
-        },
-        {
-          "name": "Emily Brontë",
-          "keys": [
-            "OL24529A"
-          ]
-        },
-        {
-          "name": "Anne Brontë",
-          "keys": [
-            "OL342487A"
-          ]
-        },
-        {
-          "name": "Margaret Atwood",
-          "keys": [
-            "OL52922A"
-          ]
-        },
-        {
-          "name": "Sylvia Plath",
-          "keys": [
-            "OL4327652A"
-          ]
-        },
-        {
-          "name": "Marlen Haushofer",
-          "keys": [
-            "OL404610A"
-          ]
-        },
-        {
-          "name": "Clarice Lispector",
-          "keys": [
-            "OL93118A"
-          ]
-        },
-        {
-          "name": "Emily Dickinson",
-          "keys": [
-            "OL19512A"
-          ]
-        },
-        {
-          "name": "Mary Shelley",
-          "keys": [
-            "OL25342A"
-          ]
-        },
-        {
-          "name": "Agatha Christie",
-          "keys": [
-            "OL27695A"
-          ]
-        },
-        {
-          "name": "Astrid Lindgren",
-          "keys": [
-            "OL24950A"
-          ]
-        },
-        {
-          "name": "Ingeborg Bachmann",
-          "keys": [
-            "OL27744A"
-          ]
-        },
-        {
-          "name": "Simone de Beauvoir",
-          "keys": [
-            "OL63285A"
-          ]
-        },
         {
           "name": "Suzette Haden Elgin",
           "keys": [
@@ -387,12 +303,6 @@
           ]
         },
         {
-          "name": "Jyotsna Sreenivasan",
-          "keys": [
-            "OL550682A"
-          ]
-        },
-        {
           "name": "Maaike Meijer",
           "keys": [
             "OL344961A"
@@ -453,12 +363,6 @@
           ]
         },
         {
-          "name": "Alice Hanson Cook",
-          "keys": [
-            "OL224759A"
-          ]
-        },
-        {
           "name": "Kali for Women (Organization)",
           "keys": [
             "OL3190615A"
@@ -501,21 +405,9 @@
           ]
         },
         {
-          "name": "Tasalima Nasarina",
-          "keys": [
-            "OL3081007A"
-          ]
-        },
-        {
           "name": "Michal Govrin",
           "keys": [
             "OL219212A"
-          ]
-        },
-        {
-          "name": "Judith Harlan",
-          "keys": [
-            "OL29020A"
           ]
         },
         {
@@ -525,21 +417,9 @@
           ]
         },
         {
-          "name": "Bettina Ling",
-          "keys": [
-            "OL237785A"
-          ]
-        },
-        {
           "name": "Hudá Shaʻrāwī",
           "keys": [
             "OL1195255A"
-          ]
-        },
-        {
-          "name": "Doris Daniels",
-          "keys": [
-            "OL1001781A"
           ]
         },
         {
@@ -567,15 +447,6 @@
           "addedAt": "2026-09-26",
           "from": "list:hopeevey/OL203409L",
           "coverIsbn": "9781558615328"
-        },
-        {
-          "id": "OL7105292W",
-          "title": "The wedding",
-          "author": "Dorothy West",
-          "coverId": "ol:7015558",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "0385471432"
         },
         {
           "id": "OL2431024W",
@@ -644,24 +515,6 @@
           "addedAt": "2026-09-26",
           "from": "list:hopeevey/OL203409L",
           "coverIsbn": "0935312722"
-        },
-        {
-          "id": "OL7105286W",
-          "title": "The Richer, the Poorer",
-          "author": "Dorothy West",
-          "coverId": "ol:240698",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "9780385471466"
-        },
-        {
-          "id": "OL7105284W",
-          "title": "The Last Leaf of Harlem",
-          "author": "Dorothy West",
-          "coverId": "ol:2370048",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "9780312261481"
         },
         {
           "id": "OL5543595W",
@@ -6913,6 +6766,918 @@
           "coverId": "ol:15212956",
           "addedAt": "2026-09-26",
           "from": "subject:collection:otherwise_tiptree_award=winner"
+        }
+      ],
+      "coverSource": "catalogue"
+    },
+    {
+      "slug": "hugo-award-novel",
+      "title": "Hugo Award, best novel",
+      "kind": "authors",
+      "intro": "",
+      "published": false,
+      "authors": [
+        {
+          "name": "Alfred Bester",
+          "keys": [
+            "OL218124A"
+          ]
+        },
+        {
+          "name": "Mark Clifton",
+          "keys": [
+            "OL4913762A"
+          ]
+        },
+        {
+          "name": "Robert A. Heinlein",
+          "keys": [
+            "OL28641A"
+          ]
+        },
+        {
+          "name": "James Blish",
+          "keys": [
+            "OL34434A"
+          ]
+        },
+        {
+          "name": "Fritz Leiber",
+          "keys": [
+            "OL29390A"
+          ]
+        },
+        {
+          "name": "Walter M. Miller Jr.",
+          "keys": [
+            "OL382686A"
+          ]
+        },
+        {
+          "name": "Philip K. Dick",
+          "keys": [
+            "OL274606A"
+          ]
+        },
+        {
+          "name": "Clifford D. Simak",
+          "keys": [
+            "OL765755A"
+          ]
+        },
+        {
+          "name": "Frank Herbert",
+          "keys": [
+            "OL79034A"
+          ]
+        },
+        {
+          "name": "Roger Zelazny",
+          "keys": [
+            "OL4587302A"
+          ]
+        },
+        {
+          "name": "John Brunner",
+          "keys": [
+            "OL2644956A"
+          ]
+        },
+        {
+          "name": "Ursula K. Le Guin",
+          "keys": [
+            "OL31353A"
+          ]
+        },
+        {
+          "name": "Larry Niven",
+          "keys": [
+            "OL33881A"
+          ]
+        },
+        {
+          "name": "Philip José Farmer",
+          "keys": [
+            "OL220398A"
+          ]
+        },
+        {
+          "name": "Isaac Asimov",
+          "keys": [
+            "OL34221A"
+          ]
+        },
+        {
+          "name": "David Brin",
+          "keys": [
+            "OL34888A"
+          ]
+        },
+        {
+          "name": "Arthur C. Clarke",
+          "keys": [
+            "OL2623461A"
+          ]
+        },
+        {
+          "name": "Joe Haldeman",
+          "keys": [
+            "OL26980A"
+          ]
+        },
+        {
+          "name": "Kate Wilhelm",
+          "keys": [
+            "OL33607A"
+          ]
+        },
+        {
+          "name": "Frederik Pohl",
+          "keys": [
+            "OL23364A"
+          ]
+        },
+        {
+          "name": "Vonda N. McIntyre",
+          "keys": [
+            "OL230306A"
+          ]
+        },
+        {
+          "name": "Joan D. Vinge",
+          "keys": [
+            "OL419303A"
+          ]
+        },
+        {
+          "name": "C. J. Cherryh",
+          "keys": [
+            "OL2644750A"
+          ]
+        },
+        {
+          "name": "William Gibson",
+          "keys": [
+            "OL26283A"
+          ]
+        },
+        {
+          "name": "Orson Scott Card",
+          "keys": [
+            "OL25161A"
+          ]
+        },
+        {
+          "name": "Dan Simmons",
+          "keys": [
+            "OL235668A"
+          ]
+        },
+        {
+          "name": "Lois McMaster Bujold",
+          "keys": [
+            "OL21317A"
+          ]
+        },
+        {
+          "name": "Vernor Vinge",
+          "keys": [
+            "OL2751197A"
+          ]
+        },
+        {
+          "name": "Connie Willis",
+          "keys": [
+            "OL20934A"
+          ]
+        },
+        {
+          "name": "Kim Stanley Robinson",
+          "keys": [
+            "OL19986A"
+          ]
+        },
+        {
+          "name": "Neal Stephenson",
+          "keys": [
+            "OL19430A"
+          ]
+        },
+        {
+          "name": "J. K. Rowling",
+          "keys": [
+            "OL23919A"
+          ]
+        },
+        {
+          "name": "Susanna Clarke",
+          "keys": [
+            "OL1387961A"
+          ]
+        },
+        {
+          "name": "Neil Gaiman",
+          "keys": [
+            "OL53305A"
+          ]
+        },
+        {
+          "name": "Robert J. Sawyer",
+          "keys": [
+            "OL23251A"
+          ]
+        },
+        {
+          "name": "Robert Charles Wilson",
+          "keys": [
+            "OL28371A"
+          ]
+        },
+        {
+          "name": "Michael Chabon",
+          "keys": [
+            "OL32884A"
+          ]
+        },
+        {
+          "name": "刘慈欣",
+          "keys": [
+            "OL7044246A"
+          ]
+        },
+        {
+          "name": "China Miéville",
+          "keys": [
+            "OL3075854A"
+          ]
+        },
+        {
+          "name": "Paolo Bacigalupi",
+          "keys": [
+            "OL3831144A"
+          ]
+        },
+        {
+          "name": "Jo Walton",
+          "keys": [
+            "OL1432837A"
+          ]
+        },
+        {
+          "name": "John Scalzi",
+          "keys": [
+            "OL1394231A"
+          ]
+        },
+        {
+          "name": "Ann Leckie",
+          "keys": [
+            "OL3399168A"
+          ]
+        },
+        {
+          "name": "N. K. Jemisin",
+          "keys": [
+            "OL6575473A"
+          ]
+        },
+        {
+          "name": "Mary Robinette Kowal",
+          "keys": [
+            "OL6834725A"
+          ]
+        },
+        {
+          "name": "Arkady Martine",
+          "keys": [
+            "OL7635848A"
+          ]
+        },
+        {
+          "name": "Martha Wells",
+          "keys": [
+            "OL221294A"
+          ]
+        },
+        {
+          "name": "T. Kingfisher",
+          "keys": [
+            "OL7442286A"
+          ]
+        },
+        {
+          "name": "Emily Tesh",
+          "keys": [
+            "OL7955267A"
+          ]
+        },
+        {
+          "name": "Robert Jackson Bennett",
+          "keys": [
+            "OL6586893A"
+          ]
+        }
+      ],
+      "works": [
+        {
+          "id": "OL16027965W",
+          "title": "The Demolished Man",
+          "author": "Alfred Bester",
+          "coverId": "ol:6874573",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL15686578W",
+          "title": "They’d rather be right",
+          "author": "Mark Clifton",
+          "coverId": "ol:6874396",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL59715W",
+          "title": "Double Star",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:14632131",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL53404W",
+          "title": "A Case of Conscience",
+          "author": "James Blish",
+          "coverId": "ol:5540783",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL101943W",
+          "title": "The Big Time",
+          "author": "Fritz Leiber",
+          "coverId": "ol:12373928",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL59740W",
+          "title": "Starship Troopers",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:14630746",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL2626638W",
+          "title": "A Canticle for Leibowitz",
+          "author": "Walter M. Miller Jr.",
+          "coverId": "ol:10221348",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL59688W",
+          "title": "Stranger in a Strange Land",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:14630668",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL2172403W",
+          "title": "The Man in the High Castle",
+          "author": "Philip K. Dick",
+          "coverId": "ol:420452",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL4088396W",
+          "title": "Way station",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:14169",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL101950W",
+          "title": "The Wanderer",
+          "author": "Fritz Leiber",
+          "coverId": "ol:379960",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL59704W",
+          "title": "The moon is a harsh mistress",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:14631258",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL893414W",
+          "title": "Dune",
+          "author": "Frank Herbert",
+          "coverId": "ol:11481354",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL13994W",
+          "title": "This Immortal",
+          "author": "Roger Zelazny",
+          "coverId": "ol:8775174",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL13992W",
+          "title": "Lord of Light",
+          "author": "Roger Zelazny",
+          "coverId": "ol:29946",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL3521966W",
+          "title": "Stand on Zanzibar",
+          "author": "John Brunner",
+          "coverId": "ol:911128",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL59800W",
+          "title": "The Left Hand of Darkness",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:10618463",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL510405W",
+          "title": "Ringworld",
+          "author": "Larry Niven",
+          "coverId": "ol:8999878",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL273080W",
+          "title": "To your scattered bodies go",
+          "author": "Philip José Farmer",
+          "coverId": "ol:382159",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL46395W",
+          "title": "The Gods Themselves",
+          "author": "Isaac Asimov",
+          "coverId": "ol:15138118",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL58710W",
+          "title": "Startide Rising",
+          "author": "David Brin",
+          "coverId": "ol:12384344",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL17417W",
+          "title": "Rendezvous with Rama",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:13472608",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL59863W",
+          "title": "The Dispossessed",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:6979680",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL271163W",
+          "title": "The Forever War",
+          "author": "Joe Haldeman",
+          "coverId": "ol:10693768",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL506264W",
+          "title": "Where Late the Sweet Birds Sang",
+          "author": "Kate Wilhelm",
+          "coverId": "ol:182911",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL46302W",
+          "title": "Foundation's Edge",
+          "author": "Isaac Asimov",
+          "coverId": "ol:6700720",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL60924W",
+          "title": "Gateway",
+          "author": "Frederik Pohl",
+          "coverId": "ol:9424523",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL17403W",
+          "title": "The Fountains of Paradise",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:6449963",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL1921526W",
+          "title": "Dreamsnake",
+          "author": "Vonda N. McIntyre",
+          "coverId": "ol:7267148",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL2816487W",
+          "title": "The Snow Queen",
+          "author": "Joan D. Vinge",
+          "coverId": "ol:288125",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL60590W",
+          "title": "Downbelow station",
+          "author": "C. J. Cherryh",
+          "coverId": "ol:683236",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL27258W",
+          "title": "Neuromancer",
+          "author": "William Gibson",
+          "coverId": "ol:283860",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL49488W",
+          "title": "Ender's Game",
+          "author": "Orson Scott Card",
+          "coverId": "ol:12996033",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL49580W",
+          "title": "Speaker for the Dead",
+          "author": "Orson Scott Card",
+          "coverId": "ol:9315123",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL58713W",
+          "title": "The Uplift War",
+          "author": "David Brin",
+          "coverId": "ol:6572753",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL60589W",
+          "title": "Cyteen",
+          "author": "C. J. Cherryh",
+          "coverId": "ol:4125331",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL1963268W",
+          "title": "Hyperion",
+          "author": "Dan Simmons",
+          "coverId": "ol:380332",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL56909W",
+          "title": "The Vor Game",
+          "author": "Lois McMaster Bujold",
+          "coverId": "ol:5807570",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL56905W",
+          "title": "Barrayar",
+          "author": "Lois McMaster Bujold",
+          "coverId": "ol:981974",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL1975714W",
+          "title": "A Fire upon the Deep",
+          "author": "Vernor Vinge",
+          "coverId": "ol:9261466",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL14858406W",
+          "title": "Doomsday book",
+          "author": "Connie Willis",
+          "coverId": "ol:369478",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL81655W",
+          "title": "Green Mars",
+          "author": "Kim Stanley Robinson",
+          "coverId": "ol:372391",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL56890W",
+          "title": "Mirror Dance",
+          "author": "Lois McMaster Bujold",
+          "coverId": "ol:3943745",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL38499W",
+          "title": "The Diamond Age",
+          "author": "Neal Stephenson",
+          "coverId": "ol:8598269",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL24832396W",
+          "title": "Hyperion [2/2]",
+          "author": "Dan Simmons",
+          "coverId": "ol:980225",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL81649W",
+          "title": "Blue Mars",
+          "author": "Kim Stanley Robinson",
+          "coverId": "ol:3818726",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL14858392W",
+          "title": "To Say Nothing of the Dog",
+          "author": "Connie Willis",
+          "coverId": "ol:982148",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL271152W",
+          "title": "Forever Peace",
+          "author": "Joe Haldeman",
+          "coverId": "ol:283721",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL1975705W",
+          "title": "A Deepness in the Sky (Zones of Thought)",
+          "author": "Vernor Vinge",
+          "coverId": "ol:603591",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12059372",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL5703422W",
+          "title": "Jonathan Strange and Mr. Norrell",
+          "author": "Susanna Clarke",
+          "coverId": "ol:525391",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL679360W",
+          "title": "American Gods",
+          "author": "Neil Gaiman",
+          "coverId": "ol:8494659",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL17020W",
+          "title": "Hominids",
+          "author": "Robert J. Sawyer",
+          "coverId": "ol:183505",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL56898W",
+          "title": "Paladin of Souls",
+          "author": "Lois McMaster Bujold",
+          "coverId": "ol:238001",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL14951012W",
+          "title": "Spin",
+          "author": "Robert Charles Wilson",
+          "coverId": "ol:6632328",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL1975712W",
+          "title": "Rainbows End",
+          "author": "Vernor Vinge",
+          "coverId": "ol:182444",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL119430W",
+          "title": "The Yiddish Policemen's Union",
+          "author": "Michael Chabon",
+          "coverId": "ol:12745258",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL17267881W",
+          "title": "三体",
+          "author": "刘慈欣",
+          "coverId": "ol:9157544",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL679348W",
+          "title": "The Graveyard Book",
+          "author": "Neil Gaiman",
+          "coverId": "ol:7099583",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL19341943W",
+          "title": "The City & The City",
+          "author": "China Miéville",
+          "coverId": "ol:8455453",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL15000756W",
+          "title": "The Windup Girl",
+          "author": "Paolo Bacigalupi",
+          "coverId": "ol:6463375",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL14914265W",
+          "title": "Blackout",
+          "author": "Connie Willis",
+          "coverId": "ol:6584391",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL16419954W",
+          "title": "Among Others",
+          "author": "Jo Walton",
+          "coverId": "ol:6998632",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL16564627W",
+          "title": "Redshirts",
+          "author": "John Scalzi",
+          "coverId": "ol:7238735",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL17062644W",
+          "title": "Ancillary Justice",
+          "author": "Ann Leckie",
+          "coverId": "ol:7355949",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL17363125W",
+          "title": "The Fifth Season",
+          "author": "N. K. Jemisin",
+          "coverId": "ol:8133598",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL17842279W",
+          "title": "The Obelisk Gate",
+          "author": "N. K. Jemisin",
+          "coverId": "ol:8138324",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL17881901W",
+          "title": "The Stone Sky",
+          "author": "N. K. Jemisin",
+          "coverId": "ol:8191910",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL18021949W",
+          "title": "The Calculating Stars",
+          "author": "Mary Robinette Kowal",
+          "coverId": "ol:8290909",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL20157046W",
+          "title": "A Memory Called Empire",
+          "author": "Arkady Martine",
+          "coverId": "ol:8802134",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL20735675W",
+          "title": "Network Effect",
+          "author": "Martha Wells",
+          "coverId": "ol:9426689",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL20832939W",
+          "title": "A Desolation Called Peace",
+          "author": "Arkady Martine",
+          "coverId": "ol:10718806",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL24510090W",
+          "title": "Nettle & Bone",
+          "author": "T. Kingfisher",
+          "coverId": "ol:11135584",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL26522636W",
+          "title": "Some Desperate Glory",
+          "author": "Emily Tesh",
+          "coverId": "ol:13462488",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL37628730W",
+          "title": "The Tainted Cup",
+          "author": "Robert Jackson Bennett",
+          "coverId": "ol:15251529",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
         }
       ],
       "coverSource": "catalogue"
