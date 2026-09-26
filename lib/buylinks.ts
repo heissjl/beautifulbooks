@@ -136,8 +136,8 @@ const RETAILERS: Record<Market, Retailer[]> = {
     amazon('de', 'AFFILIATE_AMAZON_TAG_DE'),
     {
       id: 'hugendubel', label: 'Hugendubel',
-      url: isbn => `https://www.hugendubel.de/de/search?searchString=${isbn}`,
-      searchUrl: terms => `https://www.hugendubel.de/de/search?searchString=${enc(terms)}`,
+      url: isbn => `https://www.hugendubel.de/de/search?q=${isbn}`,
+      searchUrl: terms => `https://www.hugendubel.de/de/search?q=${enc(terms)}`,
     },
     abebooks('de'),
     { id: 'booklooker', label: 'Booklooker', url: isbn => `https://www.booklooker.de/B%C3%BCcher/Angebote/isbn=${isbn}` },
