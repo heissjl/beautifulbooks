@@ -8445,11 +8445,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL27251020M",
           "coverIsbn": "9782266020381",
+          "coverWork": "OL20071030W",
           "coverArtists": [
             "W. Siudmak"
           ],
-          "isfdbRecord": "338288",
-          "coverWork": "OL20071030W"
+          "isfdbRecord": "338288"
         },
         {
           "id": "OL1819353W",
@@ -8459,11 +8459,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL9041083M",
           "coverIsbn": "9783453164185",
+          "coverWork": "OL1819342W",
           "coverArtists": [
             "Jürgen Rogner"
           ],
-          "isfdbRecord": "567199",
-          "coverWork": "OL1819342W"
+          "isfdbRecord": "567199"
         },
         {
           "id": "OL2172402W",
@@ -8549,11 +8549,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL8864496M",
           "coverIsbn": "9782207250587",
+          "coverWork": "OL7917371W",
           "coverArtists": [
             "Stéphane Barry"
           ],
-          "isfdbRecord": "332588",
-          "coverWork": "OL7917371W"
+          "isfdbRecord": "332588"
         },
         {
           "id": "OL56835W",
@@ -8576,11 +8576,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:dut:OL32851971M",
           "coverIsbn": "9789027471246",
+          "coverWork": "OL24744170W",
           "coverArtists": [
             "Han Pieko"
           ],
-          "isfdbRecord": "366072",
-          "coverWork": "OL24744170W"
+          "isfdbRecord": "366072"
         },
         {
           "id": "OL59858W",
@@ -8613,11 +8613,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL35674554M",
           "coverIsbn": "9783426057506",
+          "coverWork": "OL26419808W",
           "coverArtists": [
             "Stanislaw Fernandes"
           ],
-          "isfdbRecord": "390186",
-          "coverWork": "OL26419808W"
+          "isfdbRecord": "390186"
         },
         {
           "id": "OL3332541W",
@@ -8631,6 +8631,15 @@
             "Martin Grundmann"
           ],
           "isfdbRecord": "473271"
+        },
+        {
+          "id": "OL19208208W",
+          "title": "Arslan (SF Masterworks)",
+          "author": "M. J. Engh",
+          "coverId": "ol:15258997",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL62600301M",
+          "coverIsbn": "9782207131336"
         },
         {
           "id": "OL90571W",
@@ -8688,11 +8697,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL8864612M",
           "coverIsbn": "9782207500958",
+          "coverWork": "OL892413W",
           "coverArtists": [
             "Thierry Mebarkhi"
           ],
-          "isfdbRecord": "567839",
-          "coverWork": "OL892413W"
+          "isfdbRecord": "567839"
         },
         {
           "id": "OL2172408W",
@@ -8816,6 +8825,16 @@
           "coverIsbn": "9782070417728"
         },
         {
+          "id": "OL166482W",
+          "title": "The Affirmation",
+          "author": "Christopher Priest",
+          "coverId": "ol:15259009",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL30791868M",
+          "coverIsbn": "9783453310377",
+          "coverWork": "OL22869894W"
+        },
+        {
           "id": "OL19330505W",
           "title": "R.U.R.",
           "author": "Karel Čapek",
@@ -8851,6 +8870,25 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:tur:OL46533388M",
           "coverIsbn": "9786257163460"
+        },
+        {
+          "id": "OL20074002W",
+          "title": "Floating Worlds",
+          "author": "Cecelia Holland",
+          "coverId": "ol:15258999",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL62600304M",
+          "coverIsbn": "9783453305731"
+        },
+        {
+          "id": "OL16513W",
+          "title": "Blood Music",
+          "author": "Greg Bear",
+          "coverId": "ol:8774527",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL27297733M",
+          "coverIsbn": "9783453523654",
+          "coverWork": "OL20117790W"
         },
         {
           "id": "OL2454690W",
@@ -8891,6 +8929,15 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:chi:OL32640632M",
           "coverIsbn": "9787559416551"
+        },
+        {
+          "id": "OL3290749W",
+          "title": "Philosophy and living",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:15259015",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL62600327M",
+          "coverIsbn": "9783453303928"
         },
         {
           "id": "OL17403W",
@@ -8968,6 +9015,25 @@
           "coverIsbn": "9783453119093"
         },
         {
+          "id": "OL2657126W",
+          "title": "Sarah Canary",
+          "author": "Karen Joy Fowler",
+          "coverId": "ol:15259000",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL62600306M",
+          "coverIsbn": "9783442542543"
+        },
+        {
+          "id": "OL19186717W",
+          "title": "The Continuous Katherine Mortenhoe (SF Masterworks)",
+          "author": "D. G. Compton",
+          "coverId": "ol:8737267",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL27097358M",
+          "coverIsbn": "9782277217558",
+          "coverWork": "OL19912774W"
+        },
+        {
           "id": "OL450063W",
           "title": "Frankenstein; or, The Modern Prometheus",
           "author": "Mary Shelley",
@@ -8994,6 +9060,26 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:jpn:OL26387281M",
           "coverIsbn": "9784151101014"
+        },
+        {
+          "id": "OL19882938W",
+          "title": "The Caltraps of Time (S.F. Masterworks)",
+          "author": "David I. Masson",
+          "coverId": "ol:8753109",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL27263597M",
+          "coverIsbn": "9783548310770",
+          "coverWork": "OL20083573W"
+        },
+        {
+          "id": "OL482569W",
+          "title": "Engine Summer",
+          "author": "John Crowley",
+          "coverId": "ol:15259011",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL30518133M",
+          "coverIsbn": "9783453308572",
+          "coverWork": "OL22427004W"
         },
         {
           "id": "OL19330783W",
@@ -9026,11 +9112,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL29490486M",
           "coverIsbn": "9782277229070",
+          "coverWork": "OL21679260W",
           "coverArtists": [
             "Barclay Shaw"
           ],
-          "isfdbRecord": "593207",
-          "coverWork": "OL21679260W"
+          "isfdbRecord": "593207"
         },
         {
           "id": "OL19209380W",
@@ -9063,11 +9149,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL27304754M",
           "coverIsbn": "9783870704391",
+          "coverWork": "OL20124815W",
           "coverArtists": [
             "Bob Atkins"
           ],
-          "isfdbRecord": "425280",
-          "coverWork": "OL20124815W"
+          "isfdbRecord": "425280"
         },
         {
           "id": "OL46395W",
@@ -9079,6 +9165,15 @@
           "coverIsbn": "9788376595443"
         },
         {
+          "id": "OL20070897W",
+          "title": "This Is the Way the World Ends (S.F. Masterworks)",
+          "author": "James Morrow",
+          "coverId": "ol:15259017",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL62600332M",
+          "coverIsbn": "2207304582"
+        },
+        {
           "id": "OL19323674W",
           "title": "The Deep (S.F. Masterworks)",
           "author": "John Crowley",
@@ -9086,11 +9181,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL12464779M",
           "coverIsbn": "9782228892445",
+          "coverWork": "OL482548W",
           "coverArtists": [
             "Jeff Rey"
           ],
-          "isfdbRecord": "588601",
-          "coverWork": "OL482548W"
+          "isfdbRecord": "588601"
         },
         {
           "id": "OL20866308W",
@@ -9100,11 +9195,21 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL27279869M",
           "coverIsbn": "9788498001488",
+          "coverWork": "OL20099834W",
           "coverArtists": [
             "Michael Whelan"
           ],
-          "isfdbRecord": "493853",
-          "coverWork": "OL20099834W"
+          "isfdbRecord": "493853"
+        },
+        {
+          "id": "OL21478785W",
+          "title": "Time Is the Fire",
+          "author": "Connie Willis",
+          "coverId": "ol:13115711",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL44908075M",
+          "coverIsbn": "9782290097960",
+          "coverWork": "OL33045478W"
         },
         {
           "id": "OL59715W",
@@ -9127,11 +9232,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL27088950M",
           "coverIsbn": "9783453521865",
+          "coverWork": "OL5724838W",
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "421139",
-          "coverWork": "OL5724838W"
+          "isfdbRecord": "421139"
         },
         {
           "id": "OL17402W",
@@ -9168,11 +9273,24 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL47318984M",
           "coverIsbn": "9782070465835",
+          "coverWork": "OL34957510W",
           "coverArtists": [
             "Sam Van Olffen"
           ],
-          "isfdbRecord": "669475",
-          "coverWork": "OL34957510W"
+          "isfdbRecord": "669475"
+        },
+        {
+          "id": "OL19325351W",
+          "title": "Transfigurations (S.F. Masterworks)",
+          "author": "Michael Bishop",
+          "coverId": "ol:15259001",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL62600308M",
+          "coverIsbn": "9783453313248",
+          "coverArtists": [
+            "Klaus Holitzka"
+          ],
+          "isfdbRecord": "389731"
         },
         {
           "id": "OL59733W",
@@ -9190,6 +9308,20 @@
           "coverId": "ol:7255048",
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL25425493M"
+        },
+        {
+          "id": "OL7117373W",
+          "title": "Half Past Human",
+          "author": "T. J. Bass",
+          "coverId": "ol:15259012",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL28367367M",
+          "coverIsbn": "9783442231638",
+          "coverWork": "OL20937696W",
+          "coverArtists": [
+            "Eyke Volkmer"
+          ],
+          "isfdbRecord": "398775"
         },
         {
           "id": "OL2046154W",
@@ -9228,6 +9360,16 @@
           "isfdbRecord": "403370"
         },
         {
+          "id": "OL21118741W",
+          "title": "Shrinking Man",
+          "author": "Ted Adams",
+          "coverId": "ol:14852759",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ita:OL58187763M",
+          "coverIsbn": "9788834729069",
+          "coverWork": "OL64219W"
+        },
+        {
           "id": "OL53404W",
           "title": "A Case of Conscience",
           "author": "James Blish",
@@ -9259,6 +9401,26 @@
           "isfdbRecord": "371611"
         },
         {
+          "id": "OL1920272W",
+          "title": "The Child Garden",
+          "author": "Geoff Ryman",
+          "coverId": "ol:13884464",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL47324631M",
+          "coverIsbn": "9783453058514",
+          "coverWork": "OL34962867W"
+        },
+        {
+          "id": "OL20119339W",
+          "title": "Mission Of Gravity: Mesklinite Book 1 (S.F. Masterworks)",
+          "author": "Hal Clement",
+          "coverId": "ol:13452062",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL47086381M",
+          "coverIsbn": "9782266011297",
+          "coverWork": "OL34737746W"
+        },
+        {
           "id": "OL83885W",
           "title": "Mockingbird",
           "author": "Walter Tevis",
@@ -9266,11 +9428,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL45612668M",
           "coverIsbn": "9782277212461",
+          "coverWork": "OL33653580W",
           "coverArtists": [
             "Tibor Csernus"
           ],
-          "isfdbRecord": "369652",
-          "coverWork": "OL33653580W"
+          "isfdbRecord": "369652"
         },
         {
           "id": "OL59797W",
@@ -9325,11 +9487,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL39794905M",
           "coverIsbn": "9783453031449",
+          "coverWork": "OL28941628W",
           "coverArtists": [
             "Larry Noble"
           ],
-          "isfdbRecord": "646470",
-          "coverWork": "OL28941628W"
+          "isfdbRecord": "646470"
         },
         {
           "id": "OL35702190W",
@@ -9340,6 +9502,15 @@
           "from": "openlibrary:spa:OL27305730M",
           "coverIsbn": "9788445074947",
           "coverWork": "OL2994043W"
+        },
+        {
+          "id": "OL19546464W",
+          "title": "Dark Benediction",
+          "author": "Walter M. Miller, Jr.",
+          "coverId": "ol:15259002",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL62600309M",
+          "coverIsbn": "9783453313057"
         },
         {
           "id": "OL19218549W",
@@ -9355,10 +9526,10 @@
           "id": "OL257947W",
           "title": "Dying of the Light",
           "author": "George R. R. Martin",
-          "coverId": "ol:10546376",
+          "coverId": "ol:15126844",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:ita:OL31860953M",
-          "coverIsbn": "9788898172054"
+          "from": "openlibrary:rus:OL60296667M",
+          "coverIsbn": "9785170846108"
         },
         {
           "id": "OL59863W",
@@ -9373,11 +9544,11 @@
           "id": "OL83886W",
           "title": "The Man Who Fell to Earth",
           "author": "Walter S. Tevis",
-          "coverId": "ol:13195151",
+          "coverId": "ol:8689745",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:rus:OL26965894M",
-          "coverIsbn": "9785389134706",
-          "coverWork": "OL19752852W"
+          "from": "openlibrary:ita:OL27071972M",
+          "coverIsbn": "9788804337195",
+          "coverWork": "OL19884897W"
         },
         {
           "id": "OL56833W",
@@ -9413,11 +9584,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL16169786M",
           "coverIsbn": "2266027204",
+          "coverWork": "OL10571538W",
           "coverArtists": [
             "W. Siudmak"
           ],
-          "isfdbRecord": "338704",
-          "coverWork": "OL10571538W"
+          "isfdbRecord": "338704"
         },
         {
           "id": "OL17415602W",
@@ -9476,6 +9647,20 @@
           "isfdbRecord": "990810"
         },
         {
+          "id": "OL20126875W",
+          "title": "China Mountain Zhang",
+          "author": "Maureen F. McHugh",
+          "coverId": "ol:8769705",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL27289826M",
+          "coverIsbn": "9783886199532",
+          "coverWork": "OL20109830W",
+          "coverArtists": [
+            "Martin Grundmann"
+          ],
+          "isfdbRecord": "473341"
+        },
+        {
           "id": "OL26745098W",
           "title": "Shadow",
           "author": "Gene Wolfe",
@@ -9484,6 +9669,15 @@
           "from": "openlibrary:pol:OL35336509M",
           "coverIsbn": "9788325001223",
           "coverWork": "OL26186453W"
+        },
+        {
+          "id": "OL14871968W",
+          "title": "Sword & citadel",
+          "author": "Gene Wolfe",
+          "coverId": "ol:15259003",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL62600311M",
+          "coverIsbn": "9783910914643"
         },
         {
           "id": "OL7015488W",
@@ -9547,10 +9741,10 @@
           "id": "OL52114W",
           "title": "The War of the Worlds",
           "author": "H. G. Wells",
-          "coverId": "ol:14821280",
+          "coverId": "ol:11740945",
           "addedAt": "2026-09-26",
-          "from": "openlibrary:ita:OL55932335M",
-          "coverIsbn": "9788807904301"
+          "from": "openlibrary:dut:OL33042326M",
+          "coverIsbn": "9789044606355"
         },
         {
           "id": "OL59800W",
@@ -9578,11 +9772,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL27047942M",
           "coverIsbn": "9788427004146",
+          "coverWork": "OL19860234W",
           "coverArtists": [
             "Salinas Blanch"
           ],
-          "isfdbRecord": "659170",
-          "coverWork": "OL19860234W"
+          "isfdbRecord": "659170"
         },
         {
           "id": "OL19334472W",
@@ -9595,6 +9789,16 @@
           "coverWork": "OL15436161W"
         },
         {
+          "id": "OL72847W",
+          "title": "Raft",
+          "author": "Stephen Baxter",
+          "coverId": "ol:8540683",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL26852810M",
+          "coverIsbn": "9782266195386",
+          "coverWork": "OL19631871W"
+        },
+        {
           "id": "OL14858865W",
           "title": "Fools",
           "author": "Pat Cadigan",
@@ -9602,11 +9806,21 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL24981328M",
           "coverIsbn": "9782277241348",
+          "coverWork": "OL16084868W",
           "coverArtists": [
             "Hubert de Lartigue"
           ],
-          "isfdbRecord": "374434",
-          "coverWork": "OL16084868W"
+          "isfdbRecord": "374434"
+        },
+        {
+          "id": "OL2643429W",
+          "title": "Light",
+          "author": "M. John Harrison",
+          "coverId": "ol:8783549",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL27312062M",
+          "coverIsbn": "9783453520042",
+          "coverWork": "OL20132087W"
         },
         {
           "id": "OL492354W",
@@ -9634,11 +9848,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL24335292M",
           "coverIsbn": "3453305841",
+          "coverWork": "OL15348351W",
           "coverArtists": [
             "Eddie Jones"
           ],
-          "isfdbRecord": "470975",
-          "coverWork": "OL15348351W"
+          "isfdbRecord": "470975"
         },
         {
           "id": "OL1960375W",
@@ -9683,6 +9897,15 @@
           "coverWork": "OL10414543W"
         },
         {
+          "id": "OL19915743W",
+          "title": "Desolation Road",
+          "author": "Ian McDonald",
+          "coverId": "ol:15259004",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL62600312M",
+          "coverIsbn": "2221059085"
+        },
+        {
           "id": "OL25764282W",
           "title": "Best of Greg Egan",
           "author": "Greg Egan",
@@ -9709,6 +9932,15 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:spa:OL13268297M",
           "coverIsbn": "9788445075357"
+        },
+        {
+          "id": "OL1960610W",
+          "title": "Needle in a timestack",
+          "author": "Robert Silverberg",
+          "coverId": "ol:15259005",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL62600315M",
+          "coverIsbn": "9783442232123"
         },
         {
           "id": "OL2354527W",
@@ -9753,6 +9985,15 @@
           "coverWork": "OL24724893W"
         },
         {
+          "id": "OL28017615W",
+          "title": "Secret of Life",
+          "author": "Paul McAuley",
+          "coverId": "ol:15259006",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:fre:OL62600316M",
+          "coverIsbn": "9782221107997"
+        },
+        {
           "id": "OL13978W",
           "title": "Roadmarks",
           "author": "Roger Zelazny",
@@ -9783,11 +10024,38 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL9041049M",
           "coverIsbn": "9783453161115",
+          "coverWork": "OL14931601W",
           "coverArtists": [
             "Ifa-Bilderteam"
           ],
-          "isfdbRecord": "287933",
-          "coverWork": "OL14931601W"
+          "isfdbRecord": "287933"
+        },
+        {
+          "id": "OL37574007W",
+          "title": "Hiero's Journey",
+          "author": "Sterling E. Lanier",
+          "coverId": "ol:15259007",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:ger:OL62600317M",
+          "coverIsbn": "9783453310896",
+          "coverArtists": [
+            "Karel Thole"
+          ],
+          "isfdbRecord": "366595"
+        },
+        {
+          "id": "OL5045544W",
+          "title": "The Unforsaken Hiero",
+          "author": "Sterling E. Lanier",
+          "coverId": "ol:15259013",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL47326420M",
+          "coverIsbn": "9783453311725",
+          "coverWork": "OL34964617W",
+          "coverArtists": [
+            "Karel Thole"
+          ],
+          "isfdbRecord": "506547"
         },
         {
           "id": "OL261643W",
@@ -9796,6 +10064,20 @@
           "coverId": "ol:10438234",
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL30115139M"
+        },
+        {
+          "id": "OL18367649W",
+          "title": "Beginning Operations",
+          "author": "James White",
+          "coverId": "ol:8572656",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL26879482M",
+          "coverIsbn": "9782702408995",
+          "coverWork": "OL19659917W",
+          "coverArtists": [
+            "Philippe Caza"
+          ],
+          "isfdbRecord": "329196"
         },
         {
           "id": "OL1920269W",
@@ -9807,6 +10089,34 @@
           "coverIsbn": "9788498003062"
         },
         {
+          "id": "OL45147605W",
+          "title": "Nova Swing",
+          "author": "M. John Harrison",
+          "coverId": "ol:8783550",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL27312063M",
+          "coverIsbn": "9783453522916",
+          "coverWork": "OL20132088W",
+          "coverArtists": [
+            "Dirk Schulz"
+          ],
+          "isfdbRecord": "400134"
+        },
+        {
+          "id": "OL8698138W",
+          "title": "Thirteen",
+          "author": "Richard Morgan",
+          "coverId": "ol:13836365",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL47318832M",
+          "coverIsbn": "9783453523562",
+          "coverWork": "OL34957343W",
+          "coverArtists": [
+            "Franz Vohwinkel"
+          ],
+          "isfdbRecord": "510717"
+        },
+        {
           "id": "OL2172414W",
           "title": "Minority Report",
           "author": "Philip K. Dick",
@@ -9814,6 +10124,20 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL27288886M",
           "coverIsbn": "9783453217492"
+        },
+        {
+          "id": "OL45912000W",
+          "title": "Alien Emergencies",
+          "author": "James White",
+          "coverId": "ol:15259014",
+          "addedAt": "2026-09-26",
+          "from": "openlibrary:und:OL30529696M",
+          "coverIsbn": "9783811835078",
+          "coverWork": "OL22447119W",
+          "coverArtists": [
+            "Giuseppe Festino"
+          ],
+          "isfdbRecord": "348638"
         },
         {
           "id": "OL27025376W",
