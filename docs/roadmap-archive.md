@@ -887,3 +887,7 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 *Abgehakt 2026-09-25; beim Aufräumen am 2026-09-26 hierher kopiert, so wie er in der Roadmap stand.*
 
 - [x] **5.10h Die Reihenfolge der Sammlungen auf der Startseite.** (Julian, 2026-09-25: „i need a way to arrange the 4 collections shown on the starting page".) Gebaut 2026-09-25: ▲/▼ in der Admin-Liste auf `/curate`, gespeichert in der Redis, wirkt ohne Deploy; die ersten vier veröffentlichten stehen auf der Startseite ([SPEC F8.6](../SPEC.md)).
+
+## 0.2
+
+- [ ] **0.2 Zweiter Google-Schlüssel für die Entwicklung.** Heute bedient ein Schlüssel Arbeit und Betrieb; am 2026-09-07 kamen 305 von 1.000 Anfragen allein aus der Entwicklung. Ein zweites Cloud-Projekt mit eigenem Schlüssel verdoppelt faktisch das Budget des Betriebs. Codeseitig nichts zu tun, nur ein anderer Wert in `.env.local`. Anleitung im [README](README.md). Drei Minuten.
