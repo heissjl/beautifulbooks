@@ -149,7 +149,7 @@ Bücher: *The Great Gatsby*, *The Left Hand of Darkness*, *Metamorphosis*, *The 
 5. Klick auf eine Kachel öffnet die Wand mit Ladeszene.
 6. Julian sieht die Reihe an drei Büchern, bevor sie live geht.
 
-## 9. Offene Fragen an Julian
+## 9. Fragen an Julian — beantwortet 2026-09-26
 
 1. **Sechs** Werke — oder mehr?
 2. **Ein Cover je Karte** (Vorschlag) oder Mosaik (+6 Open-Library-Anfragen je Seite)?
@@ -161,3 +161,16 @@ Bücher: *The Great Gatsby*, *The Left Hand of Darkness*, *Metamorphosis*, *The 
 8. **Kuratiertes Cover** statt Open Librarys Standardcover (Vorschlag ja)?
 9. **Jahr** unter dem Titel?
 10. Links auf nicht veröffentlichte Werke: gewöhnlich (Vorschlag) oder `nofollow`?
+
+**Julians Antworten (2026-09-26), sie gehen dem Entwurf oben vor:**
+
+1. **Sechs am Desktop, drei am Telefon** (eine Reihe, nicht zwei) — „6 am desktop, 3 am handy und irgendwo noch ein link auf eine suche, die alle werke des autors anzeigt". Der Link „More by … →" bleibt; **vorher prüfen**, ob die Suche `/?q=<Name>` wirklich die Werke der Autorin zeigt (die Suche ist eine Titelsuche); sonst braucht es eine Autorensuche (`?author=<key>` o. ä.) als eigenen Schritt.
+2. **Ein Cover je Karte** — „1 für jetzt, aber halte 2 in der Roadmap als Idee": das Mosaik steht als Idee unter 6.53.
+3. **Streng: `max(2, 2 %)`** — Harper Lee sauber, Margaret Mitchell ohne Reihe (dann greift Antwort 6).
+4. **Titel wie im Katalog** (Kafka mit *Der Proceß*).
+5. **Nur die Erstautorin.**
+6. **Bei Ausfall oder leerem Ergebnis: nur die Zeile „More by … →"** als Link auf die Suche, ohne Kacheln — nicht gar nichts. Die Zeile behauptet nichts über den Katalog, bleibt also mit N12 vereinbar.
+7. **Auch auf der Jahrzehnte-Seite.**
+8. **Kuratiertes Cover**, wo es eins gibt.
+9. **Nur der Titel**, kein Jahr.
+10. **Gewöhnliche Links.**
