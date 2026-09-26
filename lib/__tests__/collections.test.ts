@@ -109,6 +109,15 @@ describe('data/collections.json', () => {
       for (const w of r.works) expect(names, `${r.slug}: ${w.title}`).toContain(w.author.normalize('NFC'));
     }
   });
+
+  // ISFDB sends lost letters as U+FFFD; read as ISO-8859-1 they became „Jï¿½rgen" on the wall (2026-09-26).
+  it('shows no cover artist with a destroyed letter', () => {
+    for (const r of records) {
+      for (const w of r.works) {
+        for (const a of w.coverArtists ?? []) expect(a, `${r.slug}: ${w.title}`).not.toMatch(/\uFFFD|ï¿½|Ã./);
+      }
+    }
+  });
 });
 
 describe('coverLine', () => {

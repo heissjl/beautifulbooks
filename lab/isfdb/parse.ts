@@ -23,7 +23,46 @@ export type CoverCredit =
   | { kind: 'artist'; artists: string[]; record: string }
   | { kind: 'ambiguous'; artists: string[] }
   | { kind: 'no-artist' }
-  | { kind: 'no-record' };
+  | { kind: 'no-record' }
+  /** ISFDB named someone, but sent the name with a letter already destroyed and it is not in NAME_FIXES. */
+  | { kind: 'garbled'; artists: string[] };
+
+/*
+  ISFDB's REST interface sends every letter outside ASCII as U+FFFD, the
+  replacement character, already in its answer (bytes EF BF BD, measured
+  2026-09-26 on 9783442233601: „J\uFFFDrgen F. Rogner"). The letter is gone at
+  the source; decoded as ISO-8859-1 it showed on the wall as „Jï¿½rgen"
+  (Julian: „fehler mit umlaut"). The names below were put right by hand; any
+  other name with a lost letter is not shown at all, because a garbled name
+  on a credit is worse than none (N12).
+*/
+const NAME_FIXES: Record<string, string> = {
+  'J\uFFFDrgen F. Rogner': 'Jürgen F. Rogner',
+  'J\uFFFDrgen Rogner': 'Jürgen Rogner',
+  'S\uFFFDbastien Hue': 'Sébastien Hue',
+  'Tom\uFFFDs Almeida': 'Tomás Almeida',
+  's.BENe\uFFFD': 's.BENeš',
+  'St\uFFFDphane Barry': 'Stéphane Barry',
+  'Gr\uFFFDgoire H\uFFFDnon': 'Grégoire Hénon',
+  '\uFFFDric Seigaud': 'Éric Seigaud',
+  'Sevin\uFFFD Altan': 'Sevinç Altan',
+};
+
+/** A name as ISFDB sent it, with a lost letter put right, or null when it cannot be. */
+export function repairName(name: string): string | null {
+  // The same loss read as ISO-8859-1 instead of UTF-8: three characters for one.
+  const n = name.replace(/\u00EF\u00BF\u00BD/g, '\uFFFD').normalize('NFC');
+  if (!n.includes('\uFFFD')) return n;
+  return NAME_FIXES[n] ?? null;
+}
+
+/** The credit with every name repaired; one name that cannot be repaired withholds the credit. */
+export function repairCredit(credit: CoverCredit): CoverCredit {
+  if (credit.kind !== 'artist' && credit.kind !== 'ambiguous') return credit;
+  const fixed = credit.artists.map(repairName);
+  if (fixed.some(a => a === null)) return { kind: 'garbled', artists: credit.artists };
+  return { ...credit, artists: fixed as string[] };
+}
 
 function tag(block: string, name: string): string {
   const m = block.match(new RegExp(`<${name}>([\\s\\S]*?)</${name}>`));
@@ -81,7 +120,7 @@ export function coverCredit(publications: IsfdbPublication[]): CoverCredit {
     .map(a => [...new Set(a)].sort());
   if (sets.length === 0) return { kind: 'no-artist' };
   const keys = new Set(sets.map(a => a.join(' | ')));
-  if (keys.size > 1) return { kind: 'ambiguous', artists: [...new Set(sets.flat())] };
+  if (keys.size > 1) return repairCredit({ kind: 'ambiguous', artists: [...new Set(sets.flat())] });
   const record = publications.find(p => p.artists.length > 0)?.record ?? publications[0].record;
-  return { kind: 'artist', artists: sets[0], record };
+  return repairCredit({ kind: 'artist', artists: sets[0], record });
 }

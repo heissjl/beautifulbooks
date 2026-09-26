@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { coverCredit, parsePublications, type IsfdbPublication } from '../parse';
+import { coverCredit, parsePublications, repairCredit, repairName, type IsfdbPublication } from '../parse';
 
 const xml = readFileSync(join(import.meta.dirname, '..', '__fixtures__', 'getpub-1857988116.xml'), 'utf8');
 
@@ -46,3 +46,19 @@ describe('coverCredit', () => {
     expect(coverCredit([])).toEqual({ kind: 'no-record' });
   });
 });
+
+describe('repairName (ISFDB sends lost letters as U+FFFD)', () => {
+  it('puts a known name right, whether read as UTF-8 or as ISO-8859-1', () => {
+    expect(repairName('J\uFFFDrgen F. Rogner')).toBe('Jürgen F. Rogner');
+    expect(repairName('J\u00EF\u00BF\u00BDrgen F. Rogner')).toBe('Jürgen F. Rogner');
+  });
+  it('leaves a clean name alone and refuses an unknown garbled one', () => {
+    expect(repairName('Chris Moore')).toBe('Chris Moore');
+    expect(repairName('Andr\uFFFD Unknown')).toBeNull();
+  });
+  it('withholds a credit with a name it cannot repair', () => {
+    expect(repairCredit({ kind: 'artist', artists: ['Andr\uFFFD Unknown'], record: '1' }).kind).toBe('garbled');
+    expect(repairCredit({ kind: 'artist', artists: ['S\uFFFDbastien Hue'], record: '1' })).toEqual({ kind: 'artist', artists: ['Sébastien Hue'], record: '1' });
+  });
+});
+

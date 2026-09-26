@@ -21,7 +21,7 @@
 import { existsSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { CollectionPick, CollectionRecord } from '../../lib/collections';
-import { coverCredit, parsePublications, type CoverCredit } from './parse';
+import { coverCredit, parsePublications, repairCredit, type CoverCredit } from './parse';
 
 const ROOT = join(import.meta.dirname, '..', '..');
 const OUT_FILE = process.env.COLLECTIONS_FILE ?? join(ROOT, 'data', 'collections.json');
@@ -38,7 +38,8 @@ const olCache = readJson<Record<string, Array<{ covers?: number[]; isbn_13?: str
 async function isfdb(isbn: string): Promise<Answer> {
   const cache = readJson<Record<string, Answer>>(CACHE_FILE, {});
   const hit = cache[isbn];
-  if (hit?.ok) return hit;
+  // Cached answers were parsed before names were repaired; repair them on the way out.
+  if (hit?.ok) return { ok: true, credit: repairCredit(hit.credit) };
   let answer: Answer;
   try {
     const res = await fetch(`https://www.isfdb.org/cgi-bin/rest/getpub.cgi?${isbn}`, {
@@ -96,7 +97,7 @@ async function main() {
   for (const slug of slugs) {
     const c = start.find(x => x.slug === slug);
     if (!c) { console.log(`${slug}: no such collection`); continue; }
-    const tally = { credited: 0, noIsbn: 0, none: 0, ambiguous: 0, failed: 0 };
+    const tally = { credited: 0, noIsbn: 0, none: 0, ambiguous: 0, garbled: 0, failed: 0 };
     for (const w of c.works) {
       const isbn = w.coverIsbn
         ?? (w.from?.startsWith('isbn:') ? w.from.slice(5) : null)
@@ -111,10 +112,11 @@ async function main() {
       } else {
         credits.set(key, { coverIsbn: isbn });
         if (a.credit.kind === 'ambiguous') tally.ambiguous += 1;
+        else if (a.credit.kind === 'garbled') tally.garbled += 1;
         else tally.none += 1;
       }
     }
-    console.log(`${slug}: ${c.works.length} tiles — credited ${tally.credited}, several artists ${tally.ambiguous}, none named ${tally.none}, printing not found ${tally.noIsbn}, ISFDB failed ${tally.failed}`);
+    console.log(`${slug}: ${c.works.length} tiles — credited ${tally.credited}, several artists ${tally.ambiguous}, none named ${tally.none}, name garbled by ISFDB ${tally.garbled}, printing not found ${tally.noIsbn}, ISFDB failed ${tally.failed}`);
   }
 
   // Fresh read just before writing: the curation app may have changed the file meanwhile.
