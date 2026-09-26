@@ -1,0 +1,3290 @@
+[
+ {
+  "no": "1",
+  "title": "Typee, Omoo, Mardi",
+  "author": "Herman Melville",
+  "isbn": "9780940450004",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "2",
+  "title": "Tales and Sketches",
+  "author": "Nathaniel Hawthorne",
+  "isbn": "9780940450035",
+  "fallbackIsbns": [],
+  "skip": "shelf-mark sticker on the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "3",
+  "title": "Poetry and Prose",
+  "author": "Walt Whitman",
+  "isbn": "9780940450028",
+  "fallbackIsbns": [],
+  "skip": "title page of a Houghton Mifflin edition, not the series jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "4",
+  "title": "Three Novels",
+  "author": "Harriet Beecher Stowe",
+  "isbn": "9780940450011",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "5",
+  "title": "Mississippi Writings",
+  "author": "Mark Twain",
+  "isbn": "9780940450073",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "6",
+  "title": "Novels and Stories",
+  "author": "Jack London",
+  "isbn": "9780940450059",
+  "fallbackIsbns": [],
+  "skip": "shelf-mark sticker on the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "7",
+  "title": "Novels and Social Writings",
+  "author": "Jack London",
+  "isbn": "9780940450066",
+  "fallbackIsbns": [],
+  "skip": "cloth binding without the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "8",
+  "title": "Novels 1875–1886",
+  "author": "William Dean Howells",
+  "isbn": "9780940450042",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "9",
+  "title": "Redburn, White-Jacket, Moby-Dick",
+  "author": "Herman Melville",
+  "isbn": "9780940450097",
+  "fallbackIsbns": [],
+  "skip": "library barcode sticker on the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "10",
+  "title": "Collected Novels",
+  "author": "Nathaniel Hawthorne",
+  "isbn": "9780940450080",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "11",
+  "title": "France and England in North America: Volume One",
+  "author": "Francis Parkman",
+  "isbn": "9780940450103",
+  "fallbackIsbns": [],
+  "skip": "library barcode sticker; Open Library holds vol. 11 and 12 as one edition (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "12",
+  "title": "France and England in North America: Volume Two",
+  "author": "Francis Parkman",
+  "isbn": "9780940450110",
+  "fallbackIsbns": [],
+  "skip": "library barcode sticker on the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "13",
+  "title": "Novels 1871–1880",
+  "author": "Henry James",
+  "isbn": "9780940450134",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "14",
+  "title": "Novels, Mont Saint Michel, The Education",
+  "author": "Henry Adams",
+  "isbn": "9780940450127",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "15",
+  "title": "Essays and Lectures",
+  "author": "Ralph Waldo Emerson",
+  "isbn": "9780940450158",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "16",
+  "title": "History, Tales and Sketches",
+  "author": "Washington Irving",
+  "isbn": "9780940450141",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "17",
+  "title": "Writings",
+  "author": "Thomas Jefferson",
+  "isbn": "9780940450165",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "18",
+  "title": "Prose and Poetry",
+  "author": "Stephen Crane",
+  "isbn": "9780940450172",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "19",
+  "title": "Poetry and Tales",
+  "author": "Edgar Allan Poe",
+  "isbn": "9780940450189",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "20",
+  "title": "Essays and Reviews",
+  "author": "Edgar Allan Poe",
+  "isbn": "9780940450196",
+  "fallbackIsbns": [],
+  "skip": "cloth binding without the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "21",
+  "title": "The Innocents Abroad, Roughing It",
+  "author": "Mark Twain",
+  "isbn": "9780940450257",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "22",
+  "title": "Literary Criticism: Essays on Literature, American Writers, English Writers",
+  "author": "Henry James",
+  "isbn": "9780940450226",
+  "fallbackIsbns": [],
+  "skip": "Open Library holds vol. 22 and 23 as one edition; the image is the jacket of vol. 23 (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "23",
+  "title": "Literary Criticism: French Writers, Other European Writers, Prefaces to the New York Edition",
+  "author": "Henry James",
+  "isbn": "9780940450233",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "24",
+  "title": "Pierre, Israel Potter, The Piazza Tales, The Confidence-Man, Billy Budd, Uncollected Prose",
+  "author": "Herman Melville",
+  "isbn": "9780940450240",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "25",
+  "title": "Novels 1930–1935",
+  "author": "William Faulkner",
+  "isbn": "9780940450264",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "26",
+  "title": "The Leatherstocking Tales: Volume One",
+  "author": "James Fenimore Cooper",
+  "isbn": "9780940450202",
+  "fallbackIsbns": [],
+  "skip": "Open Library holds vol. 26 and 27 as one edition; the image is the jacket of vol. 27 (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "27",
+  "title": "The Leatherstocking Tales: Volume Two",
+  "author": "James Fenimore Cooper",
+  "isbn": "9780940450219",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "28",
+  "title": "A Week, Walden, The Maine Woods, Cape Cod",
+  "author": "Henry David Thoreau",
+  "isbn": "9780940450271",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "29",
+  "title": "Novels 1881–1886",
+  "author": "Henry James",
+  "isbn": "9780940450301",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "30",
+  "title": "Novels",
+  "author": "Edith Wharton",
+  "isbn": "9780940450318",
+  "fallbackIsbns": [],
+  "skip": "library barcode sticker on the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "31",
+  "title": "History of the United States during the Administrations of Thomas Jefferson (1801–1809)",
+  "author": "Henry Adams",
+  "isbn": "9780940450349",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "32",
+  "title": "History of the United States during the Administrations of James Madison (1809–1817)",
+  "author": "Henry Adams",
+  "isbn": "9780940450356",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "33",
+  "title": "Novels and Essays",
+  "author": "Frank Norris",
+  "isbn": "9780940450400",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "34",
+  "title": "Writings",
+  "author": "W. E. B. Du Bois",
+  "isbn": "9780940450332",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "35",
+  "title": "Early Novels and Stories",
+  "author": "Willa Cather",
+  "isbn": "9780940450394",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "36",
+  "title": "Sister Carrie, Jennie Gerhardt, Twelve Men",
+  "author": "Theodore Dreiser",
+  "isbn": "9780940450417",
+  "fallbackIsbns": [],
+  "skip": "a text page, not the cover (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "37.1",
+  "title": "Silence Dogood, The Busy-Body, and Early Writings",
+  "author": "Benjamin Franklin",
+  "isbn": "9781931082228",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "37.2",
+  "title": "Autobiography, Poor Richard, and Later Writings",
+  "author": "Benjamin Franklin",
+  "isbn": "9781883011536",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "38",
+  "title": "Writings 1902–1910",
+  "author": "William James",
+  "isbn": "9780940450387",
+  "fallbackIsbns": [],
+  "skip": "cloth binding without the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "39",
+  "title": "Collected Works",
+  "author": "Flannery O'Connor",
+  "isbn": "9780940450370",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "40",
+  "title": "Complete Plays 1913–1920",
+  "author": "Eugene O'Neill",
+  "isbn": "9780940450486",
+  "fallbackIsbns": [],
+  "skip": "cloth binding without the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "41",
+  "title": "Complete Plays 1920–1931",
+  "author": "Eugene O'Neill",
+  "isbn": "9780940450493",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "42",
+  "title": "Complete Plays 1932–1943",
+  "author": "Eugene O'Neill",
+  "isbn": "9780940450509",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "43",
+  "title": "Novels 1886–1890",
+  "author": "Henry James",
+  "isbn": "9780940450561",
+  "fallbackIsbns": [],
+  "skip": "same Open Library work as vol. 29 (OL14860971W, Henry James novels); one pick per work (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "44",
+  "title": "Novels 1886–1888",
+  "author": "William Dean Howells",
+  "isbn": "9780940450516",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "45",
+  "title": "Speeches and Writings 1832–1858",
+  "author": "Abraham Lincoln",
+  "isbn": "9780940450431",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "46",
+  "title": "Speeches and Writings 1859–1865",
+  "author": "Abraham Lincoln",
+  "isbn": "9780940450639",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "47",
+  "title": "Novellas and Other Writings",
+  "author": "Edith Wharton",
+  "isbn": "9780940450530",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "48",
+  "title": "Novels 1936–1940",
+  "author": "William Faulkner",
+  "isbn": "9780940450554",
+  "fallbackIsbns": [],
+  "skip": "library barcode sticker on the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "49",
+  "title": "Later Novels",
+  "author": "Willa Cather",
+  "isbn": "9780940450523",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "50",
+  "title": "Memoirs and Selected Letters",
+  "author": "Ulysses S. Grant",
+  "isbn": "9780940450585",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "51",
+  "title": "Memoirs of General W. T. Sherman",
+  "author": "William Tecumseh Sherman",
+  "isbn": "9780940450653",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "52",
+  "title": "Bracebridge Hall, Tales of a Traveller, The Alhambra",
+  "author": "Washington Irving",
+  "isbn": "9780940450592",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "53",
+  "title": "The Oregon Trail and The Conspiracy of Pontiac",
+  "author": "Francis Parkman",
+  "isbn": "9780940450547",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "54",
+  "title": "Sea Tales",
+  "author": "James Fenimore Cooper",
+  "isbn": "9780940450707",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "55",
+  "title": "Early Works",
+  "author": "Richard Wright",
+  "isbn": "9780940450660",
+  "fallbackIsbns": [],
+  "skip": "Open Library holds vol. 55 and 56 as one edition; the image is the jacket of vol. 56 (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "56",
+  "title": "Later Works",
+  "author": "Richard Wright",
+  "isbn": "9780940450677",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "57",
+  "title": "Stories, Poems, and Other Writings",
+  "author": "Willa Cather",
+  "isbn": "9780940450714",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "58",
+  "title": "Writings 1878–1899",
+  "author": "William James",
+  "isbn": "9780940450721",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "59",
+  "title": "Main Street and Babbitt",
+  "author": "Sinclair Lewis",
+  "isbn": "9780940450615",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "60",
+  "title": "Collected Tales, Sketches, Speeches, and Essays 1852–1890",
+  "author": "Mark Twain",
+  "isbn": "9780940450363",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "61",
+  "title": "Collected Tales, Sketches, Speeches, and Essays 1891–1910",
+  "author": "Mark Twain",
+  "isbn": "9780940450738",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "62",
+  "title": "The Debate on the Constitution: Part One: September 1787 to February 1788",
+  "author": "various",
+  "isbn": "9780940450424",
+  "fallbackIsbns": [],
+  "skip": "Open Library holds vol. 62 and 63 as one edition; the image is the jacket of vol. 63 (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "63",
+  "title": "The Debate on the Constitution: Part Two: January to August 1788",
+  "author": "various",
+  "isbn": "9780940450646",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "64",
+  "title": "Collected Travel Writings: Great Britain and America",
+  "author": "Henry James",
+  "isbn": "9780940450769",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "65",
+  "title": "Collected Travel Writings: The Continent",
+  "author": "Henry James",
+  "isbn": "9780940450776",
+  "fallbackIsbns": [],
+  "skip": "same Open Library work as vol. 64 (OL14861014W); one pick per work (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "66",
+  "title": "American Poetry: The Nineteenth Century, Volume One: Freneau to Whitman",
+  "author": "various",
+  "isbn": "9780940450608",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "67",
+  "title": "American Poetry: The Nineteenth Century, Volume Two: Melville to Stickney, American Indian Poetry, Folk Songs and Spirituals",
+  "author": "various",
+  "isbn": "9780940450783",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "68",
+  "title": "Autobiographies",
+  "author": "Frederick Douglass",
+  "isbn": "9780940450790",
+  "fallbackIsbns": [],
+  "skip": "cloth binding without the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "69",
+  "title": "Novels and Stories",
+  "author": "Sarah Orne Jewett",
+  "isbn": "9780940450745",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "70",
+  "title": "Collected Poems and Translations",
+  "author": "Ralph Waldo Emerson",
+  "isbn": "9780940450288",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "71",
+  "title": "Historical Romances",
+  "author": "Mark Twain",
+  "isbn": "9780940450820",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "72",
+  "title": "Novels and Stories 1932–1937",
+  "author": "John Steinbeck",
+  "isbn": "9781883011017",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "73",
+  "title": "Novels 1942–1954",
+  "author": "William Faulkner",
+  "isbn": "9780940450851",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "74",
+  "title": "Novels and Stories",
+  "author": "Zora Neale Hurston",
+  "isbn": "9780940450837",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "75",
+  "title": "Folklore, Memoirs, and Other Writings",
+  "author": "Zora Neale Hurston",
+  "isbn": "9780940450844",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "76",
+  "title": "Collected Writings",
+  "author": "Thomas Paine",
+  "isbn": "9781883011031",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "77",
+  "title": "Reporting World War II: American Journalism 1938–1944",
+  "author": "various",
+  "isbn": "9781883011048",
+  "fallbackIsbns": [],
+  "skip": "Open Library holds vol. 77 and 78 as one edition; the image is the jacket of vol. 78 (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "78",
+  "title": "Reporting World War II: American Journalism 1944–1946",
+  "author": "various",
+  "isbn": "9781883011055",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "79",
+  "title": "Stories and Early Novels",
+  "author": "Raymond Chandler",
+  "isbn": "9781883011079",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "80",
+  "title": "Later Novels and Other Writings",
+  "author": "Raymond Chandler",
+  "isbn": "9781883011086",
+  "fallbackIsbns": [],
+  "skip": "same Open Library work as vol. 79 (OL3295493W); one pick per work (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "81",
+  "title": "Collected Poems, Prose, and Plays",
+  "author": "Robert Frost",
+  "isbn": "9781883011062",
+  "fallbackIsbns": [],
+  "skip": "title page, not the jacket (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "82",
+  "title": "Complete Stories 1892–1898",
+  "author": "Henry James",
+  "isbn": "9781883011093",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "83",
+  "title": "Complete Stories 1898–1910",
+  "author": "Henry James",
+  "isbn": "9781883011109",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "84",
+  "title": "Travels and Other Writings",
+  "author": "William Bartram",
+  "isbn": "9781883011116",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "85",
+  "title": "U.S.A.",
+  "author": "John Dos Passos",
+  "isbn": "9781883011147",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "86",
+  "title": "The Grapes of Wrath and Other Writings 1936–1941",
+  "author": "John Steinbeck",
+  "isbn": "9781883011154",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "87",
+  "title": "Novels and Memoirs 1941–1953",
+  "author": "Vladimir Nabokov",
+  "isbn": "9781883011185",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "88",
+  "title": "Novels 1955–1962",
+  "author": "Vladimir Nabokov",
+  "isbn": "9781883011192",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "89",
+  "title": "Novels 1969–1974",
+  "author": "Vladimir Nabokov",
+  "isbn": "9781883011208",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "90",
+  "title": "Writings and Drawings",
+  "author": "James Thurber",
+  "isbn": "9781883011222",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "91",
+  "title": "Writings",
+  "author": "George Washington",
+  "isbn": "9781883011239",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "92",
+  "title": "Nature Writings",
+  "author": "John Muir",
+  "isbn": "9781883011246",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "93",
+  "title": "Novels and Other Writings",
+  "author": "Nathanael West",
+  "isbn": "9781883011284",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "94",
+  "title": "Crime Novels: American Noir of the 1930s and 40s",
+  "author": "various",
+  "isbn": "9781883011468",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "95",
+  "title": "Crime Novels: American Noir of the 1950s",
+  "author": "various",
+  "isbn": "9781883011499",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "96",
+  "title": "Collected Poetry and Prose",
+  "author": "Wallace Stevens",
+  "isbn": "9781883011451",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "97",
+  "title": "Early Novels and Stories",
+  "author": "James Baldwin",
+  "isbn": "9781883011512",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "98",
+  "title": "Collected Essays",
+  "author": "James Baldwin",
+  "isbn": "9781883011529",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "99",
+  "title": "Writings 1903–1932",
+  "author": "Gertrude Stein",
+  "isbn": "9781883011406",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "100",
+  "title": "Writings 1932–1946",
+  "author": "Gertrude Stein",
+  "isbn": "9781883011413",
+  "fallbackIsbns": [],
+  "skip": "same Open Library work as vol. 99 (OL35379W); one pick per work (checked 2026-09-26)",
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "101",
+  "title": "Complete Novels",
+  "author": "Eudora Welty",
+  "isbn": "9781883011543",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "102",
+  "title": "Stories, Essays, and Memoir",
+  "author": "Eudora Welty",
+  "isbn": "9781883011550",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "103",
+  "title": "Three Gothic Novels",
+  "author": "Charles Brockden Brown",
+  "isbn": "9781883011574",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "104",
+  "title": "Reporting Vietnam: American Journalism 1959–1969",
+  "author": "various",
+  "isbn": "9781883011581",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "105",
+  "title": "Reporting Vietnam: American Journalism 1969–1975",
+  "author": "various",
+  "isbn": "9781883011598",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "106",
+  "title": "Complete Stories 1874–1884",
+  "author": "Henry James",
+  "isbn": "9781883011635",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "107",
+  "title": "Complete Stories 1884–1891",
+  "author": "Henry James",
+  "isbn": "9781883011642",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "108",
+  "title": "American Sermons: The Pilgrims to Martin Luther King Jr.",
+  "author": "various",
+  "isbn": "9781883011659",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "109",
+  "title": "Writings",
+  "author": "James Madison",
+  "isbn": "9781883011666",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "110",
+  "title": "Complete Novels",
+  "author": "Dashiell Hammett",
+  "isbn": "9781883011673",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "111",
+  "title": "Complete Stories 1864–1874",
+  "author": "Henry James",
+  "isbn": "9781883011703",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "112",
+  "title": "Novels 1957–1962",
+  "author": "William Faulkner",
+  "isbn": "9781883011697",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "113",
+  "title": "Writings and Drawings",
+  "author": "John James Audubon",
+  "isbn": "9781883011680",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "114",
+  "title": "Slave Narratives",
+  "author": "various",
+  "isbn": "9781883011765",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "115",
+  "title": "American Poetry: The Twentieth Century, Volume One: Henry Adams to Dorothy Parker",
+  "author": "various",
+  "isbn": "9781883011772",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "116",
+  "title": "American Poetry: The Twentieth Century, Volume Two: E.E. Cummings to May Swenson",
+  "author": "various",
+  "isbn": "9781883011789",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "117",
+  "title": "Novels and Stories 1920–1922",
+  "author": "F. Scott Fitzgerald",
+  "isbn": "9781883011840",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "118",
+  "title": "Poems and Other Writings",
+  "author": "Henry Wadsworth Longfellow",
+  "isbn": "9781883011857",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "119",
+  "title": "Plays 1937–1955",
+  "author": "Tennessee Williams",
+  "isbn": "9781883011864",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "120",
+  "title": "Plays 1957–1980",
+  "author": "Tennessee Williams",
+  "isbn": "9781883011871",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "121",
+  "title": "Collected Stories 1891–1910",
+  "author": "Edith Wharton",
+  "isbn": "9781883011932",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "122",
+  "title": "Collected Stories 1911–1937",
+  "author": "Edith Wharton",
+  "isbn": "9781883011949",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "123",
+  "title": "The American Revolution: Writings from the War of Independence 1775–1783",
+  "author": "various",
+  "isbn": "9781883011918",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "124",
+  "title": "Collected Essays and Poems",
+  "author": "Henry David Thoreau",
+  "isbn": "9781883011956",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "125",
+  "title": "Crime Stories and Other Writings",
+  "author": "Dashiell Hammett",
+  "isbn": "9781931082006",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "126",
+  "title": "Novels 1930–1942",
+  "author": "Dawn Powell",
+  "isbn": "9781931082013",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "127",
+  "title": "Novels 1944–1962",
+  "author": "Dawn Powell",
+  "isbn": "9781931082020",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "128",
+  "title": "Complete Novels",
+  "author": "Carson McCullers",
+  "isbn": "9781931082037",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "129",
+  "title": "Writings",
+  "author": "Alexander Hamilton",
+  "isbn": "9781931082044",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "130",
+  "title": "The Gilded Age and Later Novels",
+  "author": "Mark Twain",
+  "isbn": "9781931082105",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "131",
+  "title": "Stories, Novels, and Essays",
+  "author": "Charles W. Chesnutt",
+  "isbn": "9781931082068",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "132",
+  "title": "Novels 1942–1952",
+  "author": "John Steinbeck",
+  "isbn": "9781931082075",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "133",
+  "title": "Arrowsmith, Elmer Gantry, Dodsworth",
+  "author": "Sinclair Lewis",
+  "isbn": "9781931082082",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "134",
+  "title": "The Sheltering Sky, Let It Come Down, The Spider's House",
+  "author": "Paul Bowles",
+  "isbn": "9781931082198",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "135",
+  "title": "Complete Stories and Later Writings",
+  "author": "Paul Bowles",
+  "isbn": "9781931082204",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "136",
+  "title": "Complete Novels and Stories",
+  "author": "Kate Chopin",
+  "isbn": "9781931082211",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "137",
+  "title": "Reporting Civil Rights: American Journalism 1941–1963",
+  "author": "various",
+  "isbn": "9781931082280",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "138",
+  "title": "Reporting Civil Rights: American Journalism 1963–1973",
+  "author": "various",
+  "isbn": "9781931082297",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "139",
+  "title": "Novels 1896–1899",
+  "author": "Henry James",
+  "isbn": "9781931082303",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "140",
+  "title": "An American Tragedy",
+  "author": "Theodore Dreiser",
+  "isbn": "9781931082310",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "141",
+  "title": "Novels 1944–1953",
+  "author": "Saul Bellow",
+  "isbn": "9781931082389",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "142",
+  "title": "Novels 1920–1925",
+  "author": "John Dos Passos",
+  "isbn": "9781931082396",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "143",
+  "title": "Travel Books and Other Writings 1916–1941",
+  "author": "John Dos Passos",
+  "isbn": "9781931082402",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "144",
+  "title": "Poems and Translations",
+  "author": "Ezra Pound",
+  "isbn": "9781931082419",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "145",
+  "title": "Writings",
+  "author": "James Weldon Johnson",
+  "isbn": "9781931082525",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "146",
+  "title": "Three Western Narratives",
+  "author": "Washington Irving",
+  "isbn": "9781931082532",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "147",
+  "title": "Democracy in America",
+  "author": "Alexis de Tocqueville",
+  "isbn": "9781931082549",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "148",
+  "title": "Studs Lonigan: A Trilogy",
+  "author": "James T. Farrell",
+  "isbn": "9781931082556",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "149",
+  "title": "Collected Stories: Gimpel the Fool to The Letter Writer",
+  "author": "Isaac Bashevis Singer",
+  "isbn": "9781931082617",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "150",
+  "title": "Collected Stories: A Friend of Kafka to Passions",
+  "author": "Isaac Bashevis Singer",
+  "isbn": "9781931082624",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "151",
+  "title": "Collected Stories: One Night in Brazil to The Death of Methuselah",
+  "author": "Isaac Bashevis Singer",
+  "isbn": "9781931082631",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "152",
+  "title": "Broadway Comedies",
+  "author": "George S. Kaufman & Co.",
+  "isbn": "9781931082679",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "153",
+  "title": "The Rough Riders, An Autobiography",
+  "author": "Theodore Roosevelt",
+  "isbn": "9781931082655",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "154",
+  "title": "Letters and Speeches",
+  "author": "Theodore Roosevelt",
+  "isbn": "9781931082662",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "155",
+  "title": "Tales",
+  "author": "H. P. Lovecraft",
+  "isbn": "9781931082723",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "156",
+  "title": "Little Women, Little Men, Jo's Boys",
+  "author": "Louisa May Alcott",
+  "isbn": "9781931082730",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "157",
+  "title": "Novels and Stories 1959–1962",
+  "author": "Philip Roth",
+  "isbn": "9781931082792",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "158",
+  "title": "Novels 1967–1972",
+  "author": "Philip Roth",
+  "isbn": "9781931082808",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "159",
+  "title": "Let Us Now Praise Famous Men, A Death in the Family, and Shorter Fiction",
+  "author": "James Agee",
+  "isbn": "9781931082815",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "160",
+  "title": "Film Writing and Selected Journalism",
+  "author": "James Agee",
+  "isbn": "9781931082822",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "161",
+  "title": "Two Years Before the Mast and Other Voyages",
+  "author": "Richard Henry Dana Jr.",
+  "isbn": "9781931082839",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "162",
+  "title": "Novels 1901–1902",
+  "author": "Henry James",
+  "isbn": "9781931082884",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "163",
+  "title": "Collected Plays 1944–1961",
+  "author": "Arthur Miller",
+  "isbn": "9781931082914",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "164",
+  "title": "Novels 1926–1929",
+  "author": "William Faulkner",
+  "isbn": "9781931082891",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "165",
+  "title": "Novels 1973–1977",
+  "author": "Philip Roth",
+  "isbn": "9781931082969",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "166",
+  "title": "American Speeches: Political Oratory from the Revolution to the Civil War",
+  "author": "various",
+  "isbn": "9781931082976",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "167",
+  "title": "American Speeches: Political Oratory from Abraham Lincoln to Bill Clinton",
+  "author": "various",
+  "isbn": "9781931082983",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "168",
+  "title": "Complete Poems and Selected Letters",
+  "author": "Hart Crane",
+  "isbn": "9781931082990",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "169",
+  "title": "Novels 1956–1964",
+  "author": "Saul Bellow",
+  "isbn": "9781598530025",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "170",
+  "title": "Travels with Charley and Later Novels 1947–1962",
+  "author": "John Steinbeck",
+  "isbn": "9781598530049",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "171",
+  "title": "Writings, with Other Narratives of Roanoke, Jamestown, and the First English Settlement of America",
+  "author": "Capt. John Smith",
+  "isbn": "9781598530018",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "172",
+  "title": "Collected Plays and Writings on Theater",
+  "author": "Thornton Wilder",
+  "isbn": "9781598530032",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "173",
+  "title": "Four Novels of the 1960s",
+  "author": "Philip K. Dick",
+  "isbn": "9781598530094",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "174",
+  "title": "Road Novels 1957–1960",
+  "author": "Jack Kerouac",
+  "isbn": "9781598530124",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "175",
+  "title": "Zuckerman Bound: A Trilogy and Epilogue 1979–1985",
+  "author": "Philip Roth",
+  "isbn": "9781598530117",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "176",
+  "title": "Literary Essays and Reviews of the 1920s and 30s",
+  "author": "Edmund Wilson",
+  "isbn": "9781598530131",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "177",
+  "title": "Literary Essays and Reviews of the 1930s and 40s",
+  "author": "Edmund Wilson",
+  "isbn": "9781598530148",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "178",
+  "title": "American Poetry: The Seventeenth and Eighteenth Centuries",
+  "author": "various",
+  "isbn": "9781931082907",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "179",
+  "title": "Early Novels and Stories",
+  "author": "William Maxwell",
+  "isbn": "9781598530261",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "180",
+  "title": "Poems, Prose, and Letters",
+  "author": "Elizabeth Bishop",
+  "isbn": "9781598530179",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "181",
+  "title": "World War II Writings",
+  "author": "A. J. Liebling",
+  "isbn": "9781598530407",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "182",
+  "title": "American Earth: Environmental Writing Since Thoreau",
+  "author": "various",
+  "isbn": "9781598530209",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "183",
+  "title": "Five Novels of the 1960s and 70s",
+  "author": "Philip K. Dick",
+  "isbn": "9781598530254",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "184",
+  "title": "Later Novels and Stories",
+  "author": "William Maxwell",
+  "isbn": "9781598530261",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "185",
+  "title": "Novels and Other Narratives 1986–1991",
+  "author": "Philip Roth",
+  "isbn": "9781598530308",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "186",
+  "title": "Collected Stories and Other Writings",
+  "author": "Katherine Anne Porter",
+  "isbn": "9781598530292",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "187",
+  "title": "Collected Poems 1956–1987",
+  "author": "John Ashbery",
+  "isbn": "9781598530285",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "188",
+  "title": "Collected Stories and Other Writings",
+  "author": "John Cheever",
+  "isbn": "9781598530346",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "189",
+  "title": "Complete Novels",
+  "author": "John Cheever",
+  "isbn": "9781598530353",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "190",
+  "title": "American Writings",
+  "author": "Lafcadio Hearn",
+  "isbn": "9781598530391",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "191",
+  "title": "The Sweet Science and Other Writings",
+  "author": "A. J. Liebling",
+  "isbn": "9781598530407",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "192",
+  "title": "The Lincoln Anthology: Great Writers on His Life and Legacy from 1860 to Now",
+  "author": "various",
+  "isbn": "9781598530339",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "193",
+  "title": "VALIS and Later Novels",
+  "author": "Philip K. Dick",
+  "isbn": "9781598530445",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "194",
+  "title": "The Bridge of San Luis Rey and Other Novels 1926–1948",
+  "author": "Thornton Wilder",
+  "isbn": "9781598530452",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "195",
+  "title": "Collected Stories",
+  "author": "Raymond Carver",
+  "isbn": "9781598530469",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "196",
+  "title": "American Fantastic Tales: Terror and the Uncanny from Poe to the Pulps",
+  "author": "various",
+  "isbn": "9781598530476",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "197",
+  "title": "American Fantastic Tales: Terror and the Uncanny from the 1940s to Now",
+  "author": "various",
+  "isbn": "9781598530483",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "198",
+  "title": "Writings",
+  "author": "John Marshall",
+  "isbn": "9781598530643",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "199",
+  "title": "The Mark Twain Anthology: Great Writers on His Life and Works",
+  "author": "various",
+  "isbn": "9781598530650",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "200",
+  "title": "A Tramp Abroad, Following the Equator, Other Travels",
+  "author": "Mark Twain",
+  "isbn": "9781598530667",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "201",
+  "title": "Selected Journals 1820–1842",
+  "author": "Ralph Waldo Emerson",
+  "isbn": "9781598530674",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "202",
+  "title": "Selected Journals 1841–1877",
+  "author": "Ralph Waldo Emerson",
+  "isbn": "9781598530681",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "203",
+  "title": "The American Stage: Writing on Theater from Washington Irving to Tony Kushner",
+  "author": "various",
+  "isbn": "9781598530698",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "204",
+  "title": "Novels and Stories",
+  "author": "Shirley Jackson",
+  "isbn": "9781598530728",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "205",
+  "title": "Novels 1993–1995",
+  "author": "Philip Roth",
+  "isbn": "9781598530780",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "206",
+  "title": "Prejudices: First, Second, and Third Series",
+  "author": "H. L. Mencken",
+  "isbn": "9781598530742",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "207",
+  "title": "Prejudices: Fourth, Fifth, and Sixth Series",
+  "author": "H. L. Mencken",
+  "isbn": "9781598530759",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "208",
+  "title": "The Affluent Society and Other Writings 1952–1967",
+  "author": "John Kenneth Galbraith",
+  "isbn": "9781598530773",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "209",
+  "title": "Novels 1970–1982",
+  "author": "Saul Bellow",
+  "isbn": "9781598530797",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "210",
+  "title": "Gods' Man, Madman's Drum, Wild Pilgrimage",
+  "author": "Lynd Ward",
+  "isbn": "9781598530803",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "211",
+  "title": "Prelude to a Million Years, Song Without Words, Vertigo",
+  "author": "Lynd Ward",
+  "isbn": "9781598530810",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "212",
+  "title": "The Civil War: The First Year Told by Those Who Lived It",
+  "author": "various",
+  "isbn": "9781598530889",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "213",
+  "title": "Revolutionary Writings 1755–1775",
+  "author": "John Adams",
+  "isbn": "9781598530896",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "214",
+  "title": "Revolutionary Writings 1775–1783",
+  "author": "John Adams",
+  "isbn": "9781598530902",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "215",
+  "title": "Novels 1903–1911",
+  "author": "Henry James",
+  "isbn": "9781598530919",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "216",
+  "title": "Novels and Stories 1963–1973",
+  "author": "Kurt Vonnegut",
+  "isbn": "9781598530988",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "217",
+  "title": "Harlem Renaissance: Five Novels of the 1920s",
+  "author": "various",
+  "isbn": "9781598530995",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "218",
+  "title": "Harlem Renaissance: Five Novels of the 1930s",
+  "author": "various",
+  "isbn": "9781598531015",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "219",
+  "title": "The Devil's Dictionary, Tales, and Memoirs",
+  "author": "Ambrose Bierce",
+  "isbn": "9781598531022",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "220",
+  "title": "The American Trilogy 1997–2000",
+  "author": "Philip Roth",
+  "isbn": "9781598531039",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "221",
+  "title": "The Civil War: The Second Year Told by Those Who Lived It",
+  "author": "various",
+  "isbn": "9781598531442",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "222",
+  "title": "The Guns of August, The Proud Tower",
+  "author": "Barbara W. Tuchman",
+  "isbn": "9781598531459",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "223",
+  "title": "Collected Plays 1964–1982",
+  "author": "Arthur Miller",
+  "isbn": "9781598531473",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "224",
+  "title": "The Eighth Day, Theophilus North, Autobiographical Writings",
+  "author": "Thornton Wilder",
+  "isbn": "9781598531466",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "225",
+  "title": "Five Noir Novels of the 1940s and 50s",
+  "author": "David Goodis",
+  "isbn": "9781598531480",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "226",
+  "title": "Novels and Stories 1950–1962",
+  "author": "Kurt Vonnegut",
+  "isbn": "9781598531503",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "227",
+  "title": "American Science Fiction: Four Classic Novels 1953–1956",
+  "author": "various",
+  "isbn": "9781598531589",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "228",
+  "title": "American Science Fiction: Five Classic Novels 1956–1958",
+  "author": "various",
+  "isbn": "9781598531596",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "229",
+  "title": "The Little House Books, Volume 1",
+  "author": "Laura Ingalls Wilder",
+  "isbn": "9781598531602",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "230",
+  "title": "The Little House Books, Volume 2",
+  "author": "Laura Ingalls Wilder",
+  "isbn": "9781598531619",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "231",
+  "title": "Collected Poems",
+  "author": "Jack Kerouac",
+  "isbn": "9781598531930",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "232",
+  "title": "The War of 1812: Writings from America's Second War of Independence",
+  "author": "various",
+  "isbn": "9781598531954",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "233",
+  "title": "American Antislavery Writings: Colonial Beginnings to Emancipation",
+  "author": "various",
+  "isbn": "9781598531961",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "234",
+  "title": "The Civil War: The Third Year Told by Those Who Lived It",
+  "author": "various",
+  "isbn": "9781598531978",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "235",
+  "title": "Collected Stories",
+  "author": "Sherwood Anderson",
+  "isbn": "9781598532043",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "236",
+  "title": "Novels 2001–2007",
+  "author": "Philip Roth",
+  "isbn": "9781598531985",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "237",
+  "title": "Nemeses",
+  "author": "Philip Roth",
+  "isbn": "9781598531992",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "238",
+  "title": "A Sand County Almanac and Other Writings on Ecology and Conservation",
+  "author": "Aldo Leopold",
+  "isbn": "9781598532067",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "239",
+  "title": "Collected Poems",
+  "author": "May Swenson",
+  "isbn": "9781598532104",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "240",
+  "title": "Collected Poems 1952–1993",
+  "author": "W. S. Merwin",
+  "isbn": "9781598532081",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "241",
+  "title": "Collected Poems 1996–2011",
+  "author": "W. S. Merwin",
+  "isbn": "9781598532098",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "242",
+  "title": "Collected Early Stories",
+  "author": "John Updike",
+  "isbn": "9781598532517",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "243",
+  "title": "Collected Later Stories",
+  "author": "John Updike",
+  "isbn": "9781598532524",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "244",
+  "title": "Stories and Other Writings",
+  "author": "Ring Lardner",
+  "isbn": "9781598532531",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "245",
+  "title": "Writings from the Great Awakening",
+  "author": "Jonathan Edwards",
+  "isbn": "9781598532548",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "246",
+  "title": "Essays of the 1960s and 70s",
+  "author": "Susan Sontag",
+  "isbn": "9781598532555",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "247",
+  "title": "Clotel and Other Writings",
+  "author": "William Wells Brown",
+  "isbn": "9781598532913",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "248",
+  "title": "Novels and Stories of the 1940s and 50s",
+  "author": "Bernard Malamud",
+  "isbn": "9781598532920",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "249",
+  "title": "Novels and Stories of the 1960s",
+  "author": "Bernard Malamud",
+  "isbn": "9781598532937",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "250",
+  "title": "The Civil War: The Final Year Told by Those Who Lived It",
+  "author": "various",
+  "isbn": "9781598532944",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "251",
+  "title": "Shakespeare in America: An Anthology from the Revolution to Now",
+  "author": "various",
+  "isbn": "9781598532951",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "252",
+  "title": "Novels 1976–1985",
+  "author": "Kurt Vonnegut",
+  "isbn": "9781598533040",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "253",
+  "title": "American Musicals 1927–1949: The Complete Books and Lyrics of Eight Broadway Classics",
+  "author": "various",
+  "isbn": "9781598532586",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "254",
+  "title": "American Musicals 1950–1969: The Complete Books and Lyrics of Eight Broadway Classics",
+  "author": "various",
+  "isbn": "9781598532593",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "255",
+  "title": "Four Novels of the 1970s",
+  "author": "Elmore Leonard",
+  "isbn": "9781598533057",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "256",
+  "title": "Work, Eight Cousins, Rose in Bloom, Stories and Other Writings",
+  "author": "Louisa May Alcott",
+  "isbn": "9781598533064",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "257",
+  "title": "The Days Trilogy, Expanded Edition",
+  "author": "H. L. Mencken",
+  "isbn": "9781598533088",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "258",
+  "title": "Music Chronicles 1940–1954",
+  "author": "Virgil Thomson",
+  "isbn": "9781598533095",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "259",
+  "title": "Art in America 1945–1970: Writings from the Age of Abstract Expressionism, Pop Art, and Minimalism",
+  "author": "various",
+  "isbn": "9781598533101",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "260",
+  "title": "Novels 1984–2000",
+  "author": "Saul Bellow",
+  "isbn": "9781598533521",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "261",
+  "title": "Collected Plays 1987–2004, with Stage and Radio Plays of the 1930s and 40s",
+  "author": "Arthur Miller",
+  "isbn": "9781598533538",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "262",
+  "title": "Visions of Cody, Visions of Gerard, Big Sur",
+  "author": "Jack Kerouac",
+  "isbn": "9781598533743",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "263",
+  "title": "Major Works on Religion and Politics",
+  "author": "Reinhold Niebuhr",
+  "isbn": "9781598533750",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "264",
+  "title": "Four Crime Novels of the 1950s",
+  "author": "Ross Macdonald",
+  "isbn": "9781598533767",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "265",
+  "title": "The American Revolution: Writings from the Pamphlet Debate: Volume 1, 1764–1772",
+  "author": "various",
+  "isbn": "9781598533774",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "266",
+  "title": "The American Revolution: Writings from the Pamphlet Debate: Volume 2, 1773–1776",
+  "author": "various",
+  "isbn": "9781598533781",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "267",
+  "title": "Four Novels of the 1980s",
+  "author": "Elmore Leonard",
+  "isbn": "9781598534122",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "268",
+  "title": "Women Crime Writers: Four Suspense Novels of the 1940s",
+  "author": "various",
+  "isbn": "9781598534306",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "269",
+  "title": "Women Crime Writers: Four Suspense Novels of the 1950s",
+  "author": "various",
+  "isbn": "9781598534313",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "270",
+  "title": "Writings on Landscape, Culture, and Society",
+  "author": "Frederick Law Olmsted",
+  "isbn": "9781598534528",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "271",
+  "title": "Four Novels of the 1920s",
+  "author": "Edith Wharton",
+  "isbn": "9781598534535",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "272",
+  "title": "Later Novels",
+  "author": "James Baldwin",
+  "isbn": "9781598534542",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "273",
+  "title": "Novels 1987–1997",
+  "author": "Kurt Vonnegut",
+  "isbn": "9781598534641",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "274",
+  "title": "Autobiographies",
+  "author": "Henry James",
+  "isbn": "9781598534719",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "275",
+  "title": "Letters",
+  "author": "Abigail Adams",
+  "isbn": "9781598534658",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "276",
+  "title": "Writings from the New Nation 1784–1826",
+  "author": "John Adams",
+  "isbn": "9781598534665",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "277",
+  "title": "The State of Music and Other Writings",
+  "author": "Virgil Thomson",
+  "isbn": "9781598534672",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "278",
+  "title": "War No More: Three Centuries of American Antiwar and Peace Writing",
+  "author": "various",
+  "isbn": "9781598534733",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "279",
+  "title": "Three Novels of the Early 1960s",
+  "author": "Ross Macdonald",
+  "isbn": "9781598534795",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "280",
+  "title": "Four Later Novels",
+  "author": "Elmore Leonard",
+  "isbn": "9781598534924",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "281",
+  "title": "The Complete Orsinia",
+  "author": "Ursula K. Le Guin",
+  "isbn": "9781598534931",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "282",
+  "title": "Stories",
+  "author": "John O'Hara",
+  "isbn": "9781598534979",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "283",
+  "title": "The Unknown Kerouac: Rare, Unpublished and Newly Translated Writings",
+  "author": "Jack Kerouac",
+  "isbn": "9781598534986",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "284",
+  "title": "Collected Essays and Memoirs",
+  "author": "Albert Murray",
+  "isbn": "9781598535037",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "285",
+  "title": "Collected Essays on Evolution, Nature, and the Cosmos, Volume One",
+  "author": "Loren Eiseley",
+  "isbn": "9781598535068",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "286",
+  "title": "Collected Essays on Evolution, Nature, and the Cosmos, Volume Two",
+  "author": "Loren Eiseley",
+  "isbn": "9781598535075",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "287",
+  "title": "Stories, Plays and Other Writings",
+  "author": "Carson McCullers",
+  "isbn": "9781598535112",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "288",
+  "title": "Collected Writings",
+  "author": "Jane Bowles",
+  "isbn": "9781598535136",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "289",
+  "title": "World War I and America: Told by the Americans Who Lived It",
+  "author": "various",
+  "isbn": "9781598535143",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "290",
+  "title": "Novels and Stories 1942–1963",
+  "author": "Mary McCarthy",
+  "isbn": "9781598535167",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "291",
+  "title": "Novels 1963–1979",
+  "author": "Mary McCarthy",
+  "isbn": "9781598535174",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "292",
+  "title": "Later Essays",
+  "author": "Susan Sontag",
+  "isbn": "9781598535198",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "293",
+  "title": "Diaries 1779–1821",
+  "author": "John Quincy Adams",
+  "isbn": "9781598535204",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "294",
+  "title": "Diaries 1821–1848",
+  "author": "John Quincy Adams",
+  "isbn": "9781598535228",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "295",
+  "title": "Four Later Novels",
+  "author": "Ross Macdonald",
+  "isbn": "9781598535341",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "296",
+  "title": "Hainish Novels and Stories, Volume One",
+  "author": "Ursula K. Le Guin",
+  "isbn": "9781598535389",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "297",
+  "title": "Hainish Novels and Stories, Volume Two",
+  "author": "Ursula K. Le Guin",
+  "isbn": "9781598535396",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "298",
+  "title": "Complete Stories 1938–1959",
+  "author": "Peter Taylor",
+  "isbn": "9781598535426",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "299",
+  "title": "Complete Stories 1960–1992",
+  "author": "Peter Taylor",
+  "isbn": "9781598535433",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "300",
+  "title": "Why Write? Collected Nonfiction 1960–2013",
+  "author": "Philip Roth",
+  "isbn": "9781598535402",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "301",
+  "title": "Complete Poems 1991‒2000",
+  "author": "John Ashbery",
+  "isbn": "9781598535358",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "302",
+  "title": "Port William Novels and Stories: The Civil War to World War II",
+  "author": "Wendell Berry",
+  "isbn": "9781598535549",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "303",
+  "title": "Reconstruction: Voices from America's First Great Struggle for Racial Equality",
+  "author": "various",
+  "isbn": "9781598535556",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "304",
+  "title": "Collected Novels and Poems",
+  "author": "Albert Murray",
+  "isbn": "9781598535617",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "305",
+  "title": "Four Books of the 1960s",
+  "author": "Norman Mailer",
+  "isbn": "9781598535587",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "306",
+  "title": "Collected Essays of the 1960s",
+  "author": "Norman Mailer",
+  "isbn": "9781598535594",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "307",
+  "title": "Silent Spring and Other Writings on the Environment",
+  "author": "Rachel Carson",
+  "isbn": "9781598535600",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "308",
+  "title": "Westerns",
+  "author": "Elmore Leonard",
+  "isbn": "9781598535624",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "309",
+  "title": "The Wrinkle in Time Quartet",
+  "author": "Madeleine L'Engle",
+  "isbn": "9781598535785",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "310",
+  "title": "The Polly O'Keefe Quartet",
+  "author": "Madeleine L'Engle",
+  "isbn": "9781598535792",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "311",
+  "title": "Novels 1959–1965",
+  "author": "John Updike",
+  "isbn": "9781598535815",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "312",
+  "title": "Two Novels of the American Revolution",
+  "author": "James Fenimore Cooper",
+  "isbn": "9781598535822",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "313",
+  "title": "Four Novels of the 1930s",
+  "author": "John O'Hara",
+  "isbn": "9781598536003",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "314",
+  "title": "The Street, The Narrows",
+  "author": "Ann Petry",
+  "isbn": "9781598536010",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "315",
+  "title": "Always Coming Home (Author's Expanded Edition)",
+  "author": "Ursula K. Le Guin",
+  "isbn": "9781598536034",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "316",
+  "title": "Essays 1969–1990",
+  "author": "Wendell Berry",
+  "isbn": "9781598536065",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "317",
+  "title": "Essays 1993–2017",
+  "author": "Wendell Berry",
+  "isbn": "9781598536089",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "318",
+  "title": "The Longest Day, A Bridge Too Far",
+  "author": "Cornelius Ryan",
+  "isbn": "9781598536119",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "319",
+  "title": "Novels and Stories",
+  "author": "Booth Tarkington",
+  "isbn": "9781598536201",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "320",
+  "title": "Complete Poems",
+  "author": "Herman Melville",
+  "isbn": "9781598536188",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "321",
+  "title": "American Science Fiction: Four Classic Novels 1960–1966",
+  "author": "various",
+  "isbn": "9781598535013",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "322",
+  "title": "American Science Fiction: Four Classic Novels 1968–1969",
+  "author": "various",
+  "isbn": "9781598535020",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "323",
+  "title": "The Secret Garden, A Little Princess, Little Lord Fauntleroy",
+  "author": "Frances Hodgson Burnett",
+  "isbn": "9781598536386",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "324",
+  "title": "Complete Novels",
+  "author": "Jean Stafford",
+  "isbn": "9781598536447",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "325",
+  "title": "The 1960s and 70s",
+  "author": "Joan Didion",
+  "isbn": "9781598536454",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "326",
+  "title": "Novels 1968–1975",
+  "author": "John Updike",
+  "isbn": "9781598536492",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "327",
+  "title": "Collected Stories",
+  "author": "Constance Fenimore Woolson",
+  "isbn": "9781598536508",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "328",
+  "title": "Dog Soldiers, A Flag for Sunrise, Outerbridge Reach",
+  "author": "Robert Stone",
+  "isbn": "9781598536546",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "329",
+  "title": "The Fate of the Earth, The Abolition, The Unconquerable World",
+  "author": "Jonathan Schell",
+  "isbn": "9781598536584",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "330",
+  "title": "Anti-Intellectualism in American Life, The Paranoid Style in American Politics, Uncollected Essays 1956–1965",
+  "author": "Richard Hofstadter",
+  "isbn": "9781598536591",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "331",
+  "title": "The Western: Four Classic Novels of the 1940s and 50s",
+  "author": "various",
+  "isbn": "9781598536614",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "332",
+  "title": "American Women's Suffrage: Voices from the Long Struggle for the Vote 1776–1965",
+  "author": "various",
+  "isbn": "9781598536645",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "333",
+  "title": "African American Poetry: 250 Years of Struggle and Song",
+  "author": "various",
+  "isbn": "9781598536669",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "334",
+  "title": "The Sun Also Rises and Other Writings 1918–1926",
+  "author": "Ernest Hemingway",
+  "isbn": "9781598536676",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "335",
+  "title": "Annals of the Western Shore",
+  "author": "Ursula K. Le Guin",
+  "isbn": "9781598536683",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "336",
+  "title": "Four Novels of the 1940s and 50s",
+  "author": "Shirley Jackson",
+  "isbn": "9781598536706",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "337",
+  "title": "Plymouth Colony",
+  "author": "various",
+  "isbn": "9781598536737",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "338",
+  "title": "Kindred, Fledgling, Collected Stories",
+  "author": "Octavia E. Butler",
+  "isbn": "9781598536751",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "339",
+  "title": "Novels 1978–1984",
+  "author": "John Updike",
+  "isbn": "9781598536775",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "340",
+  "title": "Biophilia, The Diversity of Life, Naturalist",
+  "author": "Edward O. Wilson",
+  "isbn": "9781598536799",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "341",
+  "title": "The 1980s and 90s",
+  "author": "Joan Didion",
+  "isbn": "9781598536836",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "342",
+  "title": "Complete Stories and Other Writings",
+  "author": "Jean Stafford",
+  "isbn": "9781598536829",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "343",
+  "title": "Collected Stories",
+  "author": "Donald Barthelme",
+  "isbn": "9781598536843",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "344",
+  "title": "Novels and Stories",
+  "author": "Elizabeth Spencer",
+  "isbn": "9781598536867",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "345",
+  "title": "101 Stories",
+  "author": "O. Henry",
+  "isbn": "9781598536904",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "346",
+  "title": "Writings",
+  "author": "S. J. Perelman",
+  "isbn": "9781598536928",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "347",
+  "title": "Novels and Story Cycles",
+  "author": "Ray Bradbury",
+  "isbn": "9781598537000",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "348",
+  "title": "Five Novels",
+  "author": "Virginia Hamilton",
+  "isbn": "9781598537017",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "349",
+  "title": "Collected Novels",
+  "author": "John Williams",
+  "isbn": "9781598537024",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "350",
+  "title": "Black Reconstruction",
+  "author": "W. E. B. Du Bois",
+  "isbn": "9781598537031",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "351",
+  "title": "World War II Memoirs: The Pacific Theater",
+  "author": "various",
+  "isbn": "9781598537048",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "352",
+  "title": "The Sea Trilogy",
+  "author": "Rachel Carson",
+  "isbn": "9781598537055",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "353",
+  "title": "The Great Gatsby, All the Sad Young Men and Other Writings 1920–1926",
+  "author": "F. Scott Fitzgerald",
+  "isbn": "9781598537147",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "354",
+  "title": "Novels 1986–1990",
+  "author": "John Updike",
+  "isbn": "9781598537178",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "355",
+  "title": "The Woman Warrior, China Men, Tripmaster Monkey, Hawaiʻi One Summer, and Other Writings",
+  "author": "Maxine Hong Kingston",
+  "isbn": "9781598537246",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "356",
+  "title": "Novels, Stories and Poems",
+  "author": "Charlotte Perkins Gilman",
+  "isbn": "9781598537192",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "357",
+  "title": "Collected Poems",
+  "author": "Gary Snyder",
+  "isbn": "9781598537215",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "358",
+  "title": "Speeches and Writings",
+  "author": "Frederick Douglass",
+  "isbn": "9781598537222",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "359",
+  "title": "The Army of the Potomac Trilogy",
+  "author": "Bruce Catton",
+  "isbn": "9781598537253",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "360",
+  "title": "The Illustrated Man, The October Country, Other Stories",
+  "author": "Ray Bradbury",
+  "isbn": "9781598537284",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "361",
+  "title": "Bless Me, Ultima; Tortuga; Alburquerque",
+  "author": "Rudolfo Anaya",
+  "isbn": "9781598537291",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "362",
+  "title": "The Mambo Kings and Other Novels",
+  "author": "Oscar Hijuelos",
+  "isbn": "9781598537307",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "363",
+  "title": "Three Novels of the 1980s",
+  "author": "Don DeLillo",
+  "isbn": "9781598537338",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "364",
+  "title": "The Naked and the Dead and Selected Letters 1945–1946",
+  "author": "Norman Mailer",
+  "isbn": "9781598537437",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "365",
+  "title": "Novels 1996–2000",
+  "author": "John Updike",
+  "isbn": "9781598537444",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "366",
+  "title": "Black Writers of the Founding Era",
+  "author": "various",
+  "isbn": "9781598537345",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "367",
+  "title": "Novels and Stories of the 1970s and 80s",
+  "author": "Bernard Malamud",
+  "isbn": "9781598537451",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "368",
+  "title": "Collected Poems",
+  "author": "Ursula K. Le Guin",
+  "isbn": "9781598537369",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "369",
+  "title": "Collected Works",
+  "author": "Charles Portis",
+  "isbn": "9781598537468",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "370",
+  "title": "Crime Novels: Five Classic Thrillers 1961–1964",
+  "author": "various",
+  "isbn": "9781598537376",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "371",
+  "title": "Crime Novels: Four Classic Thrillers 1964–1969",
+  "author": "various",
+  "isbn": "9781598537383",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "372",
+  "title": "Collected Plays and Other Writings",
+  "author": "Adrienne Kennedy",
+  "isbn": "9781598537512",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "373",
+  "title": "Novels and Stories",
+  "author": "Joanna Russ",
+  "isbn": "9781598537536",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "374",
+  "title": "Mao II and Underworld",
+  "author": "Don DeLillo",
+  "isbn": "9781598537550",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "375",
+  "title": "Stories",
+  "author": "William Faulkner",
+  "isbn": "9781598537529",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "376",
+  "title": "Jim Crow: Voices from a Century of Struggle: Part One: 1876–1919",
+  "author": "various",
+  "isbn": "9781598537666",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "377",
+  "title": "Essential Writings",
+  "author": "Jimmy Breslin",
+  "isbn": "9781598537680",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "378",
+  "title": "Autobiographies and Other Writings",
+  "author": "Helen Keller",
+  "isbn": "9781598537727",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "379",
+  "title": "Five Novels",
+  "author": "Ursula K. Le Guin",
+  "isbn": "9781598537734",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "380",
+  "title": "The Moviegoer and Other Novels 1961–1971",
+  "author": "Walker Percy",
+  "isbn": "9781598537758",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "381",
+  "title": "Port William Novels and Stories: The Postwar Years",
+  "author": "Wendell Berry",
+  "isbn": "9781598537765",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "382",
+  "title": "Latino Poetry",
+  "author": "various",
+  "isbn": "9781598537833",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "383",
+  "title": "Four Novels",
+  "author": "Ernest J. Gaines",
+  "isbn": "9781598537901",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "384",
+  "title": "A Farewell to Arms and Other Writings 1927–1932",
+  "author": "Ernest Hemingway",
+  "isbn": "9781598537840",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "385",
+  "title": "World War II Memoirs: The European Theater",
+  "author": "various",
+  "isbn": "9781598537857",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "386",
+  "title": "Memoirs and Later Writings",
+  "author": "Joan Didion",
+  "isbn": "9781598537871",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "387",
+  "title": "Jim Crow: Voices from a Century of Struggle: Part Two: 1919–1976",
+  "author": "various",
+  "isbn": "9781598538014",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "388",
+  "title": "Collected Writings",
+  "author": "Margaret Fuller",
+  "isbn": "9781598538038",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "389",
+  "title": "The Origins of Totalitarianism, Expanded Edition",
+  "author": "Hannah Arendt",
+  "isbn": "9781598538069",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "390",
+  "title": "Speeches and Writings",
+  "author": "John Quincy Adams",
+  "isbn": "9781598538083",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "391",
+  "title": "Essential Prose",
+  "author": "Gary Snyder",
+  "isbn": "9781598538106",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "392",
+  "title": "Plays",
+  "author": "John Guare",
+  "isbn": "9781598538168",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "393",
+  "title": "Lilith's Brood: The Xenogenesis Trilogy",
+  "author": "Octavia E. Butler",
+  "isbn": "9781598538182",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "394",
+  "title": "The American Short Story: The Nineteenth Century, Volume I",
+  "author": "various",
+  "isbn": "9781598538205",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "395",
+  "title": "The American Short Story: The Nineteenth Century, Volume II",
+  "author": "various",
+  "isbn": "9781598538229",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "396",
+  "title": "Civil War Diaries",
+  "author": "George Templeton Strong",
+  "isbn": "9781598538250",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "397",
+  "title": "The Albany Trilogy",
+  "author": "William Kennedy",
+  "isbn": "9781598538410",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "398",
+  "title": "Encounters in Wild America",
+  "author": "John McPhee",
+  "isbn": "9781598538427",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "399",
+  "title": "Five Noir Novels of the 1950s and 60s",
+  "author": "Jim Thompson",
+  "isbn": "9781598538434",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "400",
+  "title": "The Complete Earthsea, Volume One",
+  "author": "Ursula K. Le Guin",
+  "isbn": "9781598538502",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "401",
+  "title": "The Complete Earthsea, Volume Two",
+  "author": "Ursula K. Le Guin",
+  "isbn": "9781598538519",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "402",
+  "title": "Three Novels of the 1970s",
+  "author": "Peter Straub",
+  "isbn": "9781598538540",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "403",
+  "title": "Three Early Novels",
+  "author": "E. L. Doctorow",
+  "isbn": "9781598538779",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "404",
+  "title": "Autobiographies and Political Writings, Volume One",
+  "author": "Eleanor Roosevelt",
+  "isbn": "9781598538663",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "405",
+  "title": "Autobiographies and Political Writings, Volume Two",
+  "author": "Eleanor Roosevelt",
+  "isbn": "9781598538670",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "406",
+  "title": "Port William Novels and Stories: The Final Years",
+  "author": "Wendell Berry",
+  "isbn": "9781598538700",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ },
+ {
+  "no": "407",
+  "title": "Novellas and Stories",
+  "author": "James Tiptree Jr.",
+  "isbn": "9781598538755",
+  "fallbackIsbns": [],
+  "source": "en.wikipedia 'Library of America', Main series table, wikitext revision 1362274185"
+ }
+]

@@ -13046,6 +13046,666 @@
           "coverIsbn": "9780141389400"
         }
       ]
+    },
+    {
+      "slug": "library-of-america",
+      "title": "Library of America",
+      "kind": "series",
+      "intro": "Volumes of the Library of America in Bruce Campbell’s jacket design: black, with a portrait of the author, the name in script and a red, white and blue band.",
+      "published": false,
+      "publishers": [
+        "Library of America"
+      ],
+      "works": [
+        {
+          "id": "OL14953686W",
+          "title": "Mardi / Omoo / Typee",
+          "author": "Herman Melville",
+          "coverId": "ol:717667",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450004",
+          "coverIsbn": "9780940450004"
+        },
+        {
+          "id": "OL152161W",
+          "title": "Uncle Tom's Cabin",
+          "author": "Harriet Beecher Stowe",
+          "coverId": "ol:717668",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450011",
+          "coverIsbn": "9780940450011"
+        },
+        {
+          "id": "OL15290035W",
+          "title": "The Mississippi Writings of Mark Twain (Adventures of Huckleberry Finn / Adventures of Tom Sawyer / Life on the Mississippi)",
+          "author": "Mark Twain",
+          "coverId": "ol:9174208",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450073",
+          "coverIsbn": "9780940450073"
+        },
+        {
+          "id": "OL8206917W",
+          "title": "Novels 1875-1886",
+          "author": "William Dean Howells",
+          "coverId": "ol:14822174",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450042",
+          "coverIsbn": "9780940450042"
+        },
+        {
+          "id": "OL455251W",
+          "title": "Fanshawe / The Scarlet Letter / The House of the Seven Gables / The Blithedale Romance / The Marble Faun",
+          "author": "Nathaniel Hawthorne",
+          "coverId": "ol:717677",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450080",
+          "coverIsbn": "9780940450080"
+        },
+        {
+          "id": "OL15097929W",
+          "title": "Novels Mont Saint Michel, The education",
+          "author": "Henry Adams",
+          "coverId": "ol:717683",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450127",
+          "coverIsbn": "9780940450127"
+        },
+        {
+          "id": "OL62033W",
+          "title": "Essays & lectures",
+          "author": "Ralph Waldo Emerson",
+          "coverId": "ol:717686",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450158",
+          "coverIsbn": "9780940450158"
+        },
+        {
+          "id": "OL14876307W",
+          "title": "History, tales, and sketches",
+          "author": "Washington Irving",
+          "coverId": "ol:717685",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450141",
+          "coverIsbn": "9780940450141"
+        },
+        {
+          "id": "OL622969W",
+          "title": "Writings",
+          "author": "Thomas Jefferson",
+          "coverId": "ol:717688",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450165",
+          "coverIsbn": "9780940450165"
+        },
+        {
+          "id": "OL20807W",
+          "title": "Prose and poetry",
+          "author": "Stephen Crane",
+          "coverId": "ol:717689",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450172",
+          "coverIsbn": "9780940450172"
+        },
+        {
+          "id": "OL14938064W",
+          "title": "Poetry and Tales",
+          "author": "Edgar Allan Poe",
+          "coverId": "ol:11794011",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450189",
+          "coverIsbn": "9780940450189"
+        },
+        {
+          "id": "OL413355W",
+          "title": "Works (Innocents Abroad / Roughing It)",
+          "author": "Mark Twain",
+          "coverId": "ol:717699",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450257",
+          "coverIsbn": "9780940450257"
+        },
+        {
+          "id": "OL276430W",
+          "title": "The short stories of Henry James",
+          "author": "Henry James",
+          "coverId": "ol:717695",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450233",
+          "coverIsbn": "9780940450233"
+        },
+        {
+          "id": "OL14953697W",
+          "title": "Pierre / Israel Potter / The Piazza Tales / The Confidence-Man / Uncollected Prose / Billy Budd",
+          "author": "Herman Melville",
+          "coverId": "ol:717697",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450240",
+          "coverIsbn": "9780940450240"
+        },
+        {
+          "id": "OL82883W",
+          "title": "Novels, 1930-1935",
+          "author": "William Faulkner",
+          "coverId": "ol:9327728",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450264",
+          "coverIsbn": "9780940450264"
+        },
+        {
+          "id": "OL78021W",
+          "title": "The Leatherstocking Tales",
+          "author": "James Fenimore Cooper",
+          "coverId": "ol:717693",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450219",
+          "coverIsbn": "9780940450219"
+        },
+        {
+          "id": "OL15032712W",
+          "title": "A week on the Concord and Merrimack rivers ; Walden, or, Life in the woods ; The Maine woods ; Cape Cod",
+          "author": "Henry David Thoreau",
+          "coverId": "ol:717701",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450271",
+          "coverIsbn": "9780940450271"
+        },
+        {
+          "id": "OL14860971W",
+          "title": "Novels",
+          "author": "Henry James",
+          "coverId": "ol:717705",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450301",
+          "coverIsbn": "9780940450301"
+        },
+        {
+          "id": "OL15097935W",
+          "title": "History of the United States of America during the administrations of Thomas Jefferson",
+          "author": "Henry Adams",
+          "coverId": "ol:717710",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450349",
+          "coverIsbn": "9780940450349"
+        },
+        {
+          "id": "OL6949018W",
+          "title": "History of the United States During the Administrations of James Madison (Library of America)",
+          "author": "Henry Adams",
+          "coverId": "ol:717711",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450356",
+          "coverIsbn": "9780940450356"
+        },
+        {
+          "id": "OL1794915W",
+          "title": "Novels and essays",
+          "author": "Frank Norris",
+          "coverId": "ol:717718",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450400",
+          "coverIsbn": "9780940450400"
+        },
+        {
+          "id": "OL14876101W",
+          "title": "W.E.B. Du Bois : Writings",
+          "author": "W. E. B. Du Bois",
+          "coverId": "ol:717708",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450332",
+          "coverIsbn": "9780940450332"
+        },
+        {
+          "id": "OL12805W",
+          "title": "Early novels and stories",
+          "author": "Willa Cather",
+          "coverId": "ol:717717",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450394",
+          "coverIsbn": "9780940450394"
+        },
+        {
+          "id": "OL2514652W",
+          "title": "Benjamin Franklin: Silence Dogood, Busy-Body",
+          "author": "Benjamin Franklin",
+          "coverId": "ol:955899",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781931082228",
+          "coverIsbn": "9781931082228"
+        },
+        {
+          "id": "OL14996484W",
+          "title": "Autobiography / Poor Richard / Later Writings",
+          "author": "Benjamin Franklin",
+          "coverId": "ol:929370",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011536",
+          "coverIsbn": "9781883011536"
+        },
+        {
+          "id": "OL16335338W",
+          "title": "Collected works",
+          "author": "Flannery O'Connor",
+          "coverId": "ol:14819634",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450370",
+          "coverIsbn": "9780940450370"
+        },
+        {
+          "id": "OL16047597W",
+          "title": "Complete plays, 1920-1931",
+          "author": "Eugene O'Neill",
+          "coverId": "ol:6932727",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450493",
+          "coverIsbn": "9780940450493"
+        },
+        {
+          "id": "OL17393255W",
+          "title": "Complete Plays 19321943",
+          "author": "Eugene O'Neill",
+          "coverId": "ol:7489400",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450509",
+          "coverIsbn": "9780940450509"
+        },
+        {
+          "id": "OL69028W",
+          "title": "Novels, 1886-1888",
+          "author": "William Dean Howells",
+          "coverId": "ol:14822126",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450516",
+          "coverIsbn": "9780940450516"
+        },
+        {
+          "id": "OL72813W",
+          "title": "Autobiography",
+          "author": "Abraham Lincoln",
+          "coverId": "ol:14815325",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450431",
+          "coverIsbn": "9780940450431"
+        },
+        {
+          "id": "OL72780W",
+          "title": "Speeches and writings 1859-1865",
+          "author": "Abraham Lincoln",
+          "coverId": "ol:717738",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450639",
+          "coverIsbn": "9780940450639"
+        },
+        {
+          "id": "OL15000211W",
+          "title": "Novellas and Other Writings (Backward Glance / Ethan Frome / Madame de Treymes / Mother's Recompense / Old New York / Summer)",
+          "author": "Edith Wharton",
+          "coverId": "ol:9329562",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450530",
+          "coverIsbn": "9780940450530"
+        },
+        {
+          "id": "OL15008672W",
+          "title": "Later Novels",
+          "author": "Willa Cather",
+          "coverId": "ol:717728",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450523",
+          "coverIsbn": "9780940450523"
+        },
+        {
+          "id": "OL1928224W",
+          "title": "Memoirs and Selected Letters",
+          "author": "Ulysses S. Grant",
+          "coverId": "ol:14849796",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450585",
+          "coverIsbn": "9780940450585"
+        },
+        {
+          "id": "OL40706366W",
+          "title": "Memoirs of William T. Sherman (Complete)",
+          "author": "William T. Sherman",
+          "coverId": "ol:717742",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450653",
+          "coverIsbn": "9780940450653"
+        },
+        {
+          "id": "OL63866W",
+          "title": "Selected writings of Washington Irving",
+          "author": "Washington Irving",
+          "coverId": "ol:717734",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450592",
+          "coverIsbn": "9780940450592"
+        },
+        {
+          "id": "OL102767W",
+          "title": "The Oregon Trail ; The conspiracy of Pontiac",
+          "author": "Francis Parkman",
+          "coverId": "ol:717730",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450547",
+          "coverIsbn": "9780940450547"
+        },
+        {
+          "id": "OL77972W",
+          "title": "Sea Tales",
+          "author": "James Fenimore Cooper",
+          "coverId": "ol:717747",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450707",
+          "coverIsbn": "9780940450707"
+        },
+        {
+          "id": "OL506443W",
+          "title": "Works (Lawd Today! | Uncle Tom’s Children | Native Son | Black Boy (American Hunger) | The Outsider)",
+          "author": "Richard Wright",
+          "coverId": "ol:12195023",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450677",
+          "coverIsbn": "9780940450677"
+        },
+        {
+          "id": "OL15008751W",
+          "title": "Stories, poems, and other writings",
+          "author": "Willa Cather",
+          "coverId": "ol:717748",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450714",
+          "coverIsbn": "9780940450714"
+        },
+        {
+          "id": "OL1502029W",
+          "title": "Writings, 1878-1899",
+          "author": "William James",
+          "coverId": "ol:717749",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450721",
+          "coverIsbn": "9780940450721"
+        },
+        {
+          "id": "OL15289882W",
+          "title": "Collected tales, sketches, speeches & essays. 1852-1890",
+          "author": "Mark Twain",
+          "coverId": "ol:9174226",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450363",
+          "coverIsbn": "9780940450363"
+        },
+        {
+          "id": "OL20514238W",
+          "title": "Collected Tales, Sketches, Speeches & Essays. 1891-1910",
+          "author": "Mark Twain",
+          "coverId": "ol:9175969",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450738",
+          "coverIsbn": "9780940450738"
+        },
+        {
+          "id": "OL16086067W",
+          "title": "The Debate on the Constitution",
+          "author": "Bernard Bailyn",
+          "coverId": "ol:717740",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450646",
+          "coverIsbn": "9780940450646"
+        },
+        {
+          "id": "OL14861014W",
+          "title": "Collected travel writings",
+          "author": "Henry James",
+          "coverId": "ol:717752",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450769",
+          "coverIsbn": "9780940450769"
+        },
+        {
+          "id": "OL15061760W",
+          "title": "American Poetry: The Nineteenth Century, Vol. 1",
+          "author": "Various",
+          "coverId": "ol:717735",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450608",
+          "coverIsbn": "9780940450608"
+        },
+        {
+          "id": "OL67206W",
+          "title": "Novels and stories",
+          "author": "Sarah Orne Jewett",
+          "coverId": "ol:717751",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450745",
+          "coverIsbn": "9780940450745"
+        },
+        {
+          "id": "OL415455W",
+          "title": "Collected poems and translations",
+          "author": "Ralph Waldo Emerson",
+          "coverId": "ol:717702",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450288",
+          "coverIsbn": "9780940450288"
+        },
+        {
+          "id": "OL53922W",
+          "title": "Novels (Adventures of Huckleberry Finn / Adventures of Tom Sawyer / Prince and the Pauper)",
+          "author": "Mark Twain",
+          "coverId": "ol:717757",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450820",
+          "coverIsbn": "9780940450820"
+        },
+        {
+          "id": "OL23167W",
+          "title": "Novels and Stories 1932-1937 (In Dubious Battle / Of Mice and Men / Pastures of Heaven / To a God Unknown / Tortilla Flat)",
+          "author": "John Steinbeck",
+          "coverId": "ol:14813354",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011017",
+          "coverIsbn": "9781883011017"
+        },
+        {
+          "id": "OL16245865W",
+          "title": "Novels, 1942-1954",
+          "author": "William Faulkner",
+          "coverId": "ol:9206191",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450851",
+          "coverIsbn": "9780940450851"
+        },
+        {
+          "id": "OL1890314W",
+          "title": "Novels and stories",
+          "author": "Zora Neale Hurston",
+          "coverId": "ol:717758",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780940450837",
+          "coverIsbn": "9780940450837"
+        },
+        {
+          "id": "OL60279W",
+          "title": "Collected writings",
+          "author": "Thomas Paine",
+          "coverId": "ol:929331",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011031",
+          "coverIsbn": "9781883011031"
+        },
+        {
+          "id": "OL17310022W",
+          "title": "Reporting World War II",
+          "author": "Samuel Lynn Hynes",
+          "coverId": "ol:929334",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011055",
+          "coverIsbn": "9781883011055"
+        },
+        {
+          "id": "OL3295493W",
+          "title": "Later novels and other writings",
+          "author": "Raymond Chandler",
+          "coverId": "ol:929338",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011079",
+          "coverIsbn": "9781883011079"
+        },
+        {
+          "id": "OL14860890W",
+          "title": "Tales of",
+          "author": "Henry James",
+          "coverId": "ol:929341",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011109",
+          "coverIsbn": "9781883011109"
+        },
+        {
+          "id": "OL2755506W",
+          "title": "Travels and Other Writings",
+          "author": "William Bartram",
+          "coverId": "ol:929342",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011116",
+          "coverIsbn": "9781883011116"
+        },
+        {
+          "id": "OL1217995W",
+          "title": "U.S.A",
+          "author": "John Dos Passos",
+          "coverId": "ol:929344",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011147",
+          "coverIsbn": "9781883011147"
+        },
+        {
+          "id": "OL23164W",
+          "title": "The grapes of wrath and other writings, 1936-1941 (Grapes of Wrath / Harvest Gypsies / Long Valley / Sea of Cortez)",
+          "author": "John Steinbeck",
+          "coverId": "ol:929345",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011154",
+          "coverIsbn": "9781883011154"
+        },
+        {
+          "id": "OL627040W",
+          "title": "Novels and memoirs, 1941-1951",
+          "author": "Vladimir Nabokov",
+          "coverId": "ol:929346",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011185",
+          "coverIsbn": "9781883011185"
+        },
+        {
+          "id": "OL20643775W",
+          "title": "Novels 1955-1962 (Lolita / Lolita. A Screenplay / Pale Fire / Pnin)",
+          "author": "Vladimir Nabokov",
+          "coverId": "ol:9266364",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011192",
+          "coverIsbn": "9781883011192"
+        },
+        {
+          "id": "OL16303411W",
+          "title": "Novels (Ada / Look at the Harlequins! / Transparent Things)",
+          "author": "Vladimir Nabokov",
+          "coverId": "ol:929348",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011208",
+          "coverIsbn": "9781883011208"
+        },
+        {
+          "id": "OL14857116W",
+          "title": "Writings and drawings",
+          "author": "James Thurber",
+          "coverId": "ol:929349",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011222",
+          "coverIsbn": "9781883011222"
+        },
+        {
+          "id": "OL75351W",
+          "title": "Writings",
+          "author": "George Washington",
+          "coverId": "ol:929351",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011239",
+          "coverIsbn": "9781883011239"
+        },
+        {
+          "id": "OL1618164W",
+          "title": "Nature writings",
+          "author": "John Muir",
+          "coverId": "ol:929352",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011246",
+          "coverIsbn": "9781883011246"
+        },
+        {
+          "id": "OL3352334W",
+          "title": "Novels & Other Writings",
+          "author": "Nathanael West",
+          "coverId": "ol:10660617",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011284",
+          "coverIsbn": "9781883011284"
+        },
+        {
+          "id": "OL15251656W",
+          "title": "Crime Novels",
+          "author": "Cornell Woolrich",
+          "coverId": "ol:929364",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011468",
+          "coverIsbn": "9781883011468"
+        },
+        {
+          "id": "OL17824334W",
+          "title": "Crime novels",
+          "author": "Jim Thompson",
+          "coverId": "ol:929366",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011499",
+          "coverIsbn": "9781883011499"
+        },
+        {
+          "id": "OL463975W",
+          "title": "Collected poetry and prose",
+          "author": "Wallace Stevens",
+          "coverId": "ol:929362",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011451",
+          "coverIsbn": "9781883011451"
+        },
+        {
+          "id": "OL2683334W",
+          "title": "Early novels and stories",
+          "author": "James Baldwin",
+          "coverId": "ol:929367",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011512",
+          "coverIsbn": "9781883011512"
+        },
+        {
+          "id": "OL228709W",
+          "title": "Nobody Knows My Name",
+          "author": "James Baldwin",
+          "coverId": "ol:929368",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011529",
+          "coverIsbn": "9781883011529"
+        },
+        {
+          "id": "OL35379W",
+          "title": "Operas and Plays",
+          "author": "Gertrude Stein",
+          "coverId": "ol:929360",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9781883011406",
+          "coverIsbn": "9781883011406"
+        }
+      ]
     }
   ]
 }

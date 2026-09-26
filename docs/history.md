@@ -3004,3 +3004,21 @@ Julian: „add hero rings derived from the collections". Das Rondell zeigte sieb
 **Klick, und ein Fund dabei.** Jedes Cover ist ein Link auf `/book/<id>?cover=ol:<id>`; Zeile und freie Fläche öffnen `/collections/<slug>` (die Fläche über den Router, weil Links sich nicht schachteln lassen). Beim Prüfen traf ein Klick auf ein Cover fast nie das Cover: `document.elementFromPoint` in der Mitte jedes der sieben Cover lieferte `rondell-seat` oder `rondell-ring` — die 3D-Ebenen von Ring und Sitzen liegen im Treffertest vor den gedrehten Covern. Beim Buchring fiel das nie auf, weil dort das Ganze ein Link ist. Jetzt `pointer-events: none` auf Ring und Sitzen, `auto` auf den Covern: danach trafen 5 von 7 Covermitten ihr eigenes Cover (die zwei übrigen liegen hinter einem vorderen), ein Klick öffnete `/book/OL5940199W?cover=ol%3A8668156`, ein Klick in die Ecke `/collections/edition-suhrkamp`, und das Drehen per Maus geht weiter über die Box. Die CSS-Änderung kam erst nach einem Neuladen im Dev-Server an, nicht per HMR (wie bei 6.57).
 
 **Geprüft** bei 1280 × 800 (Buch- und Sammlungsringe, Links, Drehung) und 390 × 844 (kein Rondell gerendert, keine Seitenbreite überschritten, unverändert). `tsc`, `lint`, 779 Tests und `npm run build` grün.
+
+## 2026-09-26 · Library of America als Entwurf, Bände 1–100 (ROADMAP 5.10)
+
+Julian: „start a draft for each of these by an agent in the background" — die erste Reihe der Rangliste von 5.10j ([Recherche](reihen-recherche.md)), gebaut von einem Agenten. Gesucht ist Bruce Campbells Schutzumschlag: schwarz, Porträt des Autors, Name in Schreibschrift, rot-weiß-blaues Band.
+
+**Liste** (`lab/collections/lists/library-of-america.json`): die Tabelle „Main series" des englischen Wikipedia-Artikels, aus dem Wikitext über die API (Revision 1362274185), **408 Einträge** — Band 1 bis 407, Band 37 als 37.1 und 37.2 (Franklin, zwei ISBNs); je Eintrag Nummer, Titel, Autor, eine ISBN und die Quelle. Die 512 ISBNs der Recherche zählen die Sonderbände und das American Poets Project mit; die sind nicht in der Liste.
+
+**Gemessen** (nur Open Library, eine Anfrage nach der anderen, nie Google), Bände 1–100, also 101 Einträge: **alle 101 ISBNs bei Open Library bekannt, 96 mit Cover, 5 ohne** (13, 59, 67, 75, 82). Alle 96 auf drei Kontaktbögen angesehen (Scratchpad, nicht im Repository). **24 mit `skip` und Grund übersprungen:**
+- 5 Leineneinbände ohne Umschlag (7, 20, 38, 40, 68: einfarbig grün, weinrot, marineblau)
+- 3 Titel- oder Textseiten (3 — eine Houghton-Mifflin-Ausgabe, nicht LoA —, 36, 81)
+- 7 Aufkleber auf dem Umschlag (2 und 6 Signaturschilder, 9, 11, 12, 30 und 48 Bibliotheks-Barcodes)
+- 5 erste Bände eines Paars, das Open Library als **eine** Ausgabe führt (22, 26, 55, 62, 77; dazu 11/12, beide schon wegen der Aufkleber draußen): das Bild zeigt jeweils den Umschlag des zweiten Bandes, also bleibt der zweite
+- 4 Bände auf demselben Open-Library-Werk wie ein früherer Band (43 wie 29, 65 wie 64, 80 wie 79, 100 wie 99): eine Wahl je Werk, `from-isbns` hätte sie sonst ohne Meldung verworfen
+
+**72 Werke auf der Wand, alle im Campbell-Umschlag**, in der Reihenfolge der Nummern. Die Anthologien (American Poetry, Crime Novels) tragen statt des Porträts ein Gemälde im selben Rahmen und sind drin. Abgeschnitten wurde mit `MAX_WORKS=72`, das nach Band 99 endet; die Einträge ab Band 101 sind ungeprüft und ohne `skip`. Einige Bände hängen bei Open Library an einem Werk mit engerem Titel (Band 4 an *Uncle Tom's Cabin*, Band 10 an einer Liste der Romane Hawthornes); die Wand zeigt dort den Titel von Open Library.
+
+Sammlung `library-of-america`, Titel „Library of America", Art `series`, Verlag „Library of America", Einleitung ein Satz, Entwurf.
+Online-Entwurf **`O-b1EzkpBVtJ`** mit `push-draft.ts` angelegt und angeglichen, nicht veröffentlicht; der erste Lauf endete nach wenigen Schritten mit 429 (andere Agenten im selben Eimer `suggest`), nach gut zwei Minuten neu gestartet, ein dritter Lauf meldete „already equal“.
