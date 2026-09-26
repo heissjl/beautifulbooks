@@ -243,7 +243,8 @@ function side(pool: VersusPool, id: string): PairSide {
 export interface PairResponse {
   pool: string;
   store: VoteStore['kind'];
-  votes: number;
+  /** Null on a pair handed out with the page, before the store was asked (`readyPairs`). */
+  votes: number | null;
   covers: number;
   /** Title and author shown under each cover since 2026-09-11 (Julian: "wir müssen noch titel und autor anzeigen"). */
   a: PairSide;
@@ -279,6 +280,36 @@ export async function nextPairFor(
     b: side(pool, b),
     token: signPair(secret, pool.name, a, b, now),
   };
+}
+
+/**
+ * Pairs handed out with the page itself (Julian, 2026-09-25: „the first load
+ * of the versus app online has a long loading time. just have a set of
+ * preloaded pairs ready to show there"). Drawn from the frozen pool without
+ * asking the store — no tally, no flags — so the first covers are on screen
+ * with the page; each is signed like any pair, so a vote on it counts. After
+ * these, the game asks the server as before, and the Elo pairing takes over.
+ * A cover someone reported can appear in these first pairs; the next ones
+ * leave it out again.
+ */
+export function readyPairs(
+  secret: Buffer,
+  count: number,
+  { pool = POOL, random = rng(Date.now() >>> 0), now = Date.now(), store = 'redis' }: { pool?: VersusPool; random?: () => number; now?: number; store?: VoteStore['kind'] } = {},
+): PairResponse[] {
+  const ids = pool.covers.map(c => c.id);
+  const book = new Map(pool.covers.map(c => [c.id, c.workId]));
+  const elo = newElo(ids);
+  const out: PairResponse[] = [];
+  const recent: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const pair = nextPair(ids, elo, random, { recent, bookOf: id => book.get(id) ?? id });
+    if (!pair) break;
+    const [a, b] = pair;
+    recent.push(a, b);
+    out.push({ pool: pool.name, store, votes: null, covers: ids.length, a: side(pool, a), b: side(pool, b), token: signPair(secret, pool.name, a, b, now) });
+  }
+  return out;
 }
 
 /**

@@ -5,7 +5,9 @@ import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import Versus from '@/components/Versus';
-import { POOL, poolBooks, someBooks } from '@/lib/hotornot/game';
+import { preload } from 'react-dom';
+import { POOL, poolBooks, readyPairs, secretForEnv, someBooks } from '@/lib/hotornot/game';
+import { storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { SITE_URL } from '@/lib/seo';
 
@@ -43,11 +45,20 @@ export default function VersusPage() {
   if (!versusEnabled()) notFound();
   const books = poolBooks();
   const sample = someBooks(SHOWN_BOOKS);
+  /*
+    Three pairs come with the page, drawn from the frozen pool and signed here,
+    without a round trip to the store (Julian, 2026-09-25: „the first load of
+    the versus app online has a long loading time. just have a set of
+    preloaded pairs ready"). The first pair's images are announced to the
+    browser in the head, so they load alongside the page.
+  */
+  const initialPairs = readyPairs(secretForEnv(), 3, { store: storeFromEnv()?.kind ?? 'memory' });
+  for (const side of initialPairs.slice(0, 1).flatMap(p => [p.a, p.b])) preload(side.src, { as: 'image' });
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-24 pt-8 sm:px-6">
-        <Versus />
+        <Versus initialPairs={initialPairs} />
 
         <section className="mt-16 border-t border-line pt-8">
           <h2 className="text-2xl text-ink">What this is</h2>

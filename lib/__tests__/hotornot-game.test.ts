@@ -4,6 +4,7 @@ import { CROWN_HOLD, ELO_START, applyVote, newElo } from '../hotornot/rating';
 import {
   BOARD_SECONDS, POOL, TALLY_SAVE_EVERY, board, cachedBoard, castVote, flagCover, forgetBoards, forgetTallies, imagePath,
   nextPairFor, pairingTally, poolBooks, someBooks, type VersusPool,
+  readyPairs,
 } from '../hotornot/game';
 import { StoreUnavailableError, memoryStore, type VoteStore } from '../hotornot/store';
 
@@ -12,7 +13,7 @@ beforeEach(() => {
   forgetTallies();
   forgetBoards();
 });
-import { pairSecret } from '../hotornot/token';
+import { pairSecret, verifyPair } from '../hotornot/token';
 
 const pool: VersusPool = {
   name: 'test',
@@ -311,3 +312,20 @@ describe('the books behind the pool (the page a crawler reads, SPEC F7.6)', () =
     expect(books.every(b => /^OL\d+W$/.test(b.workId) && b.title.length > 0)).toBe(true);
   });
 });
+
+describe('readyPairs (pairs handed out with the page)', () => {
+  const secret = pairSecret('test-token');
+
+  it('draws signed pairs, no cover twice (two covers of one book are allowed, F7.9)', () => {
+    const pairs = readyPairs(secret, 3, { random: rng(7), now: 1_700_000_000_000, store: 'memory' });
+    expect(pairs).toHaveLength(3);
+    const ids = pairs.flatMap(p => [p.a.id, p.b.id]);
+    expect(new Set(ids).size).toBe(6);
+    for (const p of pairs) {
+      expect(p.votes).toBeNull();
+      expect(p.token).toMatch(/\S/);
+      expect(verifyPair(secret, p.pool, p.a.id, p.b.id, p.token, 1_700_000_000_000)).toBe(true);
+    }
+  });
+});
+

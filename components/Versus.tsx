@@ -43,10 +43,11 @@ interface Side {
   href: string;
 }
 
-interface Pair {
+export interface Pair {
   pool: string;
   store: 'memory' | 'upstash' | 'redis';
-  votes: number;
+  /** Null on the pairs that come with the page, before the store was asked. */
+  votes: number | null;
   covers: number;
   a: Side;
   b: Side;
@@ -148,7 +149,22 @@ function askAhead(cache: Map<string, Promise<Answer>>, seen: readonly string[], 
   }
 }
 
-export default function Versus() {
+/**
+ * The pairs that came with the page (Julian, 2026-09-25: „have a set of preloaded pairs ready"),
+ * put into the cache under the `seen` lists the game will ask with — so the first ones show at
+ * once and the server is asked only from the pair after them.
+ */
+function seeded(pairs: readonly Pair[]): Map<string, Promise<Answer>> {
+  const cache = new Map<string, Promise<Answer>>();
+  let seen: readonly string[] = [];
+  for (const pair of pairs) {
+    cache.set(seen.join(','), Promise.resolve({ pair }));
+    seen = withSeen(seen, pair);
+  }
+  return cache;
+}
+
+export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] }) {
   const [request, setRequest] = useState(0);
   const [seen, setSeen] = useState<readonly string[]>([]);
   const [loaded, setLoaded] = useState<Loaded | null>(null);
@@ -158,7 +174,7 @@ export default function Versus() {
   /** When the stamp may end; 0 when no pair is leaving. Read only in callbacks. */
   const holdUntil = useRef(0);
   /** The pairs behind the one on screen, asked for early. Keyed by the `seen` list each was asked with. */
-  const ahead = useRef(new Map<string, Promise<Answer>>());
+  const ahead = useRef(seeded(initialPairs));
 
   useEffect(() => {
     let cancelled = false;
@@ -265,7 +281,11 @@ export default function Versus() {
       </div>
       <p className="mt-2 text-[15px] text-ink-2">Judge the cover, not the book!</p>
       <p className="mt-1 text-sm tabular-nums text-ink-3" aria-live="polite">
-        {shown ? `${shown.votes} ${shown.votes === 1 ? 'vote' : 'votes'} so far · ${shown.covers} covers` : ' '}
+        {shown
+          ? shown.votes === null
+            ? `${shown.covers} covers`
+            : `${shown.votes} ${shown.votes === 1 ? 'vote' : 'votes'} so far · ${shown.covers} covers`
+          : ' '}
         {shown?.store === 'memory' ? ' · development: votes live in memory' : ''}
       </p>
 
@@ -319,9 +339,14 @@ export default function Versus() {
                         <span className="absolute inset-0 animate-pulse bg-surface-2" aria-hidden="true" />
                       )}
                     </button>
-                    <div className="w-full min-w-0 text-center">
-                      <p className="line-clamp-2 min-h-[2lh] text-[13px] leading-snug text-ink">{side?.title ?? ' '}</p>
-                      <p className="truncate text-xs text-ink-3">{side?.author || ' '}</p>
+                    {/*
+                      The author sits right under the title (Julian, 2026-09-25: „bring the author name closer to the
+                      title and then instead have the gap above the buttons"). The block, not the title, keeps room
+                      for a two-line title, so both columns stay level and a short title leaves its space below.
+                    */}
+                    <div className="min-h-[3.6rem] w-full min-w-0 text-center">
+                      <p className="line-clamp-2 text-[13px] leading-snug text-ink">{side?.title ?? ' '}</p>
+                      <p className="truncate text-xs leading-snug text-ink-3">{side?.author || ' '}</p>
                     </div>
                   </div>
                 );
@@ -339,7 +364,7 @@ export default function Versus() {
             of things that lead away from the game. A new tab, so a game in progress is never lost.
           */}
           {shown && (
-            <div className="mt-2 grid grid-cols-2 gap-3 sm:gap-6">
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:gap-6">
               {[shown.a, shown.b].map((side, i) =>
                 side.workId ? (
                   <div key={side.id} className="flex items-center justify-center gap-3">
