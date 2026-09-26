@@ -10641,7 +10641,7 @@
       "slug": "jules-verne-covers-by-heinz-edelmann",
       "title": "Jules Verne — covers by Heinz Edelmann",
       "kind": "series",
-      "intro": "Fischer published Jules Verne in twenty paperback volumes from 1968, in new translations by Lothar Maier, and Heinz Edelmann designed the covers of the whole edition. Shown in the order of the volume numbers. The photographs of nineteen volumes come from the Sammlung Keller (sammlungkeller.ch), a private collection of Edelmann's work.",
+      "intro": "Fischer published Jules Verne in twenty paperback volumes from 1968, in new translations by Lothar Maier, and Heinz Edelmann designed the covers of the whole edition. Shown in the order of the volume numbers.",
       "published": false,
       "publishers": [
         "Fischer-Bücherei",
@@ -11824,15 +11824,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518370782",
           "coverIsbn": "3518370782"
-        },
-        {
-          "id": "OL9072885W",
-          "title": "Mozart",
-          "author": "Hildesheimer W",
-          "coverId": "ol:1016559",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518370987",
-          "coverIsbn": "3518370987"
         },
         {
           "id": "OL11483978W",

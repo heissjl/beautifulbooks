@@ -6142,7 +6142,8 @@
   ],
   "window": "portrait",
   "source": "DNB SRU (800481755, 840278829, 850307147) ISBN in record",
-  "note": "portrait of the book's subject, moved from the images draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")"
+  "note": "portrait of the book's subject, moved from the images draft (Julian 2026-09-26: „in suhrkamp images sind noch einige autorenfotos dabei\")",
+  "skip": "same author as st 362 (one work per author)"
  },
  {
   "no": "599",
@@ -10364,7 +10365,7 @@
   "fallbackIsbns": [
    "3518075098"
   ],
-  "skip": "same author as st 598 (one work per author)",
+  "skip": "same author as st 362 (one work per author)",
   "window": "portrait",
   "note": "later printing: the image under the first-printing ISBN is not this cover (title page)",
   "source": "DNB SRU (840728603, 870025384, 900252308) ISBN in record"

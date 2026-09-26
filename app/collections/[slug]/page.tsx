@@ -92,11 +92,17 @@ export default async function CollectionPage({ params }: PageProps) {
           best" (CLAUDE.md, SPEC §9.3 step 15). For an author collection the
           line names only authors with a book on the wall.
         */}
-        <p className="mt-3 text-sm text-ink-3">
-          {c.works.length} {c.works.length === 1 ? 'book' : 'books'}
-          {names.length > 0 && <> by {names.length} {names.length === 1 ? 'author' : 'authors'}</>}
-          , {coverLine(c.kind, c.coverSource, c.works.filter(w => w.image).length)}.
-        </p>
+        {/*
+          Not on a wall with site-served images (Julian, 2026-09-26, Jules
+          Verne: „lösche den kleinen absatz ganz"); the metadata keeps the line.
+        */}
+        {!c.works.some(w => w.image) && (
+          <p className="mt-3 text-sm text-ink-3">
+            {c.works.length} {c.works.length === 1 ? 'book' : 'books'}
+            {names.length > 0 && <> by {names.length} {names.length === 1 ? 'author' : 'authors'}</>}
+            , {coverLine(c.kind, c.coverSource)}.
+          </p>
+        )}
         <div className="mt-8">
           <CoverWall works={c.works} selectCover />
         </div>
