@@ -47,8 +47,22 @@ async function main() {
   const { drafts } = await call<{ drafts: Array<DraftLike & { id: string; slug: string; updatedAt: string; deleted?: boolean }> }>('/api/curate/drafts');
   let draft = drafts.filter(d => d.slug === slug && !d.deleted).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0];
   if (!draft) {
-    draft = (await call<{ draft: typeof drafts[number] }>('/api/curate/drafts', { from: slug })).draft;
-    console.log(`${slug}: new online draft ${draft.id} from the file`);
+    try {
+      draft = (await call<{ draft: typeof drafts[number] }>('/api/curate/drafts', { from: slug })).draft;
+      console.log(`${slug}: new online draft ${draft.id} from the deployed file`);
+    } catch {
+      /*
+        A collection that is only in the local file (not deployed yet) cannot
+        be copied by the site: start an empty draft of the same kind and give it
+        its boundary — publishers or authors — before the works follow below.
+      */
+      draft = (await call<{ draft: typeof drafts[number] }>('/api/curate/drafts', { title: record.title, kind: record.kind })).draft;
+      for (const name of record.publishers ?? []) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'addPublisher', name })).draft;
+      for (const a of record.authors ?? []) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'addAuthor', name: a.name, key: a.keys[0] ?? '' })).draft;
+      console.log(`${slug}: new empty online draft ${draft.id} (not yet in the deployed file)`);
+      // The site derives an empty draft's address from its title; a title that slugs differently cannot be found again by this tool.
+      if (draft.slug !== slug) console.warn(`${slug}: the online draft got the address "${draft.slug}" from its title — publish only after the file is deployed, or rename so both match`);
+    }
   }
 
   const delta = draftDelta(draft, record);
