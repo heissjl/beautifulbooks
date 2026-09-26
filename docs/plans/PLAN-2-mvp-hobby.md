@@ -1,5 +1,7 @@
 # PLAN 2.0 — Der Hobby-MVP: online ohne Kauf-Links, und die Shop-Variante daneben
 
+> **Erledigt am 2026-09-08** (Commit `93fa6de`): online seit dem Abend unter https://beautifulcovers.vercel.app. Offen aus diesem Plan sind nur Reste, die als eigene Roadmap-Punkte stehen: Abnahme (2.6), zweiter Google-Schlüssel (0.2), Domain (0.5 / 2.2). Roadmap [2.0](../../ROADMAP.md), Langtext im [Archiv](../roadmap-archive.md#20).
+
 Stand: 2026-09-08 abends. Roadmap-Punkt **2.0**; Branch `mvp-hobby` (von `main` bei `e5ca05f`, Tests 241/241, `tsc` und Lint grün).
 
 ## 1. Was Julian will

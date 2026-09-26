@@ -1,6 +1,6 @@
 # Plan für Punkt B und die Arbeit, die keine Entscheidung braucht
 
-> **B0 bis B8 erledigt 2026-09-07.** Historisches Arbeitsdokument mit den Messungen. Weiterhin gültig als Vorlage: der **vorläufige Plan für die Analyse-Seite** nach B4, siehe [../../ROADMAP.md](../../ROADMAP.md) Phase 3. Verweise auf `SPEC.md §…` meinen die Gliederung vor dem 2026-09-07 (Konkordanz in SPEC.md §8).
+> **B0 bis B8 erledigt 2026-09-07** (u. a. `ebd829d` Rate-Limit, `a17f8ba` SEO, `0cd8fa1` Telefon, `e74f54a` Klicks, `6f4aa3a` About, `5e4104c` Suche ohne Google). Historisches Arbeitsdokument mit den Messungen. Weiterhin gültig als Vorlage: der **vorläufige Plan für die Analyse-Seite** nach B4, siehe [../../ROADMAP.md](../../ROADMAP.md) Phase 3. Verweise auf `SPEC.md §…` meinen die Gliederung vor dem 2026-09-07 (Konkordanz in SPEC.md §8).
 
 Detailplan zu SPEC.md §10, geschrieben 2026-09-07, während A3 auf Julian wartet. Jeder Abschnitt wird einzeln geplant, umgesetzt und committet; die Reihenfolge folgt dem Risiko, nicht dem Aufwand.
 
