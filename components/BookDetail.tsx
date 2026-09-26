@@ -12,6 +12,7 @@ import WorkPanel from '@/components/WorkPanel';
 import ShareMenu from '@/components/ShareMenu';
 import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
+import LocalShops from '@/components/LocalShops';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
@@ -733,6 +734,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
           key={shown.id}
           edition={shown}
           workTitle={workTitle}
+          author={author}
           otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
           searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
           anyEditionLinks={anyEditionLinks}
@@ -749,6 +751,8 @@ interface EditionBlockProps {
   edition: EditionView;
   /** To decide whether this printing's own title is worth a line (56 % differ). */
   workTitle: string;
+  /** Primary author, for the local-bookshop search without an ISBN (5.12). */
+  author?: string;
   otherCovers: number;
   searchLinks: EditionView['buyLinks'];
   anyEditionLinks: BuyLink[];
@@ -767,7 +771,7 @@ interface EditionBlockProps {
  * them into three zones instead, and everything that is not one of the two or
  * three shops with a chance goes behind a fold.
  */
-function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict }: EditionBlockProps) {
+function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict }: EditionBlockProps) {
   // Reset whenever the edition or the market changes: an answer belongs to
   // one ISBN in one market's shops.
   const [checked, setChecked] = useState<{ key: string; byProvider: Map<string, ShopStatus> } | null>(null);
@@ -887,6 +891,13 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
           </div>
         </details>
       )}
+
+      {/*
+        A second fold, not a row in the first (Julian, 2026-09-26): the shops
+        above are the market's retailers, this one leads to services of
+        independent bookshops in a country the reader picks (ROADMAP 5.12).
+      */}
+      <LocalShops edition={{ isbn13: edition.isbn13, title: edition.title, author }} market={market} />
 
       {/*
         What is known about this printing — the preview, the dates, the blurb —
