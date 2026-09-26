@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation';
 import CurateTool, { type StartingPoint } from '@/components/CurateTool';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
-import AdminCollections from '@/components/AdminCollections';
 import SuggestLogin from '@/components/SuggestLogin';
 import { liveCollections } from '@/lib/collections-live';
 import { draftStoreFromEnv, listDrafts, type Draft } from '@/lib/curate/drafts';
@@ -71,32 +70,6 @@ export default async function CuratePage({ searchParams }: PageProps) {
           For a single book, the{' '}
           <Link href="/suggest" className="text-accent underline underline-offset-4">quick suggestion form</Link> is faster.
         </p>
-        {/*
-          The collections in the site's file, drafts included, as pages a
-          signed-in friend can open (ROADMAP 5.10b; Julian, 2026-09-25: „have
-          the drafts also in production for the curation behind login").
-          Changing them happens through a draft below, which Julian takes over.
-        */}
-        {signedIn && fileCollections.length > 0 && !admin && (
-          <p className="mt-4 max-w-2xl text-sm text-ink-3">
-            On the site now:{' '}
-            {fileCollections.map((c, i) => (
-              <span key={c.slug}>
-                {i > 0 && ' · '}
-                <Link href={`/collections/${c.slug}`} className="text-ink-2 underline underline-offset-4 hover:text-accent">{c.title}</Link>
-                {!c.published && <span className="text-accent"> (draft)</span>}
-              </span>
-            ))}
-          </p>
-        )}
-        {/*
-          Julian as admin (5.10g): each collection of the file with a switch
-          that publishes or unpublishes it on the running site at once. The
-          switch lives in the store and wins over the file until they agree.
-        */}
-        {admin && fileCollections.length > 0 && (
-          <AdminCollections collections={fileCollections.map(c => ({ slug: c.slug, title: c.title, works: c.works.length, published: c.published }))} />
-        )}
         {/* Signed in as a friend: the admin password can be entered here (5.10g). */}
         {signedIn && !admin && (
           <details className="mt-4 max-w-sm text-sm text-ink-3">
@@ -110,7 +83,14 @@ export default async function CuratePage({ searchParams }: PageProps) {
           ) : storeError ? (
             <p className="text-sm text-accent" role="alert">{storeError}</p>
           ) : (
-            <CurateTool initialDrafts={drafts ?? []} startingPoints={startingPoints} initialId={typeof d === 'string' ? d : undefined} admin={admin} />
+            <CurateTool
+              initialDrafts={drafts ?? []}
+              startingPoints={startingPoints}
+              // The site's collections with their switches and drafts now live in the tool's start page (2026-09-26).
+              collections={fileCollections.map(c => ({ slug: c.slug, title: c.title, works: c.works.length, published: c.published }))}
+              initialId={typeof d === 'string' ? d : undefined}
+              admin={admin}
+            />
           )}
         </div>
       </main>

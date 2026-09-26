@@ -38,6 +38,14 @@ export interface Draft extends CollectionRecord {
   updatedAt: string;
   /** Set by Julian's tool once the draft has been taken into the file. */
   importedOn?: string;
+  /**
+   * When Claude's `lab/collections/push-draft.ts` last brought this draft
+   * level with the file (admin only). A draft without it was made by hand on
+   * /curate; `updatedAt` later than this means hands changed it since
+   * (Julian, 2026-09-26: „es muss klar sein welche drafts händisch kamen und
+   * welche von claude gepusht wurden").
+   */
+  pushedAt?: string;
   /** When Julian last published this draft on the site from /curate (5.10g). */
   publishedOn?: string;
   deleted?: boolean;

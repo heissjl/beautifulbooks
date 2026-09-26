@@ -23,7 +23,25 @@ export async function POST(request: NextRequest, { params }: Params) {
   if ('response' in loaded) return loaded.response;
   const body = await readBody(request);
   let next;
-  if (body.op === 'imported') {
+  if (body.op === 'pushed') {
+    if (!gate.admin) return json({ error: 'Only Julian\'s tool can mark a draft pushed.' }, 403);
+    next = { ...loaded.draft, pushedAt: new Date().toISOString() };
+    // The mark itself is not a change by hand.
+    next.updatedAt = next.pushedAt;
+  } else if (body.op === 'batch') {
+    // Save on /curate: the edits since the last save, applied in order, all or
+    // nothing — one request instead of one per drag (lib/curate/pending.ts).
+    if (!Array.isArray(body.ops) || body.ops.length > 500) return json({ error: 'A list of at most 500 changes is needed.' }, 400);
+    try {
+      next = loaded.draft;
+      for (const op of body.ops) {
+        if (!op || typeof op !== 'object' || ['publish', 'imported', 'pushed', 'batch', 'delete'].includes((op as { op?: string }).op ?? '')) throw new Error('Not a change that can be saved in a batch.');
+        next = applyOp(next, op as Record<string, unknown>);
+      }
+    } catch (e) {
+      return json({ error: e instanceof Error ? e.message : 'Not saved.' }, 400);
+    }
+  } else if (body.op === 'imported') {
     if (!gate.admin) return json({ error: 'Only Julian can mark a draft imported.' }, 403);
     next = { ...loaded.draft, importedOn: new Date().toISOString().slice(0, 10) };
   } else if (body.op === 'publish') {

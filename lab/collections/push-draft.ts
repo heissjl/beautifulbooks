@@ -75,12 +75,10 @@ async function main() {
     console.log(`${slug}: the online draft ${draft.id} has what the file lacks:\n  ${delta.onlineOnly.join('\n  ')}`);
     if (!flags.includes('--force')) throw new Error('Take those into the file first, or pass --force to overwrite them.');
   }
-  // The curate routes allow 40 steps at once, then 20 a minute (lib/ratelimit.ts, bucket `suggest`):
-  // pause after the first 30 so a long collection does not end in a 429 halfway.
-  for (const [i, op] of delta.ops.entries()) {
-    if (i >= 30) await new Promise(r => setTimeout(r, 3200));
-    draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, op)).draft;
-  }
+  // One request for all steps (`op: batch`, since 2026-09-26), so a long collection no longer meets the rate limit.
+  if (delta.ops.length > 0) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'batch', ops: delta.ops })).draft;
+  // Marks the draft as Claude's, level with the file now; /curate shows it, and any later hand edit.
+  await call(`/api/curate/drafts/${draft.id}`, { op: 'pushed' });
   console.log(`${slug}: ${delta.ops.length} step(s) sent to draft ${draft.id} — ${delta.summary}`);
   if (flags.includes('--publish')) {
     await call(`/api/curate/drafts/${draft.id}`, { op: 'publish' });
