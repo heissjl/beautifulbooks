@@ -12455,6 +12455,525 @@
           "coverIsbn": "3518379852"
         }
       ]
+    },
+    {
+      "slug": "penguin-english-library",
+      "title": "Penguin English Library",
+      "kind": "series",
+      "intro": "In 2012 Coralie Bickford-Smith gave a hundred English classics a pattern each, drawn from a motif of the novel and repeated across the cover — chairs for Emma, whales for Moby-Dick.",
+      "published": false,
+      "publishers": [
+        "Penguin"
+      ],
+      "works": [
+        {
+          "id": "OL66513W",
+          "title": "Emma",
+          "author": "Jane Austen",
+          "coverId": "ol:15101895",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199528",
+          "coverIsbn": "9780141199528"
+        },
+        {
+          "id": "OL66544W",
+          "title": "Persuasion",
+          "author": "Jane Austen",
+          "coverId": "ol:14826336",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141198835",
+          "coverIsbn": "9780141198835"
+        },
+        {
+          "id": "OL66554W",
+          "title": "Pride and Prejudice",
+          "author": "Jane Austen",
+          "coverId": "ol:8638020",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199078",
+          "coverIsbn": "9780141199078"
+        },
+        {
+          "id": "OL66562W",
+          "title": "Sense and Sensibility",
+          "author": "Jane Austen",
+          "coverId": "ol:12816994",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199672",
+          "coverIsbn": "9780141199672"
+        },
+        {
+          "id": "OL1490133W",
+          "title": "Lady Audley's secret",
+          "author": "Mary Elizabeth Braddon",
+          "coverId": "ol:7737152",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141198842",
+          "coverIsbn": "9780141198842",
+          "coverWork": "OL17517730W"
+        },
+        {
+          "id": "OL1095427W",
+          "title": "Jane Eyre",
+          "author": "Charlotte Brontë",
+          "coverId": "ol:10245053",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141198859",
+          "coverIsbn": "9780141198859"
+        },
+        {
+          "id": "OL138052W",
+          "title": "Alice's Adventures in Wonderland",
+          "author": "Lewis Carroll",
+          "coverId": "ol:8764025",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199689",
+          "coverIsbn": "9780141199689"
+        },
+        {
+          "id": "OL65430W",
+          "title": "The Awakening",
+          "author": "Kate Chopin",
+          "coverId": "ol:8834904",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780241341421",
+          "coverIsbn": "9780241341421"
+        },
+        {
+          "id": "OL176045W",
+          "title": "The Woman in White",
+          "author": "Wilkie Collins",
+          "coverId": "ol:11410681",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141389431",
+          "coverIsbn": "9780141389431"
+        },
+        {
+          "id": "OL38663W",
+          "title": "Heart of Darkness",
+          "author": "Joseph Conrad",
+          "coverId": "ol:11449264",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199788",
+          "coverIsbn": "9780141199788"
+        },
+        {
+          "id": "OL38684W",
+          "title": "Lord Jim",
+          "author": "Joseph Conrad",
+          "coverId": "ol:9047926",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199054",
+          "coverIsbn": "9780141199054"
+        },
+        {
+          "id": "OL39108W",
+          "title": "The Secret Agent",
+          "author": "Joseph Conrad",
+          "coverId": "ol:10555917",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199559",
+          "coverIsbn": "9780141199559"
+        },
+        {
+          "id": "OL45089W",
+          "title": "Robinson Crusoe",
+          "author": "Daniel Defoe",
+          "coverId": "ol:12591295",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199061",
+          "coverIsbn": "9780141199061"
+        },
+        {
+          "id": "OL21023359W",
+          "title": "Christmas Carol and Other Stories",
+          "author": "Charles Dickens",
+          "coverId": "ol:14826338",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141389479",
+          "coverIsbn": "9780141389479"
+        },
+        {
+          "id": "OL14868861W",
+          "title": "Dombey and Son",
+          "author": "Charles Dickens",
+          "coverId": "ol:11145869",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199917",
+          "coverIsbn": "9780141199917"
+        },
+        {
+          "id": "OL8721462W",
+          "title": "Great Expectations",
+          "author": "Charles Dickens",
+          "coverId": "ol:13116410",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141198897",
+          "coverIsbn": "9780141198897"
+        },
+        {
+          "id": "OL14869167W",
+          "title": "The Old Curiosity Shop",
+          "author": "Charles Dickens",
+          "coverId": "ol:11072255",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199580",
+          "coverIsbn": "9780141199580"
+        },
+        {
+          "id": "OL8193478W",
+          "title": "Oliver Twist",
+          "author": "Charles Dickens",
+          "coverId": "ol:13123958",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141198880",
+          "coverIsbn": "9780141198880"
+        },
+        {
+          "id": "OL13162727W",
+          "title": "Our Mutual Friend",
+          "author": "Charles Dickens",
+          "coverId": "ol:8866725",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199801",
+          "coverIsbn": "9780141199801"
+        },
+        {
+          "id": "OL8763776W",
+          "title": "The Pickwick Papers",
+          "author": "Charles Dickens",
+          "coverId": "ol:12708856",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199108",
+          "coverIsbn": "9780141199108"
+        },
+        {
+          "id": "OL8193465W",
+          "title": "A Tale of Two Cities",
+          "author": "Charles Dickens",
+          "coverId": "ol:13123227",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199702",
+          "coverIsbn": "9780141199702"
+        },
+        {
+          "id": "OL20982900W",
+          "title": "The Adventure of the Engineer's Thumb and Other Cases [13 stories]",
+          "author": "Arthur Conan Doyle",
+          "coverId": "ol:13347443",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141395500",
+          "coverIsbn": "9780141395500"
+        },
+        {
+          "id": "OL21082974W",
+          "title": "Adventure of Six Napoleons and Other Cases",
+          "author": "Arthur Conan Doyle",
+          "coverId": "ol:11406166",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141395548",
+          "coverIsbn": "9780141395548"
+        },
+        {
+          "id": "OL1518120W",
+          "title": "The Five Orange Pips",
+          "author": "Arthur Conan Doyle",
+          "coverId": "ol:13347536",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199719",
+          "coverIsbn": "9780141199719",
+          "coverWork": "OL16344900W"
+        },
+        {
+          "id": "OL262454W",
+          "title": "The Hound of the Baskervilles",
+          "author": "Arthur Conan Doyle",
+          "coverId": "ol:13414819",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199177",
+          "coverIsbn": "9780141199177"
+        },
+        {
+          "id": "OL262496W",
+          "title": "A Study in Scarlet",
+          "author": "Arthur Conan Doyle",
+          "coverId": "ol:13348550",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141395524",
+          "coverIsbn": "9780141395524"
+        },
+        {
+          "id": "OL20867W",
+          "title": "Middlemarch",
+          "author": "George Eliot",
+          "coverId": "ol:12625565",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199795",
+          "coverIsbn": "9780141199795"
+        },
+        {
+          "id": "OL45623W",
+          "title": "The History of Tom Jones",
+          "author": "Henry Fielding",
+          "coverId": "ol:12970911",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199733",
+          "coverIsbn": "9780141199733"
+        },
+        {
+          "id": "OL88881W",
+          "title": "Howards End",
+          "author": "E. M. Forster",
+          "coverId": "ol:9047407",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199405",
+          "coverIsbn": "9780141199405"
+        },
+        {
+          "id": "OL88813W",
+          "title": "A Room with a View",
+          "author": "E. M. Forster",
+          "coverId": "ol:10865714",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199825",
+          "coverIsbn": "9780141199825"
+        },
+        {
+          "id": "OL1103093W",
+          "title": "Cranford",
+          "author": "Elizabeth Cleghorn Gaskell",
+          "coverId": "ol:12700191",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199429",
+          "coverIsbn": "9780141199429"
+        },
+        {
+          "id": "OL44986W",
+          "title": "Jude the Obscure",
+          "author": "Thomas Hardy",
+          "coverId": "ol:9047748",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199832",
+          "coverIsbn": "9780141199832"
+        },
+        {
+          "id": "OL8193406W",
+          "title": "The Mayor of Casterbridge",
+          "author": "Thomas Hardy",
+          "coverId": "ol:10300638",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199597",
+          "coverIsbn": "9780141199597"
+        },
+        {
+          "id": "OL21040134W",
+          "title": "Two on a Tower",
+          "author": "Thomas Hardy",
+          "coverId": "ol:10604622",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199436",
+          "coverIsbn": "9780141199436"
+        },
+        {
+          "id": "OL44973W",
+          "title": "Under the Greenwood Tree or, The Mellstock quire",
+          "author": "Thomas Hardy",
+          "coverId": "ol:9047919",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141389486",
+          "coverIsbn": "9780141389486"
+        },
+        {
+          "id": "OL240077W",
+          "title": "The Private Memoirs and Confessions of A Justified Sinner (With A Detail of Curious Traditionary Facts, And Other Evidence, By The Editor)",
+          "author": "James Hogg",
+          "coverId": "ol:10798633",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141198941",
+          "coverIsbn": "9780141198941"
+        },
+        {
+          "id": "OL276330W",
+          "title": "Daisy Miller / The Turn of the Screw",
+          "author": "Henry James",
+          "coverId": "ol:12632769",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199757",
+          "coverIsbn": "9780141199757"
+        },
+        {
+          "id": "OL81295W",
+          "title": "Sons and Lovers",
+          "author": "D. H. Lawrence",
+          "coverId": "ol:9047747",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199856",
+          "coverIsbn": "9780141199856",
+          "coverWork": "OL20380849W"
+        },
+        {
+          "id": "OL21407351W",
+          "title": "The monk",
+          "author": "Matthew Gregory Lewis",
+          "coverId": "ol:12700944",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199467",
+          "coverIsbn": "9780141199467"
+        },
+        {
+          "id": "OL14942956W",
+          "title": "The Call of the Wild",
+          "author": "Jack London",
+          "coverId": "ol:8834820",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780241341490",
+          "coverIsbn": "9780241341490"
+        },
+        {
+          "id": "OL21623618W",
+          "title": "At the Mountains of Madness",
+          "author": "H.P. Lovecraft",
+          "coverId": "ol:13443623",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780241341315",
+          "coverIsbn": "9780241341315"
+        },
+        {
+          "id": "OL3388961W",
+          "title": "The Great God Pan",
+          "author": "Arthur Machen",
+          "coverId": "ol:10205676",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780241341124",
+          "coverIsbn": "9780241341124"
+        },
+        {
+          "id": "OL827304W",
+          "title": "The Beetle. A Mystery",
+          "author": "Richard Marsh",
+          "coverId": "ol:8458293",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780241341353",
+          "coverIsbn": "9780241341353"
+        },
+        {
+          "id": "OL102749W",
+          "title": "Moby Dick",
+          "author": "Herman Melville",
+          "coverId": "ol:15129823",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141198958",
+          "coverIsbn": "9780141198958"
+        },
+        {
+          "id": "OL1168007W",
+          "title": "Animal Farm",
+          "author": "George Orwell",
+          "coverId": "ol:8834890",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780241341667",
+          "coverIsbn": "9780241341667"
+        },
+        {
+          "id": "OL1168083W",
+          "title": "Nineteen Eighty-Four",
+          "author": "George Orwell",
+          "coverId": "ol:8458294",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780241341650",
+          "coverIsbn": "9780241341650"
+        },
+        {
+          "id": "OL19336244W",
+          "title": "The Murders in the Rue Morgue and Other Tales",
+          "author": "Edgar Allan Poe",
+          "coverId": "ol:14314109",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141198972",
+          "coverIsbn": "9780141198972"
+        },
+        {
+          "id": "OL450063W",
+          "title": "Frankenstein; or, The Modern Prometheus",
+          "author": "Mary Shelley",
+          "coverId": "ol:9047039",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141198965",
+          "coverIsbn": "9780141198965"
+        },
+        {
+          "id": "OL24156W",
+          "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+          "author": "Robert Louis Stevenson",
+          "coverId": "ol:15128862",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141389509",
+          "coverIsbn": "9780141389509"
+        },
+        {
+          "id": "OL17421704W",
+          "title": "Treasure Island And The Ebbtide",
+          "author": "Robert Louis Stevenson",
+          "coverId": "ol:12819080",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199146",
+          "coverIsbn": "9780141199146"
+        },
+        {
+          "id": "OL16313W",
+          "title": "Vanity Fair",
+          "author": "William Makepeace Thackeray",
+          "coverId": "ol:10400865",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199641",
+          "coverIsbn": "9780141199641"
+        },
+        {
+          "id": "OL109881W",
+          "title": "Doctor Thorne",
+          "author": "Anthony Trollope",
+          "coverId": "ol:12700822",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199474",
+          "coverIsbn": "9780141199474"
+        },
+        {
+          "id": "OL53908W",
+          "title": "Adventures of Huckleberry Finn",
+          "author": "Mark Twain",
+          "coverId": "ol:8225580",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199009",
+          "coverIsbn": "9780141199009"
+        },
+        {
+          "id": "OL5721423W",
+          "title": "A Handful of Dust",
+          "author": "Evelyn Waugh",
+          "coverId": "ol:13826642",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780241341100",
+          "coverIsbn": "9780241341100"
+        },
+        {
+          "id": "OL52114W",
+          "title": "The War of the Worlds",
+          "author": "H. G. Wells",
+          "coverId": "ol:10291719",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141199047",
+          "coverIsbn": "9780141199047"
+        },
+        {
+          "id": "OL98501W",
+          "title": "Ethan Frome",
+          "author": "Edith Wharton",
+          "coverId": "ol:9047829",
+          "addedAt": "2026-09-26",
+          "from": "isbn:9780141389400",
+          "coverIsbn": "9780141389400"
+        }
+      ]
     }
   ]
 }

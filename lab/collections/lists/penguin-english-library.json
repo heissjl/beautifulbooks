@@ -1,0 +1,630 @@
+[
+ {
+  "no": null,
+  "title": "Little Women by Louisa May Alcott",
+  "isbn": "9780241335130"
+ },
+ {
+  "no": null,
+  "title": "Emma by Jane Austen",
+  "isbn": "9780141199528"
+ },
+ {
+  "no": null,
+  "title": "Mansfield Park by Jane Austen",
+  "isbn": "9780141199870"
+ },
+ {
+  "no": null,
+  "title": "Northanger Abbey by Jane Austen",
+  "isbn": "9780141389424"
+ },
+ {
+  "no": null,
+  "title": "Persuasion by Jane Austen",
+  "isbn": "9780141198835"
+ },
+ {
+  "no": null,
+  "title": "Pride and Prejudice by Jane Austen",
+  "isbn": "9780141199078"
+ },
+ {
+  "no": null,
+  "title": "Sense and Sensibility by Jane Austen",
+  "isbn": "9780141199672"
+ },
+ {
+  "no": null,
+  "title": "Peter Pan by J. M. Barrie",
+  "isbn": "9780241341391"
+ },
+ {
+  "no": null,
+  "title": "Lady Audley's Secret by Mary Elizabeth Braddon",
+  "isbn": "9780141198842",
+  "work": "OL1490133W"
+ },
+ {
+  "no": null,
+  "title": "The Tenant of Wildfell Hall by Anne Brontë",
+  "isbn": "9780141199351"
+ },
+ {
+  "no": null,
+  "title": "Jane Eyre by Charlotte Brontë",
+  "isbn": "9780141198859"
+ },
+ {
+  "no": null,
+  "title": "Shirley by Charlotte Brontë",
+  "isbn": "9780141199535"
+ },
+ {
+  "no": null,
+  "title": "Villette by Charlotte Brontë",
+  "isbn": "9780141199887"
+ },
+ {
+  "no": null,
+  "title": "Wuthering Heights by Emily Brontë",
+  "isbn": "9780141199085"
+ },
+ {
+  "no": null,
+  "title": "The Thirty-Nine Steps by John Buchan",
+  "isbn": "9780241341254"
+ },
+ {
+  "no": null,
+  "title": "Evelina by Frances Burney",
+  "isbn": "9780141198866"
+ },
+ {
+  "no": null,
+  "title": "The Way of All Flesh by Samuel Butler",
+  "isbn": "9780141199153"
+ },
+ {
+  "no": null,
+  "title": "Alice's Adventures in Wonderland by Lewis Carroll",
+  "isbn": "9780141199689"
+ },
+ {
+  "no": null,
+  "title": "The Man Who Was Thursday by G. K. Chesterton",
+  "isbn": "9780141199771"
+ },
+ {
+  "no": null,
+  "title": "The Awakening by Kate Chopin",
+  "isbn": "9780241341421"
+ },
+ {
+  "no": null,
+  "title": "The Moonstone by Wilkie Collins",
+  "isbn": "9780141198873"
+ },
+ {
+  "no": null,
+  "title": "The Woman in White by Wilkie Collins",
+  "isbn": "9780141389431"
+ },
+ {
+  "no": null,
+  "title": "Heart of Darkness by Joseph Conrad",
+  "isbn": "9780141199788"
+ },
+ {
+  "no": null,
+  "title": "Lord Jim by Joseph Conrad",
+  "isbn": "9780141199054"
+ },
+ {
+  "no": null,
+  "title": "Nostromo by Joseph Conrad",
+  "isbn": "9780141389448"
+ },
+ {
+  "no": null,
+  "title": "The Secret Agent by Joseph Conrad",
+  "isbn": "9780141199559"
+ },
+ {
+  "no": null,
+  "title": "Robinson Crusoe by Daniel Defoe",
+  "isbn": "9780141199061"
+ },
+ {
+  "no": null,
+  "title": "Barnaby Rudge by Charles Dickens",
+  "isbn": "9780141199696"
+ },
+ {
+  "no": null,
+  "title": "Bleak House by Charles Dickens",
+  "isbn": "9780141199092"
+ },
+ {
+  "no": null,
+  "title": "A Christmas Carol by Charles Dickens",
+  "isbn": "9780141389479"
+ },
+ {
+  "no": null,
+  "title": "David Copperfield by Charles Dickens",
+  "isbn": "9780141199160"
+ },
+ {
+  "no": null,
+  "title": "Dombey and Son by Charles Dickens",
+  "isbn": "9780141199917"
+ },
+ {
+  "no": null,
+  "title": "Great Expectations by Charles Dickens",
+  "isbn": "9780141198897"
+ },
+ {
+  "no": null,
+  "title": "Hard Times by Charles Dickens",
+  "isbn": "9780141199566"
+ },
+ {
+  "no": null,
+  "title": "Little Dorrit by Charles Dickens",
+  "isbn": "9780141199375"
+ },
+ {
+  "no": null,
+  "title": "Martin Chuzzlewit by Charles Dickens",
+  "isbn": "9780141198903"
+ },
+ {
+  "no": null,
+  "title": "The Mystery of Edwin Drood by Charles Dickens",
+  "isbn": "9780141199924"
+ },
+ {
+  "no": null,
+  "title": "Nicholas Nickleby by Charles Dickens",
+  "isbn": "9780141199818"
+ },
+ {
+  "no": null,
+  "title": "The Old Curiosity Shop by Charles Dickens",
+  "isbn": "9780141199580"
+ },
+ {
+  "no": null,
+  "title": "Oliver Twist by Charles Dickens",
+  "isbn": "9780141198880"
+ },
+ {
+  "no": null,
+  "title": "Our Mutual Friend by Charles Dickens",
+  "isbn": "9780141199801"
+ },
+ {
+  "no": null,
+  "title": "The Pickwick Papers by Charles Dickens",
+  "isbn": "9780141199108"
+ },
+ {
+  "no": null,
+  "title": "A Tale of Two Cities by Charles Dickens",
+  "isbn": "9780141199702"
+ },
+ {
+  "no": null,
+  "title": "The Adventure of the Engineer's Thumb and Other Cases by Arthur Conan Doyle",
+  "isbn": "9780141395500"
+ },
+ {
+  "no": null,
+  "title": "Adventure of Six Napoleons and Other Cases by Arthur Conan Doyle",
+  "isbn": "9780141395548"
+ },
+ {
+  "no": null,
+  "title": "The Five Orange Pips and Other Cases by Arthur Conan Doyle",
+  "isbn": "9780141199719",
+  "work": "OL1518120W"
+ },
+ {
+  "no": null,
+  "title": "The Hound of the Baskervilles by Arthur Conan Doyle",
+  "isbn": "9780141199177"
+ },
+ {
+  "no": null,
+  "title": "The Sign of the Four by Arthur Conan Doyle",
+  "isbn": "9780141395487"
+ },
+ {
+  "no": null,
+  "title": "A Study in Scarlet by Arthur Conan Doyle",
+  "isbn": "9780141395524"
+ },
+ {
+  "no": null,
+  "title": "The Valley of Fear by Arthur Conan Doyle",
+  "isbn": "9780141395562"
+ },
+ {
+  "no": null,
+  "title": "Daniel Deronda by George Eliot",
+  "isbn": "9780141199245"
+ },
+ {
+  "no": null,
+  "title": "Middlemarch by George Eliot",
+  "isbn": "9780141199795"
+ },
+ {
+  "no": null,
+  "title": "The Mill on the Floss by George Eliot",
+  "isbn": "9780141198910"
+ },
+ {
+  "no": null,
+  "title": "Silas Marner by George Eliot",
+  "isbn": "9780141389455"
+ },
+ {
+  "no": null,
+  "title": "Joseph Andrews by Henry Fielding",
+  "isbn": "9780141199382"
+ },
+ {
+  "no": null,
+  "title": "Tom Jones by Henry Fielding",
+  "isbn": "9780141199733"
+ },
+ {
+  "no": null,
+  "title": "The Great Gatsby by F. Scott Fitzgerald",
+  "isbn": "9780241341469"
+ },
+ {
+  "no": null,
+  "title": "Tender is the Night by F. Scott Fitzgerald",
+  "isbn": "9780241341483"
+ },
+ {
+  "no": null,
+  "title": "Howards End by E. M. Forster",
+  "isbn": "9780141199405"
+ },
+ {
+  "no": null,
+  "title": "A Room with a View by E. M. Forster",
+  "isbn": "9780141199825"
+ },
+ {
+  "no": null,
+  "title": "Where Angels Fear to Tread by E. M. Forster",
+  "isbn": "9780141199252"
+ },
+ {
+  "no": null,
+  "title": "Cranford by Elizabeth Gaskell",
+  "isbn": "9780141199429"
+ },
+ {
+  "no": null,
+  "title": "Mary Barton by Elizabeth Gaskell",
+  "isbn": "9780141199726"
+ },
+ {
+  "no": null,
+  "title": "North and South by Elizabeth Gaskell",
+  "isbn": "9780141198927"
+ },
+ {
+  "no": null,
+  "title": "Wives and Daughters by Elizabeth Gaskell",
+  "isbn": "9780141389462"
+ },
+ {
+  "no": null,
+  "title": "New Grub Street by George Gissing",
+  "isbn": "9780141199931"
+ },
+ {
+  "no": null,
+  "title": "Far from the Madding Crowd by Thomas Hardy",
+  "isbn": "9780141198934"
+ },
+ {
+  "no": null,
+  "title": "Jude the Obscure by Thomas Hardy",
+  "isbn": "9780141199832"
+ },
+ {
+  "no": null,
+  "title": "The Mayor of Casterbridge by Thomas Hardy",
+  "isbn": "9780141199597"
+ },
+ {
+  "no": null,
+  "title": "The Return of the Native by Thomas Hardy",
+  "isbn": "9780141199740"
+ },
+ {
+  "no": null,
+  "title": "Tess of the D'Urbervilles by Thomas Hardy",
+  "isbn": "9780141199948"
+ },
+ {
+  "no": null,
+  "title": "Two on a Tower by Thomas Hardy",
+  "isbn": "9780141199436"
+ },
+ {
+  "no": null,
+  "title": "Under the Greenwood Tree by Thomas Hardy",
+  "isbn": "9780141389486"
+ },
+ {
+  "no": null,
+  "title": "The Scarlet Letter by Nathaniel Hawthorne",
+  "isbn": "9780141199450"
+ },
+ {
+  "no": null,
+  "title": "The Private Memoirs & Confessions of a Justified Sinner by James Hogg",
+  "isbn": "9780141198941"
+ },
+ {
+  "no": null,
+  "title": "Ghost Stories by M. R. James",
+  "isbn": "9780241341629"
+ },
+ {
+  "no": null,
+  "title": "Daisy Miller and The Turn of the Screw by Henry James",
+  "isbn": "9780141199757"
+ },
+ {
+  "no": null,
+  "title": "The Portrait of a Lady by Henry James",
+  "isbn": "9780141199122"
+ },
+ {
+  "no": null,
+  "title": "Washington Square by Henry James",
+  "isbn": "9780141389493"
+ },
+ {
+  "no": null,
+  "title": "The Wings of the Dove by Henry James",
+  "isbn": "9780141199849"
+ },
+ {
+  "no": null,
+  "title": "Dubliners by James Joyce",
+  "isbn": "9780141199627"
+ },
+ {
+  "no": null,
+  "title": "Kim by Rudyard Kipling",
+  "isbn": "9780141199979"
+ },
+ {
+  "no": null,
+  "title": "Sons and Lovers by D. H. Lawrence",
+  "isbn": "9780141199856",
+  "work": "OL81295W"
+ },
+ {
+  "no": null,
+  "title": "The Monk by Matthew Lewis",
+  "isbn": "9780141199467"
+ },
+ {
+  "no": null,
+  "title": "The Call of the Wild by Jack London",
+  "isbn": "9780241341490"
+ },
+ {
+  "no": null,
+  "title": "At the Mountains of Madness by H. P. Lovecraft",
+  "isbn": "9780241341315"
+ },
+ {
+  "no": null,
+  "title": "The Great God Pan by Arthur Machen",
+  "isbn": "9780241341124"
+ },
+ {
+  "no": null,
+  "title": "The Garden Party by Katherine Mansfield",
+  "isbn": "9780241341643"
+ },
+ {
+  "no": null,
+  "title": "The Beetle by Richard Marsh",
+  "isbn": "9780241341353"
+ },
+ {
+  "no": null,
+  "title": "Melmoth the Wanderer by Charles Robert Maturin",
+  "isbn": "9780141199290"
+ },
+ {
+  "no": null,
+  "title": "The Confidence-Man and Billy Budd, Sailor by Herman Melville",
+  "isbn": "9780141199306"
+ },
+ {
+  "no": null,
+  "title": "Moby-Dick by Herman Melville",
+  "isbn": "9780141198958"
+ },
+ {
+  "no": null,
+  "title": "The Scarlet Pimpernel by Emmuska Orczy",
+  "isbn": "9780241341339"
+ },
+ {
+  "no": null,
+  "title": "Animal Farm by George Orwell",
+  "isbn": "9780241341667"
+ },
+ {
+  "no": null,
+  "title": "Nineteen Eighty-Four by George Orwell",
+  "isbn": "9780241341650"
+ },
+ {
+  "no": null,
+  "title": "The Murders in the Rue Morgue and Other Tales by Edgar Allan Poe",
+  "isbn": "9780141198972"
+ },
+ {
+  "no": null,
+  "title": "Pamela by Samuel Richardson",
+  "isbn": "9780141199634"
+ },
+ {
+  "no": null,
+  "title": "Ivanhoe by Walter Scott",
+  "isbn": "9780141199139"
+ },
+ {
+  "no": null,
+  "title": "Frankenstein by Mary Shelley",
+  "isbn": "9780141198965"
+ },
+ {
+  "no": null,
+  "title": "Humphry Clinker by Tobias Smollett",
+  "isbn": "9780141199320"
+ },
+ {
+  "no": null,
+  "title": "The Life and Opinions of Tristram Shandy by Laurence Sterne",
+  "isbn": "9780141199993"
+ },
+ {
+  "no": null,
+  "title": "Dr Jekyll and Mr Hyde by Robert Louis Stevenson",
+  "isbn": "9780141389509"
+ },
+ {
+  "no": null,
+  "title": "Treasure Island and The Ebb-Tide by Robert Louis Stevenson",
+  "isbn": "9780141199146"
+ },
+ {
+  "no": null,
+  "title": "Dracula by Bram Stoker",
+  "isbn": "9780141199337"
+ },
+ {
+  "no": null,
+  "title": "Gulliver's Travels by Jonathan Swift",
+  "isbn": "9780141198989"
+ },
+ {
+  "no": null,
+  "title": "Vanity Fair by William Makepeace Thackeray",
+  "isbn": "9780141199641"
+ },
+ {
+  "no": null,
+  "title": "The Warden (Barsetshire #1) by Anthony Trollope",
+  "isbn": "9780141198996"
+ },
+ {
+  "no": null,
+  "title": "Barchester Towers (Barsetshire #2) by Anthony Trollope",
+  "isbn": "9780141199115"
+ },
+ {
+  "no": null,
+  "title": "Doctor Thorne (Barsetshire #3) by Anthony Trollope",
+  "isbn": "9780141199474"
+ },
+ {
+  "no": null,
+  "title": "Framley Parsonage (Barsetshire #4) by Anthony Trollope",
+  "isbn": "9780141199764"
+ },
+ {
+  "no": null,
+  "title": "The Small House at Allington (Barsetshire #5) by Anthony Trollope",
+  "isbn": "9780141199658"
+ },
+ {
+  "no": null,
+  "title": "The Last Chronicle of Barset (Barsetshire #6) by Anthony Trollope",
+  "isbn": "9780141199863"
+ },
+ {
+  "no": null,
+  "title": "The Adventures of Huckleberry Finn by Mark Twain",
+  "isbn": "9780141199009"
+ },
+ {
+  "no": null,
+  "title": "Elizabeth and Her German Garden by Elizabeth Von Arnim",
+  "isbn": "9780241341292"
+ },
+ {
+  "no": null,
+  "title": "A Handful of Dust by Evelyn Waugh",
+  "isbn": "9780241341100"
+ },
+ {
+  "no": null,
+  "title": "The Invisible Man by H. G. Wells",
+  "isbn": "9780141389516"
+ },
+ {
+  "no": null,
+  "title": "The Island of Doctor Moreau by H. G. Wells",
+  "isbn": "9780141389394"
+ },
+ {
+  "no": null,
+  "title": "The Time Machine by H. G. Wells",
+  "isbn": "9780141199344"
+ },
+ {
+  "no": null,
+  "title": "The War of the Worlds by H. G. Wells",
+  "isbn": "9780141199047"
+ },
+ {
+  "no": null,
+  "title": "The Day of the Locust by Nathanael West",
+  "isbn": "9780241341674"
+ },
+ {
+  "no": null,
+  "title": "Ethan Frome by Edith Wharton",
+  "isbn": "9780141389400"
+ },
+ {
+  "no": null,
+  "title": "The House of Mirth by Edith Wharton",
+  "isbn": "9780141974217"
+ },
+ {
+  "no": null,
+  "title": "The Picture of Dorian Gray by Oscar Wilde",
+  "isbn": "9780141199498"
+ },
+ {
+  "no": null,
+  "title": "Mrs Dalloway by Virginia Woolf",
+  "isbn": "9780241341117"
+ },
+ {
+  "no": null,
+  "title": "To The Lighthouse by Virginia Woolf",
+  "isbn": "9780241341681"
+ }
+]
