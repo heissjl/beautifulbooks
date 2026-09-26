@@ -11515,13 +11515,13 @@
       ],
       "works": [
         {
-          "id": "OL15164672W",
-          "title": "En attendant Godot",
-          "author": "Samuel Beckett",
-          "coverId": "ol:13122704",
+          "id": "OL24634693W",
+          "title": "Der Sozialismus und die Natur des Menschen",
+          "author": "George Bernard Shaw",
+          "coverId": "ol:11313707",
           "addedAt": "2026-09-26",
-          "from": "isbn:3518365010",
-          "coverIsbn": "3518365010"
+          "from": "isbn:3518066218",
+          "coverIsbn": "3518066218"
         },
         {
           "id": "OL873076W",
@@ -11531,6 +11531,51 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518065076",
           "coverIsbn": "3518065076"
+        },
+        {
+          "id": "OL3667833W",
+          "title": "Der Schattenmann",
+          "author": "Ruth Andreas-Friedrich",
+          "coverId": "ol:2212495",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518377671",
+          "coverIsbn": "3518377671"
+        },
+        {
+          "id": "OL3691875W",
+          "title": "Vorabend",
+          "author": "Gertrud Leutenegger",
+          "coverId": "ol:10172314",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518371428",
+          "coverIsbn": "3518371428"
+        },
+        {
+          "id": "OL155603W",
+          "title": "Mutmassungen über Jakob",
+          "author": "Uwe Johnson",
+          "coverId": "ol:12982797",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518366475",
+          "coverIsbn": "3518366475"
+        },
+        {
+          "id": "OL109524W",
+          "title": "Solaris",
+          "author": "Stanisław Lem",
+          "coverId": "ol:10637320",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518067265",
+          "coverIsbn": "3518067265"
+        },
+        {
+          "id": "OL15164672W",
+          "title": "En attendant Godot",
+          "author": "Samuel Beckett",
+          "coverId": "ol:13122704",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518365010",
+          "coverIsbn": "3518365010"
         },
         {
           "id": "OL542268W",
@@ -11560,6 +11605,15 @@
           "coverIsbn": "3518365517"
         },
         {
+          "id": "OL1696162W",
+          "title": "Les petits enfants du siècle",
+          "author": "Christiane Rochefort",
+          "coverId": "ol:14619625",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518369873",
+          "coverIsbn": "3518369873"
+        },
+        {
           "id": "OL4239085W",
           "title": "Materialien zu Hermann Hesses Der Steppenwolf",
           "author": "Volker Michels",
@@ -11567,15 +11621,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:351806553X",
           "coverIsbn": "351806553X"
-        },
-        {
-          "id": "OL8664856W",
-          "title": "Ich Bin Ein Bewohner",
-          "author": "Peter Handke",
-          "coverId": "ol:1016474",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518365568",
-          "coverIsbn": "3518365568"
         },
         {
           "id": "OL9022730W",
@@ -11614,15 +11659,6 @@
           "coverIsbn": "351806617X"
         },
         {
-          "id": "OL24634693W",
-          "title": "Der Sozialismus und die Natur des Menschen",
-          "author": "George Bernard Shaw",
-          "coverId": "ol:11313707",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518066218",
-          "coverIsbn": "3518066218"
-        },
-        {
           "id": "OL4009795W",
           "title": "See- Leben I",
           "author": "Werner Koch",
@@ -11648,15 +11684,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518066412",
           "coverIsbn": "3518066412"
-        },
-        {
-          "id": "OL155603W",
-          "title": "Mutmassungen über Jakob",
-          "author": "Uwe Johnson",
-          "coverId": "ol:12982797",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518366475",
-          "coverIsbn": "3518366475"
         },
         {
           "id": "OL804215W",
@@ -11693,15 +11720,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518066994",
           "coverIsbn": "3518066994"
-        },
-        {
-          "id": "OL109524W",
-          "title": "Solaris",
-          "author": "Stanisław Lem",
-          "coverId": "ol:10637320",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518067265",
-          "coverIsbn": "3518067265"
         },
         {
           "id": "OL2141773W",
@@ -11803,6 +11821,15 @@
           "coverIsbn": "3518068946"
         },
         {
+          "id": "OL8664856W",
+          "title": "Ich Bin Ein Bewohner",
+          "author": "Peter Handke",
+          "coverId": "ol:1016474",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518365568",
+          "coverIsbn": "3518365568"
+        },
+        {
           "id": "OL4160755W",
           "title": "Franz Kafka, der Künstler",
           "author": "Heinz Politzer",
@@ -11819,15 +11846,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518369377",
           "coverIsbn": "3518369377"
-        },
-        {
-          "id": "OL1696162W",
-          "title": "Les petits enfants du siècle",
-          "author": "Christiane Rochefort",
-          "coverId": "ol:14619625",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518369873",
-          "coverIsbn": "3518369873"
         },
         {
           "id": "OL2254887W",
@@ -11873,15 +11891,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518371134",
           "coverIsbn": "3518371134"
-        },
-        {
-          "id": "OL3691875W",
-          "title": "Vorabend",
-          "author": "Gertrud Leutenegger",
-          "coverId": "ol:10172314",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518371428",
-          "coverIsbn": "3518371428"
         },
         {
           "id": "OL45895500W",
@@ -12017,15 +12026,6 @@
           "addedAt": "2026-09-26",
           "from": "isbn:3518377043",
           "coverIsbn": "3518377043"
-        },
-        {
-          "id": "OL3667833W",
-          "title": "Der Schattenmann",
-          "author": "Ruth Andreas-Friedrich",
-          "coverId": "ol:2212495",
-          "addedAt": "2026-09-26",
-          "from": "isbn:3518377671",
-          "coverIsbn": "3518377671"
         },
         {
           "id": "OL1342644W",

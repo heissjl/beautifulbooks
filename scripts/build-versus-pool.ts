@@ -292,7 +292,11 @@ const contrastOf = new Map(index.covers.map(row => [row[1], row[3]]));
 
 /** A pool grows from itself or from the pool it inherits: its covers are taken first. */
 const earlier = existsSync(POOL_FILE) ? (JSON.parse(readFileSync(POOL_FILE, 'utf8')) as { name: string; covers: PoolCover[] }) : null;
-const keep = earlier && (earlier.name === name || INHERITS.includes(earlier.name)) ? earlier.covers.map(c => c.id) : [];
+// A pool extended by scripts/add-collection-covers-to-pool.ts (`<name>-collections`) keeps its index covers here;
+// run that script again afterwards, or the collection covers are gone from the pool.
+const keep = earlier && (earlier.name === name || earlier.name === `${name}-collections` || INHERITS.includes(earlier.name))
+  ? earlier.covers.filter(c => !((earlier as { collections?: { ids: string[] } }).collections?.ids ?? []).includes(c.id)).map(c => c.id)
+  : [];
 const kept = new Set(keep);
 const options: MixOptions = { ...base, keep };
 

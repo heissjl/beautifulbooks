@@ -265,13 +265,18 @@ describe('the board', () => {
 describe('the frozen pool', () => {
   // 2000 covers since 2026-09-26, up to five per book. It grew from the 1000-cover pool, which grew
   // from the 200-book one, and inherits the votes of both: a pool's own log is not enough.
-  it('holds two thousand distinct covers, at most five per book, and none of the excluded ones', () => {
-    expect(POOL.name).toBe('mix-2000-paperwhite');
-    expect(POOL.inherits).toEqual(['mix-200-paperwhite', 'mix-1000-paperwhite']);
-    expect(POOL.covers).toHaveLength(2000);
-    expect(new Set(POOL.covers.map(c => c.id)).size).toBe(2000);
+  // Since 2026-09-26 evening also the collections' covers (scripts/add-collection-covers-to-pool.ts),
+  // under a name that inherits the 2000-cover pool, so its votes still count.
+  it('holds two thousand index covers, at most five per book, the collection covers after them, and none of the excluded ones', () => {
+    expect(POOL.name).toBe('mix-2000-paperwhite-collections');
+    expect(POOL.inherits).toEqual(['mix-200-paperwhite', 'mix-1000-paperwhite', 'mix-2000-paperwhite']);
+    const added = new Set((POOL as VersusPool & { collections: { ids: string[] } }).collections.ids);
+    const fromIndex = POOL.covers.filter(c => !added.has(c.id));
+    expect(fromIndex).toHaveLength(2000);
+    expect(POOL.covers.slice(0, 2000)).toEqual(fromIndex);
+    expect(new Set(POOL.covers.map(c => c.id)).size).toBe(POOL.covers.length);
     const perBook = new Map<string, number>();
-    for (const c of POOL.covers) perBook.set(c.workId, (perBook.get(c.workId) ?? 0) + 1);
+    for (const c of fromIndex) perBook.set(c.workId, (perBook.get(c.workId) ?? 0) + 1);
     expect(Math.max(...perBook.values())).toBeLessThanOrEqual(5);
     const excluded = new Set(POOL.excluded.map(e => e.id));
     expect(excluded.has('ol:10942061')).toBe(true);
