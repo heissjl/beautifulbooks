@@ -14297,6 +14297,583 @@
           "coverIsbn": "9781781680285"
         }
       ]
+    },
+    {
+      "slug": "ballantine-adult-fantasy",
+      "title": "Ballantine Adult Fantasy",
+      "kind": "series",
+      "intro": "Ballantine's Adult Fantasy series, edited by Lin Carter from 1969 to 1974, brought older fantasy back into print as paperbacks with a unicorn's head on the cover, many of them painted by Gervasio Gallardo.",
+      "published": false,
+      "publishers": [
+        "Ballantine"
+      ],
+      "works": [
+        {
+          "id": "OL7499222W",
+          "title": "The Blue Star",
+          "author": "Fletcher Pratt",
+          "coverId": "ol:9317358",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345016025",
+          "coverIsbn": "0345016025",
+          "coverArtists": [
+            "Ron Walotsky"
+          ],
+          "isfdbRecord": "36206"
+        },
+        {
+          "id": "OL83871W",
+          "title": "The king of Elfland's daughter",
+          "author": "Lord Dunsany",
+          "coverId": "ol:10846952",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345016289",
+          "coverIsbn": "0345016289",
+          "coverArtists": [
+            "Robert Pepper"
+          ],
+          "isfdbRecord": "42483"
+        },
+        {
+          "id": "OL47752W",
+          "title": "The wood beyond the world",
+          "author": "William Morris",
+          "coverId": "ol:6601771",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345016521",
+          "coverIsbn": "0345016521",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "50413"
+        },
+        {
+          "id": "OL15437W",
+          "title": "Lilith",
+          "author": "George MacDonald",
+          "coverId": "ol:10295955",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345017110",
+          "coverIsbn": "0345017110",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "292462"
+        },
+        {
+          "id": "OL15689952W",
+          "title": "Dragons, Elves, and Heroes",
+          "author": "Lin Carter",
+          "coverId": "ol:6794446",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345017315",
+          "coverIsbn": "0345017315",
+          "coverArtists": [
+            "Sheryl Slavitt"
+          ],
+          "isfdbRecord": "11272"
+        },
+        {
+          "id": "OL6704328W",
+          "title": "The young magicians",
+          "author": "Lin Carter",
+          "coverId": "ol:13235819",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345017307",
+          "coverIsbn": "0345017307",
+          "coverArtists": [
+            "Sheryl Slavitt"
+          ],
+          "isfdbRecord": "50867"
+        },
+        {
+          "id": "OL6585787W",
+          "title": "Figures of Earth",
+          "author": "James Branch Cabell",
+          "coverId": "ol:13897471",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345217632",
+          "coverIsbn": "0345217632"
+        },
+        {
+          "id": "OL7163425W",
+          "title": "The Sorcerer's Ship",
+          "author": "Hannes Bok",
+          "coverId": "ol:5541209",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345017951",
+          "coverIsbn": "0345017951",
+          "coverArtists": [
+            "Ray Cruz"
+          ],
+          "isfdbRecord": "47549"
+        },
+        {
+          "id": "OL2113806W",
+          "title": "Land of unreason",
+          "author": "L. Sprague De Camp",
+          "coverId": "ol:14998733",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345018141",
+          "coverIsbn": "0345018141",
+          "coverWork": "OL37994895W",
+          "coverArtists": [
+            "Donna Violetti"
+          ],
+          "isfdbRecord": "42669"
+        },
+        {
+          "id": "OL9465884W",
+          "title": "At the edge of the world",
+          "author": "Lord Dunsany",
+          "coverId": "ol:7151906",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345018796",
+          "coverIsbn": "0345018796",
+          "coverArtists": [
+            "Ray Cruz"
+          ],
+          "isfdbRecord": "3277"
+        },
+        {
+          "id": "OL152274W",
+          "title": "The dream-quest of unknown Kadath",
+          "author": "H.P. Lovecraft",
+          "coverId": "ol:7240890",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345019237",
+          "coverIsbn": "0345019237",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "290523"
+        },
+        {
+          "id": "OL20122031W",
+          "title": "Zothique",
+          "author": "Clark Ashton Smith",
+          "coverId": "ol:9042077",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345219384",
+          "coverIsbn": "0345219384"
+        },
+        {
+          "id": "OL4102499W",
+          "title": "Island of the Mighty",
+          "author": "Evangeline Walton",
+          "coverId": "ol:8571917",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345019598",
+          "coverIsbn": "0345019598",
+          "coverWork": "OL19658847W",
+          "coverArtists": [
+            "Bob Pepper"
+          ],
+          "isfdbRecord": "42217"
+        },
+        {
+          "id": "OL47750W",
+          "title": "The Well at the World's End",
+          "author": "William Morris",
+          "coverId": "ol:2404583",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345019822",
+          "coverIsbn": "0345019822",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "49805"
+        },
+        {
+          "id": "OL19298758W",
+          "title": "The Well at the World's End [2/2]",
+          "author": "William Morris",
+          "coverId": "ol:8434796",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345020154",
+          "coverIsbn": "0345020154",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "49806"
+        },
+        {
+          "id": "OL19866251W",
+          "title": "Golden Cities, Far",
+          "author": "",
+          "coverId": "ol:8670987",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345020456",
+          "coverIsbn": "0345020456",
+          "coverArtists": [
+            "Kathleen Zimmerman",
+            "Ralph Iwamoto"
+          ],
+          "isfdbRecord": "15725"
+        },
+        {
+          "id": "OL15688211W",
+          "title": "Beyond the golden stair",
+          "author": "Hannes Bok",
+          "coverId": "ol:6793669",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345020936",
+          "coverIsbn": "0345020936",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "4382"
+        },
+        {
+          "id": "OL90556W",
+          "title": "The broken sword",
+          "author": "Poul Anderson",
+          "coverId": "ol:10082370",
+          "addedAt": "2026-09-26",
+          "from": "isbn:034502107X",
+          "coverIsbn": "034502107X",
+          "coverArtists": [
+            "George Barr"
+          ],
+          "isfdbRecord": "36587"
+        },
+        {
+          "id": "OL11346535W",
+          "title": "The boats of the 'Glen Carrig'",
+          "author": "William Hope Hodgson",
+          "coverId": "ol:7317589",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345021452",
+          "coverIsbn": "0345021452",
+          "coverArtists": [
+            "Robert LoGrippo"
+          ],
+          "isfdbRecord": "36231"
+        },
+        {
+          "id": "OL8404509W",
+          "title": "THE DOOM THAT CAME TO SARNATH",
+          "author": "H.P. Lovecraft",
+          "coverId": "ol:5071026",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345021460",
+          "coverIsbn": "0345021460",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "38569"
+        },
+        {
+          "id": "OL6585851W",
+          "title": "Something about Eve",
+          "author": "James Branch Cabell",
+          "coverId": "ol:9399857",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345020677",
+          "coverIsbn": "0345020677",
+          "coverArtists": [
+            "Bob Pepper"
+          ],
+          "isfdbRecord": "31114"
+        },
+        {
+          "id": "OL4636624W",
+          "title": "Hyperborea",
+          "author": "Clark Ashton Smith",
+          "coverId": "ol:15217484",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345022068",
+          "coverIsbn": "0345022068",
+          "coverArtists": [
+            "Bill Martin"
+          ],
+          "isfdbRecord": "17592"
+        },
+        {
+          "id": "OL8199785W",
+          "title": "Don Rodriguez",
+          "author": "Lord Dunsany",
+          "coverId": "ol:8574721",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345022440",
+          "coverIsbn": "0345022440",
+          "coverArtists": [
+            "Bob Pepper"
+          ],
+          "isfdbRecord": "10570"
+        },
+        {
+          "id": "OL76487W",
+          "title": "The Man Who Was Thursday",
+          "author": "Gilbert Keith Chesterton",
+          "coverId": "ol:8776432",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345023056",
+          "coverIsbn": "0345023056",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "43824"
+        },
+        {
+          "id": "OL4102498W",
+          "title": "The children of Llyr",
+          "author": "Evangeline Walton",
+          "coverId": "ol:7052495",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345023323",
+          "coverIsbn": "0345023323",
+          "coverArtists": [
+            "David Johnston"
+          ],
+          "isfdbRecord": "37034"
+        },
+        {
+          "id": "OL6585780W",
+          "title": "The Cream of the Jest",
+          "author": "James Branch Cabell",
+          "coverId": "ol:8452981",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345023641",
+          "coverIsbn": "0345023641",
+          "coverArtists": [
+            "Brian Froud"
+          ],
+          "isfdbRecord": "37585"
+        },
+        {
+          "id": "OL9465901W",
+          "title": "The Spawn of Cthulhu",
+          "author": "Lin Carter",
+          "coverId": "ol:14538830",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345023943",
+          "coverIsbn": "0345023943",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "47631"
+        },
+        {
+          "id": "OL17533W",
+          "title": "The world's desire",
+          "author": "H. Rider Haggard",
+          "coverId": "ol:10185433",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345097610",
+          "coverIsbn": "0345097610",
+          "coverArtists": [
+            "Mati Klarwein"
+          ],
+          "isfdbRecord": "294845"
+        },
+        {
+          "id": "OL20109916W",
+          "title": "Xiccarph",
+          "author": "Clark Ashton Smith",
+          "coverId": "ol:8769794",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345025016",
+          "coverIsbn": "0345025016",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "55642"
+        },
+        {
+          "id": "OL117047W",
+          "title": "The Lost Continent",
+          "author": "C. J. Cutcliffe Hyne",
+          "coverId": "ol:8748844",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345025024",
+          "coverIsbn": "0345025024",
+          "coverWork": "OL20074546W",
+          "coverArtists": [
+            "Dean Ellis"
+          ],
+          "isfdbRecord": "43334"
+        },
+        {
+          "id": "OL9465905W",
+          "title": "Discoveries in Fantasy",
+          "author": "Lin Carter",
+          "coverId": "ol:14946556",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345025466",
+          "coverIsbn": "0345025466",
+          "coverArtists": [
+            "Peter Le Vasseur"
+          ],
+          "isfdbRecord": "10243"
+        },
+        {
+          "id": "OL4634860W",
+          "title": "Kai Lung's Golden Hours",
+          "author": "Ernest Bramah",
+          "coverId": "ol:10215589",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345025741",
+          "coverIsbn": "0345025741",
+          "coverArtists": [
+            "Ian Miller"
+          ],
+          "isfdbRecord": "19263"
+        },
+        {
+          "id": "OL56257W",
+          "title": "Deryni Checkmate",
+          "author": "Katherine Kurtz",
+          "coverId": "ol:8701024",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345025989",
+          "coverIsbn": "0345025989",
+          "coverArtists": [
+            "Bob Pepper"
+          ],
+          "isfdbRecord": "9922"
+        },
+        {
+          "id": "OL15050840W",
+          "title": "Beyond the fields we know",
+          "author": "Lord Dunsany",
+          "coverId": "ol:8774671",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345097440",
+          "coverIsbn": "0345097440",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "109051"
+        },
+        {
+          "id": "OL20898874W",
+          "title": "The Night Land, Vol. 1",
+          "author": "William Hope Hodgson",
+          "coverId": "ol:10235410",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345026691",
+          "coverIsbn": "0345026691",
+          "coverArtists": [
+            "Robert LoGrippo"
+          ],
+          "isfdbRecord": "44637"
+        },
+        {
+          "id": "OL19814904W",
+          "title": "The night land",
+          "author": "William Hope Hodgson",
+          "coverId": "ol:10837649",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345026705",
+          "coverIsbn": "0345026705",
+          "coverArtists": [
+            "Robert LoGrippo"
+          ],
+          "isfdbRecord": "44638"
+        },
+        {
+          "id": "OL4102500W",
+          "title": "The song of Rhiannon",
+          "author": "Evangeline Walton",
+          "coverId": "ol:9946794",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345027736",
+          "coverIsbn": "0345027736"
+        },
+        {
+          "id": "OL15383W",
+          "title": "Evenor",
+          "author": "George MacDonald",
+          "coverId": "ol:14363387",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345097629",
+          "coverIsbn": "0345097629",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "515380"
+        },
+        {
+          "id": "OL9412274W",
+          "title": "Orlando Furioso",
+          "author": "Richard Hodgens",
+          "coverId": "ol:13793599",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345030575",
+          "coverIsbn": "0345030575",
+          "coverArtists": [
+            "David Johnston"
+          ],
+          "isfdbRecord": "25196"
+        },
+        {
+          "id": "OL83864W",
+          "title": "The charwoman's shadow",
+          "author": "Lord Dunsany",
+          "coverId": "ol:13169038",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345030850",
+          "coverIsbn": "0345030850",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "36993"
+        },
+        {
+          "id": "OL47744W",
+          "title": "The sundering flood",
+          "author": "William Morris",
+          "coverId": "ol:6599600",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345032616",
+          "coverIsbn": "0345032616",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "48137"
+        },
+        {
+          "id": "OL6704317W",
+          "title": "Imaginary worlds",
+          "author": "Lin Carter",
+          "coverId": "ol:11364199",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345033094",
+          "coverIsbn": "0345033094",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "17838"
+        },
+        {
+          "id": "OL15391683W",
+          "title": "Excalibur",
+          "author": "Sanders Anne Laubenthal",
+          "coverId": "ol:6601764",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345234162",
+          "coverIsbn": "0345234162",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "12717"
+        },
+        {
+          "id": "OL17536W",
+          "title": "The People of the Mist",
+          "author": "H. Rider Haggard",
+          "coverId": "ol:8566615",
+          "addedAt": "2026-09-26",
+          "from": "isbn:0345236602",
+          "coverIsbn": "0345236602",
+          "coverArtists": [
+            "Dean Ellis"
+          ],
+          "isfdbRecord": "45199"
+        }
+      ],
+      "coverCredits": "isfdb"
     }
   ]
 }
