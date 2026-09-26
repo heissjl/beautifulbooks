@@ -12,6 +12,8 @@ import WorkPanel from '@/components/WorkPanel';
 import ShareMenu from '@/components/ShareMenu';
 import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
+import MoreBelow from '@/components/MoreBelow';
+import { useOverflowsY } from '@/components/useOverflowsY';
 import LocalShops from '@/components/LocalShops';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
@@ -192,6 +194,8 @@ function BookDetail() {
   // Sidebar or bottom sheet; the two are exclusive so the cover image is
   // fetched once (SPEC §10 E13).
   const isDesktop = useIsDesktop();
+  // The sidebar scrolls on its own; say so while there is more below (1 + 2, Julian 2026-09-26).
+  const { scroller: sideScroller, content: sideContent, overflows: sideOverflows, atEnd: sideAtEnd, hiddenBelow: sideHidden, onScroll: measureSide, scrollMore: sideMore } = useOverflowsY();
   const requestKey = `${params.id} ${lang} ${chosenMarket ?? ''}`;
 
   // Editions arrive page by page and keep arriving while the user looks
@@ -466,7 +470,8 @@ function BookDetail() {
             the wheel scrolls the sidebar first and then the page.
           */}
           {isDesktop && (
-            <aside className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
+            <aside ref={sideScroller} onScroll={measureSide} className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
+              <div ref={sideContent}>
               {/*
                 Nothing picked yet: the column speaks about the book instead of
                 about an edition nobody chose (ROADMAP 1.1). The span of years
@@ -481,6 +486,8 @@ function BookDetail() {
                   settled={merged.done || pages.pagesLoaded > 1}
                 />
               )}
+              </div>
+              <MoreBelow show={sideOverflows && !sideAtEnd} onMore={sideMore} lift={sideHidden} />
             </aside>
           )}
         </div>
@@ -823,7 +830,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
         {edition.isbn13 && (verdict.status === 'differs' || verdict.status === 'uncompared') && (
           <VerdictNote verdict={verdict} hint={hint} />
         )}
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
+        {/* The pills sit right after the heading, not pushed to the far edge (Julian, 2026-09-26: „less gap before the pills"). */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <p className="kicker">
             {verdict.status === 'differs'
               ? 'Find the cover you picked'

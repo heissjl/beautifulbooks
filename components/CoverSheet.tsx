@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import CoverImage from './CoverImage';
+import MoreBelow from './MoreBelow';
+import { useOverflowsY } from './useOverflowsY';
 
 interface CoverSheetProps {
   coverUrl: string;
@@ -27,6 +29,8 @@ interface CoverSheetProps {
  */
 export default function CoverSheet({ coverUrl, caption, share, children }: CoverSheetProps) {
   const [open, setOpen] = useState(false);
+  // The sheet's body scrolls; the same sign as the sidebar while there is more below.
+  const { scroller: bodyScroller, content: bodyContent, overflows: bodyOverflows, atEnd: bodyAtEnd, onScroll: measureBody, scrollMore: bodyMore } = useOverflowsY();
   const closeButton = useRef<HTMLButtonElement>(null);
   const opener = useRef<HTMLButtonElement>(null);
   const bar = useRef<HTMLDivElement>(null);
@@ -152,7 +156,10 @@ export default function CoverSheet({ coverUrl, caption, share, children }: Cover
                 Close
               </button>
             </div>
-            <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-10 pt-5">{children}</div>
+            <div ref={bodyScroller} onScroll={measureBody} className="min-h-0 flex-1 overflow-y-auto px-4 pb-10 pt-5">
+              <div ref={bodyContent}>{children}</div>
+              <MoreBelow show={bodyOverflows && !bodyAtEnd} onMore={bodyMore} />
+            </div>
           </div>
         </div>
       )}
