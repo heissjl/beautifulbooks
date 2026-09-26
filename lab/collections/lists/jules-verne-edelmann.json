@@ -1,0 +1,163 @@
+[
+ {
+  "no": "1",
+  "title": "Reise zum Mittelpunkt der Erde",
+  "isbn": "3436012432",
+  "fallbackIsbns": [
+   "3596100011"
+  ]
+ },
+ {
+  "no": "2",
+  "title": "Fünf Wochen im Ballon",
+  "isbn": "3436012440",
+  "fallbackIsbns": [
+   "359610002X"
+  ]
+ },
+ {
+  "no": "3",
+  "title": "Die Kinder des Kapitäns Grant",
+  "isbn": "3436012459",
+  "fallbackIsbns": [
+   "3596100038"
+  ]
+ },
+ {
+  "no": "4",
+  "title": "Von der Erde zum Mond",
+  "isbn": "3436012467",
+  "fallbackIsbns": [
+   "3596100046"
+  ]
+ },
+ {
+  "no": "5",
+  "title": "Reise um den Mond",
+  "isbn": "3436012475",
+  "fallbackIsbns": [
+   "3596100054"
+  ]
+ },
+ {
+  "no": "6",
+  "title": "20000 Meilen unter den Meeren",
+  "isbn": "3436012483",
+  "fallbackIsbns": [
+   "3596100062"
+  ],
+  "work": "OL1099280W"
+ },
+ {
+  "no": "7",
+  "title": "Reise um die Erde in 80 Tagen",
+  "isbn": "3436012491",
+  "fallbackIsbns": [
+   "3596100070"
+  ]
+ },
+ {
+  "no": "8",
+  "title": "Die geheimnisvolle Insel",
+  "isbn": "3436012505",
+  "fallbackIsbns": [
+   "3596100089"
+  ]
+ },
+ {
+  "no": "9",
+  "title": "Der Kurier des Zaren",
+  "isbn": "3436012513",
+  "fallbackIsbns": [
+   "3596100097"
+  ]
+ },
+ {
+  "no": "10",
+  "title": "Die 500 Millionen der Begum",
+  "isbn": "3436012521",
+  "fallbackIsbns": [
+   "3596100100"
+  ]
+ },
+ {
+  "no": "11",
+  "title": "Der Schuss am Kilimandscharo",
+  "isbn": "343601253X",
+  "fallbackIsbns": [
+   "3596100119"
+  ]
+ },
+ {
+  "no": "12",
+  "title": "Der Stahlelefant",
+  "isbn": "3436012548",
+  "fallbackIsbns": [
+   "3596100127"
+  ]
+ },
+ {
+  "no": "13",
+  "title": "Keraban der Starrkopf",
+  "isbn": "3436012556",
+  "fallbackIsbns": [
+   "3596100135"
+  ]
+ },
+ {
+  "no": "14",
+  "title": "Das Karpatenschloss",
+  "isbn": "3436012564",
+  "fallbackIsbns": [
+   "3596100143"
+  ]
+ },
+ {
+  "no": "15",
+  "title": "Meister Antifers wunderbare Abenteuer",
+  "isbn": "3436012572",
+  "fallbackIsbns": [
+   "3596100151"
+  ]
+ },
+ {
+  "no": "16",
+  "title": "Zwei Jahre Ferien",
+  "isbn": "3436012580",
+  "fallbackIsbns": [
+   "359610016X"
+  ]
+ },
+ {
+  "no": "17",
+  "title": "Die Jagd nach dem Meteor",
+  "isbn": "3436012688",
+  "fallbackIsbns": [
+   "3596100178"
+  ]
+ },
+ {
+  "no": "18",
+  "title": "Die Propellerinsel",
+  "isbn": "3436012866",
+  "fallbackIsbns": [
+   "3596100186"
+  ]
+ },
+ {
+  "no": "19",
+  "title": "Reise durch das Sonnensystem",
+  "isbn": "3436013358",
+  "fallbackIsbns": [
+   "3596100194"
+  ]
+ },
+ {
+  "no": "20",
+  "title": "Die Eissphinx",
+  "isbn": "3436013730",
+  "fallbackIsbns": [
+   "3596100208"
+  ]
+ }
+]

@@ -10583,6 +10583,29 @@
           "coverIsbn": "9783518189436"
         }
       ]
+    },
+    {
+      "slug": "jules-verne-covers-by-heinz-edelmann",
+      "title": "Jules Verne — covers by Heinz Edelmann",
+      "kind": "series",
+      "intro": "Fischer published Jules Verne in twenty paperback volumes from 1968, in new translations by Lothar Maier, and Heinz Edelmann designed the covers of the whole edition. Shown in the order of the volume numbers.",
+      "published": false,
+      "publishers": [
+        "Fischer-Bücherei",
+        "Fischer Taschenbuch Verlag"
+      ],
+      "works": [
+        {
+          "id": "OL1099280W",
+          "title": "Vingt mille lieues sous les mers",
+          "author": "Jules Verne",
+          "coverId": "ol:8806397",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3436012483",
+          "coverIsbn": "3436012483",
+          "coverWork": "OL20160863W"
+        }
+      ]
     }
   ]
 }
