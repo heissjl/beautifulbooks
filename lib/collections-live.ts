@@ -10,6 +10,7 @@
 import { commandsFromEnv, type RedisCommands } from '@/lib/hotornot/store';
 import {
   applyContent,
+  applyOrder,
   applyOverrides,
   collectionRecords,
   draftsVisible,
@@ -22,6 +23,7 @@ import {
 
 const KEY = 'collections:published';
 const CONTENT_KEY = 'collections:content';
+const ORDER_KEY = 'collections:order';
 
 export interface PublishStore {
   get(): Promise<PublishOverrides>;
@@ -29,6 +31,19 @@ export interface PublishStore {
   /** Drafts published from /curate, slug → the collection as the draft holds it. */
   getContent(): Promise<ContentOverrides>;
   setContent(content: ContentOverrides): Promise<void>;
+  /** Slugs in the order Julian arranged on /curate (5.10h). */
+  getOrder(): Promise<string[]>;
+  setOrder(order: string[]): Promise<void>;
+}
+
+function parseOrder(raw: unknown): string[] {
+  if (typeof raw !== 'string') return [];
+  try {
+    const value: unknown = JSON.parse(raw);
+    return Array.isArray(value) ? value.filter((x): x is string => typeof x === 'string') : [];
+  } catch {
+    return [];
+  }
 }
 
 function parseContent(raw: unknown): ContentOverrides {
@@ -57,10 +72,12 @@ export function commandsPublishStore(commands: RedisCommands): PublishStore {
     async set(overrides) { await commands.set(KEY, JSON.stringify(overrides)); },
     async getContent() { return parseContent(await commands.get(CONTENT_KEY)); },
     async setContent(content) { await commands.set(CONTENT_KEY, JSON.stringify(content)); },
+    async getOrder() { return parseOrder(await commands.get(ORDER_KEY)); },
+    async setOrder(order) { await commands.set(ORDER_KEY, JSON.stringify(order)); },
   };
 }
 
-const shared = globalThis as typeof globalThis & { __publishDevMemory?: PublishOverrides; __contentDevMemory?: ContentOverrides };
+const shared = globalThis as typeof globalThis & { __publishDevMemory?: PublishOverrides; __contentDevMemory?: ContentOverrides; __orderDevMemory?: string[] };
 
 export function publishStoreFromEnv(env: Record<string, string | undefined> = process.env): PublishStore | null {
   const commands = commandsFromEnv(env);
@@ -71,6 +88,8 @@ export function publishStoreFromEnv(env: Record<string, string | undefined> = pr
     async set(o) { shared.__publishDevMemory = { ...o }; },
     async getContent() { return structuredClone(shared.__contentDevMemory ?? {}); },
     async setContent(c) { shared.__contentDevMemory = structuredClone(c); },
+    async getOrder() { return [...(shared.__orderDevMemory ?? [])]; },
+    async setOrder(o) { shared.__orderDevMemory = [...o]; },
   };
 }
 
@@ -95,9 +114,14 @@ export async function contentOverrides(): Promise<ContentOverrides> {
 }
 
 /** The records as the site uses them: the file, published drafts on top, then the switches. */
+export async function collectionOrder(): Promise<string[]> {
+  const store = publishStoreFromEnv();
+  return store ? withTimeout(store.getOrder(), 2000, []) : [];
+}
+
 export async function liveRecords(): Promise<CollectionRecord[]> {
-  const [content, switches] = await Promise.all([contentOverrides(), publishOverrides()]);
-  return applyOverrides(applyContent(collectionRecords(), content), switches);
+  const [content, switches, order] = await Promise.all([contentOverrides(), publishOverrides(), collectionOrder()]);
+  return applyOrder(applyOverrides(applyContent(collectionRecords(), content), switches), order);
 }
 
 /** Every collection the site shows now, drafts included only when asked (or under `next dev`). */

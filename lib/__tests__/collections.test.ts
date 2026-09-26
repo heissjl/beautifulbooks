@@ -1,7 +1,7 @@
 /** Thematic collections (ROADMAP 5.10, SPEC F8, lib/collections.ts). */
 import { describe, expect, it } from 'vitest';
 import collectionsFile from '@/data/collections.json';
-import { applyContent, applyOverrides, authorsShown, coverLine, isCollectionSlug, nextOverrides, parseCollections, type CollectionRecord } from '../collections';
+import { applyContent, applyOrder, applyOverrides, authorsShown, coverLine, isCollectionSlug, nextOverrides, parseCollections, type CollectionRecord } from '../collections';
 
 const record = (over: Partial<CollectionRecord> = {}): CollectionRecord => ({
   slug: 'women-writers',
@@ -149,6 +149,15 @@ describe('publishing a draft from /curate (5.10g)', () => {
       ['sf-masterworks', 'Women writers', true],
       ['penguin-modern', 'Penguin Modern', true],
     ]);
+  });
+});
+
+describe('arranging the collections (5.10h)', () => {
+  it('puts the named slugs first, in that order, and keeps the rest after them in file order', () => {
+    const recs = ['a', 'b', 'c', 'd'].map(slug => record({ slug }));
+    expect(applyOrder(recs, ['c', 'a']).map(r => r.slug)).toEqual(['c', 'a', 'b', 'd']);
+    expect(applyOrder(recs, []).map(r => r.slug)).toEqual(['a', 'b', 'c', 'd']);
+    expect(applyOrder(recs, ['x', 'd']).map(r => r.slug)).toEqual(['d', 'a', 'b', 'c']);
   });
 });
 

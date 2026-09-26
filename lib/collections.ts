@@ -211,3 +211,18 @@ export function applyContent(records: CollectionRecord[], content: ContentOverri
   return out;
 }
 
+/**
+ * The order of the collections, set by Julian on /curate (5.10h; Julian,
+ * 2026-09-25: „i need a way to arrange the 4 collections shown on the
+ * starting page"). Slugs in the order given come first; any collection the
+ * order does not name keeps its place from the file, after them — so a new
+ * collection never disappears for want of a position.
+ */
+export function applyOrder(records: CollectionRecord[], order: string[]): CollectionRecord[] {
+  const rank = new Map(order.map((slug, i) => [slug, i]));
+  return records
+    .map((r, i) => ({ r, key: rank.has(r.slug) ? (rank.get(r.slug) as number) : order.length + i }))
+    .sort((a, b) => a.key - b.key)
+    .map(x => x.r);
+}
+

@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import CurateTool, { type StartingPoint } from '@/components/CurateTool';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
-import PublishToggle from '@/components/PublishToggle';
+import AdminCollections from '@/components/AdminCollections';
 import SuggestLogin from '@/components/SuggestLogin';
 import { liveCollections } from '@/lib/collections-live';
 import { draftStoreFromEnv, listDrafts, type Draft } from '@/lib/curate/drafts';
@@ -95,19 +95,7 @@ export default async function CuratePage({ searchParams }: PageProps) {
           switch lives in the store and wins over the file until they agree.
         */}
         {admin && fileCollections.length > 0 && (
-          <section className="mt-6 max-w-2xl">
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-ink-3">Collections on the site · admin</h2>
-            <ul className="mt-2 divide-y divide-line text-sm">
-              {fileCollections.map(c => (
-                <li key={c.slug} className="flex items-center gap-3 py-2">
-                  <Link href={`/collections/${c.slug}`} className="min-w-0 flex-1 truncate text-ink underline-offset-4 hover:text-accent hover:underline">{c.title}</Link>
-                  <span className="text-xs text-ink-3">{c.works.length} books</span>
-                  <span className={`text-xs ${c.published ? 'text-ink-2' : 'text-accent'}`}>{c.published ? 'published' : 'draft'}</span>
-                  <PublishToggle slug={c.slug} title={c.title} published={c.published} />
-                </li>
-              ))}
-            </ul>
-          </section>
+          <AdminCollections collections={fileCollections.map(c => ({ slug: c.slug, title: c.title, works: c.works.length, published: c.published }))} />
         )}
         {/* Signed in as a friend: the admin password can be entered here (5.10g). */}
         {signedIn && !admin && (
