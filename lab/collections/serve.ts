@@ -289,6 +289,8 @@ const server = createServer(async (req, res) => {
       }
       save();
       await remote(`/api/curate/drafts/${draft.id}`, { op: 'imported' });
+      // The file holds it now; a draft published from /curate for this address stops winning (5.10g).
+      await remote('/api/curate/publish', { slug: draft.slug, clearDraft: true });
       return send(200, { collections });
     }
 

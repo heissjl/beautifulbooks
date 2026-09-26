@@ -38,6 +38,8 @@ export interface Draft extends CollectionRecord {
   updatedAt: string;
   /** Set by Julian's tool once the draft has been taken into the file. */
   importedOn?: string;
+  /** When Julian last published this draft on the site from /curate (5.10g). */
+  publishedOn?: string;
   deleted?: boolean;
 }
 

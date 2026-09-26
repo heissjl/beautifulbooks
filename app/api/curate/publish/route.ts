@@ -3,6 +3,7 @@ import { rateLimited } from '@/app/api/rate';
 import { readBody } from '@/app/api/versus/guard';
 import { collectionRecords, nextOverrides } from '@/lib/collections';
 import { publishStoreFromEnv } from '@/lib/collections-live';
+import { applyContent } from '@/lib/collections';
 import { missingStoreMessage } from '@/lib/hotornot/store';
 import { ADMIN_COOKIE, adminMatches, adminSessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { json } from '../../suggest/guard';
@@ -23,7 +24,23 @@ export async function POST(request: NextRequest) {
   if (limited) return limited;
   if (!admin) return json({ error: 'Only Julian can publish.' }, 403);
   const body = await readBody(request);
-  const record = collectionRecords().find(r => r.slug === body.slug);
+  // Julian's local tool, after taking a draft into the file: the file is the
+  // source again, so the published draft for that address is dropped (5.10g).
+  if (body.clearDraft === true && typeof body.slug === 'string') {
+    const pub = publishStoreFromEnv();
+    if (!pub) return json({ error: missingStoreMessage() }, 503);
+    try {
+      const content = await pub.getContent();
+      if (body.slug in content) { delete content[body.slug]; await pub.setContent(content); }
+      return json({ ok: true, cleared: body.slug });
+    } catch {
+      return json({ error: 'The store did not answer. Try again in a moment.' }, 503);
+    }
+  }
+  const store0 = publishStoreFromEnv();
+  const content = store0 ? await store0.getContent().catch(() => ({})) : {};
+  // A published draft is the base the switch compares with, not the file (5.10g).
+  const record = applyContent(collectionRecords(), content).find(r => r.slug === body.slug);
   if (!record || typeof body.published !== 'boolean') return json({ error: 'slug and published (true|false) needed' }, 400);
   const store = publishStoreFromEnv();
   if (!store) return json({ error: missingStoreMessage() }, 503);

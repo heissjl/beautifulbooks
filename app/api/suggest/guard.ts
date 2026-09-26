@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimited } from '@/app/api/rate';
 import type { RateBucketName } from '@/lib/ratelimit';
-import { adminMatches, SESSION_COOKIE, sessionValid, suggestEnabled } from '@/lib/suggest/auth';
+import { ADMIN_COOKIE, adminMatches, adminSessionValid, SESSION_COOKIE, sessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { suggestStoreFromEnv, type SuggestStore } from '@/lib/suggest/store';
 import { missingStoreMessage } from '@/lib/hotornot/store';
 
@@ -51,7 +51,11 @@ export const storeDown = () => json({ error: 'The suggestion store did not answe
 export function memberGate(request: NextRequest): { admin: boolean } | { response: NextResponse } {
   if (!suggestEnabled()) return { response: json({ error: 'Not found' }, 404) };
   const friend = sessionValid(request.cookies.get(SESSION_COOKIE)?.value);
-  const admin = adminMatches((request.headers.get('authorization') ?? '').replace(/^Bearer\s+/i, ''));
+  // Julian: the admin password as a bearer token (his local tool), or the
+  // admin cookie from signing in on /curate (5.10g) — both, not only the first.
+  const admin =
+    adminMatches((request.headers.get('authorization') ?? '').replace(/^Bearer\s+/i, '')) ||
+    adminSessionValid(request.cookies.get(ADMIN_COOKIE)?.value);
   const limited = rateLimited(request, friend || admin ? 'suggest' : 'login');
   if (limited) return { response: limited };
   if (!friend && !admin) return { response: json({ error: 'Sign in first.' }, 401) };

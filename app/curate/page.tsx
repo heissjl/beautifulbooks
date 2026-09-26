@@ -122,7 +122,7 @@ export default async function CuratePage({ searchParams }: PageProps) {
           ) : storeError ? (
             <p className="text-sm text-accent" role="alert">{storeError}</p>
           ) : (
-            <CurateTool initialDrafts={drafts ?? []} startingPoints={startingPoints} initialId={typeof d === 'string' ? d : undefined} />
+            <CurateTool initialDrafts={drafts ?? []} startingPoints={startingPoints} initialId={typeof d === 'string' ? d : undefined} admin={admin} />
           )}
         </div>
       </main>

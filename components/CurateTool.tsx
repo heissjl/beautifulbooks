@@ -61,10 +61,12 @@ function when(iso: string): string {
  * F8.5): the same steps as Julian's `lab/collections/`, working on drafts in
  * the site's store. A draft never changes a page; Julian takes it over.
  */
-export default function CurateTool({ initialDrafts, startingPoints, initialId }: {
+export default function CurateTool({ initialDrafts, startingPoints, initialId, admin = false }: {
   initialDrafts: Draft[];
   startingPoints: StartingPoint[];
   initialId?: string;
+  /** Julian signed in as admin: he may publish a draft on the site (5.10g). */
+  admin?: boolean;
 }) {
   const [drafts, setDrafts] = useState(initialDrafts);
   const [currentId, setCurrentId] = useState<string | null>(
@@ -381,7 +383,7 @@ export default function CurateTool({ initialDrafts, startingPoints, initialId }:
 
           <section>
             <h2 className={heading}>Wall ({draft.works.length})</h2>
-            <p className="mt-1 text-xs text-ink-3">Drag or use the arrows to reorder; the order here is the order on the page. Tap a cover to change it.</p>
+            <p className="mt-1 text-xs text-ink-3">Drag or use the arrows to reorder; the order here is the order on the page. Tap a cover to change it, × to remove the book.</p>
             {draft.works.length === 0 && <p className="mt-3 text-sm text-ink-3">Nothing on the wall yet. Open an author below and pick a book.</p>}
             <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
               {draft.works.map((w, i) => (
@@ -391,19 +393,29 @@ export default function CurateTool({ initialDrafts, startingPoints, initialId }:
                   onDragStart={() => setDrag(w.id)}
                   onDragOver={e => e.preventDefault()}
                   onDrop={() => drop(w.id)}
-                  className={drag === w.id ? 'opacity-40' : undefined}
+                  className={`relative ${drag === w.id ? 'opacity-40' : ''}`}
                 >
                   <button type="button" onClick={() => startPicking(w, w.coverId)} className="block w-full text-left">
                     <span className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2">
                       <CoverImage src={olCover(coverNumber(w.coverId), 'M')} alt={`${w.title} by ${w.author}`} sizes="(max-width: 640px) 33vw, 16vw" />
                     </span>
                   </button>
+                  {/* Taking a book off the wall, where the eye already is (Julian, 2026-09-25: „i also need a button to delete a work"). */}
+                  <button
+                    type="button"
+                    onClick={() => change({ op: 'remove', id: w.id })}
+                    aria-label={`Remove ${w.title} from the collection`}
+                    title="Remove from the collection"
+                    className="absolute right-1 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-bg/90 text-base leading-none text-ink shadow transition-colors hover:bg-accent hover:text-on-accent"
+                  >
+                    ×
+                  </button>
                   <p className="mt-1.5 line-clamp-2 text-xs font-medium leading-snug text-ink">{w.title}</p>
                   <p className="line-clamp-1 text-xs text-ink-3">{w.author}</p>
                   <div className="mt-1 flex gap-1 text-xs text-ink-3">
                     <button type="button" disabled={i === 0} onClick={() => move(w.id, -1)} aria-label="Move earlier" className="rounded px-1.5 hover:text-accent disabled:opacity-30">←</button>
                     <button type="button" disabled={i === draft.works.length - 1} onClick={() => move(w.id, 1)} aria-label="Move later" className="rounded px-1.5 hover:text-accent disabled:opacity-30">→</button>
-                    <button type="button" onClick={() => change({ op: 'remove', id: w.id })} aria-label={`Take ${w.title} off the wall`} className="ml-auto rounded px-1.5 hover:text-accent">×</button>
+                    <button type="button" onClick={() => change({ op: 'remove', id: w.id })} aria-label={`Remove ${w.title} from the collection`} className="ml-auto rounded px-1.5 hover:text-accent">Remove</button>
                   </div>
                 </li>
               ))}
@@ -449,6 +461,28 @@ export default function CurateTool({ initialDrafts, startingPoints, initialId }:
               })}
             </div>
           </section>
+
+          {/*
+            Julian only (5.10g): the draft goes on the site as it is — covers,
+            order, text — in place of the collection at the same address.
+          */}
+          {admin && (
+            <section className="max-w-2xl rounded-md border border-accent/40 p-4">
+              <h2 className={heading}>Publish · admin</h2>
+              <p className="mt-1 text-sm text-ink-2">
+                Puts this draft on the site now, at /collections/{draft.slug}
+                {startingPoints.some(p => p.slug === draft.slug) ? ', in place of the collection there' : ', as a new collection'}. No deploy needed.
+                {draft.publishedOn ? ` Last published ${when(draft.publishedOn)}.` : ''}
+              </p>
+              <button
+                type="button"
+                className={`${button} mt-3`}
+                onClick={() => window.confirm(`Publish the draft “${draft.title}” (${draft.works.length} books) on the site now?`) && change({ op: 'publish' })}
+              >
+                Publish this draft
+              </button>
+            </section>
+          )}
 
           <section>
             <button type="button" className={button} onClick={() => window.confirm(`Delete the draft “${draft.title}” for everybody?`) && change({ op: 'delete' })}>

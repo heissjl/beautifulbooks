@@ -1,7 +1,7 @@
 /** Thematic collections (ROADMAP 5.10, SPEC F8, lib/collections.ts). */
 import { describe, expect, it } from 'vitest';
 import collectionsFile from '@/data/collections.json';
-import { applyOverrides, authorsShown, coverLine, isCollectionSlug, nextOverrides, parseCollections, type CollectionRecord } from '../collections';
+import { applyContent, applyOverrides, authorsShown, coverLine, isCollectionSlug, nextOverrides, parseCollections, type CollectionRecord } from '../collections';
 
 const record = (over: Partial<CollectionRecord> = {}): CollectionRecord => ({
   slug: 'women-writers',
@@ -135,6 +135,20 @@ describe('publishing from /curate (5.10g)', () => {
     expect(on).toEqual({ 'edition-suhrkamp': true });
     expect(nextOverrides(on, draft, false)).toEqual({});
     expect(nextOverrides({}, live, true)).toEqual({});
+  });
+});
+
+describe('publishing a draft from /curate (5.10g)', () => {
+  it('replaces the collection at that address, or adds a new one', () => {
+    const file = [record({ slug: 'tiptree-award', published: false }), record({ slug: 'sf-masterworks' })];
+    const draft = record({ slug: 'tiptree-award', published: true, title: 'The Otherwise Award' });
+    const fresh = record({ slug: 'penguin-modern', published: true, title: 'Penguin Modern' });
+    const out = applyContent(file, { 'tiptree-award': draft, 'penguin-modern': fresh });
+    expect(out.map(r => [r.slug, r.title, r.published])).toEqual([
+      ['tiptree-award', 'The Otherwise Award', true],
+      ['sf-masterworks', 'Women writers', true],
+      ['penguin-modern', 'Penguin Modern', true],
+    ]);
   });
 });
 

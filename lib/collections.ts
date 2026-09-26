@@ -197,3 +197,17 @@ export function collectionRecords(): CollectionRecord[] {
   return (collectionsFile as { collections: CollectionRecord[] }).collections;
 }
 
+/**
+ * Collections whose content comes from a draft published on /curate
+ * (5.10g; Julian, 2026-09-25: his choices in a draft „weren't saved properly"
+ * — they were, but only the file reached the site). slug → record; replaces
+ * the file's record of that slug, or adds a new collection.
+ */
+export type ContentOverrides = Record<string, CollectionRecord>;
+
+export function applyContent(records: CollectionRecord[], content: ContentOverrides): CollectionRecord[] {
+  const out = records.map(r => content[r.slug] ?? r);
+  for (const [slug, r] of Object.entries(content)) if (!records.some(x => x.slug === slug)) out.push(r);
+  return out;
+}
+
