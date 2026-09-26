@@ -4883,6 +4883,15 @@
           "coverIsbn": "3518111051"
         },
         {
+          "id": "OL86318W",
+          "title": "Ulysses",
+          "author": "James Joyce",
+          "coverId": "ol:3221104",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351811106X",
+          "coverIsbn": "351811106X"
+        },
+        {
           "id": "OL10244W",
           "title": "Secret lives, and other stories",
           "author": "Ngũgĩ wa Thiongʼo",
@@ -5817,6 +5826,132 @@
           "addedAt": "2026-09-26",
           "from": "isbn:351811428X",
           "coverIsbn": "351811428X"
+        },
+        {
+          "id": "OL3192908W",
+          "title": "Geier sind pünktliche Tiere",
+          "author": "Robert Schindel",
+          "coverId": "ol:1015918",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114298",
+          "coverIsbn": "3518114298"
+        },
+        {
+          "id": "OL2490801W",
+          "title": "Neue Urbanität",
+          "author": "Hartmut Häussermann",
+          "coverId": "ol:1015919",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114328",
+          "coverIsbn": "3518114328"
+        },
+        {
+          "id": "OL86320W",
+          "title": "Dubliners",
+          "author": "James Joyce",
+          "coverId": "ol:9256342",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114344",
+          "coverIsbn": "3518114344"
+        },
+        {
+          "id": "OL10302790W",
+          "title": "Anna Livia Plurabelle",
+          "author": "James Joyce",
+          "coverId": "ol:1015922",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114387",
+          "coverIsbn": "3518114387"
+        },
+        {
+          "id": "OL155563W",
+          "title": "Ich überlege mir die Geschichte",
+          "author": "Uwe Johnson",
+          "coverId": "ol:2211811",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114409",
+          "coverIsbn": "3518114409"
+        },
+        {
+          "id": "OL1374971W",
+          "title": "Das semiologische Abenteuer. ( Neue Folge, 441)",
+          "author": "Roland Barthes",
+          "coverId": "ol:1015923",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114417",
+          "coverIsbn": "3518114417"
+        },
+        {
+          "id": "OL2199212W",
+          "title": "Cinéma d'avant-garde",
+          "author": "Peter Weiss",
+          "coverId": "ol:3221115",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114441",
+          "coverIsbn": "3518114441"
+        },
+        {
+          "id": "OL639765W",
+          "title": "Eurotaoismus",
+          "author": "Peter Sloterdijk",
+          "coverId": "ol:8393553",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114506",
+          "coverIsbn": "3518114506"
+        },
+        {
+          "id": "OL1414341W",
+          "title": "Eine Art Schadensabwicklung",
+          "author": "Jürgen Habermas",
+          "coverId": "ol:8393554",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114530",
+          "coverIsbn": "3518114530"
+        },
+        {
+          "id": "OL2117497W",
+          "title": "Kaltes Herz, unendliche Fahrt, neue Mythologie",
+          "author": "Frank, Manfred",
+          "coverId": "ol:2211812",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114565",
+          "coverIsbn": "3518114565"
+        },
+        {
+          "id": "OL11483816W",
+          "title": "Drei Elephanten",
+          "author": "Reinhold Batberger",
+          "coverId": "ol:2211813",
+          "addedAt": "2026-09-26",
+          "from": "isbn:351811459X",
+          "coverIsbn": "351811459X"
+        },
+        {
+          "id": "OL2969678W",
+          "title": "Das Ende der Exotik",
+          "author": "Irmela Hijiya-Kirschnereit",
+          "coverId": "ol:1015927",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114662",
+          "coverIsbn": "3518114662"
+        },
+        {
+          "id": "OL796388W",
+          "title": "Gegengifte",
+          "author": "Ulrich Beck",
+          "coverId": "ol:2211814",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114689",
+          "coverIsbn": "3518114689"
+        },
+        {
+          "id": "OL2270433W",
+          "title": "Verheerende Folgen mangelnden Anscheins innerbetrieblicher Demokratie",
+          "author": "Volker Braun",
+          "coverId": "ol:2211815",
+          "addedAt": "2026-09-26",
+          "from": "isbn:3518114735",
+          "coverIsbn": "3518114735"
         }
       ]
     },
