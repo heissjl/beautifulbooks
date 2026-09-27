@@ -20187,6 +20187,528 @@
           "addedAt": "2026-09-27",
           "from": "isbn:3499502720",
           "coverIsbn": "3499502720"
+        },
+        {
+          "id": "OL4145328W",
+          "title": "Ludwig Wittgenstein",
+          "author": "Kurt Wuchterl",
+          "coverId": "ol:15161662",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502755",
+          "coverIsbn": "3499502755"
+        },
+        {
+          "id": "OL6387070W",
+          "title": "Alexander S. Puschkin",
+          "author": "Gudrun Ziegler",
+          "coverId": "ol:15176103",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502798",
+          "coverIsbn": "3499502798"
+        },
+        {
+          "id": "OL2852197W",
+          "title": "Bertrand Russell",
+          "author": "Ernst R. Sandvoss",
+          "coverId": "ol:1014929",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502828",
+          "coverIsbn": "3499502828"
+        },
+        {
+          "id": "OL6415332W",
+          "title": "Else Lasker-Schüler",
+          "author": "Erika Klüsener",
+          "coverId": "ol:1014931",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502836",
+          "coverIsbn": "3499502836"
+        },
+        {
+          "id": "OL3167386W",
+          "title": "Maria Theresia",
+          "author": "Peter Berglar",
+          "coverId": "ol:10990472",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502860",
+          "coverIsbn": "3499502860"
+        },
+        {
+          "id": "OL5231346W",
+          "title": "Max Scheler",
+          "author": "Wilhelm Mader",
+          "coverId": "ol:8392805",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502909",
+          "coverIsbn": "3499502909"
+        },
+        {
+          "id": "OL1656860W",
+          "title": "Sappho",
+          "author": "Marion Giebel",
+          "coverId": "ol:1014932",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502917",
+          "coverIsbn": "3499502917"
+        },
+        {
+          "id": "OL5149779W",
+          "title": "Käthe Kollwitz",
+          "author": "Catherine Krahmer",
+          "coverId": "ol:14637702",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502941",
+          "coverIsbn": "3499502941"
+        },
+        {
+          "id": "OL1638082W",
+          "title": "Lord Byron",
+          "author": "Hartmut Müller",
+          "coverId": "ol:2210561",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502976",
+          "coverIsbn": "3499502976"
+        },
+        {
+          "id": "OL2220388W",
+          "title": "Wilhelm Reich",
+          "author": "Bernd A. Laska",
+          "coverId": "ol:3364947",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502984",
+          "coverIsbn": "3499502984"
+        },
+        {
+          "id": "OL5497353W",
+          "title": "Paul Hindemith",
+          "author": "Giselher Schubert",
+          "coverId": "ol:8392807",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502992",
+          "coverIsbn": "3499502992"
+        },
+        {
+          "id": "OL3986770W",
+          "title": "William Faulkner",
+          "author": "Peter Nicolaisen",
+          "coverId": "ol:8392808",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950300X",
+          "coverIsbn": "349950300X"
+        },
+        {
+          "id": "OL1716601W",
+          "title": "Joseph Roth",
+          "author": "Helmuth Nürnberger",
+          "coverId": "ol:2210563",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503018",
+          "coverIsbn": "3499503018"
+        },
+        {
+          "id": "OL3132674W",
+          "title": "Friedrich Fröbel",
+          "author": "Helmut Heiland",
+          "coverId": "ol:2210564",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503034",
+          "coverIsbn": "3499503034"
+        },
+        {
+          "id": "OL9018806W",
+          "title": "Thomas Alva Edison",
+          "author": "Fritz Vögtle",
+          "coverId": "ol:3217358",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503050",
+          "coverIsbn": "3499503050"
+        },
+        {
+          "id": "OL3587230W",
+          "title": "Heinrich Böll",
+          "author": "Klaus Schröter",
+          "coverId": "ol:2210566",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503107",
+          "coverIsbn": "3499503107"
+        },
+        {
+          "id": "OL5069986W",
+          "title": "Elisabeth I.",
+          "author": "Herbert Nette",
+          "coverId": "ol:1014934",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503115",
+          "coverIsbn": "3499503115"
+        },
+        {
+          "id": "OL9056173W",
+          "title": "Ernst Toller",
+          "author": "Wolfgang Rothe",
+          "coverId": "ol:10498197",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503123",
+          "coverIsbn": "3499503123"
+        },
+        {
+          "id": "OL853633W",
+          "title": "Adolf Hitler",
+          "author": "Harald Steffahn",
+          "coverId": "ol:2210567",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503166",
+          "coverIsbn": "3499503166"
+        },
+        {
+          "id": "OL19021365W",
+          "title": "Paula Modersohn-Becker",
+          "author": "Liselotte von Reinken",
+          "coverId": "ol:14474694",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503174",
+          "coverIsbn": "3499503174"
+        },
+        {
+          "id": "OL6089550W",
+          "title": "Erich Fromm",
+          "author": "Rainer Funk",
+          "coverId": "ol:14422957",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503220",
+          "coverIsbn": "3499503220"
+        },
+        {
+          "id": "OL4899621W",
+          "title": "Giacomo Puccini",
+          "author": "Clemens Höslinger",
+          "coverId": "ol:8392810",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503255",
+          "coverIsbn": "3499503255"
+        },
+        {
+          "id": "OL7018241W",
+          "title": "Vladimir Nabokov",
+          "author": "Donald E. Morton",
+          "coverId": "ol:3217359",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950328X",
+          "coverIsbn": "349950328X"
+        },
+        {
+          "id": "OL4934651W",
+          "title": "Thomas Morus",
+          "author": "Hans Peter Heinrich",
+          "coverId": "ol:8392811",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950331X",
+          "coverIsbn": "349950331X"
+        },
+        {
+          "id": "OL754852W",
+          "title": "Klaus Mann",
+          "author": "Uwe Naumann",
+          "coverId": "ol:1014935",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503328",
+          "coverIsbn": "3499503328"
+        },
+        {
+          "id": "OL578081W",
+          "title": "Martin Luther King, jr.",
+          "author": "Gerd Presler",
+          "coverId": "ol:3217360",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503336",
+          "coverIsbn": "3499503336"
+        },
+        {
+          "id": "OL3819127W",
+          "title": "Lion Feuchtwanger",
+          "author": "Reinhold Jaretzky",
+          "coverId": "ol:2210569",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503344",
+          "coverIsbn": "3499503344"
+        },
+        {
+          "id": "OL5149781W",
+          "title": "Ernst Barlach",
+          "author": "Catherine Krahmer",
+          "coverId": "ol:2210570",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503352",
+          "coverIsbn": "3499503352"
+        },
+        {
+          "id": "OL2550825W",
+          "title": "Antonio Vivaldi",
+          "author": "Michael Stegemann",
+          "coverId": "ol:8392812",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503387",
+          "coverIsbn": "3499503387"
+        },
+        {
+          "id": "OL3397234W",
+          "title": "Fritz Lang",
+          "author": "Michael Töteberg",
+          "coverId": "ol:2210571",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503395",
+          "coverIsbn": "3499503395"
+        },
+        {
+          "id": "OL882777W",
+          "title": "Anna Freud",
+          "author": "Wilhelm Salber",
+          "coverId": "ol:8392813",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503433",
+          "coverIsbn": "3499503433"
+        },
+        {
+          "id": "OL3069462W",
+          "title": "Dschingis Khan",
+          "author": "Reinhold Neumann-Hoditz",
+          "coverId": "ol:3217361",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950345X",
+          "coverIsbn": "349950345X"
+        },
+        {
+          "id": "OL2902735W",
+          "title": "Kemal Atatürk",
+          "author": "Bernd Rill",
+          "coverId": "ol:2210572",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503468",
+          "coverIsbn": "3499503468"
+        },
+        {
+          "id": "OL4343955W",
+          "title": "Nikolaus Kopernikus",
+          "author": "Jochen Kirchhoff",
+          "coverId": "ol:2210573",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503476",
+          "coverIsbn": "3499503476"
+        },
+        {
+          "id": "OL2580222W",
+          "title": "Rudi Dutschke",
+          "author": "Jürgen Miermeister",
+          "coverId": "ol:2210574",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503492",
+          "coverIsbn": "3499503492"
+        },
+        {
+          "id": "OL10043311W",
+          "title": "Amenophis IV. Echnaton",
+          "author": "Hermann A. Schlögl",
+          "coverId": "ol:3217362",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503506",
+          "coverIsbn": "3499503506"
+        },
+        {
+          "id": "OL2238386W",
+          "title": "Edvard Munch",
+          "author": "Matthias Arnold",
+          "coverId": "ol:15251288",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503514",
+          "coverIsbn": "3499503514"
+        },
+        {
+          "id": "OL10043315W",
+          "title": "Ludwig XIV.",
+          "author": "Bernd-Rüdiger Schwesig",
+          "coverId": "ol:3217363",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503522",
+          "coverIsbn": "3499503522"
+        },
+        {
+          "id": "OL1656865W",
+          "title": "Vergil",
+          "author": "Marion Giebel",
+          "coverId": "ol:3217364",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503530",
+          "coverIsbn": "3499503530"
+        },
+        {
+          "id": "OL37401669W",
+          "title": "Henry D. Thoreau",
+          "author": "Hans-Dieter Klumpjan",
+          "coverId": "ol:3217365",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503565",
+          "coverIsbn": "3499503565"
+        },
+        {
+          "id": "OL3132724W",
+          "title": "David Hume",
+          "author": "Gerhard Streminger",
+          "coverId": "ol:2210575",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503573",
+          "coverIsbn": "3499503573"
+        },
+        {
+          "id": "OL10043316W",
+          "title": "Jules Verne",
+          "author": "Volker Dehs",
+          "coverId": "ol:3217366",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503581",
+          "coverIsbn": "3499503581"
+        },
+        {
+          "id": "OL10043318W",
+          "title": "Janusz Korczak",
+          "author": "Wolfgang Pelzer",
+          "coverId": "ol:3217367",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950362X",
+          "coverIsbn": "349950362X"
+        },
+        {
+          "id": "OL4662725W",
+          "title": "Heinar Kipphardt",
+          "author": "Adolf Stock",
+          "coverId": "ol:2210576",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503646",
+          "coverIsbn": "3499503646"
+        },
+        {
+          "id": "OL4729249W",
+          "title": "Ingmar Bergman",
+          "author": "Eckhard Weise",
+          "coverId": "ol:2210577",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503662",
+          "coverIsbn": "3499503662"
+        },
+        {
+          "id": "OL4231791W",
+          "title": "Peter Weiss",
+          "author": "Jochen Vogt",
+          "coverId": "ol:2210578",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503670",
+          "coverIsbn": "3499503670"
+        },
+        {
+          "id": "OL2076193W",
+          "title": "Astrid Lindgren",
+          "author": "Sybil Gräfin Schönfeldt",
+          "coverId": "ol:2210579",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503719",
+          "coverIsbn": "3499503719"
+        },
+        {
+          "id": "OL3848814W",
+          "title": "André Breton",
+          "author": "Volker Zotz",
+          "coverId": "ol:3217368",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503743",
+          "coverIsbn": "3499503743"
+        },
+        {
+          "id": "OL2584047W",
+          "title": "Meister Eckhart",
+          "author": "Gerhard Wehr",
+          "coverId": "ol:2210580",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950376X",
+          "coverIsbn": "349950376X"
+        },
+        {
+          "id": "OL3100931W",
+          "title": "August Strindberg",
+          "author": "Peter Schütze",
+          "coverId": "ol:8392818",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499503832",
+          "coverIsbn": "3499503832"
+        },
+        {
+          "id": "OL1850488W",
+          "title": "Rahel Levin Varnhagen",
+          "author": "Heidi Thomann Tewarson",
+          "coverId": "ol:10527261",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499504065",
+          "coverIsbn": "3499504065"
+        },
+        {
+          "id": "OL1638084W",
+          "title": "Stefan Zweig",
+          "author": "Hartmut Müller",
+          "coverId": "ol:1014940",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499504138",
+          "coverIsbn": "3499504138"
+        },
+        {
+          "id": "OL4848500W",
+          "title": "Marie Curie",
+          "author": "Peter Ksoll",
+          "coverId": "ol:2210584",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499504170",
+          "coverIsbn": "3499504170"
+        },
+        {
+          "id": "OL3132721W",
+          "title": "Adam Smith",
+          "author": "Gerhard Streminger",
+          "coverId": "ol:3217374",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499504405",
+          "coverIsbn": "3499504405"
+        },
+        {
+          "id": "OL853640W",
+          "title": "Helmut Schmidt",
+          "author": "Harald Steffahn",
+          "coverId": "ol:2210592",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499504448",
+          "coverIsbn": "3499504448"
+        },
+        {
+          "id": "OL3397233W",
+          "title": "Federico Fellini",
+          "author": "Michael Töteberg",
+          "coverId": "ol:2210597",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499504553",
+          "coverIsbn": "3499504553"
+        },
+        {
+          "id": "OL19077011W",
+          "title": "Die Schwestern Brontë",
+          "author": "Werner Waldmann",
+          "coverId": "ol:8392823",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499504561",
+          "coverIsbn": "3499504561"
+        },
+        {
+          "id": "OL4044032W",
+          "title": "Lou Andreas-Salomé",
+          "author": "Linde Salber",
+          "coverId": "ol:2210603",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499504634",
+          "coverIsbn": "3499504634"
         }
       ]
     }
