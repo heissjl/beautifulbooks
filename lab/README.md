@@ -16,7 +16,7 @@ Experiments:
 
 | Folder | Question | Roadmap | Status |
 |---|---|---|---|
-| `video/` | Can a 15-second clip of a book's covers be built from the data alone? Storyboard pure and tested, render via ffmpeg. | 5.5 | not started; plan in PLAN-struktur §4 |
+| `video/` | Can a 15-second clip of a book's covers be built from the data alone? Storyboard pure and tested, render via ffmpeg. | 5.5 | **built** 2026-09-27: Dune and Gatsby rendered as frames and WebP preview, 30 s cold for Dune, zero Google; no MP4 until ffmpeg is installed; see [video/README.md](video/README.md) |
 | `mosaic/` | Can one picture — a shadowy motif — be built from a book's covers as tiles, good enough for Instagram or Pinterest? Assignment pure and tested, render with pngjs. | 5.5 | **works**, measured 2026-09-08; see [mosaic/README.md](mosaic/README.md) |
 | `curate/` | Which cover of a work is the good one? A local click-through tool; also the seed of the mini-game. | 6.18, 5.8 | in use since 2026-09-08; 105 works picked |
 | `collections/` | Thematische Sammlungen kuratieren: Autorinnen oder Verlagsreihe als Grenze, Kandidaten je Name, Cover wählen, Reihenfolge ziehen; Vorschläge von Freunden übernehmen. Schreibt `data/collections.json`. | 5.10, 5.10a | gebaut 2026-09-24; see [collections/README.md](collections/README.md) |
