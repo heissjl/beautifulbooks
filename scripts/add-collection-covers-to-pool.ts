@@ -1,7 +1,12 @@
 /**
  * Adds the covers of the thematic collections to the cover game's pool (5.8a, 5.10).
  *
- *   npx tsx scripts/add-collection-covers-to-pool.ts [--images=<scratch dir>]
+ *   npx tsx scripts/add-collection-covers-to-pool.ts [--add=<slug,slug…>] [--images=<scratch dir>]
+ *
+ * Which collections: the ones the pool already draws from, plus `--add`
+ * (Julian, 2026-09-27: „füge die cover von den collections jai lu, denoel,
+ * folio, spektrum, heyne und alle von heinz edelmann dem versus game hinzu").
+ * The very first run took every collection but LEFT_OUT.
  *
  * Julian, 2026-09-26: „nimm die cover der collections (außer suhrkamp autoren,
  * edition suhrkamp, national library) mit in das versus game". The pool stays
@@ -69,19 +74,29 @@ const sigOf = new Map<string, DesignSignature>(index.covers.map(row => [row[1], 
 const inPool = new Set(base.map(c => c.id));
 const candidates: PoolCover[] = [];
 const seen = new Set<string>();
-const from = records.filter(r => !LEFT_OUT.includes(r.slug));
+const ADD = (process.argv.find(a => a.startsWith('--add='))?.slice('--add='.length) ?? '').split(',').filter(Boolean);
+const earlierFrom = pool.collections?.from;
+const wanted = earlierFrom ? new Set([...earlierFrom, ...ADD]) : null;
+const from = records.filter(r => (wanted ? wanted.has(r.slug) : !LEFT_OUT.includes(r.slug)) && !LEFT_OUT.includes(r.slug));
 for (const r of from) {
   for (const w of r.works) {
-    if (!/^ol:\d+$/.test(w.coverId) || inPool.has(w.coverId) || seen.has(w.coverId)) continue;
-    seen.add(w.coverId);
-    candidates.push({ id: w.coverId, workId: w.coverWork ?? w.id, title: w.title, author: w.author });
+    // A site-served picture (the Jules Verne and Tolkien stopgap) plays under an id naming its file.
+    const local = !/^ol:\d+$/.test(w.coverId) && w.image ? `local:${w.image.replace('/collection-covers/', '').replace(/\.jpg$/, '')}` : null;
+    const id = local ?? w.coverId;
+    if ((!local && !/^ol:\d+$/.test(w.coverId)) || inPool.has(id) || seen.has(id)) continue;
+    seen.add(id);
+    candidates.push({ id, workId: w.coverWork ?? w.id, title: w.title, author: w.author, ...(local ? { image: w.image } : {}) });
   }
 }
 
 let fetched = 0;
 const silent = new Set<string>();
 
-async function bytesOf(id: string): Promise<Uint8Array | null> {
+async function bytesOf(id: string, image?: string): Promise<Uint8Array | null> {
+  if (image) {
+    const file = join(ROOT, 'public', image);
+    return existsSync(file) ? new Uint8Array(readFileSync(file)) : null;
+  }
   const file = IMAGES ? join(IMAGES, `${id.replace(':', '_')}.jpg`) : null;
   if (file && existsSync(file)) return new Uint8Array(readFileSync(file));
   const url = coverUrlFor(id, 'L');
@@ -107,7 +122,7 @@ async function look(cover: PoolCover): Promise<void> {
   const cached = measures[cover.id];
   const needBytes = !cached || cached.blur === undefined || !sigOf.has(cover.id);
   if (!needBytes) return;
-  const bytes = await bytesOf(cover.id);
+  const bytes = await bytesOf(cover.id, cover.image);
   const image = bytes ? decode(bytes) : null;
   if (!bytes || !image) { silent.add(cover.id); return; }
   if (!cached || cached.blur === undefined) measures[cover.id] = measureCover(image);

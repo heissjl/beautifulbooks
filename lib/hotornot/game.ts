@@ -255,15 +255,25 @@ export interface PairSide {
   href: string;
 }
 
+/** Where a pool cover's picture comes from: the site's own file, or the image route. */
+function coverSrc(cover: PoolCover | undefined, id: string, size: 'M' | 'L'): string {
+  return cover?.image ?? imagePath(id, size);
+}
+
+/** Where a pool cover links to: its share page, or the wall of its work for a site-served picture. */
+function coverHref(cover: Pick<PoolCover, 'workId' | 'image'>, id: string): string {
+  return cover.image ? `/book/${cover.workId}` : bookPath(cover.workId, id);
+}
+
 function side(pool: VersusPool, id: string): PairSide {
   const cover = pool.covers.find(c => c.id === id);
   return {
     id,
     workId: cover?.workId ?? '',
-    src: imagePath(id, 'L'),
+    src: coverSrc(cover, id, 'L'),
     title: cover?.title ?? '',
     author: cover?.author ?? '',
-    href: cover ? bookPath(cover.workId, id) : '',
+    href: cover ? coverHref(cover, id) : '',
   };
 }
 
@@ -436,7 +446,7 @@ export async function castVote(
   const cover = pool.covers.find(c => c.id === vote.winner);
   if (!cover) return { ok: true };
   const { id, workId, title, author } = cover;
-  return { ok: true, chosen: { id, workId, title, author, href: bookPath(workId, id) } };
+  return { ok: true, chosen: { id, workId, title, author, href: coverHref(cover, id) } };
 }
 
 /**
@@ -508,8 +518,8 @@ export async function board(
   const wins = new Map<string, number>();
   for (const v of votes) wins.set(v.winner, (wins.get(v.winner) ?? 0) + 1);
   const entry = (s: Standing): BoardEntry => {
-    const c = meta.get(s.id) ?? { id: s.id, workId: '', title: '', author: '' };
-    return { ...c, ...s, src: imagePath(s.id, 'M'), wins: wins.get(s.id) ?? 0 };
+    const c: PoolCover = meta.get(s.id) ?? { id: s.id, workId: '', title: '', author: '' };
+    return { ...c, ...s, src: coverSrc(c, s.id, 'M'), wins: wins.get(s.id) ?? 0 };
   };
   const top = table.slice(0, topCount);
   const bottom = table.slice(-bottomCount).reverse();

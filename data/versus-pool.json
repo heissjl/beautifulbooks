@@ -1,6 +1,6 @@
 {
  "name": "mix-2000-paperwhite-collections",
- "builtAt": "2026-09-26",
+ "builtAt": "2026-09-27",
  "indexBuiltAt": "2026-09-26",
  "inherits": [
   "mix-200-paperwhite",
@@ -14612,10 +14612,10 @@
    "author": "Charles Dickens"
   },
   {
-   "id": "ol:12457803",
-   "workId": "OL1100007W",
-   "title": "Around the World in Eighty Days",
-   "author": "Jules Verne"
+   "id": "ol:12667806",
+   "workId": "OL66513W",
+   "title": "Emma",
+   "author": "Jane Austen"
   },
   {
    "id": "ol:8753570",
@@ -14624,10 +14624,16 @@
    "author": "Jonathan Swift"
   },
   {
-   "id": "ol:12667806",
-   "workId": "OL66513W",
-   "title": "Emma",
-   "author": "Jane Austen"
+   "id": "ol:12457803",
+   "workId": "OL1100007W",
+   "title": "Around the World in Eighty Days",
+   "author": "Jules Verne"
+  },
+  {
+   "id": "ol:8996345",
+   "workId": "OL53908W",
+   "title": "The Adventures of Huckleberry Finn",
+   "author": "Mark Twain"
   },
   {
    "id": "ol:12667828",
@@ -14718,12 +14724,6 @@
    "workId": "OL262421W",
    "title": "The Adventures of Sherlock Holmes",
    "author": "Arthur Conan Doyle"
-  },
-  {
-   "id": "ol:8996345",
-   "workId": "OL53908W",
-   "title": "The Adventures of Huckleberry Finn",
-   "author": "Mark Twain"
   },
   {
    "id": "ol:8765645",
@@ -16430,6 +16430,34 @@
    "author": "J.R.R. Tolkien"
   },
   {
+   "id": "local:tolkien-covers-by-heinz-edelmann/no-04",
+   "workId": "OL27513W",
+   "title": "Die Gefährten (1980)",
+   "author": "J.R.R. Tolkien",
+   "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-04.jpg"
+  },
+  {
+   "id": "local:tolkien-covers-by-heinz-edelmann/no-05",
+   "workId": "OL27479W",
+   "title": "Die zwei Türme (1980)",
+   "author": "J.R.R. Tolkien",
+   "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-05.jpg"
+  },
+  {
+   "id": "local:tolkien-covers-by-heinz-edelmann/no-06",
+   "workId": "OL27455W",
+   "title": "Die Rückkehr des Königs (1980)",
+   "author": "J.R.R. Tolkien",
+   "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-06.jpg"
+  },
+  {
+   "id": "local:tolkien-covers-by-heinz-edelmann/no-07",
+   "workId": "OL27512W",
+   "title": "Baum und Blatt",
+   "author": "J.R.R. Tolkien",
+   "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-07.jpg"
+  },
+  {
    "id": "ol:10555558",
    "workId": "OL1364647W",
    "title": "Marx-Chronik",
@@ -16550,10 +16578,143 @@
    "author": "Alfred Schmidt"
   },
   {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-01",
+   "workId": "OL1099513W",
+   "title": "Reise zum Mittelpunkt der Erde",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-01.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-02",
+   "workId": "OL1099380W",
+   "title": "Fünf Wochen im Ballon",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-02.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-03",
+   "workId": "OL1099364W",
+   "title": "Die Kinder des Kapitäns Grant",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-03.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-04",
+   "workId": "OL1099479W",
+   "title": "Von der Erde zum Mond",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-04.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-05",
+   "workId": "OL1100020W",
+   "title": "Reise um den Mond",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-05.jpg"
+  },
+  {
    "id": "ol:8806397",
    "workId": "OL20160863W",
    "title": "20000 Meilen unter den Meeren",
    "author": "Jules Verne"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-07",
+   "workId": "OL1100007W",
+   "title": "Reise um die Erde in 80 Tagen",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-07.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-08",
+   "workId": "OL1099915W",
+   "title": "Die geheimnisvolle Insel",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-08.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-09",
+   "workId": "OL1099641W",
+   "title": "Der Kurier des Zaren",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-09.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-10",
+   "workId": "OL1099959W",
+   "title": "Die 500 Millionen der Begum",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-10.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-11",
+   "workId": "OL1099968W",
+   "title": "Der Schuss am Kilimandscharo",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-11.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-12",
+   "workId": "OL1099965W",
+   "title": "Der Stahlelefant",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-12.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-13",
+   "workId": "OL1099954W",
+   "title": "Keraban der Starrkopf",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-13.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-14",
+   "workId": "OL1099903W",
+   "title": "Das Karpatenschloss",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-14.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-15",
+   "workId": "OL1099647W",
+   "title": "Meister Antifers wunderbare Abenteuer",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-15.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-16",
+   "workId": "OL1100004W",
+   "title": "Zwei Jahre Ferien",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-16.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-17",
+   "workId": "OL1099898W",
+   "title": "Die Jagd nach dem Meteor",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-17.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-18",
+   "workId": "OL1099854W",
+   "title": "Die Propellerinsel",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-18.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-19",
+   "workId": "OL1100005W",
+   "title": "Reise durch das Sonnensystem",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-19.jpg"
+  },
+  {
+   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-20",
+   "workId": "OL1099908W",
+   "title": "Die Eissphinx",
+   "author": "Jules Verne",
+   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-20.jpg"
   },
   {
    "id": "ol:10421448",
@@ -17604,6 +17765,12 @@
    "workId": "OL56257W",
    "title": "Deryni Checkmate",
    "author": "Katherine Kurtz"
+  },
+  {
+   "id": "ol:8774671",
+   "workId": "OL15050840W",
+   "title": "Beyond the fields we know",
+   "author": "Lord Dunsany"
   },
   {
    "id": "ol:10235410",
@@ -19026,10 +19193,1894 @@
    "workId": "OL2262056W",
    "title": "Das Wilde Karnten",
    "author": "Josef Winkler"
+  },
+  {
+   "id": "ol:8827692",
+   "workId": "OL20180138W",
+   "title": "SCHWERE WELTEN",
+   "author": "Hal Clement"
+  },
+  {
+   "id": "ol:10080998",
+   "workId": "OL20788766W",
+   "title": "Eine Handvoll Venus Und Ehrbare Kaufleute Science Fiction Roman",
+   "author": "Frederik Pohl"
+  },
+  {
+   "id": "ol:8757118",
+   "workId": "OL20091438W",
+   "title": "DER UNGLAUBLICHE PLANET (The Incredible Planet -- in German)",
+   "author": ""
+  },
+  {
+   "id": "ol:8791856",
+   "workId": "OL20146223W",
+   "title": "Ich bin Legende",
+   "author": ""
+  },
+  {
+   "id": "ol:8753111",
+   "workId": "OL20083575W",
+   "title": "Das Forschungsteam. Die Hugo Gernsback- Preisträger 1955-1961.",
+   "author": ""
+  },
+  {
+   "id": "ol:10188714",
+   "workId": "OL20869561W",
+   "title": "Das elektrische Krokodil.",
+   "author": "David G. Compton"
+  },
+  {
+   "id": "ol:12392846",
+   "workId": "OL26427593W",
+   "title": "Angoulême",
+   "author": ""
+  },
+  {
+   "id": "ol:10301515",
+   "workId": "OL20934280W",
+   "title": "Die letzten und die ersten Menschen. Eine Geschichte der nahen und fernen Zukunft.",
+   "author": ""
+  },
+  {
+   "id": "ol:15178217",
+   "workId": "OL16928480W",
+   "title": "The third ear",
+   "author": "Curt Siodmak"
+  },
+  {
+   "id": "ol:11996709",
+   "workId": "OL59861W",
+   "title": "The Wind's Twelve Quarters",
+   "author": "Ursula K. Le Guin"
+  },
+  {
+   "id": "ol:15159661",
+   "workId": "OL2270689W",
+   "title": "Das Königsprojekt",
+   "author": "Carl Amery"
+  },
+  {
+   "id": "ol:10459968",
+   "workId": "OL3290738W",
+   "title": "Sirius",
+   "author": "Olaf Stapledon"
+  },
+  {
+   "id": "ol:14409256",
+   "workId": "OL14868264W",
+   "title": "More Than Human",
+   "author": "Theodore Sturgeon"
+  },
+  {
+   "id": "ol:8778433",
+   "workId": "OL20125550W",
+   "title": "Der Krieg mit den Molchen. Science-fiction-Roman",
+   "author": ""
+  },
+  {
+   "id": "ol:8762313",
+   "workId": "OL59848W",
+   "title": "The Compass Rose",
+   "author": "Ursula K. Le Guin"
+  },
+  {
+   "id": "ol:10541887",
+   "workId": "OL2626638W",
+   "title": "A Canticle for Leibowitz",
+   "author": "Walter M. Miller Jr."
+  },
+  {
+   "id": "ol:10431902",
+   "workId": "OL22063686W",
+   "title": "Helliconia",
+   "author": ""
+  },
+  {
+   "id": "ol:10203056",
+   "workId": "OL20879413W",
+   "title": "Todeswelten",
+   "author": ""
+  },
+  {
+   "id": "ol:8785311",
+   "workId": "OL20134513W",
+   "title": "Der Gewissensfall.",
+   "author": ""
+  },
+  {
+   "id": "ol:10290675",
+   "workId": "OL20920227W",
+   "title": "Mutant 59",
+   "author": "Kit Pedler"
+  },
+  {
+   "id": "ol:13646099",
+   "workId": "OL34857427W",
+   "title": "Der Spiegel des Beobachters",
+   "author": ""
+  },
+  {
+   "id": "ol:8829470",
+   "workId": "OL20181721W",
+   "title": "Mars Odyssee",
+   "author": ""
+  },
+  {
+   "id": "ol:10299258",
+   "workId": "OL20925849W",
+   "title": "C.R.U.P.P. 2 Romane",
+   "author": ""
+  },
+  {
+   "id": "ol:8750494",
+   "workId": "OL46390W",
+   "title": "The Foundation Trilogy",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:8776756",
+   "workId": "OL20122780W",
+   "title": "Von Wells bis Stapledon (Wege zur Science Fiction, #3)",
+   "author": ""
+  },
+  {
+   "id": "ol:10291006",
+   "workId": "OL20920467W",
+   "title": "Wege zur Science Fiction 7. Von Ellison bis Haldeman",
+   "author": ""
+  },
+  {
+   "id": "ol:10291008",
+   "workId": "OL20920469W",
+   "title": "Wege zur Science Fiction 8. Von Matheson bis Shaw",
+   "author": ""
+  },
+  {
+   "id": "ol:10291010",
+   "workId": "OL20920471W",
+   "title": "Wege Zur Science Fiction 9",
+   "author": "James E. Gunn"
+  },
+  {
+   "id": "ol:9934250",
+   "workId": "OL20780689W",
+   "title": "Von Malzberg bis Benford",
+   "author": ""
+  },
+  {
+   "id": "ol:3202498",
+   "workId": "OL16244644W",
+   "title": "Wege zur Science Fiction 11. Von Shelley bis Clark",
+   "author": "James E. Gunn"
+  },
+  {
+   "id": "ol:3202741",
+   "workId": "OL16244645W",
+   "title": "Wege zur Science Fiction 12. Von Ballard bis Stableford",
+   "author": "James E. Gunn"
+  },
+  {
+   "id": "ol:12157458",
+   "workId": "OL76394W",
+   "title": "A G. K. Chesterton omnibus",
+   "author": "Gilbert Keith Chesterton"
+  },
+  {
+   "id": "ol:967062",
+   "workId": "OL652911W",
+   "title": "La condition humaine",
+   "author": "André Malraux"
+  },
+  {
+   "id": "ol:967064",
+   "workId": "OL10267W",
+   "title": "Vol de nuit",
+   "author": "Antoine de Saint-Exupéry"
+  },
+  {
+   "id": "ol:3075053",
+   "workId": "OL1327011W",
+   "title": "Les Poissons Rouges Ou Mon Pere Ce Hero",
+   "author": "Jean Anouilh"
+  },
+  {
+   "id": "ol:967065",
+   "workId": "OL385112W",
+   "title": "Le vieil homme et la mer",
+   "author": "Ernest Hemingway"
+  },
+  {
+   "id": "ol:2136555",
+   "workId": "OL1270094W",
+   "title": "La reine morte",
+   "author": "Henry de Montherlant"
+  },
+  {
+   "id": "ol:3075054",
+   "workId": "OL8971730W",
+   "title": "Emmene-Moi Au Bout Du Monde!",
+   "author": "Blaise Cendrars"
+  },
+  {
+   "id": "ol:967070",
+   "workId": "OL630884W",
+   "title": "La Symphonie pastoral",
+   "author": "André Gide"
+  },
+  {
+   "id": "ol:967074",
+   "workId": "OL1098844W",
+   "title": "Annonce Faite a Marie, L'",
+   "author": "Paul Claudel"
+  },
+  {
+   "id": "ol:14053415",
+   "workId": "OL1287903W",
+   "title": "Voyage au bout de la nuit",
+   "author": "Louis-Ferdinand Céline"
+  },
+  {
+   "id": "ol:967077",
+   "workId": "OL3388827W",
+   "title": "Monsieur Jadis ou l'école du soir",
+   "author": "Antoine Blondin"
+  },
+  {
+   "id": "ol:9249488",
+   "workId": "OL23204W",
+   "title": "Of Mice and Men",
+   "author": "John Steinbeck"
+  },
+  {
+   "id": "ol:11589222",
+   "workId": "OL267096W",
+   "title": "Анна Каренина",
+   "author": "Leo Tolstoy"
+  },
+  {
+   "id": "ol:12174565",
+   "workId": "OL8543729W",
+   "title": "Choses Vues 1847-1848",
+   "author": "Victor Hugo"
+  },
+  {
+   "id": "ol:967083",
+   "workId": "OL157523W",
+   "title": "Le cheval blanc",
+   "author": "Elsa Triolet"
+  },
+  {
+   "id": "ol:967084",
+   "workId": "OL1226032W",
+   "title": "Chien Blanc",
+   "author": "Romain Gary"
+  },
+  {
+   "id": "ol:967086",
+   "workId": "OL4489211W",
+   "title": "La mort dans l'ame",
+   "author": "Jean-Paul Sartre"
+  },
+  {
+   "id": "ol:967087",
+   "workId": "OL1992198W",
+   "title": "In Cold Blood",
+   "author": "Truman Capote"
+  },
+  {
+   "id": "ol:967088",
+   "workId": "OL8551940W",
+   "title": "Knock",
+   "author": "Jules Romains"
+  },
+  {
+   "id": "ol:967092",
+   "workId": "OL1319822W",
+   "title": "Les poneys sauvages",
+   "author": "Michel Déon"
+  },
+  {
+   "id": "ol:967093",
+   "workId": "OL74718W",
+   "title": "Nadja",
+   "author": "André Breton"
+  },
+  {
+   "id": "ol:10559452",
+   "workId": "OL498556W",
+   "title": "Metamorphosis",
+   "author": "Franz Kafka"
+  },
+  {
+   "id": "ol:967095",
+   "workId": "OL258301W",
+   "title": "Доктор Живаго",
+   "author": "Boris Pasternak"
+  },
+  {
+   "id": "ol:2136556",
+   "workId": "OL8972007W",
+   "title": "Sauve Qui Peut",
+   "author": "Jean-Jacques Sempé"
+  },
+  {
+   "id": "ol:12186494",
+   "workId": "OL29549062W",
+   "title": "À l'ombre des jeunes filles en fleurs",
+   "author": "Marcel Proust"
+  },
+  {
+   "id": "ol:3075055",
+   "workId": "OL1226638W",
+   "title": "Aventure de Catherine Crachat, tome 1",
+   "author": "Pierre Jean Jouve"
+  },
+  {
+   "id": "ol:10397379",
+   "workId": "OL1381586W",
+   "title": "Le planétarium",
+   "author": "Nathalie Sarraute"
+  },
+  {
+   "id": "ol:967102",
+   "workId": "OL1364438W",
+   "title": "Zazie dans le Métro",
+   "author": "Raymond Queneau"
+  },
+  {
+   "id": "ol:11517335",
+   "workId": "OL1278031W",
+   "title": "Spectacle",
+   "author": "Jacques Prévert"
+  },
+  {
+   "id": "ol:967105",
+   "workId": "OL8972044W",
+   "title": "La Loi",
+   "author": "Roger Vailland"
+  },
+  {
+   "id": "ol:967106",
+   "workId": "OL5570845W",
+   "title": "Z",
+   "author": "Vassilis Vassilikos"
+  },
+  {
+   "id": "ol:11668121",
+   "workId": "OL24838922W",
+   "title": "Le Lys dans la vallée",
+   "author": "Honoré de Balzac"
+  },
+  {
+   "id": "ol:3075056",
+   "workId": "OL8997397W",
+   "title": "Tant Que La Terre Durera 1",
+   "author": "Henri Troyat"
+  },
+  {
+   "id": "ol:967114",
+   "workId": "OL7921525W",
+   "title": "LA Retraite Sentimentale",
+   "author": "Colette"
+  },
+  {
+   "id": "ol:967116",
+   "workId": "OL767918W",
+   "title": "Une mort tres douce",
+   "author": "Simone de Beauvoir"
+  },
+  {
+   "id": "ol:3075057",
+   "workId": "OL8972065W",
+   "title": "Les Thibault 2",
+   "author": "Roger Martin du Gard"
+  },
+  {
+   "id": "ol:967119",
+   "workId": "OL8586524W",
+   "title": "Le chemin des écoliers",
+   "author": "Marcel Aymé"
+  },
+  {
+   "id": "ol:3075058",
+   "workId": "OL8972606W",
+   "title": "Le Feu Follet D'Adieu a Gonzagu",
+   "author": "Pierre Drieu la Rochelle"
+  },
+  {
+   "id": "ol:3075059",
+   "workId": "OL9919337W",
+   "title": "Le Quai DES Brumes",
+   "author": "Pierre Mac Orlan"
+  },
+  {
+   "id": "ol:3075061",
+   "workId": "OL7548730W",
+   "title": "Le Mas Theotime",
+   "author": "Henri Bosco"
+  },
+  {
+   "id": "ol:967132",
+   "workId": "OL8068266W",
+   "title": "La Rose de Java",
+   "author": "Joseph Kessel"
+  },
+  {
+   "id": "ol:2136558",
+   "workId": "OL8970620W",
+   "title": "Magiciennes, Les",
+   "author": "Boileau-Narcejac"
+  },
+  {
+   "id": "ol:967137",
+   "workId": "OL14857469W",
+   "title": "L'Amour conjugal",
+   "author": "Alberto Moravia"
+  },
+  {
+   "id": "ol:2136559",
+   "workId": "OL52114W",
+   "title": "The War of the Worlds",
+   "author": "H. G. Wells"
+  },
+  {
+   "id": "ol:13063375",
+   "workId": "OL80739W",
+   "title": "Les rêveries du promeneur solitaire",
+   "author": "Jean-Jacques Rousseau"
+  },
+  {
+   "id": "ol:9935572",
+   "workId": "OL159497W",
+   "title": "Les Petits chevaux de Tarquinia",
+   "author": "Marguerite Duras"
+  },
+  {
+   "id": "ol:967143",
+   "workId": "OL8418138W",
+   "title": "Anicet",
+   "author": "Louis Aragon"
+  },
+  {
+   "id": "ol:967144",
+   "workId": "OL14861970W",
+   "title": "Deux cavaliers de l'orage",
+   "author": "Jean Giono"
+  },
+  {
+   "id": "ol:967148",
+   "workId": "OL49966W",
+   "title": "La statue de sel",
+   "author": "Albert Memmi"
+  },
+  {
+   "id": "ol:3075063",
+   "workId": "OL8972356W",
+   "title": "Piege Pour Cendrillon",
+   "author": "Sébastien Japrisot"
+  },
+  {
+   "id": "ol:3075064",
+   "workId": "OL144669W",
+   "title": "Léon Morin, prêtre",
+   "author": "Béatrix Beck"
+  },
+  {
+   "id": "ol:967152",
+   "workId": "OL1261372W",
+   "title": "Le caporal épinglé",
+   "author": "Jacques Perret"
+  },
+  {
+   "id": "ol:967154",
+   "workId": "OL8971739W",
+   "title": "Fermina Márquez",
+   "author": "Valéry Larbaud"
+  },
+  {
+   "id": "ol:13897219",
+   "workId": "OL19769306W",
+   "title": "Histoire d'un amour",
+   "author": "Roger Nimier"
+  },
+  {
+   "id": "ol:967161",
+   "workId": "OL1272994W",
+   "title": "Kaputt",
+   "author": "Curzio Malaparte"
+  },
+  {
+   "id": "ol:967162",
+   "workId": "OL1450059W",
+   "title": "Ravage",
+   "author": "René Barjavel"
+  },
+  {
+   "id": "ol:967167",
+   "workId": "OL8972089W",
+   "title": "Le Lis De Mer",
+   "author": "André Pieyre de Mandiargues"
+  },
+  {
+   "id": "ol:2136564",
+   "workId": "OL9184883W",
+   "title": "Creezy",
+   "author": "Félicien Marceau"
+  },
+  {
+   "id": "ol:967170",
+   "workId": "OL8971759W",
+   "title": "L'enfant de la haute mer",
+   "author": "Jules Supervielle"
+  },
+  {
+   "id": "ol:3075066",
+   "workId": "OL8986321W",
+   "title": "Les fous de Dieu",
+   "author": "Jean-Pierre Chabrol"
+  },
+  {
+   "id": "ol:967173",
+   "workId": "OL8972096W",
+   "title": "Au Bon Beurre Ou Dix Ans De La Vie D'UN Cremier",
+   "author": "Jean Dutourd"
+  },
+  {
+   "id": "ol:967174",
+   "workId": "OL261866W",
+   "title": "Tropic of Cancer",
+   "author": "Henry Miller"
+  },
+  {
+   "id": "ol:967175",
+   "workId": "OL8445854W",
+   "title": "Le Pelerinage Aux Sources",
+   "author": "Lanza Del Vasto"
+  },
+  {
+   "id": "ol:10906658",
+   "workId": "OL24375633W",
+   "title": "Les aveux infidèles",
+   "author": "Jacques de Bourbon Busset"
+  },
+  {
+   "id": "ol:10617689",
+   "workId": "OL24189848W",
+   "title": "L'Idiot ...",
+   "author": "Fyodor Dostoevsky"
+  },
+  {
+   "id": "ol:967178",
+   "workId": "OL7050906W",
+   "title": "Le grand voyage",
+   "author": "Jorge Semprún"
+  },
+  {
+   "id": "ol:3075067",
+   "workId": "OL9104830W",
+   "title": "La Maison de Bernarda Alba. Noce de sang",
+   "author": "Federico García Lorca"
+  },
+  {
+   "id": "ol:3075070",
+   "workId": "OL80342W",
+   "title": "Les enfants humiliés",
+   "author": "Georges Bernanos"
+  },
+  {
+   "id": "ol:10482927",
+   "workId": "OL22659408W",
+   "title": "Tournesol",
+   "author": "Thérèse de Saint Phalle"
+  },
+  {
+   "id": "ol:967192",
+   "workId": "OL8972106W",
+   "title": "Les Choses De La Vie",
+   "author": "Paul Guimard"
+  },
+  {
+   "id": "ol:2136569",
+   "workId": "OL9281016W",
+   "title": "Trou, Le",
+   "author": "Jose Giovanni"
+  },
+  {
+   "id": "ol:967194",
+   "workId": "OL19926W",
+   "title": "The Second Jungle Book",
+   "author": "Rudyard Kipling"
+  },
+  {
+   "id": "ol:967204",
+   "workId": "OL8972111W",
+   "title": "Au-dessous du volcan",
+   "author": "Malcolm Lowry"
+  },
+  {
+   "id": "ol:967205",
+   "workId": "OL1728017W",
+   "title": "Le procès-verbal",
+   "author": "J. M. G. Le Clézio"
+  },
+  {
+   "id": "ol:11738290",
+   "workId": "OL11078753W",
+   "title": "Vercoquin et le plancton",
+   "author": "Boris Vian"
+  },
+  {
+   "id": "ol:967219",
+   "workId": "OL8972138W",
+   "title": "La 317e section",
+   "author": "Schoendoerffer"
+  },
+  {
+   "id": "ol:12346610",
+   "workId": "OL261791W",
+   "title": "Tremor of Intent",
+   "author": "Anthony Burgess"
+  },
+  {
+   "id": "ol:967222",
+   "workId": "OL45868W",
+   "title": "Someone Like You [18 stories]",
+   "author": "Roald Dahl"
+  },
+  {
+   "id": "ol:967224",
+   "workId": "OL37089W",
+   "title": "Kosmos",
+   "author": "Witold Gombrowicz"
+  },
+  {
+   "id": "ol:3075080",
+   "workId": "OL9240008W",
+   "title": "Vue De La Terre Promise",
+   "author": "Georges Duhamel"
+  },
+  {
+   "id": "ol:3075081",
+   "workId": "OL702066W",
+   "title": "La Prison maritime",
+   "author": "Michel Mohrt"
+  },
+  {
+   "id": "ol:10442916",
+   "workId": "OL15723140W",
+   "title": "The Spy Who Came in from the Cold",
+   "author": "John le Carré"
+  },
+  {
+   "id": "ol:967229",
+   "workId": "OL16108252W",
+   "title": "Typhon",
+   "author": "Joseph Conrad"
+  },
+  {
+   "id": "ol:967576",
+   "workId": "OL6141469W",
+   "title": "Le retour de Silbermann",
+   "author": "Jacques de Lacretelle"
+  },
+  {
+   "id": "ol:3075084",
+   "workId": "OL1164838W",
+   "title": "Le petit arpent du Bon Dieu",
+   "author": "Erskine Caldwell"
+  },
+  {
+   "id": "ol:3075085",
+   "workId": "OL9803386W",
+   "title": "Préméditation",
+   "author": "Francis Iles"
+  },
+  {
+   "id": "ol:3075088",
+   "workId": "OL1127580W",
+   "title": "Mémoires d'un tricheur",
+   "author": "Sacha Guitry"
+  },
+  {
+   "id": "ol:967236",
+   "workId": "OL638940W",
+   "title": "Lage Dhomme Precede De La Litterature",
+   "author": "Michel Leiris"
+  },
+  {
+   "id": "ol:967239",
+   "workId": "OL2276525W",
+   "title": "La Conscience de Zeno",
+   "author": "Italo Svevo"
+  },
+  {
+   "id": "ol:967244",
+   "workId": "OL276960W",
+   "title": "Las armas secretas",
+   "author": "Julio Cortázar"
+  },
+  {
+   "id": "ol:3075091",
+   "workId": "OL1677189W",
+   "title": "La maison des Atlantes",
+   "author": "Angelo Rinaldi"
+  },
+  {
+   "id": "ol:967247",
+   "workId": "OL65914W",
+   "title": "Les\\Anges Vagabonds",
+   "author": "Jack Kerouac"
+  },
+  {
+   "id": "ol:3075094",
+   "workId": "OL15300693W",
+   "title": "Le Fils de la servante",
+   "author": "August Strindberg"
+  },
+  {
+   "id": "ol:11007981",
+   "workId": "OL24433876W",
+   "title": "Avant que le coq chante",
+   "author": "Cesare Pavese"
+  },
+  {
+   "id": "ol:13083245",
+   "workId": "OL17365W",
+   "title": "2001",
+   "author": "Arthur C. Clarke"
+  },
+  {
+   "id": "ol:8541241",
+   "workId": "OL14868264W",
+   "title": "More Than Human",
+   "author": "Theodore Sturgeon"
+  },
+  {
+   "id": "ol:981204",
+   "workId": "OL14868272W",
+   "title": "Los Cristales Sonadores",
+   "author": "Theodore Sturgeon"
+  },
+  {
+   "id": "ol:7255049",
+   "workId": "OL16802774W",
+   "title": "The Pawns of Null-A",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:10618253",
+   "workId": "OL46401W",
+   "title": "The Caves of Steel",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:10132905",
+   "workId": "OL14868266W",
+   "title": "Killdozer - le viol cosmique",
+   "author": "Theodore Sturgeon"
+  },
+  {
+   "id": "ol:10715855",
+   "workId": "OL24235555W",
+   "title": "L'affaire charles dexter ward",
+   "author": "H.P. Lovecraft"
+  },
+  {
+   "id": "ol:8599307",
+   "workId": "OL19797702W",
+   "title": "Shambleau, and others",
+   "author": "C. L. Moore"
+  },
+  {
+   "id": "ol:981210",
+   "workId": "OL9007224W",
+   "title": "Empire of the atom",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:8536173",
+   "workId": "OL19622655W",
+   "title": "The Star Kings",
+   "author": "Edmond Hamilton"
+  },
+  {
+   "id": "ol:8771488",
+   "workId": "OL28316W",
+   "title": "This Perfect Day",
+   "author": "Ira Levin"
+  },
+  {
+   "id": "ol:9862625",
+   "workId": "OL20777670W",
+   "title": "The Weapon Shops of Isher",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:2155850",
+   "workId": "OL9007226W",
+   "title": "The Weapon Makers",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:15154462",
+   "workId": "OL46241W",
+   "title": "I, Robot",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:981212",
+   "workId": "OL21814W",
+   "title": "The Book of Ptath",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:8770786",
+   "workId": "OL46398W",
+   "title": "The Naked Sun",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:8356203",
+   "workId": "OL21827W",
+   "title": "The War Against the Rull",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:8066980",
+   "workId": "OL46399W",
+   "title": "The Stars, Like Dust",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:3109960",
+   "workId": "OL6595256W",
+   "title": "Le Retour aux étoiles",
+   "author": "Edmond Hamilton"
+  },
+  {
+   "id": "ol:981180",
+   "workId": "OL15345827W",
+   "title": "Destination Univers",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:10216088",
+   "workId": "OL4088390W",
+   "title": "Time and again",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:8760298",
+   "workId": "OL20097710W",
+   "title": "Isle of the dead",
+   "author": "Roger Zelazny"
+  },
+  {
+   "id": "ol:3109961",
+   "workId": "OL15345924W",
+   "title": "The Darkness on Diamondia",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:10290903",
+   "workId": "OL20920384W",
+   "title": "Hothouse",
+   "author": "Brian W. Aldiss"
+  },
+  {
+   "id": "ol:10513469",
+   "workId": "OL23538532W",
+   "title": "The Universe Maker",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:3109962",
+   "workId": "OL8266425W",
+   "title": "Strange Relations",
+   "author": "Philip José Farmer"
+  },
+  {
+   "id": "ol:10491207",
+   "workId": "OL2172509W",
+   "title": "Solar Lottery",
+   "author": "Philip K. Dick"
+  },
+  {
+   "id": "ol:14632340",
+   "workId": "OL59740W",
+   "title": "Starship Troopers",
+   "author": "Robert A. Heinlein"
+  },
+  {
+   "id": "ol:8752679",
+   "workId": "OL20082839W",
+   "title": "Dr. Bloodmoney",
+   "author": "Philip K. Dick"
+  },
+  {
+   "id": "ol:7284750",
+   "workId": "OL2172403W",
+   "title": "The Man in the High Castle",
+   "author": "Philip K. Dick"
+  },
+  {
+   "id": "ol:3109963",
+   "workId": "OL1960425W",
+   "title": "Nightwings",
+   "author": "Robert Silverberg"
+  },
+  {
+   "id": "ol:981214",
+   "workId": "OL9007223W",
+   "title": "Future Glitter",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:8440333",
+   "workId": "OL19329256W",
+   "title": "Le ressac de l'espace",
+   "author": "Philippe Curval"
+  },
+  {
+   "id": "ol:981183",
+   "workId": "OL4088328W",
+   "title": "Time is the Simplest Thing",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:7284754",
+   "workId": "OL2172429W",
+   "title": "Counter-clock world",
+   "author": "Philip K. Dick"
+  },
+  {
+   "id": "ol:3109964",
+   "workId": "OL6774458W",
+   "title": "Les Galaxiales 1",
+   "author": "Michel Demuth"
+  },
+  {
+   "id": "ol:8760377",
+   "workId": "OL20097820W",
+   "title": "Judgment night",
+   "author": "C. L. Moore"
+  },
+  {
+   "id": "ol:10326442",
+   "workId": "OL21042139W",
+   "title": "The Eyes of the Overworld",
+   "author": "Jack Vance"
+  },
+  {
+   "id": "ol:11090725",
+   "workId": "OL24479130W",
+   "title": "The Dirdir",
+   "author": "Jack Vance"
+  },
+  {
+   "id": "ol:981187",
+   "workId": "OL53403W",
+   "title": "The seedling stars",
+   "author": "James Blish"
+  },
+  {
+   "id": "ol:2155852",
+   "workId": "OL15089908W",
+   "title": "Delirium circus",
+   "author": "Pierre Pelot"
+  },
+  {
+   "id": "ol:8668666",
+   "workId": "OL19862697W",
+   "title": "Univers 11",
+   "author": "ANTHOLOGIE"
+  },
+  {
+   "id": "ol:3109966",
+   "workId": "OL9007238W",
+   "title": "Les épaves de Tycho et autres récits",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:10215221",
+   "workId": "OL20886945W",
+   "title": "Invasion galactique",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:981189",
+   "workId": "OL4088341W",
+   "title": "Ring Around the Sun",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:981191",
+   "workId": "OL14868271W",
+   "title": "Les Talents de Xanadu",
+   "author": "Theodore Sturgeon"
+  },
+  {
+   "id": "ol:8427982",
+   "workId": "OL19193973W",
+   "title": "Avant l'Eden",
+   "author": "Arthur C. Clarke"
+  },
+  {
+   "id": "ol:8443663",
+   "workId": "OL2071405W",
+   "title": "Le monde magique",
+   "author": "Jack Vance"
+  },
+  {
+   "id": "ol:8577999",
+   "workId": "OL4088396W",
+   "title": "Way station",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:981196",
+   "workId": "OL15345835W",
+   "title": "The Silkie",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:14604833",
+   "workId": "OL46157W",
+   "title": "The Martian Way and Other Stories",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:10491732",
+   "workId": "OL22708410W",
+   "title": "L'épreuve de Judith",
+   "author": "Cyrille KASZUK"
+  },
+  {
+   "id": "ol:10215294",
+   "workId": "OL20887003W",
+   "title": "The face in the abyss",
+   "author": "A. Merritt"
+  },
+  {
+   "id": "ol:10103768",
+   "workId": "OL20805168W",
+   "title": "Chasse dangereuse",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:981197",
+   "workId": "OL9007246W",
+   "title": "Imperial Earth",
+   "author": "Arthur C. Clarke"
+  },
+  {
+   "id": "ol:8740683",
+   "workId": "OL19918135W",
+   "title": "Deathworld 1",
+   "author": "Harry Harrison"
+  },
+  {
+   "id": "ol:10535430",
+   "workId": "OL24138400W",
+   "title": "La loi du talion",
+   "author": "Gérard Klein"
+  },
+  {
+   "id": "ol:981199",
+   "workId": "OL4088362W",
+   "title": "Mastodonia",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:8456931",
+   "workId": "OL19343528W",
+   "title": "Renaissance",
+   "author": "Rod Jones"
+  },
+  {
+   "id": "ol:8753653",
+   "workId": "OL20084478W",
+   "title": "Univers 17",
+   "author": "ANTHOLOGIE"
+  },
+  {
+   "id": "ol:8573829",
+   "workId": "OL19664793W",
+   "title": "L'étoile",
+   "author": "Arthur C. Clarke"
+  },
+  {
+   "id": "ol:981201",
+   "workId": "OL15345871W",
+   "title": "Rencontre Cosmique",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:8740777",
+   "workId": "OL19918387W",
+   "title": "L'épouvante",
+   "author": "Daniel Walther"
+  },
+  {
+   "id": "ol:8770203",
+   "workId": "OL1960430W",
+   "title": "Les Monades urbaines",
+   "author": "Robert Silverberg"
+  },
+  {
+   "id": "ol:3109978",
+   "workId": "OL9007233W",
+   "title": "Escarmouche",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:8761499",
+   "workId": "OL20099221W",
+   "title": "L' homme à rebours",
+   "author": "Philippe Curval"
+  },
+  {
+   "id": "ol:13770430",
+   "workId": "OL34945804W",
+   "title": "Rendezvous with Rama",
+   "author": "Arthur C. Clarke"
+  },
+  {
+   "id": "ol:3109979",
+   "workId": "OL15345837W",
+   "title": "L'Eté indien d'une paire de lunettes",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:981225",
+   "workId": "OL1960499W",
+   "title": "Trips",
+   "author": "Robert Silverberg"
+  },
+  {
+   "id": "ol:981226",
+   "workId": "OL15345836W",
+   "title": "Monsters",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:981228",
+   "workId": "OL13951W",
+   "title": "Four for tomorrow",
+   "author": "Roger Zelazny"
+  },
+  {
+   "id": "ol:8765430",
+   "workId": "OL20104674W",
+   "title": "The Black Hole",
+   "author": "Alan Dean Foster"
+  },
+  {
+   "id": "ol:8572906",
+   "workId": "OL19660820W",
+   "title": "Les Legendes du Mythe Cthulhu",
+   "author": ""
+  },
+  {
+   "id": "ol:10145041",
+   "workId": "OL60613W",
+   "title": "Hestia",
+   "author": "C. J. Cherryh"
+  },
+  {
+   "id": "ol:8761916",
+   "workId": "OL4088375W",
+   "title": "The Visitors",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:10483750",
+   "workId": "OL3521965W",
+   "title": "The Sheep Look Up",
+   "author": "John Brunner"
+  },
+  {
+   "id": "ol:10779701",
+   "workId": "OL24281069W",
+   "title": "Dark Is the Sun",
+   "author": "Philip José Farmer"
+  },
+  {
+   "id": "ol:3109982",
+   "workId": "OL15072560W",
+   "title": "Queen of Air and Darkness",
+   "author": "Poul Anderson"
+  },
+  {
+   "id": "ol:12668906",
+   "workId": "OL27686098W",
+   "title": "The Computer Connection",
+   "author": "Alfred Bester"
+  },
+  {
+   "id": "ol:10385063",
+   "workId": "OL60576W",
+   "title": "Hunter of Worlds",
+   "author": "C. J. Cherryh"
+  },
+  {
+   "id": "ol:8418074",
+   "workId": "OL19099393W",
+   "title": "Nos armes sont de miel",
+   "author": "Pierre Pelot"
+  },
+  {
+   "id": "ol:10771156",
+   "workId": "OL24274357W",
+   "title": "Je suis une herbe",
+   "author": "Jacques Mondoloni"
+  },
+  {
+   "id": "ol:8753654",
+   "workId": "OL20084479W",
+   "title": "Sunfall",
+   "author": "C. J. Cherryh"
+  },
+  {
+   "id": "ol:981235",
+   "workId": "OL4088368W",
+   "title": "Project Pope",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:11819014",
+   "workId": "OL24912923W",
+   "title": "Sur l'onde de choc",
+   "author": "John Brunner"
+  },
+  {
+   "id": "ol:11478030",
+   "workId": "OL24739733W",
+   "title": "The three stigmata of Palmer Eldritch",
+   "author": "Philip K. Dick"
+  },
+  {
+   "id": "ol:15126256",
+   "workId": "OL1955944W",
+   "title": "A Song for Lya",
+   "author": "George R. R. Martin"
+  },
+  {
+   "id": "ol:8444289",
+   "workId": "OL19333270W",
+   "title": "Les chants de l'été",
+   "author": "Robert Silverberg"
+  },
+  {
+   "id": "ol:10779319",
+   "workId": "OL24280733W",
+   "title": "Les fileurs d'anges",
+   "author": "John M. Ford"
+  },
+  {
+   "id": "ol:3109985",
+   "workId": "OL9916944W",
+   "title": "Les maîtres-feu",
+   "author": "Joëlle Wintrebert"
+  },
+  {
+   "id": "ol:8752331",
+   "workId": "OL20082281W",
+   "title": "Les seigneurs de l'Hydre",
+   "author": "C. J. Cherryh"
+  },
+  {
+   "id": "ol:3109986",
+   "workId": "OL1960416W",
+   "title": "Le chemin de l'espace",
+   "author": "Robert Silverberg"
+  },
+  {
+   "id": "ol:10131154",
+   "workId": "OL2071508W",
+   "title": "Marune",
+   "author": "Jack Vance"
+  },
+  {
+   "id": "ol:8457905",
+   "workId": "OL19345581W",
+   "title": "Les Operateurs Humains",
+   "author": "A. E. van Vogt"
+  },
+  {
+   "id": "ol:11298730",
+   "workId": "OL1955922W",
+   "title": "Songs of Stars and Shadows",
+   "author": "George R. R. Martin"
+  },
+  {
+   "id": "ol:10184638",
+   "workId": "OL103125W",
+   "title": "The golden apples of the sun and other stories",
+   "author": "Ray Bradbury"
+  },
+  {
+   "id": "ol:8770853",
+   "workId": "OL7480611W",
+   "title": "Martians, Go Home!",
+   "author": "Fredric Brown"
+  },
+  {
+   "id": "ol:10509349",
+   "workId": "OL8986410W",
+   "title": "Les perles du temps",
+   "author": "Gérard Klein"
+  },
+  {
+   "id": "ol:3091843",
+   "workId": "OL9942414W",
+   "title": "Le pays sans étoiles",
+   "author": "P. Very"
+  },
+  {
+   "id": "ol:3091844",
+   "workId": "OL4088324W",
+   "title": "La croisade de l'idiot",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:8762950",
+   "workId": "OL20101066W",
+   "title": "Fantômes et farfafouilles",
+   "author": "Fredric Brown"
+  },
+  {
+   "id": "ol:973752",
+   "workId": "OL2626644W",
+   "title": "Conditionally Human",
+   "author": "Walter M. Miller Jr."
+  },
+  {
+   "id": "ol:7255662",
+   "workId": "OL46224W",
+   "title": "Foundation and Empire",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:7255660",
+   "workId": "OL46309W",
+   "title": "Second Foundation",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:10435101",
+   "workId": "OL2745908W",
+   "title": "Crystal World (Flamingo Modern Classic)",
+   "author": "J. G. Ballard"
+  },
+  {
+   "id": "ol:973756",
+   "workId": "OL2683553W",
+   "title": "The Cyberiad",
+   "author": "Stanisław Lem"
+  },
+  {
+   "id": "ol:10618242",
+   "workId": "OL14959480W",
+   "title": "Works (\"Breeds There a Man ... ?\" / Green Patches / Hostess / Nightfall)",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:10331569",
+   "workId": "OL21171384W",
+   "title": "GUERRE AUX INVISIBLES",
+   "author": "Eric Frank Russell"
+  },
+  {
+   "id": "ol:2144672",
+   "workId": "OL2885571W",
+   "title": "Rayons pour Sidar",
+   "author": "Stefan Wul"
+  },
+  {
+   "id": "ol:3091846",
+   "workId": "OL1911294W",
+   "title": "Le péril vient de la mer",
+   "author": "John Wyndham"
+  },
+  {
+   "id": "ol:12234166",
+   "workId": "OL53396W",
+   "title": "Anywhen",
+   "author": "James Blish"
+  },
+  {
+   "id": "ol:973759",
+   "workId": "OL13994W",
+   "title": "This Immortal",
+   "author": "Roger Zelazny"
+  },
+  {
+   "id": "ol:14423647",
+   "workId": "OL33173600W",
+   "title": "The Early Asimov",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:973760",
+   "workId": "OL27775606W",
+   "title": "The early Asimov. Volume 3 (Author! Author! / Death Sentence / Legal Rites / Not Final! / Super-Neutron / Time Pussy)",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:3091849",
+   "workId": "OL7857086W",
+   "title": "Quotient intellectuel a vendre",
+   "author": "J. Boyd"
+  },
+  {
+   "id": "ol:973762",
+   "workId": "OL8984970W",
+   "title": "La voix du maitre",
+   "author": "Stanisław Lem"
+  },
+  {
+   "id": "ol:973763",
+   "workId": "OL8984975W",
+   "title": "Sirius",
+   "author": "Olaf Stapledon"
+  },
+  {
+   "id": "ol:3091850",
+   "workId": "OL7914984W",
+   "title": "Une longue marche dans la nuit",
+   "author": "B. Shaw"
+  },
+  {
+   "id": "ol:10466632",
+   "workId": "OL22455018W",
+   "title": "LA DIXIEME PLANETE",
+   "author": "EDMUND COOPER"
+  },
+  {
+   "id": "ol:3091851",
+   "workId": "OL4088395W",
+   "title": "Enchanted pilgrimage",
+   "author": "Clifford D. Simak"
+  },
+  {
+   "id": "ol:3091852",
+   "workId": "OL9942421W",
+   "title": "Hier les oiseaux",
+   "author": "K. Wilhelm"
+  },
+  {
+   "id": "ol:8763766",
+   "workId": "OL2172512W",
+   "title": "Deus Irae",
+   "author": "Philip K. Dick"
+  },
+  {
+   "id": "ol:3091853",
+   "workId": "OL8380770W",
+   "title": "Pontesprit",
+   "author": "Haldeman"
+  },
+  {
+   "id": "ol:15234853",
+   "workId": "OL31863210W",
+   "title": "Un gars de l'enfer (PRESENCE FUTUR)",
+   "author": "Аркадий Стругацкий"
+  },
+  {
+   "id": "ol:973766",
+   "workId": "OL8984976W",
+   "title": "Terre 10 11 (suite de terre)",
+   "author": "Farca"
+  },
+  {
+   "id": "ol:14423600",
+   "workId": "OL46283W",
+   "title": "The Bicentennial Man and Other Stories [12 works]",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:10466628",
+   "workId": "OL22454912W",
+   "title": "Krysnak ou Le complot",
+   "author": "Daniel Walther"
+  },
+  {
+   "id": "ol:3091854",
+   "workId": "OL9942423W",
+   "title": "5 solutions pour en fin",
+   "author": "D. Douay"
+  },
+  {
+   "id": "ol:3091855",
+   "workId": "OL8107879W",
+   "title": "Lieux secrets et vilains messieurs",
+   "author": "R. A. Lafferty"
+  },
+  {
+   "id": "ol:3091856",
+   "workId": "OL9030496W",
+   "title": "Galaxies interieur (anthologie de science fic)",
+   "author": "M. Jakubowski"
+  },
+  {
+   "id": "ol:8579331",
+   "workId": "OL19758996W",
+   "title": "Dans le palais des rois martiens",
+   "author": "John Varley"
+  },
+  {
+   "id": "ol:3091857",
+   "workId": "OL2140267W",
+   "title": "20 maisons du zodiaque",
+   "author": "Maxim Jakubowski"
+  },
+  {
+   "id": "ol:3091858",
+   "workId": "OL9942427W",
+   "title": "La forteresse de coton",
+   "author": "P. Curval"
+  },
+  {
+   "id": "ol:3091859",
+   "workId": "OL37179W",
+   "title": "Up the walls of the world",
+   "author": "James Tiptree, Jr."
+  },
+  {
+   "id": "ol:10466644",
+   "workId": "OL22455213W",
+   "title": "BIOFEEDBACK",
+   "author": "JEAN-MARC LIGNY"
+  },
+  {
+   "id": "ol:8772143",
+   "workId": "OL20113022W",
+   "title": "titan",
+   "author": "John Varley"
+  },
+  {
+   "id": "ol:3091860",
+   "workId": "OL8973285W",
+   "title": "Vue en coupe d'une ville malade",
+   "author": "S. Brussolo"
+  },
+  {
+   "id": "ol:973767",
+   "workId": "OL14959283W",
+   "title": "Jusqu'à la quatrième génération (9 short stories)",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:10466664",
+   "workId": "OL22455426W",
+   "title": "Éclipses 2000",
+   "author": "Lino Aldani"
+  },
+  {
+   "id": "ol:3091861",
+   "workId": "OL9538357W",
+   "title": "Sorcière",
+   "author": "J. Varley"
+  },
+  {
+   "id": "ol:973769",
+   "workId": "OL8984973W",
+   "title": "Voyages électriques d'ijon tichy",
+   "author": "Stanisław Lem"
+  },
+  {
+   "id": "ol:973770",
+   "workId": "OL8984978W",
+   "title": "Dernier jour de la création",
+   "author": "Wolfgan Jeschke"
+  },
+  {
+   "id": "ol:11159545",
+   "workId": "OL24527104W",
+   "title": "L'odeur de la bête",
+   "author": "Philippe Curval"
+  },
+  {
+   "id": "ol:3091864",
+   "workId": "OL825250W",
+   "title": "Sommeil de sang",
+   "author": "Serge Brussolo"
+  },
+  {
+   "id": "ol:8675921",
+   "workId": "OL19873529W",
+   "title": "Mourir au hasard (French Edition)",
+   "author": "Pierre PELOT"
+  },
+  {
+   "id": "ol:8762084",
+   "workId": "OL2163649W",
+   "title": "The Hitchhiker's Guide to the Galaxy",
+   "author": "Douglas Adams"
+  },
+  {
+   "id": "ol:10127260",
+   "workId": "OL20823820W",
+   "title": "Happy end ou La nouvelle cité du soleil",
+   "author": "Daniel Walther"
+  },
+  {
+   "id": "ol:3091865",
+   "workId": "OL37329766W",
+   "title": "L'IMMEUBLE D'EN FACE",
+   "author": "Jean-Pierre Andrevon"
+  },
+  {
+   "id": "ol:3091866",
+   "workId": "OL14871970W",
+   "title": "The claw of the conciliator",
+   "author": "Gene Wolfe"
+  },
+  {
+   "id": "ol:8774748",
+   "workId": "OL20118289W",
+   "title": "Loin du pays natal (French Edition)",
+   "author": "Walter S. Tevis"
+  },
+  {
+   "id": "ol:6452074",
+   "workId": "OL825239W",
+   "title": "Portrait du diable en chapeau melon",
+   "author": "Serge Brussolo"
+  },
+  {
+   "id": "ol:10096497",
+   "workId": "OL20799990W",
+   "title": "SONATE SANS ACCOMPAGNEMENT",
+   "author": "Orson Scott Card"
+  },
+  {
+   "id": "ol:3091867",
+   "workId": "OL8109389W",
+   "title": "L'homme sans idées",
+   "author": "Thomas M. Disch"
+  },
+  {
+   "id": "ol:6459757",
+   "workId": "OL15328270W",
+   "title": "La mémoire de l'ombre",
+   "author": "Kate Wilhelm"
+  },
+  {
+   "id": "ol:8743860",
+   "workId": "OL2172490W",
+   "title": "The Transmigration of Timothy Archer",
+   "author": "Philip K. Dick"
+  },
+  {
+   "id": "ol:3091868",
+   "workId": "OL825223W",
+   "title": "Le carnaval de fer",
+   "author": "Serge Brussolo"
+  },
+  {
+   "id": "ol:10472113",
+   "workId": "OL22505834W",
+   "title": "La sphère de platine",
+   "author": "Joseph-Marie Lo Duca"
+  },
+  {
+   "id": "ol:3091869",
+   "workId": "OL14871972W",
+   "title": "The Sword of the Lictor",
+   "author": "Gene Wolfe"
+  },
+  {
+   "id": "ol:3091870",
+   "workId": "OL4035629W",
+   "title": "Il faudra bien se résoudre à mourir seul",
+   "author": "Jean-Pierre Andrevon"
+  },
+  {
+   "id": "ol:973771",
+   "workId": "OL108289W",
+   "title": "Against infinity",
+   "author": "Gregory Benford"
+  },
+  {
+   "id": "ol:3091871",
+   "workId": "OL3522767W",
+   "title": "Nouvelle recette pour canard au sang",
+   "author": "Scott Baker"
+  },
+  {
+   "id": "ol:12167374",
+   "workId": "OL5527166W",
+   "title": "Le testament de Corlay",
+   "author": "John Middleton Murry, Jr."
+  },
+  {
+   "id": "ol:8778918",
+   "workId": "OL20125971W",
+   "title": "le soleil pas à pas",
+   "author": "Walter S. Tevis"
+  },
+  {
+   "id": "ol:3091873",
+   "workId": "OL14871898W",
+   "title": "The Citadel of the Autarch",
+   "author": "Gene Wolfe"
+  },
+  {
+   "id": "ol:13210152",
+   "workId": "OL8109388W",
+   "title": "Le businessman",
+   "author": "Thomas M. Disch"
+  },
+  {
+   "id": "ol:973773",
+   "workId": "OL8107915W",
+   "title": "Millénium",
+   "author": "John Varley"
+  },
+  {
+   "id": "ol:3091874",
+   "workId": "OL9942431W",
+   "title": "Lumière sur le détroit",
+   "author": "S. Sucharitkul"
+  },
+  {
+   "id": "ol:8611082",
+   "workId": "OL19820025W",
+   "title": "Écoute, écoute !",
+   "author": "Kate Wilhelm"
+  },
+  {
+   "id": "ol:3091875",
+   "workId": "OL4035598W",
+   "title": "C'est arrivé mais on n'en a rien su",
+   "author": "Jean-Pierre Andrevon"
+  },
+  {
+   "id": "ol:3091876",
+   "workId": "OL3332539W",
+   "title": "Des gens (extra)ordinaires",
+   "author": "Joanna Russ"
+  },
+  {
+   "id": "ol:6451835",
+   "workId": "OL8973630W",
+   "title": "Mémo",
+   "author": "André Ruellan"
+  },
+  {
+   "id": "ol:3091878",
+   "workId": "OL8107923W",
+   "title": "Démon",
+   "author": "John Varley"
+  },
+  {
+   "id": "ol:8792596",
+   "workId": "OL20148175W",
+   "title": "Divine endurance",
+   "author": "Gwyneth Jones"
+  },
+  {
+   "id": "ol:13452363",
+   "workId": "OL1888050W",
+   "title": "Schismatrix",
+   "author": "Bruce Sterling"
+  },
+  {
+   "id": "ol:15255478",
+   "workId": "OL45990631W",
+   "title": "Im Netz / Der Tod des Torero",
+   "author": "Alfonso Sastre"
+  },
+  {
+   "id": "ol:15162536",
+   "workId": "OL970746W",
+   "title": "Das Lösegeld",
+   "author": "Giuseppe Dessì"
+  },
+  {
+   "id": "ol:14850865",
+   "workId": "OL22463709W",
+   "title": "Die Expedition",
+   "author": "Per Olof Sundman"
+  },
+  {
+   "id": "ol:14645548",
+   "workId": "OL38552901W",
+   "title": "Unser Bataillonskommandeur. Der Platz für das Denkmal",
+   "author": "Daniil Aleksandrovich Granin"
+  },
+  {
+   "id": "ol:14832042",
+   "workId": "OL549719W",
+   "title": "Scherbengericht",
+   "author": "Shena Mackay"
+  },
+  {
+   "id": "ol:14645540",
+   "workId": "OL38552614W",
+   "title": "Vincent van Gogh",
+   "author": "Sewer Gansowski"
+  },
+  {
+   "id": "ol:15167950",
+   "workId": "OL8995284W",
+   "title": "Auf der Insel wollte sie ihm sagen",
+   "author": "Françoise Xenakis"
+  },
+  {
+   "id": "ol:14645535",
+   "workId": "OL4315169W",
+   "title": "Der Stierkampf",
+   "author": "Yasushi Inoue"
+  },
+  {
+   "id": "ol:15168018",
+   "workId": "OL616042W",
+   "title": "Am Meer",
+   "author": "Peter Seeberg"
+  },
+  {
+   "id": "ol:14645533",
+   "workId": "OL2140843W",
+   "title": "Leb und liebe",
+   "author": "Valentin Grigorʹevich Rasputin"
+  },
+  {
+   "id": "ol:10379484",
+   "workId": "OL21538095W",
+   "title": "Die Schleierkarawane Erzählungen",
+   "author": "Ismail Kadare"
+  },
+  {
+   "id": "ol:15224017",
+   "workId": "OL15597578W",
+   "title": "Die reinen Wasser von Kitesh",
+   "author": "Wladimir Tendrjakow"
+  },
+  {
+   "id": "ol:10746499",
+   "workId": "OL24259457W",
+   "title": "Das Verschwinden",
+   "author": "Jurij Trifonov"
+  },
+  {
+   "id": "ol:10374475",
+   "workId": "OL21483591W",
+   "title": "Der weise Regenbaum / Der Sündenbock",
+   "author": "Kenzaburō Ōe"
+  },
+  {
+   "id": "ol:10823350",
+   "workId": "OL24308617W",
+   "title": "Winter in Afghanistan",
+   "author": "Oleg Ermakov"
   }
  ],
  "collections": {
-  "addedAt": "2026-09-26",
+  "addedAt": "2026-09-27",
   "from": [
    "feminist-press",
    "sf-masterworks",
@@ -19050,7 +21101,12 @@
    "verso-radical-thinkers-later",
    "ballantine-adult-fantasy",
    "poesie-gallimard",
-   "suhrkamp-taschenbuch-images"
+   "suhrkamp-taschenbuch-images",
+   "heyne-bibliothek-sf",
+   "folio-gallimard",
+   "jai-lu-sf",
+   "presence-du-futur",
+   "spektrum-volk-und-welt"
   ],
   "leftOut": [
    "suhrkamp-taschenbuch-author-portraits",
@@ -19357,9 +21413,10 @@
    "ol:12667804",
    "ol:10291811",
    "ol:14419636",
-   "ol:12457803",
-   "ol:8753570",
    "ol:12667806",
+   "ol:8753570",
+   "ol:12457803",
+   "ol:8996345",
    "ol:12667828",
    "ol:9047655",
    "ol:10132889",
@@ -19375,7 +21432,6 @@
    "ol:12667816",
    "ol:13504697",
    "ol:8834889",
-   "ol:8996345",
    "ol:8765645",
    "ol:12667815",
    "ol:10308082",
@@ -19660,6 +21716,10 @@
    "ol:14625548",
    "ol:8773923",
    "ol:8653741",
+   "local:tolkien-covers-by-heinz-edelmann/no-04",
+   "local:tolkien-covers-by-heinz-edelmann/no-05",
+   "local:tolkien-covers-by-heinz-edelmann/no-06",
+   "local:tolkien-covers-by-heinz-edelmann/no-07",
    "ol:10555558",
    "ol:9982321",
    "ol:13065592",
@@ -19680,7 +21740,26 @@
    "ol:13663413",
    "ol:12366822",
    "ol:10554986",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-01",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-02",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-03",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-04",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-05",
    "ol:8806397",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-07",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-08",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-09",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-10",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-11",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-12",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-13",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-14",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-15",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-16",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-17",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-18",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-19",
+   "local:jules-verne-covers-by-heinz-edelmann/vol-20",
    "ol:10421448",
    "ol:1021133",
    "ol:2195690",
@@ -19856,6 +21935,7 @@
    "ol:14946556",
    "ol:10215589",
    "ol:8701024",
+   "ol:8774671",
    "ol:10235410",
    "ol:10837649",
    "ol:9946794",
@@ -20092,7 +22172,321 @@
    "ol:14818820",
    "ol:2212549",
    "ol:10976918",
-   "ol:2212577"
+   "ol:2212577",
+   "ol:8827692",
+   "ol:10080998",
+   "ol:8757118",
+   "ol:8791856",
+   "ol:8753111",
+   "ol:10188714",
+   "ol:12392846",
+   "ol:10301515",
+   "ol:15178217",
+   "ol:11996709",
+   "ol:15159661",
+   "ol:10459968",
+   "ol:14409256",
+   "ol:8778433",
+   "ol:8762313",
+   "ol:10541887",
+   "ol:10431902",
+   "ol:10203056",
+   "ol:8785311",
+   "ol:10290675",
+   "ol:13646099",
+   "ol:8829470",
+   "ol:10299258",
+   "ol:8750494",
+   "ol:8776756",
+   "ol:10291006",
+   "ol:10291008",
+   "ol:10291010",
+   "ol:9934250",
+   "ol:3202498",
+   "ol:3202741",
+   "ol:12157458",
+   "ol:967062",
+   "ol:967064",
+   "ol:3075053",
+   "ol:967065",
+   "ol:2136555",
+   "ol:3075054",
+   "ol:967070",
+   "ol:967074",
+   "ol:14053415",
+   "ol:967077",
+   "ol:9249488",
+   "ol:11589222",
+   "ol:12174565",
+   "ol:967083",
+   "ol:967084",
+   "ol:967086",
+   "ol:967087",
+   "ol:967088",
+   "ol:967092",
+   "ol:967093",
+   "ol:10559452",
+   "ol:967095",
+   "ol:2136556",
+   "ol:12186494",
+   "ol:3075055",
+   "ol:10397379",
+   "ol:967102",
+   "ol:11517335",
+   "ol:967105",
+   "ol:967106",
+   "ol:11668121",
+   "ol:3075056",
+   "ol:967114",
+   "ol:967116",
+   "ol:3075057",
+   "ol:967119",
+   "ol:3075058",
+   "ol:3075059",
+   "ol:3075061",
+   "ol:967132",
+   "ol:2136558",
+   "ol:967137",
+   "ol:2136559",
+   "ol:13063375",
+   "ol:9935572",
+   "ol:967143",
+   "ol:967144",
+   "ol:967148",
+   "ol:3075063",
+   "ol:3075064",
+   "ol:967152",
+   "ol:967154",
+   "ol:13897219",
+   "ol:967161",
+   "ol:967162",
+   "ol:967167",
+   "ol:2136564",
+   "ol:967170",
+   "ol:3075066",
+   "ol:967173",
+   "ol:967174",
+   "ol:967175",
+   "ol:10906658",
+   "ol:10617689",
+   "ol:967178",
+   "ol:3075067",
+   "ol:3075070",
+   "ol:10482927",
+   "ol:967192",
+   "ol:2136569",
+   "ol:967194",
+   "ol:967204",
+   "ol:967205",
+   "ol:11738290",
+   "ol:967219",
+   "ol:12346610",
+   "ol:967222",
+   "ol:967224",
+   "ol:3075080",
+   "ol:3075081",
+   "ol:10442916",
+   "ol:967229",
+   "ol:967576",
+   "ol:3075084",
+   "ol:3075085",
+   "ol:3075088",
+   "ol:967236",
+   "ol:967239",
+   "ol:967244",
+   "ol:3075091",
+   "ol:967247",
+   "ol:3075094",
+   "ol:11007981",
+   "ol:13083245",
+   "ol:8541241",
+   "ol:981204",
+   "ol:7255049",
+   "ol:10618253",
+   "ol:10132905",
+   "ol:10715855",
+   "ol:8599307",
+   "ol:981210",
+   "ol:8536173",
+   "ol:8771488",
+   "ol:9862625",
+   "ol:2155850",
+   "ol:15154462",
+   "ol:981212",
+   "ol:8770786",
+   "ol:8356203",
+   "ol:8066980",
+   "ol:3109960",
+   "ol:981180",
+   "ol:10216088",
+   "ol:8760298",
+   "ol:3109961",
+   "ol:10290903",
+   "ol:10513469",
+   "ol:3109962",
+   "ol:10491207",
+   "ol:14632340",
+   "ol:8752679",
+   "ol:7284750",
+   "ol:3109963",
+   "ol:981214",
+   "ol:8440333",
+   "ol:981183",
+   "ol:7284754",
+   "ol:3109964",
+   "ol:8760377",
+   "ol:10326442",
+   "ol:11090725",
+   "ol:981187",
+   "ol:2155852",
+   "ol:8668666",
+   "ol:3109966",
+   "ol:10215221",
+   "ol:981189",
+   "ol:981191",
+   "ol:8427982",
+   "ol:8443663",
+   "ol:8577999",
+   "ol:981196",
+   "ol:14604833",
+   "ol:10491732",
+   "ol:10215294",
+   "ol:10103768",
+   "ol:981197",
+   "ol:8740683",
+   "ol:10535430",
+   "ol:981199",
+   "ol:8456931",
+   "ol:8753653",
+   "ol:8573829",
+   "ol:981201",
+   "ol:8740777",
+   "ol:8770203",
+   "ol:3109978",
+   "ol:8761499",
+   "ol:13770430",
+   "ol:3109979",
+   "ol:981225",
+   "ol:981226",
+   "ol:981228",
+   "ol:8765430",
+   "ol:8572906",
+   "ol:10145041",
+   "ol:8761916",
+   "ol:10483750",
+   "ol:10779701",
+   "ol:3109982",
+   "ol:12668906",
+   "ol:10385063",
+   "ol:8418074",
+   "ol:10771156",
+   "ol:8753654",
+   "ol:981235",
+   "ol:11819014",
+   "ol:11478030",
+   "ol:15126256",
+   "ol:8444289",
+   "ol:10779319",
+   "ol:3109985",
+   "ol:8752331",
+   "ol:3109986",
+   "ol:10131154",
+   "ol:8457905",
+   "ol:11298730",
+   "ol:10184638",
+   "ol:8770853",
+   "ol:10509349",
+   "ol:3091843",
+   "ol:3091844",
+   "ol:8762950",
+   "ol:973752",
+   "ol:7255662",
+   "ol:7255660",
+   "ol:10435101",
+   "ol:973756",
+   "ol:10618242",
+   "ol:10331569",
+   "ol:2144672",
+   "ol:3091846",
+   "ol:12234166",
+   "ol:973759",
+   "ol:14423647",
+   "ol:973760",
+   "ol:3091849",
+   "ol:973762",
+   "ol:973763",
+   "ol:3091850",
+   "ol:10466632",
+   "ol:3091851",
+   "ol:3091852",
+   "ol:8763766",
+   "ol:3091853",
+   "ol:15234853",
+   "ol:973766",
+   "ol:14423600",
+   "ol:10466628",
+   "ol:3091854",
+   "ol:3091855",
+   "ol:3091856",
+   "ol:8579331",
+   "ol:3091857",
+   "ol:3091858",
+   "ol:3091859",
+   "ol:10466644",
+   "ol:8772143",
+   "ol:3091860",
+   "ol:973767",
+   "ol:10466664",
+   "ol:3091861",
+   "ol:973769",
+   "ol:973770",
+   "ol:11159545",
+   "ol:3091864",
+   "ol:8675921",
+   "ol:8762084",
+   "ol:10127260",
+   "ol:3091865",
+   "ol:3091866",
+   "ol:8774748",
+   "ol:6452074",
+   "ol:10096497",
+   "ol:3091867",
+   "ol:6459757",
+   "ol:8743860",
+   "ol:3091868",
+   "ol:10472113",
+   "ol:3091869",
+   "ol:3091870",
+   "ol:973771",
+   "ol:3091871",
+   "ol:12167374",
+   "ol:8778918",
+   "ol:3091873",
+   "ol:13210152",
+   "ol:973773",
+   "ol:3091874",
+   "ol:8611082",
+   "ol:3091875",
+   "ol:3091876",
+   "ol:6451835",
+   "ol:3091878",
+   "ol:8792596",
+   "ol:13452363",
+   "ol:15255478",
+   "ol:15162536",
+   "ol:14850865",
+   "ol:14645548",
+   "ol:14832042",
+   "ol:14645540",
+   "ol:15167950",
+   "ol:14645535",
+   "ol:15168018",
+   "ol:14645533",
+   "ol:10379484",
+   "ol:15224017",
+   "ol:10746499",
+   "ol:10374475",
+   "ol:10823350"
   ]
  }
 }

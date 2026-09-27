@@ -122,6 +122,12 @@ export interface PoolCover {
   workId: string;
   title: string;
   author: string;
+  /**
+   * A cover the site serves itself (`/collection-covers/…`, the Jules Verne
+   * and Tolkien stopgap images, SPEC F8.3): shown from there, and its link
+   * opens the work's wall without a selected cover, since the wall has none.
+   */
+  image?: string;
 }
 
 export type MixOptions = {
