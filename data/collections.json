@@ -21056,6 +21056,883 @@
           "coverIsbn": "9783453066335"
         }
       ]
+    },
+    {
+      "slug": "folio-gallimard",
+      "title": "Folio — Gallimard",
+      "kind": "series",
+      "intro": "Folio is Gallimard's numbered paperback series, launched in 1972; number 1 was Malraux's La Condition humaine, number 2 Camus's L'Étranger. Robert Massin gave it a white cover with author and title in black Baskerville above a single picture, a design that stayed in use until the end of 2010. Volumes from the first few hundred numbers in that design, one per author, in number order, from the covers Open Library has.",
+      "published": false,
+      "publishers": [
+        "Gallimard",
+        "Folio"
+      ],
+      "works": [
+        {
+          "id": "OL652911W",
+          "title": "La condition humaine",
+          "author": "André Malraux",
+          "coverId": "ol:967062",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360016",
+          "coverIsbn": "2070360016"
+        },
+        {
+          "id": "OL1230613W",
+          "title": "L’étranger",
+          "author": "Albert Camus",
+          "coverId": "ol:15115103",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360024",
+          "coverIsbn": "2070360024"
+        },
+        {
+          "id": "OL10267W",
+          "title": "Vol de nuit",
+          "author": "Antoine de Saint-Exupéry",
+          "coverId": "ol:967064",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360040",
+          "coverIsbn": "2070360040"
+        },
+        {
+          "id": "OL1327011W",
+          "title": "Les Poissons Rouges Ou Mon Pere Ce Hero",
+          "author": "Jean Anouilh",
+          "coverId": "ol:3075053",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360067",
+          "coverIsbn": "2070360067"
+        },
+        {
+          "id": "OL385112W",
+          "title": "Le vieil homme et la mer",
+          "author": "Ernest Hemingway",
+          "coverId": "ol:967065",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360075",
+          "coverIsbn": "2070360075"
+        },
+        {
+          "id": "OL1270094W",
+          "title": "La reine morte",
+          "author": "Henry de Montherlant",
+          "coverId": "ol:2136555",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360121",
+          "coverIsbn": "2070360121"
+        },
+        {
+          "id": "OL8971730W",
+          "title": "Emmene-Moi Au Bout Du Monde!",
+          "author": "Blaise Cendrars",
+          "coverId": "ol:3075054",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360156",
+          "coverIsbn": "2070360156"
+        },
+        {
+          "id": "OL630884W",
+          "title": "La Symphonie pastoral",
+          "author": "André Gide",
+          "coverId": "ol:967070",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360180",
+          "coverIsbn": "2070360180"
+        },
+        {
+          "id": "OL1098844W",
+          "title": "Annonce Faite a Marie, L'",
+          "author": "Paul Claudel",
+          "coverId": "ol:967074",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360261",
+          "coverIsbn": "2070360261"
+        },
+        {
+          "id": "OL1287903W",
+          "title": "Voyage au bout de la nuit",
+          "author": "Louis-Ferdinand Céline",
+          "coverId": "ol:14053415",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360288",
+          "coverIsbn": "2070360288"
+        },
+        {
+          "id": "OL3388827W",
+          "title": "Monsieur Jadis ou l'école du soir",
+          "author": "Antoine Blondin",
+          "coverId": "ol:967077",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360296",
+          "coverIsbn": "2070360296"
+        },
+        {
+          "id": "OL23204W",
+          "title": "Of Mice and Men",
+          "author": "John Steinbeck",
+          "coverId": "ol:9249488",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360377",
+          "coverIsbn": "2070360377"
+        },
+        {
+          "id": "OL267096W",
+          "title": "Анна Каренина",
+          "author": "Leo Tolstoy",
+          "coverId": "ol:11589222",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360393",
+          "coverIsbn": "2070360393"
+        },
+        {
+          "id": "OL8543729W",
+          "title": "Choses Vues 1847-1848",
+          "author": "Victor Hugo",
+          "coverId": "ol:12174565",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360474",
+          "coverIsbn": "2070360474"
+        },
+        {
+          "id": "OL157523W",
+          "title": "Le cheval blanc",
+          "author": "Elsa Triolet",
+          "coverId": "ol:967083",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360482",
+          "coverIsbn": "2070360482"
+        },
+        {
+          "id": "OL1226032W",
+          "title": "Chien Blanc",
+          "author": "Romain Gary",
+          "coverId": "ol:967084",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360504",
+          "coverIsbn": "2070360504"
+        },
+        {
+          "id": "OL4489211W",
+          "title": "La mort dans l'ame",
+          "author": "Jean-Paul Sartre",
+          "coverId": "ol:967086",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036058X",
+          "coverIsbn": "207036058X"
+        },
+        {
+          "id": "OL1992198W",
+          "title": "In Cold Blood",
+          "author": "Truman Capote",
+          "coverId": "ol:967087",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360598",
+          "coverIsbn": "2070360598"
+        },
+        {
+          "id": "OL8551940W",
+          "title": "Knock",
+          "author": "Jules Romains",
+          "coverId": "ol:967088",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360601",
+          "coverIsbn": "2070360601"
+        },
+        {
+          "id": "OL1319822W",
+          "title": "Les poneys sauvages",
+          "author": "Michel Déon",
+          "coverId": "ol:967092",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360717",
+          "coverIsbn": "2070360717"
+        },
+        {
+          "id": "OL74718W",
+          "title": "Nadja",
+          "author": "André Breton",
+          "coverId": "ol:967093",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360733",
+          "coverIsbn": "2070360733"
+        },
+        {
+          "id": "OL498556W",
+          "title": "Metamorphosis",
+          "author": "Franz Kafka",
+          "coverId": "ol:10559452",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360741",
+          "coverIsbn": "2070360741"
+        },
+        {
+          "id": "OL258301W",
+          "title": "Доктор Живаго",
+          "author": "Boris Pasternak",
+          "coverId": "ol:967095",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360792",
+          "coverIsbn": "2070360792"
+        },
+        {
+          "id": "OL8972007W",
+          "title": "Sauve Qui Peut",
+          "author": "Jean-Jacques Sempé",
+          "coverId": "ol:2136556",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360814",
+          "coverIsbn": "2070360814"
+        },
+        {
+          "id": "OL29549062W",
+          "title": "À l'ombre des jeunes filles en fleurs",
+          "author": "Marcel Proust",
+          "coverId": "ol:12186494",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360865",
+          "coverIsbn": "2070360865"
+        },
+        {
+          "id": "OL1226638W",
+          "title": "Aventure de Catherine Crachat, tome 1",
+          "author": "Pierre Jean Jouve",
+          "coverId": "ol:3075055",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036089X",
+          "coverIsbn": "207036089X"
+        },
+        {
+          "id": "OL1381586W",
+          "title": "Le planétarium",
+          "author": "Nathalie Sarraute",
+          "coverId": "ol:10397379",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036092X",
+          "coverIsbn": "207036092X"
+        },
+        {
+          "id": "OL1364438W",
+          "title": "Zazie dans le Métro",
+          "author": "Raymond Queneau",
+          "coverId": "ol:967102",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361039",
+          "coverIsbn": "2070361039"
+        },
+        {
+          "id": "OL1278031W",
+          "title": "Spectacle",
+          "author": "Jacques Prévert",
+          "coverId": "ol:11517335",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361047",
+          "coverIsbn": "2070361047"
+        },
+        {
+          "id": "OL8972044W",
+          "title": "La Loi",
+          "author": "Roger Vailland",
+          "coverId": "ol:967105",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361101",
+          "coverIsbn": "2070361101"
+        },
+        {
+          "id": "OL5570845W",
+          "title": "Z",
+          "author": "Vassilis Vassilikos",
+          "coverId": "ol:967106",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036111X",
+          "coverIsbn": "207036111X"
+        },
+        {
+          "id": "OL24838922W",
+          "title": "Le Lys dans la vallée",
+          "author": "Honoré de Balzac",
+          "coverId": "ol:11668121",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361128",
+          "coverIsbn": "2070361128"
+        },
+        {
+          "id": "OL8997397W",
+          "title": "Tant Que La Terre Durera 1",
+          "author": "Henri Troyat",
+          "coverId": "ol:3075056",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361136",
+          "coverIsbn": "2070361136"
+        },
+        {
+          "id": "OL7921525W",
+          "title": "LA Retraite Sentimentale",
+          "author": "Colette",
+          "coverId": "ol:967114",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361357",
+          "coverIsbn": "2070361357"
+        },
+        {
+          "id": "OL767918W",
+          "title": "Une mort tres douce",
+          "author": "Simone de Beauvoir",
+          "coverId": "ol:967116",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361373",
+          "coverIsbn": "2070361373"
+        },
+        {
+          "id": "OL8972065W",
+          "title": "Les Thibault 2",
+          "author": "Roger Martin du Gard",
+          "coverId": "ol:3075057",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361403",
+          "coverIsbn": "2070361403"
+        },
+        {
+          "id": "OL8586524W",
+          "title": "Le chemin des écoliers",
+          "author": "Marcel Aymé",
+          "coverId": "ol:967119",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361438",
+          "coverIsbn": "2070361438"
+        },
+        {
+          "id": "OL8972606W",
+          "title": "Le Feu Follet D'Adieu a Gonzagu",
+          "author": "Pierre Drieu la Rochelle",
+          "coverId": "ol:3075058",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361527",
+          "coverIsbn": "2070361527"
+        },
+        {
+          "id": "OL9919337W",
+          "title": "Le Quai DES Brumes",
+          "author": "Pierre Mac Orlan",
+          "coverId": "ol:3075059",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361543",
+          "coverIsbn": "2070361543"
+        },
+        {
+          "id": "OL82870W",
+          "title": "The Sound and the Fury",
+          "author": "William Faulkner",
+          "coverId": "ol:967126",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361624",
+          "coverIsbn": "2070361624"
+        },
+        {
+          "id": "OL7548730W",
+          "title": "Le Mas Theotime",
+          "author": "Henri Bosco",
+          "coverId": "ol:3075061",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361683",
+          "coverIsbn": "2070361683"
+        },
+        {
+          "id": "OL8068266W",
+          "title": "La Rose de Java",
+          "author": "Joseph Kessel",
+          "coverId": "ol:967132",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361748",
+          "coverIsbn": "2070361748"
+        },
+        {
+          "id": "OL8970620W",
+          "title": "Magiciennes, Les",
+          "author": "Boileau-Narcejac",
+          "coverId": "ol:2136558",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361780",
+          "coverIsbn": "2070361780"
+        },
+        {
+          "id": "OL14857469W",
+          "title": "L'Amour conjugal",
+          "author": "Alberto Moravia",
+          "coverId": "ol:967137",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361845",
+          "coverIsbn": "2070361845"
+        },
+        {
+          "id": "OL52114W",
+          "title": "The War of the Worlds",
+          "author": "H. G. Wells",
+          "coverId": "ol:2136559",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361853",
+          "coverIsbn": "2070361853"
+        },
+        {
+          "id": "OL80739W",
+          "title": "Les rêveries du promeneur solitaire",
+          "author": "Jean-Jacques Rousseau",
+          "coverId": "ol:13063375",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361861",
+          "coverIsbn": "2070361861"
+        },
+        {
+          "id": "OL159497W",
+          "title": "Les Petits chevaux de Tarquinia",
+          "author": "Marguerite Duras",
+          "coverId": "ol:9935572",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036187X",
+          "coverIsbn": "207036187X"
+        },
+        {
+          "id": "OL8418138W",
+          "title": "Anicet",
+          "author": "Louis Aragon",
+          "coverId": "ol:967143",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361950",
+          "coverIsbn": "2070361950"
+        },
+        {
+          "id": "OL14861970W",
+          "title": "Deux cavaliers de l'orage",
+          "author": "Jean Giono",
+          "coverId": "ol:967144",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361985",
+          "coverIsbn": "2070361985"
+        },
+        {
+          "id": "OL49966W",
+          "title": "La statue de sel",
+          "author": "Albert Memmi",
+          "coverId": "ol:967148",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036206X",
+          "coverIsbn": "207036206X"
+        },
+        {
+          "id": "OL8972356W",
+          "title": "Piege Pour Cendrillon",
+          "author": "Sébastien Japrisot",
+          "coverId": "ol:3075063",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362167",
+          "coverIsbn": "2070362167"
+        },
+        {
+          "id": "OL144669W",
+          "title": "Léon Morin, prêtre",
+          "author": "Béatrix Beck",
+          "coverId": "ol:3075064",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362175",
+          "coverIsbn": "2070362175"
+        },
+        {
+          "id": "OL1261372W",
+          "title": "Le caporal épinglé",
+          "author": "Jacques Perret",
+          "coverId": "ol:967152",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362221",
+          "coverIsbn": "2070362221"
+        },
+        {
+          "id": "OL8971739W",
+          "title": "Fermina Márquez",
+          "author": "Valéry Larbaud",
+          "coverId": "ol:967154",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362256",
+          "coverIsbn": "2070362256"
+        },
+        {
+          "id": "OL19769306W",
+          "title": "Histoire d'un amour",
+          "author": "Roger Nimier",
+          "coverId": "ol:13897219",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362337",
+          "coverIsbn": "2070362337"
+        },
+        {
+          "id": "OL7283692W",
+          "title": "La Cantatrice Chauve: Anti-Piece / La Lecon",
+          "author": "Eugène Ionesco",
+          "coverId": "ol:967160",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362361",
+          "coverIsbn": "2070362361"
+        },
+        {
+          "id": "OL1272994W",
+          "title": "Kaputt",
+          "author": "Curzio Malaparte",
+          "coverId": "ol:967161",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036237X",
+          "coverIsbn": "207036237X"
+        },
+        {
+          "id": "OL1450059W",
+          "title": "Ravage",
+          "author": "René Barjavel",
+          "coverId": "ol:967162",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362388",
+          "coverIsbn": "2070362388"
+        },
+        {
+          "id": "OL8972089W",
+          "title": "Le Lis De Mer",
+          "author": "André Pieyre de Mandiargues",
+          "coverId": "ol:967167",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362477",
+          "coverIsbn": "2070362477"
+        },
+        {
+          "id": "OL9184883W",
+          "title": "Creezy",
+          "author": "Félicien Marceau",
+          "coverId": "ol:2136564",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362485",
+          "coverIsbn": "2070362485"
+        },
+        {
+          "id": "OL8971759W",
+          "title": "L'enfant de la haute mer",
+          "author": "Jules Supervielle",
+          "coverId": "ol:967170",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362523",
+          "coverIsbn": "2070362523"
+        },
+        {
+          "id": "OL8986321W",
+          "title": "Les fous de Dieu",
+          "author": "Jean-Pierre Chabrol",
+          "coverId": "ol:3075066",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362574",
+          "coverIsbn": "2070362574"
+        },
+        {
+          "id": "OL8972096W",
+          "title": "Au Bon Beurre Ou Dix Ans De La Vie D'UN Cremier",
+          "author": "Jean Dutourd",
+          "coverId": "ol:967173",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362604",
+          "coverIsbn": "2070362604"
+        },
+        {
+          "id": "OL261866W",
+          "title": "Tropic of Cancer",
+          "author": "Henry Miller",
+          "coverId": "ol:967174",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362612",
+          "coverIsbn": "2070362612"
+        },
+        {
+          "id": "OL8445854W",
+          "title": "Le Pelerinage Aux Sources",
+          "author": "Lanza Del Vasto",
+          "coverId": "ol:967175",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362620",
+          "coverIsbn": "2070362620"
+        },
+        {
+          "id": "OL24375633W",
+          "title": "Les aveux infidèles",
+          "author": "Jacques de Bourbon Busset",
+          "coverId": "ol:10906658",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036268X",
+          "coverIsbn": "207036268X"
+        },
+        {
+          "id": "OL24189848W",
+          "title": "L'Idiot ...",
+          "author": "Fyodor Dostoevsky",
+          "coverId": "ol:10617689",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036271X",
+          "coverIsbn": "207036271X"
+        },
+        {
+          "id": "OL7050906W",
+          "title": "Le grand voyage",
+          "author": "Jorge Semprún",
+          "coverId": "ol:967178",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362760",
+          "coverIsbn": "2070362760"
+        },
+        {
+          "id": "OL9104830W",
+          "title": "La Maison de Bernarda Alba. Noce de sang",
+          "author": "Federico García Lorca",
+          "coverId": "ol:3075067",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362825",
+          "coverIsbn": "2070362825"
+        },
+        {
+          "id": "OL80342W",
+          "title": "Les enfants humiliés",
+          "author": "Georges Bernanos",
+          "coverId": "ol:3075070",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363031",
+          "coverIsbn": "2070363031"
+        },
+        {
+          "id": "OL22659408W",
+          "title": "Tournesol",
+          "author": "Thérèse de Saint Phalle",
+          "coverId": "ol:10482927",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363139",
+          "coverIsbn": "2070363139"
+        },
+        {
+          "id": "OL8972106W",
+          "title": "Les Choses De La Vie",
+          "author": "Paul Guimard",
+          "coverId": "ol:967192",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363155",
+          "coverIsbn": "2070363155"
+        },
+        {
+          "id": "OL9281016W",
+          "title": "Trou, Le",
+          "author": "Jose Giovanni",
+          "coverId": "ol:2136569",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036318X",
+          "coverIsbn": "207036318X"
+        },
+        {
+          "id": "OL19926W",
+          "title": "The Second Jungle Book",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:967194",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363252",
+          "coverIsbn": "2070363252"
+        },
+        {
+          "id": "OL8972111W",
+          "title": "Au-dessous du volcan",
+          "author": "Malcolm Lowry",
+          "coverId": "ol:967204",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363511",
+          "coverIsbn": "2070363511"
+        },
+        {
+          "id": "OL1728017W",
+          "title": "Le procès-verbal",
+          "author": "J. M. G. Le Clézio",
+          "coverId": "ol:967205",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363538",
+          "coverIsbn": "2070363538"
+        },
+        {
+          "id": "OL11078753W",
+          "title": "Vercoquin et le plancton",
+          "author": "Boris Vian",
+          "coverId": "ol:11738290",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363740",
+          "coverIsbn": "2070363740"
+        },
+        {
+          "id": "OL8972138W",
+          "title": "La 317e section",
+          "author": "Schoendoerffer",
+          "coverId": "ol:967219",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363910",
+          "coverIsbn": "2070363910"
+        },
+        {
+          "id": "OL261791W",
+          "title": "Tremor of Intent",
+          "author": "Anthony Burgess",
+          "coverId": "ol:12346610",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363945",
+          "coverIsbn": "2070363945"
+        },
+        {
+          "id": "OL45868W",
+          "title": "Someone Like You [18 stories]",
+          "author": "Roald Dahl",
+          "coverId": "ol:967222",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363953",
+          "coverIsbn": "2070363953"
+        },
+        {
+          "id": "OL37089W",
+          "title": "Kosmos",
+          "author": "Witold Gombrowicz",
+          "coverId": "ol:967224",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364003",
+          "coverIsbn": "2070364003"
+        },
+        {
+          "id": "OL9240008W",
+          "title": "Vue De La Terre Promise",
+          "author": "Georges Duhamel",
+          "coverId": "ol:3075080",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364046",
+          "coverIsbn": "2070364046"
+        },
+        {
+          "id": "OL702066W",
+          "title": "La Prison maritime",
+          "author": "Michel Mohrt",
+          "coverId": "ol:3075081",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364089",
+          "coverIsbn": "2070364089"
+        },
+        {
+          "id": "OL15723140W",
+          "title": "The Spy Who Came in from the Cold",
+          "author": "John le Carré",
+          "coverId": "ol:10442916",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364143",
+          "coverIsbn": "2070364143"
+        },
+        {
+          "id": "OL16108252W",
+          "title": "Typhon",
+          "author": "Joseph Conrad",
+          "coverId": "ol:967229",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036416X",
+          "coverIsbn": "207036416X"
+        },
+        {
+          "id": "OL6141469W",
+          "title": "Le retour de Silbermann",
+          "author": "Jacques de Lacretelle",
+          "coverId": "ol:967576",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364178",
+          "coverIsbn": "2070364178"
+        },
+        {
+          "id": "OL1164838W",
+          "title": "Le petit arpent du Bon Dieu",
+          "author": "Erskine Caldwell",
+          "coverId": "ol:3075084",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364194",
+          "coverIsbn": "2070364194"
+        },
+        {
+          "id": "OL9803386W",
+          "title": "Préméditation",
+          "author": "Francis Iles",
+          "coverId": "ol:3075085",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364216",
+          "coverIsbn": "2070364216"
+        },
+        {
+          "id": "OL1127580W",
+          "title": "Mémoires d'un tricheur",
+          "author": "Sacha Guitry",
+          "coverId": "ol:3075088",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364348",
+          "coverIsbn": "2070364348"
+        },
+        {
+          "id": "OL638940W",
+          "title": "Lage Dhomme Precede De La Litterature",
+          "author": "Michel Leiris",
+          "coverId": "ol:967236",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364356",
+          "coverIsbn": "2070364356"
+        },
+        {
+          "id": "OL2276525W",
+          "title": "La Conscience de Zeno",
+          "author": "Italo Svevo",
+          "coverId": "ol:967239",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364399",
+          "coverIsbn": "2070364399"
+        },
+        {
+          "id": "OL276960W",
+          "title": "Las armas secretas",
+          "author": "Julio Cortázar",
+          "coverId": "ol:967244",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364488",
+          "coverIsbn": "2070364488"
+        },
+        {
+          "id": "OL1677189W",
+          "title": "La maison des Atlantes",
+          "author": "Angelo Rinaldi",
+          "coverId": "ol:3075091",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364496",
+          "coverIsbn": "2070364496"
+        },
+        {
+          "id": "OL65914W",
+          "title": "Les\\Anges Vagabonds",
+          "author": "Jack Kerouac",
+          "coverId": "ol:967247",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364577",
+          "coverIsbn": "2070364577"
+        },
+        {
+          "id": "OL15300693W",
+          "title": "Le Fils de la servante",
+          "author": "August Strindberg",
+          "coverId": "ol:3075094",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364585",
+          "coverIsbn": "2070364585"
+        },
+        {
+          "id": "OL24433876W",
+          "title": "Avant que le coq chante",
+          "author": "Cesare Pavese",
+          "coverId": "ol:11007981",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036464X",
+          "coverIsbn": "207036464X"
+        }
+      ]
     }
   ]
 }
