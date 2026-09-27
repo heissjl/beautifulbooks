@@ -1,0 +1,1388 @@
+[
+ {
+  "no": "4",
+  "person": "Antoine de Saint-Exupéry",
+  "author": "Luc Estang",
+  "year": "1958",
+  "isbn": "3499500043",
+  "olWork": "OL1281495W",
+  "cover": 3217344
+ },
+ {
+  "no": "5",
+  "person": "Hans Christian Andersen",
+  "author": "Erling Nielsen",
+  "year": "1958",
+  "isbn": "3499500051",
+  "olWork": "OL4566200W",
+  "cover": 3217345
+ },
+ {
+  "no": "6",
+  "person": "Robert Schumann",
+  "author": "André Boucourechliev",
+  "year": "1958",
+  "isbn": "349950006X",
+  "olWork": "OL8985549W",
+  "cover": 13083653
+ },
+ {
+  "no": "9",
+  "person": "Maxim Gorki",
+  "author": "Nina Gourfinkel",
+  "year": "1958",
+  "isbn": "3499500094",
+  "olWork": "OL6386004W",
+  "cover": 13340156
+ },
+ {
+  "no": "14",
+  "person": "Friedrich Schiller",
+  "author": "Friedrich Burschell",
+  "year": "1958",
+  "isbn": "3499500140",
+  "olWork": "OL9072180W",
+  "cover": 1014890
+ },
+ {
+  "no": "15",
+  "person": "Marcel Proust",
+  "author": "Claude Mauriac",
+  "year": "1958",
+  "isbn": "3499500159",
+  "olWork": "OL24241871W",
+  "cover": 10720911
+ },
+ {
+  "no": "17",
+  "person": "Niccolò Machiavelli",
+  "author": "Edmond Barincou",
+  "year": "1958",
+  "isbn": "3499500175",
+  "olWork": "OL24241877W",
+  "cover": 10720916
+ },
+ {
+  "no": "26",
+  "person": "Blaise Pascal",
+  "author": "Albert Béguin",
+  "year": "1959",
+  "isbn": "3499500264",
+  "olWork": "OL24335912W",
+  "cover": 10857384
+ },
+ {
+  "no": "29",
+  "person": "Richard Wagner",
+  "author": "Hans Mayer",
+  "year": "1959",
+  "isbn": "3499500299",
+  "olWork": "OL1348361W",
+  "cover": 2210530
+ },
+ {
+  "no": "31",
+  "person": "Kurt Tucholsky",
+  "author": "Klaus-Peter Schulz",
+  "year": "1959",
+  "isbn": "3499500310",
+  "olWork": "OL3685569W",
+  "cover": 14434325
+ },
+ {
+  "no": "37",
+  "person": "Bertolt Brecht",
+  "author": "Marianne Kesting",
+  "year": "1959",
+  "isbn": "349950037X",
+  "olWork": "OL5071613W",
+  "cover": 1014892
+ },
+ {
+  "no": "44",
+  "person": "Stefan George",
+  "author": "Franz Schonauer",
+  "year": "1960",
+  "isbn": "3499500442",
+  "olWork": "OL6645192W",
+  "cover": 11720808
+ },
+ {
+  "no": "47",
+  "person": "Mohammed",
+  "author": "Émile Dermenghem",
+  "year": "1960",
+  "isbn": "3499500477",
+  "olWork": "OL21271010W",
+  "cover": 10358550
+ },
+ {
+  "no": "50",
+  "person": "Albert Camus",
+  "author": "Morvan Lebesque",
+  "year": "1960",
+  "isbn": "3499500507",
+  "olWork": "OL12032789W",
+  "cover": 7247218
+ },
+ {
+  "no": "59",
+  "person": "George Bernard Shaw",
+  "author": "Hermann Stresau",
+  "year": "1962",
+  "isbn": "3499500590",
+  "olWork": "OL10043296W",
+  "cover": 3217346
+ },
+ {
+  "no": "63",
+  "person": "Aristoteles",
+  "author": "Jean-Marie Zemb",
+  "year": "1961",
+  "isbn": "3499500639",
+  "olWork": "OL9072181W",
+  "cover": 1014894
+ },
+ {
+  "no": "65",
+  "person": "Arthur Rimbaud",
+  "author": "Yves Bonnefoy",
+  "year": "1962",
+  "isbn": "3499500655",
+  "olWork": "OL24241955W",
+  "cover": 10721006
+ },
+ {
+  "no": "75",
+  "person": "Gotthold Ephraim Lessing",
+  "author": "Wolfgang Drews",
+  "year": "1962",
+  "isbn": "3499500752",
+  "olWork": "OL18947838W",
+  "cover": 13662364
+ },
+ {
+  "no": "76",
+  "person": "Karl Marx",
+  "author": "Werner Blumenberg",
+  "year": "1962",
+  "isbn": "3499500760",
+  "olWork": "OL24190935W",
+  "cover": 10620268
+ },
+ {
+  "no": "79",
+  "person": "Rudolf Steiner",
+  "author": "Johannes Hemleben",
+  "year": "1963",
+  "isbn": "3499500795",
+  "olWork": "OL6186311W",
+  "cover": 10527470
+ },
+ {
+  "no": "81",
+  "person": "Robert Musil",
+  "author": "Wilfried Berghahn",
+  "year": "1963",
+  "isbn": "3499500817",
+  "olWork": "OL167680W",
+  "cover": 12576519
+ },
+ {
+  "no": "87",
+  "person": "Jean-Paul Sartre",
+  "author": "Walter Biemel",
+  "year": "1964",
+  "isbn": "3499500876",
+  "olWork": "OL2456599W",
+  "cover": 14430499
+ },
+ {
+  "no": "89",
+  "person": "André Gide",
+  "author": "Claude Martin",
+  "year": "1963",
+  "isbn": "3499500892",
+  "olWork": "OL6741516W",
+  "cover": 3217347
+ },
+ {
+  "no": "92",
+  "person": "Claude Debussy",
+  "author": "Jean Barraqué",
+  "year": "1964",
+  "isbn": "3499500922",
+  "olWork": "OL10043300W",
+  "cover": 3217348
+ },
+ {
+  "no": "97",
+  "person": "Christian Morgenstern",
+  "author": "Martin Beheim-Schwarzbach",
+  "year": "1964",
+  "isbn": "3499500973",
+  "olWork": "OL864723W",
+  "cover": 3217349
+ },
+ {
+  "no": "98",
+  "person": "Martin Luther",
+  "author": "Hanns Lilje",
+  "year": "1965",
+  "isbn": "3499500981",
+  "olWork": "OL1460303W",
+  "cover": 1014899
+ },
+ {
+  "no": "100",
+  "person": "Johann Wolfgang von Goethe",
+  "author": "Peter Boerner",
+  "year": "1964",
+  "isbn": "3499501007",
+  "olWork": "OL6501341W",
+  "cover": 1014900
+ },
+ {
+  "no": "101",
+  "person": "Immanuel Kant",
+  "author": "Uwe Schultz",
+  "year": "1965",
+  "isbn": "3499501015",
+  "olWork": "OL7177133W",
+  "cover": 10652792
+ },
+ {
+  "no": "107",
+  "person": "Béla Bartók",
+  "author": "Everett Helm",
+  "year": "1965",
+  "isbn": "3499501074",
+  "olWork": "OL19077009W",
+  "cover": 8392791
+ },
+ {
+  "no": "108",
+  "person": "Marquis de Sade",
+  "author": "Walter Lennig",
+  "year": "1965",
+  "isbn": "3499501082",
+  "olWork": "OL5071183W",
+  "cover": 13154515
+ },
+ {
+  "no": "113",
+  "person": "E. T. A. Hoffmann",
+  "author": "Gabrielle Wittkop-Ménardeau",
+  "year": "1966",
+  "isbn": "3499501139",
+  "olWork": "OL19443388W",
+  "cover": 2210533
+ },
+ {
+  "no": "114",
+  "person": "Paul Cézanne",
+  "author": "Kurt Leonhard",
+  "year": "1966",
+  "isbn": "3499501147",
+  "olWork": "OL34307384W",
+  "cover": 13158298
+ },
+ {
+  "no": "120",
+  "person": "Erich Kästner",
+  "author": "Luiselotte Enderle",
+  "year": "1966",
+  "isbn": "3499501201",
+  "olWork": "OL7257338W",
+  "cover": 14656928
+ },
+ {
+  "no": "124",
+  "person": "Michelangelo",
+  "author": "Heinrich Koch",
+  "year": "1966",
+  "isbn": "3499501244",
+  "olWork": "OL193517W",
+  "cover": 15244723
+ },
+ {
+  "no": "127",
+  "person": "Hugo von Hofmannsthal",
+  "author": "Werner Volke",
+  "year": "1967",
+  "isbn": "3499501279",
+  "olWork": "OL1434324W",
+  "cover": 3217350
+ },
+ {
+  "no": "132",
+  "person": "Johann Nestroy",
+  "author": "Otto Basil",
+  "year": "1967",
+  "isbn": "3499501325",
+  "olWork": "OL1434324W",
+  "cover": 12510247
+ },
+ {
+  "no": "133",
+  "person": "Arthur Schopenhauer",
+  "author": "Walter Abendroth",
+  "year": "1967",
+  "isbn": "3499501333",
+  "olWork": "OL10106733W",
+  "cover": 10671145
+ },
+ {
+  "no": "135",
+  "person": "Julius Caesar",
+  "author": "Hans Oppermann",
+  "year": "1968",
+  "isbn": "349950135X",
+  "olWork": "OL6494403W",
+  "cover": 1014909
+ },
+ {
+  "no": "137",
+  "person": "Charles Darwin",
+  "author": "Johannes Hemleben",
+  "year": "1968",
+  "isbn": "3499501376",
+  "olWork": "OL6186293W",
+  "cover": 1014910
+ },
+ {
+  "no": "138",
+  "person": "Johann Heinrich Pestalozzi",
+  "author": "Max Liedtke",
+  "year": "1968",
+  "isbn": "3499501384",
+  "olWork": "OL6752994W",
+  "cover": 2210534
+ },
+ {
+  "no": "139",
+  "person": "Ernst Rowohlt",
+  "author": "Paul Mayer",
+  "year": "1968",
+  "isbn": "3499501392",
+  "olWork": "OL8672573W",
+  "cover": 3217351
+ },
+ {
+  "no": "140",
+  "person": "Jesus",
+  "author": "David Flusser",
+  "year": "1968",
+  "isbn": "3499501406",
+  "olWork": "OL12650049W",
+  "cover": 14609559
+ },
+ {
+  "no": "141",
+  "person": "Mao Tse-tung",
+  "author": "Tilemann Grimm",
+  "year": "1968",
+  "isbn": "3499501414",
+  "olWork": "OL5924573W",
+  "cover": 10842719
+ },
+ {
+  "no": "142",
+  "person": "Friedrich Engels",
+  "author": "Helmut Hirsch",
+  "year": "1968",
+  "isbn": "3499501422",
+  "olWork": "OL1359569W",
+  "cover": 10620648
+ },
+ {
+  "no": "148",
+  "person": "Oscar Wilde",
+  "author": "Peter Funke",
+  "year": "1969",
+  "isbn": "3499501481",
+  "olWork": "OL6117298W",
+  "cover": 1014911
+ },
+ {
+  "no": "151",
+  "person": "Max Ernst",
+  "author": "Lothar Fischer",
+  "year": "1969",
+  "isbn": "3499501511",
+  "olWork": "OL969858W",
+  "cover": 3217353
+ },
+ {
+  "no": "153",
+  "person": "Leonardo da Vinci",
+  "author": "Kenneth Clark",
+  "year": "1969",
+  "isbn": "3499501538",
+  "olWork": "OL34307386W",
+  "cover": 13158301
+ },
+ {
+  "no": "155",
+  "person": "Jacques Offenbach",
+  "author": "P. Walter Jacob",
+  "year": "1969",
+  "isbn": "3499501554",
+  "olWork": "OL10043302W",
+  "cover": 3217354
+ },
+ {
+  "no": "157",
+  "person": "Leo Trotzki",
+  "author": "Harry Wilde",
+  "year": "1969",
+  "isbn": "3499501570",
+  "olWork": "OL1455585W",
+  "cover": 10527266
+ },
+ {
+  "no": "158",
+  "person": "Rosa Luxemburg",
+  "author": "Helmut Hirsch",
+  "year": "1969",
+  "isbn": "3499501589",
+  "olWork": "OL1359570W",
+  "cover": 3217356
+ },
+ {
+  "no": "160",
+  "person": "Friedrich Hebbel",
+  "author": "Hayo Matthiesen",
+  "year": "1970",
+  "isbn": "3499501600",
+  "olWork": "OL19077010W",
+  "cover": 8392792
+ },
+ {
+  "no": "162",
+  "person": "Albert Einstein",
+  "author": "Johannes Wickert",
+  "year": "1972",
+  "isbn": "3499501627",
+  "olWork": "OL3131470W",
+  "cover": 1014914
+ },
+ {
+  "no": "163",
+  "person": "Wilhelm Busch",
+  "author": "Joseph Kraus",
+  "year": "1970",
+  "isbn": "3499501635",
+  "olWork": "OL5509814W",
+  "cover": 2210539
+ },
+ {
+  "no": "169",
+  "person": "Karl Jaspers",
+  "author": "Hans Saner",
+  "year": "1970",
+  "isbn": "3499501694",
+  "olWork": "OL9072195W",
+  "cover": 10831575
+ },
+ {
+  "no": "172",
+  "person": "Mahatma Gandhi",
+  "author": "Heimo Rau",
+  "year": "1970",
+  "isbn": "3499501724",
+  "olWork": "OL5061693W",
+  "cover": 8443340
+ },
+ {
+  "no": "173",
+  "person": "Voltaire",
+  "author": "Georg Holmsten",
+  "year": "1971",
+  "isbn": "3499501732",
+  "olWork": "OL3160106W",
+  "cover": 8392793
+ },
+ {
+  "no": "174",
+  "person": "Karl Barth",
+  "author": "Karl Kupisch",
+  "year": "1971",
+  "isbn": "3499501740",
+  "olWork": "OL1385645W",
+  "cover": 10717392
+ },
+ {
+  "no": "181",
+  "person": "Gustav Mahler",
+  "author": "Wolfgang Schreiber",
+  "year": "1971",
+  "isbn": "3499501813",
+  "olWork": "OL6543607W",
+  "cover": 1014916
+ },
+ {
+  "no": "185",
+  "person": "Franz Liszt",
+  "author": "Everett Helm",
+  "year": "1972",
+  "isbn": "3499501856",
+  "olWork": "OL11219159W",
+  "cover": 14363493
+ },
+ {
+  "no": "186",
+  "person": "Theodor Storm",
+  "author": "Hartmut Vinçon",
+  "year": "1972",
+  "isbn": "3499501864",
+  "olWork": "OL5021330W",
+  "cover": 2210541
+ },
+ {
+  "no": "190",
+  "person": "Anton Bruckner",
+  "author": "Karl Grebe",
+  "year": "1972",
+  "isbn": "3499501902",
+  "olWork": "OL5146336W",
+  "cover": 1014917
+ },
+ {
+  "no": "191",
+  "person": "Jean-Jacques Rousseau",
+  "author": "Georg Holmsten",
+  "year": "1972",
+  "isbn": "3499501910",
+  "olWork": "OL3160101W",
+  "cover": 2210543
+ },
+ {
+  "no": "202",
+  "person": "Arnold Schönberg",
+  "author": "Eberhard Freitag",
+  "year": "1973",
+  "isbn": "349950202X",
+  "olWork": "OL4683162W",
+  "cover": 11590444
+ },
+ {
+  "no": "203",
+  "person": "Alexander der Große",
+  "author": "Gerhard Wirth",
+  "year": "1973",
+  "isbn": "3499502038",
+  "olWork": "OL2412572W",
+  "cover": 10295791
+ },
+ {
+  "no": "205",
+  "person": "Pablo Picasso",
+  "author": "Wilfried Wiegand",
+  "year": "1973",
+  "isbn": "3499502054",
+  "olWork": "OL7234594W",
+  "cover": 2210545
+ },
+ {
+  "no": "207",
+  "person": "Che Guevara",
+  "author": "Elmar May",
+  "year": "1973",
+  "isbn": "3499502070",
+  "olWork": "OL7067924W",
+  "cover": 2210546
+ },
+ {
+  "no": "216",
+  "person": "Max Weber",
+  "author": "Hans Norbert Fügen",
+  "year": "1985",
+  "isbn": "349950216X",
+  "olWork": "OL5204751W",
+  "cover": 1014919
+ },
+ {
+  "no": "218",
+  "person": "Michail A. Bakunin",
+  "author": "Justus Franz Wittkop",
+  "year": "1974",
+  "isbn": "3499502186",
+  "olWork": "OL4194479W",
+  "cover": 10242122
+ },
+ {
+  "no": "220",
+  "person": "Antonín Dvořák",
+  "author": "Kurt Honolka",
+  "year": "1974",
+  "isbn": "3499502208",
+  "olWork": "OL1285153W",
+  "cover": 8392799
+ },
+ {
+  "no": "222",
+  "person": "Friedrich II. von Hohenstaufen",
+  "author": "Herbert Nette",
+  "year": "1975",
+  "isbn": "3499502224",
+  "olWork": "OL5069987W",
+  "cover": 2210548
+ },
+ {
+  "no": "223",
+  "person": "Eugène Ionesco",
+  "author": "François Bondy",
+  "year": "1975",
+  "isbn": "3499502232",
+  "olWork": "OL2145084W",
+  "cover": 8392800
+ },
+ {
+  "no": "224",
+  "person": "Josef W. Stalin",
+  "author": "Maximilien Rubel",
+  "year": "1975",
+  "isbn": "3499502240",
+  "olWork": "OL1364633W",
+  "cover": 1014920
+ },
+ {
+  "no": "226",
+  "person": "Walt Disney",
+  "author": "Reinhold Reitberger",
+  "year": "1979",
+  "isbn": "3499502267",
+  "olWork": "OL6266711W",
+  "cover": 2210549
+ },
+ {
+  "no": "230",
+  "person": "Ernst Thälmann",
+  "author": "Hannes Heer",
+  "year": "1975",
+  "isbn": "3499502305",
+  "olWork": "OL5784690W",
+  "cover": 7065806
+ },
+ {
+  "no": "231",
+  "person": "Ödön von Horváth",
+  "author": "Dieter Hildebrandt",
+  "year": "1975",
+  "isbn": "3499502313",
+  "olWork": "OL637669W",
+  "cover": 2210550
+ },
+ {
+  "no": "232",
+  "person": "Willy Brandt",
+  "author": "Carola Stern",
+  "year": "1975",
+  "isbn": "3499502321",
+  "olWork": "OL1350931W",
+  "cover": 1014922
+ },
+ {
+  "no": "233",
+  "person": "Sergej M. Eisenstein",
+  "author": "Harald Weise",
+  "year": "1975",
+  "isbn": "349950233X",
+  "olWork": "OL4729252W",
+  "cover": 2210552
+ },
+ {
+  "no": "234",
+  "person": "Konrad Adenauer",
+  "author": "Gösta von Uexküll",
+  "year": "1976",
+  "isbn": "3499502348",
+  "olWork": "OL6884764W",
+  "cover": 8392801
+ },
+ {
+  "no": "235",
+  "person": "Arthur Schnitzler",
+  "author": "Hartmut Scheible",
+  "year": "1976",
+  "isbn": "3499502356",
+  "olWork": "OL27290558W",
+  "cover": 12619016
+ },
+ {
+  "no": "236",
+  "person": "Dietrich Bonhoeffer",
+  "author": "Eberhard Bethge",
+  "year": "1976",
+  "isbn": "3499502364",
+  "olWork": "OL3749929W",
+  "cover": 2210554
+ },
+ {
+  "no": "237",
+  "person": "Hieronymus Bosch",
+  "author": "Heinrich Goertz",
+  "year": "1977",
+  "isbn": "3499502372",
+  "olWork": "OL4697161W",
+  "cover": 2210555
+ },
+ {
+  "no": "238",
+  "person": "Conrad Ferdinand Meyer",
+  "author": "David A. Jackson",
+  "year": "1975",
+  "isbn": "3499502380",
+  "olWork": "OL4122449W",
+  "cover": 8678514
+ },
+ {
+  "no": "240",
+  "person": "Werner Heisenberg",
+  "author": "Armin Hermann",
+  "year": "1976",
+  "isbn": "3499502402",
+  "olWork": "OL5527838W",
+  "cover": 10541992
+ },
+ {
+  "no": "241",
+  "person": "George Grosz",
+  "author": "Lothar Fischer",
+  "year": "1976",
+  "isbn": "3499502410",
+  "olWork": "OL969853W",
+  "cover": 2210556
+ },
+ {
+  "no": "243",
+  "person": "Peter I. Tschaikowsky",
+  "author": "Everett Helm",
+  "year": "1976",
+  "isbn": "3499502437",
+  "olWork": "OL5186482W",
+  "cover": 2210557
+ },
+ {
+  "no": "245",
+  "person": "Molière",
+  "author": "Friedrich Hartau",
+  "year": "1976",
+  "isbn": "3499502453",
+  "olWork": "OL6497227W",
+  "cover": 8392803
+ },
+ {
+  "no": "248",
+  "person": "Le Corbusier",
+  "author": "Norbert Huse",
+  "year": "1976",
+  "isbn": "3499502488",
+  "olWork": "OL2054394W",
+  "cover": 2210558
+ },
+ {
+  "no": "253",
+  "person": "Jeanne d’Arc",
+  "author": "Herbert Nette",
+  "year": "1977",
+  "isbn": "3499502534",
+  "olWork": "OL5069988W",
+  "cover": 2210559
+ },
+ {
+  "no": "256",
+  "person": "Carl Zuckmayer",
+  "author": "Thomas Ayck",
+  "year": "1977",
+  "isbn": "3499502569",
+  "olWork": "OL5242362W",
+  "cover": 1014924
+ },
+ {
+  "no": "258",
+  "person": "Ernst Bloch",
+  "author": "Silvia Markun",
+  "year": "1977",
+  "isbn": "3499502585",
+  "olWork": "OL6480643W",
+  "cover": 15249729
+ },
+ {
+  "no": "261",
+  "person": "Marcus Tullius Cicero",
+  "author": "Marion Giebel",
+  "year": "1977",
+  "isbn": "3499502615",
+  "olWork": "OL1656858W",
+  "cover": 1014926
+ },
+ {
+  "no": "262",
+  "person": "Charles Dickens",
+  "author": "Johann N. Schmidt",
+  "year": "1978",
+  "isbn": "3499502623",
+  "olWork": "OL2467096W",
+  "cover": 2210560
+ },
+ {
+  "no": "264",
+  "person": "Wilhelm II.",
+  "author": "Friedrich Hartau",
+  "year": "1978",
+  "isbn": "349950264X",
+  "olWork": "OL6497229W",
+  "cover": 1014927
+ },
+ {
+  "no": "267",
+  "person": "Johann Jacob Christoph von Grimmelshausen",
+  "author": "Curt Hohoff",
+  "year": "1978",
+  "isbn": "3499502674",
+  "olWork": "OL1235497W",
+  "cover": 15244372
+ },
+ {
+  "no": "269",
+  "person": "Ludwig Feuerbach",
+  "author": "Hans-Martin Sass",
+  "year": "1978",
+  "isbn": "3499502690",
+  "olWork": "OL6638196W",
+  "cover": 10585133
+ },
+ {
+  "no": "272",
+  "person": "Homer",
+  "author": "Herbert Bannert",
+  "year": "1979",
+  "isbn": "3499502720",
+  "olWork": "OL4835291W",
+  "cover": 1014928
+ },
+ {
+  "no": "275",
+  "person": "Ludwig Wittgenstein",
+  "author": "Kurt Wuchterl",
+  "year": "1979",
+  "isbn": "3499502755",
+  "olWork": "OL4145328W",
+  "cover": 15161662
+ },
+ {
+  "no": "279",
+  "person": "Alexander S. Puschkin",
+  "author": "Gudrun Ziegler",
+  "year": "1979",
+  "isbn": "3499502798",
+  "olWork": "OL6387070W",
+  "cover": 15176103
+ },
+ {
+  "no": "282",
+  "person": "Bertrand Russell",
+  "author": "Ernst R. Sandvoss",
+  "year": "1980",
+  "isbn": "3499502828",
+  "olWork": "OL2852197W",
+  "cover": 1014929
+ },
+ {
+  "no": "283",
+  "person": "Else Lasker-Schüler",
+  "author": "Erika Klüsener",
+  "year": "1980",
+  "isbn": "3499502836",
+  "olWork": "OL6415332W",
+  "cover": 1014931
+ },
+ {
+  "no": "286",
+  "person": "Maria Theresia",
+  "author": "Peter Berglar",
+  "year": "1980",
+  "isbn": "3499502860",
+  "olWork": "OL3167386W",
+  "cover": 10990472
+ },
+ {
+  "no": "290",
+  "person": "Max Scheler",
+  "author": "Wilhelm Mader",
+  "year": "1980",
+  "isbn": "3499502909",
+  "olWork": "OL5231346W",
+  "cover": 8392805
+ },
+ {
+  "no": "291",
+  "person": "Sappho",
+  "author": "Marion Giebel",
+  "year": "1980",
+  "isbn": "3499502917",
+  "olWork": "OL1656860W",
+  "cover": 1014932
+ },
+ {
+  "no": "294",
+  "person": "Käthe Kollwitz",
+  "author": "Catherine Krahmer",
+  "year": "1981",
+  "isbn": "3499502941",
+  "olWork": "OL5149779W",
+  "cover": 14637702
+ },
+ {
+  "no": "297",
+  "person": "Lord Byron",
+  "author": "Hartmut Müller",
+  "year": "1981",
+  "isbn": "3499502976",
+  "olWork": "OL1638082W",
+  "cover": 2210561
+ },
+ {
+  "no": "298",
+  "person": "Wilhelm Reich",
+  "author": "Bernd A. Laska",
+  "year": "1981",
+  "isbn": "3499502984",
+  "olWork": "OL2220388W",
+  "cover": 3364947
+ },
+ {
+  "no": "299",
+  "person": "Paul Hindemith",
+  "author": "Giselher Schubert",
+  "year": "1981",
+  "isbn": "3499502992",
+  "olWork": "OL5497353W",
+  "cover": 8392807
+ },
+ {
+  "no": "300",
+  "person": "William Faulkner",
+  "author": "Peter Nicolaisen",
+  "year": "1981",
+  "isbn": "349950300X",
+  "olWork": "OL3986770W",
+  "cover": 8392808
+ },
+ {
+  "no": "301",
+  "person": "Joseph Roth",
+  "author": "Helmuth Nürnberger",
+  "year": "1981",
+  "isbn": "3499503018",
+  "olWork": "OL1716601W",
+  "cover": 2210563
+ },
+ {
+  "no": "303",
+  "person": "Friedrich Fröbel",
+  "author": "Helmut Heiland",
+  "year": "1982",
+  "isbn": "3499503034",
+  "olWork": "OL3132674W",
+  "cover": 2210564
+ },
+ {
+  "no": "305",
+  "person": "Thomas Alva Edison",
+  "author": "Fritz Vögtle",
+  "year": "1982",
+  "isbn": "3499503050",
+  "olWork": "OL9018806W",
+  "cover": 3217358
+ },
+ {
+  "no": "310",
+  "person": "Heinrich Böll",
+  "author": "Klaus Schröter",
+  "year": "1982",
+  "isbn": "3499503107",
+  "olWork": "OL3587230W",
+  "cover": 2210566
+ },
+ {
+  "no": "311",
+  "person": "Elisabeth I.",
+  "author": "Herbert Nette",
+  "year": "1982",
+  "isbn": "3499503115",
+  "olWork": "OL5069986W",
+  "cover": 1014934
+ },
+ {
+  "no": "312",
+  "person": "Ernst Toller",
+  "author": "Wolfgang Rothe",
+  "year": "1983",
+  "isbn": "3499503123",
+  "olWork": "OL9056173W",
+  "cover": 10498197
+ },
+ {
+  "no": "316",
+  "person": "Adolf Hitler",
+  "author": "Harald Steffahn",
+  "year": "1983",
+  "isbn": "3499503166",
+  "olWork": "OL853633W",
+  "cover": 2210567
+ },
+ {
+  "no": "317",
+  "person": "Paula Modersohn-Becker",
+  "author": "Liselotte von Reinken",
+  "year": "1983",
+  "isbn": "3499503174",
+  "olWork": "OL19021365W",
+  "cover": 14474694
+ },
+ {
+  "no": "322",
+  "person": "Erich Fromm",
+  "author": "Rainer Funk",
+  "year": "1983",
+  "isbn": "3499503220",
+  "olWork": "OL6089550W",
+  "cover": 14422957
+ },
+ {
+  "no": "325",
+  "person": "Giacomo Puccini",
+  "author": "Clemens Höslinger",
+  "year": "1984",
+  "isbn": "3499503255",
+  "olWork": "OL4899621W",
+  "cover": 8392810
+ },
+ {
+  "no": "328",
+  "person": "Vladimir Nabokov",
+  "author": "Donald E. Morton",
+  "year": "1984",
+  "isbn": "349950328X",
+  "olWork": "OL7018241W",
+  "cover": 3217359
+ },
+ {
+  "no": "331",
+  "person": "Thomas Morus",
+  "author": "Hans Peter Heinrich",
+  "year": "1984",
+  "isbn": "349950331X",
+  "olWork": "OL4934651W",
+  "cover": 8392811
+ },
+ {
+  "no": "332",
+  "person": "Klaus Mann",
+  "author": "Uwe Naumann",
+  "year": "1984",
+  "isbn": "3499503328",
+  "olWork": "OL754852W",
+  "cover": 1014935
+ },
+ {
+  "no": "333",
+  "person": "Martin Luther King, jr.",
+  "author": "Gerd Presler",
+  "year": "1984",
+  "isbn": "3499503336",
+  "olWork": "OL578081W",
+  "cover": 3217360
+ },
+ {
+  "no": "334",
+  "person": "Lion Feuchtwanger",
+  "author": "Reinhold Jaretzky",
+  "year": "1984",
+  "isbn": "3499503344",
+  "olWork": "OL3819127W",
+  "cover": 2210569
+ },
+ {
+  "no": "335",
+  "person": "Ernst Barlach",
+  "author": "Catherine Krahmer",
+  "year": "1984",
+  "isbn": "3499503352",
+  "olWork": "OL5149781W",
+  "cover": 2210570
+ },
+ {
+  "no": "338",
+  "person": "Antonio Vivaldi",
+  "author": "Michael Stegemann",
+  "year": "1985",
+  "isbn": "3499503387",
+  "olWork": "OL2550825W",
+  "cover": 8392812
+ },
+ {
+  "no": "339",
+  "person": "Fritz Lang",
+  "author": "Michael Töteberg",
+  "year": "1985",
+  "isbn": "3499503395",
+  "olWork": "OL3397234W",
+  "cover": 2210571
+ },
+ {
+  "no": "343",
+  "person": "Anna Freud",
+  "author": "Wilhelm Salber",
+  "year": "1985",
+  "isbn": "3499503433",
+  "olWork": "OL882777W",
+  "cover": 8392813
+ },
+ {
+  "no": "345",
+  "person": "Dschingis Khan",
+  "author": "Reinhold Neumann-Hoditz",
+  "year": "1985",
+  "isbn": "349950345X",
+  "olWork": "OL3069462W",
+  "cover": 3217361
+ },
+ {
+  "no": "346",
+  "person": "Kemal Atatürk",
+  "author": "Bernd Rill",
+  "year": "1985",
+  "isbn": "3499503468",
+  "olWork": "OL2902735W",
+  "cover": 2210572
+ },
+ {
+  "no": "347",
+  "person": "Nikolaus Kopernikus",
+  "author": "Jochen Kirchhoff",
+  "year": "1985",
+  "isbn": "3499503476",
+  "olWork": "OL4343955W",
+  "cover": 2210573
+ },
+ {
+  "no": "349",
+  "person": "Rudi Dutschke",
+  "author": "Jürgen Miermeister",
+  "year": "1986",
+  "isbn": "3499503492",
+  "olWork": "OL2580222W",
+  "cover": 2210574
+ },
+ {
+  "no": "350",
+  "person": "Amenophis IV. Echnaton",
+  "author": "Hermann A. Schlögl",
+  "year": "1986",
+  "isbn": "3499503506",
+  "olWork": "OL10043311W",
+  "cover": 3217362
+ },
+ {
+  "no": "351",
+  "person": "Edvard Munch",
+  "author": "Matthias Arnold",
+  "year": "1986",
+  "isbn": "3499503514",
+  "olWork": "OL2238386W",
+  "cover": 15251288
+ },
+ {
+  "no": "352",
+  "person": "Ludwig XIV.",
+  "author": "Bernd-Rüdiger Schwesig",
+  "year": "1986",
+  "isbn": "3499503522",
+  "olWork": "OL10043315W",
+  "cover": 3217363
+ },
+ {
+  "no": "353",
+  "person": "Vergil",
+  "author": "Marion Giebel",
+  "year": "1986",
+  "isbn": "3499503530",
+  "olWork": "OL1656865W",
+  "cover": 3217364
+ },
+ {
+  "no": "356",
+  "person": "Henry D. Thoreau",
+  "author": "Hans-Dieter Klumpjan",
+  "year": "1986",
+  "isbn": "3499503565",
+  "olWork": "OL37401669W",
+  "cover": 3217365
+ },
+ {
+  "no": "357",
+  "person": "David Hume",
+  "author": "Gerhard Streminger",
+  "year": "1986",
+  "isbn": "3499503573",
+  "olWork": "OL3132724W",
+  "cover": 2210575
+ },
+ {
+  "no": "358",
+  "person": "Jules Verne",
+  "author": "Volker Dehs",
+  "year": "1986",
+  "isbn": "3499503581",
+  "olWork": "OL10043316W",
+  "cover": 3217366
+ },
+ {
+  "no": "362",
+  "person": "Janusz Korczak",
+  "author": "Wolfgang Pelzer",
+  "year": "1987",
+  "isbn": "349950362X",
+  "olWork": "OL10043318W",
+  "cover": 3217367
+ },
+ {
+  "no": "364",
+  "person": "Heinar Kipphardt",
+  "author": "Adolf Stock",
+  "year": "1987",
+  "isbn": "3499503646",
+  "olWork": "OL4662725W",
+  "cover": 2210576
+ },
+ {
+  "no": "366",
+  "person": "Ingmar Bergman",
+  "author": "Eckhard Weise",
+  "year": "1987",
+  "isbn": "3499503662",
+  "olWork": "OL4729249W",
+  "cover": 2210577
+ },
+ {
+  "no": "367",
+  "person": "Peter Weiss",
+  "author": "Jochen Vogt",
+  "year": "1987",
+  "isbn": "3499503670",
+  "olWork": "OL4231791W",
+  "cover": 2210578
+ },
+ {
+  "no": "371",
+  "person": "Astrid Lindgren",
+  "author": "Sybil Gräfin Schönfeldt",
+  "year": "1987",
+  "isbn": "3499503719",
+  "olWork": "OL2076193W",
+  "cover": 2210579
+ },
+ {
+  "no": "374",
+  "person": "André Breton",
+  "author": "Volker Zotz",
+  "year": "1990",
+  "isbn": "3499503743",
+  "olWork": "OL3848814W",
+  "cover": 3217368
+ },
+ {
+  "no": "376",
+  "person": "Meister Eckhart",
+  "author": "Gerhard Wehr",
+  "year": "1989",
+  "isbn": "349950376X",
+  "olWork": "OL2584047W",
+  "cover": 2210580
+ },
+ {
+  "no": "383",
+  "person": "August Strindberg",
+  "author": "Peter Schütze",
+  "year": "1990",
+  "isbn": "3499503832",
+  "olWork": "OL3100931W",
+  "cover": 8392818
+ },
+ {
+  "no": "406",
+  "person": "Rahel Levin Varnhagen",
+  "author": "Heidi Thomann Tewarson",
+  "year": "1988",
+  "isbn": "3499504065",
+  "olWork": "OL1850488W",
+  "cover": 10527261
+ },
+ {
+  "no": "413",
+  "person": "Stefan Zweig",
+  "author": "Hartmut Müller",
+  "year": "1988",
+  "isbn": "3499504138",
+  "olWork": "OL1638084W",
+  "cover": 1014940
+ },
+ {
+  "no": "417",
+  "person": "Marie Curie",
+  "author": "Peter Ksoll",
+  "year": "1988",
+  "isbn": "3499504170",
+  "olWork": "OL4848500W",
+  "cover": 2210584
+ },
+ {
+  "no": "440",
+  "person": "Adam Smith",
+  "author": "Gerhard Streminger",
+  "year": "1999",
+  "isbn": "3499504405",
+  "olWork": "OL3132721W",
+  "cover": 3217374
+ },
+ {
+  "no": "444",
+  "person": "Helmut Schmidt",
+  "author": "Harald Steffahn",
+  "year": "1990",
+  "isbn": "3499504448",
+  "olWork": "OL853640W",
+  "cover": 2210592
+ },
+ {
+  "no": "455",
+  "person": "Federico Fellini",
+  "author": "Michael Töteberg",
+  "year": "1989",
+  "isbn": "3499504553",
+  "olWork": "OL3397233W",
+  "cover": 2210597
+ },
+ {
+  "no": "456",
+  "person": "Die Schwestern Brontë",
+  "author": "Werner Waldmann",
+  "year": "1990",
+  "isbn": "3499504561",
+  "olWork": "OL19077011W",
+  "cover": 8392823
+ },
+ {
+  "no": "463",
+  "person": "Lou Andreas-Salomé",
+  "author": "Linde Salber",
+  "year": "1990",
+  "isbn": "3499504634",
+  "olWork": "OL4044032W",
+  "cover": 2210603
+ }
+]

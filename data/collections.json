@@ -19313,6 +19313,882 @@
           "from": "wikipedia:Great_American_Novel"
         }
       ]
+    },
+    {
+      "slug": "rowohlts-monographien",
+      "title": "Rowohlts Monographien",
+      "kind": "series",
+      "intro": "From 1958 Rowohlt published small paperback lives, each of one person told in their own words and in pictures — writers, composers, painters, philosophers, politicians. The classic cover is a portrait photograph tinted in one colour across the whole front, the name in a bar at the top and the little rororo box at the bottom. One book per person, in series order, from the covers Open Library has in that design.",
+      "published": false,
+      "publishers": [
+        "Rowohlt"
+      ],
+      "works": [
+        {
+          "id": "OL1281495W",
+          "title": "Antoine de Saint-Exupéry",
+          "author": "Luc Estang",
+          "coverId": "ol:3217344",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500043",
+          "coverIsbn": "3499500043"
+        },
+        {
+          "id": "OL4566200W",
+          "title": "Hans Christian Andersen",
+          "author": "Erling Nielsen",
+          "coverId": "ol:3217345",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500051",
+          "coverIsbn": "3499500051"
+        },
+        {
+          "id": "OL8985549W",
+          "title": "Robert Schumann",
+          "author": "André Boucourechliev",
+          "coverId": "ol:13083653",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950006X",
+          "coverIsbn": "349950006X"
+        },
+        {
+          "id": "OL6386004W",
+          "title": "Maxim Gorki",
+          "author": "Nina Gourfinkel",
+          "coverId": "ol:13340156",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500094",
+          "coverIsbn": "3499500094"
+        },
+        {
+          "id": "OL9072180W",
+          "title": "Friedrich Schiller",
+          "author": "Friedrich Burschell",
+          "coverId": "ol:1014890",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500140",
+          "coverIsbn": "3499500140"
+        },
+        {
+          "id": "OL24241871W",
+          "title": "Marcel Proust",
+          "author": "Claude Mauriac",
+          "coverId": "ol:10720911",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500159",
+          "coverIsbn": "3499500159"
+        },
+        {
+          "id": "OL24241877W",
+          "title": "Niccolò Machiavelli",
+          "author": "Edmond Barincou",
+          "coverId": "ol:10720916",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500175",
+          "coverIsbn": "3499500175"
+        },
+        {
+          "id": "OL24335912W",
+          "title": "Blaise Pascal",
+          "author": "Albert Béguin",
+          "coverId": "ol:10857384",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500264",
+          "coverIsbn": "3499500264"
+        },
+        {
+          "id": "OL1348361W",
+          "title": "Richard Wagner",
+          "author": "Hans Mayer",
+          "coverId": "ol:2210530",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500299",
+          "coverIsbn": "3499500299"
+        },
+        {
+          "id": "OL3685569W",
+          "title": "Kurt Tucholsky",
+          "author": "Klaus-Peter Schulz",
+          "coverId": "ol:14434325",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500310",
+          "coverIsbn": "3499500310"
+        },
+        {
+          "id": "OL5071613W",
+          "title": "Bertolt Brecht",
+          "author": "Marianne Kesting",
+          "coverId": "ol:1014892",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950037X",
+          "coverIsbn": "349950037X"
+        },
+        {
+          "id": "OL6645192W",
+          "title": "Stefan George",
+          "author": "Franz Schonauer",
+          "coverId": "ol:11720808",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500442",
+          "coverIsbn": "3499500442"
+        },
+        {
+          "id": "OL21271010W",
+          "title": "Mohammed",
+          "author": "Émile Dermenghem",
+          "coverId": "ol:10358550",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500477",
+          "coverIsbn": "3499500477"
+        },
+        {
+          "id": "OL12032789W",
+          "title": "Albert Camus",
+          "author": "Morvan Lebesque",
+          "coverId": "ol:7247218",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500507",
+          "coverIsbn": "3499500507"
+        },
+        {
+          "id": "OL10043296W",
+          "title": "George Bernard Shaw",
+          "author": "Hermann Stresau",
+          "coverId": "ol:3217346",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500590",
+          "coverIsbn": "3499500590"
+        },
+        {
+          "id": "OL9072181W",
+          "title": "Aristoteles",
+          "author": "Jean-Marie Zemb",
+          "coverId": "ol:1014894",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500639",
+          "coverIsbn": "3499500639"
+        },
+        {
+          "id": "OL24241955W",
+          "title": "Arthur Rimbaud",
+          "author": "Yves Bonnefoy",
+          "coverId": "ol:10721006",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500655",
+          "coverIsbn": "3499500655"
+        },
+        {
+          "id": "OL18947838W",
+          "title": "Gotthold Ephraim Lessing",
+          "author": "Wolfgang Drews",
+          "coverId": "ol:13662364",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500752",
+          "coverIsbn": "3499500752"
+        },
+        {
+          "id": "OL24190935W",
+          "title": "Karl Marx",
+          "author": "Werner Blumenberg",
+          "coverId": "ol:10620268",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500760",
+          "coverIsbn": "3499500760"
+        },
+        {
+          "id": "OL6186311W",
+          "title": "Rudolf Steiner",
+          "author": "Johannes Hemleben",
+          "coverId": "ol:10527470",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500795",
+          "coverIsbn": "3499500795"
+        },
+        {
+          "id": "OL167680W",
+          "title": "Robert Musil",
+          "author": "Wilfried Berghahn",
+          "coverId": "ol:12576519",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500817",
+          "coverIsbn": "3499500817"
+        },
+        {
+          "id": "OL2456599W",
+          "title": "Jean-Paul Sartre",
+          "author": "Walter Biemel",
+          "coverId": "ol:14430499",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500876",
+          "coverIsbn": "3499500876"
+        },
+        {
+          "id": "OL6741516W",
+          "title": "André Gide",
+          "author": "Claude Martin",
+          "coverId": "ol:3217347",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500892",
+          "coverIsbn": "3499500892"
+        },
+        {
+          "id": "OL10043300W",
+          "title": "Claude Debussy",
+          "author": "Jean Barraqué",
+          "coverId": "ol:3217348",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500922",
+          "coverIsbn": "3499500922"
+        },
+        {
+          "id": "OL864723W",
+          "title": "Christian Morgenstern",
+          "author": "Martin Beheim-Schwarzbach",
+          "coverId": "ol:3217349",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500973",
+          "coverIsbn": "3499500973"
+        },
+        {
+          "id": "OL1460303W",
+          "title": "Martin Luther",
+          "author": "Hanns Lilje",
+          "coverId": "ol:1014899",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499500981",
+          "coverIsbn": "3499500981"
+        },
+        {
+          "id": "OL6501341W",
+          "title": "Johann Wolfgang von Goethe",
+          "author": "Peter Boerner",
+          "coverId": "ol:1014900",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501007",
+          "coverIsbn": "3499501007"
+        },
+        {
+          "id": "OL7177133W",
+          "title": "Immanuel Kant",
+          "author": "Uwe Schultz",
+          "coverId": "ol:10652792",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501015",
+          "coverIsbn": "3499501015"
+        },
+        {
+          "id": "OL19077009W",
+          "title": "Béla Bartók",
+          "author": "Everett Helm",
+          "coverId": "ol:8392791",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501074",
+          "coverIsbn": "3499501074"
+        },
+        {
+          "id": "OL5071183W",
+          "title": "Marquis de Sade",
+          "author": "Walter Lennig",
+          "coverId": "ol:13154515",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501082",
+          "coverIsbn": "3499501082"
+        },
+        {
+          "id": "OL19443388W",
+          "title": "E. T. A. Hoffmann",
+          "author": "Gabrielle Wittkop-Ménardeau",
+          "coverId": "ol:2210533",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501139",
+          "coverIsbn": "3499501139"
+        },
+        {
+          "id": "OL34307384W",
+          "title": "Paul Cézanne",
+          "author": "Kurt Leonhard",
+          "coverId": "ol:13158298",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501147",
+          "coverIsbn": "3499501147"
+        },
+        {
+          "id": "OL7257338W",
+          "title": "Erich Kästner",
+          "author": "Luiselotte Enderle",
+          "coverId": "ol:14656928",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501201",
+          "coverIsbn": "3499501201"
+        },
+        {
+          "id": "OL193517W",
+          "title": "Michelangelo",
+          "author": "Heinrich Koch",
+          "coverId": "ol:15244723",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501244",
+          "coverIsbn": "3499501244"
+        },
+        {
+          "id": "OL1434324W",
+          "title": "Hugo von Hofmannsthal",
+          "author": "Werner Volke",
+          "coverId": "ol:3217350",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501279",
+          "coverIsbn": "3499501279"
+        },
+        {
+          "id": "OL1434324W",
+          "title": "Johann Nestroy",
+          "author": "Otto Basil",
+          "coverId": "ol:12510247",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501325",
+          "coverIsbn": "3499501325"
+        },
+        {
+          "id": "OL10106733W",
+          "title": "Arthur Schopenhauer",
+          "author": "Walter Abendroth",
+          "coverId": "ol:10671145",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501333",
+          "coverIsbn": "3499501333"
+        },
+        {
+          "id": "OL6494403W",
+          "title": "Julius Caesar",
+          "author": "Hans Oppermann",
+          "coverId": "ol:1014909",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950135X",
+          "coverIsbn": "349950135X"
+        },
+        {
+          "id": "OL6186293W",
+          "title": "Charles Darwin",
+          "author": "Johannes Hemleben",
+          "coverId": "ol:1014910",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501376",
+          "coverIsbn": "3499501376"
+        },
+        {
+          "id": "OL6752994W",
+          "title": "Johann Heinrich Pestalozzi",
+          "author": "Max Liedtke",
+          "coverId": "ol:2210534",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501384",
+          "coverIsbn": "3499501384"
+        },
+        {
+          "id": "OL8672573W",
+          "title": "Ernst Rowohlt",
+          "author": "Paul Mayer",
+          "coverId": "ol:3217351",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501392",
+          "coverIsbn": "3499501392"
+        },
+        {
+          "id": "OL12650049W",
+          "title": "Jesus",
+          "author": "David Flusser",
+          "coverId": "ol:14609559",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501406",
+          "coverIsbn": "3499501406"
+        },
+        {
+          "id": "OL5924573W",
+          "title": "Mao Tse-tung",
+          "author": "Tilemann Grimm",
+          "coverId": "ol:10842719",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501414",
+          "coverIsbn": "3499501414"
+        },
+        {
+          "id": "OL1359569W",
+          "title": "Friedrich Engels",
+          "author": "Helmut Hirsch",
+          "coverId": "ol:10620648",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501422",
+          "coverIsbn": "3499501422"
+        },
+        {
+          "id": "OL6117298W",
+          "title": "Oscar Wilde",
+          "author": "Peter Funke",
+          "coverId": "ol:1014911",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501481",
+          "coverIsbn": "3499501481"
+        },
+        {
+          "id": "OL969858W",
+          "title": "Max Ernst",
+          "author": "Lothar Fischer",
+          "coverId": "ol:3217353",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501511",
+          "coverIsbn": "3499501511"
+        },
+        {
+          "id": "OL34307386W",
+          "title": "Leonardo da Vinci",
+          "author": "Kenneth Clark",
+          "coverId": "ol:13158301",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501538",
+          "coverIsbn": "3499501538"
+        },
+        {
+          "id": "OL10043302W",
+          "title": "Jacques Offenbach",
+          "author": "P. Walter Jacob",
+          "coverId": "ol:3217354",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501554",
+          "coverIsbn": "3499501554"
+        },
+        {
+          "id": "OL1455585W",
+          "title": "Leo Trotzki",
+          "author": "Harry Wilde",
+          "coverId": "ol:10527266",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501570",
+          "coverIsbn": "3499501570"
+        },
+        {
+          "id": "OL1359570W",
+          "title": "Rosa Luxemburg",
+          "author": "Helmut Hirsch",
+          "coverId": "ol:3217356",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501589",
+          "coverIsbn": "3499501589"
+        },
+        {
+          "id": "OL19077010W",
+          "title": "Friedrich Hebbel",
+          "author": "Hayo Matthiesen",
+          "coverId": "ol:8392792",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501600",
+          "coverIsbn": "3499501600"
+        },
+        {
+          "id": "OL3131470W",
+          "title": "Albert Einstein",
+          "author": "Johannes Wickert",
+          "coverId": "ol:1014914",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501627",
+          "coverIsbn": "3499501627"
+        },
+        {
+          "id": "OL5509814W",
+          "title": "Wilhelm Busch",
+          "author": "Joseph Kraus",
+          "coverId": "ol:2210539",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501635",
+          "coverIsbn": "3499501635"
+        },
+        {
+          "id": "OL9072195W",
+          "title": "Karl Jaspers",
+          "author": "Hans Saner",
+          "coverId": "ol:10831575",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501694",
+          "coverIsbn": "3499501694"
+        },
+        {
+          "id": "OL5061693W",
+          "title": "Mahatma Gandhi",
+          "author": "Heimo Rau",
+          "coverId": "ol:8443340",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501724",
+          "coverIsbn": "3499501724"
+        },
+        {
+          "id": "OL3160106W",
+          "title": "Voltaire",
+          "author": "Georg Holmsten",
+          "coverId": "ol:8392793",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501732",
+          "coverIsbn": "3499501732"
+        },
+        {
+          "id": "OL1385645W",
+          "title": "Karl Barth",
+          "author": "Karl Kupisch",
+          "coverId": "ol:10717392",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501740",
+          "coverIsbn": "3499501740"
+        },
+        {
+          "id": "OL6543607W",
+          "title": "Gustav Mahler",
+          "author": "Wolfgang Schreiber",
+          "coverId": "ol:1014916",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501813",
+          "coverIsbn": "3499501813"
+        },
+        {
+          "id": "OL11219159W",
+          "title": "Franz Liszt",
+          "author": "Everett Helm",
+          "coverId": "ol:14363493",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501856",
+          "coverIsbn": "3499501856"
+        },
+        {
+          "id": "OL5021330W",
+          "title": "Theodor Storm",
+          "author": "Hartmut Vinçon",
+          "coverId": "ol:2210541",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501864",
+          "coverIsbn": "3499501864"
+        },
+        {
+          "id": "OL5146336W",
+          "title": "Anton Bruckner",
+          "author": "Karl Grebe",
+          "coverId": "ol:1014917",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501902",
+          "coverIsbn": "3499501902"
+        },
+        {
+          "id": "OL3160101W",
+          "title": "Jean-Jacques Rousseau",
+          "author": "Georg Holmsten",
+          "coverId": "ol:2210543",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499501910",
+          "coverIsbn": "3499501910"
+        },
+        {
+          "id": "OL4683162W",
+          "title": "Arnold Schönberg",
+          "author": "Eberhard Freitag",
+          "coverId": "ol:11590444",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950202X",
+          "coverIsbn": "349950202X"
+        },
+        {
+          "id": "OL2412572W",
+          "title": "Alexander der Große",
+          "author": "Gerhard Wirth",
+          "coverId": "ol:10295791",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502038",
+          "coverIsbn": "3499502038"
+        },
+        {
+          "id": "OL7234594W",
+          "title": "Pablo Picasso",
+          "author": "Wilfried Wiegand",
+          "coverId": "ol:2210545",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502054",
+          "coverIsbn": "3499502054"
+        },
+        {
+          "id": "OL7067924W",
+          "title": "Che Guevara",
+          "author": "Elmar May",
+          "coverId": "ol:2210546",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502070",
+          "coverIsbn": "3499502070"
+        },
+        {
+          "id": "OL5204751W",
+          "title": "Max Weber",
+          "author": "Hans Norbert Fügen",
+          "coverId": "ol:1014919",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950216X",
+          "coverIsbn": "349950216X"
+        },
+        {
+          "id": "OL4194479W",
+          "title": "Michail A. Bakunin",
+          "author": "Justus Franz Wittkop",
+          "coverId": "ol:10242122",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502186",
+          "coverIsbn": "3499502186"
+        },
+        {
+          "id": "OL1285153W",
+          "title": "Antonín Dvořák",
+          "author": "Kurt Honolka",
+          "coverId": "ol:8392799",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502208",
+          "coverIsbn": "3499502208"
+        },
+        {
+          "id": "OL5069987W",
+          "title": "Friedrich II. von Hohenstaufen",
+          "author": "Herbert Nette",
+          "coverId": "ol:2210548",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502224",
+          "coverIsbn": "3499502224"
+        },
+        {
+          "id": "OL2145084W",
+          "title": "Eugène Ionesco",
+          "author": "François Bondy",
+          "coverId": "ol:8392800",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502232",
+          "coverIsbn": "3499502232"
+        },
+        {
+          "id": "OL1364633W",
+          "title": "Josef W. Stalin",
+          "author": "Maximilien Rubel",
+          "coverId": "ol:1014920",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502240",
+          "coverIsbn": "3499502240"
+        },
+        {
+          "id": "OL6266711W",
+          "title": "Walt Disney",
+          "author": "Reinhold Reitberger",
+          "coverId": "ol:2210549",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502267",
+          "coverIsbn": "3499502267"
+        },
+        {
+          "id": "OL5784690W",
+          "title": "Ernst Thälmann",
+          "author": "Hannes Heer",
+          "coverId": "ol:7065806",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502305",
+          "coverIsbn": "3499502305"
+        },
+        {
+          "id": "OL637669W",
+          "title": "Ödön von Horváth",
+          "author": "Dieter Hildebrandt",
+          "coverId": "ol:2210550",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502313",
+          "coverIsbn": "3499502313"
+        },
+        {
+          "id": "OL1350931W",
+          "title": "Willy Brandt",
+          "author": "Carola Stern",
+          "coverId": "ol:1014922",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502321",
+          "coverIsbn": "3499502321"
+        },
+        {
+          "id": "OL4729252W",
+          "title": "Sergej M. Eisenstein",
+          "author": "Harald Weise",
+          "coverId": "ol:2210552",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950233X",
+          "coverIsbn": "349950233X"
+        },
+        {
+          "id": "OL6884764W",
+          "title": "Konrad Adenauer",
+          "author": "Gösta von Uexküll",
+          "coverId": "ol:8392801",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502348",
+          "coverIsbn": "3499502348"
+        },
+        {
+          "id": "OL27290558W",
+          "title": "Arthur Schnitzler",
+          "author": "Hartmut Scheible",
+          "coverId": "ol:12619016",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502356",
+          "coverIsbn": "3499502356"
+        },
+        {
+          "id": "OL3749929W",
+          "title": "Dietrich Bonhoeffer",
+          "author": "Eberhard Bethge",
+          "coverId": "ol:2210554",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502364",
+          "coverIsbn": "3499502364"
+        },
+        {
+          "id": "OL4697161W",
+          "title": "Hieronymus Bosch",
+          "author": "Heinrich Goertz",
+          "coverId": "ol:2210555",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502372",
+          "coverIsbn": "3499502372"
+        },
+        {
+          "id": "OL4122449W",
+          "title": "Conrad Ferdinand Meyer",
+          "author": "David A. Jackson",
+          "coverId": "ol:8678514",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502380",
+          "coverIsbn": "3499502380"
+        },
+        {
+          "id": "OL5527838W",
+          "title": "Werner Heisenberg",
+          "author": "Armin Hermann",
+          "coverId": "ol:10541992",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502402",
+          "coverIsbn": "3499502402"
+        },
+        {
+          "id": "OL969853W",
+          "title": "George Grosz",
+          "author": "Lothar Fischer",
+          "coverId": "ol:2210556",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502410",
+          "coverIsbn": "3499502410"
+        },
+        {
+          "id": "OL5186482W",
+          "title": "Peter I. Tschaikowsky",
+          "author": "Everett Helm",
+          "coverId": "ol:2210557",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502437",
+          "coverIsbn": "3499502437"
+        },
+        {
+          "id": "OL6497227W",
+          "title": "Molière",
+          "author": "Friedrich Hartau",
+          "coverId": "ol:8392803",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502453",
+          "coverIsbn": "3499502453"
+        },
+        {
+          "id": "OL2054394W",
+          "title": "Le Corbusier",
+          "author": "Norbert Huse",
+          "coverId": "ol:2210558",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502488",
+          "coverIsbn": "3499502488"
+        },
+        {
+          "id": "OL5069988W",
+          "title": "Jeanne d’Arc",
+          "author": "Herbert Nette",
+          "coverId": "ol:2210559",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502534",
+          "coverIsbn": "3499502534"
+        },
+        {
+          "id": "OL5242362W",
+          "title": "Carl Zuckmayer",
+          "author": "Thomas Ayck",
+          "coverId": "ol:1014924",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502569",
+          "coverIsbn": "3499502569"
+        },
+        {
+          "id": "OL6480643W",
+          "title": "Ernst Bloch",
+          "author": "Silvia Markun",
+          "coverId": "ol:15249729",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502585",
+          "coverIsbn": "3499502585"
+        },
+        {
+          "id": "OL1656858W",
+          "title": "Marcus Tullius Cicero",
+          "author": "Marion Giebel",
+          "coverId": "ol:1014926",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502615",
+          "coverIsbn": "3499502615"
+        },
+        {
+          "id": "OL2467096W",
+          "title": "Charles Dickens",
+          "author": "Johann N. Schmidt",
+          "coverId": "ol:2210560",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502623",
+          "coverIsbn": "3499502623"
+        },
+        {
+          "id": "OL6497229W",
+          "title": "Wilhelm II.",
+          "author": "Friedrich Hartau",
+          "coverId": "ol:1014927",
+          "addedAt": "2026-09-27",
+          "from": "isbn:349950264X",
+          "coverIsbn": "349950264X"
+        },
+        {
+          "id": "OL1235497W",
+          "title": "Johann Jacob Christoph von Grimmelshausen",
+          "author": "Curt Hohoff",
+          "coverId": "ol:15244372",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502674",
+          "coverIsbn": "3499502674"
+        },
+        {
+          "id": "OL6638196W",
+          "title": "Ludwig Feuerbach",
+          "author": "Hans-Martin Sass",
+          "coverId": "ol:10585133",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502690",
+          "coverIsbn": "3499502690"
+        },
+        {
+          "id": "OL4835291W",
+          "title": "Homer",
+          "author": "Herbert Bannert",
+          "coverId": "ol:1014928",
+          "addedAt": "2026-09-27",
+          "from": "isbn:3499502720",
+          "coverIsbn": "3499502720"
+        }
+      ]
     }
   ]
 }
