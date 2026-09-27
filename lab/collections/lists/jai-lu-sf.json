@@ -1,0 +1,981 @@
+[
+ {
+  "no": "349",
+  "title": "2001",
+  "isbn": "2277123498",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL21795322M",
+  "cover": 13083245
+ },
+ {
+  "no": "355",
+  "title": "More Than Human",
+  "isbn": "2277123552",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26854160M",
+  "cover": 8541241
+ },
+ {
+  "no": "362",
+  "title": "Le monde des Ã",
+  "isbn": "9782277133629",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL21833W",
+  "edition": "OL27264452M",
+  "cover": 8753595
+ },
+ {
+  "no": "369",
+  "title": "Los Cristales Sonadores",
+  "isbn": "2277123692",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910235M",
+  "cover": 981204
+ },
+ {
+  "no": "381",
+  "title": "A la poursuite des Slans",
+  "isbn": "2277123811",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL8404014W",
+  "edition": "OL8910237M",
+  "cover": 6998050
+ },
+ {
+  "no": "397",
+  "title": "Les Joueurs du ā",
+  "isbn": "2277123978",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL15345939W",
+  "edition": "OL25425494M",
+  "cover": 7255049
+ },
+ {
+  "no": "404",
+  "title": "The Caves of Steel",
+  "isbn": "2277124044",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26767562M",
+  "cover": 10618253
+ },
+ {
+  "no": "407",
+  "title": "Killdozer - le viol cosmique",
+  "isbn": "2277124079",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL28197398M",
+  "cover": 10132905
+ },
+ {
+  "no": "410",
+  "title": "L'affaire charles dexter ward",
+  "isbn": "2277124109",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL32049641M",
+  "cover": 10715855
+ },
+ {
+  "no": "415",
+  "title": "Shambleau",
+  "isbn": "227712415X",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL2848714W",
+  "edition": "OL27009180M",
+  "cover": 8599307
+ },
+ {
+  "no": "418",
+  "title": "L'empire de l'atome",
+  "isbn": "2277124184",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL15395094W",
+  "edition": "OL8910238M",
+  "cover": 981210
+ },
+ {
+  "no": "419",
+  "title": "The Wizard of Linn",
+  "isbn": "2277124192",
+  "skip": "image on record is too small to show (under 110 px wide)",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "427",
+  "title": "Flowers for Algernon",
+  "isbn": "9782277124276",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL37040949M",
+  "cover": 12619341
+ },
+ {
+  "no": "432",
+  "title": "Les rois des étoiles",
+  "isbn": "2277134325",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL6595263W",
+  "edition": "OL26843686M",
+  "cover": 8536173
+ },
+ {
+  "no": "434",
+  "title": "This Perfect Day",
+  "isbn": "2277134341",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL27292068M",
+  "cover": 8771488
+ },
+ {
+  "no": "439",
+  "title": "Les Armureries D'isher",
+  "isbn": "2277124397",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL21832W",
+  "edition": "OL28120260M",
+  "cover": 9862625
+ },
+ {
+  "no": "440",
+  "title": "Les fabricants d'armes",
+  "isbn": "2277114405",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL15345936W",
+  "edition": "OL8910221M",
+  "cover": 2155850
+ },
+ {
+  "no": "453",
+  "title": "I, Robot",
+  "isbn": "9782277134534",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL60999714M",
+  "cover": 15154462
+ },
+ {
+  "no": "463",
+  "title": "The Book of Ptath",
+  "isbn": "227712463X",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910240M",
+  "cover": 981212
+ },
+ {
+  "no": "468",
+  "title": "The Naked Sun",
+  "isbn": "2277124680",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL27290927M",
+  "cover": 8770786
+ },
+ {
+  "no": "475",
+  "title": "The War Against the Rull",
+  "isbn": "2277124753",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26684567M",
+  "cover": 8356203
+ },
+ {
+  "no": "484",
+  "title": "The Stars, Like Dust",
+  "isbn": "9782277124849",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26376816M",
+  "cover": 8066980
+ },
+ {
+  "no": "490",
+  "title": "Le Retour aux étoiles",
+  "isbn": "2277114901",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL12512553M",
+  "cover": 3109960
+ },
+ {
+  "no": "496",
+  "title": "Destination Univers",
+  "isbn": "2277114960",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910222M",
+  "cover": 981180
+ },
+ {
+  "no": "500",
+  "title": "Time and again",
+  "isbn": "2277115002",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL28291289M",
+  "cover": 10216088
+ },
+ {
+  "no": "509",
+  "title": "L'ÃŽle des morts",
+  "isbn": "2277115096",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL13983W",
+  "edition": "OL27277748M",
+  "cover": 8760298
+ },
+ {
+  "no": "515",
+  "title": "The Darkness on Diamondia",
+  "isbn": "2277115150",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL12512554M",
+  "cover": 3109961
+ },
+ {
+  "no": "520",
+  "title": "Monde vert ***",
+  "isbn": "2277115207",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL892508W",
+  "edition": "OL28342672M",
+  "cover": 10290903
+ },
+ {
+  "no": "529",
+  "title": "Createur d'univers ***",
+  "isbn": "2277115290",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL21829W",
+  "edition": "OL31387148M",
+  "cover": 10513469
+ },
+ {
+  "no": "533",
+  "title": "Jirel de Joiry",
+  "isbn": "2277115339",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL31995563M",
+  "cover": 10666973
+ },
+ {
+  "no": "537",
+  "title": "Les amants étrangers",
+  "isbn": "2277115371",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL273077W",
+  "edition": "OL12512555M",
+  "cover": 3109962
+ },
+ {
+  "no": "542",
+  "title": "Un défilé de robots",
+  "isbn": "2277125423",
+  "skip": "image on record is too small to show (under 110 px wide)",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "547",
+  "title": "Solar Lottery",
+  "isbn": "2277115479",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL30695996M",
+  "cover": 10491207
+ },
+ {
+  "no": "562",
+  "title": "Starship Troopers",
+  "isbn": "9782277115625",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL51727861M",
+  "cover": 14632340
+ },
+ {
+  "no": "563",
+  "title": "Dr Bloodmoney",
+  "isbn": "2277115630",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL2172502W",
+  "edition": "OL27262865M",
+  "cover": 8752679
+ },
+ {
+  "no": "567",
+  "title": "The Man in the High Castle",
+  "isbn": "9782277125679",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL25504849M",
+  "cover": 7284750
+ },
+ {
+  "no": "568",
+  "title": "Pardon, vous n'avez pas vu ma planète ?",
+  "isbn": "9782277115687",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL32065181M",
+  "cover": 10721529
+ },
+ {
+  "no": "585",
+  "title": "Les Ailes de la nuit",
+  "isbn": "2277115851",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL1960649W",
+  "edition": "OL12512557M",
+  "cover": 3109963
+ },
+ {
+  "no": "588",
+  "title": "Des lendemains qui scintillent",
+  "isbn": "2277125881",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL15345898W",
+  "edition": "OL8910242M",
+  "cover": 981214
+ },
+ {
+  "no": "595",
+  "title": "Le ressac de l'espace",
+  "isbn": "2277115959",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26787509M",
+  "cover": 8440333
+ },
+ {
+  "no": "609",
+  "title": "Le Pêcheur",
+  "isbn": "2277116092",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL4088386W",
+  "edition": "OL8910223M",
+  "cover": 981183
+ },
+ {
+  "no": "613",
+  "title": "Counter-clock world",
+  "isbn": "9782277116134",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL25505255M",
+  "cover": 7284754
+ },
+ {
+  "no": "693",
+  "title": "Les Galaxiales 1",
+  "isbn": "2277116939",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL12512559M",
+  "cover": 3109964
+ },
+ {
+  "no": "700",
+  "title": "La Nuit du jugement",
+  "isbn": "2277117005",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL2848711W",
+  "edition": "OL27277857M",
+  "cover": 8760377
+ },
+ {
+  "no": "707",
+  "title": "Cugel l'astucieux",
+  "isbn": "2277117072",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL2071384W",
+  "edition": "OL28483680M",
+  "cover": 10326442
+ },
+ {
+  "no": "721",
+  "title": "Le Cycle de Tschai, n°1 : le Chasch",
+  "isbn": "2277117218",
+  "skip": "image on record is too small to show (under 110 px wide)",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "723",
+  "title": "Cycle de tschai  t3 - le dirdir",
+  "isbn": "2277117234",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL2071372W",
+  "edition": "OL32430001M",
+  "cover": 11090725
+ },
+ {
+  "no": "752",
+  "title": "The seedling stars",
+  "isbn": "2277117528",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910225M",
+  "cover": 981187
+ },
+ {
+  "no": "767",
+  "title": "Paradoxe perdu : Science fiction",
+  "isbn": "2277117676",
+  "skip": "image on record is too small to show (under 110 px wide)",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "769",
+  "title": "Univers 10",
+  "isbn": "2277117692",
+  "skip": "image on record is a small picture padded to a square, not a clean cover scan",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "773",
+  "title": "Delirium circus",
+  "isbn": "2277117730",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL4041950M",
+  "cover": 2155852
+ },
+ {
+  "no": "786",
+  "title": "Univers 11 : Collection : Science fiction j'ai lu n° 786",
+  "isbn": "2277117862",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL27050344M",
+  "cover": 8668666
+ },
+ {
+  "no": "808",
+  "title": "Les épaves de Tycho et autres récits",
+  "isbn": "2277118087",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL12512561M",
+  "cover": 3109966
+ },
+ {
+  "no": "813",
+  "title": "Invasion galactique ***",
+  "isbn": "2277118133",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL28290333M",
+  "cover": 10215221
+ },
+ {
+  "no": "814",
+  "title": "Ring Around the Sun",
+  "isbn": "2277118141",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910226M",
+  "cover": 981189
+ },
+ {
+  "no": "815",
+  "title": "Univers 12",
+  "isbn": "227711815X",
+  "skip": "image on record is a small picture padded to a square, not a clean cover scan",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "829",
+  "title": "Les Talents de Xanadu",
+  "isbn": "227711829X",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910227M",
+  "cover": 981191
+ },
+ {
+  "no": "830",
+  "title": "Avant l'Eden",
+  "isbn": "2277118303",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26775282M",
+  "cover": 8427982
+ },
+ {
+  "no": "836",
+  "title": "Le monde magique",
+  "isbn": "2277118362",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26790829M",
+  "cover": 8443663
+ },
+ {
+  "no": "847",
+  "title": "Way station",
+  "isbn": "2277118478",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26969299M",
+  "cover": 8577999
+ },
+ {
+  "no": "855",
+  "title": "Le Silkie",
+  "isbn": "2277118559",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL15345928W",
+  "edition": "OL8910228M",
+  "cover": 981196
+ },
+ {
+  "no": "857",
+  "title": "Univers 14",
+  "isbn": "2277118575",
+  "skip": "image on record is a small picture padded to a square, not a clean cover scan",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "870",
+  "title": "The Martian Way and Other Stories",
+  "isbn": "2277118702",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26767845M",
+  "cover": 14604833
+ },
+ {
+  "no": "871",
+  "title": "L'épreuve de Judith",
+  "isbn": "2277118710",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL30697049M",
+  "cover": 10491732
+ },
+ {
+  "no": "886",
+  "title": "Visage dans l'abime ****",
+  "isbn": "2277118869",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL4104764W",
+  "edition": "OL28290412M",
+  "cover": 10215294
+ },
+ {
+  "no": "887",
+  "title": "UNIVERS 15",
+  "isbn": "2277118877",
+  "skip": "image on record is a small picture padded to a square, not a clean cover scan",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "903",
+  "title": "Chasse dangereuse ****",
+  "isbn": "2277119032",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL28164683M",
+  "cover": 10103768
+ },
+ {
+  "no": "904",
+  "title": "Terre, planète impériale",
+  "isbn": "2277119040",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL17404W",
+  "edition": "OL8910229M",
+  "cover": 981197
+ },
+ {
+  "no": "910",
+  "title": "The penultimate truth",
+  "isbn": "2277119105",
+  "skip": "image on record is too small to show (under 110 px wide)",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "911",
+  "title": "Le Monde De La Mort",
+  "isbn": "2277119113",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL467158W",
+  "edition": "OL27102737M",
+  "cover": 8740683
+ },
+ {
+  "no": "934",
+  "title": "L'horloge temporelle",
+  "isbn": "2277119342",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26814747M",
+  "cover": 8473158
+ },
+ {
+  "no": "935",
+  "title": "Loi du talion",
+  "isbn": "2277119350",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL31839087M",
+  "cover": 10535430,
+  "work": "OL4026929W"
+ },
+ {
+  "no": "956",
+  "title": "Mastodonia",
+  "isbn": "2277119563",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910231M",
+  "cover": 981199
+ },
+ {
+  "no": "957",
+  "title": "Renaissance",
+  "isbn": "2277119571",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26800810M",
+  "cover": 8456931
+ },
+ {
+  "no": "958",
+  "title": "Univers 17 - J'ai lu n° 958 - Bradley/Andrevon/Zinoviev/Martin/Wintrebert/Holdstock",
+  "isbn": "227711958X",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL27264491M",
+  "cover": 8753653
+ },
+ {
+  "no": "966",
+  "title": "L'Ã©toile",
+  "isbn": "2277119660",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26883872M",
+  "cover": 8573829
+ },
+ {
+  "no": "975",
+  "title": "Rencontre Cosmique",
+  "isbn": "227711975X",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910232M",
+  "cover": 981201
+ },
+ {
+  "no": "976",
+  "title": "L'épouvante",
+  "isbn": "2277119768",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL27102990M",
+  "cover": 8740777
+ },
+ {
+  "no": "977",
+  "title": "Univers 18",
+  "isbn": "2277119776",
+  "skip": "image on record is a small picture padded to a square, not a clean cover scan",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "997",
+  "title": "Les Monades urbaines",
+  "isbn": "2277119970",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL27290316M",
+  "cover": 8770203
+ },
+ {
+  "no": "1005",
+  "title": "Escarmouche",
+  "isbn": "2277210056",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL12512584M",
+  "cover": 3109978
+ },
+ {
+  "no": "1020",
+  "title": "L'homme a rebours",
+  "isbn": "227721020X",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL2419430W",
+  "edition": "OL27279258M",
+  "cover": 8761499
+ },
+ {
+  "no": "1047",
+  "title": "Rendez vous avec rama",
+  "isbn": "2277210471",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL17417W",
+  "edition": "OL47305895M",
+  "cover": 13770430
+ },
+ {
+  "no": "1057",
+  "title": "L'Eté indien d'une paire de lunettes",
+  "isbn": "2277210579",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL12512586M",
+  "cover": 3109979
+ },
+ {
+  "no": "1067",
+  "title": "Les machines à illusions",
+  "isbn": "2277210676",
+  "skip": "image on record is too small to show (under 110 px wide)",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "1068",
+  "title": "Trips",
+  "isbn": "2277210684",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910257M",
+  "cover": 981225
+ },
+ {
+  "no": "1082",
+  "title": "Les Monstres",
+  "isbn": "227721082X",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL15345910W",
+  "edition": "OL8910258M",
+  "cover": 981226
+ },
+ {
+  "no": "1092",
+  "title": "Chronique du Peuple",
+  "isbn": "2277210927",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL3540643W",
+  "edition": "OL27303043M",
+  "cover": 8776974
+ },
+ {
+  "no": "1093",
+  "title": "Univers 1980",
+  "isbn": "2277210935",
+  "skip": "image on record is a small picture padded to a square, not a clean cover scan",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "1126",
+  "title": "Four for tomorrow",
+  "isbn": "2277211265",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910259M",
+  "cover": 981228
+ },
+ {
+  "no": "1127",
+  "title": "Babel-17",
+  "isbn": "2277211273",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL30675012M",
+  "cover": 10482543
+ },
+ {
+  "no": "1129",
+  "title": "Le Trou Noir",
+  "isbn": "227721129X",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL102561W",
+  "edition": "OL27284695M",
+  "cover": 8765430
+ },
+ {
+  "no": "1139",
+  "title": "Hellstrom's Hive",
+  "isbn": "2277211397",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL32115348M",
+  "cover": 10775565
+ },
+ {
+  "no": "1150",
+  "title": "Le Monde de la Mort - Tome 2 : Appsala",
+  "isbn": "2277211508",
+  "skip": "image on record is too small to show (under 110 px wide)",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "1161",
+  "title": "Les Legendes du Mythe Cthulhu",
+  "isbn": "2277211613",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26880375M",
+  "cover": 8572906
+ },
+ {
+  "no": "1183",
+  "title": "Hestia",
+  "isbn": "2277211834",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL28210657M",
+  "cover": 10145041
+ },
+ {
+  "no": "1194",
+  "title": "The Visitors",
+  "isbn": "227721194X",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL27279736M",
+  "cover": 8761916
+ },
+ {
+  "no": "1208",
+  "title": "UNIVERS 1981",
+  "isbn": "2277212083",
+  "skip": "image on record is a small picture padded to a square, not a clean cover scan",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "1233",
+  "title": "The Sheep Look Up",
+  "isbn": "2277212334",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL30677969M",
+  "cover": 10483750
+ },
+ {
+  "no": "1257",
+  "title": "Le Soleil obscur",
+  "isbn": "2277212571",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL273047W",
+  "edition": "OL32119305M",
+  "cover": 10779701
+ },
+ {
+  "no": "1268",
+  "title": "La reine de l'air et des ténèbres",
+  "isbn": "2277212687",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL90521W",
+  "edition": "OL12512591M",
+  "cover": 3109982
+ },
+ {
+  "no": "1269",
+  "title": "Les Clowns de l'Eden",
+  "isbn": "2277212695",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL1819365W",
+  "edition": "OL37755990M",
+  "cover": 12668906
+ },
+ {
+  "no": "1280",
+  "title": "Hunter of Worlds",
+  "isbn": "2277212806",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL29306461M",
+  "cover": 10385063
+ },
+ {
+  "no": "1291",
+  "title": "The Golden Man",
+  "isbn": "2277212911",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL31831695M",
+  "cover": 10531770
+ },
+ {
+  "no": "1305",
+  "title": "Nos armes sont de miel",
+  "isbn": "2277213055",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26768507M",
+  "cover": 8418074
+ },
+ {
+  "no": "1340",
+  "title": "Univers 1982",
+  "isbn": "2277213403",
+  "skip": "image on record is a small picture padded to a square, not a clean cover scan",
+  "source": "Open Library search isbn:22771*/227721*, cover looked at"
+ },
+ {
+  "no": "1341",
+  "title": "Je suis une herbe",
+  "isbn": "2277213411",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL32111338M",
+  "cover": 10771156
+ },
+ {
+  "no": "1354",
+  "title": "Les adieux du soleil",
+  "isbn": "2277213543",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL60583W",
+  "edition": "OL27264492M",
+  "cover": 8753654
+ },
+ {
+  "no": "1367",
+  "title": "Project Pope",
+  "isbn": "2277213675",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL8910261M",
+  "cover": 981235
+ },
+ {
+  "no": "1368",
+  "title": "Sur l'onde de choc",
+  "isbn": "2277213683",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL33115054M",
+  "cover": 11819014
+ },
+ {
+  "no": "1379",
+  "title": "Dieu venu du centaure",
+  "isbn": "2277213799",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "work": "OL2172402W",
+  "edition": "OL32845008M",
+  "cover": 11478030
+ },
+ {
+  "no": "1380",
+  "title": "A Song for Lya",
+  "isbn": "2277213802",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL27101589M",
+  "cover": 15126256
+ },
+ {
+  "no": "1392",
+  "title": "Les chants de l'été",
+  "isbn": "2277213926",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26791283M",
+  "cover": 8444289
+ },
+ {
+  "no": "1393",
+  "title": "Les fileurs d'anges",
+  "isbn": "2277213934",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL32118934M",
+  "cover": 10779319
+ },
+ {
+  "no": "1408",
+  "title": "Les maîtres-feu",
+  "isbn": "2277214086",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL12512594M",
+  "cover": 3109985
+ },
+ {
+  "no": "1420",
+  "title": "Les seigneurs de l'Hydre",
+  "isbn": "2277214205",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL27262289M",
+  "cover": 8752331
+ },
+ {
+  "no": "1434",
+  "title": "Le chemin de l'espace",
+  "isbn": "2277214345",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL12512596M",
+  "cover": 3109986
+ },
+ {
+  "no": "1435",
+  "title": "Marune",
+  "isbn": "2277214353",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL28195322M",
+  "cover": 10131154
+ },
+ {
+  "no": "1447",
+  "title": "Les Operateurs Humains",
+  "isbn": "2277214477",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL26802821M",
+  "cover": 8457905
+ },
+ {
+  "no": "1462",
+  "title": "Songs of Stars and Shadows",
+  "isbn": "2277214620",
+  "source": "Open Library search isbn:22771*/227721* (J'ai lu number from ISBN 2-277-1xNNN / 2-277-2NNNN), cover looked at",
+  "edition": "OL27264610M",
+  "cover": 11298730
+ }
+]
