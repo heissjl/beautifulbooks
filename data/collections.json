@@ -18896,6 +18896,353 @@
         }
       ],
       "setSize": 3
+    },
+    {
+      "slug": "great-american-novel",
+      "title": "The Great American Novel",
+      "kind": "authors",
+      "intro": "The Great American Novel is the old idea of one book that would catch the whole of the United States — its promise, its violence, its many voices. The phrase is from John William De Forest in 1868, and critics have argued ever since about which book, if any, comes closest. These are novels the Wikipedia article on the idea discusses as candidates, from The Last of the Mohicans to Underworld, each with one cover chosen by hand — the first edition's where Open Library holds a clean one.",
+      "published": false,
+      "authors": [
+        {
+          "name": "James Fenimore Cooper",
+          "keys": [
+            "OL39524A"
+          ]
+        },
+        {
+          "name": "Nathaniel Hawthorne",
+          "keys": [
+            "OL26681A"
+          ]
+        },
+        {
+          "name": "Herman Melville",
+          "keys": [
+            "OL29497A"
+          ]
+        },
+        {
+          "name": "Harriet Beecher Stowe",
+          "keys": [
+            "OL22157A"
+          ]
+        },
+        {
+          "name": "Louisa May Alcott",
+          "keys": [
+            "OL26680A"
+          ]
+        },
+        {
+          "name": "Mark Twain",
+          "keys": [
+            "OL18319A"
+          ]
+        },
+        {
+          "name": "Stephen Crane",
+          "keys": [
+            "OL24527A"
+          ]
+        },
+        {
+          "name": "F. Scott Fitzgerald",
+          "keys": [
+            "OL27349A"
+          ]
+        },
+        {
+          "name": "Anita Loos",
+          "keys": [
+            "OL223134A"
+          ]
+        },
+        {
+          "name": "Ernest Hemingway",
+          "keys": [
+            "OL13640A"
+          ]
+        },
+        {
+          "name": "William Faulkner",
+          "keys": [
+            "OL21831A"
+          ]
+        },
+        {
+          "name": "Margaret Mitchell",
+          "keys": [
+            "OL151749A"
+          ]
+        },
+        {
+          "name": "John Steinbeck",
+          "keys": [
+            "OL25788A"
+          ]
+        },
+        {
+          "name": "J. D. Salinger",
+          "keys": [
+            "OL540486A"
+          ]
+        },
+        {
+          "name": "Ralph Ellison",
+          "keys": [
+            "OL32983A"
+          ]
+        },
+        {
+          "name": "Saul Bellow",
+          "keys": [
+            "OL33600A"
+          ]
+        },
+        {
+          "name": "Vladimir Nabokov",
+          "keys": [
+            "OL48139A"
+          ]
+        },
+        {
+          "name": "Harper Lee",
+          "keys": [
+            "OL498120A"
+          ]
+        },
+        {
+          "name": "Thomas Pynchon",
+          "keys": [
+            "OL384171A"
+          ]
+        },
+        {
+          "name": "Cormac McCarthy",
+          "keys": [
+            "OL28104A"
+          ]
+        },
+        {
+          "name": "Toni Morrison",
+          "keys": [
+            "OL31120A"
+          ]
+        },
+        {
+          "name": "Bret Easton Ellis",
+          "keys": [
+            "OL217475A"
+          ]
+        },
+        {
+          "name": "David Foster Wallace",
+          "keys": [
+            "OL448939A"
+          ]
+        },
+        {
+          "name": "Don DeLillo",
+          "keys": [
+            "OL230288A"
+          ]
+        }
+      ],
+      "works": [
+        {
+          "id": "OL77958W",
+          "title": "The Last of the Mohicans",
+          "author": "James Fenimore Cooper",
+          "coverId": "ol:8236937",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL455305W",
+          "title": "The Scarlet Letter",
+          "author": "Nathaniel Hawthorne",
+          "coverId": "ol:5654516",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL102749W",
+          "title": "Moby-Dick",
+          "author": "Herman Melville",
+          "coverId": "ol:10544254",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL152161W",
+          "title": "Uncle Tom's Cabin",
+          "author": "Harriet Beecher Stowe",
+          "coverId": "ol:12727914",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL29983W",
+          "title": "Little Women",
+          "author": "Louisa May Alcott",
+          "coverId": "ol:6673605",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL53908W",
+          "title": "Adventures of Huckleberry Finn",
+          "author": "Mark Twain",
+          "coverId": "ol:8157113",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL20844W",
+          "title": "The Red Badge of Courage",
+          "author": "Stephen Crane",
+          "coverId": "ol:15049981",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL468431W",
+          "title": "The Great Gatsby",
+          "author": "F. Scott Fitzgerald",
+          "coverId": "ol:10590366",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL1863474W",
+          "title": "Gentlemen Prefer Blondes",
+          "author": "Anita Loos",
+          "coverId": "ol:14910173",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL62979W",
+          "title": "The Sun Also Rises",
+          "author": "Ernest Hemingway",
+          "coverId": "ol:15072812",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL82928W",
+          "title": "Absalom, Absalom!",
+          "author": "William Faulkner",
+          "coverId": "ol:14303980",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL267933W",
+          "title": "Gone with the Wind",
+          "author": "Margaret Mitchell",
+          "coverId": "ol:14817133",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL23205W",
+          "title": "The Grapes of Wrath",
+          "author": "John Steinbeck",
+          "coverId": "ol:9292315",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL3335245W",
+          "title": "The Catcher in the Rye",
+          "author": "J. D. Salinger",
+          "coverId": "ol:14813205",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL495470W",
+          "title": "Invisible Man",
+          "author": "Ralph Ellison",
+          "coverId": "ol:228067",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL506116W",
+          "title": "The Adventures of Augie March",
+          "author": "Saul Bellow",
+          "coverId": "ol:6636741",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL627084W",
+          "title": "Lolita",
+          "author": "Vladimir Nabokov",
+          "coverId": "ol:12984540",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL3140822W",
+          "title": "To Kill a Mockingbird",
+          "author": "Harper Lee",
+          "coverId": "ol:14817211",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL2636675W",
+          "title": "Gravity's Rainbow",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:97894",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL40879W",
+          "title": "Blood Meridian",
+          "author": "Cormac McCarthy",
+          "coverId": "ol:15103045",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL50548W",
+          "title": "Beloved",
+          "author": "Toni Morrison",
+          "coverId": "ol:8261367",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL1812933W",
+          "title": "American Psycho",
+          "author": "Bret Easton Ellis",
+          "coverId": "ol:15177467",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL2943602W",
+          "title": "Infinite Jest",
+          "author": "David Foster Wallace",
+          "coverId": "ol:191075",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        },
+        {
+          "id": "OL1921185W",
+          "title": "Underworld",
+          "author": "Don DeLillo",
+          "coverId": "ol:7014810",
+          "addedAt": "2026-09-26",
+          "from": "wikipedia:Great_American_Novel"
+        }
+      ]
     }
   ]
 }
