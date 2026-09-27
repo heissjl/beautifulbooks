@@ -20711,6 +20711,2985 @@
           "coverIsbn": "3499504634"
         }
       ]
+    },
+    {
+      "slug": "heyne-bibliothek-sf",
+      "title": "Heyne Bibliothek der Science Fiction Literatur",
+      "kind": "series",
+      "intro": "Heyne's „Bibliothek der Science Fiction Literatur“, edited by Wolfgang Jeschke from 1981 to 2001: about a hundred classics of the genre in the „white series“ — a white cover, the series header at the top and one square colour picture. Shown in series order, from the covers Open Library has in that design.",
+      "published": false,
+      "publishers": [
+        "Heyne"
+      ],
+      "works": [
+        {
+          "id": "OL20839344W",
+          "title": "Hier sangen früher Vögel",
+          "author": "",
+          "coverId": "ol:10147290",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453307902",
+          "coverIsbn": "9783453307902"
+        },
+        {
+          "id": "OL20180138W",
+          "title": "SCHWERE WELTEN",
+          "author": "Hal Clement",
+          "coverId": "ol:8827692",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453307933",
+          "coverIsbn": "9783453307933"
+        },
+        {
+          "id": "OL20788766W",
+          "title": "Eine Handvoll Venus Und Ehrbare Kaufleute Science Fiction Roman",
+          "author": "Frederik Pohl",
+          "coverId": "ol:10080998",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453307940",
+          "coverIsbn": "9783453307940"
+        },
+        {
+          "id": "OL20091438W",
+          "title": "DER UNGLAUBLICHE PLANET (The Incredible Planet -- in German)",
+          "author": "",
+          "coverId": "ol:8757118",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453307964",
+          "coverIsbn": "9783453307964"
+        },
+        {
+          "id": "OL20146223W",
+          "title": "Ich bin Legende",
+          "author": "",
+          "coverId": "ol:8791856",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453308039",
+          "coverIsbn": "9783453308039"
+        },
+        {
+          "id": "OL20083575W",
+          "title": "Das Forschungsteam. Die Hugo Gernsback- Preisträger 1955-1961.",
+          "author": "",
+          "coverId": "ol:8753111",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453308046",
+          "coverIsbn": "9783453308046"
+        },
+        {
+          "id": "OL20869561W",
+          "title": "Das elektrische Krokodil.",
+          "author": "David G. Compton",
+          "coverId": "ol:10188714",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453309036",
+          "coverIsbn": "9783453309036"
+        },
+        {
+          "id": "OL26427593W",
+          "title": "Angoulême",
+          "author": "",
+          "coverId": "ol:12392846",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453309067",
+          "coverIsbn": "9783453309067"
+        },
+        {
+          "id": "OL20934280W",
+          "title": "Die letzten und die ersten Menschen. Eine Geschichte der nahen und fernen Zukunft.",
+          "author": "",
+          "coverId": "ol:10301515",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453309609",
+          "coverIsbn": "9783453309609"
+        },
+        {
+          "id": "OL16928480W",
+          "title": "The third ear",
+          "author": "Curt Siodmak",
+          "coverId": "ol:15178217",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453309623",
+          "coverIsbn": "9783453309623"
+        },
+        {
+          "id": "OL59861W",
+          "title": "The Wind's Twelve Quarters",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:11996709",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453309647",
+          "coverIsbn": "9783453309647"
+        },
+        {
+          "id": "OL2777768W",
+          "title": "Donovan's Brain",
+          "author": "Curt Siodmak",
+          "coverId": "ol:15178167",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453310308",
+          "coverIsbn": "9783453310308"
+        },
+        {
+          "id": "OL2270689W",
+          "title": "Das Königsprojekt",
+          "author": "Carl Amery",
+          "coverId": "ol:15159661",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453310315",
+          "coverIsbn": "9783453310315"
+        },
+        {
+          "id": "OL3290738W",
+          "title": "Sirius",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:10459968",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453310339",
+          "coverIsbn": "9783453310339"
+        },
+        {
+          "id": "OL37574007W",
+          "title": "Hiero's Journey",
+          "author": "Sterling E. Lanier",
+          "coverId": "ol:15259007",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453310896",
+          "coverIsbn": "9783453310896"
+        },
+        {
+          "id": "OL14868264W",
+          "title": "More Than Human",
+          "author": "Theodore Sturgeon",
+          "coverId": "ol:14409256",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453310940",
+          "coverIsbn": "9783453310940"
+        },
+        {
+          "id": "OL20125550W",
+          "title": "Der Krieg mit den Molchen. Science-fiction-Roman",
+          "author": "",
+          "coverId": "ol:8778433",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453311558",
+          "coverIsbn": "9783453311558"
+        },
+        {
+          "id": "OL59848W",
+          "title": "The Compass Rose",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:8762313",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453311565",
+          "coverIsbn": "9783453311565"
+        },
+        {
+          "id": "OL2626638W",
+          "title": "A Canticle for Leibowitz",
+          "author": "Walter M. Miller Jr.",
+          "coverId": "ol:10541887",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453312852",
+          "coverIsbn": "9783453312852"
+        },
+        {
+          "id": "OL22063686W",
+          "title": "Helliconia",
+          "author": "",
+          "coverId": "ol:10431902",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453311589",
+          "coverIsbn": "9783453311589"
+        },
+        {
+          "id": "OL20879413W",
+          "title": "Todeswelten",
+          "author": "",
+          "coverId": "ol:10203056",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453312166",
+          "coverIsbn": "9783453312166"
+        },
+        {
+          "id": "OL20134513W",
+          "title": "Der Gewissensfall.",
+          "author": "",
+          "coverId": "ol:8785311",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453312883",
+          "coverIsbn": "9783453312883"
+        },
+        {
+          "id": "OL20920227W",
+          "title": "Mutant 59",
+          "author": "Kit Pedler",
+          "coverId": "ol:10290675",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453312890",
+          "coverIsbn": "9783453312890"
+        },
+        {
+          "id": "OL34857427W",
+          "title": "Der Spiegel des Beobachters",
+          "author": "",
+          "coverId": "ol:13646099",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453313477",
+          "coverIsbn": "9783453313477"
+        },
+        {
+          "id": "OL20181721W",
+          "title": "Mars Odyssee",
+          "author": "",
+          "coverId": "ol:8829470",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453313491",
+          "coverIsbn": "9783453313491"
+        },
+        {
+          "id": "OL20925849W",
+          "title": "C.R.U.P.P. 2 Romane",
+          "author": "",
+          "coverId": "ol:10299258",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453004566",
+          "coverIsbn": "9783453004566"
+        },
+        {
+          "id": "OL46390W",
+          "title": "The Foundation Trilogy",
+          "author": "Isaac Asimov",
+          "coverId": "ol:8750494",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453042650",
+          "coverIsbn": "9783453042650"
+        },
+        {
+          "id": "OL59800W",
+          "title": "The Left Hand of Darkness",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:8456814",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453050266",
+          "coverIsbn": "9783453050266"
+        },
+        {
+          "id": "OL20122780W",
+          "title": "Von Wells bis Stapledon (Wege zur Science Fiction, #3)",
+          "author": "",
+          "coverId": "ol:8776756",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453027589",
+          "coverIsbn": "9783453027589"
+        },
+        {
+          "id": "OL24426266W",
+          "title": "Von Clement bis Dick",
+          "author": "",
+          "coverId": "ol:10987206",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453039117",
+          "coverIsbn": "9783453039117"
+        },
+        {
+          "id": "OL20920467W",
+          "title": "Wege zur Science Fiction 7. Von Ellison bis Haldeman",
+          "author": "",
+          "coverId": "ol:10291006",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453050242",
+          "coverIsbn": "9783453050242"
+        },
+        {
+          "id": "OL20920469W",
+          "title": "Wege zur Science Fiction 8. Von Matheson bis Shaw",
+          "author": "",
+          "coverId": "ol:10291008",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453054172",
+          "coverIsbn": "9783453054172"
+        },
+        {
+          "id": "OL20920471W",
+          "title": "Wege Zur Science Fiction 9",
+          "author": "James E. Gunn",
+          "coverId": "ol:10291010",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453057982",
+          "coverIsbn": "9783453057982"
+        },
+        {
+          "id": "OL20780689W",
+          "title": "Von Malzberg bis Benford",
+          "author": "",
+          "coverId": "ol:9934250",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453062443",
+          "coverIsbn": "9783453062443"
+        },
+        {
+          "id": "OL16244644W",
+          "title": "Wege zur Science Fiction 11. Von Shelley bis Clark",
+          "author": "James E. Gunn",
+          "coverId": "ol:3202498",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453171046",
+          "coverIsbn": "9783453171046"
+        },
+        {
+          "id": "OL16244645W",
+          "title": "Wege zur Science Fiction 12. Von Ballard bis Stableford",
+          "author": "James E. Gunn",
+          "coverId": "ol:3202741",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453179530",
+          "coverIsbn": "9783453179530"
+        },
+        {
+          "id": "OL76394W",
+          "title": "A G. K. Chesterton omnibus",
+          "author": "Gilbert Keith Chesterton",
+          "coverId": "ol:12157458",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453066335",
+          "coverIsbn": "9783453066335"
+        }
+      ]
+    },
+    {
+      "slug": "folio-gallimard",
+      "title": "Folio — Gallimard",
+      "kind": "series",
+      "intro": "Folio is Gallimard's numbered paperback series, launched in 1972; number 1 was Malraux's La Condition humaine, number 2 Camus's L'Étranger. Robert Massin gave it a white cover with author and title in black Baskerville above a single picture, a design that stayed in use until the end of 2010. Volumes from the first few hundred numbers in that design, one per author, in number order, from the covers Open Library has.",
+      "published": false,
+      "publishers": [
+        "Gallimard",
+        "Folio"
+      ],
+      "works": [
+        {
+          "id": "OL652911W",
+          "title": "La condition humaine",
+          "author": "André Malraux",
+          "coverId": "ol:967062",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360016",
+          "coverIsbn": "2070360016"
+        },
+        {
+          "id": "OL1230613W",
+          "title": "L’étranger",
+          "author": "Albert Camus",
+          "coverId": "ol:15115103",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360024",
+          "coverIsbn": "2070360024"
+        },
+        {
+          "id": "OL10267W",
+          "title": "Vol de nuit",
+          "author": "Antoine de Saint-Exupéry",
+          "coverId": "ol:967064",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360040",
+          "coverIsbn": "2070360040"
+        },
+        {
+          "id": "OL1327011W",
+          "title": "Les Poissons Rouges Ou Mon Pere Ce Hero",
+          "author": "Jean Anouilh",
+          "coverId": "ol:3075053",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360067",
+          "coverIsbn": "2070360067"
+        },
+        {
+          "id": "OL385112W",
+          "title": "Le vieil homme et la mer",
+          "author": "Ernest Hemingway",
+          "coverId": "ol:967065",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360075",
+          "coverIsbn": "2070360075"
+        },
+        {
+          "id": "OL1270094W",
+          "title": "La reine morte",
+          "author": "Henry de Montherlant",
+          "coverId": "ol:2136555",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360121",
+          "coverIsbn": "2070360121"
+        },
+        {
+          "id": "OL8971730W",
+          "title": "Emmene-Moi Au Bout Du Monde!",
+          "author": "Blaise Cendrars",
+          "coverId": "ol:3075054",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360156",
+          "coverIsbn": "2070360156"
+        },
+        {
+          "id": "OL630884W",
+          "title": "La Symphonie pastoral",
+          "author": "André Gide",
+          "coverId": "ol:967070",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360180",
+          "coverIsbn": "2070360180"
+        },
+        {
+          "id": "OL1098844W",
+          "title": "Annonce Faite a Marie, L'",
+          "author": "Paul Claudel",
+          "coverId": "ol:967074",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360261",
+          "coverIsbn": "2070360261"
+        },
+        {
+          "id": "OL1287903W",
+          "title": "Voyage au bout de la nuit",
+          "author": "Louis-Ferdinand Céline",
+          "coverId": "ol:14053415",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360288",
+          "coverIsbn": "2070360288"
+        },
+        {
+          "id": "OL3388827W",
+          "title": "Monsieur Jadis ou l'école du soir",
+          "author": "Antoine Blondin",
+          "coverId": "ol:967077",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360296",
+          "coverIsbn": "2070360296"
+        },
+        {
+          "id": "OL23204W",
+          "title": "Of Mice and Men",
+          "author": "John Steinbeck",
+          "coverId": "ol:9249488",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360377",
+          "coverIsbn": "2070360377"
+        },
+        {
+          "id": "OL267096W",
+          "title": "Анна Каренина",
+          "author": "Leo Tolstoy",
+          "coverId": "ol:11589222",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360393",
+          "coverIsbn": "2070360393"
+        },
+        {
+          "id": "OL8543729W",
+          "title": "Choses Vues 1847-1848",
+          "author": "Victor Hugo",
+          "coverId": "ol:12174565",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360474",
+          "coverIsbn": "2070360474"
+        },
+        {
+          "id": "OL157523W",
+          "title": "Le cheval blanc",
+          "author": "Elsa Triolet",
+          "coverId": "ol:967083",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360482",
+          "coverIsbn": "2070360482"
+        },
+        {
+          "id": "OL1226032W",
+          "title": "Chien Blanc",
+          "author": "Romain Gary",
+          "coverId": "ol:967084",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360504",
+          "coverIsbn": "2070360504"
+        },
+        {
+          "id": "OL4489211W",
+          "title": "La mort dans l'ame",
+          "author": "Jean-Paul Sartre",
+          "coverId": "ol:967086",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036058X",
+          "coverIsbn": "207036058X"
+        },
+        {
+          "id": "OL1992198W",
+          "title": "In Cold Blood",
+          "author": "Truman Capote",
+          "coverId": "ol:967087",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360598",
+          "coverIsbn": "2070360598"
+        },
+        {
+          "id": "OL8551940W",
+          "title": "Knock",
+          "author": "Jules Romains",
+          "coverId": "ol:967088",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360601",
+          "coverIsbn": "2070360601"
+        },
+        {
+          "id": "OL1319822W",
+          "title": "Les poneys sauvages",
+          "author": "Michel Déon",
+          "coverId": "ol:967092",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360717",
+          "coverIsbn": "2070360717"
+        },
+        {
+          "id": "OL74718W",
+          "title": "Nadja",
+          "author": "André Breton",
+          "coverId": "ol:967093",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360733",
+          "coverIsbn": "2070360733"
+        },
+        {
+          "id": "OL498556W",
+          "title": "Metamorphosis",
+          "author": "Franz Kafka",
+          "coverId": "ol:10559452",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360741",
+          "coverIsbn": "2070360741"
+        },
+        {
+          "id": "OL258301W",
+          "title": "Доктор Живаго",
+          "author": "Boris Pasternak",
+          "coverId": "ol:967095",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360792",
+          "coverIsbn": "2070360792"
+        },
+        {
+          "id": "OL8972007W",
+          "title": "Sauve Qui Peut",
+          "author": "Jean-Jacques Sempé",
+          "coverId": "ol:2136556",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360814",
+          "coverIsbn": "2070360814"
+        },
+        {
+          "id": "OL29549062W",
+          "title": "À l'ombre des jeunes filles en fleurs",
+          "author": "Marcel Proust",
+          "coverId": "ol:12186494",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070360865",
+          "coverIsbn": "2070360865"
+        },
+        {
+          "id": "OL1226638W",
+          "title": "Aventure de Catherine Crachat, tome 1",
+          "author": "Pierre Jean Jouve",
+          "coverId": "ol:3075055",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036089X",
+          "coverIsbn": "207036089X"
+        },
+        {
+          "id": "OL1381586W",
+          "title": "Le planétarium",
+          "author": "Nathalie Sarraute",
+          "coverId": "ol:10397379",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036092X",
+          "coverIsbn": "207036092X"
+        },
+        {
+          "id": "OL1364438W",
+          "title": "Zazie dans le Métro",
+          "author": "Raymond Queneau",
+          "coverId": "ol:967102",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361039",
+          "coverIsbn": "2070361039"
+        },
+        {
+          "id": "OL1278031W",
+          "title": "Spectacle",
+          "author": "Jacques Prévert",
+          "coverId": "ol:11517335",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361047",
+          "coverIsbn": "2070361047"
+        },
+        {
+          "id": "OL8972044W",
+          "title": "La Loi",
+          "author": "Roger Vailland",
+          "coverId": "ol:967105",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361101",
+          "coverIsbn": "2070361101"
+        },
+        {
+          "id": "OL5570845W",
+          "title": "Z",
+          "author": "Vassilis Vassilikos",
+          "coverId": "ol:967106",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036111X",
+          "coverIsbn": "207036111X"
+        },
+        {
+          "id": "OL24838922W",
+          "title": "Le Lys dans la vallée",
+          "author": "Honoré de Balzac",
+          "coverId": "ol:11668121",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361128",
+          "coverIsbn": "2070361128"
+        },
+        {
+          "id": "OL8997397W",
+          "title": "Tant Que La Terre Durera 1",
+          "author": "Henri Troyat",
+          "coverId": "ol:3075056",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361136",
+          "coverIsbn": "2070361136"
+        },
+        {
+          "id": "OL7921525W",
+          "title": "LA Retraite Sentimentale",
+          "author": "Colette",
+          "coverId": "ol:967114",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361357",
+          "coverIsbn": "2070361357"
+        },
+        {
+          "id": "OL767918W",
+          "title": "Une mort tres douce",
+          "author": "Simone de Beauvoir",
+          "coverId": "ol:967116",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361373",
+          "coverIsbn": "2070361373"
+        },
+        {
+          "id": "OL8972065W",
+          "title": "Les Thibault 2",
+          "author": "Roger Martin du Gard",
+          "coverId": "ol:3075057",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361403",
+          "coverIsbn": "2070361403"
+        },
+        {
+          "id": "OL8586524W",
+          "title": "Le chemin des écoliers",
+          "author": "Marcel Aymé",
+          "coverId": "ol:967119",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361438",
+          "coverIsbn": "2070361438"
+        },
+        {
+          "id": "OL8972606W",
+          "title": "Le Feu Follet D'Adieu a Gonzagu",
+          "author": "Pierre Drieu la Rochelle",
+          "coverId": "ol:3075058",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361527",
+          "coverIsbn": "2070361527"
+        },
+        {
+          "id": "OL9919337W",
+          "title": "Le Quai DES Brumes",
+          "author": "Pierre Mac Orlan",
+          "coverId": "ol:3075059",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361543",
+          "coverIsbn": "2070361543"
+        },
+        {
+          "id": "OL82870W",
+          "title": "The Sound and the Fury",
+          "author": "William Faulkner",
+          "coverId": "ol:967126",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361624",
+          "coverIsbn": "2070361624"
+        },
+        {
+          "id": "OL7548730W",
+          "title": "Le Mas Theotime",
+          "author": "Henri Bosco",
+          "coverId": "ol:3075061",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361683",
+          "coverIsbn": "2070361683"
+        },
+        {
+          "id": "OL8068266W",
+          "title": "La Rose de Java",
+          "author": "Joseph Kessel",
+          "coverId": "ol:967132",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361748",
+          "coverIsbn": "2070361748"
+        },
+        {
+          "id": "OL8970620W",
+          "title": "Magiciennes, Les",
+          "author": "Boileau-Narcejac",
+          "coverId": "ol:2136558",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361780",
+          "coverIsbn": "2070361780"
+        },
+        {
+          "id": "OL14857469W",
+          "title": "L'Amour conjugal",
+          "author": "Alberto Moravia",
+          "coverId": "ol:967137",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361845",
+          "coverIsbn": "2070361845"
+        },
+        {
+          "id": "OL52114W",
+          "title": "The War of the Worlds",
+          "author": "H. G. Wells",
+          "coverId": "ol:2136559",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361853",
+          "coverIsbn": "2070361853"
+        },
+        {
+          "id": "OL80739W",
+          "title": "Les rêveries du promeneur solitaire",
+          "author": "Jean-Jacques Rousseau",
+          "coverId": "ol:13063375",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361861",
+          "coverIsbn": "2070361861"
+        },
+        {
+          "id": "OL159497W",
+          "title": "Les Petits chevaux de Tarquinia",
+          "author": "Marguerite Duras",
+          "coverId": "ol:9935572",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036187X",
+          "coverIsbn": "207036187X"
+        },
+        {
+          "id": "OL8418138W",
+          "title": "Anicet",
+          "author": "Louis Aragon",
+          "coverId": "ol:967143",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361950",
+          "coverIsbn": "2070361950"
+        },
+        {
+          "id": "OL14861970W",
+          "title": "Deux cavaliers de l'orage",
+          "author": "Jean Giono",
+          "coverId": "ol:967144",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070361985",
+          "coverIsbn": "2070361985"
+        },
+        {
+          "id": "OL49966W",
+          "title": "La statue de sel",
+          "author": "Albert Memmi",
+          "coverId": "ol:967148",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036206X",
+          "coverIsbn": "207036206X"
+        },
+        {
+          "id": "OL8972356W",
+          "title": "Piege Pour Cendrillon",
+          "author": "Sébastien Japrisot",
+          "coverId": "ol:3075063",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362167",
+          "coverIsbn": "2070362167"
+        },
+        {
+          "id": "OL144669W",
+          "title": "Léon Morin, prêtre",
+          "author": "Béatrix Beck",
+          "coverId": "ol:3075064",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362175",
+          "coverIsbn": "2070362175"
+        },
+        {
+          "id": "OL1261372W",
+          "title": "Le caporal épinglé",
+          "author": "Jacques Perret",
+          "coverId": "ol:967152",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362221",
+          "coverIsbn": "2070362221"
+        },
+        {
+          "id": "OL8971739W",
+          "title": "Fermina Márquez",
+          "author": "Valéry Larbaud",
+          "coverId": "ol:967154",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362256",
+          "coverIsbn": "2070362256"
+        },
+        {
+          "id": "OL19769306W",
+          "title": "Histoire d'un amour",
+          "author": "Roger Nimier",
+          "coverId": "ol:13897219",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362337",
+          "coverIsbn": "2070362337"
+        },
+        {
+          "id": "OL7283692W",
+          "title": "La Cantatrice Chauve: Anti-Piece / La Lecon",
+          "author": "Eugène Ionesco",
+          "coverId": "ol:967160",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362361",
+          "coverIsbn": "2070362361"
+        },
+        {
+          "id": "OL1272994W",
+          "title": "Kaputt",
+          "author": "Curzio Malaparte",
+          "coverId": "ol:967161",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036237X",
+          "coverIsbn": "207036237X"
+        },
+        {
+          "id": "OL1450059W",
+          "title": "Ravage",
+          "author": "René Barjavel",
+          "coverId": "ol:967162",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362388",
+          "coverIsbn": "2070362388"
+        },
+        {
+          "id": "OL8972089W",
+          "title": "Le Lis De Mer",
+          "author": "André Pieyre de Mandiargues",
+          "coverId": "ol:967167",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362477",
+          "coverIsbn": "2070362477"
+        },
+        {
+          "id": "OL9184883W",
+          "title": "Creezy",
+          "author": "Félicien Marceau",
+          "coverId": "ol:2136564",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362485",
+          "coverIsbn": "2070362485"
+        },
+        {
+          "id": "OL8971759W",
+          "title": "L'enfant de la haute mer",
+          "author": "Jules Supervielle",
+          "coverId": "ol:967170",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362523",
+          "coverIsbn": "2070362523"
+        },
+        {
+          "id": "OL8986321W",
+          "title": "Les fous de Dieu",
+          "author": "Jean-Pierre Chabrol",
+          "coverId": "ol:3075066",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362574",
+          "coverIsbn": "2070362574"
+        },
+        {
+          "id": "OL8972096W",
+          "title": "Au Bon Beurre Ou Dix Ans De La Vie D'UN Cremier",
+          "author": "Jean Dutourd",
+          "coverId": "ol:967173",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362604",
+          "coverIsbn": "2070362604"
+        },
+        {
+          "id": "OL261866W",
+          "title": "Tropic of Cancer",
+          "author": "Henry Miller",
+          "coverId": "ol:967174",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362612",
+          "coverIsbn": "2070362612"
+        },
+        {
+          "id": "OL8445854W",
+          "title": "Le Pelerinage Aux Sources",
+          "author": "Lanza Del Vasto",
+          "coverId": "ol:967175",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362620",
+          "coverIsbn": "2070362620"
+        },
+        {
+          "id": "OL24375633W",
+          "title": "Les aveux infidèles",
+          "author": "Jacques de Bourbon Busset",
+          "coverId": "ol:10906658",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036268X",
+          "coverIsbn": "207036268X"
+        },
+        {
+          "id": "OL24189848W",
+          "title": "L'Idiot ...",
+          "author": "Fyodor Dostoevsky",
+          "coverId": "ol:10617689",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036271X",
+          "coverIsbn": "207036271X"
+        },
+        {
+          "id": "OL7050906W",
+          "title": "Le grand voyage",
+          "author": "Jorge Semprún",
+          "coverId": "ol:967178",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362760",
+          "coverIsbn": "2070362760"
+        },
+        {
+          "id": "OL9104830W",
+          "title": "La Maison de Bernarda Alba. Noce de sang",
+          "author": "Federico García Lorca",
+          "coverId": "ol:3075067",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070362825",
+          "coverIsbn": "2070362825"
+        },
+        {
+          "id": "OL80342W",
+          "title": "Les enfants humiliés",
+          "author": "Georges Bernanos",
+          "coverId": "ol:3075070",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363031",
+          "coverIsbn": "2070363031"
+        },
+        {
+          "id": "OL22659408W",
+          "title": "Tournesol",
+          "author": "Thérèse de Saint Phalle",
+          "coverId": "ol:10482927",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363139",
+          "coverIsbn": "2070363139"
+        },
+        {
+          "id": "OL8972106W",
+          "title": "Les Choses De La Vie",
+          "author": "Paul Guimard",
+          "coverId": "ol:967192",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363155",
+          "coverIsbn": "2070363155"
+        },
+        {
+          "id": "OL9281016W",
+          "title": "Trou, Le",
+          "author": "Jose Giovanni",
+          "coverId": "ol:2136569",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036318X",
+          "coverIsbn": "207036318X"
+        },
+        {
+          "id": "OL19926W",
+          "title": "The Second Jungle Book",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:967194",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363252",
+          "coverIsbn": "2070363252"
+        },
+        {
+          "id": "OL8972111W",
+          "title": "Au-dessous du volcan",
+          "author": "Malcolm Lowry",
+          "coverId": "ol:967204",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363511",
+          "coverIsbn": "2070363511"
+        },
+        {
+          "id": "OL1728017W",
+          "title": "Le procès-verbal",
+          "author": "J. M. G. Le Clézio",
+          "coverId": "ol:967205",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363538",
+          "coverIsbn": "2070363538"
+        },
+        {
+          "id": "OL11078753W",
+          "title": "Vercoquin et le plancton",
+          "author": "Boris Vian",
+          "coverId": "ol:11738290",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363740",
+          "coverIsbn": "2070363740"
+        },
+        {
+          "id": "OL8972138W",
+          "title": "La 317e section",
+          "author": "Schoendoerffer",
+          "coverId": "ol:967219",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363910",
+          "coverIsbn": "2070363910"
+        },
+        {
+          "id": "OL261791W",
+          "title": "Tremor of Intent",
+          "author": "Anthony Burgess",
+          "coverId": "ol:12346610",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363945",
+          "coverIsbn": "2070363945"
+        },
+        {
+          "id": "OL45868W",
+          "title": "Someone Like You [18 stories]",
+          "author": "Roald Dahl",
+          "coverId": "ol:967222",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070363953",
+          "coverIsbn": "2070363953"
+        },
+        {
+          "id": "OL37089W",
+          "title": "Kosmos",
+          "author": "Witold Gombrowicz",
+          "coverId": "ol:967224",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364003",
+          "coverIsbn": "2070364003"
+        },
+        {
+          "id": "OL9240008W",
+          "title": "Vue De La Terre Promise",
+          "author": "Georges Duhamel",
+          "coverId": "ol:3075080",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364046",
+          "coverIsbn": "2070364046"
+        },
+        {
+          "id": "OL702066W",
+          "title": "La Prison maritime",
+          "author": "Michel Mohrt",
+          "coverId": "ol:3075081",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364089",
+          "coverIsbn": "2070364089"
+        },
+        {
+          "id": "OL15723140W",
+          "title": "The Spy Who Came in from the Cold",
+          "author": "John le Carré",
+          "coverId": "ol:10442916",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364143",
+          "coverIsbn": "2070364143"
+        },
+        {
+          "id": "OL16108252W",
+          "title": "Typhon",
+          "author": "Joseph Conrad",
+          "coverId": "ol:967229",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036416X",
+          "coverIsbn": "207036416X"
+        },
+        {
+          "id": "OL6141469W",
+          "title": "Le retour de Silbermann",
+          "author": "Jacques de Lacretelle",
+          "coverId": "ol:967576",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364178",
+          "coverIsbn": "2070364178"
+        },
+        {
+          "id": "OL1164838W",
+          "title": "Le petit arpent du Bon Dieu",
+          "author": "Erskine Caldwell",
+          "coverId": "ol:3075084",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364194",
+          "coverIsbn": "2070364194"
+        },
+        {
+          "id": "OL9803386W",
+          "title": "Préméditation",
+          "author": "Francis Iles",
+          "coverId": "ol:3075085",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364216",
+          "coverIsbn": "2070364216"
+        },
+        {
+          "id": "OL1127580W",
+          "title": "Mémoires d'un tricheur",
+          "author": "Sacha Guitry",
+          "coverId": "ol:3075088",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364348",
+          "coverIsbn": "2070364348"
+        },
+        {
+          "id": "OL638940W",
+          "title": "Lage Dhomme Precede De La Litterature",
+          "author": "Michel Leiris",
+          "coverId": "ol:967236",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364356",
+          "coverIsbn": "2070364356"
+        },
+        {
+          "id": "OL2276525W",
+          "title": "La Conscience de Zeno",
+          "author": "Italo Svevo",
+          "coverId": "ol:967239",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364399",
+          "coverIsbn": "2070364399"
+        },
+        {
+          "id": "OL276960W",
+          "title": "Las armas secretas",
+          "author": "Julio Cortázar",
+          "coverId": "ol:967244",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364488",
+          "coverIsbn": "2070364488"
+        },
+        {
+          "id": "OL1677189W",
+          "title": "La maison des Atlantes",
+          "author": "Angelo Rinaldi",
+          "coverId": "ol:3075091",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364496",
+          "coverIsbn": "2070364496"
+        },
+        {
+          "id": "OL65914W",
+          "title": "Les\\Anges Vagabonds",
+          "author": "Jack Kerouac",
+          "coverId": "ol:967247",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364577",
+          "coverIsbn": "2070364577"
+        },
+        {
+          "id": "OL15300693W",
+          "title": "Le Fils de la servante",
+          "author": "August Strindberg",
+          "coverId": "ol:3075094",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2070364585",
+          "coverIsbn": "2070364585"
+        },
+        {
+          "id": "OL24433876W",
+          "title": "Avant que le coq chante",
+          "author": "Cesare Pavese",
+          "coverId": "ol:11007981",
+          "addedAt": "2026-09-27",
+          "from": "isbn:207036464X",
+          "coverIsbn": "207036464X"
+        }
+      ]
+    },
+    {
+      "slug": "jai-lu-sf",
+      "title": "J'ai Lu — science-fiction",
+      "kind": "series",
+      "intro": "J'ai Lu launched its science-fiction line in 1970, with Jacques Sadoul as its editor; the volumes carry the house's running numbers, and their painted covers sit under the round J'ai Lu logo — in the 1970s with the big lowercase title, from the 1980s with a grey band marked S-F. Shown in number order, one book per work, each in a printing whose cover Open Library holds.",
+      "published": false,
+      "publishers": [
+        "J'ai lu"
+      ],
+      "works": [
+        {
+          "id": "OL17365W",
+          "title": "2001",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:13083245",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277123498",
+          "coverIsbn": "2277123498"
+        },
+        {
+          "id": "OL14868264W",
+          "title": "More Than Human",
+          "author": "Theodore Sturgeon",
+          "coverId": "ol:8541241",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277123552",
+          "coverIsbn": "2277123552"
+        },
+        {
+          "id": "OL21833W",
+          "title": "The World of Ā",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:8753595",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9782277133629",
+          "coverIsbn": "9782277133629",
+          "coverWork": "OL20084440W"
+        },
+        {
+          "id": "OL14868272W",
+          "title": "Los Cristales Sonadores",
+          "author": "Theodore Sturgeon",
+          "coverId": "ol:981204",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277123692",
+          "coverIsbn": "2277123692"
+        },
+        {
+          "id": "OL8404014W",
+          "title": "Slan",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:6998050",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277123811",
+          "coverIsbn": "2277123811",
+          "coverWork": "OL9007263W"
+        },
+        {
+          "id": "OL15345939W",
+          "title": "The Pawns of Null-A",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:7255049",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277123978",
+          "coverIsbn": "2277123978",
+          "coverWork": "OL16802774W"
+        },
+        {
+          "id": "OL46401W",
+          "title": "The Caves of Steel",
+          "author": "Isaac Asimov",
+          "coverId": "ol:10618253",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277124044",
+          "coverIsbn": "2277124044"
+        },
+        {
+          "id": "OL14868266W",
+          "title": "Killdozer - le viol cosmique",
+          "author": "Theodore Sturgeon",
+          "coverId": "ol:10132905",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277124079",
+          "coverIsbn": "2277124079"
+        },
+        {
+          "id": "OL24235555W",
+          "title": "L'affaire charles dexter ward",
+          "author": "H.P. Lovecraft",
+          "coverId": "ol:10715855",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277124109",
+          "coverIsbn": "2277124109"
+        },
+        {
+          "id": "OL2848714W",
+          "title": "Shambleau, and others",
+          "author": "C. L. Moore",
+          "coverId": "ol:8599307",
+          "addedAt": "2026-09-27",
+          "from": "isbn:227712415X",
+          "coverIsbn": "227712415X",
+          "coverWork": "OL19797702W"
+        },
+        {
+          "id": "OL15395094W",
+          "title": "Empire of the atom",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:981210",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277124184",
+          "coverIsbn": "2277124184",
+          "coverWork": "OL9007224W"
+        },
+        {
+          "id": "OL515754W",
+          "title": "Flowers for Algernon",
+          "author": "Daniel Keyes",
+          "coverId": "ol:12619341",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9782277124276",
+          "coverIsbn": "9782277124276"
+        },
+        {
+          "id": "OL6595263W",
+          "title": "The Star Kings",
+          "author": "Edmond Hamilton",
+          "coverId": "ol:8536173",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277134325",
+          "coverIsbn": "2277134325",
+          "coverWork": "OL19622655W"
+        },
+        {
+          "id": "OL28316W",
+          "title": "This Perfect Day",
+          "author": "Ira Levin",
+          "coverId": "ol:8771488",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277134341",
+          "coverIsbn": "2277134341"
+        },
+        {
+          "id": "OL21832W",
+          "title": "The Weapon Shops of Isher",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:9862625",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277124397",
+          "coverIsbn": "2277124397",
+          "coverWork": "OL20777670W"
+        },
+        {
+          "id": "OL15345936W",
+          "title": "The Weapon Makers",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:2155850",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277114405",
+          "coverIsbn": "2277114405",
+          "coverWork": "OL9007226W"
+        },
+        {
+          "id": "OL46241W",
+          "title": "I, Robot",
+          "author": "Isaac Asimov",
+          "coverId": "ol:15154462",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9782277134534",
+          "coverIsbn": "9782277134534"
+        },
+        {
+          "id": "OL21814W",
+          "title": "The Book of Ptath",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:981212",
+          "addedAt": "2026-09-27",
+          "from": "isbn:227712463X",
+          "coverIsbn": "227712463X"
+        },
+        {
+          "id": "OL46398W",
+          "title": "The Naked Sun",
+          "author": "Isaac Asimov",
+          "coverId": "ol:8770786",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277124680",
+          "coverIsbn": "2277124680"
+        },
+        {
+          "id": "OL21827W",
+          "title": "The War Against the Rull",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:8356203",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277124753",
+          "coverIsbn": "2277124753"
+        },
+        {
+          "id": "OL46399W",
+          "title": "The Stars, Like Dust",
+          "author": "Isaac Asimov",
+          "coverId": "ol:8066980",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9782277124849",
+          "coverIsbn": "9782277124849"
+        },
+        {
+          "id": "OL6595256W",
+          "title": "Le Retour aux étoiles",
+          "author": "Edmond Hamilton",
+          "coverId": "ol:3109960",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277114901",
+          "coverIsbn": "2277114901"
+        },
+        {
+          "id": "OL15345827W",
+          "title": "Destination Univers",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:981180",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277114960",
+          "coverIsbn": "2277114960"
+        },
+        {
+          "id": "OL4088390W",
+          "title": "Time and again",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:10216088",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115002",
+          "coverIsbn": "2277115002"
+        },
+        {
+          "id": "OL13983W",
+          "title": "Isle of the dead",
+          "author": "Roger Zelazny",
+          "coverId": "ol:8760298",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115096",
+          "coverIsbn": "2277115096",
+          "coverWork": "OL20097710W"
+        },
+        {
+          "id": "OL15345924W",
+          "title": "The Darkness on Diamondia",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:3109961",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115150",
+          "coverIsbn": "2277115150"
+        },
+        {
+          "id": "OL892508W",
+          "title": "Hothouse",
+          "author": "Brian W. Aldiss",
+          "coverId": "ol:10290903",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115207",
+          "coverIsbn": "2277115207",
+          "coverWork": "OL20920384W"
+        },
+        {
+          "id": "OL21829W",
+          "title": "The Universe Maker",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:10513469",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115290",
+          "coverIsbn": "2277115290",
+          "coverWork": "OL23538532W"
+        },
+        {
+          "id": "OL24213357W",
+          "title": "Jirel de Joiry",
+          "author": "C. L. Moore",
+          "coverId": "ol:10666973",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115339",
+          "coverIsbn": "2277115339"
+        },
+        {
+          "id": "OL273077W",
+          "title": "Strange Relations",
+          "author": "Philip José Farmer",
+          "coverId": "ol:3109962",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115371",
+          "coverIsbn": "2277115371",
+          "coverWork": "OL8266425W"
+        },
+        {
+          "id": "OL2172509W",
+          "title": "Solar Lottery",
+          "author": "Philip K. Dick",
+          "coverId": "ol:10491207",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115479",
+          "coverIsbn": "2277115479"
+        },
+        {
+          "id": "OL59740W",
+          "title": "Starship Troopers",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:14632340",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9782277115625",
+          "coverIsbn": "9782277115625"
+        },
+        {
+          "id": "OL2172502W",
+          "title": "Dr. Bloodmoney",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8752679",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115630",
+          "coverIsbn": "2277115630",
+          "coverWork": "OL20082839W"
+        },
+        {
+          "id": "OL2172403W",
+          "title": "The Man in the High Castle",
+          "author": "Philip K. Dick",
+          "coverId": "ol:7284750",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9782277125679",
+          "coverIsbn": "9782277125679"
+        },
+        {
+          "id": "OL24242365W",
+          "title": "Pardon, vous n'avez pas vu ma planète ?",
+          "author": "Bob Ottum",
+          "coverId": "ol:10721529",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9782277115687",
+          "coverIsbn": "9782277115687"
+        },
+        {
+          "id": "OL1960649W",
+          "title": "Nightwings",
+          "author": "Robert Silverberg",
+          "coverId": "ol:3109963",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115851",
+          "coverIsbn": "2277115851",
+          "coverWork": "OL1960425W"
+        },
+        {
+          "id": "OL15345898W",
+          "title": "Future Glitter",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:981214",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277125881",
+          "coverIsbn": "2277125881",
+          "coverWork": "OL9007223W"
+        },
+        {
+          "id": "OL19329256W",
+          "title": "Le ressac de l'espace",
+          "author": "Philippe Curval",
+          "coverId": "ol:8440333",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277115959",
+          "coverIsbn": "2277115959"
+        },
+        {
+          "id": "OL4088386W",
+          "title": "Time is the Simplest Thing",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:981183",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277116092",
+          "coverIsbn": "2277116092",
+          "coverWork": "OL4088328W"
+        },
+        {
+          "id": "OL2172429W",
+          "title": "Counter-clock world",
+          "author": "Philip K. Dick",
+          "coverId": "ol:7284754",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9782277116134",
+          "coverIsbn": "9782277116134"
+        },
+        {
+          "id": "OL6774458W",
+          "title": "Les Galaxiales 1",
+          "author": "Michel Demuth",
+          "coverId": "ol:3109964",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277116939",
+          "coverIsbn": "2277116939"
+        },
+        {
+          "id": "OL2848711W",
+          "title": "Judgment night",
+          "author": "C. L. Moore",
+          "coverId": "ol:8760377",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277117005",
+          "coverIsbn": "2277117005",
+          "coverWork": "OL20097820W"
+        },
+        {
+          "id": "OL2071384W",
+          "title": "The Eyes of the Overworld",
+          "author": "Jack Vance",
+          "coverId": "ol:10326442",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277117072",
+          "coverIsbn": "2277117072",
+          "coverWork": "OL21042139W"
+        },
+        {
+          "id": "OL2071372W",
+          "title": "The Dirdir",
+          "author": "Jack Vance",
+          "coverId": "ol:11090725",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277117234",
+          "coverIsbn": "2277117234",
+          "coverWork": "OL24479130W"
+        },
+        {
+          "id": "OL53403W",
+          "title": "The seedling stars",
+          "author": "James Blish",
+          "coverId": "ol:981187",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277117528",
+          "coverIsbn": "2277117528"
+        },
+        {
+          "id": "OL15089908W",
+          "title": "Delirium circus",
+          "author": "Pierre Pelot",
+          "coverId": "ol:2155852",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277117730",
+          "coverIsbn": "2277117730"
+        },
+        {
+          "id": "OL19862697W",
+          "title": "Univers 11",
+          "author": "ANTHOLOGIE",
+          "coverId": "ol:8668666",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277117862",
+          "coverIsbn": "2277117862"
+        },
+        {
+          "id": "OL9007238W",
+          "title": "Les épaves de Tycho et autres récits",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:3109966",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277118087",
+          "coverIsbn": "2277118087"
+        },
+        {
+          "id": "OL20886945W",
+          "title": "Invasion galactique",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:10215221",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277118133",
+          "coverIsbn": "2277118133"
+        },
+        {
+          "id": "OL4088341W",
+          "title": "Ring Around the Sun",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:981189",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277118141",
+          "coverIsbn": "2277118141"
+        },
+        {
+          "id": "OL14868271W",
+          "title": "Les Talents de Xanadu",
+          "author": "Theodore Sturgeon",
+          "coverId": "ol:981191",
+          "addedAt": "2026-09-27",
+          "from": "isbn:227711829X",
+          "coverIsbn": "227711829X"
+        },
+        {
+          "id": "OL19193973W",
+          "title": "Avant l'Eden",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:8427982",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277118303",
+          "coverIsbn": "2277118303"
+        },
+        {
+          "id": "OL2071405W",
+          "title": "Le monde magique",
+          "author": "Jack Vance",
+          "coverId": "ol:8443663",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277118362",
+          "coverIsbn": "2277118362"
+        },
+        {
+          "id": "OL4088396W",
+          "title": "Way station",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:8577999",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277118478",
+          "coverIsbn": "2277118478"
+        },
+        {
+          "id": "OL15345928W",
+          "title": "The Silkie",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:981196",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277118559",
+          "coverIsbn": "2277118559",
+          "coverWork": "OL15345835W"
+        },
+        {
+          "id": "OL46157W",
+          "title": "The Martian Way and Other Stories",
+          "author": "Isaac Asimov",
+          "coverId": "ol:14604833",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277118702",
+          "coverIsbn": "2277118702"
+        },
+        {
+          "id": "OL22708410W",
+          "title": "L'épreuve de Judith",
+          "author": "Cyrille KASZUK",
+          "coverId": "ol:10491732",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277118710",
+          "coverIsbn": "2277118710"
+        },
+        {
+          "id": "OL4104764W",
+          "title": "The face in the abyss",
+          "author": "A. Merritt",
+          "coverId": "ol:10215294",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277118869",
+          "coverIsbn": "2277118869",
+          "coverWork": "OL20887003W"
+        },
+        {
+          "id": "OL20805168W",
+          "title": "Chasse dangereuse",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:10103768",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277119032",
+          "coverIsbn": "2277119032"
+        },
+        {
+          "id": "OL17404W",
+          "title": "Imperial Earth",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:981197",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277119040",
+          "coverIsbn": "2277119040",
+          "coverWork": "OL9007246W"
+        },
+        {
+          "id": "OL467158W",
+          "title": "Deathworld 1",
+          "author": "Harry Harrison",
+          "coverId": "ol:8740683",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277119113",
+          "coverIsbn": "2277119113",
+          "coverWork": "OL19918135W"
+        },
+        {
+          "id": "OL19358428W",
+          "title": "L'horloge temporelle",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:8473158",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277119342",
+          "coverIsbn": "2277119342"
+        },
+        {
+          "id": "OL4026929W",
+          "title": "La loi du talion",
+          "author": "Gérard Klein",
+          "coverId": "ol:10535430",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277119350",
+          "coverIsbn": "2277119350",
+          "coverWork": "OL24138400W"
+        },
+        {
+          "id": "OL4088362W",
+          "title": "Mastodonia",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:981199",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277119563",
+          "coverIsbn": "2277119563"
+        },
+        {
+          "id": "OL19343528W",
+          "title": "Renaissance",
+          "author": "Rod Jones",
+          "coverId": "ol:8456931",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277119571",
+          "coverIsbn": "2277119571"
+        },
+        {
+          "id": "OL20084478W",
+          "title": "Univers 17",
+          "author": "ANTHOLOGIE",
+          "coverId": "ol:8753653",
+          "addedAt": "2026-09-27",
+          "from": "isbn:227711958X",
+          "coverIsbn": "227711958X"
+        },
+        {
+          "id": "OL19664793W",
+          "title": "L'étoile",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:8573829",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277119660",
+          "coverIsbn": "2277119660"
+        },
+        {
+          "id": "OL15345871W",
+          "title": "Rencontre Cosmique",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:981201",
+          "addedAt": "2026-09-27",
+          "from": "isbn:227711975X",
+          "coverIsbn": "227711975X"
+        },
+        {
+          "id": "OL19918387W",
+          "title": "L'épouvante",
+          "author": "Daniel Walther",
+          "coverId": "ol:8740777",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277119768",
+          "coverIsbn": "2277119768"
+        },
+        {
+          "id": "OL1960430W",
+          "title": "Les Monades urbaines",
+          "author": "Robert Silverberg",
+          "coverId": "ol:8770203",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277119970",
+          "coverIsbn": "2277119970"
+        },
+        {
+          "id": "OL9007233W",
+          "title": "Escarmouche",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:3109978",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277210056",
+          "coverIsbn": "2277210056"
+        },
+        {
+          "id": "OL2419430W",
+          "title": "L' homme à rebours",
+          "author": "Philippe Curval",
+          "coverId": "ol:8761499",
+          "addedAt": "2026-09-27",
+          "from": "isbn:227721020X",
+          "coverIsbn": "227721020X",
+          "coverWork": "OL20099221W"
+        },
+        {
+          "id": "OL17417W",
+          "title": "Rendezvous with Rama",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:13770430",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277210471",
+          "coverIsbn": "2277210471",
+          "coverWork": "OL34945804W"
+        },
+        {
+          "id": "OL15345837W",
+          "title": "L'Eté indien d'une paire de lunettes",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:3109979",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277210579",
+          "coverIsbn": "2277210579"
+        },
+        {
+          "id": "OL1960499W",
+          "title": "Trips",
+          "author": "Robert Silverberg",
+          "coverId": "ol:981225",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277210684",
+          "coverIsbn": "2277210684"
+        },
+        {
+          "id": "OL15345910W",
+          "title": "Monsters",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:981226",
+          "addedAt": "2026-09-27",
+          "from": "isbn:227721082X",
+          "coverIsbn": "227721082X",
+          "coverWork": "OL15345836W"
+        },
+        {
+          "id": "OL3540643W",
+          "title": "Pilgrimage",
+          "author": "Zenna Henderson",
+          "coverId": "ol:8776974",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277210927",
+          "coverIsbn": "2277210927",
+          "coverWork": "OL20123105W"
+        },
+        {
+          "id": "OL13951W",
+          "title": "Four for tomorrow",
+          "author": "Roger Zelazny",
+          "coverId": "ol:981228",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277211265",
+          "coverIsbn": "2277211265"
+        },
+        {
+          "id": "OL56834W",
+          "title": "Babel-17",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:10482543",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277211273",
+          "coverIsbn": "2277211273"
+        },
+        {
+          "id": "OL102561W",
+          "title": "The Black Hole",
+          "author": "Alan Dean Foster",
+          "coverId": "ol:8765430",
+          "addedAt": "2026-09-27",
+          "from": "isbn:227721129X",
+          "coverIsbn": "227721129X",
+          "coverWork": "OL20104674W"
+        },
+        {
+          "id": "OL893521W",
+          "title": "Hellstrom's Hive",
+          "author": "Frank Herbert",
+          "coverId": "ol:10775565",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277211397",
+          "coverIsbn": "2277211397"
+        },
+        {
+          "id": "OL19660820W",
+          "title": "Les Legendes du Mythe Cthulhu",
+          "author": "",
+          "coverId": "ol:8572906",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277211613",
+          "coverIsbn": "2277211613"
+        },
+        {
+          "id": "OL60613W",
+          "title": "Hestia",
+          "author": "C. J. Cherryh",
+          "coverId": "ol:10145041",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277211834",
+          "coverIsbn": "2277211834"
+        },
+        {
+          "id": "OL4088375W",
+          "title": "The Visitors",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:8761916",
+          "addedAt": "2026-09-27",
+          "from": "isbn:227721194X",
+          "coverIsbn": "227721194X"
+        },
+        {
+          "id": "OL3521965W",
+          "title": "The Sheep Look Up",
+          "author": "John Brunner",
+          "coverId": "ol:10483750",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277212334",
+          "coverIsbn": "2277212334"
+        },
+        {
+          "id": "OL273047W",
+          "title": "Dark Is the Sun",
+          "author": "Philip José Farmer",
+          "coverId": "ol:10779701",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277212571",
+          "coverIsbn": "2277212571",
+          "coverWork": "OL24281069W"
+        },
+        {
+          "id": "OL90521W",
+          "title": "Queen of Air and Darkness",
+          "author": "Poul Anderson",
+          "coverId": "ol:3109982",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277212687",
+          "coverIsbn": "2277212687",
+          "coverWork": "OL15072560W"
+        },
+        {
+          "id": "OL1819365W",
+          "title": "The Computer Connection",
+          "author": "Alfred Bester",
+          "coverId": "ol:12668906",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277212695",
+          "coverIsbn": "2277212695",
+          "coverWork": "OL27686098W"
+        },
+        {
+          "id": "OL60576W",
+          "title": "Hunter of Worlds",
+          "author": "C. J. Cherryh",
+          "coverId": "ol:10385063",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277212806",
+          "coverIsbn": "2277212806"
+        },
+        {
+          "id": "OL2172494W",
+          "title": "The Golden Man",
+          "author": "Philip K. Dick",
+          "coverId": "ol:10531770",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277212911",
+          "coverIsbn": "2277212911"
+        },
+        {
+          "id": "OL19099393W",
+          "title": "Nos armes sont de miel",
+          "author": "Pierre Pelot",
+          "coverId": "ol:8418074",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277213055",
+          "coverIsbn": "2277213055"
+        },
+        {
+          "id": "OL24274357W",
+          "title": "Je suis une herbe",
+          "author": "Jacques Mondoloni",
+          "coverId": "ol:10771156",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277213411",
+          "coverIsbn": "2277213411"
+        },
+        {
+          "id": "OL60583W",
+          "title": "Sunfall",
+          "author": "C. J. Cherryh",
+          "coverId": "ol:8753654",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277213543",
+          "coverIsbn": "2277213543",
+          "coverWork": "OL20084479W"
+        },
+        {
+          "id": "OL4088368W",
+          "title": "Project Pope",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:981235",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277213675",
+          "coverIsbn": "2277213675"
+        },
+        {
+          "id": "OL24912923W",
+          "title": "Sur l'onde de choc",
+          "author": "John Brunner",
+          "coverId": "ol:11819014",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277213683",
+          "coverIsbn": "2277213683"
+        },
+        {
+          "id": "OL2172402W",
+          "title": "The three stigmata of Palmer Eldritch",
+          "author": "Philip K. Dick",
+          "coverId": "ol:11478030",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277213799",
+          "coverIsbn": "2277213799",
+          "coverWork": "OL24739733W"
+        },
+        {
+          "id": "OL1955944W",
+          "title": "A Song for Lya",
+          "author": "George R. R. Martin",
+          "coverId": "ol:15126256",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277213802",
+          "coverIsbn": "2277213802"
+        },
+        {
+          "id": "OL19333270W",
+          "title": "Les chants de l'été",
+          "author": "Robert Silverberg",
+          "coverId": "ol:8444289",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277213926",
+          "coverIsbn": "2277213926"
+        },
+        {
+          "id": "OL24280733W",
+          "title": "Les fileurs d'anges",
+          "author": "John M. Ford",
+          "coverId": "ol:10779319",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277213934",
+          "coverIsbn": "2277213934"
+        },
+        {
+          "id": "OL9916944W",
+          "title": "Les maîtres-feu",
+          "author": "Joëlle Wintrebert",
+          "coverId": "ol:3109985",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277214086",
+          "coverIsbn": "2277214086"
+        },
+        {
+          "id": "OL20082281W",
+          "title": "Les seigneurs de l'Hydre",
+          "author": "C. J. Cherryh",
+          "coverId": "ol:8752331",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277214205",
+          "coverIsbn": "2277214205"
+        },
+        {
+          "id": "OL1960416W",
+          "title": "Le chemin de l'espace",
+          "author": "Robert Silverberg",
+          "coverId": "ol:3109986",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277214345",
+          "coverIsbn": "2277214345"
+        },
+        {
+          "id": "OL2071508W",
+          "title": "Marune",
+          "author": "Jack Vance",
+          "coverId": "ol:10131154",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277214353",
+          "coverIsbn": "2277214353"
+        },
+        {
+          "id": "OL19345581W",
+          "title": "Les Operateurs Humains",
+          "author": "A. E. van Vogt",
+          "coverId": "ol:8457905",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277214477",
+          "coverIsbn": "2277214477"
+        },
+        {
+          "id": "OL1955922W",
+          "title": "Songs of Stars and Shadows",
+          "author": "George R. R. Martin",
+          "coverId": "ol:11298730",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2277214620",
+          "coverIsbn": "2277214620"
+        }
+      ]
+    },
+    {
+      "slug": "presence-du-futur",
+      "title": "Présence du futur — Denoël",
+      "kind": "series",
+      "intro": "Présence du futur was the science-fiction series of the Paris publisher Denoël, founded in 1954 by Robert Kanters and published until 2000. From 1975 its covers were illustrated, at first with the picture inside a central circle on a colour gradient, until the art spread over the whole page towards the end of the 1980s. This wall shows the circle design only — first printings of the late 1970s and early 1980s and reprints of older numbers — one per work, in number order, from the covers Open Library has.",
+      "published": false,
+      "publishers": [
+        "Denoël"
+      ],
+      "works": [
+        {
+          "id": "OL103125W",
+          "title": "The golden apples of the sun and other stories",
+          "author": "Ray Bradbury",
+          "coverId": "ol:10184638",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207300145",
+          "coverIsbn": "2207300145"
+        },
+        {
+          "id": "OL7480611W",
+          "title": "Martians, Go Home!",
+          "author": "Fredric Brown",
+          "coverId": "ol:8770853",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730017X",
+          "coverIsbn": "220730017X"
+        },
+        {
+          "id": "OL8986410W",
+          "title": "Les perles du temps",
+          "author": "Gérard Klein",
+          "coverId": "ol:10509349",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207300269",
+          "coverIsbn": "2207300269"
+        },
+        {
+          "id": "OL9942414W",
+          "title": "Le pays sans étoiles",
+          "author": "P. Very",
+          "coverId": "ol:3091843",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730051X",
+          "coverIsbn": "220730051X"
+        },
+        {
+          "id": "OL4088324W",
+          "title": "La croisade de l'idiot",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:3091844",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207300528",
+          "coverIsbn": "2207300528"
+        },
+        {
+          "id": "OL20101066W",
+          "title": "Fantômes et farfafouilles",
+          "author": "Fredric Brown",
+          "coverId": "ol:8762950",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730065X",
+          "coverIsbn": "220730065X"
+        },
+        {
+          "id": "OL2626644W",
+          "title": "Conditionally Human",
+          "author": "Walter M. Miller Jr.",
+          "coverId": "ol:973752",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207300706",
+          "coverIsbn": "2207300706"
+        },
+        {
+          "id": "OL46224W",
+          "title": "Foundation and Empire",
+          "author": "Isaac Asimov",
+          "coverId": "ol:7255662",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL25425945M"
+        },
+        {
+          "id": "OL46309W",
+          "title": "Second Foundation",
+          "author": "Isaac Asimov",
+          "coverId": "ol:7255660",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207300943",
+          "coverIsbn": "2207300943"
+        },
+        {
+          "id": "OL2745908W",
+          "title": "Crystal World (Flamingo Modern Classic)",
+          "author": "J. G. Ballard",
+          "coverId": "ol:10435101",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207300986",
+          "coverIsbn": "2207300986"
+        },
+        {
+          "id": "OL2683553W",
+          "title": "The Cyberiad",
+          "author": "Stanisław Lem",
+          "coverId": "ol:973756",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207301095",
+          "coverIsbn": "2207301095"
+        },
+        {
+          "id": "OL14959480W",
+          "title": "Works (\"Breeds There a Man ... ?\" / Green Patches / Hostess / Nightfall)",
+          "author": "Isaac Asimov",
+          "coverId": "ol:10618242",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207301230",
+          "coverIsbn": "2207301230"
+        },
+        {
+          "id": "OL21171384W",
+          "title": "GUERRE AUX INVISIBLES",
+          "author": "Eric Frank Russell",
+          "coverId": "ol:10331569",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730132X",
+          "coverIsbn": "220730132X"
+        },
+        {
+          "id": "OL2885571W",
+          "title": "Rayons pour Sidar",
+          "author": "Stefan Wul",
+          "coverId": "ol:2144672",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207301362",
+          "coverIsbn": "2207301362"
+        },
+        {
+          "id": "OL13964W",
+          "title": "Creatures of light and darkness",
+          "author": "Roger Zelazny",
+          "coverId": "ol:7255701",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207301427",
+          "coverIsbn": "2207301427"
+        },
+        {
+          "id": "OL1911294W",
+          "title": "Le péril vient de la mer",
+          "author": "John Wyndham",
+          "coverId": "ol:3091846",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207301656",
+          "coverIsbn": "2207301656"
+        },
+        {
+          "id": "OL53396W",
+          "title": "Anywhen",
+          "author": "James Blish",
+          "coverId": "ol:12234166",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207301664",
+          "coverIsbn": "2207301664"
+        },
+        {
+          "id": "OL13994W",
+          "title": "This Immortal",
+          "author": "Roger Zelazny",
+          "coverId": "ol:973759",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207301672",
+          "coverIsbn": "2207301672"
+        },
+        {
+          "id": "OL33173600W",
+          "title": "The Early Asimov",
+          "author": "Isaac Asimov",
+          "coverId": "ol:14423647",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207301826",
+          "coverIsbn": "2207301826"
+        },
+        {
+          "id": "OL27775606W",
+          "title": "The early Asimov. Volume 3 (Author! Author! / Death Sentence / Legal Rites / Not Final! / Super-Neutron / Time Pussy)",
+          "author": "Isaac Asimov",
+          "coverId": "ol:973760",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207301915",
+          "coverIsbn": "2207301915"
+        },
+        {
+          "id": "OL13974W",
+          "title": "The Guns of Avalon",
+          "author": "Roger Zelazny",
+          "coverId": "ol:7255684",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207301966",
+          "coverIsbn": "2207301966"
+        },
+        {
+          "id": "OL7857086W",
+          "title": "Quotient intellectuel a vendre",
+          "author": "J. Boyd",
+          "coverId": "ol:3091849",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302105",
+          "coverIsbn": "2207302105"
+        },
+        {
+          "id": "OL8984970W",
+          "title": "La voix du maitre",
+          "author": "Stanisław Lem",
+          "coverId": "ol:973762",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302113",
+          "coverIsbn": "2207302113"
+        },
+        {
+          "id": "OL8984975W",
+          "title": "Sirius",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:973763",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302121",
+          "coverIsbn": "2207302121"
+        },
+        {
+          "id": "OL7914984W",
+          "title": "Une longue marche dans la nuit",
+          "author": "B. Shaw",
+          "coverId": "ol:3091850",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302156",
+          "coverIsbn": "2207302156"
+        },
+        {
+          "id": "OL22455018W",
+          "title": "LA DIXIEME PLANETE",
+          "author": "EDMUND COOPER",
+          "coverId": "ol:10466632",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302210",
+          "coverIsbn": "2207302210"
+        },
+        {
+          "id": "OL13959W",
+          "title": "Today We Choose a Face",
+          "author": "Roger Zelazny",
+          "coverId": "ol:7257652",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302261",
+          "coverIsbn": "2207302261"
+        },
+        {
+          "id": "OL4088395W",
+          "title": "Enchanted pilgrimage",
+          "author": "Clifford D. Simak",
+          "coverId": "ol:3091851",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302288",
+          "coverIsbn": "2207302288"
+        },
+        {
+          "id": "OL9942421W",
+          "title": "Hier les oiseaux",
+          "author": "K. Wilhelm",
+          "coverId": "ol:3091852",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302342",
+          "coverIsbn": "2207302342"
+        },
+        {
+          "id": "OL2172512W",
+          "title": "Deus Irae",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8763766",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302385",
+          "coverIsbn": "2207302385"
+        },
+        {
+          "id": "OL8380770W",
+          "title": "Pontesprit",
+          "author": "Haldeman",
+          "coverId": "ol:3091853",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302407",
+          "coverIsbn": "2207302407"
+        },
+        {
+          "id": "OL13981W",
+          "title": "Doorways in the Sand",
+          "author": "Roger Zelazny",
+          "coverId": "ol:7255702",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL25425979M"
+        },
+        {
+          "id": "OL31863210W",
+          "title": "Un gars de l'enfer (PRESENCE FUTUR)",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:15234853",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730244X",
+          "coverIsbn": "220730244X"
+        },
+        {
+          "id": "OL8984976W",
+          "title": "Terre 10 11 (suite de terre)",
+          "author": "Farca",
+          "coverId": "ol:973766",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302547",
+          "coverIsbn": "2207302547"
+        },
+        {
+          "id": "OL46283W",
+          "title": "The Bicentennial Man and Other Stories [12 works]",
+          "author": "Isaac Asimov",
+          "coverId": "ol:14423600",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302555",
+          "coverIsbn": "2207302555"
+        },
+        {
+          "id": "OL22454912W",
+          "title": "Krysnak ou Le complot",
+          "author": "Daniel Walther",
+          "coverId": "ol:10466628",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730258X",
+          "coverIsbn": "220730258X"
+        },
+        {
+          "id": "OL9942423W",
+          "title": "5 solutions pour en fin",
+          "author": "D. Douay",
+          "coverId": "ol:3091854",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730261X",
+          "coverIsbn": "220730261X"
+        },
+        {
+          "id": "OL8107879W",
+          "title": "Lieux secrets et vilains messieurs",
+          "author": "R. A. Lafferty",
+          "coverId": "ol:3091855",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302636",
+          "coverIsbn": "2207302636"
+        },
+        {
+          "id": "OL9030496W",
+          "title": "Galaxies interieur (anthologie de science fic)",
+          "author": "M. Jakubowski",
+          "coverId": "ol:3091856",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302717",
+          "coverIsbn": "2207302717"
+        },
+        {
+          "id": "OL19758996W",
+          "title": "Dans le palais des rois martiens",
+          "author": "John Varley",
+          "coverId": "ol:8579331",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302768",
+          "coverIsbn": "2207302768"
+        },
+        {
+          "id": "OL2140267W",
+          "title": "20 maisons du zodiaque",
+          "author": "Maxim Jakubowski",
+          "coverId": "ol:3091857",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302792",
+          "coverIsbn": "2207302792"
+        },
+        {
+          "id": "OL9942427W",
+          "title": "La forteresse de coton",
+          "author": "P. Curval",
+          "coverId": "ol:3091858",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302806",
+          "coverIsbn": "2207302806"
+        },
+        {
+          "id": "OL37179W",
+          "title": "Up the walls of the world",
+          "author": "James Tiptree, Jr.",
+          "coverId": "ol:3091859",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302830",
+          "coverIsbn": "2207302830"
+        },
+        {
+          "id": "OL22455213W",
+          "title": "BIOFEEDBACK",
+          "author": "JEAN-MARC LIGNY",
+          "coverId": "ol:10466644",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730289X",
+          "coverIsbn": "220730289X"
+        },
+        {
+          "id": "OL20113022W",
+          "title": "titan",
+          "author": "John Varley",
+          "coverId": "ol:8772143",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207302989",
+          "coverIsbn": "2207302989"
+        },
+        {
+          "id": "OL8973285W",
+          "title": "Vue en coupe d'une ville malade",
+          "author": "S. Brussolo",
+          "coverId": "ol:3091860",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303004",
+          "coverIsbn": "2207303004"
+        },
+        {
+          "id": "OL14959283W",
+          "title": "Jusqu'à la quatrième génération (9 short stories)",
+          "author": "Isaac Asimov",
+          "coverId": "ol:973767",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303012",
+          "coverIsbn": "2207303012"
+        },
+        {
+          "id": "OL22455426W",
+          "title": "Éclipses 2000",
+          "author": "Lino Aldani",
+          "coverId": "ol:10466664",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303039",
+          "coverIsbn": "2207303039"
+        },
+        {
+          "id": "OL9538357W",
+          "title": "Sorcière",
+          "author": "J. Varley",
+          "coverId": "ol:3091861",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730308X",
+          "coverIsbn": "220730308X"
+        },
+        {
+          "id": "OL8984973W",
+          "title": "Voyages électriques d'ijon tichy",
+          "author": "Stanisław Lem",
+          "coverId": "ol:973769",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730311X",
+          "coverIsbn": "220730311X"
+        },
+        {
+          "id": "OL8984978W",
+          "title": "Dernier jour de la création",
+          "author": "Wolfgan Jeschke",
+          "coverId": "ol:973770",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303160",
+          "coverIsbn": "2207303160"
+        },
+        {
+          "id": "OL13978W",
+          "title": "Roadmarks",
+          "author": "Roger Zelazny",
+          "coverId": "ol:3091863",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303241",
+          "coverIsbn": "2207303241"
+        },
+        {
+          "id": "OL24527104W",
+          "title": "L'odeur de la bête",
+          "author": "Philippe Curval",
+          "coverId": "ol:11159545",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303292",
+          "coverIsbn": "2207303292"
+        },
+        {
+          "id": "OL825250W",
+          "title": "Sommeil de sang",
+          "author": "Serge Brussolo",
+          "coverId": "ol:3091864",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303349",
+          "coverIsbn": "2207303349"
+        },
+        {
+          "id": "OL19873529W",
+          "title": "Mourir au hasard (French Edition)",
+          "author": "Pierre PELOT",
+          "coverId": "ol:8675921",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730339X",
+          "coverIsbn": "220730339X"
+        },
+        {
+          "id": "OL2163649W",
+          "title": "The Hitchhiker's Guide to the Galaxy",
+          "author": "Douglas Adams",
+          "coverId": "ol:8762084",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303403",
+          "coverIsbn": "2207303403"
+        },
+        {
+          "id": "OL20823820W",
+          "title": "Happy end ou La nouvelle cité du soleil",
+          "author": "Daniel Walther",
+          "coverId": "ol:10127260",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303438",
+          "coverIsbn": "2207303438"
+        },
+        {
+          "id": "OL37329766W",
+          "title": "L'IMMEUBLE D'EN FACE",
+          "author": "Jean-Pierre Andrevon",
+          "coverId": "ol:3091865",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303446",
+          "coverIsbn": "2207303446"
+        },
+        {
+          "id": "OL14871970W",
+          "title": "The claw of the conciliator",
+          "author": "Gene Wolfe",
+          "coverId": "ol:3091866",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303454",
+          "coverIsbn": "2207303454"
+        },
+        {
+          "id": "OL20118289W",
+          "title": "Loin du pays natal (French Edition)",
+          "author": "Walter S. Tevis",
+          "coverId": "ol:8774748",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303470",
+          "coverIsbn": "2207303470"
+        },
+        {
+          "id": "OL825239W",
+          "title": "Portrait du diable en chapeau melon",
+          "author": "Serge Brussolo",
+          "coverId": "ol:6452074",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303489",
+          "coverIsbn": "2207303489"
+        },
+        {
+          "id": "OL20799990W",
+          "title": "SONATE SANS ACCOMPAGNEMENT",
+          "author": "Orson Scott Card",
+          "coverId": "ol:10096497",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303497",
+          "coverIsbn": "2207303497"
+        },
+        {
+          "id": "OL8109389W",
+          "title": "L'homme sans idées",
+          "author": "Thomas M. Disch",
+          "coverId": "ol:3091867",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303527",
+          "coverIsbn": "2207303527"
+        },
+        {
+          "id": "OL15328270W",
+          "title": "La mémoire de l'ombre",
+          "author": "Kate Wilhelm",
+          "coverId": "ol:6459757",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303535",
+          "coverIsbn": "2207303535"
+        },
+        {
+          "id": "OL2172490W",
+          "title": "The Transmigration of Timothy Archer",
+          "author": "Philip K. Dick",
+          "coverId": "ol:8743860",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730356X",
+          "coverIsbn": "220730356X"
+        },
+        {
+          "id": "OL825223W",
+          "title": "Le carnaval de fer",
+          "author": "Serge Brussolo",
+          "coverId": "ol:3091868",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303594",
+          "coverIsbn": "2207303594"
+        },
+        {
+          "id": "OL22505834W",
+          "title": "La sphère de platine",
+          "author": "Joseph-Marie Lo Duca",
+          "coverId": "ol:10472113",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303608",
+          "coverIsbn": "2207303608"
+        },
+        {
+          "id": "OL14871972W",
+          "title": "The Sword of the Lictor",
+          "author": "Gene Wolfe",
+          "coverId": "ol:3091869",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303616",
+          "coverIsbn": "2207303616"
+        },
+        {
+          "id": "OL4035629W",
+          "title": "Il faudra bien se résoudre à mourir seul",
+          "author": "Jean-Pierre Andrevon",
+          "coverId": "ol:3091870",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303632",
+          "coverIsbn": "2207303632"
+        },
+        {
+          "id": "OL108289W",
+          "title": "Against infinity",
+          "author": "Gregory Benford",
+          "coverId": "ol:973771",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303640",
+          "coverIsbn": "2207303640"
+        },
+        {
+          "id": "OL3522767W",
+          "title": "Nouvelle recette pour canard au sang",
+          "author": "Scott Baker",
+          "coverId": "ol:3091871",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303683",
+          "coverIsbn": "2207303683"
+        },
+        {
+          "id": "OL5527166W",
+          "title": "Le testament de Corlay",
+          "author": "John Middleton Murry, Jr.",
+          "coverId": "ol:12167374",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303713",
+          "coverIsbn": "2207303713"
+        },
+        {
+          "id": "OL20125971W",
+          "title": "le soleil pas à pas",
+          "author": "Walter S. Tevis",
+          "coverId": "ol:8778918",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303748",
+          "coverIsbn": "2207303748"
+        },
+        {
+          "id": "OL14871898W",
+          "title": "The Citadel of the Autarch",
+          "author": "Gene Wolfe",
+          "coverId": "ol:3091873",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303756",
+          "coverIsbn": "2207303756"
+        },
+        {
+          "id": "OL8109388W",
+          "title": "Le businessman",
+          "author": "Thomas M. Disch",
+          "coverId": "ol:13210152",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303772",
+          "coverIsbn": "2207303772"
+        },
+        {
+          "id": "OL8107915W",
+          "title": "Millénium",
+          "author": "John Varley",
+          "coverId": "ol:973773",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303780",
+          "coverIsbn": "2207303780"
+        },
+        {
+          "id": "OL9942431W",
+          "title": "Lumière sur le détroit",
+          "author": "S. Sucharitkul",
+          "coverId": "ol:3091874",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303799",
+          "coverIsbn": "2207303799"
+        },
+        {
+          "id": "OL19820025W",
+          "title": "Écoute, écoute !",
+          "author": "Kate Wilhelm",
+          "coverId": "ol:8611082",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303802",
+          "coverIsbn": "2207303802"
+        },
+        {
+          "id": "OL4035598W",
+          "title": "C'est arrivé mais on n'en a rien su",
+          "author": "Jean-Pierre Andrevon",
+          "coverId": "ol:3091875",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303837",
+          "coverIsbn": "2207303837"
+        },
+        {
+          "id": "OL3332539W",
+          "title": "Des gens (extra)ordinaires",
+          "author": "Joanna Russ",
+          "coverId": "ol:3091876",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207303896",
+          "coverIsbn": "2207303896"
+        },
+        {
+          "id": "OL8973630W",
+          "title": "Mémo",
+          "author": "André Ruellan",
+          "coverId": "ol:6451835",
+          "addedAt": "2026-09-27",
+          "from": "isbn:220730390X",
+          "coverIsbn": "220730390X"
+        },
+        {
+          "id": "OL8107923W",
+          "title": "Démon",
+          "author": "John Varley",
+          "coverId": "ol:3091878",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207304000",
+          "coverIsbn": "2207304000"
+        },
+        {
+          "id": "OL20148175W",
+          "title": "Divine endurance",
+          "author": "Gwyneth Jones",
+          "coverId": "ol:8792596",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207304167",
+          "coverIsbn": "2207304167"
+        },
+        {
+          "id": "OL1888050W",
+          "title": "Schismatrix",
+          "author": "Bruce Sterling",
+          "coverId": "ol:13452363",
+          "addedAt": "2026-09-27",
+          "from": "isbn:2207304264",
+          "coverIsbn": "2207304264"
+        }
+      ]
     }
   ]
 }

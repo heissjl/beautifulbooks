@@ -1,0 +1,584 @@
+[
+ {
+  "no": "1",
+  "title": "La condition humaine",
+  "isbn": "2070360016",
+  "source": "Folio number from the ISBN block 2-07-036NNN (checked on 310 BnF records of 1972-73); no 1972-73 BnF record for 1; Folio cover checked on a contact sheet"
+ },
+ {
+  "no": "2",
+  "title": "L’étranger",
+  "isbn": "2070360024",
+  "cover": 15115103,
+  "source": "Folio number from the ISBN block 2-07-036NNN (checked on 310 BnF records of 1972-73); no 1972-73 BnF record for 2; Folio cover checked on a contact sheet",
+  "note": "second image of the edition; the first shows the post-2010 charter (author in coloured Univers)"
+ },
+ {
+  "no": "4",
+  "title": "Vol de nuit",
+  "isbn": "2070360040",
+  "source": "Folio number from the ISBN block 2-07-036NNN (checked on 310 BnF records of 1972-73); no 1972-73 BnF record for 4; Folio cover checked on a contact sheet"
+ },
+ {
+  "no": "6",
+  "title": "Les Poissons Rouges Ou Mon Pere Ce Hero",
+  "isbn": "2070360067",
+  "source": "Folio number from the ISBN block 2-07-036NNN (checked on 310 BnF records of 1972-73); no 1972-73 BnF record for 6; Folio cover checked on a contact sheet"
+ },
+ {
+  "no": "7",
+  "title": "Le vieil homme et la mer",
+  "isbn": "2070360075",
+  "cover": 967065,
+  "source": "Folio number from the ISBN block 2-07-036NNN (checked on 310 BnF records of 1972-73); no 1972-73 BnF record for 7; Folio cover checked on a contact sheet",
+  "note": "second image of the edition; the first shows the post-2010 charter (author in coloured Univers)"
+ },
+ {
+  "no": "12",
+  "title": "La reine morte",
+  "isbn": "2070360121",
+  "source": "Folio number from the ISBN block 2-07-036NNN (checked on 310 BnF records of 1972-73); no 1972-73 BnF record for 12; Folio cover checked on a contact sheet"
+ },
+ {
+  "no": "15",
+  "title": "Emmene-Moi Au Bout Du Monde!",
+  "isbn": "2070360156",
+  "source": "Folio number from the ISBN block 2-07-036NNN (checked on 310 BnF records of 1972-73); no 1972-73 BnF record for 15; Folio cover checked on a contact sheet"
+ },
+ {
+  "no": "18",
+  "title": "La Symphonie pastoral",
+  "isbn": "2070360180",
+  "source": "BnF SRU col2bib 34234540, Folio 18 (cb35224414k); ISBN 2-07-036018 on Open Library"
+ },
+ {
+  "no": "26",
+  "title": "Annonce Faite a Marie, L'",
+  "isbn": "2070360261",
+  "source": "BnF SRU col2bib 34234540, Folio 26 (cb35224520s); ISBN 2-07-036026 on Open Library"
+ },
+ {
+  "no": "28",
+  "title": "Voyage au bout de la nuit",
+  "isbn": "2070360288",
+  "cover": 14053415,
+  "source": "Folio number from the ISBN block 2-07-036NNN (checked on 310 BnF records of 1972-73); no 1972-73 BnF record for 28; Folio cover checked on a contact sheet",
+  "note": "second image of the edition; the first shows the post-2010 charter (author in coloured Univers)"
+ },
+ {
+  "no": "29",
+  "title": "Monsieur Jadis ou l'école du soir",
+  "isbn": "2070360296",
+  "source": "BnF SRU col2bib 34234540, Folio 29 (cb35224558g); ISBN 2-07-036029 on Open Library"
+ },
+ {
+  "no": "37",
+  "title": "Of Mice and Men",
+  "isbn": "2070360377",
+  "source": "BnF SRU col2bib 34234540, Folio 37 (cb352246620); ISBN 2-07-036037 on Open Library"
+ },
+ {
+  "no": "39",
+  "title": "Анна Каренина",
+  "isbn": "2070360393",
+  "source": "Folio number from the ISBN block 2-07-036NNN (checked on 310 BnF records of 1972-73); no 1972-73 BnF record for 39; Folio cover checked on a contact sheet"
+ },
+ {
+  "no": "47",
+  "title": "Choses Vues 1847-1848",
+  "isbn": "2070360474",
+  "source": "BnF SRU col2bib 34234540, Folio 47 (cb352248062); ISBN 2-07-036047 on Open Library"
+ },
+ {
+  "no": "48",
+  "title": "Le cheval blanc",
+  "isbn": "2070360482",
+  "source": "BnF SRU col2bib 34234540, Folio 48 (cb35224820m); ISBN 2-07-036048 on Open Library"
+ },
+ {
+  "no": "50",
+  "title": "Chien Blanc",
+  "isbn": "2070360504",
+  "source": "BnF SRU col2bib 34234540, Folio 50 (cb35224842x); ISBN 2-07-036050 on Open Library"
+ },
+ {
+  "no": "58",
+  "title": "La mort dans l'ame",
+  "isbn": "207036058X",
+  "source": "BnF SRU col2bib 34234540, Folio 58 (cb352249426); ISBN 2-07-036058 on Open Library"
+ },
+ {
+  "no": "59",
+  "title": "In Cold Blood",
+  "isbn": "2070360598",
+  "source": "BnF SRU col2bib 34234540, Folio 59 (cb352249488); ISBN 2-07-036059 on Open Library"
+ },
+ {
+  "no": "60",
+  "title": "Knock",
+  "isbn": "2070360601",
+  "source": "BnF SRU col2bib 34234540, Folio 60 (cb352249577); ISBN 2-07-036060 on Open Library"
+ },
+ {
+  "no": "71",
+  "title": "Les poneys sauvages",
+  "isbn": "2070360717",
+  "source": "BnF SRU col2bib 34234540, Folio 71 (cb352249697); ISBN 2-07-036071 on Open Library"
+ },
+ {
+  "no": "73",
+  "title": "Nadja",
+  "isbn": "2070360733",
+  "source": "BnF SRU col2bib 34234540, Folio 73 (cb35224971s); ISBN 2-07-036073 on Open Library"
+ },
+ {
+  "no": "74",
+  "title": "Metamorphosis",
+  "isbn": "2070360741",
+  "source": "BnF SRU col2bib 34234540, Folio 74 (cb352249724); ISBN 2-07-036074 on Open Library"
+ },
+ {
+  "no": "79",
+  "title": "Доктор Живаго",
+  "isbn": "2070360792",
+  "source": "BnF SRU col2bib 34234540, Folio 79 (cb352249786); ISBN 2-07-036079 on Open Library"
+ },
+ {
+  "no": "81",
+  "title": "Sauve Qui Peut",
+  "isbn": "2070360814",
+  "source": "BnF SRU col2bib 34234540, Folio 81 (cb35224982f); ISBN 2-07-036081 on Open Library"
+ },
+ {
+  "no": "86",
+  "title": "À l'ombre des jeunes filles en fleurs",
+  "isbn": "2070360865",
+  "source": "BnF SRU col2bib 34234540, Folio 86 (cb35224988h); ISBN 2-07-036086 on Open Library"
+ },
+ {
+  "no": "89",
+  "title": "Aventure de Catherine Crachat, tome 1",
+  "isbn": "207036089X",
+  "source": "BnF SRU col2bib 34234540, Folio 89 (cb35224992r); ISBN 2-07-036089 on Open Library"
+ },
+ {
+  "no": "92",
+  "title": "Le planétarium",
+  "isbn": "207036092X",
+  "source": "BnF SRU col2bib 34234540, Folio 92 (cb35224997g); ISBN 2-07-036092 on Open Library"
+ },
+ {
+  "no": "103",
+  "title": "Zazie dans le Métro",
+  "isbn": "2070361039",
+  "source": "BnF SRU col2bib 34234540, Folio 103 (cb35224330j); ISBN 2-07-036103 on Open Library"
+ },
+ {
+  "no": "104",
+  "title": "Spectacle",
+  "isbn": "2070361047",
+  "source": "BnF SRU col2bib 34234540, Folio 104 (cb35224331w); ISBN 2-07-036104 on Open Library"
+ },
+ {
+  "no": "110",
+  "title": "La Loi",
+  "isbn": "2070361101",
+  "source": "BnF SRU col2bib 34234540, Folio 110 (cb352243389); ISBN 2-07-036110 on Open Library"
+ },
+ {
+  "no": "111",
+  "title": "Z",
+  "isbn": "207036111X",
+  "source": "BnF SRU col2bib 34234540, Folio 111 (cb35224339n); ISBN 2-07-036111 on Open Library"
+ },
+ {
+  "no": "112",
+  "title": "Le Lys dans la vallée",
+  "isbn": "2070361128",
+  "source": "BnF SRU col2bib 34234540, Folio 112 (cb35224340v); ISBN 2-07-036112 on Open Library"
+ },
+ {
+  "no": "113",
+  "title": "Tant Que La Terre Durera 1",
+  "isbn": "2070361136",
+  "source": "BnF SRU col2bib 34234540, Folio 113 (cb352243416); ISBN 2-07-036113 on Open Library"
+ },
+ {
+  "no": "135",
+  "title": "LA Retraite Sentimentale",
+  "isbn": "2070361357",
+  "source": "BnF SRU col2bib 34234540, Folio 135 (cb35224364v); ISBN 2-07-036135 on Open Library"
+ },
+ {
+  "no": "137",
+  "title": "Une mort tres douce",
+  "isbn": "2070361373",
+  "source": "BnF SRU col2bib 34234540, Folio 137 (cb35224366j); ISBN 2-07-036137 on Open Library"
+ },
+ {
+  "no": "140",
+  "title": "Les Thibault 2",
+  "isbn": "2070361403",
+  "source": "BnF SRU col2bib 34234540, Folio 140 (cb35224370s); ISBN 2-07-036140 on Open Library"
+ },
+ {
+  "no": "143",
+  "title": "Le chemin des écoliers",
+  "isbn": "2070361438",
+  "source": "BnF SRU col2bib 34234540, Folio 143 (cb35224373t); ISBN 2-07-036143 on Open Library"
+ },
+ {
+  "no": "152",
+  "title": "Le Feu Follet D'Adieu a Gonzagu",
+  "isbn": "2070361527",
+  "source": "BnF SRU col2bib 34234540, Folio 152 (cb352243834); ISBN 2-07-036152 on Open Library"
+ },
+ {
+  "no": "154",
+  "title": "Le Quai DES Brumes",
+  "isbn": "2070361543",
+  "source": "BnF SRU col2bib 34234540, Folio 154 (cb35224385t); ISBN 2-07-036154 on Open Library"
+ },
+ {
+  "no": "162",
+  "title": "The Sound and the Fury",
+  "isbn": "2070361624",
+  "source": "BnF SRU col2bib 34234540, Folio 162 (cb352243954); ISBN 2-07-036162 on Open Library"
+ },
+ {
+  "no": "168",
+  "title": "Le Mas Theotime",
+  "isbn": "2070361683",
+  "source": "BnF SRU col2bib 34234540, Folio 168 (cb352244017); ISBN 2-07-036168 on Open Library"
+ },
+ {
+  "no": "174",
+  "title": "La Rose de Java",
+  "isbn": "2070361748",
+  "source": "BnF SRU col2bib 34234540, Folio 174 (cb35224408n); ISBN 2-07-036174 on Open Library"
+ },
+ {
+  "no": "178",
+  "title": "Magiciennes, Les",
+  "isbn": "2070361780",
+  "source": "BnF SRU col2bib 34234540, Folio 178 (cb35224412w); ISBN 2-07-036178 on Open Library"
+ },
+ {
+  "no": "184",
+  "title": "L'Amour conjugal",
+  "isbn": "2070361845",
+  "source": "BnF SRU col2bib 34234540, Folio 184 (cb35224418z); ISBN 2-07-036184 on Open Library"
+ },
+ {
+  "no": "185",
+  "title": "The War of the Worlds",
+  "isbn": "2070361853",
+  "source": "BnF SRU col2bib 34234540, Folio 185 (cb352244199); ISBN 2-07-036185 on Open Library"
+ },
+ {
+  "no": "186",
+  "title": "Les rêveries du promeneur solitaire",
+  "isbn": "2070361861",
+  "source": "BnF SRU col2bib 34234540, Folio 186 (cb35224420h); ISBN 2-07-036186 on Open Library"
+ },
+ {
+  "no": "187",
+  "title": "Les Petits chevaux de Tarquinia",
+  "isbn": "207036187X",
+  "source": "BnF SRU col2bib 34234540, Folio 187 (cb352244226); ISBN 2-07-036187 on Open Library"
+ },
+ {
+  "no": "195",
+  "title": "Anicet",
+  "isbn": "2070361950",
+  "source": "BnF SRU col2bib 34234540, Folio 195 (cb359464914); ISBN 2-07-036195 on Open Library"
+ },
+ {
+  "no": "198",
+  "title": "Deux cavaliers de l'orage",
+  "isbn": "2070361985",
+  "source": "BnF SRU col2bib 34234540, Folio 198 (cb352244346); ISBN 2-07-036198 on Open Library"
+ },
+ {
+  "no": "206",
+  "title": "La statue de sel",
+  "isbn": "207036206X",
+  "source": "BnF SRU col2bib 34234540, Folio 206 (cb35224445v); ISBN 2-07-036206 on Open Library"
+ },
+ {
+  "no": "216",
+  "title": "Piege Pour Cendrillon",
+  "isbn": "2070362167",
+  "source": "BnF SRU col2bib 34234540, Folio 216 (cb352244586); ISBN 2-07-036216 on Open Library"
+ },
+ {
+  "no": "217",
+  "title": "Léon Morin, prêtre",
+  "isbn": "2070362175",
+  "source": "BnF SRU col2bib 34234540, Folio 217 (cb35224459j); ISBN 2-07-036217 on Open Library"
+ },
+ {
+  "no": "222",
+  "title": "Le caporal épinglé",
+  "isbn": "2070362221",
+  "source": "BnF SRU col2bib 34234540, Folio 222 (cb352244675); ISBN 2-07-036222 on Open Library"
+ },
+ {
+  "no": "225",
+  "title": "Fermina Márquez",
+  "isbn": "2070362256",
+  "source": "BnF SRU col2bib 34234540, Folio 225 (cb352244702); ISBN 2-07-036225 on Open Library"
+ },
+ {
+  "no": "233",
+  "title": "Histoire d'un amour",
+  "isbn": "2070362337",
+  "source": "BnF SRU col2bib 34234540, Folio 233 (cb352244795); ISBN 2-07-036233 on Open Library"
+ },
+ {
+  "no": "236",
+  "title": "La Cantatrice Chauve: Anti-Piece / La Lecon",
+  "isbn": "2070362361",
+  "source": "BnF SRU col2bib 34234540, Folio 236 (cb352244853); ISBN 2-07-036236 on Open Library"
+ },
+ {
+  "no": "237",
+  "title": "Kaputt",
+  "isbn": "207036237X",
+  "source": "BnF SRU col2bib 34234540, Folio 237 (cb35224486f); ISBN 2-07-036237 on Open Library"
+ },
+ {
+  "no": "238",
+  "title": "Ravage",
+  "isbn": "2070362388",
+  "source": "BnF SRU col2bib 34234540, Folio 238 (cb35224487s); ISBN 2-07-036238 on Open Library"
+ },
+ {
+  "no": "247",
+  "title": "Le Lis De Mer",
+  "isbn": "2070362477",
+  "source": "BnF SRU col2bib 34234540, Folio 247 (cb35224501h); ISBN 2-07-036247 on Open Library"
+ },
+ {
+  "no": "248",
+  "title": "Creezy",
+  "isbn": "2070362485",
+  "source": "BnF SRU col2bib 34234540, Folio 248 (cb352245036); ISBN 2-07-036248 on Open Library"
+ },
+ {
+  "no": "252",
+  "title": "L'enfant de la haute mer",
+  "isbn": "2070362523",
+  "source": "BnF SRU col2bib 34234540, Folio 252 (cb352245098); ISBN 2-07-036252 on Open Library"
+ },
+ {
+  "no": "257",
+  "title": "Les fous de Dieu",
+  "isbn": "2070362574",
+  "source": "BnF SRU col2bib 34234540, Folio 257 (cb35224516j); ISBN 2-07-036257 on Open Library"
+ },
+ {
+  "no": "260",
+  "title": "Au Bon Beurre Ou Dix Ans De La Vie D'UN Cremier",
+  "isbn": "2070362604",
+  "source": "BnF SRU col2bib 34234540, Folio 260 (cb352245214); ISBN 2-07-036260 on Open Library"
+ },
+ {
+  "no": "261",
+  "title": "Tropic of Cancer",
+  "isbn": "2070362612",
+  "source": "BnF SRU col2bib 34234540, Folio 261 (cb35224522g); ISBN 2-07-036261 on Open Library"
+ },
+ {
+  "no": "262",
+  "title": "Le Pelerinage Aux Sources",
+  "isbn": "2070362620",
+  "source": "BnF SRU col2bib 34234540, Folio 262 (cb35224523t); ISBN 2-07-036262 on Open Library"
+ },
+ {
+  "no": "268",
+  "title": "Les aveux infidèles",
+  "isbn": "207036268X",
+  "source": "BnF SRU col2bib 34234540, Folio 268 (cb352245303); ISBN 2-07-036268 on Open Library"
+ },
+ {
+  "no": "271",
+  "title": "L'Idiot ...",
+  "isbn": "207036271X",
+  "source": "BnF SRU col2bib 34234540, Folio 271 (cb35224535t); ISBN 2-07-036271 on Open Library"
+ },
+ {
+  "no": "276",
+  "title": "Le grand voyage",
+  "isbn": "2070362760",
+  "source": "BnF SRU col2bib 34234540, Folio 276 (cb35224541r); ISBN 2-07-036276 on Open Library"
+ },
+ {
+  "no": "282",
+  "title": "La Maison de Bernarda Alba. Noce de sang",
+  "isbn": "2070362825",
+  "source": "BnF SRU col2bib 34234540, Folio 282 (cb35224549h); ISBN 2-07-036282 on Open Library"
+ },
+ {
+  "no": "303",
+  "title": "Les enfants humiliés",
+  "isbn": "2070363031",
+  "source": "BnF SRU col2bib 34234540, Folio 303 (cb35224577r); ISBN 2-07-036303 on Open Library"
+ },
+ {
+  "no": "313",
+  "title": "Tournesol",
+  "isbn": "2070363139",
+  "source": "BnF SRU col2bib 34234540, Folio 313 (cb35224590z); ISBN 2-07-036313 on Open Library"
+ },
+ {
+  "no": "315",
+  "title": "Les Choses De La Vie",
+  "isbn": "2070363155",
+  "source": "BnF SRU col2bib 34234540, Folio 315 (cb35224592n); ISBN 2-07-036315 on Open Library"
+ },
+ {
+  "no": "318",
+  "title": "Trou, Le",
+  "isbn": "207036318X",
+  "source": "BnF SRU col2bib 34234540, Folio 318 (cb35224595p); ISBN 2-07-036318 on Open Library"
+ },
+ {
+  "no": "325",
+  "title": "The Second Jungle Book",
+  "isbn": "2070363252",
+  "source": "BnF SRU col2bib 34234540, Folio 325 (cb35224607v); ISBN 2-07-036325 on Open Library"
+ },
+ {
+  "no": "351",
+  "title": "Au-dessous du volcan",
+  "isbn": "2070363511",
+  "source": "BnF SRU col2bib 34234540, Folio 351 (cb35224640p); ISBN 2-07-036351 on Open Library"
+ },
+ {
+  "no": "353",
+  "title": "Le procès-verbal",
+  "isbn": "2070363538",
+  "source": "BnF SRU col2bib 34234540, Folio 353 (cb35224642c); ISBN 2-07-036353 on Open Library"
+ },
+ {
+  "no": "374",
+  "title": "Vercoquin et le plancton",
+  "isbn": "2070363740",
+  "source": "BnF SRU col2bib 34234540, Folio 374 (cb35224669d); ISBN 2-07-036374 on Open Library"
+ },
+ {
+  "no": "391",
+  "title": "La 317e section",
+  "isbn": "2070363910",
+  "source": "BnF SRU col2bib 34234540, Folio 391 (cb35224692x); ISBN 2-07-036391 on Open Library"
+ },
+ {
+  "no": "394",
+  "title": "Tremor of Intent",
+  "isbn": "2070363945",
+  "source": "BnF SRU col2bib 34234540, Folio 394 (cb35224695z); ISBN 2-07-036394 on Open Library"
+ },
+ {
+  "no": "395",
+  "title": "Someone Like You [18 stories]",
+  "isbn": "2070363953",
+  "source": "BnF SRU col2bib 34234540, Folio 395 (cb352246969); ISBN 2-07-036395 on Open Library"
+ },
+ {
+  "no": "400",
+  "title": "Kosmos",
+  "isbn": "2070364003",
+  "source": "BnF SRU col2bib 34234540, Folio 400 (cb352247074); ISBN 2-07-036400 on Open Library"
+ },
+ {
+  "no": "404",
+  "title": "Vue De La Terre Promise",
+  "isbn": "2070364046",
+  "source": "BnF SRU col2bib 34234540, Folio 404 (cb35224711c); ISBN 2-07-036404 on Open Library"
+ },
+ {
+  "no": "408",
+  "title": "La Prison maritime",
+  "isbn": "2070364089",
+  "source": "BnF SRU col2bib 34234540, Folio 408 (cb35224718s); ISBN 2-07-036408 on Open Library"
+ },
+ {
+  "no": "414",
+  "title": "The Spy Who Came in from the Cold",
+  "isbn": "2070364143",
+  "source": "BnF SRU col2bib 34234540, Folio 414 (cb35224727r); ISBN 2-07-036414 on Open Library"
+ },
+ {
+  "no": "416",
+  "title": "Typhon",
+  "isbn": "207036416X",
+  "source": "BnF SRU col2bib 34234540, Folio 416 (cb352247310); ISBN 2-07-036416 on Open Library"
+ },
+ {
+  "no": "417",
+  "title": "Le retour de Silbermann",
+  "isbn": "2070364178",
+  "source": "BnF SRU col2bib 34234540, Folio 417 (cb35224732b); ISBN 2-07-036417 on Open Library"
+ },
+ {
+  "no": "419",
+  "title": "Le petit arpent du Bon Dieu",
+  "isbn": "2070364194",
+  "source": "BnF SRU col2bib 34234540, Folio 419 (cb352247341); ISBN 2-07-036419 on Open Library"
+ },
+ {
+  "no": "421",
+  "title": "Préméditation",
+  "isbn": "2070364216",
+  "source": "BnF SRU col2bib 34234540, Folio 421 (cb35224738d); ISBN 2-07-036421 on Open Library"
+ },
+ {
+  "no": "434",
+  "title": "Mémoires d'un tricheur",
+  "isbn": "2070364348",
+  "source": "BnF SRU col2bib 34234540, Folio 434 (cb35224757p); ISBN 2-07-036434 on Open Library"
+ },
+ {
+  "no": "435",
+  "title": "Lage Dhomme Precede De La Litterature",
+  "isbn": "2070364356",
+  "source": "BnF SRU col2bib 34234540, Folio 435 (cb352247581); ISBN 2-07-036435 on Open Library"
+ },
+ {
+  "no": "439",
+  "title": "La Conscience de Zeno",
+  "isbn": "2070364399",
+  "source": "BnF SRU col2bib 34234540, Folio 439 (cb352247659); ISBN 2-07-036439 on Open Library"
+ },
+ {
+  "no": "448",
+  "title": "Las armas secretas",
+  "isbn": "2070364488",
+  "source": "BnF SRU col2bib 34234540, Folio 448 (cb352247790); ISBN 2-07-036448 on Open Library"
+ },
+ {
+  "no": "449",
+  "title": "La maison des Atlantes",
+  "isbn": "2070364496",
+  "source": "BnF SRU col2bib 34234540, Folio 449 (cb352247806); ISBN 2-07-036449 on Open Library"
+ },
+ {
+  "no": "457",
+  "title": "Les\\Anges Vagabonds",
+  "isbn": "2070364577",
+  "source": "BnF SRU col2bib 34234540, Folio 457 (cb35224790h); ISBN 2-07-036457 on Open Library"
+ },
+ {
+  "no": "458",
+  "title": "Le Fils de la servante",
+  "isbn": "2070364585",
+  "source": "BnF SRU col2bib 34234540, Folio 458 (cb35224791v); ISBN 2-07-036458 on Open Library"
+ },
+ {
+  "no": "464",
+  "title": "Avant que le coq chante",
+  "isbn": "207036464X",
+  "source": "BnF SRU col2bib 34234540, Folio 464 (cb35224799m); ISBN 2-07-036464 on Open Library"
+ }
+]
