@@ -20,7 +20,7 @@
  *     is left out; and an image under `minWidth` px is left out while enough
  *     others remain, because a 114 px scan blown up to 780 px looks broken.
  *
- * Rhythm: title card, covers that start slow and accelerate (the first stays
+ * Rhythm (every change a dissolve in place, never under 0.15 s): title card, covers that start slow and accelerate (the first stays
  * `accel` times as long as the last), a wall of every cover shown filling in
  * tile by tile, and the end card.
  */
@@ -359,7 +359,8 @@ export function chooseDesigns(input: StoryboardInput, options: StoryboardOptions
   const titleFrames = Math.round((options.titleSeconds ?? 1.6) * fps);
   const gridFrames = Math.round((options.gridSeconds ?? 2.6) * fps);
   const endFrames = Math.round((options.endSeconds ?? 1.8) * fps);
-  const minShot = Math.max(1, Math.round((options.minShotSeconds ?? 0.2) * fps));
+  // A shot holds its dissolve (≥ 0.15 s) and a moment of standing still.
+  const minShot = Math.max(Math.round(0.15 * fps) + 1, Math.round((options.minShotSeconds ?? 0.2) * fps));
   const coverFrames = totalFrames - titleFrames - gridFrames - endFrames;
   if (coverFrames < minShot) {
     throw new Error(`no time left for covers: ${totalFrames} frames, ${totalFrames - coverFrames} for the cards and the wall`);
@@ -378,9 +379,10 @@ export function storyboard(input: StoryboardInput, options: StoryboardOptions = 
   const titleFrames = Math.round((options.titleSeconds ?? 1.6) * fps);
   const gridFrames = Math.round((options.gridSeconds ?? 2.6) * fps);
   const endFrames = Math.round((options.endSeconds ?? 1.8) * fps);
-  const minShot = Math.max(1, Math.round((options.minShotSeconds ?? 0.2) * fps));
+  const minShot = Math.max(Math.round(0.15 * fps) + 1, Math.round((options.minShotSeconds ?? 0.2) * fps));
   const { chosen, designs, excluded, coverFrames } = chooseDesigns(input, options);
   if (chosen.length === 0) throw new Error('no covers to show');
+  const minTransition = Math.max(1, Math.round(0.15 * fps));
 
   const years = chosen.map(d => d.year).filter((y): y is number => y !== undefined);
   const span = years.length === 0 ? undefined : { from: years[0], to: years[years.length - 1] };
@@ -402,13 +404,14 @@ export function storyboard(input: StoryboardInput, options: StoryboardOptions = 
   }
   const frames = weightedFrames(coverFrames, accelerating(n, options.accel ?? 3), minShot);
   chosen.forEach((d, i) => {
-    // The move-in takes about a third of a shot: long enough to read as a
-    // push on the slow opening covers, short enough not to blur the fast ones.
-    const transition = Math.max(2, Math.min(i === 0 ? 12 : 9, Math.round(frames[i] * 0.34)));
+    // The dissolve takes about 40 % of a shot, never less than 0.15 s (it
+    // would flicker) and never the whole shot (the cover must stand still a
+    // moment before the next one comes).
+    const transition = Math.max(minTransition, Math.min(i === 0 ? 14 : 12, Math.round(frames[i] * 0.4)));
     shots.push({
       kind: 'cover',
       frames: frames[i],
-      transition: Math.min(transition, frames[i]),
+      transition: Math.min(transition, frames[i] - 1),
       index: i,
       coverId: d.cover.id,
       url: d.cover.url,

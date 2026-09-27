@@ -70,7 +70,11 @@ describe('storyboard on the Gatsby fixtures', () => {
   it('starts slow and accelerates', () => {
     expect(shots[0].frames).toBeGreaterThan(shots.at(-1)!.frames * 2);
     for (let i = 1; i < shots.length; i++) expect(shots[i].frames).toBeLessThanOrEqual(shots[i - 1].frames + 1);
-    for (const s of shots) expect(s.transition).toBeLessThan(s.frames);
+    for (const s of shots) {
+      expect(s.transition).toBeLessThan(s.frames);
+      // No dissolve shorter than 0.15 s: it would flicker.
+      expect(s.transition / board.fps).toBeGreaterThanOrEqual(0.15);
+    }
   });
 
   it('lets every tile of the wall arrive before the wall is held', () => {

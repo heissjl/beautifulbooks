@@ -423,7 +423,7 @@ function keyMoments(board: Storyboard): Map<number, string> {
     if (shot.kind === 'title') out.set(at + shot.frames - 1, '1-title');
     if (shot.kind === 'cover') {
       if (coverSeen === 0) out.set(at + shot.frames - 1, '2-first-cover');
-      if (coverSeen === 1) out.set(at + Math.floor(shot.transition / 2), '3-push');
+      if (coverSeen === 1) out.set(at + Math.floor(shot.transition / 2), '3-dissolve');
       coverSeen++;
     }
     if (shot.kind === 'grid') {

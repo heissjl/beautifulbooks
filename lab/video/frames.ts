@@ -8,15 +8,17 @@
  * and the two-part `cover-shadow`, and the wall's tiles on `--surface-2`.
  * Text is set in the site's Fraunces and Geist by `text.py`.
  *
- * Motion, per shot kind:
- *   - title: kicker, title, an accent rule drawing out, author and years —
- *     each rising 24 px into place, staggered;
- *   - cover: pushed in from the right while the previous card leaves to the
- *     left, then a slow 3 % push-in for the rest of the shot; the caption
- *     fades in once the card has landed; a dot on the timeline at the foot of
- *     the frame travels to the cover's year;
- *   - grid: the last cover flies into its tile while the others settle in one
- *     by one, like the wall filling on the site, then the wall holds;
+ * Motion — calm, in place, nothing travels (Julian, 2026-09-27, on the
+ * sideways push of the second version: „zu unruhig für das menschliche auge"):
+ *   - title: kicker, title, author and years fade in one after another, an
+ *     accent rule draws out from the centre;
+ *   - cover: the next cover dissolves in where the current one stands,
+ *     growing from 98 % to 100 % with its shadow coming up; then a 1.5 %
+ *     push-in for the rest of the shot. Caption, counter and the dot on the
+ *     timeline dissolve too — the dot fades out at the old year and in at the
+ *     new one instead of sliding;
+ *   - grid: the last cover dissolves away and the wall fills in place, tile
+ *     by tile, each fading in;
  *   - end: crossfades in over the wall.
  */
 import sharp, { type OverlayOptions } from 'sharp';
@@ -55,8 +57,14 @@ const HEADER = 128;
 const BOX = { width: 760, height: 1100, centreY: 880 };
 const CARD_RADIUS = 12;
 const TIMELINE = { left: 150, right: 930, y: 1776 };
-/** A push moves both cards by a card's width and a gap, so they travel side by side like a carousel and never overlap. */
-const PUSH = BOX.width * 1.03 + 60;
+/**
+ * Nothing travels (Julian on the second version, 2026-09-27: „dass die
+ * animation seitwärts ist … zu unruhig für das menschliche auge"). A new
+ * cover dissolves in where the old one stands, growing from 98 % while its
+ * shadow comes up with it; afterwards a slow push-in of 1.5 % over the shot.
+ */
+const ENTER_SCALE = 0.98;
+const DRIFT = 0.015;
 
 // ---------------------------------------------------------------------------
 // Which texts a board needs, so text.py runs once.
@@ -284,13 +292,15 @@ export class FrameRenderer {
 
   private dot: Buffer | null = null;
 
-  private async dotLayer(x: number): Promise<Layer> {
+  private async dotLayer(x: number, alpha = 1): Promise<Layer | null> {
     this.dot ??= await sharp(svg(`<circle cx="12" cy="12" r="11" fill="${THEME.accent}"/>`, 24, 24)).png().toBuffer();
-    return { input: this.dot, left: Math.round(x - 12), top: TIMELINE.y - 12 };
+    const png = await faded('dot', this.dot, alpha);
+    return png ? { input: png, left: Math.round(x - 12), top: TIMELINE.y - 12 } : null;
   }
 
-  /** The card of a cover at a given scale and horizontal offset, with its shadow. */
-  private async cardLayers(id: string, scale: number, dx: number, alpha: number): Promise<Layer[]> {
+  /** The card of a cover at a given scale, in its place, with its shadow. */
+  private async cardLayers(id: string, scale: number, alpha: number): Promise<Layer[]> {
+    const dx = 0;
     const asset = await this.coverAsset(id);
     const k = scale / 1.03;
     const w = Math.round(asset.card.w * k);
@@ -343,7 +353,7 @@ export class FrameRenderer {
       for (let f = 0; f < shot.frames; f++) {
         let frame = await this.frame(shot, prev, f);
         // Between shots of different kinds (title → first cover, wall → end), a crossfade.
-        const fade = shot.kind === 'cover' && prev?.kind === 'title' ? shot.transition + 4 : shot.kind === 'end' ? 12 : 0;
+        const fade = shot.kind === 'cover' && prev?.kind === 'title' ? Math.min(shot.frames - 1, shot.transition + 6) : shot.kind === 'end' ? 14 : 0;
         if (fade > 0 && f < fade && this.lastFrame) {
           frame = blend(this.lastFrame, frame, easeInOut((f + 1) / (fade + 1)));
         }
@@ -364,7 +374,8 @@ export class FrameRenderer {
 
   private async titleFrame(shot: TitleShot, f: number): Promise<Frame> {
     const layers: (Layer | null)[] = [];
-    const rise = (start: number) => ({ a: easeOut((f - start) / 10), dy: 24 * (1 - easeOut((f - start) / 10)) });
+    // Each line fades in where it stands, one after another.
+    const rise = (start: number) => ({ a: easeInOut((f - start) / 12), dy: 0 });
     const kicker = this.t('title-kicker');
     const title = this.t('title-title');
     const author = this.t('title-author');
@@ -405,31 +416,47 @@ export class FrameRenderer {
 
   private async coverFrame(shot: CoverShot, prev: Shot | undefined, f: number): Promise<Frame> {
     const layers: Layer[] = [];
-    const pushing = prev?.kind === 'cover';
-    const t = easeInOut(f / Math.max(1, shot.transition));
-    const settled = f >= shot.transition;
-    // The slow push-in runs over the whole shot, 1.00 → 1.03.
-    const zoom = 1 + 0.03 * (f / Math.max(1, shot.frames - 1));
-    if (pushing && !settled) {
+    const dissolving = prev?.kind === 'cover' && f < shot.transition;
+    const t = easeInOut((f + 1) / (shot.transition + 1));
+    // In place: the new card grows from 98 % to 100 % while it dissolves in,
+    // then drifts on by 1.5 % for the rest of the shot. Assets are drawn at
+    // 1.03, so every scale here is a reduction.
+    const enter = prev?.kind === 'cover' ? lerp(ENTER_SCALE, 1, easeOut((f + 1) / (shot.transition + 1))) : 1;
+    const scale = enter + DRIFT * (f / Math.max(1, shot.frames - 1));
+    if (dissolving) {
       const p = prev as CoverShot;
-      layers.push(...await this.cardLayers(p.coverId, 1.03, -t * PUSH, 1));
-      layers.push(...await this.cardLayers(shot.coverId, zoom, (1 - t) * PUSH, 1));
-      layers.push(...await this.captionLayers(p, 1 - clamp(t * 2), 0));
+      layers.push(...await this.cardLayers(p.coverId, 1 + DRIFT, 1));
+      layers.push(...await this.cardLayers(shot.coverId, scale, t));
+      // Text does not cross-dissolve (two captions on top of each other read
+      // as a smudge): the old one fades out in the first half, the new one in
+      // in the second.
+      layers.push(...await this.captionLayers(p, 1 - clamp(2 * t), 0));
+      layers.push(...await this.captionLayers(shot, clamp(2 * t - 1), 0));
     } else {
-      layers.push(...await this.cardLayers(shot.coverId, zoom, 0, 1));
+      layers.push(...await this.cardLayers(shot.coverId, scale, 1));
+      layers.push(...await this.captionLayers(shot, 1, 0));
     }
-    // The caption rises in once the card has mostly landed.
-    const capStart = pushing ? shot.transition * 0.6 : 0;
-    const capLen = Math.max(2, Math.min(8, Math.round(shot.frames * 0.3)));
-    const capT = easeOut((f - capStart) / capLen);
-    layers.push(...await this.captionLayers(shot, capT, 16 * (1 - capT)));
-    const count = await this.countLayer(pushing && t < 0.5 ? (prev as CoverShot) : shot);
-    if (count) layers.push(count);
+    // The counter and the dot change by dissolving too; the dot never slides.
+    if (dissolving) {
+      const a = await this.countLayer(prev as CoverShot, 1 - clamp(2 * t));
+      const b = await this.countLayer(shot, clamp(2 * t - 1));
+      if (a) layers.push(a);
+      if (b) layers.push(b);
+    } else {
+      const c = await this.countLayer(shot);
+      if (c) layers.push(c);
+    }
     const span = this.ctx.board.span;
     if (span && span.to > span.from) {
-      const fromYear = pushing ? ((prev as CoverShot).year ?? shot.year) : shot.year;
-      const year = fromYear === undefined || shot.year === undefined ? (shot.year ?? fromYear) : lerp(fromYear, shot.year, t);
-      if (year !== undefined) layers.push(await this.dotLayer(this.yearX(year)));
+      const prevYear = dissolving ? (prev as CoverShot).year : undefined;
+      if (prevYear !== undefined && prevYear !== shot.year) {
+        const a = await this.dotLayer(this.yearX(prevYear), 1 - t);
+        if (a) layers.push(a);
+      }
+      if (shot.year !== undefined) {
+        const b = await this.dotLayer(this.yearX(shot.year), prevYear !== undefined && prevYear !== shot.year ? t : 1);
+        if (b) layers.push(b);
+      }
     }
     return this.compose(await this.chromeFrame(), layers);
   }
@@ -438,59 +465,37 @@ export class FrameRenderer {
     const layers: Layer[] = [];
     const { layout } = shot;
     const last = this.coverShots[this.coverShots.length - 1];
-    const kicker = await this.textLayer('grid-kicker', W / 2, 330, easeOut(f / 10), 0);
-    if (kicker) layers.push(kicker);
-    // The last cover's caption and counter leave as its card flies home.
-    if (f < 8) {
-      layers.push(...await this.captionLayers(last, 1 - f / 8, 0));
-      const count = await this.countLayer(last, 1 - f / 8);
+    // The last cover, its caption and counter dissolve away where they stand
+    // while the wall fills in place around the spot; nothing flies.
+    const leave = Math.max(6, Math.min(14, Math.round(shot.frames * 0.18)));
+    if (f < leave) {
+      const a = 1 - easeInOut((f + 1) / (leave + 1));
+      layers.push(...await this.cardLayers(last.coverId, 1 + DRIFT, a));
+      layers.push(...await this.captionLayers(last, a, 0));
+      const count = await this.countLayer(last, a);
       if (count) layers.push(count);
     }
-    const n = shot.coverIds.length;
-    const flyFrames = Math.min(14, Math.max(4, Math.round(shot.frames * 0.2)));
-    for (let i = 0; i < n; i++) {
+    const kicker = await this.textLayer('grid-kicker', W / 2, 330, easeInOut((f - leave / 2) / 12), 0);
+    if (kicker) layers.push(kicker);
+    for (let i = 0; i < shot.coverIds.length; i++) {
       const id = shot.coverIds[i];
+      const a = easeInOut((f - leave / 2 - i * shot.stagger) / shot.tileFrames);
+      if (a <= 0) continue;
       const col = i % layout.cols;
       const row = Math.floor(i / layout.cols);
-      const x = layout.left + col * (layout.tileWidth + layout.gap);
-      const y = layout.top + row * (layout.tileHeight + layout.gap);
-      if (i === n - 1) {
-        const t = easeInOut(f / flyFrames);
-        if (t < 1) {
-          // Fly: from the big card's place and size to the tile's.
-          const asset = await this.coverAsset(id);
-          const bigW = asset.card.w / 1.03 * 1.03;
-          const bigH = asset.card.h / 1.03 * 1.03;
-          const tile = await this.tileAsset(id, layout);
-          const w = Math.max(8, Math.round(lerp(bigW, tile.card.w, t)));
-          const h = Math.max(8, Math.round(lerp(bigH, tile.card.h, t)));
-          const cx = lerp(W / 2, x + layout.tileWidth / 2, t);
-          const cy = lerp(BOX.centreY, y + layout.tileHeight / 2, t);
-          const png = await sharp(asset.card.png).resize({ width: w, height: h, fit: 'fill' }).png({ compressionLevel: 0 }).toBuffer();
-          layers.push(...await clip(png, Math.round(cx - w / 2), Math.round(cy - h / 2), w, h));
-          continue;
-        }
-      } else {
-        const start = i * shot.stagger;
-        const a = easeOut((f - start) / shot.tileFrames);
-        if (a <= 0) continue;
-        const tile = await this.tileAsset(id, layout);
-        const dy = Math.round(18 * (1 - a));
-        const ox = x + Math.round((layout.tileWidth - tile.card.w) / 2);
-        const oy = y + Math.round((layout.tileHeight - tile.card.h) / 2) + dy;
-        const sh = await faded(`tshadow-${id}`, tile.shadow.png, a);
-        const body = await faded(`tile-${id}`, tile.card.png, a);
-        if (sh) layers.push(...await clip(sh, ox - tile.shadow.pad, oy - tile.shadow.pad, tile.card.w + 2 * tile.shadow.pad, tile.card.h + 2 * tile.shadow.pad));
-        if (body) layers.push({ input: body, left: ox, top: oy });
-        continue;
-      }
       const tile = await this.tileAsset(id, layout);
-      const ox = x + Math.round((layout.tileWidth - tile.card.w) / 2);
-      const oy = y + Math.round((layout.tileHeight - tile.card.h) / 2);
-      layers.push(...await clip(tile.shadow.png, ox - tile.shadow.pad, oy - tile.shadow.pad, tile.card.w + 2 * tile.shadow.pad, tile.card.h + 2 * tile.shadow.pad));
-      layers.push({ input: tile.card.png, left: ox, top: oy });
+      const ox = layout.left + col * (layout.tileWidth + layout.gap) + Math.round((layout.tileWidth - tile.card.w) / 2);
+      const oy = layout.top + row * (layout.tileHeight + layout.gap) + Math.round((layout.tileHeight - tile.card.h) / 2);
+      const sh = await faded(`tshadow-${id}`, tile.shadow.png, a);
+      const body = await faded(`tile-${id}`, tile.card.png, a);
+      if (sh) layers.push(...await clip(sh, ox - tile.shadow.pad, oy - tile.shadow.pad, tile.card.w + 2 * tile.shadow.pad, tile.card.h + 2 * tile.shadow.pad));
+      if (body) layers.push({ input: body, left: ox, top: oy });
     }
-    if (this.ctx.board.span && this.ctx.board.span.to > this.ctx.board.span.from) layers.push(await this.dotLayer(TIMELINE.right));
+    const span = this.ctx.board.span;
+    if (span && span.to > span.from && last.year !== undefined) {
+      const dot = await this.dotLayer(this.yearX(last.year));
+      if (dot) layers.push(dot);
+    }
     return this.compose(await this.chromeFrame(), layers);
   }
 
@@ -503,7 +508,7 @@ export class FrameRenderer {
     const credit = this.t('end-credit');
     const block = (wm?.h ?? 0) + 12 + (tag?.h ?? 0) + 70 + 3 + 70 + (url?.h ?? 0);
     let y = Math.round(H / 2 - block / 2 - 40);
-    const rise = (start: number) => ({ a: easeOut((f - start) / 12), dy: 20 * (1 - easeOut((f - start) / 12)) });
+    const rise = (start: number) => ({ a: easeInOut((f - start) / 12), dy: 0 });
     let r = rise(2);
     layers.push(await this.textLayer('end-wordmark', W / 2, y, r.a, r.dy));
     y += (wm?.h ?? 0) + 12;
