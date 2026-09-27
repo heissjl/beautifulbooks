@@ -1,0 +1,656 @@
+[
+ {
+  "no": "1",
+  "title": "Hier sangen früher Vögel, Kate Wilhelm",
+  "isbn": "9783453307902",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "2",
+  "title": "Der Ewige Krieg, Joe Haldeman",
+  "isbn": "9783453304673",
+  "skip": "image under this ISBN is the regular Heyne SF edition (3572), which shares the ISBN — not the white series design",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "3",
+  "title": "Schwere Welten, Hal Clement",
+  "isbn": "9783453307933",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "4",
+  "title": "Eine Handvoll Venus und ehrbare Kaufleute, Frederik Pohl und Cyril M. Kornbluth",
+  "isbn": "9783453307940",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "5",
+  "title": "Der Sternenschöpfer, Olaf Stapledon",
+  "isbn": "9783453307957",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "6",
+  "title": "Der unglaubliche Planet, John W. Campbell jr.",
+  "isbn": "9783453307964",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "7",
+  "title": "Lunatico oder Die nächste Welt, Isaac Asimov",
+  "isbn": "9783453004658",
+  "skip": "image is the regular Heyne SF edition, not the white series design",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "8",
+  "title": "Die fliegenden Zauberer, Larry Niven und David Gerrold",
+  "isbn": "9783453307995",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "9",
+  "title": "Camp Concentration, Thomas M. Disch",
+  "isbn": "9783453308008",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "10",
+  "title": "Leben ohne Ende, George R. Stewart",
+  "isbn": "9783453308015",
+  "note": "ISBN not in the DNB record; derived from the series sequence (3-453-30801-5), Open Library has an edition under it",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "11",
+  "title": "Karneval der Alligatoren, James Graham Ballard",
+  "isbn": "9783453308022",
+  "skip": "image is the regular Heyne SF edition, not the white series design",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "12",
+  "title": "Ich bin Legende, Richard Matheson",
+  "isbn": "9783453308039",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "13",
+  "title": "Das Forschungsteam, Isaac Asimov (Hrsg.)",
+  "isbn": "9783453308046",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "14",
+  "title": "Hellstroms Brut, Frank Herbert",
+  "isbn": "9783453309029",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "15",
+  "title": "Das elektrische Krokodil, David G. Compton",
+  "isbn": "9783453309036",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "16",
+  "title": "Simulacron drei, Daniel F. Galouye",
+  "isbn": "9783453309043",
+  "skip": "photo of the book, cover small in frame",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "17",
+  "title": "Tod im Staub, Brian W. Aldiss",
+  "isbn": "9783453309050",
+  "skip": "image is a title page, not the cover",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "18",
+  "title": "Angoulême, Thomas M. Disch",
+  "isbn": "9783453309067",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "19",
+  "title": "Andromedanebel, Iwan A. Jefremow",
+  "isbn": "9783453309074",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "20",
+  "title": "Meine Freunde, die Roboter, Isaac Asimov",
+  "isbn": "9783453308534",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "21",
+  "title": "Die letzten und die ersten Menschen, Olaf Stapledon",
+  "isbn": "9783453309609",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "22",
+  "title": "Die seltsame Geschichte des Mr. C., Richard Matheson",
+  "isbn": "9783453309616",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "23",
+  "title": "Das dritte Ohr, Curt Siodmak",
+  "isbn": "9783453309623",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "24",
+  "title": "Tiger! Tiger!, Alfred Bester",
+  "isbn": "9783453309630",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "25",
+  "title": "Die zwölf Striche der Windrose, Ursula K. Le Guin",
+  "isbn": "9783453309647",
+  "edition": "OL33884722M",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "26",
+  "title": "New York 1999, Harry Harrison",
+  "isbn": "9783453310179",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "27",
+  "title": "Die Triffids, John Wyndham",
+  "isbn": "9783453310186",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "28",
+  "title": "Die Fußangeln der Zeit, Karl Michael Armer und Wolfgang Jeschke (Hrsg.)",
+  "isbn": "9783453310193",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "29",
+  "title": "Zielzeit, Karl Michael Armer und Wolfgang Jeschke (Hrsg.)",
+  "isbn": "9783453310933",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "30",
+  "title": "Eine andere Welt, Philip K. Dick",
+  "isbn": "9783453310209",
+  "skip": "image is a title page, not the cover",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "31",
+  "title": "Vandenberg oder Als die Russen Amerika besetzten, Oliver Lange",
+  "isbn": "9783453310216",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "32",
+  "title": "Das Jahrhundert der Marsianer, Helga Abret und Lucian Boia (Hrsg.)",
+  "isbn": "9783453310223",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "33",
+  "title": "Fahrenheit 451, Ray Bradbury",
+  "isbn": "9783453310292",
+  "skip": "image is an English Ballantine cover, not this printing",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "34",
+  "title": "Donovans Gehirn, Curt Siodmak",
+  "isbn": "9783453310308",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "35",
+  "title": "Das Königsprojekt, Carl Amery",
+  "isbn": "9783453310315",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "36",
+  "title": "Andere Tage, andere Augen, Bob Shaw",
+  "isbn": "9783453310322",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "37",
+  "title": "Sirius, Olaf Stapledon",
+  "isbn": "9783453310339",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "38",
+  "title": "Pavane, Keith Roberts",
+  "isbn": "9783453310346",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "39",
+  "title": "Hieros Reise, Sterling E. Lanier",
+  "isbn": "9783453310896",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "40",
+  "title": "Auf Flügeln des Gesangs, Thomas M. Disch",
+  "isbn": "9783453312180",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "41",
+  "title": "Der steile Horizont, Christopher Priest",
+  "isbn": "9783453310902",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "42",
+  "title": "Davy, Edgar Pangborn",
+  "isbn": "9783453310919",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "43",
+  "title": "Planet der Habenichtse, Ursula K. LeGuin",
+  "isbn": "9783453310926",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "44",
+  "title": "Baby ist drei, Theodore Sturgeon",
+  "isbn": "9783453310940",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "45",
+  "title": "Herr des Lichts, Roger Zelazny",
+  "isbn": "9783453311541",
+  "skip": "photo of the book, cover small in frame",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "46",
+  "title": "Der Krieg mit den Molchen, Karel Čapek",
+  "isbn": "9783453311558",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "47",
+  "title": "Die Kompaßrose, Ursula K. LeGuin",
+  "isbn": "9783453311565",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "48",
+  "title": "Projekt Luna, Algis Budrys",
+  "isbn": "9783453312173",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "49",
+  "title": "Lobgesang auf Leibowitz, Walter M. Miller, Jr.",
+  "isbn": "9783453312852",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "50",
+  "title": "Helliconia: Frühling, Brian W. Aldiss",
+  "isbn": "9783453311572",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "51",
+  "title": "Helliconia: Sommer, Brian W. Aldiss",
+  "isbn": "9783453311589",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "52",
+  "title": "Helliconia: Winter, Brian W. Aldiss",
+  "isbn": "9783453311596",
+  "skip": "image is an unrelated book (Gilead) — wrong cover on the Open Library edition",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "53",
+  "title": "Die Reise zum Arcturus, David Lindsay",
+  "isbn": "9783453312869",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "54",
+  "title": "Wing 4, Jack Williamson",
+  "isbn": "9783453312197",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "55",
+  "title": "Todeswelten, Harry Harrison",
+  "isbn": "9783453312166",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "56",
+  "title": "Mondstaaten und Sonnenreiche, Cyrano de Bergerac",
+  "isbn": "9783453312203",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "57",
+  "title": "Charly, Daniel Keyes",
+  "isbn": "9783453312210",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "58",
+  "title": "Null-A, A. E. van Vogt",
+  "isbn": "9783453312876",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "59",
+  "title": "Der Gewissensfall, James Blish",
+  "isbn": "9783453312883",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "60",
+  "title": "Mutant 59: Der Plastikfresser, Kit Pedler und Gerry Davis",
+  "isbn": "9783453312890",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "61",
+  "title": "Der lange Nachmittag der Erde, Brian W. Aldiss",
+  "isbn": "9783453312906",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "62",
+  "title": "Der Spiegel des Beobachters, Edgar Pangborn",
+  "isbn": "9783453313477",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "63",
+  "title": "I.N.R.I. oder die Reise mit der Zeitmaschine, Michael Moorcock",
+  "isbn": "9783453313484",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "64",
+  "title": "Mars-Odyssee, Stanley G. Weinbaum",
+  "isbn": "9783453313491",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "65",
+  "title": "10000 Lichtjahre von Zuhaus, James Tiptree jr.",
+  "isbn": "9783453004115",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "66",
+  "title": "Irrgarten des Todes, Philip K. Dick",
+  "isbn": "9783453004320",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "67",
+  "title": "C.R.U.P.P., Eric Koch",
+  "isbn": "9783453004566",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "68",
+  "title": "Kontakt Radioaktiv, Daniel Keyes",
+  "isbn": "9783453009851",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "69",
+  "title": "Der programmierte Wal, Ian Watson",
+  "isbn": "9783453010093",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "70",
+  "title": "Der große Süden, Ward Moore",
+  "isbn": "9783453027565",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "71",
+  "title": "Die Stahlhöhlen, Isaac Asimov",
+  "isbn": "9783453027572",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "72",
+  "title": "Die nackte Sonne, Isaac Asimov",
+  "isbn": "9783453031203",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "73",
+  "title": "Ischer, A. E. van Vogt",
+  "isbn": "9783453031210",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "74",
+  "title": "Graubart, Brian W. Aldiss",
+  "isbn": "9783453034495",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "75",
+  "title": "Ein Mann in einer fremden Welt, Robert A. Heinlein",
+  "isbn": "",
+  "skip": "no ISBN found in the DNB catalogue for the series printing",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "76",
+  "title": "Mensch +, Frederik Pohl",
+  "isbn": "",
+  "skip": "no ISBN found in the DNB catalogue for the series printing",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "77",
+  "title": "Shambleau, C. L. Moore",
+  "isbn": "9783453039292",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "78",
+  "title": "Der Schockwellenreiter, John Brunner",
+  "isbn": "9783453042636",
+  "skip": "photo of the book, cover small in frame",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "79",
+  "title": "Foundation, Isaac Asimov",
+  "isbn": "9783453042650",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "80",
+  "title": "Das andere Ufer der Zeit, Jack Finney",
+  "isbn": "",
+  "skip": "no ISBN found in the DNB catalogue for the series printing",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "81",
+  "title": "Der fünfte Kopf des Zerberus, Gene Wolfe",
+  "isbn": "",
+  "skip": "no ISBN found in the DNB catalogue for the series printing",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "82",
+  "title": "Zeit endet, James Graham Ballard",
+  "isbn": "",
+  "skip": "no ISBN found in the DNB catalogue for the series printing",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "83",
+  "title": "Die Expedition der Space Beagle, A. E. van Vogt",
+  "isbn": "",
+  "skip": "no ISBN found in the DNB catalogue for the series printing",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "84",
+  "title": "Winterplanet, Ursula K. LeGuin",
+  "isbn": "9783453050266",
+  "cover": 8456814,
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "85",
+  "title": "Als Wilhelm kam, Saki",
+  "isbn": "9783453054189",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "86",
+  "title": "Robot Roderick, John Sladek",
+  "isbn": "9783453054196",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "87",
+  "title": "Nova, Samuel R. Delany",
+  "isbn": "9783453057975",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "88",
+  "title": "Elleander Morning, Jerry Yulsman",
+  "isbn": "",
+  "skip": "announced, never published",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "89",
+  "title": "So frustrieren wir Karl den Großen, R. A. Lafferty",
+  "isbn": "9783453062436",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "90",
+  "title": "Von Gilgamesch bis Hawthorne, James Gunn (Hrsg.)",
+  "isbn": "",
+  "skip": "no ISBN found in the DNB catalogue for the series printing",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "91",
+  "title": "Von Poe bis Wells, James Gunn (Hrsg.)",
+  "isbn": "9783453031227",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "92",
+  "title": "Von Wells bis Stapledon, James Gunn (Hrsg.)",
+  "isbn": "9783453027589",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "93",
+  "title": "Von Huxley bis Heinlein, James Gunn (Hrsg.)",
+  "isbn": "9783453009646",
+  "skip": "photo of the book, cover small in frame; the DNB cover service has a clean scan for an upload",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "94",
+  "title": "Von Heinlein bis Farmer, James Gunn (Hrsg.)",
+  "isbn": "9783453034662",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "95",
+  "title": "Von Clement bis Dick, James Gunn (Hrsg.)",
+  "isbn": "9783453039117",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "96",
+  "title": "Von Ellison bis Haldeman, James Gunn (Hrsg.)",
+  "isbn": "9783453050242",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "97",
+  "title": "Von Matheson bis Shaw, James Gunn (Hrsg.)",
+  "isbn": "9783453054172",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "98",
+  "title": "Von Lem bis Varley, James Gunn (Hrsg.)",
+  "isbn": "9783453057982",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "99",
+  "title": "Von Malzberg bis Benford, James Gunn (Hrsg.)",
+  "isbn": "9783453062443",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "100",
+  "title": "Von Shelley bis Clarke, James Gunn (Hrsg.)",
+  "isbn": "9783453171046",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "101",
+  "title": "Von Ballard bis Stableford, James Gunn (Hrsg.)",
+  "isbn": "9783453179530",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "102",
+  "title": "Von Verne bis Calvino, James Gunn (Hrsg.)",
+  "isbn": "",
+  "skip": "announced, never published",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "103",
+  "title": "Von Capek bis Garcia Marques, James Gunn (Hrsg.)",
+  "isbn": "",
+  "skip": "announced, never published",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "104",
+  "title": "Der G. K. Chesterton Omnibus – 1. Teil, Carl Amery (Hrsg.)",
+  "isbn": "9783453066335",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ },
+ {
+  "no": "105",
+  "title": "Der G. K. Chesterton Omnibus – 2. Teil, Carl Amery (Hrsg.)",
+  "isbn": "9783453066342",
+  "source": "de.wikipedia Bibliothek der Science Fiction Literatur; ISBN from DNB SRU"
+ }
+]

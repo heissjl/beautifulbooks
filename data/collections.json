@@ -20711,6 +20711,351 @@
           "coverIsbn": "3499504634"
         }
       ]
+    },
+    {
+      "slug": "heyne-bibliothek-sf",
+      "title": "Heyne Bibliothek der Science Fiction Literatur",
+      "kind": "series",
+      "intro": "Heyne's „Bibliothek der Science Fiction Literatur“, edited by Wolfgang Jeschke from 1981 to 2001: about a hundred classics of the genre in the „white series“ — a white cover, the series header at the top and one square colour picture. Shown in series order, from the covers Open Library has in that design.",
+      "published": false,
+      "publishers": [
+        "Heyne"
+      ],
+      "works": [
+        {
+          "id": "OL20839344W",
+          "title": "Hier sangen früher Vögel",
+          "author": "",
+          "coverId": "ol:10147290",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453307902",
+          "coverIsbn": "9783453307902"
+        },
+        {
+          "id": "OL20180138W",
+          "title": "SCHWERE WELTEN",
+          "author": "Hal Clement",
+          "coverId": "ol:8827692",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453307933",
+          "coverIsbn": "9783453307933"
+        },
+        {
+          "id": "OL20788766W",
+          "title": "Eine Handvoll Venus Und Ehrbare Kaufleute Science Fiction Roman",
+          "author": "Frederik Pohl",
+          "coverId": "ol:10080998",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453307940",
+          "coverIsbn": "9783453307940"
+        },
+        {
+          "id": "OL20091438W",
+          "title": "DER UNGLAUBLICHE PLANET (The Incredible Planet -- in German)",
+          "author": "",
+          "coverId": "ol:8757118",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453307964",
+          "coverIsbn": "9783453307964"
+        },
+        {
+          "id": "OL20146223W",
+          "title": "Ich bin Legende",
+          "author": "",
+          "coverId": "ol:8791856",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453308039",
+          "coverIsbn": "9783453308039"
+        },
+        {
+          "id": "OL20083575W",
+          "title": "Das Forschungsteam. Die Hugo Gernsback- Preisträger 1955-1961.",
+          "author": "",
+          "coverId": "ol:8753111",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453308046",
+          "coverIsbn": "9783453308046"
+        },
+        {
+          "id": "OL20869561W",
+          "title": "Das elektrische Krokodil.",
+          "author": "David G. Compton",
+          "coverId": "ol:10188714",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453309036",
+          "coverIsbn": "9783453309036"
+        },
+        {
+          "id": "OL26427593W",
+          "title": "Angoulême",
+          "author": "",
+          "coverId": "ol:12392846",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453309067",
+          "coverIsbn": "9783453309067"
+        },
+        {
+          "id": "OL20934280W",
+          "title": "Die letzten und die ersten Menschen. Eine Geschichte der nahen und fernen Zukunft.",
+          "author": "",
+          "coverId": "ol:10301515",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453309609",
+          "coverIsbn": "9783453309609"
+        },
+        {
+          "id": "OL16928480W",
+          "title": "The third ear",
+          "author": "Curt Siodmak",
+          "coverId": "ol:15178217",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453309623",
+          "coverIsbn": "9783453309623"
+        },
+        {
+          "id": "OL59861W",
+          "title": "The Wind's Twelve Quarters",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:11996709",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453309647",
+          "coverIsbn": "9783453309647"
+        },
+        {
+          "id": "OL2777768W",
+          "title": "Donovan's Brain",
+          "author": "Curt Siodmak",
+          "coverId": "ol:15178167",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453310308",
+          "coverIsbn": "9783453310308"
+        },
+        {
+          "id": "OL2270689W",
+          "title": "Das Königsprojekt",
+          "author": "Carl Amery",
+          "coverId": "ol:15159661",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453310315",
+          "coverIsbn": "9783453310315"
+        },
+        {
+          "id": "OL3290738W",
+          "title": "Sirius",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:10459968",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453310339",
+          "coverIsbn": "9783453310339"
+        },
+        {
+          "id": "OL37574007W",
+          "title": "Hiero's Journey",
+          "author": "Sterling E. Lanier",
+          "coverId": "ol:15259007",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453310896",
+          "coverIsbn": "9783453310896"
+        },
+        {
+          "id": "OL14868264W",
+          "title": "More Than Human",
+          "author": "Theodore Sturgeon",
+          "coverId": "ol:14409256",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453310940",
+          "coverIsbn": "9783453310940"
+        },
+        {
+          "id": "OL20125550W",
+          "title": "Der Krieg mit den Molchen. Science-fiction-Roman",
+          "author": "",
+          "coverId": "ol:8778433",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453311558",
+          "coverIsbn": "9783453311558"
+        },
+        {
+          "id": "OL59848W",
+          "title": "The Compass Rose",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:8762313",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453311565",
+          "coverIsbn": "9783453311565"
+        },
+        {
+          "id": "OL2626638W",
+          "title": "A Canticle for Leibowitz",
+          "author": "Walter M. Miller Jr.",
+          "coverId": "ol:10541887",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453312852",
+          "coverIsbn": "9783453312852"
+        },
+        {
+          "id": "OL22063686W",
+          "title": "Helliconia",
+          "author": "",
+          "coverId": "ol:10431902",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453311589",
+          "coverIsbn": "9783453311589"
+        },
+        {
+          "id": "OL20879413W",
+          "title": "Todeswelten",
+          "author": "",
+          "coverId": "ol:10203056",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453312166",
+          "coverIsbn": "9783453312166"
+        },
+        {
+          "id": "OL20134513W",
+          "title": "Der Gewissensfall.",
+          "author": "",
+          "coverId": "ol:8785311",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453312883",
+          "coverIsbn": "9783453312883"
+        },
+        {
+          "id": "OL20920227W",
+          "title": "Mutant 59",
+          "author": "Kit Pedler",
+          "coverId": "ol:10290675",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453312890",
+          "coverIsbn": "9783453312890"
+        },
+        {
+          "id": "OL34857427W",
+          "title": "Der Spiegel des Beobachters",
+          "author": "",
+          "coverId": "ol:13646099",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453313477",
+          "coverIsbn": "9783453313477"
+        },
+        {
+          "id": "OL20181721W",
+          "title": "Mars Odyssee",
+          "author": "",
+          "coverId": "ol:8829470",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453313491",
+          "coverIsbn": "9783453313491"
+        },
+        {
+          "id": "OL20925849W",
+          "title": "C.R.U.P.P. 2 Romane",
+          "author": "",
+          "coverId": "ol:10299258",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453004566",
+          "coverIsbn": "9783453004566"
+        },
+        {
+          "id": "OL46390W",
+          "title": "The Foundation Trilogy",
+          "author": "Isaac Asimov",
+          "coverId": "ol:8750494",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453042650",
+          "coverIsbn": "9783453042650"
+        },
+        {
+          "id": "OL59800W",
+          "title": "The Left Hand of Darkness",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:8456814",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453050266",
+          "coverIsbn": "9783453050266"
+        },
+        {
+          "id": "OL20122780W",
+          "title": "Von Wells bis Stapledon (Wege zur Science Fiction, #3)",
+          "author": "",
+          "coverId": "ol:8776756",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453027589",
+          "coverIsbn": "9783453027589"
+        },
+        {
+          "id": "OL24426266W",
+          "title": "Von Clement bis Dick",
+          "author": "",
+          "coverId": "ol:10987206",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453039117",
+          "coverIsbn": "9783453039117"
+        },
+        {
+          "id": "OL20920467W",
+          "title": "Wege zur Science Fiction 7. Von Ellison bis Haldeman",
+          "author": "",
+          "coverId": "ol:10291006",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453050242",
+          "coverIsbn": "9783453050242"
+        },
+        {
+          "id": "OL20920469W",
+          "title": "Wege zur Science Fiction 8. Von Matheson bis Shaw",
+          "author": "",
+          "coverId": "ol:10291008",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453054172",
+          "coverIsbn": "9783453054172"
+        },
+        {
+          "id": "OL20920471W",
+          "title": "Wege Zur Science Fiction 9",
+          "author": "James E. Gunn",
+          "coverId": "ol:10291010",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453057982",
+          "coverIsbn": "9783453057982"
+        },
+        {
+          "id": "OL20780689W",
+          "title": "Von Malzberg bis Benford",
+          "author": "",
+          "coverId": "ol:9934250",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453062443",
+          "coverIsbn": "9783453062443"
+        },
+        {
+          "id": "OL16244644W",
+          "title": "Wege zur Science Fiction 11. Von Shelley bis Clark",
+          "author": "James E. Gunn",
+          "coverId": "ol:3202498",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453171046",
+          "coverIsbn": "9783453171046"
+        },
+        {
+          "id": "OL16244645W",
+          "title": "Wege zur Science Fiction 12. Von Ballard bis Stableford",
+          "author": "James E. Gunn",
+          "coverId": "ol:3202741",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453179530",
+          "coverIsbn": "9783453179530"
+        },
+        {
+          "id": "OL76394W",
+          "title": "A G. K. Chesterton omnibus",
+          "author": "Gilbert Keith Chesterton",
+          "coverId": "ol:12157458",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9783453066335",
+          "coverIsbn": "9783453066335"
+        }
+      ]
     }
   ]
 }
