@@ -84,6 +84,19 @@ export function pickAuthor(candidates: readonly AuthorCandidate[]): ResolvedAuth
   return { key: best.key, keys, name: best.name, readers };
 }
 
+/**
+ * The keys the "More by …" row asks for (ROADMAP 6.60, plan §6.4, Julian
+ * 2026-09-27): the work's own key, widened to her other records of the same
+ * name when the name lookup finds a person that **includes** that key. If the
+ * name finds someone else, or nothing, the work's key stays alone — the row
+ * never shows another person's books. Measured: *Nineteen Eighty-Four* hangs
+ * on OL15318546A (two works), which alone gave the row almost nothing.
+ */
+export function keysForLinkedAuthor(workKey: string, candidates: readonly AuthorCandidate[]): string[] {
+  const found = pickAuthor(candidates);
+  return found && found.keys.includes(workKey) ? found.keys : [workKey];
+}
+
 /** A doc whose first author is one of these keys. The rule of `otherWorksByAuthor` and `authorCandidates`. */
 function firstAuthorIs(doc: OlSearchDoc, keys: readonly string[]): boolean {
   const first = doc.author_key?.[0]?.replace('/authors/', '');

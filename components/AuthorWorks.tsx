@@ -55,7 +55,7 @@ export default function AuthorWorks({ author, authorKey, workId, workTitle, sibl
   }, []);
 
   const enabled = near || settled;
-  const state = useAuthorWorks(authorKey, enabled);
+  const state = useAuthorWorks(authorKey, enabled, author);
 
   if (!enabled) return <div ref={sentinel} className={`mt-16 h-px ${className}`} aria-hidden="true" />;
 

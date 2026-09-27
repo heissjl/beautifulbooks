@@ -27,7 +27,7 @@ export type AuthorWorksState =
  * State is keyed by the author, and loading is derived from that key rather
  * than set inside the effect (the repo's `set-state-in-effect` rule).
  */
-export function useAuthorWorks(authorKey: string | undefined, enabled: boolean): AuthorWorksState {
+export function useAuthorWorks(authorKey: string | undefined, enabled: boolean, authorName?: string): AuthorWorksState {
   const [result, setResult] = useState<{ key: string; works: AuthorWork[] | null } | null>(null);
   const known = authorKey ? ANSWERS.get(authorKey) : undefined;
   const wanted = !!authorKey && enabled && !known;
@@ -35,7 +35,8 @@ export function useAuthorWorks(authorKey: string | undefined, enabled: boolean):
   useEffect(() => {
     if (!wanted || !authorKey) return;
     const controller = new AbortController();
-    const url = `/api/authors/${encodeURIComponent(authorKey)}/works`;
+    // The name widens the key to her other records (6.60, plan §6.4).
+    const url = `/api/authors/${encodeURIComponent(authorKey)}/works${authorName ? `?name=${encodeURIComponent(authorName)}` : ''}`;
 
     const ask = (): Promise<AuthorWork[]> =>
       fetch(url, { signal: controller.signal }).then(async res => {
@@ -62,7 +63,7 @@ export function useAuthorWorks(authorKey: string | undefined, enabled: boolean):
         if (!controller.signal.aborted) setResult({ key: authorKey, works: null });
       });
     return () => controller.abort();
-  }, [wanted, authorKey]);
+  }, [wanted, authorKey, authorName]);
 
   if (!authorKey) return { status: 'idle' };
   if (known) return { status: 'ready', works: known };

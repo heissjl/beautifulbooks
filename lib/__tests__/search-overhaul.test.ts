@@ -9,7 +9,8 @@ import path from 'node:path';
 import { NextRequest } from 'next/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { GET } from '@/app/api/search/route';
-import { authorResultWorks, authorSearchPath, parseAuthorQuery, pickAuthor } from '../authorsearch';
+import { GET as authorWorksGET } from '@/app/api/authors/[key]/works/route';
+import { authorResultWorks, authorSearchPath, keysForLinkedAuthor, parseAuthorQuery, pickAuthor } from '../authorsearch';
 import { resetRateLimits } from '../ratelimit';
 import { search, searchByAuthor } from '../search';
 import { authorLookupUrl, authorWorksUrl, searchUrl, type OlAuthorDoc } from '../sources/openlibrary';
@@ -237,5 +238,42 @@ describe('GET /api/search', () => {
     const statuses: number[] = [];
     for (let i = 0; i < 25; i++) statuses.push((await same()).status);
     expect(statuses.every(s => s === 200)).toBe(true);
+  });
+});
+
+describe('"More by …" with the name resolution (6.60, plan §6.4)', () => {
+  let client = 0;
+  const row = (key: string, name?: string) => {
+    const qs = name ? `?name=${encodeURIComponent(name)}` : '';
+    return authorWorksGET(new NextRequest(new URL(`http://localhost/api/authors/${key}/works${qs}`), {
+      headers: { 'x-forwarded-for': `198.18.0.${++client}` },
+    }), { params: Promise.resolve({ key }) });
+  };
+
+  it('widens Nineteen Eighty-Four’s small record to Orwell’s other books', async () => {
+    const res = await row('OL15318546A', 'George Orwell');
+    expect(res.status).toBe(200);
+    const titles = (await res.json()).works.map((w: { title: string }) => w.title);
+    expect(titles).toContain('Animal Farm');
+    expect(titles).toContain('Homage to Catalonia');
+    expect(calls).toEqual([authorLookupUrl('George Orwell'), authorWorksUrl(['OL118077A', 'OL16029200A', 'OL16230010A', 'OL15318546A'])]);
+    expect(calls.some(u => u.includes('googleapis'))).toBe(false);
+  });
+
+  it('keeps a lone key lone when her name finds no one else (Harper Lee)', async () => {
+    await row('OL498120A', 'Harper Lee');
+    expect(calls[1]).toBe(authorWorksUrl('OL498120A'));
+  });
+
+  it('asks with the key alone when the name lookup is silent', async () => {
+    silent.add(authorLookupUrl('Harper Lee'));
+    const res = await row('OL498120A', 'Harper Lee');
+    expect(res.status).toBe(200);
+    expect((await res.json()).works[0].title).toBe('To Kill a Mockingbird');
+  });
+
+  it('never borrows another person’s records when the name points elsewhere', () => {
+    const docs = RESPONSES[authorLookupUrl('George Orwell')].docs as OlAuthorDoc[];
+    expect(keysForLinkedAuthor('OL999999A', docs)).toEqual(['OL999999A']);
   });
 });

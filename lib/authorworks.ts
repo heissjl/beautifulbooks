@@ -76,7 +76,7 @@ export function looksLikeVolumePart(title: string): boolean {
 /**
  * The row's candidates from the author search, most-printed first.
  *
- * 1. The author's key must be the record's **first** — the rule of
+ * 1. One of the author's keys must be the record's **first** — the rule of
  *    `authorCandidates` (lib/collectionedit.ts): otherwise anthologies,
  *    letters to her and books about her come along.
  * 2. No secondary literature, no marked adaptation, no non-book.
@@ -88,10 +88,13 @@ export function looksLikeVolumePart(title: string): boolean {
  */
 export function otherWorksByAuthor(
   docs: readonly AuthorSearchDoc[],
-  authorKey: string,
+  authorKeys: string | readonly string[],
   limit = ROW_CANDIDATES,
 ): AuthorWork[] {
-  const own = docs.filter(d => d.author_key?.[0]?.replace('/authors/', '') === authorKey);
+  // Several keys since 6.60 (§6.4): her other records of the same name (`keysForLinkedAuthor`).
+  const keys: readonly string[] = typeof authorKeys === 'string' ? [authorKeys] : authorKeys;
+  const authorKey = keys[0];
+  const own = docs.filter(d => keys.includes(d.author_key?.[0]?.replace('/authors/', '') ?? ''));
   const largest = own.reduce((n, d) => Math.max(n, d.edition_count ?? 0), 0);
   const floor = minEditions(largest);
 
