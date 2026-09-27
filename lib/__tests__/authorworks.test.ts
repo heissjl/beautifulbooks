@@ -182,7 +182,10 @@ describe('wording', () => {
     const h = authorRowHeading('Ursula K. Le Guin');
     expect(h).toBe('More by Ursula K. Le Guin');
     expect(h).not.toMatch(/\b(all|every|complete)\b/i);
-    expect(authorSearchHref('Ursula K. Le Guin')).toBe('/?q=Ursula%20K.%20Le%20Guin');
+    // The author search since 6.60, pinned to her key when there is one.
+    expect(authorSearchHref('Ursula K. Le Guin')).toBe('/?author=Ursula+K.+Le+Guin');
+    expect(authorSearchHref('Ursula K. Le Guin', 'OL31353A')).toBe('/?author=Ursula+K.+Le+Guin&key=OL31353A');
+    expect(authorSearchHref('X', 'not-a-key')).toBe('/?author=X');
   });
 
   it('accepts only Open Library author keys', () => {

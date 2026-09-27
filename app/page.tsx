@@ -9,7 +9,8 @@ import { liveCollections } from '@/lib/collections-live';
 
 /**
  * The URL is the single source of truth for search state (SPEC §3 F1.5):
- * /?q=<query>&lang=<iso>. Back button and sharing work by construction.
+ * /?q=<query>&lang=<iso>[&exact=1], or /?author=<name>[&key=OL…A] for the
+ * author mode (ROADMAP 6.60). Back button and sharing work by construction.
  *
  * **The page reads that URL on the server** (ROADMAP 6.49). It used to be a
  * client component calling `useSearchParams` inside a `<Suspense>` without a
@@ -35,7 +36,11 @@ export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
   const searchQuery = first(params.q);
   const language = first(params.lang);
-  const isHero = !searchQuery;
+  // The author mode (ROADMAP 6.60, SPEC F1.10): `?author=<name>[&key=OL…A]`.
+  const authorName = first(params.author);
+  const authorKey = first(params.key);
+  const exact = first(params.exact) === '1';
+  const isHero = !searchQuery && !authorName && !authorKey;
   // Published collections only in production; drafts show under `next dev` (SPEC F8).
   const collections = isHero ? await liveCollections() : [];
   // A collection ring on the hero only for what is published on the site now,
@@ -89,7 +94,12 @@ export default async function Home({ searchParams }: HomeProps) {
                 </div>
               )}
               <div className="max-w-3xl">
-                <HomeSearchBar searchQuery={searchQuery} language={language} hero={isHero} />
+                <HomeSearchBar
+                  searchQuery={authorName || searchQuery}
+                  mode={authorName || authorKey ? 'author' : 'any'}
+                  language={language}
+                  hero={isHero}
+                />
               </div>
             </div>
             {isHero && (
@@ -102,7 +112,12 @@ export default async function Home({ searchParams }: HomeProps) {
 
         {/* Air before the footer on a desktop; on a phone 96 px was an eighth of the screen, empty (6.30). */}
         <section className="pb-10 sm:pb-24">
-          <BookGrid searchQuery={searchQuery} language={language} />
+          <BookGrid
+            searchQuery={searchQuery}
+            language={language}
+            exact={exact}
+            author={authorName || authorKey ? { name: authorName, key: authorKey || undefined } : undefined}
+          />
           {/*
             Under the curated wall, only while nothing is searched (ROADMAP
             5.10d). It used to be a line under the promise in the hero; Julian

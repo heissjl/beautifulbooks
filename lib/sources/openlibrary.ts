@@ -89,7 +89,7 @@ export const SEARCH_RETRY = {
   minAttemptMs: 5_000,
 } as const;
 
-const SEARCH_FIELDS = [
+export const SEARCH_FIELDS = [
   'key', 'title', 'subtitle', 'author_name', 'author_key', 'first_publish_year',
   // The whole year list, so a single bad record cannot date a book to 1777
   // (ROADMAP 6.16). It rides along in the same request and costs nothing.
@@ -146,15 +146,31 @@ export const OL_EDITIONS_PAGE = 100;
  * Silence is asked once more before it is reported (`SEARCH_RETRY`), because
  * silence here is the common case and not the exception.
  */
-export async function searchWorks(query: string, limit = OL_SEARCH_LIMIT): Promise<WorkSummary[]> {
-  const url = `${BASE}/search.json?q=${encodeURIComponent(query)}&limit=${limit}&fields=${SEARCH_FIELDS}`;
+/** The free-text search URL; tests and the fixture recorder build it the same way. */
+export function searchUrl(query: string, limit = OL_SEARCH_LIMIT): string {
+  return `${BASE}/search.json?q=${encodeURIComponent(query)}&limit=${limit}&fields=${SEARCH_FIELDS}`;
+}
+
+export interface SearchWorksOptions {
+  limit?: number;
+  /** Attempts in total; the default is `SEARCH_RETRY.attempts`. */
+  attempts?: number;
+  /** Per-attempt cap; the default is `OL_TIMEOUTS.search`. */
+  timeoutMs?: number;
+}
+
+export async function searchWorks(query: string, options: SearchWorksOptions = {}): Promise<WorkSummary[]> {
+  const limit = options.limit ?? OL_SEARCH_LIMIT;
+  const attempts = options.attempts ?? SEARCH_RETRY.attempts;
+  const timeoutMs = options.timeoutMs ?? OL_TIMEOUTS.search;
+  const url = searchUrl(query, limit);
   const started = Date.now();
   let failure: unknown;
 
-  for (let attempt = 1; attempt <= SEARCH_RETRY.attempts; attempt++) {
+  for (let attempt = 1; attempt <= attempts; attempt++) {
     const left = SEARCH_RETRY.totalMs - (Date.now() - started);
     try {
-      const docs = await searchOnce(url, Math.min(OL_TIMEOUTS.search, left));
+      const docs = await searchOnce(url, Math.min(timeoutMs, left));
       if (attempt > 1) debug('openlibrary', `search answered on attempt ${attempt}`);
       return parseSearchDocs(docs);
     } catch (err) {
@@ -162,7 +178,7 @@ export async function searchWorks(query: string, limit = OL_SEARCH_LIMIT): Promi
       debug('openlibrary', `search attempt ${attempt} failed: ${(err as Error).message}`);
       // A 4xx is an answer about this request; asking again repeats the fault.
       if (!isSilence(err)) break;
-      if (attempt === SEARCH_RETRY.attempts) break;
+      if (attempt === attempts) break;
       await sleep(SEARCH_RETRY.pauseMs);
       if (SEARCH_RETRY.totalMs - (Date.now() - started) < SEARCH_RETRY.minAttemptMs) {
         debug('openlibrary', 'no time left for another attempt');
@@ -318,8 +334,17 @@ export async function searchSiblingWorks(work: Pick<Work, 'title' | 'authors' | 
   return parseSearchDocs(data.docs);
 }
 
-/** Fields the "More by …" row reads (ROADMAP 6.53); nothing else is sent back. */
-const AUTHOR_WORKS_FIELDS = ['key', 'title', 'author_name', 'author_key', 'edition_count', 'cover_i'].join(',');
+/**
+ * Fields the "More by …" row (ROADMAP 6.53) and the author search (6.60)
+ * read. One field list for both, so both share one cached answer per author:
+ * whoever opens the author's results warms the row under her books, and the
+ * other way round.
+ */
+const AUTHOR_WORKS_FIELDS = [
+  'key', 'title', 'author_name', 'author_key', 'edition_count', 'cover_i',
+  'first_publish_year', 'publish_year', 'language',
+  'readinglog_count', 'want_to_read_count', 'ratings_count',
+].join(',');
 
 /** How many records the author search asks for; the measurement in PLAN-6.53 §4.1 read the first 50. */
 export const AUTHOR_WORKS_LIMIT = 50;
@@ -330,8 +355,11 @@ export const AUTHOR_WORKS_LIMIT = 50;
  * answers in record order without edition counts (Fitzgerald: a Portuguese
  * Benjamin Button and "Christmas classics" first).
  */
-export function authorWorksUrl(authorKey: string): string {
-  return `${BASE}/search.json?q=${encodeURIComponent(`author_key:${authorKey}`)}&sort=editions&limit=${AUTHOR_WORKS_LIMIT}&fields=${AUTHOR_WORKS_FIELDS}`;
+export function authorWorksUrl(authorKeys: string | readonly string[]): string {
+  const keys = typeof authorKeys === 'string' ? [authorKeys] : authorKeys;
+  // One key keeps the row's URL exactly, so the row and the author search share a cache entry.
+  const q = keys.length === 1 ? `author_key:${keys[0]}` : `author_key:(${keys.join(' OR ')})`;
+  return `${BASE}/search.json?q=${encodeURIComponent(q)}&sort=editions&limit=${AUTHOR_WORKS_LIMIT}&fields=${AUTHOR_WORKS_FIELDS}`;
 }
 
 /**
@@ -342,15 +370,54 @@ export function authorWorksUrl(authorKey: string): string {
  * the route can say 503 and nobody caches silence as "no other works"
  * (SPEC N12). Asked once: the row is a bonus, and the client asks again.
  */
-export async function searchAuthorWorks(authorKey: string): Promise<OlSearchDoc[]> {
+export async function searchAuthorWorks(authorKey: string | readonly string[], timeoutMs: number = OL_TIMEOUTS.authorWorks): Promise<OlSearchDoc[]> {
   try {
     const data = await fetchJson<OlSearchResponse>(authorWorksUrl(authorKey), {
-      timeoutMs: OL_TIMEOUTS.authorWorks, revalidate: OL_REVALIDATE.authorWorks,
+      timeoutMs, revalidate: OL_REVALIDATE.authorWorks,
     });
     if (!Array.isArray(data.docs)) throw new Error('response had no docs array');
     return data.docs;
   } catch (err) {
     debug('openlibrary', `author works ${authorKey} failed: ${(err as Error).message}`);
+    throw new SourceUnavailableError('openlibrary', err);
+  }
+}
+
+/** One hit of Open Library's author search (`/search/authors.json`). */
+export interface OlAuthorDoc {
+  key: string;
+  name?: string;
+  work_count?: number;
+  readinglog_count?: number;
+  top_work?: string;
+}
+
+/** How many name matches the author search reads; the right person was in the first five in every case measured. */
+export const AUTHOR_LOOKUP_LIMIT = 10;
+
+export function authorLookupUrl(name: string): string {
+  return `${BASE}/search/authors.json?q=${encodeURIComponent(name)}&limit=${AUTHOR_LOOKUP_LIMIT}&fields=key,name,work_count,readinglog_count,top_work`;
+}
+
+/**
+ * People whose name — or one of whose alternate names — matches (ROADMAP
+ * 6.60). The alternate names are why this runs before the works search: the
+ * works index knows Dostoevsky only as "Fiódor Dostoievski", so
+ * `author:(Dostojewski)` finds one stray record, while this finds OL22242A.
+ * Open Library orders the answer by text match, not by fame (`Tolkien` gives
+ * Christopher first); the caller picks (`pickAuthor`, lib/authorsearch.ts).
+ *
+ * **Throws `SourceUnavailableError` when Open Library does not answer.**
+ */
+export async function searchAuthorsByName(name: string): Promise<OlAuthorDoc[]> {
+  try {
+    const data = await fetchJson<{ docs?: OlAuthorDoc[] }>(authorLookupUrl(name), {
+      timeoutMs: OL_TIMEOUTS.search, revalidate: OL_REVALIDATE.authorWorks,
+    });
+    if (!Array.isArray(data.docs)) throw new Error('response had no docs array');
+    return data.docs;
+  } catch (err) {
+    debug('openlibrary', `author lookup failed: ${(err as Error).message}`);
     throw new SourceUnavailableError('openlibrary', err);
   }
 }

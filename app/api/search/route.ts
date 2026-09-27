@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MIN_QUERY_LENGTH, normalizeQuery, search } from '@/lib/search';
+import { MIN_QUERY_LENGTH, normalizeQuery, search, searchByAuthor } from '@/lib/search';
+import { parseAuthorQuery } from '@/lib/authorsearch';
 import { SourceUnavailableError } from '@/lib/sources/http';
 import { rateLimited } from '@/app/api/rate';
 
 /**
- * GET /api/search?q=<query>&lang=<iso|all>
- * The only search entry point for the UI (SPEC §4 N1). Response: SearchResult.
+ * GET /api/search?q=<query>&lang=<iso|all>[&exact=1]
+ * GET /api/search?author=<name>[&key=OL…A]
+ * The only search entry point for the UI (SPEC §4 N1). Response: SearchResult,
+ * or AuthorSearchResult for the author mode (ROADMAP 6.60, SPEC F1.10).
+ *
+ * Never spends the `google` bucket: a search asks Open Library only (N9),
+ * and since 6.60 at most twice — the second time for a corrected spelling or,
+ * in the author mode, for the works of the person a name was taken to mean.
  *
  * A 200 here means Open Library answered, and an empty `works` in it means it
  * had nothing. Everything else is a status, never an empty list: 400 for a
@@ -22,10 +29,13 @@ import { rateLimited } from '@/app/api/rate';
 export const maxDuration = 30;
 
 export async function GET(request: NextRequest) {
-  const limited = rateLimited(request, 'search', 'google');
+  const limited = rateLimited(request, 'search');
   if (limited) return limited;
 
   const params = request.nextUrl.searchParams;
+  const author = parseAuthorQuery(params.get('author'), params.get('key'));
+  if (author) return answer(() => searchByAuthor(author), !author.key && author.name.length < MIN_QUERY_LENGTH);
+
   const query = normalizeQuery(params.get('q'));
   if (!query) {
     return NextResponse.json({ error: 'Query parameter "q" is required' }, { status: 400 });
@@ -36,8 +46,18 @@ export async function GET(request: NextRequest) {
       { status: 400, headers: { 'Cache-Control': 'no-store' } },
     );
   }
+  return answer(() => search(query, { language: params.get('lang') ?? undefined, exact: params.get('exact') === '1' }), false);
+}
+
+async function answer(run: () => Promise<unknown>, tooShort: boolean): Promise<NextResponse> {
+  if (tooShort) {
+    return NextResponse.json(
+      { error: `Search for at least ${MIN_QUERY_LENGTH} characters` },
+      { status: 400, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
   try {
-    const result = await search(query, { language: params.get('lang') ?? undefined });
+    const result = await run();
     return NextResponse.json(result, {
       // A day, matching OL_REVALIDATE.search (SPEC §4 N4, ROADMAP 1.10): the
       // list of works for a title does not change by the hour, and a source

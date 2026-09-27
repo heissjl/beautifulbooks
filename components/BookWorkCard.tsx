@@ -6,11 +6,18 @@ import { useCardCovers } from './useCardCovers';
 import { storeWorkPreview } from './useWorkPreview';
 import type { WorkSummary } from '@/lib/model';
 
-interface BookWorkCardProps {
-  work: WorkSummary;
-  /** Current search state, carried to the detail page for its back link (SPEC F2.7). */
+/** The search a card was found by, carried to the detail page for its back link (SPEC F2.7). */
+export interface ResultOrigin {
   query?: string;
   language?: string;
+  /** The author mode (ROADMAP 6.60): `?author=<name>&key=OL…A`. */
+  author?: string;
+  authorKey?: string;
+}
+
+interface BookWorkCardProps {
+  work: WorkSummary;
+  origin?: ResultOrigin;
   /** Set when the search was an ISBN that found exactly this one book. */
   isbn?: string;
 }
@@ -33,21 +40,23 @@ export function displayAuthors(authors: readonly string[]): string {
  * a page that guessed at the shape of `q` a second time could disagree with
  * the first reading.
  */
-export function detailHref(workId: string, query?: string, language?: string, isbn?: string): string {
+export function detailHref(workId: string, query?: string, language?: string, isbn?: string, author?: { name?: string; key?: string }): string {
   const params = new URLSearchParams();
   if (query) params.set('q', query);
   if (language && language !== 'all') params.set('lang', language);
   if (isbn) params.set('isbn', isbn);
+  if (author?.name) params.set('author', author.name);
+  if (author?.key) params.set('key', author.key);
   const qs = params.toString();
   return qs ? `/book/${workId}?${qs}` : `/book/${workId}`;
 }
 
-export default function BookWorkCard({ work, query, language, isbn }: BookWorkCardProps) {
+export default function BookWorkCard({ work, origin = {}, isbn }: BookWorkCardProps) {
   // The search gives one cover; the rest of the mosaic is fetched once the
   // card nears the viewport (SPEC §9.3 step 14).
   const coverUrls = useCardCovers(work.id, work.coverUrls);
   const editionCount = work.editionCount ?? work.coverUrls.length;
-  const href = detailHref(work.id, query, language, isbn);
+  const href = detailHref(work.id, origin.query, origin.language, isbn, { name: origin.author, key: origin.authorKey });
   const facts = [
     editionCount > 1 ? `${editionCount} editions` : undefined,
     work.languages.length > 1 ? `${work.languages.length} languages` : undefined,

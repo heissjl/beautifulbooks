@@ -4,9 +4,14 @@ import { useEffect, useRef, useState } from 'react';
 import { preloadMosaic } from './MosaicLoader';
 import { useRecentSearches } from './useRecentSearches';
 
+/** What the field searches (ROADMAP 6.60): titles and authors together, or one author's books. */
+export type SearchMode = 'any' | 'author';
+
 interface SearchBarProps {
   searchQuery: string;
-  setSearchQuery: (query: string) => void;
+  setSearchQuery: (query: string, mode: SearchMode) => void;
+  /** The mode of the search in the address; the reader can switch it before searching. */
+  mode: SearchMode;
   language: string;
   setLanguage: (language: string) => void;
   /** Larger, centered variant for the empty home page. */
@@ -33,13 +38,25 @@ export const POPULAR_SEARCHES = [
   { query: 'The Hobbit', author: 'J. R. R. Tolkien' },
 ];
 
-export default function SearchBar({ searchQuery, setSearchQuery, language, setLanguage, hero }: SearchBarProps) {
+/** The two modes as chips; the labels say what the field will look in. */
+const MODES: { mode: SearchMode; label: string }[] = [
+  { mode: 'any', label: 'Titles & authors' },
+  { mode: 'author', label: 'Author only' },
+];
+
+export default function SearchBar({ searchQuery, setSearchQuery, mode, language, setLanguage, hero }: SearchBarProps) {
   const [inputValue, setInputValue] = useState(searchQuery);
   const [syncedQuery, setSyncedQuery] = useState(searchQuery);
+  const [currentMode, setCurrentMode] = useState<SearchMode>(mode);
+  const [syncedMode, setSyncedMode] = useState<SearchMode>(mode);
   if (syncedQuery !== searchQuery) {
     // Adopt the query from the URL when it changes (back button, chip click).
     setSyncedQuery(searchQuery);
     setInputValue(searchQuery);
+  }
+  if (syncedMode !== mode) {
+    setSyncedMode(mode);
+    setCurrentMode(mode);
   }
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [recentSearches, saveRecentSearch] = useRecentSearches();
@@ -59,18 +76,30 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const submit = (query: string) => {
+  const submit = (query: string, asMode: SearchMode = currentMode) => {
     const q = query.trim();
     if (!q) return;
     setInputValue(q);
-    setSearchQuery(q);
+    setSearchQuery(q, asMode);
     saveRecentSearch(q);
     setShowSuggestions(false);
+  };
+
+  /*
+    Switching the mode re-asks at once when a search is on screen — the reader
+    wants the same words looked up the other way. On the empty home page it
+    only changes what the next search will be.
+  */
+  const switchMode = (next: SearchMode) => {
+    setCurrentMode(next);
+    if (searchQuery && next !== mode && inputValue.trim()) submit(inputValue, next);
+    else inputRef.current?.focus();
   };
 
   const filteredSuggestions = POPULAR_SEARCHES.filter(
     s => !inputValue || s.query.toLowerCase().includes(inputValue.toLowerCase()) || s.author.toLowerCase().includes(inputValue.toLowerCase()),
   ).slice(0, 4);
+  const authorMode = currentMode === 'author';
 
   const showDropdown = showSuggestions && (recentSearches.length > 0 || filteredSuggestions.length > 0);
 
@@ -113,8 +142,8 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
             preloadMosaic();
           }}
           onFocus={() => setShowSuggestions(true)}
-          placeholder="A title, or a title and author"
-          aria-label="Search a book title"
+          placeholder={authorMode ? "An author\u2019s name" : 'A title, or a title and author'}
+          aria-label={authorMode ? 'Search an author' : 'Search a book title'}
           autoComplete="off"
           /*
             On a phone the hero field is set a size smaller and gives the
@@ -153,9 +182,10 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
               <div className="py-1">
                 <p className="kicker px-4 py-2">Popular</p>
                 {filteredSuggestions.map(s => (
-                  <button key={s.query} type="button" onClick={() => submit(s.query)} className="flex w-full items-baseline justify-between gap-3 px-4 py-2 text-left transition-colors hover:bg-surface-2">
-                    <span className="text-ink">{s.query}</span>
-                    <span className="text-sm text-ink-3">{s.author}</span>
+                  // In the author mode a suggestion is the author, and the title says why she is here.
+                  <button key={s.query} type="button" onClick={() => submit(authorMode ? s.author : s.query)} className="flex w-full items-baseline justify-between gap-3 px-4 py-2 text-left transition-colors hover:bg-surface-2">
+                    <span className="text-ink">{authorMode ? s.author : s.query}</span>
+                    <span className="text-sm text-ink-3">{authorMode ? s.query : s.author}</span>
                   </button>
                 ))}
               </div>
@@ -164,18 +194,37 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
         )}
       </div>
 
-      <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Language">
-        {LANGUAGES.map(lang => (
-          <button
-            key={lang.code}
-            type="button"
-            className="chip"
-            aria-pressed={(language || '') === lang.code}
-            onClick={() => setLanguage(lang.code)}
-          >
-            {lang.label}
-          </button>
-        ))}
+      {/*
+        The mode first, then the language (ROADMAP 6.60). The language pills
+        go away in the author mode: they filter works by the languages of
+        their editions, and a person's books are not narrowed that way.
+      */}
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Search in">
+          {MODES.map(m => (
+            <button key={m.mode} type="button" className="chip" aria-pressed={currentMode === m.mode} onClick={() => switchMode(m.mode)}>
+              {m.label}
+            </button>
+          ))}
+        </div>
+        {!authorMode && (
+          <>
+            <span className="mx-1 hidden h-5 w-px bg-line sm:inline-block" aria-hidden="true" />
+            <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Language">
+              {LANGUAGES.map(lang => (
+                <button
+                  key={lang.code}
+                  type="button"
+                  className="chip"
+                  aria-pressed={(language || '') === lang.code}
+                  onClick={() => setLanguage(lang.code)}
+                >
+                  {lang.label}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </form>
   );

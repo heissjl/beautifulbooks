@@ -1,18 +1,25 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-import BookWorkCard from './BookWorkCard';
+import BookWorkCard, { type ResultOrigin } from './BookWorkCard';
 import { shapeOf } from '@/lib/queryshape';
 import CuratedWall from './CuratedWall';
 import MosaicLoader from './MosaicLoader';
 import { LANGUAGES } from './SearchBar';
-import type { SearchResult } from '@/lib/search';
+import type { AuthorSearchResult, SearchCorrection, SearchResult } from '@/lib/search';
 
 interface BookGridProps {
   searchQuery: string;
   language: string;
+  /** `?exact=1`: no typo correction (ROADMAP 6.60). */
+  exact?: boolean;
+  /** The author mode, `?author=<name>[&key=OL…A]` (ROADMAP 6.60, SPEC F1.10). */
+  author?: { name: string; key?: string };
 }
+
+type AnyResult = SearchResult | AuthorSearchResult;
 
 /** What went wrong, in words the reader can act on. */
 interface Failure {
@@ -23,7 +30,7 @@ interface Failure {
 }
 
 /** Outcome of the most recent request, tagged with the request it answers. */
-type Outcome = { key: string; result?: SearchResult; failure?: Failure };
+type Outcome = { key: string; result?: AnyResult; failure?: Failure };
 
 /**
  * Turns a response into a failure the reader can act on.
@@ -85,11 +92,46 @@ export function GridSkeleton({ query }: { query?: string }) {
   return <MosaicLoader caption={query ? `Looking for \u201c${query}\u201d in Open Library` : 'Searching'} />;
 }
 
-export default function BookGrid({ searchQuery, language }: BookGridProps) {
+/** `/?q=…` for a search, as the result list itself would link it. */
+function textSearchHref(q: string, language: string, exact = false): string {
+  const params = new URLSearchParams({ q });
+  if (language && language !== 'all') params.set('lang', language);
+  if (exact) params.set('exact', '1');
+  return `/?${params}`;
+}
+
+/**
+ * The line above the results when the spelling was corrected (SPEC F1.9):
+ * what the results are for, and the way back to what was typed. Wording
+ * stays with what happened — "showing results for" — and never calls the
+ * reader's word wrong.
+ */
+function CorrectionLine({ correction, language, authorName }: { correction: SearchCorrection; language: string; authorName?: string }) {
+  return (
+    <p className="mb-4 text-sm text-ink-2" role="status">
+      {authorName ? (
+        <>Showing books by <strong className="font-medium text-ink">{authorName}</strong> for &ldquo;{correction.from}&rdquo;.</>
+      ) : (
+        <>
+          Showing results for <strong className="font-medium text-ink">{correction.to}</strong>.{' '}
+          <Link href={textSearchHref(correction.from, language, true)} className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
+            Search for &ldquo;{correction.from}&rdquo; instead
+          </Link>
+        </>
+      )}
+    </p>
+  );
+}
+
+export default function BookGrid({ searchQuery, language, exact = false, author }: BookGridProps) {
   // A retry has to change the request key, or the effect would not run again
   // and the reader would press a button that does nothing.
   const [attempt, setAttempt] = useState(0);
-  const key = searchQuery ? `${searchQuery} ${language} #${attempt}` : '';
+  const authorName = author?.name ?? '';
+  const authorKey = author?.key ?? '';
+  const key = author
+    ? `author:${authorName}:${authorKey} #${attempt}`
+    : searchQuery ? `${searchQuery} ${language} ${exact ? 'exact' : ''} #${attempt}` : '';
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const router = useRouter();
   // Memoised: the effect depends on it, and a fresh object each render would
@@ -105,13 +147,20 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
       asking. `replace`, not `push`: the search that was never really a search
       has no business in the back button.
     */
-    if (pasted.kind === 'work') {
+    if (!authorName && !authorKey && pasted.kind === 'work') {
       router.replace(`/book/${pasted.workId}`);
       return;
     }
     const controller = new AbortController();
-    const params = new URLSearchParams({ q: searchQuery });
-    if (language && language !== 'all') params.set('lang', language);
+    const params = new URLSearchParams();
+    if (authorName || authorKey) {
+      params.set('author', authorName);
+      if (authorKey) params.set('key', authorKey);
+    } else {
+      params.set('q', searchQuery);
+      if (language && language !== 'all') params.set('lang', language);
+      if (exact) params.set('exact', '1');
+    }
 
     fetch(`/api/search?${params}`, { signal: controller.signal })
       .then(async res => {
@@ -119,7 +168,7 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
           setOutcome({ key, failure: await failureFor(res) });
           return;
         }
-        setOutcome({ key, result: (await res.json()) as SearchResult });
+        setOutcome({ key, result: (await res.json()) as AnyResult });
       })
       .catch(() => {
         if (controller.signal.aborted) return;
@@ -130,13 +179,13 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
       });
 
     return () => controller.abort();
-  }, [key, searchQuery, language, pasted, router]);
+  }, [key, searchQuery, language, exact, authorName, authorKey, pasted, router]);
 
   if (!key) return <CuratedWall />;
 
   // Loading = the latest outcome does not answer the current request.
   const current = outcome?.key === key ? outcome : null;
-  if (!current) return <GridSkeleton query={searchQuery} />;
+  if (!current) return <GridSkeleton query={authorName || searchQuery} />;
 
   // An outcome carries a result or a failure, never both and never neither.
   if (!current.result) {
@@ -148,7 +197,10 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
     );
   }
 
-  const { works } = current.result;
+  if (author) return <AuthorResults result={current.result as AuthorSearchResult} typed={authorName} origin={{ author: authorName, authorKey }} />;
+
+  const result = current.result as SearchResult;
+  const { works, correction } = result;
   const shape = pasted;
   if (works.length === 0) {
     /*
@@ -173,6 +225,15 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
         {filter
           ? `Open Library knows nothing under this title with a ${filter} edition. Try another title, or remove the language filter.`
           : 'Open Library knows nothing under this title. Try another spelling, or add the author.'}
+        {/* A suggestion the catalogue was not asked about in time: offered, not claimed (N12). */}
+        {correction && !correction.applied && (
+          <>
+            {' '}
+            <Link href={textSearchHref(correction.to, language)} className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
+              Did you mean &ldquo;{correction.to}&rdquo;?
+            </Link>
+          </>
+        )}
       </Notice>
     );
   }
@@ -196,6 +257,7 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
           What follows are text matches, not the book you are holding.
         </Notice>
       )}
+      {correction?.applied && <CorrectionLine correction={correction} language={language} />}
       <p className="kicker mb-5">
         {works.length} {works.length === 1 ? 'book' : 'books'} · {totalEditions.toLocaleString('en')} editions
       </p>
@@ -204,8 +266,7 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
           <BookWorkCard
             key={work.id}
             work={work}
-            query={searchQuery}
-            language={language}
+            origin={{ query: correction?.applied ? correction.to : searchQuery, language }}
             /*
               Only when the ISBN picked out a single book: with several hits
               the number did not identify one edition, and pointing at a cover
@@ -213,6 +274,52 @@ export default function BookGrid({ searchQuery, language }: BookGridProps) {
             */
             isbn={shape.kind === 'isbn' && works.length === 1 ? shape.isbn13 : undefined}
           />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * The author mode's results (ROADMAP 6.60, SPEC F1.10): her books, most-printed
+ * first, as the same cards a search shows. Two empty states, because they are
+ * different facts: nobody under this name, or a person without a covered book.
+ */
+function AuthorResults({ result, typed, origin }: { result: AuthorSearchResult; typed: string; origin: ResultOrigin }) {
+  const { works, author, correction } = result;
+  if (!author) {
+    return (
+      <Notice title="No author found">
+        Open Library knows no one under this name. Try another spelling, or search titles and authors together.
+        {typed && (
+          <>
+            {' '}
+            <Link href={textSearchHref(typed, '')} className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
+              Search &ldquo;{typed}&rdquo; everywhere
+            </Link>
+          </>
+        )}
+      </Notice>
+    );
+  }
+  if (works.length === 0) {
+    return (
+      <Notice title={`No books by ${author.name} with a cover`}>
+        Open Library lists {author.name}, but none of the records under this name has a cover.
+      </Notice>
+    );
+  }
+  const totalEditions = works.reduce((sum, w) => sum + (w.editionCount ?? 0), 0);
+  return (
+    <section aria-label={`Books by ${author.name}`}>
+      {correction?.applied && <CorrectionLine correction={correction} language="" authorName={author.name} />}
+      <h2 className="mb-1 text-2xl leading-tight text-ink sm:text-3xl">Books by {author.name}</h2>
+      <p className="kicker mb-5">
+        {works.length} {works.length === 1 ? 'book' : 'books'} · {totalEditions.toLocaleString('en')} editions · most printed first
+      </p>
+      <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {works.map(work => (
+          <BookWorkCard key={work.id} work={work} origin={{ ...origin, author: origin.author || author.name, authorKey: origin.authorKey || author.key }} />
         ))}
       </div>
     </section>

@@ -172,6 +172,15 @@ function backHrefFrom(searchParams: URLSearchParams): string {
   const params = new URLSearchParams();
   const q = searchParams.get('q');
   const lang = searchParams.get('lang');
+  // The author mode (ROADMAP 6.60) comes back as the author mode.
+  const author = searchParams.get('author');
+  const key = searchParams.get('key');
+  if (author || key) {
+    if (author) params.set('author', author);
+    if (key) params.set('key', key);
+    const qs = params.toString();
+    return `/?${qs}`;
+  }
   if (q) params.set('q', q);
   if (lang) params.set('lang', lang);
   const qs = params.toString();
@@ -187,7 +196,7 @@ function BookDetail() {
   const backHref = backHrefFrom(searchParams);
   // A query means there is a result list behind the back link; a bare `?lang=`
   // does not (ROADMAP 6.28).
-  const cameFromResults = !!searchParams.get('q');
+  const cameFromResults = !!searchParams.get('q') || !!searchParams.get('author') || !!searchParams.get('key');
   const preview = useWorkPreview(params.id);
 
   // Market for buy links (E9): the user's choice, else detected by the server.

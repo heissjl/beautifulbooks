@@ -156,7 +156,15 @@ export function authorRowHeading(author: string): string {
   return `More by ${author}`;
 }
 
-/** Where the heading leads: the site's own search for the name. */
-export function authorSearchHref(author: string): string {
-  return `/?q=${encodeURIComponent(author)}`;
+/**
+ * Where the heading leads: the site's author search (ROADMAP 6.60), pinned to
+ * her key when the work carries one. Until 6.60 it was the free-text search
+ * for the name, which found books *about* her as readily as hers (Harper
+ * Lee: 3 of 18). Built by hand rather than with `authorSearchPath`
+ * (lib/authorsearch.ts), which imports this module.
+ */
+export function authorSearchHref(author: string, authorKey?: string): string {
+  const params = new URLSearchParams({ author });
+  if (authorKey && isAuthorKey(authorKey)) params.set('key', authorKey);
+  return `/?${params}`;
 }
