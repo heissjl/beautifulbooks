@@ -1168,62 +1168,62 @@
   "title": "Harry Potter and the Philosopher's Stone",
   "isbn": "9781408810545",
   "edition": "OL27281088M",
-  "set": "Bloomsbury, 2010 · signature edition · Cover: Clare Melinsky",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky",
+  "note": "cover ol:14320057, looked at 2026-09-26",
   "source": "Open Library edition record"
  },
  {
   "no": "2",
   "title": "Harry Potter and the Chamber of Secrets",
-  "isbn": "9781408810552",
-  "edition": "OL35639677M",
-  "set": "Bloomsbury, 2010 · signature edition · Cover: Clare Melinsky",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "isbn": "9781781100080",
+  "edition": "OL31445691M",
+  "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky",
+  "note": "cover ol:10521236, looked at 2026-09-26; Pottermore ebook (2012) with the signature-edition artwork; the print scans of vols. 4–6 are angled mock-ups and vol. 7 carries a library sticker",
   "source": "Open Library edition record"
  },
  {
   "no": "3",
   "title": "Harry Potter and the Prisoner of Azkaban",
-  "isbn": "9781408810569",
-  "edition": "OL26421887M",
-  "set": "Bloomsbury, 2010 · signature edition · Cover: Clare Melinsky",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "isbn": "9781781100097",
+  "edition": "OL31445749M",
+  "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky",
+  "note": "cover ol:10521237, looked at 2026-09-26; Pottermore ebook (2012) with the signature-edition artwork; the print scans of vols. 4–6 are angled mock-ups and vol. 7 carries a library sticker",
   "source": "Open Library edition record"
  },
  {
   "no": "4",
   "title": "Harry Potter and the Goblet of Fire",
-  "isbn": "9781408810576",
-  "edition": "OL27323580M",
-  "set": "Bloomsbury, 2010 · signature edition · Cover: Clare Melinsky",
-  "skip": "set incomplete — only a 3D product mock-up at an angle (8790519), no flat cover",
+  "isbn": "9781781100103",
+  "edition": "OL31445794M",
+  "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky",
+  "note": "cover ol:10521280, looked at 2026-09-26; Pottermore ebook (2012) with the signature-edition artwork; the print scans of vols. 4–6 are angled mock-ups and vol. 7 carries a library sticker",
   "source": "Open Library edition record"
  },
  {
   "no": "5",
   "title": "Harry Potter and the Order of the Phoenix",
-  "isbn": "9781408810590",
-  "edition": "OL27273035M",
-  "set": "Bloomsbury, 2010 · signature edition · Cover: Clare Melinsky",
-  "skip": "set incomplete — only a 3D product mock-up (8758111)",
+  "isbn": "9781781100110",
+  "edition": "OL25647438M",
+  "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky",
+  "note": "cover ol:10521287, looked at 2026-09-26; Pottermore ebook (2012) with the signature-edition artwork; the print scans of vols. 4–6 are angled mock-ups and vol. 7 carries a library sticker",
   "source": "Open Library edition record"
  },
  {
   "no": "6",
   "title": "Harry Potter and the Half-Blood Prince",
-  "isbn": "9781408810583",
-  "edition": "OL26106410M",
-  "set": "Bloomsbury, 2010 · signature edition · Cover: Clare Melinsky",
-  "skip": "set incomplete — only a 3D product mock-up (7737045)",
+  "isbn": "9781781100127",
+  "edition": "OL31445865M",
+  "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky",
+  "note": "cover ol:10521310, looked at 2026-09-26; Pottermore ebook (2012) with the signature-edition artwork; the print scans of vols. 4–6 are angled mock-ups and vol. 7 carries a library sticker",
   "source": "Open Library edition record"
  },
  {
   "no": "7",
   "title": "Harry Potter and the Deathly Hallows",
-  "isbn": "9781408810606",
-  "edition": "OL35675907M",
-  "set": "Bloomsbury, 2010 · signature edition · Cover: Clare Melinsky",
-  "skip": "set incomplete — flat cover 15156411 carries a library barcode sticker",
+  "isbn": "9781781100134",
+  "edition": "OL31445866M",
+  "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky",
+  "note": "cover ol:10521311, looked at 2026-09-26; Pottermore ebook (2012) with the signature-edition artwork; the print scans of vols. 4–6 are angled mock-ups and vol. 7 carries a library sticker",
   "source": "Open Library edition record"
  },
  {
@@ -1349,6 +1349,134 @@
   "edition": "OL47682327M",
   "set": "Carlsen, 2013 · Taschenbuch",
   "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "1",
+  "title": "Harry Potter en de steen der wijzen",
+  "isbn": "9789076174082",
+  "edition": "OL23018382M",
+  "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen",
+  "note": "cover ol:15128106, looked at 2026-09-26",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "2",
+  "title": "Harry Potter en de geheime kamer",
+  "isbn": "9789076174112",
+  "edition": "OL29895230M",
+  "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen",
+  "note": "cover ol:10413455, looked at 2026-09-26",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "3",
+  "title": "Harry Potter en de Gevangene van Azkaban",
+  "isbn": "9789076174181",
+  "edition": "OL40279400M",
+  "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen",
+  "note": "cover ol:15156809, looked at 2026-09-26",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "4",
+  "title": "Harry Potter en de Vuurbeker",
+  "isbn": "9076174199",
+  "edition": "OL37830569M",
+  "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen",
+  "note": "cover ol:12726842, looked at 2026-09-26",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "5",
+  "title": "Harry Potter en de Orde van de Feniks",
+  "isbn": "9789061697015",
+  "edition": "OL47151688M",
+  "work": "OL82548W",
+  "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen",
+  "note": "cover ol:13555274, looked at 2026-09-26",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "6",
+  "title": "Harry Potter en de halfbloed prins (Dutch Edition)",
+  "isbn": "9789061697664",
+  "edition": "OL26800222M",
+  "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen",
+  "note": "cover ol:8456594, looked at 2026-09-26",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "7",
+  "title": "Harry Potter en de relieken van de dood",
+  "isbn": "9789061698326",
+  "edition": "OL31900387M",
+  "work": "OL82586W",
+  "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen",
+  "note": "cover ol:10584470, looked at 2026-09-26",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "1",
+  "title": "Harry Potter y la piedra filosofal",
+  "isbn": "9781781101315",
+  "edition": "OL59922337M",
+  "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage",
+  "note": "cover ol:15116676, looked at 2026-09-26; ebook cover of the 2022 digital redesign; Open Library dates the edition 2015",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "2",
+  "title": "Harry Potter y la cámara secreta",
+  "isbn": "9781781101322",
+  "edition": "OL59922397M",
+  "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage",
+  "note": "cover ol:15116677, looked at 2026-09-26; ebook cover of the 2022 digital redesign; Open Library dates the edition 2015",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "3",
+  "title": "Harry Potter y el prisionero de Azkaban",
+  "isbn": "9781781101339",
+  "edition": "OL59922412M",
+  "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage",
+  "note": "cover ol:15116678, looked at 2026-09-26; ebook cover of the 2022 digital redesign; Open Library dates the edition 2015",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "4",
+  "title": "Harry Potter y el cáliz de fuego",
+  "isbn": "9781781101346",
+  "edition": "OL59922445M",
+  "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage",
+  "note": "cover ol:15116681, looked at 2026-09-26; ebook cover of the 2022 digital redesign; Open Library dates the edition 2015",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "5",
+  "title": "Harry Potter y la Orden del Fénix",
+  "isbn": "9781781101353",
+  "edition": "OL59922427M",
+  "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage",
+  "note": "cover ol:15116683, looked at 2026-09-26; ebook cover of the 2022 digital redesign; Open Library dates the edition 2015",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "6",
+  "title": "Harry Potter y el Misterio Del Príncipe",
+  "isbn": "9781781101360",
+  "edition": "OL59922463M",
+  "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage",
+  "note": "cover ol:15116684, looked at 2026-09-26; ebook cover of the 2022 digital redesign; Open Library dates the edition 2015",
+  "source": "Open Library edition record"
+ },
+ {
+  "no": "7",
+  "title": "Harry Potter y las Reliquias de la Muerte",
+  "isbn": "9781781102701",
+  "edition": "OL59922466M",
+  "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage",
+  "note": "cover ol:15116685, looked at 2026-09-26; ebook cover of the 2022 digital redesign; Open Library dates the edition 2015",
   "source": "Open Library edition record"
  }
 ]
