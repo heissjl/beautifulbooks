@@ -58,6 +58,13 @@ interface Entry {
    * dropped whole, because half a set is not the edition's design.
    */
   set?: string;
+  /**
+   * Set by hand: which of the edition's images is the cover, when the first
+   * is not (a library sticker on the first scan, a clean one second —
+   * Scholastic 2013, Harry Potter vol. 1). Must be one of the edition's
+   * `covers`; otherwise the entry is reported and left out.
+   */
+  cover?: number;
 }
 
 const cache: Record<string, unknown> = existsSync(CACHE_FILE) ? JSON.parse(readFileSync(CACHE_FILE, 'utf8')) : {};
@@ -90,11 +97,12 @@ async function getJson<T>(path: string): Promise<T | null> {
 interface Edition { covers?: number[]; works?: Array<{ key: string }>; title?: string }
 interface Work { title?: string; authors?: Array<{ author?: { key: string } }>; first_publish_date?: string }
 
-async function resolve(isbn: string, editionKey?: string) {
+async function resolve(isbn: string, editionKey?: string, chosen?: number) {
   const edition = await getJson<Edition>(editionKey ? `/books/${editionKey}.json` : `/isbn/${isbn}.json`);
   const workKey = edition?.works?.[0]?.key;
   if (!edition || !workKey) return null;
-  const cover = (edition.covers ?? []).find(c => c > 0);
+  const covers = (edition.covers ?? []).filter(c => c > 0);
+  const cover = chosen ? covers.find(c => c === chosen) : covers[0];
   return { workKey, cover };
 }
 
@@ -112,7 +120,7 @@ async function main() {
   for (const e of entries) {
     if (works.length >= maxWorks) break;
     if (e.skip) continue;
-    let hit = await resolve(e.isbn, e.edition);
+    let hit = await resolve(e.isbn, e.edition, e.cover);
     let coverFrom = e.edition && !e.isbn ? '' : e.isbn;
     for (const alt of e.fallbackIsbns ?? []) {
       if (hit?.cover) break;
