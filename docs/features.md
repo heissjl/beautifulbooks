@@ -30,6 +30,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
+| Unter der Wand und auf der Jahrzehnte-Seite: „More by <Name> →" mit bis zu sechs weiteren Büchern der Erstautorin (drei auf dem Telefon), je ein Cover (kuratiert, wo Julian eins gewählt hat); eine Open-Library-Suche je Autor und Tag, kein Google; bei Ausfall nur die Zeile | 2026-09-27 | F2.15 | 6.53 | `lib/authorworks.ts`, `app/api/authors/[key]/works/route.ts`, `components/AuthorWorks.tsx`, `components/useAuthorWorks.ts` |
 | Seitenweises Laden der Ausgaben (100 je Seite, bis 1.500), Wand steht nach Seite 0, Zähler statt Versprechen | 2026-09-07 | F2.2, F2.3 | Schritt 11 (PLAN-11) | `lib/work.ts` (`getWorkPage`), `components/useWorkPages.ts`, `lib/pages.ts` |
 | Andere Open-Library-Datensätze desselben Buchs (Identitätsregel 2) werden nach den eigenen Seiten mitgeladen, ohne Google, höchstens zwölf; der Zähler zählt über alle | 2026-09-11 | §2.1, F2.3 | 6.13 | `lib/works.ts` (`siblingsOf`), `lib/sources/openlibrary.ts` (`searchSiblingWorks`), `components/useWorkPages.ts` |
 | Sprach-Reiter in fester Reihenfolge (gesucht, en, de, Häufigkeit, Unknown), eingefroren nach dem ersten Auftauchen | 2026-09-07 | F2.4, E17 | Schritt 11 | `lib/pages.ts` (`orderGroups`) |
