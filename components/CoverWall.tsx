@@ -76,6 +76,10 @@ function CoverTile({ w, selectCover, caption, hideAuthor = false }: { w: Tile; s
           {'coverArtists' in w && w.coverArtists && w.coverArtists.length > 0 && (
             <p className="mt-0.5 line-clamp-1 text-[11px] italic leading-snug text-ink-3">Cover: {w.coverArtists.join(', ')}</p>
           )}
+          {/* A painting and its painter, two lines at most, where the printing credits it (coverCredits: artwork). */}
+          {'coverArt' in w && w.coverArt && (
+            <p className="mt-0.5 line-clamp-2 text-[11px] italic leading-snug text-ink-3" title={w.coverArt}>Cover: {w.coverArt}</p>
+          )}
         </>
       )}
     </Link>

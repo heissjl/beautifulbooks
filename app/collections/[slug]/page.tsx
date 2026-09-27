@@ -118,6 +118,11 @@ export default async function CollectionPage({ params }: PageProps) {
             for the printing shown (<a href="https://creativecommons.org/licenses/by/4.0/" className="underline underline-offset-2 hover:text-accent">CC BY 4.0</a>). Where a tile names nobody, ISFDB does not credit that printing, or credits several artists.
           </p>
         )}
+        {c.coverCredits === 'artwork' && (
+          <p className="mt-10 max-w-2xl text-xs text-ink-3">
+            The paintings are named as the books credit them on the back cover, for the printing shown, read from scans at the Internet Archive or from collectors quoting their own copies. Where a tile names nothing, no such credit was found — the picture is not therefore anonymous.
+          </p>
+        )}
       </main>
       <SiteFooter />
     </div>
