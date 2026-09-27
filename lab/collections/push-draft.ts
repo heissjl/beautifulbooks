@@ -18,6 +18,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { CollectionRecord } from '../../lib/collections';
+import { DRAFT_LIMITS } from '../../lib/curate/drafts';
 import { draftDelta, type DraftLike } from './draftdelta';
 
 const ROOT = join(import.meta.dirname, '..', '..');
@@ -57,7 +58,7 @@ async function main() {
         its boundary — publishers or authors — before the works follow below.
       */
       draft = (await call<{ draft: typeof drafts[number] }>('/api/curate/drafts', { title: record.title, kind: record.kind })).draft;
-      for (const name of record.publishers ?? []) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'addPublisher', name })).draft;
+      for (const name of (record.publishers ?? []).slice(0, DRAFT_LIMITS.publishers)) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'addPublisher', name })).draft;
       for (const a of record.authors ?? []) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'addAuthor', name: a.name, key: a.keys[0] ?? '' })).draft;
       console.log(`${slug}: new empty online draft ${draft.id} (not yet in the deployed file)`);
       // The site derives an empty draft's address from its title; a title that slugs differently cannot be found again by this tool.
@@ -67,7 +68,8 @@ async function main() {
 
   // The boundary first: publishers or authors the file has and the draft lacks (a run cut short by a 429 can leave them out).
   const d = draft as typeof draft & { publishers?: string[]; authors?: Array<{ name: string }> };
-  for (const name of (record.publishers ?? []).filter(n => !(d.publishers ?? []).includes(n))) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'addPublisher', name })).draft;
+  // A draft holds at most DRAFT_LIMITS.publishers spellings; the rest stay in the file only.
+  for (const name of (record.publishers ?? []).filter(n => !(d.publishers ?? []).includes(n)).slice(0, Math.max(0, DRAFT_LIMITS.publishers - (d.publishers ?? []).length))) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'addPublisher', name })).draft;
   for (const a of (record.authors ?? []).filter(a => !(d.authors ?? []).some(x => x.name === a.name))) draft = (await call<{ draft: typeof draft }>(`/api/curate/drafts/${draft.id}`, { op: 'addAuthor', name: a.name, key: a.keys[0] ?? '' })).draft;
 
   const delta = draftDelta(draft, record);

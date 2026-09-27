@@ -44,4 +44,11 @@ describe('draftDelta', () => {
     const r = draftDelta({ title: 'X', intro: '', works: [w('OL1W'), w('OL2W', 'local:vol-02')] }, { title: 'X', intro: '', works: file });
     expect(r.onlineOnly).toEqual([]);
   });
+
+  it('reads a draft copied from a wall of sets by the first cover of each work, as the file does', () => {
+    const file = [w('OL1W', 'ol:1'), w('OL2W', 'ol:2'), w('OL1W', 'ol:3'), w('OL2W', 'ol:4')];
+    const r = draftDelta({ title: 'X', intro: '', works: file }, { title: 'X', intro: '', works: file });
+    expect(r.summary).toBe('already equal');
+    expect(r.onlineOnly).toEqual([]);
+  });
 });

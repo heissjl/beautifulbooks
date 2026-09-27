@@ -36,7 +36,9 @@ export function draftDelta(draft: DraftLike, fileRecord: Pick<CollectionRecord, 
   if (meta.title !== undefined || meta.intro !== undefined) ops.push(meta);
 
   const fileIds = new Set(record.works.map(w => w.id));
-  const online = new Map(draft.works.map(w => [w.id, w]));
+  // First pick per work, as the draft's own steps see it; a draft copied from the file may hold a work under several covers.
+  const online = new Map<string, DraftLike['works'][number]>();
+  for (const w of draft.works) if (!online.has(w.id)) online.set(w.id, w);
   // A draft copied from the deployed file on /curate carries the file's own picks, site images included; those are not extra.
   const anyFileIds = new Set(fileRecord.works.map(w => w.id));
   const removed = draft.works.filter(w => !anyFileIds.has(w.id));
@@ -52,7 +54,7 @@ export function draftDelta(draft: DraftLike, fileRecord: Pick<CollectionRecord, 
     ops.push({ op: 'pick', id: w.id, title: w.title, author: w.author, coverId: w.coverId });
   }
   const wanted = record.works.map(w => w.id);
-  const kept = draft.works.filter(w => fileIds.has(w.id)).map(w => w.id);
+  const kept = [...new Set(draft.works.filter(w => fileIds.has(w.id)).map(w => w.id))];
   const afterSteps = [...kept, ...wanted.filter(id => !online.has(id))];
   if (afterSteps.join() !== wanted.join()) ops.push({ op: 'order', ids: wanted });
 
