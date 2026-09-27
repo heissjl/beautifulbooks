@@ -8,6 +8,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
+| Suche: Tippfehler werden bei leerer oder schwacher Antwort mit einer zweiten Anfrage korrigiert („Showing results for …", Link zum Getippten); „Author only" (`/?author=`) listet die Bücher einer Person, auch über gleichnamige Datensätze; keine Sprach-Pillen mehr, `?lang=` wählt nur den Reiter der Detailseite | 2026-09-27 | F1.2, F1.9, F1.10 | 6.60 | `lib/spelling.ts`, `lib/lexicon.ts`, `lib/authorsearch.ts`, `lib/search.ts`, `components/SearchBar.tsx` |
 | Freitextsuche, ein Aufruf an Open Library, **nie** an Google | 2026-09-06 / 09-07 | F1.1, E10 | PLAN-B B8 | `lib/search.ts` |
 | Sprachfilter als Pillen (`all`, `en`, `de`, …), wirkt auf Ausgaben, nicht Werke | 2026-09-06 | F1.2 | — | `components/SearchBar.tsx` |
 | Ranking relational zum Ergebnis; Ableitungen, Bühnenfassungen, Sekundärliteratur nach hinten (vier Regeln) | 2026-09-07 / 09-08 | F1.4 | Schritt 10, 6.1 | `lib/works.ts` (`relevance`, `rankContext`, `derivativeIds`) |
