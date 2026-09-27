@@ -3,12 +3,14 @@
  *
  * Run:
  *   npx tsx lab/video/render.ts OL893414W
- *   npx tsx lab/video/render.ts OL468431W --count 30 --seconds 15
+ *   npx tsx lab/video/render.ts OL468431W --count 30 --seconds 15   # default 20
  *   npx tsx lab/video/render.ts OL893414W --lang de --count 20
  *
- * Writes under lab/video/out/<workId>/ (git-ignored): one PNG per shot in
- * frames/, the ffmpeg concat list, encode.sh, an animated WebP preview, and —
- * when ffmpeg is installed — <workId>.mp4 (H.264, yuv420p, 1080×1920).
+ * Writes under lab/video/out/<workId>/ (git-ignored): every frame as JPEG in
+ * frames/, six key moments as PNG in stills/, encode.sh, an animated WebP
+ * preview, report.json, and — when ffmpeg is installed — <workId>.mp4
+ * (H.264, yuv420p, 1080×1920). The choice is `storyboard.ts`, the drawing
+ * `frames.ts`, the text `text.py`.
  *
  * **Generate yes, post by hand.** Nothing here uploads anything anywhere, and
  * the rights question of 5.5 is open until Julian answers it.
@@ -33,7 +35,10 @@ import { OL_EDITIONS_PAGE, getEditionsPage, getWork } from '../../lib/sources/op
 import { parseEditions } from '../../lib/sources/openlibrary-parse';
 import { MAX_EDITIONS_SCANNED } from '../../lib/work';
 import { assembleEditions } from '../../lib/works';
-import { storyboard, type CardShot, type CoverShot, type Storyboard } from './storyboard';
+import { FrameRenderer, textItems, type TextImage, type TextItem } from './frames';
+import {
+  chooseDesigns, storyboard, type CoverMeasure, type CoverShot, type Storyboard, type StoryboardInput, type StoryboardOptions,
+} from './storyboard';
 
 const ROOT = path.join('lab', 'video', 'out');
 const CACHE = path.join(ROOT, 'cache');
@@ -88,12 +93,14 @@ interface Options {
   language?: string;
   maxRecords: number;
   preview: boolean;
+  previewFps: number;
+  previewWidth: number;
 }
 
 function parseArgs(argv: string[]): Options {
   const [workId, ...rest] = argv;
   if (!workId || !/^OL\d+W$/.test(workId)) {
-    throw new Error('usage: npx tsx lab/video/render.ts <OL…W> [--count 30] [--seconds 15] [--fps 30] [--lang en] [--max-records 1500] [--preview false]');
+    throw new Error('usage: npx tsx lab/video/render.ts <OL…W> [--count 30] [--seconds 20] [--fps 30] [--lang en] [--max-records 1500] [--preview false] [--preview-fps 15] [--preview-width 360]');
   }
   const flags = new Map<string, string>();
   for (let i = 0; i < rest.length; i += 2) {
@@ -110,11 +117,13 @@ function parseArgs(argv: string[]): Options {
   return {
     workId,
     count: num('count', 30),
-    seconds: num('seconds', 15),
+    seconds: num('seconds', 20),
     fps: num('fps', 30),
     language: flags.get('lang') || undefined,
     maxRecords: Math.min(num('max-records', MAX_EDITIONS_SCANNED), MAX_EDITIONS_SCANNED),
     preview: (flags.get('preview') ?? 'true') !== 'false',
+    previewFps: num('preview-fps', 15),
+    previewWidth: Math.round(num('preview-width', 360)),
   };
 }
 
@@ -203,100 +212,70 @@ async function signaturesFor(covers: readonly Cover[]): Promise<{ sigs: Map<stri
 }
 
 // ---------------------------------------------------------------------------
-// Frames.
+// Measuring the chosen covers, until the choice holds still.
 
-const BG = '#141414';
-const INK = '#f2efe9';
-const MUTED = '#9a958c';
-const SERIF = "Georgia, 'Times New Roman', serif";
-const SANS = "'Helvetica Neue', Helvetica, Arial, sans-serif";
-
-function esc(text: string): string {
-  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+/** Width, height and tone of a cover's L image, for the clip's rules (storyboard.ts). */
+async function measure(bytes: Uint8Array): Promise<CoverMeasure | null> {
+  const meta = await sharp(bytes).metadata();
+  const sig = signature(bytes, { colour: true });
+  if (!meta.width || !meta.height || !sig) return null;
+  return { width: meta.width, height: meta.height, mean: sig.mean ?? 128, contrast: sig.contrast, saturation: sig.saturation ?? 0 };
 }
 
-/** Greedy word wrap by character count; good enough for titles and captions. */
-function wrap(text: string, maxChars: number, maxLines: number): string[] {
-  const lines: string[] = [];
-  let line = '';
-  for (const word of text.split(/\s+/).filter(Boolean)) {
-    if (line && (line + ' ' + word).length > maxChars) { lines.push(line); line = word; } else line = line ? `${line} ${word}` : word;
+/**
+ * The clip's rules need the L image (its size, its tone), and fetching it for
+ * every design of a 280-design book would be 280 downloads for 30 frames. So
+ * only the chosen covers are measured; a rejected one frees its slot, the
+ * choice is made again, and the newcomers are measured — until nothing new is
+ * chosen. Ten rounds is far more than it takes (three for Gatsby).
+ */
+async function chooseAndMeasure(
+  input: StoryboardInput,
+  options: StoryboardOptions,
+): Promise<{ measures: Map<string, CoverMeasure>; images: Map<string, Uint8Array>; rounds: number; failed: number; unusable: Set<string> }> {
+  const measures = new Map<string, CoverMeasure>();
+  const images = new Map<string, Uint8Array>();
+  const covers = new Map(input.covers.map(c => [c.id, c]));
+  let failed = 0;
+  let rounds = 0;
+  const unusable = new Set<string>();
+  for (; rounds < 10; rounds++) {
+    const { chosen } = chooseDesigns({ ...input, measures, covers: input.covers.filter(c => !unusable.has(c.id)) }, options);
+    const fresh = chosen.filter(d => !measures.has(d.cover.id));
+    if (fresh.length === 0) break;
+    for (const d of fresh) {
+      try {
+        const bytes = await coverImage(covers.get(d.cover.id)!, 'L');
+        const m = await measure(bytes);
+        if (!m) throw new Error('undecodable');
+        measures.set(d.cover.id, m);
+        images.set(d.cover.id, bytes);
+      } catch {
+        failed++;
+        unusable.add(d.cover.id);
+      }
+    }
   }
-  if (line) lines.push(line);
-  if (lines.length > maxLines) {
-    const kept = lines.slice(0, maxLines);
-    kept[maxLines - 1] = kept[maxLines - 1].replace(/\s*\S*$/, '') + ' …';
-    return kept;
+  return { measures, images, rounds, failed, unusable };
+}
+
+// ---------------------------------------------------------------------------
+// Text, in the site's fonts, set by text.py in one run.
+
+async function setText(items: TextItem[], outDir: string): Promise<{ text: Map<string, TextImage>; fonts: string }> {
+  const textDir = path.join(outDir, 'text');
+  await rm(textDir, { recursive: true, force: true });
+  const mainRepo = path.dirname(execFileSync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'], { encoding: 'utf8' }).trim());
+  const run = spawnSync('python3', [path.join('lab', 'video', 'text.py'), path.join(ROOT, 'fonts'), textDir, process.cwd(), mainRepo], {
+    input: JSON.stringify({ items }), encoding: 'utf8', maxBuffer: 1 << 24,
+  });
+  if (run.status !== 0) throw new Error(`text.py failed: ${run.stderr}`);
+  const result = JSON.parse(run.stdout) as { fonts: string; items: Record<string, { w: number; h: number }> };
+  const text = new Map<string, TextImage>();
+  for (const [id, { w, h }] of Object.entries(result.items)) {
+    text.set(id, { png: await readFile(path.join(textDir, `${id}.png`)), w, h });
   }
-  return lines;
-}
-
-interface TextLine { text: string; y: number; size: number; font: string; fill: string }
-
-function textSvg(width: number, height: number, lines: TextLine[], extra = ''): Buffer {
-  const body = lines.map(l =>
-    `<text x="${width / 2}" y="${l.y}" font-family="${esc(l.font)}" font-size="${l.size}" fill="${l.fill}" text-anchor="middle">${esc(l.text)}</text>`,
-  ).join('');
-  return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">${extra}${body}</svg>`);
-}
-
-function cardFrame(board: Storyboard, shot: CardShot): Promise<Buffer> {
-  const { width, height } = board;
-  const lines: TextLine[] = [];
-  if (shot.kind === 'title') {
-    const [lead, title, byline] = shot.lines;
-    const titleLines = wrap(title, 14, 4);
-    const titleSize = 112;
-    const block = titleLines.length * titleSize * 1.1;
-    let y = height / 2 - block / 2 - 40;
-    lines.push({ text: lead, y, size: 56, font: SANS, fill: MUTED });
-    y += 50;
-    for (const t of titleLines) { y += titleSize * 1.1; lines.push({ text: t, y, size: titleSize, font: SERIF, fill: INK }); }
-    if (byline) lines.push({ text: byline, y: y + 100, size: 46, font: SANS, fill: MUTED });
-  } else {
-    const [site, credit] = shot.lines;
-    lines.push({ text: site, y: height / 2, size: 60, font: SERIF, fill: INK });
-    if (credit) lines.push({ text: credit, y: height / 2 + 70, size: 34, font: SANS, fill: MUTED });
-  }
-  return sharp({ create: { width, height, channels: 3, background: BG } })
-    .composite([{ input: textSvg(width, height, lines), top: 0, left: 0 }])
-    .png()
-    .toBuffer();
-}
-
-/** Box a cover is fitted into: wide margins, room above for the title and below for the caption. */
-const BOX = { width: 860, height: 1290, centreY: 900 };
-
-async function coverFrame(board: Storyboard, shot: CoverShot, image: Uint8Array, title: string): Promise<{ png: Buffer; sourceWidth: number }> {
-  const { width, height } = board;
-  const meta = await sharp(image).metadata();
-  const resized = await sharp(image)
-    .resize({ width: BOX.width, height: BOX.height, fit: 'inside', kernel: 'lanczos3' })
-    .flatten({ background: BG })
-    .png()
-    .toBuffer({ resolveWithObject: true });
-  const w = resized.info.width;
-  const h = resized.info.height;
-  const left = Math.round((width - w) / 2);
-  const top = Math.round(BOX.centreY - h / 2);
-  // A soft shadow under the cover, so a white jacket does not merge with a
-  // light frame edge and a dark one still reads as an object.
-  const shadow = `<defs><filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="22"/></filter></defs>`
-    + `<rect x="${left + 6}" y="${top + 18}" width="${w}" height="${h}" fill="#000" opacity="0.7" filter="url(#s)"/>`;
-  const lines: TextLine[] = [
-    { text: wrap(title, 34, 1)[0], y: 190, size: 40, font: SERIF, fill: MUTED },
-  ];
-  const captionLines = shot.caption ? wrap(shot.caption, 38, 2) : [];
-  captionLines.forEach((c, i) => lines.push({ text: c, y: top + h + 110 + i * 56, size: 44, font: SANS, fill: INK }));
-  const png = await sharp({ create: { width, height, channels: 3, background: BG } })
-    .composite([
-      { input: textSvg(width, height, [], shadow), top: 0, left: 0 },
-      { input: resized.data, top, left },
-      { input: textSvg(width, height, lines), top: 0, left: 0 },
-    ])
-    .png()
-    .toBuffer();
-  return { png, sourceWidth: meta.width ?? 0 };
+  return { text, fonts: result.fonts };
 }
 
 // ---------------------------------------------------------------------------
@@ -312,10 +291,13 @@ function seconds(ms: number): number {
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   const started = Date.now();
-  const outDir = path.join(ROOT, options.workId + (options.language ? `-${options.language}` : ''));
+  const slug = options.workId + (options.language ? `-${options.language}` : '');
+  const outDir = path.join(ROOT, slug);
   const framesDir = path.join(outDir, 'frames');
-  await rm(framesDir, { recursive: true, force: true });
+  const stillsDir = path.join(outDir, 'stills');
+  await rm(outDir, { recursive: true, force: true });
   await mkdir(framesDir, { recursive: true });
+  await mkdir(stillsDir, { recursive: true });
 
   console.log(`Loading ${options.workId} from Open Library …`);
   const data = await loadWork(options.workId, options.maxRecords);
@@ -327,57 +309,49 @@ async function main() {
   console.log(`  ${fromIndex} from the built index, ${hashed} hashed here, ${failed} images did not arrive`);
   const signed = Date.now();
 
-  const board = storyboard(
-    { work: data.work, editions: data.editions, covers: data.covers, signatures: sigs },
-    { count: options.count, seconds: options.seconds, fps: options.fps, language: options.language, siteName: SITE_NAME },
-  );
+  const sbOptions: StoryboardOptions = {
+    count: options.count, seconds: options.seconds, fps: options.fps, language: options.language, siteName: SITE_NAME,
+  };
+  const input: StoryboardInput = { work: data.work, editions: data.editions, covers: data.covers, signatures: sigs };
+  console.log('Choosing and measuring …');
+  const chosen = await chooseAndMeasure(input, sbOptions);
+  const board = storyboard({ ...input, covers: input.covers.filter(c => !chosen.unusable.has(c.id)), measures: chosen.measures }, sbOptions);
   const coverShots = board.shots.filter((s): s is CoverShot => s.kind === 'cover');
-  console.log(`  ${board.designs} designs after folding; showing ${coverShots.length}, ${seconds((coverShots[0].frames / board.fps) * 1000)} s each`);
+  console.log(`  ${board.designs} designs eligible; showing ${coverShots.length} (${chosen.rounds} rounds, ${chosen.measures.size} L images measured); left out: ${JSON.stringify(board.excluded)}`);
+  const measured = Date.now();
 
-  console.log('Frames …');
-  const concat: string[] = [];
+  console.log('Text …');
+  const { text, fonts } = await setText(textItems(board, { title: data.work.title, author: data.work.authors[0] ?? '' }), outDir);
+  if (fonts !== 'site') console.log('  the site fonts were not found (run `npm run dev` once so next/font fetches them); set in system fonts');
+
+  console.log(`Frames (${board.totalFrames}) …`);
+  const renderer = new FrameRenderer({ board, text, images: chosen.images });
+  const previewEvery = Math.max(1, Math.round(board.fps / options.previewFps));
   const previewFrames: Buffer[] = [];
-  const previewDelays: number[] = [];
-  const sourceWidths: number[] = [];
-  let lFailed = 0;
+  const stillAt = keyMoments(board);
   let index = 0;
-  for (const shot of board.shots) {
-    let png: Buffer;
-    if (shot.kind === 'cover') {
-      const cover = data.covers.find(c => c.id === shot.coverId)!;
-      let image: Uint8Array;
-      try {
-        image = await coverImage(cover, 'L');
-      } catch {
-        lFailed++;
-        image = await coverImage(cover, 'M');
-      }
-      const frame = await coverFrame(board, shot, image, data.work.title);
-      png = frame.png;
-      sourceWidths.push(frame.sourceWidth);
-    } else {
-      png = await cardFrame(board, shot);
+  let framesBytes = 0;
+  const raw = { raw: { width: board.width, height: board.height, channels: 3 as const } };
+  for await (const frame of renderer.frames()) {
+    const jpg = await sharp(frame, raw).jpeg({ quality: 90, mozjpeg: true }).toBuffer();
+    framesBytes += jpg.length;
+    await writeFile(path.join(framesDir, `${String(index).padStart(4, '0')}.jpg`), jpg);
+    const still = stillAt.get(index);
+    if (still) await sharp(frame, raw).png().toFile(path.join(stillsDir, `${still}.png`));
+    if (options.preview && index % previewEvery === 0) {
+      previewFrames.push(await sharp(frame, raw).resize({ width: options.previewWidth }).png().toBuffer());
     }
-    const name = `${String(index++).padStart(3, '0')}.png`;
-    await writeFile(path.join(framesDir, name), png);
-    concat.push(`file 'frames/${name}'`, `duration ${(shot.frames / board.fps).toFixed(6)}`);
-    if (options.preview) {
-      previewFrames.push(await sharp(png).resize({ width: board.width / 2 }).png().toBuffer());
-      previewDelays.push(Math.round((shot.frames / board.fps) * 1000));
-    }
+    if ((index + 1) % 100 === 0) process.stdout.write(`  ${index + 1} of ${board.totalFrames}\n`);
+    index++;
   }
-  // The concat demuxer ignores the last duration unless the file is repeated.
-  concat.push(concat[concat.length - 2]);
-  await writeFile(path.join(outDir, 'concat.txt'), concat.join('\n') + '\n');
-  const mp4 = `${options.workId}${options.language ? `-${options.language}` : ''}.mp4`;
+  const mp4 = `${slug}.mp4`;
   const ffmpegArgs = [
-    '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', 'concat.txt',
-    '-vf', `fps=${board.fps},format=yuv420p`, '-c:v', 'libx264', '-preset', 'medium', '-crf', '20',
-    '-r', String(board.fps), '-movflags', '+faststart', '-an', mp4,
+    '-y', '-loglevel', 'error', '-framerate', String(board.fps), '-i', 'frames/%04d.jpg',
+    '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-an', mp4,
   ];
   await writeFile(
     path.join(outDir, 'encode.sh'),
-    `#!/bin/sh\n# Encodes the frames into ${mp4} (needs ffmpeg: brew install ffmpeg).\ncd "$(dirname "$0")" && ffmpeg ${ffmpegArgs.map(a => (/[\s,+=]/.test(a) ? `'${a}'` : a)).join(' ')}\n`,
+    `#!/bin/sh\n# Encodes the frames into ${mp4} (needs ffmpeg: brew install ffmpeg).\ncd "$(dirname "$0")" && ffmpeg ${ffmpegArgs.map(a => (/[\s%+]/.test(a) ? `'${a}'` : a)).join(' ')}\n`,
     { mode: 0o755 },
   );
   const framed = Date.now();
@@ -385,7 +359,10 @@ async function main() {
   let previewBytes = 0;
   if (options.preview) {
     const webp = path.join(outDir, 'preview.webp');
-    await sharp(previewFrames, { join: { animated: true } }).webp({ quality: 80, delay: previewDelays, loop: 0 }).toFile(webp);
+    const delay = Math.round((1000 * previewEvery) / board.fps);
+    await sharp(previewFrames, { join: { animated: true } })
+      .webp({ quality: 72, delay: previewFrames.map(() => delay), loop: 0, effort: 4 })
+      .toFile(webp);
     previewBytes = (await stat(webp)).size;
   }
 
@@ -399,43 +376,67 @@ async function main() {
     mp4Bytes = (await stat(path.join(outDir, mp4))).size;
   }
 
-  const framesBytes = (await Promise.all(index > 0 ? Array.from({ length: index }, (_, i) =>
-    stat(path.join(framesDir, `${String(i).padStart(3, '0')}.png`)).then(s => s.size)) : [])).reduce((a, b) => a + b, 0);
-  const widths = [...sourceWidths].sort((a, b) => a - b);
+  const widths = [...chosen.measures.entries()].filter(([id]) => coverShots.some(s => s.coverId === id)).map(([, m]) => m.width).sort((a, b) => a - b);
   const report = {
     work: `${data.work.title} (${options.workId})`,
     covers: data.covers.length,
     designs: board.designs,
+    excluded: board.excluded,
     shown: coverShots.length,
-    secondsPerCover: seconds((coverShots[0].frames / board.fps) * 1000),
+    secondsFirstCover: seconds((coverShots[0].frames / board.fps) * 1000),
+    secondsLastCover: seconds((coverShots[coverShots.length - 1].frames / board.fps) * 1000),
     coversPerSecond: Math.round((coverShots.length / (coverShots.reduce((s, x) => s + x.frames, 0) / board.fps)) * 10) / 10,
-    years: [coverShots.find(s => s.year)?.year, [...coverShots].reverse().find(s => s.year)?.year],
+    years: board.span ? [board.span.from, board.span.to] : null,
     withCaption: coverShots.filter(s => s.caption).length,
+    fonts,
     lImageWidthMedian: widths[Math.floor(widths.length / 2)],
     lImageWidthMin: widths[0],
-    lImagesFallenBackToM: lFailed,
+    lImagesMeasured: chosen.measures.size,
+    measureRounds: chosen.rounds,
     requests: Object.fromEntries(requestsByHost),
     googleRequests: [...requestsByHost].filter(([h]) => h.includes('google')).reduce((s, [, n]) => s + n, 0),
+    frames: board.totalFrames,
     timeSeconds: {
       load: seconds(loaded - started),
       signatures: seconds(signed - loaded),
-      frames: seconds(framed - signed),
+      chooseAndMeasure: seconds(measured - signed),
+      frames: seconds(framed - measured),
       encode: encodeMs ? seconds(encodeMs) : null,
       total: seconds(Date.now() - started),
     },
-    bytes: { frames: framesBytes, previewWebp: previewBytes, mp4: mp4Bytes || null },
+    bytes: { framesJpeg: framesBytes, previewWebp: previewBytes, mp4: mp4Bytes || null },
+    preview: { fps: board.fps / previewEvery, width: options.previewWidth },
   };
   await writeFile(path.join(outDir, 'report.json'), JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify(report, null, 2));
-  if (!mp4Bytes) {
-    console.log(`\nffmpeg is not installed, so no MP4. Frames, concat.txt and encode.sh are in ${outDir};`
-      + ` after \`brew install ffmpeg\` run ${path.join(outDir, 'encode.sh')} or this script again.`);
-  } else {
-    console.log(`\nWrote ${path.join(outDir, mp4)}`);
+  console.log(mp4Bytes
+    ? `\nWrote ${path.join(outDir, mp4)}`
+    : `\nffmpeg is not installed, so no MP4. Frames and encode.sh are in ${outDir}; after \`brew install ffmpeg\` run ${path.join(outDir, 'encode.sh')}.`);
+}
+
+/** Frame numbers worth a full-size still: the title settled, a cover, the wall held, the end card. */
+function keyMoments(board: Storyboard): Map<number, string> {
+  const out = new Map<number, string>();
+  let at = 0;
+  let coverSeen = 0;
+  for (const shot of board.shots) {
+    if (shot.kind === 'title') out.set(at + shot.frames - 1, '1-title');
+    if (shot.kind === 'cover') {
+      if (coverSeen === 0) out.set(at + shot.frames - 1, '2-first-cover');
+      if (coverSeen === 1) out.set(at + Math.floor(shot.transition / 2), '3-push');
+      coverSeen++;
+    }
+    if (shot.kind === 'grid') {
+      out.set(at + Math.floor(shot.frames * 0.22), '4-wall-filling');
+      out.set(at + shot.frames - 1, '5-wall');
+    }
+    if (shot.kind === 'end') out.set(at + shot.frames - 1, '6-end');
+    at += shot.frames;
   }
+  return out;
 }
 
 main().catch(err => {
-  console.error((err as Error).message);
+  console.error((err as Error).stack ?? (err as Error).message);
   process.exit(1);
 });
