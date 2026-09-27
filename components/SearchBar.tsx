@@ -12,22 +12,10 @@ interface SearchBarProps {
   setSearchQuery: (query: string, mode: SearchMode) => void;
   /** The mode of the search in the address; the reader can switch it before searching. */
   mode: SearchMode;
-  language: string;
-  setLanguage: (language: string) => void;
   /** Larger, centered variant for the empty home page. */
   hero?: boolean;
 }
 
-export const LANGUAGES = [
-  { code: '', label: 'All languages' },
-  { code: 'en', label: 'English' },
-  { code: 'de', label: 'German' },
-  { code: 'fr', label: 'French' },
-  { code: 'es', label: 'Spanish' },
-  { code: 'it', label: 'Italian' },
-  { code: 'pt', label: 'Portuguese' },
-  { code: 'ja', label: 'Japanese' },
-];
 
 export const POPULAR_SEARCHES = [
   { query: 'The Great Gatsby', author: 'F. Scott Fitzgerald' },
@@ -44,7 +32,7 @@ const MODES: { mode: SearchMode; label: string }[] = [
   { mode: 'author', label: 'Author only' },
 ];
 
-export default function SearchBar({ searchQuery, setSearchQuery, mode, language, setLanguage, hero }: SearchBarProps) {
+export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: SearchBarProps) {
   const [inputValue, setInputValue] = useState(searchQuery);
   const [syncedQuery, setSyncedQuery] = useState(searchQuery);
   const [currentMode, setCurrentMode] = useState<SearchMode>(mode);
@@ -107,8 +95,8 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, language,
     <form onSubmit={e => { e.preventDefault(); submit(inputValue); }} className="w-full" role="search">
       {/*
         The list closes when focus leaves the field, its button and the list
-        itself (ROADMAP 6.56): after Tab it stayed open over the language
-        pills while focus was already on the result cards. Escape closes it too.
+        itself (ROADMAP 6.56): after Tab it stayed open over the pills
+        below while focus was already on the result cards. Escape closes it too.
       */}
       <div
         className="relative"
@@ -195,36 +183,19 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, language,
       </div>
 
       {/*
-        The mode first, then the language (ROADMAP 6.60). The language pills
-        go away in the author mode: they filter works by the languages of
-        their editions, and a person's books are not narrowed that way.
+        The mode chips (ROADMAP 6.60). The language pills that stood here are
+        gone (Julian, 2026-09-27, PLAN-search-2026-09 §6.1): measured over 112
+        cases, "English" never changed the first card, the others left one to
+        three works, seven lists came back empty, and the covers a reader
+        hoped for sit on the detail page's language tabs anyway. An old
+        `?lang=` is still carried to the detail page as the tab to open.
       */}
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Search in">
-          {MODES.map(m => (
-            <button key={m.mode} type="button" className="chip" aria-pressed={currentMode === m.mode} onClick={() => switchMode(m.mode)}>
-              {m.label}
-            </button>
-          ))}
-        </div>
-        {!authorMode && (
-          <>
-            <span className="mx-1 hidden h-5 w-px bg-line sm:inline-block" aria-hidden="true" />
-            <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Language">
-              {LANGUAGES.map(lang => (
-                <button
-                  key={lang.code}
-                  type="button"
-                  className="chip"
-                  aria-pressed={(language || '') === lang.code}
-                  onClick={() => setLanguage(lang.code)}
-                >
-                  {lang.label}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
+      <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Search in">
+        {MODES.map(m => (
+          <button key={m.mode} type="button" className="chip" aria-pressed={currentMode === m.mode} onClick={() => switchMode(m.mode)}>
+            {m.label}
+          </button>
+        ))}
       </div>
     </form>
   );

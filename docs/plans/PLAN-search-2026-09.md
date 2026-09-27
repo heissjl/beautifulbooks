@@ -2,7 +2,7 @@
 
 Stand: 2026-09-27. Auftrag (Julian, 2026-09-27): „starte einen agenten, der die suchfunktion überarbeitet. automatische smarte erkennung von tippfehlern?, möglichkeit explizit nur nach autor zu suchen, checke ob die sprachpillen noch sinn ergeben?"
 
-**Status: Teil 1 (Tippfehler) und Teil 2 (Autorensuche) sind lokal gebaut und warten auf Julian; Teil 3 (Sprach-Pillen) ist gemessen und eine Frage an Julian (§6).** Nichts ist gepusht oder deployt. Gemessen am 2026-09-27 von Deutschland aus direkt gegen Open Library, Abfragen je mindestens 1,1 s auseinander; die Antworten, auf die sich die Tests stützen, liegen in `lib/__fixtures__/search/responses.json` (`npx tsx scripts/record-search-fixtures.ts`).
+**Status: Teil 1 (Tippfehler) und Teil 2 (Autorensuche) sind gebaut; Teil 3 ist entschieden (Julian, 2026-09-27: „mach das noch, dann deploy") und gebaut: die Sprach-Pillen sind aus der Suche entfernt (§6.1).** Deploy durch die koordinierende Session. Gemessen am 2026-09-27 von Deutschland aus direkt gegen Open Library, Abfragen je mindestens 1,1 s auseinander; die Antworten, auf die sich die Tests stützen, liegen in `lib/__fixtures__/search/responses.json` (`npx tsx scripts/record-search-fixtures.ts`).
 
 ---
 
@@ -123,12 +123,14 @@ Die Pille tut also zweierlei, und beides schwach: sie **dünnt die Liste aus** �
 
 1. **Tippfehler (gebaut):** so lassen. Messbar gewonnen: drei leere und zwei schwache von elf gemessenen Tippfehlern finden jetzt ihr Buch, kein Fehlalarm unter 30 gewöhnlichen Anfragen, eine Anfrage mehr nur im Bedarfsfall.
 2. **Autorensuche (gebaut):** so lassen; der Link „More by …" zeigt jetzt ihre Bücher statt einer Freitextsuche (Harper Lee 16 von 16 statt 3 von 18).
-3. **Sprach-Pillen: vereinfachen, und zwar so:** die Pillen aus der Suche **entfernen** und `?lang=` nur noch als Wunsch für die Detailseite weitertragen (ihre Reiter entscheiden dort ohnehin). Begründung: English ist ohne Wirkung, die übrigen Pillen machen in 7 von 112 Fällen eine leere und in 15 eine andere erste Karte, und was sie versprechen (Cover in einer Sprache) liefert die Trefferliste nicht. **Nicht gebaut**, weil es eine sichtbare Produktentscheidung ist (§6, Frage 1). In der Autorensuche sind die Pillen schon jetzt ausgeblendet.
+3. **Sprach-Pillen: entfernen** und `?lang=` nur noch als Wunsch für die Detailseite weitertragen. Begründung: English ist ohne Wirkung, die übrigen Pillen machen in 7 von 112 Fällen eine leere und in 15 eine andere erste Karte, und was sie versprechen (Cover in einer Sprache) liefert die Trefferliste nicht. **Von Julian so entschieden und gebaut (§6.1).**
 4. **Nebenbei gebaut:** die Suchroute zieht keinen Token mehr aus dem `google`-Eimer (sie kann Google nicht fragen).
 
 ## 6. Offene Fragen an Julian
 
-1. **Sprach-Pillen:** (a) entfernen, `?lang=` alter Links bleibt als Reiterwunsch der Detailseite (Empfehlung); (b) behalten, aber nicht mehr filtern — die Pille wählt nur, mit welchem Reiter sich eine Wand öffnet; (c) so lassen.
+1. **Sprach-Pillen — entschieden 2026-09-27, (a):** entfernt. Die Suche filtert nicht mehr nach Sprache (die Route liest `lang` nicht); ein vorhandenes `?lang=` bleibt in der Adresse, reist mit den Karten auf die Detailseite und wählt dort den ersten Reiter. Geprüft bei 390 und 1280 px: eine Chipzeile (nur noch „Titles & authors · Author only"), kein Überlauf; `/?q=gravity's rainbow&lang=it` zeigt jetzt 12 Werke statt „No books found", die Karte führt auf `/book/OL2636675W?…&lang=it`.
+
+**Die Punkte 2, 3, 5 und 6 stehen wie gebaut, bis Julian etwas anderes sagt** (keine Mindestausgaben in der Autorensuche, 10-%-Regel für gleichnamige Datensätze, keine aus Besuchen gelernte Wortliste, keine Umschrift-Tabelle). **Punkt 4 bleibt offen.**
 2. **Mindestausgaben in der Autorensuche:** die Reihe unter der Wand verlangt `max(2, 2 %)` des größten Werks. In der Liste hieße das: Harper Lee 3 statt 16 Werke, Margaret Mitchell **1** statt 15, Kafka 9 statt 22, Tolkien 42 statt 46. Vorschlag: keine Schwelle (jetzt gebaut), die Einzelausgaben stehen ohnehin hinten. Alternative: Datensätze mit einer einzigen Ausgabe weglassen.
 3. **Mehrere Datensätze einer Person:** 10 % der Leser holt *Nineteen Eighty-Four* in Orwells Liste, bringt aber bei Margaret Mitchell ein Kochbuch einer Namensvetterin mit (ihr zweiter Datensatz hat 879 Leser gegen 894, und darunter liegt Fremdes). Schwelle so lassen, höher setzen, oder eine Liste bekannter Zusatzschlüssel pflegen (wie `authors` in `collections.json`)?
 4. **Die Reihe „More by …" selbst** fragt weiter nur den Schlüssel des Werks — von *1984* aus also OL15318546A und damit fast nichts. Soll sie dieselbe Namensauflösung bekommen (eine Anfrage mehr je Wand, gecacht)?

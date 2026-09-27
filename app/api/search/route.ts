@@ -5,7 +5,7 @@ import { SourceUnavailableError } from '@/lib/sources/http';
 import { rateLimited } from '@/app/api/rate';
 
 /**
- * GET /api/search?q=<query>&lang=<iso|all>[&exact=1]
+ * GET /api/search?q=<query>[&exact=1]   (a `lang` parameter is ignored since 6.60)
  * GET /api/search?author=<name>[&key=OL…A]
  * The only search entry point for the UI (SPEC §4 N1). Response: SearchResult,
  * or AuthorSearchResult for the author mode (ROADMAP 6.60, SPEC F1.10).
@@ -46,7 +46,12 @@ export async function GET(request: NextRequest) {
       { status: 400, headers: { 'Cache-Control': 'no-store' } },
     );
   }
-  return answer(() => search(query, { language: params.get('lang') ?? undefined, exact: params.get('exact') === '1' }), false);
+  /*
+    `lang` is read no more (ROADMAP 6.60, PLAN-search-2026-09 §6.1, Julian
+    2026-09-27): the language pills are gone and the list is the same in
+    every language. An old link's `?lang=` is the detail page's business.
+  */
+  return answer(() => search(query, { exact: params.get('exact') === '1' }), false);
 }
 
 async function answer(run: () => Promise<unknown>, tooShort: boolean): Promise<NextResponse> {

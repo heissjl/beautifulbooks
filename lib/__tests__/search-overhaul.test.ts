@@ -217,6 +217,13 @@ describe('GET /api/search', () => {
     expect(calls).toEqual([]);
   });
 
+  it('ignores lang: the list is the same in every language since the pills went (6.60 §6.1)', async () => {
+    const plain = await (await get('?q=harry%20poter')).json();
+    const german = await (await get('?q=harry%20poter&lang=de')).json();
+    expect(german.works.map((w: { id: string }) => w.id)).toEqual(plain.works.map((w: { id: string }) => w.id));
+    expect(german.language).toBe('all');
+  });
+
   it('carries the correction and honours exact=1', async () => {
     expect((await (await get('?q=gatsbee')).json()).correction.to).toBe('gatsby');
     expect((await (await get('?q=gatsbee&exact=1')).json()).correction).toBeUndefined();

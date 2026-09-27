@@ -14,8 +14,9 @@ import SearchBar, { type SearchMode } from './SearchBar';
  * someone types, so that lives here: the field's value comes down as a prop,
  * and every change pushes a new URL — the URL stays the single source of
  * truth for the search (SPEC §3 F1.5). The author mode (ROADMAP 6.60) is
- * `?author=<name>`; it has no language, because a person's books are not
- * filtered by the language of their editions.
+ * `?author=<name>`. There are no language pills any more (6.60, §6.1); an
+ * existing `?lang=` travels on with a new search as the detail page's tab
+ * wish, as the header search already does (F1.4a), and filters nothing.
  */
 interface HomeSearchBarProps {
   searchQuery: string;
@@ -40,8 +41,6 @@ export default function HomeSearchBar({ searchQuery, mode, language, hero }: Hom
       searchQuery={searchQuery}
       setSearchQuery={(q, nextMode) => navigate(q, language, nextMode)}
       mode={mode}
-      language={language}
-      setLanguage={lang => navigate(searchQuery, lang, 'any')}
       hero={hero}
     />
   );

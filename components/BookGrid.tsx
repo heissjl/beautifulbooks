@@ -7,7 +7,6 @@ import BookWorkCard, { type ResultOrigin } from './BookWorkCard';
 import { shapeOf } from '@/lib/queryshape';
 import CuratedWall from './CuratedWall';
 import MosaicLoader from './MosaicLoader';
-import { LANGUAGES } from './SearchBar';
 import type { AuthorSearchResult, SearchCorrection, SearchResult } from '@/lib/search';
 
 interface BookGridProps {
@@ -131,7 +130,7 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
   const authorKey = author?.key ?? '';
   const key = author
     ? `author:${authorName}:${authorKey} #${attempt}`
-    : searchQuery ? `${searchQuery} ${language} ${exact ? 'exact' : ''} #${attempt}` : '';
+    : searchQuery ? `${searchQuery} ${exact ? 'exact' : ''} #${attempt}` : '';
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const router = useRouter();
   // Memoised: the effect depends on it, and a fresh object each render would
@@ -157,8 +156,9 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
       params.set('author', authorName);
       if (authorKey) params.set('key', authorKey);
     } else {
+      // `lang` is not sent: since 6.60 (§6.1) it no longer filters the list,
+      // it only rides along to the detail page as the tab to open.
       params.set('q', searchQuery);
-      if (language && language !== 'all') params.set('lang', language);
       if (exact) params.set('exact', '1');
     }
 
@@ -179,7 +179,7 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
       });
 
     return () => controller.abort();
-  }, [key, searchQuery, language, exact, authorName, authorKey, pasted, router]);
+  }, [key, searchQuery, exact, authorName, authorKey, pasted, router]);
 
   if (!key) return <CuratedWall />;
 
@@ -217,14 +217,9 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
         </Notice>
       );
     }
-    // Name the language filter only when one is set: suggesting the reader
-    // remove a filter they never applied sends them the wrong way.
-    const filter = language && language !== 'all' ? LANGUAGES.find(l => l.code === language)?.label : undefined;
     return (
       <Notice title="No books found">
-        {filter
-          ? `Open Library knows nothing under this title with a ${filter} edition. Try another title, or remove the language filter.`
-          : 'Open Library knows nothing under this title. Try another spelling, or add the author.'}
+        Open Library knows nothing under this title. Try another spelling, or add the author.
         {/* A suggestion the catalogue was not asked about in time: offered, not claimed (N12). */}
         {correction && !correction.applied && (
           <>
