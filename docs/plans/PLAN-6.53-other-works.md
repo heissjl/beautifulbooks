@@ -1,6 +1,6 @@
 # Plan für Roadmap 6.53: „Other works by this author" unter der Wand
 
-Geschrieben 2026-09-26 für eine Sitzung, die den Code nicht kennt (Julian: „starte einen plan für die funktion 'Other works by this author' unten auf der cover wall seite"). Vorher lesen: [CLAUDE.md](../../CLAUDE.md), [SPEC.md](../../SPEC.md) §3 F2 (bes. F2.12–F2.14), §4 N3, N4, N7, N9, N10, N12–N14, und den Roadmap-Punkt [6.53](../../ROADMAP.md). Code und Kommentare Englisch (E7), dieser Plan Deutsch. **Noch nichts gebaut.**
+Geschrieben 2026-09-26 für eine Sitzung, die den Code nicht kennt (Julian: „starte einen plan für die funktion 'Other works by this author' unten auf der cover wall seite"). Vorher lesen: [CLAUDE.md](../../CLAUDE.md), [SPEC.md](../../SPEC.md) §3 F2 (bes. F2.12–F2.14), §4 N3, N4, N7, N9, N10, N12–N14, und den Roadmap-Punkt [6.53](../../ROADMAP.md). Code und Kommentare Englisch (E7), dieser Plan Deutsch. **Stand 2026-09-27: gebaut lokal nach §9, nicht deployt**, wartet auf Julians Blick; was gebaut und gemessen ist, steht in der [Historie](../history.md#2026-09-27--more-by--unter-der-wand-lokal-gebaut-roadmap-653), das Verhalten in SPEC F2.15. Abweichungen vom Entwurf oben: `limit=50` statt 30 (so war gemessen), ein Werk ohne Autoren-Key zeigt wie Leer und Ausfall die Zeile (§9.6), und `mergeWorks` läuft über die Datensätze einer einzigen Autorin.
 
 ## 1. Ziel und Nicht-Ziel
 

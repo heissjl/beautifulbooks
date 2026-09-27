@@ -23,6 +23,14 @@ interface CoverWallProps {
    * blocks side by side from `md`.
    */
   setSize?: 3 | 7;
+  /**
+   * No author line under the title: the "More by …" row names her once in
+   * its heading, and six times the same name under six tiles is noise
+   * (ROADMAP 6.53).
+   */
+  hideAuthor?: boolean;
+  /** The grid's classes, for a row that needs other columns than the wall (6.53: 3 / 6). */
+  gridClassName?: string;
 }
 
 /* Literal class strings, so Tailwind sees them. */
@@ -37,7 +45,7 @@ const SETS: Record<3 | 7, string> = {
 
 const keyOf = (w: Tile) => `${w.id}:${'image' in w && w.image ? w.image : w.coverId}`;
 
-function CoverTile({ w, selectCover, caption }: { w: Tile; selectCover: boolean; caption: boolean }) {
+function CoverTile({ w, selectCover, caption, hideAuthor = false }: { w: Tile; selectCover: boolean; caption: boolean; hideAuthor?: boolean }) {
   const target = ('coverWork' in w && w.coverWork) || w.id;
   // A site-served image is on no wall of Open Library's, so there is no cover to select there.
   const image = 'image' in w ? w.image : undefined;
@@ -59,7 +67,7 @@ function CoverTile({ w, selectCover, caption }: { w: Tile; selectCover: boolean;
             shorter "Der Steppenwolf", it is no title (ROADMAP 6.30, N14).
           */}
           <p className="mt-2 line-clamp-2 text-sm font-medium leading-snug text-ink transition-colors group-hover:text-accent">{tileTitle(w.title)}</p>
-          <p className="mt-0.5 line-clamp-2 text-xs leading-snug text-ink-3">{w.author}</p>
+          {!hideAuthor && <p className="mt-0.5 line-clamp-2 text-xs leading-snug text-ink-3">{w.author}</p>}
           {/*
             The cover artist, only on collections that show credits (6.52)
             and only where ISFDB names one for this printing; the page says
@@ -96,7 +104,7 @@ function groupSets(works: readonly Tile[], size: number): Array<{ name?: string;
  * a block under its name instead: the same seven titles under every row said
  * nothing, and the name of the edition is what tells the rows apart.
  */
-export default function CoverWall({ works, selectCover = false, setSize }: CoverWallProps) {
+export default function CoverWall({ works, selectCover = false, setSize, hideAuthor = false, gridClassName }: CoverWallProps) {
   if (setSize) {
     return (
       <div className={SETS[setSize]}>
@@ -114,9 +122,9 @@ export default function CoverWall({ works, selectCover = false, setSize }: Cover
     );
   }
   return (
-    <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6">
+    <ul className={gridClassName ?? 'grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6'}>
       {works.map(w => (
-        <li key={keyOf(w)}><CoverTile w={w} selectCover={selectCover} caption /></li>
+        <li key={keyOf(w)}><CoverTile w={w} selectCover={selectCover} caption hideAuthor={hideAuthor} /></li>
       ))}
     </ul>
   );

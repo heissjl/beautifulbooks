@@ -27,6 +27,8 @@ export interface WorkPagesState {
    * in, because page 0 holds the newest records alone (ROADMAP 1.1).
    */
   pagesLoaded: number;
+  /** Other Open Library records of this book (ROADMAP 6.13), so "More by …" can leave them out (6.53). */
+  siblingIds: string[];
 }
 
 interface Progress {
@@ -42,7 +44,7 @@ interface Progress {
 }
 
 const EMPTY: WorkPagesState = {
-  status: 'loading', anyEditionLinks: [], merged: null, firstCovers: null, page0Hashed: false, pagesLoaded: 0,
+  status: 'loading', anyEditionLinks: [], merged: null, firstCovers: null, page0Hashed: false, pagesLoaded: 0, siblingIds: [],
 };
 
 /**
@@ -275,6 +277,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       firstCovers: known.pages[0]?.covers ?? null,
       page0Hashed: known.page0Hashed,
       pagesLoaded: pages.length,
+      siblingIds: siblings.map(s => s.id),
     };
   }, [progress, requestKey]);
 }

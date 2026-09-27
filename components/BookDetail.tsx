@@ -8,6 +8,7 @@ import DecadeLink from '@/components/DecadeLink';
 import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
 import CoverSheet from '@/components/CoverSheet';
+import AuthorWorks from '@/components/AuthorWorks';
 import WorkPanel from '@/components/WorkPanel';
 import ShareMenu from '@/components/ShareMenu';
 import LoadingStage from '@/components/LoadingStage';
@@ -443,12 +444,7 @@ function BookDetail() {
         <p className="text-ink-2">Neither catalogue has a cover for this book.</p>
       ) : (
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
-          {/*
-            Room for the sheet's peek bar, so the last row stays reachable —
-            but only when a cover is picked, or a phone shows a dead strip
-            under the last row of tiles from the moment the page opens.
-          */}
-          <div className={`min-w-0 lg:col-span-2 lg:pb-0 ${selected ? 'pb-20' : ''}`}>
+          <div className="min-w-0 lg:col-span-2">
             <CoverGallery
               groups={view.groups}
               allCovers={view.all}
@@ -491,6 +487,25 @@ function BookDetail() {
             </aside>
           )}
         </div>
+      )}
+      {/*
+        "More by …" under wall and sidebar alike (ROADMAP 6.53), also when the
+        wall is empty: it does not depend on this work's covers. It is the
+        last thing on the page, so it carries the room for the phone's peek
+        bar — only while a cover is picked, or a phone shows a dead strip from
+        the moment the page opens.
+      */}
+      {work.authors[0] && work.authors[0] !== 'Unknown' && (
+        <AuthorWorks
+          key={work.id}
+          author={work.authors[0]}
+          authorKey={work.authorKeys?.[0]}
+          workId={work.id}
+          workTitle={work.title}
+          siblingIds={pages.siblingIds}
+          settled={merged.done}
+          className={!isDesktop && selected ? 'pb-20' : ''}
+        />
       )}
       {!isDesktop && selected && (
         <CoverSheet

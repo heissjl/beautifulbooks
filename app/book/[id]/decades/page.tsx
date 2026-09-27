@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import AuthorWorks from '@/components/AuthorWorks';
 import CoverImage from '@/components/CoverImage';
 import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
@@ -178,6 +179,15 @@ export default async function Page({ params }: PageProps) {
             </section>
           )}
         </div>
+
+        {/*
+          "More by …" here too (Julian, 2026-09-26, PLAN-6.53 §9.7). Asked
+          from the browser when the row comes near, so the page render itself
+          makes no extra request and ISR caches nothing about the author.
+        */}
+        {work.authors[0] && work.authors[0] !== 'Unknown' && (
+          <AuthorWorks author={work.authors[0]} authorKey={work.authorKeys?.[0]} workId={work.id} workTitle={work.title} />
+        )}
 
         {/*
           R10, and SPEC N13 (Julian, 2026-09-09: „die beschreibung ist zu

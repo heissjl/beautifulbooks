@@ -3142,3 +3142,47 @@ Julian: „die suhrkamp collection hat einige mit und einige ohne konterfei. spl
 **Great American Novel: falsche „Startseiten-Cover" (2026-09-27).** Julian: „fyi dass das nicht geklappt hat, aber ich mache die auswahl jetzt selbst". Ursache: übernommen aus `CURATED_WORKS` in `lib/curated.ts`, das nur die Rückfallliste ist; die Startseite nimmt zuerst Julians Auswahl aus `data/curated.json`. Dort stehen andere Cover für Gatsby (ol:13853193 statt 10590366), Lolita (ol:13524656 statt 12984540) und Moby-Dick (ol:13603831 statt 10544254); Gravity's Rainbow und Beloved stimmten. Julian wählt die Cover dieser Sammlung jetzt selbst. Merke: „Julians Cover" steht in `data/curated.json`.
 
 **Harry Potter, Lücken (2026-09-27): 16 Sätze, 112 Cover.** Julian: „ok, nimm dir die harry potter lücken vor". Fertig ohne Upload: **Scholastic 2013 (Kazu Kibuishi)** — Bd. 1 mit dem sauberen zweiten Bild der Ausgabe (`cover: 15224397` in der Liste, das erste trägt einen Bibliotheksaufkleber; `from-isbns` kennt dafür jetzt `cover`). Für Uploads vorbereitet (Ordner unter `lab/collections/for-openlibrary/harry-potter-…`, je mit Manifest): Scholastic 2018 Selznick Bd. 5 und 7 (Bilder von Scholastics Produktseiten; Bd. 2 schon auf das zweite Bild gesetzt), Bloomsbury 2015 Erwachsene Bd. 2 (Bloomsburys Medienserver), Carlsen 2013 Bd. 4 (DNB-Coverdienst; braucht eine neue Ausgabe unter OL82560W), Bloomsbury-Hausausgabe Ravenclaw schwarz Bd. 1, 3, 5. Nach Julians Regel draußen: Psichogios (Bloomsbury-Kinderbilder) und Animus (GrandPré). Offen: Seizansha (NDL-Dienst antwortet 403), Olly-Moss-E-Books (Bd. 1 ohne Quelle), Tiden, Tammi, Gyldendal, Albatros, Rosman, die übrigen Hausausgaben (Bilder für alle 56 ISBNs auf Bloomsburys Medienserver, im Scratchpad). Hinweis: im Davidson-Satz trägt Bd. 2 (8121036) den „20 years"-Stempel.
+
+## 2026-09-27 · „More by …“ unter der Wand, lokal gebaut (ROADMAP 6.53)
+
+Julian: „fange 6.53 an lokal zu bauen". Gebaut nach [PLAN-6.53](plans/PLAN-6.53-other-works.md) mit Julians Antworten aus §9 (2026-09-26); Verhalten in SPEC F2.15. **Lokal, nicht deployt**, wartet auf Julians Blick auf drei Bücher.
+
+**Was gebaut ist.** `searchAuthorWorks` und `authorWorksUrl` in `lib/sources/openlibrary.ts` (`search.json?q=author_key:<key>&sort=editions&limit=50`, nur sechs Felder, `OL_TIMEOUTS.authorWorks` 6 s, 24 h Datencache, wirft `SourceUnavailableError`); der reine Filter `lib/authorworks.ts` (`otherWorksByAuthor`, `excludeCurrent`, `withCuratedCovers`, `authorRowHeading`, `isAuthorKey`, `looksLikeVolumePart`); die Route `app/api/authors/[key]/works` mit Eimer `author` 60/30 und dem kuratierten Cover aus `data/curated.json` (serverseitig); im Browser `components/useAuthorWorks.ts` (Antworten je Autorin und Sitzung, ein zweiter Versuch nach 1,5 s bei ≥ 500 oder Netzfehler, Zustand über den Schlüssel, kein `setState` im Effekt) und `components/AuthorWorks.tsx` (Callback-Ref mit IntersectionObserver, `rootMargin` 600 px, oder `merged.done`). `CoverWall` hat `hideAuthor` und `gridClassName` bekommen; `useWorkPages` gibt die Geschwister-Ids heraus. Das `pb-20` für die Peek-Leiste ist von der linken Spalte an die Reihe gewandert, das letzte Element der Seite. Die Reihe steht auch unter der Jahrzehnte-Seite. Fixtures für die acht Keys aus Plan §4.1 unter `lib/__fixtures__/authors/`, aufgenommen mit dem neuen `scripts/record-author-fixtures.ts` (kein Google); 24 Tests in `lib/__tests__/authorworks.test.ts`.
+
+**Laufzeit der Autorensuche, 2026-09-27 früh aus Deutschland, je ein kalter Aufruf:** Fitzgerald 604 ms, Le Guin 278, Kafka 548, Atwood 266, Harper Lee 219, Reed 241, Reeds zweiter Key 323, Mitchell 218 ms. Antwort 1,4 KB je Autorin nach dem Filter.
+
+**Was der Filter entfernt** (erste 50 Datensätze, Schwelle `max(2, 2 %)`):
+
+| Autorin | nicht Erstautorin | Sekundär/Adaption | Bandteilung | ohne Cover | unter Schwelle | übrig → nach Merge |
+|---|---|---|---|---|---|---|
+| Fitzgerald (Schwelle 23,6) | 1 | 0 | 0 | 16 | 10 | 23 → 23 |
+| Le Guin (2) | 4 | 0 | 0 | 0 | 0 | 46 → 45 |
+| Kafka (19,1) | 7 | 0 | 0 | 19 | 15 | 9 → 9 |
+| Atwood (3,5) | 9 | 0 | 0 | 0 | 0 | 41 → 41 |
+| Harper Lee (4,3) | 6 | 2 (CliffsNotes, portugiesische Graphic Novel) | 0 | 17 | 17 (u. a. *Tespih Agacinin Gölgesinde*, 3) | 3 → 3 |
+| Reed OL27626A (2) | 5 | 0 | 0 | 15 | 0 | 30 → 24 |
+| Reed OL11412010A (2) | 7 | 0 | 0 | 5 | 5 | 0 |
+| Mitchell (7,2) | 5 | 0 | 2 (`[1/2]`, `[2/2]`) | 3 | 12 (Letters 7, Before Scarlett 4, Lost Laysen 4, …) | 1 → 1 |
+
+`. 2/3` am Titelende (Mitchell: „Gone with the Wind. 2/3") fiel beim ersten Lauf nur über die Schwelle heraus; die Bandteilungs-Regel erkennt es seitdem selbst.
+
+**Was die Bücher zeigen** (gegen `npm run dev`, 1280 × 800 und 390 × 844):
+
+| Buch | Desktop, sechs (Telefon: die ersten drei) |
+|---|---|
+| *The Great Gatsby* | This Side of Paradise, The Beautiful and Damned, Tender is the Night, The Curious Case of Benjamin Button, May Day, Flappers and Philosophers |
+| *The Left Hand of Darkness* | A Wizard of Earthsea, The Dispossessed, The Tombs of Atuan, The Farthest Shore, The Lathe of Heaven, The Word for World is Forest |
+| *Metamorphosis* | Der Proceß, Das Schloß, Amerika, Briefe an Milena, Tagebücher, Short stories |
+| *The Handmaid's Tale* | The Blind Assassin, alias Grace, Cat's Eye, The Edible Woman, The Robber Bride, Surfacing |
+| *To Kill a Mockingbird* | **zwei**: Go Set A Watchman, The Land of Sweet Forever (Erzählungen und Essays, 2025) — der türkische Datensatz ist draußen |
+| *Mumbo Jumbo* | Flight to Canada, The free-lance pallbearers, Yellow back radio broke-down, The last days of Louisiana Red, The terrible threes, The terrible twos |
+| *Gone With the Wind* | **nur die Zeile** „More by Margaret Mitchell →" (wie entschieden) |
+| *Pride and Prejudice* | Emma, Sense and Sensibility, Persuasion, Mansfield Park, Northanger Abbey, Lady Susan (auf Platz 7 stand „Juvenilia - Volume I Illustrated“; die Bandteilungs-Regel kennt seitdem auch römische Bandnummern) |
+| *Gravity's Rainbow* | The Crying of Lot 49, V., Vineland, Mason & Dixon, Inherent Vice, Slow Learner |
+| *Nineteen Eighty-Four* | **nur die Zeile**: das Werk trägt als ersten Key **OL15318546A**, unter dem Open Library genau ein Werk führt, 1984 selbst — nicht Orwells Haupt-Key. Ein Fall für das Zusammenführen mehrerer Keys (Plan §4.3), das erst mit einer Messung kommt. |
+
+**Abnahme (Plan §8).** Genau **eine** Anfrage an `/api/authors/…` je Seitenaufruf, gemessen am lokalen Produktions-Build (`next start`) mit Chrome headless über CDP bei Le Guin, Gatsby und Reed; unter `next dev` erscheinen zwei, davon eine abgebrochen (React StrictMode). Keine Anfrage an `?summary=1`, keine an Google (die Route fragt nur Open Library; Test). Die Anfrage geht erst beim Heranscrollen oder nach Ende der Wand: Gatsby bei 1280 × 800 mit kaltem Cache fragte vor dem Scrollen nicht; bei warmem Cache ist die Wand nach wenigen Sekunden fertig, dann fragt die Seite ohne Scrollen, wie der Plan es vorsieht. Kein Titel abgeschnitten (alle Kacheln zwei Zeilen Raum, gemessen `scrollHeight` gegen `clientHeight`), keine Überbreite (Dokumentbreite = Fensterbreite bei 390 und 1280). Mit gewähltem Cover bei 390 × 844 endet die Kachelreihe 3 px über der Peek-Leiste (Kachel-Unterkante 764, Leiste ab 767). Ausfall simuliert (Route im Browser auf 503 gezwungen): zwei Versuche im Abstand von 1,5 s, danach nur die Zeile, die Wand unberührt (55 Kacheln). Klick auf eine Kachel öffnet deren Wand mit Titel sofort (Ladeszene über `storeWorkPreview`), oben; die Reihe dort nimmt die Antwort derselben Autorin aus der Sitzung, ohne zweite Anfrage, und zeigt Metamorphosis statt Der Proceß.
+
+**Die Suche hinter dem Link** (Julians Auftrag, vorher zu prüfen): `/?q=<Name>` ist eine Freitextsuche. Werke der Autorin unter den Treffern: Fitzgerald 15 von 17, Le Guin 20 von 20, Kafka 13 von 16, Atwood 18 von 20, Reed 14 von 18 — jeweils vorn; Harper Lee **3 von 18** und Mitchell **6 von 16**, dazwischen Bücher über sie und Fortsetzungen anderer (*Scarlett*). Der Link bleibt; eine echte Autorensuche wäre ein eigener Schritt (ROADMAP 6.53).
+
+**Nicht im Browser-Fenster prüfbar:** das Browser-Panel der Desktop-App war verborgen; dort blieben die gestreamten Teile der Jahrzehnte-Seite im Skelett stehen (React tauscht die Suspense-Grenze bei verborgenem Dokument nicht ein). Gemessen und fotografiert wurde deshalb mit Chrome headless (Breite am Telefon 500 px, die kleinste, die headless zulässt; die 390-px-Werte oben stammen aus dem Panel per DOM-Messung). Bilder lokal unter `docs/tests/2026-09-27-6.53-*.png` (git-ignoriert).

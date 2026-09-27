@@ -1,0 +1,887 @@
+{
+  "numFound": 259,
+  "docs": [
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 10618463,
+      "edition_count": 91,
+      "key": "/works/OL59800W",
+      "title": "The Left Hand of Darkness"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 13617691,
+      "edition_count": 87,
+      "key": "/works/OL59798W",
+      "title": "A Wizard of Earthsea"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 6979680,
+      "edition_count": 75,
+      "key": "/works/OL59863W",
+      "title": "The Dispossessed"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 6633403,
+      "edition_count": 67,
+      "key": "/works/OL59801W",
+      "title": "The Tombs of Atuan"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 6498990,
+      "edition_count": 65,
+      "key": "/works/OL59855W",
+      "title": "The Farthest Shore"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 26458,
+      "edition_count": 40,
+      "key": "/works/OL59858W",
+      "title": "The Lathe of Heaven"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 2270607,
+      "edition_count": 39,
+      "key": "/works/OL59797W",
+      "title": "The Word for World is Forest"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 39784,
+      "edition_count": 33,
+      "key": "/works/OL59861W",
+      "title": "The Wind's Twelve Quarters"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 3347790,
+      "edition_count": 30,
+      "key": "/works/OL15056578W",
+      "title": "Tehanu (The Earthsea Cycle, Book 4)"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 890630,
+      "edition_count": 30,
+      "key": "/works/OL59806W",
+      "title": "The Other Wind"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 4636848,
+      "edition_count": 27,
+      "key": "/works/OL59812W",
+      "title": "Tales from Earthsea"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 1926091,
+      "edition_count": 26,
+      "key": "/works/OL36745884W",
+      "title": "City of Illusions"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 1926090,
+      "edition_count": 26,
+      "key": "/works/OL59850W",
+      "title": "Rocannon's World"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 4393732,
+      "edition_count": 26,
+      "key": "/works/OL59843W",
+      "title": "The Beginning Place"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 4995583,
+      "edition_count": 24,
+      "key": "/works/OL59844W",
+      "title": "Catwings"
+    },
+    {
+      "author_key": [
+        "OL200394A",
+        "OL544937A",
+        "OL2686295A",
+        "OL31353A",
+        "OL1771265A",
+        "OL24856A",
+        "OL2643333A",
+        "OL24137A",
+        "OL1232071A",
+        "OL1654607A",
+        "OL33607A",
+        "OL2937580A",
+        "OL539879A",
+        "OL20187A",
+        "OL1294912A",
+        "OL5323285A",
+        "OL7843975A",
+        "OL1963611A",
+        "OL39603A",
+        "OL19905A",
+        "OL19921A",
+        "OL227969A",
+        "OL7843985A",
+        "OL32471A",
+        "OL6866615A",
+        "OL228668A",
+        "OL1188211A",
+        "OL777265A",
+        "OL659164A",
+        "OL7843986A",
+        "OL2666199A",
+        "OL1872913A",
+        "OL23121A",
+        "OL26237A",
+        "OL34434A",
+        "OL7843987A",
+        "OL21657A",
+        "OL329735A",
+        "OL2633928A",
+        "OL7051733A",
+        "OL284401A",
+        "OL886261A",
+        "OL2628870A",
+        "OL33088A",
+        "OL13216131A",
+        "OL13102923A"
+      ],
+      "author_name": [
+        "Harlan Ellison",
+        "John Heidenry",
+        "Ross Rocklynne",
+        "Ursula K. Le Guin",
+        "Andrew J. Offutt",
+        "Gene Wolfe",
+        "Ray Nelson",
+        "Ray Bradbury",
+        "Chad Oliver",
+        "Edward Bryant",
+        "Kate Wilhelm",
+        "James B. Hemesath",
+        "Joanna Russ",
+        "Kurt Vonnegut",
+        "T. L. Sherred",
+        "K. M. O'Donnell",
+        "H. H. Hollis",
+        "Bernard Wolfe",
+        "David Gerrold",
+        "Piers Anthony",
+        "Lee Hoffman",
+        "Gahan Wilson",
+        "Joan Bernott",
+        "Gregory Benford",
+        "Evelyn Lief",
+        "James Sallis",
+        "Josephine Saxton",
+        "Ken McCullough",
+        "David Kerr",
+        "Burt K. Filer",
+        "Richard Hill",
+        "Leonard Tushnet",
+        "Ben Bova",
+        "Edward Gorman",
+        "James Blish",
+        "A. Parra",
+        "Thomas M. Disch",
+        "Richard A. Lupoff",
+        "John Harrison",
+        "Robin Scott",
+        "Andrew Weiner",
+        "Terry Carr",
+        "James Tiptree, Jr.",
+        "Dean Koontz",
+        "Piers Anthony",
+        "Ben Bova"
+      ],
+      "cover_i": 14414452,
+      "edition_count": 24,
+      "key": "/works/OL1737310W",
+      "title": "Again, Dangerous Visions"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 6938605,
+      "edition_count": 24,
+      "key": "/works/OL59846W",
+      "title": "Always Coming Home"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 35213,
+      "edition_count": 22,
+      "key": "/works/OL59856W",
+      "title": "Orsinian Tales"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 6818682,
+      "edition_count": 22,
+      "key": "/works/OL15855820W",
+      "title": "Lavinia"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 283945,
+      "edition_count": 21,
+      "key": "/works/OL59834W",
+      "title": "The Telling"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 9260689,
+      "edition_count": 20,
+      "key": "/works/OL59836W",
+      "title": "Planet of Exile"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 284153,
+      "edition_count": 19,
+      "key": "/works/OL59790W",
+      "title": "Changing planes"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 44217,
+      "edition_count": 19,
+      "key": "/works/OL59848W",
+      "title": "The Compass Rose"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 113746,
+      "edition_count": 19,
+      "key": "/works/OL59827W",
+      "title": "Gifts"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 26244,
+      "edition_count": 18,
+      "key": "/works/OL59821W",
+      "title": "The Birthday of the World"
+    },
+    {
+      "author_key": [
+        "OL31353A",
+        "OL2704783A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin",
+        "Virginia Kidd"
+      ],
+      "cover_i": 4281393,
+      "edition_count": 17,
+      "key": "/works/OL59854W",
+      "title": "The Eye of the Heron"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 6471,
+      "edition_count": 17,
+      "key": "/works/OL59809W",
+      "title": "Searoad Chronicles of Klatsand"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 96082,
+      "edition_count": 16,
+      "key": "/works/OL59794W",
+      "title": "The Earthsea quartet"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 4060154,
+      "edition_count": 16,
+      "key": "/works/OL59822W",
+      "title": "Catwings return"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 4437200,
+      "edition_count": 16,
+      "key": "/works/OL59849W",
+      "title": "The language of the night"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 6703882,
+      "edition_count": 15,
+      "key": "/works/OL59837W",
+      "title": "Very far away from anywhere else"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 113946,
+      "edition_count": 14,
+      "key": "/works/OL15056614W",
+      "title": "Voices"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 2270613,
+      "edition_count": 12,
+      "key": "/works/OL59817W",
+      "title": "A Fisherman of the Inland Sea"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 362853,
+      "edition_count": 12,
+      "key": "/works/OL59832W",
+      "title": "Wonderful Alexander and the Catwings"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 1120521,
+      "edition_count": 12,
+      "key": "/works/OL15056590W",
+      "title": "Powers"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 5405324,
+      "edition_count": 11,
+      "key": "/works/OL261906W",
+      "title": "Nebula Award Stories 11"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 43991,
+      "edition_count": 11,
+      "key": "/works/OL59826W",
+      "title": "Four Ways to Forgiveness"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 363437,
+      "edition_count": 11,
+      "key": "/works/OL59841W",
+      "title": "Jane on Her Own"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 182642,
+      "edition_count": 10,
+      "key": "/works/OL59835W",
+      "title": "Worlds of Exile and Illusion"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 10203162,
+      "edition_count": 10,
+      "key": "/works/OL59796W",
+      "title": "The Earthsea Trilogy"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 4395792,
+      "edition_count": 10,
+      "key": "/works/OL59842W",
+      "title": "Malafrena"
+    },
+    {
+      "author_key": [
+        "OL235327A",
+        "OL24856A",
+        "OL7621581A",
+        "OL2628870A",
+        "OL31353A"
+      ],
+      "author_name": [
+        "Robert Silverberg",
+        "Gene Wolfe",
+        "SILVERBERG",
+        "James Tiptree, Jr.",
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 4469252,
+      "edition_count": 9,
+      "key": "/works/OL8123067W",
+      "title": "New Atlantis, The - And Other Novellas of Science Fiction"
+    },
+    {
+      "author_key": [
+        "OL9253241A",
+        "OL22134A",
+        "OL28885A",
+        "OL34221A",
+        "OL23074A",
+        "OL9254661A",
+        "OL39710A",
+        "OL990287A",
+        "OL233569A",
+        "OL1011027A",
+        "OL24137A",
+        "OL19471A",
+        "OL4328696A",
+        "OL2623461A",
+        "OL18319A",
+        "OL477861A",
+        "OL8207496A",
+        "OL116183A",
+        "OL215841A",
+        "OL897573A",
+        "OL114093A",
+        "OL2072538A",
+        "OL324787A",
+        "OL1189154A",
+        "OL450039A",
+        "OL2310837A",
+        "OL316805A",
+        "OL20414A",
+        "OL3290310A",
+        "OL2101175A",
+        "OL30885A",
+        "OL20848A",
+        "OL26459A",
+        "OL9253106A",
+        "OL226273A",
+        "OL890759A",
+        "OL507165A",
+        "OL237131A",
+        "OL35895A",
+        "OL2776044A",
+        "OL31353A",
+        "OL33009A",
+        "OL913606A",
+        "OL19880A",
+        "OL1013062A",
+        "OL93286A",
+        "OL25699A",
+        "OL2934957A",
+        "OL578569A",
+        "OL2852525A",
+        "OL26069A",
+        "OL4709625A",
+        "OL9253109A",
+        "OL402238A",
+        "OL21241A",
+        "OL28127A",
+        "OL9254663A",
+        "OL584947A",
+        "OL9254664A",
+        "OL272057A",
+        "OL117830A",
+        "OL2221994A",
+        "OL9254665A",
+        "OL489504A",
+        "OL9388A",
+        "OL443041A",
+        "OL548174A",
+        "OL137147A",
+        "OL447564A",
+        "OL25788A",
+        "OL1127223A",
+        "OL399090A",
+        "OL30664A",
+        "OL381188A",
+        "OL27078A",
+        "OL1189398A",
+        "OL36162A",
+        "OL217774A",
+        "OL32584A",
+        "OL1083121A",
+        "OL23178A",
+        "OL160545A",
+        "OL219856A"
+      ],
+      "author_name": [
+        "Sumner Braunstein",
+        "Rudolfo A. Anaya",
+        "Maya Angelou",
+        "Isaac Asimov",
+        "Toni Cade Bambara",
+        "Basho",
+        "Rosemary Benét",
+        "Morris Bishop",
+        "Arna Bontemps",
+        "Hal Borland",
+        "Ray Bradbury",
+        "Bruce Brooks",
+        "Pearl S. Buck",
+        "Arthur C. Clarke",
+        "Mark Twain",
+        "Davy Crockett",
+        "Bernard DeVoto",
+        "J. Frank Dobie",
+        "Paul Laurence Dunbar",
+        "Felton, Harold W.",
+        "Robert Frost",
+        "Richard Garcia",
+        "Ellen Goodman",
+        "Frances Goodrich",
+        "Shirley Ann Grau",
+        "Albert Hackett",
+        "Edward Everett Hale",
+        "Virginia Hamilton",
+        "Robert Hayden",
+        "O. Henry",
+        "James Herriot",
+        "Patricia Hubbell",
+        "Langston Hughes",
+        "Evelyn Tooley Hunt",
+        "Zora Neale Hurston",
+        "Jerry Izenberg",
+        "Shirley Jackson",
+        "Gish Jen",
+        "Daniel Keyes",
+        "Naoshi Koriyama",
+        "Ursula K. Le Guin",
+        "Henry Wadsworth Longfellow",
+        "Stephen Longstreet",
+        "Anne McCaffrey",
+        "Phyllis McGinley",
+        "Machado de Assis",
+        "Robert MacNeil",
+        "Naomi Long Madgett",
+        "Beryl Markham",
+        "Joaquin Miller",
+        "N. Scott Momaday",
+        "Toshio Morita",
+        "Moritake",
+        "Anaïs Nin",
+        "Ann Lane Petry",
+        "Edgar Allan Poe",
+        "Julio Noboa Polanco",
+        "Wendy Rose",
+        "Roberto Felix Salazar",
+        "Ricardo Sanchez",
+        "Carl Sandburg",
+        "Lew Sarett",
+        "Juan A. A. Sedillo",
+        "Olive Senior",
+        "William Shakespeare",
+        "Mimi Sheraton",
+        "Shel Silverstein",
+        "Isaac Bashevis Singer",
+        "Virginia Driving Hawk Sneve",
+        "John Steinbeck",
+        "Adrien Stoutenburg",
+        "May Swenson",
+        "Alfred Lord Tennyson",
+        "Yoshiko Uchida",
+        "John Updike",
+        "Mark Van Doren",
+        "José García Villa",
+        "Alice Walker",
+        "Eudora Welty",
+        "Richard Wesley",
+        "Walt Whitman",
+        "John Greenleaf Whittier",
+        "William Carlos Williams"
+      ],
+      "cover_i": 11204935,
+      "edition_count": 9,
+      "key": "/works/OL7962755W",
+      "title": "Prentice Hall Literature--Silver"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 3993167,
+      "edition_count": 8,
+      "key": "/works/OL15056584W",
+      "title": "The ones who walk away from Omelas"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 15171276,
+      "edition_count": 7,
+      "key": "/works/OL15056610W",
+      "title": "A Very Long Way from Anywhere Else"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 7499260,
+      "edition_count": 7,
+      "key": "/works/OL17398199W",
+      "title": "The Unreal And The Real Selected Stories Of Ursula K Le Guin"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 11275898,
+      "edition_count": 7,
+      "key": "/works/OL24609061W",
+      "title": "Eye of the Heron"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 4118421,
+      "edition_count": 7,
+      "key": "/works/OL59839W",
+      "title": "Buffalo gals and other animal presences"
+    },
+    {
+      "author_key": [
+        "OL2628836A",
+        "OL31353A",
+        "OL78952A",
+        "OL414752A",
+        "OL33607A",
+        "OL24856A",
+        "OL1654607A",
+        "OL230306A",
+        "OL1663871A",
+        "OL15058621A"
+      ],
+      "author_name": [
+        "Damon Knight",
+        "Ursula K. Le Guin",
+        "Brian W. Aldiss",
+        "Michael Bishop",
+        "Kate Wilhelm",
+        "Gene Wolfe",
+        "Edward Bryant",
+        "Vonda N. McIntyre",
+        "Doris Piserchia",
+        "Brian W. Aldiss"
+      ],
+      "cover_i": 8762870,
+      "edition_count": 7,
+      "key": "/works/OL15401242W",
+      "title": "Damon Knight's Orbit 12"
+    },
+    {
+      "author_key": [
+        "OL31353A"
+      ],
+      "author_name": [
+        "Ursula K. Le Guin"
+      ],
+      "cover_i": 4095548,
+      "edition_count": 7,
+      "key": "/works/OL59840W",
+      "title": "Dancing at the Edge of the World"
+    }
+  ]
+}

@@ -35,6 +35,12 @@ export const OL_TIMEOUTS = {
    * something that is a bonus, not the page.
    */
   siblings: 6_000,
+  /**
+   * The "More by …" row under the wall (ROADMAP 6.53). Measured 2026-09-26
+   * over eight author keys: 125 ms to 1.7 s; the row is a bonus below the
+   * wall, so it gives up long before a reader would still be looking.
+   */
+  authorWorks: 6_000,
 } as const;
 
 export const OL_REVALIDATE = {
@@ -51,6 +57,8 @@ export const OL_REVALIDATE = {
   search: 24 * 60 * 60,
   work: 24 * 60 * 60,
   editions: 24 * 60 * 60,
+  /** One author's row, cached per author for a day (ROADMAP 6.53). */
+  authorWorks: 24 * 60 * 60,
 } as const;
 
 /**
@@ -308,6 +316,43 @@ export async function searchSiblingWorks(work: Pick<Work, 'title' | 'authors' | 
   });
   if (!Array.isArray(data.docs)) throw new Error('response had no docs array');
   return parseSearchDocs(data.docs);
+}
+
+/** Fields the "More by …" row reads (ROADMAP 6.53); nothing else is sent back. */
+const AUTHOR_WORKS_FIELDS = ['key', 'title', 'author_name', 'author_key', 'edition_count', 'cover_i'].join(',');
+
+/** How many records the author search asks for; the measurement in PLAN-6.53 §4.1 read the first 50. */
+export const AUTHOR_WORKS_LIMIT = 50;
+
+/**
+ * The author search behind the "More by …" row (ROADMAP 6.53), most-printed
+ * first. `search.json` rather than `/authors/<key>/works.json`: the latter
+ * answers in record order without edition counts (Fitzgerald: a Portuguese
+ * Benjamin Button and "Christmas classics" first).
+ */
+export function authorWorksUrl(authorKey: string): string {
+  return `${BASE}/search.json?q=${encodeURIComponent(`author_key:${authorKey}`)}&sort=editions&limit=${AUTHOR_WORKS_LIMIT}&fields=${AUTHOR_WORKS_FIELDS}`;
+}
+
+/**
+ * Raw search docs for one author key (ROADMAP 6.53). The caller filters them
+ * (`otherWorksByAuthor`, lib/authorworks.ts).
+ *
+ * **Throws `SourceUnavailableError` when Open Library does not answer**, so
+ * the route can say 503 and nobody caches silence as "no other works"
+ * (SPEC N12). Asked once: the row is a bonus, and the client asks again.
+ */
+export async function searchAuthorWorks(authorKey: string): Promise<OlSearchDoc[]> {
+  try {
+    const data = await fetchJson<OlSearchResponse>(authorWorksUrl(authorKey), {
+      timeoutMs: OL_TIMEOUTS.authorWorks, revalidate: OL_REVALIDATE.authorWorks,
+    });
+    if (!Array.isArray(data.docs)) throw new Error('response had no docs array');
+    return data.docs;
+  } catch (err) {
+    debug('openlibrary', `author works ${authorKey} failed: ${(err as Error).message}`);
+    throw new SourceUnavailableError('openlibrary', err);
+  }
 }
 
 /** One page of raw edition entries. Returns an empty page on 404, throws otherwise. */

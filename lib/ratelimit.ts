@@ -54,6 +54,12 @@ export const RATE_RULES = {
    */
   similar: { capacity: 60, refillPerMinute: 60 },
   /**
+   * The "More by …" row (ROADMAP 6.53): one request per wall a reader
+   * scrolls to the bottom of, one Open Library search per author and day
+   * behind the cache. Never `google` — the route cannot spend a request of it.
+   */
+  author: { capacity: 60, refillPerMinute: 30 },
+  /**
    * The cover game (ROADMAP 5.8a): the next pair and the board. A pair a
    * click, and nobody clicks faster than once a second for long.
    */
