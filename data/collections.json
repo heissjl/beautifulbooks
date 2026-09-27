@@ -23690,6 +23690,146 @@
           "coverIsbn": "2207304264"
         }
       ]
+    },
+    {
+      "slug": "spektrum-volk-und-welt",
+      "title": "Spektrum — Volk und Welt",
+      "kind": "series",
+      "intro": "Spektrum was a paperback series from Verlag Volk und Welt in East Berlin, 1968 to 1993, 279 titles, mostly stories and short novels by foreign authors. Its black jacket — author and title in white at the top, the word „Spektrum“ at the right and one black-grey-white image below, nearly all by Lothar Reher — gave it its nickname, the „black series“. Only the volumes Open Library holds pictures of.",
+      "published": false,
+      "publishers": [
+        "Volk und Welt"
+      ],
+      "works": [
+        {
+          "id": "OL45990631W",
+          "title": "Im Netz / Der Tod des Torero",
+          "author": "Alfonso Sastre",
+          "coverId": "ol:15255478",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL62558773M"
+        },
+        {
+          "id": "OL970746W",
+          "title": "Das Lösegeld",
+          "author": "Giuseppe Dessì",
+          "coverId": "ol:15162536",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL61134244M"
+        },
+        {
+          "id": "OL18320188W",
+          "title": "Sprache und Stil Lenins",
+          "author": "Viktor Borisovič Šklovskij",
+          "coverId": "ol:9275704",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL4778904M"
+        },
+        {
+          "id": "OL22463709W",
+          "title": "Die Expedition",
+          "author": "Per Olof Sundman",
+          "coverId": "ol:14850865",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL58099832M"
+        },
+        {
+          "id": "OL38552901W",
+          "title": "Unser Bataillonskommandeur. Der Platz für das Denkmal",
+          "author": "Daniil Aleksandrovich Granin",
+          "coverId": "ol:14645548",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL52460480M"
+        },
+        {
+          "id": "OL549719W",
+          "title": "Scherbengericht",
+          "author": "Shena Mackay",
+          "coverId": "ol:14832042",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL57389916M"
+        },
+        {
+          "id": "OL38552614W",
+          "title": "Vincent van Gogh",
+          "author": "Sewer Gansowski",
+          "coverId": "ol:14645540",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL52460105M"
+        },
+        {
+          "id": "OL8995284W",
+          "title": "Auf der Insel wollte sie ihm sagen",
+          "author": "Françoise Xenakis",
+          "coverId": "ol:15167950",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL61255398M"
+        },
+        {
+          "id": "OL4315169W",
+          "title": "Der Stierkampf",
+          "author": "Yasushi Inoue",
+          "coverId": "ol:14645535",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL52459515M"
+        },
+        {
+          "id": "OL616042W",
+          "title": "Am Meer",
+          "author": "Peter Seeberg",
+          "coverId": "ol:15168018",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL61259723M"
+        },
+        {
+          "id": "OL2140843W",
+          "title": "Leb und liebe",
+          "author": "Valentin Grigorʹevich Rasputin",
+          "coverId": "ol:14645533",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL52458320M"
+        },
+        {
+          "id": "OL21538095W",
+          "title": "Die Schleierkarawane Erzählungen",
+          "author": "Ismail Kadare",
+          "coverId": "ol:10379484",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL29216060M"
+        },
+        {
+          "id": "OL15597578W",
+          "title": "Die reinen Wasser von Kitesh",
+          "author": "Wladimir Tendrjakow",
+          "coverId": "ol:15224017",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL62062442M"
+        },
+        {
+          "id": "OL24259457W",
+          "title": "Das Verschwinden",
+          "author": "Jurij Trifonov",
+          "coverId": "ol:10746499",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL32091701M"
+        },
+        {
+          "id": "OL21483591W",
+          "title": "Der weise Regenbaum / Der Sündenbock",
+          "author": "Kenzaburō Ōe",
+          "coverId": "ol:10374475",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL29109691M"
+        },
+        {
+          "id": "OL24308617W",
+          "title": "Winter in Afghanistan",
+          "author": "Oleg Ermakov",
+          "coverId": "ol:10823350",
+          "addedAt": "2026-09-27",
+          "from": "edition:OL32154766M"
+        }
+      ]
     }
   ]
 }
