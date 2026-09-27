@@ -17505,6 +17505,76 @@
           "id": "OL82563W",
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
+          "coverId": "ol:15224397",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9780545582889",
+          "coverIsbn": "9780545582889",
+          "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15158684",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9780545582926",
+          "coverIsbn": "9780545582926",
+          "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15158685",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9780545582933",
+          "coverIsbn": "9780545582933",
+          "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8081233",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9780545582957",
+          "coverIsbn": "9780545582957",
+          "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12025676",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9780545582971",
+          "coverIsbn": "9780545582971",
+          "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12460285",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9780545582995",
+          "coverIsbn": "9780545582995",
+          "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8183662",
+          "addedAt": "2026-09-27",
+          "from": "isbn:9780545583008",
+          "coverIsbn": "9780545583008",
+          "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
           "coverId": "ol:14320057",
           "addedAt": "2026-09-27",
           "from": "isbn:9781408810545",

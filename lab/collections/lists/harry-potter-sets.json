@@ -1043,8 +1043,9 @@
   "isbn": "9780545582889",
   "edition": "OL30621390M",
   "set": "Scholastic, 2013 · Cover: Kazu Kibuishi",
-  "skip": "set incomplete — first cover 15225096 carries a San Rafael Public Library barcode sticker; the clean scan 15224397 is only the second image of this edition",
-  "source": "Open Library edition record"
+  "source": "Open Library edition record",
+  "cover": 15224397,
+  "note": "cover ol:15224397, looked at 2026-09-27; the edition's first image 15225096 carries a San Rafael Public Library barcode sticker, the second (pinned) is a clean scan"
  },
  {
   "no": "2",
@@ -1052,8 +1053,8 @@
   "isbn": "9780545582926",
   "edition": "OL26416791M",
   "set": "Scholastic, 2013 · Cover: Kazu Kibuishi",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
-  "source": "Open Library edition record"
+  "source": "Open Library edition record",
+  "note": "cover ol:15158684, looked at 2026-09-27"
  },
  {
   "no": "3",
@@ -1061,8 +1062,8 @@
   "isbn": "9780545582933",
   "edition": "OL26421947M",
   "set": "Scholastic, 2013 · Cover: Kazu Kibuishi",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
-  "source": "Open Library edition record"
+  "source": "Open Library edition record",
+  "note": "cover ol:15158685, looked at 2026-09-27"
  },
  {
   "no": "4",
@@ -1070,8 +1071,8 @@
   "isbn": "9780545582957",
   "edition": "OL26387393M",
   "set": "Scholastic, 2013 · Cover: Kazu Kibuishi",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
-  "source": "Open Library edition record"
+  "source": "Open Library edition record",
+  "note": "cover ol:8081233, looked at 2026-09-27"
  },
  {
   "no": "5",
@@ -1079,8 +1080,8 @@
   "isbn": "9780545582971",
   "edition": "OL30693293M",
   "set": "Scholastic, 2013 · Cover: Kazu Kibuishi",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
-  "source": "Open Library edition record"
+  "source": "Open Library edition record",
+  "note": "cover ol:12025676, looked at 2026-09-27"
  },
  {
   "no": "6",
@@ -1088,8 +1089,8 @@
   "isbn": "9780545582995",
   "edition": "OL26423922M",
   "set": "Scholastic, 2013 · Cover: Kazu Kibuishi",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
-  "source": "Open Library edition record"
+  "source": "Open Library edition record",
+  "note": "cover ol:12460285, looked at 2026-09-27"
  },
  {
   "no": "7",
@@ -1097,8 +1098,8 @@
   "isbn": "9780545583008",
   "edition": "OL26455771M",
   "set": "Scholastic, 2013 · Cover: Kazu Kibuishi",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
-  "source": "Open Library edition record"
+  "source": "Open Library edition record",
+  "note": "cover ol:8183662, looked at 2026-09-27"
  },
  {
   "no": "1",
@@ -1106,7 +1107,7 @@
   "isbn": "9781338299144",
   "edition": "OL26821542M",
   "set": "Scholastic, 2018 · Cover: Brian Selznick",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vols. 5 and 7 carry library stickers; clean images staged in lab/collections/for-openlibrary/harry-potter-scholastic-2018-selznick/",
   "source": "Open Library edition record"
  },
  {
@@ -1115,8 +1116,10 @@
   "isbn": "9781338299151",
   "edition": "OL26821543M",
   "set": "Scholastic, 2018 · Cover: Brian Selznick",
-  "skip": "set incomplete — first cover 14656861 is a later (25th-anniversary) design; Selznick's cover 8487228 is only the second image",
-  "source": "Open Library edition record"
+  "skip": "set incomplete — vols. 5 and 7 carry library stickers; clean images staged in lab/collections/for-openlibrary/harry-potter-scholastic-2018-selznick/",
+  "source": "Open Library edition record",
+  "cover": 8487228,
+  "note": "cover 8487228 pinned: the first image 14656861 is the 25th-anniversary design"
  },
  {
   "no": "3",
@@ -1124,7 +1127,7 @@
   "isbn": "9781338299168",
   "edition": "OL26821544M",
   "set": "Scholastic, 2018 · Cover: Brian Selznick",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vols. 5 and 7 carry library stickers; clean images staged in lab/collections/for-openlibrary/harry-potter-scholastic-2018-selznick/",
   "source": "Open Library edition record"
  },
  {
@@ -1133,7 +1136,7 @@
   "isbn": "9781338299175",
   "edition": "OL27362121M",
   "set": "Scholastic, 2018 · Cover: Brian Selznick",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vols. 5 and 7 carry library stickers; clean images staged in lab/collections/for-openlibrary/harry-potter-scholastic-2018-selznick/",
   "source": "Open Library edition record"
  },
  {
@@ -1142,7 +1145,7 @@
   "isbn": "9781338299182",
   "edition": "OL26821546M",
   "set": "Scholastic, 2018 · Cover: Brian Selznick",
-  "skip": "set incomplete — only cover 11024732 carries a San Rafael Public Library barcode sticker",
+  "skip": "set incomplete — the only image on the edition carries a San Rafael Public Library barcode sticker; a clean publisher image is staged in lab/collections/for-openlibrary/harry-potter-scholastic-2018-selznick/ for upload, then pin it with `cover`",
   "source": "Open Library edition record"
  },
  {
@@ -1151,7 +1154,7 @@
   "isbn": "9781338299199",
   "edition": "OL26821547M",
   "set": "Scholastic, 2018 · Cover: Brian Selznick",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vols. 5 and 7 carry library stickers; clean images staged in lab/collections/for-openlibrary/harry-potter-scholastic-2018-selznick/",
   "source": "Open Library edition record"
  },
  {
@@ -1160,7 +1163,7 @@
   "isbn": "9781338299205",
   "edition": "OL32050722M",
   "set": "Scholastic, 2018 · Cover: Brian Selznick",
-  "skip": "set incomplete — only cover 15156200 carries a San Rafael Public Library barcode sticker",
+  "skip": "set incomplete — the only image on the edition carries a San Rafael Public Library barcode sticker; a clean publisher image is staged in lab/collections/for-openlibrary/harry-potter-scholastic-2018-selznick/ for upload, then pin it with `cover`",
   "source": "Open Library edition record"
  },
  {
@@ -1232,7 +1235,7 @@
   "isbn": "9781408865279",
   "edition": "OL27506554M",
   "set": "Bloomsbury, 2015 · adult hardback",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 2 has only a stickered image; a clean one is staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-2015-adult-hardback/",
   "source": "Open Library edition record"
  },
  {
@@ -1241,7 +1244,7 @@
   "isbn": "9781408865408",
   "edition": "OL27506465M",
   "set": "Bloomsbury, 2015 · adult hardback",
-  "skip": "set incomplete — only cover 15159973 carries a library barcode sticker",
+  "skip": "set incomplete — the only image (15159973) carries a library barcode sticker; a clean publisher image is staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-2015-adult-hardback/ for upload, then pin it with `cover`",
   "source": "Open Library edition record"
  },
  {
@@ -1250,7 +1253,7 @@
   "isbn": "9781408865415",
   "edition": "OL26421962M",
   "set": "Bloomsbury, 2015 · adult hardback",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 2 has only a stickered image; a clean one is staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-2015-adult-hardback/",
   "source": "Open Library edition record"
  },
  {
@@ -1259,7 +1262,7 @@
   "isbn": "9781408865422",
   "edition": "OL26387405M",
   "set": "Bloomsbury, 2015 · adult hardback",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 2 has only a stickered image; a clean one is staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-2015-adult-hardback/",
   "source": "Open Library edition record"
  },
  {
@@ -1268,7 +1271,7 @@
   "isbn": "9781408865439",
   "edition": "OL27313939M",
   "set": "Bloomsbury, 2015 · adult hardback",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 2 has only a stickered image; a clean one is staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-2015-adult-hardback/",
   "source": "Open Library edition record"
  },
  {
@@ -1277,7 +1280,7 @@
   "isbn": "9781408865446",
   "edition": "OL26424055M",
   "set": "Bloomsbury, 2015 · adult hardback",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 2 has only a stickered image; a clean one is staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-2015-adult-hardback/",
   "source": "Open Library edition record"
  },
  {
@@ -1286,7 +1289,7 @@
   "isbn": "9781408865453",
   "edition": "OL26456202M",
   "set": "Bloomsbury, 2015 · adult hardback",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 2 has only a stickered image; a clean one is staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-2015-adult-hardback/",
   "source": "Open Library edition record"
  },
  {
@@ -1295,7 +1298,7 @@
   "isbn": "9783551313119",
   "edition": "OL47682314M",
   "set": "Carlsen, 2013 · Taschenbuch",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 4 is not on Open Library; image staged in lab/collections/for-openlibrary/harry-potter-carlsen-2013-taschenbuch/",
   "source": "Open Library edition record"
  },
  {
@@ -1304,7 +1307,7 @@
   "isbn": "9783551313126",
   "edition": "OL47682294M",
   "set": "Carlsen, 2013 · Taschenbuch",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 4 is not on Open Library; image staged in lab/collections/for-openlibrary/harry-potter-carlsen-2013-taschenbuch/",
   "source": "Open Library edition record"
  },
  {
@@ -1313,7 +1316,7 @@
   "isbn": "9783551313133",
   "edition": "OL47682319M",
   "set": "Carlsen, 2013 · Taschenbuch",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 4 is not on Open Library; image staged in lab/collections/for-openlibrary/harry-potter-carlsen-2013-taschenbuch/",
   "source": "Open Library edition record"
  },
  {
@@ -1321,7 +1324,7 @@
   "title": "Harry Potter and the Goblet of Fire",
   "isbn": "9783551313140",
   "set": "Carlsen, 2013 · Taschenbuch",
-  "skip": "set incomplete — ISBN unknown to Open Library, no cover for vol. 4 in this design",
+  "skip": "set incomplete — ISBN unknown to Open Library; the DNB cover image is staged in lab/collections/for-openlibrary/harry-potter-carlsen-2013-taschenbuch/ for a new edition under OL82560W, then set `edition`",
   "source": "Open Library edition record"
  },
  {
@@ -1330,7 +1333,7 @@
   "isbn": "9783551313157",
   "edition": "OL47680744M",
   "set": "Carlsen, 2013 · Taschenbuch",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 4 is not on Open Library; image staged in lab/collections/for-openlibrary/harry-potter-carlsen-2013-taschenbuch/",
   "source": "Open Library edition record"
  },
  {
@@ -1339,7 +1342,7 @@
   "isbn": "9783551313164",
   "edition": "OL47680736M",
   "set": "Carlsen, 2013 · Taschenbuch",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 4 is not on Open Library; image staged in lab/collections/for-openlibrary/harry-potter-carlsen-2013-taschenbuch/",
   "source": "Open Library edition record"
  },
  {
@@ -1348,7 +1351,7 @@
   "isbn": "9783551313171",
   "edition": "OL47682327M",
   "set": "Carlsen, 2013 · Taschenbuch",
-  "skip": "set incomplete — another volume of this set has no usable cover on Open Library (see the volume marked with the reason)",
+  "skip": "set incomplete — vol. 4 is not on Open Library; image staged in lab/collections/for-openlibrary/harry-potter-carlsen-2013-taschenbuch/",
   "source": "Open Library edition record"
  },
  {
