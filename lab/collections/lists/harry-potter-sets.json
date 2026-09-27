@@ -1481,5 +1481,565 @@
   "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage",
   "note": "cover ol:15116685, looked at 2026-09-26; ebook cover of the 2022 digital redesign; Open Library dates the edition 2015",
   "source": "Open Library edition record"
+ },
+ {
+  "no": "1",
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9781408883730",
+  "edition": "OL27282614M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — both editions of this ISBN have only an angled mock-up with the roundel (OL48587862M/14367783) or a scan with the gold '20 years' roundel (OL27282614M/8764065); the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-red/01-9781408883730.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "2",
+  "title": "Harry Potter and the Chamber of Secrets",
+  "isbn": "9781408898093",
+  "edition": "OL28648030M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-red/02-9781408898093.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "3",
+  "title": "Harry Potter and the Prisoner of Azkaban",
+  "isbn": "9781526606174",
+  "edition": "OL28913765M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 5 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-red/; this volume's cover is on record",
+  "note": "cover ol:10627661, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "4",
+  "title": "Harry Potter and the Goblet of Fire",
+  "isbn": "9781526610270",
+  "edition": "OL28061124M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-red/04-9781526610270.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "5",
+  "title": "Harry Potter and the Order of the Phoenix",
+  "isbn": "9781526618153",
+  "edition": "OL29493350M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-red/05-9781526618153.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "6",
+  "title": "Harry Potter and the Half-Blood Prince",
+  "isbn": "9781526618221",
+  "edition": "OL33805525M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 5 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-red/; this volume's cover is on record",
+  "note": "cover ol:12997551, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "7",
+  "title": "Harry Potter and the Deathly Hallows",
+  "isbn": "9781526618313",
+  "edition": "OL32639025M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-red/07-9781526618313.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "1",
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9781408883747",
+  "edition": "OL26855930M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-black/01-9781408883747.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "2",
+  "title": "Harry Potter and the Chamber of Secrets",
+  "isbn": "9781408898109",
+  "edition": "OL26828066M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 6 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-black/; this volume's cover is on record",
+  "note": "cover ol:8501212, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "3",
+  "title": "Harry Potter and the Prisoner of Azkaban",
+  "isbn": "9781526606167",
+  "edition": "OL28939114M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its image is another edition's cover (Scholastic, Mary GrandPré); the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-black/03-9781526606167.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "4",
+  "title": "Harry Potter and the Goblet of Fire",
+  "isbn": "9781526610287",
+  "edition": "OL28061122M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-black/04-9781526610287.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "5",
+  "title": "Harry Potter and the Order of the Phoenix",
+  "isbn": "9781526618146",
+  "edition": "OL29495300M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-black/05-9781526618146.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "6",
+  "title": "Harry Potter and the Half-Blood Prince",
+  "isbn": "9781526618238",
+  "edition": "OL31917333M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — three of the four editions of this ISBN (OL31917331M, OL31917333M, OL31917332M) have only angled mock-ups; the fourth (OL31917330M, 15160727) is a flat but heavily creased, worn scan; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-black/06-9781526618238.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "7",
+  "title": "Harry Potter and the Deathly Hallows",
+  "isbn": "9781526618306",
+  "edition": "OL34759379M",
+  "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-gryffindor-black/07-9781526618306.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "1",
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9781408883754",
+  "edition": "OL28619595M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image carries the gold '20 years of Harry Potter magic' roundel, which the publisher's image does not have; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-green/01-9781408883754.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "2",
+  "title": "Harry Potter and the Chamber of Secrets",
+  "isbn": "9781408898116",
+  "edition": "OL28648034M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-green/02-9781408898116.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "3",
+  "title": "Harry Potter and the Prisoner of Azkaban",
+  "isbn": "9781526606235",
+  "edition": "OL28932541M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-green/03-9781526606235.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "4",
+  "title": "Harry Potter and the Goblet of Fire",
+  "isbn": "9781526610331",
+  "edition": "OL28061123M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-green/04-9781526610331.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "5",
+  "title": "Harry Potter and the Order of the Phoenix",
+  "isbn": "9781526618214",
+  "edition": "OL29495298M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-green/05-9781526618214.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "6",
+  "title": "Harry Potter and the Half-Blood Prince",
+  "isbn": "9781526618283",
+  "edition": "OL33805528M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 5 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-green/; this volume's cover is on record",
+  "note": "cover ol:14252161, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "7",
+  "title": "Harry Potter and the Deathly Hallows",
+  "isbn": "9781526618375",
+  "edition": "OL33823567M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 5 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-green/; this volume's cover is on record",
+  "note": "cover ol:13264807, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "1",
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9781408883761",
+  "edition": "OL27319792M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 5 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-black/; this volume's cover is on record",
+  "note": "cover ol:8788413, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "2",
+  "title": "Harry Potter and the Chamber of Secrets",
+  "isbn": "9781408898123",
+  "edition": "OL27375715M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image carries library stickers (a 'J' spine label and a round sticker); the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-black/02-9781408898123.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "3",
+  "title": "Harry Potter and the Prisoner of Azkaban",
+  "isbn": "9781526606228",
+  "edition": "OL28926274M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-black/03-9781526606228.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "4",
+  "title": "Harry Potter and the Goblet of Fire",
+  "isbn": "9781526610348",
+  "edition": "OL28061130M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up (400x400); the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-black/04-9781526610348.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "5",
+  "title": "Harry Potter and the Order of the Phoenix",
+  "isbn": "9781526618207",
+  "edition": "OL29493373M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 5 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-black/; this volume's cover is on record",
+  "note": "cover ol:13845342, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "6",
+  "title": "Harry Potter and the Half-Blood Prince",
+  "isbn": "9781526618290",
+  "edition": "OL32026611M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — both editions of this ISBN (OL32026611M, OL32026610M) have only angled mock-ups; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-black/06-9781526618290.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "7",
+  "title": "Harry Potter and the Deathly Hallows",
+  "isbn": "9781526618368",
+  "edition": "OL32659901M",
+  "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-slytherin-black/07-9781526618368.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "1",
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9781408883778",
+  "edition": "OL28619596M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image carries the gold '20 years of Harry Potter magic' roundel, which the publisher's image does not have; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-blue/01-9781408883778.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "2",
+  "title": "Harry Potter and the Chamber of Secrets",
+  "isbn": "9781408898130",
+  "edition": "OL27012578M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-blue/02-9781408898130.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "3",
+  "title": "Harry Potter and the Prisoner of Azkaban",
+  "isbn": "9781526606198",
+  "edition": "OL28926273M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-blue/03-9781526606198.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "4",
+  "title": "Harry Potter and the Goblet of Fire",
+  "isbn": "9781526610317",
+  "edition": "OL28061125M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-blue/04-9781526610317.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "5",
+  "title": "Harry Potter and the Order of the Phoenix",
+  "isbn": "9781526618191",
+  "edition": "OL29493370M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its two images are another edition's cover (Scholastic, Mary GrandPré); the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-blue/05-9781526618191.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "6",
+  "title": "Harry Potter and the Half-Blood Prince",
+  "isbn": "9781526618269",
+  "edition": "OL33805524M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-blue/06-9781526618269.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "7",
+  "title": "Harry Potter and the Deathly Hallows",
+  "isbn": "9781526618337",
+  "edition": "OL33823566M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 6 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-blue/; this volume's cover is on record",
+  "note": "cover ol:13264823, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "1",
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9781408883785",
+  "edition": "OL26872110M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image carries the gold '20 years of Harry Potter magic' roundel, which the publisher's image does not have; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-black/01-9781408883785.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "2",
+  "title": "Harry Potter and the Chamber of Secrets",
+  "isbn": "9781408898147",
+  "edition": "OL27318285M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 3 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-black/; this volume's cover is on record",
+  "note": "cover ol:12376745, looked at 2026-09-27; flat but dark scan",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "3",
+  "title": "Harry Potter and the Prisoner of Azkaban",
+  "isbn": "9781526606181",
+  "edition": "OL27011731M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-black/03-9781526606181.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "4",
+  "title": "Harry Potter and the Goblet of Fire",
+  "isbn": "9781526610324",
+  "edition": "OL28061129M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 3 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-black/; this volume's cover is on record",
+  "note": "cover ol:12904511, looked at 2026-09-27; flat but dark scan",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "5",
+  "title": "Harry Potter and the Order of the Phoenix",
+  "isbn": "9781526618184",
+  "edition": "OL28650069M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-black/05-9781526618184.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "6",
+  "title": "Harry Potter and the Half-Blood Prince",
+  "isbn": "9781526618276",
+  "edition": "OL33805526M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 3 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-black/; this volume's cover is on record",
+  "note": "cover ol:12997553, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "7",
+  "title": "Harry Potter and the Deathly Hallows",
+  "isbn": "9781526618320",
+  "edition": "OL33057928M",
+  "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 3 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-ravenclaw-black/; this volume's cover is on record",
+  "note": "cover ol:15158567, looked at 2026-09-27; flat but dark scan",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "1",
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9781408883792",
+  "edition": "OL26855047M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image carries the gold '20 years of Harry Potter magic' roundel, which the publisher's image does not have; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-yellow/01-9781408883792.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "2",
+  "title": "Harry Potter and the Chamber of Secrets",
+  "isbn": "9781408898154",
+  "edition": "OL26843732M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-yellow/02-9781408898154.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "3",
+  "title": "Harry Potter and the Prisoner of Azkaban",
+  "isbn": "9781526606211",
+  "edition": "OL27294945M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image carries library stickers (a 'J' label, a library label and a round sticker); the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-yellow/03-9781526606211.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "4",
+  "title": "Harry Potter and the Goblet of Fire",
+  "isbn": "9781526610294",
+  "edition": "OL28061126M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — the edition has no image; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-yellow/04-9781526610294.jpg for upload onto this edition (it becomes the first image, no pin needed)",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "5",
+  "title": "Harry Potter and the Order of the Phoenix",
+  "isbn": "9781526618177",
+  "edition": "OL28947487M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 6 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-yellow/; this volume's cover is on record",
+  "note": "cover ol:13907567, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "6",
+  "title": "Harry Potter and the Half-Blood Prince",
+  "isbn": "9781526618245",
+  "edition": "OL31997068M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-yellow/06-9781526618245.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "7",
+  "title": "Harry Potter and the Deathly Hallows",
+  "isbn": "9781526618351",
+  "edition": "OL32639024M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-yellow/07-9781526618351.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "1",
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9781408883808",
+  "edition": "OL27730868M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image carries the gold '20 years of Harry Potter magic' roundel, which the publisher's image does not have; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-black/01-9781408883808.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "2",
+  "title": "Harry Potter and the Chamber of Secrets",
+  "isbn": "9781408898161",
+  "edition": "OL26884586M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 4 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-black/; this volume's cover is on record",
+  "note": "cover ol:8573843, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "3",
+  "title": "Harry Potter and the Prisoner of Azkaban",
+  "isbn": "9781526606204",
+  "edition": "OL27325441M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-black/03-9781526606204.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "4",
+  "title": "Harry Potter and the Goblet of Fire",
+  "isbn": "9781526610300",
+  "edition": "OL28061128M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up (400x400); the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-black/04-9781526610300.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "5",
+  "title": "Harry Potter and the Order of the Phoenix",
+  "isbn": "9781526618160",
+  "edition": "OL28947503M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 4 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-black/; this volume's cover is on record",
+  "note": "cover ol:13907551, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "6",
+  "title": "Harry Potter and the Half-Blood Prince",
+  "isbn": "9781526618252",
+  "edition": "OL33805527M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — 4 of 7 volumes wait for the uploads staged in lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-black/; this volume's cover is on record",
+  "note": "cover ol:12429771, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
+ },
+ {
+  "no": "7",
+  "title": "Harry Potter and the Deathly Hallows",
+  "isbn": "9781526618344",
+  "edition": "OL32641154M",
+  "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold",
+  "skip": "set incomplete — its only image is an angled 3-D mock-up; the publisher's image is staged as lab/collections/for-openlibrary/harry-potter-bloomsbury-house-hufflepuff-black/07-9781526618344.jpg for upload onto this edition, then pin it with `cover`",
+  "note": "publisher image from media.bloomsbury.com staged, looked at 2026-09-27",
+  "source": "Open Library edition record; cover artist: Bloomsbury/Wizarding World announcements (harrypotter.com news, 2019–2021) name Levi Pinfold"
  }
 ]
