@@ -27,6 +27,22 @@ Julian schickte am 2026-09-28 zwei Fotos als Kandidaten:
 
 Entscheidung: **Julian.**
 
+### 1.1 Julians Wahl vom 2026-09-28: `?font=xanh`
+
+Julian: „nimm Xanh Mono für Überschrift und Texte, aber Jost für Pillen, in der Suchleiste, Fußleiste, auf den Links mit Text; Buchtitel und Autor unter einem Cover auch in Jost, aber nicht all caps. ‚Start with a classic' sieht in Jost besser aus als Xanh, aber z. B. der Detailtext besser in Xanh. Kannst du daraus eine Regel ableiten?" Und: der Wortabstand in „Judge a book" muss kleiner werden.
+
+**Die Regel: Xanh Mono für Sätze, Jost für Wörter.**
+
+- **Xanh Mono** bekommt, was man *liest*: die Überschrift einer Seite (das Versprechen der Startseite, der Buchtitel über der Wand), Fließtext (der Satz unter dem Versprechen, die Beschreibung eines Buchs, die Spanne der Ausgaben, der Hinweis „Pick a cover …"), und Zahlen, die auf einem Beleg stünden (ISBN).
+- **Jost** bekommt, was man *benennt, wählt oder anklickt*: Abschnittsüberschriften („Start with a classic", „This book"), Pillen, Suchfeld und Knöpfe, Links, Titel und Autor unter einem Cover, Autorzeile und Metadaten, Quellenangaben, die Fußzeile. Normale Groß- und Kleinschreibung; Versalien bleiben den Kapitälchen-Labels (`.kicker`), die es heute schon gibt.
+- Prüffrage für einen neuen Text: *Ist es ein Satz, den jemand liest, oder ein Etikett, das jemand überfliegt?* Ein Link in einem Satz folgt dem Satz.
+
+**Wortabstand:** Xanh Mono hat feste Breiten, ein Leerzeichen ist so breit wie ein Buchstabe. In der Überschrift `word-spacing: -0.3em` (bei 48 px also 14,4 px weniger). Im Fließtext bleibt der Abstand, dort liest er sich wie auf dem Bon.
+
+**Wortmarke** heißt der Name der Seite als Schriftzug oben links in der Kopfzeile („Beautiful Books", der Link zur Startseite). Im Mockup ist sie Xanh Mono kursiv — als Name gilt sie weder als Satz noch als Etikett, sondern als Logo. Julian entscheidet, ob das so bleibt.
+
+**Gemessen:** bei 390 × 844 kein seitliches Scrollen; der Buchtitel *Frankenstein* läuft über zwei Zeilen (76 px, wie mit Fraunces — Xanh Mono ist schmal genug, die dritte Zeile kam von den Versalien); die Wortmarke in einer Zeile; der Platzhalter des Suchfelds braucht in Jost 181 von 356 px. Umgesetzt ist das nur lokal (CSS unter `html[data-font="xanh"]` in `app/globals.css`, nicht committet), und die Auswahl der Fließtexte hängt dort an Klassen (`leading-relaxed`, `max-w-xl`) — beim echten Einbau bekommt jede Stelle die Schrift ausdrücklich.
+
 ## 2. Darf ein Logo aus echten Covern bestehen?
 
 **Kurz: aus geschützten Covern nicht; aus gemeinfreien ja — aber „liegt auf Commons" heißt nicht „gemeinfrei in Deutschland".** Keine Rechtsberatung; vor der Eintragung einer Marke oder dem Druck einmal von jemandem mit Fach prüfen lassen.
