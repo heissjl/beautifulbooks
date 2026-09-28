@@ -3340,3 +3340,22 @@ Julian zeigte den Abschnitt bei Sammlung Keller, den er mit „Inspiration" geme
 - **Also:** Edelmann hat das Reihenlayout nicht erfunden. Seine Bilder darin gelten Keller als stilbildend. Die Web-Suche fand keine weitere Quelle zu seinen Fischer-Umschlägen.
 - **Kontaktbogen der Wirth-Umschläge:** 86 Vorschaubilder von Keller für Julian, nur lokal gespeichert.
 - **Reihe Hanser:** Der Online-Entwurf ist auf Julians „ja" neu veröffentlicht, die Wand zeigt jetzt 102 Cover.
+
+## 2026-09-28 — Gestalter der Fischer Bücherei, Recherche (ROADMAP 5.10)
+
+Julian wollte „eine dedizierte websuche mit der wir andere cover gestalter finden für diese reihe". Die Ergebnisse stehen in [lab/collections/research/fischer-buecherei-designers.md](../lab/collections/research/fischer-buecherei-designers.md).
+
+- **Umfang:** 34 weitere Gestalter neben Wirth und Edelmann. 74 Bandnummern lassen sich einem Namen zuordnen; mit Kellers Wirth- und Edelmann-Listen sind es etwa 170 der über 1.100 Nummern.
+- **Wo die Namen stehen:** Die Fischer Bücherei druckt den Gestalter im Impressum, früh als „Umschlagbild: …", später als „Umschlagentwurf: …". Die ISFDB und viele Antiquariatsangebote schreiben diese Zeile ab.
+- **Die meisten Zuordnungen:**
+  - Wolf D. Zimmermann, 18 Nummern, vor allem „Bücher des Wissens", typografisch.
+  - Gerhard M. Hotop, 6.
+  - Hermann Rastorfer, 4.
+  - Hans Maier, 4 (1970/71).
+  - Eberhard G. Rensch und Gerhard C. Schulz, je 3.
+  - Außerdem unter anderem Paul Flora, Otl Aicher und Hans Hillmann.
+- **Neue Edelmann-Umschläge:** Nr. 818 und 843, nicht bei Keller.
+- **Zimmermann als Autor des Band-Layouts** ist nur vermutet. Belegt ist die Dreiteilung des Umschlags seit 1952.
+- **Ende der Reihe:** Das Impressum lautete bis Mitte 1971 „Fischer Bücherei".
+
+**Regel für die Wand: Ein Gestalter gehört zu einem Druck, nicht zu einer Bandnummer.** Nr. 1 hatte im Erstdruck einen Umschlag von Gerd Grimm; Keller zeigt für Nr. 1 einen späteren Druck von Wirth. Nr. 132 hatte 1956, 1965 und 1969–71 verschiedene Umschläge. Unter eine Kachel kommt ein Name also nur, wenn die Quelle genau diesen Druck betrifft. Das ist dieselbe Regel wie „ISBN ≠ Cover", mit der Bandnummer an Stelle der ISBN.
