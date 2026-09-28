@@ -64,7 +64,10 @@ export async function matchPhotoBooks(books: readonly RecognizedBook[], find: Se
           picked = second;
         }
       }
-      const work = picked ? works[picked.index] : undefined;
+      // Neither author nor title agrees: the search's first hit is a guess, not this book.
+      // Measured on the first real photo (2026-09-28): all five such hits were wrong
+      // ("Titanic" for Nansen's "In Nacht und Eis"), so they are "not found" instead.
+      const work = picked && picked.reason !== 'first-result' ? works[picked.index] : undefined;
       const tile = work ? tileFromWork(work) : undefined;
       out.push({ read, ...(tile ? { tile, reason: picked?.reason } : {}) });
     } catch {
