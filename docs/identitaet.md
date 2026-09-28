@@ -25,7 +25,7 @@ Julian schickte am 2026-09-28 zwei Fotos als Kandidaten:
 
 **Nachgemessen mit Xanh Mono (2026-09-28):** die Wortmarke passt in eine Zeile und endet bei 242 px statt 233 px (Fraunces) — Xanh Mono läuft so schmal wie Fraunces, das Umbruchproblem kam von Courier Prime und den gesperrten Versalien. Der H1 über *Frankenstein* läuft weiter über drei Zeilen (113 px statt 76 px). Kein seitliches Scrollen.
 
-**Entschieden (Julian, 2026-09-28): die ISBN bleibt Geist Mono**, „aber vielleicht mit einem Strich durch die 0". Nachgesehen: **Geist Mono hat die durchgestrichene Null schon als Standardzeichen** — `font-variant-numeric: slashed-zero` ändert nichts, beide Fassungen sind pixelgleich. Sie ist nur in 13 px und im Grau `ink-3` kaum zu sehen. Wenn die Null sichtbar werden soll, hilft Größe und Kontrast (14 px, `ink-2`), nicht ein anderes Zeichen. Eine ISBN mit Bindestrichen (978-0-14-143947-1) läse sich besser, aber wo die Striche stehen, hängt von Land und Verlag ab und braucht die Bereichstabelle der ISBN-Agentur — ein eigener Punkt, falls gewünscht.
+Entscheidung über die Schriftwahl insgesamt: **Julian.**
 
 ### 1.1 Julians Wahl vom 2026-09-28: `?font=xanh`
 
@@ -97,4 +97,6 @@ Offen: ob die Marke eine Farbe (Terrakotta) oder mehrere trägt; ob sie ohne Nam
 
 ### 1.2 ISBN: Geist Mono, Jost oder Xanh Mono
 
-Julian bat am 2026-09-28 um einen Vergleich der ISBN in den drei Schriften (Bild lokal, nicht im Repository). Befund beim Setzen: Jost hat Proportionalziffern, eine ISBN läuft darin dicht und die Bindestriche verschwinden fast; Geist Mono und Xanh Mono geben jeder Ziffer dieselbe Breite, was eine 13-stellige Zahl lesbar hält. Xanh Mono ist bei 13 px deutlich heller und schmaler als Geist Mono. Entscheidung: **Julian.**
+Julian bat am 2026-09-28 um einen Vergleich der ISBN in den drei Schriften (Bild lokal, nicht im Repository). Befund beim Setzen: Jost hat Proportionalziffern, eine ISBN läuft darin dicht und die Bindestriche verschwinden fast; Geist Mono und Xanh Mono geben jeder Ziffer dieselbe Breite, was eine 13-stellige Zahl lesbar hält. Xanh Mono ist bei 13 px deutlich heller und schmaler als Geist Mono.
+
+**Entschieden (Julian, 2026-09-28): die ISBN bleibt Geist Mono**, „aber vielleicht mit einem Strich durch die 0". Nachgesehen: **Geist Mono hat die durchgestrichene Null schon als Standardzeichen** — `font-variant-numeric: slashed-zero` ändert nichts, beide Fassungen sind pixelgleich. Sie ist nur in 13 px und im Grau `ink-3` kaum zu sehen. Wenn die Null sichtbar werden soll, hilft Größe und Kontrast (14 px, `ink-2`), nicht ein anderes Zeichen. Eine ISBN mit Bindestrichen (978-0-14-143947-1) läse sich besser, aber wo die Striche stehen, hängt von Land und Verlag ab und braucht die Bereichstabelle der ISBN-Agentur — ein eigener Punkt, falls gewünscht.
