@@ -3511,3 +3511,17 @@ Julian hatte `ANTHROPIC_API_KEY` in Vercel Production gesetzt: „test it once w
 **Eine ID eingeben, um weiterzuarbeiten (5.13l).** Julian: „or we need a way to enter an id to go on working on a collections project. maybe a field below the one that gives the id? or in the same field“. Es ging schon (einfügen, „Save“), sah aber nicht so aus. Jetzt im selben Feld: ohne eigene ID der Platzhalter „Paste an ID to go on with its collections“, mit einer anderen ID im Feld der Knopf „Use this ID“ (sonst kein Knopf). Gemessen bei 390 px: Platzhalter 231 px im 259 px breiten Feld, keine Überbreite.
 
 **Ein Satz weniger auf `/create`.** Julian markierte „No account: this browser remembers which collections are yours.“ und schrieb „strike the highlighted sentence“. Gestrichen; die Einleitung sagt jetzt nur noch, was man hier tut, und verweist auf die Sammlungen der Leser.
+
+## 2026-09-28 — Entwurf Penguin Classics, die Jahre mit dem schwarzen Titelfeld (ROADMAP 5.10)
+
+Julian: „drafte" Penguin Classics mit belegten Gemälden.
+
+- **Auswahl:** Kandidaten bei Open Library waren 897 Werke mit Cover und einer ISBN von Penguin Classics (Verlag „Penguin Classics" 1980–2005 sowie ISBN-Präfix 014043/014044). Etwa 500 davon auf Kontaktbögen angesehen, 267 im Design mit schwarzem Titelfeld gefunden, **98 auf der Wand**. Liste: `lab/collections/lists/penguin-classics-black.json`.
+- **Bildnachweise für 50** (`coverCredits: 'artwork'`): aus Scans derselben Druckausgabe bei Internet Archive, jeweils erst übernommen, nachdem Scan und unser Cover nebeneinander verglichen waren. Sieben Sätze sind unvollständig; ein `note` am Eintrag sagt es. Drei Nachweise sind Fotos, drei zeigen Münzen oder ein Fresko.
+- **Ausgelassen:**
+  - *The American*: Open Library führt dort das Cover von *The American Scene*.
+  - Eine doppelte Ausgabe von *Weir of Hermiston*.
+  - Zwölf Nachweise, deren Scan ein anderes Bild zeigte, bekamen keinen Nachweis.
+- **Nicht fertig:** Etwa 60 der 267 Kandidaten wurden nie nach einem Nachweis durchsucht, weil die Volltextsuche von Internet Archive über längere Zeit mit 400/502 antwortete; nichts wurde umgangen. Etwa 350 weitere Kandidaten sind noch nicht angesehen. Die Skripte liegen im Scratchpad und setzen dort fort, wo sie stehen blieben.
+- **Werkzeug-Lücke:** `from-isbns.ts` übernimmt `coverArt` und `coverArtSource` nicht aus der Liste. Bei Virago und Penguin wurden die Nachweise danach hineingemischt.
+- **Stand:** In der Datei als `penguin-classics-the-black-band-years`, online als Entwurf `aK53ASpzwfuL`.
