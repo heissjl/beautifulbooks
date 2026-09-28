@@ -2520,6 +2520,15 @@ Julian: „es sollten auch gleiche cover von verschiedenen verlagen gefaltet wer
 
 **Gebaut** ([SPEC §2.3](SPEC.md)): die vierte Stufe in `sameCover` bekommt die beiden Signaturen selbst, nicht nur ihren Abstand. Dafür rechnet `lib/coverhash.ts` die Farbe jetzt mit — das RGBA-Bild wird für den Hash ohnehin decodiert —, und die Seiten-Antwort trägt Sättigung und Hue-Histogramm mit: **gemessen 2.016 Byte auf 63 Signaturen**, rund 32 Byte je Cover. Für kuratierte Werke kommt die Farbe wie bisher kostenlos aus dem gebauten Index. **Ohne Farbe greift die Stufe nicht** — eine ältere Signatur faltet also wie zuvor, statt zu raten. Fünf neue Tests, 602 grün.
 
+**Nachtrag 2026-09-24: zwei Funde beim Kuratieren.** Julian fragte, ob wir das Cover der Manesse-Ausgabe von *Mrs. Dalloway* haben (rosa „Virginia", Stillleben, weißes „Woolf"; neue Übersetzung, 2023). **Nein** — alle rund 90 Cover, die wir zu OL39349W halten, durchgesehen: Penguin, Oxford, Alianza, Feltrinelli, polnische, spanische, italienische Ausgaben, aber keine Manesse. Open Library führt zu diesem Werk kaum deutsche Ausgaben, und das ist genau die Lücke, die die Seite nie verspricht zu füllen (N12, „nie alle Cover"). Der Katalog ließ sich nicht gegenprüfen: **openlibrary.org war von hier aus 20 Sekunden lang nicht erreichbar** (ECONNREFUSED), während die Produktion gleichzeitig antwortete — der Ausfall lag am Weg dieser Maschine, nicht am Dienst.
+
+Zweiter Fund, daraus geworden: unter den 90 Covern steht das Titelbild eines **Google-Tag-Manager-Handbuchs**. Open Library hängt gelegentlich fremde Ausgaben an ein Werk; die Wand zeigt sie mit, und außerhalb des Spiels kann niemand das melden (ROADMAP 6.50).
+
+**Nachtrag 2026-09-24, zweiter Teil: kann das Manesse-Cover auf die Wand?** (Julian: „können wir das aber nicht in unsere wall aufnehmen?") Zuerst der Stand, der leicht zu übersehen ist: **die Wand nimmt Handelsbilder längst auf** — `withRetailCovers` mischt die Bilder der ISBN-Nachschau vor dem Falten unter die Cover, ein abweichendes Händlerbild wird also eine eigene Kachel und kein bloßes Urteil.
+
+Für diesen Fall hilft das trotzdem nicht, und die Zahlen sagen warum. *Mrs. Dalloway* (OL39349W) bei Open Library: **81 Ausgaben, 76 mit ISBN, 90 Cover — und genau zwei deutsche Ausgaben**, beide Fischer Taschenbuch (1984, 2003), beide mit Cover. **Manesse: null.** Es gibt also keine ISBN, nach der wir fragen könnten; und **keine einzige Ausgabe mit ISBN ist ohne Cover**, die Nachschau hätte hier also ohnehin nichts beizutragen.
+
+**Google gefragt, eine Anfrage:** auf „Mrs Dalloway Manesse" kommen elf Bände, darunter **ISBN 9783717520320, Manesse 2004, mit Bild** — die dunkelblaue Ausgabe der Bibliothek der Weltliteratur. Das Bild angesehen: es ist nicht das, was Julian bei Thalia sah; die Ausgabe von 2023 mit dem Stillleben kennt **keiner der beiden Kataloge**. Aber es zeigt die Lücke: Google hält zu diesem Werk Ausgaben, die Open Library nicht führt, und unsere eine Google-Frage je Werk bringt sie nicht von selbst an die Oberfläche. Was daraus folgen könnte, steht als ROADMAP 6.51 — mit dem Preis: eine zweite Frage je Werk macht aus einer kalten Detailseite drei Anfragen statt zwei und aus 500 kalten Seiten am Tag rund 330.
 
 ## 2026-09-24 · Thematische Sammlungen und Vorschläge von Freunden (ROADMAP 5.10, 5.10a)
 
@@ -3278,6 +3287,73 @@ Julian: „starte einen agenten, der die suchfunktion überarbeitet. automatisch
 
 **Julians Antworten vom 2026-09-28 (Teil 1).** Herr der Ringe: Klett-Cotta 2000 zurück, **40 Sätze, 120 Cover**, veröffentlicht über den Schalter. Harry Potter: der gemischte Melinsky-Satz und Folio Junior raus (**25 Sätze, 175 Cover**); der Davidson-Satz mit dem „20 years"-Stempel bleibt. Ballantine: beide Bände von *The Night Land* bleiben. Heyne-Entwurf bleibt. Video wird in einer anderen Sitzung fortgesetzt.
 
+## 2026-09-28 — ZVAB statt AbeBooks im Markt `de` (ROADMAP 4.10, Teil)
+
+Julian: „stelle für markt=de noch auf zvab um in den kauflinks". `lib/buylinks.ts` baut die AbeBooks-Links jetzt über `ABEBOOKS_HOST` pro Markt: `de` → `www.zvab.com`, Label „ZVAB“, die id bleibt `abebooks`. Gemessen mit curl am 2026-09-28: ISBN-Suche *Homo faber* (9783518368541) 116 Ergebnisse auf ZVAB, 138 auf abebooks.de; *The Great Gatsby* (9780141182636) 43 auf ZVAB; Feldersuche `tn=Homo faber&an=Max Frisch&pn=Suhrkamp&yrl=1977&yrh=1977` 42 auf ZVAB, 47 auf abebooks.de. Eine ISBN ohne Angebot leitet ZVAB auf `SearchEntry?errorcode=10` um, das Suchformular — kein Fehler für den Leser, aber auch keine Trefferliste. robots.txt sperrt `/servlet/` für alle außer Googlebot, genau wie bei abebooks.de; die Seite ruft die Adresse nie selbst ab, nur der Leser über den Link. Der Test im Browser auf der Detailseite stand aus, weil Open Library in dem Moment nicht erreichbar war (Verbindung abgelehnt).
+
+## 2026-09-28 — 47 Edelmann-Ausgaben bei Open Library angelegt oder bebildert (ROADMAP 5.10)
+
+Julian: „lege die 47 ausgaben an". Das waren 32 Bände der Reihe Hanser, 5 aus „verschiedene Verlage" und 10 der Fischer Bücherei, jeweils mit einem Bild aus Sammlung Keller. Autor, Jahr und Seitenzahl kamen aus der DNB (SRU, `num=` für ISBNs, sonst `tit=` mit Verlag und Jahr).
+
+**Was passiert ist**
+- **11 gab es schon als genau diese Ausgabe ohne Bild.** Dort wurde nur das Cover hochgeladen und nichts angelegt: Reihe Hanser 7, 28, 54, 89, 156, *Der Fieberkopf* (Bärmeier & Nikel 1967), Fischer 760, 781, 794, 821 und 861.
+- **35 neu angelegt**, OL62602710M bis OL62602759M, jede mit Cover.
+  - Übersetzungen wurden an das Werk des Originals gehängt, wie Open Library es führt: *Planet News*, *Farabeuf*, *Conversation with Eldridge Cleaver*, *Trout Fishing in America*, *El informe de Brodie*, *The Last Unicorn* und *Boy on a Dolphin*.
+  - Für die übrigen hat Open Library neue Werke unter dem vorhandenen Autor angelegt. Einzige Ausnahme ist Klaus Isenhöfer, den es dort noch nicht gab.
+- **Zwei Dubletten sind entstanden**, weil der erste Abgleich nur Werktitel mit Autor suchte:
+  - *Die Grenze*: OL47678377M trug das Edelmann-Cover schon. Meine OL62602713M ist doppelt.
+  - *Das Denken von Sade*: Es gab einen verwaisten Ausgabesatz OL19218127M ohne Werk. Meine OL62602722M ist doppelt; sie hat Werk, Autor und Cover.
+  - Löschen oder zusammenführen können nur Bibliothekare bei Open Library. Beide Fälle bleiben offen.
+  - *Bakunin* fiel beim dritten Durchgang über den Dublettenhinweis von Open Library auf. Das Cover ging auf die vorhandene OL5218666M, angelegt wurde nichts.
+  - Der Abgleich sucht jetzt über die Titel der Ausgaben (`q=` Titelwörter + Autor, dann jede Ausgabe mit Jahr und Verlag). Er fand für die übrigen 33 nichts.
+- **Ein Fehler von Open Library, gefunden und behoben:**
+  - Die ISBN 3446111999 gehört laut DNB zu Laubs *Verärgerte Logik* in der Ausgabe von 1978. Open Library führt sie aber auf dem Datensatz OL18051650M, und der ist Lepenies/Nolte, *Kritik der Anthropologie* (Reihe Hanser 61, 1971, Import aus einem MARC-Satz aus Toronto).
+  - Deshalb war das Laub-Cover beim Upload vom Vormittag dort gelandet, und auf der Wand verdrängte ein Band den anderen.
+  - Das Cover ist vom Lepenies-Satz entfernt (manage-covers). Es liegt jetzt auf Laubs eigener Ausgabe von 1969, OL4365957M. Die Liste pinnt diese Ausgabe.
+  - Die falsche ISBN steht noch auf OL18051650M.
+- Die Fischer-Bücherei-Bände haben noch keine Sammlung und keine Liste. Ihre Ausgaben stehen in `lab/collections/for-openlibrary/fischer-buecherei-edelmann/manifest.json`.
+
+**Wände danach**
+- Reihe Hanser: 22 → **102 Cover** (zwei weitere, Nr. 13 und 18, nachdem veraltete Einträge ohne Cover aus `isbn-cache.json` gelöscht waren; Nr. 161 *Medienmagazin* fehlt, weil der Ausgabesatz OL15262502M zu keinem Werk gehört).
+- Verschiedene Verlage: 4 → **24 Cover**.
+- Kontaktbögen durchgesehen: nur Edelmann-Umschläge. Die späten Reihe-Hanser-Bände (etwa ab Nr. 100, typografisch oder mit Foto) führt Sammlung Keller ebenfalls unter Edelmann.
+- Kontrolle Titel gegen Ausgabe für alle 100 Kacheln: keine weitere Fehlzuordnung.
+
+**Neue Einstellungen in `from-isbns.ts`**
+- Neu ist `TITLE_FROM=list` und pro Eintrag `wallTitle`. Die Kachel trägt dann den gedruckten deutschen Titel statt „Trout Fishing in America".
+
+**Online-Entwürfe**
+- Beide Entwürfe sind nachgezogen (`push-draft`). Reihe Hanser: 78 dazu, 6 umbenannt, Reihenfolge.
+- Die veröffentlichte Reihe-Hanser-Wand zeigt weiter den veröffentlichten Entwurf, bis Julian ihn neu veröffentlicht.
+
+## 2026-09-28 — Entwurf Virago Modern Classics mit belegten Gemälden (ROADMAP 5.10)
+
+Julian: „drafte virago mit belegten gemälden".
+- **Auswahl:** Open Library `publisher:virago publish_year:[1978 TO 2005]` ergab 1.842 Werke, davon 1.173 mit Cover. Ein Erkenner für das grüne Band markierte 225. Auf Kontaktbögen blieben 142 saubere grüne Bänder, eines pro Werk. *The Orchid House* von 1991 fiel heraus, weil es ein Fernsehstandbild zeigt. Ergebnis: **141 Cover** (Liste `lab/collections/lists/virago-modern-classics.json`, Nachweise in `note` und `coverArtSource`).
+- **Bildnachweise für 96 der 141** (`coverCredits: 'artwork'`):
+  - 79 stammen aus dem Volltext der Rückseite bei Internet Archive („The cover shows …"). Jeder wurde erst übernommen, nachdem der Scan neben unser Cover gelegt war; 12 Paare mit anderem Druck wurden verworfen.
+  - 17 stammen aus dem LibraryThing-Faden „Green VMCs and their Cover Art" über die Wayback Machine.
+  - Unvollständig: sechs nennen nur den Bildtitel. *Good Daughters* widerspricht LibraryThing (Scan: Gunn, „Portrait of Ray Fuller"). Drei Bilder sind keine Gemälde (zwei Vogue-Titel, ein Bild im Stil Beardsleys).
+- **45 ohne Nachweis.** Weder ein Scan desselben Drucks noch ein Sammlerbeitrag nennt das Bild. Blogs wurden nicht durchsucht.
+- Nur Open Library, nie Google. In `data/collections.json` als Entwurf, online als Entwurf `vE6GEpRDRVeA`. Den Einleitungstext hat der Agent nur aus belegten Fakten formuliert.
+
+## 2026-09-28 — Entwurf Fischer Bücherei, Umschläge von Heinz Edelmann (ROADMAP 5.10)
+
+Julian zeigte den Abschnitt bei Sammlung Keller, den er mit „Inspiration" gemeint hatte: „Fischer Bücherei, stilbildende Umschläge für das Serienlayout von Heinz Edelmann". Das sind Edelmanns eigene Umschläge und genau die zehn, die am selben Tag bei Open Library angelegt oder bebildert wurden (Nr. 758, 760, 781, 794, 796, 807, 821, 832, 849, 861, 1966–69). Die Recherche des Agenten nach fremden Vorbildern (`lab/collections/research/edelmann-inspirations.md`) ging also von einer falschen Lesart aus. Neue Liste `lab/collections/lists/fischer-buecherei-edelmann.json`; der Entwurf `fischer-bucherei-covers-by-heinz-edelmann` hat 10 von 10 Covern und liegt online als Entwurf. Der Slug folgt der Adresse, die der Server aus dem Titel bildet („Bücherei" → „bucherei").
+
+## 2026-09-28 — Neue Schriften: Xanh Mono und Jost (ROADMAP 6.61)
+
+Julian wollte die visuelle Identität klären und schickte zwei Fotos als Schriftkandidaten: einen Kassenbon von *eavesdrop* (674 Manhattan Ave, Brooklyn) und ein T-Shirt von Frankel's Delicatessen. Der Weg im Einzelnen steht in [docs/identitaet.md](identitaet.md).
+
+- **Bestimmung.** Das T-Shirt: eine dünne geometrische Groteske der Futura-Familie, frei als **Jost**. Der Bon: zuerst als Courier Prime bestimmt, auf einem unscharfen Foto — falsch. Auf Julians Nachfrage und einem scharfen Foto den Bontext in vier Schriften gesetzt (Xanh Mono, Cutive Mono, Courier Prime, Libertinus Mono): nur **Xanh Mono** trifft die schmalen, kontrastreichen Buchstaben, die geschwungene „2", die „1" mit Fähnchen und die fast handschriftliche Kursive.
+- **Mockups** lokal über `?font=`, nie committet. Julian verwarf die Versalien der Deli-Fassung für Buchtitel, leitete mit Claude eine Regel nach Inhalt ab (Mockup `xanh`) und verglich sie mit der alten Aufteilung in neuen Schriften (Mockup `swap`). **Entschieden: `swap`.** `xanh` ist als 6.62 zurückgestellt.
+- **Wortabstand.** Xanh Mono gibt dem Leerzeichen eine volle Zeichenbreite; Julian: „der Wortabstand bei Judge a book muss kleiner werden". `-0.3em` im H1 (14,4 px bei 48 px Schriftgröße); in „Start with a classic" (24 px) liefen die Wörter damit zusammen, dort `-0.15em`.
+- **ISBN.** Julian wollte Jost mit der durchgestrichenen Null und den Strichen aus Geist Mono (Claude hatte zuerst „Geist Mono mit Strich durch die 0" verstanden und dabei festgestellt, dass Geist Mono die Null ohnehin durchgestrichen zeichnet). Die Striche kommen aus der Bereichstabelle der ISBN-Agentur über `isbn3` (MIT; `groups.js` 97 KB, gzip 8,7 KB, im Browser der Werkseite), weil die Gruppenlängen je Land und Verlag verschieden sind: 978-0-14-143947-1, 978-3-596-90486-0, 978-1-5131-3739-1. Auf Julians Vorgabe **nur in der Anzeige**; im Browser geprüft an *Frankenstein*, Long Bridge 2022: angezeigt „ISBN 978-0-578-28625-9", Kauf-Links `/go/bookshop/9780578286259?market=us` usw.
+- **Gemessen** am Dev-Server des Worktrees: bei 390 × 844 kein seitliches Scrollen auf Startseite, Suche und Werkseite; H1 der Startseite 79 px, Buchtitel *Frankenstein* 76 px (zwei Zeilen wie mit Fraunces), „Start with a classic" und Wortmarke je eine Zeile; der Platzhalter des Suchfelds braucht in Jost 181 von 356 px. Die fünf Abnahmefragen aus F1 bringen das erwartete Werk zuerst; 889 Tests und der Build grün.
+- **Nebenbefund zum Werkzeug:** `next dev` (Turbopack) im iCloud-Worktree übernahm Änderungen an `app/globals.css` mehrmals nicht, auch nicht nach einem Neustart; erst das Löschen von `.next/dev/cache/turbopack` half. Den ganzen `.next/dev`-Ordner zu löschen nahm auch den Fetch-Cache mit, und ein aus der Shell gestarteter Dev-Server erreicht Open Library nicht — danach antwortete jede Werkseite „Book data source unavailable".
+
+Offen aus 6.61: die Bildmarke (Richtung A–D) und das OG-Bild, das seine Schrift noch mit der Voreinstellung von `next/og` setzt.
+
 ## 2026-09-28 · Die eigene Wand ohne Konto, im Lab (ROADMAP 5.13)
 
 Julian: „I want to use the website as a funnel for art creation, of framed cover walls in the actual physical world … focus on step one for now but make a roadmap/plan for the entire funnel". Plan: [PLAN-5.13](plans/PLAN-5.13-wand-funnel.md); Prototyp: [`lab/walls/`](../lab/walls/README.md).
@@ -3363,3 +3439,8 @@ Julian: „hier dazwischen können wir jetzt step 2 anbieten: eine physische cov
 **„Find it“ klappt die Läden auf (5.13f).** Julian: „ändere es zu ‚find it‘ und lass dann die kauflinks hier ausklappen statt auf die andere seite umzuleiten“. Geprüft in Headless Chrome mit Cookie und `Accept-Language: de-DE`: Markt DE; *Beloved* bekam nach dem Nachschlagen „Knopf 1987 · ISBN 9780394535975“, *Gatsby* (Julians gewähltes Cover 13853193) „Lulu.com 2021 · ISBN 9781716075735“ — der Druck, zu dem Open Library diesen Scan führt. Aufgeklappt: zwei Läden vorn („AbeBooks · ISBN“, „Booklooker · ISBN“, beide über `/go/…?market=de`), elf hinter „More places to look“, und der Satz der Buchseite, dass die ISBN aus dem englischen Sprachraum stammt. Bei 390 px (per `Emulation.setDeviceMetricsOverride`, weil Headless Chrome kein Fenster unter 500 px öffnet) keine Überbreite, das Feld liegt bei 60–374 px. Es ist jeweils nur eine Zeile offen.
 
 **Auslieferungsstand gebaut (5.13a).** Branch `claude/collections-deploy` (Worktree `.claude/worktrees/collections-deploy`), 17 Commits vor `origin/main`: `origin/main` + `claude/art-funnel-lab`, dann Schnitt-Commit `b9aee28` ohne Schritt 2. Geprüft auf einem eigenen Dev-Server (Port 3108): `/`, `/create`, `/collections`, `/collections/readers`, `/collections/feminist-press`, `/book/OL468431W`, `/create/review` antworten 200; die Startseite trägt „Or create your own collection of covers“; eine Sammlung aus sechs Zufallscovern ließ sich anlegen und zeigen, `/collections/readers` zählte sie; „Make it a piece“ steht nicht im HTML, `interest` und `printings` antworten 404. 930 Tests, ESLint und `npm run build` grün. Nicht gepusht.
+
+## 2026-09-28 · Ein Auslieferungsstand nur mit den Sammlungen der Leser (ROADMAP 5.13a–e)
+
+Julian: „kannst du einen commit vorbereiten, den wir nach main mergen kann, der nur den ersten teil mit den collections von usern enthält? dann können wir das deployen und das andere weiterarbeiten“. Branch `claude/collections-deploy`, ab `origin/main` (mit 6.61 und den neuen Sammlungen), `claude/art-funnel-lab` hineingeführt, dann in einem eigenen Commit **Schritt 2 entfernt**: `components/WallPlan.tsx`, die Routen `interest` und `printings`, `lib/walls/printings.ts`, im Modell `artwork`/`artworkPlan`/`looked`, im Speicher `interest`, auf der Review-Seite die Nachfrage-Zahlen; die Sammlungsseite fragt keinen Markt mehr. Neu: ein Test, dass `WALLS` in Vercels Produktion ohne Variable aus ist — nach dem Merge bleibt die Funktion dort dunkel, bis Julian `WALLS=on` setzt.
+

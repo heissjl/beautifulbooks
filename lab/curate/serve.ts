@@ -318,6 +318,20 @@ const server = createServer(async (req, res) => {
     const body = JSON.parse(Buffer.concat(chunks).toString('utf8')) as Partial<Pick> & { id?: string };
     const work = works.find(w => w.id === body.id);
     if (!work) return send(400, { error: 'unknown work' });
+    /*
+      Struck by mistake, or struck in a different mood (Julian, 2026-09-24,
+      about Mrs. Dalloway, which he had struck on 2026-09-08): `restore`
+      removes the entry altogether, so the work comes back into the run as an
+      open one. Until now striking was undoable only by editing the file.
+    */
+    if ((body as { restore?: boolean }).restore) {
+      delete picks[work.id];
+      const at = order.indexOf(work.id);
+      if (at >= 0) order.splice(at, 1);
+      savePicks();
+      send(200, { ok: true, restored: work.id });
+      return;
+    }
     if (body.dropped) {
       picks[work.id] = { id: work.id, title: work.title, author: work.author, coverId: '', dropped: true, pickedAt: new Date().toISOString() };
     } else if (body.skipped) {

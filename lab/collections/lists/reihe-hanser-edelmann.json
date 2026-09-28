@@ -3,13 +3,14 @@
   "no": "1",
   "title": "Die Stimmen von Marrakesch",
   "isbn": "3446111670",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602712M"
  },
  {
   "no": "2",
   "title": "Die Grenze",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL47678377M"
  },
  {
   "no": "3",
@@ -21,13 +22,14 @@
   "no": "4",
   "title": "Nach dem Formalismus",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL62602710M"
  },
  {
   "no": "5",
   "title": "Zeitfragen",
   "isbn": "344611176X",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602714M"
  },
  {
   "no": "6",
@@ -39,37 +41,42 @@
   "no": "7",
   "title": "Feinde",
   "isbn": "3446111972",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL16759704M"
  },
  {
   "no": "8",
   "title": "Entblössung",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL62602715M"
  },
  {
   "no": "9",
   "title": "Richtlinien und Anschläge",
   "isbn": "3446112057",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602716M"
  },
  {
   "no": "10",
   "title": "Letzte unfrisierte Gedanken",
   "isbn": "3446111956",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602719M"
  },
  {
   "no": "11",
   "title": "Die Beerdigung findet in aller Stille statt",
   "isbn": "3446111883",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL45910787M"
  },
  {
   "no": "12",
   "title": "Kritik, von wem, für wen, wie",
   "isbn": "3446111891",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602720M"
  },
  {
   "no": "13",
@@ -81,25 +88,27 @@
   "no": "14",
   "title": "Deutschland zwischen Demokratie und Faschismus",
   "isbn": "3446111905",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL15262376M"
  },
  {
   "no": "15",
   "title": "Früher begann der Tag mit einer Schusswunde",
   "isbn": "3446112154",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL45898904M"
  },
  {
   "no": "16",
   "title": "Das Denken von Sade",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL62602722M"
  },
  {
   "no": "17",
   "title": "Obwohl",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL62602723M"
  },
  {
   "no": "18",
@@ -111,13 +120,15 @@
   "no": "20",
   "title": "Die neue Linke in den USA",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL62602721M"
  },
  {
   "no": "21",
   "title": "Verärgerte Logik",
-  "isbn": "3446111999",
-  "fallbackIsbns": []
+  "isbn": "",
+  "fallbackIsbns": [],
+  "edition": "OL4365957M",
+  "note": "ISBN 3446111999 is the 1978 reprint; Open Library carries it on the Lepenies record OL18051650M (Reihe Hanser 61) by mistake, so the 1969 edition is pinned"
  },
  {
   "no": "22",
@@ -135,7 +146,8 @@
   "no": "24",
   "title": "Planet news",
   "isbn": "3446111808",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602726M"
  },
  {
   "no": "25",
@@ -147,7 +159,7 @@
   "no": "26",
   "title": "Farabeuf oder Die Chronik eines Augenblicks",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL62602727M"
  },
  {
   "no": "27",
@@ -159,7 +171,8 @@
   "no": "28",
   "title": "Musik auf der Flucht vor sich selbst",
   "isbn": "3446112022",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL20872399M"
  },
  {
   "no": "29",
@@ -171,7 +184,8 @@
   "no": "30",
   "title": "Drei Uhr Angst",
   "isbn": "3446111638",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602728M"
  },
  {
   "no": "34",
@@ -189,13 +203,13 @@
   "no": "37",
   "title": "Gespenster für den Alltag",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL62602729M"
  },
  {
   "no": "38",
   "title": "Bakunin, eine Invention",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL5218666M"
  },
  {
   "no": "41",
@@ -237,13 +251,13 @@
   "no": "53",
   "title": "Utopien",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL62602736M"
  },
  {
   "no": "54",
   "title": "Weltbilder",
   "isbn": "",
-  "skip": "first printing without ISBN, no Open Library edition found; staged"
+  "edition": "OL5701135M"
  },
  {
   "no": "56",
@@ -261,7 +275,8 @@
   "no": "58",
   "title": "Gespräche in Algier",
   "isbn": "3446113886",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602739M"
  },
  {
   "no": "59",
@@ -286,7 +301,8 @@
   "no": "62",
   "title": "Der Mörder",
   "isbn": "3446113983",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602740M"
  },
  {
   "no": "63",
@@ -298,31 +314,36 @@
   "no": "64",
   "title": "Die Unterhaltung der deutschen Fernsehfamilie",
   "isbn": "3446113932",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5277742M"
  },
  {
   "no": "65",
   "title": "Die Tupamaros",
   "isbn": "344611419X",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL48579612M"
  },
  {
   "no": "66",
   "title": "Die Tabus der bundesdeutschen Presse",
   "isbn": "3446114009",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL15262396M"
  },
  {
   "no": "67",
   "title": "Aus lauter Liebe",
   "isbn": "3446113908",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5164482M"
  },
  {
   "no": "68",
   "title": "a und b leuchten im Klee",
   "isbn": "3446113967",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5737326M"
  },
  {
   "no": "70",
@@ -340,13 +361,15 @@
   "no": "72",
   "title": "Paul oder Die Zerstörung eines Hörbeispiels",
   "isbn": "3446115064",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5743755M"
  },
  {
   "no": "73",
   "title": "Forellenfischen in Amerika",
   "isbn": "3446114963",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602738M"
  },
  {
   "no": "74",
@@ -377,7 +400,8 @@
   "no": "78",
   "title": "Soziologie der Olympischen Spiele",
   "isbn": "344611503X",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5486212M"
  },
  {
   "no": "79",
@@ -389,7 +413,8 @@
   "no": "80",
   "title": "Soziologische Anthropologie",
   "isbn": "3446115013",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5351962M"
  },
  {
   "no": "81",
@@ -426,7 +451,8 @@
   "no": "86",
   "title": "David Brodies Bericht",
   "isbn": "3446115609",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602737M"
  },
  {
   "no": "87",
@@ -444,37 +470,43 @@
   "no": "89",
   "title": "Das Böse",
   "isbn": "3446115684",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5360852M"
  },
  {
   "no": "90",
   "title": "Der Greis in Charenton",
   "isbn": "344611565X",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602743M"
  },
  {
   "no": "91",
   "title": "Meine Begegnungen mit Vladimir Kazakov",
   "isbn": "3446115641",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602747M"
  },
  {
   "no": "92",
   "title": "Der Alte vom Berge",
   "isbn": "3446115633",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602746M"
  },
  {
   "no": "93",
   "title": "Fetisch Eigentum",
   "isbn": "3446115676",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5378585M"
  },
  {
   "no": "94",
   "title": "Anti-Olympia",
   "isbn": "3446115625",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL16623019M"
  },
  {
   "no": "95",
@@ -486,14 +518,15 @@
   "no": "96",
   "title": "Plädoyers für eine europäische Sicherheitskonferenz",
   "isbn": "3446115617",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5500284M"
  },
  {
   "no": "97",
   "title": "Wagner-Chronik",
   "isbn": "3446116400",
   "fallbackIsbns": [],
-  "skip": "image under this ISBN is a title page or back cover, not the series cover"
+  "edition": "OL5370899M"
  },
  {
   "no": "98",
@@ -505,19 +538,22 @@
   "no": "99",
   "title": "Politik und Waffengeschäfte",
   "isbn": "3446116427",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5349290M"
  },
  {
   "no": "100",
   "title": "Und sie fliegen über die Berge, weit durch die Welt",
   "isbn": "3446116435",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5373740M"
  },
  {
   "no": "101",
   "title": "Lexikon Film",
   "isbn": "3446116443",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5370276M"
  },
  {
   "no": "102",
@@ -536,7 +572,7 @@
   "title": "Zur Kritik der Sozialpsychologie",
   "isbn": "3446116478",
   "fallbackIsbns": [],
-  "skip": "image under this ISBN is a title page or back cover, not the series cover"
+  "edition": "OL5375797M"
  },
  {
   "no": "105",
@@ -575,13 +611,14 @@
   "title": "Die gespaltene Zukunft",
   "isbn": "3446116877",
   "fallbackIsbns": [],
-  "skip": "image under this ISBN is a title page or back cover, not the series cover"
+  "edition": "OL17541515M"
  },
  {
   "no": "112",
   "title": "Ansichten einer künftigen Futurologie",
   "isbn": "3446116966",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL52757873M"
  },
  {
   "no": "113",
@@ -611,19 +648,22 @@
   "no": "117",
   "title": "Der Tod in der alten Dekoration",
   "isbn": "3446117121",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602745M"
  },
  {
   "no": "118",
   "title": "Eine andere Verteidigung",
   "isbn": "344611713X",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL52314211M"
  },
  {
   "no": "119",
   "title": "Handbuch zum ordentlichen Leben",
   "isbn": "3446117148",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL4818853M"
  },
  {
   "no": "120",
@@ -684,7 +724,8 @@
   "no": "129",
   "title": "Richard Wagner, die Revolution als Oper",
   "isbn": "3446117873",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5143050M"
  },
  {
   "no": "130",
@@ -703,13 +744,14 @@
   "title": "Weshalb heisst das Bett nicht Bild?",
   "isbn": "3446117903",
   "fallbackIsbns": [],
-  "skip": "image under this ISBN is a title page or back cover, not the series cover"
+  "edition": "OL15262467M"
  },
  {
   "no": "133",
   "title": "Geschichte und menschliche Natur",
   "isbn": "3446117911",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5506889M"
  },
  {
   "no": "134",
@@ -733,7 +775,8 @@
   "no": "137",
   "title": "China in der Welt",
   "isbn": "3446117954",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5507064M"
  },
  {
   "no": "138",
@@ -751,7 +794,8 @@
   "no": "140",
   "title": "Die politischen Gefangenen Saigons",
   "isbn": "3446117989",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602744M"
  },
  {
   "no": "141",
@@ -781,13 +825,15 @@
   "no": "145",
   "title": "Aktschlüsse, Halbgedichte",
   "isbn": "3446118594",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL62602749M"
  },
  {
   "no": "146",
   "title": "Netzer kam aus der Tiefe des Raumes",
   "isbn": "3446118608",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5151041M"
  },
  {
   "no": "147",
@@ -824,7 +870,8 @@
   "no": "152",
   "title": "Lenin-Chronik",
   "isbn": "3446118667",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL5150233M"
  },
  {
   "no": "153",
@@ -848,7 +895,8 @@
   "no": "156",
   "title": "Durch Kooperation zum Frieden?",
   "isbn": "3446118705",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL18777583M"
  },
  {
   "no": "157",
@@ -861,7 +909,8 @@
   "no": "158",
   "title": "Schriften",
   "isbn": "3446118721",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL2645186M"
  },
  {
   "no": "159",
@@ -879,7 +928,8 @@
   "no": "161",
   "title": "Medienmagazin",
   "isbn": "3446118756",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL15262502M"
  },
  {
   "no": "162",
@@ -966,13 +1016,15 @@
   "no": "176",
   "title": "Demokratische Sicherheitspolitik",
   "isbn": "3446119477",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL4813755M"
  },
  {
   "no": "177",
   "title": "Drunter, drüber, mittenmang",
   "isbn": "3446119299",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL4808515M"
  },
  {
   "no": "178",
@@ -1032,7 +1084,8 @@
   "no": "186",
   "title": "Fragen zur Weltpolitik",
   "isbn": "3446120068",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL4786669M"
  },
  {
   "no": "187",
@@ -1070,7 +1123,8 @@
   "no": "192",
   "title": "Der Streit um die Intelligenz",
   "isbn": "3446120823",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL4801096M"
  },
  {
   "no": "193",
@@ -1088,7 +1142,8 @@
   "no": "195",
   "title": "Erlaubte Freiheiten",
   "isbn": "3446120858",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL4796679M"
  },
  {
   "no": "197",
@@ -1195,6 +1250,7 @@
   "no": "216",
   "title": "Mao-Chronik",
   "isbn": "3446122605",
-  "fallbackIsbns": []
+  "fallbackIsbns": [],
+  "edition": "OL4631418M"
  }
 ]

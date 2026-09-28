@@ -11,12 +11,9 @@ interface Row {
   wall: PublicWall;
   views: number;
   reports: number;
-  framed: number;
 }
 interface Totals {
   collections: number;
-  framedRequests: number;
-  collectionsWithRequests: number;
 }
 
 type State = { step: 'loading' } | { step: 'error'; message: string } | { step: 'ready'; rows: Row[]; totals?: Totals };
@@ -57,7 +54,7 @@ export default function WallReview() {
     );
   const totals = state.totals && (
     <p className="mt-6 text-sm text-ink-2">
-      {state.totals.collections} collections made · {state.totals.framedRequests} requests for a framed wall, on {state.totals.collectionsWithRequests} collections
+      {state.totals.collections} collections made
     </p>
   );
   if (state.rows.length === 0)
@@ -71,13 +68,13 @@ export default function WallReview() {
     <>
     {totals}
     <ul className="mt-8 space-y-10">
-      {state.rows.map(({ wall: w, views, reports, framed }) => (
+      {state.rows.map(({ wall: w, views, reports }) => (
         <li key={w.id} className={`border-b border-line pb-8 ${w.showcase === 'hidden' ? 'opacity-60' : ''}`}>
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <div>
               <Link href={`/c/${w.id}`} className="font-display text-2xl text-ink hover:text-accent">{w.title}</Link>
               <p className="text-xs text-ink-3">
-                {w.showcase === 'hidden' ? (w.hiddenBy === 'reports' ? 'taken down automatically after 5 reports — look and decide' : 'taken down by you') : 'shown'} · {views} views · <span className={reports ? 'text-accent' : ''}>{reports} reports</span> · {framed} want it framed
+                {w.showcase === 'hidden' ? (w.hiddenBy === 'reports' ? 'taken down automatically after 5 reports — look and decide' : 'taken down by you') : 'shown'} · {views} views · <span className={reports ? 'text-accent' : ''}>{reports} reports</span>
               </p>
             </div>
             {w.showcase === 'hidden' ? (

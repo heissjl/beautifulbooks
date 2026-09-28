@@ -115,7 +115,7 @@ describe('searchLinksFor (no ISBN needed)', () => {
       'worldcat',
     ]);
     const url = (provider: string) => links.find(l => l.provider === provider)!.url;
-    expect(url('abebooks-search')).toContain('abebooks.de');
+    expect(url('abebooks-search')).toContain('zvab.com');
     expect(url('ebay-search')).toContain('ebay.de');
     expect(url('amazon-search')).toContain('amazon.de');
   });

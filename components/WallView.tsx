@@ -6,9 +6,7 @@ import CoverImage from './CoverImage';
 import WallIdField from './WallIdField';
 import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
-import type { Market } from '@/lib/market';
 import { MAX_BY, MAX_INTRO, MIN_SHOWCASE_TILES, type PublicWall, type WallOp } from '@/lib/walls/model';
-import WallPlan from './WallPlan';
 
 /**
  * A reader's wall (ROADMAP 5.13a). A cover wall like every other on the site
@@ -16,7 +14,7 @@ import WallPlan from './WallPlan';
  * cover aussehen, mache hier eine klassische cover wall“). Everyone sees it;
  * its owner, the browser whose visitor id made it (E22), also gets the tools.
  */
-export default function WallView({ initial, market }: { initial: PublicWall; market: Market }) {
+export default function WallView({ initial }: { initial: PublicWall }) {
   const [wall, setWall] = useState(initial);
   const [canEdit, setCanEdit] = useState(false);
   const [note, setNote] = useState('');
@@ -141,7 +139,6 @@ export default function WallView({ initial, market }: { initial: PublicWall; mar
       {canEdit && wall.tiles.length > 0 && <p className="mt-6 text-sm">{moreCovers}</p>}
 
       {canEdit && <Showcase wall={wall} onSend={send} />}
-      {canEdit && wall.tiles.length > 0 && <WallPlan wall={wall} onSend={send} onWall={setWall} market={market} />}
       {!canEdit && wall.showcase === 'shown' && <Report id={wall.id} />}
 
       {others.length > 0 && (

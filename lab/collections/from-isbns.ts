@@ -13,6 +13,11 @@
  * never filled with some other printing's image, because the point of a
  * series wall is the series design.
  *
+ * `TITLE_FROM=list` puts the list's title on each tile instead of the work's.
+ * A German series whose translations sit on the original's work (as Open
+ * Library files them) would otherwise show „Trout Fishing in America" under a
+ * Reihe Hanser cover; an entry's `wallTitle` does the same for one volume.
+ *
  * `MAX_WORKS=<n>` stops once n works are on the wall, in list order — for a
  * long series such as edition suhrkamp, where Julian wanted „the first 200 …
  * that work … in order nonetheless" (2026-09-25).
@@ -30,6 +35,7 @@ const ROOT = join(import.meta.dirname, '..', '..');
 const OUT_FILE = process.env.COLLECTIONS_FILE ?? join(ROOT, 'data', 'collections.json');
 const CACHE_FILE = join(import.meta.dirname, 'isbn-cache.json');
 const PAUSE_MS = 400;
+const TITLE_FROM_LIST = process.env.TITLE_FROM === 'list';
 
 interface Entry {
   no?: string | null;
@@ -58,6 +64,8 @@ interface Entry {
    * dropped whole, because half a set is not the edition's design.
    */
   set?: string;
+  /** Set by hand: the title for this tile, when neither the work's nor the list's is the one printed on the cover. */
+  wallTitle?: string;
   /**
    * Set by hand: which of the edition's images is the cover, when the first
    * is not (a library sticker on the first scan, a clean one second —
@@ -138,7 +146,7 @@ async function main() {
     if (!hit.cover) { noCover.push(`${e.no ?? '-'} ${e.title} (${e.isbn})`); continue; }
     works.push({
       id,
-      title: work?.title ?? e.title,
+      title: e.wallTitle ?? (TITLE_FROM_LIST ? e.title : undefined) ?? work?.title ?? e.title,
       author: (author?.name ?? '').normalize('NFC'),
       coverId: `ol:${hit.cover}`,
       addedAt: new Date().toISOString().slice(0, 10),

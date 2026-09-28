@@ -78,7 +78,7 @@ describe('linkPlan order', () => {
       still offered, behind the fold — see the label rule below.
     */
     expect(plan(TR, 'us').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'eBay · ISBN']);
-    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'Booklooker · ISBN']);
+    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['ZVAB · ISBN', 'Booklooker · ISBN']);
   });
 
   it('names the question even where only one of the two is possible', () => {
@@ -98,8 +98,8 @@ describe('linkPlan order', () => {
       by number — and both used to stand there bare. Every shop now says which
       question it puts; tools that are not shops keep their plain name.
     */
-    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'Booklooker · ISBN']);
-    expect(plan(undefined, 'de').lead.map(l => l.label)).toEqual(['AbeBooks · title & year', 'eBay · title & year']);
+    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['ZVAB · ISBN', 'Booklooker · ISBN']);
+    expect(plan(undefined, 'de').lead.map(l => l.label)).toEqual(['ZVAB · title & year', 'eBay · title & year']);
     const tools = plan(EN, 'us', { verdict: 'differs' }).lead.filter(l => l.provider === 'google-lens');
     expect(tools.map(l => l.label)).toEqual(['Google Lens']);
   });
