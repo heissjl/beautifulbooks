@@ -13,6 +13,8 @@ export default function WallIdField({ me, onChange }: { me: MyWalls; onChange: (
   const [draft, setDraft] = useState<string | null>(null);
   const [note, setNote] = useState('');
   const value = draft ?? me.visitor ?? '';
+  // Another ID in the field than this browser's: the button takes it (Julian, 2026-09-28: „a way to enter an id to go on working on a collections project … in the same field“).
+  const other = !!value.trim() && normalVisitorId(value) !== me.visitor;
 
   async function save() {
     try {
@@ -29,14 +31,14 @@ export default function WallIdField({ me, onChange }: { me: MyWalls; onChange: (
     <section className="mt-16 border-t border-line pt-6" aria-labelledby="wall-id">
       <h2 id="wall-id" className="text-sm font-medium text-ink">Your ID</h2>
       <p className="mt-1 max-w-2xl text-xs text-ink-3">
-        Your collections belong to this ID, kept in a cookie in this browser. To work on them on another device, paste it there and press Save, or
-        copy the link, which carries the ID, and open it there. Anyone with the ID or the link can change your collections, so share it only with whom you mean to.
+        Your collections belong to this ID, kept in a cookie in this browser. To go on with collections from another device or from someone else,
+        paste their ID here and press <em>Use this ID</em> — or open the link that carries it. Anyone with your ID or its link can change your collections, so share it only with whom you mean to.
       </p>
       <div className="mt-3 flex max-w-2xl flex-wrap gap-2">
         <input
           value={value}
           onChange={(e) => setDraft(e.target.value)}
-          placeholder="Comes with your first collection"
+          placeholder="Paste an ID to go on with its collections"
           spellCheck={false}
           autoComplete="off"
           aria-label="Your ID"
@@ -68,14 +70,15 @@ export default function WallIdField({ me, onChange }: { me: MyWalls; onChange: (
         >
           Copy link
         </button>
-        <button
-          type="button"
-          onClick={save}
-          disabled={!value.trim()}
-          className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent disabled:opacity-40"
-        >
-          Save
-        </button>
+        {other && (
+          <button
+            type="button"
+            onClick={save}
+            className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent disabled:opacity-40"
+          >
+            Use this ID
+          </button>
+        )}
       </div>
       {note && <p className="mt-2 text-xs text-ink-2" role="status">{note}</p>}
     </section>
