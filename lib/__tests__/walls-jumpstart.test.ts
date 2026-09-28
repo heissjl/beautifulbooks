@@ -14,11 +14,11 @@ describe('starting from another collection (5.13k)', () => {
     expect(r.capped).toBe(0);
   });
 
-  it('keeps at most 60 and says how many were left out', () => {
-    const many = Array.from({ length: 73 }, (_, i) => ({ id: `OL${i + 1}W`, title: `T${i}`, author: 'A', coverId: i + 1 }));
-    const r = tilesFromCurated(many);
-    expect(r.tiles).toHaveLength(60);
-    expect(r.capped).toBe(13);
+  it('takes a collection of 198 whole, and says so only past the store bound', () => {
+    const many = (n: number) => Array.from({ length: n }, (_, i) => ({ id: `OL${i + 1}W`, title: `T${i}`, author: 'A', coverId: i + 1 }));
+    expect(tilesFromCurated(many(198))).toMatchObject({ capped: 0 });
+    expect(tilesFromCurated(many(198)).tiles).toHaveLength(198);
+    expect(tilesFromCurated(many(510)).capped).toBe(10);
   });
 
   it('copies a reader’s collection with its printings', () => {
@@ -31,7 +31,7 @@ describe('options on /create (5.13k)', () => {
   it('says how many covers a collection has and how many go in', async () => {
     const { curatedOption } = await import('../walls/jumpstart');
     const works = Array.from({ length: 76 }, (_, i) => ({ id: `OL${i + 1}W`, title: `T${i}`, author: 'A', coverId: i + 1 }));
-    expect(curatedOption({ slug: 'feminist-press', title: 'Feminist Press', works })).toMatchObject({ count: 76, taken: 60, covers: ['1', '2', '3', '4'] });
+    expect(curatedOption({ slug: 'feminist-press', title: 'Feminist Press', works })).toMatchObject({ count: 76, taken: 76, covers: ['1', '2', '3', '4'] });
     expect(curatedOption({ slug: 'x', title: 'X', works: [{ id: 'OL1W', title: 'T', author: 'A', coverId: 0, image: '/c.jpg' }] })).toBeNull();
   });
 });

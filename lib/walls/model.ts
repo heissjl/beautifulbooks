@@ -69,7 +69,12 @@ export interface Wall {
 /** What a view link returns: the wall without its owner. */
 export type PublicWall = Omit<Wall, 'ownerHash'>;
 
-export const MAX_TILES = 60;
+/**
+ * Not a limit a reader should meet (Julian, 2026-09-28: „don't set a cap here
+ * either“): the largest curated collection has 198 covers. It only bounds what
+ * one collection can put in the store — 500 covers are about 300 KB.
+ */
+export const MAX_TILES = 500;
 export const MAX_TITLE = 80;
 export const MAX_PRINTINGS = 5;
 export const DEFAULT_COLUMNS = 4;
