@@ -3281,3 +3281,38 @@ Julian: „starte einen agenten, der die suchfunktion überarbeitet. automatisch
 ## 2026-09-28 — ZVAB statt AbeBooks im Markt `de` (ROADMAP 4.10, Teil)
 
 Julian: „stelle für markt=de noch auf zvab um in den kauflinks". `lib/buylinks.ts` baut die AbeBooks-Links jetzt über `ABEBOOKS_HOST` pro Markt: `de` → `www.zvab.com`, Label „ZVAB“, die id bleibt `abebooks`. Gemessen mit curl am 2026-09-28: ISBN-Suche *Homo faber* (9783518368541) 116 Ergebnisse auf ZVAB, 138 auf abebooks.de; *The Great Gatsby* (9780141182636) 43 auf ZVAB; Feldersuche `tn=Homo faber&an=Max Frisch&pn=Suhrkamp&yrl=1977&yrh=1977` 42 auf ZVAB, 47 auf abebooks.de. Eine ISBN ohne Angebot leitet ZVAB auf `SearchEntry?errorcode=10` um, das Suchformular — kein Fehler für den Leser, aber auch keine Trefferliste. robots.txt sperrt `/servlet/` für alle außer Googlebot, genau wie bei abebooks.de; die Seite ruft die Adresse nie selbst ab, nur der Leser über den Link. Der Test im Browser auf der Detailseite stand aus, weil Open Library in dem Moment nicht erreichbar war (Verbindung abgelehnt).
+
+## 2026-09-28 — 47 Edelmann-Ausgaben bei Open Library angelegt oder bebildert (ROADMAP 5.10)
+
+Julian: „lege die 47 ausgaben an". Das waren 32 Bände der Reihe Hanser, 5 aus „verschiedene Verlage" und 10 der Fischer Bücherei, jeweils mit einem Bild aus Sammlung Keller. Autor, Jahr und Seitenzahl kamen aus der DNB (SRU, `num=` für ISBNs, sonst `tit=` mit Verlag und Jahr).
+
+**Was passiert ist**
+- **11 gab es schon als genau diese Ausgabe ohne Bild.** Dort wurde nur das Cover hochgeladen und nichts angelegt: Reihe Hanser 7, 28, 54, 89, 156, *Der Fieberkopf* (Bärmeier & Nikel 1967), Fischer 760, 781, 794, 821 und 861.
+- **35 neu angelegt**, OL62602710M bis OL62602759M, jede mit Cover.
+  - Übersetzungen wurden an das Werk des Originals gehängt, wie Open Library es führt: *Planet News*, *Farabeuf*, *Conversation with Eldridge Cleaver*, *Trout Fishing in America*, *El informe de Brodie*, *The Last Unicorn* und *Boy on a Dolphin*.
+  - Für die übrigen hat Open Library neue Werke unter dem vorhandenen Autor angelegt. Einzige Ausnahme ist Klaus Isenhöfer, den es dort noch nicht gab.
+- **Zwei Dubletten sind entstanden**, weil der erste Abgleich nur Werktitel mit Autor suchte:
+  - *Die Grenze*: OL47678377M trug das Edelmann-Cover schon. Meine OL62602713M ist doppelt.
+  - *Das Denken von Sade*: Es gab einen verwaisten Ausgabesatz OL19218127M ohne Werk. Meine OL62602722M ist doppelt; sie hat Werk, Autor und Cover.
+  - Löschen oder zusammenführen können nur Bibliothekare bei Open Library. Beide Fälle bleiben offen.
+  - *Bakunin* fiel beim dritten Durchgang über den Dublettenhinweis von Open Library auf. Das Cover ging auf die vorhandene OL5218666M, angelegt wurde nichts.
+  - Der Abgleich sucht jetzt über die Titel der Ausgaben (`q=` Titelwörter + Autor, dann jede Ausgabe mit Jahr und Verlag). Er fand für die übrigen 33 nichts.
+- **Ein Fehler von Open Library, gefunden und behoben:**
+  - Die ISBN 3446111999 gehört laut DNB zu Laubs *Verärgerte Logik* in der Ausgabe von 1978. Open Library führt sie aber auf dem Datensatz OL18051650M, und der ist Lepenies/Nolte, *Kritik der Anthropologie* (Reihe Hanser 61, 1971, Import aus einem MARC-Satz aus Toronto).
+  - Deshalb war das Laub-Cover beim Upload vom Vormittag dort gelandet, und auf der Wand verdrängte ein Band den anderen.
+  - Das Cover ist vom Lepenies-Satz entfernt (manage-covers). Es liegt jetzt auf Laubs eigener Ausgabe von 1969, OL4365957M. Die Liste pinnt diese Ausgabe.
+  - Die falsche ISBN steht noch auf OL18051650M.
+- Die Fischer-Bücherei-Bände haben noch keine Sammlung und keine Liste. Ihre Ausgaben stehen in `lab/collections/for-openlibrary/fischer-buecherei-edelmann/manifest.json`.
+
+**Wände danach**
+- Reihe Hanser: 22 → **100 Cover**.
+- Verschiedene Verlage: 4 → **24 Cover**.
+- Kontaktbögen durchgesehen: nur Edelmann-Umschläge. Die späten Reihe-Hanser-Bände (etwa ab Nr. 100, typografisch oder mit Foto) führt Sammlung Keller ebenfalls unter Edelmann.
+- Kontrolle Titel gegen Ausgabe für alle 100 Kacheln: keine weitere Fehlzuordnung.
+
+**Neue Einstellungen in `from-isbns.ts`**
+- Neu ist `TITLE_FROM=list` und pro Eintrag `wallTitle`. Die Kachel trägt dann den gedruckten deutschen Titel statt „Trout Fishing in America".
+
+**Online-Entwürfe**
+- Beide Entwürfe sind nachgezogen (`push-draft`). Reihe Hanser: 78 dazu, 6 umbenannt, Reihenfolge.
+- Die veröffentlichte Reihe-Hanser-Wand zeigt weiter den veröffentlichten Entwurf, bis Julian ihn neu veröffentlicht.

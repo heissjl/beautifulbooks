@@ -10480,37 +10480,265 @@
       ],
       "works": [
         {
+          "id": "OL1411624W",
+          "title": "Die Stimmen von Marrakesch",
+          "author": "Elias Canetti",
+          "coverId": "ol:15259575",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446111670",
+          "coverIsbn": "3446111670"
+        },
+        {
+          "id": "OL8969435W",
+          "title": "Die Grenze",
+          "author": "Régis Debray",
+          "coverId": "ol:14305208",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47678377M"
+        },
+        {
           "id": "OL1364647W",
           "title": "Marx-Chronik",
           "author": "Maximilien Rubel",
           "coverId": "ol:10555558",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL4958481M"
+        },
+        {
+          "id": "OL46028840W",
+          "title": "Nach dem Formalismus",
+          "author": "Дмитрий Сергеевич Лихачёв",
+          "coverId": "ol:15259579",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602710M"
+        },
+        {
+          "id": "OL3098159W",
+          "title": "Zeitfragen",
+          "author": "Erich Fried",
+          "coverId": "ol:15259577",
+          "addedAt": "2026-09-28",
+          "from": "isbn:344611176X",
+          "coverIsbn": "344611176X"
+        },
+        {
+          "id": "OL3079869W",
+          "title": "Feinde",
+          "author": "Reinhard Lettau",
+          "coverId": "ol:15259565",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446111972",
+          "coverIsbn": "3446111972"
+        },
+        {
+          "id": "OL46028842W",
+          "title": "Entblössung",
+          "author": "Tadeusz Różewicz",
+          "coverId": "ol:15259576",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602715M"
+        },
+        {
+          "id": "OL6390482W",
+          "title": "Richtlinien und Anschläge",
+          "author": "Albrecht Goeschel",
+          "coverId": "ol:15259578",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446112057",
+          "coverIsbn": "3446112057"
+        },
+        {
+          "id": "OL3792274W",
+          "title": "Letzte unfrisierte Gedanken",
+          "author": "Stanisław Jerzy Lec",
+          "coverId": "ol:15259580",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446111956",
+          "coverIsbn": "3446111956"
+        },
+        {
+          "id": "OL10572009W",
+          "title": "Die Beerdigung findet in aller Stille statt",
+          "author": "Günter Kunert",
+          "coverId": "ol:15259488",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446111883",
+          "coverIsbn": "3446111883"
+        },
+        {
+          "id": "OL22457867W",
+          "title": "Kritik, von wem, für wen, wie",
+          "author": "Peter Hamm",
+          "coverId": "ol:15259581",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446111891",
+          "coverIsbn": "3446111891"
+        },
+        {
+          "id": "OL4019065W",
+          "title": "Deutschland zwischen Demokratie und Faschismus",
+          "author": "Reinhard Kühnl",
+          "coverId": "ol:15259486",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446111905",
+          "coverIsbn": "3446111905"
+        },
+        {
+          "id": "OL33912572W",
+          "title": "Früher begann der Tag mit einer Schusswunde",
+          "author": "Wolf Wondratschek",
+          "coverId": "ol:15259489",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446112154",
+          "coverIsbn": "3446112154"
+        },
+        {
+          "id": "OL46028846W",
+          "title": "Das Denken von Sade",
+          "author": "Pierre Klossowski",
+          "coverId": "ol:15259582",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602722M"
+        },
+        {
+          "id": "OL46028847W",
+          "title": "Obwohl",
+          "author": "Miroslav Holub",
+          "coverId": "ol:15259583",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602723M"
+        },
+        {
+          "id": "OL46028845W",
+          "title": "Die neue Linke in den USA",
+          "author": "Paul Jacobs",
+          "coverId": "ol:15259584",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602721M"
+        },
+        {
+          "id": "OL2409891W",
+          "title": "Verärgerte Logik",
+          "author": "Gabriel Laub",
+          "coverId": "ol:15259614",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL4365957M"
+        },
+        {
+          "id": "OL2744815W",
+          "title": "Spielerei bei Tage",
+          "author": "Barbara König",
+          "coverId": "ol:15259490",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL4365709M"
         },
         {
           "id": "OL1411623W",
           "title": "Der andere Prozess",
           "author": "Elias Canetti",
           "coverId": "ol:9982321",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446111697",
           "coverIsbn": "3446111697"
         },
         {
+          "id": "OL102484W",
+          "title": "Planet news",
+          "author": "Allen Ginsberg",
+          "coverId": "ol:15259585",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446111808",
+          "coverIsbn": "3446111808"
+        },
+        {
+          "id": "OL2870267W",
+          "title": "Farabeuf oder Die Chronik eines Augenblicks",
+          "author": "Salvador Elizondo",
+          "coverId": "ol:15259586",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602727M"
+        },
+        {
+          "id": "OL29300475W",
+          "title": "Musik auf der Flucht vor sich selbst",
+          "author": "Ulrich Dibelius",
+          "coverId": "ol:15259564",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446112022",
+          "coverIsbn": "3446112022"
+        },
+        {
           "id": "OL18833939W",
-          "title": "Ansichten einer künftigen Germanistik",
+          "title": "Ansichten einer künftigen Germanistik",
           "author": "Jürgen Kolbe",
           "coverId": "ol:13065592",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446111603",
           "coverIsbn": "3446111603"
+        },
+        {
+          "id": "OL6952827W",
+          "title": "Drei Uhr Angst",
+          "author": "Uwe Brandner",
+          "coverId": "ol:15259587",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446111638",
+          "coverIsbn": "3446111638"
+        },
+        {
+          "id": "OL3998029W",
+          "title": "Kriegerdenkmal ganz hinten",
+          "author": "Guntram Vesper",
+          "coverId": "ol:15259491",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5445371M"
+        },
+        {
+          "id": "OL4534813W",
+          "title": "Handbuch für Einwohner",
+          "author": "Günter Bruno Fuchs",
+          "coverId": "ol:15259494",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5699381M"
+        },
+        {
+          "id": "OL46028850W",
+          "title": "Gespenster für den Alltag",
+          "author": "Karel Michal",
+          "coverId": "ol:15259588",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602729M"
+        },
+        {
+          "id": "OL1405585W",
+          "title": "Bakunin, eine Invention",
+          "author": "Horst Bienek",
+          "coverId": "ol:15259609",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5218666M"
+        },
+        {
+          "id": "OL2361260W",
+          "title": "Kritik und Zukunft des Sozialismus",
+          "author": "Svetozar Stojanović",
+          "coverId": "ol:15259492",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5385852M"
+        },
+        {
+          "id": "OL1264451W",
+          "title": "König Ubu",
+          "author": "Alfred Jarry",
+          "coverId": "ol:15259498",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5161471M"
         },
         {
           "id": "OL18320188W",
           "title": "Sprache und Stil Lenins",
           "author": "Viktor Borisovič Šklovskij",
           "coverId": "ol:9275703",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL5732751M"
         },
         {
@@ -10518,15 +10746,72 @@
           "title": "Alle vergeudete Verehrung",
           "author": "Elias Canetti",
           "coverId": "ol:9896796",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL4576060M"
         },
         {
+          "id": "OL6284286W",
+          "title": "USA, die neue Linke am Ende?",
+          "author": "George Günther Eckstein",
+          "coverId": "ol:15259495",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL4059522M"
+        },
+        {
+          "id": "OL6602504W",
+          "title": "Kläranlage",
+          "author": "Arnfrid Astel",
+          "coverId": "ol:15259496",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL4462048M"
+        },
+        {
+          "id": "OL15284341W",
+          "title": "Utopien",
+          "author": "Lars Gustafsson",
+          "coverId": "ol:15259589",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602736M"
+        },
+        {
+          "id": "OL2258854W",
+          "title": "Weltbilder",
+          "author": "Gert Jonke",
+          "coverId": "ol:15259567",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5701135M"
+        },
+        {
+          "id": "OL7329480W",
+          "title": "Roboter und Gartenlaube",
+          "author": "Michael Pehlke",
+          "coverId": "ol:15259499",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5757951M"
+        },
+        {
+          "id": "OL6769105W",
+          "title": "Politische Pädagogik",
+          "author": "Klaus Peter Wallraven",
+          "coverId": "ol:15259497",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5162175M"
+        },
+        {
+          "id": "OL4473283W",
+          "title": "Gespräche in Algier",
+          "author": "Lee Lockwood",
+          "coverId": "ol:15259591",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446113886",
+          "coverIsbn": "3446113886"
+        },
+        {
           "id": "OL6637377W",
-          "title": "Europa: die Toten haben nichts zu lachen",
+          "title": "Europa, die Toten haben nichts zu lachen. Prosa",
           "author": "Hermann Schürrer",
           "coverId": "ol:10967286",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446113991",
           "coverIsbn": "3446113991"
         },
@@ -10535,7 +10820,7 @@
           "title": "Ansichten einer künftigen Medizin",
           "author": "Paul Lüth",
           "coverId": "ol:10569797",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446113959",
           "coverIsbn": "3446113959"
         },
@@ -10544,52 +10829,304 @@
           "title": "Kritik der Anthropologie",
           "author": "Wolf Lepenies",
           "coverId": "ol:4493194",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446113940",
           "coverIsbn": "3446113940"
+        },
+        {
+          "id": "OL46028857W",
+          "title": "Der Mörder",
+          "author": "Witold Wirpsza",
+          "coverId": "ol:15259590",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446113983",
+          "coverIsbn": "3446113983"
+        },
+        {
+          "id": "OL6857267W",
+          "title": "Die Unterhaltung der deutschen Fernsehfamilie",
+          "author": "Friedrich Knilli",
+          "coverId": "ol:15259502",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446113932",
+          "coverIsbn": "3446113932"
+        },
+        {
+          "id": "OL35987739W",
+          "title": "Die Tupamaros",
+          "author": "",
+          "coverId": "ol:15259500",
+          "addedAt": "2026-09-28",
+          "from": "isbn:344611419X",
+          "coverIsbn": "344611419X"
+        },
+        {
+          "id": "OL19044064W",
+          "title": "Die Tabus der bundesdeutschen Presse",
+          "author": "",
+          "coverId": "ol:15259503",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446114009",
+          "coverIsbn": "3446114009"
+        },
+        {
+          "id": "OL7079938W",
+          "title": "Aus lauter Liebe",
+          "author": "Michael Hatry",
+          "coverId": "ol:15259501",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446113908",
+          "coverIsbn": "3446113908"
+        },
+        {
+          "id": "OL1752425W",
+          "title": "a und b leuchten im Klee",
+          "author": "Leo Navratil",
+          "coverId": "ol:15259504",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446113967",
+          "coverIsbn": "3446113967"
         },
         {
           "id": "OL19134843W",
           "title": "Das Rechtskartell",
           "author": "Klaus Antes",
           "coverId": "ol:10645167",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446114246",
           "coverIsbn": "3446114246"
         },
         {
           "id": "OL1358965W",
-          "title": "Adventures in the skin trade",
+          "title": "Abenteuer in Sachen Haut",
           "author": "Dylan Thomas",
           "coverId": "ol:15171334",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446114939",
           "coverIsbn": "3446114939"
+        },
+        {
+          "id": "OL1644381W",
+          "title": "Paul oder Die Zerstörung eines Hörbeispiels",
+          "author": "Wolf Wondratschek",
+          "coverId": "ol:15259507",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446115064",
+          "coverIsbn": "3446115064"
+        },
+        {
+          "id": "OL11295370W",
+          "title": "Forellenfischen in Amerika",
+          "author": "Richard Brautigan",
+          "coverId": "ol:15259592",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446114963",
+          "coverIsbn": "3446114963"
         },
         {
           "id": "OL11478151W",
           "title": "Brecht-Chronik",
           "author": "Klaus Völker",
           "coverId": "ol:13535730",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446115056",
           "coverIsbn": "3446115056"
+        },
+        {
+          "id": "OL3780671W",
+          "title": "Soziologie der Olympischen Spiele",
+          "author": "Ulrike Prokop",
+          "coverId": "ol:15259505",
+          "addedAt": "2026-09-28",
+          "from": "isbn:344611503X",
+          "coverIsbn": "344611503X"
+        },
+        {
+          "id": "OL2049200W",
+          "title": "Soziologische Anthropologie",
+          "author": "Wolf Lepenies",
+          "coverId": "ol:15259506",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446115013",
+          "coverIsbn": "3446115013"
+        },
+        {
+          "id": "OL104860W",
+          "title": "David Brodies Bericht",
+          "author": "Jorge Luis Borges",
+          "coverId": "ol:15259593",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446115609",
+          "coverIsbn": "3446115609"
+        },
+        {
+          "id": "OL22475565W",
+          "title": "Das Böse",
+          "author": "Gerhard P. Zacharias",
+          "coverId": "ol:15259566",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446115684",
+          "coverIsbn": "3446115684"
+        },
+        {
+          "id": "OL8162815W",
+          "title": "Der Greis in Charenton",
+          "author": "Marquis de Sade",
+          "coverId": "ol:15259594",
+          "addedAt": "2026-09-28",
+          "from": "isbn:344611565X",
+          "coverIsbn": "344611565X"
+        },
+        {
+          "id": "OL46028863W",
+          "title": "Meine Begegnungen mit Vladimir Kazakov",
+          "author": "Vladimir Kazakov",
+          "coverId": "ol:15259596",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446115641",
+          "coverIsbn": "3446115641"
+        },
+        {
+          "id": "OL46028862W",
+          "title": "Der Alte vom Berge",
+          "author": "Alfred Jarry",
+          "coverId": "ol:15259595",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446115633",
+          "coverIsbn": "3446115633"
+        },
+        {
+          "id": "OL7182833W",
+          "title": "Fetisch Eigentum",
+          "author": "Eckart Spoo",
+          "coverId": "ol:15259508",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446115676",
+          "coverIsbn": "3446115676"
+        },
+        {
+          "id": "OL11864403W",
+          "title": "Anti-Olympia",
+          "author": "Hans-Horst Henschen",
+          "coverId": "ol:15259509",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446115625",
+          "coverIsbn": "3446115625"
+        },
+        {
+          "id": "OL19135778W",
+          "title": "Plädoyers für eine europäische Sicherheitskonferenz",
+          "author": "Walter Fabian",
+          "coverId": "ol:15259512",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446115617",
+          "coverIsbn": "3446115617"
+        },
+        {
+          "id": "OL4918190W",
+          "title": "Wagner-Chronik",
+          "author": "Martin Gregor-Dellin",
+          "coverId": "ol:15259510",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446116400",
+          "coverIsbn": "3446116400"
+        },
+        {
+          "id": "OL3121469W",
+          "title": "Politik und Waffengeschäfte",
+          "author": "Ulrich Albrecht",
+          "coverId": "ol:15259511",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446116427",
+          "coverIsbn": "3446116427"
+        },
+        {
+          "id": "OL1691511W",
+          "title": "Und sie fliegen über die Berge, weit durch die Welt",
+          "author": "Ludwig Harig",
+          "coverId": "ol:15259513",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446116435",
+          "coverIsbn": "3446116435"
+        },
+        {
+          "id": "OL5509958W",
+          "title": "Lexikon Film",
+          "author": "Ulrich Kurowski",
+          "coverId": "ol:15259514",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446116443",
+          "coverIsbn": "3446116443"
+        },
+        {
+          "id": "OL6598941W",
+          "title": "Zur Kritik der Sozialpsychologie",
+          "author": "Helmut Nolte",
+          "coverId": "ol:15259521",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446116478",
+          "coverIsbn": "3446116478"
         },
         {
           "id": "OL4683668W",
           "title": "Emanzipatorische Sinnlichkeit",
           "author": "Alfred Schmidt",
           "coverId": "ol:10555123",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446116524",
           "coverIsbn": "3446116524"
         },
         {
+          "id": "OL1411596W",
+          "title": "Die gespaltene Zukunft",
+          "author": "Elias Canetti",
+          "coverId": "ol:15259517",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446116877",
+          "coverIsbn": "3446116877"
+        },
+        {
+          "id": "OL38751119W",
+          "title": "Ansichten einer künftigen Futurologie",
+          "author": "Dietger Pforte",
+          "coverId": "ol:15259520",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446116966",
+          "coverIsbn": "3446116966"
+        },
+        {
+          "id": "OL46028861W",
+          "title": "Der Tod in der alten Dekoration",
+          "author": "Tadeusz Różewicz",
+          "coverId": "ol:15259597",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446117121",
+          "coverIsbn": "3446117121"
+        },
+        {
+          "id": "OL38447363W",
+          "title": "Eine andere Verteidigung",
+          "author": "Vereinigung Deutscher Wissenschaftler.",
+          "coverId": "ol:15259518",
+          "addedAt": "2026-09-28",
+          "from": "isbn:344611713X",
+          "coverIsbn": "344611713X"
+        },
+        {
+          "id": "OL620625W",
+          "title": "Handbuch zum ordentlichen Leben",
+          "author": "Eisendle, Helmut.",
+          "coverId": "ol:15259519",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446117148",
+          "coverIsbn": "3446117148"
+        },
+        {
           "id": "OL18849848W",
-          "title": "Neue Ansichten einer Künftigen Germanistik",
+          "title": "Neue Ansichten einer künftigen Germanistik",
           "author": "Jürgen Kolbe",
           "coverId": "ol:9312433",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446117172",
           "coverIsbn": "3446117172"
         },
@@ -10598,34 +11135,97 @@
           "title": "Jungfer im Grünen",
           "author": "Bernd Jentzsch",
           "coverId": "ol:10445725",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446117857",
           "coverIsbn": "3446117857"
+        },
+        {
+          "id": "OL4918178W",
+          "title": "Richard Wagner, die Revolution als Oper",
+          "author": "Martin Gregor-Dellin",
+          "coverId": "ol:15259524",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446117873",
+          "coverIsbn": "3446117873"
         },
         {
           "id": "OL1680941W",
           "title": "Trotzki-Chronik",
           "author": "Heinz Abosch",
           "coverId": "ol:11732921",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446117881",
           "coverIsbn": "3446117881"
         },
         {
+          "id": "OL974825W",
+          "title": "Weshalb heisst das Bett nicht Bild?",
+          "author": "Hermann Glaser",
+          "coverId": "ol:15259522",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446117903",
+          "coverIsbn": "3446117903"
+        },
+        {
+          "id": "OL2211416W",
+          "title": "Geschichte und menschliche Natur",
+          "author": "Dietmar Kamper",
+          "coverId": "ol:15259526",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446117911",
+          "coverIsbn": "3446117911"
+        },
+        {
           "id": "OL804718W",
-          "title": "Potemkin",
+          "title": "Schriften",
           "author": "Sergei Eisenstein",
           "coverId": "ol:8389998",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446117938",
           "coverIsbn": "3446117938"
+        },
+        {
+          "id": "OL3666552W",
+          "title": "China in der Welt",
+          "author": "Joachim Schickel",
+          "coverId": "ol:15259523",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446117954",
+          "coverIsbn": "3446117954"
+        },
+        {
+          "id": "OL46028860W",
+          "title": "Die politischen Gefangenen Saigons",
+          "author": "Holmes Brown",
+          "coverId": "ol:15259598",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446117989",
+          "coverIsbn": "3446117989"
+        },
+        {
+          "id": "OL46028865W",
+          "title": "Aktschlüsse, Halbgedichte",
+          "author": "Miroslav Holub",
+          "coverId": "ol:15259599",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446118594",
+          "coverIsbn": "3446118594"
+        },
+        {
+          "id": "OL1691494W",
+          "title": "Netzer kam aus der Tiefe des Raumes",
+          "author": "Ludwig Harig",
+          "coverId": "ol:15259525",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446118608",
+          "coverIsbn": "3446118608"
         },
         {
           "id": "OL2783755W",
           "title": "Wollüstige Phantasie",
           "author": "Horst Albert Glaser",
           "coverId": "ol:4478574",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446118616",
           "coverIsbn": "3446118616"
         },
@@ -10634,16 +11234,43 @@
           "title": "Zur Idee der kritischen Theorie",
           "author": "Alfred Schmidt",
           "coverId": "ol:13325443",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446118632",
           "coverIsbn": "3446118632"
+        },
+        {
+          "id": "OL6113233W",
+          "title": "Lenin-Chronik",
+          "author": "Gerda Weber",
+          "coverId": "ol:15259531",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446118667",
+          "coverIsbn": "3446118667"
+        },
+        {
+          "id": "OL38621696W",
+          "title": "Durch Kooperation zum Frieden?",
+          "author": "Ulrich Albrecht",
+          "coverId": "ol:15259568",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446118705",
+          "coverIsbn": "3446118705"
+        },
+        {
+          "id": "OL5203311W",
+          "title": "Schriften",
+          "author": "Sergei Eisenstein",
+          "coverId": "ol:15259527",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446118721",
+          "coverIsbn": "3446118721"
         },
         {
           "id": "OL3570535W",
           "title": "Flugblätter",
           "author": "Klaus Kirchner",
           "coverId": "ol:14550956",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446119302",
           "coverIsbn": "3446119302"
         },
@@ -10652,27 +11279,81 @@
           "title": "Rainer Werner Fassbinder",
           "author": "Yaak Karsunke",
           "coverId": "ol:13663413",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3446119337",
           "coverIsbn": "3446119337"
         },
         {
+          "id": "OL19498267W",
+          "title": "Demokratische Sicherheitspolitik",
+          "author": "Theodor Ebert",
+          "coverId": "ol:15259529",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446119477",
+          "coverIsbn": "3446119477"
+        },
+        {
+          "id": "OL4371350W",
+          "title": "Drunter, drüber, mittenmang",
+          "author": "Karl Arnold",
+          "coverId": "ol:15259530",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446119299",
+          "coverIsbn": "3446119299"
+        },
+        {
+          "id": "OL1432347W",
+          "title": "Fragen zur Weltpolitik",
+          "author": "Carl Friedrich Von Weizsäcker",
+          "coverId": "ol:15259533",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446120068",
+          "coverIsbn": "3446120068"
+        },
+        {
+          "id": "OL2825194W",
+          "title": "Der Streit um die Intelligenz",
+          "author": "Dieter E. Zimmer",
+          "coverId": "ol:15259532",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446120823",
+          "coverIsbn": "3446120823"
+        },
+        {
           "id": "OL19139456W",
-          "title": "Sowjetische Fotografie 1928-1932",
+          "title": "Sowjetische Fotografie 1928 - 1932",
           "author": "Rosalinde Sartorti",
           "coverId": "ol:12366822",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:344612084X",
           "coverIsbn": "344612084X"
+        },
+        {
+          "id": "OL2409881W",
+          "title": "Erlaubte Freiheiten",
+          "author": "Gabriel Laub",
+          "coverId": "ol:15259534",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446120858",
+          "coverIsbn": "3446120858"
         },
         {
           "id": "OL4683664W",
           "title": "Die kritische Theorie als Geschichtsphilosophie",
           "author": "Alfred Schmidt",
           "coverId": "ol:10554986",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:344612201X",
           "coverIsbn": "344612201X"
+        },
+        {
+          "id": "OL4369659W",
+          "title": "Mao-Chronik",
+          "author": "Thomas Scharping",
+          "coverId": "ol:15259536",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3446122605",
+          "coverIsbn": "3446122605"
         }
       ]
     },
@@ -10891,38 +11572,206 @@
       ],
       "works": [
         {
+          "id": "OL46028868W",
+          "title": "Polnische Eulenspiegeleien",
+          "author": "Adolf Nowaczyński",
+          "coverId": "ol:15259600",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602753M"
+        },
+        {
+          "id": "OL22908198W",
+          "title": "Buch am Spiess",
+          "author": "Armin Eichholz",
+          "coverId": "ol:15259535",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL2685038M"
+        },
+        {
+          "id": "OL46028867W",
+          "title": "Düsseldorf für Anfänger",
+          "author": "",
+          "coverId": "ol:15259601",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602751M"
+        },
+        {
+          "id": "OL26459W",
+          "title": "Das letzte Einhorn",
+          "author": "Peter S. Beagle",
+          "coverId": "ol:15259604",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602752M"
+        },
+        {
+          "id": "OL7293108W",
+          "title": "Das Mondfest",
+          "author": "Kornelius von Vacano",
+          "coverId": "ol:15259541",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5673255M"
+        },
+        {
+          "id": "OL2239854W",
+          "title": "Der Krieg war besser",
+          "author": "Miodrag Bulatović",
+          "coverId": "ol:15259537",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL4505347M"
+        },
+        {
+          "id": "OL1405613W",
+          "title": "Die Zelle",
+          "author": "Horst Bienek",
+          "coverId": "ol:15259539",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5653063M"
+        },
+        {
+          "id": "OL737249W",
+          "title": "Der Fieberkopf",
+          "author": "Bauer, Wolfgang",
+          "coverId": "ol:15259569",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5648746M"
+        },
+        {
+          "id": "OL5493701W",
+          "title": "Die Botschaft eines weisen Heinzelmännchens",
+          "author": "Roel van Duyn",
+          "coverId": "ol:15259538",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL18464339M"
+        },
+        {
+          "id": "OL22494476W",
+          "title": "Die schwarzen Schafe",
+          "author": "Heinrich Böll",
+          "coverId": "ol:15259540",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3787611908",
+          "coverIsbn": "3787611908"
+        },
+        {
+          "id": "OL37357357W",
+          "title": "Das Einhorn sagt zum Zweihorn",
+          "author": "Gertraud Middelhauve",
+          "coverId": "ol:15259545",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3787612009",
+          "coverIsbn": "3787612009"
+        },
+        {
           "id": "OL22058272W",
-          "title": "Der Wind in den Weiden oder der Dachs lässt schön grüssen, möchte aber auf keinen Fall gestört werden",
+          "title": "Der Wind in den Weiden",
           "author": "Kenneth Grahame",
           "coverId": "ol:10421448",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3787681205",
           "coverIsbn": "3787681205"
         },
         {
           "id": "OL2440182W",
-          "title": "Vorstadtkrokodil",
+          "title": "Vorstadtkrokodile",
           "author": "Max von der Grün",
           "coverId": "ol:1021133",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3570076989",
           "coverIsbn": "3570076989"
         },
         {
+          "id": "OL5997022W",
+          "title": "Von erwachendem Bewußtsein und vom Sündenfall",
+          "author": "Oskar Seidlin",
+          "coverId": "ol:15259542",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3129369104",
+          "coverIsbn": "3129369104"
+        },
+        {
+          "id": "OL4579262W",
+          "title": "Textbücher 1–6",
+          "author": "Helmut Heissenbüttel",
+          "coverId": "ol:15259543",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3129034501",
+          "coverIsbn": "3129034501"
+        },
+        {
+          "id": "OL37350032W",
+          "title": "Erzählungen",
+          "author": "Veijo Meri",
+          "coverId": "ol:15259546",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL50337906M"
+        },
+        {
+          "id": "OL4579258W",
+          "title": "mehr ist dazu nicht zu sagen. neue Herbste",
+          "author": "Helmut Heissenbüttel",
+          "coverId": "ol:15259544",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3608951644",
+          "coverIsbn": "3608951644"
+        },
+        {
+          "id": "OL1260867W",
+          "title": "Das Ufer der Syrten",
+          "author": "Julien Gracq",
+          "coverId": "ol:15259550",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3608953043",
+          "coverIsbn": "3608953043"
+        },
+        {
+          "id": "OL3348909W",
+          "title": "Yellow Submarine",
+          "author": "Max Wilk",
+          "coverId": "ol:15259547",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5174016M"
+        },
+        {
+          "id": "OL46028866W",
+          "title": "Calvinols Reise durch die Welt",
+          "author": "P. C. (Per Christian) Jersild",
+          "coverId": "ol:15259603",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602750M"
+        },
+        {
+          "id": "OL19411255W",
+          "title": "Manuel Gassers Köchel-Verzeichnis",
+          "author": "Manuel Gasser",
+          "coverId": "ol:15259548",
+          "addedAt": "2026-09-28",
+          "from": "isbn:3458017968",
+          "coverIsbn": "3458017968"
+        },
+        {
           "id": "OL4579254W",
-          "title": "Eichendorffs Untergang und andere Märchen",
+          "title": "Eichendorffs Untergang und andere Märchen",
           "author": "Helmut Heissenbüttel",
           "coverId": "ol:2195690",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3129035508",
           "coverIsbn": "3129035508"
         },
         {
+          "id": "OL5062259W",
+          "title": "Problemfeld Ehe",
+          "author": "Helga Gripp-Hagelstange",
+          "coverId": "ol:15259549",
+          "addedAt": "2026-09-28",
+          "from": "isbn:312922811X",
+          "coverIsbn": "312922811X"
+        },
+        {
           "id": "OL20920429W",
-          "title": "A Dark Horn Blowing",
+          "title": "Der Ruf ins andere Land",
           "author": "Dahlov Ipcar",
           "coverId": "ol:10290958",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:3129036210",
           "coverIsbn": "3129036210"
         }
