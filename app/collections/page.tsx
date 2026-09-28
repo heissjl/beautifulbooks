@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import CollectionRow from '@/components/CollectionRow';
+import WallsInvite from '@/components/WallsInvite';
+import { wallsEnabled } from '@/lib/walls/switch';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
@@ -34,6 +36,7 @@ export default async function CollectionsPage() {
         <p className="mt-4 max-w-2xl text-base text-ink-2">
           Books gathered around a theme or a series, one cover each. Every cover leads to the wall of the others we found.
         </p>
+        {wallsEnabled() && <WallsInvite className="mt-3">Make a wall of your own</WallsInvite>}
         <ul className="mt-10 space-y-12">
           {collections.map(c => (
             <li key={c.slug}>

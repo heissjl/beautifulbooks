@@ -5,6 +5,8 @@ import HomeSearchBar from '@/components/HomeSearchBar';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import CollectionsShelf from '@/components/CollectionsShelf';
+import WallsInvite from '@/components/WallsInvite';
+import { wallsEnabled } from '@/lib/walls/switch';
 import { liveCollections } from '@/lib/collections-live';
 
 /**
@@ -91,6 +93,8 @@ export default async function Home({ searchParams }: HomeProps) {
                       <span aria-hidden="true">&rarr;</span>
                     </Link>
                   </p>
+                  {/* The reader's own wall (5.13b): the second invitation, same form, behind its switch. */}
+                  {wallsEnabled() && <WallsInvite className="mt-2">Or gather the covers you love into a wall to frame</WallsInvite>}
                 </div>
               )}
               <div className="max-w-3xl">

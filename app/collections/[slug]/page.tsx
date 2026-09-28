@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import CoverWall from '@/components/CoverWall';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
+import WallsInvite from '@/components/WallsInvite';
+import { wallsEnabled } from '@/lib/walls/switch';
 import SiteHeader from '@/components/SiteHeader';
 import { authorsShown, coverLine } from '@/lib/collections';
 import { liveCollectionBySlug } from '@/lib/collections-live';
@@ -106,6 +108,8 @@ export default async function CollectionPage({ params }: PageProps) {
         <div className="mt-8">
           <CoverWall works={c.works} selectCover setSize={c.setSize} />
         </div>
+        {/* Under a wall someone else chose: the way to one's own (5.13b). */}
+        {wallsEnabled() && <WallsInvite className="mt-8">Make a wall of your own — from any cover, or from a photo of your shelf</WallsInvite>}
         {/*
           The source of the cover credits, required by its licence (CC BY 4.0)
           and by N12: the names are ISFDB's, for the printing shown, and a tile
