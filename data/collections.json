@@ -10575,6 +10575,14 @@
           "coverIsbn": "3446111891"
         },
         {
+          "id": "OL5019829W",
+          "title": "Professor Tutkas Geschichten",
+          "author": "Jerzy Szaniawski",
+          "coverId": "ol:15259485",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5763142M"
+        },
+        {
           "id": "OL4019065W",
           "title": "Deutschland zwischen Demokratie und Faschismus",
           "author": "Reinhard Kühnl",
@@ -10607,6 +10615,14 @@
           "coverId": "ol:15259583",
           "addedAt": "2026-09-28",
           "from": "edition:OL62602723M"
+        },
+        {
+          "id": "OL3666551W",
+          "title": "China, die Revolution der Literatur",
+          "author": "Joachim Schickel",
+          "coverId": "ol:15259487",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL4619167M"
         },
         {
           "id": "OL46028845W",

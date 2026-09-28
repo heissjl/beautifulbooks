@@ -3305,7 +3305,7 @@ Julian: „lege die 47 ausgaben an". Das waren 32 Bände der Reihe Hanser, 5 aus
 - Die Fischer-Bücherei-Bände haben noch keine Sammlung und keine Liste. Ihre Ausgaben stehen in `lab/collections/for-openlibrary/fischer-buecherei-edelmann/manifest.json`.
 
 **Wände danach**
-- Reihe Hanser: 22 → **100 Cover**.
+- Reihe Hanser: 22 → **102 Cover** (zwei weitere, Nr. 13 und 18, nachdem veraltete Einträge ohne Cover aus `isbn-cache.json` gelöscht waren; Nr. 161 *Medienmagazin* fehlt, weil der Ausgabesatz OL15262502M zu keinem Werk gehört).
 - Verschiedene Verlage: 4 → **24 Cover**.
 - Kontaktbögen durchgesehen: nur Edelmann-Umschläge. Die späten Reihe-Hanser-Bände (etwa ab Nr. 100, typografisch oder mit Foto) führt Sammlung Keller ebenfalls unter Edelmann.
 - Kontrolle Titel gegen Ausgabe für alle 100 Kacheln: keine weitere Fehlzuordnung.
