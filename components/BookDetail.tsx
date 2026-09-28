@@ -30,7 +30,7 @@ import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { buildWall, captionFor, progressLabel } from '@/components/workWall';
 import { leadCover } from '@/lib/scene';
-import { isbnRuns } from '@/lib/isbnformat';
+import IsbnText from '@/components/IsbnText';
 import { useOverflowsX } from '@/components/useOverflowsX';
 import { searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
@@ -973,20 +973,6 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
   of `lib/verdicts.ts`. Both were kept when main met production on
   2026-09-11, where 1.11 and 6.32 had each rewritten this function.
 */
-/**
- * The ISBN as the reader sees it: hyphenated, in the text face, with the
- * zeros and hyphens from Geist Mono (ROADMAP 6.61). Display only — every
- * link on this page is built from the bare `isbn13`.
- */
-function IsbnText({ isbn }: { isbn: string }) {
-  return (
-    <>
-      {isbnRuns(isbn).map((run, i) =>
-        run.mono ? <span key={i} className="font-mono">{run.text}</span> : run.text,
-      )}
-    </>
-  );
-}
 
 function VerdictNote({ verdict, hint }: {
   verdict: Extract<IsbnVerdict, { status: 'differs' | 'uncompared' }>;

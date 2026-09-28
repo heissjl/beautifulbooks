@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import CoverImage from './CoverImage';
+import IsbnText from './IsbnText';
 import MarketSwitcher from './MarketSwitcher';
 import { useMarket } from './useMarket';
 import { buyLinksFor, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
@@ -10,9 +11,28 @@ import { coverUrlFor } from '@/lib/coverurl';
 import { linkPlan } from '@/lib/linkplan';
 import type { Market } from '@/lib/market';
 import type { BuyLink } from '@/lib/model';
-import { ARTWORK_CM, artworkPlan, DEFAULT_ARTWORK, TONES, type PublicWall, type Tile, type Tone, type WallOp } from '@/lib/walls/model';
+import { FORMAT_CM, formatLength, isEstimate, layoutPiece, PIECE_CM, pieceRange, unitLabel, type BookSize, type Units } from '@/lib/walls/dimensions';
+import { DEFAULT_ARTWORK, TONES, type PublicWall, type Tile, type Tone, type WallOp } from '@/lib/walls/model';
 
 const WANTED_KEY = (id: string) => `bb.wall.wanted.${id}`;
+const UNITS_KEY = 'bb.units';
+
+function readUnits(): Units | null {
+  try {
+    const v = localStorage.getItem(UNITS_KEY);
+    return v === 'metric' || v === 'imperial' ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Where a book's size came from, in words for its row (5.13i). */
+const SOURCE_NOTE: Record<BookSize['source'], string> = {
+  openlibrary: 'size from Open Library',
+  library: 'height from a national library, width from the cover',
+  format: 'typical size for its format',
+  assumed: 'size unknown, a paperback assumed',
+};
 /** Height of a wedge under a book, in centimetres; drawn, not measured. */
 const WEDGE_CM = 1.6;
 
@@ -49,8 +69,25 @@ export default function WallPlan({
   const market = chosenMarket ?? detected;
   const [open, setOpen] = useState<string | null>(null);
   const tone = (wall.artwork ?? DEFAULT_ARTWORK).tone;
-  const plan = artworkPlan(wall.tiles.length, wall.columns);
-  const c = ARTWORK_CM;
+  const [chosenUnits, setChosenUnits] = useState<Units | null>(readUnits);
+  const units: Units = chosenUnits ?? (market === 'us' ? 'imperial' : 'metric');
+  const chooseUnits = (u: Units) => {
+    setChosenUnits(u);
+    try {
+      localStorage.setItem(UNITS_KEY, u);
+    } catch {
+      // Not remembered in a private window.
+    }
+  };
+  const L = (cm: number) => formatLength(cm, units);
+  const U = unitLabel(units);
+  // The preview draws every book at its size; one without a size yet as a paperback.
+  const sizes = wall.tiles.map((t) => t.size);
+  const plan = layoutPiece(sizes.map((z) => z ?? FORMAT_CM.trade), wall.columns);
+  const range = pieceRange(sizes, wall.columns);
+  const pending = sizes.filter((z) => !z).length;
+  const c = PIECE_CM;
+  const sizeText = (a: number, b: number) => (Math.round(a) === Math.round(b) || L(a) === L(b) ? L(a) : `${L(a)}–${L(b)}`);
   const [wanted, setWanted] = useState(() => readWanted(wall.id));
   const [error, setError] = useState('');
   // Tiles that came without a printing (six random covers, a photo) are looked up once, here.
@@ -77,11 +114,6 @@ export default function WallPlan({
 
   // Everything is placed in centimetres on the back panel and shown in per cent of it.
   const pct = (cm: number, of: number) => `${(cm / of) * 100}%`;
-  const bookAt = (i: number) => {
-    const col = i % plan.columns;
-    const row = Math.floor(i / plan.columns);
-    return { x: c.margin + col * (c.bookW + c.gap), y: c.margin + row * (c.bookH + c.rowGap) };
-  };
 
   async function want() {
     setError('');
@@ -155,16 +187,16 @@ export default function WallPlan({
             }}
           >
             {wall.tiles.map((t, i) => {
-              const { x, y } = bookAt(i);
+              const { x, y, w: bw, h: bh } = plan.books[i];
               const src = coverUrlFor(`ol:${t.coverId}`, 'M');
               return (
                 <div key={t.coverId}>
                   <span
                     className="absolute"
                     style={{
-                      left: pct(x + c.bookW * 0.2, plan.widthCm),
-                      top: pct(y + c.bookH, plan.heightCm),
-                      width: pct(c.bookW * 0.6, plan.widthCm),
+                      left: pct(x + bw * 0.2, plan.widthCm),
+                      top: pct(y + bh, plan.heightCm),
+                      width: pct(bw * 0.6, plan.widthCm),
                       height: pct(WEDGE_CM, plan.heightCm),
                       background: 'linear-gradient(to bottom, rgba(255,255,255,.35), rgba(0,0,0,.25))',
                       clipPath: 'polygon(12% 0, 88% 0, 100% 100%, 0 100%)',
@@ -175,8 +207,8 @@ export default function WallPlan({
                     style={{
                       left: pct(x, plan.widthCm),
                       top: pct(y, plan.heightCm),
-                      width: pct(c.bookW, plan.widthCm),
-                      height: pct(c.bookH, plan.heightCm),
+                      width: pct(bw, plan.widthCm),
+                      height: pct(bh, plan.heightCm),
                       boxShadow: '3px 5px 9px rgba(0,0,0,.35), inset 3px 0 4px rgba(0,0,0,.25)',
                     }}
                   >
@@ -188,10 +220,36 @@ export default function WallPlan({
           </div>
         </div>
       </div>
-      <p className="mt-2 text-sm text-ink-2">
-        About <strong className="font-medium text-ink">{plan.widthCm} × {plan.heightCm} cm</strong>, {plan.depthCm} cm deep: {wall.tiles.length} books, {plan.columns} per row.{' '}
-        <span className="text-ink-3">Planned with paperbacks of {c.bookW} × {c.bookH} cm; hardcovers make it larger.</span>
-      </p>
+      <div className="mt-2 flex flex-wrap items-baseline justify-between gap-3">
+        <p className="text-sm text-ink-2">
+          {range.estimated === 0 && pending === 0 ? 'About ' : 'Between '}
+          <strong className="font-medium text-ink">
+            {sizeText(range.min.w, range.max.w)} × {sizeText(range.min.h, range.max.h)} {U}
+          </strong>
+          , {L(c.depth)} {U} deep: {wall.tiles.length} books, {plan.columns} per row.{' '}
+          <span className="text-ink-3">
+            {pending > 0
+              ? 'Sizes are being looked up.'
+              : range.estimated > 0
+                ? `${range.estimated} of ${wall.tiles.length} ${wall.tiles.length === 1 ? 'size is' : 'sizes are'} estimated, so this is a range.`
+                : 'From the sizes the catalogues give.'}
+          </span>
+        </p>
+        <div className="flex gap-1 text-xs" role="radiogroup" aria-label="Units">
+          {(['metric', 'imperial'] as const).map((u) => (
+            <button
+              key={u}
+              type="button"
+              role="radio"
+              aria-checked={units === u}
+              onClick={() => chooseUnits(u)}
+              className={`rounded-full border px-2.5 py-0.5 ${units === u ? 'border-ink bg-ink text-bg' : 'border-line text-ink-2 hover:border-accent hover:text-accent'}`}
+            >
+              {unitLabel(u)}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
         <h3 className="text-sm font-medium text-ink">Get the books</h3>
@@ -221,7 +279,25 @@ export default function WallPlan({
                         : lookup === 'failed'
                           ? 'The catalogue did not answer — the printing is not looked up yet'
                           : 'Looking up the printing…'}
-                    {isbns.length > 0 ? ` · ISBN ${isbns.slice(0, 2).join(', ')}${isbns.length > 2 ? ` +${isbns.length - 2}` : ''}` : ''}
+                    {isbns.length > 0 && (
+                      <>
+                        {' · ISBN '}
+                        {isbns.slice(0, 2).map((n, i) => (
+                          <span key={n}>
+                            {i > 0 && ', '}
+                            <IsbnText isbn={n as string} />
+                          </span>
+                        ))}
+                        {isbns.length > 2 ? ` +${isbns.length - 2}` : ''}
+                      </>
+                    )}
+                    {t.size && (
+                      <span title={SOURCE_NOTE[t.size.source]}>
+                        {' · '}
+                        {isEstimate(t.size) ? '≈ ' : ''}
+                        {L(t.size.h)} × {L(t.size.w)} {U}
+                      </span>
+                    )}
                   </span>
                 </span>
                 <button

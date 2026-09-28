@@ -9,6 +9,7 @@
  * shopping list (stage 2 of PLAN-5.13) — an ISBN names a printing, not the
  * picture (E8), so the list is where a search starts, not a promise.
  */
+import type { BookSize } from './dimensions';
 /** One framed cover. Carries enough to buy the book later (stage 2 of the plan). */
 export interface Tile {
   workId: string;
@@ -28,6 +29,8 @@ export interface Tile {
    * asked". Never taken from a browser.
    */
   looked?: boolean;
+  /** The book's size and where it came from (5.13i), set by the server's lookup. Never taken from a browser. */
+  size?: BookSize;
 }
 
 export interface Printing {
@@ -83,26 +86,6 @@ export interface Artwork {
 }
 export const DEFAULT_ARTWORK: Artwork = { tone: 'sand' };
 
-/**
- * Sizes the piece is planned with, in centimetres. The catalogue does not know
- * a book's format, so a book is taken as a trade paperback (13 × 20 cm); a
- * hardcover is larger, a mass-market paperback smaller, and the page says so.
- */
-export const ARTWORK_CM = { bookW: 13, bookH: 20, gap: 5, rowGap: 7, margin: 8, depth: 7 } as const;
-
-/** What the piece measures: the frame's outside, back panel and margins included. */
-export function artworkPlan(covers: number, columns: number): { columns: number; rows: number; widthCm: number; heightCm: number; depthCm: number } {
-  const c = ARTWORK_CM;
-  const cols = Math.max(1, Math.min(columns, covers || 1));
-  const rows = Math.max(1, Math.ceil(covers / cols));
-  return {
-    columns: cols,
-    rows,
-    widthCm: 2 * c.margin + cols * c.bookW + (cols - 1) * c.gap,
-    heightCm: 2 * c.margin + rows * c.bookH + (rows - 1) * c.rowGap,
-    depthCm: c.depth,
-  };
-}
 
 /** What a view link returns: the wall without its owner. */
 export type PublicWall = Omit<Wall, 'ownerHash'>;
