@@ -3,6 +3,11 @@
  *
  *   npx tsx lab/walls/serve.ts     # then open http://localhost:4325
  *
+ * Who may change a wall is decided by the visitor id in the `bb_visitor`
+ * cookie (E22, like taketest.xyz). The cookie is set when a browser makes its
+ * first wall or pastes an id into the footer — never for a reader who only
+ * looks. It is readable by the page, because the footer shows it.
+ *
  * Local only, never deployed. Walls live in `lab/walls/walls.json`
  * (git-ignored; `WALLS_FILE` points elsewhere). Only Open Library is asked,
  * never Google (lab rule 6): one search per query, one editions page per work
@@ -16,11 +21,13 @@ import { parseEditions, type OlEditionEntry } from '../../lib/sources/openlibrar
 import { coversFromEditions, type PickableCover } from './covers';
 import {
   applyOp,
+  isOwner,
+  isVisitorId,
   isWallId,
-  keyOpens,
-  newEditKey,
+  newVisitorId,
   newWall,
   newWallId,
+  ownedBy,
   shoppingList,
   toPublic,
   WallError,
@@ -74,6 +81,19 @@ async function body(req: IncomingMessage): Promise<unknown> {
   return raw ? JSON.parse(raw) : {};
 }
 
+const COOKIE = 'bb_visitor';
+const TWO_YEARS = 60 * 60 * 24 * 730;
+
+function visitorOf(req: IncomingMessage): string | null {
+  const match = (req.headers.cookie ?? '').match(/(?:^|;\s*)bb_visitor=([^;]+)/);
+  return match && isVisitorId(match[1]) ? match[1] : null;
+}
+function setVisitor(res: ServerResponse, visitor: string): void {
+  res.setHeader('set-cookie', `${COOKIE}=${visitor}; Path=/; Max-Age=${TWO_YEARS}; SameSite=Lax`);
+}
+/** A write must come as JSON: a cross-site form cannot send that without a preflight. */
+const isJson = (req: IncomingMessage) => (req.headers['content-type'] ?? '').startsWith('application/json');
+
 const today = () => new Date().toISOString().slice(0, 10);
 
 createServer(async (req, res) => {
@@ -94,16 +114,34 @@ createServer(async (req, res) => {
     const covers = path.match(/^\/api\/covers\/(OL\d+W)$/);
     if (req.method === 'GET' && covers) return send(res, 200, { covers: await coversOf(covers[1]) });
 
-    if (req.method === 'POST' && path === '/api/walls') {
+    if (path === '/api/me') {
+      if (req.method === 'GET') {
+        const visitor = visitorOf(req);
+        return send(res, 200, { visitor, walls: ownedBy(Object.values(load()), visitor) });
+      }
+      if (req.method === 'POST' && isJson(req)) {
+        // "Save" in the footer: this browser becomes the visitor whose id was pasted.
+        const { visitor } = (await body(req)) as { visitor?: string };
+        const id = typeof visitor === 'string' ? visitor.trim() : '';
+        if (!isVisitorId(id)) return send(res, 400, { error: 'That is not an id from this page.' });
+        setVisitor(res, id);
+        return send(res, 200, { visitor: id, walls: ownedBy(Object.values(load()), id) });
+      }
+    }
+
+    if (req.method === 'POST' && path === '/api/walls' && isJson(req)) {
       const { title } = (await body(req)) as { title?: string };
+      let visitor = visitorOf(req);
+      if (!visitor) {
+        visitor = newVisitorId();
+        setVisitor(res, visitor);
+      }
       const walls = load();
       let id = newWallId();
       while (walls[id]) id = newWallId();
-      const key = newEditKey();
-      walls[id] = newWall(id, key, title ?? '', today());
+      walls[id] = newWall(id, visitor, title ?? '', today());
       save(walls);
-      // The only moment the key leaves the server; it is not stored in clear.
-      return send(res, 201, { wall: toPublic(walls[id]), key });
+      return send(res, 201, { wall: toPublic(walls[id]), visitor });
     }
 
     const one = path.match(/^\/api\/walls\/([a-z0-9]{10})(\/list)?$/);
@@ -113,10 +151,10 @@ createServer(async (req, res) => {
       if (!wall) return send(res, 404, { error: 'No such wall.' });
       if (req.method === 'GET' && one[2]) return send(res, 200, shoppingList(toPublic(wall)), 'text/plain');
       if (req.method === 'GET') {
-        return send(res, 200, { wall: toPublic(wall), canEdit: keyOpens(wall, req.headers['x-wall-key']) });
+        return send(res, 200, { wall: toPublic(wall), canEdit: isOwner(wall, visitorOf(req)) });
       }
-      if (req.method === 'POST') {
-        if (!keyOpens(wall, req.headers['x-wall-key'])) return send(res, 403, { error: 'This key does not open the wall.' });
+      if (req.method === 'POST' && isJson(req)) {
+        if (!isOwner(wall, visitorOf(req))) return send(res, 403, { error: 'Only the browser that made this wall can change it.' });
         const { ops } = (await body(req)) as { ops?: WallOp[] };
         let next = wall;
         for (const op of (ops ?? []).slice(0, 50)) next = applyOp(next, op, new Date().toISOString());

@@ -5,23 +5,18 @@
  * The server in `serve.ts` holds walls in a file; the website, if this is ever
  * promoted, would hold them in the cover game's Redis (SPEC F7.3).
  *
- * **How a wall is kept without a login** — the taketest.xyz idea, turned
- * round. taketest gives every *visitor* an id in a cookie and shows it in the
- * footer so it can be pasted on another device. That id describes a person,
- * which N11 forbids here. So the secret belongs to the *wall*, not to whoever
- * made it:
+ * **How a wall is kept without a login** — as taketest.xyz does it (decision
+ * E22, Julian 2026-09-28, which lifts N11 for this feature):
  *
- * - every wall has a public id (the view link) and a random edit key;
- * - the server keeps only the SHA-256 of the key, so a leaked store edits
- *   nothing;
- * - the browser keeps `{ id, key }` for the walls it made, in localStorage;
- * - the edit link carries the key in the **fragment** (`/w/<id>#k=<key>`),
- *   which a browser never sends to a server, a log or a referrer;
- * - the key ring (`encodeKeyRing`) is taketest's footer field: one string,
- *   shown on the page, that brings every wall of this browser to another one.
+ * - a browser that makes its first wall gets a random **visitor id** in a
+ *   cookie; a reader who only looks at walls gets none;
+ * - the page shows the id in its footer with a Save button: pasting it on
+ *   another device makes that device the same visitor;
+ * - the server keeps only the SHA-256 of the id on each wall it owns, so a
+ *   leaked store neither edits a wall nor reveals whose it is;
+ * - a wall has a public id for its view link; only its owner changes it.
  *
- * Nothing about the reader is stored: no IP, no cookie, no user agent. A
- * wall is a title, a column count and a list of covers.
+ * Nothing else about the reader is stored: no IP, no user agent, no referrer.
  */
 import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 
@@ -49,8 +44,8 @@ export interface Printing {
 
 export interface Wall {
   id: string;
-  /** SHA-256 of the edit key, hex. Never sent to a browser. */
-  keyHash: string;
+  /** SHA-256 of the owner's visitor id, hex. Never sent to a browser. */
+  ownerHash: string;
   title: string;
   /** Columns of the frame grid, 1–8. The physical wall is planned from this. */
   columns: number;
@@ -59,8 +54,8 @@ export interface Wall {
   updatedAt: string;
 }
 
-/** What a view link returns: the wall without its key hash. */
-export type PublicWall = Omit<Wall, 'keyHash'>;
+/** What a view link returns: the wall without its owner. */
+export type PublicWall = Omit<Wall, 'ownerHash'>;
 
 export const MAX_TILES = 60;
 export const MAX_TITLE = 80;
@@ -68,12 +63,13 @@ export const MAX_PRINTINGS = 5;
 export const DEFAULT_COLUMNS = 4;
 
 const ID = /^[a-z0-9]{10}$/;
-const KEY = /^[A-Za-z0-9_-]{22}$/;
+/** 128 random bits, base64url; what the footer shows and a reader pastes. */
+const VISITOR = /^[A-Za-z0-9_-]{22}$/;
 const WORK = /^OL\d+W$/;
 const COVER = /^\d{1,12}$/;
 
 export const isWallId = (s: unknown): s is string => typeof s === 'string' && ID.test(s);
-export const isEditKey = (s: unknown): s is string => typeof s === 'string' && KEY.test(s);
+export const isVisitorId = (s: unknown): s is string => typeof s === 'string' && VISITOR.test(s);
 
 /** Ten characters from a 36-letter alphabet: ~51 bits, enough that ids are not guessed in sequence. */
 export function newWallId(bytes: Buffer = randomBytes(10)): string {
@@ -81,27 +77,27 @@ export function newWallId(bytes: Buffer = randomBytes(10)): string {
   return [...bytes].map((b) => alphabet[b % 36]).join('');
 }
 
-/** 128 random bits, base64url: the only thing that lets someone change a wall. */
-export function newEditKey(bytes: Buffer = randomBytes(16)): string {
+/** A new visitor id: 128 random bits, base64url. */
+export function newVisitorId(bytes: Buffer = randomBytes(16)): string {
   return bytes.toString('base64url');
 }
 
-export function hashKey(key: string): string {
-  return createHash('sha256').update(key).digest('hex');
+export function hashVisitor(visitor: string): string {
+  return createHash('sha256').update(visitor).digest('hex');
 }
 
-/** Constant-time check of a presented key against a stored hash. */
-export function keyOpens(wall: Pick<Wall, 'keyHash'>, key: unknown): boolean {
-  if (!isEditKey(key)) return false;
-  const a = Buffer.from(hashKey(key), 'hex');
-  const b = Buffer.from(wall.keyHash, 'hex');
+/** Constant-time check: does this visitor own the wall? */
+export function isOwner(wall: Pick<Wall, 'ownerHash'>, visitor: unknown): boolean {
+  if (!isVisitorId(visitor)) return false;
+  const a = Buffer.from(hashVisitor(visitor), 'hex');
+  const b = Buffer.from(wall.ownerHash, 'hex');
   return a.length === b.length && timingSafeEqual(a, b);
 }
 
-export function newWall(id: string, key: string, title: string, today: string): Wall {
+export function newWall(id: string, visitor: string, title: string, today: string): Wall {
   return {
     id,
-    keyHash: hashKey(key),
+    ownerHash: hashVisitor(visitor),
     title: cleanTitle(title) || 'Untitled wall',
     columns: DEFAULT_COLUMNS,
     tiles: [],
@@ -192,48 +188,6 @@ function validPrinting(raw: unknown): Printing {
   return out;
 }
 
-/** An entry of the key ring: a wall this browser may edit. */
-export interface KeyRingEntry {
-  id: string;
-  key: string;
-}
-
-const RING_PREFIX = 'bbw1.';
-
-/**
- * The key ring as one pasteable string (taketest's footer field). Versioned by
- * prefix so a later format can still read this one. Not encrypted: it *is*
- * the secret, and the page says so.
- */
-export function encodeKeyRing(entries: readonly KeyRingEntry[]): string {
-  const valid = entries.filter((e) => isWallId(e.id) && isEditKey(e.key));
-  return RING_PREFIX + valid.map((e) => `${e.id}.${e.key}`).join('~');
-}
-
-/** Reads a key ring; unknown or broken parts are dropped, never guessed. */
-export function decodeKeyRing(text: string): KeyRingEntry[] {
-  const s = text.trim();
-  if (!s.startsWith(RING_PREFIX)) return [];
-  const seen = new Set<string>();
-  const out: KeyRingEntry[] = [];
-  for (const part of s.slice(RING_PREFIX.length).split('~')) {
-    const dot = part.indexOf('.');
-    const id = part.slice(0, dot);
-    const key = part.slice(dot + 1);
-    if (dot < 0 || !isWallId(id) || !isEditKey(key) || seen.has(id)) continue;
-    seen.add(id);
-    out.push({ id, key });
-  }
-  return out;
-}
-
-/** Merges two rings; the incoming key wins for a wall both know. */
-export function mergeKeyRings(mine: readonly KeyRingEntry[], incoming: readonly KeyRingEntry[]): KeyRingEntry[] {
-  const byId = new Map(mine.map((e) => [e.id, e]));
-  for (const e of incoming) byId.set(e.id, e);
-  return [...byId.values()];
-}
-
 /**
  * The shopping list for stage 2: one line per tile, with every ISBN known to
  * have carried the cover. Plain text, because the first buyer is a person
@@ -248,4 +202,13 @@ export function shoppingList(wall: PublicWall): string {
       .join(' ');
   });
   return [`${wall.title} — ${wall.tiles.length} covers, ${wall.columns} columns`, ...lines].join('\n');
+}
+
+/** The walls a visitor owns, newest change first — the "Your walls" row. */
+export function ownedBy(walls: readonly Wall[], visitor: unknown): PublicWall[] {
+  if (!isVisitorId(visitor)) return [];
+  return walls
+    .filter((w) => isOwner(w, visitor))
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+    .map(toPublic);
 }

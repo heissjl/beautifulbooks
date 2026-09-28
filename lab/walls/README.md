@@ -9,29 +9,31 @@ WALLS_FILE=/tmp/w.json npx tsx lab/walls/serve.ts  # beim Testen: nicht in lab/w
 
 ## Die Frage
 
-Kann ein Leser eine Wand aus Covern zusammenstellen, sie behalten, teilen und auf einem anderen Gerät weiterbearbeiten — ohne Konto, und ohne dass die Seite etwas über ihn speichert (N11)?
+Kann ein Leser eine Wand aus Covern zusammenstellen, sie behalten, teilen und auf einem anderen Gerät weiterbearbeiten — ohne Konto und ohne Passwort, wie bei taketest.xyz?
 
-**Erfolg:** Anlegen, Wählen, Ordnen, Teilen und der Umzug auf ein anderes Gerät funktionieren im Browser; ein fremder Link kann nichts ändern; der Server hält keinen Schlüssel im Klartext.
+**Erfolg:** Anlegen, Wählen, Ordnen, Teilen und der Umzug auf ein anderes Gerät funktionieren im Browser; ein fremder Besucher kann nichts ändern; der Server hält die Besucher-ID nicht im Klartext.
 
 ## Wie es funktioniert
 
-- **Schlüssel je Wand, nicht je Besucher.** taketest.xyz legt eine Besucher-ID in ein Cookie und zeigt sie zum Kopieren; das wäre hier eine Kennung (N11). Stattdessen hat jede Wand eine öffentliche Id und einen 128-Bit-Bearbeitungsschlüssel. Der Server speichert nur `sha256(schlüssel)` (`model.ts`, `keyOpens` mit `timingSafeEqual`).
-- **Drei Wege zum Schlüssel:** `localStorage` in diesem Browser; der Bearbeitungslink `/w/<id>#k=<schlüssel>` (Fragment, erreicht nie einen Server und wird sofort aus der Adresse genommen); der **Schlüsselbund** unten auf der Seite — eine Zeile `bbw1.<id>.<key>~…`, die alle Wände dieses Browsers auf ein anderes Gerät bringt, taketests Fußzeilenfeld.
+- **Eine Besucher-ID wie bei taketest.xyz** (E22; Julian hat N11 dafür aufgehoben). Die erste Wand setzt das Cookie `bb_visitor` mit 128 Zufallsbits; wer nur schaut, bekommt keins. Die Fußzeile zeigt die ID mit „Save“ — auf einem anderen Gerät eingefügt, gehören dort dieselben Wände dazu.
+- **Der Server speichert je Wand nur `sha256(id)`** (`model.ts`, `isOwner` mit `timingSafeEqual`); eine gelesene Speicherdatei verrät nicht, wem eine Wand gehört. Schreiben nur als JSON, das Cookie ist `SameSite=Lax`.
 - **Operationen statt ganzer Wände** (`add`, `remove`, `move`, `title`, `columns`), wie die Entwürfe aus 5.10b. Der Server nimmt eine Kachel nur in der Form, die er selbst baut (`validTile`): Werk- und Cover-Id per Muster, ISBNs per Muster, Längen gekappt, höchstens 60 Cover.
 - **Jede Kachel trägt ihre Drucke** (bis zu fünf: ISBN, Verlag, Jahr) — die Einkaufsliste `/api/walls/<id>/list` ist der Eingang von Stufe 2. E-Book-Drucke fallen weg (E21).
 - **Nur Open Library, nie Google** (lab-Regel 6): eine Suche je Anfrage, bis zu drei Ausgabenseiten je geöffnetem Werk, im Speicher gecacht.
+
+Die erste Fassung (Schlüssel je Wand, Bearbeitungslink, Schlüsselbund; N11-treu) liegt in Commit `d34218c`.
 
 ## Dateien
 
 | Datei | |
 |---|---|
-| `model.ts` | Wand, Schlüssel, Operationen, Schlüsselbund, Einkaufsliste — rein, getestet |
+| `model.ts` | Wand, Besitzer (Hash der Besucher-ID), Operationen, Einkaufsliste — rein, getestet |
 | `covers.ts` | Ausgaben → wählbare Cover mit ihren Drucken — rein, getestet an der Gatsby-Fixture |
 | `serve.ts` | lokaler Server, Speicher `walls.json` (git-ignoriert) |
 | `index.html` | die ganze Oberfläche |
 
 ## Status
 
-**Gebaut und durchgespielt am 2026-09-28** ([Historie](../../docs/history.md)): 13 Tests; im Browser Anlegen → zwölf Cover aus zwei Werken → sechs Spalten → ohne Speicher schreibgeschützt → per Bearbeitungslink und per Schlüsselbund wieder bearbeitbar; per `curl` 403 ohne und mit falschem Schlüssel; 390 px ohne Überbreite. **12 von 12 Kacheln tragen eine ISBN.**
+**Gebaut und durchgespielt am 2026-09-28** ([Historie](../../docs/history.md)), am selben Abend auf E22 umgebaut: 12 Tests; im Browser keine ID vor der ersten Wand, eine danach; ein Gerät ohne Cookie sieht die Wand schreibgeschützt und bekommt sie per eingefügter ID zurück; per `curl` 403 für eine fremde ID, kein Cookie für bloßes Schauen; 390 px ohne Überbreite. **12 von 12 Kacheln tragen eine ISBN.**
 
-**Was auf der Seite anders sein muss** (5.13a): die Auswahl faltet hier nicht — dasselbe Motiv kann zweimal auf die Wand. Auf der Seite gehört „Add to my wall" deshalb an die gefaltete Wand der Buchseite, nicht in einen eigenen Picker.
+**Nächster Schritt: das MVP auf der Seite (5.13a).** Die Auswahl faltet hier nicht — dasselbe Motiv kann zweimal auf die Wand. Auf der Seite gehört „Add to my wall“ deshalb an die gefaltete Wand der Buchseite, nicht in einen eigenen Picker.

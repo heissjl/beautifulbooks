@@ -1,16 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import {
   applyOp,
-  decodeKeyRing,
-  encodeKeyRing,
-  hashKey,
-  isEditKey,
+  hashVisitor,
+  isOwner,
+  isVisitorId,
   isWallId,
-  keyOpens,
   MAX_TILES,
-  mergeKeyRings,
-  newEditKey,
+  newVisitorId,
   newWall,
+  ownedBy,
   newWallId,
   shoppingList,
   toPublic,
@@ -19,7 +17,8 @@ import {
   type Tile,
 } from '../model';
 
-const KEY = newEditKey(Buffer.alloc(16, 7));
+const ME = newVisitorId(Buffer.alloc(16, 7));
+const YOU = newVisitorId(Buffer.alloc(16, 8));
 const tile = (coverId: string, extra: Partial<Tile> = {}): Tile => ({
   workId: 'OL468431W',
   coverId,
@@ -28,34 +27,42 @@ const tile = (coverId: string, extra: Partial<Tile> = {}): Tile => ({
   printings: [{ isbn13: '9780743273565', publisher: 'Scribner', year: 2004 }],
   ...extra,
 });
-const wall = () => newWall('abcdefghij', KEY, '  My   hallway ', '2026-09-28');
+const wall = () => newWall('abcdefghij', ME, '  My   hallway ', '2026-09-28');
 
-describe('ids and keys', () => {
-  it('makes ids and keys in the shapes it accepts', () => {
+describe('ids and owners', () => {
+  it('makes ids in the shapes it accepts', () => {
     expect(isWallId(newWallId())).toBe(true);
-    expect(isEditKey(newEditKey())).toBe(true);
+    expect(isVisitorId(newVisitorId())).toBe(true);
     expect(isWallId('ABCDEFGHIJ')).toBe(false);
-    expect(isEditKey('short')).toBe(false);
+    expect(isVisitorId('short')).toBe(false);
   });
 
-  it('stores only the hash, and only the right key opens the wall', () => {
+  it('stores only the hash of the owner, and only the owner may change the wall', () => {
     const w = wall();
-    expect(w.keyHash).toBe(hashKey(KEY));
-    expect(JSON.stringify(w)).not.toContain(KEY);
-    expect(keyOpens(w, KEY)).toBe(true);
-    expect(keyOpens(w, newEditKey(Buffer.alloc(16, 8)))).toBe(false);
-    expect(keyOpens(w, undefined)).toBe(false);
+    expect(w.ownerHash).toBe(hashVisitor(ME));
+    expect(JSON.stringify(w)).not.toContain(ME);
+    expect(isOwner(w, ME)).toBe(true);
+    expect(isOwner(w, YOU)).toBe(false);
+    expect(isOwner(w, undefined)).toBe(false);
   });
 
-  it('never gives the hash to a viewer', () => {
-    expect(toPublic(wall())).not.toHaveProperty('keyHash');
+  it('never tells a viewer whose wall it is', () => {
+    expect(toPublic(wall())).not.toHaveProperty('ownerHash');
+  });
+
+  it('lists a visitor\'s own walls, newest change first', () => {
+    const a = { ...wall(), id: 'aaaaaaaaaa', updatedAt: '2026-09-01' };
+    const b = { ...wall(), id: 'bbbbbbbbbb', updatedAt: '2026-09-20' };
+    const c = { ...newWall('cccccccccc', YOU, 'theirs', '2026-09-28') };
+    expect(ownedBy([a, b, c], ME).map((w) => w.id)).toEqual(['bbbbbbbbbb', 'aaaaaaaaaa']);
+    expect(ownedBy([a, b, c], 'nonsense')).toEqual([]);
   });
 });
 
 describe('operations', () => {
   it('cleans the title', () => {
     expect(wall().title).toBe('My hallway');
-    expect(newWall('abcdefghij', KEY, '   ', 'd').title).toBe('Untitled wall');
+    expect(newWall('abcdefghij', ME, '   ', 'd').title).toBe('Untitled wall');
   });
 
   it('adds a cover once and keeps order', () => {
@@ -90,22 +97,6 @@ describe('operations', () => {
     expect(() => validTile({ ...tile('1'), coverId: '../etc' })).toThrow(WallError);
     const t = validTile({ ...tile('1'), printings: [{ isbn13: 'nope', year: 3000, publisher: 'X' }] });
     expect(t.printings).toEqual([{ publisher: 'X' }]);
-  });
-});
-
-describe('key ring', () => {
-  it('round-trips and drops what it cannot read', () => {
-    const ring = [{ id: 'abcdefghij', key: KEY }, { id: 'bad', key: KEY }];
-    const text = encodeKeyRing(ring);
-    expect(decodeKeyRing(text)).toEqual([{ id: 'abcdefghij', key: KEY }]);
-    expect(decodeKeyRing(`${text}~garbage~`)).toEqual([{ id: 'abcdefghij', key: KEY }]);
-    expect(decodeKeyRing('hello')).toEqual([]);
-  });
-
-  it('merges with the incoming key winning', () => {
-    const other = newEditKey(Buffer.alloc(16, 9));
-    const merged = mergeKeyRings([{ id: 'abcdefghij', key: KEY }], [{ id: 'abcdefghij', key: other }, { id: 'klmnopqrst', key: KEY }]);
-    expect(merged).toEqual([{ id: 'abcdefghij', key: other }, { id: 'klmnopqrst', key: KEY }]);
   });
 });
 

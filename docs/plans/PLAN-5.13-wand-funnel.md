@@ -1,6 +1,6 @@
 # Von der Wand im Browser zur gerahmten Wand im Flur
 
-> **Stand 2026-09-28.** Stufe 1 ist als Lab-Prototyp gebaut (`lab/walls/`, ROADMAP 5.13), Stufen 2 und 3 sind Plan. Julian, 2026-09-28: „I want to use the website as a funnel for art creation, of framed cover walls in the actual physical world … focus on step one for now but make a roadmap/plan for the entire funnel".
+> **Stand 2026-09-28, abends.** Stufe 1 ist als Lab-Prototyp gebaut (`lab/walls/`, ROADMAP 5.13) und nach **E22** auf eine Besucher-ID wie bei taketest umgestellt. **Julian: erst ein MVP — Stufe 1 auf der Seite (5.13a); Stufen 2 und 3 sind zurückgestellt** („lass uns über des rest später nachdenken“), ebenso die Anträge bei AbeBooks/EPN und die Händlerfrage. Die Abschnitte dazu bleiben als Plan stehen. Julian, 2026-09-28: „I want to use the website as a funnel for art creation, of framed cover walls in the actual physical world … focus on step one for now but make a roadmap/plan for the entire funnel".
 
 ## Der Funnel in einem Satz je Stufe
 
@@ -22,32 +22,23 @@ Jede Stufe hat ein **Tor**: die nächste wird erst gebaut, wenn die vorige gemes
 
 taketest legt jedem **Besucher** eine UUID in ein Cookie (`visitor_id`) und zeigt sie in der Fußzeile als Textfeld mit „Save": „Your ID · sign in to keep results across devices". Wer die ID auf einem anderen Gerät einfügt, hat dort seine Ergebnisse. Wer mehr will, meldet sich an — ohne Passwort, per Link an die E-Mail oder mit Google; die Seite sagt: „Your results are kept with a cookie in this browser, so you do not need an account".
 
-### Was wir davon übernehmen, und was nicht
+### Entschieden: wie taketest, mit einer Besucher-ID (E22)
 
-**Übernommen:** kein Konto, kein Passwort, ein sichtbares, einfügbares Geheimnis als Umzugsweg zwischen Geräten.
+Der erste Prototyp drehte taketest um und gab das Geheimnis der **Wand** statt dem Besucher (ein Schlüssel je Wand, Bearbeitungslink mit `#k=`, ein „Schlüsselbund“ zum Umziehen), um N11 einzuhalten. Julian hat N11 für diese Funktion aufgehoben („ich glaube n11 können wir für diese idee aufheben“), also gilt jetzt taketests Modell:
 
-**Umgedreht:** Das Geheimnis gehört **der Wand, nicht dem Besucher.** Eine Besucher-ID ist genau die „Kennung", die N11 ausschließt („kein Konto, keine Kennung, kein Tracking-Cookie"), und sie würde alle Wände eines Menschen miteinander verknüpfen. Ein Schlüssel je Wand beschreibt niemanden:
+- Wer seine **erste Wand** anlegt, bekommt eine zufällige Besucher-ID (128 Bit) im Cookie `bb_visitor` (zwei Jahre, `SameSite=Lax`). **Wer nur schaut, bekommt keine.**
+- Die Fußzeile zeigt die ID mit „Save“: auf einem anderen Gerät einfügen, und es ist derselbe Besucher mit denselben Wänden. Die Seite sagt, dass die ID wie ein Passwort ist.
+- Der Server speichert je Wand nur den **SHA-256 der ID**; ein ausgelesener Speicher verrät weder, wem eine Wand gehört, noch lässt er sie ändern. Kein IP, kein User-Agent, kein Referrer.
+- Schreiben nur als JSON — ein fremdes Formular kann das nicht ohne Preflight, und `SameSite=Lax` schickt das Cookie ohnehin nicht mit.
+- Der Link `/w/<id>` zeigt die Wand jedem; ändern kann sie nur der Besitzer.
 
-- Jede Wand hat eine **öffentliche Id** (`/w/<id>`, 10 Zeichen, ~51 Bit) und einen **Bearbeitungsschlüssel** (128 Bit, base64url).
-- Der Server speichert **nur den SHA-256 des Schlüssels.** Ein ausgelesener Speicher ändert keine Wand.
-- Der **Bearbeitungslink** trägt den Schlüssel im **Fragment** (`/w/<id>#k=<schlüssel>`). Ein Browser schickt das Fragment nie an einen Server, in kein Log und keinen Referrer; die Seite nimmt es sofort aus der Adresszeile und legt es in `localStorage`.
-- Der **Schlüsselbund** ist taketests Fußzeilenfeld: eine Zeile (`bbw1.<id>.<key>~…`), die alle Wände dieses Browsers auf ein anderes Gerät bringt. Die Seite sagt, dass die Zeile ein Passwort ist.
-- Gespeichert wird: Titel, Spaltenzahl, Cover mit Werk, Titel, Autorin und bis zu fünf Drucken (ISBN, Verlag, Jahr). **Nichts** über den Leser: keine IP, kein Cookie, kein User-Agent, kein Datum außer Anlage und letzter Änderung der Wand.
+**Was damit wegfiel:** eine Wand gemeinsam mit jemandem bearbeiten, ohne ihm alle eigenen Wände zu geben. Käme das als Wunsch, wäre ein Bearbeitungslink je Wand der Zusatz — der erste Prototyp hatte ihn schon (Commit `d34218c`).
 
-**Die Alternativen, und warum nicht jetzt:**
-
-| Weg | Für | Gegen |
-|---|---|---|
-| Besucher-ID wie taketest | eine Zeile für alles | Kennung eines Menschen (N11), verknüpft seine Wände |
-| **Schlüssel je Wand** (gebaut) | beschreibt niemanden; teilen = Link kopieren | wer Browserdaten löscht und keinen Link hat, verliert die Bearbeitung (die Wand bleibt sichtbar) |
-| E-Mail mit Anmeldelink | geräteübergreifend ohne Kopieren | E-Mail-Adressen sind personenbezogen → 0.12 sofort fällig, Versanddienst nötig |
-| Passkey | sicher, bequem | ein Konto in allem außer dem Namen |
-
-Die E-Mail kommt ohnehin in **Stufe 2** (Versandadresse, Bestätigung). Dann — und erst dann — kann „Schick mir den Bearbeitungslink" ein Zusatz sein, wie bei taketest das Anmelden.
+**Später, wie bei taketest:** Anmelden per E-Mail-Link, damit eine gelöschte Browser-Datenbank die Wände nicht kostet. Das braucht eine E-Mail-Adresse und damit 0.12 in voller Form — nicht im MVP.
 
 ### Was der Prototyp zeigt (gemessen 2026-09-28, lokal)
 
-`npx tsx lab/walls/serve.ts` → http://localhost:4325. Durchgespielt im Browser: Wand anlegen, zwei Werke suchen (*The Left Hand of Darkness*, *Dune*), zwölf Cover wählen, Titel und sechs Spalten setzen; dann ohne Speicher neu laden → **schreibgeschützt** (keine Werkzeuge, Hinweis „Only the edit link can change it"); Bearbeitungslink → bearbeitbar, **Fragment sofort aus der Adresse entfernt**; Schlüsselbund eingefügt → Wand wieder in „Your walls"; Unsinn eingefügt → abgelehnt. Per `curl`: ohne und mit falschem Schlüssel **403**, der Schlüssel steht **nicht** in der Speicherdatei. 390 px: keine Überbreite, drei Spalten, und der Zähler sagt, dass die Wand sechs hat. **12 von 12 Kacheln tragen mindestens eine ISBN** — die Einkaufsliste (`/api/walls/<id>/list`) ist damit schon der Eingang von Stufe 2.
+`npx tsx lab/walls/serve.ts` → http://localhost:4325. **Erste Fassung (Schlüssel je Wand):** Wand angelegt, zwei Werke gesucht (*The Left Hand of Darkness*, *Dune*), zwölf Cover gewählt, sechs Spalten; ohne Schlüssel schreibgeschützt, per Bearbeitungslink und Schlüsselbund wieder bearbeitbar, 403 mit falschem Schlüssel; 390 px ohne Überbreite. **12 von 12 Kacheln tragen mindestens eine ISBN** — die Einkaufsliste (`/api/walls/<id>/list`) ist schon der Eingang von Stufe 2. **Zweite Fassung (E22):** wer nur `/api/me` fragt, bekommt **kein** Cookie; die erste Wand setzt es, die zweite nicht noch einmal; der Besitzer ändert (200), eine fremde ID bekommt 403, ein Formular statt JSON 404; eine andere „Maschine“ ohne Cookie sieht die Wand schreibgeschützt, fügt die ID ein und hat beide Wände wieder; Unsinn wird abgelehnt; die ID steht nicht in der Speicherdatei.
 
 **Befunde für den Umzug auf die Seite:**
 
@@ -61,7 +52,7 @@ Die E-Mail kommt ohnehin in **Stufe 2** (Versandadresse, Bestätigung). Dann —
 - **Routen:** `POST /api/walls` (anlegen, gibt einmal den Schlüssel), `GET /api/walls/<id>`, `POST /api/walls/<id>` mit `x-wall-key` und Operationen (wie die Entwürfe aus 5.10b: Operationen, nie ganze Wände, damit zwei Tabs nur den kollidierenden Schritt verlieren). Rate-Limit-Eimer `walls`.
 - **Seiten:** `/w/<id>` mit `noindex` (fremde Titel sind fremder Text), OG-Bild als Mosaik der Wand (5.5-Rechtefrage beachten), „Add to my wall" in der Seitenleiste der Buchseite, „Your walls" im Kopf, sobald der Browser eine kennt.
 - **Missbrauch:** der einzige freie Text ist der Titel (80 Zeichen) → `noindex`, und ein Knopf „Report", der eine Wand verbirgt, bis Julian sie ansieht. Höchstens 60 Cover je Wand.
-- **Spec:** N11 bekommt einen Satz: *„Eine Wand, die ein Leser anlegt, speichert Cover und Titel, nie etwas über ihn; der Schlüssel, der sie ändert, liegt nur in seinem Browser, auf dem Server nur als Hash."* **Das entscheidet Julian**, zusammen mit der Frage, ob 0.12 damit fällig wird: der Auslöser „Eingaben vom Leser" ist erfüllt, aber die Eingabe ist keine personenbezogene — außer ein Leser schreibt seinen Namen in den Titel.
+- **Spec:** erledigt als E22. Offen vor dem Deploy: ein Absatz zum Cookie in der Datenschutzerklärung (0.12).
 - **Tor zu Stufe 2 (Messung):** vier Wochen nach dem Deploy: wie viele Wände mit **≥ 6 Covern** entstehen, und wie viele davon werden zweimal geöffnet (der Link wurde also behalten oder geteilt). Gezählt als Aggregat aus dem Speicher, ohne Besucherdaten. Schwelle vorgeschlagen: 30 solche Wände — sonst ist Stufe 2 ein Laden ohne Kundschaft.
 
 ---
@@ -121,7 +112,9 @@ Offen und bewusst später (Julian: „that's a later problem"). Was vorher zu kl
 
 ## Entscheidungen für Julian
 
-1. **N11-Satz und 0.12** für Stufe 1 auf der Seite (oben, „Auf die Seite").
+**Stand 2026-09-28:** 3 und 4 sind bis nach dem MVP zurückgestellt (Julian).
+
+1. ~~N11~~ — entschieden als E22 (2026-09-28). Offen: der Datenschutz-Absatz zum Cookie vor dem Deploy.
 2. **Tor-Schwelle** zwischen Stufe 1 und 2: 30 Wände mit ≥ 6 Covern in vier Wochen?
 3. **AbeBooks-Affiliate und eBay Partner Network beantragen** (4.3 vorziehen) — ohne Schlüssel keine Messung 5.14a außer von Hand.
 4. **Händler werden oder nicht** (Weg B): Gewerbe, AGB, Widerruf. Bis dahin nur Weg A.
@@ -132,7 +125,7 @@ Offen und bewusst später (Julian: „that's a later problem"). Was vorher zu kl
 ```mermaid
 flowchart LR
   L["5.13 Lab: Wand ohne Konto ✓"] --> S["5.13a Auf die Seite: Add to my wall, /w/id"]
-  J1(["Julian: N11-Satz, 0.12"]) --> S
+  J1(["Julian: Datenschutz-Absatz"]) --> S
   S --> T1{{"Tor: 30 Wände ≥ 6 Cover in 4 Wochen"}}
   J3(["Julian: AbeBooks + EPN beantragen"]) --> M["5.14a Messung: Angebote mit richtigem Foto, Preis einer Wand"]
   T1 --> M

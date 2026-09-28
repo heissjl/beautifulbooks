@@ -45,14 +45,13 @@
   .card + .card { margin-top: 12px; }
   .note { color: var(--mute); font-size: 13px; margin: 6px 0; }
   .err { color: var(--accent); }
-  code.key { display: block; word-break: break-all; font-size: 12px; background: var(--paper); padding: 6px 8px; border-radius: 6px; }
   [hidden] { display: none !important; }
 </style>
 </head>
 <body>
 <main>
   <h1>Your cover wall</h1>
-  <p class="lead">Pick the covers you would hang, arrange them, keep the link. No account: the wall is kept on the server, and the key to change it stays in this browser.</p>
+  <p class="lead">Pick the covers you would hang, arrange them, share the link. No account: this browser remembers which walls are yours.</p>
 
   <div class="row">
     <div class="mine" id="mine"></div>
@@ -81,61 +80,46 @@
           </div>
         </div>
         <div class="card">
-          <strong>Keep it</strong>
-          <p class="note">Anyone with the <b>view link</b> sees the wall. The <b>edit link</b> lets whoever has it change the wall — keep it like a key.</p>
-          <div class="row"><button class="ghost" id="copyView" type="button">Copy view link</button><button class="ghost" id="copyEdit" type="button">Copy edit link</button></div>
+          <strong>Share it</strong>
+          <p class="note">Anyone with the link sees the wall. Only this browser — or one you give your ID below — can change it.</p>
+          <div class="row"><button class="ghost" id="copyView" type="button">Copy link</button></div>
           <p class="note"><a id="listLink" target="_blank">Shopping list (every ISBN that carried each cover)</a></p>
         </div>
       </aside>
     </div>
   </section>
 
-  <section class="card" style="margin-top:24px">
-    <strong>Your key ring</strong>
-    <p class="note">All walls this browser may change, in one line. Paste it into this box on another device and press Save — like a password, so don't post it.</p>
-    <div class="row"><input type="text" id="ring" spellcheck="false" autocomplete="off" aria-label="Key ring"><button id="saveRing" type="button">Save</button></div>
-    <p class="note" id="ringNote"></p>
-  </section>
+  <footer class="card" style="margin-top:24px">
+    <label for="vid"><strong>Your ID</strong></label>
+    <p class="note">Your walls belong to this ID. To keep working on them on another device, paste it there and press Save. Anyone with it can change your walls, so don't post it.</p>
+    <div class="row"><input type="text" id="vid" spellcheck="false" autocomplete="off" placeholder="You get one with your first wall"><button id="saveVid" type="button">Save</button></div>
+    <p class="note" id="vidNote"></p>
+  </footer>
 </main>
 
 <script>
-const RING = 'bb.walls.ring';
 const $ = (id) => document.getElementById(id);
-let ring = readRing();
-let wall = null, key = null, canEdit = false;
-
-function readRing() { try { return JSON.parse(localStorage.getItem(RING) || '[]'); } catch { return []; } }
-function writeRing() { try { localStorage.setItem(RING, JSON.stringify(ring)); } catch {} renderMine(); renderRingField(); }
-function remember(id, k, title) {
-  const at = ring.findIndex((e) => e.id === id);
-  const entry = { id, key: k, title };
-  if (at >= 0) ring[at] = entry; else ring.unshift(entry);
-  writeRing();
-}
-function encodeRing() { return 'bbw1.' + ring.map((e) => e.id + '.' + e.key).join('~'); }
-function decodeRing(text) {
-  const s = text.trim(); if (!s.startsWith('bbw1.')) return [];
-  return s.slice(5).split('~').map((p) => { const d = p.indexOf('.'); return { id: p.slice(0, d), key: p.slice(d + 1) }; })
-    .filter((e) => /^[a-z0-9]{10}$/.test(e.id) && /^[A-Za-z0-9_-]{22}$/.test(e.key));
-}
+let me = { visitor: null, walls: [] };
+let wall = null, canEdit = false;
 
 async function api(path, opts = {}) {
-  const res = await fetch(path, { ...opts, headers: { 'content-type': 'application/json', ...(key ? { 'x-wall-key': key } : {}), ...(opts.headers || {}) } });
+  const res = await fetch(path, { ...opts, headers: { 'content-type': 'application/json', ...(opts.headers || {}) } });
   const data = res.headers.get('content-type')?.includes('json') ? await res.json() : await res.text();
   if (!res.ok) throw new Error(data.error || res.statusText);
   return data;
 }
 
+async function loadMe() { me = await api('/api/me'); renderMine(); $('vid').value = me.visitor || ''; }
+
 function renderMine() {
   $('mine').innerHTML = '';
-  for (const e of ring) {
+  for (const w of me.walls) {
     const a = document.createElement('a');
-    a.href = '/w/' + e.id; a.textContent = e.title || e.id;
-    if (wall && wall.id === e.id) a.className = 'on';
+    a.href = '/w/' + w.id; a.textContent = w.title;
+    if (wall && wall.id === w.id) a.className = 'on';
     $('mine').append(a);
   }
 }
-function renderRingField() { $('ring').value = ring.length ? encodeRing() : ''; }
 
 function renderWall() {
   $('editor').hidden = !wall;
@@ -144,8 +128,7 @@ function renderWall() {
   $('title').value = wall.title; $('title').disabled = !canEdit;
   $('cols').disabled = !canEdit; $('cols').value = String(wall.columns);
   $('picker').hidden = !canEdit;
-  $('copyEdit').hidden = !canEdit;
-  $('status').textContent = canEdit ? 'Saved on every change.' : 'You are looking at someone\'s wall. Only the edit link can change it.';
+  $('status').textContent = canEdit ? 'Saved on every change.' : 'You are looking at someone\'s wall.';
   $('listLink').href = '/api/walls/' + wall.id + '/list';
   const el = $('wall');
   el.className = 'wall' + (canEdit ? ' editing' : '');
@@ -177,22 +160,20 @@ function btn(label, fn, disabled) { const b = document.createElement('button'); 
 async function send(ops) {
   try {
     const data = await api('/api/walls/' + wall.id, { method: 'POST', body: JSON.stringify({ ops }) });
-    wall = data.wall; remember(wall.id, key, wall.title); renderWall(); renderCoverMarks();
+    wall = data.wall;
+    const at = me.walls.findIndex((w) => w.id === wall.id);
+    if (at >= 0) me.walls[at] = wall;
+    renderWall(); renderCoverMarks();
   } catch (e) { $('status').innerHTML = '<span class="err">' + e.message + '</span>'; }
 }
 
-async function open(id, k) {
-  key = k || null;
-  try {
-    const data = await api('/api/walls/' + id);
-    wall = data.wall; canEdit = data.canEdit;
-    if (canEdit) remember(id, key, wall.title);
-  } catch (e) { wall = null; $('ringNote').textContent = e.message; }
+async function open(id) {
+  try { const data = await api('/api/walls/' + id); wall = data.wall; canEdit = data.canEdit; }
+  catch (e) { wall = null; $('vidNote').textContent = e.message; }
   renderWall();
 }
 
 // Search and pick
-let currentWork = null;
 $('searchForm').onsubmit = async (ev) => {
   ev.preventDefault();
   $('coverPane').hidden = true; $('results').hidden = false;
@@ -214,7 +195,7 @@ $('searchForm').onsubmit = async (ev) => {
 $('back').onclick = () => { $('coverPane').hidden = true; $('results').hidden = false; };
 
 async function showCovers(w) {
-  currentWork = w; $('results').hidden = true; $('coverPane').hidden = false;
+  $('results').hidden = true; $('coverPane').hidden = false;
   $('workName').textContent = w.title; $('covers').innerHTML = '<p class="note">Loading covers…</p>';
   try {
     const { covers } = await api('/api/covers/' + w.id);
@@ -245,36 +226,31 @@ $('cols').onchange = () => send([{ op: 'columns', columns: Number($('cols').valu
 $('title').onchange = () => send([{ op: 'title', title: $('title').value }]);
 
 $('new').onclick = async () => {
-  const { wall: w, key: k } = await api('/api/walls', { method: 'POST', body: JSON.stringify({ title: 'My wall' }) });
-  remember(w.id, k, w.title);
+  const { wall: w } = await api('/api/walls', { method: 'POST', body: JSON.stringify({ title: 'My wall' }) });
+  await loadMe();
   history.pushState(null, '', '/w/' + w.id);
-  wall = w; key = k; canEdit = true; renderWall(); $('q').focus();
+  wall = w; canEdit = true; renderWall(); $('q').focus();
 };
 
-// Links and the key ring
-const copy = (text, label) => navigator.clipboard.writeText(text).then(() => { $('status').textContent = label + ' copied.'; });
-$('copyView').onclick = () => copy(location.origin + '/w/' + wall.id, 'View link');
-$('copyEdit').onclick = () => copy(location.origin + '/w/' + wall.id + '#k=' + key, 'Edit link');
-$('saveRing').onclick = () => {
-  const incoming = decodeRing($('ring').value);
-  if (!incoming.length) { $('ringNote').textContent = 'That is not a key ring from this page.'; return; }
-  for (const e of incoming) if (!ring.some((r) => r.id === e.id && r.key === e.key)) ring.push({ ...e, title: '' });
-  writeRing(); $('ringNote').textContent = `${incoming.length} wall${incoming.length > 1 ? 's' : ''} on this key ring.`;
-  Promise.all(ring.filter((e) => !e.title).map(async (e) => { try { const d = await api('/api/walls/' + e.id); e.title = d.wall.title; } catch {} })).then(writeRing);
+$('copyView').onclick = () => navigator.clipboard.writeText(location.origin + '/w/' + wall.id).then(() => { $('status').textContent = 'Link copied.'; });
+
+// The footer, as on taketest.xyz: paste an ID from another device and Save.
+$('saveVid').onclick = async () => {
+  try {
+    me = await api('/api/me', { method: 'POST', body: JSON.stringify({ visitor: $('vid').value }) });
+    $('vidNote').textContent = me.walls.length ? (me.walls.length === 1 ? '1 wall belongs' : `${me.walls.length} walls belong`) + ' to this ID.' : 'Saved. No walls belong to this ID yet.';
+    renderMine();
+    if (wall) await open(wall.id);
+  } catch (e) { $('vidNote').textContent = e.message; }
 };
 
-// Route: /w/<id>#k=<key> or /w/<id> with a key this browser already holds
 async function route() {
   const m = location.pathname.match(/^\/w\/([a-z0-9]{10})$/);
-  if (!m) { wall = null; renderWall(); renderMine(); renderRingField(); return; }
-  const fromHash = new URLSearchParams(location.hash.slice(1)).get('k');
-  if (fromHash) history.replaceState(null, '', location.pathname); // the key leaves the address bar at once
-  await open(m[1], fromHash || ring.find((e) => e.id === m[1])?.key);
-  renderRingField();
+  if (m) await open(m[1]); else { wall = null; renderWall(); }
 }
 addEventListener('popstate', route);
 addEventListener('resize', () => wall && renderWall());
-route();
+loadMe().then(route);
 </script>
 </body>
 </html>
