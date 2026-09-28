@@ -2,21 +2,24 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import type { PublicWall } from '@/lib/walls/model';
+import type { AccountState } from '@/lib/walls/signin';
 
 export interface MyWalls {
   visitor: string | null;
   walls: PublicWall[];
+  /** The optional sign-in (5.13h): which provider this browser is signed in with, or null. */
+  account: AccountState | null;
   /** False until the first answer, so a page does not flash "no walls". */
   loaded: boolean;
 }
 
-const EMPTY: MyWalls = { visitor: null, walls: [], loaded: false };
+const EMPTY: MyWalls = { visitor: null, walls: [], account: null, loaded: false };
 
-async function fetchMe(): Promise<MyWalls> {
+export async function fetchMe(): Promise<MyWalls> {
   const res = await fetch('/api/walls/me', { cache: 'no-store' });
   if (!res.ok) throw new Error(String(res.status));
-  const data = (await res.json()) as { visitor: string | null; walls: PublicWall[] };
-  return { ...data, loaded: true };
+  const data = (await res.json()) as { visitor: string | null; walls: PublicWall[]; account?: AccountState | null };
+  return { ...data, account: data.account ?? null, loaded: true };
 }
 
 /**

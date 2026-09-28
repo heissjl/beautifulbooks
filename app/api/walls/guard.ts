@@ -3,9 +3,10 @@ import { rateLimited } from '@/app/api/rate';
 import type { RateBucketName } from '@/lib/ratelimit';
 import { missingStoreMessage } from '@/lib/hotornot/store';
 import { isVisitorId } from '@/lib/walls/model';
-import { VISITOR_COOKIE, VISITOR_MAX_AGE } from '@/lib/walls/owner';
+import { ACCOUNT_COOKIE, ACCOUNT_MAX_AGE, readSession, signinSecret, signSession, type Session } from '@/lib/walls/account';
+import { hashVisitor, VISITOR_COOKIE, VISITOR_MAX_AGE } from '@/lib/walls/owner';
 import { wallStoreFromEnv, type WallStore } from '@/lib/walls/store';
-import { wallsEnabled } from '@/lib/walls/switch';
+import { signinEnabled, wallsEnabled } from '@/lib/walls/switch';
 
 /**
  * The reasons a wall route may not run, each said as itself (as the cover
@@ -36,6 +37,45 @@ export function visitorOf(request: NextRequest): string | null {
 export function setVisitor(response: NextResponse, visitor: string): NextResponse {
   response.cookies.set(VISITOR_COOKIE, visitor, { path: '/', maxAge: VISITOR_MAX_AGE, sameSite: 'lax', secure: process.env.NODE_ENV === 'production' });
   return response;
+}
+
+/**
+ * The signed-in account of this browser (5.13h), or null: signed out, sign-in
+ * switched off, no secret, or a cookie that does not verify.
+ */
+export function accountOf(request: NextRequest): Session | null {
+  if (!signinEnabled()) return null;
+  return readSession(request.cookies.get(ACCOUNT_COOKIE)?.value, signinSecret());
+}
+
+/** Never readable by the page: it is the sign-in itself. */
+export function setAccount(response: NextResponse, session: Session, secret: string): NextResponse {
+  response.cookies.set(ACCOUNT_COOKIE, signSession(session, secret), {
+    path: '/',
+    maxAge: ACCOUNT_MAX_AGE,
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+  });
+  return response;
+}
+
+export function clearAccount(response: NextResponse): NextResponse {
+  response.cookies.set(ACCOUNT_COOKIE, '', { path: '/', maxAge: 0, httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production' });
+  return response;
+}
+
+/** Who this browser speaks for: its visitor id, and the visitor hashes its account linked. May throw the store's error. */
+export async function claimant(request: NextRequest, store: WallStore): Promise<{ visitor: string | null; linked: string[]; session: Session | null }> {
+  const visitor = visitorOf(request);
+  const session = accountOf(request);
+  const linked = session ? await store.linked(session.account) : [];
+  return { visitor, linked, session };
+}
+
+/** A visitor this signed-in browser now has joins its account — a new device, or a pasted ID (5.13h). */
+export async function linkIfSignedIn(store: WallStore, session: Session | null, visitor: string): Promise<void> {
+  if (session) await store.link(session.account, hashVisitor(visitor));
 }
 
 /**

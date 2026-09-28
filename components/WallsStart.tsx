@@ -12,6 +12,7 @@ import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import type { WorkSummary } from '@/lib/model';
 import type { PublicWall, Tile } from '@/lib/walls/model';
+import type { SigninOption } from '@/lib/walls/signin';
 
 const TARGET_KEY = 'bb.wall.target';
 const WORK = /^OL\d+W$/;
@@ -33,7 +34,7 @@ type Results = { q: string; works: WorkSummary[] } | { q: string; error: string 
  * the book page (Julian, 2026-09-28). The chosen work and the query live in
  * the address, like everywhere on the site, so reloading and Back keep them.
  */
-export default function WallsStart({ photoOn }: { photoOn: boolean }) {
+export default function WallsStart({ photoOn, signin = [] }: { photoOn: boolean; signin?: SigninOption[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -209,7 +210,7 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
         />
       )}
 
-      <WallIdField me={me} onChange={setMe} />
+      <WallIdField me={me} onChange={setMe} signin={signin} />
     </>
   );
 }

@@ -32,10 +32,24 @@ export interface WallStore {
   /** Someone pressed "I'd order this wall framed" (step 2 demand, 5.14a). Nothing about who. */
   interest(id: string): Promise<void>;
   interests(): Promise<Map<string, number>>;
+  /** Links a visitor hash to an account hash (5.13h, E23); linking twice changes nothing. */
+  link(accountHash: string, visitorHash: string): Promise<void>;
+  /** The visitor hashes an account holds, in the order they were linked. */
+  linked(accountHash: string): Promise<string[]>;
 }
 
 /** The store did not answer — never to be shown as "no such wall" (SPEC N12). */
 export class WallStoreUnavailableError extends Error {}
+
+/**
+ * Walls of several owners at once — a signed-in browser speaks for its own
+ * visitor and for every visitor its account linked (5.13h). Newest change first.
+ */
+export async function wallsOfAll(store: WallStore, ownerHashes: readonly string[]): Promise<Wall[]> {
+  const lists = await Promise.all([...new Set(ownerHashes)].slice(0, 50).map((h) => wallsOf(store, h)));
+  const byId = new Map(lists.flat().map((w) => [w.id, w]));
+  return [...byId.values()].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+}
 
 /** Walls of one owner, newest change first; ids whose wall is gone are skipped. */
 export async function wallsOf(store: WallStore, ownerHash: string): Promise<Wall[]> {
@@ -54,6 +68,7 @@ export function memoryWallStore(): WallStore {
   const counts = new Map<string, number>();
   const flags = new Map<string, number>();
   const wants = new Map<string, number>();
+  const accounts = new Map<string, string[]>();
   return {
     kind: 'memory',
     async get(id) {
@@ -98,6 +113,13 @@ export function memoryWallStore(): WallStore {
     async interests() {
       return new Map(wants);
     },
+    async link(account, visitor) {
+      const list = accounts.get(account) ?? [];
+      if (!list.includes(visitor)) accounts.set(account, [...list, visitor]);
+    },
+    async linked(account) {
+      return [...(accounts.get(account) ?? [])];
+    },
   };
 }
 
@@ -109,6 +131,7 @@ const KEYS = {
   views: 'walls:views',
   reports: 'walls:reports',
   interest: 'walls:interest',
+  account: (hash: string) => `walls:account:${hash}`,
 };
 
 function parseWall(raw: unknown): Wall | null {
@@ -154,6 +177,21 @@ export function commandsWallStore(commands: RedisCommands): WallStore {
     reports: () => guarded(commands.hGetAll(KEYS.reports).then(countsFrom)),
     interest: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.interest, id, 1) : Promise.resolve()).then(() => undefined)),
     interests: () => guarded(commands.hGetAll(KEYS.interest).then(countsFrom)),
+    // Read, then push when absent: two sign-ins in the same instant could list a
+    // visitor twice, which `linked` folds away; a set would need a new command.
+    link: (account, visitor) =>
+      guarded(
+        commands
+          .lRange(KEYS.account(account), 0, -1)
+          .then((r) => (Array.isArray(r) && r.includes(visitor) ? undefined : commands.rPush(KEYS.account(account), visitor)))
+          .then(() => undefined),
+      ),
+    linked: (account) =>
+      guarded(
+        commands
+          .lRange(KEYS.account(account), 0, -1)
+          .then((r) => [...new Set(Array.isArray(r) ? r.filter((x): x is string => typeof x === 'string') : [])]),
+      ),
   };
 }
 

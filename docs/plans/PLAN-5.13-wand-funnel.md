@@ -81,6 +81,60 @@ Für `/privacy`, zu prüfen und zu übernehmen von Julian, bevor `WALLS=on` in P
 
 Zu klären dabei (0.12): der Speicheranbieter der Redis (Region, Auftragsverarbeitung) und Anthropics Bedingungen für Bilder über die API.
 
+### Anmelden einrichten (5.13h)
+
+Julian, 2026-09-28: „send off an agent to build the sign in via google, apple or meta. i think they offer such a service? doesnt taketest.xyz has this feature too?“ Gebaut wie SPEC F9.11 und E23 es beschreiben; ohne Zugangsdaten zeigt die Seite keinen Knopf und alles läuft wie vorher. **Warum Arctic** und nicht Clerk oder Auth.js: E23.
+
+**Weiterleitungsadressen** (exakt so, ohne Schrägstrich am Ende):
+
+| Anbieter | lokal | Produktion |
+|---|---|---|
+| Google | `http://localhost:3000/api/walls/signin/google/callback` | `https://beautifulcovers.vercel.app/api/walls/signin/google/callback` |
+| Apple | — (Apple nimmt kein `localhost` und kein `http`) | `https://beautifulcovers.vercel.app/api/walls/signin/apple/callback` |
+| Meta | `http://localhost:3000/api/walls/signin/facebook/callback` (im Entwicklungsmodus erlaubt) | `https://beautifulcovers.vercel.app/api/walls/signin/facebook/callback` |
+
+Die Adresse wird aus dem Host der Anfrage gebaut. Auf einer Vercel-Vorschau (`…-git-….vercel.app`) passt sie nicht zur eingetragenen und der Anbieter lehnt ab — Anmelden gibt es also lokal und in Produktion, nicht in Vorschauen.
+
+**Umgebungsvariablen** (Vercel → Project → Settings → Environment Variables, und lokal in `.env.local`; nie committen):
+
+| Variable | Wofür | Pflicht |
+|---|---|---|
+| `WALLS_SIGNIN` | `on`/`off`; ungesetzt an außer in Produktion | in Produktion `on` |
+| `WALLS_SIGNIN_SECRET` | signiert das Anmelde-Cookie; mindestens 32 Zeichen, z. B. `openssl rand -base64 32`. **Nie wechseln** — sonst ist jeder abgemeldet (die Konten bleiben, man meldet sich neu an) | ja |
+| `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET` | Google | für Google |
+| `APPLE_SIGNIN_CLIENT_ID` (die Services ID), `APPLE_SIGNIN_TEAM_ID`, `APPLE_SIGNIN_KEY_ID`, `APPLE_SIGNIN_PRIVATE_KEY` (Inhalt der `.p8`-Datei, Zeilenumbrüche als `\n` erlaubt) | Apple | für Apple |
+| `FACEBOOK_APP_ID`, `FACEBOOK_APP_SECRET` | Meta | für Meta |
+
+Für den Build ändert sich nichts: ohne diese Variablen baut die Seite wie bisher.
+
+**Google (zuerst, kostenlos):**
+
+1. <https://console.cloud.google.com/> → oben das Projekt wählen. Ein **eigenes Projekt** („beautifulcovers-signin“) ist sauberer als das der Books-API, weil der Zustimmungsbildschirm dann nur für die Anmeldung da ist.
+2. *APIs & Services → OAuth consent screen* (heute „Google Auth Platform“): App-Name „Beautiful Books“, Support-Mail, **Audience: External**. Unter *Data Access* **keinen Scope hinzufügen** — die Seite fragt nur `openid`, das braucht keinen Eintrag und keine Prüfung durch Google. *Branding*: Startseite `https://beautifulcovers.vercel.app`, Datenschutz `https://beautifulcovers.vercel.app/privacy`, autorisierte Domain `beautifulcovers.vercel.app`. Kein Logo hochladen — ein Logo löst eine Markenprüfung aus.
+3. *Audience → Publish app* („In production“). Solange die App im Testmodus ist, können sich nur eingetragene Testnutzer anmelden (höchstens 100).
+4. *Clients → Create client → Web application*, Name „beautifulcovers“. **Authorized JavaScript origins:** `http://localhost:3000` und `https://beautifulcovers.vercel.app`. **Authorized redirect URIs:** die beiden Google-Adressen aus der Tabelle.
+5. Client-ID und Secret kopieren → `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`; dazu `WALLS_SIGNIN_SECRET`. Lokal: `npm run dev`, `/create` öffnen, „Continue with Google“.
+
+**Apple (optional, kostet 99 $/Jahr für das Apple Developer Program):**
+
+1. <https://developer.apple.com/account/resources/identifiers/list> → **App ID** anlegen (z. B. `app.beautifulcovers`), Capability „Sign in with Apple“ an.
+2. **Services ID** anlegen (z. B. `app.beautifulcovers.signin`) — das ist `APPLE_SIGNIN_CLIENT_ID`. „Sign in with Apple“ → *Configure*: Primary App ID aus Schritt 1, **Domains** `beautifulcovers.vercel.app`, **Return URLs** die Apple-Adresse aus der Tabelle.
+3. *Keys* → neuer Schlüssel mit „Sign in with Apple“, der App ID zugeordnet → `.p8` herunterladen (geht nur einmal). Key ID → `APPLE_SIGNIN_KEY_ID`, Team ID (oben rechts im Konto) → `APPLE_SIGNIN_TEAM_ID`, Dateiinhalt → `APPLE_SIGNIN_PRIVATE_KEY`.
+4. Testen geht nur in Produktion (siehe oben). Die Seite bittet Apple um keinen Scope, Apple fragt den Leser deshalb weder nach Name noch nach E-Mail.
+
+**Meta / Facebook (optional, kostenlos):**
+
+1. <https://developers.facebook.com/apps> → *Create app* → Anwendungsfall „Authenticate and request data from users with Facebook Login“.
+2. *Facebook Login → Settings*: **Valid OAuth Redirect URIs** die Produktionsadresse aus der Tabelle; „Client OAuth login“ und „Web OAuth login“ an, „Enforce HTTPS“ an. `localhost` erlaubt Meta im Entwicklungsmodus ohne Eintrag.
+3. *App settings → Basic*: App-ID → `FACEBOOK_APP_ID`, App Secret → `FACEBOOK_APP_SECRET`; Privacy Policy URL `https://beautifulcovers.vercel.app/privacy`; **User data deletion**: „Data deletion instructions URL“ auf `/privacy` (der Satz unten sagt, wie man löscht). Kategorie, Symbol.
+4. Oben **Live** schalten (im Entwicklungsmodus können sich nur Rollen der App anmelden). Für `public_profile` braucht Meta keine App-Prüfung; eine Unternehmensverifizierung kann Meta trotzdem verlangen.
+
+**Satz für `/privacy`** (zum Absatz „Your collections“, vor `WALLS_SIGNIN=on`):
+
+> **Signing in (optional).** You can sign in with Google, Apple or Facebook to keep your collections together across devices. We ask the provider only for the number it uses for you on this site, not for your email address, name or picture, and we store only a one-way hash of that number together with one-way hashes of the browser IDs you signed in from. Signing in sets a second cookie, `bb_account`, which lasts six months and holds that hash; signing out deletes it. The provider learns that you signed in to this site, under its own privacy policy. To have the link between your account and your collections removed, write to the address in the imprint.
+
+Zu klären dabei (0.12): ob Google, Apple und Meta als eigene Verantwortliche gelten (üblich: ja, der Leser schließt mit ihnen ab); ein Löschweg besteht bisher nur per Mail an Julian — ein Knopf „Delete my account link“ wäre der nächste Schritt, sobald jemand ihn braucht.
+
 ### Schritt 2 angeboten, ohne etwas zu verkaufen (2026-09-28, 5.13f)
 
 Auf der Sammlungsseite steht jetzt „Make it a wall“: Wandplan mit Rahmen und Maßen, die Liste der Bücher mit ihren Drucken und dem Weg zur Buchseite, und „I'd order this wall framed“ als Zähler. Das ist das Tor dieses Plans in messbarer Form: `/create/review` zeigt, wie viele Sammlungen es gibt und wie oft jemand eine gerahmte Wand bestellen würde. Stufe 2 (Kaufen) und 3 (Rahmen) bleiben gebaut erst, wenn diese Zahl trägt.

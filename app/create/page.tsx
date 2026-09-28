@@ -8,6 +8,7 @@ import SiteHeader from '@/components/SiteHeader';
 import WallsStart from '@/components/WallsStart';
 import { hasApiKey } from '@/lib/recognize';
 import { SITE_URL } from '@/lib/seo';
+import { signinOptions } from '@/lib/walls/account';
 import { wallsEnabled } from '@/lib/walls/switch';
 
 /**
@@ -34,7 +35,7 @@ export default function WallsPage() {
           <Link href="/collections/readers" className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">See collections by readers</Link>.
         </p>
         <Suspense>
-          <WallsStart photoOn={hasApiKey()} />
+          <WallsStart photoOn={hasApiKey()} signin={signinOptions()} />
         </Suspense>
       </main>
       <SiteFooter />

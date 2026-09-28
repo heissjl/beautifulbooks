@@ -8,6 +8,7 @@ import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import type { Market } from '@/lib/market';
 import { MAX_BY, MAX_INTRO, MIN_SHOWCASE_TILES, type PublicWall, type WallOp } from '@/lib/walls/model';
+import type { SigninOption } from '@/lib/walls/signin';
 import WallPlan from './WallPlan';
 
 /**
@@ -16,7 +17,7 @@ import WallPlan from './WallPlan';
  * cover aussehen, mache hier eine klassische cover wall“). Everyone sees it;
  * its owner, the browser whose visitor id made it (E22), also gets the tools.
  */
-export default function WallView({ initial, market }: { initial: PublicWall; market: Market }) {
+export default function WallView({ initial, market, signin = [] }: { initial: PublicWall; market: Market; signin?: SigninOption[] }) {
   const [wall, setWall] = useState(initial);
   const [canEdit, setCanEdit] = useState(false);
   const [note, setNote] = useState('');
@@ -159,7 +160,7 @@ export default function WallView({ initial, market }: { initial: PublicWall; mar
         </nav>
       )}
 
-      {me.visitor && <WallIdField me={me} onChange={setMe} />}
+      {(me.visitor || me.account) && <WallIdField me={me} onChange={setMe} signin={signin} />}
     </>
   );
 }

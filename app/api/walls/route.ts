@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { MAX_TILES, toPublic, validTile, WallError, type Tile } from '@/lib/walls/model';
 import { newVisitorId, newWall, newWallId } from '@/lib/walls/owner';
-import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from './guard';
+import { accountOf, json, linkIfSignedIn, openWalls, readJson, setVisitor, storeDown, visitorOf } from './guard';
 
 /**
  * POST /api/walls {title?, tiles?} — a new wall owned by this browser
@@ -30,6 +30,9 @@ export async function POST(request: NextRequest) {
   try {
     await open.store.put(wall);
     await open.store.register(wall);
+    // A signed-in browser without a visitor id (its cookie was cleared) gets a
+    // new one here; it joins the account, so the account owns this wall too.
+    if (!existing) await linkIfSignedIn(open.store, accountOf(request), visitor);
   } catch {
     return storeDown();
   }

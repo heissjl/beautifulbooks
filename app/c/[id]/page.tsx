@@ -7,9 +7,10 @@ import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import WallView from '@/components/WallView';
 import { isWallId, toPublic, type PublicWall } from '@/lib/walls/model';
+import { ACCOUNT_COOKIE, readSession, signinOptions, signinSecret } from '@/lib/walls/account';
 import { isOwner, VISITOR_COOKIE } from '@/lib/walls/owner';
 import { wallStoreFromEnv } from '@/lib/walls/store';
-import { wallsEnabled } from '@/lib/walls/switch';
+import { signinEnabled, wallsEnabled } from '@/lib/walls/switch';
 
 /**
  * One reader's wall (ROADMAP 5.13a). Never indexed: the title is a reader's
@@ -28,7 +29,12 @@ async function loadWall(id: string, count = false): Promise<PublicWall | null | 
     if (!wall) return null;
     // A view by someone other than the owner counts towards "popular" (5.13d);
     // nothing about the viewer is kept, and a failed count costs the page nothing.
-    if (count && !isOwner(wall, (await cookies()).get(VISITOR_COOKIE)?.value)) await store.view(id).catch(() => {});
+    if (count) {
+      const jar = await cookies();
+      const session = signinEnabled() ? readSession(jar.get(ACCOUNT_COOKIE)?.value, signinSecret()) : null;
+      const linked = session ? await store.linked(session.account).catch(() => []) : [];
+      if (!isOwner(wall, jar.get(VISITOR_COOKIE)?.value, linked)) await store.view(id).catch(() => {});
+    }
     return toPublic(wall);
   } catch {
     return 'down';
@@ -61,7 +67,7 @@ export default async function WallPage({ params }: Props) {
           // A silent store is not a missing wall (SPEC N12).
           <p className="py-24 text-center text-ink-2">The store did not answer. Try again in a moment.</p>
         ) : (
-          <WallView initial={wall} market={market} />
+          <WallView initial={wall} market={market} signin={signinOptions()} />
         )}
       </main>
       <SiteFooter />

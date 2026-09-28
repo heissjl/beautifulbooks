@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { isWallId, toPublic, type Tile } from '@/lib/walls/model';
 import { isOwner } from '@/lib/walls/owner';
 import { lookUpPrinting } from '@/lib/walls/printings';
-import { json, openWalls, storeDown, visitorOf } from '../../guard';
+import { claimant, json, openWalls, storeDown } from '../../guard';
 
 /** At most this many tiles per request, two Open Library requests each. */
 const PER_REQUEST = 12;
@@ -21,7 +21,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   try {
     const wall = await open.store.get(id);
     if (!wall) return json({ error: 'No such collection.' }, 404);
-    if (!isOwner(wall, visitorOf(request))) return json({ error: 'Only the browser that made this collection can change it.' }, 403);
+    const who = await claimant(request, open.store);
+    if (!isOwner(wall, who.visitor, who.linked)) return json({ error: 'Only the browser that made this collection, or its account, can change it.' }, 403);
 
     const due = wall.tiles.filter((t) => t.printings.length === 0 && !t.looked).slice(0, PER_REQUEST);
     const found = new Map<string, Pick<Tile, 'printings' | 'looked'>>();

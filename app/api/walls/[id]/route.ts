@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { applyOp, isWallId, toPublic, WallError, type Wall, type WallOp } from '@/lib/walls/model';
 import { isOwner } from '@/lib/walls/owner';
 import type { WallStore } from '@/lib/walls/store';
-import { json, openWalls, readJson, storeDown, visitorOf } from '../guard';
+import { claimant, json, openWalls, readJson, storeDown } from '../guard';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -23,7 +23,12 @@ export async function GET(request: NextRequest, { params }: Params) {
   const wall = await load(open.store, id);
   if (wall === 'down') return storeDown();
   if (!wall) return json({ error: 'No such collection.' }, 404);
-  return json({ wall: toPublic(wall), canEdit: isOwner(wall, visitorOf(request)) });
+  try {
+    const who = await claimant(request, open.store);
+    return json({ wall: toPublic(wall), canEdit: isOwner(wall, who.visitor, who.linked) });
+  } catch {
+    return storeDown();
+  }
 }
 
 /** POST /api/walls/<id> {ops} — changes, one small operation at a time, by the owner only. */
@@ -37,7 +42,13 @@ export async function POST(request: NextRequest, { params }: Params) {
   const wall = await load(open.store, id);
   if (wall === 'down') return storeDown();
   if (!wall) return json({ error: 'No such collection.' }, 404);
-  if (!isOwner(wall, visitorOf(request))) return json({ error: 'Only the browser that made this collection can change it.' }, 403);
+  let who: Awaited<ReturnType<typeof claimant>>;
+  try {
+    who = await claimant(request, open.store);
+  } catch {
+    return storeDown();
+  }
+  if (!isOwner(wall, who.visitor, who.linked)) return json({ error: 'Only the browser that made this collection, or its account, can change it.' }, 403);
 
   const ops = Array.isArray(body.ops) ? (body.ops as WallOp[]).slice(0, 50) : [];
   let next = wall;

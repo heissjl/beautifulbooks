@@ -32,12 +32,24 @@ export function hashVisitor(visitor: string): string {
   return createHash('sha256').update(visitor).digest('hex');
 }
 
-/** Constant-time check: does this visitor own the wall? */
-export function isOwner(wall: Pick<Wall, 'ownerHash'>, visitor: unknown): boolean {
-  if (!isVisitorId(visitor)) return false;
-  const a = Buffer.from(hashVisitor(visitor), 'hex');
-  const b = Buffer.from(wall.ownerHash, 'hex');
-  return a.length === b.length && timingSafeEqual(a, b);
+const HASH = /^[0-9a-f]{64}$/;
+
+function sameHash(a: string, b: string): boolean {
+  if (!HASH.test(a) || !HASH.test(b)) return false;
+  return timingSafeEqual(Buffer.from(a, 'hex'), Buffer.from(b, 'hex'));
+}
+
+/**
+ * Constant-time check: may this browser change the wall? Either its visitor
+ * id made the wall, or it is signed in to an account that a sign-in on the
+ * wall's device linked to that visitor (5.13h, E23): `linked` is the list of
+ * visitor hashes the account holds, from `WallStore.linked`.
+ */
+export function isOwner(wall: Pick<Wall, 'ownerHash'>, visitor: unknown, linked: readonly string[] = []): boolean {
+  let owns = false;
+  if (isVisitorId(visitor)) owns = sameHash(hashVisitor(visitor), wall.ownerHash);
+  for (const h of linked) owns = sameHash(h, wall.ownerHash) || owns;
+  return owns;
 }
 
 export function newWall(id: string, visitor: string, title: string, now: string, tiles: Tile[] = []): Wall {

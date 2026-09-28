@@ -72,3 +72,14 @@ it('says the store is down instead of "no wall"', async () => {
   const broken = { ...fakeCommands(), get: async () => { throw new Error('ECONNRESET'); } };
   await expect(commandsWallStore(broken).get('aaaaaaaaaa')).rejects.toBeInstanceOf(WallStoreUnavailableError);
 });
+
+describe('account links in Redis (5.13h)', () => {
+  it('lists each linked visitor hash once', async () => {
+    const store = commandsWallStore(fakeCommands());
+    await store.link('a'.repeat(64), hashVisitor(ME));
+    await store.link('a'.repeat(64), hashVisitor(YOU));
+    await store.link('a'.repeat(64), hashVisitor(ME));
+    expect(await store.linked('a'.repeat(64))).toEqual([hashVisitor(ME), hashVisitor(YOU)]);
+    expect(await store.linked('b'.repeat(64))).toEqual([]);
+  });
+});
