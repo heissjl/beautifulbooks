@@ -24,12 +24,10 @@ export async function GET(request: NextRequest) {
   if ('response' in open) return open.response;
   if (!isAdmin(request)) return rateLimited(request, 'login') ?? json({ error: 'Only Julian can read this. Sign in on /curate first.' }, 403);
   try {
-    const [list, interests, total] = await Promise.all([moderationList(open.store), open.store.interests(), open.store.count()]);
-    const wanted = [...interests.values()].reduce((a, b) => a + b, 0);
+    const [list, total] = await Promise.all([moderationList(open.store), open.store.count()]);
     return json({
-      walls: list.map((s) => ({ wall: toPublic(s.wall), views: s.views, reports: s.reports, framed: interests.get(s.wall.id) ?? 0 })),
-      // The gate before step 2 (PLAN-5.13): how many collections exist, and how often someone asked for a framed wall.
-      totals: { collections: total, framedRequests: wanted, collectionsWithRequests: interests.size },
+      walls: list.map((s) => ({ wall: toPublic(s.wall), views: s.views, reports: s.reports })),
+      totals: { collections: total },
     });
   } catch {
     return storeDown();
