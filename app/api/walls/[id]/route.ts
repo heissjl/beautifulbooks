@@ -48,6 +48,10 @@ export async function POST(request: NextRequest, { params }: Params) {
     return json({ error: err instanceof WallError ? err.message : 'Bad operation.' }, 400);
   }
   try {
+    // Into the review list first, whenever it newly waits for a look (5.13d):
+    // if that fails nothing has changed, and the answer "did not answer" is true.
+    // A listed id whose wall was not saved as submitted is skipped on reading.
+    if (next.showcase === 'submitted' && wall.showcase !== 'submitted') await open.store.submitted(next.id);
     await open.store.put(next);
   } catch {
     return storeDown();

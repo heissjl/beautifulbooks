@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import WallView from '@/components/WallView';
 import { isWallId, toPublic, type PublicWall } from '@/lib/walls/model';
+import { isOwner, VISITOR_COOKIE } from '@/lib/walls/owner';
 import { wallStoreFromEnv } from '@/lib/walls/store';
 import { wallsEnabled } from '@/lib/walls/switch';
 
@@ -16,13 +18,17 @@ type Props = { params: Promise<{ id: string }> };
 
 export const dynamic = 'force-dynamic';
 
-async function loadWall(id: string): Promise<PublicWall | null | 'down'> {
+async function loadWall(id: string, count = false): Promise<PublicWall | null | 'down'> {
   if (!wallsEnabled() || !isWallId(id)) return null;
   const store = wallStoreFromEnv();
   if (!store) return 'down';
   try {
     const wall = await store.get(id);
-    return wall ? toPublic(wall) : null;
+    if (!wall) return null;
+    // A view by someone other than the owner counts towards "popular" (5.13d);
+    // nothing about the viewer is kept, and a failed count costs the page nothing.
+    if (count && !isOwner(wall, (await cookies()).get(VISITOR_COOKIE)?.value)) await store.view(id).catch(() => {});
+    return toPublic(wall);
   } catch {
     return 'down';
   }
@@ -37,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function WallPage({ params }: Props) {
-  const wall = await loadWall((await params).id);
+  const wall = await loadWall((await params).id, true);
   if (!wall) notFound();
   return (
     <div className="flex min-h-screen flex-col">

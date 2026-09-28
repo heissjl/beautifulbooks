@@ -1,89 +1,103 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import CoverImage from './CoverImage';
 import WallIdField from './WallIdField';
+import WallPhoto from './WallPhoto';
+import WallPicker from './WallPicker';
+import WallSample from './WallSample';
 import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import type { WorkSummary } from '@/lib/model';
 import type { PublicWall, Tile } from '@/lib/walls/model';
-import type { PhotoMatch } from '@/lib/walls/photo';
 
-/** Long edge the photo is shrunk to before it leaves the phone; the model reads no more (lab/shelf). */
-const PHOTO_EDGE = 1600;
+const TARGET_KEY = 'bb.wall.target';
+const WORK = /^OL\d+W$/;
 
-async function shrink(file: File): Promise<Blob> {
-  const bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
-  const scale = Math.min(1, PHOTO_EDGE / Math.max(bitmap.width, bitmap.height));
-  const canvas = document.createElement('canvas');
-  canvas.width = Math.round(bitmap.width * scale);
-  canvas.height = Math.round(bitmap.height * scale);
-  canvas.getContext('2d')?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-  return new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('The photo could not be prepared.'))), 'image/jpeg', 0.9));
+function readTarget(): string | null {
+  try {
+    return localStorage.getItem(TARGET_KEY);
+  } catch {
+    return null;
+  }
 }
 
-type PhotoState =
-  | { step: 'idle' }
-  | { step: 'reading' }
-  | { step: 'read'; matches: PhotoMatch[]; picked: Set<number> }
-  | { step: 'error'; message: string };
+type Results = { q: string; works: WorkSummary[] } | { q: string; error: string };
 
 /**
- * Where a wall begins (ROADMAP 5.13a; Julian, 2026-09-28: „es muss auch eine
- * extra unterseite geben, von der aus man die erstellung einer collection
- * starten kann. via suche, oder zb via bildsuche"). A search leads to a book's
- * own wall, where every cover is and "Add to wall" sits; a photo becomes a
- * whole wall in one step.
+ * Where a wall begins (ROADMAP 5.13a, 5.13c): a search, six random
+ * favourites, or a photo of a shelf. A search result opens the book's covers
+ * **here**, in a section between two rules, instead of sending the reader to
+ * the book page (Julian, 2026-09-28). The chosen work and the query live in
+ * the address, like everywhere on the site, so reloading and Back keep them.
  */
-export default function WallsStart({ photoOn, sampleOn }: { photoOn: boolean; sampleOn: boolean }) {
+export default function WallsStart({ photoOn }: { photoOn: boolean }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const params = useSearchParams();
   const { me, setMe } = useMyWalls();
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState<{ q: string; works: WorkSummary[] } | { q: string; error: string } | null>(null);
-  const [photo, setPhoto] = useState<PhotoState>({ step: 'idle' });
-  const [title, setTitle] = useState('My shelf');
-  const [creating, setCreating] = useState(false);
+  const [targetId, setTargetId] = useState<string | null>(readTarget);
+  const [query, setQuery] = useState(params.get('q') ?? '');
+  const [results, setResults] = useState<Results | null>(null);
 
-  async function runSearch(e: React.FormEvent) {
-    e.preventDefault();
-    const q = query.trim();
-    if (q.length < 3) return;
+  const workParam = params.get('work');
+  const workId = workParam && WORK.test(workParam) ? workParam : null;
+  const q = params.get('q') ?? '';
+  const target = me.walls.find((w) => w.id === targetId) ?? me.walls[0];
+
+  // Results follow the address, so Back from a picked book shows them again.
+  useEffect(() => {
+    if (q.trim().length < 3) return;
+    let live = true;
+    fetch(`/api/search?q=${encodeURIComponent(q)}`)
+      .then((res) => (res.ok ? (res.json() as Promise<{ works: WorkSummary[] }>) : Promise.reject(new Error())))
+      .then((d) => live && setResults({ q, works: d.works.slice(0, 12) }))
+      .catch(() => live && setResults({ q, error: 'Open Library did not answer. Try again in a moment.' }));
+    return () => {
+      live = false;
+    };
+  }, [q]);
+
+  function go(next: { q?: string; work?: string | null }) {
+    const p = new URLSearchParams(params.toString());
+    for (const key of ['q', 'work'] as const) {
+      const value = next[key];
+      if (value === undefined) continue;
+      if (value) p.set(key, value);
+      else p.delete(key);
+    }
+    const qs = p.toString();
+    router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+  }
+
+  function chooseTarget(id: string) {
+    setTargetId(id);
     try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-      if (!res.ok) throw new Error();
-      const data = (await res.json()) as { works: WorkSummary[] };
-      setResults({ q, works: data.works.slice(0, 12) });
+      localStorage.setItem(TARGET_KEY, id);
     } catch {
-      setResults({ q, error: 'Open Library did not answer. Try again in a moment.' });
+      // Not remembered in a private window; the choice still holds on this page.
     }
   }
 
-  async function readPhoto(file: File | null, sample = false) {
-    if (!file && !sample) return;
-    setPhoto({ step: 'reading' });
-    try {
-      const res = sample
-        ? await fetch('/api/walls/photo?sample=1', { method: 'POST' })
-        : await fetch('/api/walls/photo', { method: 'POST', headers: { 'content-type': 'image/jpeg' }, body: await shrink(file as File) });
-      const data = (await res.json()) as { matches?: PhotoMatch[]; error?: string };
-      if (!res.ok || !data.matches) throw new Error(data.error ?? 'The photo could not be read.');
-      const picked = new Set(data.matches.flatMap((m, i) => (m.tile ? [i] : [])));
-      setPhoto({ step: 'read', matches: data.matches, picked });
-    } catch (err) {
-      setPhoto({ step: 'error', message: err instanceof Error ? err.message : 'The photo could not be read.' });
+  function putWall(wall: PublicWall) {
+    setMe((m) => ({ ...m, walls: [wall, ...m.walls.filter((w) => w.id !== wall.id)] }));
+    // The first wall set the cookie; ask once so the ID field knows it.
+    if (!me.visitor) {
+      fetch('/api/walls/me', { cache: 'no-store' })
+        .then((r) => r.json() as Promise<{ visitor: string | null }>)
+        .then((d) => setMe((m) => ({ ...m, visitor: d.visitor })))
+        .catch(() => {});
     }
   }
 
-  async function makeWall(tiles: Tile[]) {
-    setCreating(true);
+  async function createWall(title: string, tiles: Tile[]) {
     try {
       const { wall } = await postJson<{ wall: PublicWall }>('/api/walls', { title, tiles });
       router.push(`/w/${wall.id}`);
     } catch (err) {
-      setPhoto({ step: 'error', message: err instanceof Error ? err.message : 'The wall could not be made.' });
-      setCreating(false);
+      alert(err instanceof Error ? err.message : 'The wall could not be made.');
     }
   }
 
@@ -93,7 +107,7 @@ export default function WallsStart({ photoOn, sampleOn }: { photoOn: boolean; sa
   }
 
   const heading = 'font-display text-2xl text-ink';
-  const button = 'rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent disabled:opacity-40';
+  const shown = results && results.q === q ? results : null;
 
   return (
     <>
@@ -126,8 +140,14 @@ export default function WallsStart({ photoOn, sampleOn }: { photoOn: boolean; sa
       <div className="mt-12 grid gap-12 lg:grid-cols-2">
         <section aria-labelledby="by-search">
           <h2 id="by-search" className={heading}>Start from a book</h2>
-          <p className="mt-2 text-sm text-ink-2">Find a book, open its wall of covers, pick the one you would hang and press <em>Add to wall</em>.</p>
-          <form onSubmit={runSearch} className="mt-4 flex gap-2">
+          <p className="mt-2 text-sm text-ink-2">Find a book and pick the covers you would hang from all the ones it has had.</p>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (query.trim().length >= 3) go({ q: query.trim(), work: null });
+            }}
+            className="mt-4 flex gap-2"
+          >
             <input
               type="search"
               value={query}
@@ -136,17 +156,25 @@ export default function WallsStart({ photoOn, sampleOn }: { photoOn: boolean; sa
               aria-label="Title or author"
               className="min-w-0 flex-1 rounded-full border border-line bg-surface px-4 py-1.5 text-sm text-ink placeholder:text-ink-3"
             />
-            <button className={button}>Search</button>
+            <button className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent">Search</button>
           </form>
-          {results && 'error' in results && <p className="mt-3 text-sm text-accent">{results.error}</p>}
-          {results && 'works' in results && (
-            results.works.length === 0 ? (
-              <p className="mt-3 text-sm text-ink-2">Open Library has nothing under &ldquo;{results.q}&rdquo;.</p>
+          {shown && 'error' in shown && <p className="mt-3 text-sm text-accent">{shown.error}</p>}
+          {shown && 'works' in shown &&
+            (shown.works.length === 0 ? (
+              <p className="mt-3 text-sm text-ink-2">Open Library has nothing under &ldquo;{shown.q}&rdquo;.</p>
             ) : (
-              <ul className="mt-4 space-y-2">
-                {results.works.map((w) => (
+              <ul className="mt-4 space-y-1">
+                {shown.works.map((w) => (
                   <li key={w.id}>
-                    <Link href={`/book/${w.id}?q=${encodeURIComponent(results.q)}`} className="flex items-center gap-3 rounded-md p-1.5 hover:bg-surface-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        go({ work: w.id });
+                        requestAnimationFrame(() => document.getElementById('picker')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+                      }}
+                      aria-current={w.id === workId}
+                      className={`flex w-full items-center gap-3 rounded-md p-1.5 text-left hover:bg-surface-2 ${w.id === workId ? 'bg-surface-2' : ''}`}
+                    >
                       <span className="relative block h-14 w-10 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">
                         {w.coverUrls[0] && <CoverImage src={w.coverUrls[0]} alt="" sizes="40px" />}
                       </span>
@@ -154,115 +182,34 @@ export default function WallsStart({ photoOn, sampleOn }: { photoOn: boolean; sa
                         <span className="block truncate text-sm text-ink">{w.title}</span>
                         <span className="block truncate text-xs text-ink-3">{[w.authors[0], w.editionCount ? `${w.editionCount} editions` : ''].filter(Boolean).join(' · ')}</span>
                       </span>
-                    </Link>
+                    </button>
                   </li>
                 ))}
               </ul>
-            )
-          )}
+            ))}
+          <WallSample onCreate={createWall} />
         </section>
 
         <section aria-labelledby="by-photo">
           <h2 id="by-photo" className={heading}>Start from a photo</h2>
-          <p className="mt-2 text-sm text-ink-2">
-            Photograph a shelf or a pile of books. We read the titles and make a wall of them, each with the book&rsquo;s usual cover — change any of them on the book&rsquo;s own wall.
-            The photo is read once and not kept.
-          </p>
-          {!photoOn && !sampleOn && <p className="mt-4 text-sm text-ink-3">Reading photos is not switched on yet.</p>}
-          {(photoOn || sampleOn) && (
-            <div className="mt-4 flex flex-wrap items-center gap-3">
-              {photoOn && (
-                <label className={`${button} cursor-pointer`}>
-                  Choose a photo
-                  <input type="file" accept="image/*" className="sr-only" onChange={(e) => readPhoto(e.target.files?.[0] ?? null)} />
-                </label>
-              )}
-              {sampleOn && (
-                <button type="button" onClick={() => readPhoto(null, true)} className="rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-ink-2 hover:border-accent hover:text-accent">
-                  Try with a sample list
-                </button>
-              )}
-              {!photoOn && <span className="text-xs text-ink-3">Photos need a key on this server; the sample skips the reading.</span>}
-            </div>
-          )}
-          {photo.step === 'reading' && <p className="mt-4 text-sm text-ink-2" role="status">Reading the photo and looking the books up&hellip;</p>}
-          {photo.step === 'error' && <p className="mt-4 text-sm text-accent" role="alert">{photo.message}</p>}
-          {photo.step === 'read' && (
-            <PhotoResult
-              matches={photo.matches}
-              picked={photo.picked}
-              onToggle={(i) => {
-                const picked = new Set(photo.picked);
-                if (picked.has(i)) picked.delete(i);
-                else picked.add(i);
-                setPhoto({ ...photo, picked });
-              }}
-              title={title}
-              onTitle={setTitle}
-              creating={creating}
-              onCreate={() => makeWall(photo.matches.flatMap((m, i) => (m.tile && photo.picked.has(i) ? [m.tile] : [])))}
-              button={button}
-            />
-          )}
+          <p className="mt-2 text-sm text-ink-2">Photograph a shelf or a pile of books. We read the titles and make a wall of them.</p>
+          <WallPhoto photoOn={photoOn} onCreate={createWall} />
         </section>
       </div>
 
+      {workId && (
+        <WallPicker
+          key={workId}
+          workId={workId}
+          walls={me.walls}
+          target={target}
+          onTarget={chooseTarget}
+          onWall={putWall}
+          onClose={() => go({ work: null })}
+        />
+      )}
+
       <WallIdField me={me} onChange={setMe} />
     </>
-  );
-}
-
-function PhotoResult(props: {
-  matches: PhotoMatch[];
-  picked: Set<number>;
-  onToggle: (i: number) => void;
-  title: string;
-  onTitle: (t: string) => void;
-  creating: boolean;
-  onCreate: () => void;
-  button: string;
-}) {
-  const { matches, picked } = props;
-  const found = matches.filter((m) => m.tile).length;
-  if (matches.length === 0) return <p className="mt-4 text-sm text-ink-2">No title could be read in this photo.</p>;
-  return (
-    <div className="mt-4">
-      <p className="text-sm text-ink-2">
-        {matches.length} {matches.length === 1 ? 'book' : 'books'} read, {found} found with a cover.
-      </p>
-      <ul className="mt-3 space-y-1.5">
-        {matches.map((m, i) => (
-          <li key={i} className="flex items-center gap-3">
-            {m.tile ? (
-              <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-3">
-                <input type="checkbox" checked={picked.has(i)} onChange={() => props.onToggle(i)} />
-                <span className="relative block h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">
-                  <CoverImage src={coverUrlFor(`ol:${m.tile.coverId}`, 'S') ?? ''} alt="" sizes="32px" />
-                </span>
-                <span className="min-w-0">
-                  <span className="block truncate text-sm text-ink">{m.tile.title}</span>
-                  <span className="block truncate text-xs text-ink-3">{m.tile.author}</span>
-                </span>
-              </label>
-            ) : (
-              <span className="text-sm text-ink-3">
-                &ldquo;{m.read.title}&rdquo;{m.read.author ? ` — ${m.read.author}` : ''}: {m.failed ? 'the search did not answer' : 'not found'}
-              </span>
-            )}
-          </li>
-        ))}
-      </ul>
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <input
-          value={props.title}
-          onChange={(e) => props.onTitle(e.target.value)}
-          aria-label="Title of the new wall"
-          className="min-w-0 flex-1 rounded-full border border-line bg-surface px-4 py-1.5 text-sm text-ink"
-        />
-        <button type="button" className={props.button} disabled={picked.size === 0 || props.creating} onClick={props.onCreate}>
-          Make a wall of {picked.size}
-        </button>
-      </div>
-    </div>
   );
 }

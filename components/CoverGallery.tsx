@@ -30,6 +30,13 @@ interface CoverGalleryProps {
    * that belongs to the page, not to a list of covers.
    */
   belowTabs?: React.ReactNode;
+  /**
+   * Covers already on the reader's wall (ROADMAP 5.13c): the picker on
+   * /walls toggles many, so each one on the wall carries a mark and the ring.
+   * This is not the single selection above, and it is not the check mark that
+   * was tried on the selected tile and removed (6.55).
+   */
+  marked?: ReadonlySet<string>;
 }
 
 const tabKey = (g: CoverTab) => g.language ?? 'unknown';
@@ -74,7 +81,7 @@ function visibleLanguages(
   return new Set([...others.slice(0, kept), activeKey]);
 }
 
-export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs }: CoverGalleryProps) {
+export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked }: CoverGalleryProps) {
   // The tab follows the selected cover unless the user picked a tab since
   // the selection last changed (derived state, no effect needed).
   const [picked, setPicked] = useState<{ key: string; forSelectedId: string | null } | null>(null);
@@ -194,7 +201,8 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
 
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5" role="tabpanel">
         {shown.map((cover, index) => {
-          const selected = selectedCover?.id === cover.id;
+          const onWall = !!marked?.has(cover.id);
+          const selected = selectedCover?.id === cover.id || onWall;
           const caption = captions.get(cover.id) ?? '';
           return (
             <button
@@ -231,6 +239,11 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
               <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-2 pb-2 pt-8 text-left text-[11px] font-medium leading-tight text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
                 {caption}
               </div>
+              {onWall && (
+                <span className="pointer-events-none absolute left-1.5 top-1.5 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-medium text-on-accent">
+                  On wall
+                </span>
+              )}
               {cover.similarIds && cover.similarIds.length > 0 && (
                 <span className="pointer-events-none absolute right-1.5 top-1.5 rounded-full bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white" title={`${cover.similarIds.length} more scan${cover.similarIds.length > 1 ? 's' : ''} of this cover`}>
                   +{cover.similarIds.length}

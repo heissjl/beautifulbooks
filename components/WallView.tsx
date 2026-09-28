@@ -6,7 +6,7 @@ import CoverImage from './CoverImage';
 import WallIdField from './WallIdField';
 import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
-import type { PublicWall, WallOp } from '@/lib/walls/model';
+import { MAX_INTRO, MIN_SHOWCASE_TILES, type PublicWall, type WallOp } from '@/lib/walls/model';
 
 /**
  * A reader's wall as frames (ROADMAP 5.13a). Everyone sees it; its owner —
@@ -104,6 +104,21 @@ export default function WallView({ initial }: { initial: PublicWall }) {
         {note && <span className="ml-2 text-ink-2">{note}</span>}
       </p>
 
+      {canEdit ? (
+        <textarea
+          defaultValue={wall.intro ?? ''}
+          key={wall.intro ?? ''}
+          maxLength={MAX_INTRO}
+          rows={2}
+          placeholder="A few lines about this wall — what ties it together, where it will hang."
+          onBlur={(e) => e.target.value.trim() !== (wall.intro ?? '') && send([{ op: 'intro', intro: e.target.value }])}
+          aria-label="A few lines about this wall"
+          className="mt-4 block w-full max-w-2xl resize-y rounded-md border border-line bg-surface px-3 py-2 text-base text-ink-2 placeholder:text-ink-3"
+        />
+      ) : (
+        wall.intro && <p className="mt-4 max-w-2xl whitespace-pre-line text-base text-ink-2">{wall.intro}</p>
+      )}
+
       <div
         className="mt-6 grid gap-3 rounded bg-surface-2 p-4 sm:gap-5 sm:p-8"
         style={{ gridTemplateColumns: `repeat(${shown}, minmax(0, 1fr))` }}
@@ -152,6 +167,8 @@ export default function WallView({ initial }: { initial: PublicWall }) {
         </p>
       )}
 
+      {canEdit && <Showcase wall={wall} onSend={send} />}
+
       {others.length > 0 && (
         <nav className="mt-12" aria-label="Your other walls">
           <h2 className="kicker">Your other walls</h2>
@@ -183,5 +200,47 @@ function ToolButton({ label, hidden, onClick, children }: { label: string; hidde
     >
       {children}
     </button>
+  );
+}
+
+/**
+ * Offering the wall among readers' walls (ROADMAP 5.13d). Title and paragraph
+ * become public only after Julian has read them; changing either afterwards
+ * sends the wall back for another look.
+ */
+function Showcase({ wall, onSend }: { wall: PublicWall; onSend: (ops: WallOp[]) => void }) {
+  const short = wall.tiles.length < MIN_SHOWCASE_TILES;
+  const button = 'rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent disabled:opacity-40';
+  return (
+    <section className="mt-10 max-w-2xl rounded-card border border-line p-4" aria-labelledby="showcase">
+      <h2 id="showcase" className="text-sm font-medium text-ink">Show it to others</h2>
+      {!wall.showcase && (
+        <>
+          <p className="mt-1 text-sm text-ink-2">
+            Offer this wall for <Link href="/walls/readers" className="underline underline-offset-2 hover:text-accent">Walls by readers</Link>. Its title and your lines become public once we have had a look; popular ones also stand among our collections.
+          </p>
+          <button type="button" className={`${button} mt-3`} disabled={short} onClick={() => onSend([{ op: 'submit' }])}>
+            Offer it
+          </button>
+          {short && <p className="mt-1 text-xs text-ink-3">It needs at least {MIN_SHOWCASE_TILES} covers first.</p>}
+        </>
+      )}
+      {wall.showcase === 'submitted' && (
+        <p className="mt-1 text-sm text-ink-2">
+          Offered — waiting for a look from us. <button type="button" className="underline underline-offset-2 hover:text-accent" onClick={() => onSend([{ op: 'withdraw' }])}>Withdraw</button>
+        </p>
+      )}
+      {wall.showcase === 'approved' && (
+        <p className="mt-1 text-sm text-ink-2">
+          Shown in <Link href="/walls/readers" className="underline underline-offset-2 hover:text-accent">Walls by readers</Link>. Changing the title or your lines sends it back for a look.{' '}
+          <button type="button" className="underline underline-offset-2 hover:text-accent" onClick={() => onSend([{ op: 'withdraw' }])}>Withdraw</button>
+        </p>
+      )}
+      {wall.showcase === 'declined' && (
+        <p className="mt-1 text-sm text-ink-2">
+          We did not show this one. <button type="button" className="underline underline-offset-2 hover:text-accent" onClick={() => onSend([{ op: 'submit' }])}>Offer it again</button>
+        </p>
+      )}
+    </section>
   );
 }

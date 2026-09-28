@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import CollectionRow from '@/components/CollectionRow';
 import WallsInvite from '@/components/WallsInvite';
+import WallCard from '@/components/WallCard';
+import { POPULAR_VIEWS, toPublic } from '@/lib/walls/model';
+import { showcased, wallStoreFromEnv } from '@/lib/walls/store';
 import { wallsEnabled } from '@/lib/walls/switch';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
@@ -27,6 +30,9 @@ export const dynamic = 'force-dynamic';
 export default async function CollectionsPage() {
   const collections = await liveCollections();
   if (collections.length === 0) notFound();
+  // Popular walls by readers stand among the collections (5.13d); a silent store just leaves them out.
+  const store = wallsEnabled() ? wallStoreFromEnv() : null;
+  const popular = store ? (await showcased(store).catch(() => [])).filter((s) => s.views >= POPULAR_VIEWS).slice(0, 3) : [];
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -56,6 +62,21 @@ export default async function CollectionsPage() {
             </li>
           ))}
         </ul>
+        {popular.length > 0 && (
+          <section className="mt-16" aria-labelledby="by-readers">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line pb-2">
+              <h2 id="by-readers" className="font-display text-2xl text-ink">Walls by readers</h2>
+              <Link href="/walls/readers" className="text-sm text-ink-3 hover:text-accent">all of them &rarr;</Link>
+            </div>
+            <ul className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {popular.map(({ wall }) => (
+                <li key={wall.id}>
+                  <WallCard wall={toPublic(wall)} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </main>
       <SiteFooter />
     </div>

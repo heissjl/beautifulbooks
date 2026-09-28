@@ -19,6 +19,12 @@ export interface WallStore {
   register(wall: Wall): Promise<void>;
   idsOf(ownerHash: string): Promise<string[]>;
   count(): Promise<number>;
+  /** Notes that a wall was offered for the showcase; the wall's own status decides what it is now (5.13d). */
+  submitted(id: string): Promise<void>;
+  submittedIds(): Promise<string[]>;
+  /** One more view of a wall by someone not its owner. Nothing about the viewer. */
+  view(id: string): Promise<void>;
+  views(): Promise<Map<string, number>>;
 }
 
 /** The store did not answer — never to be shown as "no such wall" (SPEC N12). */
@@ -37,6 +43,8 @@ export function memoryWallStore(): WallStore {
   const walls = new Map<string, string>();
   const owners = new Map<string, string[]>();
   const all: string[] = [];
+  const showcase: string[] = [];
+  const counts = new Map<string, number>();
   return {
     kind: 'memory',
     async get(id) {
@@ -56,6 +64,18 @@ export function memoryWallStore(): WallStore {
     async count() {
       return all.length;
     },
+    async submitted(id) {
+      showcase.push(id);
+    },
+    async submittedIds() {
+      return [...new Set(showcase)];
+    },
+    async view(id) {
+      counts.set(id, (counts.get(id) ?? 0) + 1);
+    },
+    async views() {
+      return new Map(counts);
+    },
   };
 }
 
@@ -63,6 +83,8 @@ const KEYS = {
   wall: (id: string) => `wall:${id}`,
   owner: (hash: string) => `walls:owner:${hash}`,
   all: 'walls:all',
+  showcase: 'walls:showcase',
+  views: 'walls:views',
 };
 
 function parseWall(raw: unknown): Wall | null {
@@ -73,6 +95,12 @@ function parseWall(raw: unknown): Wall | null {
   } catch {
     return null;
   }
+}
+
+/** A hash of counts as the transport delivers it: a plain object or a `Map` (RESP3). */
+function countsFrom(result: unknown): Map<string, number> {
+  const entries = result instanceof Map ? [...result.entries()] : result && typeof result === 'object' ? Object.entries(result) : [];
+  return new Map(entries.map(([k, v]) => [String(k), Number(v) || 0]));
 }
 
 async function guarded<T>(work: Promise<T>): Promise<T> {
@@ -93,7 +121,33 @@ export function commandsWallStore(commands: RedisCommands): WallStore {
     idsOf: (hash) =>
       guarded(commands.lRange(KEYS.owner(hash), 0, -1).then((r) => (Array.isArray(r) ? r.filter((x): x is string => typeof x === 'string') : []))),
     count: () => guarded(commands.lLen(KEYS.all).then((n) => (typeof n === 'number' ? n : Number(n) || 0))),
+    submitted: (id) => guarded(commands.rPush(KEYS.showcase, id).then(() => undefined)),
+    submittedIds: () =>
+      guarded(commands.lRange(KEYS.showcase, 0, -1).then((r) => [...new Set(Array.isArray(r) ? r.filter((x): x is string => typeof x === 'string') : [])])),
+    view: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.views, id, 1) : Promise.resolve()).then(() => undefined)),
+    views: () => guarded(commands.hGetAll(KEYS.views).then(countsFrom)),
   };
+}
+
+/**
+ * The walls shown among readers' walls: approved ones, most viewed first
+ * (5.13d). Reads every submitted id and the whole view hash — fine for
+ * hundreds; a sorted set is the step when it is thousands.
+ */
+export async function showcased(store: WallStore): Promise<Array<{ wall: Wall; views: number }>> {
+  const [ids, views] = await Promise.all([store.submittedIds(), store.views()]);
+  const walls = await Promise.all(ids.map((id) => store.get(id)));
+  return walls
+    .filter((w): w is Wall => !!w && w.showcase === 'approved')
+    .map((wall) => ({ wall, views: views.get(wall.id) ?? 0 }))
+    .sort((a, b) => b.views - a.views || b.wall.updatedAt.localeCompare(a.wall.updatedAt));
+}
+
+/** Walls waiting for Julian's look, oldest first. */
+export async function awaitingReview(store: WallStore): Promise<Wall[]> {
+  const ids = await store.submittedIds();
+  const walls = await Promise.all(ids.map((id) => store.get(id)));
+  return walls.filter((w): w is Wall => !!w && w.showcase === 'submitted');
 }
 
 const shared = globalThis as typeof globalThis & { __wallsDevMemory?: WallStore };

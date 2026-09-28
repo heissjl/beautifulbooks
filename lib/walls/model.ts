@@ -41,6 +41,15 @@ export interface Wall {
   tiles: Tile[];
   createdOn: string;
   updatedAt: string;
+  /** A few sentences about the wall, shown under its title (5.13d). */
+  intro?: string;
+  /**
+   * Whether the owner asked to show the wall among readers' walls, and what
+   * Julian decided (5.13d). Absent: private — it is only seen by whoever has
+   * the link. A change of title or paragraph after approval sends it back to
+   * `submitted`: the text others read is always text someone looked at.
+   */
+  showcase?: 'submitted' | 'approved' | 'declined';
 }
 
 /** What a view link returns: the wall without its owner. */
@@ -50,6 +59,14 @@ export const MAX_TILES = 60;
 export const MAX_TITLE = 80;
 export const MAX_PRINTINGS = 5;
 export const DEFAULT_COLUMNS = 4;
+export const MAX_INTRO = 600;
+/** A showcase is a wall, not a single cover: fewer and it is not worth a place among collections. */
+export const MIN_SHOWCASE_TILES = 6;
+/**
+ * Views by others before an approved wall stands among the curated
+ * collections (5.13d). Set, not measured: there are no views yet. Julian's.
+ */
+export const POPULAR_VIEWS = 25;
 
 const ID = /^[a-z0-9]{10}$/;
 /** 128 random bits, base64url; what the footer shows and a reader pastes. */
@@ -62,7 +79,16 @@ export const isWallId = (s: unknown): s is string => typeof s === 'string' && ID
 export const isVisitorId = (s: unknown): s is string => typeof s === 'string' && VISITOR.test(s);
 
 export function toPublic(wall: Wall | PublicWall): PublicWall {
-  return { id: wall.id, title: wall.title, columns: wall.columns, tiles: wall.tiles, createdOn: wall.createdOn, updatedAt: wall.updatedAt };
+  return {
+    id: wall.id,
+    title: wall.title,
+    columns: wall.columns,
+    tiles: wall.tiles,
+    createdOn: wall.createdOn,
+    updatedAt: wall.updatedAt,
+    ...(wall.intro ? { intro: wall.intro } : {}),
+    ...(wall.showcase ? { showcase: wall.showcase } : {}),
+  };
 }
 
 export function cleanTitle(raw: unknown): string {
@@ -79,7 +105,10 @@ export type WallOp =
   | { op: 'remove'; coverId: string }
   | { op: 'move'; coverId: string; to: number }
   | { op: 'title'; title: string }
-  | { op: 'columns'; columns: number };
+  | { op: 'columns'; columns: number }
+  | { op: 'intro'; intro: string }
+  | { op: 'submit' }
+  | { op: 'withdraw' };
 
 export class WallError extends Error {}
 
@@ -106,6 +135,20 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
     }
     case 'title':
       next.title = cleanTitle(op.title) || wall.title;
+      return backToReview(next, wall);
+    case 'intro': {
+      const intro = typeof op.intro === 'string' ? op.intro.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim().slice(0, MAX_INTRO) : '';
+      if (intro) next.intro = intro;
+      else delete next.intro;
+      return backToReview(next, wall);
+    }
+    case 'submit':
+      if (next.tiles.length < MIN_SHOWCASE_TILES) throw new WallError(`A wall needs at least ${MIN_SHOWCASE_TILES} covers to be shown among readers' walls.`);
+      if (wall.showcase === 'approved' || wall.showcase === 'submitted') return wall;
+      next.showcase = 'submitted';
+      return next;
+    case 'withdraw':
+      delete next.showcase;
       return next;
     case 'columns':
       if (!Number.isFinite(op.columns)) throw new WallError('Columns must be a number.');
@@ -114,6 +157,18 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
     default:
       throw new WallError('Unknown operation.');
   }
+}
+
+/** An approved wall whose words changed goes back to be looked at. */
+function backToReview<W extends PublicWall>(next: W, before: W): W {
+  if (before.showcase === 'approved' && (next.title !== before.title || next.intro !== before.intro)) next.showcase = 'submitted';
+  return next;
+}
+
+/** Julian's decision on a submitted wall; never an operation a browser may send. */
+export function review<W extends PublicWall>(wall: W, decision: 'approved' | 'declined', now: string): W {
+  if (!wall.showcase) throw new WallError('This wall was not submitted.');
+  return { ...wall, showcase: decision, updatedAt: now };
 }
 
 /** Accepts a tile from the browser only in the shape the server would have built. */

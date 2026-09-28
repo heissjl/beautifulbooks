@@ -61,11 +61,19 @@ Der erste Prototyp drehte taketest um und gab das Geheimnis der **Wand** statt d
 
 Das MVP steht auf dem Branch `claude/art-funnel-lab`, beschrieben in SPEC F9. Abweichungen vom Plan oben: der Knopf heißt „Add to wall“ und steht am Desktop **in der Zeile neben „Share“**, weil eine eigene Zeile den ersten Laden 40 px weiter unter ein 800-px-Fenster schob; der Melde-Knopf fehlt noch (der einzige freie Text ist der Titel, und `/w` ist `noindex`); dazu kam auf Julians Wunsch `/walls` mit **Fotoimport** aus `lab/shelf`.
 
+### Wie lange, wie viel (Julians Frage vom 2026-09-28, ROADMAP 5.13e)
+
+Heute: kein Ablauf, keine Grenze je ID. Gemessen: eine leere Wand 215 Byte, zwölf Cover 2,9–7,8 KB (je nach Zahl der Drucke), das Maximum 38 KB. Vorschlag: 20 Wände je ID, Verfall nach zwölf Monaten ohne Änderung und ohne fremden Aufruf (freigegebene nie), die Tarifgrenze der Redis in Vercel nachsehen. Entscheidung: Julian.
+
+### Zeigen: „Walls by readers“ (5.13d, gebaut)
+
+Der Besitzer schreibt einige Zeilen und bietet die Wand ab sechs Covern an; Julian gibt frei (`/walls/review`); was Leser schreiben, steht erst danach öffentlich, und nach jeder Änderung an Titel oder Zeilen wieder erst nach einer Freigabe. Aufrufe durch andere zählen; ab 25 (gesetzt) steht eine Wand auch unter den Sammlungen.
+
 ### Datenschutz-Absatz (Entwurf)
 
 Für `/privacy`, zu prüfen und zu übernehmen von Julian, bevor `WALLS=on` in Produktion gesetzt wird:
 
-> **Your cover walls.** If you make a wall, your browser gets a cookie named `bb_visitor` holding a random ID. It is set only when you make your first wall, lasts two years and does nothing else: it tells this site which walls you may change. We store your walls — their title, the covers on them and the editions those covers belong to — together with a one-way hash of that ID, not the ID itself, in a database run by our hosting provider’s storage partner. We store nothing else about you: no IP address, no device details, no referrer. Anyone with the link to a wall can see it. You can delete the cookie at any time; your walls then stay online but can no longer be changed from this browser unless you paste your ID again. **Photos:** if you start a wall from a photo, the photo is sent once to Anthropic, which reads the book titles on it, and is not stored by us or kept in our logs.
+> **Your cover walls.** If you make a wall, your browser gets a cookie named `bb_visitor` holding a random ID. It is set only when you make your first wall, lasts two years and does nothing else: it tells this site which walls you may change. We store your walls — their title, the covers on them and the editions those covers belong to — together with a one-way hash of that ID, not the ID itself, in a database run by our hosting provider’s storage partner. We store nothing else about you: no IP address, no device details, no referrer. We count how often a wall is opened by others, as a number per wall. If you offer a wall for “Walls by readers”, its title and the lines you wrote are shown there once we have read them. Anyone with the link to a wall can see it. You can delete the cookie at any time; your walls then stay online but can no longer be changed from this browser unless you paste your ID again. **Photos:** if you start a wall from a photo, the photo is sent once to Anthropic, which reads the book titles on it, and is not stored by us or kept in our logs.
 
 Zu klären dabei (0.12): der Speicheranbieter der Redis (Region, Auftragsverarbeitung) und Anthropics Bedingungen für Bilder über die API.
 

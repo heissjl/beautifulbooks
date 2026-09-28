@@ -133,6 +133,8 @@ export interface RedisCommands {
   hSetNX(key: string, field: string, value: string): Promise<unknown>;
   /** SET key value NX EX ttl: "OK" when set, anything else when the key was already there. */
   setNx(key: string, value: string, ttlSeconds: number): Promise<unknown>;
+  /** HINCRBY: readers' walls count their views with it (5.13d). Optional, so test doubles of the game need not grow. */
+  hIncrBy?(key: string, field: string, by: number): Promise<unknown>;
 }
 
 /**
@@ -243,6 +245,7 @@ export function upstashCommands(url: string, token: string, fetchImpl: typeof fe
     lLen: key => command(['LLEN', key]),
     get: key => command(['GET', key]),
     set: (key, value) => command(['SET', key, value]),
+    hIncrBy: (key, field, by) => command(['HINCRBY', key, field, by]),
     // HGETALL answers a flat list over REST: field, value, field, value, …
     hGetAll: async key => {
       const flat = await command(['HGETALL', key]);
@@ -333,6 +336,7 @@ export function redisCommands(url: string): RedisCommands {
     hGetAll: key => run(client => client.hGetAll(key)),
     hSetNX: (key, field, value) => run(client => client.hSetNX(key, field, value)),
     setNx: (key, value, ttlSeconds) => run(client => client.set(key, value, { NX: true, EX: ttlSeconds })),
+    hIncrBy: (key, field, by) => run(client => client.hIncrBy(key, field, by)),
   };
 }
 

@@ -23,8 +23,8 @@ import { validTile, type Tile } from './model';
 export const MAX_PHOTO_BOOKS = 40;
 
 export interface PhotoMatch {
-  /** What the photo showed, as read. */
-  read: { title: string; author: string };
+  /** What the photo showed, as read, with where in the photo (fractions, for the numbered boxes). */
+  read: { title: string; author: string; kind?: 'spine' | 'cover'; box?: [number, number, number, number] };
   /** The tile to offer, absent when nothing was found or the search failed. */
   tile?: Tile;
   reason?: WorkReason;
@@ -51,7 +51,7 @@ export function tileFromWork(work: WorkSummary): Tile | undefined {
 export async function matchPhotoBooks(books: readonly RecognizedBook[], find: Search = defaultSearch): Promise<PhotoMatch[]> {
   const out: PhotoMatch[] = [];
   for (const book of books.slice(0, MAX_PHOTO_BOOKS)) {
-    const read = { title: book.title, author: book.author };
+    const read = { title: book.title, author: book.author, kind: book.kind, ...(book.box ? { box: book.box } : {}) };
     try {
       let works = await find(`${book.title} ${book.author}`.trim());
       let picked = pickWork(works, book);

@@ -35,7 +35,7 @@ describe('matchPhotoBooks', () => {
     const [m] = await matchPhotoBooks([book('Dune', 'Herbert')], async () => {
       throw new Error('timeout');
     });
-    expect(m).toEqual({ read: { title: 'Dune', author: 'Herbert' }, failed: true });
+    expect(m).toEqual({ read: { title: 'Dune', author: 'Herbert', kind: 'spine' }, failed: true });
   });
 
   it('prefers the cover Julian picked for a curated work', () => {

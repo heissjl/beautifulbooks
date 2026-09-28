@@ -25,7 +25,7 @@ function writeTarget(id: string) {
 }
 
 /** The printings that carried this cover, as a tile keeps them; e-books never (E21). */
-function printingsOf(editions: readonly EditionView[]): Printing[] {
+export function printingsOf(editions: readonly EditionView[]): Printing[] {
   return editions
     .filter((e) => e.format !== 'ebook')
     .map((e) => ({

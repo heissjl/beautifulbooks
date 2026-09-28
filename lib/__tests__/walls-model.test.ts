@@ -4,6 +4,8 @@ import {
   isVisitorId,
   isWallId,
   MAX_TILES,
+  MIN_SHOWCASE_TILES,
+  review,
   shoppingList,
   toPublic,
   validTile,
@@ -103,5 +105,46 @@ describe('shopping list', () => {
     expect(list).toContain('ISBN 9780743273565');
     expect(list).toContain('no ISBN on record');
     expect(list.split('\n')[0]).toBe('My hallway — 2 covers, 4 columns');
+  });
+});
+
+describe('showcase (5.13d)', () => {
+  const full = () => {
+    let w = wall();
+    for (let i = 0; i < MIN_SHOWCASE_TILES; i++) w = applyOp(w, { op: 'add', tile: tile(String(i)) }, 't');
+    return w;
+  };
+
+  it('keeps a short paragraph, cleaned, and drops an empty one', () => {
+    const w = applyOp(wall(), { op: 'intro', intro: '  Six   books\n\n\n\nfrom my hallway ' }, 't');
+    expect(w.intro).toBe('Six books\n\nfrom my hallway');
+    expect(applyOp(w, { op: 'intro', intro: '  ' }, 't')).not.toHaveProperty('intro');
+    expect(applyOp(wall(), { op: 'intro', intro: 'x'.repeat(2000) }, 't').intro).toHaveLength(600);
+  });
+
+  it('takes a submission only from a wall with enough covers', () => {
+    expect(() => applyOp(wall(), { op: 'submit' }, 't')).toThrow(WallError);
+    expect(applyOp(full(), { op: 'submit' }, 't').showcase).toBe('submitted');
+  });
+
+  it('sends an approved wall back to review when its words change, not its covers', () => {
+    const approved = review(applyOp(full(), { op: 'submit' }, 't'), 'approved', 't');
+    expect(approved.showcase).toBe('approved');
+    expect(applyOp(approved, { op: 'columns', columns: 3 }, 't').showcase).toBe('approved');
+    expect(applyOp(approved, { op: 'remove', coverId: '0' }, 't').showcase).toBe('approved');
+    expect(applyOp(approved, { op: 'intro', intro: 'new words' }, 't').showcase).toBe('submitted');
+    expect(applyOp(approved, { op: 'title', title: 'Another' }, 't').showcase).toBe('submitted');
+  });
+
+  it('lets the owner withdraw, and review only what was submitted', () => {
+    const submitted = applyOp(full(), { op: 'submit' }, 't');
+    expect(applyOp(submitted, { op: 'withdraw' }, 't')).not.toHaveProperty('showcase');
+    expect(() => review(wall(), 'approved', 't')).toThrow(WallError);
+  });
+
+  it('shows the paragraph and status to viewers, never the owner', () => {
+    const pub = toPublic({ ...applyOp(full(), { op: 'intro', intro: 'hi' }, 't'), showcase: 'approved' });
+    expect(pub).toMatchObject({ intro: 'hi', showcase: 'approved' });
+    expect(pub).not.toHaveProperty('ownerHash');
   });
 });
