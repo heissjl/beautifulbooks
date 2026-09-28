@@ -107,11 +107,11 @@ Links werden **nicht gespeichert**, sondern zur Anzeige aus der ISBN generiert (
 |---|---|---|
 | `us` | Bookshop.org, Amazon, AbeBooks, ThriftBooks, eBay | amazon.com |
 | `uk` | Bookshop.org UK, Amazon, Blackwell's, Waterstones, AbeBooks, eBay | amazon.co.uk |
-| `de` | Thalia, genialokal, Amazon, Hugendubel, AbeBooks, Booklooker | amazon.de |
+| `de` | Thalia, genialokal, Amazon, Hugendubel, ZVAB, Booklooker | amazon.de |
 
 Zwei Ebenen:
 - **Kaufen (braucht eine ISBN):** Amazon `/dp/<ISBN-10>` (979-ISBNs ohne ISBN-10: Buchsuche `i=stripbooks`), Blackwell's und Bookshop mit Partner-ID als Produktseite, alle anderen als ISBN-Suche beim Händler. `BuyLink.kind` sagt ohne Anfrage, ob ein Link auf **eine Buchseite** (`product`) oder eine **Trefferliste** (`search`) führt; Suchen tragen ein kleines „search“.
-- **Finden (auch ohne ISBN, immer da):** AbeBooks und eBay nach Titel, Autor, Verlag und Jahr auf der Markt-Domain; Google Lens und TinEye mit dem Cover-Bild; WorldCat; die Open-Library-Ausgabenseite als Nachweis.
+- **Finden (auch ohne ISBN, immer da):** AbeBooks (im Markt `de` als **ZVAB**, gleicher Bestand und dieselben Suchfelder; Julian, 2026-09-28) und eBay nach Titel, Autor, Verlag und Jahr auf der Markt-Domain; Google Lens und TinEye mit dem Cover-Bild; WorldCat; die Open-Library-Ausgabenseite als Nachweis.
 
 **Die Reihenfolge der Händler richtet sich nach der Registrierungsgruppe der ISBN** (`registrationArea` in `lib/normalize.ts`, `linkPlan` in `lib/linkplan.ts`; seit 2026-09-09, ROADMAP 1.11). Gemessen am 2026-09-08 über 567 Ausgaben der fünf Fixture-Werke: von den 243 Ausgaben mit Cover tragen **44 % eine ISBN aus weder dem englischen noch dem deutschen Sprachraum** — Türkei 47, Spanien 18, Italien 14, Indien 9, langer Schwanz. Voreingestellt ist US, also zeigte die Spalte bei rund drei Vierteln der Cover fünf Knöpfe zu einer Nummer, die in Istanbul vergeben wurde. Vier Fälle:
 
