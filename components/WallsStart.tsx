@@ -4,10 +4,13 @@ import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import CoverImage from './CoverImage';
+import IdLinkNotice from './IdLinkNotice';
 import WallIdField from './WallIdField';
 import WallPhoto from './WallPhoto';
 import WallPicker from './WallPicker';
 import WallSample from './WallSample';
+import StartFromPicker from './StartFromPicker';
+import type { StartOption } from '@/lib/walls/jumpstart';
 import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import type { WorkSummary } from '@/lib/model';
@@ -33,7 +36,7 @@ type Results = { q: string; works: WorkSummary[] } | { q: string; error: string 
  * the book page (Julian, 2026-09-28). The chosen work and the query live in
  * the address, like everywhere on the site, so reloading and Back keep them.
  */
-export default function WallsStart({ photoOn }: { photoOn: boolean }) {
+export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: boolean; startOptions?: StartOption[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -111,6 +114,7 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
 
   return (
     <>
+      <IdLinkNotice me={me} onChange={setMe} />
       {me.walls.length > 0 && (
         <section className="mt-10" aria-labelledby="yours">
           <div className="flex items-baseline justify-between border-b border-line pb-2">
@@ -129,7 +133,10 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
                     ))}
                   </div>
                   <p className="mt-2 truncate text-sm text-ink group-hover:text-accent">{w.title}</p>
-                  <p className="text-xs text-ink-3">{w.tiles.length} {w.tiles.length === 1 ? 'cover' : 'covers'}</p>
+                  <p className="text-xs text-ink-3">
+                    {w.tiles.length} {w.tiles.length === 1 ? 'cover' : 'covers'}
+                    {w.unsaved && <span className="ml-2 text-accent">not saved yet</span>}
+                  </p>
                 </Link>
               </li>
             ))}
@@ -138,7 +145,7 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
       )}
 
       <div className={`mt-12 grid gap-12 ${photoOn ? 'lg:grid-cols-2' : 'max-w-2xl'}`}>
-        <section aria-labelledby="by-search">
+        <section aria-labelledby="by-search" className="min-w-0">
           <h2 id="by-search" className={heading}>Start from a book</h2>
           <p className="mt-2 text-sm text-ink-2">Find a book and pick the covers you love from all the ones it has had.</p>
           <form
@@ -188,11 +195,12 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
               </ul>
             ))}
           <WallSample onCreate={createWall} />
+          <StartFromPicker options={startOptions} />
         </section>
 
         {/* Without a key the photo cannot be read, so the section is not shown at all (Julian, 2026-09-28). */}
         {photoOn && (
-          <section aria-labelledby="by-photo">
+          <section aria-labelledby="by-photo" className="min-w-0">
             <h2 id="by-photo" className={heading}>Start from a photo</h2>
             <p className="mt-2 text-sm text-ink-2">Photograph a shelf or a pile of books. We read the titles and make a collection of them.</p>
             <WallPhoto photoOn={photoOn} onCreate={createWall} />

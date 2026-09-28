@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import type { PublicWall } from '@/lib/walls/model';
+import { idLink } from '@/lib/walls/idlink';
+import { isVisitorId, normalVisitorId, type PublicWall } from '@/lib/walls/model';
 import { postJson, type MyWalls } from './useMyWalls';
 
 /**
@@ -12,6 +13,8 @@ export default function WallIdField({ me, onChange }: { me: MyWalls; onChange: (
   const [draft, setDraft] = useState<string | null>(null);
   const [note, setNote] = useState('');
   const value = draft ?? me.visitor ?? '';
+  // Another ID in the field than this browser's: the button takes it (Julian, 2026-09-28: „a way to enter an id to go on working on a collections project … in the same field“).
+  const other = !!value.trim() && normalVisitorId(value) !== me.visitor;
 
   async function save() {
     try {
@@ -28,18 +31,18 @@ export default function WallIdField({ me, onChange }: { me: MyWalls; onChange: (
     <section className="mt-16 border-t border-line pt-6" aria-labelledby="wall-id">
       <h2 id="wall-id" className="text-sm font-medium text-ink">Your ID</h2>
       <p className="mt-1 max-w-2xl text-xs text-ink-3">
-        Your collections belong to this ID, kept in a cookie in this browser. To work on them on another device, paste it there and press Save.
-        Anyone with it can change your collections, so keep it to yourself.
+        Your collections belong to this ID, kept in a cookie in this browser. To go on with collections from another device or from someone else,
+        paste their ID here and press <em>Use this ID</em> — or open the link that carries it. Anyone with your ID or its link can change your collections, so share it only with whom you mean to.
       </p>
-      <div className="mt-3 flex max-w-xl gap-2">
+      <div className="mt-3 flex max-w-2xl flex-wrap gap-2">
         <input
           value={value}
           onChange={(e) => setDraft(e.target.value)}
-          placeholder="Comes with your first collection"
+          placeholder="Paste an ID to go on with its collections"
           spellCheck={false}
           autoComplete="off"
           aria-label="Your ID"
-          className="min-w-0 flex-1 rounded-md border border-line bg-surface px-3 py-1.5 font-mono text-sm text-ink placeholder:font-sans placeholder:text-ink-3"
+          className="min-w-[16rem] flex-1 rounded-md border border-line bg-surface px-3 py-1.5 font-mono text-sm text-ink placeholder:font-sans placeholder:text-ink-3"
         />
         <button
           type="button"
@@ -56,12 +59,26 @@ export default function WallIdField({ me, onChange }: { me: MyWalls; onChange: (
         </button>
         <button
           type="button"
-          onClick={save}
-          disabled={!value.trim()}
-          className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent disabled:opacity-40"
+          onClick={() =>
+            navigator.clipboard.writeText(idLink(window.location.origin, normalVisitorId(value))).then(
+              () => setNote('Link copied. Whoever opens it can work on these collections.'),
+              () => setNote('Copying did not work here.'),
+            )
+          }
+          disabled={!isVisitorId(normalVisitorId(value))}
+          className="rounded-full border border-line bg-surface px-4 py-1.5 text-sm text-ink-2 transition-colors hover:border-accent hover:text-accent disabled:opacity-40"
         >
-          Save
+          Copy link
         </button>
+        {other && (
+          <button
+            type="button"
+            onClick={save}
+            className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent disabled:opacity-40"
+          >
+            Use this ID
+          </button>
+        )}
       </div>
       {note && <p className="mt-2 text-xs text-ink-2" role="status">{note}</p>}
     </section>

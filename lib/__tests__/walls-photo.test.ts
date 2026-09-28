@@ -31,6 +31,12 @@ describe('matchPhotoBooks', () => {
     expect(m.tile?.workId).toBe('OL3W');
   });
 
+  it('offers nothing when neither author nor title agrees, rather than the first hit', async () => {
+    const [m] = await matchPhotoBooks([book('In Nacht und Eis', 'Nansen')], async () => [work('OL9W', 'Titanic', 'Someone Else')]);
+    expect(m.tile).toBeUndefined();
+    expect(m.failed).toBeUndefined();
+  });
+
   it('says when the search failed instead of reporting nothing found', async () => {
     const [m] = await matchPhotoBooks([book('Dune', 'Herbert')], async () => {
       throw new Error('timeout');
