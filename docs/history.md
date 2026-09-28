@@ -3527,3 +3527,33 @@ Julian: „drafte" Penguin Classics mit belegten Gemälden.
 - **Stand:** In der Datei als `penguin-classics-the-black-band-years`, online als Entwurf `aK53ASpzwfuL`.
 
 **Nachtrag 2026-09-28, abebooks.de zusätzlich.** Julian: „zvab bei duetschem markt priorisieren, aber abe books auch zeigen unter weitere". Im Markt `de` gibt es jetzt neben ZVAB die ISBN-Suche und die Feldersuche von abebooks.de (`abebooks-de`, `abebooks-de-search`). Beide stehen hinter der Klappe, ZVAB behält seinen Platz. Ein Test in `lib/__tests__/linkplan.test.ts` prüft für eine deutsche, eine fremde und eine fehlende ISBN: ZVAB steht vor AbeBooks, und AbeBooks erscheint nie in der ersten Reihe. Die Verfügbarkeitsprüfung (nicht in Produktion) fragt dadurch einen Laden mehr.
+
+## 2026-09-28 — Entwurf Fischer Bücherei als Ganzes (ROADMAP 5.10)
+
+Die Bandliste stammt aus der DNB, ergänzt aus K10plus: `lab/collections/lists/fischer-buecherei.json`, Nr. 1–1100 in Reihenfolge. Die Methode steht in [lab/collections/research/fischer-buecherei-coverage.md](../lab/collections/research/fischer-buecherei-coverage.md).
+
+- **Die Liste:**
+  - 1.079 Titel aufgelöst.
+  - 20 Nummern gehören als zweite oder dritte Nummer zu Doppel- oder Dreifachbänden.
+  - Nr. 1057 ist offen.
+- **Was Open Library davon hat:**
+  - 549 Bände haben eine Ausgabe des Fischer-Drucks.
+  - Davon tragen 115 ein Reihen-Cover.
+  - 395 Ausgaben haben kein Bild.
+  - 28 zeigen einen anderen Druck oder ein anderes Design.
+  - 530 Bände fehlen ganz.
+- **Zwei Layouts, nicht eins:**
+  - „unten": 1952 bis etwa 1962, ein Bild über die ganze Fläche mit „FISCHER ✱ BÜCHEREI" am Fuß.
+  - „oben": ab 1962 (frühestens Nr. 479 gesehen), ein farbiges Band mit Fischen oben und ein weißes Titelfeld.
+  - Nachdrucke alter Nummern bekamen das Band. Deshalb zeigt Keller Wirths Nr. 1 im Band, während Open Library den Erstdruck von 1952 führt.
+- **Ende des Band-Layouts:** Den letzten Erstdruck mit Band gab es bei Nr. 1095 (1969). Ab Nr. 1110 haben die Umschläge kein Band mehr. Die Liste endet bei 1100; 1075–1100 ist Grenzbereich.
+- **Wirth und Edelmann:** Ihre 95 Umschläge gingen in die Liste ein. Wo es für eine Nummer einen Band-Umschlag von ihnen gibt, ersetzt er den Druck, den der Agent gewählt hatte; `previous` hält diesen fest.
+- **Wand:**
+  - `fischer-bucherei` zeigt **182 der 1.100 Nummern** in Bandnummer-Reihenfolge. Von den 184 brauchbaren fielen zwei beim Bau weg.
+  - 95 Kacheln nennen den Gestalter (`coverCredits: 'artwork'`, „Cover: Kurt Wirth" / „Heinz Edelmann").
+  - Die anderen 74 belegten Gestalter-Zuordnungen aus der Recherche sind noch nicht eingetragen: Sie gelten je für einen Druck, und dass es derselbe Druck ist, ist noch nicht geprüft.
+  - Online liegt die Wand als Entwurf `nOnU6bOBKxiJ`.
+- **Offen:**
+  - Für eine vollständige Wand fehlen 964 Cover: 530 neue Ausgaben und 434 Bilder für vorhandene Ausgaben. Dafür gibt es noch keine Bildquelle.
+  - Julian entscheidet, ob beide Layouts auf eine Wand gehören.
+  - Auffällige Datensätze (falsche Bilder, falsche Jahre, Mehrbänder als eine Ausgabe, Dubletten) stehen in der Recherche-Datei.

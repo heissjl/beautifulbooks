@@ -28586,6 +28586,1666 @@
         }
       ],
       "coverCredits": "artwork"
+    },
+    {
+      "slug": "fischer-bucherei",
+      "title": "Fischer Bücherei",
+      "kind": "series",
+      "intro": "The Fischer Bücherei was S. Fischer's paperback series from 1952 to about 1970: over a thousand numbered volumes, a different picture on every cover. The first covers ran a picture over the whole front with the series name at the foot; from about 1962 a coloured band with the three fish sits at the top above a white title field. This wall shows the volumes whose series cover Open Library holds, in the order of their numbers, and names the designer where it is known for that printing.",
+      "published": false,
+      "publishers": [
+        "Fischer Bücherei",
+        "Fischer"
+      ],
+      "works": [
+        {
+          "id": "OL482894W",
+          "title": "Die Brücke von San Luis Rey",
+          "author": "Thornton Wilder",
+          "coverId": "ol:15259654",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602859M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL31289225W",
+          "title": "Königliche Hoheit",
+          "author": "Thomas Mann",
+          "coverId": "ol:14996983",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL42942107M"
+        },
+        {
+          "id": "OL1140126W",
+          "title": "Die Frauen des Hauses Wu",
+          "author": "Pearl S. Buck",
+          "coverId": "ol:15259622",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL13942720M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1439437W",
+          "title": "Madame Curie",
+          "author": "Eve Curie",
+          "coverId": "ol:7104147",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL25285721M"
+        },
+        {
+          "id": "OL498782W",
+          "title": "Das Urteil und andere Erzählungen",
+          "author": "Franz Kafka",
+          "coverId": "ol:15259623",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL13543044M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL7476482W",
+          "title": "Don Hjalmar",
+          "author": "Ernst Hardt",
+          "coverId": "ol:13347314",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL46849983M"
+        },
+        {
+          "id": "OL17966972W",
+          "title": "Der letzte Advent",
+          "author": "Edzard Schaper",
+          "coverId": "ol:15250622",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62509876M"
+        },
+        {
+          "id": "OL28423W",
+          "title": "Phantastische Nacht",
+          "author": "Stefan Zweig",
+          "coverId": "ol:15259625",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL17721734M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1069166W",
+          "title": "Abriss der Psychoanalyse",
+          "author": "Sigmund Freud",
+          "coverId": "ol:14863318",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL20301473M"
+        },
+        {
+          "id": "OL33883377W",
+          "title": "Endstation Sehnsucht",
+          "author": "Tennessee Williams",
+          "coverId": "ol:14569346",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL50556436M"
+        },
+        {
+          "id": "OL14867028W",
+          "title": "Der Tod in Venedig und andere Erzählungen",
+          "author": "Thomas Mann",
+          "coverId": "ol:13011655",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL42312189M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL751084W",
+          "title": "Esch oder die Anarchie",
+          "author": "Hermann Broch",
+          "coverId": "ol:14318973",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47773898M"
+        },
+        {
+          "id": "OL482890W",
+          "title": "Dem Himmel bin ich auserkoren",
+          "author": "Thornton Wilder",
+          "coverId": "ol:11144393",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL32490006M"
+        },
+        {
+          "id": "OL879086W",
+          "title": "Die dunkle Blume",
+          "author": "John Galsworthy",
+          "coverId": "ol:14303334",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47676604M"
+        },
+        {
+          "id": "OL3404236W",
+          "title": "Der Banditendoktor",
+          "author": "B. Traven",
+          "coverId": "ol:10606024",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL26368622M"
+        },
+        {
+          "id": "OL16033777W",
+          "title": "Bekenntnisse",
+          "author": "Augustine of Hippo",
+          "coverId": "ol:9675153",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL24935951M"
+        },
+        {
+          "id": "OL33996018W",
+          "title": "Der Tod von Reval",
+          "author": "Bergengruen W.",
+          "coverId": "ol:14943501",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL45989540M"
+        },
+        {
+          "id": "OL31446072W",
+          "title": "Flügel der Zeit",
+          "author": "C Hohoff",
+          "coverId": "ol:14962597",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL43103391M"
+        },
+        {
+          "id": "OL37785916W",
+          "title": "Unser Freund Peregrin",
+          "author": "Ina Seidel",
+          "coverId": "ol:14891363",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL50986038M"
+        },
+        {
+          "id": "OL34557714W",
+          "title": "Amerika",
+          "author": "Franz Kafka",
+          "coverId": "ol:13979393",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47384445M"
+        },
+        {
+          "id": "OL34959019W",
+          "title": "Schopenhauer",
+          "author": "Reinhold Schneider",
+          "coverId": "ol:13851684",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47320616M"
+        },
+        {
+          "id": "OL630998W",
+          "title": "Isabelle",
+          "author": "André Gide",
+          "coverId": "ol:15259655",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602861M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL4990142W",
+          "title": "Die Farm in den grünen Bergen",
+          "author": "Alice Herdan-Zuckmayer",
+          "coverId": "ol:11946466",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL33277758M"
+        },
+        {
+          "id": "OL4358788W",
+          "title": "Der Richter",
+          "author": "Charles Morgan",
+          "coverId": "ol:15259656",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602862M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1442158W",
+          "title": "Menschliche Komödie",
+          "author": "William Saroyan",
+          "coverId": "ol:11550553",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL32929538M"
+        },
+        {
+          "id": "OL34573030W",
+          "title": "Das deutsche Gedicht",
+          "author": "E Hederer",
+          "coverId": "ol:14941110",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL46888295M"
+        },
+        {
+          "id": "OL80354W",
+          "title": "Die neue Geschichte der Mouchette",
+          "author": "Georges Bernanos",
+          "coverId": "ol:14303298",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47676562M"
+        },
+        {
+          "id": "OL5071912W",
+          "title": "Der Nationalsozialismus",
+          "author": "Walther Hofer",
+          "coverId": "ol:15207977",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL61524458M"
+        },
+        {
+          "id": "OL830479W",
+          "title": "Aufstand in der Wüste",
+          "author": "T. E. Lawrence",
+          "coverId": "ol:11886020",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL33178897M"
+        },
+        {
+          "id": "OL10486707W",
+          "title": "Die sterbende Jagd",
+          "author": "Gerd Gaiser",
+          "coverId": "ol:13347301",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL13974276M"
+        },
+        {
+          "id": "OL9079521W",
+          "title": "Trauer muss Elektra tragen",
+          "author": "Eugene O'Neill",
+          "coverId": "ol:15242644",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62394631M"
+        },
+        {
+          "id": "OL505794W",
+          "title": "Theater",
+          "author": "William Somerset Maugham",
+          "coverId": "ol:14360776",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL48575851M"
+        },
+        {
+          "id": "OL28405W",
+          "title": "Drei Meister",
+          "author": "Stefan Zweig",
+          "coverId": "ol:10462773",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL20665626M"
+        },
+        {
+          "id": "OL20960474W",
+          "title": "Plotin",
+          "author": "Plotinus",
+          "coverId": "ol:10988271",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL28395486M"
+        },
+        {
+          "id": "OL10477812W",
+          "title": "Hagar am Brunnen",
+          "author": "Albrecht Goes",
+          "coverId": "ol:12979903",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL14829723M"
+        },
+        {
+          "id": "OL27038405W",
+          "title": "Blick zurück im Zorn",
+          "author": "John Osborne",
+          "coverId": "ol:13776126",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL36655598M"
+        },
+        {
+          "id": "OL1168007W",
+          "title": "Farm der Tiere",
+          "author": "George Orwell",
+          "coverId": "ol:12376637",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL35675906M"
+        },
+        {
+          "id": "OL19908W",
+          "title": "Kim",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:10528027",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL31766858M"
+        },
+        {
+          "id": "OL17965271W",
+          "title": "Der Schwierige",
+          "author": "Hugo von Hofmannsthal",
+          "coverId": "ol:9596400",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL26556993M"
+        },
+        {
+          "id": "OL31322283W",
+          "title": "Südkurier",
+          "author": "Antoine de Saint-Exupéry",
+          "coverId": "ol:15259657",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602860M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL854189W",
+          "title": "Die Plastik des 20. Jahrhunderts",
+          "author": "Werner Hofmann",
+          "coverId": "ol:13010227",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5782922M"
+        },
+        {
+          "id": "OL15766217W",
+          "title": "Fast ein Poet",
+          "author": "Eugene O'Neill",
+          "coverId": "ol:10527440",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL31727225M"
+        },
+        {
+          "id": "OL24432382W",
+          "title": "Götter und Helden der Griechen",
+          "author": "Peterich, Eckart",
+          "coverId": "ol:11003214",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL32361176M"
+        },
+        {
+          "id": "OL1399907W",
+          "title": "Die Zerstörung der deutschen Politik",
+          "author": "Harry Pross",
+          "coverId": "ol:10452564",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL217593M"
+        },
+        {
+          "id": "OL64422W",
+          "title": "Nach vielen Sommern",
+          "author": "Aldous Huxley",
+          "coverId": "ol:14314009",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47767031M"
+        },
+        {
+          "id": "OL987011W",
+          "title": "So zärtlich war Suleyken",
+          "author": "Siegfried Lenz",
+          "coverId": "ol:14548767",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL50015354M"
+        },
+        {
+          "id": "OL10267W",
+          "title": "Nachtflug",
+          "author": "Antoine de Saint-Exupéry",
+          "coverId": "ol:15259626",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL15279012M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL10515113W",
+          "title": "Hart auf hart",
+          "author": "Roger Vailland",
+          "coverId": "ol:14380125",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL48606748M"
+        },
+        {
+          "id": "OL1460172W",
+          "title": "Der tolle Bomberg",
+          "author": "Josef Winckler",
+          "coverId": "ol:15259658",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602863M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL22463644W",
+          "title": "Schwarzer Orpheus",
+          "author": "Janheinz Jahn",
+          "coverId": "ol:15237266",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62272609M"
+        },
+        {
+          "id": "OL33674814W",
+          "title": "Nach Russland und anderswohin",
+          "author": "W Koeppen",
+          "coverId": "ol:15023212",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL45636722M"
+        },
+        {
+          "id": "OL1329107W",
+          "title": "Ölberge, Weinberge",
+          "author": "Kästner, Erhart",
+          "coverId": "ol:7029688",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL15611907M"
+        },
+        {
+          "id": "OL17471892W",
+          "title": "Plötzlich letzten Sommer",
+          "author": "Tennessee Williams",
+          "coverId": "ol:11144701",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL32490393M"
+        },
+        {
+          "id": "OL46028954W",
+          "title": "Tot oder lebendig",
+          "author": "Mark Twain",
+          "coverId": "ol:15259659",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602866M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL10486708W",
+          "title": "Schlussball",
+          "author": "Gerd Gaiser",
+          "coverId": "ol:15259627",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL20213565M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL18502698W",
+          "title": "Harter blauer Himmel",
+          "author": "Shirley Ann Grau",
+          "coverId": "ol:15259660",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602865M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1442121W",
+          "title": "Rock Wagram",
+          "author": "William Saroyan",
+          "coverId": "ol:15259661",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602864M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1184857W",
+          "title": "Eifersucht",
+          "author": "Colette",
+          "coverId": "ol:15259662",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602870M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL2865527W",
+          "title": "\"Mein Kampf\"",
+          "author": "Erwin Leiser",
+          "coverId": "ol:8247091",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5896935M"
+        },
+        {
+          "id": "OL24176915W",
+          "title": "Rumänisches Tagebuch",
+          "author": "Carossa, Hans",
+          "coverId": "ol:10598801",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL31916018M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL86320W",
+          "title": "Dublin",
+          "author": "James Joyce",
+          "coverId": "ol:15259628",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL19724772M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL860066W",
+          "title": "Ist das ein Mensch?",
+          "author": "Primo Levi",
+          "coverId": "ol:12678321",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL37767950M"
+        },
+        {
+          "id": "OL82923W",
+          "title": "Der Strom",
+          "author": "William Faulkner",
+          "coverId": "ol:15259663",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602871M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL33836983W",
+          "title": "Russische Gespenstergeschichten",
+          "author": "Johannes von Guenther",
+          "coverId": "ol:15259629",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL45816004M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL36595W",
+          "title": "Das Alibi",
+          "author": "Daphne du Maurier",
+          "coverId": "ol:15259664",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602873M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL16091916W",
+          "title": "Zeichen der Zeit",
+          "author": "Walther Killy",
+          "coverId": "ol:6918054",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL24988190M"
+        },
+        {
+          "id": "OL37770171W",
+          "title": "Die Heimkehr",
+          "author": "Hermann Broch",
+          "coverId": "ol:14573618",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL50968351M"
+        },
+        {
+          "id": "OL873100W",
+          "title": "Narziss und Goldmund",
+          "author": "Hermann Hesse",
+          "coverId": "ol:12722913",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL37821432M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1442066W",
+          "title": "Ich hab dich lieb, Mama",
+          "author": "William Saroyan",
+          "coverId": "ol:13379308",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47068076M"
+        },
+        {
+          "id": "OL1219868W",
+          "title": "Jacobowsky und der Oberst",
+          "author": "Franz Werfel",
+          "coverId": "ol:12506546",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL15261256M"
+        },
+        {
+          "id": "OL1696158W",
+          "title": "Das Ruhekissen",
+          "author": "Christiane Rochefort",
+          "coverId": "ol:14548849",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL50033163M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL2883788W",
+          "title": "Arturos Insel",
+          "author": "Elsa Morante",
+          "coverId": "ol:15235217",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62229103M"
+        },
+        {
+          "id": "OL39674349W",
+          "title": "Süßer Vogel Jugend",
+          "author": "Tennessee Williams",
+          "coverId": "ol:14817659",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL54068994M"
+        },
+        {
+          "id": "OL36759823W",
+          "title": "Das Friedensfest",
+          "author": "Gerhart Hauptmann",
+          "coverId": "ol:14941137",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL49647259M"
+        },
+        {
+          "id": "OL3906336W",
+          "title": "Der König muss sterben",
+          "author": "Mary Renault",
+          "coverId": "ol:15132082",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL60472922M"
+        },
+        {
+          "id": "OL754964W",
+          "title": "Illusionen",
+          "author": "Ruth Rehmann",
+          "coverId": "ol:15259665",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602872M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL46028957W",
+          "title": "Russische Kriminalgeschichten",
+          "author": "Johannes von Guenther",
+          "coverId": "ol:15259666",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602874M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL19505816W",
+          "title": "Deutschland erzählt",
+          "author": "Benno von Wiese",
+          "coverId": "ol:14944083",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL46916328M"
+        },
+        {
+          "id": "OL1253052W",
+          "title": "Die Hafenorgel",
+          "author": "Leip, Hans",
+          "coverId": "ol:15259668",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602877M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1417688W",
+          "title": "Ein Tag zuviel",
+          "author": "Alain Robbe-Grillet",
+          "coverId": "ol:15259667",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602878M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL455327W",
+          "title": "Herr der Fliegen",
+          "author": "William Golding",
+          "coverId": "ol:15259669",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602876M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL20912172W",
+          "title": "Hochebene",
+          "author": "Luise Rinser",
+          "coverId": "ol:10526992",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL31665812M"
+        },
+        {
+          "id": "OL11311774W",
+          "title": "Sanfter Schrecken",
+          "author": "Stanley Ellin",
+          "coverId": "ol:15259630",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL15260878M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL16235618W",
+          "title": "Unter fremden Menschen",
+          "author": "Максим Горький",
+          "coverId": "ol:15259670",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602880M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL86316W",
+          "title": "Stephen Daedalus",
+          "author": "James Joyce",
+          "coverId": "ol:15259631",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL20410867M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1437964W",
+          "title": "Die Egoisten",
+          "author": "Tecchi, Bonaventura",
+          "coverId": "ol:15259671",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602881M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL31561693W",
+          "title": "Der Sonntagslügner",
+          "author": "Josef Martin Bauer",
+          "coverId": "ol:15259632",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL43230950M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL46028960W",
+          "title": "Geschichten am Sabbat",
+          "author": "Isaac Leib Peretz",
+          "coverId": "ol:15259672",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602883M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1379176W",
+          "title": "Michelangelo Antonioni",
+          "author": "Pierre Leprohon",
+          "coverId": "ol:7878236",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL26193425M"
+        },
+        {
+          "id": "OL258301W",
+          "title": "Doktor Schiwago",
+          "author": "Boris Leonidovich Pasternak",
+          "coverId": "ol:13789309",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47314530M"
+        },
+        {
+          "id": "OL44087602W",
+          "title": "Russische Liebesgeschichten",
+          "author": "Johannes von Guenther",
+          "coverId": "ol:15259673",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602882M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL8443884W",
+          "title": "Bittere Ernte",
+          "author": "Hermann Field",
+          "coverId": "ol:15259674",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602885M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL11961824W",
+          "title": "Der brennende Wind",
+          "author": "Benaya, M. (Margaret)",
+          "coverId": "ol:15259675",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602888M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL33684457W",
+          "title": "Sternstunden der Menschheit",
+          "author": "Stefan Zweig",
+          "coverId": "ol:15069427",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL45647005M"
+        },
+        {
+          "id": "OL27718382W",
+          "title": "Französische Gespenstergeschichten",
+          "author": "Hans Rauschning",
+          "coverId": "ol:12722659",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL37820555M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL7494635W",
+          "title": "Perdita",
+          "author": "Isabel Hamer",
+          "coverId": "ol:15259676",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602886M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL873082W",
+          "title": "Märchen",
+          "author": "Hermann Hesse",
+          "coverId": "ol:15259633",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL14993855M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL85528W",
+          "title": "Mein Franz von Assisi",
+          "author": "Nikos Kazantzakis",
+          "coverId": "ol:15259677",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602887M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1401583W",
+          "title": "Tewje, der Milchmann",
+          "author": "Sholem Aleichem",
+          "coverId": "ol:15259678",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602891M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL37786419W",
+          "title": "Gedichte und Prosa",
+          "author": "E Stadler",
+          "coverId": "ol:14891934",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL50986643M"
+        },
+        {
+          "id": "OL12543539W",
+          "title": "Ein Testament",
+          "author": "Joachim Maass",
+          "coverId": "ol:15259634",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL21325319M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL82918W",
+          "title": "Das verworfene Erbe",
+          "author": "William Faulkner",
+          "coverId": "ol:15259679",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602893M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL46028964W",
+          "title": "Grüner, Siegellack",
+          "author": "Colette",
+          "coverId": "ol:15259681",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602894M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL13415972W",
+          "title": "Man sollte dagegen sein",
+          "author": "W. Schnurre",
+          "coverId": "ol:15259635",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL21585341M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1171763W",
+          "title": "Das Lamm",
+          "author": "François Mauriac",
+          "coverId": "ol:15259680",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602892M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL39349W",
+          "title": "Mrs. Dalloway",
+          "author": "Virginia Woolf",
+          "coverId": "ol:15259636",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL20965611M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1390601W",
+          "title": "Belarmino und Apolonio",
+          "author": "Ramón Pérez de Ayala",
+          "coverId": "ol:15259682",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602895M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL13416023W",
+          "title": "Korporal Mombour und andere Erzählungen",
+          "author": "E. Penzoldt",
+          "coverId": "ol:15259637",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL21585549M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL7103791W",
+          "title": "China erzählt",
+          "author": "Andreas Donath",
+          "coverId": "ol:10539584",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5229800M"
+        },
+        {
+          "id": "OL14866651W",
+          "title": "Bekenntnisse des Hochstaplers Felix Krull",
+          "author": "Thomas Mann",
+          "coverId": "ol:15259638",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL16165433M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1257206W",
+          "title": "Das Halsband der Königin",
+          "author": "Alexander Lernet-Holenia",
+          "coverId": "ol:15259683",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602897M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL2234946W",
+          "title": "Die neun Schneider",
+          "author": "Dorothy L. Sayers",
+          "coverId": "ol:15259684",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602898M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL38050483W",
+          "title": "Die Geschichte eines Gewissens und andere Erzählungen",
+          "author": "Ambrose Bierce",
+          "coverId": "ol:14616669",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL51649375M"
+        },
+        {
+          "id": "OL11948082W",
+          "title": "Die andere Esther",
+          "author": "Magda Szabó",
+          "coverId": "ol:15259685",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602896M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1217968W",
+          "title": "Die grossen Tage",
+          "author": "John Dos Passos",
+          "coverId": "ol:15259686",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602901M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL15964056W",
+          "title": "Thomas Mann und die Deutschen",
+          "author": "Kurt Sontheimer",
+          "coverId": "ol:6871572",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL24927941M"
+        },
+        {
+          "id": "OL10291144W",
+          "title": "Tage der Schlehen",
+          "author": "H. Stahl",
+          "coverId": "ol:15259639",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL20071400M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL3337589W",
+          "title": "Shaw und Mollissima",
+          "author": "Peter Tompkins",
+          "coverId": "ol:15259687",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602903M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL868199W",
+          "title": "Engele von Loewen und andere Erzählungen",
+          "author": "Carl Zuckmayer",
+          "coverId": "ol:15259640",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL2824469M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL13415977W",
+          "title": "Hochzeit zwischen Himmel und Hölle",
+          "author": "R. Kassner",
+          "coverId": "ol:15259642",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL21585357M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL865476W",
+          "title": "Stiller",
+          "author": "Max Frisch",
+          "coverId": "ol:6565698",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL24220582M"
+        },
+        {
+          "id": "OL14999459W",
+          "title": "Briefe",
+          "author": "Marquis de Sade",
+          "coverId": "ol:15259688",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602902M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL2900597W",
+          "title": "São Bernardo",
+          "author": "Graciliano Ramos de Oliveira",
+          "coverId": "ol:15259689",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602904M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL6879905W",
+          "title": "Elfenbein für Felicitas",
+          "author": "Kurt Heuser",
+          "coverId": "ol:15259691",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602906M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL46028968W",
+          "title": "Heitere Geschichten aus Russland",
+          "author": "Johannes von Guenther",
+          "coverId": "ol:15259692",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602908M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1222565W",
+          "title": "Jaquemars schwierige Jugend",
+          "author": "Joachim Maass",
+          "coverId": "ol:15259643",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5584379M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL498762W",
+          "title": "Das Kafka-Buch",
+          "author": "Franz Kafka",
+          "coverId": "ol:14941191",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL15260883M"
+        },
+        {
+          "id": "OL2298824W",
+          "title": "Seelandschaft mit Pocahontas",
+          "author": "Arno Schmidt",
+          "coverId": "ol:10539831",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5585853M"
+        },
+        {
+          "id": "OL11022436W",
+          "title": "Perrudja",
+          "author": "Hans Henny Jahnn",
+          "coverId": "ol:15259644",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL14430021M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL777532W",
+          "title": "Über Franz Kafka",
+          "author": "Brod, Max",
+          "coverId": "ol:10527689",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL31736639M"
+        },
+        {
+          "id": "OL1268090W",
+          "title": "Zwei Schwestern",
+          "author": "Friedrich Georg Jünger",
+          "coverId": "ol:15259645",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL17779656M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL6766918W",
+          "title": "Noella",
+          "author": "Elisabeth Castonier",
+          "coverId": "ol:15259693",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602907M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL794064W",
+          "title": "Die grässliche Bescherung in der Via Merulana",
+          "author": "Carlo Emilio Gadda",
+          "coverId": "ol:15259694",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602909M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL46028870W",
+          "title": "Kabbala der Liebe",
+          "author": "Maude Hutchins",
+          "coverId": "ol:15259602",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602755M",
+          "coverArt": "Heinz Edelmann",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/edelmann-heinz.html"
+        },
+        {
+          "id": "OL1450495W",
+          "title": "Geliebte Söhne",
+          "author": "Howard Spring",
+          "coverId": "ol:15259695",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602914M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL5004021W",
+          "title": "Bänkelbuch",
+          "author": "Eric Singer",
+          "coverId": "ol:15259570",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5647667M",
+          "coverArt": "Heinz Edelmann",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/edelmann-heinz.html"
+        },
+        {
+          "id": "OL43169522W",
+          "title": "Das Geschäft des Lebens",
+          "author": "Saul Bellow",
+          "coverId": "ol:15259646",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL58793704M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL46028972W",
+          "title": "Die Nacht der treibenden Feuer",
+          "author": "Augusto Antonio Roa Bastos",
+          "coverId": "ol:15259696",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602916M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1454231W",
+          "title": "Lebenslauf eines dicken Mannes, der Hamlet hiess",
+          "author": "Georg Britting",
+          "coverId": "ol:15259697",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602915M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1390607W",
+          "title": "Tiger Juan",
+          "author": "Ramón Pérez de Ayala",
+          "coverId": "ol:15259698",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602913M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL19767246W",
+          "title": "Tauben im Gras",
+          "author": "Wolfgang Koeppen",
+          "coverId": "ol:15259647",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL61527722M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL19381W",
+          "title": "Im fernsten Land",
+          "author": "William Goyen",
+          "coverId": "ol:14550459",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL50211723M"
+        },
+        {
+          "id": "OL43448330W",
+          "title": "Weihrauch und Pumpernickel",
+          "author": "Otto Jägersberg",
+          "coverId": "ol:15259571",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL59210397M",
+          "coverArt": "Heinz Edelmann",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/edelmann-heinz.html"
+        },
+        {
+          "id": "OL682096W",
+          "title": "Paris, Passage de Milan",
+          "author": "Michel Butor",
+          "coverId": "ol:14305213",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47678389M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1175172W",
+          "title": "Der Einzelgänger",
+          "author": "Seán Ó Faoláin",
+          "coverId": "ol:15259699",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602920M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL4918191W",
+          "title": "Der Kandelaber",
+          "author": "Martin Gregor-Dellin",
+          "coverId": "ol:15259572",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5676271M",
+          "coverArt": "Heinz Edelmann",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/edelmann-heinz.html"
+        },
+        {
+          "id": "OL3171263W",
+          "title": "Rumänien erzählt",
+          "author": "Petru Dumitriu",
+          "coverId": "ol:13772029",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5648812M"
+        },
+        {
+          "id": "OL46028871W",
+          "title": "Zwölf um ein Bett",
+          "author": "Monica Dickens",
+          "coverId": "ol:15259605",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602756M",
+          "coverArt": "Heinz Edelmann",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/edelmann-heinz.html"
+        },
+        {
+          "id": "OL46028873W",
+          "title": "Fusstritt aus Liebe und andere Erzählungen",
+          "author": "William Saroyan",
+          "coverId": "ol:15259606",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602758M",
+          "coverArt": "Heinz Edelmann",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/edelmann-heinz.html"
+        },
+        {
+          "id": "OL1414424W",
+          "title": "Engelsbrücke",
+          "author": "Marie Luise Kaschnitz",
+          "coverId": "ol:15259648",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5717218M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL38417732W",
+          "title": "Durch afrikanische Türen",
+          "author": "Janheinz Jahn",
+          "coverId": "ol:15259573",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL52274064M",
+          "coverArt": "Heinz Edelmann",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/edelmann-heinz.html"
+        },
+        {
+          "id": "OL136820W",
+          "title": "Die Gärten der Finzi-Contini",
+          "author": "Giorgio Bassani",
+          "coverId": "ol:15259700",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602919M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1245529W",
+          "title": "Eugénie oder Die Bürgerzeit",
+          "author": "Heinrich Mann",
+          "coverId": "ol:15259649",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL19050032M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL2429129W",
+          "title": "Protest",
+          "author": "Frederik Hetmann",
+          "coverId": "ol:12954109",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5647250M"
+        },
+        {
+          "id": "OL6766913W",
+          "title": "Das vergessene Cottage",
+          "author": "Elisabeth Castonier",
+          "coverId": "ol:15204615",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL61490102M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL6699405W",
+          "title": "Der Knabe auf dem Delphin",
+          "author": "David Divine",
+          "coverId": "ol:15259607",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602759M",
+          "coverArt": "Heinz Edelmann",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/edelmann-heinz.html"
+        },
+        {
+          "id": "OL463709W",
+          "title": "Hasenherz",
+          "author": "John Updike",
+          "coverId": "ol:15259650",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL45257375M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL872724W",
+          "title": "Das Glasperlenspiel",
+          "author": "Hermann Hesse",
+          "coverId": "ol:15259651",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL13937361M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL2570924W",
+          "title": "Tynset",
+          "author": "Wolfgang Hildesheimer",
+          "coverId": "ol:14304444",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47677713M"
+        },
+        {
+          "id": "OL6753865W",
+          "title": "Teddy Flesh oder Die Belagerung von Sagunt",
+          "author": "Nonnenmann, Klaus",
+          "coverId": "ol:15259652",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL4958299M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL46028872W",
+          "title": "Drei Komödien",
+          "author": "George Bernard Shaw",
+          "coverId": "ol:15259608",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602757M",
+          "coverArt": "Heinz Edelmann",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/edelmann-heinz.html"
+        },
+        {
+          "id": "OL2070369W",
+          "title": "Leben mit Picasso",
+          "author": "Françoise Gilot",
+          "coverId": "ol:14305230",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47678405M"
+        },
+        {
+          "id": "OL12197077W",
+          "title": "Über Deutschland",
+          "author": "Richard Matthias Müller",
+          "coverId": "ol:10531023",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL17492414M"
+        },
+        {
+          "id": "OL2564737W",
+          "title": "Schlachtbeschreibung",
+          "author": "Alexander Kluge",
+          "coverId": "ol:15259701",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602918M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL466921W",
+          "title": "Die Legende vom heiligen Trinker und andere Erzählungen",
+          "author": "Joseph Roth",
+          "coverId": "ol:15259574",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5261921M",
+          "coverArt": "Heinz Edelmann",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/edelmann-heinz.html"
+        },
+        {
+          "id": "OL46028974W",
+          "title": "Lachen ist unfein",
+          "author": "Art Buchwald",
+          "coverId": "ol:15259703",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602921M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL20967355W",
+          "title": "Studienausgabe",
+          "author": "Georg Wilhelm Friedrich Hegel",
+          "coverId": "ol:10990110",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL28403541M"
+        },
+        {
+          "id": "OL1937851W",
+          "title": "Das Zauberfass und andere Erzählungen",
+          "author": "Bernard Malamud",
+          "coverId": "ol:11278587",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL1043794M"
+        },
+        {
+          "id": "OL1327741W",
+          "title": "Gedichte und Chansons",
+          "author": "Frank Wedekind",
+          "coverId": "ol:9284854",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL4776531M"
+        },
+        {
+          "id": "OL1372951W",
+          "title": "Abriß der Bibelkunde",
+          "author": "Claus Westermann",
+          "coverId": "ol:10701123",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL28395770M"
+        },
+        {
+          "id": "OL46353W",
+          "title": "Geschichte der Biologie",
+          "author": "Isaac Asimov",
+          "coverId": "ol:14817641",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL54062712M"
+        },
+        {
+          "id": "OL5026342W",
+          "title": "Das Leben ist gesichert",
+          "author": "Robert Wolfgang Schnell",
+          "coverId": "ol:11209399",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5770810M"
+        },
+        {
+          "id": "OL2570908W",
+          "title": "Die Eroberung der Prinzessin Turandot",
+          "author": "Wolfgang Hildesheimer",
+          "coverId": "ol:12722405",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL4061333M"
+        },
+        {
+          "id": "OL35362204W",
+          "title": "Parodien und Post Scripta",
+          "author": "F Torberg",
+          "coverId": "ol:15034167",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47780307M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1069549W",
+          "title": "Darstellungen der Psychoanalyse",
+          "author": "Sigmund Freud",
+          "coverId": "ol:10604383",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL21827861M"
+        },
+        {
+          "id": "OL39258023W",
+          "title": "Black power",
+          "author": "Charles V. Hamilton",
+          "coverId": "ol:12450039",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL35715003M"
+        },
+        {
+          "id": "OL54115W",
+          "title": "Autobiographie",
+          "author": "Mark Twain",
+          "coverId": "ol:12528846",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL36635474M"
+        },
+        {
+          "id": "OL1348644W",
+          "title": "Kleine Weltgeschichte der Philosophie",
+          "author": "Hans Joachim Störig",
+          "coverId": "ol:11024092",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL32370480M"
+        },
+        {
+          "id": "OL4190239W",
+          "title": "Der Orden unter dem Totenkopf",
+          "author": "Heinz Höhne",
+          "coverId": "ol:11048298",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL32384294M"
+        },
+        {
+          "id": "OL498773W",
+          "title": "Sämtliche Erzählungen",
+          "author": "Franz Kafka",
+          "coverId": "ol:11351242",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL21814534M"
+        },
+        {
+          "id": "OL1992165W",
+          "title": "Die Grasharfe",
+          "author": "Truman Capote",
+          "coverId": "ol:15248663",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62488249M"
+        },
+        {
+          "id": "OL538910W",
+          "title": "Die permanente Revolution",
+          "author": "Leon Trotsky",
+          "coverId": "ol:10605505",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL14629549M"
+        }
+      ],
+      "coverCredits": "artwork"
     }
   ]
 }
