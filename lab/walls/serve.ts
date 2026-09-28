@@ -131,4 +131,10 @@ createServer(async (req, res) => {
     // A source that did not answer is not "no covers" (SPEC N12).
     return send(res, 502, { error: 'Open Library did not answer. Try again in a moment.' });
   }
-}).listen(PORT, () => console.log(`walls: http://localhost:${PORT}`));
+})
+  .on('error', (err: NodeJS.ErrnoException) => {
+    if (err.code !== 'EADDRINUSE') throw err;
+    console.error(`Port ${PORT} is taken — another walls server is probably running. Stop it, or start with PORT=4326.`);
+    process.exit(1);
+  })
+  .listen(PORT, () => console.log(`walls: http://localhost:${PORT}`));
