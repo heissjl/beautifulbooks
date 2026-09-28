@@ -6,7 +6,7 @@ import {
   MAX_TILES,
   MIN_SHOWCASE_TILES,
   moderate,
-  wallPlan,
+  artworkPlan,
   shoppingList,
   toPublic,
   validTile,
@@ -157,20 +157,20 @@ describe('showcase (5.13d)', () => {
   });
 });
 
-describe('wall plan (step 2)', () => {
-  it('measures frames and gaps: six 24×30 frames in three columns, 5 cm apart', () => {
-    expect(wallPlan(6, 3)).toEqual({ columns: 3, rows: 2, widthCm: 82, heightCm: 65 });
+describe('artwork plan (step 2)', () => {
+  it('measures one shadow box: six trade paperbacks in three columns', () => {
+    // 2·8 + 3·13 + 2·5 = 65 wide, 2·8 + 2·20 + 7 = 63 high.
+    expect(artworkPlan(6, 3)).toEqual({ columns: 3, rows: 2, widthCm: 65, heightCm: 63, depthCm: 7 });
   });
 
-  it('never plans more columns than covers, and rounds rows up', () => {
-    expect(wallPlan(2, 6, { size: '18x24', gap: 3 })).toEqual({ columns: 2, rows: 1, widthCm: 39, heightCm: 24 });
-    expect(wallPlan(7, 3, { size: '30x40', gap: 8 }).rows).toBe(3);
+  it('never plans more columns than books, and rounds rows up', () => {
+    expect(artworkPlan(2, 6)).toMatchObject({ columns: 2, rows: 1, widthCm: 47, heightCm: 36 });
+    expect(artworkPlan(7, 3).rows).toBe(3);
   });
 
-  it('keeps a frame choice only from the list', () => {
-    expect(applyOp(wall(), { op: 'frame', size: '30x40', gap: 8 }, 't').frame).toEqual({ size: '30x40', gap: 8 });
-    expect(() => applyOp(wall(), { op: 'frame', size: '10x10' as never, gap: 5 }, 't')).toThrow(WallError);
-    expect(() => applyOp(wall(), { op: 'frame', size: '24x30', gap: 4 }, 't')).toThrow(WallError);
-    expect(toPublic(applyOp(wall(), { op: 'frame', size: '24x30', gap: 3 }, 't')).frame).toEqual({ size: '24x30', gap: 3 });
+  it('keeps a tone only from the list', () => {
+    expect(applyOp(wall(), { op: 'artwork', tone: 'sage' }, 't').artwork).toEqual({ tone: 'sage' });
+    expect(() => applyOp(wall(), { op: 'artwork', tone: 'pink' as never }, 't')).toThrow(WallError);
+    expect(toPublic(applyOp(wall(), { op: 'artwork', tone: 'ink' }, 't')).artwork).toEqual({ tone: 'ink' });
   });
 });

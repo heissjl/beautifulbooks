@@ -54,38 +54,47 @@ export interface Wall {
   showcase?: 'shown' | 'hidden';
   /** Who took it down: Julian, or the fifth report (Julian, 2026-09-28: „ab 5 vorerst runternehmen und in review so vermerken“). */
   hiddenBy?: 'julian' | 'reports';
-  /** The physical wall planned from this collection (step 2, ROADMAP 5.14a): frame format and gap. */
-  frame?: WallFrame;
+  /** The artwork planned from this collection (step 2, 5.13f): the background tone of the shadow box. */
+  artwork?: Artwork;
 }
 
 /**
- * Common shop frame formats in centimetres, portrait (ROADMAP 5.14a). A book
- * cover is not a frame size — a mass-market paperback is about 11 × 18 cm, a
- * hardcover about 16 × 24 — so a mat (passe-partout) evens mixed books out.
+ * Step 2 as one piece (Julian, 2026-09-28: „a single big frame with books on
+ * little wedge platforms with a toned background as one piece of artwork, that
+ * is something for which the books themselves need to be bought“): a deep
+ * frame, the books standing on small wedges, a toned back panel.
  */
-export const FRAME_SIZES = {
-  '18x24': { w: 18, h: 24, fits: 'paperbacks' },
-  '24x30': { w: 24, h: 30, fits: 'paperbacks and most hardcovers, with a mat' },
-  '30x40': { w: 30, h: 40, fits: 'large hardcovers, with a wide mat' },
+export const TONES = {
+  bone: { label: 'Bone', hex: '#ece6da' },
+  sand: { label: 'Sand', hex: '#d9c7a7' },
+  sage: { label: 'Sage', hex: '#aab39b' },
+  terracotta: { label: 'Terracotta', hex: '#b56a4f' },
+  ink: { label: 'Ink', hex: '#1f2833' },
 } as const;
-export type FrameSize = keyof typeof FRAME_SIZES;
-export const GAPS_CM = [3, 5, 8] as const;
-export interface WallFrame {
-  size: FrameSize;
-  gap: (typeof GAPS_CM)[number];
+export type Tone = keyof typeof TONES;
+export interface Artwork {
+  tone: Tone;
 }
-export const DEFAULT_FRAME: WallFrame = { size: '24x30', gap: 5 };
+export const DEFAULT_ARTWORK: Artwork = { tone: 'sand' };
 
-/** What the planned wall measures, frames and gaps included (step 2). */
-export function wallPlan(covers: number, columns: number, frame: WallFrame = DEFAULT_FRAME): { columns: number; rows: number; widthCm: number; heightCm: number } {
-  const size = FRAME_SIZES[frame.size];
+/**
+ * Sizes the piece is planned with, in centimetres. The catalogue does not know
+ * a book's format, so a book is taken as a trade paperback (13 × 20 cm); a
+ * hardcover is larger, a mass-market paperback smaller, and the page says so.
+ */
+export const ARTWORK_CM = { bookW: 13, bookH: 20, gap: 5, rowGap: 7, margin: 8, depth: 7 } as const;
+
+/** What the piece measures: the frame's outside, back panel and margins included. */
+export function artworkPlan(covers: number, columns: number): { columns: number; rows: number; widthCm: number; heightCm: number; depthCm: number } {
+  const c = ARTWORK_CM;
   const cols = Math.max(1, Math.min(columns, covers || 1));
   const rows = Math.max(1, Math.ceil(covers / cols));
   return {
     columns: cols,
     rows,
-    widthCm: cols * size.w + (cols - 1) * frame.gap,
-    heightCm: rows * size.h + (rows - 1) * frame.gap,
+    widthCm: 2 * c.margin + cols * c.bookW + (cols - 1) * c.gap,
+    heightCm: 2 * c.margin + rows * c.bookH + (rows - 1) * c.rowGap,
+    depthCm: c.depth,
   };
 }
 
@@ -134,7 +143,7 @@ export function toPublic(wall: Wall | PublicWall): PublicWall {
     ...(wall.by ? { by: wall.by } : {}),
     ...(wall.showcase ? { showcase: wall.showcase } : {}),
     ...(wall.hiddenBy ? { hiddenBy: wall.hiddenBy } : {}),
-    ...(wall.frame ? { frame: wall.frame } : {}),
+    ...(wall.artwork ? { artwork: wall.artwork } : {}),
   };
 }
 
@@ -155,7 +164,7 @@ export type WallOp =
   | { op: 'columns'; columns: number }
   | { op: 'intro'; intro: string }
   | { op: 'by'; by: string }
-  | { op: 'frame'; size: FrameSize; gap: number }
+  | { op: 'artwork'; tone: Tone }
   | { op: 'submit' }
   | { op: 'withdraw' };
 
@@ -191,19 +200,16 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
       else delete next.intro;
       return next;
     }
-    case 'frame': {
-      if (!(op.size in FRAME_SIZES)) throw new WallError('Unknown frame size.');
-      const gap = GAPS_CM.find((g) => g === op.gap);
-      if (gap === undefined) throw new WallError('Unknown gap.');
-      next.frame = { size: op.size, gap };
-      return next;
-    }
     case 'by': {
       const by = typeof op.by === 'string' ? op.by.replace(/\s+/g, ' ').trim().slice(0, MAX_BY) : '';
       if (by) next.by = by;
       else delete next.by;
       return next;
     }
+    case 'artwork':
+      if (!(op.tone in TONES)) throw new WallError('Unknown tone.');
+      next.artwork = { tone: op.tone };
+      return next;
     case 'submit':
       if (wall.showcase === 'hidden') throw new WallError('This collection was taken down from Collections by readers.');
       if (next.tiles.length < MIN_SHOWCASE_TILES) throw new WallError(`A collection needs at least ${MIN_SHOWCASE_TILES} covers to be shown among readers' collections.`);
