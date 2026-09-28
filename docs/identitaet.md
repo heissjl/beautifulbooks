@@ -34,7 +34,8 @@ Julian: „nimm Xanh Mono für Überschrift und Texte, aber Jost für Pillen, in
 **Die Regel: Xanh Mono für Sätze, Jost für Wörter.**
 
 - **Xanh Mono** bekommt, was man *liest*: die Überschrift einer Seite (das Versprechen der Startseite, der Buchtitel über der Wand), Fließtext (der Satz unter dem Versprechen, die Beschreibung eines Buchs, die Spanne der Ausgaben, der Hinweis „Pick a cover …"), und Zahlen, die auf einem Beleg stünden (ISBN).
-- **Jost** bekommt, was man *benennt, wählt oder anklickt*: Abschnittsüberschriften („Start with a classic", „This book"), Pillen, Suchfeld und Knöpfe, Links, Titel und Autor unter einem Cover, Autorzeile und Metadaten, Quellenangaben, die Fußzeile. Normale Groß- und Kleinschreibung; Versalien bleiben den Kapitälchen-Labels (`.kicker`), die es heute schon gibt.
+- **Jost** bekommt, was man *benennt, wählt oder anklickt*: Abschnittsüberschriften („Start with a classic", „This book"), Pillen, Suchfeld und Knöpfe, Links, Titel und Autor unter einem Cover, Metadaten, Quellenangaben, die Fußzeile. Normale Groß- und Kleinschreibung; Versalien bleiben den Kapitälchen-Labels (`.kicker`), die es heute schon gibt.
+- **Titel und Autor des Buchs, um das es auf der Seite geht, sind die Überschrift** und stehen beide in Xanh Mono (Julian, 2026-09-28, an *Berlin Alexanderplatz*: „this should both be in xanh, no?"). Unter einem Cover in der Wand oder auf einer Karte sind dieselben zwei Angaben Bildunterschrift und bleiben Jost.
 - Prüffrage für einen neuen Text: *Ist es ein Satz, den jemand liest, oder ein Etikett, das jemand überfliegt?* Ein Link in einem Satz folgt dem Satz.
 
 **Wortabstand:** Xanh Mono hat feste Breiten, ein Leerzeichen ist so breit wie ein Buchstabe. In der Überschrift `word-spacing: -0.3em` (bei 48 px also 14,4 px weniger). Im Fließtext bleibt der Abstand, dort liest er sich wie auf dem Bon.
