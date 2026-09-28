@@ -6,6 +6,7 @@ import {
   MAX_TILES,
   MIN_SHOWCASE_TILES,
   moderate,
+  wallPlan,
   shoppingList,
   toPublic,
   validTile,
@@ -125,6 +126,14 @@ describe('showcase (5.13d)', () => {
     expect(applyOp(wall(), { op: 'intro', intro: 'x'.repeat(2000) }, 't').intro).toHaveLength(600);
   });
 
+  it('keeps a name the owner chose, trimmed and short, and drops an empty one', () => {
+    const w = applyOp(wall(), { op: 'by', by: '  Julian   H. ' }, 't');
+    expect(w.by).toBe('Julian H.');
+    expect(toPublic(w).by).toBe('Julian H.');
+    expect(applyOp(w, { op: 'by', by: ' ' }, 't')).not.toHaveProperty('by');
+    expect(applyOp(wall(), { op: 'by', by: 'x'.repeat(200) }, 't').by).toHaveLength(60);
+  });
+
   it('shows a wall at once, without review, but only with enough covers', () => {
     expect(() => applyOp(wall(), { op: 'submit' }, 't')).toThrow(WallError);
     const shown = applyOp(full(), { op: 'submit' }, 't');
@@ -145,5 +154,23 @@ describe('showcase (5.13d)', () => {
     const pub = toPublic({ ...applyOp(full(), { op: 'intro', intro: 'hi' }, 't'), showcase: 'shown' });
     expect(pub).toMatchObject({ intro: 'hi', showcase: 'shown' });
     expect(pub).not.toHaveProperty('ownerHash');
+  });
+});
+
+describe('wall plan (step 2)', () => {
+  it('measures frames and gaps: six 24×30 frames in three columns, 5 cm apart', () => {
+    expect(wallPlan(6, 3)).toEqual({ columns: 3, rows: 2, widthCm: 82, heightCm: 65 });
+  });
+
+  it('never plans more columns than covers, and rounds rows up', () => {
+    expect(wallPlan(2, 6, { size: '18x24', gap: 3 })).toEqual({ columns: 2, rows: 1, widthCm: 39, heightCm: 24 });
+    expect(wallPlan(7, 3, { size: '30x40', gap: 8 }).rows).toBe(3);
+  });
+
+  it('keeps a frame choice only from the list', () => {
+    expect(applyOp(wall(), { op: 'frame', size: '30x40', gap: 8 }, 't').frame).toEqual({ size: '30x40', gap: 8 });
+    expect(() => applyOp(wall(), { op: 'frame', size: '10x10' as never, gap: 5 }, 't')).toThrow(WallError);
+    expect(() => applyOp(wall(), { op: 'frame', size: '24x30', gap: 4 }, 't')).toThrow(WallError);
+    expect(toPublic(applyOp(wall(), { op: 'frame', size: '24x30', gap: 3 }, 't')).frame).toEqual({ size: '24x30', gap: 3 });
   });
 });

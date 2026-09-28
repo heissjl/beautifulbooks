@@ -59,6 +59,9 @@ for (const [name, make] of [['memory', memoryWallStore], ['redis', () => command
       await store.view('aaaaaaaaaa');
       await store.view('aaaaaaaaaa');
       await store.report('bbbbbbbbbb');
+      await store.interest('cccccccccc');
+      await store.interest('cccccccccc');
+      expect(await store.interests()).toEqual(new Map([['cccccccccc', 2]]));
       expect((await shownWalls(store)).map((s) => [s.wall.id, s.views])).toEqual([['aaaaaaaaaa', 2]]);
       expect((await moderationList(store)).map((s) => [s.wall.id, s.reports])).toEqual([['bbbbbbbbbb', 1], ['aaaaaaaaaa', 0]]);
     });

@@ -19,7 +19,8 @@ export default function ReaderWallCard({ wall }: { wall: PublicWall }) {
           {wall.tiles.length} covers <span aria-hidden="true">&rarr;</span>
         </p>
       </div>
-      {wall.intro && <p className="mt-3 line-clamp-2 text-sm text-ink-2">{wall.intro}</p>}
+      {wall.by && <p className="mt-2 text-xs text-ink-3">by {wall.by}</p>}
+      {wall.intro && <p className="mt-2 line-clamp-2 text-sm text-ink-2">{wall.intro}</p>}
       <ul className="mt-4 grid grid-cols-4 gap-2 sm:gap-3">
         {wall.tiles.slice(0, SHOWN).map((t, i) => (
           <li key={t.coverId} className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2">

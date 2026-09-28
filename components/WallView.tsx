@@ -6,7 +6,8 @@ import CoverImage from './CoverImage';
 import WallIdField from './WallIdField';
 import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
-import { MAX_INTRO, MIN_SHOWCASE_TILES, type PublicWall, type WallOp } from '@/lib/walls/model';
+import { MAX_BY, MAX_INTRO, MIN_SHOWCASE_TILES, type PublicWall, type WallOp } from '@/lib/walls/model';
+import WallPlan from './WallPlan';
 
 /**
  * A reader's wall (ROADMAP 5.13a). A cover wall like every other on the site
@@ -77,6 +78,21 @@ export default function WallView({ initial }: { initial: PublicWall }) {
       </div>
 
       {canEdit ? (
+        <input
+          defaultValue={wall.by ?? ''}
+          key={`by-${wall.by ?? ''}`}
+          maxLength={MAX_BY}
+          placeholder="Your name (optional, shown with the collection)"
+          onBlur={(e) => e.target.value.trim() !== (wall.by ?? '') && send([{ op: 'by', by: e.target.value }])}
+          onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
+          aria-label="Your name"
+          className="mt-3 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink-2 placeholder:text-ink-3"
+        />
+      ) : (
+        wall.by && <p className="mt-2 text-sm text-ink-3">by {wall.by}</p>
+      )}
+
+      {canEdit ? (
         <textarea
           defaultValue={wall.intro ?? ''}
           key={wall.intro ?? ''}
@@ -124,6 +140,7 @@ export default function WallView({ initial }: { initial: PublicWall }) {
       {canEdit && wall.tiles.length > 0 && <p className="mt-6 text-sm">{moreCovers}</p>}
 
       {canEdit && <Showcase wall={wall} onSend={send} />}
+      {canEdit && wall.tiles.length > 0 && <WallPlan wall={wall} onSend={send} />}
       {!canEdit && wall.showcase === 'shown' && <Report id={wall.id} />}
 
       {others.length > 0 && (
@@ -191,7 +208,14 @@ function Showcase({ wall, onSend }: { wall: PublicWall; onSend: (ops: WallOp[]) 
           <button type="button" className="underline underline-offset-2 hover:text-accent" onClick={() => onSend([{ op: 'withdraw' }])}>Stop showing it</button>
         </p>
       )}
-      {wall.showcase === 'hidden' && <p className="mt-1 text-sm text-ink-2">We took this collection down from Collections by readers. The link still works for you and anyone you share it with.</p>}
+      {wall.showcase === 'hidden' && (
+        <p className="mt-1 text-sm text-ink-2">
+          {wall.hiddenBy === 'reports'
+            ? 'Several readers reported this collection, so it is off Collections by readers until we have looked at it.'
+            : 'We took this collection down from Collections by readers.'}{' '}
+          The link still works for you and anyone you share it with.
+        </p>
+      )}
     </section>
   );
 }

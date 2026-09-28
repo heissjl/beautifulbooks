@@ -11,14 +11,21 @@ interface Row {
   wall: PublicWall;
   views: number;
   reports: number;
+  framed: number;
+}
+interface Totals {
+  collections: number;
+  framedRequests: number;
+  collectionsWithRequests: number;
 }
 
-type State = { step: 'loading' } | { step: 'error'; message: string } | { step: 'ready'; rows: Row[] };
+type State = { step: 'loading' } | { step: 'error'; message: string } | { step: 'ready'; rows: Row[]; totals?: Totals };
 
 /**
  * Julian's view of Collections by readers (ROADMAP 5.13d). Readers show their
  * collections without review; this lists them, the most reported first, and
- * takes one down or puts it back.
+ * takes one down or puts it back. A collection the fifth report took down is
+ * marked as such and waits here for his decision.
  */
 export default function WallReview() {
   const [state, setState] = useState<State>({ step: 'loading' });
@@ -26,8 +33,8 @@ export default function WallReview() {
   useEffect(() => {
     fetch('/api/walls/review', { cache: 'no-store' })
       .then(async (r) => {
-        const d = (await r.json()) as { walls?: Row[]; error?: string };
-        setState(r.ok && d.walls ? { step: 'ready', rows: d.walls } : { step: 'error', message: d.error ?? `Failed (${r.status}).` });
+        const d = (await r.json()) as { walls?: Row[]; totals?: Totals; error?: string };
+        setState(r.ok && d.walls ? { step: 'ready', rows: d.walls, totals: d.totals } : { step: 'error', message: d.error ?? `Failed (${r.status}).` });
       })
       .catch(() => setState({ step: 'error', message: 'The site did not answer.' }));
   }, []);
@@ -48,16 +55,29 @@ export default function WallReview() {
         {state.message} <Link href="/curate" className="underline underline-offset-2 hover:text-accent">Sign in on /curate</Link>
       </p>
     );
-  if (state.rows.length === 0) return <p className="mt-8 text-ink-2">No reader shows a collection yet.</p>;
+  const totals = state.totals && (
+    <p className="mt-6 text-sm text-ink-2">
+      {state.totals.collections} collections made · {state.totals.framedRequests} requests for a framed wall, on {state.totals.collectionsWithRequests} collections
+    </p>
+  );
+  if (state.rows.length === 0)
+    return (
+      <>
+        {totals}
+        <p className="mt-8 text-ink-2">No reader shows a collection yet.</p>
+      </>
+    );
   return (
+    <>
+    {totals}
     <ul className="mt-8 space-y-10">
-      {state.rows.map(({ wall: w, views, reports }) => (
+      {state.rows.map(({ wall: w, views, reports, framed }) => (
         <li key={w.id} className={`border-b border-line pb-8 ${w.showcase === 'hidden' ? 'opacity-60' : ''}`}>
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <div>
               <Link href={`/c/${w.id}`} className="font-display text-2xl text-ink hover:text-accent">{w.title}</Link>
               <p className="text-xs text-ink-3">
-                {w.showcase === 'hidden' ? 'taken down' : 'shown'} · {views} views · <span className={reports ? 'text-accent' : ''}>{reports} reports</span>
+                {w.showcase === 'hidden' ? (w.hiddenBy === 'reports' ? 'taken down automatically after 5 reports — look and decide' : 'taken down by you') : 'shown'} · {views} views · <span className={reports ? 'text-accent' : ''}>{reports} reports</span> · {framed} want it framed
               </p>
             </div>
             {w.showcase === 'hidden' ? (
@@ -77,5 +97,6 @@ export default function WallReview() {
         </li>
       ))}
     </ul>
+    </>
   );
 }

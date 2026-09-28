@@ -43,6 +43,8 @@ export interface Wall {
   updatedAt: string;
   /** A few sentences about the wall, shown under its title (5.13d). */
   intro?: string;
+  /** A name the owner chose to show with it, nothing else about them (Julian, 2026-09-28: „your name als feld“). */
+  by?: string;
   /**
    * Whether the owner shows the wall among readers' walls (5.13d). Absent:
    * private — seen only by whoever has the link. `shown` takes effect at once,
@@ -50,6 +52,41 @@ export interface Wall {
    * taking a shown wall down; its owner cannot show it again by themselves.
    */
   showcase?: 'shown' | 'hidden';
+  /** Who took it down: Julian, or the fifth report (Julian, 2026-09-28: „ab 5 vorerst runternehmen und in review so vermerken“). */
+  hiddenBy?: 'julian' | 'reports';
+  /** The physical wall planned from this collection (step 2, ROADMAP 5.14a): frame format and gap. */
+  frame?: WallFrame;
+}
+
+/**
+ * Common shop frame formats in centimetres, portrait (ROADMAP 5.14a). A book
+ * cover is not a frame size — a mass-market paperback is about 11 × 18 cm, a
+ * hardcover about 16 × 24 — so a mat (passe-partout) evens mixed books out.
+ */
+export const FRAME_SIZES = {
+  '18x24': { w: 18, h: 24, fits: 'paperbacks' },
+  '24x30': { w: 24, h: 30, fits: 'paperbacks and most hardcovers, with a mat' },
+  '30x40': { w: 30, h: 40, fits: 'large hardcovers, with a wide mat' },
+} as const;
+export type FrameSize = keyof typeof FRAME_SIZES;
+export const GAPS_CM = [3, 5, 8] as const;
+export interface WallFrame {
+  size: FrameSize;
+  gap: (typeof GAPS_CM)[number];
+}
+export const DEFAULT_FRAME: WallFrame = { size: '24x30', gap: 5 };
+
+/** What the planned wall measures, frames and gaps included (step 2). */
+export function wallPlan(covers: number, columns: number, frame: WallFrame = DEFAULT_FRAME): { columns: number; rows: number; widthCm: number; heightCm: number } {
+  const size = FRAME_SIZES[frame.size];
+  const cols = Math.max(1, Math.min(columns, covers || 1));
+  const rows = Math.max(1, Math.ceil(covers / cols));
+  return {
+    columns: cols,
+    rows,
+    widthCm: cols * size.w + (cols - 1) * frame.gap,
+    heightCm: rows * size.h + (rows - 1) * frame.gap,
+  };
 }
 
 /** What a view link returns: the wall without its owner. */
@@ -60,6 +97,7 @@ export const MAX_TITLE = 80;
 export const MAX_PRINTINGS = 5;
 export const DEFAULT_COLUMNS = 4;
 export const MAX_INTRO = 600;
+export const MAX_BY = 60;
 /** A showcase is a wall, not a single cover: fewer and it is not worth a place among collections. */
 export const MIN_SHOWCASE_TILES = 6;
 /**
@@ -93,7 +131,10 @@ export function toPublic(wall: Wall | PublicWall): PublicWall {
     createdOn: wall.createdOn,
     updatedAt: wall.updatedAt,
     ...(wall.intro ? { intro: wall.intro } : {}),
+    ...(wall.by ? { by: wall.by } : {}),
     ...(wall.showcase ? { showcase: wall.showcase } : {}),
+    ...(wall.hiddenBy ? { hiddenBy: wall.hiddenBy } : {}),
+    ...(wall.frame ? { frame: wall.frame } : {}),
   };
 }
 
@@ -113,6 +154,8 @@ export type WallOp =
   | { op: 'title'; title: string }
   | { op: 'columns'; columns: number }
   | { op: 'intro'; intro: string }
+  | { op: 'by'; by: string }
+  | { op: 'frame'; size: FrameSize; gap: number }
   | { op: 'submit' }
   | { op: 'withdraw' };
 
@@ -148,6 +191,19 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
       else delete next.intro;
       return next;
     }
+    case 'frame': {
+      if (!(op.size in FRAME_SIZES)) throw new WallError('Unknown frame size.');
+      const gap = GAPS_CM.find((g) => g === op.gap);
+      if (gap === undefined) throw new WallError('Unknown gap.');
+      next.frame = { size: op.size, gap };
+      return next;
+    }
+    case 'by': {
+      const by = typeof op.by === 'string' ? op.by.replace(/\s+/g, ' ').trim().slice(0, MAX_BY) : '';
+      if (by) next.by = by;
+      else delete next.by;
+      return next;
+    }
     case 'submit':
       if (wall.showcase === 'hidden') throw new WallError('This collection was taken down from Collections by readers.');
       if (next.tiles.length < MIN_SHOWCASE_TILES) throw new WallError(`A collection needs at least ${MIN_SHOWCASE_TILES} covers to be shown among readers' collections.`);
@@ -171,7 +227,20 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
 /** Julian taking a shown wall down, or putting it back; never an operation a browser may send. */
 export function moderate<W extends PublicWall>(wall: W, decision: 'hidden' | 'shown', now: string): W {
   if (!wall.showcase) throw new WallError('This collection is not shown.');
-  return { ...wall, showcase: decision, updatedAt: now };
+  const next: W = { ...wall, showcase: decision, updatedAt: now };
+  if (decision === 'hidden') next.hiddenBy = 'julian';
+  else delete next.hiddenBy;
+  return next;
+}
+
+/** Reports that take a shown collection down until Julian looks (5.13d). */
+export const AUTO_HIDE_REPORTS = 5;
+
+/** The collection after its n-th report: down at AUTO_HIDE_REPORTS, otherwise unchanged. */
+export function afterReport<W extends PublicWall>(wall: W, reports: number, now: string): W {
+  // Only a real count reaches the threshold: an unknown one must never take a collection down.
+  if (wall.showcase !== 'shown' || !Number.isFinite(reports) || !(reports >= AUTO_HIDE_REPORTS)) return wall;
+  return { ...wall, showcase: 'hidden', hiddenBy: 'reports', updatedAt: now };
 }
 
 /** Accepts a tile from the browser only in the shape the server would have built. */

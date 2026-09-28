@@ -3344,3 +3344,14 @@ Julians Punkte dieses Abschnitts, in der Reihenfolge, in der sie kamen: ohne Rev
 - **ID:** jetzt `108a1eac-c017-4496-b83e-56c963aa94fe` statt 22 Zeichen base64url; „Copy“ neben „Save“.
 - Zweimal an diesem Tag lieferte der Dev-Speicher „did not answer“, weil die Instanz auf `globalThis` älter war als eine neue Methode; seitdem legt `wallStoreFromEnv` ihn unter `next dev` neu an, wenn ihm eine Methode fehlt.
 - 921 Tests grün, Typprüfung und ESLint ohne Befund.
+
+## 2026-09-28 · Schritt 2 auf der Sammlungsseite, Meldungen mit Mail und Schwelle, ein Namensfeld (ROADMAP 5.13d, 5.13f)
+
+Julian: „hier dazwischen können wir jetzt step 2 anbieten: eine physische cover wall aus der collection basteln“; „ab 1 meldung eine mail an mich, ab 5 vorerst runternehmen und in review so vermerken“; „hier noch ‚your name‘ als feld anbieten“.
+
+**Gemessen am Dev-Server:**
+
+- **Wandplan:** sechs Cover, vier Spalten, 24 × 30 cm, 5 cm → „About 111 × 65 cm“; drei Spalten → 82 × 65; 18 × 24 cm mit 8 cm → 70 × 56 (3 · 18 + 2 · 8, 2 · 24 + 8). Die Vorschau hat bei 1280 px 525 × 420 px, Seitenverhältnis 1,25 wie die Wand, kein Rahmen überlappt, alle liegen innerhalb; bei 390 px keine Überbreite. Rahmen, Spalten und Name bleiben gespeichert.
+- **Meldungen:** eine gezeigte Sammlung, fünf Meldungen per `curl` → nach 1 bis 4 weiter `shown`, nach der fünften `hidden/reports`; der Besitzer bekommt beim erneuten Zeigen „This collection was taken down“. **Ein Fehler vorher:** mit einer veralteten Dev-Speicherinstanz, deren `report()` nichts zurückgab, nahm schon die erste Meldung die Sammlung herunter — `afterReport` wertete „keine Zahl“ nicht als „unter 5“. Jetzt verlangt die Schwelle eine echte Zahl, und ein Test prüft `undefined` und `NaN`.
+- **Mail:** `vercel integration discover --category messaging` nennt als einzigen Anbieter **Resend** (`resend/resend-email`, liefert `RESEND_API_KEY`). Nicht verbunden; ohne Schlüssel geht keine Mail hinaus, die Log-Zeile sagt es: `{"bb":"walls.report","id":"9jr2g9xyer","reports":1,"hidden":false,"mail":"not-configured"}`.
+- Browser-Panel ausgeblendet (`visibilityState: hidden`), daher kein Screenshot; alle Werte aus dem DOM gemessen.

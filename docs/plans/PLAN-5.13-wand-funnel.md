@@ -81,6 +81,10 @@ Für `/privacy`, zu prüfen und zu übernehmen von Julian, bevor `WALLS=on` in P
 
 Zu klären dabei (0.12): der Speicheranbieter der Redis (Region, Auftragsverarbeitung) und Anthropics Bedingungen für Bilder über die API.
 
+### Schritt 2 angeboten, ohne etwas zu verkaufen (2026-09-28, 5.13f)
+
+Auf der Sammlungsseite steht jetzt „Make it a wall“: Wandplan mit Rahmen und Maßen, die Liste der Bücher mit ihren Drucken und dem Weg zur Buchseite, und „I'd order this wall framed“ als Zähler. Das ist das Tor dieses Plans in messbarer Form: `/create/review` zeigt, wie viele Sammlungen es gibt und wie oft jemand eine gerahmte Wand bestellen würde. Stufe 2 (Kaufen) und 3 (Rahmen) bleiben gebaut erst, wenn diese Zahl trägt.
+
 ## Stufe 2 — Die ganze Wand kaufen
 
 ### Die harte Wahrheit zuerst

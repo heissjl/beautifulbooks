@@ -26,9 +26,12 @@ export interface WallStore {
   /** One more view of a wall by someone not its owner. Nothing about the viewer. */
   view(id: string): Promise<void>;
   views(): Promise<Map<string, number>>;
-  /** Someone pressed "Report" on a shown wall. Nothing about who. */
-  report(id: string): Promise<void>;
+  /** Someone pressed "Report" on a shown wall; answers the count so far. Nothing about who. */
+  report(id: string): Promise<number>;
   reports(): Promise<Map<string, number>>;
+  /** Someone pressed "I'd order this wall framed" (step 2 demand, 5.14a). Nothing about who. */
+  interest(id: string): Promise<void>;
+  interests(): Promise<Map<string, number>>;
 }
 
 /** The store did not answer — never to be shown as "no such wall" (SPEC N12). */
@@ -50,6 +53,7 @@ export function memoryWallStore(): WallStore {
   const showcase: string[] = [];
   const counts = new Map<string, number>();
   const flags = new Map<string, number>();
+  const wants = new Map<string, number>();
   return {
     kind: 'memory',
     async get(id) {
@@ -83,9 +87,16 @@ export function memoryWallStore(): WallStore {
     },
     async report(id) {
       flags.set(id, (flags.get(id) ?? 0) + 1);
+      return flags.get(id) ?? 0;
     },
     async reports() {
       return new Map(flags);
+    },
+    async interest(id) {
+      wants.set(id, (wants.get(id) ?? 0) + 1);
+    },
+    async interests() {
+      return new Map(wants);
     },
   };
 }
@@ -97,6 +108,7 @@ const KEYS = {
   showcase: 'walls:showcase',
   views: 'walls:views',
   reports: 'walls:reports',
+  interest: 'walls:interest',
 };
 
 function parseWall(raw: unknown): Wall | null {
@@ -138,8 +150,10 @@ export function commandsWallStore(commands: RedisCommands): WallStore {
       guarded(commands.lRange(KEYS.showcase, 0, -1).then((r) => [...new Set(Array.isArray(r) ? r.filter((x): x is string => typeof x === 'string') : [])])),
     view: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.views, id, 1) : Promise.resolve()).then(() => undefined)),
     views: () => guarded(commands.hGetAll(KEYS.views).then(countsFrom)),
-    report: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.reports, id, 1) : Promise.resolve()).then(() => undefined)),
+    report: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.reports, id, 1) : Promise.resolve(0)).then((n) => Number(n) || 0)),
     reports: () => guarded(commands.hGetAll(KEYS.reports).then(countsFrom)),
+    interest: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.interest, id, 1) : Promise.resolve()).then(() => undefined)),
+    interests: () => guarded(commands.hGetAll(KEYS.interest).then(countsFrom)),
   };
 }
 
