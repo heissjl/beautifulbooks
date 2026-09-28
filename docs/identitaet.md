@@ -33,10 +33,11 @@ Julian: „nimm Xanh Mono für Überschrift und Texte, aber Jost für Pillen, in
 
 **Die Regel: Xanh Mono für Sätze, Jost für Wörter.**
 
-- **Xanh Mono** bekommt, was man *liest*: die Überschrift einer Seite (das Versprechen der Startseite, der Buchtitel über der Wand), Fließtext (der Satz unter dem Versprechen, die Beschreibung eines Buchs, die Spanne der Ausgaben, der Hinweis „Pick a cover …"), und Zahlen, die auf einem Beleg stünden (ISBN).
+- **Xanh Mono** bekommt, was man *liest*: die Überschrift einer Seite (das Versprechen der Startseite, der Buchtitel über der Wand), Fließtext (der Satz unter dem Versprechen, die Beschreibung eines Buchs, die Spanne der Ausgaben), und Zahlen, die auf einem Beleg stünden (ISBN).
 - **Jost** bekommt, was man *benennt, wählt oder anklickt*: Abschnittsüberschriften („Start with a classic", „This book"), Pillen, Suchfeld und Knöpfe, Links, Titel und Autor unter einem Cover, Metadaten, Quellenangaben, die Fußzeile. Normale Groß- und Kleinschreibung; Versalien bleiben den Kapitälchen-Labels (`.kicker`), die es heute schon gibt.
 - **Titel und Autor des Buchs, um das es auf der Seite geht, sind die Überschrift** und stehen beide in Xanh Mono (Julian, 2026-09-28, an *Berlin Alexanderplatz*: „this should both be in xanh, no?"). Unter einem Cover in der Wand oder auf einer Karte sind dieselben zwei Angaben Bildunterschrift und bleiben Jost.
-- Prüffrage für einen neuen Text: *Ist es ein Satz, den jemand liest, oder ein Etikett, das jemand überfliegt?* Ein Link in einem Satz folgt dem Satz.
+- **Leise Hinweise der Seite über sich selbst sind Jost**, auch wenn sie ganze Sätze sind (Julian, 2026-09-28, an der Seitenleiste): „Pick a cover to see the edition …", „Description from the Open Library record …", „This book at Open Library — where these records come from …". Xanh Mono bleibt dem, was über das Buch gesagt wird: Beschreibung und Spanne der Ausgaben. Genauer also: **Xanh Mono spricht über das Buch (und das Versprechen der Startseite), Jost spricht über die Seite und ihre Bedienung.**
+- Prüffrage für einen neuen Text: *Sagt es etwas über das Buch, das jemand lesen will, oder erklärt es die Seite, ihre Quellen oder ihre Bedienung?* Ein Link in einem Satz folgt dem Satz.
 
 **Wortabstand:** Xanh Mono hat feste Breiten, ein Leerzeichen ist so breit wie ein Buchstabe. In der Überschrift `word-spacing: -0.3em` (bei 48 px also 14,4 px weniger). Im Fließtext bleibt der Abstand, dort liest er sich wie auf dem Bon.
 
@@ -93,3 +94,7 @@ Skizzen im Chat vom 2026-09-28; Julian entscheidet.
 - **D. Fächer.** Drei versetzte Cover, das vordere in Akzent — das Rondell der Startseite als Zeichen.
 
 Offen: ob die Marke eine Farbe (Terrakotta) oder mehrere trägt; ob sie ohne Namen stehen muss, solange 0.5 offen ist (ja — das war die Vorgabe).
+
+### 1.2 ISBN: Geist Mono, Jost oder Xanh Mono
+
+Julian bat am 2026-09-28 um einen Vergleich der ISBN in den drei Schriften (Bild lokal, nicht im Repository). Befund beim Setzen: Jost hat Proportionalziffern, eine ISBN läuft darin dicht und die Bindestriche verschwinden fast; Geist Mono und Xanh Mono geben jeder Ziffer dieselbe Breite, was eine 13-stellige Zahl lesbar hält. Xanh Mono ist bei 13 px deutlich heller und schmaler als Geist Mono. Entscheidung: **Julian.**
