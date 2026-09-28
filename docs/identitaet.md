@@ -25,7 +25,7 @@ Julian schickte am 2026-09-28 zwei Fotos als Kandidaten:
 
 **Nachgemessen mit Xanh Mono (2026-09-28):** die Wortmarke passt in eine Zeile und endet bei 242 px statt 233 px (Fraunces) — Xanh Mono läuft so schmal wie Fraunces, das Umbruchproblem kam von Courier Prime und den gesperrten Versalien. Der H1 über *Frankenstein* läuft weiter über drei Zeilen (113 px statt 76 px). Kein seitliches Scrollen.
 
-Entscheidung: **Julian.**
+**Entschieden (Julian, 2026-09-28): die ISBN bleibt Geist Mono**, „aber vielleicht mit einem Strich durch die 0". Nachgesehen: **Geist Mono hat die durchgestrichene Null schon als Standardzeichen** — `font-variant-numeric: slashed-zero` ändert nichts, beide Fassungen sind pixelgleich. Sie ist nur in 13 px und im Grau `ink-3` kaum zu sehen. Wenn die Null sichtbar werden soll, hilft Größe und Kontrast (14 px, `ink-2`), nicht ein anderes Zeichen. Eine ISBN mit Bindestrichen (978-0-14-143947-1) läse sich besser, aber wo die Striche stehen, hängt von Land und Verlag ab und braucht die Bereichstabelle der ISBN-Agentur — ein eigener Punkt, falls gewünscht.
 
 ### 1.1 Julians Wahl vom 2026-09-28: `?font=xanh`
 
@@ -33,10 +33,10 @@ Julian: „nimm Xanh Mono für Überschrift und Texte, aber Jost für Pillen, in
 
 **Die Regel: Xanh Mono für Sätze, Jost für Wörter.**
 
-- **Xanh Mono** bekommt, was man *liest*: die Überschrift einer Seite (das Versprechen der Startseite, der Buchtitel über der Wand), Fließtext (der Satz unter dem Versprechen, die Beschreibung eines Buchs, die Spanne der Ausgaben), und Zahlen, die auf einem Beleg stünden (ISBN).
+- **Xanh Mono** bekommt, was man *liest*: die Überschrift einer Seite (das Versprechen der Startseite, der Buchtitel über der Wand), Fließtext (der Satz unter dem Versprechen, die Beschreibung eines Buchs), und Zahlen, die auf einem Beleg stünden (ISBN).
 - **Jost** bekommt, was man *benennt, wählt oder anklickt*: Abschnittsüberschriften („Start with a classic", „This book"), Pillen, Suchfeld und Knöpfe, Links, Titel und Autor unter einem Cover, Metadaten, Quellenangaben, die Fußzeile. Normale Groß- und Kleinschreibung; Versalien bleiben den Kapitälchen-Labels (`.kicker`), die es heute schon gibt.
 - **Titel und Autor des Buchs, um das es auf der Seite geht, sind die Überschrift** und stehen beide in Xanh Mono (Julian, 2026-09-28, an *Berlin Alexanderplatz*: „this should both be in xanh, no?"). Unter einem Cover in der Wand oder auf einer Karte sind dieselben zwei Angaben Bildunterschrift und bleiben Jost.
-- **Leise Hinweise der Seite über sich selbst sind Jost**, auch wenn sie ganze Sätze sind (Julian, 2026-09-28, an der Seitenleiste): „Pick a cover to see the edition …", „Description from the Open Library record …", „This book at Open Library — where these records come from …". Xanh Mono bleibt dem, was über das Buch gesagt wird: Beschreibung und Spanne der Ausgaben. Genauer also: **Xanh Mono spricht über das Buch (und das Versprechen der Startseite), Jost spricht über die Seite und ihre Bedienung.**
+- **Leise Hinweise der Seite über sich selbst sind Jost**, auch wenn sie ganze Sätze sind (Julian, 2026-09-28, an der Seitenleiste): „Pick a cover to see the edition …", „Description from the Open Library record …", „This book at Open Library — where these records come from …". Xanh Mono bleibt dem, was über das Buch geschrieben steht: der Beschreibung. Auch die Spanne der Ausgaben („Editions here run from 1849 to 2026, from 121 publishers") ist Jost (Julian, 2026-09-28) — sie ist eine Zählung der Seite, kein Text über das Buch. Genauer also: **Xanh Mono spricht über das Buch (und das Versprechen der Startseite), Jost spricht über die Seite und ihre Bedienung.**
 - Prüffrage für einen neuen Text: *Sagt es etwas über das Buch, das jemand lesen will, oder erklärt es die Seite, ihre Quellen oder ihre Bedienung?* Ein Link in einem Satz folgt dem Satz.
 
 **Wortabstand:** Xanh Mono hat feste Breiten, ein Leerzeichen ist so breit wie ein Buchstabe. In der Überschrift `word-spacing: -0.3em` (bei 48 px also 14,4 px weniger). Im Fließtext bleibt der Abstand, dort liest er sich wie auf dem Bon.
