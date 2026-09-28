@@ -6,7 +6,24 @@ Heute: Fraunces für Titel und Wortmarke, Geist Sans für die Oberfläche, Geist
 
 ## 1. Schrift
 
-Julian schickt zwei Kandidaten als Fotos; der Vergleich wird als Mockup gebaut (Startseite, Werkseite, Wortmarke), jeweils bei 1280 × 800 und 390 × 844. Ergebnis und Entscheidung hier nachtragen.
+Julian schickte am 2026-09-28 zwei Fotos als Kandidaten:
+
+1. **Ein Kassenbon** (Adresse, darunter „(eavesdrop)" kursiv): eine Schreibmaschinen-Serifenschrift mit fester Breite, dünner Strich, gerundete Serifen, echte Kursive. Die genaue Schrift eines Bondruckers ist nicht bestimmbar; am nächsten unter den freien Schriften kommt **Courier Prime** (Google Fonts, mit echter Kursive). Ersatz: Cutive Mono (ohne Kursive), IBM Plex Mono (serifenloser).
+2. **Ein T-Shirt von Frankel's Delicatessen** (Brooklyn): die Adresse in einer dünnen geometrischen Groteske in Versalien, Futura-Familie. Frei: **Jost** (eine Futura-Nachbildung, variabel, mit Kursive); Ersatz: Josefin Sans. Die Wortmarke „FRANKEL'S" selbst ist eine fette Art-déco-Schrift mit versetztem Schatten und nicht Teil des Vergleichs.
+
+**Mockup, nur lokal im Worktree `loading-screen-mosaic-animation-72a738`, nicht committet und nicht in Produktion** (Julian: „mache es nur lokal"): `?font=` schaltet die echte Seite um und merkt sich die Wahl für den Tab, `?font=` ohne Wert schaltet zurück. Die Kandidaten werden mit `preload: false` geladen, damit ein Besucher ohne Schalter nichts extra lädt.
+
+| `?font=` | Titel und Wortmarke | Oberfläche | ISBN |
+|---|---|---|---|
+| (keiner) | Fraunces | Geist | Geist Mono |
+| `receipt` | Courier Prime (Wortmarke kursiv wie „eavesdrop") | Geist | Courier Prime |
+| `receipt-all` | Courier Prime | Courier Prime | Courier Prime |
+| `deli` | Jost, H1 in Versalien, Light 300, gesperrt; Wortmarke Versalien 500 | Jost | Geist Mono |
+| `both` | H1 wie `deli`, Wortmarke Courier Prime kursiv | Jost | Courier Prime |
+
+**Gemessen bei 390 × 844 (Werkseite *Frankenstein*):** kein seitliches Scrollen in keiner Variante. Die Wortmarke brach in allen drei neuen Schriften auf zwei Zeilen um (Höhe 45–56 px statt 28), weil Courier Prime und gesperrte Versalien breiter laufen als Fraunces (bis 272 px statt 233 px rechter Rand); im Mockup mit `white-space: nowrap` behoben — beim echten Einbau mitnehmen. Der H1 läuft in allen neuen Varianten über drei statt zwei Zeilen (113 px statt 76 px). Die Versalien in `deli` und `both` machen lange Titel laut: „FRANKENSTEIN; OR, THE MODERN PROMETHEUS" füllt die Breite, Fraunces trägt denselben Titel ruhiger.
+
+Entscheidung: **Julian.**
 
 ## 2. Darf ein Logo aus echten Covern bestehen?
 
