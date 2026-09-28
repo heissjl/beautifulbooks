@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
+import { cookieValue, detectMarket, MARKET_KEY } from '@/lib/market';
 import { notFound } from 'next/navigation';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
@@ -45,6 +46,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function WallPage({ params }: Props) {
   const wall = await loadWall((await params).id, true);
   if (!wall) notFound();
+  // The shops of "Get the books", as the book page picks them: chosen, else country, else language (E9).
+  const h = await headers();
+  const market = detectMarket({
+    explicit: cookieValue(h.get('cookie'), MARKET_KEY),
+    country: h.get('x-vercel-ip-country'),
+    acceptLanguage: h.get('accept-language'),
+  });
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
@@ -53,7 +61,7 @@ export default async function WallPage({ params }: Props) {
           // A silent store is not a missing wall (SPEC N12).
           <p className="py-24 text-center text-ink-2">The store did not answer. Try again in a moment.</p>
         ) : (
-          <WallView initial={wall} />
+          <WallView initial={wall} market={market} />
         )}
       </main>
       <SiteFooter />
