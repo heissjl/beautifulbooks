@@ -113,10 +113,21 @@ describe('shopping list', () => {
 
 describe('showcase (5.13d)', () => {
   const full = () => {
-    let w = wall();
+    let w = applyOp(wall(), { op: 'save' }, 't');
     for (let i = 0; i < MIN_SHOWCASE_TILES; i++) w = applyOp(w, { op: 'add', tile: tile(String(i)) }, 't');
     return w;
   };
+
+  it('starts every new collection unsaved, and shows none that is not saved (5.13j)', () => {
+    expect(wall().unsaved).toBe(true);
+    let w = wall();
+    for (let i = 0; i < MIN_SHOWCASE_TILES; i++) w = applyOp(w, { op: 'add', tile: tile(String(i)) }, 't');
+    expect(() => applyOp(w, { op: 'submit' }, 't')).toThrow('Save the collection first.');
+    const saved = applyOp(w, { op: 'save' }, 't');
+    expect(saved).not.toHaveProperty('unsaved');
+    expect(toPublic(w).unsaved).toBe(true);
+    expect(applyOp(saved, { op: 'submit' }, 't').showcase).toBe('shown');
+  });
 
   it('keeps a short paragraph, cleaned, and drops an empty one', () => {
     const w = applyOp(wall(), { op: 'intro', intro: '  Six   books\n\n\n\nfrom my hallway ' }, 't');
@@ -133,8 +144,8 @@ describe('showcase (5.13d)', () => {
     expect(applyOp(wall(), { op: 'by', by: 'x'.repeat(200) }, 't').by).toHaveLength(60);
   });
 
-  it('shows a wall at once, without review, but only with enough covers', () => {
-    expect(() => applyOp(wall(), { op: 'submit' }, 't')).toThrow(WallError);
+  it('shows a saved wall at once, without review, from one cover on', () => {
+    expect(() => applyOp(applyOp(wall(), { op: 'save' }, 't'), { op: 'submit' }, 't')).toThrow('An empty collection cannot be shown.');
     const shown = applyOp(full(), { op: 'submit' }, 't');
     expect(shown.showcase).toBe('shown');
     expect(applyOp(shown, { op: 'intro', intro: 'new words' }, 't').showcase).toBe('shown');

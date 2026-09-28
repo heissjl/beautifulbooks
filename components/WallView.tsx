@@ -6,7 +6,7 @@ import CoverImage from './CoverImage';
 import WallIdField from './WallIdField';
 import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
-import { MAX_BY, MAX_INTRO, MIN_SHOWCASE_TILES, type PublicWall, type WallOp } from '@/lib/walls/model';
+import { MAX_BY, MAX_INTRO, MIN_SHOWCASE_TILES, UNSAVED_HOURS, type PublicWall, type WallOp } from '@/lib/walls/model';
 
 /**
  * A reader's wall (ROADMAP 5.13a). A cover wall like every other on the site
@@ -54,6 +54,20 @@ export default function WallView({ initial }: { initial: PublicWall }) {
 
   return (
     <>
+      {/*
+        A collection is a try until its owner saves it (5.13j): tries expire by
+        themselves, so six random covers someone looked at once do not pile up.
+      */}
+      {canEdit && wall.unsaved && (
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-card border border-accent/50 bg-surface p-4" role="status">
+          <p className="text-sm text-ink-2">
+            <strong className="font-medium text-ink">Not saved yet.</strong> Unsaved collections are deleted after {UNSAVED_HOURS / 24} days.
+          </p>
+          <button type="button" onClick={() => send([{ op: 'save' }])} className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent">
+            Save collection
+          </button>
+        </div>
+      )}
       <div className="flex flex-wrap items-end justify-between gap-4">
         {canEdit ? (
           <input
@@ -181,6 +195,7 @@ function ToolButton({ label, hidden, onClick, children }: { label: string; hidde
  */
 function Showcase({ wall, onSend }: { wall: PublicWall; onSend: (ops: WallOp[]) => void }) {
   const short = wall.tiles.length < MIN_SHOWCASE_TILES;
+  const unsaved = !!wall.unsaved;
   return (
     <section className="mt-10" aria-labelledby="showcase">
       <h2 id="showcase" className="text-sm font-medium text-ink">Show it to others</h2>
@@ -191,13 +206,17 @@ function Showcase({ wall, onSend }: { wall: PublicWall; onSend: (ops: WallOp[]) 
           </p>
           <button
             type="button"
-            disabled={short}
+            disabled={short || unsaved}
             onClick={() => onSend([{ op: 'submit' }])}
             className="mt-3 rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent disabled:opacity-40"
           >
             Show it
           </button>
-          {short && <p className="mt-1 text-xs text-ink-3">It needs at least {MIN_SHOWCASE_TILES} covers first.</p>}
+          {unsaved ? (
+            <p className="mt-1 text-xs text-ink-3">Save the collection first.</p>
+          ) : (
+            short && <p className="mt-1 text-xs text-ink-3">Add a cover first.</p>
+          )}
         </>
       )}
       {wall.showcase === 'shown' && (

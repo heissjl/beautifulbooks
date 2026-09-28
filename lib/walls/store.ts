@@ -9,15 +9,17 @@
  * gives: API routes and pages get separate copies of a module there.
  */
 import { commandsFromEnv, type RedisCommands } from '@/lib/hotornot/store';
-import { toPublic, type PublicWall, type Wall } from './model';
+import { toPublic, UNSAVED_HOURS, type PublicWall, type Wall } from './model';
 import { pageOf, readerOrder } from './order';
 
 export interface WallStore {
   readonly kind: 'memory' | 'redis';
   get(id: string): Promise<Wall | null>;
   put(wall: Wall): Promise<void>;
-  /** Records a new wall under its owner and in the list of all walls; call once, at creation. */
+  /** Records a new wall under its owner; call once, at creation. */
   register(wall: Wall): Promise<void>;
+  /** Counts a wall among all walls, once, when it is saved (5.13j): unsaved tries are not collections. */
+  counted(id: string): Promise<void>;
   idsOf(ownerHash: string): Promise<string[]>;
   count(): Promise<number>;
   /** Notes that a wall was shown among readers' walls; the wall's own status decides what it is now (5.13d). */
@@ -43,8 +45,9 @@ export async function wallsOf(store: WallStore, ownerHash: string): Promise<Wall
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
 
-export function memoryWallStore(): WallStore {
+export function memoryWallStore(now: () => number = Date.now): WallStore {
   const walls = new Map<string, string>();
+  const expires = new Map<string, number>();
   const owners = new Map<string, string[]>();
   const all: string[] = [];
   const showcase: string[] = [];
@@ -54,14 +57,24 @@ export function memoryWallStore(): WallStore {
     kind: 'memory',
     async get(id) {
       const raw = walls.get(id);
+      const until = expires.get(id);
+      if (until !== undefined && now() > until) {
+        walls.delete(id);
+        expires.delete(id);
+        return null;
+      }
       return raw ? (JSON.parse(raw) as Wall) : null;
     },
     async put(wall) {
       walls.set(wall.id, JSON.stringify(wall));
+      if (wall.unsaved) expires.set(wall.id, now() + UNSAVED_HOURS * 3_600_000);
+      else expires.delete(wall.id);
     },
     async register(wall) {
       owners.set(wall.ownerHash, [...(owners.get(wall.ownerHash) ?? []), wall.id]);
-      all.push(wall.id);
+    },
+    async counted(id) {
+      all.push(id);
     },
     async idsOf(ownerHash) {
       return [...(owners.get(ownerHash) ?? [])];
@@ -128,9 +141,16 @@ export function commandsWallStore(commands: RedisCommands): WallStore {
   return {
     kind: 'redis',
     get: (id) => guarded(commands.get(KEYS.wall(id)).then(parseWall)),
-    put: (wall) => guarded(commands.set(KEYS.wall(wall.id), JSON.stringify(wall)).then(() => undefined)),
-    register: (wall) =>
-      guarded(Promise.all([commands.rPush(KEYS.owner(wall.ownerHash), wall.id), commands.rPush(KEYS.all, wall.id)]).then(() => undefined)),
+    // An unsaved wall expires by itself; SET without EX, on saving, clears the expiry.
+    put: (wall) =>
+      guarded(
+        (wall.unsaved && commands.setEx
+          ? commands.setEx(KEYS.wall(wall.id), JSON.stringify(wall), UNSAVED_HOURS * 3600)
+          : commands.set(KEYS.wall(wall.id), JSON.stringify(wall))
+        ).then(() => undefined),
+      ),
+    register: (wall) => guarded(commands.rPush(KEYS.owner(wall.ownerHash), wall.id).then(() => undefined)),
+    counted: (id) => guarded(commands.rPush(KEYS.all, id).then(() => undefined)),
     idsOf: (hash) =>
       guarded(commands.lRange(KEYS.owner(hash), 0, -1).then((r) => (Array.isArray(r) ? r.filter((x): x is string => typeof x === 'string') : []))),
     count: () => guarded(commands.lLen(KEYS.all).then((n) => (typeof n === 'number' ? n : Number(n) || 0))),

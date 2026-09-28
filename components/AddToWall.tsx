@@ -123,7 +123,7 @@ export default function AddToWall({ workId, title, author, cover, editions }: Ad
           >
             {me.walls.map((w) => (
               <option key={w.id} value={w.id}>
-                {w.title} ({w.tiles.length})
+                {w.title} ({w.tiles.length}){w.unsaved ? ' — not saved' : ''}
               </option>
             ))}
             <option value={NEW}>New collection with this cover</option>

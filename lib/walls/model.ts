@@ -52,6 +52,15 @@ export interface Wall {
    * taking a shown wall down; its owner cannot show it again by themselves.
    */
   showcase?: 'shown' | 'hidden';
+  /**
+   * Not saved yet (5.13j; Julian, 2026-09-28: „create a save button for
+   * collections that are being created. otherwise we get tons of collections
+   * that just consist of the 6 random samples because people try it and leave
+   * it“). Every new collection starts so; the store lets it expire after
+   * UNSAVED_HOURS unless its owner presses Save. Absent on collections made
+   * before this, which count as saved.
+   */
+  unsaved?: true;
   /** Who took it down: Julian, or the fifth report (Julian, 2026-09-28: „ab 5 vorerst runternehmen und in review so vermerken“). */
   hiddenBy?: 'julian' | 'reports';
 }
@@ -65,9 +74,11 @@ export const MAX_TITLE = 80;
 export const MAX_PRINTINGS = 5;
 export const DEFAULT_COLUMNS = 4;
 export const MAX_INTRO = 600;
+/** How long an unsaved collection is kept (5.13j). */
+export const UNSAVED_HOURS = 48;
 export const MAX_BY = 60;
-/** A showcase is a wall, not a single cover: fewer and it is not worth a place among collections. */
-export const MIN_SHOWCASE_TILES = 6;
+/** One cover is enough to show a collection (Julian, 2026-09-28: „don't set a minimum … i am fine with public collections with as few as 1 book“). */
+export const MIN_SHOWCASE_TILES = 1;
 /**
  * Views by others before an approved wall stands among the curated
  * collections (5.13d). Set, not measured: there are no views yet. Julian's.
@@ -101,6 +112,7 @@ export function toPublic(wall: Wall | PublicWall): PublicWall {
     ...(wall.intro ? { intro: wall.intro } : {}),
     ...(wall.by ? { by: wall.by } : {}),
     ...(wall.showcase ? { showcase: wall.showcase } : {}),
+    ...(wall.unsaved ? { unsaved: true as const } : {}),
     ...(wall.hiddenBy ? { hiddenBy: wall.hiddenBy } : {}),
   };
 }
@@ -122,6 +134,7 @@ export type WallOp =
   | { op: 'columns'; columns: number }
   | { op: 'intro'; intro: string }
   | { op: 'by'; by: string }
+  | { op: 'save' }
   | { op: 'submit' }
   | { op: 'withdraw' };
 
@@ -163,9 +176,13 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
       else delete next.by;
       return next;
     }
+    case 'save':
+      delete next.unsaved;
+      return next;
     case 'submit':
+      if (wall.unsaved) throw new WallError('Save the collection first.');
       if (wall.showcase === 'hidden') throw new WallError('This collection was taken down from Collections by readers.');
-      if (next.tiles.length < MIN_SHOWCASE_TILES) throw new WallError(`A collection needs at least ${MIN_SHOWCASE_TILES} covers to be shown among readers' collections.`);
+      if (next.tiles.length < MIN_SHOWCASE_TILES) throw new WallError('An empty collection cannot be shown.');
       if (wall.showcase === 'shown') return wall;
       next.showcase = 'shown';
       return next;

@@ -39,6 +39,7 @@ for (const [name, make] of [['memory', memoryWallStore], ['redis', () => command
       for (const w of [a, b, c]) {
         await store.put(w);
         await store.register(w);
+        await store.counted(w.id);
       }
       await store.put({ ...a, updatedAt: '2026-09-05T00:00:00Z' });
       expect((await wallsOf(store, hashVisitor(ME))).map((w) => w.title)).toEqual(['Hall', 'Study']);
@@ -68,4 +69,32 @@ for (const [name, make] of [['memory', memoryWallStore], ['redis', () => command
 it('says the store is down instead of "no wall"', async () => {
   const broken = { ...fakeCommands(), get: async () => { throw new Error('ECONNRESET'); } };
   await expect(commandsWallStore(broken).get('aaaaaaaaaa')).rejects.toBeInstanceOf(WallStoreUnavailableError);
+});
+
+it('lets an unsaved collection expire and keeps a saved one (5.13j)', async () => {
+  let t = 0;
+  const store = memoryWallStore(() => t);
+  const w = newWall('dddddddddd', ME, 'Try', '2026-09-28T00:00:00Z');
+  await store.put(w);
+  t = 47 * 3_600_000;
+  expect(await store.get('dddddddddd')).not.toBeNull();
+  t = 49 * 3_600_000;
+  expect(await store.get('dddddddddd')).toBeNull();
+  const { unsaved: _drop, ...saved } = { ...w, id: 'eeeeeeeeee' };
+  void _drop;
+  await store.put(saved);
+  t = 1_000 * 3_600_000;
+  expect(await store.get('eeeeeeeeee')).not.toBeNull();
+});
+
+it('writes an unsaved collection with an expiry and a saved one without (5.13j)', async () => {
+  const calls: string[] = [];
+  const cmds = { ...fakeCommands(), setEx: async (k: string) => { calls.push('setEx ' + k); return 'OK'; }, set: async (k: string) => { calls.push('set ' + k); return 'OK'; } };
+  const store = commandsWallStore(cmds);
+  const w = newWall('ffffffffff', ME, 'Try', '2026-09-28T00:00:00Z');
+  await store.put(w);
+  const { unsaved: _u, ...saved } = w;
+  void _u;
+  await store.put(saved);
+  expect(calls).toEqual(['setEx wall:ffffffffff', 'set wall:ffffffffff']);
 });

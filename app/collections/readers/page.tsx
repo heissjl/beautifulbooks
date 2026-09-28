@@ -46,7 +46,7 @@ export default async function ReadersWallsPage() {
         {first === 'down' ? (
           <p className="mt-10 text-ink-2">The store did not answer. Try again in a moment.</p>
         ) : first.walls.length === 0 ? (
-          <p className="mt-10 text-ink-2">None yet. Make a collection of six covers or more and show it here.</p>
+          <p className="mt-10 text-ink-2">None yet. Make a collection and show it here.</p>
         ) : (
           <ReaderWalls initial={first.walls} next={first.next} seed={seed} />
         )}

@@ -53,6 +53,8 @@ export async function POST(request: NextRequest, { params }: Params) {
     // A listed id whose wall is not saved as shown is skipped on reading.
     if (next.showcase === 'shown' && wall.showcase !== 'shown') await open.store.submitted(next.id);
     await open.store.put(next);
+    // Counted once, when it stops being a try (5.13j).
+    if (wall.unsaved && !next.unsaved) await open.store.counted(next.id);
   } catch {
     return storeDown();
   }

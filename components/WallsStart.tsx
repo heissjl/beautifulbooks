@@ -129,7 +129,10 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
                     ))}
                   </div>
                   <p className="mt-2 truncate text-sm text-ink group-hover:text-accent">{w.title}</p>
-                  <p className="text-xs text-ink-3">{w.tiles.length} {w.tiles.length === 1 ? 'cover' : 'covers'}</p>
+                  <p className="text-xs text-ink-3">
+                    {w.tiles.length} {w.tiles.length === 1 ? 'cover' : 'covers'}
+                    {w.unsaved && <span className="ml-2 text-accent">not saved yet</span>}
+                  </p>
                 </Link>
               </li>
             ))}

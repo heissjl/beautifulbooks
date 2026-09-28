@@ -47,6 +47,7 @@ export function newWall(id: string, visitor: string, title: string, now: string,
     title: cleanTitle(title) || 'My collection',
     columns: DEFAULT_COLUMNS,
     tiles,
+    unsaved: true,
     createdOn: now.slice(0, 10),
     updatedAt: now,
   };
