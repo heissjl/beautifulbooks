@@ -73,7 +73,7 @@ export default function WallProposal({
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          aria-label="Title of the new wall"
+          aria-label="Title of the new collection"
           className="min-w-0 flex-1 rounded-full border border-line bg-surface px-4 py-1.5 text-sm text-ink"
         />
         <button
@@ -86,7 +86,7 @@ export default function WallProposal({
           }}
           className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent disabled:opacity-40"
         >
-          Make a wall of {picked.size}
+          Make a collection of {picked.size}
         </button>
       </div>
     </div>

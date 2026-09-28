@@ -95,15 +95,15 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
   async function createWall(title: string, tiles: Tile[]) {
     try {
       const { wall } = await postJson<{ wall: PublicWall }>('/api/walls', { title, tiles });
-      router.push(`/w/${wall.id}`);
+      router.push(`/c/${wall.id}`);
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'The wall could not be made.');
+      alert(err instanceof Error ? err.message : 'The collection could not be made.');
     }
   }
 
   async function emptyWall() {
-    const { wall } = await postJson<{ wall: PublicWall }>('/api/walls', { title: me.walls.length ? `Wall ${me.walls.length + 1}` : 'My wall' });
-    router.push(`/w/${wall.id}`);
+    const { wall } = await postJson<{ wall: PublicWall }>('/api/walls', { title: me.walls.length ? `Collection ${me.walls.length + 1}` : 'My collection' });
+    router.push(`/c/${wall.id}`);
   }
 
   const heading = 'font-display text-2xl text-ink';
@@ -114,13 +114,13 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
       {me.walls.length > 0 && (
         <section className="mt-10" aria-labelledby="yours">
           <div className="flex items-baseline justify-between border-b border-line pb-2">
-            <h2 id="yours" className={heading}>Your walls</h2>
-            <button type="button" onClick={emptyWall} className="text-sm text-ink-2 hover:text-accent">+ Empty wall</button>
+            <h2 id="yours" className={heading}>Your collections</h2>
+            <button type="button" onClick={emptyWall} className="text-sm text-ink-2 hover:text-accent">+ Empty collection</button>
           </div>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {me.walls.map((w) => (
               <li key={w.id}>
-                <Link href={`/w/${w.id}`} className="group block rounded-card border border-line bg-surface p-3 hover:border-accent">
+                <Link href={`/c/${w.id}`} className="group block rounded-card border border-line bg-surface p-3 hover:border-accent">
                   <div className="grid grid-cols-4 gap-1.5">
                     {Array.from({ length: 4 }, (_, i) => w.tiles[i]).map((t, i) => (
                       <span key={t?.coverId ?? i} className="relative block aspect-[2/3] overflow-hidden rounded-[2px] bg-surface-2">
@@ -140,7 +140,7 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
       <div className="mt-12 grid gap-12 lg:grid-cols-2">
         <section aria-labelledby="by-search">
           <h2 id="by-search" className={heading}>Start from a book</h2>
-          <p className="mt-2 text-sm text-ink-2">Find a book and pick the covers you would hang from all the ones it has had.</p>
+          <p className="mt-2 text-sm text-ink-2">Find a book and pick the covers you love from all the ones it has had.</p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -192,7 +192,7 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
 
         <section aria-labelledby="by-photo">
           <h2 id="by-photo" className={heading}>Start from a photo</h2>
-          <p className="mt-2 text-sm text-ink-2">Photograph a shelf or a pile of books. We read the titles and make a wall of them.</p>
+          <p className="mt-2 text-sm text-ink-2">Photograph a shelf or a pile of books. We read the titles and make a collection of them.</p>
           <WallPhoto photoOn={photoOn} onCreate={createWall} />
         </section>
       </div>

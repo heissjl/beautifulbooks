@@ -19,10 +19,10 @@ export async function GET(request: NextRequest, { params }: Params) {
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const { id } = await params;
-  if (!isWallId(id)) return json({ error: 'No such wall.' }, 404);
+  if (!isWallId(id)) return json({ error: 'No such collection.' }, 404);
   const wall = await load(open.store, id);
   if (wall === 'down') return storeDown();
-  if (!wall) return json({ error: 'No such wall.' }, 404);
+  if (!wall) return json({ error: 'No such collection.' }, 404);
   return json({ wall: toPublic(wall), canEdit: isOwner(wall, visitorOf(request)) });
 }
 
@@ -31,13 +31,13 @@ export async function POST(request: NextRequest, { params }: Params) {
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const { id } = await params;
-  if (!isWallId(id)) return json({ error: 'No such wall.' }, 404);
+  if (!isWallId(id)) return json({ error: 'No such collection.' }, 404);
   const body = await readJson(request);
   if (!body) return json({ error: 'Send JSON.' }, 415);
   const wall = await load(open.store, id);
   if (wall === 'down') return storeDown();
-  if (!wall) return json({ error: 'No such wall.' }, 404);
-  if (!isOwner(wall, visitorOf(request))) return json({ error: 'Only the browser that made this wall can change it.' }, 403);
+  if (!wall) return json({ error: 'No such collection.' }, 404);
+  if (!isOwner(wall, visitorOf(request))) return json({ error: 'Only the browser that made this collection can change it.' }, 403);
 
   const ops = Array.isArray(body.ops) ? (body.ops as WallOp[]).slice(0, 50) : [];
   let next = wall;
@@ -48,10 +48,10 @@ export async function POST(request: NextRequest, { params }: Params) {
     return json({ error: err instanceof WallError ? err.message : 'Bad operation.' }, 400);
   }
   try {
-    // Into the review list first, whenever it newly waits for a look (5.13d):
+    // Into the list of shown walls first, whenever it is newly shown (5.13d):
     // if that fails nothing has changed, and the answer "did not answer" is true.
-    // A listed id whose wall was not saved as submitted is skipped on reading.
-    if (next.showcase === 'submitted' && wall.showcase !== 'submitted') await open.store.submitted(next.id);
+    // A listed id whose wall is not saved as shown is skipped on reading.
+    if (next.showcase === 'shown' && wall.showcase !== 'shown') await open.store.submitted(next.id);
     await open.store.put(next);
   } catch {
     return storeDown();

@@ -37,7 +37,7 @@ async function loadWall(id: string, count = false): Promise<PublicWall | null | 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const wall = await loadWall((await params).id);
   return {
-    title: wall && wall !== 'down' ? `${wall.title} — a cover wall` : 'Cover wall',
+    title: wall && wall !== 'down' ? `${wall.title} — a collection of covers` : 'A collection of covers',
     robots: { index: false, follow: false },
   };
 }
@@ -51,7 +51,7 @@ export default async function WallPage({ params }: Props) {
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">
         {wall === 'down' ? (
           // A silent store is not a missing wall (SPEC N12).
-          <p className="py-24 text-center text-ink-2">The wall store did not answer. Try again in a moment.</p>
+          <p className="py-24 text-center text-ink-2">The store did not answer. Try again in a moment.</p>
         ) : (
           <WallView initial={wall} />
         )}

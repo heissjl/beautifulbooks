@@ -18,7 +18,7 @@ export default function WallIdField({ me, onChange }: { me: MyWalls; onChange: (
       const data = await postJson<{ visitor: string; walls: PublicWall[] }>('/api/walls/me', { visitor: value });
       onChange({ ...data, loaded: true });
       setDraft(null);
-      setNote(data.walls.length === 1 ? '1 wall belongs to this ID.' : `${data.walls.length} walls belong to this ID.`);
+      setNote(data.walls.length === 1 ? '1 collection belongs to this ID.' : `${data.walls.length} collections belong to this ID.`);
     } catch (err) {
       setNote(err instanceof Error ? err.message : 'That did not work.');
     }
@@ -28,19 +28,32 @@ export default function WallIdField({ me, onChange }: { me: MyWalls; onChange: (
     <section className="mt-16 border-t border-line pt-6" aria-labelledby="wall-id">
       <h2 id="wall-id" className="text-sm font-medium text-ink">Your ID</h2>
       <p className="mt-1 max-w-2xl text-xs text-ink-3">
-        Your walls belong to this ID, kept in a cookie in this browser. To work on them on another device, paste it there and press Save.
-        Anyone with it can change your walls, so keep it to yourself.
+        Your collections belong to this ID, kept in a cookie in this browser. To work on them on another device, paste it there and press Save.
+        Anyone with it can change your collections, so keep it to yourself.
       </p>
       <div className="mt-3 flex max-w-xl gap-2">
         <input
           value={value}
           onChange={(e) => setDraft(e.target.value)}
-          placeholder="Comes with your first wall"
+          placeholder="Comes with your first collection"
           spellCheck={false}
           autoComplete="off"
           aria-label="Your ID"
           className="min-w-0 flex-1 rounded-md border border-line bg-surface px-3 py-1.5 font-mono text-sm text-ink placeholder:font-sans placeholder:text-ink-3"
         />
+        <button
+          type="button"
+          onClick={() =>
+            navigator.clipboard.writeText(value.trim()).then(
+              () => setNote('Copied.'),
+              () => setNote('Copying did not work here; select the ID and copy it by hand.'),
+            )
+          }
+          disabled={!value.trim()}
+          className="rounded-full border border-line bg-surface px-4 py-1.5 text-sm text-ink-2 transition-colors hover:border-accent hover:text-accent disabled:opacity-40"
+        >
+          Copy
+        </button>
         <button
           type="button"
           onClick={save}

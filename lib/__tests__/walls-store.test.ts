@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import type { RedisCommands } from '../hotornot/store';
 import { hashVisitor, newVisitorId, newWall } from '../walls/owner';
-import { review } from '../walls/model';
-import { awaitingReview, commandsWallStore, memoryWallStore, showcased, wallsOf, WallStoreUnavailableError, type WallStore } from '../walls/store';
+import { moderate } from '../walls/model';
+import { commandsWallStore, memoryWallStore, moderationList, shownWalls, wallsOf, WallStoreUnavailableError, type WallStore } from '../walls/store';
 
 function fakeCommands(): RedisCommands {
   const kv = new Map<string, string>();
@@ -46,21 +46,21 @@ for (const [name, make] of [['memory', memoryWallStore], ['redis', () => command
       expect(await store.get('zzzzzzzzzz')).toBeNull();
     });
 
-    it('lists approved walls most viewed first, and submitted ones for review', async () => {
+    it('lists shown walls with views, and reported ones first for Julian', async () => {
       const store: WallStore = make();
-      const a = { ...newWall('aaaaaaaaaa', ME, 'A', '2026-09-01T00:00:00Z'), showcase: 'submitted' as const };
-      const b = review({ ...newWall('bbbbbbbbbb', ME, 'B', '2026-09-01T00:00:00Z'), showcase: 'submitted' as const }, 'approved', 'x');
-      const c = review({ ...newWall('cccccccccc', YOU, 'C', '2026-09-01T00:00:00Z'), showcase: 'submitted' as const }, 'approved', 'x');
+      const a = { ...newWall('aaaaaaaaaa', ME, 'A', '2026-09-01T00:00:00Z'), showcase: 'shown' as const };
+      const b = moderate({ ...newWall('bbbbbbbbbb', ME, 'B', '2026-09-01T00:00:00Z'), showcase: 'shown' as const }, 'hidden', 'x');
+      const c = newWall('cccccccccc', YOU, 'C private', '2026-09-01T00:00:00Z');
       for (const w of [a, b, c]) {
         await store.put(w);
         await store.submitted(w.id);
       }
-      await store.submitted('bbbbbbbbbb');
-      await store.view('cccccccccc');
-      await store.view('cccccccccc');
-      await store.view('bbbbbbbbbb');
-      expect((await showcased(store)).map((s) => [s.wall.id, s.views])).toEqual([['cccccccccc', 2], ['bbbbbbbbbb', 1]]);
-      expect((await awaitingReview(store)).map((w) => w.id)).toEqual(['aaaaaaaaaa']);
+      await store.submitted('aaaaaaaaaa');
+      await store.view('aaaaaaaaaa');
+      await store.view('aaaaaaaaaa');
+      await store.report('bbbbbbbbbb');
+      expect((await shownWalls(store)).map((s) => [s.wall.id, s.views])).toEqual([['aaaaaaaaaa', 2]]);
+      expect((await moderationList(store)).map((s) => [s.wall.id, s.reports])).toEqual([['bbbbbbbbbb', 1], ['aaaaaaaaaa', 0]]);
     });
   });
 }

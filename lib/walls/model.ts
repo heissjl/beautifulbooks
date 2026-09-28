@@ -44,12 +44,12 @@ export interface Wall {
   /** A few sentences about the wall, shown under its title (5.13d). */
   intro?: string;
   /**
-   * Whether the owner asked to show the wall among readers' walls, and what
-   * Julian decided (5.13d). Absent: private — it is only seen by whoever has
-   * the link. A change of title or paragraph after approval sends it back to
-   * `submitted`: the text others read is always text someone looked at.
+   * Whether the owner shows the wall among readers' walls (5.13d). Absent:
+   * private — seen only by whoever has the link. `shown` takes effect at once,
+   * without review (Julian, 2026-09-28: „ohne review“). `hidden` is Julian
+   * taking a shown wall down; its owner cannot show it again by themselves.
    */
-  showcase?: 'submitted' | 'approved' | 'declined';
+  showcase?: 'shown' | 'hidden';
 }
 
 /** What a view link returns: the wall without its owner. */
@@ -69,14 +69,20 @@ export const MIN_SHOWCASE_TILES = 6;
 export const POPULAR_VIEWS = 25;
 
 const ID = /^[a-z0-9]{10}$/;
-/** 128 random bits, base64url; what the footer shows and a reader pastes. */
-const VISITOR = /^[A-Za-z0-9_-]{22}$/;
+/**
+ * A UUID with hyphens, as taketest.xyz shows its ID (Julian, 2026-09-28: „mit
+ * bindestrichen, das gefiel mir besser“); what the footer shows and a reader pastes.
+ */
+const VISITOR = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 const WORK = /^OL\d+W$/;
 const COVER = /^\d{1,12}$/;
 
 /** Ten characters from [a-z0-9]: the public id in `/w/<id>`. */
 export const isWallId = (s: unknown): s is string => typeof s === 'string' && ID.test(s);
 export const isVisitorId = (s: unknown): s is string => typeof s === 'string' && VISITOR.test(s);
+
+/** A pasted ID as the site writes it: trimmed, lower case. */
+export const normalVisitorId = (s: string): string => s.trim().toLowerCase();
 
 export function toPublic(wall: Wall | PublicWall): PublicWall {
   return {
@@ -118,7 +124,7 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
     case 'add': {
       const tile = validTile(op.tile);
       if (next.tiles.some((t) => t.coverId === tile.coverId)) return wall;
-      if (next.tiles.length >= MAX_TILES) throw new WallError(`A wall holds at most ${MAX_TILES} covers.`);
+      if (next.tiles.length >= MAX_TILES) throw new WallError(`A collection holds at most ${MAX_TILES} covers.`);
       next.tiles.push(tile);
       return next;
     }
@@ -135,19 +141,22 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
     }
     case 'title':
       next.title = cleanTitle(op.title) || wall.title;
-      return backToReview(next, wall);
+      return next;
     case 'intro': {
       const intro = typeof op.intro === 'string' ? op.intro.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim().slice(0, MAX_INTRO) : '';
       if (intro) next.intro = intro;
       else delete next.intro;
-      return backToReview(next, wall);
+      return next;
     }
     case 'submit':
-      if (next.tiles.length < MIN_SHOWCASE_TILES) throw new WallError(`A wall needs at least ${MIN_SHOWCASE_TILES} covers to be shown among readers' walls.`);
-      if (wall.showcase === 'approved' || wall.showcase === 'submitted') return wall;
-      next.showcase = 'submitted';
+      if (wall.showcase === 'hidden') throw new WallError('This collection was taken down from Collections by readers.');
+      if (next.tiles.length < MIN_SHOWCASE_TILES) throw new WallError(`A collection needs at least ${MIN_SHOWCASE_TILES} covers to be shown among readers' collections.`);
+      if (wall.showcase === 'shown') return wall;
+      next.showcase = 'shown';
       return next;
     case 'withdraw':
+      // A hidden wall stays hidden: withdrawing must not be a way round the take-down.
+      if (wall.showcase === 'hidden') return wall;
       delete next.showcase;
       return next;
     case 'columns':
@@ -159,15 +168,9 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
   }
 }
 
-/** An approved wall whose words changed goes back to be looked at. */
-function backToReview<W extends PublicWall>(next: W, before: W): W {
-  if (before.showcase === 'approved' && (next.title !== before.title || next.intro !== before.intro)) next.showcase = 'submitted';
-  return next;
-}
-
-/** Julian's decision on a submitted wall; never an operation a browser may send. */
-export function review<W extends PublicWall>(wall: W, decision: 'approved' | 'declined', now: string): W {
-  if (!wall.showcase) throw new WallError('This wall was not submitted.');
+/** Julian taking a shown wall down, or putting it back; never an operation a browser may send. */
+export function moderate<W extends PublicWall>(wall: W, decision: 'hidden' | 'shown', now: string): W {
+  if (!wall.showcase) throw new WallError('This collection is not shown.');
   return { ...wall, showcase: decision, updatedAt: now };
 }
 

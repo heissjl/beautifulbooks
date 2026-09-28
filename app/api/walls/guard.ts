@@ -25,7 +25,7 @@ export function openWalls(request: NextRequest, bucket: RateBucketName = 'walls'
   return { store };
 }
 
-export const storeDown = () => json({ error: 'The wall store did not answer. Try again in a moment.' }, 503);
+export const storeDown = () => json({ error: 'The store did not answer. Try again in a moment.' }, 503);
 
 export function visitorOf(request: NextRequest): string | null {
   const value = request.cookies.get(VISITOR_COOKIE)?.value;

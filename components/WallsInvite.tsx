@@ -9,7 +9,7 @@ export default function WallsInvite({ children, className = '' }: { children: Re
   return (
     <p className={`text-sm ${className}`}>
       <Link
-        href="/walls"
+        href="/create"
         className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
       >
         {children}

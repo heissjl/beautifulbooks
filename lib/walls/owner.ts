@@ -19,9 +19,13 @@ export function newWallId(bytes: Buffer = randomBytes(10)): string {
   return [...bytes].map((b) => alphabet[b % 36]).join('');
 }
 
-/** A new visitor id: 128 random bits, base64url. */
+/** A new visitor id: a version-4 UUID (122 random bits), written with hyphens. */
 export function newVisitorId(bytes: Buffer = randomBytes(16)): string {
-  return bytes.toString('base64url');
+  const b = Buffer.from(bytes.subarray(0, 16));
+  b[6] = (b[6] & 0x0f) | 0x40;
+  b[8] = (b[8] & 0x3f) | 0x80;
+  const hex = b.toString('hex');
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
 
 export function hashVisitor(visitor: string): string {
@@ -40,7 +44,7 @@ export function newWall(id: string, visitor: string, title: string, now: string,
   return {
     id,
     ownerHash: hashVisitor(visitor),
-    title: cleanTitle(title) || 'My wall',
+    title: cleanTitle(title) || 'My collection',
     columns: DEFAULT_COLUMNS,
     tiles,
     createdOn: now.slice(0, 10),

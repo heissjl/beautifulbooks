@@ -27,7 +27,7 @@ export default function SiteFooter({ walls }: { walls?: boolean } = {}) {
         <p>Data from Open Library and Google Books. Cover images belong to their publishers.</p>
         <p className="flex items-center gap-4">
           {commerceEnabled() && <span>Purchase links may earn us a commission.</span>}
-          {showWalls && <Link href="/walls" className={link}>Your wall</Link>}
+          {showWalls && <Link href="/create" className={link}>Your collections</Link>}
           <Link href="/about" className={link}>About</Link>
           <Link href="/contact" className={link}>Impressum</Link>
           <Link href="/privacy" className={link}>Privacy</Link>

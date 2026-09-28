@@ -9,27 +9,18 @@ import { coverUrlFor } from '@/lib/coverurl';
 import { MAX_INTRO, MIN_SHOWCASE_TILES, type PublicWall, type WallOp } from '@/lib/walls/model';
 
 /**
- * A reader's wall as frames (ROADMAP 5.13a). Everyone sees it; its owner —
- * the browser whose visitor id made it (E22) — also gets the tools. The
- * column count is the one of the real wall; a phone may show fewer and says so.
+ * A reader's wall (ROADMAP 5.13a). A cover wall like every other on the site
+ * — no frames (Julian, 2026-09-28: „das soll nicht wie individuell geframte
+ * cover aussehen, mache hier eine klassische cover wall“). Everyone sees it;
+ * its owner, the browser whose visitor id made it (E22), also gets the tools.
  */
 export default function WallView({ initial }: { initial: PublicWall }) {
   const [wall, setWall] = useState(initial);
   const [canEdit, setCanEdit] = useState(false);
   const [note, setNote] = useState('');
   const { me, setMe } = useMyWalls();
-  const [narrow, setNarrow] = useState(false);
 
-  useEffect(() => {
-    const query = window.matchMedia('(max-width: 639px)');
-    const update = () => setNarrow(query.matches);
-    query.addEventListener('change', update);
-    Promise.resolve().then(update);
-    return () => query.removeEventListener('change', update);
-  }, []);
-
-  // Whether this browser owns the wall is the server's answer, asked once it
-  // is known that there is a visitor id at all.
+  // Whether this browser owns the wall is the server's answer, asked once a visitor id is known.
   const visitor = me.visitor;
   useEffect(() => {
     if (!visitor) return;
@@ -54,9 +45,12 @@ export default function WallView({ initial }: { initial: PublicWall }) {
     }
   }
 
-  const shown = Math.min(wall.columns, narrow ? 3 : 8);
-  const rows = Math.ceil(wall.tiles.length / wall.columns);
   const others = me.walls.filter((w) => w.id !== wall.id);
+  const moreCovers = (
+    <Link href="/create" className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
+      Go back to search and choose more covers
+    </Link>
+  );
 
   return (
     <>
@@ -67,42 +61,20 @@ export default function WallView({ initial }: { initial: PublicWall }) {
             key={wall.title}
             onBlur={(e) => e.target.value.trim() !== wall.title && send([{ op: 'title', title: e.target.value }])}
             onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
-            aria-label="Title of the wall"
+            aria-label="Title of the collection"
             className="min-w-0 flex-1 border-b border-transparent bg-transparent font-display text-3xl leading-tight text-ink hover:border-line focus:border-accent focus:outline-none sm:text-4xl"
           />
         ) : (
           <h1 className="font-display text-3xl leading-tight text-ink sm:text-4xl">{wall.title}</h1>
         )}
-        <div className="flex items-center gap-3 text-sm text-ink-2">
-          {canEdit && (
-            <label className="flex items-center gap-2">
-              Columns
-              <select
-                value={wall.columns}
-                onChange={(e) => send([{ op: 'columns', columns: Number(e.target.value) }])}
-                className="rounded-full border border-line bg-surface px-2 py-1 text-sm"
-              >
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                  <option key={n}>{n}</option>
-                ))}
-              </select>
-            </label>
-          )}
-          <button
-            type="button"
-            onClick={() => navigator.clipboard.writeText(`${location.origin}/w/${wall.id}`).then(() => setNote('Link copied.'))}
-            className="rounded-full border border-line bg-surface px-3 py-1 hover:border-accent hover:text-accent"
-          >
-            Copy link
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => navigator.clipboard.writeText(`${location.origin}/c/${wall.id}`).then(() => setNote('Link copied.'))}
+          className="rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent"
+        >
+          Copy link
+        </button>
       </div>
-      <p className="mt-2 text-sm text-ink-3" role="status">
-        {wall.tiles.length === 0
-          ? 'No covers yet.'
-          : `${wall.tiles.length} ${wall.tiles.length === 1 ? 'cover' : 'covers'}, ${wall.columns} × ${rows} on the wall${shown < wall.columns ? `, shown in ${shown} columns here` : ''}.`}
-        {note && <span className="ml-2 text-ink-2">{note}</span>}
-      </p>
 
       {canEdit ? (
         <textarea
@@ -110,72 +82,57 @@ export default function WallView({ initial }: { initial: PublicWall }) {
           key={wall.intro ?? ''}
           maxLength={MAX_INTRO}
           rows={2}
-          placeholder="A few lines about this wall — what ties it together, where it will hang."
+          placeholder="A few lines about this collection — what ties it together."
           onBlur={(e) => e.target.value.trim() !== (wall.intro ?? '') && send([{ op: 'intro', intro: e.target.value }])}
-          aria-label="A few lines about this wall"
+          aria-label="A few lines about this collection"
           className="mt-4 block w-full max-w-2xl resize-y rounded-md border border-line bg-surface px-3 py-2 text-base text-ink-2 placeholder:text-ink-3"
         />
       ) : (
         wall.intro && <p className="mt-4 max-w-2xl whitespace-pre-line text-base text-ink-2">{wall.intro}</p>
       )}
 
-      <div
-        className="mt-6 grid gap-3 rounded bg-surface-2 p-4 sm:gap-5 sm:p-8"
-        style={{ gridTemplateColumns: `repeat(${shown}, minmax(0, 1fr))` }}
-      >
-        {wall.tiles.length === 0 && (
-          <p className="col-span-full py-16 text-center text-sm text-ink-3">
-            {canEdit ? (
-              <>
-                Pick a cover on any book&rsquo;s wall and press <em>Add to wall</em>, or{' '}
-                <Link href="/walls" className="underline underline-offset-2 hover:text-accent">start from a search or a photo</Link>.
-              </>
-            ) : (
-              'This wall is empty.'
-            )}
-          </p>
-        )}
-        {wall.tiles.map((t, i) => {
-          const src = coverUrlFor(`ol:${t.coverId}`, 'M');
-          return (
-            <figure key={t.coverId} className="group relative m-0 bg-[#2a2724] p-[5px] shadow-md">
-              <Link
-                href={`/book/${t.workId}?cover=ol:${t.coverId}`}
-                className="flex aspect-[5/7] items-center justify-center bg-[#fbfaf7] p-[9%]"
-                title={t.author ? `${t.title} by ${t.author}` : t.title}
-              >
-                <span className="relative block h-full w-full">
-                  {src && <CoverImage src={src} alt={t.author ? `${t.title} by ${t.author}` : t.title} sizes="(max-width: 640px) 30vw, 180px" fit="contain" />}
-                </span>
-              </Link>
-              {canEdit && (
-                <div className="absolute inset-x-1 bottom-1 flex justify-between opacity-100 transition-opacity sm:opacity-0 sm:group-focus-within:opacity-100 sm:group-hover:opacity-100">
-                  <ToolButton label="Move left" hidden={i === 0} onClick={() => send([{ op: 'move', coverId: t.coverId, to: i - 1 }])}>←</ToolButton>
-                  <ToolButton label="Remove" onClick={() => send([{ op: 'remove', coverId: t.coverId }])}>✕</ToolButton>
-                  <ToolButton label="Move right" hidden={i === wall.tiles.length - 1} onClick={() => send([{ op: 'move', coverId: t.coverId, to: i + 1 }])}>→</ToolButton>
-                </div>
-              )}
-            </figure>
-          );
-        })}
-      </div>
+      <p className="mt-3 text-sm text-ink-3" role="status">
+        {wall.tiles.length === 0 ? 'No covers yet.' : `${wall.tiles.length} ${wall.tiles.length === 1 ? 'cover' : 'covers'}.`}
+        {note && <span className="ml-2 text-ink-2">{note}</span>}
+      </p>
 
-      {canEdit && wall.tiles.length > 0 && (
-        <p className="mt-4 text-sm text-ink-2">
-          Add more: pick a cover on any book&rsquo;s wall and press <em>Add to wall</em>, or{' '}
-          <Link href="/walls" className="underline underline-offset-2 hover:text-accent">search from the walls page</Link>.
-        </p>
+      {wall.tiles.length === 0 ? (
+        <p className="mt-8 text-sm text-ink-2">{canEdit ? moreCovers : 'This collection is empty.'}</p>
+      ) : (
+        <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5">
+          {wall.tiles.map((t, i) => {
+            const src = coverUrlFor(`ol:${t.coverId}`, 'M');
+            const label = t.author ? `${t.title} by ${t.author}` : t.title;
+            return (
+              <li key={t.coverId} className="group relative">
+                <Link href={`/book/${t.workId}?cover=ol:${t.coverId}`} title={label} className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out hover:-translate-y-1">
+                  {src && <CoverImage src={src} alt={label} sizes="(max-width: 640px) 33vw, (max-width: 1280px) 25vw, 20vw" />}
+                </Link>
+                {canEdit && (
+                  <div className="absolute inset-x-1.5 bottom-1.5 flex justify-between opacity-100 transition-opacity sm:opacity-0 sm:group-focus-within:opacity-100 sm:group-hover:opacity-100">
+                    <ToolButton label="Move left" hidden={i === 0} onClick={() => send([{ op: 'move', coverId: t.coverId, to: i - 1 }])}>←</ToolButton>
+                    <ToolButton label="Remove" onClick={() => send([{ op: 'remove', coverId: t.coverId }])}>✕</ToolButton>
+                    <ToolButton label="Move right" hidden={i === wall.tiles.length - 1} onClick={() => send([{ op: 'move', coverId: t.coverId, to: i + 1 }])}>→</ToolButton>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
       )}
 
+      {canEdit && wall.tiles.length > 0 && <p className="mt-6 text-sm">{moreCovers}</p>}
+
       {canEdit && <Showcase wall={wall} onSend={send} />}
+      {!canEdit && wall.showcase === 'shown' && <Report id={wall.id} />}
 
       {others.length > 0 && (
-        <nav className="mt-12" aria-label="Your other walls">
-          <h2 className="kicker">Your other walls</h2>
+        <nav className="mt-12" aria-label="Your other collections">
+          <h2 className="kicker">Your other collections</h2>
           <ul className="mt-2 flex flex-wrap gap-2">
             {others.map((w) => (
               <li key={w.id}>
-                <Link href={`/w/${w.id}`} className="inline-block rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent">
+                <Link href={`/c/${w.id}`} className="inline-block rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent">
                   {w.title} <span className="text-ink-3">{w.tiles.length}</span>
                 </Link>
               </li>
@@ -204,43 +161,58 @@ function ToolButton({ label, hidden, onClick, children }: { label: string; hidde
 }
 
 /**
- * Offering the wall among readers' walls (ROADMAP 5.13d). Title and paragraph
- * become public only after Julian has read them; changing either afterwards
- * sends the wall back for another look.
+ * Showing the wall among readers' walls (ROADMAP 5.13d): at once, without a
+ * review (Julian, 2026-09-28). A wall Julian took down stays down.
  */
 function Showcase({ wall, onSend }: { wall: PublicWall; onSend: (ops: WallOp[]) => void }) {
   const short = wall.tiles.length < MIN_SHOWCASE_TILES;
-  const button = 'rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent disabled:opacity-40';
   return (
     <section className="mt-10 max-w-2xl rounded-card border border-line p-4" aria-labelledby="showcase">
       <h2 id="showcase" className="text-sm font-medium text-ink">Show it to others</h2>
       {!wall.showcase && (
         <>
           <p className="mt-1 text-sm text-ink-2">
-            Offer this wall for <Link href="/walls/readers" className="underline underline-offset-2 hover:text-accent">Walls by readers</Link>. Its title and your lines become public once we have had a look; popular ones also stand among our collections.
+            Put this collection on <Link href="/collections/readers" className="underline underline-offset-2 hover:text-accent">Collections by readers</Link>, with its title and your lines. Much-visited ones also stand among our own collections.
           </p>
-          <button type="button" className={`${button} mt-3`} disabled={short} onClick={() => onSend([{ op: 'submit' }])}>
-            Offer it
+          <button
+            type="button"
+            disabled={short}
+            onClick={() => onSend([{ op: 'submit' }])}
+            className="mt-3 rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent disabled:opacity-40"
+          >
+            Show it
           </button>
           {short && <p className="mt-1 text-xs text-ink-3">It needs at least {MIN_SHOWCASE_TILES} covers first.</p>}
         </>
       )}
-      {wall.showcase === 'submitted' && (
+      {wall.showcase === 'shown' && (
         <p className="mt-1 text-sm text-ink-2">
-          Offered — waiting for a look from us. <button type="button" className="underline underline-offset-2 hover:text-accent" onClick={() => onSend([{ op: 'withdraw' }])}>Withdraw</button>
+          Shown on <Link href="/collections/readers" className="underline underline-offset-2 hover:text-accent">Collections by readers</Link>.{' '}
+          <button type="button" className="underline underline-offset-2 hover:text-accent" onClick={() => onSend([{ op: 'withdraw' }])}>Stop showing it</button>
         </p>
       )}
-      {wall.showcase === 'approved' && (
-        <p className="mt-1 text-sm text-ink-2">
-          Shown in <Link href="/walls/readers" className="underline underline-offset-2 hover:text-accent">Walls by readers</Link>. Changing the title or your lines sends it back for a look.{' '}
-          <button type="button" className="underline underline-offset-2 hover:text-accent" onClick={() => onSend([{ op: 'withdraw' }])}>Withdraw</button>
-        </p>
-      )}
-      {wall.showcase === 'declined' && (
-        <p className="mt-1 text-sm text-ink-2">
-          We did not show this one. <button type="button" className="underline underline-offset-2 hover:text-accent" onClick={() => onSend([{ op: 'submit' }])}>Offer it again</button>
-        </p>
-      )}
+      {wall.showcase === 'hidden' && <p className="mt-1 text-sm text-ink-2">We took this collection down from Collections by readers. The link still works for you and anyone you share it with.</p>}
     </section>
+  );
+}
+
+function Report({ id }: { id: string }) {
+  const [done, setDone] = useState<string | null>(null);
+  return (
+    <p className="mt-10 text-xs text-ink-3">
+      {done ?? (
+        <button
+          type="button"
+          className="underline underline-offset-2 hover:text-accent"
+          onClick={() =>
+            fetch(`/api/walls/${id}/report`, { method: 'POST' })
+              .then((r) => setDone(r.ok ? 'Thank you — we will have a look.' : 'That did not go through.'))
+              .catch(() => setDone('That did not go through.'))
+          }
+        >
+          Report this collection
+        </button>
+      )}
+    </p>
   );
 }

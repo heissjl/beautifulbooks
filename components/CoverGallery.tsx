@@ -37,6 +37,8 @@ interface CoverGalleryProps {
    * was tried on the selected tile and removed (6.55).
    */
   marked?: ReadonlySet<string>;
+  /** Open on "All languages" rather than the first language (the wall picker; Julian, 2026-09-28). */
+  allFirst?: boolean;
 }
 
 const tabKey = (g: CoverTab) => g.language ?? 'unknown';
@@ -81,7 +83,7 @@ function visibleLanguages(
   return new Set([...others.slice(0, kept), activeKey]);
 }
 
-export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked }: CoverGalleryProps) {
+export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked, allFirst }: CoverGalleryProps) {
   // The tab follows the selected cover unless the user picked a tab since
   // the selection last changed (derived state, no effect needed).
   const [picked, setPicked] = useState<{ key: string; forSelectedId: string | null } | null>(null);
@@ -96,7 +98,7 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
   const activeKey =
     picked && picked.forSelectedId === selectedId && (picked.key !== ALL || hasAll)
       ? picked.key
-      : owner ? tabKey(owner) : groups[0] ? tabKey(groups[0]) : 'unknown';
+      : allFirst && hasAll ? ALL : owner ? tabKey(owner) : groups[0] ? tabKey(groups[0]) : 'unknown';
 
   const showingAll = activeKey === ALL;
   const shown = showingAll ? allCovers : (groups.find(g => tabKey(g) === activeKey) ?? groups[0])?.covers ?? [];
@@ -241,7 +243,7 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
               </div>
               {onWall && (
                 <span className="pointer-events-none absolute left-1.5 top-1.5 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-medium text-on-accent">
-                  On wall
+                  Added
                 </span>
               )}
               {cover.similarIds && cover.similarIds.length > 0 && (

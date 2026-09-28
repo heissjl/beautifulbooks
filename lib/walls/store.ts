@@ -9,7 +9,8 @@
  * gives: API routes and pages get separate copies of a module there.
  */
 import { commandsFromEnv, type RedisCommands } from '@/lib/hotornot/store';
-import type { Wall } from './model';
+import { toPublic, type PublicWall, type Wall } from './model';
+import { pageOf, readerOrder } from './order';
 
 export interface WallStore {
   readonly kind: 'memory' | 'redis';
@@ -19,12 +20,15 @@ export interface WallStore {
   register(wall: Wall): Promise<void>;
   idsOf(ownerHash: string): Promise<string[]>;
   count(): Promise<number>;
-  /** Notes that a wall was offered for the showcase; the wall's own status decides what it is now (5.13d). */
+  /** Notes that a wall was shown among readers' walls; the wall's own status decides what it is now (5.13d). */
   submitted(id: string): Promise<void>;
   submittedIds(): Promise<string[]>;
   /** One more view of a wall by someone not its owner. Nothing about the viewer. */
   view(id: string): Promise<void>;
   views(): Promise<Map<string, number>>;
+  /** Someone pressed "Report" on a shown wall. Nothing about who. */
+  report(id: string): Promise<void>;
+  reports(): Promise<Map<string, number>>;
 }
 
 /** The store did not answer — never to be shown as "no such wall" (SPEC N12). */
@@ -45,6 +49,7 @@ export function memoryWallStore(): WallStore {
   const all: string[] = [];
   const showcase: string[] = [];
   const counts = new Map<string, number>();
+  const flags = new Map<string, number>();
   return {
     kind: 'memory',
     async get(id) {
@@ -76,6 +81,12 @@ export function memoryWallStore(): WallStore {
     async views() {
       return new Map(counts);
     },
+    async report(id) {
+      flags.set(id, (flags.get(id) ?? 0) + 1);
+    },
+    async reports() {
+      return new Map(flags);
+    },
   };
 }
 
@@ -85,6 +96,7 @@ const KEYS = {
   all: 'walls:all',
   showcase: 'walls:showcase',
   views: 'walls:views',
+  reports: 'walls:reports',
 };
 
 function parseWall(raw: unknown): Wall | null {
@@ -126,28 +138,51 @@ export function commandsWallStore(commands: RedisCommands): WallStore {
       guarded(commands.lRange(KEYS.showcase, 0, -1).then((r) => [...new Set(Array.isArray(r) ? r.filter((x): x is string => typeof x === 'string') : [])])),
     view: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.views, id, 1) : Promise.resolve()).then(() => undefined)),
     views: () => guarded(commands.hGetAll(KEYS.views).then(countsFrom)),
+    report: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.reports, id, 1) : Promise.resolve()).then(() => undefined)),
+    reports: () => guarded(commands.hGetAll(KEYS.reports).then(countsFrom)),
   };
 }
 
-/**
- * The walls shown among readers' walls: approved ones, most viewed first
- * (5.13d). Reads every submitted id and the whole view hash — fine for
- * hundreds; a sorted set is the step when it is thousands.
- */
-export async function showcased(store: WallStore): Promise<Array<{ wall: Wall; views: number }>> {
-  const [ids, views] = await Promise.all([store.submittedIds(), store.views()]);
-  const walls = await Promise.all(ids.map((id) => store.get(id)));
-  return walls
-    .filter((w): w is Wall => !!w && w.showcase === 'approved')
-    .map((wall) => ({ wall, views: views.get(wall.id) ?? 0 }))
-    .sort((a, b) => b.views - a.views || b.wall.updatedAt.localeCompare(a.wall.updatedAt));
+export interface ShownWall {
+  wall: Wall;
+  views: number;
+  reports: number;
 }
 
-/** Walls waiting for Julian's look, oldest first. */
-export async function awaitingReview(store: WallStore): Promise<Wall[]> {
-  const ids = await store.submittedIds();
+/**
+ * Every wall its owner shows among readers' walls, with its views and
+ * reports (5.13d). Reads every listed id and both count hashes — fine for
+ * hundreds; a sorted set is the step when it is thousands.
+ */
+export async function listedWalls(store: WallStore): Promise<ShownWall[]> {
+  const [ids, views, reports] = await Promise.all([store.submittedIds(), store.views(), store.reports()]);
   const walls = await Promise.all(ids.map((id) => store.get(id)));
-  return walls.filter((w): w is Wall => !!w && w.showcase === 'submitted');
+  return walls
+    .filter((w): w is Wall => !!w && !!w.showcase)
+    .map((wall) => ({ wall, views: views.get(wall.id) ?? 0, reports: reports.get(wall.id) ?? 0 }));
+}
+
+/** The shown ones only, for the public page. */
+export async function shownWalls(store: WallStore): Promise<ShownWall[]> {
+  return (await listedWalls(store)).filter((s) => s.wall.showcase === 'shown');
+}
+
+/** One page of the public list in a visit's order (5.13d): shared by the page and its route. */
+export async function readersPage(
+  store: WallStore,
+  seed: number,
+  offset: number,
+  now: number = Date.now(),
+): Promise<{ walls: PublicWall[]; next: number | null; total: number }> {
+  const shown = await shownWalls(store);
+  const ordered = readerOrder(shown.map((s) => ({ ...s, id: s.wall.id, createdOn: s.wall.createdOn })), seed, now);
+  const page = pageOf(ordered, offset);
+  return { walls: page.items.map((s) => toPublic(s.wall)), next: page.next, total: ordered.length };
+}
+
+/** For Julian: shown and hidden walls, the most reported first. */
+export async function moderationList(store: WallStore): Promise<ShownWall[]> {
+  return (await listedWalls(store)).sort((a, b) => b.reports - a.reports || b.wall.updatedAt.localeCompare(a.wall.updatedAt));
 }
 
 const shared = globalThis as typeof globalThis & { __wallsDevMemory?: WallStore };
@@ -156,6 +191,10 @@ export function wallStoreFromEnv(env: Record<string, string | undefined> = proce
   const commands = commandsFromEnv(env);
   if (commands) return commandsWallStore(commands);
   if (env.NODE_ENV === 'production') return null;
-  shared.__wallsDevMemory ??= memoryWallStore();
+  // Hot reloading keeps the old instance on globalThis; one that lacks a method
+  // this code has would answer "did not answer" for a store that is fine
+  // (found twice on 2026-09-28). Dev only, and its walls are scratch anyway.
+  const fresh = memoryWallStore();
+  if (!shared.__wallsDevMemory || Object.keys(fresh).some((k) => !(k in (shared.__wallsDevMemory as object)))) shared.__wallsDevMemory = fresh;
   return shared.__wallsDevMemory;
 }

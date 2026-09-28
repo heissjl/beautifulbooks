@@ -74,7 +74,7 @@ export default function WallPicker({
   function toggle(cover: Cover) {
     if (!view || busy) return;
     if (!cover.id.startsWith('ol:')) {
-      setError('This image comes from Google Books and cannot go on a wall yet.');
+      setError('This image comes from Google Books and cannot go into a collection yet.');
       return;
     }
     const ids = new Set([cover.id, ...(cover.similarIds ?? [])]);
@@ -82,14 +82,14 @@ export default function WallPicker({
     const editions = cover.editionIds.map((id) => view.editionsById.get(id)).filter((e): e is EditionView => !!e);
     const tile: Tile = { workId: view.work.id, coverId: cover.id.slice(3), title: view.work.title, ...(view.work.authors[0] ? { author: view.work.authors[0] } : {}), printings: printingsOf(editions) };
     if (!target) {
-      change(() => postJson('/api/walls', { title: 'My wall', tiles: [tile] }));
+      change(() => postJson('/api/walls', { title: 'My collection', tiles: [tile] }));
       return;
     }
     const ops: WallOp[] = onIt.length ? onIt.map((t) => ({ op: 'remove', coverId: t.coverId })) : [{ op: 'add', tile }];
     change(() => postJson(`/api/walls/${target.id}`, { ops }));
   }
 
-  const newWall = () => change(() => postJson('/api/walls', { title: walls.length ? `Wall ${walls.length + 1}` : 'My wall' }));
+  const newWall = () => change(() => postJson('/api/walls', { title: walls.length ? `Collection ${walls.length + 1}` : 'My collection' }));
 
   return (
     <section id="picker" aria-labelledby="picker-title" className="mt-12 border-t border-line pt-8">
@@ -124,7 +124,7 @@ export default function WallPicker({
           <select
             value={target?.id}
             onChange={(e) => (e.target.value === NEW ? newWall() : onTarget(e.target.value))}
-            aria-label="Which wall"
+            aria-label="Which collection"
             className="max-w-[14rem] truncate rounded-full border border-line bg-bg px-2 py-1 text-sm text-ink"
           >
             {walls.map((w) => (
@@ -132,12 +132,12 @@ export default function WallPicker({
                 {w.title} ({w.tiles.length})
               </option>
             ))}
-            <option value={NEW}>A new wall</option>
+            <option value={NEW}>A new collection</option>
           </select>
         ) : (
-          <span className="text-sm text-ink">a new wall, made with your first cover</span>
+          <span className="text-sm text-ink">a new collection, made with your first cover</span>
         )}
-        <ul className="flex min-w-0 flex-1 gap-1 overflow-x-auto" aria-label="On this wall">
+        <ul className="flex min-w-0 flex-1 gap-1 overflow-x-auto" aria-label="In this collection">
           {(target?.tiles ?? []).map((t) => (
             <li key={t.coverId} className="relative h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-surface-2" title={t.title}>
               <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'S') ?? ''} alt={t.title} sizes="32px" />
@@ -145,8 +145,8 @@ export default function WallPicker({
           ))}
         </ul>
         {target && (
-          <Link href={`/w/${target.id}`} className="whitespace-nowrap text-sm text-ink-2 underline underline-offset-2 hover:text-accent">
-            Open wall
+          <Link href={`/c/${target.id}`} className="whitespace-nowrap text-sm text-ink-2 underline underline-offset-2 hover:text-accent">
+            Open collection
           </Link>
         )}
       </div>
@@ -157,7 +157,7 @@ export default function WallPicker({
         {pages.status === 'error' && <p className="text-sm text-accent">{pages.message ?? 'Open Library did not answer. Try again in a moment.'}</p>}
         {view && view.groups.length === 0 && pages.merged?.done && <p className="text-sm text-ink-2">Neither catalogue has a cover for this book.</p>}
         {view && view.groups.length > 0 && (
-          <CoverGallery groups={view.groups} allCovers={view.all} selectedCover={null} onSelectCover={toggle} captions={view.captions} marked={marked} />
+          <CoverGallery groups={view.groups} allCovers={view.all} selectedCover={null} onSelectCover={toggle} captions={view.captions} marked={marked} allFirst />
         )}
       </div>
     </section>

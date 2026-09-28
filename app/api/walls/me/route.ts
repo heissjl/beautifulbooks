@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { isVisitorId, toPublic } from '@/lib/walls/model';
+import { isVisitorId, normalVisitorId, toPublic } from '@/lib/walls/model';
 import { hashVisitor } from '@/lib/walls/owner';
 import { wallsOf } from '@/lib/walls/store';
 import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from '../guard';
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const body = await readJson(request);
-  const id = typeof body?.visitor === 'string' ? body.visitor.trim() : '';
+  const id = typeof body?.visitor === 'string' ? normalVisitorId(body.visitor) : '';
   if (!isVisitorId(id)) return json({ error: 'That is not an ID from this site.' }, 400);
   try {
     const walls = (await wallsOf(open.store, hashVisitor(id))).map(toPublic);

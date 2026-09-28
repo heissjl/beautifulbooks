@@ -94,7 +94,7 @@ export default async function Home({ searchParams }: HomeProps) {
                     </Link>
                   </p>
                   {/* The reader's own wall (5.13b): the second invitation, same form, behind its switch. */}
-                  {wallsEnabled() && <WallsInvite className="mt-2">Or gather the covers you love into a wall to frame</WallsInvite>}
+                  {wallsEnabled() && <WallsInvite className="mt-2">Or create your own collection of covers</WallsInvite>}
                 </div>
               )}
               <div className="max-w-3xl">

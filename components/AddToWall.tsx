@@ -47,7 +47,7 @@ interface AddToWallProps {
 }
 
 /**
- * "Add to wall" under the picked cover (ROADMAP 5.13a). Only Open Library
+ * "Add to collection" under the picked cover (ROADMAP 5.13a). Only Open Library
  * covers: a wall rebuilds its images from the numeric id, which a Google
  * volume does not have.
  */
@@ -83,7 +83,7 @@ export default function AddToWall({ workId, title, author, cover, editions }: Ad
 
   const create = () =>
     run(async () => {
-      const made = await postJson<{ wall: PublicWall }>('/api/walls', { title: me.walls.length ? `Wall ${me.walls.length + 1}` : 'My wall', tiles: [tile] });
+      const made = await postJson<{ wall: PublicWall }>('/api/walls', { title: me.walls.length ? `Collection ${me.walls.length + 1}` : 'My collection', tiles: [tile] });
       // The first wall set the cookie; ask again so the ID is known here too.
       const mine = await fetch('/api/walls/me', { cache: 'no-store' }).then((r) => r.json() as Promise<{ visitor: string | null }>).catch(() => ({ visitor: null }));
       setMe((m) => ({ ...m, visitor: mine.visitor ?? m.visitor }));
@@ -106,7 +106,7 @@ export default function AddToWall({ workId, title, author, cover, editions }: Ad
             onTarget ? 'border border-accent text-accent hover:bg-accent hover:text-on-accent' : 'bg-ink text-bg hover:bg-accent'
           }`}
         >
-          {onTarget ? 'On your wall ✓' : '+ Add to wall'}
+          {onTarget ? 'In your collection ✓' : '+ Add to collection'}
         </button>
         {me.walls.length > 0 && (
           <select
@@ -118,7 +118,7 @@ export default function AddToWall({ workId, title, author, cover, editions }: Ad
                 writeTarget(e.target.value);
               }
             }}
-            aria-label="Which wall"
+            aria-label="Which collection"
             className="w-[7.5rem] truncate rounded-full border border-line bg-surface px-2 py-1 text-xs text-ink-2"
           >
             {me.walls.map((w) => (
@@ -126,11 +126,11 @@ export default function AddToWall({ workId, title, author, cover, editions }: Ad
                 {w.title} ({w.tiles.length})
               </option>
             ))}
-            <option value={NEW}>New wall with this cover</option>
+            <option value={NEW}>New collection with this cover</option>
           </select>
         )}
         {target && (
-          <Link href={`/w/${target.id}`} title={`Open ${target.title}`} className="whitespace-nowrap text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
+          <Link href={`/c/${target.id}`} title={`Open ${target.title}`} className="whitespace-nowrap text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
             Open
           </Link>
         )}
