@@ -137,7 +137,7 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
         </section>
       )}
 
-      <div className="mt-12 grid gap-12 lg:grid-cols-2">
+      <div className={`mt-12 grid gap-12 ${photoOn ? 'lg:grid-cols-2' : 'max-w-2xl'}`}>
         <section aria-labelledby="by-search">
           <h2 id="by-search" className={heading}>Start from a book</h2>
           <p className="mt-2 text-sm text-ink-2">Find a book and pick the covers you love from all the ones it has had.</p>
@@ -190,11 +190,14 @@ export default function WallsStart({ photoOn }: { photoOn: boolean }) {
           <WallSample onCreate={createWall} />
         </section>
 
-        <section aria-labelledby="by-photo">
-          <h2 id="by-photo" className={heading}>Start from a photo</h2>
-          <p className="mt-2 text-sm text-ink-2">Photograph a shelf or a pile of books. We read the titles and make a collection of them.</p>
-          <WallPhoto photoOn={photoOn} onCreate={createWall} />
-        </section>
+        {/* Without a key the photo cannot be read, so the section is not shown at all (Julian, 2026-09-28). */}
+        {photoOn && (
+          <section aria-labelledby="by-photo">
+            <h2 id="by-photo" className={heading}>Start from a photo</h2>
+            <p className="mt-2 text-sm text-ink-2">Photograph a shelf or a pile of books. We read the titles and make a collection of them.</p>
+            <WallPhoto photoOn={photoOn} onCreate={createWall} />
+          </section>
+        )}
       </div>
 
       {workId && (
