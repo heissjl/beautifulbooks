@@ -26805,6 +26805,99 @@
         }
       ],
       "coverCredits": "artwork"
+    },
+    {
+      "slug": "fischer-bucherei-covers-by-heinz-edelmann",
+      "title": "Fischer Bücherei — covers by Heinz Edelmann",
+      "kind": "series",
+      "intro": "In 1966–68 Heinz Edelmann drew a run of covers for the Fischer Bücherei that Sammlung Keller calls style-defining for the series layout: a coloured band with the fish logo, the author and title set in black, and below them a full picture in his flat, bright colours of those years, a year or two before Yellow Submarine. These are the ten Sammlung Keller shows.",
+      "published": false,
+      "publishers": [
+        "Fischer Bücherei",
+        "Fischer"
+      ],
+      "works": [
+        {
+          "id": "OL46028870W",
+          "title": "Kabbala der Liebe",
+          "author": "Maude Hutchins",
+          "coverId": "ol:15259602",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602755M"
+        },
+        {
+          "id": "OL5004021W",
+          "title": "Bänkelbuch",
+          "author": "Eric Singer",
+          "coverId": "ol:15259570",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5647667M"
+        },
+        {
+          "id": "OL43448330W",
+          "title": "Weihrauch und Pumpernickel",
+          "author": "Otto Jägersberg",
+          "coverId": "ol:15259571",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL59210397M"
+        },
+        {
+          "id": "OL4918191W",
+          "title": "Der Kandelaber",
+          "author": "Martin Gregor-Dellin",
+          "coverId": "ol:15259572",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5676271M"
+        },
+        {
+          "id": "OL46028871W",
+          "title": "Zwölf um ein Bett",
+          "author": "Monica Dickens",
+          "coverId": "ol:15259605",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602756M"
+        },
+        {
+          "id": "OL46028873W",
+          "title": "Fusstritt aus Liebe und andere Erzählungen",
+          "author": "William Saroyan",
+          "coverId": "ol:15259606",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602758M"
+        },
+        {
+          "id": "OL38417732W",
+          "title": "Durch afrikanische Türen",
+          "author": "Janheinz Jahn",
+          "coverId": "ol:15259573",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL52274064M"
+        },
+        {
+          "id": "OL6699405W",
+          "title": "Der Knabe auf dem Delphin",
+          "author": "David Divine",
+          "coverId": "ol:15259607",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602759M"
+        },
+        {
+          "id": "OL46028872W",
+          "title": "Drei Komödien",
+          "author": "George Bernard Shaw",
+          "coverId": "ol:15259608",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602757M"
+        },
+        {
+          "id": "OL466921W",
+          "title": "Die Legende vom heiligen Trinker und andere Erzählungen",
+          "author": "Joseph Roth",
+          "coverId": "ol:15259574",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5261921M"
+        }
+      ]
     }
   ]
 }

@@ -3327,3 +3327,7 @@ Julian: „drafte virago mit belegten gemälden".
   - Unvollständig: sechs nennen nur den Bildtitel. *Good Daughters* widerspricht LibraryThing (Scan: Gunn, „Portrait of Ray Fuller"). Drei Bilder sind keine Gemälde (zwei Vogue-Titel, ein Bild im Stil Beardsleys).
 - **45 ohne Nachweis.** Weder ein Scan desselben Drucks noch ein Sammlerbeitrag nennt das Bild. Blogs wurden nicht durchsucht.
 - Nur Open Library, nie Google. In `data/collections.json` als Entwurf, online als Entwurf `vE6GEpRDRVeA`. Den Einleitungstext hat der Agent nur aus belegten Fakten formuliert.
+
+## 2026-09-28 — Entwurf Fischer Bücherei, Umschläge von Heinz Edelmann (ROADMAP 5.10)
+
+Julian zeigte den Abschnitt bei Sammlung Keller, den er mit „Inspiration" gemeint hatte: „Fischer Bücherei, stilbildende Umschläge für das Serienlayout von Heinz Edelmann". Das sind Edelmanns eigene Umschläge und genau die zehn, die am selben Tag bei Open Library angelegt oder bebildert wurden (Nr. 758, 760, 781, 794, 796, 807, 821, 832, 849, 861, 1966–69). Die Recherche des Agenten nach fremden Vorbildern (`lab/collections/research/edelmann-inspirations.md`) ging also von einer falschen Lesart aus. Neue Liste `lab/collections/lists/fischer-buecherei-edelmann.json`; der Entwurf `fischer-bucherei-covers-by-heinz-edelmann` hat 10 von 10 Covern und liegt online als Entwurf. Der Slug folgt der Adresse, die der Server aus dem Titel bildet („Bücherei" → „bucherei").
