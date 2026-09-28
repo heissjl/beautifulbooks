@@ -26,3 +26,12 @@ describe('starting from another collection (5.13k)', () => {
     expect(tilesFromWall(wall).tiles).toEqual(wall.tiles);
   });
 });
+
+describe('options on /create (5.13k)', () => {
+  it('says how many covers a collection has and how many go in', async () => {
+    const { curatedOption } = await import('../walls/jumpstart');
+    const works = Array.from({ length: 76 }, (_, i) => ({ id: `OL${i + 1}W`, title: `T${i}`, author: 'A', coverId: i + 1 }));
+    expect(curatedOption({ slug: 'feminist-press', title: 'Feminist Press', works })).toMatchObject({ count: 76, taken: 60, covers: ['1', '2', '3', '4'] });
+    expect(curatedOption({ slug: 'x', title: 'X', works: [{ id: 'OL1W', title: 'T', author: 'A', coverId: 0, image: '/c.jpg' }] })).toBeNull();
+  });
+});

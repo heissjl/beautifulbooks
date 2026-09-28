@@ -9,6 +9,25 @@ import WallsStart from '@/components/WallsStart';
 import { hasApiKey } from '@/lib/recognize';
 import { SITE_URL } from '@/lib/seo';
 import { wallsEnabled } from '@/lib/walls/switch';
+import { liveCollections } from '@/lib/collections-live';
+import { curatedOption, readerOption, type StartOption } from '@/lib/walls/jumpstart';
+import { toPublic } from '@/lib/walls/model';
+import { shownWalls, wallStoreFromEnv } from '@/lib/walls/store';
+
+/** Readers' collections offered to start from: the most visited, a page's worth. */
+const READER_OPTIONS = 30;
+
+/** Published curated collections and shown readers' ones, as small options (5.13k); a silent store leaves the readers' out. */
+async function startOptions(): Promise<StartOption[]> {
+  const curated = (await liveCollections({ includeDrafts: false }).catch(() => [])).map(curatedOption);
+  const store = wallStoreFromEnv();
+  const shown = store ? await shownWalls(store).catch(() => []) : [];
+  const readers = shown
+    .sort((a, b) => b.views - a.views)
+    .slice(0, READER_OPTIONS)
+    .map((s) => readerOption(toPublic(s.wall)));
+  return [...curated, ...readers].filter((o): o is StartOption => !!o);
+}
 
 /**
  * Where a reader's own wall begins (ROADMAP 5.13a, SPEC F9): from a book (picked here,
@@ -22,8 +41,9 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
-export default function WallsPage() {
+export default async function WallsPage() {
   if (!wallsEnabled()) notFound();
+  const options = await startOptions();
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
@@ -34,7 +54,7 @@ export default function WallsPage() {
           <Link href="/collections/readers" className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">See collections by readers</Link>.
         </p>
         <Suspense>
-          <WallsStart photoOn={hasApiKey()} />
+          <WallsStart photoOn={hasApiKey()} startOptions={options} />
         </Suspense>
       </main>
       <SiteFooter />

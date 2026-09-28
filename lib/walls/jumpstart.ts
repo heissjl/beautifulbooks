@@ -38,3 +38,28 @@ export function tilesFromCurated(works: readonly WallWork[]): StartedTiles {
 export function tilesFromWall(wall: PublicWall): StartedTiles {
   return { tiles: wall.tiles.slice(0, MAX_TILES).map((t) => ({ ...t, printings: [...t.printings] })), skipped: 0, capped: Math.max(0, wall.tiles.length - MAX_TILES) };
 }
+
+/** What the /create page needs to offer a collection to start from: no more than a card shows. */
+export interface StartOption {
+  kind: 'curated' | 'reader';
+  /** Slug for a curated collection, id for a reader's. */
+  key: string;
+  title: string;
+  by?: string;
+  count: number;
+  /** How many of them go in: a collection holds MAX_TILES. */
+  taken: number;
+  /** Up to four Open Library cover ids for the preview. */
+  covers: string[];
+}
+
+export function curatedOption(c: { slug: string; title: string; works: readonly WallWork[] }): StartOption | null {
+  const { tiles, capped } = tilesFromCurated(c.works);
+  if (tiles.length === 0) return null;
+  return { kind: 'curated', key: c.slug, title: c.title, count: tiles.length + capped, taken: tiles.length, covers: tiles.slice(0, 4).map((t) => t.coverId) };
+}
+
+export function readerOption(w: PublicWall): StartOption | null {
+  if (w.tiles.length === 0) return null;
+  return { kind: 'reader', key: w.id, title: w.title, ...(w.by ? { by: w.by } : {}), count: w.tiles.length, taken: Math.min(w.tiles.length, MAX_TILES), covers: w.tiles.slice(0, 4).map((t) => t.coverId) };
+}
