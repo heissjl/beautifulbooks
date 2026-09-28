@@ -1,25 +1,14 @@
 /**
- * A reader's own cover wall, saved without an account (lab/walls, ROADMAP 5.13).
+ * A reader's own cover wall (ROADMAP 5.13, 5.13a; SPEC F9, E22). Pure and
+ * safe in the browser: types, limits, the operations a page may send, and
+ * the check of a tile. Who owns a wall is `lib/walls/owner.ts` (server only,
+ * it hashes); where walls live is `lib/walls/store.ts`.
  *
- * Pure: no network, no file system, no clock except where a date is passed in.
- * The server in `serve.ts` holds walls in a file; the website, if this is ever
- * promoted, would hold them in the cover game's Redis (SPEC F7.3).
- *
- * **How a wall is kept without a login** — as taketest.xyz does it (decision
- * E22, Julian 2026-09-28, which lifts N11 for this feature):
- *
- * - a browser that makes its first wall gets a random **visitor id** in a
- *   cookie; a reader who only looks at walls gets none;
- * - the page shows the id in its footer with a Save button: pasting it on
- *   another device makes that device the same visitor;
- * - the server keeps only the SHA-256 of the id on each wall it owns, so a
- *   leaked store neither edits a wall nor reveals whose it is;
- * - a wall has a public id for its view link; only its owner changes it.
- *
- * Nothing else about the reader is stored: no IP, no user agent, no referrer.
+ * A wall is a title, a column count and a list of covers. Each cover keeps
+ * the printings known to have carried it, so the wall can later become a
+ * shopping list (stage 2 of PLAN-5.13) — an ISBN names a printing, not the
+ * picture (E8), so the list is where a search starts, not a promise.
  */
-import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
-
 /** One framed cover. Carries enough to buy the book later (stage 2 of the plan). */
 export interface Tile {
   workId: string;
@@ -68,49 +57,15 @@ const VISITOR = /^[A-Za-z0-9_-]{22}$/;
 const WORK = /^OL\d+W$/;
 const COVER = /^\d{1,12}$/;
 
+/** Ten characters from [a-z0-9]: the public id in `/w/<id>`. */
 export const isWallId = (s: unknown): s is string => typeof s === 'string' && ID.test(s);
 export const isVisitorId = (s: unknown): s is string => typeof s === 'string' && VISITOR.test(s);
 
-/** Ten characters from a 36-letter alphabet: ~51 bits, enough that ids are not guessed in sequence. */
-export function newWallId(bytes: Buffer = randomBytes(10)): string {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  return [...bytes].map((b) => alphabet[b % 36]).join('');
-}
-
-/** A new visitor id: 128 random bits, base64url. */
-export function newVisitorId(bytes: Buffer = randomBytes(16)): string {
-  return bytes.toString('base64url');
-}
-
-export function hashVisitor(visitor: string): string {
-  return createHash('sha256').update(visitor).digest('hex');
-}
-
-/** Constant-time check: does this visitor own the wall? */
-export function isOwner(wall: Pick<Wall, 'ownerHash'>, visitor: unknown): boolean {
-  if (!isVisitorId(visitor)) return false;
-  const a = Buffer.from(hashVisitor(visitor), 'hex');
-  const b = Buffer.from(wall.ownerHash, 'hex');
-  return a.length === b.length && timingSafeEqual(a, b);
-}
-
-export function newWall(id: string, visitor: string, title: string, today: string): Wall {
-  return {
-    id,
-    ownerHash: hashVisitor(visitor),
-    title: cleanTitle(title) || 'Untitled wall',
-    columns: DEFAULT_COLUMNS,
-    tiles: [],
-    createdOn: today,
-    updatedAt: today,
-  };
-}
-
-export function toPublic(wall: Wall): PublicWall {
+export function toPublic(wall: Wall | PublicWall): PublicWall {
   return { id: wall.id, title: wall.title, columns: wall.columns, tiles: wall.tiles, createdOn: wall.createdOn, updatedAt: wall.updatedAt };
 }
 
-function cleanTitle(raw: unknown): string {
+export function cleanTitle(raw: unknown): string {
   return typeof raw === 'string' ? raw.replace(/\s+/g, ' ').trim().slice(0, MAX_TITLE) : '';
 }
 
@@ -128,7 +83,7 @@ export type WallOp =
 
 export class WallError extends Error {}
 
-export function applyOp(wall: Wall, op: WallOp, now: string): Wall {
+export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string): W {
   const next = { ...wall, tiles: [...wall.tiles], updatedAt: now };
   switch (op.op) {
     case 'add': {
@@ -204,11 +159,3 @@ export function shoppingList(wall: PublicWall): string {
   return [`${wall.title} — ${wall.tiles.length} covers, ${wall.columns} columns`, ...lines].join('\n');
 }
 
-/** The walls a visitor owns, newest change first — the "Your walls" row. */
-export function ownedBy(walls: readonly Wall[], visitor: unknown): PublicWall[] {
-  if (!isVisitorId(visitor)) return [];
-  return walls
-    .filter((w) => isOwner(w, visitor))
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
-    .map(toPublic);
-}

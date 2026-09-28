@@ -3,7 +3,7 @@
  * printings that carried it (pure; lab/walls).
  */
 import type { SourceEdition } from '../../lib/model';
-import { MAX_PRINTINGS, type Printing } from './model';
+import { MAX_PRINTINGS, type Printing } from '../../lib/walls/model';
 
 export interface PickableCover {
   coverId: string;

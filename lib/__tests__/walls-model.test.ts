@@ -1,21 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import {
   applyOp,
-  hashVisitor,
-  isOwner,
   isVisitorId,
   isWallId,
   MAX_TILES,
-  newVisitorId,
-  newWall,
-  ownedBy,
-  newWallId,
   shoppingList,
   toPublic,
   validTile,
   WallError,
   type Tile,
-} from '../model';
+} from '../walls/model';
+import { hashVisitor, isOwner, newVisitorId, newWall, newWallId, ownedBy } from '../walls/owner';
 
 const ME = newVisitorId(Buffer.alloc(16, 7));
 const YOU = newVisitorId(Buffer.alloc(16, 8));
@@ -62,7 +57,7 @@ describe('ids and owners', () => {
 describe('operations', () => {
   it('cleans the title', () => {
     expect(wall().title).toBe('My hallway');
-    expect(newWall('abcdefghij', ME, '   ', 'd').title).toBe('Untitled wall');
+    expect(newWall('abcdefghij', ME, '   ', 'd').title).toBe('My wall');
   });
 
   it('adds a cover once and keeps order', () => {

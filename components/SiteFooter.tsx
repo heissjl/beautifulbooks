@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { commerceEnabled } from '@/lib/sitemode';
+import { wallsEnabled } from '@/lib/walls/switch';
 
 /**
  * The same footer under every page (SPEC F6).
@@ -13,7 +14,12 @@ import { commerceEnabled } from '@/lib/sitemode';
  * In hobby mode (E20) the commission sentence is left out rather than
  * softened: no link earns anything, and saying "may" would be untrue (N12).
  */
-export default function SiteFooter() {
+/**
+ * `walls` must be passed by a client component (the book page): in the
+ * browser the switch cannot read its variables and would say "on".
+ */
+export default function SiteFooter({ walls }: { walls?: boolean } = {}) {
+  const showWalls = walls ?? wallsEnabled();
   const link = 'text-ink-2 underline underline-offset-2 hover:text-accent';
   return (
     <footer className="border-t border-line">
@@ -21,6 +27,7 @@ export default function SiteFooter() {
         <p>Data from Open Library and Google Books. Cover images belong to their publishers.</p>
         <p className="flex items-center gap-4">
           {commerceEnabled() && <span>Purchase links may earn us a commission.</span>}
+          {showWalls && <Link href="/walls" className={link}>Your wall</Link>}
           <Link href="/about" className={link}>About</Link>
           <Link href="/contact" className={link}>Impressum</Link>
           <Link href="/privacy" className={link}>Privacy</Link>

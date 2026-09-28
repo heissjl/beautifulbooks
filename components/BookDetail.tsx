@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
@@ -17,6 +17,7 @@ import MoreBelow from '@/components/MoreBelow';
 import { useOverflowsY } from '@/components/useOverflowsY';
 import LocalShops from '@/components/LocalShops';
 import SiteFooter from '@/components/SiteFooter';
+import AddToWall from '@/components/AddToWall';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
@@ -67,12 +68,20 @@ function BackLink({ href, toResults }: { href: string; toResults: boolean }) {
   );
 }
 
+/**
+ * Whether readers' walls are on (ROADMAP 5.13a), decided on the server and
+ * handed down: this component renders in the browser, where the switch cannot
+ * read its variables.
+ */
+const WallsOn = createContext(false);
+
 function Shell({ children, backHref, toResults, right }: { children: React.ReactNode; backHref: string; toResults: boolean; right?: React.ReactNode }) {
+  const walls = useContext(WallsOn);
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader left={<BackLink href={backHref} toResults={toResults} />} right={right} search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
-      <SiteFooter />
+      <SiteFooter walls={walls} />
     </div>
   );
 }
@@ -383,6 +392,7 @@ function BookDetail() {
       cover={selected}
       editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
       coversPerEdition={view.coversPerEdition}
+      workId={work.id}
       workTitle={work.title}
       anyEditionLinks={pages.anyEditionLinks}
       editionsByScan={view.editionsByScan}
@@ -548,6 +558,7 @@ function ScanProgress({ checked, total, done }: { checked: number; total: number
 }
 
 interface CoverDetailsProps {
+  workId: string;
   cover: Cover;
   editions: EditionView[];
   coversPerEdition: ReadonlyMap<string, number>;
@@ -622,7 +633,10 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   );
 }
 
-function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+  const wallsOn = useContext(WallsOn);
+  const isDesktop = useIsDesktop();
+  const addToWall = wallsOn ? <AddToWall workId={workId} title={workTitle} author={author} cover={cover} editions={editions} /> : null;
   /*
     Every scan that was folded into this tile, the representative first
     (ROADMAP 6.14). Folding is right on the wall — without it *The Great
@@ -670,7 +684,18 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
         the same control is in the bar beside "Details", so it is hidden here
         rather than shown twice. (Julian, 2026-09-09.)
       */}
-      {share && <div className="mb-3 hidden justify-end lg:flex">{share}</div>}
+      {/*
+        On a wide screen "Add to wall" shares this row with Share, so the
+        first shop stays where it was; a separate row pushed it 40 px further
+        below an 800 px window (ROADMAP 5.13a, measured 2026-09-28). One
+        instance, never a CSS-hidden twin (useIsDesktop).
+      */}
+      {(share || addToWall) && (
+        <div className="mb-3 hidden items-start justify-between gap-2 lg:flex">
+          <div>{isDesktop && addToWall}</div>
+          {share}
+        </div>
+      )}
       {/*
         In the phone sheet the cover shares the screen with the very links the
         reader opened the sheet for, so it stays small enough that the first
@@ -692,6 +717,11 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
         Image from {shownScan.startsWith('gb:') ? 'Google Books' : 'Open Library'}
         {editions.length > 1 ? ` · on ${editions.length} editions` : ''}
       </p>
+      {/*
+        A reader's own wall (ROADMAP 5.13a): the picked cover, not the scan on
+        screen — a wall keeps the design, and the folded scans are the same one.
+      */}
+      {!isDesktop && addToWall && <div className="mt-3">{addToWall}</div>}
 
       {scans.length > 1 && (
         <section className="mt-4" aria-label="Scans folded into this tile">
@@ -1093,10 +1123,12 @@ function shopLinkTitle(link: BuyLink): string {
  * description, Open Graph image and structured data (SPEC §10 D10). Nothing
  * about the behaviour changed in the move.
  */
-export default function BookDetailPage() {
+export default function BookDetailPage({ walls = false }: { walls?: boolean }) {
   return (
-    <Suspense>
-      <BookDetail />
-    </Suspense>
+    <WallsOn.Provider value={walls}>
+      <Suspense>
+        <BookDetail />
+      </Suspense>
+    </WallsOn.Provider>
   );
 }

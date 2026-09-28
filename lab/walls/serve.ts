@@ -19,21 +19,8 @@ import { join } from 'node:path';
 import { getEditionsPage, getWork, searchWorks } from '../../lib/sources/openlibrary';
 import { parseEditions, type OlEditionEntry } from '../../lib/sources/openlibrary-parse';
 import { coversFromEditions, type PickableCover } from './covers';
-import {
-  applyOp,
-  isOwner,
-  isVisitorId,
-  isWallId,
-  newVisitorId,
-  newWall,
-  newWallId,
-  ownedBy,
-  shoppingList,
-  toPublic,
-  WallError,
-  type Wall,
-  type WallOp,
-} from './model';
+import { applyOp, isVisitorId, isWallId, shoppingList, toPublic, WallError, type Wall, type WallOp } from '../../lib/walls/model';
+import { isOwner, newVisitorId, newWall, newWallId, ownedBy } from '../../lib/walls/owner';
 
 const PORT = Number(process.env.PORT ?? 4325);
 const HERE = __dirname;
@@ -94,7 +81,6 @@ function setVisitor(res: ServerResponse, visitor: string): void {
 /** A write must come as JSON: a cross-site form cannot send that without a preflight. */
 const isJson = (req: IncomingMessage) => (req.headers['content-type'] ?? '').startsWith('application/json');
 
-const today = () => new Date().toISOString().slice(0, 10);
 
 createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://localhost:${PORT}`);
@@ -139,7 +125,7 @@ createServer(async (req, res) => {
       const walls = load();
       let id = newWallId();
       while (walls[id]) id = newWallId();
-      walls[id] = newWall(id, visitor, title ?? '', today());
+      walls[id] = newWall(id, visitor, title ?? '', new Date().toISOString());
       save(walls);
       return send(res, 201, { wall: toPublic(walls[id]), visitor });
     }

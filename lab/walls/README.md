@@ -27,7 +27,7 @@ Die erste Fassung (Schlüssel je Wand, Bearbeitungslink, Schlüsselbund; N11-tre
 
 | Datei | |
 |---|---|
-| `model.ts` | Wand, Besitzer (Hash der Besucher-ID), Operationen, Einkaufsliste — rein, getestet |
+| `../../lib/walls/` | Modell und Besitzer liegen seit dem MVP (5.13a) in `lib/walls/`; das Lab importiert sie von dort |
 | `covers.ts` | Ausgaben → wählbare Cover mit ihren Drucken — rein, getestet an der Gatsby-Fixture |
 | `serve.ts` | lokaler Server, Speicher `walls.json` (git-ignoriert) |
 | `index.html` | die ganze Oberfläche |
@@ -36,4 +36,4 @@ Die erste Fassung (Schlüssel je Wand, Bearbeitungslink, Schlüsselbund; N11-tre
 
 **Gebaut und durchgespielt am 2026-09-28** ([Historie](../../docs/history.md)), am selben Abend auf E22 umgebaut: 12 Tests; im Browser keine ID vor der ersten Wand, eine danach; ein Gerät ohne Cookie sieht die Wand schreibgeschützt und bekommt sie per eingefügter ID zurück; per `curl` 403 für eine fremde ID, kein Cookie für bloßes Schauen; 390 px ohne Überbreite. **12 von 12 Kacheln tragen eine ISBN.**
 
-**Nächster Schritt: das MVP auf der Seite (5.13a).** Die Auswahl faltet hier nicht — dasselbe Motiv kann zweimal auf die Wand. Auf der Seite gehört „Add to my wall“ deshalb an die gefaltete Wand der Buchseite, nicht in einen eigenen Picker.
+**Das MVP auf der Seite ist gebaut (5.13a, SPEC F9), noch nicht deployt.** Die Auswahl faltet hier nicht — dasselbe Motiv kann zweimal auf die Wand. Auf der Seite gehört „Add to my wall“ deshalb an die gefaltete Wand der Buchseite, nicht in einen eigenen Picker.
