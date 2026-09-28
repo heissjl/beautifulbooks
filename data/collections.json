@@ -17204,76 +17204,6 @@
           "id": "OL82563W",
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
-          "coverId": "ol:2137705",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9782070612369",
-          "coverIsbn": "9782070612369",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82537W",
-          "title": "Harry Potter and the Chamber of Secrets",
-          "author": "J. K. Rowling",
-          "coverId": "ol:2137706",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9782070612376",
-          "coverIsbn": "9782070612376",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82536W",
-          "title": "Harry Potter and the Prisoner of Azkaban",
-          "author": "J. K. Rowling",
-          "coverId": "ol:2137707",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9782070612383",
-          "coverIsbn": "9782070612383",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82560W",
-          "title": "Harry Potter and the Goblet of Fire",
-          "author": "J. K. Rowling",
-          "coverId": "ol:14333193",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9782070612390",
-          "coverIsbn": "9782070612390",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82548W",
-          "title": "Harry Potter and the Order of the Phoenix",
-          "author": "J. K. Rowling",
-          "coverId": "ol:3078495",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9782070612406",
-          "coverIsbn": "9782070612406",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82565W",
-          "title": "Harry Potter and the Half-Blood Prince",
-          "author": "J. K. Rowling",
-          "coverId": "ol:12905145",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9782070612413",
-          "coverIsbn": "9782070612413",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82586W",
-          "title": "Harry Potter and the Deathly Hallows",
-          "author": "J. K. Rowling",
-          "coverId": "ol:15157040",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9782070615377",
-          "coverIsbn": "9782070615377",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82563W",
-          "title": "Harry Potter and the Philosopher's Stone",
-          "author": "J. K. Rowling",
           "coverId": "ol:8565802",
           "addedAt": "2026-09-28",
           "from": "isbn:9781408834961",
@@ -17621,76 +17551,6 @@
           "from": "isbn:9781338299205",
           "coverIsbn": "9781338299205",
           "set": "Scholastic, 2018 · Cover: Brian Selznick"
-        },
-        {
-          "id": "OL82563W",
-          "title": "Harry Potter and the Philosopher's Stone",
-          "author": "J. K. Rowling",
-          "coverId": "ol:14320057",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9781408810545",
-          "coverIsbn": "9781408810545",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
-        },
-        {
-          "id": "OL82537W",
-          "title": "Harry Potter and the Chamber of Secrets",
-          "author": "J. K. Rowling",
-          "coverId": "ol:10521236",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9781781100080",
-          "coverIsbn": "9781781100080",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
-        },
-        {
-          "id": "OL82536W",
-          "title": "Harry Potter and the Prisoner of Azkaban",
-          "author": "J. K. Rowling",
-          "coverId": "ol:10521237",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9781781100097",
-          "coverIsbn": "9781781100097",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
-        },
-        {
-          "id": "OL82560W",
-          "title": "Harry Potter and the Goblet of Fire",
-          "author": "J. K. Rowling",
-          "coverId": "ol:10521280",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9781781100103",
-          "coverIsbn": "9781781100103",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
-        },
-        {
-          "id": "OL82548W",
-          "title": "Harry Potter and the Order of the Phoenix",
-          "author": "J. K. Rowling",
-          "coverId": "ol:10521287",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9781781100110",
-          "coverIsbn": "9781781100110",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
-        },
-        {
-          "id": "OL82565W",
-          "title": "Harry Potter and the Half-Blood Prince",
-          "author": "J. K. Rowling",
-          "coverId": "ol:10521310",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9781781100127",
-          "coverIsbn": "9781781100127",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
-        },
-        {
-          "id": "OL82586W",
-          "title": "Harry Potter and the Deathly Hallows",
-          "author": "J. K. Rowling",
-          "coverId": "ol:10521311",
-          "addedAt": "2026-09-28",
-          "from": "isbn:9781781100134",
-          "coverIsbn": "9781781100134",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
         },
         {
           "id": "OL82563W",
@@ -18550,14 +18410,9 @@
         "Unwin Paperbacks",
         "Grafton",
         "HarperCollins",
-        "Easton Press",
         "Klett-Cotta",
-        "Le Livre de Poche",
         "Pocket",
-        "Yilin",
-        "De Boekerij",
-        "Minotauro",
-        "Gramedia"
+        "Minotauro"
       ],
       "works": [
         {
@@ -18565,7 +18420,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8171428",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL22266040M",
           "set": "George Allen & Unwin, 1954–55 · first edition · Cover: J. R. R. Tolkien"
         },
@@ -18574,7 +18429,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8166952",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL19604318M",
           "set": "George Allen & Unwin, 1954–55 · first edition · Cover: J. R. R. Tolkien"
         },
@@ -18583,7 +18438,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8140846",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL17427263M",
           "set": "George Allen & Unwin, 1954–55 · first edition · Cover: J. R. R. Tolkien"
         },
@@ -18592,7 +18447,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8171445",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26448808M",
           "set": "Houghton Mifflin, 1954–56 · first American edition"
         },
@@ -18601,7 +18456,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8167231",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26446259M",
           "set": "Houghton Mifflin, 1954–56 · first American edition"
         },
@@ -18610,7 +18465,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10523169",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL27928012M",
           "set": "Houghton Mifflin, 1954–56 · first American edition"
         },
@@ -18619,7 +18474,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8172046",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26449168M",
           "set": "Ballantine, 1965–66 · Cover: Barbara Remington"
         },
@@ -18628,7 +18483,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8167233",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26446091M",
           "set": "Ballantine, 1965–66 · Cover: Barbara Remington"
         },
@@ -18637,7 +18492,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8302846",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26435280M",
           "set": "Ballantine, 1965–66 · Cover: Barbara Remington"
         },
@@ -18646,7 +18501,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8172078",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26449212M",
           "set": "George Allen & Unwin, 1966 · second edition"
         },
@@ -18655,7 +18510,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8166960",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL16007738M",
           "set": "George Allen & Unwin, 1966 · second edition"
         },
@@ -18664,7 +18519,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8141314",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780048230478",
           "coverIsbn": "9780048230478",
           "set": "George Allen & Unwin, 1966 · second edition"
@@ -18674,7 +18529,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8172084",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26449226M",
           "set": "Houghton Mifflin, 1967 · second edition"
         },
@@ -18683,7 +18538,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8167584",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395082553",
           "coverIsbn": "9780395082553",
           "set": "Houghton Mifflin, 1967 · second edition"
@@ -18693,7 +18548,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8140855",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395082560",
           "coverIsbn": "9780395082560",
           "set": "Houghton Mifflin, 1967 · second edition"
@@ -18703,7 +18558,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293866",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782253011392",
           "coverIsbn": "9782253011392",
           "set": "Le Livre de Poche, 1972–77"
@@ -18713,7 +18568,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14626125",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782253012085",
           "coverIsbn": "9782253012085",
           "set": "Le Livre de Poche, 1972–77"
@@ -18723,7 +18578,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8647605",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782253013785",
           "coverIsbn": "9782253013785",
           "set": "Le Livre de Poche, 1972–77"
@@ -18733,7 +18588,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624299",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345253439",
           "coverIsbn": "9780345253439",
           "set": "Ballantine, 1976 · Cover: J. R. R. Tolkien"
@@ -18743,7 +18598,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624451",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345253446",
           "coverIsbn": "9780345253446",
           "set": "Ballantine, 1976 · Cover: J. R. R. Tolkien"
@@ -18753,7 +18608,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624452",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345253453",
           "coverIsbn": "9780345253453",
           "set": "Ballantine, 1976 · Cover: J. R. R. Tolkien"
@@ -18763,7 +18618,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14627526",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0395272238",
           "coverIsbn": "0395272238",
           "set": "Houghton Mifflin, 1978 · revised edition"
@@ -18773,7 +18628,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14627528",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395272220",
           "coverIsbn": "9780395272220",
           "set": "Houghton Mifflin, 1978 · revised edition"
@@ -18783,7 +18638,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14627534",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0395272211",
           "coverIsbn": "0395272211",
           "set": "Houghton Mifflin, 1978 · revised edition"
@@ -18793,7 +18648,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625548",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783129081808",
           "coverIsbn": "9783129081808",
           "set": "Klett-Cotta Hobbit Presse, 1979 · Cover: Heinz Edelmann"
@@ -18803,7 +18658,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8773923",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783129081907",
           "coverIsbn": "9783129081907",
           "set": "Klett-Cotta Hobbit Presse, 1979 · Cover: Heinz Edelmann"
@@ -18813,7 +18668,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8653741",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783129082003",
           "coverIsbn": "9783129082003",
           "set": "Klett-Cotta Hobbit Presse, 1979 · Cover: Heinz Edelmann"
@@ -18823,7 +18678,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9262670",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780048231857",
           "coverIsbn": "9780048231857",
           "set": "Unwin Paperbacks, 1981 · Cover: Pauline Baynes"
@@ -18833,7 +18688,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9262671",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780048231864",
           "coverIsbn": "9780048231864",
           "set": "Unwin Paperbacks, 1981 · Cover: Pauline Baynes"
@@ -18843,7 +18698,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8141985",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780048231871",
           "coverIsbn": "9780048231871",
           "set": "Unwin Paperbacks, 1981 · Cover: Pauline Baynes"
@@ -18853,7 +18708,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8173155",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395312674",
           "coverIsbn": "9780395312674",
           "set": "Houghton Mifflin, 1981 · grey boards with monogram"
@@ -18863,7 +18718,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8167614",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395312667",
           "coverIsbn": "9780395312667",
           "set": "Houghton Mifflin, 1981 · grey boards with monogram"
@@ -18873,7 +18728,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624635",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395312681",
           "coverIsbn": "9780395312681",
           "set": "Houghton Mifflin, 1981 · grey boards with monogram"
@@ -18883,7 +18738,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8173162",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345296054",
           "coverIsbn": "9780345296054",
           "set": "Ballantine, 1981–84 · Cover: Darrell K. Sweet"
@@ -18893,7 +18748,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9260085",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345296061",
           "coverIsbn": "9780345296061",
           "set": "Ballantine, 1981–84 · Cover: Darrell K. Sweet"
@@ -18903,7 +18758,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9249723",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345296085",
           "coverIsbn": "9780345296085",
           "set": "Ballantine, 1981–84 · Cover: Darrell K. Sweet"
@@ -18913,7 +18768,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8173643",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26450100M",
           "set": "Easton Press, 1984–90 · leather"
         },
@@ -18922,7 +18777,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8167652",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26446483M",
           "set": "Easton Press, 1984–90 · leather"
         },
@@ -18931,7 +18786,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8141433",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "edition:OL1937606M",
           "set": "Easton Press, 1984–90 · leather"
         },
@@ -18940,7 +18795,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8173664",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345339706",
           "coverIsbn": "9780345339706",
           "set": "Ballantine, 1986–89 · 50th anniversary · Cover: Michael Herring"
@@ -18950,7 +18805,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8168264",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345339713",
           "coverIsbn": "9780345339713",
           "set": "Ballantine, 1986–89 · 50th anniversary · Cover: Michael Herring"
@@ -18960,7 +18815,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9249718",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345339737",
           "coverIsbn": "9780345339737",
           "set": "Ballantine, 1986–89 · 50th anniversary · Cover: Michael Herring"
@@ -18970,7 +18825,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293888",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395489314",
           "coverIsbn": "9780395489314",
           "set": "Houghton Mifflin, 1987–93 · Cover: Alan Lee"
@@ -18980,7 +18835,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293885",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395489338",
           "coverIsbn": "9780395489338",
           "set": "Houghton Mifflin, 1987–93 · Cover: Alan Lee"
@@ -18990,7 +18845,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293882",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395489307",
           "coverIsbn": "9780395489307",
           "set": "Houghton Mifflin, 1987–93 · Cover: Alan Lee"
@@ -19000,7 +18855,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:13133750",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783608955361",
           "coverIsbn": "9783608955361",
           "set": "Klett-Cotta, 1987–2002 · reprint of the first German edition"
@@ -19010,7 +18865,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:13133754",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:3608955372",
           "coverIsbn": "3608955372",
           "set": "Klett-Cotta, 1987–2002 · reprint of the first German edition"
@@ -19020,7 +18875,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:13133756",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783608955385",
           "coverIsbn": "9783608955385",
           "set": "Klett-Cotta, 1987–2002 · reprint of the first German edition"
@@ -19030,7 +18885,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10290885",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266026550",
           "coverIsbn": "9782266026550",
           "set": "Presses Pocket, 1990–93 · white"
@@ -19040,7 +18895,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625962",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266026567",
           "coverIsbn": "9782266026567",
           "set": "Presses Pocket, 1990–93 · white"
@@ -19050,7 +18905,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8647603",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266026574",
           "coverIsbn": "9782266026574",
           "set": "Presses Pocket, 1990–93 · white"
@@ -19060,7 +18915,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:979591",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266046497",
           "coverIsbn": "9782266046497",
           "set": "Pocket, 1991 · Fantasy, pink titles"
@@ -19070,7 +18925,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625961",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266046503",
           "coverIsbn": "9782266046503",
           "set": "Pocket, 1991 · Fantasy, pink titles"
@@ -19080,7 +18935,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624314",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266046510",
           "coverIsbn": "9782266046510",
           "set": "Pocket, 1991 · Fantasy, pink titles"
@@ -19090,7 +18945,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625938",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0261102354",
           "coverIsbn": "0261102354",
           "set": "Grafton, 1991 · Cover: John Howe"
@@ -19100,7 +18955,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625772",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0261102362",
           "coverIsbn": "0261102362",
           "set": "Grafton, 1991 · Cover: John Howe"
@@ -19110,7 +18965,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625948",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0261102370",
           "coverIsbn": "0261102370",
           "set": "Grafton, 1991 · Cover: John Howe"
@@ -19120,7 +18975,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10290015",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103382",
           "coverIsbn": "9780261103382",
           "set": "HarperCollins, 1991–96 · illustrated edition · Cover: Alan Lee"
@@ -19130,7 +18985,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10457086",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103399",
           "coverIsbn": "9780261103399",
           "set": "HarperCollins, 1991–96 · illustrated edition · Cover: Alan Lee"
@@ -19140,7 +18995,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:2341314",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103405",
           "coverIsbn": "9780261103405",
           "set": "HarperCollins, 1991–96 · illustrated edition · Cover: Alan Lee"
@@ -19150,7 +19005,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8311423",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103573",
           "coverIsbn": "9780261103573",
           "set": "HarperCollins, 1997 · Cover: after J. R. R. Tolkien"
@@ -19160,7 +19015,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624433",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103580",
           "coverIsbn": "9780261103580",
           "set": "HarperCollins, 1997 · Cover: after J. R. R. Tolkien"
@@ -19170,7 +19025,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8461498",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103597",
           "coverIsbn": "9780261103597",
           "set": "HarperCollins, 1997 · Cover: after J. R. R. Tolkien"
@@ -19180,7 +19035,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624461",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261102354",
           "coverIsbn": "9780261102354",
           "set": "HarperCollins, 1999 · black with the rings"
@@ -19190,7 +19045,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8168674",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261102361",
           "coverIsbn": "9780261102361",
           "set": "HarperCollins, 1999 · black with the rings"
@@ -19200,7 +19055,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8142040",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261102378",
           "coverIsbn": "9780261102378",
           "set": "HarperCollins, 1999 · black with the rings"
@@ -19209,8 +19064,38 @@
           "id": "OL27513W",
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
+          "coverId": "ol:8175144",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783608935417",
+          "coverIsbn": "9783608935417",
+          "set": "Klett-Cotta, 2000–01 · green paperbacks"
+        },
+        {
+          "id": "OL27479W",
+          "title": "The Two Towers",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:14625709",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783608935424",
+          "coverIsbn": "9783608935424",
+          "set": "Klett-Cotta, 2000–01 · green paperbacks"
+        },
+        {
+          "id": "OL27455W",
+          "title": "The Return of the King",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:8142468",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783608935431",
+          "coverIsbn": "9783608935431",
+          "set": "Klett-Cotta, 2000–01 · green paperbacks"
+        },
+        {
+          "id": "OL27513W",
+          "title": "The Fellowship of the Ring",
+          "author": "J.R.R. Tolkien",
           "coverId": "ol:8888",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007117116",
           "coverIsbn": "9780007117116",
           "set": "HarperCollins, 2001 · Voyager Classics"
@@ -19220,7 +19105,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8762919",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007117123",
           "coverIsbn": "9780007117123",
           "set": "HarperCollins, 2001 · Voyager Classics"
@@ -19230,7 +19115,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8142981",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007119561",
           "coverIsbn": "9780007119561",
           "set": "HarperCollins, 2001 · Voyager Classics"
@@ -19240,7 +19125,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625981",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345339706",
           "coverIsbn": "9780345339706",
           "set": "Ballantine, 2001 · film tie-in"
@@ -19250,7 +19135,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624641",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0345339711",
           "coverIsbn": "0345339711",
           "set": "Ballantine, 2001 · film tie-in"
@@ -19260,7 +19145,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9249721",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345339737",
           "coverIsbn": "9780345339737",
           "set": "Ballantine, 2001 · film tie-in"
@@ -19270,7 +19155,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:393566",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618153985",
           "coverIsbn": "9780618153985",
           "set": "Houghton Mifflin, 2001 · film photographs of places"
@@ -19280,7 +19165,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8478000",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618153992",
           "coverIsbn": "9780618153992",
           "set": "Houghton Mifflin, 2001 · film photographs of places"
@@ -19290,7 +19175,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8461563",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618154005",
           "coverIsbn": "9780618154005",
           "set": "Houghton Mifflin, 2001 · film photographs of places"
@@ -19300,7 +19185,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14627055",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9787806572504",
           "coverIsbn": "9787806572504",
           "set": "Yilin, 2001–02"
@@ -19310,7 +19195,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293874",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9787806572665",
           "coverIsbn": "9787806572665",
           "set": "Yilin, 2001–02"
@@ -19320,7 +19205,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293871",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9787806572672",
           "coverIsbn": "9787806572672",
           "set": "Yilin, 2001–02"
@@ -19330,7 +19215,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8474010",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618260263",
           "coverIsbn": "9780618260263",
           "set": "Houghton Mifflin, 2002 · film tie-in"
@@ -19340,7 +19225,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8478164",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618260270",
           "coverIsbn": "9780618260270",
           "set": "Houghton Mifflin, 2002 · film tie-in"
@@ -19350,7 +19235,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9255338",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618260287",
           "coverIsbn": "9780618260287",
           "set": "Houghton Mifflin, 2002 · film tie-in"
@@ -19360,7 +19245,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10840420",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007136599",
           "coverIsbn": "9780007136599",
           "set": "HarperCollins, 2002 · hardcover · Cover: Alan Lee"
@@ -19370,7 +19255,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8168944",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007136568",
           "coverIsbn": "9780007136568",
           "set": "HarperCollins, 2002 · hardcover · Cover: Alan Lee"
@@ -19380,7 +19265,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:11273693",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007136575",
           "coverIsbn": "9780007136575",
           "set": "HarperCollins, 2002 · hardcover · Cover: Alan Lee"
@@ -19390,7 +19275,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:980336",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266120999",
           "coverIsbn": "9782266120999",
           "set": "Pocket, 2002 · Fantasy"
@@ -19400,7 +19285,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14626639",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266120982",
           "coverIsbn": "9782266120982",
           "set": "Pocket, 2002 · Fantasy"
@@ -19410,7 +19295,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10511215",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266120975",
           "coverIsbn": "9782266120975",
           "set": "Pocket, 2002 · Fantasy"
@@ -19420,7 +19305,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8666743",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789022531938",
           "coverIsbn": "9789022531938",
           "set": "De Boekerij / Mynx, 2002–08"
@@ -19430,7 +19315,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:15149792",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789022531945",
           "coverIsbn": "9789022531945",
           "set": "De Boekerij / Mynx, 2002–08"
@@ -19440,7 +19325,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:13239139",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789022531952",
           "coverIsbn": "9789022531952",
           "set": "De Boekerij / Mynx, 2002–08"
@@ -19450,7 +19335,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:11387256",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618574940",
           "coverIsbn": "9780618574940",
           "set": "Houghton Mifflin, 2004–05 · painted covers"
@@ -19460,7 +19345,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8169214",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618574957",
           "coverIsbn": "9780618574957",
           "set": "Houghton Mifflin, 2004–05 · painted covers"
@@ -19470,7 +19355,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:394945",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618574971",
           "coverIsbn": "9780618574971",
           "set": "Houghton Mifflin, 2004–05 · painted covers"
@@ -19480,7 +19365,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14617433",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007203581",
           "coverIsbn": "9780007203581",
           "set": "HarperCollins, 2005 · 50th anniversary · Cover: after J. R. R. Tolkien"
@@ -19490,7 +19375,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14573413",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007203598",
           "coverIsbn": "9780007203598",
           "set": "HarperCollins, 2005 · 50th anniversary · Cover: after J. R. R. Tolkien"
@@ -19500,7 +19385,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625521",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007203604",
           "coverIsbn": "9780007203604",
           "set": "HarperCollins, 2005 · 50th anniversary · Cover: after J. R. R. Tolkien"
@@ -19510,7 +19395,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:1047655",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788445075739",
           "coverIsbn": "9788445075739",
           "set": "Minotauro, 2006 · Booket"
@@ -19520,7 +19405,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8169217",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788445075746",
           "coverIsbn": "9788445075746",
           "set": "Minotauro, 2006 · Booket"
@@ -19530,7 +19415,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:2270622",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788445075753",
           "coverIsbn": "9788445075753",
           "set": "Minotauro, 2006 · Booket"
@@ -19540,7 +19425,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10587033",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007488315",
           "coverIsbn": "9780007488315",
           "set": "HarperCollins, 2012 · film art"
@@ -19550,7 +19435,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10519441",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007488322",
           "coverIsbn": "9780007488322",
           "set": "HarperCollins, 2012 · film art"
@@ -19560,7 +19445,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10555538",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007488353",
           "coverIsbn": "9780007488353",
           "set": "HarperCollins, 2012 · film art"
@@ -19570,7 +19455,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8178139",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783608939811",
           "coverIsbn": "9783608939811",
           "set": "Klett-Cotta Hobbit Presse, 2012"
@@ -19580,7 +19465,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8170090",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783608939828",
           "coverIsbn": "9783608939828",
           "set": "Klett-Cotta Hobbit Presse, 2012"
@@ -19590,7 +19475,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8143751",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783608939835",
           "coverIsbn": "9783608939835",
           "set": "Klett-Cotta Hobbit Presse, 2012"
@@ -19600,7 +19485,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8178144",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780544448933",
           "coverIsbn": "9780544448933",
           "set": "Houghton Mifflin Harcourt, 2014 · deluxe pocket"
@@ -19610,7 +19495,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8170131",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780544449732",
           "coverIsbn": "9780544449732",
           "set": "Houghton Mifflin Harcourt, 2014 · deluxe pocket"
@@ -19620,7 +19505,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8143753",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780544449749",
           "coverIsbn": "9780544449749",
           "set": "Houghton Mifflin Harcourt, 2014 · deluxe pocket"
@@ -19630,7 +19515,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8178155",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9786020332260",
           "coverIsbn": "9786020332260",
           "set": "Gramedia Pustaka Utama, 2016"
@@ -19640,7 +19525,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8170123",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9786020332277",
           "coverIsbn": "9786020332277",
           "set": "Gramedia Pustaka Utama, 2016"
@@ -19650,7 +19535,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8143759",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9786020332284",
           "coverIsbn": "9786020332284",
           "set": "Gramedia Pustaka Utama, 2016"
@@ -19660,7 +19545,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625955",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780008376062",
           "coverIsbn": "9780008376062",
           "set": "HarperCollins, 2020 · landscape photographs"
@@ -19670,7 +19555,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:12398015",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780008376079",
           "coverIsbn": "9780008376079",
           "set": "HarperCollins, 2020 · landscape photographs"
@@ -19680,7 +19565,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14694384",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780008376086",
           "coverIsbn": "9780008376086",
           "set": "HarperCollins, 2020 · landscape photographs"
@@ -19690,7 +19575,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:15244480",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780008537722",
           "coverIsbn": "9780008537722",
           "set": "HarperCollins, 2022 · Rings of Power tie-in"
@@ -19700,7 +19585,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:15244481",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780063270893",
           "coverIsbn": "9780063270893",
           "set": "HarperCollins, 2022 · Rings of Power tie-in"
@@ -19710,7 +19595,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:15244483",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780063270909",
           "coverIsbn": "9780063270909",
           "set": "HarperCollins, 2022 · Rings of Power tie-in"
