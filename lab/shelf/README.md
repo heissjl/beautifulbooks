@@ -55,7 +55,7 @@ Aus dem Hauptordner selbst: `set -a; source .env.local; set +a; npx tsx lab/shel
 
 ## Dateien
 
-`serve.ts` (Server, 127.0.0.1:4330), `index.html` (die eine Seite), `recognize.ts` (Anthropic, `parseRecognition`), `match.ts` (Werk und Cover), `sharelink.ts` (Link), `sample.json`, Tests unter `__tests__/` ohne Netz.
+`serve.ts` (Server, 127.0.0.1:4330), `index.html` (die eine Seite), `recognize.ts` (seit 5.13a nur ein Verweis auf `lib/recognize.ts`, das auch `/walls` nutzt; `pickWork` und Verwandte liegen in `lib/bookmatch.ts`), `match.ts` (Werk und Cover), `sharelink.ts` (Link), `sample.json`, Tests unter `__tests__/` ohne Netz.
 
 ## Regeln (lab/README.md)
 

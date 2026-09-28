@@ -84,6 +84,17 @@ export const RATE_RULES = {
   suggest: { capacity: 40, refillPerMinute: 20 },
   /** Password attempts: few, so the shared password cannot be guessed at speed. */
   login: { capacity: 5, refillPerMinute: 2 },
+  /**
+   * Readers' own walls (ROADMAP 5.13a): each add, move or title change is one
+   * write. A reader filling a wall clicks quickly, but not for long.
+   */
+  walls: { capacity: 60, refillPerMinute: 30 },
+  /**
+   * A photo read by the image model (5.13a): the one route that costs money
+   * per request. Per instance, like every bucket here, so it bounds a burst,
+   * not a bill; the switch keeps it off in production until Julian says.
+   */
+  wallsPhoto: { capacity: 3, refillPerMinute: 1 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

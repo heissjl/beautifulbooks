@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your cover wall</title>
+<style>
+  :root { --paper: #f6f3ee; --ink: #1d1b18; --mute: #6f6a62; --line: #d9d3c9; --frame: #2a2724; --mat: #fbfaf7; --accent: #8a3b1f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 ui-sans-serif, system-ui, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+  h1 { font: 600 22px/1.2 ui-serif, Georgia, serif; margin: 8px 0 4px; }
+  h2 { font: 600 13px/1.2 ui-sans-serif, system-ui; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); margin: 24px 0 8px; }
+  p.lead { color: var(--mute); margin: 0 0 16px; max-width: 60ch; }
+  button, input, select { font: inherit; }
+  button { border: 1px solid var(--ink); background: var(--ink); color: var(--paper); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  button.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  input[type=text], input[type=search], select { border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 7px 10px; width: 100%; min-width: 0; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .row > input { flex: 1 1 200px; }
+  .mine { display: flex; gap: 8px; flex-wrap: wrap; }
+  .mine a { color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; text-decoration: none; background: #fff; }
+  .mine a.on { border-color: var(--ink); }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; }
+  @media (max-width: 820px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+  .wall { display: grid; gap: clamp(8px, 2vw, 18px); padding: clamp(12px, 3vw, 28px); background: #e9e4dc; border-radius: 4px; min-height: 180px; }
+  .frame { position: relative; background: var(--frame); padding: 5px; box-shadow: 0 6px 14px rgba(0,0,0,.18); }
+  .frame .mat { background: var(--mat); padding: 9%; aspect-ratio: 5 / 7; display: flex; align-items: center; justify-content: center; }
+  .frame img { max-width: 100%; max-height: 100%; display: block; box-shadow: 0 1px 2px rgba(0,0,0,.25); }
+  .frame .tools { position: absolute; inset: auto 4px 4px 4px; display: none; justify-content: space-between; }
+  .editing .frame:hover .tools, .editing .frame:focus-within .tools { display: flex; }
+  @media (hover: none) { .editing .frame .tools { display: flex; } }
+  .frame .tools button { padding: 2px 8px; font-size: 13px; background: rgba(29,27,24,.85); border: 0; }
+  .empty { grid-column: 1 / -1; color: var(--mute); text-align: center; align-self: center; }
+  .results { display: grid; gap: 6px; margin-top: 8px; }
+  .result { display: flex; gap: 10px; align-items: center; text-align: left; background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 6px; }
+  .result img { width: 34px; height: 50px; object-fit: cover; background: #eee; flex: none; }
+  .result small { color: var(--mute); display: block; }
+  .covers { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px; margin-top: 8px; }
+  .covers button { padding: 0; border: 2px solid transparent; background: none; border-radius: 3px; }
+  .covers button.in { border-color: var(--accent); }
+  .covers img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; background: #eee; }
+  .covers small { display: block; font-size: 11px; color: var(--mute); text-align: center; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .card + .card { margin-top: 12px; }
+  .note { color: var(--mute); font-size: 13px; margin: 6px 0; }
+  .err { color: var(--accent); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Your cover wall</h1>
+  <p class="lead">Pick the covers you would hang, arrange them, share the link. No account: this browser remembers which walls are yours.</p>
+
+  <div class="row">
+    <div class="mine" id="mine"></div>
+    <button id="new" class="ghost">+ New wall</button>
+  </div>
+
+  <section id="editor" hidden>
+    <div class="row" style="margin-top:16px">
+      <input type="text" id="title" aria-label="Title of the wall">
+      <label class="row" style="gap:6px">Columns <select id="cols"></select></label>
+    </div>
+    <p class="note" id="status"></p>
+    <div class="layout">
+      <div>
+        <div class="wall" id="wall"></div>
+        <p class="note" id="count"></p>
+      </div>
+      <aside>
+        <div class="card" id="picker">
+          <strong>Add a cover</strong>
+          <form id="searchForm" class="row" style="margin-top:8px"><input type="search" id="q" placeholder="Title or author"><button>Search</button></form>
+          <div class="results" id="results"></div>
+          <div id="coverPane" hidden>
+            <p class="note"><button class="ghost" id="back" type="button">← Results</button> <span id="workName"></span></p>
+            <div class="covers" id="covers"></div>
+          </div>
+        </div>
+        <div class="card">
+          <strong>Share it</strong>
+          <p class="note">Anyone with the link sees the wall. Only this browser — or one you give your ID below — can change it.</p>
+          <div class="row"><button class="ghost" id="copyView" type="button">Copy link</button></div>
+          <p class="note"><a id="listLink" target="_blank">Shopping list (every ISBN that carried each cover)</a></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="card" style="margin-top:24px">
+    <label for="vid"><strong>Your ID</strong></label>
+    <p class="note">Your walls belong to this ID. To keep working on them on another device, paste it there and press Save. Anyone with it can change your walls, so don't post it.</p>
+    <div class="row"><input type="text" id="vid" spellcheck="false" autocomplete="off" placeholder="You get one with your first wall"><button id="saveVid" type="button">Save</button></div>
+    <p class="note" id="vidNote"></p>
+  </footer>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let me = { visitor: null, walls: [] };
+let wall = null, canEdit = false;
+
+async function api(path, opts = {}) {
+  const res = await fetch(path, { ...opts, headers: { 'content-type': 'application/json', ...(opts.headers || {}) } });
+  const data = res.headers.get('content-type')?.includes('json') ? await res.json() : await res.text();
+  if (!res.ok) throw new Error(data.error || res.statusText);
+  return data;
+}
+
+async function loadMe() { me = await api('/api/me'); renderMine(); $('vid').value = me.visitor || ''; }
+
+function renderMine() {
+  $('mine').innerHTML = '';
+  for (const w of me.walls) {
+    const a = document.createElement('a');
+    a.href = '/w/' + w.id; a.textContent = w.title;
+    if (wall && wall.id === w.id) a.className = 'on';
+    $('mine').append(a);
+  }
+}
+
+function renderWall() {
+  $('editor').hidden = !wall;
+  if (!wall) return;
+  document.title = wall.title + ' — cover wall';
+  $('title').value = wall.title; $('title').disabled = !canEdit;
+  $('cols').disabled = !canEdit; $('cols').value = String(wall.columns);
+  $('picker').hidden = !canEdit;
+  $('status').textContent = canEdit ? 'Saved on every change.' : 'You are looking at someone\'s wall.';
+  $('listLink').href = '/api/walls/' + wall.id + '/list';
+  const el = $('wall');
+  el.className = 'wall' + (canEdit ? ' editing' : '');
+  const shown = Math.min(wall.columns, innerWidth < 500 ? 3 : 8);
+  el.style.gridTemplateColumns = `repeat(${shown}, minmax(0, 1fr))`;
+  el.innerHTML = '';
+  if (!wall.tiles.length) el.innerHTML = '<p class="empty">' + (canEdit ? 'Search for a book on the right and pick a cover.' : 'This wall is empty.') + '</p>';
+  wall.tiles.forEach((t, i) => {
+    const f = document.createElement('figure'); f.className = 'frame'; f.style.margin = 0; f.tabIndex = 0;
+    f.innerHTML = `<div class="mat"><img alt="" loading="lazy"></div>`;
+    const img = f.querySelector('img'); img.src = `https://covers.openlibrary.org/b/id/${t.coverId}-M.jpg`;
+    img.alt = t.title + (t.author ? ' by ' + t.author : '');
+    f.title = img.alt;
+    if (canEdit) {
+      const tools = document.createElement('div'); tools.className = 'tools';
+      tools.append(btn('←', () => send([{ op: 'move', coverId: t.coverId, to: i - 1 }]), i === 0),
+                   btn('✕', () => send([{ op: 'remove', coverId: t.coverId }])),
+                   btn('→', () => send([{ op: 'move', coverId: t.coverId, to: i + 1 }]), i === wall.tiles.length - 1));
+      f.append(tools);
+    }
+    el.append(f);
+  });
+  const rows = Math.ceil(wall.tiles.length / wall.columns);
+  $('count').textContent = wall.tiles.length ? `${wall.tiles.length} covers, ${wall.columns} × ${rows} on the wall` + (shown < wall.columns ? `, shown in ${shown} columns on this screen.` : '.') : '';
+  renderMine();
+}
+function btn(label, fn, disabled) { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.onclick = fn; b.disabled = !!disabled; b.style.visibility = disabled ? 'hidden' : ''; return b; }
+
+async function send(ops) {
+  try {
+    const data = await api('/api/walls/' + wall.id, { method: 'POST', body: JSON.stringify({ ops }) });
+    wall = data.wall;
+    const at = me.walls.findIndex((w) => w.id === wall.id);
+    if (at >= 0) me.walls[at] = wall;
+    renderWall(); renderCoverMarks();
+  } catch (e) { $('status').innerHTML = '<span class="err">' + e.message + '</span>'; }
+}
+
+async function open(id) {
+  try { const data = await api('/api/walls/' + id); wall = data.wall; canEdit = data.canEdit; }
+  catch (e) { wall = null; $('vidNote').textContent = e.message; }
+  renderWall();
+}
+
+// Search and pick
+$('searchForm').onsubmit = async (ev) => {
+  ev.preventDefault();
+  $('coverPane').hidden = true; $('results').hidden = false;
+  $('results').innerHTML = '<p class="note">Asking Open Library…</p>';
+  try {
+    const { works } = await api('/api/search?q=' + encodeURIComponent($('q').value));
+    $('results').innerHTML = works.length ? '' : '<p class="note">Open Library has nothing under that.</p>';
+    for (const w of works) {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'result';
+      b.innerHTML = `<img alt=""><span><span class="t"></span><small></small></span>`;
+      if (w.cover) b.querySelector('img').src = w.cover.replace('-L.jpg', '-S.jpg');
+      b.querySelector('.t').textContent = w.title;
+      b.querySelector('small').textContent = [w.author, w.year].filter(Boolean).join(' · ');
+      b.onclick = () => showCovers(w);
+      $('results').append(b);
+    }
+  } catch (e) { $('results').innerHTML = '<p class="note err">' + e.message + '</p>'; }
+};
+$('back').onclick = () => { $('coverPane').hidden = true; $('results').hidden = false; };
+
+async function showCovers(w) {
+  $('results').hidden = true; $('coverPane').hidden = false;
+  $('workName').textContent = w.title; $('covers').innerHTML = '<p class="note">Loading covers…</p>';
+  try {
+    const { covers } = await api('/api/covers/' + w.id);
+    $('covers').innerHTML = covers.length ? '' : '<p class="note">No printed edition with a cover on record.</p>';
+    for (const c of covers) {
+      const b = document.createElement('button'); b.type = 'button'; b.dataset.cover = c.coverId;
+      const p = c.printings[0] || {};
+      b.innerHTML = `<img alt="" loading="lazy"><small></small>`;
+      b.querySelector('img').src = `https://covers.openlibrary.org/b/id/${c.coverId}-M.jpg`;
+      b.querySelector('small').textContent = [p.publisher, c.year].filter(Boolean).join(' ').slice(0, 28);
+      b.onclick = () => {
+        const inWall = wall.tiles.some((t) => t.coverId === c.coverId);
+        send([inWall ? { op: 'remove', coverId: c.coverId } : { op: 'add', tile: { workId: w.id, coverId: c.coverId, title: w.title, author: w.author, printings: c.printings } }]);
+      };
+      $('covers').append(b);
+    }
+    renderCoverMarks();
+  } catch (e) { $('covers').innerHTML = '<p class="note err">' + e.message + '</p>'; }
+}
+function renderCoverMarks() {
+  const inWall = new Set((wall?.tiles || []).map((t) => t.coverId));
+  for (const b of document.querySelectorAll('#covers button')) b.classList.toggle('in', inWall.has(b.dataset.cover));
+}
+
+// Editing the frame
+for (let n = 1; n <= 8; n++) $('cols').append(new Option(String(n), String(n)));
+$('cols').onchange = () => send([{ op: 'columns', columns: Number($('cols').value) }]);
+$('title').onchange = () => send([{ op: 'title', title: $('title').value }]);
+
+$('new').onclick = async () => {
+  const { wall: w } = await api('/api/walls', { method: 'POST', body: JSON.stringify({ title: 'My wall' }) });
+  await loadMe();
+  history.pushState(null, '', '/w/' + w.id);
+  wall = w; canEdit = true; renderWall(); $('q').focus();
+};
+
+$('copyView').onclick = () => navigator.clipboard.writeText(location.origin + '/w/' + wall.id).then(() => { $('status').textContent = 'Link copied.'; });
+
+// The footer, as on taketest.xyz: paste an ID from another device and Save.
+$('saveVid').onclick = async () => {
+  try {
+    me = await api('/api/me', { method: 'POST', body: JSON.stringify({ visitor: $('vid').value }) });
+    $('vidNote').textContent = me.walls.length ? (me.walls.length === 1 ? '1 wall belongs' : `${me.walls.length} walls belong`) + ' to this ID.' : 'Saved. No walls belong to this ID yet.';
+    renderMine();
+    if (wall) await open(wall.id);
+  } catch (e) { $('vidNote').textContent = e.message; }
+};
+
+async function route() {
+  const m = location.pathname.match(/^\/w\/([a-z0-9]{10})$/);
+  if (m) await open(m[1]); else { wall = null; renderWall(); }
+}
+addEventListener('popstate', route);
+addEventListener('resize', () => wall && renderWall());
+loadMe().then(route);
+</script>
+</body>
+</html>

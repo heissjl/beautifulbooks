@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import BookDetailPage from '@/components/BookDetail';
+import { wallsEnabled } from '@/lib/walls/switch';
 import { coverIdFromSegment } from '@/lib/coverurl';
 import { workDescription, workPageTitle, workUrl } from '@/lib/seo';
 import { getWorkPage, isWorkId } from '@/lib/work';
@@ -56,7 +57,7 @@ export default async function Page({ params }: PageProps) {
   if (!isWorkId(id) || !coverIdFromSegment(coverId)) notFound();
   return (
     <Suspense fallback={null}>
-      <BookDetailPage />
+      <BookDetailPage walls={wallsEnabled()} />
     </Suspense>
   );
 }
