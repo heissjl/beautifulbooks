@@ -140,7 +140,7 @@ export default function WallView({ initial }: { initial: PublicWall }) {
       {canEdit && wall.tiles.length > 0 && <p className="mt-6 text-sm">{moreCovers}</p>}
 
       {canEdit && <Showcase wall={wall} onSend={send} />}
-      {canEdit && wall.tiles.length > 0 && <WallPlan wall={wall} onSend={send} />}
+      {canEdit && wall.tiles.length > 0 && <WallPlan wall={wall} onSend={send} onWall={setWall} />}
       {!canEdit && wall.showcase === 'shown' && <Report id={wall.id} />}
 
       {others.length > 0 && (
@@ -184,7 +184,7 @@ function ToolButton({ label, hidden, onClick, children }: { label: string; hidde
 function Showcase({ wall, onSend }: { wall: PublicWall; onSend: (ops: WallOp[]) => void }) {
   const short = wall.tiles.length < MIN_SHOWCASE_TILES;
   return (
-    <section className="mt-10 max-w-2xl rounded-card border border-line p-4" aria-labelledby="showcase">
+    <section className="mt-10" aria-labelledby="showcase">
       <h2 id="showcase" className="text-sm font-medium text-ink">Show it to others</h2>
       {!wall.showcase && (
         <>

@@ -22,6 +22,12 @@ export interface Tile {
    * search in stage 2 starts here and must still compare photos.
    */
   printings: Printing[];
+  /**
+   * The server looked the printing up for a tile that came without one
+   * (5.13f). With no printings, it separates "none on record" from "never
+   * asked". Never taken from a browser.
+   */
+  looked?: boolean;
 }
 
 export interface Printing {

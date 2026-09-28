@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CoverImage from './CoverImage';
 import { coverUrlFor } from '@/lib/coverurl';
 import { ARTWORK_CM, artworkPlan, DEFAULT_ARTWORK, TONES, type PublicWall, type Tone, type WallOp } from '@/lib/walls/model';
@@ -28,12 +28,33 @@ function readWanted(id: string): boolean {
  * is being researched (docs/plans/research-cover-prints.md). Nothing is sold
  * yet; the last line counts who would order the piece.
  */
-export default function WallPlan({ wall, onSend }: { wall: PublicWall; onSend: (ops: WallOp[]) => void }) {
+export default function WallPlan({ wall, onSend, onWall }: { wall: PublicWall; onSend: (ops: WallOp[]) => void; onWall: (wall: PublicWall) => void }) {
   const tone = (wall.artwork ?? DEFAULT_ARTWORK).tone;
   const plan = artworkPlan(wall.tiles.length, wall.columns);
   const c = ARTWORK_CM;
   const [wanted, setWanted] = useState(() => readWanted(wall.id));
   const [error, setError] = useState('');
+  // Tiles that came without a printing (six random covers, a photo) are looked up once, here.
+  const unlooked = wall.tiles.filter((t) => t.printings.length === 0 && !t.looked).length;
+  const [lookup, setLookup] = useState<'idle' | 'looking' | 'failed'>('idle');
+  useEffect(() => {
+    if (unlooked === 0) return;
+    let live = true;
+    Promise.resolve().then(() => live && setLookup('looking'));
+    fetch(`/api/walls/${wall.id}/printings`, { method: 'POST' })
+      .then(async (r) => {
+        const d = (await r.json()) as { wall?: PublicWall; failed?: number };
+        if (!live) return;
+        if (r.ok && d.wall) onWall(d.wall);
+        setLookup(r.ok && !d.failed ? 'idle' : 'failed');
+      })
+      .catch(() => live && setLookup('failed'));
+    return () => {
+      live = false;
+    };
+    // Once per collection and count of tiles still waiting; onWall is stable enough for this.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wall.id, unlooked]);
 
   // Everything is placed in centimetres on the back panel and shown in per cent of it.
   const pct = (cm: number, of: number) => `${(cm / of) * 100}%`;
@@ -60,7 +81,7 @@ export default function WallPlan({ wall, onSend }: { wall: PublicWall; onSend: (
   }
 
   return (
-    <section className="mt-10 rounded-card border border-line p-4 sm:p-6" aria-labelledby="make-a-wall">
+    <section className="mt-16 border-t border-line pt-6" aria-labelledby="make-a-wall">
       <p className="kicker">Next step</p>
       <h2 id="make-a-wall" className="font-display text-2xl text-ink">Make it a piece for your wall</h2>
       <p className="mt-1 max-w-2xl text-sm text-ink-2">
@@ -153,7 +174,7 @@ export default function WallPlan({ wall, onSend }: { wall: PublicWall; onSend: (
         <span className="text-ink-3">Planned with paperbacks of {c.bookW} × {c.bookH} cm; hardcovers make it larger.</span>
       </p>
 
-      <h3 className="mt-8 text-sm font-medium text-ink">The books it needs</h3>
+      <h3 className="mt-8 text-sm font-medium text-ink">Get the books</h3>
       <p className="mt-1 max-w-2xl text-xs text-ink-3">
         An ISBN names a printing, not its picture: the same number has carried other covers. Each book&rsquo;s page says what the publisher shows for it and where to look.
       </p>
@@ -169,7 +190,13 @@ export default function WallPlan({ wall, onSend }: { wall: PublicWall; onSend: (
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-sm text-ink">{t.title}{t.author ? ` — ${t.author}` : ''}</span>
                 <span className="block truncate text-xs text-ink-3">
-                  {[p?.publisher, p?.year].filter(Boolean).join(' ') || 'Printing not on record'}
+                  {p
+                    ? [p.publisher, p.year].filter(Boolean).join(' ') || 'Printing on record, without publisher or year'
+                    : t.looked
+                      ? 'No printing on record for this cover'
+                      : lookup === 'failed'
+                        ? 'The catalogue did not answer — the printing is not looked up yet'
+                        : 'Looking up the printing…'}
                   {isbns.length > 0 ? ` · ISBN ${isbns.slice(0, 2).join(', ')}${isbns.length > 2 ? ` +${isbns.length - 2}` : ''}` : ''}
                 </span>
               </span>
