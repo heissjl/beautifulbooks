@@ -26898,6 +26898,699 @@
           "from": "edition:OL5261921M"
         }
       ]
+    },
+    {
+      "slug": "fischer-bucherei-covers-by-kurt-wirth",
+      "title": "Fischer Bücherei — covers by Kurt Wirth",
+      "kind": "series",
+      "intro": "From the early 1950s to the late 1960s the Swiss graphic artist Kurt Wirth drew dozens of covers for the Fischer Bücherei, the paperback series with the coloured band and the three fish at the top. Cut paper, collage, brush and ink: a different picture for every book. These are the covers Sammlung Keller shows, in the order of their numbers.",
+      "published": false,
+      "publishers": [
+        "Fischer Bücherei",
+        "Fischer"
+      ],
+      "works": [
+        {
+          "id": "OL482894W",
+          "title": "Die Brücke von San Luis Rey",
+          "author": "Thornton Wilder",
+          "coverId": "ol:15259654",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602859M"
+        },
+        {
+          "id": "OL1140126W",
+          "title": "Die Frauen des Hauses Wu",
+          "author": "Pearl S. Buck",
+          "coverId": "ol:15259622",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL13942720M"
+        },
+        {
+          "id": "OL498782W",
+          "title": "Das Urteil",
+          "author": "Franz Kafka",
+          "coverId": "ol:15259623",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL13543044M"
+        },
+        {
+          "id": "OL28423W",
+          "title": "Phantastische Nacht",
+          "author": "Stefan Zweig",
+          "coverId": "ol:15259625",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL17721734M"
+        },
+        {
+          "id": "OL14867028W",
+          "title": "Der Tod in Venedig",
+          "author": "Thomas Mann",
+          "coverId": "ol:13011655",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL42312189M"
+        },
+        {
+          "id": "OL630998W",
+          "title": "Isabelle",
+          "author": "André Gide",
+          "coverId": "ol:15259655",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602861M"
+        },
+        {
+          "id": "OL4358788W",
+          "title": "Der Richter",
+          "author": "Charles Morgan",
+          "coverId": "ol:15259656",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602862M"
+        },
+        {
+          "id": "OL31322283W",
+          "title": "Südkurier",
+          "author": "Antoine de Saint-Exupéry",
+          "coverId": "ol:15259657",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602860M"
+        },
+        {
+          "id": "OL10267W",
+          "title": "Nachtflug",
+          "author": "Antoine de Saint-Exupéry",
+          "coverId": "ol:15259626",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL15279012M"
+        },
+        {
+          "id": "OL1460172W",
+          "title": "Der tolle Bomberg",
+          "author": "Josef Winckler",
+          "coverId": "ol:15259658",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602863M"
+        },
+        {
+          "id": "OL46028954W",
+          "title": "Tot oder lebendig",
+          "author": "Mark Twain",
+          "coverId": "ol:15259659",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602866M"
+        },
+        {
+          "id": "OL10486708W",
+          "title": "Schlussball",
+          "author": "Gerd Gaiser",
+          "coverId": "ol:15259627",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL20213565M"
+        },
+        {
+          "id": "OL18502698W",
+          "title": "Harter blauer Himmel",
+          "author": "Shirley Ann Grau",
+          "coverId": "ol:15259660",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602865M"
+        },
+        {
+          "id": "OL1442121W",
+          "title": "Rock Wagram",
+          "author": "William Saroyan",
+          "coverId": "ol:15259661",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602864M"
+        },
+        {
+          "id": "OL1184857W",
+          "title": "Eifersucht",
+          "author": "Colette",
+          "coverId": "ol:15259662",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602870M"
+        },
+        {
+          "id": "OL24176915W",
+          "title": "Rumänisches Tagebuch",
+          "author": "Carossa, Hans",
+          "coverId": "ol:10598801",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL31916018M"
+        },
+        {
+          "id": "OL86320W",
+          "title": "Dublin",
+          "author": "James Joyce",
+          "coverId": "ol:15259628",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL19724772M"
+        },
+        {
+          "id": "OL82923W",
+          "title": "Der Strom",
+          "author": "William Faulkner",
+          "coverId": "ol:15259663",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602871M"
+        },
+        {
+          "id": "OL33836983W",
+          "title": "Russische Gespenstergeschichten",
+          "author": "Johannes von Guenther",
+          "coverId": "ol:15259629",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL45816004M"
+        },
+        {
+          "id": "OL36595W",
+          "title": "Das Alibi",
+          "author": "Daphne du Maurier",
+          "coverId": "ol:15259664",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602873M"
+        },
+        {
+          "id": "OL873100W",
+          "title": "Narziss und Goldmund",
+          "author": "Hermann Hesse",
+          "coverId": "ol:12722913",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL37821432M"
+        },
+        {
+          "id": "OL1696158W",
+          "title": "Das Ruhekissen",
+          "author": "Christiane Rochefort",
+          "coverId": "ol:14548849",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL50033163M"
+        },
+        {
+          "id": "OL754964W",
+          "title": "Illusionen",
+          "author": "Ruth Rehmann",
+          "coverId": "ol:15259665",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602872M"
+        },
+        {
+          "id": "OL46028957W",
+          "title": "Russische Kriminalgeschichten",
+          "author": "Johannes von Guenther",
+          "coverId": "ol:15259666",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602874M"
+        },
+        {
+          "id": "OL1253052W",
+          "title": "Die Hafenorgel",
+          "author": "Leip, Hans",
+          "coverId": "ol:15259668",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602877M"
+        },
+        {
+          "id": "OL1417688W",
+          "title": "Ein Tag zuviel",
+          "author": "Alain Robbe-Grillet",
+          "coverId": "ol:15259667",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602878M"
+        },
+        {
+          "id": "OL455327W",
+          "title": "Herr der Fliegen",
+          "author": "William Golding",
+          "coverId": "ol:15259669",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602876M"
+        },
+        {
+          "id": "OL11311774W",
+          "title": "Sanfter Schrecken",
+          "author": "Stanley Ellin",
+          "coverId": "ol:15259630",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL15260878M"
+        },
+        {
+          "id": "OL16235618W",
+          "title": "Unter fremden Menschen",
+          "author": "Максим Горький",
+          "coverId": "ol:15259670",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602880M"
+        },
+        {
+          "id": "OL86316W",
+          "title": "Stephen Daedalus",
+          "author": "James Joyce",
+          "coverId": "ol:15259631",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL20410867M"
+        },
+        {
+          "id": "OL1437964W",
+          "title": "Die Egoisten",
+          "author": "Tecchi, Bonaventura",
+          "coverId": "ol:15259671",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602881M"
+        },
+        {
+          "id": "OL31561693W",
+          "title": "Der Sonntagslügner",
+          "author": "Josef Martin Bauer",
+          "coverId": "ol:15259632",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL43230950M"
+        },
+        {
+          "id": "OL46028960W",
+          "title": "Geschichten am Sabbat",
+          "author": "Isaac Leib Peretz",
+          "coverId": "ol:15259672",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602883M"
+        },
+        {
+          "id": "OL44087602W",
+          "title": "Russische Liebesgeschichten",
+          "author": "Johannes von Guenther",
+          "coverId": "ol:15259673",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602882M"
+        },
+        {
+          "id": "OL8443884W",
+          "title": "Bittere Ernte",
+          "author": "Hermann Field",
+          "coverId": "ol:15259674",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602885M"
+        },
+        {
+          "id": "OL11961824W",
+          "title": "Der brennende Wind",
+          "author": "Benaya, M. (Margaret)",
+          "coverId": "ol:15259675",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602888M"
+        },
+        {
+          "id": "OL27718382W",
+          "title": "Französische Gespenstergeschichten",
+          "author": "Hans Rauschning",
+          "coverId": "ol:12722659",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL37820555M"
+        },
+        {
+          "id": "OL7494635W",
+          "title": "Perdita",
+          "author": "Isabel Hamer",
+          "coverId": "ol:15259676",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602886M"
+        },
+        {
+          "id": "OL873082W",
+          "title": "Märchen",
+          "author": "Hermann Hesse",
+          "coverId": "ol:15259633",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL14993855M"
+        },
+        {
+          "id": "OL85528W",
+          "title": "Mein Franz von Assisi",
+          "author": "Nikos Kazantzakis",
+          "coverId": "ol:15259677",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602887M"
+        },
+        {
+          "id": "OL1401583W",
+          "title": "Tewje der Milchmann",
+          "author": "Sholem Aleichem",
+          "coverId": "ol:15259678",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602891M"
+        },
+        {
+          "id": "OL12543539W",
+          "title": "Ein Testament",
+          "author": "Joachim Maass",
+          "coverId": "ol:15259634",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL21325319M"
+        },
+        {
+          "id": "OL82918W",
+          "title": "Das verworfene Erbe",
+          "author": "William Faulkner",
+          "coverId": "ol:15259679",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602893M"
+        },
+        {
+          "id": "OL46028964W",
+          "title": "Grüner Siegellack",
+          "author": "Colette",
+          "coverId": "ol:15259681",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602894M"
+        },
+        {
+          "id": "OL13415972W",
+          "title": "Man sollte dagegen sein",
+          "author": "W. Schnurre",
+          "coverId": "ol:15259635",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL21585341M"
+        },
+        {
+          "id": "OL1171763W",
+          "title": "Das Lamm",
+          "author": "François Mauriac",
+          "coverId": "ol:15259680",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602892M"
+        },
+        {
+          "id": "OL39349W",
+          "title": "Mrs. Dalloway",
+          "author": "Virginia Woolf",
+          "coverId": "ol:15259636",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL20965611M"
+        },
+        {
+          "id": "OL1390601W",
+          "title": "Belarmino und Apolonio",
+          "author": "Ramón Pérez de Ayala",
+          "coverId": "ol:15259682",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602895M"
+        },
+        {
+          "id": "OL13416023W",
+          "title": "Korporal Mombour und andere Erzählungen",
+          "author": "E. Penzoldt",
+          "coverId": "ol:15259637",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL21585549M"
+        },
+        {
+          "id": "OL14866651W",
+          "title": "Bekenntnisse des Hochstaplers Felix Krull",
+          "author": "Thomas Mann",
+          "coverId": "ol:15259638",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL16165433M"
+        },
+        {
+          "id": "OL1257206W",
+          "title": "Das Halsband der Königin",
+          "author": "Alexander Lernet-Holenia",
+          "coverId": "ol:15259683",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602897M"
+        },
+        {
+          "id": "OL2234946W",
+          "title": "Die neun Schneider",
+          "author": "Dorothy L. Sayers",
+          "coverId": "ol:15259684",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602898M"
+        },
+        {
+          "id": "OL11948082W",
+          "title": "Die andere Esther",
+          "author": "Magda Szabó",
+          "coverId": "ol:15259685",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602896M"
+        },
+        {
+          "id": "OL1217968W",
+          "title": "Die grossen Tage",
+          "author": "John Dos Passos",
+          "coverId": "ol:15259686",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602901M"
+        },
+        {
+          "id": "OL10291144W",
+          "title": "Tage der Schlehen",
+          "author": "H. Stahl",
+          "coverId": "ol:15259639",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL20071400M"
+        },
+        {
+          "id": "OL3337589W",
+          "title": "Shaw und Mollissima",
+          "author": "Peter Tompkins",
+          "coverId": "ol:15259687",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602903M"
+        },
+        {
+          "id": "OL868199W",
+          "title": "Engele von Loewen und andere Erzählungen",
+          "author": "Carl Zuckmayer",
+          "coverId": "ol:15259640",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL2824469M"
+        },
+        {
+          "id": "OL13415977W",
+          "title": "Hochzeit zwischen Himmel und Hölle",
+          "author": "R. Kassner",
+          "coverId": "ol:15259642",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL21585357M"
+        },
+        {
+          "id": "OL14999459W",
+          "title": "Briefe",
+          "author": "Marquis de Sade",
+          "coverId": "ol:15259688",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602902M"
+        },
+        {
+          "id": "OL2900597W",
+          "title": "São Bernardo",
+          "author": "Graciliano Ramos de Oliveira",
+          "coverId": "ol:15259689",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602904M"
+        },
+        {
+          "id": "OL6879905W",
+          "title": "Elfenbein für Felicitas",
+          "author": "Kurt Heuser",
+          "coverId": "ol:15259691",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602906M"
+        },
+        {
+          "id": "OL46028968W",
+          "title": "Heitere Geschichten aus Russland",
+          "author": "Johannes von Guenther",
+          "coverId": "ol:15259692",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602908M"
+        },
+        {
+          "id": "OL1222565W",
+          "title": "Jaquemars schwierige Jugend",
+          "author": "Joachim Maass",
+          "coverId": "ol:15259643",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5584379M"
+        },
+        {
+          "id": "OL11022436W",
+          "title": "Perrudja",
+          "author": "Hans Henny Jahnn",
+          "coverId": "ol:15259644",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL14430021M"
+        },
+        {
+          "id": "OL1268090W",
+          "title": "Zwei Schwestern",
+          "author": "Friedrich Georg Jünger",
+          "coverId": "ol:15259645",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL17779656M"
+        },
+        {
+          "id": "OL6766918W",
+          "title": "Noella",
+          "author": "Elisabeth Castonier",
+          "coverId": "ol:15259693",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602907M"
+        },
+        {
+          "id": "OL794064W",
+          "title": "Die grässliche Bescherung in der Via Merulana",
+          "author": "Carlo Emilio Gadda",
+          "coverId": "ol:15259694",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602909M"
+        },
+        {
+          "id": "OL1450495W",
+          "title": "Geliebte Söhne",
+          "author": "Howard Spring",
+          "coverId": "ol:15259695",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602914M"
+        },
+        {
+          "id": "OL43169522W",
+          "title": "Das Geschäft des Lebens",
+          "author": "Saul Bellow",
+          "coverId": "ol:15259646",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL58793704M"
+        },
+        {
+          "id": "OL46028972W",
+          "title": "Die Nacht der treibenden Feuer",
+          "author": "Augusto Antonio Roa Bastos",
+          "coverId": "ol:15259696",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602916M"
+        },
+        {
+          "id": "OL1454231W",
+          "title": "Lebenslauf eines dicken Mannes, der Hamlet hieß",
+          "author": "Georg Britting",
+          "coverId": "ol:15259697",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602915M"
+        },
+        {
+          "id": "OL1390607W",
+          "title": "Tiger Juan",
+          "author": "Ramón Pérez de Ayala",
+          "coverId": "ol:15259698",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602913M"
+        },
+        {
+          "id": "OL19767246W",
+          "title": "Tauben im Gras",
+          "author": "Wolfgang Koeppen",
+          "coverId": "ol:15259647",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL61527722M"
+        },
+        {
+          "id": "OL682096W",
+          "title": "Paris – Passage de Milan",
+          "author": "Michel Butor",
+          "coverId": "ol:14305213",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47678389M"
+        },
+        {
+          "id": "OL1175172W",
+          "title": "Der Einzelgänger",
+          "author": "Seán Ó Faoláin",
+          "coverId": "ol:15259699",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602920M"
+        },
+        {
+          "id": "OL1414424W",
+          "title": "Engelsbrücke",
+          "author": "Marie Luise Kaschnitz",
+          "coverId": "ol:15259648",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5717218M"
+        },
+        {
+          "id": "OL136820W",
+          "title": "Die Gärten der Finzi-Contini",
+          "author": "Giorgio Bassani",
+          "coverId": "ol:15259700",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602919M"
+        },
+        {
+          "id": "OL1245529W",
+          "title": "Eugénie oder Die Bürgerzeit",
+          "author": "Heinrich Mann",
+          "coverId": "ol:15259649",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL19050032M"
+        },
+        {
+          "id": "OL6766913W",
+          "title": "Das vergessene Cottage",
+          "author": "Elisabeth Castonier",
+          "coverId": "ol:15204615",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL61490102M"
+        },
+        {
+          "id": "OL463709W",
+          "title": "Hasenherz",
+          "author": "John Updike",
+          "coverId": "ol:15259650",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL45257375M"
+        },
+        {
+          "id": "OL872724W",
+          "title": "Das Glasperlenspiel",
+          "author": "Hermann Hesse",
+          "coverId": "ol:15259651",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL13937361M"
+        },
+        {
+          "id": "OL6753865W",
+          "title": "Teddy Flesh oder die Belagerung von Sagunt",
+          "author": "Nonnenmann, Klaus",
+          "coverId": "ol:15259652",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL4958299M"
+        },
+        {
+          "id": "OL2564737W",
+          "title": "Schlachtbeschreibung",
+          "author": "Alexander Kluge",
+          "coverId": "ol:15259701",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602918M"
+        },
+        {
+          "id": "OL46028974W",
+          "title": "Lachen ist unfein",
+          "author": "Art Buchwald",
+          "coverId": "ol:15259703",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602921M"
+        },
+        {
+          "id": "OL35362204W",
+          "title": "Parodien und Post Scripta",
+          "author": "F Torberg",
+          "coverId": "ol:15034167",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47780307M"
+        }
+      ]
     }
   ]
 }

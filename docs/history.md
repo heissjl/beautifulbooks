@@ -3359,3 +3359,21 @@ Julian wollte „eine dedizierte websuche mit der wir andere cover gestalter fin
 - **Ende der Reihe:** Das Impressum lautete bis Mitte 1971 „Fischer Bücherei".
 
 **Regel für die Wand: Ein Gestalter gehört zu einem Druck, nicht zu einer Bandnummer.** Nr. 1 hatte im Erstdruck einen Umschlag von Gerd Grimm; Keller zeigt für Nr. 1 einen späteren Druck von Wirth. Nr. 132 hatte 1956, 1965 und 1969–71 verschiedene Umschläge. Unter eine Kachel kommt ein Name also nur, wenn die Quelle genau diesen Druck betrifft. Das ist dieselbe Regel wie „ISBN ≠ Cover", mit der Bandnummer an Stelle der ISBN.
+
+## 2026-09-28 — Entwurf Fischer Bücherei, Umschläge von Kurt Wirth (ROADMAP 5.10)
+
+Julian: „ja, drafte das und füge die werke bei OL hinzu falls sie fehlen", dazu „falls was fehlt, mache direkt hiermit weiter".
+
+- **Quelle:** Sammlung Keller zeigt 85 Wirth-Umschläge im Abschnitt Fischer Bücherei. Ein 86. Bild, *Unkalifornische Geschichten* (S. Fischer 1965, gebunden), steht davor unter „Buchgestaltung" und bleibt draußen.
+- **Manifest:** `lab/collections/for-openlibrary/fischer-buecherei-wirth/` (git-ignoriert, mit den Bildern). Für jeden Band: Titel vom Umschlag, Druck aus der DNB, Abgleich bei Open Library über die Titel der Ausgaben.
+- **Welcher Druck:** Ab etwa Nr. 400 ist der Wirth-Umschlag der Erstdruck. Bei den frühen Nummern (1, 5, 19, 45, 54, 137, 322) trägt ihn ein späterer Druck; die Jahre sind aus der Gestaltung erschlossen.
+- **Fehler in Kellers Bildunterschrift:** *Das Alibi* steht dort als Nr. 453. Laut DNB ist es Nr. 435; 453 ist Zuckmayers *Katharina Knie*.
+- **Bei Open Library:**
+  - 8 Umschläge lagen schon dort.
+  - 29 habe ich auf vorhandene Ausgaben hochgeladen. Bei Nr. 322 ist es ein zweites Cover neben dem alten.
+  - 48 Ausgaben habe ich neu angelegt (OL62602859M–OL62602921M) und mit ihrem Umschlag versehen. 41 hängen am Werk des Originals, 7 sind neue Werke für deutsche Auswahlbände. Open Library meldete bei keiner eine mögliche Dublette.
+- **Chrome:** Die Bilder sind etwa 800 KB groß. Fünf Uploads auf einmal liefen in eine Zeitüberschreitung; vier pro Durchgang gingen. Zwei alte Tabs lieferten eine leere Seite (Viewport 0×0) und wurden durch neue ersetzt.
+- **Ergebnis:** Die Wand `fischer-bucherei-covers-by-kurt-wirth` zeigt 85 von 85 Umschlägen in Bandnummer-Reihenfolge, laut Kontaktbogen alle von Wirth. Online liegt sie als Entwurf `3_cXkyHS7FL7`.
+- **Offen:**
+  - Auffällige Datensätze bei Open Library, die das Manifest-README aufzählt: Seitenzahlen, die nicht zum Jahr passen (Nr. 1, 19, 45, 322); ISBNs auf Drucken der 1960er, die es damals noch nicht gab; doppelte Ausgaben desselben Drucks (Nr. 402, 654, 724, 740, 778, 820, 831, 838, 842).
+  - Nr. 397 (Chesterton) ist als Wirth belegt, es gibt aber kein Bild.
