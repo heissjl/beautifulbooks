@@ -316,3 +316,23 @@ describe('linkPlan: no product page is promised for a number the shop never had 
     expect(plan(EN, 'uk').rest.find(l => l.provider === 'blackwells')!.kind).toBe('product');
   });
 });
+
+describe('ZVAB and AbeBooks in the German market', () => {
+  it('puts ZVAB first and shows abebooks.de only behind the fold', () => {
+    /*
+      Julian, 2026-09-28: „zvab bei deutschem markt priorisieren, aber abe
+      books auch zeigen unter weitere". ZVAB is a subset of the same
+      marketplace (117 against 139 offers on one ISBN), so both are offered,
+      ZVAB ahead.
+    */
+    for (const isbn of [DE, TR, undefined]) {
+      const p = plan(isbn, 'de');
+      const all = [...p.lead, ...p.rest].map(l => l.label);
+      const zvab = all.findIndex(l => l.startsWith('ZVAB'));
+      const abe = all.findIndex(l => l.startsWith('AbeBooks'));
+      expect(zvab).toBeGreaterThanOrEqual(0);
+      expect(abe).toBeGreaterThan(zvab);
+      expect(p.lead.some(l => l.label.startsWith('AbeBooks'))).toBe(false);
+    }
+  });
+});
