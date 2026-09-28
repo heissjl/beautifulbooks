@@ -66,7 +66,7 @@ Julian, 2026-09-28: „mach noch eine Mock-up-Version, in der du die Aufteilung 
 
 **Gemessen bei 390 × 844:** kein seitliches Scrollen; H1 der Startseite 79 px, Buchtitel *Frankenstein* 76 px (zwei Zeilen wie mit Fraunces), „Start with a classic" eine Zeile, Wortmarke eine Zeile.
 
-Entscheidung zwischen `swap` und `xanh`: **Julian.**
+**Entschieden am 2026-09-28: `swap`** (Julian: „lets go with the swap for now, but keep record of the other xanh option in the roadmap"). Gebaut ohne den Mockup-Schalter; `xanh` steht als ROADMAP 6.62 unter „Zurückgestellt".
 
 ## 2. Darf ein Logo aus echten Covern bestehen?
 

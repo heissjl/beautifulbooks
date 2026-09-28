@@ -28,6 +28,7 @@ import { useWorkPages } from '@/components/useWorkPages';
 import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
 import { leadCover } from '@/lib/scene';
+import { isbnRuns } from '@/lib/isbnformat';
 import { useOverflowsX } from '@/components/useOverflowsX';
 import { searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
@@ -840,7 +841,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
     <div className="mt-6">
       <p className="text-sm text-ink">{head || 'Publisher and year unknown'}</p>
       {ownTitle && <p className="mt-0.5 text-sm text-ink-2">{ownTitle}</p>}
-      {edition.isbn13 && <p className="mt-0.5 font-mono text-[13px] text-ink-3">ISBN {edition.isbn13}</p>}
+      {edition.isbn13 && <p className="mt-0.5 text-[13px] text-ink-3">ISBN <IsbnText isbn={edition.isbn13} /></p>}
 
       <div className="mt-5">
         {/*
@@ -1011,6 +1012,21 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
   of `lib/verdicts.ts`. Both were kept when main met production on
   2026-09-11, where 1.11 and 6.32 had each rewritten this function.
 */
+/**
+ * The ISBN as the reader sees it: hyphenated, in the text face, with the
+ * zeros and hyphens from Geist Mono (ROADMAP 6.61). Display only — every
+ * link on this page is built from the bare `isbn13`.
+ */
+function IsbnText({ isbn }: { isbn: string }) {
+  return (
+    <>
+      {isbnRuns(isbn).map((run, i) =>
+        run.mono ? <span key={i} className="font-mono">{run.text}</span> : run.text,
+      )}
+    </>
+  );
+}
+
 function VerdictNote({ verdict, hint }: {
   verdict: Extract<IsbnVerdict, { status: 'differs' | 'uncompared' }>;
   hint: string;
