@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import CoverImage from './CoverImage';
+import IdLinkNotice from './IdLinkNotice';
 import WallIdField from './WallIdField';
 import WallPhoto from './WallPhoto';
 import WallPicker from './WallPicker';
@@ -113,6 +114,7 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
 
   return (
     <>
+      <IdLinkNotice me={me} onChange={setMe} />
       {me.walls.length > 0 && (
         <section className="mt-10" aria-labelledby="yours">
           <div className="flex items-baseline justify-between border-b border-line pb-2">
