@@ -3271,3 +3271,20 @@ Julian: „starte einen agenten, der die suchfunktion überarbeitet. automatisch
 **Versus: weitere Sammlungen (2026-09-27).** Julian: „füge die cover von den collections jai lu, denoel, folio, spektrum, heyne und alle von heinz edelmann dem versus game hinzu". `add-collection-covers-to-pool.ts --add=…` (bisherige 20 Sammlungen plus die fünf neuen); das Spiel zeigt jetzt auch Cover, die die Seite selbst ausliefert (`PoolCover.image`: Jules Verne 19, Tolkien 4; Link auf die Werkwand ohne Cover). 1.545 Kandidaten, 163 zu klein oder weich, 9 schon im Vorrat. **Vorrat jetzt 3.373 Cover** (1.373 aus Sammlungen): J'ai Lu 96, Folio 93, Présence du futur 80, Heyne 33, Spektrum 15, Jules Verne 20, Tolkien 7. Name des Vorrats unverändert, die Stimmen bleiben.
 
 **„More by …" mit Namensauflösung deployt (2026-09-27)**, zusammen mit dem erweiterten Versus-Vorrat. Tests (884), Typprüfung und Build sauber.
+
+## 2026-09-28 · Die eigene Wand ohne Konto, im Lab (ROADMAP 5.13)
+
+Julian: „I want to use the website as a funnel for art creation, of framed cover walls in the actual physical world … focus on step one for now but make a roadmap/plan for the entire funnel". Plan: [PLAN-5.13](plans/PLAN-5.13-wand-funnel.md); Prototyp: [`lab/walls/`](../lab/walls/README.md).
+
+**taketest.xyz angesehen:** eine UUID je Besucher im Cookie `visitor_id`, in der Fußzeile als Feld mit „Save" gezeigt („Your ID · sign in to keep results across devices"); Anmelden optional, per E-Mail-Link oder Google. Übernommen: kein Konto, ein sichtbares, einfügbares Geheimnis. Umgedreht: das Geheimnis gehört der Wand, nicht dem Besucher — eine Besucher-ID wäre die Kennung, die N11 ausschließt.
+
+**Gemessen, lokal, mit `WALLS_FILE` im Arbeitsordner der Sitzung:**
+
+- Open Library liefert für *The Great Gatsby* (OL468431W) auf der ersten Ausgabenseite **7** wählbare Cover, über drei Seiten (300 Datensätze) **87**. Der Prototyp liest deshalb bis zu drei Seiten.
+- Eine Wand aus *The Left Hand of Darkness* und *Dune*, zwölf Cover, sechs Spalten: **12 von 12 Kacheln tragen eine ISBN**; die Einkaufsliste nennt je Kachel Verlag, Jahr, ISBN und Cover-Id. Zwei Kacheln zeigen **dasselbe Minotauro-Motiv** aus zwei Datensätzen — der Picker faltet nicht.
+- Per `curl`: Ändern **ohne** Schlüssel und mit **falschem** Schlüssel → 403; der Schlüssel steht nicht in der Speicherdatei (nur sein SHA-256).
+- Im Browser: ohne gespeicherten Schlüssel neu geladen → schreibgeschützt (keine Werkzeuge, Titel und Spalten gesperrt, Hinweis); mit Bearbeitungslink → bearbeitbar, das Fragment `#k=` ist sofort aus der Adresse; Schlüsselbund auf leerem Speicher eingefügt → die Wand steht wieder unter „Your walls"; Unsinn eingefügt → abgelehnt.
+- 390 × 844: Seitenbreite 390, kein Element ragt heraus, die Wand zeigt drei statt sechs Spalten und sagt es. 1280: sechs Spalten, Screenshot lokal in `docs/tests/2026-09-28-walls-desktop.png` (git-ignoriert).
+- 13 Tests (`lab/walls/__tests__/`), Typprüfung und ESLint ohne Befund.
+
+**Recherche für Stufe 2** (abgerufen 2026-09-28): die eBay Browse API sucht nach GTIN, also ISBN, und gibt eine Partner-URL zurück, ist in Produktion aber nur für Partner des eBay Partner Network freigegeben, die Checkout-Methoden gar nicht; AbeBooks' Search Web Services und Purchase API gibt es nur für Mitglieder des Affiliate-Programms (5 % Provision). Ein Agent, der Läden abgrast, bleibt ausgeschlossen (§8.7).
