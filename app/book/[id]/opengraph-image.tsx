@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { authorLine, coverImages } from '@/lib/seo';
+import { Display, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
 import { getWorkPage, isWorkId } from '@/lib/work';
 
 /**
@@ -17,10 +18,6 @@ export const revalidate = 86400;
 export const alt = 'Covers of this book, side by side';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-
-const BG = '#131110';
-const INK = '#f4f0e8';
-const INK_2 = '#a8a09a';
 
 export default async function Image({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -46,7 +43,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
       <div
         style={{
           width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
-          background: BG, padding: 56, justifyContent: 'space-between',
+          background: OG.bg, padding: 56, justifyContent: 'space-between',
         }}
       >
         <div style={{ display: 'flex', gap: 24, height: 372 }}>
@@ -62,13 +59,14 @@ export default async function Image({ params }: { params: Promise<{ id: string }
           ))}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontSize: 54, color: INK, lineHeight: 1.1 }}>{title}</div>
-          <div style={{ fontSize: 30, color: INK_2, marginTop: 10, display: 'flex' }}>
-            {author ? `${author} · ` : ''}Beautiful Books
+          <Display size={56} color={OG.ink}>{title}</Display>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginTop: 10 }}>
+            {author && <div style={{ ...TEXT, fontSize: 30, color: OG.ink2 }}>{`${author} ·`}</div>}
+            <Wordmark size={30} color={OG.ink2} />
           </div>
         </div>
       </div>
     ),
-    size,
+    { ...size, fonts: await ogFonts() },
   );
 }

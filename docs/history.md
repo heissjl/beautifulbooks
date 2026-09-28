@@ -3353,3 +3353,12 @@ Julian wollte die visuelle Identität klären und schickte zwei Fotos als Schrif
 - **Nebenbefund zum Werkzeug:** `next dev` (Turbopack) im iCloud-Worktree übernahm Änderungen an `app/globals.css` mehrmals nicht, auch nicht nach einem Neustart; erst das Löschen von `.next/dev/cache/turbopack` half. Den ganzen `.next/dev`-Ordner zu löschen nahm auch den Fetch-Cache mit, und ein aus der Shell gestarteter Dev-Server erreicht Open Library nicht — danach antwortete jede Werkseite „Book data source unavailable".
 
 Offen aus 6.61: die Bildmarke (Richtung A–D) und das OG-Bild, das seine Schrift noch mit der Voreinstellung von `next/og` setzt.
+
+## 2026-09-28 — Vorschaubilder in den neuen Schriften, eine Karte für die ganze Seite (ROADMAP 6.61)
+
+- Werk- und Cover-Karte in Xanh Mono und Jost (`app/og.tsx`, WOFF in `assets/og/`). Lokal gerendert: *Frankenstein* als Werk-Karte (1,8 s kalt) und als Cover-Karte.
+- Neue Website-Karte `app/opengraph-image.tsx` (statisch, 0,2–0,3 s im Dev-Server), eine Wand aus buchförmigen Kacheln ohne echte Cover.
+- **Gefunden:** `/versus`, `/versus/board` und jede Sammlung lieferten **kein** `og:image` — sie setzen `openGraph` selbst, und das ersetzt das geerbte Objekt samt Bild. Jetzt nennen sie `SITE_CARD`. Nachgeprüft mit `curl` auf `/`, `/about`, `/collections`, `/privacy`, `/contact`, `/versus`, `/versus/board`, `/collections/feminist-press`, `/book/OL450063W`, `/book/OL450063W/decades`, `/book/OL450063W/cover/ol-14705499`: jede Seite hat ein Bild, die Werk-, Jahrzehnte- und Cover-Seiten ihr eigenes.
+- **Verworfen:** eine Website-Karte aus dem Lade-Mosaik (Gesicht aus echten Covern) — das Gesicht ist in Kartengröße kaum zu erkennen, und die Rechtefrage gleicht der eines Logos ([docs/identitaet.md §4](identitaet.md)).
+- 890 Tests und Build grün.
+

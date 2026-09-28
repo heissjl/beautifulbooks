@@ -8,7 +8,7 @@ import SiteHeader from '@/components/SiteHeader';
 import { bookPath, cachedBoard, type Board, type BoardEntry, type Verdict } from '@/lib/hotornot/game';
 import { StoreUnavailableError, missingStoreMessage, storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
-import { SITE_URL } from '@/lib/seo';
+import { SITE_CARD, SITE_URL } from '@/lib/seo';
 
 /**
  * The standings of the cover game (ROADMAP 5.8a). Rendered on the server from
@@ -33,6 +33,7 @@ export const metadata: Metadata = {
     title: 'Which cover? · Standings',
     description: 'Which book covers readers keep choosing, and which they do not.',
     url: `${SITE_URL}/versus/board`,
+    images: [SITE_CARD],
   },
 };
 

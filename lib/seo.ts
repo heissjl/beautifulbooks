@@ -11,6 +11,18 @@ import type { Cover, Edition, Work } from './model';
 /** Where the site is served from; needed for absolute image and canonical URLs. */
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
 
+/**
+ * The site's own shared-link card (`app/opengraph-image.tsx`, ROADMAP 6.61).
+ * A page that sets `openGraph` replaces the parent's whole object, images
+ * included, so a page without a card of its own names this one.
+ */
+export const SITE_CARD = {
+  url: `${SITE_URL}/opengraph-image`,
+  width: 1200,
+  height: 630,
+  alt: 'Beautiful Books: judge a book by its covers',
+};
+
 export const SITE_NAME = 'Beautiful Books';
 
 /** "George Orwell", or "Mary Shelley and 2 others" when a record lists many. */
