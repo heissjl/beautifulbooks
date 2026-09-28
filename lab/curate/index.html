@@ -50,6 +50,20 @@
   .picked button.x { background:none; border:0; color:var(--ink3); cursor:pointer; font-size:15px; line-height:1; padding:2px 6px; border-radius:4px; }
   .picked button.x:hover { color:#c0392b; background:color-mix(in srgb, #c0392b 12%, transparent); }
   .done { padding:40px 0; text-align:center; }
+  /* Die Liste der offenen Werke (Julian, 2026-09-24): scrollen statt klicken,
+     bis man das Buch findet, das man als Nächstes ansehen will. */
+  .open { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:14px; margin-top:14px; }
+  .open button { font:inherit; text-align:left; background:var(--surface); border:1px solid var(--line);
+                 border-radius:8px; padding:8px; cursor:pointer; display:flex; flex-direction:column; gap:6px; }
+  .open button:hover { border-color:var(--accent); }
+  .open .thumb { aspect-ratio:2/3; background:var(--surface-2, #eee); border-radius:4px; overflow:hidden;
+                 display:flex; align-items:center; justify-content:center; }
+  .open .thumb img { width:100%; height:100%; object-fit:contain; }
+  .open .thumb span { font-size:11px; color:var(--ink-3, #888); padding:6px; text-align:center; }
+  .open b { font-size:13px; font-weight:600; line-height:1.25; }
+  .open .who { font-size:12px; color:var(--ink-2, #666); }
+  .open .tag { font-size:11px; color:var(--ink-3, #888); }
+  .open .tag.skipped { color:var(--accent); }
   .tabs { display:flex; gap:4px; }
   .tabs button { font:inherit; font-size:13px; padding:4px 10px; border:1px solid var(--line); background:var(--surface);
                  color:var(--ink2); border-radius:999px; cursor:pointer; }
@@ -84,13 +98,14 @@
   <span class="meta" id="position"></span>
   <span class="tabs">
     <button id="tab-pick" aria-current="true">Kuratieren</button>
+    <button id="tab-open" aria-current="false">Offen</button>
     <button id="tab-order" aria-current="false">Reihenfolge</button>
   </span>
 </header>
 <main id="main">Lade …</main>
 
 <script>
-const state = { works: [], i: 0, cursor: 0, years: {}, dropped: 0, view: 'pick', order: [], drag: null };
+const state = { works: [], struck: [], i: 0, cursor: 0, years: {}, dropped: 0, view: 'pick', order: [], drag: null };
 const $ = id => document.getElementById(id);
 const cover = (id, size) => id.startsWith('ol:')
   ? `https://covers.openlibrary.org/b/id/${id.slice(3)}-${size}.jpg` : '';
@@ -98,7 +113,8 @@ const cover = (id, size) => id.startsWith('ol:')
 async function load() {
   const data = await (await fetch('/api/works')).json();
   // Struck-off works leave the run entirely; the choice itself stays on disk.
-  state.dropped = data.works.filter(w => w.pick?.dropped).length;
+  state.struck = data.works.filter(w => w.pick?.dropped);
+  state.dropped = state.struck.length;
   state.works = data.works.filter(w => !w.pick?.dropped);
   state.order = data.order ?? [];
   const firstOpen = state.works.findIndex(w => !w.pick);
@@ -111,6 +127,8 @@ function progress() {
   $('progress').textContent = `${done} von ${state.works.length} gewählt${state.dropped ? ` · ${state.dropped} gestrichen` : ''}`;
   $('barfill').style.width = `${(done / state.works.length) * 100}%`;
   $('position').textContent = `Nr. ${state.i + 1}`;
+  const open = state.works.filter(w => !w.pick || w.pick.skipped).length;
+  $('tab-open').textContent = `Offen (${open})`;
 }
 
 async function fetchYears(work) {
@@ -199,7 +217,87 @@ async function moveTo(id, to) {
   });
 }
 
+/**
+ * Die offenen Werke, zum Durchscrollen (Julian, 2026-09-24: „dass ich leichter
+ * durch die liste scrollen kann von denen, die ich noch nicht kuratiert hab").
+ *
+ * Offen heißt: noch keine Wahl, oder übersprungen und damit für später
+ * behalten. Gestrichene sind gar nicht mehr in `state.works`. Ein Klick
+ * springt in die Kuratieren-Ansicht auf genau dieses Buch.
+ */
+function openWorks() {
+  return state.works
+    .map((w, i) => ({ w, i }))
+    .filter(({ w }) => !w.pick || w.pick.skipped);
+}
+
+function renderOpen() {
+  const open = openWorks();
+  const cards = open.map(({ w, i }) => `
+    <button data-i="${i}">
+      <span class="thumb">${w.covers.length
+        ? `<img loading="lazy" src="${cover(w.covers[0], 'M')}" alt="">`
+        : '<span>Cover werden geholt …</span>'}</span>
+      <b>${escapeHtml(w.title)}</b>
+      <span class="who">${escapeHtml(w.author)}</span>
+      <span class="tag${w.pick?.skipped ? ' skipped' : ''}">${w.pick?.skipped ? 'übersprungen · ' : ''}${w.covers.length} Cover${w.note ? ` · ${escapeHtml(w.note)}` : ''}</span>
+    </button>`).join('');
+
+  // Gestrichene stehen hier, weil sie sonst nirgends stehen: ein Strich war
+  // bis zum 2026-09-24 nur durch Editieren der Datei umkehrbar.
+  const struck = state.struck.map(w => `
+    <button data-restore="${w.id}" title="zurück in den Durchlauf">
+      <span class="thumb">${w.covers.length
+        ? `<img loading="lazy" src="${cover(w.covers[0], 'M')}" alt="">`
+        : '<span>kein Cover geladen</span>'}</span>
+      <b>${escapeHtml(w.title)}</b>
+      <span class="who">${escapeHtml(w.author)}</span>
+      <span class="tag">gestrichen · zurückholen</span>
+    </button>`).join('');
+
+  $('main').innerHTML = `
+    <p class="hint" style="margin-top:12px"><b>${open.length}</b> von ${state.works.length} Werken sind noch offen.
+       Klick springt zum Buch. Übersprungene stehen mit dabei.</p>
+    <div class="open" id="openlist">${cards || '<p class="done">Nichts mehr offen.</p>'}</div>
+    ${state.struck.length ? `
+      <h2 style="font-size:15px; margin:28px 0 0">Gestrichen (${state.struck.length})</h2>
+      <p class="hint">Ein Klick holt das Buch als offenes zurück.</p>
+      <div class="open" id="strucklist">${struck}</div>` : ''}`;
+
+  $('strucklist')?.addEventListener('click', async e => {
+    const b = e.target.closest('button[data-restore]');
+    if (!b) return;
+    await fetch('/api/pick', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id: b.dataset.restore, restore: true }),
+    });
+    await load();
+    state.view = 'open';
+    render();
+  });
+
+  $('openlist')?.addEventListener('click', e => {
+    const b = e.target.closest('button[data-i]');
+    if (!b) return;
+    state.i = Number(b.dataset.i);
+    state.view = 'pick';
+    render();
+    window.scrollTo(0, 0);
+  });
+}
+
 function render() {
+  if (state.view === 'open') {
+    progress();
+    $('tab-pick').setAttribute('aria-current', 'false');
+    $('tab-open').setAttribute('aria-current', 'true');
+    $('tab-order').setAttribute('aria-current', 'false');
+    renderOpen();
+    // Die ersten Kacheln ohne Cover nachladen, damit die Liste nicht grau bleibt.
+    for (const { w } of openWorks().filter(({ w }) => w.covers.length === 0).slice(0, 4)) loadCovers(w);
+    return;
+  }
+  $('tab-open').setAttribute('aria-current', 'false');
   if (state.view === 'order') {
     progress();
     $('tab-pick').setAttribute('aria-current', 'false');
@@ -235,6 +333,7 @@ function render() {
       <button class="btn" id="skip">überspringen</button>
       <button class="btn danger" id="drop">aus der Liste streichen</button>
       <button class="btn" id="next">weiter →</button>
+      <button class="btn" id="nextopen">nächstes offenes ⇥</button>
     </div>
     <div class="grid" id="grid">${tiles}</div>
     <section class="picked" id="picked"></section>
@@ -254,6 +353,15 @@ function render() {
   });
   $('prev').onclick = () => { state.i = Math.max(0, state.i - 1); render(); };
   $('next').onclick = () => { state.i = Math.min(state.works.length - 1, state.i + 1); render(); };
+  // Das nächste Buch ohne Wahl, von hier aus vorwärts und sonst von vorn.
+  $('nextopen').onclick = () => {
+    const open = openWorks().map(({ i }) => i);
+    const next = open.find(i => i > state.i) ?? open[0];
+    if (next === undefined) return;
+    state.i = next;
+    render();
+    window.scrollTo(0, 0);
+  };
   $('skip').onclick = () => save({ skipped: true });
   $('drop').onclick = () => save({ dropped: true });
 
@@ -376,6 +484,7 @@ async function save(extra) {
   render();
 }
 
+document.getElementById('tab-open').onclick = () => { state.view = 'open'; render(); };
 document.getElementById('tab-pick').onclick = () => { state.view = 'pick'; render(); };
 document.getElementById('tab-order').onclick = () => { state.view = 'order'; render(); };
 

@@ -2,6 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import CollectionRow from '@/components/CollectionRow';
+import WallsInvite from '@/components/WallsInvite';
+import ReaderWallCard from '@/components/ReaderWallCard';
+import { POPULAR_VIEWS, toPublic } from '@/lib/walls/model';
+import { shownWalls, wallStoreFromEnv } from '@/lib/walls/store';
+import { wallsEnabled } from '@/lib/walls/switch';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
@@ -25,6 +30,14 @@ export const dynamic = 'force-dynamic';
 export default async function CollectionsPage() {
   const collections = await liveCollections();
   if (collections.length === 0) notFound();
+  // Popular walls by readers stand among the collections (5.13d); a silent store just leaves them out.
+  const store = wallsEnabled() ? wallStoreFromEnv() : null;
+  const popular = store
+    ? (await shownWalls(store).catch(() => []))
+        .filter((s) => s.views >= POPULAR_VIEWS)
+        .sort((a, b) => b.views - a.views)
+        .slice(0, 3)
+    : [];
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -34,6 +47,7 @@ export default async function CollectionsPage() {
         <p className="mt-4 max-w-2xl text-base text-ink-2">
           Books gathered around a theme or a series, one cover each. Every cover leads to the wall of the others we found.
         </p>
+        {wallsEnabled() && <WallsInvite className="mt-3">Create your own collection</WallsInvite>}
         <ul className="mt-10 space-y-12">
           {collections.map(c => (
             <li key={c.slug}>
@@ -53,6 +67,21 @@ export default async function CollectionsPage() {
             </li>
           ))}
         </ul>
+        {popular.length > 0 && (
+          <section className="mt-16" aria-labelledby="by-readers">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line pb-2">
+              <h2 id="by-readers" className="font-display text-2xl text-ink">Collections by readers</h2>
+              <Link href="/collections/readers" className="text-sm text-ink-3 hover:text-accent">all of them &rarr;</Link>
+            </div>
+            <ul className="mt-6 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
+              {popular.slice(0, 2).map(({ wall }) => (
+                <li key={wall.id}>
+                  <ReaderWallCard wall={toPublic(wall)} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </main>
       <SiteFooter />
     </div>
