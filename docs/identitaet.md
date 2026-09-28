@@ -45,6 +45,29 @@ Julian: „nimm Xanh Mono für Überschrift und Texte, aber Jost für Pillen, in
 
 **Gemessen:** bei 390 × 844 kein seitliches Scrollen; der Buchtitel *Frankenstein* läuft über zwei Zeilen (76 px, wie mit Fraunces — Xanh Mono ist schmal genug, die dritte Zeile kam von den Versalien); die Wortmarke in einer Zeile; der Platzhalter des Suchfelds braucht in Jost 181 von 356 px. Umgesetzt ist das nur lokal (CSS unter `html[data-font="xanh"]` in `app/globals.css`, nicht committet), und die Auswahl der Fließtexte hängt dort an Klassen (`leading-relaxed`, `max-w-xl`) — beim echten Einbau bekommt jede Stelle die Schrift ausdrücklich.
 
+### 1.3 Zweite Fassung: die alte Aufteilung mit den neuen Schriften (`?font=swap`)
+
+Julian, 2026-09-28: „mach noch eine Mock-up-Version, in der du die Aufteilung zwischen Fraunces und Geist beibehältst, aber jetzt mit Xanh und Jost und ISBN wie eben gebaut."
+
+**Die alte Aufteilung (SPEC §5):** Fraunces für jede Überschrift (h1, h2, h3) und für die Zeilen mit `font-display` — Wortmarke, „Book not found", „Nothing here", die Zeile über dem Lade-Mosaik; Geist für alles andere, auch jeden Fließtext; Geist Mono für die ISBN. Die Aufteilung folgt der **Form** (Überschrift oder nicht), nicht dem Inhalt.
+
+**`swap`** tauscht nur die Schriften: Xanh Mono, wo Fraunces stand, Jost, wo Geist stand, die ISBN wie in `xanh` (Jost, Null und Striche aus Geist Mono, Striche nur in der Anzeige). Wortabstand: `-0.3em` im H1 wie in `xanh`, `-0.15em` in h2, h3 und den `font-display`-Zeilen — mit `-0.3em` liefen „Start with a classic" bei 24 px die Wörter fast zusammen.
+
+**Wo `swap` und `xanh` sich unterscheiden:**
+
+| Stelle | `swap` (nach Form) | `xanh` (nach Inhalt) |
+|---|---|---|
+| Abschnittsüberschriften (h2): „Start with a classic", „This book", Jahrzehnte, About, Privacy, Spiel | Xanh | Jost |
+| Autor unter dem Buchtitel | Jost | Xanh |
+| Satz unter „Judge a book …" | Jost | Xanh |
+| Buchbeschreibung | Jost | Xanh |
+| Fehler- und Leerzeilen („Book not found", „Nothing here") | Xanh | Xanh (nach der Regel eigentlich Jost, noch nicht umgebaut) |
+| Seitenüberschrift, Wortmarke, ISBN, alles Übrige | gleich | gleich |
+
+**Gemessen bei 390 × 844:** kein seitliches Scrollen; H1 der Startseite 79 px, Buchtitel *Frankenstein* 76 px (zwei Zeilen wie mit Fraunces), „Start with a classic" eine Zeile, Wortmarke eine Zeile.
+
+Entscheidung zwischen `swap` und `xanh`: **Julian.**
+
 ## 2. Darf ein Logo aus echten Covern bestehen?
 
 **Kurz: aus geschützten Covern nicht; aus gemeinfreien ja — aber „liegt auf Commons" heißt nicht „gemeinfrei in Deutschland".** Keine Rechtsberatung; vor der Eintragung einer Marke oder dem Druck einmal von jemandem mit Fach prüfen lassen.
