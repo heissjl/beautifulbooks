@@ -3316,3 +3316,14 @@ Julian: „lege die 47 ausgaben an". Das waren 32 Bände der Reihe Hanser, 5 aus
 **Online-Entwürfe**
 - Beide Entwürfe sind nachgezogen (`push-draft`). Reihe Hanser: 78 dazu, 6 umbenannt, Reihenfolge.
 - Die veröffentlichte Reihe-Hanser-Wand zeigt weiter den veröffentlichten Entwurf, bis Julian ihn neu veröffentlicht.
+
+## 2026-09-28 — Entwurf Virago Modern Classics mit belegten Gemälden (ROADMAP 5.10)
+
+Julian: „drafte virago mit belegten gemälden".
+- **Auswahl:** Open Library `publisher:virago publish_year:[1978 TO 2005]` ergab 1.842 Werke, davon 1.173 mit Cover. Ein Erkenner für das grüne Band markierte 225. Auf Kontaktbögen blieben 142 saubere grüne Bänder, eines pro Werk. *The Orchid House* von 1991 fiel heraus, weil es ein Fernsehstandbild zeigt. Ergebnis: **141 Cover** (Liste `lab/collections/lists/virago-modern-classics.json`, Nachweise in `note` und `coverArtSource`).
+- **Bildnachweise für 96 der 141** (`coverCredits: 'artwork'`):
+  - 79 stammen aus dem Volltext der Rückseite bei Internet Archive („The cover shows …"). Jeder wurde erst übernommen, nachdem der Scan neben unser Cover gelegt war; 12 Paare mit anderem Druck wurden verworfen.
+  - 17 stammen aus dem LibraryThing-Faden „Green VMCs and their Cover Art" über die Wayback Machine.
+  - Unvollständig: sechs nennen nur den Bildtitel. *Good Daughters* widerspricht LibraryThing (Scan: Gunn, „Portrait of Ray Fuller"). Drei Bilder sind keine Gemälde (zwei Vogue-Titel, ein Bild im Stil Beardsleys).
+- **45 ohne Nachweis.** Weder ein Scan desselben Drucks noch ein Sammlerbeitrag nennt das Bild. Blogs wurden nicht durchsucht.
+- Nur Open Library, nie Google. In `data/collections.json` als Entwurf, online als Entwurf `vE6GEpRDRVeA`. Den Einleitungstext hat der Agent nur aus belegten Fakten formuliert.
