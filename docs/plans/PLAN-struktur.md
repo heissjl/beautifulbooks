@@ -1,5 +1,7 @@
 # Vorschlag: Ordnung des Projekts, bevor es weitergeht
 
+> **Entschieden am 2026-09-08** (Commit `fe8f156`): Option A, `lab/` angelegt. Offen aus diesem Plan ist nur der Clip aus §4 (Roadmap 5.5), der auf Julians Startzeichen wartet.
+
 Stand: 2026-09-08. Anlass: Julian will vor dem Weitermachen wissen, ob die Ordnerstruktur angepasst werden muss — auch, um Dinge wie einen automatisierten TikTok-Clip im selben Projekt zu erproben, „nicht zu sehr mit der Website vermischt, aber trotzdem hier im Kontext“. Die Entscheidung ist [ROADMAP](../../ROADMAP.md) 0.11: **Julian hat am 2026-09-08 Option A gewählt** und `lab/` ist angelegt (README mit den Regeln, Lint-Regel, `.gitignore`); der Clip aus §4 wartet auf sein Startzeichen. Nichts wurde verschoben.
 
 ---

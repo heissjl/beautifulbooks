@@ -1,5 +1,7 @@
 # Plan für Roadmap 1.1: beim Öffnen eines Buchs kein Cover automatisch auswählen
 
+> **Erledigt am 2026-09-09** (Commit `7105804`), wie geplant nach Kandidat 2: bis zur ersten Auswahl zeigt die zweite Spalte das Werk; gemessen 0 statt 1 ISBN-Nachschau beim kalten Öffnen. Historisches Arbeitsdokument; Roadmap [1.1](../../ROADMAP.md), Langtext im [Archiv](../roadmap-archive.md#11).
+
 Geschrieben 2026-09-07 für eine Sitzung, die den Code nicht kennt. Vorher lesen: [CLAUDE.md](../../CLAUDE.md), [SPEC.md](../../SPEC.md) §3 F2.6–F2.9 und §4 N9, sowie der Roadmap-Punkt [1.1](../../ROADMAP.md). Code und Kommentare Englisch (E7), dieser Plan Deutsch.
 
 ## 1. Ziel und Nicht-Ziel

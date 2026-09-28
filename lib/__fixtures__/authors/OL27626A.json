@@ -1,0 +1,823 @@
+{
+  "numFound": 114,
+  "docs": [
+    {
+      "author_key": [
+        "OL27626A",
+        "OL11412010A",
+        "OL10828018A",
+        "OL6284880A"
+      ],
+      "author_name": [
+        "Ishmael Reed",
+        "Ishmael Reed",
+        "Inga Pellisa Díaz",
+        "Juan Francisco Ferré"
+      ],
+      "cover_i": 992726,
+      "edition_count": 23,
+      "key": "/works/OL30751W",
+      "title": "Mumbo jumbo"
+    },
+    {
+      "author_key": [
+        "OL27626A",
+        "OL11412010A",
+        "OL8025780A"
+      ],
+      "author_name": [
+        "Ishmael Reed",
+        "Ishmael Reed",
+        "Inga Pellisa"
+      ],
+      "cover_i": 4450708,
+      "edition_count": 16,
+      "key": "/works/OL11326944W",
+      "title": "Flight to Canada"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 801571,
+      "edition_count": 9,
+      "key": "/works/OL30753W",
+      "title": "The free-lance pallbearers"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 801584,
+      "edition_count": 8,
+      "key": "/works/OL30752W",
+      "title": "Yellow back radio broke-down"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 801572,
+      "edition_count": 6,
+      "key": "/works/OL11326950W",
+      "title": "The terrible twos"
+    },
+    {
+      "author_key": [
+        "OL2652589A",
+        "OL20651A",
+        "OL218444A",
+        "OL228079A",
+        "OL29751A",
+        "OL22134A",
+        "OL28885A",
+        "OL34221A",
+        "OL52922A",
+        "OL23074A",
+        "OL9255650A",
+        "OL450456A",
+        "OL1800102A",
+        "OL24137A",
+        "OL4740146A",
+        "OL243427A",
+        "OL22098A",
+        "OL225621A",
+        "OL2262560A",
+        "OL1077591A",
+        "OL19677A",
+        "OL9253165A",
+        "OL2623461A",
+        "OL1195114A",
+        "OL22124A",
+        "OL443875A",
+        "OL272268A",
+        "OL221159A",
+        "OL9255651A",
+        "OL113574A",
+        "OL19512A",
+        "OL4441955A",
+        "OL161167A",
+        "OL34047A",
+        "OL215841A",
+        "OL116256A",
+        "OL18895A",
+        "OL114093A",
+        "OL34537A",
+        "OL2894220A",
+        "OL8265693A",
+        "OL1966444A",
+        "OL444165A",
+        "OL390824A",
+        "OL2101175A",
+        "OL162007A",
+        "OL18404A",
+        "OL26459A",
+        "OL712300A",
+        "OL1075030A",
+        "OL507165A",
+        "OL1120504A",
+        "OL389527A",
+        "OL153488A",
+        "OL1432575A",
+        "OL233499A",
+        "OL31518A",
+        "OL20345A",
+        "OL34361A",
+        "OL1039800A",
+        "OL2675024A",
+        "OL212510A",
+        "OL29388A",
+        "OL49389A",
+        "OL29767A",
+        "OL325801A",
+        "OL4585364A",
+        "OL41892A",
+        "OL390301A",
+        "OL120118A",
+        "OL20168A",
+        "OL5911201A",
+        "OL27318A",
+        "OL526613A",
+        "OL20058A",
+        "OL28127A",
+        "OL27626A",
+        "OL241616A",
+        "OL451894A",
+        "OL241012A",
+        "OL36807A",
+        "OL19728A",
+        "OL591204A",
+        "OL117830A",
+        "OL450137A",
+        "OL9388A",
+        "OL8008003A",
+        "OL137147A",
+        "OL18730A",
+        "OL27342A",
+        "OL183089A",
+        "OL220796A",
+        "OL161112A",
+        "OL30664A",
+        "OL9255652A",
+        "OL20903A",
+        "OL1330009A",
+        "OL18319A",
+        "OL217774A",
+        "OL119491A",
+        "OL443839A",
+        "OL23178A",
+        "OL28877A",
+        "OL26159A",
+        "OL33621A",
+        "OL13211425A"
+      ],
+      "author_name": [
+        "Kate Kinsella",
+        "Joan Aiken",
+        "Mitch Albom",
+        "Isabel Allende",
+        "Julia Alvarez",
+        "Rudolfo A. Anaya",
+        "Maya Angelou",
+        "Isaac Asimov",
+        "Margaret Atwood",
+        "Toni Cade Bambara",
+        "Basho",
+        "Madeleine Blais",
+        "DeWitt Bodeen",
+        "Ray Bradbury",
+        "Richard Brautigan",
+        "Gladys Cardiff",
+        "Lewis Carroll",
+        "Rachel Carson",
+        "Κωνσταντίνος Καβάφης",
+        "Alex Chadwick",
+        "Антон Павлович Чехов",
+        "Chiyojo",
+        "Arthur C. Clarke",
+        "Richard Connell",
+        "Bill Cosby",
+        "Harold Courlander",
+        "Victor Hernández Cruz",
+        "E. E. Cummings",
+        "Keav Davidson",
+        "Walter De la Mare",
+        "Emily Dickinson",
+        "Joan Didion",
+        "Arthur Conan Doyle",
+        "Daphne du Maurier",
+        "Paul Laurence Dunbar",
+        "T. S. Eliot",
+        "Horton Foote",
+        "Robert Frost",
+        "Bill Gates",
+        "Chief Dan George",
+        "Steven Gietschier",
+        "Edith Hamilton",
+        "Lorraine Hansberry",
+        "Ralph Helfer",
+        "O. Henry",
+        "George Herzog",
+        "Όμηρος",
+        "Langston Hughes",
+        "Charlayne Hunter-Gault",
+        "James Hurst",
+        "Shirley Jackson",
+        "Lady Bird Johnson",
+        "Sebastian Junger",
+        "John Keats",
+        "John E. Kennedy",
+        "Martin Luther King Jr.",
+        "Galway Kinnell",
+        "Jeffrey Kluger",
+        "Yusef Komunyakaa",
+        "Henriqueta Lisboa",
+        "Barry Lopez",
+        "Nelson Mandela",
+        "Guy de Maupassant",
+        "Scott McCloud",
+        "John McPhee",
+        "James A. Michener",
+        "Edna St. Vincent Millay",
+        "Gabriela Mistral",
+        "Lillian Morrison",
+        "Edwin Muir",
+        "Walter Dean Myers",
+        "Rasipuram Krishnaswamy Narayan",
+        "Naomi Shihab Nye",
+        "Rosa Parks",
+        "Marge Piercy",
+        "Edgar Allan Poe",
+        "Ishmael Reed",
+        "Sally Ride",
+        "Tomás Rivera",
+        "Pattiann Rogers",
+        "Christina Georgina Rosetti",
+        "Cynthia Rylant",
+        "Saki",
+        "Carl Sandburg",
+        "David Schuyler",
+        "William Shakespeare",
+        "Leslie Marmon Silko",
+        "Isaac Bashevis Singer",
+        "Gary Soto",
+        "William Stafford",
+        "Wisława Szymborska",
+        "Amy Tan",
+        "Sara Teasdale",
+        "Alfred Lord Tennyson",
+        "Edward Lawrence Thayer",
+        "James Thurber",
+        "Shu, Ting",
+        "Mark Twain",
+        "Alice Walker",
+        "Margaret Walker",
+        "Virginia A. Walter",
+        "Walt Whitman",
+        "Bryan Woolley",
+        "William Wordsworth",
+        "Richard Wright",
+        "Kate Kinsella, Kevin Feldman, Colleen Shea Stump, Joyce Armstrong Carroll and Edward E. Wilson"
+      ],
+      "cover_i": 14329726,
+      "edition_count": 6,
+      "key": "/works/OL14997511W",
+      "title": "Prentice Hall Literature--Timeless Voices, Timeless Themes--Gold Level"
+    },
+    {
+      "author_key": [
+        "OL4780933A",
+        "OL27626A"
+      ],
+      "author_name": [
+        "John Oliver Killens",
+        "Ishmael Reed"
+      ],
+      "cover_i": 10953613,
+      "edition_count": 5,
+      "key": "/works/OL24410248W",
+      "title": "The Minister Primarily"
+    },
+    {
+      "author_key": [
+        "OL27626A",
+        "OL3308169A"
+      ],
+      "author_name": [
+        "Ishmael Reed",
+        "Carla Blank"
+      ],
+      "cover_i": 10006375,
+      "edition_count": 5,
+      "key": "/works/OL16978350W",
+      "title": "Pow Wow"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 801582,
+      "edition_count": 5,
+      "key": "/works/OL30750W",
+      "title": "The last days of Louisiana Red"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 4081263,
+      "edition_count": 4,
+      "key": "/works/OL30746W",
+      "title": "The terrible threes"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 3,
+      "key": "/works/OL26554019W",
+      "title": "Complete Muhammad Ali"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 3,
+      "key": "/works/OL26590000W",
+      "title": "Yellow Back Radio Broke-Down"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 6449894,
+      "edition_count": 3,
+      "key": "/works/OL11326947W",
+      "title": "The Free-lance Pallbearers"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 4609695,
+      "edition_count": 3,
+      "key": "/works/OL11326948W",
+      "title": "The last days of Louisiana Red"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 4081264,
+      "edition_count": 3,
+      "key": "/works/OL11326949W",
+      "title": "The terrible threes"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 3934881,
+      "edition_count": 3,
+      "key": "/works/OL30742W",
+      "title": "Airing dirty laundry"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 4004508,
+      "edition_count": 3,
+      "key": "/works/OL30743W",
+      "title": "Japanese by spring"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 801583,
+      "edition_count": 3,
+      "key": "/works/OL30744W",
+      "title": "Reckless eyeballing"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 5382967,
+      "edition_count": 3,
+      "key": "/works/OL30745W",
+      "title": "Shrovetide in old New Orleans"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 6449839,
+      "edition_count": 3,
+      "key": "/works/OL11326951W",
+      "title": "Yellow back radio broke-down"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 4057721,
+      "edition_count": 3,
+      "key": "/works/OL30748W",
+      "title": "Writin' is fightin'"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 2,
+      "key": "/works/OL27123731W",
+      "title": "Why the Black Hole Sings the Blues"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 2,
+      "key": "/works/OL27096227W",
+      "title": "Terrible Twos"
+    },
+    {
+      "author_key": [
+        "OL7598524A",
+        "OL27626A"
+      ],
+      "author_name": [
+        "Kim McMillon",
+        "Ishmael Reed"
+      ],
+      "cover_i": 13345142,
+      "edition_count": 2,
+      "key": "/works/OL28580381W",
+      "title": "Black Fire This Time"
+    },
+    {
+      "author_key": [
+        "OL10014309A",
+        "OL27626A"
+      ],
+      "author_name": [
+        "Awol Erizku",
+        "Ishmael Reed"
+      ],
+      "edition_count": 2,
+      "key": "/works/OL28807537W",
+      "title": "Awol Erizku"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 789559,
+      "edition_count": 2,
+      "key": "/works/OL30736W",
+      "title": "From Totems to Hip-Hop"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 5180549,
+      "edition_count": 2,
+      "key": "/works/OL30737W",
+      "title": "Mixing it up"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 2,
+      "key": "/works/OL26541539W",
+      "title": "Barack Obama and the Jim Crow Media"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 5382969,
+      "edition_count": 2,
+      "key": "/works/OL11326946W",
+      "title": "Shrovetide in old New Orleans"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 248617,
+      "edition_count": 2,
+      "key": "/works/OL15206197W",
+      "title": "Before Columbus Foundation Fiction Anthology"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 248619,
+      "edition_count": 2,
+      "key": "/works/OL15206198W",
+      "title": "The Before Columbus Foundation Poetry Anthology"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 543802,
+      "edition_count": 2,
+      "key": "/works/OL30739W",
+      "title": "New and Collected Poems, 1964-2006"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 4060614,
+      "edition_count": 2,
+      "key": "/works/OL30740W",
+      "title": "Poems"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 299040,
+      "edition_count": 2,
+      "key": "/works/OL30741W",
+      "title": "The Reed reader"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 299038,
+      "edition_count": 2,
+      "key": "/works/OL30735W",
+      "title": "Another day at the front"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 99524,
+      "edition_count": 2,
+      "key": "/works/OL30738W",
+      "title": "Multi-America"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 14373459,
+      "edition_count": 2,
+      "key": "/works/OL20010834W",
+      "title": "The complete Muhammad Ali"
+    },
+    {
+      "author_key": [
+        "OL27626A",
+        "OL3308169A"
+      ],
+      "author_name": [
+        "Ishmael Reed",
+        "Carla Blank"
+      ],
+      "edition_count": 2,
+      "key": "/works/OL25489612W",
+      "title": "Bigotry on Broadway"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 2,
+      "key": "/works/OL11326945W",
+      "title": "Reckless eyeballing"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 4467829,
+      "edition_count": 2,
+      "key": "/works/OL13365487W",
+      "title": "The last days of Louisiana Red"
+    },
+    {
+      "author_key": [
+        "OL4755513A",
+        "OL7908797A",
+        "OL27626A"
+      ],
+      "author_name": [
+        "Reginald Martin",
+        "Lenard D. Moore",
+        "Ishmael Reed"
+      ],
+      "cover_i": 175366,
+      "edition_count": 2,
+      "key": "/works/OL21269741W",
+      "title": "Dark Eros"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "cover_i": 10237109,
+      "edition_count": 2,
+      "key": "/works/OL20900063W",
+      "title": "The Haunting of Lin-Manuel Miranda"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 1,
+      "key": "/works/OL27099216W",
+      "title": "Mixing It Up"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 1,
+      "key": "/works/OL27096226W",
+      "title": "Terrible Threes"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 1,
+      "key": "/works/OL27111567W",
+      "title": "New and Collected Poems 1964-2007"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 1,
+      "key": "/works/OL28406361W",
+      "title": "Terrible Fours"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 1,
+      "key": "/works/OL28652522W",
+      "title": "Another Day at the Front"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 1,
+      "key": "/works/OL28697248W",
+      "title": "Why No Confederate Statues in Mexico"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 1,
+      "key": "/works/OL27097121W",
+      "title": "Ishmael Reed"
+    },
+    {
+      "author_key": [
+        "OL27626A"
+      ],
+      "author_name": [
+        "Ishmael Reed"
+      ],
+      "edition_count": 1,
+      "key": "/works/OL27095284W",
+      "title": "Reckless Eyeballing"
+    }
+  ]
+}

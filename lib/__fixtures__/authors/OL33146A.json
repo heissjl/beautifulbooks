@@ -1,0 +1,789 @@
+{
+  "numFound": 1863,
+  "docs": [
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 12820198,
+      "edition_count": 956,
+      "key": "/works/OL498556W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 997423,
+      "edition_count": 783,
+      "key": "/works/OL498463W",
+      "title": "Der Proceß"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 12605605,
+      "edition_count": 166,
+      "key": "/works/OL498434W",
+      "title": "Das Schloß"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 3080557,
+      "edition_count": 94,
+      "key": "/works/OL498411W",
+      "title": "Amerika"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 4066124,
+      "edition_count": 84,
+      "key": "/works/OL498788W",
+      "title": "Briefe an Milena"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 995503,
+      "edition_count": 76,
+      "key": "/works/OL498793W",
+      "title": "Tagebücher"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 4216964,
+      "edition_count": 45,
+      "key": "/works/OL498623W",
+      "title": "Short stories"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 3177168,
+      "edition_count": 37,
+      "key": "/works/OL498787W",
+      "title": "Brief an den Vater"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 31,
+      "key": "/works/OL28089814W",
+      "title": "Metamorphosis Annotated"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 26,
+      "key": "/works/OL35787461W",
+      "title": "Metamorfosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 26,
+      "key": "/works/OL36097905W",
+      "title": "Metamorfosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 1022707,
+      "edition_count": 24,
+      "key": "/works/OL498776W",
+      "title": "Das Urteil"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 18,
+      "key": "/works/OL27875789W",
+      "title": "Metamorphosis Annotated"
+    },
+    {
+      "author_key": [
+        "OL9634975A",
+        "OL33146A"
+      ],
+      "author_name": [
+        "monica arcija",
+        "Franz Kafka"
+      ],
+      "edition_count": 18,
+      "key": "/works/OL30775570W",
+      "title": "Metamorfosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 17,
+      "key": "/works/OL25367999W",
+      "title": "Metamorphosis and Other Stories"
+    },
+    {
+      "author_key": [
+        "OL10194460A",
+        "OL33146A"
+      ],
+      "author_name": [
+        "Eternal Sky Eternal Sky Classics",
+        "Franz Kafka"
+      ],
+      "edition_count": 16,
+      "key": "/works/OL27240924W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL18928A",
+        "OL76889A",
+        "OL67141A",
+        "OL794876A",
+        "OL50694A",
+        "OL57938A",
+        "OL450788A",
+        "OL402789A",
+        "OL63258A",
+        "OL21093A",
+        "OL9144774A",
+        "OL133457A",
+        "OL9144776A",
+        "OL24137A",
+        "OL254706A",
+        "OL22736A",
+        "OL16934A",
+        "OL1329087A",
+        "OL1836313A",
+        "OL107593A",
+        "OL22098A",
+        "OL18524A",
+        "OL333978A",
+        "OL86757A",
+        "OL2631008A",
+        "OL476175A",
+        "OL376370A",
+        "OL3665032A",
+        "OL3141150A",
+        "OL2689875A",
+        "OL53103A",
+        "OL114411A",
+        "OL26681A",
+        "OL7820166A",
+        "OL160918A",
+        "OL31827A",
+        "OL3203500A",
+        "OL33146A",
+        "OL24461A",
+        "OL62912A",
+        "OL554155A",
+        "OL113574A",
+        "OL29388A",
+        "OL294424A",
+        "OL1140179A",
+        "OL9144779A",
+        "OL124778A",
+        "OL9144780A",
+        "OL1858215A",
+        "OL33452A",
+        "OL1992970A",
+        "OL28127A",
+        "OL68149A",
+        "OL4280600A",
+        "OL591204A",
+        "OL2399792A",
+        "OL1070041A",
+        "OL538087A",
+        "OL24981A",
+        "OL26783A",
+        "OL558099A",
+        "OL683896A",
+        "OL70343A",
+        "OL32293A",
+        "OL1391432A",
+        "OL2588771A",
+        "OL126394A",
+        "OL20646A",
+        "OL785191A",
+        "OL2448140A",
+        "OL25342A",
+        "OL608235A",
+        "OL21207A",
+        "OL7344211A"
+      ],
+      "author_name": [
+        "Jorge Luis Borges",
+        "Silvina Ocampo",
+        "Adolfo Bioy Casares",
+        "Ryūnosuke Akutagawa",
+        "Thomas Bailey Aldrich",
+        "Леонид Николаевич Андреев",
+        "John Aubrey",
+        "J. G. Ballard",
+        "Sir Max Beerbohm",
+        "Ambrose Bierce",
+        "Ah'med Ech Chiruani",
+        "Léon Bloy",
+        "Delia Ingenieros",
+        "Ray Bradbury",
+        "Tor Åge Bringsværd",
+        "Martin Buber",
+        "Richard Francis Burton",
+        "Arturo Cancela",
+        "Pilar de Lusarreta",
+        "Thomas Carlyle",
+        "Lewis Carroll",
+        "Gilbert Keith Chesterton",
+        "Zhuangzi",
+        "Jean Cocteau",
+        "Julio Cortázar",
+        "Santiago Dabove",
+        "Alexandra David-Néel",
+        "Lord Edward Dunsay",
+        "Macedonio Fernandez",
+        "James George Frazer",
+        "Elena Garro",
+        "Herbert Allen Giles",
+        "Nathaniel Hawthorne",
+        "I. A. Ireland",
+        "W. W. Jacobs",
+        "James Joyce",
+        "Don Juan Manuel",
+        "Franz Kafka",
+        "Rudyard Kipling",
+        "Leopoldo Lugones",
+        "Arthur Machen",
+        "Walter De la Mare",
+        "Guy de Maupassant",
+        "Edwin Morgan",
+        "H. A. Murena",
+        "Niu Chiao",
+        "Papini, Giovanni",
+        "Carlos Peralta",
+        "Barry Perowne",
+        "Petronius",
+        "Manuel Peyrou",
+        "Edgar Allan Poe",
+        "Pu Songling",
+        "François Rabelais",
+        "Saki",
+        "May Sinclair",
+        "Walter W. Skeat",
+        "Olaf Stapledon",
+        "Emanuel Swedenborg",
+        "Лев Толстой",
+        "B. Traven",
+        "Tsʻao, Hsüeh-chʻin.",
+        "Auguste comte de Villiers de L'Isle-Adam",
+        "Voltaire",
+        "Evelyn Waugh",
+        "Edward Lucas White",
+        "Juan Rodolfo Wilcock",
+        "Oscar Wilde",
+        "Richard Wilhelm",
+        "G. Willoughby-Meade",
+        "Mary Shelley",
+        "Wu Cheng'en",
+        "William Butler Yeats",
+        "Jose Zorilla"
+      ],
+      "cover_i": 10832253,
+      "edition_count": 16,
+      "key": "/works/OL16538128W",
+      "title": "Antología de la literatura fantástica"
+    },
+    {
+      "author_key": [
+        "OL33146A",
+        "OL2968590A"
+      ],
+      "author_name": [
+        "Franz Kafka",
+        "David Wyllie"
+      ],
+      "edition_count": 15,
+      "key": "/works/OL40762735W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 9778576,
+      "edition_count": 14,
+      "key": "/works/OL498786W",
+      "title": "Briefe, 1902-1924"
+    },
+    {
+      "author_key": [
+        "OL29497A",
+        "OL22242A",
+        "OL79039A",
+        "OL26783A",
+        "OL21001A",
+        "OL19677A",
+        "OL22973A",
+        "OL31827A",
+        "OL33146A",
+        "OL19964A",
+        "OL181680A"
+      ],
+      "author_name": [
+        "Herman Melville",
+        "Фёдор Михайлович Достоевский",
+        "Gustave Flaubert",
+        "Лев Толстой",
+        "Henry James",
+        "Антон Павлович Чехов",
+        "Thomas Mann",
+        "James Joyce",
+        "Franz Kafka",
+        "D. H. Lawrence",
+        "Charles Neider"
+      ],
+      "cover_i": 613244,
+      "edition_count": 13,
+      "key": "/works/OL1633753W",
+      "title": "Short Novels of the Masters"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 13,
+      "key": "/works/OL41453532W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 13,
+      "key": "/works/OL31978822W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 108061,
+      "edition_count": 12,
+      "key": "/works/OL498536W",
+      "title": "The great wall of China"
+    },
+    {
+      "author_key": [
+        "OL145748A",
+        "OL10842762A",
+        "OL2773108A",
+        "OL33146A",
+        "OL6270077A",
+        "OL2120400A",
+        "OL3255403A",
+        "OL4823223A"
+      ],
+      "author_name": [
+        "Elias Canetti",
+        "Elias Canetti",
+        "C. Middleton",
+        "Franz Kafka",
+        "James Stern",
+        "Elisabeth Duckworth",
+        "Jürgen Born",
+        "Erich Heller"
+      ],
+      "cover_i": 581616,
+      "edition_count": 12,
+      "key": "/works/OL1411622W",
+      "title": "Andere Prozess"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 11,
+      "key": "/works/OL29772748W",
+      "title": "In the Penal Colony"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 14911572,
+      "edition_count": 11,
+      "key": "/works/OL498784W",
+      "title": "The penal colony"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 1022753,
+      "edition_count": 11,
+      "key": "/works/OL498785W",
+      "title": "Beschreibung eines Kampfes"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 11,
+      "key": "/works/OL40330467W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 11,
+      "key": "/works/OL41023175W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 997356,
+      "edition_count": 11,
+      "key": "/works/OL498767W",
+      "title": "Die Erzählungen"
+    },
+    {
+      "author_key": [
+        "OL7717243A",
+        "OL33146A"
+      ],
+      "author_name": [
+        "Raúl Castro",
+        "Franz Kafka"
+      ],
+      "edition_count": 10,
+      "key": "/works/OL30049364W",
+      "title": "Metamorfosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 10,
+      "key": "/works/OL36116484W",
+      "title": "In the Penal Colony"
+    },
+    {
+      "author_key": [
+        "OL33146A",
+        "OL7729448A"
+      ],
+      "author_name": [
+        "Franz Kafka",
+        "Leroy Freeman"
+      ],
+      "edition_count": 10,
+      "key": "/works/OL39932176W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 4126170,
+      "edition_count": 10,
+      "key": "/works/OL498780W",
+      "title": "Briefe an Felice und andere Korrespondenz aus der Verlobungszeit"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 13934800,
+      "edition_count": 9,
+      "key": "/works/OL498782W",
+      "title": "Das Urteil und andere Erzählungen"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 10743672,
+      "edition_count": 9,
+      "key": "/works/OL24257503W",
+      "title": "Aforizmalar"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 14073660,
+      "edition_count": 9,
+      "key": "/works/OL35091705W",
+      "title": "La Metamorfosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 9,
+      "key": "/works/OL29708277W",
+      "title": "Die Verwandlung"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 9942185,
+      "edition_count": 8,
+      "key": "/works/OL498769W",
+      "title": "Franz Kafka"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 14667137,
+      "edition_count": 8,
+      "key": "/works/OL37922333W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 8,
+      "key": "/works/OL40189681W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL33146A",
+        "OL12721100A"
+      ],
+      "author_name": [
+        "Franz Kafka",
+        "Emma García Carbassa"
+      ],
+      "edition_count": 8,
+      "key": "/works/OL41488873W",
+      "title": "Metamorfosis"
+    },
+    {
+      "author_key": [
+        "OL33146A",
+        "OL7744360A"
+      ],
+      "author_name": [
+        "Franz Kafka",
+        "Guillermo Hernandez"
+      ],
+      "edition_count": 8,
+      "key": "/works/OL31515139W",
+      "title": "Metamorphosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 13638782,
+      "edition_count": 8,
+      "key": "/works/OL30025146W",
+      "title": "Die Verwandlung"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 14157,
+      "edition_count": 8,
+      "key": "/works/OL498781W",
+      "title": "Erzählungen und kleine Prosa"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "edition_count": 7,
+      "key": "/works/OL29827764W",
+      "title": "In der Strafkolonie"
+    },
+    {
+      "author_key": [
+        "OL6150587A",
+        "OL33146A",
+        "OL9103449A",
+        "OL9945354A"
+      ],
+      "author_name": [
+        "Miquel Barceló",
+        "Franz Kafka",
+        "Juan José del Solar",
+        "Jordi Llovet Pomar"
+      ],
+      "cover_i": 13542965,
+      "edition_count": 7,
+      "key": "/works/OL34791653W",
+      "title": "La transformación"
+    },
+    {
+      "author_key": [
+        "OL33146A",
+        "OL9945484A"
+      ],
+      "author_name": [
+        "Franz Kafka",
+        "Luis Scafati"
+      ],
+      "cover_i": 13919678,
+      "edition_count": 7,
+      "key": "/works/OL34970692W",
+      "title": "La metamorfosis"
+    },
+    {
+      "author_key": [
+        "OL33146A",
+        "OL2684655A",
+        "OL9290589A"
+      ],
+      "author_name": [
+        "Franz Kafka",
+        "Edward Hopper",
+        "Félix Gerónimo"
+      ],
+      "edition_count": 7,
+      "key": "/works/OL40811173W",
+      "title": "Metamorfosis"
+    },
+    {
+      "author_key": [
+        "OL33146A"
+      ],
+      "author_name": [
+        "Franz Kafka"
+      ],
+      "cover_i": 14910748,
+      "edition_count": 7,
+      "key": "/works/OL43043884W",
+      "title": "The Trial"
+    }
+  ]
+}

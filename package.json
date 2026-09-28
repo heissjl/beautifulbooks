@@ -11,7 +11,8 @@
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
     "worktrees": "npx tsx scripts/worktrees.ts",
-    "kanban": "npx tsx scripts/kanban.ts"
+    "kanban": "npx tsx scripts/cockpit/main.ts --build --board",
+    "cockpit": "npx tsx scripts/cockpit/main.ts"
   },
   "dependencies": {
     "jpeg-js": "^0.4.4",
@@ -22,6 +23,7 @@
     "redis": "^6.2.1"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.128.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/pngjs": "^6.0.5",
@@ -30,6 +32,7 @@
     "@vitest/ui": "^4.0.18",
     "eslint": "^9",
     "eslint-config-next": "16.1.4",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.0.18"

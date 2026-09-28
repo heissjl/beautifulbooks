@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regal zur Wand</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f4f0e8; --surface: #fbf9f4; --surface-2: #ebe5da;
+    --ink: #1a1714; --ink-2: #5a534a; --ink-3: #746c62; --line: #ddd5c8;
+    --accent: #945138; --on-accent: #fff8f2; --shadow: 20 16 12;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131110; --surface: #1b1815; --surface-2: #26221e;
+      --ink: #efe8dd; --ink-2: #b2a99b; --ink-3: #837b6f; --line: #2e2925;
+      --accent: #dbac94; --on-accent: #1a1210; --shadow: 0 0 0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 ui-sans-serif, system-ui, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: 1.9rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .sub { color: var(--ink-2); margin: 0 0 20px; }
+  .note { color: var(--ink-3); font-size: 13px; }
+  .warn { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 10px 12px; border-radius: 6px; margin: 12px 0; }
+  .drop { display: block; border: 1.5px dashed var(--line); border-radius: 10px; padding: 28px 16px; text-align: center; background: var(--surface); cursor: pointer; }
+  .drop.over { border-color: var(--accent); }
+  button, .btn { font: inherit; font-size: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  button:disabled { opacity: .5; cursor: default; }
+  input[type=text], input[type=search] { font: inherit; font-size: 14px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); width: 100%; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 12px 0; }
+  .progress { color: var(--ink-2); font-size: 14px; min-height: 1.5em; }
+  .photo { position: relative; display: inline-block; max-width: 100%; margin: 12px 0; }
+  .photo img { max-width: 100%; max-height: 360px; display: block; border-radius: 6px; }
+  .photo .box { position: absolute; border: 2px solid var(--accent); border-radius: 2px; pointer-events: none; }
+  .photo .box span { position: absolute; top: -1px; left: -1px; background: var(--accent); color: var(--on-accent); font-size: 10px; padding: 0 3px; }
+  ul.wall { list-style: none; padding: 0; margin: 20px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (min-width: 640px) { ul.wall { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 768px) { ul.wall { grid-template-columns: repeat(6, 1fr); } }
+  @media (min-width: 1024px) { ul.wall { gap: 24px; } }
+  .tile a { color: inherit; text-decoration: none; display: block; }
+  .cover { position: relative; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 6px; background: var(--surface-2);
+    box-shadow: 0 0 0 1px rgb(var(--shadow) / .06), 0 1px 2px rgb(var(--shadow) / .18), 0 12px 28px -14px rgb(var(--shadow) / .45);
+    transition: transform .3s ease-out; }
+  .tile a:hover .cover { transform: translateY(-4px); }
+  .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover .none { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px; color: var(--ink-3); font-size: 12px; }
+  .t { margin: 8px 0 0; font-size: 14px; font-weight: 500; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .a { margin: 2px 0 0; font-size: 12px; line-height: 1.3; color: var(--ink-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .why { margin: 4px 0 0; font-size: 11px; color: var(--ink-3); font-style: italic; }
+  .why.good { color: var(--accent); font-style: normal; }
+  .read { margin: 2px 0 0; font-size: 11px; color: var(--ink-3); }
+  .acts { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+  .acts button { font-size: 12px; padding: 2px 7px; }
+  .tile.missing .cover { outline: 1px dashed var(--line); box-shadow: none; }
+  .panel { margin-top: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 6px; }
+  .panel .hit { display: flex; gap: 6px; align-items: center; padding: 4px; border-radius: 4px; cursor: pointer; font-size: 12px; line-height: 1.25; }
+  .panel .hit:hover { background: var(--surface-2); }
+  .panel .hit img { width: 28px; height: 42px; object-fit: cover; border-radius: 2px; background: var(--surface-2); flex: none; }
+  .panel .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; max-height: 260px; overflow: auto; }
+  .panel .grid img { width: 100%; aspect-ratio: 2/3; object-fit: cover; cursor: pointer; border-radius: 2px; background: var(--surface-2); }
+  .share { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin: 20px 0; }
+  .share code { display: block; word-break: break-all; font-size: 12px; background: var(--surface-2); padding: 8px; border-radius: 6px; margin: 8px 0; }
+  .stats { font-size: 12px; color: var(--ink-3); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <section id="make">
+    <h1>Vom Regal zur Wand</h1>
+    <p class="sub">Ein Foto deiner Bücher — Rücken oder Umschläge. Die Seite sucht die Werke und, wo ein Umschlag zu sehen ist, genau diese Ausgabe. Dann ein Link zum Teilen.</p>
+    <p class="note">Lab-Prototyp (ROADMAP 5.11). Das Foto geht einmal an das Bildmodell von Anthropic und wird nirgends gespeichert; Werke und Cover kommen von Open Library.</p>
+    <div id="nokey" class="warn" hidden></div>
+
+    <label class="drop" id="drop">
+      <input type="file" id="file" accept="image/*" hidden>
+      <strong>Foto wählen</strong> oder hierher ziehen
+      <div class="note">Wird im Browser auf 1600 px verkleinert, bevor es den Rechner verlässt.</div>
+    </label>
+    <div class="row">
+      <button id="sample">Mit der Beispielliste ausprobieren</button>
+      <span class="note">zwölf Bücher aus <code>sample.json</code>, ohne Foto und ohne Schlüssel</span>
+    </div>
+
+    <div class="progress" id="progress" aria-live="polite"></div>
+    <div class="photo" id="photo" hidden><img id="photoImg" alt="Das hochgeladene Foto"></div>
+    <div class="stats" id="stats"></div>
+
+    <ul class="wall" id="wall"></ul>
+
+    <div class="share" id="sharebox" hidden>
+      <div class="row" style="margin-top:0">
+        <input type="text" id="title" placeholder="Titel der Sammlung (optional), z. B. Mein Regal im Flur" maxlength="80">
+        <button class="primary" id="share">Link zum Teilen</button>
+      </div>
+      <div id="linkout" hidden>
+        <code id="link"></code>
+        <div class="row" style="margin:0"><button id="copy">Kopieren</button><a class="btn" id="open" href="#" target="_blank" rel="noopener">Öffnen</a><span class="stats" id="linklen"></span></div>
+        <p class="note">Die Liste steckt im Teil nach <code>#</code>. Den schickt der Browser an keinen Server — auch nicht an diesen.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="shared" hidden>
+    <h1 id="sharedTitle">Ein Regal</h1>
+    <p class="sub" id="sharedSub"></p>
+    <ul class="wall" id="sharedWall"></ul>
+    <p class="note"><a href="/" id="own">Eigenes Regal fotografieren</a></p>
+  </section>
+</main>
+
+<script>
+/* ---------- share link: the same bytes as lab/shelf/sharelink.ts ---------- */
+function encodeShelf(entries) {
+  const bytes = [1];
+  const push = n => { let v = n; while (v >= 0x80) { bytes.push((v % 0x80) | 0x80); v = Math.floor(v / 0x80); } bytes.push(v); };
+  for (const e of entries) { push(Number(/^OL(\d+)W$/.exec(e.workId)[1])); push(Math.max(0, Math.floor(e.coverId || 0))); }
+  return btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function decodeShelf(s) {
+  if (!/^[A-Za-z0-9_-]*$/.test(s)) return null;
+  let bytes;
+  try { bytes = Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0)); } catch { return null; }
+  if (bytes[0] !== 1) return null;
+  const nums = []; let i = 1;
+  while (i < bytes.length) {
+    let n = 0, scale = 1;
+    for (;;) { if (i >= bytes.length) return null; const b = bytes[i++]; n += (b & 0x7f) * scale; scale *= 0x80; if (n > 2 ** 40) return null; if (b < 0x80) break; }
+    nums.push(n);
+  }
+  if (nums.length % 2) return null;
+  const out = [];
+  for (let k = 0; k < nums.length; k += 2) { if (!nums[k]) return null; out.push({ workId: `OL${nums[k]}W`, coverId: nums[k + 1] }); }
+  return out;
+}
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const cover = (id, size = 'M') => `https://covers.openlibrary.org/b/id/${id}-${size}.jpg`;
+let SITE = 'https://beautifulcovers.vercel.app';
+const tileHref = (workId, coverId) => coverId ? `${SITE}/book/${workId}?cover=${encodeURIComponent(`ol:${coverId}`)}` : `${SITE}/book/${workId}`;
+
+const WHY = {
+  'matched-edition': c => `Ausgabe aus dem Foto (Abstand ${c.distance} von ${c.compared} Covern)`,
+  'no-close-cover': c => `Umschlag im Foto, keins der ${c.compared} Cover nah genug (nächstes ${c.distance ?? '–'}) — Standardcover`,
+  'no-photo': () => 'Umschlag, aber kein Foto — Standardcover',
+  'default': () => 'Buchrücken — Standardcover des Werks',
+  'no-cover': () => 'Open Library hat kein Cover',
+  'chosen': () => 'von Hand gewählt',
+};
+const WORK_WHY = { 'author+title': '', 'author': 'Titel weicht ab', 'title-only': 'Autor passt nicht', 'first-result': 'unsicher: weder Titel noch Autor passen' };
+
+/* ---------- state ---------- */
+let items = [];        // { recognized, work?, cover?, workReason?, error?, removed?, panel? }
+let photoBooks = [];   // for the box overlay
+
+async function init() {
+  const hash = new URLSearchParams(location.hash.slice(1));
+  const status = await fetch('/api/status').then(r => r.json()).catch(() => null);
+  if (status?.site) SITE = status.site;
+  if (hash.get('s')) return showShared(hash.get('s'), hash.get('t'));
+  if (status && !status.key) {
+    $('nokey').hidden = false;
+    $('nokey').innerHTML = `<strong>Kein API-Schlüssel.</strong> <code>ANTHROPIC_API_KEY</code> ist nicht gesetzt, darum kann ein Foto nicht gelesen werden. In die <code>.env.local</code> des Hauptordners eintragen und den Server neu starten. Bis dahin: die Beispielliste.`;
+  }
+}
+
+/* ---------- photo ---------- */
+async function shrink(file) {
+  const bitmap = await createImageBitmap(file); // honours EXIF orientation
+  const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(bitmap.width * scale);
+  canvas.height = Math.round(bitmap.height * scale);
+  canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  return new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.9));
+}
+
+async function usePhoto(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  const blob = await shrink(file);
+  $('photoImg').src = URL.createObjectURL(blob);
+  $('photo').hidden = false;
+  run('/api/recognize', blob);
+}
+
+async function run(path, body) {
+  items = []; photoBooks = []; render(); drawBoxes();
+  $('stats').textContent = '';
+  $('sharebox').hidden = true; $('linkout').hidden = true;
+  $('progress').textContent = body ? 'Das Bildmodell liest das Foto … (dauert meist 10–40 s)' : 'Beispielliste …';
+  $('sample').disabled = true;
+  const started = performance.now();
+  try {
+    const res = await fetch(path, { method: 'POST', body, headers: body ? { 'content-type': 'image/jpeg' } : {} });
+    if (!res.ok || !res.headers.get('content-type')?.includes('ndjson')) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '', done = 0, total = 0, meta = null;
+    for (;;) {
+      const { value, done: end } = await reader.read();
+      if (end) break;
+      buf += dec.decode(value, { stream: true });
+      let nl;
+      while ((nl = buf.indexOf('\n')) >= 0) {
+        const line = JSON.parse(buf.slice(0, nl)); buf = buf.slice(nl + 1);
+        if (line.type === 'recognized') {
+          meta = line; total = line.books.length; photoBooks = line.books;
+          items = line.books.map(b => ({ recognized: b, pending: true }));
+          drawBoxes(); render();
+          $('progress').textContent = total ? `${total} Bücher erkannt — suche sie bei Open Library, eins nach dem anderen …` : 'Das Modell hat auf dem Foto keinen lesbaren Titel gefunden.';
+        } else if (line.type === 'match') {
+          items[line.index] = line.result; done++;
+          $('progress').textContent = `Zugeordnet ${done} von ${total} …`;
+          render();
+        } else if (line.type === 'done') {
+          const secs = ((performance.now() - started) / 1000).toFixed(1);
+          $('progress').textContent = `Fertig in ${secs} s. Falsches wegklicken, Fehlendes neu suchen, dann teilen.`;
+          stats(meta, line);
+        } else if (line.type === 'error') throw new Error(line.error);
+      }
+    }
+  } catch (e) {
+    $('progress').textContent = `Fehler: ${e.message}`;
+  } finally {
+    $('sample').disabled = false;
+    $('sharebox').hidden = !items.some(i => i.work && !i.removed);
+  }
+}
+
+function stats(meta, done) {
+  const found = items.filter(i => i.work).length;
+  const matched = items.filter(i => i.cover?.reason === 'matched-edition').length;
+  // Only covers that were actually compared with a crop of the photo count here.
+  const covers = items.filter(i => ['matched-edition', 'no-close-cover'].includes(i.cover?.reason)).length;
+  const parts = [`Modell: ${meta.model}`, meta.ms ? `Erkennung ${(meta.ms / 1000).toFixed(1)} s` : null,
+    meta.inputTokens ? `${meta.inputTokens} + ${meta.outputTokens} Tokens` : null,
+    `Open Library ${(done.matchMs / 1000).toFixed(1)} s`, `${found}/${items.length} Werke gefunden`,
+    covers ? `${matched}/${covers} Umschläge einer Ausgabe zugeordnet` : null,
+    meta.problems?.length ? `Beim Lesen verworfen: ${meta.problems.join('; ')}` : null];
+  $('stats').textContent = parts.filter(Boolean).join(' · ');
+}
+
+function drawBoxes() {
+  const host = $('photo');
+  host.querySelectorAll('.box').forEach(b => b.remove());
+  photoBooks.forEach((b, i) => {
+    if (!b.box) return;
+    const d = document.createElement('div');
+    d.className = 'box';
+    d.style.left = `${b.box[0] * 100}%`; d.style.top = `${b.box[1] * 100}%`;
+    d.style.width = `${b.box[2] * 100}%`; d.style.height = `${b.box[3] * 100}%`;
+    d.innerHTML = `<span>${i + 1}</span>`;
+    host.appendChild(d);
+  });
+}
+
+/* ---------- wall ---------- */
+function render() {
+  const wall = $('wall');
+  wall.innerHTML = '';
+  items.forEach((it, i) => {
+    if (it.removed) return;
+    const li = document.createElement('li');
+    li.className = 'tile' + (it.work ? '' : ' missing');
+    const r = it.recognized;
+    const readAs = `${i + 1}. gelesen: „${r.title}“${r.author ? ` — ${r.author}` : ''}`;
+    if (it.pending) {
+      li.innerHTML = `<div class="cover"><div class="none">sucht …</div></div><p class="t">${esc(r.title)}</p><p class="a">${esc(r.author)}</p>`;
+    } else if (it.work) {
+      const c = it.cover?.coverId;
+      const why = WHY[it.cover?.reason]?.(it.cover) ?? '';
+      const workWhy = WORK_WHY[it.workReason] ?? '';
+      li.innerHTML = `<a href="${tileHref(it.work.id, c)}" target="_blank" rel="noopener">
+          <div class="cover">${c ? `<img src="${cover(c)}" alt="${esc(it.work.title)} von ${esc(it.work.author)}" loading="lazy">` : '<div class="none">kein Cover</div>'}</div>
+          <p class="t">${esc(it.work.title)}</p><p class="a">${esc(it.work.author)}</p></a>
+        <p class="why ${it.cover?.reason === 'matched-edition' ? 'good' : ''}">${esc(why)}${workWhy ? ` · ${esc(workWhy)}` : ''}</p>
+        <p class="read">${esc(readAs)}</p>`;
+    } else {
+      li.innerHTML = `<div class="cover"><div class="none">${it.error ? esc(it.error) : 'bei Open Library nicht gefunden'}</div></div>
+        <p class="t">${esc(r.title)}</p><p class="a">${esc(r.author)}</p><p class="read">${esc(readAs)}</p>`;
+    }
+    if (!it.pending) {
+      const acts = document.createElement('div');
+      acts.className = 'acts';
+      acts.innerHTML = `<button data-act="remove" title="Falsch erkannt — entfernen">× falsch</button><button data-act="search">neu suchen</button>${it.work ? '<button data-act="covers">anderes Cover</button>' : ''}`;
+      acts.addEventListener('click', e => { const act = e.target.dataset?.act; if (act) action(i, act, li); });
+      li.appendChild(acts);
+    }
+    wall.appendChild(li);
+  });
+  $('sharebox').hidden = !items.some(i => i.work && !i.removed);
+}
+
+async function action(i, act, li) {
+  const it = items[i];
+  li.querySelector('.panel')?.remove();
+  if (act === 'remove') { it.removed = true; render(); return; }
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  li.appendChild(panel);
+  if (act === 'search') {
+    const q = it.work ? it.work.title : `${it.recognized.title} ${it.recognized.author}`.trim();
+    panel.innerHTML = `<input type="search" value="${esc(q)}" aria-label="Suche"><div class="hits note">Enter zum Suchen</div>`;
+    const input = panel.querySelector('input');
+    input.focus(); input.select();
+    input.addEventListener('keydown', async e => {
+      if (e.key === 'Escape') panel.remove();
+      if (e.key !== 'Enter') return;
+      const hits = panel.querySelector('.hits');
+      hits.textContent = 'sucht …';
+      const res = await fetch(`/api/search?q=${encodeURIComponent(input.value)}`).then(r => r.json()).catch(e => ({ error: e.message }));
+      if (res.error) { hits.textContent = res.error; return; }
+      if (!res.works.length) { hits.textContent = 'Open Library hat dazu nichts.'; return; }
+      hits.innerHTML = '';
+      for (const w of res.works) {
+        const d = document.createElement('div');
+        d.className = 'hit';
+        d.innerHTML = `${w.coverId ? `<img src="${cover(w.coverId, 'S')}" alt="">` : '<img alt="">'}<span><strong>${esc(w.title)}</strong><br>${esc(w.author)}${w.firstPublished ? ` (${w.firstPublished})` : ''}</span>`;
+        d.onclick = () => {
+          items[i] = { recognized: it.recognized, work: { id: w.id, title: w.title, author: w.author }, workReason: 'author+title', cover: { coverId: w.coverId, reason: 'chosen' } };
+          render();
+        };
+        hits.appendChild(d);
+      }
+    });
+  } else if (act === 'covers') {
+    panel.innerHTML = '<div class="note">lädt die Cover der ersten Ausgabenseite …</div>';
+    const res = await fetch(`/api/covers?id=${it.work.id}`).then(r => r.json()).catch(e => ({ error: e.message }));
+    if (res.error) { panel.innerHTML = `<div class="note">${esc(res.error)}</div>`; return; }
+    if (!res.covers.length) { panel.innerHTML = '<div class="note">Keine Cover auf der ersten Seite.</div>'; return; }
+    panel.innerHTML = '<div class="grid"></div>';
+    for (const id of res.covers) {
+      const img = document.createElement('img');
+      img.src = cover(id, 'S'); img.alt = `Cover ${id}`; img.loading = 'lazy';
+      img.onclick = () => { it.cover = { coverId: id, reason: 'chosen' }; render(); };
+      panel.firstChild.appendChild(img);
+    }
+  }
+}
+
+/* ---------- share ---------- */
+function shareLink() {
+  const entries = items.filter(i => i.work && !i.removed).map(i => ({ workId: i.work.id, coverId: i.cover?.coverId || 0 }));
+  const t = $('title').value.trim();
+  return `${location.origin}/#s=${encodeShelf(entries)}${t ? `&t=${encodeURIComponent(t)}` : ''}`;
+}
+$('share').onclick = () => {
+  const link = shareLink();
+  $('link').textContent = link;
+  $('open').href = link;
+  const n = items.filter(i => i.work && !i.removed).length;
+  $('linklen').textContent = `${link.length} Zeichen für ${n} Bücher`;
+  $('linkout').hidden = false;
+};
+$('copy').onclick = async () => {
+  try { await navigator.clipboard.writeText($('link').textContent); $('copy').textContent = 'Kopiert'; }
+  catch { $('copy').textContent = 'Kopieren ging nicht — Link markieren'; }
+  setTimeout(() => { $('copy').textContent = 'Kopieren'; }, 1500);
+};
+
+/* ---------- shared wall: from the fragment alone ---------- */
+async function showShared(s, title) {
+  $('make').hidden = true; $('shared').hidden = false;
+  const entries = decodeShelf(s);
+  if (!entries) { $('sharedTitle').textContent = 'Dieser Link ist beschädigt'; $('sharedSub').textContent = 'Die Liste im Link ließ sich nicht lesen.'; return; }
+  if (title) { $('sharedTitle').textContent = title; document.title = title; }
+  $('sharedSub').textContent = `${entries.length} Bücher`;
+  const wall = $('sharedWall');
+  wall.innerHTML = entries.map(e => `<li class="tile" data-id="${e.workId}"><a href="${tileHref(e.workId, e.coverId)}" target="_blank" rel="noopener">
+      <div class="cover">${e.coverId ? `<img src="${cover(e.coverId)}" alt="" loading="lazy">` : '<div class="none">kein Cover</div>'}</div>
+      <p class="t">…</p><p class="a"></p></a></li>`).join('');
+  // Titles straight from Open Library, one request for the whole wall: the list never touches this server.
+  try {
+    const keys = entries.map(e => `/works/${e.workId}`).join(' OR ');
+    const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(`key:(${keys})`)}&fields=key,title,author_name&limit=${entries.length}`;
+    const data = await fetch(url, { signal: AbortSignal.timeout(15000) }).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); });
+    const byId = new Map(data.docs.map(d => [d.key.replace('/works/', ''), d]));
+    wall.querySelectorAll('li').forEach(li => {
+      const d = byId.get(li.dataset.id);
+      li.querySelector('.t').textContent = d?.title ?? 'Titel nicht gefunden';
+      li.querySelector('.a').textContent = d?.author_name?.[0] ?? '';
+      const img = li.querySelector('img');
+      if (img && d) img.alt = `${d.title} von ${d.author_name?.[0] ?? ''}`;
+    });
+  } catch (e) {
+    // Silence is not "no such book": the covers stand, the titles say why they are missing.
+    wall.querySelectorAll('.t').forEach(t => { t.textContent = 'Titel nicht geladen'; });
+    $('sharedSub').textContent += ` · Open Library antwortete nicht (${e.message})`;
+  }
+}
+$('own').onclick = e => { e.preventDefault(); location.href = '/'; };
+window.addEventListener('hashchange', () => location.reload());
+
+/* ---------- input ---------- */
+$('file').onchange = e => usePhoto(e.target.files[0]);
+$('sample').onclick = () => { $('photo').hidden = true; run('/api/sample', null); };
+const drop = $('drop');
+['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave', 'drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => usePhoto(e.dataTransfer.files[0]));
+init();
+</script>
+</body>
+</html>

@@ -272,3 +272,22 @@ describe('consensus', () => {
     expect(favouriteRate(ids, coin).rate).toBeLessThan(0.6);
   });
 });
+
+describe('covers of one publisher series never meet', () => {
+  it('pairs a series cover only with a cover outside its series, while one is left', () => {
+    const ids = ['s1', 's2', 's3', 's4', 'x'];
+    const seriesOf = (id: string) => (id.startsWith('s') ? ['sf-masterworks'] : []);
+    const random = rng(7);
+    for (let i = 0; i < 200; i++) {
+      const pair = nextPair(ids, newElo(ids), random, { seriesOf });
+      expect(pair).not.toBeNull();
+      const [a, b] = pair!;
+      expect(a.startsWith('s') && b.startsWith('s')).toBe(false);
+    }
+  });
+
+  it('falls back to any rival when every other cover shares the series', () => {
+    const ids = ['s1', 's2'];
+    expect(nextPair(ids, newElo(ids), rng(1), { seriesOf: () => ['x'] })).not.toBeNull();
+  });
+});

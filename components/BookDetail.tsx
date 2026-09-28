@@ -8,10 +8,14 @@ import DecadeLink from '@/components/DecadeLink';
 import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
 import CoverSheet from '@/components/CoverSheet';
+import AuthorWorks from '@/components/AuthorWorks';
 import WorkPanel from '@/components/WorkPanel';
 import ShareMenu from '@/components/ShareMenu';
 import LoadingStage from '@/components/LoadingStage';
 import MarketSwitcher from '@/components/MarketSwitcher';
+import MoreBelow from '@/components/MoreBelow';
+import { useOverflowsY } from '@/components/useOverflowsY';
+import LocalShops from '@/components/LocalShops';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
@@ -105,6 +109,8 @@ function buildWall(
   extra: readonly Cover[],
   extraSignatures: ReadonlyMap<string, ImageSignature>,
   preferred: string | undefined,
+  /** The cover the address names; it leads its fold group (see foldDuplicateCovers). */
+  pinnedId: string | null = null,
 ) {
   // Each id once: the shop's image is often a Google volume page 0 already has (6.37).
   const all = withRetailCovers(merged.covers, extra);
@@ -118,9 +124,9 @@ function buildWall(
     never had that picture; this map remembers who did.
   */
   const editionsByScan = new Map<string, readonly string[]>(all.map(c => [c.id, c.editionIds]));
-  const covers = foldDuplicateCovers(all, signatures, merged.editions);
+  const covers = foldDuplicateCovers(all, signatures, merged.editions, {}, pinnedId);
   const coversById = new Map(covers.map(c => [c.id, c]));
-  const ordered = orderGroups(groupCoversByLanguage(covers, merged.editions, preferred, signatures), preferred);
+  const ordered = orderGroups(groupCoversByLanguage(covers, merged.editions, preferred, signatures, merged.coverPage), preferred);
   const groups: CoverTab[] = ordered.map(g => ({
     language: g.language,
     covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
@@ -128,7 +134,7 @@ function buildWall(
   // `signatures` goes out too: the verdict must know which pictures the fold
   // could compare at all (ROADMAP 6.32).
   // The whole wall in one list, for the "All languages" pill (ROADMAP 6.8).
-  const wholeWall = coversNewestFirst(covers, merged.editions, signatures);
+  const wholeWall = coversNewestFirst(covers, merged.editions, signatures, merged.coverPage);
   return { covers, coversById, groups, all: wholeWall, editionsByScan, signatures };
 }
 
@@ -166,6 +172,15 @@ function backHrefFrom(searchParams: URLSearchParams): string {
   const params = new URLSearchParams();
   const q = searchParams.get('q');
   const lang = searchParams.get('lang');
+  // The author mode (ROADMAP 6.60) comes back as the author mode.
+  const author = searchParams.get('author');
+  const key = searchParams.get('key');
+  if (author || key) {
+    if (author) params.set('author', author);
+    if (key) params.set('key', key);
+    const qs = params.toString();
+    return `/?${qs}`;
+  }
   if (q) params.set('q', q);
   if (lang) params.set('lang', lang);
   const qs = params.toString();
@@ -181,7 +196,7 @@ function BookDetail() {
   const backHref = backHrefFrom(searchParams);
   // A query means there is a result list behind the back link; a bare `?lang=`
   // does not (ROADMAP 6.28).
-  const cameFromResults = !!searchParams.get('q');
+  const cameFromResults = !!searchParams.get('q') || !!searchParams.get('author') || !!searchParams.get('key');
   const preview = useWorkPreview(params.id);
 
   // Market for buy links (E9): the user's choice, else detected by the server.
@@ -189,6 +204,8 @@ function BookDetail() {
   // Sidebar or bottom sheet; the two are exclusive so the cover image is
   // fetched once (SPEC §10 E13).
   const isDesktop = useIsDesktop();
+  // The sidebar scrolls on its own; say so while there is more below (1 + 2, Julian 2026-09-26).
+  const { scroller: sideScroller, content: sideContent, overflows: sideOverflows, atEnd: sideAtEnd, hiddenBelow: sideHidden, onScroll: measureSide, scrollMore: sideMore } = useOverflowsY();
   const requestKey = `${params.id} ${lang} ${chosenMarket ?? ''}`;
 
   // Editions arrive page by page and keep arriving while the user looks
@@ -252,18 +269,22 @@ function BookDetail() {
   }, [isbnWanted, pages.merged, editionIdsByIsbn]);
 
   const selectedId = searchParams.get('cover') ?? routeCover ?? coverForIsbn;
+  // The cover the page was opened with leads its fold group (a collection tile,
+  // a shared link). Only that one: a later click picks among the tiles already
+  // there, so the wall is not folded again on every selection.
+  const [openedWith] = useState<string | null>(() => searchParams.get('cover') ?? routeCover);
 
   // Which ISBN to ask about is decided on the catalogue alone. Retail covers
   // never change *which edition* is being looked at, and deriving the
   // question from an answer that depends on it would chase its own tail.
   const lookupIsbns = useMemo(() => {
     if (!pages.merged) return [];
-    const wall = buildWall(pages.merged, [], new Map(), lang || undefined);
+    const wall = buildWall(pages.merged, [], new Map(), lang || undefined, openedWith);
     const cover = coverForId(wall, selectedId);
     if (!cover) return [];
     const byId = new Map(pages.merged.editions.map(e => [e.id, e]));
     return cover.editionIds.map(id => byId.get(id)?.isbn13).filter((i): i is string => !!i);
-  }, [pages.merged, lang, selectedId]);
+  }, [pages.merged, lang, selectedId, openedWith]);
 
   // What a shop shows for that ISBN, asked on selection rather than while the
   // work loads: 7-11 Google requests per page view become 2 (SPEC §9.3 13a).
@@ -279,14 +300,14 @@ function BookDetail() {
   const view = useMemo(() => {
     const { merged, work, market } = pages;
     if (!merged || !work || !market) return null;
-    const wall = buildWall(merged, isbnCovers.covers, isbnCovers.signatures, lang || undefined);
+    const wall = buildWall(merged, isbnCovers.covers, isbnCovers.signatures, lang || undefined, openedWith);
     const editionsById = new Map(merged.editions.map(e => [e.id, e]));
     const captions = new Map(wall.covers.map(c => [c.id, captionFor(c, editionsById)]));
     // How many covers each edition appears with (to flag reprints, SPEC F2.5).
     const coversPerEdition = new Map<string, number>();
     for (const c of wall.covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
     return { work, market, merged, ...wall, editionsById, captions, coversPerEdition };
-  }, [pages, lang, isbnCovers]);
+  }, [pages, lang, isbnCovers, openedWith]);
 
   /*
     The scene opens with the cover the reader is already looking at, and hands
@@ -432,12 +453,7 @@ function BookDetail() {
         <p className="text-ink-2">Neither catalogue has a cover for this book.</p>
       ) : (
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
-          {/*
-            Room for the sheet's peek bar, so the last row stays reachable —
-            but only when a cover is picked, or a phone shows a dead strip
-            under the last row of tiles from the moment the page opens.
-          */}
-          <div className={`min-w-0 lg:col-span-2 lg:pb-0 ${selected ? 'pb-20' : ''}`}>
+          <div className="min-w-0 lg:col-span-2">
             <CoverGallery
               groups={view.groups}
               allCovers={view.all}
@@ -459,7 +475,8 @@ function BookDetail() {
             the wheel scrolls the sidebar first and then the page.
           */}
           {isDesktop && (
-            <aside className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
+            <aside ref={sideScroller} onScroll={measureSide} className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
+              <div ref={sideContent}>
               {/*
                 Nothing picked yet: the column speaks about the book instead of
                 about an edition nobody chose (ROADMAP 1.1). The span of years
@@ -474,9 +491,30 @@ function BookDetail() {
                   settled={merged.done || pages.pagesLoaded > 1}
                 />
               )}
+              </div>
+              <MoreBelow show={sideOverflows && !sideAtEnd} onMore={sideMore} lift={sideHidden} />
             </aside>
           )}
         </div>
+      )}
+      {/*
+        "More by …" under wall and sidebar alike (ROADMAP 6.53), also when the
+        wall is empty: it does not depend on this work's covers. It is the
+        last thing on the page, so it carries the room for the phone's peek
+        bar — only while a cover is picked, or a phone shows a dead strip from
+        the moment the page opens.
+      */}
+      {work.authors[0] && work.authors[0] !== 'Unknown' && (
+        <AuthorWorks
+          key={work.id}
+          author={work.authors[0]}
+          authorKey={work.authorKeys?.[0]}
+          workId={work.id}
+          workTitle={work.title}
+          siblingIds={pages.siblingIds}
+          settled={merged.done}
+          className={!isDesktop && selected ? 'pb-20' : ''}
+        />
       )}
       {!isDesktop && selected && (
         <CoverSheet
@@ -657,7 +695,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
 
       {scans.length > 1 && (
         <section className="mt-4" aria-label="Scans folded into this tile">
-          <p className="kicker">The same cover, {scans.length} scans</p>
+          <p className="kicker">{scans.length} scans of this cover</p>
           {/*
             One row that scrolls sideways, never a second row (ROADMAP 6.14a):
             *Fahrenheit 451* carries eight scans, and a wrapped second row
@@ -727,6 +765,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
           key={shown.id}
           edition={shown}
           workTitle={workTitle}
+          author={author}
           otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
           searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
           anyEditionLinks={anyEditionLinks}
@@ -743,6 +782,8 @@ interface EditionBlockProps {
   edition: EditionView;
   /** To decide whether this printing's own title is worth a line (56 % differ). */
   workTitle: string;
+  /** Primary author, for the local-bookshop search without an ISBN (5.12). */
+  author?: string;
   otherCovers: number;
   searchLinks: EditionView['buyLinks'];
   anyEditionLinks: BuyLink[];
@@ -761,7 +802,7 @@ interface EditionBlockProps {
  * them into three zones instead, and everything that is not one of the two or
  * three shops with a chance goes behind a fold.
  */
-function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict }: EditionBlockProps) {
+function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict }: EditionBlockProps) {
   // Reset whenever the edition or the market changes: an answer belongs to
   // one ISBN in one market's shops.
   const [checked, setChecked] = useState<{ key: string; byProvider: Map<string, ShopStatus> } | null>(null);
@@ -813,7 +854,8 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
         {edition.isbn13 && (verdict.status === 'differs' || verdict.status === 'uncompared') && (
           <VerdictNote verdict={verdict} hint={hint} />
         )}
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
+        {/* The pills sit right after the heading, not pushed to the far edge (Julian, 2026-09-26: „less gap before the pills"). */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <p className="kicker">
             {verdict.status === 'differs'
               ? 'Find the cover you picked'
@@ -881,6 +923,13 @@ function EditionBlock({ edition, workTitle, otherCovers, searchLinks, anyEdition
           </div>
         </details>
       )}
+
+      {/*
+        A second fold, not a row in the first (Julian, 2026-09-26): the shops
+        above are the market's retailers, this one leads to services of
+        independent bookshops in a country the reader picks (ROADMAP 5.12).
+      */}
+      <LocalShops edition={{ isbn13: edition.isbn13, title: edition.title, author }} market={market} />
 
       {/*
         What is known about this printing — the preview, the dates, the blurb —

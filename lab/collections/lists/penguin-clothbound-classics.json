@@ -1,0 +1,527 @@
+[
+ {
+  "no": null,
+  "title": "Emma by Jane Austen",
+  "isbn": "9780141192475"
+ },
+ {
+  "no": null,
+  "title": "Sanditon by Jane Austen",
+  "isbn": "9780241436585"
+ },
+ {
+  "no": null,
+  "title": "The Day of the Triffids by John Wyndham",
+  "isbn": "9780241284674"
+ },
+ {
+  "no": null,
+  "title": "Mrs Dalloway by Virginia Woolf",
+  "isbn": "9780241468647"
+ },
+ {
+  "no": null,
+  "title": "Around the World in Eighty Days by Jules Verne",
+  "isbn": "9780241468654"
+ },
+ {
+  "no": null,
+  "title": "Little Women by Louisa May Alcott",
+  "isbn": "9780141192413"
+ },
+ {
+  "no": null,
+  "title": "Bleak House by Charles Dickens",
+  "isbn": "9780141198354"
+ },
+ {
+  "no": null,
+  "title": "Naked Lunch by William S. Burroughs",
+  "isbn": "9780241284636"
+ },
+ {
+  "no": null,
+  "title": "Jabberwocky and Other Nonsense by Lewis Carroll",
+  "isbn": "9780141195940"
+ },
+ {
+  "no": null,
+  "title": "The Hound of the Baskervilles by Arthur Conan Doyle",
+  "isbn": "9780141192437"
+ },
+ {
+  "no": null,
+  "title": "A Tale of Two Cities by Charles Dickens",
+  "isbn": "9780141196909"
+ },
+ {
+  "no": null,
+  "title": "The Tenant of Wildfell Hall by Anne Brontë",
+  "isbn": "9780241198957"
+ },
+ {
+  "no": null,
+  "title": "Brideshead Revisited by Evelyn Waugh",
+  "isbn": "9780241284629"
+ },
+ {
+  "no": null,
+  "title": "Robinson Crusoe by Daniel Defoe",
+  "isbn": "9780141393407"
+ },
+ {
+  "no": null,
+  "title": "Frankenstein by Mary Shelley",
+  "isbn": "9780141393391"
+ },
+ {
+  "no": null,
+  "title": "Alice's Adventures in Wonderland and Through the Looking Glass",
+  "isbn": "9780141192468"
+ },
+ {
+  "no": null,
+  "title": "Middlemarch by George Eliot",
+  "isbn": "9780141196893"
+ },
+ {
+  "no": null,
+  "title": "Sense and Sensibility by Jane Austen",
+  "isbn": "9780141040370"
+ },
+ {
+  "no": null,
+  "title": "Mansfield Park by Jane Austen",
+  "isbn": "9780141197708"
+ },
+ {
+  "no": null,
+  "title": "Pride and Prejudice by Jane Austen",
+  "isbn": "9780141040349"
+ },
+ {
+  "no": null,
+  "title": "Oliver Twist by Charles Dickens",
+  "isbn": "9780141192499"
+ },
+ {
+  "no": null,
+  "title": "A Christmas Carol and Other Christmas Writings by Charles Dickens",
+  "isbn": "9780141195858"
+ },
+ {
+  "no": null,
+  "title": "Great Expectations by Charles Dickens",
+  "isbn": "9780141040363"
+ },
+ {
+  "no": null,
+  "title": "Paradise Lost by John Milton",
+  "isbn": "9780141394633"
+ },
+ {
+  "no": null,
+  "title": "The Adventures of Sherlock Holmes by Arthur Conan Doyle",
+  "isbn": "9780241347782"
+ },
+ {
+  "no": null,
+  "title": "The Adventures of Huckleberry Finn by Mark Twain",
+  "isbn": "9780141199573"
+ },
+ {
+  "no": null,
+  "title": "Dracula by Bram Stoker",
+  "isbn": "9780141196886"
+ },
+ {
+  "no": null,
+  "title": "Wuthering Heights by Emily Brontë",
+  "isbn": "9780141040356"
+ },
+ {
+  "no": null,
+  "title": "Villette by Charlotte Brontë",
+  "isbn": "9780241198964"
+ },
+ {
+  "no": null,
+  "title": "Gulliver's Travels by Jonathan Swift",
+  "isbn": "9780141196640"
+ },
+ {
+  "no": null,
+  "title": "The Odyssey by Homer",
+  "isbn": "9780141192444"
+ },
+ {
+  "no": null,
+  "title": "The Iliad by Homer",
+  "isbn": "9780141394657"
+ },
+ {
+  "no": null,
+  "title": "The Sonnets and a Lover's Complaint by William Shakespeare",
+  "isbn": "9780141192574"
+ },
+ {
+  "no": null,
+  "title": "Wide Sargasso Sea by Jean Rhys",
+  "isbn": "9780241281901"
+ },
+ {
+  "no": null,
+  "title": "A Confederacy of Dunces by John Kennedy Toole",
+  "isbn": "9780241284667"
+ },
+ {
+  "no": null,
+  "title": "Orlando by Virginia Woolf",
+  "isbn": "9780241284643"
+ },
+ {
+  "no": null,
+  "title": "The Jungle Book by Rudyard Kipling",
+  "isbn": "9780141394626"
+ },
+ {
+  "no": null,
+  "title": "Cranford by Elizabeth Gaskell",
+  "isbn": "9780141442549"
+ },
+ {
+  "no": null,
+  "title": "Les Miserables by Victor Hugo",
+  "isbn": "9781846140495"
+ },
+ {
+  "no": null,
+  "title": "Madame Bovary by Gustave Flaubert",
+  "isbn": "9780141394671"
+ },
+ {
+  "no": null,
+  "title": "Jane Eyre by Charlotte Brontë",
+  "isbn": "9780141040387"
+ },
+ {
+  "no": null,
+  "title": "The War of the Worlds by H.G. Wells",
+  "isbn": "9780241382707"
+ },
+ {
+  "no": null,
+  "title": "The Picture of Dorian Gray by Oscar Wilde",
+  "isbn": "9780141442464"
+ },
+ {
+  "no": null,
+  "title": "The Mayor of Casterbridge by Thomas Hardy",
+  "isbn": "9780241347775"
+ },
+ {
+  "no": null,
+  "title": "The Count of Monte Cristo by Alexandre Dumas",
+  "isbn": "9780141392462"
+ },
+ {
+  "no": null,
+  "title": "Tess of the D'Urbervilles by Thomas Hardy",
+  "isbn": "9780141040332"
+ },
+ {
+  "no": null,
+  "title": "The Little Prince by Antoine de Saint-Exupéry",
+  "isbn": "9780241508664"
+ },
+ {
+  "no": null,
+  "title": "Grimm Tales For Young and Old",
+  "isbn": "9780241472729"
+ },
+ {
+  "no": null,
+  "title": "The Outsider by Albert Camus",
+  "isbn": "9780241554401"
+ },
+ {
+  "no": null,
+  "title": "Inferno: The Divine Comedy I by Dante",
+  "isbn": "9780141195872"
+ },
+ {
+  "no": null,
+  "title": "War And Peace by Leo Tolstoy",
+  "isbn": "9780241265543"
+ },
+ {
+  "no": null,
+  "title": "Crime and Punishment by Fyodor Dostoyevsky",
+  "isbn": "9780241347683"
+ },
+ {
+  "no": null,
+  "title": "Treasure Island by Robert Louis Stevenson",
+  "isbn": "9780141192451"
+ },
+ {
+  "no": null,
+  "title": "Ulysses by James Joyce",
+  "isbn": "9780241552636"
+ },
+ {
+  "no": null,
+  "title": "Animal Farm by George Orwell",
+  "isbn": "9780241453865"
+ },
+ {
+  "no": null,
+  "title": "Monkey King: Journey to the West by Wu Ch'eng-en",
+  "isbn": "9780141393445"
+ },
+ {
+  "no": null,
+  "title": "The Penguin Book of Christmas Stories",
+  "isbn": "9780241455654"
+ },
+ {
+  "no": null,
+  "title": "The Turn of the Screw and Other Ghost Stories by Henry James",
+  "isbn": "9780241552650"
+ },
+ {
+  "no": null,
+  "title": "Don Quixote by Miguel Cervantes",
+  "isbn": "9780241347768"
+ },
+ {
+  "no": null,
+  "title": "Lady Chatterley's Lover by D. H. Lawrence",
+  "isbn": "9780141192482"
+ },
+ {
+  "no": null,
+  "title": "Twenty Thousand Leagues Under the Sea by Jules Verne",
+  "isbn": "9780241198773"
+ },
+ {
+  "no": null,
+  "title": "Metamorphoses by Ovid",
+  "isbn": "9780141394619"
+ },
+ {
+  "no": null,
+  "title": "Northanger Abbey by Jane Austen",
+  "isbn": "9780141197715"
+ },
+ {
+  "no": null,
+  "title": "The Travels by Marco Polo",
+  "isbn": "9780141198774"
+ },
+ {
+  "no": null,
+  "title": "Love and Friendship by Jane Austen",
+  "isbn": "9780140433340"
+ },
+ {
+  "no": null,
+  "title": "The Canterbury Tales by Geoffrey Chaucer",
+  "isbn": "9780141393216"
+ },
+ {
+  "no": null,
+  "title": "The Woman in White by Wilkie Collins",
+  "isbn": "9780141192420"
+ },
+ {
+  "no": null,
+  "title": "Vanity Fair by William Makepeace Thackeray",
+  "isbn": "9780141199542"
+ },
+ {
+  "no": null,
+  "title": "The Pearl by John Steinbeck",
+  "isbn": "9780141394688"
+ },
+ {
+  "no": null,
+  "title": "Jude the Obscure by Thomas Hardy",
+  "isbn": "9780241382691"
+ },
+ {
+  "no": null,
+  "title": "Hard Times by Charles Dickens",
+  "isbn": "9780141198347"
+ },
+ {
+  "no": null,
+  "title": "The Master and Margarita by Mikhail Bulgakov",
+  "isbn": "9780241552674"
+ },
+ {
+  "no": null,
+  "title": "The Lonely Londoners by Sam Selvon",
+  "isbn": "9780241504123"
+ },
+ {
+  "no": null,
+  "title": "Far from the Madding Crowd by Thomas Hardy",
+  "isbn": "9780141393384"
+ },
+ {
+  "no": null,
+  "title": "The Strange Case of Dr Jekyll and Mr Hyde by Robert Louis Stevenson",
+  "isbn": "9780241552681"
+ },
+ {
+  "no": null,
+  "title": "The Portrait of a Lady by Henry James",
+  "isbn": "9780141394664"
+ },
+ {
+  "no": null,
+  "title": "The Ring of the Nibelung by Richard Wagner",
+  "isbn": "9780241305850"
+ },
+ {
+  "no": null,
+  "title": "Lolita by Vladimir Nabokov",
+  "isbn": "9780241638439"
+ },
+ {
+  "no": null,
+  "title": "The Life and Opinions of Tristram Shandy, Gentleman by Laurence Sterne",
+  "isbn": "9780241552667"
+ },
+ {
+  "no": null,
+  "title": "Nineteen Eighty-Four by George Orwell",
+  "isbn": "9780241453513"
+ },
+ {
+  "no": null,
+  "title": "Persuasion by Jane Austen",
+  "isbn": "9780141197692"
+ },
+ {
+  "no": null,
+  "title": "Moby-Dick by Herman Melville",
+  "isbn": "9780141199603"
+ },
+ {
+  "no": null,
+  "title": "Anna Karenina by Leo Tolstoy",
+  "isbn": "9780141199610"
+ },
+ {
+  "no": null,
+  "title": "The Aeneid by Virgil",
+  "isbn": "9780141996332"
+ },
+ {
+  "no": null,
+  "title": "On the Road by Jack Kerouac",
+  "isbn": "9780241552643"
+ },
+ {
+  "no": null,
+  "title": "Tales from 1,001 Nights",
+  "isbn": "9780241382714"
+ },
+ {
+  "no": null,
+  "title": "David Copperfield by Charles Dickens",
+  "isbn": "9780141394640"
+ },
+ {
+  "no": null,
+  "title": "Pnin by Vladimir Nabokov",
+  "isbn": "9780241638422"
+ },
+ {
+  "no": null,
+  "title": "The Brothers Karamazov by Fyodor Dostoyevsky",
+  "isbn": "9780241655566"
+ },
+ {
+  "no": null,
+  "title": "Tinker Tailor Soldier Spy by John le Carré",
+  "isbn": "9780241685143"
+ },
+ {
+  "no": null,
+  "title": "Heart of Darkness by Joseph Conrad",
+  "isbn": "9780241655573"
+ },
+ {
+  "no": null,
+  "title": "Giovanni's Room by James Baldwin",
+  "isbn": "9780241718599"
+ },
+ {
+  "no": null,
+  "title": "The Haunting of Hill House by Shirley Jackson",
+  "isbn": "9780241689646"
+ },
+ {
+  "no": null,
+  "title": "My Brilliant Career by Miles Franklin",
+  "isbn": "9780241699584"
+ },
+ {
+  "no": null,
+  "title": "The Phantom of the Opera by Gaston Leroux",
+  "isbn": "9780241725429"
+ },
+ {
+  "no": null,
+  "title": "The Fall of the House of Usher by Edgar Allan Poe",
+  "isbn": "9780241739846"
+ },
+ {
+  "no": null,
+  "title": "Dubliners by James Joyce",
+  "isbn": "9780241720202"
+ },
+ {
+  "no": null,
+  "title": "Four Tragedies by William Shakespeare",
+  "isbn": "9780241726976"
+ },
+ {
+  "no": null,
+  "title": "The Idiot by Fyodor Dostoyevsky",
+  "isbn": "9780241739822"
+ },
+ {
+  "no": null,
+  "title": "My Family and Other Animals by Gerald Durrell",
+  "isbn": "9780241767061"
+ },
+ {
+  "no": null,
+  "title": "Sanshiro by Natsume Soseki",
+  "isbn": "9780241739839"
+ },
+ {
+  "no": null,
+  "title": "The Spy Who Came in from the Cold by John le Carré",
+  "isbn": "9780241771037"
+ },
+ {
+  "no": null,
+  "title": "Clothbound Classics Collection I",
+  "isbn": "1323167809611"
+ },
+ {
+  "no": null,
+  "title": "Clothbound Classics Collection II",
+  "isbn": "9780241448052"
+ },
+ {
+  "no": null,
+  "title": "Clothbound Classics Collection I & II",
+  "isbn": "9780241448069"
+ }
+]

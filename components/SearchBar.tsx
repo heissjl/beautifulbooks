@@ -4,25 +4,18 @@ import { useEffect, useRef, useState } from 'react';
 import { preloadMosaic } from './MosaicLoader';
 import { useRecentSearches } from './useRecentSearches';
 
+/** What the field searches (ROADMAP 6.60): titles and authors together, or one author's books. */
+export type SearchMode = 'any' | 'author';
+
 interface SearchBarProps {
   searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  language: string;
-  setLanguage: (language: string) => void;
+  setSearchQuery: (query: string, mode: SearchMode) => void;
+  /** The mode of the search in the address; the reader can switch it before searching. */
+  mode: SearchMode;
   /** Larger, centered variant for the empty home page. */
   hero?: boolean;
 }
 
-export const LANGUAGES = [
-  { code: '', label: 'All languages' },
-  { code: 'en', label: 'English' },
-  { code: 'de', label: 'German' },
-  { code: 'fr', label: 'French' },
-  { code: 'es', label: 'Spanish' },
-  { code: 'it', label: 'Italian' },
-  { code: 'pt', label: 'Portuguese' },
-  { code: 'ja', label: 'Japanese' },
-];
 
 export const POPULAR_SEARCHES = [
   { query: 'The Great Gatsby', author: 'F. Scott Fitzgerald' },
@@ -33,13 +26,25 @@ export const POPULAR_SEARCHES = [
   { query: 'The Hobbit', author: 'J. R. R. Tolkien' },
 ];
 
-export default function SearchBar({ searchQuery, setSearchQuery, language, setLanguage, hero }: SearchBarProps) {
+/** The two modes as chips; the labels say what the field will look in. */
+const MODES: { mode: SearchMode; label: string }[] = [
+  { mode: 'any', label: 'Titles & authors' },
+  { mode: 'author', label: 'Author only' },
+];
+
+export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: SearchBarProps) {
   const [inputValue, setInputValue] = useState(searchQuery);
   const [syncedQuery, setSyncedQuery] = useState(searchQuery);
+  const [currentMode, setCurrentMode] = useState<SearchMode>(mode);
+  const [syncedMode, setSyncedMode] = useState<SearchMode>(mode);
   if (syncedQuery !== searchQuery) {
     // Adopt the query from the URL when it changes (back button, chip click).
     setSyncedQuery(searchQuery);
     setInputValue(searchQuery);
+  }
+  if (syncedMode !== mode) {
+    setSyncedMode(mode);
+    setCurrentMode(mode);
   }
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [recentSearches, saveRecentSearch] = useRecentSearches();
@@ -59,24 +64,53 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const submit = (query: string) => {
+  const submit = (query: string, asMode: SearchMode = currentMode) => {
     const q = query.trim();
     if (!q) return;
     setInputValue(q);
-    setSearchQuery(q);
+    setSearchQuery(q, asMode);
     saveRecentSearch(q);
     setShowSuggestions(false);
+  };
+
+  /*
+    Switching the mode re-asks at once when a search is on screen — the reader
+    wants the same words looked up the other way. On the empty home page it
+    only changes what the next search will be.
+  */
+  const switchMode = (next: SearchMode) => {
+    setCurrentMode(next);
+    if (searchQuery && next !== mode && inputValue.trim()) submit(inputValue, next);
+    else inputRef.current?.focus();
   };
 
   const filteredSuggestions = POPULAR_SEARCHES.filter(
     s => !inputValue || s.query.toLowerCase().includes(inputValue.toLowerCase()) || s.author.toLowerCase().includes(inputValue.toLowerCase()),
   ).slice(0, 4);
+  const authorMode = currentMode === 'author';
 
   const showDropdown = showSuggestions && (recentSearches.length > 0 || filteredSuggestions.length > 0);
 
   return (
     <form onSubmit={e => { e.preventDefault(); submit(inputValue); }} className="w-full" role="search">
-      <div className="relative">
+      {/*
+        The list closes when focus leaves the field, its button and the list
+        itself (ROADMAP 6.56): after Tab it stayed open over the pills
+        below while focus was already on the result cards. Escape closes it too.
+      */}
+      <div
+        className="relative"
+        onBlur={e => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setShowSuggestions(false);
+        }}
+        onKeyDown={e => {
+          if (e.key !== 'Escape') return;
+          // Back to the field, so focus is not left on a suggestion that just vanished;
+          // the close comes after the field's own onFocus, so it wins.
+          inputRef.current?.focus();
+          setShowSuggestions(false);
+        }}
+      >
         <svg className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
@@ -96,8 +130,8 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
             preloadMosaic();
           }}
           onFocus={() => setShowSuggestions(true)}
-          placeholder="A title, or a title and author"
-          aria-label="Search a book title"
+          placeholder={authorMode ? "An author\u2019s name" : 'A title, or a title and author'}
+          aria-label={authorMode ? 'Search an author' : 'Search a book title'}
           autoComplete="off"
           /*
             On a phone the hero field is set a size smaller and gives the
@@ -136,9 +170,10 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
               <div className="py-1">
                 <p className="kicker px-4 py-2">Popular</p>
                 {filteredSuggestions.map(s => (
-                  <button key={s.query} type="button" onClick={() => submit(s.query)} className="flex w-full items-baseline justify-between gap-3 px-4 py-2 text-left transition-colors hover:bg-surface-2">
-                    <span className="text-ink">{s.query}</span>
-                    <span className="text-sm text-ink-3">{s.author}</span>
+                  // In the author mode a suggestion is the author, and the title says why she is here.
+                  <button key={s.query} type="button" onClick={() => submit(authorMode ? s.author : s.query)} className="flex w-full items-baseline justify-between gap-3 px-4 py-2 text-left transition-colors hover:bg-surface-2">
+                    <span className="text-ink">{authorMode ? s.author : s.query}</span>
+                    <span className="text-sm text-ink-3">{authorMode ? s.query : s.author}</span>
                   </button>
                 ))}
               </div>
@@ -147,16 +182,18 @@ export default function SearchBar({ searchQuery, setSearchQuery, language, setLa
         )}
       </div>
 
-      <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Language">
-        {LANGUAGES.map(lang => (
-          <button
-            key={lang.code}
-            type="button"
-            className="chip"
-            aria-pressed={(language || '') === lang.code}
-            onClick={() => setLanguage(lang.code)}
-          >
-            {lang.label}
+      {/*
+        The mode chips (ROADMAP 6.60). The language pills that stood here are
+        gone (Julian, 2026-09-27, PLAN-search-2026-09 §6.1): measured over 112
+        cases, "English" never changed the first card, the others left one to
+        three works, seven lists came back empty, and the covers a reader
+        hoped for sit on the detail page's language tabs anyway. An old
+        `?lang=` is still carried to the detail page as the tab to open.
+      */}
+      <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Search in">
+        {MODES.map(m => (
+          <button key={m.mode} type="button" className="chip" aria-pressed={currentMode === m.mode} onClick={() => switchMode(m.mode)}>
+            {m.label}
           </button>
         ))}
       </div>

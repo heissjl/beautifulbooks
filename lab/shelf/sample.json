@@ -1,0 +1,17 @@
+{
+  "note": "Hand-written, not from a photo: what a recognition of a mixed shelf might return. The 'cover' entries have no image, so they show the work's default cover and say so. Two are deliberately rough: an author given by surname only (as a spine prints it) and a title without its subtitle.",
+  "books": [
+    { "title": "Nineteen Eighty-Four", "author": "George Orwell", "kind": "spine", "confidence": 0.95 },
+    { "title": "The Great Gatsby", "author": "F. Scott Fitzgerald", "kind": "cover", "confidence": 0.97 },
+    { "title": "Der Steppenwolf", "author": "Hermann Hesse", "kind": "spine", "confidence": 0.9 },
+    { "title": "Beloved", "author": "Toni Morrison", "kind": "spine", "confidence": 0.9 },
+    { "title": "Fahrenheit 451", "author": "Bradbury", "kind": "spine", "confidence": 0.8 },
+    { "title": "Die Verwandlung", "author": "Franz Kafka", "kind": "cover", "confidence": 0.92 },
+    { "title": "One Hundred Years of Solitude", "author": "Gabriel García Márquez", "kind": "spine", "confidence": 0.88 },
+    { "title": "Gravity's Rainbow", "author": "Thomas Pynchon", "kind": "spine", "confidence": 0.85 },
+    { "title": "The Left Hand of Darkness", "author": "Ursula K. Le Guin", "kind": "cover", "confidence": 0.9 },
+    { "title": "Homo Faber", "author": "Max Frisch", "kind": "spine", "confidence": 0.86 },
+    { "title": "Dune", "author": "Frank Herbert", "kind": "spine", "confidence": 0.93 },
+    { "title": "Mrs Dalloway", "author": "Virginia Woolf", "kind": "spine", "confidence": 0.9 }
+  ]
+}

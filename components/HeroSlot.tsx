@@ -12,8 +12,11 @@ import { useIsDesktop } from './useIsDesktop';
  * phone fetched all seven for a picture it never showed. The empty place of
  * the ring's size stays in the page from the first paint, so nothing moves
  * when the ring arrives.
+ *
+ * `liveSlugs`: the collections published on the running site, which alone
+ * may get a collection ring (ROADMAP 6.59).
  */
-export default function HeroSlot() {
+export default function HeroSlot({ liveSlugs }: { liveSlugs: string[] }) {
   const isDesktop = useIsDesktop(false);
-  return isDesktop ? <HeroFan /> : null;
+  return isDesktop ? <HeroFan liveSlugs={liveSlugs} /> : null;
 }

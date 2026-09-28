@@ -209,10 +209,18 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
               }}
               aria-pressed={selected}
               aria-label={caption ? `Cover, ${caption}` : 'Cover'}
-              className={`tile-in group relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 text-left transition-transform duration-300 ease-out focus-visible:outline-none ${
+              /*
+                Selected and focused must look different (ROADMAP 6.55, found in a
+                real keyboard test on 2026-09-26): both drew the same accent ring,
+                so tabbing on lost which cover was chosen. Selected keeps the
+                accent ring; keyboard focus is a dark outline further out, so a
+                focused selected tile shows both. (A check mark on the selected
+                tile was tried and removed on Julian's word, 2026-09-26.)
+              */
+              className={`tile-in group relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 text-left transition-transform duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[5px] focus-visible:outline-ink ${
                 selected
                   ? 'cover-shadow ring-2 ring-accent ring-offset-2 ring-offset-bg'
-                  : 'cover-shadow hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
+                  : 'cover-shadow hover:-translate-y-1'
               }`}
             >
               <CoverImage

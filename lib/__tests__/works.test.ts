@@ -3,7 +3,7 @@ import type { SourceEdition, WorkSummary } from '../model';
 import type { EditionCandidate } from '../sources/googlebooks-parse';
 import {
   assembleEditions, blurbFor, candidatesToSourceEditions, editionKey, editionSpan, filterWorksByLanguage,
-  derivativeIds, foldDuplicateCovers, groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks,
+  coversNewestFirst, derivativeIds, foldDuplicateCovers, groupCoversByLanguage, mergeWorks, mosaicCovers, rankWorks,
   relevance, rankContext, samePublisher, verifyIsbnCover, withoutTranslators,
 } from '../works';
 import type { Cover, Edition } from '../model';
@@ -389,6 +389,16 @@ describe('foldDuplicateCovers (E8 phase 2, three tiers in SPEC 9.3 step 12)', ()
     expect(out[1].similarIds).toBeUndefined();
   });
 
+  it('lets a cover named by id lead its group instead of folding away', () => {
+    const covers = [cover('ol:relaunch', ['e1']), cover('ol:classic', ['e2'])];
+    const sigs = new Map([['ol:relaunch', sig('ffff000000000000')], ['ol:classic', sig('ffff000000000001')]]);
+    expect(foldDuplicateCovers(covers, sigs).map(c => c.id)).toEqual(['ol:relaunch']);
+    const pinned = foldDuplicateCovers(covers, sigs, [], {}, 'ol:classic');
+    expect(pinned.map(c => c.id)).toEqual(['ol:classic']);
+    expect(pinned[0].similarIds).toEqual(['ol:relaunch']);
+    expect(pinned[0].editionIds.sort()).toEqual(['e1', 'e2']);
+  });
+
   it('folds two images of one ISBN that tier 1 would keep apart (tier 2)', () => {
     // Beloved 9788497932653: the catalogue scan and Google's image of the same
     // Debolsillo printing measured 12-14 bits apart.
@@ -530,6 +540,19 @@ describe('groupCoversByLanguage sorting', () => {
     const covers = [cover('ol:old', ['e1']), cover('ol:new', ['e2'])];
     const editions = [ed({ id: 'e1', year: 1990, language: 'en' }), ed({ id: 'e2', year: 2020, language: 'en' })];
     expect(groupCoversByLanguage(covers, editions)[0].coverIds).toEqual(['ol:new', 'ol:old']);
+  });
+
+  it('appends a later page instead of sorting it in, when told which page each cover came from', () => {
+    const covers = [cover('ol:old', ['e1']), cover('ol:mid', ['e2']), cover('ol:newest', ['e3'])];
+    const editions = [
+      ed({ id: 'e1', year: 1950, language: 'en' }),
+      ed({ id: 'e2', year: 1990, language: 'en' }),
+      ed({ id: 'e3', year: 2021, language: 'en' }),
+    ];
+    const arrival = new Map([['ol:old', 0], ['ol:mid', 0], ['ol:newest', 1]]);
+    expect(groupCoversByLanguage(covers, editions)[0].coverIds).toEqual(['ol:newest', 'ol:mid', 'ol:old']);
+    expect(groupCoversByLanguage(covers, editions, undefined, undefined, arrival)[0].coverIds).toEqual(['ol:mid', 'ol:old', 'ol:newest']);
+    expect(coversNewestFirst(covers, editions, undefined, arrival).map(c => c.id)).toEqual(['ol:mid', 'ol:old', 'ol:newest']);
   });
 
   it('sends images that look like scanned pages to the end, however new', () => {

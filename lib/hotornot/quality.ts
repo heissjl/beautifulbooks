@@ -22,6 +22,12 @@ export interface CoverMeasure {
   white: number;
   /** Share in the yellow of Reclam's Universal-Bibliothek: hue 40–65°, saturation ≥ 0.55, value ≥ 0.7. */
   yellow: number;
+  /**
+   * How soft the scan is, 0 (sharp) to 1 (no edges at all): `blurOf`. Absent
+   * on the measures taken before 2026-09-26, which is why the gate on it
+   * applies only to covers a pool adds, never to one it keeps.
+   */
+  blur?: number;
 }
 
 /** Measured on a copy this many pixels tall, averaged, so a scan's grain does not count. */
@@ -35,6 +41,58 @@ function hueDegrees(r: number, g: number, b: number, max: number, delta: number)
   else if (max === g) hue = (b - r) / delta + 2;
   else hue = (r - g) / delta + 4;
   return hue * 60;
+}
+
+/** Width of the box filter `blurOf` re-blurs with, in pixels of the L image. */
+const BLUR_BOX = 9;
+
+/**
+ * The no-reference blur measure of Crete et al. (2007), on luminance at the
+ * image's own resolution: blur the image once more with a 9-pixel box, and see
+ * how much of the difference between neighbouring pixels survives. A sharp
+ * scan loses most of it; a scan that was soft already, or blown up from a
+ * small original, has little left to lose. Taken along both axes, the worse
+ * one counts. 0 is sharp, 1 has no edges at all.
+ *
+ * Added 2026-09-26 for the covers that grew the game to 2000 (ROADMAP 5.8a):
+ * the height rule lets through an L image of 500 px that was enlarged from a
+ * thumbnail, and on a sample of the 1000-cover pool the softest scans, looked
+ * at at full size, were exactly the ones this number put last.
+ */
+export function blurOf({ width, height, rgba }: { width: number; height: number; rgba: Uint8Array }): number {
+  const grey = new Float64Array(width * height);
+  for (let i = 0; i < width * height; i++) {
+    grey[i] = 0.299 * rgba[i * 4] + 0.587 * rgba[i * 4 + 1] + 0.114 * rgba[i * 4 + 2];
+  }
+  const half = Math.floor(BLUR_BOX / 2);
+  let worst = 0;
+  for (const vertical of [true, false]) {
+    const along = vertical ? height : width;
+    const across = vertical ? width : height;
+    const at = (a: number, c: number) => (vertical ? a * width + c : c * width + a);
+    let sumF = 0;
+    let sumV = 0;
+    const line = new Float64Array(along);
+    const blurred = new Float64Array(along);
+    for (let c = 0; c < across; c++) {
+      for (let a = 0; a < along; a++) line[a] = grey[at(a, c)];
+      // Box blur with the edge pixel repeated, as a running sum.
+      let run = 0;
+      for (let k = -half; k <= half; k++) run += line[Math.min(along - 1, Math.max(0, k))];
+      for (let a = 0; a < along; a++) {
+        blurred[a] = run / BLUR_BOX;
+        run += line[Math.min(along - 1, a + half + 1)] - line[Math.max(0, a - half)];
+      }
+      for (let a = 1; a < along; a++) {
+        const dF = Math.abs(line[a] - line[a - 1]);
+        const dB = Math.abs(blurred[a] - blurred[a - 1]);
+        sumF += dF;
+        sumV += Math.max(0, dF - dB);
+      }
+    }
+    worst = Math.max(worst, sumF > 0 ? (sumF - sumV) / sumF : 1);
+  }
+  return worst;
 }
 
 export function measureCover({ width, height, rgba }: { width: number; height: number; rgba: Uint8Array }): CoverMeasure {
@@ -75,5 +133,5 @@ export function measureCover({ width, height, rgba }: { width: number; height: n
     }
   }
   const total = w * h;
-  return { width, height, white: round3(white / total), yellow: round3(yellow / total) };
+  return { width, height, white: round3(white / total), yellow: round3(yellow / total), blur: round3(blurOf({ width, height, rgba })) };
 }

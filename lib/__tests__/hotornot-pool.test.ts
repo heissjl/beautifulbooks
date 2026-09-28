@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-  buildPool, fitsGame, jacketColourLimit, looksPlain, mixCandidates, poolName, sameJacket, sharpEnough,
+  MAX_BLUR, buildPool, crispEnough, fitsGame, jacketColourLimit, looksPlain, mixCandidates, poolName, sameJacket, sharpEnough,
   type CoverMeasure, type RawIndex,
 } from '../hotornot/pool';
 
@@ -174,6 +174,22 @@ describe('what a mix leaves out', () => {
     expect(ids(after)).not.toContain('ol:1'); // a title on white, whatever the earlier pool held
     expect(ids(after)).toContain('ol:2');
     expect(ids(after)[0]).toBe('ol:3');
+  });
+
+  // 2026-09-26, the covers that grew the game to 2000: an L image blown up from a thumbnail.
+  it('asks a cover it adds to be crisp, and a cover it keeps nothing new', () => {
+    expect(crispEnough(m(320, 500, { blur: 0.23 }))).toBe(true);
+    expect(crispEnough(m(306, 475, { blur: 0.466 }))).toBe(false); // Jaws, soft and blocky
+    expect(crispEnough(m(320, 500))).toBe(true); // measured before the rule
+    expect(crispEnough(undefined)).toBe(false);
+    const soft = MAX_BLUR + 0.05;
+    const measures = { 'ol:2': m(327, 500, { blur: soft }), 'ol:3': m(318, 500, { blur: soft }), 'ol:4': m(318, 500), 'ol:5': m(300, 475) };
+    const added = buildPool(bright, { mode: 'mix', size: 3, seed: 'x', measures });
+    expect(ids(added)).not.toContain('ol:2');
+    expect(ids(added)).not.toContain('ol:3');
+    const kept = buildPool(bright, { mode: 'mix', size: 3, seed: 'x', measures, keep: ['ol:2'] });
+    expect(ids(kept)[0]).toBe('ol:2');
+    expect(ids(kept)).not.toContain('ol:3');
   });
 
   it('leaves a work pool as it was: every design, for the players to judge', () => {

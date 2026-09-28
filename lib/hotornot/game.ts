@@ -15,6 +15,7 @@
  * uncertainty needs them all, and it does so once a minute (`cachedBoard`).
  */
 import poolFile from '@/data/versus-pool.json';
+import { collectionRecords } from '../collections';
 import { coverPathSegment } from '../coverurl';
 import { rng } from '../loading';
 import type { PoolCover } from './pool';
@@ -69,6 +70,32 @@ function activeIds(pool: VersusPool, flags: readonly CoverFlag[]): string[] {
 }
 
 export const POOL = poolFile as VersusPool;
+
+/**
+ * The family of a series collection: its slug's first two words, so the
+ * four SF Masterworks walls count as one series, and the two suhrkamp
+ * taschenbuch and the two Verso walls as one each.
+ */
+export function seriesFamily(slug: string): string {
+  return slug.split('-').slice(0, 2).join('-');
+}
+
+/** Cover id → the series families it appears in, from the collections file (series walls only). */
+export function seriesIndex(records = collectionRecords()): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  for (const r of records) {
+    if (r.kind !== 'series') continue;
+    const family = seriesFamily(r.slug);
+    for (const w of r.works) {
+      const have = out.get(w.coverId) ?? [];
+      if (!have.includes(family)) out.set(w.coverId, [...have, family]);
+    }
+  }
+  return out;
+}
+
+let seriesCache: Map<string, string[]> | null = null;
+const seriesOf = (id: string): readonly string[] => (seriesCache ??= seriesIndex()).get(id) ?? [];
 
 /** Through our own image route (ROADMAP 1.3): the covers never leave the site. */
 export function imagePath(coverId: string, size: 'M' | 'L'): string {
@@ -228,22 +255,33 @@ export interface PairSide {
   href: string;
 }
 
+/** Where a pool cover's picture comes from: the site's own file, or the image route. */
+function coverSrc(cover: PoolCover | undefined, id: string, size: 'M' | 'L'): string {
+  return cover?.image ?? imagePath(id, size);
+}
+
+/** Where a pool cover links to: its share page, or the wall of its work for a site-served picture. */
+function coverHref(cover: Pick<PoolCover, 'workId' | 'image'>, id: string): string {
+  return cover.image ? `/book/${cover.workId}` : bookPath(cover.workId, id);
+}
+
 function side(pool: VersusPool, id: string): PairSide {
   const cover = pool.covers.find(c => c.id === id);
   return {
     id,
     workId: cover?.workId ?? '',
-    src: imagePath(id, 'L'),
+    src: coverSrc(cover, id, 'L'),
     title: cover?.title ?? '',
     author: cover?.author ?? '',
-    href: cover ? bookPath(cover.workId, id) : '',
+    href: cover ? coverHref(cover, id) : '',
   };
 }
 
 export interface PairResponse {
   pool: string;
   store: VoteStore['kind'];
-  votes: number;
+  /** Null on a pair handed out with the page, before the store was asked (`readyPairs`). */
+  votes: number | null;
   covers: number;
   /** Title and author shown under each cover since 2026-09-11 (Julian: "wir müssen noch titel und autor anzeigen"). */
   a: PairSide;
@@ -267,7 +305,7 @@ export async function nextPairFor(
   const [{ elo, votes }, flags] = await Promise.all([pairingTally(store, pool), flagsOf(store, pool)]);
   const ids = activeIds(pool, flags);
   const book = new Map(pool.covers.map(c => [c.id, c.workId]));
-  const pair = nextPair(ids, elo, random, { last, recent, bookOf: id => book.get(id) ?? id });
+  const pair = nextPair(ids, elo, random, { last, recent, bookOf: id => book.get(id) ?? id, seriesOf });
   if (!pair) return null;
   const [a, b] = pair;
   return {
@@ -279,6 +317,36 @@ export async function nextPairFor(
     b: side(pool, b),
     token: signPair(secret, pool.name, a, b, now),
   };
+}
+
+/**
+ * Pairs handed out with the page itself (Julian, 2026-09-25: „the first load
+ * of the versus app online has a long loading time. just have a set of
+ * preloaded pairs ready to show there"). Drawn from the frozen pool without
+ * asking the store — no tally, no flags — so the first covers are on screen
+ * with the page; each is signed like any pair, so a vote on it counts. After
+ * these, the game asks the server as before, and the Elo pairing takes over.
+ * A cover someone reported can appear in these first pairs; the next ones
+ * leave it out again.
+ */
+export function readyPairs(
+  secret: Buffer,
+  count: number,
+  { pool = POOL, random = rng(Date.now() >>> 0), now = Date.now(), store = 'redis' }: { pool?: VersusPool; random?: () => number; now?: number; store?: VoteStore['kind'] } = {},
+): PairResponse[] {
+  const ids = pool.covers.map(c => c.id);
+  const book = new Map(pool.covers.map(c => [c.id, c.workId]));
+  const elo = newElo(ids);
+  const out: PairResponse[] = [];
+  const recent: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const pair = nextPair(ids, elo, random, { recent, bookOf: id => book.get(id) ?? id, seriesOf });
+    if (!pair) break;
+    const [a, b] = pair;
+    recent.push(a, b);
+    out.push({ pool: pool.name, store, votes: null, covers: ids.length, a: side(pool, a), b: side(pool, b), token: signPair(secret, pool.name, a, b, now) });
+  }
+  return out;
 }
 
 /**
@@ -378,7 +446,7 @@ export async function castVote(
   const cover = pool.covers.find(c => c.id === vote.winner);
   if (!cover) return { ok: true };
   const { id, workId, title, author } = cover;
-  return { ok: true, chosen: { id, workId, title, author, href: bookPath(workId, id) } };
+  return { ok: true, chosen: { id, workId, title, author, href: coverHref(cover, id) } };
 }
 
 /**
@@ -450,8 +518,8 @@ export async function board(
   const wins = new Map<string, number>();
   for (const v of votes) wins.set(v.winner, (wins.get(v.winner) ?? 0) + 1);
   const entry = (s: Standing): BoardEntry => {
-    const c = meta.get(s.id) ?? { id: s.id, workId: '', title: '', author: '' };
-    return { ...c, ...s, src: imagePath(s.id, 'M'), wins: wins.get(s.id) ?? 0 };
+    const c: PoolCover = meta.get(s.id) ?? { id: s.id, workId: '', title: '', author: '' };
+    return { ...c, ...s, src: coverSrc(c, s.id, 'M'), wins: wins.get(s.id) ?? 0 };
   };
   const top = table.slice(0, topCount);
   const bottom = table.slice(-bottomCount).reverse();

@@ -3,6 +3,7 @@ import { PUBLISHED_WORKS } from '@/lib/published';
 import decadePages from '@/data/decade-pages.json';
 import { SITE_URL } from '@/lib/seo';
 import { versusEnabled } from '@/lib/hotornot/switch';
+import { liveCollections } from '@/lib/collections-live';
 
 /**
  * The sitemap (SPEC §10 D11, ROADMAP 5.1).
@@ -15,7 +16,10 @@ import { versusEnabled } from '@/lib/hotornot/switch';
  *
  * Search pages stay out on purpose: `/?q=…` is a question, not a document.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+/** Hourly, so a collection published from /curate reaches the sitemap without a deploy (5.10g). */
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   /*
     The cover game only when it is switched on (ROADMAP 5.8a, SPEC F7.1): off,
@@ -27,6 +31,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ? [
         { url: `${SITE_URL}/versus`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
         { url: `${SITE_URL}/versus/board`, lastModified: now, changeFrequency: 'daily' as const, priority: 0.7 },
+      ]
+    : [];
+  const published = (await liveCollections({ includeDrafts: false })).filter(c => c.published);
+  const collections = published.length
+    ? [
+        { url: `${SITE_URL}/collections`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
+        ...published.map(c => ({
+          url: `${SITE_URL}/collections/${c.slug}`,
+          lastModified: now,
+          changeFrequency: 'monthly' as const,
+          priority: 0.7,
+        })),
       ]
     : [];
   return [
@@ -61,5 +77,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     })),
     ...game,
+    /*
+      Published collections only (ROADMAP 5.10, SPEC F8). A production build
+      never sees a draft; `liveCollections` also applies what was published from
+      /curate (5.10g), which is why the sitemap is rebuilt hourly; the
+      filter says so for anyone who runs this under `next dev`.
+    */
+    ...collections,
   ];
 }

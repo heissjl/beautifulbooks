@@ -66,11 +66,24 @@ function amazon(domain: string, affiliateEnv: string): Retailer {
   };
 }
 
-function abebooks(domain: string): Retailer {
+/*
+  In Germany the same marketplace is ZVAB (Julian, 2026-09-28): AbeBooks owns
+  it, it answers the same `/servlet/SearchResults` fields, and it is the name
+  German readers know. The id stays `abebooks` so the link plan, `/go` and the
+  click log treat it as the one shop it is; only host and label change.
+*/
+const ABEBOOKS_HOST: Record<Market, { host: string; label: string }> = {
+  us: { host: 'www.abebooks.com', label: 'AbeBooks' },
+  uk: { host: 'www.abebooks.co.uk', label: 'AbeBooks' },
+  de: { host: 'www.zvab.com', label: 'ZVAB' },
+};
+
+function abebooks(market: Market): Retailer {
+  const { host, label } = ABEBOOKS_HOST[market];
   return {
     id: 'abebooks',
-    label: 'AbeBooks',
-    url: isbn => `https://www.abebooks.${domain}/servlet/SearchResults?isbn=${isbn}`,
+    label,
+    url: isbn => `https://${host}/servlet/SearchResults?isbn=${isbn}`,
   };
 }
 
@@ -87,7 +100,7 @@ const RETAILERS: Record<Market, Retailer[]> = {
       searchUrl: terms => `https://bookshop.org/search?keywords=${enc(terms)}`,
     },
     amazon('com', 'AFFILIATE_AMAZON_TAG_US'),
-    abebooks('com'),
+    abebooks('us'),
     {
       id: 'thriftbooks', label: 'ThriftBooks',
       url: isbn => `https://www.thriftbooks.com/browse/?b.search=${isbn}`,
@@ -115,7 +128,7 @@ const RETAILERS: Record<Market, Retailer[]> = {
       url: isbn => `https://www.waterstones.com/books/search/term/${isbn}`,
       searchUrl: terms => `https://www.waterstones.com/books/search/term/${enc(terms)}`,
     },
-    abebooks('co.uk'),
+    abebooks('uk'),
     {
       id: 'ebay', label: 'eBay',
       url: isbn => `https://www.ebay.co.uk/sch/i.html?_nkw=${isbn}&_sacat=267`,
@@ -136,8 +149,8 @@ const RETAILERS: Record<Market, Retailer[]> = {
     amazon('de', 'AFFILIATE_AMAZON_TAG_DE'),
     {
       id: 'hugendubel', label: 'Hugendubel',
-      url: isbn => `https://www.hugendubel.de/de/search?searchString=${isbn}`,
-      searchUrl: terms => `https://www.hugendubel.de/de/search?searchString=${enc(terms)}`,
+      url: isbn => `https://www.hugendubel.de/de/search?q=${isbn}`,
+      searchUrl: terms => `https://www.hugendubel.de/de/search?q=${enc(terms)}`,
     },
     abebooks('de'),
     { id: 'booklooker', label: 'Booklooker', url: isbn => `https://www.booklooker.de/B%C3%BCcher/Angebote/isbn=${isbn}` },
@@ -256,7 +269,6 @@ export function searchFacts(edition: Pick<Edition, 'source' | 'format' | 'publis
   return { publisher: edition.publisher, year: edition.year };
 }
 
-const ABEBOOKS_DOMAIN: Record<Market, string> = { us: 'com', uk: 'co.uk', de: 'de' };
 const EBAY_DOMAIN: Record<Market, string> = { us: 'com', uk: 'co.uk', de: 'de' };
 
 /**
@@ -285,7 +297,7 @@ export function searchLinksFor(input: SearchLinkInput, market: Market = DEFAULT_
   if (input.author) abe.set('an', input.author);
   if (publisher) abe.set('pn', publisher);
   if (input.year) { abe.set('yrl', String(input.year)); abe.set('yrh', String(input.year)); }
-  out.push({ provider: 'abebooks-search', label: 'AbeBooks', url: `https://www.abebooks.${ABEBOOKS_DOMAIN[market]}/servlet/SearchResults?${abe}` });
+  out.push({ provider: 'abebooks-search', label: ABEBOOKS_HOST[market].label, url: `https://${ABEBOOKS_HOST[market].host}/servlet/SearchResults?${abe}` });
 
   out.push({ provider: 'ebay-search', label: 'eBay', url: `https://www.ebay.${EBAY_DOMAIN[market]}/sch/i.html?_nkw=${q(terms)}&_sacat=267` });
 

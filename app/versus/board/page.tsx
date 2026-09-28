@@ -52,7 +52,7 @@ function Row({ entries }: { entries: BoardEntry[] }) {
       {entries.map((c, i) => (
         <li key={c.id} className="min-w-0">
           {/* The book page with this cover selected: where its buy links are. */}
-          <Link href={c.workId ? bookPath(c.workId, c.id) : '#'} className="group block">
+          <Link href={!c.workId ? '#' : c.image ? `/book/${c.workId}` : bookPath(c.workId, c.id)} className="group block">
             <div className={`relative aspect-[2/3] overflow-hidden rounded-card bg-surface ${i === 0 ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}>
               <CoverImage src={c.src} alt={`${c.title} by ${c.author}`} sizes="(min-width: 640px) 140px, 30vw" fit="contain" />
             </div>

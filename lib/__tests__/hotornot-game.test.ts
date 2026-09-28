@@ -4,6 +4,7 @@ import { CROWN_HOLD, ELO_START, applyVote, newElo } from '../hotornot/rating';
 import {
   BOARD_SECONDS, POOL, TALLY_SAVE_EVERY, board, cachedBoard, castVote, flagCover, forgetBoards, forgetTallies, imagePath,
   nextPairFor, pairingTally, poolBooks, someBooks, type VersusPool,
+  readyPairs,
 } from '../hotornot/game';
 import { StoreUnavailableError, memoryStore, type VoteStore } from '../hotornot/store';
 
@@ -12,7 +13,7 @@ beforeEach(() => {
   forgetTallies();
   forgetBoards();
 });
-import { pairSecret } from '../hotornot/token';
+import { pairSecret, verifyPair } from '../hotornot/token';
 
 const pool: VersusPool = {
   name: 'test',
@@ -262,14 +263,20 @@ describe('the board', () => {
 });
 
 describe('the frozen pool', () => {
-  // 1000 covers since 2026-09-11, up to five per book; it grew from the 200-book pool and inherits its votes.
-  it('holds a thousand distinct covers, at most five per book, and none of the excluded ones', () => {
-    expect(POOL.name).toBe('mix-1000-paperwhite');
-    expect(POOL.inherits).toEqual(['mix-200-paperwhite']);
-    expect(POOL.covers).toHaveLength(1000);
-    expect(new Set(POOL.covers.map(c => c.id)).size).toBe(1000);
+  // 2000 covers since 2026-09-26, up to five per book. It grew from the 1000-cover pool, which grew
+  // from the 200-book one, and inherits the votes of both: a pool's own log is not enough.
+  // Since 2026-09-26 evening also the collections' covers (scripts/add-collection-covers-to-pool.ts),
+  // under a name that inherits the 2000-cover pool, so its votes still count.
+  it('holds two thousand index covers, at most five per book, the collection covers after them, and none of the excluded ones', () => {
+    expect(POOL.name).toBe('mix-2000-paperwhite-collections');
+    expect(POOL.inherits).toEqual(['mix-200-paperwhite', 'mix-1000-paperwhite', 'mix-2000-paperwhite']);
+    const added = new Set((POOL as VersusPool & { collections: { ids: string[] } }).collections.ids);
+    const fromIndex = POOL.covers.filter(c => !added.has(c.id));
+    expect(fromIndex).toHaveLength(2000);
+    expect(POOL.covers.slice(0, 2000)).toEqual(fromIndex);
+    expect(new Set(POOL.covers.map(c => c.id)).size).toBe(POOL.covers.length);
     const perBook = new Map<string, number>();
-    for (const c of POOL.covers) perBook.set(c.workId, (perBook.get(c.workId) ?? 0) + 1);
+    for (const c of fromIndex) perBook.set(c.workId, (perBook.get(c.workId) ?? 0) + 1);
     expect(Math.max(...perBook.values())).toBeLessThanOrEqual(5);
     const excluded = new Set(POOL.excluded.map(e => e.id));
     expect(excluded.has('ol:10942061')).toBe(true);
@@ -309,5 +316,37 @@ describe('the books behind the pool (the page a crawler reads, SPEC F7.6)', () =
     expect(books.reduce((sum, b) => sum + b.covers, 0)).toBe(POOL.covers.length);
     // Every entry is a link the page writes: /book/<work>.
     expect(books.every(b => /^OL\d+W$/.test(b.workId) && b.title.length > 0)).toBe(true);
+  });
+});
+
+describe('readyPairs (pairs handed out with the page)', () => {
+  const secret = pairSecret('test-token');
+
+  it('draws signed pairs, no cover twice (two covers of one book are allowed, F7.9)', () => {
+    const pairs = readyPairs(secret, 3, { random: rng(7), now: 1_700_000_000_000, store: 'memory' });
+    expect(pairs).toHaveLength(3);
+    const ids = pairs.flatMap(p => [p.a.id, p.b.id]);
+    expect(new Set(ids).size).toBe(6);
+    for (const p of pairs) {
+      expect(p.votes).toBeNull();
+      expect(p.token).toMatch(/\S/);
+      expect(verifyPair(secret, p.pool, p.a.id, p.b.id, p.token, 1_700_000_000_000)).toBe(true);
+    }
+  });
+});
+
+
+describe('series families for pairing', () => {
+  it('counts the SF Masterworks walls as one series and leaves author collections out', async () => {
+    const { seriesFamily, seriesIndex } = await import('../hotornot/game');
+    expect(seriesFamily('sf-masterworks-relaunch-international')).toBe('sf-masterworks');
+    expect(seriesFamily('suhrkamp-taschenbuch-images')).toBe('suhrkamp-taschenbuch');
+    const index = seriesIndex([
+      { slug: 'sf-masterworks', title: '', kind: 'series', intro: '', published: true, works: [{ id: 'OL1W', title: '', author: '', coverId: 'ol:1' }] },
+      { slug: 'sf-masterworks-relaunch', title: '', kind: 'series', intro: '', published: true, works: [{ id: 'OL1W', title: '', author: '', coverId: 'ol:1' }] },
+      { slug: 'hugo-award-novel', title: '', kind: 'authors', intro: '', published: true, works: [{ id: 'OL2W', title: '', author: '', coverId: 'ol:2' }] },
+    ]);
+    expect(index.get('ol:1')).toEqual(['sf-masterworks']);
+    expect(index.has('ol:2')).toBe(false);
   });
 });

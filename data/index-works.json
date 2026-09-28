@@ -1,5 +1,5 @@
 {
-  "pickedAt": "2026-09-11",
+  "pickedAt": "2026-09-26",
   "works": [
     {
       "id": "OL1168083W",
@@ -1672,6 +1672,1833 @@
       "title": "North and South",
       "author": "Elizabeth Cleghorn Gaskell",
       "editionCount": 110,
+      "source": "seed"
+    },
+    {
+      "id": "OL472971W",
+      "title": "Malina",
+      "author": "Ingeborg Bachmann",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL26437W",
+      "title": "The Prime of Miss Jean Brodie",
+      "author": "Muriel Spark",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL80021W",
+      "title": "I Know Why the Caged Bird Sings",
+      "author": "Maya Angelou",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL8769634W",
+      "title": "Das siebte Kreuz",
+      "author": "Anna Seghers",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL50565W",
+      "title": "The Bluest Eye",
+      "author": "Toni Morrison",
+      "editionCount": 0,
+      "source": "curated"
+    },
+    {
+      "id": "OL47087W",
+      "title": "Aeneis",
+      "author": "Publius Vergilius Maro",
+      "editionCount": 721,
+      "source": "seed"
+    },
+    {
+      "id": "OL43861W",
+      "title": "Οἰδίπους Τύραννος (Oidípous Týrannos)",
+      "author": "Sophocles",
+      "editionCount": 188,
+      "source": "seed"
+    },
+    {
+      "id": "OL531767W",
+      "title": "The Canterbury Tales",
+      "author": "Geoffrey Chaucer",
+      "editionCount": 747,
+      "source": "seed"
+    },
+    {
+      "id": "OL810991W",
+      "title": "Paradise Lost",
+      "author": "John Milton",
+      "editionCount": 607,
+      "source": "seed"
+    },
+    {
+      "id": "OL1089297W",
+      "title": "The Prince",
+      "author": "Niccolò Machiavelli",
+      "editionCount": 1594,
+      "source": "seed"
+    },
+    {
+      "id": "OL15366912W",
+      "title": "Utopia",
+      "author": "Thomas More",
+      "editionCount": 427,
+      "source": "seed"
+    },
+    {
+      "id": "OL7180368W",
+      "title": "Decamerone",
+      "author": "Giovanni Boccaccio",
+      "editionCount": 708,
+      "source": "seed"
+    },
+    {
+      "id": "OL733640W",
+      "title": "Le rouge et le noir",
+      "author": "Stendhal",
+      "editionCount": 404,
+      "source": "seed"
+    },
+    {
+      "id": "OL85047W",
+      "title": "La père Goriot",
+      "author": "Honoré de Balzac",
+      "editionCount": 444,
+      "source": "seed"
+    },
+    {
+      "id": "OL118986W",
+      "title": "Germinal",
+      "author": "Émile Zola",
+      "editionCount": 172,
+      "source": "seed"
+    },
+    {
+      "id": "OL1158921W",
+      "title": "Les fleurs du mal",
+      "author": "Charles Baudelaire",
+      "editionCount": 373,
+      "source": "seed"
+    },
+    {
+      "id": "OL551668W",
+      "title": "Cyrano de Bergerac",
+      "author": "Edmond Rostand",
+      "editionCount": 496,
+      "source": "seed"
+    },
+    {
+      "id": "OL1230715W",
+      "title": "La Peste",
+      "author": "Albert Camus",
+      "editionCount": 282,
+      "source": "seed"
+    },
+    {
+      "id": "OL1161171W",
+      "title": "La nausée",
+      "author": "Jean-Paul Sartre",
+      "editionCount": 98,
+      "source": "seed"
+    },
+    {
+      "id": "OL1364490W",
+      "title": "Zazie dans le métro",
+      "author": "Raymond Queneau",
+      "editionCount": 58,
+      "source": "seed"
+    },
+    {
+      "id": "OL17396611W",
+      "title": "Dead Souls",
+      "author": "Nikolaĭ Vasilʹevich  Gogolʹ",
+      "editionCount": 323,
+      "source": "seed"
+    },
+    {
+      "id": "OL43370W",
+      "title": "Отцы и дети",
+      "author": "Ivan Sergeevich Turgenev",
+      "editionCount": 208,
+      "source": "seed"
+    },
+    {
+      "id": "OL623499W",
+      "title": "Evgeniĭ Onegin",
+      "author": "Александр Сергеевич Пушкин",
+      "editionCount": 122,
+      "source": "seed"
+    },
+    {
+      "id": "OL55417W",
+      "title": "Вишневый сад",
+      "author": "Антон Павлович Чехов",
+      "editionCount": 152,
+      "source": "seed"
+    },
+    {
+      "id": "OL10215W",
+      "title": "Мы",
+      "author": "Евгений Иванович Замятин",
+      "editionCount": 210,
+      "source": "seed"
+    },
+    {
+      "id": "OL1139063W",
+      "title": "Обломов",
+      "author": "Ива́н Алекса́ндрович Гончаро́в",
+      "editionCount": 117,
+      "source": "seed"
+    },
+    {
+      "id": "OL207633W",
+      "title": "Die Räuber",
+      "author": "Friedrich Schiller",
+      "editionCount": 74,
+      "source": "seed"
+    },
+    {
+      "id": "OL929829W",
+      "title": "Nathan der Weise",
+      "author": "Gotthold Ephraim Lessing",
+      "editionCount": 113,
+      "source": "seed"
+    },
+    {
+      "id": "OL771125W",
+      "title": "Woyzeck",
+      "author": "Georg Büchner",
+      "editionCount": 56,
+      "source": "seed"
+    },
+    {
+      "id": "OL995265W",
+      "title": "Der Schimmelreiter",
+      "author": "Theodor Storm",
+      "editionCount": 52,
+      "source": "seed"
+    },
+    {
+      "id": "OL28429W",
+      "title": "Schachnovelle",
+      "author": "Stefan Zweig",
+      "editionCount": 246,
+      "source": "seed"
+    },
+    {
+      "id": "OL28433W",
+      "title": "Die Welt von Gestern",
+      "author": "Stefan Zweig",
+      "editionCount": 37,
+      "source": "seed"
+    },
+    {
+      "id": "OL3802689W",
+      "title": "Mutter Courage und ihre Kinder",
+      "author": "Bertolt Brecht",
+      "editionCount": 60,
+      "source": "seed"
+    },
+    {
+      "id": "OL1330246W",
+      "title": "Der Mann ohne Eigenschaften",
+      "author": "Robert Musil",
+      "editionCount": 73,
+      "source": "seed"
+    },
+    {
+      "id": "OL8584534W",
+      "title": "Die Physiker",
+      "author": "Friedrich Dürrenmatt",
+      "editionCount": 30,
+      "source": "seed"
+    },
+    {
+      "id": "OL970122W",
+      "title": "Emil und die Detektive",
+      "author": "Erich Kästner",
+      "editionCount": 92,
+      "source": "seed"
+    },
+    {
+      "id": "OL266834W",
+      "title": "Jakob der Lügner",
+      "author": "Jurek Becker",
+      "editionCount": 43,
+      "source": "seed"
+    },
+    {
+      "id": "OL15394878W",
+      "title": "Verlorene Ehre der Katharina Blum",
+      "author": "Heinrich Böll",
+      "editionCount": 63,
+      "source": "seed"
+    },
+    {
+      "id": "OL2756289W",
+      "title": "Die Wand",
+      "author": "Marlen Haushofer",
+      "editionCount": 33,
+      "source": "seed"
+    },
+    {
+      "id": "OL991411W",
+      "title": "Die Vermessung der Welt",
+      "author": "Daniel Kehlmann",
+      "editionCount": 27,
+      "source": "seed"
+    },
+    {
+      "id": "OL46615W",
+      "title": "Austerlitz",
+      "author": "W. G. Sebald",
+      "editionCount": 25,
+      "source": "seed"
+    },
+    {
+      "id": "OL46611W",
+      "title": "Die Ringe des Saturn",
+      "author": "W. G. Sebald",
+      "editionCount": 25,
+      "source": "seed"
+    },
+    {
+      "id": "OL1115809W",
+      "title": "Struwwelpeter",
+      "author": "Heinrich Hoffmann",
+      "editionCount": 62,
+      "source": "seed"
+    },
+    {
+      "id": "OL805278W",
+      "title": "Max und Moritz",
+      "author": "Wilhelm Busch",
+      "editionCount": 69,
+      "source": "seed"
+    },
+    {
+      "id": "OL28815175W",
+      "title": "Heidi",
+      "author": "Spyri, Johanna",
+      "editionCount": 747,
+      "source": "seed"
+    },
+    {
+      "id": "OL4459213W",
+      "title": "Bambi",
+      "author": "Felix Salten",
+      "editionCount": 135,
+      "source": "seed"
+    },
+    {
+      "id": "OL3801010W",
+      "title": "Duineser Elegien",
+      "author": "Rainer Maria Rilke",
+      "editionCount": 84,
+      "source": "seed"
+    },
+    {
+      "id": "OL2386305W",
+      "title": "Il Gattopardo",
+      "author": "Giuseppe Tomasi di Lampedusa",
+      "editionCount": 96,
+      "source": "seed"
+    },
+    {
+      "id": "OL644246W",
+      "title": "I promessi sposi",
+      "author": "Alessandro Manzoni",
+      "editionCount": 443,
+      "source": "seed"
+    },
+    {
+      "id": "OL1527356W",
+      "title": "Le avventure di Pinocchio",
+      "author": "Carlo Collodi",
+      "editionCount": 439,
+      "source": "seed"
+    },
+    {
+      "id": "OL16520879W",
+      "title": "L'amica geniale",
+      "author": "Elena Ferrante",
+      "editionCount": 40,
+      "source": "seed"
+    },
+    {
+      "id": "OL860066W",
+      "title": "Se questo è un uomo",
+      "author": "Primo Levi",
+      "editionCount": 112,
+      "source": "seed"
+    },
+    {
+      "id": "OL2276498W",
+      "title": "Confession of Zeno",
+      "author": "Italo Svevo",
+      "editionCount": 118,
+      "source": "seed"
+    },
+    {
+      "id": "OL14860424W",
+      "title": "Rayuela",
+      "author": "Julio Cortázar",
+      "editionCount": 129,
+      "source": "seed"
+    },
+    {
+      "id": "OL110971W",
+      "title": "Ficciones",
+      "author": "Jorge Luis Borges",
+      "editionCount": 80,
+      "source": "seed"
+    },
+    {
+      "id": "OL110969W",
+      "title": "El Aleph",
+      "author": "Jorge Luis Borges",
+      "editionCount": 67,
+      "source": "seed"
+    },
+    {
+      "id": "OL1731119W",
+      "title": "Pedro Páramo",
+      "author": "Juan Rulfo",
+      "editionCount": 137,
+      "source": "seed"
+    },
+    {
+      "id": "OL1905255W",
+      "title": "La casa de los espíritus",
+      "author": "Isabel Allende",
+      "editionCount": 116,
+      "source": "seed"
+    },
+    {
+      "id": "OL274518W",
+      "title": "El amor en los tiempos del cólera",
+      "author": "Gabriel García Márquez",
+      "editionCount": 130,
+      "source": "seed"
+    },
+    {
+      "id": "OL857544W",
+      "title": "La ciudad y los perros",
+      "author": "Mario Vargas Llosa",
+      "editionCount": 99,
+      "source": "seed"
+    },
+    {
+      "id": "OL953162W",
+      "title": "Como agua para chocolate",
+      "author": "Laura Esquivel",
+      "editionCount": 86,
+      "source": "seed"
+    },
+    {
+      "id": "OL712032W",
+      "title": "Los detectives salvajes",
+      "author": "Roberto Bolaño",
+      "editionCount": 50,
+      "source": "seed"
+    },
+    {
+      "id": "OL712025W",
+      "title": "2666",
+      "author": "Roberto Bolaño",
+      "editionCount": 62,
+      "source": "seed"
+    },
+    {
+      "id": "OL944359W",
+      "title": "La familia de Pascual Duarte",
+      "author": "Camilo José Cela",
+      "editionCount": 26,
+      "source": "seed"
+    },
+    {
+      "id": "OL35093658W",
+      "title": "Platero y yo",
+      "author": "Juan Ramón Jiménez",
+      "editionCount": 178,
+      "source": "seed"
+    },
+    {
+      "id": "OL979517W",
+      "title": "Veinte poemas de amor y una canción desesperada",
+      "author": "Pablo Neruda",
+      "editionCount": 135,
+      "source": "seed"
+    },
+    {
+      "id": "OL617847W",
+      "title": "El túnel",
+      "author": "Ernesto Sabato",
+      "editionCount": 120,
+      "source": "seed"
+    },
+    {
+      "id": "OL27420W",
+      "title": "Ensaio Sobre a Cegueira",
+      "author": "José Saramago",
+      "editionCount": 40,
+      "source": "seed"
+    },
+    {
+      "id": "OL847061W",
+      "title": "Livro do Desassossego",
+      "author": "Fernando Pessoa",
+      "editionCount": 85,
+      "source": "seed"
+    },
+    {
+      "id": "OL1003040W",
+      "title": "Dom Casmurro",
+      "author": "Machado de Assis",
+      "editionCount": 98,
+      "source": "seed"
+    },
+    {
+      "id": "OL573193W",
+      "title": "Sult",
+      "author": "Knut Hamsun",
+      "editionCount": 154,
+      "source": "seed"
+    },
+    {
+      "id": "OL16249343W",
+      "title": "A Doll's House",
+      "author": "Henrik Ibsen",
+      "editionCount": 255,
+      "source": "seed"
+    },
+    {
+      "id": "OL5784622W",
+      "title": "Män som hatar kvinnor",
+      "author": "Stieg Larsson",
+      "editionCount": 82,
+      "source": "seed"
+    },
+    {
+      "id": "OL922430W",
+      "title": "Sofies verden",
+      "author": "Jostein Gaarder",
+      "editionCount": 51,
+      "source": "seed"
+    },
+    {
+      "id": "OL644990W",
+      "title": "Nils Holgerssons underbara resa genom Sverige",
+      "author": "Selma Lagerlöf",
+      "editionCount": 70,
+      "source": "seed"
+    },
+    {
+      "id": "OL2195985W",
+      "title": "Kometen kommer (Kometjakten)",
+      "author": "Tove Jansson",
+      "editionCount": 44,
+      "source": "seed"
+    },
+    {
+      "id": "OL69210W",
+      "title": "Kristin Lavransdatter Trilogy",
+      "author": "Sigrid Undset",
+      "editionCount": 78,
+      "source": "seed"
+    },
+    {
+      "id": "OL835204W",
+      "title": "Osudy dobrého vojáka Švejka za světové války",
+      "author": "Jaroslav Hašek",
+      "editionCount": 118,
+      "source": "seed"
+    },
+    {
+      "id": "OL503424W",
+      "title": "Quo Vadis? Powieść z czasów Nerona",
+      "author": "Henryk Sienkiewicz",
+      "editionCount": 453,
+      "source": "seed"
+    },
+    {
+      "id": "OL85509W",
+      "title": "Vios ke Politia tou Alexi Zorba",
+      "author": "Nikos Kazantzakis",
+      "editionCount": 61,
+      "source": "seed"
+    },
+    {
+      "id": "OL863808W",
+      "title": "Ivanhoe",
+      "author": "Sir Walter Scott",
+      "editionCount": 578,
+      "source": "seed"
+    },
+    {
+      "id": "OL1174972W",
+      "title": "Kokoro",
+      "author": "夏目漱石",
+      "editionCount": 84,
+      "source": "seed"
+    },
+    {
+      "id": "OL1174971W",
+      "title": "吾輩は猫である",
+      "author": "夏目漱石",
+      "editionCount": 47,
+      "source": "seed"
+    },
+    {
+      "id": "OL4188238W",
+      "title": "Rashomon and other stories",
+      "author": "Ryūnosuke Akutagawa",
+      "editionCount": 97,
+      "source": "seed"
+    },
+    {
+      "id": "OL1845333W",
+      "title": "金閣寺",
+      "author": "三島由紀夫",
+      "editionCount": 28,
+      "source": "seed"
+    },
+    {
+      "id": "OL11675949W",
+      "title": "Hong lou meng",
+      "author": "Tsʻao, Hsüeh-chʻin.",
+      "editionCount": 167,
+      "source": "seed"
+    },
+    {
+      "id": "OL1961811W",
+      "title": "Romance of the three kingdoms",
+      "author": "Luo Guanzhong",
+      "editionCount": 81,
+      "source": "seed"
+    },
+    {
+      "id": "OL244537W",
+      "title": "The Art of War",
+      "author": "孙武 (Sun Tzu)",
+      "editionCount": 1543,
+      "source": "seed"
+    },
+    {
+      "id": "OL45499W",
+      "title": "Tao te Ching",
+      "author": "老子",
+      "editionCount": 660,
+      "source": "seed"
+    },
+    {
+      "id": "OL308575W",
+      "title": "Gitanjali (song offerings)",
+      "author": "Rabindranath Tagore",
+      "editionCount": 219,
+      "source": "seed"
+    },
+    {
+      "id": "OL318900W",
+      "title": "The Prophet",
+      "author": "Kahlil Gibran",
+      "editionCount": 574,
+      "source": "seed"
+    },
+    {
+      "id": "OL998028W",
+      "title": "Rubāʻīyāt",
+      "author": "Omar Khayyam",
+      "editionCount": 183,
+      "source": "seed"
+    },
+    {
+      "id": "OL17334243W",
+      "title": "채식주의자",
+      "author": "Han Kang",
+      "editionCount": 28,
+      "source": "seed"
+    },
+    {
+      "id": "OL15845961W",
+      "title": "Wild Swans",
+      "author": "Jung Chang",
+      "editionCount": 72,
+      "source": "seed"
+    },
+    {
+      "id": "OL1140109W",
+      "title": "The Good Earth",
+      "author": "Pearl S. Buck",
+      "editionCount": 175,
+      "source": "seed"
+    },
+    {
+      "id": "OL1856675W",
+      "title": "Memoirs of a Geisha",
+      "author": "Arthur Golden",
+      "editionCount": 103,
+      "source": "seed"
+    },
+    {
+      "id": "OL500451W",
+      "title": "Disgrace",
+      "author": "J. M. Coetzee",
+      "editionCount": 56,
+      "source": "seed"
+    },
+    {
+      "id": "OL500388W",
+      "title": "Waiting for the Barbarians",
+      "author": "J. M. Coetzee",
+      "editionCount": 30,
+      "source": "seed"
+    },
+    {
+      "id": "OL4672081W",
+      "title": "Une si longue lettre",
+      "author": "Mariama Bâ",
+      "editionCount": 34,
+      "source": "seed"
+    },
+    {
+      "id": "OL16313W",
+      "title": "Vanity Fair",
+      "author": "William Makepeace Thackeray",
+      "editionCount": 283,
+      "source": "seed"
+    },
+    {
+      "id": "OL679230W",
+      "title": "The Life and Opinions of Tristram Shandy, Gentleman",
+      "author": "Laurence Sterne",
+      "editionCount": 167,
+      "source": "seed"
+    },
+    {
+      "id": "OL45623W",
+      "title": "The History of Tom Jones",
+      "author": "Henry Fielding",
+      "editionCount": 445,
+      "source": "seed"
+    },
+    {
+      "id": "OL260101W",
+      "title": "The Tenant of Wildfell Hall",
+      "author": "Anne Brontë",
+      "editionCount": 558,
+      "source": "seed"
+    },
+    {
+      "id": "OL2462427W",
+      "title": "Agnes Grey",
+      "author": "Anne Brontë",
+      "editionCount": 616,
+      "source": "seed"
+    },
+    {
+      "id": "OL1095403W",
+      "title": "Villette, a novel",
+      "author": "Charlotte Brontë",
+      "editionCount": 519,
+      "source": "seed"
+    },
+    {
+      "id": "OL81295W",
+      "title": "Sons and Lovers",
+      "author": "D. H. Lawrence",
+      "editionCount": 343,
+      "source": "seed"
+    },
+    {
+      "id": "OL81180W",
+      "title": "Lady Chatterley's Lover",
+      "author": "D. H. Lawrence",
+      "editionCount": 521,
+      "source": "seed"
+    },
+    {
+      "id": "OL505781W",
+      "title": "Of Human Bondage",
+      "author": "William Somerset Maugham",
+      "editionCount": 416,
+      "source": "seed"
+    },
+    {
+      "id": "OL27776452W",
+      "title": "The Importance of Being Earnest",
+      "author": "Oscar Wilde",
+      "editionCount": 458,
+      "source": "seed"
+    },
+    {
+      "id": "OL19908W",
+      "title": "Kim",
+      "author": "Rudyard Kipling",
+      "editionCount": 1004,
+      "source": "seed"
+    },
+    {
+      "id": "OL19870W",
+      "title": "The Jungle Book",
+      "author": "Rudyard Kipling",
+      "editionCount": 536,
+      "source": "seed"
+    },
+    {
+      "id": "OL76524W",
+      "title": "The Thirty-Nine Steps",
+      "author": "John Buchan",
+      "editionCount": 881,
+      "source": "seed"
+    },
+    {
+      "id": "OL17448W",
+      "title": "King Solomon's Mines",
+      "author": "H. Rider Haggard",
+      "editionCount": 1108,
+      "source": "seed"
+    },
+    {
+      "id": "OL1793164W",
+      "title": "Three Men in a Boat (to say nothing of the dog)",
+      "author": "Jerome Klapka Jérôme",
+      "editionCount": 1136,
+      "source": "seed"
+    },
+    {
+      "id": "OL1066524W",
+      "title": "Pygmalion",
+      "author": "George Bernard Shaw",
+      "editionCount": 149,
+      "source": "seed"
+    },
+    {
+      "id": "OL86343W",
+      "title": "A Portrait of the Artist as a Young Man",
+      "author": "James Joyce",
+      "editionCount": 795,
+      "source": "seed"
+    },
+    {
+      "id": "OL2396118W",
+      "title": "Cold Comfort Farm",
+      "author": "Stella Gibbons",
+      "editionCount": 60,
+      "source": "seed"
+    },
+    {
+      "id": "OL51210W",
+      "title": "Goodbye to Berlin",
+      "author": "Christopher Isherwood",
+      "editionCount": 58,
+      "source": "seed"
+    },
+    {
+      "id": "OL106084W",
+      "title": "The Power and the Glory",
+      "author": "Graham Greene",
+      "editionCount": 130,
+      "source": "seed"
+    },
+    {
+      "id": "OL106083W",
+      "title": "Brighton Rock",
+      "author": "Graham Greene",
+      "editionCount": 111,
+      "source": "seed"
+    },
+    {
+      "id": "OL1863530W",
+      "title": "Lucky Jim",
+      "author": "Kingsley Amis",
+      "editionCount": 68,
+      "source": "seed"
+    },
+    {
+      "id": "OL15010W",
+      "title": "The French Lieutenant's Woman",
+      "author": "John Fowles",
+      "editionCount": 79,
+      "source": "seed"
+    },
+    {
+      "id": "OL15008W",
+      "title": "The Collector",
+      "author": "John Fowles",
+      "editionCount": 64,
+      "source": "seed"
+    },
+    {
+      "id": "OL115647W",
+      "title": "Possession",
+      "author": "A. S. Byatt",
+      "editionCount": 42,
+      "source": "seed"
+    },
+    {
+      "id": "OL16847W",
+      "title": "Money",
+      "author": "Martin Amis",
+      "editionCount": 25,
+      "source": "seed"
+    },
+    {
+      "id": "OL53071W",
+      "title": "The English Patient",
+      "author": "Michael Ondaatje",
+      "editionCount": 93,
+      "source": "seed"
+    },
+    {
+      "id": "OL1326310W",
+      "title": "The Sea, the Sea",
+      "author": "Iris Murdoch",
+      "editionCount": 34,
+      "source": "seed"
+    },
+    {
+      "id": "OL100784W",
+      "title": "The Wasp Factory",
+      "author": "Iain Banks",
+      "editionCount": 28,
+      "source": "seed"
+    },
+    {
+      "id": "OL152161W",
+      "title": "Uncle Tom's Cabin",
+      "author": "Harriet Beecher Stowe",
+      "editionCount": 1117,
+      "source": "seed"
+    },
+    {
+      "id": "OL77958W",
+      "title": "The Last of the Mohicans",
+      "author": "James Fenimore Cooper",
+      "editionCount": 864,
+      "source": "seed"
+    },
+    {
+      "id": "OL55649W",
+      "title": "Walden",
+      "author": "Henry David Thoreau",
+      "editionCount": 1140,
+      "source": "seed"
+    },
+    {
+      "id": "OL16333W",
+      "title": "Leaves of Grass",
+      "author": "Walt Whitman",
+      "editionCount": 755,
+      "source": "seed"
+    },
+    {
+      "id": "OL53919W",
+      "title": "The Adventures of Tom Sawyer",
+      "author": "Mark Twain",
+      "editionCount": 898,
+      "source": "seed"
+    },
+    {
+      "id": "OL20844W",
+      "title": "The Red Badge of Courage",
+      "author": "Stephen Crane",
+      "editionCount": 1086,
+      "source": "seed"
+    },
+    {
+      "id": "OL14942956W",
+      "title": "The Call of the Wild",
+      "author": "Jack London",
+      "editionCount": 1707,
+      "source": "seed"
+    },
+    {
+      "id": "OL74504W",
+      "title": "White Fang",
+      "author": "Jack London",
+      "editionCount": 387,
+      "source": "seed"
+    },
+    {
+      "id": "OL100203W",
+      "title": "Sister Carrie",
+      "author": "Theodore Dreiser",
+      "editionCount": 463,
+      "source": "seed"
+    },
+    {
+      "id": "OL51117W",
+      "title": "MAIN STREET",
+      "author": "Sinclair Lewis",
+      "editionCount": 274,
+      "source": "seed"
+    },
+    {
+      "id": "OL51148W",
+      "title": "Babbitt",
+      "author": "Sinclair Lewis",
+      "editionCount": 451,
+      "source": "seed"
+    },
+    {
+      "id": "OL276141W",
+      "title": "Look Homeward, Angel",
+      "author": "Thomas Wolfe",
+      "editionCount": 79,
+      "source": "seed"
+    },
+    {
+      "id": "OL11081469W",
+      "title": "The Heart is a Lonely Hunter",
+      "author": "Carson McCullers",
+      "editionCount": 65,
+      "source": "seed"
+    },
+    {
+      "id": "OL30294W",
+      "title": "A Streetcar Named Desire",
+      "author": "Tennessee Williams",
+      "editionCount": 71,
+      "source": "seed"
+    },
+    {
+      "id": "OL66346W",
+      "title": "Death of a Salesman",
+      "author": "Arthur Miller",
+      "editionCount": 110,
+      "source": "seed"
+    },
+    {
+      "id": "OL66347W",
+      "title": "The Crucible",
+      "author": "Arthur Miller",
+      "editionCount": 87,
+      "source": "seed"
+    },
+    {
+      "id": "OL3335291W",
+      "title": "Franny and Zooey",
+      "author": "J. D. Salinger",
+      "editionCount": 65,
+      "source": "seed"
+    },
+    {
+      "id": "OL501911W",
+      "title": "Revolutionary road",
+      "author": "Richard Yates",
+      "editionCount": 28,
+      "source": "seed"
+    },
+    {
+      "id": "OL228702W",
+      "title": "Giovanni's Room",
+      "author": "James Baldwin",
+      "editionCount": 65,
+      "source": "seed"
+    },
+    {
+      "id": "OL267913W",
+      "title": "A Separate Peace",
+      "author": "John Knowles",
+      "editionCount": 104,
+      "source": "seed"
+    },
+    {
+      "id": "OL1843720W",
+      "title": "The Joy Luck Club",
+      "author": "Amy Tan",
+      "editionCount": 74,
+      "source": "seed"
+    },
+    {
+      "id": "OL3243765W",
+      "title": "The House on Mango Street",
+      "author": "Sandra Cisneros",
+      "editionCount": 49,
+      "source": "seed"
+    },
+    {
+      "id": "OL479009W",
+      "title": "Love medicine",
+      "author": "Louise Erdrich",
+      "editionCount": 46,
+      "source": "seed"
+    },
+    {
+      "id": "OL1875009W",
+      "title": "Gilead",
+      "author": "Marilynne Robinson",
+      "editionCount": 38,
+      "source": "seed"
+    },
+    {
+      "id": "OL1875010W",
+      "title": "Housekeeping",
+      "author": "Marilynne Robinson",
+      "editionCount": 33,
+      "source": "seed"
+    },
+    {
+      "id": "OL4082696W",
+      "title": "The Corrections",
+      "author": "Jonathan Franzen",
+      "editionCount": 72,
+      "source": "seed"
+    },
+    {
+      "id": "OL5738260W",
+      "title": "Everything Is Illuminated",
+      "author": "Jonathan Safran Foer",
+      "editionCount": 42,
+      "source": "seed"
+    },
+    {
+      "id": "OL7990014W",
+      "title": "The Brief Wondrous Life of Oscar Wao",
+      "author": "Junot Díaz",
+      "editionCount": 32,
+      "source": "seed"
+    },
+    {
+      "id": "OL2001056W",
+      "title": "El Buen Nombre (Lingua Franca)",
+      "author": "Jhumpa Lahiri",
+      "editionCount": 27,
+      "source": "seed"
+    },
+    {
+      "id": "OL15026613W",
+      "title": "A Visit from the Goon Squad",
+      "author": "Jennifer Egan",
+      "editionCount": 26,
+      "source": "seed"
+    },
+    {
+      "id": "OL17619932W",
+      "title": "The Underground Railroad",
+      "author": "Colson Whitehead",
+      "editionCount": 39,
+      "source": "seed"
+    },
+    {
+      "id": "OL78359W",
+      "title": "A tree grows in Brooklyn",
+      "author": "Betty Smith",
+      "editionCount": 88,
+      "source": "seed"
+    },
+    {
+      "id": "OL276386W",
+      "title": "The Turn of the Screw",
+      "author": "Henry James",
+      "editionCount": 563,
+      "source": "seed"
+    },
+    {
+      "id": "OL276365W",
+      "title": "The Portrait of a Lady",
+      "author": "Henry James",
+      "editionCount": 435,
+      "source": "seed"
+    },
+    {
+      "id": "OL63985W",
+      "title": "The Legend of Sleepy Hollow",
+      "author": "Washington Irving",
+      "editionCount": 1034,
+      "source": "seed"
+    },
+    {
+      "id": "OL41078W",
+      "title": "The Fall of the House of Usher",
+      "author": "Edgar Allan Poe",
+      "editionCount": 237,
+      "source": "seed"
+    },
+    {
+      "id": "OL152268W",
+      "title": "At the Mountains of Madness",
+      "author": "H.P. Lovecraft",
+      "editionCount": 28,
+      "source": "seed"
+    },
+    {
+      "id": "OL2895536W",
+      "title": "Carmilla",
+      "author": "Sheridan Le Fanu",
+      "editionCount": 577,
+      "source": "seed"
+    },
+    {
+      "id": "OL183675W",
+      "title": "The Castle of Otranto",
+      "author": "Horace Walpole",
+      "editionCount": 584,
+      "source": "seed"
+    },
+    {
+      "id": "OL76837W",
+      "title": "The Da Vinci Code",
+      "author": "Dan Brown",
+      "editionCount": 212,
+      "source": "seed"
+    },
+    {
+      "id": "OL76833W",
+      "title": "Angels & Demons",
+      "author": "Dan Brown",
+      "editionCount": 171,
+      "source": "seed"
+    },
+    {
+      "id": "OL46881W",
+      "title": "Jurassic Park",
+      "author": "Michael Crichton",
+      "editionCount": 95,
+      "source": "seed"
+    },
+    {
+      "id": "OL21747086W",
+      "title": "Semilla del Diablo",
+      "author": "Ira Levin",
+      "editionCount": 65,
+      "source": "seed"
+    },
+    {
+      "id": "OL927199W",
+      "title": "The Exorcist",
+      "author": "William Peter Blatty",
+      "editionCount": 81,
+      "source": "seed"
+    },
+    {
+      "id": "OL3454854W",
+      "title": "Jaws",
+      "author": "Peter Benchley",
+      "editionCount": 58,
+      "source": "seed"
+    },
+    {
+      "id": "OL7923819W",
+      "title": "The Day of the Jackal",
+      "author": "Frederick Forsyth",
+      "editionCount": 71,
+      "source": "seed"
+    },
+    {
+      "id": "OL85753W",
+      "title": "Casino Royale",
+      "author": "Ian Fleming",
+      "editionCount": 164,
+      "source": "seed"
+    },
+    {
+      "id": "OL85750W",
+      "title": "Goldfinger",
+      "author": "Ian Fleming",
+      "editionCount": 144,
+      "source": "seed"
+    },
+    {
+      "id": "OL15723140W",
+      "title": "The Spy Who Came in from the Cold",
+      "author": "John le Carré",
+      "editionCount": 145,
+      "source": "seed"
+    },
+    {
+      "id": "OL15723131W",
+      "title": "Tinker Tailor Soldier Spy",
+      "author": "John le Carré",
+      "editionCount": 38,
+      "source": "seed"
+    },
+    {
+      "id": "OL2664916W",
+      "title": "The Bourne Identity",
+      "author": "Robert Ludlum",
+      "editionCount": 33,
+      "source": "seed"
+    },
+    {
+      "id": "OL159452W",
+      "title": "The Hunt for Red October",
+      "author": "Tom Clancy",
+      "editionCount": 63,
+      "source": "seed"
+    },
+    {
+      "id": "OL76972W",
+      "title": "The Firm",
+      "author": "John Grisham",
+      "editionCount": 94,
+      "source": "seed"
+    },
+    {
+      "id": "OL77001W",
+      "title": "A Time to Kill",
+      "author": "John Grisham",
+      "editionCount": 87,
+      "source": "seed"
+    },
+    {
+      "id": "OL17112428W",
+      "title": "The Girl on the Train",
+      "author": "Paula Hawkins",
+      "editionCount": 35,
+      "source": "seed"
+    },
+    {
+      "id": "OL2234851W",
+      "title": "Gaudy night",
+      "author": "Dorothy L. Sayers",
+      "editionCount": 77,
+      "source": "seed"
+    },
+    {
+      "id": "OL3480719W",
+      "title": "The postman always rings twice",
+      "author": "James M. Cain",
+      "editionCount": 61,
+      "source": "seed"
+    },
+    {
+      "id": "OL15400581W",
+      "title": "The Long Goodbye",
+      "author": "Raymond Chandler",
+      "editionCount": 40,
+      "source": "seed"
+    },
+    {
+      "id": "OL59482W",
+      "title": "Strangers On a Train",
+      "author": "Patricia Highsmith",
+      "editionCount": 39,
+      "source": "seed"
+    },
+    {
+      "id": "OL59740W",
+      "title": "Starship Troopers",
+      "author": "Robert A. Heinlein",
+      "editionCount": 60,
+      "source": "seed"
+    },
+    {
+      "id": "OL17415W",
+      "title": "Childhood’s End",
+      "author": "Arthur C. Clarke",
+      "editionCount": 81,
+      "source": "seed"
+    },
+    {
+      "id": "OL1963268W",
+      "title": "Hyperion",
+      "author": "Dan Simmons",
+      "editionCount": 36,
+      "source": "seed"
+    },
+    {
+      "id": "OL2172403W",
+      "title": "The Man in the High Castle",
+      "author": "Philip K. Dick",
+      "editionCount": 84,
+      "source": "seed"
+    },
+    {
+      "id": "OL515754W",
+      "title": "Flowers for Algernon",
+      "author": "Daniel Keyes",
+      "editionCount": 85,
+      "source": "seed"
+    },
+    {
+      "id": "OL1819353W",
+      "title": "The Stars My Destination",
+      "author": "Alfred Bester",
+      "editionCount": 25,
+      "source": "seed"
+    },
+    {
+      "id": "OL510405W",
+      "title": "Ringworld",
+      "author": "Larry Niven",
+      "editionCount": 53,
+      "source": "seed"
+    },
+    {
+      "id": "OL271163W",
+      "title": "The Forever War",
+      "author": "Joe Haldeman",
+      "editionCount": 44,
+      "source": "seed"
+    },
+    {
+      "id": "OL453936W",
+      "title": "Good Omens",
+      "author": "Terry Pratchett",
+      "editionCount": 73,
+      "source": "seed"
+    },
+    {
+      "id": "OL453657W",
+      "title": "The Colour of Magic",
+      "author": "Terry Pratchett",
+      "editionCount": 93,
+      "source": "seed"
+    },
+    {
+      "id": "OL679360W",
+      "title": "American Gods",
+      "author": "Neil Gaiman",
+      "editionCount": 73,
+      "source": "seed"
+    },
+    {
+      "id": "OL679358W",
+      "title": "Coraline",
+      "author": "Neil Gaiman",
+      "editionCount": 94,
+      "source": "seed"
+    },
+    {
+      "id": "OL5738148W",
+      "title": "The Final Empire",
+      "author": "Brandon Sanderson",
+      "editionCount": 45,
+      "source": "seed"
+    },
+    {
+      "id": "OL15358691W",
+      "title": "The Way of Kings",
+      "author": "Brandon Sanderson",
+      "editionCount": 30,
+      "source": "seed"
+    },
+    {
+      "id": "OL7924103W",
+      "title": "The Eye of the World",
+      "author": "Robert Jordan",
+      "editionCount": 86,
+      "source": "seed"
+    },
+    {
+      "id": "OL2707183W",
+      "title": "Assassin's Apprentice",
+      "author": "Robin Hobb",
+      "editionCount": 34,
+      "source": "seed"
+    },
+    {
+      "id": "OL1388028W",
+      "title": "The Once and Future King",
+      "author": "T. H. White",
+      "editionCount": 83,
+      "source": "seed"
+    },
+    {
+      "id": "OL26459W",
+      "title": "The Last Unicorn",
+      "author": "Peter S. Beagle",
+      "editionCount": 45,
+      "source": "seed"
+    },
+    {
+      "id": "OL486967W",
+      "title": "The Princess Bride",
+      "author": "William Goldman",
+      "editionCount": 50,
+      "source": "seed"
+    },
+    {
+      "id": "OL23738W",
+      "title": "The Mists of Avalon",
+      "author": "Marion Zimmer Bradley",
+      "editionCount": 43,
+      "source": "seed"
+    },
+    {
+      "id": "OL17076473W",
+      "title": "Red Rising",
+      "author": "Pierce Brown",
+      "editionCount": 26,
+      "source": "seed"
+    },
+    {
+      "id": "OL15936512W",
+      "title": "Ready Player One",
+      "author": "Ernest Cline",
+      "editionCount": 42,
+      "source": "seed"
+    },
+    {
+      "id": "OL17091839W",
+      "title": "The Martian",
+      "author": "Andy Weir",
+      "editionCount": 74,
+      "source": "seed"
+    },
+    {
+      "id": "OL21745884W",
+      "title": "Project Hail Mary",
+      "author": "Andy Weir",
+      "editionCount": 32,
+      "source": "seed"
+    },
+    {
+      "id": "OL18020194W",
+      "title": "It Ends With Us",
+      "author": "Colleen Hoover",
+      "editionCount": 56,
+      "source": "seed"
+    },
+    {
+      "id": "OL17352669W",
+      "title": "A Court of Thorns and Roses",
+      "author": "Sarah J. Maas",
+      "editionCount": 38,
+      "source": "seed"
+    },
+    {
+      "id": "OL16607146W",
+      "title": "Throne of Glass",
+      "author": "Sarah J. Maas",
+      "editionCount": 31,
+      "source": "seed"
+    },
+    {
+      "id": "OL17332479W",
+      "title": "Six of Crows",
+      "author": "Leigh Bardugo",
+      "editionCount": 37,
+      "source": "seed"
+    },
+    {
+      "id": "OL16239519W",
+      "title": "Shadow and Bone",
+      "author": "Leigh Bardugo",
+      "editionCount": 35,
+      "source": "seed"
+    },
+    {
+      "id": "OL20796936W",
+      "title": "The Invisible Life of Addie LaRue",
+      "author": "V. E. Schwab",
+      "editionCount": 34,
+      "source": "seed"
+    },
+    {
+      "id": "OL18766691W",
+      "title": "Where the Crawdads Sing",
+      "author": "Delia Owens",
+      "editionCount": 44,
+      "source": "seed"
+    },
+    {
+      "id": "OL19781733W",
+      "title": "Eleanor Oliphant is Completely Fine",
+      "author": "Gail Honeyman",
+      "editionCount": 26,
+      "source": "seed"
+    },
+    {
+      "id": "OL20965973W",
+      "title": "The Midnight Library",
+      "author": "Matt Haig",
+      "editionCount": 27,
+      "source": "seed"
+    },
+    {
+      "id": "OL19096402W",
+      "title": "The Silent Patient",
+      "author": "Alex Michaelides",
+      "editionCount": 27,
+      "source": "seed"
+    },
+    {
+      "id": "OL5735360W",
+      "title": "Catching Fire",
+      "author": "Suzanne Collins",
+      "editionCount": 118,
+      "source": "seed"
+    },
+    {
+      "id": "OL15719630W",
+      "title": "Divergent",
+      "author": "Veronica Roth",
+      "editionCount": 87,
+      "source": "seed"
+    },
+    {
+      "id": "OL6027236W",
+      "title": "The Maze Runner",
+      "author": "James Dashner",
+      "editionCount": 37,
+      "source": "seed"
+    },
+    {
+      "id": "OL492658W",
+      "title": "The Lightning Thief",
+      "author": "Rick Riordan",
+      "editionCount": 108,
+      "source": "seed"
+    },
+    {
+      "id": "OL5819895W",
+      "title": "Eragon",
+      "author": "Christopher Paolini",
+      "editionCount": 92,
+      "source": "seed"
+    },
+    {
+      "id": "OL28988W",
+      "title": "Northern Lights",
+      "author": "Philip Pullman",
+      "editionCount": 148,
+      "source": "seed"
+    },
+    {
+      "id": "OL28993W",
+      "title": "The Subtle Knife",
+      "author": "Philip Pullman",
+      "editionCount": 106,
+      "source": "seed"
+    },
+    {
+      "id": "OL5725956W",
+      "title": "Artemis Fowl",
+      "author": "Eoin Colfer",
+      "editionCount": 102,
+      "source": "seed"
+    },
+    {
+      "id": "OL15104144W",
+      "title": "The Bad Beginning",
+      "author": "Lemony Snicket",
+      "editionCount": 75,
+      "source": "seed"
+    },
+    {
+      "id": "OL116250W",
+      "title": "Holes",
+      "author": "Louis Sachar",
+      "editionCount": 83,
+      "source": "seed"
+    },
+    {
+      "id": "OL16142094W",
+      "title": "Wonder",
+      "author": "R. J. Palacio",
+      "editionCount": 60,
+      "source": "seed"
+    },
+    {
+      "id": "OL2965102W",
+      "title": "The Curious Incident of the Dog in the Night-Time",
+      "author": "Mark Haddon",
+      "editionCount": 108,
+      "source": "seed"
+    },
+    {
+      "id": "OL5962664W",
+      "title": "The Lovely Bones",
+      "author": "Alice Sebold",
+      "editionCount": 89,
+      "source": "seed"
+    },
+    {
+      "id": "OL4720160W",
+      "title": "The Time Traveler's Wife",
+      "author": "Audrey Niffenegger",
+      "editionCount": 46,
+      "source": "seed"
+    },
+    {
+      "id": "OL28353073W",
+      "title": "Me Before You",
+      "author": "Jojo Moyes",
+      "editionCount": 48,
+      "source": "seed"
+    },
+    {
+      "id": "OL54797W",
+      "title": "The Notebook",
+      "author": "Nicholas Sparks",
+      "editionCount": 61,
+      "source": "seed"
+    },
+    {
+      "id": "OL3261155W",
+      "title": "Outlander",
+      "author": "Diana Gabaldon",
+      "editionCount": 56,
+      "source": "seed"
+    },
+    {
+      "id": "OL16336633W",
+      "title": "Fifty Shades of Grey",
+      "author": "E. L. James",
+      "editionCount": 144,
+      "source": "seed"
+    },
+    {
+      "id": "OL547745W",
+      "title": "Bridget Jones's Diary",
+      "author": "Helen Fielding",
+      "editionCount": 90,
+      "source": "seed"
+    },
+    {
+      "id": "OL1916907W",
+      "title": "High Fidelity",
+      "author": "Nick Hornby",
+      "editionCount": 66,
+      "source": "seed"
+    },
+    {
+      "id": "OL11999891W",
+      "title": "The Help",
+      "author": "Kathryn Stockett",
+      "editionCount": 73,
+      "source": "seed"
+    },
+    {
+      "id": "OL17116910W",
+      "title": "The Nightingale",
+      "author": "Kristin Hannah",
+      "editionCount": 42,
+      "source": "seed"
+    },
+    {
+      "id": "OL16821606W",
+      "title": "All the Light We Cannot See",
+      "author": "Anthony Doerr",
+      "editionCount": 72,
+      "source": "seed"
+    },
+    {
+      "id": "OL19061442W",
+      "title": "Shantaram",
+      "author": "Gregory David Roberts",
+      "editionCount": 28,
+      "source": "seed"
+    },
+    {
+      "id": "OL1914022W",
+      "title": "The Pillars of the Earth",
+      "author": "Ken Follett",
+      "editionCount": 118,
+      "source": "seed"
+    },
+    {
+      "id": "OL1882556W",
+      "title": "The Thorn Birds",
+      "author": "Colleen McCullough",
+      "editionCount": 87,
+      "source": "seed"
+    },
+    {
+      "id": "OL1822313W",
+      "title": "Tuesdays with Morrie",
+      "author": "Mitch Albom",
+      "editionCount": 104,
+      "source": "seed"
+    },
+    {
+      "id": "OL5813796W",
+      "title": "Water for Elephants",
+      "author": "Sara Gruen",
+      "editionCount": 36,
+      "source": "seed"
+    },
+    {
+      "id": "OL16793865W",
+      "title": "En man som heter Ove",
+      "author": "Fredrik Backman",
+      "editionCount": 40,
+      "source": "seed"
+    },
+    {
+      "id": "OL18139176W",
+      "title": "Educated",
+      "author": "Tara Westover",
+      "editionCount": 35,
+      "source": "seed"
+    },
+    {
+      "id": "OL17930367W",
+      "title": "Becoming",
+      "author": "Michelle Obama",
+      "editionCount": 43,
+      "source": "seed"
+    },
+    {
+      "id": "OL52987W",
+      "title": "The Very Hungry Caterpillar",
+      "author": "Eric Carle",
+      "editionCount": 179,
+      "source": "seed"
+    },
+    {
+      "id": "OL151798W",
+      "title": "Goodnight Moon",
+      "author": "Margaret Wise Brown",
+      "editionCount": 143,
+      "source": "seed"
+    },
+    {
+      "id": "OL1898309W",
+      "title": "The Cat in the Hat",
+      "author": "Dr. Seuss",
+      "editionCount": 85,
+      "source": "seed"
+    },
+    {
+      "id": "OL1898308W",
+      "title": "Green Eggs and Ham",
+      "author": "Dr. Seuss",
+      "editionCount": 58,
+      "source": "seed"
+    },
+    {
+      "id": "OL1938178W",
+      "title": "The Gruffalo",
+      "author": "Julia Donaldson",
+      "editionCount": 99,
+      "source": "seed"
+    },
+    {
+      "id": "OL10490647W",
+      "title": "A Bear Called Paddington",
+      "author": "Michael Bond",
+      "editionCount": 57,
+      "source": "seed"
+    },
+    {
+      "id": "OL108735W",
+      "title": "The Tale of Peter Rabbit",
+      "author": "Beatrix Potter",
+      "editionCount": 262,
+      "source": "seed"
+    },
+    {
+      "id": "OL262141W",
+      "title": "Mary Poppins",
+      "author": "Pamela L. Travers",
+      "editionCount": 111,
+      "source": "seed"
+    },
+    {
+      "id": "OL78564W",
+      "title": "The Borrowers",
+      "author": "Mary Norton",
+      "editionCount": 56,
       "source": "seed"
     }
   ]

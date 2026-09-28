@@ -54,6 +54,12 @@ export const RATE_RULES = {
    */
   similar: { capacity: 60, refillPerMinute: 60 },
   /**
+   * The "More by …" row (ROADMAP 6.53): one request per wall a reader
+   * scrolls to the bottom of, one Open Library search per author and day
+   * behind the cache. Never `google` — the route cannot spend a request of it.
+   */
+  author: { capacity: 60, refillPerMinute: 30 },
+  /**
    * The cover game (ROADMAP 5.8a): the next pair and the board. A pair a
    * click, and nobody clicks faster than once a second for long.
    */
@@ -71,6 +77,13 @@ export const RATE_RULES = {
    * holds each cover for 30 days.
    */
   img: { capacity: 800, refillPerMinute: 400 },
+  /**
+   * The suggestion tool behind its password (ROADMAP 5.10a): covers of a
+   * book, and sending a suggestion. A friend picks a few books an evening.
+   */
+  suggest: { capacity: 40, refillPerMinute: 20 },
+  /** Password attempts: few, so the shared password cannot be guessed at speed. */
+  login: { capacity: 5, refillPerMinute: 2 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

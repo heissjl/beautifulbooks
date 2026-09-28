@@ -1,6 +1,14 @@
 {
-  "curatedAt": "2026-09-24",
+  "curatedAt": "2026-09-26",
   "works": [
+    {
+      "id": "OL39349W",
+      "title": "Mrs Dalloway",
+      "author": "Virginia Woolf",
+      "coverId": "ol:15258721",
+      "firstPublished": 1925,
+      "pickedAt": "2026-09-25T00:30:00.000Z"
+    },
     {
       "id": "OL472971W",
       "title": "Malina",
@@ -8,14 +16,6 @@
       "coverId": "ol:12273691",
       "firstPublished": 1971,
       "pickedAt": "2026-09-24T22:04:13.785Z"
-    },
-    {
-      "id": "OL39396W",
-      "title": "To the Lighthouse",
-      "author": "Virginia Woolf",
-      "coverId": "ol:14634219",
-      "firstPublished": 1927,
-      "pickedAt": "2026-09-24T21:59:59.775Z"
     },
     {
       "id": "OL109524W",
@@ -875,6 +875,14 @@
       "coverId": "ol:2153522",
       "firstPublished": 1970,
       "pickedAt": "2026-09-24T22:07:28.701Z"
+    },
+    {
+      "id": "OL39396W",
+      "title": "To the Lighthouse",
+      "author": "Virginia Woolf",
+      "coverId": "ol:14634219",
+      "firstPublished": 1927,
+      "pickedAt": "2026-09-24T21:59:59.775Z"
     },
     {
       "id": "OL66554W",
