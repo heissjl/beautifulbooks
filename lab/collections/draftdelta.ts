@@ -62,6 +62,10 @@ export function draftDelta(draft: DraftLike, fileRecord: Pick<CollectionRecord, 
   const onlineOnly = [
     ...removed.map(w => `${w.title} (not in the file)`),
     ...record.works.filter(w => online.has(w.id) && online.get(w.id)!.coverId !== w.coverId).map(w => `${w.title}: online ${online.get(w.id)!.coverId}, file ${w.coverId}`),
+    // An order set by hand online is the newest version (Julian, 2026-09-28: „pass darauf auf, dass die
+    // reihenfolge und coverwahl die ich online gemacht habe, erhalten bleibt"): a different sequence of the
+    // works both hold stops the push, as a different cover does, until it is taken into the file.
+    ...(kept.join() !== wanted.filter(id => online.has(id)).join() ? ['the order of the works differs from the file'] : []),
   ];
   const summary = [meta.title !== undefined && 'title', meta.intro !== undefined && 'intro', removed.length && `${removed.length} removed`, added && `${added} added`, covers && `${covers} covers`, renamed && `${renamed} renamed`, ops.some(o => o.op === 'order') && 'order'].filter(Boolean).join(', ') || 'already equal';
   return { ops, onlineOnly, summary };

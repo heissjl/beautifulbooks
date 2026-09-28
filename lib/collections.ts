@@ -40,6 +40,10 @@ export interface CollectionPick {
   coverIsbn?: string;
   /** Cover artists for that printing, as ISFDB names them; set only where ISFDB agrees on one credit (6.52). */
   coverArtists?: string[];
+  /** The artwork on the cover as the printing credits it, e.g. „The Opera Cloak by William Strang" (`coverCredits: artwork`). */
+  coverArt?: string;
+  /** Where that credit was read: a URL, or an Internet Archive identifier with the quoted sentence. */
+  coverArtSource?: string;
   /** The ISFDB publication record the credit comes from, for the link beside it. */
   isfdbRecord?: string;
   /** Why a known credit is not shown, e.g. the image is of another printing than the ISBN's. */
@@ -65,6 +69,8 @@ export interface CollectionPick {
 /** A tile on a collection wall: a curated work, and its cover credit where the collection shows one. */
 export interface WallWork extends CuratedWork {
   coverArtists?: string[];
+  /** The credited artwork (`coverCredits: artwork`). */
+  coverArt?: string;
   /** The work whose wall holds this cover, when it is not `id` (see CollectionPick). */
   coverWork?: string;
   /** The site's own image, when the pick has one (see CollectionPick); `coverId` is then 0. */
@@ -84,8 +90,14 @@ export interface CollectionRecord {
    * sf-related collections i want the cover artist data displayed on the
    * wall itself"). Only `isfdb` exists: ISFDB is the one source that names
    * artists per printing, and it covers science fiction and fantasy.
+   *
+   * `artwork` (Julian, 2026-09-27: „drafte virago mit belegten gemälden"):
+   * the painting on the cover and its painter, as the book itself credits it
+   * („The cover shows a detail from …"), taken from a source that quotes the
+   * printing shown; a tile without a credit means none was found, not that
+   * the picture is anonymous.
    */
-  coverCredits?: 'isfdb';
+  coverCredits?: 'isfdb' | 'artwork';
   /**
    * A wall of sets: every edition in `setSize` consecutive tiles, one set per
    * row (Julian, 2026-09-26: „harry potter serien. hier ausnahmsweise 7 bücher
@@ -115,7 +127,7 @@ export interface Collection {
   /** The names the collection is drawn from, in the tool's order: authors, or a series' publishers. */
   scope: string[];
   /** Set when the wall shows cover credits; the page then names the source. */
-  coverCredits?: 'isfdb';
+  coverCredits?: 'isfdb' | 'artwork';
   coverSource?: 'catalogue';
   setSize?: 3 | 7;
   works: WallWork[];
@@ -162,7 +174,8 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
       const key = `${p.id}|${p.coverId}`;
       if ((coverId === null && !image) || seen.has(key)) continue;
       seen.add(key);
-      const credit = r.coverCredits === 'isfdb' && p.coverArtists?.length ? { coverArtists: p.coverArtists } : {};
+      const credit = r.coverCredits === 'isfdb' && p.coverArtists?.length ? { coverArtists: p.coverArtists }
+        : r.coverCredits === 'artwork' && p.coverArt ? { coverArt: p.coverArt } : {};
       works.push({ id: p.id, title: p.title, author: p.author, coverId: coverId ?? 0, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}), ...(image ? { image } : {}), ...(r.setSize && p.set ? { set: p.set } : {}) });
     }
     const scope = r.kind === 'series' ? (r.publishers ?? []) : (r.authors ?? []).map(a => a.name);

@@ -42,6 +42,12 @@ describe('parseCollections', () => {
     expect(merged).toMatchObject({ title: 'Edited', setSize: 3 });
   });
 
+  it('shows a credited artwork only on a wall that credits artworks', () => {
+    const works = [{ id: 'OL1W', title: 'Family History', author: 'V. Sackville-West', coverId: 'ol:5', coverArt: 'The Opera Cloak by William Strang' }];
+    expect(parseCollections([record({ works, coverCredits: 'artwork' })], { includeDrafts: false })[0].works[0].coverArt).toBe('The Opera Cloak by William Strang');
+    expect(parseCollections([record({ works })], { includeDrafts: false })[0].works[0].coverArt).toBeUndefined();
+  });
+
   it('hides drafts unless asked for them', () => {
     const draft = record({ published: false });
     expect(parseCollections([draft], { includeDrafts: false })).toEqual([]);

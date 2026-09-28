@@ -9,10 +9,10 @@ describe('draftDelta', () => {
     expect(r.ops).toEqual([]);
     expect(r.summary).toBe('already equal');
   });
-  it('sends the order when only the order changed, and nothing counts as online-only', () => {
+  it('lists the order step when the orders differ, but reports it as online-only (pushed only with --force)', () => {
     const r = draftDelta({ title: 'X', intro: '', works: [w('OL1W'), w('OL2W')] }, { title: 'X', intro: '', works: [w('OL2W'), w('OL1W')] });
     expect(r.ops).toEqual([{ op: 'order', ids: ['OL2W', 'OL1W'] }]);
-    expect(r.onlineOnly).toEqual([]);
+    expect(r.onlineOnly).toEqual(['the order of the works differs from the file']);
   });
   it('reports what only the online draft has, and still lists the steps', () => {
     const r = draftDelta(
@@ -50,5 +50,10 @@ describe('draftDelta', () => {
     const r = draftDelta({ title: 'X', intro: '', works: file }, { title: 'X', intro: '', works: file });
     expect(r.summary).toBe('already equal');
     expect(r.onlineOnly).toEqual([]);
+  });
+
+  it('stops on an order changed online, so a push never undoes it', () => {
+    const r = draftDelta({ title: 'X', intro: '', works: [w('OL2W'), w('OL1W')] }, { title: 'X', intro: '', works: [w('OL1W'), w('OL2W')] });
+    expect(r.onlineOnly).toEqual(['the order of the works differs from the file']);
   });
 });

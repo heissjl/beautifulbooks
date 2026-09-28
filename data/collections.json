@@ -1,5 +1,5 @@
 {
-  "curatedAt": "2026-09-27",
+  "curatedAt": "2026-09-28",
   "collections": [
     {
       "slug": "feminist-press",
@@ -10461,8 +10461,7 @@
           "id": "OL27512W",
           "title": "Baum und Blatt",
           "author": "J.R.R. Tolkien",
-          "coverId": "local:no-07",
-          "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-07.jpg",
+          "coverId": "ol:15259427",
           "addedAt": "2026-09-26",
           "from": "isbn:3548390390",
           "coverIsbn": "3548390390"
@@ -10692,8 +10691,7 @@
           "id": "OL1099513W",
           "title": "Reise zum Mittelpunkt der Erde",
           "author": "Jules Verne",
-          "coverId": "local:vol-01",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-01.jpg",
+          "coverId": "ol:15259408",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012432",
           "coverIsbn": "3436012432"
@@ -10702,8 +10700,7 @@
           "id": "OL1099380W",
           "title": "Fünf Wochen im Ballon",
           "author": "Jules Verne",
-          "coverId": "local:vol-02",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-02.jpg",
+          "coverId": "ol:15259409",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012440",
           "coverIsbn": "3436012440"
@@ -10712,8 +10709,7 @@
           "id": "OL1099364W",
           "title": "Die Kinder des Kapitäns Grant",
           "author": "Jules Verne",
-          "coverId": "local:vol-03",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-03.jpg",
+          "coverId": "ol:15259410",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012459",
           "coverIsbn": "3436012459"
@@ -10722,8 +10718,7 @@
           "id": "OL1099479W",
           "title": "Von der Erde zum Mond",
           "author": "Jules Verne",
-          "coverId": "local:vol-04",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-04.jpg",
+          "coverId": "ol:15259411",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012467",
           "coverIsbn": "3436012467"
@@ -10732,8 +10727,7 @@
           "id": "OL1100020W",
           "title": "Reise um den Mond",
           "author": "Jules Verne",
-          "coverId": "local:vol-05",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-05.jpg",
+          "coverId": "ol:15259412",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012475",
           "coverIsbn": "3436012475"
@@ -10752,8 +10746,7 @@
           "id": "OL1100007W",
           "title": "Reise um die Erde in 80 Tagen",
           "author": "Jules Verne",
-          "coverId": "local:vol-07",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-07.jpg",
+          "coverId": "ol:15259428",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012491",
           "coverIsbn": "3436012491"
@@ -10762,8 +10755,7 @@
           "id": "OL1099915W",
           "title": "Die geheimnisvolle Insel",
           "author": "Jules Verne",
-          "coverId": "local:vol-08",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-08.jpg",
+          "coverId": "ol:15259413",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012505",
           "coverIsbn": "3436012505"
@@ -10772,8 +10764,7 @@
           "id": "OL1099641W",
           "title": "Der Kurier des Zaren",
           "author": "Jules Verne",
-          "coverId": "local:vol-09",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-09.jpg",
+          "coverId": "ol:15259414",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012513",
           "coverIsbn": "3436012513"
@@ -10782,8 +10773,7 @@
           "id": "OL1099959W",
           "title": "Die 500 Millionen der Begum",
           "author": "Jules Verne",
-          "coverId": "local:vol-10",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-10.jpg",
+          "coverId": "ol:15259415",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012521",
           "coverIsbn": "3436012521"
@@ -10792,8 +10782,7 @@
           "id": "OL1099968W",
           "title": "Der Schuss am Kilimandscharo",
           "author": "Jules Verne",
-          "coverId": "local:vol-11",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-11.jpg",
+          "coverId": "ol:15259416",
           "addedAt": "2026-09-26",
           "from": "isbn:343601253X",
           "coverIsbn": "343601253X"
@@ -10802,8 +10791,7 @@
           "id": "OL1099965W",
           "title": "Der Stahlelefant",
           "author": "Jules Verne",
-          "coverId": "local:vol-12",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-12.jpg",
+          "coverId": "ol:15259417",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012548",
           "coverIsbn": "3436012548"
@@ -10812,8 +10800,7 @@
           "id": "OL1099954W",
           "title": "Keraban der Starrkopf",
           "author": "Jules Verne",
-          "coverId": "local:vol-13",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-13.jpg",
+          "coverId": "ol:15259418",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012556",
           "coverIsbn": "3436012556"
@@ -10822,8 +10809,7 @@
           "id": "OL1099903W",
           "title": "Das Karpatenschloss",
           "author": "Jules Verne",
-          "coverId": "local:vol-14",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-14.jpg",
+          "coverId": "ol:15259419",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012564",
           "coverIsbn": "3436012564"
@@ -10832,8 +10818,7 @@
           "id": "OL1099647W",
           "title": "Meister Antifers wunderbare Abenteuer",
           "author": "Jules Verne",
-          "coverId": "local:vol-15",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-15.jpg",
+          "coverId": "ol:15259420",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012572",
           "coverIsbn": "3436012572"
@@ -10842,8 +10827,7 @@
           "id": "OL1100004W",
           "title": "Zwei Jahre Ferien",
           "author": "Jules Verne",
-          "coverId": "local:vol-16",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-16.jpg",
+          "coverId": "ol:15259421",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012580",
           "coverIsbn": "3436012580"
@@ -10852,8 +10836,7 @@
           "id": "OL1099898W",
           "title": "Die Jagd nach dem Meteor",
           "author": "Jules Verne",
-          "coverId": "local:vol-17",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-17.jpg",
+          "coverId": "ol:15259423",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012688",
           "coverIsbn": "3436012688"
@@ -10862,8 +10845,7 @@
           "id": "OL1099854W",
           "title": "Die Propellerinsel",
           "author": "Jules Verne",
-          "coverId": "local:vol-18",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-18.jpg",
+          "coverId": "ol:15259424",
           "addedAt": "2026-09-26",
           "from": "isbn:3436012866",
           "coverIsbn": "3436012866"
@@ -10872,8 +10854,7 @@
           "id": "OL1100005W",
           "title": "Reise durch das Sonnensystem",
           "author": "Jules Verne",
-          "coverId": "local:vol-19",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-19.jpg",
+          "coverId": "ol:15259425",
           "addedAt": "2026-09-26",
           "from": "isbn:3436013358",
           "coverIsbn": "3436013358"
@@ -10882,11 +10863,11 @@
           "id": "OL1099908W",
           "title": "Die Eissphinx",
           "author": "Jules Verne",
-          "coverId": "local:vol-20",
-          "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-20.jpg",
+          "coverId": "ol:15259426",
           "addedAt": "2026-09-26",
           "from": "isbn:3436013730",
-          "coverIsbn": "3436013730"
+          "coverIsbn": "3436013730",
+          "coverWork": "OL31322292W"
         }
       ]
     },
@@ -16664,7 +16645,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:7355968",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747532699",
           "coverIsbn": "9780747532699",
           "set": "Bloomsbury, 1997–2007 · children's edition · Cover: Thomas Taylor, Cliff Wright, Giles Greenfield, Jason Cockcroft"
@@ -16674,7 +16655,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:8237627",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747538486",
           "coverIsbn": "9780747538486",
           "set": "Bloomsbury, 1997–2007 · children's edition · Cover: Thomas Taylor, Cliff Wright, Giles Greenfield, Jason Cockcroft"
@@ -16684,7 +16665,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:15158668",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0747546290",
           "coverIsbn": "0747546290",
           "set": "Bloomsbury, 1997–2007 · children's edition · Cover: Thomas Taylor, Cliff Wright, Giles Greenfield, Jason Cockcroft"
@@ -16694,7 +16675,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:15158571",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747550990",
           "coverIsbn": "9780747550990",
           "set": "Bloomsbury, 1997–2007 · children's edition · Cover: Thomas Taylor, Cliff Wright, Giles Greenfield, Jason Cockcroft"
@@ -16704,7 +16685,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:15226832",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747551003",
           "coverIsbn": "9780747551003",
           "set": "Bloomsbury, 1997–2007 · children's edition · Cover: Thomas Taylor, Cliff Wright, Giles Greenfield, Jason Cockcroft"
@@ -16714,7 +16695,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:15156136",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747581086",
           "coverIsbn": "9780747581086",
           "set": "Bloomsbury, 1997–2007 · children's edition · Cover: Thomas Taylor, Cliff Wright, Giles Greenfield, Jason Cockcroft"
@@ -16724,7 +16705,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:15158660",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747591054",
           "coverIsbn": "9780747591054",
           "set": "Bloomsbury, 1997–2007 · children's edition · Cover: Thomas Taylor, Cliff Wright, Giles Greenfield, Jason Cockcroft"
@@ -16734,7 +16715,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:969491",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782070541270",
           "coverIsbn": "9782070541270",
           "set": "Gallimard, 1998–2007 · grand format · Cover: Jean-Claude Götting"
@@ -16744,7 +16725,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:969492",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782070541294",
           "coverIsbn": "9782070541294",
           "set": "Gallimard, 1998–2007 · grand format · Cover: Jean-Claude Götting"
@@ -16754,7 +16735,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:12728911",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782070541300",
           "coverIsbn": "9782070541300",
           "set": "Gallimard, 1998–2007 · grand format · Cover: Jean-Claude Götting"
@@ -16764,7 +16745,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:12905137",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782070543588",
           "coverIsbn": "9782070543588",
           "set": "Gallimard, 1998–2007 · grand format · Cover: Jean-Claude Götting"
@@ -16774,7 +16755,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:8458051",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782070556854",
           "coverIsbn": "9782070556854",
           "set": "Gallimard, 1998–2007 · grand format · Cover: Jean-Claude Götting"
@@ -16784,7 +16765,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:9326646",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782070572670",
           "coverIsbn": "9782070572670",
           "set": "Gallimard, 1998–2007 · grand format · Cover: Jean-Claude Götting"
@@ -16794,7 +16775,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:9262558",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782070615360",
           "coverIsbn": "9782070615360",
           "set": "Gallimard, 1998–2007 · grand format · Cover: Jean-Claude Götting"
@@ -16804,7 +16785,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:12726695",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788877827029",
           "coverIsbn": "9788877827029",
           "set": "Salani, 1998–2008 · Cover: Serena Riglietti"
@@ -16814,7 +16795,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:1049504",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788877827036",
           "coverIsbn": "9788877827036",
           "set": "Salani, 1998–2008 · Cover: Serena Riglietti"
@@ -16824,7 +16805,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:8132760",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788877828521",
           "coverIsbn": "9788877828521",
           "set": "Salani, 1998–2008 · Cover: Serena Riglietti"
@@ -16834,7 +16815,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:12728460",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788884510495",
           "coverIsbn": "9788884510495",
           "set": "Salani, 1998–2008 · Cover: Serena Riglietti"
@@ -16844,7 +16825,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:15101088",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788884513441",
           "coverIsbn": "9788884513441",
           "set": "Salani, 1998–2008 · Cover: Serena Riglietti"
@@ -16854,7 +16835,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:8129811",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788884516374",
           "coverIsbn": "9788884516374",
           "set": "Salani, 1998–2008 · Cover: Serena Riglietti"
@@ -16864,7 +16845,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:15158369",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788884518781",
           "coverIsbn": "9788884518781",
           "set": "Salani, 1998–2008 · Cover: Serena Riglietti"
@@ -16874,7 +16855,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:15235364",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0590353403",
           "coverIsbn": "0590353403",
           "set": "Scholastic, 1998–2007 · Cover: Mary GrandPré"
@@ -16884,7 +16865,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:15235365",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780439064866",
           "coverIsbn": "9780439064866",
           "set": "Scholastic, 1998–2007 · Cover: Mary GrandPré"
@@ -16894,7 +16875,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:15244794",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780439136358",
           "coverIsbn": "9780439136358",
           "set": "Scholastic, 1998–2007 · Cover: Mary GrandPré"
@@ -16904,7 +16885,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:15246117",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780439139595",
           "coverIsbn": "9780439139595",
           "set": "Scholastic, 1998–2007 · Cover: Mary GrandPré"
@@ -16914,7 +16895,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:15166468",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780439358064",
           "coverIsbn": "9780439358064",
           "set": "Scholastic, 1998–2007 · Cover: Mary GrandPré"
@@ -16924,7 +16905,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:15244811",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780439784542",
           "coverIsbn": "9780439784542",
           "set": "Scholastic, 1998–2007 · Cover: Mary GrandPré"
@@ -16934,7 +16915,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:15244822",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780545010221",
           "coverIsbn": "9780545010221",
           "set": "Scholastic, 1998–2007 · Cover: Mary GrandPré"
@@ -16944,7 +16925,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:14573304",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551354013",
           "coverIsbn": "9783551354013",
           "set": "Carlsen, 2000–2011 · Taschenbuch · Cover: Sabine Wilharm"
@@ -16954,7 +16935,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:9346688",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551354020",
           "coverIsbn": "9783551354020",
           "set": "Carlsen, 2000–2011 · Taschenbuch · Cover: Sabine Wilharm"
@@ -16964,7 +16945,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:9346696",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551354037",
           "coverIsbn": "9783551354037",
           "set": "Carlsen, 2000–2011 · Taschenbuch · Cover: Sabine Wilharm"
@@ -16974,7 +16955,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:9346706",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551354044",
           "coverIsbn": "9783551354044",
           "set": "Carlsen, 2000–2011 · Taschenbuch · Cover: Sabine Wilharm"
@@ -16984,7 +16965,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:9346719",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551354051",
           "coverIsbn": "9783551354051",
           "set": "Carlsen, 2000–2011 · Taschenbuch · Cover: Sabine Wilharm"
@@ -16994,7 +16975,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:9346725",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551354068",
           "coverIsbn": "9783551354068",
           "set": "Carlsen, 2000–2011 · Taschenbuch · Cover: Sabine Wilharm"
@@ -17004,7 +16985,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:9346749",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551354075",
           "coverIsbn": "9783551354075",
           "set": "Carlsen, 2000–2011 · Taschenbuch · Cover: Sabine Wilharm"
@@ -17014,7 +16995,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:1048192",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788478889020",
           "coverIsbn": "9788478889020",
           "set": "Salamandra, 2004–2008 · Cover: Dolores Avendaño"
@@ -17024,7 +17005,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:1048187",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788478888627",
           "coverIsbn": "9788478888627",
           "set": "Salamandra, 2004–2008 · Cover: Dolores Avendaño"
@@ -17034,7 +17015,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:1048188",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788478888634",
           "coverIsbn": "9788478888634",
           "set": "Salamandra, 2004–2008 · Cover: Dolores Avendaño"
@@ -17044,7 +17025,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:1048189",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788478888641",
           "coverIsbn": "9788478888641",
           "set": "Salamandra, 2004–2008 · Cover: Dolores Avendaño"
@@ -17054,7 +17035,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:8232747",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788478887446",
           "coverIsbn": "9788478887446",
           "set": "Salamandra, 2004–2008 · Cover: Dolores Avendaño"
@@ -17064,7 +17045,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:7360359",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788478889907",
           "coverIsbn": "9788478889907",
           "set": "Salamandra, 2004–2008 · Cover: Dolores Avendaño"
@@ -17074,7 +17055,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:8183590",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788498381450",
           "coverIsbn": "9788498381450",
           "set": "Salamandra, 2004–2008 · Cover: Dolores Avendaño"
@@ -17084,7 +17065,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:13028227",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551552006",
           "coverIsbn": "9783551552006",
           "set": "Carlsen, 2000–2007 · Ausgabe für Erwachsene"
@@ -17094,7 +17075,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:15157471",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551551092",
           "coverIsbn": "9783551551092",
           "set": "Carlsen, 2000–2007 · Ausgabe für Erwachsene"
@@ -17104,7 +17085,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:14546261",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551552105",
           "coverIsbn": "9783551552105",
           "set": "Carlsen, 2000–2007 · Ausgabe für Erwachsene"
@@ -17114,7 +17095,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:1020350",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551552532",
           "coverIsbn": "9783551552532",
           "set": "Carlsen, 2000–2007 · Ausgabe für Erwachsene"
@@ -17124,7 +17105,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:15157559",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551552976",
           "coverIsbn": "9783551552976",
           "set": "Carlsen, 2000–2007 · Ausgabe für Erwachsene"
@@ -17134,7 +17115,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:15091536",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551556004",
           "coverIsbn": "9783551556004",
           "set": "Carlsen, 2000–2007 · Ausgabe für Erwachsene"
@@ -17144,7 +17125,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:15157619",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551557001",
           "coverIsbn": "9783551557001",
           "set": "Carlsen, 2000–2007 · Ausgabe für Erwachsene"
@@ -17154,7 +17135,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:488304",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747574477",
           "coverIsbn": "9780747574477",
           "set": "Bloomsbury, 2004–2007 · adult edition · Cover: Michael Wildsmith (photographs), William Webb (design)"
@@ -17164,7 +17145,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:15155864",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747574484",
           "coverIsbn": "9780747574484",
           "set": "Bloomsbury, 2004–2007 · adult edition · Cover: Michael Wildsmith (photographs), William Webb (design)"
@@ -17174,7 +17155,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:12630812",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747574491",
           "coverIsbn": "9780747574491",
           "set": "Bloomsbury, 2004–2007 · adult edition · Cover: Michael Wildsmith (photographs), William Webb (design)"
@@ -17184,7 +17165,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:15155866",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747574507",
           "coverIsbn": "9780747574507",
           "set": "Bloomsbury, 2004–2007 · adult edition · Cover: Michael Wildsmith (photographs), William Webb (design)"
@@ -17194,7 +17175,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:15155868",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747570738",
           "coverIsbn": "9780747570738",
           "set": "Bloomsbury, 2004–2007 · adult edition · Cover: Michael Wildsmith (photographs), William Webb (design)"
@@ -17204,7 +17185,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:15169535",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747581109",
           "coverIsbn": "9780747581109",
           "set": "Bloomsbury, 2004–2007 · adult edition · Cover: Michael Wildsmith (photographs), William Webb (design)"
@@ -17214,7 +17195,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:10082428",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780747591061",
           "coverIsbn": "9780747591061",
           "set": "Bloomsbury, 2004–2007 · adult edition · Cover: Michael Wildsmith (photographs), William Webb (design)"
@@ -17223,78 +17204,8 @@
           "id": "OL82563W",
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
-          "coverId": "ol:2137705",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9782070612369",
-          "coverIsbn": "9782070612369",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82537W",
-          "title": "Harry Potter and the Chamber of Secrets",
-          "author": "J. K. Rowling",
-          "coverId": "ol:2137706",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9782070612376",
-          "coverIsbn": "9782070612376",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82536W",
-          "title": "Harry Potter and the Prisoner of Azkaban",
-          "author": "J. K. Rowling",
-          "coverId": "ol:2137707",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9782070612383",
-          "coverIsbn": "9782070612383",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82560W",
-          "title": "Harry Potter and the Goblet of Fire",
-          "author": "J. K. Rowling",
-          "coverId": "ol:14333193",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9782070612390",
-          "coverIsbn": "9782070612390",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82548W",
-          "title": "Harry Potter and the Order of the Phoenix",
-          "author": "J. K. Rowling",
-          "coverId": "ol:3078495",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9782070612406",
-          "coverIsbn": "9782070612406",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82565W",
-          "title": "Harry Potter and the Half-Blood Prince",
-          "author": "J. K. Rowling",
-          "coverId": "ol:12905145",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9782070612413",
-          "coverIsbn": "9782070612413",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82586W",
-          "title": "Harry Potter and the Deathly Hallows",
-          "author": "J. K. Rowling",
-          "coverId": "ol:15157040",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9782070615377",
-          "coverIsbn": "9782070615377",
-          "set": "Gallimard, 2007–2008 · Folio Junior · Cover: Jean-Claude Götting"
-        },
-        {
-          "id": "OL82563W",
-          "title": "Harry Potter and the Philosopher's Stone",
-          "author": "J. K. Rowling",
           "coverId": "ol:8565802",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408834961",
           "coverIsbn": "9781408834961",
           "set": "Bloomsbury, 2013 · adult edition · Cover: Andrew Davidson"
@@ -17304,7 +17215,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:8121036",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408834978",
           "coverIsbn": "9781408834978",
           "set": "Bloomsbury, 2013 · adult edition · Cover: Andrew Davidson"
@@ -17314,7 +17225,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:8772818",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408834985",
           "coverIsbn": "9781408834985",
           "set": "Bloomsbury, 2013 · adult edition · Cover: Andrew Davidson"
@@ -17324,7 +17235,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:15178361",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408834992",
           "coverIsbn": "9781408834992",
           "set": "Bloomsbury, 2013 · adult edition · Cover: Andrew Davidson"
@@ -17334,7 +17245,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:10871428",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408835005",
           "coverIsbn": "9781408835005",
           "set": "Bloomsbury, 2013 · adult edition · Cover: Andrew Davidson"
@@ -17344,7 +17255,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:8131352",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408835012",
           "coverIsbn": "9781408835012",
           "set": "Bloomsbury, 2013 · adult edition · Cover: Andrew Davidson"
@@ -17354,7 +17265,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:8183663",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408835029",
           "coverIsbn": "9781408835029",
           "set": "Bloomsbury, 2013 · adult edition · Cover: Andrew Davidson"
@@ -17364,7 +17275,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:15159585",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408855652",
           "coverIsbn": "9781408855652",
           "set": "Bloomsbury, 2014 · children's edition · Cover: Jonny Duddle"
@@ -17374,7 +17285,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:15159586",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408855669",
           "coverIsbn": "9781408855669",
           "set": "Bloomsbury, 2014 · children's edition · Cover: Jonny Duddle"
@@ -17384,7 +17295,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:15159588",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408855676",
           "coverIsbn": "9781408855676",
           "set": "Bloomsbury, 2014 · children's edition · Cover: Jonny Duddle"
@@ -17394,7 +17305,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:15159598",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408855683",
           "coverIsbn": "9781408855683",
           "set": "Bloomsbury, 2014 · children's edition · Cover: Jonny Duddle"
@@ -17404,7 +17315,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:15159605",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408855690",
           "coverIsbn": "9781408855690",
           "set": "Bloomsbury, 2014 · children's edition · Cover: Jonny Duddle"
@@ -17414,7 +17325,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:15159601",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408855706",
           "coverIsbn": "9781408855706",
           "set": "Bloomsbury, 2014 · children's edition · Cover: Jonny Duddle"
@@ -17424,7 +17335,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:15159603",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781408855713",
           "coverIsbn": "9781408855713",
           "set": "Bloomsbury, 2014 · children's edition · Cover: Jonny Duddle"
@@ -17434,7 +17345,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:10565554",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551557414",
           "coverIsbn": "9783551557414",
           "coverWork": "OL24159601W",
@@ -17445,7 +17356,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:10487260",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551557421",
           "coverIsbn": "9783551557421",
           "set": "Carlsen, 2018 · 20th anniversary edition · Cover: Iacopo Bruno"
@@ -17455,7 +17366,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:10565584",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551557438",
           "coverIsbn": "9783551557438",
           "coverWork": "OL24159611W",
@@ -17466,7 +17377,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:14573310",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551557445",
           "coverIsbn": "9783551557445",
           "set": "Carlsen, 2018 · 20th anniversary edition · Cover: Iacopo Bruno"
@@ -17476,7 +17387,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:8233607",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551557452",
           "coverIsbn": "9783551557452",
           "set": "Carlsen, 2018 · 20th anniversary edition · Cover: Iacopo Bruno"
@@ -17486,7 +17397,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:14569519",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551557469",
           "coverIsbn": "9783551557469",
           "set": "Carlsen, 2018 · 20th anniversary edition · Cover: Iacopo Bruno"
@@ -17496,7 +17407,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:15157555",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783551557476",
           "coverIsbn": "9783551557476",
           "set": "Carlsen, 2018 · 20th anniversary edition · Cover: Iacopo Bruno"
@@ -17506,7 +17417,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:15224397",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780545582889",
           "coverIsbn": "9780545582889",
           "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
@@ -17516,7 +17427,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:15158684",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780545582926",
           "coverIsbn": "9780545582926",
           "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
@@ -17526,7 +17437,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:15158685",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780545582933",
           "coverIsbn": "9780545582933",
           "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
@@ -17536,7 +17447,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:8081233",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780545582957",
           "coverIsbn": "9780545582957",
           "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
@@ -17546,7 +17457,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:12025676",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780545582971",
           "coverIsbn": "9780545582971",
           "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
@@ -17556,7 +17467,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:12460285",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780545582995",
           "coverIsbn": "9780545582995",
           "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
@@ -17566,7 +17477,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:8183662",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780545583008",
           "coverIsbn": "9780545583008",
           "set": "Scholastic, 2013 · Cover: Kazu Kibuishi"
@@ -17575,78 +17486,218 @@
           "id": "OL82563W",
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
-          "coverId": "ol:14320057",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9781408810545",
-          "coverIsbn": "9781408810545",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
+          "coverId": "ol:8487226",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781338299144",
+          "coverIsbn": "9781338299144",
+          "set": "Scholastic, 2018 · Cover: Brian Selznick"
         },
         {
           "id": "OL82537W",
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
-          "coverId": "ol:10521236",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9781781100080",
-          "coverIsbn": "9781781100080",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
+          "coverId": "ol:8487228",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781338299151",
+          "coverIsbn": "9781338299151",
+          "set": "Scholastic, 2018 · Cover: Brian Selznick"
         },
         {
           "id": "OL82536W",
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
-          "coverId": "ol:10521237",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9781781100097",
-          "coverIsbn": "9781781100097",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
+          "coverId": "ol:12630797",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781338299168",
+          "coverIsbn": "9781338299168",
+          "set": "Scholastic, 2018 · Cover: Brian Selznick"
         },
         {
           "id": "OL82560W",
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
-          "coverId": "ol:10521280",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9781781100103",
-          "coverIsbn": "9781781100103",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
+          "coverId": "ol:12376757",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781338299175",
+          "coverIsbn": "9781338299175",
+          "set": "Scholastic, 2018 · Cover: Brian Selznick"
         },
         {
           "id": "OL82548W",
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
-          "coverId": "ol:10521287",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9781781100110",
-          "coverIsbn": "9781781100110",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
+          "coverId": "ol:15259473",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781338299182",
+          "coverIsbn": "9781338299182",
+          "set": "Scholastic, 2018 · Cover: Brian Selznick"
         },
         {
           "id": "OL82565W",
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
-          "coverId": "ol:10521310",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9781781100127",
-          "coverIsbn": "9781781100127",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
+          "coverId": "ol:8487234",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781338299199",
+          "coverIsbn": "9781338299199",
+          "set": "Scholastic, 2018 · Cover: Brian Selznick"
         },
         {
           "id": "OL82586W",
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
-          "coverId": "ol:10521311",
-          "addedAt": "2026-09-27",
-          "from": "isbn:9781781100134",
-          "coverIsbn": "9781781100134",
-          "set": "Bloomsbury / Pottermore, 2010–2012 · signature edition · Cover: Clare Melinsky"
+          "coverId": "ol:15259474",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781338299205",
+          "coverIsbn": "9781338299205",
+          "set": "Scholastic, 2018 · Cover: Brian Selznick"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8963307",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408865279",
+          "coverIsbn": "9781408865279",
+          "set": "Bloomsbury, 2015 · adult hardback"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259431",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408865408",
+          "coverIsbn": "9781408865408",
+          "set": "Bloomsbury, 2015 · adult hardback"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8128339",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408865415",
+          "coverIsbn": "9781408865415",
+          "set": "Bloomsbury, 2015 · adult hardback"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8081254",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408865422",
+          "coverIsbn": "9781408865422",
+          "set": "Bloomsbury, 2015 · adult hardback"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8784775",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408865439",
+          "coverIsbn": "9781408865439",
+          "set": "Bloomsbury, 2015 · adult hardback"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8131707",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408865446",
+          "coverIsbn": "9781408865446",
+          "set": "Bloomsbury, 2015 · adult hardback"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8184308",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408865453",
+          "coverIsbn": "9781408865453",
+          "set": "Bloomsbury, 2015 · adult hardback"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157474",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783551313119",
+          "coverIsbn": "9783551313119",
+          "set": "Carlsen, 2013 · Taschenbuch"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157620",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783551313126",
+          "coverIsbn": "9783551313126",
+          "set": "Carlsen, 2013 · Taschenbuch"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157625",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783551313133",
+          "coverIsbn": "9783551313133",
+          "set": "Carlsen, 2013 · Taschenbuch"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259478",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783551313140",
+          "coverIsbn": "9783551313140",
+          "set": "Carlsen, 2013 · Taschenbuch"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157660",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783551313157",
+          "coverIsbn": "9783551313157",
+          "set": "Carlsen, 2013 · Taschenbuch"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157889",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783551313164",
+          "coverIsbn": "9783551313164",
+          "set": "Carlsen, 2013 · Taschenbuch"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15157626",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783551313171",
+          "coverIsbn": "9783551313171",
+          "set": "Carlsen, 2013 · Taschenbuch"
         },
         {
           "id": "OL82563W",
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:15128106",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789076174082",
           "coverIsbn": "9789076174082",
           "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen"
@@ -17656,7 +17707,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:10413455",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789076174112",
           "coverIsbn": "9789076174112",
           "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen"
@@ -17666,7 +17717,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:15156809",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789076174181",
           "coverIsbn": "9789076174181",
           "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen"
@@ -17676,7 +17727,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:12726842",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9076174199",
           "coverIsbn": "9076174199",
           "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen"
@@ -17686,7 +17737,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:13555274",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789061697015",
           "coverIsbn": "9789061697015",
           "coverWork": "OL34799495W",
@@ -17697,7 +17748,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:8456594",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789061697664",
           "coverIsbn": "9789061697664",
           "set": "De Harmonie, 1998–2007 · Cover: Ien van Laanen"
@@ -17707,7 +17758,7 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:10584470",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789061698326",
           "coverIsbn": "9789061698326",
           "coverWork": "OL24168780W",
@@ -17718,7 +17769,7 @@
           "title": "Harry Potter and the Philosopher's Stone",
           "author": "J. K. Rowling",
           "coverId": "ol:15116676",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781781101315",
           "coverIsbn": "9781781101315",
           "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage"
@@ -17728,7 +17779,7 @@
           "title": "Harry Potter and the Chamber of Secrets",
           "author": "J. K. Rowling",
           "coverId": "ol:15116677",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781781101322",
           "coverIsbn": "9781781101322",
           "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage"
@@ -17738,7 +17789,7 @@
           "title": "Harry Potter and the Prisoner of Azkaban",
           "author": "J. K. Rowling",
           "coverId": "ol:15116678",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781781101339",
           "coverIsbn": "9781781101339",
           "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage"
@@ -17748,7 +17799,7 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:15116681",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781781101346",
           "coverIsbn": "9781781101346",
           "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage"
@@ -17758,7 +17809,7 @@
           "title": "Harry Potter and the Order of the Phoenix",
           "author": "J. K. Rowling",
           "coverId": "ol:15116683",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781781101353",
           "coverIsbn": "9781781101353",
           "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage"
@@ -17768,7 +17819,7 @@
           "title": "Harry Potter and the Half-Blood Prince",
           "author": "J. K. Rowling",
           "coverId": "ol:15116684",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781781101360",
           "coverIsbn": "9781781101360",
           "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage"
@@ -17778,10 +17829,570 @@
           "title": "Harry Potter and the Deathly Hallows",
           "author": "J. K. Rowling",
           "coverId": "ol:15116685",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9781781102701",
           "coverIsbn": "9781781102701",
           "set": "Pottermore Publishing, 2022 · Spanish ebook · Cover: Studio La Plage"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259440",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408883730",
+          "coverIsbn": "9781408883730",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259439",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408898093",
+          "coverIsbn": "9781408898093",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:10627661",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526606174",
+          "coverIsbn": "9781526606174",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259437",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526610270",
+          "coverIsbn": "9781526610270",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259444",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618153",
+          "coverIsbn": "9781526618153",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12997551",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618221",
+          "coverIsbn": "9781526618221",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259441",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618313",
+          "coverIsbn": "9781526618313",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · red cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259432",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408883747",
+          "coverIsbn": "9781408883747",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8501212",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408898109",
+          "coverIsbn": "9781408898109",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259433",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526606167",
+          "coverIsbn": "9781526606167",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259434",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526610287",
+          "coverIsbn": "9781526610287",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259435",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618146",
+          "coverIsbn": "9781526618146",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259438",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618238",
+          "coverIsbn": "9781526618238",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259436",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618306",
+          "coverIsbn": "9781526618306",
+          "set": "Bloomsbury, 2017–2021 · Gryffindor edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259467",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408883754",
+          "coverIsbn": "9781408883754",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259471",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408898116",
+          "coverIsbn": "9781408898116",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259470",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526606235",
+          "coverIsbn": "9781526606235",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259468",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526610331",
+          "coverIsbn": "9781526610331",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259475",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618214",
+          "coverIsbn": "9781526618214",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:14252161",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618283",
+          "coverIsbn": "9781526618283",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:13264807",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618375",
+          "coverIsbn": "9781526618375",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · green cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8788413",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408883761",
+          "coverIsbn": "9781408883761",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259462",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408898123",
+          "coverIsbn": "9781408898123",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259463",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526606228",
+          "coverIsbn": "9781526606228",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259466",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526610348",
+          "coverIsbn": "9781526610348",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:13845342",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618207",
+          "coverIsbn": "9781526618207",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259464",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618290",
+          "coverIsbn": "9781526618290",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259469",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618368",
+          "coverIsbn": "9781526618368",
+          "set": "Bloomsbury, 2017–2021 · Slytherin edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259457",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408883778",
+          "coverIsbn": "9781408883778",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259458",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408898130",
+          "coverIsbn": "9781408898130",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259460",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526606198",
+          "coverIsbn": "9781526606198",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259459",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526610317",
+          "coverIsbn": "9781526610317",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259461",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618191",
+          "coverIsbn": "9781526618191",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259465",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618269",
+          "coverIsbn": "9781526618269",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:13264823",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618337",
+          "coverIsbn": "9781526618337",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · blue cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259456",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408883785",
+          "coverIsbn": "9781408883785",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12376745",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408898147",
+          "coverIsbn": "9781408898147",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259455",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526606181",
+          "coverIsbn": "9781526606181",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12904511",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526610324",
+          "coverIsbn": "9781526610324",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259452",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618184",
+          "coverIsbn": "9781526618184",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12997553",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618276",
+          "coverIsbn": "9781526618276",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15158567",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618320",
+          "coverIsbn": "9781526618320",
+          "set": "Bloomsbury, 2017–2021 · Ravenclaw edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259447",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408883792",
+          "coverIsbn": "9781408883792",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259449",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408898154",
+          "coverIsbn": "9781408898154",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259448",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526606211",
+          "coverIsbn": "9781526606211",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259451",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526610294",
+          "coverIsbn": "9781526610294",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:13907567",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618177",
+          "coverIsbn": "9781526618177",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259454",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618245",
+          "coverIsbn": "9781526618245",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259453",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618351",
+          "coverIsbn": "9781526618351",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · yellow cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82563W",
+          "title": "Harry Potter and the Philosopher's Stone",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259442",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408883808",
+          "coverIsbn": "9781408883808",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82537W",
+          "title": "Harry Potter and the Chamber of Secrets",
+          "author": "J. K. Rowling",
+          "coverId": "ol:8573843",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781408898161",
+          "coverIsbn": "9781408898161",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82536W",
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259445",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526606204",
+          "coverIsbn": "9781526606204",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82560W",
+          "title": "Harry Potter and the Goblet of Fire",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259443",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526610300",
+          "coverIsbn": "9781526610300",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82548W",
+          "title": "Harry Potter and the Order of the Phoenix",
+          "author": "J. K. Rowling",
+          "coverId": "ol:13907551",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618160",
+          "coverIsbn": "9781526618160",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82565W",
+          "title": "Harry Potter and the Half-Blood Prince",
+          "author": "J. K. Rowling",
+          "coverId": "ol:12429771",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618252",
+          "coverIsbn": "9781526618252",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold"
+        },
+        {
+          "id": "OL82586W",
+          "title": "Harry Potter and the Deathly Hallows",
+          "author": "J. K. Rowling",
+          "coverId": "ol:15259450",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9781526618344",
+          "coverIsbn": "9781526618344",
+          "set": "Bloomsbury, 2017–2021 · Hufflepuff edition · black cover · Cover: Levi Pinfold"
         }
       ],
       "setSize": 7
@@ -17799,14 +18410,9 @@
         "Unwin Paperbacks",
         "Grafton",
         "HarperCollins",
-        "Easton Press",
         "Klett-Cotta",
-        "Le Livre de Poche",
         "Pocket",
-        "Yilin",
-        "De Boekerij",
-        "Minotauro",
-        "Gramedia"
+        "Minotauro"
       ],
       "works": [
         {
@@ -17814,7 +18420,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8171428",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL22266040M",
           "set": "George Allen & Unwin, 1954–55 · first edition · Cover: J. R. R. Tolkien"
         },
@@ -17823,7 +18429,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8166952",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL19604318M",
           "set": "George Allen & Unwin, 1954–55 · first edition · Cover: J. R. R. Tolkien"
         },
@@ -17832,7 +18438,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8140846",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL17427263M",
           "set": "George Allen & Unwin, 1954–55 · first edition · Cover: J. R. R. Tolkien"
         },
@@ -17841,7 +18447,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8171445",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26448808M",
           "set": "Houghton Mifflin, 1954–56 · first American edition"
         },
@@ -17850,7 +18456,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8167231",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26446259M",
           "set": "Houghton Mifflin, 1954–56 · first American edition"
         },
@@ -17859,7 +18465,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10523169",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL27928012M",
           "set": "Houghton Mifflin, 1954–56 · first American edition"
         },
@@ -17868,7 +18474,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8172046",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26449168M",
           "set": "Ballantine, 1965–66 · Cover: Barbara Remington"
         },
@@ -17877,7 +18483,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8167233",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26446091M",
           "set": "Ballantine, 1965–66 · Cover: Barbara Remington"
         },
@@ -17886,7 +18492,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8302846",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26435280M",
           "set": "Ballantine, 1965–66 · Cover: Barbara Remington"
         },
@@ -17895,7 +18501,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8172078",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26449212M",
           "set": "George Allen & Unwin, 1966 · second edition"
         },
@@ -17904,7 +18510,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8166960",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "edition:OL16007738M",
           "set": "George Allen & Unwin, 1966 · second edition"
         },
@@ -17913,7 +18519,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8141314",
-          "addedAt": "2026-09-26",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780048230478",
           "coverIsbn": "9780048230478",
           "set": "George Allen & Unwin, 1966 · second edition"
@@ -17923,7 +18529,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8172084",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26449226M",
           "set": "Houghton Mifflin, 1967 · second edition"
         },
@@ -17932,7 +18538,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8167584",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395082553",
           "coverIsbn": "9780395082553",
           "set": "Houghton Mifflin, 1967 · second edition"
@@ -17942,7 +18548,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8140855",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395082560",
           "coverIsbn": "9780395082560",
           "set": "Houghton Mifflin, 1967 · second edition"
@@ -17952,7 +18558,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293866",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782253011392",
           "coverIsbn": "9782253011392",
           "set": "Le Livre de Poche, 1972–77"
@@ -17962,7 +18568,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14626125",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782253012085",
           "coverIsbn": "9782253012085",
           "set": "Le Livre de Poche, 1972–77"
@@ -17972,7 +18578,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8647605",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782253013785",
           "coverIsbn": "9782253013785",
           "set": "Le Livre de Poche, 1972–77"
@@ -17982,7 +18588,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624299",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345253439",
           "coverIsbn": "9780345253439",
           "set": "Ballantine, 1976 · Cover: J. R. R. Tolkien"
@@ -17992,7 +18598,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624451",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345253446",
           "coverIsbn": "9780345253446",
           "set": "Ballantine, 1976 · Cover: J. R. R. Tolkien"
@@ -18002,7 +18608,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624452",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345253453",
           "coverIsbn": "9780345253453",
           "set": "Ballantine, 1976 · Cover: J. R. R. Tolkien"
@@ -18012,7 +18618,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14627526",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0395272238",
           "coverIsbn": "0395272238",
           "set": "Houghton Mifflin, 1978 · revised edition"
@@ -18022,7 +18628,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14627528",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395272220",
           "coverIsbn": "9780395272220",
           "set": "Houghton Mifflin, 1978 · revised edition"
@@ -18032,7 +18638,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14627534",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0395272211",
           "coverIsbn": "0395272211",
           "set": "Houghton Mifflin, 1978 · revised edition"
@@ -18042,7 +18648,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625548",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783129081808",
           "coverIsbn": "9783129081808",
           "set": "Klett-Cotta Hobbit Presse, 1979 · Cover: Heinz Edelmann"
@@ -18052,7 +18658,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8773923",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783129081907",
           "coverIsbn": "9783129081907",
           "set": "Klett-Cotta Hobbit Presse, 1979 · Cover: Heinz Edelmann"
@@ -18062,7 +18668,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8653741",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783129082003",
           "coverIsbn": "9783129082003",
           "set": "Klett-Cotta Hobbit Presse, 1979 · Cover: Heinz Edelmann"
@@ -18072,7 +18678,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9262670",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780048231857",
           "coverIsbn": "9780048231857",
           "set": "Unwin Paperbacks, 1981 · Cover: Pauline Baynes"
@@ -18082,7 +18688,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9262671",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780048231864",
           "coverIsbn": "9780048231864",
           "set": "Unwin Paperbacks, 1981 · Cover: Pauline Baynes"
@@ -18092,7 +18698,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8141985",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780048231871",
           "coverIsbn": "9780048231871",
           "set": "Unwin Paperbacks, 1981 · Cover: Pauline Baynes"
@@ -18102,7 +18708,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8173155",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395312674",
           "coverIsbn": "9780395312674",
           "set": "Houghton Mifflin, 1981 · grey boards with monogram"
@@ -18112,7 +18718,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8167614",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395312667",
           "coverIsbn": "9780395312667",
           "set": "Houghton Mifflin, 1981 · grey boards with monogram"
@@ -18122,7 +18728,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624635",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395312681",
           "coverIsbn": "9780395312681",
           "set": "Houghton Mifflin, 1981 · grey boards with monogram"
@@ -18132,7 +18738,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8173162",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345296054",
           "coverIsbn": "9780345296054",
           "set": "Ballantine, 1981–84 · Cover: Darrell K. Sweet"
@@ -18142,7 +18748,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9260085",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345296061",
           "coverIsbn": "9780345296061",
           "set": "Ballantine, 1981–84 · Cover: Darrell K. Sweet"
@@ -18152,7 +18758,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9249723",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345296085",
           "coverIsbn": "9780345296085",
           "set": "Ballantine, 1981–84 · Cover: Darrell K. Sweet"
@@ -18162,7 +18768,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8173643",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26450100M",
           "set": "Easton Press, 1984–90 · leather"
         },
@@ -18171,7 +18777,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8167652",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "edition:OL26446483M",
           "set": "Easton Press, 1984–90 · leather"
         },
@@ -18180,7 +18786,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8141433",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "edition:OL1937606M",
           "set": "Easton Press, 1984–90 · leather"
         },
@@ -18189,7 +18795,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8173664",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345339706",
           "coverIsbn": "9780345339706",
           "set": "Ballantine, 1986–89 · 50th anniversary · Cover: Michael Herring"
@@ -18199,7 +18805,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8168264",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345339713",
           "coverIsbn": "9780345339713",
           "set": "Ballantine, 1986–89 · 50th anniversary · Cover: Michael Herring"
@@ -18209,7 +18815,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9249718",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345339737",
           "coverIsbn": "9780345339737",
           "set": "Ballantine, 1986–89 · 50th anniversary · Cover: Michael Herring"
@@ -18219,7 +18825,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293888",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395489314",
           "coverIsbn": "9780395489314",
           "set": "Houghton Mifflin, 1987–93 · Cover: Alan Lee"
@@ -18229,7 +18835,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293885",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395489338",
           "coverIsbn": "9780395489338",
           "set": "Houghton Mifflin, 1987–93 · Cover: Alan Lee"
@@ -18239,7 +18845,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293882",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780395489307",
           "coverIsbn": "9780395489307",
           "set": "Houghton Mifflin, 1987–93 · Cover: Alan Lee"
@@ -18249,7 +18855,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:13133750",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783608955361",
           "coverIsbn": "9783608955361",
           "set": "Klett-Cotta, 1987–2002 · reprint of the first German edition"
@@ -18259,7 +18865,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:13133754",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:3608955372",
           "coverIsbn": "3608955372",
           "set": "Klett-Cotta, 1987–2002 · reprint of the first German edition"
@@ -18269,7 +18875,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:13133756",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783608955385",
           "coverIsbn": "9783608955385",
           "set": "Klett-Cotta, 1987–2002 · reprint of the first German edition"
@@ -18279,7 +18885,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10290885",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266026550",
           "coverIsbn": "9782266026550",
           "set": "Presses Pocket, 1990–93 · white"
@@ -18289,7 +18895,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625962",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266026567",
           "coverIsbn": "9782266026567",
           "set": "Presses Pocket, 1990–93 · white"
@@ -18299,7 +18905,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8647603",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266026574",
           "coverIsbn": "9782266026574",
           "set": "Presses Pocket, 1990–93 · white"
@@ -18309,7 +18915,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:979591",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266046497",
           "coverIsbn": "9782266046497",
           "set": "Pocket, 1991 · Fantasy, pink titles"
@@ -18319,7 +18925,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625961",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266046503",
           "coverIsbn": "9782266046503",
           "set": "Pocket, 1991 · Fantasy, pink titles"
@@ -18329,7 +18935,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624314",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266046510",
           "coverIsbn": "9782266046510",
           "set": "Pocket, 1991 · Fantasy, pink titles"
@@ -18339,7 +18945,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625938",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0261102354",
           "coverIsbn": "0261102354",
           "set": "Grafton, 1991 · Cover: John Howe"
@@ -18349,7 +18955,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625772",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0261102362",
           "coverIsbn": "0261102362",
           "set": "Grafton, 1991 · Cover: John Howe"
@@ -18359,7 +18965,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625948",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0261102370",
           "coverIsbn": "0261102370",
           "set": "Grafton, 1991 · Cover: John Howe"
@@ -18369,7 +18975,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10290015",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103382",
           "coverIsbn": "9780261103382",
           "set": "HarperCollins, 1991–96 · illustrated edition · Cover: Alan Lee"
@@ -18379,7 +18985,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10457086",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103399",
           "coverIsbn": "9780261103399",
           "set": "HarperCollins, 1991–96 · illustrated edition · Cover: Alan Lee"
@@ -18389,7 +18995,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:2341314",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103405",
           "coverIsbn": "9780261103405",
           "set": "HarperCollins, 1991–96 · illustrated edition · Cover: Alan Lee"
@@ -18399,7 +19005,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8311423",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103573",
           "coverIsbn": "9780261103573",
           "set": "HarperCollins, 1997 · Cover: after J. R. R. Tolkien"
@@ -18409,7 +19015,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624433",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103580",
           "coverIsbn": "9780261103580",
           "set": "HarperCollins, 1997 · Cover: after J. R. R. Tolkien"
@@ -18419,7 +19025,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8461498",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261103597",
           "coverIsbn": "9780261103597",
           "set": "HarperCollins, 1997 · Cover: after J. R. R. Tolkien"
@@ -18429,7 +19035,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624461",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261102354",
           "coverIsbn": "9780261102354",
           "set": "HarperCollins, 1999 · black with the rings"
@@ -18439,7 +19045,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8168674",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261102361",
           "coverIsbn": "9780261102361",
           "set": "HarperCollins, 1999 · black with the rings"
@@ -18449,7 +19055,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8142040",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780261102378",
           "coverIsbn": "9780261102378",
           "set": "HarperCollins, 1999 · black with the rings"
@@ -18458,8 +19064,38 @@
           "id": "OL27513W",
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
+          "coverId": "ol:8175144",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783608935417",
+          "coverIsbn": "9783608935417",
+          "set": "Klett-Cotta, 2000–01 · green paperbacks"
+        },
+        {
+          "id": "OL27479W",
+          "title": "The Two Towers",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:14625709",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783608935424",
+          "coverIsbn": "9783608935424",
+          "set": "Klett-Cotta, 2000–01 · green paperbacks"
+        },
+        {
+          "id": "OL27455W",
+          "title": "The Return of the King",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:8142468",
+          "addedAt": "2026-09-28",
+          "from": "isbn:9783608935431",
+          "coverIsbn": "9783608935431",
+          "set": "Klett-Cotta, 2000–01 · green paperbacks"
+        },
+        {
+          "id": "OL27513W",
+          "title": "The Fellowship of the Ring",
+          "author": "J.R.R. Tolkien",
           "coverId": "ol:8888",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007117116",
           "coverIsbn": "9780007117116",
           "set": "HarperCollins, 2001 · Voyager Classics"
@@ -18469,7 +19105,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8762919",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007117123",
           "coverIsbn": "9780007117123",
           "set": "HarperCollins, 2001 · Voyager Classics"
@@ -18479,7 +19115,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8142981",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007119561",
           "coverIsbn": "9780007119561",
           "set": "HarperCollins, 2001 · Voyager Classics"
@@ -18489,7 +19125,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625981",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345339706",
           "coverIsbn": "9780345339706",
           "set": "Ballantine, 2001 · film tie-in"
@@ -18499,7 +19135,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14624641",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:0345339711",
           "coverIsbn": "0345339711",
           "set": "Ballantine, 2001 · film tie-in"
@@ -18509,7 +19145,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9249721",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780345339737",
           "coverIsbn": "9780345339737",
           "set": "Ballantine, 2001 · film tie-in"
@@ -18519,7 +19155,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:393566",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618153985",
           "coverIsbn": "9780618153985",
           "set": "Houghton Mifflin, 2001 · film photographs of places"
@@ -18529,7 +19165,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8478000",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618153992",
           "coverIsbn": "9780618153992",
           "set": "Houghton Mifflin, 2001 · film photographs of places"
@@ -18539,7 +19175,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8461563",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618154005",
           "coverIsbn": "9780618154005",
           "set": "Houghton Mifflin, 2001 · film photographs of places"
@@ -18549,7 +19185,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14627055",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9787806572504",
           "coverIsbn": "9787806572504",
           "set": "Yilin, 2001–02"
@@ -18559,7 +19195,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293874",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9787806572665",
           "coverIsbn": "9787806572665",
           "set": "Yilin, 2001–02"
@@ -18569,7 +19205,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9293871",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9787806572672",
           "coverIsbn": "9787806572672",
           "set": "Yilin, 2001–02"
@@ -18579,7 +19215,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8474010",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618260263",
           "coverIsbn": "9780618260263",
           "set": "Houghton Mifflin, 2002 · film tie-in"
@@ -18589,7 +19225,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8478164",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618260270",
           "coverIsbn": "9780618260270",
           "set": "Houghton Mifflin, 2002 · film tie-in"
@@ -18599,7 +19235,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:9255338",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618260287",
           "coverIsbn": "9780618260287",
           "set": "Houghton Mifflin, 2002 · film tie-in"
@@ -18609,7 +19245,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10840420",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007136599",
           "coverIsbn": "9780007136599",
           "set": "HarperCollins, 2002 · hardcover · Cover: Alan Lee"
@@ -18619,7 +19255,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8168944",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007136568",
           "coverIsbn": "9780007136568",
           "set": "HarperCollins, 2002 · hardcover · Cover: Alan Lee"
@@ -18629,7 +19265,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:11273693",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007136575",
           "coverIsbn": "9780007136575",
           "set": "HarperCollins, 2002 · hardcover · Cover: Alan Lee"
@@ -18639,7 +19275,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:980336",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266120999",
           "coverIsbn": "9782266120999",
           "set": "Pocket, 2002 · Fantasy"
@@ -18649,7 +19285,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14626639",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266120982",
           "coverIsbn": "9782266120982",
           "set": "Pocket, 2002 · Fantasy"
@@ -18659,7 +19295,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10511215",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9782266120975",
           "coverIsbn": "9782266120975",
           "set": "Pocket, 2002 · Fantasy"
@@ -18669,7 +19305,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8666743",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789022531938",
           "coverIsbn": "9789022531938",
           "set": "De Boekerij / Mynx, 2002–08"
@@ -18679,7 +19315,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:15149792",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789022531945",
           "coverIsbn": "9789022531945",
           "set": "De Boekerij / Mynx, 2002–08"
@@ -18689,7 +19325,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:13239139",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9789022531952",
           "coverIsbn": "9789022531952",
           "set": "De Boekerij / Mynx, 2002–08"
@@ -18699,7 +19335,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:11387256",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618574940",
           "coverIsbn": "9780618574940",
           "set": "Houghton Mifflin, 2004–05 · painted covers"
@@ -18709,7 +19345,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8169214",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618574957",
           "coverIsbn": "9780618574957",
           "set": "Houghton Mifflin, 2004–05 · painted covers"
@@ -18719,7 +19355,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:394945",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780618574971",
           "coverIsbn": "9780618574971",
           "set": "Houghton Mifflin, 2004–05 · painted covers"
@@ -18729,7 +19365,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14617433",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007203581",
           "coverIsbn": "9780007203581",
           "set": "HarperCollins, 2005 · 50th anniversary · Cover: after J. R. R. Tolkien"
@@ -18739,7 +19375,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14573413",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007203598",
           "coverIsbn": "9780007203598",
           "set": "HarperCollins, 2005 · 50th anniversary · Cover: after J. R. R. Tolkien"
@@ -18749,7 +19385,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625521",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007203604",
           "coverIsbn": "9780007203604",
           "set": "HarperCollins, 2005 · 50th anniversary · Cover: after J. R. R. Tolkien"
@@ -18759,7 +19395,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:1047655",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788445075739",
           "coverIsbn": "9788445075739",
           "set": "Minotauro, 2006 · Booket"
@@ -18769,7 +19405,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8169217",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788445075746",
           "coverIsbn": "9788445075746",
           "set": "Minotauro, 2006 · Booket"
@@ -18779,7 +19415,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:2270622",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9788445075753",
           "coverIsbn": "9788445075753",
           "set": "Minotauro, 2006 · Booket"
@@ -18789,7 +19425,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10587033",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007488315",
           "coverIsbn": "9780007488315",
           "set": "HarperCollins, 2012 · film art"
@@ -18799,7 +19435,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10519441",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007488322",
           "coverIsbn": "9780007488322",
           "set": "HarperCollins, 2012 · film art"
@@ -18809,7 +19445,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:10555538",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780007488353",
           "coverIsbn": "9780007488353",
           "set": "HarperCollins, 2012 · film art"
@@ -18819,7 +19455,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8178139",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783608939811",
           "coverIsbn": "9783608939811",
           "set": "Klett-Cotta Hobbit Presse, 2012"
@@ -18829,7 +19465,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8170090",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783608939828",
           "coverIsbn": "9783608939828",
           "set": "Klett-Cotta Hobbit Presse, 2012"
@@ -18839,7 +19475,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8143751",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9783608939835",
           "coverIsbn": "9783608939835",
           "set": "Klett-Cotta Hobbit Presse, 2012"
@@ -18849,7 +19485,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8178144",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780544448933",
           "coverIsbn": "9780544448933",
           "set": "Houghton Mifflin Harcourt, 2014 · deluxe pocket"
@@ -18859,7 +19495,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8170131",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780544449732",
           "coverIsbn": "9780544449732",
           "set": "Houghton Mifflin Harcourt, 2014 · deluxe pocket"
@@ -18869,7 +19505,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8143753",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780544449749",
           "coverIsbn": "9780544449749",
           "set": "Houghton Mifflin Harcourt, 2014 · deluxe pocket"
@@ -18879,7 +19515,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8178155",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9786020332260",
           "coverIsbn": "9786020332260",
           "set": "Gramedia Pustaka Utama, 2016"
@@ -18889,7 +19525,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8170123",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9786020332277",
           "coverIsbn": "9786020332277",
           "set": "Gramedia Pustaka Utama, 2016"
@@ -18899,7 +19535,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:8143759",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9786020332284",
           "coverIsbn": "9786020332284",
           "set": "Gramedia Pustaka Utama, 2016"
@@ -18909,7 +19545,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14625955",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780008376062",
           "coverIsbn": "9780008376062",
           "set": "HarperCollins, 2020 · landscape photographs"
@@ -18919,7 +19555,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:12398015",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780008376079",
           "coverIsbn": "9780008376079",
           "set": "HarperCollins, 2020 · landscape photographs"
@@ -18929,7 +19565,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:14694384",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780008376086",
           "coverIsbn": "9780008376086",
           "set": "HarperCollins, 2020 · landscape photographs"
@@ -18939,7 +19575,7 @@
           "title": "The Fellowship of the Ring",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:15244480",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780008537722",
           "coverIsbn": "9780008537722",
           "set": "HarperCollins, 2022 · Rings of Power tie-in"
@@ -18949,7 +19585,7 @@
           "title": "The Two Towers",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:15244481",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780063270893",
           "coverIsbn": "9780063270893",
           "set": "HarperCollins, 2022 · Rings of Power tie-in"
@@ -18959,7 +19595,7 @@
           "title": "The Return of the King",
           "author": "J.R.R. Tolkien",
           "coverId": "ol:15244483",
-          "addedAt": "2026-09-27",
+          "addedAt": "2026-09-28",
           "from": "isbn:9780063270909",
           "coverIsbn": "9780063270909",
           "set": "HarperCollins, 2022 · Rings of Power tie-in"
