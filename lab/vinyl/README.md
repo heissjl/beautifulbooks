@@ -63,11 +63,13 @@ Die Wand ansehen: `out/` mit einem beliebigen statischen Server ausliefern, z. B
    | ≤ | Rumours (wahr 1) | Dark Side (2) | Kind of Blue (8) | Autobahn (3) | Nevermind (1) | OK Computer (1) | RAM (2) | folklore (7) |
    |---|---|---|---|---|---|---|---|---|
    | 16 | 2 | 5 | 11 | 3 | 3 | 1 | 1 | 7 |
-   | **18** | 2 | 5 | 10 | 3 | 2 | 1 | 1 | 7 |
-   | 20 | 1 | 2 | 9 | 3 | 1 | 1 | 1 | 6 |
+   | 18 | 2 | 5 | 10 | 3 | 2 | 1 | 1 | 7 |
+   | **20** | 1 | 2 | 9 | 3 | 1 | 1 | 1 | 6 |
    | 22 | 1 | 1 | 5 | 3 | 1 | 1 | 1 | 6 |
 
    Bei 20 fällt die schwarze UHQR-Box ins Prisma und zwei verschiedene *folklore*-Fotos (Baum, Feld) werden eins; bei 22 mischt *Kind of Blue* Gestaltungen. Silberner und goldener Helm (*Random Access Memories*, 10th anniversary) liegen bei 9 und fallen immer zusammen — gleiche Komposition, der Hash sieht nur Hell und Dunkel. Die Vorderseiten liegen jetzt lokal in `out/thumbs/` (git-ignoriert), das Mockup lädt sie von dort; archive.org verlor bei jedem Neumessen einige Bilder, und eine Hülle ohne Hash faltet nie.
 9. **Markt:** Recherche vom 2026-09-29 in [markt.md](markt.md). Händler verkaufen je Variante und zeigen fast nur die Vorderseite; Sammlerstücke laufen über Discogs, eBay, CDandLP, Popsike, Record Store Day und audiophile Reihen; niemand zeigt die Hüllen eines Albums als Wand. Vorschlag des Agenten: „die Hüllengeschichte eines Albums" als Kern, dazu ein schmaler Streifen „heute erhältlich als …" aus Händlerfeeds (HHV mit Webgains-Feed, Amazon, Juno).
 
-**Offen, Julian:** welche Faltschwelle (18 oder 20); welche Positionierung (Hüllengeschichte, Neuerscheinungen oder Sammlerbestimmung); den Dump für die nächste Messung herunterladen (10,5 GB, braucht dein OK); Discogs-Token beantragen und die Bildrechte dort prüfen, oder bei MusicBrainz bleiben; wo Rückseite und Etikett erscheinen (auf der Wand oder erst beim gewählten Cover); eigene Seite oder Teil von beautifulcovers.
+**Entschieden 2026-09-29: Schwelle 20** (Julian: „für das hashing nimm die 20er schwelle“) — weniger Kacheln, die UHQR-Box und das zweite *folklore*-Foto verschwinden dabei im Stapel. Das Mockup steht auf 20, der Umschalter bleibt.
+
+**Offen, Julian:** welche Positionierung (Hüllengeschichte, Neuerscheinungen oder Sammlerbestimmung); den Dump für die nächste Messung herunterladen (10,5 GB, braucht dein OK); Discogs-Token beantragen und die Bildrechte dort prüfen, oder bei MusicBrainz bleiben; wo Rückseite und Etikett erscheinen (auf der Wand oder erst beim gewählten Cover); eigene Seite oder Teil von beautifulcovers.

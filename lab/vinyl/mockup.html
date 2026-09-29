@@ -197,7 +197,8 @@ function hamming(a, b) {
  * contrast gate nor the colour distance helped: sleeves are photographed, and
  * lighting moves their colour as far as a different design does. Silver and
  * gold helmets (Random Access Memories) sit at 9 and fold at any setting.
- * The mock-up bar switches the threshold, so it can be judged by looking.
+ * Julian chose 20 on 2026-09-29 („für das hashing nimm die 20er schwelle“): fewer
+ * tiles, accepting those two joins. The mock-up bar still switches it.
  */
 function sameSleeve(a, b) {
   return !!a.hash && !!b.hash && hamming(a.hash, b.hash) <= state.fold;
@@ -219,7 +220,7 @@ function fold(pressings) {
   return groups.sort((a, b) => (a.rep.date || '9999').localeCompare(b.rep.date || '9999'));
 }
 
-const state = { album: 0, country: 'all', side: 'front', selected: null, view: 'front', fold: 18 };
+const state = { album: 0, country: 'all', side: 'front', selected: null, view: 'front', fold: 20 };
 
 function render() {
   const album = DATA[state.album];

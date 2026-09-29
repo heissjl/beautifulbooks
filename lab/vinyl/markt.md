@@ -62,6 +62,27 @@ Muster [v]: Titel + „Limited (Colored) Vinyl Edition" + Format + Jahr/Land + �
 
 Neue Varianten lassen sich genau verlinken (Amazon, HHV, jpc, Juno), aber nur solange sie im Handel sind. Historische Pressungen nur über eBay (Katalognummer), CDandLP und MusicStack; Discogs wäre das Beste und zahlt nichts [i].
 
+## Woher der Streifen „heute erhältlich als …" seine Daten bekäme
+
+Julian, 2026-09-29: „woher würden wir die bekommen?" Zusammengestellt aus dieser Recherche; nichts davon ist beantragt oder ausprobiert.
+
+**Nur aus offiziellen Händlerschnittstellen, nie durch Abgrasen von Shops** (SPEC §8.7). Jede Quelle setzt ein Konto im Partnerprogramm voraus, das Julian beantragt:
+
+| Quelle | Was sie liefert | Voraussetzung | Stand |
+|---|---|---|---|
+| **HHV über Webgains** | täglicher Produktfeed (CSV im Google-Shopping-Format, mit Farbfeld) aller Artikel, auch der Exklusivpressungen | Webgains-Konto, HHV nimmt die Seite an | Feed [v] auf HHVs Partnerseite, Format und Farbfeld [s] |
+| **Rough Trade über CJ** | Produktfeed UK und US | CJ-Konto, Freigabe durch Rough Trade | [s] |
+| **Amazon Creators API** (Nachfolger der PA-API 5, abgeschaltet April/Mai 2026) | Suche nach Artikeln, auch nach EAN/UPC, mit ASIN je Variante | Associates-Konto; laut Dritten etwa 10 qualifizierte Verkäufe in 30 Tagen, bevor die API freigeschaltet wird | [s] — ohne Verkäufe kein Zugang, also frühestens nach dem Start |
+| **eBay Browse API** | Angebote je Suchbegriff oder GTIN, neu und gebraucht | eBay-Partner-Network-Konto, Produktion nur für Partner | [s]; zeigt Einzelexemplare, keine Katalogdaten |
+| jpc, Juno | Deeplinks; Feed nicht geprüft (jpc) bzw. nicht erwähnt (Juno) | Partnerkonto | [s] |
+
+**Wie ein Feed-Artikel zu einem Album findet:** über den **Barcode**. Neue Pressungen tragen eine EAN/UPC, MusicBrainz führt sie je Release (*folklore* „betty's garden": 602435034911), und Google-Shopping-Feeds haben ein GTIN-Feld [s]. Wo der Barcode fehlt, bleibt nur Titel + Künstler + „Vinyl" — unsicher, weil Händler die Variante in den Titel schreiben („Limited Splatter Colored Vinyl Edition"). Zwei Vorbehalte, wie bei Büchern:
+
+- **Barcode ≠ Pressung:** Farbvarianten und Nachpressungen teilen sich teils einen Barcode. Der Streifen darf nur sagen „erhältlich bei …", nie „diese Hülle, diese Farbe".
+- **Barcode ≠ Hülle im Archiv:** Viele neue Varianten (die farbigen *folklore*-Pressungen) haben bei MusicBrainz keine Vorderseite. Der Streifen würde dann Artikel zeigen, deren Hülle die Wand nicht kennt; das Bild käme aus dem Feed, und dessen Nutzung regelt das jeweilige Partnerprogramm.
+
+**Gemessen am 2026-09-29** aus dem Cache der Messung, ohne neue Abfragen: von den Vinyl-Pressungen der acht Alben seit 2015 haben bei MusicBrainz **53 von 58** einen Barcode, von den älteren 32 von 120. Für das, was heute im Handel ist, taugt der Barcode also als Schlüssel; für die Geschichte der Hüllen nicht, und dort braucht es ihn auch nicht.
+
 ## Drei Positionierungen (Vorschlag des Agenten)
 
 | | Idee | Für | Gegen |
