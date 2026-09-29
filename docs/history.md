@@ -3580,3 +3580,14 @@ Die Regel damit: **ein geteiltes Cover** (`/book/<id>/cover/<coverId>`) zeigt di
 
 Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/create/review`) setzen kein eigenes `openGraph` und erben die Karte ohne Änderung. `/contact` und `/privacy` antworteten im Dev-Server mit 500, weil dort die `IMPRINT_*`-Variablen fehlen (bekannt, nicht neu); `/curate`, `/suggest` und eine unbekannte `/c/<id>` mit 404, weil Passwort bzw. Sammlung fehlen — das `og:image` steht trotzdem im Kopf.
 
+
+## 2026-09-28 — Das eigene Regal nach Farben, ein Lab-Prototyp (ROADMAP 5.16)
+
+Julian: „start a new lab project. i want an option to take a picture of my library and then have an algorithm to sort the books by colours"
+
+- Gebaut in [`lab/colorsort/`](../lab/colorsort/README.md): eine einzige HTML-Datei (18,8 KB, esbuild), die ohne Server läuft. Kein Bildmodell, kein Netz — das Foto bleibt auf dem Gerät.
+- Erkennung ohne Modell: Regalböden als Zeilen, deren Farbkante (OKLab) im **Median** über die ganze Breite hoch ist; Trennlinien zwischen Rücken als Spalten, deren Farbkante im **20-%-Quantil** über den unteren Teil der Reihe hoch ist. Farbe je Rücken: größter von drei k-means-Clustern ohne die Ränder.
+- **Der Median reichte für die Rücken nicht:** am gemalten Regal fand er 27 Linien zu viel, die Ränder der Titelzeile. Mit dem 20-%-Quantil auf sechs gemalten Regalen (Seeds 7, 1–5): **295 von 295 Trennlinien auf ±3 px, keine zu viel**, beide Reihen gefunden. Im Browser 175 ms vom Bild bis zur Ansicht.
+- Ordnung: Weiß → Farbkreis ab 10° (Rot) in 30°-Stufen, je hell nach dunkel → Grau/Schwarz; Schwelle für Grau Buntheit 0,04. Alle gesetzt, nicht gemessen, als Schieber auf der Seite.
+- Befund: Wandstücke an den Reihenenden werden als helle Bücher gelesen; die Seite hat dafür „Kein Buch".
+- **Offen:** kein echtes Foto gesehen. Fünf Fotos von Julian (hell, schummrig, voll, mit Lücken, mit Stützen), Ziel ≥ 90 % der Linien ohne Eingriff.
