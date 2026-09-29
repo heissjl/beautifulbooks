@@ -85,6 +85,19 @@ Zu klären dabei (0.12): der Speicheranbieter der Redis (Region, Auftragsverarbe
 
 Auf der Sammlungsseite steht jetzt „Make it a wall“: Wandplan mit Rahmen und Maßen, die Liste der Bücher mit ihren Drucken und dem Weg zur Buchseite, und „I'd order this wall framed“ als Zähler. Das ist das Tor dieses Plans in messbarer Form: `/create/review` zeigt, wie viele Sammlungen es gibt und wie oft jemand eine gerahmte Wand bestellen würde. Stufe 2 (Kaufen) und 3 (Rahmen) bleiben gebaut erst, wenn diese Zahl trägt.
 
+### Die ganze Sammlung kaufen — wie es automatisch ginge (Konzept, 2026-09-28)
+
+Julian: „dann überlege, wie man den kauf von der ganzen sammlung automatisieren könnte“. Randbedingungen aus dem Gemessenen: kein Shop darf abgegrast werden (§8.7); eine ISBN ist nicht das Cover (E8), also muss jedes Angebot gegen das Bild geprüft werden; Vercel Hobby verbietet Zahlungsabwicklung („Any method of requesting or processing payment“, research-cover-prints.md), ein eigener Checkout braucht Vercel Pro, Gewerbe, AGB, Widerruf, USt.; Versand je Verkäufer ist bei 10 Büchern von 10 Verkäufern der größte Posten. Vier Stufen, jede nur so weit automatisch, wie es ohne neue Pflichten geht:
+
+1. **Einkaufsliste mit Häkchen** (sofort baubar, keine neuen Pflichten). „Get the books“ bekommt je Buch „bought ✓“ (nur im Browser gemerkt) und oben „3 of 7 found“; dazu „Open all first shops“ (öffnet je Buch den ersten Laden) und ein Export als Liste (Titel, Autorin, Verlag, Jahr, ISBN, Cover-Link) zum Mitnehmen in die Buchhandlung oder zum Weitergeben. Der Leser kauft selbst; die Seite nimmt ihm das Suchen ab.
+2. **Ein Warenkorb in einem Klick, wo ein Laden das anbietet.** Amazons „Add to Cart form“ legt mehrere ASINs auf einmal in den Warenkorb (`/gp/aws/cart/add.html?ASIN.1=…&Quantity.1=1&ASIN.2=…`; bei Büchern ist die ASIN die ISBN-10; dokumentiert unter PA-API 5). **Zu prüfen:** ob es nach der Abschaltung der PA-API im Mai 2026 noch geht, ob es ohne Associates-Tag geht, und dass es nur *diese ISBNs* bestellt, nicht *dieses Cover* — die Seite muss das sagen. Andere Läden (Bookshop.org, AbeBooks, genialokal) haben keinen bekannten Mehrfach-Warenkorb; zu recherchieren.
+3. **Ein Agent sucht Angebote mit dem richtigen Foto** (braucht Anträge, keine Zahlung). Über AbeBooks Search Web Services (nur Affiliates) und die eBay Browse API (Produktion nur für EPN-Partner) je Kachel Angebote nach allen ISBNs des Covers holen, das Angebotsfoto gegen die Cover-Signatur halten (dieselbe Rechnung wie die Faltung) und urteilen: zeigt dieses Cover / ein anderes / kann es nicht sagen. Dann den Korb optimieren: je Buch das günstigste sichere Angebot, Verkäufer bündeln, Versand summieren. Ausgabe: je Buch der Link zum gewählten Angebot und eine Gesamtsumme — gekauft wird weiter beim Marktplatz, mit Provision.
+4. **Ein Kauf, eine Zahlung** (braucht Händlerstatus). Der Leser zahlt einmal über eine gehostete Kasse (Stripe Checkout; die Seite sieht keine Karte), wir kaufen über die AbeBooks Purchase API oder von Hand und lassen an ihn oder an den Rahmer liefern. Erst sinnvoll, wenn der Zähler „I'd order this piece“ Nachfrage zeigt und Julian Händler werden will (5.14b).
+
+**Eine Variante, die zur Zeit passt:** statt selbst zu kaufen, eine **agententaugliche Einkaufsliste** (strukturiert, je Buch ISBNs, Cover-Bild, erlaubte Abweichungen) — der eigene Browser-Agent des Lesers (Claude in Chrome, ChatGPT Agent u. a.) kauft damit in *seinen* Konten ein. Keine Zahlung und keine Kundendaten bei uns; die Seite liefert nur die genaue Liste und das Bild, gegen das zu prüfen ist.
+
+**Empfehlung:** 1 jetzt, 2 prüfen (eine Anfrage an Amazon mit zwei ISBNs, von Julian im eigenen Browser), die Agenten-Liste als Teil von 1, 3 nach den Anträgen bei AbeBooks/EPN, 4 nur mit Nachfrage.
+
 ## Stufe 2 — Die ganze Wand kaufen
 
 ### Die harte Wahrheit zuerst
