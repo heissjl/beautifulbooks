@@ -116,6 +116,8 @@ Skizzen im Chat vom 2026-09-28; Julian entscheidet.
 - **C. Mosaik-Buch.** Die Silhouette eines aufrecht stehenden Buchs, aus kleinen 2:3-Kacheln gelegt: das Ladebild im Kleinen.
 - **D. Fächer.** Drei versetzte Cover, das vordere in Akzent — das Rondell der Startseite als Zeichen.
 
+- **A + C, Mischung** (Julian, 2026-09-29: „ist die Vorschaukarte nicht eher wie C?"). Die Website-Karte aus §4 hat die Idee von A (eine gewählte Kachel in Terrakotta, größer) und das Aussehen von C (viele Kacheln in verschiedenen Tönen), aber keine Buchform. Als Marke skizziert in zwei Größen: 3 × 3 und 5 × 5 Buchrechtecke in den sieben Tönen der Karte, die mittlere in Terrakotta und um 30 % vergrößert. Jeweils groß, in 32 und 16 px, auf hellem und dunklem Grund angesehen.
+
 Offen: ob die Marke eine Farbe (Terrakotta) oder mehrere trägt; ob sie ohne Namen stehen muss, solange 0.5 offen ist (ja — das war die Vorgabe).
 
 ### 1.2 ISBN: Geist Mono, Jost oder Xanh Mono
