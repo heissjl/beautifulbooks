@@ -46,7 +46,7 @@ def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument('--side', type=int, default=22, help='sidebearing on each side, font units')
     p.add_argument('--space', type=int, default=230, help='advance of the space')
-    p.add_argument('--overhang', type=int, default=130, help='italic: ink past the band edge, at most')
+    p.add_argument('--overhang', type=int, default=180, help='italic: ink past the band edge, at most')
     p.add_argument('--arm', type=int, default=55, help='upright: ink past the right band edge, at most (0: box)')
     p.add_argument('--band-lo', type=float, default=0.1)
     p.add_argument('--band-hi', type=float, default=0.65)
