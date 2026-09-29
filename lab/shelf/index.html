@@ -65,6 +65,12 @@
   .share { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin: 20px 0; }
   .share code { display: block; word-break: break-all; font-size: 12px; background: var(--surface-2); padding: 8px; border-radius: 6px; margin: 8px 0; }
   .stats { font-size: 12px; color: var(--ink-3); }
+  .order { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 16px 0 0; }
+  .order button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .strip { display: flex; height: 14px; border-radius: 3px; overflow: hidden; margin: 10px 0 0; }
+  .strip span { flex: 1; }
+  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: -1px; margin-right: 4px; box-shadow: 0 0 0 1px rgb(var(--shadow) / .2); }
+  .photo .box span.sw { position: static; display: inline-block; margin: 0 2px 0 0; padding: 0; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -72,8 +78,8 @@
 <main>
   <section id="make">
     <h1>Vom Regal zur Wand</h1>
-    <p class="sub">Ein Foto deiner Bücher — Rücken oder Umschläge. Die Seite sucht die Werke und, wo ein Umschlag zu sehen ist, genau diese Ausgabe. Dann ein Link zum Teilen.</p>
-    <p class="note">Lab-Prototyp (ROADMAP 5.11). Das Foto geht einmal an das Bildmodell von Anthropic und wird nirgends gespeichert; Werke und Cover kommen von Open Library.</p>
+    <p class="sub">Ein Foto deiner Bücher — Rücken oder Umschläge. Die Seite sucht die Werke und, wo ein Umschlag zu sehen ist, genau diese Ausgabe; auf Wunsch ordnet sie die Sammlung nach den Farben der Bücher im Foto. Dann ein Link zum Teilen.</p>
+    <p class="note">Lab-Prototyp (ROADMAP 5.11, Farben 5.16). Das Foto geht einmal an das Bildmodell von Anthropic und wird nirgends gespeichert; die Farben liest dieser Browser selbst aus dem Foto; Werke und Cover kommen von Open Library.</p>
     <div id="nokey" class="warn" hidden></div>
 
     <label class="drop" id="drop">
@@ -83,13 +89,21 @@
     </label>
     <div class="row">
       <button id="sample">Mit der Beispielliste ausprobieren</button>
-      <span class="note">zwölf Bücher aus <code>sample.json</code>, ohne Foto und ohne Schlüssel</span>
+      <span class="note">zwölf Bücher aus <code>sample.json</code>, ohne Schlüssel; als Foto ein gemaltes Regal mit erfundenen Farben</span>
     </div>
 
     <div class="progress" id="progress" aria-live="polite"></div>
     <div class="photo" id="photo" hidden><img id="photoImg" alt="Das hochgeladene Foto"></div>
     <div class="stats" id="stats"></div>
 
+    <div class="order" id="orderbox" hidden role="group" aria-label="Reihenfolge">
+      <span class="note">Reihenfolge:</span>
+      <button data-order="photo" aria-pressed="true">wie im Foto</button>
+      <button data-order="rainbow" aria-pressed="false">nach Farben</button>
+      <button data-order="light-dark" aria-pressed="false">hell nach dunkel</button>
+      <span class="note" id="ordernote"></span>
+    </div>
+    <div class="strip" id="strip" aria-hidden="true"></div>
     <ul class="wall" id="wall"></ul>
 
     <div class="share" id="sharebox" hidden>
@@ -113,6 +127,7 @@
   </section>
 </main>
 
+<script src="/colors.js"></script>
 <script>
 /* ---------- share link: the same bytes as lab/shelf/sharelink.ts ---------- */
 function encodeShelf(entries) {
@@ -155,8 +170,12 @@ const WHY = {
 const WORK_WHY = { 'author+title': '', 'author': 'Titel weicht ab', 'title-only': 'Autor passt nicht', 'first-result': 'unsicher: weder Titel noch Autor passen' };
 
 /* ---------- state ---------- */
-let items = [];        // { recognized, work?, cover?, workReason?, error?, removed?, panel? }
+let items = [];        // { recognized, color?, work?, cover?, workReason?, error?, removed?, panel? }
 let photoBooks = [];   // for the box overlay
+let photoCanvas = null; // the shrunk photo, kept in the browser for the colour step
+let sampleBoxes = null; // painted-shelf boxes for the sample mode
+let order = 'photo';    // 'photo' | 'rainbow' | 'light-dark'
+let colors = [];        // per recognized book: { hex, lch, box, refined } or null
 
 async function init() {
   const hash = new URLSearchParams(location.hash.slice(1));
@@ -177,19 +196,21 @@ async function shrink(file) {
   canvas.width = Math.round(bitmap.width * scale);
   canvas.height = Math.round(bitmap.height * scale);
   canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  photoCanvas = canvas;
   return new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.9));
 }
 
 async function usePhoto(file) {
   if (!file || !file.type.startsWith('image/')) return;
   const blob = await shrink(file);
+  sampleBoxes = null;
   $('photoImg').src = URL.createObjectURL(blob);
   $('photo').hidden = false;
   run('/api/recognize', blob);
 }
 
 async function run(path, body) {
-  items = []; photoBooks = []; render(); drawBoxes();
+  items = []; photoBooks = []; colors = []; render(); drawBoxes();
   $('stats').textContent = '';
   $('sharebox').hidden = true; $('linkout').hidden = true;
   $('progress').textContent = body ? 'Das Bildmodell liest das Foto … (dauert meist 10–40 s)' : 'Beispielliste …';
@@ -212,12 +233,15 @@ async function run(path, body) {
       while ((nl = buf.indexOf('\n')) >= 0) {
         const line = JSON.parse(buf.slice(0, nl)); buf = buf.slice(nl + 1);
         if (line.type === 'recognized') {
-          meta = line; total = line.books.length; photoBooks = line.books;
-          items = line.books.map(b => ({ recognized: b, pending: true }));
+          meta = line; total = line.books.length;
+          // Sample mode: the painted shelf's boxes stand in for a model's.
+          photoBooks = sampleBoxes ? line.books.map((b, k) => ({ ...b, kind: 'spine', box: sampleBoxes[k] })) : line.books;
+          readColors();
+          items = line.books.map((b, k) => ({ recognized: b, color: colors[k], pending: true }));
           drawBoxes(); render();
           $('progress').textContent = total ? `${total} Bücher erkannt — suche sie bei Open Library, eins nach dem anderen …` : 'Das Modell hat auf dem Foto keinen lesbaren Titel gefunden.';
         } else if (line.type === 'match') {
-          items[line.index] = line.result; done++;
+          items[line.index] = { ...line.result, color: colors[line.index] }; done++;
           $('progress').textContent = `Zugeordnet ${done} von ${total} …`;
           render();
         } else if (line.type === 'done') {
@@ -252,12 +276,13 @@ function drawBoxes() {
   const host = $('photo');
   host.querySelectorAll('.box').forEach(b => b.remove());
   photoBooks.forEach((b, i) => {
-    if (!b.box) return;
+    const box = colors[i]?.box ?? b.box;
+    if (!box) return;
     const d = document.createElement('div');
     d.className = 'box';
-    d.style.left = `${b.box[0] * 100}%`; d.style.top = `${b.box[1] * 100}%`;
-    d.style.width = `${b.box[2] * 100}%`; d.style.height = `${b.box[3] * 100}%`;
-    d.innerHTML = `<span>${i + 1}</span>`;
+    d.style.left = `${box[0] * 100}%`; d.style.top = `${box[1] * 100}%`;
+    d.style.width = `${box[2] * 100}%`; d.style.height = `${box[3] * 100}%`;
+    d.innerHTML = `<span>${colors[i] ? `<i class="sw" style="background:${colors[i].hex}"></i>` : ''}${i + 1}</span>`;
     host.appendChild(d);
   });
 }
@@ -266,12 +291,19 @@ function drawBoxes() {
 function render() {
   const wall = $('wall');
   wall.innerHTML = '';
-  items.forEach((it, i) => {
-    if (it.removed) return;
+  const shown = orderedIndices().filter(i => !items[i].removed);
+  $('strip').innerHTML = order === 'photo' ? '' : shown.map(i => `<span style="background:${items[i].color?.hex ?? 'transparent'}"></span>`).join('');
+  $('orderbox').hidden = !colors.some(Boolean);
+  document.querySelectorAll('[data-order]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.order === order)));
+  const uncoloured = shown.filter(i => !items[i].color).length;
+  $('ordernote').textContent = order !== 'photo' && uncoloured ? `${uncoloured} ohne Kasten im Foto stehen am Ende` : '';
+  shown.forEach(i => {
+    const it = items[i];
     const li = document.createElement('li');
     li.className = 'tile' + (it.work ? '' : ' missing');
     const r = it.recognized;
     const readAs = `${i + 1}. gelesen: „${r.title}“${r.author ? ` — ${r.author}` : ''}`;
+    const swatch = it.color ? `<i class="sw" style="background:${it.color.hex}" title="Farbe im Foto ${it.color.hex}${it.color.refined ? ', Kasten an den Rücken angepasst' : ''}"></i>` : '';
     if (it.pending) {
       li.innerHTML = `<div class="cover"><div class="none">sucht …</div></div><p class="t">${esc(r.title)}</p><p class="a">${esc(r.author)}</p>`;
     } else if (it.work) {
@@ -282,10 +314,10 @@ function render() {
           <div class="cover">${c ? `<img src="${cover(c)}" alt="${esc(it.work.title)} von ${esc(it.work.author)}" loading="lazy">` : '<div class="none">kein Cover</div>'}</div>
           <p class="t">${esc(it.work.title)}</p><p class="a">${esc(it.work.author)}</p></a>
         <p class="why ${it.cover?.reason === 'matched-edition' ? 'good' : ''}">${esc(why)}${workWhy ? ` · ${esc(workWhy)}` : ''}</p>
-        <p class="read">${esc(readAs)}</p>`;
+        <p class="read">${swatch}${esc(readAs)}</p>`;
     } else {
       li.innerHTML = `<div class="cover"><div class="none">${it.error ? esc(it.error) : 'bei Open Library nicht gefunden'}</div></div>
-        <p class="t">${esc(r.title)}</p><p class="a">${esc(r.author)}</p><p class="read">${esc(readAs)}</p>`;
+        <p class="t">${esc(r.title)}</p><p class="a">${esc(r.author)}</p><p class="read">${swatch}${esc(readAs)}</p>`;
     }
     if (!it.pending) {
       const acts = document.createElement('div');
@@ -296,6 +328,23 @@ function render() {
     }
     wall.appendChild(li);
   });
+}
+
+/* ---------- colour ---------- */
+function readColors() {
+  colors = [];
+  if (!photoCanvas || !window.shelfColors) return;
+  const started = performance.now();
+  colors = window.shelfColors.colorsForBooks(photoCanvas, photoBooks);
+  const n = colors.filter(Boolean).length;
+  const refined = colors.filter(c => c?.refined).length;
+  console.info(`colours: ${n} of ${photoBooks.length} books, ${refined} boxes moved onto a spine, ${Math.round(performance.now() - started)} ms`);
+}
+
+function orderedIndices() {
+  const all = items.map((_, i) => i);
+  if (order === 'photo' || !window.shelfColors) return all;
+  return window.shelfColors.colourOrder(items.map(it => it.color ?? null), order);
   $('sharebox').hidden = !items.some(i => i.work && !i.removed);
 }
 
@@ -348,7 +397,7 @@ async function action(i, act, li) {
 
 /* ---------- share ---------- */
 function shareLink() {
-  const entries = items.filter(i => i.work && !i.removed).map(i => ({ workId: i.work.id, coverId: i.cover?.coverId || 0 }));
+  const entries = orderedIndices().map(k => items[k]).filter(i => i.work && !i.removed).map(i => ({ workId: i.work.id, coverId: i.cover?.coverId || 0 }));
   const t = $('title').value.trim();
   return `${location.origin}/#s=${encodeShelf(entries)}${t ? `&t=${encodeURIComponent(t)}` : ''}`;
 }
@@ -401,7 +450,22 @@ window.addEventListener('hashchange', () => location.reload());
 
 /* ---------- input ---------- */
 $('file').onchange = e => usePhoto(e.target.files[0]);
-$('sample').onclick = () => { $('photo').hidden = true; run('/api/sample', null); };
+$('sample').onclick = () => {
+  if (window.shelfColors) {
+    const painted = window.shelfColors.paintedSample(12);
+    photoCanvas = painted.canvas; sampleBoxes = painted.boxes;
+    $('photoImg').src = painted.canvas.toDataURL('image/png');
+    $('photo').hidden = false;
+  } else {
+    photoCanvas = null; sampleBoxes = null; $('photo').hidden = true;
+  }
+  run('/api/sample', null);
+};
+document.querySelectorAll('[data-order]').forEach(b => b.addEventListener('click', () => {
+  order = b.dataset.order;
+  $('linkout').hidden = true; // an old link would carry the old order
+  render();
+}));
 const drop = $('drop');
 ['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
 ['dragleave', 'drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));

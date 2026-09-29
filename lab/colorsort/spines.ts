@@ -143,3 +143,44 @@ export function spinesFromCuts(cuts: number[], row: Band, width: number): Box[] 
   }
   return boxes;
 }
+
+/**
+ * Moves the left and right edge of a spine box that an image model drew
+ * (lab/shelf, `lib/recognize.ts`) onto the nearest line between books. The
+ * model knows which books there are and what they are called; it places its
+ * boxes only roughly. Each edge looks within `reach` of the box's width on
+ * either side for the nearest line and stays put where there is none, so a
+ * refined box is never worse than the model's.
+ */
+export function refineSpineBox(img: LabImage, box: Box, reach = 0.4): Box {
+  const w = box.x1 - box.x0, h = box.y1 - box.y0;
+  if (w < 3 || h < 10) return box;
+  const top = Math.round(box.y0 + h * 0.2), bottom = Math.max(top + 1, Math.round(box.y1 - h * 0.1));
+  const from = Math.max(1, Math.floor(box.x0 - w * reach)), to = Math.min(img.width - 2, Math.ceil(box.x1 + w * reach));
+  if (to - from < 4) return box;
+  const profile = new Float32Array(to - from + 1);
+  const values = new Float32Array(bottom - top);
+  for (let x = from; x <= to; x++) {
+    for (let y = top; y < bottom; y++) values[y - top] = diff(img, x - 1, y, x + 1, y);
+    profile[x - from] = quantile(values, LINE_QUANTILE);
+  }
+  const smoothed = smooth(profile);
+  const m = median(smoothed);
+  const threshold = Math.max(0.02, m + 4 * Math.max(median(smoothed.map(v => Math.abs(v - m))), 0.002));
+  // The nearest line, not the strongest: a narrow neighbour's far edge can
+  // fall inside the window and be the stronger one.
+  const snap = (edge: number, lo: number, hi: number) => {
+    let best = -1;
+    for (let x = Math.max(from + 1, Math.round(lo)); x <= Math.min(to - 1, Math.round(hi)); x++) {
+      const v = smoothed[x - from];
+      if (v < threshold || v < smoothed[x - from - 1] || v < smoothed[x - from + 1]) continue;
+      if (best < 0 || Math.abs(x - edge) < Math.abs(best - edge)) best = x;
+    }
+    return best < 0 ? edge : best;
+  };
+  const x0 = snap(box.x0, box.x0 - w * reach, box.x0 + w * reach);
+  const x1 = snap(box.x1, box.x1 - w * reach, box.x1 + w * reach);
+  // Both edges on the same line, or the book shrunk to a sliver: keep the model's box.
+  if (x1 - x0 < w * 0.5) return box;
+  return { ...box, x0, x1 };
+}

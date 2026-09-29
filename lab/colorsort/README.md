@@ -1,6 +1,6 @@
 # lab/colorsort — das eigene Regal nach Farben
 
-Julian, 2026-09-28: „start a new lab project. i want an option to take a picture of my library and then have an algorithm to sort the books by colours". Roadmap **5.16**. Stand: **Prototyp gebaut 2026-09-28, am gemalten Beispielregal geprüft; ein echtes Regalfoto hat es noch nicht gesehen.**
+Julian, 2026-09-28: „start a new lab project. i want an option to take a picture of my library and then have an algorithm to sort the books by colours". Roadmap **5.16**. Stand: **Prototyp gebaut 2026-09-28, am gemalten Beispielregal geprüft; am selben Tag als Farbschritt in den Regal-Ablauf von `lab/shelf/` eingebaut (siehe unten). Ein echtes Regalfoto hat es noch nicht gesehen.**
 
 ## Die Frage
 
@@ -28,11 +28,23 @@ Die Datei braucht keinen Server und schickt nichts ab: **das Foto verlässt das 
 7. **Zeigen**: rechts dasselbe Regal, **zusammengesetzt aus den Ausschnitten des Fotos** in der neuen Ordnung (auf den Boden gestellt, jede Reihe mittig), darunter ein Farbstreifen, die Zahl der Bücher, die stehen bleiben, und die Liste „Reihe 1, Platz 3 ← jetzt Reihe 2, Platz 7". Links auf dem Foto trägt jeder Rücken einen Punkt in seiner Farbe mit seinem neuen Platz. „Bild sichern" lädt die sortierte Ansicht als JPEG.
 8. **Korrigieren** durch Antippen des Fotos: *Trennlinie* setzt eine Linie oder nimmt die nächste weg, *Kein Buch* graut eine Lücke, eine Buchstütze oder ein Stück Wand aus, *Regalboden* setzt oder nimmt eine Reihenkante (die Rücken der Reihe werden dann neu gesucht). *Neu erkennen* verwirft alle Korrekturen.
 
+## Als Schritt im Regal-Ablauf (`lab/shelf/`, seit 2026-09-28)
+
+Julian, 2026-09-28: „use the book detection by the other lab project for the collection curation to better find the books from the picture and make the colours sorting part of that process".
+
+- **Wer die Bücher findet:** im Regal-Ablauf das Bildmodell (`lib/recognize.ts`): es weiß, welche Bücher da sind und wie sie heißen, und liefert je Buch einen Kasten — aber nur ungefähr. Die Kantenerkennung von hier sucht keine Bücher mehr, sondern **schiebt die linke und rechte Kante eines Rücken-Kastens auf die nächste Trennlinie** (`refineSpineBox`, bis 40 % der Breite zu jeder Seite; findet sie keine, bleibt der Kasten, wie das Modell ihn zog). Umschläge (`kind: cover`) bleiben unverändert.
+- **Farbe und Ordnung:** `shelfcolors.ts` liest je Kasten die Farbe (wie oben) und ordnet mit `sort.ts`. `lab/shelf/serve.ts` bündelt die Datei als `/colors.js`; sie läuft im Browser auf dem Foto, das die Seite ohnehin hält — kein zusätzlicher Weg für das Foto, keine Anfrage.
+- **Auf der Seite:** über der Wand „Reihenfolge: wie im Foto · nach Farben · hell nach dunkel", darüber ein Farbstreifen; jede Kachel trägt die Farbe ihres Buchs im Foto als kleines Feld, das Foto die angepassten Kästen. **Der geteilte Link trägt die gewählte Reihenfolge.** Bücher ohne Kasten stehen am Ende, und die Seite sagt, wie viele.
+- **Achtung beim Ansehen:** die Kacheln zeigen das Cover von Open Library, geordnet wird nach der Farbe *des eigenen Exemplars im Foto*. Wo die Ausgabe nicht die abgebildete ist, passt das Kachelbild nicht zum Farbfeld; das ist gewollt (es ist dein Regal), kann aber auf der Wand unordentlich aussehen. Ob stattdessen nach der Coverfarbe geordnet werden soll, entscheidet Julian an einem echten Foto.
+- **Beispielmodus ohne Schlüssel:** „Mit der Beispielliste ausprobieren" malt ein Regal mit zwölf Rücken und gibt den zwölf Büchern aus `sample.json` dessen Kästen, jeweils um bis zu ein Viertel der Breite verschoben wie von einem Modell. Die Farben sind damit erfunden; geprüft wird der Weg, nicht das Ergebnis.
+
 ## Gemessen (2026-09-28)
 
 - **Gemaltes Regal** (900 × 620, zwei Reihen, Schrift als Streifen in der Mitte jedes Rückens, dunkle Fugen, 10 % Lichtabfall zum Rand), sechs Zufallsregale (Seeds 7, 1–5, je 21–25 Bücher pro Reihe): beide Reihen gefunden, **alle 295 Trennlinien auf ±3 px, keine überzählige**. Die Tests in `__tests__/colorsort.test.ts` verlangen etwas weniger (≥ 95 % der Linien, höchstens eine zu viel je Reihe, jede Farbe innerhalb 0,06 OKLab der gemalten), damit ein anderer Seed sie nicht zufällig rot macht.
 - **Der Median reichte nicht:** mit dem Median statt des 20-%-Quantils fand die Erkennung auf dem gemalten Regal **27 Linien zu viel** — die Ränder der Titelzeile, die über die halbe Höhe laufen. Echte Rücken mit langen Titeln werden dasselbe tun; ob 20 % bei schräg lehnenden Büchern zu streng ist, zeigt erst ein Foto.
 - Dauer im Browser für ein gemaltes Regal: **175 ms** vom Bild bis zur ersten Ansicht (Regalböden, 54 Stücke mit k-means — die Bücher und die Wandstücke an den Reihenenden).
+- **Kasten auf den Rücken schieben** (`refineSpineBox`), sechs gemalte Regale, 283 Rücken, beide Kanten um einen Anteil der Breite verschoben: um 10 % → **283/283** auf ±3 px zurück; um 25 % → **274/283**; um 35 % → 199/283; um 50 % → 5/283 (die Kante liegt dann auf halbem Weg zur Nachbarlinie; 128 Kästen bleiben unverändert). Ein Modell, das die Kante um mehr als ein Drittel der Rückenbreite verfehlt, wird also nicht mehr gerettet. Wie weit Sonnet wirklich daneben liegt, zeigt erst ein echtes Foto.
+- Im Regal-Ablauf (Beispielmodus, Browser-Pane): 12 von 12 Farben gelesen, 12 Kästen verschoben, **71 ms**; „nach Farben" ordnet die Wand um, der geteilte Link (140 Zeichen) enthält die Werke in genau dieser Reihenfolge.
 - Im Browser-Pane geprüft: Beispielregal, „Kein Buch" auf dem Wandstück rechts (54 → 53), eine Linie weggenommen (53 → 52), 390 px breit ohne waagrechtes Verschieben.
 - **Befund am gemalten Regal:** das Stück Wand rechts neben den Büchern und der Streifen links davon werden als Bücher gelesen (hellgrau, landen also unter „Weiß" vorn). Die Erkennung kann eine Wand nicht von einem hellen Rücken unterscheiden; dafür ist „Kein Buch" da.
 
@@ -43,12 +55,12 @@ Die Datei braucht keinen Server und schickt nichts ab: **das Foto verlässt das 
 3. **Braun, Beige und Creme** liegen zwischen Farbe und Grau. Die Schwelle 0,04 ist gesetzt, nicht gemessen; am Schieber ansehen, wo alte Taschenbücher und Leinen fallen.
 4. **Wand und Stützen** werden als Bücher gelesen (siehe oben). Möglich wäre: ein Stück am Reihenende, dessen Farbe der Fläche über den Büchern gleicht, gilt als Wand.
 5. **Die Reihen werden nach Breite neu gefüllt**, nicht nach Höhe; ein großer Bildband kann so in eine niedrige Reihe wandern. Die Höhe jeder Reihe steht im Foto — prüfen, ob es stört.
-6. **Liegende Stapel und schräg lehnende Bücher** erkennt es nicht. Ein Bildmodell (wie in `lab/shelf/`, `lib/recognize.ts`) könnte Kästen liefern, kostet aber einen Schlüssel und schickt das Foto fort; erst wenn die Linien an echten Fotos scheitern.
+6. **Liegende Stapel und schräg lehnende Bücher** erkennt diese Seite nicht. Im Regal-Ablauf (`lab/shelf/`) findet sie das Bildmodell; die Kanten-Anpassung gilt dort nur für senkrechte Rücken.
 7. **Weniger umräumen:** die Ordnung beginnt immer oben links. Ein Kreis kann an jeder Stelle beginnen; die Stelle, an der am meisten Bücher stehen bleiben, wäre eine billige Verbesserung (`unmoved` zählt es schon).
 
 ## Dateien
 
-`color.ts` (OKLab, k-means, Farbe eines Rückens), `spines.ts` (Reihen und Trennlinien), `sort.ts` (Ordnung, Einräumen), `synthetic.ts` (gemaltes Regal mit bekannten Antworten), `app.ts` (die Seite), `page.html` (ihr Gerüst), `build.ts` (bündelt beides mit esbuild zu `index.html`), Tests unter `__tests__/` ohne Netz.
+`color.ts` (OKLab, k-means, Farbe eines Rückens), `spines.ts` (Reihen und Trennlinien, `refineSpineBox`), `shelfcolors.ts` (der Farbschritt für `lab/shelf/`), `sort.ts` (Ordnung, Einräumen), `synthetic.ts` (gemaltes Regal mit bekannten Antworten), `app.ts` (die Seite), `page.html` (ihr Gerüst), `build.ts` (bündelt beides mit esbuild zu `index.html`), Tests unter `__tests__/` ohne Netz.
 
 ## Regeln (lab/README.md)
 

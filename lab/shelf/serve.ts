@@ -12,6 +12,7 @@
  * so the list in a shared link never reaches this server.
  */
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
+import { build } from 'esbuild';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { decode, type RgbaImage } from '../../lib/imagehash';
@@ -27,6 +28,19 @@ const SITE = (process.env.SHELF_SITE ?? 'https://beautifulcovers.vercel.app').re
 const MAX_PHOTO_BYTES = 12 * 1024 * 1024;
 
 const matcher = new Matcher();
+
+/**
+ * The colour step (ROADMAP 5.16) runs in the browser, on the photo the page
+ * already holds: lab/colorsort/shelfcolors.ts, bundled once per start.
+ */
+let colorsJs: Promise<string> | null = null;
+function colorsScript(): Promise<string> {
+  colorsJs ??= build({
+    entryPoints: [join(import.meta.dirname, '..', 'colorsort', 'shelfcolors.ts')],
+    bundle: true, write: false, format: 'iife', target: 'es2022', minify: true,
+  }).then(r => r.outputFiles[0].text, err => { colorsJs = null; throw err; });
+  return colorsJs;
+}
 
 async function readBytes(req: IncomingMessage, limit: number): Promise<Buffer> {
   const chunks: Buffer[] = [];
@@ -64,6 +78,12 @@ const server = createServer(async (req, res) => {
     if (url.pathname === '/') {
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
       res.end(readFileSync(HTML_FILE, 'utf8'));
+      return;
+    }
+
+    if (url.pathname === '/colors.js') {
+      res.writeHead(200, { 'content-type': 'text/javascript; charset=utf-8', 'cache-control': 'no-store' });
+      res.end(await colorsScript());
       return;
     }
 

@@ -32,6 +32,10 @@ Aus dem Hauptordner selbst: `set -a; source .env.local; set +a; npx tsx lab/shel
 5. **Korrigieren**: je Kachel „× falsch" (weg), „neu suchen" (Suchfeld über `/api/search`, Treffer mit Cover antippen) und „anderes Cover" (Cover von Seite 0 des Werks, ungehasht).
 6. **Teilen** (`sharelink.ts`): `#s=` + base64url aus Versionsbyte und je Buch zwei LEB128-Varints (Werknummer, Cover-ID; 0 = kein Cover), optional `&t=` Titel. Die geteilte Wand wird **nur aus dem Fragment** gebaut: Cover sofort von `covers.openlibrary.org`, Titel und Autor mit **einer** Open-Library-Suche `key:(/works/… OR …)` direkt aus dem Browser. Das Fragment erreicht keinen Server, auch diesen nicht. Die Seite trägt eine Kopie von Kodierer und Dekodierer; ein Test prüft, dass beide dieselben Bytes schreiben.
 
+## Nach Farben ordnen (ROADMAP 5.16, seit 2026-09-28)
+
+Nach der Erkennung liest der Browser je Buch die Farbe aus dem Foto — bei Rücken zuvor den Kasten des Modells auf die Trennlinien geschoben — und die Wand lässt sich „wie im Foto", „nach Farben" oder „hell nach dunkel" ordnen; der geteilte Link trägt die gewählte Reihenfolge. Code, Regeln und Messung in [lab/colorsort/README.md](../colorsort/README.md#als-schritt-im-regal-ablauf-labshelf-seit-2026-09-28); der Server bündelt `lab/colorsort/shelfcolors.ts` als `/colors.js`. Im Beispielmodus malt die Seite ein Regal als Foto, damit der Schritt ohne Schlüssel zu sehen ist (Farben erfunden).
+
 ## Gemessen (2026-09-26)
 
 - **Linklänge** (reale Größenordnung der IDs: Werke um 27–33 Mio., Cover um 12 Mio.): **20 Bücher 240 Zeichen, 60 Bücher 667** mit `http://127.0.0.1:4330/`; mit `https://beautifulcovers.vercel.app/shelf` 258 bzw. 685. Rund 10,7 Zeichen je Buch. Die Beispielwand (11 Bücher nach einer Löschung, Titel „Probe-Regal") ergab 145 Zeichen.

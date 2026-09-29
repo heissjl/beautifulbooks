@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { hex, rgbToOklab, spineColor, toLch } from '../color';
-import { findRowCuts, findSpineCuts, rowsFromCuts, spinesFromCuts, toLabImage } from '../spines';
+import { findRowCuts, findSpineCuts, refineSpineBox, rowsFromCuts, spinesFromCuts, toLabImage } from '../spines';
 import { DEFAULTS, groupOf, layout, sortBooks, unmoved, type Book } from '../sort';
 import { syntheticShelf } from '../synthetic';
 
@@ -95,5 +95,27 @@ describe('order', () => {
   it('light-dark ignores hue', () => {
     const books = [book(0, [34, 32, 36]), book(1, [236, 196, 58]), book(2, [32, 92, 150])];
     expect(sortBooks(books, { ...DEFAULTS, mode: 'light-dark' }).map(b => b.id)).toEqual([1, 2, 0]);
+  });
+});
+
+describe('a model box moved onto the spine', () => {
+  const shelf = syntheticShelf();
+  const img = toLabImage(shelf.rgba, shelf.width, shelf.height);
+  const { y0, y1, cuts } = shelf.rows[0];
+
+  it('snaps edges pushed by a quarter of the width back to within three pixels', () => {
+    let fixed = 0;
+    for (let i = 0; i < cuts.length - 1; i++) {
+      const w = cuts[i + 1] - cuts[i];
+      const shift = Math.round(w * (i % 2 ? 0.25 : -0.25));
+      const box = refineSpineBox(img, { x0: cuts[i] + shift, x1: cuts[i + 1] + shift, y0, y1 });
+      if (Math.abs(box.x0 - cuts[i]) <= 3 && Math.abs(box.x1 - cuts[i + 1]) <= 3) fixed++;
+    }
+    expect(fixed / (cuts.length - 1)).toBeGreaterThanOrEqual(0.9);
+  });
+
+  it('leaves a box alone where there is no line', () => {
+    const wall = { x0: 2, x1: 12, y0: 0, y1: 14 }; // inside the top board: uniform
+    expect(refineSpineBox(img, wall)).toEqual(wall);
   });
 });

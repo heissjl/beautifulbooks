@@ -3591,3 +3591,12 @@ Julian: „start a new lab project. i want an option to take a picture of my lib
 - Ordnung: Weiß → Farbkreis ab 10° (Rot) in 30°-Stufen, je hell nach dunkel → Grau/Schwarz; Schwelle für Grau Buntheit 0,04. Alle gesetzt, nicht gemessen, als Schieber auf der Seite.
 - Befund: Wandstücke an den Reihenenden werden als helle Bücher gelesen; die Seite hat dafür „Kein Buch".
 - **Offen:** kein echtes Foto gesehen. Fünf Fotos von Julian (hell, schummrig, voll, mit Lücken, mit Stützen), Ziel ≥ 90 % der Linien ohne Eingriff.
+
+## 2026-09-28 — Die Farbordnung als Schritt im Regal-Ablauf (ROADMAP 5.16 auf 5.11)
+
+Julian: „use the book detection by the other lab project for the collection curation to better find the books from the picture and make the colours sorting part of that process"
+
+- Im Regal-Ablauf von [`lab/shelf/`](../lab/shelf/README.md) findet das Bildmodell (`lib/recognize.ts`) die Bücher. `refineSpineBox` aus [`lab/colorsort/`](../lab/colorsort/README.md) schiebt die linke und rechte Kante jedes Rücken-Kastens auf die nächste Trennlinie. Danach liest der Browser die Farbe und ordnet die Wand „wie im Foto“, „nach Farben“ oder „hell nach dunkel“. Der geteilte Link trägt die gewählte Reihenfolge.
+- **Kanten-Anpassung, gemessen** an sechs gemalten Regalen (283 Rücken), beide Kanten um einen Anteil der Rückenbreite verschoben: 10 % → 283/283 auf ±3 px zurück, 25 % → 274, 35 % → 199, 50 % → 5. Die erste Fassung nahm die *stärkste* Linie im Fenster statt der *nächsten* und kam bei 25 % nur auf 79 %: die Außenkante eines schmalen Nachbarn war stärker.
+- Beispielmodus im Browser: 12 von 12 Farben gelesen, 71 ms; die Reihenfolge im Link stimmt mit der Wand überein.
+- **Offen:** ein echtes Foto (Schlüssel fehlt lokal). Die Kacheln zeigen Open-Library-Cover, geordnet wird nach der Farbe des eigenen Exemplars. Ob das auf der Wand stimmig aussieht, entscheidet Julian.
