@@ -35,6 +35,19 @@
   --accent: #945138;
   --on-accent: #fff8f2;
   --shadow-color: 20 16 12;
+  /*
+   * The mark's tiles (ROADMAP 6.61, the A + C mix Julian chose 2026-09-29):
+   * seven tones from ink to paper. In dark mode the ramp turns round, so the
+   * tile that is darkest by day is lightest by night and none sinks into
+   * the ground.
+   */
+  --mark-0: #2a2622;
+  --mark-1: #3a342f;
+  --mark-2: #4a433c;
+  --mark-3: #6b635a;
+  --mark-4: #8a8178;
+  --mark-5: #b8ab9c;
+  --mark-6: #d9cfc1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -51,6 +64,13 @@
     --accent: #dbac94;
     --on-accent: #1a1210;
     --shadow-color: 0 0 0;
+    --mark-0: #efe8dd;
+    --mark-1: #d6cdc0;
+    --mark-2: #b8ab9c;
+    --mark-3: #9a8f82;
+    --mark-4: #7d7468;
+    --mark-5: #5f574e;
+    --mark-6: #48413b;
   }
 }
 

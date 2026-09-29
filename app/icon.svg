@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-7.5 0 51 51">
-<style>.t{fill:#1a1714}.p{fill:#945138}@media (prefers-color-scheme:dark){.t{fill:#efe8dd}.p{fill:#dbac94}}</style>
-<g class="t"><rect x="0" y="0" width="10" height="15" rx="0.6"/><rect x="13" y="0" width="10" height="15" rx="0.6"/><rect x="26" y="0" width="10" height="15" rx="0.6"/><rect x="0" y="18" width="10" height="15" rx="0.6"/><rect x="26" y="18" width="10" height="15" rx="0.6"/><rect x="0" y="36" width="10" height="15" rx="0.6"/><rect x="13" y="36" width="10" height="15" rx="0.6"/><rect x="26" y="36" width="10" height="15" rx="0.6"/></g>
+<style>.m0{fill:#2a2622}.m1{fill:#3a342f}.m2{fill:#4a433c}.m3{fill:#6b635a}.m4{fill:#8a8178}.m5{fill:#b8ab9c}.m6{fill:#d9cfc1}.p{fill:#945138}@media (prefers-color-scheme:dark){.m0{fill:#efe8dd}.m1{fill:#d6cdc0}.m2{fill:#b8ab9c}.m3{fill:#9a8f82}.m4{fill:#7d7468}.m5{fill:#5f574e}.m6{fill:#48413b}.p{fill:#dbac94}}</style>
+<rect class="m2" x="0" y="0" width="10" height="15" rx="0.6"/><rect class="m6" x="13" y="0" width="10" height="15" rx="0.6"/><rect class="m3" x="26" y="0" width="10" height="15" rx="0.6"/><rect class="m5" x="0" y="18" width="10" height="15" rx="0.6"/><rect class="m3" x="26" y="18" width="10" height="15" rx="0.6"/><rect class="m2" x="0" y="36" width="10" height="15" rx="0.6"/><rect class="m0" x="13" y="36" width="10" height="15" rx="0.6"/><rect class="m1" x="26" y="36" width="10" height="15" rx="0.6"/>
 <rect class="p" x="11.5" y="15.75" width="13.0" height="19.5" rx="0.8"/>
 </svg>

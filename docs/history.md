@@ -3714,3 +3714,7 @@ Julian: „update the project cockpit to include a tab on visual identity/brandi
 
 Nebenbei: der Historien-Leser des Cockpits erkennt nur Überschriften mit „·"; die 6.61-Einträge standen mit „—" und fehlten deshalb beim Roadmap-Punkt. Umgestellt. Andere Einträge vom 2026-09-28 haben dasselbe Problem.
 
+## 2026-09-29 · Die Bildmarke doch als Mischung A + C (ROADMAP 6.61)
+
+Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch diese Variante" — die Mischung A + C, 3 × 3, statt A in reiner Tinte, wenige Stunden nachdem A live ging. Die Kacheln tragen die sieben Töne der Website-Karte (`#2a2622` bis `#d9cfc1`) in genau der Anordnung der Skizze (Zeilen 2-6-3, 5-·-3, 2-0-1, Index in die Tonleiter). Der Einwand gegen die Mischung war der dunkle Grund: dort verschwanden die dunklen Kacheln. Darum dreht sich die Tonleiter im dunklen Modus um (`--mark-0` … `--mark-6` in `app/globals.css`, `#efe8dd` bis `#48413b`): die dunkelste Kachel des Tages ist nachts die hellste, und die hellste des Tages wird ein Dunkelbraun, das sich vom Grund `#131110` noch abhebt. Geprüft groß, in 16 und 32 px, hell und dunkel, und in der Kopfzeile beider Modi. Die Rasterfassungen (Papiergrund) zeichnet `scripts/build-icons.py` neu: `favicon.ico` 16/32/48, `apple-icon.png` 180.
+

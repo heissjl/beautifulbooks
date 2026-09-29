@@ -39,7 +39,7 @@ describe('parseTokens', () => {
 describe('markSketches', () => {
   it('marks exactly one direction as chosen', () => {
     const s = markSketches();
-    expect(s.filter(k => k.chosen).map(k => k.id)).toEqual(['A']);
+    expect(s.filter(k => k.chosen).map(k => k.id)).toEqual(['AC3']);
     expect(s.every(k => k.svg.startsWith('<svg'))).toBe(true);
   });
 });

@@ -21,8 +21,8 @@ export default function SiteHeader({ left, right, search }: SiteHeaderProps) {
         <div className="flex min-w-0 items-center gap-4">
           {left}
           <Link href="/" className="group flex shrink-0 items-center gap-2 font-display text-xl italic tracking-tight text-ink hover:text-accent transition-colors">
-            {/* The mark keeps the ink on hover, so the picked tile stays picked out. */}
-            <BrandMark className="h-6 w-auto text-ink" />
+            {/* The mark keeps its own tones on hover, so the picked tile stays picked out. */}
+            <BrandMark className="h-6 w-auto" />
             Beautiful Books
           </Link>
         </div>

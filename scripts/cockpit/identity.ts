@@ -88,12 +88,12 @@ export function markSketches(): MarkSketch[] {
   };
   const fan = svgBox(`<rect x="4" y="10" width="20" height="30" fill="#8a8178" transform="rotate(-14 14 40)"/><rect x="10" y="8" width="20" height="30" fill="${ink}" transform="rotate(-4 20 38)"/><rect x="16" y="8" width="20" height="30" fill="${acc}" transform="rotate(8 26 38)"/>`, 40, 46);
   return [
-    { id: 'A', label: 'A · die gewählte Kachel', note: 'Gewählt 2026-09-29. Gebaut mit Abstand auch zwischen den Reihen.', svg: wall(3, false, 1, 3, acc), chosen: true },
+    { id: 'A', label: 'A · die gewählte Kachel', note: 'Gewählt und gebaut 2026-09-29, am selben Tag durch die Mischung A + C ersetzt.', svg: wall(3, false, 1, 3, acc), chosen: false },
     { id: 'A0', label: 'A, Skizze vom 2026-09-28', note: 'Die erste Skizze: Reihen ohne Abstand.', svg: wall(3, false, 1, 0, acc), chosen: false },
     { id: 'B', label: 'B · Wand mit Lücke', note: 'Bei 16 px kaum von einem Gitter zu unterscheiden.', svg: wall(3, false, 1, 0, null, true), chosen: false },
     { id: 'C', label: 'C · Mosaik-Buch', note: 'Groß lebendig, klein ein bunter Fleck.', svg: mosaicBook(), chosen: false },
     { id: 'D', label: 'D · Fächer', note: 'Wie der Cover-Ring der Startseite.', svg: fan, chosen: false },
-    { id: 'AC3', label: 'Mischung A + C, 3 × 3', note: 'Wie die Website-Karte, auf dunklem Grund unruhig.', svg: wall(3, true, 5, 3, acc), chosen: false },
+    { id: 'AC3', label: 'Mischung A + C, 3 × 3', note: 'Gewählt 2026-09-29. Im dunklen Modus kehrt sich die Tonleiter um, damit keine Kachel im Grund versinkt.', svg: wall(3, true, 5, 3, acc), chosen: true },
     { id: 'AC5', label: 'Mischung A + C, 5 × 5', note: 'Groß wie die Karte, bei 16 px Rauschen.', svg: wall(5, true, 11, 3, acc), chosen: false },
   ];
 }

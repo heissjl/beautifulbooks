@@ -4,7 +4,8 @@
 
 Writes app/favicon.ico (16, 32, 48 px) and app/apple-icon.png (180 px).
 The vector mark is components/BrandMark.tsx and app/icon.svg; this draws the
-same wall of 3 x 3 book-shaped tiles with the middle one picked out, but
+same wall of 3 x 3 book-shaped tiles in shelf tones with the middle one
+picked out, but
 snapped to whole pixels per size, because a 16 px icon scaled from the
 vector blurs into a grey square. A raster icon cannot follow dark mode, so
 it sits on the paper colour; browsers that read SVG icons use app/icon.svg,
@@ -16,8 +17,11 @@ from PIL import Image, ImageDraw
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAPER = (244, 240, 232, 255)   # --bg, light
-INK = (26, 23, 20, 255)        # --ink, light
 ACCENT = (148, 81, 56, 255)    # --accent, light
+# --mark-0 … --mark-6, light, and the tone of each tile row by row (the A + C
+# mix, components/BrandMark.tsx MARK_TONES).
+TONES = ['#2a2622', '#3a342f', '#4a433c', '#6b635a', '#8a8178', '#b8ab9c', '#d9cfc1']
+MARK_TONES = [[2, 6, 3], [5, -1, 3], [2, 0, 1]]
 
 # Per size: tile width, tile height, gap, picked width, picked height, corner.
 # Tiles keep roughly the 2:3 of a book; the picked tile is larger by about a
@@ -45,7 +49,7 @@ def draw(size: int) -> Image.Image:
                 continue
             x = x0 + col * (tw + gap)
             y = y0 + row * (th + gap)
-            d.rectangle((x, y, x + tw - 1, y + th - 1), fill=INK)
+            d.rectangle((x, y, x + tw - 1, y + th - 1), fill=TONES[MARK_TONES[row][col]])
     cx = x0 + (tw + gap) + tw / 2
     cy = y0 + (th + gap) + th / 2
     px = round(cx - pw / 2)
