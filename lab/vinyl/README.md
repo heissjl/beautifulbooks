@@ -28,8 +28,12 @@ Was anders ist:
 
 ```bash
 npx tsx lab/vinyl/measure.ts
+npx tsx lab/vinyl/discogs.ts     # danach; Discogs drosselt ohne Token stark (2 h für acht Alben)
+npx tsx lab/vinyl/labels.ts      # Wand der Etiketten nach out/labels.html, nur aus cache.json
 npx vitest run lab/vinyl
 ```
+
+Die Wand ansehen: `out/` mit einem beliebigen statischen Server ausliefern, z. B. `cd lab/vinyl/out && python3 -m http.server 4341 --bind 127.0.0.1` (4330 belegt ein anderes Lab-Werkzeug).
 
 ## Status
 
@@ -39,5 +43,7 @@ npx vitest run lab/vinyl
 2. **Aber dünn:** 4 bis 57 Pressungen mit Bild je Album — eine Reihe, keine Wand. Discogs kennt 2- bis 20-mal so viele Vinyl-Versionen (*Rumours* 492 statt 24) und liefert ohne Token ein 150-px-Vorschaubild je Version; große Bilder brauchen einen Token, und ihre Bilder tragen keinen Seitentyp.
 3. **`Medium` zeigt das Etikett, nicht die Platte:** 11 von 12 zufällig angesehenen Bildern sind Mittenetiketten (Columbia, CBS, Harvest, Geffen), eins eine CD aus einer Box. Eine Wand der Etiketten wäre eine eigene Idee.
 4. **Die Plattenfarbe steht nur als Freitext** — bei MusicBrainz in 4 von 181 Disambiguierungen, bei Discogs im Formattext der Pressung, dort aber vermischt mit Etikett- und Hüllenfarbe („Green WB Labels", „Yellow Cover", „Green Obi"). Ein Farbwort allein heißt also noch nicht, dass die Platte so aussieht; ein Parser müsste „Labels", „Cover", „Obi", „Sleeve" ausschließen.
+
+5. **Die Wand der Etiketten** (`labels.ts`, Julian: „zeig mir eine wand der etiketten"): 103 Pressungen, je eine runde Kachel, älteste zuerst. Angesehen am 2026-09-29: sie trägt — *Kind of Blue* allein zeigt Columbias „Six Eye", Fontana in drei Farben, Coronet, CBS orange; *Dark Side* wandert von Harvest grün über schwarz zum Prisma. Unter 21 angesehenen *Kind of Blue*-Kacheln sind zwei kein Etikett (1959 JP zeigt ein Foto der Hülle, 1959 CA ist fast ganz schwarz); `Medium` allein reicht also nicht als Filter, es bräuchte einen Blick oder eine Kreis-Erkennung.
 
 **Offen, Julian:** Discogs-Token beantragen und die Bildrechte dort prüfen, oder bei MusicBrainz bleiben; wo Rückseite und Etikett erscheinen (auf der Wand oder erst beim gewählten Cover); eigene Seite oder Teil von beautifulcovers.
