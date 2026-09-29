@@ -89,12 +89,12 @@ export default async function Home({ searchParams }: HomeProps) {
                       href="/versus"
                       className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
                     >
-                      Or help us find the prettiest cover of all time!
+                      Help us find the prettiest cover of all time!
                       <span aria-hidden="true">&rarr;</span>
                     </Link>
                   </p>
                   {/* The reader's own wall (5.13b): the second invitation, same form, behind its switch. */}
-                  {wallsEnabled() && <WallsInvite className="mt-2">Or create your own collection of covers</WallsInvite>}
+                  {wallsEnabled() && <WallsInvite className="mt-2">Create your own collection of covers</WallsInvite>}
                 </div>
               )}
               <div className="max-w-3xl">
