@@ -28591,7 +28591,7 @@
       "slug": "fischer-bucherei",
       "title": "Fischer Bücherei",
       "kind": "series",
-      "intro": "The Fischer Bücherei was S. Fischer's paperback series from 1952 to about 1970: over a thousand numbered volumes, a different picture on every cover. The first covers ran a picture over the whole front with the series name at the foot; from about 1962 a coloured band with the three fish sits at the top above a white title field. This wall shows the volumes whose series cover Open Library holds, in the order of their numbers, and names the designer where it is known for that printing.",
+      "intro": "The Fischer Bücherei was S. Fischer's paperback series from 1952 to about 1970: over a thousand numbered volumes, a different picture on every cover. The first covers ran a picture over the whole front with the series name at the foot; from about 1962 a coloured band with the three fish sits at the top above a white title field. This wall shows the volumes whose series cover Open Library holds: first every cover in the early layout, then every cover with the band, each in the order of their numbers. Five volumes appear twice, once in each layout. The designer is named where it is known for that printing.",
       "published": false,
       "publishers": [
         "Fischer Bücherei",
@@ -28599,50 +28599,28 @@
       ],
       "works": [
         {
-          "id": "OL482894W",
+          "id": "OL482875W",
           "title": "Die Brücke von San Luis Rey",
           "author": "Thornton Wilder",
-          "coverId": "ol:15259654",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL62602859M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
-        },
-        {
-          "id": "OL31289225W",
-          "title": "Königliche Hoheit",
-          "author": "Thomas Mann",
-          "coverId": "ol:14996983",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL42942107M"
+          "coverId": "ol:7283706",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL22032412M"
         },
         {
           "id": "OL1140126W",
           "title": "Die Frauen des Hauses Wu",
           "author": "Pearl S. Buck",
-          "coverId": "ol:15259622",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL13942720M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
-        },
-        {
-          "id": "OL1439437W",
-          "title": "Madame Curie",
-          "author": "Eve Curie",
-          "coverId": "ol:7104147",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL25285721M"
+          "coverId": "ol:12588378",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL36855343M"
         },
         {
           "id": "OL498782W",
           "title": "Das Urteil und andere Erzählungen",
           "author": "Franz Kafka",
-          "coverId": "ol:15259623",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL13543044M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+          "coverId": "ol:12791587",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL38245602M"
         },
         {
           "id": "OL7476482W",
@@ -28653,22 +28631,12 @@
           "from": "edition:OL46849983M"
         },
         {
-          "id": "OL17966972W",
-          "title": "Der letzte Advent",
-          "author": "Edzard Schaper",
-          "coverId": "ol:15250622",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL62509876M"
-        },
-        {
           "id": "OL28423W",
           "title": "Phantastische Nacht",
           "author": "Stefan Zweig",
-          "coverId": "ol:15259625",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL17721734M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+          "coverId": "ol:14576961",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL15464324M"
         },
         {
           "id": "OL1069166W",
@@ -28687,14 +28655,12 @@
           "from": "edition:OL50556436M"
         },
         {
-          "id": "OL14867028W",
+          "id": "OL34656426W",
           "title": "Der Tod in Venedig und andere Erzählungen",
           "author": "Thomas Mann",
-          "coverId": "ol:13011655",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL42312189M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+          "coverId": "ol:14943491",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL46986053M"
         },
         {
           "id": "OL751084W",
@@ -28761,14 +28727,6 @@
           "from": "edition:OL50986038M"
         },
         {
-          "id": "OL34557714W",
-          "title": "Amerika",
-          "author": "Franz Kafka",
-          "coverId": "ol:13979393",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL47384445M"
-        },
-        {
           "id": "OL34959019W",
           "title": "Schopenhauer",
           "author": "Reinhold Schneider",
@@ -28777,40 +28735,12 @@
           "from": "edition:OL47320616M"
         },
         {
-          "id": "OL630998W",
-          "title": "Isabelle",
-          "author": "André Gide",
-          "coverId": "ol:15259655",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL62602861M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
-        },
-        {
           "id": "OL4990142W",
           "title": "Die Farm in den grünen Bergen",
           "author": "Alice Herdan-Zuckmayer",
           "coverId": "ol:11946466",
           "addedAt": "2026-09-28",
           "from": "edition:OL33277758M"
-        },
-        {
-          "id": "OL4358788W",
-          "title": "Der Richter",
-          "author": "Charles Morgan",
-          "coverId": "ol:15259656",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL62602862M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
-        },
-        {
-          "id": "OL1442158W",
-          "title": "Menschliche Komödie",
-          "author": "William Saroyan",
-          "coverId": "ol:11550553",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL32929538M"
         },
         {
           "id": "OL34573030W",
@@ -28925,16 +28855,6 @@
           "from": "edition:OL26556993M"
         },
         {
-          "id": "OL31322283W",
-          "title": "Südkurier",
-          "author": "Antoine de Saint-Exupéry",
-          "coverId": "ol:15259657",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL62602860M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
-        },
-        {
           "id": "OL854189W",
           "title": "Die Plastik des 20. Jahrhunderts",
           "author": "Werner Hofmann",
@@ -28983,32 +28903,12 @@
           "from": "edition:OL50015354M"
         },
         {
-          "id": "OL10267W",
-          "title": "Nachtflug",
-          "author": "Antoine de Saint-Exupéry",
-          "coverId": "ol:15259626",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL15279012M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
-        },
-        {
           "id": "OL10515113W",
           "title": "Hart auf hart",
           "author": "Roger Vailland",
           "coverId": "ol:14380125",
           "addedAt": "2026-09-28",
           "from": "edition:OL48606748M"
-        },
-        {
-          "id": "OL1460172W",
-          "title": "Der tolle Bomberg",
-          "author": "Josef Winckler",
-          "coverId": "ol:15259658",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL62602863M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
         },
         {
           "id": "OL22463644W",
@@ -29041,6 +28941,188 @@
           "coverId": "ol:11144701",
           "addedAt": "2026-09-28",
           "from": "edition:OL32490393M"
+        },
+        {
+          "id": "OL2865527W",
+          "title": "\"Mein Kampf\"",
+          "author": "Erwin Leiser",
+          "coverId": "ol:8247091",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL5896935M"
+        },
+        {
+          "id": "OL24176915W",
+          "title": "Rumänisches Tagebuch",
+          "author": "Carossa, Hans",
+          "coverId": "ol:10598801",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL31916018M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL860066W",
+          "title": "Ist das ein Mensch?",
+          "author": "Primo Levi",
+          "coverId": "ol:12678321",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL37767950M"
+        },
+        {
+          "id": "OL16091916W",
+          "title": "Zeichen der Zeit",
+          "author": "Walther Killy",
+          "coverId": "ol:6918054",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL24988190M"
+        },
+        {
+          "id": "OL37770171W",
+          "title": "Die Heimkehr",
+          "author": "Hermann Broch",
+          "coverId": "ol:14573618",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL50968351M"
+        },
+        {
+          "id": "OL1442066W",
+          "title": "Ich hab dich lieb, Mama",
+          "author": "William Saroyan",
+          "coverId": "ol:13379308",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47068076M"
+        },
+        {
+          "id": "OL1219868W",
+          "title": "Jacobowsky und der Oberst",
+          "author": "Franz Werfel",
+          "coverId": "ol:12506546",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL15261256M"
+        },
+        {
+          "id": "OL482894W",
+          "title": "Die Brücke von San Luis Rey",
+          "author": "Thornton Wilder",
+          "coverId": "ol:15259654",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602859M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL31289225W",
+          "title": "Königliche Hoheit",
+          "author": "Thomas Mann",
+          "coverId": "ol:14996983",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL42942107M"
+        },
+        {
+          "id": "OL1140126W",
+          "title": "Die Frauen des Hauses Wu",
+          "author": "Pearl S. Buck",
+          "coverId": "ol:15259622",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL13942720M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL498782W",
+          "title": "Das Urteil und andere Erzählungen",
+          "author": "Franz Kafka",
+          "coverId": "ol:15259623",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL13543044M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL28423W",
+          "title": "Phantastische Nacht",
+          "author": "Stefan Zweig",
+          "coverId": "ol:15259625",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL17721734M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL14867028W",
+          "title": "Der Tod in Venedig und andere Erzählungen",
+          "author": "Thomas Mann",
+          "coverId": "ol:13011655",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL42312189M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL34557714W",
+          "title": "Amerika",
+          "author": "Franz Kafka",
+          "coverId": "ol:13979393",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL47384445M"
+        },
+        {
+          "id": "OL630998W",
+          "title": "Isabelle",
+          "author": "André Gide",
+          "coverId": "ol:15259655",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602861M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL4358788W",
+          "title": "Der Richter",
+          "author": "Charles Morgan",
+          "coverId": "ol:15259656",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602862M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1442158W",
+          "title": "Menschliche Komödie",
+          "author": "William Saroyan",
+          "coverId": "ol:11550553",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL32929538M"
+        },
+        {
+          "id": "OL31322283W",
+          "title": "Südkurier",
+          "author": "Antoine de Saint-Exupéry",
+          "coverId": "ol:15259657",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602860M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL10267W",
+          "title": "Nachtflug",
+          "author": "Antoine de Saint-Exupéry",
+          "coverId": "ol:15259626",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL15279012M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
+        },
+        {
+          "id": "OL1460172W",
+          "title": "Der tolle Bomberg",
+          "author": "Josef Winckler",
+          "coverId": "ol:15259658",
+          "addedAt": "2026-09-28",
+          "from": "edition:OL62602863M",
+          "coverArt": "Kurt Wirth",
+          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
         },
         {
           "id": "OL46028954W",
@@ -29093,24 +29175,6 @@
           "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
         },
         {
-          "id": "OL2865527W",
-          "title": "\"Mein Kampf\"",
-          "author": "Erwin Leiser",
-          "coverId": "ol:8247091",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL5896935M"
-        },
-        {
-          "id": "OL24176915W",
-          "title": "Rumänisches Tagebuch",
-          "author": "Carossa, Hans",
-          "coverId": "ol:10598801",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL31916018M",
-          "coverArt": "Kurt Wirth",
-          "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
-        },
-        {
           "id": "OL86320W",
           "title": "Dublin",
           "author": "James Joyce",
@@ -29119,14 +29183,6 @@
           "from": "edition:OL19724772M",
           "coverArt": "Kurt Wirth",
           "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
-        },
-        {
-          "id": "OL860066W",
-          "title": "Ist das ein Mensch?",
-          "author": "Primo Levi",
-          "coverId": "ol:12678321",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL37767950M"
         },
         {
           "id": "OL82923W",
@@ -29159,22 +29215,6 @@
           "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
         },
         {
-          "id": "OL16091916W",
-          "title": "Zeichen der Zeit",
-          "author": "Walther Killy",
-          "coverId": "ol:6918054",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL24988190M"
-        },
-        {
-          "id": "OL37770171W",
-          "title": "Die Heimkehr",
-          "author": "Hermann Broch",
-          "coverId": "ol:14573618",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL50968351M"
-        },
-        {
           "id": "OL873100W",
           "title": "Narziss und Goldmund",
           "author": "Hermann Hesse",
@@ -29183,22 +29223,6 @@
           "from": "edition:OL37821432M",
           "coverArt": "Kurt Wirth",
           "coverArtSource": "Sammlung Keller, https://www.sammlungkeller.ch/wirth-kurt.html"
-        },
-        {
-          "id": "OL1442066W",
-          "title": "Ich hab dich lieb, Mama",
-          "author": "William Saroyan",
-          "coverId": "ol:13379308",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL47068076M"
-        },
-        {
-          "id": "OL1219868W",
-          "title": "Jacobowsky und der Oberst",
-          "author": "Franz Werfel",
-          "coverId": "ol:12506546",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL15261256M"
         },
         {
           "id": "OL1696158W",
@@ -30213,6 +30237,14 @@
           "from": "edition:OL32370480M"
         },
         {
+          "id": "OL1348644W",
+          "title": "Kleine Weltgeschichte der Philosophie",
+          "author": "Hans Joachim Störig",
+          "coverId": "ol:11024254",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL32370545M"
+        },
+        {
           "id": "OL4190239W",
           "title": "Der Orden unter dem Totenkopf",
           "author": "Heinz Höhne",
@@ -30221,12 +30253,12 @@
           "from": "edition:OL32384294M"
         },
         {
-          "id": "OL498773W",
-          "title": "Sämtliche Erzählungen",
-          "author": "Franz Kafka",
-          "coverId": "ol:11351242",
-          "addedAt": "2026-09-28",
-          "from": "edition:OL21814534M"
+          "id": "OL4190239W",
+          "title": "Der Orden unter dem Totenkopf",
+          "author": "Heinz Höhne",
+          "coverId": "ol:11048335",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL32384334M"
         },
         {
           "id": "OL1992165W",
@@ -32325,6 +32357,22 @@
           "coverId": "ol:15259961",
           "addedAt": "2026-09-29",
           "from": "edition:OL62603312M"
+        },
+        {
+          "id": "OL5095341W",
+          "title": "Das Peter-Prinzip",
+          "author": "Laurence J. Peter",
+          "coverId": "ol:15259987",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603439M"
+        },
+        {
+          "id": "OL3577840W",
+          "title": "Das Schmettern des gallischen Hahns",
+          "author": "Niklaus Meienberg",
+          "coverId": "ol:15259988",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603440M"
         }
       ]
     }

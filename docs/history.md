@@ -3662,3 +3662,26 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
   - Neues Listenfeld `wallGroup` in `from-isbns.ts`; die Picks werden stabil nach Gruppe sortiert.
   - Nr. 1, 5, 19, 45 und 54 stehen zweimal auf der Wand, mit dem älteren Druck im ersten Block (`repeat`).
   - Der Neubau wartet ebenfalls auf Open Library.
+
+**Entwürfe halten ein Werk mehrmals, 2026-09-29.** Julian: „mache das“ auf die Frage, ob Entwürfe ein Werk mehrfach halten sollen. Anlass sind die zwei *Lone Star*-Umschläge und die Doppeldrucke der Fischer Bücherei.
+- Eine Kachel heißt jetzt Werk + Cover (`pickKey` in `lib/collectionedit.ts`).
+  - `upsertPick` kennt die Optionen `again` (weitere Kachel) und `was` (welche Kachel einen neuen Umschlag bekommt).
+  - `removePick` nimmt optional ein Cover und entfernt dann nur diese Kachel.
+  - `reorder` versteht Kachel-Schlüssel und weiter auch reine Werk-IDs.
+  - Ohne die neuen Felder verhält sich alles wie vorher. Julians lokales Werkzeug (`lab/collections/serve.ts`) läuft unverändert.
+- `applyOp` in `lib/curate/drafts.ts` nimmt `again`, `was` und `remove … coverId` an.
+- Die ungespeicherten Änderungen auf /curate (`lib/curate/pending.ts`) führen Kacheln unter Schlüsseln; dazu kommt `removeTile`.
+- /curate (`components/CurateTool.tsx`): Ziehen, Pfeile, × und Kachel-Markierung wirken auf die einzelne Kachel. Der Umschlag-Wähler hat bei einem Werk, das schon auf der Wand ist, das Häkchen „Add as a further cover and keep the one on the wall“.
+- `lab/collections/draftdelta.ts` vergleicht Kacheln statt Werke:
+  - Eine weitere Kachel aus der Datei geht mit `again` hinaus.
+  - Eine Kachel, die nur online existiert, wird gemeldet und stoppt den Push.
+  - Die Reihenfolge prüft das Werkzeug, indem es die eigenen Schritte mit den Server-Regeln durchspielt.
+- **Geprüft** gegen `next dev` mit Speicher im Arbeitsspeicher und Wegwerf-Passwörtern, ohne das Redis der Produktion:
+  - Ein Entwurf aus der Haffmans-Wand zeigt beide *Lone Star*.
+  - ⇤ bewegt nur die eine Kachel; nach dem Speichern steht Cover 15259879 auf Platz 1, 15259878 auf Platz 35.
+  - × entfernt nur die eine Kachel.
+  - Die Konsole zeigt keine Fehler; das Häkchen erscheint.
+  - Tests: 950 plus die neuen Fälle in `curate-drafts`, `curate-pending` und `draftdelta`.
+- **Fischer Bücherei, Julians Veröffentlichung auf /curate:** Julian hat den Entwurf am 29.9. um 05:12 Uhr veröffentlicht und dabei *Madame Curie*, *Der letzte Advent* und *Sämtliche Erzählungen* entfernt. Die drei sind in Liste und Datei übernommen (`skip`). Die Wand hat jetzt 186 Kacheln in zwei Blöcken; 95 tragen einen Gestalter.
+- **Ex Libris Nr. 57 und 58 angelegt:** OL62603439M (Ex Libris 1972) und OL62603440M (Ex Libris 1977), beide ohne ISBN und mit Umschlag. Die Wand zeigt 58 von 58.
+- **Julians Berichtigungen bei Open Library, geprüft:** OL62603210M steht auf Haffmans, OL18051650M hat keine ISBN mehr.

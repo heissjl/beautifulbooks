@@ -31,7 +31,8 @@
    "layout": "unten"
   },
   "designer": "Kurt Wirth",
-  "wallGroup": 1
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "2",
@@ -101,7 +102,8 @@
    "layout": "unten"
   },
   "designer": "Kurt Wirth",
-  "wallGroup": 1
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "6",
@@ -127,7 +129,8 @@
   "dnb": "450852652",
   "layout": "unten",
   "editionYear": 1957,
-  "wallGroup": 0
+  "wallGroup": 0,
+  "skip": "Julian removed it from the online draft (published 2026-09-29)"
  },
  {
   "no": "8",
@@ -284,7 +287,8 @@
    "layout": "unten"
   },
   "designer": "Kurt Wirth",
-  "wallGroup": 1
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "20",
@@ -520,7 +524,8 @@
   "dnb": "454308027",
   "layout": "unten",
   "editionYear": 1953,
-  "wallGroup": 0
+  "wallGroup": 0,
+  "skip": "Julian removed it from the online draft (published 2026-09-29)"
  },
  {
   "no": "42",
@@ -584,7 +589,8 @@
    "layout": "unten"
   },
   "designer": "Kurt Wirth",
-  "wallGroup": 1
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "46",
@@ -720,7 +726,8 @@
    "layout": "unten"
   },
   "designer": "Kurt Wirth",
-  "wallGroup": 1
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "55",
@@ -12352,7 +12359,8 @@
   "dnb": "458252131",
   "layout": "oben",
   "editionYear": 1969,
-  "wallGroup": 1
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "1052",
@@ -12380,7 +12388,8 @@
   "dnb": "457007184",
   "layout": "oben",
   "editionYear": 1969,
-  "wallGroup": 1
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "1054",
@@ -12650,7 +12659,8 @@
   "dnb": "457126035",
   "layout": "oben",
   "editionYear": 1970,
-  "wallGroup": 1
+  "wallGroup": 1,
+  "skip": "Julian removed it from the online draft (published 2026-09-29)"
  },
  {
   "no": "1079",
