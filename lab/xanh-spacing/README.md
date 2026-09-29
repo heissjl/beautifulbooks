@@ -9,7 +9,9 @@
 **Result, 2026-09-29:**
 
 - **Upright: better.** Punctuation sits against its word („Frankenstein; or,"), and the gaps between letters even out. Sidebearing 22 reads close to the page's current density; 36 is looser than today. Widths after respacing (side 36): i 518, l 518, r 532, e 459, o 466, m 553, W 617, comma 186, semicolon 186.
-- **Italic: worse.** The sidebearing is taken from the glyph's bounding box, which for a slanted glyph includes the overhang: „b y", „Beauti f ul" open up. An italic needs sidebearings measured at the x-height band, not the whole box. Not done.
+- **Italic, first try: worse.** The sidebearing was taken from the glyph's bounding box, which for a slanted glyph includes the overhang: „b y", „Beauti f ul" opened up.
+- **Italic, measured in the band (2026-09-29, Julian: „baue die Kursive mit Rand auf Höhe der Kleinbuchstaben"):** sidebearings from the ink between 10 % and 90 % of the x-height (of the cap height for capitals and figures), punctuation keeps its box. On its own that was too tight — the italic f (ink −97…663, body about 150 wide) ran into its neighbours and over the space: „offiction", „WolfHall". So ink may reach at most a set distance past the band-measured edge (`OVERHANG`, fourth argument). Compared: side 30 / overhang 80, 30 / 130, 40 / 80. **30 / 130 reads best**: „Beautiful Books", „fifty shades of fiction", „Wolf Hall" and „by its covers." evenly spaced, the f still leaning into its neighbours as an italic f should. At 80 the f gets too much room („of  fiction"); side 40 is looser than the upright.
+- **An upright „Xanh" without „Mono" does not exist** as far as could be found (2026-09-29): the foundry's repository, Google Fonts and Fonts In Use list only Xanh Mono.
 - **−0.04em letter-spacing** makes everything denser but keeps the punctuation cells.
 
-**Status:** measured, not on the site. Open: Julian's choice; if the upright respacing goes in, the italic either stays Xanh Mono or gets a slant-aware respacing first. Roadmap 6.61.
+**Status:** measured, not on the site. Candidate: upright side 22, italic side 30 with overhang 130 (`python3 lab/xanh-spacing/respace.py 22 230` for the upright, `30 230 no 130` for the italic). Julian's choice. Roadmap 6.61.
