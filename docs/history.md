@@ -3637,3 +3637,12 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
   - Nr. 57 (*Das Peter-Prinzip*) und Nr. 58 (*Das Schmettern des gallischen Hahns*): Keller nennt kein Jahr, und kein Katalog kennt einen Druck bei Ex Libris.
 - Bei vier Büchern auf der Wand (Nr. 7, 32, 40, 41) nennt der Umschlag Benziger statt Ex Libris; diese Ausgaben stehen unter Benziger. Nr. 28 erschien bei beiden zugleich. Dazu kommen Nr. 35 (Nebelspalter) und Nr. 45 (Huber), deren Ausgaben es schon gab.
 - **Wand `ex-libris-covers-by-hanspeter-wyss`:** 44 von 58, laut Kontaktbogen alle von Wyss und bildhaft. Online als Entwurf.
+
+**Offene Fälle der Keller-Wände, nachgesehen am 2026-09-29.** Alle Fälle mit Bildern und Open-Library-Links stehen auf einer privaten Seite für Julian: https://claude.ai/artifact/S63L2jtsSUtTgWh2PBUgpM
+- **Berichtigung zu *Lone Star*:** Die Heyne-Ausgabe (Nr. 36, OL62603224M) hat einen anderen Heidelbach-Umschlag (Würfel) als die Haffmans-Ausgabe (Nr. 35, OL62603210M, Zigarre). Weil die Wand jedes Werk nur einmal zeigt, fehlt das Würfel-Bild. Oben stand, das sei richtig so; das stimmt nicht. Welches Bild bleibt, entscheidet Julian.
+- **Ex Libris, die zwölf zurückgehaltenen:** Nur Nr. 12, 15 und 29 sind reine Schrift. Die übrigen neun tragen eine abstrakte Grafik. Empfehlung: die neun dazunehmen.
+- **Empfehlungen für Julians Entscheidung:**
+  - Haffmans Nr. 63, 65 und 66 behalten; ebenso *Kim* (Büchergilde) und den *Kipling Companion*.
+  - Ex Libris Nr. 57 und 58 weglassen, bis ein Beleg für den Druck auftaucht.
+  - Die Fischer Bücherei als eine Wand mit beiden Layouts führen. In der Liste stehen 137 Cover im Layout „oben“ und 47 im Layout „unten“.
+  - Edelmann Nr. 818 und 843 erst, wenn es ein Bild gibt.
