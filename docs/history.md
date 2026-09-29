@@ -3566,3 +3566,17 @@ Die Bandliste stammt aus der DNB, ergänzt aus K10plus: `lab/collections/lists/f
 - **Verworfen:** eine Website-Karte aus dem Lade-Mosaik (Gesicht aus echten Covern) — das Gesicht ist in Kartengröße kaum zu erkennen, und die Rechtefrage gleicht der eines Logos ([docs/identitaet.md §4](identitaet.md)).
 - 890 Tests und Build grün.
 
+## 2026-09-28 — Welche Seite welche Vorschau zeigt (ROADMAP 6.61)
+
+Julian: „setz das [die Website-Karte] erstmal als Standard für alle Vorschauen, die nicht auf ein einzelnes Cover gehen. Schaue auch nach für die neuen Unterseiten, die mittlerweile online gingen" — und dazu: die Werk-Karte mit vier Covern „ist gut für die Vorschau auf einen Werk-Link ohne ausgewähltes Cover".
+
+Die Regel damit: **ein geteiltes Cover** (`/book/<id>/cover/<coverId>`) zeigt dieses Cover groß, **ein Werk ohne gewähltes Cover** (`/book/<id>`, auch die Jahrzehnte-Seite darunter) vier verschiedene Cover des Buchs, **jede andere Seite** die Website-Karte. Nach dem Einmischen von 38 Commits aus Produktion (darunter die Leser-Sammlungen 5.13) jede Seite mit `curl` am Dev-Server geprüft, was `og:image` nennt:
+
+| Seite | Vorschau |
+|---|---|
+| `/`, `/about`, `/contact`, `/privacy`, `/collections`, `/collections/readers`, `/collections/<slug>`, `/create`, `/create/review`, `/curate`, `/suggest`, `/versus`, `/versus/board`, `/c/<id>` | Website-Karte |
+| `/book/<id>`, `/book/<id>/decades` | Werk-Karte, vier Cover |
+| `/book/<id>/cover/<coverId>` | Cover-Karte |
+
+Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/create/review`) setzen kein eigenes `openGraph` und erben die Karte ohne Änderung. `/contact` und `/privacy` antworteten im Dev-Server mit 500, weil dort die `IMPRINT_*`-Variablen fehlen (bekannt, nicht neu); `/curate`, `/suggest` und eine unbekannte `/c/<id>` mit 404, weil Passwort bzw. Sammlung fehlen — das `og:image` steht trotzdem im Kopf.
+
