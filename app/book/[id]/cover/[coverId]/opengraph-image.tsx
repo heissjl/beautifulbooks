@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import { authorLine } from '@/lib/seo';
+import { Display, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
 import { getWorkPage, isWorkId } from '@/lib/work';
 
 /**
@@ -20,10 +21,6 @@ export const revalidate = 86400;
 export const alt = 'A cover of this book';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-
-const BG = '#131110';
-const INK = '#f4f0e8';
-const INK_2 = '#a8a09a';
 
 export default async function Image({ params }: { params: Promise<{ id: string; coverId: string }> }) {
   const { id, coverId } = await params;
@@ -49,7 +46,7 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
       <div
         style={{
           width: '100%', height: '100%', display: 'flex', alignItems: 'center',
-          background: BG, padding: 56, gap: 48,
+          background: OG.bg, padding: 56, gap: 48,
         }}
       >
         {url && (
@@ -62,14 +59,15 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
           />
         )}
         <div style={{ display: 'flex', flexDirection: 'column', maxWidth: 660 }}>
-          <div style={{ fontSize: 30, color: INK_2, display: 'flex' }}>One cover of</div>
-          <div style={{ fontSize: 62, color: INK, lineHeight: 1.1, marginTop: 8 }}>{title}</div>
-          <div style={{ fontSize: 32, color: INK_2, marginTop: 16, display: 'flex' }}>
-            {author ? `${author} · ` : ''}Beautiful Books
+          <div style={{ ...TEXT, fontSize: 30, color: OG.ink2, display: 'flex' }}>One cover of</div>
+          <div style={{ display: 'flex', marginTop: 8 }}><Display size={64} color={OG.ink}>{title}</Display></div>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginTop: 16 }}>
+            {author && <div style={{ ...TEXT, fontSize: 32, color: OG.ink2 }}>{`${author} ·`}</div>}
+            <Wordmark size={32} color={OG.ink2} />
           </div>
         </div>
       </div>
     ),
-    size,
+    { ...size, fonts: await ogFonts() },
   );
 }

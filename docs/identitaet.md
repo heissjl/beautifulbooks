@@ -127,3 +127,19 @@ Julian bat am 2026-09-28 um einen Vergleich der ISBN in den drei Schriften (Bild
 - **Bindestriche nach der Bereichstabelle der ISBN-Agentur**, über das npm-Paket `isbn3` (MIT, 128 KB entpackt, bringt 8 Pakete mit; nur lokal installiert, `package.json` nicht committet). Beispiele: 978-0-14-143947-1, 978-3-596-90486-0, 978-1-5131-3739-1 — die Gruppen sind je nach Land und Verlag verschieden lang, darum keine eigene Regel. Kennt die Tabelle eine ISBN nicht, bleibt sie ohne Striche.
 - **Die Striche gibt es nur in der Anzeige** (Julian: „falls das Probleme gibt, muss es ohne Striche weitergegeben werden"). `IsbnText` in `components/BookDetail.tsx` formatiert `edition.isbn13` beim Rendern; das Feld selbst bleibt unverändert, und daraus bauen `lib/buylinks.ts` und `/go/` ihre Adressen. **Geprüft im Browser** an *Frankenstein*, Long Bridge 2022: Anzeige „ISBN 978-0-578-28625-9", Kauf-Links `/go/abebooks/9780578286259?market=de` usw., ohne Striche. Kopiert jemand die angezeigte ISBN in das Suchfeld der Seite, entfernt `cleanIsbn` (`lib/normalize.ts`) die Striche wieder (`lib/queryshape.ts`).
 - **Schrift:** die Ziffern in Jost, jede `0` und jeder `-` in Geist Mono (`.isbn-mark`). Die Geist-Null ist breiter und durchgestrichen und steht dadurch sichtbar zwischen den Jost-Ziffern; die Geist-Striche sind länger als die von Jost und trennen die Gruppen deutlich. Offen für den Einbau: ob `isbn3` die 60-plus KB Bereichsdaten im Browser wert ist, oder ob die Striche auf dem Server gesetzt und mitgeschickt werden.
+
+## 4. Vorschaubilder (Open Graph)
+
+Julian, 2026-09-28: „[die Schrift im OG-Bild] gehe das an. Außerdem ob wir ein Mosaik als Vorschaubild benutzen können, entweder mit echten Bildern oder welchen wie ganz oben in der Session entwickelt."
+
+**Vorher:** eine Karte je Werk (vier Cover, Titel) und je geteiltem Cover (ein Cover groß), beide in der Voreinstellung von `next/og`. Startseite, About, Sammlungen und Impressum hatten keine Karte; Spiel, Rangliste und Sammlungen setzten `openGraph` selbst und verloren dadurch auch jedes geerbte Bild.
+
+**Gebaut:**
+
+- **Schrift:** Titel Xanh Mono, Autor und „One cover of" Jost, der Name kursiv in Xanh Mono. Statische WOFF-Dateien in `assets/og/` (je 8–16 KB, OFL-Lizenzen daneben), eingelesen in `app/og.tsx`; der Build nimmt sie in alle drei Kartenfunktionen auf (in den `.nft.json` geprüft). `word-spacing` übergeht der Generator, darum setzt `Display` jedes Wort als eigenes Kästchen, mit dem Rest-Abstand der Seite (0,2 em statt der vollen Zeichenbreite von 0,5 em).
+- **Website-Karte** `app/opengraph-image.tsx`: links der Name und „Judge a book *by its covers.*", rechts eine Wand aus 9 × 7 Kacheln im Format 2:3 in sieben Tönen der Seite, zum Text hin blasser, eine Kachel in Terrakotta vergrößert — Richtung A der Bildmarke. Statisch gebaut, fragt keine Quelle.
+
+**Nicht gebaut, als Vergleich gerendert:** dieselbe Karte mit dem Lade-Mosaik von Mary Shelley (ihr Porträt aus 179 Covern ihrer Bücher) auf der rechten Hälfte. Befund: in 600 × 630 und im Hochformat-Ausschnitt ist das Gesicht **kaum zu erkennen**, es liest sich als bunte Fläche aus Covern. Dazu die Rechtefrage: eine Karte für die ganze Seite zeigt kein bestimmtes Buch, also trägt sie das Argument der Wand nicht (§2.1), sie steht rechtlich neben dem Logo. Mit gemeinfreien Covern (§2.2) ginge es; dafür fehlt der Korpus.
+
+**Werkseiten** bleiben bei vier Covern desselben Buchs. Ein dichteres Mosaik aus Covern *desselben* Buchs wäre rechtlich wie die Wand, kostet aber je Karte ein Mehrfaches an Bildabrufen bei Open Library (100 je IP und 5 Minuten, Risikoregister) — bei jedem Crawler, der die Sitemap abläuft. Nicht ohne Messung.
+

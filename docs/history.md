@@ -3582,3 +3582,25 @@ Die Bandliste stammt aus der DNB, ergänzt aus K10plus: `lab/collections/lists/f
 - **Haffmans und Ex Libris:** Die Manifest-Agenten liefen, als die Sitzung endete; ihre Ordner enthalten nur Zwischenstände.
 
 **Herder Bücherei (Grieder), fertig am 2026-09-28.** 38 neue Ausgaben angelegt (OL62603082M–OL62603151M, Zuordnung in `created.json` im Manifest-Ordner) und 44 Umschläge hochgeladen. Die Wand `herder-bucherei-covers-by-walter-grieder` zeigt 44 von 45, laut Kontaktbogen alle von Grieder. Nr. 292/293 und 294/295 sind zwei Bände desselben Werks (*Wege zur Kunst*), deshalb steht nur einer auf der Wand. Online als Entwurf.
+## 2026-09-28 — Vorschaubilder in den neuen Schriften, eine Karte für die ganze Seite (ROADMAP 6.61)
+
+- Werk- und Cover-Karte in Xanh Mono und Jost (`app/og.tsx`, WOFF in `assets/og/`). Lokal gerendert: *Frankenstein* als Werk-Karte (1,8 s kalt) und als Cover-Karte.
+- Neue Website-Karte `app/opengraph-image.tsx` (statisch, 0,2–0,3 s im Dev-Server), eine Wand aus buchförmigen Kacheln ohne echte Cover.
+- **Gefunden:** `/versus`, `/versus/board` und jede Sammlung lieferten **kein** `og:image` — sie setzen `openGraph` selbst, und das ersetzt das geerbte Objekt samt Bild. Jetzt nennen sie `SITE_CARD`. Nachgeprüft mit `curl` auf `/`, `/about`, `/collections`, `/privacy`, `/contact`, `/versus`, `/versus/board`, `/collections/feminist-press`, `/book/OL450063W`, `/book/OL450063W/decades`, `/book/OL450063W/cover/ol-14705499`: jede Seite hat ein Bild, die Werk-, Jahrzehnte- und Cover-Seiten ihr eigenes.
+- **Verworfen:** eine Website-Karte aus dem Lade-Mosaik (Gesicht aus echten Covern) — das Gesicht ist in Kartengröße kaum zu erkennen, und die Rechtefrage gleicht der eines Logos ([docs/identitaet.md §4](identitaet.md)).
+- 890 Tests und Build grün.
+
+## 2026-09-28 — Welche Seite welche Vorschau zeigt (ROADMAP 6.61)
+
+Julian: „setz das [die Website-Karte] erstmal als Standard für alle Vorschauen, die nicht auf ein einzelnes Cover gehen. Schaue auch nach für die neuen Unterseiten, die mittlerweile online gingen" — und dazu: die Werk-Karte mit vier Covern „ist gut für die Vorschau auf einen Werk-Link ohne ausgewähltes Cover".
+
+Die Regel damit: **ein geteiltes Cover** (`/book/<id>/cover/<coverId>`) zeigt dieses Cover groß, **ein Werk ohne gewähltes Cover** (`/book/<id>`, auch die Jahrzehnte-Seite darunter) vier verschiedene Cover des Buchs, **jede andere Seite** die Website-Karte. Nach dem Einmischen von 38 Commits aus Produktion (darunter die Leser-Sammlungen 5.13) jede Seite mit `curl` am Dev-Server geprüft, was `og:image` nennt:
+
+| Seite | Vorschau |
+|---|---|
+| `/`, `/about`, `/contact`, `/privacy`, `/collections`, `/collections/readers`, `/collections/<slug>`, `/create`, `/create/review`, `/curate`, `/suggest`, `/versus`, `/versus/board`, `/c/<id>` | Website-Karte |
+| `/book/<id>`, `/book/<id>/decades` | Werk-Karte, vier Cover |
+| `/book/<id>/cover/<coverId>` | Cover-Karte |
+
+Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/create/review`) setzen kein eigenes `openGraph` und erben die Karte ohne Änderung. `/contact` und `/privacy` antworteten im Dev-Server mit 500, weil dort die `IMPRINT_*`-Variablen fehlen (bekannt, nicht neu); `/curate`, `/suggest` und eine unbekannte `/c/<id>` mit 404, weil Passwort bzw. Sammlung fehlen — das `og:image` steht trotzdem im Kopf.
+
