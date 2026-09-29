@@ -30821,6 +30821,343 @@
           "from": "edition:OL62603150M"
         }
       ]
+    },
+    {
+      "slug": "dtv-phantastica-covers-by-celestino-piatti",
+      "title": "dtv phantastica — covers by Celestino Piatti",
+      "kind": "series",
+      "intro": "From 1979 dtv published a series of fantastic fiction, dtv phantastica, and Celestino Piatti gave every volume the same black ground and a different picture on it: vampires, snails, a werewolf, a spaceship. These are the covers Sammlung Keller shows, in the order of their dtv numbers.",
+      "published": false,
+      "publishers": [
+        "Deutscher Taschenbuch Verlag",
+        "dtv"
+      ],
+      "works": [
+        {
+          "id": "OL6763838W",
+          "title": "Der Tag der nicht im Kalender stand",
+          "author": "Peter Motram",
+          "coverId": "ol:15259807",
+          "addedAt": "2026-09-29",
+          "from": "isbn:342301850X",
+          "coverIsbn": "342301850X"
+        },
+        {
+          "id": "OL85892W",
+          "title": "Dracula",
+          "author": "Bram Stoker",
+          "coverId": "ol:15259808",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018518",
+          "coverIsbn": "3423018518"
+        },
+        {
+          "id": "OL34307021W",
+          "title": "Jeder Dämon hat seinen Preis",
+          "author": "",
+          "coverId": "ol:15259806",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018526",
+          "coverIsbn": "3423018526"
+        },
+        {
+          "id": "OL31386661W",
+          "title": "Eden",
+          "author": "",
+          "coverId": "ol:15259809",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018534",
+          "coverIsbn": "3423018534"
+        },
+        {
+          "id": "OL14956485W",
+          "title": "Im Haus des Grafen Dracula",
+          "author": "Bram Stoker",
+          "coverId": "ol:15259811",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018542",
+          "coverIsbn": "3423018542"
+        },
+        {
+          "id": "OL46029137W",
+          "title": "Die Dame in Grün",
+          "author": "Boutet, Frédéric",
+          "coverId": "ol:15259810",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018550",
+          "coverIsbn": "3423018550"
+        },
+        {
+          "id": "OL46029135W",
+          "title": "Luzifer läßt grüßen",
+          "author": "Peter Haining",
+          "coverId": "ol:15259813",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018569",
+          "coverIsbn": "3423018569"
+        },
+        {
+          "id": "OL33875311W",
+          "title": "Das Wachsfigurenkabinett",
+          "author": "",
+          "coverId": "ol:15259812",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018577",
+          "coverIsbn": "3423018577"
+        },
+        {
+          "id": "OL46029136W",
+          "title": "Die Fliege",
+          "author": "George Langelaan",
+          "coverId": "ol:15259814",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018585",
+          "coverIsbn": "3423018585"
+        },
+        {
+          "id": "OL854383W",
+          "title": "Der gewöhnliche Schrecken",
+          "author": "Peter Handke",
+          "coverId": "ol:15259815",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423007834",
+          "coverIsbn": "3423007834"
+        },
+        {
+          "id": "OL450063W",
+          "title": "Frankenstein oder Der neue Prometheus",
+          "author": "Mary Shelley",
+          "coverId": "ol:15259816",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018607",
+          "coverIsbn": "3423018607"
+        },
+        {
+          "id": "OL11482934W",
+          "title": "Zwischen neun und neun",
+          "author": "Leo Perutz",
+          "coverId": "ol:15259817",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018615",
+          "coverIsbn": "3423018615"
+        },
+        {
+          "id": "OL9186348W",
+          "title": "Ich, Rodolfo, Magier",
+          "author": "Otto F. Beer",
+          "coverId": "ol:15259819",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018623",
+          "coverIsbn": "3423018623"
+        },
+        {
+          "id": "OL9679346W",
+          "title": "Der Mönch und die Henkerstochter",
+          "author": "Ambrose Bierce",
+          "coverId": "ol:15259818",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018631",
+          "coverIsbn": "3423018631"
+        },
+        {
+          "id": "OL46029139W",
+          "title": "Die Stimme",
+          "author": "George Langelaan",
+          "coverId": "ol:15259821",
+          "addedAt": "2026-09-29",
+          "from": "isbn:342301864X",
+          "coverIsbn": "342301864X"
+        },
+        {
+          "id": "OL20116099W",
+          "title": "Der Werwolf von Paris",
+          "author": "Guy Endore",
+          "coverId": "ol:15259820",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018658",
+          "coverIsbn": "3423018658"
+        },
+        {
+          "id": "OL4170701W",
+          "title": "Das Monster im Park",
+          "author": "Jürgen Vom Scheidt",
+          "coverId": "ol:15259823",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018666",
+          "coverIsbn": "3423018666"
+        },
+        {
+          "id": "OL35420367W",
+          "title": "Das Gespenst im Aktenschrank",
+          "author": "",
+          "coverId": "ol:15259822",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018674",
+          "coverIsbn": "3423018674"
+        },
+        {
+          "id": "OL1833989W",
+          "title": "Das Phantom der Oper",
+          "author": "Gaston Leroux",
+          "coverId": "ol:15259824",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018682",
+          "coverIsbn": "3423018682"
+        },
+        {
+          "id": "OL2841952W",
+          "title": "Die dritte Kugel",
+          "author": "Leo Perutz",
+          "coverId": "ol:15259825",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018690",
+          "coverIsbn": "3423018690"
+        },
+        {
+          "id": "OL46029143W",
+          "title": "Das Schnurren der Katze",
+          "author": "Hugh B. Cave",
+          "coverId": "ol:15259826",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018704",
+          "coverIsbn": "3423018704"
+        },
+        {
+          "id": "OL46029142W",
+          "title": "Die unheimlichen Wirklichkeiten",
+          "author": "George Langelaan",
+          "coverId": "ol:15259827",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018712",
+          "coverIsbn": "3423018712"
+        },
+        {
+          "id": "OL676009W",
+          "title": "Der Meister und Margarita",
+          "author": "Михаил Афанасьевич Булгаков",
+          "coverId": "ol:15259828",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018720",
+          "coverIsbn": "3423018720"
+        },
+        {
+          "id": "OL19317486W",
+          "title": "Vorgriff auf morgen",
+          "author": "Jörg Weigand",
+          "coverId": "ol:15259829",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018739",
+          "coverIsbn": "3423018739"
+        },
+        {
+          "id": "OL19052309W",
+          "title": "Von einem anderen Stern",
+          "author": "Horst Heidtmann",
+          "coverId": "ol:15259831",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018747",
+          "coverIsbn": "3423018747"
+        },
+        {
+          "id": "OL19193190W",
+          "title": "Im Jenseits",
+          "author": "Horst Heidtmann",
+          "coverId": "ol:15259832",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018755",
+          "coverIsbn": "3423018755"
+        },
+        {
+          "id": "OL5424069W",
+          "title": "Die Rache der Kälber",
+          "author": "Ernst W. Heine",
+          "coverId": "ol:15259830",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018763",
+          "coverIsbn": "3423018763"
+        },
+        {
+          "id": "OL81632W",
+          "title": "Brennen muß Salem!",
+          "author": "Stephen King",
+          "coverId": "ol:15259833",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018771",
+          "coverIsbn": "3423018771"
+        },
+        {
+          "id": "OL4839164W",
+          "title": "Das Teufelsrad",
+          "author": "John Franklin Bardin",
+          "coverId": "ol:15259834",
+          "addedAt": "2026-09-29",
+          "from": "isbn:342301878X",
+          "coverIsbn": "342301878X"
+        },
+        {
+          "id": "OL46029144W",
+          "title": "Die gestohlenen Techmine",
+          "author": "Horst Heidtmann",
+          "coverId": "ol:15259835",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018798",
+          "coverIsbn": "3423018798"
+        },
+        {
+          "id": "OL54031W",
+          "title": "Ein Yankee aus Connecticut an König Artus' Hof",
+          "author": "Mark Twain",
+          "coverId": "ol:15259837",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018801",
+          "coverIsbn": "3423018801"
+        },
+        {
+          "id": "OL46029146W",
+          "title": "Fabrik der Träume",
+          "author": "Susanne Päch",
+          "coverId": "ol:15259836",
+          "addedAt": "2026-09-29",
+          "from": "isbn:342301881X",
+          "coverIsbn": "342301881X"
+        },
+        {
+          "id": "OL10641392W",
+          "title": "Geständnis auf Raten",
+          "author": "John Franklin Bardin",
+          "coverId": "ol:15259840",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018828",
+          "coverIsbn": "3423018828"
+        },
+        {
+          "id": "OL46029145W",
+          "title": "Die letzte Tür",
+          "author": "Horst Heidtmann",
+          "coverId": "ol:15259841",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018836",
+          "coverIsbn": "3423018836"
+        },
+        {
+          "id": "OL10641391W",
+          "title": "Die Bärengrube",
+          "author": "John Franklin Bardin",
+          "coverId": "ol:15259839",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018844",
+          "coverIsbn": "3423018844"
+        },
+        {
+          "id": "OL940472W",
+          "title": "Weltgeist Superstar",
+          "author": "Hans Widmer",
+          "coverId": "ol:15259838",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423018852",
+          "coverIsbn": "3423018852"
+        }
+      ]
     }
   ]
 }
