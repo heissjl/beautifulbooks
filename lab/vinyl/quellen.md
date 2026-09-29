@@ -48,6 +48,10 @@ Kein offener Katalog führt die Farbe der Platte als Feld. Der beste Weg ist der
 
 Keine offene Quelle hat eins. coloredvinylrecords.com (rund 3.000 Einträge, Farbkategorien) ist eine Amazon-Affiliate-Seite ohne API. Realistisch: den Discogs-Freitext aus dem Dump selbst normalisieren, mit den Farbkarten der Presswerke als Vokabular ([United Record Pressing](https://www.urpressing.com/client-resources/vinyl-colors/), [Gotta Groove](https://www.gottagrooverecords.com/vinyl-colors/)) und abgegrenzt gegen „Labels", „Cover", „Sleeve", „Obi".
 
+## Nachgemessen am 2026-09-29
+
+Den Dump selbst gelesen (Historie, „Der Discogs-Dump gemessen"): **er enthält überhaupt kein `<images>`-Element** — weder URIs noch Typ, Breite oder Höhe; die Angabe oben aus zweiter Hand stimmt für den September-Dump nicht. Der Farbtext ist drin: 7,5 % aller Vinyl-Einträge, 41 % der Pressungen aus den 2020ern.
+
 ## Empfehlung
 
 1. **Discogs-Dump (CC0) + CAA-Bilder**, verbunden über die Discogs-Links in MusicBrainz: Pressungsliste, Farbtext, Picture Disc/Shape ohne Limit und ohne Bildrechtsfrage; Bilder wie jetzt aus dem CAA.

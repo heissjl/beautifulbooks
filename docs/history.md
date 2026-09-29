@@ -3753,3 +3753,43 @@ Zum Vergleich Discogs ([`lab/vinyl/discogs.ts`](../lab/vinyl/discogs.ts)): der M
 **Schwelle 20 entschieden** (Julian: „für das hashing nimm die 20er schwelle"): das Mockup faltet jetzt bei dHash ≤ 20 — *Kind of Blue* 9 Kacheln, *Rumours* und *Nevermind* je eine, *Dark Side* zwei; die UHQR-Box und das zweite *folklore*-Foto liegen damit im Stapel einer anderen Hülle. Der Umschalter bleibt.
 
 **Woher „heute erhältlich als …" käme** (Julian: „woher würden wir die bekommen?"): aus Produktfeeds und APIs der Partnerprogramme — HHV über Webgains (Tagesfeed), Rough Trade über CJ, Amazon Creators API (erst nach Verkäufen), eBay Browse API —, zugeordnet über den Barcode; Einzelheiten in [lab/vinyl/markt.md](../lab/vinyl/markt.md). Gemessen: 53 von 58 Vinyl-Pressungen seit 2015 haben bei MusicBrainz einen Barcode, 32 von 120 ältere.
+
+
+## 2026-09-29 · Der Discogs-Dump gemessen (ROADMAP 5.16)
+
+Julian: „lade den discogs dump herunter und mach die messung". `discogs_20260901_releases.xml.gz` von data.discogs.com (CC0, 11.252.161.836 Bytes) mit [`lab/vinyl/dump-measure.ts`](../lab/vinyl/dump-measure.ts) **als Datenstrom gelesen, nicht gespeichert**: auf dem Mac waren 15 GB frei. Der Server ignoriert Bereichsanfragen und lieferte rund 25 MB/s; der ganze Lauf dauerte etwa 8 Minuten. Gespeichert sind nur die Ergebnisse in `lab/vinyl/out/` (git-ignoriert): die 4.549 Einträge der acht Alben, die Zählungen und eine Zufallsstichprobe von 2.000 Formattexten.
+
+**Ganzer Dump:** 19.417.067 Einträge, davon 8.046.639 mit Vinyl. 1.360.829 Vinyl-Einträge (17 %) haben einen Formattext, 605.726 (7,5 %) nennen darin eine Farbe der Platte. Strukturiert sind nur 45.700 Sondervinyls (Picture Disc 33.411, Etched 11.020, Shape 3.649). **Kein einziger Vinyl-Eintrag hat ein `<images>`-Element** — der Dump enthält keine Bildangaben, nicht einmal ihre Zahl (die Recherche hatte nach zweiter Hand Typ, Breite und Höhe vermutet). Farbe nach Jahrzehnt: 1960er 1,2 %, 1970er 0,8 %, 1980er 1,3 %, 1990er 5,2 %, 2000er 8,9 %, **2010er 28,5 %, 2020er 41,3 %**; die 1940er stechen mit 15,5 % heraus (Schellack- und frühe Vinylausgaben in Farbe).
+
+**Die acht Alben** ([`dump-report.ts`](../lab/vinyl/dump-report.ts)); die Vinyl-Zahlen decken sich mit der API-Messung (Rumours 495 gegen 492, *Dark Side* 668 gegen 651):
+
+| Album | Vinyl | mit Formattext | Farbe der Platte | seit 2015: Vinyl / Farbe | Picture Disc, Shape, Etched | mit Barcode | häufigste Farben |
+|---|---:|---:|---:|---:|---:|---:|---|
+| Rumours | 495 | 265 | 25 | 28 / 13 | 3 | 63 | white 6, clear 5, light 3, cream 2 |
+| The Dark Side of the Moon | 668 | 453 | 65 | 33 / 7 | 13 | 82 | clear 9, blue 8, pink 7, white 6 |
+| Kind of Blue | 356 | 169 | 56 | 104 / 44 | 3 | 138 | blue 38, clear 8, transparent 2, white 2 |
+| Autobahn | 143 | 41 | 8 | 5 / 3 | 4 | 26 | blue 4, red 1, brown 1, green 1 |
+| Nevermind | 222 | 130 | 90 | 47 / 20 | 17 | 134 | blue 14, red 7, white 7, pink 6 |
+| OK Computer | 42 | 24 | 0 | 28 / 0 | 1 | 39 | — |
+| Random Access Memories | 17 | 14 | 1 | 12 / 0 | 0 | 13 | blue 1 |
+| folklore | 38 | 38 | 37 | 30 / 29 | 0 | 38 | beige 13, brown 4, grey 3, red 3 |
+
+Die 38 blauen *Kind of Blue* sind echte blaue Neuauflagen, meist 180 g („Blue, 180g", „Blue Marbled", „Transparent Blue"); *OK Computer* hat trotz 28 neuer Pressungen keine mit Farbangabe.
+
+**Die Farberkennung von Hand geprüft** (`vinylColour` in [`lab/vinyl/dump.ts`](../lab/vinyl/dump.ts), Segment für Segment, Etikett, Hülle, Obi usw. ausgeschlossen): von 60 zufälligen Texten, die sie als Farbe las, stimmen 57; falsch waren „Silver injection, solid centre" (Etikett-Verfahren), „Red Gatefold" (vermutlich die Hülle) und „Ⓗ ¥500 Pink" (unklar); bei *Kind of Blue* zusätzlich „White "360 Sound"" (das Etikett). Von 40 Texten ohne Farbe war nur „Turqoise" (Tippfehler) eine übersehene Farbe; „Red labels", „Rainbow Label", „Silver Injection Labels", Presswerke („Santa Maria Pressing") blieben zu Recht draußen.
+
+**Verknüpft mit MusicBrainz** ([`dump-link.ts`](../lab/vinyl/dump-link.ts), Discogs-Link je Release, 1 Anfrage/s):
+
+| Album | Vinyl-Pressungen (MB) | mit Vorderseite | mit Discogs-Link | im Dump gefunden | Farbe laut Discogs | davon mit Vorderseite |
+|---|---:|---:|---:|---:|---:|---:|
+| Rumours | 24 | 19 | 23 | 23 | 1 | 1 |
+| The Dark Side of the Moon | 33 | 23 | 31 | 29 | 0 | 0 |
+| Kind of Blue | 63 | 57 | 60 | 58 | 2 | 2 |
+| Autobahn | 10 | 7 | 8 | 8 | 0 | 0 |
+| Nevermind | 21 | 16 | 19 | 19 | 1 | 1 |
+| OK Computer | 5 | 5 | 5 | 5 | 0 | 0 |
+| Random Access Memories | 4 | 4 | 4 | 4 | 0 | 0 |
+| folklore | 21 | 7 | 21 | 21 | 20 | 6 |
+| **Summe** | 181 | 138 | 171 | 167 | 24 | 10 |
+
+Die Verknüpfung trägt (167 von 181), bringt aber nur **10 der 138 Pressungen mit Foto** eine Farbe. Die farbigen Pressungen stehen fast nur bei Discogs: *Kind of Blue* hat dort 56, MusicBrainz kennt davon 2; bei *folklore* dagegen kennt MusicBrainz 20 von 21 farbigen, hat aber nur für 6 davon eine Vorderseite. Für eine Farbwand heißt das: die Farben kämen aus dem Dump als Text, die Bilder dazu gibt es in offenen Quellen kaum.
