@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   formatLength,
   layoutPiece,
+  measurements,
   parseLibraryHeight,
   parseOlDimensions,
   pieceRange,
@@ -44,19 +45,29 @@ describe('book sizes (5.13i)', () => {
 describe('the piece (5.13i)', () => {
   it('puts the books of a row on one bottom line, the row as tall as its tallest book', () => {
     const p = layoutPiece([{ w: 13, h: 20 }, { w: 16, h: 24 }, { w: 11, h: 18 }], 3);
-    // 8 + 13 + 5 + 16 + 5 + 11 + 8 = 66 wide; 8 + 24 + 8 = 40 high.
-    expect([p.widthCm, p.heightCm]).toEqual([66, 40]);
+    // 8 + 13 + 5 + 16 + 5 + 11 + 8 = 66 wide; 8 + 24 + 8 = 40 high; the moulding adds 3 on each side.
+    expect([p.widthCm, p.heightCm, p.outerWidthCm, p.outerHeightCm]).toEqual([66, 40, 72, 46]);
     expect(p.books.map((b) => b.y + b.h)).toEqual([32, 32, 32]);
+  });
+
+  it('centres each book in its column, the column as wide as its widest book', () => {
+    // Column 1 holds a 16 cm and a 11 cm book: both are centred on the same axis.
+    const p = layoutPiece([{ w: 16, h: 24 }, { w: 13, h: 20 }, { w: 11, h: 18 }, { w: 13, h: 20 }], 2);
+    const centre = (b: { x: number; w: number }) => b.x + b.w / 2;
+    expect(centre(p.books[0])).toBe(centre(p.books[2]));
+    expect(centre(p.books[1])).toBe(centre(p.books[3]));
+    expect(p.books[2].x).toBe(10.5);
+    expect(p.widthCm).toBe(8 + 16 + 5 + 13 + 8);
   });
 
   it('gives six trade paperbacks in three columns the size the fixed plan had', () => {
     const six = Array.from({ length: 6 }, () => ({ w: 13, h: 20 }));
-    expect(layoutPiece(six, 3)).toMatchObject({ widthCm: 65, heightCm: 63, rows: 2 });
+    expect(layoutPiece(six, 3)).toMatchObject({ widthCm: 65, heightCm: 63, outerWidthCm: 71, outerHeightCm: 69, rows: 2 });
   });
 
   it('is a range while any book is estimated, and exact when none is', () => {
     const known = { w: 13, h: 20, source: 'library' as const };
-    expect(pieceRange([known, known], 2)).toEqual({ min: { w: 47, h: 36 }, max: { w: 47, h: 36 }, estimated: 0 });
+    expect(pieceRange([known, known], 2)).toEqual({ min: { w: 53, h: 42 }, max: { w: 53, h: 42 }, estimated: 0 });
     const r = pieceRange([known, { w: 13, h: 20, source: 'assumed' }], 2);
     expect(r.estimated).toBe(1);
     expect(r.min.w).toBeLessThan(r.max.w);
@@ -67,5 +78,25 @@ describe('the piece (5.13i)', () => {
     expect(formatLength(65, 'imperial')).toBe('25½');
     expect(formatLength(7, 'imperial')).toBe('2¾');
     expect(formatLength(0.3, 'imperial')).toBe('0');
+  });
+});
+
+describe('measurements (5.13f)', () => {
+  it('measures what is there: margins, the real gap between books, wedge to wedge', () => {
+    // Two per row: a wide and a narrow book, then one book in the second row.
+    const plan = layoutPiece([{ w: 15, h: 23 }, { w: 11, h: 18 }, { w: 13, h: 20 }], 2);
+    const d = measurements(plan);
+    const by = (k: string) => d.filter((x) => x.kind === k).map((x) => x.cm);
+    expect(by('moulding')).toEqual([3]);
+    // The second row's book is centred in the wide first column; every margin is still 8.
+    expect(by('margin')).toEqual([8, 8, 8, 8]);
+    expect(by('gap')).toEqual([5]);
+    // Wedge to wedge: the second row's book (20) plus the row gap (7).
+    expect(by('rowPitch')).toEqual([27]);
+  });
+
+  it('draws no gaps for a single book', () => {
+    const d = measurements(layoutPiece([{ w: 13, h: 20 }], 3));
+    expect(d.filter((x) => x.kind === 'gap' || x.kind === 'rowPitch')).toEqual([]);
   });
 });

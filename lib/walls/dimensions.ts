@@ -97,7 +97,12 @@ export function sizeFromFormat(format: string | undefined): Omit<BookSize, 'sour
 export const isEstimate = (s: BookSize | undefined) => !s || s.source === 'format' || s.source === 'assumed';
 
 /** Spacing of the piece in centimetres: margin inside the frame, gap between books, gap between rows, depth. */
-export const PIECE_CM = { margin: 8, gap: 5, rowGap: 7, depth: 7 } as const;
+/**
+ * Spacing of the piece in centimetres: margin inside the frame, gap between
+ * columns and rows, depth, and the moulding's face width (drawn and counted in
+ * the outer size).
+ */
+export const PIECE_CM = { margin: 8, gap: 5, rowGap: 7, depth: 7, moulding: 3 } as const;
 
 export interface PlacedBook {
   x: number;
@@ -107,31 +112,43 @@ export interface PlacedBook {
 }
 
 /**
- * Lays the books out: rows of `columns`, books side by side with a gap, all
- * books of a row on one bottom line, the row as tall as its tallest book (the
- * interim rule until Julian decides, ROADMAP 5.13i). Returns the outer size
- * and each book's place, in centimetres.
+ * Lays the books out on the back panel (Julian, 2026-09-29): rows of
+ * `columns`; all books of a row on one bottom line, the row as tall as its
+ * tallest book („gemeinsame unterkante je reihe passt so“); every column as
+ * wide as its widest book, and each book centred in its column („sie müssen
+ * jeweils pro column zentriert sein“). Returns the back panel's size, the
+ * frame's outer size (moulding included), and each book's place on the panel,
+ * in centimetres.
  */
-export function layoutPiece(sizes: ReadonlyArray<{ w: number; h: number }>, columns: number): { widthCm: number; heightCm: number; columns: number; rows: number; books: PlacedBook[] } {
+export function layoutPiece(
+  sizes: ReadonlyArray<{ w: number; h: number }>,
+  columns: number,
+): { widthCm: number; heightCm: number; outerWidthCm: number; outerHeightCm: number; columns: number; rows: number; books: PlacedBook[] } {
   const c = PIECE_CM;
   const cols = Math.max(1, Math.min(columns, sizes.length || 1));
   const rows: Array<Array<{ w: number; h: number }>> = [];
   sizes.forEach((s, i) => (rows[Math.floor(i / cols)] ??= []).push(s));
+  const colW = Array.from({ length: cols }, (_, j) => Math.max(0, ...rows.map((r) => r[j]?.w ?? 0)));
+  const colX: number[] = [];
+  colW.reduce((x, w, j) => ((colX[j] = x), x + w + c.gap), c.margin);
   const books: PlacedBook[] = [];
   let y = c.margin;
-  let inner = 0;
   for (const row of rows) {
     const rowH = Math.max(...row.map((b) => b.h));
-    let x = c.margin;
-    for (const b of row) {
-      books.push({ x: round1(x), y: round1(y + rowH - b.h), w: b.w, h: b.h });
-      x += b.w + c.gap;
-    }
-    inner = Math.max(inner, x - c.gap - c.margin);
+    row.forEach((b, j) => books.push({ x: round1(colX[j] + (colW[j] - b.w) / 2), y: round1(y + rowH - b.h), w: b.w, h: b.h }));
     y += rowH + c.rowGap;
   }
+  const widthCm = round1(colW.reduce((a, w) => a + w, 0) + (cols - 1) * c.gap + 2 * c.margin);
   const heightCm = round1(y - c.rowGap + c.margin);
-  return { widthCm: round1(inner + 2 * c.margin), heightCm, columns: cols, rows: rows.length, books };
+  return {
+    widthCm,
+    heightCm,
+    outerWidthCm: round1(widthCm + 2 * c.moulding),
+    outerHeightCm: round1(heightCm + 2 * c.moulding),
+    columns: cols,
+    rows: rows.length,
+    books,
+  };
 }
 
 /**
@@ -143,7 +160,8 @@ export function pieceRange(sizes: ReadonlyArray<BookSize | undefined>, columns: 
     sizes.map((s) => (s && !isEstimate(s) ? s : UNKNOWN_RANGE[end]));
   const lo = layoutPiece(pick('min'), columns);
   const hi = layoutPiece(pick('max'), columns);
-  return { min: { w: lo.widthCm, h: lo.heightCm }, max: { w: hi.widthCm, h: hi.heightCm }, estimated: sizes.filter(isEstimate).length };
+  // The size a reader hangs: the frame's outside.
+  return { min: { w: lo.outerWidthCm, h: lo.outerHeightCm }, max: { w: hi.outerWidthCm, h: hi.outerHeightCm }, estimated: sizes.filter(isEstimate).length };
 }
 
 export type Units = 'metric' | 'imperial';
@@ -158,3 +176,60 @@ export function formatLength(cm: number, units: Units): string {
 }
 
 export const unitLabel = (units: Units) => (units === 'metric' ? 'cm' : 'in');
+
+/** One dimension line on the preview, in centimetres from the frame's outer top left. */
+export interface Measure {
+  kind: 'moulding' | 'margin' | 'gap' | 'rowPitch';
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  cm: number;
+}
+
+/**
+ * The distances a reader asked to see on the sketch (Julian, 2026-09-29:
+ * „abstand zw den reihen, abstand zum rand etc“): the moulding, the margin on
+ * all four sides, the gap between neighbouring books in the first row, and the
+ * distance from the first row's bottom edge to the second's. Each line measures what is really there — a
+ * narrow book centred in a wide column stands further from its neighbour than
+ * `PIECE_CM.gap` — so the lines are taken from the placed books, not the rules.
+ */
+export function measurements(plan: ReturnType<typeof layoutPiece>): Measure[] {
+  const m = PIECE_CM.moulding;
+  const { books, columns, widthCm, heightCm, outerWidthCm, outerHeightCm } = plan;
+  if (books.length === 0) return [];
+  const out: Measure[] = [];
+  const line = (kind: Measure['kind'], x1: number, y1: number, x2: number, y2: number) =>
+    out.push({ kind, x1: round1(x1), y1: round1(y1), x2: round1(x2), y2: round1(y2), cm: round1(Math.abs(x2 - x1) + Math.abs(y2 - y1)) });
+  const row0 = books.slice(0, columns);
+  const bottom0 = Math.max(...row0.map((b) => b.y + b.h));
+  const tallest = (row: PlacedBook[]) => row.reduce((a, b) => (b.h > a.h ? b : a));
+
+  line('moulding', outerWidthCm / 2, 0, outerWidthCm / 2, m);
+  const first = row0[0];
+  const last = row0[row0.length - 1];
+  line('margin', m, m + first.y + first.h / 2, m + first.x, m + first.y + first.h / 2);
+  line('margin', m + last.x + last.w, m + last.y + last.h / 2, m + widthCm, m + last.y + last.h / 2);
+  const top = tallest(row0);
+  line('margin', m + top.x + top.w / 2, m, m + top.x + top.w / 2, m + top.y);
+  const lastRow = books.slice(Math.floor((books.length - 1) / columns) * columns);
+  const low = lastRow[0];
+  line('margin', m + low.x + low.w / 2, m + low.y + low.h, m + low.x + low.w / 2, m + heightCm);
+  for (let j = 1; j < row0.length; j++) {
+    const a = row0[j - 1];
+    const b = row0[j];
+    const y = m + bottom0 - Math.min(a.h, b.h) / 2;
+    line('gap', m + a.x + a.w, y, m + b.x, y);
+  }
+  // Rows share a bottom edge, so the rows are measured wedge to wedge (Julian,
+  // 2026-09-29: „abstand von dem oberen oder unteren wedge zu dem der mitte“),
+  // drawn in the gap between the first two columns, where no book covers it.
+  const row1 = books.slice(columns, 2 * columns);
+  if (row1.length > 0) {
+    const bottom1 = Math.max(...row1.map((b) => b.y + b.h));
+    const x = row1.length > 1 ? (row1[0].x + row1[0].w + row1[1].x) / 2 : row1[0].x / 2;
+    line('rowPitch', m + x, m + bottom0, m + x, m + bottom1);
+  }
+  return out.filter((d) => d.cm > 0 && outerHeightCm > 0);
+}

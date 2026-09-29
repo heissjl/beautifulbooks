@@ -13,11 +13,13 @@ import { agentList, shoppingText } from '@/lib/walls/shoppinglist';
 import { linkPlan } from '@/lib/linkplan';
 import type { Market } from '@/lib/market';
 import type { BuyLink } from '@/lib/model';
-import { FORMAT_CM, formatLength, isEstimate, layoutPiece, PIECE_CM, pieceRange, unitLabel, type BookSize, type Units } from '@/lib/walls/dimensions';
+import { FORMAT_CM, formatLength, isEstimate, layoutPiece, measurements, PIECE_CM, pieceRange, unitLabel, type BookSize, type Units } from '@/lib/walls/dimensions';
+import { mitre, mouldingSide, type Side } from '@/lib/walls/moulding';
 import { DEFAULT_ARTWORK, FRAMES, MAX_COLUMNS, TONES, type FrameColor, type PublicWall, type Tile, type Tone, type WallOp } from '@/lib/walls/model';
 
 const WANTED_KEY = (id: string) => `bb.wall.wanted.${id}`;
 const UNITS_KEY = 'bb.units';
+const SIDES: Side[] = ['top', 'right', 'bottom', 'left'];
 /** Which books of a collection are bought: this browser's own note, never sent anywhere (5.14 stage 1). */
 const BOUGHT_KEY = (id: string) => `bb.wall.bought.${id}`;
 
@@ -138,6 +140,8 @@ export default function WallPlan({
   // The preview draws every book at its size; one without a size yet as a paperback.
   const sizes = wall.tiles.map((t) => t.size);
   const plan = layoutPiece(sizes.map((z) => z ?? FORMAT_CM.trade), wall.columns);
+  const [showMeasures, setShowMeasures] = useState(false);
+  const measures = showMeasures ? measurements(plan) : [];
   const range = pieceRange(sizes, wall.columns);
   const pending = sizes.filter((z) => !z).length;
   const c = PIECE_CM;
@@ -238,30 +242,37 @@ export default function WallPlan({
             />
           ))}
         </div>
+        <label className="flex items-center gap-2">
+          <input type="checkbox" checked={showMeasures} onChange={(e) => setShowMeasures(e.target.checked)} className="accent-accent" />
+          Show measurements
+        </label>
       </div>
 
-      {/* The piece: moulding, back panel, books on wedges. */}
-      <div className="mt-5 rounded bg-surface-2 p-4 sm:p-8">
+      {/* The piece: four mitred pieces of moulding, the back panel, books on wedges. */}
+      <div className="mt-5 rounded bg-surface-2 px-4 pb-4 pt-7 sm:px-8 sm:pb-8 sm:pt-10">
         <div
-          className="mx-auto p-[1.4%] shadow-lg"
+          className="relative mx-auto"
           style={{
-            maxWidth: `min(100%, ${Math.round((460 * plan.widthCm) / plan.heightCm)}px)`,
-            background: FRAMES[frameColor].css,
-            // A moulding has an edge: a hairline outside, a shade inside.
-            boxShadow: '0 12px 28px -12px rgba(0,0,0,.45), inset 0 0 0 1px rgba(0,0,0,.25)',
+            maxWidth: `min(100%, ${Math.round((460 * plan.outerWidthCm) / plan.outerHeightCm)}px)`,
+            aspectRatio: `${plan.outerWidthCm} / ${plan.outerHeightCm}`,
+            boxShadow: '0 14px 30px -12px rgba(0,0,0,.5), 0 2px 4px rgba(0,0,0,.2)',
           }}
           role="img"
           aria-label={`Preview: ${wall.tiles.length} books on wedges in a ${FRAMES[frameColor].label.toLowerCase()} frame, ${plan.columns} per row, ${TONES[tone].label} background`}
         >
           <div
-            className="relative w-full"
+            className="absolute"
             style={{
-              aspectRatio: `${plan.widthCm} / ${plan.heightCm}`,
+              left: pct(c.moulding, plan.outerWidthCm),
+              top: pct(c.moulding, plan.outerHeightCm),
+              right: pct(c.moulding, plan.outerWidthCm),
+              bottom: pct(c.moulding, plan.outerHeightCm),
               // The back panel is cloth or paper, not flat paint: a fine noise over the tone
               // (Julian, 2026-09-28: „gib dem background etwas textur“).
               backgroundColor: TONES[tone].hex,
               backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"), repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(0,0,0,.03) 0 1px, transparent 1px 3px)`,
-              boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.18), inset 0 10px 24px rgba(0,0,0,.28)',
+              // The moulding throws a shadow onto the panel, heavier from the top left.
+              boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.18), inset 4px 8px 18px rgba(0,0,0,.3)',
             }}
           >
             {wall.tiles.map((t, i) => {
@@ -296,6 +307,52 @@ export default function WallPlan({
               );
             })}
           </div>
+          {SIDES.map((side) => {
+            const fx = (100 * c.moulding) / plan.outerWidthCm;
+            const fy = (100 * c.moulding) / plan.outerHeightCm;
+            const across = side === 'top' || side === 'bottom';
+            return (
+              <span
+                key={side}
+                className="absolute"
+                style={{
+                  [side]: 0,
+                  ...(across ? { left: 0, width: '100%', height: `${fy}%` } : { top: 0, height: '100%', width: `${fx}%` }),
+                  background: mouldingSide(FRAMES[frameColor].moulding, side),
+                  clipPath: mitre(side, fx, fy),
+                }}
+              />
+            );
+          })}
+          {showMeasures && (
+            <>
+              <svg
+                className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+                viewBox={`0 0 ${plan.outerWidthCm} ${plan.outerHeightCm}`}
+                preserveAspectRatio="none"
+                aria-hidden
+              >
+                {measures.map((d, i) => (
+                  <line key={i} x1={d.x1} y1={d.y1} x2={d.x2} y2={d.y2} stroke="#c2410c" strokeWidth={1.25} vectorEffect="non-scaling-stroke" />
+                ))}
+              </svg>
+              {measures.map((d, i) => (
+                <span
+                  key={i}
+                  className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded bg-white/90 px-1 text-[10px] leading-tight text-[#9a3412] shadow-sm"
+                  style={{ left: pct((d.x1 + d.x2) / 2, plan.outerWidthCm), top: pct((d.y1 + d.y2) / 2, plan.outerHeightCm) }}
+                >
+                  {L(d.cm)}
+                </span>
+              ))}
+              <span
+                className="pointer-events-none absolute -translate-x-1/2 whitespace-nowrap rounded bg-white/90 px-1 text-[10px] leading-tight text-[#9a3412]"
+                style={{ left: '50%', top: 0, transform: 'translate(-50%, calc(-100% - 6px))' }}
+              >
+                {L(plan.outerWidthCm)} × {L(plan.outerHeightCm)} {U} outside
+              </span>
+            </>
+          )}
         </div>
       </div>
       <div className="mt-2 flex flex-wrap items-baseline justify-between gap-3">
