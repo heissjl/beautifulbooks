@@ -1,9 +1,9 @@
 'use client';
 
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
-import CoverGallery, { type CoverTab } from '@/components/CoverGallery';
+import CoverGallery from '@/components/CoverGallery';
 import DecadeLink from '@/components/DecadeLink';
 import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import CoverImage from '@/components/CoverImage';
@@ -17,6 +17,7 @@ import MoreBelow from '@/components/MoreBelow';
 import { useOverflowsY } from '@/components/useOverflowsY';
 import LocalShops from '@/components/LocalShops';
 import SiteFooter from '@/components/SiteFooter';
+import AddToWall from '@/components/AddToWall';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
@@ -27,6 +28,7 @@ import { useIsbnCovers } from '@/components/useIsbnCovers';
 import { useWorkPages } from '@/components/useWorkPages';
 import { useSimilarCovers } from '@/components/useSimilarCovers';
 import { useWorkPreview } from '@/components/useWorkPreview';
+import { buildWall, captionFor, progressLabel } from '@/components/workWall';
 import { leadCover } from '@/lib/scene';
 import { isbnRuns } from '@/lib/isbnformat';
 import { useOverflowsX } from '@/components/useOverflowsX';
@@ -40,11 +42,10 @@ import type { ShopStatus } from '@/lib/availability';
 import type { Market } from '@/lib/market';
 import type { BuyLink, Cover, EditionView } from '@/lib/model';
 import { displayTitle, languageName, normalizeTitle } from '@/lib/normalize';
-import type { ImageSignature } from '@/lib/imagesig';
-import { coverForId, leadLanguagesSettled, orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
+import { coverForId, leadLanguagesSettled } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
 import { shapeOf } from '@/lib/queryshape';
-import { coversNewestFirst, foldDuplicateCovers, groupCoversByLanguage, verifyIsbnCover, withRetailCovers, type IsbnVerdict } from '@/lib/works';
+import { verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
 
 /*
   It said "Search" until 2026-09-10, which stopped working the moment a search
@@ -68,12 +69,20 @@ function BackLink({ href, toResults }: { href: string; toResults: boolean }) {
   );
 }
 
+/**
+ * Whether readers' walls are on (ROADMAP 5.13a), decided on the server and
+ * handed down: this component renders in the browser, where the switch cannot
+ * read its variables.
+ */
+const WallsOn = createContext(false);
+
 function Shell({ children, backHref, toResults, right }: { children: React.ReactNode; backHref: string; toResults: boolean; right?: React.ReactNode }) {
+  const walls = useContext(WallsOn);
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader left={<BackLink href={backHref} toResults={toResults} />} right={right} search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
-      <SiteFooter />
+      <SiteFooter walls={walls} />
     </div>
   );
 }
@@ -96,77 +105,8 @@ function TitleBlock({ title, authors, meta }: { title?: string; authors?: string
   );
 }
 
-/**
- * Folds and groups the covers of a wall.
- *
- * Folding cannot happen on the server: it only ever sees one page of
- * editions, and duplicates sit across pages (SPEC §9.3 step 11). `extra`
- * carries the retail covers fetched for a selected ISBN (step 13a); they
- * join before folding, so a retail image identical to the catalogue scan
- * folds into it instead of showing up twice.
- */
-function buildWall(
-  merged: MergedWork<EditionView>,
-  extra: readonly Cover[],
-  extraSignatures: ReadonlyMap<string, ImageSignature>,
-  preferred: string | undefined,
-  /** The cover the address names; it leads its fold group (see foldDuplicateCovers). */
-  pinnedId: string | null = null,
-) {
-  // Each id once: the shop's image is often a Google volume page 0 already has (6.37).
-  const all = withRetailCovers(merged.covers, extra);
-  const signatures = new Map(merged.signatures);
-  for (const [id, sig] of extraSignatures) signatures.set(id, sig);
 
-  /*
-    Which editions carried each scan *before* folding (ROADMAP 6.14, and the
-    ordering in `orderEditionsForMarket`). Folding merges the members' edition
-    ids into the representative, so afterwards a tile lists printings that
-    never had that picture; this map remembers who did.
-  */
-  const editionsByScan = new Map<string, readonly string[]>(all.map(c => [c.id, c.editionIds]));
-  const covers = foldDuplicateCovers(all, signatures, merged.editions, {}, pinnedId);
-  const coversById = new Map(covers.map(c => [c.id, c]));
-  const ordered = orderGroups(groupCoversByLanguage(covers, merged.editions, preferred, signatures, merged.coverPage), preferred);
-  const groups: CoverTab[] = ordered.map(g => ({
-    language: g.language,
-    covers: g.coverIds.map(id => coversById.get(id)).filter((c): c is Cover => !!c),
-  }));
-  // `signatures` goes out too: the verdict must know which pictures the fold
-  // could compare at all (ROADMAP 6.32).
-  // The whole wall in one list, for the "All languages" pill (ROADMAP 6.8).
-  const wholeWall = coversNewestFirst(covers, merged.editions, signatures, merged.coverPage);
-  return { covers, coversById, groups, all: wholeWall, editionsByScan, signatures };
-}
 
-/**
- * What the wall is showing and how much of the catalogue it has seen
- * (SPEC §9.3 step 11, F). Open Library knows far more editions than carry a
- * cover, so the honest statement is "n covers out of m edition records
- * checked", never "every cover".
- */
-export function progressLabel(covers: number, merged: Pick<MergedWork, 'checked' | 'total' | 'done' | 'truncated'>): string {
-  const n = `${covers} cover${covers === 1 ? '' : 's'}`;
-  const checked = merged.checked.toLocaleString('en');
-  const total = merged.total.toLocaleString('en');
-  if (!merged.done) return `${n} · ${checked} of ${total} editions checked`;
-  const reason: Record<Exclude<Truncation, null>, string> = {
-    cap: `${n} · first ${checked} of ${total} editions checked`,
-    error: `${n} · ${checked} of ${total} editions checked, the source stopped answering`,
-  };
-  if (merged.truncated) return reason[merged.truncated];
-  return `${n} from ${total} edition${merged.total === 1 ? '' : 's'}`;
-}
-
-/** "Scribner 1996" style caption from the editions carrying a cover. */
-function captionFor(cover: Cover, editionsById: ReadonlyMap<string, EditionView>): string {
-  const eds = cover.editionIds.map(id => editionsById.get(id)).filter((e): e is EditionView => !!e);
-  const first = eds[0];
-  if (!first) return '';
-  const parts = [first.publisher, first.year ? String(first.year) : undefined].filter(Boolean);
-  const more = eds.length > 1 ? ` +${eds.length - 1}` : '';
-  return parts.join(' ') + more;
-}
 
 /** Back to the search the user came from (SPEC F2.7). */
 function backHrefFrom(searchParams: URLSearchParams): string {
@@ -384,6 +324,7 @@ function BookDetail() {
       cover={selected}
       editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
       coversPerEdition={view.coversPerEdition}
+      workId={work.id}
       workTitle={work.title}
       anyEditionLinks={pages.anyEditionLinks}
       editionsByScan={view.editionsByScan}
@@ -549,6 +490,7 @@ function ScanProgress({ checked, total, done }: { checked: number; total: number
 }
 
 interface CoverDetailsProps {
+  workId: string;
   cover: Cover;
   editions: EditionView[];
   coversPerEdition: ReadonlyMap<string, number>;
@@ -623,7 +565,10 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   );
 }
 
-function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+  const wallsOn = useContext(WallsOn);
+  const isDesktop = useIsDesktop();
+  const addToWall = wallsOn ? <AddToWall workId={workId} title={workTitle} author={author} cover={cover} editions={editions} /> : null;
   /*
     Every scan that was folded into this tile, the representative first
     (ROADMAP 6.14). Folding is right on the wall — without it *The Great
@@ -671,7 +616,18 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
         the same control is in the bar beside "Details", so it is hidden here
         rather than shown twice. (Julian, 2026-09-09.)
       */}
-      {share && <div className="mb-3 hidden justify-end lg:flex">{share}</div>}
+      {/*
+        On a wide screen "Add to wall" shares this row with Share, so the
+        first shop stays where it was; a separate row pushed it 40 px further
+        below an 800 px window (ROADMAP 5.13a, measured 2026-09-28). One
+        instance, never a CSS-hidden twin (useIsDesktop).
+      */}
+      {(share || addToWall) && (
+        <div className="mb-3 hidden items-start justify-between gap-2 lg:flex">
+          <div>{isDesktop && addToWall}</div>
+          {share}
+        </div>
+      )}
       {/*
         In the phone sheet the cover shares the screen with the very links the
         reader opened the sheet for, so it stays small enough that the first
@@ -693,6 +649,11 @@ function CoverDetails({ cover, editions, coversPerEdition, workTitle, anyEdition
         Image from {shownScan.startsWith('gb:') ? 'Google Books' : 'Open Library'}
         {editions.length > 1 ? ` · on ${editions.length} editions` : ''}
       </p>
+      {/*
+        A reader's own wall (ROADMAP 5.13a): the picked cover, not the scan on
+        screen — a wall keeps the design, and the folded scans are the same one.
+      */}
+      {!isDesktop && addToWall && <div className="mt-3">{addToWall}</div>}
 
       {scans.length > 1 && (
         <section className="mt-4" aria-label="Scans folded into this tile">
@@ -1109,10 +1070,12 @@ function shopLinkTitle(link: BuyLink): string {
  * description, Open Graph image and structured data (SPEC §10 D10). Nothing
  * about the behaviour changed in the move.
  */
-export default function BookDetailPage() {
+export default function BookDetailPage({ walls = false }: { walls?: boolean }) {
   return (
-    <Suspense>
-      <BookDetail />
-    </Suspense>
+    <WallsOn.Provider value={walls}>
+      <Suspense>
+        <BookDetail />
+      </Suspense>
+    </WallsOn.Provider>
   );
 }

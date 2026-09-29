@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import BookDetailPage from '@/components/BookDetail';
+import { wallsEnabled } from '@/lib/walls/switch';
 import { WALL_WORKS } from '@/lib/curated';
 import type { Cover, Edition, Work } from '@/lib/model';
 import { bookJsonLd, workDescription, workPageTitle, workUrl } from '@/lib/seo';
@@ -109,7 +110,7 @@ export default async function Page({ params }: PageProps) {
       <Suspense fallback={null}>
         <WorkJsonLd id={id} />
       </Suspense>
-      <BookDetailPage />
+      <BookDetailPage walls={wallsEnabled()} />
     </>
   );
 }

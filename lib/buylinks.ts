@@ -154,6 +154,14 @@ const RETAILERS: Record<Market, Retailer[]> = {
     },
     abebooks('de'),
     { id: 'booklooker', label: 'Booklooker', url: isbn => `https://www.booklooker.de/B%C3%BCcher/Angebote/isbn=${isbn}` },
+    /*
+      abebooks.de beside ZVAB (Julian, 2026-09-28: „zvab bei deutschem markt
+      priorisieren, aber abe books auch zeigen unter weitere"). ZVAB shows a
+      subset of the same marketplace — measured on one ISBN, 117 offers against
+      139, the missing ones nearly all from sellers abroad — so ZVAB leads and
+      AbeBooks follows behind the fold for the reader who wants those too.
+    */
+    { id: 'abebooks-de', label: 'AbeBooks', url: isbn => `https://www.abebooks.de/servlet/SearchResults?isbn=${isbn}` },
   ],
 };
 
@@ -300,6 +308,7 @@ export function searchLinksFor(input: SearchLinkInput, market: Market = DEFAULT_
   out.push({ provider: 'abebooks-search', label: ABEBOOKS_HOST[market].label, url: `https://${ABEBOOKS_HOST[market].host}/servlet/SearchResults?${abe}` });
 
   out.push({ provider: 'ebay-search', label: 'eBay', url: `https://www.ebay.${EBAY_DOMAIN[market]}/sch/i.html?_nkw=${q(terms)}&_sacat=267` });
+  if (market === 'de') out.push({ provider: 'abebooks-de-search', label: 'AbeBooks', url: `https://www.abebooks.de/servlet/SearchResults?${abe}` });
 
   /*
     Every shop with a search form is asked about *this printing* too, not only
