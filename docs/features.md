@@ -116,6 +116,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Farbschema-Mockups mit Kontrasttabelle | 6.22 | `lab/palette/` |
 | Fixtures aufzeichnen, Cover-Index bauen, Werk befördern, Jahrzehnte-Seiten finden, Händler-Links prüfen, Ladebilder kopieren, Worktrees anzeigen | diverse | `scripts/` |
 | Cockpit: eine erzeugte Seite für das ganze Projekt (Brett nach Thema × Status, Sammlungen & Synchronisation, Werkzeuge zum Starten, Dienste, Funktionen, Website-Karte, Lab), Server nur auf 127.0.0.1; `npm run kanban` ist der Alias für die Datei | 6.54 | `scripts/cockpit/`, `npm run cockpit` |
+| Cockpit-Ansicht „Identität" (seit 2026-09-29): Entscheidungen aus `docs/identitaet.md` §0, Marke und verglichene Richtungen, Schriftproben heute und vorher, Farben, Vorschaubilder | 6.61, 6.54 | `scripts/cockpit/identity.ts` |
 
 ## Was es ausdrücklich **nicht** gibt
 

@@ -3386,7 +3386,7 @@ Julian: „ja, drafte das und füge die werke bei OL hinzu falls sie fehlen", da
 - **Offen:**
   - Auffällige Datensätze bei Open Library, die das Manifest-README aufzählt: Seitenzahlen, die nicht zum Jahr passen (Nr. 1, 19, 45, 322); ISBNs auf Drucken der 1960er, die es damals noch nicht gab; doppelte Ausgaben desselben Drucks (Nr. 402, 654, 724, 740, 778, 820, 831, 838, 842).
   - Nr. 397 (Chesterton) ist als Wirth belegt, es gibt aber kein Bild.
-## 2026-09-28 — Neue Schriften: Xanh Mono und Jost (ROADMAP 6.61)
+## 2026-09-28 · Neue Schriften: Xanh Mono und Jost (ROADMAP 6.61)
 
 Julian wollte die visuelle Identität klären und schickte zwei Fotos als Schriftkandidaten: einen Kassenbon von *eavesdrop* (674 Manhattan Ave, Brooklyn) und ein T-Shirt von Frankel's Delicatessen. Der Weg im Einzelnen steht in [docs/identitaet.md](identitaet.md).
 
@@ -3582,7 +3582,7 @@ Die Bandliste stammt aus der DNB, ergänzt aus K10plus: `lab/collections/lists/f
 - **Haffmans und Ex Libris:** Die Manifest-Agenten liefen, als die Sitzung endete; ihre Ordner enthalten nur Zwischenstände.
 
 **Herder Bücherei (Grieder), fertig am 2026-09-28.** 38 neue Ausgaben angelegt (OL62603082M–OL62603151M, Zuordnung in `created.json` im Manifest-Ordner) und 44 Umschläge hochgeladen. Die Wand `herder-bucherei-covers-by-walter-grieder` zeigt 44 von 45, laut Kontaktbogen alle von Grieder. Nr. 292/293 und 294/295 sind zwei Bände desselben Werks (*Wege zur Kunst*), deshalb steht nur einer auf der Wand. Online als Entwurf.
-## 2026-09-28 — Vorschaubilder in den neuen Schriften, eine Karte für die ganze Seite (ROADMAP 6.61)
+## 2026-09-28 · Vorschaubilder in den neuen Schriften, eine Karte für die ganze Seite (ROADMAP 6.61)
 
 - Werk- und Cover-Karte in Xanh Mono und Jost (`app/og.tsx`, WOFF in `assets/og/`). Lokal gerendert: *Frankenstein* als Werk-Karte (1,8 s kalt) und als Cover-Karte.
 - Neue Website-Karte `app/opengraph-image.tsx` (statisch, 0,2–0,3 s im Dev-Server), eine Wand aus buchförmigen Kacheln ohne echte Cover.
@@ -3590,7 +3590,7 @@ Die Bandliste stammt aus der DNB, ergänzt aus K10plus: `lab/collections/lists/f
 - **Verworfen:** eine Website-Karte aus dem Lade-Mosaik (Gesicht aus echten Covern) — das Gesicht ist in Kartengröße kaum zu erkennen, und die Rechtefrage gleicht der eines Logos ([docs/identitaet.md §4](identitaet.md)).
 - 890 Tests und Build grün.
 
-## 2026-09-28 — Welche Seite welche Vorschau zeigt (ROADMAP 6.61)
+## 2026-09-28 · Welche Seite welche Vorschau zeigt (ROADMAP 6.61)
 
 Julian: „setz das [die Website-Karte] erstmal als Standard für alle Vorschauen, die nicht auf ein einzelnes Cover gehen. Schaue auch nach für die neuen Unterseiten, die mittlerweile online gingen" — und dazu: die Werk-Karte mit vier Covern „ist gut für die Vorschau auf einen Werk-Link ohne ausgewähltes Cover".
 
@@ -3686,7 +3686,7 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
 - **Ex Libris Nr. 57 und 58 angelegt:** OL62603439M (Ex Libris 1972) und OL62603440M (Ex Libris 1977), beide ohne ISBN und mit Umschlag. Die Wand zeigt 58 von 58.
 - **Julians Berichtigungen bei Open Library, geprüft:** OL62603210M steht auf Haffmans, OL18051650M hat keine ISBN mehr.
 
-## 2026-09-29 — Xanh Mono proportional neu gesetzt (ROADMAP 6.61)
+## 2026-09-29 · Xanh Mono proportional neu gesetzt (ROADMAP 6.61)
 
 Julian: „kann man das letter spacing von der xanh font noch verbessern? es sieht unregelmäßig aus." Ursache: Xanh Mono ist monospaced, jedes Zeichen 500 Einheiten breit (von 1000). Ein Komma hat 114 Einheiten Tinte, ein „m" 481, ein „W" 545 — die schmalen Zeichen standen in weiten Zellen („Frankenstein ; or ,"). `letter-spacing` verschiebt jeden Abstand gleich und hilft nicht; −0,04 em machte alles dichter, die Zellen blieben. Eine proportionale Xanh gibt es nicht (Foundry-Repository, Google Fonts, Fonts In Use).
 
@@ -3699,7 +3699,7 @@ Gebaut in [lab/xanh-spacing](../lab/xanh-spacing/README.md) (`respace.py`, fontT
 
 **Gemessen** am Dev-Server: bei 390 × 844 kein seitliches Scrollen; H1 der Startseite 79 px, *Frankenstein* 76 px (zwei Zeilen), „Start with a classic" 32 px, Wortmarke eine Zeile; bei 1280 × 800 *Frankenstein* 101 px. Das kursive f war bei Überhang 130 noch 544 Einheiten breit und ließ „Beauti ful" auseinanderfallen, sichtbar im Namen oben links; nebeneinander gerendert schloss 180 die Lücke (f 444 breit), 230 war zu eng. **Julian wählte 180**, eingebaut am selben Tag.
 
-## 2026-09-29 — Die Bildmarke: Richtung A, im Tab und in der Kopfzeile (ROADMAP 6.61)
+## 2026-09-29 · Die Bildmarke: Richtung A, im Tab und in der Kopfzeile (ROADMAP 6.61)
 
 Julian: „nimm A für die Bildmarke — ändert die auch das Icon in der Tab-Bar des Browsers?" Bis dahin zeigte der Tab das Dreieck im Kreis aus der Next.js-Vorlage (`app/favicon.ico` seit dem ersten Commit).
 
@@ -3707,4 +3707,10 @@ Julian: „nimm A für die Bildmarke — ändert die auch das Icon in der Tab-Ba
 - **Raster:** `scripts/build-icons.py` (Pillow) zeichnet 16, 32 und 48 px für `favicon.ico` (779 Byte) und 180 px für `apple-icon.png` (576 Byte) je Größe von Hand aufs Pixelraster — bei 16 px Kacheln 3 × 4 mit 1 px Abstand, die mittlere 5 × 6 —, auf einem Papier-Quadrat, weil ein Rasterbild dem dunklen Modus nicht folgen kann.
 - **Kopfzeile:** die Marke vor dem Namen, 24 px hoch, 17 px breit, bleibt beim Überfahren in Tintenfarbe. Bei 390 × 844 auf der Werkseite: Name von 98 bis 241 px, rechte Knöpfe bis 374, kein seitliches Scrollen; bei 1280 × 800 von 32 bis 175 px.
 - Next liefert alle drei aus (`<link rel="icon">` für ICO und SVG, `apple-touch-icon`), im Dev-Server geprüft.
+
+## 2026-09-29 · Die Identität im Cockpit (ROADMAP 6.61, 6.54)
+
+Julian: „update the project cockpit to include a tab on visual identity/branding that has all these choices and important previous versions collected." Neue Ansicht „Identität" (`scripts/cockpit/identity.ts`, Test `scripts/cockpit/__tests__/identity.test.ts`). Wie jede Cockpit-Ansicht **keine zweite Liste**: die Entscheidungen stehen als Tabelle in [docs/identitaet.md](identitaet.md) §0 (acht Zeilen am 2026-09-29: Marke ohne echte Cover, Xanh Mono statt Courier Prime, Aufteilung `swap`, ISBN, Vorschaubilder, das gestrichene „Or", die proportionale Xanh, Richtung A), die Farben kommen aus `app/globals.css` (hell und dunkel), die Marke aus `app/icon.svg` und den Rasterdateien, die Schriftproben sind in den echten Dateien gesetzt (die neu gesetzte Xanh, Jost, und aus `lab/xanh-spacing/source/` das monospaced Original; Fraunces und Geist lagen nie im Repository und kommen, wenn online, von Google Fonts), die verglichenen Markenrichtungen A (auch die erste Skizze ohne Reihenabstand), B, C, D und zwei Mischungen A + C aus den Zahlen, mit denen sie gezeichnet wurden, und die drei Vorschaubilder von der Produktion beim Öffnen der Ansicht. `docs/cockpit.html` wächst durch die eingebetteten Schriften auf rund 1 MB.
+
+Nebenbei: der Historien-Leser des Cockpits erkennt nur Überschriften mit „·"; die 6.61-Einträge standen mit „—" und fehlten deshalb beim Roadmap-Punkt. Umgestellt. Andere Einträge vom 2026-09-28 haben dasselbe Problem.
 

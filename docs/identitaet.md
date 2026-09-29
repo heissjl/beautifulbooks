@@ -2,7 +2,23 @@
 
 Angelegt 2026-09-28 (ROADMAP 6.61). Julian: „lass uns über ein visuelles Logo nachdenken, nicht an den Namen gebunden, weil der noch nicht feststeht. Können wir etwas mit dem Mosaik machen, gibt es rechtliche Probleme, können wir Cover nehmen, die selbst auf Wikimedia Commons liegen, und daraus ein Mosaik bauen?"
 
-Heute: Fraunces für Titel und Wortmarke, Geist Sans für die Oberfläche, Geist Mono für ISBNs (SPEC §5). Eine Bildmarke gibt es nicht; das Favicon ist der Standard.
+Ausgangslage am 2026-09-28: Fraunces für Titel und Wortmarke, Geist Sans für die Oberfläche, Geist Mono für ISBNs; keine Bildmarke, im Browser-Tab das Icon der Next.js-Vorlage.
+
+## 0. Entscheidungen
+
+Jede Entscheidung dieser Datei in einer Zeile, neueste unten. Das Cockpit liest diese Tabelle (Ansicht „Identität"); eine neue Entscheidung kommt hier hinzu und in den Abschnitt, der sie begründet.
+
+| Datum | Thema | Entscheidung | Verworfen / vorher | Roadmap |
+|---|---|---|---|---|
+| 2026-09-28 | Bildmarke | Keine Marke aus echten Covern; abstrakt aus Buchrechtecken (§2) | Mosaik aus geschützten Covern; „liegt auf Commons" als Freibrief | 6.61 |
+| 2026-09-28 | Schrift | Kassenbon-Schrift ist Xanh Mono | Courier Prime (aus unscharfem Foto geraten) | 6.61 |
+| 2026-09-28 | Schrift | Titel und Wortmarke in Xanh, Oberfläche in Jost, Aufteilung wie vorher Fraunces/Geist (`swap`) | Aufteilung nach Inhalt (`xanh`, zurückgestellt als 6.62); Versalien der Deli-Fassung | 6.61, 6.62 |
+| 2026-09-28 | ISBN | Jost, Null und Bindestriche aus Geist Mono, gegliedert, Striche nur in der Anzeige | Geist Mono ohne Striche | 6.61 |
+| 2026-09-28 | Vorschaubild | Website-Karte als Wand aus Buchrechtecken für jede Seite ohne eigene; Werk vier Cover, einzelnes Cover groß | Karte aus dem Lade-Mosaik (echte Cover) | 6.61 |
+| 2026-09-28 | Text | „Or" vor beiden Einladungen der Startseite gestrichen | „Or help us find …", „Or create your own …" | 5.8a, 5.13b |
+| 2026-09-29 | Schrift | Xanh Mono proportional neu gesetzt: Rand 22, Band 10–65 %, kursiv Überhang 180, aufrecht Arm 55 | Monospaced mit Wortabstand −0,3 em; Überhang 130 (Lücke im f) | 6.61 |
+| 2026-09-29 | Bildmarke | Richtung A: 3 × 3 Buchrechtecke, die mittlere in Terrakotta; Kopfzeile und Browser-Icon | B Wand mit Lücke, C Mosaik-Buch, D Fächer, Mischung A+C | 6.61 |
+
 
 ## 1. Schrift
 

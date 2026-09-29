@@ -268,6 +268,55 @@
       }).join('');
   }
 
+  /* --------------------------------------------------------------- Identität */
+  let identityFontsLoaded = false;
+  function loadIdentityFonts() {
+    if (identityFontsLoaded) return;
+    identityFontsLoaded = true;
+    const css = D.identity.fonts.map(f => `@font-face{font-family:"${f.family}";font-style:${f.style};font-weight:400;src:url(${f.url})}`).join('');
+    const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+    // Fraunces, Geist and Geist Mono were Google fonts and never lived in the
+    // repository; the "before" specimens borrow them from Google when online.
+    const l = document.createElement('link'); l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Geist:wght@400&family=Geist+Mono&display=swap';
+    document.head.appendChild(l);
+  }
+  function specimen(label, note, head, text, extra = '') {
+    return `<div class="box" style="margin-bottom:.8rem"><div class="small muted" style="margin-bottom:.4rem"><b>${esc(label)}</b> · ${esc(note)}</div>
+      <div style="font-family:${head.family};font-size:44px;line-height:1.1;${head.style || ''}">Judge a book <em style="color:#945138">by its covers.</em></div>
+      <div style="font-family:${head.family};font-size:28px;line-height:1.2;margin-top:.3rem;${head.style || ''}">Frankenstein; or, The Modern Prometheus</div>
+      <div style="font-family:${text};font-size:17px;margin-top:.5rem">Type a title and see the covers it has been printed with, by language and year. <span style="color:#746c62">Start with a classic · English 54 · German 3</span></div>${extra}</div>`;
+  }
+  function vIdentity() {
+    loadIdentityFonts();
+    const I = D.identity;
+    const rows = I.decisions.filter(d => matches(Object.values(d).join(' '))).map(d => `<tr><td class="mono small">${esc(d.date)}</td><td class="small"><span class="tag">${esc(d.topic)}</span></td><td class="small">${esc(d.decision)}</td><td class="small muted">${esc(d.rejected)}</td><td class="small">${d.items.map(itemA).join(' ')}</td></tr>`).join('');
+    const isbn = `<div style="font-family:'BB Jost';font-size:22px;margin-top:.6rem">ISBN ${I.isbn.runs.map(r => r.mono ? `<span style="font-family:'Geist Mono',ui-monospace,monospace">${esc(r.text)}</span>` : esc(r.text)).join('')} <span class="small muted" style="font-family:inherit">— Jost, Null und Striche aus Geist Mono; im Link bleibt ${esc(I.isbn.raw)}</span></div>`;
+    const sketches = I.sketches.map(k => `<div class="box" style="text-align:center;${k.chosen ? 'outline:2px solid #945138' : ''}"><div style="background:#f4f0e8;border-radius:8px;padding:.6rem">
+      <div style="width:96px;height:96px;margin:auto">${k.svg}</div></div>
+      <div class="small" style="margin-top:.4rem"><b>${esc(k.label)}</b>${k.chosen ? ' <span class="tag">gewählt</span>' : ''}</div><div class="small muted">${esc(k.note)}</div></div>`).join('');
+    const icon = I.iconSvg ? `<div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <div style="background:#f4f0e8;border-radius:8px;padding:.8rem;color-scheme:light"><div style="width:96px;height:96px">${I.iconSvg}</div></div>
+      <div style="background:#131110;border-radius:8px;padding:.8rem;color-scheme:dark"><img alt="" width="96" height="96" src="data:image/svg+xml;utf8,${encodeURIComponent(I.iconSvg.replace('prefers-color-scheme:dark', 'min-width:0'))}"></div>
+      ${I.rasterIcons.map(r => `<div class="small" style="text-align:center"><img alt="" src="${r.url}" style="width:${r.name.endsWith('.ico') ? 48 : 90}px;height:auto;image-rendering:pixelated;display:block;margin:auto"><code>${esc(r.name)}</code> <span class="muted">${r.bytes} B</span></div>`).join('')}
+    </div><div class="small muted" style="margin-top:.4rem">SVG hell und dunkel (${fileA('app/icon.svg')}), dazu die Rasterfassungen auf Papiergrund (${fileA('scripts/build-icons.py')}), in der Kopfzeile ${fileA('components/BrandMark.tsx')}.</div>` : '<p class="muted">app/icon.svg fehlt.</p>';
+    const tokens = I.tokens.filter(t => /^(bg|surface|surface-2|ink|ink-2|ink-3|line|accent|on-accent)$/.test(t.name)).map(t => `<tr><td class="mono small">--${esc(t.name)}</td><td><span style="display:inline-block;width:2.2rem;height:1.2rem;border-radius:4px;border:1px solid var(--line);background:${esc(t.light)};vertical-align:middle"></span> <code>${esc(t.light)}</code></td><td>${t.dark ? `<span style="display:inline-block;width:2.2rem;height:1.2rem;border-radius:4px;border:1px solid var(--line);background:${esc(t.dark)};vertical-align:middle"></span> <code>${esc(t.dark)}</code>` : '—'}</td></tr>`).join('');
+    const cards = [['Website-Karte', '/opengraph-image', 'jede Seite ohne eigene Karte'], ['Werk ohne gewähltes Cover', '/book/OL450063W/opengraph-image', 'vier Cover des Buchs'], ['Ein geteiltes Cover', '/book/OL450063W/cover/ol-14705499/opengraph-image', 'dieses Cover groß']]
+      .map(([t, p, n]) => `<div class="box"><div class="small"><b>${esc(t)}</b> · <span class="muted">${esc(n)}</span></div><a href="${LIVE}${p}" target="_blank" rel="noopener"><img alt="" loading="lazy" src="${LIVE}${p}" style="width:100%;border-radius:6px;margin-top:.4rem;border:1px solid var(--line)"></a></div>`).join('');
+    return topbar('Identität', `aus ${'docs/identitaet.md'} §0, app/globals.css, app/icon.svg, assets/fonts, lab/xanh-spacing — Stand dieser Erzeugung`) +
+      `<p class="lede">Schrift, Marke, Farben und Vorschaubilder der Seite, mit den Entscheidungen, die dahin führten, und den Fassungen davor. Begründungen und Messungen: ${fileA('docs/identitaet.md')} · ${fileA('lab/xanh-spacing/README.md')} · Roadmap ${itemA('6.61')} ${itemA('6.62')}.</p>` +
+      (I.missing.length ? `<div class="hint"><span class="ico">!</span><div>Nicht gefunden: ${I.missing.map(m => `<code>${esc(m)}</code>`).join(', ')}</div></div>` : '') +
+      `<h2>Entscheidungen ${src('docs/identitaet.md §0')}</h2><div class="box scroll"><table><tr><th>Datum</th><th>Thema</th><th>Entscheidung</th><th>Verworfen / vorher</th><th>Roadmap</th></tr>${rows}</table></div>` +
+      `<h2>Bildmarke</h2><div class="box">${icon}</div><h3>Richtungen, die verglichen wurden</h3><div class="cardgrid">${sketches}</div>` +
+      `<h2>Schrift</h2>` +
+      specimen('Heute, seit 2026-09-29', 'Xanh (Xanh Mono proportional neu gesetzt) für Überschriften, Jost für alles andere', { family: "'BB Xanh'" }, "'BB Jost'", isbn) +
+      specimen('2026-09-28 bis 29', 'Xanh Mono im Original, monospaced, Wortabstand −0,3 em', { family: "'BB Xanh Mono'", style: 'word-spacing:-0.3em;letter-spacing:-0.01em' }, "'BB Jost'") +
+      specimen('Bis 2026-09-28', 'Fraunces und Geist — von Google Fonts geladen, nur wenn online', { family: "'Fraunces',Georgia,serif", style: 'font-weight:500' }, "'Geist',ui-sans-serif") +
+      `<div class="small muted">Verworfen, nur beschrieben: Courier Prime (falsch bestimmt), die Deli-Fassung in Versalien, die Aufteilung nach Inhalt (${itemA('6.62')}).</div>` +
+      `<h2>Farben ${src('app/globals.css')}</h2><div class="box scroll"><table><tr><th>Token</th><th>hell</th><th>dunkel</th></tr>${tokens}</table></div>` +
+      `<h2>Vorschaubilder ${src('von der Produktion, beim Öffnen dieser Ansicht')}</h2><div class="cardgrid">${cards}</div>`;
+  }
+
   /* ------------------------------------------------------------------ Drawers */
   function openDrawer(html) {
     $('#drawer').innerHTML = '<button class="close" id="close">Schließen ✕</button>' + html;
@@ -332,7 +381,7 @@
   }
 
   /* ------------------------------------------------------------------ Wiring */
-  const VIEWS = { home: vHome, board: vBoard, sync: vSync, tools: vTools, services: vServices, features: vFeatures, site: vSite, lab: vLab, artefacts: vArtefacts, hints: vHints };
+  const VIEWS = { home: vHome, board: vBoard, sync: vSync, tools: vTools, services: vServices, features: vFeatures, site: vSite, lab: vLab, identity: vIdentity, artefacts: vArtefacts, hints: vHints };
   function render() {
     $('#main').innerHTML = VIEWS[view]();
     document.querySelectorAll('nav.side button[data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === view));

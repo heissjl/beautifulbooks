@@ -43,6 +43,7 @@ export function renderPage(data: CockpitData, assets = { css: readFileSync(path.
     <button data-v="features">Funktionen <span class="count" id="c-feat"></span></button>
     <button data-v="site">Website-Karte <span class="count" id="c-site"></span></button>
     <button data-v="lab">Lab <span class="count" id="c-lab"></span></button>
+    <button data-v="identity">Identität <span class="count">${data.identity.decisions.length}</span></button>
     <button data-v="artefacts">Artefakte</button>
     <button data-v="hints">Hinweise <span class="count">${data.hints.length}</span></button>
     <div class="side-foot">
