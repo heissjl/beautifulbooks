@@ -3575,7 +3575,7 @@ Die Bandliste stammt aus der DNB, ergänzt aus K10plus: `lab/collections/lists/f
 
 **Nachtrag 2026-09-28, Stand Herder Bücherei (Grieder) und dtv phantastica (Piatti).**
 - **Herder Bücherei:** Manifest fertig (`lab/collections/for-openlibrary/herder-bucherei-covers-by-walter-grieder/`). 45 Umschläge; 1 schon da, 6 Uploads, 20 neue Ausgaben auf vorhandenen Werken, 18 neue Werke.
-  - Angelegt sind 36 der 38 neuen Ausgaben: OL62603082M–OL62603120M, Zuordnung im Scratchpad unter `herder/created.json`.
+  - Angelegt sind 36 der 38 neuen Ausgaben: OL62603082M–OL62603120M, Zuordnung in `created.json` im Manifest-Ordner.
   - Es fehlen Nr. 410 (Skasa-Weiß, *So lacht Germania*) und Nr. 411 (Lepp, *Schöpferischer Lebensstil*).
   - Noch kein Umschlag hochgeladen.
 - **dtv phantastica:** Manifest fertig (`lab/collections/for-openlibrary/dtv-phantastica-covers-by-celestino-piatti/`). 36 Umschläge (Keller zeigt Nr. 1879 doppelt); 6 Uploads, 21 neue Ausgaben auf Werken, 9 neue Werke. Bei Open Library noch nichts gemacht.
