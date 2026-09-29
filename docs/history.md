@@ -3685,3 +3685,7 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
 - **Fischer Bücherei, Julians Veröffentlichung auf /curate:** Julian hat den Entwurf am 29.9. um 05:12 Uhr veröffentlicht und dabei *Madame Curie*, *Der letzte Advent* und *Sämtliche Erzählungen* entfernt. Die drei sind in Liste und Datei übernommen (`skip`). Die Wand hat jetzt 186 Kacheln in zwei Blöcken; 95 tragen einen Gestalter.
 - **Ex Libris Nr. 57 und 58 angelegt:** OL62603439M (Ex Libris 1972) und OL62603440M (Ex Libris 1977), beide ohne ISBN und mit Umschlag. Die Wand zeigt 58 von 58.
 - **Julians Berichtigungen bei Open Library, geprüft:** OL62603210M steht auf Haffmans, OL18051650M hat keine ISBN mehr.
+- **Online-Entwürfe nachgezogen**, nach dem Deploy von `84bcf80`:
+  - Haffmans: 2 Schritte (1 dazu, Reihenfolge). Beide *Lone Star* stehen im Entwurf.
+  - Fischer Bücherei: mit `--force` wegen der neuen Reihenfolge, die Julian verlangt hatte; die Umschläge stimmten überein. 9 Schritte (Intro, 7 Kacheln dazu, Reihenfolge); danach „already equal“.
+  - Die Fischer-Wand war am Morgen von /curate aus veröffentlicht. Die Seite zeigt deshalb bis zu einer erneuten Veröffentlichung auf /curate den alten Stand.
