@@ -162,6 +162,18 @@ async function main() {
       Object.assign(album, { story: { ...run.story.album, article: run.article, url: run.url, wikiMs: run.wikiMs, totalMs: run.totalMs, captions } });
     }
   }
+  // The same without a model (wiki-only.ts): Wikipedia excerpt and set captions, with the measured lookup time.
+  const wikiOnlyPath = join(DIR, 'out', 'wiki-only.json');
+  if (existsSync(wikiOnlyPath)) {
+    const runs = JSON.parse(readFileSync(wikiOnlyPath, 'utf8')) as Array<{ album: string; article: string | null; url: string | null; excerpt: string; fromWikidataMs: number | null; sleeves: Array<{ ids: string[]; line: string; note: string | null }> }>;
+    for (const album of albums) {
+      const run = runs.filter(r => r.album === album.title).at(-1);
+      if (!run) continue;
+      const captions: Record<string, { line: string; note: string | null }> = {};
+      for (const s of run.sleeves) for (const id of s.ids) captions[id] = { line: s.line, note: s.note };
+      Object.assign(album, { wiki: { article: run.article, url: run.url, excerpt: run.excerpt, ms: run.fromWikidataMs ?? 0, captions } });
+    }
+  }
   const template = readFileSync(join(DIR, 'mockup.html'), 'utf8');
   mkdirSync(join(DIR, 'out'), { recursive: true });
   writeFileSync(join(DIR, 'out', 'mockup.html'), template.replace('/*DATA*/null', JSON.stringify(albums).replace(/</g, '\\u003c')));

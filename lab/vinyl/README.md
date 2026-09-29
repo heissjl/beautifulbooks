@@ -34,6 +34,7 @@ npx tsx lab/vinyl/mockup.ts      # Mockup der Albumseite nach out/mockup.html (h
 npx tsx lab/vinyl/story.ts       # Zeitleiste, Credits, Anmerkungen je Hülle nach out/story.json
 # mit ANTHROPIC_API_KEY aus der .env.local des Hauptordners, nur für diesen Befehl:
 npx tsx lab/vinyl/live-story.ts  # Wikipedia + Claude, gemessen, nach out/live-story.json; danach mockup.ts erneut
+npx tsx lab/vinyl/wiki-only.ts   # Wikipedia-Auszug + gesetzte Zeilen, ohne Modell, gemessen, nach out/wiki-only.json
 npx vitest run lab/vinyl
 ```
 
@@ -78,6 +79,8 @@ Die Wand ansehen: `out/` mit einem beliebigen statischen Server ausliefern, z. B
 11. **Geschichte je Hülle** (Julian: „aber woher bekommen wir die geschichte zu jeder hülle"; `story.ts`, Befund in [geschichte.md](geschichte.md)): vier Schichten — Zeitleiste aus unseren Daten (24 von 24 Hüllen), Credits aus MusicBrainz und Discogs (15 von 24, CC0), Discogs-Anmerkungen (21 von 24, CC0, meist Herstellungsangaben), Erzählung aus Wikipedia (6 von 8 Alben, fast nur zum Original, CC BY-SA). Die Geschichte der Varianten gibt es nirgends fertig; sie müsste geschrieben werden.
 
 12. **Geschichte live geschrieben** (Julian: „mach mal einen mockup mit den wikipedia-daten und miss wie lange die ad-hoc erstellung dafür dauert"; `wiki.ts`, `live-story.ts`): Wikipedia-Artworktext in 1,3 s (Median), dann ein Aufruf an Claude Opus 5.5 (Aufwand `low`) für Albumtext und Beschriftung je Hülle in 5,5 s — zusammen 7,3 s (5,4–11,3 s), 0,022 $ je Album. Nicht für die Suche; auf der Albumseite nachgeladen und danach gespeichert schon. Im Mockup mit nachgespielter Wartezeit („live timing"). Tabellen in der [Historie](../../docs/history.md).
+
+13. **Ohne Sprachmodell** (Julian: „ist es einfacher nur den text aus wikipedia zu finden und darzustellen, statt zusammenzufassen?"; `wiki-only.ts`, `captions.ts`): Wikipedia-Auszug mit Link und Lizenz fürs Album, je Hülle eine gesetzte Zeile aus unseren Daten und höchstens eine Discogs-Anmerkung wörtlich. 1,0 s (Median) mit gespeicherter Wikidata-ID, höchstens 1,9 s, kostenlos. Im Mockup die Voreinstellung.
 
 **Entschieden 2026-09-29: Schwelle 20** (Julian: „für das hashing nimm die 20er schwelle“) — weniger Kacheln, die UHQR-Box und das zweite *folklore*-Foto verschwinden dabei im Stapel. Das Mockup steht auf 20, der Umschalter bleibt.
 

@@ -225,7 +225,7 @@ function fold(pressings) {
   return groups.sort((a, b) => (a.rep.date || '9999').localeCompare(b.rep.date || '9999'));
 }
 
-const state = { album: 0, country: 'all', side: 'front', selected: null, view: 'front', fold: 20, live: true, storyStart: performance.now() };
+const state = { album: 0, country: 'all', side: 'front', selected: null, view: 'front', fold: 20, live: true, storyStart: performance.now(), storyMode: 'wikipedia' };
 
 function render() {
   const album = DATA[state.album];
@@ -291,14 +291,48 @@ function tile(p, src, cls, n, current) {
  * reader would see can be judged by looking.
  */
 function storyBlock(album, p) {
+  return state.storyMode === 'claude' ? claudeBlock(album, p) : wikiBlock(album, p);
+}
+
+/** Pending state while the (simulated) lookup runs; null when the text may show. */
+function pending(ms, p, steps) {
+  const elapsed = performance.now() - (state.storyStart ?? 0);
+  if (!state.live || elapsed >= ms) return null;
+  scheduleStoryRender(ms - elapsed);
+  const step = steps.find(s => elapsed < s[0])?.[1] ?? steps.at(-1)[1];
+  return `<h3>${p ? 'This sleeve' : 'The sleeve'}</h3><p class="story wait">${step}</p>`;
+}
+
+/**
+ * Without a model: Wikipedia's own words, an excerpt of the article's artwork
+ * section with a link and the licence, and per sleeve a set line from our data
+ * plus at most one Discogs note quoted as written. Measured: about 1 s.
+ */
+function wikiBlock(album, p) {
+  const w = album.wiki;
+  if (!w) return '';
+  if (!p) {
+    const wait = pending(w.ms, p, [[w.ms, 'Looking up the sleeve on Wikipedia']]);
+    if (wait) return wait;
+    if (!w.excerpt) return '<h3>The sleeve</h3><p class="story quiet">Wikipedia says nothing about this sleeve.</p>';
+    return `<h3>The sleeve</h3>${w.excerpt.split(/\n\n/).map(t => `<p class="story">${esc(t)}</p>`).join('')}
+      <p class="credit">Excerpt from <a href="${esc(w.url)}">Wikipedia: ${esc(w.article)}</a>, CC BY-SA 4.0 · <a href="${esc(w.url)}">Read more on Wikipedia</a></p>`;
+  }
+  const c = w.captions[p.id];
+  if (!c) return '';
+  return `<h3>This sleeve</h3><p class="story">${esc(c.line)}</p>
+    ${c.note ? `<p class="story">“${esc(c.note)}”</p><p class="credit">Note from Discogs</p>` : '<p class="credit">From the pressings listed here and their credits (MusicBrainz, Discogs)</p>'}`;
+}
+
+/**
+ * Written by Claude (live-story.ts) from Wikipedia, our timeline, credits and
+ * Discogs notes; with "live timing" the page waits as long as that took.
+ */
+function claudeBlock(album, p) {
   const st = album.story;
   if (!st) return '';
-  const elapsed = performance.now() - (state.storyStart ?? 0);
-  if (state.live && elapsed < st.totalMs) {
-    scheduleStoryRender(st.totalMs - elapsed);
-    const step = elapsed < st.wikiMs ? 'Looking up the sleeve' : 'Writing the story of this sleeve';
-    return `<h3>${p ? 'This sleeve' : 'The sleeve'}</h3><p class="story wait">${step}</p>`;
-  }
+  const wait = pending(st.totalMs, p, [[st.wikiMs, 'Looking up the sleeve'], [st.totalMs, 'Writing the story of this sleeve']]);
+  if (wait) return wait;
   const names = { wikipedia: 'Wikipedia', timeline: 'the pressings listed here', credits: 'credits (MusicBrainz, Discogs)', notes: 'Discogs notes' };
   if (!p) {
     if (!st.text) return '<h3>The sleeve</h3><p class="story quiet">Nothing written about this sleeve in the sources we read.</p>';
@@ -379,10 +413,11 @@ function renderAside(album, allGroups) {
 }
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-country],[data-side],[data-id],[data-view],[data-close],[data-album],[data-fold],[data-live]');
+  const t = e.target.closest('[data-country],[data-side],[data-id],[data-view],[data-close],[data-album],[data-fold],[data-live],[data-mode]');
   if (!t) return;
   const album = DATA[state.album];
   if (t.dataset.fold) { state.fold = +t.dataset.fold; state.selected = null; renderMock(); }
+  else if (t.dataset.mode) { state.storyMode = t.dataset.mode; state.storyStart = performance.now(); renderMock(); }
   else if (t.dataset.live !== undefined) { state.live = !state.live; state.storyStart = performance.now(); renderMock(); }
   else if (t.dataset.album !== undefined) { state.album = +t.dataset.album; state.storyStart = performance.now(); state.country = 'all'; state.selected = null; state.view = 'front'; renderMock(); }
   else if (t.dataset.country !== undefined) state.country = t.dataset.country;
@@ -416,6 +451,13 @@ function renderMock() {
     bar.append(b);
   }
   bar.append(sep2, live);
+  const sep3 = document.createElement('span'); sep3.className = 'sep'; sep3.textContent = '· story:';
+  bar.append(sep3);
+  for (const [mode, label] of [['wikipedia', 'Wikipedia text'], ['claude', 'Claude summary']]) {
+    const b = document.createElement('button');
+    b.dataset.mode = mode; b.textContent = label; b.setAttribute('aria-pressed', String(state.storyMode === mode));
+    bar.append(b);
+  }
 }
 state.album = Math.max(0, DATA.findIndex(a => a.title === 'Kind of Blue'));
 renderMock();

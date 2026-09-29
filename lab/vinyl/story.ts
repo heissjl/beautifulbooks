@@ -86,22 +86,26 @@ async function main() {
     const albumCredits = groupRels.filter(r => SLEEVE_REL_RE.test(r.type)).map(r => `${r.type}: ${r.artist?.name}`);
     const sleeves: Sleeve[] = [];
     for (const g of fold(album.pressings)) {
-      const mb = new Set<string>(), discogs = new Set<string>(), notes = new Set<string>();
+      const mb: string[] = [], discogs: string[] = [], notes = new Set<string>();
       for (const p of g) {
-        for (const r of (await artistRels('release', p.id)) ?? []) if (SLEEVE_REL_RE.test(r.type)) mb.add(`${r.type}: ${r.artist?.name}`);
+        // One entry per pressing that names it, so a caption can prefer who is named most often.
+        const mbHere = new Set<string>(), discogsHere = new Set<string>();
+        for (const r of (await artistRels('release', p.id)) ?? []) if (SLEEVE_REL_RE.test(r.type)) mbHere.add(`${r.type}: ${r.artist?.name}`);
         for (const id of links[p.id]?.discogs ?? []) {
           const d = dump.get(id);
           if (!d) continue;
-          for (const c of d.credits) if (SLEEVE_ROLE_RE.test(c.role)) discogs.add(`${c.role}: ${c.name}`);
+          for (const c of d.credits) if (SLEEVE_ROLE_RE.test(c.role)) discogsHere.add(`${c.role}: ${c.name}`);
           for (const line of d.notes.split(/\n+/)) if (/\b(cover|sleeve|jacket|artwork|photo)/i.test(line) && line.length < 300) notes.add(line.trim());
         }
+        mb.push(...mbHere);
+        discogs.push(...discogsHere);
       }
       const years = g.map(p => p.year).filter(Boolean).sort();
       sleeves.push({
         ids: g.map(p => p.id),
         pressings: g.length, first: years[0] ?? '', last: years.at(-1) ?? '',
         countries: [...new Set(g.map(p => p.country).filter(Boolean))], labels: [...new Set(g.map(p => p.label).filter(Boolean))],
-        mbCredits: [...mb], discogsCredits: [...discogs], notes: [...notes].slice(0, 5),
+        mbCredits: mb, discogsCredits: discogs, notes: [...notes].slice(0, 5),
       });
     }
     out.push({ album: album.title, albumCredits, sleeves });
