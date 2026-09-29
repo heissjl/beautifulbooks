@@ -3505,3 +3505,13 @@ Anlass: Julians Frage nach dem Döblin-Fehler („gibt es noch mehr solcher fals
 - Unter den 2.196 Treffern im selben Werk trägt die Ausgabe der ISBN in 2.117 Fällen genau das gewählte Cover.
 
 **Einschränkung:** geprüft wurde die Datei auf `claude/art-funnel-lab`; online veröffentlichte Entwürfe (Redis, 5.10b) sind nicht darin. Fehler in Open Librarys eigenen Ausgaben (wie „John Calvin“) können auf einer Buchseite erscheinen, wo die Seite die Ausgabe so zeigt, wie der Katalog sie führt. **Vorschlag, nicht beschlossen:** derselbe Abgleich als Prüfung, bevor eine Sammlung veröffentlicht wird.
+
+## 2026-09-29 · Der Maßplan als PDF für die Rahmenwerkstatt (ROADMAP 5.15; nur `claude/art-funnel-lab`)
+
+Aus der Rahmen-Recherche ([research-framing-partners.md](plans/research-framing-partners.md)): eine Werkstatt braucht einen Plan, keinen Link. „Frame plan (PDF)“ neben cm / in lädt `/api/walls/<id>/plan?units=metric|imperial`.
+
+- **Ohne Abhängigkeit:** `lib/walls/pdf.ts` schreibt PDF 1.4 mit Linien, Flächen und Text in Helvetica (Windows-1252, nichts eingebettet), rund 150 Zeilen; ein Test prüft, dass jeder Eintrag der Querverweistabelle auf sein Objekt zeigt. Zeichen außerhalb von Windows-1252 (三体) werden „?“, darum steht bei einem solchen Titel die Open-Library-Id daneben.
+- **Inhalt** (`lib/walls/planpdf.ts`, 7 Tests): Seite 1 Zeichnung mit Gehrung, nummerierten Büchern, Keilen und den Maßlinien aus `measurements`, Außenmaße daneben; die Angaben Außen, Rückwand, Tiefe, Leiste, Hintergrund mit Farbwert, Rand, Abstände, Keile (1,6 cm hoch, 60 % der Buchbreite; jetzt `PIECE_CM.wedge`), Gewicht, Verglasung „mit der Werkstatt abzustimmen“; die Regeln der Anordnung als Text. Ab Seite 2 höchstens 26 Bücher je Seite mit ISBN (gegliedert), Druck, Maß, Herkunft des Maßes, Position. Positionen in cm mit einer Nachkommastelle, in Zoll auf Viertel.
+- **Gewicht nur geschätzt, nicht gemessen:** Papier 0,7 g/cm³ bei 2,5 cm Dicke, wo keine bekannt ist, 2 mm Glas, 5 mm MDF, Leiste 3 × 7 cm Holz. Die Demo-Sammlung (6 Bücher, 71 × 69 cm) kommt auf etwa 9,5 kg — dient zur Wahl der Aufhängung.
+- **Gefunden beim Ansehen:** die Keilhöhe stand zuerst als „NaN“ — `next dev` lieferte die alte `dimensions.ts` ohne `wedge`; nach erneutem Laden richtig, ein Test verbietet „NaN“ im Plan. Die Spalte „Size from“ lief über den Rand und ist nach links gerückt. Geprüft an der Demo-Sammlung, gerendert mit PDFKit; auf dem Telefon (375 px) passt der Knopf ohne Überbreite.
+

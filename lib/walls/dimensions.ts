@@ -96,13 +96,13 @@ export function sizeFromFormat(format: string | undefined): Omit<BookSize, 'sour
 
 export const isEstimate = (s: BookSize | undefined) => !s || s.source === 'format' || s.source === 'assumed';
 
-/** Spacing of the piece in centimetres: margin inside the frame, gap between books, gap between rows, depth. */
 /**
  * Spacing of the piece in centimetres: margin inside the frame, gap between
- * columns and rows, depth, and the moulding's face width (drawn and counted in
- * the outer size).
+ * columns and rows, depth, the moulding's face width (drawn and counted in
+ * the outer size), and the height of the wedge each book stands on (as wide as
+ * 60 % of its book).
  */
-export const PIECE_CM = { margin: 8, gap: 5, rowGap: 7, depth: 7, moulding: 3 } as const;
+export const PIECE_CM = { margin: 8, gap: 5, rowGap: 7, depth: 7, moulding: 3, wedge: 1.6 } as const;
 
 export interface PlacedBook {
   x: number;

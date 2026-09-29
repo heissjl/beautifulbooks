@@ -56,7 +56,6 @@ const SOURCE_NOTE: Record<BookSize['source'], string> = {
   assumed: 'size unknown, a paperback assumed',
 };
 /** Height of a wedge under a book, in centimetres; drawn, not measured. */
-const WEDGE_CM = 1.6;
 
 function readWanted(id: string): boolean {
   try {
@@ -291,7 +290,7 @@ export default function WallPlan({
                       left: pct(x + bw * 0.2, plan.widthCm),
                       top: pct(y + bh, plan.heightCm),
                       width: pct(bw * 0.6, plan.widthCm),
-                      height: pct(WEDGE_CM, plan.heightCm),
+                      height: pct(PIECE_CM.wedge, plan.heightCm),
                       background: 'linear-gradient(to bottom, rgba(255,255,255,.35), rgba(0,0,0,.25))',
                       clipPath: 'polygon(12% 0, 88% 0, 100% 100%, 0 100%)',
                     }}
@@ -375,7 +374,16 @@ export default function WallPlan({
                 : 'From the sizes the catalogues give.'}
           </span>
         </p>
-        <div className="flex gap-1 text-xs" role="radiogroup" aria-label="Units">
+        <div className="flex items-center gap-1 text-xs">
+          {/* The plan a framing workshop builds from (ROADMAP 5.15). */}
+          <a
+            href={`/api/walls/${wall.id}/plan?units=${units}`}
+            download
+            className="mr-2 rounded-full border border-line px-2.5 py-0.5 text-ink-2 hover:border-accent hover:text-accent"
+          >
+            Frame plan (PDF)
+          </a>
+          <div className="flex gap-1" role="radiogroup" aria-label="Units">
           {(['metric', 'imperial'] as const).map((u) => (
             <button
               key={u}
@@ -388,6 +396,7 @@ export default function WallPlan({
               {unitLabel(u)}
             </button>
           ))}
+          </div>
         </div>
       </div>
 
