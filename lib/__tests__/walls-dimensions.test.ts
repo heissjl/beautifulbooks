@@ -3,6 +3,7 @@ import {
   formatLength,
   layoutPiece,
   measurements,
+  ledges,
   parseLibraryHeight,
   parseOlDimensions,
   pieceRange,
@@ -98,5 +99,18 @@ describe('measurements (5.13f)', () => {
   it('draws no gaps for a single book', () => {
     const d = measurements(layoutPiece([{ w: 13, h: 20 }], 3));
     expect(d.filter((x) => x.kind === 'gap' || x.kind === 'rowPitch')).toEqual([]);
+  });
+});
+
+describe('ledges (5.15)', () => {
+  it('gives every row one ledge from margin to margin, on its bottom line, as deep as its thickest book', () => {
+    const plan = layoutPiece([{ w: 15, h: 23 }, { w: 11, h: 18 }, { w: 13, h: 20 }], 2);
+    const l = ledges(plan, [{ w: 15, h: 23, t: 4.2 }, { w: 11, h: 18 }, { w: 13, h: 20 }]);
+    expect(l).toHaveLength(2);
+    expect(l.map((x) => x.length)).toEqual([plan.widthCm - 16, plan.widthCm - 16]);
+    expect(l[0].y).toBe(31);
+    expect(l[1].y).toBe(58);
+    // 4.2 cm rounds up to 4.5; a row of unknown thickness gets the profile's 3 cm.
+    expect(l.map((x) => x.depth)).toEqual([4.5, 3]);
   });
 });

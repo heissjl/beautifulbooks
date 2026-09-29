@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { PdfDoc, encodable, fit } from '../walls/pdf';
-import { planPdf, roughWeightKg } from '../walls/planpdf';
+import { glazingFor, planPdf, roughWeightKg } from '../walls/planpdf';
 import type { PublicWall } from '../walls/model';
 
 const text = (bytes: Uint8Array) => Array.from(bytes, (b) => String.fromCharCode(b)).join('');
@@ -64,6 +64,19 @@ describe('frame plan (5.15)', () => {
     expect(pdf).toContain('2 of 3 book sizes are estimated');
     expect(pdf).toContain('(~ 10.8 \\327 17.5)');
     expect(pdf).toContain('(library)');
+  });
+
+  it('asks for one acrylic ledge per row, UV-filtering glazing, and no fixing on the books', () => {
+    expect(pdf).toContain('(Ledges)');
+    expect(pdf).toMatch(/\(2 \\327 [0-9.]+ cm, clear acrylic L-profile\)/);
+    expect(pdf).toContain('UV filter 99 %');
+    expect(pdf).toContain('Nothing is glued or fixed to a book');
+    expect(pdf).not.toContain('Wedges');
+  });
+
+  it('asks for acrylic rather than glass once a side passes 70 cm', () => {
+    expect(glazingFor({ w: 60, h: 50 })).toContain('glass or acrylic');
+    expect(glazingFor({ w: 90, h: 50 })).toMatch(/^acrylic/);
   });
 
   it('writes inches when asked', () => {

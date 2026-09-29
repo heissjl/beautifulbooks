@@ -13,7 +13,7 @@ import { agentList, shoppingText } from '@/lib/walls/shoppinglist';
 import { linkPlan } from '@/lib/linkplan';
 import type { Market } from '@/lib/market';
 import type { BuyLink } from '@/lib/model';
-import { FORMAT_CM, formatLength, isEstimate, layoutPiece, measurements, PIECE_CM, pieceRange, unitLabel, type BookSize, type Units } from '@/lib/walls/dimensions';
+import { FORMAT_CM, formatLength, isEstimate, ASSUMED_THICKNESS_CM, layoutPiece, ledges, measurements, PIECE_CM, pieceRange, unitLabel, type BookSize, type Units } from '@/lib/walls/dimensions';
 import { mouldingEdge, mouldingImage, SAMPLE } from '@/lib/walls/moulding';
 import { DEFAULT_ARTWORK, FRAMES, MAX_COLUMNS, TONES, type FrameColor, type PublicWall, type Tile, type Tone, type WallOp } from '@/lib/walls/model';
 
@@ -54,7 +54,6 @@ const SOURCE_NOTE: Record<BookSize['source'], string> = {
   format: 'typical size for its format',
   assumed: 'size unknown, a paperback assumed',
 };
-/** Height of a wedge under a book, in centimetres; drawn, not measured. */
 
 function readWanted(id: string): boolean {
   try {
@@ -150,6 +149,7 @@ export default function WallPlan({
   /** A length on the piece as a CSS length: the wrapper is a size container as wide as the frame. */
   const len = (cmValue: number) => `calc(100cqw * ${(cmValue / plan.outerWidthCm).toFixed(5)})`;
   const moulding = FRAMES[frameColor].moulding;
+  const shelves = ledges(plan, sizes.map((z) => z ?? FORMAT_CM.trade));
   const range = pieceRange(sizes, wall.columns);
   const pending = sizes.filter((z) => !z).length;
   const c = PIECE_CM;
@@ -204,7 +204,7 @@ export default function WallPlan({
       <p className="kicker">Next step</p>
       <h2 id="make-a-wall" className="font-display text-2xl text-ink">Make it a piece for your wall</h2>
       <p className="mt-1 max-w-2xl text-sm text-ink-2">
-        One deep frame, the books themselves standing on small wedges against a toned background — your collection as a single piece of art. It is made of the real books, so it starts with finding them.
+        One deep frame, the books themselves standing on clear acrylic ledges against a toned background — your collection as a single piece of art. It is made of the real books, so it starts with finding them.
       </p>
 
       <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-ink-2">
@@ -273,7 +273,7 @@ export default function WallPlan({
         </label>
       </div>
 
-      {/* The piece: the moulding drawn from a sample frame with border-image, the back panel, books on wedges. */}
+      {/* The piece: the moulding drawn from a sample frame with border-image, the back panel, books on acrylic ledges. */}
       <div className="mt-5 overflow-hidden rounded bg-surface-2 px-4 pb-4 pt-7 sm:px-8 sm:pb-8 sm:pt-10" style={{ backgroundImage: 'radial-gradient(circle at 20% 0%, rgba(255,255,255,.35), transparent 70%)' }}>
         <div
           className="relative mx-auto"
@@ -284,13 +284,13 @@ export default function WallPlan({
             perspective: '1800px',
           }}
           role="img"
-          aria-label={`Preview${angled ? ' at an angle' : ''}: ${wall.tiles.length} books on wedges in a ${FRAMES[frameColor].label.toLowerCase()} frame, ${plan.columns} per row, ${TONES[tone].label} background`}
+          aria-label={`Preview${angled ? ' at an angle' : ''}: ${wall.tiles.length} books on acrylic ledges in a ${FRAMES[frameColor].label.toLowerCase()} frame, ${plan.columns} per row, ${TONES[tone].label} background`}
         >
           <div
             className="absolute inset-0 transition-transform duration-500"
             style={{
               transformStyle: 'preserve-3d',
-              transform: angled ? 'rotateY(28deg) rotateX(-6deg) scale(.86)' : 'none',
+              transform: angled ? 'rotateY(-28deg) rotateX(-6deg) scale(.86)' : 'none',
               boxShadow: angled ? 'none' : '0 14px 30px -12px rgba(0,0,0,.5), 0 2px 4px rgba(0,0,0,.2)',
             }}
           >
@@ -315,27 +315,17 @@ export default function WallPlan({
               {wall.tiles.map((t, i) => {
                 const { x, y, w: bw, h: bh } = plan.books[i];
                 const src = coverUrlFor(`ol:${t.coverId}`, 'M');
-                // In the angled view a book stands out from the panel by its thickness, and its pages show.
-                const thick = t.size?.t ?? 2.5;
+                // In the angled view a book stands out from the panel by its thickness. The view comes
+                // from the right, so the fore-edge shows and the spine, which is not drawn, stays hidden
+                // (Julian, 2026-09-29: „von der anderen seite … fällt nicht auf, dass die bücherrücken fehlen“).
+                const thick = t.size?.t ?? ASSUMED_THICKNESS_CM;
                 return (
                   <Fragment key={t.coverId}>
-                    <span
-                      className="absolute"
-                      style={{
-                        left: pct(x + bw * 0.2, plan.widthCm),
-                        top: pct(y + bh, plan.heightCm),
-                        width: pct(bw * 0.6, plan.widthCm),
-                        height: pct(PIECE_CM.wedge, plan.heightCm),
-                        background: 'linear-gradient(to bottom, rgba(255,255,255,.35), rgba(0,0,0,.25))',
-                        clipPath: 'polygon(12% 0, 88% 0, 100% 100%, 0 100%)',
-                        transform: angled ? `translateZ(${len(thick * 0.6)})` : undefined,
-                      }}
-                    />
                     {angled && (
                       <span
                         className="absolute"
                         style={{
-                          left: pct(x, plan.widthCm),
+                          left: pct(x + bw, plan.widthCm),
                           top: pct(y, plan.heightCm),
                           width: len(thick),
                           height: pct(bh, plan.heightCm),
@@ -362,13 +352,45 @@ export default function WallPlan({
                   </Fragment>
                 );
               })}
+              {/* One clear acrylic ledge per row, the books standing on it (5.15). */}
+              {shelves.map((l, r) => (
+                <Fragment key={`ledge-${r}`}>
+                  <span
+                    className="absolute"
+                    style={{
+                      left: pct(l.x, plan.widthCm),
+                      top: pct(l.y, plan.heightCm),
+                      width: pct(l.length, plan.widthCm),
+                      height: pct(c.ledge, plan.heightCm),
+                      background: 'linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.12) 18%, rgba(255,255,255,.06) 80%, rgba(255,255,255,.3))',
+                      borderTop: '1px solid rgba(255,255,255,.8)',
+                      boxShadow: '0 1px 2px rgba(0,0,0,.18)',
+                    }}
+                  />
+                  {angled && (
+                    <span
+                      className="absolute"
+                      style={{
+                        left: pct(l.x, plan.widthCm),
+                        top: pct(l.y, plan.heightCm),
+                        width: pct(l.length, plan.widthCm),
+                        height: len(l.depth),
+                        transformOrigin: 'top',
+                        transform: 'rotateX(90deg)',
+                        background: 'linear-gradient(rgba(255,255,255,.35), rgba(255,255,255,.15))',
+                        borderBottom: '1px solid rgba(255,255,255,.85)',
+                      }}
+                    />
+                  )}
+                </Fragment>
+              ))}
             </div>
             {angled && (
               <>
                 {/* The shadow the box throws on the wall behind it. */}
                 <span
                   className="absolute inset-0"
-                  style={{ transform: `translateZ(calc(-1 * ${len(c.depth)} - 1px))`, boxShadow: '24px 30px 40px -6px rgba(0,0,0,.4)' }}
+                  style={{ transform: `translateZ(calc(-1 * ${len(c.depth)} - 1px))`, boxShadow: '-10px 30px 40px -6px rgba(0,0,0,.4)' }}
                 />
                 {/* The inside of the box: four walls from the moulding back to the panel, lined like the panel. */}
                 {(['left', 'right', 'top', 'bottom'] as const).map((side) => {
@@ -392,8 +414,8 @@ export default function WallPlan({
                 })}
                 {/* The outside of the moulding, as deep as the box. */}
                 <span
-                  className="absolute left-0 top-0 h-full"
-                  style={{ width: len(c.depth), transformOrigin: 'left', transform: 'rotateY(90deg)', background: mouldingEdge(moulding) }}
+                  className="absolute right-0 top-0 h-full"
+                  style={{ width: len(c.depth), transformOrigin: 'right', transform: 'rotateY(-90deg)', background: mouldingEdge(moulding) }}
                 />
                 <span
                   className="absolute left-0 top-0 w-full"

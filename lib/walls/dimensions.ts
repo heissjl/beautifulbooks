@@ -99,10 +99,15 @@ export const isEstimate = (s: BookSize | undefined) => !s || s.source === 'forma
 /**
  * Spacing of the piece in centimetres: margin inside the frame, gap between
  * columns and rows, depth, the moulding's face width (drawn and counted in
- * the outer size), and the height of the wedge each book stands on (as wide as
- * 60 % of its book).
+ * the outer size), and the height of the clear acrylic ledge each row stands
+ * on — one L-profile per row instead of a wedge per book (Julian, 2026-09-29:
+ * „bau die Acrylleiste je Reihe … in den Plan“, after research-book-wall-artists.md:
+ * conservators support a closed book across its whole thickness).
  */
-export const PIECE_CM = { margin: 8, gap: 5, rowGap: 7, depth: 7, moulding: 3, wedge: 1.6 } as const;
+export const PIECE_CM = { margin: 8, gap: 5, rowGap: 7, depth: 7, moulding: 3, ledge: 3 } as const;
+
+/** The thickness assumed for a book whose thickness is not known. */
+export const ASSUMED_THICKNESS_CM = 2.5;
 
 export interface PlacedBook {
   x: number;
@@ -222,7 +227,7 @@ export function measurements(plan: ReturnType<typeof layoutPiece>): Measure[] {
     const y = m + bottom0 - Math.min(a.h, b.h) / 2;
     line('gap', m + a.x + a.w, y, m + b.x, y);
   }
-  // Rows share a bottom edge, so the rows are measured wedge to wedge (Julian,
+  // Rows share a bottom edge, so the rows are measured ledge to ledge (Julian,
   // 2026-09-29: „abstand von dem oberen oder unteren wedge zu dem der mitte“),
   // drawn in the gap between the first two columns, where no book covers it.
   const row1 = books.slice(columns, 2 * columns);
@@ -233,3 +238,38 @@ export function measurements(plan: ReturnType<typeof layoutPiece>): Measure[] {
   }
   return out.filter((d) => d.cm > 0 && outerHeightCm > 0);
 }
+
+/** One acrylic ledge: a row's books stand on it, its top on the row's bottom line. Centimetres on the back panel. */
+export interface Ledge {
+  x: number;
+  /** The top of the ledge, where the books stand. */
+  y: number;
+  length: number;
+  /** How far it reaches out from the panel: the row's thickest book, at least the profile's height. */
+  depth: number;
+}
+
+/**
+ * The ledges of a piece: one per row, from margin to margin, so every ledge
+ * has the same length and a framer cuts one size. Deep enough to carry the
+ * row's thickest book across its whole thickness, rounded up to half a
+ * centimetre.
+ */
+export function ledges(
+  plan: ReturnType<typeof layoutPiece>,
+  sizes: ReadonlyArray<{ w: number; h: number; t?: number }>,
+): Ledge[] {
+  const out: Ledge[] = [];
+  for (let r = 0; r < plan.rows; r++) {
+    const row = plan.books.slice(r * plan.columns, (r + 1) * plan.columns);
+    const thick = sizes.slice(r * plan.columns, (r + 1) * plan.columns).map((s) => s.t ?? ASSUMED_THICKNESS_CM);
+    out.push({
+      x: PIECE_CM.margin,
+      y: round1(Math.max(...row.map((b) => b.y + b.h))),
+      length: round1(plan.widthCm - 2 * PIECE_CM.margin),
+      depth: Math.max(PIECE_CM.ledge, Math.ceil(Math.max(...thick) * 2) / 2),
+    });
+  }
+  return out;
+}
+

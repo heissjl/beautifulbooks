@@ -9,7 +9,7 @@
  * laid out by the rules it states — the positions follow from those rules.
  */
 import { hyphenateIsbn } from '../isbnformat';
-import { FORMAT_CM, formatLength, isEstimate, layoutPiece, measurements, PIECE_CM, unitLabel, type BookSize, type Units } from './dimensions';
+import { ASSUMED_THICKNESS_CM, FORMAT_CM, formatLength, isEstimate, layoutPiece, ledges, measurements, PIECE_CM, unitLabel, type BookSize, type Units } from './dimensions';
 import { DEFAULT_ARTWORK, FRAMES, TONES, type PublicWall } from './model';
 import { encodable, fit, hexRgb, PdfDoc, type Rgb } from './pdf';
 
@@ -22,15 +22,31 @@ const MEASURE: Rgb = [0.76, 0.25, 0.05];
 
 /**
  * Rough weight, **not measured**: books as paper at 0.7 g/cm³ (2.5 cm thick
- * when the thickness is unknown), 2 mm glass, a 5 mm MDF back panel and a
- * wooden moulding 3 × 7 cm at 0.6 g/cm³. Enough to choose a hanging system.
+ * when the thickness is unknown), 2 mm glass, a 5 mm MDF back panel, a
+ * wooden moulding 3 × 7 cm at 0.6 g/cm³ and 3 mm acrylic ledges at 1.19 g/cm³.
+ * Enough to choose a hanging system.
  */
-export function roughWeightKg(sizes: ReadonlyArray<{ w: number; h: number; t?: number }>, panel: { w: number; h: number }, outer: { w: number; h: number }): number {
-  const books = sizes.reduce((g, s) => g + s.w * s.h * (s.t ?? 2.5) * 0.7, 0);
+export function roughWeightKg(
+  sizes: ReadonlyArray<{ w: number; h: number; t?: number }>,
+  panel: { w: number; h: number },
+  outer: { w: number; h: number },
+  shelves: ReadonlyArray<{ length: number; depth: number }> = [],
+): number {
+  const books = sizes.reduce((g, s) => g + s.w * s.h * (s.t ?? ASSUMED_THICKNESS_CM) * 0.7, 0);
   const glass = panel.w * panel.h * 0.2 * 2.5;
   const back = panel.w * panel.h * 0.5 * 0.75;
   const moulding = 2 * (outer.w + outer.h) * PIECE_CM.moulding * PIECE_CM.depth * 0.6;
-  return Math.round(((books + glass + back + moulding) / 1000) * 2) / 2;
+  const acrylic = shelves.reduce((g, l) => g + l.length * (PIECE_CM.ledge + l.depth) * 0.3 * 1.19, 0);
+  return Math.round(((books + glass + back + moulding + acrylic) / 1000) * 2) / 2;
+}
+
+/**
+ * The glazing a plan asks for (research-book-wall-artists.md): UV-filtering,
+ * at least 99 %, because covers fade behind plain glass; acrylic once a side
+ * passes 70 cm, where glass gets heavy and breaks in the post.
+ */
+export function glazingFor(outer: { w: number; h: number }): string {
+  return Math.max(outer.w, outer.h) > 70 ? 'acrylic, UV filter 99 %' : 'glass or acrylic, UV filter 99 %';
 }
 
 const SOURCE: Record<BookSize['source'], string> = {
@@ -57,6 +73,7 @@ export function planPdf({ wall, units, date, url }: PlanInput): Uint8Array {
   const sizes = wall.tiles.map((t) => t.size ?? FORMAT_CM.trade);
   const estimated = wall.tiles.filter((t) => isEstimate(t.size)).length;
   const plan = layoutPiece(sizes, wall.columns);
+  const shelves = ledges(plan, sizes);
   const tone = TONES[wall.artwork?.tone ?? DEFAULT_ARTWORK.tone];
   const frame = FRAMES[wall.artwork?.frame ?? DEFAULT_ARTWORK.frame];
   const order = `${wall.id}-${date.replaceAll('-', '')}`;
@@ -94,8 +111,12 @@ export function planPdf({ wall, units, date, url }: PlanInput): Uint8Array {
   doc.line(X(0), Y(plan.outerHeightCm), X(m), Y(plan.outerHeightCm - m), 0.4, INK);
   doc.line(X(plan.outerWidthCm), Y(plan.outerHeightCm), X(plan.outerWidthCm - m), Y(plan.outerHeightCm - m), 0.4, INK);
   const label = Math.max(5, Math.min(9, s * 2.2));
+  // The ledges: clear acrylic, drawn light with a firm top edge where the books stand.
+  for (const l of shelves) {
+    doc.rect(X(m + l.x), Y(m + l.y), l.length * s, PIECE_CM.ledge * s, { fill: [0.86, 0.9, 0.93], stroke: [0.45, 0.55, 0.62], width: 0.4 });
+    doc.line(X(m + l.x), Y(m + l.y), X(m + l.x + l.length), Y(m + l.y), 0.9, [0.3, 0.4, 0.48]);
+  }
   plan.books.forEach((b, i) => {
-    doc.rect(X(m + b.x + b.w * 0.2), Y(m + b.y + b.h), b.w * 0.6 * s, PIECE_CM.wedge * s, { fill: [0.55, 0.53, 0.5] });
     doc.rect(X(m + b.x), Y(m + b.y), b.w * s, b.h * s, { fill: [1, 1, 1], stroke: INK, width: 0.6 });
     doc.text(X(m + b.x + b.w / 2), Y(m + b.y + b.h / 2) + label / 3, String(i + 1), { size: label, bold: true, align: 'center' });
   });
@@ -139,17 +160,21 @@ export function planPdf({ wall, units, date, url }: PlanInput): Uint8Array {
   doc.text(col, y - 14, `All measures in ${units === 'metric' ? 'centimetres' : 'inches'}`, { size: 8, bold: true });
   spec('Outside', `${L(plan.outerWidthCm)} × ${L(plan.outerHeightCm)} ${U}`);
   spec('Back panel', `${L(plan.widthCm)} × ${L(plan.heightCm)} ${U}`);
-  spec('Depth', `${L(PIECE_CM.depth)} ${U} inside, for books on wedges`);
+  spec('Depth', `${L(PIECE_CM.depth)} ${U} inside, books + ledge + air`);
   spec('Moulding', `${L(m)} ${U} face, ${frame.label.toLowerCase()}`);
   spec('Background', `${tone.label} (${tone.hex}), linen or paper`);
   spec('Margin', `${L(PIECE_CM.margin)} ${U} on every side`);
   spec('Between books', `at least ${L(PIECE_CM.gap)} ${U}`);
   spec('Between rows', `${L(PIECE_CM.rowGap)} ${U} above the tallest book`);
-  spec('Wedges', `${L(PIECE_CM.wedge)} ${U} high, 60 % of book width`);
-  spec('Weight', `about ${roughWeightKg(sizes, { w: plan.widthCm, h: plan.heightCm }, { w: plan.outerWidthCm, h: plan.outerHeightCm })} kg, estimated`);
-  spec('Glazing', 'to agree with the workshop');
+  if (shelves.length > 0) {
+    spec('Ledges', `${shelves.length} × ${L(shelves[0].length)} ${U}, clear acrylic L-profile`);
+    spec('', `${L(PIECE_CM.ledge)} ${U} high × ${L(Math.max(...shelves.map((l) => l.depth)))} ${U} deep`);
+  }
+  spec('Weight', `about ${roughWeightKg(sizes, { w: plan.widthCm, h: plan.heightCm }, { w: plan.outerWidthCm, h: plan.outerHeightCm }, shelves)} kg, estimated`);
+  spec('Glazing', glazingFor({ w: plan.outerWidthCm, h: plan.outerHeightCm }));
   y += 6;
   note('How the books are laid out: each row stands on one bottom line and is as tall as its tallest book. Each column is as wide as its widest book, and each book is centred in its column.');
+  note('The books stand upright on the ledges, their backs against the panel. Nothing is glued or fixed to a book: they must come out again to be read, so make the front removable.');
   note(`Positions (page 2) are the top-left corner of each book, measured from the inside top-left corner of the back panel.`);
   if (estimated > 0) {
     note(`${estimated} of ${wall.tiles.length} book sizes are estimated. Measure the books when they arrive and lay them out by the rules above; the positions follow from these rules and will move with the real sizes.`);
