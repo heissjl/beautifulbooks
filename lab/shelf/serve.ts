@@ -179,7 +179,7 @@ const server = createServer(async (req, res) => {
       const key = createHash('sha256').update(bytes).digest('hex');
       const cached = recognitions.get(key);
       try {
-        const run = cached ?? await recognize(bytes, type, { publisher: true, pixels: { width: image.width, height: image.height } });
+        const run = cached ?? await recognize(bytes, type, { publisher: true, axis: true, pixels: { width: image.width, height: image.height } });
         recognitions.set(key, run);
         return send(200, { ...run, cached: !!cached });
       } catch (err) {
@@ -210,7 +210,7 @@ const server = createServer(async (req, res) => {
       const key = createHash('sha256').update(bytes).digest('hex');
       let run = recognitions.get(key);
       try {
-        run ??= await recognize(bytes, type, { publisher: true, pixels: { width: photo.width, height: photo.height } });
+        run ??= await recognize(bytes, type, { publisher: true, axis: true, pixels: { width: photo.width, height: photo.height } });
         recognitions.set(key, run);
       } catch (err) {
         return send(502, { error: `Erkennung fehlgeschlagen: ${err instanceof Error ? err.message : String(err)}` });

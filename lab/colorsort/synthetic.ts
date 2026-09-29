@@ -74,3 +74,74 @@ export function syntheticShelf(width = 900, height = 620, rowCount = 2, seed = 7
   }
   return { width, height, rgba, rows };
 }
+
+/**
+ * Books standing, leaning and lying, painted as turned rectangles with known
+ * geometry (ROADMAP 5.16): a group standing close together, three leaning
+ * against each other and a stack lying flat, as on a real shelf.
+ */
+export interface PaintedBook { cx: number; cy: number; angle: number; length: number; thickness: number; color: [number, number, number] }
+
+export function orientedScene(seed = 3, width = 900, height = 520): { width: number; height: number; rgba: Uint8ClampedArray; books: PaintedBook[] } {
+  const random = rng(seed);
+  const rgba = new Uint8ClampedArray(width * height * 4);
+  for (let i = 0; i < width * height; i++) {
+    const n = (random() - 0.5) * 8;
+    rgba[i * 4] = 214 + n; rgba[i * 4 + 1] = 206 + n; rgba[i * 4 + 2] = 192 + n; rgba[i * 4 + 3] = 255;
+  }
+  const books: PaintedBook[] = [];
+  const pick = () => PALETTE[Math.floor(random() * PALETTE.length)];
+  const up = -Math.PI / 2; // foot at the bottom, head at the top
+  const base = height - 40;
+  // Standing, touching.
+  let x = 40;
+  for (let i = 0; i < 6; i++) {
+    const t = 24 + Math.round(random() * 20), l = 300 + Math.round(random() * 110);
+    books.push({ cx: x + t / 2, cy: base - l / 2, angle: up, length: l, thickness: t, color: pick() });
+    x += t;
+  }
+  // Leaning to the right, each against the next: parallel, one thickness apart.
+  x += 40;
+  const lean = ((12 + random() * 10) * Math.PI) / 180;
+  const angle = up + lean;
+  const nx = Math.cos(lean), ny = Math.sin(lean); // across the books, to the right
+  let prev: PaintedBook | null = null;
+  for (let i = 0; i < 3; i++) {
+    const t = 26 + Math.round(random() * 14), l = 320;
+    const book: PaintedBook = prev
+      ? { cx: prev.cx + nx * ((prev.thickness + t) / 2), cy: prev.cy + ny * ((prev.thickness + t) / 2), angle, length: l, thickness: t, color: pick() }
+      : { cx: x + t / 2 + (Math.sin(lean) * l) / 2, cy: base - (Math.cos(lean) * l) / 2, angle, length: l, thickness: t, color: pick() };
+    books.push(book);
+    prev = book;
+  }
+  x = prev!.cx + 200;
+  // A stack lying flat, touching.
+  let y = base;
+  for (let i = 0; i < 5; i++) {
+    const t = 22 + Math.round(random() * 16), l = 250 + Math.round(random() * 60);
+    books.push({ cx: x + l / 2, cy: y - t / 2, angle: 0, length: l, thickness: t, color: pick() });
+    y -= t;
+  }
+  for (const b of books) paintBook(rgba, width, height, b, random);
+  return { width, height, rgba, books };
+}
+
+function paintBook(rgba: Uint8ClampedArray, width: number, height: number, b: PaintedBook, random: () => number) {
+  const ux = Math.cos(b.angle), uy = Math.sin(b.angle), nx = -uy, ny = ux;
+  const r = Math.hypot(b.length, b.thickness) / 2 + 2;
+  const letter: [number, number, number] = b.color[0] + b.color[1] + b.color[2] > 380 ? [30, 30, 30] : [235, 225, 200];
+  for (let y = Math.max(0, Math.floor(b.cy - r)); y < Math.min(height, b.cy + r); y++) {
+    for (let x = Math.max(0, Math.floor(b.cx - r)); x < Math.min(width, b.cx + r); x++) {
+      const dx = x + 0.5 - b.cx, dy = y + 0.5 - b.cy;
+      const s = dx * ux + dy * uy, d = dx * nx + dy * ny;
+      if (Math.abs(s) > b.length / 2 || Math.abs(d) > b.thickness / 2) continue;
+      const edge = b.thickness / 2 - Math.abs(d) < 1.5;
+      const inText = Math.abs(d) < b.thickness * 0.18 && Math.abs(s) < b.length * 0.3 && ((s + 1000) % 14) < 9;
+      const c = inText ? letter : b.color;
+      const shade = edge ? 0.5 : 1;
+      const n = (random() - 0.5) * 10;
+      const i = (y * width + x) * 4;
+      rgba[i] = c[0] * shade + n; rgba[i + 1] = c[1] * shade + n; rgba[i + 2] = c[2] * shade + n;
+    }
+  }
+}

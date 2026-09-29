@@ -31,6 +31,12 @@ export interface RecognizedBook {
    * lab/shelf uses it to find the edition a spine belongs to (ROADMAP 5.16).
    */
   publisher?: string;
+  /**
+   * With `RecognizeOptions.axis`: the line along the middle of the spine, end to end, and its
+   * thickness, as [ax, ay, bx, by, t] with x and t as fractions of the width
+   * and y of the height. Unlike `box` it describes a leaning or lying book.
+   */
+  axis?: [number, number, number, number, number];
 }
 
 export interface RecognizeOptions {
@@ -45,6 +51,12 @@ export interface RecognizeOptions {
    * callers see the same `box` either way.
    */
   pixels?: { width: number; height: number };
+  /**
+   * Ask for each book's centre line and thickness instead of a box (needs
+   * `pixels`). Julian, 2026-09-29: „teilweise liegen die bücher ja auch oder
+   * sind schief im regal". `box` is then the rectangle around it.
+   */
+  axis?: boolean;
 }
 
 export interface Recognition {
@@ -83,27 +95,25 @@ const PUBLISHER_LINE = `- publisher: the publisher's name or imprint as printed 
 const FRACTION_BOX = `- box: [x, y, w, h], the book's outline in the photo as fractions of the picture width and height (0..1), top-left origin`;
 
 function promptFor(options: RecognizeOptions): string {
-  const box = options.pixels
+  const box = options.pixels && options.axis
+    ? `- axis: [x1, y1, x2, y2, t] in pixels of this image, which is ${options.pixels.width} × ${options.pixels.height} pixels, top-left origin: a line along the middle of the book's spine over its whole length, from one short end of the spine to the other (x1,y1 and x2,y2 are those two ends), and t the spine's width across that line in pixels. The line always runs along the long side: vertical for a book standing upright, slanted for one leaning, horizontal for one lying flat in a stack. For a front cover facing the camera: the line along its height, and t its width. Always five numbers.
+- A book lying flat in a stack whose spine faces the camera is kind "spine", not "cover"`
+    : options.pixels
     ? `- box: [x0, y0, x1, y1], the book's outline in pixels of this image, which is ${options.pixels.width} × ${options.pixels.height} pixels; top-left origin, x0 < x1, y0 < y1. For a spine: its left and right edge, and its top and its foot where it stands on the shelf`
     : FRACTION_BOX;
   return PROMPT.replace('{BOX}', box).replace('{PUBLISHER}', options.publisher ? PUBLISHER_LINE : '');
 }
 
 function schemaFor(options: RecognizeOptions) {
-  if (!options.publisher) return SCHEMA;
+  if (!options.publisher && !options.axis) return SCHEMA;
   const item = SCHEMA.properties.books.items;
+  const required: string[] = item.required.filter(k => !(options.axis && k === 'box'));
+  const properties: Record<string, unknown> = { ...item.properties };
+  if (options.axis) { delete properties.box; properties.axis = { type: 'array', items: { type: 'number' } }; required.push('axis'); }
+  if (options.publisher) { properties.publisher = { type: 'string' }; required.push('publisher'); }
   return {
     ...SCHEMA,
-    properties: {
-      books: {
-        ...SCHEMA.properties.books,
-        items: {
-          ...item,
-          required: [...item.required, 'publisher'],
-          properties: { ...item.properties, publisher: { type: 'string' } },
-        },
-      },
-    },
+    properties: { books: { ...SCHEMA.properties.books, items: { ...item, required, properties } } },
   };
 }
 
@@ -172,6 +182,23 @@ function pixelBox(raw: unknown, { width, height }: { width: number; height: numb
   return [x0 / width, y0 / height, (x1 - x0) / width, (y1 - y0) / height];
 }
 
+/** Pixel axis [ax, ay, bx, by, t] to fractions, and the upright box around the turned rectangle. */
+function pixelAxis(raw: unknown, { width, height }: { width: number; height: number }): { axis: NonNullable<RecognizedBook['axis']>; box: unknown } | undefined {
+  if (!Array.isArray(raw) || raw.length !== 5 || !raw.every(n => typeof n === 'number' && Number.isFinite(n))) return undefined;
+  const [ax, ay, bx, by, t] = raw as number[];
+  const length = Math.hypot(bx - ax, by - ay);
+  if (length < 2 || t <= 0) return undefined;
+  const nx = -(by - ay) / length, ny = (bx - ax) / length;
+  const xs = [ax + nx * t / 2, ax - nx * t / 2, bx + nx * t / 2, bx - nx * t / 2];
+  const ys = [ay + ny * t / 2, ay - ny * t / 2, by + ny * t / 2, by - ny * t / 2];
+  const x0 = Math.max(0, Math.min(...xs)), x1 = Math.min(width, Math.max(...xs));
+  const y0 = Math.max(0, Math.min(...ys)), y1 = Math.min(height, Math.max(...ys));
+  return {
+    axis: [ax / width, ay / height, bx / width, by / height, t / width],
+    box: [x0 / width, y0 / height, (x1 - x0) / width, (y1 - y0) / height],
+  };
+}
+
 export function parseRecognition(text: string, pixels?: { width: number; height: number }): Recognition {
   const problems: string[] = [];
   const value = extractJson(text);
@@ -192,11 +219,16 @@ export function parseRecognition(text: string, pixels?: { width: number; height:
     const author = typeof r.author === 'string' ? r.author.replace(/\s+/g, ' ').trim() : '';
     const kind: BookKind = r.kind === 'cover' ? 'cover' : 'spine';
     if (r.kind !== 'cover' && r.kind !== 'spine') problems.push(`#${i + 1}: kind "${String(r.kind)}" als spine gelesen`);
-    const box = parseBox(pixels ? pixelBox(r.box, pixels) : r.box);
-    if (r.box !== undefined && !box) problems.push(`#${i + 1}: Ausschnitt unbrauchbar`);
+    const turned = pixels && r.axis !== undefined ? pixelAxis(r.axis, pixels) : undefined;
+    const box = parseBox(turned ? turned.box : pixels ? pixelBox(r.box, pixels) : r.box);
+    if ((r.box !== undefined || r.axis !== undefined) && !box) {
+      // The raw numbers, so a rejected answer can be understood from the log.
+      const raw = JSON.stringify(r.axis ?? r.box).slice(0, 60);
+      problems.push(`#${i + 1}: Ausschnitt unbrauchbar${pixels ? ` ${raw}` : ''}`);
+    }
     const confidence = typeof r.confidence === 'number' && Number.isFinite(r.confidence) ? clamp01(r.confidence) : 0.5;
     const publisher = typeof r.publisher === 'string' ? r.publisher.replace(/\s+/g, ' ').trim() : '';
-    books.push({ title, author, kind, ...(box ? { box } : {}), confidence, ...(publisher ? { publisher } : {}) });
+    books.push({ title, author, kind, ...(box ? { box } : {}), ...(turned && box ? { axis: turned.axis } : {}), confidence, ...(publisher ? { publisher } : {}) });
   });
   return { books, problems };
 }

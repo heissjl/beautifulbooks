@@ -38,6 +38,29 @@ Julian, 2026-09-28: „use the book detection by the other lab project for the c
 - **Achtung beim Ansehen:** die Kacheln zeigen das Cover von Open Library, geordnet wird nach der Farbe *des eigenen Exemplars im Foto*. Wo die Ausgabe nicht die abgebildete ist, passt das Kachelbild nicht zum Farbfeld; das ist gewollt (es ist dein Regal), kann aber auf der Wand unordentlich aussehen. Ob stattdessen nach der Coverfarbe geordnet werden soll, entscheidet Julian an einem echten Foto.
 - **Beispielmodus ohne Schlüssel:** „Mit der Beispielliste ausprobieren" malt ein Regal mit zwölf Rücken und gibt den zwölf Büchern aus `sample.json` dessen Kästen, jeweils um bis zu ein Viertel der Breite verschoben wie von einem Modell. Die Farben sind damit erfunden; geprüft wird der Weg, nicht das Ergebnis.
 
+## Gedrehte Rechtecke statt Kästen (2026-09-29)
+
+Julian: „teilweise liegen die bücher ja auch oder sind schief im regal. die segmentierung sollte hier deutlich genauer sein".
+
+Ein achsenparalleler Kasten kann ein lehnendes oder liegendes Buch nicht beschreiben, und eine Suche nach senkrechten Linien findet auf einem schrägen Rücken nichts. Deshalb (`oriented.ts`):
+
+- **Das Modell** gibt je Buch eine Linie entlang der Mitte des Rückens von Ende zu Ende und dessen Breite, in Pixeln (`recognize(…, { axis: true, pixels })`). Die erste Fassung sagte „vom Fuß zum Kopf“; bei liegenden Büchern zog das Modell dann eine kurze Linie von unten nach oben, quer übers Buch. Jetzt heißt es „entlang der langen Seite“. Ist eine Linie trotzdem kürzer als das Buch dick, dreht die Seite sie um 90°.
+- **`refineOriented`** sucht die beiden Längskanten *quer zur Richtung des Buchs*, mit derselben Regel wie für Trennlinien (eine Kante muss auf vier Fünfteln der Länge da sein). Es probiert Drehungen bis ±8° und wählt das **Kantenpaar**, das kräftig ist und Mitte und Dicke des Modells am nächsten bleibt. Die erste Fassung suchte jede Kante einzeln und fand bei einem zu dünn geschätzten Buch die zweite nicht (auf gemalten Szenen 21–36 % richtig); mit der Paarsuche sind es 40 von 42.
+- **Kontrolle:** Wird das Buch durch die Verschiebung weniger einfarbig (Anteil der Hauptfarbe sinkt um mehr als 0,05), gilt das Rechteck des Modells.
+- **`orientedColor`** liest die Farbe im gedrehten Rechteck: innere 70 % quer, 84 % längs.
+- **Auf der Seite** stehen die Rechtecke gedreht auf dem Foto (grün: verschoben, orange: wie vom Modell). Die Seite schickt die Farben mit an den Server, damit die Ausgabenwahl dieselben Farben nutzt. Beim Hochladen schreibt sie eine Zeile ins Protokoll: wie viele stehend, lehnend und liegend, wie viele verschoben, der Anteil der Hauptfarbe vorher und nachher.
+
+**Gemessen an einer gemalten Szene mit echten Titeln** (2000 × 1100; fünf Bücher stehend, zwei um 15° lehnend, drei liegend gestapelt), abgeschickt an `claude-sonnet-5`:
+
+| | Modell allein | nach dem Nachschärfen |
+|---|---|---|
+| stehend (5) | 0–12 px quer daneben, Dicke bis 10 px falsch | alle ≤ 2 px, Dicke ≤ 3 px |
+| lehnend (2) | 1–9 px; Winkel 2,5–3° (erste Fassung: 4–7°) zu wenig geneigt | beide ≤ 1 px |
+| liegend (3) | nach der neuen Anweisung 1–2 px, Dicke bis 5 px falsch | alle ≤ 2 px |
+| Farbe | — | 10 von 10 innerhalb weniger Stufen der gemalten |
+
+Gemalt ist nicht fotografiert: gerade Kanten, gleichmäßiges Licht, keine Schatten. Das Ergebnis ist eine Untergrenze. Die Tests in `__tests__/oriented.test.ts` prüfen dasselbe ohne Modell an drei gemalten Szenen mit verschobenen, verdrehten und falsch dicken Rechtecken.
+
 ## Gemessen (2026-09-28)
 
 - **Gemaltes Regal** (900 × 620, zwei Reihen, Schrift als Streifen in der Mitte jedes Rückens, dunkle Fugen, 10 % Lichtabfall zum Rand), sechs Zufallsregale (Seeds 7, 1–5, je 21–25 Bücher pro Reihe): beide Reihen gefunden, **alle 295 Trennlinien auf ±3 px, keine überzählige**. Die Tests in `__tests__/colorsort.test.ts` verlangen etwas weniger (≥ 95 % der Linien, höchstens eine zu viel je Reihe, jede Farbe innerhalb 0,06 OKLab der gemalten), damit ein anderer Seed sie nicht zufällig rot macht.

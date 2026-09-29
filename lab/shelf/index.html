@@ -183,6 +183,9 @@ let sampleBoxes = null; // painted-shelf boxes for the sample mode
 let order = 'photo';    // 'photo' | 'rainbow' | 'light-dark'
 let colors = [];        // per recognized book: { hex, lch, box, refined } or null
 let rowBands = [];      // the shelf rows the photo was read by, as fractions
+let pendingColors = null; // colours already read in readByRows, used once by readColors
+/** OKLab of a colour the page read, for the server's edition step. */
+const labOf = c => { const h = c.lch.h * Math.PI / 180; return { L: c.lch.L, a: c.lch.C * Math.cos(h), b: c.lch.C * Math.sin(h) }; };
 
 async function init() {
   const hash = new URLSearchParams(location.hash.slice(1));
@@ -291,11 +294,25 @@ async function readByRows(full, shrunk) {
     if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
     done++;
     if (bands.length > 1) $('progress').textContent = `${bands.length} Regalreihen gefunden — das Bildmodell liest jede einzeln … (${done} von ${bands.length})`;
-    // Boxes are fractions of the row; make them fractions of the photo.
-    data.books = data.books.map(b => b.box ? { ...b, box: [b.box[0], band.y0 + b.box[1] * (band.y1 - band.y0), b.box[2], b.box[3] * (band.y1 - band.y0)] } : b);
+    // Boxes and axes are fractions of the row; make them fractions of the photo.
+    const bh = band.y1 - band.y0;
+    data.books = data.books.map(b => ({
+      ...b,
+      ...(b.box ? { box: [b.box[0], band.y0 + b.box[1] * bh, b.box[2], b.box[3] * bh] } : {}),
+      ...(b.axis ? { axis: [b.axis[0], band.y0 + b.axis[1] * bh, b.axis[2], band.y0 + b.axis[3] * bh, b.axis[4]] } : {}),
+    }));
     return data;
   }));
-  const books = runs.flatMap(r => r.books);
+  const read = runs.flatMap(r => r.books);
+  // The colour step runs here, before matching, so the server compares editions with the same colours the page shows.
+  const started2 = performance.now();
+  const found2 = window.shelfColors ? window.shelfColors.colorsForBooks(photoCanvas, read) : read.map(() => null);
+  pendingColors = found2;
+  const books = read.map((b, k) => found2[k] ? { ...b, spineColor: { hex: found2[k].hex, lab: labOf(found2[k]) } } : b);
+  const turned = found2.filter(c => c?.corners);
+  const tilts = { upright: turned.filter(c => c.tilt < 5).length, leaning: turned.filter(c => c.tilt >= 5 && c.tilt < 60).length, lying: turned.filter(c => c.tilt >= 60).length };
+  const mean = xs => xs.length ? (xs.reduce((s, v) => s + v, 0) / xs.length).toFixed(2) : '–';
+  report(`segmentation: ${turned.length} turned rectangles (${tilts.upright} upright, ${tilts.leaning} leaning, ${tilts.lying} lying), moved ${turned.filter(c => c.refined).length}, both edges ${turned.filter(c => c.edges === 2).length}, one edge ${turned.filter(c => c.edges === 1).length}, main-colour share ${mean(turned.map(c => c.shareBefore))} → ${mean(turned.map(c => c.share))}, ${Math.round(performance.now() - started2)} ms`);
   const meta = {
     model: runs[0]?.model, ms: Math.round(performance.now() - started),
     inputTokens: runs.reduce((s, r) => s + (r.inputTokens || 0), 0),
@@ -398,7 +415,19 @@ function drawBoxes() {
     d.style.cssText = `position:absolute;left:0;right:0;top:${b.y0 * 100}%;border-top:2px dashed rgba(0,160,255,.9);pointer-events:none`;
     host.appendChild(d);
   });
+  host.querySelector('svg.turned')?.remove();
+  const polys = colors.map((c, i) => c?.corners ? `<polygon points="${c.corners.map(p => p.join(',')).join(' ')}" fill="none" stroke="${c.refined ? '#1fb36b' : '#e0a030'}" stroke-width="0.0025" vector-effect="non-scaling-stroke" style="stroke-width:1.5px"/><text x="${c.corners[0][0]}" y="${c.corners[0][1]}" font-size="0.012" fill="#fff" stroke="#000" stroke-width="0.002" paint-order="stroke">${i + 1}</text>` : '').join('');
+  if (polys) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'turned');
+    svg.setAttribute('viewBox', '0 0 1 1');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
+    svg.innerHTML = polys;
+    host.appendChild(svg);
+  }
   photoBooks.forEach((b, i) => {
+    if (colors[i]?.corners) return; // drawn as a turned rectangle
     const box = colors[i]?.box ?? b.box;
     if (!box) return;
     const d = document.createElement('div');
@@ -456,6 +485,8 @@ function render() {
 /* ---------- colour ---------- */
 function readColors() {
   colors = [];
+  if (pendingColors && pendingColors.length === photoBooks.length) { colors = pendingColors; pendingColors = null; return; }
+  pendingColors = null;
   if (!photoCanvas || !window.shelfColors) return;
   const started = performance.now();
   colors = window.shelfColors.colorsForBooks(photoCanvas, photoBooks);

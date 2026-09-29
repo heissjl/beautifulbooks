@@ -3627,3 +3627,12 @@ Julian: „the picture works now, but the colour detection seems still off"
 - Die Kantenerkennung fand die drei Regalböden sauber (364 ms). Zwischen den Rücken fand sie nur 21 von 38 Linien.
 - **Geändert:** Kästen werden auf ihre Reihe geschnitten (`fitBoxToRows`). Die Seite liest Reihe für Reihe in bis zu 2576 px statt das ganze Regal in 1600 px. Die Kästen kommen in Pixeln (`recognize(…, { pixels })`); die Website-Anfrage bleibt unverändert. Antworten werden per Prüfsumme gemerkt.
 - **Dasselbe Foto, zweiter Durchgang:** 64 statt 38 Bücher gelesen, Verlag bei 25 statt 0. 26 von 63 Rücken einer Ausgabe zugeordnet (vorher 10 von 38). Lesen 14,3 s in drei parallelen Aufrufen, 12 919 + 4572 Tokens; Open Library 40,4 s, Ausgaben 82,0 s. Die Kästen sitzen senkrecht auf den Rücken. Die Farbordnung ist auf den ersten Blick plausibel, Buch für Buch nicht geprüft.
+
+## 2026-09-29 — Gedrehte Rechtecke für schräge und liegende Bücher (ROADMAP 5.16)
+
+Julian: „teilweise liegen die bücher ja auch oder sind schief im regal. die segmentierung sollte hier deutlich genauer sein"
+
+- `lab/colorsort/oriented.ts`: ein Buch ist eine Mittellinie mit einer Breite. Die Längskanten werden quer zur Buchrichtung gesucht, mit Drehungen bis ±8°; es gewinnt das Kantenpaar, das Mitte und Dicke des Modells am nächsten bleibt. Die Farbe wird im gedrehten Rechteck gelesen. `lib/recognize.ts` hat dafür die Option `axis` (die Website nutzt sie nicht).
+- Ohne Modell, drei gemalte Szenen, 42 Bücher mit verschobenen, verdrehten und falsch dicken Rechtecken: Die erste Fassung suchte jede Kante einzeln und traf 21–36 %. Mit der Paarsuche sind es 40 von 42.
+- Mit `claude-sonnet-5`, gemalte Szene mit echten Titeln (5 stehend, 2 lehnend, 3 liegend). Erster Versuch: Die lehnenden Bücher gab das Modell 4–7° zu steil an, die Winkelsuche bis ±3° reichte nicht. Die liegenden kamen als „Umschlag“ und wurden verworfen, danach als kurze Linie quer übers Buch („Fuß → Kopf“ verstand das Modell als unten → oben). Nach drei Korrekturen (±8°, „entlang der langen Seite“, Drehen einer zu kurzen Linie): **10 von 10 auf ≤ 2 px**, Dicke ≤ 3 px, alle Farben richtig. Das Modell allein lag bis zu 12 px daneben.
+- Offen: ein echtes Foto mit schrägen und liegenden Büchern.

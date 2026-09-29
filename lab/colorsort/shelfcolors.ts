@@ -9,6 +9,7 @@
  * colour, and orders the collection by colour with the rules of sort.ts.
  */
 import { spineColor } from './color';
+import { corners, fromAxis, orientedColor, refineOriented, tilt } from './oriented';
 import { findRowCuts, findSpineCuts, fitBoxToRows, refineSpineBox, rowsFromCuts, toLabImage, type Band, type Box } from './spines';
 import { DEFAULTS, sortBooks, type Book, type Mode } from './sort';
 import { syntheticShelf } from './synthetic';
@@ -17,6 +18,8 @@ export interface BookInPhoto {
   kind: 'spine' | 'cover';
   /** [x, y, w, h] as fractions of the photo, as lib/recognize.ts gives it. */
   box?: [number, number, number, number];
+  /** Centre line and thickness, fractions (x and t of the width, y of the height). */
+  axis?: [number, number, number, number, number];
 }
 
 export interface BookColor {
@@ -25,6 +28,13 @@ export interface BookColor {
   /** The box the colour was read from, as fractions — refined for spines. */
   box: [number, number, number, number];
   refined: boolean;
+  /** Turned books: the rectangle's corners as fractions, for drawing. */
+  corners?: Array<[number, number]>;
+  /** Degrees from upright, how many long edges were found, and the main colour's share before and after. */
+  tilt?: number;
+  edges?: number;
+  shareBefore?: number;
+  share?: number;
 }
 
 export function colorsForBooks(canvas: HTMLCanvasElement, books: BookInPhoto[]): Array<BookColor | null> {
@@ -33,6 +43,30 @@ export function colorsForBooks(canvas: HTMLCanvasElement, books: BookInPhoto[]):
   const lab = toLabImage(rgba, width, height);
   const rows = rowsFromCuts(findRowCuts(lab), height);
   return books.map(book => {
+    if (book.axis) {
+      const [ax, ay, bx, by, t] = book.axis;
+      let model = fromAxis(ax * width, ay * height, bx * width, by * height, t * width);
+      // A line shorter than the book is thick runs across the book, not along it — seen on a
+      // painted stack, where the model drew lying books from their bottom to their top. Turn it;
+      // the edge search then finds the real thickness.
+      if (model.length < model.thickness) model = { ...model, angle: model.angle + Math.PI / 2, length: model.thickness, thickness: model.length };
+      const before = orientedColor(rgba, width, height, model);
+      const refined = refineOriented(lab, model);
+      const after = refined.moved ? orientedColor(rgba, width, height, refined.box) : before;
+      // A move that makes the book less of one colour took in a neighbour: keep the model's.
+      const keep = refined.moved && after.share >= before.share - 0.05;
+      const b = keep ? refined.box : model, c = keep ? after : before;
+      const pts = corners(b);
+      const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+      return {
+        hex: c.hex, lch: c.lch,
+        box: [Math.min(...xs) / width, Math.min(...ys) / height, (Math.max(...xs) - Math.min(...xs)) / width, (Math.max(...ys) - Math.min(...ys)) / height],
+        refined: keep,
+        corners: pts.map(([x, y]) => [x / width, y / height] as [number, number]),
+        tilt: Math.round(tilt(b)), edges: keep ? refined.edges : 0,
+        shareBefore: before.share, share: c.share,
+      };
+    }
     if (!book.box) return null;
     const [fx, fy, fw, fh] = book.box;
     const raw: Box = {

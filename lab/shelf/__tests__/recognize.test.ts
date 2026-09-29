@@ -74,6 +74,19 @@ describe('boxes in pixels (ROADMAP 5.16)', () => {
     ] }), { width: 2000, height: 2000 });
     expect(r.books[0].box).toEqual([0.1, 0.2, 0.03, 0.3]);
     expect(r.books[1]).not.toHaveProperty('box');
-    expect(r.problems).toEqual(['#2: Ausschnitt unbrauchbar']);
+    expect(r.problems).toEqual(['#2: Ausschnitt unbrauchbar [300,400,280,1000]']);
+  });
+});
+
+describe('centre line and thickness (ROADMAP 5.16)', () => {
+  it('keeps the axis and puts the upright box around the turned book', () => {
+    const r = parseRecognition(JSON.stringify({ books: [
+      { title: 'Kindred', author: 'Octavia E. Butler', kind: 'spine', axis: [100, 1000, 100, 400, 60], confidence: 0.9 },
+      { title: 'Dune', author: 'Frank Herbert', kind: 'spine', axis: [200, 900, 800, 900, 50], confidence: 0.9 },
+    ] }), { width: 2000, height: 1000 });
+    expect(r.books[0].axis).toEqual([0.05, 1, 0.05, 0.4, 0.03]);
+    expect(r.books[0].box).toEqual([0.035, 0.4, 0.03, 0.6]);
+    const [x, y, w, h] = r.books[1].box!;
+    expect([x, y, w, h].map(v => +v.toFixed(3))).toEqual([0.1, 0.875, 0.3, 0.05]);
   });
 });

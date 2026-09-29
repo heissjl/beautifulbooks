@@ -238,18 +238,22 @@ export class Matcher {
    */
   async spineEdition(book: RecognizedBook, workId: string, photo: RgbaImage, fallback: number): Promise<SpineEditionResult | null> {
     if (book.kind !== 'spine' || !book.box) return null;
-    let seen = this.labs.get(photo);
-    if (!seen) {
-      const lab = toLabImage(photo.rgba, photo.width, photo.height);
-      seen = { lab, rows: rowsFromCuts(findRowCuts(lab), photo.height) };
-      this.labs.set(photo, seen);
-    }
-    const { lab, rows } = seen;
+    // The page has already read the colour inside the turned, refined rectangle (ROADMAP 5.16).
+    const given = (book as RecognizedBook & { spineColor?: { hex: string; lab: { L: number; a: number; b: number } } }).spineColor;
     const [fx, fy, fw, fh] = book.box;
     const raw = { x0: Math.round(fx * photo.width), y0: Math.round(fy * photo.height), x1: Math.round((fx + fw) * photo.width), y1: Math.round((fy + fh) * photo.height) };
+    const seen = () => {
+      let hit = this.labs.get(photo);
+      if (!hit) {
+        const lab = toLabImage(photo.rgba, photo.width, photo.height);
+        hit = { lab, rows: rowsFromCuts(findRowCuts(lab), photo.height) };
+        this.labs.set(photo, hit);
+      }
+      return hit;
+    };
     if (raw.x1 - raw.x0 < 3 || raw.y1 - raw.y0 < 10) return null;
-    const box = refineSpineBox(lab, fitBoxToRows(raw, rows));
-    const colour = spineColor(photo.rgba, photo.width, box);
+    const box = given ? raw : refineSpineBox(seen().lab, fitBoxToRows(raw, seen().rows));
+    const colour = given ?? spineColor(photo.rgba, photo.width, box);
     const spine = { hex: colour.hex, box: [box.x0 / photo.width, box.y0 / photo.height, (box.x1 - box.x0) / photo.width, (box.y1 - box.y0) / photo.height] as [number, number, number, number] };
 
     const all = await this.workEditions(workId);
