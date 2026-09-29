@@ -3628,3 +3628,12 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
   - *Kim* ist die Lizenzausgabe der Büchergilde Gutenberg von 1990 mit demselben Umschlag; so steht es auch im Intro.
   - Der *Kipling Companion* stammt von Gisbert Haefs, nicht von Kipling.
   - Der Slug wurde vom Ordnernamen `haffmans-kipling-…` auf den Titel umgestellt, weil der Server die Adresse des Online-Entwurfs aus dem Titel bildet.
+
+**Ex Libris (Wyss), fertig am 2026-09-29.**
+- **Angelegt:** 39 neue Ausgaben, OL62603267M–OL62603313M, davon 3 mit neuem Werk (Nr. 4 Wilder-Sammelband, Nr. 53 Bobrowski, Nr. 56 Federspiel). Die Zuordnung steht in `created.json` im Manifest-Ordner. Vorher geprüft: Auf keinem Zielwerk lag schon eine Ausgabe von Ex Libris.
+- **Hochgeladen:** 43 Umschläge, 39 auf die neuen und 4 auf vorhandene Ausgaben (Nr. 7, 32, 35, 55). *Der Kinderfresser* brauchte einen zweiten Versuch.
+- **Ausgelassen:**
+  - 12 typografische Umschläge, auf Julians Vorliebe für bildhafte Reihen hin. Sie sind im Manifest mit `hold: typographic` vermerkt; ob sie dazukommen, entscheidet Julian.
+  - Nr. 57 (*Das Peter-Prinzip*) und Nr. 58 (*Das Schmettern des gallischen Hahns*): Keller nennt kein Jahr, und kein Katalog kennt einen Druck bei Ex Libris.
+- Bei vier Büchern auf der Wand (Nr. 7, 32, 40, 41) nennt der Umschlag Benziger statt Ex Libris; diese Ausgaben stehen unter Benziger. Nr. 28 erschien bei beiden zugleich. Dazu kommen Nr. 35 (Nebelspalter) und Nr. 45 (Huber), deren Ausgaben es schon gab.
+- **Wand `ex-libris-covers-by-hanspeter-wyss`:** 44 von 58, laut Kontaktbogen alle von Wyss und bildhaft. Online als Entwurf.

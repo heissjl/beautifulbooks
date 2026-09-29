@@ -31850,6 +31850,376 @@
           "coverIsbn": "9783251201846"
         }
       ]
+    },
+    {
+      "slug": "ex-libris-covers-by-hanspeter-wyss",
+      "title": "Ex Libris — covers by Hanspeter Wyss",
+      "kind": "series",
+      "intro": "From 1961 into the early 1980s the Swiss illustrator Hanspeter Wyss drew dust jackets for Ex Libris, the Zurich book club, and for Benziger: flat bright shapes, a crowd of houses, a skyline of crystals, a harlequin under an umbrella. Ex Libris kept no numbered series, so these follow Sammlung Keller's dates roughly, with the undated ones last. Keller also shows about a dozen purely typographic jackets by Wyss; they are not on this wall.",
+      "published": false,
+      "publishers": [
+        "Buchclub Ex Libris",
+        "Ex Libris",
+        "Benziger",
+        "Nebelspalter",
+        "Huber"
+      ],
+      "works": [
+        {
+          "id": "OL1434640W",
+          "title": "Berlin Alexanderplatz",
+          "author": "Alfred Döblin",
+          "coverId": "ol:15259917",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603269M"
+        },
+        {
+          "id": "OL2113346W",
+          "title": "Abwässer",
+          "author": "Hugo Loetscher",
+          "coverId": "ol:15259916",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603268M"
+        },
+        {
+          "id": "OL10438899W",
+          "title": "Theater-Schriften und Reden",
+          "author": "Friedrich Dürrenmatt",
+          "coverId": "ol:15259918",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603267M"
+        },
+        {
+          "id": "OL46029185W",
+          "title": "Die Cabala · Die Brücke von San Luis Rey · Die Iden des März",
+          "author": "Thornton Wilder",
+          "coverId": "ol:15259919",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603270M"
+        },
+        {
+          "id": "OL6015929W",
+          "title": "Das Geheimnis von Santa Vittoria",
+          "author": "Robert Crichton",
+          "coverId": "ol:15259920",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603272M"
+        },
+        {
+          "id": "OL1141660W",
+          "title": "Bist du es, Ronald?",
+          "author": "Urzidil, Johannes",
+          "coverId": "ol:15259921",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603271M"
+        },
+        {
+          "id": "OL11579406W",
+          "title": "Der Glasberg",
+          "author": "Clemens Mettler",
+          "coverId": "ol:15259922",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL15450145M"
+        },
+        {
+          "id": "OL258332W",
+          "title": "Der erste Kreis der Hölle",
+          "author": "Александр Солженицын",
+          "coverId": "ol:15259923",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603274M"
+        },
+        {
+          "id": "OL46909W",
+          "title": "Andromeda",
+          "author": "Michael Crichton",
+          "coverId": "ol:15259924",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603273M"
+        },
+        {
+          "id": "OL2460613W",
+          "title": "Auf dem Berge Sinai sitzt der Schneider Kikrikri",
+          "author": "Jörg Steiner",
+          "coverId": "ol:15259925",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603278M"
+        },
+        {
+          "id": "OL1100020W",
+          "title": "Reise um den Mond",
+          "author": "Jules Verne",
+          "coverId": "ol:15259926",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603277M"
+        },
+        {
+          "id": "OL1666775W",
+          "title": "Mitgespielt",
+          "author": "Adolf Muschg",
+          "coverId": "ol:15259927",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603276M"
+        },
+        {
+          "id": "OL2176015W",
+          "title": "Entläßt die Natur den Menschen?",
+          "author": "Adolf Portmann",
+          "coverId": "ol:15259928",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603279M"
+        },
+        {
+          "id": "OL2271052W",
+          "title": "Idyllen",
+          "author": "Franz Hohler",
+          "coverId": "ol:15259929",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603282M"
+        },
+        {
+          "id": "OL3987518W",
+          "title": "Selbstporträt",
+          "author": "Jakov Lind",
+          "coverId": "ol:15259930",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603281M"
+        },
+        {
+          "id": "OL2279718W",
+          "title": "Im Hause enden die Geschichten",
+          "author": "Paul Nizon",
+          "coverId": "ol:15259931",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603283M"
+        },
+        {
+          "id": "OL7475101W",
+          "title": "Gärtnern, Ackern – ohne Gift",
+          "author": "Alwin Seifert",
+          "coverId": "ol:15259932",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603280M"
+        },
+        {
+          "id": "OL854266W",
+          "title": "Der kurze Brief zum langen Abschied",
+          "author": "Peter Handke",
+          "coverId": "ol:15259933",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603286M"
+        },
+        {
+          "id": "OL3397491W",
+          "title": "Die ersten Unruhen",
+          "author": "Otto F. Walter",
+          "coverId": "ol:15259934",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603289M"
+        },
+        {
+          "id": "OL991250W",
+          "title": "Ein Fest im Dorf",
+          "author": "Giovanni Orelli",
+          "coverId": "ol:15259935",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603287M"
+        },
+        {
+          "id": "OL4048820W",
+          "title": "Ich und das Dorf",
+          "author": "Walter Matthias Diggelmann",
+          "coverId": "ol:15259936",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603288M"
+        },
+        {
+          "id": "OL655867W",
+          "title": "Leben und Sterben im Waadtland",
+          "author": "Jacques Chessex",
+          "coverId": "ol:15259937",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603292M"
+        },
+        {
+          "id": "OL4048809W",
+          "title": "Aber den Kirschbaum, den gibt es",
+          "author": "Walter Matthias Diggelmann",
+          "coverId": "ol:15259938",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3545362426",
+          "coverIsbn": "3545362426"
+        },
+        {
+          "id": "OL34953057W",
+          "title": "Der Tee der drei alten Damen · Der Chinese",
+          "author": "Friedrich Glauser",
+          "coverId": "ol:15259939",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603291M"
+        },
+        {
+          "id": "OL655843W",
+          "title": "Der Kinderfresser",
+          "author": "Jacques Chessex",
+          "coverId": "ol:15259962",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603294M"
+        },
+        {
+          "id": "OL6764277W",
+          "title": "Anton Jakob Kellers gesammeltes Lachen",
+          "author": "Anton Jakob Keller",
+          "coverId": "ol:15259940",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL4660912M"
+        },
+        {
+          "id": "OL770940W",
+          "title": "Das Ende von Seldwyla",
+          "author": "Kurt Guggenheim",
+          "coverId": "ol:15259941",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603293M"
+        },
+        {
+          "id": "OL260395W",
+          "title": "Harlekin",
+          "author": "Morris West",
+          "coverId": "ol:15259942",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603298M"
+        },
+        {
+          "id": "OL1261675W",
+          "title": "Kleine Negermärchen",
+          "author": "Blaise Cendrars",
+          "coverId": "ol:15259943",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603296M"
+        },
+        {
+          "id": "OL769227W",
+          "title": "Matto regiert",
+          "author": "Friedrich Glauser",
+          "coverId": "ol:15259944",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603299M"
+        },
+        {
+          "id": "OL15841539W",
+          "title": "Traumfahrt zu den letzten Riesen",
+          "author": "Mary Norton",
+          "coverId": "ol:15259946",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603297M"
+        },
+        {
+          "id": "OL1636262W",
+          "title": "Weckerhund, Wedermann und Schlafittchen",
+          "author": "Norton Juster",
+          "coverId": "ol:15259945",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603302M"
+        },
+        {
+          "id": "OL2037553W",
+          "title": "Alle Herrlichkeit ist innerlich",
+          "author": "Bruce Marshall",
+          "coverId": "ol:15259948",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603301M"
+        },
+        {
+          "id": "OL986993W",
+          "title": "Einstein überquert die Elbe bei Hamburg",
+          "author": "Siegfried Lenz",
+          "coverId": "ol:15259947",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603303M"
+        },
+        {
+          "id": "OL45463241W",
+          "title": "Gourrama",
+          "author": "Friedrich Glauser",
+          "coverId": "ol:15259949",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603304M"
+        },
+        {
+          "id": "OL4842169W",
+          "title": "Ich bin gern schuld an meinem Glück",
+          "author": "Katharina von Arx",
+          "coverId": "ol:13225392",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3719305694",
+          "coverIsbn": "3719305694"
+        },
+        {
+          "id": "OL59437W",
+          "title": "Ediths Tagebuch",
+          "author": "Patricia Highsmith",
+          "coverId": "ol:15259950",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603307M"
+        },
+        {
+          "id": "OL472250W",
+          "title": "Ruhe unsanft",
+          "author": "Agatha Christie",
+          "coverId": "ol:15259951",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603308M"
+        },
+        {
+          "id": "OL472470W",
+          "title": "Vorhang",
+          "author": "Agatha Christie",
+          "coverId": "ol:15259952",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603310M"
+        },
+        {
+          "id": "OL1873222W",
+          "title": "Das Drama des begabten Kindes",
+          "author": "Alice Miller",
+          "coverId": "ol:15259953",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603309M"
+        },
+        {
+          "id": "OL19151568W",
+          "title": "Ich hab im Traum die Schweiz gesehn",
+          "author": "Jochen Jung",
+          "coverId": "ol:15259954",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603311M"
+        },
+        {
+          "id": "OL46029192W",
+          "title": "Litauische Claviere · Levins Mühle",
+          "author": "Johannes Bobrowski",
+          "coverId": "ol:15259959",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603313M"
+        },
+        {
+          "id": "OL865476W",
+          "title": "Stiller",
+          "author": "Max Frisch",
+          "coverId": "ol:15259960",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL19964478M"
+        },
+        {
+          "id": "OL46029191W",
+          "title": "In den Wäldern des Herzens",
+          "author": "Jürg Federspiel",
+          "coverId": "ol:15259961",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603312M"
+        }
+      ]
     }
   ]
 }
