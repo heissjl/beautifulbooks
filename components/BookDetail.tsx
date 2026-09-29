@@ -87,6 +87,42 @@ function Shell({ children, backHref, toResults, right }: { children: React.React
   );
 }
 
+/**
+ * The page when the catalogue did not answer (ROADMAP 6.75, N12).
+ *
+ * It used to print the server's own sentence ("Book data source unavailable,
+ * try again shortly") over a single "Back to search" — a dead end for anyone
+ * who came from a link or a search engine, with no result list to go back
+ * to. The first page is already asked twice before this shows
+ * (`useWorkPages`), so "Try again" starts the whole walk once more. The
+ * wording names the source that was silent and says that this is no
+ * statement about the book.
+ */
+function LoadFailed({ httpStatus, onRetry, backHref, toResults }: {
+  httpStatus?: number;
+  onRetry: () => void;
+  backHref: string;
+  toResults: boolean;
+}) {
+  const busy = httpStatus === 429;
+  return (
+    <div className="py-24 text-center">
+      <p className="font-display text-2xl text-ink">{busy ? 'Too many requests at once' : 'Open Library did not answer'}</p>
+      <p className="mx-auto mt-2 max-w-md text-sm text-ink-2">
+        {busy
+          ? 'Give it a few seconds, then try again.'
+          : 'The catalogue this page is built from is slow or down at the moment. That says nothing about the book.'}
+      </p>
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
+        <button type="button" onClick={onRetry} className="btn btn-accent">Try again</button>
+        <Link href={backHref} className="text-sm text-accent hover:underline">
+          {toResults ? 'Back to the results' : 'Search for another book'}
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 function TitleBlock({ title, authors, meta }: { title?: string; authors?: string[]; meta?: string }) {
   if (!title) {
     return (
@@ -289,12 +325,14 @@ function BookDetail() {
   if (pages.status === 'notfound' || pages.status === 'error') {
     return (
       <Shell backHref={backHref} toResults={cameFromResults}>
-        <div className="py-24 text-center">
-          <p className="font-display text-2xl text-ink">
-            {pages.status === 'notfound' ? 'Book not found' : pages.message}
-          </p>
-          <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">Back to search</Link>
-        </div>
+        {pages.status === 'notfound' ? (
+          <div className="py-24 text-center">
+            <p className="font-display text-2xl text-ink">Book not found</p>
+            <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">Back to search</Link>
+          </div>
+        ) : (
+          <LoadFailed httpStatus={pages.httpStatus} onRetry={pages.retry} backHref={backHref} toResults={cameFromResults} />
+        )}
       </Shell>
     );
   }
