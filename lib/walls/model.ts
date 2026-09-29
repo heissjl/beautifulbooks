@@ -98,13 +98,13 @@ export type Tone = keyof typeof TONES;
  * moulding's background: flat paint, a wood grain, or a metallic sheen.
  */
 export const FRAMES = {
-  // `css` is the swatch; `moulding` draws the four mitred pieces (lib/walls/moulding.ts).
-  white: { label: 'White', css: '#f3f1ec', moulding: { material: 'paint', base: '#f3f1ec', light: '#ffffff', dark: '#d9d5cc' } },
-  black: { label: 'Black', css: '#1f1c1a', moulding: { material: 'paint', base: '#1f1c1a', light: '#3a3532', dark: '#0f0d0c' } },
-  oak: { label: 'Light wood', css: 'linear-gradient(90deg, #c89a62, #dcb683 40%, #b98a52 75%, #d0a56d)', moulding: { material: 'wood', base: '#c99c64', light: '#ddb987', dark: '#a97c48' } },
-  walnut: { label: 'Dark wood', css: 'linear-gradient(90deg, #5a3a24, #76502f 40%, #45291a 75%, #62412a)', moulding: { material: 'wood', base: '#5a3a24', light: '#77512f', dark: '#3c2415' } },
-  silver: { label: 'Silver', css: 'linear-gradient(135deg, #f2f4f6 0%, #9ea4ab 35%, #f7f8f9 52%, #6f757c 80%, #c9cdd2 100%)', moulding: { material: 'metal', base: '#b4b9bf', light: '#f4f6f8', dark: '#686e76' } },
-  gold: { label: 'Gold', css: 'linear-gradient(135deg, #f7e6a6 0%, #b8892c 35%, #fbefc0 52%, #7d5816 80%, #d8b55e 100%)', moulding: { material: 'metal', base: '#c49a3a', light: '#f8e7a8', dark: '#7a5616' } },
+  // `moulding` draws the sample frame that border-image stretches (lib/walls/moulding.ts).
+  white: { label: 'White', moulding: { material: 'paint', base: '#f3f1ec', light: '#ffffff', dark: '#d9d5cc' } },
+  black: { label: 'Black', moulding: { material: 'paint', base: '#1f1c1a', light: '#3a3532', dark: '#0f0d0c' } },
+  oak: { label: 'Light wood', moulding: { material: 'wood', base: '#c99c64', light: '#ddb987', dark: '#a97c48' } },
+  walnut: { label: 'Dark wood', moulding: { material: 'wood', base: '#5a3a24', light: '#77512f', dark: '#3c2415' } },
+  silver: { label: 'Silver', moulding: { material: 'metal', base: '#b4b9bf', light: '#f4f6f8', dark: '#686e76' } },
+  gold: { label: 'Gold', moulding: { material: 'metal', base: '#c49a3a', light: '#f8e7a8', dark: '#7a5616' } },
 } as const;
 export type FrameColor = keyof typeof FRAMES;
 

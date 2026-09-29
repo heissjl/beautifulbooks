@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import CoverImage from './CoverImage';
 import IsbnText from './IsbnText';
 import LocalShops from './LocalShops';
@@ -14,12 +14,11 @@ import { linkPlan } from '@/lib/linkplan';
 import type { Market } from '@/lib/market';
 import type { BuyLink } from '@/lib/model';
 import { FORMAT_CM, formatLength, isEstimate, layoutPiece, measurements, PIECE_CM, pieceRange, unitLabel, type BookSize, type Units } from '@/lib/walls/dimensions';
-import { mitre, mouldingSide, type Side } from '@/lib/walls/moulding';
+import { mouldingEdge, mouldingImage, SAMPLE } from '@/lib/walls/moulding';
 import { DEFAULT_ARTWORK, FRAMES, MAX_COLUMNS, TONES, type FrameColor, type PublicWall, type Tile, type Tone, type WallOp } from '@/lib/walls/model';
 
 const WANTED_KEY = (id: string) => `bb.wall.wanted.${id}`;
 const UNITS_KEY = 'bb.units';
-const SIDES: Side[] = ['top', 'right', 'bottom', 'left'];
 /** Which books of a collection are bought: this browser's own note, never sent anywhere (5.14 stage 1). */
 const BOUGHT_KEY = (id: string) => `bb.wall.bought.${id}`;
 
@@ -145,15 +144,22 @@ export default function WallPlan({
   const sizes = wall.tiles.map((t) => t.size);
   const plan = layoutPiece(sizes.map((z) => z ?? FORMAT_CM.trade), wall.columns);
   const [showMeasures, setShowMeasures] = useState(false);
-  const measures = showMeasures ? measurements(plan) : [];
+  // Front, or at an angle that shows the depth (Julian, 2026-09-29: „bau … die Schrägansicht“).
+  const [angled, setAngled] = useState(false);
+  const measures = showMeasures && !angled ? measurements(plan) : [];
+  /** A length on the piece as a CSS length: the wrapper is a size container as wide as the frame. */
+  const len = (cmValue: number) => `calc(100cqw * ${(cmValue / plan.outerWidthCm).toFixed(5)})`;
+  const moulding = FRAMES[frameColor].moulding;
   const range = pieceRange(sizes, wall.columns);
   const pending = sizes.filter((z) => !z).length;
   const c = PIECE_CM;
   const sizeText = (a: number, b: number) => (Math.round(a) === Math.round(b) || L(a) === L(b) ? L(a) : `${L(a)}–${L(b)}`);
   const [wanted, setWanted] = useState(() => readWanted(wall.id));
   const [error, setError] = useState('');
-  // Tiles that came without a printing (six random covers, a photo) are looked up once, here.
-  const unlooked = wall.tiles.filter((t) => t.printings.length === 0 && !t.looked).length;
+  // Tiles that came without a printing (six random covers, a photo) or without a size are
+  // looked up once, here. Counting only missing printings left a tile that had its printing
+  // but no size waiting forever under "Sizes are being looked up" (found 2026-09-29).
+  const unlooked = wall.tiles.filter((t) => (t.printings.length === 0 && !t.looked) || !t.size).length;
   const [lookup, setLookup] = useState<'idle' | 'looking' | 'failed'>('idle');
   useEffect(() => {
     if (unlooked === 0) return;
@@ -241,93 +247,170 @@ export default function WallPlan({
               title={FRAMES[f].label}
               aria-label={FRAMES[f].label}
               onClick={() => onSend([{ op: 'artwork', frame: f }])}
-              className={`h-6 w-6 rounded-full border ${f === frameColor ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'border-line'}`}
-              style={{ background: FRAMES[f].css }}
+              className={`h-6 w-6 rounded-sm border ${f === frameColor ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'border-line'}`}
+              // A mitred corner of the moulding, as a framer's sample shows it.
+              style={{ backgroundImage: mouldingImage(FRAMES[f].moulding), backgroundSize: '280%', backgroundPosition: '0 0' }}
             />
           ))}
         </div>
-        <label className="flex items-center gap-2">
-          <input type="checkbox" checked={showMeasures} onChange={(e) => setShowMeasures(e.target.checked)} className="accent-accent" />
+        <div className="flex items-center gap-1 text-xs" role="radiogroup" aria-label="View">
+          {([false, true] as const).map((a) => (
+            <button
+              key={String(a)}
+              type="button"
+              role="radio"
+              aria-checked={angled === a}
+              onClick={() => setAngled(a)}
+              className={`rounded-full border px-2.5 py-0.5 ${angled === a ? 'border-ink bg-ink text-bg' : 'border-line text-ink-2 hover:border-accent hover:text-accent'}`}
+            >
+              {a ? 'Angle' : 'Front'}
+            </button>
+          ))}
+        </div>
+        <label className={`flex items-center gap-2 ${angled ? 'opacity-40' : ''}`}>
+          <input type="checkbox" checked={showMeasures} disabled={angled} onChange={(e) => setShowMeasures(e.target.checked)} className="accent-accent" />
           Show measurements
         </label>
       </div>
 
-      {/* The piece: four mitred pieces of moulding, the back panel, books on wedges. */}
-      <div className="mt-5 rounded bg-surface-2 px-4 pb-4 pt-7 sm:px-8 sm:pb-8 sm:pt-10">
+      {/* The piece: the moulding drawn from a sample frame with border-image, the back panel, books on wedges. */}
+      <div className="mt-5 overflow-hidden rounded bg-surface-2 px-4 pb-4 pt-7 sm:px-8 sm:pb-8 sm:pt-10" style={{ backgroundImage: 'radial-gradient(circle at 20% 0%, rgba(255,255,255,.35), transparent 70%)' }}>
         <div
           className="relative mx-auto"
           style={{
             maxWidth: `min(100%, ${Math.round((460 * plan.outerWidthCm) / plan.outerHeightCm)}px)`,
             aspectRatio: `${plan.outerWidthCm} / ${plan.outerHeightCm}`,
-            boxShadow: '0 14px 30px -12px rgba(0,0,0,.5), 0 2px 4px rgba(0,0,0,.2)',
+            containerType: 'inline-size',
+            perspective: '1800px',
           }}
           role="img"
-          aria-label={`Preview: ${wall.tiles.length} books on wedges in a ${FRAMES[frameColor].label.toLowerCase()} frame, ${plan.columns} per row, ${TONES[tone].label} background`}
+          aria-label={`Preview${angled ? ' at an angle' : ''}: ${wall.tiles.length} books on wedges in a ${FRAMES[frameColor].label.toLowerCase()} frame, ${plan.columns} per row, ${TONES[tone].label} background`}
         >
           <div
-            className="absolute"
+            className="absolute inset-0 transition-transform duration-500"
             style={{
-              left: pct(c.moulding, plan.outerWidthCm),
-              top: pct(c.moulding, plan.outerHeightCm),
-              right: pct(c.moulding, plan.outerWidthCm),
-              bottom: pct(c.moulding, plan.outerHeightCm),
+              transformStyle: 'preserve-3d',
+              transform: angled ? 'rotateY(28deg) rotateX(-6deg) scale(.86)' : 'none',
+              boxShadow: angled ? 'none' : '0 14px 30px -12px rgba(0,0,0,.5), 0 2px 4px rgba(0,0,0,.2)',
+            }}
+          >
+            <div
+              className="absolute"
+              style={{
+                left: pct(c.moulding, plan.outerWidthCm),
+                top: pct(c.moulding, plan.outerHeightCm),
+                right: pct(c.moulding, plan.outerWidthCm),
+                bottom: pct(c.moulding, plan.outerHeightCm),
+                transformStyle: 'preserve-3d',
+                transform: angled ? `translateZ(calc(-1 * ${len(c.depth)}))` : 'none',
               // The back panel is cloth or paper, not flat paint: a fine noise over the tone
               // (Julian, 2026-09-28: „gib dem background etwas textur“).
               backgroundColor: TONES[tone].hex,
               backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"), repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(0,0,0,.03) 0 1px, transparent 1px 3px)`,
               // The moulding throws a shadow onto the panel, heavier from the top left.
-              boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.18), inset 4px 8px 18px rgba(0,0,0,.3)',
-            }}
-          >
-            {wall.tiles.map((t, i) => {
-              const { x, y, w: bw, h: bh } = plan.books[i];
-              const src = coverUrlFor(`ol:${t.coverId}`, 'M');
-              return (
-                <div key={t.coverId}>
-                  <span
-                    className="absolute"
-                    style={{
-                      left: pct(x + bw * 0.2, plan.widthCm),
-                      top: pct(y + bh, plan.heightCm),
-                      width: pct(bw * 0.6, plan.widthCm),
-                      height: pct(PIECE_CM.wedge, plan.heightCm),
-                      background: 'linear-gradient(to bottom, rgba(255,255,255,.35), rgba(0,0,0,.25))',
-                      clipPath: 'polygon(12% 0, 88% 0, 100% 100%, 0 100%)',
-                    }}
-                  />
-                  <span
-                    className="absolute overflow-hidden rounded-[1px] bg-surface-2"
-                    style={{
-                      left: pct(x, plan.widthCm),
-                      top: pct(y, plan.heightCm),
-                      width: pct(bw, plan.widthCm),
-                      height: pct(bh, plan.heightCm),
-                      boxShadow: '3px 5px 9px rgba(0,0,0,.35), inset 3px 0 4px rgba(0,0,0,.25)',
-                    }}
-                  >
-                    {src && <CoverImage src={src} alt="" sizes="120px" />}
-                  </span>
-                </div>
-              );
-            })}
+                // The moulding throws a shadow onto the panel, heavier from the top left.
+                boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.18), inset 4px 8px 18px rgba(0,0,0,.3)',
+              }}
+            >
+              {wall.tiles.map((t, i) => {
+                const { x, y, w: bw, h: bh } = plan.books[i];
+                const src = coverUrlFor(`ol:${t.coverId}`, 'M');
+                // In the angled view a book stands out from the panel by its thickness, and its pages show.
+                const thick = t.size?.t ?? 2.5;
+                return (
+                  <Fragment key={t.coverId}>
+                    <span
+                      className="absolute"
+                      style={{
+                        left: pct(x + bw * 0.2, plan.widthCm),
+                        top: pct(y + bh, plan.heightCm),
+                        width: pct(bw * 0.6, plan.widthCm),
+                        height: pct(PIECE_CM.wedge, plan.heightCm),
+                        background: 'linear-gradient(to bottom, rgba(255,255,255,.35), rgba(0,0,0,.25))',
+                        clipPath: 'polygon(12% 0, 88% 0, 100% 100%, 0 100%)',
+                        transform: angled ? `translateZ(${len(thick * 0.6)})` : undefined,
+                      }}
+                    />
+                    {angled && (
+                      <span
+                        className="absolute"
+                        style={{
+                          left: pct(x, plan.widthCm),
+                          top: pct(y, plan.heightCm),
+                          width: len(thick),
+                          height: pct(bh, plan.heightCm),
+                          transformOrigin: 'left',
+                          transform: `translateZ(${len(thick)}) rotateY(90deg)`,
+                          // The fore-edge: paper, in fine lines.
+                          background: 'repeating-linear-gradient(90deg, #efe8d8 0 1px, #d9d0bd 1px 2px)',
+                        }}
+                      />
+                    )}
+                    <span
+                      className="absolute overflow-hidden rounded-[1px] bg-surface-2"
+                      style={{
+                        left: pct(x, plan.widthCm),
+                        top: pct(y, plan.heightCm),
+                        width: pct(bw, plan.widthCm),
+                        height: pct(bh, plan.heightCm),
+                        boxShadow: '3px 5px 9px rgba(0,0,0,.35), inset 3px 0 4px rgba(0,0,0,.25)',
+                        transform: angled ? `translateZ(${len(thick)})` : undefined,
+                      }}
+                    >
+                      {src && <CoverImage src={src} alt="" sizes="120px" />}
+                    </span>
+                  </Fragment>
+                );
+              })}
+            </div>
+            {angled && (
+              <>
+                {/* The shadow the box throws on the wall behind it. */}
+                <span
+                  className="absolute inset-0"
+                  style={{ transform: `translateZ(calc(-1 * ${len(c.depth)} - 1px))`, boxShadow: '24px 30px 40px -6px rgba(0,0,0,.4)' }}
+                />
+                {/* The inside of the box: four walls from the moulding back to the panel, lined like the panel. */}
+                {(['left', 'right', 'top', 'bottom'] as const).map((side) => {
+                  const across = side === 'left' || side === 'right';
+                  const inset = { x: pct(c.moulding, plan.outerWidthCm), y: pct(c.moulding, plan.outerHeightCm) };
+                  return (
+                    <span
+                      key={side}
+                      className="absolute"
+                      style={{
+                        ...(across
+                          ? { top: inset.y, bottom: inset.y, width: len(c.depth), [side]: inset.x }
+                          : { left: inset.x, right: inset.x, height: len(c.depth), [side]: inset.y }),
+                        transformOrigin: side,
+                        transform: { left: 'rotateY(90deg)', right: 'rotateY(-90deg)', top: 'rotateX(-90deg)', bottom: 'rotateX(90deg)' }[side],
+                        backgroundColor: TONES[tone].hex,
+                        backgroundImage: `linear-gradient(rgba(0,0,0,${side === 'right' ? 0.12 : side === 'top' ? 0.3 : 0.2}), rgba(0,0,0,${side === 'right' ? 0.12 : side === 'top' ? 0.3 : 0.2}))`,
+                      }}
+                    />
+                  );
+                })}
+                {/* The outside of the moulding, as deep as the box. */}
+                <span
+                  className="absolute left-0 top-0 h-full"
+                  style={{ width: len(c.depth), transformOrigin: 'left', transform: 'rotateY(90deg)', background: mouldingEdge(moulding) }}
+                />
+                <span
+                  className="absolute left-0 top-0 w-full"
+                  style={{ height: len(c.depth), transformOrigin: 'top', transform: 'rotateX(-90deg)', background: mouldingEdge(moulding) }}
+                />
+              </>
+            )}
+            {/* The moulding: a sample frame, its corners kept and its pieces stretched along their length. */}
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                borderStyle: 'solid',
+                borderWidth: len(c.moulding),
+                borderImage: `${mouldingImage(moulding)} ${SAMPLE.band} stretch`,
+              }}
+            />
           </div>
-          {SIDES.map((side) => {
-            const fx = (100 * c.moulding) / plan.outerWidthCm;
-            const fy = (100 * c.moulding) / plan.outerHeightCm;
-            const across = side === 'top' || side === 'bottom';
-            return (
-              <span
-                key={side}
-                className="absolute"
-                style={{
-                  [side]: 0,
-                  ...(across ? { left: 0, width: '100%', height: `${fy}%` } : { top: 0, height: '100%', width: `${fx}%` }),
-                  background: mouldingSide(FRAMES[frameColor].moulding, side),
-                  clipPath: mitre(side, fx, fy),
-                }}
-              />
-            );
-          })}
           {showMeasures && (
             <>
               <svg

@@ -1,23 +1,36 @@
 import { describe, expect, it } from 'vitest';
-import { mitre, mouldingSide } from '../walls/moulding';
+import { mouldingEdge, mouldingImage, mouldingSvg, SAMPLE } from '../walls/moulding';
 
-const gold = { material: 'metal' as const, base: '#c9a13b', light: '#f7e7ad', dark: '#7d5a14' };
-const oak = { material: 'wood' as const, base: '#d2ad78', light: '#e2c496', dark: '#b88d58' };
+const gold = { material: 'metal' as const, base: '#c49a3a', light: '#f8e7a8', dark: '#7a5616' };
+const oak = { material: 'wood' as const, base: '#c99c64', light: '#ddb987', dark: '#a97c48' };
+const black = { material: 'paint' as const, base: '#1f1c1a', light: '#3a3532', dark: '#0f0d0c' };
 
-describe('moulding (5.13f)', () => {
-  it('lights the top and shades the bottom', () => {
-    expect(mouldingSide(gold, 'top')).toMatch(/^linear-gradient\(rgba\(255,255,255/);
-    expect(mouldingSide(gold, 'bottom')).toMatch(/^linear-gradient\(rgba\(0,0,0/);
+describe('moulding sample (5.13f, border-image)', () => {
+  it('draws four mitred pieces, each lit from the top left', () => {
+    const svg = mouldingSvg(gold);
+    for (const side of ['top', 'right', 'bottom', 'left']) expect(svg).toContain(`<clipPath id="c${side}">`);
+    expect(svg).toContain(`points="0,0 ${SAMPLE.size},0 ${SAMPLE.size - SAMPLE.band},${SAMPLE.band} ${SAMPLE.band},${SAMPLE.band}"`);
+    expect(svg).toMatch(/clip-path="url\(#ctop\)">.*fill="#ffffff" fill-opacity="0.16"/);
+    expect(svg).toMatch(/clip-path="url\(#cbottom\)">.*fill="#000000" fill-opacity="0.24"/);
   });
 
-  it('runs the wood grain along each piece', () => {
-    // Stretched noise: low frequency along the piece, high across it.
-    expect(mouldingSide(oak, 'top')).toContain("baseFrequency='0.006 0.55'");
-    expect(mouldingSide(oak, 'left')).toContain("baseFrequency='0.55 0.006'");
+  it('runs the grain along each piece, in the wood’s own dark and in sRGB', () => {
+    const svg = mouldingSvg(oak);
+    expect(svg).toContain('baseFrequency="0.012 0.45"');
+    expect(svg).toContain('baseFrequency="0.45 0.012"');
+    expect(svg).toContain('color-interpolation-filters="sRGB"');
+    expect(svg).toContain('0 0 0 0 0.663');
   });
 
-  it('mitres the corners so the pieces meet on the diagonal', () => {
-    expect(mitre('top', 4, 5)).toBe('polygon(0 0, 100% 0, 96% 100%, 4% 100%)');
-    expect(mitre('right', 4, 5)).toBe('polygon(0 5%, 100% 0, 100% 100%, 0 95%)');
+  it('paints a painted frame without grain', () => {
+    expect(mouldingSvg(black)).not.toContain('feTurbulence');
+  });
+
+  it('is a CSS image with nothing left unescaped', () => {
+    const css = mouldingImage(oak);
+    expect(css.startsWith('url("data:image/svg+xml,')).toBe(true);
+    // A raw "#" would end the data URL at the first colour or url(#…).
+    expect(css).not.toContain('#');
+    expect(mouldingEdge(oak)).toContain(oak.base);
   });
 });

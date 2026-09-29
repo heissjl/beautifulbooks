@@ -3515,3 +3515,11 @@ Aus der Rahmen-Recherche ([research-framing-partners.md](plans/research-framing-
 - **Gewicht nur geschätzt, nicht gemessen:** Papier 0,7 g/cm³ bei 2,5 cm Dicke, wo keine bekannt ist, 2 mm Glas, 5 mm MDF, Leiste 3 × 7 cm Holz. Die Demo-Sammlung (6 Bücher, 71 × 69 cm) kommt auf etwa 9,5 kg — dient zur Wahl der Aufhängung.
 - **Gefunden beim Ansehen:** die Keilhöhe stand zuerst als „NaN“ — `next dev` lieferte die alte `dimensions.ts` ohne `wedge`; nach erneutem Laden richtig, ein Test verbietet „NaN“ im Plan. Die Spalte „Size from“ lief über den Rand und ist nach links gerückt. Geprüft an der Demo-Sammlung, gerendert mit PDFKit; auf dem Telefon (375 px) passt der Knopf ohne Überbreite.
 
+## 2026-09-29 · Rahmen per border-image, Schrägansicht (ROADMAP 5.13f/5.15; nur `claude/art-funnel-lab`)
+
+Nach dem Vorbild des Collage-Builders von Level Frames (Notizen im [Plan](plans/PLAN-5.13-wand-funnel.md)), dessen Vorschau das Foto eines Musterrahmens per `border-image` auf jede Größe zieht.
+
+- **Rahmen:** `lib/walls/moulding.ts` zeichnet statt vier CSS-Stücken mit `clip-path` einen quadratischen Musterrahmen als SVG (300 × 300, Leiste 60): vier Gehrungsstücke mit Profilverlauf quer, Maserung als gestrecktes Rauschen längs (in sRGB, in der Holzfarbe), Metall mit Bürststrich und Glanzlichtern, Licht von oben links, Haarlinien an den Gehrungen. Die Vorschau setzt ihn als `border-image` mit Slice 60 und `stretch`; die Leistenbreite folgt dem Rahmen über Container-Einheiten (`100cqw × Leiste / Außenbreite`). Eigenes Bild, kein fremdes Foto. Die Rahmenwahl zeigt denselben Musterrahmen als Gehrungsecke. 4 Tests.
+- **Schrägansicht** („Front / Angle“): CSS 3D, `rotateY(28°) rotateX(−6°)`; Rückwand 7 cm nach hinten, vier Innenwände im Ton des Hintergrunds, Außenseite der Leiste mit Maserung, Bücher um ihre Dicke (2,5 cm, wo keine bekannt ist) vor der Rückwand mit sichtbarem Schnitt, Schatten an der Wand. Maßlinien nur von vorn. Bei 390 px keine Überbreite.
+- **Nebenbei behoben:** Die Größen wurden nur nachgeschlagen, wenn einer Kachel der Druck fehlte; eine Kachel mit Druck und ohne Maß stand für immer unter „Sizes are being looked up“ (die Route `/printings` hätte das Maß geliefert, der Client fragte sie nicht). Jetzt zählt auch eine fehlende Größe.
+
