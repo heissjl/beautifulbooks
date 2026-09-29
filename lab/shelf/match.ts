@@ -14,7 +14,7 @@
 import { colour, decode, dhash, luminance, toGray, type RgbaImage } from '../../lib/imagehash';
 import { fetchBytes } from '../../lib/sources/http';
 import { spineColor } from '../colorsort/color';
-import { refineSpineBox, toLabImage, type LabImage } from '../colorsort/spines';
+import { findRowCuts, fitBoxToRows, refineSpineBox, rowsFromCuts, toLabImage, type Band, type LabImage } from '../colorsort/spines';
 import { pickBySpine, samePublisher, type CoverColours, type EditionCandidate, type RankedCover } from './edition';
 import { colourDistance, hamming, type ImageSignature } from '../../lib/imagesig';
 import type { WorkSummary } from '../../lib/model';
@@ -140,7 +140,7 @@ export class Matcher {
   private covers = new Map<string, CoverOption[]>();
   private editions = new Map<string, EditionCandidate[]>();
   private coverColours = new Map<number, Promise<CoverColours[] | null>>();
-  private labs = new WeakMap<RgbaImage, LabImage>();
+  private labs = new WeakMap<RgbaImage, { lab: LabImage; rows: Band[] }>();
   private imageSlots = 4;
   private imageWaiting: Array<() => void> = [];
   private queue: Promise<unknown> = Promise.resolve();
@@ -238,12 +238,17 @@ export class Matcher {
    */
   async spineEdition(book: RecognizedBook, workId: string, photo: RgbaImage, fallback: number): Promise<SpineEditionResult | null> {
     if (book.kind !== 'spine' || !book.box) return null;
-    let lab = this.labs.get(photo);
-    if (!lab) { lab = toLabImage(photo.rgba, photo.width, photo.height); this.labs.set(photo, lab); }
+    let seen = this.labs.get(photo);
+    if (!seen) {
+      const lab = toLabImage(photo.rgba, photo.width, photo.height);
+      seen = { lab, rows: rowsFromCuts(findRowCuts(lab), photo.height) };
+      this.labs.set(photo, seen);
+    }
+    const { lab, rows } = seen;
     const [fx, fy, fw, fh] = book.box;
     const raw = { x0: Math.round(fx * photo.width), y0: Math.round(fy * photo.height), x1: Math.round((fx + fw) * photo.width), y1: Math.round((fy + fh) * photo.height) };
     if (raw.x1 - raw.x0 < 3 || raw.y1 - raw.y0 < 10) return null;
-    const box = refineSpineBox(lab, raw);
+    const box = refineSpineBox(lab, fitBoxToRows(raw, rows));
     const colour = spineColor(photo.rgba, photo.width, box);
     const spine = { hex: colour.hex, box: [box.x0 / photo.width, box.y0 / photo.height, (box.x1 - box.x0) / photo.width, (box.y1 - box.y0) / photo.height] as [number, number, number, number] };
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { hex, rgbToOklab, spineColor, toLch } from '../color';
-import { findRowCuts, findSpineCuts, refineSpineBox, rowsFromCuts, spinesFromCuts, toLabImage } from '../spines';
+import { findRowCuts, findSpineCuts, fitBoxToRows, refineSpineBox, rowsFromCuts, spinesFromCuts, toLabImage } from '../spines';
 import { DEFAULTS, groupOf, layout, sortBooks, unmoved, type Book } from '../sort';
 import { syntheticShelf } from '../synthetic';
 
@@ -117,5 +117,23 @@ describe('a model box moved onto the spine', () => {
   it('leaves a box alone where there is no line', () => {
     const wall = { x0: 2, x1: 12, y0: 0, y1: 14 }; // inside the top board: uniform
     expect(refineSpineBox(img, wall)).toEqual(wall);
+  });
+});
+
+describe('a model box fitted to its row', () => {
+  const rows = [{ y0: 0, y1: 440 }, { y0: 440, y1: 920 }, { y0: 920, y1: 1490 }];
+
+  it('cuts a box that runs over the board into the next row', () => {
+    // as measured on the first real photo: top halfway down the spines, three times too tall
+    expect(fitBoxToRows({ x0: 10, x1: 50, y0: 240, y1: 576 }, rows)).toEqual({ x0: 10, x1: 50, y0: 240, y1: 440 });
+  });
+
+  it('gives a box left too short the lower half of its row', () => {
+    expect(fitBoxToRows({ x0: 10, x1: 50, y0: 430, y1: 700 }, rows)).toEqual({ x0: 10, x1: 50, y0: 220, y1: 440 });
+  });
+
+  it('leaves a box alone when there is only one row', () => {
+    const box = { x0: 10, x1: 50, y0: 240, y1: 576 };
+    expect(fitBoxToRows(box, [{ y0: 0, y1: 1600 }])).toBe(box);
   });
 });

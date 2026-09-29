@@ -154,6 +154,10 @@ function decodeShelf(s) {
 }
 
 const $ = id => document.getElementById(id);
+/** Report to the lab server's terminal; the page's own message stays as it is. */
+const report = msg => fetch('/api/log', { method: 'POST', body: String(msg) }).catch(() => {});
+window.addEventListener('error', e => report(`error: ${e.message} @${e.lineno}`));
+window.addEventListener('unhandledrejection', e => report(`rejection: ${e.reason?.message ?? e.reason}`));
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const cover = (id, size = 'M') => `https://covers.openlibrary.org/b/id/${id}-${size}.jpg`;
 let SITE = 'https://beautifulcovers.vercel.app';
@@ -178,6 +182,7 @@ let photoCanvas = null; // the shrunk photo, kept in the browser for the colour 
 let sampleBoxes = null; // painted-shelf boxes for the sample mode
 let order = 'photo';    // 'photo' | 'rainbow' | 'light-dark'
 let colors = [];        // per recognized book: { hex, lch, box, refined } or null
+let rowBands = [];      // the shelf rows the photo was read by, as fractions
 
 async function init() {
   const hash = new URLSearchParams(location.hash.slice(1));
@@ -218,31 +223,100 @@ async function readable(file) {
   return res.blob();
 }
 
+/** Largest picture the model reads without shrinking it: 2576 px long edge, 3.75 MP (claude-sonnet-5). */
+const MODEL_EDGE = 2576, MODEL_PIXELS = 3.7e6;
+
+/** A region of the full-size photo as a JPEG at the most the model reads. */
+function cropForModel(bitmap, sx, sy, sw, sh) {
+  const scale = Math.min(1, MODEL_EDGE / Math.max(sw, sh), Math.sqrt(MODEL_PIXELS / (sw * sh)));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(sw * scale); canvas.height = Math.round(sh * scale);
+  canvas.getContext('2d').drawImage(bitmap, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+  return new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.9));
+}
+
 async function usePhoto(file) {
   if (!file) return;
-  let blob;
+  report(`photo chosen: type "${file.type}", ${Math.round(file.size / 1024)} KB, extension ${(file.name.match(/\.[^.]+$/) || ['none'])[0]}`);
+  let source, blob, full;
   try {
-    blob = await shrink(await readable(file));
+    source = await readable(file);
+    blob = await shrink(source);
+    full = await createImageBitmap(source);
   } catch (err) {
     // Never silent: a photo that could not be read must say so (CLAUDE.md).
     $('progress').textContent = `Fehler: ${err.message}`;
+    report(`photo failed: ${err.message}`);
     return;
   }
   sampleBoxes = null;
   $('photoImg').src = URL.createObjectURL(blob);
   $('photo').hidden = false;
-  run('/api/recognize', blob);
+  try {
+    await readByRows(full, blob);
+  } catch (err) {
+    $('progress').textContent = `Fehler: ${err.message}`;
+    report(`read failed: ${err.message}`);
+  } finally {
+    full.close();
+  }
 }
 
-async function run(path, body) {
+/**
+ * Reads the photo row by row (ROADMAP 5.16): the shelf boards come from the
+ * photo itself, each row goes to the model on its own at up to 2576 px, and
+ * the model's boxes — in pixels of the row — are mapped back onto the photo.
+ * One row, or none found: the whole photo, at the same resolution.
+ */
+async function readByRows(full, shrunk) {
+  items = []; photoBooks = []; colors = []; render(); drawBoxes();
+  $('stats').textContent = ''; $('sharebox').hidden = true; $('linkout').hidden = true;
+  const found = window.shelfColors ? window.shelfColors.detectShelf(photoCanvas) : { rows: [] };
+  const H = photoCanvas.height;
+  const bands = found.rows.length >= 2
+    ? found.rows.map(r => ({ y0: r.y0 / H, y1: r.y1 / H }))
+    : [{ y0: 0, y1: 1 }];
+  rowBands = bands.length > 1 ? bands : [];
+  drawBoxes();
+  const started = performance.now();
+  let done = 0;
+  $('progress').textContent = bands.length > 1
+    ? `${bands.length} Regalreihen gefunden — das Bildmodell liest jede einzeln … (0 von ${bands.length})`
+    : 'Das Bildmodell liest das Foto … (dauert meist 10–40 s)';
+  const runs = await Promise.all(bands.map(async band => {
+    const sy = Math.floor(band.y0 * full.height), sh = Math.ceil((band.y1 - band.y0) * full.height);
+    const crop = await cropForModel(full, 0, sy, full.width, sh);
+    const res = await fetch('/api/read', { method: 'POST', body: crop, headers: { 'content-type': 'image/jpeg' } });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+    done++;
+    if (bands.length > 1) $('progress').textContent = `${bands.length} Regalreihen gefunden — das Bildmodell liest jede einzeln … (${done} von ${bands.length})`;
+    // Boxes are fractions of the row; make them fractions of the photo.
+    data.books = data.books.map(b => b.box ? { ...b, box: [b.box[0], band.y0 + b.box[1] * (band.y1 - band.y0), b.box[2], b.box[3] * (band.y1 - band.y0)] } : b);
+    return data;
+  }));
+  const books = runs.flatMap(r => r.books);
+  const meta = {
+    model: runs[0]?.model, ms: Math.round(performance.now() - started),
+    inputTokens: runs.reduce((s, r) => s + (r.inputTokens || 0), 0),
+    outputTokens: runs.reduce((s, r) => s + (r.outputTokens || 0), 0),
+    problems: runs.flatMap(r => r.problems || []),
+    rows: bands.length, cached: runs.every(r => r.cached),
+  };
+  report(`read: ${bands.length} row(s), ${books.length} books, ${books.filter(b => b.publisher).length} with publisher, ${meta.inputTokens}+${meta.outputTokens} tokens${meta.cached ? ', cached' : ''}`);
+  const photo = await new Promise(res => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.readAsDataURL(shrunk); });
+  await run('/api/match', JSON.stringify({ photo, books, meta }), 'application/json', true);
+}
+
+async function run(path, body, type = 'image/jpeg', keepProgress = false) {
   items = []; photoBooks = []; colors = []; render(); drawBoxes();
   $('stats').textContent = '';
   $('sharebox').hidden = true; $('linkout').hidden = true;
-  $('progress').textContent = body ? 'Das Bildmodell liest das Foto … (dauert meist 10–40 s)' : 'Beispielliste …';
+  if (!keepProgress) $('progress').textContent = body ? 'Das Bildmodell liest das Foto … (dauert meist 10–40 s)' : 'Beispielliste …';
   $('sample').disabled = true;
   const started = performance.now();
   try {
-    const res = await fetch(path, { method: 'POST', body, headers: body ? { 'content-type': 'image/jpeg' } : {} });
+    const res = await fetch(path, { method: 'POST', body, headers: body ? { 'content-type': type } : {} });
     if (!res.ok || !res.headers.get('content-type')?.includes('ndjson')) {
       const err = await res.json().catch(() => ({}));
       throw new Error(err.error || `HTTP ${res.status}`);
@@ -292,6 +366,7 @@ async function run(path, body) {
     }
   } catch (e) {
     $('progress').textContent = `Fehler: ${e.message}`;
+    report(`run failed: ${e.message}`);
   } finally {
     $('sample').disabled = false;
     $('sharebox').hidden = !items.some(i => i.work && !i.removed);
@@ -304,7 +379,8 @@ function stats(meta, done) {
   // Only covers that were actually compared with a crop of the photo count here.
   const covers = items.filter(i => ['matched-edition', 'no-close-cover'].includes(i.cover?.reason)).length;
   const parts = [`Modell: ${meta.model}`, meta.ms ? `Erkennung ${(meta.ms / 1000).toFixed(1)} s` : null,
-    meta.inputTokens ? `${meta.inputTokens} + ${meta.outputTokens} Tokens` : null,
+    meta.inputTokens ? `${meta.inputTokens} + ${meta.outputTokens} Tokens${meta.cached ? ' (aus dem Speicher, nicht neu bezahlt)' : ''}` : null,
+    meta.rows > 1 ? `${meta.rows} Reihen einzeln gelesen` : null,
     `Open Library ${(done.matchMs / 1000).toFixed(1)} s`, done.editionMs ? `Ausgaben ${(done.editionMs / 1000).toFixed(1)} s` : null,
     done.editions ? `${done.picked}/${done.editions} Rücken einer Ausgabe zugeordnet` : null,
     meta.books?.some(b => b.publisher) ? `Verlag gelesen bei ${meta.books.filter(b => b.publisher).length}/${meta.books.length}` : null, `${found}/${items.length} Werke gefunden`,
@@ -315,7 +391,13 @@ function stats(meta, done) {
 
 function drawBoxes() {
   const host = $('photo');
-  host.querySelectorAll('.box').forEach(b => b.remove());
+  host.querySelectorAll('.box, .rowline').forEach(b => b.remove());
+  rowBands.slice(1).forEach(b => {
+    const d = document.createElement('div');
+    d.className = 'rowline';
+    d.style.cssText = `position:absolute;left:0;right:0;top:${b.y0 * 100}%;border-top:2px dashed rgba(0,160,255,.9);pointer-events:none`;
+    host.appendChild(d);
+  });
   photoBooks.forEach((b, i) => {
     const box = colors[i]?.box ?? b.box;
     if (!box) return;
@@ -502,6 +584,7 @@ window.addEventListener('hashchange', () => location.reload());
 /* ---------- input ---------- */
 $('file').onchange = e => usePhoto(e.target.files[0]);
 $('sample').onclick = () => {
+  rowBands = [];
   if (window.shelfColors) {
     const painted = window.shelfColors.paintedSample(12);
     photoCanvas = painted.canvas; sampleBoxes = painted.boxes;

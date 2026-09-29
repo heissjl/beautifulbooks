@@ -15,6 +15,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from 'node:ht
 import { build } from 'esbuild';
 import decodeHeic from 'heic-decode';
 import jpeg from 'jpeg-js';
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { decode, type RgbaImage } from '../../lib/imagehash';
@@ -30,6 +31,14 @@ const SITE = (process.env.SHELF_SITE ?? 'https://beautifulcovers.vercel.app').re
 const MAX_PHOTO_BYTES = 12 * 1024 * 1024;
 
 const matcher = new Matcher();
+
+/**
+ * The model's answer per photo, keyed by the photo's SHA-256, until the
+ * server stops: uploading the same photo again (to try a change in the
+ * colour or edition step) costs no second model call. Only the hash and the
+ * titles are kept, never the photo.
+ */
+const recognitions = new Map<string, Awaited<ReturnType<typeof recognize>>>();
 
 /**
  * The colour step (ROADMAP 5.16) runs in the browser, on the photo the page
@@ -94,6 +103,12 @@ async function matchAll(books: RecognizedBook[], photo: RgbaImage | null, emit: 
 
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://127.0.0.1:${PORT}`);
+  // One line per request — path, status, time, size; never the photo, never a title.
+  const t0 = Date.now();
+  res.on('finish', () => {
+    if (url.pathname === '/api/log') return;
+    console.log(`${new Date().toISOString().slice(11, 19)} ${req.method} ${url.pathname} ${res.statusCode} ${Date.now() - t0}ms ${req.headers['content-length'] ?? ''}${req.headers['content-type'] ? ` ${req.headers['content-type']}` : ''} ${(req.headers['user-agent'] ?? '').match(/(Safari|Chrome|Firefox)\/[\d.]+/g)?.join(' ') ?? ''}`);
+  });
   const send = (code: number, body: unknown) => {
     res.writeHead(code, { 'content-type': 'application/json' });
     res.end(JSON.stringify(body));
@@ -129,6 +144,14 @@ const server = createServer(async (req, res) => {
       return;
     }
 
+    // What went wrong in the page, so a failure in the reader's browser reaches this terminal.
+    if (url.pathname === '/api/log' && req.method === 'POST') {
+      const text = (await readBytes(req, 4000)).toString('utf8');
+      console.log(`page: ${text.replace(/\s+/g, ' ').slice(0, 500)}`);
+      res.writeHead(204); res.end();
+      return;
+    }
+
     if (url.pathname === '/api/status') {
       return send(200, { key: hasApiKey(), model: PRIMARY_MODEL, fallback: FALLBACK_MODEL, site: SITE });
     }
@@ -141,6 +164,41 @@ const server = createServer(async (req, res) => {
       return res.end();
     }
 
+    // Reading by rows (ROADMAP 5.16, first real photo 2026-09-29): the page
+    // cuts the photo at the shelf boards it found and sends each row at full
+    // resolution. /api/read only reads — one row, one model call, cached by
+    // the crop's hash; /api/match then matches the combined list against the
+    // whole (shrunk) photo, streamed as before.
+    if (url.pathname === '/api/read' && req.method === 'POST') {
+      if (!hasApiKey()) return send(400, { error: 'ANTHROPIC_API_KEY ist nicht gesetzt.' });
+      const type = req.headers['content-type'];
+      if (type !== 'image/jpeg' && type !== 'image/png') return send(400, { error: 'nur JPEG oder PNG' });
+      const bytes = await readBytes(req, MAX_PHOTO_BYTES);
+      const image = decode(bytes);
+      if (!image) return send(400, { error: 'Bild ließ sich nicht lesen' });
+      const key = createHash('sha256').update(bytes).digest('hex');
+      const cached = recognitions.get(key);
+      try {
+        const run = cached ?? await recognize(bytes, type, { publisher: true, pixels: { width: image.width, height: image.height } });
+        recognitions.set(key, run);
+        return send(200, { ...run, cached: !!cached });
+      } catch (err) {
+        return send(502, { error: `Erkennung fehlgeschlagen: ${err instanceof Error ? err.message : String(err)}` });
+      }
+    }
+
+    if (url.pathname === '/api/match' && req.method === 'POST') {
+      const body = JSON.parse((await readBytes(req, MAX_PHOTO_BYTES * 2)).toString('utf8')) as {
+        photo: string; books: RecognizedBook[]; meta: Record<string, unknown>;
+      };
+      const photo = decode(Buffer.from(body.photo, 'base64'));
+      if (!photo) return send(400, { error: 'Foto ließ sich nicht lesen' });
+      const emit = stream(res);
+      emit({ type: 'recognized', books: body.books, problems: [], ...body.meta, photo: { width: photo.width, height: photo.height } });
+      await matchAll(body.books, photo, emit);
+      return res.end();
+    }
+
     if (url.pathname === '/api/recognize' && req.method === 'POST') {
       if (!hasApiKey()) return send(400, { error: 'ANTHROPIC_API_KEY ist nicht gesetzt. Schlüssel in .env.local eintragen und den Server neu starten — oder die Beispielliste nehmen.' });
       const type = req.headers['content-type'];
@@ -149,9 +207,11 @@ const server = createServer(async (req, res) => {
       const bytes = await readBytes(req, MAX_PHOTO_BYTES);
       const photo = decode(bytes);
       if (!photo) return send(400, { error: 'Foto ließ sich nicht lesen' });
-      let run;
+      const key = createHash('sha256').update(bytes).digest('hex');
+      let run = recognitions.get(key);
       try {
-        run = await recognize(bytes, type, { publisher: true });
+        run ??= await recognize(bytes, type, { publisher: true, pixels: { width: photo.width, height: photo.height } });
+        recognitions.set(key, run);
       } catch (err) {
         return send(502, { error: `Erkennung fehlgeschlagen: ${err instanceof Error ? err.message : String(err)}` });
       }

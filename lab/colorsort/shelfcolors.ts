@@ -9,7 +9,7 @@
  * colour, and orders the collection by colour with the rules of sort.ts.
  */
 import { spineColor } from './color';
-import { refineSpineBox, toLabImage, type Box } from './spines';
+import { findRowCuts, findSpineCuts, fitBoxToRows, refineSpineBox, rowsFromCuts, toLabImage, type Band, type Box } from './spines';
 import { DEFAULTS, sortBooks, type Book, type Mode } from './sort';
 import { syntheticShelf } from './synthetic';
 
@@ -31,6 +31,7 @@ export function colorsForBooks(canvas: HTMLCanvasElement, books: BookInPhoto[]):
   const { width, height } = canvas;
   const rgba = canvas.getContext('2d', { willReadFrequently: true })!.getImageData(0, 0, width, height).data;
   const lab = toLabImage(rgba, width, height);
+  const rows = rowsFromCuts(findRowCuts(lab), height);
   return books.map(book => {
     if (!book.box) return null;
     const [fx, fy, fw, fh] = book.box;
@@ -39,13 +40,13 @@ export function colorsForBooks(canvas: HTMLCanvasElement, books: BookInPhoto[]):
       x1: Math.round((fx + fw) * width), y1: Math.round((fy + fh) * height),
     };
     if (raw.x1 - raw.x0 < 2 || raw.y1 - raw.y0 < 2) return null;
-    const box = book.kind === 'spine' ? refineSpineBox(lab, raw) : raw;
+    const box = book.kind === 'spine' ? refineSpineBox(lab, fitBoxToRows(raw, rows)) : raw;
     const c = spineColor(rgba, width, box);
     return {
       hex: c.hex,
       lch: c.lch,
       box: [box.x0 / width, box.y0 / height, (box.x1 - box.x0) / width, (box.y1 - box.y0) / height],
-      refined: box.x0 !== raw.x0 || box.x1 !== raw.x1,
+      refined: box.x0 !== raw.x0 || box.x1 !== raw.x1 || box.y0 !== raw.y0 || box.y1 !== raw.y1,
     };
   });
 }
@@ -86,7 +87,18 @@ export function paintedSample(n: number, seed = Date.now() % 1000): { canvas: HT
   return { canvas, boxes };
 }
 
-declare global {
-  interface Window { shelfColors: { colorsForBooks: typeof colorsForBooks; colourOrder: typeof colourOrder; paintedSample: typeof paintedSample } }
+/** Shelf boards and spine lines found in the photo itself, without the model. */
+export function detectShelf(canvas: HTMLCanvasElement): { rows: Band[]; rowCuts: number[]; cuts: number[][]; ms: number } {
+  const started = performance.now();
+  const { width, height } = canvas;
+  const rgba = canvas.getContext('2d', { willReadFrequently: true })!.getImageData(0, 0, width, height).data;
+  const lab = toLabImage(rgba, width, height);
+  const rowCuts = findRowCuts(lab);
+  const rows = rowsFromCuts(rowCuts, height);
+  return { rows, rowCuts, cuts: rows.map(r => findSpineCuts(lab, r)), ms: Math.round(performance.now() - started) };
 }
-if (typeof window !== 'undefined') window.shelfColors = { colorsForBooks, colourOrder, paintedSample };
+
+declare global {
+  interface Window { shelfColors: { colorsForBooks: typeof colorsForBooks; colourOrder: typeof colourOrder; paintedSample: typeof paintedSample; detectShelf: typeof detectShelf } }
+}
+if (typeof window !== 'undefined') window.shelfColors = { colorsForBooks, colourOrder, paintedSample, detectShelf };

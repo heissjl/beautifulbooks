@@ -36,6 +36,20 @@ Aus dem Hauptordner selbst: `set -a; source .env.local; set +a; npx tsx lab/shel
 
 Nach der Erkennung liest der Browser je Buch die Farbe aus dem Foto — bei Rücken zuvor den Kasten des Modells auf die Trennlinien geschoben — und die Wand lässt sich „wie im Foto", „nach Farben" oder „hell nach dunkel" ordnen; der geteilte Link trägt die gewählte Reihenfolge. Code, Regeln und Messung in [lab/colorsort/README.md](../colorsort/README.md#als-schritt-im-regal-ablauf-labshelf-seit-2026-09-28); der Server bündelt `lab/colorsort/shelfcolors.ts` als `/colors.js`. Im Beispielmodus malt die Seite ein Regal als Foto, damit der Schritt ohne Schlüssel zu sehen ist (Farben erfunden).
 
+## Das erste echte Foto im Prototyp (2026-09-29)
+
+Julian lud ein Foto seines ganzen Regals hoch (Hochformat, drei Reihen, Dosen vor der mittleren Reihe; auf 1200 × 1600 verkleinert). Das Foto liegt nicht im Repository. Julian: „the picture works now, but the colour detection seems still off".
+
+- **Gemessen:** 38 Rücken gelesen, 38 Werke zugeordnet. Erkennung 20,1 s, 3224 + 2767 Tokens. Open Library 19,7 s, Ausgaben 53,1 s. 10 von 38 Rücken einer Ausgabe zugeordnet, **Verlag bei 0 von 38 gelesen**. Mindestens eine Zuordnung war falsch: „Nelson the Astronaut“ wurde zu *Alice's Adventures in Wonderland*, als „unsicher: weder Titel noch Autor passen“ markiert, aber gezählt.
+- **Die Kästen des Modells taugten nicht für Farben.** Waagrecht lagen sie ungefähr richtig. Senkrecht begannen sie in der Mitte der Rücken und liefen übers Brett in die nächste Reihe; Kasten 7 lag auf der leeren Wand. In der unteren Reihe standen sie in gleichmäßigen Abständen (0,155 · 0,19 · 0,225 …, alle 0,025 breit): eher geschätzt als gesehen. Alle 16 Farben dort waren dunkelbraun. Die Farben kamen also zum Teil vom Brett und von der Reihe darunter.
+- **Die Kantenerkennung** fand die drei Regalböden sauber (bei 27 %, 57 % und 93 % der Höhe, 364 ms). Linien zwischen den Rücken fand sie nur 21 statt 38: bei 35 px breiten Rücken und Dosen davor ist das zu wenig.
+- **Geändert daraufhin:**
+  1. `fitBoxToRows` schneidet jeden Kasten auf die Reihe, in der seine Oberkante liegt.
+  2. Die Seite **liest Reihe für Reihe**: Sie schneidet das Originalfoto an den gefundenen Böden und schickt jede Reihe einzeln mit bis zu 2576 px / 3,7 MP (die Grenze von `claude-sonnet-5`, statt bisher 1600 px für das ganze Regal).
+  3. Das Modell gibt die **Kästen in Pixeln** an (`recognize(…, { pixels })`). Aktuelle Modelle nennen Bildkoordinaten 1:1 in Pixeln; Bruchteile müsste es selbst umrechnen.
+  4. Der Server merkt sich jede Antwort unter der Prüfsumme des Bildes, sodass ein zweites Hochladen desselben Fotos nichts kostet.
+  Mit dem gemalten Regal geprüft (zwei Reihen, zwei Aufrufe à 2,3 s). Ob es die Farben auf Julians Foto richtig macht, steht noch aus.
+
 ## HEIC-Fotos (2026-09-28)
 
 Julian: „it doesnt recognize the photos i am uploading, but the same photo worked online for a collection creation already". **Ursache:** iPhone-Fotos sind HEIC. Chrome — und damit das Browser-Pane — gibt einer `.HEIC`-Datei keinen Typ (`file.type` leer) und kann sie weder mit `createImageBitmap` noch mit `<img>` lesen; Safari kann beides. Die Seite verwarf eine Datei ohne `image/`-Typ **stillschweigend**, darum geschah nichts. Online lief dasselbe Foto vermutlich in Safari oder auf dem Telefon.

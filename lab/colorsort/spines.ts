@@ -184,3 +184,27 @@ export function refineSpineBox(img: LabImage, box: Box, reach = 0.4): Box {
   if (x1 - x0 < w * 0.5) return box;
   return { ...box, x0, x1 };
 }
+
+/**
+ * Fits a model's box into the shelf row it belongs to. Measured on Julian's
+ * first real photo (2026-09-29, a whole bookcase, 1200 × 1600): the model
+ * placed its boxes well from left to right but badly from top to bottom —
+ * they began halfway down the spines and ran over the board into the next
+ * row, so the colour was read partly from the board and the books below.
+ * The boards themselves `findRowCuts` found cleanly. So the row is the one
+ * the box's top lies in, and the box is cut to that row. A box that would
+ * be left very short is given the lower half of its row, where books stand.
+ */
+export function fitBoxToRows(box: Box, rows: Band[]): Box {
+  if (rows.length < 2) return box;
+  const row = rows.find(r => box.y0 >= r.y0 && box.y0 < r.y1)
+    ?? rows.reduce((best, r) => overlap(r, box) > overlap(best, box) ? r : best, rows[0]);
+  const h = row.y1 - row.y0;
+  let y0 = Math.max(box.y0, row.y0), y1 = Math.min(box.y1, row.y1);
+  if (y1 - y0 < h * 0.15) { y0 = row.y1 - h * 0.5; y1 = row.y1; }
+  return { ...box, y0: Math.round(y0), y1: Math.round(y1) };
+}
+
+function overlap(row: Band, box: Box): number {
+  return Math.max(0, Math.min(row.y1, box.y1) - Math.max(row.y0, box.y0));
+}

@@ -65,3 +65,15 @@ describe('publisher (ROADMAP 5.16)', () => {
     expect(r.books[1]).not.toHaveProperty('publisher');
   });
 });
+
+describe('boxes in pixels (ROADMAP 5.16)', () => {
+  it('turns pixel corners into the fraction box callers already use', () => {
+    const r = parseRecognition(JSON.stringify({ books: [
+      { title: 'Kindred', author: 'Octavia E. Butler', kind: 'spine', box: [200, 400, 260, 1000], confidence: 0.9 },
+      { title: 'Beloved', author: 'Toni Morrison', kind: 'spine', box: [300, 400, 280, 1000], confidence: 0.9 },
+    ] }), { width: 2000, height: 2000 });
+    expect(r.books[0].box).toEqual([0.1, 0.2, 0.03, 0.3]);
+    expect(r.books[1]).not.toHaveProperty('box');
+    expect(r.problems).toEqual(['#2: Ausschnitt unbrauchbar']);
+  });
+});

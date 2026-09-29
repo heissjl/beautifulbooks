@@ -36,6 +36,15 @@ export interface RecognizedBook {
 export interface RecognizeOptions {
   /** Also read the publisher's name or logo text. Off for the website. */
   publisher?: boolean;
+  /**
+   * Ask for boxes in pixels of this image instead of fractions (lab/shelf,
+   * ROADMAP 5.16). Current models give image coordinates 1:1 in pixels; a
+   * fraction is arithmetic the model does in its head, and on the first real
+   * photo (2026-09-29) its fractional boxes came back evenly spaced and off
+   * by half a shelf. `parseRecognition` turns pixels back into fractions, so
+   * callers see the same `box` either way.
+   */
+  pixels?: { width: number; height: number };
 }
 
 export interface Recognition {
@@ -62,7 +71,7 @@ For each book give:
 - title: the title as printed, without series names or "a novel"
 - author: the author as printed; "" if not visible and you are not sure
 - kind: "cover" if the front cover faces the camera, "spine" if only the spine is visible
-- box: [x, y, w, h], the book's outline in the photo as fractions of the picture width and height (0..1), top-left origin
+{BOX}
 - confidence: 0..1, how sure you are of title and author together
 {PUBLISHER}
 Leave out books whose title you cannot read; do not guess titles from colours or shapes.
@@ -71,8 +80,13 @@ Answer with JSON only: {"books": [...]}.`;
 const PUBLISHER_LINE = `- publisher: the publisher's name or imprint as printed on the book (on a spine usually at the foot, often as a logo with a word); "" if none is readable. Do not guess it from the design.
 `;
 
+const FRACTION_BOX = `- box: [x, y, w, h], the book's outline in the photo as fractions of the picture width and height (0..1), top-left origin`;
+
 function promptFor(options: RecognizeOptions): string {
-  return PROMPT.replace('{PUBLISHER}', options.publisher ? PUBLISHER_LINE : '');
+  const box = options.pixels
+    ? `- box: [x0, y0, x1, y1], the book's outline in pixels of this image, which is ${options.pixels.width} × ${options.pixels.height} pixels; top-left origin, x0 < x1, y0 < y1. For a spine: its left and right edge, and its top and its foot where it stands on the shelf`
+    : FRACTION_BOX;
+  return PROMPT.replace('{BOX}', box).replace('{PUBLISHER}', options.publisher ? PUBLISHER_LINE : '');
 }
 
 function schemaFor(options: RecognizeOptions) {
@@ -150,7 +164,15 @@ function parseBox(raw: unknown): RecognizedBook['box'] {
   return [x, y, w, h];
 }
 
-export function parseRecognition(text: string): Recognition {
+/** Pixel corners [x0, y0, x1, y1] to the fraction box [x, y, w, h]; undefined when unusable. */
+function pixelBox(raw: unknown, { width, height }: { width: number; height: number }): unknown {
+  if (!Array.isArray(raw) || raw.length !== 4 || !raw.every(n => typeof n === 'number' && Number.isFinite(n))) return undefined;
+  const [x0, y0, x1, y1] = raw as number[];
+  if (x1 <= x0 || y1 <= y0) return undefined;
+  return [x0 / width, y0 / height, (x1 - x0) / width, (y1 - y0) / height];
+}
+
+export function parseRecognition(text: string, pixels?: { width: number; height: number }): Recognition {
   const problems: string[] = [];
   const value = extractJson(text);
   if (value === undefined) return { books: [], problems: ['Antwort war kein JSON'] };
@@ -170,7 +192,7 @@ export function parseRecognition(text: string): Recognition {
     const author = typeof r.author === 'string' ? r.author.replace(/\s+/g, ' ').trim() : '';
     const kind: BookKind = r.kind === 'cover' ? 'cover' : 'spine';
     if (r.kind !== 'cover' && r.kind !== 'spine') problems.push(`#${i + 1}: kind "${String(r.kind)}" als spine gelesen`);
-    const box = parseBox(r.box);
+    const box = parseBox(pixels ? pixelBox(r.box, pixels) : r.box);
     if (r.box !== undefined && !box) problems.push(`#${i + 1}: Ausschnitt unbrauchbar`);
     const confidence = typeof r.confidence === 'number' && Number.isFinite(r.confidence) ? clamp01(r.confidence) : 0.5;
     const publisher = typeof r.publisher === 'string' ? r.publisher.replace(/\s+/g, ' ').trim() : '';
@@ -217,7 +239,7 @@ export async function recognize(image: Buffer, mediaType: 'image/jpeg' | 'image/
   if (response.stop_reason === 'refusal') throw new Error(`${model} hat das Foto abgelehnt`);
 
   const text = response.content.map(b => (b.type === 'text' ? b.text : '')).join('');
-  const parsed = parseRecognition(text);
+  const parsed = parseRecognition(text, options.pixels);
   if (response.stop_reason === 'max_tokens') parsed.problems.push('Antwort abgeschnitten (max_tokens)');
   return {
     ...parsed,

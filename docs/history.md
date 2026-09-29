@@ -3617,3 +3617,13 @@ Julian: „it doesnt recognize the photos i am uploading, but the same photo wor
 - Gemessen im Browser-Pane (Chrome): eine `.HEIC`-Datei hat einen leeren `file.type`. `createImageBitmap` scheitert mit „The source image could not be decoded“, `<img>` ebenso. Der Prototyp prüfte `file.type.startsWith('image/')` und kehrte ohne Meldung zurück; beim Server kam nie eine Anfrage an.
 - Behoben in `lab/shelf/`: Lesefehler stehen in der Statuszeile. HEIC geht an `POST /api/heic` (heic-decode → JPEG, im Speicher). Ende-zu-Ende geprüft: HEIC → JPEG → `claude-sonnet-5`, 2,2 s.
 - `/create` auf der Website (`components/WallPhoto.tsx`) dekodiert ebenfalls mit `createImageBitmap` und scheitert in Chrome an HEIC. Nicht angefasst.
+
+## 2026-09-29 — Das erste echte Foto im Regal-Prototyp (ROADMAP 5.11/5.16)
+
+Julian: „the picture works now, but the colour detection seems still off"
+
+- Ganzes Regal im Hochformat, auf 1200 × 1600 verkleinert, 38 Rücken. Erkennung 20,1 s, 3224 + 2767 Tokens; 38 Werke, mindestens eines falsch (unsicher markiert, aber gezählt). Open Library 19,7 s, Ausgaben 53,1 s, 10 von 38 Rücken einer Ausgabe zugeordnet. **Verlag bei 0 von 38 gelesen.**
+- **Befund:** Die Kästen des Modells lagen waagrecht ungefähr richtig. Senkrecht begannen sie mitten auf dem Rücken und liefen über das Brett in die nächste Reihe. In der unteren Reihe waren sie gleichmäßig verteilt (alle 0,025 breit, Schritt 0,035) — geschätzt. Die Farben kamen zum Teil vom Brett und von Nachbarreihen.
+- Die Kantenerkennung fand die drei Regalböden sauber (364 ms). Zwischen den Rücken fand sie nur 21 von 38 Linien.
+- **Geändert:** Kästen werden auf ihre Reihe geschnitten (`fitBoxToRows`). Die Seite liest Reihe für Reihe in bis zu 2576 px statt das ganze Regal in 1600 px. Die Kästen kommen in Pixeln (`recognize(…, { pixels })`); die Website-Anfrage bleibt unverändert. Antworten werden per Prüfsumme gemerkt.
+- **Offen:** das Ergebnis mit Julians Foto.
