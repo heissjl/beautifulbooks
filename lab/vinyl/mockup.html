@@ -188,31 +188,38 @@ function hamming(a, b) {
   return d;
 }
 /**
- * Fold pressings whose fronts are the same design, in the book wall's tiers
- * (CLAUDE.md, lib/works.ts): dHash distance ≤ 8 always; ≤ 20 when both share
- * a catalogue number (the record's ISBN); ≤ 16 on the same label within a
- * year (the publisher tier). Photos of sleeves vary more than book scans.
+ * Fold pressings whose fronts are the same design, by single linkage on the
+ * site's dHash. Measured 2026-09-29 on the 57 fronts of Kind of Blue, sorted by
+ * hand into 8 designs: photos of one sleeve lie at distance 18 (median),
+ * different designs from 21, mostly 27+. At ≤ 18 the wall shows 10 tiles and
+ * mixes nothing; at ≤ 20 it shows 9, but elsewhere joins the black UHQR box to
+ * the prism (Dark Side) and two different deluxe photos (folklore). Neither a
+ * contrast gate nor the colour distance helped: sleeves are photographed, and
+ * lighting moves their colour as far as a different design does. Silver and
+ * gold helmets (Random Access Memories) sit at 9 and fold at any setting.
+ * The mock-up bar switches the threshold, so it can be judged by looking.
  */
 function sameSleeve(a, b) {
-  if (!a.hash || !b.hash) return false;
-  const d = hamming(a.hash, b.hash);
-  if (d <= 8) return true;
-  const cat = x => new Set((x.catno || '').split(', ').filter(Boolean).map(c => c.replace(/\W/g, '').toLowerCase()));
-  const ca = cat(a), cb = cat(b);
-  if (d <= 20 && [...ca].some(c => cb.has(c))) return true;
-  return d <= 16 && a.label && a.label === b.label && Math.abs((+a.year || 0) - (+b.year || 0)) <= 1;
+  return !!a.hash && !!b.hash && hamming(a.hash, b.hash) <= state.fold;
 }
 function fold(pressings) {
   const groups = [];
   for (const p of pressings) {
     if (!p.front) continue;
-    const g = groups.find(g => g.members.some(m => sameSleeve(m, p)));
-    if (g) g.members.push(p); else groups.push({ rep: p, members: [p] });
+    const hits = groups.filter(g => g.members.some(m => sameSleeve(m, p)));
+    if (!hits.length) { groups.push({ rep: p, members: [p] }); continue; }
+    // A pressing that matches two stacks joins them: single linkage, not first match.
+    const [first, ...rest] = hits;
+    first.members.push(p);
+    for (const g of rest) { first.members.push(...g.members); groups.splice(groups.indexOf(g), 1); }
   }
-  return groups;
+  // The earliest pressing stands for its stack, and stacks keep the order of their first pressing.
+  for (const g of groups) g.members.sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
+  for (const g of groups) g.rep = g.members[0];
+  return groups.sort((a, b) => (a.rep.date || '9999').localeCompare(b.rep.date || '9999'));
 }
 
-const state = { album: 0, country: 'all', side: 'front', selected: null, view: 'front' };
+const state = { album: 0, country: 'all', side: 'front', selected: null, view: 'front', fold: 18 };
 
 function render() {
   const album = DATA[state.album];
@@ -240,7 +247,7 @@ function render() {
 
   for (const b of document.querySelectorAll('#sides button')) b.setAttribute('aria-pressed', String(b.dataset.side === state.side));
   const hints = {
-    front: 'Reprints with the same sleeve are stacked; the number says how many pressings share it.',
+    front: 'One tile per sleeve design. Later pressings mostly keep the sleeve; the number says how many more share it.',
     back: 'The back of each stacked sleeve, in the same order. A dashed tile: no photo of the back on record.',
     label: 'One label per pressing — the label is what tells pressings with the same sleeve apart.',
   };
@@ -330,10 +337,11 @@ function renderAside(album, allGroups) {
 }
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-country],[data-side],[data-id],[data-view],[data-close],[data-album]');
+  const t = e.target.closest('[data-country],[data-side],[data-id],[data-view],[data-close],[data-album],[data-fold]');
   if (!t) return;
   const album = DATA[state.album];
-  if (t.dataset.album !== undefined) { state.album = +t.dataset.album; state.country = 'all'; state.selected = null; state.view = 'front'; renderMock(); }
+  if (t.dataset.fold) { state.fold = +t.dataset.fold; state.selected = null; renderMock(); }
+  else if (t.dataset.album !== undefined) { state.album = +t.dataset.album; state.country = 'all'; state.selected = null; state.view = 'front'; renderMock(); }
   else if (t.dataset.country !== undefined) state.country = t.dataset.country;
   else if (t.dataset.side) { state.side = t.dataset.side; if (state.selected) state.view = t.dataset.side === 'label' ? 'labelA' : t.dataset.side; }
   else if (t.dataset.view) state.view = t.dataset.view;
@@ -347,12 +355,20 @@ document.addEventListener('click', e => {
 
 function renderMock() {
   const bar = document.getElementById('mock');
-  bar.querySelectorAll('button').forEach(b => b.remove());
+  bar.querySelectorAll('button, .sep').forEach(b => b.remove());
   DATA.forEach((a, i) => {
     const b = document.createElement('button');
     b.dataset.album = i; b.textContent = a.title; b.setAttribute('aria-pressed', String(i === state.album));
     bar.append(b);
   });
+  const sep = document.createElement('span');
+  sep.className = 'sep'; sep.textContent = '· fold at dHash ≤';
+  bar.append(sep);
+  for (const n of [16, 18, 20, 22]) {
+    const b = document.createElement('button');
+    b.dataset.fold = n; b.textContent = String(n); b.setAttribute('aria-pressed', String(n === state.fold));
+    bar.append(b);
+  }
 }
 state.album = Math.max(0, DATA.findIndex(a => a.title === 'Kind of Blue'));
 renderMock();
