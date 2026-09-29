@@ -1,6 +1,6 @@
 # Open-Library-Korrekturen aus dem Befund zu 5.10k, vorbereitet am 2026-09-29
 
-Julian bearbeitet die Datensätze selbst, weil das Bearbeiten bei Open Library ein reCAPTCHA verlangt. Die Checkliste mit Bearbeiten-Links steht auf einer privaten Seite: https://claude.ai/artifact/RU4uLCxKec9BqijaaVt2BT
+Julian bearbeitet die Datensätze selbst, weil das Bearbeiten bei Open Library ein reCAPTCHA verlangt. Die Checkliste mit Bearbeiten-Links steht auf der privaten Seite mit den offenen Fällen, Abschnitt „Open Library: sechs Korrekturen“: https://claude.ai/artifact/S63L2jtsSUtTgWh2PBUgpM
 
 ## A · Suhrkamp BasisBibliothek
 
