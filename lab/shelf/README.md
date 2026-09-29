@@ -36,6 +36,12 @@ Aus dem Hauptordner selbst: `set -a; source .env.local; set +a; npx tsx lab/shel
 
 Nach der Erkennung liest der Browser je Buch die Farbe aus dem Foto — bei Rücken zuvor den Kasten des Modells auf die Trennlinien geschoben — und die Wand lässt sich „wie im Foto", „nach Farben" oder „hell nach dunkel" ordnen; der geteilte Link trägt die gewählte Reihenfolge. Code, Regeln und Messung in [lab/colorsort/README.md](../colorsort/README.md#als-schritt-im-regal-ablauf-labshelf-seit-2026-09-28); der Server bündelt `lab/colorsort/shelfcolors.ts` als `/colors.js`. Im Beispielmodus malt die Seite ein Regal als Foto, damit der Schritt ohne Schlüssel zu sehen ist (Farben erfunden).
 
+## HEIC-Fotos (2026-09-28)
+
+Julian: „it doesnt recognize the photos i am uploading, but the same photo worked online for a collection creation already". **Ursache:** iPhone-Fotos sind HEIC. Chrome — und damit das Browser-Pane — gibt einer `.HEIC`-Datei keinen Typ (`file.type` leer) und kann sie weder mit `createImageBitmap` noch mit `<img>` lesen; Safari kann beides. Die Seite verwarf eine Datei ohne `image/`-Typ **stillschweigend**, darum geschah nichts. Online lief dasselbe Foto vermutlich in Safari oder auf dem Telefon.
+
+**Behoben:** jeder Lesefehler steht jetzt in der Statuszeile. Eine HEIC-Datei, die der Browser nicht lesen kann, geht an `POST /api/heic` des lokalen Servers (`heic-decode`, libheif als WebAssembly, im Speicher → JPEG mit jpeg-js, nichts wird geschrieben) und läuft dann den normalen Weg. Geprüft im Browser-Pane: HEIC → JPEG → `claude-sonnet-5` antwortete in 2,2 s. **Die Website (`/create`, `components/WallPhoto.tsx`) hat dieselbe Lücke in Chrome;** dort wäre es ein eigener Punkt.
+
 ## Die Ausgabe vom Buchrücken (ROADMAP 5.16, seit 2026-09-28)
 
 Julian, 2026-09-28: „der plan ist auch, dass du die seite das entsprechende cover der im foto gezeigten version findet. schwierig vom buchrücken aus, aber lass es uns versuchen".

@@ -13,6 +13,8 @@
  */
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { build } from 'esbuild';
+import decodeHeic from 'heic-decode';
+import jpeg from 'jpeg-js';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { decode, type RgbaImage } from '../../lib/imagehash';
@@ -107,6 +109,23 @@ const server = createServer(async (req, res) => {
     if (url.pathname === '/colors.js') {
       res.writeHead(200, { 'content-type': 'text/javascript; charset=utf-8', 'cache-control': 'no-store' });
       res.end(await colorsScript());
+      return;
+    }
+
+    // iPhone photos are HEIC, which Chrome cannot decode (Safari can): the
+    // page sends such a file here and gets a JPEG back. In memory only, like
+    // the photo in /api/recognize — nothing is written.
+    if (url.pathname === '/api/heic' && req.method === 'POST') {
+      const bytes = await readBytes(req, 40 * 1024 * 1024);
+      let image;
+      try {
+        image = await decodeHeic({ buffer: new Uint8Array(bytes) });
+      } catch (err) {
+        return send(400, { error: `HEIC ließ sich nicht lesen: ${err instanceof Error ? err.message : String(err)}` });
+      }
+      const out = jpeg.encode({ data: Buffer.from(image.data.buffer, image.data.byteOffset, image.data.byteLength), width: image.width, height: image.height }, 90);
+      res.writeHead(200, { 'content-type': 'image/jpeg', 'cache-control': 'no-store' });
+      res.end(out.data);
       return;
     }
 

@@ -83,7 +83,7 @@
     <div id="nokey" class="warn" hidden></div>
 
     <label class="drop" id="drop">
-      <input type="file" id="file" accept="image/*" hidden>
+      <input type="file" id="file" accept="image/*,.heic,.heif" hidden>
       <strong>Foto wählen</strong> oder hierher ziehen
       <div class="note">Wird im Browser auf 1600 px verkleinert, bevor es den Rechner verlässt.</div>
     </label>
@@ -202,9 +202,32 @@ async function shrink(file) {
   return new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.9));
 }
 
+const isHeic = file => /image\/hei[cf]/i.test(file.type) || /\.hei[cf]$/i.test(file.name);
+
+/** The photo as something this browser can draw: HEIC goes through the local server first. */
+async function readable(file) {
+  try {
+    await createImageBitmap(file).then(b => b.close());
+    return file;
+  } catch (err) {
+    if (!isHeic(file)) throw new Error(`Dieser Browser kann die Datei „${file.name}“ nicht als Bild lesen (${err.message}).`);
+  }
+  $('progress').textContent = 'HEIC-Foto — wird auf diesem Rechner in JPEG umgewandelt …';
+  const res = await fetch('/api/heic', { method: 'POST', body: file });
+  if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || `HEIC-Umwandlung: HTTP ${res.status}`);
+  return res.blob();
+}
+
 async function usePhoto(file) {
-  if (!file || !file.type.startsWith('image/')) return;
-  const blob = await shrink(file);
+  if (!file) return;
+  let blob;
+  try {
+    blob = await shrink(await readable(file));
+  } catch (err) {
+    // Never silent: a photo that could not be read must say so (CLAUDE.md).
+    $('progress').textContent = `Fehler: ${err.message}`;
+    return;
+  }
   sampleBoxes = null;
   $('photoImg').src = URL.createObjectURL(blob);
   $('photo').hidden = false;

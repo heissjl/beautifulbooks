@@ -3609,3 +3609,11 @@ Julian: „der plan ist auch, dass du die seite das entsprechende cover der im f
 - **Auswahl** (`lab/shelf/edition.ts`, `Matcher.spineEdition`): Kandidaten sind die Cover von Seite 0 des Werks mit demselben Verlag, ohne Verlagstreffer die ersten 16. Gereiht wird nach dem OKLab-Abstand der Rückenfarbe zur nächsten Hauptfarbe des Covers. Gewählt wird bei Verlagstreffer ab Abstand ≤ 0,10; ohne Verlag nur, wenn das Cover außerdem das zweitbeste um ≥ 0,03 schlägt. Die Kacheln zeigen die Gründe, „anderes Cover" die Reihung.
 - **Gestellte Messung:** Streifen aus der Mitte echter Cover als „Rücken", drei Werke. Mit Verlag 22 von 23 richtig. Nur mit Farbe 7 von 17 gewählt, alle richtig; das richtige stand in 13 von 17 Fällen auf Platz 1. Kalt 8,8 s für sechs Rücken.
 - **Offen:** echte Rücken, deren Farbe von der Vorderseite abweicht, und ob Sonnet den Verlag lesen kann — dafür braucht es Julians Fotos. Außerdem sieht der Vergleich nur Seite 0 (Gatsby: 7 von 379 Covern).
+
+## 2026-09-28 — HEIC-Fotos im Regal-Prototyp (ROADMAP 5.11/5.16)
+
+Julian: „it doesnt recognize the photos i am uploading, but the same photo worked online for a collection creation already"
+
+- Gemessen im Browser-Pane (Chrome): eine `.HEIC`-Datei hat einen leeren `file.type`. `createImageBitmap` scheitert mit „The source image could not be decoded“, `<img>` ebenso. Der Prototyp prüfte `file.type.startsWith('image/')` und kehrte ohne Meldung zurück; beim Server kam nie eine Anfrage an.
+- Behoben in `lab/shelf/`: Lesefehler stehen in der Statuszeile. HEIC geht an `POST /api/heic` (heic-decode → JPEG, im Speicher). Ende-zu-Ende geprüft: HEIC → JPEG → `claude-sonnet-5`, 2,2 s.
+- `/create` auf der Website (`components/WallPhoto.tsx`) dekodiert ebenfalls mit `createImageBitmap` und scheitert in Chrome an HEIC. Nicht angefasst.
