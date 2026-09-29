@@ -3699,3 +3699,43 @@ Gebaut in [lab/xanh-spacing](../lab/xanh-spacing/README.md) (`respace.py`, fontT
 
 **Gemessen** am Dev-Server: bei 390 × 844 kein seitliches Scrollen; H1 der Startseite 79 px, *Frankenstein* 76 px (zwei Zeilen), „Start with a classic" 32 px, Wortmarke eine Zeile; bei 1280 × 800 *Frankenstein* 101 px. Das kursive f war bei Überhang 130 noch 544 Einheiten breit und ließ „Beauti ful" auseinanderfallen, sichtbar im Namen oben links; nebeneinander gerendert schloss 180 die Lücke (f 444 breit), 230 war zu eng. **Julian wählte 180**, eingebaut am selben Tag.
 
+
+## 2026-09-29 · Schallplatten statt Bücher: erste Messung (ROADMAP 5.16)
+
+Julian: „lab idee: exakt das gleiche aber für vinyl alben. zu bedenken: vorder und rückseite und vielleicht farbe oder print auf vinylplatte selbst". Gemessen mit [`lab/vinyl/measure.ts`](../lab/vinyl/measure.ts) an acht Alben aus sechs Jahrzehnten: MusicBrainz (Release-Gruppe = Werk, Release = Pressung) und das Cover Art Archive (Bilder mit Typ); für bis zu 40 Vinyl-Pressungen mit Bild je Album die Bildtypen abgefragt, ältere zuerst.
+
+| Album | Releases | Vinyl | mit Bild | Front | Back | CAA gefragt | mit `Medium` | Farbe in der Disambiguierung |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| Fleetwood Mac — Rumours | 81 | 24 | 20 | 19 | 11 | 20 | 13 | — |
+| Pink Floyd — The Dark Side of the Moon | 151 | 33 | 26 | 23 | 20 | 26 (1 fehlgeschlagen) | 22 | — |
+| Miles Davis — Kind of Blue | 136 | 63 | 57 | 57 | 52 | 40 (1 fehlgeschlagen) | 38 | 1 |
+| Kraftwerk — Autobahn | 30 | 10 | 7 | 7 | 6 | 7 | 5 | — |
+| Nirvana — Nevermind | 98 | 21 | 16 | 16 | 9 | 16 | 10 | 1 |
+| Radiohead — OK Computer | 39 | 5 | 5 | 5 | 5 | 5 | 3 | — |
+| Daft Punk — Random Access Memories | 23 | 4 | 4 | 4 | 3 | 4 | 4 | — |
+| Taylor Swift — folklore | 87 | 21 | 8 | 7 | 7 | 8 | 8 | 2 (gold, red) |
+| **Summe** | 645 | 181 | 143 | 138 | 113 | 126 | 103 | 4 |
+
+Bildtypen über die 126 gefragten Pressungen: Medium 265, Front 159, Booklet 147, Back 118, Other 90, Sticker 44, Liner 42, Poster 38, ohne Typ 36, Spine 8, Panel 8, Matrix/Runout 7, Obi 7, Tray 4, Raw/Unedited 2.
+
+- **Vorder- und Rückseite sind getrennt und benannt.** 138 von 181 Vinyl-Pressungen haben eine Vorderseite, 113 eine Rückseite. Eine Wand der Vorderseiten und eine zweite Ansicht der Rückseiten sind damit ohne Raten möglich.
+- **Dünn.** 4 bis 57 Pressungen mit Vorderseite je Album; *Rumours* hat 19, bei Open Library hat *Gatsby* 379 Cover. Eine Wand pro Album wäre bei den meisten eine Reihe, keine Wand.
+- **`Medium` ist das Etikett.** Zwölf zufällige `Medium`-Bilder angesehen: elf zeigen das Mittenetikett (Columbia „360 Sound", CBS Frankreich und England, Harvest, das Dreieck von *Dark Side*, Geffen), eins eine CD aus einer *Rumours*-Box. Keins zeigt die Farbe der Platte. Die Etiketten sind für sich eine sehenswerte Wand.
+- **Die Farbe der Platte steht nur als Text,** bei MusicBrainz in vier von 181 Disambiguierungen.
+
+Zum Vergleich Discogs ([`lab/vinyl/discogs.ts`](../lab/vinyl/discogs.ts)): der Master jedes Albums aus den URL-Verknüpfungen der Release-Gruppe bei MusicBrainz, alle Versionen über `/masters/<id>/versions` (ohne Token), dazu je Album bis zu 20 Vinyl-Versionen, gleichmäßig über die Jahre verteilt, einzeln abgefragt (`/releases/<id>`), um den Freitext des Formats zu lesen. Discogs drosselte stark; der Lauf brauchte rund zwei Stunden, sieben Einzelabfragen schlugen fehl.
+
+| Album | Versionen | davon Vinyl | Vinyl mit Vorschaubild | Picture Disc | Stichprobe | Farbwort im Freitext | Beispiele |
+|---|---:|---:|---:|---:|---:|---:|---|
+| Fleetwood Mac — Rumours | 819 | 492 | 487 | 3 | 20 | 2 | „Cream", „Green WB Labels" |
+| Pink Floyd — The Dark Side of the Moon | 1542 | 651 | 646 | 13 | 20 | 4 | „White", „Yellow Cover", „Blue Marble" |
+| Miles Davis — Kind of Blue | 624 | 355 | 354 | 3 | 20 | 3 | „Blue, 180gm", „Clear" |
+| Kraftwerk — Autobahn | 267 | 142 | 139 | 4 | 20 | 2 | „Green Obi", „Green Marbled" |
+| Nirvana — Nevermind | 884 | 224 | 222 | 18 | 20 | 13 | „Grey / Multicolor Marbled", „Pink Marbled", „Purple Marbled" |
+| Radiohead — OK Computer | 248 | 42 | 42 | 1 | 17 | 0 | — |
+| Daft Punk — Random Access Memories | 80 | 16 | 16 | 0 | 16 | 1 | „Blue, Visual Test" |
+| Taylor Swift — folklore | 104 | 38 | 36 | 0 | 20 | 15 | „Red "Meet Me Behind The Mall"", „Silver "Running Like Water"" |
+| **Summe** | 4568 | 1960 | 1942 | 42 | 153 | 40 | |
+
+- **Discogs kennt elfmal so viele Vinyl-Pressungen** (1.960 gegen 181), fast alle mit Vorschaubild (150 px, ohne Token); große Bilder und ihre Reihenfolge brauchen einen Token, und die Bilder tragen keinen Seitentyp — ob ein Bild Vorder- oder Rückseite zeigt, müsste die Seite selbst erkennen.
+- **Die Plattenfarbe ist bei Discogs verbreitet, aber Freitext:** 40 von 153 Stichproben nennen ein Farbwort, gehäuft bei jungen Neuauflagen (*folklore* 15 von 20, *Nevermind* 13 von 20), selten bei alten. Mindestens drei davon meinen nicht die Platte, sondern Etikett, Hülle oder Obi („Green WB Labels", „Yellow Cover", „Green Obi"); ein Leser dieser Angabe muss solche Zusätze ausschließen. Eine Farbwand der Pressungen eines Albums ginge aus diesem Text als Farbfeld, nicht als Foto.
