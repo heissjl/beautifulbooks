@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import CoverImage from './CoverImage';
 import IsbnText from './IsbnText';
+import LocalShops from './LocalShops';
 import MarketSwitcher from './MarketSwitcher';
 import { useMarket } from './useMarket';
 import { buyLinksFor, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
@@ -397,14 +398,22 @@ function FindIt({ id, tile, market }: { id: string; tile: Tile; market: Market }
   };
   return (
     <div id={id} className="mb-2 ml-11 mt-3">
-      {plan.note && <p className="mb-2 max-w-xl text-xs text-ink-3">{plan.note}</p>}
-      <div className="flex flex-wrap gap-2">{plan.lead.map(shop)}</div>
-      {plan.rest.length > 0 && (
-        <details className="mt-2">
-          <summary className="cursor-pointer text-xs text-ink-2 hover:text-accent">More places to look</summary>
-          <div className="mt-2 flex flex-wrap gap-2">{plan.rest.map(shop)}</div>
-        </details>
-      )}
+      <div className="grid gap-6 md:grid-cols-2">
+        <div className="min-w-0">
+          {plan.note && <p className="mb-2 max-w-xl text-xs text-ink-3">{plan.note}</p>}
+          <div className="flex flex-wrap gap-2">{plan.lead.map(shop)}</div>
+          {plan.rest.length > 0 && (
+            <details className="mt-2">
+              <summary className="cursor-pointer text-xs text-ink-2 hover:text-accent">More places to look</summary>
+              <div className="mt-2 flex flex-wrap gap-2">{plan.rest.map(shop)}</div>
+            </details>
+          )}
+        </div>
+        {/* Beside the online shops: a local bookshop that can order it (5.12). */}
+        <div className="min-w-0 md:border-l md:border-line md:pl-6">
+          <LocalShops edition={{ isbn13, title: tile.title, author: tile.author }} market={market} beside />
+        </div>
+      </div>
       <p className="mt-2 text-xs text-ink-3">
         <Link href={`/book/${tile.workId}?cover=ol:${tile.coverId}`} className="underline underline-offset-2 hover:text-accent">
           Check on the book&rsquo;s page whether shops show this cover

@@ -57,14 +57,19 @@ function useLocalCountry(market: Market): [LocalCountry, (country: LocalCountry)
  * bookshops. Plain links: no counting redirect (the `/go` route only knows
  * the retailer table), no fetch, no postcode.
  */
-export default function LocalShops({ edition, market }: { edition: LocalShopInput; market: Market }) {
+/**
+ * `beside`: shown next to the online shops of a collection's book (ROADMAP 5.13f;
+ * Julian, 2026-09-28: „hier noch die möglichkeit für buy local rechts neben das
+ * bisherige“) — open from the start and without the rule above it.
+ */
+export default function LocalShops({ edition, market, beside = false }: { edition: LocalShopInput; market: Market; beside?: boolean }) {
   const [country, setCountry] = useLocalCountry(market);
   const selectId = useId();
   const links = localShopLinks(country, edition);
   const anyFinder = links.some(l => l.kind === 'finder');
 
   return (
-    <details className="group mt-4 border-t border-line pt-3">
+    <details className={beside ? 'group' : 'group mt-4 border-t border-line pt-3'} open={beside || undefined}>
       <summary className="cursor-pointer list-none text-sm text-ink-2 transition-colors hover:text-ink">
         <span className="mr-1 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
         {LOCAL_SHOPS_COPY.summary}
