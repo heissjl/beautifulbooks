@@ -54,7 +54,7 @@ export default async function Home({ searchParams }: HomeProps) {
       <SiteHeader />
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <section className={`${isHero ? 'pb-12 pt-16 sm:pt-24' : 'pb-8 pt-8'} transition-[padding]`}>
+        <section className={`${isHero ? 'pb-12 pt-10 sm:pt-24' : 'pb-8 pt-8'} transition-[padding]`}>
           {/*
             The headline and the search field on the left, and from `lg` up
             the promise as a picture beside both (ROADMAP 1.9): seven covers
@@ -79,22 +79,6 @@ export default async function Home({ searchParams }: HomeProps) {
                     Type a title and see the covers it has been printed with, by language and year.
                     Then find the edition you&rsquo;d actually want on your shelf.
                   </p>
-                  {/*
-                    The way into the cover game (ROADMAP 5.8a, SPEC F7): under the promise,
-                    not in the header — it is an invitation, not a part of the search. One
-                    line, so the search field keeps the page.
-                  */}
-                  <p className="mt-5 text-sm">
-                    <Link
-                      href="/versus"
-                      className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
-                    >
-                      Help us find the prettiest cover of all time!
-                      <span aria-hidden="true">&rarr;</span>
-                    </Link>
-                  </p>
-                  {/* The reader's own wall (5.13b): the second invitation, same form, behind its switch. */}
-                  {wallsEnabled() && <WallsInvite className="mt-2">Create your own collection of covers</WallsInvite>}
                 </div>
               )}
               <div className="max-w-3xl">
@@ -104,6 +88,26 @@ export default async function Home({ searchParams }: HomeProps) {
                   language={language}
                   hero={isHero}
                 />
+                {/*
+                  The two invitations, under the field rather than above it
+                  (ROADMAP 6.76): the search is what the page is for, and a
+                  reader who knows the site should reach it without passing two
+                  links first. One line where it fits, two on a phone. The way
+                  into the cover game (5.8a, SPEC F7) and the reader's own
+                  collection (5.13b, behind its switch).
+                */}
+                {isHero && (
+                  <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                    <Link
+                      href="/versus"
+                      className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
+                    >
+                      Help us find the prettiest cover of all time!
+                      <span aria-hidden="true">&rarr;</span>
+                    </Link>
+                    {wallsEnabled() && <WallsInvite>Create your own collection of covers</WallsInvite>}
+                  </div>
+                )}
               </div>
             </div>
             {isHero && (
