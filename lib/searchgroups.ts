@@ -25,6 +25,16 @@ import type { Work } from './model';
  */
 export const OTHER_AUTHOR_SHARE = 10;
 
+/**
+ * …and at least this many editions of its own (Julian, 2026-09-29: „ja, bau
+ * das ein"). A tenth alone failed on small works: Reed's *Mumbo Jumbo* has 23
+ * editions, so 3 were enough, and Wheen's unrelated *How Mumbo-jumbo
+ * Conquered the World* stood beside the novel. 30 is the line the typo
+ * correction already draws for a work worth the name (`WEAK_BEST_EDITIONS`
+ * in `lib/spelling.ts`); Beccaria's 164 and Fénelon's 102 clear it.
+ */
+export const OTHER_AUTHOR_MIN_EDITIONS = 30;
+
 export interface ResultGroups<W> {
   /** The first card, its author's other books, and large books by others. */
   main: W[];
@@ -34,6 +44,41 @@ export interface ResultGroups<W> {
 
 type Grouped = Pick<Work, 'authors' | 'authorKeys' | 'editionCount'>;
 
+/** Surnames this long may differ by this many letters and still name one person. */
+const LOOSE_SURNAME_LENGTH = 6;
+const LOOSE_SURNAME_EDITS = 2;
+
+function editDistance(a: string, b: string): number {
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i];
+    for (let j = 1; j <= b.length; j++) {
+      row[j] = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    }
+    prev = row;
+  }
+  return prev[b.length];
+}
+
+/**
+ * Two name keys (`authorMatchKey`: initial and surname) for one person, allowing
+ * for transliteration. Open Library keeps Dostoevsky under two people with two
+ * keys — "Fiódor Dostoievski" (OL22242A) and "Fyodor Dostoevsky"
+ * (OL16224933A) — and on 2026-09-29 his 19-edition *Crime and Punishment* stood
+ * under "By other authors" because neither the key nor the name matched. A
+ * false "same" only keeps a book on top; a false "other" puts a wrong heading
+ * over it, so the match leans towards same.
+ */
+function sameName(a: string, b: string): boolean {
+  if (a === b) return true;
+  const [ia, ...ra] = a.split(' ');
+  const [ib, ...rb] = b.split(' ');
+  const sa = ra.join(' ');
+  const sb = rb.join(' ');
+  if (!sa || !sb || ia !== ib) return false;
+  return Math.min(sa.length, sb.length) >= LOOSE_SURNAME_LENGTH && editDistance(sa, sb) <= LOOSE_SURNAME_EDITS;
+}
+
 export function groupByAuthor<W extends Grouped>(works: readonly W[]): ResultGroups<W> {
   const [first] = works;
   const author = first?.authors[0];
@@ -41,15 +86,19 @@ export function groupByAuthor<W extends Grouped>(works: readonly W[]): ResultGro
   if (!first || works.length < 2 || !author || author === 'Unknown') return { main: [...works], others: [] };
 
   /*
-    Two identities, as in `derivativeIds`: the name key alone misses a
-    transliteration ("Fyodor Dostoevsky" beside "Fiódor Dostoievski"), the
-    Open Library key alone misses a record that carries none.
+    Two identities, as in `derivativeIds`: the Open Library key survives a
+    different spelling ("Фёдор Достоевский" is OL22242A too), the name
+    survives a record without keys or a person Open Library keeps twice.
   */
-  const ids = new Set([authorMatchKey(author), first.authorKeys?.[0]].filter((id): id is string => !!id));
+  const name = authorMatchKey(author);
+  const key = first.authorKeys?.[0];
   const sameAuthor = (w: W) =>
-    ids.has(authorMatchKey(w.authors[0] ?? '')) || (!!w.authorKeys?.[0] && ids.has(w.authorKeys[0]));
+    (!!key && w.authorKeys?.[0] === key) || (!!w.authors[0] && sameName(name, authorMatchKey(w.authors[0])));
   const lead = first.editionCount ?? 0;
-  const large = (w: W) => (w.editionCount ?? 0) * OTHER_AUTHOR_SHARE >= lead;
+  const large = (w: W) => {
+    const editions = w.editionCount ?? 0;
+    return editions >= OTHER_AUTHOR_MIN_EDITIONS && editions * OTHER_AUTHOR_SHARE >= lead;
+  };
 
   const main: W[] = [];
   const others: W[] = [];

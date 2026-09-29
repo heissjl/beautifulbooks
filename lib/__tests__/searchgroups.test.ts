@@ -35,6 +35,7 @@ describe('groupByAuthor on the acceptance searches', () => {
     const { main, others } = groupByAuthor(search('mumbo-jumbo', 'mumbo jumbo'));
     expect(main[0].authors[0]).toBe('Ishmael Reed');
     expect(others.some(w => w.authors[0] === 'Kathryn Lasky')).toBe(true);
+    expect(main.every(w => w.authors[0] === 'Ishmael Reed')).toBe(true);
   });
 
   it('keeps Orwell above the study guides for 1984', () => {
@@ -51,12 +52,30 @@ describe('groupByAuthor rules', () => {
     expect(main).toHaveLength(2);
   });
 
+  it('matches the same author by name when Open Library keeps him under two keys', () => {
+    // Crime and Punishment, measured 2026-09-29: OL22242A and OL16224933A are both Dostoevsky.
+    const { main } = groupByAuthor([work('Fiódor Dostoievski', 1178, 'OL22242A'), work('Fyodor Dostoevsky', 19, 'OL16224933A')]);
+    expect(main).toHaveLength(2);
+  });
+
+  it('keeps short surnames apart', () => {
+    const { others } = groupByAuthor([work('John Smith', 100), work('Jane Smyth', 1)]);
+    expect(others).toHaveLength(1);
+  });
+
   it('keeps a large book by another author on top', () => {
     const large = work('Cesare Beccaria', 164);
     const small = work('James Forman', 6);
     const { main, others } = groupByAuthor([work('Fiódor Dostoievski', 1178), large, small]);
     expect(main).toContain(large);
     expect(others).toEqual([small]);
+  });
+
+  it('puts a small book by another author below, even beside a small first card', () => {
+    // Mumbo Jumbo, measured 2026-09-29: 3 editions against Reed's 23 is more than a tenth.
+    const wheen = work('Francis Wheen', 3);
+    const { others } = groupByAuthor([work('Ishmael Reed', 23), wheen]);
+    expect(others).toEqual([wheen]);
   });
 
   it('does not group without an author to anchor on, or with a single card', () => {
