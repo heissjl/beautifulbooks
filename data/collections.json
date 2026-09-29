@@ -31158,6 +31158,698 @@
           "coverIsbn": "3423018852"
         }
       ]
+    },
+    {
+      "slug": "haffmans-covers-by-nikolaus-heidelbach",
+      "title": "Haffmans — covers by Nikolaus Heidelbach",
+      "kind": "series",
+      "intro": "From the late 1980s the Zurich publisher Haffmans dressed its crime novels and much of its fiction in covers by Nikolaus Heidelbach: one strange, exactly painted object on black — a lipstick with a nail through it, a cigar, a swan with a red hood in its beak. These are the covers Sammlung Keller shows; Keller gives no titles, so they were read from the covers themselves.",
+      "published": false,
+      "publishers": [
+        "Haffmans",
+        "Heyne"
+      ],
+      "works": [
+        {
+          "id": "OL4564716W",
+          "title": "Vom Äussersten",
+          "author": "W. E. Richartz",
+          "coverId": "ol:15259853",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251000838",
+          "coverIsbn": "9783251000838"
+        },
+        {
+          "id": "OL4651916W",
+          "title": "Duffy",
+          "author": "Dan Kavanagh",
+          "coverId": "ol:15259852",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010073",
+          "coverIsbn": "9783251010073"
+        },
+        {
+          "id": "OL4337103W",
+          "title": "Löwe in Aspik",
+          "author": "Gerhard Mensching",
+          "coverId": "ol:15259851",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010080",
+          "coverIsbn": "9783251010080"
+        },
+        {
+          "id": "OL752946W",
+          "title": "Und oben sitzt ein Rabe",
+          "author": "Gisbert Haefs",
+          "coverId": "ol:15259850",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010097",
+          "coverIsbn": "9783251010097"
+        },
+        {
+          "id": "OL752920W",
+          "title": "Das Doppelgrab in der Provence",
+          "author": "Gisbert Haefs",
+          "coverId": "ol:13801475",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010134",
+          "coverIsbn": "9783251010134"
+        },
+        {
+          "id": "OL4337096W",
+          "title": "Der Bauch der schönen Schwarzen",
+          "author": "Gerhard Mensching",
+          "coverId": "ol:15259854",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010158",
+          "coverIsbn": "9783251010158"
+        },
+        {
+          "id": "OL752939W",
+          "title": "Mörder & Marder",
+          "author": "Gisbert Haefs",
+          "coverId": "ol:15259855",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010196",
+          "coverIsbn": "9783251010196"
+        },
+        {
+          "id": "OL11324954W",
+          "title": "Die Kinder der Finsternis",
+          "author": "Wolf von Niebelschütz",
+          "coverId": "ol:15259856",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010332",
+          "coverIsbn": "9783251010332"
+        },
+        {
+          "id": "OL4651915W",
+          "title": "Vor die Hunde gehen",
+          "author": "Dan Kavanagh",
+          "coverId": "ol:13323715",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010363",
+          "coverIsbn": "9783251010363"
+        },
+        {
+          "id": "OL46029151W",
+          "title": "Das Mörderquartett",
+          "author": "",
+          "coverId": "ol:15259857",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010400",
+          "coverIsbn": "9783251010400"
+        },
+        {
+          "id": "OL16923475W",
+          "title": "Das brennende Labyrinth",
+          "author": "Hanns Kneifel",
+          "coverId": "ol:15259858",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010417",
+          "coverIsbn": "9783251010417"
+        },
+        {
+          "id": "OL4780878W",
+          "title": "Einzelgänger, männlich",
+          "author": "Geoffrey Household",
+          "coverId": "ol:15259859",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251010431",
+          "coverIsbn": "9783251010431"
+        },
+        {
+          "id": "OL4337098W",
+          "title": "Die violetten Briefe",
+          "author": "Gerhard Mensching",
+          "coverId": "ol:15259861",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251001385",
+          "coverIsbn": "9783251001385"
+        },
+        {
+          "id": "OL11475887W",
+          "title": "Standbein, Spielbein",
+          "author": "Axel Maria Marquardt",
+          "coverId": "ol:15259860",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251001460",
+          "coverIsbn": "9783251001460"
+        },
+        {
+          "id": "OL2818727W",
+          "title": "Patzer",
+          "author": "Ulrich Horstmann",
+          "coverId": "ol:11693096",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251001651",
+          "coverIsbn": "9783251001651"
+        },
+        {
+          "id": "OL4337101W",
+          "title": "Rotkäppchen und der Schwan",
+          "author": "Gerhard Mensching",
+          "coverId": "ol:15259862",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011063",
+          "coverIsbn": "9783251011063"
+        },
+        {
+          "id": "OL15753988W",
+          "title": "Eine Sache unter Freunden",
+          "author": "Wolfgang Schweiger",
+          "coverId": "ol:15259864",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011179",
+          "coverIsbn": "9783251011179"
+        },
+        {
+          "id": "OL29556W",
+          "title": "Alte Knochen",
+          "author": "Aaron J. Elkins",
+          "coverId": "ol:15259863",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011438",
+          "coverIsbn": "9783251011438"
+        },
+        {
+          "id": "OL15621381W",
+          "title": "Lichter des Grauens",
+          "author": "Hanns Kneifel",
+          "coverId": "ol:10438003",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011452",
+          "coverIsbn": "9783251011452"
+        },
+        {
+          "id": "OL29229936W",
+          "title": "Spiel der Verlierer",
+          "author": "Wolfgang Schweiger",
+          "coverId": "ol:15259865",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011469",
+          "coverIsbn": "9783251011469"
+        },
+        {
+          "id": "OL46029154W",
+          "title": "Störmer im Dreck",
+          "author": "Sven Böttcher",
+          "coverId": "ol:15259866",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011476",
+          "coverIsbn": "9783251011476"
+        },
+        {
+          "id": "OL46029153W",
+          "title": "Ciao Tao",
+          "author": "Hen Hermanns",
+          "coverId": "ol:15259867",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011483",
+          "coverIsbn": "9783251011483"
+        },
+        {
+          "id": "OL46029155W",
+          "title": "Silvi und Mokka",
+          "author": "Conny Lens",
+          "coverId": "ol:15259868",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011490",
+          "coverIsbn": "9783251011490"
+        },
+        {
+          "id": "OL974642W",
+          "title": "Die Reisenden",
+          "author": "Axel Marquardt",
+          "coverId": "ol:15259869",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011582",
+          "coverIsbn": "9783251011582"
+        },
+        {
+          "id": "OL2962332W",
+          "title": "Down in the Valley",
+          "author": "Pierce, David M.",
+          "coverId": "ol:15259870",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011698",
+          "coverIsbn": "9783251011698"
+        },
+        {
+          "id": "OL11383059W",
+          "title": "Abblocken",
+          "author": "Dan Kavanagh",
+          "coverId": "ol:15259871",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011711",
+          "coverIsbn": "9783251011711"
+        },
+        {
+          "id": "OL46029156W",
+          "title": "Abschied in der Nacht",
+          "author": "",
+          "coverId": "ol:15259872",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011728",
+          "coverIsbn": "9783251011728"
+        },
+        {
+          "id": "OL29228346W",
+          "title": "Max perplex",
+          "author": "Hen Hermanns",
+          "coverId": "ol:15259873",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011742",
+          "coverIsbn": "9783251011742"
+        },
+        {
+          "id": "OL974639W",
+          "title": "Der Betriebsdichter und andere Geschichten",
+          "author": "Axel Marquardt",
+          "coverId": "ol:15224242",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251011803",
+          "coverIsbn": "9783251011803"
+        },
+        {
+          "id": "OL2412067W",
+          "title": "Die Prophezeiung",
+          "author": "Peter James",
+          "coverId": "ol:15259874",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251002283",
+          "coverIsbn": "9783251002283"
+        },
+        {
+          "id": "OL3926760W",
+          "title": "Der wandernde Spielzeugladen",
+          "author": "Edmund Crispin",
+          "coverId": "ol:15259876",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300112",
+          "coverIsbn": "9783251300112"
+        },
+        {
+          "id": "OL29547W",
+          "title": "Fluch!",
+          "author": "Aaron J. Elkins",
+          "coverId": "ol:15259875",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300044",
+          "coverIsbn": "9783251300044"
+        },
+        {
+          "id": "OL34942419W",
+          "title": "Interview mit einer Toten",
+          "author": "",
+          "coverId": "ol:15259877",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300181",
+          "coverIsbn": "9783251300181"
+        },
+        {
+          "id": "OL18067W",
+          "title": "Lone Star",
+          "author": "Kinky Friedman",
+          "coverId": "ol:15259878",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300020",
+          "coverIsbn": "9783251300020"
+        },
+        {
+          "id": "OL26285273W",
+          "title": "Maximum Trouble",
+          "author": "Hen Hermanns",
+          "coverId": "ol:15259880",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300068",
+          "coverIsbn": "9783251300068"
+        },
+        {
+          "id": "OL4978841W",
+          "title": "Mickey Finn",
+          "author": "Elliot Paul",
+          "coverId": "ol:15259881",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300051",
+          "coverIsbn": "9783251300051"
+        },
+        {
+          "id": "OL4651914W",
+          "title": "Schieber-City",
+          "author": "Dan Kavanagh",
+          "coverId": "ol:15259883",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300013",
+          "coverIsbn": "9783251300013"
+        },
+        {
+          "id": "OL34942424W",
+          "title": "Wand aus Glas",
+          "author": "Walter Satterthwait",
+          "coverId": "ol:13766419",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300136",
+          "coverIsbn": "9783251300136"
+        },
+        {
+          "id": "OL6158478W",
+          "title": "Alma",
+          "author": "Kinder, Hermann.",
+          "coverId": "ol:15259884",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251002382",
+          "coverIsbn": "9783251002382"
+        },
+        {
+          "id": "OL2962330W",
+          "title": "Angels in Heaven",
+          "author": "Pierce, David M.",
+          "coverId": "ol:15259885",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300495",
+          "coverIsbn": "9783251300495"
+        },
+        {
+          "id": "OL46029168W",
+          "title": "Auf der Kippe",
+          "author": "Bob Leuci",
+          "coverId": "ol:15259882",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300471",
+          "coverIsbn": "9783251300471"
+        },
+        {
+          "id": "OL34942425W",
+          "title": "Captain Butterfly",
+          "author": "",
+          "coverId": "ol:15259886",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300341",
+          "coverIsbn": "9783251300341"
+        },
+        {
+          "id": "OL46029166W",
+          "title": "Das Affen-Buch",
+          "author": "",
+          "coverId": "ol:15259887",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251002467",
+          "coverIsbn": "9783251002467"
+        },
+        {
+          "id": "OL22070563W",
+          "title": "Der Traum der Maschine",
+          "author": "Hanns Kneifel",
+          "coverId": "ol:15259888",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300327",
+          "coverIsbn": "9783251300327"
+        },
+        {
+          "id": "OL46029167W",
+          "title": "Fish im Trüben",
+          "author": "Susan Geason",
+          "coverId": "ol:15259889",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300433",
+          "coverIsbn": "9783251300433"
+        },
+        {
+          "id": "OL46029169W",
+          "title": "Geierfrühling",
+          "author": "Hans Peter Karr",
+          "coverId": "ol:15259890",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300464",
+          "coverIsbn": "9783251300464"
+        },
+        {
+          "id": "OL34942287W",
+          "title": "Hear the Wind Blow",
+          "author": "",
+          "coverId": "ol:15259891",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300358",
+          "coverIsbn": "9783251300358"
+        },
+        {
+          "id": "OL2183044W",
+          "title": "Mit den Toten in Frieden",
+          "author": "Walter Satterthwait",
+          "coverId": "ol:15259892",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300372",
+          "coverIsbn": "9783251300372"
+        },
+        {
+          "id": "OL46029170W",
+          "title": "Nie wieder Tequila",
+          "author": "Kinky Friedman",
+          "coverId": "ol:15259893",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300426",
+          "coverIsbn": "9783251300426"
+        },
+        {
+          "id": "OL3082557W",
+          "title": "Pumaschuh",
+          "author": "Volker Erbes",
+          "coverId": "ol:15259894",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251002535",
+          "coverIsbn": "9783251002535"
+        },
+        {
+          "id": "OL11475942W",
+          "title": "Verliebt in den Tod",
+          "author": "Conny Lens",
+          "coverId": "ol:15259895",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300334",
+          "coverIsbn": "9783251300334"
+        },
+        {
+          "id": "OL20078052W",
+          "title": "Zur Zeit der Perky Pat",
+          "author": "",
+          "coverId": "ol:8750333",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300280",
+          "coverIsbn": "9783251300280"
+        },
+        {
+          "id": "OL3477437W",
+          "title": "Die im Dunkeln",
+          "author": "Ross Thomas",
+          "coverId": "ol:15259897",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300570",
+          "coverIsbn": "9783251300570"
+        },
+        {
+          "id": "OL18068W",
+          "title": "Elvis, Jesus & Coca-Cola",
+          "author": "Kinky Friedman",
+          "coverId": "ol:15259896",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300518",
+          "coverIsbn": "9783251300518"
+        },
+        {
+          "id": "OL46029172W",
+          "title": "Fish vor die Hunde",
+          "author": "Susan Geason",
+          "coverId": "ol:15259898",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300525",
+          "coverIsbn": "9783251300525"
+        },
+        {
+          "id": "OL45858164W",
+          "title": "Rattensommer",
+          "author": "Hans Peter Karr",
+          "coverId": "ol:15259899",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300556",
+          "coverIsbn": "9783251300556"
+        },
+        {
+          "id": "OL33823776W",
+          "title": "Die neue klassische Sau",
+          "author": "",
+          "coverId": "ol:15259900",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251003167",
+          "coverIsbn": "9783251003167"
+        },
+        {
+          "id": "OL828060W",
+          "title": "Zürich bei Nacht",
+          "author": "Roger Graf",
+          "coverId": "ol:2198091",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300631",
+          "coverIsbn": "9783251300631"
+        },
+        {
+          "id": "OL35429655W",
+          "title": "Haffmans Krimi-Jahresband 1997",
+          "author": "",
+          "coverId": "ol:15259901",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783453118539",
+          "coverIsbn": "9783453118539"
+        },
+        {
+          "id": "OL767730W",
+          "title": "Hühnerherbst",
+          "author": "H. P. Karr",
+          "coverId": "ol:2198090",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251300587",
+          "coverIsbn": "9783251300587"
+        },
+        {
+          "id": "OL15971589W",
+          "title": "Der Himmel des Teufels",
+          "author": "Thomas Adcock",
+          "coverId": "ol:15259902",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251301003",
+          "coverIsbn": "9783251301003"
+        },
+        {
+          "id": "OL729912W",
+          "title": "Zeuss",
+          "author": "Alfred Hellmann",
+          "coverId": "ol:2198092",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251301027",
+          "coverIsbn": "9783251301027"
+        },
+        {
+          "id": "OL46029171W",
+          "title": "Kolonie",
+          "author": "Philip K. Dick",
+          "coverId": "ol:15259903",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251202874",
+          "coverIsbn": "9783251202874"
+        },
+        {
+          "id": "OL3955095W",
+          "title": "Buffalo Soldiers",
+          "author": "Robert O'Connor",
+          "coverId": "ol:15259904",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251301201",
+          "coverIsbn": "9783251301201"
+        }
+      ]
+    },
+    {
+      "slug": "kipling-at-haffmans-covers-by-nikolaus-heidelbach",
+      "title": "Kipling at Haffmans — covers by Nikolaus Heidelbach",
+      "kind": "series",
+      "intro": "Haffmans published a German Kipling edition in the late 1980s and 1990s, and Nikolaus Heidelbach drew a black-and-white picture for the panel on each volume: a tiger, a panther, an elephant, three schoolboys. Kim is shown in the Büchergilde Gutenberg edition, which kept the design. These are the volumes Sammlung Keller shows.",
+      "published": false,
+      "publishers": [
+        "Haffmans",
+        "Büchergilde Gutenberg"
+      ],
+      "works": [
+        {
+          "id": "OL19870W",
+          "title": "Das Dschungelbuch",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:15259905",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251200368",
+          "coverIsbn": "9783251200368"
+        },
+        {
+          "id": "OL19926W",
+          "title": "Das zweite Dschungelbuch",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:15259908",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251200481",
+          "coverIsbn": "9783251200481"
+        },
+        {
+          "id": "OL752935W",
+          "title": "Kipling Companion",
+          "author": "Gisbert Haefs",
+          "coverId": "ol:15259906",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251200382",
+          "coverIsbn": "9783251200382"
+        },
+        {
+          "id": "OL15127479W",
+          "title": "Vielerlei Schliche",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:15259907",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251200351",
+          "coverIsbn": "9783251200351"
+        },
+        {
+          "id": "OL19969W",
+          "title": "Stalky & Co.",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:15259909",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251200504",
+          "coverIsbn": "9783251200504"
+        },
+        {
+          "id": "OL20159W",
+          "title": "Die Vielfalt der Geschöpfe",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:15259910",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251200764",
+          "coverIsbn": "9783251200764"
+        },
+        {
+          "id": "OL19899W",
+          "title": "Genau-so-Geschichten",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:15259914",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251200894",
+          "coverIsbn": "9783251200894"
+        },
+        {
+          "id": "OL19908W",
+          "title": "Kim",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:15259911",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783763236435",
+          "coverIsbn": "9783763236435"
+        },
+        {
+          "id": "OL46029173W",
+          "title": "Die Ballade von Ost und West",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:15259912",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251200733",
+          "coverIsbn": "9783251200733"
+        },
+        {
+          "id": "OL19842W",
+          "title": "Kühne Kapitäne",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:15259913",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783251201846",
+          "coverIsbn": "9783251201846"
+        }
+      ]
     }
   ]
 }

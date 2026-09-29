@@ -3615,4 +3615,16 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
 - **Angelegt:** 16 der 33 neuen Haffmans-Ausgaben, OL62603196M–OL62603213M (Zuordnung in `created.json`). Noch kein Umschlag hochgeladen, Kipling noch nicht begonnen.
 - **Ausgelassen, bis die Datensätze berichtigt sind:** Nr. 33 (*Hell's Kitchen*), 39 (*Rosen lieben Sonne*) und 48 (*Feuer und Schwefel*). Die Amazon-Importe OL47305537M, OL47301628M und OL47305534M tragen die Haffmans-ISBN, aber einen falschen Titel.
 - **Ohne ISBN angelegt:** Nr. 22 (*Ciao Tao*). Die ISBN ist nur aus der Nummer errechnet und in keinem Katalog belegt.
-- **Eigener Fehler:** Bei Nr. 35 (*Lone Star*, OL62603210M) steht als Verlag „Heyne" statt „Haffmans"; die ISBN 3-251-… ist Haffmans. Die Korrektur scheiterte: **Open Library verlangt beim Bearbeiten eines Datensatzes seit heute Abend ein reCAPTCHA** („Recaptcha solution was incorrect"). Ein CAPTCHA wird hier nicht umgangen. Diese Korrektur und die drei berichtigungsbedürftigen Datensätze macht Julian von Hand, oder sie warten, bis das CAPTCHA wieder wegfällt.
+- **Eigener Fehler:** Bei Nr. 35 (*Lone Star*, OL62603210M) steht als Verlag „Heyne" statt „Haffmans"; die ISBN 3-251-… ist Haffmans. Die Korrektur scheiterte: **Open Library verlangt beim Bearbeiten eines Datensatzes seit heute Abend ein reCAPTCHA** („Recaptcha solution was incorrect"). Ein CAPTCHA wird hier nicht umgangen. Diese Korrektur und die drei berichtigungsbedürftigen Datensätze macht Julian von Hand, oder sie warten, bis das CAPTCHA wieder wegfällt. Julian 2026-09-28 zur Herder-Wand mit ihrem Layoutwechsel um 1965: „so lassen" (eine Wand).
+
+**Haffmans und Kipling (Heidelbach), fertig am 2026-09-29.**
+- **Angelegt:** alle 33 neuen Haffmans-Ausgaben und 9 neue Kipling-Ausgaben, OL62603241M–OL62603249M. Die Zuordnung steht in `created.json` im jeweiligen Manifest-Ordner.
+- **Hochgeladen:** 55 Haffmans-Umschläge und 10 Kipling-Umschläge. Einmal kam „Internal Error" (*Genau-so-Geschichten*, OL62603246M); der Datensatz hatte danach kein Bild, der zweite Versuch ging durch.
+- **Wand `haffmans-covers-by-nikolaus-heidelbach`:** 64 von 68, online als Entwurf.
+  - Drei Nummern sind ausgelassen (33, 39, 48, siehe oben).
+  - *Lone Star* steht einmal auf der Wand, obwohl es zweimal auf der Liste steht (Nr. 35 Haffmans, Nr. 36 Heyne). Beide Ausgaben gehören zu einem Werk, und eine Wand zeigt jedes Werk einmal.
+  - Zwei Bände sind bei Heyne erschienen und nicht bei Haffmans, in der Reihe „Haffmans Kriminalromane bei Heyne“: Nr. 36 *Lone Star* (fällt ohnehin mit Nr. 35 zusammen) und Nr. 63 *Haffmans Krimi-Jahresband 1997*. Die übrigen Bände mischen mehrere Haffmans-Reihen: Haffmans-Taschenbuch, Haffmans' Entertainer, gebundene Ausgaben, Raben-Krimi 1 und 3 in einem späteren Layout sowie zwei Anthologien (*Das Affen-Buch*, *Die neue klassische Sau*). Ob die Heyne-Bände und die Raben-Krimis bleiben, entscheidet Julian.
+- **Wand `kipling-at-haffmans-covers-by-nikolaus-heidelbach`:** 10 von 10, online als Entwurf.
+  - *Kim* ist die Lizenzausgabe der Büchergilde Gutenberg von 1990 mit demselben Umschlag; so steht es auch im Intro.
+  - Der *Kipling Companion* stammt von Gisbert Haefs, nicht von Kipling.
+  - Der Slug wurde vom Ordnernamen `haffmans-kipling-…` auf den Titel umgestellt, weil der Server die Adresse des Online-Entwurfs aus dem Titel bildet.
