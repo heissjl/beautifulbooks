@@ -1,14 +1,16 @@
-# Plan 6.63–6.73, 5.8c, 0.15: Alltagstauglichkeit nach der Durchsicht von außen
+# Plan 6.63–6.81 (ohne 6.74), 5.8c, 0.15: Alltagstauglichkeit
 
-Stand: 2026-09-28, **offen**. Quelle ist die [UX-Durchsicht von außen](../tests/2026-09-28-ux-review-extern.md) (Chrome, ~455 px, Dunkelmodus, gegen Produktion), die Julian am selben Tag mit „use this report to make a plan to fix ux and bugs“ in die Sitzung gab. Geschrieben für eine Sitzung, die den Code nicht kennt. Nichts davon ist gebaut.
+Stand: 2026-09-29, **offen**. Quelle sind **zwei Durchsichten vom 2026-09-28**, seit dem 2026-09-29 in einer Datei ([Bericht](../tests/2026-09-28-alltagstauglichkeit.md)): **Teil A** aus der Sitzung `interface-usability-improvements` unter `npm run dev` (Befunde A1–A7 und ein zweiter Durchgang in Julians Chrome), **Teil B** eine Durchsicht von außen gegen Produktion (Chrome, ~455 px, Dunkelmodus), die Julian mit „use this report to make a plan to fix ux and bugs“ gab. Julian am 2026-09-29: „füge beide berichte zusammen“. Geschrieben für eine Sitzung, die den Code nicht kennt. Nichts davon ist gebaut.
 
-**Überschneidung:** Am selben Tag schrieb die Sitzung `interface-usability-improvements` einen eigenen Bericht, *docs/tests/2026-09-28-alltagstauglichkeit.md*, beim Schreiben dieses Plans **nicht committet** (nur in ihrem Worktree). Wo beide dasselbe sehen, steht es unten dabei; ihre übrigen Befunde (Kaufen unter der Falte, Navigation in der Kopfzeile, „Unknown“-Reiter, Vertreter ohne ISBN, Markt US in Deutschland) sind hier **nicht** eingeplant — sie gehören in die Punkte, die jene Sitzung anlegt. Vor dem Anlegen weiterer Nummern `npm run worktrees -- --fetch` lesen.
+Die Nummern: 6.63–6.73 kamen am 2026-09-28 aus Teil B, 6.75–6.81 am 2026-09-29 aus Teil A. **6.74 ist nicht dieser Plan** — sie ist auf `claude/adoring-volhard-3f8ef6` vergeben (HEIC beim Foto-Import). Vor dem Anlegen weiterer Nummern `npm run worktrees -- --fetch` lesen.
 
-## 1. Was der Bericht richtig sieht, was schon da ist, was einer Entscheidung widerspricht
+## 1. Was die Berichte richtig sehen, was schon da ist, was einer Entscheidung widerspricht
 
-Jeder Befund wurde am 2026-09-28 gegen den Code gelesen, nicht im Browser nachgestellt (das ist jeweils der erste Schritt unten).
+Jeder Befund wurde gegen den Code gelesen (Teil B am 2026-09-28, Teil A am 2026-09-29), nicht im Browser nachgestellt — das ist jeweils der erste Schritt unten.
 
-| Befund des Berichts | Stand im Code | Folge |
+### 1a. Teil B, die Durchsicht von außen
+
+| Befund (Teil B) | Stand im Code | Folge |
 |---|---|---|
 | §1 Eine Stimme bekommt keine Rückmeldung | Stimmt teilweise: F7.8 hebt das gewählte Cover mit einem Ring und zeigt den letzten Pick mit Link — aber keine Zahl, kein Zähler | **6.66** |
 | §1 Serie, „your votes so far“ | Nicht vorhanden. Server darf nichts über den Spieler speichern (N11, F7.3); der Browser darf | **6.66**, nur localStorage |
@@ -17,7 +19,7 @@ Jeder Befund wurde am 2026-09-28 gegen den Code gelesen, nicht im Browser nachge
 | §3 Suchfeld verschwindet hinter einer Lupe | Stimmt unter 640 px: `components/HeaderSearch.tsx:96–97` zeigt das Feld erst ab `sm`, darunter die Lupe — bewusst aus 6.28, weil Zurück-Link, Wortmarke und Feld bei 390 px nicht in eine Zeile passen. Ein `/`-Kürzel gibt es nicht | **6.68** |
 | §3 Keine Sortierung/Filter der Treffer | Stimmt. Die Sprach-Pillen wurden am 2026-09-27 auf Julians Entscheidung entfernt (6.60) | nicht eingeplant — erst mit 3.1 (was Leser tun) |
 | §3 Vorschlagsliste zeigt einen Treffer | Es gibt keine Autovervollständigung: „Popular“ ist die feste Liste `POPULAR_SEARCHES`, nach dem Getippten gefiltert, höchstens 4 (`components/SearchBar.tsx:86–89`) | **6.69** |
-| §3 Sekundärliteratur neben dem Roman | Bekannt, der Label-Teil von **6.5**; der andere Bericht zählt 10 von 15 Karten bei Gatsby | in 6.69 mitgenommen |
+| §3 Sekundärliteratur neben dem Roman | Bekannt, der Label-Teil von **6.5**; Teil A zählt 10 von 15 Karten bei Gatsby | **6.81** |
 | §4 Gatsby „1920“ | `lib/firstyear.ts` verwirft ein führendes Jahr nur, wenn es mehr als 50 Jahre vor dem nächsten liegt; 1920 → 1925 fällt nicht darunter. Gatsby ist kuratiert (`lib/curated.ts:39`) | **6.16 Schritt 2**, abgekoppelt von 6.18 (§3 unten) |
 | §4 293 / 291 / 162 Cover | 293 → 291 ist die bekannte Faltung beim zweiten Besuch (SPEC §7, 6.12). **162 aus 181 Datensätzen** auf der Jahrzehnte-Seite passt nicht zu 1.180 Datensätzen der Wand bei einer Obergrenze von 600 (`app/book/[id]/decades/page.tsx:60`) — Verdacht auf den abgebrochenen Lauf aus **6.43** | **6.71** |
 | §4 Nicht-Cover im Mosaik der Karte | Stimmt im Code: der Mosaik-Pfad (`?summary=1`) holt keine Signaturen (`app/api/works/[id]/route.ts:115`), `looksLikeScannedPage` greift dort nie | **6.70** |
@@ -37,26 +39,58 @@ Jeder Befund wurde am 2026-09-28 gegen den Code gelesen, nicht im Browser nachge
 | §8 „Save to collection“ auf der Buchseite | **Ist da** (F9.3, „Add to collection“), hinter `WALLS`. Auf den Spielkarten nicht | **6.72** (Spiel) |
 | §8 Tastaturhinweis unter der Falte, Pfeile auf der Wand | Hinweis steht unter dem Paar (`components/Versus.tsx:433`); die Wand kennt Tab und Enter (0.8a), keine Pfeile | **6.72** |
 
+### 1b. Teil A, der Durchklick unter `npm run dev`
+
+| Befund (Teil A) | Stand im Code | Folge |
+|---|---|---|
+| A1 Kalte Suche 19 s, Werkseite 503 nach 20,9 s, die Fehlseite hat nur „Back to search“ | Stimmt: `components/BookDetail.tsx` kennt kein „Try again“, die Suche schon (1.4). Die Wartezeit selbst ist Open Library (CLAUDE.md: 2–7 s Suche, 3–10 s Ausgaben, gelegentlich viel länger) | **6.75**; der Wartesatz gehört zu **6.3** |
+| A1c Sofort-Treffer aus dem Index, während Open Library sucht | Die Liste aus 6.69 trägt genau das | **6.69** |
+| A2 Auf dem Telefon beginnt das Suchfeld der Startseite bei ~540 von 812 px | Über dem Feld stehen Überschrift, Versprechen und zwei Einladungen (`app/page.tsx:80–97`) | **6.76**, Julians Blick |
+| A2 Zuletzt gesucht / angesehen als erste Reihe | `useRecentSearches` gibt es; angesehene Bücher nicht | **5.8c** |
+| A3 Sekundärliteratur, rohe Titel („The great Gatsby“) | Das Ranking schiebt nach hinten (6.1), die Karte kennzeichnet nichts | **6.81** |
+| A4 Zähler und Reiterzahlen laufen beim Nachladen | Ehrlich nach Schritt 15, liest sich aber wie ein Fehler | **6.71** Teil b |
+| A5 Kaufen unter der Falte: Bild, „Add to collection“, Scan-Streifen, Druck-Chips vor der ersten Laden-Reihe | Reihenfolge der Spalte aus 1.2/1.11 plus F9.3; „Add to collection“ kam am 2026-09-28 dazu | **6.77**, Julians Blick |
+| A6 Keine Navigation außer auf der Startseite | `SiteHeader` hat Zurück, Wortmarke, Suchfeld; Sammlungen und Spiel nur über Startseite und Fuß | **6.68** Teil 2 |
+| A7 Reiter „Unknown“ als zweitgrößter | Bewusst nie eingeklappt (Julian 2026-09-11, `components/CoverGallery.tsx:108`); das Wort ist offen | **6.72** (nur das Wort) |
+| A7 Kachel „Audible 2013“ in der Wand | Gefiltert wird nach `physical_format` mit „audio“ und nach Titelwörtern (`lib/sources/openlibrary-parse.ts:120`, `lib/normalize.ts:234`); ein Datensatz mit Verlag Audible und leerem Format kommt durch | **6.80** |
+| A7 „Titles & authors / Author only“ ist unklar | Umschalter aus 6.60 | **6.72** |
+| A7 Die Wand beginnt mit dem neuesten Druck | Open Library ordnet nach Alter des Datensatzes; E17 regelt die Reiter, 6.31 verbietet Nachrücken. Eine Produktfrage, kein Fehler | §4, Frage an Julian |
+| A7 Sammlungen am Telefon erst nach sechs Reihen | Folgt aus der Startseite | **6.76** |
+| 2. Durchgang: leere Kacheln bei warmem Cache, Bilder nach ~16 s | Die Daten sind da, die Bilder nicht — `/img` kalt oder archive.org langsam | **6.73** (messen), Platzhalter dort |
+| 2. Durchgang: der Vertreter von „+22“ ist Perma-Bound 1981 ohne ISBN, die Knöpfe sind nur Titelsuchen | Die Regel aus 6.14 (der Druck des gezeigten Scans führt) ist richtig für die Herkunft, falsch fürs Kaufen | **6.78** |
+| 2. Durchgang: nach Enter liegt das Suchfeld halb unter der Kopfzeile | Nicht im Code nachgesehen | **6.79**, erst nachstellen |
+| 2. Durchgang: Markt US in Deutschland | **Artefakt des Dev-Servers:** `detectMarket` (`lib/market.ts:49`) nimmt zuerst das Land aus `x-vercel-ip-country`, und diesen Kopf gibt es lokal nicht. In Produktion bekommt ein Leser in Deutschland DE. Richtig ist nur: Accept-Language zählt allein mit dem ersten Eintrag | kein Punkt |
+| 2. Durchgang: Dunkelmodus fehlt in features.md | Stimmt | am 2026-09-29 nachgetragen |
+| 2. Durchgang: die Seitenleiste scrollt für sich, „More ↓“ sieht wie ein Knopf der Wand aus | Folgt aus A5 | **6.77** |
+| 2. Durchgang: „George Orwell, George Orwel“ auf einer Karte | Autoren kommen roh aus der Suchantwort | **6.81** |
+
 ## 2. Reihenfolge
 
-Anders als der Bericht vorschlägt: erst was ein Leser als **Fehler** sieht und was sich in einer Stunde schließen lässt, dann die Rückmeldung im Spiel, dann Messungen, zuletzt die Entscheidungen. Jede Zeile ein Commit, der die Nummer nennt.
+Anders als Teil B vorschlägt: erst was ein Leser als **Fehler** sieht und was sich in einer Stunde schließen lässt, dann die Rückmeldung im Spiel, dann Messungen, zuletzt die Entscheidungen. Jede Zeile ein Commit, der die Nummer nennt.
 
 | # | Punkt | Wer | Aufwand | hängt an |
 |---|---|---|---|---|
 | 1 | 6.63 Zwei Klickfehler nachstellen | Claude | 1 h | — |
-| 2 | 6.64 Ein Zurück-Link | Claude | 30 min | — |
-| 3 | 6.66 Das Spiel antwortet (inkl. Textzeile F7.9) | Claude | ½ Tag | — |
-| 4 | 6.71 Jahrzehnte: 181 von 1.180 | Claude | 1–2 h | berührt 6.43 |
-| 5 | 6.70 Keine Nicht-Cover im Mosaik | Claude | ½ Tag | — |
-| 6 | 6.65 Dieselbe Wand, dieselbe Reihenfolge | Claude | ½ Tag | E17, 6.31 |
-| 7 | 6.68 `/` und das Feld am Telefon | Claude, dann Julian | 1 h + Blick | — |
-| 8 | 6.69 Vorschläge aus dem Index | Claude | ½ Tag | berührt 6.5 |
-| 9 | 6.72 Kleinigkeiten | Claude, Julian (ein Wort) | je 30 min | — |
-| 10 | 6.73 Die Wand am Telefon messen | Claude | 2 h | 6.26, 6.5 `priority` |
-| 11 | 6.16 Schritt 2 ohne 6.18 | Claude, Julian prüft Jahre | 1 h + Liste | — |
-| 12 | 6.67 Rangliste und Krone | Claude simuliert, Julian entscheidet | ½ Tag | — |
-| 13 | 5.8c Ein Grund wiederzukommen | Julian entscheidet | — | 5.8b, 6.17 |
-| 14 | 0.15 Anmeldung | Julian entscheidet | — | Tor aus 5.13a |
+| 2 | 6.79 Suchfeld unter der Kopfzeile nachstellen | Claude | 30 min | — |
+| 3 | 6.80 Hörbücher in der Wand | Claude | 1 h | — |
+| 4 | 6.75 Die Werkseite nach einem Ausfall | Claude | 1–2 h | 6.3 |
+| 5 | 6.64 Ein Zurück-Link | Claude | 30 min | — |
+| 6 | 6.71 Zahlen: Jahrzehnte 181 von 1.180, Zähler beim Nachladen | Claude | ½ Tag | berührt 6.43 |
+| 7 | 6.78 Kaufen über den Druck mit ISBN | Claude | 1–2 h | 6.14 |
+| 8 | 6.66 Das Spiel antwortet (inkl. Textzeile F7.9) | Claude | ½ Tag | N11 für Teil 2 |
+| 9 | 6.70 Keine Nicht-Cover im Mosaik | Claude | ½ Tag | — |
+| 10 | 6.81 Die Trefferkarte: Sekundärliteratur, Titel, Autoren | Claude | ½ Tag | 6.5 |
+| 11 | 6.65 Dieselbe Wand, dieselbe Reihenfolge | Claude | ½ Tag | E17, 6.31 |
+| 12 | 6.69 Vorschläge und Sofort-Treffer aus dem Index | Claude | ½ Tag | 6.81 |
+| 13 | 6.72 Kleinigkeiten | Claude, Julian (Wörter) | je 30 min | — |
+| 14 | 6.73 Die Wand am Telefon messen | Claude | 2 h | 6.26, 6.5 `priority` |
+| 15 | 6.77 Die Seitenleiste: Kaufen vor Sammeln | Claude baut, Julian sieht an | ½ Tag + Blick | 1.2, 1.11 |
+| 16 | 6.76 Die Startseite: Suchfeld zuerst | Claude baut, Julian sieht an | 2 h + Blick | — |
+| 17 | 6.68 `/`, das Feld am Telefon, Navigation | Claude, dann Julian | 1 h + Blick | — |
+| 18 | 6.16 Schritt 2 ohne 6.18 | Claude, Julian prüft Jahre | 1 h + Liste | — |
+| 19 | 6.67 Rangliste und Krone | Claude simuliert, Julian entscheidet | ½ Tag | — |
+| 20 | 5.8c Ein Grund wiederzukommen | Julian entscheidet | — | 5.8b, 6.17 |
+| 21 | 0.15 Anmeldung | Julian entscheidet | — | Tor aus 5.13a |
 
 Jede UI-Änderung wird bei 390 × 844 und 1280 × 800 angesehen (N14), gegen `npm run dev`, nie gegen Produktion.
 
@@ -78,7 +112,7 @@ Jede UI-Änderung wird bei 390 × 844 und 1280 × 800 angesehen (N14), gegen `np
 
 **Befund:** das erste Cover der Wand war beim zweiten Laden ein anderes.
 
-**Zuerst messen:** Gatsby zweimal mit warmem Cache laden, die ersten 20 Kachel-IDs je Reiter vergleichen; dasselbe nach Neustart des Dev-Servers (kalte Signaturen). **Verdacht:** `foldDuplicateCovers` wählt den Vertreter einer Gruppe nach dem, was gerade da ist; beim zweiten Besuch liegen mehr Signaturen vor (SPEC §7), eine Gruppe wird größer, ein anderer Vertreter führt, die Kachel wandert. **Zu bauen, wenn bestätigt:** der Vertreter und die Stellung einer gefalteten Gruppe hängen nur von der Gruppe ab (erste Ausgabe in der Reihenfolge der Seite, bei Gleichstand die kleinere Cover-ID), nicht davon, welche Signatur zuerst kam; ein Test in `lib/__tests__/` mit zwei Signatur-Teilmengen derselben Ausgaben. **Nicht** die Ordnung der Wand ändern („Jahr absteigend, dann Verlag“ wie vorgeschlagen): die Reihenfolge der Reiter ist E17, das „nichts rückt nach“ ist 6.31; das wäre eine Produktfrage, und der andere Bericht fragt sie schon (häufigstes oder ältestes zuerst).
+**Zuerst messen:** Gatsby zweimal mit warmem Cache laden, die ersten 20 Kachel-IDs je Reiter vergleichen; dasselbe nach Neustart des Dev-Servers (kalte Signaturen). **Verdacht:** `foldDuplicateCovers` wählt den Vertreter einer Gruppe nach dem, was gerade da ist; beim zweiten Besuch liegen mehr Signaturen vor (SPEC §7), eine Gruppe wird größer, ein anderer Vertreter führt, die Kachel wandert. **Zu bauen, wenn bestätigt:** der Vertreter und die Stellung einer gefalteten Gruppe hängen nur von der Gruppe ab (erste Ausgabe in der Reihenfolge der Seite, bei Gleichstand die kleinere Cover-ID), nicht davon, welche Signatur zuerst kam; ein Test in `lib/__tests__/` mit zwei Signatur-Teilmengen derselben Ausgaben. **Nicht** die Ordnung der Wand ändern („Jahr absteigend, dann Verlag“ wie vorgeschlagen): die Reihenfolge der Reiter ist E17, das „nichts rückt nach“ ist 6.31; das wäre eine Produktfrage, und Teil A (A7) stellt sie: häufigstes oder ältestes Cover zuerst statt des neuesten Datensatzes. Sie steht in §4.
 
 ### 6.66 Das Spiel antwortet auf eine Stimme
 
@@ -99,11 +133,11 @@ Abnahme: zehn Stimmen im Dev-Speicher, die Zahl erscheint erst ab 10 Spielen, lo
 ### 6.68 Suche von jeder Seite: `/` und das Feld am Telefon
 
 1. **`/` fokussiert das Suchfeld** — auf der Startseite das große, sonst das der Kopfzeile (am Telefon öffnet es sich). Nicht, wenn der Fokus in einem Eingabefeld liegt oder eine Taste mit Modifikator gedrückt ist; nicht auf `/versus`, wo Pfeiltasten spielen (dort `/` trotzdem erlauben, es kollidiert nicht). Eine halbe Stunde.
-2. **Das Feld am Telefon:** 6.28 hat unter 640 px bewusst eine Lupe gewählt. Claude baut die Alternative hinter einem Dev-Schalter — auf Buch- und Spielseiten ersetzt das Feld am Telefon die Wortmarke, der Zurück-Link bleibt — und legt Julian beide bei 390 × 844 als Bild vor (lokal, `docs/tests/`). **Julian entscheidet.** Der andere Bericht schlägt für dieselbe Zeile „Collections“ und „Game“ vor; beides zusammen passt bei 390 px nicht, also in einer Entscheidung.
+2. **Das Feld am Telefon:** 6.28 hat unter 640 px bewusst eine Lupe gewählt. Claude baut die Alternative hinter einem Dev-Schalter — auf Buch- und Spielseiten ersetzt das Feld am Telefon die Wortmarke, der Zurück-Link bleibt — und legt Julian beide bei 390 × 844 als Bild vor (lokal, `docs/tests/`). **Julian entscheidet.** Teil A (A6) schlägt für dieselbe Zeile „Collections“ und „Game“ vor, dazu „Your collections“, sobald `bb_visitor` gesetzt ist; Feld und zwei Wörter passen bei 390 px nicht zusammen in eine Zeile, also **eine** Entscheidung mit drei Bildern: Lupe wie heute plus Wörter, Feld ohne Wörter, Wörter in einer zweiten Zeile nur auf der Startseite.
 
 ### 6.69 Vorschläge beim Tippen: aus dem Index, das Werk vor dem Buch über das Werk
 
-Heute gibt es keine Autovervollständigung, nur `POPULAR_SEARCHES`. Eine echte fragt Open Library bei jedem Tastendruck — 2–7 s und das Rate-Limit, also nicht. **Vorschlag:** Vorschläge aus einer kleinen, gebauten Liste im Browser: Titel, Autorin, Werk-ID und ein Cover der **veröffentlichten Werke** (`lib/published.ts`, heute ~500) — dieselben, für die die Seite ohnehin einen Index hat. Nicht `data/cover-index.json` selbst (410 KB+, server only, CLAUDE.md), sondern ein eigenes, von `scripts/build-cover-index.ts` mitgeschriebenes JSON mit nur diesen vier Feldern; Größe messen (Ziel unter 40 KB gzip), sonst per Route. Bis zu 6 Treffer mit Miniatur, ein Klick öffnet die Wand direkt. Treffer außerhalb der Liste findet weiter die Suche. **Sekundärliteratur:** der offene Teil von 6.5 („about this book“ an der Karte) wird hier mitgebaut, damit Vorschlag und Karte dieselbe Unterscheidung treffen; ob Karten ohne Cover eingeklappt werden (der andere Bericht, Befund 3), bleibt dessen Punkt.
+Heute gibt es keine Autovervollständigung, nur `POPULAR_SEARCHES`. Eine echte fragt Open Library bei jedem Tastendruck — 2–7 s und das Rate-Limit, also nicht. **Vorschlag:** Vorschläge aus einer kleinen, gebauten Liste im Browser: Titel, Autorin, Werk-ID und ein Cover der **veröffentlichten Werke** (`lib/published.ts`, heute ~500) — dieselben, für die die Seite ohnehin einen Index hat. Nicht `data/cover-index.json` selbst (410 KB+, server only, CLAUDE.md), sondern ein eigenes, von `scripts/build-cover-index.ts` mitgeschriebenes JSON mit nur diesen vier Feldern; Größe messen (Ziel unter 40 KB gzip), sonst per Route. Bis zu 6 Treffer mit Miniatur, ein Klick öffnet die Wand direkt. Treffer außerhalb der Liste findet weiter die Suche. **Sofort-Treffer** (Teil A, A1c): dieselbe Liste zeigt, während Open Library noch sucht, die passenden veröffentlichten Werke als eine Zeile über der Ladeszene („Right away“); die Karten der Suche ersetzen sie, wenn sie kommen. Für die Klassiker, die die meisten suchen, ist die Suche damit sofort da. **Sekundärliteratur:** Vorschlag und Karte treffen dieselbe Unterscheidung, gebaut in 6.81.
 
 ### 6.70 Keine Nicht-Cover im Mosaik einer Karte
 
@@ -113,20 +147,54 @@ Der Mosaik-Pfad nimmt die ersten vier Cover ohne jede Prüfung. Zwei Stufen, bei
 
 Messen an „the great gatsby“ und „pynchon“: wie viele Mosaik-Kacheln vorher und nachher Nicht-Cover sind (von Auge, Liste in der Historie).
 
-### 6.71 Die Jahrzehnte-Seite zählt 181 von 1.180 Datensätzen
+### 6.71 Zahlen, die einander widersprechen oder beim Hinsehen laufen
 
-**Zuerst messen:** Gatsby-Jahrzehnte lokal kalt rendern, `detail.editions.length` und `truncated` loggen. Drei mögliche Ursachen: (a) der Lauf brach ab (6.43 — dann ist dies derselbe Fehler, sichtbar, und 6.43 wird zuerst gebaut); (b) `assembleEditions` fasst gleiche ISBN zusammen und die 181 sind zusammengeführte Ausgaben (dann stimmt die Zahl, und der Satz muss sagen, was sie zählt); (c) nur Ausgaben mit Jahr zählen. **In jedem Fall** sagt der Satz unter dem Titel, dass nur Ausgaben mit bekanntem Jahr eingehen, und nennt nie eine Zahl, die neben der der Wand wie ein Widerspruch steht. Die Zählung der Wand selbst (293 → 291) bleibt, wie sie ist: sie sagt, was gesehen wurde (Schritt 15); ob sie während des Nachladens ruhiger wird, ist Befund 4 des anderen Berichts.
+**(a) Die Jahrzehnte-Seite zählt 181 von 1.180 Datensätzen** (Teil B §4).
+
+**Zuerst messen:** Gatsby-Jahrzehnte lokal kalt rendern, `detail.editions.length` und `truncated` loggen. Drei mögliche Ursachen: (a) der Lauf brach ab (6.43 — dann ist dies derselbe Fehler, sichtbar, und 6.43 wird zuerst gebaut); (b) `assembleEditions` fasst gleiche ISBN zusammen und die 181 sind zusammengeführte Ausgaben (dann stimmt die Zahl, und der Satz muss sagen, was sie zählt); (c) nur Ausgaben mit Jahr zählen. **In jedem Fall** sagt der Satz unter dem Titel, dass nur Ausgaben mit bekanntem Jahr eingehen, und nennt nie eine Zahl, die neben der der Wand wie ein Widerspruch steht. Die Zählung der Wand selbst (293 → 291) bleibt, wie sie ist: sie sagt, was gesehen wurde (Schritt 15).
+
+**(b) Der Zähler der Wand läuft beim Nachladen** (Teil A, A4: „254 covers · 1,100 of 1,180 editions checked“ → 283 → 287, die Reiter zählen mit). Solange Seiten nachkommen, sagt der Zähler „254 covers so far“ und die Reiter tragen noch keine Zahl; beides steht erst nach der letzten Seite fest da. Keine Zahl wird dabei geschönt, sie wird nur erst als Endzahl gezeigt, wenn sie eine ist (N12). Prüfen, dass die Reiter dabei nicht springen (E17: eingefroren nach dem ersten Auftauchen). Aufwand für (b) ein bis zwei Stunden.
 
 ### 6.72 Kleinigkeiten
 
 - **Fußzeile:** „Impressum“ → Julian wählt: „Imprint“, „Contact & imprint“ oder so lassen. § 5 DDG verlangt, dass die Angaben leicht erkennbar sind; „Impressum“ ist die gebräuchlichste Bezeichnung, der BGH hat auch „Kontakt“ genügen lassen (I ZR 228/03, 2006) — vor dem Ändern in [docs/recht-hobbyseite.md](../recht-hobbyseite.md) nachsehen. Empfehlung: „Imprint & contact“, das ein englischer Leser versteht und das Wort behält.
 - **Jede Ausgabe mit diesem Titel:** prüfen, ob im Hobby-Modus unter den ISBN-Knöpfen immer ein Titel-Suchlink steht; wenn nicht, einen („Any edition: search by title“). Die Wortwahl darf nichts über Bestand behaupten (E12).
 - **Zur Sammlung aus dem Spiel:** unter jedem Cover des Paars neben „Share“ ein „Add to collection“ — nur mit `WALLS` an, und nur nach der Stimme, damit es die Wahl nicht stört. Wiederverwendet `components/AddToWall.tsx`.
+- **„Unknown“ als Reiter** (Teil A, A7): bleibt sichtbar (Julian 2026-09-11), aber das Wort sagt einem Leser nichts. Vorschlag „Language not recorded“ oder „No language on record“ — **Julian wählt**, zusammen mit dem Wort der Fußzeile.
+- **„Author only“** (Teil A, A7): beim Umschalten sagt der Platzhalter, was jetzt gesucht wird („Author’s name, e.g. Ursula K. Le Guin“); Breite gegen das Feld messen (N14).
 - **Pfeile auf der Wand:** ←/→ wandern durch die Kacheln eines Reiters, Enter wählt (öffnet die Seitenleiste). Nur wenn der Fokus auf einer Kachel liegt, damit die Seite weiter scrollt. Fokus-Ringe wie 6.55.
 
 ### 6.73 Die Wand am Telefon: messen, bevor gebaut wird
 
-Der Bericht empfiehlt Seiten zu 36 Kacheln; das widerspricht §1 (die Wand ist der Vergleich) und E17/6.31. Erst messen, was ein Telefon tatsächlich tut: bei 390 × 844 und gedrosseltem Netz (Fast 4G) auf dem Dev-Server die Zeit bis zur ersten vollen Bildschirmseite Kacheln, die Zahl der Bildanfragen vor dem ersten Scrollen, und ob `loading="lazy"` greift (Erinnerung: das Browser-Panel lädt verborgen alles; mit Headless-Chrome und hohem Fenster gegenprüfen). Gehört zu 6.26 und zum `priority`-Teil von 6.5; erst mit den Zahlen entscheiden, ob etwas zu bauen ist (weniger Bilder vor dem Scrollen, kleinere Bildgröße `S` für die hinteren Reihen, ein Platzhalter, der atmet).
+Der Bericht empfiehlt Seiten zu 36 Kacheln; das widerspricht §1 (die Wand ist der Vergleich) und E17/6.31. Erst messen, was ein Telefon tatsächlich tut: bei 390 × 844 und gedrosseltem Netz (Fast 4G) auf dem Dev-Server die Zeit bis zur ersten vollen Bildschirmseite Kacheln, die Zahl der Bildanfragen vor dem ersten Scrollen, und ob `loading="lazy"` greift (Erinnerung: das Browser-Panel lädt verborgen alles; mit Headless-Chrome und hohem Fenster gegenprüfen). Dazu der zweite Durchgang aus Teil A: bei **warmem** Cache trug nach 13 s nur eine von fünf Karten ein Mosaik, die Wand zeigte nach 11 s noch zehn graue Platzhalter. Messen, ob die Zeit in `/img` (kalt beim CDN), bei archive.org oder im Browser liegt (Wasserfall der ersten 20 Bildanfragen). Gehört zu 6.26 und zum `priority`-Teil von 6.5; erst mit den Zahlen entscheiden, ob etwas zu bauen ist (weniger Bilder vor dem Scrollen, kleinere Bildgröße `S` für die hinteren Reihen, ein Platzhalter, der sichtbar atmet — wie die Startwand seit 6.33 —, damit Warten nicht wie „kaputt“ aussieht).
+
+### 6.75 Die Werkseite nach einem Ausfall (Teil A, A1)
+
+Antwortet `/api/works/<id>` mit 503, zeigt die Werkseite „Back to search“ und sonst nichts — für jemanden, der über einen Link oder eine Suchmaschine kommt, eine Sackgasse. Zu bauen: (1) **ein zweiter Versuch im Browser** nach 1,5 s bei 5xx oder Netzfehler, bevor die Seite etwas sagt — dasselbe Muster wie das Mosaik (`components/useCardCovers.ts`, 6.5) und die Suche (1.10); nicht bei 404 oder 429; (2) **„Try again“** auf der Fehlseite wie in der Suche (1.4); (3) der Satz sagt, dass der Katalog nicht antwortete, nicht dass es das Buch nicht gibt (N12, F3.3). Der Wartesatz ab etwa 8 s („Open Library is slow right now …“) ist schon Kandidat 3 von **6.3** und wird dort gebaut, nicht hier. Abnahme: 503 im Dev-Server erzwingen (Umgebungsschalter oder gemocktes Fetch im Test), einmal mit Erfolg im zweiten Versuch, einmal mit zweitem Ausfall. Ein bis zwei Stunden, Claude.
+
+### 6.76 Die Startseite: das Suchfeld zuerst (Teil A, A2 und A7)
+
+Auf dem Telefon beginnt das Feld bei etwa 540 von 812 px; Überschrift, Versprechen und die zwei Einladungen (Spiel, eigene Sammlung) stehen davor, die Sammlungen erst nach sechs Reihen Wand. Vorschlag: Feld direkt unter das Versprechen, die Einladungen als **eine** Zeile darunter; die Sammlungsreihe über die zweite Hälfte der Wand, nicht dahinter. **Julian sieht an**: er hat die Einladungen am 2026-09-28 selbst umformuliert, die Reihenfolge ist Gestaltung. Claude baut hinter einem Dev-Schalter und legt beide Fassungen bei 390 × 844 und 1280 × 800 als Bild vor (lokal, `docs/tests/`), gemessen: Oberkante des Felds in px, Zahl der Sammlungskarten im ersten und zweiten Bildschirm. Zwei Stunden.
+
+### 6.77 Die Seitenleiste: Kaufen vor Sammeln (Teil A, A5 und zweiter Durchgang)
+
+Nach der Wahl eines Covers stehen in Seitenleiste und Telefon-Blatt: Bild, „Image from Open Library · on 29 editions“, „+ Add to collection“, der Streifen „30 scans of this cover“, ein Erklärsatz, rund fünfzehn Druck-Chips mit „More ↓“ — die erste Laden-Reihe liegt bei 800 × 600 unter der Falte, im Blatt ebenso. Das Versprechen der Seite (§1: die Ausgabe finden, die man im Regal haben will) endet damit erst nach zwei Bildschirmen. Vorschlag: **Bild → Urteil und erste Laden-Reihe → „Add to collection“ → Scans und Drucke eingeklappt** („29 printings with this cover ▸“). Die Seitenleiste scrollt für sich; unter dem Bild ein Hinweis, dass darunter mehr kommt, statt „More ↓“ am Rand, das wie ein Knopf der Wand aussieht. **Gegen 1.2 und 1.11 prüfen** (fünf sichtbare Bedienelemente, Zone A/B) und die 0 px aus F9.3 nicht verlieren. Julian sieht an, beide Fassungen bei 390 und 1280 px. Ein halber Tag.
+
+### 6.78 Kaufen über den Druck mit ISBN, nicht über den Scan-Träger (Teil A, zweiter Durchgang)
+
+Beim Cover „+22“ von *Nineteen Eighty-Four* führt „Perma-Bound · 1981“ (Schulbindung, keine ISBN): die Leiste sagt, dass kein Laden danach suchen kann, und bietet nur Titelsuchen — obwohl 22 weitere Drucke mit demselben Bild dahinterstehen, davon welche mit ISBN. Die Regel aus 6.14 (der Druck, der den gezeigten Scan trägt, führt) bleibt für die **Herkunft** richtig; für die **Kauf-Knöpfe** führt der erste Druck mit ISBN in der Reihenfolge des Markts, und der Scan-Träger wird als Quelle des Bilds genannt. Ort: `orderEditionsForMarket` (`lib/linkplan.ts:357`) bzw. die Stelle, die den führenden Druck an die Knöpfe gibt. **Das Urteil (`verifyIsbnCover`) prüft dann die ISBN, deren Knöpfe gezeigt werden** — nie eine andere; ein Test, der das festhält. Ein bis zwei Stunden, Claude.
+
+### 6.79 Nach Enter liegt das Suchfeld halb unter der Kopfzeile (Teil A, zweiter Durchgang)
+
+Nach dem Abschicken scrollt die Ergebnisseite so, dass Unterkante des Felds und „Search“ hinter der festen Kopfzeile liegen; wer korrigieren will, scrollt erst hoch. Erst nachstellen (1512 × 790 und 390 × 844, „nineteen eighty four“ + Enter), dann das Ziel des Scrollens suchen; vermutlich fehlt `scroll-margin-top` in Höhe der Kopfzeile (56 px). Eine halbe Stunde, Claude.
+
+### 6.80 Hörbücher in der Wand (Teil A, A7)
+
+„Audible 2013“ steht als Kachel in der englischen Wand von Gatsby, obwohl Hörbücher ganz wegfallen sollen (F3.4, features.md). Gefiltert wird heute nach `physical_format` mit „audio“ und nach Titelwörtern; ein Datensatz mit Verlag „Audible“ und leerem Format kommt durch. Zu bauen: Verlage, die nur Hörbücher machen (Audible, Brilliance Audio, Tantor, Blackstone Audio, Recorded Books, Naxos AudioBooks — Liste gegen die Fixtures prüfen, nicht raten), als Nicht-Buch; ein Test mit dem Gatsby-Datensatz. Das Cover bleibt, wenn ein anderer Druck es trägt (E8: nie ein Cover löschen, nur den Datensatz). Eine Stunde, Claude.
+
+### 6.81 Die Trefferkarte: Sekundärliteratur, Titel, Autoren (Teil A, A3; Teil B §3)
+
+Bei „the great gatsby“ sind 10 von 15 Karten Sekundärliteratur, drei heißen wörtlich „The Great Gatsby“ (Matterson, Lehan, Parkinson); bei „nineteen eighty four“ 11 von 17. Drei Teile: (1) das Label „about this book“ aus 6.5 an Karten, deren Werk ein Buch über ein anderes Werk der Trefferliste ist (die Erkennung aus 6.1, die heute nur nach hinten rechnet); (2) Karten ohne ein einziges Cover und mit wenigen Ausgaben hinter einen Abschnitt „Also about this book (10)“ — **nicht löschen**, nur einklappen; (3) Titel in der Anzeige nur dann in Title Case, wenn der Katalog durchgehend klein schreibt („The great Gatsby“), und Autoren auf der Karte nach losem Schlüssel entdoppeln (Initiale + Nachname, Abstand ≤ 1: „George Orwell, George Orwel“). Keine Änderung am Ranking. Messen an den fünf Abnahmesuchen aus SPEC §3 F1. Ein halber Tag, Claude.
 
 ### 6.16 Schritt 2 ohne 6.18
 
@@ -136,7 +204,7 @@ Das geprüfte Erstausgabejahr hängt heute an Julians Kuratierung (6.18). Vorsch
 
 Drei Ideen aus dem Bericht, jede mit dem, was sie voraussetzt:
 - **Cover des Tages** oben auf der Startseite: aus den gekrönten und den oberen 10 % des Spiels plus den kuratierten Covern, täglich per ISR gewechselt. Setzt den Export aus 5.8b voraus (`data/cover-ranking.json`, damit die Produktion nie den Speicher fragt) und passt zur Rotation 6.17.
-- **Zuletzt angesehen** auf der Startseite: localStorage, nichts auf dem Server — erweitert N11 wie der Zähler aus 6.66. Billig.
+- **Zuletzt gesucht und zuletzt angesehen** als erste Reihe der Startseite (Teil A, A2), statt der immer gleichen 18 Klassiker: localStorage, nichts auf dem Server; die Suchen liegen schon dort (`useRecentSearches`), angesehene Bücher erweitern N11 wie der Zähler aus 6.66. Billig.
 - **Neu gewählt / neu hinzugekommen**: liest den Speicher bei jedem Besuch der Startseite — **zurückstellen**, bis es Besucher gibt, die das füllen.
 
 ### 0.15 Anmeldung ohne Passwort — Julian entscheidet, nicht jetzt
@@ -150,8 +218,13 @@ Der Bericht will Magic Link oder Passkey statt der ID. Dagegen steht E22 vom sel
 3. Suchfeld statt Lupe am Telefon (6.68), nach zwei Bildern.
 4. Das Wort in der Fußzeile (6.72).
 5. Cover des Tages (5.8c) und Anmeldung (0.15): ob überhaupt.
+6. Das Wort für den Reiter „Unknown“ (6.72).
+7. Reihenfolge von Startseite (6.76) und Seitenleiste (6.77), nach Bildern.
+8. Die erste Reihe der Wand (Teil A, A7): bleibt der neueste Datensatz vorn, oder das häufigste bzw. älteste Cover? Die Faltungszahl („+28“) ist da; 6.31 (nichts rückt nach) gilt so oder so.
 
 ## 5. Was nicht gebaut wird, mit Grund
+
+- **Markt aus Accept-Language stärker gewichten** (Teil A): der Befund „US in Deutschland“ kam vom Dev-Server, dem das Land aus `x-vercel-ip-country` fehlt; in Produktion entscheidet es. Allenfalls, wenn 3.1 zeigt, dass Leser den Markt umstellen.
 
 - **Wand in 36er-Seiten mit „show more“:** widerspricht §1; ersetzt durch die Messung 6.73.
 - **Nächstes Paar vorladen, Elo/Bradley–Terry:** schon da (F7.8, F7.10, F7.5).

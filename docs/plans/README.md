@@ -1,6 +1,6 @@
 # Pläne
 
-Stand: 2026-09-28. Ein Plan ist die ausführliche Fassung eines *offenen* Roadmap-Punkts, geschrieben für eine Sitzung, die den Code nicht kennt; der Langtext eines *erledigten* Punkts liegt dagegen im [Roadmap-Archiv](../roadmap-archive.md), seine Messungen in der [Historie](../history.md), und was er der Seite gebracht hat, als Zeile in [features.md](../features.md). Erledigte Pläne bleiben liegen, weil ihre Messungen und Begründungen zitiert werden; ihr Kopf sagt, dass sie Geschichte sind. Neue Pläne heißen `PLAN-<Roadmap-Nummer>-<slug>.md`.
+Stand: 2026-09-29. Ein Plan ist die ausführliche Fassung eines *offenen* Roadmap-Punkts, geschrieben für eine Sitzung, die den Code nicht kennt; der Langtext eines *erledigten* Punkts liegt dagegen im [Roadmap-Archiv](../roadmap-archive.md), seine Messungen in der [Historie](../history.md), und was er der Seite gebracht hat, als Zeile in [features.md](../features.md). Erledigte Pläne bleiben liegen, weil ihre Messungen und Begründungen zitiert werden; ihr Kopf sagt, dass sie Geschichte sind. Neue Pläne heißen `PLAN-<Roadmap-Nummer>-<slug>.md`.
 
 | Plan | Roadmap | Stand |
 |---|---|---|
@@ -18,7 +18,7 @@ Stand: 2026-09-28. Ein Plan ist die ausführliche Fassung eines *offenen* Roadma
 | [PLAN-5.13-wand-funnel.md](PLAN-5.13-wand-funnel.md) | 5.13–5.15: von der eigenen Wand im Browser über den Kauf aller Cover zur gerahmten Wand | **offen**; Stufe 1 als Lab-Prototyp gebaut 2026-09-28 (`lab/walls/`), Stufen 2 und 3 Plan mit Toren und Julians Entscheidungen |
 | [research-cover-prints.md](research-cover-prints.md) | 5.13g: Drucke von Covern verkaufen — Urheberrecht, Lizenzen, Partnerprogramme, Print-on-Demand | **Recherche fertig** 2026-09-28; Entscheidungen bei Julian |
 | [research-book-dimensions.md](research-book-dimensions.md) | 5.13f: die echten Maße eines Drucks herausfinden, für die Größe des Stücks | **Recherche läuft** (2026-09-28) |
-| [PLAN-6.63-alltag.md](PLAN-6.63-alltag.md) | 6.63–6.73, 5.8c, 0.15 (und 6.16 Schritt 2): Alltagstauglichkeit nach der [Durchsicht von außen](../tests/2026-09-28-ux-review-extern.md) | **offen**, Plan 2026-09-28; jeder Befund gegen den Code gelesen, nichts gebaut; fünf Entscheidungen bei Julian (§4) |
+| [PLAN-6.63-alltag.md](PLAN-6.63-alltag.md) | 6.63–6.73 und 6.75–6.81, 5.8c, 0.15 (und 6.16 Schritt 2): Alltagstauglichkeit nach [zwei Durchsichten](../tests/2026-09-28-alltagstauglichkeit.md) — Durchklick unter `npm run dev` und Durchsicht von außen, seit 2026-09-29 in einem Bericht | **offen**, Plan 2026-09-28/29; jeder Befund gegen den Code gelesen, nichts gebaut; acht Entscheidungen bei Julian (§4) |
 | [PLAN-5-reichweite.md](PLAN-5-reichweite.md) | Phase 5: Seitengattungen, Agenten-Kette, Regeln gegen Slop | offen, wartet auf Phase 2–4; die Reihen-Seiten (5.4b) sind seit 5.10 eine Art Sammlung, siehe Roadmap |
 | [PLAN-4-einnahmen.md](PLAN-4-einnahmen.md) | 4.6–4.8: Einnahmen jenseits der Affiliate-Links | Analyse fertig, Regeln als E19; Bau wartet auf Reichweite |
 | [PLAN-struktur.md](PLAN-struktur.md) | 0.11: Ordnerstruktur, `lab/`, der Clip als erstes Experiment | **entschieden** 2026-09-08 (`fe8f156`): Option A, `lab/` angelegt; der Clip wartet (5.5) |
