@@ -9,6 +9,7 @@ import MarketSwitcher from './MarketSwitcher';
 import { useMarket } from './useMarket';
 import { buyLinksFor, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { coverUrlFor } from '@/lib/coverurl';
+import { agentList, shoppingText } from '@/lib/walls/shoppinglist';
 import { linkPlan } from '@/lib/linkplan';
 import type { Market } from '@/lib/market';
 import type { BuyLink } from '@/lib/model';
@@ -17,6 +18,24 @@ import { DEFAULT_ARTWORK, FRAMES, MAX_COLUMNS, TONES, type FrameColor, type Publ
 
 const WANTED_KEY = (id: string) => `bb.wall.wanted.${id}`;
 const UNITS_KEY = 'bb.units';
+/** Which books of a collection are bought: this browser's own note, never sent anywhere (5.14 stage 1). */
+const BOUGHT_KEY = (id: string) => `bb.wall.bought.${id}`;
+
+function readBought(id: string): Set<string> {
+  try {
+    const raw = JSON.parse(localStorage.getItem(BOUGHT_KEY(id)) ?? '[]');
+    return new Set(Array.isArray(raw) ? raw.filter((x): x is string => typeof x === 'string') : []);
+  } catch {
+    return new Set();
+  }
+}
+function writeBought(id: string, bought: ReadonlySet<string>) {
+  try {
+    localStorage.setItem(BOUGHT_KEY(id), JSON.stringify([...bought]));
+  } catch {
+    // A private window: the ticks last for this visit only.
+  }
+}
 
 function readUnits(): Units | null {
   try {
@@ -69,6 +88,39 @@ export default function WallPlan({
   const [chosenMarket, setMarket] = useMarket();
   const market = chosenMarket ?? detected;
   const [open, setOpen] = useState<string | null>(null);
+  const [bought, setBought] = useState<Set<string>>(() => readBought(wall.id));
+  const [listNote, setListNote] = useState('');
+  const toggleBought = (coverId: string) =>
+    setBought((prev) => {
+      const next = new Set(prev);
+      if (next.has(coverId)) next.delete(coverId);
+      else next.add(coverId);
+      writeBought(wall.id, next);
+      return next;
+    });
+  const pageUrl = () => `${window.location.origin}/c/${wall.id}`;
+  const nextToGet = wall.tiles.find((t) => !bought.has(t.coverId));
+  const openNext = () => {
+    if (!nextToGet) return;
+    const { plan, href } = shopsFor(nextToGet, market);
+    const link = plan.lead[0] ?? plan.rest[0];
+    if (link) window.open(href(link), '_blank', 'noopener');
+    setListNote(link ? `Opened ${link.label} for ${nextToGet.title}. Tick it once you have bought it.` : `No shop to open for ${nextToGet.title}.`);
+  };
+  const copyList = () =>
+    navigator.clipboard.writeText(shoppingText(wall, bought, pageUrl())).then(
+      () => setListNote('List copied.'),
+      () => setListNote('Copying did not work here.'),
+    );
+  const downloadForAgent = () => {
+    const blob = new Blob([JSON.stringify(agentList(wall, bought, pageUrl()), null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `shopping-list-${wall.id}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    setListNote('Saved. Give the file to your own browser agent; it buys in your accounts, after you confirm.');
+  };
   const tone = wall.artwork?.tone ?? DEFAULT_ARTWORK.tone;
   const frameColor = wall.artwork?.frame ?? DEFAULT_ARTWORK.frame;
   const [chosenUnits, setChosenUnits] = useState<Units | null>(readUnits);
@@ -278,9 +330,26 @@ export default function WallPlan({
       </div>
 
       <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
-        <h3 className="text-sm font-medium text-ink">Get the books</h3>
+        <h3 className="text-sm font-medium text-ink">
+          Get the books{' '}
+          <span className="font-normal text-ink-3">
+            · {wall.tiles.filter((t) => bought.has(t.coverId)).length} of {wall.tiles.length} bought
+          </span>
+        </h3>
         <MarketSwitcher market={market} onChange={setMarket} />
       </div>
+      <div className="mt-3 flex flex-wrap gap-2 text-sm">
+        <button type="button" onClick={openNext} disabled={!nextToGet} className="rounded-full bg-ink px-3 py-1 text-bg transition-colors hover:bg-accent disabled:opacity-40">
+          {nextToGet ? 'Open next shop' : 'All bought'}
+        </button>
+        <button type="button" onClick={copyList} className="rounded-full border border-line bg-surface px-3 py-1 text-ink-2 hover:border-accent hover:text-accent">
+          Copy list
+        </button>
+        <button type="button" onClick={downloadForAgent} className="rounded-full border border-line bg-surface px-3 py-1 text-ink-2 hover:border-accent hover:text-accent">
+          Download for your agent
+        </button>
+      </div>
+      {listNote && <p className="mt-2 text-xs text-ink-2" role="status">{listNote}</p>}
       <p className="mt-1 max-w-2xl text-xs text-ink-3">
         An ISBN names a printing, not its picture: the same number has carried other covers. Whether a shop shows this very cover today is checked on the book&rsquo;s page.
       </p>
@@ -291,12 +360,20 @@ export default function WallPlan({
           const isOpen = open === t.coverId;
           return (
             <li key={t.coverId} className="py-2">
-              <div className="flex items-center gap-3">
+              <div className={`flex items-center gap-3 ${bought.has(t.coverId) ? 'opacity-60' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={bought.has(t.coverId)}
+                  onChange={() => toggleBought(t.coverId)}
+                  aria-label={`Bought ${t.title}`}
+                  title="Bought"
+                  className="h-4 w-4 shrink-0 accent-[var(--accent)]"
+                />
                 <span className="relative block h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">
                   <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'S') ?? ''} alt="" sizes="32px" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm text-ink">{t.title}{t.author ? ` — ${t.author}` : ''}</span>
+                  <span className={`block truncate text-sm text-ink ${bought.has(t.coverId) ? 'line-through decoration-ink-3' : ''}`}>{t.title}{t.author ? ` — ${t.author}` : ''}</span>
                   <span className="block truncate text-xs text-ink-3">
                     {p
                       ? [p.publisher, p.year].filter(Boolean).join(' ') || 'Printing on record, without publisher or year'
@@ -367,11 +444,15 @@ export default function WallPlan({
  * page cannot do here is the verdict — whether the publisher's image is this
  * cover — so the last line leads there.
  */
-function FindIt({ id, tile, market }: { id: string; tile: Tile; market: Market }) {
+/**
+ * The shops for one book, as the book page orders them (`linkPlan`), and the
+ * address to open for each: through /go/ when built from the ISBN, so the
+ * click is counted as on the book page. Shared by "Find it" and "Open next shop".
+ */
+function shopsFor(tile: Tile, market: Market) {
   const p = tile.printings.find((x) => x.isbn13) ?? tile.printings[0];
   const isbn13 = p?.isbn13;
   const buyLinks = isbn13 ? buyLinksFor({ isbn13 }, market) : [];
-  // Counted through /go/ only what was built from the ISBN, as on the book page.
   const byIsbn = new Set(buyLinks.map((l) => l.provider));
   const plan = linkPlan({
     edition: { isbn13 },
@@ -382,12 +463,17 @@ function FindIt({ id, tile, market }: { id: string; tile: Tile; market: Market }
     ),
     market,
   });
+  const href = (link: BuyLink) => (isbn13 && byIsbn.has(link.provider) ? trackedBuyHref(link.provider, isbn13, market) : link.url);
+  return { plan, isbn13, href };
+}
+
+function FindIt({ id, tile, market }: { id: string; tile: Tile; market: Market }) {
+  const { plan, isbn13, href } = shopsFor(tile, market);
   const shop = (link: BuyLink) => {
-    const counted = !!isbn13 && byIsbn.has(link.provider);
     return (
       <a
         key={link.provider}
-        href={counted && isbn13 ? trackedBuyHref(link.provider, isbn13, market) : link.url}
+        href={href(link)}
         target="_blank"
         rel="noopener noreferrer"
         className="btn"
