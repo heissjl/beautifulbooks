@@ -3595,3 +3595,16 @@ Die Regel damit: **ein geteiltes Cover** (`/book/<id>/cover/<coverId>`) zeigt di
 
 Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/create/review`) setzen kein eigenes `openGraph` und erben die Karte ohne Änderung. `/contact` und `/privacy` antworteten im Dev-Server mit 500, weil dort die `IMPRINT_*`-Variablen fehlen (bekannt, nicht neu); `/curate`, `/suggest` und eine unbekannte `/c/<id>` mit 404, weil Passwort bzw. Sammlung fehlen — das `og:image` steht trotzdem im Kopf.
 
+## 2026-09-29 — Xanh Mono proportional neu gesetzt (ROADMAP 6.61)
+
+Julian: „kann man das letter spacing von der xanh font noch verbessern? es sieht unregelmäßig aus." Ursache: Xanh Mono ist monospaced, jedes Zeichen 500 Einheiten breit (von 1000). Ein Komma hat 114 Einheiten Tinte, ein „m" 481, ein „W" 545 — die schmalen Zeichen standen in weiten Zellen („Frankenstein ; or ,"). `letter-spacing` verschiebt jeden Abstand gleich und hilft nicht; −0,04 em machte alles dichter, die Zellen blieben. Eine proportionale Xanh gibt es nicht (Foundry-Repository, Google Fonts, Fonts In Use).
+
+Gebaut in [lab/xanh-spacing](../lab/xanh-spacing/README.md) (`respace.py`, fontTools): jedes Zeichen bekommt seine Tintenbreite plus einen festen Rand, die Umrisse bleiben unverändert, die Familie heißt „Xanh Proportional" (OFL erlaubt Änderungen, Xanh Mono reserviert keinen Namen). Der Weg in Runden mit Julian, jede nebeneinander gerendert:
+
+1. Rand am ganzen Umriss: aufrecht besser, kursiv schlechter („b y", „Beauti f ul"), weil der Umriss den Überhang der Schräge enthält.
+2. Kursiv im Band zwischen 10 und 90 % der x-Höhe gemessen: zu eng, das f lief über Nachbarn und Leerzeichen („offiction"). Überhang begrenzt: bei 80 zu weit („of  fiction"), bei 130 gut.
+3. Julian: „warum kursiv nicht auch Rand 22?" — geht mit begrenztem Überhang. „Das s nach dem r ist noch ein Problem": der Arm des r lag im Band und bestimmte seine Breite; Band nur bis 65 % schließt das kursiv. Aufrecht ganz im Band gemessen verloren die Serifen ihren Platz („Modem"), darum dort links der Umriss und rechts das Band mit höchstens 40, 70 oder 100 Einheiten Arm; 40 gemessen am besten, **Julian wählte 55**.
+4. Eingebaut mit Julians Werten (Rand 22, Leerzeichen 230, Band 10–65 %, kursiv Überhang 130, aufrecht Arm 55) aus den vollständigen TTFs von google/fonts: WOFF2 für die Seite (21,6 und 24,6 KB, Latin und Latin Extended, 425 Zeichen), WOFF für die Vorschau-Karten. Der negative Wortabstand der Überschriften (−0,3 em und −0,15 em) und der Buchstabenabstand −0,01 em entfallen; `Display` in `app/og.tsx` setzt keine Wörter mehr einzeln.
+
+**Gemessen** am Dev-Server: bei 390 × 844 kein seitliches Scrollen; H1 der Startseite 79 px, *Frankenstein* 76 px (zwei Zeilen), „Start with a classic" 32 px, Wortmarke eine Zeile; bei 1280 × 800 *Frankenstein* 101 px. **Offen:** das kursive f ist bei Überhang 130 noch 544 Einheiten breit und lässt „Beauti ful" auseinanderfallen, sichtbar im Namen oben links; 180 schließt die Lücke, 230 ist zu eng.
+
