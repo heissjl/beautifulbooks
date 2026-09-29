@@ -3609,3 +3609,10 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
 - Nr. 1859 (Handke) ist ohne ISBN angelegt. Die DNB gibt dem Druck von 1980 die alte ISBN von dtv 783, die bei Open Library zum Druck von 1971 gehört.
 - Die Wand `dtv-phantastica-covers-by-celestino-piatti` zeigt 36 von 36, laut Kontaktbogen alle von Piatti. Online als Entwurf.
 - Zum Bauen dienen jetzt Hilfsskripte in `lab/collections/for-openlibrary/_runs/` (git-ignoriert): `gen.py` erzeugt die Browser-Stapel aus einem Manifest, `build.sh` baut die Wand samt Kontaktbogen, `merge.py` übernimmt sie in die Datei.
+
+**Haffmans (Heidelbach), unterbrochen am 2026-09-28.**
+- **Manifeste fertig:** `lab/collections/for-openlibrary/haffmans-covers-by-nikolaus-heidelbach/` (68 Umschläge) und `haffmans-kipling-…` (10 Umschläge).
+- **Angelegt:** 16 der 33 neuen Haffmans-Ausgaben, OL62603196M–OL62603213M (Zuordnung in `created.json`). Noch kein Umschlag hochgeladen, Kipling noch nicht begonnen.
+- **Ausgelassen, bis die Datensätze berichtigt sind:** Nr. 33 (*Hell's Kitchen*), 39 (*Rosen lieben Sonne*) und 48 (*Feuer und Schwefel*). Die Amazon-Importe OL47305537M, OL47301628M und OL47305534M tragen die Haffmans-ISBN, aber einen falschen Titel.
+- **Ohne ISBN angelegt:** Nr. 22 (*Ciao Tao*). Die ISBN ist nur aus der Nummer errechnet und in keinem Katalog belegt.
+- **Eigener Fehler:** Bei Nr. 35 (*Lone Star*, OL62603210M) steht als Verlag „Heyne" statt „Haffmans"; die ISBN 3-251-… ist Haffmans. Die Korrektur scheiterte: **Open Library verlangt beim Bearbeiten eines Datensatzes seit heute Abend ein reCAPTCHA** („Recaptcha solution was incorrect"). Ein CAPTCHA wird hier nicht umgangen. Diese Korrektur und die drei berichtigungsbedürftigen Datensätze macht Julian von Hand, oder sie warten, bis das CAPTCHA wieder wegfällt.
