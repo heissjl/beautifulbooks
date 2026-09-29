@@ -3694,3 +3694,15 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
 - **„Passt“ (13):** NYRB Children’s Collection, Découvertes Gallimard, Rivages/Noir, Virago Designer Collection, Zytglogge (Werner Maurer), Ravensburger (Grieder und Schindler), insel taschenbuch, Penguin Drop Caps, Penguin Great Ideas, L’Imaginaire, Nebula (Roman), Deutscher Buchpreis, National Book Award.
 - **Nicht gewählt (8):** Penguin Orange Collection, Penguin Modern, Diogenes detebe, Semiotext(e), Little Black Classics, Éditions de Minuit, Melville House, Persephone.
 - Julian wählte also auch typografische Reihen (Drop Caps, Great Ideas, L’Imaginaire) und alle drei Preiswände. Die frühere Notiz, typografische Reihen langweilten ihn, gilt nicht pauschal.
+
+**Keller-Manifeste Zytglogge und Ravensburger, 2026-09-29.** Ein Agent hat sie gebaut; auf Open Library ist noch nichts angelegt oder hochgeladen.
+- **Zytglogge (Werner Maurer), 24 Umschläge**, 1973–78, alle mit Druck in DNB oder swisscovery und mit ISBN.
+  - Aktionen: 20 Uploads auf vorhandene Ausgaben, 1 neue Ausgabe, 3 neue Werke.
+  - Fünf Umschläge sind typografisch (die drei der „Schwarzen Reihe“ und *Kurzwaren 1* und *2*). Sie sind aufgenommen, wie Julian es bei Ex Libris wollte.
+  - Zwei ISBNs lösen bei Open Library auf fremde Datensätze auf (*Papierrosen*, *S chürzere Bei*); die Liste nennt die richtige Ausgabe.
+  - Für Fritz Widmer gibt es bei Open Library keinen Autorendatensatz.
+- **Ravensburger (Grieder 18, Schindler 16), 34 Umschläge**; die Keller-Zählung (17 und 13) war zu knapp.
+  - Aktionen: 1 hat den Umschlag schon, 5 Uploads, 17 neue Ausgaben, 10 neue Werke.
+  - 1 zurückgehalten: *Joseph* im späteren Layout hat dieselbe ISBN wie das frühere.
+  - Unsicher sind das Original von *Pirat Jacko* und die Werkzuordnung von *Affengeplapper*. Bei *Dominik Dachs* und beim *Riesenpfirsich* nennt die DNB andere Illustratoren als Keller; die Liste folgt Keller, weil es um den Umschlag geht.
+- Die Stapel sind erzeugt (4 bzw. 27 Ausgaben anzulegen). Am Abend des 29.9. war die Chrome-Erweiterung nicht verbunden, die Uploads warten darauf.
