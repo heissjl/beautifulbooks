@@ -3573,6 +3573,15 @@ Die Bandliste stammt aus der DNB, ergänzt aus K10plus: `lab/collections/lists/f
 - **Nach der WLAN-Pause fertig:** Wand `steinbeck-at-dtv-covers-by-celestino-piatti` (Liste unter dem alten Namen `dtv-steinbeck-…`) mit 22 von 23, alle Piatti, online als Entwurf. Es fehlt *Die gute alte und die bessere neue Zeit* (10921): Open Library führt die Ausgabe OL40211633M unter *The Pastures of Heaven*, demselben Werk wie *Das Tal des Himmels* (10675), also verdrängt eine Kachel die andere. Das richtige Werk fehlt bei Open Library.
 - **Angehalten auf Julians Bitte** („stop it and wait until i have stable wifi"). Die Manifest-Agenten für phantastica, Haffmans, Herder und Ex Libris sind gestoppt; ihre Zwischenstände liegen in `lab/collections/for-openlibrary/<slug>/`.
 
+**Nachtrag 2026-09-28, Stand Herder Bücherei (Grieder) und dtv phantastica (Piatti).**
+- **Herder Bücherei:** Manifest fertig (`lab/collections/for-openlibrary/herder-bucherei-covers-by-walter-grieder/`). 45 Umschläge; 1 schon da, 6 Uploads, 20 neue Ausgaben auf vorhandenen Werken, 18 neue Werke.
+  - Angelegt sind 36 der 38 neuen Ausgaben: OL62603082M–OL62603120M, Zuordnung in `created.json` im Manifest-Ordner.
+  - Es fehlen Nr. 410 (Skasa-Weiß, *So lacht Germania*) und Nr. 411 (Lepp, *Schöpferischer Lebensstil*).
+  - Noch kein Umschlag hochgeladen.
+- **dtv phantastica:** Manifest fertig (`lab/collections/for-openlibrary/dtv-phantastica-covers-by-celestino-piatti/`). 36 Umschläge (Keller zeigt Nr. 1879 doppelt); 6 Uploads, 21 neue Ausgaben auf Werken, 9 neue Werke. Bei Open Library noch nichts gemacht.
+- **Haffmans und Ex Libris:** Die Manifest-Agenten liefen, als die Sitzung endete; ihre Ordner enthalten nur Zwischenstände.
+
+**Herder Bücherei (Grieder), fertig am 2026-09-28.** 38 neue Ausgaben angelegt (OL62603082M–OL62603151M, Zuordnung in `created.json` im Manifest-Ordner) und 44 Umschläge hochgeladen. Die Wand `herder-bucherei-covers-by-walter-grieder` zeigt 44 von 45, laut Kontaktbogen alle von Grieder. Nr. 292/293 und 294/295 sind zwei Bände desselben Werks (*Wege zur Kunst*), deshalb steht nur einer auf der Wand. Online als Entwurf.
 ## 2026-09-28 — Vorschaubilder in den neuen Schriften, eine Karte für die ganze Seite (ROADMAP 6.61)
 
 - Werk- und Cover-Karte in Xanh Mono und Jost (`app/og.tsx`, WOFF in `assets/og/`). Lokal gerendert: *Frankenstein* als Werk-Karte (1,8 s kalt) und als Cover-Karte.
@@ -3595,3 +3604,36 @@ Die Regel damit: **ein geteiltes Cover** (`/book/<id>/cover/<coverId>`) zeigt di
 
 Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/create/review`) setzen kein eigenes `openGraph` und erben die Karte ohne Änderung. `/contact` und `/privacy` antworteten im Dev-Server mit 500, weil dort die `IMPRINT_*`-Variablen fehlen (bekannt, nicht neu); `/curate`, `/suggest` und eine unbekannte `/c/<id>` mit 404, weil Passwort bzw. Sammlung fehlen — das `og:image` steht trotzdem im Kopf.
 
+
+**dtv phantastica (Piatti), fertig am 2026-09-28.** 30 neue Ausgaben angelegt, OL62603158M–OL62603190M (Zuordnung in `created.json` im Manifest-Ordner), und 36 Umschläge hochgeladen.
+- Nr. 1859 (Handke) ist ohne ISBN angelegt. Die DNB gibt dem Druck von 1980 die alte ISBN von dtv 783, die bei Open Library zum Druck von 1971 gehört.
+- Die Wand `dtv-phantastica-covers-by-celestino-piatti` zeigt 36 von 36, laut Kontaktbogen alle von Piatti. Online als Entwurf.
+- Zum Bauen dienen jetzt Hilfsskripte in `lab/collections/for-openlibrary/_runs/` (git-ignoriert): `gen.py` erzeugt die Browser-Stapel aus einem Manifest, `build.sh` baut die Wand samt Kontaktbogen, `merge.py` übernimmt sie in die Datei.
+
+**Haffmans (Heidelbach), unterbrochen am 2026-09-28.**
+- **Manifeste fertig:** `lab/collections/for-openlibrary/haffmans-covers-by-nikolaus-heidelbach/` (68 Umschläge) und `haffmans-kipling-…` (10 Umschläge).
+- **Angelegt:** 16 der 33 neuen Haffmans-Ausgaben, OL62603196M–OL62603213M (Zuordnung in `created.json`). Noch kein Umschlag hochgeladen, Kipling noch nicht begonnen.
+- **Ausgelassen, bis die Datensätze berichtigt sind:** Nr. 33 (*Hell's Kitchen*), 39 (*Rosen lieben Sonne*) und 48 (*Feuer und Schwefel*). Die Amazon-Importe OL47305537M, OL47301628M und OL47305534M tragen die Haffmans-ISBN, aber einen falschen Titel.
+- **Ohne ISBN angelegt:** Nr. 22 (*Ciao Tao*). Die ISBN ist nur aus der Nummer errechnet und in keinem Katalog belegt.
+- **Eigener Fehler:** Bei Nr. 35 (*Lone Star*, OL62603210M) steht als Verlag „Heyne" statt „Haffmans"; die ISBN 3-251-… ist Haffmans. Die Korrektur scheiterte: **Open Library verlangt beim Bearbeiten eines Datensatzes seit heute Abend ein reCAPTCHA** („Recaptcha solution was incorrect"). Ein CAPTCHA wird hier nicht umgangen. Diese Korrektur und die drei berichtigungsbedürftigen Datensätze macht Julian von Hand, oder sie warten, bis das CAPTCHA wieder wegfällt. Julian 2026-09-28 zur Herder-Wand mit ihrem Layoutwechsel um 1965: „so lassen" (eine Wand).
+
+**Haffmans und Kipling (Heidelbach), fertig am 2026-09-29.**
+- **Angelegt:** alle 33 neuen Haffmans-Ausgaben und 9 neue Kipling-Ausgaben, OL62603241M–OL62603249M. Die Zuordnung steht in `created.json` im jeweiligen Manifest-Ordner.
+- **Hochgeladen:** 55 Haffmans-Umschläge und 10 Kipling-Umschläge. Einmal kam „Internal Error" (*Genau-so-Geschichten*, OL62603246M); der Datensatz hatte danach kein Bild, der zweite Versuch ging durch.
+- **Wand `haffmans-covers-by-nikolaus-heidelbach`:** 64 von 68, online als Entwurf.
+  - Drei Nummern sind ausgelassen (33, 39, 48, siehe oben).
+  - *Lone Star* steht einmal auf der Wand, obwohl es zweimal auf der Liste steht (Nr. 35 Haffmans, Nr. 36 Heyne). Beide Ausgaben gehören zu einem Werk, und eine Wand zeigt jedes Werk einmal.
+  - Zwei Bände sind bei Heyne erschienen und nicht bei Haffmans, in der Reihe „Haffmans Kriminalromane bei Heyne“: Nr. 36 *Lone Star* (fällt ohnehin mit Nr. 35 zusammen) und Nr. 63 *Haffmans Krimi-Jahresband 1997*. Die übrigen Bände mischen mehrere Haffmans-Reihen: Haffmans-Taschenbuch, Haffmans' Entertainer, gebundene Ausgaben, Raben-Krimi 1 und 3 in einem späteren Layout sowie zwei Anthologien (*Das Affen-Buch*, *Die neue klassische Sau*). Ob die Heyne-Bände und die Raben-Krimis bleiben, entscheidet Julian.
+- **Wand `kipling-at-haffmans-covers-by-nikolaus-heidelbach`:** 10 von 10, online als Entwurf.
+  - *Kim* ist die Lizenzausgabe der Büchergilde Gutenberg von 1990 mit demselben Umschlag; so steht es auch im Intro.
+  - Der *Kipling Companion* stammt von Gisbert Haefs, nicht von Kipling.
+  - Der Slug wurde vom Ordnernamen `haffmans-kipling-…` auf den Titel umgestellt, weil der Server die Adresse des Online-Entwurfs aus dem Titel bildet.
+
+**Ex Libris (Wyss), fertig am 2026-09-29.**
+- **Angelegt:** 39 neue Ausgaben, OL62603267M–OL62603313M, davon 3 mit neuem Werk (Nr. 4 Wilder-Sammelband, Nr. 53 Bobrowski, Nr. 56 Federspiel). Die Zuordnung steht in `created.json` im Manifest-Ordner. Vorher geprüft: Auf keinem Zielwerk lag schon eine Ausgabe von Ex Libris.
+- **Hochgeladen:** 43 Umschläge, 39 auf die neuen und 4 auf vorhandene Ausgaben (Nr. 7, 32, 35, 55). *Der Kinderfresser* brauchte einen zweiten Versuch.
+- **Ausgelassen:**
+  - 12 typografische Umschläge, auf Julians Vorliebe für bildhafte Reihen hin. Sie sind im Manifest mit `hold: typographic` vermerkt; ob sie dazukommen, entscheidet Julian.
+  - Nr. 57 (*Das Peter-Prinzip*) und Nr. 58 (*Das Schmettern des gallischen Hahns*): Keller nennt kein Jahr, und kein Katalog kennt einen Druck bei Ex Libris.
+- Bei vier Büchern auf der Wand (Nr. 7, 32, 40, 41) nennt der Umschlag Benziger statt Ex Libris; diese Ausgaben stehen unter Benziger. Nr. 28 erschien bei beiden zugleich. Dazu kommen Nr. 35 (Nebelspalter) und Nr. 45 (Huber), deren Ausgaben es schon gab.
+- **Wand `ex-libris-covers-by-hanspeter-wyss`:** 44 von 58, laut Kontaktbogen alle von Wyss und bildhaft. Online als Entwurf.
