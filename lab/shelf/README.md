@@ -48,7 +48,19 @@ Julian lud ein Foto seines ganzen Regals hoch (Hochformat, drei Reihen, Dosen vo
   2. Die Seite **liest Reihe für Reihe**: Sie schneidet das Originalfoto an den gefundenen Böden und schickt jede Reihe einzeln mit bis zu 2576 px / 3,7 MP (die Grenze von `claude-sonnet-5`, statt bisher 1600 px für das ganze Regal).
   3. Das Modell gibt die **Kästen in Pixeln** an (`recognize(…, { pixels })`). Aktuelle Modelle nennen Bildkoordinaten 1:1 in Pixeln; Bruchteile müsste es selbst umrechnen.
   4. Der Server merkt sich jede Antwort unter der Prüfsumme des Bildes, sodass ein zweites Hochladen desselben Fotos nichts kostet.
-  Mit dem gemalten Regal geprüft (zwei Reihen, zwei Aufrufe à 2,3 s). Ob es die Farben auf Julians Foto richtig macht, steht noch aus.
+  Mit dem gemalten Regal geprüft (zwei Reihen, zwei Aufrufe à 2,3 s).
+- **Dasselbe Foto, zweiter Durchgang (2026-09-29, Reihe für Reihe, Pixel-Kästen):**
+
+  | | erster Durchgang | zweiter Durchgang |
+  |---|---|---|
+  | Bücher gelesen | 38 | **64** |
+  | Verlag gelesen | 0 | **25** (Penguin, Riverhead, Vintage, Signet, Scribner …) |
+  | Rücken einer Ausgabe zugeordnet | 10 von 38 | 26 von 63 |
+  | Lesen | 20,1 s, ein Aufruf | 14,3 s, drei Aufrufe parallel |
+  | Tokens | 3224 + 2767 | 12 919 + 4572 |
+
+  Open Library brauchte 40,4 s, die Ausgaben 82,0 s. Die Kästen sitzen jetzt senkrecht auf den Rücken, vom Kopf bis zum Brett; 39 von 64 wurden an Trennlinien oder die Reihe angepasst. Die Farbordnung sieht auf den ersten Blick plausibel aus (Creme und Weiß vorn, Schwarz hinten), ist aber nicht Buch für Buch geprüft.
+  Bei den Werken passten 44 nach Autor und Titel und 17 nur nach Titel; 2 waren „unsicher“. Wie viele davon falsch sind, ist nicht gezählt.
 
 ## HEIC-Fotos (2026-09-28)
 
