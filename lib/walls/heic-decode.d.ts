@@ -1,0 +1,4 @@
+/** Just what lib/walls/heicjpeg.ts uses of heic-decode, which ships no types. */
+declare module 'heic-decode' {
+  export default function decode(input: { buffer: Uint8Array }): Promise<{ width: number; height: number; data: Uint8ClampedArray }>;
+}

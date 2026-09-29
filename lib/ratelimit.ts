@@ -95,6 +95,12 @@ export const RATE_RULES = {
    * not a bill; the switch keeps it off in production until Julian says.
    */
   wallsPhoto: { capacity: 3, refillPerMinute: 1 },
+  /**
+   * An iPhone photo turned into a JPEG for a browser that cannot open HEIC
+   * (6.74). Free, but a few seconds of CPU each; one comes before each photo
+   * read, so it gets the photo's numbers and a bucket of its own.
+   */
+  wallsHeic: { capacity: 3, refillPerMinute: 1 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

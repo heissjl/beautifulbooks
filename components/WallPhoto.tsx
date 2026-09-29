@@ -4,11 +4,9 @@ import { useRef, useState } from 'react';
 import WallProposal, { type Proposal } from './WallProposal';
 import type { Tile } from '@/lib/walls/model';
 import type { PhotoMatch } from '@/lib/walls/photo';
+import { PHOTO_EDGE, looksLikeHeif } from '@/lib/walls/photofile';
 
-/** Long edge the photo is shrunk to before it leaves the phone; the model reads no more (lab/shelf). */
-const PHOTO_EDGE = 1600;
-
-async function shrink(file: File): Promise<Blob> {
+async function shrink(file: Blob): Promise<Blob> {
   const bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
   const scale = Math.min(1, PHOTO_EDGE / Math.max(bitmap.width, bitmap.height));
   const canvas = document.createElement('canvas');
@@ -18,17 +16,40 @@ async function shrink(file: File): Promise<Blob> {
   return new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('The photo could not be prepared.'))), 'image/jpeg', 0.9));
 }
 
+const HEIC_HELP = 'Open this page in Safari, or send the photo as a JPEG (on an iPhone: Settings › Camera › Formats › Most Compatible).';
+
+/**
+ * Chrome cannot open an iPhone photo (HEIC, ROADMAP 6.74): the server turns
+ * it into a JPEG of the size `shrink` would make, in memory, and keeps
+ * nothing. Every way this can fail is said, with what to do instead.
+ */
+async function fromHeic(file: File): Promise<Blob> {
+  const lead = 'This browser cannot open iPhone photos (HEIC).';
+  let res: Response;
+  try {
+    res = await fetch('/api/walls/heic', { method: 'POST', headers: { 'content-type': 'image/heic' }, body: file });
+  } catch {
+    throw new Error(`${lead} The conversion did not answer. ${HEIC_HELP}`);
+  }
+  if (res.ok) return res.blob();
+  const data = (await res.json().catch(() => ({}))) as { error?: string };
+  const reason = (data.error ?? 'Converting it did not work').replace(/\.?$/, '.');
+  throw new Error(`${lead} ${reason} ${HEIC_HELP}`);
+}
+
 type State =
   | { step: 'idle' }
-  | { step: 'reading'; preview: string }
-  | { step: 'read'; preview: string; matches: PhotoMatch[] }
+  | { step: 'reading'; preview?: string }
+  | { step: 'read'; preview?: string; matches: PhotoMatch[] }
   | { step: 'error'; preview?: string; message: string };
 
 /**
  * A wall from a photo of a shelf (ROADMAP 5.13a, from lab/shelf 5.11): drop
  * or choose a photo, see it with a numbered box on every book that was read,
  * tick the ones to keep. The photo stays in this browser as a preview and
- * goes to the server once, shrunk; the server does not keep it.
+ * goes to the server once, shrunk; the server does not keep it. An iPhone
+ * photo in a browser that cannot open HEIC goes twice: first whole, to be
+ * turned into a JPEG, then as that JPEG.
  */
 export default function WallPhoto({ photoOn, onCreate }: { photoOn: boolean; onCreate: (title: string, tiles: Tile[]) => Promise<void> }) {
   const [state, setState] = useState<State>({ step: 'idle' });
@@ -37,10 +58,22 @@ export default function WallPhoto({ photoOn, onCreate }: { photoOn: boolean; onC
 
   async function read(file: File | undefined) {
     if (!file) return;
-    const preview = URL.createObjectURL(file);
+    let preview: string | undefined = URL.createObjectURL(file);
     setState({ step: 'reading', preview });
     try {
-      const res = await fetch('/api/walls/photo', { method: 'POST', headers: { 'content-type': 'image/jpeg' }, body: await shrink(file) });
+      let photo: Blob;
+      try {
+        photo = await shrink(file);
+      } catch {
+        // Nor can it show the file: no broken image beside the message.
+        preview = undefined;
+        setState({ step: 'reading' });
+        if (!looksLikeHeif(new Uint8Array(await file.slice(0, 12).arrayBuffer()))) throw new Error('This browser could not open this file as a photo. Try a JPEG or PNG.');
+        photo = await fromHeic(file);
+        preview = URL.createObjectURL(photo);
+        setState({ step: 'reading', preview });
+      }
+      const res = await fetch('/api/walls/photo', { method: 'POST', headers: { 'content-type': 'image/jpeg' }, body: photo });
       const data = (await res.json()) as { matches?: PhotoMatch[]; error?: string };
       if (!res.ok || !data.matches) throw new Error(data.error ?? 'The photo could not be read.');
       setState({ step: 'read', preview, matches: data.matches });
@@ -77,7 +110,7 @@ export default function WallPhoto({ photoOn, onCreate }: { photoOn: boolean; onC
         }}
         className={`block cursor-pointer rounded-card border-[1.5px] border-dashed bg-surface px-4 py-7 text-center text-sm text-ink-2 transition-colors ${over ? 'border-accent' : 'border-line hover:border-accent'}`}
       >
-        <input ref={input} type="file" accept="image/*" className="sr-only" onChange={(e) => read(e.target.files?.[0])} />
+        <input ref={input} type="file" accept="image/*,.heic,.heif" className="sr-only" onChange={(e) => read(e.target.files?.[0])} />
         <span className="font-medium text-ink">Choose a photo</span> or drop it here
         <span className="mt-1 block text-xs text-ink-3">Spines or covers, as sharp as you can. It is read once and not kept.</span>
       </label>

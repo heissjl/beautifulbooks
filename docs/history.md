@@ -3604,3 +3604,15 @@ Die Regel damit: **ein geteiltes Cover** (`/book/<id>/cover/<coverId>`) zeigt di
 
 Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/create/review`) setzen kein eigenes `openGraph` und erben die Karte ohne Änderung. `/contact` und `/privacy` antworteten im Dev-Server mit 500, weil dort die `IMPRINT_*`-Variablen fehlen (bekannt, nicht neu); `/curate`, `/suggest` und eine unbekannte `/c/<id>` mit 404, weil Passwort bzw. Sammlung fehlen — das `og:image` steht trotzdem im Kopf.
 
+
+## 2026-09-28 · iPhone-Fotos (HEIC) beim Foto-Import (ROADMAP 6.74)
+
+Nachgestellt auf `npm run dev` im Browser-Pane (Chrome 152) mit einem HEIC aus `sips -s format heic` (620 × 1250): `file.type` leer, `createImageBitmap` → `InvalidStateError: The source image could not be decoded.`, `<img>` → Fehler. `/create` zeigte vor der Änderung genau diesen Satz als Meldung und daneben ein kaputtes Bild (`naturalWidth` 0).
+
+Nach der Änderung (Umwandlung auf dem Server, `POST /api/walls/heic`):
+- **620 × 1250-HEIC im Browser:** Umwandlung 955 ms beim ersten Aufruf (davon Kompilieren im Dev-Server), JPEG 224 KB, Vorschau 620 × 1250 statt kaputt; danach ging das JPEG an `/api/walls/photo`.
+- **4032 × 3024-HEIC (12 MP, 363 KB, aus einem hochskalierten Bildschirmfoto) per curl:** 0,43 s und 0,41 s, Antwort 1600 × 1200, 242 KB. Ein echtes Foto hat mehr Detail, die Dekodierzeit hängt aber vor allem an der Pixelzahl.
+- **Kaputtes HEIC (die ersten 3000 Byte):** 422, im Browser „This browser cannot open iPhone photos (HEIC). This HEIC photo could not be converted. Open this page in Safari, or send the photo as a JPEG …"; kein Bild daneben. **Kein HEIC** (PNG an die Route): 415. Drei Aufrufe in Folge, dann 429 — der Behälter `wallsHeic` greift.
+- **Größe:** libheif landet als ein Server-Chunk von 2,0 MB im Build; in `.next/static` kein Treffer auf `heif_context`, also nichts davon im Browser.
+- **Breiten:** bei 390 × 844 steht die Meldung zwischen 16 und 374 px, `scrollWidth` 390; bei 1280 × 800 die umgewandelte Vorschau in ihrer Spalte (664–886 von 664–1248 px, 448 px hoch = `max-h-[28rem]`).
+- **Nicht gemessen:** ein echtes iPhone-Foto, 48 MP, und die Erkennung dahinter (kein Schlüssel, kein Netz im Worktree-Dev-Server; `/api/walls/photo` antwortete 502).
