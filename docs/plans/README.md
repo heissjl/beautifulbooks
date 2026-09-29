@@ -21,7 +21,7 @@ Stand: 2026-09-26. Ein Plan ist die ausführliche Fassung eines *offenen* Roadma
 | [research-framing-partners.md](research-framing-partners.md) | 5.15: wer baut den Bücherrahmen, wer zahlt Provision | **Recherche fertig** 2026-09-29; Anfragen bei Julian |
 | [research-frame-reselling.md](research-frame-reselling.md) | 5.15: Rahmen sprintweise bestellen und weiterverkaufen — Lieferanten, Marge, Pflichten | **Recherche fertig** 2026-09-29; Pilot-Entscheidung bei Julian |
 | [research-book-wall-artists.md](research-book-wall-artists.md) | 5.15: wie Künstler und Werkstätten echte Bücher rahmen, was wir daraus lernen | **Recherche fertig** 2026-09-29; Änderungen am Stück offen |
-| [research-diy-frame-kit.md](research-diy-frame-kit.md) | 5.15: Bausatz mit Partnerlinks — tiefe Maßrahmen, Halter, Kosten | **Recherche läuft** 2026-09-29 |
+| [research-diy-frame-kit.md](research-diy-frame-kit.md) | 5.15: Bausatz mit Partnerlinks — tiefe Maßrahmen, Halter, Kosten | **Recherche fertig** 2026-09-29; Anfragen bei Julian |
 | [PLAN-5-reichweite.md](PLAN-5-reichweite.md) | Phase 5: Seitengattungen, Agenten-Kette, Regeln gegen Slop | offen, wartet auf Phase 2–4; die Reihen-Seiten (5.4b) sind seit 5.10 eine Art Sammlung, siehe Roadmap |
 | [PLAN-4-einnahmen.md](PLAN-4-einnahmen.md) | 4.6–4.8: Einnahmen jenseits der Affiliate-Links | Analyse fertig, Regeln als E19; Bau wartet auf Reichweite |
 | [PLAN-struktur.md](PLAN-struktur.md) | 0.11: Ordnerstruktur, `lab/`, der Clip als erstes Experiment | **entschieden** 2026-09-08 (`fe8f156`): Option A, `lab/` angelegt; der Clip wartet (5.5) |
