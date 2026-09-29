@@ -30457,6 +30457,370 @@
           "coverIsbn": "3423117125"
         }
       ]
+    },
+    {
+      "slug": "herder-bucherei-covers-by-walter-grieder",
+      "title": "Herder Bücherei — covers by Walter Grieder",
+      "kind": "series",
+      "intro": "The Swiss illustrator Walter Grieder drew covers for the Herder Bücherei, Herder's paperback series, from the late 1950s into the early 1970s: first bright, crowded pictures across the whole front, later a single bold motif in a white frame. These are the covers Sammlung Keller shows, in the order of their numbers.",
+      "published": false,
+      "publishers": [
+        "Herder"
+      ],
+      "works": [
+        {
+          "id": "OL2037552W",
+          "title": "Die rote Donau",
+          "author": "Bruce Marshall",
+          "coverId": "ol:15259762",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603082M"
+        },
+        {
+          "id": "OL76468W",
+          "title": "Der Mann, der zuviel wusste",
+          "author": "Gilbert Keith Chesterton",
+          "coverId": "ol:15259763",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603084M"
+        },
+        {
+          "id": "OL46029083W",
+          "title": "Rotschilds Geige",
+          "author": "Антон Павлович Чехов",
+          "coverId": "ol:15259765",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603085M"
+        },
+        {
+          "id": "OL71165W",
+          "title": "Die böse Macht",
+          "author": "C. S. Lewis",
+          "coverId": "ol:15259764",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603083M"
+        },
+        {
+          "id": "OL1236062W",
+          "title": "Papst Cölestin VI.",
+          "author": "Papini, Giovanni",
+          "coverId": "ol:15259769",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603086M"
+        },
+        {
+          "id": "OL24674994W",
+          "title": "Spiel mit dem Phantom",
+          "author": "N. S. Leskov",
+          "coverId": "ol:15259767",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603087M"
+        },
+        {
+          "id": "OL46029084W",
+          "title": "Der Teufel und der Pfarrvikar",
+          "author": "J. F. Powers",
+          "coverId": "ol:15259766",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603089M"
+        },
+        {
+          "id": "OL19969W",
+          "title": "Staaks und Genossen",
+          "author": "Rudyard Kipling",
+          "coverId": "ol:15259768",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603088M"
+        },
+        {
+          "id": "OL4940436W",
+          "title": "Vom unbekannten Judentum",
+          "author": "Robert Raphael Geis",
+          "coverId": "ol:8373395",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL19715096M"
+        },
+        {
+          "id": "OL76325W",
+          "title": "Der geheimnisvolle Klub",
+          "author": "Gilbert Keith Chesterton",
+          "coverId": "ol:15259772",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603091M"
+        },
+        {
+          "id": "OL46029087W",
+          "title": "Gespenstergeschichten",
+          "author": "Karlheinz Schmidthüs",
+          "coverId": "ol:15259773",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603093M"
+        },
+        {
+          "id": "OL76448W",
+          "title": "Der Dichter und die Verrückten",
+          "author": "Gilbert Keith Chesterton",
+          "coverId": "ol:15259770",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603094M"
+        },
+        {
+          "id": "OL46029086W",
+          "title": "Kriminalgeschichten",
+          "author": "Karlheinz Schmidthüs",
+          "coverId": "ol:15259771",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603092M"
+        },
+        {
+          "id": "OL76475W",
+          "title": "Menschenskind",
+          "author": "Gilbert Keith Chesterton",
+          "coverId": "ol:15259776",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603095M"
+        },
+        {
+          "id": "OL46029089W",
+          "title": "Ballspiel mit Ideen",
+          "author": "Gilbert Keith Chesterton",
+          "coverId": "ol:15259775",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603098M"
+        },
+        {
+          "id": "OL38702543W",
+          "title": "Führer zur Kunst",
+          "author": "Heinrich Lützeler",
+          "coverId": "ol:15259774",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603097M"
+        },
+        {
+          "id": "OL258926W",
+          "title": "Die Lebensalter",
+          "author": "William Shakespeare",
+          "coverId": "ol:15259777",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603096M"
+        },
+        {
+          "id": "OL46029090W",
+          "title": "Die Zeit im Spiegel",
+          "author": "Rochus Spiecker",
+          "coverId": "ol:15259778",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603099M"
+        },
+        {
+          "id": "OL38701167W",
+          "title": "Als ob das immer so weiterginge …",
+          "author": "Sigismund von Radecki",
+          "coverId": "ol:15259779",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603101M"
+        },
+        {
+          "id": "OL1245223W",
+          "title": "Die Flamme im Säulenholz",
+          "author": "Werner Bergengruen",
+          "coverId": "ol:15259780",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603100M"
+        },
+        {
+          "id": "OL46029091W",
+          "title": "365mal Guten Morgen",
+          "author": "Benedikt Reetz",
+          "coverId": "ol:15259781",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603102M"
+        },
+        {
+          "id": "OL7094346W",
+          "title": "Psychoanalyse der Liebe",
+          "author": "Lepp, Ignace",
+          "coverId": "ol:15259782",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603103M"
+        },
+        {
+          "id": "OL46029093W",
+          "title": "Deine Sprache und Du",
+          "author": "Wilhelm Schneider",
+          "coverId": "ol:15259783",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603106M"
+        },
+        {
+          "id": "OL22471696W",
+          "title": "Über Leben, Lüge und Liebe",
+          "author": "Fritz Leist",
+          "coverId": "ol:15259784",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL5656946M"
+        },
+        {
+          "id": "OL5721436W",
+          "title": "Tod in Hollywood",
+          "author": "Evelyn Waugh",
+          "coverId": "ol:15259785",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603105M"
+        },
+        {
+          "id": "OL11303569W",
+          "title": "Gesundheit in der technischen Welt",
+          "author": "Joachim Bodamer",
+          "coverId": "ol:15259786",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL21199942M"
+        },
+        {
+          "id": "OL46029092W",
+          "title": "Geistlicher Humor",
+          "author": "Karl Rauch",
+          "coverId": "ol:15259787",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603104M"
+        },
+        {
+          "id": "OL6611421W",
+          "title": "Father Bredder weiß zuviel",
+          "author": "Leonard Wibberley",
+          "coverId": "ol:15259788",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603108M"
+        },
+        {
+          "id": "OL1265048W",
+          "title": "Wege zur Kunst",
+          "author": "Heinrich Lützeler",
+          "coverId": "ol:15259789",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603109M"
+        },
+        {
+          "id": "OL46029095W",
+          "title": "Gesundheit und Krankheit der Seele",
+          "author": "Fritz Leist",
+          "coverId": "ol:15259792",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603111M"
+        },
+        {
+          "id": "OL1171769W",
+          "title": "Die Pharisäerin",
+          "author": "François Mauriac",
+          "coverId": "ol:15259791",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603110M"
+        },
+        {
+          "id": "OL46029096W",
+          "title": "Revolution der Nächstenliebe",
+          "author": "Raoul Follereau",
+          "coverId": "ol:15259793",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603112M"
+        },
+        {
+          "id": "OL22557417W",
+          "title": "Herders kleines Lexikon der Heiligen",
+          "author": "",
+          "coverId": "ol:15259794",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL4958475M"
+        },
+        {
+          "id": "OL46029099W",
+          "title": "Gesund leben – gesund bleiben",
+          "author": "Leonhard Reinisch",
+          "coverId": "ol:15259796",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603115M"
+        },
+        {
+          "id": "OL6842781W",
+          "title": "Der Verlust der Seele",
+          "author": "Bitter, Wilhelm",
+          "coverId": "ol:15259795",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL4775295M"
+        },
+        {
+          "id": "OL4590428W",
+          "title": "Allein kannst Du nicht glücklich sein",
+          "author": "Raoul Follereau",
+          "coverId": "ol:15259797",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL4636580M"
+        },
+        {
+          "id": "OL46029098W",
+          "title": "Keiner kann aus seiner Haut",
+          "author": "",
+          "coverId": "ol:15259801",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603114M"
+        },
+        {
+          "id": "OL46029097W",
+          "title": "Politiker sind auch Menschen",
+          "author": "",
+          "coverId": "ol:15259798",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603113M"
+        },
+        {
+          "id": "OL6835038W",
+          "title": "Wir Glaubenszweifler",
+          "author": "Bernard Basset",
+          "coverId": "ol:15259799",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603118M"
+        },
+        {
+          "id": "OL46029102W",
+          "title": "Liebe und Geschlecht",
+          "author": "Fritz Leist",
+          "coverId": "ol:15259800",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603120M"
+        },
+        {
+          "id": "OL46029101W",
+          "title": "Aus der Sprechstunde eines Psychiaters",
+          "author": "Hermann Dobbelstein",
+          "coverId": "ol:15259802",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603119M"
+        },
+        {
+          "id": "OL4481173W",
+          "title": "Geborgenheit – Sehnsucht des Menschen",
+          "author": "Paul Tournier",
+          "coverId": "ol:15259803",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603117M"
+        },
+        {
+          "id": "OL46029130W",
+          "title": "So lacht Germania",
+          "author": "Eugen Skasa-Weiss",
+          "coverId": "ol:15259804",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603151M"
+        },
+        {
+          "id": "OL46029129W",
+          "title": "Schöpferischer Lebensstil",
+          "author": "Lepp, Ignace",
+          "coverId": "ol:15259805",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603150M"
+        }
+      ]
     }
   ]
 }
