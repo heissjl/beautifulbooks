@@ -75,11 +75,18 @@ function handle(xml: string) {
   }
 }
 
-function save() {
+/**
+ * Progress goes to `*.partial.json`; the result files are replaced only after a
+ * complete pass. On 2026-09-29 data.discogs.com closed the connection at 7.1 GB,
+ * and an earlier version of this script had overwritten the full results with
+ * the partial ones.
+ */
+function save(final: boolean) {
   mkdirSync(OUT, { recursive: true });
-  writeFileSync(join(OUT, 'dump-summary.json'), JSON.stringify(summary, null, 1));
-  writeFileSync(join(OUT, 'dump-albums.json'), JSON.stringify(albums));
-  writeFileSync(join(OUT, 'dump-sample.json'), JSON.stringify(sample, null, 1));
+  const suffix = final ? '' : '.partial';
+  writeFileSync(join(OUT, `dump-summary${suffix}.json`), JSON.stringify(summary, null, 1));
+  writeFileSync(join(OUT, `dump-albums${suffix}.json`), JSON.stringify(albums));
+  writeFileSync(join(OUT, `dump-sample${suffix}.json`), JSON.stringify(sample, null, 1));
 }
 
 async function main() {
@@ -109,12 +116,12 @@ async function main() {
     if (summary.releases >= nextReport) {
       nextReport = summary.releases + 1_000_000;
       console.log(`${new Date().toISOString().slice(11, 19)}  ${summary.releases.toLocaleString('en')} releases, ${summary.vinyl.toLocaleString('en')} vinyl, ${albums.length} of the eight albums, ${(bytes / 1e6).toFixed(0)} MB read`);
-      save();
+      save(false);
     }
   }
   summary.finished = new Date().toISOString();
-  save();
+  save(true);
   console.log(`done: ${summary.releases.toLocaleString('en')} releases, ${summary.vinyl.toLocaleString('en')} vinyl, ${albums.length} releases of the eight albums`);
 }
 
-main().catch(e => { console.error(e); save(); process.exit(1); });
+main().catch(e => { console.error(e); save(false); process.exit(1); });

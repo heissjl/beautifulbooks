@@ -23,12 +23,19 @@ export interface DumpRelease {
   barcodes: string[];
   /** Number of `<image>` elements, or null when the element is absent altogether. */
   images: number | null;
+  /** Release credits (`extraartists`) as role and name, e.g. "Design" — "Hipgnosis". */
+  credits: Array<{ role: string; name: string }>;
+  /** Free-text notes, where editors explain what sets a pressing apart. */
+  notes: string;
 }
 
 const decode = (s: string) =>
   s.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 const attr = (tag: string, name: string) => decode(tag.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1] ?? '');
 const text = (xml: string, tag: string) => decode(xml.match(new RegExp(`<${tag}>([^<]*)</${tag}>`))?.[1] ?? '');
+
+/** Credit roles that describe the sleeve, as Discogs spells them (role text may carry a bracket: "Photography By [Cover]"). */
+export const SLEEVE_ROLE_RE = /\b(design|designed|artwork|art direction|art by|cover|photography|photo|illustration|painting|layout|lettering|sleeve|typography)\b/i;
 
 export function parseDumpRelease(xml: string): DumpRelease | null {
   const id = Number(xml.match(/<release id="(\d+)"/)?.[1]);
@@ -57,6 +64,9 @@ export function parseDumpRelease(xml: string): DumpRelease | null {
     barcodes: [...identifiers.matchAll(/<identifier ([^>]*)\/?>/g)]
       .filter(m => attr(m[1], 'type') === 'Barcode').map(m => attr(m[1], 'value')),
     images: imagesBlock ? (imagesBlock[1]?.match(/<image\b/g)?.length ?? 0) : null,
+    credits: [...(xml.match(/<extraartists>([\s\S]*?)<\/extraartists>/)?.[1] ?? '').matchAll(/<artist>([\s\S]*?)<\/artist>/g)]
+      .map(m => ({ role: text(m[1], 'role'), name: text(m[1], 'name') })),
+    notes: decode(xml.match(/<notes>([\s\S]*?)<\/notes>/)?.[1] ?? ''),
   };
 }
 

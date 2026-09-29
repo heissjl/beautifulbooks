@@ -3793,3 +3793,10 @@ Die 38 blauen *Kind of Blue* sind echte blaue Neuauflagen, meist 180 g („Blue,
 | **Summe** | 181 | 138 | 171 | 167 | 24 | 10 |
 
 Die Verknüpfung trägt (167 von 181), bringt aber nur **10 der 138 Pressungen mit Foto** eine Farbe. Die farbigen Pressungen stehen fast nur bei Discogs: *Kind of Blue* hat dort 56, MusicBrainz kennt davon 2; bei *folklore* dagegen kennt MusicBrainz 20 von 21 farbigen, hat aber nur für 6 davon eine Vorderseite. Für eine Farbwand heißt das: die Farben kämen aus dem Dump als Text, die Bilder dazu gibt es in offenen Quellen kaum.
+
+
+## 2026-09-29 · Woher die Geschichte einer Hülle käme (ROADMAP 5.16)
+
+Julian: „aber woher bekommen wir die geschichte zu jeder hülle". Gemessen an den 24 Hüllen der acht Alben (Faltung ≤ 20) mit [`lab/vinyl/story.ts`](../lab/vinyl/story.ts); Befund und Folgerungen in [lab/vinyl/geschichte.md](../lab/vinyl/geschichte.md). Unsere eigene **Zeitleiste** (Jahre, Länder, Labels, Zahl der Pressungen) gibt es für 24 von 24 Hüllen; **Credits** zur Gestaltung für 15 (MusicBrainz 8, Discogs 13 über den Discogs-Link je Release); eine **Discogs-Anmerkung**, die die Hülle erwähnt, für 21 — meist Herstellungsangaben, nur wenige erzählen („Dutch issue with unique cover photography", *Kind of Blue* NL 1964). Von den 1.981 Vinyl-Pressungen der acht Alben bei Discogs tragen 1.080 einen Hüllen-Credit, 19 Anmerkungen sagen ausdrücklich „andere Hülle". **Wikipedia** hat einen Artwork-Abschnitt bei 6 von 8 Alben, fast nur zum Original (*Kind of Blue*: kein Satz zur Hülle); **Wikidata** „cover art by" nur bei *Dark Side*. Credits und Anmerkungen sind CC0, Wikipedia CC BY-SA.
+
+Für die Credits den Dump ein zweites Mal gestreamt: data.discogs.com schloss die Verbindung bei 7,1 GB („other side closed"), und das Skript hatte beim Abbruch die vollständigen Ergebnisse des ersten Laufs mit dem Teilstand überschrieben. Seitdem schreibt `dump-measure.ts` Zwischenstände nach `*.partial.json` und ersetzt die Ergebnisse erst nach einem vollständigen Durchgang; der dritte Lauf ging durch und ergab dieselben Zahlen wie der erste (19.417.067 Einträge, 4.549 der acht Alben).
