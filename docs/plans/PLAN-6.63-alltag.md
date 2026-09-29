@@ -178,6 +178,8 @@ Auf dem Telefon beginnt das Feld bei etwa 540 von 812 px; Überschrift, Versprec
 
 ### 6.77 Die Seitenleiste: Kaufen vor Sammeln (Teil A, A5 und zweiter Durchgang)
 
+**Wortwahl, von Julian am 2026-09-29 gefragt** („was ist der unterschied zwischen printing und scan“, am Bild der eingeklappten Zeilen „29 printings with this cover“ und „30 scans of this cover“): die zwei Zeilen stehen im Mockup direkt untereinander und erklären sich nicht. Ein *Druck* (printing) ist ein Ausgabe-Datensatz — Verlag, Jahr, ISBN —, ein *Scan* ist ein Bild in einem Katalog. Die Kachel faltet Scans desselben Entwurfs; jeder Scan hängt an einem oder mehreren Drucken. Wird B gewählt, brauchen die Zeilen Wörter, die das sagen (etwa „Printed by 29 editions“ und „30 photos of this cover“) oder nur eine der beiden Zeilen.
+
 **Stand 2026-09-29: Mockup gebaut** — Variante B unter `next dev` mit `?panel=b` an jeder Buchseite mit gewähltem Cover (`components/BookDetail.tsx`, `CoverDetails` `layout`, `EditionBlock` `afterLead`). Erste Laden-Reihe am Telefon bei 565 statt 1.174 px, am Desktop bei 801 statt 1.338 px ([Historie](../history.md#2026-09-29--seitenleiste-mit-den-läden-zuerst-als-mockup-roadmap-677)). Wird B gewählt, fällt der Schalter und die doppelte Scan-Zeile weg; wird A behalten, fliegt das Mockup vor dem Merge nach `main` wieder heraus.
 
 
@@ -205,7 +207,9 @@ Bei „the great gatsby“ sind 10 von 15 Karten Sekundärliteratur, drei heiße
 4. **Autoren entdoppeln:** gleiche Initiale, Nachname eine Änderung entfernt — „George Orwell, George Orwel“, „John D. Simons, John D. Simmons“. Zwei Treffer in zehn Suchen, keiner falsch. Gezeigt wird der erste Name.
 5. **Title Case — optional, Julian entscheidet.** Nur wenn der Titel in Satzschreibung steht (ab dem zweiten Wort alles klein), nur ASCII, und kein Artikel oder Bindewort aus dem Italienischen, Spanischen, Französischen oder Deutschen darin (`la, le, les, el, los, de, del, dei, della, degli, delle, e, et, y, und, der, die, das`). Die naive Fassung hätte „Dei Delitte E Delle Pene“ und „La Casa Degli Specchi“ geschrieben. Betroffen in der Stichprobe: 17 Titel, darunter „Careless People“, „The Last Tycoon“, vier Mal „Mumbo Jumbo“. Dagegen spricht: der Katalog schreibt sie so, und Satzschreibung ist in vielen Bibliotheken die Regel, nicht der Fehler.
 
-**Bau:** eine reine Funktion `groupSearchResults(works, mode)` in `lib/searchgroups.ts` (Hauptliste, andere Autoren, Etikett je Karte, entdoppelte Autoren), getestet an den zehn aufgezeichneten Suchen als Fixtures; `BookGrid` zeigt die zwei Abschnitte. **Kein Eingriff ins Ranking**, die Abnahmesuchen aus SPEC F1 bleiben, wie sie sind („genau ein Fitzgerald-Work, zuerst“). 6.69 übernimmt die Unterscheidung für die Vorschläge. Ein halber Tag, nachdem Julian zu 2, 5 und dem Wort der Überschrift entschieden hat.
+**Stand 2026-09-29: Teil 1 und 2 gebaut** (Julian: „das klingt gut“ zur Gruppierung), als `groupByAuthor` in `lib/searchgroups.ts` mit Tests an den Fixtures der Abnahmesuchen; Teil 2 wie vorgeschlagen (bis vier offen). Teil 3–5 warten.
+
+**Bau, wie ursprünglich vorgeschlagen:** eine reine Funktion `groupSearchResults(works, mode)` in `lib/searchgroups.ts` (Hauptliste, andere Autoren, Etikett je Karte, entdoppelte Autoren), getestet an den zehn aufgezeichneten Suchen als Fixtures; `BookGrid` zeigt die zwei Abschnitte. **Kein Eingriff ins Ranking**, die Abnahmesuchen aus SPEC F1 bleiben, wie sie sind („genau ein Fitzgerald-Work, zuerst“). 6.69 übernimmt die Unterscheidung für die Vorschläge. Ein halber Tag, nachdem Julian zu 2, 5 und dem Wort der Überschrift entschieden hat.
 
 ### 6.16 Schritt 2 ohne 6.18
 

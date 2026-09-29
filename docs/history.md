@@ -3696,3 +3696,15 @@ Was dagegen ohne Fehlgriff blieb:
 ¹ Werke desselben Erstautors wie die erste Karte (Namensschlüssel oder Open-Library-Key, so findet „Crime and Punishment — Fyodor Dostoevsky“ zu „Fiódor Dostoievski“) und Werke anderer Autoren mit mindestens einem Zehntel ihrer Ausgaben (Beccaria, Fénelon). ² `looksLikeSecondaryLiterature` („About the book“: SparkNotes, CliffsNotes, notes, companion, reader's guide) und `MARKED_DERIVATIVE` („Adaptation“: [adaptation], a play, in five acts); keine falsche Zuordnung unter den 21. ³ Gleiche Initiale, Nachname eine Änderung entfernt: „George Orwell, George Orwel“, „John D. Simons, John D. Simmons“.
 
 **Title Case** naiv (jeder Titel in Satzschreibung, `en` unter den Sprachen, nur ASCII) hätte zwei italienische Titel falsch gemacht („Dei Delitte E Delle Pene“, „La Casa Degli Specchi“) und das englische „The last tycoon“ (Sprachen `de, fr, es`) verfehlt; eine Liste romanischer und deutscher Artikel schließt die zwei aus. Vorschlag und Entscheidungen im [Plan 6.63](plans/PLAN-6.63-alltag.md), Abschnitt 6.81.
+
+## 2026-09-29 — Die Trefferliste in zwei Teilen (ROADMAP 6.81, Teil 1)
+
+Julian zur Gruppierung nach Autor: „das klingt gut“. Gebaut als `groupByAuthor` (`lib/searchgroups.ts`, Tests an den Fixtures der Abnahmesuchen) und in `components/BookGrid.tsx`: oben der Autor der ersten Karte, darunter „By other authors (n)“, bis vier Karten offen, darüber eingeklappt, und eingeklappte Karten werden erst beim Aufklappen gebaut. Geprüft unter `npm run dev` mit Headless-Chrome:
+
+| Suche | oben | By other authors | Zustand |
+|---|---|---|---|
+| the great gatsby (1280 und 390 px) | 3 (Gatsby, Gatsby/Last Tycoon, The last tycoon) | 12 | eingeklappt, aufgeklappt 12 Karten |
+| nineteen eighty four | 3 (1984, Animal Farm/1984, Novels) | 14 | eingeklappt |
+| mumbo jumbo | 2 (Reed, Wheen) | 9 | eingeklappt |
+
+Keine Seite breiter als das Fenster. Wheens *How Mumbo-jumbo Conquered the World* steht oben, weil es 3 Ausgaben hat und Reeds Werk 23 — mehr als ein Zehntel; die Regel greift wie beschrieben, ob das so gewollt ist, lässt sich an einem Beispiel nicht sagen. Tests 948 grün.
