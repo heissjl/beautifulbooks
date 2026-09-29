@@ -11,7 +11,11 @@
  * Every result says how its cover was chosen, because a wall that shows "your
  * edition" must be able to tell a matched jacket from the work's default.
  */
-import { colour, dhash, luminance, toGray, type RgbaImage } from '../../lib/imagehash';
+import { colour, decode, dhash, luminance, toGray, type RgbaImage } from '../../lib/imagehash';
+import { fetchBytes } from '../../lib/sources/http';
+import { spineColor } from '../colorsort/color';
+import { refineSpineBox, toLabImage, type LabImage } from '../colorsort/spines';
+import { pickBySpine, samePublisher, type CoverColours, type EditionCandidate, type RankedCover } from './edition';
 import { colourDistance, hamming, type ImageSignature } from '../../lib/imagesig';
 import type { WorkSummary } from '../../lib/model';
 import { search } from '../../lib/search';
@@ -30,7 +34,10 @@ export { coverIdFromUrl, pickWork, sameAuthor, titleScore, type WorkReason } fro
 export const PHOTO_MAX_HAMMING = 14;
 export const PHOTO_MAX_COLOUR = 0.52;
 
-export type CoverReason = 'matched-edition' | 'default' | 'no-photo' | 'no-close-cover' | 'no-cover' | 'chosen';
+export type CoverReason = 'matched-edition' | 'spine-edition' | 'spine-no-match' | 'default' | 'no-photo' | 'no-close-cover' | 'no-cover' | 'chosen';
+
+/** How many of a work's covers are fetched to compare with one spine. */
+export const SPINE_MAX_CANDIDATES = 16;
 
 export interface CoverChoice {
   coverId: number;
@@ -40,6 +47,13 @@ export interface CoverChoice {
   colour?: number;
   /** How many of the work's covers had a signature to compare with. */
   compared?: number;
+  /** Spine matches: the publisher read off the spine, and whether the edition carries it. */
+  publisher?: string;
+  publisherMatch?: boolean;
+  /** Spine matches: OKLab distance from the spine's colour to the cover's nearest main colour. */
+  gap?: number;
+  editionPublisher?: string;
+  year?: number;
 }
 
 export interface MatchResult {
@@ -49,6 +63,14 @@ export interface MatchResult {
   workReason?: WorkReason;
   cover?: CoverChoice;
   error?: string;
+}
+
+/** The second pass for a spine: its edition, and the covers in order of likeness. */
+export interface SpineEditionResult {
+  cover: CoverChoice;
+  ranked: RankedCover[];
+  /** The spine's colour as the server read it, and the box after refinement. */
+  spine: { hex: string; box: [number, number, number, number] };
 }
 
 /* ---------- pure ---------- */
@@ -116,6 +138,11 @@ export interface CoverOption { coverId: number; signature?: ImageSignature }
 export class Matcher {
   private searches = new Map<string, WorkSummary[]>();
   private covers = new Map<string, CoverOption[]>();
+  private editions = new Map<string, EditionCandidate[]>();
+  private coverColours = new Map<number, Promise<CoverColours[] | null>>();
+  private labs = new WeakMap<RgbaImage, LabImage>();
+  private imageSlots = 4;
+  private imageWaiting: Array<() => void> = [];
   private queue: Promise<unknown> = Promise.resolve();
 
   /** One Open Library request at a time, across all callers. */
@@ -146,6 +173,103 @@ export class Matcher {
       .map(c => ({ coverId: Number(c.id.slice(3)), signature: page?.signatures?.[c.id] }));
     this.covers.set(workId, options);
     return options;
+  }
+
+  /** Page 0 of a work as candidates for a spine: each cover with its edition's publisher and year. */
+  async workEditions(workId: string): Promise<EditionCandidate[]> {
+    const hit = this.editions.get(workId);
+    if (hit) return hit;
+    const page = await this.serial(() => getWorkPage(workId, {
+      googleBooks: false, siblings: false, workDescription: 'never', signatures: false,
+    }));
+    const byId = new Map((page?.editions ?? []).map(e => [e.id, e]));
+    const out: EditionCandidate[] = (page?.covers ?? [])
+      .filter(c => c.id.startsWith('ol:'))
+      .map(c => {
+        const edition = c.editionIds.map(id => byId.get(id)).find(e => e?.publisher) ?? byId.get(c.editionIds[0]);
+        return {
+          coverId: Number(c.id.slice(3)),
+          ...(edition?.publisher ? { publisher: edition.publisher } : {}),
+          ...(edition?.year ? { year: edition.year } : {}),
+        };
+      });
+    this.editions.set(workId, out);
+    return out;
+  }
+
+  /** A cover's main colours, from its small image; four images at a time, remembered. */
+  private coloursOf(coverId: number): Promise<CoverColours[] | null> {
+    let hit = this.coverColours.get(coverId);
+    if (!hit) {
+      hit = this.withImageSlot(async () => {
+        try {
+          const bytes = await fetchBytes(`https://covers.openlibrary.org/b/id/${coverId}-S.jpg`, { timeoutMs: 8000, revalidate: 30 * 24 * 3600 });
+          const img = decode(bytes);
+          if (!img || img.width < 8 || img.height < 8) return null;
+          return spineColor(img.rgba, img.width, { x0: 0, y0: 0, x1: img.width, y1: img.height })
+            .clusters.map(c => ({ lab: c.lab, share: c.share }));
+        } catch {
+          // A cover that did not load is not a cover without colours: forget it, so the next spine asks again.
+          this.coverColours.delete(coverId);
+          return null;
+        }
+      });
+      this.coverColours.set(coverId, hit);
+    }
+    return hit;
+  }
+
+  private async withImageSlot<T>(job: () => Promise<T>): Promise<T> {
+    if (this.imageSlots === 0) await new Promise<void>(resolve => this.imageWaiting.push(resolve));
+    else this.imageSlots--;
+    try {
+      return await job();
+    } finally {
+      const next = this.imageWaiting.shift();
+      if (next) next(); else this.imageSlots++;
+    }
+  }
+
+  /**
+   * The edition a photographed spine belongs to (ROADMAP 5.16): the model's
+   * box moved onto the spine's edges, its colour read, the work's covers of
+   * the same publisher (or, without one, the newest few) compared by colour.
+   * Null when the book is not a spine with a box.
+   */
+  async spineEdition(book: RecognizedBook, workId: string, photo: RgbaImage, fallback: number): Promise<SpineEditionResult | null> {
+    if (book.kind !== 'spine' || !book.box) return null;
+    let lab = this.labs.get(photo);
+    if (!lab) { lab = toLabImage(photo.rgba, photo.width, photo.height); this.labs.set(photo, lab); }
+    const [fx, fy, fw, fh] = book.box;
+    const raw = { x0: Math.round(fx * photo.width), y0: Math.round(fy * photo.height), x1: Math.round((fx + fw) * photo.width), y1: Math.round((fy + fh) * photo.height) };
+    if (raw.x1 - raw.x0 < 3 || raw.y1 - raw.y0 < 10) return null;
+    const box = refineSpineBox(lab, raw);
+    const colour = spineColor(photo.rgba, photo.width, box);
+    const spine = { hex: colour.hex, box: [box.x0 / photo.width, box.y0 / photo.height, (box.x1 - box.x0) / photo.width, (box.y1 - box.y0) / photo.height] as [number, number, number, number] };
+
+    const all = await this.workEditions(workId);
+    const byPublisher = book.publisher ? all.filter(c => samePublisher(book.publisher!, c.publisher)) : [];
+    const chosen = (byPublisher.length ? byPublisher : all).slice(0, SPINE_MAX_CANDIDATES);
+    const withColours = await Promise.all(chosen.map(async c => ({ ...c, colours: (await this.coloursOf(c.coverId)) ?? undefined })));
+    const rest: EditionCandidate[] = all.filter(c => !chosen.includes(c));
+    const { pick, ranked } = pickBySpine(colour, book.publisher, [...withColours, ...rest]);
+    const compared = withColours.filter(c => c.colours).length;
+    const evidence = {
+      compared,
+      ...(book.publisher ? { publisher: book.publisher } : {}),
+    };
+    const cover: CoverChoice = pick
+      ? {
+          coverId: pick.coverId, reason: 'spine-edition', ...evidence, publisherMatch: pick.publisherMatch,
+          ...(pick.gap !== undefined ? { gap: Math.round(pick.gap * 1000) / 1000 } : {}),
+          ...(pick.publisher ? { editionPublisher: pick.publisher } : {}), ...(pick.year ? { year: pick.year } : {}),
+        }
+      : {
+          coverId: fallback, reason: fallback ? 'spine-no-match' : 'no-cover', ...evidence,
+          ...(ranked[0]?.gap !== undefined ? { gap: Math.round(ranked[0].gap * 1000) / 1000 } : {}),
+          publisherMatch: byPublisher.length > 0,
+        };
+    return { cover, ranked, spine };
   }
 
   async match(book: RecognizedBook, photo: RgbaImage | null): Promise<MatchResult> {

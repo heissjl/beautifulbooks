@@ -166,6 +166,8 @@ const WHY = {
   'default': () => 'Buchrücken — Standardcover des Werks',
   'no-cover': () => 'Open Library hat kein Cover',
   'chosen': () => 'von Hand gewählt',
+  'spine-edition': c => `Ausgabe nach dem Rücken: ${c.publisherMatch ? `Verlag „${c.publisher}“${c.editionPublisher && c.editionPublisher !== c.publisher ? ` (${c.editionPublisher})` : ''} und ` : ''}Farbe (Abstand ${c.gap}) unter ${c.compared} Covern${c.year ? `, ${c.year}` : ''}`,
+  'spine-no-match': c => `Rücken mit ${c.compared} Covern verglichen${c.publisher ? `, Verlag „${c.publisher}“ ${c.publisherMatch ? 'gefunden' : 'bei keiner Ausgabe'}` : ', kein Verlag lesbar'}; keins sicher genug${c.gap !== undefined ? ` (nächstes ${c.gap})` : ''} — Standardcover`,
 };
 const WORK_WHY = { 'author+title': '', 'author': 'Titel weicht ab', 'title-only': 'Autor passt nicht', 'first-result': 'unsicher: weder Titel noch Autor passen' };
 
@@ -244,9 +246,23 @@ async function run(path, body) {
           items[line.index] = { ...line.result, color: colors[line.index] }; done++;
           $('progress').textContent = `Zugeordnet ${done} von ${total} …`;
           render();
+        } else if (line.type === 'edition-start') {
+          items[line.index].editionPending = true;
+          $('progress').textContent = `Werke zugeordnet. Suche die Ausgabe zu jedem Rücken (Verlag und Farbe) — Buch ${line.index + 1} von ${total} …`;
+          render();
+        } else if (line.type === 'edition') {
+          const it = items[line.index];
+          it.editionPending = false;
+          if (line.error) it.editionError = line.error;
+          else {
+            // A cover chosen by hand in the meantime stays.
+            if (it.cover?.reason !== 'chosen') it.cover = line.cover;
+            it.ranked = line.ranked;
+          }
+          render();
         } else if (line.type === 'done') {
           const secs = ((performance.now() - started) / 1000).toFixed(1);
-          $('progress').textContent = `Fertig in ${secs} s. Falsches wegklicken, Fehlendes neu suchen, dann teilen.`;
+          $('progress').textContent = `Fertig in ${secs} s${line.editions ? ` — ${line.picked} von ${line.editions} Rücken einer Ausgabe zugeordnet` : ''}. Falsches wegklicken, Fehlendes neu suchen, dann teilen.`;
           stats(meta, line);
         } else if (line.type === 'error') throw new Error(line.error);
       }
@@ -266,7 +282,9 @@ function stats(meta, done) {
   const covers = items.filter(i => ['matched-edition', 'no-close-cover'].includes(i.cover?.reason)).length;
   const parts = [`Modell: ${meta.model}`, meta.ms ? `Erkennung ${(meta.ms / 1000).toFixed(1)} s` : null,
     meta.inputTokens ? `${meta.inputTokens} + ${meta.outputTokens} Tokens` : null,
-    `Open Library ${(done.matchMs / 1000).toFixed(1)} s`, `${found}/${items.length} Werke gefunden`,
+    `Open Library ${(done.matchMs / 1000).toFixed(1)} s`, done.editionMs ? `Ausgaben ${(done.editionMs / 1000).toFixed(1)} s` : null,
+    done.editions ? `${done.picked}/${done.editions} Rücken einer Ausgabe zugeordnet` : null,
+    meta.books?.some(b => b.publisher) ? `Verlag gelesen bei ${meta.books.filter(b => b.publisher).length}/${meta.books.length}` : null, `${found}/${items.length} Werke gefunden`,
     covers ? `${matched}/${covers} Umschläge einer Ausgabe zugeordnet` : null,
     meta.problems?.length ? `Beim Lesen verworfen: ${meta.problems.join('; ')}` : null];
   $('stats').textContent = parts.filter(Boolean).join(' · ');
@@ -302,7 +320,7 @@ function render() {
     const li = document.createElement('li');
     li.className = 'tile' + (it.work ? '' : ' missing');
     const r = it.recognized;
-    const readAs = `${i + 1}. gelesen: „${r.title}“${r.author ? ` — ${r.author}` : ''}`;
+    const readAs = `${i + 1}. gelesen: „${r.title}“${r.author ? ` — ${r.author}` : ''}${r.publisher ? ` · ${r.publisher}` : ''}`;
     const swatch = it.color ? `<i class="sw" style="background:${it.color.hex}" title="Farbe im Foto ${it.color.hex}${it.color.refined ? ', Kasten an den Rücken angepasst' : ''}"></i>` : '';
     if (it.pending) {
       li.innerHTML = `<div class="cover"><div class="none">sucht …</div></div><p class="t">${esc(r.title)}</p><p class="a">${esc(r.author)}</p>`;
@@ -313,7 +331,7 @@ function render() {
       li.innerHTML = `<a href="${tileHref(it.work.id, c)}" target="_blank" rel="noopener">
           <div class="cover">${c ? `<img src="${cover(c)}" alt="${esc(it.work.title)} von ${esc(it.work.author)}" loading="lazy">` : '<div class="none">kein Cover</div>'}</div>
           <p class="t">${esc(it.work.title)}</p><p class="a">${esc(it.work.author)}</p></a>
-        <p class="why ${it.cover?.reason === 'matched-edition' ? 'good' : ''}">${esc(why)}${workWhy ? ` · ${esc(workWhy)}` : ''}</p>
+        <p class="why ${['matched-edition', 'spine-edition'].includes(it.cover?.reason) ? 'good' : ''}">${it.editionPending ? 'sucht die Ausgabe zum Rücken …' : esc(why)}${it.editionError ? ` · ${esc(it.editionError)}` : ''}${workWhy ? ` · ${esc(workWhy)}` : ''}</p>
         <p class="read">${swatch}${esc(readAs)}</p>`;
     } else {
       li.innerHTML = `<div class="cover"><div class="none">${it.error ? esc(it.error) : 'bei Open Library nicht gefunden'}</div></div>
@@ -380,6 +398,16 @@ async function action(i, act, li) {
         hits.appendChild(d);
       }
     });
+  } else if (act === 'covers' && it.ranked?.length) {
+    // Spine: the covers in order of likeness, with what the order rests on.
+    panel.innerHTML = '<div class="note">nach Ähnlichkeit zum Rücken: Verlag, dann Farbe</div><div class="grid"></div>';
+    for (const c of it.ranked) {
+      const fig = document.createElement('figure');
+      fig.style.margin = '0';
+      fig.innerHTML = `<img src="${cover(c.coverId, 'S')}" alt="Cover ${c.coverId}" loading="lazy"><figcaption class="stats" style="font-size:10px;line-height:1.2">${c.publisherMatch ? '✓ ' : ''}${esc(c.publisher ?? '')}${c.year ? ` ${c.year}` : ''}${c.gap !== undefined ? ` · ${c.gap.toFixed(2)}` : ''}</figcaption>`;
+      fig.onclick = () => { it.cover = { coverId: c.coverId, reason: 'chosen' }; render(); };
+      panel.querySelector('.grid').appendChild(fig);
+    }
   } else if (act === 'covers') {
     panel.innerHTML = '<div class="note">lädt die Cover der ersten Ausgabenseite …</div>';
     const res = await fetch(`/api/covers?id=${it.work.id}`).then(r => r.json()).catch(e => ({ error: e.message }));

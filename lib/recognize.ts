@@ -26,6 +26,16 @@ export interface RecognizedBook {
   box?: [number, number, number, number];
   /** 0..1, the model's own estimate. */
   confidence: number;
+  /**
+   * The publisher as printed, only when asked for (`RecognizeOptions`):
+   * lab/shelf uses it to find the edition a spine belongs to (ROADMAP 5.16).
+   */
+  publisher?: string;
+}
+
+export interface RecognizeOptions {
+  /** Also read the publisher's name or logo text. Off for the website. */
+  publisher?: boolean;
 }
 
 export interface Recognition {
@@ -54,9 +64,34 @@ For each book give:
 - kind: "cover" if the front cover faces the camera, "spine" if only the spine is visible
 - box: [x, y, w, h], the book's outline in the photo as fractions of the picture width and height (0..1), top-left origin
 - confidence: 0..1, how sure you are of title and author together
-
+{PUBLISHER}
 Leave out books whose title you cannot read; do not guess titles from colours or shapes.
 Answer with JSON only: {"books": [...]}.`;
+
+const PUBLISHER_LINE = `- publisher: the publisher's name or imprint as printed on the book (on a spine usually at the foot, often as a logo with a word); "" if none is readable. Do not guess it from the design.
+`;
+
+function promptFor(options: RecognizeOptions): string {
+  return PROMPT.replace('{PUBLISHER}', options.publisher ? PUBLISHER_LINE : '');
+}
+
+function schemaFor(options: RecognizeOptions) {
+  if (!options.publisher) return SCHEMA;
+  const item = SCHEMA.properties.books.items;
+  return {
+    ...SCHEMA,
+    properties: {
+      books: {
+        ...SCHEMA.properties.books,
+        items: {
+          ...item,
+          required: [...item.required, 'publisher'],
+          properties: { ...item.properties, publisher: { type: 'string' } },
+        },
+      },
+    },
+  };
+}
 
 const SCHEMA = {
   type: 'object',
@@ -138,7 +173,8 @@ export function parseRecognition(text: string): Recognition {
     const box = parseBox(r.box);
     if (r.box !== undefined && !box) problems.push(`#${i + 1}: Ausschnitt unbrauchbar`);
     const confidence = typeof r.confidence === 'number' && Number.isFinite(r.confidence) ? clamp01(r.confidence) : 0.5;
-    books.push({ title, author, kind, ...(box ? { box } : {}), confidence });
+    const publisher = typeof r.publisher === 'string' ? r.publisher.replace(/\s+/g, ' ').trim() : '';
+    books.push({ title, author, kind, ...(box ? { box } : {}), confidence, ...(publisher ? { publisher } : {}) });
   });
   return { books, problems };
 }
@@ -148,7 +184,7 @@ export function parseRecognition(text: string): Recognition {
  * key or the API fails; an empty `books` means the model answered and read
  * nothing — the two must not be confused (CLAUDE.md).
  */
-export async function recognize(image: Buffer, mediaType: 'image/jpeg' | 'image/png'): Promise<RecognitionRun> {
+export async function recognize(image: Buffer, mediaType: 'image/jpeg' | 'image/png', options: RecognizeOptions = {}): Promise<RecognitionRun> {
   if (!hasApiKey()) throw new Error('ANTHROPIC_API_KEY ist nicht gesetzt');
   const client = new Anthropic();
   const data = image.toString('base64');
@@ -156,12 +192,12 @@ export async function recognize(image: Buffer, mediaType: 'image/jpeg' | 'image/
   const ask = (model: string) => client.messages.create({
     model,
     max_tokens: 16000,
-    output_config: { effort: 'high', format: { type: 'json_schema', schema: SCHEMA } },
+    output_config: { effort: 'high', format: { type: 'json_schema', schema: schemaFor(options) } },
     messages: [{
       role: 'user',
       content: [
         { type: 'image', source: { type: 'base64', media_type: mediaType, data } },
-        { type: 'text', text: PROMPT },
+        { type: 'text', text: promptFor(options) },
       ],
     }],
   });

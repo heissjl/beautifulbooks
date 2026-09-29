@@ -36,6 +36,26 @@ Aus dem Hauptordner selbst: `set -a; source .env.local; set +a; npx tsx lab/shel
 
 Nach der Erkennung liest der Browser je Buch die Farbe aus dem Foto — bei Rücken zuvor den Kasten des Modells auf die Trennlinien geschoben — und die Wand lässt sich „wie im Foto", „nach Farben" oder „hell nach dunkel" ordnen; der geteilte Link trägt die gewählte Reihenfolge. Code, Regeln und Messung in [lab/colorsort/README.md](../colorsort/README.md#als-schritt-im-regal-ablauf-labshelf-seit-2026-09-28); der Server bündelt `lab/colorsort/shelfcolors.ts` als `/colors.js`. Im Beispielmodus malt die Seite ein Regal als Foto, damit der Schritt ohne Schlüssel zu sehen ist (Farben erfunden).
 
+## Die Ausgabe vom Buchrücken (ROADMAP 5.16, seit 2026-09-28)
+
+Julian, 2026-09-28: „der plan ist auch, dass du die seite das entsprechende cover der im foto gezeigten version findet. schwierig vom buchrücken aus, aber lass es uns versuchen".
+
+Ein Rücken zeigt weder Vorderseite noch ISBN. Zwei Dinge auf ihm sagen etwas über die Ausgabe:
+1. **Der Verlag am Fuß.** Das Modell liest ihn jetzt mit. `recognize(…, { publisher: true })` erweitert Prompt und Schema; die Website ruft ohne die Option auf und bleibt Wort für Wort gleich. `samePublisher` in `edition.ts` vergleicht locker: gemeinsames Wort ohne „Verlag/Books/Press/…", oder Initialen („dtv" = Deutscher Taschenbuch Verlag).
+2. **Die Farbe.** Verlage ziehen die Farbe der Vorderseite meist über den Rücken. Der Rücken-Kasten wird auf die Kanten geschoben (`refineSpineBox`), seine Farbe gelesen. Von jedem Kandidaten-Cover lädt der Server das kleine Bild (`-S.jpg`, vier gleichzeitig, im Speicher gemerkt) und nimmt seine drei Hauptfarben. Abstand = OKLab-Abstand zur nächsten Hauptfarbe mit ≥ 15 % Anteil.
+
+**Regel** (`pickBySpine`, gesetzt, nicht gemessen): Kandidaten sind die Cover von Seite 0 des Werks mit demselben Verlag, ohne Verlag die ersten 16. Gewählt wird bei Verlagstreffer das farblich nächste Cover, wenn der Abstand ≤ 0,10 ist; ohne Verlag nur, wenn es außerdem das zweitbeste um ≥ 0,03 schlägt. Sonst bleibt das Standardcover, und die Kachel sagt, was verglichen wurde. Der Verlag allein reicht nie: ein Verlag druckt ein Werk unter vielen Umschlägen.
+
+**Ablauf:** ein zweiter Durchgang nach den Werken, damit die Wand zuerst steht und die Cover an ihrem Platz wechseln. Er kostet je Rücken eine Editions-Anfrage an Open Library (Seite 0) und bis zu 16 kleine Coverbilder. „anderes Cover" zeigt bei Rücken die Cover in der Reihenfolge der Ähnlichkeit, mit Verlag, Jahr und Abstand.
+
+**Gemessen (2026-09-28), gestellt:** als „Rücken" diente ein Streifen aus der Mitte eines echten Open-Library-Covers (ein Sechstel der Breite) vor grauer Wand, der Kasten 8 px zu weit links, auf drei Werken (Gatsby 7 Cover auf Seite 0, `OL1168007W` 7, `OL82563W` 75).
+- **Mit Verlag: 6/6, 7/7, 9/10** richtig; der eine Fehler (Cappelen Damm) stand erst auf Platz 8.
+- **Nur Farbe: 3/7 und 4/10** gewählt, alle gewählten richtig. Die übrigen lehnte die Regel ab, obwohl das richtige Cover in 13 von 17 Fällen auf Platz 1 der Liste stand. Mit Verlag wählt sie also, ohne Verlag bietet sie an.
+- Dauer: 8,8 s für Gatsby, sechs Rücken, kalt.
+- **Was das nicht misst:** ein echter Rücken hat oft eine andere Farbe als die Mitte der Vorderseite (Band, Streifen, schwarzer Rücken bei farbiger Front); Licht und Weißabgleich eines Telefons; und ob Sonnet den Verlag wirklich lesen kann. Das zeigen erst Julians Fotos.
+
+**Grenzen:** nur Seite 0 (die 100 jüngsten Ausgabensätze) wird verglichen, Gatsby hat dort 7 von 379 Covern. Ein älteres Exemplar findet seine Ausgabe daher oft nicht und bekommt ehrlich das Standardcover. Weitere Seiten kosten je eine Anfrage.
+
 ## Gemessen (2026-09-26)
 
 - **Linklänge** (reale Größenordnung der IDs: Werke um 27–33 Mio., Cover um 12 Mio.): **20 Bücher 240 Zeichen, 60 Bücher 667** mit `http://127.0.0.1:4330/`; mit `https://beautifulcovers.vercel.app/shelf` 258 bzw. 685. Rund 10,7 Zeichen je Buch. Die Beispielwand (11 Bücher nach einer Löschung, Titel „Probe-Regal") ergab 145 Zeichen.

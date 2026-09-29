@@ -54,3 +54,14 @@ describe('parseRecognition', () => {
     ]);
   });
 });
+
+describe('publisher (ROADMAP 5.16)', () => {
+  it('reads it when the answer carries one and leaves it out when empty', () => {
+    const r = parseRecognition(JSON.stringify({ books: [
+      { title: 'Homo Faber', author: 'Max Frisch', kind: 'spine', confidence: 0.9, publisher: ' suhrkamp  taschenbuch ' },
+      { title: 'Dune', author: 'Frank Herbert', kind: 'spine', confidence: 0.9, publisher: '' },
+    ] }));
+    expect(r.books[0].publisher).toBe('suhrkamp taschenbuch');
+    expect(r.books[1]).not.toHaveProperty('publisher');
+  });
+});

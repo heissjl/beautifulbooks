@@ -19,7 +19,7 @@ export interface SpineColor {
   /** Share of the sampled pixels in the winning cluster, 0..1. */
   share: number;
   /** Every cluster, largest first — the second one shows a two-colour spine. */
-  clusters: Array<{ hex: string; share: number }>;
+  clusters: Array<{ hex: string; lab: Oklab; share: number }>;
 }
 
 function toLinear(c: number): number {
@@ -148,6 +148,6 @@ export function spineColor(rgba: Uint8Array | Uint8ClampedArray, width: number, 
     lab: main,
     lch: toLch(main),
     share: (clusters[0]?.size ?? 0) / total,
-    clusters: clusters.map(c => ({ hex: hex(c.centre), share: c.size / total })),
+    clusters: clusters.map(c => ({ hex: hex(c.centre), lab: c.centre, share: c.size / total })),
   };
 }

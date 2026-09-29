@@ -3600,3 +3600,12 @@ Julian: „use the book detection by the other lab project for the collection cu
 - **Kanten-Anpassung, gemessen** an sechs gemalten Regalen (283 Rücken), beide Kanten um einen Anteil der Rückenbreite verschoben: 10 % → 283/283 auf ±3 px zurück, 25 % → 274, 35 % → 199, 50 % → 5. Die erste Fassung nahm die *stärkste* Linie im Fenster statt der *nächsten* und kam bei 25 % nur auf 79 %: die Außenkante eines schmalen Nachbarn war stärker.
 - Beispielmodus im Browser: 12 von 12 Farben gelesen, 71 ms; die Reihenfolge im Link stimmt mit der Wand überein.
 - **Offen:** ein echtes Foto (Schlüssel fehlt lokal). Die Kacheln zeigen Open-Library-Cover, geordnet wird nach der Farbe des eigenen Exemplars. Ob das auf der Wand stimmig aussieht, entscheidet Julian.
+
+## 2026-09-28 — Die Ausgabe vom Buchrücken (ROADMAP 5.16 auf 5.11)
+
+Julian: „der plan ist auch, dass du die seite das entsprechende cover der im foto gezeigten version findet. schwierig vom buchrücken aus, aber lass es uns versuchen"
+
+- **Verlag:** `lib/recognize.ts` hat die Option `{ publisher: true }`. Das Modell liest dann den Verlag vom Buch mit. Die Website ruft ohne die Option auf; Prompt und Schema sind dort unverändert.
+- **Auswahl** (`lab/shelf/edition.ts`, `Matcher.spineEdition`): Kandidaten sind die Cover von Seite 0 des Werks mit demselben Verlag, ohne Verlagstreffer die ersten 16. Gereiht wird nach dem OKLab-Abstand der Rückenfarbe zur nächsten Hauptfarbe des Covers. Gewählt wird bei Verlagstreffer ab Abstand ≤ 0,10; ohne Verlag nur, wenn das Cover außerdem das zweitbeste um ≥ 0,03 schlägt. Die Kacheln zeigen die Gründe, „anderes Cover" die Reihung.
+- **Gestellte Messung:** Streifen aus der Mitte echter Cover als „Rücken", drei Werke. Mit Verlag 22 von 23 richtig. Nur mit Farbe 7 von 17 gewählt, alle richtig; das richtige stand in 13 von 17 Fällen auf Platz 1. Kalt 8,8 s für sechs Rücken.
+- **Offen:** echte Rücken, deren Farbe von der Vorderseite abweicht, und ob Sonnet den Verlag lesen kann — dafür braucht es Julians Fotos. Außerdem sieht der Vergleich nur Seite 0 (Gatsby: 7 von 379 Covern).

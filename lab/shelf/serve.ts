@@ -61,10 +61,33 @@ function stream(res: ServerResponse) {
 
 async function matchAll(books: RecognizedBook[], photo: RgbaImage | null, emit: (line: unknown) => void) {
   const started = Date.now();
+  const results = [];
   for (let i = 0; i < books.length; i++) {
-    emit({ type: 'match', index: i, result: await matcher.match(books[i], photo) });
+    const result = await matcher.match(books[i], photo);
+    results.push(result);
+    emit({ type: 'match', index: i, result });
   }
-  emit({ type: 'done', matchMs: Date.now() - started });
+  const matchMs = Date.now() - started;
+  // Second pass (ROADMAP 5.16): the edition behind each spine. After the
+  // works, so the wall stands first and covers change in place.
+  let editions = 0, picked = 0;
+  if (photo) {
+    for (let i = 0; i < books.length; i++) {
+      const r = results[i];
+      if (!r.work || books[i].kind !== 'spine') continue;
+      emit({ type: 'edition-start', index: i });
+      try {
+        const found = await matcher.spineEdition(books[i], r.work.id, photo, r.cover?.coverId ?? 0);
+        if (!found) continue;
+        editions++;
+        if (found.cover.reason === 'spine-edition') picked++;
+        emit({ type: 'edition', index: i, cover: found.cover, ranked: found.ranked.slice(0, 24), spine: found.spine });
+      } catch (err) {
+        emit({ type: 'edition', index: i, error: `Open Library: ${err instanceof Error ? err.message : String(err)}` });
+      }
+    }
+  }
+  emit({ type: 'done', matchMs, editionMs: Date.now() - started - matchMs, editions, picked });
 }
 
 const server = createServer(async (req, res) => {
@@ -109,7 +132,7 @@ const server = createServer(async (req, res) => {
       if (!photo) return send(400, { error: 'Foto ließ sich nicht lesen' });
       let run;
       try {
-        run = await recognize(bytes, type);
+        run = await recognize(bytes, type, { publisher: true });
       } catch (err) {
         return send(502, { error: `Erkennung fehlgeschlagen: ${err instanceof Error ? err.message : String(err)}` });
       }
