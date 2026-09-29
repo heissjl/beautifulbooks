@@ -3557,3 +3557,18 @@ Die Bandliste stammt aus der DNB, ergänzt aus K10plus: `lab/collections/lists/f
   - Für eine vollständige Wand fehlen 964 Cover: 530 neue Ausgaben und 434 Bilder für vorhandene Ausgaben. Dafür gibt es noch keine Bildquelle.
   - Julian entscheidet, ob beide Layouts auf eine Wand gehören.
   - Auffällige Datensätze (falsche Bilder, falsche Jahre, Mehrbänder als eine Ausgabe, Dubletten) stehen in der Recherche-Datei.
+
+## 2026-09-28 — Steinbeck/Piatti bei dtv: Uploads fertig, Wand noch nicht gebaut (ROADMAP 5.10)
+
+- **Manifest:** `lab/collections/for-openlibrary/dtv-steinbeck-covers-by-celestino-piatti/`. 23 Umschläge:
+  - 3 waren schon da;
+  - 9 Uploads auf vorhandene Ausgaben;
+  - 11 neue Ausgaben, OL62602984M–OL62602994M, an den englischen Werken; 10613 hängt am deutschen Werk OL7966025W.
+- **Keller-Nummern:** Zwei sind um 1000 verschoben. *König Artus* ist dtv 11490 (1992), *An den Pforten der Hölle* ist 11712 (1993).
+- **Stand am Abend:** Alle 20 Uploads sind gespeichert.
+- **Noch offen:**
+  - Die Liste `lab/collections/lists/dtv-steinbeck-covers-by-celestino-piatti.json` bekommt noch die 11 neuen Ausgaben.
+  - Bei 10734, 10879 und 10921 liegt vor dem neuen Bild ein altes Nicht-Cover; dort `cover` pinnen.
+  - Dann die Wand bauen, den Entwurf pushen und deployen.
+- **Nach der WLAN-Pause fertig:** Wand `dtv-steinbeck-covers-by-celestino-piatti` mit 22 von 23, alle Piatti, online als Entwurf. Es fehlt *Die gute alte und die bessere neue Zeit* (10921): Open Library führt die Ausgabe OL40211633M unter *The Pastures of Heaven*, demselben Werk wie *Das Tal des Himmels* (10675), also verdrängt eine Kachel die andere. Das richtige Werk fehlt bei Open Library.
+- **Angehalten auf Julians Bitte** („stop it and wait until i have stable wifi"). Die Manifest-Agenten für phantastica, Haffmans, Herder und Ex Libris sind gestoppt; ihre Zwischenstände liegen in `lab/collections/for-openlibrary/<slug>/`.

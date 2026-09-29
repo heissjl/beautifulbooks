@@ -30246,6 +30246,217 @@
         }
       ],
       "coverCredits": "artwork"
+    },
+    {
+      "slug": "dtv-steinbeck-covers-by-celestino-piatti",
+      "title": "Steinbeck at dtv — covers by Celestino Piatti",
+      "kind": "series",
+      "intro": "From the mid-1980s dtv reissued John Steinbeck's books in German with covers by the Swiss artist Celestino Piatti: one bold black line drawing on a single colour for each book, signed in the corner. These are the covers Sammlung Keller shows, in the order of their dtv numbers.",
+      "published": false,
+      "publishers": [
+        "Deutscher Taschenbuch Verlag",
+        "dtv"
+      ],
+      "works": [
+        {
+          "id": "OL23205W",
+          "title": "Früchte des Zorns",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259714",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423104740",
+          "coverIsbn": "3423104740"
+        },
+        {
+          "id": "OL23194W",
+          "title": "Autobus auf Seitenwegen",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259725",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423104759",
+          "coverIsbn": "3423104759"
+        },
+        {
+          "id": "OL23190W",
+          "title": "Geld bringt Geld",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259726",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423105054",
+          "coverIsbn": "3423105054"
+        },
+        {
+          "id": "OL23186W",
+          "title": "Die wilde Flamme",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259715",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423105216",
+          "coverIsbn": "3423105216"
+        },
+        {
+          "id": "OL7966025W",
+          "title": "Der rote Pony und andere Erzählungen",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259727",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423106131",
+          "coverIsbn": "3423106131"
+        },
+        {
+          "id": "OL23199W",
+          "title": "Die Straße der Ölsardinen",
+          "author": "John Steinbeck",
+          "coverId": "ol:10976620",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423106255",
+          "coverIsbn": "3423106255"
+        },
+        {
+          "id": "OL23195W",
+          "title": "Das Tal des Himmels",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259730",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423106751",
+          "coverIsbn": "3423106751"
+        },
+        {
+          "id": "OL7966118W",
+          "title": "Die Perle",
+          "author": "John Steinbeck",
+          "coverId": "ol:14458677",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423106905",
+          "coverIsbn": "3423106905"
+        },
+        {
+          "id": "OL23200W",
+          "title": "Der Mond ging unter",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259717",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423107022",
+          "coverIsbn": "3423107022"
+        },
+        {
+          "id": "OL7966231W",
+          "title": "Tagebuch eines Romans",
+          "author": "John Steinbeck",
+          "coverId": "ol:14633652",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423107170",
+          "coverIsbn": "3423107170"
+        },
+        {
+          "id": "OL23198W",
+          "title": "Stürmische Ernte",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259716",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423107340",
+          "coverIsbn": "3423107340"
+        },
+        {
+          "id": "OL23201W",
+          "title": "Tortilla Flat",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259728",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423107642",
+          "coverIsbn": "3423107642"
+        },
+        {
+          "id": "OL23193W",
+          "title": "Wonniger Donnerstag",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259729",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423107766",
+          "coverIsbn": "3423107766"
+        },
+        {
+          "id": "OL23187W",
+          "title": "Eine Handvoll Gold",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259718",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423107863",
+          "coverIsbn": "3423107863"
+        },
+        {
+          "id": "OL23204W",
+          "title": "Von Mäusen und Menschen",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259731",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423107979",
+          "coverIsbn": "3423107979"
+        },
+        {
+          "id": "OL23166W",
+          "title": "Jenseits von Eden",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259719",
+          "addedAt": "2026-09-29",
+          "from": "isbn:342310810X",
+          "coverIsbn": "342310810X"
+        },
+        {
+          "id": "OL23191W",
+          "title": "Laßt uns König spielen",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259732",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423108452",
+          "coverIsbn": "3423108452"
+        },
+        {
+          "id": "OL23188W",
+          "title": "Logbuch des Lebens",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259735",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423108657",
+          "coverIsbn": "3423108657"
+        },
+        {
+          "id": "OL23192W",
+          "title": "Meine Reise mit Charley",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259720",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423108797",
+          "coverIsbn": "3423108797"
+        },
+        {
+          "id": "OL23196W",
+          "title": "Der fremde Gott",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259721",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423109092",
+          "coverIsbn": "3423109092"
+        },
+        {
+          "id": "OL23181W",
+          "title": "König Artus",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259733",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423114908",
+          "coverIsbn": "3423114908"
+        },
+        {
+          "id": "OL15398039W",
+          "title": "An den Pforten der Hölle",
+          "author": "John Steinbeck",
+          "coverId": "ol:15259734",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3423117125",
+          "coverIsbn": "3423117125"
+        }
+      ]
     }
   ]
 }
