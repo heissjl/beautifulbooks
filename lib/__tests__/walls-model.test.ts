@@ -82,7 +82,7 @@ describe('operations', () => {
     expect(w.tiles.map((t) => t.coverId)).toEqual(['1', '2', '3']);
     w = applyOp(w, { op: 'remove', coverId: '2' }, 't');
     expect(w.tiles.map((t) => t.coverId)).toEqual(['1', '3']);
-    expect(applyOp(w, { op: 'columns', columns: 42 }, 't').columns).toBe(8);
+    expect(applyOp(w, { op: 'columns', columns: 42 }, 't').columns).toBe(10);
     expect(applyOp(w, { op: 'columns', columns: 0 }, 't').columns).toBe(1);
   });
 
@@ -169,8 +169,12 @@ describe('showcase (5.13d)', () => {
 
 describe('artwork (step 2)', () => {
   it('keeps a tone only from the list', () => {
-    expect(applyOp(wall(), { op: 'artwork', tone: 'sage' }, 't').artwork).toEqual({ tone: 'sage' });
+    expect(applyOp(wall(), { op: 'artwork', tone: 'sage' }, 't').artwork).toEqual({ tone: 'sage', frame: 'black' });
     expect(() => applyOp(wall(), { op: 'artwork', tone: 'pink' as never }, 't')).toThrow(WallError);
-    expect(toPublic(applyOp(wall(), { op: 'artwork', tone: 'ink' }, 't')).artwork).toEqual({ tone: 'ink' });
+    expect(() => applyOp(wall(), { op: 'artwork', frame: 'plastic' as never }, 't')).toThrow(WallError);
+    const lilac = applyOp(wall(), { op: 'artwork', tone: 'lilac' }, 't');
+    // A frame alone keeps the tone, and the other way round.
+    expect(applyOp(lilac, { op: 'artwork', frame: 'walnut' }, 't').artwork).toEqual({ tone: 'lilac', frame: 'walnut' });
+    expect(toPublic(applyOp(wall(), { op: 'artwork', frame: 'gold' }, 't')).artwork).toEqual({ tone: 'sand', frame: 'gold' });
   });
 });

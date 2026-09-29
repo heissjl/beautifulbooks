@@ -12,7 +12,7 @@ import { linkPlan } from '@/lib/linkplan';
 import type { Market } from '@/lib/market';
 import type { BuyLink } from '@/lib/model';
 import { FORMAT_CM, formatLength, isEstimate, layoutPiece, PIECE_CM, pieceRange, unitLabel, type BookSize, type Units } from '@/lib/walls/dimensions';
-import { DEFAULT_ARTWORK, TONES, type PublicWall, type Tile, type Tone, type WallOp } from '@/lib/walls/model';
+import { DEFAULT_ARTWORK, FRAMES, MAX_COLUMNS, TONES, type FrameColor, type PublicWall, type Tile, type Tone, type WallOp } from '@/lib/walls/model';
 
 const WANTED_KEY = (id: string) => `bb.wall.wanted.${id}`;
 const UNITS_KEY = 'bb.units';
@@ -68,7 +68,8 @@ export default function WallPlan({
   const [chosenMarket, setMarket] = useMarket();
   const market = chosenMarket ?? detected;
   const [open, setOpen] = useState<string | null>(null);
-  const tone = (wall.artwork ?? DEFAULT_ARTWORK).tone;
+  const tone = wall.artwork?.tone ?? DEFAULT_ARTWORK.tone;
+  const frameColor = wall.artwork?.frame ?? DEFAULT_ARTWORK.frame;
   const [chosenUnits, setChosenUnits] = useState<Units | null>(readUnits);
   const units: Units = chosenUnits ?? (market === 'us' ? 'imperial' : 'metric');
   const chooseUnits = (u: Units) => {
@@ -143,11 +144,11 @@ export default function WallPlan({
         <label className="flex items-center gap-2">
           Books per row
           <select
-            value={plan.columns}
+            value={Math.min(wall.columns, MAX_COLUMNS)}
             onChange={(e) => onSend([{ op: 'columns', columns: Number(e.target.value) }])}
             className="rounded-full border border-line bg-surface px-2 py-1 text-sm text-ink"
           >
-            {Array.from({ length: Math.min(8, wall.tiles.length) }, (_, i) => i + 1).map((n) => (
+            {Array.from({ length: MAX_COLUMNS }, (_, i) => i + 1).map((n) => (
               <option key={n}>{n}</option>
             ))}
           </select>
@@ -168,21 +169,45 @@ export default function WallPlan({
             />
           ))}
         </div>
+        <div className="flex items-center gap-2" role="radiogroup" aria-label="Frame">
+          Frame
+          {(Object.keys(FRAMES) as FrameColor[]).map((f) => (
+            <button
+              key={f}
+              type="button"
+              role="radio"
+              aria-checked={f === frameColor}
+              title={FRAMES[f].label}
+              aria-label={FRAMES[f].label}
+              onClick={() => onSend([{ op: 'artwork', frame: f }])}
+              className={`h-6 w-6 rounded-full border ${f === frameColor ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'border-line'}`}
+              style={{ background: FRAMES[f].css }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* The piece: moulding, back panel, books on wedges. */}
       <div className="mt-5 rounded bg-surface-2 p-4 sm:p-8">
         <div
-          className="mx-auto bg-[#2a2724] p-[1.4%] shadow-lg"
-          style={{ maxWidth: `min(100%, ${Math.round((460 * plan.widthCm) / plan.heightCm)}px)` }}
+          className="mx-auto p-[1.4%] shadow-lg"
+          style={{
+            maxWidth: `min(100%, ${Math.round((460 * plan.widthCm) / plan.heightCm)}px)`,
+            background: FRAMES[frameColor].css,
+            // A moulding has an edge: a hairline outside, a shade inside.
+            boxShadow: '0 12px 28px -12px rgba(0,0,0,.45), inset 0 0 0 1px rgba(0,0,0,.25)',
+          }}
           role="img"
-          aria-label={`Preview: ${wall.tiles.length} books on wedges in one frame, ${plan.columns} per row, ${TONES[tone].label} background`}
+          aria-label={`Preview: ${wall.tiles.length} books on wedges in a ${FRAMES[frameColor].label.toLowerCase()} frame, ${plan.columns} per row, ${TONES[tone].label} background`}
         >
           <div
             className="relative w-full"
             style={{
               aspectRatio: `${plan.widthCm} / ${plan.heightCm}`,
-              background: TONES[tone].hex,
+              // The back panel is cloth or paper, not flat paint: a fine noise over the tone
+              // (Julian, 2026-09-28: „gib dem background etwas textur“).
+              backgroundColor: TONES[tone].hex,
+              backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"), repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(0,0,0,.03) 0 1px, transparent 1px 3px)`,
               boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.18), inset 0 10px 24px rgba(0,0,0,.28)',
             }}
           >

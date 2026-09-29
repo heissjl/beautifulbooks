@@ -86,14 +86,32 @@ export const TONES = {
   bone: { label: 'Bone', hex: '#ece6da' },
   sand: { label: 'Sand', hex: '#d9c7a7' },
   sage: { label: 'Sage', hex: '#aab39b' },
+  lilac: { label: 'Lilac', hex: '#c8bfd8' },
   terracotta: { label: 'Terracotta', hex: '#b56a4f' },
   ink: { label: 'Ink', hex: '#1f2833' },
 } as const;
 export type Tone = keyof typeof TONES;
+
+/**
+ * The frame's colour (Julian, 2026-09-28: „die möglichkeit eine rahmenfarbe zu
+ * wählen, weiß, schwarz, holz hell, holz dunkel, silber, golden“). `css` is the
+ * moulding's background: flat paint, a wood grain, or a metallic sheen.
+ */
+export const FRAMES = {
+  white: { label: 'White', css: '#f3f1ec' },
+  black: { label: 'Black', css: '#1f1c1a' },
+  oak: { label: 'Light wood', css: 'repeating-linear-gradient(88deg, #c9a46f 0 3px, #b98f59 3px 5px, #d2b07c 5px 9px, #bd955f 9px 12px)' },
+  walnut: { label: 'Dark wood', css: 'repeating-linear-gradient(88deg, #5b3a22 0 3px, #4a2e1a 3px 6px, #6a4429 6px 9px, #523320 9px 12px)' },
+  silver: { label: 'Silver', css: 'linear-gradient(135deg, #eceef0 0%, #b9bdc2 30%, #f4f5f6 50%, #a8adb3 72%, #dfe2e5 100%)' },
+  gold: { label: 'Gold', css: 'linear-gradient(135deg, #f3dc95 0%, #c9a13b 30%, #f7e7ad 50%, #b88f2c 72%, #e9cd7a 100%)' },
+} as const;
+export type FrameColor = keyof typeof FRAMES;
+
 export interface Artwork {
   tone: Tone;
+  frame?: FrameColor;
 }
-export const DEFAULT_ARTWORK: Artwork = { tone: 'sand' };
+export const DEFAULT_ARTWORK: Required<Artwork> = { tone: 'sand', frame: 'black' };
 
 
 /** What a view link returns: the wall without its owner. */
@@ -108,6 +126,7 @@ export const MAX_TILES = 500;
 export const MAX_TITLE = 80;
 export const MAX_PRINTINGS = 5;
 export const DEFAULT_COLUMNS = 4;
+export const MAX_COLUMNS = 10;
 export const MAX_INTRO = 600;
 /** How long an unsaved collection is kept (5.13j). */
 export const UNSAVED_HOURS = 48;
@@ -170,7 +189,7 @@ export type WallOp =
   | { op: 'columns'; columns: number }
   | { op: 'intro'; intro: string }
   | { op: 'by'; by: string }
-  | { op: 'artwork'; tone: Tone }
+  | { op: 'artwork'; tone?: Tone; frame?: FrameColor }
   | { op: 'save' }
   | { op: 'submit' }
   | { op: 'withdraw' };
@@ -213,10 +232,15 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
       else delete next.by;
       return next;
     }
-    case 'artwork':
-      if (!(op.tone in TONES)) throw new WallError('Unknown tone.');
-      next.artwork = { tone: op.tone };
+    case 'artwork': {
+      // Either part may change alone; the other stays as it was.
+      const tone = op.tone ?? wall.artwork?.tone ?? DEFAULT_ARTWORK.tone;
+      const frame = op.frame ?? wall.artwork?.frame ?? DEFAULT_ARTWORK.frame;
+      if (!(tone in TONES)) throw new WallError('Unknown tone.');
+      if (!(frame in FRAMES)) throw new WallError('Unknown frame.');
+      next.artwork = { tone, frame };
       return next;
+    }
     case 'save':
       delete next.unsaved;
       return next;
@@ -234,7 +258,8 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
       return next;
     case 'columns':
       if (!Number.isFinite(op.columns)) throw new WallError('Columns must be a number.');
-      next.columns = Math.max(1, Math.min(8, Math.round(op.columns)));
+      // 1 to 10 books per row (Julian, 2026-09-28: „hier 1 bis zu 10 per reihe“).
+      next.columns = Math.max(1, Math.min(MAX_COLUMNS, Math.round(op.columns)));
       return next;
     default:
       throw new WallError('Unknown operation.');
