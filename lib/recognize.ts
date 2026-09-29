@@ -82,10 +82,10 @@ List every book whose title you can read, in reading order (left to right, top t
 For each book give:
 - title: the title as printed, without series names or "a novel"
 - author: the author as printed; "" if not visible and you are not sure
-- kind: "cover" if the front cover faces the camera, "spine" if only the spine is visible
+{PUBLISHER}- kind: "cover" if the front cover faces the camera, "spine" if only the spine is visible
 {BOX}
 - confidence: 0..1, how sure you are of title and author together
-{PUBLISHER}
+
 Leave out books whose title you cannot read; do not guess titles from colours or shapes.
 Answer with JSON only: {"books": [...]}.`;
 
@@ -94,7 +94,12 @@ const PUBLISHER_LINE = `- publisher: the publisher's name or imprint as printed 
 
 const FRACTION_BOX = `- box: [x, y, w, h], the book's outline in the photo as fractions of the picture width and height (0..1), top-left origin`;
 
-function promptFor(options: RecognizeOptions): string {
+/**
+ * The prompt for a set of options. Exported for the test that pins the
+ * website's prompt (no options) to its wording: lab/shelf adds fields, the
+ * website must not notice.
+ */
+export function promptFor(options: RecognizeOptions): string {
   const box = options.pixels && options.axis
     ? `- axis: [x1, y1, x2, y2, t] in pixels of this image, which is ${options.pixels.width} × ${options.pixels.height} pixels, top-left origin: a line along the middle of the book's spine over its whole length, from one short end of the spine to the other (x1,y1 and x2,y2 are those two ends), and t the spine's width across that line in pixels. The line always runs along the long side: vertical for a book standing upright, slanted for one leaning, horizontal for one lying flat in a stack. For a front cover facing the camera: the line along its height, and t its width. Always five numbers.
 - A book lying flat in a stack whose spine faces the camera is kind "spine", not "cover"`
@@ -111,9 +116,13 @@ function schemaFor(options: RecognizeOptions) {
   const properties: Record<string, unknown> = { ...item.properties };
   if (options.axis) { delete properties.box; properties.axis = { type: 'array', items: { type: 'number' } }; required.push('axis'); }
   if (options.publisher) { properties.publisher = { type: 'string' }; required.push('publisher'); }
+  // Right after the author, as in the prompt: the model fills fields in this order, and the
+  // publisher came back for 3 of 58 books when it followed the geometry, 25 of 64 before.
+  const order = ['title', 'author', 'publisher', 'kind', 'box', 'axis', 'confidence'];
+  const ordered = Object.fromEntries(order.filter(k => k in properties).map(k => [k, properties[k]]));
   return {
     ...SCHEMA,
-    properties: { books: { ...SCHEMA.properties.books, items: { ...item, required, properties } } },
+    properties: { books: { ...SCHEMA.properties.books, items: { ...item, required, properties: ordered } } },
   };
 }
 

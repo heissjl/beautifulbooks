@@ -62,6 +62,20 @@ Julian lud ein Foto seines ganzen Regals hoch (Hochformat, drei Reihen, Dosen vo
   Open Library brauchte 40,4 s, die Ausgaben 82,0 s. Die Kästen sitzen jetzt senkrecht auf den Rücken, vom Kopf bis zum Brett; 39 von 64 wurden an Trennlinien oder die Reihe angepasst. Die Farbordnung sieht auf den ersten Blick plausibel aus (Creme und Weiß vorn, Schwarz hinten), ist aber nicht Buch für Buch geprüft.
   Bei den Werken passten 44 nach Autor und Titel und 17 nur nach Titel; 2 waren „unsicher“. Wie viele davon falsch sind, ist nicht gezählt.
 
+## Gedrehte Rechtecke am echten Foto, und das sortierte Regal (2026-09-29)
+
+**Protokoll, drittes Hochladen desselben Fotos** (gedrehte Rechtecke, Reihe für Reihe):
+- 58 Bücher gelesen (vorher 64): 50 stehend, 8 lehnend, 0 liegend. 37 Rechtecke verschoben, davon 31 mit beiden Kanten und 6 mit einer. Anteil der Hauptfarbe 0,55 → 0,58.
+- **Verlag nur noch bei 3 statt 25.** Die ausführlichere Frage nach der Geometrie hat den Verlag offenbar verdrängt. Er steht jetzt in Anweisung und Schema direkt nach dem Autor. Ob das hilft, zeigt erst das nächste Hochladen.
+- Lesen 31–47 s je Reihe, parallel; 13 306 + 7579 Tokens. **Zuordnung kalt 589 s** (Open Library, Ausgaben je Rücken nacheinander), warm 15 s.
+- **Firefox:** dreimal `400 Bild ließ sich nicht lesen`. Die Reihen-Ausschnitte waren 5,1–5,7 MB groß, bei Chrome 0,4–0,6 MB. `/api/read` dekodierte sie ganz, nur um die Größe zu erfahren, und scheiterte an der Speichergrenze von jpeg-js. Jetzt liest `imagesize.ts` Breite und Höhe aus dem Dateikopf. Scheitert auch das, protokolliert der Server die ersten Bytes. Warum Firefox so große JPEGs schreibt, ist ungeklärt.
+
+**Das sortierte Regal** (Julian: „baue noch die funktion ein, dass am ende das sortierte regal gezeigt wird“): Unter der Wand steht „Dein Regal, nach Farben eingeräumt“, gezeichnet von `drawSortedShelf` in `lab/colorsort/shelfcolors.ts`.
+- Jedes Buch wird entlang seines gedrehten Rechtecks aus dem Foto geschnitten und aufgerichtet; lehnende und liegende stehen dann wie die anderen.
+- Die Reihen werden mit `layout` (sort.ts) der Reihe nach gefüllt, jede bis zur Breite, die ihre Bücher auf dem Foto einnahmen, und stehen auf einem Brett.
+- Die Ordnung folgt dem Umschalter; bei „wie im Foto“ gilt der Regenbogen. „Bild sichern“ lädt das Regal als JPEG.
+- Geprüft an der gemalten Szene: Eine Linie knapp über dem Brett trifft Weiß · Rot · Orange · Creme · Gelb · Grün · Blau · Marineblau · Magenta · Schwarz, jeder Streifen etwa so breit wie sein Buch.
+
 ## HEIC-Fotos (2026-09-28)
 
 Julian: „it doesnt recognize the photos i am uploading, but the same photo worked online for a collection creation already". **Ursache:** iPhone-Fotos sind HEIC. Chrome — und damit das Browser-Pane — gibt einer `.HEIC`-Datei keinen Typ (`file.type` leer) und kann sie weder mit `createImageBitmap` noch mit `<img>` lesen; Safari kann beides. Die Seite verwarf eine Datei ohne `image/`-Typ **stillschweigend**, darum geschah nichts. Online lief dasselbe Foto vermutlich in Safari oder auf dem Telefon.

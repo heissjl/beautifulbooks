@@ -19,6 +19,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { decode, type RgbaImage } from '../../lib/imagehash';
+import { imageSize } from './imagesize';
 import { Matcher, coverIdFromUrl } from './match';
 import { FALLBACK_MODEL, PRIMARY_MODEL, hasApiKey, recognize, type RecognizedBook } from './recognize';
 
@@ -174,8 +175,11 @@ const server = createServer(async (req, res) => {
       const type = req.headers['content-type'];
       if (type !== 'image/jpeg' && type !== 'image/png') return send(400, { error: 'nur JPEG oder PNG' });
       const bytes = await readBytes(req, MAX_PHOTO_BYTES);
-      const image = decode(bytes);
-      if (!image) return send(400, { error: 'Bild ließ sich nicht lesen' });
+      const image = imageSize(bytes);
+      if (!image) {
+        console.log(`read: no image size, ${bytes.length} bytes, starts ${bytes.subarray(0, 8).toString('hex')}`);
+        return send(400, { error: `Bild ließ sich nicht lesen (${bytes.length} Bytes, Kopf ${bytes.subarray(0, 4).toString('hex')})` });
+      }
       const key = createHash('sha256').update(bytes).digest('hex');
       const cached = recognitions.get(key);
       try {

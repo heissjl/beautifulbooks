@@ -11,7 +11,7 @@
 import { spineColor } from './color';
 import { corners, fromAxis, orientedColor, refineOriented, tilt } from './oriented';
 import { findRowCuts, findSpineCuts, fitBoxToRows, refineSpineBox, rowsFromCuts, toLabImage, type Band, type Box } from './spines';
-import { DEFAULTS, sortBooks, type Book, type Mode } from './sort';
+import { DEFAULTS, layout, sortBooks, type Book, type Mode } from './sort';
 import { syntheticShelf } from './synthetic';
 
 export interface BookInPhoto {
@@ -132,7 +132,78 @@ export function detectShelf(canvas: HTMLCanvasElement): { rows: Band[]; rowCuts:
   return { rows, rowCuts, cuts: rows.map(r => findSpineCuts(lab, r)), ms: Math.round(performance.now() - started) };
 }
 
-declare global {
-  interface Window { shelfColors: { colorsForBooks: typeof colorsForBooks; colourOrder: typeof colourOrder; paintedSample: typeof paintedSample; detectShelf: typeof detectShelf } }
+/**
+ * The shelf rebuilt from the photo's own spines in a new order (Julian,
+ * 2026-09-29: „baue noch die funktion ein, dass am ende das sortierte regal
+ * gezeigt wird"). Each book is cut out along its turned rectangle and stood
+ * upright, so a leaning or lying book stands like the others; the rows are
+ * refilled in order, each up to the width its books took in the photo
+ * (`layout` in sort.ts), and stand on a board. Returns how many books it drew.
+ */
+export function drawSortedShelf(
+  target: HTMLCanvasElement,
+  photo: HTMLCanvasElement,
+  colors: Array<BookColor | null>,
+  rows: number[],
+  order: number[],
+): number {
+  const W = photo.width, H = photo.height;
+  type Piece = { index: number; row: number; cx: number; cy: number; angle: number; w: number; h: number };
+  const pieces = new Map<number, Piece>();
+  colors.forEach((c, index) => {
+    if (!c) return;
+    if (c.corners) {
+      const [p0, p1, , p3] = c.corners.map(([x, y]) => [x * W, y * H]);
+      let angle = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+      if (Math.sin(angle) > 0.2) angle -= Math.PI; // stand it head up
+      const cx = c.corners.reduce((sum, q) => sum + q[0] * W, 0) / 4, cy = c.corners.reduce((sum, q) => sum + q[1] * H, 0) / 4;
+      pieces.set(index, { index, row: rows[index] ?? 0, cx, cy, angle, h: Math.hypot(p1[0] - p0[0], p1[1] - p0[1]), w: Math.hypot(p3[0] - p0[0], p3[1] - p0[1]) });
+    } else {
+      const [x, y, w, h] = c.box;
+      pieces.set(index, { index, row: rows[index] ?? 0, cx: (x + w / 2) * W, cy: (y + h / 2) * H, angle: -Math.PI / 2, w: w * W, h: h * H });
+    }
+  });
+  const sequence = order.map(i => pieces.get(i)).filter((p): p is Piece => !!p);
+  if (sequence.length === 0) return 0;
+  const rowCount = Math.max(...sequence.map(p => p.row)) + 1;
+  const capacity = Array.from({ length: rowCount }, (_, r) => sequence.filter(p => p.row === r).reduce((sum, p) => sum + p.w, 0));
+  const placed = layout(sequence.map((p, k) => ({ id: k, row: p.row, pos: k, width: p.w, lch: { L: 0, C: 0, h: 0 } })), capacity);
+
+  const pad = Math.round(W * 0.02), board = Math.max(4, Math.round(H * 0.012)), gap = Math.round(H * 0.03);
+  const rowHeights = Array.from({ length: rowCount }, (_, r) => Math.max(10, ...placed.filter(q => q.row === r).map(q => sequence[q.book.id].h)));
+  const rowWidths = Array.from({ length: rowCount }, (_, r) => placed.filter(q => q.row === r).reduce((sum, q) => sum + sequence[q.book.id].w, 0));
+  const width = Math.round(Math.max(...rowWidths) + 2 * pad);
+  const height = Math.round(rowHeights.reduce((sum, h) => sum + h + board + gap, gap));
+  const scale = Math.min(1, 2400 / width);
+  target.width = Math.round(width * scale); target.height = Math.round(height * scale);
+  const ctx = target.getContext('2d')!;
+  ctx.scale(scale, scale);
+  ctx.fillStyle = '#e4ddd0';
+  ctx.fillRect(0, 0, width, height);
+  let top = gap;
+  for (let r = 0; r < rowCount; r++) {
+    const bottom = top + rowHeights[r];
+    let x = pad + (width - 2 * pad - rowWidths[r]) / 2;
+    for (const q of placed.filter(p => p.row === r)) {
+      const p = sequence[q.book.id];
+      ctx.save();
+      ctx.translate(x + p.w / 2, bottom - p.h / 2);
+      ctx.beginPath();
+      ctx.rect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.clip();
+      ctx.rotate(-Math.PI / 2 - p.angle);
+      ctx.drawImage(photo, -p.cx, -p.cy);
+      ctx.restore();
+      x += p.w;
+    }
+    ctx.fillStyle = '#7a5a3e';
+    ctx.fillRect(0, bottom, width, board);
+    top = bottom + board + gap;
+  }
+  return sequence.length;
 }
-if (typeof window !== 'undefined') window.shelfColors = { colorsForBooks, colourOrder, paintedSample, detectShelf };
+
+declare global {
+  interface Window { shelfColors: { colorsForBooks: typeof colorsForBooks; colourOrder: typeof colourOrder; paintedSample: typeof paintedSample; detectShelf: typeof detectShelf; drawSortedShelf: typeof drawSortedShelf } }
+}
+if (typeof window !== 'undefined') window.shelfColors = { colorsForBooks, colourOrder, paintedSample, detectShelf, drawSortedShelf };

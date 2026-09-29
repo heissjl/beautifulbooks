@@ -3636,3 +3636,11 @@ Julian: „teilweise liegen die bücher ja auch oder sind schief im regal. die s
 - Ohne Modell, drei gemalte Szenen, 42 Bücher mit verschobenen, verdrehten und falsch dicken Rechtecken: Die erste Fassung suchte jede Kante einzeln und traf 21–36 %. Mit der Paarsuche sind es 40 von 42.
 - Mit `claude-sonnet-5`, gemalte Szene mit echten Titeln (5 stehend, 2 lehnend, 3 liegend). Erster Versuch: Die lehnenden Bücher gab das Modell 4–7° zu steil an, die Winkelsuche bis ±3° reichte nicht. Die liegenden kamen als „Umschlag“ und wurden verworfen, danach als kurze Linie quer übers Buch („Fuß → Kopf“ verstand das Modell als unten → oben). Nach drei Korrekturen (±8°, „entlang der langen Seite“, Drehen einer zu kurzen Linie): **10 von 10 auf ≤ 2 px**, Dicke ≤ 3 px, alle Farben richtig. Das Modell allein lag bis zu 12 px daneben.
 - Offen: ein echtes Foto mit schrägen und liegenden Büchern.
+
+## 2026-09-29 — Das sortierte Regal; gedrehte Rechtecke am echten Foto (ROADMAP 5.16)
+
+Julian: „baue noch die funktion ein, dass am ende das sortierte regal gezeigt wird"
+
+- `drawSortedShelf` schneidet jedes Buch entlang seines gedrehten Rechtecks aus dem Foto, richtet es auf und räumt die Reihen in Farbordnung neu ein, jede so breit wie im Foto. An der gemalten Szene trifft eine Linie über dem Brett die zehn Rücken in Regenbogenordnung.
+- Echtes Foto mit gedrehten Rechtecken: 58 Bücher (50 stehend, 8 lehnend), 37 verschoben, Hauptfarbe 0,55 → 0,58. **Verlag nur bei 3 von 58** (vorher 25 von 64). Seitdem fragt die Anweisung den Verlag direkt nach dem Autor; ein Test hält die Anfrage der Website Wort für Wort fest. Zuordnung kalt 589 s.
+- Firefox: drei Reihen-Ausschnitte mit 5,1–5,7 MB (Chrome 0,4–0,6 MB) scheiterten an der Speichergrenze von jpeg-js, weil `/api/read` sie nur für die Bildgröße dekodierte. Jetzt kommt die Größe aus dem Dateikopf (`imagesize.ts`).

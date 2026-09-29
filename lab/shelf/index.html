@@ -65,6 +65,9 @@
   .share { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin: 20px 0; }
   .share code { display: block; word-break: break-all; font-size: 12px; background: var(--surface-2); padding: 8px; border-radius: 6px; margin: 8px 0; }
   .stats { font-size: 12px; color: var(--ink-3); }
+  .shelfbox { margin: 28px 0; }
+  .shelfbox h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: 1.3rem; margin: 0 0 4px; }
+  #sortedShelf { display: block; width: 100%; height: auto; border-radius: 6px; margin-top: 10px; }
   .order { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 16px 0 0; }
   .order button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   .strip { display: flex; height: 14px; border-radius: 3px; overflow: hidden; margin: 10px 0 0; }
@@ -105,6 +108,13 @@
     </div>
     <div class="strip" id="strip" aria-hidden="true"></div>
     <ul class="wall" id="wall"></ul>
+
+    <section class="shelfbox" id="shelfbox" hidden>
+      <h2>Dein Regal, nach Farben eingeräumt</h2>
+      <p class="note" id="shelfnote">Aus den Rücken deines Fotos zusammengesetzt: jedes Buch aufgerichtet, die Reihen der Reihe nach gefüllt, jede so breit, wie ihre Bücher auf dem Foto waren.</p>
+      <canvas id="sortedShelf"></canvas>
+      <div class="row"><button id="saveShelf">Bild sichern</button></div>
+    </section>
 
     <div class="share" id="sharebox" hidden>
       <div class="row" style="margin-top:0">
@@ -300,6 +310,7 @@ async function readByRows(full, shrunk) {
       ...b,
       ...(b.box ? { box: [b.box[0], band.y0 + b.box[1] * bh, b.box[2], b.box[3] * bh] } : {}),
       ...(b.axis ? { axis: [b.axis[0], band.y0 + b.axis[1] * bh, b.axis[2], band.y0 + b.axis[3] * bh, b.axis[4]] } : {}),
+      row: bands.indexOf(band),
     }));
     return data;
   }));
@@ -480,6 +491,8 @@ function render() {
     }
     wall.appendChild(li);
   });
+  $('sharebox').hidden = !items.some(i => i.work && !i.removed);
+  drawShelf();
 }
 
 /* ---------- colour ---------- */
@@ -499,7 +512,18 @@ function orderedIndices() {
   const all = items.map((_, i) => i);
   if (order === 'photo' || !window.shelfColors) return all;
   return window.shelfColors.colourOrder(items.map(it => it.color ?? null), order);
-  $('sharebox').hidden = !items.some(i => i.work && !i.removed);
+}
+
+/** The sorted shelf at the end: the photo's own spines in the chosen colour order. */
+function drawShelf() {
+  const box = $('shelfbox');
+  if (!photoCanvas || !window.shelfColors || !colors.some(Boolean)) { box.hidden = true; return; }
+  const mode = order === 'light-dark' ? 'light-dark' : 'rainbow';
+  const kept = items.map((it, i) => (it.removed ? null : colors[i] ?? null));
+  const sequence = window.shelfColors.colourOrder(kept, mode).filter(i => kept[i]);
+  const drawn = window.shelfColors.drawSortedShelf($('sortedShelf'), photoCanvas, kept, photoBooks.map(b => b.row ?? 0), sequence);
+  box.hidden = drawn === 0;
+  $('shelfnote').textContent = `${drawn} Bücher ${mode === 'light-dark' ? 'von hell nach dunkel' : 'nach Farben: Weiß, dann reihum ab Rot, zuletzt Grau und Schwarz'} — aus den Rücken deines Fotos zusammengesetzt, jedes Buch aufgerichtet, die Reihen der Reihe nach gefüllt, jede so breit, wie ihre Bücher auf dem Foto waren.`;
 }
 
 async function action(i, act, li) {
@@ -572,6 +596,12 @@ $('share').onclick = () => {
   const n = items.filter(i => i.work && !i.removed).length;
   $('linklen').textContent = `${link.length} Zeichen für ${n} Bücher`;
   $('linkout').hidden = false;
+};
+$('saveShelf').onclick = () => {
+  const a = document.createElement('a');
+  a.href = $('sortedShelf').toDataURL('image/jpeg', 0.9);
+  a.download = 'regal-nach-farben.jpg';
+  a.click();
 };
 $('copy').onclick = async () => {
   try { await navigator.clipboard.writeText($('link').textContent); $('copy').textContent = 'Kopiert'; }
