@@ -83,6 +83,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Entwürfe von Sammlungen (sichtbar unter `next dev` und für angemeldete Freunde): u. a. die Relaunch-Reihe mit **internationalen Covern** — 135 von 182 Bänden in einer Übersetzung, gefunden über Sprach-Tag, ISBN-Ländergruppe, nicht zusammengeführte Übersetzungs-Werke und übersetzte Titel aus Wikipedia und Wikidata —, die abgerundeten Ausgaben von 2006, edition suhrkamp, Penguin Clothbound, Hugo Award | 2026-09-25 / 09-26 | F8 | 5.10e, 5.10f, 5.10i | `data/collections.json`, `lab/international-covers/` |
 | Schriften: Xanh (Xanh Mono, proportional neu gesetzt, seit 2026-09-29) für Überschriften und Wortmarke, Jost für alles andere; ISBN gegliedert (978-0-14-143947-1), in Jost mit Null und Strichen aus Geist Mono, Striche nur in der Anzeige | 2026-09-28 | §5 | 6.61 | `app/layout.tsx`, `app/globals.css`, `assets/fonts/`, `lib/isbnformat.ts`, `components/BookDetail.tsx` (`IsbnText`) |
 | Vorschaubilder für geteilte Links in Xanh Mono und Jost; eine Website-Karte (Wand aus buchförmigen Kacheln, keine echten Cover) für jede Seite ohne eigene, auch Spiel, Rangliste und Sammlungen | 2026-09-28 | F2.13 | 6.61 | `app/og.tsx`, `app/opengraph-image.tsx`, `assets/og/`, `lib/seo.ts` (`SITE_CARD`) |
+| Bildmarke (Richtung A: Wand aus Buchrechtecken, eines hervorgehoben) in der Kopfzeile und als Browser-Icon, hell und dunkel | 2026-09-29 | §5 | 6.61 | `components/BrandMark.tsx`, `app/icon.svg`, `app/favicon.ico`, `app/apple-icon.png`, `scripts/build-icons.py` |
 
 ## Betrieb und Schutz
 

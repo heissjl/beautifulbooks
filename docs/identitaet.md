@@ -118,6 +118,8 @@ Skizzen im Chat vom 2026-09-28; Julian entscheidet.
 
 - **A + C, Mischung** (Julian, 2026-09-29: „ist die Vorschaukarte nicht eher wie C?"). Die Website-Karte aus §4 hat die Idee von A (eine gewählte Kachel in Terrakotta, größer) und das Aussehen von C (viele Kacheln in verschiedenen Tönen), aber keine Buchform. Als Marke skizziert in zwei Größen: 3 × 3 und 5 × 5 Buchrechtecke in den sieben Tönen der Karte, die mittlere in Terrakotta und um 30 % vergrößert. Jeweils groß, in 32 und 16 px, auf hellem und dunklem Grund angesehen.
 
+**Entschieden am 2026-09-29: A** (Julian: „nimm A für die Bildmarke"). Gebaut als `components/BrandMark.tsx`, `app/icon.svg`, `app/favicon.ico` und `app/apple-icon.png` (SPEC §5). Die Frage unten ist damit beantwortet: Tinte und eine Terrakotta-Kachel.
+
 Offen: ob die Marke eine Farbe (Terrakotta) oder mehrere trägt; ob sie ohne Namen stehen muss, solange 0.5 offen ist (ja — das war die Vorgabe).
 
 ### 1.2 ISBN: Geist Mono, Jost oder Xanh Mono

@@ -3699,3 +3699,12 @@ Gebaut in [lab/xanh-spacing](../lab/xanh-spacing/README.md) (`respace.py`, fontT
 
 **Gemessen** am Dev-Server: bei 390 × 844 kein seitliches Scrollen; H1 der Startseite 79 px, *Frankenstein* 76 px (zwei Zeilen), „Start with a classic" 32 px, Wortmarke eine Zeile; bei 1280 × 800 *Frankenstein* 101 px. Das kursive f war bei Überhang 130 noch 544 Einheiten breit und ließ „Beauti ful" auseinanderfallen, sichtbar im Namen oben links; nebeneinander gerendert schloss 180 die Lücke (f 444 breit), 230 war zu eng. **Julian wählte 180**, eingebaut am selben Tag.
 
+## 2026-09-29 — Die Bildmarke: Richtung A, im Tab und in der Kopfzeile (ROADMAP 6.61)
+
+Julian: „nimm A für die Bildmarke — ändert die auch das Icon in der Tab-Bar des Browsers?" Bis dahin zeigte der Tab das Dreieck im Kreis aus der Next.js-Vorlage (`app/favicon.ico` seit dem ersten Commit).
+
+- **Vektor:** `components/BrandMark.tsx` zeichnet 3 × 3 Kacheln 10 × 15 mit 3 Abstand, die mittlere 13 × 19,5 in `--accent`; `app/icon.svg` dieselben Zahlen, mit eigenen Farben für den dunklen Modus (Tinte `#efe8dd`, Akzent `#dbac94`). Gegenüber der Skizze vom 2026-09-28 haben die Reihen jetzt auch einen Abstand, wie die Kacheln der Website-Karte.
+- **Raster:** `scripts/build-icons.py` (Pillow) zeichnet 16, 32 und 48 px für `favicon.ico` (779 Byte) und 180 px für `apple-icon.png` (576 Byte) je Größe von Hand aufs Pixelraster — bei 16 px Kacheln 3 × 4 mit 1 px Abstand, die mittlere 5 × 6 —, auf einem Papier-Quadrat, weil ein Rasterbild dem dunklen Modus nicht folgen kann.
+- **Kopfzeile:** die Marke vor dem Namen, 24 px hoch, 17 px breit, bleibt beim Überfahren in Tintenfarbe. Bei 390 × 844 auf der Werkseite: Name von 98 bis 241 px, rechte Knöpfe bis 374, kein seitliches Scrollen; bei 1280 × 800 von 32 bis 175 px.
+- Next liefert alle drei aus (`<link rel="icon">` für ICO und SVG, `apple-touch-icon`), im Dev-Server geprüft.
+

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import BrandMark from '@/components/BrandMark';
 
 interface SiteHeaderProps {
   /** Optional left slot, e.g. a back link on detail pages. */
@@ -19,7 +20,9 @@ export default function SiteHeader({ left, right, search }: SiteHeaderProps) {
       <div className="relative mx-auto flex h-14 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-4">
           {left}
-          <Link href="/" className="font-display text-xl italic tracking-tight text-ink hover:text-accent transition-colors">
+          <Link href="/" className="group flex shrink-0 items-center gap-2 font-display text-xl italic tracking-tight text-ink hover:text-accent transition-colors">
+            {/* The mark keeps the ink on hover, so the picked tile stays picked out. */}
+            <BrandMark className="h-6 w-auto text-ink" />
             Beautiful Books
           </Link>
         </div>
