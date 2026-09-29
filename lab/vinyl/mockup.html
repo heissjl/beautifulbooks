@@ -104,6 +104,11 @@
   .flip button[aria-pressed="true"] .th { border-color: var(--accent); }
   .flip button:disabled { opacity: .45; cursor: default; }
   .src { font-size: 12px; color: var(--ink-3); margin: 2px 0 0; }
+  .story { font-size: 14px; line-height: 1.55; margin: 0 0 8px; }
+  .story.wait { color: var(--ink-3); font-style: italic; }
+  .story.wait::after { content: ''; display: inline-block; width: 1em; animation: dots 1.2s steps(4) infinite; overflow: hidden; vertical-align: bottom; }
+  @keyframes dots { from { width: 0; } to { width: 1.2em; } }
+  .credit { font-size: 11.5px; color: var(--ink-3); margin: 0 0 14px; }
   .ptitle { font-size: 15px; font-weight: 500; margin: 18px 0 2px; }
   .psub { font-size: 13px; color: var(--ink-2); margin: 0 0 12px; }
   dl { display: grid; grid-template-columns: auto 1fr; gap: 5px 16px; margin: 0; font-size: 13.5px; }
@@ -220,7 +225,7 @@ function fold(pressings) {
   return groups.sort((a, b) => (a.rep.date || '9999').localeCompare(b.rep.date || '9999'));
 }
 
-const state = { album: 0, country: 'all', side: 'front', selected: null, view: 'front', fold: 20 };
+const state = { album: 0, country: 'all', side: 'front', selected: null, view: 'front', fold: 20, live: true, storyStart: performance.now() };
 
 function render() {
   const album = DATA[state.album];
@@ -278,6 +283,40 @@ function tile(p, src, cls, n, current) {
     <img loading="lazy" src="${esc(src)}" alt="">${n > 1 ? `<span class="badge">+${n - 1}</span>` : ''}<span class="cap">${esc(caption(p))}</span></button>`;
 }
 
+/**
+ * The story of the album's sleeve (no pressing) or the caption of one sleeve.
+ * Written by live-story.ts from Wikipedia, our timeline, credits and Discogs
+ * notes. With "live timing" on, the page waits as long as the measurement
+ * took for this album — Wikipedia first, then the model — so the delay a
+ * reader would see can be judged by looking.
+ */
+function storyBlock(album, p) {
+  const st = album.story;
+  if (!st) return '';
+  const elapsed = performance.now() - (state.storyStart ?? 0);
+  if (state.live && elapsed < st.totalMs) {
+    scheduleStoryRender(st.totalMs - elapsed);
+    const step = elapsed < st.wikiMs ? 'Looking up the sleeve' : 'Writing the story of this sleeve';
+    return `<h3>${p ? 'This sleeve' : 'The sleeve'}</h3><p class="story wait">${step}</p>`;
+  }
+  const names = { wikipedia: 'Wikipedia', timeline: 'the pressings listed here', credits: 'credits (MusicBrainz, Discogs)', notes: 'Discogs notes' };
+  if (!p) {
+    if (!st.text) return '<h3>The sleeve</h3><p class="story quiet">Nothing written about this sleeve in the sources we read.</p>';
+    return `<h3>The sleeve</h3><p class="story">${esc(st.text)}</p>
+      <p class="credit">From ${st.url ? `<a href="${esc(st.url)}">Wikipedia: ${esc(st.article)}</a> (CC BY-SA 4.0)` : 'the credits'}, summarised by Claude, not checked by hand · written in ${(st.totalMs / 1000).toFixed(1)} s</p>`;
+  }
+  const c = st.captions[p.id];
+  if (!c) return '';
+  return `<h3>This sleeve</h3><p class="story">${esc(c.text)}</p>
+    <p class="credit">From ${c.sources.map(x => names[x] ?? x).join(', ')} · summarised by Claude, not checked by hand</p>`;
+}
+let storyTimer = null;
+function scheduleStoryRender(ms) {
+  clearTimeout(storyTimer);
+  // Only the sidebar: redrawing the wall would reload its images.
+  storyTimer = setTimeout(() => { const a = DATA[state.album]; renderAside(a, fold(a.pressings)); }, Math.min(ms + 30, 500));
+}
+
 function renderAside(album, allGroups) {
   const aside = document.getElementById('aside');
   const p = state.selected;
@@ -290,6 +329,7 @@ function renderAside(album, allGroups) {
     aside.innerHTML = `<h3>This album</h3>
       <p>Pressings here run from ${years[0]} to ${years.at(-1)}, on ${labels.size} labels, in ${new Set(album.pressings.map(p => p.country).filter(Boolean)).size} countries.${coloured ? ` ${coloured === 1 ? 'One names' : `${coloured} name`} a coloured record.` : ''}</p>
       <p>Pick a sleeve to see the pressing it belongs to — front, back and label — its catalogue number and where to find a copy.</p>
+      ${storyBlock(album, null)}
       <p class="src"><a href="https://musicbrainz.org/release-group/${album.id}">This album at MusicBrainz</a> — where these records come from, and where they can be corrected.</p>`;
     return;
   }
@@ -318,6 +358,7 @@ function renderAside(album, allGroups) {
       <div class="siblings">${group.members.map(m => `<button data-id="${m.id}" title="${esc(caption(m))}" ${m === p ? 'aria-current="true"' : ''}>${m.labels[0] ? `<img src="${esc(m.labels[0].small)}" alt="">` : `<span>${esc(m.year || '?')}</span>`}</button>`).join('')}</div>` : ''}
     <p class="ptitle">${esc(p.label || 'Label not recorded')} · ${esc(p.year || '—')}</p>
     <p class="psub">${esc(countryName(p.country))}${p.note ? ` · ${esc(p.note)}` : ''}</p>
+    ${storyBlock(album, p)}
     <dl>
       <dt>Catalogue no.</dt><dd class="mono">${esc(catno) || '<span class="quiet">not recorded</span>'}</dd>
       <dt>Barcode</dt><dd class="mono">${esc(p.barcode) || '<span class="quiet">none on record</span>'}</dd>
@@ -338,11 +379,12 @@ function renderAside(album, allGroups) {
 }
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-country],[data-side],[data-id],[data-view],[data-close],[data-album],[data-fold]');
+  const t = e.target.closest('[data-country],[data-side],[data-id],[data-view],[data-close],[data-album],[data-fold],[data-live]');
   if (!t) return;
   const album = DATA[state.album];
   if (t.dataset.fold) { state.fold = +t.dataset.fold; state.selected = null; renderMock(); }
-  else if (t.dataset.album !== undefined) { state.album = +t.dataset.album; state.country = 'all'; state.selected = null; state.view = 'front'; renderMock(); }
+  else if (t.dataset.live !== undefined) { state.live = !state.live; state.storyStart = performance.now(); renderMock(); }
+  else if (t.dataset.album !== undefined) { state.album = +t.dataset.album; state.storyStart = performance.now(); state.country = 'all'; state.selected = null; state.view = 'front'; renderMock(); }
   else if (t.dataset.country !== undefined) state.country = t.dataset.country;
   else if (t.dataset.side) { state.side = t.dataset.side; if (state.selected) state.view = t.dataset.side === 'label' ? 'labelA' : t.dataset.side; }
   else if (t.dataset.view) state.view = t.dataset.view;
@@ -365,11 +407,15 @@ function renderMock() {
   const sep = document.createElement('span');
   sep.className = 'sep'; sep.textContent = '· fold at dHash ≤';
   bar.append(sep);
+  const live = document.createElement('button');
+  live.dataset.live = ''; live.textContent = 'live timing'; live.setAttribute('aria-pressed', String(state.live));
+  const sep2 = document.createElement('span'); sep2.className = 'sep'; sep2.textContent = '·';
   for (const n of [16, 18, 20, 22]) {
     const b = document.createElement('button');
     b.dataset.fold = n; b.textContent = String(n); b.setAttribute('aria-pressed', String(n === state.fold));
     bar.append(b);
   }
+  bar.append(sep2, live);
 }
 state.album = Math.max(0, DATA.findIndex(a => a.title === 'Kind of Blue'));
 renderMock();

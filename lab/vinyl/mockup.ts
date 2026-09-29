@@ -144,6 +144,24 @@ async function main() {
     albums.push({ id: rg.id, title: rg.title, artist: rg['artist-credit'][0].name, first: rg['first-release-date']?.slice(0, 4) ?? '', releases: releases.length, pressings });
     console.log(`${rg.title}: ${pressings.length} vinyl pressings, ${pressings.filter(p => p.front).length} with a front`);
   }
+  // Stories from live-story.ts (last round per album), with the measured time it took, if there are any.
+  const livePath = join(DIR, 'out', 'live-story.json');
+  const storyPath = join(DIR, 'out', 'story.json');
+  if (existsSync(livePath) && existsSync(storyPath)) {
+    const runs = JSON.parse(readFileSync(livePath, 'utf8')) as Array<{ album: string; round: number; url: string | null; article: string | null; wikiMs: number; totalMs: number; story: { album: { text: string; sources: string[] }; sleeves: Array<{ id: string; text: string; sources: string[] }> } | null }>;
+    const stacks = JSON.parse(readFileSync(storyPath, 'utf8')) as Array<{ album: string; sleeves: Array<{ ids: string[] }> }>;
+    for (const album of albums) {
+      const run = runs.filter(r => r.album === album.title && r.story).at(-1);
+      const stack = stacks.find(s => s.album === album.title);
+      if (!run?.story || !stack) continue;
+      const captions: Record<string, { text: string; sources: string[] }> = {};
+      run.story.sleeves.forEach(c => {
+        const ids = stack.sleeves[Number(c.id.slice(1)) - 1]?.ids ?? [];
+        for (const id of ids) captions[id] = { text: c.text, sources: c.sources };
+      });
+      Object.assign(album, { story: { ...run.story.album, article: run.article, url: run.url, wikiMs: run.wikiMs, totalMs: run.totalMs, captions } });
+    }
+  }
   const template = readFileSync(join(DIR, 'mockup.html'), 'utf8');
   mkdirSync(join(DIR, 'out'), { recursive: true });
   writeFileSync(join(DIR, 'out', 'mockup.html'), template.replace('/*DATA*/null', JSON.stringify(albums).replace(/</g, '\\u003c')));

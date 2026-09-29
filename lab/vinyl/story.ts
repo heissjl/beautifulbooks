@@ -48,6 +48,8 @@ const SLEEVE_REL_RE = /design|illustrat|art direction|artwork|photograph|graphic
 interface Pressing { id: string; year: string; date: string; country: string; label: string; front: string | null; hash: string | null }
 interface Album { id: string; title: string; artist: string; pressings: Pressing[] }
 interface Sleeve {
+  /** MusicBrainz ids of the pressings in this stack, so a caption can be found from any of them. */
+  ids: string[];
   pressings: number; first: string; last: string; countries: string[]; labels: string[];
   mbCredits: string[]; discogsCredits: string[]; notes: string[];
 }
@@ -96,6 +98,7 @@ async function main() {
       }
       const years = g.map(p => p.year).filter(Boolean).sort();
       sleeves.push({
+        ids: g.map(p => p.id),
         pressings: g.length, first: years[0] ?? '', last: years.at(-1) ?? '',
         countries: [...new Set(g.map(p => p.country).filter(Boolean))], labels: [...new Set(g.map(p => p.label).filter(Boolean))],
         mbCredits: [...mb], discogsCredits: [...discogs], notes: [...notes].slice(0, 5),
