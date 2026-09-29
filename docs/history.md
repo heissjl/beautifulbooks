@@ -3637,3 +3637,62 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
   - Nr. 57 (*Das Peter-Prinzip*) und Nr. 58 (*Das Schmettern des gallischen Hahns*): Keller nennt kein Jahr, und kein Katalog kennt einen Druck bei Ex Libris.
 - Bei vier Büchern auf der Wand (Nr. 7, 32, 40, 41) nennt der Umschlag Benziger statt Ex Libris; diese Ausgaben stehen unter Benziger. Nr. 28 erschien bei beiden zugleich. Dazu kommen Nr. 35 (Nebelspalter) und Nr. 45 (Huber), deren Ausgaben es schon gab.
 - **Wand `ex-libris-covers-by-hanspeter-wyss`:** 44 von 58, laut Kontaktbogen alle von Wyss und bildhaft. Online als Entwurf.
+
+## 2026-09-29 — Drei Punkte aus den Durchsichten gebaut (ROADMAP 6.79, 6.75, 6.76)
+
+Gemessen unter `npm run dev` (Worktree `beautiful-books-ux-plan`, Port 3017) mit Headless-Chrome über das DevTools-Protokoll, Telefon mit echter Geräte-Emulation (`Emulation.setDeviceMetricsOverride`, mobil, Touch), weil das Browser-Panel verborgen war (Breite 0). Skripte im Scratchpad der Sitzung, Bilder in `docs/tests/2026-09-29-*` (lokal).
+
+**6.79, das Suchfeld unter der Kopfzeile.** Nicht nachstellbar, solange die Startseite oben steht: bei `scrollY = 0` stand das Feld nach Enter bei 89 px, die Kopfzeile endet bei 57. **Nachstellbar, sobald die Seite beim Tippen gescrollt war:** `HomeSearchBar` schob die neue Adresse mit `scroll: false`, die Scrollposition blieb, und der Hero über dem Feld fiel weg.
+
+| Fall | Feld vor Enter | Feld nach Enter, vorher | nachher |
+|---|---|---|---|
+| 1512 × 790, 100 px gescrollt | 278–382 | **−11 bis 81** (halb unter der Kopfzeile) | 89–181 |
+| 1512 × 790, 250 px gescrollt | 128–232 | 64–156 (Chrome verankerte) | 89–181 |
+| 390 × 844, 300 px gescrollt | 88–188 | 56–148 (bündig an der Kopfzeile) | 89–181 |
+
+Behoben mit `window.scrollTo({ top: 0 })` vor dem `push` (`components/HomeSearchBar.tsx`).
+
+**6.75, die Werkseite nach einem Ausfall.** Der zweite Versuch nach 2 s für Seite 0 gab es schon (`useWorkPages`, seit 2026-09-07); was fehlte, war der Ausgang. Mit 503 auf jede Anfrage an `/api/works/*` (DevTools `Fetch.fulfillRequest`): zwei Anfragen, dann „Open Library did not answer“, der Satz, dass das nichts über das Buch sagt, „Try again“ und „Search for another book“ (von einer Trefferliste: „Back to the results“). Mit 429: „Too many requests at once“. „Try again“ bei wieder erreichbarer Quelle: Wand mit 31 Bildern nach 1,5 s (Cache warm). Vorher stand dort der Satz des Servers („Book data source unavailable, try again shortly“) über „Back to search“.
+
+**6.76, das Suchfeld zuerst.** Die zwei Einladungen (Spiel, eigene Sammlung) stehen jetzt unter dem Feld und seinen zwei Knöpfen, am Desktop in einer Zeile; oben am Telefon 24 px weniger Luft (`pt-10` statt `pt-16`).
+
+| | Oberkante des Suchfelds vorher | nachher |
+|---|---|---|
+| 390 × 844 | 388 px | **296 px** |
+| 1280 × 800 | 378 px | **310 px** |
+
+Die Sammlungen bleiben unter der Wand der Klassiker, wie Julian es für 5.10d wollte; Teil A der Durchsicht hatte sie höher vorgeschlagen. Der Bericht nannte ~540 px bei 375 × 812; bei 390 × 844 waren es 388 — der Unterschied wurde nicht weiter verfolgt.
+
+## 2026-09-29 — Seitenleiste mit den Läden zuerst, als Mockup (ROADMAP 6.77)
+
+Variante B hinter `?panel=b`, nur unter `next dev` (`process.env.NODE_ENV`, im Produktions-Build entfernt): unter dem Cover sofort Druck, ISBN und die erste Laden-Reihe; danach „Add to collection“, „29 printings with this cover ▸“ und „30 scans of this cover ▸“ eingeklappt, dann „Looks like this“, die übrigen Wege und die lokalen Läden. Gemessen an *The Great Gatsby*, Cover `ol:14811162` (die Kachel mit den meisten gefalteten Scans, +29), Oberkante der ersten Laden-Reihe:
+
+| | A (heute) | B |
+|---|---|---|
+| 1280 × 800, Seitenleiste ungescrollt | 1.338 px | **801 px** |
+| 390 × 844, Telefon-Blatt offen | 1.174 px | **565 px** |
+
+Am Telefon ist die erste Reihe damit im ersten Bildschirm; am Desktop liegt sie 1 px unter der Falte, solange die Seite oben steht (die Spalte beginnt dort bei 235 px, klebt erst beim Scrollen bei 80). Nebenbefund: in derselben Wand steht „Jake Gyllenhaal performs“, ein Hörbuch-Cover — ein zweiter Beleg für 6.80.
+
+## 2026-09-29 — Sekundärliteratur auf den Trefferkarten: was sich sicher sagen lässt (ROADMAP 6.81, Vorschlag)
+
+Zehn Suchen gegen den Dev-Server (`the great gatsby`, `nineteen eighty four`, `1984`, `mumbo jumbo`, `gravity's rainbow`, `pride and prejudice`, `alice in wonderland`, `crime and punishment`, `ulysses`, `moby dick`), jede Karte mit fünf Regeln klassifiziert. **Die vorhandene Ableitungsregel `derivativeIds` taugt fürs Ranking, nicht für ein Etikett:** sie erfasst auch Bücher, die nur den Titel teilen — „Flora & Ulysses“ (DiCamillo), „H.M.S. Ulysses“ (MacLean), „Chasing gravity's rainbow“. Titelenthaltensein ohne Ableitungsregel ebenso: „Management mumbo-jumbo“ wäre „about *Mumbo Jumbo*“. Und die Gatsby-Sekundärliteratur heißt meist schlicht „The Great Gatsby“ (Matterson, Lehan, Parkinson, Northman) — **kein Titelwort verrät sie**.
+
+Was dagegen ohne Fehlgriff blieb:
+
+| Suche | Karten | Hauptliste¹ | andere Autoren | Etikett aus dem Titel² | Autor entdoppelt³ |
+|---|---|---|---|---|---|
+| the great gatsby | 15 | 3 | 12 | 0 | 0 |
+| nineteen eighty four | 17 | 3 | 14 | 3 | 1 |
+| 1984 | 17 | 3 | 14 | 2 | 1 |
+| mumbo jumbo | 11 | 2 | 9 | 0 | 0 |
+| gravity's rainbow | 12 | 1 | 11 | 2 | 0 |
+| pride and prejudice | 15 | 2 | 13 | 4 | 0 |
+| alice in wonderland | 20 | 5 | 15 | 3 | 0 |
+| crime and punishment | 18 | 3 | 15 | 1 | 1 |
+| ulysses | 15 | 2 | 13 | 0 | 0 |
+| moby dick | 13 | 1 | 12 | 0 | 0 |
+
+¹ Werke desselben Erstautors wie die erste Karte (Namensschlüssel oder Open-Library-Key, so findet „Crime and Punishment — Fyodor Dostoevsky“ zu „Fiódor Dostoievski“) und Werke anderer Autoren mit mindestens einem Zehntel ihrer Ausgaben (Beccaria, Fénelon). ² `looksLikeSecondaryLiterature` („About the book“: SparkNotes, CliffsNotes, notes, companion, reader's guide) und `MARKED_DERIVATIVE` („Adaptation“: [adaptation], a play, in five acts); keine falsche Zuordnung unter den 21. ³ Gleiche Initiale, Nachname eine Änderung entfernt: „George Orwell, George Orwel“, „John D. Simons, John D. Simmons“.
+
+**Title Case** naiv (jeder Titel in Satzschreibung, `en` unter den Sprachen, nur ASCII) hätte zwei italienische Titel falsch gemacht („Dei Delitte E Delle Pene“, „La Casa Degli Specchi“) und das englische „The last tycoon“ (Sprachen `de, fr, es`) verfehlt; eine Liste romanischer und deutscher Artikel schließt die zwei aus. Vorschlag und Entscheidungen im [Plan 6.63](plans/PLAN-6.63-alltag.md), Abschnitt 6.81.

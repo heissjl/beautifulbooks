@@ -899,3 +899,21 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 ## 6.60
 
 - [x] **6.60 Die Suche überarbeitet: Tippfehler, „Author only", Sprach-Pillen geprüft.** (Julian, 2026-09-27: „automatische smarte erkennung von tippfehlern?, möglichkeit explizit nur nach autor zu suchen, checke ob die sprachpillen noch sinn ergeben?") **Status: gebaut, von Julian zum Deploy freigegeben (2026-09-27)**; deployt wird von der koordinierenden Session. Tippfehler (SPEC F1.9): bei leerer oder schwacher Antwort eine korrigierte zweite Suche gegen eine Wortliste aus Index, Wand und Sammlungen — `gatsbee`, `pride and prejudise`, `lord of the rigns`, `Tolkein`, `Hemmingway` finden ihr Buch, kein Fehlalarm unter 30 gewöhnlichen Anfragen. Autorensuche (F1.10): `/?author=<Name>[&key=…]`, Chips „Titles & authors · Author only", Person nach Lesern, gleichnamige Datensätze dazu (*1984* bei Orwell), Harper Lee 16 von 16 statt 3 von 18; „More by …" führt jetzt dorthin (die in 6.53 offen gelassene echte Autorensuche, und für die Suche auch die mehreren Keys einer Person). Sprach-Pillen gemessen (English ohne Wirkung, 7 von 112 Fällen leer, 15 mit anderer erster Karte) und **auf Julians Entscheidung entfernt** (2026-09-27, „mach das noch, dann deploy"): die Suche filtert nicht mehr nach Sprache, `?lang=` wählt nur noch den ersten Reiter der Detailseite. Die übrigen Fragen stehen wie gebaut, offen bleibt, ob „More by …" dieselbe Namensauflösung bekommt: [PLAN-search-2026-09](docs/plans/PLAN-search-2026-09.md) §6. Die Suchroute spart den `google`-Eimer. → [Historie](docs/history.md)
+
+## 6.75
+
+*Abgehakt 2026-09-29, so wie er in der Roadmap stand.*
+
+- [x] **6.75 Die Werkseite nach einem Ausfall: ein zweiter Versuch und „Try again“.** (Aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev), A1: kalt antwortete die Werkseite nach 20,9 s mit 503, die Fehlseite hat nur „Back to search“.) Ein zweiter Versuch im Browser nach 1,5 s bei 5xx oder Netzfehler, wie Mosaik (6.5) und Suche (1.10); „Try again“ wie in der Suche (1.4); der Satz sagt, dass der Katalog nicht antwortete (N12). Der Wartesatz ab ~8 s ist Kandidat 3 von 6.3 und wird dort gebaut. Ein bis zwei Stunden, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+## 6.76
+
+*Abgehakt 2026-09-29, so wie er in der Roadmap stand.*
+
+- [x] **6.76 Die Startseite: das Suchfeld zuerst.** (Aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev), A2 und A7: auf dem Telefon beginnt das Feld bei ~540 von 812 px, die Sammlungen erst nach sechs Reihen Wand.) Feld unter das Versprechen, die zwei Einladungen als eine Zeile darunter, die Sammlungsreihe höher. Claude baut hinter einem Dev-Schalter, **Julian sieht an** (390 × 844 und 1280 × 800, gemessen: Oberkante des Felds). Zwei Stunden. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+## 6.79
+
+*Abgehakt 2026-09-29, so wie er in der Roadmap stand.*
+
+- [x] **6.79 Nach Enter liegt das Suchfeld halb unter der Kopfzeile.** (Aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev), zweiter Durchgang.) Erst nachstellen bei 1512 × 790 und 390 × 844; vermutlich fehlt `scroll-margin-top` in Höhe der Kopfzeile. Eine halbe Stunde, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
