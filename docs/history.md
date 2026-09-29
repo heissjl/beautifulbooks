@@ -3689,3 +3689,8 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
   - Haffmans: 2 Schritte (1 dazu, Reihenfolge). Beide *Lone Star* stehen im Entwurf.
   - Fischer Bücherei: mit `--force` wegen der neuen Reihenfolge, die Julian verlangt hatte; die Umschläge stimmten überein. 9 Schritte (Intro, 7 Kacheln dazu, Reihenfolge); danach „already equal“.
   - Die Fischer-Wand war am Morgen von /curate aus veröffentlicht. Die Seite zeigt deshalb bis zu einer erneuten Veröffentlichung auf /curate den alten Stand.
+
+**Julians Auswahl aus den Sammlungskandidaten, 2026-09-29.**
+- **„Passt“ (13):** NYRB Children’s Collection, Découvertes Gallimard, Rivages/Noir, Virago Designer Collection, Zytglogge (Werner Maurer), Ravensburger (Grieder und Schindler), insel taschenbuch, Penguin Drop Caps, Penguin Great Ideas, L’Imaginaire, Nebula (Roman), Deutscher Buchpreis, National Book Award.
+- **Nicht gewählt (8):** Penguin Orange Collection, Penguin Modern, Diogenes detebe, Semiotext(e), Little Black Classics, Éditions de Minuit, Melville House, Persephone.
+- Julian wählte also auch typografische Reihen (Drop Caps, Great Ideas, L’Imaginaire) und alle drei Preiswände. Die frühere Notiz, typografische Reihen langweilten ihn, gilt nicht pauschal.
