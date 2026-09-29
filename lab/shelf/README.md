@@ -45,7 +45,7 @@ Nach der Erkennung liest der Browser je Buch die Farbe aus dem Foto — bei Rüc
 
 ## Was noch fehlt — die eigentliche Messung
 
-- **`ANTHROPIC_API_KEY` in die `.env.local` des Hauptordners** (Julian). Ohne ihn ist die Erkennung ungetestet: das Modell hat noch kein Foto gesehen.
+- ~~`ANTHROPIC_API_KEY` in die `.env.local` des Hauptordners~~ — **eingetragen von Julian am 2026-09-28**; der Server meldet damit „recognition with claude-sonnet-5“. Lokal hat das Modell noch kein Foto gesehen.
 - **Fünf echte Regalfotos von Julian** (Rücken, Umschläge, gemischt; hell und schummrig). Je Foto: Anteil richtig erkannter Werke ohne Eingriff, Anteil richtig gewählter Ausgaben bei Umschlägen, Fehltreffer, Dauer (steht in der Statuszeile), Tokens (ebenfalls; daraus die Kosten). Schwelle zum Weitermachen (Vorschlag): ≥ 80 % der Werke richtig ohne Eingriff, jede Korrektur in unter 10 Sekunden. Die Fotos gehören nach `docs/tests/` (git-ignoriert), die Zahlen in diese Datei und in docs/history.md.
 
 ## Offene Punkte
