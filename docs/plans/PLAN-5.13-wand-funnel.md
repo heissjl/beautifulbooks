@@ -151,6 +151,18 @@ Offen und bewusst später (Julian: „that's a later problem"). Was vorher zu kl
 
 ---
 
+### Vorbild: der Collage-Builder von Level Frames (angesehen am 2026-09-29)
+
+Julian: „look at this for inspiration“ (<https://www.levelframes.com/frames/collage-builder>). Was dort anders gelöst ist als in unserer Vorschau:
+
+- **Der Rahmen ist ein Foto, kein Verlauf.** Jede Leiste liegt als quadratisches Foto eines kleinen Musterrahmens vor (500 × 500 px, Rahmen mittig auf Schwarz), und die Vorschau zieht es mit CSS `border-image` (Slice 120, `stretch`) auf jede Größe. Die Gehrungen kommen aus den Ecken des Fotos, das Profil quer zur Leiste bleibt scharf, die Leiste wird nur in Längsrichtung gedehnt — für Holzmaserung und gebürstetes Metall genau die richtige Richtung. Für uns: dieselbe Technik mit **eigenen** Musterbildern (gerendert aus `lib/walls/moulding.ts` oder selbst fotografiert, nie deren Bilder) ersetzt die vier Stücke mit `clip-path` durch ein Element.
+- **Tiefe als 3D-Kasten.** Rahmen und Rückwand sind zwei Ebenen in `transform-style: preserve-3d`, die Rückwand 37,5 px nach hinten versetzt, darunter zwei Schatten (nah und weit). Drei Vorschaubilder unter dem Rahmen zeigen Ecke von vorn, Ecke im Schnitt und das Profil — für einen Objektrahmen mit Büchern, die 7 cm tief stehen, wäre eine **Schrägansicht** das überzeugendste Bild.
+- **Musterfelder als Eckfotos:** die Rahmenwahl zeigt je Oberfläche eine Gehrungsecke, nicht einen Farbpunkt — man sieht Profil und Material vor dem Klick. Unter der Wahl steht der Name und „with a 0.75" face and 1.125" depth“ mit wählbarer Leistenbreite.
+- **Zahlen statt Voreinstellungen:** Anzahl, Abstand, Bildbreite und -höhe als Felder, darunter live „Outer Dimensions: 11" x 15.5"“, der Preis steht auf dem Knopf („$110 – Next: Add Photos“), Passepartout-Breite als Schieberegler, Passepartout-Farbe als zwei Felder.
+- **Die Wand hinter dem Rahmen** ist ein ganz leichter radialer Verlauf, kein flaches Grau.
+
+**Was wir davon nehmen könnten** (nichts beschlossen): (1) `border-image` mit eigenen Musterbildern je Oberfläche; (2) eine Schrägansicht, die die Tiefe und die Bücher auf den Keilen zeigt; (3) Musterfelder als Eckausschnitt; (4) wählbare Leistenbreite und Randbreite (unser `PIECE_CM` als Regler); (5) sobald es einen Preis gibt, den Preis auf dem Knopf. Level Frames selbst bleibt als Werkstatt ungeeignet (Recherche 5.15: keine eingesandten Objekte in dieser Tiefe).
+
 ## Entscheidungen für Julian
 
 **Stand 2026-09-28:** 3 und 4 sind bis nach dem MVP zurückgestellt (Julian).
