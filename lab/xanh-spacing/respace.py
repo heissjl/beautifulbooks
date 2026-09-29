@@ -37,6 +37,16 @@ BAND_UPRIGHT = len(sys.argv) > 3 and sys.argv[3] == 'band'
 # italic f (ink -97..663, body ~150 wide) overlapped its neighbours and the
 # space: "of fiction" read "offiction", "Wolf Hall" "WolfHall".
 OVERHANG = int(sys.argv[4]) if len(sys.argv) > 4 else 80
+# The band, as fractions of the x-height (cap height for capitals). The
+# arm of an "r" sits near the top of the x-height; measured up to 90 % it
+# made the r as wide as its arm and left a hole before an "s" ("cover s").
+BAND_LO = float(sys.argv[5]) if len(sys.argv) > 5 else 0.1
+BAND_HI = float(sys.argv[6]) if len(sys.argv) > 6 else 0.9
+# Upright: the serifs at the baseline must keep their room, so the left edge
+# stays the bounding box and only the right edge may be measured in the band
+# — and ink may reach at most this far past it (the arm of an r over an s).
+# 0 keeps the upright on its bounding box.
+UPRIGHT_ARM = int(sys.argv[7]) if len(sys.argv) > 7 else 0
 
 
 def band_extent(glyf, name: str, lo: float, hi: float):
@@ -74,13 +84,20 @@ def respace(path: str, out_path: str) -> None:
     def measure(name: str):
         """The extent the sidebearings are measured from."""
         full = bounds(name)
-        if full is None or not band:
+        if full is None:
+            return full
+        if not band:
+            ch = char_of.get(name, '')
+            if UPRIGHT_ARM and ch.islower():
+                inner = band_extent(glyf, name, BAND_LO * x_height, BAND_HI * x_height)
+                if inner is not None:
+                    return full[0], max(inner[1], full[1] - UPRIGHT_ARM)
             return full
         ch = char_of.get(name, '')
         if ch.isupper() or ch.isdigit():
-            lo, hi = 0.1 * cap_height, 0.9 * cap_height
+            lo, hi = BAND_LO * cap_height, BAND_HI * cap_height
         elif ch.islower():
-            lo, hi = 0.1 * x_height, 0.9 * x_height
+            lo, hi = BAND_LO * x_height, BAND_HI * x_height
         else:
             return full  # punctuation and symbols keep their box
         inner = band_extent(glyf, name, lo, hi)
