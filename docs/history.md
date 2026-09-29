@@ -3646,3 +3646,19 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
   - Ex Libris Nr. 57 und 58 weglassen, bis ein Beleg für den Druck auftaucht.
   - Die Fischer Bücherei als eine Wand mit beiden Layouts führen. In der Liste stehen 137 Cover im Layout „oben“ und 47 im Layout „unten“.
   - Edelmann Nr. 818 und 843 erst, wenn es ein Bild gibt.
+
+**Julians Entscheidungen vom 2026-09-29, umgesetzt.**
+- ***Lone Star*: beide Umschläge bleiben.** Die Heyne-Ausgabe (Würfel, OL62603224M, Cover 15259879) steht jetzt direkt hinter der von Haffmans (Zigarre) auf der Wand, 65 Umschläge.
+  - `from-isbns.ts` kennt dafür das Listenfeld `repeat`: Der Eintrag zeigt seinen Umschlag auch dann, wenn das Werk schon auf der Wand ist.
+  - **Grenze:** Ein Online-Entwurf auf /curate führt jedes Werk nur einmal (`draftableWorks`). push-draft meldet deshalb „already equal“, und wer den Entwurf auf /curate veröffentlicht, ersetzt die Werke der Datei durch die des Entwurfs; der zweite Umschlag ginge dabei verloren. Damit beide erscheinen, muss die Wand über die Datei veröffentlicht werden (`published: true` und ein Deploy), oder Entwürfe müssen ein Werk mehrfach halten können.
+- ***Lone Star*, Verlagsfehler bei OL62603210M, und die falsche ISBN bei OL18051650M:** Julian bat mich, das reCAPTCHA zu lösen. Das tue ich grundsätzlich nicht; beide Berichtigungen bleiben bei Julian.
+- **Ex Libris: alle zwölf typografischen Umschläge aufgenommen** (Julian: „deine einschätzung stimmt nicht. nimm alle 12 auf“).
+  - Neun neue Ausgaben, OL62603421M–OL62603429M; hochgeladen auf diese und auf OL62255080M, OL4837605M und OL5142502M.
+  - Die Wand zeigt jetzt 56 von 58, Intro angepasst.
+  - Nr. 52 (*Irisches Tagebuch*) steht auf 1957, dem einzigen belegten Druck bei Ex Libris. Wyss arbeitete erst ab 1961 für Ex Libris; der Umschlag gehört vermutlich zu einem späteren, unverzeichneten Nachdruck.
+- **Ex Libris Nr. 57 und 58:** Ein Agent fand die Drucke: Ex Libris 1972 mit 221 S. und Ex Libris 1977 mit 234 S., beide ohne ISBN ([Recherche](../lab/collections/research/ex-libris-57-58.md)). Angelegt werden sie, sobald Open Library wieder antwortet; am Abend des 29.9. war die Seite nicht erreichbar.
+- **Fischer Bücherei:** Julian: „wir können auf einer wand bleiben, aber dann die verschiedenen drucke jeweils nacheinander nach nummern aufreihen statt zwei drucke aus zwei reihen nebeneinander“.
+  - Umsetzung: erst alle Umschläge im Layout „unten“ nach Nummern, dann alle im Layout „oben“ nach Nummern.
+  - Neues Listenfeld `wallGroup` in `from-isbns.ts`; die Picks werden stabil nach Gruppe sortiert.
+  - Nr. 1, 5, 19, 45 und 54 stehen zweimal auf der Wand, mit dem älteren Druck im ersten Block (`repeat`).
+  - Der Neubau wartet ebenfalls auf Open Library.

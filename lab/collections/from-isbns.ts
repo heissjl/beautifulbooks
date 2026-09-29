@@ -64,6 +64,10 @@ interface Entry {
    * dropped whole, because half a set is not the edition's design.
    */
   set?: string;
+  /** Show this cover even when the work is already on the wall: another printing with its own design (e.g. Lone Star, Haffmans and Heyne). */
+  repeat?: boolean;
+  /** Walls built in blocks (Fischer Bücherei: layout „unten“ first, then „oben“): picks sort by this, stably, list order within a block. */
+  wallGroup?: number;
   /** Set by hand: the title for this tile, when neither the work's nor the list's is the one printed on the cover. */
   wallTitle?: string;
   /**
@@ -121,6 +125,7 @@ async function main() {
   const works: CollectionPick[] = [];
   const setOf = new Map<string, Set<string>>();
   const pickSet = new Map<CollectionPick, string>();
+  const wallGroupOf = new Map<CollectionPick, number>();
   const noCover: string[] = [];
   const notFound: string[] = [];
 
@@ -139,7 +144,7 @@ async function main() {
     if (!hit) { notFound.push(`${e.no ?? '-'} ${e.title} (${e.isbn})`); continue; }
     const coverWork = hit.workKey.replace('/works/', '');
     const id = e.work ?? coverWork;
-    if (e.set ? setOf.get(id)?.has(e.set) : works.some(w => w.id === id)) continue;
+    if (e.set ? setOf.get(id)?.has(e.set) : !e.repeat && works.some(w => w.id === id)) continue;
     const work = await getJson<Work>(`/works/${id}.json`);
     const authorKey = work?.authors?.[0]?.author?.key;
     const author = authorKey ? await getJson<{ name?: string }>(`${authorKey}.json`) : null;
@@ -154,6 +159,7 @@ async function main() {
       ...(coverWork !== id ? { coverWork } : {}),
       ...(e.set ? { set: e.set } : {}),
     });
+    if (e.wallGroup !== undefined) wallGroupOf.set(works[works.length - 1], e.wallGroup);
     if (e.set) {
       pickSet.set(works[works.length - 1], e.set);
       setOf.set(id, (setOf.get(id) ?? new Set()).add(e.set));
@@ -169,6 +175,8 @@ async function main() {
   }
   const dropped = new Set(incomplete.map(s => s.slice(0, s.lastIndexOf(':'))));
   for (let i = works.length - 1; i >= 0; i--) if (dropped.has(pickSet.get(works[i]) ?? '')) works.splice(i, 1);
+
+  if (wallGroupOf.size > 0) works.sort((a, b) => (wallGroupOf.get(a) ?? 1e9) - (wallGroupOf.get(b) ?? 1e9));
 
   const file = JSON.parse(readFileSync(OUT_FILE, 'utf8')) as { collections: CollectionRecord[] };
   const record: CollectionRecord = {

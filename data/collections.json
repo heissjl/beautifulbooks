@@ -31477,6 +31477,15 @@
           "coverIsbn": "9783251300020"
         },
         {
+          "id": "OL18067W",
+          "title": "Lone Star",
+          "author": "Kinky Friedman",
+          "coverId": "ol:15259879",
+          "addedAt": "2026-09-29",
+          "from": "isbn:9783453064799",
+          "coverIsbn": "9783453064799"
+        },
+        {
           "id": "OL26285273W",
           "title": "Maximum Trouble",
           "author": "Hen Hermanns",
@@ -31855,7 +31864,7 @@
       "slug": "ex-libris-covers-by-hanspeter-wyss",
       "title": "Ex Libris — covers by Hanspeter Wyss",
       "kind": "series",
-      "intro": "From 1961 into the early 1980s the Swiss illustrator Hanspeter Wyss drew dust jackets for Ex Libris, the Zurich book club, and for Benziger: flat bright shapes, a crowd of houses, a skyline of crystals, a harlequin under an umbrella. Ex Libris kept no numbered series, so these follow Sammlung Keller's dates roughly, with the undated ones last. Keller also shows about a dozen purely typographic jackets by Wyss; they are not on this wall.",
+      "intro": "From 1961 into the early 1980s the Swiss illustrator Hanspeter Wyss drew dust jackets for Ex Libris, the Zurich book club, and for Benziger: flat bright shapes, a crowd of houses, a skyline of crystals, a harlequin under an umbrella. Ex Libris kept no numbered series, so these follow Sammlung Keller's dates roughly, with the undated ones last. Some carry only type and an abstract figure, such as a target, a colour wheel or a grid.",
       "published": false,
       "publishers": [
         "Buchclub Ex Libris",
@@ -31930,6 +31939,14 @@
           "from": "edition:OL62603274M"
         },
         {
+          "id": "OL1666741W",
+          "title": "Fremdkörper",
+          "author": "Adolf Muschg",
+          "coverId": "ol:15259972",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603424M"
+        },
+        {
           "id": "OL46909W",
           "title": "Andromeda",
           "author": "Michael Crichton",
@@ -31946,6 +31963,22 @@
           "from": "edition:OL62603278M"
         },
         {
+          "id": "OL5622948W",
+          "title": "Konzert für Papagei und Schifferklavier",
+          "author": "Christoph Mangold",
+          "coverId": "ol:15259973",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62255080M"
+        },
+        {
+          "id": "OL1401232W",
+          "title": "Monstervortrag über Gerechtigkeit und Recht",
+          "author": "Friedrich Dürrenmatt",
+          "coverId": "ol:15259975",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603421M"
+        },
+        {
           "id": "OL1100020W",
           "title": "Reise um den Mond",
           "author": "Jules Verne",
@@ -31954,12 +31987,28 @@
           "from": "edition:OL62603277M"
         },
         {
+          "id": "OL46029284W",
+          "title": "Rosa Loui · Republikanische Gedichte · Leichenreden",
+          "author": "Kurt Marti",
+          "coverId": "ol:15259974",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603422M"
+        },
+        {
           "id": "OL1666775W",
           "title": "Mitgespielt",
           "author": "Adolf Muschg",
           "coverId": "ol:15259927",
           "addedAt": "2026-09-29",
           "from": "edition:OL62603276M"
+        },
+        {
+          "id": "OL2725439W",
+          "title": "Dies ist mein Volk",
+          "author": "Abba Solomon Eban",
+          "coverId": "ol:15259979",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603423M"
         },
         {
           "id": "OL2176015W",
@@ -31984,6 +32033,14 @@
           "coverId": "ol:15259930",
           "addedAt": "2026-09-29",
           "from": "edition:OL62603281M"
+        },
+        {
+          "id": "OL131462W",
+          "title": "Die Untersuchung",
+          "author": "Per Olof Sundman",
+          "coverId": "ol:15259976",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603426M"
         },
         {
           "id": "OL2279718W",
@@ -32040,6 +32097,32 @@
           "coverId": "ol:15259937",
           "addedAt": "2026-09-29",
           "from": "edition:OL62603292M"
+        },
+        {
+          "id": "OL1319096W",
+          "title": "New Yorker Novellen",
+          "author": "Ulrich Becher",
+          "coverId": "ol:15259977",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3545362337",
+          "coverIsbn": "3545362337"
+        },
+        {
+          "id": "OL4048821W",
+          "title": "Reise durch Transdanubien",
+          "author": "Walter Matthias Diggelmann",
+          "coverId": "ol:15259978",
+          "addedAt": "2026-09-29",
+          "from": "isbn:3545362116",
+          "coverIsbn": "3545362116"
+        },
+        {
+          "id": "OL865558W",
+          "title": "Tagebuch 1966–1971",
+          "author": "Max Frisch",
+          "coverId": "ol:15259981",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603425M"
         },
         {
           "id": "OL4048809W",
@@ -32156,6 +32239,14 @@
           "coverIsbn": "3719305694"
         },
         {
+          "id": "OL865551W",
+          "title": "Montauk",
+          "author": "Max Frisch",
+          "coverId": "ol:15259980",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603427M"
+        },
+        {
           "id": "OL59437W",
           "title": "Ediths Tagebuch",
           "author": "Patricia Highsmith",
@@ -32196,12 +32287,28 @@
           "from": "edition:OL62603311M"
         },
         {
+          "id": "OL279834W",
+          "title": "Irisches Tagebuch",
+          "author": "Heinrich Böll",
+          "coverId": "ol:15259982",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603428M"
+        },
+        {
           "id": "OL46029192W",
           "title": "Litauische Claviere · Levins Mühle",
           "author": "Johannes Bobrowski",
           "coverId": "ol:15259959",
           "addedAt": "2026-09-29",
           "from": "edition:OL62603313M"
+        },
+        {
+          "id": "OL865559W",
+          "title": "Tagebuch 1946–1949",
+          "author": "Max Frisch",
+          "coverId": "ol:15259983",
+          "addedAt": "2026-09-29",
+          "from": "edition:OL62603429M"
         },
         {
           "id": "OL865476W",

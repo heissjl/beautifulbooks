@@ -60,7 +60,7 @@
   "title": "Fremdkörper",
   "isbn": "",
   "wallTitle": "Fremdkörper",
-  "skip": "typographic"
+  "edition": "OL62603424M"
  },
  {
   "no": "10",
@@ -81,15 +81,14 @@
   "title": "Konzert für Papagei und Schifferklavier",
   "isbn": "",
   "wallTitle": "Konzert für Papagei und Schifferklavier",
-  "edition": "OL62255080M",
-  "skip": "typographic"
+  "edition": "OL62255080M"
  },
  {
   "no": "13",
   "title": "Monstervortrag über Gerechtigkeit und Recht",
   "isbn": "",
   "wallTitle": "Monstervortrag über Gerechtigkeit und Recht",
-  "skip": "typographic"
+  "edition": "OL62603421M"
  },
  {
   "no": "14",
@@ -103,7 +102,7 @@
   "title": "Rosa Loui · Republikanische Gedichte · Leichenreden",
   "isbn": "",
   "wallTitle": "Rosa Loui · Republikanische Gedichte · Leichenreden",
-  "skip": "typographic"
+  "edition": "OL62603422M"
  },
  {
   "no": "16",
@@ -117,7 +116,7 @@
   "title": "Dies ist mein Volk",
   "isbn": "",
   "wallTitle": "Dies ist mein Volk",
-  "skip": "typographic"
+  "edition": "OL62603423M"
  },
  {
   "no": "18",
@@ -145,7 +144,7 @@
   "title": "Die Untersuchung",
   "isbn": "",
   "wallTitle": "Die Untersuchung",
-  "skip": "typographic"
+  "edition": "OL62603426M"
  },
  {
   "no": "22",
@@ -202,7 +201,7 @@
   "isbn": "3545362337",
   "wallTitle": "New Yorker Novellen",
   "edition": "OL4837605M",
-  "skip": "typographic"
+  "cover": 15259977
  },
  {
   "no": "30",
@@ -210,14 +209,14 @@
   "isbn": "3545362116",
   "wallTitle": "Reise durch Transdanubien",
   "edition": "OL5142502M",
-  "skip": "typographic"
+  "cover": 15259978
  },
  {
   "no": "31",
   "title": "Tagebuch 1966–1971",
   "isbn": "",
   "wallTitle": "Tagebuch 1966–1971",
-  "skip": "typographic"
+  "edition": "OL62603425M"
  },
  {
   "no": "32",
@@ -323,7 +322,7 @@
   "title": "Montauk",
   "isbn": "",
   "wallTitle": "Montauk",
-  "skip": "typographic"
+  "edition": "OL62603427M"
  },
  {
   "no": "47",
@@ -365,7 +364,7 @@
   "title": "Irisches Tagebuch",
   "isbn": "",
   "wallTitle": "Irisches Tagebuch",
-  "skip": "typographic"
+  "edition": "OL62603428M"
  },
  {
   "no": "53",
@@ -379,7 +378,7 @@
   "title": "Tagebuch 1946–1949",
   "isbn": "",
   "wallTitle": "Tagebuch 1946–1949",
-  "skip": "typographic"
+  "edition": "OL62603429M"
  },
  {
   "no": "55",
