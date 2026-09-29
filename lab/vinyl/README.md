@@ -30,6 +30,7 @@ Was anders ist:
 npx tsx lab/vinyl/measure.ts
 npx tsx lab/vinyl/discogs.ts     # danach; Discogs drosselt ohne Token stark (2 h für acht Alben)
 npx tsx lab/vinyl/labels.ts      # Wand der Etiketten nach out/labels.html, nur aus cache.json
+npx tsx lab/vinyl/mockup.ts      # Mockup der Albumseite nach out/mockup.html (holt Labels, Katalognummern, alle Bilder, dHash)
 npx vitest run lab/vinyl
 ```
 
@@ -46,4 +47,15 @@ Die Wand ansehen: `out/` mit einem beliebigen statischen Server ausliefern, z. B
 
 5. **Die Wand der Etiketten** (`labels.ts`, Julian: „zeig mir eine wand der etiketten"): 103 Pressungen, je eine runde Kachel, älteste zuerst. Angesehen am 2026-09-29: sie trägt — *Kind of Blue* allein zeigt Columbias „Six Eye", Fontana in drei Farben, Coronet, CBS orange; *Dark Side* wandert von Harvest grün über schwarz zum Prisma. Unter 21 angesehenen *Kind of Blue*-Kacheln sind zwei kein Etikett (1959 JP zeigt ein Foto der Hülle, 1959 CA ist fast ganz schwarz); `Medium` allein reicht also nicht als Filter, es bräuchte einen Blick oder eine Kreis-Erkennung.
 
-**Offen, Julian:** Discogs-Token beantragen und die Bildrechte dort prüfen, oder bei MusicBrainz bleiben; wo Rückseite und Etikett erscheinen (auf der Wand oder erst beim gewählten Cover); eigene Seite oder Teil von beautifulcovers.
+6. **Andere Quellen:** Recherche vom 2026-09-29 in [quellen.md](quellen.md). Kein offener Katalog führt die Plattenfarbe als Feld; am besten wäre der **Discogs-Dump (CC0, 10,5 GB)** für Pressungen und Farbtext, verbunden über die Discogs-Links in MusicBrainz mit den Bildern des Cover Art Archive. Discogs-Bilder sind nach den API-Bedingungen (kein kommerzieller Gebrauch, 6-Stunden-Regel, kein Cache) für eine Seite mit Affiliate-Links vermutlich nicht nutzbar. TheAudioDB und fanart.tv haben Rückseite und Disc-Motiv nur je Album.
+
+7. **Mockup der Albumseite** (`mockup.ts` + Vorlage `mockup.html` → `out/mockup.html`; Julian: „kannst du ein mock up erstellen wie die seite aussehen könnte für vinyl. gleiches konzept wie für bücher aber entsprechend abgeändert?"): Farben, Schriften und Aufbau der Buchseite, mit echten Daten der acht Alben. Was sich ändert:
+   - **quadratische Kacheln**, Wortmarke „Beautiful Records", Zählzeile „23 sleeves from 57 of 63 vinyl pressings with a photo";
+   - **Länder statt Sprachen** als Reiter (US, UK, Japan, Europe …), gezählt in gefalteten Hüllen;
+   - ein Umschalter **Front · Back · Label** über der Wand: Vorder- und Rückseite gefaltet in derselben Ordnung, Etiketten eines je Pressung, rund;
+   - **Faltung in den Stufen der Buchwand** mit dem dHash der Seite (`lib/dhash.ts`): ≤ 8 immer, ≤ 20 bei gleicher Katalognummer (die ISBN der Platte), ≤ 16 bei gleichem Label im selben oder nächsten Jahr. Ein fester Abstand ≤ 10 faltete zu wenig, weil Hüllen fotografiert statt gescannt sind; mit den Stufen wird bei *Kind of Blue* die Columbia-Hülle zu einer Kachel mit 27 Pressungen, 23 Hüllen statt 37;
+   - die Seitenleiste zeigt die **Pressung**: großes Bild mit Vorder-, Rückseite, Etikett A und B zum Umschalten, darunter „27 pressings with this sleeve" als Reihe ihrer Etiketten (die Pressungen gleicher Hülle unterscheidet das Etikett), Katalognummer, Barcode, Format, Plattenfarbe („Not recorded", nie „black"), Links zu Discogs und eBay über die Katalognummer und der Hinweis, dass eine Neuauflage unter derselben Nummer anders aussehen kann;
+   - auf dem Telefon wird die Seitenleiste zum Blatt von unten, wie `CoverSheet` bei Büchern.
+   Angesehen bei 1280 × 800 und 390 × 844 (kein seitliches Scrollen). Befunde: archive.org verliert gelegentlich ein Bild, darum lädt die Seite zweimal neu und sagt dann „Image did not load"; die 500-px-Fassung fehlt bei kleinen Originalen, die Seite fällt auf das Original zurück. Bei *folklore* haben die beiden farbigen Pressungen (rot, gold) keine Vorderseite im Archiv und fehlen deshalb auf der Wand — gerade die Farbvarianten sind am schlechtesten belegt.
+
+**Offen, Julian:** den Dump für die nächste Messung herunterladen (10,5 GB, braucht dein OK); Discogs-Token beantragen und die Bildrechte dort prüfen, oder bei MusicBrainz bleiben; wo Rückseite und Etikett erscheinen (auf der Wand oder erst beim gewählten Cover); eigene Seite oder Teil von beautifulcovers.
