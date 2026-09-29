@@ -31,6 +31,9 @@ npx tsx lab/vinyl/measure.ts
 npx tsx lab/vinyl/discogs.ts     # danach; Discogs drosselt ohne Token stark (2 h für acht Alben)
 npx tsx lab/vinyl/labels.ts      # Wand der Etiketten nach out/labels.html, nur aus cache.json
 npx tsx lab/vinyl/mockup.ts      # Mockup der Albumseite nach out/mockup.html (holt Labels, Katalognummern, alle Bilder, dHash)
+npx tsx lab/vinyl/story.ts       # Zeitleiste, Credits, Anmerkungen je Hülle nach out/story.json
+# mit ANTHROPIC_API_KEY aus der .env.local des Hauptordners, nur für diesen Befehl:
+npx tsx lab/vinyl/live-story.ts  # Wikipedia + Claude, gemessen, nach out/live-story.json; danach mockup.ts erneut
 npx vitest run lab/vinyl
 ```
 
@@ -73,6 +76,8 @@ Die Wand ansehen: `out/` mit einem beliebigen statischen Server ausliefern, z. B
 10. **Discogs-Dump gemessen** (Julian: „lade den discogs dump herunter und mach die messung"; `dump-measure.ts`, `dump-report.ts`, `dump-link.ts`, Leser in `dump.ts`): 11,25 GB als Datenstrom gelesen, nicht gespeichert (15 GB frei), 8 Minuten. 8,05 Mio. Vinyl-Einträge, 7,5 % mit Plattenfarbe im Text — 2010er 28,5 %, 2020er 41,3 %, davor um 1 %. **Der Dump hat keine Bildangaben**, nicht einmal deren Zahl. Farberkennung von Hand geprüft: 57 von 60 richtig, 1 von 40 übersehen. Die acht Alben haben bei Discogs 282 farbige Pressungen (*Nevermind* 90, *Dark Side* 65, *Kind of Blue* 56 — fast alle blau); über den Discogs-Link in MusicBrainz bekommen aber nur 10 der 138 Pressungen mit Foto eine Farbe. Tabellen in der [Historie](../../docs/history.md#2026-09-29--der-discogs-dump-gemessen-roadmap-516).
 
 11. **Geschichte je Hülle** (Julian: „aber woher bekommen wir die geschichte zu jeder hülle"; `story.ts`, Befund in [geschichte.md](geschichte.md)): vier Schichten — Zeitleiste aus unseren Daten (24 von 24 Hüllen), Credits aus MusicBrainz und Discogs (15 von 24, CC0), Discogs-Anmerkungen (21 von 24, CC0, meist Herstellungsangaben), Erzählung aus Wikipedia (6 von 8 Alben, fast nur zum Original, CC BY-SA). Die Geschichte der Varianten gibt es nirgends fertig; sie müsste geschrieben werden.
+
+12. **Geschichte live geschrieben** (Julian: „mach mal einen mockup mit den wikipedia-daten und miss wie lange die ad-hoc erstellung dafür dauert"; `wiki.ts`, `live-story.ts`): Wikipedia-Artworktext in 1,3 s (Median), dann ein Aufruf an Claude Opus 5.5 (Aufwand `low`) für Albumtext und Beschriftung je Hülle in 5,5 s — zusammen 7,3 s (5,4–11,3 s), 0,022 $ je Album. Nicht für die Suche; auf der Albumseite nachgeladen und danach gespeichert schon. Im Mockup mit nachgespielter Wartezeit („live timing"). Tabellen in der [Historie](../../docs/history.md).
 
 **Entschieden 2026-09-29: Schwelle 20** (Julian: „für das hashing nimm die 20er schwelle“) — weniger Kacheln, die UHQR-Box und das zweite *folklore*-Foto verschwinden dabei im Stapel. Das Mockup steht auf 20, der Umschalter bleibt.
 
