@@ -102,12 +102,17 @@ export default function WallPlan({
     });
   const pageUrl = () => `${window.location.origin}/c/${wall.id}`;
   const nextToGet = wall.tiles.find((t) => !bought.has(t.coverId));
-  const openNext = () => {
-    if (!nextToGet) return;
+  // A real link with target=_blank, not window.open: a script-opened window is a
+  // popup to some browsers, and the app's own browser opened it in place
+  // (Julian, 2026-09-29: „open next shop muss in einem neuen tab öffnen“).
+  const nextShop = nextToGet ? (() => {
     const { plan, href } = shopsFor(nextToGet, market);
     const link = plan.lead[0] ?? plan.rest[0];
-    if (link) window.open(href(link), '_blank', 'noopener');
-    setListNote(link ? `Opened ${link.label} for ${nextToGet.title}. Tick it once you have bought it.` : `No shop to open for ${nextToGet.title}.`);
+    return link ? { label: link.label, href: href(link) } : null;
+  })() : null;
+  const openedNext = () => {
+    if (!nextToGet) return;
+    setListNote(nextShop ? `Opened ${nextShop.label} for ${nextToGet.title}. Tick it once you have bought it.` : `No shop to open for ${nextToGet.title}.`);
   };
   const copyList = () =>
     navigator.clipboard.writeText(shoppingText(wall, bought, pageUrl())).then(
@@ -396,9 +401,15 @@ export default function WallPlan({
         <MarketSwitcher market={market} onChange={setMarket} />
       </div>
       <div className="mt-3 flex flex-wrap gap-2 text-sm">
-        <button type="button" onClick={openNext} disabled={!nextToGet} className="rounded-full bg-ink px-3 py-1 text-bg transition-colors hover:bg-accent disabled:opacity-40">
-          {nextToGet ? 'Open next shop' : 'All bought'}
-        </button>
+        {nextShop ? (
+          <a href={nextShop.href} target="_blank" rel="noopener" onClick={openedNext} className="rounded-full bg-ink px-3 py-1 text-bg transition-colors hover:bg-accent">
+            Open next shop
+          </a>
+        ) : (
+          <button type="button" onClick={openedNext} disabled={!nextToGet} className="rounded-full bg-ink px-3 py-1 text-bg transition-colors hover:bg-accent disabled:opacity-40">
+            {nextToGet ? 'Open next shop' : 'All bought'}
+          </button>
+        )}
         <button type="button" onClick={copyList} className="rounded-full border border-line bg-surface px-3 py-1 text-ink-2 hover:border-accent hover:text-accent">
           Copy list
         </button>
