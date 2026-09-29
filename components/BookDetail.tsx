@@ -174,6 +174,12 @@ function BookDetail() {
   // A query means there is a result list behind the back link; a bare `?lang=`
   // does not (ROADMAP 6.28).
   const cameFromResults = !!searchParams.get('q') || !!searchParams.get('author') || !!searchParams.get('key');
+  /*
+    ROADMAP 6.77, a mockup for Julian: `?panel=b` puts the shops before the
+    scans and printings. Only under `next dev` — a production build inlines
+    NODE_ENV and drops the branch. Remove the switch when the order is decided.
+  */
+  const panelLayout: 'a' | 'b' = process.env.NODE_ENV !== 'production' && searchParams.get('panel') === 'b' ? 'b' : 'a';
   const preview = useWorkPreview(params.id);
 
   // Market for buy links (E9): the user's choice, else detected by the server.
@@ -371,6 +377,7 @@ function BookDetail() {
       market={view.market}
       onMarketChange={setMarket}
       share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} />}
+      layout={panelLayout}
       verdictFor={isbn13 => verifyIsbnCover(
         selected,
         isbnCovers.byIsbn.get(isbn13) ?? [],
@@ -547,6 +554,8 @@ interface CoverDetailsProps {
   verdictFor: (isbn13: string) => IsbnVerdict;
   /** Rendered under the big cover on wide screens (Julian, 2026-09-09). */
   share?: React.ReactNode;
+  /** `b` is the 6.77 mockup, shops before scans and printings; dev only. */
+  layout?: 'a' | 'b';
 }
 
 /**
@@ -603,7 +612,7 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   );
 }
 
-function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share, layout = 'a' }: CoverDetailsProps) {
   const wallsOn = useContext(WallsOn);
   const isDesktop = useIsDesktop();
   const addToWall = wallsOn ? <AddToWall workId={workId} title={workTitle} author={author} cover={cover} editions={editions} /> : null;
@@ -691,6 +700,105 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         A reader's own wall (ROADMAP 5.13a): the picked cover, not the scan on
         screen — a wall keeps the design, and the folded scans are the same one.
       */}
+
+      {layout === 'b' ? (
+        /*
+          ROADMAP 6.77, variant B (a mockup under `next dev`, `?panel=b`):
+          the printing and its shops come straight under the cover; adding to
+          a collection, the other printings and the other scans follow, the
+          last two folded. The printing the buttons are for is named in the
+          heading above them, so folding the chips hides no decision.
+        */
+        shown && (
+        <EditionBlock
+          key={shown.id}
+          edition={shown}
+          workTitle={workTitle}
+          author={author}
+          otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
+          searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
+          anyEditionLinks={anyEditionLinks}
+          market={market}
+          onMarketChange={onMarketChange}
+          verdict={shown.isbn13 ? verdictFor(shown.isbn13) : { status: 'unknown' }}
+          afterLead={
+            <>
+              {!isDesktop && addToWall && <div className="mt-4">{addToWall}</div>}
+              {ordered.length > 1 && (
+                <details className="group mt-4 border-t border-line pt-3">
+                  <summary className="cursor-pointer list-none text-sm text-ink-2 transition-colors hover:text-ink">
+                    <span className="mr-1 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
+                    {ordered.length} printings with this cover
+                  </summary>
+                  <div className="mt-3 flex flex-wrap gap-1.5" role="group" aria-label="Printings that carry this cover">
+                    {ordered.map(edition => (
+                      <button
+                        key={edition.id}
+                        type="button"
+                        onClick={() => setPicked(edition.id)}
+                        aria-pressed={edition.id === shown?.id}
+                        className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                          edition.id === shown?.id ? 'border-accent text-accent' : 'border-line text-ink-3 hover:text-ink-2'
+                        }`}
+                      >
+                        {[edition.publisher, edition.year].filter(Boolean).join(' · ') || 'This printing'}
+                      </button>
+                    ))}
+                  </div>
+                </details>
+              )}
+              {scans.length > 1 && (
+                <details className="group mt-3 border-t border-line pt-3">
+                  <summary className="cursor-pointer list-none text-sm text-ink-2 transition-colors hover:text-ink">
+                    <span className="mr-1 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
+                    {scans.length} scans of this cover
+                  </summary>
+                  <div className="mt-3">
+          {/*
+            One row that scrolls sideways, never a second row (ROADMAP 6.14a):
+            *Fahrenheit 451* carries eight scans, and a wrapped second row
+            costs the column the height that 1.2 had just won back. The fading
+            edge appears only while there is more to the right — a fade over
+            a row that fits would hide a slice of the last tile for nothing.
+          */}
+          <div className="relative mt-2">
+            <div ref={scanScroller} onScroll={measureScanRow} className="snap-x overflow-x-auto pb-1 [scrollbar-width:thin]">
+            <ul ref={scanContent} className="flex w-max gap-2">
+            {scans.map((id, i) => (
+              <li key={id} className="snap-start">
+                <button
+                  type="button"
+                  onClick={() => setPickedScan(id)}
+                  aria-pressed={id === shownScan}
+                  title={i === 0 ? 'The scan the wall shows' : 'Another scan of the same cover'}
+                  className={`cover-shadow relative block h-16 w-[2.7rem] overflow-hidden rounded-[3px] bg-surface-2 transition-opacity ${
+                    id === shownScan ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  <CoverImage src={coverUrlFor(id, 'M') ?? ''} alt={i === 0 ? 'The scan the wall shows' : `Scan ${i + 1} of this cover`} sizes="44px" />
+                </button>
+              </li>
+            ))}
+            </ul>
+            </div>
+            {scanOverflows && !scanAtEnd && (
+              <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-bg to-transparent" />
+            )}
+          </div>
+          {/* N13: what is on screen, not the rule that put it there. */}
+          <p className="mt-2 text-xs leading-relaxed text-ink-3">
+            Different scans of the same design, sometimes of different printings.
+          </p>
+                  </div>
+                </details>
+              )}
+              <SimilarCovers coverId={cover.id} query={query} />
+            </>
+          }
+        />
+      )
+      ) : (
+        <>
       {!isDesktop && addToWall && <div className="mt-3">{addToWall}</div>}
 
       {scans.length > 1 && (
@@ -774,6 +882,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
           verdict={shown.isbn13 ? verdictFor(shown.isbn13) : { status: 'unknown' }}
         />
       )}
+        </>
+      )}
     </div>
   );
 }
@@ -790,6 +900,8 @@ interface EditionBlockProps {
   market: Market;
   onMarketChange: (market: Market) => void;
   verdict: IsbnVerdict;
+  /** Rendered right after the first row of shops; the 6.77 mockup puts scans and printings there. */
+  afterLead?: React.ReactNode;
 }
 
 /**
@@ -802,7 +914,7 @@ interface EditionBlockProps {
  * them into three zones instead, and everything that is not one of the two or
  * three shops with a chance goes behind a fold.
  */
-function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict }: EditionBlockProps) {
+function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict, afterLead }: EditionBlockProps) {
   // Reset whenever the edition or the market changes: an answer belongs to
   // one ISBN in one market's shops.
   const [checked, setChecked] = useState<{ key: string; byProvider: Map<string, ShopStatus> } | null>(null);
@@ -882,6 +994,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
         */}
         {plan.note && <p className="mt-2 text-xs leading-relaxed text-ink-3">{plan.note}</p>}
       </div>
+
+      {afterLead}
 
       {hasFold && (
         <details className="group mt-4 border-t border-line pt-3">
