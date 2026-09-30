@@ -378,22 +378,8 @@ export default function WallPlan({
                       boxShadow: '0 1px 2px rgba(0,0,0,.18)',
                     }}
                   />
-                  {angled && (
-                    <span
-                      className="absolute"
-                      style={{
-                        ...smooth,
-                        left: pct(l.x, plan.widthCm),
-                        top: pct(l.y, plan.heightCm),
-                        width: pct(l.length, plan.widthCm),
-                        height: len(l.depth),
-                        transformOrigin: 'top',
-                        transform: 'rotateX(90deg)',
-                        background: 'linear-gradient(rgba(255,255,255,.35), rgba(255,255,255,.15))',
-                        borderBottom: '1px solid rgba(255,255,255,.85)',
-                      }}
-                    />
-                  )}
+                  {/* No shelf plane in the angled view: Chrome sorted it wrongly against the inner wall and
+                      drew white ticks across the moulding (2026-09-29); the strip alone reads as the ledge. */}
                 </Fragment>
               ))}
             </div>
