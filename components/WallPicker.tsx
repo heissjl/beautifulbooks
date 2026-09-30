@@ -8,20 +8,27 @@ import { postJson } from './useMyWalls';
 import { useWorkPages } from './useWorkPages';
 import { buildWall, captionFor, progressLabel } from './workWall';
 import type { Cover, EditionView } from '@/lib/model';
+import { swapOps } from '@/lib/walls/edit';
 import type { PublicWall, Tile, WallOp } from '@/lib/walls/model';
 
 export default function WallPicker({
   workId,
   target,
   newTitle = 'My collection',
+  replace,
   onWall,
+  onReplaced,
   onClose,
 }: {
   workId: string;
   /** The collection covers go into; none yet means the first cover makes one, called `newTitle`. */
   target: PublicWall | null;
   newTitle?: string;
+  /** From Arrange (5.13m): the picked cover takes this tile's place instead of joining at the end. */
+  replace?: { tile: Tile; index: number };
   onWall: (wall: PublicWall) => void;
+  /** After a replacement, so the editor can return to Arrange. */
+  onReplaced?: () => void;
   onClose: () => void;
 }) {
   const pages = useWorkPages(workId, '', undefined);
@@ -70,6 +77,12 @@ export default function WallPicker({
       change(() => postJson('/api/walls', { title: newTitle, tiles: [tile] }));
       return;
     }
+    if (replace) {
+      if (replace.tile.coverId === tile.coverId) return;
+      const ops = swapOps(replace.tile, tile, replace.index);
+      change(() => postJson(`/api/walls/${target.id}`, { ops })).then(() => onReplaced?.());
+      return;
+    }
     const ops: WallOp[] = onIt.length ? onIt.map((t) => ({ op: 'remove', coverId: t.coverId })) : [{ op: 'add', tile }];
     change(() => postJson(`/api/walls/${target.id}`, { ops }));
   }
@@ -102,7 +115,11 @@ export default function WallPicker({
 
       {/* Which collection a click fills is said here, not left to guess (5.13m). */}
       <p className="mt-3 text-sm text-ink-2">
-        {target ? (
+        {replace ? (
+          <>
+            Pick another cover for this book: it takes the place of the one marked in <strong className="font-medium text-ink">{target?.title}</strong>.
+          </>
+        ) : target ? (
           <>
             A click puts a cover into <strong className="font-medium text-ink">{target.title}</strong>, a second click takes it out.
           </>

@@ -18,6 +18,8 @@ export interface EditState {
   add?: AddTab;
   q?: string;
   work?: string;
+  /** The cover a picked one replaces, in its place (Julian, 2026-09-29: „ein anderes cover durch anklicken einer kachel auszuwählen“). */
+  swap?: string;
 }
 
 /** `/c/<id>/edit` with what the editor shows; defaults stay out of the address. */
@@ -27,6 +29,7 @@ export function editHref(id: string, state: EditState = {}): string {
   if (state.add && state.add !== 'search') p.set('add', state.add);
   if (state.q) p.set('q', state.q);
   if (state.work) p.set('work', state.work);
+  if (state.swap) p.set('swap', state.swap);
   const qs = p.toString();
   return `/c/${id}/edit${qs ? `?${qs}` : ''}`;
 }
@@ -34,16 +37,27 @@ export function editHref(id: string, state: EditState = {}): string {
 const TABS: readonly AddTab[] = ['search', 'photo', 'ideas'];
 
 /** The editor's state read back from the address; anything unknown falls to the default. */
-export function readEditState(get: (key: string) => string | null): Required<Pick<EditState, 'mode' | 'add'>> & Pick<EditState, 'q' | 'work'> {
+export function readEditState(get: (key: string) => string | null): Required<Pick<EditState, 'mode' | 'add'>> & Pick<EditState, 'q' | 'work' | 'swap'> {
   const add = get('add');
   const work = get('work');
+  const swap = get('swap');
   const q = get('q')?.trim();
   return {
     mode: get('mode') === 'arrange' ? 'arrange' : 'add',
     add: TABS.includes(add as AddTab) ? (add as AddTab) : 'search',
     ...(q ? { q } : {}),
     ...(work && /^OL\d+W$/.test(work) ? { work } : {}),
+    ...(swap && /^\d{1,12}$/.test(swap) ? { swap } : {}),
   };
+}
+
+/** Puts `next` where `old` stands: the three operations the change route applies in order. */
+export function swapOps(old: Tile, next: Tile, index: number): WallOp[] {
+  return [
+    { op: 'remove', coverId: old.coverId },
+    { op: 'add', tile: next },
+    { op: 'move', coverId: next.coverId, to: index },
+  ];
 }
 
 /**

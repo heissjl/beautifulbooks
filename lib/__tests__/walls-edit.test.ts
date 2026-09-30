@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { addRequests, defaultTitle, editHref, OPS_PER_REQUEST, readEditState, standingOf } from '../walls/edit';
+import { addRequests, defaultTitle, editHref, OPS_PER_REQUEST, readEditState, standingOf, swapOps } from '../walls/edit';
+import { applyOp } from '../walls/model';
 import type { Tile } from '../walls/model';
 
 const tile = (coverId: string, workId = `OL${coverId}W`): Tile => ({ workId, coverId, title: `T${coverId}`, printings: [] });
@@ -11,6 +12,7 @@ describe('the editor address (5.13m)', () => {
     expect(editHref('abcdefghij', { add: 'photo' })).toBe('/c/abcdefghij/edit?add=photo');
     expect(editHref('abcdefghij', { q: 'rebecca du maurier', work: 'OL45W' })).toBe('/c/abcdefghij/edit?q=rebecca+du+maurier&work=OL45W');
     expect(editHref('abcdefghij', { mode: 'arrange' })).toBe('/c/abcdefghij/edit?mode=arrange');
+    expect(editHref('abcdefghij', { work: 'OL45W', swap: '123' })).toBe('/c/abcdefghij/edit?work=OL45W&swap=123');
   });
 
   it('reads it back, and anything unknown as the default', () => {
@@ -22,6 +24,8 @@ describe('the editor address (5.13m)', () => {
     expect(read('mode=arrange&add=ideas')).toEqual({ mode: 'arrange', add: 'ideas' });
     expect(read('mode=x&add=../&work=nope&q=%20%20')).toEqual({ mode: 'add', add: 'search' });
     expect(read('q=rebecca&work=OL45W')).toEqual({ mode: 'add', add: 'search', q: 'rebecca', work: 'OL45W' });
+    expect(read('swap=123')).toEqual({ mode: 'add', add: 'search', swap: '123' });
+    expect(read('swap=ol:123')).toEqual({ mode: 'add', add: 'search' });
   });
 });
 
@@ -53,4 +57,10 @@ describe('adding many covers at once', () => {
 it('names a new collection after the ones there are', () => {
   expect(defaultTitle([])).toBe('My collection');
   expect(defaultTitle([1, 2])).toBe('Collection 3');
+});
+
+it('swapping a cover keeps its place', () => {
+  const wall = { id: 'w', title: 't', columns: 4, tiles: [tile('1'), tile('2'), tile('3')], createdOn: '', updatedAt: '' };
+  const after = swapOps(tile('2'), tile('9'), 1).reduce((w, op) => applyOp(w, op, 'now'), wall);
+  expect(after.tiles.map((t) => t.coverId)).toEqual(['1', '9', '3']);
 });

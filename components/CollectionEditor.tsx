@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { writeTarget } from './AddToWall';
 import { startEditing, stopEditing } from './editingSession';
 import BookSearch from './BookSearch';
@@ -114,7 +114,10 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
     }
   }
 
-  const showCovers = (tile: Tile) => go({ add: 'search', q: tile.title, work: tile.workId });
+  const showCovers = (tile: Tile) => go({ add: 'search', q: tile.title, work: tile.workId, swap: undefined });
+  // A tile clicked in Arrange (5.13m): the picker replaces it in place, as long as it is still in the collection.
+  const swapIndex = state.swap ? wall.tiles.findIndex((t) => t.coverId === state.swap) : -1;
+  const swapTarget = swapIndex >= 0 ? { tile: wall.tiles[swapIndex], index: swapIndex } : undefined;
 
   if (access !== 'owner') {
     return (
@@ -151,9 +154,6 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
                 Keep it
               </button>
             )}
-            <Link href={`/c/${id}`} className="hidden text-sm text-bg/80 underline underline-offset-4 hover:text-bg md:inline">
-              See it as others do
-            </Link>
             <Link href={`/c/${id}`} onClick={stopEditing} className="rounded-full bg-bg px-4 py-0.5 text-sm text-ink hover:bg-surface">
               Stop editing
             </Link>
@@ -182,7 +182,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
           the three ways in. Nothing hidden here loads an image the other
           mode would load again: the covers are the same tiles.
         */}
-        {state.mode === 'arrange' && <Arrange wall={wall} onSend={send} onAdd={() => go({ mode: 'add' })} />}
+        {state.mode === 'arrange' && <Arrange wall={wall} onSend={send} onAdd={() => go({ mode: 'add' })} onPick={(t) => go({ mode: 'add', add: 'search', q: t.title, work: t.workId, swap: t.coverId })} />}
         <div hidden={state.mode !== 'add'} className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
             <section aria-labelledby="add-title" className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2 border-b border-line pb-2">
@@ -207,7 +207,17 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
                       requestAnimationFrame(() => document.getElementById('picker')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
                     }}
                   />
-                {state.work && <WallPicker key={state.work} workId={state.work} target={wall} onWall={accept} onClose={() => go({ work: undefined })} />}
+                {state.work && (
+                  <WallPicker
+                    key={state.work}
+                    workId={state.work}
+                    target={wall}
+                    replace={swapTarget}
+                    onWall={accept}
+                    onReplaced={() => go({ mode: 'arrange', swap: undefined, work: undefined })}
+                    onClose={() => go({ work: undefined, swap: undefined })}
+                  />
+                )}
               </div>
               {photoOn && (
                 <div hidden={tab !== 'photo'}>
@@ -245,7 +255,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
  * every cover's tools always in sight — the narrow column is for gathering,
  * not for ordering forty covers.
  */
-function Arrange({ wall, onSend, onAdd }: { wall: PublicWall; onSend: (ops: WallOp[]) => void; onAdd: () => void }) {
+function Arrange({ wall, onSend, onAdd, onPick }: { wall: PublicWall; onSend: (ops: WallOp[]) => void; onAdd: () => void; onPick: (tile: Tile) => void }) {
   /*
     Dragging a cover to its place (5.13m step 6). Pointer events, one drag at
     a time: `from` is the tile picked up, `over` the tile under the pointer.
@@ -254,6 +264,14 @@ function Arrange({ wall, onSend, onAdd }: { wall: PublicWall; onSend: (ops: Wall
     the page. The arrows stay for the keyboard and as the plain way.
   */
   const [drag, setDrag] = useState<{ from: number; over: number | null } | null>(null);
+  /*
+    A click on a cover picks another cover for that book (Julian, 2026-09-29:
+    „in der arrange-sicht fehlt mir jetzt die option ein anderes cover durch
+    anklicken einer kachel auszuwählen“); a drag must not count as one. The
+    pointer's start is kept outside React's state — it is only read in
+    handlers, never in render.
+  */
+  const start = useRef<{ x: number; y: number; moved: boolean } | null>(null);
 
   function pickUp(e: React.PointerEvent<HTMLElement>, from: number) {
     if (e.button !== 0) return;
@@ -262,10 +280,12 @@ function Arrange({ wall, onSend, onAdd }: { wall: PublicWall; onSend: (ops: Wall
     } catch {
       // A pointer the browser no longer knows (a synthetic one in a test): the drag still runs on plain events.
     }
+    start.current = { x: e.clientX, y: e.clientY, moved: false };
     setDrag({ from, over: null });
   }
   function track(e: React.PointerEvent<HTMLElement>) {
     if (!drag) return;
+    if (start.current && !start.current.moved && Math.hypot(e.clientX - start.current.x, e.clientY - start.current.y) > 6) start.current.moved = true;
     const under = document.elementFromPoint(e.clientX, e.clientY)?.closest<HTMLElement>('[data-index]');
     const over = under ? Number(under.dataset.index) : null;
     setDrag((d) => (d && d.over !== over ? { ...d, over } : d));
@@ -325,16 +345,19 @@ function Arrange({ wall, onSend, onAdd }: { wall: PublicWall; onSend: (ops: Wall
             const target = drag !== null && drag.over === i && drag.from !== i;
             return (
               <li key={t.coverId} data-index={i} className={lifted ? 'opacity-40' : ''}>
-                <span
-                  className={`cover-shadow relative block aspect-[2/3] cursor-grab select-none overflow-hidden rounded-card bg-surface-2 ${target ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}
-                  title={label}
+                <button
+                  type="button"
+                  aria-label={`${label} — pick another cover for it`}
+                  className={`cover-shadow relative block aspect-[2/3] w-full cursor-grab select-none overflow-hidden rounded-card border-0 bg-surface-2 p-0 text-left ${target ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}
+                  title="Click for another cover of this book, drag to move it"
                   onPointerDown={(e) => e.pointerType === 'mouse' && pickUp(e, i)}
+                  onClick={() => !start.current?.moved && onPick(t)}
                   // The browser's own image drag would cancel the pointer events (seen in headless Chrome).
                   onDragStart={(e) => e.preventDefault()}
                   {...handlers}
                 >
                   {src && <CoverImage src={src} alt={label} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />}
-                </span>
+                </button>
                 <span className="mt-1.5 flex items-center justify-between">
                   <ToolButton label={`Move ${t.title} left`} hidden={i === 0} onClick={() => onSend([{ op: 'move', coverId: t.coverId, to: i - 1 }])}>←</ToolButton>
                   <button
