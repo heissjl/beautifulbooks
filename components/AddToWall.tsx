@@ -44,6 +44,12 @@ interface AddToWallProps {
   author?: string;
   cover: Cover;
   editions: readonly EditionView[];
+  /**
+   * Beside "Close" in the phone sheet (ROADMAP 6.77, mockup D): once the cover
+   * is in, the button says only "✓" (Julian, 2026-09-29: „mach den knopf
+   * kürzer, nur ✓"), so the collection picker and "Open" fit the row.
+   */
+  compact?: boolean;
 }
 
 /**
@@ -51,7 +57,7 @@ interface AddToWallProps {
  * covers: a wall rebuilds its images from the numeric id, which a Google
  * volume does not have.
  */
-export default function AddToWall({ workId, title, author, cover, editions }: AddToWallProps) {
+export default function AddToWall({ workId, title, author, cover, editions, compact = false }: AddToWallProps) {
   const { me, setMe } = useMyWalls();
   const [chosen, setChosen] = useState<string | null>(readTarget);
   const [busy, setBusy] = useState(false);
@@ -106,7 +112,7 @@ export default function AddToWall({ workId, title, author, cover, editions }: Ad
             onTarget ? 'border border-accent text-accent hover:bg-accent hover:text-on-accent' : 'bg-ink text-bg hover:bg-accent'
           }`}
         >
-          {onTarget ? 'In your collection ✓' : '+ Add to collection'}
+          {onTarget ? (compact ? <span aria-label="In your collection" title="In your collection — click to take it out">✓</span> : 'In your collection ✓') : '+ Add to collection'}
         </button>
         {me.walls.length > 0 && (
           <select
