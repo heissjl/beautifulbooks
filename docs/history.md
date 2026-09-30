@@ -3789,3 +3789,19 @@ Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch dies
   - Draußen bleiben auf Julians Wort edition suhrkamp, Library of America und die Suhrkamp-Autorenporträts.
   - 3386 Kandidaten: 291 zu klein oder unscharf, 35 schon im Spiel, jede Anfrage beantwortet.
   - Der Vorrat hat jetzt **5060 Umschläge** (927 neu, 2 heraus, weil sich eine Sammlung online geändert hat). Die neuen sind auf einem Kontaktbogen angesehen.
+
+**5.10l umgesetzt: /collections zweispaltig mit Mosaik-Kachel, 2026-09-30.** Julian wählte Variante D aus dem Mockup („setze das um“).
+- **Neu:** `components/CollectionGrid.tsx` zeigt zwei Reihen ohne Seitwärtsscrollen; die letzte Kachel ist ein 3 × 3-Mosaik der Umschläge 10–18, also keiner, der schon in den Reihen steht.
+- **Schild:** „All n →“ sitzt mittig auf dem abgedunkelten Mosaik; seine Schrift richtet sich nach der Kachelbreite (`clamp(9px, 10cqw, 13px)`).
+- **Spalten und Umschläge pro Reihe** folgen dem Fenster: ab `xl` zwei Karten à 5, ab `lg` zwei à 4, ab `sm` eine à 5, darunter eine à 4. Wo eine Reihe vier fasst, treten der 8. und 9. Umschlag zurück.
+- Die alte Scrollzeile `CollectionRow` ist entfernt; sie hatte keinen anderen Nutzer.
+- **Gemessen** im Dev-Server mit einer DOM-Messung:
+
+  | Fenster | Spalten | pro Reihe | Umschlag | Schild |
+  |---|---|---|---|---|
+  | 1280 px | 2 | 5 | 107 px | 58 px auf 107 px |
+  | 1100 px | 2 | 4 | 115 px | 62 px auf 115 px |
+  | 800 px | 1 | 5 | 141 px | 70 px auf 141 px |
+  | 375 px | 1 | 4 | 77 px | 49 px auf 77 px |
+
+  Nirgends seitliches Scrollen; bei 1280 px auch mit Bildschirmfoto angesehen.
