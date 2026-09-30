@@ -533,7 +533,7 @@ export default function WallPlan({
           {unknownThickness > 0 && (
             <li>
               The thickness of {unknownThickness === wall.tiles.length ? 'the books is' : `${unknownThickness} of ${wall.tiles.length} books is`} not known, so the
-              depth assumes {L(ASSUMED_THICKNESS_CM)} {U} each. A thick hardcover needs a deeper frame: measure the thickest book before ordering.
+              depth assumes {units === 'metric' ? ASSUMED_THICKNESS_CM.toFixed(1) : L(ASSUMED_THICKNESS_CM)} {U} each. A thick hardcover needs a deeper frame: measure the thickest book before ordering.
             </li>
           )}
         </ul>
