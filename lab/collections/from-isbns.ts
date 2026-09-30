@@ -84,7 +84,8 @@ const cache: Record<string, unknown> = existsSync(CACHE_FILE) ? JSON.parse(readF
 async function getJson<T>(path: string): Promise<T | null> {
   if (path in cache) return cache[path] as T | null;
   let body: T | null = null;
-  for (let attempt = 1; attempt <= 2; attempt++) {
+  // Five tries with a growing pause (5, 10, 20, 40 s): Open Library drops single requests during a long wall (2026-09-29, the French series).
+  for (let attempt = 1; attempt <= 5; attempt++) {
     try {
       const res = await fetch(`https://openlibrary.org${path}`, {
         signal: AbortSignal.timeout(30_000),
@@ -95,9 +96,9 @@ async function getJson<T>(path: string): Promise<T | null> {
       body = (await res.json()) as T;
       break;
     } catch (err) {
-      // A silent catalogue is not "no such book": retry once, then stop the run.
-      if (attempt === 2) throw new Error(`Open Library did not answer for ${path}: ${err instanceof Error ? err.message : err}`);
-      await new Promise(r => setTimeout(r, 3000));
+      // A silent catalogue is not "no such book": retry, then stop the run.
+      if (attempt === 5) throw new Error(`Open Library did not answer for ${path}: ${err instanceof Error ? err.message : err}`);
+      await new Promise(r => setTimeout(r, 5000 * 2 ** (attempt - 1)));
     }
   }
   cache[path] = body;

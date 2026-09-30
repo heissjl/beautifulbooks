@@ -10,7 +10,8 @@
   "no": "2",
   "title": "Um jede Priis",
   "isbn": "3729600281",
-  "wallTitle": "Um jede Priis"
+  "wallTitle": "Um jede Priis",
+  "edition": "OL62605264M"
  },
  {
   "no": "3",
@@ -24,7 +25,7 @@
   "title": "Derfür und derwider",
   "isbn": "3729600036",
   "wallTitle": "Derfür und derwider",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605261M"
  },
  {
   "no": "5",
@@ -38,14 +39,15 @@
   "title": "Ds fromme Ross",
   "isbn": "3729600354",
   "wallTitle": "Ds fromme Ross",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605263M"
  },
  {
   "no": "7",
   "title": "I Waud go Fahne schwinge",
   "isbn": "3729600370",
   "wallTitle": "I Waud go Fahne schwinge",
-  "edition": "OL4843303M"
+  "edition": "OL4843303M",
+  "cover": 15260239
  },
  {
   "no": "8",
@@ -73,7 +75,8 @@
   "title": "Kurzwaren 1",
   "isbn": "3729600486",
   "wallTitle": "Kurzwaren 1",
-  "edition": "OL4970520M"
+  "edition": "OL4970520M",
+  "cover": 15260242
  },
  {
   "no": "12",
@@ -100,7 +103,8 @@
   "no": "15",
   "title": "Kurzwaren 2",
   "isbn": "3729600524",
-  "wallTitle": "Kurzwaren 2"
+  "wallTitle": "Kurzwaren 2",
+  "edition": "OL62605262M"
  },
  {
   "no": "16",

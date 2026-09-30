@@ -1,0 +1,1079 @@
+[
+ {
+  "no": "1",
+  "title": "On the Shortness of Life",
+  "author": "Seneca",
+  "isbn": "9780141018812",
+  "series": "One (2004)",
+  "edition": "OL7358557M",
+  "cover": 107192
+ },
+ {
+  "no": "2",
+  "title": "Meditations",
+  "author": "Marcus Aurelius",
+  "isbn": "9780141018829",
+  "series": "One (2004)",
+  "edition": "OL7358558M",
+  "cover": 107193
+ },
+ {
+  "no": "3",
+  "title": "Confessions",
+  "author": "Augustine",
+  "isbn": "9780141018836",
+  "series": "One (2004)",
+  "edition": "OL7358559M",
+  "cover": 107194
+ },
+ {
+  "no": "4",
+  "title": "The Inner Life",
+  "author": "Thomas à Kempis",
+  "isbn": "9780141018843",
+  "series": "One (2004)",
+  "edition": "OL7358560M",
+  "cover": 107195
+ },
+ {
+  "no": "5",
+  "title": "The Prince",
+  "author": "Niccolò Machiavelli",
+  "isbn": "9780141018850",
+  "series": "One (2004)",
+  "edition": "OL28206091M",
+  "cover": 10141138
+ },
+ {
+  "no": "6",
+  "title": "On Friendship",
+  "author": "Michel de Montaigne",
+  "isbn": "9780141018867",
+  "series": "One (2004)",
+  "edition": "OL7358561M",
+  "cover": 107197
+ },
+ {
+  "no": "7",
+  "title": "A Tale of a Tub",
+  "author": "Jonathan Swift",
+  "isbn": "9780141018874",
+  "series": "One (2004)",
+  "edition": "OL7358562M",
+  "cover": 107198
+ },
+ {
+  "no": "8",
+  "title": "The Social Contract",
+  "author": "Jean-Jacques Rousseau",
+  "isbn": "9780141018881",
+  "series": "One (2004)",
+  "edition": "OL7358563M",
+  "cover": 107199
+ },
+ {
+  "no": "9",
+  "title": "The Christians and the Fall of Rome",
+  "author": "Edward Gibbon",
+  "isbn": "9780141018898",
+  "series": "One (2004)",
+  "edition": "OL28968726M",
+  "cover": 11603968
+ },
+ {
+  "no": "10",
+  "title": "Common Sense",
+  "author": "Thomas Paine",
+  "isbn": "9780143036258",
+  "series": "One (2004)",
+  "edition": "OL3424705M",
+  "cover": 111242,
+  "ukIsbn": "9780141018904",
+  "note": "US edition, same design"
+ },
+ {
+  "no": "11",
+  "title": "A Vindication of the Rights of Woman",
+  "author": "Mary Wollstonecraft",
+  "isbn": "9780141018911",
+  "series": "One (2004)",
+  "edition": "OL28206046M",
+  "cover": 10141093
+ },
+ {
+  "no": "12",
+  "title": "On the Pleasure of Hating",
+  "author": "William Hazlitt",
+  "isbn": "9780141018928",
+  "series": "One (2004)",
+  "edition": "OL7358564M",
+  "cover": 107203
+ },
+ {
+  "no": "13",
+  "title": "The Communist Manifesto",
+  "author": "Karl Marx and Friedrich Engels",
+  "isbn": "9780143037514",
+  "series": "One (2004)",
+  "edition": "OL7361639M",
+  "cover": 111362,
+  "ukIsbn": "9780141018935",
+  "note": "US Penguin Great Ideas edition in the same design; the UK record (9780141018935) has only a photo of the book"
+ },
+ {
+  "no": "14",
+  "title": "On the Suffering of the World",
+  "author": "Arthur Schopenhauer",
+  "isbn": "9780141018942",
+  "series": "One (2004)",
+  "edition": "OL7358565M",
+  "cover": 107205
+ },
+ {
+  "no": "15",
+  "title": "On Art and Life",
+  "author": "John Ruskin",
+  "isbn": "9780141018959",
+  "series": "One (2004)",
+  "edition": "OL7358566M",
+  "cover": 107206
+ },
+ {
+  "no": "16",
+  "title": "On Natural Selection",
+  "author": "Charles Darwin",
+  "isbn": "9780143036302",
+  "series": "One (2004)",
+  "edition": "OL3424521M",
+  "cover": 111248,
+  "ukIsbn": "9780141018966",
+  "note": "US Penguin Great Ideas edition in the same design; the UK record image (9780141018966) is a title page"
+ },
+ {
+  "no": "17",
+  "title": "Why I Am So Wise",
+  "author": "Friedrich Nietzsche",
+  "isbn": "9780141018973",
+  "series": "One (2004)",
+  "edition": "OL7358567M",
+  "cover": 107208
+ },
+ {
+  "no": "18",
+  "title": "A Room of One's Own",
+  "author": "Virginia Woolf",
+  "isbn": "9780141018980",
+  "series": "One (2004)",
+  "edition": "OL22713679M",
+  "cover": 10178851
+ },
+ {
+  "no": "19",
+  "title": "Civilization and Its Discontents",
+  "author": "Sigmund Freud",
+  "isbn": "9780141018997",
+  "series": "One (2004)",
+  "edition": "OL7358568M",
+  "cover": 107210
+ },
+ {
+  "no": "20",
+  "title": "Why I Write",
+  "author": "George Orwell",
+  "isbn": "9780143036357",
+  "series": "One (2004)",
+  "edition": "OL3424523M",
+  "cover": 11442618,
+  "ukIsbn": "9780141019000",
+  "note": "US Penguin Great Ideas edition in the same design; the UK record (9780141019000) has no cover; the US record has a second scan with a library sticker (10524430)"
+ },
+ {
+  "no": "21",
+  "title": "The First Ten Books",
+  "author": "Confucius",
+  "isbn": "9780141023809",
+  "series": "Two (2005)",
+  "edition": "OL7358709M",
+  "cover": 107445
+ },
+ {
+  "no": "22",
+  "title": "The Art of War",
+  "author": "Sun Tzu",
+  "isbn": "9780141023816",
+  "series": "Two (2005)",
+  "edition": "OL7358710M",
+  "cover": 107446
+ },
+ {
+  "no": "23",
+  "title": "The Symposium",
+  "author": "Plato",
+  "isbn": "9780141023847",
+  "series": "Two (2005)",
+  "edition": "OL7358713M",
+  "cover": 107449
+ },
+ {
+  "no": "24",
+  "title": "Sensation and Sex",
+  "author": "Lucretius",
+  "isbn": "9780141023823",
+  "series": "Two (2005)",
+  "edition": "OL7358711M",
+  "cover": 107447
+ },
+ {
+  "no": "25",
+  "title": "An Attack on the Enemy of Freedom",
+  "author": "Cicero",
+  "isbn": "9780141023830",
+  "series": "Two (2005)",
+  "edition": "OL7358712M",
+  "cover": 107448
+ },
+ {
+  "no": "26",
+  "title": "The Revelation of St John the Divine and The Book of Job",
+  "author": "Anonymous",
+  "isbn": "9780141023854",
+  "series": "Two (2005)",
+  "edition": "OL27997895M",
+  "cover": 9382994
+ },
+ {
+  "no": "27",
+  "title": "Travels in the Land of Kublai Khan",
+  "author": "Marco Polo",
+  "isbn": "9780141023861",
+  "series": "Two (2005)",
+  "edition": "OL7358714M",
+  "cover": 107451
+ },
+ {
+  "no": "28",
+  "title": "The City of Ladies",
+  "author": "Christine de Pizan",
+  "isbn": "9780141023878",
+  "series": "Two (2005)",
+  "edition": "OL7358715M",
+  "cover": 107452
+ },
+ {
+  "no": "29",
+  "title": "How to Achieve True Greatness",
+  "author": "Baldesar Castiglione",
+  "isbn": "9780141023885",
+  "series": "Two (2005)",
+  "edition": "OL7358716M",
+  "cover": 107453
+ },
+ {
+  "no": "30",
+  "title": "Of Empire",
+  "author": "Francis Bacon",
+  "isbn": "9780141023892",
+  "series": "Two (2005)",
+  "edition": "OL7358717M",
+  "cover": 107454
+ },
+ {
+  "no": "31",
+  "title": "Of Man",
+  "author": "Thomas Hobbes",
+  "isbn": "9780141023908",
+  "series": "Two (2005)",
+  "edition": "OL7358718M",
+  "cover": 107455
+ },
+ {
+  "no": "32",
+  "title": "Urne-Burial",
+  "author": "Sir Thomas Browne",
+  "isbn": "9780141023915",
+  "series": "Two (2005)",
+  "edition": "OL7358719M",
+  "cover": 107456
+ },
+ {
+  "no": "33",
+  "title": "Miracles and Idolatry",
+  "author": "Voltaire",
+  "isbn": "9780141023922",
+  "series": "Two (2005)",
+  "edition": "OL7358720M",
+  "cover": 107457
+ },
+ {
+  "no": "34",
+  "title": "On Suicide",
+  "author": "David Hume",
+  "isbn": "9780141023953",
+  "series": "Two (2005)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "35",
+  "title": "On the Nature of War",
+  "author": "Carl von Clausewitz",
+  "isbn": "9780141023946",
+  "series": "Two (2005)",
+  "edition": "OL7358722M",
+  "cover": 107459
+ },
+ {
+  "no": "36",
+  "title": "Fear and Trembling",
+  "author": "Søren Kierkegaard",
+  "isbn": "9780141023939",
+  "series": "Two (2005)",
+  "edition": "OL7358721M",
+  "cover": 107458
+ },
+ {
+  "no": "37",
+  "title": "Where I Lived, and What I Lived For",
+  "author": "Henry David Thoreau",
+  "isbn": "9780141023977",
+  "series": "Two (2005)",
+  "edition": "OL7358723M",
+  "cover": 107461
+ },
+ {
+  "no": "38",
+  "title": "Conspicuous Consumption",
+  "author": "Thorstein Veblen",
+  "isbn": "9780141023984",
+  "series": "Two (2005)",
+  "edition": "OL7358724M",
+  "cover": 107462
+ },
+ {
+  "no": "39",
+  "title": "The Myth of Sisyphus",
+  "author": "Albert Camus",
+  "isbn": "9780141023991",
+  "series": "Two (2005)",
+  "edition": "OL7358725M",
+  "cover": 107463
+ },
+ {
+  "no": "40",
+  "title": "Eichmann and the Holocaust",
+  "author": "Hannah Arendt",
+  "isbn": "9780141024004",
+  "series": "Two (2005)",
+  "edition": "OL7358726M",
+  "cover": 107464
+ },
+ {
+  "no": "41",
+  "title": "In Consolation to his Wife",
+  "author": "Plutarch",
+  "isbn": "9780141036779",
+  "series": "Three (2008)",
+  "edition": "OL35268786M",
+  "cover": 12082688
+ },
+ {
+  "no": "42",
+  "title": "Some Anatomies of Melancholy",
+  "author": "Robert Burton",
+  "isbn": "9780141036786",
+  "series": "Three (2008)",
+  "edition": "OL26032153M",
+  "cover": 7598017
+ },
+ {
+  "no": "43",
+  "title": "Human Happiness",
+  "author": "Blaise Pascal",
+  "isbn": "9780141042510",
+  "series": "Three (2008)",
+  "edition": "OL26047814M",
+  "cover": 7627520,
+  "ukIsbn": "9780141036793",
+  "note": "another Penguin Great Ideas printing of the same design, the UK series ISBN has no usable cover on Open Library"
+ },
+ {
+  "no": "44",
+  "title": "The Invisible Hand",
+  "author": "Adam Smith",
+  "isbn": "9780141042541",
+  "series": "Three (2008)",
+  "edition": "OL36556743M",
+  "cover": 12507820,
+  "ukIsbn": "9780141036816",
+  "note": "another Penguin Great Ideas printing of the same design, the UK series ISBN has no usable cover on Open Library; the image on 9780141036816 is a title page"
+ },
+ {
+  "no": "45",
+  "title": "The Evils of Revolution",
+  "author": "Edmund Burke",
+  "isbn": "9780141036809",
+  "series": "Three (2008)",
+  "edition": "OL26004967M",
+  "cover": 7547192
+ },
+ {
+  "no": "46",
+  "title": "Nature",
+  "author": "Ralph Waldo Emerson",
+  "isbn": "9780141036823",
+  "series": "Three (2008)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "47",
+  "title": "The Sickness Unto Death",
+  "author": "Søren Kierkegaard",
+  "isbn": "9780141036656",
+  "series": "Three (2008)",
+  "edition": "OL26021911M",
+  "cover": 7578784
+ },
+ {
+  "no": "48",
+  "title": "The Lamp of Memory",
+  "author": "John Ruskin",
+  "isbn": "9780141036670",
+  "series": "Three (2008)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "49",
+  "title": "Man Alone with Himself",
+  "author": "Friedrich Nietzsche",
+  "isbn": "9780141036687",
+  "series": "Three (2008)",
+  "edition": "OL26027355M",
+  "cover": 7588975
+ },
+ {
+  "no": "50",
+  "title": "A Confession",
+  "author": "Leo Tolstoy",
+  "isbn": "9780141036694",
+  "series": "Three (2008)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "51",
+  "title": "Useful Work versus Useless Toil",
+  "author": "William Morris",
+  "isbn": "9780141036700",
+  "series": "Three (2008)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "52",
+  "title": "The Significance of the Frontier in American History",
+  "author": "Frederick Jackson Turner",
+  "isbn": "9780141036717",
+  "series": "Three (2008)",
+  "edition": "OL26145465M",
+  "cover": 7811898
+ },
+ {
+  "no": "53",
+  "title": "Days of Reading",
+  "author": "Marcel Proust",
+  "isbn": "9780141042534",
+  "series": "Three (2008)",
+  "edition": "OL26034054M",
+  "cover": 7601591,
+  "ukIsbn": "9780141036731",
+  "note": "another Penguin Great Ideas printing of the same design, the UK series ISBN has no usable cover on Open Library"
+ },
+ {
+  "no": "54",
+  "title": "An Appeal to the Toiling, Oppressed and Exhausted Peoples of Europe",
+  "author": "Leon Trotsky",
+  "isbn": "9780141036755",
+  "series": "Three (2008)",
+  "edition": "OL25958089M",
+  "cover": 7460373
+ },
+ {
+  "no": "55",
+  "title": "The Future of an Illusion",
+  "author": "Sigmund Freud",
+  "isbn": "9780141036762",
+  "series": "Three (2008)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "56",
+  "title": "The Work of Art in the Age of Mechanical Reproduction",
+  "author": "Walter Benjamin",
+  "isbn": "9780141036199",
+  "series": "Three (2008)",
+  "edition": "OL24333116M",
+  "cover": 6459966,
+  "skip": "only image is a photo of a stack of books, not the cover (seen 2026-09-29)"
+ },
+ {
+  "no": "57",
+  "title": "Books v. Cigarettes",
+  "author": "George Orwell",
+  "isbn": "9780141036618",
+  "series": "Three (2008)",
+  "edition": "OL28091110M",
+  "cover": 9619415
+ },
+ {
+  "no": "58",
+  "title": "The Fastidious Assassins",
+  "author": "Albert Camus",
+  "isbn": "9780141036625",
+  "series": "Three (2008)",
+  "edition": "OL25978244M",
+  "cover": 7497828
+ },
+ {
+  "no": "59",
+  "title": "Concerning Violence",
+  "author": "Frantz Fanon",
+  "isbn": "9780141036632",
+  "series": "Three (2008)",
+  "edition": "OL28338892M",
+  "cover": 10287420
+ },
+ {
+  "no": "60",
+  "title": "The Spectacle of the Scaffold",
+  "author": "Michel Foucault",
+  "isbn": "9780141036649",
+  "series": "Three (2008)",
+  "edition": "OL25956944M",
+  "cover": 7458222
+ },
+ {
+  "no": "61",
+  "title": "Tao Te Ching",
+  "author": "Lao-Tzu",
+  "isbn": "9780141043685",
+  "series": "Four (2009)",
+  "edition": "OL28451488M",
+  "cover": 13213015
+ },
+ {
+  "no": "62",
+  "title": "Writings from the Zen Masters",
+  "author": "Various",
+  "isbn": "9780141956671",
+  "series": "Four (2009)",
+  "edition": "OL24323321M",
+  "cover": 6447820,
+  "ukIsbn": "9780141043845",
+  "note": "another Penguin Great Ideas printing of the same design, the UK series ISBN has no usable cover on Open Library; e-book record"
+ },
+ {
+  "no": "63",
+  "title": "Utopia",
+  "author": "Thomas More",
+  "isbn": "9780141043692",
+  "series": "Four (2009)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "64",
+  "title": "On Solitude",
+  "author": "Michel de Montaigne",
+  "isbn": "9780141043852",
+  "series": "Four (2009)",
+  "edition": "OL29027790M",
+  "cover": 10583144
+ },
+ {
+  "no": "65",
+  "title": "On Power",
+  "author": "William Shakespeare",
+  "isbn": "9780141043869",
+  "series": "Four (2009)",
+  "edition": "OL37758529M",
+  "cover": 12669575
+ },
+ {
+  "no": "66",
+  "title": "Of the Abuse of Words",
+  "author": "John Locke",
+  "isbn": "9780141043876",
+  "series": "Four (2009)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "67",
+  "title": "Consolation in the Face of Death",
+  "author": "Samuel Johnson",
+  "isbn": "9780141956541",
+  "series": "Four (2009)",
+  "edition": "OL24313239M",
+  "cover": 6438174,
+  "ukIsbn": "9780141043708",
+  "note": "another Penguin Great Ideas printing of the same design, the UK series ISBN has no usable cover on Open Library; e-book record"
+ },
+ {
+  "no": "68",
+  "title": "An Answer to the Question: What Is Enlightenment?",
+  "author": "Immanuel Kant",
+  "isbn": "9780141399294",
+  "series": "Four (2009)",
+  "edition": "OL26021325M",
+  "cover": 7577692,
+  "ukIsbn": "9780141043883",
+  "note": "another Penguin Great Ideas printing of the same design, the UK series ISBN has no usable cover on Open Library"
+ },
+ {
+  "no": "69",
+  "title": "The Executioner",
+  "author": "Joseph de Maistre",
+  "isbn": "9780141191638",
+  "series": "Four (2009)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "70",
+  "title": "Confessions of an English Opium-Eater",
+  "author": "Thomas de Quincey",
+  "isbn": "9780141043890",
+  "series": "Four (2009)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "71",
+  "title": "The Horrors and Absurdities of Religion",
+  "author": "Arthur Schopenhauer",
+  "isbn": "9780141191591",
+  "series": "Four (2009)",
+  "edition": "OL26095675M",
+  "cover": 7716766
+ },
+ {
+  "no": "72",
+  "title": "The Gettysburg Address",
+  "author": "Abraham Lincoln",
+  "isbn": "9780141043906",
+  "series": "Four (2009)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "73",
+  "title": "Revolution and War",
+  "author": "Karl Marx",
+  "isbn": "9780141399324",
+  "series": "Four (2009)",
+  "edition": "OL25959265M",
+  "cover": 7462556,
+  "ukIsbn": "9780141043913",
+  "note": "another Penguin Great Ideas printing of the same design, the UK series ISBN has no usable cover on Open Library"
+ },
+ {
+  "no": "74",
+  "title": "The Grand Inquisitor",
+  "author": "Fyodor Dostoyevsky",
+  "isbn": "9780141043920",
+  "series": "Four (2009)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "75",
+  "title": "On A Certain Blindness in Human Beings",
+  "author": "William James",
+  "isbn": "9780141043944",
+  "series": "Four (2009)",
+  "edition": "OL29547294M",
+  "cover": 13866522
+ },
+ {
+  "no": "76",
+  "title": "An Apology for Idlers",
+  "author": "Robert Louis Stevenson",
+  "isbn": "9780141399249",
+  "series": "Four (2009)",
+  "edition": "OL31854708M",
+  "cover": 10543035,
+  "ukIsbn": "9780141043968",
+  "note": "another Penguin Great Ideas printing of the same design, the UK series ISBN has no usable cover on Open Library"
+ },
+ {
+  "no": "77",
+  "title": "Of the Dawn of Freedom",
+  "author": "W. E. B. Du Bois",
+  "isbn": "9780141043937",
+  "series": "Four (2009)",
+  "edition": "OL25975145M",
+  "cover": 7492120
+ },
+ {
+  "no": "78",
+  "title": "Thoughts of Peace in an Air Raid",
+  "author": "Virginia Woolf",
+  "isbn": "9780141043951",
+  "series": "Four (2009)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "79",
+  "title": "Decline of the English Murder",
+  "author": "George Orwell",
+  "isbn": "9780141956558",
+  "series": "Four (2009)",
+  "edition": "OL24324771M",
+  "cover": 6449203,
+  "ukIsbn": "9780141191263",
+  "note": "another Penguin Great Ideas printing of the same design, the UK series ISBN has no usable cover on Open Library; e-book record"
+ },
+ {
+  "no": "80",
+  "title": "Why Look at Animals?",
+  "author": "John Berger",
+  "isbn": "9780141043975",
+  "series": "Four (2009)",
+  "edition": "OL26035731M",
+  "cover": 7604746
+ },
+ {
+  "no": "81",
+  "title": "The Tao of Nature",
+  "author": "Chuang Tzu",
+  "isbn": "9780141192741",
+  "series": "Five (2010)",
+  "edition": "OL27667908M",
+  "cover": 9109780
+ },
+ {
+  "no": "82",
+  "title": "Of Human Freedom",
+  "author": "Epictetus",
+  "isbn": "9780141192352",
+  "series": "Five (2010)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "83",
+  "title": "On Conspiracies",
+  "author": "Niccolò Machiavelli",
+  "isbn": "9780141192772",
+  "series": "Five (2010)",
+  "edition": "OL25962989M",
+  "cover": 7469530
+ },
+ {
+  "no": "84",
+  "title": "Meditations",
+  "author": "René Descartes",
+  "isbn": "9780141192963",
+  "series": "Five (2010)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "85",
+  "title": "Dialogue Between Fashion and Death",
+  "author": "Giacomo Leopardi",
+  "isbn": "9780141192550",
+  "series": "Five (2010)",
+  "edition": "OL25954080M",
+  "cover": 7452869
+ },
+ {
+  "no": "86",
+  "title": "On Liberty",
+  "author": "John Stuart Mill",
+  "isbn": "",
+  "series": "Five (2010)",
+  "skip": "UK print ISBN not found on Open Library; only an e-book record without cover (9780141946399)"
+ },
+ {
+  "no": "87",
+  "title": "Hosts of Living Forms",
+  "author": "Charles Darwin",
+  "isbn": "9780141048109",
+  "series": "Five (2010)",
+  "edition": "OL26176235M",
+  "cover": 7847218
+ },
+ {
+  "no": "88",
+  "title": "Night Walks",
+  "author": "Charles Dickens",
+  "isbn": "9780141047508",
+  "series": "Five (2010)",
+  "edition": "OL24395331M",
+  "cover": 6649993
+ },
+ {
+  "no": "89",
+  "title": "Some Extraordinary Popular Delusions",
+  "author": "Charles Mackay",
+  "isbn": "9780141192925",
+  "series": "Five (2010)",
+  "edition": "OL26175413M",
+  "cover": 7845582
+ },
+ {
+  "no": "90",
+  "title": "The State as a Work of Art",
+  "author": "Jacob Burckhardt",
+  "isbn": "9780141048116",
+  "series": "Five (2010)",
+  "edition": "OL26014684M",
+  "cover": 7565216
+ },
+ {
+  "no": "91",
+  "title": "Silly Novels by Lady Novelists",
+  "author": "George Eliot",
+  "isbn": "9780141192758",
+  "series": "Five (2010)",
+  "edition": "OL27667834M",
+  "cover": 9109704
+ },
+ {
+  "no": "92",
+  "title": "The Painter of Modern Life",
+  "author": "Charles Baudelaire",
+  "isbn": "9780141192765",
+  "series": "Five (2010)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "93",
+  "title": "The 'Wolfman'",
+  "author": "Sigmund Freud",
+  "isbn": "9780141192208",
+  "series": "Five (2010)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "94",
+  "title": "The Jewish State",
+  "author": "Theodor Herzl",
+  "isbn": "9780141192901",
+  "series": "Five (2010)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "95",
+  "title": "Nationalism",
+  "author": "Rabindranath Tagore",
+  "isbn": "9780141192970",
+  "series": "Five (2010)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "96",
+  "title": "Imperialism: The Highest Stage of Capitalism",
+  "author": "Vladimir Ilyich Lenin",
+  "isbn": "9780141192567",
+  "series": "Five (2010)",
+  "edition": "OL27667865M",
+  "cover": 9109736
+ },
+ {
+  "no": "97",
+  "title": "We Will All Go Down Fighting to the End",
+  "author": "Winston Churchill",
+  "isbn": "9780141192536",
+  "series": "Five (2010)",
+  "edition": "OL25967718M",
+  "cover": 7478309
+ },
+ {
+  "no": "98",
+  "title": "The Perpetual Race of Achilles and the Tortoise",
+  "author": "Jorge Luis Borges",
+  "isbn": "9780141192949",
+  "series": "Five (2010)",
+  "edition": "OL26176427M",
+  "cover": 7847587
+ },
+ {
+  "no": "99",
+  "title": "Some Thoughts on the Common Toad",
+  "author": "George Orwell",
+  "isbn": "9780141191270",
+  "series": "Five (2010)",
+  "edition": "OL26176005M",
+  "cover": 7846765
+ },
+ {
+  "no": "100",
+  "title": "An Image of Africa",
+  "author": "Chinua Achebe",
+  "isbn": "9780141192581",
+  "series": "Five (2010)",
+  "edition": "OL24658648M",
+  "cover": 14305413
+ },
+ {
+  "no": "101",
+  "title": "One Swallow Does Not Make a Summer",
+  "author": "Aristotle",
+  "isbn": "9780241472866",
+  "series": "Six (2020)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "102",
+  "title": "Being Happy",
+  "author": "Epicurus",
+  "isbn": "9780241473269",
+  "series": "Six (2020)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "103",
+  "title": "How To Be a Stoic",
+  "author": "Marcus Aurelius, Seneca and Epictetus",
+  "isbn": "9780241475263",
+  "series": "Six (2020)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "104",
+  "title": "Three Japanese Buddhist Monks",
+  "author": "Yoshida Kenkō, Kamo no Chōmei and Saigyō Hōshi",
+  "isbn": "9780241472910",
+  "series": "Six (2020)",
+  "edition": "OL29506535M",
+  "cover": 13697879
+ },
+ {
+  "no": "105",
+  "title": "Ain't I A Woman?",
+  "author": "Sojourner Truth",
+  "isbn": "9780241472361",
+  "series": "Six (2020)",
+  "edition": "OL29506549M",
+  "cover": 13692503
+ },
+ {
+  "no": "106",
+  "title": "Anarchist Communism",
+  "author": "Peter Kropotkin",
+  "isbn": "9780241472408",
+  "series": "Six (2020)",
+  "edition": "OL29506525M",
+  "cover": 13692504
+ },
+ {
+  "no": "107",
+  "title": "God is Dead",
+  "author": "Friedrich Nietzsche",
+  "isbn": "9780241472842",
+  "series": "Six (2020)",
+  "edition": "OL29506523M",
+  "cover": 14149542
+ },
+ {
+  "no": "108",
+  "title": "The Decay of Lying",
+  "author": "Oscar Wilde",
+  "isbn": "9780241472453",
+  "series": "Six (2020)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "109",
+  "title": "Suffragette Manifestos",
+  "author": "Various",
+  "isbn": "9780241472415",
+  "series": "Six (2020)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "110",
+  "title": "Bushido: The Soul of Japan",
+  "author": "Inazo Nitobe",
+  "isbn": "9780241472439",
+  "series": "Six (2020)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "111",
+  "title": "The Freedom to Be Free",
+  "author": "Hannah Arendt",
+  "isbn": "9780241472880",
+  "series": "Six (2020)",
+  "edition": "OL60613158M",
+  "cover": 15140984
+ },
+ {
+  "no": "112",
+  "title": "What Is Existentialism?",
+  "author": "Simone de Beauvoir",
+  "isbn": "9780241475232",
+  "series": "Six (2020)",
+  "edition": "OL29523869M",
+  "cover": 14624326
+ },
+ {
+  "no": "113",
+  "title": "The Power of Words",
+  "author": "Simone Weil",
+  "isbn": "9780241472903",
+  "series": "Six (2020)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "114",
+  "title": "Reflections on the Guillotine",
+  "author": "Albert Camus",
+  "isbn": "9780241475225",
+  "series": "Six (2020)",
+  "edition": "OL29520503M",
+  "cover": 14356181
+ },
+ {
+  "no": "115",
+  "title": "The Narrative of Trajan's Column",
+  "author": "Italo Calvino",
+  "isbn": "9780241472859",
+  "series": "Six (2020)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "116",
+  "title": "A Tough Mind and a Tender Heart",
+  "author": "Martin Luther King Jr.",
+  "isbn": "9780241473252",
+  "series": "Six (2020)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "117",
+  "title": "Steps Towards a Small Theory of the Visible",
+  "author": "John Berger",
+  "isbn": "9780241472873",
+  "series": "Six (2020)",
+  "skip": "no cover of this design on Open Library (series ISBN without image; title search 2026-09-29 found no other printing of the design)"
+ },
+ {
+  "no": "118",
+  "title": "When I Dare to Be Powerful",
+  "author": "Audre Lorde",
+  "isbn": "9780241473153",
+  "series": "Six (2020)",
+  "edition": "OL29506278M",
+  "cover": 14099369
+ },
+ {
+  "no": "119",
+  "title": "Brief Notes on the Art and Manner of Arranging One's Books",
+  "author": "Georges Perec",
+  "isbn": "9780241475218",
+  "series": "Six (2020)",
+  "edition": "OL29515187M",
+  "cover": 14604198
+ },
+ {
+  "no": "120",
+  "title": "Why Vegan?",
+  "author": "Peter Singer",
+  "isbn": "9780241472385",
+  "series": "Six (2020)",
+  "edition": "OL29506524M",
+  "cover": 10721093
+ }
+]

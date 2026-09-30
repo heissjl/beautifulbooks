@@ -4,7 +4,8 @@
   "title": "David",
   "isbn": "9783473390465",
   "wallTitle": "David",
-  "edition": "OL31972644M"
+  "edition": "OL31972644M",
+  "cover": 15260256
  },
  {
   "no": "2",
@@ -18,14 +19,14 @@
   "title": "Vorstoß zum Pazifik",
   "isbn": "9783473390922",
   "wallTitle": "Vorstoß zum Pazifik",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605267M"
  },
  {
   "no": "4",
   "title": "Joseph",
   "isbn": "9783473390946",
   "wallTitle": "Joseph",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605268M"
  },
  {
   "no": "5",
@@ -39,63 +40,65 @@
   "title": "Das silberne Messer",
   "isbn": "9783473390977",
   "wallTitle": "Das silberne Messer",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605266M"
  },
  {
   "no": "7",
   "title": "Der wilde Sam",
   "isbn": "",
   "wallTitle": "Der wilde Sam",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605265M"
  },
  {
   "no": "8",
   "title": "Weißer Sohn des kleinen Königs",
   "isbn": "9783473391264",
   "wallTitle": "Weißer Sohn des kleinen Königs",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605270M"
  },
  {
   "no": "9",
   "title": "Daniel",
   "isbn": "9783473391301",
   "wallTitle": "Daniel",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605272M"
  },
  {
   "no": "10",
   "title": "Der pfiffige Pirat Jacko",
   "isbn": "9783473391875",
   "wallTitle": "Der pfiffige Pirat Jacko",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605269M"
  },
  {
   "no": "11",
   "title": "Mose",
   "isbn": "9783473392315",
   "wallTitle": "Mose",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605271M"
  },
  {
   "no": "12",
   "title": "Das Marsungeheuer",
   "isbn": "9783473392339",
   "wallTitle": "Das Marsungeheuer",
-  "edition": "OL40205596M"
+  "edition": "OL40205596M",
+  "cover": 15260266
  },
  {
   "no": "13",
   "title": "Affengeplapper",
   "isbn": "9783473392551",
   "wallTitle": "Affengeplapper",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605275M"
  },
  {
   "no": "14",
   "title": "Der irre Müllschlucker",
   "isbn": "9783473392575",
   "wallTitle": "Der irre Müllschlucker",
-  "edition": "OL40233544M"
+  "edition": "OL40233544M",
+  "cover": 15260267
  },
  {
   "no": "15",
@@ -109,63 +112,63 @@
   "title": "Krokodilslieder",
   "isbn": "9783473392674",
   "wallTitle": "Krokodilslieder",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605276M"
  },
  {
   "no": "17",
   "title": "Geschichten aus 1001 Nacht",
   "isbn": "9783473392803",
   "wallTitle": "Geschichten aus 1001 Nacht",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605274M"
  },
  {
   "no": "18",
   "title": "Spiralnebel 101",
   "isbn": "9783473392810",
   "wallTitle": "Spiralnebel 101",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605273M"
  },
  {
   "no": "19",
   "title": "James und der Riesenpfirsich",
   "isbn": "9783473392964",
   "wallTitle": "James und der Riesenpfirsich",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605278M"
  },
  {
   "no": "20",
   "title": "Erben auf schottisch",
   "isbn": "9783473393152",
   "wallTitle": "Erben auf schottisch",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605280M"
  },
  {
   "no": "21",
   "title": "Spaghetti, Spaghetti!",
   "isbn": "9783473396290",
   "wallTitle": "Spaghetti, Spaghetti!",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605279M"
  },
  {
   "no": "22",
   "title": "Die vergessene Stadt",
   "isbn": "9783473393275",
   "wallTitle": "Die vergessene Stadt",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605277M"
  },
  {
   "no": "23",
   "title": "Weltreise mit Korilu",
   "isbn": "9783473393329",
   "wallTitle": "Weltreise mit Korilu",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605283M"
  },
  {
   "no": "24",
   "title": "Kichergeschichten",
   "isbn": "9783473393374",
   "wallTitle": "Kichergeschichten",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605282M"
  },
  {
   "no": "25",
@@ -179,62 +182,62 @@
   "title": "Spiel nach innen",
   "isbn": "9783473393664",
   "wallTitle": "Spiel nach innen",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605284M"
  },
  {
   "no": "27",
   "title": "Dominik Dachs und die Katzenpiraten",
   "isbn": "9783473393817",
   "wallTitle": "Dominik Dachs und die Katzenpiraten",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605281M"
  },
  {
   "no": "28",
   "title": "Dominik Dachs und der Schnüffelhannes",
   "isbn": "9783473393824",
   "wallTitle": "Dominik Dachs und der Schnüffelhannes",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605288M"
  },
  {
   "no": "29",
   "title": "Dominik Dachs und der verborgene Schatz",
   "isbn": "9783473394234",
   "wallTitle": "Dominik Dachs und der verborgene Schatz",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605285M"
  },
  {
   "no": "30",
   "title": "Dominik Dachs und der Schwarze Napoleon",
   "isbn": "9783473394241",
   "wallTitle": "Dominik Dachs und der Schwarze Napoleon",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605286M"
  },
  {
   "no": "31",
   "title": "Die Wächter",
   "isbn": "9783473394418",
   "wallTitle": "Die Wächter",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605287M"
  },
  {
   "no": "32",
   "title": "Die Schweizer Familie Robinson",
   "isbn": "9783473395835",
   "wallTitle": "Die Schweizer Familie Robinson",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605291M"
  },
  {
   "no": "33",
   "title": "Wind für Dolly McMolly",
   "isbn": "9783473389292",
   "wallTitle": "Wind für Dolly McMolly",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605290M"
  },
  {
   "no": "34",
   "title": "Jesus",
   "isbn": "9783473517855",
   "wallTitle": "Jesus",
-  "skip": "needs new Open Library edition; staged"
+  "edition": "OL62605289M"
  }
 ]

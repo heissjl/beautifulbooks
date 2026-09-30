@@ -3706,3 +3706,21 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
   - 1 zurückgehalten: *Joseph* im späteren Layout hat dieselbe ISBN wie das frühere.
   - Unsicher sind das Original von *Pirat Jacko* und die Werkzuordnung von *Affengeplapper*. Bei *Dominik Dachs* und beim *Riesenpfirsich* nennt die DNB andere Illustratoren als Keller; die Liste folgt Keller, weil es um den Umschlag geht.
 - Die Stapel sind erzeugt (4 bzw. 27 Ausgaben anzulegen). Am Abend des 29.9. war die Chrome-Erweiterung nicht verbunden, die Uploads warten darauf.
+
+**Neun der 13 gewählten Kandidaten als Entwürfe, 2026-09-30.** Listen von Agenten, jedes Cover auf Kontaktbögen angesehen; gebaut mit `from-isbns.ts`, online als Entwurf, nicht veröffentlicht.
+
+| Wand | auf der Wand | Liste | Bemerkung |
+|---|---|---|---|
+| `penguin-drop-caps` | 22 von 26 | beautifulbooks.info | D, I, O, X ohne Reihen-Cover bei Open Library |
+| `virago-designer-collection` | 17 von 28 | beautifulbooks.info | 11 ohne Designer-Cover |
+| `penguin-great-ideas` | 89 von 120 | Wikipedia (Sets 1–6) + ISBN-Blöcke | Wo das britische Bild fehlt, eine US- oder spätere Penguin-Ausgabe im selben Design; 3 Kacheln hängen an E-Book-Datensätzen; Nr. 56 (Benjamin) ausgelassen, Bild ist ein Bücherstapel |
+| `nyrb-children-s-collection` | 21 von 52 | nyrb.com products.json | nur Hardcover im klassischen Design (rotes Rückenband); der Shop führt nur Lieferbares, vergriffene Bände fehlen ganz |
+| `l-imaginaire` | 142 | BnF-SRU, Nr. 200–400 | Deckung bei Open Library dicht bis etwa Nr. 500 |
+| `decouvertes-gallimard` | 149 | BnF-SRU, Nr. 1–200 | Nr. 99 und 167 zeigen einen späteren Druck derselben Nummer |
+| `rivages-noir` | 138 | BnF-SRU, Nr. 1–200 | ab Nr. 500 kaum Cover bei Open Library |
+| `zytglogge-covers-by-werner-maurer` | 24 von 24 | Keller-Manifest | 20 Uploads, 4 neue Ausgaben (OL62605261M–64M); 5 typografische aufgenommen |
+| `ravensburger-covers-by-grieder-and-schindler` | 33 von 34 | Keller-Manifest | 5 Uploads, 27 neue Ausgaben (OL62605265M–91M); *Joseph* im späteren Layout zurückgehalten (gleiche ISBN wie der Druck von 1975) |
+
+- **Mein Fehler bei Zytglogge:** *Um jede Priis* (OL62605264M) ist ohne Titel angelegt. Nach Open Librarys Hinweis „mögliche Treffer“ (ein Sammelband von 1981) war das Formular beim Klick auf „Continue“ leer. ISBN, Verlag, Jahr und Umschlag sind da; Titel von Ausgabe und Werk (OL46030909W) setzt Julian, weil das Bearbeiten ein reCAPTCHA verlangt.
+- **Werkzeuge:** `from-isbns.ts` versucht eine Anfrage jetzt fünfmal mit wachsender Pause (5–40 s) statt zweimal; die französischen Wände brachen vorher an einzelnen stummen Anfragen ab. `_runs/walls.sh` baut mehrere Wände nacheinander; `npx` darf dort nicht von der Schleifeneingabe lesen (`< /dev/null`).
+- **Offen:** insel taschenbuch, Deutscher Buchpreis, Nebula und National Book Award. Die Listen für Buchpreis und Nebula liegen vor, insel und NBA baut ein Agent noch.
