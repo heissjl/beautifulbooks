@@ -298,7 +298,9 @@ export default function WallPlan({
             style={{
               ...smooth,
               transformStyle: 'preserve-3d',
-              transform: angled ? 'rotateY(-28deg) rotateX(-6deg) scale(.86)' : 'none',
+              // Gentle, and the top leaning back a little: at -6° the top came toward the reader and the books
+              // looked about to fall out (Julian, 2026-09-29: „etwas weniger schief“).
+              transform: angled ? 'rotateY(-18deg) rotateX(3deg) scale(.9)' : 'none',
               boxShadow: angled ? 'none' : '0 14px 30px -12px rgba(0,0,0,.5), 0 2px 4px rgba(0,0,0,.2)',
             }}
           >
