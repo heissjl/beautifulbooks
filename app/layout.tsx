@@ -1,23 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Jost, Xanh_Mono } from "next/font/google";
+import { Geist_Mono, Jost } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { SITE_URL } from "@/lib/seo";
 import Analytics from "@/components/Analytics";
 
-// Typography (ROADMAP 6.61, SPEC §5): Xanh Mono where Fraunces stood — every
+// Typography (ROADMAP 6.61, SPEC §5): Xanh where Fraunces stood — every
 // heading, the wordmark and the font-display lines — and Jost where Geist
-// stood, which is everything else. Xanh Mono has one weight only.
+// stood, which is everything else. The Xanh is Xanh Mono respaced
+// proportionally (lab/xanh-spacing, built with its respace.py); the
+// monospaced original set commas and "r"s in cells far wider than their ink.
 const jost = Jost({
   variable: "--font-jost",
   subsets: ["latin"],
   style: ["normal", "italic"],
 });
 
-const xanhMono = Xanh_Mono({
-  variable: "--font-xanh-mono",
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+const xanh = localFont({
+  variable: "--font-xanh",
+  src: [
+    { path: "../assets/fonts/xanh-proportional-regular.woff2", weight: "400", style: "normal" },
+    { path: "../assets/fonts/xanh-proportional-italic.woff2", weight: "400", style: "italic" },
+  ],
 });
 
 // Only the zero and the hyphens of an ISBN use it, and only once a cover is
@@ -53,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${jost.variable} ${xanhMono.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${jost.variable} ${xanh.variable} ${geistMono.variable}`}>
       <body className="min-h-screen bg-bg text-ink antialiased">
         {children}
         <Analytics />

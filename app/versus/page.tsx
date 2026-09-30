@@ -9,7 +9,7 @@ import { preload } from 'react-dom';
 import { POOL, poolBooks, readyPairs, secretForEnv, someBooks } from '@/lib/hotornot/game';
 import { storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
-import { SITE_URL } from '@/lib/seo';
+import { SITE_CARD, SITE_URL } from '@/lib/seo';
 
 /**
  * The cover game (ROADMAP 5.8a): two covers, one click. Behind a switch —
@@ -36,6 +36,7 @@ export const metadata: Metadata = {
     title: 'Which cover would you rather look at?',
     description: 'Two covers, one click. The standings show which covers readers keep choosing.',
     url: `${SITE_URL}/versus`,
+    images: [SITE_CARD],
   },
 };
 

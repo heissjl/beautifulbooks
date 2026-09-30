@@ -55,11 +55,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!c) return {};
   // Authors only: a series' scope is publishers, and "73 books by Gollancz" named them as writers (2026-09-25).
   const names = c.kind === 'authors' ? authorsShown(c) : [];
-  const description = `${c.works.length} ${c.works.length === 1 ? 'book' : 'books'}${names.length ? ` by ${nameLine(names)}` : ''}, ${coverLine(c.kind, c.coverSource, c.works.filter(w => w.image).length)}. ${c.intro}`.slice(0, 300);
+  const description = `${c.works.length} ${c.works.length === 1 ? 'book' : 'books'}${names.length ? ` by ${nameLine(names)}` : ''}, ${coverLine(c.kind, c.coverSource, c.works.filter(w => w.image).length, c.scope)}. ${c.intro}`.slice(0, 300);
   return {
     title: c.title,
     description,
     alternates: { canonical: `${SITE_URL}/collections/${c.slug}` },
+    // The image is the collection's own card, opengraph-image.tsx beside this file.
     openGraph: { type: 'website', title: c.title, description, url: `${SITE_URL}/collections/${c.slug}` },
     ...(c.published ? {} : { robots: { index: false, follow: false } }),
   };
@@ -102,7 +103,7 @@ export default async function CollectionPage({ params }: PageProps) {
           <p className="mt-3 text-sm text-ink-3">
             {c.works.length} {c.works.length === 1 ? 'book' : 'books'}
             {names.length > 0 && <> by {names.length} {names.length === 1 ? 'author' : 'authors'}</>}
-            , {coverLine(c.kind, c.coverSource)}.
+            , {coverLine(c.kind, c.coverSource, 0, c.scope)}.
           </p>
         )}
         <div className="mt-8">

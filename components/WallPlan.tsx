@@ -15,7 +15,7 @@ import type { Market } from '@/lib/market';
 import type { BuyLink } from '@/lib/model';
 import { FORMAT_CM, formatLength, isEstimate, ASSUMED_THICKNESS_CM, clearDepth, layoutPiece, ledges, measurements, PIECE_CM, pieceRange, roughWeightKg, unitLabel, type BookSize, type Units } from '@/lib/walls/dimensions';
 import { mouldingEdge, mouldingImage, SAMPLE } from '@/lib/walls/moulding';
-import { DEFAULT_ARTWORK, FRAMES, MAX_COLUMNS, TONES, type FrameColor, type PublicWall, type Tile, type Tone, type WallOp } from '@/lib/walls/model';
+import { DEFAULT_ARTWORK, FRAMES, MAX_COLUMNS, tileCoverId, TONES, type FrameColor, type PublicWall, type Tile, type Tone, type WallOp } from '@/lib/walls/model';
 
 const WANTED_KEY = (id: string) => `bb.wall.wanted.${id}`;
 const UNITS_KEY = 'bb.units';
@@ -325,7 +325,7 @@ export default function WallPlan({
             >
               {wall.tiles.map((t, i) => {
                 const { x, y, w: bw, h: bh } = plan.books[i];
-                const src = coverUrlFor(`ol:${t.coverId}`, 'M');
+                const src = coverUrlFor(tileCoverId(t), 'M');
                 // In the angled view a book stands out from the panel by its thickness. The view comes
                 // from the right, so the fore-edge shows and the spine, which is not drawn, stays hidden
                 // (Julian, 2026-09-29: „von der anderen seite … fällt nicht auf, dass die bücherrücken fehlen“).
@@ -574,7 +574,7 @@ export default function WallPlan({
                   className="h-4 w-4 shrink-0 accent-[var(--accent)]"
                 />
                 <span className="relative block h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">
-                  <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'S') ?? ''} alt="" sizes="32px" />
+                  <CoverImage src={coverUrlFor(tileCoverId(t), 'S') ?? ''} alt="" sizes="32px" />
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className={`block truncate text-sm text-ink ${bought.has(t.coverId) ? 'line-through decoration-ink-3' : ''}`}>{t.title}{t.author ? ` — ${t.author}` : ''}</span>
@@ -662,7 +662,7 @@ function shopsFor(tile: Tile, market: Market) {
     edition: { isbn13 },
     buyLinks,
     searchLinks: searchLinksFor(
-      { title: tile.title, author: tile.author, publisher: p?.publisher, year: p?.year, coverUrl: coverUrlFor(`ol:${tile.coverId}`, 'L') ?? undefined },
+      { title: tile.title, author: tile.author, publisher: p?.publisher, year: p?.year, coverUrl: coverUrlFor(tileCoverId(tile), 'L') ?? undefined },
       market,
     ),
     market,

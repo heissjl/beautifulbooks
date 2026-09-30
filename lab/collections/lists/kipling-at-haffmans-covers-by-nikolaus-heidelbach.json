@@ -1,0 +1,72 @@
+[
+ {
+  "no": "1",
+  "title": "Das Dschungelbuch",
+  "isbn": "9783251200368",
+  "wallTitle": "Das Dschungelbuch",
+  "edition": "OL62603241M"
+ },
+ {
+  "no": "2",
+  "title": "Das zweite Dschungelbuch",
+  "isbn": "9783251200481",
+  "wallTitle": "Das zweite Dschungelbuch",
+  "edition": "OL62603244M"
+ },
+ {
+  "no": "3",
+  "title": "Kipling Companion",
+  "isbn": "9783251200382",
+  "wallTitle": "Kipling Companion",
+  "edition": "OL2456235M"
+ },
+ {
+  "no": "4",
+  "title": "Vielerlei Schliche",
+  "isbn": "9783251200351",
+  "wallTitle": "Vielerlei Schliche",
+  "edition": "OL62603243M"
+ },
+ {
+  "no": "5",
+  "title": "Stalky & Co.",
+  "isbn": "9783251200504",
+  "wallTitle": "Stalky & Co.",
+  "edition": "OL62603242M"
+ },
+ {
+  "no": "6",
+  "title": "Die Vielfalt der Geschöpfe",
+  "isbn": "9783251200764",
+  "wallTitle": "Die Vielfalt der Geschöpfe",
+  "edition": "OL62603248M"
+ },
+ {
+  "no": "7",
+  "title": "Genau-so-Geschichten",
+  "isbn": "9783251200894",
+  "wallTitle": "Genau-so-Geschichten",
+  "edition": "OL62603246M"
+ },
+ {
+  "no": "8",
+  "title": "Kim",
+  "isbn": "9783763236435",
+  "wallTitle": "Kim",
+  "edition": "OL62603247M"
+ },
+ {
+  "no": "9",
+  "title": "Die Ballade von Ost und West",
+  "isbn": "9783251200733",
+  "wallTitle": "Die Ballade von Ost und West",
+  "edition": "OL62603245M"
+ },
+ {
+  "no": "10",
+  "title": "Kühne Kapitäne",
+  "isbn": "9783251201846",
+  "wallTitle": "Kühne Kapitäne",
+  "edition": "OL62603249M"
+ }
+]

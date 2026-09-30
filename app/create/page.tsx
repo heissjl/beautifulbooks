@@ -9,25 +9,7 @@ import WallsStart from '@/components/WallsStart';
 import { hasApiKey } from '@/lib/recognize';
 import { SITE_URL } from '@/lib/seo';
 import { wallsEnabled } from '@/lib/walls/switch';
-import { liveCollections } from '@/lib/collections-live';
-import { curatedOption, readerOption, type StartOption } from '@/lib/walls/jumpstart';
-import { toPublic } from '@/lib/walls/model';
-import { shownWalls, wallStoreFromEnv } from '@/lib/walls/store';
-
-/** Readers' collections offered to start from: the most visited, a page's worth. */
-const READER_OPTIONS = 30;
-
-/** Published curated collections and shown readers' ones, as small options (5.13k); a silent store leaves the readers' out. */
-async function startOptions(): Promise<StartOption[]> {
-  const curated = (await liveCollections({ includeDrafts: false }).catch(() => [])).map(curatedOption);
-  const store = wallStoreFromEnv();
-  const shown = store ? await shownWalls(store).catch(() => []) : [];
-  const readers = shown
-    .sort((a, b) => b.views - a.views)
-    .slice(0, READER_OPTIONS)
-    .map((s) => readerOption(toPublic(s.wall)));
-  return [...curated, ...readers].filter((o): o is StartOption => !!o);
-}
+import { startOptions } from '@/lib/walls/startoptions';
 
 /**
  * Where a reader's own wall begins (ROADMAP 5.13a, SPEC F9): from a book (picked here,

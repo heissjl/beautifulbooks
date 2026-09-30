@@ -32,7 +32,8 @@ export async function GET(request: NextRequest) {
   const covers = page.covers
     .filter(c => c.id.startsWith('ol:'))
     .map(c => ({ c, editions: c.editionIds.map(e => editions.get(e)).filter(e => e !== undefined) }))
-    .filter(({ editions: es }) => draft.kind !== 'series' || es.some(e => inSeries(e.publisher ? [e.publisher] : undefined, draft.publishers ?? [])))
+    // A series without publisher names spans publishers (a prize wall): every cover may be chosen (Julian, 2026-09-30: no alternatives on the Deutscher Buchpreis).
+    .filter(({ editions: es }) => draft.kind !== 'series' || !(draft.publishers ?? []).length || es.some(e => inSeries(e.publisher ? [e.publisher] : undefined, draft.publishers ?? [])))
     .map(({ c, editions: es }) => ({ id: c.id, year: es[0]?.year, publisher: es[0]?.publisher }));
   const { offset: at, limit, total } = page.page;
   // How far the search got, for the progress line in the window (5.10b): the

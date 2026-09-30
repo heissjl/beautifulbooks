@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import CoverImage from './CoverImage';
 import { coverUrlFor } from '@/lib/coverurl';
-import type { PublicWall } from '@/lib/walls/model';
+import { tileCoverId, type PublicWall } from '@/lib/walls/model';
 
 const SHOWN = 8;
 
@@ -24,7 +24,7 @@ export default function ReaderWallCard({ wall }: { wall: PublicWall }) {
       <ul className="mt-4 grid grid-cols-4 gap-2 sm:gap-3">
         {wall.tiles.slice(0, SHOWN).map((t, i) => (
           <li key={t.coverId} className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2">
-            <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'M') ?? ''} alt={t.author ? `${t.title} by ${t.author}` : t.title} sizes="(max-width: 768px) 25vw, 12vw" />
+            <CoverImage src={coverUrlFor(tileCoverId(t), 'M') ?? ''} alt={t.author ? `${t.title} by ${t.author}` : t.title} sizes="(max-width: 768px) 25vw, 12vw" />
             {i === SHOWN - 1 && more > 0 && (
               <span className="absolute inset-0 flex items-center justify-center bg-black/55 text-sm font-medium text-white">+{more}</span>
             )}

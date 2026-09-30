@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { WorkPageResponse } from '@/app/api/works/[id]/route';
 import type { Market } from '@/lib/market';
 import type { BuyLink, EditionView, Work } from '@/lib/model';
@@ -12,6 +12,14 @@ const RETRY_DELAY_MS = 2000;
 export interface WorkPagesState {
   status: 'loading' | 'notfound' | 'error' | 'ready';
   message?: string;
+  /**
+   * The HTTP status of the answer that ended the walk in `error`, or
+   * undefined when there was no answer at all (network, timeout). The page
+   * words a 429 differently from a silent catalogue (ROADMAP 6.75).
+   */
+  httpStatus?: number;
+  /** Starts the walk again from page 0; for „Try again" after an `error` (ROADMAP 6.75). */
+  retry: () => void;
   work?: Work;
   market?: Market;
   /** The market's own shops searched by the work's title (ROADMAP 1.11). */
@@ -35,6 +43,7 @@ interface Progress {
   key: string;
   status: WorkPagesState['status'];
   message?: string;
+  httpStatus?: number;
   work?: Work;
   market?: Market;
   pages: Array<WorkPageResponse>;
@@ -43,7 +52,14 @@ interface Progress {
   truncated: Truncation;
 }
 
-const EMPTY: WorkPagesState = {
+/** An answer that was not a page; keeps the status so the page can say which failure it was. */
+class PageError extends Error {
+  constructor(message: string, readonly httpStatus: number) {
+    super(message);
+  }
+}
+
+const EMPTY: Omit<WorkPagesState, 'retry'> = {
   status: 'loading', anyEditionLinks: [], merged: null, firstCovers: null, page0Hashed: false, pagesLoaded: 0, siblingIds: [],
 };
 
@@ -94,6 +110,17 @@ function remember(key: string, p: Progress) {
 export function useWorkPages(workId: string, lang: string, market: Market | undefined): WorkPagesState {
   const requestKey = `${workId} ${lang} ${market ?? ''}`;
   const [progress, setProgress] = useState<Progress | null>(null);
+  /*
+    Bumped by „Try again" (ROADMAP 6.75). A failed walk is never remembered in
+    FINISHED, so running the effect again starts it from page 0; clearing the
+    progress in the same handler shows the loading scene rather than the old
+    error for the moment before the first answer.
+  */
+  const [attempt, setAttempt] = useState(0);
+  const retry = useCallback(() => {
+    setProgress(null);
+    setAttempt(a => a + 1);
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -115,7 +142,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
     ): Promise<WorkPageResponse | null> => {
       const res = await fetch(query(id, offset, signatures, sibling), { signal: controller.signal });
       if (res.status === 404 || res.status === 400) return null;
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `Request failed (${res.status})`);
+      if (!res.ok) throw new PageError((await res.json().catch(() => ({}))).error ?? `Request failed (${res.status})`, res.status);
       return (await res.json()) as WorkPageResponse;
     };
 
@@ -167,6 +194,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
         if (controller.signal.aborted) return;
         put({
           key, status: 'error', message: err instanceof Error ? err.message : 'Request failed',
+          httpStatus: err instanceof PageError ? err.httpStatus : undefined,
           pages: [], page0Hashed: false, done: true, truncated: 'error',
         });
         return;
@@ -247,7 +275,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
     })();
 
     return () => controller.abort();
-  }, [requestKey, workId, market]);
+  }, [requestKey, workId, market, attempt]);
 
   return useMemo<WorkPagesState>(() => {
     /*
@@ -257,9 +285,9 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       state: a walk this hook did not start has nothing to set.
     */
     const known = progress && progress.key === requestKey ? progress : FINISHED.get(requestKey);
-    if (!known) return EMPTY;
+    if (!known) return { ...EMPTY, retry };
     if (known.status !== 'ready') {
-      return { ...EMPTY, status: known.status, message: known.message };
+      return { ...EMPTY, status: known.status, message: known.message, httpStatus: known.httpStatus, retry };
     }
     const pages: WorkPageData<EditionView>[] = known.pages;
     // The count under the title names the book, not the record: the card
@@ -278,6 +306,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       page0Hashed: known.page0Hashed,
       pagesLoaded: pages.length,
       siblingIds: siblings.map(s => s.id),
+      retry,
     };
-  }, [progress, requestKey]);
+  }, [progress, requestKey, retry]);
 }

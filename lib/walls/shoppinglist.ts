@@ -6,7 +6,7 @@
  * contacts a shop; the reader, or their agent, buys.
  */
 import { coverUrlFor } from '@/lib/coverurl';
-import type { PublicWall, Tile } from './model';
+import { tileCoverId, type PublicWall, type Tile } from './model';
 
 const isbnsOf = (t: Tile) => t.printings.map((p) => p.isbn13 ?? p.isbn10).filter((x): x is string => !!x);
 
@@ -20,7 +20,7 @@ export function shoppingText(wall: PublicWall, bought: ReadonlySet<string>, page
       `${bought.has(t.coverId) ? '[x]' : '[ ]'} ${i + 1}. ${t.title}${t.author ? ` — ${t.author}` : ''}`,
       printing ? `   ${printing}` : '',
       isbns.length ? `   ISBN ${isbns.join(', ')}` : '   no ISBN on record',
-      `   cover: ${coverUrlFor(`ol:${t.coverId}`, 'L')}`,
+      `   cover: ${coverUrlFor(tileCoverId(t), 'L')}`,
     ].filter(Boolean).join('\n');
   });
   const left = wall.tiles.filter((t) => !bought.has(t.coverId)).length;
@@ -70,7 +70,7 @@ export function agentList(wall: PublicWall, bought: ReadonlySet<string>, pageUrl
       ...(t.author ? { author: t.author } : {}),
       ...(t.printings[0] ? { printing: { ...(t.printings[0].publisher ? { publisher: t.printings[0].publisher } : {}), ...(t.printings[0].year ? { year: t.printings[0].year } : {}) } } : {}),
       isbns: isbnsOf(t),
-      coverImage: coverUrlFor(`ol:${t.coverId}`, 'L') ?? '',
+      coverImage: coverUrlFor(tileCoverId(t), 'L') ?? '',
       alreadyBought: bought.has(t.coverId),
     })),
   };

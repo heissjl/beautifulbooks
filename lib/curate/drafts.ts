@@ -110,8 +110,8 @@ export type DraftOp =
   | { op: 'removeAuthor'; name: string }
   | { op: 'addPublisher'; name: string }
   | { op: 'removePublisher'; name: string }
-  | { op: 'pick'; id: string; title: string; author: string; coverId: string; firstPublished?: number }
-  | { op: 'remove'; id: string }
+  | { op: 'pick'; id: string; title: string; author: string; coverId: string; firstPublished?: number; again?: boolean; was?: string }
+  | { op: 'remove'; id: string; coverId?: string }
   | { op: 'order'; ids: string[] }
   | { op: 'delete' };
 
@@ -166,7 +166,11 @@ export function applyOp(draft: Draft, raw: Record<string, unknown>, now = new Da
       const coverId = clip(raw.coverId, 30);
       const title = clip(raw.title, 200);
       if (!/^OL\d+W$/.test(id) || !/^ol:\d+$/.test(coverId) || !title) throw new Error('A book and a cover are needed.');
-      if (!draft.works.some(w => w.id === id) && draft.works.length >= DRAFT_LIMITS.works) throw new Error(`At most ${DRAFT_LIMITS.works} books.`);
+      const again = raw.again === true;
+      const was = clip(raw.was, 30);
+      if (was && !/^ol:\d+$/.test(was)) throw new Error('A book and a cover are needed.');
+      const adds = again ? !draft.works.some(w => w.id === id && w.coverId === coverId) : !draft.works.some(w => w.id === id);
+      if (adds && draft.works.length >= DRAFT_LIMITS.works) throw new Error(`At most ${DRAFT_LIMITS.works} books.`);
       const year = Number(raw.firstPublished);
       return {
         ...upsertPick(draft, {
@@ -176,12 +180,14 @@ export function applyOp(draft: Draft, raw: Record<string, unknown>, now = new Da
           coverId,
           ...(Number.isInteger(year) && year > 0 ? { firstPublished: year } : {}),
           addedAt: now.toISOString().slice(0, 10),
-        }),
+        }, { again, ...(was ? { was } : {}) }),
         ...stamp,
       } as Draft;
     }
-    case 'remove':
-      return { ...removePick(draft, clip(raw.id, 20)), ...stamp } as Draft;
+    case 'remove': {
+      const coverId = raw.coverId === undefined ? undefined : clip(raw.coverId, 30);
+      return { ...removePick(draft, clip(raw.id, 20), coverId || undefined), ...stamp } as Draft;
+    }
     case 'order':
       if (!Array.isArray(raw.ids)) throw new Error('No order given.');
       return { ...reorder(draft, raw.ids.filter((x): x is string => typeof x === 'string')), ...stamp } as Draft;

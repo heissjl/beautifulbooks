@@ -127,7 +127,10 @@ export async function lookUpBook(
   get: Fetch = defaultFetch,
   getText: FetchText = defaultText,
 ): Promise<BookLookup> {
-  const meta = await get<CoverMeta>(`https://covers.openlibrary.org/b/id/${coverId}.json`);
+  // A Google Books cover (5.13n, from main) has no Open Library record behind it: the size
+  // comes from the library by the printing's ISBN alone, and there is no printing to find.
+  const google = coverId.startsWith('gb:');
+  const meta: CoverMeta = google ? {} : await get<CoverMeta>(`https://covers.openlibrary.org/b/id/${coverId}.json`);
   const olid = typeof meta.olid === 'string' && /^OL\d+M$/.test(meta.olid) ? meta.olid : null;
   const edition = olid ? await get<EditionJson>(`https://openlibrary.org/books/${olid}.json`) : null;
   const fromEdition = edition ? printingFromEdition(edition) : null;

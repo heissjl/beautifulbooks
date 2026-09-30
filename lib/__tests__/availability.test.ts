@@ -49,10 +49,10 @@ describe('checkAvailability', () => {
 
   it('asks every shop of the market twice: for the ISBN and for the control', async () => {
     const shops = await checkAvailability('9783499130656', 'de', { env: {} });
-    expect(shops.map(s => s.provider)).toEqual(['thalia', 'genialokal', 'amazon', 'hugendubel', 'abebooks', 'booklooker']);
-    expect(calls).toHaveLength(12);
+    expect(shops.map(s => s.provider)).toEqual(['thalia', 'genialokal', 'amazon', 'hugendubel', 'abebooks', 'booklooker', 'abebooks-de']);
+    expect(calls).toHaveLength(14);
     // Amazon addresses a book by its ISBN-10, so its URLs carry neither ISBN-13.
-    expect(calls.filter(u => u.includes(CONTROL_ISBN))).toHaveLength(5);
+    expect(calls.filter(u => u.includes(CONTROL_ISBN))).toHaveLength(6);
     expect(calls.filter(u => u.includes('/dp/'))).toHaveLength(2);
   });
 

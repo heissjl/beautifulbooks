@@ -108,14 +108,43 @@ export function newCollection(input: { title: string; slug?: string; kind: Colle
 }
 
 /**
- * Adds a work, or changes its cover if it is already there — in place, so a
- * new cover does not move a work Julian had arranged.
+ * One tile on a wall: a work and the cover shown for it. A wall may show the
+ * same work twice when two printings have their own designs (Julian,
+ * 2026-09-29: both Lone Star covers, the two layouts of the Fischer Bücherei),
+ * so the work id alone does not name a tile.
  */
-export function upsertPick(c: CollectionRecord, pick: CollectionPick): CollectionRecord {
+export function pickKey(w: Pick<CollectionPick, 'id' | 'coverId'>): string {
+  return `${w.id}|${w.coverId}`;
+}
+
+/** `OL1W|ol:2` → work and cover; a plain work id → the work alone (older callers). */
+export function parsePickKey(key: string): { id: string; coverId?: string } {
+  const bar = key.indexOf('|');
+  return bar < 0 ? { id: key } : { id: key.slice(0, bar), coverId: key.slice(bar + 1) };
+}
+
+export interface PickOptions {
+  /** Show this cover in addition to the work's other covers on the wall. */
+  again?: boolean;
+  /** The cover this pick replaces, when the work is on the wall more than once. */
+  was?: string;
+}
+
+/**
+ * Adds a work, or changes its cover if it is already there — in place, so a
+ * new cover does not move a work Julian had arranged. A pick naming a cover
+ * the work already shows updates that tile; `again` adds a second tile;
+ * `was` says which tile gets the new cover. Without either, the work's first
+ * tile changes, as before walls could show a work twice.
+ */
+export function upsertPick(c: CollectionRecord, pick: CollectionPick, options: PickOptions = {}): CollectionRecord {
   if (c.kind === 'authors' && !(c.authors ?? []).some(a => a.name === pick.author)) {
     throw new Error(`${pick.author} is not on this collection's list of authors. Add them first.`);
   }
-  const at = c.works.findIndex(w => w.id === pick.id);
+  let at = c.works.findIndex(w => w.id === pick.id && w.coverId === pick.coverId);
+  if (at < 0 && options.again) return { ...c, works: [...c.works, pick] };
+  if (at < 0 && options.was) at = c.works.findIndex(w => w.id === pick.id && w.coverId === options.was);
+  if (at < 0) at = c.works.findIndex(w => w.id === pick.id);
   const works = at < 0 ? [...c.works, pick] : c.works.map((w, i) => (i === at ? merged(w, pick) : w));
   return { ...c, works };
 }
@@ -135,21 +164,23 @@ function merged(old: CollectionPick, pick: CollectionPick): CollectionPick {
   return next;
 }
 
-export function removePick(c: CollectionRecord, id: string): CollectionRecord {
-  return { ...c, works: c.works.filter(w => w.id !== id) };
+/** Takes a work off the wall — every tile of it, or only the one with `coverId`. */
+export function removePick(c: CollectionRecord, id: string, coverId?: string): CollectionRecord {
+  return { ...c, works: c.works.filter(w => w.id !== id || (coverId !== undefined && w.coverId !== coverId)) };
 }
 
 /**
- * A new order from the tool. Ids it does not know are ignored, and works it
- * left out keep their relative order at the end: a stale page must never be
- * able to drop a work by sending an old list.
+ * A new order from the tool, as tile keys (`pickKey`) or plain work ids. A
+ * plain id places the work's first tile not yet placed. Keys it does not
+ * know are ignored, and tiles it left out keep their relative order at the
+ * end: a stale page must never be able to drop a work by sending an old list.
  */
 export function reorder(c: CollectionRecord, ids: string[]): CollectionRecord {
-  const byId = new Map(c.works.map(w => [w.id, w]));
   const out: CollectionPick[] = [];
-  for (const id of ids) {
-    const w = byId.get(id);
-    if (w && !out.includes(w)) out.push(w);
+  for (const key of ids) {
+    const { id, coverId } = parsePickKey(key);
+    const w = c.works.find(x => x.id === id && (coverId === undefined || x.coverId === coverId) && !out.includes(x));
+    if (w) out.push(w);
   }
   for (const w of c.works) if (!out.includes(w)) out.push(w);
   return { ...c, works: out };

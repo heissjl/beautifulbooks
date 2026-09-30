@@ -65,7 +65,7 @@ describe('buyLinksFor per market', () => {
   it('orders retailers per market as specified', () => {
     expect(retailersFor('us').map(r => r.id)).toEqual(['bookshop', 'amazon', 'abebooks', 'thriftbooks', 'ebay']);
     expect(retailersFor('uk').map(r => r.id)).toEqual(['bookshop', 'amazon', 'blackwells', 'waterstones', 'abebooks', 'ebay']);
-    expect(retailersFor('de').map(r => r.id)).toEqual(['thalia', 'genialokal', 'amazon', 'hugendubel', 'abebooks', 'booklooker']);
+    expect(retailersFor('de').map(r => r.id)).toEqual(['thalia', 'genialokal', 'amazon', 'hugendubel', 'abebooks', 'booklooker', 'abebooks-de']);
     expect(buyLinksFor(isbn, 'de', {}).map(l => l.provider)).toEqual(retailersFor('de').map(r => r.id));
   });
   it('uses the Bookshop affiliate storefront only when configured', () => {
@@ -110,7 +110,7 @@ describe('searchLinksFor (no ISBN needed)', () => {
     // Blackwell's and Booklooker have no confirmed search form, so they are
     // absent rather than guessed at (ROADMAP 1.8).
     expect(links.map(l => l.provider)).toEqual([
-      'abebooks-search', 'ebay-search',
+      'abebooks-search', 'ebay-search', 'abebooks-de-search',
       'thalia-search', 'genialokal-search', 'amazon-search', 'hugendubel-search',
       'worldcat',
     ]);
@@ -141,6 +141,6 @@ describe('link kind (SPEC §9.3 step 16)', () => {
   it('marks every ISBN search as a search', () => {
     const de = buyLinksFor({ isbn13: '9783499130656' }, 'de', {});
     const searches = de.filter(l => l.kind === 'search').map(l => l.provider);
-    expect(searches).toEqual(['thalia', 'genialokal', 'hugendubel', 'abebooks', 'booklooker']);
+    expect(searches).toEqual(['thalia', 'genialokal', 'hugendubel', 'abebooks', 'booklooker', 'abebooks-de']);
   });
 });

@@ -1,0 +1,498 @@
+[
+ {
+  "no": "1965",
+  "title": "Dune",
+  "author": "Frank Herbert",
+  "isbn": "",
+  "edition": "OL43283259M",
+  "wallTitle": "Dune"
+ },
+ {
+  "no": "1966",
+  "title": "Babel-17",
+  "author": "Samuel R. Delany",
+  "isbn": "",
+  "edition": "OL13588645M",
+  "wallTitle": "Babel-17"
+ },
+ {
+  "no": "1966",
+  "title": "Flowers for Algernon",
+  "author": "Daniel Keyes",
+  "isbn": "9780151315109",
+  "edition": "OL29564184M",
+  "wallTitle": "Flowers for Algernon"
+ },
+ {
+  "no": "1967",
+  "title": "The Einstein Intersection",
+  "author": "Samuel R. Delany",
+  "isbn": "",
+  "edition": "OL21134827M",
+  "wallTitle": "The Einstein Intersection"
+ },
+ {
+  "no": "1968",
+  "title": "Rite of Passage",
+  "author": "Alexei Panshin",
+  "isbn": "9780441727858",
+  "edition": "OL28262013M",
+  "wallTitle": "Rite of Passage"
+ },
+ {
+  "no": "1969",
+  "title": "The Left Hand of Darkness",
+  "author": "Ursula K. Le Guin",
+  "isbn": "",
+  "edition": "OL58688990M",
+  "wallTitle": "The Left Hand of Darkness"
+ },
+ {
+  "no": "1970",
+  "title": "Ringworld",
+  "author": "Larry Niven",
+  "isbn": "9780345020468",
+  "edition": "OL26839173M",
+  "wallTitle": "Ringworld"
+ },
+ {
+  "no": "1971",
+  "title": "A Time of Changes",
+  "author": "Robert Silverberg",
+  "isbn": "",
+  "edition": "OL5201878M",
+  "wallTitle": "A Time of Changes"
+ },
+ {
+  "no": "1972",
+  "title": "The Gods Themselves",
+  "author": "Isaac Asimov",
+  "isbn": "",
+  "edition": "OL27261468M",
+  "wallTitle": "The Gods Themselves"
+ },
+ {
+  "no": "1973",
+  "title": "Rendezvous with Rama",
+  "author": "Arthur C. Clarke",
+  "isbn": "",
+  "edition": "OL17576481M",
+  "wallTitle": "Rendezvous with Rama"
+ },
+ {
+  "no": "1974",
+  "title": "The Dispossessed",
+  "author": "Ursula K. Le Guin",
+  "isbn": "",
+  "edition": "OL18217873M",
+  "wallTitle": "The Dispossessed"
+ },
+ {
+  "no": "1975",
+  "title": "The Forever War",
+  "author": "Joe Haldeman",
+  "isbn": "0312298900",
+  "edition": "OL51727675M",
+  "wallTitle": "The Forever War"
+ },
+ {
+  "no": "1976",
+  "title": "Man Plus",
+  "author": "Frederik Pohl",
+  "isbn": "0394486765",
+  "edition": "OL4876371M",
+  "wallTitle": "Man Plus"
+ },
+ {
+  "no": "1977",
+  "title": "Gateway",
+  "author": "Frederik Pohl",
+  "isbn": "0312317808",
+  "edition": "OL4881862M",
+  "wallTitle": "Gateway"
+ },
+ {
+  "no": "1978",
+  "title": "Dreamsnake",
+  "author": "Vonda N. McIntyre",
+  "isbn": "",
+  "edition": "OL16423118M",
+  "wallTitle": "Dreamsnake"
+ },
+ {
+  "no": "1979",
+  "title": "The Fountains of Paradise",
+  "author": "Arthur C. Clarke",
+  "isbn": "9780345253569",
+  "edition": "OL17993465M",
+  "wallTitle": "The Fountains of Paradise"
+ },
+ {
+  "no": "1980",
+  "title": "Timescape",
+  "author": "Gregory Benford",
+  "isbn": "9780553297096",
+  "edition": "OL7825465M",
+  "wallTitle": "Timescape"
+ },
+ {
+  "no": "1981",
+  "title": "The Claw of the Conciliator",
+  "author": "Gene Wolfe",
+  "isbn": "0671413708",
+  "edition": "OL4105871M",
+  "wallTitle": "The Claw of the Conciliator"
+ },
+ {
+  "no": "1982",
+  "title": "No Enemy But Time",
+  "author": "Michael Bishop",
+  "isbn": "0671449737",
+  "edition": "OL4272317M",
+  "wallTitle": "No Enemy But Time"
+ },
+ {
+  "no": "1983",
+  "title": "Startide Rising",
+  "author": "David Brin",
+  "isbn": "",
+  "edition": "OL47132891M",
+  "wallTitle": "Startide Rising"
+ },
+ {
+  "no": "1984",
+  "title": "Neuromancer",
+  "author": "William Gibson",
+  "isbn": "9780441569564",
+  "edition": "OL26788697M",
+  "wallTitle": "Neuromancer"
+ },
+ {
+  "no": "1985",
+  "title": "Ender's Game",
+  "author": "Orson Scott Card",
+  "isbn": "0312932081",
+  "edition": "OL2586366M",
+  "wallTitle": "Ender's Game"
+ },
+ {
+  "no": "1986",
+  "title": "Speaker for the Dead",
+  "author": "Orson Scott Card",
+  "isbn": "0312937385",
+  "edition": "OL2553998M",
+  "wallTitle": "Speaker for the Dead"
+ },
+ {
+  "no": "1987",
+  "title": "The Falling Woman",
+  "author": "Pat Murphy",
+  "isbn": "9780812546200",
+  "edition": "OL24370465M",
+  "wallTitle": "The Falling Woman"
+ },
+ {
+  "no": "1988",
+  "title": "Falling Free",
+  "author": "Lois McMaster Bujold",
+  "isbn": "9780671653989",
+  "edition": "OL538837M",
+  "wallTitle": "Falling Free"
+ },
+ {
+  "no": "1989",
+  "title": "The Healer's War",
+  "author": "Elizabeth Ann Scarborough",
+  "isbn": "9780385248280",
+  "edition": "OL28202136M",
+  "wallTitle": "The Healer's War"
+ },
+ {
+  "no": "1990",
+  "title": "Tehanu: The Last Book of Earthsea",
+  "author": "Ursula K. Le Guin",
+  "isbn": "0689315953",
+  "edition": "OL2210281M",
+  "wallTitle": "Tehanu"
+ },
+ {
+  "no": "1991",
+  "title": "Stations of the Tide",
+  "author": "Michael Swanwick",
+  "isbn": "0380715244",
+  "edition": "OL14679007M",
+  "wallTitle": "Stations of the Tide"
+ },
+ {
+  "no": "1992",
+  "title": "Doomsday Book",
+  "author": "Connie Willis",
+  "isbn": "0553351672",
+  "edition": "OL1561481M",
+  "wallTitle": "Doomsday Book"
+ },
+ {
+  "no": "1993",
+  "title": "Red Mars",
+  "author": "Kim Stanley Robinson",
+  "isbn": "9780246138811",
+  "edition": "OL10227099M",
+  "wallTitle": "Red Mars"
+ },
+ {
+  "no": "1994",
+  "title": "Moving Mars",
+  "author": "Greg Bear",
+  "isbn": "031285515X",
+  "edition": "OL1416950M",
+  "wallTitle": "Moving Mars"
+ },
+ {
+  "no": "1995",
+  "title": "The Terminal Experiment",
+  "author": "Robert J. Sawyer",
+  "isbn": "0061053104",
+  "edition": "OL20887964M",
+  "wallTitle": "The Terminal Experiment"
+ },
+ {
+  "no": "1996",
+  "title": "Slow River",
+  "author": "Nicola Griffith",
+  "isbn": "0345391659",
+  "edition": "OL1270535M",
+  "wallTitle": "Slow River"
+ },
+ {
+  "no": "1997",
+  "title": "The Moon and the Sun",
+  "author": "Vonda N. McIntyre",
+  "isbn": "0671567659",
+  "edition": "OL35667717M",
+  "wallTitle": "The Moon and the Sun"
+ },
+ {
+  "no": "1998",
+  "title": "Forever Peace",
+  "author": "Joe Haldeman",
+  "isbn": "0441004067",
+  "edition": "OL1012030M",
+  "wallTitle": "Forever Peace"
+ },
+ {
+  "no": "1999",
+  "title": "Parable of the Talents",
+  "author": "Octavia E. Butler",
+  "isbn": "1888363819",
+  "edition": "OL374094M",
+  "wallTitle": "Parable of the Talents"
+ },
+ {
+  "no": "2000",
+  "title": "Darwin's Radio",
+  "author": "Greg Bear",
+  "isbn": "034542333X",
+  "edition": "OL36221M",
+  "wallTitle": "Darwin's Radio"
+ },
+ {
+  "no": "2001",
+  "title": "The Quantum Rose",
+  "author": "Catherine Asaro",
+  "isbn": "0312890621",
+  "edition": "OL6786975M",
+  "wallTitle": "The Quantum Rose"
+ },
+ {
+  "no": "2002",
+  "title": "American Gods",
+  "author": "Neil Gaiman",
+  "isbn": "9780380973651",
+  "edition": "OL31902599M",
+  "wallTitle": "American Gods"
+ },
+ {
+  "no": "2003",
+  "title": "The Speed of Dark",
+  "author": "Elizabeth Moon",
+  "isbn": "9781841491417",
+  "edition": "OL27099187M",
+  "wallTitle": "The Speed of Dark"
+ },
+ {
+  "no": "2004",
+  "title": "Paladin of Souls",
+  "author": "Lois McMaster Bujold",
+  "isbn": "9780060573355",
+  "edition": "OL32334982M",
+  "wallTitle": "Paladin of Souls"
+ },
+ {
+  "no": "2005",
+  "title": "Camouflage",
+  "author": "Joe Haldeman",
+  "isbn": "0441011616",
+  "edition": "OL3305403M",
+  "wallTitle": "Camouflage"
+ },
+ {
+  "no": "2006",
+  "title": "Seeker",
+  "author": "Jack McDevitt",
+  "isbn": "0441013295",
+  "edition": "OL3424972M",
+  "wallTitle": "Seeker"
+ },
+ {
+  "no": "2007",
+  "title": "The Yiddish Policemen's Union",
+  "author": "Michael Chabon",
+  "isbn": "9780007149827",
+  "edition": "OL20945235M",
+  "wallTitle": "The Yiddish Policemen's Union"
+ },
+ {
+  "no": "2008",
+  "title": "Powers",
+  "author": "Ursula K. Le Guin",
+  "isbn": "9780152057701",
+  "edition": "OL9868943M",
+  "wallTitle": "Powers"
+ },
+ {
+  "no": "2009",
+  "title": "The Windup Girl",
+  "author": "Paolo Bacigalupi",
+  "isbn": "9781597802369",
+  "edition": "OL29600967M",
+  "wallTitle": "The Windup Girl"
+ },
+ {
+  "no": "2010",
+  "title": "Blackout",
+  "author": "Connie Willis",
+  "isbn": "9780345519641",
+  "edition": "OL24262951M",
+  "wallTitle": "Blackout"
+ },
+ {
+  "no": "2011",
+  "title": "Among Others",
+  "author": "Jo Walton",
+  "isbn": "9780765331724",
+  "edition": "OL25154720M",
+  "wallTitle": "Among Others"
+ },
+ {
+  "no": "2012",
+  "title": "2312",
+  "author": "Kim Stanley Robinson",
+  "isbn": "9781841499963",
+  "edition": "OL27097097M",
+  "wallTitle": "2312"
+ },
+ {
+  "no": "2013",
+  "title": "Ancillary Justice",
+  "author": "Ann Leckie",
+  "isbn": "9780316246637",
+  "edition": "OL39796244M",
+  "wallTitle": "Ancillary Justice"
+ },
+ {
+  "no": "2014",
+  "title": "Annihilation",
+  "author": "Jeff VanderMeer",
+  "isbn": "9780374710774",
+  "edition": "OL26759325M",
+  "wallTitle": "Annihilation"
+ },
+ {
+  "no": "2015",
+  "title": "Uprooted",
+  "author": "Naomi Novik",
+  "isbn": "9780804179034",
+  "edition": "OL25922809M",
+  "wallTitle": "Uprooted"
+ },
+ {
+  "no": "2016",
+  "title": "All the Birds in the Sky",
+  "author": "Charlie Jane Anders",
+  "isbn": "9781466871120",
+  "edition": "OL29720128M",
+  "wallTitle": "All the Birds in the Sky"
+ },
+ {
+  "no": "2017",
+  "title": "The Stone Sky",
+  "author": "N. K. Jemisin",
+  "isbn": "9780356508689",
+  "edition": "OL26832498M",
+  "wallTitle": "The Stone Sky"
+ },
+ {
+  "no": "2018",
+  "title": "The Calculating Stars",
+  "author": "Mary Robinette Kowal",
+  "isbn": "9781466861244",
+  "edition": "OL29774199M",
+  "wallTitle": "The Calculating Stars"
+ },
+ {
+  "no": "2019",
+  "title": "A Song for a New Day",
+  "author": "Sarah Pinsker",
+  "isbn": "9781984802583",
+  "edition": "OL27307920M",
+  "wallTitle": "A Song for a New Day"
+ },
+ {
+  "no": "2020",
+  "title": "Network Effect",
+  "author": "Martha Wells",
+  "isbn": "9781250229847",
+  "edition": "OL29831122M",
+  "wallTitle": "Network Effect"
+ },
+ {
+  "no": "2021",
+  "title": "A Master of Djinn",
+  "author": "P. Djèlí Clark",
+  "isbn": "9781250267689",
+  "edition": "OL30516084M",
+  "wallTitle": "A Master of Djinn"
+ },
+ {
+  "no": "2022",
+  "title": "Babel",
+  "author": "R. F. Kuang",
+  "isbn": "9780063021440",
+  "edition": "OL36541099M",
+  "wallTitle": "Babel"
+ },
+ {
+  "no": "2023",
+  "title": "The Saint of Bright Doors",
+  "author": "Vajra Chandrasekera",
+  "isbn": "9781250847386",
+  "edition": "OL39728247M",
+  "wallTitle": "The Saint of Bright Doors"
+ },
+ {
+  "no": "2024",
+  "title": "Someone You Can Build a Nest In",
+  "author": "John Wiswell",
+  "isbn": "9780756418854",
+  "edition": "OL50717791M",
+  "wallTitle": "Someone You Can Build a Nest In"
+ },
+ {
+  "no": "2025",
+  "title": "The Buffalo Hunter Hunter",
+  "author": "Stephen Graham Jones",
+  "isbn": "9781835414316",
+  "edition": "OL61798679M",
+  "wallTitle": "The Buffalo Hunter Hunter"
+ }
+]

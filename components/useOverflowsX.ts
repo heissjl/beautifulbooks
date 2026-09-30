@@ -29,6 +29,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 export function useOverflowsX() {
   const [overflows, setOverflows] = useState(false);
   const [atEnd, setAtEnd] = useState(false);
+  const [atStart, setAtStart] = useState(true);
   const elements = useRef<{ box: HTMLElement | null; inner: HTMLElement | null }>({ box: null, inner: null });
   const observer = useRef<ResizeObserver | null>(null);
 
@@ -37,6 +38,7 @@ export function useOverflowsX() {
     if (!box || !inner) return;
     setOverflows(inner.offsetWidth > box.clientWidth + 1);
     setAtEnd(box.scrollLeft + box.clientWidth >= box.scrollWidth - 1);
+    setAtStart(box.scrollLeft <= 1);
   }, []);
 
   const attach = useCallback(
@@ -57,5 +59,5 @@ export function useOverflowsX() {
   const scroller = useMemo(() => attach('box'), [attach]);
   const content = useMemo(() => attach('inner'), [attach]);
 
-  return { scroller, content, overflows, atEnd, onScroll: measure };
+  return { scroller, content, overflows, atStart, atEnd, onScroll: measure };
 }

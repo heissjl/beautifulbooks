@@ -135,3 +135,12 @@ describe('one cover per printing, for cards and shared links alike', () => {
     expect(coverImages(covers, 4)).toEqual(['https://covers/a.jpg', 'https://covers/b.jpg']);
   });
 });
+
+describe('SITE_CARD', () => {
+  it('points at the site card and claims nothing about completeness', async () => {
+    const { SITE_CARD } = await import('../seo');
+    expect(SITE_CARD.url.endsWith('/opengraph-image')).toBe(true);
+    expect([SITE_CARD.width, SITE_CARD.height]).toEqual([1200, 630]);
+    expect(SITE_CARD.alt).not.toMatch(/\b(all|every|complete)\b/i);
+  });
+});

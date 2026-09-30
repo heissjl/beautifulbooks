@@ -1,0 +1,206 @@
+[
+ {
+  "no": "A",
+  "title": "Pride and Prejudice",
+  "author": "Jane Austen",
+  "isbn": "9780143123163",
+  "edition": "OL26020929M",
+  "cover": 7576923
+ },
+ {
+  "no": "B",
+  "title": "Jane Eyre",
+  "author": "Charlotte Brontë",
+  "isbn": "9780143123149",
+  "edition": "OL26114724M",
+  "cover": 7752765
+ },
+ {
+  "no": "C",
+  "title": "My Ántonia",
+  "author": "Willa Cather",
+  "isbn": "9780143123156",
+  "edition": "OL26061755M",
+  "cover": 7653753
+ },
+ {
+  "no": "D",
+  "title": "Great Expectations",
+  "author": "Charles Dickens",
+  "isbn": "9780143123798",
+  "skip": "no cover on Open Library under the series ISBN, and no other Penguin edition of the work there shows the Drop Caps design (checked 2026-09-29)"
+ },
+ {
+  "no": "E",
+  "title": "Middlemarch",
+  "author": "George Eliot",
+  "isbn": "9780143123811",
+  "edition": "OL27565962M",
+  "cover": 9021033
+ },
+ {
+  "no": "F",
+  "title": "Madame Bovary",
+  "author": "Gustave Flaubert",
+  "isbn": "9780143123804",
+  "edition": "OL28263110M",
+  "cover": 10191306
+ },
+ {
+  "no": "G",
+  "title": "Lord of the Flies",
+  "author": "William Golding",
+  "isbn": "9780143124290",
+  "edition": "OL28196900M",
+  "cover": 10132567
+ },
+ {
+  "no": "H",
+  "title": "Siddhartha",
+  "author": "Hermann Hesse",
+  "isbn": "9780143124337",
+  "edition": "OL27301619M",
+  "cover": 8776068
+ },
+ {
+  "no": "I",
+  "title": "An Artist of the Floating World",
+  "author": "Kazuo Ishiguro",
+  "isbn": "9780143124283",
+  "skip": "no cover on Open Library under the series ISBN, and no other Penguin edition of the work there shows the Drop Caps design (checked 2026-09-29)"
+ },
+ {
+  "no": "J",
+  "title": "A Portrait of the Artist as a Young Man",
+  "author": "James Joyce",
+  "isbn": "9780143124313",
+  "edition": "OL27566644M",
+  "cover": 9021712
+ },
+ {
+  "no": "K",
+  "title": "The Secret Life of Bees",
+  "author": "Sue Monk Kidd",
+  "isbn": "9780143124320",
+  "edition": "OL28281827M",
+  "cover": 10207344
+ },
+ {
+  "no": "L",
+  "title": "Native Speaker",
+  "author": "Chang-rae Lee",
+  "isbn": "9780143124306",
+  "edition": "OL27566605M",
+  "cover": 9021673
+ },
+ {
+  "no": "M",
+  "title": "Moby-Dick; or, The Whale",
+  "author": "Herman Melville",
+  "isbn": "9780143124672",
+  "edition": "OL27567722M",
+  "cover": 9022780
+ },
+ {
+  "no": "N",
+  "title": "Five Children and It",
+  "author": "E. Nesbit",
+  "isbn": "9780143124665",
+  "edition": "OL27567773M",
+  "cover": 9022830
+ },
+ {
+  "no": "O",
+  "title": "Butterfield 8",
+  "author": "John O’Hara",
+  "isbn": "9780143124689",
+  "skip": "no cover on Open Library under the series ISBN, and no other Penguin edition of the work there shows the Drop Caps design (checked 2026-09-29)"
+ },
+ {
+  "no": "P",
+  "title": "Swann’s Way",
+  "author": "Marcel Proust",
+  "isbn": "9780143124696",
+  "edition": "OL27568394M",
+  "cover": 9023456
+ },
+ {
+  "no": "Q",
+  "title": "The Greek Coffin Mystery",
+  "author": "Ellery Queen",
+  "isbn": "9780143125143",
+  "edition": "OL30794406M",
+  "cover": 10502757
+ },
+ {
+  "no": "R",
+  "title": "Haroun and the Sea of Stories",
+  "author": "Salman Rushdie",
+  "isbn": "9780143124771",
+  "edition": "OL28288620M",
+  "cover": 10213458
+ },
+ {
+  "no": "S",
+  "title": "Cannery Row",
+  "author": "John Steinbeck",
+  "isbn": "9780143125211",
+  "edition": "OL27541339M",
+  "cover": 8997035
+ },
+ {
+  "no": "T",
+  "title": "The Joy Luck Club",
+  "author": "Amy Tan",
+  "isbn": "9780143124849",
+  "edition": "OL25661019M",
+  "cover": 7333919
+ },
+ {
+  "no": "U",
+  "title": "Kristin Lavransdatter, I: The Wreath",
+  "author": "Sigrid Undset",
+  "isbn": "9780143124856",
+  "edition": "OL28513904M",
+  "cover": 13825966
+ },
+ {
+  "no": "V",
+  "title": "Candide: Or Optimism",
+  "author": "Voltaire",
+  "isbn": "9780143125853",
+  "edition": "OL26793843M",
+  "cover": 8447798
+ },
+ {
+  "no": "W",
+  "title": "Leaves of Grass and Selected Poems and Prose",
+  "author": "Walt Whitman",
+  "isbn": "9780143107439",
+  "edition": "OL27525317M",
+  "cover": 8981262
+ },
+ {
+  "no": "X",
+  "title": "Sky Burial",
+  "author": "Xinran",
+  "isbn": "9780143125259",
+  "skip": "no cover on Open Library under the series ISBN, and no other Penguin edition of the work there shows the Drop Caps design (checked 2026-09-29)"
+ },
+ {
+  "no": "Y",
+  "title": "When You Are Old: Early Poems and Fairy Tales",
+  "author": "W. B. Yeats",
+  "isbn": "9780143126386",
+  "edition": "OL27525368M",
+  "cover": 8981312
+ },
+ {
+  "no": "Z",
+  "title": "The Shadow of the Wind",
+  "author": "Carlos Ruiz Zafón",
+  "isbn": "9780143126393",
+  "edition": "OL27292692M",
+  "cover": 8771833
+ }
+]

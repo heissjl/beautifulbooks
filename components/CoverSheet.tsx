@@ -11,6 +11,12 @@ interface CoverSheetProps {
   caption: string;
   /** Sits beside "Details" in the bar: sharing belongs where the cover is. */
   share?: React.ReactNode;
+  /**
+   * In the sheet's header beside "Close", in place of the "Selected cover"
+   * line (ROADMAP 6.77: "Add to collection"). The dialog keeps its
+   * name for a screen reader either way.
+   */
+  headerAction?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -27,7 +33,7 @@ interface CoverSheetProps {
  * So: a bar pinned to the bottom answers "did my tap do anything?" without a
  * single scroll, and doubles as the handle of a sheet holding the details.
  */
-export default function CoverSheet({ coverUrl, caption, share, children }: CoverSheetProps) {
+export default function CoverSheet({ coverUrl, caption, share, headerAction, children }: CoverSheetProps) {
   const [open, setOpen] = useState(false);
   // The sheet's body scrolls; the same sign as the sidebar while there is more below.
   const { scroller: bodyScroller, content: bodyContent, overflows: bodyOverflows, atEnd: bodyAtEnd, onScroll: measureBody, scrollMore: bodyMore } = useOverflowsY();
@@ -145,8 +151,8 @@ export default function CoverSheet({ coverUrl, caption, share, children }: Cover
             onClick={() => setOpen(false)}
           />
           <div className="absolute inset-x-0 bottom-0 top-12 flex flex-col rounded-t-2xl bg-bg shadow-2xl">
-            <div className="flex items-center justify-between border-b border-line px-4 py-3">
-              <p className="kicker">Selected cover</p>
+            <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
+              {headerAction ? <div className="min-w-0">{headerAction}</div> : <p className="kicker">Selected cover</p>}
               <button
                 ref={closeButton}
                 type="button"

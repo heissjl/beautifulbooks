@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import CollectionRow from '@/components/CollectionRow';
+import CollectionGrid from '@/components/CollectionGrid';
 import WallsInvite from '@/components/WallsInvite';
 import ReaderWallCard from '@/components/ReaderWallCard';
 import { POPULAR_VIEWS, toPublic } from '@/lib/walls/model';
@@ -15,7 +15,7 @@ import { SITE_URL } from '@/lib/seo';
 
 /**
  * Every collection the file holds (ROADMAP 5.10, SPEC F8), each with its title
- * link and a row of its covers that scrolls sideways (`CollectionRow`). With none published this is a 404 on a production build,
+ * link and two rows of its covers with a mosaic of the next ones (`CollectionGrid`); two cards side by side from `lg` (5.10l). With none published this is a 404 on a production build,
  * so the footer never points at an empty shelf.
  */
 export const metadata: Metadata = {
@@ -48,9 +48,9 @@ export default async function CollectionsPage() {
           Books gathered around a theme or a series, one cover each. Every cover leads to the wall of the others we found.
         </p>
         {wallsEnabled() && <WallsInvite className="mt-3">Create your own collection</WallsInvite>}
-        <ul className="mt-10 space-y-12">
+        <ul className="mt-10 grid grid-cols-1 gap-x-12 gap-y-14 lg:grid-cols-2">
           {collections.map(c => (
-            <li key={c.slug}>
+            <li key={c.slug} className="min-w-0">
               <Link href={`/collections/${c.slug}`} className="group block">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line pb-2">
                   <h2 className="font-display text-2xl text-ink transition-colors group-hover:text-accent">
@@ -63,7 +63,7 @@ export default async function CollectionsPage() {
                 </div>
                 <p className="mt-3 line-clamp-2 max-w-2xl text-sm text-ink-2">{c.intro}</p>
               </Link>
-              <CollectionRow slug={c.slug} title={c.title} works={c.works} total={c.works.length} />
+              <CollectionGrid slug={c.slug} title={c.title} works={c.works} total={c.works.length} />
             </li>
           ))}
         </ul>

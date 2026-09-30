@@ -1,0 +1,1744 @@
+[
+ {
+  "note": "Découvertes Gallimard, BnF série cb342469648. BnF SRU (bib.col2bib 34246964, 899 records, 582 numbered volumes Nr. 1–588, 145 records without a number, 2026-09-29). Open Library has a cover for 392 of 582 numbers, densest at the start (39–44 per fifty up to Nr. 200) and thin after Nr. 450. Chosen stretch Nr. 1–200, the first two hundred in order: 169 with a cover, every cover looked at, 156 on the wall; 13 skipped for the image, and for Nr. 99 and 167 a later printing of the same number replaces an unusable first-printing image; 24 numbers have no cover at Open Library, 7 no ISBN at the BnF. Several first printings on Open Library are the white Réunion des musées nationaux / sub-series jacket (Aventures, Techniques, Musique, Peinture), not the series' full-bleed picture: skipped. Titles and authors from the BnF; build with TITLE_FROM=list.",
+  "no": "1",
+  "title": "À la recherche de l'Égypte oubliée",
+  "author": "Vercoutter Jean",
+  "isbn": "2070530280",
+  "source": "BnF SRU col2bib 34246964 (cb349038879, cb434156777, cb40926441k)",
+  "bnfOtherTitles": [
+   "1900-1910",
+   "Îles"
+  ],
+  "otherIsbns": [
+   "2070530906",
+   "2070342468"
+  ]
+ },
+ {
+  "no": "2",
+  "title": "Vie et mort des baleines",
+  "author": "Cohat Yves",
+  "isbn": "2070530205",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb34904124q, cb43415595w)",
+  "bnfOtherTitles": [
+   "1910-1920"
+  ],
+  "otherIsbns": [
+   "2070535134"
+  ]
+ },
+ {
+  "no": "3",
+  "title": "La Saga de l'espace",
+  "author": "Dupas Alain",
+  "isbn": "2070530256",
+  "source": "BnF SRU col2bib 34246964 (cb34903170n)",
+  "bnfOtherTitles": [
+   "1920-1930"
+  ]
+ },
+ {
+  "no": "4",
+  "title": "Picasso, le sage et le fou",
+  "author": "Du Bouchet Paule",
+  "isbn": "2070530167",
+  "source": "BnF SRU col2bib 34246964 (cb34901943g)",
+  "bnfOtherTitles": [
+   "1930-1940",
+   "Picasso"
+  ]
+ },
+ {
+  "no": "5",
+  "title": "À la conquête du Mont-Blanc",
+  "author": "Ballu Yves",
+  "isbn": "2070530175",
+  "source": "BnF SRU col2bib 34246964 (cb36623298g)",
+  "bnfOtherTitles": [
+   "1940-1950"
+  ]
+ },
+ {
+  "no": "6",
+  "title": "La Longue marche vers la Chine moderne",
+  "author": "Hudelot Claude",
+  "isbn": "2070530140",
+  "source": "BnF SRU col2bib 34246964 (cb349019842)",
+  "bnfOtherTitles": [
+   "1950-1960"
+  ],
+  "otherIsbns": [
+   "207030423X"
+  ]
+ },
+ {
+  "no": "7",
+  "title": "Goya d'or et de sang",
+  "author": "Baticle Jeannine",
+  "isbn": "207053023X",
+  "source": "BnF SRU col2bib 34246964 (cb349047998)",
+  "bnfOtherTitles": [
+   "1960-1970"
+  ]
+ },
+ {
+  "no": "8",
+  "title": "Blancs et Bleus dans la Vendée déchirée",
+  "author": "Martin Jean-Clément",
+  "isbn": "2070530221",
+  "source": "BnF SRU col2bib 34246964 (cb34904872h, cb37224282s, cb414180473)",
+  "bnfOtherTitles": [
+   "1970-1980"
+  ],
+  "otherIsbns": [
+   "2070762068",
+   "9782070379743"
+  ]
+ },
+ {
+  "no": "9",
+  "title": "Verdi, la musique et le drame",
+  "author": "Duault Alain",
+  "isbn": "2070530159",
+  "source": "BnF SRU col2bib 34246964 (cb349019513)",
+  "bnfOtherTitles": [
+   "1980-1990",
+   "Verdi, une passion, un destin"
+  ]
+ },
+ {
+  "no": "10",
+  "title": "Galilée, le messager des étoiles",
+  "author": "Maury Jean-Pierre",
+  "isbn": "2070530191",
+  "source": "BnF SRU col2bib 34246964 (cb349038023, cb40027309h)",
+  "bnfOtherTitles": [
+   "1990-2000"
+  ],
+  "otherIsbns": [
+   "2070317137"
+  ]
+ },
+ {
+  "no": "11",
+  "title": "Esclaves et négriers",
+  "author": "Meyer Jean",
+  "isbn": "2070530183",
+  "source": "BnF SRU col2bib 34246964 (cb34910563z, cb41177832r)",
+  "otherIsbns": [
+   "9782070347896"
+  ]
+ },
+ {
+  "no": "12",
+  "title": "Alexandre Dumas",
+  "author": "Rispail Jean-Luc",
+  "isbn": "2070530213",
+  "source": "BnF SRU col2bib 34246964 (cb34901944t)",
+  "bnfOtherTitles": [
+   "Alexandre Dumas ou les aventures d'un romancier"
+  ]
+ },
+ {
+  "no": "13",
+  "title": "Les Vikings, rois des mers",
+  "author": "Cohat Yves",
+  "isbn": "2070530272",
+  "source": "BnF SRU col2bib 34246964 (cb349645242)"
+ },
+ {
+  "no": "14",
+  "title": "La terre des Peaux-Rouges",
+  "author": "Jacquin Philippe",
+  "isbn": "2070530310",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb34965705k, cb374596168)"
+ },
+ {
+  "no": "15",
+  "title": "Le Grand défi des pôles",
+  "author": "Imbert Bertrand",
+  "isbn": "2070530132",
+  "source": "BnF SRU col2bib 34246964 (cb36630099r, cb409652648)",
+  "otherIsbns": [
+   "9782070763320"
+  ]
+ },
+ {
+  "no": "16",
+  "title": "Pompéi, la cité ensevelie",
+  "author": "Étienne Robert",
+  "isbn": "9782070348732",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb366300287, cb41449308w)"
+ },
+ {
+  "no": "17",
+  "title": "Van Gogh, le soleil en face",
+  "author": "Bonafoux Pascal",
+  "isbn": "2070530396",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb34976864t)"
+ },
+ {
+  "no": "18",
+  "title": "Malraux",
+  "author": "Biet Christian",
+  "isbn": "2070530299",
+  "source": "BnF SRU col2bib 34246964 (cb34951483c)"
+ },
+ {
+  "no": "19",
+  "title": "Les Fossiles",
+  "author": "Gayrard-Baly Yvette",
+  "isbn": "2070530345",
+  "source": "BnF SRU col2bib 34246964 (cb349874436, cb41309205k)",
+  "otherIsbns": [
+   "2070535258"
+  ]
+ },
+ {
+  "no": "20",
+  "title": "Les cités perdues des Mayas",
+  "author": "Baudez Claude-François",
+  "isbn": "2070530353",
+  "source": "BnF SRU col2bib 34246964 (cb36147909g, cb413734592)",
+  "otherIsbns": [
+   "9782070348749"
+  ]
+ },
+ {
+  "no": "21",
+  "title": "Sur des mers inconnues",
+  "author": "Taillemite Étienne",
+  "isbn": "2070530388",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb36632025p)",
+  "bnfOtherTitles": [
+   "Les découvreurs du Pacifique"
+  ]
+ },
+ {
+  "no": "22",
+  "title": "Mahomet, la parole d'Allah",
+  "author": "Delcambre Anne-Marie",
+  "isbn": "2070530302",
+  "source": "BnF SRU col2bib 34246964 (cb35023767d, cb41486987s)",
+  "bnfOtherTitles": [
+   "Mahomet"
+  ],
+  "otherIsbns": [
+   "9782070347872"
+  ]
+ },
+ {
+  "no": "23",
+  "title": "Montaigne",
+  "author": "Pouilloux Jean-Yves",
+  "isbn": "207053037X",
+  "source": "BnF SRU col2bib 34246964 (cb34951472q)"
+ },
+ {
+  "no": "24",
+  "title": "L'Écriture mémoire des hommes",
+  "author": "Jean Georges",
+  "isbn": "207053040X",
+  "source": "BnF SRU col2bib 34246964 (cb349759269, cb41071061h)",
+  "otherIsbns": [
+   "9782070345793"
+  ]
+ },
+ {
+  "no": "25",
+  "title": "Vers l'Ouest",
+  "author": "Jacquin Philippe",
+  "isbn": "2070530361",
+  "source": "BnF SRU col2bib 34246964 (cb34943345t)"
+ },
+ {
+  "no": "26",
+  "title": "Le ciel",
+  "author": "Verdet Jean-Pierre",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34246964 (cb434252195)",
+  "bnfOtherTitles": [
+   "Le Ciel, ordre et désordres",
+   "Le ciel, ordre et désordre"
+  ]
+ },
+ {
+  "no": "27",
+  "title": "De la Grèce à l'Orient, Alexandre le Grand",
+  "author": "Briant Pierre",
+  "isbn": "2070530418",
+  "source": "BnF SRU col2bib 34246964 (cb349898297)",
+  "bnfOtherTitles": [
+   "Alexandre le Grand"
+  ]
+ },
+ {
+  "no": "28",
+  "title": "Entre ciel et mer, le Mont Saint-Michel",
+  "author": "Brighelli Jean-Paul",
+  "isbn": "2070530426",
+  "source": "BnF SRU col2bib 34246964 (cb34986445n, cb37223534h, cb42501609m)",
+  "otherIsbns": [
+   "2070762076",
+   "9782070357413"
+  ]
+ },
+ {
+  "no": "29",
+  "title": "Brésil, épopée métisse",
+  "author": "Carelli Mario",
+  "isbn": "2070530469",
+  "source": "BnF SRU col2bib 34246964 (cb36626564q, cb37459542j)"
+ },
+ {
+  "no": "30",
+  "title": "Gloire et misère des galères",
+  "author": "Zysberg André",
+  "isbn": "2070530337",
+  "source": "BnF SRU col2bib 34246964 (cb36626566d)"
+ },
+ {
+  "no": "31",
+  "title": "L'Homme réparé",
+  "author": "Avan Louis",
+  "isbn": "2070530485",
+  "source": "BnF SRU col2bib 34246964 (cb34940386p)"
+ },
+ {
+  "no": "32",
+  "title": "Le Sang et les hommes",
+  "author": "Binet Jacques-Louis",
+  "isbn": "2070530477",
+  "source": "BnF SRU col2bib 34246964 (cb34941778d, cb37717706f)",
+  "otherIsbns": [
+   "2070761568"
+  ]
+ },
+ {
+  "no": "33",
+  "title": "Le Destin brisé de l'empire aztèque",
+  "author": "Gruzinski Serge",
+  "isbn": "2070530507",
+  "source": "BnF SRU col2bib 34246964 (cb366285913, cb42334889n)",
+  "otherIsbns": [
+   "9782070348763"
+  ]
+ },
+ {
+  "no": "34",
+  "title": "La Fièvre de l'or",
+  "author": "Le Bris Michel",
+  "isbn": "2070530493",
+  "skip": "back cover (blurb), not the front (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb34950446x, cb35619082n)"
+ },
+ {
+  "no": "35",
+  "title": "Cinématographe, invention du siècle",
+  "author": "Toulet Emmanuelle",
+  "isbn": "207053054X",
+  "source": "BnF SRU col2bib 34246964 (cb34950437z)"
+ },
+ {
+  "no": "36",
+  "title": "Degas, \"Je voudrais être illustre et inconnu\"",
+  "author": "Loyrette Henri",
+  "isbn": "2070530523",
+  "source": "BnF SRU col2bib 34246964 (cb349504416)",
+  "bnfOtherTitles": [
+   "Degas"
+  ]
+ },
+ {
+  "no": "37",
+  "title": "Les Incas, peuple du Soleil",
+  "author": "Bernand Carmen",
+  "isbn": "2070530604",
+  "source": "BnF SRU col2bib 34246964 (cb34992606j)",
+  "bnfOtherTitles": [
+   "Les Incas"
+  ]
+ },
+ {
+  "no": "38",
+  "title": "Des Dieux regardent les étoiles",
+  "author": "Orliac Catherine",
+  "isbn": "2070530639",
+  "source": "BnF SRU col2bib 34246964 (cb366325132)",
+  "bnfOtherTitles": [
+   "L'île de Pâques"
+  ]
+ },
+ {
+  "no": "39",
+  "title": "Richard Wagner, l'opéra de la fin du monde",
+  "author": "Godefroid Philippe",
+  "isbn": "2070530515",
+  "source": "BnF SRU col2bib 34246964 (cb34992564f)"
+ },
+ {
+  "no": "40",
+  "title": "L'Amazone, un géant blessé",
+  "author": "Gheerbrant Alain",
+  "isbn": "2070530612",
+  "source": "BnF SRU col2bib 34246964 (cb34992616v, cb374595416, cb40000178p)",
+  "otherIsbns": [
+   "2070765237"
+  ]
+ },
+ {
+  "no": "41",
+  "title": "Mozart, aimé des dieux",
+  "author": "Parouty Michel",
+  "isbn": "2070530620",
+  "source": "BnF SRU col2bib 34246964 (cb349925602, cb401012562)",
+  "otherIsbns": [
+   "2070327590"
+  ]
+ },
+ {
+  "no": "42",
+  "title": "À vos plumes, citoyens !",
+  "author": "Gengembre Gérard",
+  "isbn": "2070530574",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb34992556t)"
+ },
+ {
+  "no": "43",
+  "title": "L'Histoire vraie des mutins de la \"Bounty\"",
+  "author": "Kirchner Yves",
+  "isbn": "2070530647",
+  "source": "BnF SRU col2bib 34246964 (cb34992628v)"
+ },
+ {
+  "no": "44",
+  "title": "Rodin",
+  "author": "Pinet Hélène",
+  "isbn": "2070530655",
+  "source": "BnF SRU col2bib 34246964 (cb34992631r, cb421045279)",
+  "otherIsbns": [
+   "9782070348770"
+  ]
+ },
+ {
+  "no": "45",
+  "title": "Sous le pavillon noir",
+  "author": "Jacquin Philippe",
+  "isbn": "2070530663",
+  "skip": "white sub-series jacket (Découvertes Gallimard Aventures), not the series design (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb349926652, cb377137848)",
+  "otherIsbns": [
+   "2070763617"
+  ]
+ },
+ {
+  "no": "46",
+  "title": "David, l'art et le politique",
+  "author": "Michel Régis",
+  "isbn": "207053068X",
+  "source": "BnF SRU col2bib 34246964 (cb34992661p)"
+ },
+ {
+  "no": "47",
+  "title": "Les architectes de la liberté",
+  "author": "Jacques Annie",
+  "isbn": "2070530671",
+  "source": "BnF SRU col2bib 34246964 (cb349926203)"
+ },
+ {
+  "no": "48",
+  "title": "La Révolution des savants",
+  "author": "Guedj Denis",
+  "isbn": "2070530698",
+  "source": "BnF SRU col2bib 34246964 (cb349926114, cb37374668j)"
+ },
+ {
+  "no": "49",
+  "title": "Gauguin, \"Ce malgré moi de sauvage\"",
+  "author": "Cachin Françoise",
+  "isbn": "2070530701",
+  "source": "BnF SRU col2bib 34246964 (cb35000041n)",
+  "bnfOtherTitles": [
+   "Gauguin"
+  ]
+ },
+ {
+  "no": "50",
+  "title": "Gandhi",
+  "author": "Clément Catherine",
+  "isbn": "207053071X",
+  "source": "BnF SRU col2bib 34246964 (cb354642026, cb41194659x)",
+  "otherIsbns": [
+   "9782070355938"
+  ]
+ },
+ {
+  "no": "51",
+  "title": "Hector Berlioz",
+  "author": "Wasselin Christian",
+  "isbn": "2070530728",
+  "source": "BnF SRU col2bib 34246964 (cb37061895j)",
+  "bnfOtherTitles": [
+   "Berlioz"
+  ]
+ },
+ {
+  "no": "52",
+  "title": "Comment la terre devint ronde",
+  "author": "Maury Jean-Pierre",
+  "isbn": "2070530744",
+  "source": "BnF SRU col2bib 34246964 (cb35464201v, cb40027452x)",
+  "otherIsbns": [
+   "2070318915"
+  ]
+ },
+ {
+  "no": "53",
+  "title": "Marco Polo et la route de la soie",
+  "author": "Drège Jean-Pierre",
+  "isbn": "2070530760",
+  "source": "BnF SRU col2bib 34246964 (cb350285521)"
+ },
+ {
+  "no": "54",
+  "title": "Villa, Zapata et le Mexique en feu",
+  "author": "Oudin Bernard",
+  "isbn": "2070530825",
+  "source": "BnF SRU col2bib 34246964 (cb35028617s)"
+ },
+ {
+  "no": "55",
+  "title": "Cézanne",
+  "author": "Hoog Michel",
+  "isbn": "2070335631",
+  "source": "BnF SRU col2bib 34246964 (cb40115783h, cb42564366k)",
+  "bnfOtherTitles": [
+   "Cézanne, puissant et solitaire"
+  ],
+  "otherIsbns": [
+   "2711851745",
+   "9782070444588",
+   "9782711859795"
+  ]
+ },
+ {
+  "no": "56",
+  "title": "À la recherche de la Rome antique",
+  "author": "Moatti Claudia",
+  "isbn": "2070530736",
+  "source": "BnF SRU col2bib 34246964 (cb36636194r)"
+ },
+ {
+  "no": "57",
+  "title": "Les Sorcières fiancées de Satan",
+  "author": "Sallmann Jean-Michel",
+  "isbn": "2070530779",
+  "source": "BnF SRU col2bib 34246964 (cb35028658c)"
+ },
+ {
+  "no": "58",
+  "title": "Les Miroirs du soleil",
+  "author": "Biet Christian",
+  "isbn": "2070530566",
+  "source": "BnF SRU col2bib 34246964 (cb35028700b, cb377568603)",
+  "otherIsbns": [
+   "2070535290"
+  ]
+ },
+ {
+  "no": "59",
+  "title": "Le Triomphe des arcs",
+  "author": "Dupavillon Christian",
+  "isbn": "2070530817",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35031472w)"
+ },
+ {
+  "no": "60",
+  "title": "Mémoires du Louvre",
+  "author": "Bresc-Bautier Geneviève",
+  "isbn": "2070530787",
+  "source": "BnF SRU col2bib 34246964 (cb35070969z)",
+  "otherIsbns": [
+   "9782070359806"
+  ]
+ },
+ {
+  "no": "61",
+  "title": "Versailles",
+  "author": "Constans Claire",
+  "isbn": "2070530752",
+  "source": "BnF SRU col2bib 34246964 (cb35031294n)"
+ },
+ {
+  "no": "62",
+  "title": "La tour de Monsieur Eiffel",
+  "author": "Lemoine Bertrand",
+  "isbn": "2070530833",
+  "source": "BnF SRU col2bib 34246964 (cb351007485)"
+ },
+ {
+  "no": "63",
+  "title": "Quand les Gaulois étaient romains",
+  "author": "Beck Françoise",
+  "isbn": "2070530949",
+  "source": "BnF SRU col2bib 34246964 (cb35072165v)"
+ },
+ {
+  "no": "64",
+  "title": "Angkor",
+  "author": "Dagens Bruno",
+  "isbn": "2070530914",
+  "source": "BnF SRU col2bib 34246964 (cb35070963w)"
+ },
+ {
+  "no": "65",
+  "title": "Voltaire",
+  "author": "Goldzink Jean",
+  "isbn": "2070530795",
+  "source": "BnF SRU col2bib 34246964 (cb35072156w, cb37465733c)"
+ },
+ {
+  "no": "66",
+  "title": "Jean-Jacques Rousseau",
+  "author": "Howlett Marc-Vincent",
+  "isbn": "207053085X",
+  "source": "BnF SRU col2bib 34246964 (cb350709391, cb42703952d)",
+  "bnfOtherTitles": [
+   "L'homme qui croyait en l'homme Jean-Jacques Rousseau"
+  ],
+  "otherIsbns": [
+   "9782070444595"
+  ]
+ },
+ {
+  "no": "67",
+  "title": "Langage de signes",
+  "author": "Jean Georges",
+  "isbn": "2070530841",
+  "source": "BnF SRU col2bib 34246964 (cb35072141v)"
+ },
+ {
+  "no": "68",
+  "title": "Carpeaux",
+  "author": "Margerie Laure de",
+  "isbn": "2070530922",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35070941k)"
+ },
+ {
+  "no": "69",
+  "title": "Le Monde perdu des dinosaures",
+  "author": "Michard Jean-Guy",
+  "isbn": "2070530876",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35070960v)"
+ },
+ {
+  "no": "70",
+  "title": "Frédéric Chopin, \"Chapeau bas, messieurs, un génie\"",
+  "author": "Pazdro Michel",
+  "isbn": "2070530809",
+  "source": "BnF SRU col2bib 34246964 (cb35070935n)",
+  "bnfOtherTitles": [
+   "\"Chapeau bas, messieurs, un génie\""
+  ]
+ },
+ {
+  "no": "71",
+  "title": "Le Dernier exil",
+  "author": "Pierre Michel",
+  "isbn": "2070530892",
+  "source": "BnF SRU col2bib 34246964 (cb36954621c)"
+ },
+ {
+  "no": "72",
+  "title": "L'Histoire à la une",
+  "author": "Wolgensinger Jacques",
+  "isbn": "2070530868",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb36640074m)",
+  "bnfOtherTitles": [
+   "La grande aventure de la presse"
+  ]
+ },
+ {
+  "no": "73",
+  "title": "Velázquez",
+  "author": "Baticle Jeannine",
+  "isbn": "2070530930",
+  "source": "BnF SRU col2bib 34246964 (cb35072152h, cb44314508v)",
+  "otherIsbns": [
+   "9782070464579"
+  ]
+ },
+ {
+  "no": "74",
+  "title": "La Plume et l'épée",
+  "author": "Fragonard Marie-Madeleine",
+  "isbn": "2070530558",
+  "skip": "photo of the book at an angle, not a scan (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35072147x)"
+ },
+ {
+  "no": "75",
+  "title": "Les Paquebots ambassadeurs des mers",
+  "author": "Marin Pierre-Henri",
+  "isbn": "2070530957",
+  "skip": "white sub-series jacket (Techniques), not the series design (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35075403v)"
+ },
+ {
+  "no": "76",
+  "title": "Rembrandt, le clair, l'obscur",
+  "author": "Bonafoux Pascal",
+  "isbn": "2070530973",
+  "source": "BnF SRU col2bib 34246964 (cb350753894)",
+  "bnfOtherTitles": [
+   "Rembrandt"
+  ]
+ },
+ {
+  "no": "77",
+  "title": "Les temples de l'opéra",
+  "author": "Beauvert Thierry",
+  "isbn": "2070531023",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35075385r)"
+ },
+ {
+  "no": "78",
+  "title": "Dans la nuit des abysses au fond des océans",
+  "author": "Reyss Daniel",
+  "isbn": "2070531007",
+  "source": "BnF SRU col2bib 34246964 (cb35094234r)",
+  "bnfOtherTitles": [
+   "Dans la nuit des abysses"
+  ]
+ },
+ {
+  "no": "79",
+  "title": "Sigmund Freud, \"un tragique à l'âge de la science\"",
+  "author": "Babin Pierre",
+  "isbn": "2070530981",
+  "source": "BnF SRU col2bib 34246964 (cb350942442)",
+  "otherIsbns": [
+   "9782070349166"
+  ]
+ },
+ {
+  "no": "80",
+  "title": "Les Dialogues du prince et du poète",
+  "author": "Fragonard Marie-Madeleine",
+  "isbn": "207053099X",
+  "source": "BnF SRU col2bib 34246964 (cb35113809g)"
+ },
+ {
+  "no": "81",
+  "title": "La Saga du tour de France",
+  "author": "Laget Serge",
+  "isbn": "2070531015",
+  "skip": "'Livre d'occasion' sticker on the scan (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35094254c, cb390513221)",
+  "otherIsbns": [
+   "2070304353"
+  ]
+ },
+ {
+  "no": "82",
+  "title": "Les Gladiateurs du nouveau monde",
+  "author": "Heimermann Benoît",
+  "isbn": "207053104X",
+  "source": "BnF SRU col2bib 34246964 (cb36642069h)"
+ },
+ {
+  "no": "83",
+  "title": "La Balle au pied",
+  "author": "Wahl Alfred",
+  "isbn": "2070531058",
+  "source": "BnF SRU col2bib 34246964 (cb35094249s, cb38832129z)",
+  "otherIsbns": [
+   "2070765202"
+  ]
+ },
+ {
+  "no": "84",
+  "title": "La Grèce antique",
+  "author": "Étienne Roland",
+  "isbn": "2070530434",
+  "source": "BnF SRU col2bib 34246964 (cb366420743)"
+ },
+ {
+  "no": "85",
+  "title": "Nouvelle-Calédonie",
+  "author": "Bensa Alban",
+  "isbn": "2070523888",
+  "source": "BnF SRU col2bib 34246964 (cb351137034, cb37006640p)",
+  "otherIsbns": [
+   "2070530884"
+  ]
+ },
+ {
+  "no": "86",
+  "title": "La Naissance de la Grèce",
+  "author": "Lévêque Pierre",
+  "isbn": "2070531104",
+  "source": "BnF SRU col2bib 34246964 (cb35114295g)"
+ },
+ {
+  "no": "87",
+  "title": "Ni empereur ni roi, chef d'orchestre",
+  "author": "Liébert Georges",
+  "isbn": "2070531147",
+  "source": "BnF SRU col2bib 34246964 (cb35107164f)"
+ },
+ {
+  "no": "88",
+  "title": "La Bibliothèque nationale, mémoire de l'avenir",
+  "author": "Blasselle Bruno",
+  "isbn": "2070531112",
+  "source": "BnF SRU col2bib 34246964 (cb35208740h, cb37436960f)",
+  "bnfOtherTitles": [
+   "La Bibliothèque nationale de France",
+   "La Bibliothèque nationale de France, mémoire de l'avenir"
+  ]
+ },
+ {
+  "no": "89",
+  "title": "Les Étrusques",
+  "author": "Thuillier Jean-Paul",
+  "isbn": "2070530264",
+  "source": "BnF SRU col2bib 34246964 (cb351141956, cb41487124x)",
+  "otherIsbns": [
+   "9782070395729"
+  ]
+ },
+ {
+  "no": "90",
+  "title": "Ils inventèrent le Nouveau Monde",
+  "author": "Louis Jeanne Henriette",
+  "isbn": "2070530965",
+  "source": "BnF SRU col2bib 34246964 (cb35114407x)"
+ },
+ {
+  "no": "91",
+  "title": "Newton et la mécanique céleste",
+  "author": "Maury Jean-Pierre",
+  "isbn": "2070531163",
+  "source": "BnF SRU col2bib 34246964 (cb36646802d, cb40027303f)",
+  "otherIsbns": [
+   "2070317145"
+  ]
+ },
+ {
+  "no": "92",
+  "title": "La Grenouille dans tous ses états",
+  "author": "Wasserman Françoise",
+  "isbn": "2070531090",
+  "source": "BnF SRU col2bib 34246964 (cb35299577d)"
+ },
+ {
+  "no": "93",
+  "title": "Les Éléphants, piliers du monde",
+  "author": "Delort Robert",
+  "isbn": "2070531066",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35299591z)"
+ },
+ {
+  "no": "94",
+  "title": "Le Faucon, favori des princes",
+  "author": "Beck Corinne",
+  "isbn": "2070531082",
+  "source": "BnF SRU col2bib 34246964 (cb352996065)"
+ },
+ {
+  "no": "95",
+  "title": "Le Rêve cistercien",
+  "author": "Pressouyre Léon",
+  "isbn": "2070531244",
+  "source": "BnF SRU col2bib 34246964 (cb35208948t, cb425175199)",
+  "otherIsbns": [
+   "9782070531240",
+   "9782070317745"
+  ]
+ },
+ {
+  "no": "96",
+  "title": "Champollion",
+  "author": "Dewachter Michel",
+  "isbn": "2070531031",
+  "skip": "an inside page, not the cover (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb354163080)"
+ },
+ {
+  "no": "97",
+  "title": "Ho Chi Minh",
+  "author": "Hémery Daniel",
+  "isbn": "2070530531",
+  "source": "BnF SRU col2bib 34246964 (cb35299574c)"
+ },
+ {
+  "no": "98",
+  "title": "Au Néolithique, les premiers paysans du monde",
+  "author": "Louboutin Catherine",
+  "isbn": "2070531120",
+  "source": "BnF SRU col2bib 34246964 (cb37170197f)"
+ },
+ {
+  "no": "99",
+  "title": "Quand le Japon s'ouvrit au monde",
+  "author": "Macouin Francis",
+  "isbn": "2070760847",
+  "source": "BnF SRU col2bib 34246964 (cb352995820, cb372170984)",
+  "otherIsbns": [
+   "207053118X",
+   "2711842053"
+  ]
+ },
+ {
+  "no": "100",
+  "title": "Le Roman vrai de l'\"Encyclopédie\"",
+  "author": "Moureau François",
+  "isbn": "2070531139",
+  "source": "BnF SRU col2bib 34246964 (cb36204966x, cb376516020)",
+  "otherIsbns": [
+   "2070762734"
+  ]
+ },
+ {
+  "no": "101",
+  "title": "De Gaulle",
+  "author": "Rudelle Odile",
+  "isbn": "2070530582",
+  "source": "BnF SRU col2bib 34246964 (cb35209013x, cb422335553)",
+  "otherIsbns": [
+   "9782070438785"
+  ]
+ },
+ {
+  "no": "102",
+  "title": "Rimbaud l'heure de la fuite",
+  "author": "Borer Alain",
+  "isbn": "2070531252",
+  "source": "BnF SRU col2bib 34246964 (cb35389439j)"
+ },
+ {
+  "no": "103",
+  "title": "La Gaule retrouvée",
+  "author": "Pinon Pierre",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34246964 (cb36650028n)"
+ },
+ {
+  "no": "104",
+  "title": "Tout l'or de Byzance",
+  "author": "Kaplan Michel",
+  "isbn": "2070531198",
+  "source": "BnF SRU col2bib 34246964 (cb35389430f)"
+ },
+ {
+  "no": "105",
+  "title": "Les neuf vies du chat",
+  "author": "Bobis Laurence",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34246964 (cb35389422t)"
+ },
+ {
+  "no": "106",
+  "title": "Beethoven",
+  "author": "Autexier Philippe Alexandre",
+  "isbn": "9782070394234",
+  "skip": "library barcode sticker on the cover; the BnF ISBN at Open Library also sits on an unrelated 1946 edition (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35455640w, cb42158567j)",
+  "otherIsbns": [
+   "207053121X"
+  ]
+ },
+ {
+  "no": "107",
+  "title": "En garde",
+  "author": "Lacaze Pierre",
+  "isbn": "2070531201",
+  "source": "BnF SRU col2bib 34246964 (cb36650722h)"
+ },
+ {
+  "no": "108",
+  "title": "Seurat, le rêve de l'art-science",
+  "author": "Cachin Françoise",
+  "isbn": "2070531171",
+  "source": "BnF SRU col2bib 34246964 (cb35455626b)"
+ },
+ {
+  "no": "109",
+  "title": "Les Surréalistes",
+  "author": "Rispail Jean-Luc",
+  "isbn": "2070531406",
+  "source": "BnF SRU col2bib 34246964 (cb35461368p)"
+ },
+ {
+  "no": "110",
+  "title": "\"Pour une plus grande gloire de Dieu\"",
+  "author": "Lécrivain Philippe",
+  "isbn": "2070531287",
+  "skip": "library label on the cover (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb354613273)",
+  "bnfOtherTitles": [
+   "Les missions jésuites"
+  ]
+ },
+ {
+  "no": "111",
+  "title": "Les chemins du sel",
+  "author": "Dunoyer de Segonzac Gilbert",
+  "isbn": "207076382X",
+  "source": "BnF SRU col2bib 34246964 (cb35461335q, cb38846566f)",
+  "otherIsbns": [
+   "2070531317"
+  ]
+ },
+ {
+  "no": "112",
+  "title": "De la paume au tennis",
+  "author": "Bonhomme Guy",
+  "isbn": "2070531341",
+  "source": "BnF SRU col2bib 34246964 (cb35461389n)"
+ },
+ {
+  "no": "113",
+  "title": "Les feux de la terre",
+  "author": "Krafft Maurice",
+  "isbn": "2070429008",
+  "source": "BnF SRU col2bib 34246964 (cb35461390v, cb390515279)",
+  "otherIsbns": [
+   "2070531414"
+  ]
+ },
+ {
+  "no": "114",
+  "title": "L'épopée du jazz",
+  "author": "Bergerot Franck",
+  "isbn": "2070531422",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35453815r)"
+ },
+ {
+  "no": "115",
+  "title": "L'épopée du jazz",
+  "author": "Bergerot Franck",
+  "isbn": "2070531430",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35474988w)"
+ },
+ {
+  "no": "116",
+  "title": "Magnificat",
+  "author": "Du Bouchet Paule",
+  "isbn": "2070531449",
+  "skip": "white sub-series jacket (Musique), not the series design (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35474982t)"
+ },
+ {
+  "no": "117",
+  "title": "Vers les sources du Nil",
+  "author": "Hugon Anne",
+  "isbn": "2070531309",
+  "wallTitle": "L'Afrique des explorateurs. Vers les sources du Nil",
+  "source": "BnF SRU col2bib 34246964 (cb354749568)"
+ },
+ {
+  "no": "118",
+  "title": "Les momies",
+  "author": "Dunand Françoise",
+  "isbn": "2070531678",
+  "source": "BnF SRU col2bib 34246964 (cb35474967x, cb41177888c)",
+  "otherIsbns": [
+   "9782070346509"
+  ]
+ },
+ {
+  "no": "119",
+  "title": "Jules Verne, le rêve du progrès",
+  "author": "Dekiss Jean-Paul",
+  "isbn": "2070531686",
+  "source": "BnF SRU col2bib 34246964 (cb354749417)"
+ },
+ {
+  "no": "120",
+  "title": "Christophe Colomb",
+  "author": "Lequenne Michel",
+  "isbn": "2070314707",
+  "source": "BnF SRU col2bib 34246964 (cb355363851, cb40000066d)",
+  "otherIsbns": [
+   "2070531333"
+  ]
+ },
+ {
+  "no": "121",
+  "title": "Les travailleurs du fer",
+  "author": "Andrieux Jean-Yves",
+  "isbn": "2070531481",
+  "source": "BnF SRU col2bib 34246964 (cb354874931)"
+ },
+ {
+  "no": "122",
+  "title": "La fée électricité",
+  "author": "Beltran Alain",
+  "isbn": "2070531465",
+  "source": "BnF SRU col2bib 34246964 (cb354875939)"
+ },
+ {
+  "no": "123",
+  "title": "Quelle belle invention que la poste !",
+  "author": "Charbon Paul",
+  "isbn": "2070531473",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb354875892)"
+ },
+ {
+  "no": "124",
+  "title": "La peur du loup",
+  "author": "Carbone Geneviève",
+  "isbn": "2070531279",
+  "source": "BnF SRU col2bib 34246964 (cb35487609v)"
+ },
+ {
+  "no": "125",
+  "title": "La cité des abeilles",
+  "author": "Corbara Bruno",
+  "isbn": "2070531074",
+  "source": "BnF SRU col2bib 34246964 (cb35487572b, cb38868356g)",
+  "otherIsbns": [
+   "2070765199"
+  ]
+ },
+ {
+  "no": "126",
+  "title": "Shakespeare, \"Comme il vous plaira\"",
+  "author": "Laroque François",
+  "isbn": "2070531708",
+  "source": "BnF SRU col2bib 34246964 (cb35487569f)"
+ },
+ {
+  "no": "127",
+  "title": "L'hiver de glisse et de glace",
+  "author": "Ballu Yves",
+  "isbn": "2070531724",
+  "source": "BnF SRU col2bib 34246964 (cb35487576q)"
+ },
+ {
+  "no": "128",
+  "title": "Rollermania",
+  "author": "Nieswizski Sam",
+  "isbn": "2070531384",
+  "source": "BnF SRU col2bib 34246964 (cb35487603s)"
+ },
+ {
+  "no": "129",
+  "title": "L'Orient des Croisades",
+  "author": "Tate Georges",
+  "isbn": "2070531767",
+  "source": "BnF SRU col2bib 34246964 (cb366540754, cb374559989, cb37496130j)",
+  "otherIsbns": [
+   "9782070347858"
+  ]
+ },
+ {
+  "no": "130",
+  "title": "Histoires de kourganes",
+  "author": "Schiltz Véronique",
+  "isbn": "2070531740",
+  "skip": "photo of the book at an angle, not a scan (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb366540785)",
+  "bnfOtherTitles": [
+   "La redécouverte de l'or des Scythes"
+  ]
+ },
+ {
+  "no": "131",
+  "title": "Monet, \"un oeil, mais bon dieu, quel oeil!\"",
+  "author": "Patin Sylvie",
+  "isbn": "2070531546",
+  "skip": "library label on the cover (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35487580z)",
+  "bnfOtherTitles": [
+   "Monet"
+  ]
+ },
+ {
+  "no": "132",
+  "title": "Toulouse-Lautrec, les lumières de la nuit",
+  "author": "Frèches-Thory Claire",
+  "isbn": "2070531783",
+  "source": "BnF SRU col2bib 34246964 (cb35487500g)",
+  "bnfOtherTitles": [
+   "La danse",
+   "Toulouse-Lautrec"
+  ]
+ },
+ {
+  "no": "133",
+  "title": "Jeux olympiques",
+  "author": "Hache-Bissette Françoise",
+  "isbn": "2070531732",
+  "source": "BnF SRU col2bib 34246964 (cb35497178h, cb377066804)",
+  "otherIsbns": [
+   "9782070359196"
+  ]
+ },
+ {
+  "no": "134",
+  "title": "La grande parade du cirque",
+  "author": "Jacob Pascal",
+  "isbn": "2070531570",
+  "source": "BnF SRU col2bib 34246964 (cb35500429r)",
+  "bnfOtherTitles": [
+   "Le cirque"
+  ]
+ },
+ {
+  "no": "135",
+  "title": "Carnaval",
+  "author": "Fabre Daniel",
+  "isbn": "2070531635",
+  "source": "BnF SRU col2bib 34246964 (cb354997899)"
+ },
+ {
+  "no": "136",
+  "title": "Guimard, l'art nouveau",
+  "author": "Thiébaut Philippe",
+  "isbn": "2070531945",
+  "source": "BnF SRU col2bib 34246964 (cb355037028)"
+ },
+ {
+  "no": "137",
+  "title": "Stendhal, l'Italie au coeur",
+  "author": "Goldzink Jean",
+  "isbn": "2070531937",
+  "skip": "an inside page, not the cover (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb355036934)"
+ },
+ {
+  "no": "138",
+  "title": "La perspective en jeu",
+  "author": "Comar Philippe",
+  "isbn": "2070531856",
+  "source": "BnF SRU col2bib 34246964 (cb355038554)"
+ },
+ {
+  "no": "139",
+  "title": "Le crime à l'écran",
+  "author": "Ciment Michel",
+  "isbn": "2070531953",
+  "source": "BnF SRU col2bib 34246964 (cb35510883v)"
+ },
+ {
+  "no": "140",
+  "title": "Hollywood, l'usine à rêves",
+  "author": "Bosséno Christian-Marc",
+  "isbn": "2070531538",
+  "source": "BnF SRU col2bib 34246964 (cb362088569)"
+ },
+ {
+  "no": "141",
+  "title": "L'histoire au cinéma",
+  "author": "Bourget Jean-Loup",
+  "isbn": "207053152X",
+  "source": "BnF SRU col2bib 34246964 (cb355109040)"
+ },
+ {
+  "no": "142",
+  "title": "Barcelone",
+  "author": "Torres Pascal",
+  "isbn": "2070531872",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb366572862)"
+ },
+ {
+  "no": "143",
+  "title": "L'Afrique du Sud",
+  "author": "Coquerel Paul",
+  "isbn": "2070531813",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35514949x, cb42228684z)",
+  "bnfOtherTitles": [
+   "La nouvelle Afrique du Sud"
+  ],
+  "otherIsbns": [
+   "9782070438341"
+  ]
+ },
+ {
+  "no": "144",
+  "title": "L'heure de la corrida",
+  "author": "Pelletier Claude",
+  "isbn": "2070531899",
+  "source": "BnF SRU col2bib 34246964 (cb35514937x)"
+ },
+ {
+  "no": "145",
+  "title": "Le beau dans l'utile",
+  "author": "Brunhammer Yvonne",
+  "isbn": "2070531961",
+  "source": "BnF SRU col2bib 34246964 (cb362089228)"
+ },
+ {
+  "no": "146",
+  "title": "Marianne, les visages de la République",
+  "author": "Agulhon Maurice",
+  "isbn": "2070532089",
+  "source": "BnF SRU col2bib 34246964 (cb35533747v)"
+ },
+ {
+  "no": "147",
+  "title": "La France à l'école",
+  "author": "Gaulupeau Yves",
+  "isbn": "2070532151",
+  "source": "BnF SRU col2bib 34246964 (cb35533813t)"
+ },
+ {
+  "no": "148",
+  "title": "Sissi",
+  "author": "Clément Catherine",
+  "isbn": "2070532046",
+  "source": "BnF SRU col2bib 34246964 (cb35533822s)"
+ },
+ {
+  "no": "149",
+  "title": "Rossini, l'opéra de lumière",
+  "author": "Colas Gallet Damien",
+  "isbn": "207053202X",
+  "source": "BnF SRU col2bib 34246964 (cb35533809k)"
+ },
+ {
+  "no": "150",
+  "title": "Balzac, le Napoléon des lettres",
+  "author": "Gengembre Gérard",
+  "isbn": "2070531910",
+  "source": "BnF SRU col2bib 34246964 (cb35533806j)"
+ },
+ {
+  "no": "151",
+  "title": "Le destin de l'univers",
+  "author": "Trinh Xuan Thuan",
+  "isbn": "2070531457",
+  "source": "BnF SRU col2bib 34246964 (cb35533807w, cb413532086)",
+  "otherIsbns": [
+   "9782070348794"
+  ]
+ },
+ {
+  "no": "152",
+  "title": "Le chant de la sirène",
+  "author": "De Donder Vic",
+  "isbn": "2070532070",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35543667d)"
+ },
+ {
+  "no": "153",
+  "title": "Le douanier Rousseau, un naïf dans la jungle",
+  "author": "Plazy Gilles",
+  "isbn": "207053197X",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb355436751)",
+  "bnfOtherTitles": [
+   "Le Douanier Rousseau"
+  ]
+ },
+ {
+  "no": "154",
+  "title": "Géricault, l'invention du réel",
+  "author": "Michel Régis",
+  "isbn": "2070532143",
+  "source": "BnF SRU col2bib 34246964 (cb35543671n)"
+ },
+ {
+  "no": "155",
+  "title": "Lawrence en Arabie",
+  "author": "Laurens Henry",
+  "isbn": "2070531902",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb355436918)"
+ },
+ {
+  "no": "156",
+  "title": "Les années noires",
+  "author": "Rousso Henry",
+  "isbn": "2070532178",
+  "source": "BnF SRU col2bib 34246964 (cb35543662p, cb42501562s)",
+  "otherIsbns": [
+   "9782070399741"
+  ]
+ },
+ {
+  "no": "157",
+  "title": "La guerre de Sécession",
+  "author": "Kaspi André",
+  "isbn": "2070531651",
+  "source": "BnF SRU col2bib 34246964 (cb35543685b)"
+ },
+ {
+  "no": "158",
+  "title": "L'Europe des Celtes",
+  "author": "Eluère Christiane",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34246964 (cb35543681z)"
+ },
+ {
+  "no": "159",
+  "title": "Darius",
+  "author": "Briant Pierre",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34246964 (cb35543692m)"
+ },
+ {
+  "no": "160",
+  "title": "L'âge du rock",
+  "author": "Dister Alain",
+  "isbn": "2070532003",
+  "source": "BnF SRU col2bib 34246964 (cb35550925s)"
+ },
+ {
+  "no": "161",
+  "title": "Sang pour sang",
+  "author": "Marigny Jean",
+  "isbn": "2070532038",
+  "source": "BnF SRU col2bib 34246964 (cb35560314p, cb42215718h)",
+  "otherIsbns": [
+   "9782070438761"
+  ]
+ },
+ {
+  "no": "162",
+  "title": "Autour du billard",
+  "author": "Albouker Robert",
+  "isbn": "2070531805",
+  "source": "BnF SRU col2bib 34246964 (cb355603240)"
+ },
+ {
+  "no": "163",
+  "title": "La loi du ring",
+  "author": "Chemin Michel",
+  "isbn": "2070531376",
+  "source": "BnF SRU col2bib 34246964 (cb35560333z)"
+ },
+ {
+  "no": "164",
+  "title": "Voyous et gentlemen",
+  "author": "Lacouture Jean",
+  "isbn": "2070531392",
+  "source": "BnF SRU col2bib 34246964 (cb355603469)"
+ },
+ {
+  "no": "165",
+  "title": "Matisse, \"Une splendeur inouïe\"",
+  "author": "Girard Xavier",
+  "isbn": "2070532216",
+  "source": "BnF SRU col2bib 34246964 (cb35564103f)",
+  "bnfOtherTitles": [
+   "Matisse"
+  ],
+  "otherIsbns": [
+   "9782072894015"
+  ]
+ },
+ {
+  "no": "166",
+  "title": "La planète Bourse",
+  "author": "Turin Michel",
+  "isbn": "2070532062",
+  "source": "BnF SRU col2bib 34246964 (cb355724030)"
+ },
+ {
+  "no": "167",
+  "title": "Un homme, une voix ?",
+  "author": "Offerlé Michel",
+  "isbn": "2070764060",
+  "source": "BnF SRU col2bib 34246964 (cb35572396j, cb38844686v)",
+  "otherIsbns": [
+   "2070532135"
+  ]
+ },
+ {
+  "no": "168",
+  "title": "La police",
+  "author": "Lebigre Arlette",
+  "isbn": "2070532364",
+  "source": "BnF SRU col2bib 34246964 (cb36664325m)"
+ },
+ {
+  "no": "169",
+  "title": "Titien, \"l'art plus fort que la nature\"",
+  "author": "Rosand David",
+  "isbn": "2070532526",
+  "source": "BnF SRU col2bib 34246964 (cb35572390g)"
+ },
+ {
+  "no": "170",
+  "title": "Jésus",
+  "author": "Bessière Gérard",
+  "isbn": "2070531848",
+  "source": "BnF SRU col2bib 34246964 (cb355723836)"
+ },
+ {
+  "no": "171",
+  "title": "L'heure du grand passage",
+  "author": "Vovelle Michel",
+  "isbn": "2070531619",
+  "source": "BnF SRU col2bib 34246964 (cb355758808)"
+ },
+ {
+  "no": "172",
+  "title": "La légende de Carthage",
+  "author": "Bachaouch Azzedine",
+  "isbn": "2070532127",
+  "source": "BnF SRU col2bib 34246964 (cb36664875j)"
+ },
+ {
+  "no": "173",
+  "title": "Pont-Aven, l'Ecole buissonnière",
+  "author": "Terrasse Antoine",
+  "isbn": "2070532097",
+  "source": "BnF SRU col2bib 34246964 (cb35575882z)"
+ },
+ {
+  "no": "174",
+  "title": "Compostelle",
+  "author": "Barral i Altet Xavier",
+  "isbn": "2070532496",
+  "source": "BnF SRU col2bib 34246964 (cb355796695)"
+ },
+ {
+  "no": "175",
+  "title": "Cnossos",
+  "author": "Farnoux Alexandre",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34246964 (cb35579655g)"
+ },
+ {
+  "no": "176",
+  "title": "Ingmar Bergman, le magicien du nord",
+  "author": "Binh N. T.",
+  "isbn": "2070532186",
+  "source": "BnF SRU col2bib 34246964 (cb35579776q)"
+ },
+ {
+  "no": "177",
+  "title": "Renoir, \"Il faut embellir\"",
+  "author": "Distel Anne",
+  "isbn": "2070532593",
+  "skip": "white Réunion des musées nationaux jacket (Peinture), not the series design (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb356011478)",
+  "bnfOtherTitles": [
+   "Renoir"
+  ]
+ },
+ {
+  "no": "178",
+  "title": "Vuillard, le temps détourné",
+  "author": "Cogeval Guy",
+  "isbn": "2070428834",
+  "source": "BnF SRU col2bib 34246964 (cb35601129b, cb39002369w)",
+  "bnfOtherTitles": [
+   "Vuillard"
+  ],
+  "otherIsbns": [
+   "2070532615"
+  ]
+ },
+ {
+  "no": "179",
+  "title": "Le Corbusier, l'architecture pour émouvoir",
+  "author": "Jenger Jean",
+  "isbn": "2070532356",
+  "source": "BnF SRU col2bib 34246964 (cb35601164v)"
+ },
+ {
+  "no": "180",
+  "title": "Quand les cathédrales étaient peintes",
+  "author": "Erlande-Brandenburg Alain",
+  "isbn": "2070532348",
+  "source": "BnF SRU col2bib 34246964 (cb35601154j, cb414822480)",
+  "otherIsbns": [
+   "9782070347919"
+  ]
+ },
+ {
+  "no": "181",
+  "title": "Rabelais",
+  "author": "Pouilloux Jean-Yves",
+  "isbn": "207053250X",
+  "source": "BnF SRU col2bib 34246964 (cb35601136m)"
+ },
+ {
+  "no": "182",
+  "title": "L'homme et la forêt",
+  "author": "Larrère Raphaël",
+  "isbn": "2070531511",
+  "source": "BnF SRU col2bib 34246964 (cb35601140v)"
+ },
+ {
+  "no": "183",
+  "title": "Cléopâtre",
+  "author": "Flamarion Édith",
+  "isbn": "2070531929",
+  "source": "BnF SRU col2bib 34246964 (cb35601127n)"
+ },
+ {
+  "no": "184",
+  "title": "La mine, dévoreuse d'hommes",
+  "author": "Michel Joël",
+  "isbn": "2070532607",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35608754w)"
+ },
+ {
+  "no": "185",
+  "title": "Les images du corps",
+  "author": "Comar Philippe",
+  "isbn": "2070532534",
+  "source": "BnF SRU col2bib 34246964 (cb35611073r)"
+ },
+ {
+  "no": "186",
+  "title": "Joan Miró, le peintre aux étoiles",
+  "author": "Punyet Miró Joan",
+  "isbn": "2070532259",
+  "source": "BnF SRU col2bib 34246964 (cb35615222c, cb391698352)",
+  "bnfOtherTitles": [
+   "Miró"
+  ],
+  "otherIsbns": [
+   "2070315444"
+  ]
+ },
+ {
+  "no": "187",
+  "title": "L'invention des musées",
+  "author": "Schaer Roland",
+  "isbn": "9782070344505",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35613401g, cb41044894s)"
+ },
+ {
+  "no": "188",
+  "title": "Divines divas",
+  "author": "Segond André",
+  "isbn": "2070765210",
+  "source": "BnF SRU col2bib 34246964 (cb35613398d, cb38893551q)",
+  "otherIsbns": [
+   "2070531821"
+  ]
+ },
+ {
+  "no": "189",
+  "title": "Premiers chrétiens, premiers martyrs",
+  "author": "Beaude Pierre-Marie",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34246964 (cb36669292p)"
+ },
+ {
+  "no": "190",
+  "title": "Les mystères du Vaudou",
+  "author": "Hurbon Laënnec",
+  "isbn": "2070531864",
+  "source": "BnF SRU col2bib 34246964 (cb36210800z)"
+ },
+ {
+  "no": "191",
+  "title": "Il était une fois la Mésopotamie",
+  "author": "Bottéro Jean",
+  "isbn": "2070532542",
+  "source": "BnF SRU col2bib 34246964 (cb36669079x, cb42016326x)",
+  "otherIsbns": [
+   "9782070395705"
+  ]
+ },
+ {
+  "no": "192",
+  "title": "Le téléphone, un monde à portée de voix",
+  "author": "Carré Patrice-Alexandre",
+  "isbn": "207053149X",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35619088q)"
+ },
+ {
+  "no": "193",
+  "title": "Einstein",
+  "author": "Balibar Françoise",
+  "isbn": "2070532208",
+  "source": "BnF SRU col2bib 34246964 (cb356191311)",
+  "otherIsbns": [
+   "9782070347841"
+  ]
+ },
+ {
+  "no": "194",
+  "title": "La sagesse du Bouddha",
+  "author": "Boisselier Jean",
+  "isbn": "2070532623",
+  "source": "BnF SRU col2bib 34246964 (cb35647270b, cb374831627, cb42314864w)",
+  "otherIsbns": [
+   "9782070437504",
+   "9782072839856"
+  ]
+ },
+ {
+  "no": "195",
+  "title": "Le Palais de la Découverte",
+  "author": "Maury Jean-Pierre",
+  "isbn": "2070532585",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34246964 (cb35679938w)"
+ },
+ {
+  "no": "196",
+  "title": "Soliman",
+  "author": "Bittar Thérèse",
+  "isbn": "2070532011",
+  "source": "BnF SRU col2bib 34246964 (cb35679955g)"
+ },
+ {
+  "no": "197",
+  "title": "Charles Quint",
+  "author": "Pérez Joseph",
+  "isbn": "2070532372",
+  "source": "BnF SRU col2bib 34246964 (cb35679965s)"
+ },
+ {
+  "no": "198",
+  "title": "\"J'ai nom Jeanne la Pucelle\"",
+  "author": "Pernoud Régine",
+  "isbn": "2070532674",
+  "source": "BnF SRU col2bib 34246964 (cb35679971q)"
+ },
+ {
+  "no": "199",
+  "title": "Humboldt",
+  "author": "Duviols Jean-Paul",
+  "isbn": "2070531988",
+  "source": "BnF SRU col2bib 34246964 (cb35688205z)"
+ },
+ {
+  "no": "200",
+  "title": "Voyages en utopie",
+  "author": "Jean Georges",
+  "isbn": "2070531554",
+  "source": "BnF SRU col2bib 34246964 (cb36676711q)"
+ }
+]

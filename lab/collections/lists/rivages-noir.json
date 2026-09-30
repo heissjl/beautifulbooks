@@ -1,0 +1,1575 @@
+[
+ {
+  "note": "Rivages/Noir, BnF série cb342436563. BnF SRU (bib.col2bib 34243656, 1,355 records, 1,123 numbered volumes Nr. 1–1153, 132 records without a number, 2026-09-29). Open Library has a cover for 373 of 1,123 numbers: 30–42 per fifty up to Nr. 250, a second dense patch at Nr. 400–499, and 0–8 per fifty after Nr. 500. Chosen stretch Nr. 1–200, the first two hundred in order: 156 with a cover, every cover looked at, 153 on the wall; three skipped because the image is a later printing without the series' white title boxes (Nr. 100, 122, 143). Nr. 174 is a later printing with an Animal Factory film band, but it has the series boxes and is kept. Not every cover has a black ground; the constant is the photo or film still with title and author in white boxes and RIVAGES/NOIR at the foot. Titles and authors from the BnF; build with TITLE_FROM=list.",
+  "no": "1",
+  "title": "Liberté sous condition",
+  "author": "Thompson Jim",
+  "isbn": "2869300050",
+  "source": "BnF SRU col2bib 34243656 (cb349147415)",
+  "bnfOtherTitles": [
+   "Les morsures de l'aube"
+  ]
+ },
+ {
+  "no": "2",
+  "title": "La Fille des collines",
+  "author": "Williams Charles",
+  "isbn": "286930000X",
+  "source": "BnF SRU col2bib 34243656 (cb34914757j)",
+  "bnfOtherTitles": [
+   "La bête contre les murs"
+  ]
+ },
+ {
+  "no": "3",
+  "title": "Gardénia rouge",
+  "author": "Latimer Jonathan",
+  "isbn": "2869300042",
+  "source": "BnF SRU col2bib 34243656 (cb349146605)",
+  "bnfOtherTitles": [
+   "J'étais Dora Suarez",
+   "Les enchanteurs"
+  ]
+ },
+ {
+  "no": "4",
+  "title": "Par qui la mort arrive",
+  "author": "Hansen Joseph",
+  "isbn": "2869300018",
+  "source": "BnF SRU col2bib 34243656 (cb34914634m, cb46725113r)",
+  "bnfOtherTitles": [
+   "Merci pour le chocolat"
+  ],
+  "otherIsbns": [
+   "9782743650834"
+  ]
+ },
+ {
+  "no": "5",
+  "title": "Comme un rat mort",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869300107",
+  "source": "BnF SRU col2bib 34243656 (cb34915518b, cb475959852)",
+  "bnfOtherTitles": [
+   "Les six jours du Condor"
+  ],
+  "otherIsbns": [
+   "9782743664817"
+  ]
+ },
+ {
+  "no": "6",
+  "title": "Là où dansent les morts",
+  "author": "Hillerman Tony",
+  "isbn": "2869300093",
+  "source": "BnF SRU col2bib 34243656 (cb348687232)",
+  "bnfOtherTitles": [
+   "Rouge est ma couleur"
+  ]
+ },
+ {
+  "no": "7",
+  "title": "Thank you, Mister Moto",
+  "author": "Marquand John Phillips",
+  "isbn": "2869300123",
+  "source": "BnF SRU col2bib 34243656 (cb348668873)",
+  "bnfOtherTitles": [
+   "Scarface"
+  ]
+ },
+ {
+  "no": "8",
+  "title": "Bien joué ! Mister Moto",
+  "author": "Marquand John Phillips",
+  "isbn": "2869300131",
+  "source": "BnF SRU col2bib 34243656 (cb34866886r)"
+ },
+ {
+  "no": "9",
+  "title": "La Blonde au coin de la rue",
+  "author": "Goodis David",
+  "isbn": "2869300174",
+  "source": "BnF SRU col2bib 34243656 (cb34877505j, cb45415257s)",
+  "otherIsbns": [
+   "9782743637972"
+  ]
+ },
+ {
+  "no": "10",
+  "title": "Dark place",
+  "author": "Davis Mildred",
+  "isbn": "2869300239",
+  "source": "BnF SRU col2bib 34243656 (cb349707612)"
+ },
+ {
+  "no": "11",
+  "title": "Mort un dimanche de pluie",
+  "author": "Aiken Joan",
+  "isbn": "2869300298",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb34871458d)"
+ },
+ {
+  "no": "12",
+  "title": "Un Nid de crotales",
+  "author": "Thompson Jim",
+  "isbn": "2869300301",
+  "source": "BnF SRU col2bib 34243656 (cb34876453w)"
+ },
+ {
+  "no": "13",
+  "title": "Des Feux qui détruisent",
+  "author": "Whittington Harry",
+  "isbn": "2869300182",
+  "source": "BnF SRU col2bib 34243656 (cb34974245d)"
+ },
+ {
+  "no": "14",
+  "title": "La Corrida des pendus",
+  "author": "Ellin Stanley",
+  "isbn": "2869300387",
+  "source": "BnF SRU col2bib 34243656 (cb348774832)"
+ },
+ {
+  "no": "15",
+  "title": "Manhattan love song",
+  "author": "Irish William",
+  "isbn": "2869300379",
+  "source": "BnF SRU col2bib 34243656 (cb34970843d)"
+ },
+ {
+  "no": "16",
+  "title": "Le Vent sombre",
+  "author": "Hillerman Tony",
+  "isbn": "2869300468",
+  "source": "BnF SRU col2bib 34243656 (cb348805021)"
+ },
+ {
+  "no": "17",
+  "title": "Les Eaux mortes",
+  "author": "Pagan Hugues",
+  "isbn": "2869300476",
+  "source": "BnF SRU col2bib 34243656 (cb34904647r)"
+ },
+ {
+  "no": "18",
+  "title": "Mister Moto est désolé",
+  "author": "Marquand John Phillips",
+  "isbn": "2869300530",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb349036225)"
+ },
+ {
+  "no": "19",
+  "title": "Drôles de frères",
+  "author": "Westlake Donald E.",
+  "isbn": "286930045X",
+  "source": "BnF SRU col2bib 34243656 (cb34904719s)"
+ },
+ {
+  "no": "20",
+  "title": "Noir comme un souvenir",
+  "author": "Latimer Jonathan",
+  "isbn": "2869300573",
+  "source": "BnF SRU col2bib 34243656 (cb34964199v)"
+ },
+ {
+  "no": "21",
+  "title": "Réponse mortelle",
+  "author": "MacDonald John D.",
+  "isbn": "2869300581",
+  "source": "BnF SRU col2bib 34243656 (cb349675792)"
+ },
+ {
+  "no": "22",
+  "title": "Sang mêlé",
+  "author": "Thompson Jim",
+  "isbn": "2869300654",
+  "source": "BnF SRU col2bib 34243656 (cb349111277)"
+ },
+ {
+  "no": "23",
+  "title": "Les Papiers de Tony Veitch",
+  "author": "McIlvanney William",
+  "isbn": "2869300662",
+  "source": "BnF SRU col2bib 34243656 (cb34965429r, cb370823171, cb44359231k)",
+  "otherIsbns": [
+   "9782743632571"
+  ]
+ },
+ {
+  "no": "24",
+  "title": "Laidlaw",
+  "author": "McIlvanney William",
+  "isbn": "2869300670",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb34911036x, cb37082313n, cb44363145r)",
+  "otherIsbns": [
+   "9782743632533"
+  ]
+ },
+ {
+  "no": "25",
+  "title": "Approche des ténèbres",
+  "author": "Ramsay Diana",
+  "isbn": "286930031X",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb34911069w)"
+ },
+ {
+  "no": "26",
+  "title": "Levine",
+  "author": "Westlake Donald E.",
+  "isbn": "2869300743",
+  "source": "BnF SRU col2bib 34243656 (cb34964331s)"
+ },
+ {
+  "no": "27",
+  "title": "Lune sanglante",
+  "author": "Ellroy James",
+  "isbn": "2869300778",
+  "source": "BnF SRU col2bib 34243656 (cb34964147m, cb37215810m, cb45243534r)",
+  "otherIsbns": [
+   "9782869300774"
+  ]
+ },
+ {
+  "no": "28",
+  "title": "Le Diable a des ailes",
+  "author": "Whittington Harry",
+  "isbn": "2869300824",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb34911143g)"
+ },
+ {
+  "no": "29",
+  "title": "Un Temps pour mourir",
+  "author": "MacDonald John D.",
+  "isbn": "2869300794",
+  "source": "BnF SRU col2bib 34243656 (cb349642158)"
+ },
+ {
+  "no": "30",
+  "title": "Sale temps",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869300816",
+  "source": "BnF SRU col2bib 34243656 (cb34967658c)"
+ },
+ {
+  "no": "31",
+  "title": "À cause de la nuit",
+  "author": "Ellroy James",
+  "isbn": "2869300883",
+  "source": "BnF SRU col2bib 34243656 (cb349685001)"
+ },
+ {
+  "no": "32",
+  "title": "Nuit de fureur",
+  "author": "Thompson Jim",
+  "isbn": "2869300891",
+  "source": "BnF SRU col2bib 34243656 (cb34967651z, cb450298615)",
+  "otherIsbns": [
+   "9782743636067"
+  ]
+ },
+ {
+  "no": "33",
+  "title": "L'Autre fils de Dieu",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869301073",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb349710156)"
+ },
+ {
+  "no": "34",
+  "title": "Le Babouin blond",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869301081",
+  "source": "BnF SRU col2bib 34243656 (cb34971016j)"
+ },
+ {
+  "no": "35",
+  "title": "La Voie du fantôme",
+  "author": "Hillerman Tony",
+  "isbn": "2869301014",
+  "source": "BnF SRU col2bib 34243656 (cb34970829v)"
+ },
+ {
+  "no": "36",
+  "title": "Romelle",
+  "author": "Burnett William Riley",
+  "isbn": "2869300956",
+  "source": "BnF SRU col2bib 34243656 (cb34972927x)"
+ },
+ {
+  "no": "37",
+  "title": "Beauté bleue",
+  "author": "Goodis David",
+  "isbn": "286930112X",
+  "source": "BnF SRU col2bib 34243656 (cb34972999s)"
+ },
+ {
+  "no": "38",
+  "title": "Est-ce un meurtre ?",
+  "author": "Ramsay Diana",
+  "isbn": "2869301154",
+  "source": "BnF SRU col2bib 34243656 (cb34973108p)"
+ },
+ {
+  "no": "39",
+  "title": "À deux pas du ciel",
+  "author": "Thompson Jim",
+  "isbn": "2869301162",
+  "source": "BnF SRU col2bib 34243656 (cb34974209j)"
+ },
+ {
+  "no": "40",
+  "title": "La Colline aux suicidés",
+  "author": "Ellroy James",
+  "isbn": "2869301189",
+  "source": "BnF SRU col2bib 34243656 (cb349740675)"
+ },
+ {
+  "no": "41",
+  "title": "La Demoiselle",
+  "author": "Stark Richard",
+  "isbn": "2869301227",
+  "source": "BnF SRU col2bib 34243656 (cb34928636g)"
+ },
+ {
+  "no": "42",
+  "title": "Inspecteur Saito",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869301235",
+  "source": "BnF SRU col2bib 34243656 (cb349289129)"
+ },
+ {
+  "no": "43",
+  "title": "Le Massacre du Maine",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869301308",
+  "source": "BnF SRU col2bib 34243656 (cb34929083k)"
+ },
+ {
+  "no": "44",
+  "title": "Le Petit chien riait",
+  "author": "Hansen Joseph",
+  "isbn": "2869301316",
+  "source": "BnF SRU col2bib 34243656 (cb34929194h)"
+ },
+ {
+  "no": "45",
+  "title": "Un Cadavre dans ses rêves",
+  "author": "MacDonald John D.",
+  "isbn": "2869301324",
+  "source": "BnF SRU col2bib 34243656 (cb34939663t)"
+ },
+ {
+  "no": "46",
+  "title": "La Plage vide",
+  "author": "Corris Peter",
+  "isbn": "2869301472",
+  "source": "BnF SRU col2bib 34243656 (cb349396676)"
+ },
+ {
+  "no": "47",
+  "title": "Rage noire",
+  "author": "Thompson Jim",
+  "isbn": "2869301545",
+  "source": "BnF SRU col2bib 34243656 (cb349454834, cb48679513z)",
+  "otherIsbns": [
+   "9782743668518"
+  ]
+ },
+ {
+  "no": "48",
+  "title": "Hidden Valley",
+  "author": "Pronzini Bill",
+  "isbn": "286930157X",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb34945518z)"
+ },
+ {
+  "no": "49",
+  "title": "Un Pied dans la tombe",
+  "author": "Hansen Joseph",
+  "isbn": "2869301634",
+  "source": "BnF SRU col2bib 34243656 (cb34949148r)"
+ },
+ {
+  "no": "50",
+  "title": "Valse dans les ténèbres",
+  "author": "Irish William",
+  "isbn": "2869301626",
+  "source": "BnF SRU col2bib 34243656 (cb349491462, cb45244457c)",
+  "otherIsbns": [
+   "9782743638771"
+  ]
+ },
+ {
+  "no": "51",
+  "title": "Le Combat pour l'île",
+  "author": "MacDonald John D.",
+  "isbn": "2869301618",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb34949141b)"
+ },
+ {
+  "no": "52",
+  "title": "La Mort viendra, petite",
+  "author": "Thompson Jim",
+  "isbn": "2869301553",
+  "source": "BnF SRU col2bib 34243656 (cb34949138f, cb48679527n)",
+  "otherIsbns": [
+   "9782743668501"
+  ]
+ },
+ {
+  "no": "53",
+  "title": "Un Vautour dans la ville",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869301812",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb34958551q)"
+ },
+ {
+  "no": "54",
+  "title": "Brown's requiem",
+  "author": "Ellroy James",
+  "isbn": "2869301820",
+  "source": "BnF SRU col2bib 34243656 (cb349584894, cb47596055w)",
+  "otherIsbns": [
+   "9782743664183"
+  ]
+ },
+ {
+  "no": "55",
+  "title": "Les Alcooliques",
+  "author": "Thompson Jim",
+  "isbn": "2869301847",
+  "source": "BnF SRU col2bib 34243656 (cb34993828n, cb48691174j)",
+  "otherIsbns": [
+   "9782743668464"
+  ]
+ },
+ {
+  "no": "56",
+  "title": "King Cole",
+  "author": "Burnett William Riley",
+  "isbn": "2869301898",
+  "source": "BnF SRU col2bib 34243656 (cb349938337)"
+ },
+ {
+  "no": "57",
+  "title": "Des Morts dans l'âme",
+  "author": "Corris Peter",
+  "isbn": "2869301863",
+  "source": "BnF SRU col2bib 34243656 (cb34993837m)"
+ },
+ {
+  "no": "58",
+  "title": "Les Arnaqueurs",
+  "author": "Thompson Jim",
+  "isbn": "286930191X",
+  "source": "BnF SRU col2bib 34243656 (cb349938306, cb352996541, cb485137547)",
+  "otherIsbns": [
+   "9782743666873"
+  ]
+ },
+ {
+  "no": "59",
+  "title": "Mort d'un colporteur",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869302002",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb34993840h)"
+ },
+ {
+  "no": "60",
+  "title": "Fin de parcours",
+  "author": "Burnett William Riley",
+  "isbn": "2869302010",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb34997443d)"
+ },
+ {
+  "no": "61",
+  "title": "Femme qui écoute",
+  "author": "Hillerman Tony",
+  "isbn": "2869302045",
+  "source": "BnF SRU col2bib 34243656 (cb349975112)"
+ },
+ {
+  "no": "62",
+  "title": "Meurtre à Greenwich Village",
+  "author": "Friedman Kinky",
+  "isbn": "2869302134",
+  "source": "BnF SRU col2bib 34243656 (cb35000461c)"
+ },
+ {
+  "no": "63",
+  "title": "Vaurien",
+  "author": "Thompson Jim",
+  "isbn": "2869302207",
+  "source": "BnF SRU col2bib 34243656 (cb34997456r)"
+ },
+ {
+  "no": "64",
+  "title": "Cauchemar dans la rue",
+  "author": "Cook Robin",
+  "isbn": "2869302215",
+  "source": "BnF SRU col2bib 34243656 (cb349975023)"
+ },
+ {
+  "no": "65",
+  "title": "Chair blanche",
+  "author": "Corris Peter",
+  "isbn": "2869302126",
+  "source": "BnF SRU col2bib 34243656 (cb35002415p)"
+ },
+ {
+  "no": "66",
+  "title": "Rue Barbare",
+  "author": "Goodis David",
+  "isbn": "2869302223",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb350027354)"
+ },
+ {
+  "no": "67",
+  "title": "Retour à la vie",
+  "author": "Goodis David",
+  "isbn": "2869302231",
+  "source": "BnF SRU col2bib 34243656 (cb35002478k)"
+ },
+ {
+  "no": "68",
+  "title": "Port Tropique",
+  "author": "Gifford Barry",
+  "isbn": "2869302193",
+  "source": "BnF SRU col2bib 34243656 (cb350096764)"
+ },
+ {
+  "no": "69",
+  "title": "Le Chat du sergent",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869302312",
+  "source": "BnF SRU col2bib 34243656 (cb35015896j)"
+ },
+ {
+  "no": "70",
+  "title": "Obédience",
+  "author": "Hansen Joseph",
+  "isbn": "286930241X",
+  "source": "BnF SRU col2bib 34243656 (cb35019126d)"
+ },
+ {
+  "no": "71",
+  "title": "Le Clown blanc",
+  "author": "Simon Roger Lichtenberg",
+  "isbn": "2869302428",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb350230455)"
+ },
+ {
+  "no": "72",
+  "title": "Attractions meurtres",
+  "author": "Alter Robert Edmund",
+  "isbn": "2869302541",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35023020t)"
+ },
+ {
+  "no": "73",
+  "title": "Go home stranger",
+  "author": "Williams Charles",
+  "isbn": "2869302584",
+  "source": "BnF SRU col2bib 34243656 (cb350247293)"
+ },
+ {
+  "no": "74",
+  "title": "L'Héritage de la haine",
+  "author": "MacDonald John D.",
+  "isbn": "2869301928",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35023642s)"
+ },
+ {
+  "no": "75",
+  "title": "Obsession",
+  "author": "Goodis David",
+  "isbn": "2869302657",
+  "source": "BnF SRU col2bib 34243656 (cb35037377s)"
+ },
+ {
+  "no": "76",
+  "title": "Le Noyé d'Arena Blanca",
+  "author": "Hansen Joseph",
+  "isbn": "2869302649",
+  "source": "BnF SRU col2bib 34243656 (cb35039417p)"
+ },
+ {
+  "no": "77",
+  "title": "Une Combine en or",
+  "author": "Thompson Jim",
+  "isbn": "2869302835",
+  "source": "BnF SRU col2bib 34243656 (cb35051125z)"
+ },
+ {
+  "no": "78",
+  "title": "La Nuit hurle",
+  "author": "Pronzini Bill",
+  "isbn": "2869302797",
+  "source": "BnF SRU col2bib 34243656 (cb350532084)"
+ },
+ {
+  "no": "79",
+  "title": "Pente douce",
+  "author": "Hansen Joseph",
+  "isbn": "2869302762",
+  "source": "BnF SRU col2bib 34243656 (cb350532142)"
+ },
+ {
+  "no": "80",
+  "title": "Le Garçon merveilleux",
+  "author": "Corris Peter",
+  "isbn": "2869302908",
+  "source": "BnF SRU col2bib 34243656 (cb350533359)"
+ },
+ {
+  "no": "81",
+  "title": "Cash-cash millions",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869302967",
+  "source": "BnF SRU col2bib 34243656 (cb35066828b)"
+ },
+ {
+  "no": "82",
+  "title": "Et la mer profonde et bleue",
+  "author": "Williams Charles",
+  "isbn": "2869302932",
+  "source": "BnF SRU col2bib 34243656 (cb350669696)"
+ },
+ {
+  "no": "83",
+  "title": "Le Texas par la queue",
+  "author": "Thompson Jim",
+  "isbn": "2869303092",
+  "source": "BnF SRU col2bib 34243656 (cb350669754)"
+ },
+ {
+  "no": "84",
+  "title": "Les Damnés ne meurent jamais",
+  "author": "Nisbet Jim",
+  "isbn": "2869303106",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb350708430)"
+ },
+ {
+  "no": "85",
+  "title": "Sylvia",
+  "author": "Fast Howard",
+  "isbn": "286930322X",
+  "source": "BnF SRU col2bib 34243656 (cb350704478, cb37465054d)"
+ },
+ {
+  "no": "86",
+  "title": "Une Fille facile",
+  "author": "Willeford Charles",
+  "isbn": "2869303211",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35071210m)"
+ },
+ {
+  "no": "87",
+  "title": "Rira bien, Mister Moto",
+  "author": "Marquand John Phillips",
+  "isbn": "2869303289",
+  "source": "BnF SRU col2bib 34243656 (cb350740621)"
+ },
+ {
+  "no": "88",
+  "title": "Qu'on lui jette la première pierre",
+  "author": "Himes Chester",
+  "isbn": "2869303394",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb350738442, cb374754254)"
+ },
+ {
+  "no": "89",
+  "title": "La Victime expiatoire",
+  "author": "Hitchens Dolores",
+  "isbn": "2869303408",
+  "source": "BnF SRU col2bib 34243656 (cb350738620)"
+ },
+ {
+  "no": "90",
+  "title": "Big man",
+  "author": "McIlvanney William",
+  "isbn": "2869303475",
+  "source": "BnF SRU col2bib 34243656 (cb35465474v)"
+ },
+ {
+  "no": "91",
+  "title": "Le Baiser de feu",
+  "author": "Togawa Masako",
+  "isbn": "2869303491",
+  "source": "BnF SRU col2bib 34243656 (cb35079757k)"
+ },
+ {
+  "no": "92",
+  "title": "Putes",
+  "author": "Crumley James",
+  "isbn": "2869303572",
+  "source": "BnF SRU col2bib 34243656 (cb35084742j)"
+ },
+ {
+  "no": "93",
+  "title": "Pendez-moi haut et court",
+  "author": "Homes Geoffrey",
+  "isbn": "2869303653",
+  "source": "BnF SRU col2bib 34243656 (cb35089321p)"
+ },
+ {
+  "no": "94",
+  "title": "La Rue de la femme qui pleure",
+  "author": "Homes Geoffrey",
+  "isbn": "2869303661",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb350893461)"
+ },
+ {
+  "no": "95",
+  "title": "Une affaire de sorciers",
+  "author": "Chesbro George C.",
+  "isbn": "2869303629",
+  "source": "BnF SRU col2bib 34243656 (cb354653481, cb450575995, cb485387018)",
+  "otherIsbns": [
+   "9782743636456",
+   "9782743666378"
+  ]
+ },
+ {
+  "no": "96",
+  "title": "Porteurs-de-peau",
+  "author": "Hillerman Tony",
+  "isbn": "2869303955",
+  "source": "BnF SRU col2bib 34243656 (cb35100133g)"
+ },
+ {
+  "no": "97",
+  "title": "Clandestin",
+  "author": "Ellroy James",
+  "isbn": "2869303742",
+  "source": "BnF SRU col2bib 34243656 (cb35089283z, cb37218195m, cb475713809)",
+  "otherIsbns": [
+   "9782743664084"
+  ]
+ },
+ {
+  "no": "98",
+  "title": "La Voie de l'ennemi",
+  "author": "Hillerman Tony",
+  "isbn": "2869303971",
+  "source": "BnF SRU col2bib 34243656 (cb35098171n)"
+ },
+ {
+  "no": "99",
+  "title": "Hérésie",
+  "author": "Willeford Charles",
+  "isbn": "2869304013",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35133634j)"
+ },
+ {
+  "no": "100",
+  "title": "Le Dahlia noir",
+  "author": "Ellroy James",
+  "isbn": "2743615877",
+  "skip": "later printing (2006) with large Ellroy lettering, not the series' white title boxes (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35098174p, cb40931428c)",
+  "otherIsbns": [
+   "2869303912"
+  ]
+ },
+ {
+  "no": "101",
+  "title": "Le chasseur de papillons",
+  "author": "Wetering Janwillem van de",
+  "isbn": "2869304099",
+  "source": "BnF SRU col2bib 34243656 (cb37170156v)"
+ },
+ {
+  "no": "102",
+  "title": "Héroïne Annie",
+  "author": "Corris Peter",
+  "isbn": "2869304110",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35152204p)"
+ },
+ {
+  "no": "103",
+  "title": "Injection mortelle",
+  "author": "Nisbet Jim",
+  "isbn": "286930417X",
+  "source": "BnF SRU col2bib 34243656 (cb35346475v)"
+ },
+ {
+  "no": "104",
+  "title": "Le garçon enterré ce matin",
+  "author": "Hansen Joseph",
+  "isbn": "2869304331",
+  "source": "BnF SRU col2bib 34243656 (cb35412800n)"
+ },
+ {
+  "no": "105",
+  "title": "La somnambule",
+  "author": "McCloy Helen",
+  "isbn": "2869304323",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb354130251)"
+ },
+ {
+  "no": "106",
+  "title": "L'ange déchu",
+  "author": "Fast Howard",
+  "isbn": "2869304366",
+  "source": "BnF SRU col2bib 34243656 (cb35412484d, cb45595055c)",
+  "otherIsbns": [
+   "9782743644802"
+  ]
+ },
+ {
+  "no": "107",
+  "title": "Sailor et Lula",
+  "author": "Gifford Barry",
+  "isbn": "2869304404",
+  "source": "BnF SRU col2bib 34243656 (cb354153976, cb454509320)",
+  "otherIsbns": [
+   "9782743642327"
+  ]
+ },
+ {
+  "no": "108",
+  "title": "Quand le chat n'est pas là",
+  "author": "Friedman Kinky",
+  "isbn": "286930403X",
+  "source": "BnF SRU col2bib 34243656 (cb35417144j)"
+ },
+ {
+  "no": "109",
+  "title": "Un tueur sur la route",
+  "author": "Ellroy James",
+  "isbn": "286930448X",
+  "source": "BnF SRU col2bib 34243656 (cb354538419)"
+ },
+ {
+  "no": "110",
+  "title": "Le voleur de temps",
+  "author": "Hillerman Tony",
+  "isbn": "2869304587",
+  "source": "BnF SRU col2bib 34243656 (cb35453848q, cb450575755)",
+  "otherIsbns": [
+   "9782743636593"
+  ]
+ },
+ {
+  "no": "111",
+  "title": "Escorte pour une mort douce",
+  "author": "Corris Peter",
+  "isbn": "2869304595",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35459459q)"
+ },
+ {
+  "no": "112",
+  "title": "Le grand nulle part",
+  "author": "Ellroy James",
+  "isbn": "2869304676",
+  "source": "BnF SRU col2bib 34243656 (cb35687377v)"
+ },
+ {
+  "no": "113",
+  "title": "La mouche sur le mur",
+  "author": "Hillerman Tony",
+  "isbn": "286930465X",
+  "source": "BnF SRU col2bib 34243656 (cb35459179h)"
+ },
+ {
+  "no": "114",
+  "title": "Les copains d'Eddie Coyle",
+  "author": "Higgins George Vincent",
+  "isbn": "2869304722",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb354599771)"
+ },
+ {
+  "no": "115",
+  "title": "Miami blues",
+  "author": "Willeford Charles",
+  "isbn": "2869304714",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb354628867, cb454506058)",
+  "otherIsbns": [
+   "9782743642297"
+  ]
+ },
+ {
+  "no": "116",
+  "title": "J'étais Dora Suarez",
+  "author": "Cook Robin",
+  "isbn": "2869304765",
+  "source": "BnF SRU col2bib 34243656 (cb354696762, cb45029799k)",
+  "otherIsbns": [
+   "9782743636227"
+  ]
+ },
+ {
+  "no": "117",
+  "title": "Sous la lumière cruelle",
+  "author": "Woodrell Daniel",
+  "isbn": "2869304803",
+  "source": "BnF SRU col2bib 34243656 (cb35469695b)"
+ },
+ {
+  "no": "118",
+  "title": "Midnight examiner",
+  "author": "Kotzwinkle William",
+  "isbn": "286930496X",
+  "source": "BnF SRU col2bib 34243656 (cb35473011k)"
+ },
+ {
+  "no": "119",
+  "title": "Le retour de Jack",
+  "author": "Lewis Ted",
+  "isbn": "2869305001",
+  "source": "BnF SRU col2bib 34243656 (cb35477921b)",
+  "bnfOtherTitles": [
+   "Get Carter"
+  ]
+ },
+ {
+  "no": "120",
+  "title": "L.A. Confidential",
+  "author": "Ellroy James",
+  "isbn": "2869305036",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35480289j)"
+ },
+ {
+  "no": "121",
+  "title": "Battement d'aile",
+  "author": "Woodrell Daniel",
+  "isbn": "2869304781",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb354814493)"
+ },
+ {
+  "no": "122",
+  "title": "Dieu qui parle",
+  "author": "Hillerman Tony",
+  "isbn": "2869303777",
+  "skip": "not the series design: large red lettering, no white title boxes (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb354805494, cb455073267)",
+  "otherIsbns": [
+   "9782743644000"
+  ]
+ },
+ {
+  "no": "123",
+  "title": "Une seconde chance pour les morts",
+  "author": "Willeford Charles",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34243656 (cb35601617q)"
+ },
+ {
+  "no": "124",
+  "title": "Ombre de l'ombre",
+  "author": "Taibo Paco Ignacio",
+  "isbn": "286930515X",
+  "source": "BnF SRU col2bib 34243656 (cb37535467d, cb37159710z)"
+ },
+ {
+  "no": "125",
+  "title": "Les faisans des îles",
+  "author": "Thomas Ross",
+  "isbn": "9782743640071",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb356016229, cb45331835d)"
+ },
+ {
+  "no": "126",
+  "title": "Scarface",
+  "author": "Trail Armitage",
+  "isbn": "2869305230",
+  "source": "BnF SRU col2bib 34243656 (cb35567628w)"
+ },
+ {
+  "no": "127",
+  "title": "Aucune bête aussi féroce",
+  "author": "Bunker Edward",
+  "isbn": "2869305389",
+  "source": "BnF SRU col2bib 34243656 (cb355181726, cb451420955)",
+  "otherIsbns": [
+   "9782743637774"
+  ]
+ },
+ {
+  "no": "128",
+  "title": "Le fils perdu",
+  "author": "Corris Peter",
+  "isbn": "2869305400",
+  "source": "BnF SRU col2bib 34243656 (cb35514281g)"
+ },
+ {
+  "no": "129",
+  "title": "Toutes peines confondues",
+  "author": "Coburn Andrew",
+  "isbn": "2869305443",
+  "source": "BnF SRU col2bib 34243656 (cb35514255x)"
+ },
+ {
+  "no": "130",
+  "title": "Démons ordinaires",
+  "author": "Villard Marc",
+  "isbn": "2869305524",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb355174316)"
+ },
+ {
+  "no": "131",
+  "title": "Potsdamer platz",
+  "author": "Biermann Pieke",
+  "isbn": "2869305575",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35515899f)"
+ },
+ {
+  "no": "132",
+  "title": "Prisonniers du ciel",
+  "author": "Burke James Lee",
+  "isbn": "2869305648",
+  "source": "BnF SRU col2bib 34243656 (cb35514263j)"
+ },
+ {
+  "no": "133",
+  "title": "La mort dans une voiture solitaire",
+  "author": "Pagan Hugues",
+  "isbn": "2869305680",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35515702z)"
+ },
+ {
+  "no": "134",
+  "title": "Coyote attend",
+  "author": "Hillerman Tony",
+  "isbn": "2869305672",
+  "source": "BnF SRU col2bib 34243656 (cb35601623n)"
+ },
+ {
+  "no": "135",
+  "title": "La reine de la nuit",
+  "author": "Behm Marc",
+  "isbn": "2869305729",
+  "source": "BnF SRU col2bib 34243656 (cb35519717z, cb45203477x)",
+  "otherIsbns": [
+   "9782743637996"
+  ]
+ },
+ {
+  "no": "136",
+  "title": "Pandemonium",
+  "author": "Standiford Les",
+  "isbn": "2869305737",
+  "source": "BnF SRU col2bib 34243656 (cb35519529d)"
+ },
+ {
+  "no": "137",
+  "title": "Le démon dans ma tête",
+  "author": "Nisbet Jim",
+  "isbn": "2869305788",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35523483p)"
+ },
+ {
+  "no": "138",
+  "title": "Sombres crapules",
+  "author": "Greenan Russell H.",
+  "isbn": "2869305796",
+  "source": "BnF SRU col2bib 34243656 (cb35522588f)"
+ },
+ {
+  "no": "139",
+  "title": "Étranges loyautés",
+  "author": "McIlvanney William",
+  "isbn": "2869305885",
+  "source": "BnF SRU col2bib 34243656 (cb35530954z, cb44359691j)",
+  "otherIsbns": [
+   "9782743632465"
+  ]
+ },
+ {
+  "no": "140",
+  "title": "Perdita Durango",
+  "author": "Gifford Barry",
+  "isbn": "2869305850",
+  "source": "BnF SRU col2bib 34243656 (cb35601626p)"
+ },
+ {
+  "no": "141",
+  "title": "White jazz",
+  "author": "Ellroy James",
+  "isbn": "2869305923",
+  "source": "BnF SRU col2bib 34243656 (cb35594400v)"
+ },
+ {
+  "no": "142",
+  "title": "La vie même",
+  "author": "Taibo Paco Ignacio",
+  "isbn": "2869305915",
+  "source": "BnF SRU col2bib 34243656 (cb35592833f)"
+ },
+ {
+  "no": "143",
+  "title": "Les morsures de l'aube",
+  "author": "Benacquista Tonino",
+  "isbn": "2869306008",
+  "skip": "film tie-in jacket without the series' white title boxes (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35592857f)"
+ },
+ {
+  "no": "144",
+  "title": "Coeurs solitaires",
+  "author": "Harvey John",
+  "isbn": "2869306121",
+  "source": "BnF SRU col2bib 34243656 (cb35592849t)"
+ },
+ {
+  "no": "145",
+  "title": "Le grand vol de la banque de Taos",
+  "author": "Hillerman Tony",
+  "isbn": "2869306105",
+  "source": "BnF SRU col2bib 34243656 (cb355928203)"
+ },
+ {
+  "no": "146",
+  "title": "Les enfants de Dracula",
+  "author": "Lortz Richard",
+  "isbn": "2869306237",
+  "source": "BnF SRU col2bib 34243656 (cb355579720)"
+ },
+ {
+  "no": "147",
+  "title": "L'ombre d'un homme brisé",
+  "author": "Chesbro George C.",
+  "isbn": "2869306245",
+  "source": "BnF SRU col2bib 34243656 (cb35601637b)"
+ },
+ {
+  "no": "148",
+  "title": "L'égorgeur",
+  "author": "Collins Michael",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34243656 (cb356016407)"
+ },
+ {
+  "no": "149",
+  "title": "Captain Butterfly",
+  "author": "Leuci Bob",
+  "isbn": "2869306326",
+  "source": "BnF SRU col2bib 34243656 (cb356016438)"
+ },
+ {
+  "no": "150",
+  "title": "La vie d'artiste",
+  "author": "Villard Marc",
+  "isbn": "2869306369",
+  "source": "BnF SRU col2bib 34243656 (cb356016480)"
+ },
+ {
+  "no": "151",
+  "title": "Meurtres au Lone Star Café",
+  "author": "Friedman Kinky",
+  "isbn": "2869306377",
+  "source": "BnF SRU col2bib 34243656 (cb35601653k)"
+ },
+ {
+  "no": "152",
+  "title": "Sévices",
+  "author": "Lewis Ted",
+  "isbn": "2869306415",
+  "source": "BnF SRU col2bib 34243656 (cb35601656m, cb450440588)",
+  "otherIsbns": [
+   "9782743636654"
+  ]
+ },
+ {
+  "no": "153",
+  "title": "La nuit divisée",
+  "author": "Ebersohn Wessel",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34243656 (cb35601662j)"
+ },
+ {
+  "no": "154",
+  "title": "Black Alice",
+  "author": "Disch Thomas M.",
+  "isbn": "2869306458",
+  "source": "BnF SRU col2bib 34243656 (cb356016647)"
+ },
+ {
+  "no": "155",
+  "title": "Un pays de vieux",
+  "author": "Hansen Joseph",
+  "isbn": "2869306539",
+  "source": "BnF SRU col2bib 34243656 (cb35601665k)"
+ },
+ {
+  "no": "156",
+  "title": "La vie secrète d'Algernon Pendleton",
+  "author": "Greenan Russell H.",
+  "isbn": "2869306547",
+  "source": "BnF SRU col2bib 34243656 (cb35601671h)"
+ },
+ {
+  "no": "157",
+  "title": "Le montreur d'ombres",
+  "author": "Williams Timothy",
+  "isbn": "2869306601",
+  "source": "BnF SRU col2bib 34243656 (cb35601677k)"
+ },
+ {
+  "no": "158",
+  "title": "Ecrits perdus, 1929-1967",
+  "author": "Thompson Jim",
+  "isbn": "",
+  "skip": "no ISBN in the BnF record",
+  "source": "BnF SRU col2bib 34243656 (cb35601684v)"
+ },
+ {
+  "no": "159",
+  "title": "Black cherry blues",
+  "author": "Burke James Lee",
+  "isbn": "2869306725",
+  "source": "BnF SRU col2bib 34243656 (cb35601687w)"
+ },
+ {
+  "no": "160",
+  "title": "Violetta",
+  "author": "Biermann Pieke",
+  "isbn": "2869306733",
+  "source": "BnF SRU col2bib 34243656 (cb35601690s)"
+ },
+ {
+  "no": "161",
+  "title": "Le chien d'Ulysse",
+  "author": "Nisbet Jim",
+  "isbn": "286930675X",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb356016914)"
+ },
+ {
+  "no": "162",
+  "title": "Billard à l'étage",
+  "author": "Quint Michel",
+  "isbn": "2869306741",
+  "source": "BnF SRU col2bib 34243656 (cb35601695h)"
+ },
+ {
+  "no": "163",
+  "title": "Trouille",
+  "author": "Behm Marc",
+  "isbn": "2869306822",
+  "source": "BnF SRU col2bib 34243656 (cb35601699w)"
+ },
+ {
+  "no": "164",
+  "title": "Bone",
+  "author": "Chesbro George C.",
+  "isbn": "2869306806",
+  "source": "BnF SRU col2bib 34243656 (cb35601704n)"
+ },
+ {
+  "no": "165",
+  "title": "Autoroute",
+  "author": "Lebrun Michel",
+  "isbn": "2869306814",
+  "source": "BnF SRU col2bib 34243656 (cb35592047x)"
+ },
+ {
+  "no": "166",
+  "title": "Vices privés, vertus publiques",
+  "author": "Cook Robin",
+  "isbn": "2869306962",
+  "source": "BnF SRU col2bib 34243656 (cb35601792r)"
+ },
+ {
+  "no": "167",
+  "title": "Le criminel",
+  "author": "Thompson Jim",
+  "isbn": "2869306970",
+  "source": "BnF SRU col2bib 34243656 (cb35605022m)"
+ },
+ {
+  "no": "168",
+  "title": "Un jumeau singulier",
+  "author": "Westlake Donald E.",
+  "isbn": "2869306989",
+  "source": "BnF SRU col2bib 34243656 (cb356050009)"
+ },
+ {
+  "no": "169",
+  "title": "La machine à broyer les petites filles",
+  "author": "Benacquista Tonino",
+  "isbn": "2869307063",
+  "source": "BnF SRU col2bib 34243656 (cb361497667)"
+ },
+ {
+  "no": "170",
+  "title": "La dame",
+  "author": "Stark Richard",
+  "isbn": "2869307071",
+  "source": "BnF SRU col2bib 34243656 (cb35607971s)"
+ },
+ {
+  "no": "171",
+  "title": "La quatrième Durango",
+  "author": "Thomas Ross",
+  "isbn": "2869307136",
+  "source": "BnF SRU col2bib 34243656 (cb356873666)"
+ },
+ {
+  "no": "172",
+  "title": "Un café, une cigarette",
+  "author": "Busino Jean-Jacques",
+  "isbn": "2869307217",
+  "source": "BnF SRU col2bib 34243656 (cb356872945)"
+ },
+ {
+  "no": "173",
+  "title": "Cosa fácil",
+  "author": "Taibo Paco Ignacio",
+  "isbn": "2869307225",
+  "source": "BnF SRU col2bib 34243656 (cb35687467t)"
+ },
+ {
+  "no": "174",
+  "title": "La bête contre les murs",
+  "author": "Bunker Edward",
+  "isbn": "2869307233",
+  "source": "BnF SRU col2bib 34243656 (cb35687481c, cb47432304f)",
+  "otherIsbns": [
+   "9782743661823"
+  ]
+ },
+ {
+  "no": "175",
+  "title": "Les tueurs de la lune de miel",
+  "author": "Buck Paul",
+  "isbn": "2869307349",
+  "source": "BnF SRU col2bib 34243656 (cb35687355j)"
+ },
+ {
+  "no": "176",
+  "title": "Le camp des vainqueurs",
+  "author": "Corris Peter",
+  "isbn": "2869307357",
+  "source": "BnF SRU col2bib 34243656 (cb35687290s)"
+ },
+ {
+  "no": "177",
+  "title": "Écrits perdus, 1968-1977",
+  "author": "Thompson Jim",
+  "isbn": "2869307381",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35690980x)",
+  "bnfOtherTitles": [
+   "Après nous le grabuge"
+  ]
+ },
+ {
+  "no": "178",
+  "title": "Dans les rayons de la mort",
+  "author": "Villard Marc",
+  "isbn": "2869307497",
+  "source": "BnF SRU col2bib 34243656 (cb356872976)"
+ },
+ {
+  "no": "179",
+  "title": "L'étage des morts",
+  "author": "Pagan Hugues",
+  "isbn": "2869307500",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb356874832, cb47658403k)",
+  "otherIsbns": [
+   "9782743665661"
+  ]
+ },
+ {
+  "no": "180",
+  "title": "Le fleuve des ténèbres",
+  "author": "Grady James Thomas",
+  "isbn": "2869307543",
+  "source": "BnF SRU col2bib 34243656 (cb35708446m, cb45331803s)",
+  "otherIsbns": [
+   "9782743639433"
+  ]
+ },
+ {
+  "no": "181",
+  "title": "Retour à L.A.",
+  "author": "Svensson Vidar",
+  "isbn": "2869307608",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35719908w)"
+ },
+ {
+  "no": "182",
+  "title": "Deuil après deuil",
+  "author": "Lortz Richard",
+  "isbn": "2869307594",
+  "source": "BnF SRU col2bib 34243656 (cb35710260w)"
+ },
+ {
+  "no": "183",
+  "title": "Brocéliande sur Marne",
+  "author": "Oppel Jean-Hugues",
+  "isbn": "2869307675",
+  "source": "BnF SRU col2bib 34243656 (cb357156230)"
+ },
+ {
+  "no": "184",
+  "title": "La cité où les pierres murmurent",
+  "author": "Chesbro George C.",
+  "isbn": "2869307764",
+  "source": "BnF SRU col2bib 34243656 (cb35701108j)"
+ },
+ {
+  "no": "185",
+  "title": "Captain Blood",
+  "author": "Blodgett Michael",
+  "isbn": "2869307772",
+  "source": "BnF SRU col2bib 34243656 (cb357010982)"
+ },
+ {
+  "no": "186",
+  "title": "Saraka bô",
+  "author": "Nathan Tobie",
+  "isbn": "2869307837",
+  "source": "BnF SRU col2bib 34243656 (cb35710109v, cb435363448)",
+  "otherIsbns": [
+   "9782743624835"
+  ]
+ },
+ {
+  "no": "187",
+  "title": "Fou-de-Coudre",
+  "author": "Setbon Philippe",
+  "isbn": "2869307845",
+  "source": "BnF SRU col2bib 34243656 (cb357108282)"
+ },
+ {
+  "no": "188",
+  "title": "À côté de la plaque",
+  "author": "Behm Marc",
+  "isbn": "2869307934",
+  "source": "BnF SRU col2bib 34243656 (cb35710265m, cb47647195s)",
+  "otherIsbns": [
+   "9782743661809"
+  ]
+ },
+ {
+  "no": "189",
+  "title": "Et tournent les chevaux de bois",
+  "author": "Hughes Dorothy Belle",
+  "isbn": "2869307977",
+  "source": "BnF SRU col2bib 34243656 (cb35710114f)"
+ },
+ {
+  "no": "190",
+  "title": "L'inexorable enquête",
+  "author": "Fuller Samuel",
+  "isbn": "2869307985",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb35710251x)"
+ },
+ {
+  "no": "191",
+  "title": "Le contrat Mandeville",
+  "author": "Higgins George Vincent",
+  "isbn": "2869308086",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb357112008)"
+ },
+ {
+  "no": "192",
+  "title": "Dérapages",
+  "author": "Willeford Charles",
+  "isbn": "2869308094",
+  "source": "BnF SRU col2bib 34243656 (cb36994018n)"
+ },
+ {
+  "no": "193",
+  "title": "Coin perdu pour mourir",
+  "author": "Ebersohn Wessel",
+  "isbn": "2869308108",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb369940179, cb37495413j)",
+  "otherIsbns": [
+   "290631062X"
+  ]
+ },
+ {
+  "no": "194",
+  "title": "Les ombres du passé",
+  "author": "Woodrell Daniel",
+  "isbn": "2869308248",
+  "skip": "no cover at Open Library under any BnF ISBN (checked 2026-09-29)",
+  "source": "BnF SRU col2bib 34243656 (cb36994015m)"
+ },
+ {
+  "no": "195",
+  "title": "Hallali",
+  "author": "Thompson Jim",
+  "isbn": "2869308256",
+  "source": "BnF SRU col2bib 34243656 (cb35729805s)"
+ },
+ {
+  "no": "196",
+  "title": "L'homme de fer",
+  "author": "Thompson Jim",
+  "isbn": "2869308264",
+  "source": "BnF SRU col2bib 34243656 (cb35729802r)"
+ },
+ {
+  "no": "197",
+  "title": "Le vieux coup de la sauterelle",
+  "author": "Friedman Kinky",
+  "isbn": "2869308345",
+  "source": "BnF SRU col2bib 34243656 (cb35730059j)"
+ },
+ {
+  "no": "198",
+  "title": "Quelques nuages",
+  "author": "Taibo Paco Ignacio",
+  "isbn": "2869308353",
+  "source": "BnF SRU col2bib 34243656 (cb35730057v)"
+ },
+ {
+  "no": "199",
+  "title": "Génération Armageddon",
+  "author": "Simon Roger Lichtenberg",
+  "isbn": "2869308418",
+  "source": "BnF SRU col2bib 34243656 (cb369940190)"
+ },
+ {
+  "no": "200",
+  "title": "La rue obscène",
+  "author": "Cook Robin",
+  "isbn": "2869308426",
+  "source": "BnF SRU col2bib 34243656 (cb35846553p)"
+ }
+]

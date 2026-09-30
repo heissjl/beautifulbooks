@@ -150,6 +150,9 @@ describe('coverLine', () => {
     expect(coverLine('authors', 'catalogue')).toContain('not all of them chosen by hand');
     expect(coverLine('series', undefined, 19)).toContain('19 of them photographed');
     expect(coverLine('series', undefined, 19)).not.toContain('Open Library holds');
+    // A series without publisher names is a prize wall across publishers, not a printing in a series.
+    expect(coverLine('series', undefined, 0, [])).toBe('one cover each, chosen by hand');
+    expect(coverLine('series', undefined, 0, ['Penguin'])).toContain('printing in the series');
   });
 });
 

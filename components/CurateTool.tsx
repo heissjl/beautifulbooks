@@ -8,7 +8,7 @@ import { olCover } from '@/lib/curated';
 import type { Candidate } from '@/lib/collectionedit';
 import type { Draft } from '@/lib/curate/drafts';
 import type { FoundAuthor } from '@/lib/curate/catalog';
-import { NOTHING_PENDING, hasPending, moveTo, pendingOps, pendingWorks, type Pending, type WallPick } from '@/lib/curate/pending';
+import { NOTHING_PENDING, hasPending, moveTo, pendingOps, pendingWorks, pickKey, removeTile, type Pending, type WallPick } from '@/lib/curate/pending';
 
 /** A collection in the site's file that a friend can start a draft from. */
 export interface StartingPoint {
@@ -135,6 +135,8 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
   const [candidates, setCandidates] = useState<Record<string, Candidate[] | 'loading' | { error: string }>>({});
   const [picking, setPicking] = useState<Picking | null>(null);
   const [drag, setDrag] = useState<string | null>(null);
+  /** In the cover picker: add the cover as a further tile and keep the one on the wall (two printings, two designs). */
+  const [pickAgain, setPickAgain] = useState(false);
   const [dropAt, setDropAt] = useState<string | null>(null);
   const [filter, setFilter] = useState<{ origin: 'all' | Origin; slug: string; text: string }>({ origin: 'all', slug: '', text: '' });
   // Which work the cover window is searching for; read only in handlers, so the
@@ -195,7 +197,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
     setError('');
     setSaving(true);
     try {
-      const { draft: next } = await call<{ draft: Draft }>(`/api/curate/drafts/${draft.id}`, { op: 'batch', ops: pendingOps(pending, wall.map(w => w.id)) });
+      const { draft: next } = await call<{ draft: Draft }>(`/api/curate/drafts/${draft.id}`, { op: 'batch', ops: pendingOps(pending, wall.map(pickKey)) });
       take(next);
       setPending(NOTHING_PENDING);
     } catch (e) {
@@ -307,6 +309,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
   function startPicking(work: Picking['work'], chosen?: string) {
     const p: Picking = { work, chosen, covers: [], next: 0, loading: true, error: '', scanned: 0, total: null, capped: false };
     setPicking(p);
+    setPickAgain(false);
     void loadCovers(p, 0);
   }
 
@@ -315,32 +318,47 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
     setPicking(null);
   }
 
-  /** A chosen cover waits for Save like every other edit; choosing takes a removed book back. */
+  /**
+   * A chosen cover waits for Save like every other edit; choosing takes a
+   * removed book back. The tile being changed is the one the picker opened
+   * from (its current cover is `chosen`); with `again`, the cover becomes a
+   * further tile and the old one stays.
+   */
   function choose(coverId: string) {
     if (!picking) return;
-    const { work } = picking;
+    const { work, chosen } = picking;
+    const again = pickAgain;
     closePicking();
-    setPending(p => ({ ...p, removed: p.removed.filter(id => id !== work.id), picks: { ...p.picks, [work.id]: { ...work, coverId } } }));
-  }
-
-  function remove(id: string) {
+    const shownKey = chosen !== undefined && wall.some(w => w.id === work.id && w.coverId === chosen) ? `${work.id}|${chosen}` : null;
+    const nextKey = `${work.id}|${coverId}`;
     setPending(p => {
       const picks = { ...p.picks };
-      const wasNew = !draft?.works.some(w => w.id === id);
-      delete picks[id];
-      return { ...p, picks, removed: wasNew ? p.removed : [...new Set([...p.removed, id])], order: p.order?.filter(x => x !== id) ?? null };
+      if (again || !shownKey) {
+        if (wall.some(w => pickKey(w) === nextKey)) return p;
+        picks[nextKey] = { ...work, coverId, ...(again ? { again: true } : {}) };
+        return { ...p, picks, order: p.order ? [...p.order, nextKey] : null };
+      }
+      // A tile whose cover was already changed keeps its saved key, so Save can say which tile it replaces.
+      const savedKey = Object.keys(picks).find(k => pickKey(picks[k]) === shownKey) ?? shownKey;
+      picks[savedKey] = { ...picks[savedKey], ...work, coverId };
+      return { ...p, picks, removed: p.removed.filter(k => k !== savedKey), order: p.order?.map(k => (k === shownKey ? nextKey : k)) ?? null };
     });
   }
 
-  function place(id: string, to: number) {
-    const ids = wall.map(w => w.id);
-    const next = moveTo(ids, id, to);
-    if (next.join() !== ids.join()) setPending(p => ({ ...p, order: next }));
+  function remove(key: string) {
+    const saved = new Set((draft?.works ?? []).map(pickKey));
+    setPending(p => removeTile(p, saved, key));
+  }
+
+  function place(key: string, to: number) {
+    const keys = wall.map(pickKey);
+    const next = moveTo(keys, key, to);
+    if (next.join() !== keys.join()) setPending(p => ({ ...p, order: next }));
   }
 
   function drop(onto: string) {
     if (!drag || drag === onto) return;
-    place(drag, wall.findIndex(w => w.id === onto));
+    place(drag, wall.findIndex(w => pickKey(w) === onto));
     setDrag(null);
     setDropAt(null);
   }
@@ -350,7 +368,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
   const shownTitle = pending.title ?? draft?.title ?? '';
   const shownIntro = pending.intro ?? draft?.intro ?? '';
   const shownBy = pending.by ?? draft?.by ?? '';
-  const pendingCount = pendingOps(pending, wall.map(w => w.id)).length;
+  const pendingCount = pendingOps(pending, wall.map(pickKey)).length;
 
   const draftsBySlug = useMemo(() => {
     const out: Record<string, number> = {};
@@ -502,18 +520,19 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
             {wall.length === 0 && <p className="mt-3 text-sm text-ink-3">Nothing on the wall yet. Open an author below and pick a book.</p>}
             <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
               {wall.map((w, i) => {
-                const changed = w.id in pending.picks;
+                const key = pickKey(w);
+                const changed = Object.values(pending.picks).some(x => pickKey(x) === key);
                 return (
                   <li
-                    key={w.id}
+                    key={key}
                     draggable
-                    onDragStart={e => { setDrag(w.id); e.dataTransfer.effectAllowed = 'move'; }}
+                    onDragStart={e => { setDrag(key); e.dataTransfer.effectAllowed = 'move'; }}
                     onDragEnd={() => { setDrag(null); setDropAt(null); }}
-                    onDragOver={e => { if (drag) { e.preventDefault(); setDropAt(w.id); } }}
-                    onDrop={e => { e.preventDefault(); drop(w.id); }}
-                    className={`relative cursor-grab active:cursor-grabbing ${drag === w.id ? 'opacity-40' : ''}`}
+                    onDragOver={e => { if (drag) { e.preventDefault(); setDropAt(key); } }}
+                    onDrop={e => { e.preventDefault(); drop(key); }}
+                    className={`relative cursor-grab active:cursor-grabbing ${drag === key ? 'opacity-40' : ''}`}
                   >
-                    {dropAt === w.id && drag !== w.id && <span aria-hidden="true" className="absolute -left-2 top-0 bottom-0 w-1 rounded-full bg-accent sm:-left-2.5" />}
+                    {dropAt === key && drag !== key && <span aria-hidden="true" className="absolute -left-2 top-0 bottom-0 w-1 rounded-full bg-accent sm:-left-2.5" />}
                     <button type="button" onClick={() => startPicking(w, w.coverId)} className="block w-full text-left">
                       <span className={`cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 ${changed ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}>
                         <Thumb coverId={w.coverId} size="M" sizes="(max-width: 640px) 33vw, 16vw" />
@@ -523,7 +542,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
                     {/* Taking a book off the wall, where the eye already is (Julian, 2026-09-25: „i also need a button to delete a work"). */}
                     <button
                       type="button"
-                      onClick={() => remove(w.id)}
+                      onClick={() => remove(key)}
                       aria-label={`Remove ${w.title} from the collection`}
                       title="Remove from the collection"
                       className="absolute right-1 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-bg/90 text-base leading-none text-ink shadow transition-colors hover:bg-accent hover:text-on-accent"
@@ -533,9 +552,9 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
                     <p className="mt-1.5 line-clamp-2 text-xs font-medium leading-snug text-ink">{w.title}</p>
                     <p className="line-clamp-1 text-xs text-ink-3">{w.author}</p>
                     <div className="mt-1 flex items-center gap-0.5 text-xs text-ink-3">
-                      <button type="button" disabled={i === 0} onClick={() => place(w.id, 0)} aria-label={`Move ${w.title} to the front`} title="To the front" className="rounded px-1.5 text-sm leading-none hover:text-accent disabled:opacity-30">⇤</button>
-                      <button type="button" disabled={i === 0} onClick={() => place(w.id, i - 1)} aria-label="Move earlier" className="ml-auto rounded px-1.5 hover:text-accent disabled:opacity-30">←</button>
-                      <button type="button" disabled={i === wall.length - 1} onClick={() => place(w.id, i + 1)} aria-label="Move later" className="rounded px-1.5 hover:text-accent disabled:opacity-30">→</button>
+                      <button type="button" disabled={i === 0} onClick={() => place(key, 0)} aria-label={`Move ${w.title} to the front`} title="To the front" className="rounded px-1.5 text-sm leading-none hover:text-accent disabled:opacity-30">⇤</button>
+                      <button type="button" disabled={i === 0} onClick={() => place(key, i - 1)} aria-label="Move earlier" className="ml-auto rounded px-1.5 hover:text-accent disabled:opacity-30">←</button>
+                      <button type="button" disabled={i === wall.length - 1} onClick={() => place(key, i + 1)} aria-label="Move later" className="rounded px-1.5 hover:text-accent disabled:opacity-30">→</button>
                     </div>
                   </li>
                 );
@@ -672,6 +691,12 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
               <button type="button" onClick={closePicking} className={button}>Close</button>
             </div>
             <p className="mt-1 text-sm text-ink-3">{picking.work.author} · {picking.covers.length} covers · tap one to put it on the wall (then Save)</p>
+            {wall.some(w => w.id === picking.work.id) && (
+              <label className="mt-2 inline-flex items-center gap-2 text-sm text-ink-2">
+                <input id="curate-pick-again" type="checkbox" checked={pickAgain} onChange={e => setPickAgain(e.target.checked)} />
+                Add as a further cover and keep the one on the wall
+              </label>
+            )}
             {/* Where the search stands: still looking, done, or stopped by an error (N12: a stop is not an end). */}
             <div className="mt-3" aria-live="polite">
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-2">

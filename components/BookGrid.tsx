@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import BookWorkCard, { type ResultOrigin } from './BookWorkCard';
 import { shapeOf } from '@/lib/queryshape';
+import { groupByAuthor } from '@/lib/searchgroups';
 import CuratedWall from './CuratedWall';
 import MosaicLoader from './MosaicLoader';
 import type { AuthorSearchResult, SearchCorrection, SearchResult } from '@/lib/search';
@@ -19,6 +20,13 @@ interface BookGridProps {
 }
 
 type AnyResult = SearchResult | AuthorSearchResult;
+
+/**
+ * Up to this many books by other authors stand open under their heading;
+ * more are folded behind it, with the number (ROADMAP 6.81). Four is one row
+ * on a desktop, two on a phone.
+ */
+const OPEN_OTHERS = 4;
 
 /** What went wrong, in words the reader can act on. */
 interface Failure {
@@ -91,6 +99,8 @@ export function GridSkeleton({ query }: { query?: string }) {
   return <MosaicLoader caption={query ? `Looking for \u201c${query}\u201d in Open Library` : 'Searching'} />;
 }
 
+const GRID = 'grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5';
+
 /** `/?q=…` for a search, as the result list itself would link it. */
 function textSearchHref(q: string, language: string, exact = false): string {
   const params = new URLSearchParams({ q });
@@ -132,6 +142,12 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
     ? `author:${authorName}:${authorKey} #${attempt}`
     : searchQuery ? `${searchQuery} ${exact ? 'exact' : ''} #${attempt}` : '';
   const [outcome, setOutcome] = useState<Outcome | null>(null);
+  /*
+    Which search the reader unfolded "By other authors" for (ROADMAP 6.81).
+    Keyed by the request, so a new search starts folded again without an
+    effect resetting anything.
+  */
+  const [othersOpenFor, setOthersOpenFor] = useState<string | null>(null);
   const router = useRouter();
   // Memoised: the effect depends on it, and a fresh object each render would
   // restart the search on every render.
@@ -234,6 +250,22 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
   }
 
   const totalEditions = works.reduce((sum, w) => sum + (w.editionCount ?? 0), 0);
+  // With several hits an ISBN matched nothing and these are loose text matches (6.29): no first author to group by.
+  const { main, others } = shape.kind === 'isbn' && works.length > 1 ? { main: works, others: [] } : groupByAuthor(works);
+  const othersOpen = othersOpenFor === key;
+  const card = (work: (typeof works)[number]) => (
+    <BookWorkCard
+      key={work.id}
+      work={work}
+      origin={{ query: correction?.applied ? correction.to : searchQuery, language }}
+      /*
+        Only when the ISBN picked out a single book: with several hits
+        the number did not identify one edition, and pointing at a cover
+        would claim more than was asked (ROADMAP 6.29).
+      */
+      isbn={shape.kind === 'isbn' && works.length === 1 ? shape.isbn13 : undefined}
+    />
+  );
 
   return (
     <section aria-label="Search results">
@@ -256,21 +288,34 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
       <p className="kicker mb-5">
         {works.length} {works.length === 1 ? 'book' : 'books'} · {totalEditions.toLocaleString('en')} editions
       </p>
-      <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {works.map(work => (
-          <BookWorkCard
-            key={work.id}
-            work={work}
-            origin={{ query: correction?.applied ? correction.to : searchQuery, language }}
-            /*
-              Only when the ISBN picked out a single book: with several hits
-              the number did not identify one edition, and pointing at a cover
-              would claim more than was asked (ROADMAP 6.29).
-            */
-            isbn={shape.kind === 'isbn' && works.length === 1 ? shape.isbn13 : undefined}
-          />
-        ))}
-      </div>
+      <div className={GRID}>{main.map(card)}</div>
+      {/*
+        The first card's author on top, everyone else below (ROADMAP 6.81,
+        SPEC F1.11): "the great gatsby" returned twelve books by other authors
+        among fifteen, most of them study guides called plainly "The Great
+        Gatsby". Who wrote a book is on the record; whether it is *about* the
+        novel is not, so the heading says only the first. Folded above four,
+        and the cards are not even rendered until unfolded, so their mosaics
+        do not load for a reader who never looks.
+      */}
+      {others.length > 0 && (
+        <section className="mt-12 border-t border-line pt-6" aria-label="By other authors">
+          {others.length <= OPEN_OTHERS ? (
+            <h2 className="kicker">By other authors ({others.length})</h2>
+          ) : (
+            <button
+              type="button"
+              aria-expanded={othersOpen}
+              onClick={() => setOthersOpenFor(othersOpen ? null : key)}
+              className="kicker inline-flex items-center gap-2 transition-colors hover:text-ink"
+            >
+              <span aria-hidden="true" className={`inline-block text-accent transition-transform ${othersOpen ? 'rotate-90' : ''}`}>▸</span>
+              By other authors ({others.length})
+            </button>
+          )}
+          {(others.length <= OPEN_OTHERS || othersOpen) && <div className={`${GRID} mt-5`}>{others.map(card)}</div>}
+        </section>
+      )}
     </section>
   );
 }

@@ -33,6 +33,16 @@ export default function HomeSearchBar({ searchQuery, mode, language, hero }: Hom
     if (q && nextMode === 'any') params.set('q', q);
     if (lang && lang !== 'all' && nextMode === 'any') params.set('lang', lang);
     const qs = params.toString();
+    /*
+      A new search starts at the top of the page (ROADMAP 6.79). `scroll:
+      false` keeps the offset the reader had, and the hero above the field
+      goes away with the search, so the field slid up by the hero's height:
+      measured at 1512 × 790 with the page scrolled 100 px, it ended at
+      −11 to 81 px, half behind the 57 px header. At the top it sits at 89 px
+      whatever the offset was. Scrolling before the push, while the hero is
+      still there, means nothing moves under the reader twice.
+    */
+    window.scrollTo({ top: 0, behavior: 'instant' });
     router.push(qs ? `/?${qs}` : '/', { scroll: false });
   }, [router]);
 
