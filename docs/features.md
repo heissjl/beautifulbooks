@@ -81,8 +81,9 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Eine Sammlungskachel öffnet ihr eigenes Cover auf der Wand des Werks, auch wenn es auf einem nicht zusammengeführten Übersetzungs-Werk liegt | 2026-09-26 | F8.3 | 5.10 | `components/CoverWall.tsx`, `components/BookDetail.tsx`, `lib/works.ts` |
 | Umschlagkünstler aus ISFDB unter den Kacheln der SF-Sammlungen („Cover art“), aus der Datei, nie zur Laufzeit; Namen, deren Akzente ISFDB als U+FFFD schickt, werden repariert, unbekannte verstümmelte Namen nicht gezeigt | 2026-09-25 / 09-26 | F8 | 6.52 (Wände), 5.10i | `lab/isfdb/`, `data/collections.json`, `lib/collections.ts`, `components/CoverWall.tsx` |
 | Entwürfe von Sammlungen (sichtbar unter `next dev` und für angemeldete Freunde): u. a. die Relaunch-Reihe mit **internationalen Covern** — 135 von 182 Bänden in einer Übersetzung, gefunden über Sprach-Tag, ISBN-Ländergruppe, nicht zusammengeführte Übersetzungs-Werke und übersetzte Titel aus Wikipedia und Wikidata —, die abgerundeten Ausgaben von 2006, edition suhrkamp, Penguin Clothbound, Hugo Award | 2026-09-25 / 09-26 | F8 | 5.10e, 5.10f, 5.10i | `data/collections.json`, `lab/international-covers/` |
-| Schriften: Xanh Mono für Überschriften und Wortmarke, Jost für alles andere; ISBN gegliedert (978-0-14-143947-1), in Jost mit Null und Strichen aus Geist Mono, Striche nur in der Anzeige | 2026-09-28 | §5 | 6.61 | `app/layout.tsx`, `app/globals.css`, `lib/isbnformat.ts`, `components/BookDetail.tsx` (`IsbnText`) |
+| Schriften: Xanh (Xanh Mono, proportional neu gesetzt, seit 2026-09-29) für Überschriften und Wortmarke, Jost für alles andere; ISBN gegliedert (978-0-14-143947-1), in Jost mit Null und Strichen aus Geist Mono, Striche nur in der Anzeige | 2026-09-28 | §5 | 6.61 | `app/layout.tsx`, `app/globals.css`, `assets/fonts/`, `lib/isbnformat.ts`, `components/BookDetail.tsx` (`IsbnText`) |
 | Vorschaubilder für geteilte Links in Xanh Mono und Jost; eine Website-Karte (Wand aus buchförmigen Kacheln, keine echten Cover) für jede Seite ohne eigene, auch Spiel, Rangliste und Sammlungen | 2026-09-28 | F2.13 | 6.61 | `app/og.tsx`, `app/opengraph-image.tsx`, `assets/og/`, `lib/seo.ts` (`SITE_CARD`) |
+| Bildmarke (Richtung A: Wand aus Buchrechtecken, eines hervorgehoben) in der Kopfzeile und als Browser-Icon, hell und dunkel | 2026-09-29 | §5 | 6.61 | `components/BrandMark.tsx`, `app/icon.svg`, `app/favicon.ico`, `app/apple-icon.png`, `scripts/build-icons.py` |
 
 ## Betrieb und Schutz
 
@@ -115,6 +116,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Farbschema-Mockups mit Kontrasttabelle | 6.22 | `lab/palette/` |
 | Fixtures aufzeichnen, Cover-Index bauen, Werk befördern, Jahrzehnte-Seiten finden, Händler-Links prüfen, Ladebilder kopieren, Worktrees anzeigen | diverse | `scripts/` |
 | Cockpit: eine erzeugte Seite für das ganze Projekt (Brett nach Thema × Status, Sammlungen & Synchronisation, Werkzeuge zum Starten, Dienste, Funktionen, Website-Karte, Lab), Server nur auf 127.0.0.1; `npm run kanban` ist der Alias für die Datei | 6.54 | `scripts/cockpit/`, `npm run cockpit` |
+| Cockpit-Ansicht „Identität" (seit 2026-09-29): Entscheidungen aus `docs/identitaet.md` §0, Marke und verglichene Richtungen, Schriftproben heute und vorher, Farben, Vorschaubilder | 6.61, 6.54 | `scripts/cockpit/identity.ts` |
 
 ## Was es ausdrücklich **nicht** gibt
 
