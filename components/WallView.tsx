@@ -69,8 +69,9 @@ export default function WallView({ initial }: { initial: PublicWall }) {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <h1 className="font-display text-3xl leading-tight text-ink sm:text-4xl">{wall.title}</h1>
         <div className="flex flex-wrap gap-2">
+          {/* Into Arrange, not Add covers: the wall is what one came from (Julian, 2026-09-29). An empty collection still opens on Add covers below. */}
           {canEdit && (
-            <Link href={editHref(wall.id)} className="rounded-full bg-accent px-4 py-1 text-sm text-on-accent transition-opacity hover:opacity-90">
+            <Link href={editHref(wall.id, { mode: 'arrange' })} className="rounded-full bg-accent px-4 py-1 text-sm text-on-accent transition-opacity hover:opacity-90">
               Edit collection
             </Link>
           )}
