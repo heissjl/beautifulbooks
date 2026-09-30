@@ -3918,3 +3918,7 @@ Offen: die Sammlungen der Leser (`/c/<id>`) zeigen weiter die Website-Karte.
 
 Julian: „deploye“. Vor dem Push drei neue Commits aus `origin/main` eingemischt (5.8a, 5.10l), Typen, Lint, Build und 963 Tests grün; `main` vorgespult und als `3843e9b` nach `origin/main` geschoben. Vercel-Deploy `beautifulbooks-8vyc6nicr`, Ready. Ein Prüfabruf gegen https://beautifulcovers.vercel.app/: HTTP 200, das Suchfeld steht im Server-HTML vor der Einladung ins Spiel (6.76). Die übrigen Punkte sind Browser-Code und wurden unter `next dev` geprüft, nicht in Produktion.
 
+
+## 2026-09-30 — Die Notiz der Druck-Reihe zählte nicht (ROADMAP 6.77, Nachtrag)
+
+Julian in Produktion, *Solaris*, Faber and Faber 2003: drei Kacheln unter „1 printing with this cover“, rechts „one with 2 scans“ — „ich glaube die notiz kam, bevor alle 3 scans geladen waren“. Die Ursache war einfacher: „2“ stand fest im Text. Der dritte Scan war tatsächlich später gekommen — das Bild, das Google Books zur ISBN führt („Image from Google Books“), faltet nach der Auswahl in die Kachel (F2.8) —, aber Notiz und Kacheln entstehen im selben Rendern aus denselben Daten, die Notiz hätte also mitgezählt. Jetzt zählt sie: bei einem Druck nur „3 scans“, bei mehreren „one with 3 scans“ oder „2 with several scans“. Lokal nachgeprüft an derselben Kachel (`ol:10534042`): „1 printing with this cover · 2 scans“ — lokal ohne Google-Schlüssel, also ohne den dritten Scan.

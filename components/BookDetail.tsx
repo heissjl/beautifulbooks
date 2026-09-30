@@ -691,7 +691,17 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         const tier = (p: { e: EditionView; scans: string[] }) => (p.scans.includes(cover.id) ? 0 : p.e.isbn13 ? 1 : 2);
         return tier(a) - tier(b) || a.i - b.i;
       });
-    const several = printings.filter(p => p.scans.length > 1).length;
+    /*
+      The note counts, it does not assume: "one with 2 scans" was a fixed
+      string, and *Solaris* (Faber and Faber 2003, three scans) said "2"
+      under three tiles (Julian, 2026-09-30). With a single printing
+      "one with …" reads as a riddle, so it says only how many scans.
+    */
+    const multi = printings.filter(p => p.scans.length > 1);
+    const note = multi.length === 0 ? null
+      : printings.length === 1 ? `${multi[0].scans.length} scans`
+      : multi.length === 1 ? `one with ${multi[0].scans.length} scans`
+      : `${multi.length} with several scans`;
     const scrollBy = (event: React.MouseEvent<HTMLButtonElement>, direction: 1 | -1) => {
       const box = event.currentTarget.closest('[data-strip]')?.querySelector<HTMLElement>('[data-strip-scroller]');
       box?.scrollBy({ left: direction * box.clientWidth * 0.8, behavior: 'smooth' });
@@ -705,11 +715,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
       <section className="mt-4" aria-label="Printings with this cover" data-strip>
         <div className="flex items-baseline justify-between gap-3">
           <p className="kicker">{editions.length} {editions.length === 1 ? 'printing' : 'printings'} with this cover</p>
-          {several > 0 && (
-            <p className="text-right text-xs text-ink-3">
-              {several === 1 ? 'one with 2 scans' : `${several} with several scans`}
-            </p>
-          )}
+          {note && <p className="text-right text-xs text-ink-3">{note}</p>}
         </div>
         <div className="relative mt-3">
           <div ref={scanScroller} onScroll={measureScanRow} data-strip-scroller className="snap-x overflow-x-auto pb-2 [scrollbar-width:thin]">
