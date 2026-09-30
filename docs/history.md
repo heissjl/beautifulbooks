@@ -3769,3 +3769,18 @@ Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch dies
 
 - Die Preiswände heißen wie die Hugo-Wand („Nebula Award — best novel“, „National Book Award — fiction“) und sind Reihen-Sammlungen ohne Verlagsliste.
 - **robots.txt:** Open Library sperrt `/search` für alle Nutzer; ob das `search.json` meint, ist ROADMAP 6.63.
+
+**Preiswände: der Umschlag-Wähler fand keine Alternativen, 2026-09-30.** Julian: „beim deutschen buchpreis finde ich keine alternativen cover?“
+- **Ursache:** Die Preiswände sind Reihen-Sammlungen ohne Verlagsliste. `app/api/curate/covers` zeigt bei einer Reihe nur Ausgaben der eingetragenen Verlage (`inSeries`), und bei leerer Liste blieb keine übrig.
+- **Behoben:** Eine Reihe ohne Verlagsnamen gilt als Wand über mehrere Verlage; der Wähler zeigt dann jeden Umschlag.
+- `coverLine` sagt bei einer solchen Sammlung „one cover each, chosen by hand“ statt „the cover Open Library holds for its printing in the series“. Test in `collections.test.ts`.
+- Betrifft Deutscher Buchpreis, Nebula und National Book Award.
+
+**Cover-Spiel: die neu veröffentlichten Sammlungen aufgenommen, 2026-09-30.** Julian: „nimm alle cover der neu published collections in das versus spiel auf“.
+- Einmal in der Produktion nachgesehen, was veröffentlicht ist (`/api/curate/publish`).
+- Neu im Spiel sind neun Sammlungen: dtv phantastica, Ex Libris, Fischer Bücherei (Wirth), Haffmans, Harry-Potter- und Herr-der-Ringe-Cover-Sets, NYRB Children's, Rowohlts Monographien, Zytglogge.
+- Die edition suhrkamp ist veröffentlicht, bleibt aber auf Julians Wort vom 26.9. draußen.
+- `scripts/add-collection-covers-to-pool.ts --add=…`: 2380 Kandidaten aus 34 Sammlungen. 211 waren zu klein oder unscharf, 34 zeigten ein Design, das das Spiel für dasselbe Werk schon hat; jede Anfrage wurde beantwortet.
+- Der Vorrat `mix-2000-paperwhite-collections` wächst von 3373 auf **4135 Umschläge** (782 neu); die Stimmen zählen weiter. Die neuen Umschläge sind auf einem Kontaktbogen angesehen.
+- Das Skript liest `data/collections.json`. Für Sammlungen, die Julian online bearbeitet und von /curate aus veröffentlicht hat, nimmt es den Stand der Datei, nicht den online geänderten.
+- **Offen:** insel taschenbuch, Découvertes, L’Imaginaire, Rivages/Noir, Great Ideas und Virago Designer haben online veröffentlichten Inhalt, aber keinen eingeschalteten Schalter. Sie gelten nicht als veröffentlicht und sind deshalb nicht im Spiel; Julian klärt, ob das gewollt ist.
