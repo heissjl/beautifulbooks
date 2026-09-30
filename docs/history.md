@@ -3757,3 +3757,15 @@ Nebenbei: der Historien-Leser des Cockpits erkennt nur Überschriften mit „·"
 
 Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch diese Variante" — die Mischung A + C, 3 × 3, statt A in reiner Tinte, wenige Stunden nachdem A live ging. Die Kacheln tragen die sieben Töne der Website-Karte (`#2a2622` bis `#d9cfc1`) in genau der Anordnung der Skizze (Zeilen 2-6-3, 5-·-3, 2-0-1, Index in die Tonleiter). Der Einwand gegen die Mischung war der dunkle Grund: dort verschwanden die dunklen Kacheln. Darum dreht sich die Tonleiter im dunklen Modus um (`--mark-0` … `--mark-6` in `app/globals.css`, `#efe8dd` bis `#48413b`): die dunkelste Kachel des Tages ist nachts die hellste, und die hellste des Tages wird ein Dunkelbraun, das sich vom Grund `#131110` noch abhebt. Geprüft groß, in 16 und 32 px, hell und dunkel, und in der Kopfzeile beider Modi. Die Rasterfassungen (Papiergrund) zeichnet `scripts/build-icons.py` neu: `favicon.ico` 16/32/48, `apple-icon.png` 180.
 
+
+**Die letzten vier der 13 gewählten Kandidaten als Entwürfe, 2026-09-30.** Damit sind alle 13 online als Entwurf, keiner veröffentlicht.
+
+| Wand | auf der Wand | Quelle | Bemerkung |
+|---|---|---|---|
+| `insel-taschenbuch` | 329 | Open Library, ISBN-Stämme 3-458-31 bis 36 | Nur it 1–1500, die Jahre des Fleckhaus-Rahmens; ab etwa it 1500 mischt sich der Bestand, und ein Online-Entwurf fasst höchstens 400 Werke. 360 weitere Umschläge bleiben in der Liste (`skip` mit Grund). Die blaue Platon-Werkausgabe (7 Bände) ist herausgenommen, eigene Gestaltung. Welche Umschläge noch zum Fleckhaus-Design zählen, war eine Ermessensfrage: Julian sieht es sich an. |
+| `deutscher-buchpreis` | 21 von 21 | de.wikipedia | 19 mit Erstausgabe; 2007 Franck (Fischer TB 2009) und 2015 Witzel (btb 2016) mit späterer Ausgabe |
+| `nebula-award-best-novel` | 62 von 62 | en.wikipedia | Gleichstand 1966 mit beiden Büchern; meist Erstausgaben, vier spätere, wo die Erstausgabe nur als Titelblatt oder mit Etikett vorliegt |
+| `national-book-award-fiction` | 83 von 83 | en.wikipedia | Nicht der Open-Library-Tag (267 Treffer mit Nicht-Preisträgern). *Cold Mountain* zeigte die französische Ausgabe; ersetzt durch die Sceptre-Erstausgabe 1997 (OL31920608M). |
+
+- Die Preiswände heißen wie die Hugo-Wand („Nebula Award — best novel“, „National Book Award — fiction“) und sind Reihen-Sammlungen ohne Verlagsliste.
+- **robots.txt:** Open Library sperrt `/search` für alle Nutzer; ob das `search.json` meint, ist ROADMAP 6.63.

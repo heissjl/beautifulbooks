@@ -38202,6 +38202,4480 @@
           "coverIsbn": "9783473517855"
         }
       ]
+    },
+    {
+      "slug": "insel-taschenbuch",
+      "title": "insel taschenbuch",
+      "kind": "series",
+      "intro": "Willy Fleckhaus designed the insel taschenbuch in 1972: pale card in ten colours, classical type, and a picture taken from an old book illustration, painting or portrait in a window on the front. The wall shows numbers 1 to 1500, the years of that design, where Open Library holds the cover; later numbers mix other designs.",
+      "published": false,
+      "publishers": [
+        "Insel",
+        "Insel Verlag"
+      ],
+      "works": [
+        {
+          "id": "OL52449W",
+          "title": "Die Wahlverwandtschaften",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:1010520",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317015",
+          "coverIsbn": "3458317015"
+        },
+        {
+          "id": "OL3801005W",
+          "title": "Das Stunden-Buch enthaltend die drei Bücher",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:14227239",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317023",
+          "coverIsbn": "3458317023"
+        },
+        {
+          "id": "OL1414422W",
+          "title": "Eisbären",
+          "author": "Marie Luise Kaschnitz",
+          "coverId": "ol:13866659",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345831704X",
+          "coverIsbn": "345831704X"
+        },
+        {
+          "id": "OL14877865W",
+          "title": "Die Erzählungen und Märchen",
+          "author": "Oscar Wilde",
+          "coverId": "ol:14294693",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317058",
+          "coverIsbn": "3458317058"
+        },
+        {
+          "id": "OL20779978W",
+          "title": "Das Dekameron",
+          "author": "Giovanni Boccaccio",
+          "coverId": "ol:11451314",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317082",
+          "coverIsbn": "3458317082"
+        },
+        {
+          "id": "OL100672W",
+          "title": "Candide oder der Optimismus",
+          "author": "Voltaire",
+          "coverId": "ol:13319612",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317112",
+          "coverIsbn": "3458317112"
+        },
+        {
+          "id": "OL45518475W",
+          "title": "Die Nibelungen",
+          "author": "Franz Keim",
+          "coverId": "ol:15222873",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317147",
+          "coverIsbn": "3458317147"
+        },
+        {
+          "id": "OL15729728W",
+          "title": "Sophokles König Ödipus",
+          "author": "Sophocles",
+          "coverId": "ol:1010524",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317155",
+          "coverIsbn": "3458317155"
+        },
+        {
+          "id": "OL1441746W",
+          "title": "Kalendergeschichten",
+          "author": "Johann Peter Hebel",
+          "coverId": "ol:1010525",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317171",
+          "coverIsbn": "3458317171"
+        },
+        {
+          "id": "OL26186485W",
+          "title": "Die grossen Erzählungen",
+          "author": "Лев Толстой",
+          "coverId": "ol:12159188",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345831718X",
+          "coverIsbn": "345831718X"
+        },
+        {
+          "id": "OL1429993W",
+          "title": "Insel Taschenbücher, Nr.22, Der Dreißigjährige Krieg",
+          "author": "Ricarda Huch",
+          "coverId": "ol:3204979",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317228",
+          "coverIsbn": "3458317228"
+        },
+        {
+          "id": "OL52556W",
+          "title": "Die Leiden des jungen Werther",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:14643972",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317252",
+          "coverIsbn": "3458317252"
+        },
+        {
+          "id": "OL3800991W",
+          "title": "Das Buch Der Bilder",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:1010527",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317260",
+          "coverIsbn": "3458317260"
+        },
+        {
+          "id": "OL26440415W",
+          "title": "Buch der Lieder",
+          "author": "Heinrich Heine",
+          "coverId": "ol:12605315",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317333",
+          "coverIsbn": "3458317333"
+        },
+        {
+          "id": "OL138052W",
+          "title": "Alice im Wunderland",
+          "author": "Lewis Carroll",
+          "coverId": "ol:12740018",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317422",
+          "coverIsbn": "3458317422"
+        },
+        {
+          "id": "OL3800724W",
+          "title": "Geschichten vom lieben Gott",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:11501450",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317430",
+          "coverIsbn": "3458317430"
+        },
+        {
+          "id": "OL3801004W",
+          "title": "Neue Gedichte",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:1010534",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345831749X",
+          "coverIsbn": "345831749X"
+        },
+        {
+          "id": "OL8317818W",
+          "title": "Faust I",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:1010535",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317503",
+          "coverIsbn": "3458317503"
+        },
+        {
+          "id": "OL34311492W",
+          "title": "Salome Lebensruckblick",
+          "author": "Lou Andreas",
+          "coverId": "ol:13194801",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317546",
+          "coverIsbn": "3458317546"
+        },
+        {
+          "id": "OL14905133W",
+          "title": "Gullivers Reisen",
+          "author": "Jonathan Swift",
+          "coverId": "ol:3204980",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317589",
+          "coverIsbn": "3458317589"
+        },
+        {
+          "id": "OL15198785W",
+          "title": "Kant-Brevier. Ein philosophisches Lesebuch für freie Minuten.",
+          "author": "Immanuel Kant",
+          "coverId": "ol:1010537",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317619",
+          "coverIsbn": "3458317619"
+        },
+        {
+          "id": "OL20267260W",
+          "title": "Antigone.",
+          "author": "Sophocles",
+          "coverId": "ol:13120808",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317708",
+          "coverIsbn": "3458317708"
+        },
+        {
+          "id": "OL9068668W",
+          "title": "Duineser Elegien Sonette an Orpheus",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:1010541",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317805",
+          "coverIsbn": "3458317805"
+        },
+        {
+          "id": "OL2162410W",
+          "title": "Das Buch der Liebe",
+          "author": "Elisabeth Borchers",
+          "coverId": "ol:14435235",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317821",
+          "coverIsbn": "3458317821"
+        },
+        {
+          "id": "OL19075725W",
+          "title": "Nachtwachen von Bonaventura",
+          "author": "Richard Brinkmann",
+          "coverId": "ol:8391019",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317899",
+          "coverIsbn": "3458317899"
+        },
+        {
+          "id": "OL26189427W",
+          "title": "Das grosse Lalula und andere Gedichte und Geschichten von morgens bis abends für Kinder",
+          "author": "Elisabeth Borchers",
+          "coverId": "ol:12164713",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317910",
+          "coverIsbn": "3458317910"
+        },
+        {
+          "id": "OL93082W",
+          "title": "Die göttliche Komödie",
+          "author": "Dante Alighieri",
+          "coverId": "ol:13319558",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317945",
+          "coverIsbn": "3458317945"
+        },
+        {
+          "id": "OL151406W",
+          "title": "Insel Taschenbücher, Nr.97, Alice hinter den Spiegeln",
+          "author": "Lewis Carroll",
+          "coverId": "ol:1010543",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345831797X",
+          "coverIsbn": "345831797X"
+        },
+        {
+          "id": "OL24709221W",
+          "title": "Ausgesetzt auf den Bergen des Herzens",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:11431359",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458317988",
+          "coverIsbn": "3458317988"
+        },
+        {
+          "id": "OL8317819W",
+          "title": "Faust II",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:3204981",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318003",
+          "coverIsbn": "3458318003"
+        },
+        {
+          "id": "OL14877882W",
+          "title": "Salome.",
+          "author": "Oscar Wilde",
+          "coverId": "ol:1010545",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318070",
+          "coverIsbn": "3458318070"
+        },
+        {
+          "id": "OL24152683W",
+          "title": "Mordillos Träumereien und andere wunderliche Geschichten",
+          "author": "Guillermo Mordillo",
+          "coverId": "ol:10552033",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318089",
+          "coverIsbn": "3458318089"
+        },
+        {
+          "id": "OL19041850W",
+          "title": "Der Wandsbecker Bote",
+          "author": "Matthias Claudius",
+          "coverId": "ol:13400102",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318305",
+          "coverIsbn": "3458318305"
+        },
+        {
+          "id": "OL857189W",
+          "title": "Effi Briest",
+          "author": "Theodor Fontane",
+          "coverId": "ol:14538960",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318380",
+          "coverIsbn": "3458318380"
+        },
+        {
+          "id": "OL3150684W",
+          "title": "Die Handschrift von Saragossa",
+          "author": "Jan Potocki",
+          "coverId": "ol:15164402",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318399",
+          "coverIsbn": "3458318399"
+        },
+        {
+          "id": "OL21177W",
+          "title": "Die Sturmhöhe",
+          "author": "Emily Brontë",
+          "coverId": "ol:11944231",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318410",
+          "coverIsbn": "3458318410"
+        },
+        {
+          "id": "OL8967313W",
+          "title": "Am Kamin Und Andere Unheimliche Geschichten",
+          "author": "Theodor Storm",
+          "coverId": "ol:1010551",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318437",
+          "coverIsbn": "3458318437"
+        },
+        {
+          "id": "OL98130W",
+          "title": "Also Sprach Zarathustra",
+          "author": "Friedrich Nietzsche",
+          "coverId": "ol:1010552",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318453",
+          "coverIsbn": "3458318453"
+        },
+        {
+          "id": "OL658250W",
+          "title": "Der goldene Esel",
+          "author": "Lucius Apuleius",
+          "coverId": "ol:2206746",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318461",
+          "coverIsbn": "3458318461"
+        },
+        {
+          "id": "OL52470W",
+          "title": "Dichtung und Wahrheit.",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:2206747",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345831850X",
+          "coverIsbn": "345831850X"
+        },
+        {
+          "id": "OL857347W",
+          "title": "Der Stechlin",
+          "author": "Theodor Fontane",
+          "coverId": "ol:2206748",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318526",
+          "coverIsbn": "3458318526"
+        },
+        {
+          "id": "OL1673015W",
+          "title": "Aphorismen.",
+          "author": "Georg Christoph Lichtenberg",
+          "coverId": "ol:1010555",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318658",
+          "coverIsbn": "3458318658"
+        },
+        {
+          "id": "OL969787W",
+          "title": "Lebensansichten DES Katers Murr",
+          "author": "E. T. A. Hoffmann",
+          "coverId": "ol:1010556",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318682",
+          "coverIsbn": "3458318682"
+        },
+        {
+          "id": "OL1451544W",
+          "title": "Der Zerbrochene Krug",
+          "author": "Heinrich von Kleist",
+          "coverId": "ol:1010557",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318712",
+          "coverIsbn": "3458318712"
+        },
+        {
+          "id": "OL52574W",
+          "title": "Tagebuch Der Italienischen Reise",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:1010559",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458318763",
+          "coverIsbn": "3458318763"
+        },
+        {
+          "id": "OL207598W",
+          "title": "Der Geisterseher",
+          "author": "Friedrich Schiller",
+          "coverId": "ol:1010561",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319123",
+          "coverIsbn": "3458319123"
+        },
+        {
+          "id": "OL17815373W",
+          "title": "Märchen",
+          "author": "Wilhelm Hauff",
+          "coverId": "ol:10567830",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319174",
+          "coverIsbn": "3458319174"
+        },
+        {
+          "id": "OL1361620W",
+          "title": "Die Erzählungen aus den Tausendundein Nächten. 12 Bände.",
+          "author": "Enno Littmann",
+          "coverId": "ol:1010563",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319247",
+          "coverIsbn": "3458319247"
+        },
+        {
+          "id": "OL52672W",
+          "title": "Hermann Und Dorothea",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:2206752",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319255",
+          "coverIsbn": "3458319255"
+        },
+        {
+          "id": "OL24753927W",
+          "title": "Leben Und Werk",
+          "author": "Bernhard Zeller",
+          "coverId": "ol:11499479",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319263",
+          "coverIsbn": "3458319263"
+        },
+        {
+          "id": "OL34311486W",
+          "title": "Zwei Prager Geschichten und ein Prager Künstler",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:13194706",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319352",
+          "coverIsbn": "3458319352"
+        },
+        {
+          "id": "OL8250151W",
+          "title": "Der Unheimliche Gast Etc.",
+          "author": "E. T. A. Hoffmann",
+          "coverId": "ol:10572031",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345831945X",
+          "coverIsbn": "345831945X"
+        },
+        {
+          "id": "OL24217109W",
+          "title": "Alte, unnennbare Tage",
+          "author": "Eduard Mörike",
+          "coverId": "ol:10674270",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319468",
+          "coverIsbn": "3458319468"
+        },
+        {
+          "id": "OL1451531W",
+          "title": "Erzählungen",
+          "author": "Heinrich von Kleist",
+          "coverId": "ol:14630191",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319476",
+          "coverIsbn": "3458319476"
+        },
+        {
+          "id": "OL19031499W",
+          "title": "Kin Ping Meh oder die abenteuerliche Geschichte von Hsi Men und seinen sechs Frauen.",
+          "author": "",
+          "coverId": "ol:3204985",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319530",
+          "coverIsbn": "3458319530"
+        },
+        {
+          "id": "OL9055264W",
+          "title": "Gedichte",
+          "author": "Joseph von Eichendorff",
+          "coverId": "ol:2206754",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319557",
+          "coverIsbn": "3458319557"
+        },
+        {
+          "id": "OL16033847W",
+          "title": "Adolph Freiherr von Knigge über den Umgang mit Menschen",
+          "author": "Gert Ueding",
+          "coverId": "ol:9993526",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319735",
+          "coverIsbn": "3458319735"
+        },
+        {
+          "id": "OL52485W",
+          "title": "Goethes Liebesgedichte",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:3204986",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319751",
+          "coverIsbn": "3458319751"
+        },
+        {
+          "id": "OL93842W",
+          "title": "Bel Ami.",
+          "author": "Guy de Maupassant",
+          "coverId": "ol:2206756",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319808",
+          "coverIsbn": "3458319808"
+        },
+        {
+          "id": "OL15692719W",
+          "title": "Ecce homo",
+          "author": "Friedrich Nietzsche",
+          "coverId": "ol:2206757",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319905",
+          "coverIsbn": "3458319905"
+        },
+        {
+          "id": "OL1451536W",
+          "title": "Die Marquise Von O",
+          "author": "Heinrich von Kleist",
+          "coverId": "ol:1010574",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458319999",
+          "coverIsbn": "3458319999"
+        },
+        {
+          "id": "OL969753W",
+          "title": "Die Elixiere DES Teufels",
+          "author": "E. T. A. Hoffmann",
+          "coverId": "ol:1010575",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320040",
+          "coverIsbn": "3458320040"
+        },
+        {
+          "id": "OL733285W",
+          "title": "Die Kartause von Parma",
+          "author": "Stendhal",
+          "coverId": "ol:11450892",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320075",
+          "coverIsbn": "3458320075"
+        },
+        {
+          "id": "OL15096869W",
+          "title": "Geschichte meines Lebens. Aus ihrem autobiographischen Werk",
+          "author": "George Sand",
+          "coverId": "ol:1010576",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832013X",
+          "coverIsbn": "345832013X"
+        },
+        {
+          "id": "OL15086173W",
+          "title": "Ein Puppenheim.",
+          "author": "Henrik Ibsen",
+          "coverId": "ol:1010577",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320237",
+          "coverIsbn": "3458320237"
+        },
+        {
+          "id": "OL23024578W",
+          "title": "Das Kalte Herz und andere Texte der Romantik",
+          "author": "Frank, Manfred",
+          "coverId": "ol:2206758",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832030X",
+          "coverIsbn": "345832030X"
+        },
+        {
+          "id": "OL7963751W",
+          "title": "Der Grune Heinrich (2 Vols)",
+          "author": "Keller (undifferentiated)",
+          "coverId": "ol:1010578",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320350",
+          "coverIsbn": "3458320350"
+        },
+        {
+          "id": "OL9068693W",
+          "title": "Till Eulenspiegel",
+          "author": "H. BOTE",
+          "coverId": "ol:1010579",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320369",
+          "coverIsbn": "3458320369"
+        },
+        {
+          "id": "OL9068666W",
+          "title": "Die Drei Liebenden",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:3204988",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320555",
+          "coverIsbn": "3458320555"
+        },
+        {
+          "id": "OL15032960W",
+          "title": "Novellen und Gedichte.",
+          "author": "Hermann Hesse",
+          "coverId": "ol:3204989",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320601",
+          "coverIsbn": "3458320601"
+        },
+        {
+          "id": "OL684115W",
+          "title": "Hyperion",
+          "author": "Friedrich Hölderlin",
+          "coverId": "ol:2206760",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320652",
+          "coverIsbn": "3458320652"
+        },
+        {
+          "id": "OL8347405W",
+          "title": "Die Chronik Der Sperlingsgasse",
+          "author": "Wilhelm Raabe",
+          "coverId": "ol:2206761",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320709",
+          "coverIsbn": "3458320709"
+        },
+        {
+          "id": "OL893601W",
+          "title": "Bouvard und Pécuchet",
+          "author": "Gustave Flaubert",
+          "coverId": "ol:14559298",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320733",
+          "coverIsbn": "3458320733"
+        },
+        {
+          "id": "OL1140825W",
+          "title": "Mozart auf der Reise nach Prag",
+          "author": "Eduard Mörike",
+          "coverId": "ol:10966133",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320768",
+          "coverIsbn": "3458320768"
+        },
+        {
+          "id": "OL5622302W",
+          "title": "Manuel Gassers Kräutergarten",
+          "author": "Manuel Gasser",
+          "coverId": "ol:14418100",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320776",
+          "coverIsbn": "3458320776"
+        },
+        {
+          "id": "OL6260555W",
+          "title": "Schmetterlinge",
+          "author": "Hesse.",
+          "coverId": "ol:3204990",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320857",
+          "coverIsbn": "3458320857"
+        },
+        {
+          "id": "OL1329103W",
+          "title": "Erhart Kästner",
+          "author": "Kästner, Erhart",
+          "coverId": "ol:13525239",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320865",
+          "coverIsbn": "3458320865"
+        },
+        {
+          "id": "OL1235370W",
+          "title": "Das Kajütenbuch",
+          "author": "Charles Sealsfield",
+          "coverId": "ol:1010582",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832092X",
+          "coverIsbn": "345832092X"
+        },
+        {
+          "id": "OL6260559W",
+          "title": "Knulp",
+          "author": "Hesse.",
+          "coverId": "ol:1010583",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320946",
+          "coverIsbn": "3458320946"
+        },
+        {
+          "id": "OL19075726W",
+          "title": "Madame de Sévigné",
+          "author": "Marie de Rabutin-Chantal",
+          "coverId": "ol:8391022",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320954",
+          "coverIsbn": "3458320954"
+        },
+        {
+          "id": "OL1456168W",
+          "title": "Die Judenbuche",
+          "author": "Annette von Droste-Hülshoff",
+          "coverId": "ol:1010585",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458320997",
+          "coverIsbn": "3458320997"
+        },
+        {
+          "id": "OL9072873W",
+          "title": "Der Menschen Feind",
+          "author": "Hans Magnus Enzensberger",
+          "coverId": "ol:3204991",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321012",
+          "coverIsbn": "3458321012"
+        },
+        {
+          "id": "OL1140818W",
+          "title": "Maler Nolten",
+          "author": "Eduard Mörike",
+          "coverId": "ol:2206763",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321047",
+          "coverIsbn": "3458321047"
+        },
+        {
+          "id": "OL969604W",
+          "title": "Das Fraulein Von Scuderi",
+          "author": "E. T. A. Hoffmann",
+          "coverId": "ol:1010586",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321101",
+          "coverIsbn": "3458321101"
+        },
+        {
+          "id": "OL10343279W",
+          "title": "Götterlehre",
+          "author": "Karl Philipp Moritz",
+          "coverId": "ol:11355624",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321195",
+          "coverIsbn": "3458321195"
+        },
+        {
+          "id": "OL52601W",
+          "title": "Novellen.",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:3204992",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832125X",
+          "coverIsbn": "345832125X"
+        },
+        {
+          "id": "OL1548841W",
+          "title": "Briefe der Liselotte von der Pfalz",
+          "author": "Orléans, Charlotte-Elisabeth duchesse d'",
+          "coverId": "ol:1010587",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321284",
+          "coverIsbn": "3458321284"
+        },
+        {
+          "id": "OL8088344W",
+          "title": "Lenz Erzählung. Mit Materialien zum Text.",
+          "author": "Georg Büchner",
+          "coverId": "ol:2206764",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321292",
+          "coverIsbn": "3458321292"
+        },
+        {
+          "id": "OL14943526W",
+          "title": "Aus dem Wörterbuch des Teufels",
+          "author": "Dieter E. Zimmer",
+          "coverId": "ol:1010589",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321403",
+          "coverIsbn": "3458321403"
+        },
+        {
+          "id": "OL1262436W",
+          "title": "Größe und Elend des Menschen",
+          "author": "Blaise Pascal",
+          "coverId": "ol:3204993",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321411",
+          "coverIsbn": "3458321411"
+        },
+        {
+          "id": "OL1447685W",
+          "title": "Hans Dampf in allen Gassen",
+          "author": "Heinrich Zschokke",
+          "coverId": "ol:11167905",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321438",
+          "coverIsbn": "3458321438"
+        },
+        {
+          "id": "OL453553W",
+          "title": "Perserbriefe",
+          "author": "Charles-Louis de Secondat baron de La Brède et de Montesquieu",
+          "coverId": "ol:3204994",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321586",
+          "coverIsbn": "3458321586"
+        },
+        {
+          "id": "OL85143W",
+          "title": "Die Frau von dreißig Jahren",
+          "author": "Honoré de Balzac",
+          "coverId": "ol:15222568",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321608",
+          "coverIsbn": "3458321608"
+        },
+        {
+          "id": "OL27677616W",
+          "title": "Deutsche Sagen",
+          "author": "Jacob Grimm",
+          "coverId": "ol:12654994",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321810",
+          "coverIsbn": "3458321810"
+        },
+        {
+          "id": "OL872875W",
+          "title": "Magie der Farben",
+          "author": "Hermann Hesse",
+          "coverId": "ol:1010593",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321829",
+          "coverIsbn": "3458321829"
+        },
+        {
+          "id": "OL10779W",
+          "title": "Ich Wolkenstein",
+          "author": "Dieter Kühn",
+          "coverId": "ol:13083981",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458321977",
+          "coverIsbn": "3458321977"
+        },
+        {
+          "id": "OL9068698W",
+          "title": "Gespraeche Mit Goethe",
+          "author": "Johann Eckermann",
+          "coverId": "ol:1010594",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322000",
+          "coverIsbn": "3458322000"
+        },
+        {
+          "id": "OL15326175W",
+          "title": "Unzeitgemässe Betrachtungen",
+          "author": "Friedrich Nietzsche",
+          "coverId": "ol:15222866",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322094",
+          "coverIsbn": "3458322094"
+        },
+        {
+          "id": "OL4569483W",
+          "title": "Alltagsleben im Mittelalter",
+          "author": "Otto Borst",
+          "coverId": "ol:12065226",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322132",
+          "coverIsbn": "3458322132"
+        },
+        {
+          "id": "OL3127278W",
+          "title": "Edith Piaf. Die Geschichte der Piaf. Ihr Leben in Text und Bildern.",
+          "author": "Monique Lange",
+          "coverId": "ol:3204995",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322167",
+          "coverIsbn": "3458322167"
+        },
+        {
+          "id": "OL14922255W",
+          "title": "Leben des Benvenuto Cellini.",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:3204996",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322256",
+          "coverIsbn": "3458322256"
+        },
+        {
+          "id": "OL11221095W",
+          "title": "Born Judas",
+          "author": "Micah Joseph Berdichevsky",
+          "coverId": "ol:2206767",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322299",
+          "coverIsbn": "3458322299"
+        },
+        {
+          "id": "OL26425752W",
+          "title": "Istanbul",
+          "author": "Esther Gallwitz",
+          "coverId": "ol:12390437",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322302",
+          "coverIsbn": "3458322302"
+        },
+        {
+          "id": "OL15681350W",
+          "title": "Stefan Zweig",
+          "author": "Stefan Zweig",
+          "coverId": "ol:15222870",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322329",
+          "coverIsbn": "3458322329"
+        },
+        {
+          "id": "OL41751296W",
+          "title": "Mr. Jonathan Wild der Große",
+          "author": "Henry Fielding",
+          "coverId": "ol:15256065",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322353",
+          "coverIsbn": "3458322353"
+        },
+        {
+          "id": "OL1103511W",
+          "title": "Romanzero.",
+          "author": "Heinrich Heine",
+          "coverId": "ol:3204997",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322388",
+          "coverIsbn": "3458322388"
+        },
+        {
+          "id": "OL857349W",
+          "title": "Ein leben in Briefen",
+          "author": "Theodor Fontane",
+          "coverId": "ol:13904752",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832240X",
+          "coverIsbn": "345832240X"
+        },
+        {
+          "id": "OL19485642W",
+          "title": "Frauenbriefe der Romantik",
+          "author": "Katja Behrens",
+          "coverId": "ol:14819001",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322450",
+          "coverIsbn": "3458322450"
+        },
+        {
+          "id": "OL19075727W",
+          "title": "Hastenbeck. Eine Erzählung.",
+          "author": "Wilhelm Raabe",
+          "coverId": "ol:8391024",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322639",
+          "coverIsbn": "3458322639"
+        },
+        {
+          "id": "OL24241923W",
+          "title": "Wilhelm Meisters Wanderjahre oder die Entsagenden",
+          "author": "Adolf Goethe; Muschg",
+          "coverId": "ol:10720965",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322752",
+          "coverIsbn": "3458322752"
+        },
+        {
+          "id": "OL771119W",
+          "title": "Leonce Und Lena",
+          "author": "Georg Büchner",
+          "coverId": "ol:3204998",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322949",
+          "coverIsbn": "3458322949"
+        },
+        {
+          "id": "OL24269113W",
+          "title": "Heinrich von Ofterdingen",
+          "author": "Novalis",
+          "coverId": "ol:10761726",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458322965",
+          "coverIsbn": "3458322965"
+        },
+        {
+          "id": "OL1696356W",
+          "title": "Heinrich Heine",
+          "author": "Joseph A. Kruse",
+          "coverId": "ol:2206769",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323155",
+          "coverIsbn": "3458323155"
+        },
+        {
+          "id": "OL8089151W",
+          "title": "Hauspostille",
+          "author": "Bertolt Brecht",
+          "coverId": "ol:12572556",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323171",
+          "coverIsbn": "3458323171"
+        },
+        {
+          "id": "OL19020338W",
+          "title": "Über Deutschland.",
+          "author": "Germaine de Staël",
+          "coverId": "ol:3204999",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323236",
+          "coverIsbn": "3458323236"
+        },
+        {
+          "id": "OL3800614W",
+          "title": "Aufzeichnungen Des Malte Laurids Brigge (Insel Taschenbuch)",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:1010601",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323309",
+          "coverIsbn": "3458323309"
+        },
+        {
+          "id": "OL15326219W",
+          "title": "Die Froehliche Wissenschaft",
+          "author": "Friedrich Nietzsche",
+          "coverId": "ol:1010602",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832335X",
+          "coverIsbn": "345832335X"
+        },
+        {
+          "id": "OL15097939W",
+          "title": "Das geheime Tagebuch.",
+          "author": "Samuel Pepys",
+          "coverId": "ol:3205000",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323376",
+          "coverIsbn": "3458323376"
+        },
+        {
+          "id": "OL24163544W",
+          "title": "Glückspeter",
+          "author": "Hans Christian Andersen",
+          "coverId": "ol:10575200",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323430",
+          "coverIsbn": "3458323430"
+        },
+        {
+          "id": "OL2807206W",
+          "title": "Der tanzende Tod. Mittelalterliche Totentänze.",
+          "author": "Gert Kaiser",
+          "coverId": "ol:14166703",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323473",
+          "coverIsbn": "3458323473"
+        },
+        {
+          "id": "OL26426629W",
+          "title": "Goethe - Erfahrungen der Geschichte",
+          "author": "Horst Günther",
+          "coverId": "ol:12391738",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323503",
+          "coverIsbn": "3458323503"
+        },
+        {
+          "id": "OL37327383W",
+          "title": "Das Herbstbuch",
+          "author": "Bender, Hans",
+          "coverId": "ol:15258428",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323570",
+          "coverIsbn": "3458323570"
+        },
+        {
+          "id": "OL4715438W",
+          "title": "Tagebücher, 1918-1937",
+          "author": "Harry Graf Kessler",
+          "coverId": "ol:8391025",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323597",
+          "coverIsbn": "3458323597"
+        },
+        {
+          "id": "OL1414472W",
+          "title": "Beschreibung eines Dorfes",
+          "author": "Marie Luise Kaschnitz",
+          "coverId": "ol:8391026",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323651",
+          "coverIsbn": "3458323651"
+        },
+        {
+          "id": "OL8721462W",
+          "title": "Grosse Erwartungen",
+          "author": "Charles Dickens",
+          "coverId": "ol:13774924",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323678",
+          "coverIsbn": "3458323678"
+        },
+        {
+          "id": "OL8971145W",
+          "title": "Das Trinkgelage oder Über den Eros.",
+          "author": "Plato",
+          "coverId": "ol:1010603",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458323813",
+          "coverIsbn": "3458323813"
+        },
+        {
+          "id": "OL3800819W",
+          "title": "Gedichte.",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:1010604",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324011",
+          "coverIsbn": "3458324011"
+        },
+        {
+          "id": "OL1989818W",
+          "title": "Die Günderode",
+          "author": "Bettina von Arnim",
+          "coverId": "ol:10564462",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832402X",
+          "coverIsbn": "345832402X"
+        },
+        {
+          "id": "OL14936883W",
+          "title": "Rede gegen den Krieg",
+          "author": "Лев Толстой",
+          "coverId": "ol:10524234",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324038",
+          "coverIsbn": "3458324038"
+        },
+        {
+          "id": "OL5134645W",
+          "title": "Erotische Geschichten aus den Tausendundein Nächten.",
+          "author": "Felix Tauer",
+          "coverId": "ol:3205001",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324046",
+          "coverIsbn": "3458324046"
+        },
+        {
+          "id": "OL857333W",
+          "title": "Meine Kinderjahre",
+          "author": "Theodor Fontane",
+          "coverId": "ol:13053171",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324054",
+          "coverIsbn": "3458324054"
+        },
+        {
+          "id": "OL24207801W",
+          "title": "Der Elementargeist",
+          "author": "E. T. A. Hoffmann",
+          "coverId": "ol:10653836",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324062",
+          "coverIsbn": "3458324062"
+        },
+        {
+          "id": "OL45139W",
+          "title": "Glück und Unglück der berühmten Moll Flanders.",
+          "author": "Daniel Defoe",
+          "coverId": "ol:1010605",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324070",
+          "coverIsbn": "3458324070"
+        },
+        {
+          "id": "OL982014W",
+          "title": "Indiana.",
+          "author": "George Sand",
+          "coverId": "ol:3205002",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324119",
+          "coverIsbn": "3458324119"
+        },
+        {
+          "id": "OL26440877W",
+          "title": "Dramen",
+          "author": "Gotthold Ephraim Lessing",
+          "coverId": "ol:12463610",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324143",
+          "coverIsbn": "3458324143"
+        },
+        {
+          "id": "OL19075728W",
+          "title": "Aristipp und einige seiner Zeitgenossen",
+          "author": "Christoph M. Wieland",
+          "coverId": "ol:8391027",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324186",
+          "coverIsbn": "3458324186"
+        },
+        {
+          "id": "OL9068700W",
+          "title": "Deutschland Ein Wintermarchen",
+          "author": "Heinrich Heine",
+          "coverId": "ol:1010607",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324232",
+          "coverIsbn": "3458324232"
+        },
+        {
+          "id": "OL15204457W",
+          "title": "Wieland Lesebuch.",
+          "author": "Christoph Martin Wieland",
+          "coverId": "ol:3205003",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324291",
+          "coverIsbn": "3458324291"
+        },
+        {
+          "id": "OL995156W",
+          "title": "Gesammelte Werke in sechs Bänden",
+          "author": "Theodor Storm",
+          "coverId": "ol:1010609",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324313",
+          "coverIsbn": "3458324313"
+        },
+        {
+          "id": "OL995251W",
+          "title": "Immensee und andere Novellen",
+          "author": "Theodor Storm",
+          "coverId": "ol:1010611",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324321",
+          "coverIsbn": "3458324321"
+        },
+        {
+          "id": "OL995180W",
+          "title": "Pole Poppenspäler und andere Novellen",
+          "author": "Theodor Storm",
+          "coverId": "ol:1010612",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832433X",
+          "coverIsbn": "345832433X"
+        },
+        {
+          "id": "OL995131W",
+          "title": "Carsten Curator und andere Novellen",
+          "author": "Theodor Storm",
+          "coverId": "ol:12175423",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324348",
+          "coverIsbn": "3458324348"
+        },
+        {
+          "id": "OL995160W",
+          "title": "Hans und Heinz Kirch und andere Novellen",
+          "author": "Theodor Storm",
+          "coverId": "ol:2206774",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324356",
+          "coverIsbn": "3458324356"
+        },
+        {
+          "id": "OL995265W",
+          "title": "Der Schimmelreiter",
+          "author": "Theodor Storm",
+          "coverId": "ol:1010613",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324364",
+          "coverIsbn": "3458324364"
+        },
+        {
+          "id": "OL981959W",
+          "title": "Lélia",
+          "author": "George Sand",
+          "coverId": "ol:15230517",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324372",
+          "coverIsbn": "3458324372"
+        },
+        {
+          "id": "OL1437469W",
+          "title": "Der abenteuerliche Simplicissimus.",
+          "author": "Hans Jakob Christoffel von Grimmelshausen",
+          "coverId": "ol:1010615",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324399",
+          "coverIsbn": "3458324399"
+        },
+        {
+          "id": "OL26186477W",
+          "title": "Frau Jenny Treibel, oder, \"Wo sich Herz zum Herzen findt\"",
+          "author": "Theodor Fontane",
+          "coverId": "ol:12159178",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324461",
+          "coverIsbn": "3458324461"
+        },
+        {
+          "id": "OL24161104W",
+          "title": "Atta Troll",
+          "author": "Heinrich Heine",
+          "coverId": "ol:10569582",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324488",
+          "coverIsbn": "3458324488"
+        },
+        {
+          "id": "OL25068166W",
+          "title": "Der Landstreicher und andere Erzählungen",
+          "author": "Maksim Gorʹkij",
+          "coverId": "ol:11955198",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324496",
+          "coverIsbn": "3458324496"
+        },
+        {
+          "id": "OL7968018W",
+          "title": "Ivanhoe. Roman.",
+          "author": "Sir Walter Scott",
+          "coverId": "ol:3205005",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324518",
+          "coverIsbn": "3458324518"
+        },
+        {
+          "id": "OL207636W",
+          "title": "Wallenstein",
+          "author": "Friedrich Schiller",
+          "coverId": "ol:3205006",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324526",
+          "coverIsbn": "3458324526"
+        },
+        {
+          "id": "OL1446215W",
+          "title": "Romeo Und Julia Auf Dem Dorfe",
+          "author": "Gottfried Keller",
+          "coverId": "ol:3205008",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324569",
+          "coverIsbn": "3458324569"
+        },
+        {
+          "id": "OL15263080W",
+          "title": "Reise um die Welt.",
+          "author": "Georg Forster",
+          "coverId": "ol:3205009",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324577",
+          "coverIsbn": "3458324577"
+        },
+        {
+          "id": "OL98174W",
+          "title": "Jenseits von Gut und Böse",
+          "author": "Friedrich Nietzsche",
+          "coverId": "ol:13770845",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324623",
+          "coverIsbn": "3458324623"
+        },
+        {
+          "id": "OL267110W",
+          "title": "Die Kreutzersonate. Erzählung.",
+          "author": "Лев Толстой",
+          "coverId": "ol:1010617",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324631",
+          "coverIsbn": "3458324631"
+        },
+        {
+          "id": "OL1989819W",
+          "title": "Goethes Briefwechsel mit einem Kinde",
+          "author": "Bettina von Arnim",
+          "coverId": "ol:12724619",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324674",
+          "coverIsbn": "3458324674"
+        },
+        {
+          "id": "OL857311W",
+          "title": "Irrungen, Wirrungen",
+          "author": "Theodor Fontane",
+          "coverId": "ol:1010619",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324712",
+          "coverIsbn": "3458324712"
+        },
+        {
+          "id": "OL29239601W",
+          "title": "Deutsche Criminalgeschichten",
+          "author": "Friedrich Schiller",
+          "coverId": "ol:12973314",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324739",
+          "coverIsbn": "3458324739"
+        },
+        {
+          "id": "OL27682719W",
+          "title": "Rameaus Neffe",
+          "author": "Denis Diderot",
+          "coverId": "ol:12663040",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324755",
+          "coverIsbn": "3458324755"
+        },
+        {
+          "id": "OL1454566W",
+          "title": "Leberecht Hühnchen",
+          "author": "Heinrich Seidel",
+          "coverId": "ol:2206775",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324860",
+          "coverIsbn": "3458324860"
+        },
+        {
+          "id": "OL66554W",
+          "title": "Stolz und Vorurteil",
+          "author": "Jane Austen",
+          "coverId": "ol:15172095",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324879",
+          "coverIsbn": "3458324879"
+        },
+        {
+          "id": "OL26176312W",
+          "title": "Liebesgeschichten",
+          "author": "Elisabeth Borchers",
+          "coverId": "ol:12141592",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324895",
+          "coverIsbn": "3458324895"
+        },
+        {
+          "id": "OL457760W",
+          "title": "Auferstehung. Roman.",
+          "author": "Лев Толстой",
+          "coverId": "ol:2206776",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324917",
+          "coverIsbn": "3458324917"
+        },
+        {
+          "id": "OL4575711W",
+          "title": "Schwestern berühmter Männer. Zwölf biographische Portraits.",
+          "author": "Luise F. Pusch",
+          "coverId": "ol:10246016",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324968",
+          "coverIsbn": "3458324968"
+        },
+        {
+          "id": "OL969728W",
+          "title": "Die Abenteuer der Silvester- Nacht.",
+          "author": "E. T. A. Hoffmann",
+          "coverId": "ol:3205010",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458324984",
+          "coverIsbn": "3458324984"
+        },
+        {
+          "id": "OL2577404W",
+          "title": "Picassos Guernica.",
+          "author": "Max Imdahl",
+          "coverId": "ol:3205011",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325069",
+          "coverIsbn": "3458325069"
+        },
+        {
+          "id": "OL26180805W",
+          "title": "Gedichte",
+          "author": "Karoline von Günderode",
+          "coverId": "ol:12148901",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325093",
+          "coverIsbn": "3458325093"
+        },
+        {
+          "id": "OL14949616W",
+          "title": "Jane Eyre. Eine Autobiographie.",
+          "author": "Norbert Kohl",
+          "coverId": "ol:11657943",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325131",
+          "coverIsbn": "3458325131"
+        },
+        {
+          "id": "OL20785577W",
+          "title": "Liebe und Tod in Wien",
+          "author": "Jean Gyory",
+          "coverId": "ol:10074938",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325158",
+          "coverIsbn": "3458325158"
+        },
+        {
+          "id": "OL15010336W",
+          "title": "Götzendämmerung oder Wie man mit dem Hammer philosophiert.",
+          "author": "Karl Schlechta",
+          "coverId": "ol:1010622",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325220",
+          "coverIsbn": "3458325220"
+        },
+        {
+          "id": "OL80587W",
+          "title": "Bekenntnisse.",
+          "author": "Jean-Jacques Rousseau",
+          "coverId": "ol:2206777",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325239",
+          "coverIsbn": "3458325239"
+        },
+        {
+          "id": "OL670157W",
+          "title": "Memoiren einer Idealistin",
+          "author": "Malwida von Meysenbug",
+          "coverId": "ol:8458146",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325247",
+          "coverIsbn": "3458325247"
+        },
+        {
+          "id": "OL1190547W",
+          "title": "Die Schicksale Doktor Bürgers",
+          "author": "Carossa, Hans",
+          "coverId": "ol:11959526",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325301",
+          "coverIsbn": "3458325301"
+        },
+        {
+          "id": "OL8841917W",
+          "title": "Woyzeck",
+          "author": "George Buchner",
+          "coverId": "ol:1010624",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325468",
+          "coverIsbn": "3458325468"
+        },
+        {
+          "id": "OL24163647W",
+          "title": "Chinesische Novellen",
+          "author": "Věnceslava Hrdličková",
+          "coverId": "ol:10575481",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325484",
+          "coverIsbn": "3458325484"
+        },
+        {
+          "id": "OL26190670W",
+          "title": "Berlin im Gedicht",
+          "author": "Barbara Hartlage-Laufenberg",
+          "coverId": "ol:12167313",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325514",
+          "coverIsbn": "3458325514"
+        },
+        {
+          "id": "OL973426W",
+          "title": "Der nackte Mann",
+          "author": "Tankred Dorst",
+          "coverId": "ol:10846534",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325573",
+          "coverIsbn": "3458325573"
+        },
+        {
+          "id": "OL981805W",
+          "title": "Lucrezia Floriani",
+          "author": "George Sand",
+          "coverId": "ol:14613290",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325581",
+          "coverIsbn": "3458325581"
+        },
+        {
+          "id": "OL34576524W",
+          "title": "Hexengeschichten",
+          "author": "",
+          "coverId": "ol:14474753",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325654",
+          "coverIsbn": "3458325654"
+        },
+        {
+          "id": "OL14877914W",
+          "title": "Die Geschichte vom großen Krakeel. Zwischen Iwan Iwanowitsch und Iwan Nikiforowitsch.",
+          "author": "Josef Hegenbarth",
+          "coverId": "ol:1010625",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325700",
+          "coverIsbn": "3458325700"
+        },
+        {
+          "id": "OL1155273W",
+          "title": "Flegeljahre",
+          "author": "Jean Paul",
+          "coverId": "ol:1010626",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325735",
+          "coverIsbn": "3458325735"
+        },
+        {
+          "id": "OL19075729W",
+          "title": "Goethe",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:8391029",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325751",
+          "coverIsbn": "3458325751"
+        },
+        {
+          "id": "OL820438W",
+          "title": "Stopfkuchen",
+          "author": "Wilhelm Raabe",
+          "coverId": "ol:15247328",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325875",
+          "coverIsbn": "3458325875"
+        },
+        {
+          "id": "OL2810529W",
+          "title": "Fabeln und Lieder",
+          "author": "Christian Fürchtegott Gellert",
+          "coverId": "ol:11423772",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325956",
+          "coverIsbn": "3458325956"
+        },
+        {
+          "id": "OL2570910W",
+          "title": "Endlich allein",
+          "author": "Wolfgang Hildesheimer",
+          "coverId": "ol:12459784",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458325980",
+          "coverIsbn": "3458325980"
+        },
+        {
+          "id": "OL37409554W",
+          "title": "Briefwechsel mit Marianne und Johann Jakob Willemar",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:14583180",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326006",
+          "coverIsbn": "3458326006"
+        },
+        {
+          "id": "OL2179384W",
+          "title": "Lou Andreas-Salomé",
+          "author": "Cordula Koepcke",
+          "coverId": "ol:2206778",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326057",
+          "coverIsbn": "3458326057"
+        },
+        {
+          "id": "OL19075730W",
+          "title": "Kokoschka",
+          "author": "Norbert Werner",
+          "coverId": "ol:8391030",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832609X",
+          "coverIsbn": "345832609X"
+        },
+        {
+          "id": "OL26447803W",
+          "title": "Das Frühlingsbuch",
+          "author": "Hans Bender",
+          "coverId": "ol:12476586",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326146",
+          "coverIsbn": "3458326146"
+        },
+        {
+          "id": "OL1351219W",
+          "title": "Heinrich der Löwe",
+          "author": "Helmut Hiller",
+          "coverId": "ol:11643127",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326227",
+          "coverIsbn": "3458326227"
+        },
+        {
+          "id": "OL27059290W",
+          "title": "Die guten Frauen als Gegenbilder der bösen Weiber",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:12576154",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326251",
+          "coverIsbn": "3458326251"
+        },
+        {
+          "id": "OL66534W",
+          "title": "Die Abtei von Northanger",
+          "author": "Jane Austen",
+          "coverId": "ol:10565313",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326316",
+          "coverIsbn": "3458326316"
+        },
+        {
+          "id": "OL969770W",
+          "title": "Der Sandmann",
+          "author": "E. T. A. Hoffmann",
+          "coverId": "ol:1010629",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326340",
+          "coverIsbn": "3458326340"
+        },
+        {
+          "id": "OL33951817W",
+          "title": "Besuche im Städel. Betrachtungen zu Bildern.",
+          "author": "Dolf Sternberger",
+          "coverId": "ol:13098475",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326391",
+          "coverIsbn": "3458326391"
+        },
+        {
+          "id": "OL1459359W",
+          "title": "Der gestiefelte Kater",
+          "author": "Ludwig Tieck",
+          "coverId": "ol:15248582",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326405",
+          "coverIsbn": "3458326405"
+        },
+        {
+          "id": "OL98170W",
+          "title": "Der Antichrist",
+          "author": "Friedrich Nietzsche",
+          "coverId": "ol:11578942",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326472",
+          "coverIsbn": "3458326472"
+        },
+        {
+          "id": "OL11465755W",
+          "title": "Das Gut Stepantschikow und seine Bewohner.",
+          "author": "Fiódor Dostoievski",
+          "coverId": "ol:3205014",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326642",
+          "coverIsbn": "3458326642"
+        },
+        {
+          "id": "OL166923W",
+          "title": "Der Spieler",
+          "author": "Fiódor Dostoievski",
+          "coverId": "ol:1010632",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326685",
+          "coverIsbn": "3458326685"
+        },
+        {
+          "id": "OL166894W",
+          "title": "Schuld und Sühne",
+          "author": "Fiódor Dostoievski",
+          "coverId": "ol:10690908",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326693",
+          "coverIsbn": "3458326693"
+        },
+        {
+          "id": "OL166971W",
+          "title": "Die Dämonen",
+          "author": "Fiódor Dostoievski",
+          "coverId": "ol:3205015",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326723",
+          "coverIsbn": "3458326723"
+        },
+        {
+          "id": "OL19075731W",
+          "title": "Töchter berühmter Männer",
+          "author": "Luise F. Pusch",
+          "coverId": "ol:8391031",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458326790",
+          "coverIsbn": "3458326790"
+        },
+        {
+          "id": "OL15053027W",
+          "title": "Irische Elfenmärchen.",
+          "author": "Gebrüder Grimm [Brothers Grimm]",
+          "coverId": "ol:1010634",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832688X",
+          "coverIsbn": "345832688X"
+        },
+        {
+          "id": "OL16270049W",
+          "title": "Das Buch der göttlichen Tröstung.",
+          "author": "Meister Eckhart",
+          "coverId": "ol:3205016",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327053",
+          "coverIsbn": "3458327053"
+        },
+        {
+          "id": "OL8366473W",
+          "title": "Canterbury Erzhalungen",
+          "author": "Geoffrey Chaucer",
+          "coverId": "ol:1010637",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327061",
+          "coverIsbn": "3458327061"
+        },
+        {
+          "id": "OL793456W",
+          "title": "Die Novellen.",
+          "author": "Miguel de Cervantes Saavedra",
+          "coverId": "ol:3205017",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832707X",
+          "coverIsbn": "345832707X"
+        },
+        {
+          "id": "OL1449578W",
+          "title": "Gedichte. Die Lehrlinge zu Sais. Dialogen und Monolog.",
+          "author": "Novalis",
+          "coverId": "ol:3205018",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832710X",
+          "coverIsbn": "345832710X"
+        },
+        {
+          "id": "OL6714267W",
+          "title": "Der eingebildete Kranke.",
+          "author": "Molière",
+          "coverId": "ol:2206779",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327142",
+          "coverIsbn": "3458327142"
+        },
+        {
+          "id": "OL14877117W",
+          "title": "Aphorismen.",
+          "author": "Oscar Wilde",
+          "coverId": "ol:1010638",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327207",
+          "coverIsbn": "3458327207"
+        },
+        {
+          "id": "OL1177155W",
+          "title": "Andeutungen über Landschaftsgärtnerei.",
+          "author": "Hermann von Pückler-Muskau",
+          "coverId": "ol:1010639",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832724X",
+          "coverIsbn": "345832724X"
+        },
+        {
+          "id": "OL24758067W",
+          "title": "Sämtliche Dichtungen. Zweisprachige Ausgabe. Französisch / Deutsch.",
+          "author": "François Villon",
+          "coverId": "ol:1010641",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327398",
+          "coverIsbn": "3458327398"
+        },
+        {
+          "id": "OL15682025W",
+          "title": "Unter dem Tannenbaum. Geschichten und Gedichte.",
+          "author": "Theodor Storm",
+          "coverId": "ol:3205019",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327428",
+          "coverIsbn": "3458327428"
+        },
+        {
+          "id": "OL2506542W",
+          "title": "Rainer Maria Rilke",
+          "author": "Lou Andreas-Salomé",
+          "coverId": "ol:8391032",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327444",
+          "coverIsbn": "3458327444"
+        },
+        {
+          "id": "OL24305985W",
+          "title": "Unterhaltungen deutscher Ausgewanderten",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:10819240",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327509",
+          "coverIsbn": "3458327509"
+        },
+        {
+          "id": "OL19469356W",
+          "title": "Lord Byron",
+          "author": "Gert Ueding",
+          "coverId": "ol:1010642",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327517",
+          "coverIsbn": "3458327517"
+        },
+        {
+          "id": "OL15202692W",
+          "title": "Neue Gedichte. Deutschland. Ein Wintermärchen. Atta Troll.",
+          "author": "Heinrich Heine",
+          "coverId": "ol:3205020",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832755X",
+          "coverIsbn": "345832755X"
+        },
+        {
+          "id": "OL24158479W",
+          "title": "Der Morgen eines Gutsbesitzers",
+          "author": "Лев Толстой",
+          "coverId": "ol:10562513",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327568",
+          "coverIsbn": "3458327568"
+        },
+        {
+          "id": "OL20275132W",
+          "title": "Philosophie der Freude",
+          "author": "Epikur",
+          "coverId": "ol:12656482",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327576",
+          "coverIsbn": "3458327576"
+        },
+        {
+          "id": "OL18835387W",
+          "title": "Arthur Schopenhauer",
+          "author": "",
+          "coverId": "ol:2206780",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327592",
+          "coverIsbn": "3458327592"
+        },
+        {
+          "id": "OL16234568W",
+          "title": "Gedichte",
+          "author": "Joseph von Eichendorff",
+          "coverId": "ol:1010643",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327606",
+          "coverIsbn": "3458327606"
+        },
+        {
+          "id": "OL34950169W",
+          "title": "Anne Elliot.",
+          "author": "Jane Austen",
+          "coverId": "ol:13776172",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327622",
+          "coverIsbn": "3458327622"
+        },
+        {
+          "id": "OL8750031W",
+          "title": "Jensiets DES Tweed",
+          "author": "Theodor Fontane",
+          "coverId": "ol:2206781",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327665",
+          "coverIsbn": "3458327665"
+        },
+        {
+          "id": "OL7525529W",
+          "title": "Die Eroberung von Mexiko.",
+          "author": "Bernal Díaz del Castillo",
+          "coverId": "ol:1010646",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327673",
+          "coverIsbn": "3458327673"
+        },
+        {
+          "id": "OL872991W",
+          "title": "Franz von Assisi.",
+          "author": "Hermann Hesse",
+          "coverId": "ol:1010647",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832769X",
+          "coverIsbn": "345832769X"
+        },
+        {
+          "id": "OL14934908W",
+          "title": "Tagebuch einer Reise durch Italien. Die Schweiz und Deutschland in den Jahren 1580 und 1581.",
+          "author": "Otto Flake",
+          "coverId": "ol:1010648",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327746",
+          "coverIsbn": "3458327746"
+        },
+        {
+          "id": "OL9068768W",
+          "title": "Sämtliche Gedichte.",
+          "author": "Annette von Droste-Hülshoff",
+          "coverId": "ol:3205021",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327924",
+          "coverIsbn": "3458327924"
+        },
+        {
+          "id": "OL1256661W",
+          "title": "Die gescheiterte Revolution",
+          "author": "Aleksandr Herzen",
+          "coverId": "ol:10483688",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458327975",
+          "coverIsbn": "3458327975"
+        },
+        {
+          "id": "OL857343W",
+          "title": "Mathilde Möhring.",
+          "author": "Theodor Fontane",
+          "coverId": "ol:3205023",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328076",
+          "coverIsbn": "3458328076"
+        },
+        {
+          "id": "OL14868510W",
+          "title": "Bleak House.",
+          "author": "Charles Dickens",
+          "coverId": "ol:3205024",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328106",
+          "coverIsbn": "3458328106"
+        },
+        {
+          "id": "OL15032941W",
+          "title": "Hesse. Sein Leben in Bildern und Texten.",
+          "author": "Hermann Hesse",
+          "coverId": "ol:3205025",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328114",
+          "coverIsbn": "3458328114"
+        },
+        {
+          "id": "OL15032942W",
+          "title": "Hesse. Werk und Wirkungsgeschichte.",
+          "author": "Hermann Hesse",
+          "coverId": "ol:3205026",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328122",
+          "coverIsbn": "3458328122"
+        },
+        {
+          "id": "OL2245509W",
+          "title": "Das Evangeliar Heinrichs des Löwen",
+          "author": "Elisabeth Klemm",
+          "coverId": "ol:11614986",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328211",
+          "coverIsbn": "3458328211"
+        },
+        {
+          "id": "OL15117168W",
+          "title": "Bertolt Brecht. Sein Leben in Bildern und Texten.",
+          "author": "Bertolt Brecht",
+          "coverId": "ol:1010650",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832822X",
+          "coverIsbn": "345832822X"
+        },
+        {
+          "id": "OL14948636W",
+          "title": "Eugenie Grandet. Roman.",
+          "author": "Eberhard Wesemann",
+          "coverId": "ol:1010651",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328270",
+          "coverIsbn": "3458328270"
+        },
+        {
+          "id": "OL6256927W",
+          "title": "Der versiegelte Engel. Erzählungen zu Ikonen.",
+          "author": "Angela Martini-Wonde",
+          "coverId": "ol:3205027",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328327",
+          "coverIsbn": "3458328327"
+        },
+        {
+          "id": "OL166885W",
+          "title": "Die Sanfte. Eine phantastische Erzählung.",
+          "author": "Fiódor Dostoievski",
+          "coverId": "ol:3205028",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328386",
+          "coverIsbn": "3458328386"
+        },
+        {
+          "id": "OL45955833W",
+          "title": "Paul Cézanne",
+          "author": "Margret Boehm-Hunold",
+          "coverId": "ol:15251747",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328408",
+          "coverIsbn": "3458328408"
+        },
+        {
+          "id": "OL1095397W",
+          "title": "Shirley",
+          "author": "Charlotte Brontë",
+          "coverId": "ol:11298675",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328459",
+          "coverIsbn": "3458328459"
+        },
+        {
+          "id": "OL14954688W",
+          "title": "Therese Raquin. Roman.",
+          "author": "Wolfgang Tschöke",
+          "coverId": "ol:2206783",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328467",
+          "coverIsbn": "3458328467"
+        },
+        {
+          "id": "OL8317837W",
+          "title": "Romische Elegien",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:3205029",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328505",
+          "coverIsbn": "3458328505"
+        },
+        {
+          "id": "OL14877735W",
+          "title": "Lord Arthur Saviles Verbrechen und andere Geschichten.",
+          "author": "Oscar Wilde",
+          "coverId": "ol:2206784",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328513",
+          "coverIsbn": "3458328513"
+        },
+        {
+          "id": "OL9068737W",
+          "title": "Claude Monet. Betrachtungen und Erinnerungen eines Freundes.",
+          "author": "George Clemenceau",
+          "coverId": "ol:1010653",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328521",
+          "coverIsbn": "3458328521"
+        },
+        {
+          "id": "OL857324W",
+          "title": "Grete Minde. Nach einer altmärkischen Chronik.",
+          "author": "Theodor Fontane",
+          "coverId": "ol:3205030",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328572",
+          "coverIsbn": "3458328572"
+        },
+        {
+          "id": "OL2004075W",
+          "title": "Das Jahr 2440",
+          "author": "Louis-Sébastien Mercier",
+          "coverId": "ol:14830651",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328629",
+          "coverIsbn": "3458328629"
+        },
+        {
+          "id": "OL42653594W",
+          "title": "Das Kajütenbuch oder Nationale Charakteristiken.",
+          "author": "Charles Sealsfield",
+          "coverId": "ol:2206785",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328637",
+          "coverIsbn": "3458328637"
+        },
+        {
+          "id": "OL3800720W",
+          "title": "Gedichte aus den späten Jahren.",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:3205031",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328785",
+          "coverIsbn": "3458328785"
+        },
+        {
+          "id": "OL15963656W",
+          "title": "Aufzeichnungen eines Jägers",
+          "author": "Ivan Sergeevich Turgenev",
+          "coverId": "ol:10648681",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328793",
+          "coverIsbn": "3458328793"
+        },
+        {
+          "id": "OL7480693W",
+          "title": "Pariser Erinnerungen.",
+          "author": "Misia Sert",
+          "coverId": "ol:3205032",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328807",
+          "coverIsbn": "3458328807"
+        },
+        {
+          "id": "OL15080073W",
+          "title": "Lady Susan / Die Watsons / Sanditon. Ein Briefroman mit den zwei Romanfragmenten.",
+          "author": "Jane Austen",
+          "coverId": "ol:1010654",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458328920",
+          "coverIsbn": "3458328920"
+        },
+        {
+          "id": "OL37900798W",
+          "title": "René Magritte: Die Beschaffenheit des Menschen I",
+          "author": "Axel Müller",
+          "coverId": "ol:14589076",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329021",
+          "coverIsbn": "3458329021"
+        },
+        {
+          "id": "OL19075734W",
+          "title": "Ilias. Odyssee",
+          "author": "johann-heinrich-vob",
+          "coverId": "ol:8391035",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329048",
+          "coverIsbn": "3458329048"
+        },
+        {
+          "id": "OL362694W",
+          "title": "Was ihr wollt.",
+          "author": "William Shakespeare",
+          "coverId": "ol:1010656",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329056",
+          "coverIsbn": "3458329056"
+        },
+        {
+          "id": "OL15007450W",
+          "title": "Utopia.",
+          "author": "Thomas Morus",
+          "coverId": "ol:2206786",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329064",
+          "coverIsbn": "3458329064"
+        },
+        {
+          "id": "OL1089297W",
+          "title": "Der Fürst.",
+          "author": "Niccolò Machiavelli",
+          "coverId": "ol:1010657",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329072",
+          "coverIsbn": "3458329072"
+        },
+        {
+          "id": "OL4068481W",
+          "title": "Joseph Conrad",
+          "author": "Renate Wiggershaus",
+          "coverId": "ol:8751295",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329080",
+          "coverIsbn": "3458329080"
+        },
+        {
+          "id": "OL733495W",
+          "title": "Rot und Schwarz. Zeitbild von 1830.",
+          "author": "Stendhal",
+          "coverId": "ol:1010658",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329102",
+          "coverIsbn": "3458329102"
+        },
+        {
+          "id": "OL77958W",
+          "title": "Der letzte Mohikaner",
+          "author": "James Fenimore Cooper",
+          "coverId": "ol:12531975",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329129",
+          "coverIsbn": "3458329129"
+        },
+        {
+          "id": "OL1393101W",
+          "title": "Trost der Philosophie. Zweisprachige Ausgabe. Lateinisch / Deutsch.",
+          "author": "Boethius",
+          "coverId": "ol:1010659",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329153",
+          "coverIsbn": "3458329153"
+        },
+        {
+          "id": "OL15069667W",
+          "title": "Vom Alleinsein. Geschichten, Gedanken, Gedichte.",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:3205034",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329161",
+          "coverIsbn": "3458329161"
+        },
+        {
+          "id": "OL3800977W",
+          "title": "Briefwechsel.",
+          "author": "Rainer Maria Rilke",
+          "coverId": "ol:1010660",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832917X",
+          "coverIsbn": "345832917X"
+        },
+        {
+          "id": "OL26181459W",
+          "title": "Märchen deutscher Dichter",
+          "author": "Elisabeth Borchers",
+          "coverId": "ol:12150045",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832920X",
+          "coverIsbn": "345832920X"
+        },
+        {
+          "id": "OL230294W",
+          "title": "Glanz und Elend der Kurtisanen.",
+          "author": "Honoré de Balzac",
+          "coverId": "ol:2206787",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329323",
+          "coverIsbn": "3458329323"
+        },
+        {
+          "id": "OL15292640W",
+          "title": "Metamorphosen.",
+          "author": "Ovid",
+          "coverId": "ol:1010662",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329374",
+          "coverIsbn": "3458329374"
+        },
+        {
+          "id": "OL15680795W",
+          "title": "Die Amerikareise. Versuch, ein Gefühl zu verstehen.",
+          "author": "Martin Walser",
+          "coverId": "ol:3205037",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329439",
+          "coverIsbn": "3458329439"
+        },
+        {
+          "id": "OL14948723W",
+          "title": "Über die Liebe.",
+          "author": "Elsemarie Maletzke",
+          "coverId": "ol:1010663",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329498",
+          "coverIsbn": "3458329498"
+        },
+        {
+          "id": "OL962240W",
+          "title": "Justine oder Die Leiden der Tugend. Roman aus dem Jahre 1797.",
+          "author": "Marquis de Sade",
+          "coverId": "ol:1010665",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329579",
+          "coverIsbn": "3458329579"
+        },
+        {
+          "id": "OL15320006W",
+          "title": "Feuer Der Seele Insel",
+          "author": "Vincent van Gogh",
+          "coverId": "ol:3205038",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832965X",
+          "coverIsbn": "345832965X"
+        },
+        {
+          "id": "OL15682154W",
+          "title": "Dorf- und Schloßgeschichten.",
+          "author": "Marie von Ebner-Eschenbach",
+          "coverId": "ol:3205039",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329722",
+          "coverIsbn": "3458329722"
+        },
+        {
+          "id": "OL8250159W",
+          "title": "Instrument und Körper",
+          "author": "Hoffmann",
+          "coverId": "ol:15222871",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329749",
+          "coverIsbn": "3458329749"
+        },
+        {
+          "id": "OL14922297W",
+          "title": "Sämtliche Balladen und Romanzen. In zeitlicher Folge.",
+          "author": "Johann Wolfgang von Goethe",
+          "coverId": "ol:1010666",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329757",
+          "coverIsbn": "3458329757"
+        },
+        {
+          "id": "OL42514038W",
+          "title": "Melmoth Der Wanderer",
+          "author": "Charles Robert Maturin",
+          "coverId": "ol:14842742",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345832979X",
+          "coverIsbn": "345832979X"
+        },
+        {
+          "id": "OL271355W",
+          "title": "Erzählungen aus Angria",
+          "author": "Charlotte Brontë",
+          "coverId": "ol:13907470",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329854",
+          "coverIsbn": "3458329854"
+        },
+        {
+          "id": "OL15032921W",
+          "title": "Eduard Mörikes schönste Erzählungen.",
+          "author": "Hermann Hesse",
+          "coverId": "ol:3205041",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329900",
+          "coverIsbn": "3458329900"
+        },
+        {
+          "id": "OL1972840W",
+          "title": "Elizabeth und ihr Garten. Roman.",
+          "author": "Elizabeth von Arnim",
+          "coverId": "ol:3205042",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329935",
+          "coverIsbn": "3458329935"
+        },
+        {
+          "id": "OL20144925W",
+          "title": "Der Italiäner oder der Beichtstuhl der Schwarzen Büßermönche",
+          "author": "",
+          "coverId": "ol:8791111",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458329994",
+          "coverIsbn": "3458329994"
+        },
+        {
+          "id": "OL488968W",
+          "title": "Mystische Schriften",
+          "author": "Meister Eckhart",
+          "coverId": "ol:8354247",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345833002X",
+          "coverIsbn": "345833002X"
+        },
+        {
+          "id": "OL13114895W",
+          "title": "Nikolaus Nickleby",
+          "author": "Charles Dickens",
+          "coverId": "ol:1010667",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330046",
+          "coverIsbn": "3458330046"
+        },
+        {
+          "id": "OL971572W",
+          "title": "Die kleinen Helden. Kinderbuchfiguren und ihre Vorbilder.",
+          "author": "Dietmar Grieser",
+          "coverId": "ol:2206789",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330135",
+          "coverIsbn": "3458330135"
+        },
+        {
+          "id": "OL1414438W",
+          "title": "Orte. Aufzeichnungen.",
+          "author": "Marie Luise Kaschnitz",
+          "coverId": "ol:3205045",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330216",
+          "coverIsbn": "3458330216"
+        },
+        {
+          "id": "OL26194799W",
+          "title": "Briefe aus Berlin",
+          "author": "Heinrich Heine",
+          "coverId": "ol:12175159",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330224",
+          "coverIsbn": "3458330224"
+        },
+        {
+          "id": "OL15032930W",
+          "title": "Freude am Garten. Betrachtungen und Gedichte.",
+          "author": "Hermann Hesse",
+          "coverId": "ol:3205046",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330291",
+          "coverIsbn": "3458330291"
+        },
+        {
+          "id": "OL15325881W",
+          "title": "Über die Frauen.",
+          "author": "Friedrich Nietzsche",
+          "coverId": "ol:1010668",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330356",
+          "coverIsbn": "3458330356"
+        },
+        {
+          "id": "OL55417W",
+          "title": "Der Kirschgarten.",
+          "author": "Антон Павлович Чехов",
+          "coverId": "ol:2206791",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330410",
+          "coverIsbn": "3458330410"
+        },
+        {
+          "id": "OL10039560W",
+          "title": "Goethe und die Medizin. Selbstzeugnisse und Dokumente.",
+          "author": "Manfred Wenzel",
+          "coverId": "ol:3205047",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345833050X",
+          "coverIsbn": "345833050X"
+        },
+        {
+          "id": "OL1451524W",
+          "title": "Michael Kohlhaas. Aus einer alten Chronik.",
+          "author": "Heinrich von Kleist",
+          "coverId": "ol:1010670",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330526",
+          "coverIsbn": "3458330526"
+        },
+        {
+          "id": "OL14948851W",
+          "title": "Undine. Ein Märchen der Berliner Romantik.",
+          "author": "Karl Friedrich Schinkel",
+          "coverId": "ol:1010671",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330534",
+          "coverIsbn": "3458330534"
+        },
+        {
+          "id": "OL271361W",
+          "title": "Der Professor.",
+          "author": "Charlotte Brontë",
+          "coverId": "ol:1010672",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330542",
+          "coverIsbn": "3458330542"
+        },
+        {
+          "id": "OL19075735W",
+          "title": "Mütter berühmter Männer",
+          "author": "Luise F. Pusch",
+          "coverId": "ol:8391038",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330569",
+          "coverIsbn": "3458330569"
+        },
+        {
+          "id": "OL1673078W",
+          "title": "Schriften und Briefe",
+          "author": "Georg Christoph Lichtenberg",
+          "coverId": "ol:12606882",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330607",
+          "coverIsbn": "3458330607"
+        },
+        {
+          "id": "OL1414439W",
+          "title": "Orte und Menschen. Aufzeichnungen.",
+          "author": "Marie Luise Kaschnitz",
+          "coverId": "ol:3205048",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330615",
+          "coverIsbn": "3458330615"
+        },
+        {
+          "id": "OL18873407W",
+          "title": "Dresden",
+          "author": "Katrin Nitzschke",
+          "coverId": "ol:2206792",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330658",
+          "coverIsbn": "3458330658"
+        },
+        {
+          "id": "OL18833030W",
+          "title": "Was wir gespielt haben",
+          "author": "Ingeborg Weber-Kellermann",
+          "coverId": "ol:15213519",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330712",
+          "coverIsbn": "3458330712"
+        },
+        {
+          "id": "OL41078W",
+          "title": "Der Untergang des Hauses Usher. Meistererzählungen.",
+          "author": "Edgar Allan Poe",
+          "coverId": "ol:1010675",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330739",
+          "coverIsbn": "3458330739"
+        },
+        {
+          "id": "OL1317211W",
+          "title": "Selbstbetrachtungen.",
+          "author": "Marcus Aurelius",
+          "coverId": "ol:2206794",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330747",
+          "coverIsbn": "3458330747"
+        },
+        {
+          "id": "OL362427W",
+          "title": "Romeo und Julia",
+          "author": "William Shakespeare",
+          "coverId": "ol:3205049",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330836",
+          "coverIsbn": "3458330836"
+        },
+        {
+          "id": "OL10039561W",
+          "title": "Magdeburgische Hochzeit",
+          "author": "von Fort",
+          "coverId": "ol:3205050",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330844",
+          "coverIsbn": "3458330844"
+        },
+        {
+          "id": "OL15399798W",
+          "title": "Sämtliche Werke.",
+          "author": "Arthur Rimbaud",
+          "coverId": "ol:1010676",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330984",
+          "coverIsbn": "3458330984"
+        },
+        {
+          "id": "OL2247203W",
+          "title": "Vögel, die verkünden Land. Das Leben des Jakob Michael Reinhold Lenz.",
+          "author": "Sigrid Damm",
+          "coverId": "ol:3205052",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458330992",
+          "coverIsbn": "3458330992"
+        },
+        {
+          "id": "OL8484611W",
+          "title": "Goethe Gedichte",
+          "author": "Echtermeyer",
+          "coverId": "ol:2206795",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345833100X",
+          "coverIsbn": "345833100X"
+        },
+        {
+          "id": "OL15048038W",
+          "title": "Aurora oder Morgenröte im Aufgang.",
+          "author": "Jacob Boehme",
+          "coverId": "ol:2206797",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331115",
+          "coverIsbn": "3458331115"
+        },
+        {
+          "id": "OL18247548W",
+          "title": "Lichtenbergs Funkenflug der Vernunft",
+          "author": "Harro Zimmermann",
+          "coverId": "ol:2206798",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345833114X",
+          "coverIsbn": "345833114X"
+        },
+        {
+          "id": "OL1429938W",
+          "title": "Der Fall Deruga. Kriminalroman.",
+          "author": "Ricarda Huch",
+          "coverId": "ol:3205059",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331166",
+          "coverIsbn": "3458331166"
+        },
+        {
+          "id": "OL36893219W",
+          "title": "Hartmann von Aue erzählt",
+          "author": "Hartmann von Aue",
+          "coverId": "ol:14541535",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331174",
+          "coverIsbn": "3458331174"
+        },
+        {
+          "id": "OL1459732W",
+          "title": "Sommer auf Sylt.",
+          "author": "Ernst Penzoldt",
+          "coverId": "ol:3205060",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331247",
+          "coverIsbn": "3458331247"
+        },
+        {
+          "id": "OL8642860W",
+          "title": "Pallieter. Roman.",
+          "author": "Felix Timmermans",
+          "coverId": "ol:3205061",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331301",
+          "coverIsbn": "3458331301"
+        },
+        {
+          "id": "OL906971W",
+          "title": "Nannerl Mozart",
+          "author": "Eva Rieger",
+          "coverId": "ol:10658660",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345833131X",
+          "coverIsbn": "345833131X"
+        },
+        {
+          "id": "OL2683553W",
+          "title": "Kyberiade",
+          "author": "Stanisław Lem",
+          "coverId": "ol:3205063",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331352",
+          "coverIsbn": "3458331352"
+        },
+        {
+          "id": "OL258902W",
+          "title": "Die Tragödie des Macbeth.",
+          "author": "William Shakespeare",
+          "coverId": "ol:3205064",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331409",
+          "coverIsbn": "3458331409"
+        },
+        {
+          "id": "OL15202670W",
+          "title": "Gedichte aus Liebe.",
+          "author": "Heinrich Heine",
+          "coverId": "ol:3205065",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331441",
+          "coverIsbn": "3458331441"
+        },
+        {
+          "id": "OL14991094W",
+          "title": "Herr von Ribbeck auf Ribbeck. Gedichte und Balladen.",
+          "author": "Theodor Fontane",
+          "coverId": "ol:3205066",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331468",
+          "coverIsbn": "3458331468"
+        },
+        {
+          "id": "OL1095403W",
+          "title": "Villette",
+          "author": "Charlotte Brontë",
+          "coverId": "ol:11298291",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331476",
+          "coverIsbn": "3458331476"
+        },
+        {
+          "id": "OL40962W",
+          "title": "Der Bericht des Arthur Gordon Pym.",
+          "author": "Edgar Allan Poe",
+          "coverId": "ol:1010681",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331492",
+          "coverIsbn": "3458331492"
+        },
+        {
+          "id": "OL2247207W",
+          "title": "Cornelia Goethe.",
+          "author": "Sigrid Damm",
+          "coverId": "ol:2206800",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331522",
+          "coverIsbn": "3458331522"
+        },
+        {
+          "id": "OL9063225W",
+          "title": "Tage Tage Jahre",
+          "author": "Marie Luise Kaschnitz",
+          "coverId": "ol:3205067",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331530",
+          "coverIsbn": "3458331530"
+        },
+        {
+          "id": "OL14877332W",
+          "title": "Gedichte.",
+          "author": "Oscar Wilde",
+          "coverId": "ol:1010682",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331557",
+          "coverIsbn": "3458331557"
+        },
+        {
+          "id": "OL8035112W",
+          "title": "Platero und ich. Andalusische Elegie.",
+          "author": "Juan Ramón Jiménez",
+          "coverId": "ol:3205068",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331565",
+          "coverIsbn": "3458331565"
+        },
+        {
+          "id": "OL7982455W",
+          "title": "Vom glücklichen Leben.",
+          "author": "Seneca the Younger",
+          "coverId": "ol:3205069",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331573",
+          "coverIsbn": "3458331573"
+        },
+        {
+          "id": "OL9085319W",
+          "title": "Wege zum glücklichen Handeln.",
+          "author": "Epictetus",
+          "coverId": "ol:3205070",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331581",
+          "coverIsbn": "3458331581"
+        },
+        {
+          "id": "OL3100530W",
+          "title": "Glück. Erkundigungen.",
+          "author": "Gottfried Honnefelder",
+          "coverId": "ol:13623996",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345833159X",
+          "coverIsbn": "345833159X"
+        },
+        {
+          "id": "OL1190517W",
+          "title": "Die Schicksale Doktor Bürgers. Rumänisches Tagebuch.",
+          "author": "Carossa, Hans",
+          "coverId": "ol:3205071",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345833162X",
+          "coverIsbn": "345833162X"
+        },
+        {
+          "id": "OL1190515W",
+          "title": "Der Arzt Gion. Erzählung.",
+          "author": "Carossa, Hans",
+          "coverId": "ol:3205072",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331638",
+          "coverIsbn": "3458331638"
+        },
+        {
+          "id": "OL1190521W",
+          "title": "Führung und Geleit. Ein Lebensgedenkbuch.",
+          "author": "Carossa, Hans",
+          "coverId": "ol:3205073",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331654",
+          "coverIsbn": "3458331654"
+        },
+        {
+          "id": "OL1190552W",
+          "title": "Eine Kindheit.",
+          "author": "Carossa, Hans",
+          "coverId": "ol:3205074",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331670",
+          "coverIsbn": "3458331670"
+        },
+        {
+          "id": "OL1190545W",
+          "title": "Das Jahr der schönen Täuschungen.",
+          "author": "Carossa, Hans",
+          "coverId": "ol:3205075",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331697",
+          "coverIsbn": "3458331697"
+        },
+        {
+          "id": "OL1190546W",
+          "title": "Der Tag des jungen Arztes.",
+          "author": "Carossa, Hans",
+          "coverId": "ol:3205076",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331700",
+          "coverIsbn": "3458331700"
+        },
+        {
+          "id": "OL8084110W",
+          "title": "Vom mönchischen Leben. Geschichte einer Sehnsucht.",
+          "author": "Johannes Werner",
+          "coverId": "ol:13637459",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331735",
+          "coverIsbn": "3458331735"
+        },
+        {
+          "id": "OL2039398W",
+          "title": "Die Hochzeit von Kadmos und Harmonia.",
+          "author": "Roberto Calasso",
+          "coverId": "ol:2206802",
+          "addedAt": "2026-09-30",
+          "from": "isbn:345833176X",
+          "coverIsbn": "345833176X"
+        },
+        {
+          "id": "OL3548538W",
+          "title": "Auguste Rodin",
+          "author": "Roland Bothner",
+          "coverId": "ol:8391040",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331832",
+          "coverIsbn": "3458331832"
+        },
+        {
+          "id": "OL5243470W",
+          "title": "Wien im Gedicht.",
+          "author": "Gerhard C. Krischker",
+          "coverId": "ol:3205077",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331883",
+          "coverIsbn": "3458331883"
+        },
+        {
+          "id": "OL15032975W",
+          "title": "Tessin. Betrachtungen, Gedichte und Aquarelle des Autors.",
+          "author": "Hermann Hesse",
+          "coverId": "ol:3205078",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3458331948",
+          "coverIsbn": "3458331948"
+        }
+      ]
+    },
+    {
+      "slug": "deutscher-buchpreis",
+      "title": "Deutscher Buchpreis",
+      "kind": "series",
+      "intro": "The German Book Prize, awarded each autumn since 2005 to the novel of the year in German. One cover per winner in year order, the first German edition wherever Open Library has its cover.",
+      "published": false,
+      "publishers": [],
+      "works": [
+        {
+          "id": "OL987076W",
+          "title": "Es geht uns gut",
+          "author": "Arno Geiger",
+          "coverId": "ol:15161444",
+          "addedAt": "2026-09-30",
+          "from": "isbn:3446206507",
+          "coverIsbn": "3446206507"
+        },
+        {
+          "id": "OL874786W",
+          "title": "Die Habenichtse",
+          "author": "Katharina Hacker",
+          "coverId": "ol:1017284",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783518417393",
+          "coverIsbn": "9783518417393"
+        },
+        {
+          "id": "OL18451123W",
+          "title": "Die Mittagsfrau",
+          "author": "Julia Franck",
+          "coverId": "ol:12518398",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783596175529",
+          "coverIsbn": "9783596175529"
+        },
+        {
+          "id": "OL5878982W",
+          "title": "Der Turm",
+          "author": "Uwe Tellkamp",
+          "coverId": "ol:10564150",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783518420201",
+          "coverIsbn": "9783518420201"
+        },
+        {
+          "id": "OL2264755W",
+          "title": "Du stirbst nicht",
+          "author": "Kathrin Schmidt",
+          "coverId": "ol:6593751",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783462040982",
+          "coverIsbn": "9783462040982"
+        },
+        {
+          "id": "OL15380380W",
+          "title": "Tauben fliegen auf",
+          "author": "Melinda Nadj Abonji",
+          "coverId": "ol:6595990",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783902497789",
+          "coverIsbn": "9783902497789"
+        },
+        {
+          "id": "OL16102584W",
+          "title": "In Zeiten des abnehmenden Lichts",
+          "author": "Eugen Ruge",
+          "coverId": "ol:6944501",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783498057862",
+          "coverIsbn": "9783498057862"
+        },
+        {
+          "id": "OL19964043W",
+          "title": "Landgericht",
+          "author": "Ursula Krechel",
+          "coverId": "ol:14352365",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783990270240",
+          "coverIsbn": "9783990270240"
+        },
+        {
+          "id": "OL16807601W",
+          "title": "Das Ungeheuer",
+          "author": "Terézia Mora",
+          "coverId": "ol:7263051",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783630873657",
+          "coverIsbn": "9783630873657"
+        },
+        {
+          "id": "OL20002331W",
+          "title": "Kruso",
+          "author": "Lutz Seiler",
+          "coverId": "ol:13052170",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783518424476",
+          "coverIsbn": "9783518424476"
+        },
+        {
+          "id": "OL20236728W",
+          "title": "Die Erfindung der Roten Armee Fraktion durch einen manisch-depressiven Teenager im Sommer 1969",
+          "author": "Frank Witzel",
+          "coverId": "ol:8890966",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783442714230",
+          "coverIsbn": "9783442714230"
+        },
+        {
+          "id": "OL20051117W",
+          "title": "Widerfahrnis",
+          "author": "Bodo Kirchhoff",
+          "coverId": "ol:14824913",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783627002282",
+          "coverIsbn": "9783627002282"
+        },
+        {
+          "id": "OL19731462W",
+          "title": "Die Hauptstadt",
+          "author": "Robert Menasse",
+          "coverId": "ol:14458588",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783518427583",
+          "coverIsbn": "9783518427583"
+        },
+        {
+          "id": "OL20865503W",
+          "title": "Archipel",
+          "author": "Inger-Maria Mahlke",
+          "coverId": "ol:15172770",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783498042240",
+          "coverIsbn": "9783498042240"
+        },
+        {
+          "id": "OL26233063W",
+          "title": "Herkunft",
+          "author": "Saša Stanišić",
+          "coverId": "ol:12232728",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783630874739",
+          "coverIsbn": "9783630874739"
+        },
+        {
+          "id": "OL26425839W",
+          "title": "Annette, ein Heldinnenepos",
+          "author": "Anne Weber",
+          "coverId": "ol:14824933",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783957578457",
+          "coverIsbn": "9783957578457"
+        },
+        {
+          "id": "OL26426282W",
+          "title": "Blaue Frau",
+          "author": "Antje Rávic Strubel",
+          "coverId": "ol:13010601",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783103971019",
+          "coverIsbn": "9783103971019"
+        },
+        {
+          "id": "OL29182033W",
+          "title": "Blutbuch",
+          "author": "Kim de l'Horizon",
+          "coverId": "ol:12954804",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783832182083",
+          "coverIsbn": "9783832182083"
+        },
+        {
+          "id": "OL34961727W",
+          "title": "Echtzeitalter",
+          "author": "Tonio Schachinger",
+          "coverId": "ol:13871652",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783498003173",
+          "coverIsbn": "9783498003173"
+        },
+        {
+          "id": "OL41942475W",
+          "title": "Hey guten Morgen, wie geht es dir?",
+          "author": "Martina Hefter",
+          "coverId": "ol:14824941",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783608988260",
+          "coverIsbn": "9783608988260"
+        },
+        {
+          "id": "OL44713807W",
+          "title": "Die Holländerinnen",
+          "author": "Dorothee Elmiger",
+          "coverId": "ol:15159118",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9783446282988",
+          "coverIsbn": "9783446282988"
+        }
+      ]
+    },
+    {
+      "slug": "nebula-award-best-novel",
+      "title": "Nebula Award — best novel",
+      "kind": "series",
+      "intro": "The Nebula Award for best novel, voted by the Science Fiction and Fantasy Writers of America since 1966. One cover per winner in year order, mostly the first edition's.",
+      "published": false,
+      "publishers": [],
+      "works": [
+        {
+          "id": "OL893414W",
+          "title": "Dune",
+          "author": "Frank Herbert",
+          "coverId": "ol:15244952",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL43283259M"
+        },
+        {
+          "id": "OL56834W",
+          "title": "Babel-17",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:6291052",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL13588645M"
+        },
+        {
+          "id": "OL515754W",
+          "title": "Flowers for Algernon",
+          "author": "Daniel Keyes",
+          "coverId": "ol:12387587",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780151315109",
+          "coverIsbn": "9780151315109"
+        },
+        {
+          "id": "OL56829W",
+          "title": "The Einstein Intersection",
+          "author": "Samuel R. Delany",
+          "coverId": "ol:5540956",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL21134827M"
+        },
+        {
+          "id": "OL4798474W",
+          "title": "Rite of Passage",
+          "author": "Alexei Panshin",
+          "coverId": "ol:10190353",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780441727858",
+          "coverIsbn": "9780441727858"
+        },
+        {
+          "id": "OL59800W",
+          "title": "The Left Hand of Darkness",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:14920821",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL58688990M"
+        },
+        {
+          "id": "OL510405W",
+          "title": "Ringworld",
+          "author": "Larry Niven",
+          "coverId": "ol:8515444",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780345020468",
+          "coverIsbn": "9780345020468"
+        },
+        {
+          "id": "OL1960491W",
+          "title": "A Time of Changes",
+          "author": "Robert Silverberg",
+          "coverId": "ol:10268213",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL5201878M"
+        },
+        {
+          "id": "OL46395W",
+          "title": "The Gods Themselves",
+          "author": "Isaac Asimov",
+          "coverId": "ol:13148642",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL27261468M"
+        },
+        {
+          "id": "OL17417W",
+          "title": "Rendezvous with Rama",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:10801406",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL17576481M"
+        },
+        {
+          "id": "OL59863W",
+          "title": "The Dispossessed",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:12375387",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL18217873M"
+        },
+        {
+          "id": "OL271163W",
+          "title": "The Forever War",
+          "author": "Joe Haldeman",
+          "coverId": "ol:14631931",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0312298900",
+          "coverIsbn": "0312298900"
+        },
+        {
+          "id": "OL60939W",
+          "title": "Man Plus",
+          "author": "Frederik Pohl",
+          "coverId": "ol:6905749",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0394486765",
+          "coverIsbn": "0394486765"
+        },
+        {
+          "id": "OL60924W",
+          "title": "Gateway",
+          "author": "Frederik Pohl",
+          "coverId": "ol:9424523",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0312317808",
+          "coverIsbn": "0312317808"
+        },
+        {
+          "id": "OL1921526W",
+          "title": "Dreamsnake",
+          "author": "Vonda N. McIntyre",
+          "coverId": "ol:7267145",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL16423118M"
+        },
+        {
+          "id": "OL17403W",
+          "title": "The Fountains of Paradise",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:6656063",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780345253569",
+          "coverIsbn": "9780345253569"
+        },
+        {
+          "id": "OL108288W",
+          "title": "Timescape",
+          "author": "Gregory Benford",
+          "coverId": "ol:369277",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780553297096",
+          "coverIsbn": "9780553297096"
+        },
+        {
+          "id": "OL14871970W",
+          "title": "The Claw of the Conciliator",
+          "author": "Gene Wolfe",
+          "coverId": "ol:12384364",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0671413708",
+          "coverIsbn": "0671413708"
+        },
+        {
+          "id": "OL2798254W",
+          "title": "No Enemy But Time",
+          "author": "Michael Bishop",
+          "coverId": "ol:12372147",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0671449737",
+          "coverIsbn": "0671449737"
+        },
+        {
+          "id": "OL58710W",
+          "title": "Startide Rising",
+          "author": "David Brin",
+          "coverId": "ol:13527094",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL47132891M"
+        },
+        {
+          "id": "OL27258W",
+          "title": "Neuromancer",
+          "author": "William Gibson",
+          "coverId": "ol:14538056",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780441569564",
+          "coverIsbn": "9780441569564"
+        },
+        {
+          "id": "OL49488W",
+          "title": "Ender's Game",
+          "author": "Orson Scott Card",
+          "coverId": "ol:183786",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0312932081",
+          "coverIsbn": "0312932081"
+        },
+        {
+          "id": "OL49580W",
+          "title": "Speaker for the Dead",
+          "author": "Orson Scott Card",
+          "coverId": "ol:183878",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0312937385",
+          "coverIsbn": "0312937385"
+        },
+        {
+          "id": "OL66835W",
+          "title": "The Falling Woman",
+          "author": "Pat Murphy",
+          "coverId": "ol:6604950",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780812546200",
+          "coverIsbn": "9780812546200"
+        },
+        {
+          "id": "OL56895W",
+          "title": "Falling Free",
+          "author": "Lois McMaster Bujold",
+          "coverId": "ol:12393801",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780671653989",
+          "coverIsbn": "9780671653989"
+        },
+        {
+          "id": "OL1847100W",
+          "title": "The Healer's War",
+          "author": "Elizabeth Ann Scarborough",
+          "coverId": "ol:10137412",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780385248280",
+          "coverIsbn": "9780385248280"
+        },
+        {
+          "id": "OL15056578W",
+          "title": "Tehanu",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:433315",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0689315953",
+          "coverIsbn": "0689315953"
+        },
+        {
+          "id": "OL549274W",
+          "title": "Stations of the Tide",
+          "author": "Michael Swanwick",
+          "coverId": "ol:9412397",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0380715244",
+          "coverIsbn": "0380715244"
+        },
+        {
+          "id": "OL14858406W",
+          "title": "Doomsday Book",
+          "author": "Connie Willis",
+          "coverId": "ol:369478",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0553351672",
+          "coverIsbn": "0553351672"
+        },
+        {
+          "id": "OL81665W",
+          "title": "Red Mars",
+          "author": "Kim Stanley Robinson",
+          "coverId": "ol:7265318",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780246138811",
+          "coverIsbn": "9780246138811"
+        },
+        {
+          "id": "OL16519W",
+          "title": "Moving Mars",
+          "author": "Greg Bear",
+          "coverId": "ol:9607475",
+          "addedAt": "2026-09-30",
+          "from": "isbn:031285515X",
+          "coverIsbn": "031285515X"
+        },
+        {
+          "id": "OL17029W",
+          "title": "The Terminal Experiment",
+          "author": "Robert J. Sawyer",
+          "coverId": "ol:6568693",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0061053104",
+          "coverIsbn": "0061053104"
+        },
+        {
+          "id": "OL2737402W",
+          "title": "Slow River",
+          "author": "Nicola Griffith",
+          "coverId": "ol:3910025",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0345391659",
+          "coverIsbn": "0345391659"
+        },
+        {
+          "id": "OL1921494W",
+          "title": "The Moon and the Sun",
+          "author": "Vonda N. McIntyre",
+          "coverId": "ol:12371989",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0671567659",
+          "coverIsbn": "0671567659"
+        },
+        {
+          "id": "OL271152W",
+          "title": "Forever Peace",
+          "author": "Joe Haldeman",
+          "coverId": "ol:283616",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0441004067",
+          "coverIsbn": "0441004067"
+        },
+        {
+          "id": "OL35618W",
+          "title": "Parable of the Talents",
+          "author": "Octavia E. Butler",
+          "coverId": "ol:12384358",
+          "addedAt": "2026-09-30",
+          "from": "isbn:1888363819",
+          "coverIsbn": "1888363819"
+        },
+        {
+          "id": "OL16508W",
+          "title": "Darwin's Radio",
+          "author": "Greg Bear",
+          "coverId": "ol:209258",
+          "addedAt": "2026-09-30",
+          "from": "isbn:034542333X",
+          "coverIsbn": "034542333X"
+        },
+        {
+          "id": "OL78622W",
+          "title": "The Quantum Rose",
+          "author": "Catherine Asaro",
+          "coverId": "ol:183653",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0312890621",
+          "coverIsbn": "0312890621"
+        },
+        {
+          "id": "OL679360W",
+          "title": "American Gods",
+          "author": "Neil Gaiman",
+          "coverId": "ol:10585487",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780380973651",
+          "coverIsbn": "9780380973651"
+        },
+        {
+          "id": "OL14871719W",
+          "title": "The Speed of Dark",
+          "author": "Elizabeth Moon",
+          "coverId": "ol:8738694",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781841491417",
+          "coverIsbn": "9781841491417"
+        },
+        {
+          "id": "OL56898W",
+          "title": "Paladin of Souls",
+          "author": "Lois McMaster Bujold",
+          "coverId": "ol:10957039",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780060573355",
+          "coverIsbn": "9780060573355"
+        },
+        {
+          "id": "OL461302W",
+          "title": "Camouflage",
+          "author": "Joe Haldeman",
+          "coverId": "ol:284158",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0441011616",
+          "coverIsbn": "0441011616"
+        },
+        {
+          "id": "OL15105193W",
+          "title": "Seeker",
+          "author": "Jack McDevitt",
+          "coverId": "ol:284292",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0441013295",
+          "coverIsbn": "0441013295"
+        },
+        {
+          "id": "OL119430W",
+          "title": "The Yiddish Policemen's Union",
+          "author": "Michael Chabon",
+          "coverId": "ol:12745199",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780007149827",
+          "coverIsbn": "9780007149827"
+        },
+        {
+          "id": "OL15056590W",
+          "title": "Powers",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:1120521",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780152057701",
+          "coverIsbn": "9780152057701"
+        },
+        {
+          "id": "OL15000756W",
+          "title": "The Windup Girl",
+          "author": "Paolo Bacigalupi",
+          "coverId": "ol:15205260",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781597802369",
+          "coverIsbn": "9781597802369"
+        },
+        {
+          "id": "OL14914265W",
+          "title": "Blackout",
+          "author": "Connie Willis",
+          "coverId": "ol:6411364",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780345519641",
+          "coverIsbn": "9780345519641"
+        },
+        {
+          "id": "OL16419954W",
+          "title": "Among Others",
+          "author": "Jo Walton",
+          "coverId": "ol:6998632",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780765331724",
+          "coverIsbn": "9780765331724"
+        },
+        {
+          "id": "OL16298967W",
+          "title": "2312",
+          "author": "Kim Stanley Robinson",
+          "coverId": "ol:8736994",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781841499963",
+          "coverIsbn": "9781841499963"
+        },
+        {
+          "id": "OL17062644W",
+          "title": "Ancillary Justice",
+          "author": "Ann Leckie",
+          "coverId": "ol:12908215",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780316246637",
+          "coverIsbn": "9780316246637"
+        },
+        {
+          "id": "OL17268007W",
+          "title": "Annihilation",
+          "author": "Jeff VanderMeer",
+          "coverId": "ol:8408974",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780374710774",
+          "coverIsbn": "9780374710774"
+        },
+        {
+          "id": "OL17345493W",
+          "title": "Uprooted",
+          "author": "Naomi Novik",
+          "coverId": "ol:10668649",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780804179034",
+          "coverIsbn": "9780804179034"
+        },
+        {
+          "id": "OL17357379W",
+          "title": "All the Birds in the Sky",
+          "author": "Charlie Jane Anders",
+          "coverId": "ol:15142244",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781466871120",
+          "coverIsbn": "9781466871120"
+        },
+        {
+          "id": "OL17881901W",
+          "title": "The Stone Sky",
+          "author": "N. K. Jemisin",
+          "coverId": "ol:8507466",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780356508689",
+          "coverIsbn": "9780356508689"
+        },
+        {
+          "id": "OL18021949W",
+          "title": "The Calculating Stars",
+          "author": "Mary Robinette Kowal",
+          "coverId": "ol:15138596",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781466861244",
+          "coverIsbn": "9781466861244"
+        },
+        {
+          "id": "OL20127946W",
+          "title": "A Song for a New Day",
+          "author": "Sarah Pinsker",
+          "coverId": "ol:8780333",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781984802583",
+          "coverIsbn": "9781984802583"
+        },
+        {
+          "id": "OL20735675W",
+          "title": "Network Effect",
+          "author": "Martha Wells",
+          "coverId": "ol:14320191",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781250229847",
+          "coverIsbn": "9781250229847"
+        },
+        {
+          "id": "OL22425740W",
+          "title": "A Master of Djinn",
+          "author": "P. Djèlí Clark",
+          "coverId": "ol:10457293",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781250267689",
+          "coverIsbn": "9781250267689"
+        },
+        {
+          "id": "OL26443093W",
+          "title": "Babel",
+          "author": "R. F. Kuang",
+          "coverId": "ol:12866714",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780063021440",
+          "coverIsbn": "9780063021440"
+        },
+        {
+          "id": "OL28899652W",
+          "title": "The Saint of Bright Doors",
+          "author": "Vajra Chandrasekera",
+          "coverId": "ol:14369806",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781250847386",
+          "coverIsbn": "9781250847386"
+        },
+        {
+          "id": "OL37581492W",
+          "title": "Someone You Can Build a Nest In",
+          "author": "John Wiswell",
+          "coverId": "ol:15137458",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780756418854",
+          "coverIsbn": "9780756418854"
+        },
+        {
+          "id": "OL45341636W",
+          "title": "The Buffalo Hunter Hunter",
+          "author": "Stephen Jones",
+          "coverId": "ol:15234922",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781835414316",
+          "coverIsbn": "9781835414316"
+        }
+      ]
+    },
+    {
+      "slug": "national-book-award-fiction",
+      "title": "National Book Award — fiction",
+      "kind": "series",
+      "intro": "The National Book Award for Fiction, since 1950. One cover per winner in year order, mostly the first edition's; where Open Library has no usable image of it, a later printing stands in.",
+      "published": false,
+      "publishers": [],
+      "works": [
+        {
+          "id": "OL102384W",
+          "title": "The Man with the Golden Arm",
+          "author": "Nelson Algren",
+          "coverId": "ol:14361915",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL6050268M"
+        },
+        {
+          "id": "OL82851W",
+          "title": "Collected Stories of William Faulkner",
+          "author": "William Faulkner",
+          "coverId": "ol:9256244",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL16427749M"
+        },
+        {
+          "id": "OL3000715W",
+          "title": "From Here to Eternity",
+          "author": "James Jones",
+          "coverId": "ol:12959487",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL23248396M"
+        },
+        {
+          "id": "OL495470W",
+          "title": "Invisible Man",
+          "author": "Ralph Ellison",
+          "coverId": "ol:15185410",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL61417743M",
+          "coverWork": "OL17724488W"
+        },
+        {
+          "id": "OL506116W",
+          "title": "The Adventures of Augie March",
+          "author": "Saul Bellow",
+          "coverId": "ol:6636741",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL21492838M"
+        },
+        {
+          "id": "OL82911W",
+          "title": "A Fable",
+          "author": "William Faulkner",
+          "coverId": "ol:8357120",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780394424002",
+          "coverIsbn": "9780394424002"
+        },
+        {
+          "id": "OL1952567W",
+          "title": "Ten North Frederick",
+          "author": "John O'Hara",
+          "coverId": "ol:15076189",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL45605683M"
+        },
+        {
+          "id": "OL176276W",
+          "title": "The Field of Vision",
+          "author": "Wright Morris",
+          "coverId": "ol:6643397",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780803257894",
+          "coverIsbn": "9780803257894"
+        },
+        {
+          "id": "OL1992159W",
+          "title": "The Wapshot Chronicle",
+          "author": "John Cheever",
+          "coverId": "ol:6574211",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL24279297M"
+        },
+        {
+          "id": "OL1937851W",
+          "title": "The Magic Barrel",
+          "author": "Bernard Malamud",
+          "coverId": "ol:14421126",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL23784310M"
+        },
+        {
+          "id": "OL74657W",
+          "title": "Goodbye, Columbus",
+          "author": "Philip Roth",
+          "coverId": "ol:15147260",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL2645413M"
+        },
+        {
+          "id": "OL1960071W",
+          "title": "The Waters of Kronos",
+          "author": "Conrad Richter",
+          "coverId": "ol:6939046",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL5795395M"
+        },
+        {
+          "id": "OL38282W",
+          "title": "The Moviegoer",
+          "author": "Walker Percy",
+          "coverId": "ol:9822064",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0394437039",
+          "coverIsbn": "0394437039"
+        },
+        {
+          "id": "OL488130W",
+          "title": "Morte d'Urban",
+          "author": "J. F. Powers",
+          "coverId": "ol:3367510",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL5854658M"
+        },
+        {
+          "id": "OL463611W",
+          "title": "The Centaur",
+          "author": "John Updike",
+          "coverId": "ol:12564770",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780394418810",
+          "coverIsbn": "9780394418810"
+        },
+        {
+          "id": "OL15859552W",
+          "title": "Herzog",
+          "author": "Saul Bellow",
+          "coverId": "ol:6956577",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL24940842M"
+        },
+        {
+          "id": "OL1446690W",
+          "title": "The Collected Stories of Katherine Anne Porter",
+          "author": "Katherine Anne Porter",
+          "coverId": "ol:6637800",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL5943684M"
+        },
+        {
+          "id": "OL1937854W",
+          "title": "The Fixer",
+          "author": "Bernard Malamud",
+          "coverId": "ol:14918776",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL51005172M"
+        },
+        {
+          "id": "OL482889W",
+          "title": "The Eighth Day",
+          "author": "Thornton Wilder",
+          "coverId": "ol:3365772",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL4537718M"
+        },
+        {
+          "id": "OL104658W",
+          "title": "Steps",
+          "author": "Jerzy N. Kosinski",
+          "coverId": "ol:6565737",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL5619678M"
+        },
+        {
+          "id": "OL14958468W",
+          "title": "them",
+          "author": "Joyce Carol Oates",
+          "coverId": "ol:6569052",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780449206928",
+          "coverIsbn": "9780449206928"
+        },
+        {
+          "id": "OL16248726W",
+          "title": "Mr. Sammler's Planet",
+          "author": "Saul Bellow",
+          "coverId": "ol:6780472",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780140073171",
+          "coverIsbn": "9780140073171",
+          "coverWork": "OL15690126W"
+        },
+        {
+          "id": "OL65292W",
+          "title": "The Complete Stories",
+          "author": "Flannery O'Connor",
+          "coverId": "ol:10323293",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780374127527",
+          "coverIsbn": "9780374127527"
+        },
+        {
+          "id": "OL2974552W",
+          "title": "Chimera",
+          "author": "John Barth",
+          "coverId": "ol:6719011",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL24630583M"
+        },
+        {
+          "id": "OL3511458W",
+          "title": "Augustus",
+          "author": "John Williams",
+          "coverId": "ol:6817587",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780670141128",
+          "coverIsbn": "9780670141128"
+        },
+        {
+          "id": "OL2636675W",
+          "title": "Gravity's Rainbow",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:15091663",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL59248218M"
+        },
+        {
+          "id": "OL1345064W",
+          "title": "A Crown of Feathers and Other Stories",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:6655247",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL24398566M",
+          "coverWork": "OL15429909W"
+        },
+        {
+          "id": "OL273586W",
+          "title": "Dog Soldiers",
+          "author": "Robert Stone",
+          "coverId": "ol:4468476",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0395184819",
+          "coverIsbn": "0395184819",
+          "coverWork": "OL55220W"
+        },
+        {
+          "id": "OL3523036W",
+          "title": "The Hair of Harold Roux",
+          "author": "Thomas Williams",
+          "coverId": "ol:13850573",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0394489888",
+          "coverIsbn": "0394489888"
+        },
+        {
+          "id": "OL3412515W",
+          "title": "J R",
+          "author": "William Gaddis",
+          "coverId": "ol:97726",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0140187073",
+          "coverIsbn": "0140187073"
+        },
+        {
+          "id": "OL478207W",
+          "title": "The Spectator Bird",
+          "author": "Wallace Stegner",
+          "coverId": "ol:11960329",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0816164436",
+          "coverIsbn": "0816164436"
+        },
+        {
+          "id": "OL1908637W",
+          "title": "Blood Tie",
+          "author": "Mary Lee Settle",
+          "coverId": "ol:7127182",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0684186624",
+          "coverIsbn": "0684186624"
+        },
+        {
+          "id": "OL22435W",
+          "title": "Going After Cacciato",
+          "author": "Tim O'Brien",
+          "coverId": "ol:11794322",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0767904427",
+          "coverIsbn": "0767904427"
+        },
+        {
+          "id": "OL86543W",
+          "title": "Sophie's Choice",
+          "author": "William Styron",
+          "coverId": "ol:10407122",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780307292025",
+          "coverIsbn": "9780307292025"
+        },
+        {
+          "id": "OL8035564W",
+          "title": "The World According to Garp",
+          "author": "John Irving",
+          "coverId": "ol:7317048",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780671452179",
+          "coverIsbn": "9780671452179"
+        },
+        {
+          "id": "OL176265W",
+          "title": "Plains Song",
+          "author": "Wright Morris",
+          "coverId": "ol:15110339",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0060130474",
+          "coverIsbn": "0060130474"
+        },
+        {
+          "id": "OL1992157W",
+          "title": "The Stories of John Cheever",
+          "author": "John Cheever",
+          "coverId": "ol:253672",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0394500873",
+          "coverIsbn": "0394500873"
+        },
+        {
+          "id": "OL463820W",
+          "title": "Rabbit is Rich",
+          "author": "John Updike",
+          "coverId": "ol:291193",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0449911829",
+          "coverIsbn": "0449911829"
+        },
+        {
+          "id": "OL2394473W",
+          "title": "So Long, See You Tomorrow",
+          "author": "William Maxwell",
+          "coverId": "ol:8260474",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780345291943",
+          "coverIsbn": "9780345291943",
+          "coverWork": "OL1503900W"
+        },
+        {
+          "id": "OL273644W",
+          "title": "The Color Purple",
+          "author": "Alice Walker",
+          "coverId": "ol:15172750",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0151191530",
+          "coverIsbn": "0151191530"
+        },
+        {
+          "id": "OL113973W",
+          "title": "The Collected Stories of Eudora Welty",
+          "author": "Eudora Welty",
+          "coverId": "ol:112480",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0151189943",
+          "coverIsbn": "0151189943"
+        },
+        {
+          "id": "OL41587W",
+          "title": "Victory Over Japan",
+          "author": "Ellen Gilchrist",
+          "coverId": "ol:6573452",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0316313033",
+          "coverIsbn": "0316313033"
+        },
+        {
+          "id": "OL1921196W",
+          "title": "White Noise",
+          "author": "Don DeLillo",
+          "coverId": "ol:7148947",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0670803731",
+          "coverIsbn": "0670803731"
+        },
+        {
+          "id": "OL55236W",
+          "title": "World's Fair",
+          "author": "E. L. Doctorow",
+          "coverId": "ol:10600529",
+          "addedAt": "2026-09-30",
+          "from": "isbn:067973628X",
+          "coverIsbn": "067973628X"
+        },
+        {
+          "id": "OL4119177W",
+          "title": "Paco's Story",
+          "author": "Larry Heinemann",
+          "coverId": "ol:12463592",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0374228477",
+          "coverIsbn": "0374228477"
+        },
+        {
+          "id": "OL261852W",
+          "title": "Paris Trout",
+          "author": "Pete Dexter",
+          "coverId": "ol:12915158",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780394563701",
+          "coverIsbn": "9780394563701"
+        },
+        {
+          "id": "OL4801793W",
+          "title": "Spartina",
+          "author": "John Casey",
+          "coverId": "ol:6564391",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780380711048",
+          "coverIsbn": "9780380711048"
+        },
+        {
+          "id": "OL1839971W",
+          "title": "Middle Passage",
+          "author": "Charles Richard Johnson",
+          "coverId": "ol:8261266",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0689119682",
+          "coverIsbn": "0689119682"
+        },
+        {
+          "id": "OL4320012W",
+          "title": "Mating",
+          "author": "Norman Rush",
+          "coverId": "ol:6255652",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780394544724",
+          "coverIsbn": "9780394544724"
+        },
+        {
+          "id": "OL40882W",
+          "title": "All the Pretty Horses",
+          "author": "Cormac McCarthy",
+          "coverId": "ol:253875",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0394574745",
+          "coverIsbn": "0394574745"
+        },
+        {
+          "id": "OL456089W",
+          "title": "The Shipping News",
+          "author": "Annie Proulx",
+          "coverId": "ol:10522593",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780684193373",
+          "coverIsbn": "9780684193373"
+        },
+        {
+          "id": "OL3412514W",
+          "title": "A Frolic of His Own",
+          "author": "William Gaddis",
+          "coverId": "ol:3938926",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0671669842",
+          "coverIsbn": "0671669842"
+        },
+        {
+          "id": "OL74653W",
+          "title": "Sabbath's Theater",
+          "author": "Philip Roth",
+          "coverId": "ol:9322636",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0395739829",
+          "coverIsbn": "0395739829"
+        },
+        {
+          "id": "OL1845087W",
+          "title": "Ship Fever and Other Stories",
+          "author": "Andrea Barrett",
+          "coverId": "ol:246952",
+          "addedAt": "2026-09-30",
+          "from": "isbn:039303853X",
+          "coverIsbn": "039303853X"
+        },
+        {
+          "id": "OL21385580W",
+          "title": "Cold Mountain",
+          "author": "Charles Frazier",
+          "coverId": "ol:10603445",
+          "addedAt": "2026-09-30",
+          "from": "edition:OL31920608M"
+        },
+        {
+          "id": "OL1980257W",
+          "title": "Charming Billy",
+          "author": "Alice McDermott",
+          "coverId": "ol:222814",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0374120803",
+          "coverIsbn": "0374120803"
+        },
+        {
+          "id": "OL14557W",
+          "title": "Waiting",
+          "author": "Ha Jin",
+          "coverId": "ol:12728280",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780965026239",
+          "coverIsbn": "9780965026239"
+        },
+        {
+          "id": "OL496475W",
+          "title": "In America",
+          "author": "Susan Sontag",
+          "coverId": "ol:6515457",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0374175403",
+          "coverIsbn": "0374175403"
+        },
+        {
+          "id": "OL4082696W",
+          "title": "The Corrections",
+          "author": "Jonathan Franzen",
+          "coverId": "ol:11515741",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780374100124",
+          "coverIsbn": "9780374100124"
+        },
+        {
+          "id": "OL5851112W",
+          "title": "Three Junes",
+          "author": "Julia Glass",
+          "coverId": "ol:226794",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0375421440",
+          "coverIsbn": "0375421440"
+        },
+        {
+          "id": "OL103065W",
+          "title": "The Great Fire",
+          "author": "Shirley Hazzard",
+          "coverId": "ol:8261200",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0374166447",
+          "coverIsbn": "0374166447"
+        },
+        {
+          "id": "OL58928W",
+          "title": "The News from Paraguay",
+          "author": "Lily Tuck",
+          "coverId": "ol:52516",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0066209447",
+          "coverIsbn": "0066209447"
+        },
+        {
+          "id": "OL506904W",
+          "title": "Europe Central",
+          "author": "William T. Vollmann",
+          "coverId": "ol:400524",
+          "addedAt": "2026-09-30",
+          "from": "isbn:0670033928",
+          "coverIsbn": "0670033928"
+        },
+        {
+          "id": "OL138011W",
+          "title": "The Echo Maker",
+          "author": "Richard Powers",
+          "coverId": "ol:10591714",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780374146351",
+          "coverIsbn": "9780374146351"
+        },
+        {
+          "id": "OL545415W",
+          "title": "Tree of Smoke",
+          "author": "Denis Johnson",
+          "coverId": "ol:10142167",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780330449205",
+          "coverIsbn": "9780330449205"
+        },
+        {
+          "id": "OL12472708W",
+          "title": "Shadow Country",
+          "author": "Peter Matthiessen",
+          "coverId": "ol:6403786",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781588368249",
+          "coverIsbn": "9781588368249"
+        },
+        {
+          "id": "OL14873320W",
+          "title": "Let the Great World Spin",
+          "author": "Colum McCann",
+          "coverId": "ol:6305612",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781400063734",
+          "coverIsbn": "9781400063734"
+        },
+        {
+          "id": "OL15492797W",
+          "title": "Lord of Misrule",
+          "author": "Jaimy Gordon",
+          "coverId": "ol:6669377",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780929701837",
+          "coverIsbn": "9780929701837"
+        },
+        {
+          "id": "OL16086740W",
+          "title": "Salvage the Bones",
+          "author": "Jesmyn Ward",
+          "coverId": "ol:6906262",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781608195220",
+          "coverIsbn": "9781608195220"
+        },
+        {
+          "id": "OL16532040W",
+          "title": "The Round House",
+          "author": "Louise Erdrich",
+          "coverId": "ol:9384037",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780062065247",
+          "coverIsbn": "9780062065247"
+        },
+        {
+          "id": "OL17272578W",
+          "title": "The Good Lord Bird",
+          "author": "James McBride",
+          "coverId": "ol:12483815",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781410464859",
+          "coverIsbn": "9781410464859"
+        },
+        {
+          "id": "OL17094207W",
+          "title": "Redeployment",
+          "author": "Phil Klay",
+          "coverId": "ol:7336149",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781594204999",
+          "coverIsbn": "9781594204999"
+        },
+        {
+          "id": "OL17308309W",
+          "title": "Fortune Smiles",
+          "author": "Adam Johnson",
+          "coverId": "ol:11326739",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780857522986",
+          "coverIsbn": "9780857522986"
+        },
+        {
+          "id": "OL17619932W",
+          "title": "The Underground Railroad",
+          "author": "Colson Whitehead",
+          "coverId": "ol:13066356",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781524736309",
+          "coverIsbn": "9781524736309"
+        },
+        {
+          "id": "OL17826879W",
+          "title": "Sing, Unburied, Sing",
+          "author": "Jesmyn Ward",
+          "coverId": "ol:10132620",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781501126093",
+          "coverIsbn": "9781501126093"
+        },
+        {
+          "id": "OL19665493W",
+          "title": "The Friend",
+          "author": "Sigrid Nunez",
+          "coverId": "ol:10464927",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780735219465",
+          "coverIsbn": "9780735219465"
+        },
+        {
+          "id": "OL20129824W",
+          "title": "Trust Exercise",
+          "author": "Susan Choi",
+          "coverId": "ol:10144556",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9781250309884",
+          "coverIsbn": "9781250309884"
+        },
+        {
+          "id": "OL20991105W",
+          "title": "Interior Chinatown",
+          "author": "Charles Yu",
+          "coverId": "ol:10716590",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780307907196",
+          "coverIsbn": "9780307907196",
+          "coverWork": "OL20640520W"
+        },
+        {
+          "id": "OL24166595W",
+          "title": "Hell of a Book",
+          "author": "Jason Mott",
+          "coverId": "ol:10580853",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780593330968",
+          "coverIsbn": "9780593330968"
+        },
+        {
+          "id": "OL26846737W",
+          "title": "The Rabbit Hutch",
+          "author": "Tess Gunty",
+          "coverId": "ol:13136120",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780593534663",
+          "coverIsbn": "9780593534663"
+        },
+        {
+          "id": "OL34082879W",
+          "title": "Blackouts",
+          "author": "Justin Torres",
+          "coverId": "ol:13880917",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780374293574",
+          "coverIsbn": "9780374293574"
+        },
+        {
+          "id": "OL36506504W",
+          "title": "James",
+          "author": "Percival L. Everett",
+          "coverId": "ol:14619520",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780385550376",
+          "coverIsbn": "9780385550376"
+        },
+        {
+          "id": "OL44257696W",
+          "title": "The True True Story of Raja the Gullible (and His Mother)",
+          "author": "Rabih Alameddine",
+          "coverId": "ol:15133619",
+          "addedAt": "2026-09-30",
+          "from": "isbn:9780802166487",
+          "coverIsbn": "9780802166487"
+        }
+      ]
     }
   ]
 }
