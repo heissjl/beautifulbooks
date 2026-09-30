@@ -3685,6 +3685,45 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
 - **Fischer Bücherei, Julians Veröffentlichung auf /curate:** Julian hat den Entwurf am 29.9. um 05:12 Uhr veröffentlicht und dabei *Madame Curie*, *Der letzte Advent* und *Sämtliche Erzählungen* entfernt. Die drei sind in Liste und Datei übernommen (`skip`). Die Wand hat jetzt 186 Kacheln in zwei Blöcken; 95 tragen einen Gestalter.
 - **Ex Libris Nr. 57 und 58 angelegt:** OL62603439M (Ex Libris 1972) und OL62603440M (Ex Libris 1977), beide ohne ISBN und mit Umschlag. Die Wand zeigt 58 von 58.
 - **Julians Berichtigungen bei Open Library, geprüft:** OL62603210M steht auf Haffmans, OL18051650M hat keine ISBN mehr.
+- **Online-Entwürfe nachgezogen**, nach dem Deploy von `84bcf80`:
+  - Haffmans: 2 Schritte (1 dazu, Reihenfolge). Beide *Lone Star* stehen im Entwurf.
+  - Fischer Bücherei: mit `--force` wegen der neuen Reihenfolge, die Julian verlangt hatte; die Umschläge stimmten überein. 9 Schritte (Intro, 7 Kacheln dazu, Reihenfolge); danach „already equal“.
+  - Die Fischer-Wand war am Morgen von /curate aus veröffentlicht. Die Seite zeigt deshalb bis zu einer erneuten Veröffentlichung auf /curate den alten Stand.
+
+**Julians Auswahl aus den Sammlungskandidaten, 2026-09-29.**
+- **„Passt“ (13):** NYRB Children’s Collection, Découvertes Gallimard, Rivages/Noir, Virago Designer Collection, Zytglogge (Werner Maurer), Ravensburger (Grieder und Schindler), insel taschenbuch, Penguin Drop Caps, Penguin Great Ideas, L’Imaginaire, Nebula (Roman), Deutscher Buchpreis, National Book Award.
+- **Nicht gewählt (8):** Penguin Orange Collection, Penguin Modern, Diogenes detebe, Semiotext(e), Little Black Classics, Éditions de Minuit, Melville House, Persephone.
+- Julian wählte also auch typografische Reihen (Drop Caps, Great Ideas, L’Imaginaire) und alle drei Preiswände. Die frühere Notiz, typografische Reihen langweilten ihn, gilt nicht pauschal.
+
+**Keller-Manifeste Zytglogge und Ravensburger, 2026-09-29.** Ein Agent hat sie gebaut; auf Open Library ist noch nichts angelegt oder hochgeladen.
+- **Zytglogge (Werner Maurer), 24 Umschläge**, 1973–78, alle mit Druck in DNB oder swisscovery und mit ISBN.
+  - Aktionen: 20 Uploads auf vorhandene Ausgaben, 1 neue Ausgabe, 3 neue Werke.
+  - Fünf Umschläge sind typografisch (die drei der „Schwarzen Reihe“ und *Kurzwaren 1* und *2*). Sie sind aufgenommen, wie Julian es bei Ex Libris wollte.
+  - Zwei ISBNs lösen bei Open Library auf fremde Datensätze auf (*Papierrosen*, *S chürzere Bei*); die Liste nennt die richtige Ausgabe.
+  - Für Fritz Widmer gibt es bei Open Library keinen Autorendatensatz.
+- **Ravensburger (Grieder 18, Schindler 16), 34 Umschläge**; die Keller-Zählung (17 und 13) war zu knapp.
+  - Aktionen: 1 hat den Umschlag schon, 5 Uploads, 17 neue Ausgaben, 10 neue Werke.
+  - 1 zurückgehalten: *Joseph* im späteren Layout hat dieselbe ISBN wie das frühere.
+  - Unsicher sind das Original von *Pirat Jacko* und die Werkzuordnung von *Affengeplapper*. Bei *Dominik Dachs* und beim *Riesenpfirsich* nennt die DNB andere Illustratoren als Keller; die Liste folgt Keller, weil es um den Umschlag geht.
+- Die Stapel sind erzeugt (4 bzw. 27 Ausgaben anzulegen). Am Abend des 29.9. war die Chrome-Erweiterung nicht verbunden, die Uploads warten darauf.
+
+**Neun der 13 gewählten Kandidaten als Entwürfe, 2026-09-30.** Listen von Agenten, jedes Cover auf Kontaktbögen angesehen; gebaut mit `from-isbns.ts`, online als Entwurf, nicht veröffentlicht.
+
+| Wand | auf der Wand | Liste | Bemerkung |
+|---|---|---|---|
+| `penguin-drop-caps` | 22 von 26 | beautifulbooks.info | D, I, O, X ohne Reihen-Cover bei Open Library |
+| `virago-designer-collection` | 17 von 28 | beautifulbooks.info | 11 ohne Designer-Cover |
+| `penguin-great-ideas` | 89 von 120 | Wikipedia (Sets 1–6) + ISBN-Blöcke | Wo das britische Bild fehlt, eine US- oder spätere Penguin-Ausgabe im selben Design; 3 Kacheln hängen an E-Book-Datensätzen; Nr. 56 (Benjamin) ausgelassen, Bild ist ein Bücherstapel |
+| `nyrb-children-s-collection` | 21 von 52 | nyrb.com products.json | nur Hardcover im klassischen Design (rotes Rückenband); der Shop führt nur Lieferbares, vergriffene Bände fehlen ganz |
+| `l-imaginaire` | 142 | BnF-SRU, Nr. 200–400 | Deckung bei Open Library dicht bis etwa Nr. 500 |
+| `decouvertes-gallimard` | 149 | BnF-SRU, Nr. 1–200 | Nr. 99 und 167 zeigen einen späteren Druck derselben Nummer |
+| `rivages-noir` | 138 | BnF-SRU, Nr. 1–200 | ab Nr. 500 kaum Cover bei Open Library |
+| `zytglogge-covers-by-werner-maurer` | 24 von 24 | Keller-Manifest | 20 Uploads, 4 neue Ausgaben (OL62605261M–64M); 5 typografische aufgenommen |
+| `ravensburger-covers-by-grieder-and-schindler` | 33 von 34 | Keller-Manifest | 5 Uploads, 27 neue Ausgaben (OL62605265M–91M); *Joseph* im späteren Layout zurückgehalten (gleiche ISBN wie der Druck von 1975) |
+
+- **Mein Fehler bei Zytglogge:** *Um jede Priis* (OL62605264M) ist ohne Titel angelegt. Nach Open Librarys Hinweis „mögliche Treffer“ (ein Sammelband von 1981) war das Formular beim Klick auf „Continue“ leer. ISBN, Verlag, Jahr und Umschlag sind da; Titel von Ausgabe und Werk (OL46030909W) setzt Julian, weil das Bearbeiten ein reCAPTCHA verlangt.
+- **Werkzeuge:** `from-isbns.ts` versucht eine Anfrage jetzt fünfmal mit wachsender Pause (5–40 s) statt zweimal; die französischen Wände brachen vorher an einzelnen stummen Anfragen ab. `_runs/walls.sh` baut mehrere Wände nacheinander; `npx` darf dort nicht von der Schleifeneingabe lesen (`< /dev/null`).
+- **Offen:** insel taschenbuch, Deutscher Buchpreis, Nebula und National Book Award. Die Listen für Buchpreis und Nebula liegen vor, insel und NBA baut ein Agent noch.
 
 ## 2026-09-29 · Xanh Mono proportional neu gesetzt (ROADMAP 6.61)
 
@@ -3728,3 +3767,15 @@ Julian: „wir brauchen noch eine Vorschaukarte für Collections" — bis dahin 
 
 Offen: die Sammlungen der Leser (`/c/<id>`) zeigen weiter die Website-Karte.
 
+
+**Die letzten vier der 13 gewählten Kandidaten als Entwürfe, 2026-09-30.** Damit sind alle 13 online als Entwurf, keiner veröffentlicht.
+
+| Wand | auf der Wand | Quelle | Bemerkung |
+|---|---|---|---|
+| `insel-taschenbuch` | 329 | Open Library, ISBN-Stämme 3-458-31 bis 36 | Nur it 1–1500, die Jahre des Fleckhaus-Rahmens; ab etwa it 1500 mischt sich der Bestand, und ein Online-Entwurf fasst höchstens 400 Werke. 360 weitere Umschläge bleiben in der Liste (`skip` mit Grund). Die blaue Platon-Werkausgabe (7 Bände) ist herausgenommen, eigene Gestaltung. Welche Umschläge noch zum Fleckhaus-Design zählen, war eine Ermessensfrage: Julian sieht es sich an. |
+| `deutscher-buchpreis` | 21 von 21 | de.wikipedia | 19 mit Erstausgabe; 2007 Franck (Fischer TB 2009) und 2015 Witzel (btb 2016) mit späterer Ausgabe |
+| `nebula-award-best-novel` | 62 von 62 | en.wikipedia | Gleichstand 1966 mit beiden Büchern; meist Erstausgaben, vier spätere, wo die Erstausgabe nur als Titelblatt oder mit Etikett vorliegt |
+| `national-book-award-fiction` | 83 von 83 | en.wikipedia | Nicht der Open-Library-Tag (267 Treffer mit Nicht-Preisträgern). *Cold Mountain* zeigte die französische Ausgabe; ersetzt durch die Sceptre-Erstausgabe 1997 (OL31920608M). |
+
+- Die Preiswände heißen wie die Hugo-Wand („Nebula Award — best novel“, „National Book Award — fiction“) und sind Reihen-Sammlungen ohne Verlagsliste.
+- **robots.txt:** Open Library sperrt `/search` für alle Nutzer; ob das `search.json` meint, ist ROADMAP 6.63.
