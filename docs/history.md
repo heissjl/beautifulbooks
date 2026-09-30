@@ -3638,6 +3638,103 @@ Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/creat
 - Bei vier Büchern auf der Wand (Nr. 7, 32, 40, 41) nennt der Umschlag Benziger statt Ex Libris; diese Ausgaben stehen unter Benziger. Nr. 28 erschien bei beiden zugleich. Dazu kommen Nr. 35 (Nebelspalter) und Nr. 45 (Huber), deren Ausgaben es schon gab.
 - **Wand `ex-libris-covers-by-hanspeter-wyss`:** 44 von 58, laut Kontaktbogen alle von Wyss und bildhaft. Online als Entwurf.
 
+## 2026-09-29 — Drei Punkte aus den Durchsichten gebaut (ROADMAP 6.79, 6.75, 6.76)
+
+Gemessen unter `npm run dev` (Worktree `beautiful-books-ux-plan`, Port 3017) mit Headless-Chrome über das DevTools-Protokoll, Telefon mit echter Geräte-Emulation (`Emulation.setDeviceMetricsOverride`, mobil, Touch), weil das Browser-Panel verborgen war (Breite 0). Skripte im Scratchpad der Sitzung, Bilder in `docs/tests/2026-09-29-*` (lokal).
+
+**6.79, das Suchfeld unter der Kopfzeile.** Nicht nachstellbar, solange die Startseite oben steht: bei `scrollY = 0` stand das Feld nach Enter bei 89 px, die Kopfzeile endet bei 57. **Nachstellbar, sobald die Seite beim Tippen gescrollt war:** `HomeSearchBar` schob die neue Adresse mit `scroll: false`, die Scrollposition blieb, und der Hero über dem Feld fiel weg.
+
+| Fall | Feld vor Enter | Feld nach Enter, vorher | nachher |
+|---|---|---|---|
+| 1512 × 790, 100 px gescrollt | 278–382 | **−11 bis 81** (halb unter der Kopfzeile) | 89–181 |
+| 1512 × 790, 250 px gescrollt | 128–232 | 64–156 (Chrome verankerte) | 89–181 |
+| 390 × 844, 300 px gescrollt | 88–188 | 56–148 (bündig an der Kopfzeile) | 89–181 |
+
+Behoben mit `window.scrollTo({ top: 0 })` vor dem `push` (`components/HomeSearchBar.tsx`).
+
+**6.75, die Werkseite nach einem Ausfall.** Der zweite Versuch nach 2 s für Seite 0 gab es schon (`useWorkPages`, seit 2026-09-07); was fehlte, war der Ausgang. Mit 503 auf jede Anfrage an `/api/works/*` (DevTools `Fetch.fulfillRequest`): zwei Anfragen, dann „Open Library did not answer“, der Satz, dass das nichts über das Buch sagt, „Try again“ und „Search for another book“ (von einer Trefferliste: „Back to the results“). Mit 429: „Too many requests at once“. „Try again“ bei wieder erreichbarer Quelle: Wand mit 31 Bildern nach 1,5 s (Cache warm). Vorher stand dort der Satz des Servers („Book data source unavailable, try again shortly“) über „Back to search“.
+
+**6.76, das Suchfeld zuerst.** Die zwei Einladungen (Spiel, eigene Sammlung) stehen jetzt unter dem Feld und seinen zwei Knöpfen, am Desktop in einer Zeile; oben am Telefon 24 px weniger Luft (`pt-10` statt `pt-16`).
+
+| | Oberkante des Suchfelds vorher | nachher |
+|---|---|---|
+| 390 × 844 | 388 px | **296 px** |
+| 1280 × 800 | 378 px | **310 px** |
+
+Die Sammlungen bleiben unter der Wand der Klassiker, wie Julian es für 5.10d wollte; Teil A der Durchsicht hatte sie höher vorgeschlagen. Der Bericht nannte ~540 px bei 375 × 812; bei 390 × 844 waren es 388 — der Unterschied wurde nicht weiter verfolgt.
+
+## 2026-09-29 — Seitenleiste mit den Läden zuerst, als Mockup (ROADMAP 6.77)
+
+Variante B hinter `?panel=b`, nur unter `next dev` (`process.env.NODE_ENV`, im Produktions-Build entfernt): unter dem Cover sofort Druck, ISBN und die erste Laden-Reihe; danach „Add to collection“, „29 printings with this cover ▸“ und „30 scans of this cover ▸“ eingeklappt, dann „Looks like this“, die übrigen Wege und die lokalen Läden. Gemessen an *The Great Gatsby*, Cover `ol:14811162` (die Kachel mit den meisten gefalteten Scans, +29), Oberkante der ersten Laden-Reihe:
+
+| | A (heute) | B |
+|---|---|---|
+| 1280 × 800, Seitenleiste ungescrollt | 1.338 px | **801 px** |
+| 390 × 844, Telefon-Blatt offen | 1.174 px | **565 px** |
+
+Am Telefon ist die erste Reihe damit im ersten Bildschirm; am Desktop liegt sie 1 px unter der Falte, solange die Seite oben steht (die Spalte beginnt dort bei 235 px, klebt erst beim Scrollen bei 80). Nebenbefund: in derselben Wand steht „Jake Gyllenhaal performs“, ein Hörbuch-Cover — ein zweiter Beleg für 6.80.
+
+## 2026-09-29 — Sekundärliteratur auf den Trefferkarten: was sich sicher sagen lässt (ROADMAP 6.81, Vorschlag)
+
+Zehn Suchen gegen den Dev-Server (`the great gatsby`, `nineteen eighty four`, `1984`, `mumbo jumbo`, `gravity's rainbow`, `pride and prejudice`, `alice in wonderland`, `crime and punishment`, `ulysses`, `moby dick`), jede Karte mit fünf Regeln klassifiziert. **Die vorhandene Ableitungsregel `derivativeIds` taugt fürs Ranking, nicht für ein Etikett:** sie erfasst auch Bücher, die nur den Titel teilen — „Flora & Ulysses“ (DiCamillo), „H.M.S. Ulysses“ (MacLean), „Chasing gravity's rainbow“. Titelenthaltensein ohne Ableitungsregel ebenso: „Management mumbo-jumbo“ wäre „about *Mumbo Jumbo*“. Und die Gatsby-Sekundärliteratur heißt meist schlicht „The Great Gatsby“ (Matterson, Lehan, Parkinson, Northman) — **kein Titelwort verrät sie**.
+
+Was dagegen ohne Fehlgriff blieb:
+
+| Suche | Karten | Hauptliste¹ | andere Autoren | Etikett aus dem Titel² | Autor entdoppelt³ |
+|---|---|---|---|---|---|
+| the great gatsby | 15 | 3 | 12 | 0 | 0 |
+| nineteen eighty four | 17 | 3 | 14 | 3 | 1 |
+| 1984 | 17 | 3 | 14 | 2 | 1 |
+| mumbo jumbo | 11 | 2 | 9 | 0 | 0 |
+| gravity's rainbow | 12 | 1 | 11 | 2 | 0 |
+| pride and prejudice | 15 | 2 | 13 | 4 | 0 |
+| alice in wonderland | 20 | 5 | 15 | 3 | 0 |
+| crime and punishment | 18 | 3 | 15 | 1 | 1 |
+| ulysses | 15 | 2 | 13 | 0 | 0 |
+| moby dick | 13 | 1 | 12 | 0 | 0 |
+
+¹ Werke desselben Erstautors wie die erste Karte (Namensschlüssel oder Open-Library-Key, so findet „Crime and Punishment — Fyodor Dostoevsky“ zu „Fiódor Dostoievski“) und Werke anderer Autoren mit mindestens einem Zehntel ihrer Ausgaben (Beccaria, Fénelon). ² `looksLikeSecondaryLiterature` („About the book“: SparkNotes, CliffsNotes, notes, companion, reader's guide) und `MARKED_DERIVATIVE` („Adaptation“: [adaptation], a play, in five acts); keine falsche Zuordnung unter den 21. ³ Gleiche Initiale, Nachname eine Änderung entfernt: „George Orwell, George Orwel“, „John D. Simons, John D. Simmons“.
+
+**Title Case** naiv (jeder Titel in Satzschreibung, `en` unter den Sprachen, nur ASCII) hätte zwei italienische Titel falsch gemacht („Dei Delitte E Delle Pene“, „La Casa Degli Specchi“) und das englische „The last tycoon“ (Sprachen `de, fr, es`) verfehlt; eine Liste romanischer und deutscher Artikel schließt die zwei aus. Vorschlag und Entscheidungen im [Plan 6.63](plans/PLAN-6.63-alltag.md), Abschnitt 6.81.
+
+## 2026-09-29 — Die Trefferliste in zwei Teilen (ROADMAP 6.81, Teil 1)
+
+Julian zur Gruppierung nach Autor: „das klingt gut“. Gebaut als `groupByAuthor` (`lib/searchgroups.ts`, Tests an den Fixtures der Abnahmesuchen) und in `components/BookGrid.tsx`: oben der Autor der ersten Karte, darunter „By other authors (n)“, bis vier Karten offen, darüber eingeklappt, und eingeklappte Karten werden erst beim Aufklappen gebaut. Geprüft unter `npm run dev` mit Headless-Chrome:
+
+| Suche | oben | By other authors | Zustand |
+|---|---|---|---|
+| the great gatsby (1280 und 390 px) | 3 (Gatsby, Gatsby/Last Tycoon, The last tycoon) | 12 | eingeklappt, aufgeklappt 12 Karten |
+| nineteen eighty four | 3 (1984, Animal Farm/1984, Novels) | 14 | eingeklappt |
+| mumbo jumbo | 2 (Reed, Wheen) | 9 | eingeklappt |
+
+Keine Seite breiter als das Fenster. Wheens *How Mumbo-jumbo Conquered the World* steht oben, weil es 3 Ausgaben hat und Reeds Werk 23 — mehr als ein Zehntel; die Regel greift wie beschrieben, ob das so gewollt ist, lässt sich an einem Beispiel nicht sagen. Tests 948 grün.
+
+**Nachtrag am selben Tag: zwei Korrekturen der Regel.** (1) Julian verstand nicht, warum Wheens *How Mumbo-jumbo Conquered the World* (3 Ausgaben) neben Reeds Roman stand: das Zehntel der ersten Karte waren bei 23 Ausgaben nur 2,3. Ein großes Buch eines anderen Autors braucht jetzt zusätzlich **mindestens 30 Ausgaben** (dieselbe Grenze wie `WEAK_BEST_EDITIONS` der Tippfehler-Korrektur); Julian: „ja, bau das ein“. *Mumbo Jumbo* danach 1 oben, 10 darunter; die übrigen neun Suchen unverändert. (2) Beim Nachprüfen stand bei „crime and punishment“ Dostojewskis *Crime and Punishment* mit 19 Ausgaben unter „By other authors“: Open Library führt ihn zweimal, als „Fiódor Dostoievski“ (OL22242A) und „Fyodor Dostoevsky“ (OL16224933A), und weder Key noch Namensschlüssel stimmten. Der Eintrag oben, der das als gelöst beschrieb, irrte — gefunden hatte die Regel nur den Datensatz mit Key OL22242A. Jetzt gilt auch gleiche Initiale und ein Nachname ab sechs Buchstaben, der höchstens zwei abweicht (Smith und Smyth bleiben getrennt). Danach 4 oben, 14 darunter. Durchgesehen: unter „By other authors“ steht in den zehn Suchen niemand mehr, der der Autor der ersten Karte ist; es bleiben Datensätze, die Übersetzer oder Bearbeiter als Erstautor führen (Katz vor Dostojewski, zehn Nacherzählungen mit Melville an zweiter Stelle). Im Browser bei 1280 und 390 px geprüft.
+
+## 2026-09-29 — Seitenleiste, Variante C: eine Liste der Scans (ROADMAP 6.77)
+
+Julian fragte, was der Unterschied zwischen „printings“ und „scans“ in Variante B sei, und wählte dann eine Zeile, „mit scan leading over printing“. Gebaut als `?panel=c` unter `next dev`: „30 scans of this cover, on 29 printings ▸“, aufgeklappt je Scan das kleine Bild und daneben die Drucke, die ihn tragen. Geprüft an Gatsby, Cover `ol:14811162`, bei 1280 × 800 und 390 × 844: 30 Zeilen, keine Zeile ohne Druck und kein Druck ohne Scan; ein Klick auf die dritte Zeile zeigte deren Bild (`ol:14811170`) oben groß und setzte „Charles Scribner's Sons · 1953“ über die Knöpfe; Seite nicht breiter als das Fenster. Erste Laden-Reihe wie bei B. Nebenbei in den Daten: zwei Drucke „Charles Scribner's Sons · 1925“ tragen eine ISBN, die es 1925 noch nicht gab — Katalogfehler, die die Seite so zeigt, wie Open Library sie führt.
+
+## 2026-09-29 — Seitenleiste, Variante D: die seitliche Scan-Reihe verbessert (ROADMAP 6.77)
+
+Julian nach Variante C: „die version die wir haben mit einem seitlichen scrollen finde ich viel besser. können wir die verbessern“. Gebaut als `?panel=d`: Läden zuerst wie B, darunter offen die Scan-Reihe aus A mit Kacheln 72 × 108 px (vorher 44 × 64), unter jeder Verlag, Jahr und gegebenenfalls „no ISBN“ des tragenden Drucks, „+n more“ für einen Scan auf mehreren Drucken, Pfeile und Verlaufskanten an beiden Enden bei Geräten mit Zeiger. Die Reihe der Druck-Knöpfe entfällt. Geprüft an Gatsby, `ol:14811162`, 1280 × 800 und 390 × 844: 30 Kacheln, Reihe 224 px hoch, am Desktop anfangs nur der Pfeil rechts, nach einem Klick 336 px weiter und beide Pfeile; am Telefon keine Pfeile (Wischen); die dritte Kachel wählte Bild und Druck (Scribner 1953); erste Laden-Reihe wie B, 565 px am Telefon. `useOverflowsX` gibt dafür zusätzlich `atStart` zurück.
+
+**Nachtrag, D in zweiter Fassung** (Julian: „mach bei D die scans kleiner, und setze sie doch nochmal über die kauflinks. add to collection kann beim handy neben den close button“): Kacheln 56 × 84 px, die Reihe zwischen Cover und Druck, am Telefon „Add to collection“ im Kopf des Blatts neben „Close“. Gemessen an derselben Seite: Reihe 176 px; erste Laden-Reihe 757 px am Telefon, 993 px am Desktop (B: 565 und 801). Kopf ohne Sammlung eine Zeile (55 px); nach „Add“ erscheinen Auswahlliste und „Open“, „Open“ bricht um, 75 px. Ein erster Testlauf meldete, „Add“ tue nichts: die Sammlung war angelegt (201), aber `next dev` kompilierte `/api/walls/me` beim ersten Aufruf länger, als der Test wartete — mit 6 s Wartezeit zeigten A und D beide „In your collection ✓“.
+
+**Nachtrag, D in dritter Fassung:** die Reihe ordnet nach Drucken statt nach Scans — 29 Drucke, 30 Kacheln; der eine Druck mit zwei Scans (Charles Scribner's Sons, 1925) zeigt beide nebeneinander, ein Klick darauf ließ beide leuchten; die Notiz „one with 2 scans“ steht rechts in der Überschriftenzeile. Im Kopf des Telefon-Blatts heißt der Knopf nach „Add“ nur „✓“, der Kopf bleibt eine Zeile (55 px statt 75). Unter der Reihe am Telefon 16 px bis zur Druck-Zeile, vorher 32 (Julian zuerst „etwas wenig abstand“, dann „weniger luft, nicht mehr“).
+
+## 2026-09-29 — Seitenleiste: D ist die feste Fassung (ROADMAP 6.77)
+
+Julian: „ja, mach D zur festen Fassung“. Der Schalter `?panel=` und die Varianten A (die bisherige Spalte), B und C sind aus `components/BookDetail.tsx` entfernt; `CoverDetails` hat eine Reihenfolge: Share-Zeile, Cover, „N printings with this cover“ (nur, wenn es mehr als einen Scan oder Druck gibt), Kopfzeile des Drucks mit ISBN, Läden, „Looks like this“, die zugeklappten Zeilen. Am Telefon sitzt „Add to collection“ im Kopf des Blatts (`CoverSheet` `headerAction`, `AddToWall` `compact`). Ohne Schalter nachgemessen an *The Great Gatsby*:
+
+| | Cover mit 29 Drucken (`ol:14811162`) | Cover mit einem Druck (`ol:15144216`) |
+|---|---|---|
+| 390 × 844, erster Kauf-Knopf | 741 px (vorher 1.174) | 549 px |
+| 1280 × 800, ungescrollt | 993 px (vorher 1.338) | 801 px |
+| Reihe | 29 Drucke, 30 Kacheln, „one with 2 scans“ | keine |
+
+Keine Reste der alten Zeilen „printings/scans of this cover ▸“ im DOM, keine Seite breiter als das Fenster, 951 Tests grün.
+
 **Offene Fälle der Keller-Wände, nachgesehen am 2026-09-29.** Alle Fälle mit Bildern und Open-Library-Links stehen auf einer privaten Seite für Julian: https://claude.ai/artifact/S63L2jtsSUtTgWh2PBUgpM
 - **Berichtigung zu *Lone Star*:** Die Heyne-Ausgabe (Nr. 36, OL62603224M) hat einen anderen Heidelbach-Umschlag (Würfel) als die Haffmans-Ausgabe (Nr. 35, OL62603210M, Zigarre). Weil die Wand jedes Werk nur einmal zeigt, fehlt das Würfel-Bild. Oben stand, das sei richtig so; das stimmt nicht. Welches Bild bleibt, entscheidet Julian.
 - **Ex Libris, die zwölf zurückgehaltenen:** Nur Nr. 12, 15 und 29 sind reine Schrift. Die übrigen neun tragen eine abstrakte Grafik. Empfehlung: die neun dazunehmen.
@@ -3783,6 +3880,28 @@ Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch dies
 - `scripts/add-collection-covers-to-pool.ts --add=…`: 2380 Kandidaten aus 34 Sammlungen. 211 waren zu klein oder unscharf, 34 zeigten ein Design, das das Spiel für dasselbe Werk schon hat; jede Anfrage wurde beantwortet.
 - Der Vorrat `mix-2000-paperwhite-collections` wächst von 3373 auf **4135 Umschläge** (782 neu); die Stimmen zählen weiter. Die neuen Umschläge sind auf einem Kontaktbogen angesehen.
 - Das Skript liest `data/collections.json`. Für Sammlungen, die Julian online bearbeitet und von /curate aus veröffentlicht hat, nimmt es den Stand der Datei, nicht den online geänderten.
+- **Berichtigung, gleicher Tag:** Die Annahme, diese Sammlungen seien nicht veröffentlicht, war mein Fehler, kein Fehler der Seite (Julian: „ich glaube das könnte ein bug sein“). Wer einen Entwurf auf /curate veröffentlicht, speichert den Inhalt mit `published: true` und löscht den Schalter (`app/api/curate/drafts/[id]`); `liveRecords` wendet beides richtig an. Meine Abfrage las nur die Schalter.
+- **Zweiter Lauf, aus dem Live-Stand:** `add-collection-covers-to-pool.ts` liest jetzt `COLLECTIONS_FILE`. Die Datei war aus Datei und Online-Inhalt so zusammengesetzt, wie die Seite sie zeigt, damit Julians Online-Änderungen ins Spiel kommen.
+  - Veröffentlicht sind 44 Sammlungen; zehn kamen neu dazu: Découvertes Gallimard, Fischer Bücherei, Great American Novel, insel taschenbuch, Kipling, L’Imaginaire, Great Ideas, Rivages/Noir, Steinbeck, Virago Designer.
+  - Draußen bleiben auf Julians Wort edition suhrkamp, Library of America und die Suhrkamp-Autorenporträts.
+  - 3386 Kandidaten: 291 zu klein oder unscharf, 35 schon im Spiel, jede Anfrage beantwortet.
+  - Der Vorrat hat jetzt **5060 Umschläge** (927 neu, 2 heraus, weil sich eine Sammlung online geändert hat). Die neuen sind auf einem Kontaktbogen angesehen.
+
+**5.10l umgesetzt: /collections zweispaltig mit Mosaik-Kachel, 2026-09-30.** Julian wählte Variante D aus dem Mockup („setze das um“).
+- **Neu:** `components/CollectionGrid.tsx` zeigt zwei Reihen ohne Seitwärtsscrollen; die letzte Kachel ist ein 3 × 3-Mosaik der Umschläge 10–18, also keiner, der schon in den Reihen steht.
+- **Schild:** „All n →“ sitzt mittig auf dem abgedunkelten Mosaik; seine Schrift richtet sich nach der Kachelbreite (`clamp(9px, 10cqw, 13px)`).
+- **Spalten und Umschläge pro Reihe** folgen dem Fenster: ab `xl` zwei Karten à 5, ab `lg` zwei à 4, ab `sm` eine à 5, darunter eine à 4. Wo eine Reihe vier fasst, treten der 8. und 9. Umschlag zurück.
+- Die alte Scrollzeile `CollectionRow` ist entfernt; sie hatte keinen anderen Nutzer.
+- **Gemessen** im Dev-Server mit einer DOM-Messung:
+
+  | Fenster | Spalten | pro Reihe | Umschlag | Schild |
+  |---|---|---|---|---|
+  | 1280 px | 2 | 5 | 107 px | 58 px auf 107 px |
+  | 1100 px | 2 | 4 | 115 px | 62 px auf 115 px |
+  | 800 px | 1 | 5 | 141 px | 70 px auf 141 px |
+  | 375 px | 1 | 4 | 77 px | 49 px auf 77 px |
+
+  Nirgends seitliches Scrollen; bei 1280 px auch mit Bildschirmfoto angesehen.
 - **Offen:** insel taschenbuch, Découvertes, L’Imaginaire, Rivages/Noir, Great Ideas und Virago Designer haben online veröffentlichten Inhalt, aber keinen eingeschalteten Schalter. Sie gelten nicht als veröffentlicht und sind deshalb nicht im Spiel; Julian klärt, ob das gewollt ist.
 
 ## 2026-09-29 · Eine Vorschaukarte je Sammlung, vorberechnet (ROADMAP 6.61)
