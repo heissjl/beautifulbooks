@@ -216,7 +216,9 @@ export function authorsShown(collection: Collection): string[] {
  * each series printing, which nobody looked at one by one — and for a few
  * it is not the series design at all (SF Masterworks: 4 of 73, 2026-09-25).
  */
-export function coverLine(kind: CollectionKind, coverSource?: 'catalogue', ownImages = 0): string {
+export function coverLine(kind: CollectionKind, coverSource?: 'catalogue', ownImages = 0, scope?: string[]): string {
+  // A series without publisher names is a wall across publishers (the prize walls, 2026-09-30): no "printing in the series".
+  if (kind === 'series' && scope && scope.length === 0) return 'one cover each, chosen by hand';
   // A site-served image is not Open Library's, so the line must not say it is (see CollectionPick.image).
   if (ownImages > 0 && kind === 'series') {
     return `each with the cover of its printing in the series — ${ownImages === 1 ? 'one of them' : `${ownImages} of them`} photographed from a collector's copy, as Open Library has no image of ${ownImages === 1 ? 'it' : 'them'} yet`;
