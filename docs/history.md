@@ -3817,3 +3817,5 @@ Julian: „wir brauchen noch eine Vorschaukarte für Collections" — bis dahin 
 
 Offen: die Sammlungen der Leser (`/c/<id>`) zeigen weiter die Website-Karte.
 
+
+**Cover-Spiel ohne Suhrkamp BasisBibliothek, 2026-09-30.** Julian: „entferne die suhrkamp basisbibliothek aus dem spiel“. `suhrkamp-basisbibliothek` steht jetzt in `LEFT_OUT` von `scripts/add-collection-covers-to-pool.ts`, neben edition suhrkamp, Library of America und den Suhrkamp-Autorenporträts. Neu gebaut aus dem Live-Stand: 48 Umschläge heraus, der Vorrat hat 5012 statt 5060, keiner der BasisBibliothek bleibt drin (auch nicht im Grundvorrat aus dem Index). Die Messungen waren zwischengespeichert, kein Bild wurde neu geladen.
