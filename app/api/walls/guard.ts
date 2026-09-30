@@ -38,6 +38,12 @@ export function setVisitor(response: NextResponse, visitor: string): NextRespons
   return response;
 }
 
+/** Log out (Julian, 2026-09-30): the cookie goes, the collections stay under the ID for whoever pastes it again. */
+export function clearVisitor(response: NextResponse): NextResponse {
+  response.cookies.set(VISITOR_COOKIE, '', { path: '/', maxAge: 0, sameSite: 'lax', secure: process.env.NODE_ENV === 'production' });
+  return response;
+}
+
 /**
  * A write must arrive as JSON. A cross-site form cannot send that without a
  * preflight, and `SameSite=Lax` keeps the cookie off a cross-site POST anyway.
