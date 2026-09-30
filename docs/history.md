@@ -3880,6 +3880,28 @@ Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch dies
 - `scripts/add-collection-covers-to-pool.ts --add=…`: 2380 Kandidaten aus 34 Sammlungen. 211 waren zu klein oder unscharf, 34 zeigten ein Design, das das Spiel für dasselbe Werk schon hat; jede Anfrage wurde beantwortet.
 - Der Vorrat `mix-2000-paperwhite-collections` wächst von 3373 auf **4135 Umschläge** (782 neu); die Stimmen zählen weiter. Die neuen Umschläge sind auf einem Kontaktbogen angesehen.
 - Das Skript liest `data/collections.json`. Für Sammlungen, die Julian online bearbeitet und von /curate aus veröffentlicht hat, nimmt es den Stand der Datei, nicht den online geänderten.
+- **Berichtigung, gleicher Tag:** Die Annahme, diese Sammlungen seien nicht veröffentlicht, war mein Fehler, kein Fehler der Seite (Julian: „ich glaube das könnte ein bug sein“). Wer einen Entwurf auf /curate veröffentlicht, speichert den Inhalt mit `published: true` und löscht den Schalter (`app/api/curate/drafts/[id]`); `liveRecords` wendet beides richtig an. Meine Abfrage las nur die Schalter.
+- **Zweiter Lauf, aus dem Live-Stand:** `add-collection-covers-to-pool.ts` liest jetzt `COLLECTIONS_FILE`. Die Datei war aus Datei und Online-Inhalt so zusammengesetzt, wie die Seite sie zeigt, damit Julians Online-Änderungen ins Spiel kommen.
+  - Veröffentlicht sind 44 Sammlungen; zehn kamen neu dazu: Découvertes Gallimard, Fischer Bücherei, Great American Novel, insel taschenbuch, Kipling, L’Imaginaire, Great Ideas, Rivages/Noir, Steinbeck, Virago Designer.
+  - Draußen bleiben auf Julians Wort edition suhrkamp, Library of America und die Suhrkamp-Autorenporträts.
+  - 3386 Kandidaten: 291 zu klein oder unscharf, 35 schon im Spiel, jede Anfrage beantwortet.
+  - Der Vorrat hat jetzt **5060 Umschläge** (927 neu, 2 heraus, weil sich eine Sammlung online geändert hat). Die neuen sind auf einem Kontaktbogen angesehen.
+
+**5.10l umgesetzt: /collections zweispaltig mit Mosaik-Kachel, 2026-09-30.** Julian wählte Variante D aus dem Mockup („setze das um“).
+- **Neu:** `components/CollectionGrid.tsx` zeigt zwei Reihen ohne Seitwärtsscrollen; die letzte Kachel ist ein 3 × 3-Mosaik der Umschläge 10–18, also keiner, der schon in den Reihen steht.
+- **Schild:** „All n →“ sitzt mittig auf dem abgedunkelten Mosaik; seine Schrift richtet sich nach der Kachelbreite (`clamp(9px, 10cqw, 13px)`).
+- **Spalten und Umschläge pro Reihe** folgen dem Fenster: ab `xl` zwei Karten à 5, ab `lg` zwei à 4, ab `sm` eine à 5, darunter eine à 4. Wo eine Reihe vier fasst, treten der 8. und 9. Umschlag zurück.
+- Die alte Scrollzeile `CollectionRow` ist entfernt; sie hatte keinen anderen Nutzer.
+- **Gemessen** im Dev-Server mit einer DOM-Messung:
+
+  | Fenster | Spalten | pro Reihe | Umschlag | Schild |
+  |---|---|---|---|---|
+  | 1280 px | 2 | 5 | 107 px | 58 px auf 107 px |
+  | 1100 px | 2 | 4 | 115 px | 62 px auf 115 px |
+  | 800 px | 1 | 5 | 141 px | 70 px auf 141 px |
+  | 375 px | 1 | 4 | 77 px | 49 px auf 77 px |
+
+  Nirgends seitliches Scrollen; bei 1280 px auch mit Bildschirmfoto angesehen.
 - **Offen:** insel taschenbuch, Découvertes, L’Imaginaire, Rivages/Noir, Great Ideas und Virago Designer haben online veröffentlichten Inhalt, aber keinen eingeschalteten Schalter. Sie gelten nicht als veröffentlicht und sind deshalb nicht im Spiel; Julian klärt, ob das gewollt ist.
 
 ## 2026-09-29 · Eine Vorschaukarte je Sammlung, vorberechnet (ROADMAP 6.61)

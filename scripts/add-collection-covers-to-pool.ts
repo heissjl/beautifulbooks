@@ -57,7 +57,9 @@ interface PoolFile {
 }
 
 const pool = JSON.parse(readFileSync(POOL_FILE, 'utf8')) as PoolFile;
-const records = (JSON.parse(readFileSync(join(ROOT, 'data', 'collections.json'), 'utf8')) as { collections: CollectionRecord[] }).collections;
+// COLLECTIONS_FILE: the collections as the site shows them (drafts published on /curate replace the file's
+// record), so the game takes Julian's online edits rather than the file's older version (2026-09-30).
+const records = (JSON.parse(readFileSync(process.env.COLLECTIONS_FILE ?? join(ROOT, 'data', 'collections.json'), 'utf8')) as { collections: CollectionRecord[] }).collections;
 const index = JSON.parse(readFileSync(join(ROOT, 'data', 'cover-index.json'), 'utf8')) as RawIndex;
 const measuresFile = JSON.parse(readFileSync(MEASURES_FILE, 'utf8')) as { measuredAt: string; measures: Record<string, CoverMeasure> };
 const measures = measuresFile.measures;
