@@ -4,7 +4,7 @@ import { useState } from 'react';
 import CoverImage from './CoverImage';
 import { coverUrlFor } from '@/lib/coverurl';
 import { standingOf, type Standing } from '@/lib/walls/edit';
-import type { PublicWall, Tile } from '@/lib/walls/model';
+import { tileCoverId, type PublicWall, type Tile } from '@/lib/walls/model';
 
 export interface Proposal {
   /** What was read or drawn; the tile when a cover was found. */
@@ -113,7 +113,7 @@ export default function WallProposal({
                   <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-3">
                     <input type="checkbox" checked={st === 'in' || picked.has(i)} disabled={st === 'in'} onChange={() => toggle(i)} />
                     <span className={`relative block h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-surface-2 ${st === 'in' ? 'opacity-60' : ''}`}>
-                      <CoverImage src={coverUrlFor(`ol:${p.tile.coverId}`, 'S') ?? ''} alt="" sizes="32px" />
+                      <CoverImage src={coverUrlFor(tileCoverId(p.tile), 'S') ?? ''} alt="" sizes="32px" />
                     </span>
                     <span className="min-w-0">
                       <span className={`block truncate text-sm ${st === 'in' ? 'text-ink-2' : 'text-ink'}`}>{p.tile.title}</span>

@@ -7,7 +7,7 @@ import WallIdField from './WallIdField';
 import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import { editHref } from '@/lib/walls/edit';
-import { MIN_SHOWCASE_TILES, UNSAVED_HOURS, type PublicWall, type WallOp } from '@/lib/walls/model';
+import { MIN_SHOWCASE_TILES, tileCoverId, UNSAVED_HOURS, type PublicWall, type WallOp } from '@/lib/walls/model';
 
 /**
  * A reader's wall (ROADMAP 5.13a). A cover wall like every other on the site
@@ -105,11 +105,11 @@ export default function WallView({ initial }: { initial: PublicWall }) {
       ) : (
         <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5">
           {wall.tiles.map((t) => {
-            const src = coverUrlFor(`ol:${t.coverId}`, 'M');
+            const src = coverUrlFor(tileCoverId(t), 'M');
             const label = t.author ? `${t.title} by ${t.author}` : t.title;
             return (
               <li key={t.coverId}>
-                <Link href={`/book/${t.workId}?cover=ol:${t.coverId}`} title={label} className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out hover:-translate-y-1">
+                <Link href={`/book/${t.workId}?cover=${tileCoverId(t)}`} title={label} className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out hover:-translate-y-1">
                   {src && <CoverImage src={src} alt={label} sizes="(max-width: 640px) 33vw, (max-width: 1280px) 25vw, 20vw" />}
                 </Link>
               </li>

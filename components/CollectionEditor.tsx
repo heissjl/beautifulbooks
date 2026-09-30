@@ -18,7 +18,7 @@ import { addTiles, createWall, postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import { defaultTitle, editHref, readEditState, type AddTab, type EditState } from '@/lib/walls/edit';
 import type { StartOption } from '@/lib/walls/jumpstart';
-import { MAX_BY, MAX_INTRO, UNSAVED_HOURS, type PublicWall, type Tile, type WallOp } from '@/lib/walls/model';
+import { MAX_BY, MAX_INTRO, tileCoverId, UNSAVED_HOURS, type PublicWall, type Tile, type WallOp } from '@/lib/walls/model';
 
 type Access = 'checking' | 'owner' | 'down';
 
@@ -375,7 +375,7 @@ function Arrange({ wall, onSend, onAdd, onPick }: { wall: PublicWall; onSend: (o
       ) : (
         <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
           {wall.tiles.map((t, i) => {
-            const src = coverUrlFor(`ol:${t.coverId}`, 'M');
+            const src = coverUrlFor(tileCoverId(t), 'M');
             const label = t.author ? `${t.title} by ${t.author}` : t.title;
             const lifted = drag?.from === i;
             const target = drag !== null && drag.over === i && drag.from !== i;
@@ -480,7 +480,7 @@ function TargetPanel({
             {wall.tiles.map((t) => (
               <li key={t.coverId} className="relative">
                 <span className={`relative block aspect-[2/3] overflow-hidden rounded-[3px] bg-surface-2 ${fresh.has(t.coverId) ? 'ring-2 ring-accent ring-offset-1 ring-offset-surface' : ''}`}>
-                  <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'S') ?? ''} alt={t.title} sizes="80px" />
+                  <CoverImage src={coverUrlFor(tileCoverId(t), 'S') ?? ''} alt={t.title} sizes="80px" />
                 </span>
                 <button
                   type="button"

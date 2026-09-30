@@ -15,7 +15,7 @@ import type { StartOption } from '@/lib/walls/jumpstart';
 import { addTiles, createWall, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import { defaultTitle, editHref } from '@/lib/walls/edit';
-import type { Tile } from '@/lib/walls/model';
+import { tileCoverId, type Tile } from '@/lib/walls/model';
 
 const WORK = /^OL\d+W$/;
 
@@ -83,7 +83,7 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
                   <span className="grid grid-cols-4 gap-1.5">
                     {Array.from({ length: 4 }, (_, i) => w.tiles[i]).map((t, i) => (
                       <span key={t?.coverId ?? i} className="relative block aspect-[2/3] overflow-hidden rounded-[2px] bg-surface-2">
-                        {t && <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'S') ?? ''} alt="" sizes="60px" />}
+                        {t && <CoverImage src={coverUrlFor(tileCoverId(t), 'S') ?? ''} alt="" sizes="60px" />}
                       </span>
                     ))}
                   </span>
