@@ -9,7 +9,7 @@ import { wallsEnabled } from '@/lib/walls/switch';
 import SiteHeader from '@/components/SiteHeader';
 import { authorsShown, coverLine } from '@/lib/collections';
 import { liveCollectionBySlug } from '@/lib/collections-live';
-import { SITE_CARD, SITE_URL } from '@/lib/seo';
+import { SITE_URL } from '@/lib/seo';
 import { friendSignedIn } from '@/lib/suggest/session';
 
 /**
@@ -60,7 +60,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: c.title,
     description,
     alternates: { canonical: `${SITE_URL}/collections/${c.slug}` },
-    openGraph: { type: 'website', title: c.title, description, url: `${SITE_URL}/collections/${c.slug}`, images: [SITE_CARD] },
+    // The image is the collection's own card, opengraph-image.tsx beside this file.
+    openGraph: { type: 'website', title: c.title, description, url: `${SITE_URL}/collections/${c.slug}` },
     ...(c.published ? {} : { robots: { index: false, follow: false } }),
   };
 }

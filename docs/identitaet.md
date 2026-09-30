@@ -19,6 +19,7 @@ Jede Entscheidung dieser Datei in einer Zeile, neueste unten. Das Cockpit liest 
 | 2026-09-29 | Schrift | Xanh Mono proportional neu gesetzt: Rand 22, Band 10–65 %, kursiv Überhang 180, aufrecht Arm 55 | Monospaced mit Wortabstand −0,3 em; Überhang 130 (Lücke im f) | 6.61 |
 | 2026-09-29 | Bildmarke | Richtung A: 3 × 3 Buchrechtecke, die mittlere in Terrakotta; Kopfzeile und Browser-Icon | B Wand mit Lücke, C Mosaik-Buch, D Fächer, Mischung A+C | 6.61 |
 | 2026-09-29 | Bildmarke | Doch die Mischung A + C, 3 × 3: Wand und gewählte Kachel von A in den Tönen eines Regals wie die Website-Karte; dunkel kehrt sich die Tonleiter um | A in reiner Tinte (am selben Tag gebaut und ersetzt) | 6.61 |
+| 2026-09-29 | Vorschaubild | Eigene Karte je veröffentlichter Sammlung: vierzehn ihrer Cover als Wand, beim Build vorberechnet | Website-Karte für Sammlungen | 6.61 |
 
 
 ## 1. Schrift

@@ -3718,3 +3718,13 @@ Nebenbei: der Historien-Leser des Cockpits erkennt nur Überschriften mit „·"
 
 Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch diese Variante" — die Mischung A + C, 3 × 3, statt A in reiner Tinte, wenige Stunden nachdem A live ging. Die Kacheln tragen die sieben Töne der Website-Karte (`#2a2622` bis `#d9cfc1`) in genau der Anordnung der Skizze (Zeilen 2-6-3, 5-·-3, 2-0-1, Index in die Tonleiter). Der Einwand gegen die Mischung war der dunkle Grund: dort verschwanden die dunklen Kacheln. Darum dreht sich die Tonleiter im dunklen Modus um (`--mark-0` … `--mark-6` in `app/globals.css`, `#efe8dd` bis `#48413b`): die dunkelste Kachel des Tages ist nachts die hellste, und die hellste des Tages wird ein Dunkelbraun, das sich vom Grund `#131110` noch abhebt. Geprüft groß, in 16 und 32 px, hell und dunkel, und in der Kopfzeile beider Modi. Die Rasterfassungen (Papiergrund) zeichnet `scripts/build-icons.py` neu: `favicon.ico` 16/32/48, `apple-icon.png` 180.
 
+## 2026-09-29 · Eine Vorschaukarte je Sammlung, vorberechnet (ROADMAP 6.61)
+
+Julian: „wir brauchen noch eine Vorschaukarte für Collections" — bis dahin zeigte jede Sammlung die Website-Karte. Neu: `app/collections/[slug]/opengraph-image.tsx`, dunkler Grund wie die Werk-Karte, die ersten vierzehn Cover der Sammlung in ihrer Reihenfolge als zwei Reihen à sieben (140 × 210), darunter der Titel in Xanh und „N books by A, B and n more · *Beautiful Books*". Die Seite nennt kein `SITE_CARD` mehr, damit die Karte daneben greift.
+
+**Leere Kacheln, gemessen:** im ersten Wurf blieben bei *edition suhrkamp* elf von vierzehn Kacheln leer, obwohl jedes Bild bei Open Library existiert (200, 8–18 KB). Open Library leitet jede Cover-Adresse auf archive.org um, 0,5–1,7 s je Bild, und der Generator gab langsame Bilder auf. `loadCovers` in `app/og.tsx` lädt die Bilder jetzt selbst, je 5 s, verwirft Fehler, Nicht-Bilder und Platzhalter unter 1 KB und lässt das nächste Cover der Sammlung nachrücken; der Generator bekommt Data-URLs. Danach keine Lücke mehr. Weniger als vierzehn geladene Cover ergeben eine Reihe statt einer halb leeren zweiten (*SF Masterworks – rounded corners*, 10 Bücher).
+
+**Vorberechnet** auf Julians Vorschlag („für die von uns erstellten Sammlungen kannst du die Karten ja vorberechnen"): `generateStaticParams` aus `data/collections.json`, im Build alle sieben veröffentlichten Sammlungen (● SSG, Erneuerung täglich); ein Entwurf bekommt die Website-Karte, eine später per Schalter veröffentlichte Sammlung ihre Karte beim ersten Abruf. Die PNGs wiegen 352 KB (zehn Cover) bis 1,15 MB (*SF Masterworks – the relaunch*) — `next/og` schreibt nur PNG.
+
+Offen: die Sammlungen der Leser (`/c/<id>`) zeigen weiter die Website-Karte.
+
