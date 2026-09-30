@@ -3795,3 +3795,9 @@ Julian: „wir brauchen noch eine Vorschaukarte für Collections" — bis dahin 
 
 Offen: die Sammlungen der Leser (`/c/<id>`) zeigen weiter die Website-Karte.
 
+## 2026-09-29 · Vorschaukarten als JPEG (ROADMAP 6.61)
+
+Julian zu den Sammlungskarten: „das ist schon recht groß, nach dem Deploy sollten wir überlegen, wie es kleiner geht." Gemessen an der Karte von *Feminist Press* aus der Produktion (PNG, 927 KB): JPEG 90 → 160 KB, 82 → 122 KB, 75 → 104 KB; WebP 82 → 86 KB; PNG mit 256 Farben → 217 KB. Julian: „ja, mach jpg." `asJpeg` in `app/og.tsx` wandelt die PNG des Generators mit `sharp` (schon Abhängigkeit des Projekts) in JPEG, Qualität 82, mozjpeg, progressiv; Werk-, Cover- und Sammlungskarte deklarieren `image/jpeg`.
+
+**Ergebnis im Build:** Sammlungskarten 53 KB (*SF Masterworks – rounded corners*, eine Reihe) bis 139 KB (*SF Masterworks – the relaunch*), vorher 352 KB bis 1,15 MB; *Feminist Press* 106 KB. Am Dev-Server: Werk-Karte *Frankenstein* 108 KB, Cover-Karte 50 KB, die Website-Karte als Ersatz einer unbekannten Sammlung 35 KB (JPEG, weil die Route JPEG deklariert). Die Website-Karte selbst bleibt PNG, 53 KB — Flächen und Schrift, die JPEG verschmieren würde. Die Schrift unter der Wand bleibt im JPEG scharf (vergrößert angesehen).
+
