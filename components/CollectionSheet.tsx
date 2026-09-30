@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import CoverImage from './CoverImage';
 import { coverUrlFor } from '@/lib/coverurl';
-import type { PublicWall } from '@/lib/walls/model';
+import { tileCoverId, type PublicWall } from '@/lib/walls/model';
 
 /**
  * The collection being filled, on a phone (ROADMAP 5.13m, step 5): a bar at
@@ -60,7 +60,7 @@ export default function CollectionSheet({ wall, fresh, children }: { wall: Publi
             {last.length === 0 && <span className="h-11 w-7 rounded-[2px] border border-dashed border-line" />}
             {last.map((t) => (
               <span key={t.coverId} className={`relative h-11 w-7 overflow-hidden rounded-[2px] bg-surface-2 ${fresh.has(t.coverId) ? 'ring-2 ring-accent' : ''}`}>
-                <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'S') ?? ''} alt="" sizes="28px" />
+                <CoverImage src={coverUrlFor(tileCoverId(t), 'S') ?? ''} alt="" sizes="28px" />
               </span>
             ))}
           </span>

@@ -9,7 +9,7 @@ import { useWorkPages } from './useWorkPages';
 import { buildWall, captionFor, progressLabel } from './workWall';
 import type { Cover, EditionView } from '@/lib/model';
 import { swapOps } from '@/lib/walls/edit';
-import type { PublicWall, Tile, WallOp } from '@/lib/walls/model';
+import { storedCoverId, tileCoverId, type PublicWall, type Tile, type WallOp } from '@/lib/walls/model';
 
 export default function WallPicker({
   workId,
@@ -53,12 +53,9 @@ export default function WallPicker({
     return { work, merged, ...wall, editionsById, captions };
   }, [pages]);
 
-  // Google's images have no Open Library number to rebuild them from; they are shown, dimmed, and refused with a word (F9.2).
-  const google = useMemo(() => new Set((view?.covers ?? []).filter((c) => !c.id.startsWith('ol:')).map((c) => c.id)), [view]);
-
   // A tile on the wall marks the gallery cover it is, or the one it was folded into.
   const marked = useMemo(() => {
-    const onWall = new Set((target?.tiles ?? []).map((t) => `ol:${t.coverId}`));
+    const onWall = new Set((target?.tiles ?? []).map(tileCoverId));
     return new Set((view?.covers ?? []).filter((c) => onWall.has(c.id) || c.similarIds?.some((id) => onWall.has(id))).map((c) => c.id));
   }, [view, target]);
 
@@ -77,14 +74,15 @@ export default function WallPicker({
 
   function toggle(cover: Cover) {
     if (!view || busy) return;
-    if (!cover.id.startsWith('ol:')) {
-      setError('This image comes from Google Books, and a collection can only hold covers from Open Library for now.');
+    const stored = storedCoverId(cover.id);
+    if (!stored) {
+      setError('This image has no id a collection can keep.');
       return;
     }
     const ids = new Set([cover.id, ...(cover.similarIds ?? [])]);
-    const onIt = (target?.tiles ?? []).filter((t) => ids.has(`ol:${t.coverId}`));
+    const onIt = (target?.tiles ?? []).filter((t) => ids.has(tileCoverId(t)));
     const editions = cover.editionIds.map((id) => view.editionsById.get(id)).filter((e): e is EditionView => !!e);
-    const tile: Tile = { workId: view.work.id, coverId: cover.id.slice(3), title: view.work.title, ...(view.work.authors[0] ? { author: view.work.authors[0] } : {}), printings: printingsOf(editions) };
+    const tile: Tile = { workId: view.work.id, coverId: stored, title: view.work.title, ...(view.work.authors[0] ? { author: view.work.authors[0] } : {}), printings: printingsOf(editions) };
     if (!target) {
       change(() => postJson('/api/walls', { title: newTitle, tiles: [tile] }));
       return;
@@ -139,11 +137,6 @@ export default function WallPicker({
           'Your first cover starts a new collection; you go on adding in its editor.'
         )}
       </p>
-      {google.size > 0 && view && (
-        <p className="mt-1 text-xs text-ink-3">
-          {google.size} of the {view.covers.length} {google.size === 1 ? 'comes' : 'come'} from Google Books and cannot go into a collection for now — shown dimmed.
-        </p>
-      )}
       {error && (
         <div className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-lg rounded-card border border-accent bg-surface px-4 py-3 text-sm text-ink shadow-xl" role="alert">
           {error}
@@ -158,7 +151,7 @@ export default function WallPicker({
         {pages.status === 'error' && <p className="text-sm text-accent">{pages.message ?? 'Open Library did not answer. Try again in a moment.'}</p>}
         {view && view.groups.length === 0 && pages.merged?.done && <p className="text-sm text-ink-2">Neither catalogue has a cover for this book.</p>}
         {view && view.groups.length > 0 && (
-          <CoverGallery groups={view.groups} allCovers={view.all} selectedCover={null} onSelectCover={toggle} captions={view.captions} marked={marked} dimmed={{ ids: google, label: 'Google Books' }} allFirst />
+          <CoverGallery groups={view.groups} allCovers={view.all} selectedCover={null} onSelectCover={toggle} captions={view.captions} marked={marked} allFirst />
         )}
       </div>
     </section>

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import type { Cover, EditionView } from '@/lib/model';
-import { MAX_PRINTINGS, type Printing, type PublicWall, type Tile } from '@/lib/walls/model';
+import { MAX_PRINTINGS, storedCoverId, type Printing, type PublicWall, type Tile } from '@/lib/walls/model';
 import { useEditingId } from './editingSession';
 import { announceWall, createWall, postJson, useMyWalls } from './useMyWalls';
 import { defaultTitle, editHref } from '@/lib/walls/edit';
@@ -89,8 +89,8 @@ export default function AddToWall({ workId, title, author, cover, editions, comp
     };
   }, [open]);
 
-  if (!cover.id.startsWith('ol:')) return null;
-  const coverId = cover.id.slice(3);
+  const coverId = storedCoverId(cover.id);
+  if (!coverId) return null;
   const tile: Tile = { workId, coverId, title, ...(author ? { author } : {}), printings: printingsOf(editions) };
   const rank = (id: string) => (id === editingId ? 0 : id === lastTarget ? 1 : 2);
   const walls = [...me.walls].sort((a, b) => rank(a.id) - rank(b.id));

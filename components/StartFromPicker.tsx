@@ -8,7 +8,7 @@ import { postJson } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import { editHref } from '@/lib/walls/edit';
 import type { StartOption } from '@/lib/walls/jumpstart';
-import type { PublicWall, Tile } from '@/lib/walls/model';
+import { tileCoverId, type PublicWall, type Tile } from '@/lib/walls/model';
 
 type Loaded = { key: string; title: string; tiles: Tile[]; skipped: number } | { key: string; error: string };
 
@@ -116,7 +116,7 @@ export default function StartFromPicker({
         <ul className="mt-3 flex gap-1.5" aria-label={`First covers of ${option.title}`}>
           {option.covers.map((id) => (
             <li key={id} className="relative h-16 w-11 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">
-              <CoverImage src={coverUrlFor(`ol:${id}`, 'S') ?? ''} alt="" sizes="44px" />
+              <CoverImage src={coverUrlFor(tileCoverId(id), 'S') ?? ''} alt="" sizes="44px" />
             </li>
           ))}
         </ul>

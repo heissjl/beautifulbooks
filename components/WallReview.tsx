@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import CoverImage from './CoverImage';
 import { postJson } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
-import type { PublicWall } from '@/lib/walls/model';
+import { tileCoverId, type PublicWall } from '@/lib/walls/model';
 
 interface Row {
   wall: PublicWall;
@@ -87,7 +87,7 @@ export default function WallReview() {
           <ul className="mt-4 flex flex-wrap gap-2">
             {w.tiles.map((t) => (
               <li key={t.coverId} className="relative h-24 w-16 overflow-hidden rounded-[2px] bg-surface-2" title={`${t.title}${t.author ? ` — ${t.author}` : ''}`}>
-                <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'S') ?? ''} alt={t.title} sizes="64px" />
+                <CoverImage src={coverUrlFor(tileCoverId(t), 'S') ?? ''} alt={t.title} sizes="64px" />
               </li>
             ))}
           </ul>
