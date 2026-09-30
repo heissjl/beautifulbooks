@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import CoverGallery from './CoverGallery';
 import { printingsOf } from './AddToWall';
 import { postJson } from './useMyWalls';
@@ -36,6 +36,12 @@ export default function WallPicker({
 }) {
   const pages = useWorkPages(workId, '', undefined);
   const [error, setError] = useState('');
+  // The message follows the reader: a line at the top is out of sight when the cover clicked is far down (Julian, 2026-09-29).
+  useEffect(() => {
+    if (!error) return;
+    const t = setTimeout(() => setError(''), 7000);
+    return () => clearTimeout(t);
+  }, [error]);
   const [busy, setBusy] = useState(false);
 
   const view = useMemo(() => {
@@ -46,6 +52,9 @@ export default function WallPicker({
     const captions = new Map(wall.covers.map((c) => [c.id, captionFor(c, editionsById)]));
     return { work, merged, ...wall, editionsById, captions };
   }, [pages]);
+
+  // Google's images have no Open Library number to rebuild them from; they are shown, dimmed, and refused with a word (F9.2).
+  const google = useMemo(() => new Set((view?.covers ?? []).filter((c) => !c.id.startsWith('ol:')).map((c) => c.id)), [view]);
 
   // A tile on the wall marks the gallery cover it is, or the one it was folded into.
   const marked = useMemo(() => {
@@ -69,7 +78,7 @@ export default function WallPicker({
   function toggle(cover: Cover) {
     if (!view || busy) return;
     if (!cover.id.startsWith('ol:')) {
-      setError('This image comes from Google Books and cannot go into a collection yet.');
+      setError('This image comes from Google Books, and a collection can only hold covers from Open Library for now.');
       return;
     }
     const ids = new Set([cover.id, ...(cover.similarIds ?? [])]);
@@ -130,14 +139,26 @@ export default function WallPicker({
           'Your first cover starts a new collection; you go on adding in its editor.'
         )}
       </p>
-      {error && <p className="mt-2 text-sm text-accent" role="alert">{error}</p>}
+      {google.size > 0 && view && (
+        <p className="mt-1 text-xs text-ink-3">
+          {google.size} of the {view.covers.length} {google.size === 1 ? 'comes' : 'come'} from Google Books and cannot go into a collection for now — shown dimmed.
+        </p>
+      )}
+      {error && (
+        <div className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-lg rounded-card border border-accent bg-surface px-4 py-3 text-sm text-ink shadow-xl" role="alert">
+          {error}
+          <button type="button" onClick={() => setError('')} className="ml-3 text-ink-2 underline underline-offset-2 hover:text-accent">
+            Close
+          </button>
+        </div>
+      )}
 
       <div className="mt-6">
         {pages.status === 'notfound' && <p className="text-sm text-ink-2">Open Library has no such book.</p>}
         {pages.status === 'error' && <p className="text-sm text-accent">{pages.message ?? 'Open Library did not answer. Try again in a moment.'}</p>}
         {view && view.groups.length === 0 && pages.merged?.done && <p className="text-sm text-ink-2">Neither catalogue has a cover for this book.</p>}
         {view && view.groups.length > 0 && (
-          <CoverGallery groups={view.groups} allCovers={view.all} selectedCover={null} onSelectCover={toggle} captions={view.captions} marked={marked} allFirst />
+          <CoverGallery groups={view.groups} allCovers={view.all} selectedCover={null} onSelectCover={toggle} captions={view.captions} marked={marked} dimmed={{ ids: google, label: 'Google Books' }} allFirst />
         )}
       </div>
     </section>

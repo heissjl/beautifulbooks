@@ -37,6 +37,8 @@ interface CoverGalleryProps {
    * was tried on the selected tile and removed (6.55).
    */
   marked?: ReadonlySet<string>;
+  /** Covers the page cannot take, shown dimmed with a word why (the collection editor, 5.13m). */
+  dimmed?: { ids: ReadonlySet<string>; label: string };
   /** Open on "All languages" rather than the first language (the wall picker; Julian, 2026-09-28). */
   allFirst?: boolean;
 }
@@ -83,7 +85,7 @@ function visibleLanguages(
   return new Set([...others.slice(0, kept), activeKey]);
 }
 
-export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked, allFirst }: CoverGalleryProps) {
+export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked, dimmed, allFirst }: CoverGalleryProps) {
   // The tab follows the selected cover unless the user picked a tab since
   // the selection last changed (derived state, no effect needed).
   const [picked, setPicked] = useState<{ key: string; forSelectedId: string | null } | null>(null);
@@ -204,6 +206,7 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5" role="tabpanel">
         {shown.map((cover, index) => {
           const onWall = !!marked?.has(cover.id);
+          const dim = !!dimmed?.ids.has(cover.id);
           const selected = selectedCover?.id === cover.id || onWall;
           const caption = captions.get(cover.id) ?? '';
           return (
@@ -227,7 +230,7 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
                 focused selected tile shows both. (A check mark on the selected
                 tile was tried and removed on Julian's word, 2026-09-26.)
               */
-              className={`tile-in group relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 text-left transition-transform duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[5px] focus-visible:outline-ink ${
+              className={`tile-in group relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 text-left transition-transform duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[5px] focus-visible:outline-ink ${dim ? 'opacity-45' : ''} ${
                 selected
                   ? 'cover-shadow ring-2 ring-accent ring-offset-2 ring-offset-bg'
                   : 'cover-shadow hover:-translate-y-1'
@@ -244,6 +247,11 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
               {onWall && (
                 <span className="pointer-events-none absolute left-1.5 top-1.5 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-medium text-on-accent">
                   Added
+                </span>
+              )}
+              {dim && dimmed && (
+                <span className="pointer-events-none absolute inset-x-1.5 bottom-1.5 rounded-full bg-black/70 px-1.5 py-0.5 text-center text-[10px] font-medium text-white">
+                  {dimmed.label}
                 </span>
               )}
               {cover.similarIds && cover.similarIds.length > 0 && (
