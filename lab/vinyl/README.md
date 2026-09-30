@@ -82,6 +82,8 @@ Die Wand ansehen: `out/` mit einem beliebigen statischen Server ausliefern, z. B
 
 13. **Ohne Sprachmodell** (Julian: „ist es einfacher nur den text aus wikipedia zu finden und darzustellen, statt zusammenzufassen?"; `wiki-only.ts`, `captions.ts`): Wikipedia-Auszug mit Link und Lizenz fürs Album, je Hülle eine gesetzte Zeile aus unseren Daten und höchstens eine Discogs-Anmerkung wörtlich. 1,0 s (Median) mit gespeicherter Wikidata-ID, höchstens 1,9 s, kostenlos. Im Mockup die Voreinstellung.
 
+**Entschieden 2026-09-29: Wikipedia-Auszug statt Zusammenfassung** (Julian: „der wikipedia-auszug reicht, nimm den") — die Geschichte einer Hülle ist der Wikipedia-Auszug mit Link und Lizenz, dazu je Hülle die gesetzte Zeile und höchstens eine Discogs-Anmerkung (Punkt 13). `live-story.ts` bleibt als Messung im Labor; im Mockup ist die Claude-Fassung nur noch zum Vergleich umschaltbar.
+
 **Entschieden 2026-09-29: Schwelle 20** (Julian: „für das hashing nimm die 20er schwelle“) — weniger Kacheln, die UHQR-Box und das zweite *folklore*-Foto verschwinden dabei im Stapel. Das Mockup steht auf 20, der Umschalter bleibt.
 
 **Offen, Julian:** welche Positionierung (Hüllengeschichte, Neuerscheinungen oder Sammlerbestimmung); Discogs-Token beantragen und die Bildrechte dort prüfen, oder bei MusicBrainz bleiben; wo Rückseite und Etikett erscheinen (auf der Wand oder erst beim gewählten Cover); eigene Seite oder Teil von beautifulcovers.
