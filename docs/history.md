@@ -3914,3 +3914,7 @@ Julian: „wir brauchen noch eine Vorschaukarte für Collections" — bis dahin 
 
 Offen: die Sammlungen der Leser (`/c/<id>`) zeigen weiter die Website-Karte.
 
+## 2026-09-29 — Deploy der Durchsichts-Punkte (ROADMAP 6.75, 6.76, 6.77, 6.79, 6.81 Teil 1)
+
+Julian: „deploye“. Vor dem Push drei neue Commits aus `origin/main` eingemischt (5.8a, 5.10l), Typen, Lint, Build und 963 Tests grün; `main` vorgespult und als `3843e9b` nach `origin/main` geschoben. Vercel-Deploy `beautifulbooks-8vyc6nicr`, Ready. Ein Prüfabruf gegen https://beautifulcovers.vercel.app/: HTTP 200, das Suchfeld steht im Server-HTML vor der Einladung ins Spiel (6.76). Die übrigen Punkte sind Browser-Code und wurden unter `next dev` geprüft, nicht in Produktion.
+
