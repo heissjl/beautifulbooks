@@ -165,6 +165,7 @@ function backHrefFrom(searchParams: URLSearchParams): string {
 }
 
 function BookDetail() {
+  const wallsOn = useContext(WallsOn);
   const params = useParams<{ id: string; coverId?: string }>();
   const router = useRouter();
   const pathname = usePathname();
@@ -511,6 +512,15 @@ function BookDetail() {
           coverUrl={selected.url}
           caption={view.captions.get(selected.id) ?? ''}
           share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} placement="up" compact />}
+          headerAction={panelLayout === 'd' && wallsOn ? (
+            <AddToWall
+              workId={work.id}
+              title={work.title}
+              author={work.authors[0]}
+              cover={selected}
+              editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
+            />
+          ) : undefined}
         >
           {details}
         </CoverSheet>
@@ -739,8 +749,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
     ROADMAP 6.77, variant D (mockup, `?panel=d`; Julian, 2026-09-29: „die
     version die wir haben mit einem seitlichen scrollen finde ich viel besser.
     können wir die verbessern"). The sideways row of scans from A, made the
-    one place to choose: bigger tiles (72 × 108 instead of 44 × 64), because
-    telling scans apart is the point of the row; under each the printing that
+    one place to choose: tiles of 56 × 84 (A had 44 × 64; 72 × 108 was
+    Julian's „mach bei D die scans kleiner"), above the shops; under each the printing that
     carries it, so the chips row goes; open rather than folded, since it is
     one tile high; arrows on screens with a pointer, where a wheel does not
     scroll sideways. A scan on several printings says "+n" and steps through
@@ -762,36 +772,36 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
       const box = event.currentTarget.closest('[data-strip]')?.querySelector<HTMLElement>('[data-strip-scroller]');
       box?.scrollBy({ left: direction * box.clientWidth * 0.8, behavior: 'smooth' });
     };
-    const arrow = 'absolute top-[3.375rem] z-10 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg/90 text-ink-2 shadow-sm transition-colors hover:text-ink [@media(hover:hover)]:flex';
+    const arrow = 'absolute top-[2.625rem] z-10 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg/90 text-ink-2 shadow-sm transition-colors hover:text-ink [@media(hover:hover)]:flex';
     return (
-      <section className="mt-5 border-t border-line pt-4" aria-label="Scans of this cover" data-strip>
+      <section className="mt-4" aria-label="Scans of this cover" data-strip>
         <div className="flex items-baseline justify-between gap-3">
           <p className="kicker">{scans.length} {scans.length === 1 ? 'scan' : 'scans'} of this cover</p>
           <p className="text-xs text-ink-3">on {editions.length} {editions.length === 1 ? 'printing' : 'printings'}</p>
         </div>
         <div className="relative mt-3">
           <div ref={scanScroller} onScroll={measureScanRow} data-strip-scroller className="snap-x overflow-x-auto pb-2 [scrollbar-width:thin]">
-            <ul ref={scanContent} className="flex w-max gap-3">
+            <ul ref={scanContent} className="flex w-max gap-2.5">
               {rows.map(row => {
                 const selected = row.id === shownScan;
                 // The printing this tile names: the one on the buttons when it carries this scan, else its first.
                 const current = (selected && row.printings.find(p => p.id === shown?.id)) || row.printings[0];
                 const next = row.printings[(row.printings.indexOf(current as EditionView) + 1) % Math.max(1, row.printings.length)];
                 return (
-                  <li key={row.id} className="w-[4.5rem] snap-start">
+                  <li key={row.id} className="w-14 snap-start">
                     <button
                       type="button"
                       onClick={() => { setPickedScan(row.id); setPicked(current?.id ?? null); }}
                       aria-pressed={selected}
                       title={row.id === cover.id ? 'The scan the wall shows' : 'Another scan of the same cover'}
-                      className={`cover-shadow relative block h-[6.75rem] w-[4.5rem] overflow-hidden rounded-[3px] bg-surface-2 transition-opacity ${
+                      className={`cover-shadow relative block h-[5.25rem] w-14 overflow-hidden rounded-[3px] bg-surface-2 transition-opacity ${
                         selected ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'opacity-80 hover:opacity-100'
                       }`}
                     >
-                      <CoverImage src={coverUrlFor(row.id, 'M') ?? ''} alt={row.id === cover.id ? 'The scan the wall shows' : 'Another scan of this cover'} sizes="72px" />
+                      <CoverImage src={coverUrlFor(row.id, 'M') ?? ''} alt={row.id === cover.id ? 'The scan the wall shows' : 'Another scan of this cover'} sizes="56px" />
                     </button>
                     {current ? (
-                      <div className="mt-1.5 text-[11px] leading-tight">
+                      <div className="mt-1 text-[10px] leading-tight">
                         <p className={`line-clamp-2 ${selected ? 'text-accent' : 'text-ink-2'}`}>{current.publisher || 'Publisher unknown'}</p>
                         <p className="mt-0.5 text-ink-3">
                           {[current.year, current.isbn13 ? undefined : 'no ISBN'].filter(Boolean).join(' · ')}
@@ -808,7 +818,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
                         )}
                       </div>
                     ) : (
-                      <p className="mt-1.5 text-[11px] leading-tight text-ink-3">No printing on record</p>
+                      <p className="mt-1 text-[10px] leading-tight text-ink-3">No printing on record</p>
                     )}
                   </li>
                 );
@@ -888,6 +898,9 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
           heading above them, so folding the chips hides no decision.
         */
         shown && (
+        <>
+        {/* Mockup D: the scans before the shops (Julian, 2026-09-29: „setze sie doch nochmal über die kauflinks"). */}
+        {layout === 'd' && scanStrip}
         <EditionBlock
           key={shown.id}
           edition={shown}
@@ -901,8 +914,9 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
           verdict={shown.isbn13 ? verdictFor(shown.isbn13) : { status: 'unknown' }}
           afterLead={
             <>
-              {!isDesktop && addToWall && <div className="mt-4">{addToWall}</div>}
-              {layout === 'c' ? scanList : layout === 'd' ? scanStrip : (
+              {/* In D the phone has it beside "Close" in the sheet's header. */}
+              {!isDesktop && layout !== 'd' && addToWall && <div className="mt-4">{addToWall}</div>}
+              {layout === 'c' ? scanList : layout === 'd' ? null : (
               <>
               {ordered.length > 1 && (
                 <details className="group mt-4 border-t border-line pt-3">
@@ -978,6 +992,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
             </>
           }
         />
+        </>
       )
       ) : (
         <>
