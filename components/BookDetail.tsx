@@ -176,10 +176,11 @@ function BookDetail() {
   const cameFromResults = !!searchParams.get('q') || !!searchParams.get('author') || !!searchParams.get('key');
   /*
     ROADMAP 6.77, a mockup for Julian: `?panel=b` puts the shops before the
-    scans and printings. Only under `next dev` — a production build inlines
+    scans and printings, `?panel=c` also makes the two one list of scans. Only under `next dev` — a production build inlines
     NODE_ENV and drops the branch. Remove the switch when the order is decided.
   */
-  const panelLayout: 'a' | 'b' = process.env.NODE_ENV !== 'production' && searchParams.get('panel') === 'b' ? 'b' : 'a';
+  const panelParam = searchParams.get('panel');
+  const panelLayout: 'a' | 'b' | 'c' = process.env.NODE_ENV !== 'production' && (panelParam === 'b' || panelParam === 'c') ? panelParam : 'a';
   const preview = useWorkPreview(params.id);
 
   // Market for buy links (E9): the user's choice, else detected by the server.
@@ -554,8 +555,8 @@ interface CoverDetailsProps {
   verdictFor: (isbn13: string) => IsbnVerdict;
   /** Rendered under the big cover on wide screens (Julian, 2026-09-09). */
   share?: React.ReactNode;
-  /** `b` is the 6.77 mockup, shops before scans and printings; dev only. */
-  layout?: 'a' | 'b';
+  /** `b` and `c` are the 6.77 mockups, shops before scans and printings; dev only. */
+  layout?: 'a' | 'b' | 'c';
 }
 
 /**
@@ -654,6 +655,84 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
   */
   const shown = ordered.find(e => e.id === pickedId) ?? ordered[0];
 
+  /*
+    ROADMAP 6.77, variant C (mockup, `?panel=c`; Julian, 2026-09-29: „mit
+    scan leading over printing"): one list instead of a row of scans and a
+    row of printings. Each entry is a scan, beside it the printings that carry
+    it. Picking the scan shows it large and hands the buttons to a printing
+    that carries it — the coupling the two rows already had, now visible;
+    picking a printing does the same for exactly that one. The order is fixed
+    so nothing moves under the pointer: the wall's scan first, then scans on a
+    printing with an ISBN (the only ones a shop can look up), then the rest.
+  */
+  const scanList = layout === 'c' && (scans.length > 1 || ordered.length > 1) ? (() => {
+    const byId = new Map(editions.map(e => [e.id, e]));
+    const rows = scans.map((id, i) => ({
+      id,
+      i,
+      printings: (editionsByScan.get(id) ?? []).map(e => byId.get(e)).filter((e): e is EditionView => !!e),
+    }));
+    const tier = (r: (typeof rows)[number]) => (r.id === cover.id ? 0 : r.printings.some(p => p.isbn13) ? 1 : 2);
+    rows.sort((a, b) => tier(a) - tier(b) || a.i - b.i);
+    const carried = new Set(rows.flatMap(r => r.printings.map(p => p.id)));
+    const withoutScan = editions.filter(e => !carried.has(e.id));
+    const label = (e: EditionView) => [e.publisher, e.year].filter(Boolean).join(' · ') || 'This printing';
+    const printingButton = (scanId: string | null, e: EditionView) => (
+      <button
+        key={e.id}
+        type="button"
+        onClick={() => { if (scanId) setPickedScan(scanId); setPicked(e.id); }}
+        aria-pressed={e.id === shown?.id}
+        className={`block text-left text-xs transition-colors ${e.id === shown?.id ? 'text-accent' : 'text-ink-2 hover:text-ink'}`}
+      >
+        {label(e)}
+        <span className="text-ink-3">{e.isbn13 ? ' · ISBN' : ' · no ISBN'}</span>
+      </button>
+    );
+    const MAX_PRINTINGS = 3;
+    return (
+      <details className="group mt-4 border-t border-line pt-3">
+        <summary className="cursor-pointer list-none text-sm text-ink-2 transition-colors hover:text-ink">
+          <span className="mr-1 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
+          {scans.length} {scans.length === 1 ? 'scan' : 'scans'} of this cover, on {editions.length} {editions.length === 1 ? 'printing' : 'printings'}
+        </summary>
+        <ul className="mt-3 space-y-2">
+          {rows.map(row => (
+            <li key={row.id} className="flex items-start gap-3">
+              <button
+                type="button"
+                onClick={() => { setPickedScan(row.id); setPicked(null); }}
+                aria-pressed={row.id === shownScan}
+                title={row.id === cover.id ? 'The scan the wall shows' : 'Another scan of the same cover'}
+                className={`cover-shadow relative block h-16 w-[2.7rem] shrink-0 overflow-hidden rounded-[3px] bg-surface-2 transition-opacity ${
+                  row.id === shownScan ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'opacity-70 hover:opacity-100'
+                }`}
+              >
+                <CoverImage src={coverUrlFor(row.id, 'M') ?? ''} alt={row.id === cover.id ? 'The scan the wall shows' : 'Another scan of this cover'} sizes="44px" />
+              </button>
+              <div className="min-w-0 space-y-0.5 pt-0.5">
+                {row.printings.slice(0, MAX_PRINTINGS).map(e => printingButton(row.id, e))}
+                {row.printings.length > MAX_PRINTINGS && (
+                  <p className="text-xs text-ink-3">and {row.printings.length - MAX_PRINTINGS} more</p>
+                )}
+                {row.printings.length === 0 && <p className="text-xs text-ink-3">No printing on record for this scan</p>}
+              </div>
+            </li>
+          ))}
+          {withoutScan.length > 0 && (
+            <li className="flex items-start gap-3">
+              <span className="block h-16 w-[2.7rem] shrink-0 rounded-[3px] border border-dashed border-line" aria-hidden="true" />
+              <div className="min-w-0 space-y-0.5 pt-0.5">
+                <p className="text-xs text-ink-3">Printed with this cover, no scan of its own:</p>
+                {withoutScan.map(e => printingButton(null, e))}
+              </div>
+            </li>
+          )}
+        </ul>
+      </details>
+    );
+  })() : null;
+
   return (
     <div>
       {/*
@@ -701,7 +780,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         screen — a wall keeps the design, and the folded scans are the same one.
       */}
 
-      {layout === 'b' ? (
+      {layout !== 'a' ? (
         /*
           ROADMAP 6.77, variant B (a mockup under `next dev`, `?panel=b`):
           the printing and its shops come straight under the cover; adding to
@@ -724,6 +803,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
           afterLead={
             <>
               {!isDesktop && addToWall && <div className="mt-4">{addToWall}</div>}
+              {layout === 'c' ? scanList : (
+              <>
               {ordered.length > 1 && (
                 <details className="group mt-4 border-t border-line pt-3">
                   <summary className="cursor-pointer list-none text-sm text-ink-2 transition-colors hover:text-ink">
@@ -791,6 +872,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
           </p>
                   </div>
                 </details>
+              )}
+              </>
               )}
               <SimilarCovers coverId={cover.id} query={query} />
             </>
