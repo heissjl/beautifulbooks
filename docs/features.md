@@ -90,6 +90,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Dunkelmodus auf jeder Seite, nach der Einstellung des Systems (`prefers-color-scheme`), mit eigener Palette und denselben Kontrastzielen (Akzent `#dbac94`, `ink-3` 4,51:1); kein Umschalter auf der Seite. Nachgetragen 2026-09-29, nachdem die [Durchsicht](tests/2026-09-28-alltagstauglichkeit.md) ihn im echten Chrome ohne Bruch sah | 2026-09-06 / 09-09 | §5 | 6.22 | `app/globals.css` |
 | Bildmarke (Richtung A: Wand aus Buchrechtecken, eines hervorgehoben) in der Kopfzeile und als Browser-Icon, hell und dunkel | 2026-09-29 | §5 | 6.61 | `components/BrandMark.tsx`, `app/icon.svg`, `app/favicon.ico`, `app/apple-icon.png`, `scripts/build-icons.py` |
 | Vorschaukarte je veröffentlichter Sammlung: vierzehn ihrer Cover als Wand, beim Build vorberechnet; langsame Cover werden ersetzt statt leer gelassen | 2026-09-29 | F2.13 | 6.61 | `app/collections/[slug]/opengraph-image.tsx`, `app/og.tsx` (`loadCovers`) |
+| Vorschaukarte für die Sammlungen der Leser (`/c/<id>`): ihre Cover, ihr Titel, der selbst gewählte Name; abgeschaltete und leere zeigen die Website-Karte | 2026-09-29 | F2.13, F9 | 6.61, 5.13a | `app/c/[id]/opengraph-image.tsx`, `app/og.tsx` (`coverWallCard`) |
 
 ## Betrieb und Schutz
 

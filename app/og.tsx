@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { ImageResponse } from 'next/og';
 import sharp from 'sharp';
 
 /**
@@ -117,5 +118,56 @@ export async function asJpeg(card: Response): Promise<Response> {
   headers.set('content-type', 'image/jpeg');
   headers.delete('content-length');
   return new Response(new Uint8Array(jpeg), { status: card.status, headers });
+}
+
+const WALL_COLS = 7;
+const WALL_ROWS = 2;
+const WALL_TILE_W = 140;
+const WALL_TILE_H = 210;
+const WALL_GAP = 12;
+
+/**
+ * The card of a wall of covers — a collection of ours (`/collections/<slug>`)
+ * or a reader's (`/c/<id>`): the first fourteen covers that load, two rows of
+ * seven, or one row when fewer than fourteen load (a half-filled second row
+ * reads as covers missing), the title under them and one line of facts.
+ * JPEG, like every card with covers. `coverUrls` are the candidates in the
+ * wall's order; up to twice the wall is enough to fill the holes.
+ */
+export async function coverWallCard({ coverUrls, title, facts }: { coverUrls: string[]; title: string; facts: string }): Promise<Response> {
+  const covers = await loadCovers(coverUrls.slice(0, WALL_COLS * WALL_ROWS * 2), WALL_COLS * WALL_ROWS);
+  const rows = covers.length >= WALL_COLS * WALL_ROWS ? WALL_ROWS : 1;
+  return asJpeg(new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
+          background: OG.bg, padding: '40px 56px', justifyContent: 'space-between',
+        }}
+      >
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: WALL_GAP, width: WALL_COLS * WALL_TILE_W + (WALL_COLS - 1) * WALL_GAP, height: rows * WALL_TILE_H + (rows - 1) * WALL_GAP, overflow: 'hidden' }}>
+          {covers.slice(0, rows * WALL_COLS).map((url, i) => (
+            // eslint-disable-next-line @next/next/no-img-element -- next/og draws plain <img>
+            <img
+              key={i}
+              src={url}
+              alt=""
+              width={WALL_TILE_W}
+              height={WALL_TILE_H}
+              style={{ objectFit: 'cover', borderRadius: 5, background: '#26221f' }}
+            />
+          ))}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Display size={48} color={OG.ink}>{title}</Display>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginTop: 8 }}>
+            <div style={{ ...TEXT, fontSize: 26, color: OG.ink2 }}>{`${facts} ·`}</div>
+            <Wordmark size={26} color={OG.ink2} />
+          </div>
+        </div>
+      </div>
+    ),
+    { ...OG_SIZE, fonts: await ogFonts() },
+  ));
 }
 
