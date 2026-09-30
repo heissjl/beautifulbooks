@@ -246,6 +246,38 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
  * not for ordering forty covers.
  */
 function Arrange({ wall, onSend, onAdd }: { wall: PublicWall; onSend: (ops: WallOp[]) => void; onAdd: () => void }) {
+  /*
+    Dragging a cover to its place (5.13m step 6). Pointer events, one drag at
+    a time: `from` is the tile picked up, `over` the tile under the pointer.
+    A mouse picks a cover up anywhere on it; a finger only by the grip, which
+    has `touch-action: none` — on the cover itself a finger must still scroll
+    the page. The arrows stay for the keyboard and as the plain way.
+  */
+  const [drag, setDrag] = useState<{ from: number; over: number | null } | null>(null);
+
+  function pickUp(e: React.PointerEvent<HTMLElement>, from: number) {
+    if (e.button !== 0) return;
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // A pointer the browser no longer knows (a synthetic one in a test): the drag still runs on plain events.
+    }
+    setDrag({ from, over: null });
+  }
+  function track(e: React.PointerEvent<HTMLElement>) {
+    if (!drag) return;
+    const under = document.elementFromPoint(e.clientX, e.clientY)?.closest<HTMLElement>('[data-index]');
+    const over = under ? Number(under.dataset.index) : null;
+    setDrag((d) => (d && d.over !== over ? { ...d, over } : d));
+  }
+  function drop(e: React.PointerEvent<HTMLElement>) {
+    if (!drag) return;
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
+    if (drag.over !== null && drag.over !== drag.from) onSend([{ op: 'move', coverId: wall.tiles[drag.from].coverId, to: drag.over }]);
+    setDrag(null);
+  }
+  const handlers = { onPointerMove: track, onPointerUp: drop, onPointerCancel: () => setDrag(null) };
+
   return (
     <section className="mt-6" aria-label="Arrange the collection">
       <input
@@ -289,13 +321,32 @@ function Arrange({ wall, onSend, onAdd }: { wall: PublicWall; onSend: (ops: Wall
           {wall.tiles.map((t, i) => {
             const src = coverUrlFor(`ol:${t.coverId}`, 'M');
             const label = t.author ? `${t.title} by ${t.author}` : t.title;
+            const lifted = drag?.from === i;
+            const target = drag !== null && drag.over === i && drag.from !== i;
             return (
-              <li key={t.coverId}>
-                <span className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2" title={label}>
+              <li key={t.coverId} data-index={i} className={lifted ? 'opacity-40' : ''}>
+                <span
+                  className={`cover-shadow relative block aspect-[2/3] cursor-grab select-none overflow-hidden rounded-card bg-surface-2 ${target ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}
+                  title={label}
+                  onPointerDown={(e) => e.pointerType === 'mouse' && pickUp(e, i)}
+                  // The browser's own image drag would cancel the pointer events (seen in headless Chrome).
+                  onDragStart={(e) => e.preventDefault()}
+                  {...handlers}
+                >
                   {src && <CoverImage src={src} alt={label} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />}
                 </span>
-                <span className="mt-1.5 flex justify-between">
+                <span className="mt-1.5 flex items-center justify-between">
                   <ToolButton label={`Move ${t.title} left`} hidden={i === 0} onClick={() => onSend([{ op: 'move', coverId: t.coverId, to: i - 1 }])}>←</ToolButton>
+                  <button
+                    type="button"
+                    aria-label={`Drag ${t.title} to another place`}
+                    title="Drag to another place"
+                    onPointerDown={(e) => pickUp(e, i)}
+                    {...handlers}
+                    className="h-8 w-8 cursor-grab touch-none rounded-full text-ink-3 hover:text-accent"
+                  >
+                    ⠿
+                  </button>
                   <ToolButton label={`Take ${t.title} out`} onClick={() => onSend([{ op: 'remove', coverId: t.coverId }])}>✕</ToolButton>
                   <ToolButton label={`Move ${t.title} right`} hidden={i === wall.tiles.length - 1} onClick={() => onSend([{ op: 'move', coverId: t.coverId, to: i + 1 }])}>→</ToolButton>
                 </span>
