@@ -1,6 +1,6 @@
 # PLAN 5.13m — Ein Bearbeitungsmodus für die eigene Sammlung
 
-Stand: 2026-09-29, **offen** — Plan und Mockup, nichts gebaut. Roadmap: [5.13m](../../ROADMAP.md). Spec: F9 (wird mit dem Bau angepasst).
+Stand: 2026-09-29, **entschieden, nicht gebaut** — Julians Entscheidungen in §7. Roadmap: [5.13m](../../ROADMAP.md). Spec: F9 (wird mit dem Bau angepasst).
 
 > Julian, 2026-09-29: „die bearbeitung für user von ihren bestehenden collections muss einfacher werden. zb muss man von einem foto einfach zu einer bestehenden collection hinzufügen können … und es sollte einen bearbeitungsmodus geben bei dem klar ist, bei welcher collection man gerade was hinzufügt mit bild oder suche. wenn ich eine collection in der create ansicht anklicke lande ich in der anzeigesicht, dort kann ich aber nichts machen.“
 
@@ -31,6 +31,7 @@ Grundsatz: **Hinzufügen geschieht immer in eine Sammlung, die auf dem Bildschir
 - Ein dunkles Band unter der Kopfzeile: „EDITING · Rainy-day paperbacks · 9 covers · not saved yet“, rechts „See it as others do“ und „Done“. Man weiß jederzeit, dass man bearbeitet und was.
 - **Links „Add covers“** mit drei Reitern: **Search** (Suche → Werk → dieselbe gefaltete Wand wie heute im Picker, „All languages“ vorgewählt, ein Klick legt hinein, der zweite nimmt heraus, „Added ✓“ markiert), **Photo** (siehe §4), **Ideas** (sechs Zufallscover einzeln oder alle, „Draw six others“; die Cover einer anderen Sammlung zum Herauspicken).
 - **Rechts die Sammlung** unter „YOU ARE ADDING TO“: Titel als Feld, „+ Your name, a few lines“ (klappt die zwei Felder auf), alle Cover klein mit **immer sichtbarem ✕**, Ziehen zum Verschieben, neu Hinzugefügte mit „new“ markiert; darunter „Not saved yet — gone in 2 days unless you keep it · **Keep it**“ und „Add to another instead“ mit den übrigen eigenen Sammlungen als Chips und „+ New collection“. Ein Chip wechselt in deren Editor, Suche und Werk bleiben in der Adresse.
+- **Zwei Modi oben im Editor** (Julian, 2026-09-29, §7.3): „Add covers“ wie oben beschrieben, und „**Arrange**“ — die Sammlung in voller Breite mit großen Covern, ✕, Verschieben (Pfeile, später Ziehen) und den Feldern für Titel, Namen und Zeilen. Die schmale Spalte reicht zum Sammeln, nicht zum Ordnen von vierzig Covern. Adresse: `?mode=arrange`. *Im Mockup noch nicht gezeichnet.*
 - Die Adresse trägt den Zustand wie überall: `/c/<id>/edit?add=search&q=rebecca&work=OL…W`. Reload und Zurück behalten Reiter, Suche und Werk.
 - Ein Browser, der die Sammlung nicht besitzt, wird auf `/c/<id>` umgeleitet (dieselbe Prüfung wie heute: `GET /api/walls/<id>` → `canEdit`). `noindex`.
 
@@ -49,7 +50,7 @@ Grundsatz: **Hinzufügen geschieht immer in eine Sammlung, die auf dem Bildschir
 ## 3. Wortwahl
 
 - Die Rückmeldung nach einer Änderung heißt nicht mehr „Saved.“: jede Änderung ist sofort angekommen, und das sagt ein Satz unter der Sammlung („Every change is kept at once“), nicht ein flüchtiger Hinweis.
-- **Vorschlag, Julian entscheidet:** „Save collection“ (5.13j) heißt „**Keep it**“, der Hinweis „Not saved yet — gone in 2 days unless you keep it“. Dann gibt es nur noch eine Bedeutung von „saved“, und die heißt anders. Die Regel aus 5.13j (48 Stunden, erst behaltene zählen und lassen sich zeigen) bleibt unverändert.
+- **Entschieden (Julian, 2026-09-29):** „Save collection“ (5.13j) heißt „**Keep it**“, der Hinweis „Not saved yet — gone in 2 days unless you keep it“. Dann gibt es nur noch eine Bedeutung von „saved“, und die heißt anders. Die Regel aus 5.13j (48 Stunden, erst behaltene zählen und lassen sich zeigen) bleibt unverändert.
 
 ## 4. Foto in eine bestehende Sammlung (Tafel D)
 
@@ -61,7 +62,7 @@ Grundsatz: **Hinzufügen geschieht immer in eine Sammlung, die auf dem Bildschir
 
 ## 5. Bauen, in Schritten (je ein Commit, „5.13m: …“)
 
-1. **Editor mit Suche.** Route `app/c/[id]/edit/page.tsx` (Server: Schalter `WALLS`, `noindex`, lädt die Sammlung wie `/c/<id>`); Komponente `components/CollectionEditor.tsx` mit Band, Reiter Search und Sammlungsspalte. `WallPicker` bekommt ein festes Ziel (Auswahl und Streifen fallen weg, wenn die Sammlung rechts steht). Ansicht: „Edit collection“ statt der Werkzeuge; `/create`-Karten → Editor. *Prüfen:* Besitzer und Fremder, Umleitung, Reload mit `q`/`work`, 390 und 1280.
+1. **Editor mit Suche und Arrange.** Route `app/c/[id]/edit/page.tsx` (Server: Schalter `WALLS`, `noindex`, lädt die Sammlung wie `/c/<id>`); Komponente `components/CollectionEditor.tsx` mit Band, Modi „Add covers“ / „Arrange“, Reiter Search und Sammlungsspalte; „Keep it“ statt „Save collection“. `WallPicker` bekommt ein festes Ziel (Auswahl und Streifen fallen weg, wenn die Sammlung rechts steht). Ansicht: „Edit collection“ statt der Werkzeuge; `/create`-Karten → Editor. *Prüfen:* Besitzer und Fremder, Umleitung, Reload mit `q`/`work`, 390 und 1280.
 2. **Foto und Ideen im Editor.** `WallProposal` bekommt ein optionales Ziel (Knopftext, „already in“, „in with another cover“, „another cover“, gestrichelte Vorschau); `WallSample` und „Start from a collection“ bekommen „Add“ statt „Make“. Reine Logik (Markierung gegen die Sammlung, Pakete zu 50) nach `lib/walls/` mit Tests.
 3. **`/create` mündet in den Editor.** Erster Klick im Picker → Sammlung anlegen → `router.replace` auf den Editor mit denselben Parametern; Foto/Zufall/Sammlung → Editor; beim Foto „or add them to …“.
 4. **Buchseite.** `AddToWall` als Liste mit Häkchen je Sammlung (eine Operation je Klick an die jeweilige Sammlung), „Open the editor“; das Band „EDITING …“ aus `sessionStorage`. Desktop-Zeile neben „Share“ bleibt (0 px, SPEC F9.3); das Menü klappt darüber auf.
@@ -74,10 +75,10 @@ Schritte 1–3 sind eine Sitzung, 4 und 5 je eine halbe. Nach jedem Schritt: `np
 
 Speicher, Besucher-ID (E22), Eigentum (nur der Browser mit der ID ändert), die Operationen, 48 Stunden für nicht behaltene Sammlungen, „Show it to others“, „Your ID“ und „Copy link“ mit `#id=`. Keine neue Anfrage an Open Library oder Google: der Editor nutzt dieselben Routen wie `/create` heute.
 
-## 7. Julian entscheidet
+## 7. Entschieden (Julian, 2026-09-29, im Chat)
 
-1. **Eigene Adresse `/c/<id>/edit`** (Vorschlag: die Ansicht bleibt für alle gleich, und ein Link auf den Editor ist ein Link auf „weitermachen“) — oder Bearbeiten als Umschalter auf `/c/<id>`.
-2. **„Save collection“ → „Keep it“** (§3) — ja oder nein.
-3. **Die Ansicht ohne Werkzeuge für den Besitzer** (Vorschlag), oder die Hover-Knöpfe dort behalten.
-4. **Das Band „EDITING …“ auf der Buchseite** — ja oder nein; ohne es bleibt nur die Liste mit Häkchen.
-5. **Reihenfolge:** Vorschlag 1 → 2 → 3 zusammen, dann 4, dann 5; Ziehen (6) erst, wenn jemand danach fragt.
+1. **Eigene Adresse `/c/<id>/edit`.** Die Ansicht bleibt für alle gleich.
+2. **„Save collection“ heißt „Keep it“**, die Meldung „Saved.“ nach jeder Änderung fällt weg (§3).
+3. **Die Ansicht bleibt ohne Werkzeuge; geordnet wird im Editor, im Modus „Arrange“.** Julian fragte, ob Entfernen, Verschieben und die Textfelder hinter einem „Arrange“-Knopf in der Ansicht stehen sollten oder ob man sie ohnehin nach „Edit“ sieht. Antwort: im Editor stehen sie schon, nur ist die Spalte für viele Cover zu schmal — deshalb „Arrange“ als zweiter Modus des Editors, nicht als Knopf der Ansicht.
+4. **Das Band „Editing …“ auf der Buchseite: ja** (nur im Tab, `sessionStorage`).
+5. **Reihenfolge: Schritte 1–3 zusammen, dann 4 (Buchseite), dann 5 (Telefon);** Ziehen (6) später, bis dahin Pfeile.
