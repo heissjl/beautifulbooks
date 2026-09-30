@@ -172,10 +172,18 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
         </div>
         {error && <p className="mt-3 text-sm text-accent" role="alert">{error}</p>}
 
-        {state.mode === 'arrange' ? (
-          <Arrange wall={wall} onSend={send} onAdd={() => go({ mode: 'add' })} />
-        ) : (
-          <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        {/*
+          The add panel stays mounted while arranging, hidden rather than
+          unmounted: a photo being read, its boxes and ticks, a search and its
+          picker live in that panel's own state, and switching to Arrange
+          while the photo is read — the very moment one wants to arrange —
+          must not throw them away (Julian, 2026-09-29: „in diesem mini-tab
+          muss der zustand im hintergrund weiterlaufen können“). The same for
+          the three ways in. Nothing hidden here loads an image the other
+          mode would load again: the covers are the same tiles.
+        */}
+        {state.mode === 'arrange' && <Arrange wall={wall} onSend={send} onAdd={() => go({ mode: 'add' })} />}
+        <div hidden={state.mode !== 'add'} className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
             <section aria-labelledby="add-title" className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2 border-b border-line pb-2">
                 <h2 id="add-title" className="font-display text-2xl text-ink">Add covers</h2>
@@ -188,8 +196,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
                 </div>
               </div>
 
-              {tab === 'search' && (
-                <>
+              <div hidden={tab !== 'search'}>
                   <BookSearch
                     key={state.q ?? ''}
                     q={state.q ?? ''}
@@ -200,28 +207,25 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
                       requestAnimationFrame(() => document.getElementById('picker')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
                     }}
                   />
-                  {state.work && <WallPicker key={state.work} workId={state.work} target={wall} onWall={accept} onClose={() => go({ work: undefined })} />}
-                </>
-              )}
-              {tab === 'photo' && (
-                <>
+                {state.work && <WallPicker key={state.work} workId={state.work} target={wall} onWall={accept} onClose={() => go({ work: undefined })} />}
+              </div>
+              {photoOn && (
+                <div hidden={tab !== 'photo'}>
                   <p className="mt-4 text-sm text-ink-2">
                     Photograph a shelf or a pile of books. The books we can read are offered for <strong className="font-medium text-ink">{wall.title}</strong> — you tick which go in.
                   </p>
                   <WallPhoto photoOn={photoOn} target={wall} onCommit={commit} onOtherCover={showCovers} onSearchFor={(q) => go({ add: 'search', q, work: undefined })} />
-                </>
+                </div>
               )}
-              {tab === 'ideas' && (
-                <div className="mt-5 space-y-10">
+              <div hidden={tab !== 'ideas'} className="mt-5 space-y-10">
                   <div>
                     <h3 className="font-display text-lg text-ink">Six random favourites</h3>
                     <div className="mt-2">
                       <WallSample target={wall} onCommit={commit} onOtherCover={showCovers} />
                     </div>
                   </div>
-                  <StartFromPicker options={startOptions} into={wall} onCommit={commit} onOtherCover={showCovers} />
-                </div>
-              )}
+                <StartFromPicker options={startOptions} into={wall} onCommit={commit} onOtherCover={showCovers} />
+              </div>
             </section>
 
             {isDesktop && (
@@ -229,8 +233,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
                 {panel}
               </aside>
             )}
-          </div>
-        )}
+        </div>
       </main>
       {!isDesktop && state.mode === 'add' && <CollectionSheet wall={wall} fresh={fresh}>{panel}</CollectionSheet>}
     </>
