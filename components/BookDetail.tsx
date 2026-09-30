@@ -176,11 +176,13 @@ function BookDetail() {
   const cameFromResults = !!searchParams.get('q') || !!searchParams.get('author') || !!searchParams.get('key');
   /*
     ROADMAP 6.77, a mockup for Julian: `?panel=b` puts the shops before the
-    scans and printings, `?panel=c` also makes the two one list of scans. Only under `next dev` — a production build inlines
+    scans and printings, `?panel=c` also makes the two one list of scans,
+    `?panel=d` one sideways row of scans with their printings under them. Only under `next dev` — a production build inlines
     NODE_ENV and drops the branch. Remove the switch when the order is decided.
   */
   const panelParam = searchParams.get('panel');
-  const panelLayout: 'a' | 'b' | 'c' = process.env.NODE_ENV !== 'production' && (panelParam === 'b' || panelParam === 'c') ? panelParam : 'a';
+  const panelLayout: 'a' | 'b' | 'c' | 'd' =
+    process.env.NODE_ENV !== 'production' && (panelParam === 'b' || panelParam === 'c' || panelParam === 'd') ? panelParam : 'a';
   const preview = useWorkPreview(params.id);
 
   // Market for buy links (E9): the user's choice, else detected by the server.
@@ -555,8 +557,8 @@ interface CoverDetailsProps {
   verdictFor: (isbn13: string) => IsbnVerdict;
   /** Rendered under the big cover on wide screens (Julian, 2026-09-09). */
   share?: React.ReactNode;
-  /** `b` and `c` are the 6.77 mockups, shops before scans and printings; dev only. */
-  layout?: 'a' | 'b' | 'c';
+  /** `b`, `c` and `d` are the 6.77 mockups, shops before scans and printings; dev only. */
+  layout?: 'a' | 'b' | 'c' | 'd';
 }
 
 /**
@@ -634,7 +636,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
   */
   const scans = [cover.id, ...(cover.similarIds ?? [])].filter(id => coverUrlFor(id, 'L'));
   const [pickedScan, setPickedScan] = useState<string | null>(null);
-  const { scroller: scanScroller, content: scanContent, overflows: scanOverflows, atEnd: scanAtEnd, onScroll: measureScanRow } = useOverflowsX();
+  const { scroller: scanScroller, content: scanContent, overflows: scanOverflows, atStart: scanAtStart, atEnd: scanAtEnd, onScroll: measureScanRow } = useOverflowsX();
   // Derived, like the printing above it: another cover replaces the list.
   const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : cover.id;
   const shownUrl = shownScan === cover.id ? cover.url : coverUrlFor(shownScan, 'L') ?? cover.url;
@@ -733,6 +735,103 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
     );
   })() : null;
 
+  /*
+    ROADMAP 6.77, variant D (mockup, `?panel=d`; Julian, 2026-09-29: „die
+    version die wir haben mit einem seitlichen scrollen finde ich viel besser.
+    können wir die verbessern"). The sideways row of scans from A, made the
+    one place to choose: bigger tiles (72 × 108 instead of 44 × 64), because
+    telling scans apart is the point of the row; under each the printing that
+    carries it, so the chips row goes; open rather than folded, since it is
+    one tile high; arrows on screens with a pointer, where a wheel does not
+    scroll sideways. A scan on several printings says "+n" and steps through
+    them. Fixed order as in C, so nothing moves under the pointer.
+  */
+  const scanStrip = layout === 'd' && (scans.length > 1 || ordered.length > 1) ? (() => {
+    const byId = new Map(editions.map(e => [e.id, e]));
+    const rows = scans.map((id, i) => ({
+      id,
+      i,
+      printings: (editionsByScan.get(id) ?? [])
+        .map(e => byId.get(e))
+        .filter((e): e is EditionView => !!e)
+        .sort((a, b) => Number(!!b.isbn13) - Number(!!a.isbn13)),
+    }));
+    const tier = (r: (typeof rows)[number]) => (r.id === cover.id ? 0 : r.printings.some(p => p.isbn13) ? 1 : 2);
+    rows.sort((a, b) => tier(a) - tier(b) || a.i - b.i);
+    const scrollBy = (event: React.MouseEvent<HTMLButtonElement>, direction: 1 | -1) => {
+      const box = event.currentTarget.closest('[data-strip]')?.querySelector<HTMLElement>('[data-strip-scroller]');
+      box?.scrollBy({ left: direction * box.clientWidth * 0.8, behavior: 'smooth' });
+    };
+    const arrow = 'absolute top-[3.375rem] z-10 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg/90 text-ink-2 shadow-sm transition-colors hover:text-ink [@media(hover:hover)]:flex';
+    return (
+      <section className="mt-5 border-t border-line pt-4" aria-label="Scans of this cover" data-strip>
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="kicker">{scans.length} {scans.length === 1 ? 'scan' : 'scans'} of this cover</p>
+          <p className="text-xs text-ink-3">on {editions.length} {editions.length === 1 ? 'printing' : 'printings'}</p>
+        </div>
+        <div className="relative mt-3">
+          <div ref={scanScroller} onScroll={measureScanRow} data-strip-scroller className="snap-x overflow-x-auto pb-2 [scrollbar-width:thin]">
+            <ul ref={scanContent} className="flex w-max gap-3">
+              {rows.map(row => {
+                const selected = row.id === shownScan;
+                // The printing this tile names: the one on the buttons when it carries this scan, else its first.
+                const current = (selected && row.printings.find(p => p.id === shown?.id)) || row.printings[0];
+                const next = row.printings[(row.printings.indexOf(current as EditionView) + 1) % Math.max(1, row.printings.length)];
+                return (
+                  <li key={row.id} className="w-[4.5rem] snap-start">
+                    <button
+                      type="button"
+                      onClick={() => { setPickedScan(row.id); setPicked(current?.id ?? null); }}
+                      aria-pressed={selected}
+                      title={row.id === cover.id ? 'The scan the wall shows' : 'Another scan of the same cover'}
+                      className={`cover-shadow relative block h-[6.75rem] w-[4.5rem] overflow-hidden rounded-[3px] bg-surface-2 transition-opacity ${
+                        selected ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'opacity-80 hover:opacity-100'
+                      }`}
+                    >
+                      <CoverImage src={coverUrlFor(row.id, 'M') ?? ''} alt={row.id === cover.id ? 'The scan the wall shows' : 'Another scan of this cover'} sizes="72px" />
+                    </button>
+                    {current ? (
+                      <div className="mt-1.5 text-[11px] leading-tight">
+                        <p className={`line-clamp-2 ${selected ? 'text-accent' : 'text-ink-2'}`}>{current.publisher || 'Publisher unknown'}</p>
+                        <p className="mt-0.5 text-ink-3">
+                          {[current.year, current.isbn13 ? undefined : 'no ISBN'].filter(Boolean).join(' · ')}
+                        </p>
+                        {row.printings.length > 1 && next && (
+                          <button
+                            type="button"
+                            onClick={() => { setPickedScan(row.id); setPicked(next.id); }}
+                            className="mt-0.5 text-accent hover:underline"
+                            title="Another printing with this scan"
+                          >
+                            +{row.printings.length - 1} more
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="mt-1.5 text-[11px] leading-tight text-ink-3">No printing on record</p>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          {scanOverflows && !scanAtStart && (
+            <>
+              <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-bg to-transparent" />
+              <button type="button" onClick={e => scrollBy(e, -1)} className={`${arrow} left-0`} aria-label="Earlier scans">‹</button>
+            </>
+          )}
+          {scanOverflows && !scanAtEnd && (
+            <>
+              <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-bg to-transparent" />
+              <button type="button" onClick={e => scrollBy(e, 1)} className={`${arrow} right-0`} aria-label="More scans">›</button>
+            </>
+          )}
+        </div>
+      </section>
+    );
+  })() : null;
+
   return (
     <div>
       {/*
@@ -803,7 +902,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
           afterLead={
             <>
               {!isDesktop && addToWall && <div className="mt-4">{addToWall}</div>}
-              {layout === 'c' ? scanList : (
+              {layout === 'c' ? scanList : layout === 'd' ? scanStrip : (
               <>
               {ordered.length > 1 && (
                 <details className="group mt-4 border-t border-line pt-3">
