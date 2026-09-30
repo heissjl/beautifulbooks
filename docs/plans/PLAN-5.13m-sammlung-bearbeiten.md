@@ -1,6 +1,6 @@
 # PLAN 5.13m — Ein Bearbeitungsmodus für die eigene Sammlung
 
-Stand: 2026-09-29, **Alle sechs Schritte gebaut** (Branch `claude/collection-editing-ux-562eba`, nicht deployt; Messungen in der [Historie](../history.md)); offen Merge und Deploy. Abweichung in Schritt 4: die Liste klappt unter dem Knopf auf (absolut, über dem Cover) und schließt bei Klick daneben; das Band auf der Buchseite haftet nicht, weil die Seitenleiste dort bei `top-20` haftet. Julians Entscheidungen in §7. Roadmap: [5.13m](../../ROADMAP.md). Spec: F9 (wird mit dem Bau angepasst).
+Stand: 2026-09-29, **erledigt und deployt 2026-09-29**, alle sechs Schritte (Messungen in der [Historie](../history.md)); dieser Plan ist Geschichte. Abweichung in Schritt 4: die Liste klappt unter dem Knopf auf (absolut, über dem Cover) und schließt bei Klick daneben; das Band auf der Buchseite haftet nicht, weil die Seitenleiste dort bei `top-20` haftet. Julians Entscheidungen in §7. Roadmap: [5.13m](../../ROADMAP.md). Spec: F9 (wird mit dem Bau angepasst).
 
 > Julian, 2026-09-29: „die bearbeitung für user von ihren bestehenden collections muss einfacher werden. zb muss man von einem foto einfach zu einer bestehenden collection hinzufügen können … und es sollte einen bearbeitungsmodus geben bei dem klar ist, bei welcher collection man gerade was hinzufügt mit bild oder suche. wenn ich eine collection in der create ansicht anklicke lande ich in der anzeigesicht, dort kann ich aber nichts machen.“
 
