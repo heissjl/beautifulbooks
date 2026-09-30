@@ -46,6 +46,12 @@ interface AddToWallProps {
   author?: string;
   cover: Cover;
   editions: readonly EditionView[];
+  /**
+   * Beside "Close" in the phone sheet (ROADMAP 6.77): once the cover
+   * is in, the button says only "✓" (Julian, 2026-09-29: „mach den knopf
+   * kürzer, nur ✓"), so the collection picker and "Open" fit the row.
+   */
+  compact?: boolean;
 }
 
 /**
@@ -59,7 +65,7 @@ interface AddToWallProps {
  * takes it out of that one (Julian, 2026-09-29, plan 5.13m). The collection
  * this tab is editing comes first, marked "editing".
  */
-export default function AddToWall({ workId, title, author, cover, editions }: AddToWallProps) {
+export default function AddToWall({ workId, title, author, cover, editions, compact = false }: AddToWallProps) {
   const { me, setMe } = useMyWalls();
   const editingId = useEditingId();
   const [lastTarget] = useState<string | null>(readTarget);
@@ -124,7 +130,8 @@ export default function AddToWall({ workId, title, author, cover, editions }: Ad
     return run(wall.id, async () => (await postJson<{ wall: PublicWall }>(`/api/walls/${wall.id}`, { ops: [inIt ? { op: 'remove', coverId } : { op: 'add', tile }] })).wall);
   };
 
-  const label = holding.length === 0 ? '+ Add to collection' : holding.length === 1 ? `In ${holding[0].title} ✓` : `In ${holding.length} collections ✓`;
+  const long = holding.length === 0 ? '+ Add to collection' : holding.length === 1 ? `In ${holding[0].title} ✓` : `In ${holding.length} collections ✓`;
+  const label = compact && holding.length > 0 ? '✓' : long;
 
   return (
     <div ref={box} className="relative text-sm">
@@ -134,6 +141,8 @@ export default function AddToWall({ workId, title, author, cover, editions }: Ad
         disabled={!me.loaded || busy === 'new'}
         aria-expanded={walls.length > 0 ? open : undefined}
         aria-haspopup={walls.length > 0 ? 'true' : undefined}
+        aria-label={label === '✓' ? long : undefined}
+        title={label === '✓' ? long : undefined}
         className={`max-w-[15rem] truncate whitespace-nowrap rounded-full px-3 py-1 transition-colors disabled:opacity-50 ${
           holding.length ? 'border border-accent text-accent hover:bg-accent hover:text-on-accent' : 'bg-ink text-bg hover:bg-accent'
         }`}

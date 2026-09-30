@@ -899,3 +899,27 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 ## 6.60
 
 - [x] **6.60 Die Suche überarbeitet: Tippfehler, „Author only", Sprach-Pillen geprüft.** (Julian, 2026-09-27: „automatische smarte erkennung von tippfehlern?, möglichkeit explizit nur nach autor zu suchen, checke ob die sprachpillen noch sinn ergeben?") **Status: gebaut, von Julian zum Deploy freigegeben (2026-09-27)**; deployt wird von der koordinierenden Session. Tippfehler (SPEC F1.9): bei leerer oder schwacher Antwort eine korrigierte zweite Suche gegen eine Wortliste aus Index, Wand und Sammlungen — `gatsbee`, `pride and prejudise`, `lord of the rigns`, `Tolkein`, `Hemmingway` finden ihr Buch, kein Fehlalarm unter 30 gewöhnlichen Anfragen. Autorensuche (F1.10): `/?author=<Name>[&key=…]`, Chips „Titles & authors · Author only", Person nach Lesern, gleichnamige Datensätze dazu (*1984* bei Orwell), Harper Lee 16 von 16 statt 3 von 18; „More by …" führt jetzt dorthin (die in 6.53 offen gelassene echte Autorensuche, und für die Suche auch die mehreren Keys einer Person). Sprach-Pillen gemessen (English ohne Wirkung, 7 von 112 Fällen leer, 15 mit anderer erster Karte) und **auf Julians Entscheidung entfernt** (2026-09-27, „mach das noch, dann deploy"): die Suche filtert nicht mehr nach Sprache, `?lang=` wählt nur noch den ersten Reiter der Detailseite. Die übrigen Fragen stehen wie gebaut, offen bleibt, ob „More by …" dieselbe Namensauflösung bekommt: [PLAN-search-2026-09](docs/plans/PLAN-search-2026-09.md) §6. Die Suchroute spart den `google`-Eimer. → [Historie](docs/history.md)
+
+## 6.75
+
+*Abgehakt 2026-09-29, so wie er in der Roadmap stand.*
+
+- [x] **6.75 Die Werkseite nach einem Ausfall: ein zweiter Versuch und „Try again“.** (Aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev), A1: kalt antwortete die Werkseite nach 20,9 s mit 503, die Fehlseite hat nur „Back to search“.) Ein zweiter Versuch im Browser nach 1,5 s bei 5xx oder Netzfehler, wie Mosaik (6.5) und Suche (1.10); „Try again“ wie in der Suche (1.4); der Satz sagt, dass der Katalog nicht antwortete (N12). Der Wartesatz ab ~8 s ist Kandidat 3 von 6.3 und wird dort gebaut. Ein bis zwei Stunden, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+## 6.76
+
+*Abgehakt 2026-09-29, so wie er in der Roadmap stand.*
+
+- [x] **6.76 Die Startseite: das Suchfeld zuerst.** (Aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev), A2 und A7: auf dem Telefon beginnt das Feld bei ~540 von 812 px, die Sammlungen erst nach sechs Reihen Wand.) Feld unter das Versprechen, die zwei Einladungen als eine Zeile darunter, die Sammlungsreihe höher. Claude baut hinter einem Dev-Schalter, **Julian sieht an** (390 × 844 und 1280 × 800, gemessen: Oberkante des Felds). Zwei Stunden. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+## 6.79
+
+*Abgehakt 2026-09-29, so wie er in der Roadmap stand.*
+
+- [x] **6.79 Nach Enter liegt das Suchfeld halb unter der Kopfzeile.** (Aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev), zweiter Durchgang.) Erst nachstellen bei 1512 × 790 und 390 × 844; vermutlich fehlt `scroll-margin-top` in Höhe der Kopfzeile. Eine halbe Stunde, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+## 6.77
+
+*Abgehakt 2026-09-29, so wie er in der Roadmap stand.*
+
+- [x] **6.77 Die Seitenleiste: Kaufen vor Sammeln.** *Mockup gebaut 2026-09-29: `?panel=b` unter `next dev` an jeder Buchseite mit gewähltem Cover; erste Laden-Reihe am Telefon bei 565 statt 1.174 px, am Desktop bei 801 statt 1.338 ([Historie](docs/history.md#2026-09-29--seitenleiste-mit-den-läden-zuerst-als-mockup-roadmap-677)). Dazu **Variante C** (`?panel=c`, 2026-09-29, Julian: „mit scan leading over printing“): eine eingeklappte Zeile „30 scans of this cover, on 29 printings“, aufgeklappt je Scan ein Bild und die Drucke, die ihn tragen; ein Klick wählt Bild und Druck zugleich. Und **Variante D** (`?panel=d`, Julian: „die version … mit einem seitlichen scrollen finde ich viel besser. können wir die verbessern“): die seitliche Scan-Reihe aus A offen unter den Läden, größere Kacheln, Verlag und Jahr des Drucks unter jeder, Pfeile am Desktop; die Druck-Knöpfe entfallen. Zweite und dritte Fassung auf Julians Wunsch: Kacheln 56 × 84, die Reihe über den Kauf-Links, „Add to collection“ am Telefon neben „Close“ und danach nur „✓“; die Reihe spricht von Drucken („29 printings with this cover“), ein Druck mit zwei Scans zeigt beide und leuchtet mit beiden, die Notiz dazu rechts in der Überschrift; weniger Luft unter der Reihe am Telefon. Wartet auf Julians Blick; vor dem Merge nach `main` eine Variante übernehmen und die übrigen entfernen.* (Aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev), A5 und zweiter Durchgang: Bild, „Add to collection“, Scan-Streifen und Druck-Chips stehen vor der ersten Laden-Reihe, die bei 800 × 600 unter der Falte liegt; „More ↓“ sieht wie ein Knopf der Wand aus.) Vorschlag: Bild → Urteil und erste Laden-Reihe → „Add to collection“ → Scans und Drucke eingeklappt. Gegen 1.2 und 1.11 prüfen, F9.3 behält seine 0 px. **Julian sieht an.** Ein halber Tag. [Plan](docs/plans/PLAN-6.63-alltag.md)

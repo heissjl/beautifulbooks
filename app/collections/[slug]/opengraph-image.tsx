@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import SiteCard from '@/app/opengraph-image';
-import { Display, OG, TEXT, Wordmark, loadCovers, ogFonts } from '@/app/og';
+import { asJpeg, Display, OG, TEXT, Wordmark, loadCovers, ogFonts } from '@/app/og';
 import { allCollections, authorsShown } from '@/lib/collections';
 import { liveCollectionBySlug } from '@/lib/collections-live';
 import { wallCover } from '@/lib/curated';
@@ -35,7 +35,7 @@ export function generateStaticParams() {
 
 export const alt = 'Covers of this collection';
 export const size = { width: 1200, height: 630 };
-export const contentType = 'image/png';
+export const contentType = 'image/jpeg';
 
 const COLS = 7;
 const ROWS = 2;
@@ -46,7 +46,8 @@ const GAP = 12;
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const c = await liveCollectionBySlug(slug).catch(() => null);
-  if (!c) return SiteCard();
+  // The site card as JPEG too, since this route is declared as one.
+  if (!c) return asJpeg(await SiteCard());
 
   const candidates = c.works
     .filter(w => w.image || w.coverId > 0)
@@ -63,7 +64,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const byline = names.length === 0 ? '' : names.length <= 2 ? names.join(' and ') : `${names[0]}, ${names[1]} and ${names.length - 2} more`;
   const count = `${c.works.length} ${c.works.length === 1 ? 'book' : 'books'}`;
 
-  return new ImageResponse(
+  return asJpeg(new ImageResponse(
     (
       <div
         style={{
@@ -93,5 +94,5 @@ export default async function Image({ params }: { params: Promise<{ slug: string
       </div>
     ),
     { ...size, fonts: await ogFonts() },
-  );
+  ));
 }

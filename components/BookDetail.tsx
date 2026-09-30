@@ -89,6 +89,42 @@ function Shell({ children, backHref, toResults, right }: { children: React.React
   );
 }
 
+/**
+ * The page when the catalogue did not answer (ROADMAP 6.75, N12).
+ *
+ * It used to print the server's own sentence ("Book data source unavailable,
+ * try again shortly") over a single "Back to search" — a dead end for anyone
+ * who came from a link or a search engine, with no result list to go back
+ * to. The first page is already asked twice before this shows
+ * (`useWorkPages`), so "Try again" starts the whole walk once more. The
+ * wording names the source that was silent and says that this is no
+ * statement about the book.
+ */
+function LoadFailed({ httpStatus, onRetry, backHref, toResults }: {
+  httpStatus?: number;
+  onRetry: () => void;
+  backHref: string;
+  toResults: boolean;
+}) {
+  const busy = httpStatus === 429;
+  return (
+    <div className="py-24 text-center">
+      <p className="font-display text-2xl text-ink">{busy ? 'Too many requests at once' : 'Open Library did not answer'}</p>
+      <p className="mx-auto mt-2 max-w-md text-sm text-ink-2">
+        {busy
+          ? 'Give it a few seconds, then try again.'
+          : 'The catalogue this page is built from is slow or down at the moment. That says nothing about the book.'}
+      </p>
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
+        <button type="button" onClick={onRetry} className="btn btn-accent">Try again</button>
+        <Link href={backHref} className="text-sm text-accent hover:underline">
+          {toResults ? 'Back to the results' : 'Search for another book'}
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 function TitleBlock({ title, authors, meta }: { title?: string; authors?: string[]; meta?: string }) {
   if (!title) {
     return (
@@ -131,6 +167,7 @@ function backHrefFrom(searchParams: URLSearchParams): string {
 }
 
 function BookDetail() {
+  const wallsOn = useContext(WallsOn);
   const params = useParams<{ id: string; coverId?: string }>();
   const router = useRouter();
   const pathname = usePathname();
@@ -291,12 +328,14 @@ function BookDetail() {
   if (pages.status === 'notfound' || pages.status === 'error') {
     return (
       <Shell backHref={backHref} toResults={cameFromResults}>
-        <div className="py-24 text-center">
-          <p className="font-display text-2xl text-ink">
-            {pages.status === 'notfound' ? 'Book not found' : pages.message}
-          </p>
-          <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">Back to search</Link>
-        </div>
+        {pages.status === 'notfound' ? (
+          <div className="py-24 text-center">
+            <p className="font-display text-2xl text-ink">Book not found</p>
+            <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">Back to search</Link>
+          </div>
+        ) : (
+          <LoadFailed httpStatus={pages.httpStatus} onRetry={pages.retry} backHref={backHref} toResults={cameFromResults} />
+        )}
       </Shell>
     );
   }
@@ -465,6 +504,20 @@ function BookDetail() {
           coverUrl={selected.url}
           caption={view.captions.get(selected.id) ?? ''}
           share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} placement="up" compact />}
+          /*
+            On a phone "Add to collection" sits in the sheet's header beside
+            "Close" (ROADMAP 6.77), where it costs the body no height.
+          */
+          headerAction={wallsOn ? (
+            <AddToWall
+              workId={work.id}
+              title={work.title}
+              author={work.authors[0]}
+              cover={selected}
+              editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
+              compact
+            />
+          ) : undefined}
         >
           {details}
         </CoverSheet>
@@ -588,7 +641,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
   */
   const scans = [cover.id, ...(cover.similarIds ?? [])].filter(id => coverUrlFor(id, 'L'));
   const [pickedScan, setPickedScan] = useState<string | null>(null);
-  const { scroller: scanScroller, content: scanContent, overflows: scanOverflows, atEnd: scanAtEnd, onScroll: measureScanRow } = useOverflowsX();
+  const { scroller: scanScroller, content: scanContent, overflows: scanOverflows, atStart: scanAtStart, atEnd: scanAtEnd, onScroll: measureScanRow } = useOverflowsX();
   // Derived, like the printing above it: another cover replaces the list.
   const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : cover.id;
   const shownUrl = shownScan === cover.id ? cover.url : coverUrlFor(shownScan, 'L') ?? cover.url;
@@ -608,6 +661,112 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
     back to the first (the repo's set-state-in-effect rule).
   */
   const shown = ordered.find(e => e.id === pickedId) ?? ordered[0];
+
+  /*
+    The printings that carry this cover, as one sideways row between the
+    cover and its shops (ROADMAP 6.77, chosen by Julian on 2026-09-29 after
+    four mockups: „ja, mach D zur festen Fassung"). Before, a row of scans
+    and a row of printing chips sat between the cover and the shops, and the
+    first shop lay 1,174 px down a phone's sheet; a vertical list was tried
+    and dropped („die version … mit einem seitlichen scrollen finde ich viel
+    besser").
+
+    Each printing gets a tile per scan it carries, side by side, with its
+    publisher and year under them — the row speaks of printings, not scans
+    (Julian: „sprich doch von printings statt von scans"). The printing on
+    the buttons lights up with all its tiles, the scan shown large with the
+    full ring; a click on a tile shows that scan and hands the buttons to that
+    printing. How many printings carry more than one scan is said in the
+    heading's free right half, where it takes no room. Arrows on screens with
+    a pointer, where a wheel does not scroll sideways. Fixed order, so nothing
+    moves under the pointer: the printing of the wall's scan, then printings
+    with an ISBN (the only ones a shop can look up), then the rest.
+  */
+  const scanStrip = scans.length > 1 || ordered.length > 1 ? (() => {
+    const scansOf = new Map<string, string[]>();
+    for (const scan of scans) {
+      for (const id of editionsByScan.get(scan) ?? []) scansOf.set(id, [...(scansOf.get(id) ?? []), scan]);
+    }
+    const printings = editions
+      .map((e, i) => ({ e, i, scans: scansOf.get(e.id) ?? [] }))
+      .sort((a, b) => {
+        const tier = (p: { e: EditionView; scans: string[] }) => (p.scans.includes(cover.id) ? 0 : p.e.isbn13 ? 1 : 2);
+        return tier(a) - tier(b) || a.i - b.i;
+      });
+    const several = printings.filter(p => p.scans.length > 1).length;
+    const scrollBy = (event: React.MouseEvent<HTMLButtonElement>, direction: 1 | -1) => {
+      const box = event.currentTarget.closest('[data-strip]')?.querySelector<HTMLElement>('[data-strip-scroller]');
+      box?.scrollBy({ left: direction * box.clientWidth * 0.8, behavior: 'smooth' });
+    };
+    const arrow = 'absolute top-[2.625rem] z-10 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg/90 text-ink-2 shadow-sm transition-colors hover:text-ink [@media(hover:hover)]:flex';
+    const tileClass = (lit: boolean, big: boolean) =>
+      `cover-shadow relative block h-[5.25rem] w-14 overflow-hidden rounded-[3px] bg-surface-2 transition-opacity ${
+        lit ? `ring-2 ring-offset-2 ring-offset-bg ${big ? 'ring-accent' : 'ring-accent/50'}` : 'opacity-80 hover:opacity-100'
+      }`;
+    return (
+      <section className="mt-4" aria-label="Printings with this cover" data-strip>
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="kicker">{editions.length} {editions.length === 1 ? 'printing' : 'printings'} with this cover</p>
+          {several > 0 && (
+            <p className="text-right text-xs text-ink-3">
+              {several === 1 ? 'one with 2 scans' : `${several} with several scans`}
+            </p>
+          )}
+        </div>
+        <div className="relative mt-3">
+          <div ref={scanScroller} onScroll={measureScanRow} data-strip-scroller className="snap-x overflow-x-auto pb-2 [scrollbar-width:thin]">
+            <ul ref={scanContent} className="flex w-max gap-2.5">
+              {printings.map(({ e, scans: own }) => {
+                const lit = e.id === shown?.id;
+                return (
+                  <li key={e.id} className="snap-start">
+                    <div className="flex gap-1">
+                      {own.length === 0 ? (
+                        <button
+                          type="button"
+                          onClick={() => setPicked(e.id)}
+                          aria-pressed={lit}
+                          title="This printing carries the cover, without a scan of its own"
+                          className={`block h-[5.25rem] w-14 rounded-[3px] border border-dashed border-line ${lit ? 'border-accent' : ''}`}
+                        />
+                      ) : own.map((scan, k) => (
+                        <button
+                          key={scan}
+                          type="button"
+                          onClick={() => { setPickedScan(scan); setPicked(e.id); }}
+                          aria-pressed={lit && scan === shownScan}
+                          title={own.length > 1 ? `Scan ${k + 1} of ${own.length} of this printing` : scan === cover.id ? 'The scan the wall shows' : undefined}
+                          className={tileClass(lit, scan === shownScan)}
+                        >
+                          <CoverImage src={coverUrlFor(scan, 'M') ?? ''} alt={`${e.publisher ?? 'A printing'}${e.year ? `, ${e.year}` : ''}${own.length > 1 ? `, scan ${k + 1} of ${own.length}` : ''}`} sizes="56px" />
+                        </button>
+                      ))}
+                    </div>
+                    <div className="mt-1 w-14 text-[10px] leading-tight">
+                      <p className={`line-clamp-2 ${lit ? 'text-accent' : 'text-ink-2'}`}>{e.publisher || 'Publisher unknown'}</p>
+                      <p className="mt-0.5 text-ink-3">{[e.year, e.isbn13 ? undefined : 'no ISBN'].filter(Boolean).join(' · ')}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          {scanOverflows && !scanAtStart && (
+            <>
+              <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-bg to-transparent" />
+              <button type="button" onClick={e => scrollBy(e, -1)} className={`${arrow} left-0`} aria-label="Earlier printings">‹</button>
+            </>
+          )}
+          {scanOverflows && !scanAtEnd && (
+            <>
+              <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-bg to-transparent" />
+              <button type="button" onClick={e => scrollBy(e, 1)} className={`${arrow} right-0`} aria-label="More printings">›</button>
+            </>
+          )}
+        </div>
+      </section>
+    );
+  })() : null;
 
   return (
     <div>
@@ -651,92 +810,24 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         Image from {shownScan.startsWith('gb:') ? 'Google Books' : 'Open Library'}
         {editions.length > 1 ? ` · on ${editions.length} editions` : ''}
       </p>
-      {/*
-        A reader's own wall (ROADMAP 5.13a): the picked cover, not the scan on
-        screen — a wall keeps the design, and the folded scans are the same one.
-      */}
-      {!isDesktop && addToWall && <div className="mt-3">{addToWall}</div>}
-
-      {scans.length > 1 && (
-        <section className="mt-4" aria-label="Scans folded into this tile">
-          <p className="kicker">{scans.length} scans of this cover</p>
-          {/*
-            One row that scrolls sideways, never a second row (ROADMAP 6.14a):
-            *Fahrenheit 451* carries eight scans, and a wrapped second row
-            costs the column the height that 1.2 had just won back. The fading
-            edge appears only while there is more to the right — a fade over
-            a row that fits would hide a slice of the last tile for nothing.
-          */}
-          <div className="relative mt-2">
-            <div ref={scanScroller} onScroll={measureScanRow} className="snap-x overflow-x-auto pb-1 [scrollbar-width:thin]">
-            <ul ref={scanContent} className="flex w-max gap-2">
-            {scans.map((id, i) => (
-              <li key={id} className="snap-start">
-                <button
-                  type="button"
-                  onClick={() => setPickedScan(id)}
-                  aria-pressed={id === shownScan}
-                  title={i === 0 ? 'The scan the wall shows' : 'Another scan of the same cover'}
-                  className={`cover-shadow relative block h-16 w-[2.7rem] overflow-hidden rounded-[3px] bg-surface-2 transition-opacity ${
-                    id === shownScan ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'opacity-70 hover:opacity-100'
-                  }`}
-                >
-                  <CoverImage src={coverUrlFor(id, 'M') ?? ''} alt={i === 0 ? 'The scan the wall shows' : `Scan ${i + 1} of this cover`} sizes="44px" />
-                </button>
-              </li>
-            ))}
-            </ul>
-            </div>
-            {scanOverflows && !scanAtEnd && (
-              <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-bg to-transparent" />
-            )}
-          </div>
-          {/* N13: what is on screen, not the rule that put it there. */}
-          <p className="mt-2 text-xs leading-relaxed text-ink-3">
-            Different scans of the same design, sometimes of different printings.
-          </p>
-        </section>
-      )}
-
-      <SimilarCovers coverId={cover.id} query={query} />
-
-      {/*
-        A folded cover can sit on several printings, and the whole apparatus
-        below used to repeat for every one of them — the 2,351 px of content
-        in an 804 px column measured in ROADMAP 1.2. One printing is open,
-        the others are one chip each.
-      */}
-      {ordered.length > 1 && (
-        <div className="mt-6 flex flex-wrap gap-1.5" role="group" aria-label="Printings that carry this cover">
-          {ordered.map(edition => (
-            <button
-              key={edition.id}
-              type="button"
-              onClick={() => setPicked(edition.id)}
-              aria-pressed={edition.id === shown?.id}
-              className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
-                edition.id === shown?.id ? 'border-accent text-accent' : 'border-line text-ink-3 hover:text-ink-2'
-              }`}
-            >
-              {[edition.publisher, edition.year].filter(Boolean).join(' · ') || 'This printing'}
-            </button>
-          ))}
-        </div>
-      )}
-
       {shown && (
-        <EditionBlock
-          key={shown.id}
-          edition={shown}
-          workTitle={workTitle}
-          author={author}
-          otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
-          searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
-          anyEditionLinks={anyEditionLinks}
-          market={market}
-          onMarketChange={onMarketChange}
-          verdict={shown.isbn13 ? verdictFor(shown.isbn13) : { status: 'unknown' }}
-        />
+        <>
+          {scanStrip}
+          <EditionBlock
+            key={shown.id}
+            gap="mt-2 lg:mt-6"
+            edition={shown}
+            workTitle={workTitle}
+            author={author}
+            otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
+            searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
+            anyEditionLinks={anyEditionLinks}
+            market={market}
+            onMarketChange={onMarketChange}
+            verdict={shown.isbn13 ? verdictFor(shown.isbn13) : { status: 'unknown' }}
+            afterLead={<SimilarCovers coverId={cover.id} query={query} />}
+          />
+        </>
       )}
     </div>
   );
@@ -754,6 +845,10 @@ interface EditionBlockProps {
   market: Market;
   onMarketChange: (market: Market) => void;
   verdict: IsbnVerdict;
+  /** Rendered right after the first row of shops: "Looks like this" (ROADMAP 6.77). */
+  afterLead?: React.ReactNode;
+  /** Space above the printing's heading; small on a phone under the printings row (Julian, 2026-09-29: „weniger luft"). */
+  gap?: string;
 }
 
 /**
@@ -766,7 +861,7 @@ interface EditionBlockProps {
  * them into three zones instead, and everything that is not one of the two or
  * three shops with a chance goes behind a fold.
  */
-function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict }: EditionBlockProps) {
+function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict, afterLead, gap = 'mt-6' }: EditionBlockProps) {
   // Reset whenever the edition or the market changes: an answer belongs to
   // one ISBN in one market's shops.
   const [checked, setChecked] = useState<{ key: string; byProvider: Map<string, ShopStatus> } | null>(null);
@@ -801,7 +896,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
   const hasInfo = !!edition.previewUrl || rows.length > 0 || !!edition.description;
 
   return (
-    <div className="mt-6">
+    <div className={gap}>
       <p className="text-sm text-ink">{head || 'Publisher and year unknown'}</p>
       {ownTitle && <p className="mt-0.5 text-sm text-ink-2">{ownTitle}</p>}
       {edition.isbn13 && <p className="mt-0.5 text-[13px] text-ink-3">ISBN <IsbnText isbn={edition.isbn13} /></p>}
@@ -846,6 +941,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
         */}
         {plan.note && <p className="mt-2 text-xs leading-relaxed text-ink-3">{plan.note}</p>}
       </div>
+
+      {afterLead}
 
       {hasFold && (
         <details className="group mt-4 border-t border-line pt-3">
