@@ -19,6 +19,7 @@ export default function WallPicker({
   onWall,
   onReplaced,
   onClose,
+  className = 'mt-12 border-t border-line pt-8',
 }: {
   workId: string;
   /** The collection covers go into; none yet means the first cover makes one, called `newTitle`. */
@@ -30,6 +31,8 @@ export default function WallPicker({
   /** After a replacement, so the editor can return to Arrange. */
   onReplaced?: () => void;
   onClose: () => void;
+  /** The section's own frame; a dialog brings its own. */
+  className?: string;
 }) {
   const pages = useWorkPages(workId, '', undefined);
   const [error, setError] = useState('');
@@ -88,7 +91,7 @@ export default function WallPicker({
   }
 
   return (
-    <section id="picker" aria-labelledby="picker-title" className="mt-12 border-t border-line pt-8">
+    <section id="picker" aria-labelledby="picker-title" className={className}>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
           <p className="kicker">Pick covers</p>

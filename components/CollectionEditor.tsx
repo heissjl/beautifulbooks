@@ -78,6 +78,15 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
     router.push(editHref(id, { ...state, ...next }), { scroll: false });
   }
 
+  // Escape closes the cover window over Arrange, like the backdrop.
+  const swapOpen = state.mode === 'arrange' && !!state.swap;
+  useEffect(() => {
+    if (!swapOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && router.push(editHref(id, { mode: 'arrange' }), { scroll: false });
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [swapOpen, id, router]);
+
   /** Takes the collection as the server answered, and marks what came in since the page opened. */
   function accept(next: PublicWall) {
     const before = new Set(wall.tiles.map((t) => t.coverId));
@@ -114,8 +123,8 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
     }
   }
 
-  const showCovers = (tile: Tile) => go({ add: 'search', q: tile.title, work: tile.workId, swap: undefined });
-  // A tile clicked in Arrange (5.13m): the picker replaces it in place, as long as it is still in the collection.
+  const showCovers = (tile: Tile) => go({ add: 'search', q: tile.title, work: tile.workId });
+  // A tile clicked in Arrange (5.13m): a window replaces it in place, as long as it is still in the collection.
   const swapIndex = state.swap ? wall.tiles.findIndex((t) => t.coverId === state.swap) : -1;
   const swapTarget = swapIndex >= 0 ? { tile: wall.tiles[swapIndex], index: swapIndex } : undefined;
 
@@ -182,7 +191,36 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
           the three ways in. Nothing hidden here loads an image the other
           mode would load again: the covers are the same tiles.
         */}
-        {state.mode === 'arrange' && <Arrange wall={wall} onSend={send} onAdd={() => go({ mode: 'add' })} onPick={(t) => go({ mode: 'add', add: 'search', q: t.title, work: t.workId, swap: t.coverId })} />}
+        {state.mode === 'arrange' && <Arrange wall={wall} onSend={send} onAdd={() => go({ mode: 'add' })} onPick={(t) => go({ swap: t.coverId })} />}
+        {/*
+          Another cover for a tile, in place (Julian, 2026-09-29: „lieber eine
+          in-place änderung durch ein pop-up so wie das bei der curate-seite“):
+          the book's covers in a window over Arrange, the same picker as the
+          Search tab, which swaps the cover where it stands. `?swap=` keeps it
+          open across a reload.
+        */}
+        {state.mode === 'arrange' && swapTarget && (
+          <div
+            className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4 sm:p-8"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Covers of ${swapTarget.tile.title}`}
+            onClick={(e) => e.target === e.currentTarget && go({ swap: undefined })}
+          >
+            <div className="w-full max-w-5xl rounded-lg border border-line bg-bg p-4 sm:p-6">
+              <WallPicker
+                key={swapTarget.tile.coverId}
+                workId={swapTarget.tile.workId}
+                target={wall}
+                replace={swapTarget}
+                onWall={accept}
+                onReplaced={() => go({ swap: undefined })}
+                onClose={() => go({ swap: undefined })}
+                className=""
+              />
+            </div>
+          </div>
+        )}
         <div hidden={state.mode !== 'add'} className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
             <section aria-labelledby="add-title" className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2 border-b border-line pb-2">
@@ -212,10 +250,8 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
                     key={state.work}
                     workId={state.work}
                     target={wall}
-                    replace={swapTarget}
                     onWall={accept}
-                    onReplaced={() => go({ mode: 'arrange', swap: undefined, work: undefined })}
-                    onClose={() => go({ work: undefined, swap: undefined })}
+                    onClose={() => go({ work: undefined })}
                   />
                 )}
               </div>
