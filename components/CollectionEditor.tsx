@@ -135,7 +135,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
           <span className="min-w-0 flex-1 truncate font-display text-lg sm:flex-none sm:text-xl">{wall.title}</span>
           <span className="hidden text-sm text-bg/70 sm:inline">
             {count}
-            {wall.unsaved && ' · not kept yet'}
+            {wall.unsaved && ' · not saved yet'}
           </span>
           <span className="ml-auto flex items-center gap-3">
             {wall.unsaved && (
@@ -147,7 +147,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
               See it as others do
             </Link>
             <Link href={`/c/${id}`} className="rounded-full bg-bg px-4 py-0.5 text-sm text-ink hover:bg-surface">
-              Done
+              Stop editing
             </Link>
           </span>
         </div>

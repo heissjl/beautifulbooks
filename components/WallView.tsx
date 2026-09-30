@@ -59,7 +59,7 @@ export default function WallView({ initial }: { initial: PublicWall }) {
       {canEdit && wall.unsaved && (
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-card border border-accent/50 bg-surface p-4" role="status">
           <p className="text-sm text-ink-2">
-            <strong className="font-medium text-ink">Not kept yet.</strong> Collections nobody keeps are deleted after {UNSAVED_HOURS / 24} days.
+            <strong className="font-medium text-ink">Not saved yet.</strong> Collections nobody keeps are deleted after {UNSAVED_HOURS / 24} days.
           </p>
           <button type="button" onClick={() => send([{ op: 'save' }])} className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent">
             Keep it

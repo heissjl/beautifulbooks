@@ -81,4 +81,5 @@ Speicher, Besucher-ID (E22), Eigentum (nur der Browser mit der ID ändert), die 
 2. **„Save collection“ heißt „Keep it“**, die Meldung „Saved.“ nach jeder Änderung fällt weg (§3).
 3. **Die Ansicht bleibt ohne Werkzeuge; geordnet wird im Editor, im Modus „Arrange“.** Julian fragte, ob Entfernen, Verschieben und die Textfelder hinter einem „Arrange“-Knopf in der Ansicht stehen sollten oder ob man sie ohnehin nach „Edit“ sieht. Antwort: im Editor stehen sie schon, nur ist die Spalte für viele Cover zu schmal — deshalb „Arrange“ als zweiter Modus des Editors, nicht als Knopf der Ansicht.
 4. **Das Band „Editing …“ auf der Buchseite: ja** (nur im Tab, `sessionStorage`).
-5. **Reihenfolge: Schritte 1–3 zusammen, dann 4 (Buchseite), dann 5 (Telefon);** Ziehen (6) später, bis dahin Pfeile.
+5. **Wortwahl nach dem Bau** (Julian, 2026-09-29): „statt ‚not kept yet‘ lieber ‚not saved yet‘. ‚keep it‘ lassen. statt ‚done‘ lieber ‚stop editing‘“ — der Hinweis heißt „not saved yet“, der Knopf „Keep it“, der Ausgang aus dem Editor „Stop editing“.
+6. **Reihenfolge: Schritte 1–3 zusammen, dann 4 (Buchseite), dann 5 (Telefon);** Ziehen (6) später, bis dahin Pfeile.

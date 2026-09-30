@@ -90,7 +90,7 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
                   <span className="mt-2 block truncate text-sm text-ink group-hover:text-accent">{w.title}</span>
                   <span className="block text-xs text-ink-3">
                     {w.tiles.length} {w.tiles.length === 1 ? 'cover' : 'covers'}
-                    {w.unsaved && <span className="ml-2 text-accent">not kept yet</span>}
+                    {w.unsaved && <span className="ml-2 text-accent">not saved yet</span>}
                     {!w.unsaved && w.showcase === 'shown' && <span className="ml-2">· shown</span>}
                   </span>
                 </Link>
