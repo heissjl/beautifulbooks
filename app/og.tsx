@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import sharp from 'sharp';
 
 /**
  * What the shared-link cards have in common (ROADMAP 6.61): the site's two
@@ -97,5 +98,24 @@ export async function loadCovers(urls: string[], want: number, timeoutMs = 5000)
     for (const img of await Promise.all(batch.map(one))) if (img) out.push(img);
   }
   return out.slice(0, want);
+}
+
+/** Quality of a card with covers as JPEG (ROADMAP 6.61, Julian 2026-09-29: „ja, mach jpg"). */
+export const CARD_JPEG_QUALITY = 82;
+
+/**
+ * A card with covers, as JPEG. `next/og` writes PNG only, and a wall of
+ * fourteen photographed covers came to 927 KB as PNG (Feminist Press,
+ * measured in production 2026-09-29); the same picture is 122 KB at quality
+ * 82. The site card stays PNG: it is flat colour and type, which PNG keeps
+ * small and JPEG would smear.
+ */
+export async function asJpeg(card: Response): Promise<Response> {
+  const png = Buffer.from(await card.arrayBuffer());
+  const jpeg = await sharp(png).jpeg({ quality: CARD_JPEG_QUALITY, mozjpeg: true }).toBuffer();
+  const headers = new Headers(card.headers);
+  headers.set('content-type', 'image/jpeg');
+  headers.delete('content-length');
+  return new Response(new Uint8Array(jpeg), { status: card.status, headers });
 }
 
