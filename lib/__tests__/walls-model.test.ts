@@ -122,7 +122,7 @@ describe('showcase (5.13d)', () => {
     expect(wall().unsaved).toBe(true);
     let w = wall();
     for (let i = 0; i < MIN_SHOWCASE_TILES; i++) w = applyOp(w, { op: 'add', tile: tile(String(i)) }, 't');
-    expect(() => applyOp(w, { op: 'submit' }, 't')).toThrow('Save the collection first.');
+    expect(() => applyOp(w, { op: 'submit' }, 't')).toThrow('Keep the collection first.');
     const saved = applyOp(w, { op: 'save' }, 't');
     expect(saved).not.toHaveProperty('unsaved');
     expect(toPublic(w).unsaved).toBe(true);

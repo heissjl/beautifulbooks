@@ -1,8 +1,8 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import WallProposal, { type Proposal } from './WallProposal';
-import type { Tile } from '@/lib/walls/model';
+import WallProposal, { type Destination, type Proposal } from './WallProposal';
+import type { PublicWall, Tile } from '@/lib/walls/model';
 import type { PhotoMatch } from '@/lib/walls/photo';
 
 /** Long edge the photo is shrunk to before it leaves the phone; the model reads no more (lab/shelf). */
@@ -30,7 +30,23 @@ type State =
  * tick the ones to keep. The photo stays in this browser as a preview and
  * goes to the server once, shrunk; the server does not keep it.
  */
-export default function WallPhoto({ photoOn, onCreate }: { photoOn: boolean; onCreate: (title: string, tiles: Tile[]) => Promise<void> }) {
+export default function WallPhoto({
+  photoOn,
+  target,
+  walls,
+  onCommit,
+  onOtherCover,
+  onSearchFor,
+}: {
+  photoOn: boolean;
+  /** The collection open in the editor: the books go into it (5.13m). */
+  target?: PublicWall;
+  /** On /create: the reader's collections, offered beside a new one. */
+  walls?: PublicWall[];
+  onCommit: (dest: Destination, tiles: Tile[]) => Promise<void>;
+  onOtherCover?: (tile: Tile) => void;
+  onSearchFor?: (label: string) => void;
+}) {
   const [state, setState] = useState<State>({ step: 'idle' });
   const [over, setOver] = useState(false);
   const input = useRef<HTMLInputElement>(null);
@@ -57,6 +73,7 @@ export default function WallPhoto({ photoOn, onCreate }: { photoOn: boolean; onC
     sub: m.tile ? undefined : m.read.author || undefined,
     tile: m.tile,
     missing: m.failed ? 'the search did not answer' : 'not found',
+    ...(m.failed ? { failed: true } : {}),
   }));
 
   return (
@@ -111,8 +128,12 @@ export default function WallPhoto({ photoOn, onCreate }: { photoOn: boolean; onC
             key={preview}
             proposals={proposals}
             defaultTitle="My shelf"
-            onCreate={onCreate}
-            summary={`${matches.length} ${matches.length === 1 ? 'book' : 'books'} read, ${matches.filter((m) => m.tile).length} found with a cover. Each gets the book's usual cover — change it in the picker below.`}
+            target={target}
+            walls={walls}
+            onCommit={onCommit}
+            onOtherCover={onOtherCover}
+            onSearchFor={onSearchFor}
+            summary={`${matches.length} ${matches.length === 1 ? 'book' : 'books'} read, ${matches.filter((m) => m.tile).length} found with a cover. Each gets the book's usual cover — ${onOtherCover ? '“another cover” shows all of its covers' : 'you can change it in the collection’s editor'}.`}
           />
         ))}
     </div>

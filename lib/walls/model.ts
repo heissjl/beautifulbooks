@@ -185,7 +185,7 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
       delete next.unsaved;
       return next;
     case 'submit':
-      if (wall.unsaved) throw new WallError('Save the collection first.');
+      if (wall.unsaved) throw new WallError('Keep the collection first.');
       if (wall.showcase === 'hidden') throw new WallError('This collection was taken down from Collections by readers.');
       if (next.tiles.length < MIN_SHOWCASE_TILES) throw new WallError('An empty collection cannot be shown.');
       if (wall.showcase === 'shown') return wall;

@@ -1,7 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import type { PublicWall } from '@/lib/walls/model';
+import { addRequests } from '@/lib/walls/edit';
+import type { PublicWall, Tile } from '@/lib/walls/model';
 
 export interface MyWalls {
   visitor: string | null;
@@ -47,4 +48,20 @@ export async function postJson<T>(url: string, body: unknown): Promise<T> {
   const data = (await res.json().catch(() => ({}))) as T & { error?: string };
   if (!res.ok) throw new Error(data.error ?? `The request failed (${res.status}).`);
   return data;
+}
+
+/** A new collection of this browser's, with these covers (the first one also sets the visitor cookie). */
+export async function createWall(title: string, tiles: Tile[] = []): Promise<PublicWall> {
+  return (await postJson<{ wall: PublicWall }>('/api/walls', { title, tiles })).wall;
+}
+
+/**
+ * Puts covers into a collection, as many requests as the route needs
+ * (5.13m); covers already in it are not sent. Returns the collection as the
+ * last answer had it, or unchanged when nothing was new.
+ */
+export async function addTiles(wall: PublicWall, tiles: readonly Tile[]): Promise<PublicWall> {
+  let current = wall;
+  for (const ops of addRequests(tiles, wall)) current = (await postJson<{ wall: PublicWall }>(`/api/walls/${wall.id}`, { ops })).wall;
+  return current;
 }

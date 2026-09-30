@@ -16,7 +16,8 @@ function readTarget(): string | null {
     return null;
   }
 }
-function writeTarget(id: string) {
+/** The collection "Add to collection" fills next; the editor sets it to the one it has open (5.13m). */
+export function writeTarget(id: string) {
   try {
     localStorage.setItem(TARGET_KEY, id);
   } catch {

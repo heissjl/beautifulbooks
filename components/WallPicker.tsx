@@ -3,38 +3,24 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import CoverGallery from './CoverGallery';
-import CoverImage from './CoverImage';
 import { printingsOf } from './AddToWall';
 import { postJson } from './useMyWalls';
 import { useWorkPages } from './useWorkPages';
 import { buildWall, captionFor, progressLabel } from './workWall';
-import { coverUrlFor } from '@/lib/coverurl';
 import type { Cover, EditionView } from '@/lib/model';
 import type { PublicWall, Tile, WallOp } from '@/lib/walls/model';
 
-const NEW = '__new__';
-
-/**
- * One work's covers, for picking onto a wall without leaving /walls (ROADMAP
- * 5.13c; Julian, 2026-09-28: „die auswahl passiert in einem neuen zwischenteil
- * … sodass ich nicht von der seite runtergeschickt werde. … wir können teile
- * der detail-ansicht weglassen und uns auf die funktionen der coverauswahl
- * konzentrieren"). The same wall as the book page — loaded page by page,
- * folded, grouped by language — with none of its shop column: a click puts a
- * cover on the wall or takes it off, and the wall grows in the strip above.
- */
 export default function WallPicker({
   workId,
-  walls,
   target,
-  onTarget,
+  newTitle = 'My collection',
   onWall,
   onClose,
 }: {
   workId: string;
-  walls: PublicWall[];
-  target: PublicWall | undefined;
-  onTarget: (id: string) => void;
+  /** The collection covers go into; none yet means the first cover makes one, called `newTitle`. */
+  target: PublicWall | null;
+  newTitle?: string;
   onWall: (wall: PublicWall) => void;
   onClose: () => void;
 }) {
@@ -63,7 +49,6 @@ export default function WallPicker({
     try {
       const { wall } = await run();
       onWall(wall);
-      onTarget(wall.id);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'That did not work.');
     } finally {
@@ -82,14 +67,12 @@ export default function WallPicker({
     const editions = cover.editionIds.map((id) => view.editionsById.get(id)).filter((e): e is EditionView => !!e);
     const tile: Tile = { workId: view.work.id, coverId: cover.id.slice(3), title: view.work.title, ...(view.work.authors[0] ? { author: view.work.authors[0] } : {}), printings: printingsOf(editions) };
     if (!target) {
-      change(() => postJson('/api/walls', { title: 'My collection', tiles: [tile] }));
+      change(() => postJson('/api/walls', { title: newTitle, tiles: [tile] }));
       return;
     }
     const ops: WallOp[] = onIt.length ? onIt.map((t) => ({ op: 'remove', coverId: t.coverId })) : [{ op: 'add', tile }];
     change(() => postJson(`/api/walls/${target.id}`, { ops }));
   }
-
-  const newWall = () => change(() => postJson('/api/walls', { title: walls.length ? `Collection ${walls.length + 1}` : 'My collection' }));
 
   return (
     <section id="picker" aria-labelledby="picker-title" className="mt-12 border-t border-line pt-8">
@@ -113,43 +96,20 @@ export default function WallPicker({
           </p>
         </div>
         <button type="button" onClick={onClose} className="rounded-full border border-line px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent">
-          Done
+          Close
         </button>
       </div>
 
-      {/* The wall this picks for, and what is on it so far. */}
-      <div className="mt-4 flex flex-wrap items-center gap-3 rounded-card border border-line bg-surface p-3">
-        <span className="text-sm text-ink-2">Adding to</span>
-        {walls.length > 0 ? (
-          <select
-            value={target?.id}
-            onChange={(e) => (e.target.value === NEW ? newWall() : onTarget(e.target.value))}
-            aria-label="Which collection"
-            className="max-w-[14rem] truncate rounded-full border border-line bg-bg px-2 py-1 text-sm text-ink"
-          >
-            {walls.map((w) => (
-              <option key={w.id} value={w.id}>
-                {w.title} ({w.tiles.length})
-              </option>
-            ))}
-            <option value={NEW}>A new collection</option>
-          </select>
+      {/* Which collection a click fills is said here, not left to guess (5.13m). */}
+      <p className="mt-3 text-sm text-ink-2">
+        {target ? (
+          <>
+            A click puts a cover into <strong className="font-medium text-ink">{target.title}</strong>, a second click takes it out.
+          </>
         ) : (
-          <span className="text-sm text-ink">a new collection, made with your first cover</span>
+          'Your first cover starts a new collection; you go on adding in its editor.'
         )}
-        <ul className="flex min-w-0 flex-1 gap-1 overflow-x-auto" aria-label="In this collection">
-          {(target?.tiles ?? []).map((t) => (
-            <li key={t.coverId} className="relative h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-surface-2" title={t.title}>
-              <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'S') ?? ''} alt={t.title} sizes="32px" />
-            </li>
-          ))}
-        </ul>
-        {target && (
-          <Link href={`/c/${target.id}`} className="whitespace-nowrap text-sm text-ink-2 underline underline-offset-2 hover:text-accent">
-            Open collection
-          </Link>
-        )}
-      </div>
+      </p>
       {error && <p className="mt-2 text-sm text-accent" role="alert">{error}</p>}
 
       <div className="mt-6">
