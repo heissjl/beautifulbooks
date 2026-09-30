@@ -199,3 +199,19 @@ Alle weiteren Reihen, mit Stichprobe, sofern es eine gab. „vor ISBN“ heißt:
 ## 7. Rechte
 
 Die Sammlungen zeigen Katalog-Cover von Open Library und verlinken sie; das ist derselbe Fall wie bei den bestehenden Sammlungen. Besonders geschützt sind nur Gorey (Edward Gorey Charitable Trust) und Lustig; beide Reihen sind ohnehin vor ISBN und nicht empfohlen. Die Titel- und ISBN-Listen aus Wikipedia, BnF und Verlagsseiten sind Fakten. Beschreibungstexte der Quellen übernehmen wir nicht.
+
+## 8. Nachtrag 2026-09-29: sechs Beispiele je offenem Vorschlag
+
+Drei Agenten haben für die 21 offenen Vorschläge je sechs Umschläge gesucht und jeden angesehen. Die Vorschläge stammen aus dieser Recherche, aus 5.10f und aus der Keller-Recherche. Die Beispiele mit Cover-IDs, Ausgaben und Zählungen stehen in [`lab/collections/research/kandidaten-beispiele.json`](../lab/collections/research/kandidaten-beispiele.json). Für Julian gibt es eine private Übersicht zum Ankreuzen: https://claude.ai/artifact/L6pt8aumAcKPYAzABL69zS
+
+Was sich gegenüber der Rangliste ändert:
+- **insel taschenbuch ist bei Open Library viel besser abgedeckt als gedacht.** `publisher:Insel isbn:345831*` liefert 73 Ausgaben mit Cover, gut 60 davon im Fleckhaus-Design. Die Stichprobe „2 von 12“ oben war zu pessimistisch; eine Auswahl-Wand ist gut machbar.
+- **Penguin Modern (2018)** ist reine Schrift auf Mintgrün, also typografisch. Die Liste OL207773L hat 50 von 50 Bänden mit Cover.
+- **National Book Award:** Der Tag `award:national_book_award` hat heute 267 Treffer, darunter Nicht-Preisträger (*Wolf Hall*, *Atonement*), Reden und Kataloge. Eine Wand ginge nur mit Handauswahl.
+- **Nebula** hat 68 Werke, darunter Anthologien. Beim **Deutschen Buchpreis** fehlt 2025, und ein fremdes Buch steckt drin.
+- **NYRB Children's:** Die Taschenbücher ab etwa 2016/17 haben ein anderes Design, einen gelben „NYRB Kids“-Streifen statt des roten Rückenbands.
+- **Persephone:** Fünf von 19 Open-Library-Bildern zeigen den Vorsatz statt des grauen Umschlags. Die Umschläge sehen fast gleich aus.
+- **Diogenes detebe:** Rund 25 von 46 angesehenen Covern zeigen das Rahmenlayout; die ältere gelb-schwarze Krimireihe gehört nicht dazu.
+- **Semiotext(e):** 22 von 30 im Reihendesign, Nr. 25–28 ohne Cover.
+- **Little Black Classics:** penguin.co.uk listet ohne JavaScript nur 44 Bände (Nr. 81–124).
+- **Great Ideas** und **Art of the Novella:** Viele ISBNs der Verlagsseiten sind E-Books, die Open Library nicht kennt.

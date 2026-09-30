@@ -3,6 +3,20 @@
   "no": "1",
   "title": "Die Brücke von San Luis Rey",
   "isbn": "",
+  "edition": "OL22032412M",
+  "cover": 7283706,
+  "wallTitle": "Die Brücke von San Luis Rey",
+  "author": "Thornton Wilder",
+  "year": 1952,
+  "layout": "unten",
+  "wallGroup": 0,
+  "repeat": true,
+  "printing": "earlier printing, layout „unten“ (Julian 2026-09-29: both printings, each in its block)"
+ },
+ {
+  "no": "1",
+  "title": "Die Brücke von San Luis Rey",
+  "isbn": "",
   "edition": "OL62602859M",
   "cover": 15259654,
   "wallTitle": "Die Brücke von San Luis Rey",
@@ -16,7 +30,9 @@
    "cover": 7283706,
    "layout": "unten"
   },
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "2",
@@ -29,7 +45,8 @@
   "year": 1952,
   "dnb": "453204929",
   "layout": "oben",
-  "editionYear": 1967
+  "editionYear": 1967,
+  "wallGroup": 1
  },
  {
   "no": "3",
@@ -57,6 +74,20 @@
   "no": "5",
   "title": "Die Frauen des Hauses Wu",
   "isbn": "",
+  "edition": "OL36855343M",
+  "cover": 12588378,
+  "wallTitle": "Die Frauen des Hauses Wu",
+  "author": "Pearl S Buck",
+  "year": 1952,
+  "layout": "unten",
+  "wallGroup": 0,
+  "repeat": true,
+  "printing": "earlier printing, layout „unten“ (Julian 2026-09-29: both printings, each in its block)"
+ },
+ {
+  "no": "5",
+  "title": "Die Frauen des Hauses Wu",
+  "isbn": "",
   "edition": "OL13942720M",
   "cover": 15259622,
   "wallTitle": "Die Frauen des Hauses Wu",
@@ -70,7 +101,9 @@
    "cover": 12588378,
    "layout": "unten"
   },
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "6",
@@ -95,7 +128,9 @@
   "year": 1952,
   "dnb": "450852652",
   "layout": "unten",
-  "editionYear": 1957
+  "editionYear": 1957,
+  "wallGroup": 0,
+  "skip": "Julian removed it from the online draft (published 2026-09-29)"
  },
  {
   "no": "8",
@@ -221,6 +256,20 @@
   "no": "19",
   "title": "Das Urteil und andere Erzählungen",
   "isbn": "",
+  "edition": "OL38245602M",
+  "cover": 12791587,
+  "wallTitle": "Das Urteil und andere Erzählungen",
+  "author": "Franz Kafka",
+  "year": 1952,
+  "layout": "unten",
+  "wallGroup": 0,
+  "repeat": true,
+  "printing": "earlier printing, layout „unten“ (Julian 2026-09-29: both printings, each in its block)"
+ },
+ {
+  "no": "19",
+  "title": "Das Urteil und andere Erzählungen",
+  "isbn": "",
   "edition": "OL13543044M",
   "cover": 15259623,
   "wallTitle": "Das Urteil und andere Erzählungen",
@@ -237,7 +286,9 @@
    "cover": 12791587,
    "layout": "unten"
   },
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "20",
@@ -356,7 +407,8 @@
   "year": 1953,
   "dnb": "451831918",
   "layout": "unten",
-  "editionYear": 1953
+  "editionYear": 1953,
+  "wallGroup": 0
  },
  {
   "no": "31",
@@ -471,7 +523,9 @@
   "year": 1953,
   "dnb": "454308027",
   "layout": "unten",
-  "editionYear": 1953
+  "editionYear": 1953,
+  "wallGroup": 0,
+  "skip": "Julian removed it from the online draft (published 2026-09-29)"
  },
  {
   "no": "42",
@@ -507,6 +561,20 @@
   "no": "45",
   "title": "Phantastische Nacht",
   "isbn": "",
+  "edition": "OL15464324M",
+  "cover": 14576961,
+  "wallTitle": "Phantastische Nacht",
+  "author": "Stefan Zweig",
+  "year": 1954,
+  "layout": "unten",
+  "wallGroup": 0,
+  "repeat": true,
+  "printing": "earlier printing, layout „unten“ (Julian 2026-09-29: both printings, each in its block)"
+ },
+ {
+  "no": "45",
+  "title": "Phantastische Nacht",
+  "isbn": "",
   "edition": "OL17721734M",
   "cover": 15259625,
   "wallTitle": "Phantastische Nacht",
@@ -520,7 +588,9 @@
    "cover": 14576961,
    "layout": "unten"
   },
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "46",
@@ -548,7 +618,8 @@
   "editionYear": 1960,
   "alsoSeriesCover": [
    "OL28394939M"
-  ]
+  ],
+  "wallGroup": 0
  },
  {
   "no": "48",
@@ -605,7 +676,8 @@
   "year": 1954,
   "dnb": "455685398",
   "layout": "unten",
-  "editionYear": 1960
+  "editionYear": 1960,
+  "wallGroup": 0
  },
  {
   "no": "53",
@@ -618,6 +690,20 @@
   "year": 1954,
   "dnb": "452623472",
   "editionYear": 1954
+ },
+ {
+  "no": "54",
+  "title": "Der Tod in Venedig und andere Erzählungen",
+  "isbn": "",
+  "edition": "OL46986053M",
+  "cover": 14943491,
+  "wallTitle": "Der Tod in Venedig und andere Erzählungen",
+  "author": "Thomas Mann",
+  "year": 1954,
+  "layout": "unten",
+  "wallGroup": 0,
+  "repeat": true,
+  "printing": "earlier printing, layout „unten“ (Julian 2026-09-29: both printings, each in its block)"
  },
  {
   "no": "54",
@@ -639,7 +725,9 @@
    "cover": 14943491,
    "layout": "unten"
   },
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "55",
@@ -676,7 +764,8 @@
   "year": 1954,
   "dnb": "450630684",
   "layout": "unten",
-  "editionYear": 1954
+  "editionYear": 1954,
+  "wallGroup": 0
  },
  {
   "no": "58",
@@ -729,7 +818,8 @@
   "year": 1954,
   "dnb": "455531471",
   "layout": "unten",
-  "editionYear": 1954
+  "editionYear": 1954,
+  "wallGroup": 0
  },
  {
   "no": "63",
@@ -752,7 +842,8 @@
   "year": 1954,
   "dnb": "451426584",
   "layout": "unten",
-  "editionYear": 1954
+  "editionYear": 1954,
+  "wallGroup": 0
  },
  {
   "no": "65",
@@ -931,7 +1022,8 @@
   "year": 1955,
   "dnb": "455101949",
   "layout": "unten",
-  "editionYear": 1955
+  "editionYear": 1955,
+  "wallGroup": 0
  },
  {
   "no": "81",
@@ -1188,7 +1280,8 @@
   "year": 1955,
   "dnb": "450170160",
   "layout": "unten",
-  "editionYear": 1955
+  "editionYear": 1955,
+  "wallGroup": 0
  },
  {
   "no": "104",
@@ -1279,7 +1372,8 @@
   "year": 1956,
   "dnb": "450372332",
   "layout": "unten",
-  "editionYear": 1956
+  "editionYear": 1956,
+  "wallGroup": 0
  },
  {
   "no": "112",
@@ -1304,7 +1398,8 @@
   "year": 1956,
   "dnb": "452078164",
   "layout": "unten",
-  "editionYear": 1962
+  "editionYear": 1962,
+  "wallGroup": 0
  },
  {
   "no": "114",
@@ -1471,7 +1566,8 @@
   "year": 1956,
   "dnb": "454642938",
   "layout": "unten",
-  "editionYear": 1956
+  "editionYear": 1956,
+  "wallGroup": 0
  },
  {
   "no": "129",
@@ -1520,7 +1616,8 @@
   "year": 1956,
   "dnb": "452289866",
   "layout": "oben",
-  "editionYear": 1967
+  "editionYear": 1967,
+  "wallGroup": 1
  },
  {
   "no": "133",
@@ -1545,7 +1642,8 @@
   "year": 1956,
   "dnb": "454458878",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "135",
@@ -1585,7 +1683,8 @@
   "edition": "OL62602861M",
   "cover": 15259655,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "138",
@@ -1642,7 +1741,8 @@
   "year": 1956,
   "dnb": "451965760",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "143",
@@ -1722,7 +1822,8 @@
   "edition": "OL62602862M",
   "cover": 15259656,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "150",
@@ -1769,7 +1870,8 @@
   "year": 1957,
   "dnb": "454278187",
   "layout": "oben",
-  "editionYear": 1966
+  "editionYear": 1966,
+  "wallGroup": 1
  },
  {
   "no": "154",
@@ -1792,7 +1894,8 @@
   "year": 1957,
   "dnb": "451888650",
   "layout": "unten",
-  "editionYear": 1962
+  "editionYear": 1962,
+  "wallGroup": 0
  },
  {
   "no": "156",
@@ -1971,7 +2074,8 @@
   "year": 1957,
   "dnb": "450406369",
   "layout": "unten",
-  "editionYear": 1957
+  "editionYear": 1957,
+  "wallGroup": 0
  },
  {
   "no": "172",
@@ -1984,7 +2088,8 @@
   "year": 1957,
   "dnb": "452059151",
   "layout": "unten",
-  "editionYear": 1957
+  "editionYear": 1957,
+  "wallGroup": 0
  },
  {
   "no": "173",
@@ -2045,7 +2150,8 @@
   "year": 1957,
   "dnb": "452731771",
   "layout": "unten",
-  "editionYear": 1957
+  "editionYear": 1957,
+  "wallGroup": 0
  },
  {
   "no": "178",
@@ -2142,7 +2248,8 @@
   "year": 1957,
   "dnb": "451422023",
   "layout": "unten",
-  "editionYear": 1959
+  "editionYear": 1959,
+  "wallGroup": 0
  },
  {
   "no": "187",
@@ -2155,7 +2262,8 @@
   "year": 1957,
   "dnb": "453647065",
   "layout": "unten",
-  "editionYear": 1957
+  "editionYear": 1957,
+  "wallGroup": 0
  },
  {
   "no": "188",
@@ -2204,7 +2312,8 @@
   "year": 1958,
   "dnb": "453259308",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "192",
@@ -2217,7 +2326,8 @@
   "year": 1958,
   "dnb": "455848106",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "193",
@@ -2344,7 +2454,8 @@
   "year": 1958,
   "dnb": "453802702",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "204",
@@ -2436,7 +2547,8 @@
   "editionYear": 1958,
   "alsoSeriesCover": [
    "OL45645586M"
-  ]
+  ],
+  "wallGroup": 0
  },
  {
   "no": "212",
@@ -2449,7 +2561,8 @@
   "year": 1958,
   "dnb": "453661564",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "213",
@@ -2494,7 +2607,8 @@
   "year": 1958,
   "dnb": "453661181",
   "layout": "unten",
-  "editionYear": 1963
+  "editionYear": 1963,
+  "wallGroup": 0
  },
  {
   "no": "217",
@@ -2571,7 +2685,8 @@
   "year": 1958,
   "dnb": "452412579",
   "layout": "unten",
-  "editionYear": 1960
+  "editionYear": 1960,
+  "wallGroup": 0
  },
  {
   "no": "224",
@@ -2684,7 +2799,8 @@
   "year": 1958,
   "dnb": "452074150",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "234",
@@ -2700,7 +2816,8 @@
   "edition": "OL62602860M",
   "cover": 15259657,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "235",
@@ -2757,7 +2874,8 @@
   "year": 1958,
   "dnb": "452072859",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "240",
@@ -2899,7 +3017,8 @@
   "year": 1959,
   "dnb": "453647081",
   "layout": "unten",
-  "editionYear": 1959
+  "editionYear": 1959,
+  "wallGroup": 0
  },
  {
   "no": "253",
@@ -2971,7 +3090,8 @@
   "year": 1958,
   "dnb": "453743056",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "260",
@@ -3030,7 +3150,8 @@
   "year": 1959,
   "dnb": "455809097",
   "layout": "unten",
-  "editionYear": 1959
+  "editionYear": 1959,
+  "wallGroup": 0
  },
  {
   "no": "265",
@@ -3043,7 +3164,8 @@
   "year": 1959,
   "dnb": "452152372",
   "layout": "unten",
-  "editionYear": 1959
+  "editionYear": 1959,
+  "wallGroup": 0
  },
  {
   "no": "266",
@@ -3557,7 +3679,8 @@
   "editionYear": 1965,
   "alsoSeriesCover": [
    "OL48577878M"
-  ]
+  ],
+  "wallGroup": 0
  },
  {
   "no": "313",
@@ -3669,7 +3792,8 @@
   },
   "cover": 15259626,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "323",
@@ -3836,7 +3960,8 @@
   "year": 1960,
   "dnb": "455201765",
   "layout": "unten",
-  "editionYear": 1960
+  "editionYear": 1960,
+  "wallGroup": 0
  },
  {
   "no": "338",
@@ -3914,7 +4039,8 @@
   "edition": "OL62602863M",
   "cover": 15259658,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "345",
@@ -3981,7 +4107,8 @@
   "year": 1960,
   "dnb": "452166217",
   "layout": "unten",
-  "editionYear": 1960
+  "editionYear": 1960,
+  "wallGroup": 0
  },
  {
   "no": "351",
@@ -4082,7 +4209,8 @@
   "year": 1961,
   "dnb": "452502608",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "360",
@@ -4117,7 +4245,8 @@
   "year": 1960,
   "dnb": "452287065",
   "layout": "unten",
-  "editionYear": 1960
+  "editionYear": 1960,
+  "wallGroup": 0
  },
  {
   "no": "363",
@@ -4130,7 +4259,8 @@
   "year": 1960,
   "dnb": "455685401",
   "layout": "unten",
-  "editionYear": 1960
+  "editionYear": 1960,
+  "wallGroup": 0
  },
  {
   "no": "364",
@@ -4228,7 +4358,8 @@
   "edition": "OL62602866M",
   "cover": 15259659,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "373",
@@ -4558,7 +4689,8 @@
   },
   "cover": 15259627,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "403",
@@ -4574,7 +4706,8 @@
   "edition": "OL62602865M",
   "cover": 15259660,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "404",
@@ -4602,7 +4735,8 @@
   "edition": "OL62602864M",
   "cover": 15259661,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "406",
@@ -4628,7 +4762,8 @@
   "edition": "OL62602870M",
   "cover": 15259662,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "408",
@@ -4670,7 +4805,8 @@
   "year": 1962,
   "dnb": "452789591",
   "layout": "unten",
-  "editionYear": 1962
+  "editionYear": 1962,
+  "wallGroup": 0
  },
  {
   "no": "412",
@@ -4684,7 +4820,8 @@
   "dnb": "450747042",
   "layout": "unten",
   "editionYear": 1961,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 0
  },
  {
   "no": "413",
@@ -4712,7 +4849,8 @@
   },
   "cover": 15259628,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "415",
@@ -4793,7 +4931,8 @@
   "year": 1958,
   "dnb": "1201191955",
   "layout": "unten",
-  "editionYear": 1961
+  "editionYear": 1961,
+  "wallGroup": 0
  },
  {
   "no": "422",
@@ -4843,7 +4982,8 @@
   "edition": "OL62602871M",
   "cover": 15259663,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "426",
@@ -4861,7 +5001,8 @@
   },
   "cover": 15259629,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "427",
@@ -4956,7 +5097,8 @@
   "edition": "OL62602873M",
   "cover": 15259664,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "436",
@@ -5023,7 +5165,8 @@
   "year": 1962,
   "dnb": "455795282",
   "layout": "unten",
-  "editionYear": 1958
+  "editionYear": 1958,
+  "wallGroup": 0
  },
  {
   "no": "442",
@@ -5109,7 +5252,8 @@
   "year": 1962,
   "dnb": "450630625",
   "layout": "unten",
-  "editionYear": 1962
+  "editionYear": 1962,
+  "wallGroup": 0
  },
  {
   "no": "450",
@@ -5123,7 +5267,8 @@
   "dnb": "451991133",
   "layout": "oben",
   "editionYear": 1968,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "451",
@@ -5210,7 +5355,8 @@
   "year": 1962,
   "dnb": "454278292",
   "layout": "unten",
-  "editionYear": 1962
+  "editionYear": 1962,
+  "wallGroup": 0
  },
  {
   "no": "459",
@@ -5285,7 +5431,8 @@
   "year": 1962,
   "dnb": "455468834",
   "layout": "unten",
-  "editionYear": 1962
+  "editionYear": 1962,
+  "wallGroup": 0
  },
  {
   "no": "466",
@@ -5427,7 +5574,8 @@
   "dnb": "454065272",
   "layout": "oben",
   "editionYear": 1962,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "480",
@@ -5440,7 +5588,8 @@
   "year": 1962,
   "dnb": "453453341",
   "layout": "oben",
-  "editionYear": 1962
+  "editionYear": 1962,
+  "wallGroup": 1
  },
  {
   "no": "481",
@@ -5473,7 +5622,8 @@
   "year": 1962,
   "dnb": "455685282",
   "layout": "oben",
-  "editionYear": 1962
+  "editionYear": 1962,
+  "wallGroup": 1
  },
  {
   "no": "484",
@@ -5486,7 +5636,8 @@
   "year": 1962,
   "dnb": "451866118",
   "layout": "oben",
-  "editionYear": 1962
+  "editionYear": 1962,
+  "wallGroup": 1
  },
  {
   "no": "485",
@@ -5499,7 +5650,8 @@
   "year": 1962,
   "dnb": "453988997",
   "layout": "oben",
-  "editionYear": 1962
+  "editionYear": 1962,
+  "wallGroup": 1
  },
  {
   "no": "486",
@@ -5567,7 +5719,8 @@
   "edition": "OL62602872M",
   "cover": 15259665,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "492",
@@ -5595,7 +5748,8 @@
   "edition": "OL62602874M",
   "cover": 15259666,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "494",
@@ -5674,7 +5828,8 @@
   "year": 1962,
   "dnb": "364798580",
   "layout": "oben",
-  "editionYear": 1963
+  "editionYear": 1963,
+  "wallGroup": 1
  },
  {
   "no": "501",
@@ -5798,7 +5953,8 @@
   "edition": "OL62602877M",
   "cover": 15259668,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "512",
@@ -5843,7 +5999,8 @@
   "edition": "OL62602878M",
   "cover": 15259667,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "516",
@@ -5920,7 +6077,8 @@
   "edition": "OL62602876M",
   "cover": 15259669,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "523",
@@ -6033,7 +6191,8 @@
   "year": 1963,
   "dnb": "454052480",
   "layout": "oben",
-  "editionYear": 1969
+  "editionYear": 1969,
+  "wallGroup": 1
  },
  {
   "no": "533",
@@ -6083,7 +6242,8 @@
   },
   "cover": 15259630,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "537",
@@ -6123,7 +6283,8 @@
   "edition": "OL62602880M",
   "cover": 15259670,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "540",
@@ -6141,7 +6302,8 @@
   },
   "cover": 15259631,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "541",
@@ -6261,7 +6423,8 @@
   "edition": "OL62602881M",
   "cover": 15259671,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "552",
@@ -6301,7 +6464,8 @@
   },
   "cover": 15259632,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "555",
@@ -6449,7 +6613,8 @@
   "edition": "OL62602883M",
   "cover": 15259672,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "569",
@@ -6482,7 +6647,8 @@
   "year": 1964,
   "dnb": "453003702",
   "layout": "oben",
-  "editionYear": 1964
+  "editionYear": 1964,
+  "wallGroup": 1
  },
  {
   "no": "572",
@@ -6652,7 +6818,8 @@
   "dnb": "453709885",
   "double": "587/588/589",
   "layout": "oben",
-  "editionYear": 1968
+  "editionYear": 1968,
+  "wallGroup": 1
  },
  {
   "no": "588",
@@ -6690,7 +6857,8 @@
   "edition": "OL62602882M",
   "cover": 15259673,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "592",
@@ -6716,7 +6884,8 @@
   "edition": "OL62602885M",
   "cover": 15259674,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "594",
@@ -6732,7 +6901,8 @@
   "edition": "OL62602888M",
   "cover": 15259675,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "595",
@@ -6745,7 +6915,8 @@
   "year": 1964,
   "dnb": "455848939",
   "layout": "oben",
-  "editionYear": 1968
+  "editionYear": 1968,
+  "wallGroup": 1
  },
  {
   "no": "596",
@@ -6759,7 +6930,8 @@
   "dnb": "451529383",
   "layout": "oben",
   "editionYear": 1969,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "597",
@@ -6819,7 +6991,8 @@
   "edition": "OL62602886M",
   "cover": 15259676,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "602",
@@ -6929,7 +7102,8 @@
   },
   "cover": 15259633,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "611",
@@ -6969,7 +7143,8 @@
   "edition": "OL62602887M",
   "cover": 15259677,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "614",
@@ -6995,7 +7170,8 @@
   "edition": "OL62602891M",
   "cover": 15259678,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "616",
@@ -7074,7 +7250,8 @@
   "year": 1964,
   "dnb": "454812671",
   "layout": "oben",
-  "editionYear": 1964
+  "editionYear": 1964,
+  "wallGroup": 1
  },
  {
   "no": "623",
@@ -7111,7 +7288,8 @@
   },
   "cover": 15259634,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "626",
@@ -7127,7 +7305,8 @@
   "edition": "OL62602893M",
   "cover": 15259679,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "627",
@@ -7143,7 +7322,8 @@
   "edition": "OL62602894M",
   "cover": 15259681,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "628",
@@ -7161,7 +7341,8 @@
   },
   "cover": 15259635,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "629",
@@ -7197,7 +7378,8 @@
   "edition": "OL62602892M",
   "cover": 15259680,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "632",
@@ -7215,7 +7397,8 @@
   },
   "cover": 15259636,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "633",
@@ -7231,7 +7414,8 @@
   "edition": "OL62602895M",
   "cover": 15259682,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "634",
@@ -7249,7 +7433,8 @@
   },
   "cover": 15259637,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "635",
@@ -7262,7 +7447,8 @@
   "year": 1964,
   "dnb": "450776832",
   "layout": "oben",
-  "editionYear": 1964
+  "editionYear": 1964,
+  "wallGroup": 1
  },
  {
   "no": "636",
@@ -7309,7 +7495,8 @@
   },
   "cover": 15259638,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "640",
@@ -7325,7 +7512,8 @@
   "edition": "OL62602897M",
   "cover": 15259683,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "641",
@@ -7341,7 +7529,8 @@
   "edition": "OL62602898M",
   "cover": 15259684,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "642",
@@ -7354,7 +7543,8 @@
   "year": 1965,
   "dnb": "450456080",
   "layout": "oben",
-  "editionYear": 1965
+  "editionYear": 1965,
+  "wallGroup": 1
  },
  {
   "no": "643",
@@ -7411,7 +7601,8 @@
   "edition": "OL62602896M",
   "cover": 15259685,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "648",
@@ -7427,7 +7618,8 @@
   "edition": "OL62602901M",
   "cover": 15259686,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "649",
@@ -7453,7 +7645,8 @@
   "editionYear": 1965,
   "alsoSeriesCover": [
    "OL24870014M"
-  ]
+  ],
+  "wallGroup": 1
  },
  {
   "no": "651",
@@ -7471,7 +7664,8 @@
   },
   "cover": 15259639,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "652",
@@ -7497,7 +7691,8 @@
   "edition": "OL62602903M",
   "cover": 15259687,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "654",
@@ -7515,7 +7710,8 @@
   },
   "cover": 15259640,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "655",
@@ -7533,7 +7729,8 @@
   },
   "cover": 15259642,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "656",
@@ -7546,7 +7743,8 @@
   "year": 1965,
   "dnb": "451383249",
   "layout": "oben",
-  "editionYear": 1965
+  "editionYear": 1965,
+  "wallGroup": 1
  },
  {
   "no": "657",
@@ -7574,7 +7772,8 @@
   "edition": "OL62602902M",
   "cover": 15259688,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "659",
@@ -7643,7 +7842,8 @@
   "edition": "OL62602904M",
   "cover": 15259689,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "665",
@@ -7729,7 +7929,8 @@
   "edition": "OL62602906M",
   "cover": 15259691,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "673",
@@ -7745,7 +7946,8 @@
   "edition": "OL62602908M",
   "cover": 15259692,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "674",
@@ -8112,7 +8314,8 @@
   },
   "cover": 15259643,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "707",
@@ -8137,7 +8340,8 @@
   "year": 1965,
   "dnb": "452289831",
   "layout": "oben",
-  "editionYear": 1977
+  "editionYear": 1977,
+  "wallGroup": 1
  },
  {
   "no": "709",
@@ -8262,7 +8466,8 @@
   "year": 1966,
   "dnb": "458851477",
   "layout": "oben",
-  "editionYear": 1966
+  "editionYear": 1966,
+  "wallGroup": 1
  },
  {
   "no": "720",
@@ -8324,7 +8529,8 @@
   },
   "cover": 15259644,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "725",
@@ -8451,7 +8657,8 @@
   "year": 1966,
   "dnb": "456201173",
   "layout": "oben",
-  "editionYear": 1968
+  "editionYear": 1968,
+  "wallGroup": 1
  },
  {
   "no": "736",
@@ -8515,7 +8722,8 @@
   },
   "cover": 15259645,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "741",
@@ -8605,7 +8813,8 @@
   "edition": "OL62602907M",
   "cover": 15259693,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "749",
@@ -8643,7 +8852,8 @@
   "edition": "OL62602909M",
   "cover": 15259694,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "752",
@@ -8725,7 +8935,8 @@
   "dnb": "457044756",
   "layout": "oben",
   "editionYear": 1966,
-  "designer": "Heinz Edelmann"
+  "designer": "Heinz Edelmann",
+  "wallGroup": 1
  },
  {
   "no": "759",
@@ -8741,7 +8952,8 @@
   "edition": "OL62602914M",
   "cover": 15259695,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "760",
@@ -8755,7 +8967,8 @@
   "dnb": "455598975",
   "layout": "oben",
   "editionYear": 1966,
-  "designer": "Heinz Edelmann"
+  "designer": "Heinz Edelmann",
+  "wallGroup": 1
  },
  {
   "no": "761",
@@ -8773,7 +8986,8 @@
   },
   "cover": 15259646,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "762",
@@ -8857,7 +9071,8 @@
   "edition": "OL62602916M",
   "cover": 15259696,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "769",
@@ -8873,7 +9088,8 @@
   "edition": "OL62602915M",
   "cover": 15259697,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "770",
@@ -8925,7 +9141,8 @@
   "edition": "OL62602913M",
   "cover": 15259698,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "774",
@@ -8987,7 +9204,8 @@
   },
   "cover": 15259647,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "779",
@@ -9012,7 +9230,8 @@
   "year": 1967,
   "dnb": "456790063",
   "layout": "oben",
-  "editionYear": 1967
+  "editionYear": 1967,
+  "wallGroup": 1
  },
  {
   "no": "781",
@@ -9026,7 +9245,8 @@
   "dnb": "457086939",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Heinz Edelmann"
+  "designer": "Heinz Edelmann",
+  "wallGroup": 1
  },
  {
   "no": "782",
@@ -9072,7 +9292,8 @@
   "dnb": "456245391",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "786",
@@ -9134,7 +9355,8 @@
   "edition": "OL62602920M",
   "cover": 15259699,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "791",
@@ -9178,7 +9400,8 @@
   "dnb": "456799346",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Heinz Edelmann"
+  "designer": "Heinz Edelmann",
+  "wallGroup": 1
  },
  {
   "no": "795",
@@ -9191,7 +9414,8 @@
   "year": 1967,
   "dnb": "457986840",
   "layout": "oben",
-  "editionYear": 1967
+  "editionYear": 1967,
+  "wallGroup": 1
  },
  {
   "no": "796",
@@ -9205,7 +9429,8 @@
   "dnb": "456449809",
   "layout": "oben",
   "editionYear": 1969,
-  "designer": "Heinz Edelmann"
+  "designer": "Heinz Edelmann",
+  "wallGroup": 1
  },
  {
   "no": "797",
@@ -9333,7 +9558,8 @@
   "dnb": "458805742",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Heinz Edelmann"
+  "designer": "Heinz Edelmann",
+  "wallGroup": 1
  },
  {
   "no": "808",
@@ -9475,7 +9701,8 @@
   "dnb": "457158050",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "821",
@@ -9489,7 +9716,8 @@
   "dnb": "457088621",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Heinz Edelmann"
+  "designer": "Heinz Edelmann",
+  "wallGroup": 1
  },
  {
   "no": "822",
@@ -9527,7 +9755,8 @@
   "edition": "OL62602919M",
   "cover": 15259700,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "825",
@@ -9585,7 +9814,8 @@
   "dnb": "457500158",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "830",
@@ -9602,7 +9832,8 @@
   "alsoSeriesCover": [
    "OL18432759M",
    "OL23720232M"
-  ]
+  ],
+  "wallGroup": 1
  },
  {
   "no": "831",
@@ -9620,7 +9851,8 @@
   },
   "cover": 15204615,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "832",
@@ -9634,7 +9866,8 @@
   "dnb": "456466665",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Heinz Edelmann"
+  "designer": "Heinz Edelmann",
+  "wallGroup": 1
  },
  {
   "no": "833",
@@ -9702,7 +9935,8 @@
   "dnb": "458492205",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "839",
@@ -9750,7 +9984,8 @@
   "dnb": "456975179",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "843",
@@ -9773,7 +10008,8 @@
   "year": 1967,
   "dnb": "456988904",
   "layout": "oben",
-  "editionYear": 1967
+  "editionYear": 1967,
+  "wallGroup": 1
  },
  {
   "no": "845",
@@ -9809,7 +10045,8 @@
   "dnb": "457710381",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "848",
@@ -9835,7 +10072,8 @@
   "dnb": "458940208",
   "layout": "oben",
   "editionYear": 1967,
-  "designer": "Heinz Edelmann"
+  "designer": "Heinz Edelmann",
+  "wallGroup": 1
  },
  {
   "no": "850",
@@ -9904,7 +10142,8 @@
   "year": 1967,
   "dnb": "456756787",
   "layout": "oben",
-  "editionYear": 1967
+  "editionYear": 1967,
+  "wallGroup": 1
  },
  {
   "no": "856",
@@ -9951,7 +10190,8 @@
   "year": 1967,
   "dnb": "457649941",
   "layout": "oben",
-  "editionYear": 1967
+  "editionYear": 1967,
+  "wallGroup": 1
  },
  {
   "no": "860",
@@ -9967,7 +10207,8 @@
   "edition": "OL62602918M",
   "cover": 15259701,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "861",
@@ -9981,7 +10222,8 @@
   "dnb": "457976241",
   "layout": "oben",
   "editionYear": 1968,
-  "designer": "Heinz Edelmann"
+  "designer": "Heinz Edelmann",
+  "wallGroup": 1
  },
  {
   "no": "862",
@@ -10061,7 +10303,8 @@
   "edition": "OL62602921M",
   "cover": 15259703,
   "layout": "oben",
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "869",
@@ -10174,7 +10417,8 @@
   "year": 1968,
   "dnb": "456935266",
   "layout": "oben",
-  "editionYear": 1968
+  "editionYear": 1968,
+  "wallGroup": 1
  },
  {
   "no": "879",
@@ -10789,7 +11033,8 @@
   "year": 1968,
   "dnb": "457490446",
   "layout": "oben",
-  "editionYear": 1968
+  "editionYear": 1968,
+  "wallGroup": 1
  },
  {
   "no": "933",
@@ -10802,7 +11047,8 @@
   "year": 1968,
   "dnb": "458587710",
   "layout": "oben",
-  "editionYear": 1968
+  "editionYear": 1968,
+  "wallGroup": 1
  },
  {
   "no": "934",
@@ -10825,7 +11071,8 @@
   "year": 1968,
   "dnb": "364795093",
   "layout": "oben",
-  "editionYear": 1968
+  "editionYear": 1968,
+  "wallGroup": 1
  },
  {
   "no": "936",
@@ -10882,7 +11129,8 @@
   "year": 1968,
   "dnb": "455564841",
   "layout": "oben",
-  "editionYear": 1968
+  "editionYear": 1968,
+  "wallGroup": 1
  },
  {
   "no": "941",
@@ -10927,7 +11175,8 @@
   "year": 1968,
   "dnb": "458868663",
   "layout": "oben",
-  "editionYear": 1968
+  "editionYear": 1968,
+  "wallGroup": 1
  },
  {
   "no": "945",
@@ -11232,7 +11481,8 @@
   "year": 1969,
   "dnb": "456988823",
   "layout": "oben",
-  "editionYear": 1969
+  "editionYear": 1969,
+  "wallGroup": 1
  },
  {
   "no": "972",
@@ -11522,7 +11772,8 @@
   "dnb": "458434531",
   "layout": "oben",
   "editionYear": 1969,
-  "designer": "Kurt Wirth"
+  "designer": "Kurt Wirth",
+  "wallGroup": 1
  },
  {
   "no": "999",
@@ -11649,7 +11900,8 @@
   "year": 1969,
   "dnb": "456661204",
   "layout": "oben",
-  "editionYear": 1969
+  "editionYear": 1969,
+  "wallGroup": 1
  },
  {
   "no": "1011",
@@ -11730,7 +11982,8 @@
   "year": 1969,
   "dnb": "456253858",
   "layout": "oben",
-  "editionYear": 1969
+  "editionYear": 1969,
+  "wallGroup": 1
  },
  {
   "no": "1018",
@@ -11775,7 +12028,8 @@
   "year": 1969,
   "dnb": "458452106",
   "layout": "oben",
-  "editionYear": 1969
+  "editionYear": 1969,
+  "wallGroup": 1
  },
  {
   "no": "1022",
@@ -12090,7 +12344,8 @@
   "year": 1969,
   "dnb": "458252123",
   "layout": "oben",
-  "editionYear": 1969
+  "editionYear": 1969,
+  "wallGroup": 1
  },
  {
   "no": "1051",
@@ -12103,7 +12358,9 @@
   "year": 1969,
   "dnb": "458252131",
   "layout": "oben",
-  "editionYear": 1969
+  "editionYear": 1969,
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "1052",
@@ -12116,7 +12373,8 @@
   "year": 1969,
   "dnb": "457007176",
   "layout": "oben",
-  "editionYear": 1969
+  "editionYear": 1969,
+  "wallGroup": 1
  },
  {
   "no": "1053",
@@ -12129,7 +12387,9 @@
   "year": 1969,
   "dnb": "457007184",
   "layout": "oben",
-  "editionYear": 1969
+  "editionYear": 1969,
+  "wallGroup": 1,
+  "repeat": true
  },
  {
   "no": "1054",
@@ -12398,7 +12658,9 @@
   "year": 1970,
   "dnb": "457126035",
   "layout": "oben",
-  "editionYear": 1970
+  "editionYear": 1970,
+  "wallGroup": 1,
+  "skip": "Julian removed it from the online draft (published 2026-09-29)"
  },
  {
   "no": "1079",
@@ -12483,7 +12745,8 @@
   "year": 1970,
   "dnb": "456251820",
   "layout": "oben",
-  "editionYear": 1973
+  "editionYear": 1973,
+  "wallGroup": 1
  },
  {
   "no": "1087",
@@ -12580,7 +12843,8 @@
   "year": 1969,
   "dnb": "458442712",
   "layout": "oben",
-  "editionYear": 1969
+  "editionYear": 1969,
+  "wallGroup": 1
  },
  {
   "no": "1096",

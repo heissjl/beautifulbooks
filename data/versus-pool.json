@@ -1,6 +1,6 @@
 {
  "name": "mix-2000-paperwhite-collections",
- "builtAt": "2026-09-27",
+ "builtAt": "2026-09-30",
  "indexBuiltAt": "2026-09-26",
  "inherits": [
   "mix-200-paperwhite",
@@ -16451,11 +16451,22 @@
    "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-06.jpg"
   },
   {
-   "id": "local:tolkien-covers-by-heinz-edelmann/no-07",
+   "id": "ol:15259427",
    "workId": "OL27512W",
    "title": "Baum und Blatt",
-   "author": "J.R.R. Tolkien",
-   "image": "/collection-covers/tolkien-covers-by-heinz-edelmann/no-07.jpg"
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:15259575",
+   "workId": "OL1411624W",
+   "title": "Die Stimmen von Marrakesch",
+   "author": "Elias Canetti"
+  },
+  {
+   "id": "ol:14305208",
+   "workId": "OL8969435W",
+   "title": "Die Grenze",
+   "author": "Régis Debray"
   },
   {
    "id": "ol:10555558",
@@ -16464,16 +16475,178 @@
    "author": "Maximilien Rubel"
   },
   {
+   "id": "ol:15259579",
+   "workId": "OL46028840W",
+   "title": "Nach dem Formalismus",
+   "author": "Дмитрий Сергеевич Лихачёв"
+  },
+  {
+   "id": "ol:15259577",
+   "workId": "OL3098159W",
+   "title": "Zeitfragen",
+   "author": "Erich Fried"
+  },
+  {
+   "id": "ol:15259565",
+   "workId": "OL3079869W",
+   "title": "Feinde",
+   "author": "Reinhard Lettau"
+  },
+  {
+   "id": "ol:15259576",
+   "workId": "OL46028842W",
+   "title": "Entblössung",
+   "author": "Tadeusz Różewicz"
+  },
+  {
+   "id": "ol:15259578",
+   "workId": "OL6390482W",
+   "title": "Richtlinien und Anschläge",
+   "author": "Albrecht Goeschel"
+  },
+  {
+   "id": "ol:15259580",
+   "workId": "OL3792274W",
+   "title": "Letzte unfrisierte Gedanken",
+   "author": "Stanisław Jerzy Lec"
+  },
+  {
+   "id": "ol:15259488",
+   "workId": "OL10572009W",
+   "title": "Die Beerdigung findet in aller Stille statt",
+   "author": "Günter Kunert"
+  },
+  {
+   "id": "ol:15259581",
+   "workId": "OL22457867W",
+   "title": "Kritik, von wem, für wen, wie",
+   "author": "Peter Hamm"
+  },
+  {
+   "id": "ol:15259485",
+   "workId": "OL5019829W",
+   "title": "Professor Tutkas Geschichten",
+   "author": "Jerzy Szaniawski"
+  },
+  {
+   "id": "ol:15259486",
+   "workId": "OL4019065W",
+   "title": "Deutschland zwischen Demokratie und Faschismus",
+   "author": "Reinhard Kühnl"
+  },
+  {
+   "id": "ol:15259489",
+   "workId": "OL33912572W",
+   "title": "Früher begann der Tag mit einer Schusswunde",
+   "author": "Wolf Wondratschek"
+  },
+  {
+   "id": "ol:15259582",
+   "workId": "OL46028846W",
+   "title": "Das Denken von Sade",
+   "author": "Pierre Klossowski"
+  },
+  {
+   "id": "ol:15259583",
+   "workId": "OL46028847W",
+   "title": "Obwohl",
+   "author": "Miroslav Holub"
+  },
+  {
+   "id": "ol:15259487",
+   "workId": "OL3666551W",
+   "title": "China, die Revolution der Literatur",
+   "author": "Joachim Schickel"
+  },
+  {
+   "id": "ol:15259584",
+   "workId": "OL46028845W",
+   "title": "Die neue Linke in den USA",
+   "author": "Paul Jacobs"
+  },
+  {
+   "id": "ol:15259614",
+   "workId": "OL2409891W",
+   "title": "Verärgerte Logik",
+   "author": "Gabriel Laub"
+  },
+  {
+   "id": "ol:15259490",
+   "workId": "OL2744815W",
+   "title": "Spielerei bei Tage",
+   "author": "Barbara König"
+  },
+  {
    "id": "ol:9982321",
    "workId": "OL1411623W",
    "title": "Der andere Prozess",
    "author": "Elias Canetti"
   },
   {
+   "id": "ol:15259585",
+   "workId": "OL102484W",
+   "title": "Planet news",
+   "author": "Allen Ginsberg"
+  },
+  {
+   "id": "ol:15259586",
+   "workId": "OL2870267W",
+   "title": "Farabeuf oder Die Chronik eines Augenblicks",
+   "author": "Salvador Elizondo"
+  },
+  {
+   "id": "ol:15259564",
+   "workId": "OL29300475W",
+   "title": "Musik auf der Flucht vor sich selbst",
+   "author": "Ulrich Dibelius"
+  },
+  {
    "id": "ol:13065592",
    "workId": "OL18833939W",
-   "title": "Ansichten einer künftigen Germanistik",
+   "title": "Ansichten einer künftigen Germanistik",
    "author": "Jürgen Kolbe"
+  },
+  {
+   "id": "ol:15259587",
+   "workId": "OL6952827W",
+   "title": "Drei Uhr Angst",
+   "author": "Uwe Brandner"
+  },
+  {
+   "id": "ol:15259491",
+   "workId": "OL3998029W",
+   "title": "Kriegerdenkmal ganz hinten",
+   "author": "Guntram Vesper"
+  },
+  {
+   "id": "ol:15259494",
+   "workId": "OL4534813W",
+   "title": "Handbuch für Einwohner",
+   "author": "Günter Bruno Fuchs"
+  },
+  {
+   "id": "ol:15259588",
+   "workId": "OL46028850W",
+   "title": "Gespenster für den Alltag",
+   "author": "Karel Michal"
+  },
+  {
+   "id": "ol:15259609",
+   "workId": "OL1405585W",
+   "title": "Bakunin, eine Invention",
+   "author": "Horst Bienek"
+  },
+  {
+   "id": "ol:15259492",
+   "workId": "OL2361260W",
+   "title": "Kritik und Zukunft des Sozialismus",
+   "author": "Svetozar Stojanović"
+  },
+  {
+   "id": "ol:15259498",
+   "workId": "OL1264451W",
+   "title": "König Ubu",
+   "author": "Alfred Jarry"
   },
   {
    "id": "ol:9275703",
@@ -16488,9 +16661,51 @@
    "author": "Elias Canetti"
   },
   {
+   "id": "ol:15259495",
+   "workId": "OL6284286W",
+   "title": "USA, die neue Linke am Ende?",
+   "author": "George Günther Eckstein"
+  },
+  {
+   "id": "ol:15259496",
+   "workId": "OL6602504W",
+   "title": "Kläranlage",
+   "author": "Arnfrid Astel"
+  },
+  {
+   "id": "ol:15259589",
+   "workId": "OL15284341W",
+   "title": "Utopien",
+   "author": "Lars Gustafsson"
+  },
+  {
+   "id": "ol:15259567",
+   "workId": "OL2258854W",
+   "title": "Weltbilder",
+   "author": "Gert Jonke"
+  },
+  {
+   "id": "ol:15259499",
+   "workId": "OL7329480W",
+   "title": "Roboter und Gartenlaube",
+   "author": "Michael Pehlke"
+  },
+  {
+   "id": "ol:15259497",
+   "workId": "OL6769105W",
+   "title": "Politische Pädagogik",
+   "author": "Klaus Peter Wallraven"
+  },
+  {
+   "id": "ol:15259591",
+   "workId": "OL4473283W",
+   "title": "Gespräche in Algier",
+   "author": "Lee Lockwood"
+  },
+  {
    "id": "ol:10967286",
    "workId": "OL6637377W",
-   "title": "Europa: die Toten haben nichts zu lachen",
+   "title": "Europa, die Toten haben nichts zu lachen. Prosa",
    "author": "Hermann Schürrer"
   },
   {
@@ -16498,6 +16713,42 @@
    "workId": "OL13476120W",
    "title": "Ansichten einer künftigen Medizin",
    "author": "Paul Lüth"
+  },
+  {
+   "id": "ol:15259590",
+   "workId": "OL46028857W",
+   "title": "Der Mörder",
+   "author": "Witold Wirpsza"
+  },
+  {
+   "id": "ol:15259502",
+   "workId": "OL6857267W",
+   "title": "Die Unterhaltung der deutschen Fernsehfamilie",
+   "author": "Friedrich Knilli"
+  },
+  {
+   "id": "ol:15259500",
+   "workId": "OL35987739W",
+   "title": "Die Tupamaros",
+   "author": ""
+  },
+  {
+   "id": "ol:15259503",
+   "workId": "OL19044064W",
+   "title": "Die Tabus der bundesdeutschen Presse",
+   "author": ""
+  },
+  {
+   "id": "ol:15259501",
+   "workId": "OL7079938W",
+   "title": "Aus lauter Liebe",
+   "author": "Michael Hatry"
+  },
+  {
+   "id": "ol:15259504",
+   "workId": "OL1752425W",
+   "title": "a und b leuchten im Klee",
+   "author": "Leo Navratil"
   },
   {
    "id": "ol:10645167",
@@ -16508,8 +16759,20 @@
   {
    "id": "ol:15171334",
    "workId": "OL1358965W",
-   "title": "Adventures in the skin trade",
+   "title": "Abenteuer in Sachen Haut",
    "author": "Dylan Thomas"
+  },
+  {
+   "id": "ol:15259507",
+   "workId": "OL1644381W",
+   "title": "Paul oder Die Zerstörung eines Hörbeispiels",
+   "author": "Wolf Wondratschek"
+  },
+  {
+   "id": "ol:15259592",
+   "workId": "OL11295370W",
+   "title": "Forellenfischen in Amerika",
+   "author": "Richard Brautigan"
   },
   {
    "id": "ol:13535730",
@@ -16518,15 +16781,135 @@
    "author": "Klaus Völker"
   },
   {
+   "id": "ol:15259505",
+   "workId": "OL3780671W",
+   "title": "Soziologie der Olympischen Spiele",
+   "author": "Ulrike Prokop"
+  },
+  {
+   "id": "ol:15259506",
+   "workId": "OL2049200W",
+   "title": "Soziologische Anthropologie",
+   "author": "Wolf Lepenies"
+  },
+  {
+   "id": "ol:15259593",
+   "workId": "OL104860W",
+   "title": "David Brodies Bericht",
+   "author": "Jorge Luis Borges"
+  },
+  {
+   "id": "ol:15259566",
+   "workId": "OL22475565W",
+   "title": "Das Böse",
+   "author": "Gerhard P. Zacharias"
+  },
+  {
+   "id": "ol:15259594",
+   "workId": "OL8162815W",
+   "title": "Der Greis in Charenton",
+   "author": "Marquis de Sade"
+  },
+  {
+   "id": "ol:15259596",
+   "workId": "OL46028863W",
+   "title": "Meine Begegnungen mit Vladimir Kazakov",
+   "author": "Vladimir Kazakov"
+  },
+  {
+   "id": "ol:15259595",
+   "workId": "OL46028862W",
+   "title": "Der Alte vom Berge",
+   "author": "Alfred Jarry"
+  },
+  {
+   "id": "ol:15259508",
+   "workId": "OL7182833W",
+   "title": "Fetisch Eigentum",
+   "author": "Eckart Spoo"
+  },
+  {
+   "id": "ol:15259509",
+   "workId": "OL11864403W",
+   "title": "Anti-Olympia",
+   "author": "Hans-Horst Henschen"
+  },
+  {
+   "id": "ol:15259512",
+   "workId": "OL19135778W",
+   "title": "Plädoyers für eine europäische Sicherheitskonferenz",
+   "author": "Walter Fabian"
+  },
+  {
+   "id": "ol:15259510",
+   "workId": "OL4918190W",
+   "title": "Wagner-Chronik",
+   "author": "Martin Gregor-Dellin"
+  },
+  {
+   "id": "ol:15259511",
+   "workId": "OL3121469W",
+   "title": "Politik und Waffengeschäfte",
+   "author": "Ulrich Albrecht"
+  },
+  {
+   "id": "ol:15259513",
+   "workId": "OL1691511W",
+   "title": "Und sie fliegen über die Berge, weit durch die Welt",
+   "author": "Ludwig Harig"
+  },
+  {
+   "id": "ol:15259514",
+   "workId": "OL5509958W",
+   "title": "Lexikon Film",
+   "author": "Ulrich Kurowski"
+  },
+  {
+   "id": "ol:15259521",
+   "workId": "OL6598941W",
+   "title": "Zur Kritik der Sozialpsychologie",
+   "author": "Helmut Nolte"
+  },
+  {
    "id": "ol:10555123",
    "workId": "OL4683668W",
    "title": "Emanzipatorische Sinnlichkeit",
    "author": "Alfred Schmidt"
   },
   {
+   "id": "ol:15259517",
+   "workId": "OL1411596W",
+   "title": "Die gespaltene Zukunft",
+   "author": "Elias Canetti"
+  },
+  {
+   "id": "ol:15259520",
+   "workId": "OL38751119W",
+   "title": "Ansichten einer künftigen Futurologie",
+   "author": "Dietger Pforte"
+  },
+  {
+   "id": "ol:15259597",
+   "workId": "OL46028861W",
+   "title": "Der Tod in der alten Dekoration",
+   "author": "Tadeusz Różewicz"
+  },
+  {
+   "id": "ol:15259518",
+   "workId": "OL38447363W",
+   "title": "Eine andere Verteidigung",
+   "author": "Vereinigung Deutscher Wissenschaftler."
+  },
+  {
+   "id": "ol:15259519",
+   "workId": "OL620625W",
+   "title": "Handbuch zum ordentlichen Leben",
+   "author": "Eisendle, Helmut."
+  },
+  {
    "id": "ol:9312433",
    "workId": "OL18849848W",
-   "title": "Neue Ansichten einer Künftigen Germanistik",
+   "title": "Neue Ansichten einer künftigen Germanistik",
    "author": "Jürgen Kolbe"
   },
   {
@@ -16536,22 +16919,82 @@
    "author": "Bernd Jentzsch"
   },
   {
+   "id": "ol:15259524",
+   "workId": "OL4918178W",
+   "title": "Richard Wagner, die Revolution als Oper",
+   "author": "Martin Gregor-Dellin"
+  },
+  {
    "id": "ol:11732921",
    "workId": "OL1680941W",
    "title": "Trotzki-Chronik",
    "author": "Heinz Abosch"
   },
   {
+   "id": "ol:15259522",
+   "workId": "OL974825W",
+   "title": "Weshalb heisst das Bett nicht Bild?",
+   "author": "Hermann Glaser"
+  },
+  {
+   "id": "ol:15259526",
+   "workId": "OL2211416W",
+   "title": "Geschichte und menschliche Natur",
+   "author": "Dietmar Kamper"
+  },
+  {
    "id": "ol:8389998",
    "workId": "OL804718W",
-   "title": "Potemkin",
+   "title": "Schriften",
    "author": "Sergei Eisenstein"
+  },
+  {
+   "id": "ol:15259523",
+   "workId": "OL3666552W",
+   "title": "China in der Welt",
+   "author": "Joachim Schickel"
+  },
+  {
+   "id": "ol:15259598",
+   "workId": "OL46028860W",
+   "title": "Die politischen Gefangenen Saigons",
+   "author": "Holmes Brown"
+  },
+  {
+   "id": "ol:15259599",
+   "workId": "OL46028865W",
+   "title": "Aktschlüsse, Halbgedichte",
+   "author": "Miroslav Holub"
+  },
+  {
+   "id": "ol:15259525",
+   "workId": "OL1691494W",
+   "title": "Netzer kam aus der Tiefe des Raumes",
+   "author": "Ludwig Harig"
   },
   {
    "id": "ol:13325443",
    "workId": "OL4683673W",
    "title": "Zur Idee der kritischen Theorie",
    "author": "Alfred Schmidt"
+  },
+  {
+   "id": "ol:15259531",
+   "workId": "OL6113233W",
+   "title": "Lenin-Chronik",
+   "author": "Gerda Weber"
+  },
+  {
+   "id": "ol:15259568",
+   "workId": "OL38621696W",
+   "title": "Durch Kooperation zum Frieden?",
+   "author": "Ulrich Albrecht"
+  },
+  {
+   "id": "ol:15259527",
+   "workId": "OL5203311W",
+   "title": "Schriften",
+   "author": "Sergei Eisenstein"
   },
   {
    "id": "ol:14550956",
@@ -16566,10 +17009,40 @@
    "author": "Yaak Karsunke"
   },
   {
+   "id": "ol:15259529",
+   "workId": "OL19498267W",
+   "title": "Demokratische Sicherheitspolitik",
+   "author": "Theodor Ebert"
+  },
+  {
+   "id": "ol:15259530",
+   "workId": "OL4371350W",
+   "title": "Drunter, drüber, mittenmang",
+   "author": "Karl Arnold"
+  },
+  {
+   "id": "ol:15259533",
+   "workId": "OL1432347W",
+   "title": "Fragen zur Weltpolitik",
+   "author": "Carl Friedrich Von Weizsäcker"
+  },
+  {
+   "id": "ol:15259532",
+   "workId": "OL2825194W",
+   "title": "Der Streit um die Intelligenz",
+   "author": "Dieter E. Zimmer"
+  },
+  {
    "id": "ol:12366822",
    "workId": "OL19139456W",
-   "title": "Sowjetische Fotografie 1928-1932",
+   "title": "Sowjetische Fotografie 1928 - 1932",
    "author": "Rosalinde Sartorti"
+  },
+  {
+   "id": "ol:15259534",
+   "workId": "OL2409881W",
+   "title": "Erlaubte Freiheiten",
+   "author": "Gabriel Laub"
   },
   {
    "id": "ol:10554986",
@@ -16578,39 +17051,40 @@
    "author": "Alfred Schmidt"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-01",
+   "id": "ol:15259536",
+   "workId": "OL4369659W",
+   "title": "Mao-Chronik",
+   "author": "Thomas Scharping"
+  },
+  {
+   "id": "ol:15259408",
    "workId": "OL1099513W",
    "title": "Reise zum Mittelpunkt der Erde",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-01.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-02",
+   "id": "ol:15259409",
    "workId": "OL1099380W",
    "title": "Fünf Wochen im Ballon",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-02.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-03",
+   "id": "ol:15259410",
    "workId": "OL1099364W",
    "title": "Die Kinder des Kapitäns Grant",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-03.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-04",
+   "id": "ol:15259411",
    "workId": "OL1099479W",
    "title": "Von der Erde zum Mond",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-04.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-05",
+   "id": "ol:15259412",
    "workId": "OL1100020W",
    "title": "Reise um den Mond",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-05.jpg"
+   "author": "Jules Verne"
   },
   {
    "id": "ol:8806397",
@@ -16619,125 +17093,225 @@
    "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-07",
+   "id": "ol:15259428",
    "workId": "OL1100007W",
    "title": "Reise um die Erde in 80 Tagen",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-07.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-08",
+   "id": "ol:15259413",
    "workId": "OL1099915W",
    "title": "Die geheimnisvolle Insel",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-08.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-09",
+   "id": "ol:15259414",
    "workId": "OL1099641W",
    "title": "Der Kurier des Zaren",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-09.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-10",
+   "id": "ol:15259415",
    "workId": "OL1099959W",
    "title": "Die 500 Millionen der Begum",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-10.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-11",
+   "id": "ol:15259416",
    "workId": "OL1099968W",
    "title": "Der Schuss am Kilimandscharo",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-11.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-12",
+   "id": "ol:15259417",
    "workId": "OL1099965W",
    "title": "Der Stahlelefant",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-12.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-13",
+   "id": "ol:15259418",
    "workId": "OL1099954W",
    "title": "Keraban der Starrkopf",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-13.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-14",
+   "id": "ol:15259419",
    "workId": "OL1099903W",
    "title": "Das Karpatenschloss",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-14.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-15",
+   "id": "ol:15259420",
    "workId": "OL1099647W",
    "title": "Meister Antifers wunderbare Abenteuer",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-15.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-16",
+   "id": "ol:15259421",
    "workId": "OL1100004W",
    "title": "Zwei Jahre Ferien",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-16.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-17",
+   "id": "ol:15259423",
    "workId": "OL1099898W",
    "title": "Die Jagd nach dem Meteor",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-17.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-18",
+   "id": "ol:15259424",
    "workId": "OL1099854W",
    "title": "Die Propellerinsel",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-18.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-19",
+   "id": "ol:15259425",
    "workId": "OL1100005W",
    "title": "Reise durch das Sonnensystem",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-19.jpg"
+   "author": "Jules Verne"
   },
   {
-   "id": "local:jules-verne-covers-by-heinz-edelmann/vol-20",
-   "workId": "OL1099908W",
+   "id": "ol:15259426",
+   "workId": "OL31322292W",
    "title": "Die Eissphinx",
-   "author": "Jules Verne",
-   "image": "/collection-covers/jules-verne-covers-by-heinz-edelmann/vol-20.jpg"
+   "author": "Jules Verne"
+  },
+  {
+   "id": "ol:15259600",
+   "workId": "OL46028868W",
+   "title": "Polnische Eulenspiegeleien",
+   "author": "Adolf Nowaczyński"
+  },
+  {
+   "id": "ol:15259535",
+   "workId": "OL22908198W",
+   "title": "Buch am Spiess",
+   "author": "Armin Eichholz"
+  },
+  {
+   "id": "ol:15259601",
+   "workId": "OL46028867W",
+   "title": "Düsseldorf für Anfänger",
+   "author": ""
+  },
+  {
+   "id": "ol:15259604",
+   "workId": "OL26459W",
+   "title": "Das letzte Einhorn",
+   "author": "Peter S. Beagle"
+  },
+  {
+   "id": "ol:15259541",
+   "workId": "OL7293108W",
+   "title": "Das Mondfest",
+   "author": "Kornelius von Vacano"
+  },
+  {
+   "id": "ol:15259537",
+   "workId": "OL2239854W",
+   "title": "Der Krieg war besser",
+   "author": "Miodrag Bulatović"
+  },
+  {
+   "id": "ol:15259539",
+   "workId": "OL1405613W",
+   "title": "Die Zelle",
+   "author": "Horst Bienek"
+  },
+  {
+   "id": "ol:15259569",
+   "workId": "OL737249W",
+   "title": "Der Fieberkopf",
+   "author": "Bauer, Wolfgang"
+  },
+  {
+   "id": "ol:15259538",
+   "workId": "OL5493701W",
+   "title": "Die Botschaft eines weisen Heinzelmännchens",
+   "author": "Roel van Duyn"
+  },
+  {
+   "id": "ol:15259540",
+   "workId": "OL22494476W",
+   "title": "Die schwarzen Schafe",
+   "author": "Heinrich Böll"
+  },
+  {
+   "id": "ol:15259545",
+   "workId": "OL37357357W",
+   "title": "Das Einhorn sagt zum Zweihorn",
+   "author": "Gertraud Middelhauve"
   },
   {
    "id": "ol:10421448",
    "workId": "OL22058272W",
-   "title": "Der Wind in den Weiden oder der Dachs lässt schön grüssen, möchte aber auf keinen Fall gestört werden",
+   "title": "Der Wind in den Weiden",
    "author": "Kenneth Grahame"
   },
   {
    "id": "ol:1021133",
    "workId": "OL2440182W",
-   "title": "Vorstadtkrokodil",
+   "title": "Vorstadtkrokodile",
    "author": "Max von der Grün"
+  },
+  {
+   "id": "ol:15259542",
+   "workId": "OL5997022W",
+   "title": "Von erwachendem Bewußtsein und vom Sündenfall",
+   "author": "Oskar Seidlin"
+  },
+  {
+   "id": "ol:15259543",
+   "workId": "OL4579262W",
+   "title": "Textbücher 1–6",
+   "author": "Helmut Heissenbüttel"
+  },
+  {
+   "id": "ol:15259546",
+   "workId": "OL37350032W",
+   "title": "Erzählungen",
+   "author": "Veijo Meri"
+  },
+  {
+   "id": "ol:15259550",
+   "workId": "OL1260867W",
+   "title": "Das Ufer der Syrten",
+   "author": "Julien Gracq"
+  },
+  {
+   "id": "ol:15259547",
+   "workId": "OL3348909W",
+   "title": "Yellow Submarine",
+   "author": "Max Wilk"
+  },
+  {
+   "id": "ol:15259603",
+   "workId": "OL46028866W",
+   "title": "Calvinols Reise durch die Welt",
+   "author": "P. C. (Per Christian) Jersild"
+  },
+  {
+   "id": "ol:15259548",
+   "workId": "OL19411255W",
+   "title": "Manuel Gassers Köchel-Verzeichnis",
+   "author": "Manuel Gasser"
   },
   {
    "id": "ol:2195690",
    "workId": "OL4579254W",
-   "title": "Eichendorffs Untergang und andere Märchen",
+   "title": "Eichendorffs Untergang und andere Märchen",
    "author": "Helmut Heissenbüttel"
+  },
+  {
+   "id": "ol:15259549",
+   "workId": "OL5062259W",
+   "title": "Problemfeld Ehe",
+   "author": "Helga Gripp-Hagelstange"
   },
   {
    "id": "ol:10290958",
    "workId": "OL20920429W",
-   "title": "A Dark Horn Blowing",
+   "title": "Der Ruf ins andere Land",
    "author": "Dahlov Ipcar"
   },
   {
@@ -19195,6 +19769,2280 @@
    "author": "Josef Winkler"
   },
   {
+   "id": "ol:7355968",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8237627",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15158668",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15226832",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15156136",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15158660",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:969491",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:969492",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12728911",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12905137",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8458051",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:9326646",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:9262558",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12726695",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:1049504",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12728460",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15101088",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8129811",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15158369",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15235364",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15235365",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15244794",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15166468",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15244811",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15244822",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:14573304",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:9346688",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:9346696",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:9346706",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:9346719",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:9346725",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:9346749",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:1048192",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:1048187",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:1048188",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:1048189",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8232747",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:7360359",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8183590",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:13028227",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15157471",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:14546261",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15157559",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15091536",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15157619",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:488304",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15155864",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12630812",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15155866",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15155868",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15169535",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:10082428",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8565802",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8121036",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8772818",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15178361",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:10871428",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8131352",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8183663",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15159585",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15159586",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15159588",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15159598",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15159601",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15159603",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:10565554",
+   "workId": "OL24159601W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:10487260",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:10565584",
+   "workId": "OL24159611W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:14573310",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8233607",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:14569519",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15157555",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15224397",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15158684",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15158685",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8081233",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12025676",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12460285",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8487228",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12630797",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12376757",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259473",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8487234",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259474",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8963307",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259431",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8128339",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8081254",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8784775",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8131707",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8184308",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15157474",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15157620",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15157625",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259478",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15157660",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15157889",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15157626",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:10413455",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15156809",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12726842",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:13555274",
+   "workId": "OL34799495W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8456594",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:10584470",
+   "workId": "OL24168780W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15116676",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15116677",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15116678",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15116681",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15116683",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15116684",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15116685",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259440",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259439",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259437",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259444",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12997551",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259441",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259432",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8501212",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259433",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259434",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259435",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259438",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259436",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259467",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259470",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259475",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:14252161",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259469",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259457",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259458",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259460",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259459",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259461",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259465",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:13264823",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12376745",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259455",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12904511",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:12997553",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15158567",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259447",
+   "workId": "OL82563W",
+   "title": "Harry Potter and the Philosopher's Stone",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259449",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259448",
+   "workId": "OL82536W",
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259451",
+   "workId": "OL82560W",
+   "title": "Harry Potter and the Goblet of Fire",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:13907567",
+   "workId": "OL82548W",
+   "title": "Harry Potter and the Order of the Phoenix",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259454",
+   "workId": "OL82565W",
+   "title": "Harry Potter and the Half-Blood Prince",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8573843",
+   "workId": "OL82537W",
+   "title": "Harry Potter and the Chamber of Secrets",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:15259450",
+   "workId": "OL82586W",
+   "title": "Harry Potter and the Deathly Hallows",
+   "author": "J. K. Rowling"
+  },
+  {
+   "id": "ol:8171428",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8140846",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8171445",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8167231",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:10523169",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8172046",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8167233",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8302846",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8172078",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8166960",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8141314",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8172084",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8167584",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8140855",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9293866",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14626125",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8647605",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14624299",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14624451",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14624452",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14627526",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14627528",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14627534",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9262670",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9262671",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8141985",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14624635",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8173162",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9260085",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9249723",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8173643",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8167652",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8141433",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8173664",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8168264",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9249718",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9293888",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9293885",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9293882",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:13133750",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:13133754",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:13133756",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:10290885",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14625962",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8647603",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:979591",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14625961",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14624314",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14625938",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14625772",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14625948",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:10290015",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:10457086",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:2341314",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14624433",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8461498",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14624461",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8168674",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8142040",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8175144",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14625709",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8142468",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8888",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8762919",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14625981",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14624641",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9249721",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8478000",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8461563",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9293874",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9293871",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8474010",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8478164",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:9255338",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:10840420",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8168944",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:11273693",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:980336",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14626639",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:10511215",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8666743",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:13239139",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:11387256",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8169214",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:394945",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14617433",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14573413",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14625521",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:1047655",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:2270622",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:10519441",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:10555538",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8178139",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8170090",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8143751",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8178155",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8170123",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:8143759",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:14625955",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:15244480",
+   "workId": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:15244481",
+   "workId": "OL27479W",
+   "title": "The Two Towers",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:15244483",
+   "workId": "OL27455W",
+   "title": "The Return of the King",
+   "author": "J.R.R. Tolkien"
+  },
+  {
+   "id": "ol:3217344",
+   "workId": "OL1281495W",
+   "title": "Antoine de Saint-Exupéry",
+   "author": "Luc Estang"
+  },
+  {
+   "id": "ol:3217345",
+   "workId": "OL4566200W",
+   "title": "Hans Christian Andersen",
+   "author": "Erling Nielsen"
+  },
+  {
+   "id": "ol:13083653",
+   "workId": "OL8985549W",
+   "title": "Robert Schumann",
+   "author": "André Boucourechliev"
+  },
+  {
+   "id": "ol:1014890",
+   "workId": "OL9072180W",
+   "title": "Friedrich Schiller",
+   "author": "Friedrich Burschell"
+  },
+  {
+   "id": "ol:10720911",
+   "workId": "OL24241871W",
+   "title": "Marcel Proust",
+   "author": "Claude Mauriac"
+  },
+  {
+   "id": "ol:2210530",
+   "workId": "OL1348361W",
+   "title": "Richard Wagner",
+   "author": "Hans Mayer"
+  },
+  {
+   "id": "ol:14434325",
+   "workId": "OL3685569W",
+   "title": "Kurt Tucholsky",
+   "author": "Klaus-Peter Schulz"
+  },
+  {
+   "id": "ol:1014892",
+   "workId": "OL5071613W",
+   "title": "Bertolt Brecht",
+   "author": "Marianne Kesting"
+  },
+  {
+   "id": "ol:11720808",
+   "workId": "OL6645192W",
+   "title": "Stefan George",
+   "author": "Franz Schonauer"
+  },
+  {
+   "id": "ol:10358550",
+   "workId": "OL21271010W",
+   "title": "Mohammed",
+   "author": "Émile Dermenghem"
+  },
+  {
+   "id": "ol:3217346",
+   "workId": "OL10043296W",
+   "title": "George Bernard Shaw",
+   "author": "Hermann Stresau"
+  },
+  {
+   "id": "ol:1014894",
+   "workId": "OL9072181W",
+   "title": "Aristoteles",
+   "author": "Jean-Marie Zemb"
+  },
+  {
+   "id": "ol:10721006",
+   "workId": "OL24241955W",
+   "title": "Arthur Rimbaud",
+   "author": "Yves Bonnefoy"
+  },
+  {
+   "id": "ol:10620268",
+   "workId": "OL24190935W",
+   "title": "Karl Marx",
+   "author": "Werner Blumenberg"
+  },
+  {
+   "id": "ol:10527470",
+   "workId": "OL6186311W",
+   "title": "Rudolf Steiner",
+   "author": "Johannes Hemleben"
+  },
+  {
+   "id": "ol:12576519",
+   "workId": "OL167680W",
+   "title": "Robert Musil",
+   "author": "Wilfried Berghahn"
+  },
+  {
+   "id": "ol:14430499",
+   "workId": "OL2456599W",
+   "title": "Jean-Paul Sartre",
+   "author": "Walter Biemel"
+  },
+  {
+   "id": "ol:3217347",
+   "workId": "OL6741516W",
+   "title": "André Gide",
+   "author": "Claude Martin"
+  },
+  {
+   "id": "ol:3217348",
+   "workId": "OL10043300W",
+   "title": "Claude Debussy",
+   "author": "Jean Barraqué"
+  },
+  {
+   "id": "ol:3217349",
+   "workId": "OL864723W",
+   "title": "Christian Morgenstern",
+   "author": "Martin Beheim-Schwarzbach"
+  },
+  {
+   "id": "ol:1014899",
+   "workId": "OL1460303W",
+   "title": "Martin Luther",
+   "author": "Hanns Lilje"
+  },
+  {
+   "id": "ol:1014900",
+   "workId": "OL6501341W",
+   "title": "Johann Wolfgang von Goethe",
+   "author": "Peter Boerner"
+  },
+  {
+   "id": "ol:10652792",
+   "workId": "OL7177133W",
+   "title": "Immanuel Kant",
+   "author": "Uwe Schultz"
+  },
+  {
+   "id": "ol:13154515",
+   "workId": "OL5071183W",
+   "title": "Marquis de Sade",
+   "author": "Walter Lennig"
+  },
+  {
+   "id": "ol:2210533",
+   "workId": "OL19443388W",
+   "title": "E. T. A. Hoffmann",
+   "author": "Gabrielle Wittkop-Ménardeau"
+  },
+  {
+   "id": "ol:13158298",
+   "workId": "OL34307384W",
+   "title": "Paul Cézanne",
+   "author": "Kurt Leonhard"
+  },
+  {
+   "id": "ol:14656928",
+   "workId": "OL7257338W",
+   "title": "Erich Kästner",
+   "author": "Luiselotte Enderle"
+  },
+  {
+   "id": "ol:15244723",
+   "workId": "OL193517W",
+   "title": "Michelangelo",
+   "author": "Heinrich Koch"
+  },
+  {
+   "id": "ol:3217350",
+   "workId": "OL1434324W",
+   "title": "Hugo von Hofmannsthal",
+   "author": "Werner Volke"
+  },
+  {
+   "id": "ol:12510247",
+   "workId": "OL1434324W",
+   "title": "Johann Nestroy",
+   "author": "Otto Basil"
+  },
+  {
+   "id": "ol:10671145",
+   "workId": "OL10106733W",
+   "title": "Arthur Schopenhauer",
+   "author": "Walter Abendroth"
+  },
+  {
+   "id": "ol:1014909",
+   "workId": "OL6494403W",
+   "title": "Julius Caesar",
+   "author": "Hans Oppermann"
+  },
+  {
+   "id": "ol:1014910",
+   "workId": "OL6186293W",
+   "title": "Charles Darwin",
+   "author": "Johannes Hemleben"
+  },
+  {
+   "id": "ol:10842719",
+   "workId": "OL5924573W",
+   "title": "Mao Tse-tung",
+   "author": "Tilemann Grimm"
+  },
+  {
+   "id": "ol:10620648",
+   "workId": "OL1359569W",
+   "title": "Friedrich Engels",
+   "author": "Helmut Hirsch"
+  },
+  {
+   "id": "ol:3217353",
+   "workId": "OL969858W",
+   "title": "Max Ernst",
+   "author": "Lothar Fischer"
+  },
+  {
+   "id": "ol:13158301",
+   "workId": "OL34307386W",
+   "title": "Leonardo da Vinci",
+   "author": "Kenneth Clark"
+  },
+  {
+   "id": "ol:3217354",
+   "workId": "OL10043302W",
+   "title": "Jacques Offenbach",
+   "author": "P. Walter Jacob"
+  },
+  {
+   "id": "ol:10527266",
+   "workId": "OL1455585W",
+   "title": "Leo Trotzki",
+   "author": "Harry Wilde"
+  },
+  {
+   "id": "ol:3217356",
+   "workId": "OL1359570W",
+   "title": "Rosa Luxemburg",
+   "author": "Helmut Hirsch"
+  },
+  {
+   "id": "ol:8392792",
+   "workId": "OL19077010W",
+   "title": "Friedrich Hebbel",
+   "author": "Hayo Matthiesen"
+  },
+  {
+   "id": "ol:1014914",
+   "workId": "OL3131470W",
+   "title": "Albert Einstein",
+   "author": "Johannes Wickert"
+  },
+  {
+   "id": "ol:2210539",
+   "workId": "OL5509814W",
+   "title": "Wilhelm Busch",
+   "author": "Joseph Kraus"
+  },
+  {
+   "id": "ol:10831575",
+   "workId": "OL9072195W",
+   "title": "Karl Jaspers",
+   "author": "Hans Saner"
+  },
+  {
+   "id": "ol:8392793",
+   "workId": "OL3160106W",
+   "title": "Voltaire",
+   "author": "Georg Holmsten"
+  },
+  {
+   "id": "ol:10717392",
+   "workId": "OL1385645W",
+   "title": "Karl Barth",
+   "author": "Karl Kupisch"
+  },
+  {
+   "id": "ol:1014916",
+   "workId": "OL6543607W",
+   "title": "Gustav Mahler",
+   "author": "Wolfgang Schreiber"
+  },
+  {
+   "id": "ol:14363493",
+   "workId": "OL11219159W",
+   "title": "Franz Liszt",
+   "author": "Everett Helm"
+  },
+  {
+   "id": "ol:2210541",
+   "workId": "OL5021330W",
+   "title": "Theodor Storm",
+   "author": "Hartmut Vinçon"
+  },
+  {
+   "id": "ol:1014917",
+   "workId": "OL5146336W",
+   "title": "Anton Bruckner",
+   "author": "Karl Grebe"
+  },
+  {
+   "id": "ol:2210543",
+   "workId": "OL3160101W",
+   "title": "Jean-Jacques Rousseau",
+   "author": "Georg Holmsten"
+  },
+  {
+   "id": "ol:11590444",
+   "workId": "OL4683162W",
+   "title": "Arnold Schönberg",
+   "author": "Eberhard Freitag"
+  },
+  {
+   "id": "ol:10295791",
+   "workId": "OL2412572W",
+   "title": "Alexander der Große",
+   "author": "Gerhard Wirth"
+  },
+  {
+   "id": "ol:2210545",
+   "workId": "OL7234594W",
+   "title": "Pablo Picasso",
+   "author": "Wilfried Wiegand"
+  },
+  {
+   "id": "ol:2210546",
+   "workId": "OL7067924W",
+   "title": "Che Guevara",
+   "author": "Elmar May"
+  },
+  {
+   "id": "ol:1014919",
+   "workId": "OL5204751W",
+   "title": "Max Weber",
+   "author": "Hans Norbert Fügen"
+  },
+  {
+   "id": "ol:10242122",
+   "workId": "OL4194479W",
+   "title": "Michail A. Bakunin",
+   "author": "Justus Franz Wittkop"
+  },
+  {
+   "id": "ol:8392799",
+   "workId": "OL1285153W",
+   "title": "Antonín Dvořák",
+   "author": "Kurt Honolka"
+  },
+  {
+   "id": "ol:2210548",
+   "workId": "OL5069987W",
+   "title": "Friedrich II. von Hohenstaufen",
+   "author": "Herbert Nette"
+  },
+  {
+   "id": "ol:1014920",
+   "workId": "OL1364633W",
+   "title": "Josef W. Stalin",
+   "author": "Maximilien Rubel"
+  },
+  {
+   "id": "ol:2210549",
+   "workId": "OL6266711W",
+   "title": "Walt Disney",
+   "author": "Reinhold Reitberger"
+  },
+  {
+   "id": "ol:7065806",
+   "workId": "OL5784690W",
+   "title": "Ernst Thälmann",
+   "author": "Hannes Heer"
+  },
+  {
+   "id": "ol:2210550",
+   "workId": "OL637669W",
+   "title": "Ödön von Horváth",
+   "author": "Dieter Hildebrandt"
+  },
+  {
+   "id": "ol:1014922",
+   "workId": "OL1350931W",
+   "title": "Willy Brandt",
+   "author": "Carola Stern"
+  },
+  {
+   "id": "ol:8392801",
+   "workId": "OL6884764W",
+   "title": "Konrad Adenauer",
+   "author": "Gösta von Uexküll"
+  },
+  {
+   "id": "ol:12619016",
+   "workId": "OL27290558W",
+   "title": "Arthur Schnitzler",
+   "author": "Hartmut Scheible"
+  },
+  {
+   "id": "ol:2210554",
+   "workId": "OL3749929W",
+   "title": "Dietrich Bonhoeffer",
+   "author": "Eberhard Bethge"
+  },
+  {
+   "id": "ol:2210555",
+   "workId": "OL4697161W",
+   "title": "Hieronymus Bosch",
+   "author": "Heinrich Goertz"
+  },
+  {
+   "id": "ol:8678514",
+   "workId": "OL4122449W",
+   "title": "Conrad Ferdinand Meyer",
+   "author": "David A. Jackson"
+  },
+  {
+   "id": "ol:10541992",
+   "workId": "OL5527838W",
+   "title": "Werner Heisenberg",
+   "author": "Armin Hermann"
+  },
+  {
+   "id": "ol:2210558",
+   "workId": "OL2054394W",
+   "title": "Le Corbusier",
+   "author": "Norbert Huse"
+  },
+  {
+   "id": "ol:2210559",
+   "workId": "OL5069988W",
+   "title": "Jeanne d’Arc",
+   "author": "Herbert Nette"
+  },
+  {
+   "id": "ol:1014924",
+   "workId": "OL5242362W",
+   "title": "Carl Zuckmayer",
+   "author": "Thomas Ayck"
+  },
+  {
+   "id": "ol:15249729",
+   "workId": "OL6480643W",
+   "title": "Ernst Bloch",
+   "author": "Silvia Markun"
+  },
+  {
+   "id": "ol:1014926",
+   "workId": "OL1656858W",
+   "title": "Marcus Tullius Cicero",
+   "author": "Marion Giebel"
+  },
+  {
+   "id": "ol:1014927",
+   "workId": "OL6497229W",
+   "title": "Wilhelm II.",
+   "author": "Friedrich Hartau"
+  },
+  {
+   "id": "ol:15244372",
+   "workId": "OL1235497W",
+   "title": "Johann Jacob Christoph von Grimmelshausen",
+   "author": "Curt Hohoff"
+  },
+  {
+   "id": "ol:10585133",
+   "workId": "OL6638196W",
+   "title": "Ludwig Feuerbach",
+   "author": "Hans-Martin Sass"
+  },
+  {
+   "id": "ol:1014928",
+   "workId": "OL4835291W",
+   "title": "Homer",
+   "author": "Herbert Bannert"
+  },
+  {
+   "id": "ol:15161662",
+   "workId": "OL4145328W",
+   "title": "Ludwig Wittgenstein",
+   "author": "Kurt Wuchterl"
+  },
+  {
+   "id": "ol:15176103",
+   "workId": "OL6387070W",
+   "title": "Alexander S. Puschkin",
+   "author": "Gudrun Ziegler"
+  },
+  {
+   "id": "ol:1014929",
+   "workId": "OL2852197W",
+   "title": "Bertrand Russell",
+   "author": "Ernst R. Sandvoss"
+  },
+  {
+   "id": "ol:1014931",
+   "workId": "OL6415332W",
+   "title": "Else Lasker-Schüler",
+   "author": "Erika Klüsener"
+  },
+  {
+   "id": "ol:10990472",
+   "workId": "OL3167386W",
+   "title": "Maria Theresia",
+   "author": "Peter Berglar"
+  },
+  {
+   "id": "ol:1014932",
+   "workId": "OL1656860W",
+   "title": "Sappho",
+   "author": "Marion Giebel"
+  },
+  {
+   "id": "ol:14637702",
+   "workId": "OL5149779W",
+   "title": "Käthe Kollwitz",
+   "author": "Catherine Krahmer"
+  },
+  {
+   "id": "ol:2210561",
+   "workId": "OL1638082W",
+   "title": "Lord Byron",
+   "author": "Hartmut Müller"
+  },
+  {
+   "id": "ol:8392808",
+   "workId": "OL3986770W",
+   "title": "William Faulkner",
+   "author": "Peter Nicolaisen"
+  },
+  {
+   "id": "ol:2210563",
+   "workId": "OL1716601W",
+   "title": "Joseph Roth",
+   "author": "Helmuth Nürnberger"
+  },
+  {
+   "id": "ol:3217358",
+   "workId": "OL9018806W",
+   "title": "Thomas Alva Edison",
+   "author": "Fritz Vögtle"
+  },
+  {
+   "id": "ol:2210566",
+   "workId": "OL3587230W",
+   "title": "Heinrich Böll",
+   "author": "Klaus Schröter"
+  },
+  {
+   "id": "ol:1014934",
+   "workId": "OL5069986W",
+   "title": "Elisabeth I.",
+   "author": "Herbert Nette"
+  },
+  {
+   "id": "ol:10498197",
+   "workId": "OL9056173W",
+   "title": "Ernst Toller",
+   "author": "Wolfgang Rothe"
+  },
+  {
+   "id": "ol:2210567",
+   "workId": "OL853633W",
+   "title": "Adolf Hitler",
+   "author": "Harald Steffahn"
+  },
+  {
+   "id": "ol:14474694",
+   "workId": "OL19021365W",
+   "title": "Paula Modersohn-Becker",
+   "author": "Liselotte von Reinken"
+  },
+  {
+   "id": "ol:14422957",
+   "workId": "OL6089550W",
+   "title": "Erich Fromm",
+   "author": "Rainer Funk"
+  },
+  {
+   "id": "ol:8392810",
+   "workId": "OL4899621W",
+   "title": "Giacomo Puccini",
+   "author": "Clemens Höslinger"
+  },
+  {
+   "id": "ol:3217359",
+   "workId": "OL7018241W",
+   "title": "Vladimir Nabokov",
+   "author": "Donald E. Morton"
+  },
+  {
+   "id": "ol:8392811",
+   "workId": "OL4934651W",
+   "title": "Thomas Morus",
+   "author": "Hans Peter Heinrich"
+  },
+  {
+   "id": "ol:1014935",
+   "workId": "OL754852W",
+   "title": "Klaus Mann",
+   "author": "Uwe Naumann"
+  },
+  {
+   "id": "ol:3217360",
+   "workId": "OL578081W",
+   "title": "Martin Luther King, jr.",
+   "author": "Gerd Presler"
+  },
+  {
+   "id": "ol:2210569",
+   "workId": "OL3819127W",
+   "title": "Lion Feuchtwanger",
+   "author": "Reinhold Jaretzky"
+  },
+  {
+   "id": "ol:2210570",
+   "workId": "OL5149781W",
+   "title": "Ernst Barlach",
+   "author": "Catherine Krahmer"
+  },
+  {
+   "id": "ol:8392813",
+   "workId": "OL882777W",
+   "title": "Anna Freud",
+   "author": "Wilhelm Salber"
+  },
+  {
+   "id": "ol:3217361",
+   "workId": "OL3069462W",
+   "title": "Dschingis Khan",
+   "author": "Reinhold Neumann-Hoditz"
+  },
+  {
+   "id": "ol:2210572",
+   "workId": "OL2902735W",
+   "title": "Kemal Atatürk",
+   "author": "Bernd Rill"
+  },
+  {
+   "id": "ol:2210573",
+   "workId": "OL4343955W",
+   "title": "Nikolaus Kopernikus",
+   "author": "Jochen Kirchhoff"
+  },
+  {
+   "id": "ol:2210574",
+   "workId": "OL2580222W",
+   "title": "Rudi Dutschke",
+   "author": "Jürgen Miermeister"
+  },
+  {
+   "id": "ol:3217362",
+   "workId": "OL10043311W",
+   "title": "Amenophis IV. Echnaton",
+   "author": "Hermann A. Schlögl"
+  },
+  {
+   "id": "ol:15251288",
+   "workId": "OL2238386W",
+   "title": "Edvard Munch",
+   "author": "Matthias Arnold"
+  },
+  {
+   "id": "ol:3217363",
+   "workId": "OL10043315W",
+   "title": "Ludwig XIV.",
+   "author": "Bernd-Rüdiger Schwesig"
+  },
+  {
+   "id": "ol:3217364",
+   "workId": "OL1656865W",
+   "title": "Vergil",
+   "author": "Marion Giebel"
+  },
+  {
+   "id": "ol:3217365",
+   "workId": "OL37401669W",
+   "title": "Henry D. Thoreau",
+   "author": "Hans-Dieter Klumpjan"
+  },
+  {
+   "id": "ol:2210575",
+   "workId": "OL3132724W",
+   "title": "David Hume",
+   "author": "Gerhard Streminger"
+  },
+  {
+   "id": "ol:3217366",
+   "workId": "OL10043316W",
+   "title": "Jules Verne",
+   "author": "Volker Dehs"
+  },
+  {
+   "id": "ol:3217367",
+   "workId": "OL10043318W",
+   "title": "Janusz Korczak",
+   "author": "Wolfgang Pelzer"
+  },
+  {
+   "id": "ol:2210577",
+   "workId": "OL4729249W",
+   "title": "Ingmar Bergman",
+   "author": "Eckhard Weise"
+  },
+  {
+   "id": "ol:2210579",
+   "workId": "OL2076193W",
+   "title": "Astrid Lindgren",
+   "author": "Sybil Gräfin Schönfeldt"
+  },
+  {
+   "id": "ol:2210580",
+   "workId": "OL2584047W",
+   "title": "Meister Eckhart",
+   "author": "Gerhard Wehr"
+  },
+  {
+   "id": "ol:8392818",
+   "workId": "OL3100931W",
+   "title": "August Strindberg",
+   "author": "Peter Schütze"
+  },
+  {
+   "id": "ol:10527261",
+   "workId": "OL1850488W",
+   "title": "Rahel Levin Varnhagen",
+   "author": "Heidi Thomann Tewarson"
+  },
+  {
+   "id": "ol:1014940",
+   "workId": "OL1638084W",
+   "title": "Stefan Zweig",
+   "author": "Hartmut Müller"
+  },
+  {
+   "id": "ol:2210584",
+   "workId": "OL4848500W",
+   "title": "Marie Curie",
+   "author": "Peter Ksoll"
+  },
+  {
+   "id": "ol:3217374",
+   "workId": "OL3132721W",
+   "title": "Adam Smith",
+   "author": "Gerhard Streminger"
+  },
+  {
+   "id": "ol:2210592",
+   "workId": "OL853640W",
+   "title": "Helmut Schmidt",
+   "author": "Harald Steffahn"
+  },
+  {
+   "id": "ol:2210597",
+   "workId": "OL3397233W",
+   "title": "Federico Fellini",
+   "author": "Michael Töteberg"
+  },
+  {
+   "id": "ol:8392823",
+   "workId": "OL19077011W",
+   "title": "Die Schwestern Brontë",
+   "author": "Werner Waldmann"
+  },
+  {
+   "id": "ol:2210603",
+   "workId": "OL4044032W",
+   "title": "Lou Andreas-Salomé",
+   "author": "Linde Salber"
+  },
+  {
    "id": "ol:8827692",
    "workId": "OL20180138W",
    "title": "SCHWERE WELTEN",
@@ -21077,10 +23925,1714 @@
    "workId": "OL24308617W",
    "title": "Winter in Afghanistan",
    "author": "Oleg Ermakov"
+  },
+  {
+   "id": "ol:15259654",
+   "workId": "OL482894W",
+   "title": "Die Brücke von San Luis Rey",
+   "author": "Thornton Wilder"
+  },
+  {
+   "id": "ol:15259622",
+   "workId": "OL1140126W",
+   "title": "Die Frauen des Hauses Wu",
+   "author": "Pearl S. Buck"
+  },
+  {
+   "id": "ol:15259623",
+   "workId": "OL498782W",
+   "title": "Das Urteil",
+   "author": "Franz Kafka"
+  },
+  {
+   "id": "ol:15259625",
+   "workId": "OL28423W",
+   "title": "Phantastische Nacht",
+   "author": "Stefan Zweig"
+  },
+  {
+   "id": "ol:13011655",
+   "workId": "OL14867028W",
+   "title": "Der Tod in Venedig",
+   "author": "Thomas Mann"
+  },
+  {
+   "id": "ol:15259655",
+   "workId": "OL630998W",
+   "title": "Isabelle",
+   "author": "André Gide"
+  },
+  {
+   "id": "ol:15259656",
+   "workId": "OL4358788W",
+   "title": "Der Richter",
+   "author": "Charles Morgan"
+  },
+  {
+   "id": "ol:15259657",
+   "workId": "OL31322283W",
+   "title": "Südkurier",
+   "author": "Antoine de Saint-Exupéry"
+  },
+  {
+   "id": "ol:15259626",
+   "workId": "OL10267W",
+   "title": "Nachtflug",
+   "author": "Antoine de Saint-Exupéry"
+  },
+  {
+   "id": "ol:15259658",
+   "workId": "OL1460172W",
+   "title": "Der tolle Bomberg",
+   "author": "Josef Winckler"
+  },
+  {
+   "id": "ol:15259659",
+   "workId": "OL46028954W",
+   "title": "Tot oder lebendig",
+   "author": "Mark Twain"
+  },
+  {
+   "id": "ol:15259627",
+   "workId": "OL10486708W",
+   "title": "Schlussball",
+   "author": "Gerd Gaiser"
+  },
+  {
+   "id": "ol:15259660",
+   "workId": "OL18502698W",
+   "title": "Harter blauer Himmel",
+   "author": "Shirley Ann Grau"
+  },
+  {
+   "id": "ol:15259661",
+   "workId": "OL1442121W",
+   "title": "Rock Wagram",
+   "author": "William Saroyan"
+  },
+  {
+   "id": "ol:15259662",
+   "workId": "OL1184857W",
+   "title": "Eifersucht",
+   "author": "Colette"
+  },
+  {
+   "id": "ol:10598801",
+   "workId": "OL24176915W",
+   "title": "Rumänisches Tagebuch",
+   "author": "Carossa, Hans"
+  },
+  {
+   "id": "ol:15259628",
+   "workId": "OL86320W",
+   "title": "Dublin",
+   "author": "James Joyce"
+  },
+  {
+   "id": "ol:15259663",
+   "workId": "OL82923W",
+   "title": "Der Strom",
+   "author": "William Faulkner"
+  },
+  {
+   "id": "ol:15259629",
+   "workId": "OL33836983W",
+   "title": "Russische Gespenstergeschichten",
+   "author": "Johannes von Guenther"
+  },
+  {
+   "id": "ol:15259664",
+   "workId": "OL36595W",
+   "title": "Das Alibi",
+   "author": "Daphne du Maurier"
+  },
+  {
+   "id": "ol:12722913",
+   "workId": "OL873100W",
+   "title": "Narziss und Goldmund",
+   "author": "Hermann Hesse"
+  },
+  {
+   "id": "ol:14548849",
+   "workId": "OL1696158W",
+   "title": "Das Ruhekissen",
+   "author": "Christiane Rochefort"
+  },
+  {
+   "id": "ol:15259665",
+   "workId": "OL754964W",
+   "title": "Illusionen",
+   "author": "Ruth Rehmann"
+  },
+  {
+   "id": "ol:15259666",
+   "workId": "OL46028957W",
+   "title": "Russische Kriminalgeschichten",
+   "author": "Johannes von Guenther"
+  },
+  {
+   "id": "ol:15259668",
+   "workId": "OL1253052W",
+   "title": "Die Hafenorgel",
+   "author": "Leip, Hans"
+  },
+  {
+   "id": "ol:15259667",
+   "workId": "OL1417688W",
+   "title": "Ein Tag zuviel",
+   "author": "Alain Robbe-Grillet"
+  },
+  {
+   "id": "ol:15259669",
+   "workId": "OL455327W",
+   "title": "Herr der Fliegen",
+   "author": "William Golding"
+  },
+  {
+   "id": "ol:15259630",
+   "workId": "OL11311774W",
+   "title": "Sanfter Schrecken",
+   "author": "Stanley Ellin"
+  },
+  {
+   "id": "ol:15259670",
+   "workId": "OL16235618W",
+   "title": "Unter fremden Menschen",
+   "author": "Максим Горький"
+  },
+  {
+   "id": "ol:15259631",
+   "workId": "OL86316W",
+   "title": "Stephen Daedalus",
+   "author": "James Joyce"
+  },
+  {
+   "id": "ol:15259671",
+   "workId": "OL1437964W",
+   "title": "Die Egoisten",
+   "author": "Tecchi, Bonaventura"
+  },
+  {
+   "id": "ol:15259632",
+   "workId": "OL31561693W",
+   "title": "Der Sonntagslügner",
+   "author": "Josef Martin Bauer"
+  },
+  {
+   "id": "ol:15259672",
+   "workId": "OL46028960W",
+   "title": "Geschichten am Sabbat",
+   "author": "Isaac Leib Peretz"
+  },
+  {
+   "id": "ol:15259673",
+   "workId": "OL44087602W",
+   "title": "Russische Liebesgeschichten",
+   "author": "Johannes von Guenther"
+  },
+  {
+   "id": "ol:15259674",
+   "workId": "OL8443884W",
+   "title": "Bittere Ernte",
+   "author": "Hermann Field"
+  },
+  {
+   "id": "ol:15259675",
+   "workId": "OL11961824W",
+   "title": "Der brennende Wind",
+   "author": "Benaya, M. (Margaret)"
+  },
+  {
+   "id": "ol:12722659",
+   "workId": "OL27718382W",
+   "title": "Französische Gespenstergeschichten",
+   "author": "Hans Rauschning"
+  },
+  {
+   "id": "ol:15259676",
+   "workId": "OL7494635W",
+   "title": "Perdita",
+   "author": "Isabel Hamer"
+  },
+  {
+   "id": "ol:15259633",
+   "workId": "OL873082W",
+   "title": "Märchen",
+   "author": "Hermann Hesse"
+  },
+  {
+   "id": "ol:15259677",
+   "workId": "OL85528W",
+   "title": "Mein Franz von Assisi",
+   "author": "Nikos Kazantzakis"
+  },
+  {
+   "id": "ol:15259678",
+   "workId": "OL1401583W",
+   "title": "Tewje der Milchmann",
+   "author": "Sholem Aleichem"
+  },
+  {
+   "id": "ol:15259634",
+   "workId": "OL12543539W",
+   "title": "Ein Testament",
+   "author": "Joachim Maass"
+  },
+  {
+   "id": "ol:15259679",
+   "workId": "OL82918W",
+   "title": "Das verworfene Erbe",
+   "author": "William Faulkner"
+  },
+  {
+   "id": "ol:15259681",
+   "workId": "OL46028964W",
+   "title": "Grüner Siegellack",
+   "author": "Colette"
+  },
+  {
+   "id": "ol:15259635",
+   "workId": "OL13415972W",
+   "title": "Man sollte dagegen sein",
+   "author": "W. Schnurre"
+  },
+  {
+   "id": "ol:15259680",
+   "workId": "OL1171763W",
+   "title": "Das Lamm",
+   "author": "François Mauriac"
+  },
+  {
+   "id": "ol:15259636",
+   "workId": "OL39349W",
+   "title": "Mrs. Dalloway",
+   "author": "Virginia Woolf"
+  },
+  {
+   "id": "ol:15259682",
+   "workId": "OL1390601W",
+   "title": "Belarmino und Apolonio",
+   "author": "Ramón Pérez de Ayala"
+  },
+  {
+   "id": "ol:15259637",
+   "workId": "OL13416023W",
+   "title": "Korporal Mombour und andere Erzählungen",
+   "author": "E. Penzoldt"
+  },
+  {
+   "id": "ol:15259638",
+   "workId": "OL14866651W",
+   "title": "Bekenntnisse des Hochstaplers Felix Krull",
+   "author": "Thomas Mann"
+  },
+  {
+   "id": "ol:15259683",
+   "workId": "OL1257206W",
+   "title": "Das Halsband der Königin",
+   "author": "Alexander Lernet-Holenia"
+  },
+  {
+   "id": "ol:15259684",
+   "workId": "OL2234946W",
+   "title": "Die neun Schneider",
+   "author": "Dorothy L. Sayers"
+  },
+  {
+   "id": "ol:15259685",
+   "workId": "OL11948082W",
+   "title": "Die andere Esther",
+   "author": "Magda Szabó"
+  },
+  {
+   "id": "ol:15259686",
+   "workId": "OL1217968W",
+   "title": "Die grossen Tage",
+   "author": "John Dos Passos"
+  },
+  {
+   "id": "ol:15259639",
+   "workId": "OL10291144W",
+   "title": "Tage der Schlehen",
+   "author": "H. Stahl"
+  },
+  {
+   "id": "ol:15259687",
+   "workId": "OL3337589W",
+   "title": "Shaw und Mollissima",
+   "author": "Peter Tompkins"
+  },
+  {
+   "id": "ol:15259640",
+   "workId": "OL868199W",
+   "title": "Engele von Loewen und andere Erzählungen",
+   "author": "Carl Zuckmayer"
+  },
+  {
+   "id": "ol:15259642",
+   "workId": "OL13415977W",
+   "title": "Hochzeit zwischen Himmel und Hölle",
+   "author": "R. Kassner"
+  },
+  {
+   "id": "ol:15259688",
+   "workId": "OL14999459W",
+   "title": "Briefe",
+   "author": "Marquis de Sade"
+  },
+  {
+   "id": "ol:15259689",
+   "workId": "OL2900597W",
+   "title": "São Bernardo",
+   "author": "Graciliano Ramos de Oliveira"
+  },
+  {
+   "id": "ol:15259691",
+   "workId": "OL6879905W",
+   "title": "Elfenbein für Felicitas",
+   "author": "Kurt Heuser"
+  },
+  {
+   "id": "ol:15259692",
+   "workId": "OL46028968W",
+   "title": "Heitere Geschichten aus Russland",
+   "author": "Johannes von Guenther"
+  },
+  {
+   "id": "ol:15259643",
+   "workId": "OL1222565W",
+   "title": "Jaquemars schwierige Jugend",
+   "author": "Joachim Maass"
+  },
+  {
+   "id": "ol:15259644",
+   "workId": "OL11022436W",
+   "title": "Perrudja",
+   "author": "Hans Henny Jahnn"
+  },
+  {
+   "id": "ol:15259645",
+   "workId": "OL1268090W",
+   "title": "Zwei Schwestern",
+   "author": "Friedrich Georg Jünger"
+  },
+  {
+   "id": "ol:15259693",
+   "workId": "OL6766918W",
+   "title": "Noella",
+   "author": "Elisabeth Castonier"
+  },
+  {
+   "id": "ol:15259694",
+   "workId": "OL794064W",
+   "title": "Die grässliche Bescherung in der Via Merulana",
+   "author": "Carlo Emilio Gadda"
+  },
+  {
+   "id": "ol:15259695",
+   "workId": "OL1450495W",
+   "title": "Geliebte Söhne",
+   "author": "Howard Spring"
+  },
+  {
+   "id": "ol:15259646",
+   "workId": "OL43169522W",
+   "title": "Das Geschäft des Lebens",
+   "author": "Saul Bellow"
+  },
+  {
+   "id": "ol:15259696",
+   "workId": "OL46028972W",
+   "title": "Die Nacht der treibenden Feuer",
+   "author": "Augusto Antonio Roa Bastos"
+  },
+  {
+   "id": "ol:15259697",
+   "workId": "OL1454231W",
+   "title": "Lebenslauf eines dicken Mannes, der Hamlet hieß",
+   "author": "Georg Britting"
+  },
+  {
+   "id": "ol:15259698",
+   "workId": "OL1390607W",
+   "title": "Tiger Juan",
+   "author": "Ramón Pérez de Ayala"
+  },
+  {
+   "id": "ol:15259647",
+   "workId": "OL19767246W",
+   "title": "Tauben im Gras",
+   "author": "Wolfgang Koeppen"
+  },
+  {
+   "id": "ol:14305213",
+   "workId": "OL682096W",
+   "title": "Paris – Passage de Milan",
+   "author": "Michel Butor"
+  },
+  {
+   "id": "ol:15259699",
+   "workId": "OL1175172W",
+   "title": "Der Einzelgänger",
+   "author": "Seán Ó Faoláin"
+  },
+  {
+   "id": "ol:15259648",
+   "workId": "OL1414424W",
+   "title": "Engelsbrücke",
+   "author": "Marie Luise Kaschnitz"
+  },
+  {
+   "id": "ol:15259700",
+   "workId": "OL136820W",
+   "title": "Die Gärten der Finzi-Contini",
+   "author": "Giorgio Bassani"
+  },
+  {
+   "id": "ol:15259649",
+   "workId": "OL1245529W",
+   "title": "Eugénie oder Die Bürgerzeit",
+   "author": "Heinrich Mann"
+  },
+  {
+   "id": "ol:15204615",
+   "workId": "OL6766913W",
+   "title": "Das vergessene Cottage",
+   "author": "Elisabeth Castonier"
+  },
+  {
+   "id": "ol:15259650",
+   "workId": "OL463709W",
+   "title": "Hasenherz",
+   "author": "John Updike"
+  },
+  {
+   "id": "ol:15259651",
+   "workId": "OL872724W",
+   "title": "Das Glasperlenspiel",
+   "author": "Hermann Hesse"
+  },
+  {
+   "id": "ol:15259652",
+   "workId": "OL6753865W",
+   "title": "Teddy Flesh oder die Belagerung von Sagunt",
+   "author": "Nonnenmann, Klaus"
+  },
+  {
+   "id": "ol:15259701",
+   "workId": "OL2564737W",
+   "title": "Schlachtbeschreibung",
+   "author": "Alexander Kluge"
+  },
+  {
+   "id": "ol:15259703",
+   "workId": "OL46028974W",
+   "title": "Lachen ist unfein",
+   "author": "Art Buchwald"
+  },
+  {
+   "id": "ol:15034167",
+   "workId": "OL35362204W",
+   "title": "Parodien und Post Scripta",
+   "author": "F Torberg"
+  },
+  {
+   "id": "ol:15259807",
+   "workId": "OL6763838W",
+   "title": "Der Tag der nicht im Kalender stand",
+   "author": "Peter Motram"
+  },
+  {
+   "id": "ol:15259808",
+   "workId": "OL85892W",
+   "title": "Dracula",
+   "author": "Bram Stoker"
+  },
+  {
+   "id": "ol:15259806",
+   "workId": "OL34307021W",
+   "title": "Jeder Dämon hat seinen Preis",
+   "author": ""
+  },
+  {
+   "id": "ol:15259809",
+   "workId": "OL31386661W",
+   "title": "Eden",
+   "author": ""
+  },
+  {
+   "id": "ol:15259811",
+   "workId": "OL14956485W",
+   "title": "Im Haus des Grafen Dracula",
+   "author": "Bram Stoker"
+  },
+  {
+   "id": "ol:15259810",
+   "workId": "OL46029137W",
+   "title": "Die Dame in Grün",
+   "author": "Boutet, Frédéric"
+  },
+  {
+   "id": "ol:15259813",
+   "workId": "OL46029135W",
+   "title": "Luzifer läßt grüßen",
+   "author": "Peter Haining"
+  },
+  {
+   "id": "ol:15259812",
+   "workId": "OL33875311W",
+   "title": "Das Wachsfigurenkabinett",
+   "author": ""
+  },
+  {
+   "id": "ol:15259814",
+   "workId": "OL46029136W",
+   "title": "Die Fliege",
+   "author": "George Langelaan"
+  },
+  {
+   "id": "ol:15259815",
+   "workId": "OL854383W",
+   "title": "Der gewöhnliche Schrecken",
+   "author": "Peter Handke"
+  },
+  {
+   "id": "ol:15259816",
+   "workId": "OL450063W",
+   "title": "Frankenstein oder Der neue Prometheus",
+   "author": "Mary Shelley"
+  },
+  {
+   "id": "ol:15259817",
+   "workId": "OL11482934W",
+   "title": "Zwischen neun und neun",
+   "author": "Leo Perutz"
+  },
+  {
+   "id": "ol:15259819",
+   "workId": "OL9186348W",
+   "title": "Ich, Rodolfo, Magier",
+   "author": "Otto F. Beer"
+  },
+  {
+   "id": "ol:15259818",
+   "workId": "OL9679346W",
+   "title": "Der Mönch und die Henkerstochter",
+   "author": "Ambrose Bierce"
+  },
+  {
+   "id": "ol:15259821",
+   "workId": "OL46029139W",
+   "title": "Die Stimme",
+   "author": "George Langelaan"
+  },
+  {
+   "id": "ol:15259820",
+   "workId": "OL20116099W",
+   "title": "Der Werwolf von Paris",
+   "author": "Guy Endore"
+  },
+  {
+   "id": "ol:15259823",
+   "workId": "OL4170701W",
+   "title": "Das Monster im Park",
+   "author": "Jürgen Vom Scheidt"
+  },
+  {
+   "id": "ol:15259822",
+   "workId": "OL35420367W",
+   "title": "Das Gespenst im Aktenschrank",
+   "author": ""
+  },
+  {
+   "id": "ol:15259824",
+   "workId": "OL1833989W",
+   "title": "Das Phantom der Oper",
+   "author": "Gaston Leroux"
+  },
+  {
+   "id": "ol:15259825",
+   "workId": "OL2841952W",
+   "title": "Die dritte Kugel",
+   "author": "Leo Perutz"
+  },
+  {
+   "id": "ol:15259826",
+   "workId": "OL46029143W",
+   "title": "Das Schnurren der Katze",
+   "author": "Hugh B. Cave"
+  },
+  {
+   "id": "ol:15259827",
+   "workId": "OL46029142W",
+   "title": "Die unheimlichen Wirklichkeiten",
+   "author": "George Langelaan"
+  },
+  {
+   "id": "ol:15259828",
+   "workId": "OL676009W",
+   "title": "Der Meister und Margarita",
+   "author": "Михаил Афанасьевич Булгаков"
+  },
+  {
+   "id": "ol:15259829",
+   "workId": "OL19317486W",
+   "title": "Vorgriff auf morgen",
+   "author": "Jörg Weigand"
+  },
+  {
+   "id": "ol:15259831",
+   "workId": "OL19052309W",
+   "title": "Von einem anderen Stern",
+   "author": "Horst Heidtmann"
+  },
+  {
+   "id": "ol:15259832",
+   "workId": "OL19193190W",
+   "title": "Im Jenseits",
+   "author": "Horst Heidtmann"
+  },
+  {
+   "id": "ol:15259830",
+   "workId": "OL5424069W",
+   "title": "Die Rache der Kälber",
+   "author": "Ernst W. Heine"
+  },
+  {
+   "id": "ol:15259833",
+   "workId": "OL81632W",
+   "title": "Brennen muß Salem!",
+   "author": "Stephen King"
+  },
+  {
+   "id": "ol:15259834",
+   "workId": "OL4839164W",
+   "title": "Das Teufelsrad",
+   "author": "John Franklin Bardin"
+  },
+  {
+   "id": "ol:15259835",
+   "workId": "OL46029144W",
+   "title": "Die gestohlenen Techmine",
+   "author": "Horst Heidtmann"
+  },
+  {
+   "id": "ol:15259837",
+   "workId": "OL54031W",
+   "title": "Ein Yankee aus Connecticut an König Artus' Hof",
+   "author": "Mark Twain"
+  },
+  {
+   "id": "ol:15259836",
+   "workId": "OL46029146W",
+   "title": "Fabrik der Träume",
+   "author": "Susanne Päch"
+  },
+  {
+   "id": "ol:15259840",
+   "workId": "OL10641392W",
+   "title": "Geständnis auf Raten",
+   "author": "John Franklin Bardin"
+  },
+  {
+   "id": "ol:15259841",
+   "workId": "OL46029145W",
+   "title": "Die letzte Tür",
+   "author": "Horst Heidtmann"
+  },
+  {
+   "id": "ol:15259839",
+   "workId": "OL10641391W",
+   "title": "Die Bärengrube",
+   "author": "John Franklin Bardin"
+  },
+  {
+   "id": "ol:15259838",
+   "workId": "OL940472W",
+   "title": "Weltgeist Superstar",
+   "author": "Hans Widmer"
+  },
+  {
+   "id": "ol:15259853",
+   "workId": "OL4564716W",
+   "title": "Vom Äussersten",
+   "author": "W. E. Richartz"
+  },
+  {
+   "id": "ol:15259852",
+   "workId": "OL4651916W",
+   "title": "Duffy",
+   "author": "Dan Kavanagh"
+  },
+  {
+   "id": "ol:15259851",
+   "workId": "OL4337103W",
+   "title": "Löwe in Aspik",
+   "author": "Gerhard Mensching"
+  },
+  {
+   "id": "ol:15259850",
+   "workId": "OL752946W",
+   "title": "Und oben sitzt ein Rabe",
+   "author": "Gisbert Haefs"
+  },
+  {
+   "id": "ol:13801475",
+   "workId": "OL752920W",
+   "title": "Das Doppelgrab in der Provence",
+   "author": "Gisbert Haefs"
+  },
+  {
+   "id": "ol:15259854",
+   "workId": "OL4337096W",
+   "title": "Der Bauch der schönen Schwarzen",
+   "author": "Gerhard Mensching"
+  },
+  {
+   "id": "ol:15259855",
+   "workId": "OL752939W",
+   "title": "Mörder & Marder",
+   "author": "Gisbert Haefs"
+  },
+  {
+   "id": "ol:15259856",
+   "workId": "OL11324954W",
+   "title": "Die Kinder der Finsternis",
+   "author": "Wolf von Niebelschütz"
+  },
+  {
+   "id": "ol:13323715",
+   "workId": "OL4651915W",
+   "title": "Vor die Hunde gehen",
+   "author": "Dan Kavanagh"
+  },
+  {
+   "id": "ol:15259857",
+   "workId": "OL46029151W",
+   "title": "Das Mörderquartett",
+   "author": ""
+  },
+  {
+   "id": "ol:15259858",
+   "workId": "OL16923475W",
+   "title": "Das brennende Labyrinth",
+   "author": "Hanns Kneifel"
+  },
+  {
+   "id": "ol:15259859",
+   "workId": "OL4780878W",
+   "title": "Einzelgänger, männlich",
+   "author": "Geoffrey Household"
+  },
+  {
+   "id": "ol:15259861",
+   "workId": "OL4337098W",
+   "title": "Die violetten Briefe",
+   "author": "Gerhard Mensching"
+  },
+  {
+   "id": "ol:15259860",
+   "workId": "OL11475887W",
+   "title": "Standbein, Spielbein",
+   "author": "Axel Maria Marquardt"
+  },
+  {
+   "id": "ol:11693096",
+   "workId": "OL2818727W",
+   "title": "Patzer",
+   "author": "Ulrich Horstmann"
+  },
+  {
+   "id": "ol:15259862",
+   "workId": "OL4337101W",
+   "title": "Rotkäppchen und der Schwan",
+   "author": "Gerhard Mensching"
+  },
+  {
+   "id": "ol:15259864",
+   "workId": "OL15753988W",
+   "title": "Eine Sache unter Freunden",
+   "author": "Wolfgang Schweiger"
+  },
+  {
+   "id": "ol:15259863",
+   "workId": "OL29556W",
+   "title": "Alte Knochen",
+   "author": "Aaron J. Elkins"
+  },
+  {
+   "id": "ol:15259865",
+   "workId": "OL29229936W",
+   "title": "Spiel der Verlierer",
+   "author": "Wolfgang Schweiger"
+  },
+  {
+   "id": "ol:15259866",
+   "workId": "OL46029154W",
+   "title": "Störmer im Dreck",
+   "author": "Sven Böttcher"
+  },
+  {
+   "id": "ol:15259867",
+   "workId": "OL46029153W",
+   "title": "Ciao Tao",
+   "author": "Hen Hermanns"
+  },
+  {
+   "id": "ol:15259868",
+   "workId": "OL46029155W",
+   "title": "Silvi und Mokka",
+   "author": "Conny Lens"
+  },
+  {
+   "id": "ol:15259869",
+   "workId": "OL974642W",
+   "title": "Die Reisenden",
+   "author": "Axel Marquardt"
+  },
+  {
+   "id": "ol:15259870",
+   "workId": "OL2962332W",
+   "title": "Down in the Valley",
+   "author": "Pierce, David M."
+  },
+  {
+   "id": "ol:15259871",
+   "workId": "OL11383059W",
+   "title": "Abblocken",
+   "author": "Dan Kavanagh"
+  },
+  {
+   "id": "ol:15259872",
+   "workId": "OL46029156W",
+   "title": "Abschied in der Nacht",
+   "author": ""
+  },
+  {
+   "id": "ol:15259873",
+   "workId": "OL29228346W",
+   "title": "Max perplex",
+   "author": "Hen Hermanns"
+  },
+  {
+   "id": "ol:15224242",
+   "workId": "OL974639W",
+   "title": "Der Betriebsdichter und andere Geschichten",
+   "author": "Axel Marquardt"
+  },
+  {
+   "id": "ol:15259874",
+   "workId": "OL2412067W",
+   "title": "Die Prophezeiung",
+   "author": "Peter James"
+  },
+  {
+   "id": "ol:15259876",
+   "workId": "OL3926760W",
+   "title": "Der wandernde Spielzeugladen",
+   "author": "Edmund Crispin"
+  },
+  {
+   "id": "ol:15259875",
+   "workId": "OL29547W",
+   "title": "Fluch!",
+   "author": "Aaron J. Elkins"
+  },
+  {
+   "id": "ol:15259877",
+   "workId": "OL34942419W",
+   "title": "Interview mit einer Toten",
+   "author": ""
+  },
+  {
+   "id": "ol:15259878",
+   "workId": "OL18067W",
+   "title": "Lone Star",
+   "author": "Kinky Friedman"
+  },
+  {
+   "id": "ol:15259879",
+   "workId": "OL18067W",
+   "title": "Lone Star",
+   "author": "Kinky Friedman"
+  },
+  {
+   "id": "ol:15259880",
+   "workId": "OL26285273W",
+   "title": "Maximum Trouble",
+   "author": "Hen Hermanns"
+  },
+  {
+   "id": "ol:15259881",
+   "workId": "OL4978841W",
+   "title": "Mickey Finn",
+   "author": "Elliot Paul"
+  },
+  {
+   "id": "ol:15259883",
+   "workId": "OL4651914W",
+   "title": "Schieber-City",
+   "author": "Dan Kavanagh"
+  },
+  {
+   "id": "ol:13766419",
+   "workId": "OL34942424W",
+   "title": "Wand aus Glas",
+   "author": "Walter Satterthwait"
+  },
+  {
+   "id": "ol:15259884",
+   "workId": "OL6158478W",
+   "title": "Alma",
+   "author": "Kinder, Hermann."
+  },
+  {
+   "id": "ol:15259885",
+   "workId": "OL2962330W",
+   "title": "Angels in Heaven",
+   "author": "Pierce, David M."
+  },
+  {
+   "id": "ol:15259882",
+   "workId": "OL46029168W",
+   "title": "Auf der Kippe",
+   "author": "Bob Leuci"
+  },
+  {
+   "id": "ol:15259886",
+   "workId": "OL34942425W",
+   "title": "Captain Butterfly",
+   "author": ""
+  },
+  {
+   "id": "ol:15259887",
+   "workId": "OL46029166W",
+   "title": "Das Affen-Buch",
+   "author": ""
+  },
+  {
+   "id": "ol:15259888",
+   "workId": "OL22070563W",
+   "title": "Der Traum der Maschine",
+   "author": "Hanns Kneifel"
+  },
+  {
+   "id": "ol:15259889",
+   "workId": "OL46029167W",
+   "title": "Fish im Trüben",
+   "author": "Susan Geason"
+  },
+  {
+   "id": "ol:15259890",
+   "workId": "OL46029169W",
+   "title": "Geierfrühling",
+   "author": "Hans Peter Karr"
+  },
+  {
+   "id": "ol:15259891",
+   "workId": "OL34942287W",
+   "title": "Hear the Wind Blow",
+   "author": ""
+  },
+  {
+   "id": "ol:15259892",
+   "workId": "OL2183044W",
+   "title": "Mit den Toten in Frieden",
+   "author": "Walter Satterthwait"
+  },
+  {
+   "id": "ol:15259893",
+   "workId": "OL46029170W",
+   "title": "Nie wieder Tequila",
+   "author": "Kinky Friedman"
+  },
+  {
+   "id": "ol:15259894",
+   "workId": "OL3082557W",
+   "title": "Pumaschuh",
+   "author": "Volker Erbes"
+  },
+  {
+   "id": "ol:15259895",
+   "workId": "OL11475942W",
+   "title": "Verliebt in den Tod",
+   "author": "Conny Lens"
+  },
+  {
+   "id": "ol:8750333",
+   "workId": "OL20078052W",
+   "title": "Zur Zeit der Perky Pat",
+   "author": ""
+  },
+  {
+   "id": "ol:15259897",
+   "workId": "OL3477437W",
+   "title": "Die im Dunkeln",
+   "author": "Ross Thomas"
+  },
+  {
+   "id": "ol:15259896",
+   "workId": "OL18068W",
+   "title": "Elvis, Jesus & Coca-Cola",
+   "author": "Kinky Friedman"
+  },
+  {
+   "id": "ol:15259898",
+   "workId": "OL46029172W",
+   "title": "Fish vor die Hunde",
+   "author": "Susan Geason"
+  },
+  {
+   "id": "ol:15259899",
+   "workId": "OL45858164W",
+   "title": "Rattensommer",
+   "author": "Hans Peter Karr"
+  },
+  {
+   "id": "ol:15259900",
+   "workId": "OL33823776W",
+   "title": "Die neue klassische Sau",
+   "author": ""
+  },
+  {
+   "id": "ol:2198091",
+   "workId": "OL828060W",
+   "title": "Zürich bei Nacht",
+   "author": "Roger Graf"
+  },
+  {
+   "id": "ol:15259901",
+   "workId": "OL35429655W",
+   "title": "Haffmans Krimi-Jahresband 1997",
+   "author": ""
+  },
+  {
+   "id": "ol:2198090",
+   "workId": "OL767730W",
+   "title": "Hühnerherbst",
+   "author": "H. P. Karr"
+  },
+  {
+   "id": "ol:15259902",
+   "workId": "OL15971589W",
+   "title": "Der Himmel des Teufels",
+   "author": "Thomas Adcock"
+  },
+  {
+   "id": "ol:2198092",
+   "workId": "OL729912W",
+   "title": "Zeuss",
+   "author": "Alfred Hellmann"
+  },
+  {
+   "id": "ol:15259903",
+   "workId": "OL46029171W",
+   "title": "Kolonie",
+   "author": "Philip K. Dick"
+  },
+  {
+   "id": "ol:15259904",
+   "workId": "OL3955095W",
+   "title": "Buffalo Soldiers",
+   "author": "Robert O'Connor"
+  },
+  {
+   "id": "ol:15259917",
+   "workId": "OL1434640W",
+   "title": "Berlin Alexanderplatz",
+   "author": "Alfred Döblin"
+  },
+  {
+   "id": "ol:15259916",
+   "workId": "OL2113346W",
+   "title": "Abwässer",
+   "author": "Hugo Loetscher"
+  },
+  {
+   "id": "ol:15259918",
+   "workId": "OL10438899W",
+   "title": "Theater-Schriften und Reden",
+   "author": "Friedrich Dürrenmatt"
+  },
+  {
+   "id": "ol:15259919",
+   "workId": "OL46029185W",
+   "title": "Die Cabala · Die Brücke von San Luis Rey · Die Iden des März",
+   "author": "Thornton Wilder"
+  },
+  {
+   "id": "ol:15259920",
+   "workId": "OL6015929W",
+   "title": "Das Geheimnis von Santa Vittoria",
+   "author": "Robert Crichton"
+  },
+  {
+   "id": "ol:15259921",
+   "workId": "OL1141660W",
+   "title": "Bist du es, Ronald?",
+   "author": "Urzidil, Johannes"
+  },
+  {
+   "id": "ol:15259922",
+   "workId": "OL11579406W",
+   "title": "Der Glasberg",
+   "author": "Clemens Mettler"
+  },
+  {
+   "id": "ol:15259923",
+   "workId": "OL258332W",
+   "title": "Der erste Kreis der Hölle",
+   "author": "Александр Солженицын"
+  },
+  {
+   "id": "ol:15259972",
+   "workId": "OL1666741W",
+   "title": "Fremdkörper",
+   "author": "Adolf Muschg"
+  },
+  {
+   "id": "ol:15259924",
+   "workId": "OL46909W",
+   "title": "Andromeda",
+   "author": "Michael Crichton"
+  },
+  {
+   "id": "ol:15259925",
+   "workId": "OL2460613W",
+   "title": "Auf dem Berge Sinai sitzt der Schneider Kikrikri",
+   "author": "Jörg Steiner"
+  },
+  {
+   "id": "ol:15259973",
+   "workId": "OL5622948W",
+   "title": "Konzert für Papagei und Schifferklavier",
+   "author": "Christoph Mangold"
+  },
+  {
+   "id": "ol:15259975",
+   "workId": "OL1401232W",
+   "title": "Monstervortrag über Gerechtigkeit und Recht",
+   "author": "Friedrich Dürrenmatt"
+  },
+  {
+   "id": "ol:15259926",
+   "workId": "OL1100020W",
+   "title": "Reise um den Mond",
+   "author": "Jules Verne"
+  },
+  {
+   "id": "ol:15259974",
+   "workId": "OL46029284W",
+   "title": "Rosa Loui · Republikanische Gedichte · Leichenreden",
+   "author": "Kurt Marti"
+  },
+  {
+   "id": "ol:15259927",
+   "workId": "OL1666775W",
+   "title": "Mitgespielt",
+   "author": "Adolf Muschg"
+  },
+  {
+   "id": "ol:15259979",
+   "workId": "OL2725439W",
+   "title": "Dies ist mein Volk",
+   "author": "Abba Solomon Eban"
+  },
+  {
+   "id": "ol:15259928",
+   "workId": "OL2176015W",
+   "title": "Entläßt die Natur den Menschen?",
+   "author": "Adolf Portmann"
+  },
+  {
+   "id": "ol:15259929",
+   "workId": "OL2271052W",
+   "title": "Idyllen",
+   "author": "Franz Hohler"
+  },
+  {
+   "id": "ol:15259930",
+   "workId": "OL3987518W",
+   "title": "Selbstporträt",
+   "author": "Jakov Lind"
+  },
+  {
+   "id": "ol:15259976",
+   "workId": "OL131462W",
+   "title": "Die Untersuchung",
+   "author": "Per Olof Sundman"
+  },
+  {
+   "id": "ol:15259931",
+   "workId": "OL2279718W",
+   "title": "Im Hause enden die Geschichten",
+   "author": "Paul Nizon"
+  },
+  {
+   "id": "ol:15259932",
+   "workId": "OL7475101W",
+   "title": "Gärtnern, Ackern – ohne Gift",
+   "author": "Alwin Seifert"
+  },
+  {
+   "id": "ol:15259933",
+   "workId": "OL854266W",
+   "title": "Der kurze Brief zum langen Abschied",
+   "author": "Peter Handke"
+  },
+  {
+   "id": "ol:15259934",
+   "workId": "OL3397491W",
+   "title": "Die ersten Unruhen",
+   "author": "Otto F. Walter"
+  },
+  {
+   "id": "ol:15259935",
+   "workId": "OL991250W",
+   "title": "Ein Fest im Dorf",
+   "author": "Giovanni Orelli"
+  },
+  {
+   "id": "ol:15259936",
+   "workId": "OL4048820W",
+   "title": "Ich und das Dorf",
+   "author": "Walter Matthias Diggelmann"
+  },
+  {
+   "id": "ol:15259937",
+   "workId": "OL655867W",
+   "title": "Leben und Sterben im Waadtland",
+   "author": "Jacques Chessex"
+  },
+  {
+   "id": "ol:15259977",
+   "workId": "OL1319096W",
+   "title": "New Yorker Novellen",
+   "author": "Ulrich Becher"
+  },
+  {
+   "id": "ol:15259978",
+   "workId": "OL4048821W",
+   "title": "Reise durch Transdanubien",
+   "author": "Walter Matthias Diggelmann"
+  },
+  {
+   "id": "ol:15259981",
+   "workId": "OL865558W",
+   "title": "Tagebuch 1966–1971",
+   "author": "Max Frisch"
+  },
+  {
+   "id": "ol:15259938",
+   "workId": "OL4048809W",
+   "title": "Aber den Kirschbaum, den gibt es",
+   "author": "Walter Matthias Diggelmann"
+  },
+  {
+   "id": "ol:15259939",
+   "workId": "OL34953057W",
+   "title": "Der Tee der drei alten Damen · Der Chinese",
+   "author": "Friedrich Glauser"
+  },
+  {
+   "id": "ol:15259962",
+   "workId": "OL655843W",
+   "title": "Der Kinderfresser",
+   "author": "Jacques Chessex"
+  },
+  {
+   "id": "ol:15259940",
+   "workId": "OL6764277W",
+   "title": "Anton Jakob Kellers gesammeltes Lachen",
+   "author": "Anton Jakob Keller"
+  },
+  {
+   "id": "ol:15259941",
+   "workId": "OL770940W",
+   "title": "Das Ende von Seldwyla",
+   "author": "Kurt Guggenheim"
+  },
+  {
+   "id": "ol:15259942",
+   "workId": "OL260395W",
+   "title": "Harlekin",
+   "author": "Morris West"
+  },
+  {
+   "id": "ol:15259943",
+   "workId": "OL1261675W",
+   "title": "Kleine Negermärchen",
+   "author": "Blaise Cendrars"
+  },
+  {
+   "id": "ol:15259944",
+   "workId": "OL769227W",
+   "title": "Matto regiert",
+   "author": "Friedrich Glauser"
+  },
+  {
+   "id": "ol:15259946",
+   "workId": "OL15841539W",
+   "title": "Traumfahrt zu den letzten Riesen",
+   "author": "Mary Norton"
+  },
+  {
+   "id": "ol:15259945",
+   "workId": "OL1636262W",
+   "title": "Weckerhund, Wedermann und Schlafittchen",
+   "author": "Norton Juster"
+  },
+  {
+   "id": "ol:15259948",
+   "workId": "OL2037553W",
+   "title": "Alle Herrlichkeit ist innerlich",
+   "author": "Bruce Marshall"
+  },
+  {
+   "id": "ol:15259947",
+   "workId": "OL986993W",
+   "title": "Einstein überquert die Elbe bei Hamburg",
+   "author": "Siegfried Lenz"
+  },
+  {
+   "id": "ol:15259949",
+   "workId": "OL45463241W",
+   "title": "Gourrama",
+   "author": "Friedrich Glauser"
+  },
+  {
+   "id": "ol:13225392",
+   "workId": "OL4842169W",
+   "title": "Ich bin gern schuld an meinem Glück",
+   "author": "Katharina von Arx"
+  },
+  {
+   "id": "ol:15259980",
+   "workId": "OL865551W",
+   "title": "Montauk",
+   "author": "Max Frisch"
+  },
+  {
+   "id": "ol:15259950",
+   "workId": "OL59437W",
+   "title": "Ediths Tagebuch",
+   "author": "Patricia Highsmith"
+  },
+  {
+   "id": "ol:15259951",
+   "workId": "OL472250W",
+   "title": "Ruhe unsanft",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15259952",
+   "workId": "OL472470W",
+   "title": "Vorhang",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15259953",
+   "workId": "OL1873222W",
+   "title": "Das Drama des begabten Kindes",
+   "author": "Alice Miller"
+  },
+  {
+   "id": "ol:15259954",
+   "workId": "OL19151568W",
+   "title": "Ich hab im Traum die Schweiz gesehn",
+   "author": "Jochen Jung"
+  },
+  {
+   "id": "ol:15259982",
+   "workId": "OL279834W",
+   "title": "Irisches Tagebuch",
+   "author": "Heinrich Böll"
+  },
+  {
+   "id": "ol:15259959",
+   "workId": "OL46029192W",
+   "title": "Litauische Claviere · Levins Mühle",
+   "author": "Johannes Bobrowski"
+  },
+  {
+   "id": "ol:15259983",
+   "workId": "OL865559W",
+   "title": "Tagebuch 1946–1949",
+   "author": "Max Frisch"
+  },
+  {
+   "id": "ol:15259960",
+   "workId": "OL865476W",
+   "title": "Stiller",
+   "author": "Max Frisch"
+  },
+  {
+   "id": "ol:15259961",
+   "workId": "OL46029191W",
+   "title": "In den Wäldern des Herzens",
+   "author": "Jürg Federspiel"
+  },
+  {
+   "id": "ol:15259987",
+   "workId": "OL5095341W",
+   "title": "Das Peter-Prinzip",
+   "author": "Laurence J. Peter"
+  },
+  {
+   "id": "ol:15259988",
+   "workId": "OL3577840W",
+   "title": "Das Schmettern des gallischen Hahns",
+   "author": "Niklaus Meienberg"
+  },
+  {
+   "id": "ol:859082",
+   "workId": "OL4304084W",
+   "title": "Jenny and the Cat Club",
+   "author": "Esther Holden Averill"
+  },
+  {
+   "id": "ol:859133",
+   "workId": "OL19283868W",
+   "title": "Mistress Masham's Repose",
+   "author": "T. H. White"
+  },
+  {
+   "id": "ol:859150",
+   "workId": "OL4771368W",
+   "title": "D'Aulaires' Book of Norse Myths",
+   "author": "Ingri Parin D'Aulaire"
+  },
+  {
+   "id": "ol:859177",
+   "workId": "OL4304088W",
+   "title": "Jenny Goes To Sea",
+   "author": "Esther Holden Averill"
+  },
+  {
+   "id": "ol:859180",
+   "workId": "OL4304090W",
+   "title": "The Hotel Cat",
+   "author": "Esther Holden Averill"
+  },
+  {
+   "id": "ol:859181",
+   "workId": "OL4304089W",
+   "title": "Jenny's Moonlight Adventure",
+   "author": "Esther Holden Averill"
+  },
+  {
+   "id": "ol:859194",
+   "workId": "OL4304087W",
+   "title": "The School For Cats",
+   "author": "Esther Holden Averill"
+  },
+  {
+   "id": "ol:859195",
+   "workId": "OL4304078W",
+   "title": "Captains of the City Streets",
+   "author": "Esther Holden Averill"
+  },
+  {
+   "id": "ol:859227",
+   "workId": "OL4649311W",
+   "title": "Wee Gillis",
+   "author": "Munro Leaf"
+  },
+  {
+   "id": "ol:859238",
+   "workId": "OL4771371W",
+   "title": "D'Aulaires' Book of Trolls",
+   "author": "Ingri Parin D'Aulaire"
+  },
+  {
+   "id": "ol:859263",
+   "workId": "OL1103652W",
+   "title": "The Box of Delights",
+   "author": "John Masefield"
+  },
+  {
+   "id": "ol:859264",
+   "workId": "OL4771355W",
+   "title": "The Terrible Troll-Bird",
+   "author": "Ingri Parin D'Aulaire"
+  },
+  {
+   "id": "ol:2950341",
+   "workId": "OL5447676W",
+   "title": "Uncle Cleans Up",
+   "author": "J. P. Martin"
+  },
+  {
+   "id": "ol:5777850",
+   "workId": "OL2142197W",
+   "title": "Ounce Dice Trice",
+   "author": "Alastair Reid"
+  },
+  {
+   "id": "ol:12737722",
+   "workId": "OL25857968W",
+   "title": "Leon Garfield's Shakespeare Stories",
+   "author": "Leon Garfield"
+  },
+  {
+   "id": "ol:10376509",
+   "workId": "OL21505630W",
+   "title": "The Complete Polly and the Wolf",
+   "author": "Catherine Storr"
+  },
+  {
+   "id": "ol:10197381",
+   "workId": "OL2271562W",
+   "title": "The Night of Wishes",
+   "author": "Michael Ende"
+  },
+  {
+   "id": "ol:15260232",
+   "workId": "OL3790471W",
+   "title": "Die weissen Zähne der Gemeinde",
+   "author": "Sam Jaun"
+  },
+  {
+   "id": "ol:15260233",
+   "workId": "OL46030909W",
+   "title": "Um jede Priis",
+   "author": "Ernst Burren"
+  },
+  {
+   "id": "ol:15260234",
+   "workId": "OL12705274W",
+   "title": "Leitfaden für Fluchtverdächtige",
+   "author": "Adolf Schaller"
+  },
+  {
+   "id": "ol:15260235",
+   "workId": "OL44877407W",
+   "title": "Derfür und derwider",
+   "author": "Ernst Burren"
+  },
+  {
+   "id": "ol:15260236",
+   "workId": "OL2441172W",
+   "title": "Der andere Tag",
+   "author": "Meier, Gerhard"
+  },
+  {
+   "id": "ol:15260238",
+   "workId": "OL46030908W",
+   "title": "Ds fromme Ross",
+   "author": ""
+  },
+  {
+   "id": "ol:15260239",
+   "workId": "OL2064295W",
+   "title": "I Waud go Fahne schwinge",
+   "author": "Ernst Burren"
+  },
+  {
+   "id": "ol:15260237",
+   "workId": "OL755429W",
+   "title": "Madeleine, Martha und Pia",
+   "author": "Lukas Hartmann"
+  },
+  {
+   "id": "ol:15260240",
+   "workId": "OL5342727W",
+   "title": "Der Briefeschreiber",
+   "author": "Nicol Cunningham"
+  },
+  {
+   "id": "ol:15260241",
+   "workId": "OL3034497W",
+   "title": "Schädel",
+   "author": "Rolf Geissbühler"
+  },
+  {
+   "id": "ol:15260242",
+   "workId": "OL19467723W",
+   "title": "Kurzwaren 1",
+   "author": "Dres Balmer"
+  },
+  {
+   "id": "ol:15260243",
+   "workId": "OL2441181W",
+   "title": "Papierrosen",
+   "author": "Meier, Gerhard"
+  },
+  {
+   "id": "ol:15260244",
+   "workId": "OL2064292W",
+   "title": "Dr Schtammgascht",
+   "author": "Ernst Burren"
+  },
+  {
+   "id": "ol:15260247",
+   "workId": "OL2884546W",
+   "title": "Flissingen fehlt auf der Karte",
+   "author": "Maja Beutler"
+  },
+  {
+   "id": "ol:15260246",
+   "workId": "OL46030907W",
+   "title": "Kurzwaren 2",
+   "author": "Beat Brechbühl"
+  },
+  {
+   "id": "ol:15260245",
+   "workId": "OL755431W",
+   "title": "Mozart im Hurenhaus",
+   "author": "Lukas Hartmann"
+  },
+  {
+   "id": "ol:15260248",
+   "workId": "OL2441173W",
+   "title": "Der Besuch",
+   "author": "Meier, Gerhard"
+  },
+  {
+   "id": "ol:15260249",
+   "workId": "OL2064300W",
+   "title": "S chürzere Bei",
+   "author": "Ernst Burren"
+  },
+  {
+   "id": "ol:15260251",
+   "workId": "OL5031973W",
+   "title": "Stationen",
+   "author": "Meier, Peter"
+  },
+  {
+   "id": "ol:15260250",
+   "workId": "OL2866181W",
+   "title": "Der Technokrat",
+   "author": "Urs Karpf"
+  },
+  {
+   "id": "ol:15260252",
+   "workId": "OL3790472W",
+   "title": "Die Wirklichkeit des Chefbeamten",
+   "author": "Sam Jaun"
+  },
+  {
+   "id": "ol:15260253",
+   "workId": "OL4415283W",
+   "title": "Anpassungsversuche",
+   "author": "Peter John Betts"
+  },
+  {
+   "id": "ol:15260254",
+   "workId": "OL2866182W",
+   "title": "Die Nacht des grossen Kometen",
+   "author": "Urs Karpf"
+  },
+  {
+   "id": "ol:15260255",
+   "workId": "OL4205133W",
+   "title": "Die Fowlersche Lösung",
+   "author": "Hans Mühlethaler"
   }
  ],
  "collections": {
-  "addedAt": "2026-09-27",
+  "addedAt": "2026-09-30",
   "from": [
    "feminist-press",
    "sf-masterworks",
@@ -21102,11 +25654,20 @@
    "ballantine-adult-fantasy",
    "poesie-gallimard",
    "suhrkamp-taschenbuch-images",
+   "harry-potter-cover-sets",
+   "lord-of-the-rings-cover-sets",
+   "rowohlts-monographien",
    "heyne-bibliothek-sf",
    "folio-gallimard",
    "jai-lu-sf",
    "presence-du-futur",
-   "spektrum-volk-und-welt"
+   "spektrum-volk-und-welt",
+   "fischer-bucherei-covers-by-kurt-wirth",
+   "dtv-phantastica-covers-by-celestino-piatti",
+   "haffmans-covers-by-nikolaus-heidelbach",
+   "ex-libris-covers-by-hanspeter-wyss",
+   "nyrb-children-s-collection",
+   "zytglogge-covers-by-werner-maurer"
   ],
   "leftOut": [
    "suhrkamp-taschenbuch-author-portraits",
@@ -21719,50 +26280,149 @@
    "local:tolkien-covers-by-heinz-edelmann/no-04",
    "local:tolkien-covers-by-heinz-edelmann/no-05",
    "local:tolkien-covers-by-heinz-edelmann/no-06",
-   "local:tolkien-covers-by-heinz-edelmann/no-07",
+   "ol:15259427",
+   "ol:15259575",
+   "ol:14305208",
    "ol:10555558",
+   "ol:15259579",
+   "ol:15259577",
+   "ol:15259565",
+   "ol:15259576",
+   "ol:15259578",
+   "ol:15259580",
+   "ol:15259488",
+   "ol:15259581",
+   "ol:15259485",
+   "ol:15259486",
+   "ol:15259489",
+   "ol:15259582",
+   "ol:15259583",
+   "ol:15259487",
+   "ol:15259584",
+   "ol:15259614",
+   "ol:15259490",
    "ol:9982321",
+   "ol:15259585",
+   "ol:15259586",
+   "ol:15259564",
    "ol:13065592",
+   "ol:15259587",
+   "ol:15259491",
+   "ol:15259494",
+   "ol:15259588",
+   "ol:15259609",
+   "ol:15259492",
+   "ol:15259498",
    "ol:9275703",
    "ol:9896796",
+   "ol:15259495",
+   "ol:15259496",
+   "ol:15259589",
+   "ol:15259567",
+   "ol:15259499",
+   "ol:15259497",
+   "ol:15259591",
    "ol:10967286",
    "ol:10569797",
+   "ol:15259590",
+   "ol:15259502",
+   "ol:15259500",
+   "ol:15259503",
+   "ol:15259501",
+   "ol:15259504",
    "ol:10645167",
    "ol:15171334",
+   "ol:15259507",
+   "ol:15259592",
    "ol:13535730",
+   "ol:15259505",
+   "ol:15259506",
+   "ol:15259593",
+   "ol:15259566",
+   "ol:15259594",
+   "ol:15259596",
+   "ol:15259595",
+   "ol:15259508",
+   "ol:15259509",
+   "ol:15259512",
+   "ol:15259510",
+   "ol:15259511",
+   "ol:15259513",
+   "ol:15259514",
+   "ol:15259521",
    "ol:10555123",
+   "ol:15259517",
+   "ol:15259520",
+   "ol:15259597",
+   "ol:15259518",
+   "ol:15259519",
    "ol:9312433",
    "ol:10445725",
+   "ol:15259524",
    "ol:11732921",
+   "ol:15259522",
+   "ol:15259526",
    "ol:8389998",
+   "ol:15259523",
+   "ol:15259598",
+   "ol:15259599",
+   "ol:15259525",
    "ol:13325443",
+   "ol:15259531",
+   "ol:15259568",
+   "ol:15259527",
    "ol:14550956",
    "ol:13663413",
+   "ol:15259529",
+   "ol:15259530",
+   "ol:15259533",
+   "ol:15259532",
    "ol:12366822",
+   "ol:15259534",
    "ol:10554986",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-01",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-02",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-03",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-04",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-05",
+   "ol:15259536",
+   "ol:15259408",
+   "ol:15259409",
+   "ol:15259410",
+   "ol:15259411",
+   "ol:15259412",
    "ol:8806397",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-07",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-08",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-09",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-10",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-11",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-12",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-13",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-14",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-15",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-16",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-17",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-18",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-19",
-   "local:jules-verne-covers-by-heinz-edelmann/vol-20",
+   "ol:15259428",
+   "ol:15259413",
+   "ol:15259414",
+   "ol:15259415",
+   "ol:15259416",
+   "ol:15259417",
+   "ol:15259418",
+   "ol:15259419",
+   "ol:15259420",
+   "ol:15259421",
+   "ol:15259423",
+   "ol:15259424",
+   "ol:15259425",
+   "ol:15259426",
+   "ol:15259600",
+   "ol:15259535",
+   "ol:15259601",
+   "ol:15259604",
+   "ol:15259541",
+   "ol:15259537",
+   "ol:15259539",
+   "ol:15259569",
+   "ol:15259538",
+   "ol:15259540",
+   "ol:15259545",
    "ol:10421448",
    "ol:1021133",
+   "ol:15259542",
+   "ol:15259543",
+   "ol:15259546",
+   "ol:15259550",
+   "ol:15259547",
+   "ol:15259603",
+   "ol:15259548",
    "ol:2195690",
+   "ol:15259549",
    "ol:10290958",
    "ol:15160977",
    "ol:1016084",
@@ -22173,6 +26833,385 @@
    "ol:2212549",
    "ol:10976918",
    "ol:2212577",
+   "ol:7355968",
+   "ol:8237627",
+   "ol:15158668",
+   "ol:15226832",
+   "ol:15156136",
+   "ol:15158660",
+   "ol:969491",
+   "ol:969492",
+   "ol:12728911",
+   "ol:12905137",
+   "ol:8458051",
+   "ol:9326646",
+   "ol:9262558",
+   "ol:12726695",
+   "ol:1049504",
+   "ol:12728460",
+   "ol:15101088",
+   "ol:8129811",
+   "ol:15158369",
+   "ol:15235364",
+   "ol:15235365",
+   "ol:15244794",
+   "ol:15166468",
+   "ol:15244811",
+   "ol:15244822",
+   "ol:14573304",
+   "ol:9346688",
+   "ol:9346696",
+   "ol:9346706",
+   "ol:9346719",
+   "ol:9346725",
+   "ol:9346749",
+   "ol:1048192",
+   "ol:1048187",
+   "ol:1048188",
+   "ol:1048189",
+   "ol:8232747",
+   "ol:7360359",
+   "ol:8183590",
+   "ol:13028227",
+   "ol:15157471",
+   "ol:14546261",
+   "ol:15157559",
+   "ol:15091536",
+   "ol:15157619",
+   "ol:488304",
+   "ol:15155864",
+   "ol:12630812",
+   "ol:15155866",
+   "ol:15155868",
+   "ol:15169535",
+   "ol:10082428",
+   "ol:8565802",
+   "ol:8121036",
+   "ol:8772818",
+   "ol:15178361",
+   "ol:10871428",
+   "ol:8131352",
+   "ol:8183663",
+   "ol:15159585",
+   "ol:15159586",
+   "ol:15159588",
+   "ol:15159598",
+   "ol:15159601",
+   "ol:15159603",
+   "ol:10565554",
+   "ol:10487260",
+   "ol:10565584",
+   "ol:14573310",
+   "ol:8233607",
+   "ol:14569519",
+   "ol:15157555",
+   "ol:15224397",
+   "ol:15158684",
+   "ol:15158685",
+   "ol:8081233",
+   "ol:12025676",
+   "ol:12460285",
+   "ol:8487228",
+   "ol:12630797",
+   "ol:12376757",
+   "ol:15259473",
+   "ol:8487234",
+   "ol:15259474",
+   "ol:8963307",
+   "ol:15259431",
+   "ol:8128339",
+   "ol:8081254",
+   "ol:8784775",
+   "ol:8131707",
+   "ol:8184308",
+   "ol:15157474",
+   "ol:15157620",
+   "ol:15157625",
+   "ol:15259478",
+   "ol:15157660",
+   "ol:15157889",
+   "ol:15157626",
+   "ol:10413455",
+   "ol:15156809",
+   "ol:12726842",
+   "ol:13555274",
+   "ol:8456594",
+   "ol:10584470",
+   "ol:15116676",
+   "ol:15116677",
+   "ol:15116678",
+   "ol:15116681",
+   "ol:15116683",
+   "ol:15116684",
+   "ol:15116685",
+   "ol:15259440",
+   "ol:15259439",
+   "ol:15259437",
+   "ol:15259444",
+   "ol:12997551",
+   "ol:15259441",
+   "ol:15259432",
+   "ol:8501212",
+   "ol:15259433",
+   "ol:15259434",
+   "ol:15259435",
+   "ol:15259438",
+   "ol:15259436",
+   "ol:15259467",
+   "ol:15259470",
+   "ol:15259475",
+   "ol:14252161",
+   "ol:15259469",
+   "ol:15259457",
+   "ol:15259458",
+   "ol:15259460",
+   "ol:15259459",
+   "ol:15259461",
+   "ol:15259465",
+   "ol:13264823",
+   "ol:12376745",
+   "ol:15259455",
+   "ol:12904511",
+   "ol:12997553",
+   "ol:15158567",
+   "ol:15259447",
+   "ol:15259449",
+   "ol:15259448",
+   "ol:15259451",
+   "ol:13907567",
+   "ol:15259454",
+   "ol:8573843",
+   "ol:15259450",
+   "ol:8171428",
+   "ol:8140846",
+   "ol:8171445",
+   "ol:8167231",
+   "ol:10523169",
+   "ol:8172046",
+   "ol:8167233",
+   "ol:8302846",
+   "ol:8172078",
+   "ol:8166960",
+   "ol:8141314",
+   "ol:8172084",
+   "ol:8167584",
+   "ol:8140855",
+   "ol:9293866",
+   "ol:14626125",
+   "ol:8647605",
+   "ol:14624299",
+   "ol:14624451",
+   "ol:14624452",
+   "ol:14627526",
+   "ol:14627528",
+   "ol:14627534",
+   "ol:9262670",
+   "ol:9262671",
+   "ol:8141985",
+   "ol:14624635",
+   "ol:8173162",
+   "ol:9260085",
+   "ol:9249723",
+   "ol:8173643",
+   "ol:8167652",
+   "ol:8141433",
+   "ol:8173664",
+   "ol:8168264",
+   "ol:9249718",
+   "ol:9293888",
+   "ol:9293885",
+   "ol:9293882",
+   "ol:13133750",
+   "ol:13133754",
+   "ol:13133756",
+   "ol:10290885",
+   "ol:14625962",
+   "ol:8647603",
+   "ol:979591",
+   "ol:14625961",
+   "ol:14624314",
+   "ol:14625938",
+   "ol:14625772",
+   "ol:14625948",
+   "ol:10290015",
+   "ol:10457086",
+   "ol:2341314",
+   "ol:14624433",
+   "ol:8461498",
+   "ol:14624461",
+   "ol:8168674",
+   "ol:8142040",
+   "ol:8175144",
+   "ol:14625709",
+   "ol:8142468",
+   "ol:8888",
+   "ol:8762919",
+   "ol:14625981",
+   "ol:14624641",
+   "ol:9249721",
+   "ol:8478000",
+   "ol:8461563",
+   "ol:9293874",
+   "ol:9293871",
+   "ol:8474010",
+   "ol:8478164",
+   "ol:9255338",
+   "ol:10840420",
+   "ol:8168944",
+   "ol:11273693",
+   "ol:980336",
+   "ol:14626639",
+   "ol:10511215",
+   "ol:8666743",
+   "ol:13239139",
+   "ol:11387256",
+   "ol:8169214",
+   "ol:394945",
+   "ol:14617433",
+   "ol:14573413",
+   "ol:14625521",
+   "ol:1047655",
+   "ol:2270622",
+   "ol:10519441",
+   "ol:10555538",
+   "ol:8178139",
+   "ol:8170090",
+   "ol:8143751",
+   "ol:8178155",
+   "ol:8170123",
+   "ol:8143759",
+   "ol:14625955",
+   "ol:15244480",
+   "ol:15244481",
+   "ol:15244483",
+   "ol:3217344",
+   "ol:3217345",
+   "ol:13083653",
+   "ol:1014890",
+   "ol:10720911",
+   "ol:2210530",
+   "ol:14434325",
+   "ol:1014892",
+   "ol:11720808",
+   "ol:10358550",
+   "ol:3217346",
+   "ol:1014894",
+   "ol:10721006",
+   "ol:10620268",
+   "ol:10527470",
+   "ol:12576519",
+   "ol:14430499",
+   "ol:3217347",
+   "ol:3217348",
+   "ol:3217349",
+   "ol:1014899",
+   "ol:1014900",
+   "ol:10652792",
+   "ol:13154515",
+   "ol:2210533",
+   "ol:13158298",
+   "ol:14656928",
+   "ol:15244723",
+   "ol:3217350",
+   "ol:12510247",
+   "ol:10671145",
+   "ol:1014909",
+   "ol:1014910",
+   "ol:10842719",
+   "ol:10620648",
+   "ol:3217353",
+   "ol:13158301",
+   "ol:3217354",
+   "ol:10527266",
+   "ol:3217356",
+   "ol:8392792",
+   "ol:1014914",
+   "ol:2210539",
+   "ol:10831575",
+   "ol:8392793",
+   "ol:10717392",
+   "ol:1014916",
+   "ol:14363493",
+   "ol:2210541",
+   "ol:1014917",
+   "ol:2210543",
+   "ol:11590444",
+   "ol:10295791",
+   "ol:2210545",
+   "ol:2210546",
+   "ol:1014919",
+   "ol:10242122",
+   "ol:8392799",
+   "ol:2210548",
+   "ol:1014920",
+   "ol:2210549",
+   "ol:7065806",
+   "ol:2210550",
+   "ol:1014922",
+   "ol:8392801",
+   "ol:12619016",
+   "ol:2210554",
+   "ol:2210555",
+   "ol:8678514",
+   "ol:10541992",
+   "ol:2210558",
+   "ol:2210559",
+   "ol:1014924",
+   "ol:15249729",
+   "ol:1014926",
+   "ol:1014927",
+   "ol:15244372",
+   "ol:10585133",
+   "ol:1014928",
+   "ol:15161662",
+   "ol:15176103",
+   "ol:1014929",
+   "ol:1014931",
+   "ol:10990472",
+   "ol:1014932",
+   "ol:14637702",
+   "ol:2210561",
+   "ol:8392808",
+   "ol:2210563",
+   "ol:3217358",
+   "ol:2210566",
+   "ol:1014934",
+   "ol:10498197",
+   "ol:2210567",
+   "ol:14474694",
+   "ol:14422957",
+   "ol:8392810",
+   "ol:3217359",
+   "ol:8392811",
+   "ol:1014935",
+   "ol:3217360",
+   "ol:2210569",
+   "ol:2210570",
+   "ol:8392813",
+   "ol:3217361",
+   "ol:2210572",
+   "ol:2210573",
+   "ol:2210574",
+   "ol:3217362",
+   "ol:15251288",
+   "ol:3217363",
+   "ol:3217364",
+   "ol:3217365",
+   "ol:2210575",
+   "ol:3217366",
+   "ol:3217367",
+   "ol:2210577",
+   "ol:2210579",
+   "ol:2210580",
+   "ol:8392818",
+   "ol:10527261",
+   "ol:1014940",
+   "ol:2210584",
+   "ol:3217374",
+   "ol:2210592",
+   "ol:2210597",
+   "ol:8392823",
+   "ol:2210603",
    "ol:8827692",
    "ol:10080998",
    "ol:8757118",
@@ -22486,7 +27525,291 @@
    "ol:15224017",
    "ol:10746499",
    "ol:10374475",
-   "ol:10823350"
+   "ol:10823350",
+   "ol:15259654",
+   "ol:15259622",
+   "ol:15259623",
+   "ol:15259625",
+   "ol:13011655",
+   "ol:15259655",
+   "ol:15259656",
+   "ol:15259657",
+   "ol:15259626",
+   "ol:15259658",
+   "ol:15259659",
+   "ol:15259627",
+   "ol:15259660",
+   "ol:15259661",
+   "ol:15259662",
+   "ol:10598801",
+   "ol:15259628",
+   "ol:15259663",
+   "ol:15259629",
+   "ol:15259664",
+   "ol:12722913",
+   "ol:14548849",
+   "ol:15259665",
+   "ol:15259666",
+   "ol:15259668",
+   "ol:15259667",
+   "ol:15259669",
+   "ol:15259630",
+   "ol:15259670",
+   "ol:15259631",
+   "ol:15259671",
+   "ol:15259632",
+   "ol:15259672",
+   "ol:15259673",
+   "ol:15259674",
+   "ol:15259675",
+   "ol:12722659",
+   "ol:15259676",
+   "ol:15259633",
+   "ol:15259677",
+   "ol:15259678",
+   "ol:15259634",
+   "ol:15259679",
+   "ol:15259681",
+   "ol:15259635",
+   "ol:15259680",
+   "ol:15259636",
+   "ol:15259682",
+   "ol:15259637",
+   "ol:15259638",
+   "ol:15259683",
+   "ol:15259684",
+   "ol:15259685",
+   "ol:15259686",
+   "ol:15259639",
+   "ol:15259687",
+   "ol:15259640",
+   "ol:15259642",
+   "ol:15259688",
+   "ol:15259689",
+   "ol:15259691",
+   "ol:15259692",
+   "ol:15259643",
+   "ol:15259644",
+   "ol:15259645",
+   "ol:15259693",
+   "ol:15259694",
+   "ol:15259695",
+   "ol:15259646",
+   "ol:15259696",
+   "ol:15259697",
+   "ol:15259698",
+   "ol:15259647",
+   "ol:14305213",
+   "ol:15259699",
+   "ol:15259648",
+   "ol:15259700",
+   "ol:15259649",
+   "ol:15204615",
+   "ol:15259650",
+   "ol:15259651",
+   "ol:15259652",
+   "ol:15259701",
+   "ol:15259703",
+   "ol:15034167",
+   "ol:15259807",
+   "ol:15259808",
+   "ol:15259806",
+   "ol:15259809",
+   "ol:15259811",
+   "ol:15259810",
+   "ol:15259813",
+   "ol:15259812",
+   "ol:15259814",
+   "ol:15259815",
+   "ol:15259816",
+   "ol:15259817",
+   "ol:15259819",
+   "ol:15259818",
+   "ol:15259821",
+   "ol:15259820",
+   "ol:15259823",
+   "ol:15259822",
+   "ol:15259824",
+   "ol:15259825",
+   "ol:15259826",
+   "ol:15259827",
+   "ol:15259828",
+   "ol:15259829",
+   "ol:15259831",
+   "ol:15259832",
+   "ol:15259830",
+   "ol:15259833",
+   "ol:15259834",
+   "ol:15259835",
+   "ol:15259837",
+   "ol:15259836",
+   "ol:15259840",
+   "ol:15259841",
+   "ol:15259839",
+   "ol:15259838",
+   "ol:15259853",
+   "ol:15259852",
+   "ol:15259851",
+   "ol:15259850",
+   "ol:13801475",
+   "ol:15259854",
+   "ol:15259855",
+   "ol:15259856",
+   "ol:13323715",
+   "ol:15259857",
+   "ol:15259858",
+   "ol:15259859",
+   "ol:15259861",
+   "ol:15259860",
+   "ol:11693096",
+   "ol:15259862",
+   "ol:15259864",
+   "ol:15259863",
+   "ol:15259865",
+   "ol:15259866",
+   "ol:15259867",
+   "ol:15259868",
+   "ol:15259869",
+   "ol:15259870",
+   "ol:15259871",
+   "ol:15259872",
+   "ol:15259873",
+   "ol:15224242",
+   "ol:15259874",
+   "ol:15259876",
+   "ol:15259875",
+   "ol:15259877",
+   "ol:15259878",
+   "ol:15259879",
+   "ol:15259880",
+   "ol:15259881",
+   "ol:15259883",
+   "ol:13766419",
+   "ol:15259884",
+   "ol:15259885",
+   "ol:15259882",
+   "ol:15259886",
+   "ol:15259887",
+   "ol:15259888",
+   "ol:15259889",
+   "ol:15259890",
+   "ol:15259891",
+   "ol:15259892",
+   "ol:15259893",
+   "ol:15259894",
+   "ol:15259895",
+   "ol:8750333",
+   "ol:15259897",
+   "ol:15259896",
+   "ol:15259898",
+   "ol:15259899",
+   "ol:15259900",
+   "ol:2198091",
+   "ol:15259901",
+   "ol:2198090",
+   "ol:15259902",
+   "ol:2198092",
+   "ol:15259903",
+   "ol:15259904",
+   "ol:15259917",
+   "ol:15259916",
+   "ol:15259918",
+   "ol:15259919",
+   "ol:15259920",
+   "ol:15259921",
+   "ol:15259922",
+   "ol:15259923",
+   "ol:15259972",
+   "ol:15259924",
+   "ol:15259925",
+   "ol:15259973",
+   "ol:15259975",
+   "ol:15259926",
+   "ol:15259974",
+   "ol:15259927",
+   "ol:15259979",
+   "ol:15259928",
+   "ol:15259929",
+   "ol:15259930",
+   "ol:15259976",
+   "ol:15259931",
+   "ol:15259932",
+   "ol:15259933",
+   "ol:15259934",
+   "ol:15259935",
+   "ol:15259936",
+   "ol:15259937",
+   "ol:15259977",
+   "ol:15259978",
+   "ol:15259981",
+   "ol:15259938",
+   "ol:15259939",
+   "ol:15259962",
+   "ol:15259940",
+   "ol:15259941",
+   "ol:15259942",
+   "ol:15259943",
+   "ol:15259944",
+   "ol:15259946",
+   "ol:15259945",
+   "ol:15259948",
+   "ol:15259947",
+   "ol:15259949",
+   "ol:13225392",
+   "ol:15259980",
+   "ol:15259950",
+   "ol:15259951",
+   "ol:15259952",
+   "ol:15259953",
+   "ol:15259954",
+   "ol:15259982",
+   "ol:15259959",
+   "ol:15259983",
+   "ol:15259960",
+   "ol:15259961",
+   "ol:15259987",
+   "ol:15259988",
+   "ol:859082",
+   "ol:859133",
+   "ol:859150",
+   "ol:859177",
+   "ol:859180",
+   "ol:859181",
+   "ol:859194",
+   "ol:859195",
+   "ol:859227",
+   "ol:859238",
+   "ol:859263",
+   "ol:859264",
+   "ol:2950341",
+   "ol:5777850",
+   "ol:12737722",
+   "ol:10376509",
+   "ol:10197381",
+   "ol:15260232",
+   "ol:15260233",
+   "ol:15260234",
+   "ol:15260235",
+   "ol:15260236",
+   "ol:15260238",
+   "ol:15260239",
+   "ol:15260237",
+   "ol:15260240",
+   "ol:15260241",
+   "ol:15260242",
+   "ol:15260243",
+   "ol:15260244",
+   "ol:15260247",
+   "ol:15260246",
+   "ol:15260245",
+   "ol:15260248",
+   "ol:15260249",
+   "ol:15260251",
+   "ol:15260250",
+   "ol:15260252",
+   "ol:15260253",
+   "ol:15260254",
+   "ol:15260255"
   ]
  }
 }

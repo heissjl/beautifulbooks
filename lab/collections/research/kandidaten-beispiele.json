@@ -1,0 +1,1178 @@
+{
+ "measured": "2026-09-29",
+ "series": [
+  {
+   "name": "Penguin Orange Collection",
+   "checked": "11 ISBNs von PRH PNG nachgeschlagen / 11 mit Cover / 10 im Design (Ceremony 13078095 ist ein Foto des Buchs)",
+   "note": "PRH-Seite nennt 12 Bände, im HTML stehen 11 ISBNs; alle 11 bei Open Library. Die Crucible-Aufnahme (12627378) ist blass, aber im Design.",
+   "examples": [
+    {
+     "title": "The Call of Cthulhu and Other Weird Stories",
+     "author": "H. P. Lovecraft",
+     "year": "2016",
+     "coverId": 8769700,
+     "edition": "OL27289821M",
+     "isbn": "9780143129455"
+    },
+    {
+     "title": "On the Road",
+     "author": "Jack Kerouac",
+     "year": "2016",
+     "coverId": 10313574,
+     "edition": "OL28396544M",
+     "isbn": "9780143129509"
+    },
+    {
+     "title": "The Joy Luck Club",
+     "author": "Amy Tan",
+     "year": "2016",
+     "coverId": 13692443,
+     "edition": "OL29734050M",
+     "isbn": "9780143129493"
+    },
+    {
+     "title": "One Flew Over the Cuckoo's Nest",
+     "author": "Ken Kesey",
+     "year": "2016",
+     "coverId": 12390600,
+     "edition": "OL26417659M",
+     "isbn": "9780143129516"
+    },
+    {
+     "title": "The Snow Leopard",
+     "author": "Peter Matthiessen",
+     "year": "2017",
+     "coverId": 8904044,
+     "edition": "OL27444253M",
+     "isbn": "9780143129523"
+    },
+    {
+     "title": "We Have Always Lived in the Castle",
+     "author": "Shirley Jackson",
+     "year": "2016",
+     "coverId": 8903974,
+     "edition": "OL27444180M",
+     "isbn": "9780143129547"
+    }
+   ]
+  },
+  {
+   "name": "Penguin Modern",
+   "checked": "50 Editionen der Open-Library-Liste OL207773L (seeds.json) / 50 mit Cover / 50 im Design; 6 Editionen einzeln nachgeladen fuer ISBN",
+   "note": "Die Liste hat alle 50 Baende mit Cover, alle im mintgruenen Design (Nr. 28 Achebe 14417073 und Nr. 32 Ekwensi sind etwas blasse Scans). Die Cover unterscheiden sich nur im Text; Vielfalt kommt allein aus Autoren/Titeln.",
+   "examples": [
+    {
+     "title": "Letter from Birmingham Jail",
+     "author": "Martin Luther King, Jr.",
+     "year": "2018",
+     "coverId": 12728481,
+     "edition": "OL37847932M",
+     "isbn": "9780241339466"
+    },
+    {
+     "title": "Notes on Nationalism",
+     "author": "George Orwell",
+     "year": "2018",
+     "coverId": 12727187,
+     "edition": "OL30597976M",
+     "isbn": "9780241339565"
+    },
+    {
+     "title": "Create Dangerously",
+     "author": "Albert Camus",
+     "year": "2018",
+     "coverId": 12727185,
+     "edition": "OL30598458M",
+     "isbn": "9780241339121"
+    },
+    {
+     "title": "Notes on 'Camp'",
+     "author": "Susan Sontag",
+     "year": "2018",
+     "coverId": 12818843,
+     "edition": "OL30597978M",
+     "isbn": "9780241339701"
+    },
+    {
+     "title": "Dark Days",
+     "author": "James Baldwin",
+     "year": "2018",
+     "coverId": 12818855,
+     "edition": "OL29368582M",
+     "isbn": "9780241337547"
+    },
+    {
+     "title": "The Garden of Forking Paths",
+     "author": "Jorge Luis Borges",
+     "year": "2018",
+     "coverId": 12818869,
+     "edition": "OL30597973M",
+     "isbn": "9780241339053"
+    }
+   ]
+  },
+  {
+   "name": "Virago Modern Classics Designer Collection",
+   "checked": "28 ISBNs von beautifulbooks.info / 18 mit Cover / 18 im Design",
+   "note": "Alle 18 Cover sind die Stoffmuster-Ausgaben. Strangers on a Train (OL28441260M) traegt bei Open Library das Datum 2001, das Bild ist aber das Designer-Cover.",
+   "examples": [
+    {
+     "title": "The Enchanted April",
+     "author": "Elizabeth von Arnim",
+     "year": "2012",
+     "coverId": 9098903,
+     "edition": "OL27654790M",
+     "isbn": "9781844087617"
+    },
+    {
+     "title": "Their Eyes Were Watching God",
+     "author": "Zora Neale Hurston",
+     "year": "2008",
+     "coverId": 10326321,
+     "edition": "OL28476245M",
+     "isbn": "9781844085286"
+    },
+    {
+     "title": "Rebecca",
+     "author": "Daphne du Maurier",
+     "year": "2012",
+     "coverId": 9070307,
+     "edition": "OL27620724M",
+     "isbn": "9781844088799"
+    },
+    {
+     "title": "Excellent Women",
+     "author": "Barbara Pym",
+     "year": "2008",
+     "coverId": 10550663,
+     "edition": "OL31871933M",
+     "isbn": "9781844085262"
+    },
+    {
+     "title": "The Talented Mr Ripley",
+     "author": "Patricia Highsmith",
+     "year": "2015",
+     "coverId": 12698825,
+     "edition": "OL29263617M",
+     "isbn": "9780349006963"
+    },
+    {
+     "title": "The Ghost Stories of Edith Wharton",
+     "author": "Edith Wharton",
+     "year": "2019",
+     "coverId": 14677792,
+     "edition": "OL29404606M",
+     "isbn": "9780349009674"
+    }
+   ]
+  },
+  {
+   "name": "Penguin Drop Caps",
+   "checked": "26 ISBNs von beautifulbooks.info / 22 mit Cover / 22 im Design",
+   "note": "Ohne Cover: D Great Expectations, I Artist of the Floating World, O Butterfield 8, X Sky Burial. Auswahl ueber das Alphabet verteilt, damit der Farbverlauf sichtbar wird.",
+   "examples": [
+    {
+     "title": "Pride and Prejudice",
+     "author": "Jane Austen",
+     "year": "2012",
+     "coverId": 7576923,
+     "edition": "OL26020929M",
+     "isbn": "9780143123163"
+    },
+    {
+     "title": "Madame Bovary",
+     "author": "Gustave Flaubert",
+     "year": "2012",
+     "coverId": 10191306,
+     "edition": "OL28263110M",
+     "isbn": "9780143123804"
+    },
+    {
+     "title": "A Portrait of the Artist as a Young Man",
+     "author": "James Joyce",
+     "year": "2013",
+     "coverId": 9021712,
+     "edition": "OL27566644M",
+     "isbn": "9780143124313"
+    },
+    {
+     "title": "Moby-Dick",
+     "author": "Herman Melville",
+     "year": "2013",
+     "coverId": 9022780,
+     "edition": "OL27567722M",
+     "isbn": "9780143124672"
+    },
+    {
+     "title": "Cannery Row",
+     "author": "John Steinbeck",
+     "year": "2014",
+     "coverId": 8997035,
+     "edition": "OL27541339M",
+     "isbn": "9780143125211"
+    },
+    {
+     "title": "When You Are Old",
+     "author": "W. B. Yeats",
+     "year": "2014",
+     "coverId": 8981312,
+     "edition": "OL27525368M",
+     "isbn": "9780143126386"
+    }
+   ]
+  },
+  {
+   "name": "Penguin Great Ideas",
+   "checked": "21 ISBNs von PRH BM5 (erste Seite, 33 Titel laut Seite) / 10 mit Cover / 9 im Design (5 US-E-Book-ISBNs 404, Perec/What Is Existentialism im Design; Social Contract und Communist Manifesto sind die US-Ausgaben 2006 im selben Design)",
+   "note": "PRH BM5 mischt US-Ausgaben (2006) und den UK-Satz von 2020; fruehere UK-Saetze (2004-2010) nicht auf der Seite, Open-Library-Suche nach der Reihe ergibt 0 Treffer. On Solitude (12586921) ist sehr blass, entspricht aber dem cremefarbenen Original. What Is Existentialism (14624326) fast weiss, deshalb nicht gewaehlt.",
+   "examples": [
+    {
+     "title": "The Social Contract",
+     "author": "Jean-Jacques Rousseau",
+     "year": "2006",
+     "coverId": 111360,
+     "edition": "OL7361638M",
+     "isbn": "9780143037491"
+    },
+    {
+     "title": "The Communist Manifesto",
+     "author": "Karl Marx & Friedrich Engels",
+     "year": "2006",
+     "coverId": 111362,
+     "edition": "OL7361639M",
+     "isbn": "9780143037514"
+    },
+    {
+     "title": "On Solitude",
+     "author": "Michel de Montaigne",
+     "year": "2010",
+     "coverId": 12586921,
+     "edition": "OL36699673M",
+     "isbn": "9780141399256"
+    },
+    {
+     "title": "God Is Dead. God Remains Dead. And We Have Killed Him.",
+     "author": "Friedrich Nietzsche",
+     "year": "2020",
+     "coverId": 14149542,
+     "edition": "OL29506523M",
+     "isbn": "9780241472842"
+    },
+    {
+     "title": "Three Japanese Buddhist Monks",
+     "author": "Saigyo, Kamo no Chomei, Yoshida Kenko",
+     "year": "2020",
+     "coverId": 13697879,
+     "edition": "OL29506535M",
+     "isbn": "9780241472910"
+    },
+    {
+     "title": "Brief Notes on the Art and Manner of Arranging One's Books",
+     "author": "Georges Perec",
+     "year": "2020",
+     "coverId": 14604198,
+     "edition": "OL29515187M",
+     "isbn": "9780241475218"
+    }
+   ]
+  },
+  {
+   "name": "Little Black Classics",
+   "checked": "44 ISBNs von penguin.co.uk LBC (Seiten 1-3) / 17 mit Cover / 15 im Design (Terrible Beauty 14412905 = Titelseite, Suffragettes 12516411 mit Bibliotheksetikett)",
+   "note": "penguin.co.uk listet nur 44 der 128 Baende; die gefundenen Nummern liegen alle zwischen 81 und 124, eine Verteilung ueber die ganze Reihe war daher nicht moeglich. Einige Scans (Nr. 112, 116, 119, 81) sind grau statt schwarz.",
+   "examples": [
+    {
+     "title": "The World Is Full of Foolish Men",
+     "author": "Jean de la Fontaine",
+     "year": "2016",
+     "coverId": 13898668,
+     "edition": "OL29292840M",
+     "isbn": "9780241250402"
+    },
+    {
+     "title": "The Death of Ivan Ilyich",
+     "author": "Leo Tolstoy",
+     "year": "2016",
+     "coverId": 14831465,
+     "edition": "OL28587988M",
+     "isbn": "9780241251768"
+    },
+    {
+     "title": "The Frogs",
+     "author": "Aristophanes",
+     "year": "2016",
+     "coverId": 14772780,
+     "edition": "OL38810870M",
+     "isbn": "9780241250396"
+    },
+    {
+     "title": "Letters to a Young Poet",
+     "author": "Rainer Maria Rilke",
+     "year": "2016",
+     "coverId": 15158500,
+     "edition": "OL28592112M",
+     "isbn": "9780241252055"
+    },
+    {
+     "title": "The Love That Moves the Sun and Other Stars",
+     "author": "Dante",
+     "year": "2016",
+     "coverId": 10108828,
+     "edition": "OL28170908M",
+     "isbn": "9780241250426"
+    },
+    {
+     "title": "White Nights",
+     "author": "Fyodor Dostoyevsky",
+     "year": "2016",
+     "coverId": 14598226,
+     "edition": "OL49273234M",
+     "isbn": "9780241252086"
+    }
+   ]
+  },
+  {
+   "name": "Melville House - The Art of the Novella",
+   "checked": "34 ISBNs (21 PRH ATN erste Seite + 13 aus Open-Library-Suche \"art of the novella\") / 18 mit Cover / 17 im Design (Pathseeker ist die Schwesterreihe Contemporary Art of the Novella)",
+   "note": "15 der 21 PRH-ISBNs (9781612192xxx u.a.) sind bei Open Library unbekannt (404), vermutlich E-Books. Die fehlenden Print-ISBNs kamen aus der Open-Library-Suche. PRH nennt 57 Titel, laedt aber nur 21 ohne JavaScript.",
+   "examples": [
+    {
+     "title": "Bartleby the Scrivener",
+     "author": "Herman Melville",
+     "year": "2004",
+     "coverId": 740300,
+     "edition": "OL3291503M",
+     "isbn": "9780974607801"
+    },
+    {
+     "title": "May Day",
+     "author": "F. Scott Fitzgerald",
+     "year": "2008",
+     "coverId": 3062851,
+     "edition": "OL12338981M",
+     "isbn": "9781933633435"
+    },
+    {
+     "title": "The Alienist",
+     "author": "Machado de Assis",
+     "year": "2012",
+     "coverId": 7815572,
+     "edition": "OL26147358M",
+     "isbn": "9781612191072"
+    },
+    {
+     "title": "The Lemoine Affair",
+     "author": "Marcel Proust",
+     "year": "2008",
+     "coverId": 3062849,
+     "edition": "OL12338979M",
+     "isbn": "9781933633411"
+    },
+    {
+     "title": "The Coxon Fund",
+     "author": "Henry James",
+     "year": "2008",
+     "coverId": 3062850,
+     "edition": "OL12338980M",
+     "isbn": "9781933633428"
+    },
+    {
+     "title": "Billy Budd, Sailor",
+     "author": "Herman Melville",
+     "year": "2016",
+     "coverId": 8892671,
+     "edition": "OL27432136M",
+     "isbn": "9781612195858"
+    }
+   ]
+  },
+  {
+   "name": "Découvertes Gallimard",
+   "checked": "BnF SRU cb342469648 (899 Datensätze), 32 ISBNs über die ganze Liste verteilt bei Open Library nachgeschlagen / 20 bei OL bekannt / 11 mit Cover / 10 im Reihendesign",
+   "note": "Abgelehnt: 'La Saga du Tour de France' (Aufkleber 'Livre d'occasion' auf dem Scan). Die übrigen zehn sind alle sauber im Design (randloses Bild, Titelblock oben, Reihenname am Rücken). Beim ersten Download kamen drei Bilder als HTML statt JPEG zurück (vorübergehend), beim zweiten Versuch waren sie da.",
+   "examples": [
+    {
+     "title": "David, l'art et le politique",
+     "author": "Régis Michel, Marie-Catherine Sahut",
+     "year": "1988",
+     "coverId": 969371,
+     "edition": "OL1790469M",
+     "isbn": "207053068X"
+    },
+    {
+     "title": "La balle au pied. Histoire du football",
+     "author": "Alfred Wahl",
+     "year": "1990",
+     "coverId": 8374296,
+     "edition": "OL15222649M",
+     "isbn": "2070531058"
+    },
+    {
+     "title": "Les mystères du vaudou",
+     "author": "Laënnec Hurbon",
+     "year": "1993",
+     "coverId": 969404,
+     "edition": "OL8840097M",
+     "isbn": "2070531864"
+    },
+    {
+     "title": "Blaise Cendrars, l'or d'un poète",
+     "author": "Miriam Cendrars",
+     "year": "1996",
+     "coverId": 3078325,
+     "edition": "OL12397016M",
+     "isbn": "2070586650"
+    },
+    {
+     "title": "Marie-Antoinette. La dernière reine",
+     "author": "Évelyne Lever",
+     "year": "2000",
+     "coverId": 2137551,
+     "edition": "OL9666957M",
+     "isbn": "2070535223"
+    },
+    {
+     "title": "L'Arménie à l'épreuve des siècles",
+     "author": "Annie et Jean-Pierre Mahé",
+     "year": "2005",
+     "coverId": 13771130,
+     "edition": "OL22555910M",
+     "isbn": "207031409X"
+    }
+   ]
+  },
+  {
+   "name": "Rivages/Noir",
+   "checked": "BnF SRU cb342436563 (1.355 Datensätze), 32 ISBNs verteilt nachgeschlagen / 15 bei OL bekannt / 9 mit Cover / 9 im Reihendesign",
+   "note": "Alle neun Cover im Design (Foto/Filmstill oder Bild, Titel und Autor in weißen Schriftkästen, Rivages/Noir unten). Bände ab ca. Nr. 600 sind bei Open Library dünn; die zwei jüngsten Treffer sind von 2008 und 2012. Nicht jedes Cover ist schwarz grundiert — der schwarze Rahmen gilt eher für die frühen Bände.",
+   "examples": [
+    {
+     "title": "Des feux qui détruisent",
+     "author": "Harry Whittington",
+     "year": "1986",
+     "coverId": 3152371,
+     "edition": "OL12637560M",
+     "isbn": "2869300182"
+    },
+    {
+     "title": "Lune sanglante",
+     "author": "James Ellroy",
+     "year": "1987",
+     "coverId": 991545,
+     "edition": "OL8985734M",
+     "isbn": "2869300778"
+    },
+    {
+     "title": "Aucune bête aussi féroce",
+     "author": "Edward Bunker",
+     "year": "1992",
+     "coverId": 991618,
+     "edition": "OL8985798M",
+     "isbn": "2869305389"
+    },
+    {
+     "title": "Et tournent les chevaux de bois",
+     "author": "Dorothy B. Hughes",
+     "year": "1994",
+     "coverId": 3152545,
+     "edition": "OL12637747M",
+     "isbn": "2869307977"
+    },
+    {
+     "title": "Tohu-bohu",
+     "author": "Marc Villard, Jean-Bernard Pouy",
+     "year": "2007",
+     "coverId": 11028843,
+     "edition": "OL32372871M",
+     "isbn": "9782743617578"
+    },
+    {
+     "title": "Défunts disparus",
+     "author": "Paco Ignacio Taibo II",
+     "year": "2012",
+     "coverId": 10774561,
+     "edition": "OL32114432M",
+     "isbn": "9782743623661"
+    }
+   ]
+  },
+  {
+   "name": "L'Imaginaire (Gallimard)",
+   "checked": "BnF SRU cb34226014t (851 Datensätze), 32 ISBNs verteilt nachgeschlagen / 19 bei OL bekannt, alle mit Cover / 17 sauber im Reihendesign",
+   "note": "Beste Abdeckung der Gruppe. Abgelehnt: 'La toile d'araignée' (Roth, Titelseite statt Umschlag) und 'L'archéologue' (Bibliotheksexemplar mit Signaturschild und Strichcode, Design aber erkennbar). 'Chaka' (Nr. 599, 2010) hat eine vollflächige Illustration statt der Typo-Grafik, weitere Option. Die Farbe des Logostreifens wechselt je Band, das zeigt die Auswahl mit.",
+   "examples": [
+    {
+     "title": "Saint Glinglin",
+     "author": "Raymond Queneau",
+     "year": "1992",
+     "coverId": 966189,
+     "edition": "OL8837279M",
+     "isbn": "2070291510"
+    },
+    {
+     "title": "Au jour le jour",
+     "author": "Saul Bellow",
+     "year": "1983",
+     "coverId": 3078500,
+     "edition": "OL12397224M",
+     "isbn": "2070700143"
+    },
+    {
+     "title": "Papiers collés",
+     "author": "Georges Perros",
+     "year": "1987",
+     "coverId": 969693,
+     "edition": "OL8840384M",
+     "isbn": "207070856X"
+    },
+    {
+     "title": "Le calice de la vie",
+     "author": "Ivan Bounine",
+     "year": "1990",
+     "coverId": 3078723,
+     "edition": "OL12397552M",
+     "isbn": "2070720233"
+    },
+    {
+     "title": "Tais-toi",
+     "author": "Paul Morand",
+     "year": "1998",
+     "coverId": 970137,
+     "edition": "OL8840787M",
+     "isbn": "2070752321"
+    },
+    {
+     "title": "Le voyage d'Urien",
+     "author": "André Gide",
+     "year": "2003",
+     "coverId": 970347,
+     "edition": "OL8840970M",
+     "isbn": "207076883X"
+    }
+   ]
+  },
+  {
+   "name": "Éditions de Minuit (Nouveau Roman)",
+   "checked": "Keine Reihenliste; Open-Library-Suche publisher:minuit für Beckett, Robbe-Grillet, Duras, Simon (dazu Sarraute, Butor, Pinget, Echenoz nur gezählt): 82 Minuit-Ausgaben mit Cover der vier Autoren angesehen / davon ca. 65 im Hausstil (weiß oder vergilbt, blauer Rahmen, Stern-m), viele davon aber Bibliotheksscans mit Signaturschild",
+   "note": "Abgelehnt: Ausgaben der Taschenbuchreihe 'Minuit double' (Fotos/Farbflächen, z. B. La maison de rendez-vous, Le Tramway, Le Vent 2013, Savannah Bay 2007), Leineneinbände (rot, dunkelgrün), eine US-Ausgabe von Eleutheria, 'Pour un nouveau roman' (Collection Critique), und alle Scans mit Signaturschild oder Strichcode. Beckett-Bände mit Fotovignette (Fin de partie, Oh les beaux jours) sind Hausstil und bringen Abwechslung. Die ISBN von 'Fin de partie' gehört zu einem Nachdruck; OL datiert sie 1957.",
+   "examples": [
+    {
+     "title": "Fin de partie",
+     "author": "Samuel Beckett",
+     "year": "1957",
+     "coverId": 983775,
+     "edition": "OL8913180M",
+     "isbn": "9782707300706"
+    },
+    {
+     "title": "Oh les beaux jours, suivi de Pas moi",
+     "author": "Samuel Beckett",
+     "year": "1975",
+     "coverId": 983768,
+     "edition": "OL4991828M",
+     "isbn": "2707300551"
+    },
+    {
+     "title": "Le voyeur",
+     "author": "Alain Robbe-Grillet",
+     "year": "1978",
+     "coverId": 983812,
+     "edition": "OL8913213M",
+     "isbn": "9782707302434"
+    },
+    {
+     "title": "Moderato cantabile",
+     "author": "Marguerite Duras",
+     "year": "1992",
+     "coverId": 983837,
+     "edition": "OL8913230M",
+     "isbn": "9782707303394"
+    },
+    {
+     "title": "L'amant",
+     "author": "Marguerite Duras",
+     "year": "1993",
+     "coverId": 6889972,
+     "edition": "OL21358008M",
+     "isbn": "2707306959"
+    },
+    {
+     "title": "L'herbe",
+     "author": "Claude Simon",
+     "year": "1983",
+     "coverId": 983840,
+     "edition": "OL8913233M",
+     "isbn": "9782707303523"
+    }
+   ]
+  },
+  {
+   "name": "NYRB Children's Collection",
+   "checked": "nyrb.com products.json, product_type 'NYRB Kids': 126 Produkte; 40 ISBNs (jede dritte, 979er ausgelassen) nachgeschlagen / 18 mit Cover / 10 im klassischen Design (rotes Rückenband, Originalillustration)",
+   "note": "Die neueren Taschenbücher (ab ca. 2016/17) haben ein anderes Design: gelber Rückenstreifen 'NYRB Kids' statt rotem Band (Curious Lobster, Little Bookroom, Carbonel and Calidor, Meet Monster, Arm in Arm) — nicht gewählt. Abgelehnt außerdem: Jenny's Birthday Book (angeschnittener Scan), The Little Woman Wanted Noise (graue Titelseite ohne Band), Alphabetabum (Leineneinband ohne Band). 'Wee Gillis' trägt das gedruckte Newbery-Siegel.",
+   "examples": [
+    {
+     "title": "Jenny and the Cat Club",
+     "author": "Esther Averill",
+     "year": "2003",
+     "coverId": 859082,
+     "edition": "OL3678506M",
+     "isbn": "9781590170472"
+    },
+    {
+     "title": "Wee Gillis",
+     "author": "Munro Leaf, ill. Robert Lawson",
+     "year": "2006",
+     "coverId": 859227,
+     "edition": "OL3414972M",
+     "isbn": "9781590172063"
+    },
+    {
+     "title": "The Box of Delights",
+     "author": "John Masefield",
+     "year": "2007",
+     "coverId": 859263,
+     "edition": "OL8845346M",
+     "isbn": "9781590172513"
+    },
+    {
+     "title": "Ounce Dice Trice",
+     "author": "Alastair Reid, ill. Ben Shahn",
+     "year": "2009",
+     "coverId": 5777850,
+     "edition": "OL22691378M",
+     "isbn": "9781590173206"
+    },
+    {
+     "title": "The Complete Polly and the Wolf",
+     "author": "Catherine Storr",
+     "year": "2016",
+     "coverId": 10376509,
+     "edition": "OL29155173M",
+     "isbn": "9781681370019"
+    },
+    {
+     "title": "The Night of Wishes",
+     "author": "Michael Ende, ill. Regina Kehn",
+     "year": "2017",
+     "coverId": 10197381,
+     "edition": "OL28269565M",
+     "isbn": "9781681371887"
+    }
+   ]
+  },
+  {
+   "name": "Semiotext(e) Intervention Series",
+   "checked": "en.wikipedia 'Semiotext(e)': 30 ISBNs (Nr. 1–28 plus Neuauflage Nr. 2 und Autonomia) alle nachgeschlagen / 24 mit Cover / 22 im Reihendesign",
+   "note": "Hervorragende Abdeckung bis Nr. 24; Nr. 25–28 (2018/19) ohne Cover. Abgelehnt: 'This Is Not a Program' (Textseite), 'Autonomia' (Prototyp-Band von 2007 in anderem Design). 'Gore Capitalism' ist im Design, trägt aber 'Copyrighted Material'-Stempel oben und unten. Ab ca. Nr. 12 kommen Verläufe und Raster in die Flächen.",
+   "examples": [
+    {
+     "title": "The Coming Insurrection",
+     "author": "The Invisible Committee",
+     "year": "2009",
+     "coverId": 6290393,
+     "edition": "OL23407396M",
+     "isbn": "9781584350804"
+    },
+    {
+     "title": "The Screwball Asses",
+     "author": "Guy Hocquenghem",
+     "year": "2010",
+     "coverId": 6684927,
+     "edition": "OL24604587M",
+     "isbn": "9781584350811"
+    },
+    {
+     "title": "Where Art Belongs",
+     "author": "Chris Kraus",
+     "year": "2011",
+     "coverId": 13977550,
+     "edition": "OL25095183M",
+     "isbn": "9781584350989"
+    },
+    {
+     "title": "Preliminary Materials for a Theory of the Young-Girl",
+     "author": "Tiqqun",
+     "year": "2012",
+     "coverId": 7618549,
+     "edition": "OL26043046M",
+     "isbn": "9781584351085"
+    },
+    {
+     "title": "The Uprising: On Poetry and Finance",
+     "author": "Franco 'Bifo' Berardi",
+     "year": "2012",
+     "coverId": 7507301,
+     "edition": "OL25983309M",
+     "isbn": "9781584351122"
+    },
+    {
+     "title": "Whites, Jews, and Us",
+     "author": "Houria Bouteldja",
+     "year": "2017",
+     "coverId": 14551114,
+     "edition": "OL29348330M",
+     "isbn": "9781635900033"
+    }
+   ]
+  },
+  {
+   "name": "Persephone Books",
+   "checked": "persephonebooks.co.uk products.json, product_type 'Grey Book': 155 Bände mit ISBN; jede fünfte Nummer (31 ISBNs) nachgeschlagen / 19 mit Cover / 12 im grauen Umschlag",
+   "note": "Fünf der 19 Cover sind Vorsatzpapiere statt des grauen Umschlags (Hostages to Fortune, Operation Heartbreak, A London Child of the 1870s, Gardener's Nightcap, To Bed With Grand Music), einmal eine Titelseite (Miss Buncle Married), einmal ein dunklerer Umschlag mit Goldschild (Miss Ranskill Comes Home, vermutlich andere Ausgabe) — alle abgelehnt. Die grauen Umschläge sehen fast gleich aus, Abwechslung gibt es nur im Titelschild; für eine Übersicht wirkt die Reihe als Kachelwand eintönig, die Vorsatzpapiere wären das Bunte, sind aber nicht der Umschlag.",
+   "examples": [
+    {
+     "title": "William – an Englishman",
+     "author": "Cicely Hamilton",
+     "year": "1999",
+     "coverId": 723363,
+     "edition": "OL8478251M",
+     "isbn": "9780953478002"
+    },
+    {
+     "title": "The Victorian Chaise-longue",
+     "author": "Marghanita Laski",
+     "year": "1999",
+     "coverId": 723367,
+     "edition": "OL8478255M",
+     "isbn": "9780953478040"
+    },
+    {
+     "title": "Miss Pettigrew Lives for a Day",
+     "author": "Winifred Watson",
+     "year": "2000",
+     "coverId": 948982,
+     "edition": "OL8767142M",
+     "isbn": "9781903155103"
+    },
+    {
+     "title": "Lettice Delmer",
+     "author": "Susan Miles",
+     "year": "2002",
+     "coverId": 948992,
+     "edition": "OL8767153M",
+     "isbn": "9781903155219"
+    },
+    {
+     "title": "The Crowded Street",
+     "author": "Winifred Holtby",
+     "year": "2008",
+     "coverId": 11303687,
+     "edition": "OL32676980M",
+     "isbn": "9781903155660"
+    },
+    {
+     "title": "Milton Place",
+     "author": "Elisabeth de Waal",
+     "year": "2019",
+     "coverId": 14560820,
+     "edition": "OL50525503M",
+     "isbn": "9781910263211"
+    }
+   ]
+  },
+  {
+   "name": "Diogenes detebe (Diogenes Taschenbuch)",
+   "checked": "2026-09-29: Open Library search.json q='publisher:Diogenes isbn:32572*' (2266 Werke, 92 Ausgaben mit Cover in den ersten 100 Werken); 46 Cover angesehen. buch-sammler.de-Liste Seite 1 gelesen.",
+   "note": "Abdeckung gut: rund 25 der 46 angesehenen Cover zeigen das Rahmenlayout (weiss, Bild im dünnen Rahmen mit runden Ecken, Didot-Titel darunter). Daneben die ältere gelbe Krimi-Reihe (Chandler, Hammett, Highsmith, Wells: gelb/schwarz mit Strichzeichnung) und Klassiker mit vollflächigem Bild — nicht im Seriendesign, verworfen. Nicht jedes Rahmenbild ist ein Gemälde (Irving, Yoshimoto, Bradbury: Zeichnungen). Gewählt: Gemälde, Farben gestreut.",
+   "examples": [
+    {
+     "title": "Das Parfum",
+     "author": "Patrick Süskind",
+     "year": "1994",
+     "coverId": 999008,
+     "edition": "OL9021484M",
+     "isbn": "3257228007"
+    },
+    {
+     "title": "Carol",
+     "author": "Patricia Highsmith",
+     "year": "1992",
+     "coverId": 3176945,
+     "edition": "OL12680062M",
+     "isbn": "3257224877"
+    },
+    {
+     "title": "Der Vorleser",
+     "author": "Bernhard Schlink",
+     "year": "1997",
+     "coverId": 8782586,
+     "edition": "OL18666592M",
+     "isbn": "3257229534"
+    },
+    {
+     "title": "Madame Bovary",
+     "author": "Gustave Flaubert",
+     "year": "1979",
+     "coverId": 998705,
+     "edition": "OL9021257M",
+     "isbn": "3257207212"
+    },
+    {
+     "title": "Die Apothekerin",
+     "author": "Ingrid Noll",
+     "year": "1996",
+     "coverId": 999042,
+     "edition": "OL9021515M",
+     "isbn": "3257229305"
+    },
+    {
+     "title": "Die dunkle Seite des Mondes",
+     "author": "Martin Suter",
+     "year": "2001",
+     "coverId": 999169,
+     "edition": "OL9021638M",
+     "isbn": "3257233019"
+    }
+   ]
+  },
+  {
+   "name": "insel taschenbuch (frühe Fleckhaus-Jahre)",
+   "checked": "2026-09-29: Open Library search.json q='publisher:Insel isbn:345831*' (126 Werke, 73 Ausgaben mit Cover); alle 73 Cover angesehen.",
+   "note": "Deutlich besser als die Stichprobe in docs/reihen-recherche.md (2/12 zufällig): gut 60 der 73 Cover zeigen das Fleckhaus-Design (Pastellkarton, Vignette aus alter Illustration, 'insel taschenbuch' unter dem Titel). Verworfen: späte Fotocover (Monte Christo, Kaschnitz, Hesse mit Bibliotheksetikett), Weihnachtsbücher im späteren Layout, ein Produktfoto (Carossa), ein Datenblatt (Knigge 8730234), Lévi-Strauss ohne Bild. Jahr = Erscheinungsjahr der Ausgabe laut OL, nicht Erstausgabe der it-Nummer. it-Nummer aus der ISBN (3-458-31700+N).",
+   "examples": [
+    {
+     "title": "Die Nibelungen (it 14)",
+     "author": "Franz Keim / Carl Otto Czeschka",
+     "year": "1972",
+     "coverId": 15222873,
+     "edition": "OL9041961M",
+     "isbn": "3458317147"
+    },
+    {
+     "title": "Alice hinter den Spiegeln (it 97)",
+     "author": "Lewis Carroll",
+     "year": "1974",
+     "coverId": 1010543,
+     "edition": "OL9041975M",
+     "isbn": "345831797X"
+    },
+    {
+     "title": "Salome (it 107)",
+     "author": "Oscar Wilde",
+     "year": "1975",
+     "coverId": 1010545,
+     "edition": "OL9041976M",
+     "isbn": "3458318070"
+    },
+    {
+     "title": "Effi Briest (it 138)",
+     "author": "Theodor Fontane",
+     "year": "1984",
+     "coverId": 14538960,
+     "edition": "OL49823055M",
+     "isbn": "3458318380"
+    },
+    {
+     "title": "Gullivers Reisen (it 58)",
+     "author": "Jonathan Swift",
+     "year": "1996",
+     "coverId": 3204980,
+     "edition": "OL12727084M",
+     "isbn": "3458317589"
+    },
+    {
+     "title": "Lebensansichten des Katers Murr (it 168)",
+     "author": "E. T. A. Hoffmann",
+     "year": "",
+     "coverId": 1010556,
+     "edition": "OL9041984M",
+     "isbn": "3458318682"
+    }
+   ]
+  },
+  {
+   "name": "Zytglogge-Reihe, Umschläge von Werner Maurer (Sammlung Keller)",
+   "checked": "2026-09-29: die sechs vorgegebenen Keller-Vorschaubilder geladen, alle HTTP 200 image/jpeg (17–22 KB). Keine weiteren Keller-Bilder geladen.",
+   "note": "Jahre nicht einzeln belegt (Keller-Recherche: 1970er). Open Library hat laut lab/collections/research/sammlung-keller-series.md 0 dieser Umschläge.",
+   "examples": [
+    {
+     "title": "Dr Schtammgascht",
+     "author": "Burren",
+     "year": "1970er",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/maurer_zyt_schtammgascht_web-200x321.jpg",
+     "edition": "",
+     "isbn": ""
+    },
+    {
+     "title": "Papierrosen",
+     "author": "Meier",
+     "year": "1970er",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/maurer_zyt_papierrosen_web-200x321.jpg",
+     "edition": "",
+     "isbn": ""
+    },
+    {
+     "title": "Der Besuch",
+     "author": "Meier",
+     "year": "1970er",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/maurer_zyt_besuch_web-200x321.jpg",
+     "edition": "",
+     "isbn": ""
+    },
+    {
+     "title": "Anpassungsversuche",
+     "author": "Betts",
+     "year": "1970er",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/maurer_zyt_anpassungsversuche_web-200x321.jpg",
+     "edition": "",
+     "isbn": ""
+    },
+    {
+     "title": "Ds fromme Ross",
+     "author": "Widmer",
+     "year": "1970er",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/maurer_zyt_ross_web-200x321.jpg",
+     "edition": "",
+     "isbn": ""
+    },
+    {
+     "title": "Die Fowlersche Lösung",
+     "author": "Mühlethaler",
+     "year": "1970er",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/maurer_zyt_fowlersche_web-200x306.jpg",
+     "edition": "",
+     "isbn": ""
+    }
+   ]
+  },
+  {
+   "name": "Ravensburger Taschenbücher, Umschläge von Walter Grieder und Edith Schindler (Sammlung Keller)",
+   "checked": "2026-09-29: Künstlerseiten sammlungkeller.ch/grieder-walter.html und /schindler-edith.html (2 s Pause), 20 Vorschaubilder geladen und angesehen (Grieder: die 10 Hochformat-Umschläge im Abschnitt 'Ravensburger Taschenbücher'; Schindler: die 10 Ravensburger-TB-Umschläge im Abschnitt 'Gestaltung von Buch-Umschlägen (Taschenbücher)'). Alle 20 sind echte Umschläge.",
+   "note": "Grieder: 10 Taschenbuch-Umschläge mit Nummer und Jahr (Nr. 255–583, 1973–1979) plus 4 Dominik-Dachs-Umschläge; die Querformate (Müllschlucker, Vergessene Stadt, Zeitgericht, Marsungeheuer) sind Umschlag+Innenseiten. Schindler: nur 'Der wilde Sam' hat bei Keller eine Bildunterschrift; die übrigen neun haben keine, Titel und Autor stehen nur auf dem Bild (dort abgelesen). Schindlers Bände sind älter (ab Nr. 115, 1962) und haben das frühere Reihenlayout mit Windrad-Signet; Grieders ab 1973 teils das spätere Blau-Logo. Die Idee aus der Keller-Recherche, beide zu kombinieren, trägt: gemeinsames Reihenlayout (weisse Fussleiste 'Ravensburger Taschenbücher').",
+   "examples": [
+    {
+     "title": "Krokodilslieder",
+     "author": "Richard Bletschacher",
+     "year": "1973",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/grieder_krokodilslieder_web-01-160x248.jpg",
+     "edition": "",
+     "isbn": "",
+     "caption": "Walter Grieder: Umschlag & Illustrationen für \"Krokodilslieder\", Ravensburger, Nr. 267, 1973."
+    },
+    {
+     "title": "James und der Riesenpfirsich",
+     "author": "Roald Dahl",
+     "year": "1974",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/grieder_riesenpfirsich_web-01-160x246.jpg",
+     "edition": "",
+     "isbn": "",
+     "caption": "Walter Grieder: Umschlag & Illustrationen für \"James und der Riesenpfirsich\", Ravensburger, Nr. 296, 1974."
+    },
+    {
+     "title": "Die Wächter",
+     "author": "John Christopher",
+     "year": "1978",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/grieder_ravensburger_waechter-160x248.jpg",
+     "edition": "",
+     "isbn": "",
+     "caption": "Walter Grieder: Umschlag & Illustrationen für \"Die Wächter\", Ravensburger, Nr. 441, 1978."
+    },
+    {
+     "title": "Der wilde Sam",
+     "author": "Fred Gipson",
+     "year": "1962",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/schindler_wilde-sam_rav-tb_115-196x303.jpg",
+     "edition": "",
+     "isbn": "",
+     "caption": "Edith Schindler, Umschlagillustration für \"Der wilde Sam\" von Fred Gipson, Ravensburger Taschenbücher Nr. 115, 1962."
+    },
+    {
+     "title": "Vorstoß zum Pazifik",
+     "author": "Hans Baumann",
+     "year": "",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/schindler_ravensburger_pazifik_web-196x303.jpg",
+     "edition": "",
+     "isbn": "",
+     "caption": "(bei Keller ohne Bildunterschrift; Abschnitt 'Gestaltung von Buch-Umschlägen (Taschenbücher)', Edith Schindler; Titel vom Umschlag abgelesen)"
+    },
+    {
+     "title": "Weißer Sohn des kleinen Königs",
+     "author": "Alberto Manzi",
+     "year": "",
+     "coverId": null,
+     "img": "https://www.sammlungkeller.ch/media/images/thumbnails/schindler_ravensburger_weisser-sohn_web-196x302.jpg",
+     "edition": "",
+     "isbn": "",
+     "caption": "(bei Keller ohne Bildunterschrift; Abschnitt 'Gestaltung von Buch-Umschlägen (Taschenbücher)', Edith Schindler; Titel vom Umschlag abgelesen)"
+    }
+   ]
+  },
+  {
+   "name": "Nebula Award, Roman",
+   "checked": "2026-09-29: search.json q=award:nebula_award=novel, 68 Werke; 10 Katalog-Cover (cover_i) angesehen, alle echte Cover.",
+   "note": "Tag enthält auch Nicht-Romane (Nebula Awards Showcase-Anthologien, Gaimans Essayband 'The View From the Cheap Seats', eine polnische Liu-Cixin-Ausgabe). Katalog-Cover sind gemischte Ausgaben (Dispossessed = SF-Masterworks-Cover, Left Hand = Jubiläumsausgabe). Jahr = Erstveröffentlichung laut OL.",
+   "examples": [
+    {
+     "title": "Dune",
+     "author": "Frank Herbert",
+     "year": "1965",
+     "coverId": 11481354,
+     "edition": "OL32848840M",
+     "isbn": ""
+    },
+    {
+     "title": "The Left Hand of Darkness",
+     "author": "Ursula K. Le Guin",
+     "year": "1969",
+     "coverId": 10618463,
+     "edition": "OL31935740M",
+     "isbn": ""
+    },
+    {
+     "title": "Gateway",
+     "author": "Frederik Pohl",
+     "year": "1977",
+     "coverId": 9424523,
+     "edition": "OL4881862M",
+     "isbn": ""
+    },
+    {
+     "title": "Neuromancer",
+     "author": "William Gibson",
+     "year": "1984",
+     "coverId": 283860,
+     "edition": "work OL27258W",
+     "isbn": ""
+    },
+    {
+     "title": "Doomsday Book",
+     "author": "Connie Willis",
+     "year": "1992",
+     "coverId": 369478,
+     "edition": "OL1561481M",
+     "isbn": ""
+    },
+    {
+     "title": "Ancillary Justice",
+     "author": "Ann Leckie",
+     "year": "2013",
+     "coverId": 7355949,
+     "edition": "OL25726365M",
+     "isbn": ""
+    }
+   ]
+  },
+  {
+   "name": "Deutscher Buchpreis",
+   "checked": "2026-09-29: search.json q=award:deutscher-buchpreis, 21 Werke (20 mit Cover); 9 Katalog-Cover angesehen.",
+   "note": "Verworfen: 'Die Mittagsfrau' (cover 5289221 ist ein weisses Titelblatt). Der Tag enthält einen Fremdkörper ('Spiel, Satz und Sieg', Irsigler, ohne Cover). 2023 'Echtzeitalter' ist da (ohne Jahr im Katalog), 2025 fehlt.",
+   "examples": [
+    {
+     "title": "Es geht uns gut",
+     "author": "Arno Geiger",
+     "year": "2005",
+     "coverId": 1007997,
+     "edition": "work OL987076W",
+     "isbn": ""
+    },
+    {
+     "title": "Der Turm",
+     "author": "Uwe Tellkamp",
+     "year": "2008",
+     "coverId": 10564150,
+     "edition": "OL22800012M",
+     "isbn": ""
+    },
+    {
+     "title": "In Zeiten des abnehmenden Lichts",
+     "author": "Eugen Ruge",
+     "year": "2011",
+     "coverId": 6944501,
+     "edition": "OL24997482M",
+     "isbn": ""
+    },
+    {
+     "title": "Kruso",
+     "author": "Lutz Seiler",
+     "year": "2014",
+     "coverId": 13052170,
+     "edition": "OL27182430M",
+     "isbn": ""
+    },
+    {
+     "title": "Herkunft",
+     "author": "Saša Stanišić",
+     "year": "2019",
+     "coverId": 12232728,
+     "edition": "OL35390157M",
+     "isbn": ""
+    },
+    {
+     "title": "Hey guten Morgen, wie geht es dir?",
+     "author": "Martina Hefter",
+     "year": "2024",
+     "coverId": 14824941,
+     "edition": "OL56968446M",
+     "isbn": ""
+    }
+   ]
+  },
+  {
+   "name": "National Book Award",
+   "checked": "2026-09-29: search.json q=award:national_book_award, 267 Werke; 9 Katalog-Cover echter Belletristik-Preisträger angesehen.",
+   "note": "Tag sehr unsauber: 267 statt der in 5.10f gemessenen 82 Werke; darin Sachbuch- und Jugendbuch-Preisträger, Finalisten, Nicht-Preisträger (Wolf Hall, Atonement, Americanah, American Gods, Bibel), Preisreden, Jewish-Book-Award-Kataloge, Arbeitshefte. Eine Wand braucht eine Handauswahl. Verworfen: 'The Good Lord Bird' (8332028 ist ein Titelblatt). 'Invisible Man' hat als Katalog-Cover die deutsche Ammann-Ausgabe ('Der unsichtbare Mann').",
+   "examples": [
+    {
+     "title": "Invisible Man (Der unsichtbare Mann)",
+     "author": "Ralph Ellison",
+     "year": "1952",
+     "coverId": 998256,
+     "edition": "OL9020990M",
+     "isbn": ""
+    },
+    {
+     "title": "The Moviegoer",
+     "author": "Walker Percy",
+     "year": "1961",
+     "coverId": 291181,
+     "edition": "OL1024917M",
+     "isbn": ""
+    },
+    {
+     "title": "Gravity's Rainbow",
+     "author": "Thomas Pynchon",
+     "year": "1973",
+     "coverId": 97894,
+     "edition": "OL922236M",
+     "isbn": ""
+    },
+    {
+     "title": "White Noise",
+     "author": "Don DeLillo",
+     "year": "1985",
+     "coverId": 94015,
+     "edition": "OL2531465M",
+     "isbn": ""
+    },
+    {
+     "title": "The Corrections",
+     "author": "Jonathan Franzen",
+     "year": "2001",
+     "coverId": 9273701,
+     "edition": "OL10751586M",
+     "isbn": ""
+    },
+    {
+     "title": "Hell of a Book",
+     "author": "Jason Mott",
+     "year": "2021",
+     "coverId": 10580853,
+     "edition": "OL31895201M",
+     "isbn": ""
+    }
+   ]
+  }
+ ]
+}

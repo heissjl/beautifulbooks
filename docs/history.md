@@ -3386,7 +3386,7 @@ Julian: „ja, drafte das und füge die werke bei OL hinzu falls sie fehlen", da
 - **Offen:**
   - Auffällige Datensätze bei Open Library, die das Manifest-README aufzählt: Seitenzahlen, die nicht zum Jahr passen (Nr. 1, 19, 45, 322); ISBNs auf Drucken der 1960er, die es damals noch nicht gab; doppelte Ausgaben desselben Drucks (Nr. 402, 654, 724, 740, 778, 820, 831, 838, 842).
   - Nr. 397 (Chesterton) ist als Wirth belegt, es gibt aber kein Bild.
-## 2026-09-28 — Neue Schriften: Xanh Mono und Jost (ROADMAP 6.61)
+## 2026-09-28 · Neue Schriften: Xanh Mono und Jost (ROADMAP 6.61)
 
 Julian wollte die visuelle Identität klären und schickte zwei Fotos als Schriftkandidaten: einen Kassenbon von *eavesdrop* (674 Manhattan Ave, Brooklyn) und ein T-Shirt von Frankel's Delicatessen. Der Weg im Einzelnen steht in [docs/identitaet.md](identitaet.md).
 
@@ -3582,7 +3582,7 @@ Die Bandliste stammt aus der DNB, ergänzt aus K10plus: `lab/collections/lists/f
 - **Haffmans und Ex Libris:** Die Manifest-Agenten liefen, als die Sitzung endete; ihre Ordner enthalten nur Zwischenstände.
 
 **Herder Bücherei (Grieder), fertig am 2026-09-28.** 38 neue Ausgaben angelegt (OL62603082M–OL62603151M, Zuordnung in `created.json` im Manifest-Ordner) und 44 Umschläge hochgeladen. Die Wand `herder-bucherei-covers-by-walter-grieder` zeigt 44 von 45, laut Kontaktbogen alle von Grieder. Nr. 292/293 und 294/295 sind zwei Bände desselben Werks (*Wege zur Kunst*), deshalb steht nur einer auf der Wand. Online als Entwurf.
-## 2026-09-28 — Vorschaubilder in den neuen Schriften, eine Karte für die ganze Seite (ROADMAP 6.61)
+## 2026-09-28 · Vorschaubilder in den neuen Schriften, eine Karte für die ganze Seite (ROADMAP 6.61)
 
 - Werk- und Cover-Karte in Xanh Mono und Jost (`app/og.tsx`, WOFF in `assets/og/`). Lokal gerendert: *Frankenstein* als Werk-Karte (1,8 s kalt) und als Cover-Karte.
 - Neue Website-Karte `app/opengraph-image.tsx` (statisch, 0,2–0,3 s im Dev-Server), eine Wand aus buchförmigen Kacheln ohne echte Cover.
@@ -3590,7 +3590,7 @@ Die Bandliste stammt aus der DNB, ergänzt aus K10plus: `lab/collections/lists/f
 - **Verworfen:** eine Website-Karte aus dem Lade-Mosaik (Gesicht aus echten Covern) — das Gesicht ist in Kartengröße kaum zu erkennen, und die Rechtefrage gleicht der eines Logos ([docs/identitaet.md §4](identitaet.md)).
 - 890 Tests und Build grün.
 
-## 2026-09-28 — Welche Seite welche Vorschau zeigt (ROADMAP 6.61)
+## 2026-09-28 · Welche Seite welche Vorschau zeigt (ROADMAP 6.61)
 
 Julian: „setz das [die Website-Karte] erstmal als Standard für alle Vorschauen, die nicht auf ein einzelnes Cover gehen. Schaue auch nach für die neuen Unterseiten, die mittlerweile online gingen" — und dazu: die Werk-Karte mit vier Covern „ist gut für die Vorschau auf einen Werk-Link ohne ausgewähltes Cover".
 
@@ -3734,3 +3734,161 @@ Julian: „ja, mach D zur festen Fassung“. Der Schalter `?panel=` und die Vari
 | Reihe | 29 Drucke, 30 Kacheln, „one with 2 scans“ | keine |
 
 Keine Reste der alten Zeilen „printings/scans of this cover ▸“ im DOM, keine Seite breiter als das Fenster, 951 Tests grün.
+
+**Offene Fälle der Keller-Wände, nachgesehen am 2026-09-29.** Alle Fälle mit Bildern und Open-Library-Links stehen auf einer privaten Seite für Julian: https://claude.ai/artifact/S63L2jtsSUtTgWh2PBUgpM
+- **Berichtigung zu *Lone Star*:** Die Heyne-Ausgabe (Nr. 36, OL62603224M) hat einen anderen Heidelbach-Umschlag (Würfel) als die Haffmans-Ausgabe (Nr. 35, OL62603210M, Zigarre). Weil die Wand jedes Werk nur einmal zeigt, fehlt das Würfel-Bild. Oben stand, das sei richtig so; das stimmt nicht. Welches Bild bleibt, entscheidet Julian.
+- **Ex Libris, die zwölf zurückgehaltenen:** Nur Nr. 12, 15 und 29 sind reine Schrift. Die übrigen neun tragen eine abstrakte Grafik. Empfehlung: die neun dazunehmen.
+- **Empfehlungen für Julians Entscheidung:**
+  - Haffmans Nr. 63, 65 und 66 behalten; ebenso *Kim* (Büchergilde) und den *Kipling Companion*.
+  - Ex Libris Nr. 57 und 58 weglassen, bis ein Beleg für den Druck auftaucht.
+  - Die Fischer Bücherei als eine Wand mit beiden Layouts führen. In der Liste stehen 137 Cover im Layout „oben“ und 47 im Layout „unten“.
+  - Edelmann Nr. 818 und 843 erst, wenn es ein Bild gibt.
+
+**Julians Entscheidungen vom 2026-09-29, umgesetzt.**
+- ***Lone Star*: beide Umschläge bleiben.** Die Heyne-Ausgabe (Würfel, OL62603224M, Cover 15259879) steht jetzt direkt hinter der von Haffmans (Zigarre) auf der Wand, 65 Umschläge.
+  - `from-isbns.ts` kennt dafür das Listenfeld `repeat`: Der Eintrag zeigt seinen Umschlag auch dann, wenn das Werk schon auf der Wand ist.
+  - **Grenze:** Ein Online-Entwurf auf /curate führt jedes Werk nur einmal (`draftableWorks`). push-draft meldet deshalb „already equal“, und wer den Entwurf auf /curate veröffentlicht, ersetzt die Werke der Datei durch die des Entwurfs; der zweite Umschlag ginge dabei verloren. Damit beide erscheinen, muss die Wand über die Datei veröffentlicht werden (`published: true` und ein Deploy), oder Entwürfe müssen ein Werk mehrfach halten können.
+- ***Lone Star*, Verlagsfehler bei OL62603210M, und die falsche ISBN bei OL18051650M:** Julian bat mich, das reCAPTCHA zu lösen. Das tue ich grundsätzlich nicht; beide Berichtigungen bleiben bei Julian.
+- **Ex Libris: alle zwölf typografischen Umschläge aufgenommen** (Julian: „deine einschätzung stimmt nicht. nimm alle 12 auf“).
+  - Neun neue Ausgaben, OL62603421M–OL62603429M; hochgeladen auf diese und auf OL62255080M, OL4837605M und OL5142502M.
+  - Die Wand zeigt jetzt 56 von 58, Intro angepasst.
+  - Nr. 52 (*Irisches Tagebuch*) steht auf 1957, dem einzigen belegten Druck bei Ex Libris. Wyss arbeitete erst ab 1961 für Ex Libris; der Umschlag gehört vermutlich zu einem späteren, unverzeichneten Nachdruck.
+- **Ex Libris Nr. 57 und 58:** Ein Agent fand die Drucke: Ex Libris 1972 mit 221 S. und Ex Libris 1977 mit 234 S., beide ohne ISBN ([Recherche](../lab/collections/research/ex-libris-57-58.md)). Angelegt werden sie, sobald Open Library wieder antwortet; am Abend des 29.9. war die Seite nicht erreichbar.
+- **Fischer Bücherei:** Julian: „wir können auf einer wand bleiben, aber dann die verschiedenen drucke jeweils nacheinander nach nummern aufreihen statt zwei drucke aus zwei reihen nebeneinander“.
+  - Umsetzung: erst alle Umschläge im Layout „unten“ nach Nummern, dann alle im Layout „oben“ nach Nummern.
+  - Neues Listenfeld `wallGroup` in `from-isbns.ts`; die Picks werden stabil nach Gruppe sortiert.
+  - Nr. 1, 5, 19, 45 und 54 stehen zweimal auf der Wand, mit dem älteren Druck im ersten Block (`repeat`).
+  - Der Neubau wartet ebenfalls auf Open Library.
+
+**Entwürfe halten ein Werk mehrmals, 2026-09-29.** Julian: „mache das“ auf die Frage, ob Entwürfe ein Werk mehrfach halten sollen. Anlass sind die zwei *Lone Star*-Umschläge und die Doppeldrucke der Fischer Bücherei.
+- Eine Kachel heißt jetzt Werk + Cover (`pickKey` in `lib/collectionedit.ts`).
+  - `upsertPick` kennt die Optionen `again` (weitere Kachel) und `was` (welche Kachel einen neuen Umschlag bekommt).
+  - `removePick` nimmt optional ein Cover und entfernt dann nur diese Kachel.
+  - `reorder` versteht Kachel-Schlüssel und weiter auch reine Werk-IDs.
+  - Ohne die neuen Felder verhält sich alles wie vorher. Julians lokales Werkzeug (`lab/collections/serve.ts`) läuft unverändert.
+- `applyOp` in `lib/curate/drafts.ts` nimmt `again`, `was` und `remove … coverId` an.
+- Die ungespeicherten Änderungen auf /curate (`lib/curate/pending.ts`) führen Kacheln unter Schlüsseln; dazu kommt `removeTile`.
+- /curate (`components/CurateTool.tsx`): Ziehen, Pfeile, × und Kachel-Markierung wirken auf die einzelne Kachel. Der Umschlag-Wähler hat bei einem Werk, das schon auf der Wand ist, das Häkchen „Add as a further cover and keep the one on the wall“.
+- `lab/collections/draftdelta.ts` vergleicht Kacheln statt Werke:
+  - Eine weitere Kachel aus der Datei geht mit `again` hinaus.
+  - Eine Kachel, die nur online existiert, wird gemeldet und stoppt den Push.
+  - Die Reihenfolge prüft das Werkzeug, indem es die eigenen Schritte mit den Server-Regeln durchspielt.
+- **Geprüft** gegen `next dev` mit Speicher im Arbeitsspeicher und Wegwerf-Passwörtern, ohne das Redis der Produktion:
+  - Ein Entwurf aus der Haffmans-Wand zeigt beide *Lone Star*.
+  - ⇤ bewegt nur die eine Kachel; nach dem Speichern steht Cover 15259879 auf Platz 1, 15259878 auf Platz 35.
+  - × entfernt nur die eine Kachel.
+  - Die Konsole zeigt keine Fehler; das Häkchen erscheint.
+  - Tests: 950 plus die neuen Fälle in `curate-drafts`, `curate-pending` und `draftdelta`.
+- **Fischer Bücherei, Julians Veröffentlichung auf /curate:** Julian hat den Entwurf am 29.9. um 05:12 Uhr veröffentlicht und dabei *Madame Curie*, *Der letzte Advent* und *Sämtliche Erzählungen* entfernt. Die drei sind in Liste und Datei übernommen (`skip`). Die Wand hat jetzt 186 Kacheln in zwei Blöcken; 95 tragen einen Gestalter.
+- **Ex Libris Nr. 57 und 58 angelegt:** OL62603439M (Ex Libris 1972) und OL62603440M (Ex Libris 1977), beide ohne ISBN und mit Umschlag. Die Wand zeigt 58 von 58.
+- **Julians Berichtigungen bei Open Library, geprüft:** OL62603210M steht auf Haffmans, OL18051650M hat keine ISBN mehr.
+- **Online-Entwürfe nachgezogen**, nach dem Deploy von `84bcf80`:
+  - Haffmans: 2 Schritte (1 dazu, Reihenfolge). Beide *Lone Star* stehen im Entwurf.
+  - Fischer Bücherei: mit `--force` wegen der neuen Reihenfolge, die Julian verlangt hatte; die Umschläge stimmten überein. 9 Schritte (Intro, 7 Kacheln dazu, Reihenfolge); danach „already equal“.
+  - Die Fischer-Wand war am Morgen von /curate aus veröffentlicht. Die Seite zeigt deshalb bis zu einer erneuten Veröffentlichung auf /curate den alten Stand.
+
+**Julians Auswahl aus den Sammlungskandidaten, 2026-09-29.**
+- **„Passt“ (13):** NYRB Children’s Collection, Découvertes Gallimard, Rivages/Noir, Virago Designer Collection, Zytglogge (Werner Maurer), Ravensburger (Grieder und Schindler), insel taschenbuch, Penguin Drop Caps, Penguin Great Ideas, L’Imaginaire, Nebula (Roman), Deutscher Buchpreis, National Book Award.
+- **Nicht gewählt (8):** Penguin Orange Collection, Penguin Modern, Diogenes detebe, Semiotext(e), Little Black Classics, Éditions de Minuit, Melville House, Persephone.
+- Julian wählte also auch typografische Reihen (Drop Caps, Great Ideas, L’Imaginaire) und alle drei Preiswände. Die frühere Notiz, typografische Reihen langweilten ihn, gilt nicht pauschal.
+
+**Keller-Manifeste Zytglogge und Ravensburger, 2026-09-29.** Ein Agent hat sie gebaut; auf Open Library ist noch nichts angelegt oder hochgeladen.
+- **Zytglogge (Werner Maurer), 24 Umschläge**, 1973–78, alle mit Druck in DNB oder swisscovery und mit ISBN.
+  - Aktionen: 20 Uploads auf vorhandene Ausgaben, 1 neue Ausgabe, 3 neue Werke.
+  - Fünf Umschläge sind typografisch (die drei der „Schwarzen Reihe“ und *Kurzwaren 1* und *2*). Sie sind aufgenommen, wie Julian es bei Ex Libris wollte.
+  - Zwei ISBNs lösen bei Open Library auf fremde Datensätze auf (*Papierrosen*, *S chürzere Bei*); die Liste nennt die richtige Ausgabe.
+  - Für Fritz Widmer gibt es bei Open Library keinen Autorendatensatz.
+- **Ravensburger (Grieder 18, Schindler 16), 34 Umschläge**; die Keller-Zählung (17 und 13) war zu knapp.
+  - Aktionen: 1 hat den Umschlag schon, 5 Uploads, 17 neue Ausgaben, 10 neue Werke.
+  - 1 zurückgehalten: *Joseph* im späteren Layout hat dieselbe ISBN wie das frühere.
+  - Unsicher sind das Original von *Pirat Jacko* und die Werkzuordnung von *Affengeplapper*. Bei *Dominik Dachs* und beim *Riesenpfirsich* nennt die DNB andere Illustratoren als Keller; die Liste folgt Keller, weil es um den Umschlag geht.
+- Die Stapel sind erzeugt (4 bzw. 27 Ausgaben anzulegen). Am Abend des 29.9. war die Chrome-Erweiterung nicht verbunden, die Uploads warten darauf.
+
+**Neun der 13 gewählten Kandidaten als Entwürfe, 2026-09-30.** Listen von Agenten, jedes Cover auf Kontaktbögen angesehen; gebaut mit `from-isbns.ts`, online als Entwurf, nicht veröffentlicht.
+
+| Wand | auf der Wand | Liste | Bemerkung |
+|---|---|---|---|
+| `penguin-drop-caps` | 22 von 26 | beautifulbooks.info | D, I, O, X ohne Reihen-Cover bei Open Library |
+| `virago-designer-collection` | 17 von 28 | beautifulbooks.info | 11 ohne Designer-Cover |
+| `penguin-great-ideas` | 89 von 120 | Wikipedia (Sets 1–6) + ISBN-Blöcke | Wo das britische Bild fehlt, eine US- oder spätere Penguin-Ausgabe im selben Design; 3 Kacheln hängen an E-Book-Datensätzen; Nr. 56 (Benjamin) ausgelassen, Bild ist ein Bücherstapel |
+| `nyrb-children-s-collection` | 21 von 52 | nyrb.com products.json | nur Hardcover im klassischen Design (rotes Rückenband); der Shop führt nur Lieferbares, vergriffene Bände fehlen ganz |
+| `l-imaginaire` | 142 | BnF-SRU, Nr. 200–400 | Deckung bei Open Library dicht bis etwa Nr. 500 |
+| `decouvertes-gallimard` | 149 | BnF-SRU, Nr. 1–200 | Nr. 99 und 167 zeigen einen späteren Druck derselben Nummer |
+| `rivages-noir` | 138 | BnF-SRU, Nr. 1–200 | ab Nr. 500 kaum Cover bei Open Library |
+| `zytglogge-covers-by-werner-maurer` | 24 von 24 | Keller-Manifest | 20 Uploads, 4 neue Ausgaben (OL62605261M–64M); 5 typografische aufgenommen |
+| `ravensburger-covers-by-grieder-and-schindler` | 33 von 34 | Keller-Manifest | 5 Uploads, 27 neue Ausgaben (OL62605265M–91M); *Joseph* im späteren Layout zurückgehalten (gleiche ISBN wie der Druck von 1975) |
+
+- **Mein Fehler bei Zytglogge:** *Um jede Priis* (OL62605264M) ist ohne Titel angelegt. Nach Open Librarys Hinweis „mögliche Treffer“ (ein Sammelband von 1981) war das Formular beim Klick auf „Continue“ leer. ISBN, Verlag, Jahr und Umschlag sind da; Titel von Ausgabe und Werk (OL46030909W) setzt Julian, weil das Bearbeiten ein reCAPTCHA verlangt.
+- **Werkzeuge:** `from-isbns.ts` versucht eine Anfrage jetzt fünfmal mit wachsender Pause (5–40 s) statt zweimal; die französischen Wände brachen vorher an einzelnen stummen Anfragen ab. `_runs/walls.sh` baut mehrere Wände nacheinander; `npx` darf dort nicht von der Schleifeneingabe lesen (`< /dev/null`).
+- **Offen:** insel taschenbuch, Deutscher Buchpreis, Nebula und National Book Award. Die Listen für Buchpreis und Nebula liegen vor, insel und NBA baut ein Agent noch.
+
+## 2026-09-29 · Xanh Mono proportional neu gesetzt (ROADMAP 6.61)
+
+Julian: „kann man das letter spacing von der xanh font noch verbessern? es sieht unregelmäßig aus." Ursache: Xanh Mono ist monospaced, jedes Zeichen 500 Einheiten breit (von 1000). Ein Komma hat 114 Einheiten Tinte, ein „m" 481, ein „W" 545 — die schmalen Zeichen standen in weiten Zellen („Frankenstein ; or ,"). `letter-spacing` verschiebt jeden Abstand gleich und hilft nicht; −0,04 em machte alles dichter, die Zellen blieben. Eine proportionale Xanh gibt es nicht (Foundry-Repository, Google Fonts, Fonts In Use).
+
+Gebaut in [lab/xanh-spacing](../lab/xanh-spacing/README.md) (`respace.py`, fontTools): jedes Zeichen bekommt seine Tintenbreite plus einen festen Rand, die Umrisse bleiben unverändert, die Familie heißt „Xanh Proportional" (OFL erlaubt Änderungen, Xanh Mono reserviert keinen Namen). Der Weg in Runden mit Julian, jede nebeneinander gerendert:
+
+1. Rand am ganzen Umriss: aufrecht besser, kursiv schlechter („b y", „Beauti f ul"), weil der Umriss den Überhang der Schräge enthält.
+2. Kursiv im Band zwischen 10 und 90 % der x-Höhe gemessen: zu eng, das f lief über Nachbarn und Leerzeichen („offiction"). Überhang begrenzt: bei 80 zu weit („of  fiction"), bei 130 gut.
+3. Julian: „warum kursiv nicht auch Rand 22?" — geht mit begrenztem Überhang. „Das s nach dem r ist noch ein Problem": der Arm des r lag im Band und bestimmte seine Breite; Band nur bis 65 % schließt das kursiv. Aufrecht ganz im Band gemessen verloren die Serifen ihren Platz („Modem"), darum dort links der Umriss und rechts das Band mit höchstens 40, 70 oder 100 Einheiten Arm; 40 gemessen am besten, **Julian wählte 55**.
+4. Eingebaut mit Julians Werten (Rand 22, Leerzeichen 230, Band 10–65 %, kursiv Überhang 130, aufrecht Arm 55) aus den vollständigen TTFs von google/fonts: WOFF2 für die Seite (21,6 und 24,6 KB, Latin und Latin Extended, 425 Zeichen), WOFF für die Vorschau-Karten. Der negative Wortabstand der Überschriften (−0,3 em und −0,15 em) und der Buchstabenabstand −0,01 em entfallen; `Display` in `app/og.tsx` setzt keine Wörter mehr einzeln.
+
+**Gemessen** am Dev-Server: bei 390 × 844 kein seitliches Scrollen; H1 der Startseite 79 px, *Frankenstein* 76 px (zwei Zeilen), „Start with a classic" 32 px, Wortmarke eine Zeile; bei 1280 × 800 *Frankenstein* 101 px. Das kursive f war bei Überhang 130 noch 544 Einheiten breit und ließ „Beauti ful" auseinanderfallen, sichtbar im Namen oben links; nebeneinander gerendert schloss 180 die Lücke (f 444 breit), 230 war zu eng. **Julian wählte 180**, eingebaut am selben Tag.
+
+## 2026-09-29 · Die Bildmarke: Richtung A, im Tab und in der Kopfzeile (ROADMAP 6.61)
+
+Julian: „nimm A für die Bildmarke — ändert die auch das Icon in der Tab-Bar des Browsers?" Bis dahin zeigte der Tab das Dreieck im Kreis aus der Next.js-Vorlage (`app/favicon.ico` seit dem ersten Commit).
+
+- **Vektor:** `components/BrandMark.tsx` zeichnet 3 × 3 Kacheln 10 × 15 mit 3 Abstand, die mittlere 13 × 19,5 in `--accent`; `app/icon.svg` dieselben Zahlen, mit eigenen Farben für den dunklen Modus (Tinte `#efe8dd`, Akzent `#dbac94`). Gegenüber der Skizze vom 2026-09-28 haben die Reihen jetzt auch einen Abstand, wie die Kacheln der Website-Karte.
+- **Raster:** `scripts/build-icons.py` (Pillow) zeichnet 16, 32 und 48 px für `favicon.ico` (779 Byte) und 180 px für `apple-icon.png` (576 Byte) je Größe von Hand aufs Pixelraster — bei 16 px Kacheln 3 × 4 mit 1 px Abstand, die mittlere 5 × 6 —, auf einem Papier-Quadrat, weil ein Rasterbild dem dunklen Modus nicht folgen kann.
+- **Kopfzeile:** die Marke vor dem Namen, 24 px hoch, 17 px breit, bleibt beim Überfahren in Tintenfarbe. Bei 390 × 844 auf der Werkseite: Name von 98 bis 241 px, rechte Knöpfe bis 374, kein seitliches Scrollen; bei 1280 × 800 von 32 bis 175 px.
+- Next liefert alle drei aus (`<link rel="icon">` für ICO und SVG, `apple-touch-icon`), im Dev-Server geprüft.
+
+## 2026-09-29 · Die Identität im Cockpit (ROADMAP 6.61, 6.54)
+
+Julian: „update the project cockpit to include a tab on visual identity/branding that has all these choices and important previous versions collected." Neue Ansicht „Identität" (`scripts/cockpit/identity.ts`, Test `scripts/cockpit/__tests__/identity.test.ts`). Wie jede Cockpit-Ansicht **keine zweite Liste**: die Entscheidungen stehen als Tabelle in [docs/identitaet.md](identitaet.md) §0 (acht Zeilen am 2026-09-29: Marke ohne echte Cover, Xanh Mono statt Courier Prime, Aufteilung `swap`, ISBN, Vorschaubilder, das gestrichene „Or", die proportionale Xanh, Richtung A), die Farben kommen aus `app/globals.css` (hell und dunkel), die Marke aus `app/icon.svg` und den Rasterdateien, die Schriftproben sind in den echten Dateien gesetzt (die neu gesetzte Xanh, Jost, und aus `lab/xanh-spacing/source/` das monospaced Original; Fraunces und Geist lagen nie im Repository und kommen, wenn online, von Google Fonts), die verglichenen Markenrichtungen A (auch die erste Skizze ohne Reihenabstand), B, C, D und zwei Mischungen A + C aus den Zahlen, mit denen sie gezeichnet wurden, und die drei Vorschaubilder von der Produktion beim Öffnen der Ansicht. `docs/cockpit.html` wächst durch die eingebetteten Schriften auf rund 1 MB.
+
+Nebenbei: der Historien-Leser des Cockpits erkennt nur Überschriften mit „·"; die 6.61-Einträge standen mit „—" und fehlten deshalb beim Roadmap-Punkt. Umgestellt. Andere Einträge vom 2026-09-28 haben dasselbe Problem.
+
+## 2026-09-29 · Die Bildmarke doch als Mischung A + C (ROADMAP 6.61)
+
+Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch diese Variante" — die Mischung A + C, 3 × 3, statt A in reiner Tinte, wenige Stunden nachdem A live ging. Die Kacheln tragen die sieben Töne der Website-Karte (`#2a2622` bis `#d9cfc1`) in genau der Anordnung der Skizze (Zeilen 2-6-3, 5-·-3, 2-0-1, Index in die Tonleiter). Der Einwand gegen die Mischung war der dunkle Grund: dort verschwanden die dunklen Kacheln. Darum dreht sich die Tonleiter im dunklen Modus um (`--mark-0` … `--mark-6` in `app/globals.css`, `#efe8dd` bis `#48413b`): die dunkelste Kachel des Tages ist nachts die hellste, und die hellste des Tages wird ein Dunkelbraun, das sich vom Grund `#131110` noch abhebt. Geprüft groß, in 16 und 32 px, hell und dunkel, und in der Kopfzeile beider Modi. Die Rasterfassungen (Papiergrund) zeichnet `scripts/build-icons.py` neu: `favicon.ico` 16/32/48, `apple-icon.png` 180.
+
+
+**Die letzten vier der 13 gewählten Kandidaten als Entwürfe, 2026-09-30.** Damit sind alle 13 online als Entwurf, keiner veröffentlicht.
+
+| Wand | auf der Wand | Quelle | Bemerkung |
+|---|---|---|---|
+| `insel-taschenbuch` | 329 | Open Library, ISBN-Stämme 3-458-31 bis 36 | Nur it 1–1500, die Jahre des Fleckhaus-Rahmens; ab etwa it 1500 mischt sich der Bestand, und ein Online-Entwurf fasst höchstens 400 Werke. 360 weitere Umschläge bleiben in der Liste (`skip` mit Grund). Die blaue Platon-Werkausgabe (7 Bände) ist herausgenommen, eigene Gestaltung. Welche Umschläge noch zum Fleckhaus-Design zählen, war eine Ermessensfrage: Julian sieht es sich an. |
+| `deutscher-buchpreis` | 21 von 21 | de.wikipedia | 19 mit Erstausgabe; 2007 Franck (Fischer TB 2009) und 2015 Witzel (btb 2016) mit späterer Ausgabe |
+| `nebula-award-best-novel` | 62 von 62 | en.wikipedia | Gleichstand 1966 mit beiden Büchern; meist Erstausgaben, vier spätere, wo die Erstausgabe nur als Titelblatt oder mit Etikett vorliegt |
+| `national-book-award-fiction` | 83 von 83 | en.wikipedia | Nicht der Open-Library-Tag (267 Treffer mit Nicht-Preisträgern). *Cold Mountain* zeigte die französische Ausgabe; ersetzt durch die Sceptre-Erstausgabe 1997 (OL31920608M). |
+
+- Die Preiswände heißen wie die Hugo-Wand („Nebula Award — best novel“, „National Book Award — fiction“) und sind Reihen-Sammlungen ohne Verlagsliste.
+- **robots.txt:** Open Library sperrt `/search` für alle Nutzer; ob das `search.json` meint, ist ROADMAP 6.63.
+
+**Preiswände: der Umschlag-Wähler fand keine Alternativen, 2026-09-30.** Julian: „beim deutschen buchpreis finde ich keine alternativen cover?“
+- **Ursache:** Die Preiswände sind Reihen-Sammlungen ohne Verlagsliste. `app/api/curate/covers` zeigt bei einer Reihe nur Ausgaben der eingetragenen Verlage (`inSeries`), und bei leerer Liste blieb keine übrig.
+- **Behoben:** Eine Reihe ohne Verlagsnamen gilt als Wand über mehrere Verlage; der Wähler zeigt dann jeden Umschlag.
+- `coverLine` sagt bei einer solchen Sammlung „one cover each, chosen by hand“ statt „the cover Open Library holds for its printing in the series“. Test in `collections.test.ts`.
+- Betrifft Deutscher Buchpreis, Nebula und National Book Award.
+
+**Cover-Spiel: die neu veröffentlichten Sammlungen aufgenommen, 2026-09-30.** Julian: „nimm alle cover der neu published collections in das versus spiel auf“.
+- Einmal in der Produktion nachgesehen, was veröffentlicht ist (`/api/curate/publish`).
+- Neu im Spiel sind neun Sammlungen: dtv phantastica, Ex Libris, Fischer Bücherei (Wirth), Haffmans, Harry-Potter- und Herr-der-Ringe-Cover-Sets, NYRB Children's, Rowohlts Monographien, Zytglogge.
+- Die edition suhrkamp ist veröffentlicht, bleibt aber auf Julians Wort vom 26.9. draußen.
+- `scripts/add-collection-covers-to-pool.ts --add=…`: 2380 Kandidaten aus 34 Sammlungen. 211 waren zu klein oder unscharf, 34 zeigten ein Design, das das Spiel für dasselbe Werk schon hat; jede Anfrage wurde beantwortet.
+- Der Vorrat `mix-2000-paperwhite-collections` wächst von 3373 auf **4135 Umschläge** (782 neu); die Stimmen zählen weiter. Die neuen Umschläge sind auf einem Kontaktbogen angesehen.
+- Das Skript liest `data/collections.json`. Für Sammlungen, die Julian online bearbeitet und von /curate aus veröffentlicht hat, nimmt es den Stand der Datei, nicht den online geänderten.
+- **Offen:** insel taschenbuch, Découvertes, L’Imaginaire, Rivages/Noir, Great Ideas und Virago Designer haben online veröffentlichten Inhalt, aber keinen eingeschalteten Schalter. Sie gelten nicht als veröffentlicht und sind deshalb nicht im Spiel; Julian klärt, ob das gewollt ist.
+
+## 2026-09-29 · Eine Vorschaukarte je Sammlung, vorberechnet (ROADMAP 6.61)
+
+Julian: „wir brauchen noch eine Vorschaukarte für Collections" — bis dahin zeigte jede Sammlung die Website-Karte. Neu: `app/collections/[slug]/opengraph-image.tsx`, dunkler Grund wie die Werk-Karte, die ersten vierzehn Cover der Sammlung in ihrer Reihenfolge als zwei Reihen à sieben (140 × 210), darunter der Titel in Xanh und „N books by A, B and n more · *Beautiful Books*". Die Seite nennt kein `SITE_CARD` mehr, damit die Karte daneben greift.
+
+**Leere Kacheln, gemessen:** im ersten Wurf blieben bei *edition suhrkamp* elf von vierzehn Kacheln leer, obwohl jedes Bild bei Open Library existiert (200, 8–18 KB). Open Library leitet jede Cover-Adresse auf archive.org um, 0,5–1,7 s je Bild, und der Generator gab langsame Bilder auf. `loadCovers` in `app/og.tsx` lädt die Bilder jetzt selbst, je 5 s, verwirft Fehler, Nicht-Bilder und Platzhalter unter 1 KB und lässt das nächste Cover der Sammlung nachrücken; der Generator bekommt Data-URLs. Danach keine Lücke mehr. Weniger als vierzehn geladene Cover ergeben eine Reihe statt einer halb leeren zweiten (*SF Masterworks – rounded corners*, 10 Bücher).
+
+**Vorberechnet** auf Julians Vorschlag („für die von uns erstellten Sammlungen kannst du die Karten ja vorberechnen"): `generateStaticParams` aus `data/collections.json`, im Build alle sieben veröffentlichten Sammlungen (● SSG, Erneuerung täglich); ein Entwurf bekommt die Website-Karte, eine später per Schalter veröffentlichte Sammlung ihre Karte beim ersten Abruf. Die PNGs wiegen 352 KB (zehn Cover) bis 1,15 MB (*SF Masterworks – the relaunch*) — `next/og` schreibt nur PNG.
+
+Offen: die Sammlungen der Leser (`/c/<id>`) zeigen weiter die Website-Karte.
+

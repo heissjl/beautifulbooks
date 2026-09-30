@@ -256,7 +256,8 @@
   "title": "Lone Star",
   "isbn": "9783453064799",
   "wallTitle": "Lone Star",
-  "edition": "OL62603224M"
+  "edition": "OL62603224M",
+  "repeat": true
  },
  {
   "no": "37",
