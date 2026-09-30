@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { writeTarget } from './AddToWall';
+import { startEditing, stopEditing } from './editingSession';
 import BookSearch from './BookSearch';
 import CoverImage from './CoverImage';
 import StartFromPicker from './StartFromPicker';
@@ -11,6 +12,8 @@ import WallPhoto from './WallPhoto';
 import WallPicker from './WallPicker';
 import type { Destination } from './WallProposal';
 import WallSample from './WallSample';
+import CollectionSheet from './CollectionSheet';
+import { useIsDesktop } from './useIsDesktop';
 import { addTiles, createWall, postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import { defaultTitle, editHref, readEditState, type AddTab, type EditState } from '@/lib/walls/edit';
@@ -42,6 +45,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
   const params = useSearchParams();
   const state = readEditState((key) => params.get(key));
   const { me, setMe } = useMyWalls();
+  const isDesktop = useIsDesktop();
   const [wall, setWall] = useState(initial);
   const [access, setAccess] = useState<Access>('checking');
   const [fresh, setFresh] = useState<ReadonlySet<string>>(new Set());
@@ -60,8 +64,9 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
         }
         setWall(d.wall);
         setAccess('owner');
-        // "Add to collection" on a book page fills this one next.
+        // "Add to collection" on a book page fills this one next, and a book page says so (step 4).
         writeTarget(id);
+        startEditing(id);
       })
       .catch(() => live && setAccess('down'));
     return () => {
@@ -123,6 +128,9 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
   const others = me.walls.filter((w) => w.id !== id);
   const tabs: AddTab[] = photoOn ? ['search', 'photo', 'ideas'] : ['search', 'ideas'];
   const tab = tabs.includes(state.add) ? state.add : 'search';
+  const panel = (
+    <TargetPanel wall={wall} fresh={fresh} others={others} state={state} onSend={send} onArrange={() => go({ mode: 'arrange' })} onNew={newCollection} />
+  );
   const pill = (active: boolean) =>
     `rounded-full border px-4 py-1 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
 
@@ -146,7 +154,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
             <Link href={`/c/${id}`} className="hidden text-sm text-bg/80 underline underline-offset-4 hover:text-bg md:inline">
               See it as others do
             </Link>
-            <Link href={`/c/${id}`} className="rounded-full bg-bg px-4 py-0.5 text-sm text-ink hover:bg-surface">
+            <Link href={`/c/${id}`} onClick={stopEditing} className="rounded-full bg-bg px-4 py-0.5 text-sm text-ink hover:bg-surface">
               Stop editing
             </Link>
           </span>
@@ -216,70 +224,15 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
               )}
             </section>
 
-            <aside aria-labelledby="target-title" className="min-w-0 lg:sticky lg:top-32 lg:self-start">
-              <div className="rounded-card border border-accent bg-surface p-4">
-                <p id="target-title" className="text-[11px] uppercase tracking-[0.14em] text-accent">You are adding to</p>
-                <input
-                  defaultValue={wall.title}
-                  key={wall.title}
-                  onBlur={(e) => e.target.value.trim() !== wall.title && send([{ op: 'title', title: e.target.value }])}
-                  onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
-                  aria-label="Title of the collection"
-                  className="mt-0.5 block w-full border-b border-line bg-transparent py-0.5 font-display text-2xl text-ink focus:border-accent focus:outline-none"
-                />
-                <p className="mt-1.5 flex justify-between gap-3 text-xs text-ink-3">
-                  <span>{count}</span>
-                  <button type="button" onClick={() => go({ mode: 'arrange' })} className="text-accent underline underline-offset-2">
-                    Arrange, your name, a few lines
-                  </button>
-                </p>
-                {wall.tiles.length === 0 ? (
-                  <p className="mt-4 text-sm text-ink-2">No covers yet. Pick some on the left.</p>
-                ) : (
-                  <ul className="mt-3 grid max-h-[55vh] grid-cols-4 gap-2 overflow-y-auto pr-1" aria-label={`Covers in ${wall.title}`}>
-                    {wall.tiles.map((t) => (
-                      <li key={t.coverId} className="relative">
-                        <span className={`relative block aspect-[2/3] overflow-hidden rounded-[3px] bg-surface-2 ${fresh.has(t.coverId) ? 'ring-2 ring-accent ring-offset-1 ring-offset-surface' : ''}`}>
-                          <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'S') ?? ''} alt={t.title} sizes="80px" />
-                        </span>
-                        <button
-                          type="button"
-                          aria-label={`Take ${t.title} out`}
-                          title="Take it out"
-                          onClick={() => send([{ op: 'remove', coverId: t.coverId }])}
-                          className="absolute right-1 top-1 h-6 w-6 rounded-full bg-black/75 text-xs text-white hover:bg-accent"
-                        >
-                          ✕
-                        </button>
-                        {fresh.has(t.coverId) && <span className="absolute bottom-1 left-1 rounded-full bg-accent px-1.5 text-[10px] text-on-accent">new</span>}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <p className="mt-3 border-t border-line pt-2 text-xs text-ink-3">Every change is kept at once.</p>
-              </div>
-
-              <div className="mt-4">
-                <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3">Add to another instead</p>
-                <div className="mt-1.5 flex flex-wrap gap-1.5 text-sm">
-                  {others.map((w) => (
-                    <Link
-                      key={w.id}
-                      href={editHref(w.id, { add: state.add, q: state.q, work: state.work })}
-                      className="rounded-full border border-line bg-surface px-3 py-0.5 text-ink-2 hover:border-accent hover:text-accent"
-                    >
-                      {w.title} <span className="text-ink-3">{w.tiles.length}</span>
-                    </Link>
-                  ))}
-                  <button type="button" onClick={newCollection} className="rounded-full border border-dashed border-line px-3 py-0.5 text-ink-2 hover:border-accent hover:text-accent">
-                    + New collection
-                  </button>
-                </div>
-              </div>
-            </aside>
+            {isDesktop && (
+              <aside aria-labelledby="target-title" className="min-w-0 lg:sticky lg:top-32 lg:self-start">
+                {panel}
+              </aside>
+            )}
           </div>
         )}
       </main>
+      {!isDesktop && state.mode === 'add' && <CollectionSheet wall={wall} fresh={fresh}>{panel}</CollectionSheet>}
     </>
   );
 }
@@ -363,5 +316,93 @@ function ToolButton({ label, hidden, onClick, children }: { label: string; hidde
     >
       {children}
     </button>
+  );
+}
+
+/**
+ * The collection covers go into: its name, every cover with ✕, the new ones
+ * marked, and the other collections to switch to. Beside the ways in on a
+ * wide screen; in a sheet behind a bar at the bottom on a phone (step 5).
+ */
+function TargetPanel({
+  wall,
+  fresh,
+  others,
+  state,
+  onSend,
+  onArrange,
+  onNew,
+}: {
+  wall: PublicWall;
+  fresh: ReadonlySet<string>;
+  others: PublicWall[];
+  state: EditState;
+  onSend: (ops: WallOp[]) => void;
+  onArrange: () => void;
+  onNew: () => void;
+}) {
+  const count = `${wall.tiles.length} ${wall.tiles.length === 1 ? 'cover' : 'covers'}`;
+  return (
+    <>
+      <div className="rounded-card border border-accent bg-surface p-4">
+        <p id="target-title" className="text-[11px] uppercase tracking-[0.14em] text-accent">You are adding to</p>
+        <input
+          defaultValue={wall.title}
+          key={wall.title}
+          onBlur={(e) => e.target.value.trim() !== wall.title && onSend([{ op: 'title', title: e.target.value }])}
+          onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
+          aria-label="Title of the collection"
+          className="mt-0.5 block w-full border-b border-line bg-transparent py-0.5 font-display text-2xl text-ink focus:border-accent focus:outline-none"
+        />
+        <p className="mt-1.5 flex justify-between gap-3 text-xs text-ink-3">
+          <span>{count}</span>
+          <button type="button" onClick={onArrange} className="text-accent underline underline-offset-2">
+            Arrange, your name, a few lines
+          </button>
+        </p>
+        {wall.tiles.length === 0 ? (
+          <p className="mt-4 text-sm text-ink-2">No covers yet. Pick some on the left.</p>
+        ) : (
+          <ul className="mt-3 grid max-h-[55vh] grid-cols-4 gap-2 overflow-y-auto pr-1" aria-label={`Covers in ${wall.title}`}>
+            {wall.tiles.map((t) => (
+              <li key={t.coverId} className="relative">
+                <span className={`relative block aspect-[2/3] overflow-hidden rounded-[3px] bg-surface-2 ${fresh.has(t.coverId) ? 'ring-2 ring-accent ring-offset-1 ring-offset-surface' : ''}`}>
+                  <CoverImage src={coverUrlFor(`ol:${t.coverId}`, 'S') ?? ''} alt={t.title} sizes="80px" />
+                </span>
+                <button
+                  type="button"
+                  aria-label={`Take ${t.title} out`}
+                  title="Take it out"
+                  onClick={() => onSend([{ op: 'remove', coverId: t.coverId }])}
+                  className="absolute right-1 top-1 h-6 w-6 rounded-full bg-black/75 text-xs text-white hover:bg-accent"
+                >
+                  ✕
+                </button>
+                {fresh.has(t.coverId) && <span className="absolute bottom-1 left-1 rounded-full bg-accent px-1.5 text-[10px] text-on-accent">new</span>}
+              </li>
+            ))}
+          </ul>
+        )}
+        <p className="mt-3 border-t border-line pt-2 text-xs text-ink-3">Every change is kept at once.</p>
+      </div>
+
+      <div className="mt-4">
+        <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3">Add to another instead</p>
+        <div className="mt-1.5 flex flex-wrap gap-1.5 text-sm">
+          {others.map((w) => (
+            <Link
+              key={w.id}
+              href={editHref(w.id, { add: state.add, q: state.q, work: state.work })}
+              className="rounded-full border border-line bg-surface px-3 py-0.5 text-ink-2 hover:border-accent hover:text-accent"
+            >
+              {w.title} <span className="text-ink-3">{w.tiles.length}</span>
+            </Link>
+          ))}
+          <button type="button" onClick={onNew} className="rounded-full border border-dashed border-line px-3 py-0.5 text-ink-2 hover:border-accent hover:text-accent">
+            + New collection
+          </button>
+        </div>
+      </div>
+    </>
   );
 }

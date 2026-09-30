@@ -32,6 +32,16 @@ export function useMyWalls() {
     fetchMe().then(setMe, () => setMe((m) => ({ ...m, loaded: true })));
   }, []);
 
+  // Another component on the page changed a collection: take its answer, so a band and a menu agree.
+  useEffect(() => {
+    const onWall = (e: Event) => {
+      const wall = (e as CustomEvent<PublicWall>).detail;
+      setMe((m) => ({ ...m, walls: m.walls.some((w) => w.id === wall.id) ? m.walls.map((w) => (w.id === wall.id ? wall : w)) : [wall, ...m.walls] }));
+    };
+    window.addEventListener(WALL_EVENT, onWall);
+    return () => window.removeEventListener(WALL_EVENT, onWall);
+  }, []);
+
   useEffect(() => {
     if (document.cookie.split(/;\s*/).some((c) => c.startsWith('bb_visitor='))) {
       fetchMe().then(setMe, () => setMe((m) => ({ ...m, loaded: true })));
@@ -41,6 +51,13 @@ export function useMyWalls() {
   }, []);
 
   return { me, setMe, refresh };
+}
+
+const WALL_EVENT = 'bb-wall-changed';
+
+/** Tells every `useMyWalls` on the page that a collection changed (5.13m). */
+export function announceWall(wall: PublicWall) {
+  window.dispatchEvent(new CustomEvent(WALL_EVENT, { detail: wall }));
 }
 
 export async function postJson<T>(url: string, body: unknown): Promise<T> {
