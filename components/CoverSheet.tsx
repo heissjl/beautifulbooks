@@ -13,7 +13,7 @@ interface CoverSheetProps {
   share?: React.ReactNode;
   /**
    * In the sheet's header beside "Close", in place of the "Selected cover"
-   * line (ROADMAP 6.77, mockup D: "Add to collection"). The dialog keeps its
+   * line (ROADMAP 6.77: "Add to collection"). The dialog keeps its
    * name for a screen reader either way.
    */
   headerAction?: React.ReactNode;

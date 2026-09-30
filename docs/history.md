@@ -3722,3 +3722,15 @@ Julian nach Variante C: „die version die wir haben mit einem seitlichen scroll
 **Nachtrag, D in zweiter Fassung** (Julian: „mach bei D die scans kleiner, und setze sie doch nochmal über die kauflinks. add to collection kann beim handy neben den close button“): Kacheln 56 × 84 px, die Reihe zwischen Cover und Druck, am Telefon „Add to collection“ im Kopf des Blatts neben „Close“. Gemessen an derselben Seite: Reihe 176 px; erste Laden-Reihe 757 px am Telefon, 993 px am Desktop (B: 565 und 801). Kopf ohne Sammlung eine Zeile (55 px); nach „Add“ erscheinen Auswahlliste und „Open“, „Open“ bricht um, 75 px. Ein erster Testlauf meldete, „Add“ tue nichts: die Sammlung war angelegt (201), aber `next dev` kompilierte `/api/walls/me` beim ersten Aufruf länger, als der Test wartete — mit 6 s Wartezeit zeigten A und D beide „In your collection ✓“.
 
 **Nachtrag, D in dritter Fassung:** die Reihe ordnet nach Drucken statt nach Scans — 29 Drucke, 30 Kacheln; der eine Druck mit zwei Scans (Charles Scribner's Sons, 1925) zeigt beide nebeneinander, ein Klick darauf ließ beide leuchten; die Notiz „one with 2 scans“ steht rechts in der Überschriftenzeile. Im Kopf des Telefon-Blatts heißt der Knopf nach „Add“ nur „✓“, der Kopf bleibt eine Zeile (55 px statt 75). Unter der Reihe am Telefon 16 px bis zur Druck-Zeile, vorher 32 (Julian zuerst „etwas wenig abstand“, dann „weniger luft, nicht mehr“).
+
+## 2026-09-29 — Seitenleiste: D ist die feste Fassung (ROADMAP 6.77)
+
+Julian: „ja, mach D zur festen Fassung“. Der Schalter `?panel=` und die Varianten A (die bisherige Spalte), B und C sind aus `components/BookDetail.tsx` entfernt; `CoverDetails` hat eine Reihenfolge: Share-Zeile, Cover, „N printings with this cover“ (nur, wenn es mehr als einen Scan oder Druck gibt), Kopfzeile des Drucks mit ISBN, Läden, „Looks like this“, die zugeklappten Zeilen. Am Telefon sitzt „Add to collection“ im Kopf des Blatts (`CoverSheet` `headerAction`, `AddToWall` `compact`). Ohne Schalter nachgemessen an *The Great Gatsby*:
+
+| | Cover mit 29 Drucken (`ol:14811162`) | Cover mit einem Druck (`ol:15144216`) |
+|---|---|---|
+| 390 × 844, erster Kauf-Knopf | 741 px (vorher 1.174) | 549 px |
+| 1280 × 800, ungescrollt | 993 px (vorher 1.338) | 801 px |
+| Reihe | 29 Drucke, 30 Kacheln, „one with 2 scans“ | keine |
+
+Keine Reste der alten Zeilen „printings/scans of this cover ▸“ im DOM, keine Seite breiter als das Fenster, 951 Tests grün.

@@ -45,7 +45,7 @@ interface AddToWallProps {
   cover: Cover;
   editions: readonly EditionView[];
   /**
-   * Beside "Close" in the phone sheet (ROADMAP 6.77, mockup D): once the cover
+   * Beside "Close" in the phone sheet (ROADMAP 6.77): once the cover
    * is in, the button says only "✓" (Julian, 2026-09-29: „mach den knopf
    * kürzer, nur ✓"), so the collection picker and "Open" fit the row.
    */
