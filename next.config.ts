@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     "/opengraph-image": ["./assets/og/*.woff", "./assets/fonts/*.woff"],
     "/book/[id]/opengraph-image": ["./assets/og/*.woff", "./assets/fonts/*.woff"],
     "/book/[id]/cover/[coverId]/opengraph-image": ["./assets/og/*.woff", "./assets/fonts/*.woff"],
+    "/collections/[slug]/opengraph-image": ["./assets/og/*.woff", "./assets/fonts/*.woff"],
   },
   async redirects() {
     return [

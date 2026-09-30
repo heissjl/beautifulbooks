@@ -3805,3 +3805,15 @@ Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch dies
   | 375 px | 1 | 4 | 77 px | 49 px auf 77 px |
 
   Nirgends seitliches Scrollen; bei 1280 px auch mit Bildschirmfoto angesehen.
+- **Offen:** insel taschenbuch, Découvertes, L’Imaginaire, Rivages/Noir, Great Ideas und Virago Designer haben online veröffentlichten Inhalt, aber keinen eingeschalteten Schalter. Sie gelten nicht als veröffentlicht und sind deshalb nicht im Spiel; Julian klärt, ob das gewollt ist.
+
+## 2026-09-29 · Eine Vorschaukarte je Sammlung, vorberechnet (ROADMAP 6.61)
+
+Julian: „wir brauchen noch eine Vorschaukarte für Collections" — bis dahin zeigte jede Sammlung die Website-Karte. Neu: `app/collections/[slug]/opengraph-image.tsx`, dunkler Grund wie die Werk-Karte, die ersten vierzehn Cover der Sammlung in ihrer Reihenfolge als zwei Reihen à sieben (140 × 210), darunter der Titel in Xanh und „N books by A, B and n more · *Beautiful Books*". Die Seite nennt kein `SITE_CARD` mehr, damit die Karte daneben greift.
+
+**Leere Kacheln, gemessen:** im ersten Wurf blieben bei *edition suhrkamp* elf von vierzehn Kacheln leer, obwohl jedes Bild bei Open Library existiert (200, 8–18 KB). Open Library leitet jede Cover-Adresse auf archive.org um, 0,5–1,7 s je Bild, und der Generator gab langsame Bilder auf. `loadCovers` in `app/og.tsx` lädt die Bilder jetzt selbst, je 5 s, verwirft Fehler, Nicht-Bilder und Platzhalter unter 1 KB und lässt das nächste Cover der Sammlung nachrücken; der Generator bekommt Data-URLs. Danach keine Lücke mehr. Weniger als vierzehn geladene Cover ergeben eine Reihe statt einer halb leeren zweiten (*SF Masterworks – rounded corners*, 10 Bücher).
+
+**Vorberechnet** auf Julians Vorschlag („für die von uns erstellten Sammlungen kannst du die Karten ja vorberechnen"): `generateStaticParams` aus `data/collections.json`, im Build alle sieben veröffentlichten Sammlungen (● SSG, Erneuerung täglich); ein Entwurf bekommt die Website-Karte, eine später per Schalter veröffentlichte Sammlung ihre Karte beim ersten Abruf. Die PNGs wiegen 352 KB (zehn Cover) bis 1,15 MB (*SF Masterworks – the relaunch*) — `next/og` schreibt nur PNG.
+
+Offen: die Sammlungen der Leser (`/c/<id>`) zeigen weiter die Website-Karte.
+
