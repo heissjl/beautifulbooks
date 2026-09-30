@@ -3,6 +3,7 @@ import {
   formatLength,
   layoutPiece,
   measurements,
+  clearDepth,
   ledges,
   parseLibraryHeight,
   parseOlDimensions,
@@ -112,5 +113,14 @@ describe('ledges (5.15)', () => {
     expect(l[1].y).toBe(58);
     // 4.2 cm rounds up to 4.5; a row of unknown thickness gets the profile's 3 cm.
     expect(l.map((x) => x.depth)).toEqual([4.5, 3]);
+  });
+});
+
+describe('clear depth (5.15)', () => {
+  it('is the ledge upright, the deepest ledge and a centimetre of air, never under 5 cm', () => {
+    expect(clearDepth([{ depth: 3 }])).toBe(5);
+    // A 4.2 cm hardcover makes a 4.5 cm ledge: 0.3 + 4.5 + 1 = 5.8, rounded up to 6.
+    expect(clearDepth([{ depth: 3 }, { depth: 4.5 }])).toBe(6);
+    expect(clearDepth([])).toBe(5);
   });
 });

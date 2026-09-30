@@ -13,7 +13,7 @@ import { agentList, shoppingText } from '@/lib/walls/shoppinglist';
 import { linkPlan } from '@/lib/linkplan';
 import type { Market } from '@/lib/market';
 import type { BuyLink } from '@/lib/model';
-import { FORMAT_CM, formatLength, isEstimate, ASSUMED_THICKNESS_CM, layoutPiece, ledges, measurements, PIECE_CM, pieceRange, unitLabel, type BookSize, type Units } from '@/lib/walls/dimensions';
+import { FORMAT_CM, formatLength, isEstimate, ASSUMED_THICKNESS_CM, clearDepth, layoutPiece, ledges, measurements, PIECE_CM, pieceRange, roughWeightKg, unitLabel, type BookSize, type Units } from '@/lib/walls/dimensions';
 import { mouldingEdge, mouldingImage, SAMPLE } from '@/lib/walls/moulding';
 import { DEFAULT_ARTWORK, FRAMES, MAX_COLUMNS, TONES, type FrameColor, type PublicWall, type Tile, type Tone, type WallOp } from '@/lib/walls/model';
 
@@ -149,7 +149,14 @@ export default function WallPlan({
   /** A length on the piece as a CSS length: the wrapper is a size container as wide as the frame. */
   const len = (cmValue: number) => `calc(100cqw * ${(cmValue / plan.outerWidthCm).toFixed(5)})`;
   const moulding = FRAMES[frameColor].moulding;
+  // Edges of 3D-transformed boxes are drawn without antialiasing in Chrome and Safari; a
+  // transparent outline makes the browser smooth them (Julian, 2026-09-29: „mehr antialiasing im bild“).
+  const smooth = angled ? { outline: '1px solid transparent', backfaceVisibility: 'visible' as const } : {};
   const shelves = ledges(plan, sizes.map((z) => z ?? FORMAT_CM.trade));
+  // The box is as deep as its thickest book needs (Julian, 2026-09-29: „rechne die Tiefe nach“).
+  const depth = clearDepth(shelves);
+  const weight = roughWeightKg(sizes.map((z) => z ?? FORMAT_CM.trade), { w: plan.widthCm, h: plan.heightCm }, { w: plan.outerWidthCm, h: plan.outerHeightCm }, shelves);
+  const unknownThickness = sizes.filter((z) => z?.t === undefined).length;
   const range = pieceRange(sizes, wall.columns);
   const pending = sizes.filter((z) => !z).length;
   const c = PIECE_CM;
@@ -289,6 +296,7 @@ export default function WallPlan({
           <div
             className="absolute inset-0 transition-transform duration-500"
             style={{
+              ...smooth,
               transformStyle: 'preserve-3d',
               transform: angled ? 'rotateY(-28deg) rotateX(-6deg) scale(.86)' : 'none',
               boxShadow: angled ? 'none' : '0 14px 30px -12px rgba(0,0,0,.5), 0 2px 4px rgba(0,0,0,.2)',
@@ -297,12 +305,13 @@ export default function WallPlan({
             <div
               className="absolute"
               style={{
+                ...smooth,
                 left: pct(c.moulding, plan.outerWidthCm),
                 top: pct(c.moulding, plan.outerHeightCm),
                 right: pct(c.moulding, plan.outerWidthCm),
                 bottom: pct(c.moulding, plan.outerHeightCm),
                 transformStyle: 'preserve-3d',
-                transform: angled ? `translateZ(calc(-1 * ${len(c.depth)}))` : 'none',
+                transform: angled ? `translateZ(calc(-1 * ${len(depth)}))` : 'none',
               // The back panel is cloth or paper, not flat paint: a fine noise over the tone
               // (Julian, 2026-09-28: „gib dem background etwas textur“).
               backgroundColor: TONES[tone].hex,
@@ -325,6 +334,7 @@ export default function WallPlan({
                       <span
                         className="absolute"
                         style={{
+                          ...smooth,
                           left: pct(x + bw, plan.widthCm),
                           top: pct(y, plan.heightCm),
                           width: len(thick),
@@ -339,6 +349,7 @@ export default function WallPlan({
                     <span
                       className="absolute overflow-hidden rounded-[1px] bg-surface-2"
                       style={{
+                        ...smooth,
                         left: pct(x, plan.widthCm),
                         top: pct(y, plan.heightCm),
                         width: pct(bw, plan.widthCm),
@@ -347,7 +358,7 @@ export default function WallPlan({
                         transform: angled ? `translateZ(${len(thick)})` : undefined,
                       }}
                     >
-                      {src && <CoverImage src={src} alt="" sizes="120px" />}
+                      {src && <CoverImage src={src} alt="" sizes={angled ? "240px" : "120px"} />}
                     </span>
                   </Fragment>
                 );
@@ -371,6 +382,7 @@ export default function WallPlan({
                     <span
                       className="absolute"
                       style={{
+                        ...smooth,
                         left: pct(l.x, plan.widthCm),
                         top: pct(l.y, plan.heightCm),
                         width: pct(l.length, plan.widthCm),
@@ -390,7 +402,7 @@ export default function WallPlan({
                 {/* The shadow the box throws on the wall behind it. */}
                 <span
                   className="absolute inset-0"
-                  style={{ transform: `translateZ(calc(-1 * ${len(c.depth)} - 1px))`, boxShadow: '-10px 30px 40px -6px rgba(0,0,0,.4)' }}
+                  style={{ ...smooth, transform: `translateZ(calc(-1 * ${len(depth)} - 1px))`, boxShadow: '-10px 30px 40px -6px rgba(0,0,0,.4)' }}
                 />
                 {/* The inside of the box: four walls from the moulding back to the panel, lined like the panel. */}
                 {(['left', 'right', 'top', 'bottom'] as const).map((side) => {
@@ -401,9 +413,10 @@ export default function WallPlan({
                       key={side}
                       className="absolute"
                       style={{
+                        ...smooth,
                         ...(across
-                          ? { top: inset.y, bottom: inset.y, width: len(c.depth), [side]: inset.x }
-                          : { left: inset.x, right: inset.x, height: len(c.depth), [side]: inset.y }),
+                          ? { top: inset.y, bottom: inset.y, width: len(depth), [side]: inset.x }
+                          : { left: inset.x, right: inset.x, height: len(depth), [side]: inset.y }),
                         transformOrigin: side,
                         transform: { left: 'rotateY(90deg)', right: 'rotateY(-90deg)', top: 'rotateX(-90deg)', bottom: 'rotateX(90deg)' }[side],
                         backgroundColor: TONES[tone].hex,
@@ -415,11 +428,11 @@ export default function WallPlan({
                 {/* The outside of the moulding, as deep as the box. */}
                 <span
                   className="absolute right-0 top-0 h-full"
-                  style={{ width: len(c.depth), transformOrigin: 'right', transform: 'rotateY(-90deg)', background: mouldingEdge(moulding) }}
+                  style={{ ...smooth, width: len(depth), transformOrigin: 'right', transform: 'rotateY(-90deg)', background: mouldingEdge(moulding) }}
                 />
                 <span
                   className="absolute left-0 top-0 w-full"
-                  style={{ height: len(c.depth), transformOrigin: 'top', transform: 'rotateX(-90deg)', background: mouldingEdge(moulding) }}
+                  style={{ ...smooth, height: len(depth), transformOrigin: 'top', transform: 'rotateX(-90deg)', background: mouldingEdge(moulding) }}
                 />
               </>
             )}
@@ -470,7 +483,7 @@ export default function WallPlan({
           <strong className="font-medium text-ink">
             {sizeText(range.min.w, range.max.w)} × {sizeText(range.min.h, range.max.h)} {U}
           </strong>
-          , {L(c.depth)} {U} deep: {wall.tiles.length} books, {plan.columns} per row.{' '}
+          , {L(depth)} {U} deep inside, about {weight} kg: {wall.tiles.length} books, {plan.columns} per row.{' '}
           <span className="text-ink-3">
             {pending > 0
               ? 'Sizes are being looked up.'
@@ -504,6 +517,27 @@ export default function WallPlan({
           </div>
         </div>
       </div>
+      {/* What a reader should know before it goes on the wall (Julian, 2026-09-29: „bau die Warnhinweise ein“;
+          from the conservation sources in research-book-wall-artists.md). Says what the site knows, no more. */}
+      <details className="mt-3 max-w-2xl text-sm text-ink-2">
+        <summary className="cursor-pointer text-ink">Before it goes on the wall</summary>
+        <ul className="mt-2 list-disc space-y-1 pl-5">
+          <li>
+            It weighs about {weight} kg, estimated. Hang it from two points on fixings rated for at least twice that, not from one nail.
+          </li>
+          <li>Keep it out of direct sun. Covers fade behind UV-filtering glazing too, only more slowly.</li>
+          <li>
+            Not above a radiator, and not in a bathroom or kitchen: paper covers warp when the air turns from dry to damp and back.
+          </li>
+          <li>Nothing is glued to the books. They stand on their ledges and come out again to be read; ask for a front that opens.</li>
+          {unknownThickness > 0 && (
+            <li>
+              The thickness of {unknownThickness === wall.tiles.length ? 'the books is' : `${unknownThickness} of ${wall.tiles.length} books is`} not known, so the
+              depth assumes {L(ASSUMED_THICKNESS_CM)} {U} each. A thick hardcover needs a deeper frame: measure the thickest book before ordering.
+            </li>
+          )}
+        </ul>
+      </details>
 
       <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
         <h3 className="text-sm font-medium text-ink">

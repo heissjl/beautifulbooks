@@ -98,13 +98,17 @@ export const isEstimate = (s: BookSize | undefined) => !s || s.source === 'forma
 
 /**
  * Spacing of the piece in centimetres: margin inside the frame, gap between
- * columns and rows, depth, the moulding's face width (drawn and counted in
- * the outer size), and the height of the clear acrylic ledge each row stands
- * on — one L-profile per row instead of a wedge per book (Julian, 2026-09-29:
- * „bau die Acrylleiste je Reihe … in den Plan“, after research-book-wall-artists.md:
- * conservators support a closed book across its whole thickness).
+ * columns and rows, the moulding's face width (drawn and counted in the outer
+ * size), and the clear acrylic ledge each row stands on — one L-profile per
+ * row instead of a wedge per book (Julian, 2026-09-29: „bau die Acrylleiste je
+ * Reihe … in den Plan“, after research-book-wall-artists.md: conservators
+ * support a closed book across its whole thickness): `ledge` is the profile's
+ * height, `profile` the acrylic's thickness. The depth is not a constant any
+ * more (Julian, 2026-09-29: „rechne die Tiefe nach“): see `clearDepth`, with
+ * `air` between the thickest book and the glazing and `minDepth` as the
+ * shallowest box frame worth building (research-diy-frame-kit.md: 50 mm).
  */
-export const PIECE_CM = { margin: 8, gap: 5, rowGap: 7, depth: 7, moulding: 3, ledge: 3 } as const;
+export const PIECE_CM = { margin: 8, gap: 5, rowGap: 7, moulding: 3, ledge: 3, profile: 0.3, air: 1, minDepth: 5 } as const;
 
 /** The thickness assumed for a book whose thickness is not known. */
 export const ASSUMED_THICKNESS_CM = 2.5;
@@ -273,3 +277,37 @@ export function ledges(
   return out;
 }
 
+
+
+/**
+ * The clear depth the frame needs inside: the ledge's upright against the
+ * panel, the deepest ledge (which is the row's thickest book or more), and a
+ * centimetre of air before the glazing, rounded up to half a centimetre and
+ * never under `minDepth`. With unknown thicknesses (2.5 cm assumed) that is
+ * 5 cm; one 4.2 cm hardcover makes it 6.
+ */
+export function clearDepth(shelves: ReadonlyArray<{ depth: number }>): number {
+  const deepest = Math.max(PIECE_CM.ledge, ...shelves.map((l) => l.depth));
+  return Math.max(PIECE_CM.minDepth, Math.ceil((PIECE_CM.profile + deepest + PIECE_CM.air) * 2) / 2);
+}
+
+/**
+ * Rough weight, **not measured**: books as paper at 0.7 g/cm³ (2.5 cm thick
+ * when the thickness is unknown), 2 mm glass, a 5 mm MDF back panel, a wooden
+ * moulding 3 cm wide and as deep as the box at 0.6 g/cm³ and 3 mm acrylic
+ * ledges at 1.19 g/cm³. Enough to choose a hanging system.
+ */
+export function roughWeightKg(
+  sizes: ReadonlyArray<{ w: number; h: number; t?: number }>,
+  panel: { w: number; h: number },
+  outer: { w: number; h: number },
+  shelves: ReadonlyArray<{ length: number; depth: number }> = [],
+): number {
+  const depth = clearDepth(shelves);
+  const books = sizes.reduce((g, s) => g + s.w * s.h * (s.t ?? ASSUMED_THICKNESS_CM) * 0.7, 0);
+  const glass = panel.w * panel.h * 0.2 * 2.5;
+  const back = panel.w * panel.h * 0.5 * 0.75;
+  const moulding = 2 * (outer.w + outer.h) * PIECE_CM.moulding * depth * 0.6;
+  const acrylic = shelves.reduce((g, l) => g + l.length * (PIECE_CM.ledge + l.depth) * PIECE_CM.profile * 1.19, 0);
+  return Math.round(((books + glass + back + moulding + acrylic) / 1000) * 2) / 2;
+}

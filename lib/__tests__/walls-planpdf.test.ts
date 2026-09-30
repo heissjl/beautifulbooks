@@ -72,6 +72,8 @@ describe('frame plan (5.15)', () => {
     expect(pdf).toContain('UV filter 99 %');
     expect(pdf).toContain('Nothing is glued or fixed to a book');
     expect(pdf).not.toContain('Wedges');
+    expect(pdf).toContain('(at least 5.0 cm clear inside)');
+    expect(pdf).toContain('thicknesses are not known');
   });
 
   it('asks for acrylic rather than glass once a side passes 70 cm', () => {
