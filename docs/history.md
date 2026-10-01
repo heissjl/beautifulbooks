@@ -3995,15 +3995,15 @@ Das Netz des Spielers ist also nicht das Thema, und die Paarung auch nicht.
 
 **Die Bilder sind es.** Dasselbe Cover über `/img/L/…`:
 
-| Abruf | Zeit | Rand |
+| Abruf | Zeit | Vercels Zwischenspeicher |
 |---|---|---|
 | erster | **2,30 s** bzw. 1,44 s | `x-vercel-cache: MISS` |
 | zweiter | **0,37 s** | `HIT`, `age: 22` |
 
-Der Rand hält ein Bild 30 Tage (`s-maxage`), aber bei 1000 Covern und wenigen Spielern ist fast jedes Bild beim ersten Zeigen ein MISS, und dann holen wir es von archive.org.
+Vercels Zwischenspeicher (der CDN-Knoten, der den Besucher bedient) hält ein Bild 30 Tage (`s-maxage`), aber bei 1000 Covern und wenigen Spielern hat der Knoten fast jedes Bild beim ersten Zeigen noch nie gesehen — dann holen wir es von archive.org.
 
 **Und daraus wird ein Fehler, den die drei fertigen Paare selbst machen:** `seeded()` legt sie als `Promise.resolve({ pair })` in den Zwischenspeicher — ohne `preload`. `askAhead` findet den Eintrag und ruft `fetchPair` gar nicht erst auf, das die Bilder holen würde. **Die Bilder von Paar 2 und 3 beginnen also erst zu laden, wenn das Paar auf dem Schirm steht** — ein bis zwei Sekunden Leere nach genau den ersten zwei Klicks. Der Server legt nur für das erste Paar `preload`-Hinweise in den Kopf (`initialPairs.slice(0, 1)`).
 
 **Behoben am selben Tag** (Julian: „baue und committe es"). `usePreloadSeeded` stößt die Bilder der mitgelieferten Paare nach dem Mounten an: ein Paar nach dem anderen, beide Cover zugleich, in der Reihenfolge, in der sie gebraucht werden. In einem Effekt, weil `preload` einen Browser braucht, und genau einmal, weil ein zweiter Lauf Bilder noch einmal anstieße, die schon unterwegs sind. **Nachgemessen am Dev-Server:** vor dem ersten Klick sind **sechs** Cover geladen, während **zwei** Kacheln zu sehen sind; nach einem Klick steht das zweite Paar nach **767 ms** — und seine Bilder waren schon im Zwischenspeicher, die Zeit ist Übergang und Rendern. 972 Tests, `tsc`, Lint und Build grün.
 
-Was bleibt: **das allererste Bild eines Besuchs** kostet weiter 1,2 bis 2,3 s, wenn kein Rand es hält. Dagegen hülfe nur, den Vorrat vorzuwärmen — 1000 Cover einmal durch `/img` zu ziehen, damit jeder Rand sie hat; das ist eine eigene Entscheidung und steht hier nur als Notiz.
+Was bleibt: **das allererste Bild eines Besuchs** kostet weiter 1,2 bis 2,3 s, solange kein CDN-Knoten es hält. Dagegen hülfe nur, den Vorrat vorzuwärmen — 1000 Cover einmal durch `/img` zu ziehen, damit die Knoten sie haben; das ist eine eigene Entscheidung und steht hier nur als Notiz.
