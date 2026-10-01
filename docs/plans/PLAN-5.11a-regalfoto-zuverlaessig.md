@@ -1,0 +1,71 @@
+# PLAN 5.11a — Das Regalfoto: zuverlässig, sichtbar, ohne Token zu fressen
+
+Stand 2026-09-30, geschrieben für eine Sitzung, die den Code nicht kennt. Roadmap **5.11a**; der Code ist `lib/recognize.ts` (Modell), `lib/walls/photo.ts` (Zuordnung), `app/api/walls/photo/route.ts` (ein POST) und `components/WallPhoto.tsx` (Foto, Kästen, Vorschlag).
+
+## Anlass
+
+Julian, 2026-09-30, nach zwei Fotos gegen die Produktion („i used these two photos to stress-test the add by photo function“): eine Galerie-Bücherwand (drei Fächer, drei Böden, rund neunzig Rücken, unten flach liegende Umschläge) und ein Brett mit 22 Romanen. Fünf Punkte:
+
+1. Für das kleine Brett kamen **keine Ergebnisse** zurück.
+2. Die **Kästen** über dem Foto sitzen nicht an der richtigen Stelle.
+3. **Rücken und Umschlag** müssen unterschieden werden; bei einem Umschlag zählt **die abgebildete Ausgabe**.
+4. Es braucht einen **Fortschritt**: Ladebild, Balken, oder die Kästen erscheinen Rücken für Rücken, während gelesen wird.
+5. Den **Algorithmus neu bewerten**: zuverlässig, ohne Token zu fressen.
+
+Die Fotos liegen lokal unter `docs/tests/2026-09-30-regalfoto-*.jpg` (git-ignoriert, Regel vom 2026-09-11), die Kästen darauf gezeichnet als `…-kaesten.png`.
+
+## Gemessen (2026-09-30, lokal gegen `npm run dev` mit dem Schlüssel des Hauptordners; Fotos wie im Browser auf 1600 px lange Kante verkleinert)
+
+| | Foto 1 Galeriewand (1200 × 1600) | Foto 2 ein Brett (1600 × 1200) |
+|---|---|---|
+| `claude-sonnet-5`, wie gebaut (effort high, JSON-Schema) | 26,6 s · 3.137 / 3.751 Token · **58 Bücher** gelesen | 10,7–12,4 s (drei Läufe) · 3.137 / 1.305–1.383 Token · **19–20 von 22** |
+| Die Route als Ganzes | **61 s** · 50 gelesen, **auf 40 gekappt** (`MAX_PHOTO_BOOKS`) · 21 „gefunden“ | **21,7 s** · 20 gelesen · 19 gefunden |
+| Richtig | Alle 21 nur über den Titel (`title-only`); **mindestens fünf falsch**: *Sub Rosa* → Amber Dawn, *Mousquetaires* → Dumas, *The Virgin* → *The Virgin Suicides*, *Crossing Over* → John Edward, *Sites Unseen* → Dianne Harris | **0 falsch**; *The Joke* und *Laughable Loves* landen auf den tschechischen Datensätzen (*Žert*, *Směšné lásky* — der Punkt 1 des Lab-READMEs); der violette *Collected Novellas* wird nie gelesen, einmal als *The Sheltering Sky* (0,40), einmal als *One Hundred Years of Solitude* (0,55) erfunden |
+| `claude-haiku-4-5` | 4,7 s · 1.770 / 603 · 9 „Bücher“, 4 echt | 8,1 s · 1.770 / 1.230 · 18 „Bücher“, **~3 echt**, der Rest erfunden (*Dan Brown*, *Twilight*, *The Pillars of the Earth*) — **unbrauchbar** |
+| `claude-sonnet-5`, effort low, ohne Schema | — | 9,8 s · 2.747 / 1.288 · 19 Bücher, zwei ohne Autor — fast gleich gut; das Schema kostet rund 400 Eingabetoken |
+
+**Kosten:** bei 3 $ / 15 $ je Million Token kostet Foto 1 rund **6,6 ct**, Foto 2 rund **3 ct**. Token frisst das nicht. **Die Zeit frisst Open Library:** die 40 Suchen laufen nacheinander (`matchPhotoBooks`), rund 35 der 61 Sekunden; das Modell braucht 11–27.
+
+**Kästen** (`…-kaesten.png`): auf Foto 2 stimmt die **x-Lage** der ersten zwölf Rücken, dann driftet sie nach links und bündelt sich; die **Höhe** läuft bis ins Brett (Bücher enden bei 0,77 der Höhe, die Kästen bei 0,86). Auf Foto 1 sind sie unbrauchbar: Höhen 0,33–0,40 für Rücken, die 0,20 messen; Bücher der mittleren Reihe im oberen Boden; die flach liegenden Umschläge unten als Streifen am Rand. Drei Läufe desselben Fotos verschieben die Kästen um bis zu 0,05 in x und 0,06 in y. **Das CSS ist nicht schuld:** die Hülle der Kästen (`inline-block max-w-full`) misst in Chrome 336 × 448 px bei einem Bild von 336 × 448 (Foto 1) und 597 × 448 bei 597 × 448 (Foto 2) — Rahmen und Bild sind pixelgleich. Die Zahlen kommen vom Modell, und Modelle dieser Art geben auf einem dichten Regal keine Kästen, die eine Kante treffen.
+
+**„Keine Ergebnisse“ in Produktion:** `vercel logs` zeigt drei `POST /api/walls/photo` mit 200 (22:51:36, 22:53:45, 22:53:57), ohne Dauer, ohne Inhalt — die Route schreibt keine Zeile. Lokal nicht reproduzierbar: drei von drei Läufen lesen 19–20 der 22 Bücher, die Route findet 19. Zwei der Anfragen liegen zwölf Sekunden auseinander; ob die erste leer war, ein Fehler oder zweimal gedrückt, sagt nichts. Darum Punkt E unten.
+
+**Rücken oder Umschlag:** das Modell unterscheidet (`kind`); auf Foto 1 sind die drei flach liegenden Bücher `cover`. Was fehlt, ist der nächste Schritt: die **Ausgabe** suchen. Im Lab gibt es ihn (`lab/shelf/match.ts`: Ausschnitt → Signatur wie `lib/imagehash.ts` → gegen die Cover der Seite 0 des Werks, Hamming ≤ 14, Farbe ≤ 0,52), auf der Seite nicht, und die Schwelle ist an keinem echten Foto gemessen.
+
+## Befund, je Punkt ein Satz
+
+1. **Keine Ergebnisse:** Ursache unbekannt, weil die Route nichts loggt — das ist der Fehler.
+2. **Kästen:** die Koordinaten des Modells, nicht die Darstellung; in **einer** Reihe stimmt x, y und Höhe stimmen nie.
+3. **Rücken/Umschlag:** unterschieden, aber die Ausgabe wird nicht gesucht.
+4. **Fortschritt:** ein Request, der alles tut, und 61 Sekunden Stille.
+5. **Algorithmus:** das Modell ist richtig gewählt (Haiku liest Phantasie, Sonnet liest 19–20 von 22) und billig; Zeit und Fehler liegen in der Suche nacheinander und in der Vorauswahl, die Titel-Treffer ohne Autor vorhakt.
+
+## Vorschlag
+
+**A. Zwei Phasen, ein Strom.** Die Route antwortet als NDJSON-Strom (`ReadableStream`, kein Edge nötig): zuerst, nach den 10–25 s des Modells, eine Zeile `{"read": [...]}` mit allen gelesenen Büchern — der Browser setzt sofort die Marker aufs Foto, grau, und schreibt „n books read, looking them up…“; dann je Buch eine Zeile `{"i": k, "tile": …}` oder `{"i": k, "failed": true}`, sobald **seine** Suche antwortet, **drei Suchen parallel** statt nacheinander — der Marker wird farbig, der Vorschlag wächst. `WallPhoto` liest den Strom mit `fetch` und `getReader()`; der Zustand bekommt `reading` → `looking-up` (mit k von n) → `read`. Das deckt Punkt 4 und drückt Foto 1 von 61 s auf rund 25 + 12. Die Grenze `MAX_PHOTO_BOOKS` steigt von 40 auf 80: Foto 1 liest 50–58, die Wand nimmt 500.
+
+**B. Reihen statt Kästen.** Das Modell war in x gut und in y schlecht, also fragt der Prompt nur noch, was es kann: je Buch `row` (Boden von oben) und `x0`, `x1` (Anteile der Breite), je Reihe einmal `y0`, `y1`. Der Marker ist ein Streifen in seiner Reihe, keine Kiste. Zu messen an den zwei Fotos: trifft ein Streifen seinen Rücken? **B2, nur wenn B nicht reicht:** erst ein kleiner Aufruf für die Reihen (wenige Zahlen), dann **je Reihe ein Ausschnitt** 1600 px breit und ein Aufruf je Reihe, parallel: größere Schrift, bessere Lesung, x in einer Reihe (wo das Modell gut ist), Fortschritt reihenweise. Token etwa gleich (Bildtoken wachsen mit den Pixeln, nicht mit den Aufrufen), Latenz kleiner, weil die Reihen nebeneinander laufen.
+
+**C. Ehrlichere Vorauswahl.** Ein Treffer `title-only` ohne gelesenen Autor ist ein Rateversuch (fünf von 21 auf Foto 1 nachweislich falsch, vermutlich mehr): er wird **nicht vorgehakt** und heißt „maybe: *Titel* by *Autor*?“ mit „search instead“ daneben (`onSearchFor` gibt es). `author+title` und `author` bleiben vorgehakt. Dazu der Satz, der auf Foto 1 fehlt: Kunstkataloge und Galeriebände stehen kaum in Open Library — „n of m are not in the catalogue“ statt nur „not found“ je Zeile.
+
+**D. Umschlag → Ausgabe.** Für `kind: cover` wird der Ausschnitt (aus B) signiert und gegen die Cover der Seite 0 des Werks verglichen — der Lab-Code wandert nach `lib/walls/`, `getWorkPage` mit `googleBooks: false`, **kein Google**. Die Schwelle wird an einem echten Umschlagfoto gemessen (Julian: sechs bis zehn Bücher flach, Umschlag nach oben). Kein naher Treffer → die Kachel bekommt das Standardcover und den Hinweis „which cover? pick it“, der das Tausch-Fenster des Editors öffnet (seit 5.13m da). Google-Cover im Vergleich nur, wenn die Seite sie ohnehin hat.
+
+**E. Eine Logzeile je Foto** wie bei den Klicks (`lib/clicks.ts`): gelesen, gefunden, nicht gefunden, nicht geantwortet, ms Modell, ms Suche, Token, Modell. **Nichts vom Bild, nichts vom Leser.** Beim nächsten „keine Ergebnisse“ sagt das Log innerhalb der Stunde, was war.
+
+**F. Modell:** `claude-sonnet-5` bleibt; `effort` von high auf **medium** und das JSON-Schema bleibt (es hat in sechs Läufen nie versagt); Haiku kommt nicht in Frage (gemessen).
+
+## Reihenfolge und Aufwand
+
+| | Schritt | Deckt | Aufwand |
+|---|---|---|---|
+| 1 | E Logzeile + C Vorauswahl | 1, 5 | eine Stunde |
+| 2 | A Strom, Suchen parallel, Grenze 80 | 4 | halber Tag |
+| 3 | B Reihen statt Kästen, an beiden Fotos gemessen | 2 | halber Tag |
+| 4 | D Umschlag → Ausgabe, an einem Umschlagfoto gemessen | 3 | ein Tag; braucht Julians Foto |
+| 5 | B2 je Reihe ein Aufruf | 2 | halber Tag, nur nach schlechter Messung in 3 |
+
+## Entscheidungen für Julian
+
+1. Schritte 1–3 so bauen?
+2. Ein Foto mit flach liegenden Umschlägen für Schritt 4.
+3. Grenze 80 Bücher je Foto.

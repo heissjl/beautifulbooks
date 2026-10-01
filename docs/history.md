@@ -3972,3 +3972,17 @@ Julian: „mach es“, „plus error handling falls der api limit erreicht wird 
 ## 2026-09-30 · „Log out“ bei der ID (ROADMAP 5.13a, SPEC F9.1)
 
 Julian: „es braucht einen log-out button bei der id“. Neben „Copy link“ steht „Log out“; ein Klick öffnet eine Zeile, die sagt, dass die Sammlungen unter der ID bleiben und man sie vorher kopieren soll, mit „Log out“ und „Keep“. `DELETE /api/walls/me` (`clearVisitor` in `app/api/walls/guard.ts`) setzt das Cookie auf `Max-Age=0`; der Browser vergisst dazu das gemerkte Ziel (`bb.wall.target`) und die Bearbeitungssitzung. Im Speicher ändert sich nichts. Auf `/c/<id>` hängen die Werkzeuge des Besitzers jetzt an `canEdit && me.visitor`, damit sie mit der ID verschwinden.
+
+## 2026-09-30 · Zwei echte Regalfotos (ROADMAP 5.11a)
+
+Julian hat die Fotofunktion mit zwei Fotos gegen die Produktion geprüft: eine Galerie-Bücherwand (drei Fächer, drei Böden, rund neunzig Rücken, unten flach liegende Umschläge) und ein Brett mit 22 Romanen. Für das Brett kamen „keine Ergebnisse“, die Kästen saßen falsch. Die Messung, lokal mit demselben Code (`npm run dev`, Fotos auf 1600 px wie im Browser), steht mit allen Zahlen im [Plan 5.11a](plans/PLAN-5.11a-regalfoto-zuverlaessig.md); die Kurzfassung:
+
+- **Das Modell ist nicht das Problem.** `claude-sonnet-5` liest **19–20 von 22** Rücken des Bretts in 11–12 s (3.137 Eingabe-, 1.305–1.383 Ausgabetoken, rund 3 ct) und **58** der Galeriewand in 27 s (3.751 Ausgabetoken, rund 7 ct); drei Läufe desselben Fotos ergeben 20, 20, 19, nie leer. **Haiku 4.5 ist unbrauchbar:** 18 „Bücher“, davon drei echt, der Rest erfunden (*Dan Brown*, *Twilight*). Sonnet mit effort low liest fast gleich gut in 9,8 s.
+- **Die Zeit frisst die Suche.** Die Route braucht **21,7 s** für das Brett und **61 s** für die Wand, weil die Open-Library-Suchen eine nach der anderen laufen; die Wand wird dazu bei 40 Büchern gekappt (`MAX_PHOTO_BOOKS`), gelesen waren 50–58.
+- **Die Kästen sind die Zahlen des Modells, nicht das CSS.** Hülle und Bild sind in Chrome pixelgleich (336 × 448 und 597 × 448). Auf dem Brett stimmt die x-Lage der ersten zwölf Rücken und driftet dann, die Höhe läuft ins Brett; auf der Wand sind Reihen vertauscht und Höhen doppelt so groß wie die Rücken; drei Läufe verschieben die Kästen um bis zu 0,05 in x und 0,06 in y.
+- **Auf der Galeriewand sind alle 21 Treffer reine Titel-Treffer, mindestens fünf falsch** (*Sub Rosa* → Amber Dawn, *Mousquetaires* → Dumas, *The Virgin* → *The Virgin Suicides*, *Crossing Over* → John Edward, *Sites Unseen* → Dianne Harris): Kunstkataloge stehen kaum in Open Library, und ein Titel ohne Autor ist ein Rateversuch, der heute vorgehakt wird.
+- **Das „keine Ergebnisse“ ist nicht zu sehen.** `vercel logs` zeigt drei `POST /api/walls/photo` mit 200 (22:51:36, 22:53:45, 22:53:57), ohne Dauer, ohne Inhalt; die Route schreibt keine Zeile. Lokal nicht reproduzierbar.
+- **Rücken und Umschlag** unterscheidet das Modell (`kind`); die Ausgabe eines Umschlags sucht die Seite nicht — der Lab-Code dafür (`lab/shelf/match.ts`) hat eine ungemessene Schwelle.
+
+Die Fotos und die gezeichneten Kästen liegen lokal unter `docs/tests/2026-09-30-regalfoto-*` (git-ignoriert). Der Plan schlägt vor: eine Logzeile je Foto, Titel-Treffer ohne Autor nicht vorgehakt, die Route als Strom mit drei parallelen Suchen, Reihen und x-Streifen statt Kästen, und für Umschläge den Ausschnitt gegen die Cover der Seite 0, gemessen an einem Umschlagfoto von Julian.
+
