@@ -261,7 +261,8 @@ export default function WallPhoto({
         <div className="relative mt-4 inline-block max-w-full">
           {/* A local object URL, never uploaded as such; next/image has nothing to optimise here. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={preview} alt="Your photo" className="block max-h-[28rem] max-w-full rounded-card" />
+          {/* 44rem, not 28: a portrait photo of a gallery wall was 336 px wide at 28rem and forty pins overlapped (2026-10-01). */}
+          <img src={preview} alt="Your photo" className="block max-h-[44rem] max-w-full rounded-card" />
           {markers.map((m, i) => {
             const box = m.read.box;
             if (!box) return null;
