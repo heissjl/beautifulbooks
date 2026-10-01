@@ -5,7 +5,7 @@
  */
 import type { Edition, SourceEdition, Work, WorkSummary } from '../model';
 import {
-  cleanAuthorEntries, cleanIsbn, isbn10to13, looksLikeNonBook, parseYear, toIsoLanguage,
+  cleanAuthorEntries, cleanIsbn, isbn10to13, looksLikeNonBook, parseYear, toIsoLanguage, looksLikeAudioPublisher,
 } from '../normalize';
 import { robustFirstPublishYear } from '../firstyear';
 
@@ -117,7 +117,7 @@ export function parseEditions(entries: readonly OlEditionEntry[], work: Work): S
     const coverIds = Array.from(new Set((e.covers ?? []).filter(c => c > 0)));
     if (coverIds.length === 0 || !e.key) continue;
     const title = e.title?.trim() || work.title;
-    if (looksLikeNonBook(title) || /audio/i.test(e.physical_format ?? '')) continue;
+    if (looksLikeNonBook(title) || /audio/i.test(e.physical_format ?? '') || looksLikeAudioPublisher(e.publishers?.[0])) continue;
 
     const isbn13 = cleanIsbn(e.isbn_13?.[0]);
     const isbn10 = cleanIsbn(e.isbn_10?.[0]);

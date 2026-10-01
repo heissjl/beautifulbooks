@@ -233,6 +233,23 @@ export function stripHtml(s: string | undefined): string | undefined {
 
 const NON_BOOK_TITLE = /\b(audiobook|audio book|audio cd|mp3 cd|journal|proceedings)\b/i;
 
+/**
+ * Publishers that only make recordings (ROADMAP 6.80). The format field
+ * catches most audiobooks ("Audio CD", "Audio cassette"), but not all: *The
+ * Great Gatsby* carried Audible's 2013 recording read by Jake Gyllenhaal as a
+ * tile on the wall, because its record says "Digital". Every name here occurs
+ * in the recorded fixtures or in Gatsby's live records (Audiofy/Naxos 1999,
+ * Audiofy/Hayes 2006, both without an audio format); none is guessed. A word
+ * boundary keeps "Audio" from matching inside another word, and "Hörbuch",
+ * "Hörverlag" and "audiolibri" are the German and Italian imprints.
+ */
+const AUDIO_PUBLISHER = /\b(audible|audio|audiobooks?|audiofy|audiolibri|brilliance|caedmon)\b|h(ö|o|oe)r(buch|verlag)/i;
+
+/** True for a publisher that only makes recordings; the cover stays if a printed record carries it. */
+export function looksLikeAudioPublisher(publisher: string | undefined): boolean {
+  return !!publisher && AUDIO_PUBLISHER.test(publisher);
+}
+
 /** SPEC §3 F3.4: audiobooks, journals and proceedings are filtered out. */
 export function looksLikeNonBook(title: string, description?: string): boolean {
   return NON_BOOK_TITLE.test(title) || /\b(narrated by|unabridged audio)\b/i.test(description ?? '');
