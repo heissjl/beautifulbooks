@@ -38,6 +38,13 @@ export interface WorkDetail {
   editions: Edition[];
   covers: Cover[];
   groups: LanguageGroup[];
+  /**
+   * False when a page did not answer, twice, and the walk stopped with what
+   * had arrived (ROADMAP 6.43). A caller that caches must not keep such a
+   * result as the book: Brave New World's decade page stood in production
+   * for a day with 41 of 130 records.
+   */
+  complete: boolean;
 }
 
 /** One page of a work's editions and their covers. */
@@ -262,6 +269,7 @@ export async function getWorkDetail(workId: string, options: WorkDetailOptions =
   if (!first) return null;
 
   const pages: WorkPage[] = [first];
+  let complete = true;
   let next = first.page.nextOffset;
   while (next !== undefined && next < cap) {
     /*
@@ -275,6 +283,7 @@ export async function getWorkDetail(workId: string, options: WorkDetailOptions =
     try {
       page = await fetchPageWithRetry(workId, next, options);
     } catch {
+      complete = false;
       break;
     }
     if (!page) break;
@@ -301,5 +310,5 @@ export async function getWorkDetail(workId: string, options: WorkDetailOptions =
     : foldDuplicateCovers(assembled, await hashCovers(assembled, { deadlineMs: options.hashDeadlineMs }), editions);
 
   const groups = groupCoversByLanguage(covers, editions, options.preferredLanguage);
-  return { work: first.work, editions, covers, groups };
+  return { work: first.work, editions, covers, groups, complete };
 }

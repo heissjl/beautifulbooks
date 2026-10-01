@@ -642,18 +642,31 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
   const scans = [cover.id, ...(cover.similarIds ?? [])].filter(id => coverUrlFor(id, 'L'));
   const [pickedScan, setPickedScan] = useState<string | null>(null);
   const { scroller: scanScroller, content: scanContent, overflows: scanOverflows, atStart: scanAtStart, atEnd: scanAtEnd, onScroll: measureScanRow } = useOverflowsX();
+  const verdictOf = (isbn13: string) => verdictFor(isbn13).status;
+  /*
+    Without a pick, the scan follows the printing that leads (ROADMAP 6.78).
+    Ordered once from the wall's scan: when that scan's carrier has no ISBN
+    and another printing of the cover has one, the other leads, and the
+    picture shown large is its own scan — so the buttons and the image name
+    the same printing. A printing without a scan of its own keeps the wall's.
+  */
+  const lead = orderEditionsForMarket(editions, market, { carriedBy: new Set(editionsByScan.get(cover.id) ?? []), verdictOf })[0];
+  const leadScan = lead && !(editionsByScan.get(cover.id) ?? []).includes(lead.id)
+    ? scans.find(scan => (editionsByScan.get(scan) ?? []).includes(lead.id))
+    : undefined;
   // Derived, like the printing above it: another cover replaces the list.
-  const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : cover.id;
+  const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : leadScan ?? cover.id;
   const shownUrl = shownScan === cover.id ? cover.url : coverUrlFor(shownScan, 'L') ?? cover.url;
 
   /*
     Which printing leads is a decision now, not the catalogue's arrival order
     (ROADMAP 1.11 lever 2, sharpened by Julian on 2026-09-09). It follows the
     scan on screen: pick another scan of the same design above, and the
-    printing that carried *that* one comes to the front.
+    printing that carried *that* one comes to the front — among the printings
+    a shop can look up, when there are any (6.78).
   */
   const carriedBy = new Set(editionsByScan.get(shownScan) ?? []);
-  const ordered = orderEditionsForMarket(editions, market, { carriedBy, verdictOf: isbn13 => verdictFor(isbn13).status });
+  const ordered = orderEditionsForMarket(editions, market, { carriedBy, verdictOf });
   const [pickedId, setPicked] = useState<string | null>(null);
   /*
     Derived, never corrected from an effect: picking another cover replaces
@@ -693,7 +706,17 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         const tier = (p: { e: EditionView; scans: string[] }) => (p.scans.includes(cover.id) ? 0 : p.e.isbn13 ? 1 : 2);
         return tier(a) - tier(b) || a.i - b.i;
       });
-    const several = printings.filter(p => p.scans.length > 1).length;
+    /*
+      The note counts, it does not assume: "one with 2 scans" was a fixed
+      string, and *Solaris* (Faber and Faber 2003, three scans) said "2"
+      under three tiles (Julian, 2026-09-30). With a single printing
+      "one with …" reads as a riddle, so it says only how many scans.
+    */
+    const multi = printings.filter(p => p.scans.length > 1);
+    const note = multi.length === 0 ? null
+      : printings.length === 1 ? `${multi[0].scans.length} scans`
+      : multi.length === 1 ? `one with ${multi[0].scans.length} scans`
+      : `${multi.length} with several scans`;
     const scrollBy = (event: React.MouseEvent<HTMLButtonElement>, direction: 1 | -1) => {
       const box = event.currentTarget.closest('[data-strip]')?.querySelector<HTMLElement>('[data-strip-scroller]');
       box?.scrollBy({ left: direction * box.clientWidth * 0.8, behavior: 'smooth' });
@@ -707,11 +730,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
       <section className="mt-4" aria-label="Printings with this cover" data-strip>
         <div className="flex items-baseline justify-between gap-3">
           <p className="kicker">{editions.length} {editions.length === 1 ? 'printing' : 'printings'} with this cover</p>
-          {several > 0 && (
-            <p className="text-right text-xs text-ink-3">
-              {several === 1 ? 'one with 2 scans' : `${several} with several scans`}
-            </p>
-          )}
+          {note && <p className="text-right text-xs text-ink-3">{note}</p>}
         </div>
         <div className="relative mt-3">
           <div ref={scanScroller} onScroll={measureScanRow} data-strip-scroller className="snap-x overflow-x-auto pb-2 [scrollbar-width:thin]">

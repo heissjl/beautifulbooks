@@ -294,6 +294,19 @@ describe('orderEditionsForMarket (lever 2)', () => {
       .toEqual(['ol:OL1M', 'ol:OL2M']);
   });
 
+  it('never lets a printing without an ISBN lead while one with an ISBN carries the cover (6.78)', () => {
+    // Nineteen Eighty-Four, 2026-09-30: Perma-Bound 1981 carried the scan, without a number.
+    const tile = [
+      { id: 'permabound', isbn13: undefined, year: 1981 },
+      { id: 'signet', isbn13: EN, year: 1961 },
+    ];
+    const carriedBy = new Set(['permabound']);
+    expect(orderEditionsForMarket(tile, 'us', { carriedBy }).map(e => e.id)).toEqual(['signet', 'permabound']);
+    // Without any ISBN the scan still decides.
+    const none = [{ id: 'x', isbn13: undefined, year: 1990 }, { id: 'y', isbn13: undefined, year: 1981 }];
+    expect(orderEditionsForMarket(none, 'us', { carriedBy: new Set(['y']) }).map(e => e.id)).toEqual(['y', 'x']);
+  });
+
   it('skips the scan criterion when it knows nothing, rather than reshuffling', () => {
     const two = [{ id: 'a', isbn13: EN, year: 2025 }, { id: 'b', isbn13: EN, year: 2004 }];
     expect(orderEditionsForMarket(two, 'us', { carriedBy: new Set(['somewhere-else']) }).map(e => e.id)).toEqual(['a', 'b']);

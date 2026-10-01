@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-  authorMatchKey, cleanAuthorEntries, cleanAuthors, cleanIsbn, displayTitle, isbn10to13, languageName, looksLikeNonBook,
+  authorMatchKey, cleanAuthorEntries, cleanAuthors, cleanIsbn, displayTitle, isbn10to13, languageName, looksLikeAudioPublisher, looksLikeNonBook,
   looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeAuthor, normalizeTitle, parseYear, stripHtml,
   registrationArea, titleAuthorKey, toIsoLanguage,
 } from '../normalize';
@@ -100,6 +100,15 @@ describe('filters', () => {
     expect(looksLikeNonBook('1984 (Audiobook)')).toBe(true);
     expect(looksLikeNonBook('Journal of Irreproducible Results')).toBe(true);
     expect(looksLikeNonBook('1984')).toBe(false);
+  });
+
+  it('knows publishers that only make recordings (ROADMAP 6.80)', () => {
+    for (const p of ['Audible', 'Audible Studios on Brilliance Audio', 'Naxos Audiobooks', 'Penguin Audio', 'Caedmon', 'Heyne Hörbuch, Mchn.', 'Diogenes Horbuch', 'Ullstein Hörverlag', 'emons:audiolibri', 'Audiofy/Naxos']) {
+      expect(looksLikeAudioPublisher(p)).toBe(true);
+    }
+    for (const p of ['Scribner', 'Penguin Books', 'Charles Scribner\'s Sons', 'Horizon Press', 'Audubon Society', undefined]) {
+      expect(looksLikeAudioPublisher(p)).toBe(false);
+    }
     expect(looksLikeSecondaryLiterature("A Reader's Guide to Gravity's Rainbow")).toBe(true);
     expect(looksLikeSecondaryLiterature('SparkNotes for 1984 by George Orwell')).toBe(true);
     expect(looksLikeSecondaryLiterature("A Gravity's rainbow companion")).toBe(true);

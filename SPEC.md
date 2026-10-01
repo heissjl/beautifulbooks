@@ -131,6 +131,7 @@ Zwei Ebenen:
 
 **Die Ausgaben unter einem gefalteten Cover** sind nach drei Kriterien sortiert (`orderEditionsForMarket`), in dieser Reihenfolge (Julian, 2026-09-09: „die version die das gleiche aktuelle cover hat wie die isbn sollte zuerst vorgeschlagen werden, nicht nach jahr sortiert"):
 
+0. **Ein Druck, den ein Laden nachschlagen kann** (seit 2026-09-30, ROADMAP 6.78): hat das Cover überhaupt einen Druck mit ISBN, führt nie einer ohne. Vorher trug bei *Nineteen Eighty-Four* in 15 von 261 Covern nur ein Datensatz ohne Nummer den Scan der Wand, und die Knöpfe waren Titelsuchen, während ein anderer Druck desselben Bilds eine ISBN hatte. Ohne Wahl des Lesers zeigt die Seitenleiste dann den eigenen Scan des führenden Drucks, damit Bild und Knöpfe denselben Druck meinen.
 1. **Wer den gezeigten Scan tatsächlich trägt**, gemessen an der Cover-Liste **vor** dem Falten. Das Falten hängt die Ausgaben der Mitglieder an den Vertreter, danach nennt eine Kachel also Drucke, die dieses Bild nie hatten. Wechselt der Leser über „N scans of this cover" den Scan, wandert der zugehörige Druck nach vorn.
 2. **Das Verdikt**, für Drucke, die Kriterium 1 nicht trennt.
 3. **Der Markt**: ISBN aus dem eigenen Sprachraum, dann irgendeine ISBN, dann das jüngste Jahr.
@@ -271,7 +272,7 @@ Dass das Verdikt den Markt schlägt, ist Absicht: der Leser hat ein **Bild** ang
   **Eine gescheiterte Suche wird einmal wiederholt** (`SEARCH_RETRY` in `lib/sources/openlibrary.ts`). Wiederholt wird nur **Schweigen**: Timeout, Netzfehler, ein Rumpf, der sich nicht lesen ließ, und 5xx. Ein **4xx wird nie wiederholt** — es ist eine Antwort über genau diese Anfrage, und ein zweiter Versuch wiederholte den Fehler (422 unter drei Zeichen, 429 aus dem Rate-Limit). Beide Versuche zusammen sind auf 20 s gedeckelt, der Deckel je Versuch wird auf den Rest gekürzt, und unterhalb von 5 s Rest unterbleibt der zweite Versuch: er brächte dann meist nur einen weiteren Timeout und eine längere Wartezeit. Der Leser drückt diesen Knopf ohnehin — F1.7 gibt ihm „Try again" —, also drückt ihn der Server einmal selbst.
 
   **Der Deckel liegt bei 12 s, nicht bei 8.** Gemessen am 2026-09-07 über zwölf kalte Suchen direkt bei Open Library, ohne Deckel: sieben antworteten unter 8 s, **drei zwischen 9 und 10 s**, eine nach 24 s, eine gar nicht. Acht Sekunden machten also aus einem Drittel der langsamen, aber gültigen Antworten einen Fehler. Der Preis ist eine längere Wartezeit im schlechten Fall; das Skelett steht so lange auf dem Schirm, und die Wartezeit endet jetzt in einer Auskunft statt in einer falschen.
-- **F3.4** Hörbücher, Zeitschriften, Proceedings werden herausgefiltert.
+- **F3.4** Hörbücher, Zeitschriften, Proceedings werden herausgefiltert. Ein Hörbuch erkennt die Seite am Format („Audio CD“, „Audio cassette“), an Titelwörtern und **seit 2026-09-29 auch am Verlag** (ROADMAP 6.80, `looksLikeAudioPublisher` in `lib/normalize.ts`): Audible, Audiofy, Naxos Audiobooks, Penguin Audio, Caedmon, Brilliance, Hörbuch- und Hörverlage, audiolibri — nur Namen, die in den Daten vorkamen. Anlass: Audibles Aufnahme von *The Great Gatsby* (2013, gelesen von Jake Gyllenhaal) stand als Kachel auf der Wand, weil ihr Datensatz als Format nur „Digital“ trägt. Geprüft gegen 250 Verlagsnamen der Fixtures: 11 Treffer, alle Hörbücher.
 
 ### F4 – Cover-Mosaik
 
