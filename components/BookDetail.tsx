@@ -640,18 +640,31 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
   const scans = [cover.id, ...(cover.similarIds ?? [])].filter(id => coverUrlFor(id, 'L'));
   const [pickedScan, setPickedScan] = useState<string | null>(null);
   const { scroller: scanScroller, content: scanContent, overflows: scanOverflows, atStart: scanAtStart, atEnd: scanAtEnd, onScroll: measureScanRow } = useOverflowsX();
+  const verdictOf = (isbn13: string) => verdictFor(isbn13).status;
+  /*
+    Without a pick, the scan follows the printing that leads (ROADMAP 6.78).
+    Ordered once from the wall's scan: when that scan's carrier has no ISBN
+    and another printing of the cover has one, the other leads, and the
+    picture shown large is its own scan — so the buttons and the image name
+    the same printing. A printing without a scan of its own keeps the wall's.
+  */
+  const lead = orderEditionsForMarket(editions, market, { carriedBy: new Set(editionsByScan.get(cover.id) ?? []), verdictOf })[0];
+  const leadScan = lead && !(editionsByScan.get(cover.id) ?? []).includes(lead.id)
+    ? scans.find(scan => (editionsByScan.get(scan) ?? []).includes(lead.id))
+    : undefined;
   // Derived, like the printing above it: another cover replaces the list.
-  const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : cover.id;
+  const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : leadScan ?? cover.id;
   const shownUrl = shownScan === cover.id ? cover.url : coverUrlFor(shownScan, 'L') ?? cover.url;
 
   /*
     Which printing leads is a decision now, not the catalogue's arrival order
     (ROADMAP 1.11 lever 2, sharpened by Julian on 2026-09-09). It follows the
     scan on screen: pick another scan of the same design above, and the
-    printing that carried *that* one comes to the front.
+    printing that carried *that* one comes to the front — among the printings
+    a shop can look up, when there are any (6.78).
   */
   const carriedBy = new Set(editionsByScan.get(shownScan) ?? []);
-  const ordered = orderEditionsForMarket(editions, market, { carriedBy, verdictOf: isbn13 => verdictFor(isbn13).status });
+  const ordered = orderEditionsForMarket(editions, market, { carriedBy, verdictOf });
   const [pickedId, setPicked] = useState<string | null>(null);
   /*
     Derived, never corrected from an effect: picking another cover replaces

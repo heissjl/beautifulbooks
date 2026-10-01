@@ -929,3 +929,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 *Abgehakt 2026-09-30, so wie er in der Roadmap stand.*
 
 - [x] **6.80 Hörbücher in der Wand.** (Aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev), A7: „Audible 2013“ als Kachel in Gatsbys englischer Wand, obwohl Hörbücher wegfallen, F3.4.) Gefiltert wird nach `physical_format` und Titelwörtern; ein Datensatz mit Verlag Audible und leerem Format kommt durch. Reine Hörbuchverlage als Nicht-Buch, Liste gegen die Fixtures geprüft; das Cover bleibt, wenn ein anderer Druck es trägt. Eine Stunde, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+## 6.78
+
+*Abgehakt 2026-09-30, so wie er in der Roadmap stand.*
+
+- [x] **6.78 Kaufen über den Druck mit ISBN, nicht über den Scan-Träger.** (Aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev), zweiter Durchgang: beim Cover „+22“ von *Nineteen Eighty-Four* führt Perma-Bound 1981 ohne ISBN, die Knöpfe sind nur Titelsuchen, obwohl 22 Drucke mit demselben Bild dahinterstehen.) Die Regel aus 6.14 bleibt für die Herkunft des Bilds; die Kauf-Knöpfe nimmt der erste Druck mit ISBN in der Reihenfolge des Markts (`orderEditionsForMarket`, `lib/linkplan.ts:357`), und das Urteil prüft genau diese ISBN — ein Test hält das fest. Ein bis zwei Stunden, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)

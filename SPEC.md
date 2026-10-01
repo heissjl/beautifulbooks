@@ -131,6 +131,7 @@ Zwei Ebenen:
 
 **Die Ausgaben unter einem gefalteten Cover** sind nach drei Kriterien sortiert (`orderEditionsForMarket`), in dieser Reihenfolge (Julian, 2026-09-09: „die version die das gleiche aktuelle cover hat wie die isbn sollte zuerst vorgeschlagen werden, nicht nach jahr sortiert"):
 
+0. **Ein Druck, den ein Laden nachschlagen kann** (seit 2026-09-30, ROADMAP 6.78): hat das Cover überhaupt einen Druck mit ISBN, führt nie einer ohne. Vorher trug bei *Nineteen Eighty-Four* in 15 von 261 Covern nur ein Datensatz ohne Nummer den Scan der Wand, und die Knöpfe waren Titelsuchen, während ein anderer Druck desselben Bilds eine ISBN hatte. Ohne Wahl des Lesers zeigt die Seitenleiste dann den eigenen Scan des führenden Drucks, damit Bild und Knöpfe denselben Druck meinen.
 1. **Wer den gezeigten Scan tatsächlich trägt**, gemessen an der Cover-Liste **vor** dem Falten. Das Falten hängt die Ausgaben der Mitglieder an den Vertreter, danach nennt eine Kachel also Drucke, die dieses Bild nie hatten. Wechselt der Leser über „N scans of this cover" den Scan, wandert der zugehörige Druck nach vorn.
 2. **Das Verdikt**, für Drucke, die Kriterium 1 nicht trennt.
 3. **Der Markt**: ISBN aus dem eigenen Sprachraum, dann irgendeine ISBN, dann das jüngste Jahr.
