@@ -9,7 +9,13 @@ import type { PhotoMatch, PhotoRead } from '@/lib/walls/photo';
 const PHOTO_EDGE = 1600;
 
 async function shrink(file: File): Promise<Blob> {
-  const bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
+  let bitmap: ImageBitmap;
+  try {
+    bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
+  } catch {
+    // Chrome says "The source image could not be decoded." — for a HEIC from an iPhone, measured 2026-09-30.
+    throw new Error('This browser cannot open this photo’s format (an iPhone HEIC, perhaps). Save it as a JPEG first, or set the camera to “Most Compatible”.');
+  }
   const scale = Math.min(1, PHOTO_EDGE / Math.max(bitmap.width, bitmap.height));
   const canvas = document.createElement('canvas');
   canvas.width = Math.round(bitmap.width * scale);
