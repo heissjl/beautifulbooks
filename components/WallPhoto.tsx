@@ -120,11 +120,12 @@ async function* lines(body: ReadableStream<Uint8Array>): AsyncGenerator<Line> {
  * read, tick the ones to keep. The photo stays in this browser as a preview
  * and goes to the server once, shrunk; the server does not keep it.
  *
- * Since 5.11a the answer is a stream (Julian, 2026-09-30): a marker appears
- * on the photo for each book the moment the model has read it, grey; it
- * turns to the accent colour when the catalogue has found the book, and
- * stays grey when it has not. A cover lying flat gets a wider marker that
- * says so. The list to tick comes when every book has been looked up.
+ * Since 5.11a the answer is a stream (Julian, 2026-09-30): a numbered pin
+ * appears on the photo for each book the moment the model has read it,
+ * pale; it turns to the accent colour when the catalogue has found the book,
+ * and grey when it has not. The pin sits at the model's estimate of the
+ * book's centre and claims nothing about its edges — square for a cover,
+ * round for a spine. The list to tick comes when every book has been looked up.
  */
 export default function WallPhoto({
   photoOn,
@@ -242,20 +243,18 @@ export default function WallPhoto({
             const box = m.read.box;
             if (!box) return null;
             const cover = m.read.kind === 'cover';
-            // A strip says which spine is meant, not where its edges are (the model estimates, it does not measure).
-            const tone = m.found === true ? 'border-accent' : m.found === false ? 'border-ink-3 border-dashed' : 'border-bg/80';
-            const badge = m.found === true ? 'bg-accent text-on-accent' : m.found === false ? 'bg-ink-3 text-bg' : 'bg-bg/80 text-ink';
+            // A pin at the estimated centre, not a box: the model estimates where a book is, it does not segment the
+            // picture, and a rectangle promised edges it never had (Julian, 2026-10-01: „entweder eine gute
+            // segmentierung oder eine grundsätzlich andere darstellung“). Round for a spine, square for a cover.
+            const tone = m.found === true ? 'bg-accent text-on-accent' : m.found === false ? 'bg-ink-3 text-bg' : 'bg-bg/90 text-ink';
             return (
               <span
                 key={i}
                 data-marker={cover ? 'cover' : 'spine'}
-                className={`pointer-events-none absolute rounded-[2px] border-2 ${tone} ${cover ? 'bg-bg/10' : ''}`}
-                style={{ left: `${box[0] * 100}%`, top: `${box[1] * 100}%`, width: `${box[2] * 100}%`, height: `${box[3] * 100}%` }}
+                className={`pointer-events-none absolute flex h-6 min-w-6 -translate-x-1/2 items-center justify-center px-1 text-[11px] font-medium leading-none shadow-md ring-1 ring-black/20 ${cover ? 'rounded-[4px]' : 'rounded-full'} ${tone} ${i % 2 ? 'max-sm:-translate-y-[110%] sm:-translate-y-1/2' : 'max-sm:translate-y-[10%] sm:-translate-y-1/2'}`}
+                style={{ left: `${(box[0] + box[2] / 2) * 100}%`, top: `${(box[1] + box[3] / 2) * 100}%` }}
               >
-                <span className={`absolute -left-px -top-px whitespace-nowrap px-1 text-[10px] ${badge}`}>
-                  {i + 1}
-                  {cover ? ' cover' : ''}
-                </span>
+                {i + 1}
               </span>
             );
           })}
