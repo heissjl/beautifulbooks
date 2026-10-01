@@ -947,3 +947,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 *Abgehakt 2026-09-30, so wie er in der Roadmap stand.*
 
 - [x] **6.43 Ein unvollständiger Lauf der Jahrzehnte-Seite wird 24 Stunden gecacht.** (Aus 5.4a, wo es als „Offen“ stand, beim Bewerten am 2026-09-12 herausgelöst.) Bricht der Ausgabenlauf nach einer stummen Seite ab, rendert die Seite aus dem Teil, der da ist, und ISR friert das für einen Tag ein — *Brave New World* stand so mit 41 statt 130 Datensätzen in Produktion. Das ist derselbe Riss wie 1.4 und 5.4a selbst: ein Ausfall, der wie ein Befund aussieht (N12). Zu bauen: ein Lauf, der wegen `truncated: 'error'` endete, darf nicht als fertige Seite in den Cache — kurze `revalidate`, oder werfen, damit ISR die letzte gute Fassung behält; ein Test dafür. Eine Stunde, Claude.
+
+## 6.65
+
+*Geschlossen 2026-09-30 ohne Code, so wie er in der Roadmap stand.*
+
+- [x] **6.65 Dieselbe Wand, dieselbe Reihenfolge.** (Aus der [Durchsicht von außen](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-b-durchsicht-von-außen): das erste Cover war beim zweiten Laden ein anderes.) Verdacht: der Vertreter einer gefalteten Gruppe hängt davon ab, welche Signaturen gerade da sind, und beim zweiten Besuch sind es mehr (SPEC §7). Erst messen (Gatsby zweimal warm, einmal kalt, erste 20 Kachel-IDs je Reiter), dann Vertreter und Stellung nur aus der Gruppe ableiten, Test mit zwei Signatur-Teilmengen. Die Ordnung der Wand selbst bleibt (E17, 6.31). Ein halber Tag, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
