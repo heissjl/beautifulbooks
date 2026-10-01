@@ -3974,3 +3974,32 @@ Julian: „für geteilte User-Collections soll auch eine Vorschaukarte kommen." 
 
 **Geprüft am Dev-Server** mit einer Sammlung aus sechzehn Covern der Hugo-Wand: Karte 115 KB, JPEG, vierzehn Cover in zwei Reihen, Titel und „16 covers"; eine unbekannte Kennung ergibt die Website-Karte (35 KB); die Karte von *Feminist Press* nach dem Umbau unverändert 106 KB.
 
+
+---
+
+## 2026-10-01 · Warum sich das Cover-Spiel langsam anfühlt (ROADMAP 6.82)
+
+Julian: „checke, ob nach wie vor 3 paare vorgeladen werden und paare für den kaltstart bereitstehen. es fühlt sich derzeit langsam an, aber vllt ist mein internet langsam."
+
+**Beides steht noch, im Code und in der Produktion gemessen:**
+
+| Gemessen an https://beautifulcovers.vercel.app | Wert |
+|---|---|
+| `/versus` ausgeliefert | **0,58 s** (TTFB 0,48 s), 44.757 Byte |
+| Fertige Paare im HTML | **3** (`readyPairs(secret, 3)`, `signPair`-Token mitgezählt) |
+| `preload`-Hinweise für Bilder | **2** — die beiden Cover des ersten Paars |
+| `/api/versus/pair` | **0,58 s** und **0,32 s** bei zwei Abrufen |
+| Paare hinter dem gezeigten | **2** (`AHEAD`), jedes mit `fetchPair` samt Bild-Vorladen |
+
+Das Netz des Spielers ist also nicht das Thema, und die Paarung auch nicht.
+
+**Die Bilder sind es.** Dasselbe Cover über `/img/L/…`:
+
+| Abruf | Zeit | Rand |
+|---|---|---|
+| erster | **2,30 s** bzw. 1,44 s | `x-vercel-cache: MISS` |
+| zweiter | **0,37 s** | `HIT`, `age: 22` |
+
+Der Rand hält ein Bild 30 Tage (`s-maxage`), aber bei 1000 Covern und wenigen Spielern ist fast jedes Bild beim ersten Zeigen ein MISS, und dann holen wir es von archive.org.
+
+**Und daraus wird ein Fehler, den die drei fertigen Paare selbst machen:** `seeded()` legt sie als `Promise.resolve({ pair })` in den Zwischenspeicher — ohne `preload`. `askAhead` findet den Eintrag und ruft `fetchPair` gar nicht erst auf, das die Bilder holen würde. **Die Bilder von Paar 2 und 3 beginnen also erst zu laden, wenn das Paar auf dem Schirm steht** — ein bis zwei Sekunden Leere nach genau den ersten zwei Klicks. Der Server legt nur für das erste Paar `preload`-Hinweise in den Kopf (`initialPairs.slice(0, 1)`).
