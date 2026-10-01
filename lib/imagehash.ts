@@ -18,7 +18,7 @@ export type { ImageSignature };
 
 // The hash itself lives in `dhash.ts`, which the browser may import too
 // (ROADMAP 6.34); re-exported so nothing that used it from here changes.
-import { dhash, resizeGray, toGray, type GrayImage } from './dhash';
+import { dhash, luminanceOf, resizeGray, toGray, type GrayImage } from './dhash';
 export { dhash, resizeGray, toGray, type GrayImage };
 
 export interface RgbaImage {
@@ -112,15 +112,9 @@ export function colour({ width, height, rgba }: RgbaImage): { saturation: number
   };
 }
 
-/** Mean and standard deviation of luminance on a 32x32 thumbnail. */
+/** Mean and standard deviation of luminance on a 32x32 thumbnail (`luminanceOf`, client-safe). */
 export function luminance(img: GrayImage): { mean: number; contrast: number } {
-  const t = resizeGray(img, 32, 32);
-  let sum = 0;
-  for (const v of t.data) sum += v;
-  const mean = sum / t.data.length;
-  let varSum = 0;
-  for (const v of t.data) varSum += (v - mean) ** 2;
-  return { mean, contrast: Math.sqrt(varSum / t.data.length) };
+  return luminanceOf(img);
 }
 
 /** Standard deviation of luminance; near-blank scans score very low. */

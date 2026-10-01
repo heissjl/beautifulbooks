@@ -127,6 +127,34 @@ export function looksLikeScannedPage(signature: ImageSignature | undefined): boo
     && setBits(signature.hash) <= BLANK_MAX_SET_BITS;
 }
 
+/**
+ * Width to height an image may have and still fill a mosaic tile, which is
+ * 2:3 and crops (ROADMAP 6.70). Set by looking at the 175 of 9,494 measured
+ * covers outside it (`data/cover-measures.json`, contact sheet 2026-10-01):
+ * one narrower than 0.45, a spine; 174 wider than 1.0, about half of them
+ * photographs of a book as an object, open spreads, "No image available"
+ * placeholders and an author portrait, the other half real landscape picture
+ * books (*Goodnight Moon*, *The Very Hungry Caterpillar*). Those are covers —
+ * but a 2:3 tile shows a third of them, so in a mosaic they go last as well.
+ * Between 0.85 and 1.0 nearly all are ordinary covers; they stay.
+ */
+export const MOSAIC_MIN_ASPECT = 0.45;
+export const MOSAIC_MAX_ASPECT = 1.0;
+
+/**
+ * Whether an image belongs at the front of a card's mosaic: upright enough
+ * for its tile, and not a pale page. Only an ordering: a card with nothing
+ * better still shows what it has, and the wall is not touched (CLAUDE.md:
+ * never delete a cover for looking blank).
+ */
+export function fitsMosaicTile(width: number, height: number, signature: ImageSignature | undefined): boolean {
+  if (width > 0 && height > 0) {
+    const aspect = width / height;
+    if (aspect < MOSAIC_MIN_ASPECT || aspect > MOSAIC_MAX_ASPECT) return false;
+  }
+  return !looksLikeScannedPage(signature);
+}
+
 /** Number of differing bits between two hex hashes of equal length. */
 export function hamming(a: string, b: string): number {
   if (a.length !== b.length) return HASH_BITS;

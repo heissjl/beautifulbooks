@@ -60,6 +60,21 @@ export function dhash(img: GrayImage): string {
   return hex;
 }
 
+/**
+ * Mean and standard deviation of luminance on a 32x32 thumbnail. Lives here,
+ * not in `imagehash.ts`, so the browser can measure a mosaic tile the way the
+ * server measures a wall cover (ROADMAP 6.70).
+ */
+export function luminanceOf(img: GrayImage): { mean: number; contrast: number } {
+  const t = resizeGray(img, 32, 32);
+  let sum = 0;
+  for (const v of t.data) sum += v;
+  const mean = sum / t.data.length;
+  let varSum = 0;
+  for (const v of t.data) varSum += (v - mean) ** 2;
+  return { mean, contrast: Math.sqrt(varSum / t.data.length) };
+}
+
 /** The hash of RGBA pixels as a canvas returns them (`ImageData.data`). */
 export function dhashFromRgba(width: number, height: number, rgba: ArrayLike<number>): string {
   return dhash(toGray({ width, height, rgba }));
