@@ -65,6 +65,19 @@ Die Fotos liegen lokal unter `docs/tests/2026-09-30-regalfoto-*.jpg` (git-ignori
 
 **F. Modell:** `claude-sonnet-5` bleibt; `effort` von high auf **medium** und das JSON-Schema bleibt (es hat in sechs Läufen nie versagt); Haiku kommt nicht in Frage (gemessen).
 
+## Kosten (Julian, 2026-09-30: „das finde ich teuer, können wir hier nicht ein zweistufiges modell nehmen oder spezialisierter algorithmen, statt alles an sonnet zu schicken?“)
+
+Die 7 ct der Galeriewand sind fast ganz **Ausgabe** (Preisliste wie oben angenommen, 3 $ / 15 $ je Million): Bild und Prompt 3.137 Token = 0,9 ct, die JSON-Antwort 3.751 Token = 5,6 ct; das Brett 0,9 + 2,0 ct. Je Buch schreibt das Modell rund 65 Token, mehr als die Hälfte davon der Kasten mit vier Dezimalzahlen, die Konfidenz und die langen Schlüssel. Mit B (Boden, Mitte als ganze Prozentzahl, kurze Schlüssel, keine Konfidenz) sind es 20–25 Token je Buch: **Galeriewand ≈ 2,3 ct, Brett ≈ 1 ct** — in Schritt 3 nachzumessen.
+
+Zweistufig oder spezialisiert:
+
+- **Haiku als erste Stufe:** nein. 3 von 22 auf dem Brett, das schon eine einzelne Reihe in voller Breite war; das Problem ist das Lesen gedrehter, gestalteter Schrift, nicht die Auflösung.
+- **Klassische OCR** (Tesseract als WASM): scheitert an senkrechten Rücken in beiden Richtungen, Zierschriften und wenig Kontrast, und trennt Titel nicht von Autor; jede Zeile müsste trotzdem gesucht werden.
+- **Google Cloud Vision, Texterkennung:** die ernsthafte zweite Stufe. 0,15 ct je Bild (1.000 je Monat frei), liest gedrehten Text gut und gibt **jedes Wort mit genauen Koordinaten** — daraus die Rückenstreifen exakt statt geschätzt (löst B gleich mit); das Modell bekommt nur Text (≈ 1 ct) oder gar nichts, wenn die Zeilen direkt in die Suche gehen. Preis: ein zweiter Anbieter sieht das Foto (Datenschutz-Absatz und Hinweis in `WallPhoto` ändern), ein zweiter Schlüssel, und das Gruppieren der Wörter zu einem Rücken ist Handarbeit (Titel und Autor in verschiedenen Schriften und Richtungen). **Erst als Lab-Messung an den zwei Fotos, ein halber Tag**, bevor es in diesen Plan kommt.
+- **Eigene Segmentierung** (ein Erkennungsmodell für Rücken): braucht einen Rechner, der es ausführt; auf Vercel Hobby gibt es den nicht.
+
+**Vorschlag:** die schlanke Antwort aus B zuerst (halbiert bis drittelt sofort); dazu eine **Tagesgrenze für Fotos** wie `lib/googlequota.ts` für Google, damit ein Abend mit vielen Fotos höchstens ein paar Euro kostet (Vorschlag 300 je Tag ≈ 3–7 €); Vision als Lab-Messung, wenn 1–2 ct je Foto noch zu viel sind oder die Streifen aus Schritt 3 die Schwelle verfehlen — es löst beides.
+
 ## Reihenfolge und Aufwand
 
 | | Schritt | Deckt | Aufwand |
@@ -79,4 +92,5 @@ Die Fotos liegen lokal unter `docs/tests/2026-09-30-regalfoto-*.jpg` (git-ignori
 
 1. Schritte 1–3 so bauen?
 2. Ein Foto mit flach liegenden Umschlägen für Schritt 4.
-3. Grenze 80 Bücher je Foto.
+3. Grenze 80 Bücher je Foto und 300 Fotos je Tag.
+4. Google Cloud Vision als zweite Stufe im Lab messen — ja oder nein (zweiter Anbieter sieht das Foto).
