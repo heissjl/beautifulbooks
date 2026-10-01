@@ -1,6 +1,6 @@
 # PLAN 5.11a — Das Regalfoto: zuverlässig, sichtbar, ohne Token zu fressen
 
-Stand 2026-09-30, geschrieben für eine Sitzung, die den Code nicht kennt. Roadmap **5.11a**; der Code ist `lib/recognize.ts` (Modell), `lib/walls/photo.ts` (Zuordnung), `app/api/walls/photo/route.ts` (ein POST) und `components/WallPhoto.tsx` (Foto, Kästen, Vorschlag).
+Stand 2026-09-30, abends: **Schritte 1–3 gebaut** (Julian: „ok, starte hiermit“), Messung unten unter „Gebaut und gemessen“; Schritt 4 wartet auf Julians Umschlagfoto, Schritt 5 (B2) oder die Kantensuche auf eine Entscheidung. Geschrieben für eine Sitzung, die den Code nicht kennt. Roadmap **5.11a**; der Code ist `lib/recognize.ts` (Modell), `lib/walls/photo.ts` (Zuordnung), `app/api/walls/photo/route.ts` (ein POST) und `components/WallPhoto.tsx` (Foto, Kästen, Vorschlag).
 
 ## Anlass
 
@@ -42,7 +42,7 @@ Die Fotos liegen lokal unter `docs/tests/2026-09-30-regalfoto-*.jpg` (git-ignori
 
 ## Vorschlag
 
-**A. Zwei Phasen, ein Strom.** Die Route antwortet als NDJSON-Strom (`ReadableStream`, kein Edge nötig): zuerst, nach den 10–25 s des Modells, eine Zeile `{"read": [...]}` mit allen gelesenen Büchern — der Browser setzt sofort die Marker aufs Foto, grau, und schreibt „n books read, looking them up…“; dann je Buch eine Zeile `{"i": k, "tile": …}` oder `{"i": k, "failed": true}`, sobald **seine** Suche antwortet, **drei Suchen parallel** statt nacheinander — der Marker wird farbig, der Vorschlag wächst. `WallPhoto` liest den Strom mit `fetch` und `getReader()`; der Zustand bekommt `reading` → `looking-up` (mit k von n) → `read`. Das deckt Punkt 4 und drückt Foto 1 von 61 s auf rund 25 + 12. Die Grenze `MAX_PHOTO_BOOKS` steigt von 40 auf 80: Foto 1 liest 50–58, die Wand nimmt 500.
+**A. Zwei Phasen, ein Strom.** (Julian, 2026-09-30: „berücksichtigst du das?“ — ja, und seit dieser Rückfrage auch das Modell selbst: seine Antwort wird gestreamt, die Reihen stehen in ihr zuerst, und jedes Buch ist ein abgeschlossenes JSON-Objekt, das die Route weiterreicht, sobald es eintrifft — der Marker erscheint also **Rücken für Rücken, während gelesen wird**, nicht erst nach der ganzen Antwort; davor eine Statuszeile ab der ersten Sekunde.) Die Route antwortet als NDJSON-Strom (`ReadableStream`, kein Edge nötig): zuerst, während der 10–25 s des Modells, je gelesenem Buch eine Zeile `{"read": …}` — der Browser setzt sofort die Marker aufs Foto, grau, und schreibt „n books read, looking them up…“; dann je Buch eine Zeile `{"i": k, "tile": …}` oder `{"i": k, "failed": true}`, sobald **seine** Suche antwortet, **drei Suchen parallel** statt nacheinander — der Marker wird farbig, der Vorschlag wächst. `WallPhoto` liest den Strom mit `fetch` und `getReader()`; der Zustand bekommt `reading` → `looking-up` (mit k von n) → `read`. Das deckt Punkt 4 und drückt Foto 1 von 61 s auf rund 25 + 12. Die Grenze `MAX_PHOTO_BOOKS` steigt von 40 auf 80: Foto 1 liest 50–58, die Wand nimmt 500.
 
 **B. Reihen statt Kästen.** (Julian, 2026-09-30: „erkläre das noch genauer bevor wir starten“.) Heute gibt das Modell je Buch vier Zahlen — links, oben, Breite, Höhe —, auf der Galeriewand 232 Schätzungen ohne Maßstab; gemessen kann es oben und Höhe je Buch nicht, und die Reihen verwechselt es. Brauchbar waren zwei Dinge: die **Leserichtung** (welches Buch neben welchem steht) und auf einem Brett die **waagrechte Lage** der ersten zwölf Rücken, danach driftet sie, weil das Modell eher zählt als misst und der Fehler sich nach rechts aufsummiert. Der Prompt fragt darum nur noch, was es kann:
 
@@ -94,3 +94,28 @@ Zweistufig oder spezialisiert:
 2. Ein Foto mit flach liegenden Umschlägen für Schritt 4.
 3. Grenze 80 Bücher je Foto und 300 Fotos je Tag.
 4. Google Cloud Vision als zweite Stufe im Lab messen — ja oder nein (zweiter Anbieter sieht das Foto).
+
+## Gebaut und gemessen (2026-09-30, abends)
+
+**Was steht:** `lib/recognize.ts` fragt Reihen und je Buch Reihe und Mitte, streamt die Antwort (`client.messages.stream`, `scanPartial` liest jedes geschlossene Objekt) und baut die Streifen (`placeBooks`: Nachbarn nach Mitte, nicht nach Reihenfolge; ohne Mitten gleichmäßig). `lib/walls/photo.ts`: `matchPhotoBook` mit `unsure` für Titel-Treffer, `matchPhotoBooksEach` mit drei Suchen zugleich, Grenze 80. Die Route streamt JSON-Zeilen (`book` je gelesenem Buch, `read` mit allen, `match` je Suche, `done`), zählt den Tag (`WallStore.countPhoto`, Hash `walls:photos`, 300) und schreibt `bb.photo`. `WallPhoto` liest den Strom, zeichnet Marker (grau beim Lesen, Akzent beim Finden, gestrichelt wenn nicht; „cover“ breiter), zeigt die Liste am Ende; `WallProposal` hakt „maybe“ nicht vor und bietet „search instead“. Tests: `lib/__tests__/recognize.test.ts` (Streifen, Teilantwort), `walls-photo.test.ts` (maybe, zu dritt, Grenze), `walls-store.test.ts` (Tageszähler), das Lab-Testfile auf das neue Format. 986 Tests grün, Build durch.
+
+**Zeiten und Kosten** (lokal, `npm run dev`, Sonnet 5, effort high):
+
+| | Brett | Galeriewand |
+|---|---|---|
+| erstes Buch im Strom | 4,4 s (im Browser 2,7 s nach dem Hochladen) | 2,7–2,9 s |
+| alle Bücher gelesen | 8,8 s, 19 Bücher | 11,8–12,9 s, 38–41 Bücher (alter Prompt: 50–58) |
+| Token, Kosten | 3.267 / 778–899 → **≈ 2,1 ct** (vorher 3) | 3.267 / 1.399–1.519 → **≈ 3,3 ct** (vorher 6,6) |
+| Route gesamt | 16,3 s mit warmer Suche (vorher 21,7) | — |
+
+effort medium: Brett gleich (19), Wand nur 25–27 Bücher für 982 Ausgabetoken — der Cent ist die Lesung nicht wert, es bleibt high. Der neue Prompt liest die Wand mit weniger Büchern als der alte (38–41 gegen 50–58, zwei Läufe je); die Reihen-Arbeit kostet Aufmerksamkeit. Das ist ein Argument für B2 (je Boden ein Aufruf, weniger je Antwort).
+
+**Die Streifen** (`docs/tests/2026-09-30-regalfoto-2-streifen.png`, `…-1-streifen.png`): Reihen stimmen (Brett 0,25–0,95, Bücher stehen 0,32–0,77 — zu hoch, aber eine Reihe; Wand vier bis fünf Böden, fast auf der Kante). Die Mitten driften nach rechts: auf dem Brett treffen **6–8 von 19** Streifen ihren Rücken, die übrigen den Nachbarn, ab der Mitte zwei bis drei Rücken daneben. **Schwelle (9 von 10) verfehlt.** Zwei Versuche dagegen, beide lokal in Python:
+
+1. **Ein Prozentraster ins Bild gezeichnet** (Linien alle 5 %, Zahlen alle 10 %, `…-streifen-raster.png`): die Lage wird nicht besser (ab dem dritten Buch um einen Rücken daneben, bis zu drei), und das Modell „liest“ an den Linien drei Titel, die nicht da sind (*Collected Stories*, *Play It As It Lays*, *Red Noses*). Verworfen.
+2. **Kantensuche** (`…-kanten.png`): das **Buchband** in der Reihe des Modells findet die Spaltenvarianz sicher (0,35–0,75 statt 0,25–0,95), was allein schon die Streifenhöhe richtig machte; die **Rückenstöße** als lange senkrechte Kanten (Anteil der Zeilen mit Farbsprung > 40 je Spalte, Schwelle 0,45) finden auf dem Brett nur 10 von 22 — dunkle Rücken an dunklen Rücken bleiben unsichtbar, und mit lockerer Schwelle kommen Holzmaserung und Schrift dazu. Dann monotone Zuordnung (DP) der gelesenen Reihenfolge zu den Segmenten, Segmente dürfen übersprungen werden: bei gleicher Zahl wäre die Lage exakt, ganz ohne Mitte. **Nächstes im Lab (`lab/shelf/`):** Kantenmaß und Schwelle an beiden Fotos, Band aus der Varianz übernehmen (auch ohne Kanten ein Gewinn), dann entscheiden, ob es in den Server kommt (jpeg-js dekodiert dort schon).
+
+**Die Oberfläche** (`…-strom-desktop.png`, `…-strom-phone.png`): 1280 px — Marker beim Lesen weiß, „Reading the photo… 10 books so far“, dann „20 books read, looking them up… 6 of 20“ mit den ersten Markern in Akzent, am Ende Streifen 19 (*A Valentine for Noel*) gestrichelt grau, Zeile „20 books read: 19 found with a cover, 1 not in the catalogue“. 390 px — kein Überlauf (scrollWidth 390), 21 Marker, die Leiste „You are adding to“ unten. Headless, mit `DOM.setFileInputFiles`.
+
+**Produktion** steht noch auf dem alten Stand; vor dem Deploy: Julians Blick auf den Strom und die „maybe“-Zeilen.
+

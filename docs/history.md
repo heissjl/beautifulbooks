@@ -3986,3 +3986,14 @@ Julian hat die Fotofunktion mit zwei Fotos gegen die Produktion geprüft: eine G
 
 Die Fotos und die gezeichneten Kästen liegen lokal unter `docs/tests/2026-09-30-regalfoto-*` (git-ignoriert). Der Plan schlägt vor: eine Logzeile je Foto, Titel-Treffer ohne Autor nicht vorgehakt, die Route als Strom mit drei parallelen Suchen, Reihen und x-Streifen statt Kästen, und für Umschläge den Ausschnitt gegen die Cover der Seite 0, gemessen an einem Umschlagfoto von Julian.
 
+## 2026-09-30 · Das Regalfoto als Strom (ROADMAP 5.11a, Schritte 1–3)
+
+Nach der Messung vom Nachmittag (oben) sagte Julian „ok, starte hiermit“ zu den Schritten 1–3 und den Grenzen 80 je Foto und 300 je Tag — und fragte zweimal nach: ob der Fortschritt „Rücken für Rücken“ im Plan sei (ja, und seitdem wird auch die Antwort des Modells gestreamt, nicht nur die Suchen), und ob die 7 ct je Galeriewand nicht zu teuer seien (die Antwort war die Ausgabe, nicht das Bild: der Kasten mit vier Dezimalzahlen und die Konfidenz je Buch). Gebaut: eine Logzeile `bb.photo` je Foto; Titel-Treffer als „maybe“, nicht vorgehakt; die Route als JSON-Zeilen-Strom, in dem jedes Buch in dem Moment ankommt, in dem das Modell es geschrieben hat, drei Suchen zugleich; Reihen und Mitten statt Kästen, die Streifen baut der Server; ein eigener Marker „cover“ für flach liegende Umschläge; 80 Bücher je Foto, 300 Fotos je Tag über den Speicher. Zahlen, Bilder und die beiden verworfenen Versuche gegen die Drift der Streifen (Prozentraster, Kantensuche) stehen im [Plan](plans/PLAN-5.11a-regalfoto-zuverlaessig.md#gebaut-und-gemessen-2026-09-30-abends); die Kurzfassung:
+
+- **Billiger und schneller:** das Brett kostet 2,1 ct statt 3, die Galeriewand 3,3 statt 6,6; das erste Buch steht nach 2,7–4,4 s auf dem Foto, das Brett ist nach 8,8 s gelesen und mit warmer Suche nach 16,3 s fertig (vorher 21,7 s Stille).
+- **effort medium fällt weg:** es liest die Wand mit 25–27 statt 38–41 Büchern. Und der neue Prompt liest die Wand mit weniger Büchern als der alte (38–41 gegen 50–58; das Brett gleich): die Reihen kosten Aufmerksamkeit — ein Argument für je Boden einen Aufruf (B2).
+- **Die Streifen verfehlen die Schwelle:** 6–8 von 19 treffen auf dem Brett ihren Rücken, die Mitte des Modells driftet nach rechts. Ein eingezeichnetes Prozentraster half nicht und verführte zu drei erfundenen Titeln. Eine Kantensuche findet das Buchband in der Reihe sicher, die Rückenstöße mit der ersten Schwelle nur zur Hälfte — das wird das Nächste im Lab.
+- **Im Browser geprüft** (headless, 1280 und 390 px): Marker weiß beim Lesen, Akzent beim Finden, gestrichelt grau für *A Valentine for Noel*; am Telefon kein Überlauf.
+
+986 Tests, Build durch. Nicht deployt.
+

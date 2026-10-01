@@ -17,6 +17,8 @@ export interface Proposal {
   failed?: boolean;
   /** Number drawn on the photo, when there is one. */
   number?: number;
+  /** A guess by title alone (5.11a): shown as "maybe", never ticked by itself. */
+  unsure?: boolean;
 }
 
 /** Where the ticked covers go: an existing collection, or a new one with this title. */
@@ -56,7 +58,7 @@ export default function WallProposal({
   onSearchFor?: (label: string) => void;
 }) {
   const standing = (p: Proposal): Standing | null => (p.tile ? standingOf(p.tile, target) : null);
-  const [picked, setPicked] = useState(() => new Set(proposals.flatMap((p, i) => (standing(p) === 'new' ? [i] : []))));
+  const [picked, setPicked] = useState(() => new Set(proposals.flatMap((p, i) => (standing(p) === 'new' && !p.unsure ? [i] : []))));
   const [title, setTitle] = useState(defaultTitle);
   const [chosen, setChosen] = useState(NEW);
   const [asNew, setAsNew] = useState(false);
@@ -96,7 +98,7 @@ export default function WallProposal({
       {proposals.length > 8 && (
         <button
           type="button"
-          onClick={() => setPicked(picked.size ? new Set() : new Set(proposals.flatMap((p, i) => (standing(p) === 'new' ? [i] : []))))}
+          onClick={() => setPicked(picked.size ? new Set() : new Set(proposals.flatMap((p, i) => (standing(p) === 'new' && !p.unsure ? [i] : []))))}
           className="mt-1 text-xs text-ink-2 underline underline-offset-2 hover:text-accent"
         >
           {picked.size ? 'Untick all' : 'Tick all new ones'}
@@ -117,15 +119,21 @@ export default function WallProposal({
                     </span>
                     <span className="min-w-0">
                       <span className={`block truncate text-sm ${st === 'in' ? 'text-ink-2' : 'text-ink'}`}>{p.tile.title}</span>
-                      <span className={`block truncate text-xs ${st === 'new' ? 'text-ink-3' : 'text-accent'}`}>
-                        {st === 'in' ? 'already in this collection' : st === 'work' ? 'in this collection with another cover' : (p.sub ?? p.tile.author)}
+                      <span className={`block truncate text-xs ${st === 'new' && !p.unsure ? 'text-ink-3' : 'text-accent'}`}>
+                        {st === 'in' ? 'already in this collection' : st === 'work' ? 'in this collection with another cover' : p.unsure ? `maybe — the photo reads “${p.label}${p.sub ? `, ${p.sub}` : ''}”` : (p.sub ?? p.tile.author)}
                       </span>
                     </span>
                   </label>
-                  {onOtherCover && (
-                    <button type="button" onClick={() => onOtherCover(p.tile as Tile)} className="shrink-0 text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
-                      another cover
+                  {p.unsure && onSearchFor ? (
+                    <button type="button" onClick={() => onSearchFor(p.label)} className="shrink-0 text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
+                      search instead
                     </button>
+                  ) : (
+                    onOtherCover && (
+                      <button type="button" onClick={() => onOtherCover(p.tile as Tile)} className="shrink-0 text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
+                        another cover
+                      </button>
+                    )
                   )}
                 </>
               ) : (
