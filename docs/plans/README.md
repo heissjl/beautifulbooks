@@ -4,7 +4,7 @@ Stand: 2026-09-30. Ein Plan ist die ausführliche Fassung eines *offenen* Roadma
 
 | Plan | Roadmap | Stand |
 |---|---|---|
-| [PLAN-5.11a-regalfoto-zuverlaessig.md](PLAN-5.11a-regalfoto-zuverlaessig.md) | 5.11a: das Regalfoto — Messung an zwei echten Fotos, Strom statt Stille, Reihen statt Kästen, Ausgabe aus dem Umschlag | **Schritte 1–3 gebaut** 2026-09-30 (Strom, Streifen, maybe, Grenzen), nicht deployt; Streifen verfehlen die Schwelle, Kantensuche als Lab-Nächstes; Schritt 4 wartet auf ein Umschlagfoto |
+| [PLAN-5.11a-regalfoto-zuverlaessig.md](PLAN-5.11a-regalfoto-zuverlaessig.md) | 5.11a: das Regalfoto — Messung an zwei echten Fotos, Strom statt Stille, Reihen statt Kästen, Ausgabe aus dem Umschlag | **Schritte 1–3 deployt** 2026-10-01 (Strom, Pins statt Kästen, wachsende Liste, maybe, Grenzen, Server bereitet das Foto auf); echte Umrisse brauchen einen Segmentierer (Lab-Vorschlag MobileSAM, Julian entscheidet); Schritt 4 wartet auf ein Umschlagfoto |
 | [PLAN-A.md](PLAN-A.md) | alte Spec §10 A: aufräumen, ehrliche Sprache, drei Entscheidungen | **erledigt** 2026-09-07 (`3e353b3`, `8fe21e6`); die Entscheidungen leben als 0.1 und 4.1 |
 | [PLAN-B.md](PLAN-B.md) | alte Spec §10 B: Sprache, Rate-Limit, SEO, mobil, Klicks, About, Kontingent | **erledigt** 2026-09-07 (mehrere Commits, im Kopf des Plans); der Abschnitt „Analyse-Seite“ ist die Vorlage für 3.1 |
 | [PLAN-11.md](PLAN-11.md) | alte Spec §9.3 Schritt 11: seitenweise Cover-Wand | **erledigt** 2026-09-07 (`e05cddb`) |

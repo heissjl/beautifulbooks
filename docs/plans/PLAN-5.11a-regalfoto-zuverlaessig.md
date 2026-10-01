@@ -117,7 +117,7 @@ effort medium: Brett gleich (19), Wand nur 25–27 Bücher für 982 Ausgabetoken
 
 **Die Oberfläche** (`…-strom-desktop.png`, `…-strom-phone.png`): 1280 px — Marker beim Lesen weiß, „Reading the photo… 10 books so far“, dann „20 books read, looking them up… 6 of 20“ mit den ersten Markern in Akzent, am Ende Streifen 19 (*A Valentine for Noel*) gestrichelt grau, Zeile „20 books read: 19 found with a cover, 1 not in the catalogue“. 390 px — kein Überlauf (scrollWidth 390), 21 Marker, die Leiste „You are adding to“ unten. Headless, mit `DOM.setFileInputFiles`.
 
-**Produktion** steht noch auf dem alten Stand; vor dem Deploy: Julians Blick auf den Strom und die „maybe“-Zeilen.
+**Produktion:** deployt am 2026-10-01 (Julian: „merge die commits in main“), zusammen mit allem, was unten folgt.
 
 ## Das „keine Ergebnisse“ — gelöst (2026-09-30, nachts)
 
