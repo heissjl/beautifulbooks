@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { hasApiKey, recognize, type RecognizedBook } from '@/lib/recognize';
 import { matchPhotoBooksEach, photoRead, MAX_PHOTO_BOOKS, type PhotoMatch } from '@/lib/walls/photo';
+import { preparePhoto } from '@/lib/photoprep';
 import { json, openWalls } from '../guard';
 
 /**
@@ -19,7 +20,8 @@ import { json, openWalls } from '../guard';
  */
 export const maxDuration = 120;
 
-const MAX_BYTES = 6 * 1024 * 1024;
+/** A photo as the phone took it, when the browser cannot shrink it (a private canvas, 5.11a); a shrunk one is under 2 MB. */
+const MAX_BYTES = 12 * 1024 * 1024;
 
 /** Photos read per day, all readers together — a spending cap, not a rate limit (5.11a; about 1–3 ct a photo). */
 export const PHOTOS_PER_DAY = 300;
@@ -43,6 +45,9 @@ export async function POST(request: NextRequest) {
   const bytes = Buffer.from(await request.arrayBuffer());
   if (bytes.length === 0) return json({ error: 'The photo was empty.' }, 400);
   if (bytes.length > MAX_BYTES) return json({ error: 'The photo is too large.' }, 413);
+  // Upright, shrunk, a plain JPEG without EXIF — whatever the browser sent (lib/photoprep.ts).
+  const prepared = preparePhoto(bytes);
+  if (!prepared) return json({ error: 'The photo could not be opened. Send a JPEG or PNG.' }, 415);
 
   // The day's cap is counted before the model is asked, so an attempt that fails still counts; that errs on the cheap side.
   let today = 0;
@@ -67,7 +72,7 @@ export async function POST(request: NextRequest) {
       let tokens = { in: 0, out: 0 };
       let problems = 0;
       try {
-        const run = await recognize(bytes, type, (book, i) => {
+        const run = await recognize(prepared.bytes, 'image/jpeg', (book, i) => {
           if (i < MAX_PHOTO_BOOKS) line({ book: photoRead(book), i });
         });
         books = run.books.slice(0, MAX_PHOTO_BOOKS);
@@ -94,6 +99,9 @@ export async function POST(request: NextRequest) {
       }
       recordPhoto({
         bytes: bytes.length,
+        sent: `${prepared.width}x${prepared.height}`,
+        orientation: prepared.orientation,
+        shrunk: prepared.shrunk,
         model,
         read: books.length,
         found: matches.filter((m) => m.tile && !m.unsure).length,

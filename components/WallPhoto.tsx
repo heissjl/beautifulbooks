@@ -8,7 +8,48 @@ import type { PhotoMatch, PhotoRead } from '@/lib/walls/photo';
 /** Long edge the photo is shrunk to before it leaves the phone; the model reads no more (lab/shelf). */
 const PHOTO_EDGE = 1600;
 
-async function shrink(file: File): Promise<Blob> {
+/** What the server takes as it is when the canvas cannot be trusted (app/api/walls/photo/route.ts has the same number). */
+const MAX_ORIGINAL_BYTES = 12 * 1024 * 1024;
+
+/**
+ * Whether what this browser draws on a canvas is what it reads back.
+ * LibreWolf, Firefox with resistFingerprinting and the Tor Browser answer
+ * with a made-up pattern instead (Julian's LibreWolf, 2026-09-30: 64 of 64
+ * test pixels wrong, the model got 1.1 MB of stripes and read nothing).
+ */
+function canvasIsHonest(): boolean {
+  const c = document.createElement('canvas');
+  c.width = 8;
+  c.height = 8;
+  const ctx = c.getContext('2d');
+  if (!ctx) return false;
+  for (let y = 0; y < 8; y++) {
+    for (let x = 0; x < 8; x++) {
+      ctx.fillStyle = `rgb(${x * 32},${y * 32},128)`;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+  const d = ctx.getImageData(0, 0, 8, 8).data;
+  for (let y = 0; y < 8; y++) {
+    for (let x = 0; x < 8; x++) {
+      const i = (y * 8 + x) * 4;
+      if (Math.abs(d[i] - x * 32) > 2 || Math.abs(d[i + 1] - y * 32) > 2 || Math.abs(d[i + 2] - 128) > 2) return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * The photo as it goes to the server: shrunk on a canvas where the canvas can
+ * be trusted, otherwise the file as it is — the server turns and shrinks it
+ * then (`lib/photoprep.ts`), at the price of a bigger upload.
+ */
+async function prepare(file: File): Promise<Blob> {
+  if (!canvasIsHonest()) {
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') throw new Error('This browser keeps its canvas private, so the photo goes as it is — and that works for a JPEG or PNG only. Save it as a JPEG first.');
+    if (file.size > MAX_ORIGINAL_BYTES) throw new Error('This browser keeps its canvas private, so the photo would go as it is — and this one is larger than 12 MB. Choose a smaller copy.');
+    return file;
+  }
   let bitmap: ImageBitmap;
   try {
     bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
@@ -22,9 +63,6 @@ async function shrink(file: File): Promise<Blob> {
   canvas.height = Math.round(bitmap.height * scale);
   const ctx = canvas.getContext('2d');
   ctx?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-  // On 2026-09-30 a shelf photo reached the model with its full size and not one
-  // book on it (20 answer tokens): most likely an empty canvas. Say so here
-  // instead of "No title could be read", and spend nothing on it.
   if (ctx && looksBlank(ctx, canvas.width, canvas.height)) throw new Error('The photo came out blank when it was prepared. Choose it again, or another copy of it.');
   return new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('The photo could not be prepared.'))), 'image/jpeg', 0.9));
 }
@@ -114,7 +152,8 @@ export default function WallPhoto({
     const preview = URL.createObjectURL(file);
     setState({ step: 'reading', preview, reads: [] });
     try {
-      const res = await fetch('/api/walls/photo', { method: 'POST', headers: { 'content-type': 'image/jpeg' }, body: await shrink(file) });
+      const body = await prepare(file);
+      const res = await fetch('/api/walls/photo', { method: 'POST', headers: { 'content-type': body.type || 'image/jpeg' }, body });
       if (!res.ok || !res.body) {
         const data = (await res.json().catch(() => ({}))) as { error?: string };
         throw new Error(data.error ?? 'The photo could not be read.');

@@ -3997,3 +3997,7 @@ Nach der Messung vom Nachmittag (oben) sagte Julian „ok, starte hiermit“ zu 
 
 986 Tests, Build durch. Nicht deployt.
 
+## 2026-09-30 · Warum LibreWolf keine Bücher sah (ROADMAP 5.11a)
+
+Das „keine Ergebnisse“ vom Nachmittag hatte eine Ursache, die kein Log zeigen konnte: **Julians LibreWolf gibt beim Auslesen des Canvas ein Streifenmuster zurück** — der Fingerprinting-Schutz, den auch Firefox mit `resistFingerprinting` und der Tor-Browser haben. Der Browser verkleinerte das Foto auf einem Canvas, las Streifen zurück und schickte 1,1 MB Streifen; das Modell antwortete ehrlich mit einer leeren Liste. Nachgestellt in einem headless LibreWolf (WebDriver BiDi), dasselbe JPEG an das Modell geschickt: 0 Bücher. Seitdem prüft die Seite ihr Canvas mit einem 8 × 8-Verlauf (LibreWolf: 64 von 64 Pixeln falsch, Chrome: 0) und schickt bei einem unehrlichen Canvas das Original, und **der Server bereitet jedes Foto selbst auf** (`lib/photoprep.ts`: EXIF-Drehung, 1600 px, nacktes JPEG) — ein Nebengewinn: das Modell sieht keinen EXIF-Tag mehr, auch keinen GPS-Tag. In LibreWolf durchgespielt: 19 gelesen, 18 gefunden. Zahlen im [Plan](plans/PLAN-5.11a-regalfoto-zuverlaessig.md#das-keine-ergebnisse--gelöst-2026-09-30-nachts).
+

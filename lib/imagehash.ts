@@ -29,13 +29,14 @@ export interface RgbaImage {
 }
 
 /** Decodes JPEG or PNG bytes. Returns null for unsupported or broken data. */
-export function decode(bytes: Uint8Array): RgbaImage | null {
+export function decode(bytes: Uint8Array, limits: { maxMemoryUsageInMB?: number; maxResolutionInMP?: number } = {}): RgbaImage | null {
   let width: number;
   let height: number;
   let rgba: Uint8Array;
   try {
     if (bytes[0] === 0xff && bytes[1] === 0xd8) {
-      const img = jpeg.decode(bytes, { useTArray: true, maxMemoryUsageInMB: 64, maxResolutionInMP: 20 });
+      // 64 MB covers a cover scan; a phone's 12-megapixel photo (5.11a) needs more and says so.
+      const img = jpeg.decode(bytes, { useTArray: true, maxMemoryUsageInMB: limits.maxMemoryUsageInMB ?? 64, maxResolutionInMP: limits.maxResolutionInMP ?? 20 });
       width = img.width; height = img.height; rgba = img.data;
     } else if (bytes[0] === 0x89 && bytes[1] === 0x50) {
       const img = PNG.sync.read(Buffer.from(bytes));
