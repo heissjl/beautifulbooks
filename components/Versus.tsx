@@ -153,6 +153,9 @@ function askAhead(cache: Map<string, Promise<Answer>>, seen: readonly string[], 
  * The pairs that came with the page (Julian, 2026-09-25: „have a set of preloaded pairs ready"),
  * put into the cache under the `seen` lists the game will ask with — so the first ones show at
  * once and the server is asked only from the pair after them.
+ *
+ * They carry no images: `askAhead` finds them here and never calls `fetchPair`, which is what
+ * fetches the two pictures. That is `usePreloadSeeded`'s job (ROADMAP 6.82).
  */
 function seeded(pairs: readonly Pair[]): Map<string, Promise<Answer>> {
   const cache = new Map<string, Promise<Answer>>();
@@ -162,6 +165,31 @@ function seeded(pairs: readonly Pair[]): Map<string, Promise<Answer>> {
     seen = withSeen(seen, pair);
   }
   return cache;
+}
+
+/**
+ * The images of the pairs that came with the page (ROADMAP 6.82).
+ *
+ * Only the first pair's two covers are in the page's `preload` hints, and the seeded pairs skip
+ * `fetchPair`, so pairs two and three used to start loading their pictures at the moment they
+ * appeared: measured on 2026-10-01, a cover that no edge holds yet takes 1.2 to 2.3 s, against
+ * 0.37 s once it is cached. That was a second of emptiness after each of the first two clicks.
+ *
+ * One pair after another, both of its covers at once: the browser has the first pair's images
+ * from the page's own hints, so the chain spends its bandwidth on what comes next, in the order
+ * it will be needed. In an effect, because `preload` needs a browser, and once, because a second
+ * run would build Images for pictures already on their way.
+ */
+function usePreloadSeeded(pairs: readonly Pair[]) {
+  const started = useRef(false);
+  useEffect(() => {
+    if (started.current || pairs.length === 0) return;
+    started.current = true;
+    void pairs.reduce(
+      (before, pair) => before.then(() => Promise.all([preload(pair.a.src), preload(pair.b.src)]).then(() => undefined)),
+      Promise.resolve(),
+    );
+  }, [pairs]);
 }
 
 export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] }) {
@@ -175,6 +203,7 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
   const holdUntil = useRef(0);
   /** The pairs behind the one on screen, asked for early. Keyed by the `seen` list each was asked with. */
   const ahead = useRef(seeded(initialPairs));
+  usePreloadSeeded(initialPairs);
 
   useEffect(() => {
     let cancelled = false;

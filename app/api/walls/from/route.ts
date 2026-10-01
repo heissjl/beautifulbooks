@@ -6,6 +6,35 @@ import { newVisitorId, newWall, newWallId } from '@/lib/walls/owner';
 import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from '../guard';
 
 /**
+ * GET /api/walls/from?curated=<slug> | ?reader=<id> — the covers of a
+ * published curated collection or a reader's collection as tiles, without
+ * making anything (ROADMAP 5.13m): the editor offers them to pick into the
+ * collection that is open.
+ */
+export async function GET(request: NextRequest) {
+  const open = openWalls(request);
+  if ('response' in open) return open.response;
+  const params = request.nextUrl.searchParams;
+  const curated = params.get('curated');
+  const reader = params.get('reader');
+  try {
+    if (curated) {
+      const c = await liveCollectionBySlug(curated, { includeDrafts: false });
+      if (!c) return json({ error: 'No such collection.' }, 404);
+      return json({ title: c.title, ...tilesFromCurated(c.works) });
+    }
+    if (isWallId(reader)) {
+      const source = await open.store.get(reader);
+      if (!source) return json({ error: 'No such collection.' }, 404);
+      return json({ title: source.title, ...tilesFromWall(toPublic(source)) });
+    }
+  } catch {
+    return storeDown();
+  }
+  return json({ error: 'Name a collection.' }, 400);
+}
+
+/**
  * POST /api/walls/from {curated: slug} | {reader: id} — a new collection of
  * one's own, started from a published curated collection or from a reader's
  * collection (ROADMAP 5.13k). It starts unsaved, like every new collection

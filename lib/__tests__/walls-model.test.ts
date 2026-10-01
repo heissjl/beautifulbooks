@@ -10,6 +10,8 @@ import {
   toPublic,
   validTile,
   WallError,
+  storedCoverId,
+  tileCoverId,
   type Tile,
 } from '../walls/model';
 import { hashVisitor, isOwner, newVisitorId, newWall, newWallId, ownedBy } from '../walls/owner';
@@ -122,7 +124,7 @@ describe('showcase (5.13d)', () => {
     expect(wall().unsaved).toBe(true);
     let w = wall();
     for (let i = 0; i < MIN_SHOWCASE_TILES; i++) w = applyOp(w, { op: 'add', tile: tile(String(i)) }, 't');
-    expect(() => applyOp(w, { op: 'submit' }, 't')).toThrow('Save the collection first.');
+    expect(() => applyOp(w, { op: 'submit' }, 't')).toThrow('Keep the collection first.');
     const saved = applyOp(w, { op: 'save' }, 't');
     expect(saved).not.toHaveProperty('unsaved');
     expect(toPublic(w).unsaved).toBe(true);
@@ -167,3 +169,20 @@ describe('showcase (5.13d)', () => {
   });
 });
 
+describe('cover ids of tiles (5.13n)', () => {
+  it('takes an Open Library number or a Google volume, nothing else', () => {
+    const base = { workId: 'OL1W', title: 'T', printings: [] };
+    expect(validTile({ ...base, coverId: '123' }).coverId).toBe('123');
+    expect(validTile({ ...base, coverId: 'gb:AbC_1-x' }).coverId).toBe('gb:AbC_1-x');
+    expect(() => validTile({ ...base, coverId: 'ol:123' })).toThrow('Bad cover id.');
+    expect(() => validTile({ ...base, coverId: 'gb:' })).toThrow('Bad cover id.');
+    expect(() => validTile({ ...base, coverId: 'https://x' })).toThrow('Bad cover id.');
+  });
+  it('writes both back the way the site names covers', () => {
+    expect(tileCoverId({ coverId: '123' })).toBe('ol:123');
+    expect(tileCoverId('gb:AbC')).toBe('gb:AbC');
+    expect(storedCoverId('ol:123')).toBe('123');
+    expect(storedCoverId('gb:AbC')).toBe('gb:AbC');
+    expect(storedCoverId('x:1')).toBeNull();
+  });
+});

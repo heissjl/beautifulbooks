@@ -3914,6 +3914,102 @@ Julian: „wir brauchen noch eine Vorschaukarte für Collections" — bis dahin 
 
 Offen: die Sammlungen der Leser (`/c/<id>`) zeigen weiter die Website-Karte.
 
+
+**Cover-Spiel ohne Suhrkamp BasisBibliothek, 2026-09-30.** Julian: „entferne die suhrkamp basisbibliothek aus dem spiel“. `suhrkamp-basisbibliothek` steht jetzt in `LEFT_OUT` von `scripts/add-collection-covers-to-pool.ts`, neben edition suhrkamp, Library of America und den Suhrkamp-Autorenporträts. Neu gebaut aus dem Live-Stand: 48 Umschläge heraus, der Vorrat hat 5012 statt 5060, keiner der BasisBibliothek bleibt drin (auch nicht im Grundvorrat aus dem Index). Die Messungen waren zwischengespeichert, kein Bild wurde neu geladen.
+## 2026-09-29 · Vorschaukarten als JPEG (ROADMAP 6.61)
+
+Julian zu den Sammlungskarten: „das ist schon recht groß, nach dem Deploy sollten wir überlegen, wie es kleiner geht." Gemessen an der Karte von *Feminist Press* aus der Produktion (PNG, 927 KB): JPEG 90 → 160 KB, 82 → 122 KB, 75 → 104 KB; WebP 82 → 86 KB; PNG mit 256 Farben → 217 KB. Julian: „ja, mach jpg." `asJpeg` in `app/og.tsx` wandelt die PNG des Generators mit `sharp` (schon Abhängigkeit des Projekts) in JPEG, Qualität 82, mozjpeg, progressiv; Werk-, Cover- und Sammlungskarte deklarieren `image/jpeg`.
+
+**Ergebnis im Build:** Sammlungskarten 53 KB (*SF Masterworks – rounded corners*, eine Reihe) bis 139 KB (*SF Masterworks – the relaunch*), vorher 352 KB bis 1,15 MB; *Feminist Press* 106 KB. Am Dev-Server: Werk-Karte *Frankenstein* 108 KB, Cover-Karte 50 KB, die Website-Karte als Ersatz einer unbekannten Sammlung 35 KB (JPEG, weil die Route JPEG deklariert). Die Website-Karte selbst bleibt PNG, 53 KB — Flächen und Schrift, die JPEG verschmieren würde. Die Schrift unter der Wand bleibt im JPEG scharf (vergrößert angesehen).
+
+
+## 2026-09-29 · Ein Bearbeitungsmodus für die eigene Sammlung, Schritte 1–3 (ROADMAP 5.13m)
+
+Julian: „die bearbeitung für user von ihren bestehenden collections muss einfacher werden …“; Plan und Mockup am selben Tag ([PLAN-5.13m](plans/PLAN-5.13m-sammlung-bearbeiten.md)), Entscheidungen im Chat (eigene Adresse, „Keep it“, „Arrange“ im Editor statt Werkzeugen auf der Ansicht, Band auf der Buchseite, Reihenfolge 1–3 → 4 → 5). Gebaut auf `claude/collection-editing-ux-562eba`, nicht gemergt, nicht deployt.
+
+- **Neu:** `/c/<id>/edit` (`components/CollectionEditor.tsx`) mit Band, „Add covers“ (Search, Photo, Ideas) und „Arrange“; `lib/walls/edit.ts` (Adresse, Stand eines Covers gegen die Sammlung, Anfragen zu 50) mit sechs Tests; `GET /api/walls/from` liefert die Cover einer Sammlung, ohne etwas anzulegen; `components/BookSearch.tsx` aus `/create` herausgelöst; `lib/walls/startoptions.ts` teilt die Auswahl „from a collection“ zwischen `/create` und Editor.
+- **Geändert:** `WallProposal` nimmt ein Ziel (Foto, Zufall, fremde Sammlung → „Add n to …“, „already in this collection“, „another cover“); `WallPicker` hat ein festes Ziel statt Auswahl und Streifen; `/create` ist die Lobby, jeder Start endet im Editor; `/c/<id>` ohne Werkzeuge, mit „Edit collection“; „Save collection“ → „Keep it“, „Saved.“ entfällt, der Modellfehler heißt „Keep the collection first.“
+- **Im Browser gegen `next dev` durchgespielt** (Port 3457, Speicher im Arbeitsspeicher, Open Library live; Klicks per Skript im Browser-Bereich): Suche „rebecca du maurier“ → Werk → erster Cover-Klick legt „My collection“ an und öffnet `/c/<id>/edit?q=…&work=OL36633W` mit demselben Picker; zwei weitere Cover → 3 in der Spalte, 3 als „Added“; Ideas → sechs Zufallscover „Add 6“ → 9, danach sechs Zeilen „already in this collection“ und „Add 0“; **edition suhrkamp, 198 Cover auf einmal → 207** (vier Anfragen, keine verloren); Arrange: → verschiebt (Reihenfolge der Cover-IDs geprüft), ✕ nimmt heraus, Titel und Name kommen an, „Keep it“ nimmt „not kept yet“ aus dem Band; Ansicht: 0 Werkzeugknöpfe, 0 Felder, „Edit collection“ → Editor, „206 covers. Yours.“; Lobby: Karten und „Edit“ zeigen auf den Editor; „+ New collection“ aus der Spalte öffnet „Collection 2“ mit derselben Suche. Ein Browser **ohne** die ID auf `/c/<id>/edit` landet auf `/c/<id>` (Headless-Chrome ohne Cookie).
+- **Größen (N14):** Headless-Chrome mit Geräte-Emulation, 1280 × 800 und 390 × 844, hell und dunkel: `scrollWidth` = Breite auf jeder Seite (Lobby, Editor, Arrange, Ansicht), kein seitliches Überlaufen. Am Telefon steht die Spalte „You are adding to“ **unter** Suche und Picker; bis Schritt 5 (Leiste unten) nennt nur das Band die Sammlung.
+- **Foto-Reiter, nachgeprüft am selben Abend** (Julian: „doch ein key sollte da sein“ — er steht in der `.env.local` des Hauptordners, der Worktree hat keine; der Dev-Server lief zuerst ohne sie): Server neu gestartet mit dieser Datei, als „Foto“ ein Screenshot einer Cover-Wand (1280 × 800, sieben Cover sichtbar). Gelesen in **10 s**: 7 Bücher, 7 mit Cover gefunden. In einer Sammlung mit zwei Rebecca-Ausgaben standen beide Rebecca-Zeilen als „in this collection with another cover“, nicht vorgewählt; „Add 5 to My collection“ → 2 auf 7, danach fünf Zeilen „already in this collection“ und „Add 0“; „another cover“ bei *Effi Briest* öffnete den Reiter Search mit `q=Effi+Briest&work=OL857189W` und dem Picker des Buchs. Weiter **nicht geprüft:** ein echtes Regalfoto (Rücken statt Cover) und die Auswahl „A new collection / Add to …“ nach einem Foto auf `/create` (dieselbe Komponente, ein zweiter Modellaufruf wäre nötig gewesen); das Gefühl echter Klicks und Tastatur (die Klicks waren synthetisch).
+- `npm run test:run` 89 Dateien, 960 Tests grün, `npx tsc --noEmit` und ESLint sauber, `npm run build` durch (mit der `.env.local` des Hauptordners nur für diesen Befehl).
+- **Wortwahl nach Julians Blick** (2026-09-29, „statt ‚not kept yet‘ lieber ‚not saved yet‘. ‚keep it‘ lassen. statt ‚done‘ lieber ‚stop editing‘“): Hinweis „not saved yet“ im Band, auf den Karten und in der Ansicht; Knopf bleibt „Keep it“; der Ausgang aus dem Editor heißt „Stop editing“.
+
+## 2026-09-29 · Bearbeitungsmodus, Schritte 4 und 5: Buchseite und Telefon (ROADMAP 5.13m)
+
+Julian: „mach mit schritt 4 und 5 weiter“. Gebaut auf demselben Branch, nicht gemergt, nicht deployt.
+
+- **Buchseite (Schritt 4):** `components/AddToWall.tsx` ist eine Liste aller eigenen Sammlungen mit Häkchen (eine Operation je Klick an die jeweilige Sammlung), „+ New collection with it“, „Open the editor“; die bearbeitete Sammlung zuoberst als „editing“. `components/editingSession.ts` hält in `sessionStorage` (`bb.wall.editing`), welche Sammlung der Tab bearbeitet — der Editor setzt es, „Stop editing“ löscht es (im Band des Editors wie auf der Buchseite); `components/EditingBand.tsx` zeigt es auf der Buchseite. Damit Band und Liste dieselbe Zahl nennen, teilt `announceWall` in `useMyWalls.ts` jede Änderung als Fenster-Ereignis mit allen Instanzen des Hooks. Das Band haftet dort **nicht**: die Seitenleiste haftet bei `top-20`, ein Band darüber hätte ihren Kopf verdeckt.
+- **Telefon (Schritt 5):** `components/CollectionSheet.tsx` nach dem Muster von `CoverSheet` — Leiste unten mit den letzten drei Covern, „You are adding to“, Titel und Zahl; ein Blatt mit derselben Spalte (`TargetPanel`, aus dem Editor herausgelöst). Spalte und Leiste sind exklusiv über `useIsDesktop`, nur im Modus „Add covers“.
+- **Durchgespielt im Browser-Bereich** (Klicks per Skript, 1280 × 800): aus dem Picker über „the book's page“ auf *Effi Briest* → Band „EDITING · My collection · 7 covers · Back to the editor · Stop editing“; Cover gewählt, Liste geöffnet: „My collection · editing · 7“ ohne Häkchen; Häkchen gesetzt → Knopf „In My collection ✓“, Band zählt **8**; „+ New collection with it“ → zweite Zeile „Collection 2 · not saved yet · 1“, Knopf „In 2 collections ✓“; erstes Häkchen weg → Band **7**, Knopf „In Collection 2 ✓“, „Open the editor“ zeigt weiter auf die bearbeitete Sammlung; „Stop editing“ nimmt Band und Sitzung weg. Ein erster Versuch schlug fehl, weil die Seitenleiste nach der Cover-Wahl neu aufgebaut wird und der gemerkte Knopf veraltet war — kein Fehler der Seite.
+- **Größen (N14, Headless-Chrome, hell):** Editor 390 × 844 mit Leiste unten („YOU ARE ADDING TO · My collection · 7 · Open“) und geöffnetem Blatt (Spalte mit 7 Covern und ✕, „Add to another instead“); Buchseite 1280 mit Band und offener Liste neben „Share“, 390 mit Band unter der Kopfzeile; `scrollWidth` = Breite überall. Der Titel im Band kürzt sich am Telefon auf „My collect…“ — gewollt, die Zahl bleibt in der Leiste.
+- **Nicht geprüft:** die Liste am Telefon im Cover-Blatt (sie klappt dort absolut unter dem Knopf auf; nur am Desktop gesehen), echte Berührung und Tastatur.
+- `npm run test:run` 89 Dateien, 960 Tests grün; `npx tsc --noEmit`, ESLint, `npm run build` durch.
+- **Nachtrag, Fortschritt beim Moduswechsel** (Julian, nach dem ersten Klicken: „wenn ich zu einer sammlung unter add covers zb via photo hinzufüge und währenddessen auf arrange klicke, geht der ganz fortschritt verloren … vor allem während der wartezeit will man arrangen“): der linke Bereich wurde bei „Arrange“ ausgehängt und mit ihm der Zustand von Foto, Kästen und Häkchen. Jetzt bleiben der Bereich und die drei Reiter eingehängt und werden mit `hidden` versteckt. Geprüft: Foto hochgeladen, während „Reading the photo…“ auf Arrange gewechselt und ein Cover verschoben; das Lesen lief weiter (8 von 8 gefunden), zurück auf „Add covers“ standen Foto, 8 Zeilen, 6 Häkchen und „Add 6 to My collection“; der Suchreiter blieb versteckt.
+- **Schritt 6, Ziehen zum Verschieben** (Julian: „weiter mit den nächsten schritten“): Pointer-Ereignisse in „Arrange“ — die Maus nimmt ein Cover überall auf, ein Finger nur am Griff ⠿ mit `touch-action: none`, damit er auf dem Cover die Seite scrollen kann; `elementFromPoint` findet das Ziel, das den Akzentring bekommt, Loslassen sendet `move`. **Gemessen in Headless-Chrome mit echten Ereignissen** (`Input.dispatchMouseEvent`, `Input.dispatchTouchEvent`; der Browser-Bereich war verborgen, `innerHeight` 0, dort findet `elementFromPoint` nichts): Maus Cover 0 → Stelle 2, Ziel hervorgehoben, Reihenfolge danach 15204748 / 2627061 / 12518966 (aus 12518966 / 15204748 / 2627061); Finger am Griff Cover 1 → Stelle 0; Finger auf dem Cover: Seite scrollt, Reihenfolge bleibt. Ein erster Versuch mit der Maus bewegte nichts: das `<img>` startete den nativen Bild-Drag des Browsers, der die Pointer-Ereignisse abbricht — `onDragStart` verhindert ihn jetzt. Tests, `tsc`, ESLint und Build danach grün.
+- **Nach dem Merge von `origin/main` (26 Commits, darunter 6.77):** „Add to collection“ steht am Telefon jetzt im Kopf des Blatts neben „Close“; die Liste mit Häkchen klappt dort unter dem Knopf auf, über dem Cover (Headless-Chrome 390 × 844, gesehen: „PUT THIS COVER INTO · My collection · editing · 7 · + New collection with it · Open the editor“), und der Knopf heißt, sobald das Cover in einer Sammlung ist, „✓ ▾“ (6.77: „nur ✓“). Nach dem Merge 90 Dateien, 969 Tests grün, Build durch.
+
+## 2026-09-29 · Bearbeitungsmodus nach dem Deploy: Kachel-Klick tauscht das Cover, ein Link weniger (ROADMAP 5.13m)
+
+Julian, nach dem Deploy: „in der arrange-sicht fehlt mir jetzt die option ein anderes cover durch anklicken einer kachel auszuwählen“ und „der see it as others do button macht irgendwie das gleiche wie der stop editing button? also lieber weglassen oder zusammenführen?“
+
+- **Kachel-Klick in „Arrange“:** die Kachel ist ein Knopf; ein Klick ohne Bewegung (unter 6 px, sonst ist es ein Ziehen) öffnet die Cover des Buchs im Picker mit `?swap=<coverId>`; das gewählte Cover tritt an die Stelle des alten (`swapOps` in `lib/walls/edit.ts`: entfernen, hinzufügen, an den Platz rücken; Test: aus 1 / 2 / 3 wird 1 / 9 / 3), danach zurück auf „Arrange“. Der Picker sagt „Pick another cover for this book: it takes the place of the one marked in <Titel>“. Geprüft im Browser: Kachel 1 (*Homo Faber*, 2627061) → Picker mit der alten als „Added“ → Klick auf 14409489 → Reihenfolge 15204748 / 14409489 / 12518966, Adresse `?mode=arrange`. Ein Cover aus Google Books wird wie überall abgelehnt („cannot go into a collection yet“).
+- **Doch als Fenster** (Julian gleich danach: „ich wollte lieber eine in-place änderung durch ein pop-up so wie das bei der curate-seite bisher ist“): der Picker liegt jetzt in einem Dialog über „Arrange“ (`fixed inset-0`, wie `CurateTool`), statt in den Reiter Search zu springen; `?swap=` bleibt in der Adresse, Escape und Klick daneben schließen. Geprüft: Kachel 3 → Fenster über der Wand, Klick auf ein anderes Cover → getauscht an Ort und Stelle, Fenster zu.
+- **„See it as others do“ ist weg:** beide Links führten auf `/c/<id>`, nur „Stop editing“ beendete dazu die Sitzung; „Stop editing“ bleibt und zeigt die Ansicht.
+- Tests (jetzt 970), `tsc`, ESLint und Build grün; gepusht und deployt am selben Abend.
+- **Google-Cover klarer** (Julian: „‚This image comes from Google Books …‘ das muss klarer angezeigt werden wenn es passiert. außerdem, warum können wir das nicht nehmen?“): die Absage stand als Zeile über der Wand, außer Sicht, wenn das geklickte Cover weit unten lag. Jetzt sind Google-Cover im Picker gedimmt mit „Google Books“ (`CoverGallery` kennt `dimmed`), ihre Zahl steht vorab („2 of the 187 come from Google Books …“), und die Absage erscheint als Hinweis am unteren Rand, sieben Sekunden oder bis „Close“. Geprüft an *The Great Gatsby*: 187 Cover, 2 von Google, beide gedimmt, Klick → Hinweis. Das „Warum“ ist ROADMAP 5.13n: nur eine Abkürzung im Code (Sammlungen speichern die Open-Library-Nummer), kein Recht, kein Kontingent; Umbau eine Sitzung mit Folgen für Schritt 2 und die Karten — Julians Entscheidung.
+
+## 2026-09-29 · Google-Cover in eigenen Sammlungen (ROADMAP 5.13n)
+
+Julian: „mach es“, „plus error handling falls der api limit erreicht wird oder ähnliches“.
+
+- `coverId` einer Kachel ist eine Open-Library-Nummer oder `gb:<Band-ID>` (`COVER` in `lib/walls/model.ts`); `tileCoverId` schreibt beides als Cover-Kennung der Seite, `storedCoverId` nimmt sie zurück. Neun Stellen in den Komponenten nahmen `ol:` an — jetzt der Helfer; `WallPicker` und `AddToWall` nehmen jede Kennung, die eine Sammlung halten kann. Die Dimm-Markierung und der Hinweis vom Abend sind wieder ausgebaut. Zwei Tests.
+- **Geprüft** an *The Great Gatsby* (187 Cover, 2 von Google): Klick auf `gb:WpD_DAAAQBAJ` → 8 Kacheln, in der Leiste unten `/img/S/gb-WpD_DAAAQBAJ`, die Bildroute antwortet 200 `image/jpeg` mit `X-Cover-Source: googlebooks`.
+- **Fehlerfall:** nichts Neues nötig, nur nachgesehen — `/img/` gibt bei einem stummen Google 502 mit `no-store` und zeichnet den Ausfall auf (`recordCoverFailure`), `CoverImage` fragt nach 1,5 s einmal nach und zeigt dann den Platzhalter; die Kachel bleibt mit Titel und ✕ bedienbar. Ist das Tageskontingent aus, fehlen Google-Cover im Picker wie auf der Buchseite (die Seite sagt das dort bisher nicht; das wäre ein eigener Punkt).
+- Tests 972 grün, `tsc`, ESLint, Build; gepusht und deployt.
+
+## 2026-09-29 · Eine Vorschaukarte für die Sammlungen der Leser (ROADMAP 6.61, 5.13a)
+
+Julian: „für geteilte User-Collections soll auch eine Vorschaukarte kommen." Die Wand der Sammlungskarte ist jetzt `coverWallCard` in `app/og.tsx`; `/collections/<slug>/opengraph-image` und das neue `/c/<id>/opengraph-image` rufen sie auf. Eine Lesersammlung zeigt ihre ersten vierzehn ladbaren Cover, ihren Titel (auf 70 Zeichen gekürzt) und „N covers", mit dem Namen, den der Besitzer selbst zu zeigen gewählt hat („collected by …") — nichts über den Besitzer darüber hinaus (E22). Abgeschaltet (`hiddenBy`), leer, Schalter aus oder Speicher stumm: die Website-Karte, als JPEG. Nicht vorberechnet — die Sammlungen liegen im Speicher und ändern sich, während sie entstehen —, sondern beim ersten Abruf gebaut und eine Stunde gehalten. Die Seite gibt dem Link dazu Titel und Beschreibung (die Einleitung des Lesers, sonst „16 covers, on Beautiful Books."); vorher stand dort der allgemeine Satz der Website.
+
+**Geprüft am Dev-Server** mit einer Sammlung aus sechzehn Covern der Hugo-Wand: Karte 115 KB, JPEG, vierzehn Cover in zwei Reihen, Titel und „16 covers"; eine unbekannte Kennung ergibt die Website-Karte (35 KB); die Karte von *Feminist Press* nach dem Umbau unverändert 106 KB.
+
+
+---
+
+## 2026-10-01 · Warum sich das Cover-Spiel langsam anfühlt (ROADMAP 6.82)
+
+Julian: „checke, ob nach wie vor 3 paare vorgeladen werden und paare für den kaltstart bereitstehen. es fühlt sich derzeit langsam an, aber vllt ist mein internet langsam."
+
+**Beides steht noch, im Code und in der Produktion gemessen:**
+
+| Gemessen an https://beautifulcovers.vercel.app | Wert |
+|---|---|
+| `/versus` ausgeliefert | **0,58 s** (TTFB 0,48 s), 44.757 Byte |
+| Fertige Paare im HTML | **3** (`readyPairs(secret, 3)`, `signPair`-Token mitgezählt) |
+| `preload`-Hinweise für Bilder | **2** — die beiden Cover des ersten Paars |
+| `/api/versus/pair` | **0,58 s** und **0,32 s** bei zwei Abrufen |
+| Paare hinter dem gezeigten | **2** (`AHEAD`), jedes mit `fetchPair` samt Bild-Vorladen |
+
+Das Netz des Spielers ist also nicht das Thema, und die Paarung auch nicht.
+
+**Die Bilder sind es.** Dasselbe Cover über `/img/L/…`:
+
+| Abruf | Zeit | Vercels Zwischenspeicher |
+|---|---|---|
+| erster | **2,30 s** bzw. 1,44 s | `x-vercel-cache: MISS` |
+| zweiter | **0,37 s** | `HIT`, `age: 22` |
+
+Vercels Zwischenspeicher (der CDN-Knoten, der den Besucher bedient) hält ein Bild 30 Tage (`s-maxage`), aber bei inzwischen 5.012 Covern und wenigen Spielern hat der Knoten fast jedes Bild beim ersten Zeigen noch nie gesehen — dann holen wir es von archive.org.
+
+**Und daraus wird ein Fehler, den die drei fertigen Paare selbst machen:** `seeded()` legt sie als `Promise.resolve({ pair })` in den Zwischenspeicher — ohne `preload`. `askAhead` findet den Eintrag und ruft `fetchPair` gar nicht erst auf, das die Bilder holen würde. **Die Bilder von Paar 2 und 3 beginnen also erst zu laden, wenn das Paar auf dem Schirm steht** — ein bis zwei Sekunden Leere nach genau den ersten zwei Klicks. Der Server legt nur für das erste Paar `preload`-Hinweise in den Kopf (`initialPairs.slice(0, 1)`).
+
+**Behoben am selben Tag** (Julian: „baue und committe es"). `usePreloadSeeded` stößt die Bilder der mitgelieferten Paare nach dem Mounten an: ein Paar nach dem anderen, beide Cover zugleich, in der Reihenfolge, in der sie gebraucht werden. In einem Effekt, weil `preload` einen Browser braucht, und genau einmal, weil ein zweiter Lauf Bilder noch einmal anstieße, die schon unterwegs sind. **Nachgemessen am Dev-Server:** vor dem ersten Klick sind **sechs** Cover geladen, während **zwei** Kacheln zu sehen sind; nach einem Klick steht das zweite Paar nach **767 ms** — und seine Bilder waren schon im Zwischenspeicher, die Zeit ist Übergang und Rendern. 972 Tests, `tsc`, Lint und Build grün.
+
+Was bleibt: **das allererste Bild eines Besuchs** kostet weiter 1,2 bis 2,3 s, solange kein CDN-Knoten es hält. Dagegen hülfe nur, den Vorrat vorzuwärmen — die Cover einmal durch `/img` zu ziehen, damit die Knoten sie haben; das ist eine eigene Entscheidung und steht hier nur als Notiz.
+
+**Nachgeprüft am 2026-10-01, nachdem der Vorrat auf 5.012 Cover aus 2.907 Büchern gewachsen war** (`mix-2000-paperwhite-collections`, gebaut 2026-09-30): Der Befund hält, und die Rechnung wird durch die Zahl nur deutlicher — je mehr Cover, desto seltener hat ein CDN-Knoten eines davon schon gesehen. **Die drei fertigen Paare bauen zu lassen kostet weiterhin nichts:** `readyPairs(3)` über 5.012 Cover braucht **5,3 ms** im Mittel von zwanzig Läufen (4,1 bis 7,1 ms, `scripts/measure-ready-pairs.ts`), obwohl es für jedes Cover einen Elo-Startwert anlegt; die Seite ist dynamisch, das fällt also je Besuch an. Die Produktion liefert `/versus` weiterhin mit **drei** Paaren und zwei Bild-Hinweisen aus.
+
 ## 2026-09-29 — Deploy der Durchsichts-Punkte (ROADMAP 6.75, 6.76, 6.77, 6.79, 6.81 Teil 1)
 
 Julian: „deploye“. Vor dem Push drei neue Commits aus `origin/main` eingemischt (5.8a, 5.10l), Typen, Lint, Build und 963 Tests grün; `main` vorgespult und als `3843e9b` nach `origin/main` geschoben. Vercel-Deploy `beautifulbooks-8vyc6nicr`, Ready. Ein Prüfabruf gegen https://beautifulcovers.vercel.app/: HTTP 200, das Suchfeld steht im Server-HTML vor der Einladung ins Spiel (6.76). Die übrigen Punkte sind Browser-Code und wurden unter `next dev` geprüft, nicht in Produktion.

@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import { authorLine } from '@/lib/seo';
-import { Display, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
+import { asJpeg, Display, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
 import { getWorkPage, isWorkId } from '@/lib/work';
 
 /**
@@ -20,7 +20,7 @@ export const runtime = 'nodejs';
 export const revalidate = 86400;
 export const alt = 'A cover of this book';
 export const size = { width: 1200, height: 630 };
-export const contentType = 'image/png';
+export const contentType = 'image/jpeg';
 
 export default async function Image({ params }: { params: Promise<{ id: string; coverId: string }> }) {
   const { id, coverId } = await params;
@@ -41,7 +41,7 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
     }
   }
 
-  return new ImageResponse(
+  return asJpeg(new ImageResponse(
     (
       <div
         style={{
@@ -69,5 +69,5 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
       </div>
     ),
     { ...size, fonts: await ogFonts() },
-  );
+  ));
 }

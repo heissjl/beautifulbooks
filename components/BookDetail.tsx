@@ -18,6 +18,7 @@ import { useOverflowsY } from '@/components/useOverflowsY';
 import LocalShops from '@/components/LocalShops';
 import SiteFooter from '@/components/SiteFooter';
 import AddToWall from '@/components/AddToWall';
+import EditingBand from '@/components/EditingBand';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
@@ -81,6 +82,7 @@ function Shell({ children, backHref, toResults, right }: { children: React.React
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader left={<BackLink href={backHref} toResults={toResults} />} right={right} search={<HeaderSearch />} />
+      {walls && <EditingBand />}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
       <SiteFooter walls={walls} />
     </div>

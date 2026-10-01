@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { postJson } from './useMyWalls';
+import { editHref } from '@/lib/walls/edit';
 import type { PublicWall } from '@/lib/walls/model';
 
 /**
@@ -19,7 +20,7 @@ export default function StartFromCollection({ curated, reader, className = '' }:
     setError('');
     try {
       const { wall } = await postJson<{ wall: PublicWall }>('/api/walls/from', curated ? { curated } : { reader });
-      router.push(`/c/${wall.id}`);
+      router.push(editHref(wall.id));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'That did not work.');
       setBusy(false);

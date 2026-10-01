@@ -36,9 +36,19 @@ async function loadWall(id: string, count = false): Promise<PublicWall | null | 
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const wall = await loadWall((await params).id);
+  const found = wall && wall !== 'down' ? wall : null;
+  const title = found ? `${found.title} — a collection of covers` : 'A collection of covers';
+  // Shared links get the card beside this file (opengraph-image.tsx); these give it words: the
+  // reader's own introduction if they wrote one, otherwise what the wall holds.
+  const description = found
+    ? (found.intro?.trim() || `${found.tiles.length} ${found.tiles.length === 1 ? 'cover' : 'covers'}${found.by ? `, collected by ${found.by}` : ''}, on Beautiful Books.`).slice(0, 200)
+    : undefined;
   return {
-    title: wall && wall !== 'down' ? `${wall.title} — a collection of covers` : 'A collection of covers',
+    title,
+    ...(description ? { description } : {}),
     robots: { index: false, follow: false },
+    openGraph: { type: 'website', title, ...(description ? { description } : {}) },
+    twitter: { card: 'summary_large_image', title, ...(description ? { description } : {}) },
   };
 }
 

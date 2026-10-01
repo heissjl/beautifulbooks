@@ -97,7 +97,12 @@ const ID = /^[a-z0-9]{10}$/;
  */
 const VISITOR = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 const WORK = /^OL\d+W$/;
-const COVER = /^\d{1,12}$/;
+/**
+ * An Open Library cover number, or since 5.13n a Google Books volume
+ * (`gb:<id>`, Julian, 2026-09-29: „warum können wir das nicht nehmen?“) —
+ * both are ids `coverUrlFor` rebuilds an image from; nothing else is.
+ */
+const COVER = /^(\d{1,12}|gb:[A-Za-z0-9_-]{1,40})$/;
 
 /** Ten characters from [a-z0-9]: the public id in `/w/<id>`. */
 export const isWallId = (s: unknown): s is string => typeof s === 'string' && ID.test(s);
@@ -105,6 +110,18 @@ export const isVisitorId = (s: unknown): s is string => typeof s === 'string' &&
 
 /** A pasted ID as the site writes it: trimmed, lower case. */
 export const normalVisitorId = (s: string): string => s.trim().toLowerCase();
+
+/** The cover id of a tile as the rest of the site writes it: `ol:<number>` or `gb:<id>`. */
+export function tileCoverId(t: Pick<Tile, 'coverId'> | string): string {
+  const id = typeof t === 'string' ? t : t.coverId;
+  return id.startsWith('gb:') ? id : `ol:${id}`;
+}
+
+/** The site's cover id as a tile stores it, or null for an id no collection can hold. */
+export function storedCoverId(coverId: string): string | null {
+  const id = coverId.startsWith('ol:') ? coverId.slice(3) : coverId;
+  return COVER.test(id) ? id : null;
+}
 
 export function toPublic(wall: Wall | PublicWall): PublicWall {
   return {
@@ -185,7 +202,7 @@ export function applyOp<W extends PublicWall>(wall: W, op: WallOp, now: string):
       delete next.unsaved;
       return next;
     case 'submit':
-      if (wall.unsaved) throw new WallError('Save the collection first.');
+      if (wall.unsaved) throw new WallError('Keep the collection first.');
       if (wall.showcase === 'hidden') throw new WallError('This collection was taken down from Collections by readers.');
       if (next.tiles.length < MIN_SHOWCASE_TILES) throw new WallError('An empty collection cannot be shown.');
       if (wall.showcase === 'shown') return wall;
