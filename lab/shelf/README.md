@@ -43,6 +43,8 @@ Aus dem Hauptordner selbst: `set -a; source .env.local; set +a; npx tsx lab/shel
 
 Julians Galeriewand (rund neunzig Rücken) und ein Brett mit 22 Romanen, lokal durch den Code der Website (`lib/recognize.ts`, derselbe Prompt): Sonnet liest 19–20 von 22 bzw. 58; Haiku erfindet Bücher; die Kästen des Modells treffen in einer Reihe x, nie y; die Zeit geht in die Suchen nacheinander. Zahlen, Bilder und der Vorschlag (Reihen statt Kästen, Strom, Umschlag → Ausgabe) in [docs/plans/PLAN-5.11a-regalfoto-zuverlaessig.md](../../docs/plans/PLAN-5.11a-regalfoto-zuverlaessig.md). Die Schwelle Hamming ≤ 14 ist weiter ungemessen: beide Fotos zeigen Rücken.
 
+**Seit 2026-10-01 liefert die Erkennung keinen Kasten mehr** (`box` bleibt leer, je Buch nur ein Punkt `x`, `y`): der Ausschnitt-Vergleich für Umschläge in `match.ts` läuft damit nicht, bis ein Segmentierer den Umriss liefert (Plan 5.11a, Abschnitt „Die Kästen sollen die Bücher zeigen“); die Lab-Seite zeichnet entsprechend keine Kästen.
+
 ## Was noch fehlt — die eigentliche Messung
 
 - **`ANTHROPIC_API_KEY` in die `.env.local` des Hauptordners** (Julian). Ohne ihn ist die Erkennung ungetestet: das Modell hat noch kein Foto gesehen.

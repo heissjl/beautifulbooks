@@ -26,8 +26,8 @@ export const MAX_PHOTO_BOOKS = 80;
 export const PHOTO_SEARCHES_AT_ONCE = 3;
 
 export interface PhotoMatch {
-  /** What the photo showed, as read, with where in the photo (fractions, for the numbered boxes). */
-  read: { title: string; author: string; kind?: 'spine' | 'cover'; box?: [number, number, number, number] };
+  /** What the photo showed, as read, with the point the model put on the book (fractions of width and height, for the numbered pin). */
+  read: { title: string; author: string; kind?: 'spine' | 'cover'; at?: [number, number] };
   /** The tile to offer, absent when nothing was found or the search failed. */
   tile?: Tile;
   reason?: WorkReason;
@@ -45,7 +45,7 @@ export interface PhotoMatch {
 export type PhotoRead = PhotoMatch['read'];
 
 export function photoRead(book: RecognizedBook): PhotoRead {
-  return { title: book.title, author: book.author, kind: book.kind, ...(book.box ? { box: book.box } : {}) };
+  return { title: book.title, author: book.author, kind: book.kind, ...(book.x !== undefined && book.y !== undefined ? { at: [book.x, book.y] as [number, number] } : {}) };
 }
 
 type Search = (query: string) => Promise<WorkSummary[]>;
