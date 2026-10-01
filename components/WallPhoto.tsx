@@ -14,8 +14,28 @@ async function shrink(file: File): Promise<Blob> {
   const canvas = document.createElement('canvas');
   canvas.width = Math.round(bitmap.width * scale);
   canvas.height = Math.round(bitmap.height * scale);
-  canvas.getContext('2d')?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  const ctx = canvas.getContext('2d');
+  ctx?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  // On 2026-09-30 a shelf photo reached the model with its full size and not one
+  // book on it (20 answer tokens): most likely an empty canvas. Say so here
+  // instead of "No title could be read", and spend nothing on it.
+  if (ctx && looksBlank(ctx, canvas.width, canvas.height)) throw new Error('The photo came out blank when it was prepared. Choose it again, or another copy of it.');
   return new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('The photo could not be prepared.'))), 'image/jpeg', 0.9));
+}
+
+/** No photograph of a shelf is one flat tone: a 16 × 16 sample whose brightest and darkest pixels are within 8 of each other is empty. */
+function looksBlank(ctx: CanvasRenderingContext2D, width: number, height: number): boolean {
+  let min = 255;
+  let max = 0;
+  for (let i = 0; i < 16; i++) {
+    for (let j = 0; j < 16; j++) {
+      const [r, g, b] = ctx.getImageData(Math.floor(((i + 0.5) * width) / 16), Math.floor(((j + 0.5) * height) / 16), 1, 1).data;
+      const lum = (r + g + b) / 3;
+      if (lum < min) min = lum;
+      if (lum > max) max = lum;
+    }
+  }
+  return max - min < 8;
 }
 
 /** One line of the route's stream (app/api/walls/photo/route.ts). */

@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
         line({ read: books.map(photoRead), problems, capped: run.books.length > MAX_PHOTO_BOOKS });
       } catch {
         // Never "no books": the model did not answer, which is something else (N12).
-        recordPhoto({ failed: 'model', ms: Date.now() - started });
+        recordPhoto({ failed: 'model', bytes: bytes.length, ms: Date.now() - started });
         line({ error: 'The photo could not be read just now. Try again in a moment.' });
         controller.close();
         return;
@@ -93,6 +93,7 @@ export async function POST(request: NextRequest) {
         return;
       }
       recordPhoto({
+        bytes: bytes.length,
         model,
         read: books.length,
         found: matches.filter((m) => m.tile && !m.unsure).length,
