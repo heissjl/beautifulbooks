@@ -74,6 +74,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
 | Jahrzehnte-Seite `/book/<id>/decades`: dieselben Cover nach dem Jahrzehnt ihres frühesten Drucks, gefaltet aus dem Index, Schwelle 20 Cover über 4 Jahrzehnte, sonst 404; Mosaik als Ladebild | 2026-09-09 / 09-10 | F6 | 5.4a, 6.19a | `app/book/[id]/decades/`, `lib/decades.ts`, `data/decade-pages.json` |
+| Jahrzehnte-Seite liest bis 1.500 Datensätze wie die Wand; ein abgebrochener Lauf wird nie gecacht, ein Ausfall heißt „Open Library did not answer“ mit „Try again“ statt 404 | 2026-09-30 | N12 | 6.43, 6.71 | `app/book/[id]/decades/page.tsx`, `error.tsx`, `lib/work.ts` (`complete`) |
 | About mit Verdikten im Wortlaut der Oberfläche, Quellen, Lücken, „Looks like this“ | 2026-09-07 / 09-08 | F6, N13 | PLAN-B B7, 1.5 | `app/about/page.tsx` |
 | Impressum und Datenschutz aus `IMPRINT_*`; Build bricht ohne die Werte | 2026-09-08 | F6 | 2.3 | `app/contact/`, `app/privacy/`, `lib/imprint.ts` |
 | Titel, Beschreibung, Schema.org `Book`, OG-Bild 1200×630 mit vier verschiedenen Covern, Sitemap, robots | 2026-09-07 | F2.13 | PLAN-B B3 | `lib/seo.ts`, `app/book/[id]/opengraph-image.tsx`, `app/sitemap.ts`, `app/robots.ts` |

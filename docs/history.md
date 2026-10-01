@@ -3935,3 +3935,18 @@ Anlass: auf Gatsbys Wand standen „Audible 2013“ und „Jake Gyllenhaal perfo
 
 Teil A der Durchsicht (zweiter Durchgang): beim Cover „+22“ von *Nineteen Eighty-Four* führte Perma-Bound 1981 ohne ISBN, die Knöpfe waren nur Titelsuchen. Gemessen unter `npm run dev`, jedes Cover der Wand einmal gewählt: **15 von 261** Orwell-Covern zeigten „Find this printing“ (kein ISBN-Knopf), obwohl ein anderer Druck desselben Covers eine ISBN trug; Gatsby 0 von 282. Ursache: `orderEditionsForMarket` stellte den Träger des gezeigten Scans vor alles andere. Neu: hat ein Cover einen Druck mit ISBN, führt keiner ohne; unter denen mit ISBN gilt die alte Ordnung. Damit Bild und Knöpfe denselben Druck meinen, zeigt die Seitenleiste ohne Wahl des Lesers den Scan des führenden Drucks, wenn er einen eigenen hat. Danach: 0 von 261 und 0 von 282, und bei keinem der 543 Cover zeigt das große Bild einen anderen Druck als den über den Knöpfen. Beispiel `ol:15256129`: führt jetzt „Harcourt, Brace & World, Inc. 1949“ mit ISBN 978-0-15-166035-3 und dessen Scan `ol:15256128` — eine Nummer, die es 1949 nicht gab, also ein Katalogeintrag für einen späteren Druck; ob dieser die Jacke trägt, prüft das Urteil (F2.9) wie bei jeder ISBN. *Rendezvous with Rama* (`ol:10801406`, Harcourt Brace Jovanovich 1973) bleibt bei Titelsuchen: das Cover hat nur diesen einen Druck. Test in `lib/__tests__/linkplan.test.ts`.
 
+## 2026-09-30 — Jahrzehnte-Seite: volle Strecke, kein Cache für einen abgebrochenen Lauf, kein 404 für einen Ausfall (ROADMAP 6.71, 6.43)
+
+Teil B der Durchsicht: Gatsby mit 293 Covern auf der Wand, 162 aus 181 Datensätzen auf der Jahrzehnte-Seite. Gemessen mit `getWorkDetail` gegen Open Library, Seite für Seite: **kein Abbruch** — alle sechs Seiten bis Datensatz 600 kamen (0,5–3,6 s je Seite). Die Ursache war die Grenze von 600 Datensätzen, gesetzt am 2026-09-09 als Grenze des Kandidaten-Laufs; Gatsby hat 1.180. Mit der Grenze der Wand (1.500):
+
+| Werk | 600 | 1.500 | Zeit (kalt, 1.500) |
+|---|---|---|---|
+| The Great Gatsby | 159 Cover aus 178 Drucken | 348 aus 340 | 6,2 s |
+| Nineteen Eighty-Four | 270 aus 268 | 343 aus 354 | 5,4 s |
+| Pride and Prejudice | 115 aus 117 | 194 aus 199 | 10,4 s |
+| The Lord of the Rings | 140 aus 120 | gleich | 2,3 s |
+
+Dazu 6.43: `getWorkDetail` meldet jetzt `complete`; ein Lauf, der wegen einer zweimal schweigenden Seite endete, lässt die Seite werfen, statt einen Teil des Buchs einen Tag lang zu cachen. Und beim Lesen gefunden: `load()` fing **jeden** Fehler ab und machte daraus eine 404-Seite — ein schweigender Katalog hieß „diese Seite gibt es nicht“. Jetzt antwortet `null` (404) nur ein Werk, das es nicht gibt; ein Ausfall zeigt `error.tsx` („Open Library did not answer“, „Try again“, Weg zur Wand), die nie gecacht wird. Der Satz unter dem Titel sagt „348 covers from 340 printings with a known year“ statt „… edition records“, weil nur datierte Drucke in ein Jahrzehnt kommen. Im Dev-Server bei 1280 und 390 px: 11 Jahrzehnte, 348 Kacheln, keine Überbreite.
+
+**Bleibt:** die Wand faltet stärker (293), weil sie Signaturen im Server rechnet; die Jahrzehnte-Seite faltet nur über den gebauten Index und zeigt deshalb mehr Kacheln. Die Zahlen widersprechen sich jetzt in die andere Richtung. Die Seite selbst zu hashen kostete die Zeitgrenze (darum `dedupeCovers: false` seit 2026-09-09); Gatsby im Index nachzubauen würde es für diesen einen Fall lösen. Nicht entschieden.
+

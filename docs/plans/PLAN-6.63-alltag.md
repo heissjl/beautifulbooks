@@ -149,7 +149,7 @@ Messen an „the great gatsby“ und „pynchon“: wie viele Mosaik-Kacheln vor
 
 ### 6.71 Zahlen, die einander widersprechen oder beim Hinsehen laufen
 
-**(a) Die Jahrzehnte-Seite zählt 181 von 1.180 Datensätzen** (Teil B §4).
+**(a) Die Jahrzehnte-Seite zählt 181 von 1.180 Datensätzen** (Teil B §4). *Erledigt 2026-09-30: die Ursache war die Grenze von 600, nicht 6.43; jetzt 1.500, 6.43 gleich mit behoben, Historie.*
 
 **Zuerst messen:** Gatsby-Jahrzehnte lokal kalt rendern, `detail.editions.length` und `truncated` loggen. Drei mögliche Ursachen: (a) der Lauf brach ab (6.43 — dann ist dies derselbe Fehler, sichtbar, und 6.43 wird zuerst gebaut); (b) `assembleEditions` fasst gleiche ISBN zusammen und die 181 sind zusammengeführte Ausgaben (dann stimmt die Zahl, und der Satz muss sagen, was sie zählt); (c) nur Ausgaben mit Jahr zählen. **In jedem Fall** sagt der Satz unter dem Titel, dass nur Ausgaben mit bekanntem Jahr eingehen, und nennt nie eine Zahl, die neben der der Wand wie ein Widerspruch steht. Die Zählung der Wand selbst (293 → 291) bleibt, wie sie ist: sie sagt, was gesehen wurde (Schritt 15).
 

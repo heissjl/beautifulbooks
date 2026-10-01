@@ -313,6 +313,9 @@ describe('getWorkDetail', () => {
     expect(partial).not.toBeNull();
     expect(partial!.editions.length).toBeGreaterThan(0);
     expect(partial!.editions.length).toBeLessThan(ok!.editions.length);
+    // …and says so, so the decade page does not cache it as the book (6.43).
+    expect(ok!.complete).toBe(true);
+    expect(partial!.complete).toBe(false);
   });
 
   it('gives a failing later page a second attempt before ending the walk', async () => {

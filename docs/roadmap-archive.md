@@ -935,3 +935,15 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 *Abgehakt 2026-09-30, so wie er in der Roadmap stand.*
 
 - [x] **6.78 Kaufen über den Druck mit ISBN, nicht über den Scan-Träger.** (Aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev), zweiter Durchgang: beim Cover „+22“ von *Nineteen Eighty-Four* führt Perma-Bound 1981 ohne ISBN, die Knöpfe sind nur Titelsuchen, obwohl 22 Drucke mit demselben Bild dahinterstehen.) Die Regel aus 6.14 bleibt für die Herkunft des Bilds; die Kauf-Knöpfe nimmt der erste Druck mit ISBN in der Reihenfolge des Markts (`orderEditionsForMarket`, `lib/linkplan.ts:357`), und das Urteil prüft genau diese ISBN — ein Test hält das fest. Ein bis zwei Stunden, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+## 6.71
+
+*Abgehakt 2026-09-30, so wie er in der Roadmap stand.*
+
+- [x] **6.71 Zahlen, die einander widersprechen: die Jahrzehnte-Seite zählt 181 Datensätze, die Wand 1.180, und der Zähler läuft beim Nachladen.** (Aus der [Durchsicht von außen](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-b-durchsicht-von-außen): Gatsby mit 293 Covern auf der Wand, 162 aus 181 Datensätzen auf der Jahrzehnte-Seite.) Die Seite holt bis zu 600 (`app/book/[id]/decades/page.tsx:60`), 181 passt nicht dazu — Verdacht auf den abgebrochenen Lauf aus **6.43**. Erst kalt rendern und `editions.length` und `truncated` loggen; ist es 6.43, das zuerst. In jedem Fall sagt der Satz, dass nur Ausgaben mit bekanntem Jahr eingehen. 293 → 291 auf der Wand ist die bekannte Faltung beim zweiten Besuch und bleibt. *Seit 2026-09-29 auch (b) aus [Teil A des Berichts](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev) (A4): „254 covers · 1,100 of 1,180 editions checked“ → 283 → 287, die Reiter zählen mit — solange Seiten nachkommen „so far“ und Reiter ohne Zahl, Endzahlen erst nach der letzten Seite.* Ein halber Tag, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+## 6.43
+
+*Abgehakt 2026-09-30, so wie er in der Roadmap stand.*
+
+- [x] **6.43 Ein unvollständiger Lauf der Jahrzehnte-Seite wird 24 Stunden gecacht.** (Aus 5.4a, wo es als „Offen“ stand, beim Bewerten am 2026-09-12 herausgelöst.) Bricht der Ausgabenlauf nach einer stummen Seite ab, rendert die Seite aus dem Teil, der da ist, und ISR friert das für einen Tag ein — *Brave New World* stand so mit 41 statt 130 Datensätzen in Produktion. Das ist derselbe Riss wie 1.4 und 5.4a selbst: ein Ausfall, der wie ein Befund aussieht (N12). Zu bauen: ein Lauf, der wegen `truncated: 'error'` endete, darf nicht als fertige Seite in den Cache — kurze `revalidate`, oder werfen, damit ISR die letzte gute Fassung behält; ein Test dafür. Eine Stunde, Claude.
