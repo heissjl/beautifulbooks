@@ -195,21 +195,44 @@ export default function WallPhoto({
         : state.step === 'read'
           ? state.matches.map((m) => ({ read: m.read, found: !!m.tile }))
           : [];
-  const matches = state.step === 'read' ? state.matches : [];
-  const proposals: Proposal[] = matches.map((m, i) => ({
+  // The list grows while the catalogue is still answering (Julian, 2026-10-01: „während die bücher
+  // nachgeschaut werden können die ersten ergebnisse auch schon angezeigt werden“): a row per book
+  // read, pending until its search answers, then a tile or a reason.
+  const rows: { read: PhotoRead; match?: PhotoMatch }[] =
+    state.step === 'looking'
+      ? state.reads.map((read, i) => ({ read, match: state.matches[i] }))
+      : state.step === 'read'
+        ? state.matches.map((m) => ({ read: m.read, match: m }))
+        : [];
+  const proposals: Proposal[] = rows.map(({ read, match: m }, i) => ({
     number: i + 1,
-    label: m.read.title,
-    sub: m.tile && !m.unsure ? undefined : m.read.author || undefined,
-    tile: m.tile,
-    missing: m.failed ? 'the search did not answer' : 'not in the catalogue',
-    ...(m.failed ? { failed: true } : {}),
-    ...(m.unsure ? { unsure: true } : {}),
+    label: read.title,
+    sub: m?.tile && !m.unsure ? undefined : read.author || undefined,
+    ...(m
+      ? {
+          tile: m.tile,
+          missing: m.failed ? 'the search did not answer' : 'not in the catalogue',
+          ...(m.failed ? { failed: true } : {}),
+          ...(m.unsure ? { unsure: true } : {}),
+        }
+      : { pending: true }),
   }));
+  const matches = rows.flatMap((r) => (r.match ? [r.match] : []));
   const found = matches.filter((m) => m.tile && !m.unsure).length;
   const maybe = matches.filter((m) => m.unsure).length;
   const notFound = matches.filter((m) => !m.tile && !m.failed).length;
   const failed = matches.filter((m) => m.failed).length;
-  const looked = state.step === 'looking' ? state.matches.filter(Boolean).length : 0;
+  const capped = state.step === 'looking' || state.step === 'read' ? state.capped : false;
+  const counts = [
+    `${found} found with a cover`,
+    maybe ? `${maybe} maybe` : '',
+    notFound ? `${notFound} not in the catalogue` : '',
+    failed ? `${failed} ${failed === 1 ? 'search' : 'searches'} did not answer` : '',
+  ].filter(Boolean);
+  const summary =
+    state.step === 'looking'
+      ? `${rows.length} ${rows.length === 1 ? 'book' : 'books'} read, looking them up… ${matches.length} of ${rows.length}${counts.length && found ? `: ${counts.join(', ')}` : ''}. You can tick and add while the rest come in.`
+      : `${rows.length} ${rows.length === 1 ? 'book' : 'books'} read${capped ? ' (the first 80 of more)' : ''}: ${counts.join(', ')}. Each gets the book’s usual cover — ${onOtherCover ? '“another cover” shows all of its covers' : 'you can change it in the collection’s editor'}.`;
 
   return (
     <div className="mt-4">
@@ -266,14 +289,9 @@ export default function WallPhoto({
           {state.reads.length === 0 ? 'Reading the photo…' : `Reading the photo… ${state.reads.length} ${state.reads.length === 1 ? 'book' : 'books'} so far.`}
         </p>
       )}
-      {state.step === 'looking' && (
-        <p className="mt-3 text-sm text-ink-2" role="status">
-          {state.reads.length} {state.reads.length === 1 ? 'book' : 'books'} read, looking them up… {looked} of {state.reads.length}.
-        </p>
-      )}
       {state.step === 'error' && <p className="mt-3 text-sm text-accent" role="alert">{state.message}</p>}
-      {state.step === 'read' &&
-        (matches.length === 0 ? (
+      {(state.step === 'looking' || state.step === 'read') &&
+        (rows.length === 0 ? (
           <p className="mt-3 text-sm text-ink-2">No title could be read in this photo.</p>
         ) : (
           <WallProposal
@@ -285,14 +303,7 @@ export default function WallPhoto({
             onCommit={onCommit}
             onOtherCover={onOtherCover}
             onSearchFor={onSearchFor}
-            summary={[
-              `${matches.length} ${matches.length === 1 ? 'book' : 'books'} read${state.capped ? ' (the first 80 of more)' : ''}: ${found} found with a cover`,
-              maybe ? `${maybe} maybe` : '',
-              notFound ? `${notFound} not in the catalogue` : '',
-              failed ? `${failed} ${failed === 1 ? 'search' : 'searches'} did not answer` : '',
-            ]
-              .filter(Boolean)
-              .join(', ') + `. Each gets the book’s usual cover — ${onOtherCover ? '“another cover” shows all of its covers' : 'you can change it in the collection’s editor'}.`}
+            summary={summary}
           />
         ))}
     </div>

@@ -19,6 +19,8 @@ export interface Proposal {
   number?: number;
   /** A guess by title alone (5.11a): shown as "maybe", never ticked by itself. */
   unsure?: boolean;
+  /** Its catalogue search has not answered yet (5.11a): the row is there, the tile is not. */
+  pending?: boolean;
 }
 
 /** Where the ticked covers go: an existing collection, or a new one with this title. */
@@ -58,7 +60,12 @@ export default function WallProposal({
   onSearchFor?: (label: string) => void;
 }) {
   const standing = (p: Proposal): Standing | null => (p.tile ? standingOf(p.tile, target) : null);
-  const [picked, setPicked] = useState(() => new Set(proposals.flatMap((p, i) => (standing(p) === 'new' && !p.unsure ? [i] : []))));
+  // Ticked by default: a found cover that is new to the collection and not a guess. The reader's
+  // choices are kept as exceptions to that rule, so a row that arrives later — the list grows
+  // while the catalogue is still answering (Julian, 2026-10-01) — gets the default too.
+  const byDefault = (p: Proposal) => !!p.tile && standing(p) === 'new' && !p.unsure;
+  const [flipped, setFlipped] = useState(() => new Set<number>());
+  const ticked = (p: Proposal, i: number) => byDefault(p) !== flipped.has(i);
   const [title, setTitle] = useState(defaultTitle);
   const [chosen, setChosen] = useState(NEW);
   const [asNew, setAsNew] = useState(false);
@@ -66,14 +73,16 @@ export default function WallProposal({
   const [error, setError] = useState('');
 
   const toggle = (i: number) =>
-    setPicked((prev) => {
+    setFlipped((prev) => {
       const next = new Set(prev);
       if (next.has(i)) next.delete(i);
       else next.add(i);
       return next;
     });
 
-  const tiles = proposals.flatMap((p, i) => (p.tile && picked.has(i) && standing(p) !== 'in' ? [p.tile] : []));
+  const tiles = proposals.flatMap((p, i) => (p.tile && ticked(p, i) && standing(p) !== 'in' ? [p.tile] : []));
+  const anyTicked = proposals.some((p, i) => !!p.tile && standing(p) !== 'in' && ticked(p, i));
+  const pending = proposals.filter((p) => p.pending).length;
   const existing = target ?? walls.find((w) => w.id === chosen);
   const intoNew = !existing || (target && asNew);
 
@@ -94,14 +103,14 @@ export default function WallProposal({
 
   return (
     <div className="mt-4">
-      <p className="text-sm text-ink-2">{summary}</p>
+      <p className="text-sm text-ink-2" aria-live="polite">{summary}</p>
       {proposals.length > 8 && (
         <button
           type="button"
-          onClick={() => setPicked(picked.size ? new Set() : new Set(proposals.flatMap((p, i) => (standing(p) === 'new' && !p.unsure ? [i] : []))))}
+          onClick={() => setFlipped(anyTicked ? new Set(proposals.flatMap((p, i) => (byDefault(p) ? [i] : []))) : new Set())}
           className="mt-1 text-xs text-ink-2 underline underline-offset-2 hover:text-accent"
         >
-          {picked.size ? 'Untick all' : 'Tick all new ones'}
+          {anyTicked ? 'Untick all' : 'Tick all new ones'}
         </button>
       )}
       {/* Two columns on a wide screen (Julian, 2026-10-01: „on desktop there's too much empty space here“); the link stays at the row's end, now half as far away. */}
@@ -114,7 +123,7 @@ export default function WallProposal({
               {p.tile ? (
                 <>
                   <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-3">
-                    <input type="checkbox" checked={st === 'in' || picked.has(i)} disabled={st === 'in'} onChange={() => toggle(i)} />
+                    <input type="checkbox" checked={st === 'in' || ticked(p, i)} disabled={st === 'in'} onChange={() => toggle(i)} />
                     <span className={`relative block h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-surface-2 ${st === 'in' ? 'opacity-60' : ''}`}>
                       <CoverImage src={coverUrlFor(tileCoverId(p.tile), 'S') ?? ''} alt="" sizes="32px" />
                     </span>
@@ -137,6 +146,10 @@ export default function WallProposal({
                     )
                   )}
                 </>
+              ) : p.pending ? (
+                <span className="text-sm text-ink-3">
+                  &ldquo;{p.label}&rdquo;{p.sub ? ` — ${p.sub}` : ''}: <span className="italic">looking it up…</span>
+                </span>
               ) : (
                 <span className="text-sm text-ink-3">
                   &ldquo;{p.label}&rdquo;{p.sub ? ` — ${p.sub}` : ''}: {p.missing}
@@ -158,7 +171,7 @@ export default function WallProposal({
       {target && !asNew ? (
         <div className="mt-4 flex flex-col items-start gap-2">
           <button type="button" disabled={count === 0 || busy} onClick={() => commit({ wall: target })} className={button}>
-            {busy ? 'Adding…' : `Add ${count} to ${target.title}`}
+            {busy ? 'Adding…' : `Add ${count} to ${target.title}`}{!busy && pending > 0 ? ` (${pending} still looking)` : ''}
           </button>
           <button type="button" onClick={() => setAsNew(true)} className="text-sm text-ink-2 underline underline-offset-2 hover:text-accent">
             or make a new collection of them
