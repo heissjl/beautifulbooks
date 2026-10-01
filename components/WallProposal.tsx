@@ -104,7 +104,8 @@ export default function WallProposal({
           {picked.size ? 'Untick all' : 'Tick all new ones'}
         </button>
       )}
-      <ul className="mt-3 space-y-1.5">
+      {/* Two columns on a wide screen (Julian, 2026-10-01: „on desktop there's too much empty space here“); the link stays at the row's end, now half as far away. */}
+      <ul className="mt-3 grid gap-x-8 gap-y-1.5 lg:grid-cols-2">
         {proposals.map((p, i) => {
           const st = standing(p);
           return (
