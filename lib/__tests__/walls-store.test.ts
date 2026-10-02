@@ -98,3 +98,12 @@ it('writes an unsaved collection with an expiry and a saved one without (5.13j)'
   await store.put(saved);
   expect(calls).toEqual(['setEx wall:ffffffffff', 'set wall:ffffffffff']);
 });
+
+describe('the day\'s photo count (5.11a)', () => {
+  it('counts up per day in memory, nothing about who', async () => {
+    const store = memoryWallStore();
+    expect(await store.countPhoto('2026-09-30')).toBe(1);
+    expect(await store.countPhoto('2026-09-30')).toBe(2);
+    expect(await store.countPhoto('2026-10-01')).toBe(1);
+  });
+});

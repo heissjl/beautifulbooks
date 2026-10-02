@@ -2,12 +2,14 @@ import { NextRequest } from 'next/server';
 import { isVisitorId, normalVisitorId, toPublic } from '@/lib/walls/model';
 import { hashVisitor } from '@/lib/walls/owner';
 import { wallsOf } from '@/lib/walls/store';
-import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from '../guard';
+import { clearVisitor, json, openWalls, readJson, setVisitor, storeDown, visitorOf } from '../guard';
 
 /**
  * GET /api/walls/me — this browser's visitor id and its walls (E22).
  * POST /api/walls/me {visitor} — the footer's Save, as on taketest.xyz: this
  * browser becomes the visitor whose id was pasted.
+ * DELETE /api/walls/me — log out: this browser forgets the id; nothing in
+ * the store changes, the collections wait for the id to be pasted again.
  */
 export async function GET(request: NextRequest) {
   const open = openWalls(request);
@@ -33,4 +35,10 @@ export async function POST(request: NextRequest) {
   } catch {
     return storeDown();
   }
+}
+
+export async function DELETE(request: NextRequest) {
+  const open = openWalls(request);
+  if ('response' in open) return open.response;
+  return clearVisitor(json({ visitor: null, walls: [] }));
 }

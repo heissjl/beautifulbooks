@@ -21,6 +21,7 @@ Jede Entscheidung dieser Datei in einer Zeile, neueste unten. Das Cockpit liest 
 | 2026-09-29 | Bildmarke | Doch die Mischung A + C, 3 × 3: Wand und gewählte Kachel von A in den Tönen eines Regals wie die Website-Karte; dunkel kehrt sich die Tonleiter um | A in reiner Tinte (am selben Tag gebaut und ersetzt) | 6.61 |
 | 2026-09-29 | Vorschaubild | Eigene Karte je veröffentlichter Sammlung: vierzehn ihrer Cover als Wand, beim Build vorberechnet | Website-Karte für Sammlungen | 6.61 |
 | 2026-09-29 | Vorschaubild | Karten mit Covern als JPEG, Qualität 82 (Sammlung 53–139 KB); Website-Karte bleibt PNG | PNG (bis 1,15 MB); WebP (kleiner, aber nicht jeder Messenger zeigt es) | 6.61 |
+| 2026-09-29 | Vorschaubild | Lesersammlungen (`/c/<id>`) mit derselben Wand-Karte: ihre Cover, ihr Titel, der selbst gewählte Name | Website-Karte für Lesersammlungen | 6.61, 5.13a |
 
 
 ## 1. Schrift
