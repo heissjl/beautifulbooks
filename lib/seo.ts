@@ -21,8 +21,8 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3
  * template, the share cards and the mail sender all read it from here.
  * Never write the name out anywhere else — a test walks `app/`, `components/`
  * and `lib/` for it. The site was "Beautiful Books" until 2026-10-02
- * (docs/domain-recherche.md §13–15); production keeps the old name until the
- * commit that carries this line is pushed.
+ * (docs/domain-recherche.md §13–16) and still lives at
+ * beautifulcovers.vercel.app until the domain is bought and connected.
  */
 export const SITE_NAME = 'Other Covers';
 
