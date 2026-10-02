@@ -22,6 +22,7 @@
  *   - end: crossfades in over the wall.
  */
 import sharp, { type OverlayOptions } from 'sharp';
+import { SITE_NAME } from '../../lib/seo';
 import type { CoverShot, GridShot, Shot, Storyboard, TitleShot, EndShot } from './storyboard';
 
 export const THEME = {
@@ -71,7 +72,7 @@ const DRIFT = 0.015;
 
 export function textItems(board: Storyboard, work: { title: string; author: string }): TextItem[] {
   const items: TextItem[] = [
-    { id: 'wordmark', text: 'Beautiful Books', font: 'display-italic', size: 44, color: THEME.ink },
+    { id: 'wordmark', text: board.shots.find((s): s is EndShot => s.kind === 'end')?.wordmark ?? SITE_NAME, font: 'display-italic', size: 44, color: THEME.ink },
     { id: 'book-title', text: work.title, font: 'display', size: 50, color: THEME.ink, maxWidth: 900 },
     { id: 'book-author', text: work.author, font: 'sans', size: 30, color: THEME.ink3 },
   ];

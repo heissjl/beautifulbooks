@@ -112,6 +112,8 @@ npm run build      # must pass before a step is considered done
 
 - **A failure must never be reported as a finding.** A source that times out is not "no results", an unasked question is not "nothing on record", and a hint must not name a setting that is not set. `searchWorks` still swallows every error into an empty list, which reaches the reader as "No books found"; that is ROADMAP 1.4 and the pattern to avoid everywhere else (SPEC F1.7, F3.3, N12).
 
+- **The site's name is written once: `SITE_NAME` in `lib/seo.ts`** (ROADMAP 0.5, 2026-10-02). Header, title template, share cards, the mail sender and the user agent sent to the catalogues (`userAgent`) read it from there; `lib/__tests__/sitename.test.ts` fails on a second copy in `app/`, `components/` or `lib/`. The site is called "Other Covers" on the branch that prepares the rename and "Beautiful Books" in production until Julian merges it; repository, folder, Vercel project, the cookie `bb_visitor` and the log prefix `bb.` keep the old initials — renaming the cookie would cut every reader off from their collections.
+
 - **No copy claims completeness.** The site shows what two open catalogues happen to hold, which is a fraction of what was printed: never "every", "all" or "complete" about covers or editions, in the UI, the metadata or the README. The detail page's counter states what was actually seen, and the surrounding text must not contradict it (SPEC §9.3 step 15).
 
 - One commit per roadmap item; the commit message names it.

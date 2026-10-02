@@ -19,10 +19,15 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3
 /**
  * The name of the site, in one place (ROADMAP 0.5): the header, the title
  * template, the share cards and the mail sender all read it from here.
- * "Other Covers" is the mock-up of 2026-10-02 — Julian has not bought the
- * domain or decided; "Beautiful Books" is what production says.
+ * Never write the name out anywhere else — a test walks `app/`, `components/`
+ * and `lib/` for it. The rename to "Other Covers" is prepared on its branch
+ * (docs/domain-recherche.md §13–14) and reaches production only when Julian
+ * merges it; until then production says the old name.
  */
 export const SITE_NAME = 'Other Covers';
+
+/** The public repository; the contact of last resort in `userAgent`. */
+export const SITE_REPOSITORY = 'https://github.com/heissjl/beautifulbooks';
 
 export const SITE_CARD = {
   url: `${SITE_URL}/opengraph-image`,
@@ -32,6 +37,19 @@ export const SITE_CARD = {
 };
 
 /** "George Orwell", or "Mary Shelley and 2 others" when a record lists many. */
+/**
+ * How the site names itself to a catalogue: "OtherCovers/0.1 (<where to find
+ * us>)". The address is the site itself once it is deployed — its imprint
+ * carries the contact — and the public repository from a script or a dev
+ * server, where the site's address is localhost and tells Open Library
+ * nothing. An e-mail address, which would raise Open Library's limit from 1
+ * to 3 requests a second, is ROADMAP 2.7 and Julian's to add.
+ */
+export function userAgent(siteUrl: string = SITE_URL): string {
+  const local = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:|\/|$)/.test(siteUrl);
+  return `${SITE_NAME.replace(/\s+/g, '')}/0.1 (${local ? SITE_REPOSITORY : siteUrl})`;
+}
+
 export function authorLine(authors: readonly string[]): string {
   const [first, second, ...rest] = authors;
   if (!first) return '';

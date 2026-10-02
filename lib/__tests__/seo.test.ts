@@ -143,4 +143,25 @@ describe('SITE_CARD', () => {
     expect([SITE_CARD.width, SITE_CARD.height]).toEqual([1200, 630]);
     expect(SITE_CARD.alt).not.toMatch(/\b(all|every|complete)\b/i);
   });
+
+  it('carries the name of the site, whatever that is', async () => {
+    const { SITE_CARD, SITE_NAME } = await import('../seo');
+    expect(SITE_CARD.alt.startsWith(`${SITE_NAME}: `)).toBe(true);
+  });
+});
+
+describe('userAgent', () => {
+  it('names the site without a space and gives the deployed address', async () => {
+    const { SITE_NAME, userAgent } = await import('../seo');
+    const agent = userAgent('https://example.org');
+    expect(agent).toBe(`${SITE_NAME.replace(/\s+/g, '')}/0.1 (https://example.org)`);
+    expect(agent.split('/')[0]).not.toMatch(/\s/);
+  });
+
+  it('gives the repository instead of a localhost address', async () => {
+    const { SITE_REPOSITORY, userAgent } = await import('../seo');
+    for (const local of ['http://localhost:3000', 'http://127.0.0.1:3411', 'http://localhost']) {
+      expect(userAgent(local)).toContain(`(${SITE_REPOSITORY})`);
+    }
+  });
 });

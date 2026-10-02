@@ -1,4 +1,6 @@
-# Beautiful Books
+# Other Covers
+
+*Formerly "Beautiful Books". The repository, the folder and the Vercel project keep the old name `beautifulbooks`; the site's name lives in one constant, `SITE_NAME` in `lib/seo.ts`.*
 
 A visual book search: type a title, get one card per book with a mosaic of its covers. Open a book to see the editions those catalogues have a cover for, grouped by language, with metadata and purchase links.
 

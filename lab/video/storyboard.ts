@@ -27,6 +27,7 @@
 import { looksLikeScannedPage, type ImageSignature } from '../../lib/imagesig';
 import { looksPlain, sameJacket } from '../../lib/hotornot/pool';
 import type { Cover, Edition, Work } from '../../lib/model';
+import { SITE_NAME } from '../../lib/seo';
 import { foldDuplicateCovers } from '../../lib/works';
 
 export const CLIP_WIDTH = 1080;
@@ -431,7 +432,7 @@ export function storyboard(input: StoryboardInput, options: StoryboardOptions = 
     shots.push({
       kind: 'end',
       frames: endFrames,
-      wordmark: options.siteName ?? 'Beautiful Books',
+      wordmark: options.siteName ?? SITE_NAME,
       tagline: 'Covers, side by side.',
       url: options.siteUrl ?? SITE_URL_DEFAULT,
       credit: 'Covers from Open Library',

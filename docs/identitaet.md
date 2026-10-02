@@ -61,7 +61,7 @@ Julian: „nimm Xanh Mono für Überschrift und Texte, aber Jost für Pillen, in
 
 **Wortabstand:** Xanh Mono hat feste Breiten, ein Leerzeichen ist so breit wie ein Buchstabe. In der Überschrift `word-spacing: -0.3em` (bei 48 px also 14,4 px weniger). Im Fließtext bleibt der Abstand, dort liest er sich wie auf dem Bon.
 
-**Wortmarke** heißt der Name der Seite als Schriftzug oben links in der Kopfzeile („Beautiful Books", der Link zur Startseite). Im Mockup ist sie Xanh Mono kursiv — als Name gilt sie weder als Satz noch als Etikett, sondern als Logo. Julian entscheidet, ob das so bleibt.
+**Wortmarke** heißt der Name der Seite als Schriftzug oben links in der Kopfzeile („Beautiful Books", seit der Umbenennung von ROADMAP 0.5 „Other Covers"; der Link zur Startseite). Im Mockup ist sie Xanh Mono kursiv — als Name gilt sie weder als Satz noch als Etikett, sondern als Logo. Julian entscheidet, ob das so bleibt.
 
 **Gemessen:** bei 390 × 844 kein seitliches Scrollen; der Buchtitel *Frankenstein* läuft über zwei Zeilen (76 px, wie mit Fraunces — Xanh Mono ist schmal genug, die dritte Zeile kam von den Versalien); die Wortmarke in einer Zeile; der Platzhalter des Suchfelds braucht in Jost 181 von 356 px. Umgesetzt ist das nur lokal (CSS unter `html[data-font="xanh"]` in `app/globals.css`, nicht committet), und die Auswahl der Fließtexte hängt dort an Klassen (`leading-relaxed`, `max-w-xl`) — beim echten Einbau bekommt jede Stelle die Schrift ausdrücklich.
 

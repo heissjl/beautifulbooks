@@ -261,7 +261,7 @@ Julian, 2026-10-02: „check noch andere social media accounts für othercovers"
 
 ## 13. Mock-up: die Seite als „Other Covers" (2026-10-02)
 
-Julian, 2026-10-02: „make a mock up with the other covers name. we would need to change some labels etc". **Gebaut im echten Code auf diesem Branch, nicht deployt, nicht entschieden** — der letzte Commit des Branches ist das Mock-up; wer nur die Recherche nach `main` holen will, nimmt die Commits davor.
+Julian, 2026-10-02: „make a mock up with the other covers name. we would need to change some labels etc". **Gebaut im echten Code auf diesem Branch, nicht deployt, nicht entschieden.** Seit demselben Abend ist daraus die vorbereitete Umbenennung geworden, siehe [§14](#14-vorbereitet-der-branch-ist-die-umbenennung-2026-10-02); die Liste „Was eine echte Umbenennung noch braucht" unten ist dort abgearbeitet.
 
 **Was sich geändert hat.** Der Name stand als Wort an acht Stellen im Code. Jetzt steht er einmal, als `SITE_NAME` in `lib/seo.ts`, und alle lesen ihn von dort:
 
@@ -303,3 +303,36 @@ Gesetzt ist **+0,01em** in `components/SiteHeader.tsx` und derselbe Wert in `Wor
 7. **Bleibt, wie es ist:** das Cookie `bb_visitor` und die Log-Kennung `bb.img`. Das Cookie umzubenennen würde jeden Leser von seinen Sammlungen trennen.
 
 Die Skripte unter `scripts/` und die übrigen `lab/`-Ordner nennen „beautifulbooks" nur als Projekt- oder Ordnernamen und in User-Agents für Aufzeichnungen; für den Leser unsichtbar.
+
+## 14. Vorbereitet: der Branch ist die Umbenennung (2026-10-02)
+
+Julian, 2026-10-02, auf die Liste der sechs Stellen: „bereite das im branch vor". **`claude/project-naming-domains-edc18b` ist jetzt so weit, dass ein Merge nach `main` die Seite umbenennt** — und nichts sonst von Hand im Code zu tun bleibt. Nicht gemergt, nicht gepusht, nicht deployt; die Domain ist nicht gekauft.
+
+**Was dazugekommen ist, über das Mock-up hinaus**
+
+| Was | Wo | Warum |
+|---|---|---|
+| `origin/main` eingearbeitet (18 Commits: Regalfoto 5.11a, 5.13a/m/o, 5.8a) | Merge-Commit | Regel aus CLAUDE.md vor jedem Merge nach `main`. Ein Konflikt in `docs/history.md` — beide Seiten hatten am Ende angehängt, beide behalten |
+| **User-Agent gegenüber Open Library und Google** | `userAgent()` in `lib/seo.ts`, benutzt von `lib/sources/http.ts` | hieß `BeautifulBooks/0.1 (https://github.com/julianheiss/beautifulbooks)` — ein Repo, das es nicht gibt (ROADMAP 2.7). Jetzt `OtherCovers/0.1 (<Adresse der Seite>)`, lokal und in Skripten das richtige, öffentliche Repo `heissjl/beautifulbooks` |
+| Die Filmbilder | `lab/video/storyboard.ts`, `frames.ts` und ihr Test | Wortmarke im Kopf und auf der Schlusskarte kommen aus `SITE_NAME` |
+| Ein Test, der eine zweite Kopie des Namens zurückweist | `lib/__tests__/sitename.test.ts` | damit die nächste Umbenennung wieder eine Zeile ist |
+| Tests für den User-Agent und den Alt-Text der Karte | `lib/__tests__/seo.test.ts` | |
+| Spec, README, CLAUDE.md, `docs/identitaet.md` | Kopf der Spec, §5 (Name und Wortmarke), README-Überschrift, eine Arbeitsregel | der Name und wo er steht |
+
+**Was der Branch außerdem mitbringt — nicht von mir, bitte wissen:** Er zweigt vom lokalen `main` ab, und das lokale `main` trägt **zwölf Commits, die `origin/main` nicht hat** (6.82 Cover-Spiel, 6.65, 6.71/6.43, 6.78, 6.80, 6.77, zwei zu den Kauflinks, „deploy recorded"). Ein Merge dieses Branches nach `origin/main` nimmt sie mit. Ob sie schon deployt sind oder noch warten, weiß die Sitzung, die sie gebaut hat; `npm run worktrees -- --fetch` zeigt den Stand.
+
+**Geprüft nach dem Zusammenführen:** `npx tsc --noEmit` sauber; ESLint über `app`, `components`, `lib`, `lab/video` ohne Befund; `npm run test:run` **999 von 999** in 94 Dateien (der eine Ausfall vom Nachmittag kam nicht wieder; er fiel in einen Lauf neben dem Dev-Server, der 240 s statt 5 s brauchte); `next build` läuft durch. Am Dev-Server des Worktrees bei 1280 × 800 und 390 × 844: Startseite, Suche „frankenstein" (13 Bücher), Buchseite *Frankenstein* und die Karte — überall „Other Covers", Reitertitel „About · Other Covers" und „The covers of Frankenstein … · Other Covers", Alt-Text der Karte „Other Covers: judge a book by its covers", `innerWidth` gleich `scrollWidth` auf allen sechs Seiten. **Nicht geprüft:** die fünf Abnahme-Suchen aus SPEC §3 F1 — an der Suche ist nichts geändert, gelaufen ist eine; und der User-Agent auf der Leitung (nur der Test für `userAgent()`).
+
+**Der Umschalttag — Julians Schritte, in dieser Reihenfolge**
+
+1. `othercovers.com` kaufen (dazu `othercover.com`, `othercovers.de`), in Vercel dem Projekt zuweisen, DNS setzen (ROADMAP 2.2).
+2. In Vercel `NEXT_PUBLIC_SITE_URL` auf `https://othercovers.com` setzen — die Variable wandert zur Bauzeit in Canonical, Sitemap, OG-Bild und jetzt auch in den User-Agent.
+3. Falls `WALLS_REPORT_FROM` gesetzt ist: dort steht der alte Name als Absender, und die Variable gewinnt gegen `SITE_NAME`.
+4. Diesen Branch nach `main` mergen und deployen (ein Wort an Claude genügt).
+5. Produktion **einmal** ansehen: Kopfzeile, Reitertitel einer Buchseite, `/opengraph-image`.
+6. Sitemap in der Search Console unter der neuen Adresse einreichen (2.5); `beautifulcovers.vercel.app` leitet Vercel auf die Hauptdomain um, sobald sie als solche gesetzt ist.
+7. Konten anlegen: X, TikTok, Bluesky (`@othercovers.com`), GitHub (§12).
+
+**Was bleibt, wie es ist:** `package.json` (`beautifulbooks`), Repository, Ordner, Vercel-Projekt, das Cookie `bb_visitor`, die Log-Kennung `bb.`; im Film die Adresse `beautifulcovers.vercel.app` (`SITE_URL_DEFAULT` in `lab/video/storyboard.ts`), bis es die Domain gibt. Offen aus 2.7: eine E-Mail-Adresse im User-Agent, die Open Librarys Limit von 1 auf 3 Anfragen je Sekunde hebt — Julians Entscheidung, weil es seine Adresse ist.
+
+**Wenn es doch ein anderer Name wird:** eine Zeile in `lib/seo.ts`, dazu die Überschriften von Spec und README. Alles andere folgt.
