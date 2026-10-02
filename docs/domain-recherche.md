@@ -1,6 +1,10 @@
-# Ein Name für die Seite: Recherche nach Saras zwei Spuren
+# Ein Name für die Seite: zwei Recherchen
 
-Stand: 2026-09-08 abends. Gehört zu ROADMAP 0.5. Ausgangspunkt ist Saras Antwort auf Julians Frage, wie man eine Seite nennen würde, auf der man das schönste Cover eines Buches sucht:
+Gehört zu ROADMAP 0.5. **Teil A (2026-09-08)** folgt Saras zwei Spuren: Schönheit auf Griechisch und Latein, und literarische Frauenfiguren. **Teil B (2026-10-01)** prüft Julians vier beschreibende Namen — Other Covers, Coverwall, Which Edition, Reprinted — und 148 weitere, mit der Regel „`.com` zuerst, kein Bindestrich". Die Empfehlung aus Teil B ([§9](#9-empfehlung-2026-10-01)) ersetzt die aus Teil A (§4), wenn der Name beschreibend sein soll.
+
+# Teil A — Saras zwei Spuren (2026-09-08)
+
+Stand: 2026-09-08 abends. Ausgangspunkt ist Saras Antwort auf Julians Frage, wie man eine Seite nennen würde, auf der man das schönste Cover eines Buches sucht:
 
 > „I'd look up how to say beauty in like Greek and Latin and any adjacent words. See if anything was nice. And I would research female literary figures who were known for their beauty."
 
@@ -59,3 +63,113 @@ Alle einzelnen Wörter sind als `.com` vergeben — kallos, kalos, venustas, pul
 **Nicht empfohlen:** alles mit „beautiful" (vergeben, und `beautifulcovers.com` gehört jemand anderem — dieselbe Falle wie bei `beautifulbooks.vercel.app`), sowie jeder Name mit *every*, *all* oder *complete*, den SPEC §1 der Seite ohnehin verbietet.
 
 **Nicht gekauft.** Domains kauft Julian selbst; die Preise oben sind Momentaufnahmen und können sich bis dahin ändern.
+
+# Teil B — Beschreibende Namen (2026-10-01)
+
+Julian, 2026-10-01: „research availability of names and domains for the project: Other Covers, Coverwall, Which Edition, Reprinted, with the .com first because the US market is first under E9, and no hyphen. come up with more candidates".
+
+## 5. Wie gemessen wurde
+
+- **Verfügbarkeit:** Vercels Domain-Abfrage (eine Registry-Abfrage, sie reserviert nichts) für **152 Namen als `.com`** und 46 Ausweich-Endungen, am 2026-10-01. Die 14 Namen, um die es am Ende geht, sind zusätzlich per `whois` bei Verisign gegengeprüft („No match" oder Registrierungsdatum). `.de` führt Vercel nicht; die fünf `.de`-Angaben stammen von DENIC (`whois.denic.de`).
+- **Preise:** Vercels Preisabfrage, USD je Jahr, Kauf / Verlängerung. Abgefragt für 22 freie `.com` — alle **11,25 / 11,25**, keiner mit Aufschlag — und für die Ausweich-Endungen. Für die übrigen freien `.com` ist der Preis **nicht** abgefragt.
+- **Wer den Namen schon benutzt:** die vergebene Domain aufgerufen, dazu je eine Websuche nach dem Namen und ein Blick auf den GitHub-Namen (`github.com/<name>`, 404 = frei).
+- **Nicht geprüft:** die Markenregister (USPTO, EUIPO, DPMA). Eine einzelne Suche bei Trademarkia nach „other covers" zeigte auf der ersten Seite keinen gleichlautenden Eintrag; das ist ein Blick, keine Recherche. Ebenso nicht geprüft: Instagram, X und andere Konten, außer wo unten genannt. **Vor dem Kauf** gehört der gewählte Name einmal in die drei Register.
+
+## 6. Julians vier Namen
+
+| Name | `.com` | Was dort ist | Ausweichen | Urteil |
+|---|---|---|---|---|
+| **Other Covers** | **frei, 11,25** | nichts registriert | `.de` `.org` `.net` `.app` `.co` `.ink` alle frei; `othercover.com` (Einzahl) frei; GitHub `othercovers` frei | **Der einzige der vier, der die Regel erfüllt.** Haken: Instagram `@othercovers` gehört einem Konto mit 18 Followern und 12 Beiträgen (KI-Plattencover) |
+| **Coverwall** | vergeben seit 2011 | Händler (HugeDomains), **Angebot 10.295 USD** oder 428,96 USD × 24 Monate | **`thecoverwall.com` frei, 11,25**; `coverwall.app` 9,99 / 15, `.org` 9,99 / 10,99, `.net` 13,50, `.io` 14,99 / 46, `.co` 29,99 / 24,80, `.de` frei; `wallofcovers.com` frei | Als `.com` nur mit Artikel. GitHub `coverwall` ist vergeben. Keine Firma dieses Namens gefunden (die Suche führt zu CoverWallet, einer Versicherung) |
+| **Which Edition** | **vergeben seit 2026-07-13** (Cloudflare) | **eine laufende Seite gleichen Namens:** „Which Edition — the best editions and translations of the classics", von einer Einzelperson, mit Affiliate-Links, zuletzt aktualisiert Juni 2026 | `.org` `.net` `.app` `.co` `.io` `.de` frei; `whicheditions.com` frei | **Streichen.** Derselbe Name, dieselbe Frage („welche Ausgabe soll ich kaufen"), dasselbe Erlösmodell, elf Wochen vor uns. Jede andere Endung schickt Leser zur anderen Seite und uns in einen Namensstreit |
+| **Reprinted** | vergeben seit 1999 | geparkt bei GoDaddy (CashParking); **Preis nicht zu ermitteln** — die Seite lieferte nichts Lesbares, GoDaddys Suche antwortet Automaten mit 403 | `.app` 9,99 / 15, `.io` 14,99 / 46, `.ink` 2,99 / **28,75**, `.co` **123,20** (Premium); `.org` `.net` `.de` vergeben; `reprintedagain.com`, `oftenreprinted.com` frei | Ohne `.com` gegen die Regel. Ein Wörterbuchwort allein ist außerdem nicht zu suchen: wer „reprinted" tippt, bekommt die Wortbedeutung. GitHub `reprinted` ist vergeben |
+
+**Zu Which Edition gehört ein Befund über den Markt:** die Seite dort empfiehlt je Klassiker *eine* Übersetzung und Ausgabe nach dem Text; wir zeigen viele Ausgaben nach dem Umschlag. Das ist ein Nachbar, kein Doppelgänger — aber er beantwortet die Frage, die unser Name stellen würde.
+
+## 7. Weitere Kandidaten
+
+Sortiert nach dem, was der Name sagt. Alle hier genannten sind als `.com` **frei** und ohne Bindestrich; Preis 11,25, wo „✓" steht, sonst nicht abgefragt.
+
+**Sagt, was man sieht — andere Umschläge desselben Buchs**
+
+| Domain | Preis | Anmerkung |
+|---|---|---|
+| **othercovers.com** | ✓ | siehe §6 |
+| othercover.com | ✓ | die Einzahl; als Vertipper-Fang zu `othercovers` mitzukaufen |
+| anothercover.com | ✓ | „another cover" — flüssiger gesprochen, aber Einzahl |
+| differentcovers.com | ✓ | länger, kein Gewinn gegenüber „other" |
+| inothercovers.com | ✓ | „… in other covers", liest sich als Satzende |
+| thesamebook.com | – | die Gegenrichtung: dasselbe Buch. Sagt nichts über Umschläge |
+| samebooknewcover.com | – | der ganze Gedanke, 19 Buchstaben |
+
+**Sagt, was es ist — eine Wand**
+
+| Domain | Preis | Anmerkung |
+|---|---|---|
+| **thecoverwall.com** | ✓ | das Wort, das Code, Spec und Julian ohnehin benutzen; schon am 2026-09-08 frei |
+| wallofcovers.com | ✓ | dasselbe umgestellt; ohne den Händler auf `coverwall.com` im Nacken |
+| editionwall.com | ✓ | genauer (eine Wand zeigt Ausgaben), aber weniger anschaulich |
+| jacketwall.com | – | „jacket" heißt im US-Englisch auch Jacke |
+
+**Wörter des Buchhandels — die eigenwilligen**
+
+| Domain | Preis | Anmerkung |
+|---|---|---|
+| **rejacketed.com** | ✓ | Verlagswort für „mit neuem Umschlag wieder aufgelegt" („the backlist was rejacketed"). **Der freie Verwandte von „Reprinted"**: ein Wort, zehn Buchstaben, und es meint genau den Vorgang, den die Seite sichtbar macht — derselbe Text, neuer Umschlag |
+| **firstthus.com** | ✓ | Antiquariatsformel „first thus": die erste Ausgabe *in dieser Gestalt* (neuer Umschlag, neuer Verlag, neue Illustration). Neun Buchstaben; `.org` `.net` `.co` und GitHub frei; keine Seite, kein Laden dieses Namens gefunden. Kennt außerhalb des Handels niemand, und „thus" ist für deutsche Zungen unbequem |
+| laterprinting.com | ✓ | „later printing" steht in jeder Antiquariatsbeschreibung; klingt nach Abwertung („nur ein späterer Druck") |
+| whichprinting.com | ✓ | die Frage von „Which Edition", ohne den Nachbarn — aber „printing" sagt Laien wenig |
+| thirdprinting.com / seventhprinting.com | – | hübsch, beliebig |
+
+**Das Sprichwort**
+
+| Domain | Preis | Anmerkung |
+|---|---|---|
+| **bytheircovers.com** | ✓ | „judge books by their covers" — jeder kennt den Satz, und die Seite ist die Aufforderung, es zu tun |
+| judgedbyitscover.com | ✓ | dasselbe ausgeschrieben, 19 Buchstaben |
+| choosebycover.com | – | sagt die Tätigkeit; nüchtern |
+
+**Der Anlass — das falsche Cover**
+
+| Domain | Preis | Anmerkung |
+|---|---|---|
+| **notthatcover.com** | ✓ | der Satz, mit dem man herkommt: „das Buch ja, aber nicht mit dem Umschlag". Witz, und ein Name, der mit einer Verneinung beginnt |
+| notthiscover.com | ✓ | dasselbe |
+| nomovietiein.com | ✓ | der häufigste Einzelfall (Filmplakat als Umschlag); zu eng, und „tiein" liest niemand richtig |
+| nicercopy.com / handsomeeditions.com | ✓ | „a nicer copy"; „handsome" ist Antiquariatston. Beide verschieben den Blick vom Umschlag aufs Exemplar |
+
+**Frei, aber nicht zu nehmen**
+
+- `allthejackets.com` — „all" verbietet SPEC §1 und N12 (keine Vollständigkeit behaupten). Aus demselben Grund nichts mit *every* oder *complete*.
+- `stillinprint.com`, `inprintagain.com` — versprechen Lieferbarkeit; die Seite prüft keinen Bestand (CLAUDE.md, Verfügbarkeitsprüfung).
+- `shopbycover.com`, `buybycover.com` — versprechen einen Laden; die Seite verkauft nichts.
+- `hundredcovers.com`, `ahundredcovers.com` — eine Zahl im Namen ist eine Behauptung, die bei den meisten Werken nicht stimmt.
+- `whicheditions.com`, `thewhichedition.com` — ein Buchstabe neben dem Nachbarn aus §6.
+
+## 8. Vergeben — damit niemand noch einmal fragt
+
+| Name | `.com` | Stand |
+|---|---|---|
+| Which Cover | vergeben seit 2011 | HugeDomains, **3.795 USD**; `.org` `.co` `.app` frei |
+| Cover Versions | vergeben seit 2004 | BuyDomains, zum Verkauf, Preis nicht lesbar (403); `.org` 9,99, `.net` 13,50, `.app` 9,99, `.co` 29,99 frei. Der beste Wortwitz der Liste — und einer, bei dem jede Suche bei Musik landet |
+| By Its Cover | vergeben seit 2015 | registriert, keine Seite erreichbar; `.org` `.co` vergeben, `.app` `.net` frei |
+| Other Editions | vergeben seit 2017 | laufende Seite „Other Editions", Halter in Finnland; `.org` `.co` `.net` frei |
+| Reissued | vergeben | `.co` `.org` `.net` ebenfalls |
+
+Ebenfalls als `.com` vergeben: anotheredition, coverbycover, pickacover, finecopy, readingcopy, faceout, facingout, dustjackets, coverhunt, covervariants, variantcovers, rightedition, therightedition, coveratlas, coverlore, wellcovered, samebook, thiscover, thatcover, coveredition, newjacket, coverspotting, recovered, firstimpression, whichcopy, theothercover, coverwalls, coversof, editionsof, coverscout, originalcover, bythecover, judgethecover, judgebythecover, coverfirst, editionist, jacketry, coverledger, fromcovertocover, covercopy, thecoveredition, papercovers, coverchoice, bookbycover, booksbycover, coverpicker, printedagain, reprints, thereprint, frontcovers, shelfface, coversleuth, coverfinder, thatcopy, thiscopy.
+
+Frei und oben nicht einzeln besprochen: thatedition, manycovers, samebookdifferentcover, onebookmanycovers, choosethecover, anicercopy, editionhunt, otherjackets, reprintedbooks, whichjacket, theothercovers, differentcover, adifferentcover, bookcoverwall, laterprintings, thecoversof, editionscout, jacketscout, prettiercopy, handsomecopy, handsomeedition, nomovietieins, wrongcover, thecoveryouwant, coversfirst, theeditionist, rejacket, inanothercover, samewordsnewcover, samestoryothercover, getreprinted, reprintedhq, jacketsandcovers, samebookothercover, newcoversamebook, coverstocover, nthprinting, copywithcover, editionandcover, coverandedition, coversandprintings, pickbycover, thecoverpick, printingsof, reprintedas, reprintwall, facingcovers, editionsleuth, findthecover, findthatcover, findthatedition, theothercopy, othercopies.
+
+## 9. Empfehlung (2026-10-01)
+
+**Erste Wahl: `othercovers.com`.** Der Name ist Julians eigener, er ist der einzige der vier, der als `.com` frei ist, und er sagt in zwei Wörtern, was die Seite tut: man kennt das Buch und sieht seine anderen Umschläge. Er behauptet keine Vollständigkeit („other", nicht „all"), er hat keinen Nachbarn im Buchgeschäft, und jede Nebenendung samt `.de` und dem GitHub-Namen ist frei. Dazu `othercover.com` für den Vertipper und `othercovers.de` — zusammen rund 23 USD im Jahr plus die `.de`. Die zwei Schwächen: „covers" heißt im Englischen auch Coverversionen (das besetzte Instagram-Konto ist genau so eines), und das Wort „other" braucht ein Gegenüber — auf der Startseite ohne Buch steht es allein.
+
+**Zweite Wahl: `thecoverwall.com`**, wenn der Name das Ding benennen soll statt den Vorgang. Preis dafür: `coverwall.com` bleibt bei einem Händler, der es jederzeit an jemand anderen verkaufen kann, und wer den Artikel weglässt, landet dort.
+
+**Wenn es eigenwillig sein darf: `rejacketed.com`**, vor `firstthus.com`. Beides sind Wörter, die Buchmenschen wiedererkennen und alle anderen einmal erklärt bekommen müssen; „rejacketed" erklärt sich dabei selbst.
+
+**Gestrichen: Which Edition** (laufende Seite gleichen Namens im selben Feld) **und Reprinted** (kein `.com`, Preis unbekannt, als Suchwort verloren).
+
+**Die griechische Spur aus Teil A** (`kalloscovers.com`, `kallos.ink`) bleibt gültig für den Fall, dass der Name nicht beschreiben, sondern klingen soll. Für den US-Markt zuerst (E9) trägt ein Name, den man beim ersten Hören schreiben kann, weiter.
+
+**Nicht gekauft.** Offen vor dem Kauf: (1) der gewählte Name in USPTO, EUIPO und DPMA; (2) die Konten, die mit dem Namen gehen sollen; (3) bei `reprinted.com` oder `coverversions.com`, falls doch: den Preis von Hand beim Händler erfragen. Nach dem Kauf gilt ROADMAP 2.2 — `NEXT_PUBLIC_SITE_URL` ändern, neu bauen, Sitemap neu einreichen.
