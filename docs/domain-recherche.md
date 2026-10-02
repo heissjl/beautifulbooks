@@ -440,7 +440,52 @@ Julian, 2026-10-02: „ok, we're switching the name to buyitscovers(.com) — go
 
 Unverändert: `package.json`, Repository, Ordner, Vercel-Projekt, Cookie `bb_visitor`, Log-Kennung `bb.` — wie bei jeder Umbenennung (§13). Die Film-Schlusskarte (`lab/video`) liest den Namen aus der Konstante; ihre Adresse bleibt `beautifulcovers.vercel.app`, bis es die Domain gibt.
 
-## 19. Gekauft und bei Vercel angelegt — die DNS-Einträge bei INWX fehlen (2026-10-02, nachts)
+## 19. `buyitscovers` und `byitscovers`: Warenkorb und Konten (2026-10-02 abends)
+
+Julian: „bereite buyitscovers und byitscovers in com und de vor — checke die social media accounts für buyitscovers".
+
+**INWX-Warenkorb.** Julian hatte in der Zwischenzeit selbst `byitscovers.com`, `byitscovers.de` und `buyitscovers.com` hineingelegt; Claude hat `buyitscovers.de` dazugelegt. Die drei `othercovers`-Domains aus §14 liegen weiter darin — herausgenommen hat sie niemand, weil Julian das nicht gesagt hat. Stand beim letzten Blick, je Registrierung 12 Monate, ohne MwSt.:
+
+| Domain | Preis / Jahr | Verlängerung |
+|---|---|---|
+| othercovers.com | 14,60 € | 14,60 € |
+| othercovers.de | 5,02 € | 3,91 € |
+| othercover.com | 14,60 € | 14,60 € |
+| byitscovers.com | 14,60 € | (nicht abgelesen) |
+| byitscovers.de | 5,02 € | (nicht abgelesen) |
+| buyitscovers.com | 14,60 € | 14,60 € |
+| buyitscovers.de | 5,02 € | 3,91 € |
+| **Summe** | **73,46 €** | |
+
+Ohne die drei `othercovers` wären es 39,24 €. Kurz danach stand Julians Reiter auf INWX' Anmeldung und dann auf `account.inwx.de/de/order` — Julian ist im Bestellvorgang; was bestellt wurde, ist hier nicht festgehalten.
+
+**Konten für `buyitscovers`**, je öffentliche Adresse ohne Anmeldung, mit einem Konto, das es sicher gibt, als Gegenprobe (wie §12; „frei" heißt: unter der Adresse liegt nichts, nicht, dass die Plattform den Namen vergibt):
+
+| Plattform | Befund | Gegenprobe |
+|---|---|---|
+| Instagram | **frei** („Profile isn't available") | `@othercovers` zeigt das Profil |
+| Threads | frei, folgt dem Instagram-Namen (die Seite selbst verlangt die Anmeldung) | — |
+| X | **frei** („User Profile Not Found") | `@penguinbooks` zeigt das Profil |
+| TikTok | **frei** (allgemeine Seite statt Profil) | `@penguinbooks` zeigt das Profil |
+| Bluesky | `buyitscovers.bsky.social` nicht aufzulösen; mit Domain hieße es ohnehin `@buyitscovers.com` | `penguinbooks.bsky.social` löst auf |
+| Facebook | keine öffentliche Seite („This content isn't available") | `/penguinbooks` zeigt die Seite |
+| YouTube | frei (404) | `@mkbhd` 200 |
+| GitHub | frei (404) | `penguinbooks` 200 |
+| Mastodon (mastodon.social) | frei (404) | `Gargron` 200 |
+| Substack | frei (404) | `astralcodexten` 301 |
+| Medium | frei („Page not found") | `@ev` zeigt das Profil |
+| Tumblr | frei („There's nothing here") | `othercovers` zeigt den Blog |
+| Buy Me a Coffee | „Not found" | ohne Gegenprobe |
+| Vercel `buyitscovers.vercel.app` | frei (404) | `beautifulcovers` 200 |
+| Telegram | kein öffentlicher Kanal (nur „Contact @buyitscovers", wie für jeden Namen); ob ein Nutzer den Namen hat, nicht zu erkennen | `durov` zeigt den Kanal |
+| Ko-fi | nicht zu erkennen (leitet auf die Startseite, wie in §14) | — |
+| Pinterest, Reddit | nicht geprüft — Pinterest ist auf diesem Weg nicht zu entscheiden (§14), Reddit darf die Erweiterung nicht öffnen | — |
+
+**Nebenbefund `byitscovers`:** Instagram `@byitscovers` ist **vergeben** — ein privates Konto (37 Follower, 40 abonniert, koreanischer Profilname), nichts über Bücher. Damit auch Threads. Für `byitscovers` sind die übrigen Plattformen nicht geprüft.
+
+**Was daraus folgt.** `buyitscovers` ist auf jeder Plattform frei, die sich entscheiden ließ, Instagram eingeschlossen — anders als `othercovers` (Musik-Konto) und `byitscovers` (privates Konto). Wird es `buyitscovers`, sind am Tag des Kaufs anzulegen: Instagram, X, TikTok, Bluesky (`@buyitscovers.com`), eine GitHub-Organisation. Konten legt Claude nicht an.
+
+## 20. Gekauft und bei Vercel angelegt — die DNS-Einträge bei INWX fehlen (2026-10-02, nachts)
 
 Julian, 2026-10-02: „i bought the domains now. can we forward the vercel site to buyitscovers.com? … und wie verbinde ich die domains". Bei INWX stehen auf **OK**: `buyitscovers.com`, `buyitscovers.de`, `byitscovers.com`, `byitscovers.de`, `othercovers.com`, `othercovers.de` (alle bis 03.10.2027), dazu `jheiss.de` und `julianheiss.com` von früher.
 
