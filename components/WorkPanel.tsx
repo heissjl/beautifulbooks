@@ -15,6 +15,7 @@
 import type { Edition, Work } from '@/lib/model';
 import { blurbFor, editionSpan } from '@/lib/works';
 import { languageName } from '@/lib/normalize';
+import { useLocale, useT } from './i18n';
 
 interface WorkPanelProps {
   work: Work;
@@ -30,12 +31,14 @@ interface WorkPanelProps {
 }
 
 export default function WorkPanel({ work, editions, language, settled }: WorkPanelProps) {
+  const t = useT();
+  const locale = useLocale();
   const blurb = blurbFor(editions, language, work);
-  const span = settled ? editionSpan(editions) : null;
+  const span = settled ? editionSpan(editions, t) : null;
 
   return (
     <div>
-      <p className="kicker">This book</p>
+      <p className="kicker">{t('This book')}</p>
 
       {span && (
         /*
@@ -64,17 +67,17 @@ export default function WorkPanel({ work, editions, language, settled }: WorkPan
           */}
           {blurb.edition ? (
             <p className="mt-2 text-xs text-ink-3">
-              Description from the {[blurb.edition.publisher, blurb.edition.year].filter(Boolean).join(' ') || 'unnamed'} edition
+              {t('Description from the {edition} edition', { edition: [blurb.edition.publisher, blurb.edition.year].filter(Boolean).join(' ') || t('unnamed') })}
               {language && blurb.edition.language && blurb.edition.language !== language
-                ? `, in ${languageName(blurb.edition.language)}`
+                ? t(', in {language}', { language: languageName(blurb.edition.language, locale) })
                 : ''}
-              , via {blurb.edition.source === 'openlibrary' ? 'Open Library' : 'Google Books'}.
+              {t(', via {source}.', { source: blurb.edition.source === 'openlibrary' ? 'Open Library' : 'Google Books' })}
             </p>
           ) : (
             <p className="mt-2 text-xs text-ink-3">
               {blurb.source === 'wikipedia'
-                ? 'Description from Wikipedia (CC BY-SA), via the Open Library record of this book.'
-                : 'Description from the Open Library record of this book.'}
+                ? t('Description from Wikipedia (CC BY-SA), via the Open Library record of this book.')
+                : t('Description from the Open Library record of this book.')}
             </p>
           )}
         </div>
@@ -86,7 +89,7 @@ export default function WorkPanel({ work, editions, language, settled }: WorkPan
         after the click, which is the part that is not visible.
       */}
       <p className="mt-6 text-sm leading-relaxed text-ink-3">
-        Pick a cover to see the edition it belongs to, its ISBN and where to find a copy.
+        {t('Pick a cover to see the edition it belongs to, its ISBN and where to find a copy.')}
       </p>
 
       {/*
@@ -102,9 +105,9 @@ export default function WorkPanel({ work, editions, language, settled }: WorkPan
           rel="noopener noreferrer"
           className="text-accent hover:underline"
         >
-          This book at Open Library
+          {t('This book at Open Library')}
         </a>
-        {' — where these records come from, and where they can be corrected.'}
+        {' '}{t('— where these records come from, and where they can be corrected.')}
       </p>
     </div>
   );

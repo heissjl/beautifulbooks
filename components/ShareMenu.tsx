@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { coverPathSegment, coverUrlFor } from '@/lib/coverurl';
+import { useT } from './i18n';
 
 /**
  * Sharing a wall, or one cover of it (ROADMAP 6.20, 6.21).
@@ -41,6 +42,7 @@ function shareUrlFor(workId: string, coverId: string | null | undefined): string
 export default function ShareMenu({
   workId, coverId, title, author, placement = 'down', compact = false, align = 'right', text: ownText,
 }: ShareMenuProps) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const box = useRef<HTMLDivElement>(null);
@@ -60,8 +62,8 @@ export default function ShareMenu({
   }, [open]);
 
   const url = shareUrlFor(workId, coverId);
-  const line = author ? `${title} by ${author}` : title;
-  const text = ownText ?? (coverId ? `${line} — one of its covers` : line);
+  const line = author ? t('{title} by {author}', { title, author }) : title;
+  const text = ownText ?? (coverId ? t('{line} — one of its covers', { line }) : line);
   const q = encodeURIComponent;
   const image = coverId ? coverUrlFor(coverId, 'L') : null;
 
@@ -75,7 +77,7 @@ export default function ShareMenu({
     { label: 'WhatsApp', href: `https://wa.me/?text=${q(`${text} ${url}`)}` },
     { label: 'Bluesky', href: `https://bsky.app/intent/compose?text=${q(`${text} ${url}`)}` },
     { label: 'X', href: `https://twitter.com/intent/tweet?text=${q(text)}&url=${q(url)}` },
-    { label: 'E-mail', href: `mailto:?subject=${q(line)}&body=${q(`${text}\n\n${url}`)}` },
+    { label: t('E-mail'), href: `mailto:?subject=${q(line)}&body=${q(`${text}\n\n${url}`)}` },
   ];
 
   const copy = async () => {
@@ -106,7 +108,7 @@ export default function ShareMenu({
         aria-haspopup="menu"
         onClick={() => setOpen(o => !o)}
       >
-        {copied ? 'Link copied' : 'Share'}
+        {copied ? t('Link copied') : t('Share')}
       </button>
 
       {open && (
@@ -117,14 +119,14 @@ export default function ShareMenu({
           }`}
         >
           <p className="px-2.5 pb-1.5 pt-1 text-xs text-ink-3">
-            {coverId ? 'Shares this cover' : 'Shares this book'}
+            {coverId ? t('Shares this cover') : t('Shares this book')}
           </p>
           <button type="button" role="menuitem" className="share-item" onClick={copy}>
-            {copied ? 'Link copied' : 'Copy link'}
+            {copied ? t('Link copied') : t('Copy link')}
           </button>
           {typeof navigator !== 'undefined' && 'share' in navigator && (
             <button type="button" role="menuitem" className="share-item" onClick={native}>
-              Share…
+              {t('Share…')}
             </button>
           )}
           {links.map(l => (

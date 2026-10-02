@@ -24,6 +24,7 @@
  *    and the "another edition" row is not offered at all. It appears only when
  *    no such link is possible — a foreign ISBN, or none.
  */
+import { english, type Translate } from './i18n/translate';
 import type { BuyLink, Edition } from './model';
 import { DEFAULT_MARKET, type Market } from './market';
 import { isbn13to10, registrationArea } from './normalize';
@@ -48,7 +49,7 @@ export interface LinkPlan {
 /** Which registration area a market's own shops are built around. */
 const MARKET_AREA: Record<Market, 'en' | 'de'> = { us: 'en', uk: 'en', de: 'de' };
 
-const AREA_NAME: Record<'en' | 'de', string> = {
+export const AREA_NAME: Record<'en' | 'de', string> = {
   en: 'the English-language area',
   de: 'the German-language area',
 };
@@ -130,6 +131,8 @@ export interface LinkPlanInput {
   market?: Market;
   /** What the publisher's registered image showed, when it has been asked. */
   verdict?: VerdictStatus;
+  /** The reader's language for `note` (ROADMAP 6.82); English without one. */
+  t?: Translate;
 }
 
 /**
@@ -252,8 +255,9 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
     keep their plain name: they ask by picture or point at a record, and a
     suffix there would explain nothing.
   */
+  const t = input.t ?? english;
   const name = (l: BuyLink): BuyLink =>
-    fromIsbn.has(l.provider) || /-search$/.test(l.provider) ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
+    fromIsbn.has(l.provider) || /-search$/.test(l.provider) ? { ...l, label: `${l.label} · ${questionOf(l, t)}` } : l;
   const namedLead = lead.map(name);
 
   /*
@@ -271,24 +275,24 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
     namedRest.push(named);
   }
 
-  return { case: linkCase, place: registration?.place, lead: namedLead, rest: namedRest, anyEdition, note: noteFor(linkCase, market, registration?.place, isbn13) };
+  return { case: linkCase, place: registration?.place, lead: namedLead, rest: namedRest, anyEdition, note: noteFor(linkCase, market, registration?.place, isbn13, t) };
 }
 
 /** Which question a link puts to a shop: its ISBN field, or words. */
-function questionOf(link: BuyLink): string {
-  return /-search$|-title$/.test(link.provider) ? 'title & year' : 'ISBN';
+function questionOf(link: BuyLink, t: Translate): string {
+  return /-search$|-title$/.test(link.provider) ? t('title & year') : 'ISBN';
 }
 
-function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, isbn13: string | undefined): string {
+function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, isbn13: string | undefined, t: Translate): string {
   if (linkCase === 'home') return '';
   if (linkCase === 'kdp') {
     const searchOnly = isbn13 && !isbn13to10(isbn13);
-    return `This number is from the 979-8 range, which Amazon issues for its own print-on-demand titles.${
-      searchOnly ? ' It has no ISBN-10, so the link opens a search rather than one book’s page.' : ''
+    return `${t('This number is from the 979-8 range, which Amazon issues for its own print-on-demand titles.')}${
+      searchOnly ? ` ${t('It has no ISBN-10, so the link opens a search rather than one book’s page.')}` : ''
     }`;
   }
   if (linkCase === 'no-isbn') {
-    return 'This edition has no ISBN on record, so no shop can look it up by number. These search by title, publisher and year instead.';
+    return t('This edition has no ISBN on record, so no shop can look it up by number. These search by title, publisher and year instead.');
   }
   /*
     The fact, what it means for the reader, and the limit of what was done
@@ -300,11 +304,11 @@ function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, 
     was asked." was too short to say what had not been asked (Julian,
     2026-09-11).
   */
-  const area = AREA_NAME[MARKET_AREA[market]];
-  const where = place
-    ? `was registered in ${place}, so shops in ${area} may not carry it`
-    : `was not registered in ${area}, so shops there may not carry it`;
-  return `This printing’s ISBN ${where}. Whether any shop has a copy was not checked.`;
+  // Place and area are English names from the registration table; they stay as they are.
+  const area = t(AREA_NAME[MARKET_AREA[market]]);
+  return place
+    ? t('This printing’s ISBN was registered in {place}, so shops in {area} may not carry it. Whether any shop has a copy was not checked.', { place: t(place), area })
+    : t('This printing’s ISBN was not registered in {area}, so shops there may not carry it. Whether any shop has a copy was not checked.', { area });
 }
 
 /**

@@ -10,6 +10,7 @@
  *
  * Pure, no I/O.
  */
+import { english, type Translate } from './i18n/translate';
 import type { Cover, Edition } from './model';
 
 /** Below this a page has nothing to show that the wall does not (R6). */
@@ -132,23 +133,24 @@ export function worthAPage(d: Decades): boolean {
  * many covers it holds, the line says only that — a sentence that adds
  * nothing is dropped rather than padded (R3).
  */
-export function decadeLine(g: DecadeGroup): string {
+export function decadeLine(g: DecadeGroup, t: Translate = english): string {
   const n = g.covers.length;
-  const parts: string[] = [`${n} cover${n === 1 ? '' : 's'}`];
+  const parts: string[] = [n === 1 ? t('{n} cover', { n: 1 }) : t('{n} covers', { n })];
 
   const formats = Object.entries(g.formats).sort((a, b) => (b[1] ?? 0) - (a[1] ?? 0));
   const [topFormat, topCount] = formats[0] ?? [];
   if (topFormat && topCount && topCount >= 2 && g.editionCount >= 2) {
-    parts.push(`${topCount} of ${g.editionCount} printings say ${topFormat}`);
+    // The format is quoted as the records say it, so it stays untranslated.
+    parts.push(t('{n} of {total} printings say {format}', { n: topCount, total: g.editionCount, format: topFormat }));
   }
 
   if (g.publishers.length === 1) {
     // Not "all from Signet": the records we hold are not the decade (R7).
-    parts.push(`1 publisher, ${g.publishers[0]}`);
+    parts.push(t('1 publisher, {publisher}', { publisher: g.publishers[0] }));
   } else if (g.publishers.length > 1) {
-    parts.push(`${g.publishers.length} publishers, ${g.publishers.slice(0, 2).join(' and ')} among them`);
+    parts.push(t('{n} publishers, {a} and {b} among them', { n: g.publishers.length, a: g.publishers[0], b: g.publishers[1] }));
   }
 
-  if (g.languages.length > 1) parts.push(`${g.languages.length} languages`);
+  if (g.languages.length > 1) parts.push(t('{n} languages', { n: g.languages.length }));
   return parts.join(' · ');
 }

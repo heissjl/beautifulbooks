@@ -11,6 +11,8 @@ import { decadeLine, groupByDecade, worthAPage } from '@/lib/decades';
 import { authorLine, SITE_URL } from '@/lib/seo';
 import { getWorkDetail, isWorkId } from '@/lib/work';
 import { foldDuplicateCovers } from '@/lib/works';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/translate';
 
 /**
  * One book through the decades (ROADMAP 5.4a, PLAN-5 §3).
@@ -42,6 +44,8 @@ const EAGER_TILES = 12;
 
 interface PageProps {
   params: Promise<{ id: string }>;
+  /** Set by the German tree (ROADMAP 6.82); Next itself passes none. */
+  locale?: Locale;
 }
 
 async function load(id: string) {
@@ -97,7 +101,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params, locale = DEFAULT_LOCALE }: PageProps) {
+  const t = translator(locale);
   const { id } = await params;
   const loaded = await load(id);
   if (!loaded || !worthAPage(loaded.decades)) notFound();
@@ -120,27 +125,27 @@ export default async function Page({ params }: PageProps) {
       <SiteHeader
         left={
           <Link href={`/book/${id}`} className="rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
-            ← The wall
+            ← {t('The wall')}
           </Link>
         }
         search={<HeaderSearch />}
       />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-8 sm:px-6">
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">
-          {work.title} <em className="text-accent">by decade</em>
+          {work.title} <em className="text-accent">{t('by decade')}</em>
         </h1>
         <p className="mt-2 text-ink-2">{author}</p>
         <p className="mt-1 text-sm text-ink-3">
-          {decades.coverCount} covers from {editions.length.toLocaleString('en')} edition records
-          {decades.from && decades.to ? `, ${decades.to}s back to ${decades.from}s` : ''}
+          {t('{covers} covers from {records} edition records', { covers: decades.coverCount, records: editions.length })}
+          {decades.from && decades.to ? t(', {to}s back to {from}s', { to: String(decades.to), from: String(decades.from) }) : ''}
         </p>
 
         <div className="mt-10 space-y-12">
           {decades.groups.map(group => (
             <section key={group.decade}>
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line pb-2">
-                <h2 className="font-display text-2xl text-ink">{group.decade}s</h2>
-                <p className="text-sm text-ink-3">{decadeLine(group)}</p>
+                <h2 className="font-display text-2xl text-ink">{t('{decade}s', { decade: String(group.decade) })}</h2>
+                <p className="text-sm text-ink-3">{decadeLine(group, t)}</p>
               </div>
               <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
                 {group.covers.map(cover => {
@@ -162,8 +167,8 @@ export default async function Page({ params }: PageProps) {
           {decades.undated.length > 0 && (
             <section>
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line pb-2">
-                <h2 className="font-display text-2xl text-ink">No year on record</h2>
-                <p className="text-sm text-ink-3">{decades.undated.length} covers</p>
+                <h2 className="font-display text-2xl text-ink">{t('No year on record')}</h2>
+                <p className="text-sm text-ink-3">{decades.undated.length === 1 ? t('{n} cover', { n: 1 }) : t('{n} covers', { n: decades.undated.length })}</p>
               </div>
               <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
                 {decades.undated.map(cover => (
@@ -199,9 +204,8 @@ export default async function Page({ params }: PageProps) {
           belong in SPEC §9.3, not under a reader's eyes.
         */}
         <p className="mt-16 border-t border-line pt-4 text-xs leading-relaxed text-ink-3">
-          Covers from Open Library, each in the decade of the earliest printing that carries it.
-          What the catalogues never scanned is missing here too.{' '}
-          <Link href={`/book/${id}`} className="underline underline-offset-2 hover:text-accent">See the whole wall</Link>.
+          {t('Covers from Open Library, each in the decade of the earliest printing that carries it. What the catalogues never scanned is missing here too.')}{' '}
+          <Link href={`/book/${id}`} className="underline underline-offset-2 hover:text-accent">{t('See the whole wall')}</Link>.
         </p>
       </main>
       <SiteFooter />

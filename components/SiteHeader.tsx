@@ -1,5 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import BrandMark from '@/components/BrandMark';
+import LocaleSwitcher from '@/components/LocaleSwitcher';
+import { useT } from '@/components/i18n';
 
 interface SiteHeaderProps {
   /** Optional left slot, e.g. a back link on detail pages. */
@@ -14,7 +18,13 @@ interface SiteHeaderProps {
   search?: React.ReactNode;
 }
 
+/**
+ * A client component since 6.82: the tagline and the language switch read the
+ * locale from context, and the header is rendered inside `BookDetail`, a
+ * client component, anyway.
+ */
 export default function SiteHeader({ left, right, search }: SiteHeaderProps) {
+  const t = useT();
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-bg/85 backdrop-blur-md">
       <div className="relative mx-auto flex h-14 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
@@ -27,9 +37,11 @@ export default function SiteHeader({ left, right, search }: SiteHeaderProps) {
           </Link>
         </div>
         {/* The tagline is decoration and yields the room to the field. */}
-        {!search && <p className="hidden text-sm text-ink-3 md:block">Covers, side by side.</p>}
+        {!search && <p className="hidden text-sm text-ink-3 md:block">{t('Covers, side by side.')}</p>}
         <div className="ml-auto flex items-center gap-2">
           {search}
+          {/* The language switch (6.82), last on the right except for a page's own button. */}
+          <LocaleSwitcher />
           {right}
         </div>
       </div>
