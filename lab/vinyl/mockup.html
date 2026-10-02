@@ -6,6 +6,12 @@
   what changes for records: square tiles, countries instead of languages,
   a switch between front, back and label, and a pressing instead of an
   edition in the sidebar.
+
+  Second layout, the default since 2026-10-02 (Julian: „the focus is not many
+  different covers, but printings and showing them in detail"): one section
+  per sleeve, its front, back and both labels side by side at full column
+  width, the pressings of that sleeve as a row of label discs to pick from,
+  every image opening full size. The wall stays switchable in the mock bar.
 -->
 <html lang="en">
 <head>
@@ -132,6 +138,48 @@
   details { font-size: 13.5px; margin: 6px 0; } summary { cursor: pointer; color: var(--ink-2); }
   .close { display: none; }
 
+  /* Sleeves layout: one section per folded sleeve, all sides visible at once. */
+  .sleeves { display: grid; gap: 56px; margin-top: 26px; }
+  .sleeve h2 { font-family: var(--display); font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0 0 2px; }
+  .sleeve .span { font-size: 13px; color: var(--ink-3); margin: 0 0 14px; }
+  .spread { display: grid; grid-template-columns: 1fr 1fr .56fr; grid-template-areas: "front back la" "front back lb"; gap: 16px; align-items: start; }
+  .spread .side { margin: 0; }
+  .spread .side.front { grid-area: front; } .spread .side.back { grid-area: back; }
+  .spread .side.la { grid-area: la; } .spread .side.lb { grid-area: lb; align-self: end; }
+  .spread .pic { position: relative; display: block; width: 100%; aspect-ratio: 1; border: 0; padding: 0; cursor: zoom-in; background: var(--surface-2); border-radius: 3px; overflow: hidden;
+                 box-shadow: 0 1px 2px rgb(var(--shadow) / .18), 0 8px 22px rgb(var(--shadow) / .16); }
+  .spread .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .spread .round .pic { border-radius: 50%; background: #0b0a09; }
+  .spread .pic.none { cursor: default; background: none; border: 1px dashed var(--line); box-shadow: none; color: var(--ink-3); font-size: 12px; display: grid; place-items: center; padding: 10px; text-align: center; }
+  .spread .pic.failed img { visibility: hidden; }
+  .spread .pic.failed::after { content: 'Image did not load'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; color: var(--ink-3); }
+  .spread figcaption { font-size: 12px; color: var(--ink-3); margin-top: 6px; }
+  .spread .round figcaption { text-align: center; }
+  .discs-h { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); font-weight: 500; margin: 22px 0 10px; }
+  .discs { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 12px 10px; }
+  .discs button { border: 0; background: none; padding: 0; cursor: pointer; text-align: center; font-size: 11px; line-height: 1.25; color: var(--ink-2); }
+  .discs .d { display: block; aspect-ratio: 1; border-radius: 50%; background: #0b0a09; overflow: hidden; margin-bottom: 5px; outline-offset: 2px; }
+  .discs .d img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .discs .d.none { background: none; border: 1px dashed var(--line); }
+  .discs button[aria-current="true"] .d { outline: 2px solid var(--accent); }
+  .discs button[aria-current="true"] { color: var(--ink); }
+  .pdetail { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 40px; }
+  .pdetail .ptitle { margin-top: 0; }
+
+  .lightbox { position: fixed; inset: 0; z-index: 20; background: rgb(12 10 9 / .94); color: #efe8dd; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; padding: 14px 16px 18px; }
+  .lightbox[hidden] { display: none; }
+  .lightbox .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; }
+  .lightbox .top button { border: 0; background: none; color: inherit; font-size: 26px; line-height: 1; cursor: pointer; }
+  .lightbox .stage { display: grid; place-items: center; min-height: 0; }
+  .lightbox .stage img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .lightbox .tabs { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .lightbox .tabs button { border: 1px solid rgb(239 232 221 / .35); background: none; color: inherit; border-radius: 99px; padding: 3px 13px; font-size: 13px; cursor: pointer; }
+  .lightbox .tabs button[aria-pressed="true"] { background: #efe8dd; color: #131110; }
+  .lightbox .tabs button:disabled { opacity: .35; cursor: default; }
+  .lightbox a { color: #dbac94; }
+  body.layout-sleeves .sides, body.layout-sleeves .decade, body.layout-sleeves #wall { display: none; }
+  body.layout-wall #sleeves { display: none; }
+
   @media (max-width: 1023px) {
     header.site { padding: 10px 16px; gap: 12px; }
     header.site .home { display: none; }
@@ -145,6 +193,11 @@
     aside.sheet .big { width: 62%; margin: 0 auto; }
     aside.sheet .close { display: block; margin-left: auto; border: 0; background: none; font-size: 22px; line-height: 1; color: var(--ink-2); cursor: pointer; }
     .sides button { padding: 5px 10px; }
+    .spread { grid-template-columns: 1fr 1fr; grid-template-areas: "front back" "la lb"; gap: 12px; }
+    .spread .side.la, .spread .side.lb { width: 72%; justify-self: center; align-self: start; }
+    .sleeve h2 { font-size: 22px; }
+    .pdetail { grid-template-columns: minmax(0, 1fr); }
+    .discs { grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); }
   }
 </style>
 </head>
@@ -171,10 +224,12 @@
     </div>
     <a class="decade" href="#">See these sleeves by decade →</a>
     <div class="wall" id="wall"></div>
+    <div class="sleeves" id="sleeves"></div>
     <p class="wall-note">Sleeves come from MusicBrainz and the Cover Art Archive. Most pressings carry no photo, so an album has had sleeves neither catalogue knows.</p>
   </section>
   <aside id="aside"></aside>
 </main>
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Image"></div>
 <script>
 const DATA = /*DATA*/null;
 
@@ -225,7 +280,8 @@ function fold(pressings) {
   return groups.sort((a, b) => (a.rep.date || '9999').localeCompare(b.rep.date || '9999'));
 }
 
-const state = { album: 0, country: 'all', side: 'front', selected: null, view: 'front', fold: 20, live: true, storyStart: performance.now(), storyMode: 'wikipedia' };
+const state = { album: 0, country: 'all', side: 'front', selected: null, view: 'front', fold: 20, live: true, storyStart: performance.now(), storyMode: 'wikipedia',
+  layout: 'sleeves', box: null };
 
 function render() {
   const album = DATA[state.album];
@@ -251,6 +307,15 @@ function render() {
     order.map(([c, n]) => `<button class="chip" data-country="${esc(c)}" aria-pressed="${state.country === c}">${esc(countryName(c))}<small>${n}</small></button>`).join('') +
     `<button class="chip" data-country="all" aria-pressed="${state.country === 'all'}">All countries<small>${allGroups.length}</small></button>`;
 
+  document.body.classList.toggle('layout-sleeves', state.layout === 'sleeves');
+  document.body.classList.toggle('layout-wall', state.layout === 'wall');
+  if (state.layout === 'sleeves') {
+    document.getElementById('hint').textContent = 'One section per sleeve design: front, back and both labels of one pressing. The discs are the pressings with this sleeve; pick one to see its back and labels. Any image opens full size.';
+    renderSleeves(album, groups, inCountry);
+    renderAside(album, allGroups, true);
+    renderBox();
+    return;
+  }
   for (const b of document.querySelectorAll('#sides button')) b.setAttribute('aria-pressed', String(b.dataset.side === state.side));
   const hints = {
     front: 'One tile per sleeve design. Later pressings mostly keep the sleeve; the number says how many more share it.',
@@ -275,6 +340,7 @@ function render() {
     }).join('');
   }
   renderAside(album, allGroups);
+  renderBox();
 }
 
 const caption = p => [p.label, p.year, countryName(p.country)].filter(Boolean).join(' · ');
@@ -282,6 +348,115 @@ function tile(p, src, cls, n, current) {
   return `<button class="tile ${cls}" data-id="${p.id}" ${current ? 'aria-current="true"' : ''} aria-label="${esc(caption(p))}">
     <img loading="lazy" src="${esc(src)}" alt="">${n > 1 ? `<span class="badge">+${n - 1}</span>` : ''}<span class="cap">${esc(caption(p))}</span></button>`;
 }
+
+
+/** The four sides of a pressing, as [key, name, small, large, xl, full, round]. */
+function sidesOf(p) {
+  return [
+    ['front', 'Front', p.front, p.frontLarge, p.frontXL, p.frontFull, false],
+    ['back', 'Back', p.back, p.backLarge, p.backXL, p.backFull, false],
+    ['labelA', 'Label, side A', p.labels[0]?.small, p.labels[0]?.large, p.labels[0]?.xl, p.labels[0]?.full, true],
+    ['labelB', 'Label, side B', p.labels[1]?.small, p.labels[1]?.large, p.labels[1]?.xl, p.labels[1]?.full, true],
+  ];
+}
+
+/**
+ * The pressing a sleeve section shows: the one the reader picked if it has this
+ * sleeve, otherwise the earliest that has a back and a label photo, then the
+ * earliest with a back, then the earliest. A missing side of a picked pressing
+ * is shown missing, never filled in from a sibling: backs and labels differ
+ * between pressings of one sleeve (catalogue number, label logo, barcode).
+ */
+function shownPressing(g) {
+  if (state.selected && g.members.includes(state.selected)) return state.selected;
+  return g.members.find(m => m.back && m.labels.length) ?? g.members.find(m => m.back) ?? g.members[0];
+}
+
+function renderSleeves(album, groups, inCountry) {
+  const el = document.getElementById('sleeves');
+  if (!groups.length) { el.innerHTML = '<p class="quiet">No pressing with a photo of its front in this country.</p>'; return; }
+  const noFront = inCountry.filter(p => !p.front).length;
+  el.innerHTML = groups.map((g, i) => {
+    const p = shownPressing(g);
+    const years = g.members.map(m => m.year).filter(Boolean);
+    const countries = [...new Set(g.members.map(m => countryName(m.country)))];
+    const span = [years.length ? (years[0] === years.at(-1) ? years[0] : `${years[0]}–${years.at(-1)}`) : '',
+      `${g.members.length} pressing${g.members.length === 1 ? '' : 's'}`,
+      countries.length > 4 ? `${countries.length} countries` : countries.join(', ')].filter(Boolean).join(' · ');
+    const sides = sidesOf(p).map(([key, name, small, large, xl, full, round]) => {
+      const cls = { front: 'front', back: 'back', labelA: 'la', labelB: 'lb' }[key];
+      if (key === 'labelB' && !large && !small) return '';
+      const pic = large || small
+        ? `<button class="pic" data-box="${p.id}" data-boxview="${key}" aria-label="${esc(name)}, full size"><img loading="lazy" src="${esc(large || small)}" data-fallback="${esc(small && large ? small : '')}" alt=""></button>`
+        : `<div class="pic none">No photo of the ${key === 'back' ? 'back' : 'label'} of this pressing</div>`;
+      return `<figure class="side ${cls} ${round ? 'round' : ''}">${pic}<figcaption>${esc(name)}</figcaption></figure>`;
+    }).join('');
+    const discs = g.members.map(m => `<button data-pick="${m.id}" ${m === p ? 'aria-current="true"' : ''} title="${esc(caption(m))}">
+        <span class="d ${m.labels[0] ? '' : 'none'}">${m.labels[0] ? `<img loading="lazy" src="${esc(m.labels[0].small)}" alt="">` : ''}</span>${esc(m.year || '?')}<br>${esc(countryName(m.country))}</button>`).join('');
+    const picked = state.selected === p;
+    return `<section class="sleeve" data-sleeve="${i}">
+      <h2>${esc(g.rep.label || 'Label not recorded')}, ${esc(g.rep.year || 'year not recorded')}${groups.length > 1 ? ` <span class="quiet" style="font-size:.6em">sleeve ${i + 1} of ${groups.length}</span>` : ''}</h2>
+      <p class="span">${esc(span)}</p>
+      <div class="spread">${sides}</div>
+      <p class="src">Shown: ${esc(caption(p))}${p.catno ? ` · <span class="mono">${esc(p.catno)}</span>` : ''} · images from the Cover Art Archive</p>
+      ${g.members.length > 1 ? `<p class="discs-h">${g.members.length} pressings with this sleeve</p><div class="discs">${discs}</div>` : ''}
+      ${picked ? `<div class="pdetail"><div>${pressingFacts(album, p)}</div><div>${findBlock(album, p)}</div></div>` : ''}
+    </section>`;
+  }).join('') + (noFront ? `<p class="wall-note">${noFront} more pressing${noFront === 1 ? '' : 's'} here without a photo of the front, so no sleeve to put them under.</p>` : '');
+}
+
+function pressingFacts(album, p) {
+  const colour = p.colour
+    ? `<span class="swatch" style="background:${SWATCH[p.colour] ?? 'var(--surface-2)'}"></span>${esc(p.colour)} <span class="quiet">— as written in MusicBrainz</span>`
+    : '<span class="quiet">Not recorded</span>';
+  return `<p class="ptitle">${esc(p.label || 'Label not recorded')} · ${esc(p.year || '—')}</p>
+    <p class="psub">${esc(countryName(p.country))}${p.note ? ` · ${esc(p.note)}` : ''}</p>
+    ${storyBlock(album, p)}
+    <dl>
+      <dt>Catalogue no.</dt><dd class="mono">${esc(p.catno) || '<span class="quiet">not recorded</span>'}</dd>
+      <dt>Barcode</dt><dd class="mono">${esc(p.barcode) || '<span class="quiet">none on record</span>'}</dd>
+      <dt>Format</dt><dd>${esc(p.format)}</dd>
+      <dt>Vinyl</dt><dd>${colour}</dd>
+      <dt>Released</dt><dd>${esc(p.date || '—')}</dd>
+    </dl>`;
+}
+
+function findBlock(album, p) {
+  const q = encodeURIComponent(`${album.artist} ${album.title} ${p.catno || ''}`.trim());
+  return `<h3 style="margin-top:0">Find this pressing</h3>
+    <div class="buy">
+      <a href="https://www.discogs.com/search/?q=${q}&type=release">Discogs Marketplace <small>catalogue no.</small></a>
+      <a href="https://www.ebay.com/sch/i.html?_nkw=${q}">eBay <small>catalogue no.</small></a>
+    </div>
+    <p class="verdict">Shops list records by catalogue number. A reissue can carry the same number with a different sleeve or label — compare the photos before you buy.</p>
+    <p class="src"><a href="https://musicbrainz.org/release/${p.id}">This pressing at MusicBrainz</a></p>`;
+}
+
+/** Full-size view of one pressing: the largest thumbnail, the original one click away. */
+function renderBox() {
+  const box = document.getElementById('lightbox');
+  const b = state.box;
+  const p = b && DATA[state.album].pressings.find(x => x.id === b.id);
+  if (!p) { box.hidden = true; box.innerHTML = ''; document.body.style.overflow = ''; return; }
+  const sides = sidesOf(p);
+  const cur = sides.find(v => v[0] === b.view && v[3]) ?? sides.find(v => v[3]);
+  box.hidden = false;
+  document.body.style.overflow = 'hidden';
+  box.innerHTML = `<div class="top"><span>${esc(caption(p))}${p.catno ? ` · ${esc(p.catno)}` : ''} — ${esc(cur[1])}</span><button data-boxclose aria-label="Close">×</button></div>
+    <div class="stage"><img src="${esc(cur[4] || cur[3])}" data-fallback="${esc(cur[4] ? cur[3] : (cur[5] ?? ''))}" alt="${esc(cur[1])}"></div>
+    <div class="tabs">${sides.map(v => `<button data-boxview="${v[0]}" data-box="${p.id}" ${v[3] ? '' : 'disabled'} aria-pressed="${v === cur}">${esc(v[1])}</button>`).join('')}
+      ${cur[5] ? `<a href="${esc(cur[5])}" style="align-self:center;font-size:13px;margin-left:6px">Original file</a>` : ''}</div>`;
+}
+addEventListener('keydown', e => {
+  if (!state.box) return;
+  if (e.key === 'Escape') { state.box = null; renderBox(); return; }
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  const p = DATA[state.album].pressings.find(x => x.id === state.box.id);
+  const keys = sidesOf(p).filter(v => v[3]).map(v => v[0]);
+  const i = keys.indexOf(state.box.view);
+  state.box.view = keys[(i + (e.key === 'ArrowRight' ? 1 : keys.length - 1)) % keys.length];
+  renderBox();
+});
 
 /**
  * The story of the album's sleeve (no pressing) or the caption of one sleeve.
@@ -348,12 +523,16 @@ let storyTimer = null;
 function scheduleStoryRender(ms) {
   clearTimeout(storyTimer);
   // Only the sidebar: redrawing the wall would reload its images.
-  storyTimer = setTimeout(() => { const a = DATA[state.album]; renderAside(a, fold(a.pressings)); }, Math.min(ms + 30, 500));
+  storyTimer = setTimeout(() => {
+    const a = DATA[state.album];
+    // The sleeves layout shows the pressing's story inline; its images come from the browser cache.
+    if (state.layout === 'sleeves') render(); else renderAside(a, fold(a.pressings));
+  }, Math.min(ms + 30, 500));
 }
 
-function renderAside(album, allGroups) {
+function renderAside(album, allGroups, albumOnly = false) {
   const aside = document.getElementById('aside');
-  const p = state.selected;
+  const p = albumOnly ? null : state.selected;
   const narrow = matchMedia('(max-width: 1023px)').matches;
   aside.classList.toggle('sheet', !!p && narrow);
   if (!p) {
@@ -362,7 +541,7 @@ function renderAside(album, allGroups) {
     const coloured = album.pressings.filter(p => p.colour).length;
     aside.innerHTML = `<h3>This album</h3>
       <p>Pressings here run from ${years[0]} to ${years.at(-1)}, on ${labels.size} labels, in ${new Set(album.pressings.map(p => p.country).filter(Boolean)).size} countries.${coloured ? ` ${coloured === 1 ? 'One names' : `${coloured} name`} a coloured record.` : ''}</p>
-      <p>Pick a sleeve to see the pressing it belongs to — front, back and label — its catalogue number and where to find a copy.</p>
+      <p>${albumOnly ? 'Pick a pressing by its label to see its back, its labels, its catalogue number and where to find a copy.' : 'Pick a sleeve to see the pressing it belongs to — front, back and label — its catalogue number and where to find a copy.'}</p>
       ${storyBlock(album, null)}
       <p class="src"><a href="https://musicbrainz.org/release-group/${album.id}">This album at MusicBrainz</a> — where these records come from, and where they can be corrected.</p>`;
     return;
@@ -413,10 +592,18 @@ function renderAside(album, allGroups) {
 }
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-country],[data-side],[data-id],[data-view],[data-close],[data-album],[data-fold],[data-live],[data-mode]');
+  const t = e.target.closest('[data-country],[data-side],[data-id],[data-view],[data-close],[data-album],[data-fold],[data-live],[data-mode],[data-layout],[data-pick],[data-box],[data-boxclose],#lightbox');
   if (!t) return;
   const album = DATA[state.album];
-  if (t.dataset.fold) { state.fold = +t.dataset.fold; state.selected = null; renderMock(); }
+  if (t.id === 'lightbox') { if (e.target === t || e.target.classList.contains('stage')) { state.box = null; renderBox(); } return; }
+  if (t.dataset.boxclose !== undefined) { state.box = null; renderBox(); return; }
+  if (t.dataset.box) { state.box = { id: t.dataset.box, view: t.dataset.boxview }; renderBox(); return; }
+  if (t.dataset.layout) { state.layout = t.dataset.layout; state.selected = null; renderMock(); }
+  else if (t.dataset.pick) {
+    const p = album.pressings.find(x => x.id === t.dataset.pick) ?? null;
+    state.selected = state.selected === p ? null : p;
+  }
+  else if (t.dataset.fold) { state.fold = +t.dataset.fold; state.selected = null; renderMock(); }
   else if (t.dataset.mode) { state.storyMode = t.dataset.mode; state.storyStart = performance.now(); renderMock(); }
   else if (t.dataset.live !== undefined) { state.live = !state.live; state.storyStart = performance.now(); renderMock(); }
   else if (t.dataset.album !== undefined) { state.album = +t.dataset.album; state.storyStart = performance.now(); state.country = 'all'; state.selected = null; state.view = 'front'; renderMock(); }
@@ -451,6 +638,13 @@ function renderMock() {
     bar.append(b);
   }
   bar.append(sep2, live);
+  const sep4 = document.createElement('span'); sep4.className = 'sep'; sep4.textContent = '· layout:';
+  bar.append(sep4);
+  for (const [layout, label] of [['sleeves', 'sleeves in detail'], ['wall', 'wall (29 Sep)']]) {
+    const b = document.createElement('button');
+    b.dataset.layout = layout; b.textContent = label; b.setAttribute('aria-pressed', String(state.layout === layout));
+    bar.append(b);
+  }
   const sep3 = document.createElement('span'); sep3.className = 'sep'; sep3.textContent = '· story:';
   bar.append(sep3);
   for (const [mode, label] of [['wikipedia', 'Wikipedia text'], ['claude', 'Claude summary']]) {
@@ -476,7 +670,7 @@ addEventListener('error', e => {
     img.dataset.base ??= img.src;
     setTimeout(() => { img.src = `${img.dataset.base}?retry=${n + 1}`; }, 2000 * (n + 1));
   }
-  else img.closest('.tile, .big')?.classList.add('failed');
+  else img.closest('.tile, .big, .pic')?.classList.add('failed');
 }, true);
 </script>
 </body>

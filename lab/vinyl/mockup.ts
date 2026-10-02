@@ -87,7 +87,7 @@ interface Image { types: string[]; comment?: string; thumbnails: Record<string, 
 interface LabelInfo { 'catalog-number'?: string | null; label?: { name: string } | null }
 type FullRelease = MbRelease & { barcode?: string | null; 'label-info'?: LabelInfo[]; status?: string };
 
-const thumb = (img: Image | undefined, size: '250' | '500') =>
+const thumb = (img: Image | undefined, size: '250' | '500' | '1200') =>
   img ? (img.thumbnails[size] ?? img.thumbnails.large ?? img.thumbnails.small ?? img.image).replace(/^http:/, 'https:') : null;
 
 const full = (img: Image | undefined) => img ? img.image.replace(/^http:/, 'https:') : null;
@@ -134,9 +134,9 @@ async function main() {
         // The wall shows the local copy that the signature was made from: archive.org
         // is slow and drops requests, and the fronts are what a visitor sees first.
         front: frontThumb && existsSync(thumbFile(frontThumb)) ? `thumbs/${basename(thumbFile(frontThumb))}` : frontThumb,
-        frontLarge: thumb(front, '500'), frontFull: full(front),
-        back: thumb(back, '250'), backLarge: thumb(back, '500'), backFull: full(back),
-        labels: labels.slice(0, 2).map(l => ({ small: thumb(l, '250'), large: thumb(l, '500'), full: full(l) })),
+        frontLarge: thumb(front, '500'), frontXL: thumb(front, '1200'), frontFull: full(front),
+        back: thumb(back, '250'), backLarge: thumb(back, '500'), backXL: thumb(back, '1200'), backFull: full(back),
+        labels: labels.slice(0, 2).map(l => ({ small: thumb(l, '250'), large: thumb(l, '500'), xl: thumb(l, '1200'), full: full(l) })),
         ...(frontThumb ? await signatureOf(frontThumb) : { hash: null, contrast: null }),
       });
     }
