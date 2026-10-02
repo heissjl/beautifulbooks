@@ -150,6 +150,16 @@ describe('SITE_CARD', () => {
   });
 });
 
+describe('jsonLdHtml', () => {
+  it('lets no value close the script element or open a tag', async () => {
+    const { jsonLdHtml } = await import('../seo');
+    const hostile = { name: 'Frankenstein</script><script>alert(1)</script>', note: 'a & b <!-- c', sep: 'x\u2028y\u2029z' };
+    const html = jsonLdHtml(hostile);
+    expect(html).not.toMatch(/[<>&\u2028\u2029]/);
+    expect(JSON.parse(html)).toEqual(hostile);
+  });
+});
+
 describe('userAgent', () => {
   it('names the site without a space and gives the deployed address', async () => {
     const { SITE_NAME, userAgent } = await import('../seo');

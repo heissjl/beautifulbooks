@@ -50,6 +50,24 @@ export function userAgent(siteUrl: string = SITE_URL): string {
   return `${SITE_NAME.replace(/\s+/g, '')}/0.1 (${local ? SITE_REPOSITORY : siteUrl})`;
 }
 
+/**
+ * JSON for a `<script type="application/ld+json">`. `JSON.stringify` leaves
+ * `<` alone, and the HTML parser ends a script element at the first
+ * `</script>` whatever the JSON says — so a title that contains one would
+ * run as markup. Titles and descriptions come from Open Library, which
+ * anyone with an account can edit, and from Google Books: not typed by a
+ * visitor here, but not ours either (docs/sicherheit-2026-10-02.md, ROADMAP
+ * 2.8). The escapes are valid JSON and read back as the same characters.
+ */
+export function jsonLdHtml(value: unknown): string {
+  return JSON.stringify(value)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
+
 export function authorLine(authors: readonly string[]): string {
   const [first, second, ...rest] = authors;
   if (!first) return '';
