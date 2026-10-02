@@ -374,7 +374,40 @@ Julian, 2026-10-02: „push it now even though it has a different vercel name rn
 
 **Was jetzt schief steht, bis die Domain da ist:** die Seite heißt „Other Covers" und wohnt unter `beautifulcovers.vercel.app`. Canonical, Sitemap und der User-Agent gegenüber den Katalogen nennen weiter diese Adresse (`NEXT_PUBLIC_SITE_URL` ist unverändert) — das ist richtig so, solange es die Domain nicht gibt. Der Umschalttag aus §14 schrumpft auf: kaufen, in Vercel zuweisen, DNS, `NEXT_PUBLIC_SITE_URL` setzen, **neu deployen** (die Variable wirkt zur Bauzeit), einmal ansehen, Sitemap neu einreichen, Konten.
 
-## 17. Umentschieden: „Buy Its Covers" (2026-10-02, abends)
+## 17. Namen aus „judge a book by its cover" (2026-10-02)
+
+Julian, 2026-10-02 abends, nachdem der INWX-Korb mit `othercovers` stand (§14) und noch nicht bezahlt war: „what about names derived from judge a book by its cover". §7 hatte zwei davon (`bytheircovers.com`, `judgedbyitscover.com`), §8 vier vergebene (`byitscover`, `bythecover`, `judgethecover`, `judgebythecover`). Jetzt 50 Formen über Vercels Domain-Abfrage, die freien `.com` dazu per `whois` bei Verisign gegengeprüft („No match") und mit Preis (alle **11,25 / 11,25 USD**, keiner mit Aufschlag); GitHub-Name je `github.com/<name>`, 404 = frei.
+
+**Frei als `.com`**
+
+| Domain | GitHub | Anmerkung |
+|---|---|---|
+| **byitscovers.com** | frei | **wörtlich der Untertitel der Seite** („Judge a book *by its covers*."), mit dem Plural als Pointe. Haken: die Einzahl `byitscover.com` ist seit 2015 vergeben (keine Seite, §8) — wer das s vergisst, landet bei jemand anderem; gesprochen klingt „its" wie „it's". `.org` `.net` `.app` frei |
+| **bytheircovers.com** | frei | „judge books by their covers"; anders als oben ist die Einzahl `bytheircover.com` **frei** und als Vertipper-Fang zu haben. `.org` `.app` frei |
+| judgebycovers.com | frei | die Aufforderung als Imperativ; Einzahl `judgebycover.com` seit 2019 vergeben |
+| judgecovers.com | frei | kurz, aber liest sich wie ein Wettbewerb („Cover bewerten") — näher an `/versus` als an der Wand |
+| judgethecovers.com | frei | dasselbe mit Artikel; `judgethecover.com` vergeben |
+| judgetwice.com | frei | Witz: dasselbe Buch, ein zweites Urteil. Sagt ohne den Satz im Kopf nichts über Bücher; `.app` frei |
+| youmayjudge.com, goaheadjudge.com, judgefreely.com | – / frei / – | die Erlaubnis als Name; ohne „book" oder „cover" nicht zu verorten |
+| judgedbyitscovers.com, judgeabookbyitscovers.com, booksbytheircovers.com, bookbyitscovers.com, judgeabookby.com | – | ausgeschrieben, 17–25 Buchstaben |
+| bycovers.com, itscovers.com | frei | Bruchstücke; ohne den Satz davor bedeutungslos |
+| judgeacover.com, judgeitscovers.com, judgebooks.com, judgethebooks.com | – | frei, nichts gewonnen gegenüber den obigen |
+
+**Vergeben als `.com`:** judgeabook, judgethebook, judgebycover (2019), judgeitscover, judgingcovers, coverjudge, coverjudging, judgeagain, rejudged, pleasejudge, dojudge, judgeaway, judgeall, bookbyitscover, abookbyitscover, judgeabookbyitscover (2005), itscover (2010), bycover (2021), judgeby.
+
+**`.de`:** Vercel meldete `judgebycovers.de`, `bytheircovers.de`, `byitscovers.de` als frei — laut §5 führt Vercel `.de` nicht, also **ungeprüft**; vor einem Kauf bei DENIC nachsehen.
+
+**Nicht geprüft:** Markenregister und Konten für jeden dieser Namen (für „Other Covers" erledigt, §10, §12).
+
+**Einschätzung.** Der stärkste ist `byitscovers.com`: Name und Untertitel wären derselbe Satz, und die Pointe — *covers*, Mehrzahl — ist genau die Idee der Seite. Der Preis dafür ist die vergebene Einzahl. `bytheircovers.com` hat den Vertipper-Fang frei, verliert aber „a book", das jeder im Ohr hat. Gegenüber `othercovers.com` gewinnen beide Wiedererkennung (jeder kennt den Satz) und verlieren Kürze und die Klarheit beim Hören („by its covers" muss man buchstabieren, „other covers" nicht). Wird es einer davon, braucht die Seite einen neuen Untertitel, denn der jetzige wiederholte dann nur den Namen. **Entscheidung bei Julian; der INWX-Korb mit `othercovers` wartet unbezahlt** — für einen anderen Namen wäre er zu leeren und neu zu füllen.
+
+**Mock-up „By Its Covers", 2026-10-02** (Julian: „make a small mockup for byitscovers"). Im echten Code auf dem Branch `claude/mockup-byitscovers` (Worktree `.claude/worktrees/mockup-byitscovers`, Commit `9af7210`), **nicht für `main`, nicht deployt**. Geändert sind drei Dinge: `SITE_NAME` = „By Its Covers"; der Untertitel auf Startseite und Karte heißt jetzt **„Same book. *Other covers.*"** statt „Judge a book *by its covers.*" (der hätte nur den Namen wiederholt, und so lebt der bisherige Name als Untertitel weiter); der Alt-Text der Karte entsprechend. Reitertitel einer Buchseite: „The covers of Frankenstein; or, The Modern Prometheus by Mary Shelley · By Its Covers". `tsc` sauber, die Tests zu Name und SEO (19) grün. Angesehen am Dev-Server per Headless-Chrome mit Geräte-Emulation bei 1280 × 800 und 390 × 844: Startseite und Buchseite *Frankenstein*, `innerWidth` gleich `scrollWidth` auf allen vier, dazu `/opengraph-image` (200, 49 KB). Bilder lokal unter `docs/tests/2026-10-02-byitscovers-*.png`.
+
+Befund am Bild: in der kursiven Xanh stehen „I" und „t" eng, „Its" bleibt aber als Wort lesbar und wird nicht zu „It's"; die Wortmarke ist mit drei kurzen Wörtern etwa so breit wie „Other Covers". Am Telefon passt der neue Untertitel in eine Zeile.
+
+**Screenshots „Buy Its Covers", 2026-10-02** (Julian: „mock up mit buyitscovers.com und tagline judge a book buy its covers — i only need screenshots, no full mockup"). `buyitscovers.com` ist **frei** (Vercel-Abfrage und Verisign „No match"), die Einzahl `buyitscover.com` seit 2013 vergeben. Nur Bilder, kein Commit: im Mock-up-Worktree kurz `SITE_NAME` = „Buy Its Covers" und der Untertitel „Judge a book *buy its covers.*" gesetzt, Startseite bei 1280 × 800 und 390 × 844 und die Karte aufgenommen (`docs/tests/2026-10-02-buyitscovers-*.png`, lokal), danach zurückgesetzt. Was gegen den Namen spricht, steht schon in §7 unter „Frei, aber nicht zu nehmen": ein Name mit *buy* verspricht einen Laden, und die Seite verkauft nichts, sie verlinkt auf Shops (`shopbycover.com`, `buybycover.com` sind aus diesem Grund gestrichen). Der Witz dagegen funktioniert nur geschrieben, denn gesprochen ist „buy its covers" nicht von „by its covers" zu unterscheiden; wer den Namen gehört hat, tippt `byitscovers.com`, und das ist frei.
+
+## 18. Umentschieden: „Buy Its Covers" (2026-10-02, abends)
 
 Julian, 2026-10-02: „ok, we're switching the name to buyitscovers(.com) — go through the project again to alter all necessary parts. make the tagline read 'Judge a book, buy its covers'".
 
