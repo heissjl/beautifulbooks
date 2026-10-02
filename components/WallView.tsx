@@ -48,6 +48,8 @@ export default function WallView({ initial }: { initial: PublicWall }) {
     }
   }
 
+  // Logged out on this page: the tools go with the ID.
+  const editable = canEdit && !!me.visitor;
   const others = me.walls.filter((w) => w.id !== wall.id);
 
   return (
@@ -56,7 +58,7 @@ export default function WallView({ initial }: { initial: PublicWall }) {
         A collection is a try until its owner saves it (5.13j): tries expire by
         themselves, so six random covers someone looked at once do not pile up.
       */}
-      {canEdit && wall.unsaved && (
+      {editable && wall.unsaved && (
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-card border border-accent/50 bg-surface p-4" role="status">
           <p className="text-sm text-ink-2">
             <strong className="font-medium text-ink">Not saved yet.</strong> Collections nobody keeps are deleted after {UNSAVED_HOURS / 24} days.
@@ -69,8 +71,9 @@ export default function WallView({ initial }: { initial: PublicWall }) {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <h1 className="font-display text-3xl leading-tight text-ink sm:text-4xl">{wall.title}</h1>
         <div className="flex flex-wrap gap-2">
-          {canEdit && (
-            <Link href={editHref(wall.id)} className="rounded-full bg-accent px-4 py-1 text-sm text-on-accent transition-opacity hover:opacity-90">
+          {/* Into Arrange, not Add covers: the wall is what one came from (Julian, 2026-09-29). An empty collection still opens on Add covers below. */}
+          {editable && (
+            <Link href={editHref(wall.id, { mode: 'arrange' })} className="rounded-full bg-accent px-4 py-1 text-sm text-on-accent transition-opacity hover:opacity-90">
               Edit collection
             </Link>
           )}
@@ -88,13 +91,13 @@ export default function WallView({ initial }: { initial: PublicWall }) {
 
       <p className="mt-3 text-sm text-ink-3" role="status">
         {wall.tiles.length === 0 ? 'No covers yet.' : `${wall.tiles.length} ${wall.tiles.length === 1 ? 'cover' : 'covers'}.`}
-        {canEdit && ' Yours.'}
+        {editable && ' Yours.'}
         {note && <span className="ml-2 text-ink-2">{note}</span>}
       </p>
 
       {wall.tiles.length === 0 ? (
         <p className="mt-8 text-sm text-ink-2">
-          {canEdit ? (
+          {editable ? (
             <Link href={editHref(wall.id)} className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
               Add covers in the editor
             </Link>
@@ -118,8 +121,8 @@ export default function WallView({ initial }: { initial: PublicWall }) {
         </ul>
       )}
 
-      {canEdit && <Showcase wall={wall} onSend={send} />}
-      {!canEdit && wall.showcase === 'shown' && <Report id={wall.id} />}
+      {editable && <Showcase wall={wall} onSend={send} />}
+      {!editable && wall.showcase === 'shown' && <Report id={wall.id} />}
 
       {others.length > 0 && (
         <nav className="mt-12" aria-label="Your other collections">

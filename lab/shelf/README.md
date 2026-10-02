@@ -39,6 +39,10 @@ Aus dem Hauptordner selbst: `set -a; source .env.local; set +a; npx tsx lab/shel
 - **Ausschnitt-Vergleich mit einem idealen „Foto"** (ein Open-Library-Scan in einen grauen Rahmen geklebt, Kasten exakt): Gatsby Abstand 2 unter 7 Covern, *Beloved* Abstand 0 unter 52 — der Weg Ausschnitt → Signatur → Cover funktioniert. Über echte Fotos (Perspektive, Glanz, Regalkante) sagt das **nichts**; die Schwelle 14 ist gesetzt, nicht gemessen.
 - Geprüft im Browser-Pane: Beispielmodus, Entfernen, Neu-Suchen („Animal Farm Orwell" → 12 Treffer, ersetzt), anderes Cover (Gatsby: 7 auf Seite 0), Link erzeugen, geteilte Wand aus dem Link (11 Titel von Open Library nachgeladen). Bei 375 px: drei Kacheln je Reihe à 104 px, keine waagrechte Verschiebung.
 
+## Gemessen an zwei echten Fotos (2026-09-30)
+
+Julians Galeriewand (rund neunzig Rücken) und ein Brett mit 22 Romanen, lokal durch den Code der Website (`lib/recognize.ts`, derselbe Prompt): Sonnet liest 19–20 von 22 bzw. 58; Haiku erfindet Bücher; die Kästen des Modells treffen in einer Reihe x, nie y; die Zeit geht in die Suchen nacheinander. Zahlen, Bilder und der Vorschlag (Reihen statt Kästen, Strom, Umschlag → Ausgabe) in [docs/plans/PLAN-5.11a-regalfoto-zuverlaessig.md](../../docs/plans/PLAN-5.11a-regalfoto-zuverlaessig.md). Die Schwelle Hamming ≤ 14 ist weiter ungemessen: beide Fotos zeigen Rücken.
+
 ## Was noch fehlt — die eigentliche Messung
 
 - **`ANTHROPIC_API_KEY` in die `.env.local` des Hauptordners** (Julian). Ohne ihn ist die Erkennung ungetestet: das Modell hat noch kein Foto gesehen.

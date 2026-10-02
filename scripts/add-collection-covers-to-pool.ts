@@ -41,7 +41,7 @@ const POOL_FILE = join(ROOT, 'data', 'versus-pool.json');
 const MEASURES_FILE = join(ROOT, 'data', 'cover-measures.json');
 const SUFFIX = '-collections';
 /** Left out on Julian's word: author portraits, edition suhrkamp, the Library of America („national library"), and since 2026-09-30 the Suhrkamp BasisBibliothek („entferne die suhrkamp basisbibliothek aus dem spiel"). */
-const LEFT_OUT = ['suhrkamp-taschenbuch-author-portraits', 'edition-suhrkamp', 'library-of-america', 'suhrkamp-basisbibliothek'];
+const LEFT_OUT = ['suhrkamp-taschenbuch-author-portraits', 'edition-suhrkamp', 'library-of-america', 'suhrkamp-basisbibliothek', 'rowohlts-monographien'];
 const CONCURRENCY = 4;
 const TIMEOUT_MS = 40_000;
 
