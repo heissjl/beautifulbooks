@@ -123,7 +123,7 @@ export default function WallView({ initial }: { initial: PublicWall }) {
 
       {others.length > 0 && (
         <nav className="mt-12" aria-label="Your other collections">
-          <h2 className="kicker">Your other collections</h2>
+          <h2 className="text-xl leading-snug text-ink">Your other collections</h2>
           <ul className="mt-2 flex flex-wrap gap-2">
             {others.map((w) => (
               <li key={w.id}>

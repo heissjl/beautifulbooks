@@ -72,10 +72,10 @@ export function progressLabel(covers: number, merged: Pick<MergedWork, 'checked'
   const n = `${covers} cover${covers === 1 ? '' : 's'}`;
   const checked = merged.checked.toLocaleString('en');
   const total = merged.total.toLocaleString('en');
-  if (!merged.done) return `${n} · ${checked} of ${total} editions checked`;
+  if (!merged.done) return `${n} from ${checked} of ${total} editions checked`;
   const reason: Record<Exclude<Truncation, null>, string> = {
-    cap: `${n} · first ${checked} of ${total} editions checked`,
-    error: `${n} · ${checked} of ${total} editions checked, the source stopped answering`,
+    cap: `${n} from the first ${checked} of ${total} editions`,
+    error: `${n} from ${checked} of ${total} editions; the source stopped answering`,
   };
   if (merged.truncated) return reason[merged.truncated];
   return `${n} from ${total} edition${merged.total === 1 ? '' : 's'}`;

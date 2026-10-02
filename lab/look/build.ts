@@ -81,7 +81,7 @@ function page(look: Look, scheme: Scheme, ps: Printing[], imgs: Map<number, stri
       <p class="author">F. Scott Fitzgerald</p>
       <p class="meta">${meta}</p>
       <div class="tabs">${today ? '<span class="kicker">251 covers</span>' : ''}${tabs}</div>
-      <p class="decade"><a>${today ? 'See these covers by decade' : 'The same covers by decade'}${arrow}</a></p>
+      <p class="decade"><a>See these covers by decade${arrow}</a></p>
       <div class="wall">${tiles}</div>
     </div>
     <aside class="side">
@@ -131,7 +131,7 @@ const ARROWS: Array<[string, string, string]> = [
   ['Collections … See all →', 'die Überschrift „Collections" selbst ist der Link; „See all" fällt weg', 'CollectionsShelf.tsx:34'],
   ['/collections: „76 books →" und Kachel „All 76 →" — zwei Links zum selben Ziel', 'der Titel ist der Link, „76 books" grau ohne Link; die letzte Kachel „70 more" ohne Pfeil', 'collections/page.tsx:61, CollectionGrid.tsx:72'],
   ['all of them →', '„All collections by readers"', 'collections/page.tsx:74'],
-  ['See these covers by decade →', '„The same covers by decade"', 'DecadeLink.tsx:46'],
+  ['See these covers by decade →', 'Wortlaut bleibt, nur ohne Pfeil, dafür unterstrichen (Julian, 2026-10-02) — umgesetzt', 'DecadeLink.tsx:46'],
   ['More by Ray Bradbury →', 'ohne Pfeil', 'AuthorWorks.tsx:72'],
   ['12 covers →', '„12 covers"', 'ReaderWallCard.tsx:19'],
 ];
@@ -207,9 +207,9 @@ body[data-mode="light"] .mode.dark, body[data-mode="dark"] .mode.light { display
 .pill { border:1px solid var(--line); border-radius:999px; padding:3px 11px; font-size:13px; color:var(--ink-2); }
 .pill b { font-weight:400; color:var(--ink-3); margin-left:3px; }
 .pill.on { background:var(--select); border-color:var(--select); color:var(--on-select); } .pill.on b { color:inherit; opacity:.75; }
-.tab { font-size:14px; color:var(--ink-2); padding:2px 8px 4px; margin-right:4px; border-bottom:2px solid transparent; }
-.tab small { color:var(--ink-3); font-size:12px; margin-left:2px; }
-.tab.on { color:var(--ink); background:var(--select); color:var(--on-select); border-radius:2px; } .tab.on small { color:inherit; opacity:.8; }
+.tab { display:inline-flex; align-items:center; gap:4px; font-size:14px; line-height:20px; color:var(--ink-2); padding:4px 8px; margin-right:4px; border-radius:3px; }
+.tab small { color:var(--ink-3); font-size:12px; }
+.tab.on { background:var(--select); color:var(--on-select); } .tab.on small { color:inherit; opacity:.8; }
 .decade { font-size:13px; margin:12px 0 14px; } .site a { color:var(--accent); text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; }
 .wall { display:grid; grid-template-columns:repeat(6, 1fr); gap:14px 12px; align-items:end; }
 .tile { margin:0; } .tile img { width:100%; display:block; box-shadow:0 1px 2px rgba(0,0,0,.18), 0 10px 22px -14px rgba(0,0,0,.45); }

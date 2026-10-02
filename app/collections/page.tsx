@@ -58,7 +58,7 @@ export default async function CollectionsPage() {
                     {!c.published && <span className="ml-3 align-middle text-xs text-accent">draft</span>}
                   </h2>
                   <p className="text-sm text-ink-3">
-                    {c.works.length} {c.works.length === 1 ? 'book' : 'books'} <span aria-hidden="true">&rarr;</span>
+                    {c.works.length} {c.works.length === 1 ? 'book' : 'books'}
                   </p>
                 </div>
                 <p className="mt-3 line-clamp-2 max-w-2xl text-sm text-ink-2">{c.intro}</p>
@@ -71,7 +71,7 @@ export default async function CollectionsPage() {
           <section className="mt-16" aria-labelledby="by-readers">
             <div className="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line pb-2">
               <h2 id="by-readers" className="font-display text-2xl text-ink">Collections by readers</h2>
-              <Link href="/collections/readers" className="text-sm text-ink-3 hover:text-accent">all of them &rarr;</Link>
+              <Link href="/collections/readers" className="text-sm text-ink-2 underline decoration-line underline-offset-4 hover:text-accent hover:decoration-accent">All collections by readers</Link>
             </div>
             <ul className="mt-6 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
               {popular.slice(0, 2).map(({ wall }) => (

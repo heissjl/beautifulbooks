@@ -69,7 +69,7 @@ export default function CollectionGrid({ slug, title, works, total }: { slug: st
             </div>
             <div className="absolute inset-0 flex items-center justify-center bg-black/45 transition-colors group-hover:bg-black/35">
               <span className="max-w-[92%] whitespace-nowrap rounded-full bg-bg/90 px-[0.75em] py-[0.35em] text-[clamp(9px,10cqw,13px)] font-medium leading-tight text-ink shadow">
-                All {total} <span aria-hidden="true">&rarr;</span>
+                All {total}
               </span>
             </div>
           </Link>

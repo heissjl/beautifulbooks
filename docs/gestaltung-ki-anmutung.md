@@ -107,7 +107,7 @@ Julian zu den Punkten 3, 4 und 7: „zeig beispiele und mach einen vorschlag", z
 
 ### Pfeile (Punkt 4)
 
-**Regel:** kein Pfeil hinter Text. Pfeile bleiben, wo sie eine Richtung meinen („← Home", Tastenhilfe im Spiel, Verschiebeknöpfe). Acht Stellen; die wichtigste: auf `/collections` führen „76 books →" und die Kachel „All 76 →" zum selben Ziel — **der Titel wird der Link, „76 books" grau ohne Link, die letzte Kachel heißt „70 more"**. Auf der Startseite wird die Überschrift „Collections" selbst zum Link, „See all →" fällt weg.
+**Regel:** kein Pfeil hinter Text. Pfeile bleiben, wo sie eine Richtung meinen („← Home", Tastenhilfe im Spiel, Verschiebeknöpfe). Acht Stellen; die wichtigste: auf `/collections` führen „76 books →" und die Kachel „All 76 →" zum selben Ziel — **der Titel wird der Link, „76 books" grau ohne Link, die letzte Kachel heißt „70 more"**. Auf der Startseite wird die Überschrift „Collections" selbst zum Link, „See all →" fällt weg. **„See these covers by decade" behält seinen Wortlaut**, verliert nur den Pfeil und bekommt die Unterstreichung (Julian, 2026-10-02: „hier fand ich das vorher besser, aber bitte ohne pfeil"); umgesetzt in `components/DecadeLink.tsx`.
 
 ### Mittelpunkte und Slogan (Punkt 7)
 
@@ -124,3 +124,7 @@ Julian zu den Punkten 3, 4 und 7: „zeig beispiele und mach einen vorschlag", z
 ### Farbe (Punkt 1)
 
 Drei Fassungen neben *Heute* und *Heutige Farben, neue Form*: **Galerie** (kein Akzent, kühles Papier — am strengsten), **Edelmann-Gelb** (Reihe Hanser: Gelb als Fläche für Suchknopf, gewählte Sprache und ersten Laden, Schrift schwarz), **Penguin-Orange** (Band über der Seite, Orange als Fläche, Links dunkles Orange `#a84400`). Jede besteht WCAG AA hell und dunkel (Tabellen im Mockup). Gelb und Penguin-Orange gehen nur als Fläche mit Tinte darauf; als Linktext auf hellem Grund fallen sie durch. Die Fassung *Heutige Farben, neue Form* zeigt, wie viel Punkt 3, 4 und 7 allein ausmachen — wer nur die Form ändert, ändert schon viel.
+
+## Umgesetzt (2026-10-02)
+
+Julian wählte „Heutige Farben, neue Form" — mit senkrecht mittiger Schrift in den Sprachreitern. Gebaut als **ROADMAP 6.84**; Einzelheiten im Archiv, Messung in der Historie. Offen bleiben die Farbe (Galerie, Edelmann-Gelb, Penguin-Orange), der Hero (Punkt 2), die About-Seite (4.12, Bedingung für den Shop-Modus) und die Gleichförmigkeit der Kacheln (Punkt 6).

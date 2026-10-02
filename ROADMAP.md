@@ -744,6 +744,8 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 ### Erledigt in Phase 6
 
+- [x] **6.84 Die neue Form: keine gesperrten Etiketten, keine Pfeile, keine Mittelpunkt-Zeilen, kein Slogan.** Erledigt 2026-10-02 (Julian zum Mockup `lab/look/`, Fassung „Heutige Farben, neue Form": „stell darauf um, aber schau dass die sprachbuttons die schrift vertikal mittig haben"). Sprachreiter als Wörter, der gewählte mit Tinte gefüllt, Schrift gemessen mittig (bei 2×: 19 px über, 21 px unter dem Versal); `.kicker` in normaler Schreibung, fünf Etiketten gestrichen, vier zu Serifenüberschriften; Pfeile hinter Links weg; Angaben als Sätze oder „Verlag, Jahr (Sprache)"; Ladenknöpfe „Amazon by ISBN". **Die Farben bleiben**; die Farbwahl ist weiter offen (Ideenblock). „See these covers by decade" behält seinen Wortlaut (Julian). → [Befund](docs/gestaltung-ki-anmutung.md) · [Historie](docs/history.md#2026-10-02--die-neue-form-roadmap-684) · [Archiv](docs/roadmap-archive.md#684)
+
 - [x] **6.83 WorldCat nach ISBN statt nach Titel.** Erledigt 2026-10-02 (Julian: „ok", zum Vergleich mit whichedition.com). Hat der Druck eine ISBN, fragt der WorldCat-Link `q=bn:<ISBN-13>` und trifft diese Ausgabe; ohne ISBN bleibt die Suche nach Titel, Autor, Verlag und Jahr. **Nicht von Claude im Browser geprüft:** WorldCat antwortete am 2026-10-02 schon auf die erste Anfrage mit Cloudflare 1015 (Rate Limit) — Julian klickt einmal an einem Druck mit ISBN. → [Historie](docs/history.md#2026-10-02--worldcat-nach-isbn-und-der-provisionshinweis-roadmap-683-411) · [Archiv](docs/roadmap-archive.md#683)
 
 - [x] **6.1 Gleichnamige Ableitungen und Sekundärliteratur nach hinten.** Erledigt 2026-09-08: vier Regeln statt einer, `SAME_TITLE_EDITION_RATIO` = 30 abgelesen (Fenster 17–65); über 15 Suchen 7 verbessert, 8 unverändert, keine verschlechtert. Offen bleibt der fremdsprachige Haupttitel (`crime and punishment`), dieselbe Wurzel wie 6.13/6.15. → [Historie](docs/history.md#2026-09-08--vier-regeln-gegen-gleichnamige-ableitungen-roadmap-61) · [Archiv](docs/roadmap-archive.md#61)
@@ -1158,7 +1160,7 @@ Julian: „can you identify the most derivative claude-prototypical stuff on our
 |---|---|
 | ~~About-Seite in der ersten Person~~ → **4.12**, Bedingung für den Shop-Modus | Julian schreibt, Claude kürzt |
 | **Farbe aus dem Material statt Creme und Terrakotta** (Anthropics eigene Palette) — Mockup 2026-10-02: `lab/look/` | Julian wählt, Claude baut |
-| **Etiketten, Pfeile, Mittelpunkt-Zeilen und Slogan** — Vorschläge mit Beispielen 2026-10-02 in [docs/gestaltung-ki-anmutung.md](docs/gestaltung-ki-anmutung.md#vorschläge-2026-10-02), im Mockup `lab/look/` | Julian wählt, Claude baut |
+| ~~Etiketten, Pfeile, Mittelpunkt-Zeilen und Slogan~~ → **6.84, umgesetzt 2026-10-02** | — |
 | **Hero durch ein echtes Bild ersetzen** (Wand, heutiges Cover, Regalfoto); kein Kursiv-Akzent | Julian entscheidet |
 | ~~Sammlungen zeichnen mit „chosen by Julian"~~ — **abgelehnt** (Julian, 2026-10-02: „so etwas will ich nicht") | — |
 

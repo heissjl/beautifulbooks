@@ -286,7 +286,7 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
       )}
       {correction?.applied && <CorrectionLine correction={correction} language={language} />}
       <p className="kicker mb-5">
-        {works.length} {works.length === 1 ? 'book' : 'books'} · {totalEditions.toLocaleString('en')} editions
+        {works.length} {works.length === 1 ? 'book' : 'books'}, {totalEditions.toLocaleString('en')} editions
       </p>
       <div className={GRID}>{main.map(card)}</div>
       {/*
@@ -355,7 +355,7 @@ function AuthorResults({ result, typed, origin }: { result: AuthorSearchResult; 
       {correction?.applied && <CorrectionLine correction={correction} language="" authorName={author.name} />}
       <h2 className="mb-1 text-2xl leading-tight text-ink sm:text-3xl">Books by {author.name}</h2>
       <p className="kicker mb-5">
-        {works.length} {works.length === 1 ? 'book' : 'books'} · {totalEditions.toLocaleString('en')} editions · most printed first
+        {works.length} {works.length === 1 ? 'book' : 'books'} and {totalEditions.toLocaleString('en')} editions, the most printed first.
       </p>
       <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {works.map(work => (
