@@ -72,7 +72,7 @@ Rund zehn Oberflächentexte und viele Sammlungsbeschreibungen tragen Gedankenstr
 
 **Die Sammlungsbeschreibungen.** „Heinz Edelmann designed the first German edition of The Lord of the Rings for Klett in 1969–70…", die Bibliothek der Erinnerung, die Reihe Hanser ab Canettis „Die Stimmen von Marrakesch", die Scans aus einer Privatsammlung. So etwas erfindet kein Modell ohne Vorlage; das ist kuratiert, und es sieht man. Ausbauen:
 
-- **Sammlungen zeichnen:** „chosen by Julian, September 2026", ein Satz, warum diese Reihe.
+- ~~Sammlungen zeichnen mit „chosen by Julian"~~ — abgelehnt (Julian, 2026-10-02: „so etwas will ich nicht").
 - **Eine Auswahl mit Meinung:** je Sammlung oder Buch ein Lieblingscover mit einem Satz Begründung — genau das, was whichedition menschlich macht, ohne Bewertung aller Cover.
 - **Eigene Fotos** von Büchern aus Julians Regal, wo die Rechte es tragen (die Bildfrage aus 5.5 gilt auch hier).
 - **„Zuletzt geändert"** auf About und Sammlungen.
@@ -85,3 +85,42 @@ Rund zehn Oberflächentexte und viele Sammlungsbeschreibungen tragen Gedankenstr
 4. Den Hero durch ein echtes Bild ersetzen.
 
 Punkt 3 kann sofort geschehen; 1, 2 und 4 brauchen Julian.
+
+## Vorschläge (2026-10-02)
+
+Julian zu den Punkten 3, 4 und 7: „zeig beispiele und mach einen vorschlag", zur Farbe: „mach ein mockup". Alles zusammen im Mockup **`lab/look/`** (`npx tsx lab/look/build.ts --embed` → `lab/look/out/look.html`): die Gatsby-Seite in fünf Fassungen, hell und dunkel, darunter die Tabellen mit jeder Stelle im Code. Hier die Regeln und das Wichtigste; die vollständigen Listen stehen in `lab/look/build.ts` (`KICKERS`, `ARROWS`, `DOTS`).
+
+### Etiketten (Punkt 3)
+
+**Regel:** ein Kasten bekommt nur dann eine Beschriftung, wenn er ohne sie unklar wäre — dann als Satz, nicht als Stempel. **Schritt 1:** die Klasse `.kicker` in `app/globals.css` verliert `uppercase` und die Sperrung und wird `text-sm text-ink-2`; das trifft alle 23 Stellen auf einmal. **Schritt 2**, je Stelle:
+
+| Heute | Vorschlag |
+|---|---|
+| 251 COVERS (über den Sprachreitern) | streichen, die Zahl steht in der Zeile unter dem Autor |
+| THIS BOOK | streichen |
+| SELECTED COVER (Telefon) | Verlag und Jahr: „Penguin Books, 2010" |
+| LOOKS LIKE THIS | Serifenüberschrift „Covers that look like this one" |
+| GET THIS PRINTING, OR READ IT IN ANOTHER EDITION, BY OTHER AUTHORS, YOUR OTHER COLLECTIONS | Serifenüberschrift, normale Schreibung |
+| 3 BOOKS · 1,180 EDITIONS | „3 books, 1,180 editions" |
+| WHICH COVER? über „The standings" | streichen |
+| RECENT / POPULAR, SHOP IN, COUNTRY, PICK COVERS … | normale Schreibung, klein |
+
+### Pfeile (Punkt 4)
+
+**Regel:** kein Pfeil hinter Text. Pfeile bleiben, wo sie eine Richtung meinen („← Home", Tastenhilfe im Spiel, Verschiebeknöpfe). Acht Stellen; die wichtigste: auf `/collections` führen „76 books →" und die Kachel „All 76 →" zum selben Ziel — **der Titel wird der Link, „76 books" grau ohne Link, die letzte Kachel heißt „70 more"**. Auf der Startseite wird die Überschrift „Collections" selbst zum Link, „See all →" fällt weg.
+
+### Mittelpunkte und Slogan (Punkt 7)
+
+**Regel:** ganze Sätze, wo es Aussagen sind; Komma und Klammer wie auf einer Katalogkarte, wo es Angaben sind.
+
+| Heute | Vorschlag |
+|---|---|
+| Kopf: „Covers, side by side." | streichen — Logo und Suche genügen, die Startseite sagt im ersten Satz, was die Seite ist |
+| Open Library dates it to 1920 · 251 covers · 1,100 of 1,180 editions checked | 251 covers from 1,100 of 1,180 editions. Open Library dates the book to 1920. |
+| Penguin Books · 2010 · English | Penguin Books, 2010 (English) |
+| AbeBooks · ISBN | AbeBooks by ISBN |
+| About · Beautiful Books (Tab) | bleibt |
+
+### Farbe (Punkt 1)
+
+Drei Fassungen neben *Heute* und *Heutige Farben, neue Form*: **Galerie** (kein Akzent, kühles Papier — am strengsten), **Edelmann-Gelb** (Reihe Hanser: Gelb als Fläche für Suchknopf, gewählte Sprache und ersten Laden, Schrift schwarz), **Penguin-Orange** (Band über der Seite, Orange als Fläche, Links dunkles Orange `#a84400`). Jede besteht WCAG AA hell und dunkel (Tabellen im Mockup). Gelb und Penguin-Orange gehen nur als Fläche mit Tinte darauf; als Linktext auf hellem Grund fallen sie durch. Die Fassung *Heutige Farben, neue Form* zeigt, wie viel Punkt 3, 4 und 7 allein ausmachen — wer nur die Form ändert, ändert schon viel.
