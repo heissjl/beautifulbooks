@@ -160,6 +160,29 @@ Was zu portieren wäre: `foldDuplicateCovers` und `hamming` (die Faltung läuft 
 - **Die Cover:** siehe 4.6, Zeile 5.2.1. Bevor Julian einreicht, sollte die Rechtefrage aus 5.5 eine Antwort haben, die man einem Prüfer in zwei Sätzen schreiben kann.
 - **Der Speicher des Spiels und der Sammlungen** (Redis, Region offen seit 5.8a) steht in den Labels wie im Datenschutztext; die offene Regionsfrage wird mit dem Store nicht leichter.
 
+## 6a. Was eine App für Einnahmen ändert
+
+Julian, 2026-10-02: „What could an app help/change for monetization?" **Kurz: die Menge und die Kosten, nicht die Mechanik.** Jeder Weg aus Phase 4 ist ein Link zu einem Händler, ein von einem Netz gefüllter Platz oder ein Spendenlink, und jeder davon verhält sich in einer Store-App anders — keiner besser.
+
+| Weg (Phase 4) | In der Store-App | Was zu tun wäre |
+|---|---|---|
+| Affiliate-Links (4.1–4.3) | erlaubt: Käufe körperlicher Waren außerhalb der App (3.1.5(a)) | **Amazon verlangt eine eigene Freigabe der mobilen App** (Mobile Application Policy), bevor ein Tag darin erscheint; Bookshop.org und die Awin-Läden kennen keine solche Regel. **Zu messen:** ob der Tag überlebt, wenn ein Amazon-Link die Amazon-App statt Safari öffnet |
+| Der Werbeplatz (4.7, E19) | **überträgt sich nicht**: AdSense verbietet Anzeigen in einem WebView ausdrücklich; die trackingfreien Netze aus dem Plan sind zu fragen, ob ihr Skript in einer App laufen darf; die App-eigene Alternative (AdMob) heißt Tracking-Abfrage und das Ende von N11 | der Platz wird in der App per User-Agent ausgeblendet, oder die App hat keine Anzeigen |
+| Spenden-Knopf (4.9) | **die Falle:** Geld an den Entwickler in der App gilt Apple als digitaler Kauf; ein Link zu Ko-fi oder Liberapay aus der App ist ein klassischer Ablehnungsgrund (3.1.1). Die Ausnahmen gelten für anerkannte gemeinnützige Organisationen und für Geschenke zwischen Nutzern, nicht für den Entwickler | der Spendenlink bleibt Web-only (in der App ausgeblendet), oder er wird ein Trinkgeld über In-App-Kauf mit Apples Anteil |
+| Concierge (5.14b) | gewinnt nichts: Stripe Checkout im Web bietet Apple Pay schon | — |
+| **Digitale Extras über In-App-Kauf** | **das Einzige, was nur eine App kann:** Apple ist Händler, erledigt Zahlung, Umsatzsteuer, Belege und Erstattungen — was eine Privatperson mit Stripe im Web selbst trüge. Preis: Apples Anteil | die Seite hat nichts zu verkaufen: der Wandplan mit Maßen (5.15a) ist ein paar Zeilen, Poster scheitern an Rechten und Bildgröße (5.13g), Sammlungen haben keine bezahlte Stufe |
+
+| | |
+|---|---|
+| Apples Anteil an einem In-App-Kauf | 30 %, 15 % im Small Business Program |
+| Developer Program | 99 USD im Jahr |
+
+**Einnahmen machen die Store-App teurer, nicht billiger.** Am Umschalttag ist Julian Händler im EU-Storefront (§6), und Apple zeigt dann Anschrift und Telefonnummer auf der Store-Seite; „kein Händler" erklären und danach verdienen ist eine falsche Erklärung. Der Umschalttag schaltet also nicht nur die Seite auf `shop`, er erklärt auch die App neu.
+
+**Wo eine App Einnahmen überhaupt bewegen könnte,** ist die Wiederkehr: ein Symbol auf dem Home-Bildschirm bringt Wiederbesuche, und Affiliate-Einnahmen sind linear in den Klicks auf Kauf-Links. Das gilt für die Home-Bildschirm-Web-App (Weg A) genauso wie für die Store-App und kostet nichts; der User-Agent-Zusatz aus §4.1 ließe den Server App-Besuche als Aggregat zählen, ohne Kennung (N11, E14).
+
+**Lesart:** Einnahmen dürfen die App-Entscheidung nicht treiben. Die Roadmap sagt in Phase 4 selbst, dass ein Kauf-Link ohne Besucher nichts bringt; die App ändert diesen Satz nicht.
+
 ## 7. Entscheidungen bei Julian
 
 1. **Weg A bauen?** Empfohlen; kostet nichts als sein iPhone für die Messung A1–A6.
