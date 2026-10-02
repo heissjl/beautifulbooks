@@ -516,6 +516,23 @@ Vorhandene A- oder AAAA-Einträge auf `@` (INWX legt bei manchen Domains eine Pa
 
 **Deployt am 2026-10-02 nachts** (`0bb16b3..65fc975`, Ready nach rund zwei Minuten), einmal angesehen unter `beautifulcovers.vercel.app`: Titel „Buy Its Covers", Überschrift „Judge a book, buy its covers.", Canonical, `og:image`, `robots.txt` und Sitemap nennen `https://buyitscovers.com`. **Bis das DNS steht, zeigen diese Adressen ins Leere** — ein in dieser Zeit geteilter Link bekommt keine Vorschaukarte. Alle sechs Domains antworten im DNS noch mit `185.181.104.242` (INWX' Parkseite); genau dieser A-Eintrag ist je Domain durch `76.76.21.21` zu ersetzen.
 
+**DNS bei INWX, angefangen am 2026-10-03 um 00:30 MESZ** (Julian: „beides ja, die alte vercel adresse auch umleiten wenn es geht" und, zu `www` auf den fünf anderen Domains, „mache das auch"; Prompt [prompt-dns-inwx.md](prompt-dns-inwx.md), über Julians Chrome bei angemeldetem INWX-Konto).
+
+*Vorher, bei allen sechs Domains gleich:* `*` A `185.181.104.242`, `@` A `185.181.104.242`, `www` A `185.181.104.242` (je TTL 3600), dazu NS `ns.inwx.de`, `ns2.inwx.de`, `ns3.inwx.eu` und der SOA — sonst nichts, kein AAAA, kein CNAME.
+
+*Erledigt — nur `buyitscovers.com`:* die drei Parkeinträge gelöscht (INWX fragt „Wollen Sie den Eintrag wirklich löschen?" und löscht sofort); angelegt **A `@` → `76.76.21.21`**, **CNAME `www` → `cname.vercel-dns.com`** und **TXT `@` `v=spf1 -all`**, alle TTL 3600. INWX' Liste danach: NS ×3, SOA, A 76.76.21.21, CNAME www, TXT v=spf1 -all. Um 00:36 MESZ direkt bei `ns.inwx.de` gefragt: A `76.76.21.21`, `www` CNAME `cname.vercel-dns.com.`, TXT `"v=spf1 -all"` — gesetzt. Der lokale Resolver nannte für die Domain selbst noch `185.181.104.242` (zwischengespeichert, TTL 3600), für `www` schon Vercel.
+
+*Abgebrochen:* danach hat die automatische Freigabe von Claude Code jede weitere DNS-Änderung gesperrt („DNS / Domain / Cert Changes"). **Offen, also von Julian oder nach seiner Freigabe der Aktion:**
+
+| Domain | löschen | anlegen |
+|---|---|---|
+| buyitscovers.com | — | TXT `_dmarc` `v=DMARC1; p=reject;` · MX `@` Prio 0 Wert `.` (Null-MX; wenn INWX `.` nicht annimmt, weglassen) |
+| buyitscovers.de, byitscovers.com, byitscovers.de, othercovers.com, othercovers.de | `*` A, `@` A, `www` A (alle `185.181.104.242`) | A `@` → `76.76.21.21` · CNAME `www` → `cname.vercel-dns.com` · TXT `@` `v=spf1 -all` · TXT `_dmarc` `v=DMARC1; p=reject;` · MX `@` 0 `.` |
+
+Bei Vercel dazu (ebenfalls gesperrt, nicht angefangen): `www.buyitscovers.de`, `www.byitscovers.com`, `www.byitscovers.de`, `www.othercovers.com`, `www.othercovers.de` als Weiterleitung (308) auf `buyitscovers.com` anlegen — bisher kennt Vercel nur `www.buyitscovers.com` —, und `beautifulcovers.vercel.app` auf `buyitscovers.com` umleiten. **Korrektur zu oben:** Vercel leitet `beautifulcovers.vercel.app` **nicht** von selbst um; die Projektdomains nennen sie am 2026-10-03 ohne Weiterleitung. Ob Vercel eine `*.vercel.app`-Adresse überhaupt als Weiterleitung zulässt, ist nicht geprüft.
+
+Danach, wie im Prompt: je Domain einmal `dig +short A`, `vercel domains inspect` für buyitscovers.com, buyitscovers.de, othercovers.com, und nach dem Zertifikat buyitscovers.com und othercovers.com je einmal im Browser.
+
 ## 21. E-Mail unter der Domain (2026-10-02)
 
 Julian: „what do i need to do to set up emails from that domain". Drei getrennte Fragen, drei getrennte Antworten.
