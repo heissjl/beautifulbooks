@@ -280,7 +280,17 @@ Damit ist die Umbenennung selbst eine Zeile. `npx tsc --noEmit` und ESLint sind 
 
 **Angesehen** auf dem Dev-Server des Worktrees bei 1280 × 800 und 390 × 844 (als Gerät emuliert; `innerWidth` gleich `scrollWidth` auf allen vier Seiten, nichts läuft über): Startseite, Buchseite *Frankenstein* (Reitertitel „The covers of Frankenstein; or, The Modern Prometheus by Mary Shelley · Other Covers"), die Karte der Seite und die Karte des Buchs. Bilder lokal unter `docs/tests/2026-10-02-othercovers-*.png`.
 
-**Ein Befund am Bild: der Wortabstand.** In der schmalen kursiven Xanh liest sich die Wortmarke in der Kopfzeile am Desktop wie **„OtherCovers"** — der Zwischenraum ist kaum breiter als der Abstand zwischen zwei Buchstaben. Am Telefon und auf der Karte ist er zu sehen, aber knapp. Zwei Wege, Julian entscheidet: den Abstand in der Wortmarke weiten (`word-spacing`, eine Zeile), oder es absichtlich als ein Wort setzen, wie die Domain.
+**Ein Befund am Bild: der Wortabstand — behoben am selben Tag.** In der schmalen kursiven Xanh las sich die Wortmarke in der Kopfzeile am Desktop wie **„OtherCovers"**: die Kopfzeile setzte sie mit `tracking-tight` (−0,025em, bei 20 px −0,5 px je Buchstabe), und zwischen den Wörtern blieben 4,1 px. Julian, 2026-10-02: „gib minimal mehr buchstabenabstand". Gemessen an der laufenden Seite bei 1280 px:
+
+| Buchstabenabstand | Breite der Wortmarke | Lücke zwischen den Wörtern |
+|---|---|---|
+| −0,025em (vorher) | 87,0 px | 4,08 px |
+| 0 | 93,0 px | 4,58 px |
+| **+0,01em (gesetzt)** | **95,4 px** | **4,78 px** |
+| +0,02em | 97,8 px | 4,98 px |
+| +0,03em | 100,2 px | 5,17 px |
+
+Gesetzt ist **+0,01em** in `components/SiteHeader.tsx` und derselbe Wert in `Wordmark` (`app/og.tsx`) für die Karten, damit Kopfzeile und Karte gleich aussehen. Die zwei Wörter lesen sich jetzt als zwei, die Wortmarke ist 8 px breiter; am Telefon läuft auf Startseite und Buchseite weiter nichts über (`innerWidth` gleich `scrollWidth`, 390). Alle sechs Bilder sind neu aufgenommen. Der größere Teil der Wirkung kommt vom Wegfall des negativen Abstands, nicht vom Hundertstel darüber — wer es noch lockerer will, nimmt die nächste Zeile der Tabelle.
 
 **Was eine echte Umbenennung noch braucht** — nichts davon ist im Mock-up angefasst:
 

@@ -65,9 +65,13 @@ export function Display({ children, size, color, italic = false, lineHeight = 1.
   );
 }
 
-/** The name as the header sets it: Xanh, italic. */
+/** The name as the header sets it: Xanh, italic, 0.01em of tracking (in px, which the generator is sure to read). */
 export function Wordmark({ size, color }: { size: number; color: string }) {
-  return <Display size={size} color={color} italic>{SITE_NAME}</Display>;
+  return (
+    <div style={{ ...DISPLAY, display: 'flex', fontSize: size, color, lineHeight: 1.1, fontStyle: 'italic', letterSpacing: size * 0.01 }}>
+      {SITE_NAME}
+    </div>
+  );
 }
 
 /**
