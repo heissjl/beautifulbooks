@@ -336,3 +336,19 @@ Julian, 2026-10-02, auf die Liste der sechs Stellen: „bereite das im branch vo
 **Was bleibt, wie es ist:** `package.json` (`beautifulbooks`), Repository, Ordner, Vercel-Projekt, das Cookie `bb_visitor`, die Log-Kennung `bb.`; im Film die Adresse `beautifulcovers.vercel.app` (`SITE_URL_DEFAULT` in `lab/video/storyboard.ts`), bis es die Domain gibt. Offen aus 2.7: eine E-Mail-Adresse im User-Agent, die Open Librarys Limit von 1 auf 3 Anfragen je Sekunde hebt — Julians Entscheidung, weil es seine Adresse ist.
 
 **Wenn es doch ein anderer Name wird:** eine Zeile in `lib/seo.ts`, dazu die Überschriften von Spec und README. Alles andere folgt.
+
+## 15. Im lokalen `main`, nicht gepusht (2026-10-02)
+
+Julian, 2026-10-02: „schreibe das alles in einen prompt den ich einer lokalen session geben kann — dann merge die anderen änderungen mit der umbenennung in main, ohne zu pushen".
+
+**Der Prompt** steht in [prompt-domain-und-konten.md](prompt-domain-und-konten.md): Warenkorb bei INWX mit drei Domains, die Anmeldeseiten der Konten, und die Schritte nach dem Kauf — jede Seite bis genau vor den Schritt, der Julians ist.
+
+**Der Merge.** Zwischen der Vorbereitung und dem Merge hatte das lokale `main` sechs neue Commits einer anderen Sitzung bekommen (6.83, 6.84, 4.11, 4.12, zwei Dokumente, dazu deren Merge von `origin/main`). Sie sind zuerst in den Branch eingearbeitet worden; ein Konflikt in `docs/history.md` — derselbe Block stand an zwei Stellen, weil beide Sitzungen denselben früheren Konflikt verschieden herum gelöst hatten; die Reihenfolge von `main` gilt. Danach geprüft: `npx tsc --noEmit` und ESLint sauber, **1.003 von 1.003 Tests**, `next build` läuft durch, Startseite und Buchseite am Dev-Server bei 1280 × 800 und 390 × 844 (die neue Form aus 6.84 mit der Wortmarke „Other Covers", nichts läuft über). Dann `main` per Fast-Forward auf den Branch gezogen.
+
+**Was das heißt — bitte wissen, bevor irgendeine Sitzung `main` pusht:**
+
+- Das lokale `main` liegt weit vor `origin/main` und trägt jetzt **die Umbenennung zusammen mit allem, was dort schon wartete** (6.82, 6.65, 6.71, 6.78, 6.80, 6.77, die Kauflinks, 6.83, 6.84, 4.11, 4.12).
+- **Der nächste Push von `main` benennt die laufende Seite um** — auch wenn er wegen etwas anderem geschieht, und auch wenn die Domain dann noch nicht gekauft ist. Die Seite hieße „Other Covers" unter `beautifulcovers.vercel.app`. Schaden entsteht dadurch keiner, aber es ist eine Entscheidung und kein Nebeneffekt; in CLAUDE.md steht die Regel dazu.
+- Die richtige Reihenfolge bleibt die aus §14: Domain kaufen, in Vercel zuweisen, `NEXT_PUBLIC_SITE_URL` setzen, **dann** pushen.
+
+**Zurück, falls der Name doch ein anderer wird:** eine Zeile in `lib/seo.ts` (`SITE_NAME`), dazu die Überschriften von Spec und README.

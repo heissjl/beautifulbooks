@@ -20,9 +20,9 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3
  * The name of the site, in one place (ROADMAP 0.5): the header, the title
  * template, the share cards and the mail sender all read it from here.
  * Never write the name out anywhere else — a test walks `app/`, `components/`
- * and `lib/` for it. The rename to "Other Covers" is prepared on its branch
- * (docs/domain-recherche.md §13–14) and reaches production only when Julian
- * merges it; until then production says the old name.
+ * and `lib/` for it. The site was "Beautiful Books" until 2026-10-02
+ * (docs/domain-recherche.md §13–15); production keeps the old name until the
+ * commit that carries this line is pushed.
  */
 export const SITE_NAME = 'Other Covers';
 
