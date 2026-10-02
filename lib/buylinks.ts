@@ -216,7 +216,7 @@ export function titleSearchLinksFor(
   return RETAILERS[market].flatMap(r => {
     if (!r.searchUrl) return [];
     const affiliate = commerce && r.affiliateEnv ? env[r.affiliateEnv] || undefined : undefined;
-    return [{ provider: `${r.id}-title`, label: r.label, url: r.searchUrl(query, affiliate), kind: 'search' as const }];
+    return [{ provider: `${r.id}-title`, label: r.label, url: r.searchUrl(query, affiliate), kind: 'search' as const, ...(affiliate ? { affiliate: true } : {}) }];
   });
 }
 
@@ -233,8 +233,30 @@ export function buyLinksFor(edition: Pick<Edition, 'isbn13'>, market: Market = D
       label: r.label,
       url: r.url(isbn13, affiliate),
       kind: r.kind ? r.kind(isbn13, affiliate) : 'search',
+      ...(affiliate ? { affiliate: true } : {}),
     };
   });
+}
+
+/**
+ * The sentence under the shop links in shop mode (ROADMAP 4.11, prepared for
+ * the day E20 switches to `shop`).
+ *
+ * Read off the links actually shown, not off the mode: a market without a
+ * programme, or a printing whose only links are searches without an id,
+ * earns nothing and must not say it does. Amazon's operating agreement asks
+ * for its own sentence in so many words, so that one is added verbatim
+ * whenever an Amazon link carries a tag (docs/vergleich-whichedition.md).
+ * The order clause is true because the order follows the ISBN (SPEC 2.4).
+ */
+export const COMMISSION_NOTE = 'Some of these links earn this site a small commission if you buy through them, at no cost to you. It does not change their order.';
+export const AMAZON_ASSOCIATE_NOTE = 'As an Amazon Associate I earn from qualifying purchases.';
+
+export function commissionNote(links: ReadonlyArray<Pick<BuyLink, 'provider' | 'affiliate'>>): string | undefined {
+  const earning = links.filter(l => l.affiliate);
+  if (earning.length === 0) return undefined;
+  const amazon = earning.some(l => l.provider.replace(/-(title|search)$/, '') === 'amazon');
+  return amazon ? `${COMMISSION_NOTE} ${AMAZON_ASSOCIATE_NOTE}` : COMMISSION_NOTE;
 }
 
 /**
@@ -258,6 +280,12 @@ export interface SearchLinkInput {
   coverUrl?: string;
   /** Open Library edition id (`ol:OL123M`) for the provenance link. */
   editionId?: string;
+  /**
+   * The printing's ISBN. When there is one, WorldCat is asked for that number
+   * (`bn:`) rather than for title, publisher and year, which lists every
+   * printing a library holds (ROADMAP 6.83).
+   */
+  isbn13?: string;
 }
 
 /**
@@ -331,7 +359,7 @@ export function searchLinksFor(input: SearchLinkInput, market: Market = DEFAULT_
     out.push({ provider: 'tineye', label: 'TinEye', url: `https://tineye.com/search?url=${q(input.coverUrl)}` });
   }
 
-  out.push({ provider: 'worldcat', label: 'WorldCat', url: `https://search.worldcat.org/search?q=${q(terms)}` });
+  out.push({ provider: 'worldcat', label: 'WorldCat', url: `https://search.worldcat.org/search?q=${input.isbn13 ? `bn:${input.isbn13}` : q(terms)}` });
   if (input.editionId?.startsWith('ol:')) {
     out.push({ provider: 'openlibrary', label: 'Open Library', url: `https://openlibrary.org/books/${input.editionId.slice(3)}` });
   }

@@ -33,7 +33,7 @@ import { buildWall, captionFor, progressLabel } from '@/components/workWall';
 import { leadCover } from '@/lib/scene';
 import { isbnRuns } from '@/lib/isbnformat';
 import { useOverflowsX } from '@/components/useOverflowsX';
-import { searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
+import { commissionNote, searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
@@ -839,7 +839,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
             workTitle={workTitle}
             author={author}
             otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
-            searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
+            searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id, isbn13: shown.isbn13 }, market)}
             anyEditionLinks={anyEditionLinks}
             market={market}
             onMarketChange={onMarketChange}
@@ -910,6 +910,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
   ];
   const rows = details.filter(([, v]) => v);
   const moreLinks = plan.rest.length;
+  const commission = commissionNote([...plan.lead, ...plan.rest, ...plan.anyEdition]);
   // In hobby mode the availability probe is off (E20), so the fold holds links only.
   const hasFold = moreLinks > 0 || (commerceEnabled() && !!edition.isbn13);
   const hasInfo = !!edition.previewUrl || rows.length > 0 || !!edition.description;
@@ -959,6 +960,13 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
           is the same line `lib/verdicts.ts` holds one level up.
         */}
         {plan.note && <p className="mt-2 text-xs leading-relaxed text-ink-3">{plan.note}</p>}
+        {/*
+          Shop mode only, and only when a link shown here carries an id
+          (ROADMAP 4.11): under the first row, not on the About page alone,
+          because that is where the reader decides to click. Hobby mode
+          builds no affiliate links, so it never appears there (E20).
+        */}
+        {commission && <p className="mt-2 text-xs leading-relaxed text-ink-3">{commission}</p>}
       </div>
 
       {afterLead}
