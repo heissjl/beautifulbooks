@@ -37,16 +37,12 @@ export const VERDICT_LEAD: Record<VerdictStatus, string> = {
 
 /** What each state means, for the About page's list. */
 export const VERDICT_MEANING: Record<VerdictStatus, string> = {
-  verified: 'The registered image matches the cover you picked, so a new copy should look like it.',
-  differs:
-    'The ISBN is right, but the printing you would receive probably looks like something else. The image is shown beside the note, and the search links move to the front so you can hunt the cover you actually chose.',
-  uncompared:
-    'One of the two pictures could not be fetched, so the site did not compare them — and says so rather than guessing either way. The publisher’s image is shown beside the note so you can compare them yourself.',
-  unknown:
-    'Common for older printings. It says nothing about whether a shop has the book, only that no image is filed under that number.',
-  pending: 'The lookup is still running. It takes a second, and until it answers the page says nothing else.',
-  unavailable:
-    'Google Books was asked and stayed silent, which it does often enough to matter. Trying again later usually works, and the page says so rather than reporting the silence as "nothing known".',
+  verified: 'A new copy should look like the cover you picked.',
+  differs: 'A new copy probably looks different. The publisher’s image is shown, and searches for your cover move to the front.',
+  uncompared: 'One of the two pictures could not be loaded, so the site shows the publisher’s image and lets you compare.',
+  unknown: 'Common for older printings. It says nothing about whether a shop has the book.',
+  pending: 'The lookup is still running; it takes a second.',
+  unavailable: 'Google Books did not answer. Trying again later usually works.',
 };
 
 /** Every state, in the order the About page lists them. */
