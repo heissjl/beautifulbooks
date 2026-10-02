@@ -9,7 +9,7 @@ import { SITE_NAME } from '../seo';
  * This walks the website's own folders; lab/ and scripts/ are not the site.
  */
 const ROOT = path.resolve(__dirname, '../..');
-const NAMES = [SITE_NAME, 'Beautiful Books'];
+const NAMES = [SITE_NAME, 'Beautiful Books', 'Other Covers'];
 
 function sources(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {

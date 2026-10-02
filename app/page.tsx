@@ -73,7 +73,7 @@ export default async function Home({ searchParams }: HomeProps) {
               {isHero && (
                 <div className="mb-8 max-w-2xl">
                   <h1 className="text-4xl leading-[1.1] text-ink sm:text-5xl">
-                    Judge a book <em className="text-accent">by its covers.</em>
+                    Judge a book, <em className="text-accent">buy its covers.</em>
                   </h1>
                   <p className="mt-4 max-w-xl text-base text-ink-2 sm:text-lg">
                     Type a title and see the covers it has been printed with, by language and year.

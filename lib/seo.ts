@@ -20,11 +20,11 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3
  * The name of the site, in one place (ROADMAP 0.5): the header, the title
  * template, the share cards and the mail sender all read it from here.
  * Never write the name out anywhere else — a test walks `app/`, `components/`
- * and `lib/` for it. The site was "Beautiful Books" until 2026-10-02
- * (docs/domain-recherche.md §13–16) and still lives at
- * beautifulcovers.vercel.app until the domain is bought and connected.
+ * and `lib/` for it. The site was "Beautiful Books" until 2026-10-02 and
+ * "Other Covers" for one afternoon (docs/domain-recherche.md §13–17); it
+ * lives at beautifulcovers.vercel.app until buyitscovers.com is connected.
  */
-export const SITE_NAME = 'Other Covers';
+export const SITE_NAME = 'Buy Its Covers';
 
 /** The public repository; the contact of last resort in `userAgent`. */
 export const SITE_REPOSITORY = 'https://github.com/heissjl/beautifulbooks';
@@ -33,12 +33,12 @@ export const SITE_CARD = {
   url: `${SITE_URL}/opengraph-image`,
   width: 1200,
   height: 630,
-  alt: `${SITE_NAME}: judge a book by its covers`,
+  alt: `${SITE_NAME}: judge a book, buy its covers`,
 };
 
 /** "George Orwell", or "Mary Shelley and 2 others" when a record lists many. */
 /**
- * How the site names itself to a catalogue: "OtherCovers/0.1 (<where to find
+ * How the site names itself to a catalogue: "BuyItsCovers/0.1 (<where to find
  * us>)". The address is the site itself once it is deployed — its imprint
  * carries the contact — and the public repository from a script or a dev
  * server, where the site's address is localhost and tells Open Library

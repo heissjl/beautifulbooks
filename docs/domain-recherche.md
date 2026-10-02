@@ -373,3 +373,36 @@ Julian, 2026-10-02: „push it now even though it has a different vercel name rn
 **Mit demselben Push online gegangen**, weil es im lokalen `main` wartete: 6.82, 6.65, 6.71/6.43, 6.78, 6.80, 6.77, die beiden Kauflink-Commits, 6.83, 6.84, 4.11, 4.12. Ob davon etwas in Produktion eigens anzusehen ist, wissen die Sitzungen, die es gebaut haben; hier ist nur der Name geprüft.
 
 **Was jetzt schief steht, bis die Domain da ist:** die Seite heißt „Other Covers" und wohnt unter `beautifulcovers.vercel.app`. Canonical, Sitemap und der User-Agent gegenüber den Katalogen nennen weiter diese Adresse (`NEXT_PUBLIC_SITE_URL` ist unverändert) — das ist richtig so, solange es die Domain nicht gibt. Der Umschalttag aus §14 schrumpft auf: kaufen, in Vercel zuweisen, DNS, `NEXT_PUBLIC_SITE_URL` setzen, **neu deployen** (die Variable wirkt zur Bauzeit), einmal ansehen, Sitemap neu einreichen, Konten.
+
+## 17. Umentschieden: „Buy Its Covers" (2026-10-02, abends)
+
+Julian, 2026-10-02: „ok, we're switching the name to buyitscovers(.com) — go through the project again to alter all necessary parts. make the tagline read 'Judge a book, buy its covers'".
+
+**Der Name** setzt das Sprichwort fort, mit dem die Seite seit dem ersten Tag beginnt: aus „judge a book by its covers" wird „Judge a book, **buy** its covers" — ein Buchstabe, und der Satz sagt, was die Seite tut: ansehen, dann kaufen. Er trägt das Wort „cover" (§11: die Zeile im Suchergebnis), ist als `.com` frei und hat keine Nebenbedeutung aus der Musik.
+
+**Verfügbarkeit am 2026-10-02 abends** (Vercels Registry-Abfrage, `whois`, DENIC):
+
+| Domain | Stand |
+|---|---|
+| **buyitscovers.com** | frei („No match" bei Verisign) |
+| buyitscovers.de | frei (DENIC) |
+| buyitscovers.net / .org / .co / .app | frei |
+| buyitscover.com (Einzahl) | **vergeben seit 2013** — den Vertipper-Fang gibt es für diesen Namen nicht |
+| GitHub `buyitscovers` | frei (404) |
+
+**Nicht geprüft für den neuen Namen:** die Markenregister (§10 galt „Other Covers"), die Konten (§12 ebenso) und INWX' Preis (die Listenpreise von §14 — 14,60 € für `.com`, 5,02 € für `.de` — gelten, solange der Name kein Premium-Aufschlag ist). Der Prompt für die lokale Sitzung ([prompt-domain-und-konten.md](prompt-domain-und-konten.md)) ist umgeschrieben; **der Warenkorb mit den `othercovers`-Domains ist hinfällig** und muss bei INWX geleert oder einfach stehen gelassen werden.
+
+**Was im Projekt geändert ist:**
+
+| Was | Vorher | Jetzt |
+|---|---|---|
+| `SITE_NAME` (`lib/seo.ts`) — Kopfzeile, Titelvorlage, Karten, Absender, User-Agent (`BuyItsCovers/0.1`) | Other Covers | **Buy Its Covers** |
+| Überschrift der Startseite (`app/page.tsx`) | Judge a book *by its covers.* | Judge a book, *buy its covers.* |
+| Karte der Seite (`app/opengraph-image.tsx`) und ihr Alt-Text | dasselbe | dasselbe |
+| Spec (Titel, §1 Kernwert, §5 Name, Seitenliste), README, CLAUDE.md, `docs/identitaet.md` | | umgeschrieben |
+| `lab/palette/build.ts`, Kommentar in `lib/hotornot/rating.ts` | | die Zeile |
+| `lib/__tests__/sitename.test.ts` | | weist jetzt auch „Other Covers" als Kopie zurück |
+
+**Gemessen am Dev-Server** (Buchseite *Frankenstein*, 390 × 844, Gerät emuliert): die Kopfzeile trägt Home (16–82 px), die Wortmarke mit Marke (98–231 px, 133 px breit; „Other Covers" hatte 95 px für den Schriftzug allein, „Buy Its Covers" 108), das Suchsymbol (265–297) und Share (305–374) — 34 px Luft vor dem Suchsymbol, nichts beschnitten, `innerWidth` gleich `scrollWidth`. Bei 1280 × 800 dasselbe mit dem vollen Suchfeld. Startseite, Buchseite und Karte angesehen (`docs/tests/2026-10-02-buyitscovers-*.png`): die Überschrift bricht am Telefon nach dem Komma um, „buy its covers." steht kursiv in Akzentfarbe in der zweiten Zeile, auf der Karte ebenso.
+
+Unverändert: `package.json`, Repository, Ordner, Vercel-Projekt, Cookie `bb_visitor`, Log-Kennung `bb.` — wie bei jeder Umbenennung (§13). Die Film-Schlusskarte (`lab/video`) liest den Namen aus der Konstante; ihre Adresse bleibt `beautifulcovers.vercel.app`, bis es die Domain gibt.

@@ -46,8 +46,8 @@ export default async function Image() {
         >
           <Wordmark size={40} color={OG.paperInk} />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Display size={76} color={OG.paperInk} lineHeight={1.05}>Judge a book</Display>
-            <Display size={76} color={OG.accent} lineHeight={1.05} italic>by its covers.</Display>
+            <Display size={76} color={OG.paperInk} lineHeight={1.05}>Judge a book,</Display>
+            <Display size={76} color={OG.accent} lineHeight={1.05} italic>buy its covers.</Display>
           </div>
         </div>
         <div

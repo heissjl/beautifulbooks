@@ -61,7 +61,7 @@ Julian: „nimm Xanh Mono für Überschrift und Texte, aber Jost für Pillen, in
 
 **Wortabstand:** Xanh Mono hat feste Breiten, ein Leerzeichen ist so breit wie ein Buchstabe. In der Überschrift `word-spacing: -0.3em` (bei 48 px also 14,4 px weniger). Im Fließtext bleibt der Abstand, dort liest er sich wie auf dem Bon.
 
-**Wortmarke** heißt der Name der Seite als Schriftzug oben links in der Kopfzeile („Beautiful Books", seit der Umbenennung von ROADMAP 0.5 „Other Covers"; der Link zur Startseite). Im Mockup ist sie Xanh Mono kursiv — als Name gilt sie weder als Satz noch als Etikett, sondern als Logo. Julian entscheidet, ob das so bleibt.
+**Wortmarke** heißt der Name der Seite als Schriftzug oben links in der Kopfzeile („Beautiful Books", seit der Umbenennung von ROADMAP 0.5 am 2026-10-02 „Buy Its Covers"; der Link zur Startseite). Im Mockup ist sie Xanh Mono kursiv — als Name gilt sie weder als Satz noch als Etikett, sondern als Logo. Julian entscheidet, ob das so bleibt.
 
 **Gemessen:** bei 390 × 844 kein seitliches Scrollen; der Buchtitel *Frankenstein* läuft über zwei Zeilen (76 px, wie mit Fraunces — Xanh Mono ist schmal genug, die dritte Zeile kam von den Versalien); die Wortmarke in einer Zeile; der Platzhalter des Suchfelds braucht in Jost 181 von 356 px. Umgesetzt ist das nur lokal (CSS unter `html[data-font="xanh"]` in `app/globals.css`, nicht committet), und die Auswahl der Fließtexte hängt dort an Klassen (`leading-relaxed`, `max-w-xl`) — beim echten Einbau bekommt jede Stelle die Schrift ausdrücklich.
 
@@ -161,7 +161,7 @@ Julian, 2026-09-28: „[die Schrift im OG-Bild] gehe das an. Außerdem ob wir ei
 **Gebaut:**
 
 - **Schrift:** Titel Xanh Mono, Autor und „One cover of" Jost, der Name kursiv in Xanh Mono. Statische WOFF-Dateien in `assets/og/` (je 8–16 KB, OFL-Lizenzen daneben), eingelesen in `app/og.tsx`; der Build nimmt sie in alle drei Kartenfunktionen auf (in den `.nft.json` geprüft). `word-spacing` übergeht der Generator, darum setzt `Display` jedes Wort als eigenes Kästchen, mit dem Rest-Abstand der Seite (0,2 em statt der vollen Zeichenbreite von 0,5 em).
-- **Website-Karte** `app/opengraph-image.tsx`: links der Name und „Judge a book *by its covers.*", rechts eine Wand aus 9 × 7 Kacheln im Format 2:3 in sieben Tönen der Seite, zum Text hin blasser, eine Kachel in Terrakotta vergrößert — Richtung A der Bildmarke. Statisch gebaut, fragt keine Quelle.
+- **Website-Karte** `app/opengraph-image.tsx`: links der Name und „Judge a book, *buy its covers.*" (bis 2026-10-02 „Judge a book *by its covers.*"), rechts eine Wand aus 9 × 7 Kacheln im Format 2:3 in sieben Tönen der Seite, zum Text hin blasser, eine Kachel in Terrakotta vergrößert — Richtung A der Bildmarke. Statisch gebaut, fragt keine Quelle.
 
 **Nicht gebaut, als Vergleich gerendert:** dieselbe Karte mit dem Lade-Mosaik von Mary Shelley (ihr Porträt aus 179 Covern ihrer Bücher) auf der rechten Hälfte. Befund: in 600 × 630 und im Hochformat-Ausschnitt ist das Gesicht **kaum zu erkennen**, es liest sich als bunte Fläche aus Covern. Dazu die Rechtefrage: eine Karte für die ganze Seite zeigt kein bestimmtes Buch, also trägt sie das Argument der Wand nicht (§2.1), sie steht rechtlich neben dem Logo. Mit gemeinfreien Covern (§2.2) ginge es; dafür fehlt der Korpus.
 
