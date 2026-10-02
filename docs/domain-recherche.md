@@ -74,7 +74,7 @@ Julian, 2026-10-01: „research availability of names and domains for the projec
 - **Preise:** Vercels Preisabfrage, USD je Jahr, Kauf / Verlängerung. Abgefragt für 22 freie `.com` — alle **11,25 / 11,25**, keiner mit Aufschlag — und für die Ausweich-Endungen. Für die übrigen freien `.com` ist der Preis **nicht** abgefragt.
 - **Wer den Namen schon benutzt:** die vergebene Domain aufgerufen, dazu je eine Websuche nach dem Namen und ein Blick auf den GitHub-Namen (`github.com/<name>`, 404 = frei).
 - **Markenregister:** am 2026-10-01 nicht geprüft; **für „Other Covers" am 2026-10-02 nachgeholt, siehe [§10](#10-markenregister-für-other-covers-2026-10-02)**. Für jeden anderen Namen steht das noch aus.
-- **Nicht geprüft:** Instagram, X und andere Konten, außer wo unten genannt.
+- **Konten:** am 2026-10-01 nur GitHub und ein Zufallsfund bei Instagram; **für „othercovers" am 2026-10-02 auf siebzehn Plattformen nachgeholt, siehe [§12](#12-konten-für-othercovers-2026-10-02)**.
 
 ## 6. Julians vier Namen
 
@@ -173,7 +173,7 @@ Frei und oben nicht einzeln besprochen: thatedition, manycovers, samebookdiffere
 
 **Die griechische Spur aus Teil A** (`kalloscovers.com`, `kallos.ink`) bleibt gültig für den Fall, dass der Name nicht beschreiben, sondern klingen soll. Für den US-Markt zuerst (E9) trägt ein Name, den man beim ersten Hören schreiben kann, weiter.
 
-**Nicht gekauft.** Offen vor dem Kauf: (1) ~~der gewählte Name in USPTO, EUIPO und DPMA~~ — für „Other Covers" erledigt (§10), für jeden anderen Namen noch zu tun; (2) die Konten, die mit dem Namen gehen sollen; (3) bei `reprinted.com` oder `coverversions.com`, falls doch: den Preis von Hand beim Händler erfragen. Nach dem Kauf gilt ROADMAP 2.2 — `NEXT_PUBLIC_SITE_URL` ändern, neu bauen, Sitemap neu einreichen.
+**Nicht gekauft.** Offen vor dem Kauf: (1) ~~der gewählte Name in USPTO, EUIPO und DPMA~~ — für „Other Covers" erledigt (§10), für jeden anderen Namen noch zu tun; (2) ~~die Konten, die mit dem Namen gehen sollen~~ — für „othercovers" geprüft (§12); (3) bei `reprinted.com` oder `coverversions.com`, falls doch: den Preis von Hand beim Händler erfragen. Nach dem Kauf gilt ROADMAP 2.2 — `NEXT_PUBLIC_SITE_URL` ändern, neu bauen, Sitemap neu einreichen.
 
 ## 10. Markenregister für „Other Covers" (2026-10-02)
 
@@ -217,3 +217,44 @@ Julians Einwand, 2026-10-02: „würde ein user auf dieser seite landen, wenn er
 3. **Beim Weitersagen** — der Weg, über den eine Hobbyseite am Anfang überhaupt Besucher bekommt (Reddit, Newsletter, ein Link unter Freunden), lange bevor Google etwas schickt.
 
 **Folge für die Wahl:** nichts an der Empfehlung ändert sich, aber die Begründung verschiebt sich. `othercovers.com` und `thecoverwall.com` bleiben vorn, weil beide das Wort „cover" tragen; `rejacketed.com` und `firstthus.com` rutschen nach hinten. **Wer über den Namen gefunden werden will, findet keinen** — der Hebel dafür ist 2.5, zwanzig Minuten, Julian.
+
+## 12. Konten für „othercovers" (2026-10-02)
+
+Julian, 2026-10-02: „check noch andere social media accounts für othercovers". Geprüft ist jeweils die öffentliche Profiladresse, **ohne Anmeldung**, neben einem Konto, das es sicher gibt, und einem erfundenen Namen (`othercoversqzx9173`) — nur wo sich der Name von beiden unterscheiden ließ, steht hier ein Urteil. Ein Konto anzulegen hat niemand versucht; „kein Konto" heißt, dass unter der Adresse nichts liegt, nicht, dass die Plattform den Namen auch vergibt (gesperrte und gelöschte Namen sehen von außen genauso aus).
+
+**Belegt**
+
+| Plattform | Was dort ist |
+|---|---|
+| **Instagram** `@othercovers` | „Other Covers — AI designed alternative covers for the records I like", 17 Follower, 4 abonniert, mit Spotify-Playlist. Klein, aber derselbe Name in zwei Wörtern und ebenfalls über Cover |
+| **Threads** | hängt am Instagram-Namen und ist damit ebenfalls vergeben |
+| **YouTube** `@othercovers` | ein Kanal mit **einem** Video von vor 16 Jahren (eine Musikvideo-Vorschau, 5.100 Aufrufe); verwaist |
+| **Tumblr** `othercovers` | ein Blog mit Fan-Covern für Popalben, alle weitergereicht von coverlandia.net; die sichtbaren Beiträge stammen der Musik nach aus 2015/16 |
+| Instagram `@othercover` (Einzahl) | ein leeres Konto, 4 Follower |
+
+**Kein Konto unter dem Namen**
+
+| Plattform | Befund |
+|---|---|
+| **X** `@othercovers` | „this page doesn't exist" (Kontrolle `@penguinbooks` zeigt das Profil) |
+| **TikTok** `@othercovers` | Antwort „Nutzer nicht gefunden" (Code 10221), wie beim erfundenen Namen |
+| **Bluesky** `othercovers.bsky.social` | nicht aufzulösen. **Mit der eigenen Domain heißt das Konto ohnehin `@othercovers.com`** — das kann niemand sonst belegen |
+| **Mastodon** (mastodon.social) | kein Konto |
+| **Facebook** `/othercovers` | „This content isn't available" (Kontrolle zeigt die Seite) — keine öffentliche Seite unter der Adresse |
+| **GitHub** `othercovers` | 404 (seit 2026-10-01 bekannt) |
+| **Substack** `othercovers.substack.com` | 404 |
+| **Medium** `@othercovers` | „Page not found" |
+| **Buy Me a Coffee** `/othercovers` | 404 |
+| **Telegram** `t.me/othercovers` | kein öffentlicher Kanal oder Name |
+| **Vercel** `othercovers.vercel.app` | kein Deployment — anders als bei `beautifulbooks.vercel.app` (ROADMAP 2.2) liegt dort niemand |
+
+**Nicht zu entscheiden**
+
+- **Reddit** (`u/othercovers`, `r/othercovers`): antwortet Automaten mit 403, und der Browser der Sitzung darf die Seite nicht öffnen. Von Hand nachsehen.
+- **Pinterest:** liefert für jeden Namen dieselbe leere Hülle. Von Hand nachsehen.
+- **Ko-fi:** leitet jede Adresse, die ich probiert habe, auf die Startseite; ohne Gegenprobe kein Urteil.
+- **LinkedIn:** nicht geprüft, verlangt eine Anmeldung.
+
+**Was daraus folgt.** Die drei belegten Konten sind klein oder verwaist und haben alle mit **Musik**-Covern zu tun — die Nebenbedeutung von „covers", die §9 schon als Schwäche nennt, zeigt sich hier zum ersten Mal an echten Fällen. Eine Verwechslung mit einer Seite über Buchumschläge ist das nicht, aber Instagram ist für ein Projekt aus Bildern der naheliegendste Kanal, und genau dort ist der Name weg. Auswege, in dieser Reihenfolge: `@othercovers.books`, `@othercoversbooks` oder `@othercovers_com` auf Instagram (nicht geprüft, ob frei); das verwaiste YouTube-Konto lässt sich nicht übernehmen, ist aber für diese Seite auch der unwichtigste Kanal. Frei sind die Kanäle, auf denen über Bücher und Gestaltung geredet wird — X, Bluesky, Mastodon, TikTok —, und der GitHub-Name.
+
+**Wenn die Domain gekauft wird, am selben Tag anlegen** (kostet nichts, und ein freier Name bleibt es nicht von selbst): X, TikTok, Bluesky mit der Domain als Name, GitHub. Das ist Julians Schritt — Konten legt Claude nicht an.
