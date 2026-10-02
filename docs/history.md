@@ -3922,3 +3922,7 @@ Julian zu den Sammlungskarten: „das ist schon recht groß, nach dem Deploy sol
 
 **Ergebnis im Build:** Sammlungskarten 53 KB (*SF Masterworks – rounded corners*, eine Reihe) bis 139 KB (*SF Masterworks – the relaunch*), vorher 352 KB bis 1,15 MB; *Feminist Press* 106 KB. Am Dev-Server: Werk-Karte *Frankenstein* 108 KB, Cover-Karte 50 KB, die Website-Karte als Ersatz einer unbekannten Sammlung 35 KB (JPEG, weil die Route JPEG deklariert). Die Website-Karte selbst bleibt PNG, 53 KB — Flächen und Schrift, die JPEG verschmieren würde. Die Schrift unter der Wand bleibt im JPEG scharf (vergrößert angesehen).
 
+
+**Cover-Spiel: die Rowohlts Monographien gehen raus, 2026-10-01.** Julian: „nimm die rororo konterfei serie aus dem cover-spiel“ — gemeint sind die Rowohlts Monographien mit ihren eingefärbten Porträtfotos.
+- `rowohlts-monographien` steht in `LEFT_OUT` von `scripts/add-collection-covers-to-pool.ts`, neben den Suhrkamp-Autorenporträts, edition suhrkamp, Library of America und der BasisBibliothek.
+- Neu gebaut aus demselben Online-Stand wie am 30.9. (`COLLECTIONS_FILE`): genau die 128 Umschläge der Reihe sind weg, keiner kam dazu. Der Vorrat `mix-2000-paperwhite-collections` hat jetzt **4884 Umschläge** aus 42 Sammlungen; die Stimmen zählen weiter.
