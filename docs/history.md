@@ -4112,3 +4112,7 @@ Julian fragte nach Cybersecurity, Bots und Sicherungen. Gelesen: alle 31 Routen,
 
 Am Abend desselben Tages, an dem „Other Covers“ online ging: Julian, „we're switching the name to buyitscovers(.com) … make the tagline read 'Judge a book, buy its covers'“. Eine Zeile in `lib/seo.ts`, die Überschrift auf Startseite und Karte, Spec, README, CLAUDE.md, der Prompt für die Domain-Sitzung. `buyitscovers.com` und `.de` sind frei, die Einzahl seit 2013 vergeben; Markenregister und Konten für den neuen Namen nicht geprüft. Geprüft wie bei der ersten Umbenennung: Tests, Build, Startseite und Buchseite bei 1280 × 800 und 390 × 844 — die Wortmarke ist mit drei Wörtern breiter, die Messung steht in [domain-recherche.md](domain-recherche.md) §18.
 
+## 2026-10-02 · Sechs Domains gekauft, bei Vercel angelegt, die Seite geht als „Buy Its Covers“ online (ROADMAP 0.5, 2.2)
+
+Julian kaufte bei INWX `buyitscovers.com`/`.de`, `byitscovers.com`/`.de`, `othercovers.com`/`.de`. Über den Vercel-Connector: `buyitscovers.com` als Domain des Projekts, die anderen fünf und `www` als 308-Weiterleitung darauf; `NEXT_PUBLIC_SITE_URL` auf `https://buyitscovers.com`. Gepusht wurde der Stand mit dem neuen Namen (`SITE_NAME`, Überschrift „Judge a book, buy its covers.“, JSON-LD-Maskierung 2.8, Sicherheits-Durchsicht). Was fehlt, ist das DNS bei INWX (A `@ → 76.76.21.21` je Domain); bis dahin antwortet nur `beautifulcovers.vercel.app`. Tabelle in [domain-recherche.md](domain-recherche.md) §19.
+

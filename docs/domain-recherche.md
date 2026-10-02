@@ -439,3 +439,32 @@ Julian, 2026-10-02: „ok, we're switching the name to buyitscovers(.com) — go
 **Gemessen am Dev-Server** (Buchseite *Frankenstein*, 390 × 844, Gerät emuliert): die Kopfzeile trägt Home (16–82 px), die Wortmarke mit Marke (98–231 px, 133 px breit; „Other Covers" hatte 95 px für den Schriftzug allein, „Buy Its Covers" 108), das Suchsymbol (265–297) und Share (305–374) — 34 px Luft vor dem Suchsymbol, nichts beschnitten, `innerWidth` gleich `scrollWidth`. Bei 1280 × 800 dasselbe mit dem vollen Suchfeld. Startseite, Buchseite und Karte angesehen (`docs/tests/2026-10-02-buyitscovers-*.png`): die Überschrift bricht am Telefon nach dem Komma um, „buy its covers." steht kursiv in Akzentfarbe in der zweiten Zeile, auf der Karte ebenso.
 
 Unverändert: `package.json`, Repository, Ordner, Vercel-Projekt, Cookie `bb_visitor`, Log-Kennung `bb.` — wie bei jeder Umbenennung (§13). Die Film-Schlusskarte (`lab/video`) liest den Namen aus der Konstante; ihre Adresse bleibt `beautifulcovers.vercel.app`, bis es die Domain gibt.
+
+## 19. Gekauft und bei Vercel angelegt — die DNS-Einträge bei INWX fehlen (2026-10-02, nachts)
+
+Julian, 2026-10-02: „i bought the domains now. can we forward the vercel site to buyitscovers.com? … und wie verbinde ich die domains". Bei INWX stehen auf **OK**: `buyitscovers.com`, `buyitscovers.de`, `byitscovers.com`, `byitscovers.de`, `othercovers.com`, `othercovers.de` (alle bis 03.10.2027), dazu `jheiss.de` und `julianheiss.com` von früher.
+
+**Bei Vercel erledigt (über den Connector, Projekt `beautifulbooks`):**
+
+| Domain | Rolle |
+|---|---|
+| **buyitscovers.com** | die Seite |
+| www.buyitscovers.com, buyitscovers.de, byitscovers.com, byitscovers.de, othercovers.com, othercovers.de | Weiterleitung auf `buyitscovers.com`, Status 308 (dauerhaft, Methode bleibt) |
+
+Vercel meldet alle sieben als „verified" (niemand sonst beansprucht sie), aber **„not configured properly"**, solange das DNS bei INWX nicht gesetzt ist. `NEXT_PUBLIC_SITE_URL` steht in Vercel jetzt auf `https://buyitscovers.com` (Production und Preview); die Variable wirkt zur Bauzeit, deshalb folgt ein Push.
+
+**Bei INWX zu setzen, je Domain** (INWX → Domains → Domain → DNS; Vercel nennt den A-Eintrag in `vercel domains inspect` als „recommended", der Wert ist für alle sechs derselbe):
+
+| Domain | Typ | Name | Wert |
+|---|---|---|---|
+| buyitscovers.com | A | `@` (leer) | `76.76.21.21` |
+| buyitscovers.com | CNAME | `www` | `cname.vercel-dns.com` |
+| buyitscovers.de | A | `@` | `76.76.21.21` |
+| byitscovers.com | A | `@` | `76.76.21.21` |
+| byitscovers.de | A | `@` | `76.76.21.21` |
+| othercovers.com | A | `@` | `76.76.21.21` |
+| othercovers.de | A | `@` | `76.76.21.21` |
+
+Vorhandene A- oder AAAA-Einträge auf `@` (INWX legt bei manchen Domains eine Parkseite an) vorher löschen; sonst nichts anfassen, die Nameserver bleiben bei INWX. Nach dem Setzen prüft Vercel von selbst, stellt das Zertifikat aus (Let's Encrypt, Minuten bis eine Stunde) und schickt eine Mail. Ein CAA-Eintrag ist nicht nötig; **wer einen setzt, muss `letsencrypt.org` erlauben**, sonst bleibt das Zertifikat aus. `beautifulcovers.vercel.app` bleibt als Adresse bestehen; Vercel leitet sie auf die Hauptdomain um, sobald die steht.
+
+**Danach:** Sitemap in der Search Console unter `https://buyitscovers.com/sitemap.xml` neu einreichen (2.5), Konten (§12, Prompt), DNS härten (2.14).
