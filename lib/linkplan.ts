@@ -253,7 +253,7 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
     suffix there would explain nothing.
   */
   const name = (l: BuyLink): BuyLink =>
-    fromIsbn.has(l.provider) || /-search$/.test(l.provider) ? { ...l, label: `${l.label} · ${questionOf(l)}` } : l;
+    fromIsbn.has(l.provider) || /-search$/.test(l.provider) ? { ...l, label: `${l.label} by ${questionOf(l)}` } : l;
   const namedLead = lead.map(name);
 
   /*
@@ -276,7 +276,7 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
 
 /** Which question a link puts to a shop: its ISBN field, or words. */
 function questionOf(link: BuyLink): string {
-  return /-search$|-title$/.test(link.provider) ? 'title & year' : 'ISBN';
+  return /-search$|-title$/.test(link.provider) ? 'title and year' : 'ISBN';
 }
 
 function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, isbn13: string | undefined): string {

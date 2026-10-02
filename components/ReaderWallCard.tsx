@@ -16,7 +16,7 @@ export default function ReaderWallCard({ wall }: { wall: PublicWall }) {
       <div className="flex items-baseline justify-between gap-4 border-b border-line pb-2">
         <h2 className="truncate font-display text-2xl text-ink transition-colors group-hover:text-accent">{wall.title}</h2>
         <p className="shrink-0 text-sm text-ink-3">
-          {wall.tiles.length} covers <span aria-hidden="true">&rarr;</span>
+          {wall.tiles.length} covers
         </p>
       </div>
       {wall.by && <p className="mt-2 text-xs text-ink-3">by {wall.by}</p>}

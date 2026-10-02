@@ -49,7 +49,7 @@ describe('linkPlan cases', () => {
   it('keeps Amazon’s own range apart and says why the link is a search', () => {
     const p = plan(KDP, 'us');
     expect(p.case).toBe('kdp');
-    expect(p.lead.map(l => l.label)).toEqual(['Amazon · ISBN']);
+    expect(p.lead.map(l => l.label)).toEqual(['Amazon by ISBN']);
     expect(p.note).toContain('no ISBN-10');
   });
 
@@ -65,8 +65,8 @@ describe('linkPlan order', () => {
   it('leads with the market’s own shops at home', () => {
     // Since 2026-09-10 every shop with a search form can be asked two ways,
     // so every one of them names the question its button puts.
-    expect(plan(EN, 'us').lead.map(l => l.label)).toEqual(['Bookshop.org · ISBN', 'Amazon · ISBN']);
-    expect(plan(DE, 'de').lead.map(l => l.label)).toEqual(['Thalia · ISBN', 'Amazon · ISBN']);
+    expect(plan(EN, 'us').lead.map(l => l.label)).toEqual(['Bookshop.org by ISBN', 'Amazon by ISBN']);
+    expect(plan(DE, 'de').lead.map(l => l.label)).toEqual(['Thalia by ISBN', 'Amazon by ISBN']);
   });
 
   it('leads with the marketplaces for a foreign number, and asks them by ISBN', () => {
@@ -77,8 +77,8 @@ describe('linkPlan order', () => {
       publisher and year. The suffix is there because the other question is
       still offered, behind the fold — see the label rule below.
     */
-    expect(plan(TR, 'us').lead.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'eBay · ISBN']);
-    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['ZVAB · ISBN', 'Booklooker · ISBN']);
+    expect(plan(TR, 'us').lead.map(l => l.label)).toEqual(['AbeBooks by ISBN', 'eBay by ISBN']);
+    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['ZVAB by ISBN', 'Booklooker by ISBN']);
   });
 
   it('names the question even where only one of the two is possible', () => {
@@ -88,7 +88,7 @@ describe('linkPlan order', () => {
       "AbeBooks" on an edition without an ISBN would mean something different
       from the "AbeBooks" on the printing beside it.
     */
-    expect(plan(undefined, 'us').lead.map(l => l.label)).toEqual(['AbeBooks · title & year', 'eBay · title & year']);
+    expect(plan(undefined, 'us').lead.map(l => l.label)).toEqual(['AbeBooks by title and year', 'eBay by title and year']);
   });
 
   it('names the question on every shop button, and on no tool', () => {
@@ -98,8 +98,8 @@ describe('linkPlan order', () => {
       by number — and both used to stand there bare. Every shop now says which
       question it puts; tools that are not shops keep their plain name.
     */
-    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['ZVAB · ISBN', 'Booklooker · ISBN']);
-    expect(plan(undefined, 'de').lead.map(l => l.label)).toEqual(['ZVAB · title & year', 'eBay · title & year']);
+    expect(plan(TR, 'de').lead.map(l => l.label)).toEqual(['ZVAB by ISBN', 'Booklooker by ISBN']);
+    expect(plan(undefined, 'de').lead.map(l => l.label)).toEqual(['ZVAB by title and year', 'eBay by title and year']);
     const tools = plan(EN, 'us', { verdict: 'differs' }).lead.filter(l => l.provider === 'google-lens');
     expect(tools.map(l => l.label)).toEqual(['Google Lens']);
   });
@@ -114,7 +114,7 @@ describe('linkPlan order', () => {
       const lead = plan(isbn, 'us', { verdict: 'differs' }).lead;
       // The one case where the number does *not* lead, even though it exists:
       // it opens the other jacket by construction.
-      expect(lead.map(l => l.label)).toEqual(['AbeBooks · title & year', 'eBay · title & year', 'Google Lens']);
+      expect(lead.map(l => l.label)).toEqual(['AbeBooks by title and year', 'eBay by title and year', 'Google Lens']);
       // Every one of them searches by title, author, publisher and year.
       for (const link of lead.slice(0, 2)) {
         expect(decodeURIComponent(link.url)).toContain('Everest');
@@ -125,14 +125,14 @@ describe('linkPlan order', () => {
 
   it('moves the market’s shops behind the fold on differs, without losing them', () => {
     const p = plan(EN, 'us', { verdict: 'differs' });
-    expect(p.lead.map(l => l.label)).not.toContain('Bookshop.org · ISBN');
-    expect(p.rest.map(l => l.label)).toEqual(expect.arrayContaining(['Bookshop.org · ISBN', 'Amazon · ISBN']));
+    expect(p.lead.map(l => l.label)).not.toContain('Bookshop.org by ISBN');
+    expect(p.rest.map(l => l.label)).toEqual(expect.arrayContaining(['Bookshop.org by ISBN', 'Amazon by ISBN']));
   });
 
   it('adds the antiquarian search when no publisher image is on record (lever 4)', () => {
     // Only the order changes; "unknown" still says nothing about buying.
-    expect(plan(EN, 'us', { verdict: 'unknown' }).lead.map(l => l.label)).toEqual(['Bookshop.org · ISBN', 'Amazon · ISBN', 'AbeBooks · ISBN']);
-    expect(plan(EN, 'us', { verdict: 'verified' }).lead.map(l => l.label)).toEqual(['Bookshop.org · ISBN', 'Amazon · ISBN']);
+    expect(plan(EN, 'us', { verdict: 'unknown' }).lead.map(l => l.label)).toEqual(['Bookshop.org by ISBN', 'Amazon by ISBN', 'AbeBooks by ISBN']);
+    expect(plan(EN, 'us', { verdict: 'verified' }).lead.map(l => l.label)).toEqual(['Bookshop.org by ISBN', 'Amazon by ISBN']);
   });
 
   it('says nothing in the home case, where there is no order to explain', () => {
@@ -197,7 +197,7 @@ describe('linkPlan: one label, one place', () => {
     const p = plan(TR, 'us');
     const abe = [...p.lead, ...p.rest].filter(l => l.label.startsWith('AbeBooks'));
     expect(abe.map(l => l.provider)).toEqual(['abebooks', 'abebooks-search']);
-    expect(abe.map(l => l.label)).toEqual(['AbeBooks · ISBN', 'AbeBooks · title & year']);
+    expect(abe.map(l => l.label)).toEqual(['AbeBooks by ISBN', 'AbeBooks by title and year']);
     // The number leads; the words stay one row behind it.
     expect(p.lead.map(l => l.provider)).toContain('abebooks');
     expect(p.rest.map(l => l.provider)).toContain('abebooks-search');
@@ -212,7 +212,7 @@ describe('linkPlan: nothing is thrown away', () => {
       carries a suffix that says which question a button puts ("AbeBooks ·
       ISBN"). The claim here is unchanged and now stronger — no shop is lost.
     */
-    const shopOf = (label: string) => label.split(' · ')[0];
+    const shopOf = (label: string) => label.split(' by ')[0];
     const shown = new Set([...p.lead, ...p.rest, ...p.anyEdition].map(l => shopOf(l.label)));
     const offered = new Set([
       ...buyLinksFor({ isbn13: TR }, market, ENV).map(l => shopOf(l.label)),

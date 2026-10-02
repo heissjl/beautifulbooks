@@ -117,8 +117,7 @@ export default async function BoardPage({ searchParams }: { searchParams: Promis
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-24 pt-8 sm:px-6">
-        <p className="kicker">Which cover?</p>
-        <h1 className="mt-1 text-4xl leading-[1.1] text-ink [text-wrap:balance]">The standings</h1>
+        <h1 className="text-4xl leading-[1.1] text-ink [text-wrap:balance]">The standings</h1>
         {problem || !result ? (
           <Unavailable>{problem}</Unavailable>
         ) : (

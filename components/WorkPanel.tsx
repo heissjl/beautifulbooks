@@ -35,7 +35,6 @@ export default function WorkPanel({ work, editions, language, settled }: WorkPan
 
   return (
     <div>
-      <p className="kicker">This book</p>
 
       {span && (
         /*

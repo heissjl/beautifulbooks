@@ -959,3 +959,21 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 *Geschlossen 2026-09-30 ohne Code, so wie er in der Roadmap stand.*
 
 - [x] **6.65 Dieselbe Wand, dieselbe Reihenfolge.** (Aus der [Durchsicht von außen](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-b-durchsicht-von-außen): das erste Cover war beim zweiten Laden ein anderes.) Verdacht: der Vertreter einer gefalteten Gruppe hängt davon ab, welche Signaturen gerade da sind, und beim zweiten Besuch sind es mehr (SPEC §7). Erst messen (Gatsby zweimal warm, einmal kalt, erste 20 Kachel-IDs je Reiter), dann Vertreter und Stellung nur aus der Gruppe ableiten, Test mit zwei Signatur-Teilmengen. Die Ordnung der Wand selbst bleibt (E17, 6.31). Ein halber Tag, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+## 6.83
+
+*Abgehakt 2026-10-02, so wie er gebaut wurde.*
+
+- [x] **6.83 WorldCat nach ISBN statt nach Titel.** Aus dem Vergleich mit whichedition.com ([docs/vergleich-whichedition.md](vergleich-whichedition.md)), Julian am 2026-10-02: „ok". Whichedition verlinkt WorldCat als „Borrow — Free" mit `search.worldcat.org/search?q=bn:<ISBN-13>`; unser Link fragte nach Titel, Autor, Verlag und Jahr und listete damit jeden Druck, den eine Bibliothek führt. `SearchLinkInput.isbn13` (lib/buylinks.ts) schaltet auf `bn:` um, `BookDetail` reicht die ISBN des gewählten Drucks durch; ohne ISBN bleibt die Wortsuche. Test in `lib/__tests__/buylinks.test.ts`. Im Browser nicht geprüft: WorldCat sperrte am selben Tag schon die erste Anfrage (Cloudflare 1015).
+
+## 4.11
+
+*Abgehakt 2026-10-02 als Vorbereitung; sichtbar erst im Shop-Modus.*
+
+- [x] **4.11 Provisionshinweis unter den Kauflinks.** Aus dem Vergleich mit whichedition.com: dort steht unter jedem Kaufknopf ein Satz zur Provision, Amazons Pflichtformel aber nirgends. Julian am 2026-10-02: „für shop modus vorbereiten". Gebaut: `BuyLink.affiliate` (lib/model.ts) wird gesetzt, wenn `buyLinksFor` oder `titleSearchLinksFor` eine Partner-Kennung einsetzt — also nur im Shop-Modus mit gesetzter Variable des Markts. `commissionNote(links)` gibt dann `COMMISSION_NOTE` zurück („Some of these links earn this site a small commission if you buy through them, at no cost to you. It does not change their order."), bei einem getaggten Amazon-Link dazu `AMAZON_ASSOCIATE_NOTE` („As an Amazon Associate I earn from qualifying purchases."). `EditionBlock` in `components/BookDetail.tsx` zeigt ihn unter der ersten Reihe der Läden, über alle gezeigten Links gerechnet (vorn, hinter der Klappe, „another edition"). Der Satz über die Reihenfolge stimmt, weil sie der ISBN folgt (SPEC 2.4). Offen für den Umschalttag: deutscher Wortlaut für Amazon.de, und ob „I" bleibt, wenn 4.12 die Person nennt.
+
+## 6.84
+
+*Abgehakt 2026-10-02.*
+
+- [x] **6.84 Die neue Form.** Aus der Durchsicht „Was an der Seite nach Claude aussieht" ([docs/gestaltung-ki-anmutung.md](gestaltung-ki-anmutung.md)) und dem Mockup `lab/look/`. Julian wählte die Fassung „Heutige Farben, neue Form": „stell darauf um, aber schau dass die sprachbuttons die schrift vertikal mittig haben". Vorher: zu „See these covers by decade" — „hier fand ich das vorher besser, aber bitte ohne pfeil". Umgesetzt: `.chip` als Reiter ohne Rahmen mit gleichem Innenabstand oben und unten und fester Zeilenhöhe (`app/globals.css`); `.kicker` ohne Versalien und Sperrung; gestrichen „251 covers" über den Reitern, „This book", „Which cover?" über der Rangliste; Serifenüberschriften „Covers that look like this one", „Get this printing", „Or read it in another edition", „Your other collections"; „Recent searches"; Pfeile weg in Startseite, Einladung zur eigenen Sammlung, Sammlungsregal (die Überschrift „Collections" ist jetzt der Link, „See all" fällt weg), `/collections`, Leserkarten, „More by …", Jahrzehnte-Link (unterstrichen); Kopfzeile ohne „Covers, side by side."; Metazeile als zwei Sätze (`progressLabel` ohne Mittelpunkt); Druck „Verlag, Jahr (Sprache)"; Ladenknöpfe „<Laden> by ISBN / by title and year" (`lib/linkplan.ts`); Bücherring „Titel by Autor", „…, a collection". Nicht umgestellt: das Blatt am Telefon heißt weiter „Selected cover" (jetzt in normaler Schreibung), die Mittelpunkte der Jahrzehnte-Seite und die Seitentitel im Browser-Tab.

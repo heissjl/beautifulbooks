@@ -147,7 +147,6 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       */}
       <div className="relative mb-4">
       <div ref={pillRow} className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Language">
-        <span className="kicker mr-2 w-full sm:w-auto">{total} cover{total !== 1 ? 's' : ''}</span>
         {named.map(tab)}
         {tucked.length > 0 && (
           <button
@@ -183,7 +182,6 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       */}
       <div aria-hidden="true" className="pointer-events-none invisible absolute inset-x-0 top-0 h-0 overflow-hidden">
         <div ref={pillProbe} className="flex w-max gap-2">
-          <span data-k="kicker" className="kicker">{total} cover{total !== 1 ? 's' : ''}</span>
           {groups.map(g => (
             <span key={tabKey(g)} data-k={tabKey(g)} className="chip shrink-0">
               {languageName(g.language)}

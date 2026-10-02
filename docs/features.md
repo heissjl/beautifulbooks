@@ -68,6 +68,8 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Jeder Kauf-Link läuft über `/go/`, das Ziel wird aus der Tabelle neu gebaut; eine Logzeile ohne jede Kennung | 2026-09-07 | F5, E14 | PLAN-B B6 | `app/go/[provider]/[isbn]/`, `lib/clicks.ts` |
 | Teilen: Menü mit Link kopieren, `navigator.share`, Pinterest, WhatsApp, Bluesky, X, E-Mail — nur Links, kein Skript; eigene Adresse `/book/<werk>/cover/<cover>` mit dem gewählten Cover als Vorschaubild | 2026-09-09 | F2.13 | 6.20, 6.21 | `components/ShareButton.tsx`, `app/book/[id]/cover/[cover]/` |
 | Verfügbarkeits-Button — **nur im Shop-Modus**, nicht freigegeben | 2026-09-06 | F2.10, E12 | 0.1 | `lib/availability.ts`, `app/api/availability/` |
+| WorldCat fragt nach der ISBN des gewählten Drucks (`bn:`), ohne ISBN nach Titel, Autor, Verlag und Jahr | 2026-10-02 | §8.5 | 6.83 | `lib/buylinks.ts` (`searchLinksFor`) |
+| Provisionshinweis unter der ersten Reihe der Läden, nur wenn ein gezeigter Link eine Partner-Kennung trägt (also nie im Hobby-Modus), mit Amazons Pflichtsatz bei getaggtem Amazon-Link | 2026-10-02 (vorbereitet) | 2.4, E20 | 4.11 | `lib/buylinks.ts` (`commissionNote`), `components/BookDetail.tsx` |
 
 ## Weitere Seiten
 
@@ -93,6 +95,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Bildmarke (Richtung A: Wand aus Buchrechtecken, eines hervorgehoben) in der Kopfzeile und als Browser-Icon, hell und dunkel | 2026-09-29 | §5 | 6.61 | `components/BrandMark.tsx`, `app/icon.svg`, `app/favicon.ico`, `app/apple-icon.png`, `scripts/build-icons.py` |
 | Vorschaukarte je veröffentlichter Sammlung: vierzehn ihrer Cover als Wand, beim Build vorberechnet; langsame Cover werden ersetzt statt leer gelassen | 2026-09-29 | F2.13 | 6.61 | `app/collections/[slug]/opengraph-image.tsx`, `app/og.tsx` (`loadCovers`) |
 | Vorschaukarte für die Sammlungen der Leser (`/c/<id>`): ihre Cover, ihr Titel, der selbst gewählte Name; abgeschaltete und leere zeigen die Website-Karte | 2026-09-29 | F2.13, F9 | 6.61, 5.13a | `app/c/[id]/opengraph-image.tsx`, `app/og.tsx` (`coverWallCard`) |
+| Die Form ohne Vorlage: Sprachreiter als Wörter (gewählter gefüllt, Schrift mittig), Etiketten in normaler Schreibung oder als Serifenüberschrift, keine Pfeile hinter Links, Angaben als Sätze oder „Verlag, Jahr (Sprache)", kein Slogan im Kopf | 2026-10-02 | §5 | 6.84 | `app/globals.css`, `components/BookDetail.tsx`, `components/CoverGallery.tsx`, `components/workWall.ts`, `lib/linkplan.ts` |
 
 ## Betrieb und Schutz
 

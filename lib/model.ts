@@ -113,6 +113,13 @@ export interface BuyLink {
    * the URL alone; no shop is ever contacted to find out (SPEC §9.3 step 16).
    */
   kind?: 'product' | 'search';
+  /**
+   * The URL carries an affiliate id, so a purchase through it may earn a
+   * commission. Set only in shop mode with the market's variable present
+   * (SPEC 2.4, E20); the commission note under the links reads it rather
+   * than guessing from the mode (ROADMAP 4.11).
+   */
+  affiliate?: boolean;
 }
 
 /** Edition as delivered by /api/works/[id]: with display-time purchase links. */

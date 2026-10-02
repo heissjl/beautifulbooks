@@ -33,8 +33,6 @@ export default function SiteHeader({ left, right, search }: SiteHeaderProps) {
             {SITE_NAME}
           </Link>
         </div>
-        {/* The tagline is decoration and yields the room to the field. */}
-        {!search && <p className="hidden text-sm text-ink-3 md:block">Covers, side by side.</p>}
         <div className="ml-auto flex items-center gap-2">
           {search}
           {right}

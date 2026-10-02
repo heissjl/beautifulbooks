@@ -33,7 +33,7 @@ import { buildWall, captionFor, progressLabel } from '@/components/workWall';
 import { leadCover } from '@/lib/scene';
 import { isbnRuns } from '@/lib/isbnformat';
 import { useOverflowsX } from '@/components/useOverflowsX';
-import { searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
+import { commissionNote, searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
@@ -414,9 +414,9 @@ function BookDetail() {
   const decadesPossible = merged.done && worthAPage(groupByDecade(view.covers, merged.editions));
   const hasDecades = decadesPossible || decadePages.pages.some(p => p.id === work.id);
   const meta = [
-    work.firstPublishYear ? `Open Library dates it to ${work.firstPublishYear}` : undefined,
-    progressLabel(view.covers.length, merged),
-  ].filter(Boolean).join(' · ');
+    `${progressLabel(view.covers.length, merged)}.`,
+    work.firstPublishYear ? `Open Library dates the book to ${work.firstPublishYear}.` : undefined,
+  ].filter(Boolean).join(' ');
 
   return (
     <Shell
@@ -587,7 +587,7 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   if (similar.length === 0) return null;
   return (
     <section className="mt-4" aria-label="Covers that look like this one">
-      <p className="kicker">Looks like this</p>
+      <h3 className="text-lg leading-snug text-ink">Covers that look like this one</h3>
       {/*
         A fixed three-column grid, not `flex-1` per item (ROADMAP 6.10a).
         With three matches the two are the same; with one, `flex-1` gave that
@@ -763,7 +763,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
                     </div>
                     <div className="mt-1 w-14 text-[10px] leading-tight">
                       <p className={`line-clamp-2 ${lit ? 'text-accent' : 'text-ink-2'}`}>{e.publisher || 'Publisher unknown'}</p>
-                      <p className="mt-0.5 text-ink-3">{[e.year, e.isbn13 ? undefined : 'no ISBN'].filter(Boolean).join(' · ')}</p>
+                      <p className="mt-0.5 text-ink-3">{[e.year, e.isbn13 ? undefined : 'no ISBN'].filter(Boolean).join(', ')}</p>
                     </div>
                   </li>
                 );
@@ -827,7 +827,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
       <p className="mt-2 text-xs text-ink-3">
         {/* Named for the scan on screen, not for the tile it was folded into. */}
         Image from {shownScan.startsWith('gb:') ? 'Google Books' : 'Open Library'}
-        {editions.length > 1 ? ` · on ${editions.length} editions` : ''}
+        {editions.length > 1 ? `, on ${editions.length} editions` : ''}
       </p>
       {shown && (
         <>
@@ -839,7 +839,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
             workTitle={workTitle}
             author={author}
             otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
-            searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
+            searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id, isbn13: shown.isbn13 }, market)}
             anyEditionLinks={anyEditionLinks}
             market={market}
             onMarketChange={onMarketChange}
@@ -895,7 +895,10 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
   const fromIsbn = useMemo(() => new Set(edition.buyLinks.map(l => l.provider)), [edition.buyLinks]);
 
   const hint = [edition.publisher, edition.year].filter(Boolean).join(' ');
-  const head = [edition.publisher, edition.year ? String(edition.year) : undefined, languageName(edition.language)].filter(Boolean).join(' · ');
+  // Like a catalogue card, "Penguin Books, 2010 (English)" — not a row of dots (6.84).
+  const language = edition.language ? languageName(edition.language) : undefined;
+  const head = [[edition.publisher, edition.year ? String(edition.year) : undefined].filter(Boolean).join(', '), language ? `(${language})` : undefined]
+    .filter(Boolean).join(' ');
   /*
     56 % of cover-bearing editions carry a title of their own — "Die Enden der
     Parabel", "El arco iris de gravedad". That is worth a line; repeating the
@@ -910,6 +913,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
   ];
   const rows = details.filter(([, v]) => v);
   const moreLinks = plan.rest.length;
+  const commission = commissionNote([...plan.lead, ...plan.rest, ...plan.anyEdition]);
   // In hobby mode the availability probe is off (E20), so the fold holds links only.
   const hasFold = moreLinks > 0 || (commerceEnabled() && !!edition.isbn13);
   const hasInfo = !!edition.previewUrl || rows.length > 0 || !!edition.description;
@@ -934,11 +938,11 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
         )}
         {/* The pills sit right after the heading, not pushed to the far edge (Julian, 2026-09-26: „less gap before the pills"). */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <p className="kicker">
+          <h3 className="text-lg leading-snug text-ink">
             {verdict.status === 'differs'
               ? 'Find the cover you picked'
               : edition.isbn13 ? 'Get this printing' : 'Find this printing'}
-          </p>
+          </h3>
           <MarketSwitcher market={market} onChange={onMarketChange} compact />
         </div>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -959,6 +963,13 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
           is the same line `lib/verdicts.ts` holds one level up.
         */}
         {plan.note && <p className="mt-2 text-xs leading-relaxed text-ink-3">{plan.note}</p>}
+        {/*
+          Shop mode only, and only when a link shown here carries an id
+          (ROADMAP 4.11): under the first row, not on the About page alone,
+          because that is where the reader decides to click. Hobby mode
+          builds no affiliate links, so it never appears there (E20).
+        */}
+        {commission && <p className="mt-2 text-xs leading-relaxed text-ink-3">{commission}</p>}
       </div>
 
       {afterLead}
@@ -1049,7 +1060,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
       */}
       {plan.anyEdition.length > 0 && (
         <div className="mt-5 border-t border-line pt-4">
-          <p className="kicker">Or read it in another edition</p>
+          <h3 className="text-lg leading-snug text-ink">Or read it in another edition</h3>
           <div className="mt-2 flex flex-wrap gap-2">
             {plan.anyEdition.map(link => (
               <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
