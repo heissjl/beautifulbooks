@@ -4,7 +4,6 @@ import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import { VERDICT_LEAD, VERDICT_MEANING, VERDICT_ORDER } from '@/lib/verdicts';
-import { indexBuiltAt, indexSize } from '@/lib/coverindex';
 import { commerceEnabled } from '@/lib/sitemode';
 
 /**
@@ -20,9 +19,6 @@ export const metadata: Metadata = {
   description:
     'Where the cover images come from, what is missing from them, and what the notes under each buy link mean.',
 };
-
-const INDEXED = indexSize();
-const INDEX_BUILT_AT = indexBuiltAt();
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -43,7 +39,7 @@ export default function AboutPage() {
         {/*
           Shortened 2026-10-02 (Julian: "can you shorten the about page"),
           from about 1,000 words to about 500, the verdict notes in lib/verdicts.ts
-          included. The facts stay; the measurements
+          included. The facts stay (the section on "Looks like this" went too, Julian the same day); the measurements
           and the reassurances went. Rewriting it in the first person is
           still ROADMAP 4.12, Julian's.
         */}
@@ -63,15 +59,6 @@ export default function AboutPage() {
             <a className="underline underline-offset-2 hover:text-accent" href="https://books.google.com" target="_blank" rel="noopener noreferrer">Google Books</a>,
             which also says which picture a publisher currently files under an ISBN. The two catalogues
             hold only part of what has been printed: you see the covers someone scanned and uploaded.
-          </p>
-        </Section>
-
-        <Section title="“Looks like this”">
-          <p>
-            Sometimes a row of three appears under the cover you picked: <em>other</em> books with
-            similar colours and layout. The match is strict, so most covers have none. It draws on{' '}
-            {INDEXED.covers.toLocaleString('en')} covers of {INDEXED.works} books, measured on{' '}
-            {INDEX_BUILT_AT}. Only the measurements are kept, not the images.
           </p>
         </Section>
 
