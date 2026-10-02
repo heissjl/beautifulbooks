@@ -56,7 +56,7 @@ export const de: Readonly<Record<string, string>> = {
   'Search a book': 'Ein Buch suchen',
   'Search a book title': 'Einen Buchtitel suchen',
   'Cancel': 'Abbrechen',
-  'An author’s name': 'Der Name einer Autorin oder eines Autors',
+  'An author’s name': 'Autorin oder Autor',
   'A title, or a title and author': 'Ein Titel, oder Titel und Autor',
   'Search an author': 'Nach Autorin oder Autor suchen',
   'Search': 'Suchen',
