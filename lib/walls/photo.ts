@@ -19,8 +19,11 @@ import { CURATED_LIST, CURATED_WORKS } from '@/lib/curated';
 import type { WorkSummary } from '@/lib/model';
 import { validTile, type Tile } from './model';
 
-/** A photo rarely shows more; a wall holds 60 and the search runs one book at a time. */
-export const MAX_PHOTO_BOOKS = 40;
+/** Julian's gallery wall read 50–58 (2026-09-30); a wall holds 500, and the searches run three at a time since 5.11a. */
+export const MAX_PHOTO_BOOKS = 80;
+
+/** Open Library searches in flight at once for one photo: three cut a 40-book photo from 35 s to about 12 without leaning on the catalogue. */
+export const PHOTO_SEARCHES_AT_ONCE = 3;
 
 export interface PhotoMatch {
   /** What the photo showed, as read, with where in the photo (fractions, for the numbered boxes). */
@@ -28,8 +31,21 @@ export interface PhotoMatch {
   /** The tile to offer, absent when nothing was found or the search failed. */
   tile?: Tile;
   reason?: WorkReason;
+  /**
+   * Only the title agreed (5.11a): on the gallery wall of 2026-09-30 every
+   * such hit was a guess and at least five were wrong ("The Virgin" →
+   * *The Virgin Suicides*), so the tile is offered as "maybe" and not ticked.
+   */
+  unsure?: true;
   /** The search did not answer: not the same as "not found" (SPEC N12). */
   failed?: boolean;
+}
+
+/** What the photo showed, as it goes to the browser. */
+export type PhotoRead = PhotoMatch['read'];
+
+export function photoRead(book: RecognizedBook): PhotoRead {
+  return { title: book.title, author: book.author, kind: book.kind, ...(book.box ? { box: book.box } : {}) };
 }
 
 type Search = (query: string) => Promise<WorkSummary[]>;
@@ -48,31 +64,59 @@ export function tileFromWork(work: WorkSummary): Tile | undefined {
   }
 }
 
-export async function matchPhotoBooks(books: readonly RecognizedBook[], find: Search = defaultSearch): Promise<PhotoMatch[]> {
-  const out: PhotoMatch[] = [];
-  for (const book of books.slice(0, MAX_PHOTO_BOOKS)) {
-    const read = { title: book.title, author: book.author, kind: book.kind, ...(book.box ? { box: book.box } : {}) };
-    try {
-      let works = await find(`${book.title} ${book.author}`.trim());
-      let picked = pickWork(works, book);
-      // A misread author can empty the first search; the title alone is the second try.
-      if ((!picked || picked.reason === 'first-result') && book.author) {
-        const byTitle = await find(book.title);
-        const second = pickWork(byTitle, book);
-        if (second && (!picked || second.reason !== 'first-result')) {
-          works = byTitle;
-          picked = second;
-        }
+/** One book against the catalogue: the work, its tile, and how sure the match is. */
+export async function matchPhotoBook(book: RecognizedBook, find: Search = defaultSearch): Promise<PhotoMatch> {
+  const read = photoRead(book);
+  try {
+    let works = await find(`${book.title} ${book.author}`.trim());
+    let picked = pickWork(works, book);
+    // A misread author can empty the first search; the title alone is the second try.
+    if ((!picked || picked.reason === 'first-result') && book.author) {
+      const byTitle = await find(book.title);
+      const second = pickWork(byTitle, book);
+      if (second && (!picked || second.reason !== 'first-result')) {
+        works = byTitle;
+        picked = second;
       }
-      // Neither author nor title agrees: the search's first hit is a guess, not this book.
-      // Measured on the first real photo (2026-09-28): all five such hits were wrong
-      // ("Titanic" for Nansen's "In Nacht und Eis"), so they are "not found" instead.
-      const work = picked && picked.reason !== 'first-result' ? works[picked.index] : undefined;
-      const tile = work ? tileFromWork(work) : undefined;
-      out.push({ read, ...(tile ? { tile, reason: picked?.reason } : {}) });
-    } catch {
-      out.push({ read, failed: true });
     }
+    // Neither author nor title agrees: the search's first hit is a guess, not this book.
+    // Measured on the first real photo (2026-09-28): all five such hits were wrong
+    // ("Titanic" for Nansen's "In Nacht und Eis"), so they are "not found" instead.
+    const work = picked && picked.reason !== 'first-result' ? works[picked.index] : undefined;
+    const tile = work ? tileFromWork(work) : undefined;
+    return { read, ...(tile ? { tile, reason: picked?.reason, ...(picked?.reason === 'title-only' ? { unsure: true as const } : {}) } : {}) };
+  } catch {
+    return { read, failed: true };
   }
+}
+
+/**
+ * Every book of a photo against the catalogue, `PHOTO_SEARCHES_AT_ONCE` at a
+ * time, each result handed on the moment it is there (5.11a: the marker on
+ * the photo turns from grey to found while the rest are still being looked
+ * up). Resolves to all results in the photo's order.
+ */
+export async function matchPhotoBooksEach(
+  books: readonly RecognizedBook[],
+  onMatch: (index: number, match: PhotoMatch) => void,
+  find: Search = defaultSearch,
+  atOnce: number = PHOTO_SEARCHES_AT_ONCE,
+): Promise<PhotoMatch[]> {
+  const list = books.slice(0, MAX_PHOTO_BOOKS);
+  const out: PhotoMatch[] = new Array(list.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < list.length) {
+      const i = next++;
+      const match = await matchPhotoBook(list[i], find);
+      out[i] = match;
+      onMatch(i, match);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.max(1, Math.min(atOnce, list.length)) }, worker));
   return out;
+}
+
+export async function matchPhotoBooks(books: readonly RecognizedBook[], find: Search = defaultSearch): Promise<PhotoMatch[]> {
+  return matchPhotoBooksEach(books, () => {}, find);
 }

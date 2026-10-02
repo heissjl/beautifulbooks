@@ -85,6 +85,10 @@ Zu klären dabei (0.12): der Speicheranbieter der Redis (Region, Auftragsverarbe
 
 Auf der Sammlungsseite steht jetzt „Make it a wall“: Wandplan mit Rahmen und Maßen, die Liste der Bücher mit ihren Drucken und dem Weg zur Buchseite, und „I'd order this wall framed“ als Zähler. Das ist das Tor dieses Plans in messbarer Form: `/create/review` zeigt, wie viele Sammlungen es gibt und wie oft jemand eine gerahmte Wand bestellen würde. Stufe 2 (Kaufen) und 3 (Rahmen) bleiben gebaut erst, wenn diese Zahl trägt.
 
+### Eine Kaufliste? (Julians Frage vom 2026-09-30, ROADMAP 5.13o)
+
+Julian: „überlege lokal ob wir die erste collection jedes users als ‚buy later‘ etablieren wollen oder vllt sogar dafür einen extra button anlegen“. Die Abwägung steht im Roadmap-Eintrag; die Kurzfassung: die **erste** Sammlung ist der falsche Auslöser (von `/create` aus ist sie ein Regal, keine Kaufliste), ein **zweiter Knopf** die falsche Stelle (die Share-Zeile ist seit 6.77 vermessen und voll). Was zum Funnel passt, ist eine **stehende Sammlung „To buy“ je Browser** als erste Zeile der Häkchenliste auf der Buchseite, ohne Ablauf, mit Druck, ISBN und Läden je Cover auf ihrer Seite — also „Get the books“ aus 5.13f ohne Rahmen. Sie wäre der Schritt zwischen Stufe 1 und 2: eine Liste, die schon heute zu den Läden führt, und die Vorlage für den Korb von 5.14. Vorher ein Blick auf `/create/review`, ob Leser ihre Sammlungen schon so nennen.
+
 ## Stufe 2 — Die ganze Wand kaufen
 
 ### Die harte Wahrheit zuerst

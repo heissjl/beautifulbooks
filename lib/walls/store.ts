@@ -31,6 +31,8 @@ export interface WallStore {
   /** Someone pressed "Report" on a shown wall; answers the count so far. Nothing about who. */
   report(id: string): Promise<number>;
   reports(): Promise<Map<string, number>>;
+  /** One more photo read on this day (UTC, `YYYY-MM-DD`); answers the day's count so far, for the daily cap (5.11a). Nothing about who. */
+  countPhoto(day: string): Promise<number>;
 }
 
 /** The store did not answer — never to be shown as "no such wall" (SPEC N12). */
@@ -53,8 +55,14 @@ export function memoryWallStore(now: () => number = Date.now): WallStore {
   const showcase: string[] = [];
   const counts = new Map<string, number>();
   const flags = new Map<string, number>();
+  const photos = new Map<string, number>();
   return {
     kind: 'memory',
+    async countPhoto(day) {
+      const n = (photos.get(day) ?? 0) + 1;
+      photos.set(day, n);
+      return n;
+    },
     async get(id) {
       const raw = walls.get(id);
       const until = expires.get(id);
@@ -108,6 +116,7 @@ const KEYS = {
   wall: (id: string) => `wall:${id}`,
   owner: (hash: string) => `walls:owner:${hash}`,
   all: 'walls:all',
+  photos: 'walls:photos',
   showcase: 'walls:showcase',
   views: 'walls:views',
   reports: 'walls:reports',
@@ -161,6 +170,8 @@ export function commandsWallStore(commands: RedisCommands): WallStore {
     views: () => guarded(commands.hGetAll(KEYS.views).then(countsFrom)),
     report: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.reports, id, 1) : Promise.resolve(0)).then((n) => Number(n) || 0)),
     reports: () => guarded(commands.hGetAll(KEYS.reports).then(countsFrom)),
+    // Without HINCRBY (a test double) the cap cannot count and does not bind.
+    countPhoto: (day) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.photos, day, 1) : Promise.resolve(0)).then((n) => Number(n) || 0)),
   };
 }
 

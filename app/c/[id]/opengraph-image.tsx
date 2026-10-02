@@ -1,7 +1,7 @@
 import SiteCard from '@/app/opengraph-image';
 import { asJpeg, coverWallCard } from '@/app/og';
 import { coverUrlFor } from '@/lib/coverurl';
-import { isWallId } from '@/lib/walls/model';
+import { isWallId, tileCoverId } from '@/lib/walls/model';
 import { wallStoreFromEnv } from '@/lib/walls/store';
 import { wallsEnabled } from '@/lib/walls/switch';
 
@@ -36,7 +36,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   const wall = store ? await store.get(id).catch(() => null) : null;
   if (!wall || wall.hiddenBy || wall.tiles.length === 0) return asJpeg(await SiteCard());
 
-  const coverUrls = wall.tiles.map(t => coverUrlFor(`ol:${t.coverId}`, 'M')).filter((u): u is string => !!u);
+  const coverUrls = wall.tiles.map(t => coverUrlFor(tileCoverId(t), 'M')).filter((u): u is string => !!u);
   const count = `${wall.tiles.length} ${wall.tiles.length === 1 ? 'cover' : 'covers'}`;
   return coverWallCard({
     coverUrls,
