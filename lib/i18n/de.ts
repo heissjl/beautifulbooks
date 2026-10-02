@@ -11,6 +11,16 @@
  * „vollständig", „jede" — CLAUDE.md, in German). Numbers come formatted for
  * the locale (1.234), years are passed as strings and keep their digits.
  *
+ * **Translate the job of a sentence, not its words** (Julian, 2026-10-02: „der
+ * deutsche hero braucht noch besseres copywriting statt wortwörtlicher
+ * übersetzung. das wird auch für alle späteren dazukommenden sprachen
+ * gelten"). The English key says what a line has to do — a headline has to
+ * hook, a promise has to promise, an error has to say what happened and what
+ * it does not mean — and the German does that job in German. „Judge a book by
+ * its covers" is a pun that does not exist in German, so the headline is not
+ * a rendering of it. What must survive literally are the facts and the limits
+ * (N12): the source named, the number stated, the claim not made.
+ *
  * The reader is addressed as „du", the way the English side speaks („Help us
  * find the prettiest cover"); whether it should be „Sie" is Julian's call and
  * changes only this file. Proper names stay: Open Library, Google Books,
@@ -18,7 +28,7 @@
  */
 export const de: Readonly<Record<string, string>> = {
   // Header, footer, 404
-  'Covers, side by side.': 'Cover, nebeneinander.',
+  'Covers, side by side.': 'Cover im Vergleich.',
   'Data from Open Library and Google Books. Cover images belong to their publishers.': 'Daten von Open Library und Google Books. Die Coverbilder gehören ihren Verlagen.',
   'Purchase links may earn us a commission.': 'Kauflinks können uns eine Provision einbringen.',
   'Your collections': 'Deine Sammlungen',
@@ -29,13 +39,14 @@ export const de: Readonly<Record<string, string>> = {
   'Search for a book': 'Ein Buch suchen',
 
   // Home
-  'Judge a book': 'Beurteile ein Buch',
-  'by its covers.': 'nach seinen Covern.',
-  'Type a title and see the covers it has been printed with, by language and year.': 'Tipp einen Titel ein und sieh die Cover, mit denen das Buch gedruckt wurde, nach Sprache und Jahr.',
-  'Then find the edition you’d actually want on your shelf.': 'Dann finde die Ausgabe, die du wirklich im Regal haben willst.',
-  'Help us find the prettiest cover of all time!': 'Hilf uns, das schönste Cover aller Zeiten zu finden!',
-  'Create your own collection of covers': 'Stell deine eigene Sammlung von Covern zusammen',
-  'Start with a classic': 'Fang mit einem Klassiker an',
+  // The hero is written for German, not rendered from the English pun (see the header).
+  'Judge a book': 'Ein Buch hat viele Cover.',
+  'by its covers.': 'Such dir deins aus.',
+  'Type a title and see the covers it has been printed with, by language and year.': 'Gib einen Titel ein und sieh, mit welchen Covern das Buch gedruckt wurde — nach Sprache und Jahr geordnet.',
+  'Then find the edition you’d actually want on your shelf.': 'Dann such dir die Ausgabe aus, die wirklich in dein Regal gehört.',
+  'Help us find the prettiest cover of all time!': 'Hilf mit, das schönste Cover aller Zeiten zu küren!',
+  'Create your own collection of covers': 'Stell dir deine eigene Coverwand zusammen',
+  'Start with a classic': 'Zum Einstieg ein paar Klassiker',
   'Collections': 'Sammlungen',
   'See all': 'Alle ansehen',
   '{n} book': '{n} Buch',
