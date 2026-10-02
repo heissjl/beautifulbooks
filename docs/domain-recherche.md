@@ -251,11 +251,11 @@ Julian, 2026-10-02: „check noch andere social media accounts für othercovers"
 **Nicht zu entscheiden**
 
 - **Reddit** (`u/othercovers`, `r/othercovers`): antwortet Automaten mit 403, und der Browser der Sitzung darf die Seite nicht öffnen. Von Hand nachsehen.
-- **Pinterest:** liefert für jeden Namen dieselbe leere Hülle. Von Hand nachsehen.
+- **Pinterest:** liefert für jeden Namen dieselbe leere Hülle. Von Hand nachsehen. (Am Abend in Julians Chrome wiederholt, ebenfalls ohne Urteil — §14.)
 - **Ko-fi:** leitet jede Adresse, die ich probiert habe, auf die Startseite; ohne Gegenprobe kein Urteil.
 - **LinkedIn:** nicht geprüft, verlangt eine Anmeldung.
 
-**Was daraus folgt.** Die drei belegten Konten sind klein oder verwaist und haben alle mit **Musik**-Covern zu tun — die Nebenbedeutung von „covers", die §9 schon als Schwäche nennt, zeigt sich hier zum ersten Mal an echten Fällen. Eine Verwechslung mit einer Seite über Buchumschläge ist das nicht, aber Instagram ist für ein Projekt aus Bildern der naheliegendste Kanal, und genau dort ist der Name weg. Auswege, in dieser Reihenfolge: `@othercovers.books`, `@othercoversbooks` oder `@othercovers_com` auf Instagram (nicht geprüft, ob frei); das verwaiste YouTube-Konto lässt sich nicht übernehmen, ist aber für diese Seite auch der unwichtigste Kanal. Frei sind die Kanäle, auf denen über Bücher und Gestaltung geredet wird — X, Bluesky, Mastodon, TikTok —, und der GitHub-Name.
+**Was daraus folgt.** Die drei belegten Konten sind klein oder verwaist und haben alle mit **Musik**-Covern zu tun — die Nebenbedeutung von „covers", die §9 schon als Schwäche nennt, zeigt sich hier zum ersten Mal an echten Fällen. Eine Verwechslung mit einer Seite über Buchumschläge ist das nicht, aber Instagram ist für ein Projekt aus Bildern der naheliegendste Kanal, und genau dort ist der Name weg. Auswege, in dieser Reihenfolge: `@othercovers.books`, `@othercoversbooks` oder `@othercovers_com` auf Instagram (am Abend nachgesehen, §14: alle drei ohne Profil, die erste ist `@othercovers.books`); das verwaiste YouTube-Konto lässt sich nicht übernehmen, ist aber für diese Seite auch der unwichtigste Kanal. Frei sind die Kanäle, auf denen über Bücher und Gestaltung geredet wird — X, Bluesky, Mastodon, TikTok —, und der GitHub-Name.
 
 **Wenn die Domain gekauft wird, am selben Tag anlegen** (kostet nichts, und ein freier Name bleibt es nicht von selbst): X, TikTok, Bluesky mit der Domain als Name, GitHub. Das ist Julians Schritt — Konten legt Claude nicht an.
 
@@ -336,6 +336,17 @@ Julian, 2026-10-02, auf die Liste der sechs Stellen: „bereite das im branch vo
 **Was bleibt, wie es ist:** `package.json` (`beautifulbooks`), Repository, Ordner, Vercel-Projekt, das Cookie `bb_visitor`, die Log-Kennung `bb.`; im Film die Adresse `beautifulcovers.vercel.app` (`SITE_URL_DEFAULT` in `lab/video/storyboard.ts`), bis es die Domain gibt. Offen aus 2.7: eine E-Mail-Adresse im User-Agent, die Open Librarys Limit von 1 auf 3 Anfragen je Sekunde hebt — Julians Entscheidung, weil es seine Adresse ist.
 
 **Wenn es doch ein anderer Name wird:** eine Zeile in `lib/seo.ts`, dazu die Überschriften von Spec und README. Alles andere folgt.
+
+**Zweiter Anlauf mit Julians eigenem Chrome, 2026-10-02 abends** (Prompt aus §15, „Benutze das Chrome plugin"). Der Korb aus dem ersten Anlauf hing am Browser der damaligen Sitzung; dieser hier war leer, also von vorn.
+
+- **INWX-Warenkorb, steht auf `inwx.de/de/cart`, vor „Weiter":** genau drei Domains, je Registrierung 12 Monate — `othercovers.com` 14,60 € (Verlängerung 14,60 €), `othercovers.de` 5,02 € (Verlängerung 3,91 €), `othercover.com` 14,60 € (Verlängerung 14,60 €); **zusammen 34,22 € ohne MwSt.**, alle drei von INWX als verfügbar gemeldet, alle Preise wie erwartet. Das angebotene „Trust Provider DV SSL" (15,97 €/Jahr) ist nur ein Vorschlag auf der Seite und liegt nicht im Korb. Ohne Anmeldung zeigt der Korb 0 % MwSt.; mit deutschem Konto kommen 19 % dazu.
+- **Anmeldeseiten in Reitern offen, nichts ausgefüllt:** X (`x.com/i/flow/signup`: Telefon, Google, Apple oder E-Mail), TikTok (`tiktok.com/signup`: Telefon/E-Mail, Facebook, Google), Bluesky (Schritt 1 von 3: E-Mail, Passwort, Geburtsdatum — das Feld ist mit einem Vorgabedatum vorbelegt, bitte selbst setzen), GitHub-Organisation (`github.com/account/organizations/new?plan=free` leitet auf die Anmeldung um; nach der Anmeldung als `heissjl` geht es dorthin weiter). Bei X und TikTok ist das Wort „Weiter" zugleich die Annahme der Bedingungen — das ist Julians Klick.
+- **Instagram, Ausweichformen**, je öffentliche Profiladresse ohne Anmeldung, gegen `@othercovers` (Profil sichtbar: 17 Follower, 4 abonniert, KI-Plattencover) und den erfundenen `@othercoversqzx9173` („Profile isn't available"): `othercovers.books`, `othercoversbooks` und `othercovers_com` antworten alle wie der erfundene Name. **Die erste freie ist `@othercovers.books`** — mit dem Vorbehalt aus §12, dass gesperrte oder gelöschte Namen von außen genauso aussehen; sicher ist es erst, wenn Instagram den Namen beim Anlegen annimmt.
+- **Reddit:** die Chrome-Erweiterung darf reddit.com nicht öffnen („not allowed due to safety restrictions") — **nicht zu erkennen**, von Hand nachsehen: `reddit.com/user/othercovers` und `reddit.com/r/othercovers`.
+- **Pinterest:** die Seite baut sich im Reiter nicht auf (leere Hülle, auch für `penguinbooks`), und die Profil-Schnittstelle der Seite antwortet für `othercovers`, `penguinbooks` und den erfundenen Namen gleich mit 403 — **nicht zu erkennen**.
+- **Ko-fi:** `ko-fi.com/othercovers`, der erfundene Name und `ko-fi.com/kofi` landen alle auf der Startseite — ohne eine Gegenprobe, die ein Profil zeigt, **nicht zu erkennen**.
+
+**Offen, Julian:** bei INWX anmelden, Daten prüfen, bezahlen; die vier Konten anlegen; Reddit, Pinterest, Ko-fi von Hand ansehen. **Danach, auf Julians Wort, Claude:** Vercel-Domains (Hauptdomain plus zwei Weiterleitungen), die DNS-Einträge, die Vercel dafür nennt, bei INWX setzen (vorher zeigen), der Bluesky-TXT-Eintrag `_atproto`, `NEXT_PUBLIC_SITE_URL`, neu deployen, Produktion einmal ansehen.
 
 ## 15. Im lokalen `main`, nicht gepusht (2026-10-02)
 
