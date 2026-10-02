@@ -40,6 +40,14 @@ npx vitest run lab/vinyl
 
 Die Wand ansehen: `out/` mit einem beliebigen statischen Server ausliefern, z. B. `cd lab/vinyl/out && python3 -m http.server 4341 --bind 127.0.0.1` (4330 belegt ein anderes Lab-Werkzeug).
 
+## Fork, eigene App oder Teil der Buchseite?
+
+Julian, 2026-10-02: „would it make more sense to try out this idea as a fork of the project or can it live within the same structures?" Einschätzung (Claude), Grundlage für die offene Frage (3) in ROADMAP 5.16:
+
+- **Kein Fork.** Geteilt wird genau das, was am meisten Messung gekostet hat: Bildsignaturen (`lib/imagehash.ts`, `lib/imagesig.ts`), die Faltmechanik, Rate-Limits, der Redis-Zugang, die Gestaltung, die Doku-Ordnung (SPEC, ROADMAP, Historie je einmal). Ein Fork verdoppelt all das, und die Kopien laufen auseinander — derselbe Grund, aus dem E20 einen Schalter statt zweier Branches wählte. Dazu entstünden zwei ROADMAPs, was die Regel „jedes Element genau einmal" bricht.
+- **Nicht in dieselbe App, jedenfalls nicht ohne Umbau.** Der Kern ist buchtypisiert: 26 von 49 Dateien in `lib/` sprechen von ISBN, Open Library oder Google Books; `Edition` trägt `isbn13`/`isbn10`; die Faltstufen hängen an ISBN und Sprache („nie über bekannte Sprachen"), während die Platten nach Land gruppieren und mit einfacher Verkettung bei ≤ 20 falten (Julians Wahl) — ein anderer Algorithmus, kein anderer Parameter. Urteil (`lib/verdicts.ts`, Google-ISBN-Abfrage), Kauf-Links je ISBN, E21 und die Wortregeln in `lib/seo.ts` haben bei Platten kein Gegenstück; Discogs-CC0, CAA und Wikipedia-CC-BY-SA bringen eigene Lizenzpflichten. Eine Medienweiche quer durch `lib/` würde jede Buchregel um einen Fall erweitern, den sie nie gemessen hat.
+- **Empfehlung: bis zur Entscheidung (3) in `lab/vinyl/` bleiben** — die Lab-Regeln tragen das schon (darf `lib/` importieren, wird nie importiert). Heute importiert `lab/vinyl` aus `lib/` nur `imagehash`; die tatsächlich geteilte Fläche ist also klein und bekannt. **Fällt (3) auf „eigene Seite"**, dann im selben Repository als zweite App (Workspace: `apps/books`, `apps/records`, ein gemeinsames Paket mit Signaturen, Faltmechanik, Rate-Limit, Store, Gestaltung), eigenes Vercel-Projekt und eigene Domain; der erste Schritt wäre, die medienneutralen Teile aus `lib/` herauszulösen, gemessen daran, dass die Buchtests unverändert grün bleiben. **Fällt (3) auf „Teil von beautifulcovers"**, ist der Preis eine Verallgemeinerung von Work/Edition/Cover (Kennungsart statt ISBN, Gruppierung statt Sprache, Faltregel je Medium) — eigener Roadmap-Punkt, nicht nebenbei.
+
 ## Status
 
 **Gemessen am 2026-09-29** an acht Alben; die Tabellen stehen in der [Historie](../../docs/history.md#2026-09-29--schallplatten-statt-bücher-erste-messung-roadmap-516). Kurz:
