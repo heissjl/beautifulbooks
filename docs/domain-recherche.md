@@ -73,7 +73,8 @@ Julian, 2026-10-01: „research availability of names and domains for the projec
 - **Verfügbarkeit:** Vercels Domain-Abfrage (eine Registry-Abfrage, sie reserviert nichts) für **152 Namen als `.com`** und 46 Ausweich-Endungen, am 2026-10-01. Die 14 Namen, um die es am Ende geht, sind zusätzlich per `whois` bei Verisign gegengeprüft („No match" oder Registrierungsdatum). `.de` führt Vercel nicht; die fünf `.de`-Angaben stammen von DENIC (`whois.denic.de`).
 - **Preise:** Vercels Preisabfrage, USD je Jahr, Kauf / Verlängerung. Abgefragt für 22 freie `.com` — alle **11,25 / 11,25**, keiner mit Aufschlag — und für die Ausweich-Endungen. Für die übrigen freien `.com` ist der Preis **nicht** abgefragt.
 - **Wer den Namen schon benutzt:** die vergebene Domain aufgerufen, dazu je eine Websuche nach dem Namen und ein Blick auf den GitHub-Namen (`github.com/<name>`, 404 = frei).
-- **Nicht geprüft:** die Markenregister (USPTO, EUIPO, DPMA). Eine einzelne Suche bei Trademarkia nach „other covers" zeigte auf der ersten Seite keinen gleichlautenden Eintrag; das ist ein Blick, keine Recherche. Ebenso nicht geprüft: Instagram, X und andere Konten, außer wo unten genannt. **Vor dem Kauf** gehört der gewählte Name einmal in die drei Register.
+- **Markenregister:** am 2026-10-01 nicht geprüft; **für „Other Covers" am 2026-10-02 nachgeholt, siehe [§10](#10-markenregister-für-other-covers-2026-10-02)**. Für jeden anderen Namen steht das noch aus.
+- **Nicht geprüft:** Instagram, X und andere Konten, außer wo unten genannt.
 
 ## 6. Julians vier Namen
 
@@ -172,4 +173,47 @@ Frei und oben nicht einzeln besprochen: thatedition, manycovers, samebookdiffere
 
 **Die griechische Spur aus Teil A** (`kalloscovers.com`, `kallos.ink`) bleibt gültig für den Fall, dass der Name nicht beschreiben, sondern klingen soll. Für den US-Markt zuerst (E9) trägt ein Name, den man beim ersten Hören schreiben kann, weiter.
 
-**Nicht gekauft.** Offen vor dem Kauf: (1) der gewählte Name in USPTO, EUIPO und DPMA; (2) die Konten, die mit dem Namen gehen sollen; (3) bei `reprinted.com` oder `coverversions.com`, falls doch: den Preis von Hand beim Händler erfragen. Nach dem Kauf gilt ROADMAP 2.2 — `NEXT_PUBLIC_SITE_URL` ändern, neu bauen, Sitemap neu einreichen.
+**Nicht gekauft.** Offen vor dem Kauf: (1) ~~der gewählte Name in USPTO, EUIPO und DPMA~~ — für „Other Covers" erledigt (§10), für jeden anderen Namen noch zu tun; (2) die Konten, die mit dem Namen gehen sollen; (3) bei `reprinted.com` oder `coverversions.com`, falls doch: den Preis von Hand beim Händler erfragen. Nach dem Kauf gilt ROADMAP 2.2 — `NEXT_PUBLIC_SITE_URL` ändern, neu bauen, Sitemap neu einreichen.
+
+## 10. Markenregister für „Other Covers" (2026-10-02)
+
+Julian, 2026-10-02: „check das für othercovers". **Ergebnis: in keinem der drei Register steht eine Marke „Other Covers" oder „Othercovers", weder lebend noch erloschen.**
+
+| Register | Wie gefragt | Kontrolle | Treffer |
+|---|---|---|---|
+| **USPTO** (USA) | die Schnittstelle der amtlichen Suche `tmsearch.uspto.gov`, Feld Wortmarke: `othercovers`, `othercover`, „other covers" als Phrase und als zwei Wörter in beliebiger Stellung, dazu `othercover*` | `coverwallet` → 1 Eintrag (erloschen) | **0** für jede Schreibweise mit „covers" |
+| **EUIPO** (EU) | eSearch plus, einfache Suche: `othercovers`, `other covers`, `othercover` | `suhrkamp` → 2 Einträge | **0** |
+| **DPMA** (Deutschland) | DPMAregister, Basisrecherche über alle drei Bestände — nationale Marken, Unionsmarken, internationale Marken: `othercovers` und `other covers` (das Register sucht dann `marke="other" and marke="covers"`) | `suhrkamp` → 5 Einträge (DE und EM, auch abgelaufene) | **0** („Die Datenbankabfrage lieferte keine Treffer") |
+| **TMview** (Sammelsuche über EUIPO, DPMA, WIPO, USPTO, UK und weitere Ämter) | „enthält" für `othercovers`, `othercover`, `other covers`, `other cover`; dazu die unscharfe Suche | `suhrkamp` je Amt, `penguin` bei der WIPO | **0** gleichlautende |
+
+**Was in der Nähe liegt** — alles, was die Zeichenfolge enthält oder die unscharfe Suche zurückgab und beide Wörter trägt:
+
+| Marke | Amt | Stand | Klassen | Inhaber | Warum es nicht stört |
+|---|---|---|---|---|---|
+| THE OTHER COVER | USA, 78840359 | **erloschen** (angemeldet 2006) | 25 (Bekleidung) | Triboro Quilt Manufacturing | tot, andere Ware |
+| MotherCover | UK, UK00003963537 | eingetragen, angemeldet 2023 | 9, 16, 25, 35, 36, 38, 41, 42, 44, 45 | Claire Ferreira | ein anderes Wort, das unsere Buchstaben nur enthält; allerdings breit angemeldet, auch 9, 16, 41 und 42 |
+| MOTHER COVER, MOTHER'S COVER | USA | erloschen | 20, 24, 25 | Leachco; Bramhan | andere Ware |
+| MOTHERCOVER | Australien | erloschen (1986) | 36 | privat | Versicherung |
+| COVER OTHER | China | eingetragen | 25, 35 | 钱佳 | umgekehrte Wortfolge, Bekleidung, China |
+
+**Was diese Prüfung nicht ist.** Sie findet gleich und fast gleich geschriebene **eingetragene** Marken. Sie findet nicht: Rechte ohne Eintragung (in den USA entsteht Markenschutz schon durch Benutzung; in Deutschland schützt § 5 MarkenG Unternehmenskennzeichen und Werktitel ohne Register), Bildmarken ohne Wortbestandteil, und Zeichen, die ein Gericht für verwechselbar hielte, obwohl sie anders geschrieben sind. Gegen die ersten beiden steht die Websuche vom 2026-10-01 (§6: keine Firma, keine Seite, kein Buchprojekt dieses Namens gefunden; nur das Instagram-Konto mit 18 Followern). Eine Rechtsberatung ist das nicht.
+
+**Nebenbefund:** „other covers" ist für eine Seite, die andere Umschläge zeigt, nahezu beschreibend. Das macht den Namen ungefährlich — zwei gewöhnliche Wörter in ihrer gewöhnlichen Bedeutung kann niemand für sich sperren — und aus demselben Grund schwer selbst als Wortmarke einzutragen, falls das je gewollt wäre.
+
+**Handwerk, damit die nächste Prüfung schneller geht:** Die USPTO-Suche und TMview antworten auf eine gewöhnliche POST-Anfrage mit JSON (`https://tmsearch.uspto.gov/prod-stage-v1-0-0/tmsearch`, `https://www.tmdn.org/tmview/api/search/results`); TMview verweigert GET mit 405. EUIPOs eSearch nimmt den Suchbegriff in der Adresse hinter `#basic/…/`, **sucht aber nur beim frischen Laden** — ein Wechsel des Begriffs ohne Neuladen zeigt weiter „0 results" und sah bei der Kontrollsuche wie ein leerer Bestand aus. Immer erst die Kontrolle, dann den Namen.
+
+## 11. Findet jemand die Seite über den Namen? (2026-10-02)
+
+Julians Einwand, 2026-10-02: „würde ein user auf dieser seite landen, wenn er sucht? man gibt ja eher nicht ein bild bei google ein und sucht nach ‚other covers'. die meisten würden nur das buch bei stores eingeben oder das buch googeln und dann auf die image seite von google gehen oder ‚frankenstein cover' oder sowas".
+
+**Der Einwand stimmt, und er gilt für jeden Namen auf dieser Liste.** Niemand sucht „other covers", niemand sucht „coverwall", niemand sucht „which edition". Gesucht wird das Buch. Ein Domainname bringt deshalb keinen Suchverkehr, und ein Stichwort in der Domain hebt die Seite auch nicht mehr in der Rangfolge.
+
+**Was bei „frankenstein cover" entscheidet, ist die Buchseite, nicht die Domain.** Deren Titel heißt heute „The covers of Frankenstein by Mary Shelley" (`workPageTitle` in `lib/seo.ts`) — die Wörter der Suchanfrage stehen dort schon. Ob Google die Seite dafür zeigt, hängt an Dingen, die auf der Roadmap stehen und mit dem Namen nichts zu tun haben: **2.5** (Search Console und Sitemap, noch offen — bis dahin steht die Seite in keiner Suchmaschine), **5.2** (ob die Cover im ausgelieferten HTML ankommen) und die Landeseiten aus Phase 5. Und selbst dann steht eine neue Seite bei „frankenstein cover" hinter Wikipedia, Goodreads, Amazon und der Bildersuche; damit ist auf Monate nicht zu rechnen.
+
+**Wofür der Name trotzdem zählt:**
+
+1. **Als Zeile im Suchergebnis und im geteilten Link.** „The covers of Frankenstein — Other Covers" sagt dem, der „frankenstein cover" gesucht hat, dass er richtig ist. „… — Rejacketed", „… — First Thus" oder „… — Kallos" sagen das nicht. Das ist ein Argument für einen Namen, in dem „cover" steht, und gegen die eigenwilligen.
+2. **Beim Wiederkommen.** Wer die Seite einmal gesehen hat, muss den Namen eine Woche später noch tippen können. Das ist die eigentliche Aufgabe des Namens, und der Grund für „`.com`, kein Bindestrich".
+3. **Beim Weitersagen** — der Weg, über den eine Hobbyseite am Anfang überhaupt Besucher bekommt (Reddit, Newsletter, ein Link unter Freunden), lange bevor Google etwas schickt.
+
+**Folge für die Wahl:** nichts an der Empfehlung ändert sich, aber die Begründung verschiebt sich. `othercovers.com` und `thecoverwall.com` bleiben vorn, weil beide das Wort „cover" tragen; `rejacketed.com` und `firstthus.com` rutschen nach hinten. **Wer über den Namen gefunden werden will, findet keinen** — der Hebel dafür ist 2.5, zwanzig Minuten, Julian.
