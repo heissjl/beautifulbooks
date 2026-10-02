@@ -352,3 +352,13 @@ Julian, 2026-10-02: „schreibe das alles in einen prompt den ich einer lokalen 
 - Die richtige Reihenfolge bleibt die aus §14: Domain kaufen, in Vercel zuweisen, `NEXT_PUBLIC_SITE_URL` setzen, **dann** pushen.
 
 **Zurück, falls der Name doch ein anderer wird:** eine Zeile in `lib/seo.ts` (`SITE_NAME`), dazu die Überschriften von Spec und README.
+
+## 16. Online als „Other Covers", unter der alten Adresse (2026-10-02)
+
+Julian, 2026-10-02: „push it now even though it has a different vercel name rn". `main` gepusht (`84195cb..0bb16b3`, 32 Commits), Vercel hat gebaut (Deployment `dpl_6zPzqXpdoYv326cKYLviNV2sTV8h`, Ready nach rund zwei Minuten). Damit ist §15 überholt: die Warnung vor dem nächsten Push gilt nicht mehr, die Regel in CLAUDE.md ist angepasst.
+
+**Produktion einmal angesehen**, `https://beautifulcovers.vercel.app`: Startseite 200, Titel „Other Covers", Alt-Text der Karte „Other Covers: judge a book by its covers", Wortmarke mit `tracking-[0.01em]`, der alte Name kommt im HTML der Startseite nicht mehr vor; Buchseite *Frankenstein* mit dem Titel „The covers of Frankenstein; or, The Modern Prometheus by Mary Shelley · Other Covers"; `/opengraph-image` 200, PNG, 51 KB. Nicht angesehen: die Karte als Bild, eine Leser-Sammlung, die Meldungs-Mail.
+
+**Mit demselben Push online gegangen**, weil es im lokalen `main` wartete: 6.82, 6.65, 6.71/6.43, 6.78, 6.80, 6.77, die beiden Kauflink-Commits, 6.83, 6.84, 4.11, 4.12. Ob davon etwas in Produktion eigens anzusehen ist, wissen die Sitzungen, die es gebaut haben; hier ist nur der Name geprüft.
+
+**Was jetzt schief steht, bis die Domain da ist:** die Seite heißt „Other Covers" und wohnt unter `beautifulcovers.vercel.app`. Canonical, Sitemap und der User-Agent gegenüber den Katalogen nennen weiter diese Adresse (`NEXT_PUBLIC_SITE_URL` ist unverändert) — das ist richtig so, solange es die Domain nicht gibt. Der Umschalttag aus §14 schrumpft auf: kaufen, in Vercel zuweisen, DNS, `NEXT_PUBLIC_SITE_URL` setzen, **neu deployen** (die Variable wirkt zur Bauzeit), einmal ansehen, Sitemap neu einreichen, Konten.
