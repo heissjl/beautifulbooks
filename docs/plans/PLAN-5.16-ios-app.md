@@ -107,14 +107,23 @@ TestFlight verteilt Builds ohne Store: interne Tester (Mitglieder des Teams), ex
 
 ### 4.7 Was nur eine App könnte — und was davon heute existiert
 
-| Kandidat | Was er braucht | Stand |
-|---|---|---|
-| **Barcode im Suchfeld** (Ideen-Tabelle der Roadmap, Zeile 2) — die Kamera liest die ISBN, die ISBN-Suche (6.29) übernimmt | ein Kamera-Plugin, oder im Web `BarcodeDetector` — **ob Safari auf iOS ihn hat, ist zu messen**, nicht zu erinnern; wenn ja, schwächt das die Begründung für die Hülle | nichts gebaut |
-| **„Welche Ausgabe habe ich?"** (Zeile 1) — ein Foto des eigenen Exemplars gegen den Index; als **Share-Extension** („Teilen → Beautiful Books" aus der Fotos-App) echt nur nativ | zuerst die Bildabstands-Suche gegen `data/cover-index.json` (nicht gebaut; die Faltung vergleicht Scans, kein Foto mit Perspektive und Schatten) | nichts gebaut; das Regalfoto (5.11a) zeigt, wie weit ein Foto von einem Scan entfernt ist |
-| **Widget** „Cover der Woche" aus Julians Kuratierung | native SwiftUI-Widget, dazu die RSS-Idee (Zeile 5) als Datenquelle | nichts gebaut |
-| Push | ausgeschlossen durch N11 (ein Push-Token ist eine Kennung), es sei denn, Julian hebt N11 dafür auf wie bei E22 | — |
+Julian, 2026-10-02, auf die Analyse: „what potential features could fulfil this requirement". Geordnet danach, wie viel die Funktion über Safari hinaus bringt; die rechte Spalte ist der Haken.
 
-**Folgerung:** Heute gibt es keine Funktion, die eine Hülle vor 4.2 trägt. B beginnt mit einem dieser drei Kandidaten als eigenem Roadmap-Punkt (zuerst als `lab/`-Experiment mit Messung, Regel aus `lab/README.md`), nicht mit dem Xcode-Projekt.
+| Rang | Kandidat | Was er braucht | Haken |
+|---|---|---|---|
+| 1 | **Regalfoto mit Erkennung auf dem Gerät** (5.11a): iOS bringt Rechteck-Erkennung und Dokument-Segmentierung (Vision) mit — ohne Schlüssel, ohne Upload, bis der Leser bestätigt. Der [Plan 5.11a](PLAN-5.11a-regalfoto-zuverlaessig.md) hängt genau an der Kantensuche und wartet auf eine Entscheidung über einen Segmentierer | eine native Kamera-Ansicht, die Rücken-Ausschnitte an die vorhandene Route gibt | ungemessen; Rücken in einer Reihe sind nicht das, wofür Rechteck-Erkennung gebaut ist. Der einzige Kandidat, der ein offenes Roadmap-Problem löst statt eine Funktion zu erfinden |
+| 2 | **Widget** auf dem Home-Bildschirm: Cover der Woche aus Julians Kuratierung oder eine Kachel einer veröffentlichten Sammlung, täglich aus einer kleinen JSON-Route | ein SwiftUI-Widget, eine Route (verwandt mit der RSS-Idee der Ideen-Tabelle) | billig und nur nativ, im ersten Screenshot sichtbar, keine Kennung — aber eine Tür, kein Werkzeug; allein dünn |
+| 3 | **Share-Extension „Welche Ausgabe habe ich?"** (Ideen-Tabelle, Zeile 1): ein Foto aus Fotos oder Kamera an die App teilen, Ausgabe und ISBN zurück | zuerst die Bildabstands-Suche eines **Fotos** (Perspektive, Glanz) gegen `data/cover-index.json`; die Faltung vergleicht Scans mit Scans | die beste Geschichte, die Extension ein Tag — der Abgleich ist das Projekt; nichts gebaut |
+| 4 | **Barcode im Suchfeld** (Zeile 2): die Kamera liest die ISBN, 6.29 übernimmt | ein Kamera-Plugin | **falls Safari auf iOS `BarcodeDetector` hat, kann das Web es schon** und der Unterschied verschwindet — vor dem Zählen messen |
+| 5 | **Core Spotlight**: geöffnete Werke und Sammlungen in der Suche des iPhones („Gatsby covers") | ein Index auf dem Gerät, nichts verlässt es (N11 hält) | für einen Prüfer unsichtbar, wenn die Prüfnotiz nicht darauf zeigt |
+| 6 | **Eigene Sammlung offline**, mit Covern auf dem Gerät | ein lokaler Cache der Sammlung | das einzige Offline-Stück einer sonst online-only Seite; der Prüfer bräuchte eine Sammlung, um es zu sehen |
+| — | Push | — | ausgeschlossen durch N11 (ein Push-Token ist eine Kennung), es sei denn, Julian hebt N11 dafür auf wie bei E22 |
+| — | Ladenfinder mit Standort (5.12) | — | der Browser hat Geolocation ebenso; 5.12 hat sich gegen einen Finder entschieden |
+| — | AR, Haptik im Spiel | — | kosmetisch, trägt 4.2 nicht allein |
+
+**Regel 4.2 wird von einem Prüfer mit Minuten beurteilt:** die Funktion muss auf dem ersten Bildschirm oder im ersten Screenshot liegen (ein Scan-Knopf im Suchfeld, ein Widget im Screenshot), sonst zählt sie nicht, auch wenn sie da ist.
+
+**Folgerung:** Heute gibt es keine Funktion, die eine Hülle vor 4.2 trägt. B beginnt mit einem dieser Kandidaten als eigenem Roadmap-Punkt (zuerst als `lab/`-Experiment mit Messung, Regel aus `lab/README.md`), nicht mit dem Xcode-Projekt. Rang 1 ist zugleich der nächste Schritt von 5.11a; wenn Julian beide will, ist das ein Punkt, nicht zwei.
 
 ### 4.8 Die Domain vor dem Store
 
