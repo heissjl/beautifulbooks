@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import BrandMark from '@/components/BrandMark';
+import { SITE_NAME } from '@/lib/seo';
 
 interface SiteHeaderProps {
   /** Optional left slot, e.g. a back link on detail pages. */
@@ -20,10 +21,16 @@ export default function SiteHeader({ left, right, search }: SiteHeaderProps) {
       <div className="relative mx-auto flex h-14 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-4">
           {left}
-          <Link href="/" className="group flex shrink-0 items-center gap-2 font-display text-xl italic tracking-tight text-ink hover:text-accent transition-colors">
+          {/*
+            A hair of tracking (Julian, 2026-10-02: „gib minimal mehr
+            buchstabenabstand"): with `tracking-tight` the narrow italic set
+            the two words 4.1 px apart and the name read as one; at 0.01em
+            the gap is 4.8 px. `Wordmark` in app/og.tsx carries the same.
+          */}
+          <Link href="/" className="group flex shrink-0 items-center gap-2 font-display text-xl italic tracking-[0.01em] text-ink hover:text-accent transition-colors">
             {/* The mark keeps its own tones on hover, so the picked tile stays picked out. */}
             <BrandMark className="h-6 w-auto" />
-            Beautiful Books
+            {SITE_NAME}
           </Link>
         </div>
         <div className="ml-auto flex items-center gap-2">

@@ -5,6 +5,7 @@ import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import WallView from '@/components/WallView';
+import { SITE_NAME } from '@/lib/seo';
 import { isWallId, toPublic, type PublicWall } from '@/lib/walls/model';
 import { isOwner, VISITOR_COOKIE } from '@/lib/walls/owner';
 import { wallStoreFromEnv } from '@/lib/walls/store';
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Shared links get the card beside this file (opengraph-image.tsx); these give it words: the
   // reader's own introduction if they wrote one, otherwise what the wall holds.
   const description = found
-    ? (found.intro?.trim() || `${found.tiles.length} ${found.tiles.length === 1 ? 'cover' : 'covers'}${found.by ? `, collected by ${found.by}` : ''}, on Beautiful Books.`).slice(0, 200)
+    ? (found.intro?.trim() || `${found.tiles.length} ${found.tiles.length === 1 ? 'cover' : 'covers'}${found.by ? `, collected by ${found.by}` : ''}, on ${SITE_NAME}.`).slice(0, 200)
     : undefined;
   return {
     title,

@@ -16,16 +16,58 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3
  * A page that sets `openGraph` replaces the parent's whole object, images
  * included, so a page without a card of its own names this one.
  */
+/**
+ * The name of the site, in one place (ROADMAP 0.5): the header, the title
+ * template, the share cards and the mail sender all read it from here.
+ * Never write the name out anywhere else — a test walks `app/`, `components/`
+ * and `lib/` for it. The site was "Beautiful Books" until 2026-10-02 and
+ * "Other Covers" for one afternoon (docs/domain-recherche.md §13–18); it
+ * lives at beautifulcovers.vercel.app until buyitscovers.com is connected.
+ */
+export const SITE_NAME = 'Buy Its Covers';
+
+/** The public repository; the contact of last resort in `userAgent`. */
+export const SITE_REPOSITORY = 'https://github.com/heissjl/beautifulbooks';
+
 export const SITE_CARD = {
   url: `${SITE_URL}/opengraph-image`,
   width: 1200,
   height: 630,
-  alt: 'Beautiful Books: judge a book by its covers',
+  alt: `${SITE_NAME}: judge a book, buy its covers`,
 };
 
-export const SITE_NAME = 'Beautiful Books';
-
 /** "George Orwell", or "Mary Shelley and 2 others" when a record lists many. */
+/**
+ * How the site names itself to a catalogue: "BuyItsCovers/0.1 (<where to find
+ * us>)". The address is the site itself once it is deployed — its imprint
+ * carries the contact — and the public repository from a script or a dev
+ * server, where the site's address is localhost and tells Open Library
+ * nothing. An e-mail address, which would raise Open Library's limit from 1
+ * to 3 requests a second, is ROADMAP 2.7 and Julian's to add.
+ */
+export function userAgent(siteUrl: string = SITE_URL): string {
+  const local = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:|\/|$)/.test(siteUrl);
+  return `${SITE_NAME.replace(/\s+/g, '')}/0.1 (${local ? SITE_REPOSITORY : siteUrl})`;
+}
+
+/**
+ * JSON for a `<script type="application/ld+json">`. `JSON.stringify` leaves
+ * `<` alone, and the HTML parser ends a script element at the first
+ * `</script>` whatever the JSON says — so a title that contains one would
+ * run as markup. Titles and descriptions come from Open Library, which
+ * anyone with an account can edit, and from Google Books: not typed by a
+ * visitor here, but not ours either (docs/sicherheit-2026-10-02.md, ROADMAP
+ * 2.8). The escapes are valid JSON and read back as the same characters.
+ */
+export function jsonLdHtml(value: unknown): string {
+  return JSON.stringify(value)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
+
 export function authorLine(authors: readonly string[]): string {
   const [first, second, ...rest] = authors;
   if (!first) return '';
@@ -37,7 +79,7 @@ export function authorLine(authors: readonly string[]): string {
 /**
  * "The covers of Nineteen Eighty-Four by George Orwell".
  *
- * The layout appends " · Beautiful Books", so this stays a noun phrase and
+ * The layout appends " · " and the site's name, so this stays a noun phrase and
  * carries the two words a searcher actually types: the title and the author.
  */
 export function workPageTitle(work: Pick<Work, 'title' | 'authors'>): string {

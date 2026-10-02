@@ -5,7 +5,7 @@ import BookDetailPage from '@/components/BookDetail';
 import { wallsEnabled } from '@/lib/walls/switch';
 import { WALL_WORKS } from '@/lib/curated';
 import type { Cover, Edition, Work } from '@/lib/model';
-import { bookJsonLd, workDescription, workPageTitle, workUrl } from '@/lib/seo';
+import { bookJsonLd, jsonLdHtml, workDescription, workPageTitle, workUrl } from '@/lib/seo';
 import { getWorkPage, isWorkId } from '@/lib/work';
 import { getWork } from '@/lib/sources/openlibrary';
 
@@ -80,8 +80,8 @@ async function WorkJsonLd({ id }: { id: string }) {
   return (
     <script
       type="application/ld+json"
-      // Built from our own types, never from anything a visitor typed.
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(bookJsonLd(loaded.work, loaded.covers, loaded.editions)) }}
+      // Not typed by a visitor here, but written by whoever edits the catalogues: escaped so no title can close the script.
+      dangerouslySetInnerHTML={{ __html: jsonLdHtml(bookJsonLd(loaded.work, loaded.covers, loaded.editions)) }}
     />
   );
 }
