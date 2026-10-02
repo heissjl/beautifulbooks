@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { Display, OG, Wordmark, ogFonts } from '@/app/og';
+import { SITE_CARD } from '@/lib/seo';
 
 /**
  * The card for every page that has none of its own: the home page, About,
@@ -11,7 +12,7 @@ import { Display, OG, Wordmark, ogFonts } from '@/app/og';
  * covers does not reach it (docs/identitaet.md §2). It asks no source and
  * can be static.
  */
-export const alt = 'Beautiful Books: judge a book by its covers';
+export const alt = SITE_CARD.alt;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 

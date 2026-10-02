@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import BrandMark from '@/components/BrandMark';
+import { SITE_NAME } from '@/lib/seo';
 
 interface SiteHeaderProps {
   /** Optional left slot, e.g. a back link on detail pages. */
@@ -23,7 +24,7 @@ export default function SiteHeader({ left, right, search }: SiteHeaderProps) {
           <Link href="/" className="group flex shrink-0 items-center gap-2 font-display text-xl italic tracking-tight text-ink hover:text-accent transition-colors">
             {/* The mark keeps its own tones on hover, so the picked tile stays picked out. */}
             <BrandMark className="h-6 w-auto" />
-            Beautiful Books
+            {SITE_NAME}
           </Link>
         </div>
         {/* The tagline is decoration and yields the room to the field. */}

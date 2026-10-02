@@ -16,14 +16,20 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3
  * A page that sets `openGraph` replaces the parent's whole object, images
  * included, so a page without a card of its own names this one.
  */
+/**
+ * The name of the site, in one place (ROADMAP 0.5): the header, the title
+ * template, the share cards and the mail sender all read it from here.
+ * "Other Covers" is the mock-up of 2026-10-02 — Julian has not bought the
+ * domain or decided; "Beautiful Books" is what production says.
+ */
+export const SITE_NAME = 'Other Covers';
+
 export const SITE_CARD = {
   url: `${SITE_URL}/opengraph-image`,
   width: 1200,
   height: 630,
-  alt: 'Beautiful Books: judge a book by its covers',
+  alt: `${SITE_NAME}: judge a book by its covers`,
 };
-
-export const SITE_NAME = 'Beautiful Books';
 
 /** "George Orwell", or "Mary Shelley and 2 others" when a record lists many. */
 export function authorLine(authors: readonly string[]): string {
@@ -37,7 +43,7 @@ export function authorLine(authors: readonly string[]): string {
 /**
  * "The covers of Nineteen Eighty-Four by George Orwell".
  *
- * The layout appends " · Beautiful Books", so this stays a noun phrase and
+ * The layout appends " · " and the site's name, so this stays a noun phrase and
  * carries the two words a searcher actually types: the title and the author.
  */
 export function workPageTitle(work: Pick<Work, 'title' | 'authors'>): string {

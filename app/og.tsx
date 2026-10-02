@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 import sharp from 'sharp';
+import { SITE_NAME } from '@/lib/seo';
 
 /**
  * What the shared-link cards have in common (ROADMAP 6.61): the site's two
@@ -66,7 +67,7 @@ export function Display({ children, size, color, italic = false, lineHeight = 1.
 
 /** The name as the header sets it: Xanh, italic. */
 export function Wordmark({ size, color }: { size: number; color: string }) {
-  return <Display size={size} color={color} italic>Beautiful Books</Display>;
+  return <Display size={size} color={color} italic>{SITE_NAME}</Display>;
 }
 
 /**

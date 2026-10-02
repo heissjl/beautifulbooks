@@ -258,3 +258,38 @@ Julian, 2026-10-02: „check noch andere social media accounts für othercovers"
 **Was daraus folgt.** Die drei belegten Konten sind klein oder verwaist und haben alle mit **Musik**-Covern zu tun — die Nebenbedeutung von „covers", die §9 schon als Schwäche nennt, zeigt sich hier zum ersten Mal an echten Fällen. Eine Verwechslung mit einer Seite über Buchumschläge ist das nicht, aber Instagram ist für ein Projekt aus Bildern der naheliegendste Kanal, und genau dort ist der Name weg. Auswege, in dieser Reihenfolge: `@othercovers.books`, `@othercoversbooks` oder `@othercovers_com` auf Instagram (nicht geprüft, ob frei); das verwaiste YouTube-Konto lässt sich nicht übernehmen, ist aber für diese Seite auch der unwichtigste Kanal. Frei sind die Kanäle, auf denen über Bücher und Gestaltung geredet wird — X, Bluesky, Mastodon, TikTok —, und der GitHub-Name.
 
 **Wenn die Domain gekauft wird, am selben Tag anlegen** (kostet nichts, und ein freier Name bleibt es nicht von selbst): X, TikTok, Bluesky mit der Domain als Name, GitHub. Das ist Julians Schritt — Konten legt Claude nicht an.
+
+## 13. Mock-up: die Seite als „Other Covers" (2026-10-02)
+
+Julian, 2026-10-02: „make a mock up with the other covers name. we would need to change some labels etc". **Gebaut im echten Code auf diesem Branch, nicht deployt, nicht entschieden** — der letzte Commit des Branches ist das Mock-up; wer nur die Recherche nach `main` holen will, nimmt die Commits davor.
+
+**Was sich geändert hat.** Der Name stand als Wort an acht Stellen im Code. Jetzt steht er einmal, als `SITE_NAME` in `lib/seo.ts`, und alle lesen ihn von dort:
+
+| Wo der Leser den Namen sieht | Datei |
+|---|---|
+| Wortmarke in der Kopfzeile jeder Seite | `components/SiteHeader.tsx` |
+| Reiter des Browsers und Zeile im Suchergebnis: „… · Other Covers" | `app/layout.tsx` |
+| Karte für geteilte Links der Seite (Wortmarke und Alt-Text) | `app/opengraph-image.tsx`, `app/og.tsx` |
+| Karte für ein Buch und für ein einzelnes Cover, wenn die Quelle ausfällt | `app/book/[id]/opengraph-image.tsx`, `…/cover/[coverId]/opengraph-image.tsx` |
+| Beschreibung einer Leser-Sammlung: „…, on Other Covers." | `app/c/[id]/page.tsx` |
+| Absender der Meldungs-Mail an Julian | `lib/walls/notify.ts` |
+
+Damit ist die Umbenennung selbst eine Zeile. `npx tsc --noEmit` und ESLint sind sauber. `npm run test:run`: im ersten Lauf, neben dem laufenden Dev-Server, fiel **einer von 977 Tests** durch — welcher, ist nicht festgehalten, die Ausgabe war gekürzt; im zweiten Lauf ohne Dev-Server bestanden alle 977. Kein Test nennt den Namen der Seite, ein Zusammenhang mit der Änderung ist nicht zu sehen, aber auch nicht ausgeschlossen. `npm run build` ist nicht gelaufen.
+
+**Was nicht geändert werden musste.** „Judge a book *by its covers.*", „Covers, side by side." und die Bildmarke (eine Wand aus Kacheln, eine herausgehoben) passen zu „Other Covers" besser als zu „Beautiful Books" — die Marke zeigt wörtlich ein Cover unter anderen. About, Privacy und Impressum nennen den Namen nicht. Auf der Buchseite sagt die Seitenleiste schon heute „Also printed with · 3 other covers".
+
+**Angesehen** auf dem Dev-Server des Worktrees bei 1280 × 800 und 390 × 844 (als Gerät emuliert; `innerWidth` gleich `scrollWidth` auf allen vier Seiten, nichts läuft über): Startseite, Buchseite *Frankenstein* (Reitertitel „The covers of Frankenstein; or, The Modern Prometheus by Mary Shelley · Other Covers"), die Karte der Seite und die Karte des Buchs. Bilder lokal unter `docs/tests/2026-10-02-othercovers-*.png`.
+
+**Ein Befund am Bild: der Wortabstand.** In der schmalen kursiven Xanh liest sich die Wortmarke in der Kopfzeile am Desktop wie **„OtherCovers"** — der Zwischenraum ist kaum breiter als der Abstand zwischen zwei Buchstaben. Am Telefon und auf der Karte ist er zu sehen, aber knapp. Zwei Wege, Julian entscheidet: den Abstand in der Wortmarke weiten (`word-spacing`, eine Zeile), oder es absichtlich als ein Wort setzen, wie die Domain.
+
+**Was eine echte Umbenennung noch braucht** — nichts davon ist im Mock-up angefasst:
+
+1. **Domain verbinden** (ROADMAP 2.2): `NEXT_PUBLIC_SITE_URL` in Vercel ändern, neu bauen, Sitemap neu einreichen; `beautifulcovers.vercel.app` leitet dann um.
+2. **User-Agent gegenüber Open Library** (`lib/sources/http.ts`): heißt `BeautifulBooks/0.1` und nennt ein Repo, das es nicht gibt — ohnehin offen in ROADMAP 2.7.
+3. **`README.md`** (Überschrift) und **`package.json`** (`name`).
+4. **`lab/video/`** (`storyboard.ts`, `frames.ts` und ihr Test): der Name steht in den Bildern des Films.
+5. **`WALLS_REPORT_FROM`** in Vercel, falls gesetzt — die Variable gewinnt gegen `SITE_NAME`.
+6. **Texte außerhalb des Codes:** das Vercel-Projekt `beautifulbooks`, das GitHub-Repo, der Ordner. Müssen nicht, können.
+7. **Bleibt, wie es ist:** das Cookie `bb_visitor` und die Log-Kennung `bb.img`. Das Cookie umzubenennen würde jeden Leser von seinen Sammlungen trennen.
+
+Die Skripte unter `scripts/` und die übrigen `lab/`-Ordner nennen „beautifulbooks" nur als Projekt- oder Ordnernamen und in User-Agents für Aufzeichnungen; für den Leser unsichtbar.
