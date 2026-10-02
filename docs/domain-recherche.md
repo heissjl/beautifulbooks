@@ -513,3 +513,25 @@ Vercel meldet alle sieben als „verified" (niemand sonst beansprucht sie), aber
 Vorhandene A- oder AAAA-Einträge auf `@` (INWX legt bei manchen Domains eine Parkseite an) vorher löschen; sonst nichts anfassen, die Nameserver bleiben bei INWX. Nach dem Setzen prüft Vercel von selbst, stellt das Zertifikat aus (Let's Encrypt, Minuten bis eine Stunde) und schickt eine Mail. Ein CAA-Eintrag ist nicht nötig; **wer einen setzt, muss `letsencrypt.org` erlauben**, sonst bleibt das Zertifikat aus. `beautifulcovers.vercel.app` bleibt als Adresse bestehen; Vercel leitet sie auf die Hauptdomain um, sobald die steht.
 
 **Danach:** Sitemap in der Search Console unter `https://buyitscovers.com/sitemap.xml` neu einreichen (2.5), Konten (§12, Prompt), DNS härten (2.14).
+
+**Deployt am 2026-10-02 nachts** (`0bb16b3..65fc975`, Ready nach rund zwei Minuten), einmal angesehen unter `beautifulcovers.vercel.app`: Titel „Buy Its Covers", Überschrift „Judge a book, buy its covers.", Canonical, `og:image`, `robots.txt` und Sitemap nennen `https://buyitscovers.com`. **Bis das DNS steht, zeigen diese Adressen ins Leere** — ein in dieser Zeit geteilter Link bekommt keine Vorschaukarte. Alle sechs Domains antworten im DNS noch mit `185.181.104.242` (INWX' Parkseite); genau dieser A-Eintrag ist je Domain durch `76.76.21.21` zu ersetzen.
+
+## 21. E-Mail unter der Domain (2026-10-02)
+
+Julian: „what do i need to do to set up emails from that domain". Drei getrennte Fragen, drei getrennte Antworten.
+
+**1. Mails empfangen und von Hand schreiben** (`julian@buyitscovers.com`). INWX registriert Domains und hält DNS, ist aber kein Postfach. Was infrage kommt, in der Reihenfolge, die ich wählen würde:
+
+| Weg | Was es kann | Kosten | Was ins DNS kommt |
+|---|---|---|---|
+| **iCloud+ mit eigener Domain** (Apple: iCloud → Eigene E-Mail-Domain) | Empfangen *und* Senden aus Mail.app, bis zu drei Adressen je Person, bis zu fünf Domains | im iCloud+-Abo enthalten, das Julian für iCloud Drive vermutlich schon hat | Apple zeigt beim Einrichten MX-, SPF-, DKIM- und DMARC-Einträge an, die bei INWX einzutragen sind |
+| Ein Postfach-Anbieter mit eigener Domain (mailbox.org, Fastmail, Proton) | dasselbe, unabhängig von Apple | 1–5 € im Monat | MX, SPF, DKIM, DMARC vom Anbieter |
+| Nur Weiterleitung auf die bestehende Adresse (ImprovMX, oder falls INWX es im Kundenmenü anbietet) | Empfangen; Antworten kommen von der alten Adresse | frei | MX und SPF des Weiterleiters |
+
+Posteo, Julians heutige Adresse, nimmt keine eigenen Domains an. Die eine Adresse, die die Seite wirklich braucht, ist die im Impressum (`IMPRINT_EMAIL`) — die kann bleiben, wie sie ist, oder umziehen, sobald das Postfach steht.
+
+**2. Mails, die die Seite verschickt** (heute nur die Meldungs-Mail an Julian über Resend, `lib/walls/notify.ts`, Absender `onboarding@resend.dev`). Damit sie von `@buyitscovers.com` kommt: in Resend → Domains die Domain anlegen; Resend zeigt dann drei Einträge für INWX — einen TXT-Eintrag für DKIM (`resend._domainkey`), einen MX- und einen SPF-TXT-Eintrag auf einer Unterdomain (`send.buyitscovers.com`); nach „Verify" in Vercel `WALLS_REPORT_FROM` auf `Buy Its Covers <reports@buyitscovers.com>` setzen und neu deployen. Das kollidiert nicht mit einem Postfach, weil Resend seine Unterdomain benutzt.
+
+**3. Verhindern, dass andere im Namen der Domain schreiben** (2.14). Solange kein Postfach da ist: TXT `@` `v=spf1 -all`, TXT `_dmarc` `v=DMARC1; p=reject;`, und ein Null-MX (`MX @ 0 .`) — dann weiß jeder Empfänger, dass von dieser Domain keine Mail kommt. Sobald ein Postfach oder Resend eingerichtet ist, ersetzen deren Einträge SPF und MX; DMARC bleibt, zuerst mit `p=quarantine`, nach einer Woche ohne Fehlzustellung `p=reject`. Dasselbe für die fünf Weiterleitungs-Domains, von denen nie Mail kommen wird.
+
+Was ich hier **nicht** prüfen konnte: ob INWX selbst eine Weiterleitung anbietet und ob Julian iCloud+ hat.
