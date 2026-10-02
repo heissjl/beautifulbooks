@@ -1,0 +1,535 @@
+<!doctype html>
+<!--
+  The local MVP of the record page (ROADMAP 5.16a), served by serve.ts.
+  Layout „sleeves in detail" from mockup.html (Julian, 2026-10-02): one
+  section per sleeve design with front, back and both labels of one pressing,
+  the pressings of that sleeve as their labels, every image full size. The
+  URL is the state: /?q= for a search, /album/<mbid>?country=&p= for an album.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beautiful Records</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Xanh+Mono:ital@0;1&display=swap">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f4f0e8; --surface: #fbf9f4; --surface-2: #ebe5da;
+    --ink: #1a1714; --ink-2: #5a534a; --ink-3: #746c62; --line: #ddd5c8;
+    --accent: #945138; --on-accent: #fff8f2; --shadow: 20 16 12;
+    --display: "Xanh Mono", Georgia, serif; --sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #131110; --surface: #1b1815; --surface-2: #26221e;
+      --ink: #efe8dd; --ink-2: #b2a99b; --ink-3: #837b6f; --line: #2e2925;
+      --accent: #dbac94; --on-accent: #1a1210; --shadow: 0 0 0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--sans); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font: inherit; color: inherit; }
+
+
+  header.site { display: flex; align-items: center; gap: 20px; padding: 12px 32px; border-bottom: 1px solid var(--line); }
+  header.site .home { color: var(--ink-2); font-size: 14px; }
+  header.site .mark { font-family: var(--display); font-style: italic; font-size: 20px; color: var(--ink); letter-spacing: -.01em; }
+  header.site form { margin-left: auto; }
+  header.site input { width: 260px; max-width: 52vw; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 10px; color: var(--ink); font: inherit; font-size: 14px; }
+
+  main { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 48px; padding: 28px 32px 64px; max-width: 1400px; }
+  h1 { font-family: var(--display); font-weight: 400; font-size: 52px; line-height: 1.05; margin: 0 0 10px; letter-spacing: -.01em; }
+  .by { font-size: 17px; color: var(--ink-2); margin: 0; }
+  .meta { font-size: 13px; color: var(--ink-3); margin: 6px 0 28px; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .count { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); margin-right: 4px; }
+  .chip { border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 3px 12px; font-size: 13.5px; cursor: pointer; white-space: nowrap; }
+  .chip small { color: var(--ink-3); margin-left: 5px; font-size: 11.5px; }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .chip[aria-pressed="true"] small { color: color-mix(in srgb, var(--bg) 70%, transparent); }
+  .sides { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+  .sides button { border: 0; background: none; padding: 5px 14px; cursor: pointer; font-size: 13.5px; display: flex; gap: 7px; align-items: center; }
+  .sides button + button { border-left: 1px solid var(--line); }
+  .sides button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .sides svg { width: 15px; height: 15px; }
+  .row2 { margin: 14px 0 6px; display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+  .hint { font-size: 12.5px; color: var(--ink-3); max-width: 46ch; }
+  .decade { font-size: 13.5px; display: inline-block; margin: 4px 0 20px; }
+
+  .wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 18px; }
+  .tile { position: relative; aspect-ratio: 1; border: 0; padding: 0; background: var(--surface-2); border-radius: 3px; cursor: pointer;
+          box-shadow: 0 1px 2px rgb(var(--shadow) / .18), 0 6px 16px rgb(var(--shadow) / .14); transition: transform .15s; }
+  .tile:hover { transform: translateY(-2px); }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 3px; }
+  .tile.label { background: #0b0a09; border-radius: 50%; }
+  .tile.label img { border-radius: 50%; }
+  .tile .badge { position: absolute; top: 7px; right: 7px; background: rgb(0 0 0 / .62); color: #fff; font-size: 11px; border-radius: 99px; padding: 0 7px; line-height: 19px; }
+  .tile.label .badge { top: 4px; right: 4px; }
+  .tile .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 9px 7px; font-size: 12px; line-height: 1.3; color: #fff; text-align: left;
+               background: linear-gradient(transparent, rgb(0 0 0 / .72)); border-radius: 0 0 3px 3px; opacity: 0; transition: opacity .15s; }
+  .tile:hover .cap, .tile[aria-current="true"] .cap { opacity: 1; }
+  .tile.label .cap { border-radius: 0 0 99px 99px; text-align: center; padding-bottom: 14px; }
+  .tile[aria-current="true"] { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .tile.missing { background: none; border: 1px dashed var(--line); box-shadow: none; color: var(--ink-3); font-size: 12px; display: grid; place-items: center; padding: 12px; text-align: center; }
+  .tile.missing.label { border-radius: 50%; }
+  .tile.failed img, .big.failed img { visibility: hidden; }
+  .big { position: relative; }
+  .tile.failed::after, .big.failed::after { content: 'Image did not load'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; color: var(--ink-3); }
+  .wall-note { font-size: 13px; color: var(--ink-3); margin-top: 28px; max-width: 70ch; }
+
+  aside { position: sticky; top: 20px; align-self: start; font-size: 14px; }
+  aside h3 { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); font-weight: 500; margin: 26px 0 8px; }
+  aside p { margin: 0 0 14px; color: var(--ink); }
+  .actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .pill { background: var(--ink); color: var(--bg); border: 0; border-radius: 99px; padding: 4px 13px; font-size: 13px; }
+  .btn { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 4px 14px; font-size: 13.5px; }
+  .big { width: 100%; aspect-ratio: 1; background: var(--surface-2); border-radius: 3px; overflow: hidden;
+         box-shadow: 0 2px 4px rgb(var(--shadow) / .2), 0 12px 30px rgb(var(--shadow) / .2); display: grid; place-items: center; color: var(--ink-3); font-size: 13px; }
+  .big img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .big.label { border-radius: 50%; background: #0b0a09; }
+  .flip { display: flex; gap: 10px; margin: 14px 0 6px; }
+  .flip button { border: 0; background: none; padding: 0; cursor: pointer; width: 62px; text-align: center; font-size: 11.5px; color: var(--ink-2); }
+  .flip .th { width: 62px; height: 62px; border-radius: 2px; background: var(--surface-2); overflow: hidden; margin-bottom: 4px; border: 2px solid transparent; }
+  .flip .th.round { border-radius: 50%; background: #0b0a09; }
+  .flip .th img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .flip button[aria-pressed="true"] .th { border-color: var(--accent); }
+  .flip button:disabled { opacity: .45; cursor: default; }
+  .src { font-size: 12px; color: var(--ink-3); margin: 2px 0 0; }
+  .story { font-size: 14px; line-height: 1.55; margin: 0 0 8px; }
+  .story.wait { color: var(--ink-3); font-style: italic; }
+  .story.wait::after { content: ''; display: inline-block; width: 1em; animation: dots 1.2s steps(4) infinite; overflow: hidden; vertical-align: bottom; }
+  @keyframes dots { from { width: 0; } to { width: 1.2em; } }
+  .credit { font-size: 11.5px; color: var(--ink-3); margin: 0 0 14px; }
+  .ptitle { font-size: 15px; font-weight: 500; margin: 18px 0 2px; }
+  .psub { font-size: 13px; color: var(--ink-2); margin: 0 0 12px; }
+  dl { display: grid; grid-template-columns: auto 1fr; gap: 5px 16px; margin: 0; font-size: 13.5px; }
+  dt { color: var(--ink-3); }
+  dd { margin: 0; }
+  .mono { font-family: ui-monospace, "Geist Mono", monospace; font-size: 12.5px; }
+  .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; margin-right: 6px; border: 1px solid var(--line); }
+  .quiet { color: var(--ink-3); }
+  .siblings { display: grid; grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 8px; margin-bottom: 4px; }
+  .siblings button { border: 0; padding: 0; background: #0b0a09; border-radius: 50%; aspect-ratio: 1; overflow: hidden; cursor: pointer; outline-offset: 2px; }
+  .siblings button[aria-current="true"] { outline: 2px solid var(--accent); }
+  .siblings span { color: #b8b0a3; font-size: 11px; }
+  .siblings img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .markets { display: flex; gap: 6px; margin: 4px 0 10px; }
+  .markets span { border: 1px solid var(--line); border-radius: 6px; padding: 1px 8px; font-size: 12px; }
+  .markets span.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .buy { display: grid; gap: 8px; }
+  .buy a { display: flex; justify-content: space-between; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 8px 12px; color: var(--ink); }
+  .buy a small { color: var(--ink-3); }
+  .verdict { font-size: 12.5px; color: var(--ink-2); border-left: 2px solid var(--accent); padding-left: 10px; margin: 12px 0 10px; }
+  details { font-size: 13.5px; margin: 6px 0; } summary { cursor: pointer; color: var(--ink-2); }
+  .close { display: none; }
+
+  /* Sleeves layout: one section per folded sleeve, all sides visible at once. */
+  .sleeves { display: grid; gap: 56px; margin-top: 26px; }
+  .sleeve h2 { font-family: var(--display); font-weight: 400; font-size: 26px; line-height: 1.15; margin: 0 0 2px; }
+  .sleeve .span { font-size: 13px; color: var(--ink-3); margin: 0 0 14px; }
+  .spread { display: grid; grid-template-columns: 1fr 1fr .56fr; grid-template-areas: "front back la" "front back lb"; gap: 16px; align-items: start; }
+  .spread .side { margin: 0; }
+  .spread .side.front { grid-area: front; } .spread .side.back { grid-area: back; }
+  .spread .side.la { grid-area: la; } .spread .side.lb { grid-area: lb; align-self: end; }
+  .spread .pic { position: relative; display: block; width: 100%; aspect-ratio: 1; border: 0; padding: 0; cursor: zoom-in; background: var(--surface-2); border-radius: 3px; overflow: hidden;
+                 box-shadow: 0 1px 2px rgb(var(--shadow) / .18), 0 8px 22px rgb(var(--shadow) / .16); }
+  .spread .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .spread .round .pic { border-radius: 50%; background: #0b0a09; }
+  .spread .pic.none { cursor: default; background: none; border: 1px dashed var(--line); box-shadow: none; color: var(--ink-3); font-size: 12px; display: grid; place-items: center; padding: 10px; text-align: center; }
+  .spread .pic.failed img { visibility: hidden; }
+  .spread .pic.failed::after { content: 'Image did not load'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; color: var(--ink-3); }
+  .spread figcaption { font-size: 12px; color: var(--ink-3); margin-top: 6px; }
+  .spread .round figcaption { text-align: center; }
+  .discs-h { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); font-weight: 500; margin: 22px 0 10px; }
+  .discs { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 12px 10px; }
+  .discs a { border: 0; background: none; padding: 0; cursor: pointer; text-align: center; font-size: 11px; line-height: 1.25; color: var(--ink-2); }
+  .discs .d { display: block; aspect-ratio: 1; border-radius: 50%; background: #0b0a09; overflow: hidden; margin-bottom: 5px; outline-offset: 2px; }
+  .discs .d img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .discs .d.none { background: none; border: 1px dashed var(--line); }
+  .discs a[aria-current="true"] .d { outline: 2px solid var(--accent); }
+  .discs a[aria-current="true"] { color: var(--ink); }
+  .pdetail { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 40px; }
+  .pdetail .ptitle { margin-top: 0; }
+
+  .lightbox { position: fixed; inset: 0; z-index: 20; background: rgb(12 10 9 / .94); color: #efe8dd; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; padding: 14px 16px 18px; }
+  .lightbox[hidden] { display: none; }
+  .lightbox .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; }
+  .lightbox .top button { border: 0; background: none; color: inherit; font-size: 26px; line-height: 1; cursor: pointer; }
+  .lightbox .stage { display: grid; place-items: center; min-height: 0; }
+  .lightbox .stage img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .lightbox .tabs { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .lightbox .tabs button { border: 1px solid rgb(239 232 221 / .35); background: none; color: inherit; border-radius: 99px; padding: 3px 13px; font-size: 13px; cursor: pointer; }
+  .lightbox .tabs button[aria-pressed="true"] { background: #efe8dd; color: #131110; }
+  .lightbox .tabs button:disabled { opacity: .35; cursor: default; }
+  .lightbox a { color: #dbac94; }
+
+  @media (max-width: 1023px) {
+    header.site { padding: 10px 16px; gap: 12px; }
+    header.site .home { display: none; }
+    main { display: block; padding: 20px 16px 120px; }
+    h1 { font-size: 38px; }
+    .wall { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 12px; }
+    aside { position: static; margin-top: 36px; }
+    aside.sheet { position: fixed; left: 0; right: 0; bottom: 0; top: auto; max-height: 78vh; overflow: auto; margin: 0; z-index: 10;
+                  background: var(--bg); border-top: 1px solid var(--line); border-radius: 14px 14px 0 0; padding: 14px 16px 32px;
+                  box-shadow: 0 -10px 40px rgb(var(--shadow) / .3); }
+    aside.sheet .big { width: 62%; margin: 0 auto; }
+    aside.sheet .close { display: block; margin-left: auto; border: 0; background: none; font-size: 22px; line-height: 1; color: var(--ink-2); cursor: pointer; }
+    .sides button { padding: 5px 10px; }
+    .spread { grid-template-columns: 1fr 1fr; grid-template-areas: "front back" "la lb"; gap: 12px; }
+    .spread .side.la, .spread .side.lb { width: 72%; justify-self: center; align-self: start; }
+    .sleeve h2 { font-size: 22px; }
+    .pdetail { grid-template-columns: minmax(0, 1fr); }
+    .discs { grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); }
+  }
+
+  a.chip { color: var(--ink); display: inline-block; text-decoration: none; }
+  .discs a { text-decoration: none; display: block; }
+  .progress { font-size: 13px; color: var(--ink-2); margin: 0 0 18px; min-height: 1.5em; }
+  .progress .bar { display: inline-block; vertical-align: middle; width: 120px; height: 4px; border-radius: 2px; background: var(--surface-2); margin-left: 8px; overflow: hidden; }
+  .progress .bar i { display: block; height: 100%; background: var(--accent); }
+  .error { border-left: 2px solid var(--accent); padding: 4px 0 4px 12px; margin: 10px 0 20px; }
+  .error button, .again { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 3px 12px; cursor: pointer; margin-top: 8px; }
+  .results { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 2px; max-width: 760px; }
+  .results a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 10px 12px; border-radius: 6px; color: var(--ink); }
+  .results a:hover { background: var(--surface); text-decoration: none; }
+  .results b { font-weight: 500; font-size: 16px; }
+  .results small { color: var(--ink-3); font-size: 12.5px; grid-column: 1 / -1; }
+  .results .n { color: var(--ink-3); font-size: 12.5px; text-align: right; }
+  .home h1 { font-size: 44px; }
+  .examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .discs .d.wait { background: var(--surface-2); animation: pulse 1.4s ease-in-out infinite; }
+  .discs .d.fail { background: none; border: 1px dashed var(--accent); display: grid; place-items: center; color: var(--accent); font-size: 13px; }
+  @keyframes pulse { 50% { opacity: .45; } }
+  .spread .pic.wait { animation: pulse 1.4s ease-in-out infinite; }
+  @media (max-width: 1023px) { .home h1 { font-size: 34px; } .results a { grid-template-columns: minmax(0, 1fr); } .results .n { text-align: left; order: 3; } }
+</style>
+</head>
+<body>
+<header class="site">
+  <a class="home" href="/">‹ Home</a>
+  <a class="mark" href="/" style="text-decoration:none">Beautiful Records</a>
+  <form id="search" role="search"><input name="q" id="q" type="search" placeholder="Search an album or artist" autocomplete="off" aria-label="Search an album or artist"></form>
+</header>
+<main id="main"></main>
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Image"></div>
+<script>
+const NAMES = { US: 'US', GB: 'UK', XE: 'Europe', XW: 'Worldwide', XU: 'Unknown' };
+const regionNames = (() => { try { return new Intl.DisplayNames(['en'], { type: 'region' }); } catch { return null; } })();
+const countryName = c => !c ? 'Unknown' : NAMES[c] ?? regionNames?.of(c) ?? c;
+const SWATCH = { red: '#c0392b', blue: '#2e5fa8', green: '#3c8a4e', yellow: '#e5c03a', white: '#f4f1ea', clear: 'rgba(200,210,215,.45)', transparent: 'rgba(200,210,215,.45)',
+  translucent: 'rgba(200,210,215,.45)', orange: '#e07a2e', pink: '#e59ab8', purple: '#7b4fa0', violet: '#7b4fa0', gold: '#c9a13b', silver: '#b8bcc2', grey: '#8a8d90', gray: '#8a8d90',
+  brown: '#7a5234', cream: '#efe3c4', bone: '#e8dcc0', marble: 'conic-gradient(#ddd,#999,#eee,#bbb,#ddd)', marbled: 'conic-gradient(#ddd,#999,#eee,#bbb,#ddd)',
+  splatter: 'radial-gradient(circle at 30% 30%,#e33 0 15%,transparent 16%),#eee', 'picture disc': 'conic-gradient(#c96,#69c,#c69,#9c6,#c96)' };
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const caption = p => [p.label, p.year, countryName(p.country)].filter(Boolean).join(' · ');
+const main = document.getElementById('main');
+const EXAMPLES = ['Kind of Blue', 'Abbey Road', 'Blue Joni Mitchell', 'Unknown Pleasures', 'Thriller Michael Jackson', 'Rumours'];
+
+// ---- routing: the URL is the state ----
+const state = { album: null, box: null, poll: null, key: '' };
+function go(href, replace = false) { (replace ? history.replaceState : history.pushState).call(history, null, '', href); route(); }
+addEventListener('popstate', () => route());
+function params() { return new URL(location.href).searchParams; }
+
+function route() {
+  clearTimeout(state.poll);
+  state.box = null; renderBox();
+  const m = location.pathname.match(/^\/album\/([0-9a-f-]{36})$/);
+  if (m) return openAlbum(m[1]);
+  state.album = null;
+  const q = params().get('q') ?? '';
+  document.getElementById('q').value = q;
+  if (q) return search(q);
+  document.title = 'Beautiful Records';
+  main.className = 'home'; main.style.display = 'block';
+  main.innerHTML = `<section><h1>The pressings of a record</h1>
+    <p class="by">Search an album to see every vinyl pressing MusicBrainz knows with a photo — front, back and label, side by side.</p>
+    <div class="examples">${EXAMPLES.map(e => `<a class="chip" href="/?q=${encodeURIComponent(e)}">${esc(e)}</a>`).join('')}</div></section>`;
+}
+
+document.getElementById('search').addEventListener('submit', e => {
+  e.preventDefault();
+  const q = document.getElementById('q').value.trim();
+  if (q) go(`/?q=${encodeURIComponent(q)}`);
+});
+
+// ---- search ----
+async function search(q) {
+  document.title = `${q} · Beautiful Records`;
+  main.className = ''; main.style.display = 'block';
+  main.innerHTML = `<section><p class="progress">Searching MusicBrainz for “${esc(q)}”…</p></section>`;
+  let body;
+  try {
+    const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+    body = await res.json();
+    if (!res.ok) throw new Error(body.error ?? `HTTP ${res.status}`);
+  } catch (e) {
+    if (params().get('q') !== q) return;
+    main.innerHTML = `<section><p class="error">The search did not go through: ${esc(e.message)}<br><button class="again" data-again>Try again</button></p></section>`;
+    return;
+  }
+  if (params().get('q') !== q) return;
+  main.innerHTML = `<section><p class="count">Albums for “${esc(q)}”</p>
+    ${body.hits.length ? `<ul class="results">${body.hits.map(h => `<li><a href="/album/${h.id}" data-nav>
+      <b>${esc(h.title)}</b><span class="n">${h.releases ? `${h.releases} release${h.releases === 1 ? '' : 's'}` : ''}</span>
+      <small>${esc(h.artist)}${h.year ? ` · ${esc(h.year)}` : ''}${h.kind && h.kind !== 'Album' ? ` · ${esc(h.kind)}` : ''}</small></a></li>`).join('')}</ul>`
+      : '<p>MusicBrainz knows no album by that name. Try the artist’s name with it.</p>'}</section>`;
+}
+
+// ---- album ----
+async function openAlbum(id, retry = false) {
+  clearTimeout(state.poll);
+  main.className = ''; main.style.display = '';
+  if (!state.album || state.album.id !== id) {
+    state.album = null; state.key = '';
+    main.innerHTML = `<section><p class="progress">Asking MusicBrainz for this album…</p></section><aside id="aside"></aside>`;
+  }
+  let a;
+  try {
+    const res = await fetch(`/api/album/${id}${retry ? '?retry=1' : ''}`);
+    a = await res.json();
+    if (!res.ok) throw new Error(a.error ?? `HTTP ${res.status}`);
+  } catch (e) {
+    if (!location.pathname.endsWith(id)) return;
+    main.innerHTML = `<section><p class="error">The local server did not answer: ${esc(e.message)}<br><button class="again" data-retry>Try again</button></p></section>`;
+    return;
+  }
+  if (!location.pathname.endsWith(id)) return;
+  state.album = a;
+  // Redraw only when something changed: a redraw re-sets every image.
+  const key = JSON.stringify([a.status, a.steps, a.sleeves.length, a.story?.article, params().toString()]);
+  if (key !== state.key) { state.key = key; renderAlbum(); }
+  if (a.status === 'loading') state.poll = setTimeout(() => openAlbum(id), 1000);
+}
+
+function progressLine(a) {
+  const s = a.steps;
+  if (a.status === 'failed') return '';
+  if (s.releases !== 'done') return 'Listing the pressings at MusicBrainz…';
+  const parts = [];
+  const f = s.fronts, l = s.labels;
+  if (f.done < f.total) parts.push(`comparing fronts ${f.done} of ${f.total}`);
+  if (l.done < l.total) parts.push(`label photos ${l.done} of ${l.total}`);
+  if (s.story === 'pending') parts.push('looking up the sleeve on Wikipedia');
+  if (!parts.length) return '';
+  const all = f.total + l.total || 1;
+  return `${parts.join(' · ')}<span class="bar"><i style="width:${Math.round(100 * (f.done + l.done) / all)}%"></i></span>`;
+}
+
+function renderAlbum() {
+  const a = state.album;
+  const sel = params().get('p');
+  const country = params().get('country') ?? 'all';
+  if (a.status === 'failed' && !a.pressings.length) {
+    main.innerHTML = `<section><p class="error">${esc(a.error ?? 'This album could not be loaded.')}<br><button class="again" data-retry>Try again</button></p></section>`;
+    return;
+  }
+  document.title = a.title ? `The pressings of ${a.title} by ${a.artist} · Beautiful Records` : 'Beautiful Records';
+  const byId = new Map(a.pressings.map(p => [p.id, p]));
+  const inCountry = p => country === 'all' || (p.country || '') === country;
+  const sleeves = a.sleeves.map(s => ({ ...s, members: s.ids.map(id => byId.get(id)).filter(inCountry) })).filter(s => s.members.length);
+  const withFront = a.pressings.filter(p => p.front).length;
+  const counts = new Map();
+  for (const s of a.sleeves) for (const c of new Set(s.ids.map(id => byId.get(id).country || ''))) counts.set(c, (counts.get(c) ?? 0) + 1);
+  const order = [...counts.entries()].sort((x, y) => y[1] - x[1]);
+  const f = a.steps.fronts;
+  // Until every front is compared, which pressings share a sleeve is not known:
+  // no sleeve count, and a plain grid of fronts instead of sections that would
+  // collapse into each other as the hashes arrive.
+  const comparing = f.done < f.total;
+  const failNote = [
+    f.failed ? `${f.failed} front${f.failed === 1 ? '' : 's'} did not load and could not be compared, so ${f.failed === 1 ? 'it stands' : 'they stand'} alone` : '',
+    a.steps.labels.failed ? `label photos of ${a.steps.labels.failed} pressing${a.steps.labels.failed === 1 ? '' : 's'} did not load` : '',
+  ].filter(Boolean);
+  const section = `<section>
+    <h1>${esc(a.title)}</h1>
+    <p class="by">${esc(a.artist)}</p>
+    <p class="meta">${a.first ? `MusicBrainz dates it to ${esc(a.first)} · ` : ''}${comparing ? '' : `${a.sleeves.length} sleeve${a.sleeves.length === 1 ? '' : 's'} from `}${withFront} of ${a.pressings.length} vinyl pressings with a photo · ${a.releases} releases in all formats</p>
+    ${progressLine(a) ? `<p class="progress">${progressLine(a)}</p>` : ''}
+    ${failNote.length ? `<p class="error">${esc(failNote.join('; '))}. <button class="again" data-retry>Try again</button></p>` : ''}
+    ${comparing ? `<p class="hint" style="margin-bottom:14px">Comparing the fronts to find which pressings share a sleeve; the sleeves appear when that is done.</p>
+      <div class="wall">${a.pressings.filter(p => p.front && inCountry(p)).map(p => `<div class="tile" title="${esc(caption(p))}"><img loading="lazy" src="${esc(p.front)}" alt=""><span class="cap" style="opacity:1">${esc(caption(p))}</span></div>`).join('')}</div>` : ''}
+    ${!comparing && order.length > 1 ? `<div class="controls">
+      ${order.map(([c, n]) => `<a class="chip" href="${albumHref({ country: c, p: null })}" data-nav aria-pressed="${country === c}">${esc(countryName(c))}<small>${n}</small></a>`).join('')}
+      <a class="chip" href="${albumHref({ country: null, p: null })}" data-nav aria-pressed="${country === 'all'}">All countries<small>${a.sleeves.length}</small></a></div>` : ''}
+    <div class="sleeves" id="sleeves">${comparing ? '' : sleeves.length ? sleeves.map((s, i) => sleeveSection(a, s, i, sleeves.length, sel)).join('')
+      : a.steps.releases === 'done' ? `<p class="quiet">${a.pressings.length ? 'No vinyl pressing here has a photo of its front in the Cover Art Archive.' : 'MusicBrainz lists no vinyl pressing of this album.'}</p>` : ''}</div>
+    ${a.pressings.length - withFront ? `<p class="wall-note">${a.pressings.length - withFront} more vinyl pressing${a.pressings.length - withFront === 1 ? '' : 's'} without a photo of the front, so no sleeve to put ${a.pressings.length - withFront === 1 ? 'it' : 'them'} under.</p>` : ''}
+    <p class="wall-note">Pressings and photos come from MusicBrainz and the Cover Art Archive. Most pressings carry no photo, so an album has had sleeves neither catalogue knows.</p>
+  </section>`;
+  main.innerHTML = section + `<aside id="aside">${albumAside(a)}</aside>`;
+}
+
+function albumHref(change) {
+  const u = new URL(location.href);
+  for (const [k, v] of Object.entries(change)) v == null ? u.searchParams.delete(k) : u.searchParams.set(k, v);
+  return u.pathname + u.search;
+}
+
+function albumAside(a) {
+  const years = a.pressings.map(p => p.year).filter(Boolean).sort();
+  const labels = new Set(a.pressings.map(p => p.label).filter(Boolean));
+  const coloured = a.pressings.filter(p => p.colour).length;
+  const st = a.story;
+  const story = a.steps.story === 'pending' ? '<h3>The sleeve</h3><p class="story wait">Looking up the sleeve on Wikipedia</p>'
+    : a.steps.story === 'failed' ? '<h3>The sleeve</h3><p class="story quiet">Wikipedia did not answer.</p>'
+    : !st ? '' : !st.excerpt ? (st.article ? `<h3>The sleeve</h3><p class="story quiet">The Wikipedia article says nothing about the sleeve. <a href="${esc(st.url)}">Read it</a></p>` : '')
+    : `<h3>The sleeve</h3>${st.excerpt.split(/\n\n/).map(t => `<p class="story">${esc(t)}</p>`).join('')}
+      <p class="credit">Excerpt from <a href="${esc(st.url)}">Wikipedia: ${esc(st.article)}</a>, CC BY-SA 4.0 · <a href="${esc(st.url)}">Read more on Wikipedia</a></p>`;
+  return `<h3>This album</h3>
+    ${years.length ? `<p>Vinyl pressings here run from ${years[0]} to ${years.at(-1)}, on ${labels.size} label${labels.size === 1 ? '' : 's'}, in ${new Set(a.pressings.map(p => p.country).filter(Boolean)).size} countries.${coloured ? ` ${coloured === 1 ? 'One names' : `${coloured} name`} a coloured record.` : ''}</p>` : ''}
+    <p>Pick a pressing by its label to see its back, its labels, its catalogue number and where to find a copy.</p>
+    ${story}
+    <p class="src"><a href="https://musicbrainz.org/release-group/${a.id}">This album at MusicBrainz</a> — where these records come from, and where they can be corrected.</p>`;
+}
+
+/** The four sides of a pressing, as [key, name, small, large, xl, full, round]. */
+function sidesOf(p) {
+  const l = p.labels ?? [];
+  return [
+    ['front', 'Front', p.front, p.frontLarge, p.frontXL, p.frontFull, false],
+    ['back', 'Back', p.back, p.backLarge, p.backXL, p.backFull, false],
+    ['labelA', 'Label, side A', l[0]?.small, l[0]?.large, l[0]?.xl, l[0]?.full, true],
+    ['labelB', 'Label, side B', l[1]?.small, l[1]?.large, l[1]?.xl, l[1]?.full, true],
+  ];
+}
+
+/**
+ * The pressing a section shows: the picked one if it has this sleeve, else the
+ * earliest with a back and a label photo, then with a back, then the earliest.
+ * A missing side of a picked pressing stays missing — never borrowed from a
+ * sibling, whose back and labels may differ.
+ */
+function shownPressing(members, sel) {
+  return members.find(m => m.id === sel) ?? members.find(m => m.back && m.labels?.length) ?? members.find(m => m.back) ?? members[0];
+}
+
+function sleeveSection(a, s, i, n, sel) {
+  const g = s.members;
+  const p = shownPressing(g, sel);
+  const first = g[0];
+  const sides = sidesOf(p).map(([key, name, small, large, , , round]) => {
+    const cls = { front: 'front', back: 'back', labelA: 'la', labelB: 'lb' }[key];
+    const label = key.startsWith('label');
+    if (key === 'labelB' && (p.labels === null || p.labelsFailed || !large)) return '';
+    let pic;
+    if (large || small) pic = `<button class="pic" data-box="${p.id}" data-boxview="${key}" aria-label="${esc(name)}, full size"><img loading="lazy" src="${esc(large || small)}" data-fallback="${esc(small && large ? small : '')}" alt=""></button>`;
+    else if (label && p.labels === null && !p.labelsFailed) pic = '<div class="pic none wait">Loading the label photo</div>';
+    else if (label && p.labelsFailed) pic = '<div class="pic none">The label photos did not load</div>';
+    else pic = `<div class="pic none">No photo of the ${label ? 'label' : 'back'} of this pressing on record</div>`;
+    return `<figure class="side ${cls} ${round ? 'round' : ''}">${pic}<figcaption>${esc(name)}</figcaption></figure>`;
+  }).join('');
+  const discs = g.map(m => {
+    const l = m.labels;
+    const d = l?.[0] ? `<span class="d"><img loading="lazy" src="${esc(l[0].small)}" alt=""></span>`
+      : m.labelsFailed ? '<span class="d fail" title="Label photos did not load">?</span>'
+      : l === null ? '<span class="d wait"></span>' : '<span class="d none"></span>';
+    return `<a href="${albumHref({ p: m.id === sel ? null : m.id })}" data-nav data-keep ${m === p ? 'aria-current="true"' : ''} title="${esc(caption(m))}">${d}${esc(m.year || '?')}<br>${esc(countryName(m.country))}</a>`;
+  }).join('');
+  const years = g.map(m => m.year).filter(Boolean);
+  const countries = [...new Set(g.map(m => countryName(m.country)))];
+  const span = [years.length ? (years[0] === years.at(-1) ? years[0] : `${years[0]}–${years.at(-1)}`) : '',
+    `${g.length} pressing${g.length === 1 ? '' : 's'}`, countries.length > 4 ? `${countries.length} countries` : countries.join(', ')].filter(Boolean).join(' · ');
+  return `<section class="sleeve">
+    <h2>${esc(first.label || 'Label not recorded')}, ${esc(first.year || 'year not recorded')}${n > 1 ? ` <span class="quiet" style="font-size:.6em">sleeve ${i + 1} of ${n}</span>` : ''}</h2>
+    <p class="span">${esc(span)}</p>
+    <div class="spread">${sides}</div>
+    <p class="src">Shown: ${esc(caption(p))}${p.catno ? ` · <span class="mono">${esc(p.catno)}</span>` : ''} · images from the Cover Art Archive</p>
+    ${g.length > 1 ? `<p class="discs-h">${g.length} pressings with this sleeve</p><div class="discs">${discs}</div>` : ''}
+    ${p.id === sel ? `<div class="pdetail"><div>${pressingFacts(p)}</div><div>${findBlock(a, p)}</div></div>` : ''}
+  </section>`;
+}
+
+function pressingFacts(p) {
+  const colour = p.colour
+    ? `<span class="swatch" style="background:${SWATCH[p.colour] ?? 'var(--surface-2)'}"></span>${esc(p.colour)} <span class="quiet">— as written in MusicBrainz</span>`
+    : '<span class="quiet">Not recorded</span>';
+  return `<p class="ptitle">${esc(p.label || 'Label not recorded')} · ${esc(p.year || '—')}</p>
+    <p class="psub">${esc(countryName(p.country))}${p.note ? ` · ${esc(p.note)}` : ''}</p>
+    <dl>
+      <dt>Catalogue no.</dt><dd class="mono">${esc(p.catno) || '<span class="quiet">not recorded</span>'}</dd>
+      <dt>Barcode</dt><dd class="mono">${esc(p.barcode) || '<span class="quiet">none on record</span>'}</dd>
+      <dt>Format</dt><dd>${esc(p.format)}</dd>
+      <dt>Vinyl</dt><dd>${colour}</dd>
+      <dt>Released</dt><dd>${esc(p.date || '—')}</dd>
+    </dl>`;
+}
+
+function findBlock(a, p) {
+  const q = encodeURIComponent(`${a.artist} ${a.title} ${p.catno || ''}`.trim());
+  return `<h3 style="margin-top:0">Find this pressing</h3>
+    <div class="buy">
+      <a href="https://www.discogs.com/search/?q=${q}&type=release">Discogs Marketplace <small>catalogue no.</small></a>
+      <a href="https://www.ebay.com/sch/i.html?_nkw=${q}">eBay <small>catalogue no.</small></a>
+    </div>
+    <p class="verdict">Shops list records by catalogue number. A reissue can carry the same number with a different sleeve or label — compare the photos before you buy.</p>
+    <p class="src"><a href="https://musicbrainz.org/release/${p.id}">This pressing at MusicBrainz</a></p>`;
+}
+
+// ---- full-size view ----
+function renderBox() {
+  const box = document.getElementById('lightbox');
+  const b = state.box;
+  const p = b && state.album?.pressings.find(x => x.id === b.id);
+  if (!p) { box.hidden = true; box.innerHTML = ''; document.body.style.overflow = ''; return; }
+  const sides = sidesOf(p);
+  const cur = sides.find(v => v[0] === b.view && v[3]) ?? sides.find(v => v[3]);
+  box.hidden = false;
+  document.body.style.overflow = 'hidden';
+  box.innerHTML = `<div class="top"><span>${esc(caption(p))}${p.catno ? ` · ${esc(p.catno)}` : ''} — ${esc(cur[1])}</span><button data-boxclose aria-label="Close">×</button></div>
+    <div class="stage"><img src="${esc(cur[4] || cur[3])}" data-fallback="${esc(cur[4] ? cur[3] : (cur[5] ?? ''))}" alt="${esc(cur[1])}"></div>
+    <div class="tabs">${sides.map(v => `<button data-boxview="${v[0]}" data-box="${p.id}" ${v[3] ? '' : 'disabled'} aria-pressed="${v === cur}">${esc(v[1])}</button>`).join('')}
+      ${cur[5] ? `<a href="${esc(cur[5])}" style="align-self:center;font-size:13px;margin-left:6px">Original file</a>` : ''}</div>`;
+}
+addEventListener('keydown', e => {
+  if (!state.box) return;
+  if (e.key === 'Escape') { state.box = null; renderBox(); return; }
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  const p = state.album.pressings.find(x => x.id === state.box.id);
+  const keys = sidesOf(p).filter(v => v[3]).map(v => v[0]);
+  const i = keys.indexOf(state.box.view);
+  state.box.view = keys[(i + (e.key === 'ArrowRight' ? 1 : keys.length - 1)) % keys.length];
+  renderBox();
+});
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-nav],[data-box],[data-boxclose],[data-retry],[data-again],.examples a,#lightbox');
+  if (!t || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  if (t.id === 'lightbox') { if (e.target === t || e.target.classList.contains('stage')) { state.box = null; renderBox(); } return; }
+  if (t.dataset.boxclose !== undefined) { state.box = null; renderBox(); return; }
+  if (t.dataset.box) { state.box = { id: t.dataset.box, view: t.dataset.boxview }; renderBox(); return; }
+  if (t.dataset.retry !== undefined) { state.key = ''; openAlbum(state.album?.id ?? location.pathname.split('/').pop(), true); return; }
+  if (t.dataset.again !== undefined) { route(); return; }
+  e.preventDefault();
+  const href = t.getAttribute('href');
+  // Picking a pressing keeps the scroll position; anything else starts at the top.
+  if (t.dataset.keep !== undefined) { history.pushState(null, '', href); state.key = ''; openAlbum(state.album.id); return; }
+  go(href);
+  scrollTo(0, 0);
+});
+
+// archive.org drops a request now and then: fall back, try twice more, then
+// say the image failed — never that there is none.
+addEventListener('error', e => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement)) return;
+  if (img.dataset.fallback) { const f = img.dataset.fallback; img.dataset.fallback = ''; img.src = f; return; }
+  const n = +(img.dataset.retried ?? 0);
+  if (n < 2) {
+    img.dataset.retried = String(n + 1);
+    img.dataset.base ??= img.src;
+    setTimeout(() => { img.src = `${img.dataset.base}${img.dataset.base.includes('?') ? '&' : '?'}retry=${n + 1}`; }, 2000 * (n + 1));
+  }
+  else img.closest('.pic')?.classList.add('failed');
+}, true);
+
+route();
+</script>
+</body>
+</html>

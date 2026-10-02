@@ -1,6 +1,6 @@
 # PLAN 5.16a — Schallplatten: lokales MVP aus dem Mockup
 
-Stand: 2026-10-02, offen. Julian: „ok, starting from the mock up, what do we need now to build a local mvp". Grundlage: [lab/vinyl/README.md](../../lab/vinyl/README.md), Messungen in der [Historie](../history.md#2026-09-29--schallplatten-statt-bücher-erste-messung-roadmap-516).
+Stand: 2026-10-02, **gebaut** (Schritte 1–4, [lab/vinyl README Punkt 15](../../lab/vinyl/README.md)); Schritt 5, die Abnahme mit echten Daten, ist offen — aus der Cloud-Umgebung waren alle Quellen gesperrt. Abweichungen vom Plan: die Faltungs-Regression gegen die 57 von Hand eingeteilten *Kind-of-Blue*-Hüllen fehlt, weil deren Hashes nur in Julians lokalem `cache.json` liegen (die Tests prüfen die Regel an erfundenen Hashes); bis alle Vorderseiten verglichen sind, zeigt die Seite ein Raster statt Hüllen-Abschnitten. Julian: „ok, starting from the mock up, what do we need now to build a local mvp". Grundlage: [lab/vinyl/README.md](../../lab/vinyl/README.md), Messungen in der [Historie](../history.md#2026-09-29--schallplatten-statt-bücher-erste-messung-roadmap-516).
 
 ## Was „lokales MVP" heißt
 
