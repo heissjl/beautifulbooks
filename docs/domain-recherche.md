@@ -325,7 +325,7 @@ Julian, 2026-10-02, auf die Liste der sechs Stellen: „bereite das im branch vo
 
 **Der Umschalttag — Julians Schritte, in dieser Reihenfolge**
 
-1. `othercovers.com` kaufen (dazu `othercover.com`, `othercovers.de`), in Vercel dem Projekt zuweisen, DNS setzen (ROADMAP 2.2).
+1. `othercovers.com` kaufen (dazu `othercover.com`, `othercovers.de`), in Vercel dem Projekt zuweisen, DNS setzen (ROADMAP 2.2). **Bei INWX im Warenkorb vorbereitet am 2026-10-02** (Julian: „prepare the .com and .de in the browser to buy via inwx"): `othercovers.com` 14,60 € im Jahr (Verlängerung 14,60 €), `othercovers.de` 5,02 € im ersten Jahr (Verlängerung 3,91 €), zusammen **19,62 € ohne Mehrwertsteuer** — der Korb zeigt ohne Anmeldung 0 %, mit deutschem Konto kommen 19 % dazu. Beide von INWX am selben Abend als verfügbar gemeldet. `othercover.com` (die Einzahl) liegt nicht im Korb, das angebotene SSL-Zertifikat auch nicht — Vercel stellt das Zertifikat selbst aus. Zum Vergleich: Vercel nannte am 2026-10-01 für die `.com` 11,25 USD, führt aber keine `.de`. **Der Korb liegt im Browser der Sitzung und ist nicht an ein Konto gebunden; anmelden und bezahlen muss Julian.**
 2. In Vercel `NEXT_PUBLIC_SITE_URL` auf `https://othercovers.com` setzen — die Variable wandert zur Bauzeit in Canonical, Sitemap, OG-Bild und jetzt auch in den User-Agent.
 3. Falls `WALLS_REPORT_FROM` gesetzt ist: dort steht der alte Name als Absender, und die Variable gewinnt gegen `SITE_NAME`.
 4. Diesen Branch nach `main` mergen und deployen (ein Wort an Claude genügt).
