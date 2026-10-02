@@ -24,7 +24,7 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3
  * (docs/domain-recherche.md §13–16) and still lives at
  * beautifulcovers.vercel.app until the domain is bought and connected.
  */
-export const SITE_NAME = 'Other Covers';
+export const SITE_NAME = 'By Its Covers';
 
 /** The public repository; the contact of last resort in `userAgent`. */
 export const SITE_REPOSITORY = 'https://github.com/heissjl/beautifulbooks';
@@ -33,7 +33,7 @@ export const SITE_CARD = {
   url: `${SITE_URL}/opengraph-image`,
   width: 1200,
   height: 630,
-  alt: `${SITE_NAME}: judge a book by its covers`,
+  alt: `${SITE_NAME}: same book, other covers`,
 };
 
 /** "George Orwell", or "Mary Shelley and 2 others" when a record lists many. */
