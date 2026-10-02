@@ -23,7 +23,7 @@ Stand: 2026-09-26, aufgeräumt (lange abgehakte Punkte gekürzt und ihr Text ins
 | **Was offen ist, als Brett — und das ganze Projekt auf einer Seite** | `npm run cockpit` schreibt das **Cockpit** (`docs/cockpit.html`, git-ignoriert) und öffnet es über einen kleinen Server nur auf 127.0.0.1 (6.54): Übersicht, Brett nach Thema × Status, Sammlungen & Synchronisation, Werkzeuge zum Starten, Dienste & Einstellungen, Funktionen, Website-Karte, Lab, Artefakte, Hinweise. `npm run kanban` bleibt als Alias (nur die Datei, `#board`). **Eine Ansicht, kein zweiter Ort** — eine Karte bewegt sich, indem der Punkt hier bearbeitet wird; ein falsches Thema korrigiert `Thema: …` in der Zeile des Punkts. Das ältere [Roadmap-Brett](https://claude.ai/code/artifact/3871e261-34bc-4e25-976e-f858406046fa) als Artefakt ist ein Schnappschuss |
 | **Welche Session woran arbeitet** | `npm run worktrees` schreibt [docs/worktrees.md](docs/worktrees.md): alle Worktrees und Branches, Stand gegen Produktion, Themen aus den Commits (git-ignoriert, also nie veraltet) |
 | **Arbeitsregeln** | [CLAUDE.md](CLAUDE.md) |
-| **Recherchen** | [Risikoregister: was das Projekt kaputt machen könnte](docs/risiken-2026-09-12.md) · [Best Practices Websites und Claude Code](docs/best-practices-2026-09-12.md) · [Recht der Hobbyseite](docs/recht-hobbyseite.md) · [Domain-Namen](docs/domain-recherche.md) · [Visuelle Identität und Cover-Rechte im Logo](docs/identitaet.md) · [Suche nach ISBN und Stichwort](docs/suche-isbn-und-stichwort.md) · [Buchrücken](docs/spine-research.md) · [Vergleich whichedition.com und deren Affiliate-Links](docs/vergleich-whichedition.md) · [Testbericht 2026-09-07](docs/tests/2026-09-07-durchklick.md) · [Alltagstauglichkeit, zwei Durchsichten 2026-09-28](docs/tests/2026-09-28-alltagstauglichkeit.md) |
+| **Recherchen** | [Risikoregister: was das Projekt kaputt machen könnte](docs/risiken-2026-09-12.md) · [Best Practices Websites und Claude Code](docs/best-practices-2026-09-12.md) · [Recht der Hobbyseite](docs/recht-hobbyseite.md) · [Domain-Namen](docs/domain-recherche.md) · [Visuelle Identität und Cover-Rechte im Logo](docs/identitaet.md) · [Suche nach ISBN und Stichwort](docs/suche-isbn-und-stichwort.md) · [Buchrücken](docs/spine-research.md) · [Vergleich whichedition.com und deren Affiliate-Links](docs/vergleich-whichedition.md) · [Was an der Seite nach Claude aussieht](docs/gestaltung-ki-anmutung.md) · [Testbericht 2026-09-07](docs/tests/2026-09-07-durchklick.md) · [Alltagstauglichkeit, zwei Durchsichten 2026-09-28](docs/tests/2026-09-28-alltagstauglichkeit.md) |
 
 ### Stand
 
@@ -1143,6 +1143,18 @@ Nichts davon wird begonnen, bevor sein Auslöser eintritt.
 ### Geprüft am 2026-09-25: Zeitschriften-Cover
 
 **The New Yorker bei Open Library** (Julian: „check wether new yorker magazine covers have an openlibrary entry"): nein, nicht als Hefte. Es gibt einen Eintrag „The New Yorker" von 1925 ohne Bild (OL28179549W), drei Wandkalender von Cartoon Bank 2005–2008 (OL257659W) und Bücher *über* die Cover (*The Complete Book of Covers from The New Yorker, 1925–1989*, *Blown Covers*, *Covering the New Yorker*). Eine Wand der Hefte bräuchte eine andere Quelle und ein anderes Modell (ein Heft ist weder Werk noch Ausgabe im Sinn von SPEC §2); nicht weiter verfolgt, bis Julian es will.
+
+### Weniger nach Claude aussehen (2026-10-02), unbewertet
+
+Julian: „can you identify the most derivative claude-prototypical stuff on our website so we can make it seem more human-made or at least human-curated". Befund mit Stellen und Zählungen in [docs/gestaltung-ki-anmutung.md](docs/gestaltung-ki-anmutung.md). Kern: whichedition hat dieselben Bauteile und wirkt trotzdem menschlich, wegen der Person auf der About-Seite — die Stimme bringt mehr als jedes Bauteil.
+
+| Idee | Wer |
+|---|---|
+| **About-Seite in der ersten Person**, mit Foto oder Regal, Datum; Beteuerungen auf je einen Satz | Julian schreibt, Claude kürzt |
+| **Farbe aus dem Material statt Creme und Terrakotta** (Anthropics eigene Palette); zwei, drei Entwürfe bei beiden Größen | Julian wählt, Claude baut |
+| **Etiketten, Pfeile und Pillen ausdünnen** (23 × `.kicker`, Pfeile hinter fast jedem Link, Pillen-Reiter) | Claude, mechanisch, sofort möglich |
+| **Hero durch ein echtes Bild ersetzen** (Wand, heutiges Cover, Regalfoto); kein Kursiv-Akzent | Julian entscheidet |
+| **Sammlungen zeichnen**: „chosen by Julian", Datum, ein Satz warum, ein Lieblingscover mit Begründung | Julian |
 
 ### Ideen aus dem Vergleich mit whichedition.com (2026-10-01), unbewertet
 
