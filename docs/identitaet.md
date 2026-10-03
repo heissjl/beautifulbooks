@@ -142,6 +142,31 @@ Skizzen im Chat vom 2026-09-28; Julian entscheidet.
 
 Offen: ob die Marke eine Farbe (Terrakotta) oder mehrere trägt; ob sie ohne Namen stehen muss, solange 0.5 offen ist (ja — das war die Vorgabe).
 
+### 3.1 Zweiter Anlauf, 2026-10-03: die Marke neben dem festen Namen
+
+Julian: „ich mag das logo der website noch nicht wirklich, lass uns nochmal ideen durchspielen." Die Marke von §3 entstand, als der Name offen war; seit 0.5 heißt die Seite „Buy Its Covers", und der Name trägt selbst eine Idee (buy/by). Vergleichsblatt mit der heutigen Marke und sieben Richtungen, je bei 96, 48, 24 und 16 px auf Papier und auf Tinte, Wortmarke in der echten Xanh Proportional: https://claude.ai/artifact/DnpY5KhejTnNJhTzwmHqm2 (privat; Quelle in der Sitzung, nicht im Repository).
+
+**Was an der 3 × 3-Wand nicht trägt** (Claudes Befund, im Chromium bei 1 px Raster angesehen; was Julian stört, ist nicht gefragt worden und entscheidet die Spur):
+
+1. Bei 24 px (Kopfzeile) sind die Kacheln 4,7 × 7 px und die Lücken 1,4 px; bei 16 px wird das Zeichen ein graues Raster mit einem Punkt. Sieben Töne auf acht Kacheln sind dort Rauschen.
+2. Nichts daran ist als Buch zu lesen: 2:3 statt 1:1 sieht man erst ab etwa 48 px. Ein Raster ist das Zeichen jeder App-Übersicht.
+3. Die Tonverteilung (2, 6, 3 / 5, –, 3 / 2, 0, 1) hat keine Gestalt, das Auge findet keine Figur.
+4. Sie sagt „viele", nicht „Cover" und nicht „kaufen"; Richtung A war für „aus vielen Ausgaben die eine" gezeichnet, der Name sagt inzwischen Schärferes.
+
+**Richtungen** (alle abstrakt ohne echtes Cover, §2; eine Akzentfarbe; Töne `--mark-0…6`):
+
+| Nr. | Richtung | Sagt | Risiko | Buch bei 16 px |
+|---|---|---|---|---|
+| 1 | **Regal**: fünf Rücken ungleicher Höhe, einer in Terrakotta vorgezogen | Bücher, sofort; das eine, das du nimmst | Rücken statt Cover; Nähe zu Balkendiagramm | ja |
+| 2 | **Umschlag**: Buchblock in Tinte, Umschlag in Terrakotta versetzt | dasselbe Buch, ein anderer Umschlag — der Satz der Seite | zwei versetzte Rechtecke = „kopieren" | knapp |
+| 3 | **Aufgeschlagen**: zwei Deckel mit Rückenschlitz, einer in Terrakotta | „its covers" in der Mehrzahl; das Gegenüber zweier Cover wie im Spiel | liest sich als zwei Spalten | knapp |
+| 4 | **Preisschild**: ein Cover mit rundem Aufkleber der Buchhandlung | der Punkt ist das „buy" | Benachrichtigungs-Blase | ja |
+| 5 | **Drei**: die heutige Idee auf drei Kacheln gekürzt, die mittlere größer | wie heute, aber jede Kachel bleibt bei 16 px 4 px breit | kein Buch, Podium klingt mit | nein |
+| 6 | **b**: Schaft und ein 2:3-Cover in Terrakotta als Bauch | b wie buy, book, by; ein Buchstabe trägt bei 16 px | Monogramm-Beliebigkeit; ein zweites B vor „Buy" | ja (Buchstabe) |
+| 7 | **Nur die Wortmarke**: kein Zeichen, das u in „Buy" in Terrakotta (oder das ganze Wort); der Tab bekommt 4 oder 6 | der Name ist das Logo, das Wortspiel sichtbar | ein farbiger Buchstabe wirkt wie ein Marker | – |
+
+Richtung D (Fächer) aus §3 ist nicht wiederholt, sie ist 2 mit einer Kachel mehr. Claudes Reihung: 1 für die Lesbarkeit, 4 für den Namen, 6 als die eigenste Form; 2 und 3 sind inhaltlich am genauesten und bei 16 px am schwächsten. **Entscheidung bei Julian**; bis dahin bleibt die Marke von §3 gebaut. Beim Einbau einer neuen: `components/BrandMark.tsx`, `app/icon.svg`, `scripts/build-icons.py` (Favicon, Apple-Icon) und die Wand der Website-Karte (`app/opengraph-image.tsx`, Richtung A) in einem Zug, sonst zeigen Tab und Karte zwei Marken.
+
 ### 1.2 ISBN: Geist Mono, Jost oder Xanh Mono
 
 Julian bat am 2026-09-28 um einen Vergleich der ISBN in den drei Schriften (Bild lokal, nicht im Repository). Befund beim Setzen: Jost hat Proportionalziffern, eine ISBN läuft darin dicht und die Bindestriche verschwinden fast; Geist Mono und Xanh Mono geben jeder Ziffer dieselbe Breite, was eine 13-stellige Zahl lesbar hält. Xanh Mono ist bei 13 px deutlich heller und schmaler als Geist Mono.
