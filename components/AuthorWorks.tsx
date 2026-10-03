@@ -71,7 +71,7 @@ export default function AuthorWorks({ author, authorKey, workId, workTitle, sibl
     <section className={`mt-16 ${className}`} aria-label={authorRowHeading(author, t)}>
       <h2 className="text-xl leading-tight text-ink sm:text-2xl">
         <Link href={authorSearchHref(author, authorKey)} className="transition-colors hover:text-accent">
-          {authorRowHeading(author, t)} <span aria-hidden="true">→</span>
+          {authorRowHeading(author, t)}
         </Link>
       </h2>
       {loading && (

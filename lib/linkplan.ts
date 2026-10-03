@@ -257,7 +257,7 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
   */
   const t = input.t ?? english;
   const name = (l: BuyLink): BuyLink =>
-    fromIsbn.has(l.provider) || /-search$/.test(l.provider) ? { ...l, label: `${l.label} · ${questionOf(l, t)}` } : l;
+    fromIsbn.has(l.provider) || /-search$/.test(l.provider) ? { ...l, label: t('{shop} by {question}', { shop: l.label, question: questionOf(l, t) }) } : l;
   const namedLead = lead.map(name);
 
   /*
@@ -280,7 +280,7 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
 
 /** Which question a link puts to a shop: its ISBN field, or words. */
 function questionOf(link: BuyLink, t: Translate): string {
-  return /-search$|-title$/.test(link.provider) ? t('title & year') : 'ISBN';
+  return /-search$|-title$/.test(link.provider) ? t('title and year') : 'ISBN';
 }
 
 function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, isbn13: string | undefined, t: Translate): string {
@@ -336,6 +336,14 @@ function noteFor(linkCase: LinkCase, market: Market, place: string | undefined, 
  * 3. **Can a shop in the reader's market look the number up?** An ISBN from
  *    their own registration area first, then any ISBN, then the newest year.
  *
+ * **Before all three: a printing a shop can look up** (ROADMAP 6.78, 2026-09-30).
+ * When the cover has a printing with an ISBN, no printing without one leads.
+ * On *Nineteen Eighty-Four* the scan of 15 of 261 covers was carried only by a
+ * record without a number — Perma-Bound 1981, a school binding — so the
+ * buttons were title searches while another printing of the same picture had
+ * an ISBN. The scan criterion still decides among the printings with one;
+ * the sidebar then shows the lead's own scan, so picture and buttons agree.
+ *
  * Both of the first two outrank the market, so a foreign ISBN can lead and
  * the shop order then adapts to it (`linkPlan` case `foreign`). That is the
  * right way round: the reader picked a *picture*, and the printing that
@@ -374,15 +382,18 @@ export function orderEditionsForMarket<E extends Pick<Edition, 'id' | 'isbn13' |
     if (status === 'verified') return 0;
     return status === 'differs' ? 2 : 1;
   };
+  const anyIsbn = editions.some(e => e.isbn13);
+  const byIsbn = (e: E): number => (anyIsbn && !e.isbn13 ? 1 : 0);
   const byMarket = (e: E): number => {
     if (!e.isbn13) return 2;
     const registration = registrationArea(e.isbn13);
     return registration && registration.area === area ? 0 : 1;
   };
   return [...editions]
-    .map((edition, index) => ({ edition, index, scan: byScan(edition), verdict: byVerdict(edition), market: byMarket(edition) }))
+    .map((edition, index) => ({ edition, index, isbn: byIsbn(edition), scan: byScan(edition), verdict: byVerdict(edition), market: byMarket(edition) }))
     .sort((a, b) =>
-      a.scan - b.scan
+      a.isbn - b.isbn
+      || a.scan - b.scan
       || a.verdict - b.verdict
       || a.market - b.market
       || (b.edition.year ?? 0) - (a.edition.year ?? 0)

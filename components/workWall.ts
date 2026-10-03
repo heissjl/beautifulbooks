@@ -72,10 +72,10 @@ export function captionFor(cover: Cover, editionsById: ReadonlyMap<string, Editi
 export function progressLabel(covers: number, merged: Pick<MergedWork, 'checked' | 'total' | 'done' | 'truncated'>, t: Translate = english): string {
   const n = covers === 1 ? t('{n} cover', { n: 1 }) : t('{n} covers', { n: covers });
   const { checked, total } = merged;
-  if (!merged.done) return t('{covers} · {checked} of {total} editions checked', { covers: n, checked, total });
+  if (!merged.done) return t('{covers} from {checked} of {total} editions checked', { covers: n, checked, total });
   const reason: Record<Exclude<Truncation, null>, string> = {
-    cap: t('{covers} · first {checked} of {total} editions checked', { covers: n, checked, total }),
-    error: t('{covers} · {checked} of {total} editions checked, the source stopped answering', { covers: n, checked, total }),
+    cap: t('{covers} from the first {checked} of {total} editions', { covers: n, checked, total }),
+    error: t('{covers} from {checked} of {total} editions; the source stopped answering', { covers: n, checked, total }),
   };
   if (merged.truncated) return reason[merged.truncated];
   return total === 1 ? t('{covers} from {total} edition', { covers: n, total }) : t('{covers} from {total} editions', { covers: n, total });

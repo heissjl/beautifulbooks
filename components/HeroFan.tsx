@@ -58,7 +58,7 @@ function WorkRing({ ring: { workId, title: fullTitle, author, coverIds }, classN
       <HeroRondell faces={coverIds.map(id => <Face key={id} coverId={id} />)} />
       {/* The book, not a count (Julian 2026-09-11): the covers on the ring are plain to see. */}
       <p className="mt-3 text-xs text-ink-3 transition-colors group-hover:text-ink-2">
-        <span className="text-ink-2">{title}</span> · {author}
+        <span className="text-ink-2">{title}</span> by {author}
       </p>
     </Link>
   );
@@ -87,7 +87,7 @@ function CollectionRingView({ ring: { slug, title, covers }, className }: { ring
               key={c.coverId}
               href={`/book/${c.workId}?cover=${encodeURIComponent(c.coverId)}`}
               aria-label={`${tileTitle(c.title)} by ${c.author}`}
-              title={`${tileTitle(c.title)} · ${c.author}`}
+              title={`${tileTitle(c.title)} by ${c.author}`}
               className="block h-full w-full rounded-[4px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               <Face coverId={c.coverId} />
@@ -98,7 +98,7 @@ function CollectionRingView({ ring: { slug, title, covers }, className }: { ring
       {/* The collection, not a count, as the book ring names the book. */}
       <p className="mt-3 text-xs text-ink-3">
         <Link href={href} className="transition-colors hover:text-ink-2 group-hover:text-ink-2">
-          <span className="text-ink-2">{title}</span> · a collection
+          <span className="text-ink-2">{title}</span>, a collection
         </Link>
       </p>
     </div>

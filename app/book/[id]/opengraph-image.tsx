@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og';
-import { authorLine, coverImages } from '@/lib/seo';
+import { SITE_NAME, authorLine, coverImages } from '@/lib/seo';
 import { asJpeg, Display, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
 import { getWorkPage, isWorkId } from '@/lib/work';
 
@@ -21,7 +21,7 @@ export const contentType = 'image/jpeg';
 
 export default async function Image({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  let title = 'Beautiful Books';
+  let title: string = SITE_NAME;
   let author = '';
   let urls: string[] = [];
 

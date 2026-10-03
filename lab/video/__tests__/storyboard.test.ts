@@ -8,6 +8,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { ImageSignature } from '../../../lib/imagesig';
 import type { Cover, Edition, Work } from '../../../lib/model';
+import { SITE_NAME } from '../../../lib/seo';
 import { parseEditions, type OlEditionEntry } from '../../../lib/sources/openlibrary-parse';
 import { assembleEditions } from '../../../lib/works';
 import {
@@ -64,7 +65,7 @@ describe('storyboard on the Gatsby fixtures', () => {
     const grid = board.shots.at(-2) as GridShot;
     expect(grid.kind).toBe('grid');
     expect(grid.coverIds).toEqual(shots.map(s => s.coverId));
-    expect(board.shots.at(-1)).toMatchObject({ kind: 'end', wordmark: 'Beautiful Books', url: 'beautifulcovers.vercel.app' });
+    expect(board.shots.at(-1)).toMatchObject({ kind: 'end', wordmark: SITE_NAME, url: 'beautifulcovers.vercel.app' });
   });
 
   it('starts slow and accelerates', () => {

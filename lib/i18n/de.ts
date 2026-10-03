@@ -28,7 +28,6 @@
  */
 export const de: Readonly<Record<string, string>> = {
   // Header, footer, 404
-  'Covers, side by side.': 'Cover im Vergleich.',
   'Data from Open Library and Google Books. Cover images belong to their publishers.': 'Daten von Open Library und Google Books. Die Coverbilder gehören ihren Verlagen.',
   'Purchase links may earn us a commission.': 'Kauflinks können uns eine Provision einbringen.',
   'Your collections': 'Deine Sammlungen',
@@ -40,15 +39,12 @@ export const de: Readonly<Record<string, string>> = {
 
   // Home
   // The hero is written for German, not rendered from the English pun (see the header).
-  'Judge a book': 'Ein Buch hat viele Cover.',
-  'by its covers.': 'Such dir deins aus.',
   'Type a title and see the covers it has been printed with, by language and year.': 'Gib einen Titel ein und sieh, mit welchen Covern das Buch gedruckt wurde — nach Sprache und Jahr geordnet.',
   'Then find the edition you’d actually want on your shelf.': 'Dann such dir die Ausgabe aus, die wirklich in dein Regal gehört.',
   'Help us find the prettiest cover of all time!': 'Hilf mit, das schönste Cover aller Zeiten zu küren!',
   'Create your own collection of covers': 'Stell dir deine eigene Coverwand zusammen',
   'Start with a classic': 'Zum Einstieg ein paar Klassiker',
   'Collections': 'Sammlungen',
-  'See all': 'Alle ansehen',
   '{n} book': '{n} Buch',
   '{n} books': '{n} Bücher',
 
@@ -60,7 +56,6 @@ export const de: Readonly<Record<string, string>> = {
   'A title, or a title and author': 'Ein Titel, oder Titel und Autor',
   'Search an author': 'Nach Autorin oder Autor suchen',
   'Search': 'Suchen',
-  'Recent': 'Zuletzt',
   'Popular': 'Beliebt',
   'Search in': 'Suchen in',
   'Titles & authors': 'Titel & Autoren',
@@ -101,7 +96,6 @@ export const de: Readonly<Record<string, string>> = {
   'No books by {author} with a cover': 'Keine Bücher von {author} mit Cover',
   'Open Library lists {author}, but none of the records under this name has a cover.': 'Open Library führt {author}, aber keiner der Datensätze unter diesem Namen hat ein Cover.',
   'Books by {author}': 'Bücher von {author}',
-  'most printed first': 'meistgedruckte zuerst',
   '{n} languages': '{n} Sprachen',
 
   // Collections
@@ -112,7 +106,6 @@ export const de: Readonly<Record<string, string>> = {
   'Create your own collection': 'Stell deine eigene Sammlung zusammen',
   'draft': 'Entwurf',
   'Collections by readers': 'Von Lesern zusammengestellt',
-  'all of them': 'alle ansehen',
   'Draft — not on the public site; visible under': 'Entwurf — nicht auf der öffentlichen Seite; sichtbar unter',
   'and to friends signed in on /curate': 'und für Freunde, die auf /curate angemeldet sind',
   'by 1 author': 'von 1 Autorin oder Autor',
@@ -154,12 +147,8 @@ export const de: Readonly<Record<string, string>> = {
   'Sorting these covers by decade': 'Diese Cover werden nach Jahrzehnt sortiert',
 
   // Book page: title line and wall
-  'Open Library dates it to {year}': 'Open Library datiert es auf {year}',
   '{n} cover': '{n} Cover',
   '{n} covers': '{n} Cover',
-  '{covers} · {checked} of {total} editions checked': '{covers} · {checked} von {total} Ausgaben geprüft',
-  '{covers} · first {checked} of {total} editions checked': '{covers} · die ersten {checked} von {total} Ausgaben geprüft',
-  '{covers} · {checked} of {total} editions checked, the source stopped answering': '{covers} · {checked} von {total} Ausgaben geprüft, dann hat die Quelle aufgehört zu antworten',
   '{covers} from {total} edition': '{covers} aus {total} Ausgabe',
   '{covers} from {total} editions': '{covers} aus {total} Ausgaben',
   'Editions checked': 'Geprüfte Ausgaben',
@@ -180,7 +169,6 @@ export const de: Readonly<Record<string, string>> = {
   'More': 'Mehr',
 
   // Book page: the work panel
-  'This book': 'Dieses Buch',
   'Editions here are from {year}': 'Die Ausgaben hier sind von {year}',
   'Editions here run from {from} to {to}': 'Die Ausgaben hier reichen von {from} bis {to}',
   '{n} publisher': '{n} Verlag',
@@ -203,11 +191,9 @@ export const de: Readonly<Record<string, string>> = {
   'Details': 'Details',
   'Close': 'Schließen',
   'Covers that look like this one': 'Cover, die so aussehen wie dieses',
-  'Looks like this': 'Ähnliche Cover',
   'Printings with this cover': 'Drucke mit diesem Cover',
   '1 printing with this cover': '1 Druck mit diesem Cover',
   '{n} printings with this cover': '{n} Drucke mit diesem Cover',
-  'one with 2 scans': 'einer mit 2 Scans',
   '{n} with several scans': '{n} mit mehreren Scans',
   'This printing carries the cover, without a scan of its own': 'Dieser Druck trägt das Cover, ohne eigenen Scan',
   'Scan {k} of {n} of this printing': 'Scan {k} von {n} dieses Drucks',
@@ -230,7 +216,6 @@ export const de: Readonly<Record<string, string>> = {
   'Find the cover you picked': 'Das gewählte Cover finden',
   'Get this printing': 'Diesen Druck kaufen',
   'Find this printing': 'Diesen Druck finden',
-  'title & year': 'Titel & Jahr',
   'Shop in': 'Einkaufen in',
   'United States': 'Vereinigte Staaten',
   'United Kingdom': 'Vereinigtes Königreich',
@@ -268,12 +253,6 @@ export const de: Readonly<Record<string, string>> = {
   'No current publisher image is on record for this ISBN.': 'Zu dieser ISBN ist kein aktuelles Verlagsbild verzeichnet.',
   'Checking which cover the publisher has registered for this ISBN…': 'Es wird geprüft, welches Cover der Verlag zu dieser ISBN hinterlegt hat…',
   'The catalogue that holds publishers’ current images did not answer.': 'Der Katalog mit den aktuellen Bildern der Verlage hat nicht geantwortet.',
-  'The registered image matches the cover you picked, so a new copy should look like it.': 'Das hinterlegte Bild entspricht dem gewählten Cover, ein neues Exemplar sollte also so aussehen.',
-  'The ISBN is right, but the printing you would receive probably looks like something else. The image is shown beside the note, and the search links move to the front so you can hunt the cover you actually chose.': 'Die ISBN stimmt, aber der Druck, den du bekämst, sieht wahrscheinlich anders aus. Das Bild steht neben der Notiz, und die Suchlinks rücken nach vorn, damit du dem Cover nachjagen kannst, das du wirklich gewählt hast.',
-  'One of the two pictures could not be fetched, so the site did not compare them — and says so rather than guessing either way. The publisher’s image is shown beside the note so you can compare them yourself.': 'Eines der beiden Bilder ließ sich nicht laden, also hat die Seite sie nicht verglichen — und sagt das, statt in eine Richtung zu raten. Das Bild des Verlags steht neben der Notiz, damit du selbst vergleichen kannst.',
-  'Common for older printings. It says nothing about whether a shop has the book, only that no image is filed under that number.': 'Bei älteren Drucken häufig. Es sagt nichts darüber, ob ein Shop das Buch hat, nur dass unter dieser Nummer kein Bild hinterlegt ist.',
-  'The lookup is still running. It takes a second, and until it answers the page says nothing else.': 'Die Abfrage läuft noch. Sie dauert eine Sekunde, und bis sie antwortet, sagt die Seite nichts weiter.',
-  'Google Books was asked and stayed silent, which it does often enough to matter. Trying again later usually works, and the page says so rather than reporting the silence as "nothing known".': 'Google Books wurde gefragt und hat geschwiegen, was oft genug vorkommt, um zu zählen. Später noch einmal versuchen hilft meist, und die Seite sagt das, statt das Schweigen als „nichts bekannt“ zu melden.',
 
   // The link plan's note (lib/linkplan.ts). The German place names carry their preposition.
   'This number is from the 979-8 range, which Amazon issues for its own print-on-demand titles.': 'Diese Nummer stammt aus dem Bereich 979-8, den Amazon für seine eigenen Print-on-Demand-Titel vergibt.',
@@ -399,7 +378,6 @@ export const de: Readonly<Record<string, string>> = {
   // Decades page
   'The wall': 'Zur Wand',
   'by decade': 'nach Jahrzehnt',
-  '{covers} covers from {records} edition records': '{covers} Cover aus {records} Ausgabendatensätzen',
   ', {to}s back to {from}s': ', von den {to}ern zurück bis zu den {from}ern',
   '{decade}s': '{decade}er',
   'No year on record': 'Ohne Jahr',
@@ -413,4 +391,26 @@ export const de: Readonly<Record<string, string>> = {
   'Editing': 'In Bearbeitung',
   'Back to the editor': 'Zurück zum Editor',
   'Stop editing': 'Bearbeitung beenden',
+
+  // After the merge of 2026-10-03: the site was renamed (0.5) and the headline now says the proverb to its end. German has no such proverb, so the line is its own.
+  'Judge a book,': 'Ein Buch hat viele Cover.',
+  'buy its covers.': 'Kauf dir deins.',
+  'Recent searches': 'Zuletzt gesucht',
+  'and {n} editions, the most printed first.': 'und {n} Ausgaben, die meistgedruckten zuerst.',
+  'All collections by readers': 'Alle Sammlungen von Lesern',
+  'Open Library dates the book to {year}.': 'Open Library datiert das Buch auf {year}.',
+  '{covers} from {checked} of {total} editions checked': '{covers} aus {checked} von {total} geprüften Ausgaben',
+  '{covers} from the first {checked} of {total} editions': '{covers} aus den ersten {checked} von {total} Ausgaben',
+  '{covers} from {checked} of {total} editions; the source stopped answering': '{covers} aus {checked} von {total} Ausgaben; die Quelle hat aufgehört zu antworten',
+  '{covers} covers from {records} printings with a known year': '{covers} Cover aus {records} Drucken mit bekanntem Jahr',
+  '{n} scans': '{n} Scans',
+  'one with {n} scans': 'einer mit {n} Scans',
+  '{shop} by {question}': '{shop} nach {question}',
+  'title and year': 'Titel und Jahr',
+  'A new copy should look like the cover you picked.': 'Ein neues Exemplar sollte so aussehen wie das gewählte Cover.',
+  'A new copy probably looks different. The publisher’s image is shown, and searches for your cover move to the front.': 'Ein neues Exemplar sieht wahrscheinlich anders aus. Das Bild des Verlags wird gezeigt, und die Suchen nach deinem Cover rücken nach vorn.',
+  'One of the two pictures could not be loaded, so the site shows the publisher’s image and lets you compare.': 'Eines der beiden Bilder ließ sich nicht laden; die Seite zeigt das Bild des Verlags und überlässt dir den Vergleich.',
+  'Common for older printings. It says nothing about whether a shop has the book.': 'Bei älteren Drucken häufig. Es sagt nichts darüber, ob ein Shop das Buch hat.',
+  'The lookup is still running; it takes a second.': 'Die Abfrage läuft noch; sie dauert eine Sekunde.',
+  'Google Books did not answer. Trying again later usually works.': 'Google Books hat nicht geantwortet. Später noch einmal versuchen hilft meist.',
 };

@@ -79,7 +79,7 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
                 <div className="mb-8 max-w-2xl">
                   {/* Two halves, so the accent can sit on the German verb as it sits on the English object. */}
                   <h1 className="text-4xl leading-[1.1] text-ink sm:text-5xl">
-                    {t('Judge a book')} <em className="text-accent">{t('by its covers.')}</em>
+                    {t('Judge a book,')} <em className="text-accent">{t('buy its covers.')}</em>
                   </h1>
                   <p className="mt-4 max-w-xl text-base text-ink-2 sm:text-lg">
                     {t('Type a title and see the covers it has been printed with, by language and year.')}{' '}
@@ -109,7 +109,6 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
                       className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
                     >
                       {t('Help us find the prettiest cover of all time!')}
-                      <span aria-hidden="true">&rarr;</span>
                     </Link>
                     {wallsEnabled() && <WallsInvite>{t('Create your own collection of covers')}</WallsInvite>}
                   </div>

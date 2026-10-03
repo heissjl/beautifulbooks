@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { Display, OG, Wordmark, ogFonts } from '@/app/og';
+import { SITE_CARD } from '@/lib/seo';
 
 /**
  * The card for every page that has none of its own: the home page, About,
@@ -11,7 +12,7 @@ import { Display, OG, Wordmark, ogFonts } from '@/app/og';
  * covers does not reach it (docs/identitaet.md §2). It asks no source and
  * can be static.
  */
-export const alt = 'Beautiful Books: judge a book by its covers';
+export const alt = SITE_CARD.alt;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -45,8 +46,8 @@ export default async function Image() {
         >
           <Wordmark size={40} color={OG.paperInk} />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Display size={76} color={OG.paperInk} lineHeight={1.05}>Judge a book</Display>
-            <Display size={76} color={OG.accent} lineHeight={1.05} italic>by its covers.</Display>
+            <Display size={76} color={OG.paperInk} lineHeight={1.05}>Judge a book,</Display>
+            <Display size={76} color={OG.accent} lineHeight={1.05} italic>buy its covers.</Display>
           </div>
         </div>
         <div

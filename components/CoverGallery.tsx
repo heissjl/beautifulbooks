@@ -87,7 +87,6 @@ function visibleLanguages(
 export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked, allFirst }: CoverGalleryProps) {
   const t = useT();
   const locale = useLocale();
-  const coverCount = (n: number) => (n === 1 ? t('{n} cover', { n: 1 }) : t('{n} covers', { n }));
   // The tab follows the selected cover unless the user picked a tab since
   // the selection last changed (derived state, no effect needed).
   const [picked, setPicked] = useState<{ key: string; forSelectedId: string | null } | null>(null);
@@ -151,7 +150,6 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       */}
       <div className="relative mb-4">
       <div ref={pillRow} className="flex flex-wrap items-center gap-2" role="tablist" aria-label={t('Language')}>
-        <span className="kicker mr-2 w-full sm:w-auto">{coverCount(total)}</span>
         {named.map(tab)}
         {tucked.length > 0 && (
           <button
@@ -187,7 +185,6 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       */}
       <div aria-hidden="true" className="pointer-events-none invisible absolute inset-x-0 top-0 h-0 overflow-hidden">
         <div ref={pillProbe} className="flex w-max gap-2">
-          <span data-k="kicker" className="kicker">{coverCount(total)}</span>
           {groups.map(g => (
             <span key={tabKey(g)} data-k={tabKey(g)} className="chip shrink-0">
               {languageName(g.language, locale)}

@@ -157,7 +157,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
           >
             {recentSearches.length > 0 && (
               <div className="border-b border-line py-1">
-                <p className="kicker px-4 py-2">{t('Recent')}</p>
+                <p className="kicker px-4 py-2">{t('Recent searches')}</p>
                 {recentSearches.map(search => (
                   <button key={search} type="button" onClick={() => submit(search)} className="flex w-full items-center gap-3 px-4 py-2 text-left text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink">
                     <svg className="h-4 w-4 text-ink-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
