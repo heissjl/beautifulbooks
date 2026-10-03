@@ -16,6 +16,7 @@ import { commerceEnabled } from '@/lib/sitemode';
  */
 export const metadata: Metadata = {
   title: 'About',
+  alternates: { canonical: '/about' },
   description:
     'Where the cover images come from, what is missing from them, and what the notes under each buy link mean.',
 };

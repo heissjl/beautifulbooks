@@ -17,6 +17,7 @@ import { readImprint } from '@/lib/imprint';
  */
 export const metadata: Metadata = {
   title: 'Impressum',
+  alternates: { canonical: '/contact' },
   description: 'Legal notice: who runs this site and how to reach them.',
 };
 

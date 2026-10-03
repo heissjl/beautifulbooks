@@ -25,6 +25,7 @@ import { suggestEnabled } from '@/lib/suggest/auth';
  */
 export const metadata: Metadata = {
   title: 'Privacy',
+  alternates: { canonical: '/privacy' },
   description: 'What this site does with data, which is little, and who is responsible for it.',
 };
 

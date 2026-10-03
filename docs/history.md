@@ -4121,3 +4121,16 @@ Julian kaufte bei INWX `buyitscovers.com`/`.de`, `byitscovers.com`/`.de`, `other
 Julian: „can you shorten the about page". Gezählt im Browser unter `npm run dev`: **516 Wörter im `<main>`**, vorher rund 1.000 (aus dem Quelltext geschätzt: 968 gegen 486). Was blieb: woher die Bilder kommen und dass die Kataloge nur einen Teil kennen, „Looks like this" mit Zahl und Datum des Index, die vier Lücken, die sechs Verdikte (Überschriften unverändert aus `VERDICT_LEAD`, die Erklärungen in `VERDICT_MEANING` gekürzt — sie werden nur hier gelesen, die Seitenleiste bleibt gleich), dass kein Laden gefragt wird, die Reihenfolge nach ISBN, was ein Klick aufzeichnet. Was ging: die Messprotokolle (Google-Anteil an drei Büchern, „one cover in nine"), die Verneinungsketten und Nachsätze. Die Tests auf den Wortlaut der Verdikte (kein Laden-Anspruch, keine Vollständigkeit) laufen unverändert grün; geprüft bei 1280 und 500 px.
 
 Nachtrag am selben Tag: Julian ließ auch den Abschnitt „Looks like this" streichen („lösch das noch"); damit liest die About-Seite `lib/coverindex.ts` nicht mehr, und SPEC F2.14 sagt es. Rund 440 Wörter.
+
+## 2026-10-03 — Launch auf der eigenen Domain: Canonical überall, und die alte Adresse leitet nicht von selbst um (ROADMAP 2.15, 4.13)
+
+Julian: „wir haben jetzt eine domain und können jetzt endlich das live gehen in einen richtigen shop vorbereiten. was sind die wichtigen schritte, sitemap, etc?"
+
+**Abgelesen über den Vercel-Connector:** alle acht Domains des Projekts `verified`; die sechs Nebenadressen leiten mit 308 auf `buyitscovers.com`; **`beautifulcovers.vercel.app` hat `redirect: null`**. Die Annahme in domain-recherche §20, Vercel leite die alte Adresse von selbst um, war falsch. Das DNS selbst ließ sich aus der Sitzung nicht prüfen (DNS-over-HTTPS und die Domain hinter dem Proxy der Sitzung: keine Antwort bzw. 403 vom Proxy) — ob INWX schon umgestellt ist, ist also offen.
+
+**Gemessen am Quelltext:** von den indexierbaren Seiten hatten Startseite, `/about`, `/privacy` und `/contact` keinen Canonical; Buchseiten, Jahrzehnte, Cover-Seiten, Sammlungen und das Spiel hatten einen. Solange zwei Hosts dieselbe Seite ausliefern, wären die vier doppelt im Index gelandet. Suchergebnisse (`/?q=`) trugen den Titel der Startseite und waren indexierbar, obwohl die Sitemap sie mit Absicht auslässt.
+
+**Gebaut:** Canonical auf den vier Seiten; Startseite mit `generateMetadata`, die bei `q`, `author` oder `key` `noindex, follow` setzt. Geprüft im Produktions-Build mit `NEXT_PUBLIC_SITE_URL=https://buyitscovers.com`: `/` → Canonical `https://buyitscovers.com`, `/?q=dune` → `noindex, follow`, `/about`, `/privacy`, `/contact` je mit eigenem Canonical. 1.004 Tests grün.
+
+Die Reihenfolge des Umzugs steht als ROADMAP 2.15, die Sperrliste vor dem Shop-Modus als 4.13 — mit dem Befund, dass `NEXT_PUBLIC_SITE_MODE=shop` den nicht freigegebenen Verfügbarkeits-Button einschaltet, 0.1 also vor dem Umschalttag entschieden sein muss.
+
