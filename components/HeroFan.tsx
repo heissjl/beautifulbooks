@@ -9,6 +9,7 @@ import { coverUrlFor } from '@/lib/coverurl';
 import { pickHeroPick } from '@/lib/herofan';
 import type { CollectionRing, HeroRing } from '@/lib/heroring';
 import { tileTitle } from '@/lib/normalize';
+import { rich, useT } from './i18n';
 
 /**
  * Seven covers on a turning ring beside the headline (ROADMAP 1.9). It began
@@ -47,18 +48,19 @@ function Face({ coverId }: { coverId: string }) {
 
 /** One book: the whole thing is one link to the book's wall — a way in, not decoration. */
 function WorkRing({ ring: { workId, title: fullTitle, author, coverIds }, className }: { ring: HeroRing; className: string }) {
+  const t = useT();
   // The same short form the wall's tiles use: "Frankenstein", not "Frankenstein; or, The Modern Prometheus" (6.30).
   const title = tileTitle(fullTitle);
   return (
     <Link
       href={`/book/${workId}`}
       className={`group block shrink-0 text-center ${className}`}
-      aria-label={`${title} by ${author}: seven of its covers. Open the wall.`}
+      aria-label={t('{title} by {author}: seven of its covers. Open the wall.', { title, author })}
     >
       <HeroRondell faces={coverIds.map(id => <Face key={id} coverId={id} />)} />
       {/* The book, not a count (Julian 2026-09-11): the covers on the ring are plain to see. */}
       <p className="mt-3 text-xs text-ink-3 transition-colors group-hover:text-ink-2">
-        <span className="text-ink-2">{title}</span> by {author}
+        {rich(t('{title} by {author}', { author }), { title: <span className="text-ink-2">{title}</span> })}
       </p>
     </Link>
   );
@@ -72,6 +74,7 @@ function WorkRing({ ring: { workId, title: fullTitle, author, coverIds }, classN
  * through the router, and the caption is the link a keyboard reaches.
  */
 function CollectionRingView({ ring: { slug, title, covers }, className }: { ring: CollectionRing; className: string }) {
+  const t = useT();
   const router = useRouter();
   const href = `/collections/${slug}`;
   const openCollection = (e: MouseEvent) => {
@@ -86,8 +89,8 @@ function CollectionRingView({ ring: { slug, title, covers }, className }: { ring
             <Link
               key={c.coverId}
               href={`/book/${c.workId}?cover=${encodeURIComponent(c.coverId)}`}
-              aria-label={`${tileTitle(c.title)} by ${c.author}`}
-              title={`${tileTitle(c.title)} by ${c.author}`}
+              aria-label={t('{title} by {author}', { title: tileTitle(c.title), author: c.author })}
+              title={t('{title} by {author}', { title: tileTitle(c.title), author: c.author })}
               className="block h-full w-full rounded-[4px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               <Face coverId={c.coverId} />

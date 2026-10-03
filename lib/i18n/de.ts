@@ -46,6 +46,7 @@ export const de: Readonly<Record<string, string>> = {
   'Start with a classic': 'Zum Einstieg ein paar Klassiker',
   'Collections': 'Sammlungen',
   'Game': 'Spiel',
+  '{title} by {author}: seven of its covers. Open the wall.': '{title} von {author}: sieben seiner Cover. Die Wand öffnen.',
   'Site': 'Seite',
   '{n} book': '{n} Buch',
   '{n} books': '{n} Bücher',
