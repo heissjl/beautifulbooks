@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analyse – Mock-up</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b; --text-secondary: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --series-1: #2a78d6; --series-1-wash: rgba(42,120,214,0.10); --spark-dim: #b7d3f6;
+    --up-good: #006300; --down-bad: #d03b3b;
+    --good: #0ca30c; --warning: #fab219; --critical: #d03b3b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface-1: #1a1a19;
+      --text-primary: #ffffff; --text-secondary: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5; --series-1-wash: rgba(57,135,229,0.12); --spark-dim: #184f95;
+      --up-good: #0ca30c; --down-bad: #e66767;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface-1: #1a1a19;
+    --text-primary: #ffffff; --text-secondary: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --series-1: #3987e5; --series-1-wash: rgba(57,135,229,0.12); --spark-dim: #184f95;
+    --up-good: #0ca30c; --down-bad: #e66767;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--text-primary);
+         font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 64px; }
+  .banner { font-size: 12px; color: var(--text-secondary); border: 1px dashed var(--axis);
+            border-radius: 8px; padding: 8px 12px; margin-bottom: 16px; }
+  h1 { font-size: 20px; margin: 0 0 4px; font-weight: 600; }
+  h2 { font-size: 15px; margin: 0 0 2px; font-weight: 600; }
+  .sub { color: var(--text-secondary); font-size: 13px; margin: 0 0 12px; }
+  .note { color: var(--muted); font-size: 12px; margin-top: 10px; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 20px; }
+  .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface-1); }
+  .seg button { border: 0; background: none; color: var(--text-secondary); padding: 6px 12px; font: inherit; cursor: pointer; }
+  .seg button[aria-pressed="true"] { color: var(--text-primary); font-weight: 600; background: var(--series-1-wash); }
+  .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .grid { display: grid; gap: 16px; }
+  .top { grid-template-columns: minmax(0,1.3fr) repeat(4, minmax(0,1fr)); margin-bottom: 16px; }
+  .two { grid-template-columns: minmax(0,1fr) minmax(0,1fr); margin-top: 16px; }
+  @media (max-width: 900px) { .top { grid-template-columns: minmax(0,1fr) minmax(0,1fr); } .top .hero { grid-column: 1 / -1; } .two { grid-template-columns: minmax(0,1fr); } }
+  .label { color: var(--text-secondary); font-size: 13px; }
+  .value { font-size: 26px; font-weight: 600; margin: 2px 0; }
+  .hero .value { font-size: 52px; line-height: 1.05; }
+  .delta { font-size: 12px; }
+  .delta.up { color: var(--up-good); } .delta.down { color: var(--down-bad); }
+  .delta .vs { color: var(--muted); }
+  svg { display: block; width: 100%; overflow: visible; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; color: var(--muted); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--grid); }
+  td { padding: 6px 8px; border-bottom: 1px solid var(--grid); vertical-align: middle; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .barcell { width: 38%; }
+  .bar { height: 10px; border-radius: 0 4px 4px 0; background: var(--series-1); }
+  .status { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .muted { color: var(--muted); }
+  #tip { position: fixed; pointer-events: none; background: var(--surface-1); border: 1px solid var(--border);
+         border-radius: 8px; padding: 6px 10px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.12); display: none; z-index: 10; }
+  #tip strong { display: block; font-size: 14px; }
+  .funnel-row { display: grid; grid-template-columns: 140px 1fr 64px; gap: 10px; align-items: center; margin: 8px 0; }
+  .funnel-row .track { height: 18px; }
+  .funnel-row .fill { height: 18px; border-radius: 0 4px 4px 0; background: var(--series-1); }
+  .drop { font-size: 12px; color: var(--text-secondary); margin: -4px 0 0 150px; }
+  .tablewrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+  <div class="banner">Mock-up zu ROADMAP 3.1 (docs/plans/PLAN-3.1-analyse.md). <strong>Alle Zahlen sind erfunden</strong> und zeigen nur die Form. Gebaut ist nichts.</div>
+  <h1>Analyse · Buy Its Covers</h1>
+  <p class="sub">Was auf der Seite passiert. Aufrufe und Herkunft im Einzelnen: Vercel Web Analytics; Suchanfragen bei Google: Search Console; Umsatz: Partner-Dashboards.</p>
+
+  <div class="filters" role="toolbar" aria-label="Filter">
+    <div class="seg" data-group="range"><button aria-pressed="false">7 Tage</button><button aria-pressed="true">30 Tage</button><button aria-pressed="false">90 Tage</button></div>
+    <div class="seg" data-group="market"><button aria-pressed="true">Alle Märkte</button><button aria-pressed="false">US</button><button aria-pressed="false">UK</button><button aria-pressed="false">DE</button></div>
+  </div>
+
+  <section class="grid top">
+    <div class="card hero">
+      <div class="label">Klickrate der Buchseite</div>
+      <div class="value">8,4 %</div>
+      <div class="delta up">+1,1 Pkt. <span class="vs">gegen die 30 Tage davor</span></div>
+      <div class="note">Buchseiten-Besuche mit mindestens einem Kauf-Klick ÷ Buchseiten-Besuche. Signale erfasst: ~91 % (Abgleich mit /go/).</div>
+    </div>
+    <div class="card"><div class="label">Buchseiten-Besuche</div><div class="value">3.412</div><div class="delta up">+18 %</div><svg class="spark" data-series="visits" height="28"></svg></div>
+    <div class="card"><div class="label">Kauf-Klicks</div><div class="value">287</div><div class="delta up">+34 %</div><svg class="spark" data-series="clicks" height="28"></svg></div>
+    <div class="card"><div class="label">Suchen</div><div class="value">1.960</div><div class="delta up">+9 %</div><svg class="spark" data-series="searches" height="28"></svg></div>
+    <div class="card"><div class="label">Suche ohne Ergebnis</div><div class="value">6,1 %</div><div class="delta down">+0,8 Pkt.</div><div class="note">davon Quelle ausgefallen: 0,7 %</div></div>
+  </section>
+
+  <section class="card">
+    <h2>Verlauf je Tag</h2>
+    <p class="sub">Zwei Diagramme mit gemeinsamer Zeitachse, keine zweite y-Achse.</p>
+    <div class="label">Buchseiten-Besuche</div>
+    <svg id="lineVisits" height="140"></svg>
+    <div class="label" style="margin-top:12px">Kauf-Klicks</div>
+    <svg id="lineClicks" height="110"></svg>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>Weg zum Kauf</h2>
+      <p class="sub">Anteil der Buchseiten-Besuche, die die Stufe erreichen.</p>
+      <div id="funnel"></div>
+      <p class="note">Gezählt wird ein Signal je Besuch beim Verlassen der Seite. „Wand geladen“: mindestens eine Seite Cover angekommen.</p>
+    </div>
+    <div class="card">
+      <h2>Händler</h2>
+      <p class="sub">Kauf-Klicks aus /go/, exakt gezählt.</p>
+      <div class="tablewrap"><table id="retailers"><thead><tr><th>Händler</th><th>Markt</th><th class="barcell">Anteil</th><th class="num">Klicks</th><th class="num">Produktlink</th></tr></thead><tbody></tbody></table></div>
+      <p class="note">Mit dem Shop-Modus kommt eine Spalte „Provision je 100 Klicks“ dazu, von Hand aus den Partner-Dashboards.</p>
+    </div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>Suche: wo geklickt wird</h2>
+      <p class="sub">Position der angeklickten Karte, Anteil der Suchen mit Ergebnis.</p>
+      <svg id="positions" height="170"></svg>
+      <p class="note">Liegt Position 1 unter 50 %, stimmt die Reihenfolge nicht.</p>
+    </div>
+    <div class="card">
+      <h2>Gesucht, nichts gefunden</h2>
+      <p class="sub">Erst ab zwei gleichen Anfragen gezeigt, 90 Tage gespeichert.</p>
+      <div class="tablewrap"><table id="empty"><thead><tr><th>Anfrage</th><th class="num">Anzahl</th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>Cover gesehen vor dem Verlassen</h2>
+      <p class="sub">Kacheln, die zu mindestens der Hälfte im Bild waren.</p>
+      <svg id="seen" height="170"></svg>
+      <p class="note">41 % verlassen die Seite, ohne dass Seite 2 der Wand geladen ist.</p>
+    </div>
+    <div class="card">
+      <h2>Verdikt und Kauf</h2>
+      <p class="sub">Nach Auswahl eines Covers: was das Verdikt sagte, und wie oft danach geklickt wurde.</p>
+      <div class="tablewrap"><table id="verdicts"><thead><tr><th>Verdikt</th><th class="num">Auswahlen</th><th class="barcell">Klickrate danach</th><th class="num"></th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>Werke</h2>
+      <p class="sub">Die meistbesuchten Buchseiten, mit Klickrate je Werk.</p>
+      <div class="tablewrap"><table id="works"><thead><tr><th>Werk</th><th class="num">Besuche</th><th class="num">Klickrate</th></tr></thead><tbody></tbody></table></div>
+    </div>
+    <div class="card">
+      <h2>Woher die Buchseiten-Besuche kommen</h2>
+      <p class="sub">Im Browser zur Klasse verdichtet; der Referrer selbst wird nicht gesendet.</p>
+      <div class="tablewrap"><table id="origin"><thead><tr><th>Herkunft</th><th class="barcell">Anteil</th><th class="num">Besuche</th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>Betrieb</h2>
+      <p class="sub">Ereignisse, keine Anfragen. Den Google-Verbrauch zählt nur die Cloud-Konsole.</p>
+      <table><tbody id="ops"></tbody></table>
+    </div>
+    <div class="card">
+      <h2>Gemeinschaft</h2>
+      <p class="sub">Aus den vorhandenen Beständen in Redis.</p>
+      <table><tbody>
+        <tr><td>Stimmen im Spiel</td><td class="num">1.204</td></tr>
+        <tr><td>Neue Sammlungen (≥ 6 Cover)</td><td class="num">11 <span class="muted">von 30 fürs Tor aus 5.13a</span></td></tr>
+        <tr><td>Vorschläge von Freunden</td><td class="num">7</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+</main>
+<div id="tip" role="status"></div>
+<script>
+(() => {
+  const days = 30;
+  const rnd = (seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647)(42);
+  const visits = Array.from({length: days}, (_, i) => Math.round(80 + i * 1.6 + (i % 7 === 5 || i % 7 === 6 ? 25 : 0) + rnd() * 18));
+  const clicks = visits.map(v => Math.round(v * (0.07 + rnd() * 0.03)));
+  const searches = visits.map(v => Math.round(v * (0.55 + rnd() * 0.1)));
+  const start = new Date('2026-09-04');
+  const dateLabel = i => { const d = new Date(start); d.setDate(d.getDate() + i); return d.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' }); };
+  const fmt = n => n.toLocaleString('de-DE');
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (name, attrs, parent) => { const e = document.createElementNS(NS, name); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; };
+  const tip = document.getElementById('tip');
+  function showTip(evt, value, label) {
+    tip.textContent = '';
+    const s = document.createElement('strong'); s.textContent = value; tip.appendChild(s);
+    const l = document.createElement('span'); l.textContent = label; tip.appendChild(l);
+    tip.style.display = 'block';
+    const x = Math.min(evt.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
+    tip.style.left = x + 'px'; tip.style.top = (evt.clientY + 14) + 'px';
+  }
+  const hideTip = () => { tip.style.display = 'none'; };
+
+  // Sparklines: dim line, current week in the accent.
+  const sparkData = { visits, clicks, searches };
+  document.querySelectorAll('svg.spark').forEach(svg => {
+    const data = sparkData[svg.dataset.series];
+    const w = svg.clientWidth || 160, h = 28, max = Math.max(...data), min = Math.min(...data);
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    const pt = (v, i) => `${(i / (data.length - 1)) * w},${h - 3 - ((v - min) / (max - min || 1)) * (h - 6)}`;
+    el('polyline', { points: data.map(pt).join(' '), fill: 'none', stroke: 'var(--spark-dim)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
+    const tail = data.slice(-7).map((v, j) => pt(v, data.length - 7 + j));
+    el('polyline', { points: tail.join(' '), fill: 'none', stroke: 'var(--series-1)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
+  });
+
+  // Line chart with area wash, crosshair and tooltip.
+  function line(id, data, name) {
+    const svg = document.getElementById(id);
+    const w = svg.clientWidth || 800, h = +svg.getAttribute('height'), padL = 36, padB = 20, padT = 8;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    const rawMax = Math.max(...data), step = Math.pow(10, Math.floor(Math.log10(rawMax))) / 2;
+    const max = Math.ceil(rawMax / step) * step;
+    const x = i => padL + (i / (data.length - 1)) * (w - padL - 8);
+    const y = v => padT + (1 - v / max) * (h - padT - padB);
+    [0, max / 2, max].forEach(t => {
+      el('line', { x1: padL, x2: w - 8, y1: y(t), y2: y(t), stroke: t === 0 ? 'var(--axis)' : 'var(--grid)', 'stroke-width': 1 }, svg);
+      el('text', { x: padL - 6, y: y(t) + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--muted)' }, svg).textContent = fmt(t);
+    });
+    [0, 7, 14, 21, 29].forEach(i => el('text', { x: x(i), y: h - 4, 'text-anchor': i === 0 ? 'start' : i === 29 ? 'end' : 'middle', 'font-size': 11, fill: 'var(--muted)' }, svg).textContent = dateLabel(i));
+    const pts = data.map((v, i) => `${x(i)},${y(v)}`);
+    el('polygon', { points: `${x(0)},${y(0)} ${pts.join(' ')} ${x(data.length - 1)},${y(0)}`, fill: 'var(--series-1-wash)' }, svg);
+    el('polyline', { points: pts.join(' '), fill: 'none', stroke: 'var(--series-1)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
+    const last = data.length - 1;
+    el('circle', { cx: x(last), cy: y(data[last]), r: 4, fill: 'var(--series-1)', stroke: 'var(--surface-1)', 'stroke-width': 2 }, svg);
+    const hair = el('line', { y1: padT, y2: h - padB, stroke: 'var(--axis)', 'stroke-width': 1, visibility: 'hidden' }, svg);
+    const dot = el('circle', { r: 4, fill: 'var(--series-1)', stroke: 'var(--surface-1)', 'stroke-width': 2, visibility: 'hidden' }, svg);
+    const hit = el('rect', { x: padL, y: 0, width: w - padL, height: h, fill: 'transparent', tabindex: 0, 'aria-label': name }, svg);
+    const move = evt => {
+      const r = svg.getBoundingClientRect(), px = (evt.clientX - r.left) * (w / r.width);
+      const i = Math.max(0, Math.min(last, Math.round((px - padL) / (w - padL - 8) * last)));
+      hair.setAttribute('x1', x(i)); hair.setAttribute('x2', x(i)); hair.setAttribute('visibility', 'visible');
+      dot.setAttribute('cx', x(i)); dot.setAttribute('cy', y(data[i])); dot.setAttribute('visibility', 'visible');
+      showTip(evt, fmt(data[i]), `${name} · ${dateLabel(i)}`);
+    };
+    hit.addEventListener('pointermove', move);
+    hit.addEventListener('pointerleave', () => { hair.setAttribute('visibility', 'hidden'); dot.setAttribute('visibility', 'hidden'); hideTip(); });
+  }
+  line('lineVisits', visits, 'Buchseiten-Besuche');
+  line('lineClicks', clicks, 'Kauf-Klicks');
+
+  // Funnel: one series, bars from a shared baseline.
+  const funnel = [['Besuch', 100], ['Wand geladen', 93], ['Cover gewählt', 31], ['Kauf-Klick', 8.4]];
+  const fWrap = document.getElementById('funnel');
+  funnel.forEach(([name, pct], i) => {
+    const row = document.createElement('div'); row.className = 'funnel-row';
+    const a = document.createElement('span'); a.textContent = name;
+    const track = document.createElement('div'); track.className = 'track';
+    const fill = document.createElement('div'); fill.className = 'fill'; fill.style.width = pct + '%';
+    fill.addEventListener('pointermove', e => showTip(e, pct.toLocaleString('de-DE') + ' %', name)); fill.addEventListener('pointerleave', hideTip);
+    track.appendChild(fill);
+    const v = document.createElement('span'); v.className = 'num'; v.style.textAlign = 'right'; v.textContent = pct.toLocaleString('de-DE') + ' %';
+    row.append(a, track, v); fWrap.appendChild(row);
+    if (i === 1) { const d = document.createElement('div'); d.className = 'drop'; d.textContent = 'Größter Abfall: zwei von drei sehen die Wand und wählen kein Cover.'; fWrap.appendChild(d); }
+  });
+
+  function barTable(id, rows, cells) {
+    const tb = document.querySelector(`#${id} tbody`);
+    const max = Math.max(...rows.map(r => r.share));
+    rows.forEach(r => {
+      const tr = document.createElement('tr');
+      cells(r).forEach(c => {
+        const td = document.createElement('td');
+        if (c === 'BAR') {
+          td.className = 'barcell';
+          const b = document.createElement('div'); b.className = 'bar'; b.style.width = (r.share / max * 100) + '%';
+          b.addEventListener('pointermove', e => showTip(e, r.share.toLocaleString('de-DE') + ' %', r.name)); b.addEventListener('pointerleave', hideTip);
+          td.appendChild(b);
+        } else { if (c.num) td.className = 'num'; td.textContent = c.t; }
+        tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+  }
+  barTable('retailers', [
+    { name: 'Bookshop.org', market: 'US', share: 31, n: 89, prod: '100 %' },
+    { name: 'Amazon', market: 'US', share: 22, n: 63, prod: '100 %' },
+    { name: 'Thalia', market: 'DE', share: 14, n: 40, prod: '100 %' },
+    { name: 'AbeBooks', market: 'US', share: 11, n: 32, prod: '62 %' },
+    { name: 'genialokal', market: 'DE', share: 8, n: 23, prod: '100 %' },
+    { name: 'Waterstones', market: 'UK', share: 6, n: 17, prod: '100 %' },
+    { name: 'Übrige (6)', market: '—', share: 8, n: 23, prod: '48 %' },
+  ], r => [{ t: r.name }, { t: r.market }, 'BAR', { t: fmt(r.n), num: 1 }, { t: r.prod, num: 1 }]);
+
+  // Column chart helper (single series).
+  function columns(id, data, name) {
+    const svg = document.getElementById(id);
+    const w = svg.clientWidth || 480, h = +svg.getAttribute('height'), padB = 22, padT = 18;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    const max = Math.max(...data.map(d => d[1])), band = w / data.length, bw = Math.min(24, band * 0.6);
+    el('line', { x1: 0, x2: w, y1: h - padB, y2: h - padB, stroke: 'var(--axis)', 'stroke-width': 1 }, svg);
+    data.forEach(([label, v], i) => {
+      const bh = (v / max) * (h - padB - padT), cx = band * i + band / 2, top = h - padB - bh;
+      const r = Math.min(4, bh);
+      el('path', { d: `M${cx - bw / 2},${h - padB} V${top + r} Q${cx - bw / 2},${top} ${cx - bw / 2 + r},${top} H${cx + bw / 2 - r} Q${cx + bw / 2},${top} ${cx + bw / 2},${top + r} V${h - padB} Z`, fill: 'var(--series-1)' }, svg);
+      el('text', { x: cx, y: top - 5, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--text-secondary)' }, svg).textContent = v + ' %';
+      el('text', { x: cx, y: h - 6, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)' }, svg).textContent = label;
+      const hit = el('rect', { x: band * i, y: 0, width: band, height: h - padB, fill: 'transparent' }, svg);
+      hit.addEventListener('pointermove', e => showTip(e, v + ' %', `${name}: ${label}`)); hit.addEventListener('pointerleave', hideTip);
+    });
+  }
+  columns('positions', [['1', 58], ['2', 14], ['3', 7], ['4–10', 6], ['11+', 1], ['kein Klick', 14]], 'Klickposition');
+  columns('seen', [['0–12', 41], ['13–40', 27], ['41–100', 18], ['101–250', 10], ['250+', 4]], 'Cover gesehen');
+
+  const empty = [['the reckoning of the drowned', 6], ['schneider brockhaus 1932', 4], ['mrs dalloway penguin', 3], ['gedichte celan', 3], ['tolkien hobbit 1937 erstausgabe', 2]];
+  const etb = document.querySelector('#empty tbody');
+  empty.forEach(([q, n]) => { const tr = document.createElement('tr'); const a = document.createElement('td'); a.textContent = q; const b = document.createElement('td'); b.className = 'num'; b.textContent = n; tr.append(a, b); etb.appendChild(tr); });
+
+  barTable('verdicts', [
+    { name: 'gleich (same)', n: 512, share: 14.2 },
+    { name: 'anders (differs)', n: 188, share: 6.4 },
+    { name: 'kein Bild (unknown)', n: 301, share: 11.0 },
+    { name: 'Quelle stumm (unavailable)', n: 27, share: 9.1 },
+  ], r => [{ t: r.name }, { t: fmt(r.n), num: 1 }, 'BAR', { t: r.share.toLocaleString('de-DE') + ' %', num: 1 }]);
+
+  const works = [['Nineteen Eighty-Four', 412, '9,7 %'], ['The Great Gatsby', 288, '11,1 %'], ['Frankenstein', 203, '6,4 %'], ['Dune', 174, '12,6 %'], ['Homo faber', 121, '5,0 %'], ['Mrs Dalloway', 97, '8,2 %']];
+  const wtb = document.querySelector('#works tbody');
+  works.forEach(([t, n, r]) => { const tr = document.createElement('tr'); [t, fmt(n), r].forEach((c, i) => { const td = document.createElement('td'); if (i) td.className = 'num'; td.textContent = c; tr.appendChild(td); }); wtb.appendChild(tr); });
+
+  barTable('origin', [
+    { name: 'Suchmaschine', share: 34, n: 1160 }, { name: 'Suche auf der Seite', share: 27, n: 921 },
+    { name: 'Startseite', share: 15, n: 512 }, { name: 'Sammlung', share: 9, n: 307 },
+    { name: 'Andere Buchseite', share: 7, n: 239 }, { name: 'Sozial', share: 4, n: 136 }, { name: 'Direkt / andere', share: 4, n: 137 },
+  ], r => [{ t: r.name }, 'BAR', { t: fmt(r.n), num: 1 }]);
+
+  const ops = [
+    ['good', '✓', 'Google-Kontingent', 'kein Tagesstopp in 30 Tagen'],
+    ['warning', '!', 'Open Library', '2 Tage mit über 3 % ausgefallenen Suchen (12. und 19. Sep.)'],
+    ['good', '✓', 'Signale', 'Abgleich mit /go/: ~91 % erfasst'],
+  ];
+  const otb = document.getElementById('ops');
+  ops.forEach(([kind, icon, name, text]) => {
+    const tr = document.createElement('tr');
+    const a = document.createElement('td'); const s = document.createElement('span'); s.className = 'status';
+    const d = document.createElement('span'); d.className = 'dot'; d.style.background = `var(--${kind})`;
+    const i = document.createElement('span'); i.textContent = icon + ' ' + name; s.append(d, i); a.appendChild(s);
+    const b = document.createElement('td'); b.textContent = text; tr.append(a, b); otb.appendChild(tr);
+  });
+  const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 2; td.className = 'muted';
+  td.textContent = 'Google-Verbrauch je Tag: Cloud-Konsole → APIs → Books API → Kontingente (Link)'; tr.appendChild(td); otb.appendChild(tr);
+
+  document.querySelectorAll('.seg').forEach(seg => seg.addEventListener('click', e => {
+    if (e.target.tagName !== 'BUTTON') return;
+    seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === e.target)));
+  }));
+})();
+</script>
+</body>
+</html>
