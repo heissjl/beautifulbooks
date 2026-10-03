@@ -34,7 +34,7 @@ export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
-  /** Set by the German tree (ROADMAP 6.82); Next itself passes none. */
+  /** Set by the German tree (ROADMAP 6.85); Next itself passes none. */
   locale?: Locale;
 }
 

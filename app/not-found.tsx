@@ -10,7 +10,7 @@ import { translator } from '@/lib/i18n/translate';
  * answered 200 with "Book not found" in the body, which a crawler reads as
  * a page worth indexing.
  *
- * `locale` comes from the German tree's own not-found file (6.82); Next
+ * `locale` comes from the German tree's own not-found file (6.85); Next
  * passes nothing here itself.
  */
 export default function NotFound({ locale = DEFAULT_LOCALE }: { locale?: Locale }) {

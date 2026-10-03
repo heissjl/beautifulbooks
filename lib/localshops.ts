@@ -241,7 +241,7 @@ export function localShopLinks(country: LocalCountry, edition: LocalShopInput): 
 }
 
 /** Wording of the section, in one place. */
-/** Every sentence the fold can show, for the catalogue test (ROADMAP 6.82). */
+/** Every sentence the fold can show, for the catalogue test (ROADMAP 6.85). */
 export function localShopCopy(): string[] {
   return [
     ...Object.values(LOCAL_SHOPS_COPY),

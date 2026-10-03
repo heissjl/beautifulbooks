@@ -5,7 +5,7 @@ import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator, type Translate } from '@/lib/i18n/translate';
 
 /**
- * The locale for client components (ROADMAP 6.82). `app/de/layout.tsx`
+ * The locale for client components (ROADMAP 6.85). `app/de/layout.tsx`
  * provides `de`; the root tree has no provider and so speaks English. Server
  * components take the locale as a prop from their page instead.
  */

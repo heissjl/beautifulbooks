@@ -1,5 +1,5 @@
 /**
- * The rules of the German catalogue (ROADMAP 6.82).
+ * The rules of the German catalogue (ROADMAP 6.85).
  *
  * The English sentence is the key, so this file is what keeps a translation
  * from going stale: it reads every `t('…')` in app/, components/ and lib/,

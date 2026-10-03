@@ -220,7 +220,7 @@ export const LANGUAGE_NAMES: Record<string, string> = {
   sl: 'Slovenian', lt: 'Lithuanian', lv: 'Latvian', et: 'Estonian', is: 'Icelandic',
 };
 
-/** The same languages in German (ROADMAP 6.82); a code missing here falls back to the English name. */
+/** The same languages in German (ROADMAP 6.85); a code missing here falls back to the English name. */
 export const LANGUAGE_NAMES_DE: Record<string, string> = {
   en: 'Englisch', de: 'Deutsch', fr: 'Französisch', es: 'Spanisch', it: 'Italienisch',
   pt: 'Portugiesisch', ru: 'Russisch', ja: 'Japanisch', zh: 'Chinesisch', nl: 'Niederländisch',
@@ -338,7 +338,7 @@ export interface IsbnRegistration {
 }
 
 /** Leading digits of an ISBN-13 (prefix + registration group) -> what they mean. */
-/** The place names the link note can quote, for the catalogue test (ROADMAP 6.82). */
+/** The place names the link note can quote, for the catalogue test (ROADMAP 6.85). */
 export function registrationPlaces(): string[] {
   return [...new Set(Object.values(REGISTRATION_GROUPS).map(r => r.place).filter((p): p is string => !!p))];
 }

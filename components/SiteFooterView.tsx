@@ -6,7 +6,7 @@ import { commerceEnabled } from '@/lib/sitemode';
 
 /**
  * The footer as rendered (SPEC F6); `SiteFooter` is the server wrapper that
- * decides `walls`. Split in 6.82 so the sentences can be translated: the
+ * decides `walls`. Split in 6.85 so the sentences can be translated: the
  * switch for readers' walls can only be read on the server, the locale only
  * from the client context.
  *

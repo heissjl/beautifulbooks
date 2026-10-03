@@ -31,7 +31,7 @@ import { translator } from '@/lib/i18n/translate';
  */
 interface HomeProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
-  /** Set by the German tree (`app/de/page.tsx`, ROADMAP 6.82); Next itself passes none. */
+  /** Set by the German tree (`app/de/page.tsx`, ROADMAP 6.85); Next itself passes none. */
   locale?: Locale;
 }
 

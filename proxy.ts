@@ -3,7 +3,7 @@ import { LOCALE_COOKIE, normalizeLocale, DEFAULT_LOCALE } from '@/lib/i18n/local
 
 /**
  * Serves the site in the reader's language without changing its addresses
- * (ROADMAP 6.82, SPEC E23).
+ * (ROADMAP 6.85, SPEC E23).
  *
  * A request carrying `locale=de` is rewritten to the mirrored tree under
  * `app/de/`, whose pages render the same modules with the German locale. The

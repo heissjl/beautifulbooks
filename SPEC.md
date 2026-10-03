@@ -2,7 +2,7 @@
 
 *Die Seite hieß bis zum 2026-10-02 „Beautiful Books" und für einen Nachmittag „Other Covers" (ROADMAP 0.5, [docs/domain-recherche.md](docs/domain-recherche.md) Teil B). Repository, Ordner und Vercel-Projekt heißen weiter `beautifulbooks`.*
 
-Stand: 2026-09-10. Diese Datei sagt, **was die Seite ist und sein soll**. Sie enthält keine Historie und keine offenen Aufgaben:
+Stand: 2026-10-03 (zuletzt §2.6 und E23). Diese Datei sagt, **was die Seite ist und sein soll**. Sie enthält keine Historie und keine offenen Aufgaben:
 
 - Was noch zu tun ist, mit Reihenfolge und Zuständigkeit: [ROADMAP.md](ROADMAP.md); ihr Kopf („Steuerung“) verlinkt alle Dokumente und Abschnitte.
 - Was die Seite heute tatsächlich kann, als Bestandsliste mit Spec-Stelle und Code: [docs/features.md](docs/features.md).
@@ -150,7 +150,7 @@ Dass das Verdikt den Markt schlägt, ist Absicht: der Leser hat ein **Bild** ang
 
 ### 2.6 Die Sprache der Oberfläche (Entscheidung E23)
 
-Die Seite spricht **Englisch** (Default, das sieht jeder Crawler) oder **Deutsch**, umgeschaltet oben rechts in der Kopfzeile (`components/LocaleSwitcher.tsx`): ein kleiner Knopf, der die *andere* Sprache nennt („Deutsch“ / „English“), weil zwei Chips neben Zurück-Link, Wortmarke, Lupe und „Teilen“ auf 390 px nicht passten. Die Wahl ist ein Cookie `locale` für ein Jahr, nichts sonst (N11); ohne Wahl Englisch, keine Erkennung aus `Accept-Language` oder Land — ob das kommen soll, ist offen (ROADMAP 6.82).
+Die Seite spricht **Englisch** (Default, das sieht jeder Crawler) oder **Deutsch**, umgeschaltet oben rechts in der Kopfzeile (`components/LocaleSwitcher.tsx`): ein kleiner Knopf, der die *andere* Sprache nennt („Deutsch“ / „English“), weil zwei Chips neben Zurück-Link, Wortmarke, Lupe und „Teilen“ auf 390 px nicht passten. Die Wahl ist ein Cookie `locale` für ein Jahr, nichts sonst (N11); ohne Wahl Englisch, keine Erkennung aus `Accept-Language` oder Land — ob das kommen soll, ist offen (ROADMAP 6.85).
 
 - **Die Adressen ändern sich nicht.** `proxy.ts` schreibt eine Anfrage mit `locale=de` intern auf den Spiegelbaum `app/de/` um; jede Datei dort rendert das Modul der englischen Route mit `locale="de"`. So behält die englische Buchseite ihre Vorab-Renderung (ein Tag) und die deutsche wird daneben gecacht; das Cookie in der Wurzel zu lesen hätte jede Route dynamisch gemacht. `/de/…` direkt aufgerufen leitet auf den Pfad ohne Präfix um, damit keine zweite Kopie einer Seite indexiert wird. Pfade bleiben englisch (`/decades`, `/collections`).
 - **Der englische Satz ist der Schlüssel.** Die Komponenten rufen `t('No books found')`; `lib/i18n/de.ts` bildet Satz auf Satz ab, ein fehlender Eintrag fällt auf das Englische zurück. `lib/__tests__/i18n.test.ts` liest jeden Aufruf aus dem Code und schlägt fehl bei einem englischen Satz ohne deutschen, einem deutschen ohne englischen, ungleichen Platzhaltern und bei deutschen Vollständigkeitsbehauptungen über Cover, Ausgaben oder Drucke („sämtliche“, „vollständig“, „alle Cover“). Eine englische Umformulierung macht ihre Übersetzung damit sichtbar ungültig, statt still weiterzuleben.

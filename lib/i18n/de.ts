@@ -1,5 +1,5 @@
 /**
- * The German catalogue (ROADMAP 6.82, SPEC E23): English sentence → German
+ * The German catalogue (ROADMAP 6.85, SPEC E23): English sentence → German
  * sentence. The English is the key, so a sentence rewritten in a component
  * drops out of here on the next test run (lib/__tests__/i18n.test.ts) and
  * must be translated again — that is the point, a stale translation would

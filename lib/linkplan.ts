@@ -131,7 +131,7 @@ export interface LinkPlanInput {
   market?: Market;
   /** What the publisher's registered image showed, when it has been asked. */
   verdict?: VerdictStatus;
-  /** The reader's language for `note` (ROADMAP 6.82); English without one. */
+  /** The reader's language for `note` (ROADMAP 6.85); English without one. */
   t?: Translate;
 }
 

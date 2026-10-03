@@ -19,7 +19,7 @@ interface SiteHeaderProps {
 }
 
 /**
- * A client component since 6.82: the tagline and the language switch read the
+ * A client component since 6.85: the tagline and the language switch read the
  * locale from context, and the header is rendered inside `BookDetail`, a
  * client component, anyway.
  */
@@ -43,7 +43,7 @@ export default function SiteHeader({ left, right, search }: SiteHeaderProps) {
         </div>
         <div className="ml-auto flex items-center gap-2">
           {search}
-          {/* The language switch (6.82), last on the right except for a page's own button. */}
+          {/* The language switch (6.85), last on the right except for a page's own button. */}
           <LocaleSwitcher />
           {right}
         </div>
