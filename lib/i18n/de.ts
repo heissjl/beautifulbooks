@@ -394,7 +394,7 @@ export const de: Readonly<Record<string, string>> = {
 
   // After the merge of 2026-10-03: the site was renamed (0.5) and the headline now says the proverb to its end. German has no such proverb, so the line is its own.
   'Judge a book,': 'Ein Buch hat viele Cover.',
-  'buy its covers.': 'Kauf dir deins.',
+  'buy its covers.': 'Such dir deins aus.',
   'Recent searches': 'Zuletzt gesucht',
   'and {n} editions, the most printed first.': 'und {n} Ausgaben, die meistgedruckten zuerst.',
   'All collections by readers': 'Alle Sammlungen von Lesern',
