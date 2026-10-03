@@ -75,6 +75,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
+| Kopfzeile: „Collections“ und „Game“ als Links auf jeder Seite ab 640 px, davor Wortmarke, danach Suchfeld und Sprachwahl | 2026-10-03 | F6 | 6.88 | `components/SiteHeader.tsx` |
 | Die Seite auf Deutsch: Knopf „Deutsch“ / „English“ oben rechts auf jeder Seite, Cookie `locale`, Adressen unverändert (`proxy.ts` → `app/de/`); übersetzt sind Kopf, Fuß, Start, Suche, Buchseite, Jahrzehnte, Rahmen der Sammlungen, 404 — nicht About, Impressum, Datenschutz, Spiel, eigene Sammlung, `/curate`, `/suggest`; Metadaten bleiben englisch | 2026-10-02 | §2.6, E23 | 6.85 | `lib/i18n/`, `components/i18n.tsx`, `components/LocaleSwitcher.tsx`, `proxy.ts`, `app/de/`, `lib/__tests__/i18n.test.ts` |
 | Jahrzehnte-Seite `/book/<id>/decades`: dieselben Cover nach dem Jahrzehnt ihres frühesten Drucks, gefaltet aus dem Index, Schwelle 20 Cover über 4 Jahrzehnte, sonst 404; Mosaik als Ladebild | 2026-09-09 / 09-10 | F6 | 5.4a, 6.19a | `app/book/[id]/decades/`, `lib/decades.ts`, `data/decade-pages.json` |
 | Jahrzehnte-Seite liest bis 1.500 Datensätze wie die Wand; ein abgebrochener Lauf wird nie gecacht, ein Ausfall heißt „Open Library did not answer“ mit „Try again“ statt 404 | 2026-09-30 | N12 | 6.43, 6.71 | `app/book/[id]/decades/page.tsx`, `error.tsx`, `lib/work.ts` (`complete`) |

@@ -45,6 +45,8 @@ export const de: Readonly<Record<string, string>> = {
   'Create your own collection of covers': 'Stell dir deine eigene Coverwand zusammen',
   'Start with a classic': 'Zum Einstieg ein paar Klassiker',
   'Collections': 'Sammlungen',
+  'Game': 'Spiel',
+  'Site': 'Seite',
   '{n} book': '{n} Buch',
   '{n} books': '{n} Bücher',
 

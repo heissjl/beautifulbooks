@@ -4169,3 +4169,7 @@ Julian: „can you now refine the project cockpit?“. Gebaut mit `--offline` un
 
 Stand danach: Offen 56 · Wartet auf Julian 28 · Zurückgestellt 27 · Erledigt 82; Hinweise 0 (6.87 bekam als Letztes seine Bewertungszeile; den Branch zählt das Cockpit nicht mehr, sobald er lokal weg ist). 1.015 Tests.
 
+## 2026-10-03 · „Collections“ und „Game“ in der Kopfzeile (ROADMAP 6.88)
+
+Julian schickte ein Mockup der Kopfzeile: Wortmarke, dann „Collections · Game · DE“. Gebaut als zwei Textlinks vor Suchfeld und Sprachwahl, ab 640 px; die Sprachwahl bleibt „Deutsch“ / „English“ (6.85), nicht „DE“ — das Mockup zeigte das Kürzel, entschieden ist nichts. Gemessen gegen `next dev` bei 390, 640 und 1280 in beiden Sprachen: kein Überlauf, bei 390 trägt die Zeile die Links nicht (bewusst). 1.015 Tests.
+
