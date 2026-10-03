@@ -3865,7 +3865,7 @@ Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch dies
 | `national-book-award-fiction` | 83 von 83 | en.wikipedia | Nicht der Open-Library-Tag (267 Treffer mit Nicht-Preisträgern). *Cold Mountain* zeigte die französische Ausgabe; ersetzt durch die Sceptre-Erstausgabe 1997 (OL31920608M). |
 
 - Die Preiswände heißen wie die Hugo-Wand („Nebula Award — best novel“, „National Book Award — fiction“) und sind Reihen-Sammlungen ohne Verlagsliste.
-- **robots.txt:** Open Library sperrt `/search` für alle Nutzer; ob das `search.json` meint, ist ROADMAP 6.63.
+- **robots.txt:** Open Library sperrt `/search` für alle Nutzer; ob das `search.json` meint, ist ROADMAP 6.87 (bis 2026-10-03 als zweites 6.63 geführt).
 
 **Preiswände: der Umschlag-Wähler fand keine Alternativen, 2026-09-30.** Julian: „beim deutschen buchpreis finde ich keine alternativen cover?“
 - **Ursache:** Die Preiswände sind Reihen-Sammlungen ohne Verlagsliste. `app/api/curate/covers` zeigt bei einer Reihe nur Ausgaben der eingetragenen Verlage (`inSeries`), und bei leerer Liste blieb keine übrig.
@@ -4155,4 +4155,17 @@ Julian: „clean up the different plans and roadmaps / adjust the claude md file
 - **Durchsicht des Codes** ([docs/refactoring-2026-10-03.md](refactoring-2026-10-03.md)): kein Umbau. Zwei Funde am selben Tag behoben — `@anthropic-ai/sdk` lag unter `devDependencies`, obwohl `/api/walls/photo` es zur Laufzeit ruft (lief nur, weil Vercel Dev-Abhängigkeiten mitinstalliert); und ein Test verlangt nun für jede Seite ihren Spiegel unter `app/de/`. Vier Schnitte als 6.86 für das nächste Anfassen: `BookDetail.tsx` (1.217 Zeilen) teilen, `lib/works.ts` (947) nach Anliegen teilen mit Sammelexport, eine `PageShell` für 15 gleich gebaute Seiten, ein Hook für vier localStorage-Speicher. Ausdrücklich nicht: `lib/` umsortieren, `lab/` löschen, die drei Editoren zusammenlegen.
 
 1.014 Tests, tsc und Lint grün.
+
+## 2026-10-03 · Das Cockpit nachgeschärft (ROADMAP 6.54)
+
+Julian: „can you now refine the project cockpit?“. Gebaut mit `--offline` und im Browser angesehen; was die Seite selbst zeigte, war die Arbeitsliste.
+
+- **Name:** Kopf und Titel sagten noch „Beautiful Books“ — jetzt aus `SITE_NAME` (`lib/seo.ts`), wie überall.
+- **Ein Thema fehlte:** Abschnitt 6.C „Oberfläche und Texte“ hatte keine Regel, die deutsche Oberfläche lag unter „Daten & Quellen“. Neu: **Oberfläche & Texte** (`ui`), Regel für 6.C, Titelwörter („auf Deutsch“, „Zurück-Link“, „die neue Form“, „Etikett“) und Pfade (`lib/i18n`, `SiteHeader`, `verdicts`, `seo`); 8 offene, 5 erledigte Punkte liegen dort. Das Spiel-Paar 6.82 bekam sein Thema per `Thema: Cover-Spiel` im Punkt, wie die Regel es will.
+- **Zwei neue Hinweise, mit Tests:** „Dieselbe Nummer zweimal“ (die Panne mit 6.82 vom Vortag soll nie wieder still bleiben) und „Nächster Schritt ist erledigt“ (ein Schritt der Tabelle, der nur abgehakte Punkte nennt). **Der erste fand sofort den nächsten Fall:** 6.63 stand ebenfalls zweimal — die Robots-Frage zu Open Library heißt jetzt 6.87.
+- **Website-Karte:** die 19 Spiegel unter `app/de/` sind keine 19 Zeilen mehr, sondern ein Etikett „auch deutsch“ an ihrer Route; 19 Seiten statt 37.
+- **Was die Hinweise sonst sagten, ist erledigt:** `lab/palette` steht in der Lab-Tabelle; `lab/duel` lief auf dem Port der Sammlungs-App und dann auf dem der Ladebilder — jetzt 4326; 6.9 hat eine Bewertung mit lebendem Auslöser (2.5 statt des erledigten 6.53); die 13 Punkte ohne Bewertung (2.9–2.14, 4.12, 5.10j, 5.13k, 6.59, 6.61, 6.71b, 6.86) haben eine Zeile; **0.5 ist abgehakt** (Name und Domains sind da, der Rest ist 2.2) und die Zeilen zu 0.5 und 2.2 sagen das.
+- **Nicht gelungen:** der zusammengeführte Branch `claude/dazzling-ride-27fb28` lässt sich von hier nicht löschen (der Push der Löschung bricht am Proxy ab); der Hinweis dazu bleibt wahr, bis Julian `git push origin --delete claude/dazzling-ride-27fb28` ausführt.
+
+Stand danach: Offen 56 · Wartet auf Julian 28 · Zurückgestellt 27 · Erledigt 82; Hinweise 1 (der Branch). 1.016 Tests.
 

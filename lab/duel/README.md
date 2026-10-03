@@ -4,7 +4,7 @@ Roadmap 5.8, Spielart 2. Julian, 2026-09-08: „Vergleich mit einem Freund (beid
 
 ```bash
 npx tsx lab/duel/serve.ts
-# beide öffnen http://localhost:4322/?seed=paperwhite&me=<name>
+# beide öffnen http://localhost:4326/?seed=paperwhite&me=<name>
 ```
 
 ## Die Frage

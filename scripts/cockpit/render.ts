@@ -10,6 +10,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import type { CockpitData } from './collect';
+import { SITE_NAME } from '../../lib/seo';
 
 export const SERVER_SLOT = '<!--cockpit-server-->';
 
@@ -28,13 +29,13 @@ export function renderPage(data: CockpitData, assets = { css: readFileSync(path.
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Beautiful Books Cockpit</title>
+<title>${SITE_NAME} Cockpit</title>
 <style>${assets.css}</style>
 </head>
 <body>
 <div class="app">
   <nav class="side" aria-label="Ansichten">
-    <div class="brand">Beautiful Books<small>Cockpit · erzeugt, nie von Hand</small></div>
+    <div class="brand">${SITE_NAME}<small>Cockpit · erzeugt, nie von Hand</small></div>
     <button data-v="home">Übersicht</button>
     <button data-v="board">Brett <span class="count" id="c-board"></span></button>
     <button data-v="sync">Sammlungen &amp; Sync <span class="count" id="c-sync"></span></button>
