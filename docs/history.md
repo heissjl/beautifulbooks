@@ -4167,5 +4167,5 @@ Julian: „can you now refine the project cockpit?“. Gebaut mit `--offline` un
 - **Was die Hinweise sonst sagten, ist erledigt:** `lab/palette` steht in der Lab-Tabelle; `lab/duel` lief auf dem Port der Sammlungs-App und dann auf dem der Ladebilder — jetzt 4326; 6.9 hat eine Bewertung mit lebendem Auslöser (2.5 statt des erledigten 6.53); die 13 Punkte ohne Bewertung (2.9–2.14, 4.12, 5.10j, 5.13k, 6.59, 6.61, 6.71b, 6.86) haben eine Zeile; **0.5 ist abgehakt** (Name und Domains sind da, der Rest ist 2.2) und die Zeilen zu 0.5 und 2.2 sagen das.
 - **Nicht gelungen:** der zusammengeführte Branch `claude/dazzling-ride-27fb28` lässt sich von hier nicht löschen (der Push der Löschung bricht am Proxy ab); der Hinweis dazu bleibt wahr, bis Julian `git push origin --delete claude/dazzling-ride-27fb28` ausführt.
 
-Stand danach: Offen 56 · Wartet auf Julian 28 · Zurückgestellt 27 · Erledigt 82; Hinweise 1 (der Branch). 1.016 Tests.
+Stand danach: Offen 56 · Wartet auf Julian 28 · Zurückgestellt 27 · Erledigt 82; Hinweise 0 (6.87 bekam als Letztes seine Bewertungszeile; den Branch zählt das Cockpit nicht mehr, sobald er lokal weg ist). 1.015 Tests.
 

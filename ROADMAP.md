@@ -84,6 +84,7 @@ Die Urteile sind ein festes Vokabular, weil das Brett des Cockpits (`npm run coc
 | 6.59 | erledigt? | — | Gebaut und deployt 2026-09-26; was offen bleibt, steht im Punkt (Julians Blick, 1.9a) |
 | 6.61 | entscheiden | — | Schrift ist gebaut (Xanh, Jost), die Bildmarke steht; offen ist nur Julians Wort zum Rest |
 | 6.71b | tun | 1 h | Der Zähler der Wand läuft beim Nachladen — gleiche Wurzel wie 6.71 (a), die Zahl erst zeigen, wenn die Seite fertig ist |
+| 6.87 | entscheiden | 10 min Julian | Ob Open Librarys robots.txt mit `/search` auch `search.json` meint — Julian fragt nach oder entscheidet, dass die API-Nutzung gemeint bleibt; bis 2026-10-03 das zweite 6.63 |
 | 6.86 | tun beim Anfassen | — | Vier Schnitte, je mit der Datei, die ohnehin geändert wird; nie als eigener Umbau (docs/refactoring-2026-10-03.md) |
 | 0.1 | streichen | 30 min | Für den MVP beantwortet: der Hobby-Modus hat keinen Button. Bis zur Shop-Variante ist der Code (`lib/availability.ts`, Route, Absatz in `BookDetail`) totes Gewicht, das 6.27 mitschleppt. Empfehlung: Option (a) jetzt, Skript behalten, Punkt schließen |
 | 0.2 | tun | 3 min | Verdoppelt faktisch das Kontingent des Betriebs; heute zehrt jede Entwicklungssitzung vom Budget der Besucher |
