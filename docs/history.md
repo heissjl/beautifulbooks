@@ -4173,3 +4173,7 @@ Stand danach: Offen 56 · Wartet auf Julian 28 · Zurückgestellt 27 · Erledigt
 
 Julian schickte ein Mockup der Kopfzeile: Wortmarke, dann „Collections · Game · DE“. Gebaut als zwei Textlinks vor Suchfeld und Sprachwahl, ab 640 px; die Sprachwahl bleibt „Deutsch“ / „English“ (6.85), nicht „DE“ — das Mockup zeigte das Kürzel, entschieden ist nichts. Gemessen gegen `next dev` bei 390, 640 und 1280 in beiden Sprachen: kein Überlauf, bei 390 trägt die Zeile die Links nicht (bewusst). 1.015 Tests.
 
+## 2026-10-03 · Der deutsche Hero, dritter Anlauf (ROADMAP 6.85)
+
+Julian zum Screenshot der Startseite: „das deutsch ist noch kein gutes copywriting“. Die Zeile „Ein Buch hat viele Cover. Such dir deins aus.“ war wahr, aber Behauptung plus Aufforderung, ohne Haken. Jetzt nimmt das Deutsche das Sprichwort selbst — man soll ein Buch nicht nach dem Umschlag beurteilen — und dreht es um: **„Ein Buch nach dem Cover beurteilen? *Unbedingt.*“** Das Versprechen darunter in Alltagssprache und ehrlich (N12): „Tipp einen Titel ein, und du siehst die Cover, die wir zu dem Buch gefunden haben — sortiert nach Sprache und Jahr. Und dann die Ausgabe, die in dein Regal gehört.“ Gemessen: die Überschrift bleibt bei 390 und 1280 zweizeilig. Zwei Alternativen, falls die Frage zu kokett ist: „Urteile ruhig nach dem Cover. *Und nimm das schönste.*“ und „Ein Buch, viele Gesichter. *Deins ist dabei.*“ (Letzteres verspricht mehr, als die Kataloge halten.)
+

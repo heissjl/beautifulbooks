@@ -39,8 +39,8 @@ export const de: Readonly<Record<string, string>> = {
 
   // Home
   // The hero is written for German, not rendered from the English pun (see the header).
-  'Type a title and see the covers it has been printed with, by language and year.': 'Gib einen Titel ein und sieh, mit welchen Covern das Buch gedruckt wurde — nach Sprache und Jahr geordnet.',
-  'Then find the edition you’d actually want on your shelf.': 'Dann such dir die Ausgabe aus, die wirklich in dein Regal gehört.',
+  'Type a title and see the covers it has been printed with, by language and year.': 'Tipp einen Titel ein, und du siehst die Cover, die wir zu dem Buch gefunden haben — sortiert nach Sprache und Jahr.',
+  'Then find the edition you’d actually want on your shelf.': 'Und dann die Ausgabe, die in dein Regal gehört.',
   'Help us find the prettiest cover of all time!': 'Hilf mit, das schönste Cover aller Zeiten zu küren!',
   'Create your own collection of covers': 'Stell dir deine eigene Coverwand zusammen',
   'Start with a classic': 'Zum Einstieg ein paar Klassiker',
@@ -395,8 +395,9 @@ export const de: Readonly<Record<string, string>> = {
   'Stop editing': 'Bearbeitung beenden',
 
   // After the merge of 2026-10-03: the site was renamed (0.5) and the headline now says the proverb to its end. German has no such proverb, so the line is its own.
-  'Judge a book,': 'Ein Buch hat viele Cover.',
-  'buy its covers.': 'Such dir deins aus.',
+  // The German turns the proverb into the question and answers it (Julian, 2026-10-03: the earlier line was „noch kein gutes copywriting“).
+  'Judge a book,': 'Ein Buch nach dem Cover beurteilen?',
+  'buy its covers.': 'Unbedingt.',
   'Recent searches': 'Zuletzt gesucht',
   'and {n} editions, the most printed first.': 'und {n} Ausgaben, die meistgedruckten zuerst.',
   'All collections by readers': 'Alle Sammlungen von Lesern',
