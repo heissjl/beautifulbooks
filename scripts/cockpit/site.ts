@@ -19,6 +19,8 @@ export interface Route {
   example: string | null;
   /** May the Cockpit take a screenshot on request? Never for a work page (Google quota, 0.2). */
   shot: boolean;
+  /** `/de/…` renders this route with locale="de" (6.85): shown on the route it mirrors, not as a row. */
+  mirror?: string;
 }
 
 /** app/book/[id]/page.tsx → /book/[id] */
@@ -65,5 +67,15 @@ export function mapSite(files: SourceFile[]): Route[] {
     });
   }
   const order = (r: Route) => (r.kind === 'page' ? 0 : r.kind === 'route' ? 1 : 2);
-  return routes.sort((a, b) => order(a) - order(b) || a.route.localeCompare(b.route));
+  // The German tree (6.85): each `/de/<route>` is the same module with locale="de". Fold it into its route.
+  const folded: Route[] = [];
+  for (const r of routes) {
+    const m = /^\/de(\/.*)?$/.exec(r.route);
+    if (!m) { folded.push(r); continue; }
+    const target = m[1] ?? '/';
+    const original = routes.find(o => o.route === target);
+    if (original) original.mirror = r.route;
+    else folded.push({ ...r, what: `Deutscher Spiegel ohne englische Route: ${r.what}` });
+  }
+  return folded.sort((a, b) => order(a) - order(b) || a.route.localeCompare(b.route));
 }

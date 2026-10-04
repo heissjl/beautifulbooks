@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useRecentSearches } from './useRecentSearches';
+import { useT } from './i18n';
 
 /**
  * A search field in the header, on every page that is not the search itself
@@ -28,6 +29,7 @@ import { useRecentSearches } from './useRecentSearches';
  * static page keeps being static when it carries one.
  */
 export default function HeaderSearch() {
+  const t = useT();
   const router = useRouter();
   const [, saveRecentSearch] = useRecentSearches();
   const [open, setOpen] = useState(false);
@@ -75,7 +77,7 @@ export default function HeaderSearch() {
           type="button"
           onClick={() => setOpen(true)}
           className="rounded-md p-1.5 text-ink-2 transition-colors hover:text-ink sm:hidden"
-          aria-label="Search for a book"
+          aria-label={t('Search for a book')}
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -107,8 +109,8 @@ export default function HeaderSearch() {
             value={value}
             onChange={e => setValue(e.target.value)}
             onKeyDown={e => { if (e.key === 'Escape') { setOpen(false); input.current?.blur(); } }}
-            placeholder="Search a book"
-            aria-label="Search a book title"
+            placeholder={t('Search a book')}
+            aria-label={t('Search a book title')}
             autoComplete="off"
             className="w-full rounded-lg border border-line bg-surface py-1.5 pl-8 pr-3 text-sm text-ink placeholder:text-ink-3 transition-colors focus:border-ink-3 focus:outline-none sm:w-44 lg:w-56"
           />
@@ -118,7 +120,7 @@ export default function HeaderSearch() {
           onClick={() => { setOpen(false); setValue(''); }}
           className="rounded-md px-1 py-1 text-sm text-ink-2 transition-colors hover:text-ink sm:hidden"
         >
-          Cancel
+          {t('Cancel')}
         </button>
       </form>
     </>

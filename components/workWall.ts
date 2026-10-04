@@ -8,6 +8,7 @@ import type { ImageSignature } from '@/lib/imagesig';
 import type { Cover, EditionView } from '@/lib/model';
 import { orderGroups, type MergedWork, type Truncation } from '@/lib/pages';
 import { coversNewestFirst, foldDuplicateCovers, groupCoversByLanguage, withRetailCovers } from '@/lib/works';
+import { english, type Translate } from '@/lib/i18n/translate';
 
 /**
  * Folds and groups the covers of a wall.
@@ -68,15 +69,14 @@ export function captionFor(cover: Cover, editionsById: ReadonlyMap<string, Editi
  * cover, so the honest statement is "n covers out of m edition records
  * checked", never "every cover".
  */
-export function progressLabel(covers: number, merged: Pick<MergedWork, 'checked' | 'total' | 'done' | 'truncated'>): string {
-  const n = `${covers} cover${covers === 1 ? '' : 's'}`;
-  const checked = merged.checked.toLocaleString('en');
-  const total = merged.total.toLocaleString('en');
-  if (!merged.done) return `${n} from ${checked} of ${total} editions checked`;
+export function progressLabel(covers: number, merged: Pick<MergedWork, 'checked' | 'total' | 'done' | 'truncated'>, t: Translate = english): string {
+  const n = covers === 1 ? t('{n} cover', { n: 1 }) : t('{n} covers', { n: covers });
+  const { checked, total } = merged;
+  if (!merged.done) return t('{covers} from {checked} of {total} editions checked', { covers: n, checked, total });
   const reason: Record<Exclude<Truncation, null>, string> = {
-    cap: `${n} from the first ${checked} of ${total} editions`,
-    error: `${n} from ${checked} of ${total} editions; the source stopped answering`,
+    cap: t('{covers} from the first {checked} of {total} editions', { covers: n, checked, total }),
+    error: t('{covers} from {checked} of {total} editions; the source stopped answering', { covers: n, checked, total }),
   };
   if (merged.truncated) return reason[merged.truncated];
-  return `${n} from ${total} edition${merged.total === 1 ? '' : 's'}`;
+  return total === 1 ? t('{covers} from {total} edition', { covers: n, total }) : t('{covers} from {total} editions', { covers: n, total });
 }

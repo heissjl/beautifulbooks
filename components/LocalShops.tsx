@@ -12,6 +12,7 @@ import {
   type LocalShopInput,
 } from '@/lib/localshops';
 import type { Market } from '@/lib/market';
+import { useT } from './i18n';
 
 const EVENT = 'local-shop-country-change';
 
@@ -58,6 +59,7 @@ function useLocalCountry(market: Market): [LocalCountry, (country: LocalCountry)
  * the retailer table), no fetch, no postcode.
  */
 export default function LocalShops({ edition, market }: { edition: LocalShopInput; market: Market }) {
+  const t = useT();
   const [country, setCountry] = useLocalCountry(market);
   const selectId = useId();
   const links = localShopLinks(country, edition);
@@ -67,12 +69,12 @@ export default function LocalShops({ edition, market }: { edition: LocalShopInpu
     <details className="group mt-4 border-t border-line pt-3">
       <summary className="cursor-pointer list-none text-sm text-ink-2 transition-colors hover:text-ink">
         <span className="mr-1 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
-        {LOCAL_SHOPS_COPY.summary}
+        {t(LOCAL_SHOPS_COPY.summary)}
       </summary>
       <div className="mt-3 space-y-3">
-        <p className="text-sm text-ink-2">{LOCAL_SHOPS_COPY.lead}</p>
+        <p className="text-sm text-ink-2">{t(LOCAL_SHOPS_COPY.lead)}</p>
         <div className="flex items-center gap-2">
-          <label htmlFor={selectId} className="kicker">{LOCAL_SHOPS_COPY.countryLabel}</label>
+          <label htmlFor={selectId} className="kicker">{t(LOCAL_SHOPS_COPY.countryLabel)}</label>
           <select
             id={selectId}
             value={country}
@@ -80,7 +82,7 @@ export default function LocalShops({ edition, market }: { edition: LocalShopInpu
             className="min-w-0 rounded-md border border-line bg-surface px-2 py-1 text-sm text-ink focus:border-accent focus:outline-none"
           >
             {LOCAL_COUNTRIES.map(c => (
-              <option key={c.id} value={c.id}>{c.label}</option>
+              <option key={c.id} value={c.id}>{t(c.label)}</option>
             ))}
           </select>
         </div>
@@ -89,15 +91,15 @@ export default function LocalShops({ edition, market }: { edition: LocalShopInpu
             <li key={link.id}>
               <a href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
                 {link.label}
-                {link.kind === 'finder' && <span className="text-xs font-normal text-ink-3">finder</span>}
+                {link.kind === 'finder' && <span className="text-xs font-normal text-ink-3">{t('finder')}</span>}
               </a>
-              <p className="mt-1 text-xs leading-relaxed text-ink-3">{link.note}</p>
+              <p className="mt-1 text-xs leading-relaxed text-ink-3">{t(link.note)}</p>
             </li>
           ))}
         </ul>
         <p className="text-xs leading-relaxed text-ink-3">
-          {LOCAL_SHOPS_COPY.noStock}
-          {anyFinder && <> {LOCAL_SHOPS_COPY.finderHint}</>}
+          {t(LOCAL_SHOPS_COPY.noStock)}
+          {anyFinder && <> {t(LOCAL_SHOPS_COPY.finderHint)}</>}
         </p>
       </div>
     </details>

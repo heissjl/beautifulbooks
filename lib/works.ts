@@ -2,6 +2,7 @@
  * Work identity, edition dedupe, relevance ranking and language grouping.
  * Pure functions, no I/O (SPEC.md §2, §3 F1.2–F1.4, F2.3–F2.4, F4).
  */
+import { english, type Translate } from './i18n/translate';
 import type { Cover, Edition, LanguageGroup, SourceEdition, Work, WorkSummary } from './model';
 import type { EditionCandidate } from './sources/googlebooks-parse';
 import { authorMatchKey, looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeTitle, titleAuthorKey } from './normalize';
@@ -924,7 +925,7 @@ function mostCommonLanguage(editions: readonly Edition[]): string | undefined {
  * have stopped arriving: after page 0 alone, Wolf Hall would claim a span of
  * 2009 to 2020 and then correct itself (SPEC §4 N12).
  */
-export function editionSpan(editions: readonly Edition[]): string | null {
+export function editionSpan(editions: readonly Edition[], t: Translate = english): string | null {
   const years = editions.map(e => e.year).filter((y): y is number => !!y && y > 1000);
   const publishers = new Set(
     editions.map(e => e.publisher?.trim().toLowerCase()).filter((p): p is string => !!p),
@@ -935,11 +936,12 @@ export function editionSpan(editions: readonly Edition[]): string | null {
   if (years.length > 0) {
     const from = Math.min(...years);
     const to = Math.max(...years);
-    parts.push(from === to ? `Editions here are from ${from}` : `Editions here run from ${from} to ${to}`);
+    // Years are written as they are, never with a thousands separator.
+    parts.push(from === to ? t('Editions here are from {year}', { year: String(from) }) : t('Editions here run from {from} to {to}', { from: String(from), to: String(to) }));
   }
   if (publishers.size > 0) {
-    const n = `${publishers.size} publisher${publishers.size === 1 ? '' : 's'}`;
-    parts.push(parts.length > 0 ? `from ${n}` : `Editions here come from ${n}`);
+    const n = publishers.size === 1 ? t('{n} publisher', { n: 1 }) : t('{n} publishers', { n: publishers.size });
+    parts.push(parts.length > 0 ? t('from {publishers}', { publishers: n }) : t('Editions here come from {publishers}', { publishers: n }));
   }
   return `${parts.join(', ')}.`;
 }

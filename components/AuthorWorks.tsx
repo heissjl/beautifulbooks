@@ -5,6 +5,7 @@ import Link from 'next/link';
 import CoverWall from './CoverWall';
 import { useAuthorWorks } from './useAuthorWorks';
 import { useIsDesktop } from './useIsDesktop';
+import { useT } from './i18n';
 import { authorRowHeading, authorSearchHref, excludeCurrent, ROW_DESKTOP, ROW_PHONE } from '@/lib/authorworks';
 
 interface AuthorWorksProps {
@@ -35,6 +36,7 @@ const GRID = 'grid grid-cols-3 gap-4 lg:grid-cols-6 lg:gap-6';
  * works" (SPEC N12).
  */
 export default function AuthorWorks({ author, authorKey, workId, workTitle, siblingIds, settled = false, className = '' }: AuthorWorksProps) {
+  const t = useT();
   const [near, setNear] = useState(false);
   const isDesktop = useIsDesktop();
 
@@ -66,10 +68,10 @@ export default function AuthorWorks({ author, authorKey, workId, workTitle, sibl
   const loading = state.status === 'loading';
 
   return (
-    <section className={`mt-16 ${className}`} aria-label={authorRowHeading(author)}>
+    <section className={`mt-16 ${className}`} aria-label={authorRowHeading(author, t)}>
       <h2 className="text-xl leading-tight text-ink sm:text-2xl">
         <Link href={authorSearchHref(author, authorKey)} className="transition-colors hover:text-accent">
-          {authorRowHeading(author)}
+          {authorRowHeading(author, t)}
         </Link>
       </h2>
       {loading && (

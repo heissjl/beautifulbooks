@@ -6,6 +6,7 @@ import { storeWorkPreview } from './useWorkPreview';
 import { wallCover, type CuratedWork } from '@/lib/curated';
 import type { WallWork } from '@/lib/collections';
 import { tileTitle } from '@/lib/normalize';
+import { useT } from './i18n';
 
 type Tile = CuratedWork | WallWork;
 
@@ -46,6 +47,7 @@ const SETS: Record<3 | 7, string> = {
 const keyOf = (w: Tile) => `${w.id}:${'image' in w && w.image ? w.image : w.coverId}`;
 
 function CoverTile({ w, selectCover, caption, hideAuthor = false }: { w: Tile; selectCover: boolean; caption: boolean; hideAuthor?: boolean }) {
+  const t = useT();
   const target = ('coverWork' in w && w.coverWork) || w.id;
   // A site-served image is on no wall of Open Library's, so there is no cover to select there.
   const image = 'image' in w ? w.image : undefined;
@@ -57,7 +59,7 @@ function CoverTile({ w, selectCover, caption, hideAuthor = false }: { w: Tile; s
       onClick={() => storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [wallCover({ coverId: w.coverId, image }, 'L')] })}
     >
       <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
-        <CoverImage src={wallCover({ coverId: w.coverId, image }, 'M')} alt={`${w.title} by ${w.author}`} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
+        <CoverImage src={wallCover({ coverId: w.coverId, image }, 'M')} alt={t('{title} by {author}', { title: w.title, author: w.author })} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
       </div>
       {caption && (
         <>
