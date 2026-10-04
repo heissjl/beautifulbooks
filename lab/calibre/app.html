@@ -376,10 +376,10 @@ function renderCovers() {
     el('p', { class: 'meta', style: 'margin:0 0 10px' },
       pending ? `Measuring… ${inLang.length - pending} of ${inLang.length} covers; ${large.length} so far at least as large as ${against}.`
         : `${large.length} of ${inLang.length} are at least as large as ${against}. They come first; the faded ones have fewer pixels.`),
-    el('div', { class: 'covers' }, list.map((c) => el('button', { class: `cover${mine.has(c.coverId) ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}${tier(c, b.size) >= 2 ? ' less' : ''}`, onclick: () => pick(c), title: c.publishers.join(', ') },
+    el('div', { class: 'covers' }, list.map((c) => el('button', { class: `cover${mine.has(c.coverId) ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}${tier(c, b.size) >= 2 ? ' less' : ''}`, onclick: () => pick(c), title: [mine.has(c.coverId) ? 'Open Library lists this cover under the ISBN that Calibre has for the book. An ISBN names a printing, not a picture: it need not be the cover your file came with.' : '', c.publishers.join(', ')].filter(Boolean).join('\n') },
       el('div', { class: 'frame' }, el('img', { src: c.thumb, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' })),
       el('div', { class: 'z' }, sizeLine(c) + (tier(c, b.size) === 4 ? ' · too small' : '')),
-      el('div', { class: 'c' }, [mine.has(c.coverId) ? 'your edition' : '', c.year, c.languages.map((l) => l.toUpperCase()).join(' ')].filter(Boolean).join(' · ') || '—')))),
+      el('div', { class: 'c' }, [mine.has(c.coverId) ? 'same ISBN' : '', c.year, c.languages.map((l) => l.toUpperCase()).join(' ')].filter(Boolean).join(' · ') || '—')))),
     open.bigOnly && !list.length && !pending ? el('p', { class: 'meta' }, 'None of the covers seen so far is large enough.') : null,
     open.error ? el('p', { class: 'note bad' }, open.error) : null,
     el('p', { class: 'meta', style: 'margin-top:12px' },
