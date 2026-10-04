@@ -11,8 +11,12 @@ import { sameAuthor, titleScore } from '../../lib/bookmatch';
 import type { CalibreBook } from './library';
 import type { CoverPick } from './source';
 
-/** `isbn` and `title+author` are sure; `maybe` and `author` are suggestions. */
-export type MatchKind = 'isbn' | 'title+author' | 'maybe' | 'author';
+/**
+ * `mapped`, `isbn` and `title+author` are sure; `maybe` and `author` are
+ * suggestions. `mapped` (5.17): the import made this tile from this book and
+ * wrote that down (`map.ts`) — the one way a translated title finds its book.
+ */
+export type MatchKind = 'mapped' | 'isbn' | 'title+author' | 'maybe' | 'author';
 
 export interface Candidate {
   bookId: number;
@@ -26,13 +30,18 @@ export interface PickMatch {
   sure?: number;
 }
 
-const RANK: Record<MatchKind, number> = { isbn: 0, 'title+author': 1, maybe: 2, author: 3 };
-export const isSure = (kind: MatchKind): boolean => kind === 'isbn' || kind === 'title+author';
+const RANK: Record<MatchKind, number> = { mapped: -1, isbn: 0, 'title+author': 1, maybe: 2, author: 3 };
+export const isSure = (kind: MatchKind): boolean => kind === 'mapped' || kind === 'isbn' || kind === 'title+author';
+
+/** Work → book numbers, from the import's map; empty without one. */
+export type Mapped = ReadonlyMap<string, readonly number[]>;
+const NO_MAP: Mapped = new Map();
 
 /** At most this many "same author" suggestions per pick. */
 export const MAX_AUTHOR_SUGGESTIONS = 8;
 
-function kindOf(pick: CoverPick, book: CalibreBook): MatchKind | null {
+function kindOf(pick: CoverPick, book: CalibreBook, mapped: Mapped): MatchKind | null {
+  if (mapped.get(pick.workId)?.includes(book.id)) return 'mapped';
   if (pick.isbns.some((i) => book.isbns.includes(i))) return 'isbn';
   const author = !!pick.author && book.authors.some((a) => sameAuthor(pick.author as string, a));
   const title = titleScore(pick.title, book.title);
@@ -44,18 +53,20 @@ function kindOf(pick: CoverPick, book: CalibreBook): MatchKind | null {
   return null;
 }
 
-export function matchPick(pick: CoverPick, books: readonly CalibreBook[]): PickMatch {
+export function matchPick(pick: CoverPick, books: readonly CalibreBook[], mapped: Mapped = NO_MAP): PickMatch {
   const all: Candidate[] = [];
   for (const book of books) {
-    const kind = kindOf(pick, book);
+    const kind = kindOf(pick, book, mapped);
     if (kind) all.push({ bookId: book.id, kind });
   }
   all.sort((a, b) => RANK[a.kind] - RANK[b.kind] || a.bookId - b.bookId);
   const strong = all.filter((c) => c.kind !== 'author');
   const candidates = [...strong, ...all.filter((c) => c.kind === 'author').slice(0, MAX_AUTHOR_SUGGESTIONS)];
-  const sure = candidates.filter((c) => isSure(c.kind));
+  // The import's word outranks a resemblance: one mapped book is the book, whatever else shares its title.
+  const fromMap = candidates.filter((c) => c.kind === 'mapped');
+  const sure = fromMap.length > 0 ? fromMap : candidates.filter((c) => isSure(c.kind));
   // Two copies of the same book in the library: which one is meant is Julian's call.
   return sure.length === 1 ? { candidates, sure: sure[0].bookId } : { candidates };
 }
 
-export const matchPicks = (picks: readonly CoverPick[], books: readonly CalibreBook[]): PickMatch[] => picks.map((p) => matchPick(p, books));
+export const matchPicks = (picks: readonly CoverPick[], books: readonly CalibreBook[], mapped: Mapped = NO_MAP): PickMatch[] => picks.map((p) => matchPick(p, books, mapped));

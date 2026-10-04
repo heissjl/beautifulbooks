@@ -9,6 +9,8 @@
  * (`sf-masterworks`). `--library <folder>` points at another library — a
  * rehearsal copy from `rehearsal.ts`, for the first run. `--base <url>` reads
  * a reader's collection from another address (`http://localhost:3000`).
+ * `--map <file>` names the import's map (5.17) when it was made for another
+ * library with the same book numbers, i.e. for the original of a rehearsal copy.
  *
  * Local only, never deployed: binds 127.0.0.1 and takes requests only with
  * the token printed at start. The page asks nothing outside this server. What
@@ -26,8 +28,9 @@ import { userAgent } from '../../lib/seo';
 import { hostAllowed, makeToken, originAllowed, tokenMatches } from '../../scripts/cockpit/guard';
 import { checkCover, imageFacts, isSmaller, type CoverCheck, type ImageFacts } from './image';
 import { coverFile, findLibrary, readLibrary, type CalibreBook } from './library';
-import { matchPicks } from './match';
-import { CoverWriter, defaultBackupRoot, findCalibredb, undoStacks } from './safety';
+import { booksByWork, loadMap, mapFile } from './map';
+import { matchPicks, type Mapped } from './match';
+import { CoverWriter, defaultBackupRoot, findCalibredb, libraryKey, undoStacks } from './safety';
 import { imageUrls, loadSource, type Source } from './source';
 
 const args = process.argv.slice(2);
@@ -38,7 +41,7 @@ const flag = (name: string): string | undefined => {
 const WRITE = args.includes('--write');
 const PORT = Number(flag('port') ?? process.env.PORT ?? 4327);
 const BASE = (flag('base') ?? 'https://buyitscovers.com').replace(/\/$/, '');
-const VALUE_FLAGS = new Set(['--library', '--base', '--port']);
+const VALUE_FLAGS = new Set(['--library', '--base', '--port', '--map']);
 const sourceArg = args.find((a, i) => !a.startsWith('--') && !VALUE_FLAGS.has(args[i - 1] ?? ''));
 const ROOT = join(__dirname, '../..');
 const TOKEN = makeToken();
@@ -70,6 +73,23 @@ async function main(): Promise<void> {
   const writer = new CoverWriter({ library, calibredb: findCalibredb(), backupRoot: defaultBackupRoot() });
   let books = readLibrary(library);
   const source: Source = await loadSource(sourceArg, ROOT, BASE);
+
+  /*
+   * The import's map (5.17): which book each tile was made from. Looked up
+   * for this collection and this library; `--map <file>` names one made for
+   * another library — a rehearsal copy has the numbers of its original.
+   */
+  let mapped: Mapped = new Map();
+  let mapNote = '';
+  if (source.kind === 'wall') {
+    const given = flag('map');
+    const found = loadMap(given ?? mapFile(defaultBackupRoot(), source.ref), source.ref, given ? null : libraryKey(library));
+    if ('map' in found) {
+      mapped = booksByWork(found.map);
+      mapNote = `${found.map.books.length} books mapped by the import${given ? ' (map named by hand)' : ''}`;
+    } else if (given) throw new Error(`--map: ${found.none}`);
+    else mapNote = found.none;
+  }
 
   /* The new images: fetched once, checked, kept in memory for the run. */
   type Fetched = { check: CoverCheck; bytes?: Buffer };
@@ -129,7 +149,7 @@ async function main(): Promise<void> {
   };
 
   const state = () => {
-    const matches = matchPicks(source.picks, books);
+    const matches = matchPicks(source.picks, books, mapped);
     const stacks = undoStacks(writer.journal());
     return {
       mode: WRITE ? 'write' : 'preview',
@@ -217,9 +237,10 @@ async function main(): Promise<void> {
       process.exit(1);
     })
     .listen(PORT, '127.0.0.1', () => {
-      const sure = matchPicks(source.picks, books).filter((m) => m.sure !== undefined).length;
+      const sure = matchPicks(source.picks, books, mapped).filter((m) => m.sure !== undefined).length;
       console.log(`calibre: „${source.title}" — ${source.picks.length} covers, ${sure} with a sure match among ${books.length} books`);
       console.log(`library: ${library}`);
+      if (mapNote) console.log(`map:     ${mapNote}`);
       console.log(WRITE ? `mode:    WRITE — backups and journal in ${writer.root}` : 'mode:    look only (add --write to change the library)');
       for (const p of WRITE ? writer.problems() : []) console.log(`         ! ${p}`);
       console.log(`open:    http://127.0.0.1:${PORT}/?t=${TOKEN}`);

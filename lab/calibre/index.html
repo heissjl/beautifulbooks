@@ -72,8 +72,8 @@ const el = (tag, attrs = {}, ...kids) => {
   return n;
 };
 const px = (f) => `${f.width} × ${f.height} px`;
-const SURE = new Set(['isbn', 'title+author']);
-const KIND = { isbn: 'same ISBN', 'title+author': 'same title and author', maybe: 'similar title', author: 'same author' };
+const SURE = new Set(['mapped', 'isbn', 'title+author']);
+const KIND = { mapped: 'the book this tile was made from', isbn: 'same ISBN', 'title+author': 'same title and author', maybe: 'similar title', author: 'same author' };
 
 let state = null;
 const chosen = new Map();   // row index -> book id (or null)
