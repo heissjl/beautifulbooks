@@ -3,11 +3,14 @@
  * the click totals of a range, the range before it for comparison, and the
  * days on which the operation stumbled. Server only.
  */
-import { buyLinksFor } from '../buylinks';
+import { buyLinksFor, isWordsProvider, searchLinksFor, titleSearchLinksFor } from '../buylinks';
 import type { RedisCommands } from '../hotornot/store';
+import { LOCAL_COUNTRIES, localShopLinks } from '../localshops';
 import type { Market } from '../market';
 import { change, FEW_CLICKS, lastDays, MAX_RANGE_DAYS, summarizeClicks, summarizeOps, type ClickSummary, type OpsSummary } from './model';
 import { readDays } from './store';
+import { emptySearches, summarizeBooks, summarizeSearches, topWorks, type BookSummary, type SearchSummary, type WorkRow } from './visits';
+import { PUBLISHED_WORKS } from '../published';
 
 export const RANGES = [7, 30, 90] as const;
 export type RangeDays = (typeof RANGES)[number];
@@ -36,6 +39,12 @@ export type InsightsReport =
       few: boolean;
       ops: OpsSummary;
       labels: Record<string, string>;
+      /** From the browser's signals (3.1b). */
+      books: BookSummary;
+      previousBooks: BookSummary;
+      searches: SearchSummary;
+      works: Array<WorkRow & { title?: string }>;
+      empty: Array<{ q: string; n: number }>;
     }
   | { ok: false; reason: 'no-store' | 'failed' };
 
@@ -45,6 +54,15 @@ function labelsFor(): Record<string, string> {
   for (const market of ['us', 'uk', 'de'] as const) {
     // Any valid ISBN-13: the labels do not depend on it.
     for (const link of buyLinksFor({ isbn13: '9780141036144' }, market)) labels[link.provider] ??= link.label;
+    // Shops searched by words (ROADMAP 3.1): which question was put to them.
+    for (const link of searchLinksFor({ title: 'x' }, market)) {
+      if (isWordsProvider(link.provider)) labels[link.provider] ??= `${link.label} · diese Ausgabe nach Titel`;
+    }
+    for (const link of titleSearchLinksFor({ title: 'x' }, market, {})) labels[link.provider] ??= `${link.label} · andere Ausgabe`;
+  }
+  // "Buy from a local bookshop" (5.12), counted as `local-<service>` since 3.1.
+  for (const { id } of LOCAL_COUNTRIES) {
+    for (const link of localShopLinks(id, {})) labels[`local-${link.id.replace(/-finder$/, '')}`] ??= `${link.label} · lokale Buchhandlung`;
   }
   return labels;
 }
@@ -59,16 +77,22 @@ export async function buildReport(
   const current = lastDays(now, span);
   const previous = lastDays(new Date(now.getTime() - span * 86_400_000), span);
   // `undefined` lets `readDays` take this deployment's store; `null` means none.
-  const [clickRead, previousRead, opsRead] = await Promise.all([
+  const reads = await Promise.all([
     readDays(current, 'clicks', commands),
     readDays(previous, 'clicks', commands),
     readDays(current, 'ops', commands),
+    readDays(current, 'book', commands),
+    readDays(previous, 'book', commands),
+    readDays(current, 'search', commands),
+    readDays(current, 'works', commands),
+    readDays(current, 'empty', commands),
   ]);
-  if (!clickRead.ok) return { ok: false, reason: clickRead.reason };
-  if (!previousRead.ok) return { ok: false, reason: previousRead.reason };
-  if (!opsRead.ok) return { ok: false, reason: opsRead.reason };
-  const clicks = summarizeClicks(current, clickRead.hashes, market);
-  const previousTotal = summarizeClicks(previous, previousRead.hashes, market).total;
+  const failed = reads.find(r => !r.ok);
+  if (failed && !failed.ok) return { ok: false, reason: failed.reason };
+  const [clickRead, previousRead, opsRead, bookRead, previousBookRead, searchRead, worksRead, emptyRead] = reads.map(r => (r.ok ? r.hashes : []));
+  const clicks = summarizeClicks(current, clickRead, market);
+  const previousTotal = summarizeClicks(previous, previousRead, market).total;
+  const titles = new Map(PUBLISHED_WORKS.map(w => [w.id, w.title]));
   return {
     ok: true,
     days,
@@ -79,7 +103,12 @@ export async function buildReport(
     previousTotal,
     change: change(clicks.total, previousTotal),
     few: clicks.total < FEW_CLICKS,
-    ops: summarizeOps(current, opsRead.hashes),
+    ops: summarizeOps(current, opsRead),
     labels: labelsFor(),
+    books: summarizeBooks(bookRead, market),
+    previousBooks: summarizeBooks(previousBookRead, market),
+    searches: summarizeSearches(searchRead),
+    works: topWorks(worksRead).map(w => ({ ...w, title: titles.get(w.work) })),
+    empty: emptySearches(emptyRead),
   };
 }

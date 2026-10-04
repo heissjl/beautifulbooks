@@ -1,6 +1,6 @@
 # Plan 3.1: Kennzahlen und Analyse-Ansicht
 
-Stand: 2026-10-04, **3.1a gebaut** (Branch, nicht deployt); 3.1b offen, alle Entscheidungen getroffen, baubereit. Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
+Stand: 2026-10-04, **gebaut** (3.1a, 3.1b und die Händlersuchen über `/go/`; Branch, nicht deployt). Abweichungen vom Plan stehen jeweils dabei. Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
 
 ## 1. Grundsatz
 
@@ -83,7 +83,7 @@ Daraus zwei Wege, je nach Art des Links (Aufwand zusammen etwa zwei Stunden, ohn
 
 **Der Empfänger** `POST /api/seen` (bewusst kein Name wie `track`, `event`, `analytics`, den Werbeblocker-Listen sperren): nimmt nur JSON bis 1 KB, prüft jedes Feld gegen die feste Liste oben und verwirft alles andere stumm (204), Rate-Limit-Bucket `seen` (60/min je IP, wie die übrigen pro Instanz), antwortet immer 204 — auch wenn der Speicher schweigt, denn ein Leser darf nie merken, dass gezählt wird oder nicht. Nur in Production (`VERCEL_ENV`), nie unter `next dev` und nie in Previews; dort ein `DEBUG`-Log.
 
-**Julians eigene Besuche:** die Analyse-Ansicht setzt beim Öffnen in Julians Browser `localStorage['bb.self'] = 1`; die Seite sendet dann nichts. Das ist ein Schalter auf Julians Gerät, keine Kennung eines Lesers.
+**Julians eigene Besuche** zählen nicht, solange sein Admin-Cookie `bb_admin` gilt: `/api/seen` und `/go/` prüfen es auf dem Server. *Gebaut anders als geplant (2026-10-04):* der Plan wollte einen Schalter `bb.self` in `localStorage` — aber dafür hätte die Seite auf **jedem** Gerät `localStorage` auslesen müssen, und genau das ist der Zugriff, den § 25 TDDDG meint. Das Cookie gibt es ohnehin nur auf Julians Geräten.
 
 ## 5. Speicher
 
@@ -101,7 +101,7 @@ Was den Browser verlässt, steht vollständig in §4; nichts davon bezieht sich 
 
 > When you leave a book page or a search, your browser sends one anonymous summary — for example which book, how many covers came into view, whether a shop link was used — and the site adds it to daily totals. No identifier, cookie, IP address or referrer is stored, so a summary cannot be linked to you or to another visit. Searches that found nothing are kept as text for 90 days to improve the catalogue.
 
-**Kein Einwilligungsbanner, nach Claudes Einschätzung (2026-10-04, keine Rechtsberatung):** § 25 TDDDG verlangt eine Einwilligung, wenn auf dem Gerät des Lesers Informationen *gespeichert* oder dort gespeicherte *ausgelesen* werden. Das Signal speichert nichts auf dem Gerät (kein Cookie, kein localStorage — der Schalter `bb.self` liegt nur in Julians Browser) und liest nur, was die Seite ohnehin im Speicher hat (welche Kacheln im Bild waren, ob geklickt wurde); `document.referrer` wird im Browser zur Klasse verdichtet. Wer es strenger liest, könnte das Auslesen des Referrers als Zugriff werten; dann fiele die Herkunft (K9) weg, der Rest bliebe. Vor dem Bau von 3.1b einmal gegen [docs/recht-hobbyseite.md](../recht-hobbyseite.md) halten.
+**Kein Einwilligungsbanner, nach Claudes Einschätzung (2026-10-04, keine Rechtsberatung):** § 25 TDDDG verlangt eine Einwilligung, wenn auf dem Gerät des Lesers Informationen *gespeichert* oder dort gespeicherte *ausgelesen* werden. Das Signal speichert nichts auf dem Gerät (kein Cookie, kein localStorage) und liest nur, was die Seite ohnehin im Speicher hat (welche Kacheln im Bild waren, ob geklickt wurde); `document.referrer` wird im Browser zur Klasse verdichtet. Wer es strenger liest, könnte das Auslesen des Referrers als Zugriff werten; dann fiele die Herkunft (K9) weg, der Rest bliebe. Gegen [docs/recht-hobbyseite.md](../recht-hobbyseite.md) §4 gehalten (2026-10-04): dieselbe Begründung trägt dort Vercel Web Analytics, das den Referrer ebenfalls im Browser liest; das Signal steht dort jetzt als eigene Zeile.
 
 **Der Satz auf Deutsch** (für `lib/i18n/de.ts`, Entwurf): „Wenn du eine Buchseite oder eine Suche verlässt, schickt dein Browser eine anonyme Zusammenfassung — etwa welches Buch, wie viele Cover zu sehen waren, ob ein Shop-Link benutzt wurde —, und die Seite zählt sie zu Tagessummen. Eine Kennung, ein Cookie, die IP-Adresse oder der Referrer werden nicht gespeichert; eine Zusammenfassung lässt sich also weder dir noch einem anderen Besuch zuordnen. Suchen ohne Ergebnis werden 90 Tage als Text aufbewahrt, um den Katalog zu verbessern."
 
@@ -121,7 +121,7 @@ Was den Browser verlässt, steht vollständig in §4; nichts davon bezieht sich 
 - **Eine Kopplung, die vorher zu lösen ist:** `adminSessionValid` verlangt heute zusätzlich `SUGGEST_PASSWORD` (das Passwort der Freunde) — ohne `/suggest` gäbe es also keine Analyse. Claude trennt das: eine Funktion `adminEnabled()` hängt nur an `SUGGEST_ADMIN_PASSWORD`; `/suggest` und `/curate` behalten ihre eigene Bedingung. Ein Test hält beides fest.
 - **Daten:** die Seite ist eine Server-Komponente und liest Redis direkt (ein Pipeline-Aufruf mit `HGETALL` je Tag und Hash, bei 90 Tagen rund 500 Befehle je Aufruf; Ergebnis 5 Minuten im Speicher der Funktion). Der JSON-Endpunkt `/api/insights` bleibt für das Cockpit, mit dem Admin-Passwort als Bearer, wie das Cockpit die Produktion schon heute fragt.
 - **Das Telefon** ist der Grund für online: die Ansicht folgt N14 (390 × 844 und 1280 × 800); das Mock-up ist bei beiden Breiten angesehen, ohne seitliches Scrollen.
-- **Eigene Besuche:** öffnet Julian `/admin/insights`, setzt die Seite `localStorage['bb.self'] = 1` in diesem Browser; danach sendet die Website von dort keine Signale. Auf jedem Gerät einmal die Analyse öffnen genügt.
+- **Eigene Besuche:** zählen nicht, solange das Admin-Cookie gilt (sieben Tage nach der Anmeldung auf `/curate`); auf einem Gerät ohne Anmeldung zählt Julian wie ein Leser.
 - **Was das Risiko ist:** die Analyse zeigt nur Summen und Suchbegriffe ohne Ergebnis, nichts über Leser; ein erratenes Admin-Passwort öffnete aber auch `/curate` und die Moderation — das gilt schon heute, die Analyse vergrößert es nicht. Das Passwort lang wählen; die Anmeldung läuft durch das Rate-Limit der Login-Route.
 
 **Aufbau** (Mock-up: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html)), von oben nach unten in der Reihenfolge, in der eine Woche gelesen wird:
@@ -153,4 +153,4 @@ Unter jedem Abschnitt eine Zeile „gezählt wird …", damit niemand eine Zahl 
 | 3.1b | `/api/seen`, die Signale `book` und `search`, K1, K2, K4–K10, Eichung gegen `/go/`, Datenschutzsatz | 1 Tag | nach Julians Entscheidungen §9; sinnvoll, sobald 2.5 Besucher bringt |
 | 3.1c | Spalte Provision je 100 Klicks (von Hand), K12 aus den vorhandenen Beständen | 2 h | mit dem Shop-Modus |
 
-Prüfen: Tests für Feldprüfung, Schlüssel und Summen (keine Netzaufrufe, Redis gemockt); unter `next dev` mit `DEBUG` die Signale sehen; nach dem Deploy **einmal** einen eigenen Besuch mit gelöschtem `bb.self` und einen `/go/`-Klick und in der Ansicht wiederfinden — nicht pollen.
+Prüfen: Tests für Feldprüfung, Schlüssel und Summen (keine Netzaufrufe, Redis gemockt); unter `next dev` mit `DEBUG` die Signale sehen; nach dem Deploy **einmal** einen Besuch ohne Admin-Cookie (privates Fenster) mit einem `/go/`-Klick machen und in der Ansicht wiederfinden — nicht pollen.

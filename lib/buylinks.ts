@@ -365,3 +365,78 @@ export function searchLinksFor(input: SearchLinkInput, market: Market = DEFAULT_
   }
   return out;
 }
+
+/**
+ * Shop searches by words rather than by number (ROADMAP 3.1, plan §4):
+ * `-search` asks a shop about *this printing* by title, author, publisher and
+ * year; `-title` asks about the work, any edition. Recognised by the suffix
+ * the two builders above give them. Google Lens, TinEye, WorldCat and Open
+ * Library are not shops and never go through the counting redirect.
+ */
+export function isWordsProvider(provider: string): boolean {
+  return /^[a-z0-9-]+-(search|title)$/.test(provider);
+}
+
+export interface WordsQuery {
+  title: string;
+  author?: string;
+  /** As the catalogue holds it; `searchLinksFor` trims it for the shop itself. */
+  publisher?: string;
+  year?: number;
+}
+
+/** Longest text a counted search carries; a title longer than this is not one a shop would find anyway. */
+const MAX_WORDS = 300;
+
+/**
+ * The counted form of a shop search: `/go/<provider>/title?t=…&a=…&p=…&y=…`.
+ *
+ * Only the words travel, never an address. The redirect rebuilds the shop's
+ * URL from this file's table, so whatever someone types into `t` ends up as a
+ * search term at that shop and never as the place the reader is sent — the
+ * route cannot become an open redirect (CLAUDE.md).
+ */
+export function trackedSearchHref(provider: string, query: WordsQuery, market: Market): string {
+  const params = new URLSearchParams({ t: query.title });
+  if (query.author) params.set('a', query.author);
+  if (provider.endsWith('-search')) {
+    if (query.publisher) params.set('p', query.publisher);
+    if (query.year) params.set('y', String(query.year));
+  }
+  params.set('market', market);
+  return `/go/${encodeURIComponent(provider)}/title?${params}`;
+}
+
+function clipWords(value: string | null): string | undefined {
+  // Control characters out: they have no place in a search and would only travel into a log line.
+  const text = value?.replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, MAX_WORDS);
+  return text || undefined;
+}
+
+/** The words of a counted search, or null when there is no title to search for. */
+export function parseWordsQuery(params: URLSearchParams): WordsQuery | null {
+  const title = clipWords(params.get('t'));
+  if (!title) return null;
+  const year = params.get('y');
+  return {
+    title,
+    author: clipWords(params.get('a')),
+    publisher: clipWords(params.get('p')),
+    ...(year && /^\d{3,4}$/.test(year) ? { year: Number(year) } : {}),
+  };
+}
+
+/**
+ * The shop search a counted link stands for, rebuilt from the table exactly as
+ * the page built it: `-title` links with the market's affiliate id where shop
+ * mode sets one (`titleSearchLinksFor`), `-search` links without
+ * (`searchLinksFor`). Undefined for anything that is not a shop search here.
+ */
+export function wordsLinkFor(provider: string, query: WordsQuery, market: Market, env: Env = process.env): BuyLink | undefined {
+  if (!isWordsProvider(provider)) return undefined;
+  if (provider.endsWith('-title')) {
+    return titleSearchLinksFor({ title: query.title, author: query.author }, market, env).find(l => l.provider === provider);
+  }
+  return searchLinksFor({ title: query.title, author: query.author, publisher: query.publisher, year: query.year }, market)
+    .find(l => l.provider === provider);
+}

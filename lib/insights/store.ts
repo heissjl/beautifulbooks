@@ -9,8 +9,10 @@
  * the totals (plan §4).
  */
 import { commandsFromEnv, type RedisCommands } from '../hotornot/store';
+import { bookField, searchField, workField, type Signal } from './signals';
 import {
   clickField,
+  EMPTY_RETENTION_SECONDS,
   dayOf,
   insightsKey,
   RETENTION_SECONDS,
@@ -35,7 +37,7 @@ async function add(commands: RedisCommands, hash: InsightsHash, field: string, n
   try {
     await commands.hIncrBy(key, field, 1);
     // Every write renews the day's expiry; the last write of a day sets it for good.
-    await commands.expire?.(key, RETENTION_SECONDS);
+    await commands.expire?.(key, hash === 'empty' ? EMPTY_RETENTION_SECONDS : RETENTION_SECONDS);
     return 'counted';
   } catch {
     return 'failed';
@@ -96,3 +98,22 @@ export async function readDays(days: string[], hash: InsightsHash, commands: Red
     return { ok: false, reason: 'failed' };
   }
 }
+
+/**
+ * One visit's signal into the day's totals (ROADMAP 3.1b): a book visit adds
+ * to `book` and `works`, a search to `search` and, when it found nothing, to
+ * `empty` with its words.
+ */
+export async function countSignal(signal: Signal, options: CountOptions = {}): Promise<CountResult> {
+  const commands = setup(options);
+  if (commands === 'off') return 'off';
+  if (!commands) return 'no-store';
+  const now = options.now ?? new Date();
+  const writes: Array<[InsightsHash, string]> =
+    signal.t === 'book'
+      ? [['book', bookField(signal)], ['works', workField(signal)]]
+      : [['search', searchField(signal)], ...(signal.q ? [['empty', signal.q] as [InsightsHash, string]] : [])];
+  const results = await Promise.all(writes.map(([hash, field]) => add(commands, hash, field, now)));
+  return results.find(r => r !== 'counted') ?? 'counted';
+}
+

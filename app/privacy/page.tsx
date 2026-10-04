@@ -97,7 +97,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
 
         <Section title={t('Shop links and click counting')}>
           <p>
-            {t('Clicking a shop link takes you through this site to the shop, and the click is written to the server log: which shop, which market, which ISBN, and when; the log is kept for the same hour as the hosting log. The site also adds one to a daily total per shop, market and kind of link, without the ISBN, and keeps those totals for about thirteen months. Nothing about you is recorded in either — no IP address, no cookie, no browser details, no referrer. From the moment you arrive at the shop, its own privacy notice applies.')}{' '}
+            {t('Clicking a shop link takes you through this site to the shop, and the click is written to the server log: which shop, which market, which ISBN where the link was built from one, and when; the log is kept for the same hour as the hosting log. The words of a search by title are not logged. The site also adds one to a daily total per shop, market and kind of link, without the ISBN, and keeps those totals for about thirteen months. Nothing about you is recorded in either — no IP address, no cookie, no browser details, no referrer. From the moment you arrive at the shop, its own privacy notice applies.')}{' '}
             {shop
               ? t('Some links carry an affiliate parameter, which tells the shop that you came from here; it does not tell this site who you are.')
               : t('The links carry no affiliate or tracking parameter.')}
@@ -105,6 +105,11 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
           {shop && (
             <p>{t('The “Check the shops” button, when you press it, asks this site’s server to load each shop’s page for the ISBN. The shops see the server, not you.')}</p>
           )}
+        </Section>
+
+        {/* ROADMAP 3.1b; wording approved by Julian on 2026-10-04. Nothing is stored on the device, hence no consent (§ 25 TDDDG, plan §6). */}
+        <Section title={t('What is counted when you leave a page')}>
+          <p>{t('When you leave a book page or a search, your browser sends one anonymous summary — for example which book, how many covers came into view, whether a shop link was used — and the site adds it to daily totals. No identifier, cookie, IP address or referrer is stored, so a summary cannot be linked to you or to another visit. Searches that found nothing are kept as text for 90 days to improve the catalogue.')}</p>
         </Section>
 
         {game && (

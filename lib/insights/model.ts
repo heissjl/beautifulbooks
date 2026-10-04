@@ -24,7 +24,10 @@ export const RETENTION_SECONDS = RETENTION_DAYS * 24 * 60 * 60;
 /** The longest range the view asks for; more would read hundreds of hashes per page view. */
 export const MAX_RANGE_DAYS = 90;
 
-export type InsightsHash = 'clicks' | 'ops';
+export type InsightsHash = 'clicks' | 'ops' | 'book' | 'works' | 'search' | 'empty';
+
+/** Searches that found nothing are kept as words, so for a shorter time (Julian, 2026-10-04). */
+export const EMPTY_RETENTION_SECONDS = 90 * 24 * 60 * 60;
 
 /**
  * Events of the operation that the code can actually see (K11). Not the

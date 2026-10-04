@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
-import { FEW_CLICKS, type ProviderRow } from '@/lib/insights/model';
+import type { ProviderRow } from '@/lib/insights/model';
 import { buildReport, parseMarket, parseRange, RANGES, type InsightsReport } from '@/lib/insights/report';
 import type { Market } from '@/lib/market';
 import { adminCookieValid } from '@/lib/suggest/session';
@@ -24,6 +24,7 @@ export const metadata: Metadata = { title: 'Analyse', robots: { index: false, fo
 const MARKET_NAMES: Record<Market, string> = { us: 'US', uk: 'UK', de: 'DE' };
 const nf = new Intl.NumberFormat('de-DE');
 const pf = new Intl.NumberFormat('de-DE', { style: 'percent', maximumFractionDigits: 1 });
+const plural = (k: number, one: string, many: string) => `${nf.format(k)} ${k === 1 ? one : many}`;
 const shortDay = (day: string) =>
   new Date(`${day}T00:00:00Z`).toLocaleDateString('de-DE', { day: 'numeric', month: 'short', timeZone: 'UTC' });
 
@@ -69,14 +70,6 @@ export default async function InsightsPage({ searchParams }: Props) {
 
         {report.ok ? <Report report={report} /> : <StoreDown reason={report.reason} />}
 
-        <section className="mt-10 rounded-lg border border-dashed border-line p-4 text-sm text-ink-2">
-          <h2 className="text-base font-medium text-ink">Noch nicht gezählt (3.1b)</h2>
-          <p className="mt-1">
-            Klickrate der Buchseite, Weg zum Kauf, Suche ohne Ergebnis und Klickposition, gesehene Cover, Verdikt und Kauf,
-            Herkunft und Werke kommen aus einem Signal je Seitenbesuch im Browser. Das wird gebaut, wenn der Satz für die
-            Datenschutzerklärung und die Frage nach den Suchbegriffen entschieden sind (Plan §9).
-          </p>
-        </section>
       </main>
       <SiteFooter />
     </div>
@@ -110,84 +103,246 @@ function StoreDown({ reason }: { reason: 'no-store' | 'failed' }) {
   );
 }
 
+const ORIGIN_NAMES: Record<string, string> = {
+  engine: 'Suchmaschine', search: 'Suche auf der Seite', home: 'Startseite', collection: 'Sammlung',
+  book: 'Andere Buchseite', social: 'Sozial', other: 'Andere Seite', direct: 'Direkt / unbekannt',
+};
+const VERDICT_NAMES: Record<string, string> = {
+  verified: 'gleich (verified)', differs: 'anders (differs)', uncompared: 'nicht verglichen', unknown: 'kein Bild (unknown)',
+  unavailable: 'Quelle stumm', pending: 'noch offen', none: 'kein Cover mit ISBN gewählt',
+};
+const POSITION_NAMES: Record<string, string> = { '1': '1', '2': '2', '3': '3', '4-10': '4–10', '11+': '11+', none: 'kein Klick' };
+/** Below this many visits, rates are noise (plan §7). */
+const FEW_VISITS = 100;
+
 function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
-  const { clicks } = report;
+  const { clicks, books, searches } = report;
+  const few = books.visits < FEW_VISITS;
   const changeText =
     report.change === null
       ? report.previousTotal === 0 && clicks.total > 0
         ? 'neu gegenüber den Tagen davor'
         : 'kein Vergleich möglich'
       : `${report.change >= 0 ? '+' : '−'}${pf.format(Math.abs(report.change))} gegenüber den ${report.days} Tagen davor`;
+  const rateDelta =
+    books.rate !== null && report.previousBooks.rate !== null
+      ? `${books.rate >= report.previousBooks.rate ? '+' : '−'}${nf.format(Math.abs(books.rate - report.previousBooks.rate) * 100)} Pkt. gegenüber den ${report.days} Tagen davor`
+      : 'kein Vergleich möglich';
+  const answered = searches.searches - searches.empty - searches.failed;
   return (
     <>
-      <section className="mt-6 grid grid-cols-3 gap-3 sm:gap-4 lg:grid-cols-5">
-        <div className="col-span-3 rounded-lg border border-line bg-surface p-4 lg:col-span-2">
-          <div className="text-sm text-ink-2">Klicks zum Händler</div>
-          <div className="mt-1 text-5xl font-medium text-ink">{nf.format(clicks.total)}</div>
-          <div className="mt-1 text-xs text-ink-2">{changeText}</div>
-          <p className="mt-2 text-xs text-ink-3">
-            Über /go/ gezählt, {shortDay(report.from)} bis {shortDay(report.to)} (UTC). Ein Klick ist kein Kauf. Deine eigenen
-            Klicks mit Admin-Cookie zählen nicht.
-          </p>
+      <section className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-6">
+        <div className="col-span-2 rounded-lg border border-line bg-surface p-4">
+          <div className="text-sm text-ink-2">Klickrate der Buchseite</div>
+          <div className={`mt-1 text-5xl font-medium ${few ? 'text-ink-3' : 'text-ink'}`}>{books.rate === null ? '—' : pf.format(books.rate)}</div>
+          <div className="mt-1 text-xs text-ink-2">{few ? `zu wenig Daten (unter ${FEW_VISITS} Besuchen)` : rateDelta}</div>
+          <p className="mt-2 text-xs text-ink-3">Buchseiten-Besuche mit mindestens einem Klick zum Händler ÷ Buchseiten-Besuche, aus dem Signal beim Verlassen der Seite.</p>
         </div>
-        {(['us', 'uk', 'de'] as const)
-          .filter(m => !report.market || m === report.market)
-          .map(m => (
-            <Tile key={m} label={`Markt ${MARKET_NAMES[m]}`} value={clicks.byMarket[m]} total={clicks.total} />
-          ))}
+        <Tile label="Buchseiten-Besuche" value={books.visits} />
+        <Tile label="Klicks zum Händler" value={clicks.total} note={changeText} />
+        <Tile label="Suchen" value={searches.searches} />
+        <Tile
+          label="Suche ohne Ergebnis"
+          value={searches.empty}
+          note={searches.searches > 0 ? `${pf.format(searches.empty / searches.searches)}; Quelle ausgefallen: ${nf.format(searches.failed)}` : '—'}
+        />
       </section>
 
-      <section className="mt-6 rounded-lg border border-line bg-surface p-4">
-        <h2 className="text-base font-medium text-ink">Je Tag</h2>
-        <DayColumns perDay={clicks.perDay} />
-      </section>
-
-      <section className="mt-6 rounded-lg border border-line bg-surface p-4">
-        <h2 className="text-base font-medium text-ink">Händler</h2>
-        <p className="text-sm text-ink-2">
-          Klicks je Händler und Markt; „Produktseite“ heißt, der Link öffnete das Buch selbst statt einer Trefferliste.
-          {report.few && ` Unter ${FEW_CLICKS} Klicks sind die Anteile Rauschen.`}
-        </p>
-        <RetailerTable rows={clicks.rows} total={clicks.total} labels={report.labels} few={report.few} />
-        <p className="mt-2 text-xs text-ink-3">
-          Titelsuchen bei Händlern und „Find this exact cover“ laufen noch nicht über /go/ und fehlen hier (Plan §4).
-        </p>
-      </section>
-
-      <section className="mt-6 rounded-lg border border-line bg-surface p-4">
-        <h2 className="text-base font-medium text-ink">Betrieb</h2>
-        <ul className="mt-2 space-y-2 text-sm">
-          <Status
-            ok={report.ops.totals['google-stop'] === 0}
-            name="Google-Kontingent"
-            good="kein Tagesstopp im Zeitraum"
-            bad={`Tagesstopp an ${report.ops.daysWith['google-stop'].map(shortDay).join(', ')}`}
+      <section className="mt-6 grid gap-6 lg:grid-cols-2">
+        <Card title="Weg zum Kauf" sub="Anteil der Buchseiten-Besuche, die die Stufe erreichen.">
+          <Bars
+            rows={[
+              { label: 'Besuch', value: books.funnel.visits },
+              { label: 'Wand geladen', value: books.funnel.wall },
+              { label: 'Cover gewählt', value: books.funnel.picked },
+              { label: 'Klick zum Händler', value: books.funnel.bought },
+            ]}
+            total={books.funnel.visits}
+            few={few}
           />
-          <Status
-            ok={report.ops.totals['ol-failed'] === 0}
-            name="Open Library"
-            good="keine Suche ist an Open Library gescheitert"
-            bad={`${nf.format(report.ops.totals['ol-failed'])} gescheiterte ${report.ops.totals['ol-failed'] === 1 ? 'Suche' : 'Suchen'} an ${report.ops.daysWith['ol-failed'].length === 1 ? 'einem Tag' : `${report.ops.daysWith['ol-failed'].length} Tagen`}`}
+          <Note>
+            Ein Signal je Besuch, beim Verlassen der Seite. Abgleich: {plural(books.bought, 'Besuch', 'Besuche')} mit Klick laut Browser,{' '}
+            {plural(clicks.total, 'Klick', 'Klicks')} laut /go/ — ein Besuch kann mehrere Klicks haben, ein verlorenes Signal fehlt nur links.
+          </Note>
+        </Card>
+        <Card title="Je Tag" sub={`Klicks zum Händler, ${shortDay(report.from)} bis ${shortDay(report.to)} (UTC).`}>
+          <DayColumns perDay={clicks.perDay} />
+        </Card>
+      </section>
+
+      <section className="mt-6">
+        <Card title="Händler" sub={`Klicks je Händler und Markt, über /go/ exakt gezählt; ein Klick ist kein Kauf. US ${nf.format(clicks.byMarket.us)} · UK ${nf.format(clicks.byMarket.uk)} · DE ${nf.format(clicks.byMarket.de)}.`}>
+          <RetailerTable rows={clicks.rows} total={clicks.total} labels={report.labels} few={report.few} />
+          <Note>
+            Gezählt werden Links nach ISBN, Händlersuchen nach Titel und die lokalen Buchhandlungen; Google Lens, TinEye, WorldCat und
+            Open Library sind keine Händler. Deine eigenen Klicks mit Admin-Cookie zählen nicht.
+          </Note>
+        </Card>
+      </section>
+
+      <section className="mt-6 grid gap-6 lg:grid-cols-2">
+        <Card title="Suche: wo geklickt wird" sub={`Position der angeklickten Karte, bei ${plural(answered, 'Suche', 'Suchen')} mit Ergebnis.`}>
+          <Bars rows={Object.entries(searches.positions).map(([k, v]) => ({ label: POSITION_NAMES[k] ?? k, value: v }))} total={answered} few={answered < FEW_VISITS} />
+          <Note>Liegt Position 1 unter 50 %, stimmt die Reihenfolge nicht. Suchen haben keinen Markt; der Marktfilter gilt hier nicht.</Note>
+        </Card>
+        <Card title="Gesucht, nichts gefunden" sub="Erst ab zwei gleichen Anfragen gezeigt, 90 Tage gespeichert.">
+          {report.empty.length === 0 ? (
+            <p className="text-sm text-ink-2">Keine Anfrage zweimal ohne Ergebnis.</p>
+          ) : (
+            <table className="w-full text-sm">
+              <tbody>
+                {report.empty.map(e => (
+                  <tr key={e.q} className="border-b border-line">
+                    <td className="py-1.5 pr-2 text-ink">
+                      <Link className="hover:underline" href={`/?q=${encodeURIComponent(e.q)}`}>{e.q}</Link>
+                    </td>
+                    <td className="py-1.5 text-right tabular-nums text-ink-2">{nf.format(e.n)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </Card>
+      </section>
+
+      <section className="mt-6 grid gap-6 lg:grid-cols-2">
+        <Card title="Cover gesehen vor dem Verlassen" sub="Kacheln, die zu mindestens der Hälfte im Bild waren.">
+          <Bars rows={Object.entries(books.seen).map(([k, v]) => ({ label: k.replace('-', '–'), value: v }))} total={books.visits} few={few} />
+          <Note>
+            {books.visits > 0 ? `${pf.format(books.onePageOrLess / books.visits)} der Besuche endeten, bevor die zweite Seite der Wand ankam.` : '—'}
+          </Note>
+        </Card>
+        <Card title="Verdikt und Kauf" sub="Das letzte Verdikt, das ein Besuch sah, und wie oft danach zum Händler geklickt wurde.">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-line text-left text-xs text-ink-3">
+                <th className="py-1.5 pr-2 font-normal">Verdikt</th>
+                <th className="py-1.5 pr-2 text-right font-normal">Besuche</th>
+                <th className="py-1.5 text-right font-normal">Klickrate danach</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(books.verdicts)
+                .filter(([, v]) => v.visits > 0)
+                .sort((x, y) => y[1].visits - x[1].visits)
+                .map(([k, v]) => (
+                  <tr key={k} className="border-b border-line">
+                    <td className="py-1.5 pr-2 text-ink">{VERDICT_NAMES[k] ?? k}</td>
+                    <td className="py-1.5 pr-2 text-right tabular-nums text-ink-2">{nf.format(v.visits)}</td>
+                    <td className={`py-1.5 text-right tabular-nums ${v.visits < 30 ? 'text-ink-3' : 'text-ink'}`}>{pf.format(v.bought / v.visits)}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          <Note>Liegt die Klickrate nach „anders“ nicht unter der nach „gleich“, wirkt der Satz nicht. Grau: unter 30 Besuchen.</Note>
+        </Card>
+      </section>
+
+      <section className="mt-6 grid gap-6 lg:grid-cols-2">
+        <Card title="Werke" sub="Die meistbesuchten Buchseiten, mit Klickrate je Werk.">
+          {report.works.length === 0 ? (
+            <p className="text-sm text-ink-2">Noch kein Besuch gezählt.</p>
+          ) : (
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-line text-left text-xs text-ink-3">
+                  <th className="py-1.5 pr-2 font-normal">Werk</th>
+                  <th className="py-1.5 pr-2 text-right font-normal">Besuche</th>
+                  <th className="py-1.5 text-right font-normal">Klickrate</th>
+                </tr>
+              </thead>
+              <tbody>
+                {report.works.map(w => (
+                  <tr key={w.work} className="border-b border-line">
+                    <td className="py-1.5 pr-2 text-ink">
+                      <Link className="hover:underline" href={`/book/${w.work}`}>{w.title ?? w.work}</Link>
+                    </td>
+                    <td className="py-1.5 pr-2 text-right tabular-nums text-ink-2">{nf.format(w.visits)}</td>
+                    <td className="py-1.5 text-right tabular-nums text-ink-2">{pf.format(w.bought / w.visits)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </Card>
+        <Card title="Woher die Buchseiten-Besuche kommen" sub="Im Browser zur Klasse verdichtet; die Herkunftsadresse selbst wird nicht gesendet.">
+          <Bars
+            rows={Object.entries(books.origins).sort((x, y) => y[1] - x[1]).map(([k, v]) => ({ label: ORIGIN_NAMES[k] ?? k, value: v }))}
+            total={books.visits}
+            few={few}
           />
-        </ul>
-        <p className="mt-3 text-xs text-ink-3">
-          Den Google-Verbrauch je Tag kann die Seite nicht zählen (Datencache); er steht in der{' '}
-          <a className="text-accent hover:underline" href="https://console.cloud.google.com/apis/api/books.googleapis.com/quotas" target="_blank" rel="noopener noreferrer">
-            Cloud-Konsole
-          </a>
-          . Ein Tagesstopp, den eine Seite statt einer API-Route bemerkt, erscheint erst mit der nächsten Anfrage derselben Instanz.
-        </p>
+        </Card>
+      </section>
+
+      <section className="mt-6">
+        <Card title="Betrieb" sub="Ereignisse, keine Anfragen.">
+          <ul className="space-y-2 text-sm">
+            <Status
+              ok={report.ops.totals['google-stop'] === 0}
+              name="Google-Kontingent"
+              good="kein Tagesstopp im Zeitraum"
+              bad={`Tagesstopp an ${report.ops.daysWith['google-stop'].map(shortDay).join(', ')}`}
+            />
+            <Status
+              ok={report.ops.totals['ol-failed'] === 0}
+              name="Open Library"
+              good="keine Suche ist an Open Library gescheitert"
+              bad={`${nf.format(report.ops.totals['ol-failed'])} gescheiterte ${report.ops.totals['ol-failed'] === 1 ? 'Suche' : 'Suchen'} an ${report.ops.daysWith['ol-failed'].length === 1 ? 'einem Tag' : `${report.ops.daysWith['ol-failed'].length} Tagen`}`}
+            />
+          </ul>
+          <Note>
+            Den Google-Verbrauch je Tag kann die Seite nicht zählen (Datencache); er steht in der{' '}
+            <a className="text-accent hover:underline" href="https://console.cloud.google.com/apis/api/books.googleapis.com/quotas" target="_blank" rel="noopener noreferrer">
+              Cloud-Konsole
+            </a>
+            . Ein Tagesstopp, den eine Seite statt einer API-Route bemerkt, erscheint erst mit der nächsten Anfrage derselben Instanz.
+          </Note>
+        </Card>
       </section>
     </>
   );
 }
 
-function Tile({ label, value, total }: { label: string; value: number; total: number }) {
+function Card({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-lg border border-line bg-surface p-4">
+      <h2 className="text-base font-medium text-ink">{title}</h2>
+      {sub && <p className="mt-0.5 text-sm text-ink-2">{sub}</p>}
+      <div className="mt-3">{children}</div>
+    </div>
+  );
+}
+
+function Note({ children }: { children: React.ReactNode }) {
+  return <p className="mt-3 text-xs text-ink-3">{children}</p>;
+}
+
+/** One row per class, one series: the bar is the share of `total`, the number beside it the count. */
+function Bars({ rows, total, few }: { rows: Array<{ label: string; value: number }>; total: number; few: boolean }) {
+  const max = Math.max(1, ...rows.map(r => r.value));
+  return (
+    <div className="space-y-2">
+      {rows.map(r => (
+        <div key={r.label} className="grid grid-cols-[7.5rem_1fr_4.5rem] items-center gap-2 text-sm sm:grid-cols-[9rem_1fr_5rem]">
+          <span className="truncate text-ink-2">{r.label}</span>
+          <span className="h-2.5">
+            <span className="block h-2.5 rounded-r bg-accent" style={{ width: `${(r.value / max) * 100}%`, opacity: few ? 0.45 : 1 }} title={`${r.label}: ${nf.format(r.value)}`} />
+          </span>
+          <span className={`text-right tabular-nums ${few ? 'text-ink-3' : 'text-ink'}`}>
+            {total > 0 ? pf.format(r.value / total) : '—'}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Tile({ label, value, note }: { label: string; value: number; note?: string }) {
   return (
     <div className="rounded-lg border border-line bg-surface p-3 sm:p-4">
       <div className="text-sm text-ink-2">{label}</div>
       <div className="mt-1 text-2xl font-medium text-ink">{nf.format(value)}</div>
-      <div className="mt-1 text-xs text-ink-3">{total > 0 ? `${pf.format(value / total)} der Klicks` : '—'}</div>
+      {note && <div className="mt-1 text-xs text-ink-3">{note}</div>}
     </div>
   );
 }
@@ -202,7 +357,7 @@ function DayColumns({ perDay }: { perDay: Array<{ day: string; clicks: number }>
   const bar = Math.min(24, band * 0.7);
   const ticks = [0, Math.floor((perDay.length - 1) / 2), perDay.length - 1];
   return (
-    <figure className="mt-3">
+    <figure>
       <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" className="h-36 w-full" role="img" aria-label="Klicks zum Händler je Tag">
         <line x1={0} x2={w} y1={h} y2={h} stroke="var(--line)" strokeWidth={1} />
         {perDay.map((d, i) => {
@@ -228,7 +383,7 @@ function DayColumns({ perDay }: { perDay: Array<{ day: string; clicks: number }>
           <span key={i}>{shortDay(perDay[i]?.day ?? '')}</span>
         ))}
       </div>
-      <figcaption className="mt-1 text-xs text-ink-3">Höchster Tag: {nf.format(peak)} Klicks. Werte beim Darüberfahren.</figcaption>
+      <figcaption className="mt-1 text-xs text-ink-3">Höchster Tag: {plural(peak, 'Klick', 'Klicks')}. Werte beim Darüberfahren.</figcaption>
     </figure>
   );
 }
