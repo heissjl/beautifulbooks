@@ -15,6 +15,14 @@ describe('the shelf photo test set: scoring a reading against the truth list', (
       { file: 'x.jpg', what: '', complete: true, books: [['Babel', 'R. F. Kuang'], ['Assata', 'Assata Shakur'], ['The Odyssey', 'Homer']], optional: [['Monsters', '']] },
       [read('Babel', 'R.F. Kuang'), read('Assata: An Autobiography'), read('Monsters: A Fan’s Dilemma', 'Claire Dederer'), read('Twilight')],
     );
-    expect(s).toMatchObject({ truth: 3, read: 4, hit: 2, authorOnPhoto: 2, authorRead: 1, extra: 1, missed: ['The Odyssey — Homer'], extras: ['Twilight'] });
+    expect(s).toMatchObject({ truth: 3, read: 4, hit: 2, authorOnPhoto: 2, authorRead: 1, extra: 1, missed: ['The Odyssey — Homer'], extras: ['Twilight'], unsure: 0, hitUnsure: 0, extraUnsure: 0, stumps: 0 });
+  });
+
+  it('tells readings the model marked as unsure, and the stumps of cut-off books', () => {
+    const s = score(
+      { file: 'x.jpg', what: '', complete: false, books: [['Babel', ''], ['Assata', '']], optional: [] },
+      [read('Babel'), { ...read('Assata'), unsure: true as const }, { ...read('SETH'), unsure: true as const }, read('Go')],
+    );
+    expect(s).toMatchObject({ hit: 2, hitUnsure: 1, unsure: 2, extra: 2, extraUnsure: 1, stumps: 2, extras: ['SETH (?)', 'Go'] });
   });
 });

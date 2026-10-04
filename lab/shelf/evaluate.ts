@@ -46,6 +46,14 @@ export interface PhotoScore {
   extra: number;
   missed: string[];
   extras: string[];
+  /** With the `unsure` variant: readings the model marked as read in part. */
+  unsure: number;
+  /** Truth books that came back only as unsure readings. */
+  hitUnsure: number;
+  /** Readings beyond the list that were marked unsure. */
+  extraUnsure: number;
+  /** Readings beyond the list that are one short word ("GO", "Self", "SETH"): the stumps of books the picture cuts off. */
+  stumps: number;
   pieces: number;
   ms: number;
   tokensIn: number;
@@ -71,13 +79,14 @@ export function isTruth(truth: RecognizedBook, read: RecognizedBook): boolean {
 /** The author's last word, as it would be printed on a spine. */
 const surname = (author: string) => wordsOf(author).pop() ?? '';
 
-export function score(photo: TruthPhoto, reads: readonly RecognizedBook[]): Pick<PhotoScore, 'truth' | 'read' | 'hit' | 'authorOnPhoto' | 'authorRead' | 'extra' | 'missed' | 'extras'> {
+export function score(photo: TruthPhoto, reads: readonly RecognizedBook[]): Pick<PhotoScore, 'truth' | 'read' | 'hit' | 'authorOnPhoto' | 'authorRead' | 'extra' | 'missed' | 'extras' | 'unsure' | 'hitUnsure' | 'extraUnsure' | 'stumps'> {
   const truth = photo.books.map(asBook);
   const optional = photo.optional.map(asBook);
   const missed: string[] = [];
   let hit = 0;
   let authorOnPhoto = 0;
   let authorRead = 0;
+  let hitUnsure = 0;
   for (const t of truth) {
     const found = reads.filter((r) => isTruth(t, r));
     if (found.length === 0) {
@@ -85,14 +94,17 @@ export function score(photo: TruthPhoto, reads: readonly RecognizedBook[]): Pick
       continue;
     }
     hit++;
+    if (found.every((r) => r.unsure)) hitUnsure++;
     if (t.author) {
       authorOnPhoto++;
       const name = surname(t.author);
       if (found.some((r) => wordsOf(`${r.author} ${r.title}`).includes(name))) authorRead++;
     }
   }
-  const extras = reads.filter((r) => !truth.some((t) => isTruth(t, r)) && !optional.some((t) => isTruth(t, r))).map((r) => (r.author ? `${r.title} — ${r.author}` : r.title));
-  return { truth: truth.length, read: reads.length, hit, authorOnPhoto, authorRead, extra: extras.length, missed, extras };
+  const beyond = reads.filter((r) => !truth.some((t) => isTruth(t, r)) && !optional.some((t) => isTruth(t, r)));
+  const extras = beyond.map((r) => `${r.author ? `${r.title} — ${r.author}` : r.title}${r.unsure ? ' (?)' : ''}`);
+  const stumps = beyond.filter((r) => { const w = wordsOf(r.title); return w.length === 1 && w[0].length <= 6; }).length;
+  return { truth: truth.length, read: reads.length, hit, authorOnPhoto, authorRead, extra: extras.length, missed, extras, unsure: reads.filter((r) => r.unsure).length, hitUnsure, extraUnsure: beyond.filter((r) => r.unsure).length, stumps };
 }
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -106,6 +118,9 @@ async function main() {
   };
   const only = arg('only')?.split(',').map((n) => n.padStart(2, '0'));
   const label = arg('label') ?? '';
+  // Variants being measured: cut (prompt: leave out books the edge cuts off), trim (no second look at the edge strips), unsure (a field for titles read in part).
+  const variants = new Set((arg('variant') ?? '').split(',').filter(Boolean));
+  const variant = { cut: variants.has('cut'), trim: variants.has('trim'), unsure: variants.has('unsure') };
   const truth = JSON.parse(readFileSync(join(here, 'testset', 'truth.json'), 'utf8')) as { photos: TruthPhoto[] };
   const photos = truth.photos.filter((p) => !only || only.some((n) => p.file.includes(`-${n}.`)));
 
@@ -122,7 +137,7 @@ async function main() {
       continue;
     }
     try {
-      const reading = await readPhoto(prepared);
+      const reading = await readPhoto(prepared, {}, variant);
       const s = score(photo, reading.books);
       // List price of the model that read it (lib/insights/prices.ts); 0 for a model the table does not know.
       const cents = Math.round((costUsd(reading.model, reading.tokensIn, reading.tokensOut) ?? 0) * 1000) / 10;
@@ -136,10 +151,10 @@ async function main() {
   const sum = (f: (s: PhotoScore) => number) => scores.reduce((n, s) => n + f(s), 0);
   const pct = (a: number, b: number) => (b ? `${Math.round((a / b) * 100)} %` : '–');
   const lines = [
-    '| Foto | Was | gelesen von Liste | mit Autor | darüber hinaus | Teile | Zeit | Kosten |',
+    '| Foto | gelesen von Liste (nur unsicher) | mit Autor | darüber hinaus (unsicher) | Stümpfe | Teile | Zeit | Kosten |',
     '|---|---|---|---|---|---|---|---|',
-    ...scores.map((s) => `| ${s.file.replace('regalfoto-set-', '').replace('.jpg', '')} | ${s.what} | ${s.hit} / ${s.truth} (${pct(s.hit, s.truth)}) | ${s.authorRead} / ${s.authorOnPhoto} | ${s.extra}${s.complete ? ' (Fehler)' : ' (ungeprüft)'} | ${s.pieces || '–'} | ${(s.ms / 1000).toFixed(1)} s | ${s.cents} ct |`),
-    `| **alle** | ${scores.length} Fotos | **${sum((s) => s.hit)} / ${sum((s) => s.truth)} (${pct(sum((s) => s.hit), sum((s) => s.truth))})** | ${sum((s) => s.authorRead)} / ${sum((s) => s.authorOnPhoto)} | ${sum((s) => (s.complete ? s.extra : 0))} Fehler auf vollzähligen Fotos | | ${(sum((s) => s.ms) / 1000).toFixed(0)} s | ${sum((s) => s.cents).toFixed(1)} ct |`,
+    ...scores.map((s) => `| ${s.file.replace('regalfoto-set-', '').replace('.jpg', '')} | ${s.hit} / ${s.truth}${s.hitUnsure ? ` (${s.hitUnsure})` : ''} | ${s.authorRead} / ${s.authorOnPhoto} | ${s.extra}${s.extraUnsure ? ` (${s.extraUnsure})` : ''}${s.complete ? ' Fehler' : ''} | ${s.stumps} | ${s.pieces || '–'} | ${(s.ms / 1000).toFixed(1)} s | ${s.cents} ct |`),
+    `| **alle ${scores.length}** | **${sum((s) => s.hit)} / ${sum((s) => s.truth)} (${pct(sum((s) => s.hit), sum((s) => s.truth))})**${sum((s) => s.hitUnsure) ? ` (${sum((s) => s.hitUnsure)})` : ''} | ${sum((s) => s.authorRead)} / ${sum((s) => s.authorOnPhoto)} | ${sum((s) => s.extra)}${sum((s) => s.extraUnsure) ? ` (${sum((s) => s.extraUnsure)})` : ''}; auf vollzähligen: ${sum((s) => (s.complete ? s.extra : 0))}${sum((s) => (s.complete ? s.extraUnsure : 0)) ? ` (${sum((s) => (s.complete ? s.extraUnsure : 0))})` : ''} | ${sum((s) => s.stumps)} | | ${(sum((s) => s.ms) / 1000).toFixed(0)} s | ${sum((s) => s.cents).toFixed(1)} ct |`,
   ];
   console.log(lines.join('\n'));
 
@@ -147,7 +162,7 @@ async function main() {
   const dir = join(here, 'testset', 'results');
   mkdirSync(dir, { recursive: true });
   const out = join(dir, `${stamp}${label ? `-${label.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}` : ''}.json`);
-  writeFileSync(out, JSON.stringify({ at: new Date().toISOString(), label, scores }, null, 1));
+  writeFileSync(out, JSON.stringify({ at: new Date().toISOString(), label, variant, scores }, null, 1));
   console.error(`written: ${out}`);
 }
 

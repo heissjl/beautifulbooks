@@ -52,7 +52,7 @@ export function rowChange(img: RgbaImage, rows: number = 400): number[] {
  * when no board divides the picture — a pile, a single shelf — and the caller
  * cuts some other way.
  */
-export function shelvesOf(img: RgbaImage): [number, number][] {
+export function shelvesOf(img: RgbaImage, options: { dropEdgeStrips?: boolean } = {}): [number, number][] {
   const change = rowChange(img);
   const n = change.length;
   if (n < 20) return [];
@@ -93,6 +93,14 @@ export function shelvesOf(img: RgbaImage): [number, number][] {
   if (shelves.length > 1 && shelves[0][1] - shelves[0][0] < MIN_SHELF) {
     shelves[1][0] = shelves[0][0];
     shelves.shift();
+  }
+  // A variant being measured (lab/shelf/evaluate.ts --variant trim): the low strips at the top and bottom
+  // edge — where the photo cuts a shelf off — are not read again at all, rather than given to a neighbour.
+  if (options.dropEdgeStrips) {
+    const first = edges[1] - edges[0];
+    const last = edges[edges.length - 1] - edges[edges.length - 2];
+    if (first < MIN_SHELF && shelves.length > 1) shelves[0][0] = edges[1];
+    if (last < MIN_SHELF && shelves.length > 1) shelves[shelves.length - 1][1] = edges[edges.length - 2];
   }
   return shelves.length > 1 ? shelves : [];
 }
