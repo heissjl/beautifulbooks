@@ -167,3 +167,7 @@ Julian nach der Frage, ob sich etwas vorschalten lässt, das Prompt und Denk-Ein
 
 **Offen:** ein Testsatz von acht bis zehn Fotos mit gezählter Wahrheit, bevor an Prompt, Schwelle oder Schnitt weiter gedreht wird — alle Zahlen hier stammen von drei Fotos.
 
+## Der Testsatz (2026-10-04)
+
+Julian lieferte zwölf Fotos; mit den zwei ersten sind es vierzehn, je mit einer Wahrheitsliste (Entwurf, von Julian zu korrigieren) und einem Auswertungsskript, das den Lesecode der Website selbst benutzt (`lib/walls/readphoto.ts`, aus der Route herausgezogen). Erster Lauf: **292 von 322 Büchern der Listen gelesen (91 %)**, 94 % davon mit dem Autor, der auf dem Foto steht; auf den sieben vollzähligen Fotos ein einziger Fehler; Umschläge 1–2,4 ct und 2–7 s, dichte Regale 9–13 ct und 17–24 s; das verwackelte Regal 52 %. Bericht mit Tabelle, Fehlbildern und vier Vorschlägen: [docs/tests/2026-10-04-regalfoto-testsatz.md](../tests/2026-10-04-regalfoto-testsatz.md). Ab jetzt läuft jede Änderung an Prompt, Schwelle oder Schnitt zuerst gegen diesen Satz.
+

@@ -45,6 +45,17 @@ Julians Galeriewand (rund neunzig Rücken) und ein Brett mit 22 Romanen, lokal d
 
 **Seit 2026-10-01 liefert die Erkennung keinen Kasten mehr** (`box` bleibt leer, je Buch nur ein Punkt `x`, `y`): der Ausschnitt-Vergleich für Umschläge in `match.ts` läuft damit nicht, bis ein Segmentierer den Umriss liefert (Plan 5.11a, Abschnitt „Die Kästen sollen die Bücher zeigen“); die Lab-Seite zeichnet entsprechend keine Kästen.
 
+## Der Testsatz (seit 2026-10-04)
+
+Vierzehn Fotos von Julian (lokal unter `docs/tests/regalfoto-set-NN.jpg`, git-ignoriert), je Foto eine Wahrheitsliste in `testset/truth.json` (Entwurf von Claude, von Julian zu korrigieren), und `evaluate.ts`, das jedes Foto durch `lib/walls/readphoto.ts` schickt — dieselbe Funktion wie die Website — und zählt: wie viele Bücher der Liste gelesen wurden, wie viele mit Autor, was darüber hinaus kam, Zeit und Kosten. Jeder Lauf schreibt `testset/results/<Zeit>-<Etikett>.json`; der erste (`baseline`) liest 292 von 322 (91 %). Bericht: [docs/tests/2026-10-04-regalfoto-testsatz.md](../../docs/tests/2026-10-04-regalfoto-testsatz.md). **Jede Änderung an Prompt, Schwelle oder Schnitt läuft zuerst hier** — die Zahlen vom 2026-09-30 bis 2026-10-03 stammten von drei Fotos und haben mindestens eine falsche Erklärung getragen.
+
+```bash
+set -a; source ../../../.env.local; set +a
+npx tsx lab/shelf/evaluate.ts --label "was geändert wurde"      # alle; --only 02,08 für einzelne
+```
+
+Ein Lauf über alle kostet rund 80 ct und dauert drei Minuten. Kein Katalog wird gefragt, nur das Modell.
+
 ## Was noch fehlt — die eigentliche Messung
 
 - **`ANTHROPIC_API_KEY` in die `.env.local` des Hauptordners** (Julian). Ohne ihn ist die Erkennung ungetestet: das Modell hat noch kein Foto gesehen.

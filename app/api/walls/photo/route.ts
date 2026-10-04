@@ -1,9 +1,8 @@
 import { NextRequest } from 'next/server';
-import { hasApiKey, recognize, type RecognizedBook } from '@/lib/recognize';
+import { hasApiKey, type RecognizedBook } from '@/lib/recognize';
 import { matchPhotoBooksEach, photoRead, MAX_PHOTO_BOOKS, type PhotoMatch } from '@/lib/walls/photo';
-import { crop, preparePhoto, shrink, toJpeg } from '@/lib/photoprep';
-import { shelvesOf } from '@/lib/shelfrows';
-import { DENSE_AT, inWhole, mergeReads, piecesOf } from '@/lib/walls/dense';
+import { preparePhoto } from '@/lib/photoprep';
+import { readPhoto } from '@/lib/walls/readphoto';
 import { json, openWalls } from '../guard';
 
 /**
@@ -77,45 +76,23 @@ export async function POST(request: NextRequest) {
       let pieces = 0;
       let piecesFailed = 0;
       try {
-        // The first read is its own density signal: at DENSE_AT books it stops, and the photo is read again
-        // in pieces cut from the full-size picture (lib/walls/dense.ts; Julian, 2026-10-03: „mach variante 3“).
-        const run = await recognize(
-          prepared.bytes,
-          'image/jpeg',
-          (book, i) => {
+        // One look, and for a dense photo a second, shelf by shelf (lib/walls/readphoto.ts).
+        const reading = await readPhoto(prepared, {
+          onBook: (book, i) => {
             if (i < MAX_PHOTO_BOOKS) line({ book: photoRead(book), i });
           },
-          DENSE_AT,
-        );
-        let all = run.books;
-        model = run.model;
-        msModel = run.ms;
-        tokens = { in: run.inputTokens, out: run.outputTokens };
-        problems = run.problems.length;
-        if (run.stopped) {
-          const cut = piecesOf(prepared.full.width, prepared.full.height, shelvesOf(prepared.full));
-          pieces = cut.length;
-          line({ again: pieces, done: 0 });
-          const againStarted = Date.now();
-          let done = 0;
-          const runs = await Promise.allSettled(
-            cut.map(async (piece) => {
-              const r = await recognize(toJpeg(shrink(crop(prepared.full, ...piece))), 'image/jpeg');
-              line({ again: pieces, done: ++done });
-              return { ...r, books: r.books.map((b) => inWhole(b, piece)) };
-            }),
-          );
-          const read = runs.flatMap((r) => (r.status === 'fulfilled' ? [r.value] : []));
-          piecesFailed = pieces - read.length;
-          all = mergeReads(run.books, read.flatMap((r) => r.books));
-          msModel += Date.now() - againStarted;
-          tokens = { in: tokens.in + read.reduce((n, r) => n + r.inputTokens, 0), out: tokens.out + read.reduce((n, r) => n + r.outputTokens, 0) };
-          problems += read.reduce((n, r) => n + r.problems.length, 0);
-          // A dense photo is four reads, and the day's budget counts reads.
-          for (let i = 0; i < pieces; i++) open.store.countPhoto(new Date().toISOString().slice(0, 10)).catch(() => {});
-        }
-        books = all.slice(0, MAX_PHOTO_BOOKS);
-        line({ read: books.map(photoRead), problems, capped: all.length > MAX_PHOTO_BOOKS });
+          onAgain: (of, done) => line({ again: of, done }),
+        });
+        model = reading.model;
+        msModel = reading.msModel;
+        tokens = { in: reading.tokensIn, out: reading.tokensOut };
+        problems = reading.problems;
+        pieces = reading.pieces;
+        piecesFailed = reading.piecesFailed;
+        // A dense photo is several reads, and the day's budget counts reads.
+        for (let i = 0; i < pieces; i++) open.store.countPhoto(new Date().toISOString().slice(0, 10)).catch(() => {});
+        books = reading.books.slice(0, MAX_PHOTO_BOOKS);
+        line({ read: books.map(photoRead), problems, capped: reading.books.length > MAX_PHOTO_BOOKS });
       } catch {
         // Never "no books": the model did not answer, which is something else (N12).
         recordPhoto({ failed: 'model', bytes: bytes.length, ms: Date.now() - started });

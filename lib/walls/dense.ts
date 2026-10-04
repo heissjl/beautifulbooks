@@ -51,7 +51,7 @@ export function inWhole(book: RecognizedBook, [x0, y0, x1, y1]: Piece): Recogniz
   };
 }
 
-const words = (text: string): string[] =>
+export const wordsOf = (text: string): string[] =>
   text
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
@@ -86,8 +86,8 @@ function distance(a: string, b: string): number {
  * so two copies of one book count as one — which a collection does anyway.
  */
 export function sameBook(a: RecognizedBook, b: RecognizedBook): boolean {
-  const ta = words(a.title);
-  const tb = words(b.title);
+  const ta = wordsOf(a.title);
+  const tb = wordsOf(b.title);
   if (ta.length === 0 || tb.length === 0) return false;
   // The same letters, give or take a misreading: "Maki Na Kamura" and "Makina Kamura", "Rocine" and "Rottine".
   const ja = ta.join('');
@@ -97,7 +97,7 @@ export function sameBook(a: RecognizedBook, b: RecognizedBook): boolean {
   // Either title, two words at least, wholly inside the other reading's title and author.
   const inside = (one: string[], other: RecognizedBook) => {
     if (one.length < 2) return false;
-    const all = new Set(words(`${other.title} ${other.author}`));
+    const all = new Set(wordsOf(`${other.title} ${other.author}`));
     return one.every((w) => all.has(w));
   };
   return inside(ta, b) || inside(tb, a);
