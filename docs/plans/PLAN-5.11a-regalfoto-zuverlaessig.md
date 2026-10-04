@@ -210,3 +210,15 @@ Die Schalter (`ReadVariant`, `shelvesOf(…, { dropEdgeStrips })`, `--variant`) 
 
 **Entschieden (Julian, 2026-10-04):** „setz die schwelle zurück auf 30 und pushe“. Zur Bodenzahl als Dichtesignal: „das klingt sinnvoll aber eben nur für regale“ — richtig, Stapel, Büchertische und Auslagen haben keine Bretter; sie bleibt eine Idee für später und ersetzt die Zählung nicht. `DENSE_AT` ist 30; die offenen Messungen (`trim`, `unsure`, je zweimal, gegen zwei Vergleichsläufe) laufen mit dieser Schwelle, sobald wieder Guthaben da ist.
 
+## Die restlichen Varianten, gemessen (2026-10-04, nach dem Aufladen)
+
+Julian: „guthaben ist aufgeladen, miss die restlichen varianten“. Zehn Läufe, jede Variante zweimal ([Bericht](../tests/2026-10-04-regalfoto-testsatz.md#vierter-durchgang-die-restlichen-varianten-2026-10-04-nach-dem-aufladen)):
+
+- **Rauschen:** zwei gleiche Läufe liegen zehn Bücher auseinander (305 und 295 von 322). Darunter ist nichts ein Befund.
+- **Feld für Unsicheres (`unsure`):** bringt kein fehlendes Buch zurück (297, 296) — die Vermutung vom 2026-10-03 ist widerlegt. Es markiert alle Fehler auf den vollzähligen Fotos, nimmt aber auch 17–19 % der richtigen Lesungen mit und kostet 12 % mehr. **Nicht einbauen.**
+- **Randstreifen nicht lesen (`trim`):** nimmt die Stümpfe weg, aber auch ganze Bücher in angeschnittenen Reihen (Atlanten, *Louise Fishman*, *True Believers*). **Nicht einbauen.**
+- **Stumpf-Regel (`stumps`):** in einer angeschnittenen Reihe (`cutOffRows`: Randreihe unter der halben Medianhöhe der übrigen) fallen Lesungen aus einem Wort ohne Autor weg. Stümpfe auf den dichten Fotos 23 / 21 → 11 / 10, Foto 10 von 8–10 auf 0, keine verlorenen Bücher. **Einbauen** — wartet auf Julians Wort.
+- **Hinweis bei Unschärfe:** gemessen im dritten Durchgang, trägt. **Einbauen** — wartet auf Julians Wort und einen Satz für den Leser.
+
+Die Schalter bleiben im Code; die Website übergibt weiter keinen.
+

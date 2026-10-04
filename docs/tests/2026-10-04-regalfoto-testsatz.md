@@ -104,3 +104,51 @@ Gebaut und schaltbar: ein Feld `u` je Buch, der Satz „give your best reading a
 3. Vorher die Schwellenfrage entscheiden, sonst misst jeder Lauf vor allem, ob der zweite Blick kam.
 Je Lauf rund 35–55 ct; sechs Läufe etwa 3 $.
 
+## Vierter Durchgang: die restlichen Varianten (2026-10-04, nach dem Aufladen)
+
+Julian: „guthaben ist aufgeladen, miss die restlichen varianten“. Schwelle 30, Preise aus der Tabelle, kein Teilaufruf fehlgeschlagen (das Skript zeigt es seitdem an). Jede Variante zweimal, drei Läufe nebeneinander.
+
+### Alle vierzehn Fotos
+
+| Lauf | gelesen von Liste | davon nur als unsicher | darüber hinaus (unsicher) | Fehler auf vollzähligen (unsicher) | Stümpfe | Kosten |
+|---|---|---|---|---|---|---|
+| Vergleich 1 | 305 / 322 (95 %) | – | 199 | 2 | 24 | 53,5 ct |
+| Vergleich 2 | 295 / 322 (92 %) | – | 177 | 4 | 22 | 48,9 ct |
+| `trim` 1 (erste Fassung) | 296 / 322 | – | 190 | 2 | 22 | 52,9 ct |
+| `trim` 2 (erste Fassung) | 296 / 322 | – | 197 | 2 | 24 | 52,6 ct |
+| `unsure` 1 | 297 / 322 | 56 | 244 (194) | 13 (13) | 34 | 60,1 ct |
+| `unsure` 2 | 296 / 322 | 49 | 240 (200) | 6 (6) | 29 | 59,4 ct |
+
+**Das Rauschen:** die zwei Vergleichsläufe liegen zehn Bücher auseinander (Schuber 20 und 16, übersetzte Literatur 49 und 46). Was zwischen zwei Varianten weniger als zehn Bücher ausmacht, ist kein Befund.
+
+### (b) Ein Feld für Unsicheres — bringt keine Bücher zurück, markiert aber die Fehler
+
+- **Die Vermutung vom 2026-10-03 ist widerlegt.** Das Modell hält keine halb gelesenen Titel zurück, die ein Feld freigäbe: 297 und 296 Bücher der Listen gegen 305 und 295 ohne das Feld. *Collected Novellas* und *Lord Malquist & Mr Moon* fehlen in allen vier Läufen; der violette Rücken kommt stattdessen als „Collected Stories — Gabriel García Márquez (?)“.
+- **Als Fehlermarke taugt es:** auf den sieben vollzähligen Fotos sind **alle** Fehler als unsicher markiert (13 von 13, 6 von 6); ohne das Feld kommen dort 2–4 Fehler unmarkiert.
+- **Der Preis:** 49–56 richtige Lesungen (17–19 %) kommen ebenfalls nur als unsicher; auf den vollzähligen Fotos 6 von 58. Und das Feld lädt zu mehr ein: auf den vollzähligen Fotos 6–13 Lesungen über die Liste hinaus statt 2–4 — unscharfe Rücken im Hintergrund („Candy“, „Faulkner“, „Out“), alle markiert. 12 % teurer.
+- **Urteil:** nicht einbauen. Die Katalogsuche stuft die meisten dieser Fehler ohnehin zu „maybe“ herab (Titel ohne passenden Autor); eine zweite Herabstufung, die jedes sechste richtige Buch mitnimmt, kostet den Leser mehr Häkchen, als sie ihm falsche erspart.
+
+### (a) Bruchstücke am Bildrand — drei Wege, einer trägt
+
+Gemessen auf den sechs dichten Fotos (238 Bücher der Listen); Stümpfe = Lesungen über die Liste hinaus aus einem Wort bis sechs Buchstaben.
+
+| Lauf | gelesen von Liste | Stümpfe | Kosten |
+|---|---|---|---|
+| Vergleich 1 / 2 | 235 / 223 | 23 / 21 | 44,4 / 39,8 ct |
+| `trim`, zweite Fassung (angeschnittene Reihe gar nicht lesen) 1 / 2 | 226 / 226 | 11 / 16 | 41,6 / 38,4 ct |
+| `stumps` (in der angeschnittenen Reihe Ein-Wort-Lesungen ohne Autor fallenlassen) 1 / 2 | 227 / 225 | 11 / 10 | 44,0 / 44,1 ct |
+
+- **`trim`, erste Fassung, traf ihr Ziel nicht:** der angeschnittene Streifen der Belletristik (Foto 10) misst 11 % der Bildhöhe und galt damit als Boden, nicht als Rand. Daher die zweite Fassung: eine Randreihe, die weniger als halb so hoch ist wie der Median der Böden dazwischen (`cutOffRows`).
+- **`trim`, zweite Fassung:** die Stümpfe von Foto 10 sind weg (8–10 → 0; was bleibt, sind echte Ein-Wort-Titel: *Like*, *Robinson*) — aber in angeschnittenen Reihen stehen auch ganze Bücher: die Schuber verlieren die zwei Architektur-Atlanten, die Galeriewand *Louise Fishman*, *True Believers*, *Julian Schnabel*.
+- **`stumps`:** dieselben Stümpfe weg (Foto 10: „GO“, „Self“, „Clash“, „Free“, „SETH“, „LEE“ fehlen in beiden Läufen), **ohne** diese Verluste — die Schuber lesen 20 von 20, die Galeriewand 37 und 38 von 39 (im Rauschen). Kostet nichts, ist keine Frage an das Modell, sondern eine Regel danach.
+- **`cut`** (der Satz im Prompt, dritter Durchgang) trägt nicht.
+- **Urteil:** `stumps` einbauen; `trim` und `cut` nicht.
+
+### Empfehlung
+
+1. **Einbauen:** die Stumpf-Regel (`stumps`) und den Hinweis bei Unschärfe (`lib/sharpness.ts`, Schwelle 0,38, als Hinweis, nicht als Absage).
+2. **Nicht einbauen:** `cut`, `trim`, `unsure`.
+3. **Offen bleibt**, was kein Lauf gelöst hat: Rücken, die das Modell nie liest (*Collected Novellas*, violett auf violett), und die Streuung von zehn Büchern zwischen gleichen Läufen.
+
+Kosten dieses Durchgangs: zehn Läufe, zusammen rund 4,90 $.
+
