@@ -37,17 +37,22 @@ export const SITE_CARD = {
 };
 
 /** "George Orwell", or "Mary Shelley and 2 others" when a record lists many. */
+/** Where a catalogue's operator reaches a person (Julian, 2026-10-04: „we should be able to receive mails on mail@buyitscovers.com now. put it in the agent"). */
+export const SITE_CONTACT = 'mail@buyitscovers.com';
+
 /**
  * How the site names itself to a catalogue: "BuyItsCovers/0.1 (<where to find
- * us>)". The address is the site itself once it is deployed — its imprint
- * carries the contact — and the public repository from a script or a dev
- * server, where the site's address is localhost and tells Open Library
- * nothing. An e-mail address, which would raise Open Library's limit from 1
- * to 3 requests a second, is ROADMAP 2.7 and Julian's to add.
+ * us>; <e-mail>)". The address is the site itself once it is deployed and
+ * the public repository from a script or a dev server, where the site's
+ * address is localhost and tells Open Library nothing. The e-mail is what
+ * Open Library asks for ("the name of your application and your contact
+ * email") and what lifts its limit from 1 to 3 requests a second
+ * (docs/risiken-2026-09-12.md, verified 2026-09-13); it went in on
+ * 2026-10-04, once the mailbox existed.
  */
 export function userAgent(siteUrl: string = SITE_URL): string {
   const local = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:|\/|$)/.test(siteUrl);
-  return `${SITE_NAME.replace(/\s+/g, '')}/0.1 (${local ? SITE_REPOSITORY : siteUrl})`;
+  return `${SITE_NAME.replace(/\s+/g, '')}/0.1 (${local ? SITE_REPOSITORY : siteUrl}; ${SITE_CONTACT})`;
 }
 
 /**
