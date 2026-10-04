@@ -1,6 +1,6 @@
 # Plan 3.1: Kennzahlen und Analyse-Ansicht
 
-Stand: 2026-10-04, **gebaut**, mit K13 (Fotos und Kosten) und der Regel in CLAUDE.md, die bei jeder Änderung nach den Folgen für die Analyse fragt; (3.1a, 3.1b und die Händlersuchen über `/go/`; Branch, nicht deployt). Abweichungen vom Plan stehen jeweils dabei. Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
+Stand: 2026-10-04, **gebaut und deployt** (`599996c`), mit K13 (Fotos und Kosten) und der Regel in CLAUDE.md, die bei jeder Änderung nach den Folgen für die Analyse fragt; (3.1a, 3.1b und die Händlersuchen über `/go/`). Abweichungen vom Plan stehen jeweils dabei. Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
 
 ## 1. Grundsatz
 
