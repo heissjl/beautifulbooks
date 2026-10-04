@@ -11,10 +11,13 @@
  * as the site's book page would know them, and a second click compares one
  * with the cover in Calibre.
  *
- * „Uses the website" means its code and its catalogue, run here: the search
- * is `lib/search.ts`, the editions are read as `lib/sources/openlibrary.ts`
- * reads them. The live site is not called — its rate limits and its Google
- * quota belong to its visitors — and Google Books is never asked (lab rule 6).
+ * The catalogue is asked **through the website** (`catalogue.ts`): its search
+ * and its work pages, in their Open-Library-only mode, answered from the
+ * site's servers and kept a day at its CDN. When the website does not answer,
+ * the same code runs here against Open Library directly — unless Open Library
+ * is refusing this Mac, in which case the app waits. `--source direct` skips
+ * the website. Google Books is never asked, either way (lab rule 6). Only on
+ * a click: nothing here walks the library by itself.
  *
  * `--library <folder>` points at another library (a rehearsal copy).
  * `--port auto` takes any free port and `--exit-with-parent` ends the server
@@ -28,8 +31,8 @@ import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { getEditionsPage, getWork, isWorkId, makeToken, parseEditions, type Work } from './site';
-import { pickCovers } from './covers';
+import { isWorkId, makeToken } from './site';
+import { CatalogueError, directCatalogue, remembering, siteCatalogue, withFallback } from './catalogue';
 import { CoverDownloads, CoverSizes } from './download';
 import { findWorks, refusedConnection, WorkMap } from './find';
 import { jsonBody, refused, send } from './http';
@@ -97,6 +100,7 @@ function state() {
   const remembered = works.all();
   return {
     mode: WRITE ? 'write' : 'preview',
+    catalogue: SOURCE,
     problems: WRITE ? writer.problems() : [],
     library: { path: library, books: books.length },
     backupRoot: writer.root,
@@ -121,31 +125,6 @@ function state() {
   };
 }
 
-/* Works and their edition pages, kept for the run: Open Library takes seconds for each. */
-const workCache = new Map<string, Promise<Work | null>>();
-const pageCache = new Map<string, Promise<{ covers: ReturnType<typeof pickCovers>; size: number }>>();
-const forget = <T>(cache: Map<string, Promise<T>>, key: string, p: Promise<T>): Promise<T> => {
-  // A source that did not answer is asked again next time, not remembered as empty (SPEC N12).
-  p.catch(() => cache.delete(key));
-  return p;
-};
-function workOf(id: string): Promise<Work | null> {
-  return workCache.get(id) ?? forget(workCache, id, workCache.set(id, getWork(id)).get(id) as Promise<Work | null>);
-}
-function coverPage(workId: string, offset: number) {
-  const key = `${workId}@${offset}`;
-  const have = pageCache.get(key);
-  if (have) return have;
-  const p = (async () => {
-    const work = await workOf(workId);
-    if (!work) return { covers: [], size: 0 };
-    const page = await getEditionsPage(workId, offset);
-    return { covers: pickCovers(parseEditions(page.entries, work)), size: page.size };
-  })();
-  pageCache.set(key, p);
-  return forget(pageCache, key, p);
-}
-
 let syncing = false;
 
 /*
@@ -166,6 +145,10 @@ const paused = (): { error: string; pausedUntil: number } | null =>
       }
     : null;
 
+/* Through the website first; Open Library directly when the website fails and Open Library is not refusing this Mac. */
+const SOURCE = flag('source') === 'direct' ? 'direct' : 'site';
+const catalogue = remembering(SOURCE === 'site' ? withFallback(siteCatalogue(SITE), directCatalogue(), () => !paused()) : directCatalogue());
+
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://127.0.0.1:${PORT}`);
   const path = url.pathname;
@@ -179,13 +162,12 @@ const server = createServer(async (req, res) => {
       const book = books.find((b) => b.id === Number(bookPath[2]));
       if (!book) return send(res, 404, { error: 'No such book.' });
       if (bookPath[1] === 'find') {
-        if (paused()) return send(res, 503, paused());
+        if (SOURCE === 'direct' && paused()) return send(res, 503, paused());
         const q = (url.searchParams.get('q') ?? '').trim().slice(0, 200);
-        const found = await findWorks(book, SITE, works.get(book.id), q || undefined);
-        if (found.refused) {
-          pausedUntil = Date.now() + PAUSE_MS;
-          return send(res, 503, paused());
-        }
+        const found = await findWorks(book, catalogue, { site: SITE, remembered: works.get(book.id), query: q || undefined, askEdition: !paused() });
+        if (found.refused) pausedUntil = Date.now() + PAUSE_MS;
+        // Refused and nothing to show: say why, once, instead of an empty list.
+        if (found.refused && found.hits.length === 0) return send(res, 503, paused());
         return send(res, 200, found);
       }
       if (path.startsWith('/api/')) return send(res, 200, oldFacts(book));
@@ -198,19 +180,21 @@ const server = createServer(async (req, res) => {
     if (req.method === 'GET' && coversOf && isWorkId(coversOf[1])) {
       const offset = Number(url.searchParams.get('offset') ?? 0);
       if (!Number.isInteger(offset) || offset < 0 || offset > MAX_OFFSET || offset % 100 !== 0) return send(res, 400, { error: 'Bad offset.' });
-      if (paused()) return send(res, 503, paused());
+      if (SOURCE === 'direct' && paused()) return send(res, 503, paused());
       try {
-        const page = await coverPage(coversOf[1], offset);
-        const next = offset + 100 < page.size && offset + 100 <= MAX_OFFSET ? offset + 100 : null;
+        const page = await catalogue.page(coversOf[1], offset);
+        if (!page) return send(res, 404, { error: 'The catalogue does not know this work.' });
+        const next = page.next !== null && page.next <= MAX_OFFSET ? page.next : null;
         // Sizes already known ride along, so a work opened before sorts at once.
         const covers = page.covers.map((c) => ({ ...c, ...(coverSizes.peek(c.coverId) ? { size: coverSizes.peek(c.coverId) } : {}) }));
-        return send(res, 200, { covers, editions: page.size, next });
+        return send(res, 200, { covers, editions: page.editions, next });
       } catch (err) {
         if (refusedConnection(err)) {
           pausedUntil = Date.now() + PAUSE_MS;
           return send(res, 503, paused());
         }
-        return send(res, 502, { error: 'Open Library did not answer. Try again in a moment.' });
+        if (err instanceof CatalogueError) return send(res, 502, { error: err.message });
+        return send(res, 502, { error: 'The catalogue did not answer. Try again in a moment.' });
       }
     }
 
@@ -293,6 +277,7 @@ server
     console.log(`library: ${library}`);
     console.log(WRITE ? `mode:    WRITE — backups and journal in ${writer.root}` : 'mode:    look only (add --write to change the library)');
     for (const p of WRITE ? writer.problems() : []) console.log(`         ! ${p}`);
+    console.log(`asks:    ${SOURCE === 'site' ? `${SITE} (Open Library directly when it does not answer)` : 'Open Library directly'}`);
     console.log(`open:    http://127.0.0.1:${PORT}/?t=${TOKEN}`);
   });
 

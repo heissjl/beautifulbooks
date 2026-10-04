@@ -184,7 +184,7 @@ function renderTop() {
   $('stats').textContent = `${S.library.books} books · ${S.books.filter((b) => b.size).length} with a cover · ${S.books.filter(isSmall).length} small`;
   $('mode').textContent = S.mode === 'write' ? 'writing is on' : 'looking only';
   $('mode').className = `pill${S.mode === 'write' ? ' write' : ''}`;
-  $('mode').title = S.mode === 'write' ? `Backups and journal: ${S.backupRoot}` : 'Start the app with --write to change the library.';
+  $('mode').title = `${S.mode === 'write' ? `Backups and journal: ${S.backupRoot}` : 'Start the app with --write to change the library.'}\nThe catalogue is asked ${S.catalogue === 'site' ? 'through buyitscovers.com' : 'at Open Library directly'}.`;
   $('chips').replaceChildren(...CHIPS.map(([key, label, test]) =>
     el('button', { class: 'chip', 'aria-pressed': String(view.chip === key), onclick: () => { view.chip = key; renderTop(); renderGrid(); } }, `${label} (${S.books.filter(test).length})`)));
   $('problems').replaceChildren(...S.problems.map((p) => el('div', { class: 'problem' }, p)));

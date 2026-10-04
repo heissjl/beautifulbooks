@@ -36,3 +36,30 @@ export function pickCovers(editions: readonly SourceEdition[]): PickCover[] {
   }
   return [...byId.values()];
 }
+
+/**
+ * The same list out of a page the website answers with (`/api/works/<id>`):
+ * there the covers are already split from the editions and name them by id.
+ */
+export function pickCoversFromPage(
+  covers: readonly { id: string; url: string; urlSmall?: string; editionIds: readonly string[] }[],
+  editions: readonly { id: string; language?: string; publisher?: string; isbn13?: string; year?: number }[],
+): PickCover[] {
+  const byId = new Map(editions.map((e) => [e.id, e]));
+  const out: PickCover[] = [];
+  for (const c of covers) {
+    if (!/^ol:\d{1,12}$/.test(c.id)) continue;
+    // The address is rebuilt from the id, never taken from the answer.
+    const cover: PickCover = { coverId: c.id, thumb: `https://covers.openlibrary.org/b/id/${c.id.slice(3)}-M.jpg`, languages: [], publishers: [], isbns: [] };
+    for (const id of c.editionIds) {
+      const e = byId.get(id);
+      if (!e) continue;
+      if (e.language && !cover.languages.includes(e.language)) cover.languages.push(e.language);
+      if (e.publisher && !cover.publishers.includes(e.publisher)) cover.publishers.push(e.publisher);
+      if (e.isbn13 && !cover.isbns.includes(e.isbn13)) cover.isbns.push(e.isbn13);
+      if (e.year && (!cover.year || e.year > cover.year)) cover.year = e.year;
+    }
+    out.push(cover);
+  }
+  return out;
+}
