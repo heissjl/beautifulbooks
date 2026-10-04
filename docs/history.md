@@ -4332,3 +4332,13 @@ Julian: „maybe include the pocketbook app from the other project in it? and wr
 
 1.053 Tests vor dem Zusammenführen, 1.127 danach; tsc und Lint grün.
 
+## 2026-10-03 · Versteckt die Faltung die großen Cover? Gemessen (ROADMAP 5.16a)
+
+Julian, nachdem die App für *Rendezvous with Rama* Scans bis 2813 × 4536 fand, wo die SF-Masterworks-Cover der Sammlung um 310 × 500 lagen: „macht unsere faltung hier probleme, dass wir dadurch nicht die großen cover finden?" `lab/calibre/measure-fold.ts`, nur Open Library, die Bibliothek nur gelesen.
+
+- **Die App faltet nicht.** Sie zeigt jede Cover-ID des Werks einzeln, mit Maß; dort kann die Faltung nichts verstecken.
+- **Die 17 SF-Masterworks-Cover mit einem Buch in Calibre:** je Werk 12–128 Cover gehasht (dHash des mittleren Bilds). Beim unbedingten Schwellwert der Faltung (Abstand ≤ 8) hat **keins** einen größeren Scan desselben Motivs — ein einziger weiterer Scan überhaupt (*The Dispossessed*, 308 × 475 gegen 312 × 475). Knapp dahinter (9–13) vier Scans, alle 318–326 × 500. Open Library hat von diesen Drucken schlicht nur kleine Scans; die großen Bilder gehören zu anderen Ausgaben mit anderem Motiv.
+- **Die Wand der Seite, an einem Werk:** *Rendezvous with Rama*, 33 Cover → 31 Motive, zwei Gruppen mit je zwei Scans. In einer ist der gezeigte Scan 287 × 500 und der weggefaltete 2002 × 3401. `foldDuplicateCovers` nimmt als Vertreter den zuerst gesehenen Scan (angeheftetes Cover, sonst das erste von Open Library), nie den größten — es kennt die Größen nicht. *Flow My Tears*: 25 Cover → 24 Motive, in der einen Gruppe ist der gezeigte auch der größte.
+
+**Was daraus folgt:** für die Seite nichts — sie zeigt Cover höchstens 500 px hoch. Für Calibre nur auf dem Weg über eine Sammlung: die Kachel trägt die ID des Vertreters, und der kann der kleine Scan sein. Der Sammlungs-Modus (`serve.ts`) könnte je Kachel den größten Scan desselben Motivs nachschlagen (dieselbe Rechnung wie die Messung); nicht gebaut, zwei Werke sind keine Grundlage für eine Zahl, wie oft es vorkommt.
+
