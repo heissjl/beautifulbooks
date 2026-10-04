@@ -2088,14 +2088,23 @@
   "id": "OL19208208W",
   "title": "Arslan (SF Masterworks)",
   "author": "M. J. Engh",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15258997",
+  "language": "fre",
+  "via": "isbn-group",
+  "edition": "/books/OL62600301M",
+  "publishDate": "2016",
+  "isbn": "9782207131336",
+  "candidates": [
+   {
+    "cover": 15258997,
+    "language": "fre",
+    "edition": "/books/OL62600301M",
+    "publishDate": "2016",
+    "isbn": "9782207131336",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 26,
@@ -2856,14 +2865,35 @@
   "id": "OL166482W",
   "title": "The Affirmation",
   "author": "Christopher Priest",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259009",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL30791868M",
+  "publishDate": "Nov 03, 1987",
+  "isbn": "9783453310377",
+  "candidates": [
+   {
+    "cover": 15259009,
+    "language": "und",
+    "edition": "/books/OL30791868M",
+    "publishDate": "Nov 03, 1987",
+    "isbn": "9783453310377",
+    "via": "separate-work",
+    "work": "OL22869894W",
+    "match": "by-hand"
+   },
+   {
+    "cover": 10502502,
+    "language": "und",
+    "edition": "/books/OL30791868M",
+    "publishDate": "Nov 03, 1987",
+    "isbn": "9783453310377",
+    "via": "separate-work",
+    "work": "OL22869894W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 45,
@@ -2988,28 +3018,48 @@
   "id": "OL20074002W",
   "title": "Floating Worlds",
   "author": "Cecelia Holland",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15258999",
+  "language": "ger",
+  "via": "isbn-group",
+  "edition": "/books/OL62600304M",
+  "publishDate": "1979",
+  "isbn": "9783453305731",
+  "candidates": [
+   {
+    "cover": 15258999,
+    "language": "ger",
+    "edition": "/books/OL62600304M",
+    "publishDate": "1979",
+    "isbn": "9783453305731",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 50,
   "id": "OL16513W",
   "title": "Blood Music",
   "author": "Greg Bear",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
+  "coverId": "ol:8774527",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL27297733M",
   "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "isbn": "9783453523654",
+  "candidates": [
+   {
+    "cover": 8774527,
+    "language": "und",
+    "edition": "/books/OL27297733M",
+    "publishDate": null,
+    "isbn": "9783453523654",
+    "via": "separate-work",
+    "work": "OL20117790W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 51,
@@ -3198,16 +3248,25 @@
  {
   "order": 55,
   "id": "OL3290749W",
-  "title": "Odd John",
+  "title": "Philosophy and living",
   "author": "Olaf Stapledon",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259015",
+  "language": "ger",
+  "via": "isbn-group",
+  "edition": "/books/OL62600327M",
+  "publishDate": "1977",
+  "isbn": "9783453303928",
+  "candidates": [
+   {
+    "cover": 15259015,
+    "language": "ger",
+    "edition": "/books/OL62600327M",
+    "publishDate": "1977",
+    "isbn": "9783453303928",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 56,
@@ -3527,28 +3586,48 @@
   "id": "OL2657126W",
   "title": "Sarah Canary",
   "author": "Karen Joy Fowler",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259000",
+  "language": "ger",
+  "via": "isbn-group",
+  "edition": "/books/OL62600306M",
+  "publishDate": "2008",
+  "isbn": "9783442542543",
+  "candidates": [
+   {
+    "cover": 15259000,
+    "language": "ger",
+    "edition": "/books/OL62600306M",
+    "publishDate": "2008",
+    "isbn": "9783442542543",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 64,
   "id": "OL19186717W",
   "title": "The Continuous Katherine Mortenhoe (SF Masterworks)",
   "author": "D. G. Compton",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:8737267",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL27097358M",
+  "publishDate": "Jul 09, 2001",
+  "isbn": "9782277217558",
+  "candidates": [
+   {
+    "cover": 8737267,
+    "language": "und",
+    "edition": "/books/OL27097358M",
+    "publishDate": "Jul 09, 2001",
+    "isbn": "9782277217558",
+    "via": "separate-work",
+    "work": "OL19912774W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 65,
@@ -4756,14 +4835,25 @@
   "id": "OL19882938W",
   "title": "The Caltraps of Time (S.F. Masterworks)",
   "author": "David I. Masson",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
+  "coverId": "ol:8753109",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL27263597M",
   "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "isbn": "9783548310770",
+  "candidates": [
+   {
+    "cover": 8753109,
+    "language": "und",
+    "edition": "/books/OL27263597M",
+    "publishDate": null,
+    "isbn": "9783548310770",
+    "via": "separate-work",
+    "work": "OL20083573W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 69,
@@ -4784,14 +4874,35 @@
   "id": "OL482569W",
   "title": "Engine Summer",
   "author": "John Crowley",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259011",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL30518133M",
+  "publishDate": "Sep 26, 1982",
+  "isbn": "9783453308572",
+  "candidates": [
+   {
+    "cover": 15259011,
+    "language": "und",
+    "edition": "/books/OL30518133M",
+    "publishDate": "Sep 26, 1982",
+    "isbn": "9783453308572",
+    "via": "separate-work",
+    "work": "OL22427004W",
+    "match": "by-hand"
+   },
+   {
+    "cover": 10457833,
+    "language": "und",
+    "edition": "/books/OL30518133M",
+    "publishDate": "Sep 26, 1982",
+    "isbn": "9783453308572",
+    "via": "separate-work",
+    "work": "OL22427004W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 71,
@@ -5130,14 +5241,23 @@
   "id": "OL20070897W",
   "title": "This Is the Way the World Ends (S.F. Masterworks)",
   "author": "James Morrow",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259017",
+  "language": "fre",
+  "via": "isbn-group",
+  "edition": "/books/OL62600332M",
+  "publishDate": "1988",
+  "isbn": "2207304582",
+  "candidates": [
+   {
+    "cover": 15259017,
+    "language": "fre",
+    "edition": "/books/OL62600332M",
+    "publishDate": "1988",
+    "isbn": "2207304582",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 79,
@@ -5194,14 +5314,25 @@
   "id": "OL21478785W",
   "title": "Time Is the Fire",
   "author": "Connie Willis",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:13115711",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL44908075M",
+  "publishDate": "Apr 29, 2015",
+  "isbn": "9782290097960",
+  "candidates": [
+   {
+    "cover": 13115711,
+    "language": "und",
+    "edition": "/books/OL44908075M",
+    "publishDate": "Apr 29, 2015",
+    "isbn": "9782290097960",
+    "via": "separate-work",
+    "work": "OL33045478W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 82,
@@ -5512,14 +5643,23 @@
   "id": "OL19325351W",
   "title": "Transfigurations (S.F. Masterworks)",
   "author": "Michael Bishop",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259001",
+  "language": "ger",
+  "via": "isbn-group",
+  "edition": "/books/OL62600308M",
+  "publishDate": "1986",
+  "isbn": "9783453313248",
+  "candidates": [
+   {
+    "cover": 15259001,
+    "language": "ger",
+    "edition": "/books/OL62600308M",
+    "publishDate": "1986",
+    "isbn": "9783453313248",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 89,
@@ -5652,14 +5792,35 @@
   "id": "OL7117373W",
   "title": "Half Past Human",
   "author": "T. J. Bass",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
+  "coverId": "ol:15259012",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL28367367M",
   "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "isbn": "9783442231638",
+  "candidates": [
+   {
+    "cover": 15259012,
+    "language": "und",
+    "edition": "/books/OL28367367M",
+    "publishDate": null,
+    "isbn": "9783442231638",
+    "via": "separate-work",
+    "work": "OL20937696W",
+    "match": "by-hand"
+   },
+   {
+    "cover": 10306627,
+    "language": "und",
+    "edition": "/books/OL28367367M",
+    "publishDate": null,
+    "isbn": "9783442231638",
+    "via": "separate-work",
+    "work": "OL20937696W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 92,
@@ -5755,14 +5916,35 @@
   "id": "OL21118741W",
   "title": "Shrinking Man",
   "author": "Ted Adams",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:14852759",
+  "language": "ita",
+  "via": "separate-work",
+  "edition": "/books/OL58187763M",
+  "publishDate": "2004",
+  "isbn": "9788834729069",
+  "candidates": [
+   {
+    "cover": 14852759,
+    "language": "ita",
+    "edition": "/books/OL58187763M",
+    "publishDate": "2004",
+    "isbn": "9788834729069",
+    "via": "separate-work",
+    "work": "OL64219W",
+    "match": "by-hand"
+   },
+   {
+    "cover": 3075987,
+    "language": "fre",
+    "edition": "/books/OL12394442M",
+    "publishDate": "October 11, 2000",
+    "isbn": "9782070415816",
+    "via": "separate-work",
+    "work": "OL64219W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 96,
@@ -5916,28 +6098,50 @@
   "id": "OL1920272W",
   "title": "The Child Garden",
   "author": "Geoff Ryman",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
+  "coverId": "ol:13884464",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL47324631M",
   "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "isbn": "9783453058514",
+  "candidates": [
+   {
+    "cover": 13884464,
+    "language": "und",
+    "edition": "/books/OL47324631M",
+    "publishDate": null,
+    "isbn": "9783453058514",
+    "via": "separate-work",
+    "work": "OL34962867W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 101,
   "id": "OL20119339W",
   "title": "Mission Of Gravity: Mesklinite Book 1 (S.F. Masterworks)",
   "author": "Hal Clement",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
+  "coverId": "ol:13452062",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL47086381M",
   "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "isbn": "9782266011297",
+  "candidates": [
+   {
+    "cover": 13452062,
+    "language": "und",
+    "edition": "/books/OL47086381M",
+    "publishDate": null,
+    "isbn": "9782266011297",
+    "via": "separate-work",
+    "work": "OL34737746W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 102,
@@ -6273,14 +6477,23 @@
   "id": "OL19546464W",
   "title": "Dark Benediction",
   "author": "Walter M. Miller, Jr.",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259002",
+  "language": "ger",
+  "via": "isbn-group",
+  "edition": "/books/OL62600309M",
+  "publishDate": "1986",
+  "isbn": "9783453313057",
+  "candidates": [
+   {
+    "cover": 15259002,
+    "language": "ger",
+    "edition": "/books/OL62600309M",
+    "publishDate": "1986",
+    "isbn": "9783453313057",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 110,
@@ -6312,12 +6525,12 @@
   "id": "OL257947W",
   "title": "Dying of the Light",
   "author": "George R. R. Martin",
-  "coverId": "ol:10546376",
-  "language": "ita",
+  "coverId": "ol:15126844",
+  "language": "rus",
   "via": "tag",
-  "edition": "/books/OL31860953M",
-  "publishDate": "2013",
-  "isbn": "9788898172054",
+  "edition": "/books/OL60296667M",
+  "publishDate": "2015",
+  "isbn": "9785170846108",
   "candidates": [
    {
     "cover": 8883583,
@@ -6582,12 +6795,12 @@
   "id": "OL83886W",
   "title": "The Man Who Fell to Earth",
   "author": "Walter S. Tevis",
-  "coverId": "ol:13195151",
-  "language": "rus",
+  "coverId": "ol:8689745",
+  "language": "ita",
   "via": "separate-work",
-  "edition": "/books/OL26965894M",
-  "publishDate": "2018",
-  "isbn": "9785389134706",
+  "edition": "/books/OL27071972M",
+  "publishDate": "1990",
+  "isbn": "9788804337195",
   "candidates": [
    {
     "cover": 13195151,
@@ -6937,14 +7150,25 @@
   "id": "OL20126875W",
   "title": "China Mountain Zhang",
   "author": "Maureen F. McHugh",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
+  "coverId": "ol:8769705",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL27289826M",
   "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "isbn": "9783886199532",
+  "candidates": [
+   {
+    "cover": 8769705,
+    "language": "und",
+    "edition": "/books/OL27289826M",
+    "publishDate": null,
+    "isbn": "9783886199532",
+    "via": "separate-work",
+    "work": "OL20109830W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 123,
@@ -6986,14 +7210,23 @@
   "id": "OL14871968W",
   "title": "Sword & citadel",
   "author": "Gene Wolfe",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259003",
+  "language": "ger",
+  "via": "isbn-group",
+  "edition": "/books/OL62600311M",
+  "publishDate": "2026",
+  "isbn": "9783910914643",
+  "candidates": [
+   {
+    "cover": 15259003,
+    "language": "ger",
+    "edition": "/books/OL62600311M",
+    "publishDate": "2026",
+    "isbn": "9783910914643",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 125,
@@ -8129,12 +8362,12 @@
   "id": "OL52114W",
   "title": "The War of the Worlds",
   "author": "H. G. Wells",
-  "coverId": "ol:14821280",
-  "language": "ita",
+  "coverId": "ol:11740945",
+  "language": "dut",
   "via": "tag",
-  "edition": "/books/OL55932335M",
-  "publishDate": "2023",
-  "isbn": "9788807904301",
+  "edition": "/books/OL33042326M",
+  "publishDate": "2005",
+  "isbn": "9789044606355",
   "candidates": [
    {
     "cover": 15088491,
@@ -8998,14 +9231,25 @@
   "id": "OL72847W",
   "title": "Raft",
   "author": "Stephen Baxter",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:8540683",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL26852810M",
+  "publishDate": "Apr 17, 2013",
+  "isbn": "9782266195386",
+  "candidates": [
+   {
+    "cover": 8540683,
+    "language": "und",
+    "edition": "/books/OL26852810M",
+    "publishDate": "Apr 17, 2013",
+    "isbn": "9782266195386",
+    "via": "separate-work",
+    "work": "OL19631871W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 140,
@@ -9064,14 +9308,25 @@
   "id": "OL2643429W",
   "title": "Light",
   "author": "M. John Harrison",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:8783549",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL27312062M",
+  "publishDate": "Sep 17, 2004",
+  "isbn": "9783453520042",
+  "candidates": [
+   {
+    "cover": 8783549,
+    "language": "und",
+    "edition": "/books/OL27312062M",
+    "publishDate": "Sep 17, 2004",
+    "isbn": "9783453520042",
+    "via": "separate-work",
+    "work": "OL20132087W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 144,
@@ -9311,14 +9566,23 @@
   "id": "OL19915743W",
   "title": "Desolation Road",
   "author": "Ian McDonald",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259004",
+  "language": "fre",
+  "via": "isbn-group",
+  "edition": "/books/OL62600312M",
+  "publishDate": "1989",
+  "isbn": "2221059085",
+  "candidates": [
+   {
+    "cover": 15259004,
+    "language": "fre",
+    "edition": "/books/OL62600312M",
+    "publishDate": "1989",
+    "isbn": "2221059085",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 153,
@@ -9445,14 +9709,23 @@
   "id": "OL1960610W",
   "title": "Needle in a timestack",
   "author": "Robert Silverberg",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259005",
+  "language": "ger",
+  "via": "isbn-group",
+  "edition": "/books/OL62600315M",
+  "publishDate": "1975",
+  "isbn": "9783442232123",
+  "candidates": [
+   {
+    "cover": 15259005,
+    "language": "ger",
+    "edition": "/books/OL62600315M",
+    "publishDate": "1975",
+    "isbn": "9783442232123",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 158,
@@ -10889,14 +11162,23 @@
   "id": "OL28017615W",
   "title": "Secret of Life",
   "author": "Paul McAuley",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259006",
+  "language": "fre",
+  "via": "isbn-group",
+  "edition": "/books/OL62600316M",
+  "publishDate": "2008",
+  "isbn": "9782221107997",
+  "candidates": [
+   {
+    "cover": 15259006,
+    "language": "fre",
+    "edition": "/books/OL62600316M",
+    "publishDate": "2008",
+    "isbn": "9782221107997",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 166,
@@ -11028,14 +11310,23 @@
   "id": "OL37574007W",
   "title": "Hiero's Journey",
   "author": "Sterling E. Lanier",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259007",
+  "language": "ger",
+  "via": "isbn-group",
+  "edition": "/books/OL62600317M",
+  "publishDate": "1984",
+  "isbn": "9783453310896",
+  "candidates": [
+   {
+    "cover": 15259007,
+    "language": "ger",
+    "edition": "/books/OL62600317M",
+    "publishDate": "1984",
+    "isbn": "9783453310896",
+    "via": "isbn-group"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 171,
@@ -11056,14 +11347,35 @@
   "id": "OL5045544W",
   "title": "The Unforsaken Hiero",
   "author": "Sterling E. Lanier",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
+  "coverId": "ol:15259013",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL47326420M",
   "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "isbn": "9783453311725",
+  "candidates": [
+   {
+    "cover": 15259013,
+    "language": "und",
+    "edition": "/books/OL47326420M",
+    "publishDate": null,
+    "isbn": "9783453311725",
+    "via": "separate-work",
+    "work": "OL34964617W",
+    "match": "by-hand"
+   },
+   {
+    "cover": 13898210,
+    "language": "und",
+    "edition": "/books/OL47326420M",
+    "publishDate": null,
+    "isbn": "9783453311725",
+    "via": "separate-work",
+    "work": "OL34964617W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 173,
@@ -11107,14 +11419,25 @@
   "id": "OL18367649W",
   "title": "Beginning Operations",
   "author": "James White",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:8572656",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL26879482M",
+  "publishDate": "May 11, 1979",
+  "isbn": "9782702408995",
+  "candidates": [
+   {
+    "cover": 8572656,
+    "language": "und",
+    "edition": "/books/OL26879482M",
+    "publishDate": "May 11, 1979",
+    "isbn": "9782702408995",
+    "via": "separate-work",
+    "work": "OL19659917W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 176,
@@ -11158,28 +11481,50 @@
   "id": "OL45147605W",
   "title": "Nova Swing",
   "author": "M. John Harrison",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
+  "coverId": "ol:8783550",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL27312063M",
   "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "isbn": "9783453522916",
+  "candidates": [
+   {
+    "cover": 8783550,
+    "language": "und",
+    "edition": "/books/OL27312063M",
+    "publishDate": null,
+    "isbn": "9783453522916",
+    "via": "separate-work",
+    "work": "OL20132088W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 179,
   "id": "OL8698138W",
   "title": "Thirteen",
   "author": "Richard Morgan",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
+  "coverId": "ol:13836365",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL47318832M",
   "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "isbn": "9783453523562",
+  "candidates": [
+   {
+    "cover": 13836365,
+    "language": "und",
+    "edition": "/books/OL47318832M",
+    "publishDate": null,
+    "isbn": "9783453523562",
+    "via": "separate-work",
+    "work": "OL34957343W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 180,
@@ -11217,14 +11562,35 @@
   "id": "OL45912000W",
   "title": "Alien Emergencies",
   "author": "James White",
-  "coverId": null,
-  "language": null,
-  "via": null,
-  "edition": null,
-  "publishDate": null,
-  "isbn": null,
-  "candidates": [],
-  "status": "none"
+  "coverId": "ol:15259014",
+  "language": "und",
+  "via": "separate-work",
+  "edition": "/books/OL30529696M",
+  "publishDate": "Sep 30, 1980",
+  "isbn": "9783811835078",
+  "candidates": [
+   {
+    "cover": 15259014,
+    "language": "und",
+    "edition": "/books/OL30529696M",
+    "publishDate": "Sep 30, 1980",
+    "isbn": "9783811835078",
+    "via": "separate-work",
+    "work": "OL22447119W",
+    "match": "by-hand"
+   },
+   {
+    "cover": 10462526,
+    "language": "und",
+    "edition": "/books/OL30529696M",
+    "publishDate": "Sep 30, 1980",
+    "isbn": "9783811835078",
+    "via": "separate-work",
+    "work": "OL22447119W",
+    "match": "by-hand"
+   }
+  ],
+  "status": "found"
  },
  {
   "order": 182,
