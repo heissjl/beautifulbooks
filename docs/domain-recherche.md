@@ -533,6 +533,25 @@ Bei Vercel dazu (ebenfalls gesperrt, nicht angefangen): `www.buyitscovers.de`, `
 
 Danach, wie im Prompt: je Domain einmal `dig +short A`, `vercel domains inspect` für buyitscovers.com, buyitscovers.de, othercovers.com, und nach dem Zertifikat buyitscovers.com und othercovers.com je einmal im Browser.
 
+**Fortgesetzt am 2026-10-03 um 02:50 MESZ** (Julian: „mach die änderungen fertig", nach erneutem Anmelden bei INWX), danach brach die App ab. **Geprüft am 2026-10-04 um 02:56 MESZ**, nur lesend (`dig` bei `ns.inwx.de` und `1.1.1.1`, `vercel domains inspect`, je eine HTTPS-Anfrage):
+
+| Domain | A `@` | `www` | `*` | SPF | DMARC | Null-MX | HTTPS |
+|---|---|---|---|---|---|---|---|
+| buyitscovers.com | 76.76.21.21 | CNAME Vercel | – | ✓ | ✓ | ✓ | 200, Titel „Buy Its Covers", Zertifikat gültig |
+| buyitscovers.de | 76.76.21.21 | CNAME Vercel | – | ✓ | ✓ | ✓ | 308 → buyitscovers.com |
+| byitscovers.com | 76.76.21.21 | CNAME Vercel | – | ✓ | ✓ | ✓ | 308 → buyitscovers.com |
+| byitscovers.de | 76.76.21.21 | CNAME Vercel | – | ✓ | **fehlt** | **fehlt** | (nicht abgefragt) |
+| othercovers.com | **185.181.104.242** | Parkseite | Parkseite | – | – | – | – |
+| othercovers.de | **185.181.104.242** | Parkseite | Parkseite | – | – | – | – |
+
+`www.buyitscovers.com` antwortet 308 → `buyitscovers.com`. Vercel meldet `buyitscovers.com` und `buyitscovers.de` als konfiguriert, `othercovers.com` noch „not configured properly". INWX hat den Null-MX (`MX @ 0 .`) angenommen. Nameserver überall unverändert `ns.inwx.de`, `ns2.inwx.de`, `ns3.inwx.eu`; kein AAAA.
+
+**Offen:**
+1. byitscovers.de: TXT `_dmarc` `v=DMARC1; p=reject;` und MX `@` 0 `.`.
+2. othercovers.com und othercovers.de: die drei Parkeinträge (`*`, `@`, `www`) löschen; A `@` → `76.76.21.21`, CNAME `www` → `cname.vercel-dns.com`, TXT `v=spf1 -all`, TXT `_dmarc` `v=DMARC1; p=reject;`, MX `@` 0 `.`.
+3. Vercel: `www.buyitscovers.de`, `www.byitscovers.com`, `www.byitscovers.de`, `www.othercovers.com`, `www.othercovers.de` als Weiterleitung (308) auf `buyitscovers.com` anlegen. Bis dahin zeigen die `www`-CNAMEs dieser Domains auf Vercel, das für sie kein Zertifikat hat: `https://www.buyitscovers.de/` scheitert am TLS-Handshake.
+4. `beautifulcovers.vercel.app` ist weiter ohne Weiterleitung.
+
 ## 21. E-Mail unter der Domain (2026-10-02)
 
 Julian: „what do i need to do to set up emails from that domain". Drei getrennte Fragen, drei getrennte Antworten.
