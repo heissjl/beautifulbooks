@@ -4393,3 +4393,5 @@ Das deckt sich mit der Lab-Messung (328 Treffer bei 421 Fragen, darin die 7 dopp
 **Lokal mit Foto:** der Dev-Server lief diesmal mit `ANTHROPIC_API_KEY` aus der `.env.local` des Hauptordners (nur diese Variable), damit „From a photo“ erscheint; Julian musste daran erinnern.
 
 Kein waagrechter Überlauf bei 390 und 1280 px; Seite 1.228 px hoch bei 1280. 1.186 Tests, tsc und Lint grün. Nicht deployt.
+
+**Nachtrag 2026-10-04 — der echte Klick.** Mit Open Library wieder erreichbar: auf `/create?q=Dune` „Dune Messiah“ angeklickt, die Seite rollte von 0 auf 840 px, „Pick covers“ 80 px unter dem oberen Rand, 56 Cover aus 101 Ausgaben geladen. Ein erster Versuch landete 1.150 px zu tief — das Browserfenster des Tests wurde währenddessen eingeblendet und wechselte die Breite, die Trefferliste sprang von einer in zwei Spalten und die Auswahl rückte nach oben; bei gleichbleibender Breite (1024 px vor und nach dem Klick) stimmt der Sprung.
