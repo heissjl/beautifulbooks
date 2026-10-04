@@ -1,6 +1,6 @@
 # Plan für 5.5 und 5.6: Reichweite außerhalb der Suche
 
-Geschrieben am 2026-10-04 auf Julians Bitte („mach dafür einen plan"), nachdem die Domain steht (2.2) und geteilte Links eine Vorschaukarte zeigen. Ergänzt [PLAN-5-reichweite.md](PLAN-5-reichweite.md) §5, der die Kanäle nur nennt. Die Roadmap-Punkte sind 5.5 (Pinterest, Clips), 5.6 (Launch, Reddit, Blogger) und die beiden neuen Claude-Punkte **5.5a** (Pin-Format) und **5.6a** (Kanäle messen).
+**Stand 2026-10-04: 5.6a gebaut** (auf dem Branch, nicht deployt; der Satz der Datenschutzerklärung wartet auf Julian). Geschrieben am 2026-10-04 auf Julians Bitte („mach dafür einen plan"), nachdem die Domain steht (2.2) und geteilte Links eine Vorschaukarte zeigen. Ergänzt [PLAN-5-reichweite.md](PLAN-5-reichweite.md) §5, der die Kanäle nur nennt. Die Roadmap-Punkte sind 5.5 (Pinterest, Clips), 5.6 (Launch, Reddit, Blogger) und die beiden neuen Claude-Punkte **5.5a** (Pin-Format) und **5.6a** (Kanäle messen).
 
 **Die Grenze aus 5.6 gilt für jeden Schritt:** Die Maschine erzeugt Material und Links. Jeder Beitrag, Kommentar, jede Antwort und jede Nachricht an einen Menschen kommt von Julian, von Hand.
 
@@ -103,17 +103,23 @@ Zwei Ergänzungen der Signale aus 3.1b. Beides sind feste Klassen, keine Werte u
    - Erkannt wird am Host des Referrers, wie heute.
    - Klassen statt Hosts, damit kein freier Text in den Speicher kommt.
 2. **Kanal-Marke für die Links, die wir selbst setzen: `?via=<klasse>`.**
-   - Die Klassen sind fest: `pin`, `clip`, `hn`, `reddit`, `ph`, `blog`, `mail`.
+   - Die Klassen sind fest und heißen wie die Herkunftsklassen (`VIA` in `lib/insights/signals.ts`): `pinterest`, `hn`, `reddit`, `producthunt`, `instagram`, `tiktok`, `bluesky`, `blog`, `mail`. Ein Clip trägt die Plattform, auf der er läuft (`instagram`, `tiktok`), nicht `clip`.
    - Die Marke wird im Browser beim Ankommen gelesen und geht ins Signal (`from` wird zu der Klasse, wenn `via` gültig ist). Sie gewinnt über den Referrer, weil In-App-Browser keinen senden.
    - Unbekannte Werte werden verworfen. Kanonische URL und ISR bleiben unberührt; die Seite liest `via` nur im Client.
    - Geteilte Links tragen die Marke weiter. Das ist gewollt, denn der Besuch kam über diesen Kanal.
 3. **Landing-Signal für Sammlungs- und Wandseiten.**
-   - Ein Signal `t: 'landing'` mit `page` (`collection` | `wall` | `home`), `from` und `opened` (ob danach ein Buch geöffnet wurde), wie die anderen per `sendBeacon` beim Verlassen.
+   - Ein Signal `t: 'landing'` mit `page` (`home` | `search` | `collections` | `collection` | `wall`), `entry` (Kanal des Besuchs), `first` (erste Seite des Tabs) und `opened` (ob von dort ein Buch geöffnet wurde), wie die anderen per `sendBeacon` beim Verlassen; gesendet von `NavMemory` im Wurzel-Layout, also ohne Eingriff in die Seiten.
+   - Das Buchsignal trägt zusätzlich `entry`. So lässt sich ein Kauf dem Kanal zuordnen, auch wenn der Leser über eine Sammlung zum Buch kam. Der Kanal liegt im Modulspeicher des Tabs; ein Neuladen fragt den Referrer neu.
+   - Eine Seite der Site, die keine Einstiegsseite ist (About, Anlegen), heißt als Herkunft jetzt `page` statt `other`: `other` ist seitdem nur noch eine fremde Website.
    - Keine Sammlungs- oder Wand-ID, nur die Seitenart. Eine Wand-ID wäre einer Person zuzuordnen.
 4. **Ansicht:** In `/admin/insights` eine Tabelle „Kanäle": je Herkunft Besuche, Anteil mit geöffnetem Buch, Anteil mit Klick zu einem Händler. Dazu ein Tagesverlauf, an dem man einen Launch-Tag erkennt.
 5. **Tests:** `parseSignal` für die neuen Klassen und für verworfene `via`-Werte, `originOf` je Plattform, die Summen in `insights-signals.test.ts`.
 
 Aufwand: ein Tag Claude, plus Julians Freigabe des Satzes in der Datenschutzerklärung.
+
+**Gebaut 2026-10-04** wie beschrieben; Tests in `lib/__tests__/insights-signals.test.ts` (Plattformen, `via` nur auf der ersten Seite und nur aus der Liste, Einstiegsseiten, `landing` ohne ID, Summen je Kanal, Bericht). Der Satz, der in Erklärung und `de.ts` steht und Julians Freigabe braucht: „When you leave a book page, a search, the home page or a collection, your browser sends one anonymous summary … The summary also names the kind of site your visit began on, as one word from a fixed list (a search engine, Reddit, Pinterest, Hacker News and the like), or the word in the “via” part of a link this site posted itself. No identifier, cookie, IP address or address you came from is stored …"
+
+**Was die Zählung nicht sieht:** einen Einstieg auf einer Seite, die keine Einstiegsseite ist (About, `/create`, das Spiel), und Leser, deren Browser `sendBeacon` blockiert. Die Einstiege sind deshalb eine Untergrenze.
 
 ---
 
@@ -167,3 +173,33 @@ Die Frage über allem ist dieselbe wie in 5.7: **Bringt ein Kanal Leute dazu, ei
    - Empfehlung: **HN vor dem Umschalttag**, weil HN-Leser eher die Idee als den Kauf testen, und Product Hunt danach.
 3. **Die Schwellen in §5.**
 4. **Der Satz in der Datenschutzerklärung für 5.6a.** Entwurf: „We note which kind of site sent you here (a search engine, Reddit, Pinterest, Hacker News, …) and, on a link we posted ourselves, which channel it was — a fixed word, never the address you came from."
+
+---
+
+## 7. Wie auf Pinterest posten (Julian, 2026-10-04: „wie sollte ich auf pinterest posten?")
+
+**Vorweg die Grenze:** Auf Pinterest gibt es keinen Beitrag ohne Bild. Jeder Pin ist ein Bild, auch einer, den Pinterest per „Merken" von unserer Seite holt. Weg (c) aus §6 („nur Links") schließt Pinterest damit aus. Pinterest braucht Weg (a), oder Pins ohne Cover, und die verfehlen den Zweck. **Erst die Entscheidung, dann der erste Pin.**
+
+**Einrichten, einmal (Julian, etwa 20 Minuten):**
+1. **Unternehmenskonto** anlegen oder ein privates umstellen (kostenlos). Nur damit gibt es Statistiken und die Bestätigung der Website.
+2. **Website bestätigen** („Claim"): `buyitscovers.com`, per DNS-TXT bei INWX. Das geht wie bei der Search Console: ein neuer Eintrag, `v=spf1` nicht anfassen. Die Alternative per Meta-Tag wäre eine Codeänderung, die TXT-Variante ist keine. Danach zeigen Pins von der Seite den Namen der Website, und die Statistik trennt eigene Pins von denen, die andere von der Seite merken.
+3. **Rich Pins** sind kein eigener Schritt mehr nötig: Pinterest liest Titel und Beschreibung aus den Open-Graph-Angaben, die jede Buch-, Sammlungs- und Jahrzehnte-Seite schon hat. Ob sie greifen, zeigt der erste Pin; das ist ungeprüft.
+
+**Welche Seiten, in dieser Reihenfolge.** Pinterest ist eine Suchmaschine für Bilder und belohnt Sammlungen und Vergleiche, nicht Einzelstücke:
+1. **Jahrzehnte-Seiten** (`/book/<id>/decades`, 90 Werke tragen eine). „Dune covers through the decades" ist genau das, wonach dort gesucht wird.
+2. **Sammlungen** (`/collections/<slug>`), je eine Pinnwand pro Sammlung.
+3. **Buchseiten mit vielen Covern**, die meistbesuchten zuerst (Tabelle „Werke" in `/admin/insights`).
+
+**Das Bild:** Hochformat 2:3 (1000×1500); Querformate werden im Feed klein. Bis 5.5a das Format liefert, gibt es kein gutes Pin-Bild. Die Vorschaukarte 1200×630 ist quer und deshalb ein schlechter Ersatz. **5.5a (ein halber Tag Claude) kommt also vor dem ersten Pin**, nach der Rechte-Entscheidung.
+
+**Ein Pin:**
+- **Titel** sachlich, mit den Wörtern, die gesucht werden: „Dune by Frank Herbert — 60 years of covers". Kein „the most beautiful", keine Rangliste (Regel aus PLAN-5 §2).
+- **Beschreibung** in zwei Sätzen: was zu sehen ist, wie viele Ausgaben, welche Verlage. Dazu die Wörter „book cover", „edition", der Reihen- oder Verlagsname. Höchstens zwei, drei Hashtags; Pinterest wertet sie kaum noch.
+- **Link** mit Marke: `https://buyitscovers.com/book/OL…/decades?via=pinterest`. Ohne die Marke landet ein Besuch aus der Pinterest-App meist unter „direkt".
+- **Pinnwand** nach Thema: eine je Sammlung, dazu „Covers through the decades", „Science fiction covers", „Penguin Classics covers" usw. Gruppen-Pinnwände bringen erfahrungsgemäß wenig und kosten Pflege.
+
+**Rhythmus:** lieber regelmäßig als in Wellen, etwa zwei Pins am Tag statt zehn am Sonntag. Pinterests eigene Planungsfunktion verteilt einen Stapel, den Julian an einem Abend anlegt; das ist kein automatisches Posten, denn jeder Pin ist von Hand gemacht. Nie dasselbe Bild zweimal auf dieselbe Pinnwand.
+
+**Was Claude dafür liefert:** eine Liste je Woche mit Seite, Bild (sobald 5.5a steht), Titel, Beschreibung und markiertem Link, als Datei unter `docs/`. Hochladen und Posten bleibt bei Julian (Grenze oben).
+
+**Messen:** Pinterests Statistik (Impressionen, ausgehende Klicks; erst nach der Bestätigung der Website) und K14 mit `via=pinterest` in `/admin/insights`. Abbruch nach §5: 80 Pins, 8 Wochen, unter 50 Besuchen pro Woche → einstellen, nicht automatisieren.

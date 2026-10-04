@@ -4,7 +4,7 @@
  */
 import type { Market } from '../market';
 import type { DayHash } from './model';
-import { ORIGINS, POSITIONS, readField, SEEN, VERDICTS, type Origin } from './signals';
+import { ENTRIES, LANDINGS, ORIGINS, POSITIONS, readField, SEEN, VERDICTS, type Entry, type Landing, type Origin } from './signals';
 
 function n(value: unknown): number {
   const v = typeof value === 'number' ? value : Number(value);
@@ -64,6 +64,88 @@ export function summarizeBooks(hashes: ReadonlyArray<DayHash | null>, market?: M
   }
   s.rate = s.visits > 0 ? s.bought / s.visits : null;
   return s;
+}
+
+export interface ChannelRow {
+  entry: Entry;
+  /** Visits that began with this channel: a landing page or a book page as the tab's first page. */
+  entries: number;
+  /** Of these, how many opened a book — the first page was one, or a book was opened from it. */
+  opened: number;
+  /** Book page visits, at any depth, in visits that began with this channel. */
+  bookVisits: number;
+  /** Of these, how many clicked through to a shop. */
+  bought: number;
+}
+
+export interface ChannelSummary {
+  /** Channels with at least one entry or book visit; most entries first. */
+  rows: ChannelRow[];
+  entries: number;
+  /** Entries from outside per day (everything but `direct` and `site`): a launch day shows as a peak. */
+  perDay: Array<{ day: string; clicks: number }>;
+  /** Per kind of landing page: visits, how many were a tab's first page, how many opened a book. */
+  landings: Record<Landing, { visits: number; first: number; opened: number }>;
+  /** Book visits counted before 5.6a, which carry no channel. */
+  unattributed: number;
+}
+
+const QUIET: ReadonlySet<string> = new Set(['direct', 'site']);
+
+/**
+ * K14 (5.6a): which channels bring readers, and whether those readers open a
+ * book and go on to a shop. `bookHashes` and `landingHashes` are the days'
+ * `book` and `landing` hashes, in the order of `days`. Not narrowed by market:
+ * a landing page does not know the reader's market.
+ */
+export function summarizeChannels(days: string[], bookHashes: ReadonlyArray<DayHash | null>, landingHashes: ReadonlyArray<DayHash | null>): ChannelSummary {
+  const rows = new Map<Entry, ChannelRow>();
+  const row = (entry: Entry) => {
+    let r = rows.get(entry);
+    if (!r) rows.set(entry, (r = { entry, entries: 0, opened: 0, bookVisits: 0, bought: 0 }));
+    return r;
+  };
+  const landings = Object.fromEntries(LANDINGS.map(l => [l, { visits: 0, first: 0, opened: 0 }])) as ChannelSummary['landings'];
+  const isEntry = (v: string | undefined): v is Entry => v !== undefined && (ENTRIES as readonly string[]).includes(v);
+  let unattributed = 0;
+  const perDay = days.map((day, i) => {
+    let outside = 0;
+    for (const [field, value] of Object.entries(landingHashes[i] ?? {})) {
+      const f = readField(field);
+      const k = n(value);
+      if (!f || k === 0 || !isEntry(f.entry) || !(f.page in landings)) continue;
+      const l = landings[f.page as Landing];
+      l.visits += k;
+      if (f.opened === '1') l.opened += k;
+      if (f.first !== '1') continue;
+      l.first += k;
+      const r = row(f.entry);
+      r.entries += k;
+      if (f.opened === '1') r.opened += k;
+      if (!QUIET.has(f.entry)) outside += k;
+    }
+    for (const [field, value] of Object.entries(bookHashes[i] ?? {})) {
+      const f = readField(field);
+      const k = n(value);
+      if (!f || k === 0) continue;
+      if (!isEntry(f.entry)) {
+        unattributed += k;
+        continue;
+      }
+      const r = row(f.entry);
+      r.bookVisits += k;
+      if (f.bought === '1') r.bought += k;
+      // A book page reached from outside was the tab's first page.
+      if (isEntry(f.from)) {
+        r.entries += k;
+        r.opened += k;
+        if (!QUIET.has(f.entry)) outside += k;
+      }
+    }
+    return { day, clicks: outside };
+  });
+  const list = [...rows.values()].sort((a, b) => b.entries - a.entries || b.bookVisits - a.bookVisits || a.entry.localeCompare(b.entry));
+  return { rows: list, entries: list.reduce((sum, r) => sum + r.entries, 0), perDay, landings, unattributed };
 }
 
 export interface SearchSummary {
