@@ -1235,6 +1235,16 @@ Julian: „can you identify the most derivative claude-prototypical stuff on our
 | **Hero durch ein echtes Bild ersetzen** (Wand, heutiges Cover, Regalfoto); kein Kursiv-Akzent | Julian entscheidet |
 | ~~Sammlungen zeichnen mit „chosen by Julian"~~ — **abgelehnt** (Julian, 2026-10-02: „so etwas will ich nicht") | — |
 
+### Ideen aus my9albums.org (2026-10-04), unbewertet
+
+Julian: „check what we can learn from this website that went viral just now". Befund in [docs/vergleich-my9albums.md](docs/vergleich-my9albums.md) (die Seite selbst war aus der Sitzung nicht erreichbar, nur Suchtreffer). Kern: eine feste Zahl als Aussage über sich selbst, und ein **herunterladbares Hochformat-Bild** statt eines Links. Auslöser wie oben.
+
+| Idee | Wann |
+|---|---|
+| **„9 books that made you — in the edition you read"**: 3×3, Zustand nur in der URL (kein Redis, keine Besucher-ID), bekanntestes Cover als Standard mit Ausgabewahl, keine Google-Anfrage (`googleBooks: false`) | nach **2.2** — ein Bild, das auf die Parkseite führt, verbrennt die Welle; Julian entscheidet |
+| **„Download image" 1080×1920 mit Adresse** für jede Sammlung, nicht nur die Vorschaukarte 1200×630 (2:3-Kacheln passen in 9:16, nicht ohne Rand in 4:5) | mit der Zeile darüber oder für F9 allein |
+| **Picker ohne Google** (`WallPicker` fragt Google über Seite 0 je kaltem Werk) — betrifft F9 schon heute | jederzeit, Phase 6 |
+
 ### Ideen aus dem Vergleich mit whichedition.com (2026-10-01), unbewertet
 
 Julian bat um einen Vergleich mit whichedition.com und darum, wie dort die Affiliate-Links funktionieren; Befund und Begründungen in [docs/vergleich-whichedition.md](docs/vergleich-whichedition.md). Kurz: ein einziges Programm (Amazon US, `/dp/<ISBN-10>?tag=…`, direkt verlinkt, ohne `rel="sponsored"` und ohne Amazons Pflichtformel), dazu WorldCat nach ISBN als „Borrow — Free". Auslöser wie oben: Julian greift eine Idee auf, dann bekommt sie eine Nummer.
