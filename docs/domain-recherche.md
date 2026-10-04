@@ -613,3 +613,9 @@ Julian, 2026-10-04: „bereite die erstellung der social media konten für buyit
 
 Bei INWX für `buyitscovers.com` dafür zu löschen: MX `@` 0 `.` (Null-MX) und TXT `@` `v=spf1 -all`. Bleiben: A, CNAME `www`, TXT `protonmail-verification=…`, TXT `_dmarc`. Die INWX-Sitzung war wieder abgelaufen; gesetzt ist noch nichts davon.
 
+**Bei INWX gesetzt, 2026-10-04 um 07:20 MESZ** (Julian: „ja, bin wieder bei inwx angemeldet, mach weiter"): für `buyitscovers.com` Null-MX und `v=spf1 -all` gelöscht; angelegt MX `@` 10 `mail.protonmail.ch`, MX `@` 20 `mailsec.protonmail.ch`, TXT `@` `v=spf1 include:_spf.protonmail.ch ~all` und die drei DKIM-CNAMEs aus der Tabelle oben. Mit `dig +dnssec` bei `ns.inwx.de` geprüft: alle sechs da, dazu A, Prüf-TXT und DMARC `p=reject` unverändert. Protons Status zeigte MX und SPF danach noch rot — Protons Resolver hält die alten Antworten (TTL 3600); erneut ansehen frühestens um 08:20 MESZ.
+
+**Adressen:** Das Formular für `judgeabook@buyitscovers.com` (Anzeigename „Buy Its Covers") ist ausgefüllt und abgeschickt; Proton verlangt dafür Julians Passwort („Enter your password" → „Authenticate"), das Claude nicht eingibt. `mail@buyitscovers.com` folgt danach. Das Konto erlaubt 10 Adressen, 9 sind frei.
+
+**Warum drei DKIM-Einträge** (Julian fragte): Proton signiert ausgehende Mails mit einem Schlüssel und tauscht diesen Schlüssel regelmäßig aus. Die drei CNAMEs zeigen auf drei Plätze bei Proton (aktueller, nächster, vorheriger Schlüssel), sodass Proton den Wechsel selbst vornimmt, ohne dass jemand bei INWX etwas ändern muss, und Mails, die mit dem alten Schlüssel unterschrieben sind, noch geprüft werden können.
+
