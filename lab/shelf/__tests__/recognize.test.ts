@@ -43,9 +43,10 @@ describe('parseRecognition', () => {
       ],
     }));
     expect(r.books).toEqual([
-      { title: 'Beloved', author: 'Toni Morrison', kind: 'spine', y: 0.2 },
-      // A point outside the picture is clamped to its edge; a missing author is empty.
-      { title: 'Homo Faber', author: '', kind: 'cover', x: 0.9, y: 1 },
+      // A point beyond the picture means the answer was counted, not measured: every y is drawn back in proportion (settle).
+      { title: 'Beloved', author: 'Toni Morrison', kind: 'spine', y: expect.closeTo(0.2 * (0.97 / 1.5), 6) },
+      // A missing author is empty.
+      { title: 'Homo Faber', author: '', kind: 'cover', x: 0.9, y: expect.closeTo(0.97, 6) },
     ]);
     expect(r.problems).toEqual(['#1: ohne Titel', '#2: kein Objekt', '#3: kind "jacket" als spine gelesen', '#3: Mitte unbrauchbar']);
   });

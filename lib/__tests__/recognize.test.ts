@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseRecognition, scanPartial } from '../recognize';
+import { parseRecognition, scanPartial, settle } from '../recognize';
 
 describe('parseRecognition (5.11a): a point per book', () => {
   it('reads title, author, kind and the point as fractions', () => {
@@ -42,3 +42,20 @@ describe('scanPartial (5.11a): books from an answer still arriving', () => {
     expect(scanPartial(answer + '{"t": "After the list"}').books).toHaveLength(2);
   });
 });
+
+describe('settle (5.11a): points the model counted its way out of the picture with', () => {
+  const spine = (x: number, y = 0.5) => ({ title: 'T', author: '', kind: 'spine' as const, x, y });
+  it('leaves an answer inside the picture alone', () => {
+    expect(settle([spine(0.1), spine(0.9)]).map((b) => b.x)).toEqual([0.1, 0.9]);
+  });
+  it('draws an answer that overshot back in proportion, the last book near the edge', () => {
+    const out = settle([spine(0.5), spine(1.0), spine(1.5)]).map((b) => b.x as number);
+    expect(out[2]).toBeCloseTo(0.97);
+    expect(out[1] - out[0]).toBeCloseTo(out[2] - out[1]);
+    expect(settle([spine(0.5, 0.4), spine(1.5, 0.4)])[0].y).toBe(0.4);
+  });
+  it('clamps a book of a partial answer, which cannot be settled yet', () => {
+    expect(scanPartial('{"books": [{"t": "Far", "a": "", "k": "spine", "x": 150, "y": 50}').books[0]).toMatchObject({ x: 1, y: 0.5 });
+  });
+});
+

@@ -1,7 +1,9 @@
 import { NextRequest } from 'next/server';
 import { hasApiKey, recognize, type RecognizedBook } from '@/lib/recognize';
 import { matchPhotoBooksEach, photoRead, MAX_PHOTO_BOOKS, type PhotoMatch } from '@/lib/walls/photo';
-import { preparePhoto } from '@/lib/photoprep';
+import { crop, preparePhoto, shrink, toJpeg } from '@/lib/photoprep';
+import { shelvesOf } from '@/lib/shelfrows';
+import { DENSE_AT, inWhole, mergeReads, piecesOf } from '@/lib/walls/dense';
 import { json, openWalls } from '../guard';
 
 /**
@@ -13,7 +15,8 @@ import { json, openWalls } from '../guard';
  * Since 5.11a the answer is a stream of JSON lines (Julian, 2026-09-30:
  * „zeigen des Fortschritts … Rücken für Rücken“), in this order:
  *   {"book": <read>, "i": n}    one per book, the moment the model has written it
- *   {"read": [<read>…]}         every book, placed with its neighbours known; capped at MAX_PHOTO_BOOKS
+ *   {"again": n, "done": k}     a dense photo is being read again in n pieces, k of them back
+ *   {"read": [<read>…]}         every book, from both looks where there were two; capped at MAX_PHOTO_BOOKS
  *   {"i": n, "match": <match>}  one per book, the moment its catalogue search answers
  *   {"done": true}              or {"error": "…"} when the model or the store failed on the way
  * Errors before the first line answer as before, with a status.
@@ -71,16 +74,48 @@ export async function POST(request: NextRequest) {
       let msModel = 0;
       let tokens = { in: 0, out: 0 };
       let problems = 0;
+      let pieces = 0;
+      let piecesFailed = 0;
       try {
-        const run = await recognize(prepared.bytes, 'image/jpeg', (book, i) => {
-          if (i < MAX_PHOTO_BOOKS) line({ book: photoRead(book), i });
-        });
-        books = run.books.slice(0, MAX_PHOTO_BOOKS);
+        // The first read is its own density signal: at DENSE_AT books it stops, and the photo is read again
+        // in pieces cut from the full-size picture (lib/walls/dense.ts; Julian, 2026-10-03: „mach variante 3“).
+        const run = await recognize(
+          prepared.bytes,
+          'image/jpeg',
+          (book, i) => {
+            if (i < MAX_PHOTO_BOOKS) line({ book: photoRead(book), i });
+          },
+          DENSE_AT,
+        );
+        let all = run.books;
         model = run.model;
         msModel = run.ms;
         tokens = { in: run.inputTokens, out: run.outputTokens };
         problems = run.problems.length;
-        line({ read: books.map(photoRead), problems, capped: run.books.length > MAX_PHOTO_BOOKS });
+        if (run.stopped) {
+          const cut = piecesOf(prepared.full.width, prepared.full.height, shelvesOf(prepared.full));
+          pieces = cut.length;
+          line({ again: pieces, done: 0 });
+          const againStarted = Date.now();
+          let done = 0;
+          const runs = await Promise.allSettled(
+            cut.map(async (piece) => {
+              const r = await recognize(toJpeg(shrink(crop(prepared.full, ...piece))), 'image/jpeg');
+              line({ again: pieces, done: ++done });
+              return { ...r, books: r.books.map((b) => inWhole(b, piece)) };
+            }),
+          );
+          const read = runs.flatMap((r) => (r.status === 'fulfilled' ? [r.value] : []));
+          piecesFailed = pieces - read.length;
+          all = mergeReads(run.books, read.flatMap((r) => r.books));
+          msModel += Date.now() - againStarted;
+          tokens = { in: tokens.in + read.reduce((n, r) => n + r.inputTokens, 0), out: tokens.out + read.reduce((n, r) => n + r.outputTokens, 0) };
+          problems += read.reduce((n, r) => n + r.problems.length, 0);
+          // A dense photo is four reads, and the day's budget counts reads.
+          for (let i = 0; i < pieces; i++) open.store.countPhoto(new Date().toISOString().slice(0, 10)).catch(() => {});
+        }
+        books = all.slice(0, MAX_PHOTO_BOOKS);
+        line({ read: books.map(photoRead), problems, capped: all.length > MAX_PHOTO_BOOKS });
       } catch {
         // Never "no books": the model did not answer, which is something else (N12).
         recordPhoto({ failed: 'model', bytes: bytes.length, ms: Date.now() - started });
@@ -109,6 +144,7 @@ export async function POST(request: NextRequest) {
         notFound: matches.filter((m) => !m.tile && !m.failed).length,
         failed: matches.filter((m) => m.failed).length,
         covers: books.filter((b) => b.kind === 'cover').length,
+        ...(pieces ? { pieces, piecesFailed } : {}),
         problems,
         msModel,
         msSearch: Date.now() - searchStarted,

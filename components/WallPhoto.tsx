@@ -8,8 +8,12 @@ import type { PublicWall, Tile } from '@/lib/walls/model';
 import type { PhotoMatch, PhotoRead } from '@/lib/walls/photo';
 import { spreadPins } from '@/lib/walls/pins';
 
-/** Long edge the photo is shrunk to before it leaves the phone; the model reads no more (lab/shelf). */
-const PHOTO_EDGE = 1600;
+/**
+ * Long edge the photo is shrunk to before it leaves the phone. 2000, not the 1600 the model reads in one look:
+ * a dense photo is read again in pieces (lib/walls/dense.ts), and a piece is cut from what was sent — at 1600
+ * a piece would hold no more than the first look saw.
+ */
+const PHOTO_EDGE = 2000;
 
 /** What the server takes as it is when the canvas cannot be trusted (app/api/walls/photo/route.ts has the same number). */
 const MAX_ORIGINAL_BYTES = 12 * 1024 * 1024;
@@ -91,6 +95,7 @@ const PIN = 24;
 /** One line of the route's stream (app/api/walls/photo/route.ts). */
 type Line =
   | { book: PhotoRead; i: number }
+  | { again: number; done?: number }
   | { read: PhotoRead[]; problems: number; capped: boolean }
   | { i: number; match: PhotoMatch }
   | { done: true }
@@ -99,7 +104,7 @@ type Line =
 type State =
   | { step: 'idle' }
   /** The model is reading: books appear one by one as it writes them. */
-  | { step: 'reading'; preview: string; reads: PhotoRead[] }
+  | { step: 'reading'; preview: string; reads: PhotoRead[]; again?: { of: number; done: number } }
   /** Every book is read; the catalogue answers one by one. */
   | { step: 'looking'; preview: string; reads: PhotoRead[]; matches: (PhotoMatch | undefined)[]; capped: boolean }
   | { step: 'read'; preview: string; matches: PhotoMatch[]; capped: boolean }
@@ -173,7 +178,10 @@ export default function WallPhoto({
       let capped = false;
       for await (const line of lines(res.body)) {
         if ('error' in line) throw new Error(line.error);
-        if ('book' in line) {
+        if ('again' in line) {
+          // A full wall: the server reads it again in pieces (lib/walls/dense.ts) and says how far it is.
+          setState({ step: 'reading', preview, reads, again: { of: line.again, done: line.done ?? 0 } });
+        } else if ('book' in line) {
           reads = [...reads.slice(0, line.i), line.book, ...reads.slice(line.i + 1)];
           setState({ step: 'reading', preview, reads });
         } else if ('read' in line) {
@@ -244,7 +252,7 @@ export default function WallPhoto({
   const summary =
     state.step === 'looking'
       ? `${booksRead}, ${t('looking them up… {done} of {total}', { done: matches.length, total: rows.length })}${counts.length && found ? `: ${counts.join(', ')}` : ''}. ${t('You can tick and add while the rest come in.')}`
-      : `${booksRead}${capped ? ` ${t('(the first 80 of more)')}` : ''}: ${counts.join(', ')}. ${onOtherCover ? t('Each gets the book’s usual cover — “another cover” shows the others it has had.') : t('Each gets the book’s usual cover — you can change it in the collection’s editor.')}`;
+      : `${booksRead}${capped ? ` ${t('(the first 100 of more)')}` : ''}: ${counts.join(', ')}. ${onOtherCover ? t('Each gets the book’s usual cover — “another cover” shows the others it has had.') : t('Each gets the book’s usual cover — you can change it in the collection’s editor.')}`;
 
   return (
     <div className="mt-4">
@@ -305,7 +313,7 @@ export default function WallPhoto({
 
       {state.step === 'reading' && (
         <p className="mt-3 text-sm text-ink-2" role="status">
-          {state.reads.length === 0 ? t('Reading the photo…') : state.reads.length === 1 ? t('Reading the photo… 1 book so far.') : t('Reading the photo… {n} books so far.', { n: state.reads.length })}
+          {state.again ? t('Many books — reading the photo again in {of} parts, closer up… {done} of {of} done.', { of: state.again.of, done: state.again.done }) : state.reads.length === 0 ? t('Reading the photo…') : state.reads.length === 1 ? t('Reading the photo… 1 book so far.') : t('Reading the photo… {n} books so far.', { n: state.reads.length })}
         </p>
       )}
       {state.step === 'error' && <p className="mt-3 text-sm text-accent" role="alert">{state.message}</p>}

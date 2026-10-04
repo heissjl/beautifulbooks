@@ -147,3 +147,23 @@ Julian, mit einem Foto zweier Bücherstapel aus der Produktion: „Hier gibt es 
 
 **Gemessen** (lokal; `docs/tests/2026-10-01-regalfoto-stapel-punkte.png`, `…-pins-phone.png`): auf Julians Stapelfoto (als Bildschirmfoto, 739 × 1600) neun bis zehn Bücher, jedes mit eigenem Punkt in seinem Stapel; auf dem Brett 20–22 von 22, alle Pins am Telefon sichtbar. **effort wieder medium:** mit dem Punkt-Prompt denkt „high“ vor der Antwort nach — die Galeriewand kostete 3.131–5.241 Ausgabetoken und 24–40 s für 42–47 Bücher (5–9 ct), „medium“ liest 33–40 für 1.383–1.699 Token in 11–13 s (≈ 3 ct), das Brett 21–22 in 8 s. Am Vortag, mit dem Reihen-Prompt, war es umgekehrt (25–27 gegen 38–41): die Einstellung hängt am Prompt und gehört bei jeder Prompt-Änderung neu gemessen.
 
+## Variante 3: ein zweiter Blick auf dichte Fotos (2026-10-03)
+
+Julian nach der Frage, ob sich etwas vorschalten lässt, das Prompt und Denk-Einstellung wählt: „mach variante 3“ — das Ergebnis des ersten Lesens als Weiche. Vier Anläufe an der Galeriewand (1500 × 2000), jeder gemessen:
+
+| Schnitt | Bücher | Zeit zweiter Blick | Kosten gesamt | Befund |
+|---|---|---|---|---|
+| nur ein Blick (Stand vorher) | 33–39 | — | ≈ 3 ct | viele ohne Autor |
+| drei Bänder nach den y-Werten des Modells | 73 | 12 s | — | die y-Werte lagen einen halben Boden daneben, das oberste Band schnitt durch die Bücher (14 statt ~30 gelesen) |
+| drei feste Streifen über die volle Breite (je halbe Höhe, ein Viertel versetzt) | 68–76 | 12–37 s | ≈ 11–20 ct | gute Lesung mit Autoren, aber das Modell **zählt** die waagrechte Lage bis „150 %“ — Punkte wertlos |
+| sechs feste Stücke (3 × 2) | 95 | 12 s | ≈ 15 ct | Punkte im Bild, aber waagrechte Schnitte gehen durch die Rückentitel: „Edo to Performance“, „S Party“, „Tar“ |
+| **je Boden, an den Brettern geschnitten, 2–3 Teile nebeneinander** | **97–100** | **9–10 s** | **≈ 13 ct** | saubere Titel, Autoren, Punkte im richtigen Boden |
+
+**Gebaut:** `recognize(…, stopAt)` bricht den ersten Durchgang beim 30. Buch ab (`DENSE_AT`, `stream.abort()`); `lib/shelfrows.ts` findet die Bretter (mittlere Helligkeitsänderung je Pixelzeile, geglättet; ruhige Bänder unter 45 % des Medians und mindestens 1,2 % hoch sind Bretter; 6–8 ms je Foto; Wand: Böden bei 0,117 / 0,436 / 0,691, das Brett und der Stapel haben keine teilenden Bretter); `piecesOf` schneidet je Boden zwei Teile (0–0,6 und 0,4–1) oder drei, wenn der Boden mehr als viermal so breit wie hoch ist; `mergeReads` führt zusammen (gleiche Buchstaben, höchstens 15 % verlesen, oder ein Titel ab zwei Wörtern ganz in Titel und Autor des anderen; die vollere Lesung, der Punkt aus dem Stück); `settle` zieht Antworten, deren Lage über das Bild hinausgezählt wurde, proportional zurück. Die Route streamt `{"again": n, "done": k}`. Der Browser schickt 2000 statt 1600 px lange Kante, damit die Stücke mehr Pixel haben als der erste Blick; Grenze 100 statt 80 Bücher; ein dichtes Foto zählt mit jedem Teil auf die Tagesgrenze.
+
+**Denken abgeschaltet** (`thinking: { type: 'disabled' }`), an drei Streifen der Wand gemessen: mit Denken 96 Bücher für 6.762 Ausgabetoken in 14–20 s je Streifen, ohne 95 für 4.133 in 10–13 s. Gilt für alle Aufrufe.
+
+**Im Browser** (headless, 1280 px, `docs/tests/2026-10-03-regalfoto-wand-zweiter-blick.png`): erster Pin nach 5 s, „Many books — reading the photo again in 9 parts“ bei 12,8 s, 100 Bücher gelesen nach 22,6 s (14.592 / 6.069 Token ≈ 13,5 ct), die Suche nach 100 Titeln weitere 45 s — 6 gefunden, 42 „maybe“, 52 nicht im Katalog: es sind Galeriekataloge. Das Brett: unverändert ein Durchgang, 20 Bücher in 7,8 s. Julian hatte „nur die Wand zahlt doppelt“ gelesen — es ist das Vierfache; die Grenze `DENSE_AT` und die Zahl der Teile sind die Stellschrauben.
+
+**Offen:** ein Testsatz von acht bis zehn Fotos mit gezählter Wahrheit, bevor an Prompt, Schwelle oder Schnitt weiter gedreht wird — alle Zahlen hier stammen von drei Fotos.
+

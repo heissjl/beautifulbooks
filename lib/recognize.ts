@@ -47,6 +47,8 @@ export interface RecognitionRun extends Recognition {
   ms: number;
   inputTokens: number;
   outputTokens: number;
+  /** The read was stopped at `stopAt` books: the caller has seen enough to decide to look closer. */
+  stopped?: true;
 }
 
 export function hasApiKey(): boolean {
@@ -119,12 +121,39 @@ function extractJson(text: string): unknown {
   }
 }
 
-const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
-
-/** A whole percentage (or, from an older answer, a fraction) as a fraction 0..1; undefined when it is no number. */
+/**
+ * A whole percentage (or, from an older answer, a fraction) as a fraction of
+ * the picture; undefined when it is no number. Not clamped at the top: on a
+ * wide strip of thirty spines the model counts along rather than measures and
+ * arrives at 150 "per cent" (measured 2026-10-03) — `settle` deals with that
+ * once the whole answer is there.
+ */
 function fraction(raw: unknown): number | undefined {
   if (typeof raw !== 'number' || !Number.isFinite(raw)) return undefined;
-  return clamp01(raw > 1 ? raw / 100 : raw);
+  return Math.max(0, raw > 1 ? raw / 100 : raw);
+}
+
+/** Where the last book of an answer that overshot is put: near the edge, not on it. */
+const FAR_EDGE = 0.97;
+
+/**
+ * Points inside the picture. An answer whose largest x (or y) lies beyond the
+ * picture was counted, not measured; its books keep their order and their
+ * spacing and are drawn back so that the last one stands at the edge. One
+ * book of a partial answer can only be clamped.
+ */
+export function settle(books: readonly RecognizedBook[]): RecognizedBook[] {
+  const scale = (key: 'x' | 'y') => {
+    const max = Math.max(0, ...books.map((b) => b[key] ?? 0));
+    return max > 1 ? FAR_EDGE / max : 1;
+  };
+  const sx = scale('x');
+  const sy = scale('y');
+  return books.map((b) => ({
+    ...b,
+    ...(b.x !== undefined ? { x: Math.min(1, b.x * sx) } : {}),
+    ...(b.y !== undefined ? { y: Math.min(1, b.y * sy) } : {}),
+  }));
 }
 
 /** One book as the model wrote it (short keys since 5.11a; the old long keys still read). */
@@ -162,7 +191,7 @@ export function parseRecognition(text: string): Recognition {
     const book = parseBook(raw, i, problems);
     if (book) books.push(book);
   });
-  return { books, problems };
+  return { books: settle(books), problems };
 }
 
 /**
@@ -199,7 +228,8 @@ export function scanPartial(text: string): { books: RecognizedBook[] } {
       if (depth === 0 && start >= 0) {
         try {
           const book = parseBook(JSON.parse(text.slice(start, i + 1)), books.length, problems);
-          if (book) books.push(book);
+          // A partial answer cannot be settled yet; a point beyond the picture waits at its edge.
+          if (book) books.push({ ...book, ...(book.x !== undefined ? { x: Math.min(1, book.x) } : {}), ...(book.y !== undefined ? { y: Math.min(1, book.y) } : {}) });
         } catch {
           // A broken object is dropped here; parseRecognition on the whole answer reports it.
         }
@@ -216,24 +246,34 @@ export function scanPartial(text: string): { books: RecognizedBook[] } {
  * nothing — the two must not be confused (CLAUDE.md).
  *
  * The answer is streamed (5.11a): `onBook` gets every book as soon as its
- * object has closed.
+ * object has closed, and with `stopAt` the read ends there — the books so far
+ * come back with `stopped`.
  */
 export async function recognize(
   image: Buffer,
   mediaType: 'image/jpeg' | 'image/png',
   onBook?: (book: RecognizedBook, index: number) => void,
+  /** Stop reading once this many books have come (5.11a: a dense photo is then read again in pieces, and the rest of this answer would be paid for twice). */
+  stopAt?: number,
 ): Promise<RecognitionRun> {
   if (!hasApiKey()) throw new Error('ANTHROPIC_API_KEY ist nicht gesetzt');
   const client = new Anthropic();
   const data = image.toString('base64');
 
-  const ask = async (model: string): Promise<Anthropic.Message> => {
+  let sofar = '';
+  let stopped = false;
+  let usage = { input: 0, output: 0 };
+
+  const ask = async (model: string): Promise<Anthropic.Message | null> => {
+    sofar = '';
     const stream = client.messages.stream({
       model,
       max_tokens: 8000,
-      // effort medium. With the point prompt (2026-10-01) high thinks before it answers: the gallery wall cost
-      // 3,100–5,200 answer tokens and 24–40 s for 42–47 books; medium reads 33–40 for 1,400–1,700 in 11–13 s.
-      // (With the rows prompt of the day before it was the other way round, 25–27 against 38–41.)
+      // No thinking. Measured 2026-10-03 on three pieces of the gallery wall: with it 96 books for 6,762 answer
+      // tokens in 14–20 s a piece, without it 95 for 4,133 in 10–13 s — it costs and reads nothing more.
+      thinking: { type: 'disabled' },
+      // effort medium. With the point prompt (2026-10-01) high cost the gallery wall 3,100–5,200 answer tokens
+      // and 24–40 s for 42–47 books; medium reads 33–40 for 1,400–1,700 in 11–13 s.
       output_config: { effort: 'medium', format: { type: 'json_schema', schema: SCHEMA } },
       messages: [{
         role: 'user',
@@ -243,21 +283,31 @@ export async function recognize(
         ],
       }],
     });
-    if (onBook) {
-      let sofar = '';
-      let handed = 0;
-      stream.on('text', (delta) => {
-        sofar += delta;
-        const partial = scanPartial(sofar);
-        for (; handed < partial.books.length; handed++) onBook(partial.books[handed], handed);
-      });
+    let handed = 0;
+    stream.on('text', (delta) => {
+      if (stopped) return;
+      sofar += delta;
+      const partial = scanPartial(sofar);
+      for (; handed < partial.books.length; handed++) onBook?.(partial.books[handed], handed);
+      if (stopAt !== undefined && handed >= stopAt) {
+        stopped = true;
+        const now = stream.currentMessage?.usage;
+        // The answer's tokens so far are not in the snapshot; four characters a token is the usual estimate.
+        usage = { input: now?.input_tokens ?? 0, output: Math.round(sofar.length / 4) };
+        stream.abort();
+      }
+    });
+    try {
+      return await stream.finalMessage();
+    } catch (err) {
+      if (stopped) return null;
+      throw err;
     }
-    return stream.finalMessage();
   };
 
   const started = Date.now();
   let model = PRIMARY_MODEL;
-  let response: Anthropic.Message;
+  let response: Anthropic.Message | null;
   try {
     response = await ask(model);
   } catch (err) {
@@ -266,6 +316,9 @@ export async function recognize(
     if (!(err instanceof Anthropic.NotFoundError || err instanceof Anthropic.PermissionDeniedError)) throw err;
     model = FALLBACK_MODEL;
     response = await ask(model);
+  }
+  if (!response) {
+    return { books: scanPartial(sofar).books, problems: [], model, ms: Date.now() - started, inputTokens: usage.input, outputTokens: usage.output, stopped: true };
   }
   if (response.stop_reason === 'refusal') throw new Error(`${model} hat das Foto abgelehnt`);
 

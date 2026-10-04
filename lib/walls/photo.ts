@@ -19,8 +19,8 @@ import { CURATED_LIST, CURATED_WORKS } from '@/lib/curated';
 import type { WorkSummary } from '@/lib/model';
 import { validTile, type Tile } from './model';
 
-/** Julian's gallery wall read 50–58 (2026-09-30); a wall holds 500, and the searches run three at a time since 5.11a. */
-export const MAX_PHOTO_BOOKS = 80;
+/** Julian's gallery wall, read shelf by shelf, comes to 97 (2026-10-03); a wall holds 500, and the searches run three at a time. */
+export const MAX_PHOTO_BOOKS = 100;
 
 /** Open Library searches in flight at once for one photo: three cut a 40-book photo from 35 s to about 12 without leaning on the catalogue. */
 export const PHOTO_SEARCHES_AT_ONCE = 3;
