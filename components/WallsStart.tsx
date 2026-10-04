@@ -55,7 +55,10 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
 
   async function commit(dest: Destination, tiles: Tile[]) {
     const wall = 'wall' in dest ? await addTiles(dest.wall, tiles) : await createWall(dest.title, tiles);
-    router.push(editHref(wall.id));
+    // Straight to the covers just added, not to the search box: from a photo the next step is
+    // checking them and changing one, which Arrange does (Julian, 2026-10-04, on a phone: the
+    // editor opened on "Add covers" and "another cover" was nowhere to be seen).
+    router.push(editHref(wall.id, tiles.length > 0 ? { mode: 'arrange' } : {}));
   }
 
   async function emptyWall() {

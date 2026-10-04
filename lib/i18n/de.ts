@@ -576,6 +576,7 @@ export const de: Readonly<Record<string, string>> = {
   'Add some': 'Welche hinzufügen',
   '{label} — pick another cover for it': '{label} – ein anderes Cover dafür wählen',
   'Click for another cover of this book, drag to move it': 'Klicken für ein anderes Cover dieses Buchs, ziehen zum Verschieben',
+  'Tap or click a cover to swap it for another cover of the same book.': 'Tipp oder klick ein Cover an, um es gegen ein anderes Cover desselben Buchs zu tauschen.',
   'Move {title} left': '{title} nach links',
   'Drag {title} to another place': '{title} an eine andere Stelle ziehen',
   'Drag to another place': 'An eine andere Stelle ziehen',

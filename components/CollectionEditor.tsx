@@ -377,7 +377,14 @@ function Arrange({ wall, onSend, onAdd, onPick, t }: { wall: PublicWall; onSend:
           </button>
         </p>
       ) : (
-        <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
+        <>
+        {/*
+          Said in words, not only in the tile's `title` (Julian, 2026-10-04, on a phone
+          in a home-screen web app: he could not find "another cover"). A tooltip never
+          shows on a touch screen, so the tap on a cover was there but nothing named it.
+        */}
+        <p className="mt-6 text-sm text-ink-2">{t('Tap or click a cover to swap it for another cover of the same book.')}</p>
+        <ul className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
           {wall.tiles.map((tile, i) => {
             const src = coverUrlFor(tileCoverId(tile), 'M');
             const label = tile.author ? t('{title} by {author}', { title: tile.title, author: tile.author }) : tile.title;
@@ -417,6 +424,7 @@ function Arrange({ wall, onSend, onAdd, onPick, t }: { wall: PublicWall; onSend:
             );
           })}
         </ul>
+        </>
       )}
     </section>
   );
