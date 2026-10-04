@@ -21,6 +21,7 @@ export default function WallPicker({
   onReplaced,
   onClose,
   className = 'mt-12 border-t border-line pt-8',
+  focus = false,
 }: {
   workId: string;
   /** The collection covers go into; none yet means the first cover makes one, called `newTitle`. */
@@ -34,8 +35,17 @@ export default function WallPicker({
   onClose: () => void;
   /** The section's own frame; a dialog brings its own. */
   className?: string;
+  /**
+   * Bring the section into view when it opens (Julian, 2026-10-04: „wenn man bei from a book eines
+   * anklickt, muss die seite automatisch runterscrollen zur coverauswahl"). The picker is keyed by
+   * its work, so it opens once per book; the caller's old scroll ran before the section existed.
+   */
+  focus?: boolean;
 }) {
   const t = useT();
+  useEffect(() => {
+    if (focus) document.getElementById('picker')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [focus]);
   const pages = useWorkPages(workId, '', undefined);
   const [error, setError] = useState('');
   // The message follows the reader: a line at the top is out of sight when the cover clicked is far down (Julian, 2026-09-29).
@@ -100,7 +110,7 @@ export default function WallPicker({
   }
 
   return (
-    <section id="picker" aria-labelledby="picker-title" className={className}>
+    <section id="picker" aria-labelledby="picker-title" className={`scroll-mt-20 ${className}`}>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
           <p className="kicker">{t('Pick covers')}</p>

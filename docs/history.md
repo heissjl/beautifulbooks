@@ -4377,3 +4377,19 @@ Das deckt sich mit der Lab-Messung (328 Treffer bei 421 Fragen, darin die 7 dopp
 1.186 Tests, tsc, Lint und `npm run build` grün.
 
 **Nachtrag 2026-10-04 — hochladen statt im Browser lesen?** Julian fragte, ob das Senden der Datei weniger eingreife und welche Berechtigungen Leser dafür freigeben müssten. Keine, in beiden Fällen: der Dateidialog gibt der Seite genau die gewählte Datei und nichts sonst. Hochladen ist dieselbe Lesung plus das Senden der ganzen Datei; Julians `metadata.db` enthält außer Titeln und Autoren 170 Klappentexte, 300 Schlagwörter, 128 Verlage und 5 Bewertungen (gezählt, nur gelesen; Anmerkungen 0, eigene Spalten 0). Deshalb bleibt es beim Lesen im Browser; die Begründung steht in SPEC F9.4 (e).
+
+## 2026-10-04 · `/create` neu geordnet (ROADMAP 5.17b)
+
+(Julian, 2026-10-04: „überarbeite die oberfläche dieser seite. from a book sollte fokus oder erstes sein, sich klarer abgrenzen von from a collection. die beispielcollection sollte wyssberger sein, und 6 statt 4 cover zeigen. wahrscheinlich dann 4 wege zum anlegen, davon from a book herausgestellt. wenn man bei from a book eines anklickt, muss die seite automatisch runterscrollen zur coverauswahl“.)
+
+**Gebaut:** „From a book“ zuerst, auf getöntem Grund und größer gesetzt; die Coverauswahl (`WallPicker`) steht direkt darunter statt am Seitenende. Darunter „Or start another way“ mit drei Karten (bei 1280 px nebeneinander, je rund 400 px breit; bei 390 px untereinander): „From a collection“, „From a photo“, „From your Calibre library“. Das sind vier Wege, wie Julian schätzte — die sechs Zufallscover sind kein eigener Weg mehr, sondern stehen in der Sammlungs-Karte unter der Auswahl, weil sie dasselbe tun: mit fertig gewählten Covern beginnen.
+
+**Wyss:** „wyssberger“ verstanden als die Sammlung *Ex Libris — covers by Hanspeter Wyss* (`ex-libris-covers-by-hanspeter-wyss`, 58 Cover). In `data/collections.json` ist sie ein Entwurf, auf der echten Seite online veröffentlicht (`/collections/ex-libris-…` antwortete 200, einmal abgefragt). `StartFromPicker` wählt sie vor, wenn sie angeboten wird, sonst die erste. Damit sie auch unter `next dev` ohne Redis erscheint, nehmen `startOptions` und `/api/walls/from` jetzt die Voreinstellung der übrigen Seite (`draftsVisible()`: Entwürfe nur in dev); in Produktion ändert sich nichts. Vorschau **6 statt 4** Cover (`PREVIEW_COVERS`), als Reihe über die Kartenbreite statt 44 px kleiner Kacheln. Die Auswahlliste hat die volle Kartenbreite — daneben gequetscht las sie „Ex Libris — covers …“.
+
+**Der Sprung zur Coverauswahl:** `WallsStart` rief bisher `scrollIntoView` in `requestAnimationFrame` direkt nach dem Wechsel der Adresse — da gab es die Auswahl noch nicht, der Sprung ging ins Leere. Jetzt holt sich `WallPicker` mit `focus` beim Erscheinen selbst ins Bild (`scroll-mt-20` gegen den Kopf). Gemessen bei 1280 × 800: von Seitenanfang auf 428 px gerollt, „Pick covers“ 80 px unter dem oberen Rand. Weil Open Library während des Tests wieder jede Verbindung ablehnte (`ECONNREFUSED`, auch die Suche „Dune“ antwortete 503), lief der Test über denselben Adresswechsel, den ein Klick auf ein Suchergebnis auslöst (`router.push('/create?q=Dune&work=OL893415W')`), nicht über einen echten Klick.
+
+**Die Ankreuzlisten** (Foto, Calibre, Zufallscover, Sammlung) teilen sich in zwei Spalten jetzt nach der Breite ihrer Karte (`@container`, ab 42rem), nicht nach der des Bildschirms — in einer Drittel-Karte wären zwei Spalten zu schmal.
+
+**Lokal mit Foto:** der Dev-Server lief diesmal mit `ANTHROPIC_API_KEY` aus der `.env.local` des Hauptordners (nur diese Variable), damit „From a photo“ erscheint; Julian musste daran erinnern.
+
+Kein waagrechter Überlauf bei 390 und 1280 px; Seite 1.228 px hoch bei 1280. 1.186 Tests, tsc und Lint grün. Nicht deployt.

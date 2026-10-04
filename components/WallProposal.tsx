@@ -109,7 +109,7 @@ export default function WallProposal({
   const count = tiles.length;
 
   return (
-    <div className="mt-4">
+    <div className="@container mt-4">
       <p className="text-sm text-ink-2" aria-live="polite">{summary}</p>
       {proposals.length > 8 && (
         <button
@@ -120,8 +120,8 @@ export default function WallProposal({
           {anyTicked ? t('Untick all') : t('Tick all new ones')}
         </button>
       )}
-      {/* Two columns on a wide screen (Julian, 2026-10-01: „on desktop there's too much empty space here“); the link stays at the row's end, now half as far away. */}
-      <ul className={`mt-3 grid grid-cols-[minmax(0,1fr)] gap-x-8 gap-y-1.5 lg:grid-cols-2 ${scroll ? 'max-h-[32rem] overflow-y-auto overscroll-contain rounded-card border border-line p-3' : ''}`}>
+      {/* Two columns where there is room (Julian, 2026-10-01: „on desktop there's too much empty space here“) — measured on the box, not the screen, since 5.17a put the list into a third of a row. */}
+      <ul className={`mt-3 grid grid-cols-[minmax(0,1fr)] gap-x-8 gap-y-1.5 @2xl:grid-cols-2 ${scroll ? 'max-h-[32rem] overflow-y-auto overscroll-contain rounded-card border border-line p-3' : ''}`}>
         {proposals.map((p, i) => {
           const st = standing(p);
           return (
