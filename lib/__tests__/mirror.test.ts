@@ -13,7 +13,8 @@ function pages(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(dir)) {
     const path = join(dir, name);
     if (statSync(path).isDirectory()) {
-      if (path === join(APP, 'de') || path === join(APP, 'api')) continue;
+      // `admin/` is Julian's, German only, and `proxy.ts` never rewrites it (ROADMAP 3.1a).
+      if (path === join(APP, 'de') || path === join(APP, 'api') || path === join(APP, 'admin')) continue;
       pages(path, out);
     } else if (name === 'page.tsx' || name === 'loading.tsx') out.push(relative(APP, path));
   }

@@ -258,3 +258,29 @@ export const LOCAL_SHOPS_COPY = {
   /** Shown when at least one link does not carry the book. */
   finderHint: 'Links marked “finder” open the service without this book; search there by title or ISBN.',
 } as const;
+
+/**
+ * The counted form of a local-shop link (ROADMAP 3.1): `/go/local/<isbn13 or
+ * title>?c=<country>&id=<link id>&t=&a=&market=`. Like the shop searches in
+ * `lib/buylinks.ts`, only the edition's facts travel; the redirect rebuilds
+ * the link with `localShopLinks` from the same table, so it can only ever
+ * send a reader to a service listed here.
+ */
+export function trackedLocalHref(country: LocalCountry, link: Pick<LocalShopLink, 'id'>, edition: LocalShopInput, market: Market): string {
+  const params = new URLSearchParams({ c: country, id: link.id });
+  if (edition.title) params.set('t', edition.title);
+  if (edition.author) params.set('a', edition.author);
+  params.set('market', market);
+  return `/go/local/${edition.isbn13 ? encodeURIComponent(edition.isbn13) : 'title'}?${params}`;
+}
+
+/** The link a counted local-shop href stands for, or undefined when the table has none like it. */
+export function localLinkFor(target: string, params: URLSearchParams): LocalShopLink | undefined {
+  const country = params.get('c');
+  const id = params.get('id');
+  if (!isLocalCountry(country) || !id) return undefined;
+  const clip = (v: string | null) => v?.replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, 300) || undefined;
+  const isbn13 = /^97[89]\d{10}$/.test(target) ? target : undefined;
+  if (!isbn13 && target !== 'title') return undefined;
+  return localShopLinks(country, { isbn13, title: clip(params.get('t')), author: clip(params.get('a')) }).find(l => l.id === id);
+}

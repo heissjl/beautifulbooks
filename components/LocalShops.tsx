@@ -8,6 +8,7 @@ import {
   LOCAL_COUNTRY_KEY,
   LOCAL_SHOPS_COPY,
   localShopLinks,
+  trackedLocalHref,
   type LocalCountry,
   type LocalShopInput,
 } from '@/lib/localshops';
@@ -55,8 +56,8 @@ function useLocalCountry(market: Market): [LocalCountry, (country: LocalCountry)
 /**
  * "Buy from a local bookshop" (ROADMAP 5.12): a second fold beside "Other
  * ways to find it", with deep links into national services of independent
- * bookshops. Plain links: no counting redirect (the `/go` route only knows
- * the retailer table), no fetch, no postcode.
+ * bookshops. Counted like the shop links since ROADMAP 3.1 (`/go/local/…`,
+ * rebuilt from `lib/localshops.ts`); no fetch, no postcode.
  */
 export default function LocalShops({ edition, market }: { edition: LocalShopInput; market: Market }) {
   const t = useT();
@@ -89,7 +90,8 @@ export default function LocalShops({ edition, market }: { edition: LocalShopInpu
         <ul className="space-y-3">
           {links.map(link => (
             <li key={link.id}>
-              <a href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
+              {/* Through the counting redirect, which rebuilds this link from the table (ROADMAP 3.1). */}
+              <a href={trackedLocalHref(country, link, edition, market)} target="_blank" rel="noopener noreferrer" className="btn">
                 {link.label}
                 {link.kind === 'finder' && <span className="text-xs font-normal text-ink-3">{t('finder')}</span>}
               </a>

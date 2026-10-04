@@ -6,9 +6,14 @@ import { rich, useT } from './i18n';
 import type { Translate } from '@/lib/i18n/translate';
 import type { PublicWall, Tile } from '@/lib/walls/model';
 import type { PhotoMatch, PhotoRead } from '@/lib/walls/photo';
+import { spreadPins } from '@/lib/walls/pins';
 
-/** Long edge the photo is shrunk to before it leaves the phone; the model reads no more (lab/shelf). */
-const PHOTO_EDGE = 1600;
+/**
+ * Long edge the photo is shrunk to before it leaves the phone. 2000, not the 1600 the model reads in one look:
+ * a dense photo is read again in pieces (lib/walls/dense.ts), and a piece is cut from what was sent — at 1600
+ * a piece would hold no more than the first look saw.
+ */
+const PHOTO_EDGE = 2000;
 
 /** What the server takes as it is when the canvas cannot be trusted (app/api/walls/photo/route.ts has the same number). */
 const MAX_ORIGINAL_BYTES = 12 * 1024 * 1024;
@@ -84,9 +89,13 @@ function looksBlank(ctx: CanvasRenderingContext2D, width: number, height: number
   return max - min < 8;
 }
 
+/** A pin's size in pixels, with a little air: what `spreadPins` keeps apart. */
+const PIN = 24;
+
 /** One line of the route's stream (app/api/walls/photo/route.ts). */
 type Line =
   | { book: PhotoRead; i: number }
+  | { again: number; done?: number }
   | { read: PhotoRead[]; problems: number; capped: boolean }
   | { i: number; match: PhotoMatch }
   | { done: true }
@@ -95,7 +104,7 @@ type Line =
 type State =
   | { step: 'idle' }
   /** The model is reading: books appear one by one as it writes them. */
-  | { step: 'reading'; preview: string; reads: PhotoRead[] }
+  | { step: 'reading'; preview: string; reads: PhotoRead[]; again?: { of: number; done: number } }
   /** Every book is read; the catalogue answers one by one. */
   | { step: 'looking'; preview: string; reads: PhotoRead[]; matches: (PhotoMatch | undefined)[]; capped: boolean }
   | { step: 'read'; preview: string; matches: PhotoMatch[]; capped: boolean }
@@ -149,6 +158,8 @@ export default function WallPhoto({
   const t = useT();
   const [state, setState] = useState<State>({ step: 'idle' });
   const [over, setOver] = useState(false);
+  // The size the photo is shown at, read when it has loaded: pins step aside in pixels (lib/walls/pins.ts).
+  const [shown, setShown] = useState<{ w: number; h: number } | null>(null);
   const input = useRef<HTMLInputElement>(null);
 
   async function read(file: File | undefined) {
@@ -167,7 +178,10 @@ export default function WallPhoto({
       let capped = false;
       for await (const line of lines(res.body)) {
         if ('error' in line) throw new Error(line.error);
-        if ('book' in line) {
+        if ('again' in line) {
+          // A full wall: the server reads it again in pieces (lib/walls/dense.ts) and says how far it is.
+          setState({ step: 'reading', preview, reads, again: { of: line.again, done: line.done ?? 0 } });
+        } else if ('book' in line) {
           reads = [...reads.slice(0, line.i), line.book, ...reads.slice(line.i + 1)];
           setState({ step: 'reading', preview, reads });
         } else if ('read' in line) {
@@ -220,6 +234,8 @@ export default function WallPhoto({
         }
       : { pending: true }),
   }));
+  // No pin hides another: neighbours on a shelf step up and down, books in a pile step left and right.
+  const pins = shown ? spreadPins(markers.map((m) => m.read.at), shown.w, shown.h, PIN) : [];
   const matches = rows.flatMap((r) => (r.match ? [r.match] : []));
   const found = matches.filter((m) => m.tile && !m.unsure).length;
   const maybe = matches.filter((m) => m.unsure).length;
@@ -236,7 +252,7 @@ export default function WallPhoto({
   const summary =
     state.step === 'looking'
       ? `${booksRead}, ${t('looking them up… {done} of {total}', { done: matches.length, total: rows.length })}${counts.length && found ? `: ${counts.join(', ')}` : ''}. ${t('You can tick and add while the rest come in.')}`
-      : `${booksRead}${capped ? ` ${t('(the first 80 of more)')}` : ''}: ${counts.join(', ')}. ${onOtherCover ? t('Each gets the book’s usual cover — “another cover” shows the others it has had.') : t('Each gets the book’s usual cover — you can change it in the collection’s editor.')}`;
+      : `${booksRead}${capped ? ` ${t('(the first 100 of more)')}` : ''}: ${counts.join(', ')}. ${onOtherCover ? t('Each gets the book’s usual cover — “another cover” shows the others it has had.') : t('Each gets the book’s usual cover — you can change it in the collection’s editor.')}`;
 
   return (
     <div className="mt-4">
@@ -266,32 +282,38 @@ export default function WallPhoto({
           {/* A local object URL, never uploaded as such; next/image has nothing to optimise here. */}
           {/* 44rem, not 28: a portrait photo of a gallery wall was 336 px wide at 28rem and forty pins overlapped (2026-10-01). */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={preview} alt={t('Your photo')} className="block max-h-[44rem] max-w-full rounded-card" />
-          {markers.map((m, i) => {
-            const box = m.read.box;
-            if (!box) return null;
-            const cover = m.read.kind === 'cover';
-            // A pin at the estimated centre, not a box: the model estimates where a book is, it does not segment the
-            // picture, and a rectangle promised edges it never had (Julian, 2026-10-01: „entweder eine gute
-            // segmentierung oder eine grundsätzlich andere darstellung“). Round for a spine, square for a cover.
-            const tone = m.found === true ? 'bg-accent text-on-accent' : m.found === false ? 'bg-ink-3 text-bg' : 'bg-bg/90 text-ink';
-            return (
-              <span
-                key={i}
-                data-marker={cover ? 'cover' : 'spine'}
-                className={`pointer-events-none absolute flex h-6 min-w-6 -translate-x-1/2 items-center justify-center px-1 text-[11px] font-medium leading-none shadow-md ring-1 ring-black/20 ${cover ? 'rounded-[4px]' : 'rounded-full'} ${tone} ${i % 2 ? 'max-sm:-translate-y-[110%] sm:-translate-y-1/2' : 'max-sm:translate-y-[10%] sm:-translate-y-1/2'}`}
-                style={{ left: `${(box[0] + box[2] / 2) * 100}%`, top: `${(box[1] + box[3] / 2) * 100}%` }}
-              >
-                {i + 1}
-              </span>
-            );
-          })}
+          <img
+            src={preview}
+            alt={t('Your photo')}
+            className="block max-h-[44rem] max-w-full rounded-card"
+            onLoad={(e) => setShown({ w: e.currentTarget.clientWidth, h: e.currentTarget.clientHeight })}
+          />
+          {shown &&
+            pins.map((at, i) => {
+              if (!at) return null;
+              const m = markers[i];
+              const cover = m.read.kind === 'cover';
+              // A pin at the model's point, not a box: the model estimates where a book is, it does not segment the
+              // picture, and a rectangle promised edges it never had (Julian, 2026-10-01: „entweder eine gute
+              // segmentierung oder eine grundsätzlich andere darstellung“). Round for a spine, square for a cover.
+              const tone = m.found === true ? 'bg-accent text-on-accent' : m.found === false ? 'bg-ink-3 text-bg' : 'bg-bg/90 text-ink';
+              return (
+                <span
+                  key={i}
+                  data-marker={cover ? 'cover' : 'spine'}
+                  className={`pointer-events-none absolute flex h-[22px] min-w-[22px] -translate-x-1/2 -translate-y-1/2 items-center justify-center px-1 text-[11px] font-medium leading-none shadow-md ring-1 ring-black/20 ${cover ? 'rounded-[4px]' : 'rounded-full'} ${tone}`}
+                  style={{ left: `${at[0]}px`, top: `${at[1]}px` }}
+                >
+                  {i + 1}
+                </span>
+              );
+            })}
         </div>
       )}
 
       {state.step === 'reading' && (
         <p className="mt-3 text-sm text-ink-2" role="status">
-          {state.reads.length === 0 ? t('Reading the photo…') : state.reads.length === 1 ? t('Reading the photo… 1 book so far.') : t('Reading the photo… {n} books so far.', { n: state.reads.length })}
+          {state.again ? t('Many books — reading the photo again in {of} parts, closer up… {done} of {of} done.', { of: state.again.of, done: state.again.done }) : state.reads.length === 0 ? t('Reading the photo…') : state.reads.length === 1 ? t('Reading the photo… 1 book so far.') : t('Reading the photo… {n} books so far.', { n: state.reads.length })}
         </p>
       )}
       {state.step === 'error' && <p className="mt-3 text-sm text-accent" role="alert">{state.message}</p>}

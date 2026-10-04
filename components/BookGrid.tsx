@@ -11,6 +11,7 @@ import MosaicLoader from './MosaicLoader';
 import type { AuthorSearchResult, SearchCorrection, SearchResult } from '@/lib/search';
 import { rich, useT } from './i18n';
 import type { Translate } from '@/lib/i18n/translate';
+import { useSearchSignal } from './useInsights';
 
 interface BookGridProps {
   searchQuery: string;
@@ -204,6 +205,21 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
     return () => controller.abort();
   }, [key, searchQuery, exact, authorName, authorKey, pasted, router, t]);
 
+  /*
+    One summary of this search when the reader leaves it or asks another
+    (ROADMAP 3.1b): outcome, number of books in classes, which card was
+    clicked, and the words only when nothing was found (kept 90 days).
+  */
+  const answered = outcome?.key === key ? outcome : null;
+  useSearchSignal({
+    key,
+    outcome: !answered ? null : answered.failure ? 'failed' : (answered.result as AnyResult | undefined)?.works.length ? 'results' : 'empty',
+    results: (answered?.result as AnyResult | undefined)?.works.length ?? 0,
+    mode: author ? 'author' : pasted.kind === 'isbn' ? 'isbn' : 'title',
+    query: authorName || searchQuery,
+    hrefs: () => [...document.querySelectorAll('[data-results] a[href^="/book/"]')].map(a => a.getAttribute('href') ?? ''),
+  });
+
   if (!key) return <CuratedWall />;
 
   // Loading = the latest outcome does not answer the current request.
@@ -274,7 +290,7 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
   );
 
   return (
-    <section aria-label={t('Search results')}>
+    <section aria-label={t('Search results')} data-results>
       {/*
         The number was an ISBN, and Open Library did not find an edition under
         it — it fell back to searching for the digits (ROADMAP 6.29). Measured
@@ -357,7 +373,7 @@ function AuthorResults({ result, typed, origin }: { result: AuthorSearchResult; 
   }
   const totalEditions = works.reduce((sum, w) => sum + (w.editionCount ?? 0), 0);
   return (
-    <section aria-label={t('Books by {author}', { author: author.name })}>
+    <section aria-label={t('Books by {author}', { author: author.name })} data-results>
       {correction?.applied && <CorrectionLine correction={correction} language="" authorName={author.name} />}
       <h2 className="mb-1 text-2xl leading-tight text-ink sm:text-3xl">{t('Books by {author}', { author: author.name })}</h2>
       <p className="kicker mb-5">

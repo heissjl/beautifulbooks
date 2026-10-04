@@ -1,8 +1,14 @@
 import { NextRequest } from 'next/server';
-import { hasApiKey, recognize, type RecognizedBook } from '@/lib/recognize';
+import { hasApiKey, type RecognizedBook } from '@/lib/recognize';
 import { matchPhotoBooksEach, photoRead, MAX_PHOTO_BOOKS, type PhotoMatch } from '@/lib/walls/photo';
 import { preparePhoto } from '@/lib/photoprep';
+import { sendAlert } from '@/lib/alerts';
+import { SITE_NAME } from '@/lib/seo';
+import { budgetCents, budgetMail, budgetState, crossed, spendUnits, UNITS_PER_CENT } from '@/lib/walls/photobudget';
+import { readPhoto } from '@/lib/walls/readphoto';
 import { json, openWalls } from '../guard';
+import { later } from '@/app/api/count';
+import { countPhoto } from '@/lib/insights/store';
 
 /**
  * POST /api/walls/photo — a photo of books (JPEG or PNG, the browser has
@@ -13,7 +19,8 @@ import { json, openWalls } from '../guard';
  * Since 5.11a the answer is a stream of JSON lines (Julian, 2026-09-30:
  * „zeigen des Fortschritts … Rücken für Rücken“), in this order:
  *   {"book": <read>, "i": n}    one per book, the moment the model has written it
- *   {"read": [<read>…]}         every book, placed with its neighbours known; capped at MAX_PHOTO_BOOKS
+ *   {"again": n, "done": k}     a dense photo is being read again in n pieces, k of them back
+ *   {"read": [<read>…]}         every book, from both looks where there were two; capped at MAX_PHOTO_BOOKS
  *   {"i": n, "match": <match>}  one per book, the moment its catalogue search answers
  *   {"done": true}              or {"error": "…"} when the model or the store failed on the way
  * Errors before the first line answer as before, with a status.
@@ -58,6 +65,25 @@ export async function POST(request: NextRequest) {
   }
   if (today > PHOTOS_PER_DAY) {
     recordPhoto({ capped: true, today });
+    later(() => countPhoto({ outcome: 'capped' }));
+    return json({ error: 'Today’s photos are used up — the site reads a limited number a day. Tomorrow again.' }, 429);
+  }
+
+  // The day's budget in cents (lib/walls/photobudget.ts): used up → no photo; past half → one look only.
+  const day = new Date().toISOString().slice(0, 10);
+  const budget = budgetCents();
+  let spentBefore = 0;
+  try {
+    spentBefore = await open.store.spendPhoto(day, 0);
+  } catch {
+    // A silent store does not stop a reader; the budget is a guard, not a right.
+  }
+  const state = budgetState(spentBefore, budget);
+  if (state === 'full') {
+    recordPhoto({ capped: 'budget', spentCents: spentBefore / UNITS_PER_CENT, budget, today });
+    // The analytics count a photo turned away the same, whichever guard did it (K13).
+    later(() => countPhoto({ outcome: 'capped' }));
+    await sendAlert(`photo-full:${day}`, budgetMail('full', { day, spentCents: spentBefore / UNITS_PER_CENT, budget, photos: today, site: SITE_NAME }));
     return json({ error: 'Today’s photos are used up — the site reads a limited number a day. Tomorrow again.' }, 429);
   }
 
@@ -71,19 +97,40 @@ export async function POST(request: NextRequest) {
       let msModel = 0;
       let tokens = { in: 0, out: 0 };
       let problems = 0;
+      let pieces = 0;
+      let piecesFailed = 0;
+      let spentCents = spentBefore / UNITS_PER_CENT;
       try {
-        const run = await recognize(prepared.bytes, 'image/jpeg', (book, i) => {
-          if (i < MAX_PHOTO_BOOKS) line({ book: photoRead(book), i });
+        // One look, and for a dense photo a second, shelf by shelf (lib/walls/readphoto.ts).
+        const reading = await readPhoto(prepared, {
+          secondLook: state === 'open',
+          onBook: (book, i) => {
+            if (i < MAX_PHOTO_BOOKS) line({ book: photoRead(book), i });
+          },
+          onAgain: (of, done) => line({ again: of, done }),
         });
-        books = run.books.slice(0, MAX_PHOTO_BOOKS);
-        model = run.model;
-        msModel = run.ms;
-        tokens = { in: run.inputTokens, out: run.outputTokens };
-        problems = run.problems.length;
-        line({ read: books.map(photoRead), problems, capped: run.books.length > MAX_PHOTO_BOOKS });
+        model = reading.model;
+        msModel = reading.msModel;
+        tokens = { in: reading.tokensIn, out: reading.tokensOut };
+        problems = reading.problems;
+        pieces = reading.pieces;
+        piecesFailed = reading.piecesFailed;
+        // What this read cost goes onto the day, and a threshold crossed sends Julian one mail.
+        const units = spendUnits(reading.model, reading.tokensIn, reading.tokensOut);
+        const after = await open.store.spendPhoto(day, units).catch(() => 0);
+        spentCents = after / UNITS_PER_CENT;
+        for (const level of crossed(after - units, after, budget)) {
+          await sendAlert(`photo-${level}:${day}`, budgetMail(level, { day, spentCents, budget, photos: today + reading.pieces, site: SITE_NAME }));
+        }
+        // A dense photo is several reads, and the day's count counts reads.
+        for (let i = 0; i < pieces; i++) open.store.countPhoto(new Date().toISOString().slice(0, 10)).catch(() => {});
+        books = reading.books.slice(0, MAX_PHOTO_BOOKS);
+        line({ read: books.map(photoRead), problems, capped: reading.books.length > MAX_PHOTO_BOOKS });
       } catch {
         // Never "no books": the model did not answer, which is something else (N12).
         recordPhoto({ failed: 'model', bytes: bytes.length, ms: Date.now() - started });
+        // Awaited inside the stream, before it closes, so the function is still alive for the write; it never throws.
+        await countPhoto({ outcome: 'failed' });
         line({ error: 'The photo could not be read just now. Try again in a moment.' });
         controller.close();
         return;
@@ -97,6 +144,16 @@ export async function POST(request: NextRequest) {
         controller.close();
         return;
       }
+      // What the photo cost, for the analytics (ROADMAP 3.1, K13): tokens per model, books read and found.
+      await countPhoto({
+        outcome: 'read',
+        model,
+        inputTokens: tokens.in,
+        outputTokens: tokens.out,
+        books: books.length,
+        found: matches.filter((m) => m.tile && !m.unsure).length,
+        maybe: matches.filter((m) => m.unsure).length,
+      });
       recordPhoto({
         bytes: bytes.length,
         sent: `${prepared.width}x${prepared.height}`,
@@ -109,12 +166,16 @@ export async function POST(request: NextRequest) {
         notFound: matches.filter((m) => !m.tile && !m.failed).length,
         failed: matches.filter((m) => m.failed).length,
         covers: books.filter((b) => b.kind === 'cover').length,
+        ...(pieces ? { pieces, piecesFailed } : {}),
         problems,
         msModel,
         msSearch: Date.now() - searchStarted,
         tokensIn: tokens.in,
         tokensOut: tokens.out,
         today,
+        spentCents,
+        budget,
+        ...(state === 'half' ? { oneLook: 'budget' } : {}),
       });
       line({ done: true });
       controller.close();

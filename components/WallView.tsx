@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { rememberWall, tileAnchor } from './cameFrom';
 import CoverImage from './CoverImage';
 import WallIdField from './WallIdField';
 import { rich, useT } from './i18n';
@@ -114,8 +115,12 @@ export default function WallView({ initial }: { initial: PublicWall }) {
             const src = coverUrlFor(tileCoverId(tile), 'M');
             const label = tile.author ? t('{title} by {author}', { title: tile.title, author: tile.author }) : tile.title;
             return (
-              <li key={tile.coverId}>
-                <Link href={`/book/${tile.workId}?cover=${tileCoverId(tile)}`} title={label} className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out hover:-translate-y-1">
+              <li key={tile.coverId} id={tileAnchor(tile.workId, tile.coverId)} className="scroll-mt-24">
+                <Link
+                  href={`/book/${tile.workId}?cover=${tileCoverId(tile)}`}
+                  title={label}
+                  onClick={() => rememberWall({ href: `/c/${wall.id}#${tileAnchor(tile.workId, tile.coverId)}`, title: wall.title, workId: tile.workId })}
+                  className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out hover:-translate-y-1">
                   {src && <CoverImage src={src} alt={label} sizes="(max-width: 640px) 33vw, (max-width: 1280px) 25vw, 20vw" />}
                 </Link>
               </li>
