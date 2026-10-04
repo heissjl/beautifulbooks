@@ -12,7 +12,7 @@ Stand: 2026-10-03, **offen**, nichts gebaut; Ort entschieden 2026-10-04 (online,
 
 Am selben Tag in ROADMAP 3.1 stand, die Hälfte der Fragen brauche keinen Code im Browser. **Das stimmt nicht.** `/api/search`, `/api/works/[id]` und `/api/isbn/[isbn]` antworten mit `s-maxage=86400` (gelesen in den Routen), Vercels CDN beantwortet also jede Wiederholung derselben Anfrage einen Tag lang selbst; ein Zähler in der Route sähe nur die Fehltreffer des Caches — eine beliebte Suche zählte einmal am Tag. Die Buchseite selbst ist ISR (`revalidate = 86400`), dasselbe Problem. **Exakt zählt der Server nur `/go/`** (`no-store`, jede Weiterleitung läuft durch die Funktion). Alles andere kommt aus dem Browser.
 
-Das ist kein Nachteil: ein Signal aus dem Browser braucht JavaScript, Crawler senden es fast nie, und der `/go/`-Zähler dient als Eichung — die Zahl der Buchseiten-Besuche „mit Kauf-Klick" aus dem Browser muss nahe an den Klicks aus `/go/` liegen; der Abstand ist der Verlust der Signale (§7).
+Das ist kein Nachteil: ein Signal aus dem Browser braucht JavaScript, Crawler senden es fast nie, und der `/go/`-Zähler dient als Eichung — die Zahl der Buchseiten-Besuche „mit Klick zum Händler" aus dem Browser muss nahe an den Klicks aus `/go/` liegen; der Abstand ist der Verlust der Signale (§7).
 
 ## 3. Die Kennzahlen
 
@@ -20,10 +20,10 @@ Wöchentlich gelesen, Zeitraum wählbar (7 / 30 / 90 Tage), Vergleich mit dem Ze
 
 | # | Kennzahl | Definition | Quelle | Entscheidung, die sie auslöst |
 |---|---|---|---|---|
-| **K1** | **Klickrate der Buchseite** (die Leitzahl) | Buchseiten-Besuche mit ≥ 1 Kauf-Klick ÷ Buchseiten-Besuche | Signal `book` | Trägt der Shop-Modus? Unter 2 % nach vier Wochen mit ≥ 500 Besuchen: Händlerliste und Verdikt ansehen, bevor Partnerprogramme beworben werden. Ist die Zahl, die eine Bewerbung bei Awin oder Amazon glaubwürdig macht |
+| **K1** | **Klickrate der Buchseite** (die Leitzahl) | Buchseiten-Besuche mit ≥ 1 Klick zum Händler ÷ Buchseiten-Besuche | Signal `book` | Trägt der Shop-Modus? Unter 2 % nach vier Wochen mit ≥ 500 Besuchen: Händlerliste und Verdikt ansehen, bevor Partnerprogramme beworben werden. Ist die Zahl, die eine Bewerbung bei Awin oder Amazon glaubwürdig macht |
 | K2 | Buchseiten-Besuche | Anzahl Signale `book` | Signal `book` | Nenner von K1; Herkunft (K9) |
 | K3 | Klicks zum Händler je Händler × Markt × Linkart (Produkt, Suche nach ISBN, Titelsuche) | Zähler in `/go/` — nach dem Umbau in §4 auch für Titelsuchen | Server, exakt | Reihenfolge der Händler (1.2, 3.3); welches Programm zuerst (4.1–4.3). Ein Händler unter 2 % Anteil nach 90 Tagen wandert hinter die Klappe |
-| K4 | Weg zum Kauf | Besuch → Wand geladen (≥ 1 Seite) → Cover gewählt → Kauf-Klick, je als Anteil | Signal `book` | Wo der Weg bricht: vor „Cover gewählt" ist es die Wand (6.3 Laden, Faltung), danach die Händlerliste |
+| K4 | Weg zum Kauf | Besuch → Wand geladen (≥ 1 Seite) → Cover gewählt → Klick zum Händler, je als Anteil | Signal `book` | Wo der Weg bricht: vor „Cover gewählt" ist es die Wand (6.3 Laden, Faltung), danach die Händlerliste |
 | K5 | Suche ohne Ergebnis | Anteil Suchen mit 0 Treffern, **getrennt** von Suchen, deren Quelle ausfiel | Signal `search` | Leer → Kuratierung, Tippfehler (6.5); ausgefallen → Open Library (1.4, N12). Ausgefallen über 3 % an einem Tag ist ein Betriebsfehler |
 | K6 | Klickposition in der Suche | Verteilung 1 / 2 / 3 / 4–10 / mehr / kein Klick | Signal `search` | Ranking (alte §9.3 Schritt 10): Liegt Position 1 unter 50 %, stimmt die Reihenfolge nicht |
 | K7 | Cover gesehen vor dem Verlassen | Verteilung der im Bild gewesenen Kacheln je Besuch, in Klassen; dazu Anteil „nur Seite 0" | Signal `book` | Paging und Faltung (6.3, 6.4): Verlässt die Mehrheit nach unter 13 Covern, ist die erste Reihe die ganze Seite — dann zählt die erste Reihe (Startseite, 6.17), nicht die Vollständigkeit |
@@ -50,7 +50,7 @@ Zwei Signale aus dem Browser, je **eines pro Seitenbesuch**, gesendet beim Verla
 | `seen` | Kacheln, die zu ≥ 50 % im Bild waren (IntersectionObserver): `0–12`, `13–40`, `41–100`, `101–250`, `250+` |
 | `picked` | ein Cover gewählt: ja/nein |
 | `verdict` | das letzte gezeigte Verdikt oder keins |
-| `bought` | ≥ 1 Kauf-Klick: ja/nein |
+| `bought` | ≥ 1 Klick zum Händler: ja/nein |
 
 **`search`** — die Startseite mit `?q=` oder `?author=`:
 
@@ -123,8 +123,8 @@ Was den Browser verlässt, steht vollständig in §4; nichts davon bezieht sich 
 **Aufbau** (Mock-up: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html)), von oben nach unten in der Reihenfolge, in der eine Woche gelesen wird:
 
 1. **Filterzeile**: Zeitraum (7 / 30 / 90 Tage), Markt (alle / US / UK / DE). Gilt für alles darunter.
-2. **Leitzahl K1** groß, mit Veränderung zum Vorzeitraum; daneben vier Kacheln: Buchseiten-Besuche, Kauf-Klicks, Suchen, Suche ohne Ergebnis — je mit Verlauf als kleine Linie.
-3. **Verlauf je Tag**: Besuche und Kauf-Klicks als zwei Diagramme übereinander mit gemeinsamer Zeitachse (keine zweite y-Achse).
+2. **Leitzahl K1** groß, mit Veränderung zum Vorzeitraum; daneben vier Kacheln: Buchseiten-Besuche, Klicks zum Händler, Suchen, Suche ohne Ergebnis — je mit Verlauf als kleine Linie.
+3. **Verlauf je Tag**: Besuche und Klicks zum Händler als zwei Diagramme übereinander mit gemeinsamer Zeitachse (keine zweite y-Achse).
 4. **Weg zum Kauf** (K4): vier Balken, Anteil je Stufe, der größte Abfall benannt.
 5. **Händler** (K3): Tabelle mit Balken je Zeile — Händler, Markt, Klicks, Anteil, Produkt- vs. Suchlink; später „Provision je 100 Klicks".
 6. **Suche** (K5, K6): Klickposition als Balken; leer und ausgefallen getrennt; Liste der Begriffe ohne Ergebnis.
