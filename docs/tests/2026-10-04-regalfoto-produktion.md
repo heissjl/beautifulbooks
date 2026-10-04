@@ -48,6 +48,12 @@ Julian, auf diesen Bericht: „i want a user to be able to change covers in the 
 
 Nachgestellt gegen `npm run dev` mit Playwright, Foto-Antwort gestubbt (Gatsby gefunden, ein Titel nicht), `/api/works/OL468431W` aus den Gatsby-Fixtures (123 Cover aus drei Seiten), bei 390 × 844 (Touch) und 1280 × 800: markiert war das Cover der Zeile (`ol:14369845`), gewählt `ol:13853193`, das Vorschaubild der Zeile wechselte, `POST /api/walls` trug `13853193`, danach `/c/<id>/edit?mode=arrange`.
 
+## Nachtrag 2: der Link stand rechts außerhalb des Telefons
+
+Julian: „problem earlier was i didn't see this link on mobile“. Gemessen mit einem langen Titel („The Great Gatsby: The Authorized Text With Notes and a Preface by the Editor“) bei 390 × 844: **die Seite war 630 px breit, der rechte Rand von „another cover“ lag bei 630 px** — außerhalb des Bildschirms, auf `/create` wie im Editor. Ursache: die Liste in `WallProposal` ist ein Grid ohne Spaltenangabe; eine implizite Spur ist so breit wie der längste `truncate`-Titel (der nicht umbricht), also wuchs jede Zeile auf 614 px. Mit `grid-cols-1` (`minmax(0, 1fr)`) und `min-w-0` an der Zeile: Seite 390 px, Link bei x = 305–374. Dieselbe Liste zeigt auch die Zufallscover und „Start from a collection“; dort galt derselbe Fehler. Der erste Test oben hatte einen kurzen Titel und sah es nicht.
+
+Dazu: das Foto im Editor („Add covers → Photo“) benutzt jetzt dasselbe Fenster wie `/create`. Vorher sprang „another cover“ in den Reiter „Search“, und die Fotoliste verschwand. Nachgestellt bei 390 und 1280: Link sichtbar, Wahl ersetzt die Zeile, die Liste bleibt, „Add 1 to Shelf“ legt das gewählte Cover (`13853193`) in die Sammlung.
+
 ## Offen (in ROADMAP 5.11a eingetragen)
 
 - **Die Titel von Foto 1** — Julian, falls er sie noch weiß oder das Foto hat: als Foto 15 in den Testsatz (Wahrheitsliste), dann ist der Fall nachstellbar.

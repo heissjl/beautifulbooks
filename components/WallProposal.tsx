@@ -116,11 +116,17 @@ export default function WallProposal({
         </button>
       )}
       {/* Two columns on a wide screen (Julian, 2026-10-01: „on desktop there's too much empty space here“); the link stays at the row's end, now half as far away. */}
-      <ul className="mt-3 grid gap-x-8 gap-y-1.5 lg:grid-cols-2">
+      {/*
+        grid-cols-1, not the implicit column: an implicit track is as wide as the longest
+        `truncate` title, so on a phone one long title pushed every row's "another cover"
+        off the right edge (Julian, 2026-10-04: „i didn't see this link on mobile“; measured
+        614 px rows on a 390 px screen).
+      */}
+      <ul className="mt-3 grid grid-cols-1 gap-x-8 gap-y-1.5 lg:grid-cols-2">
         {proposals.map((p, i) => {
           const st = standing(p);
           return (
-            <li key={i} className="flex items-center gap-3">
+            <li key={i} className="flex min-w-0 items-center gap-3">
               {p.number !== undefined && <span className="w-5 shrink-0 text-right text-xs tabular-nums text-accent">{p.number}</span>}
               {p.tile ? (
                 <>

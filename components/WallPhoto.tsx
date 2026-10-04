@@ -165,7 +165,7 @@ export default function WallPhoto({
     Another cover before there is a collection (Julian, 2026-10-04: „i want a user to be able to
     change covers in the from photo funnel before they create a collection“). Without a collection
     to swap in, the choice stays here, per row, and replaces the row's tile in the list; nothing is
-    written until the reader makes the collection. In the editor the parent's own `onOtherCover` wins.
+    written until the reader adds the ticked rows. The editor uses the same window; a parent's `onOtherCover` would replace it.
   */
   const [swapped, setSwapped] = useState<Record<number, Tile>>({});
   const [picking, setPicking] = useState<{ index: number; tile: Tile } | null>(null);

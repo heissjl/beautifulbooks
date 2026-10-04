@@ -264,7 +264,8 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
                   <p className="mt-4 text-sm text-ink-2">
                     {rich(t('Photograph a shelf or a pile of books. The books we can read are offered for {title} — you tick which go in.'), { title: <strong className="font-medium text-ink">{wall.title}</strong> })}
                   </p>
-                  <WallPhoto photoOn={photoOn} target={wall} onCommit={commit} onOtherCover={showCovers} onSearchFor={(q) => go({ add: 'search', q, work: undefined })} />
+                  {/* No onOtherCover: the photo list swaps a row's cover in its own window, as on /create, instead of leaving for the Search tab and hiding the list (Julian, 2026-10-04). */}
+                  <WallPhoto photoOn={photoOn} target={wall} onCommit={commit} onSearchFor={(q) => go({ add: 'search', q, work: undefined })} />
                 </div>
               )}
               <div hidden={tab !== 'ideas'} className="mt-5 space-y-10">
