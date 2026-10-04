@@ -4328,5 +4328,7 @@ Julian: „maybe include the pocketbook app from the other project in it? and wr
 
 **Eigener Bereich:** `lab/calibre/site.ts` führt alles auf, was das Werkzeug aus `lib/` und `scripts/` nimmt (Suche, Werke und Ausgaben, Titel- und Autorenvergleich, ISBN- und Sprachcodes, Bilddekoder, die Form einer Sammlung, die Tür des lokalen Servers); alle anderen Dateien importieren nur von dort, ein Test prüft es. **Parallel dazu** hat die Sitzung für 5.17 (`claude/calibre-sammlung-5-17-10363d`) `lab/calibre/match.ts`, `serve.ts`, `index.html` und die README geändert und `map.ts` angelegt, auf dem Stand vor diesem Umbau — wer beide Zweige zusammenführt, löst dort Konflikte und führt die Importe von `map.ts` über `site.ts`, sonst schlägt der Test an.
 
-1.053 Tests, tsc und Lint grün.
+**Ort:** der Zweig `claude/calibre-book-covers-df06e1` ist nach `origin/main` (26 Commits anderer Sitzungen, ein Konflikt am Ende dieser Datei, beide Seiten behalten) in das lokale `main` geführt, ohne Push — `main` steht 15 Commits vor `origin/main`. Die App ist aus dem Hauptordner nach `~/Applications/Calibre Covers.app` gebaut und zeigt auf ihn; sie lief nach dem Bau mit ihrem Server.
+
+1.053 Tests vor dem Zusammenführen, 1.127 danach; tsc und Lint grün.
 
