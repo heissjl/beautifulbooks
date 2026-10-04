@@ -665,3 +665,11 @@ Noch nicht entschieden, nichts geändert. Der Schutz auf `byitscovers.com` (Null
 
 **Profilbilder.** Vier Entwürfe in den Farben der Seite (Papier `#f4f0e8`, Rost `#945138`, die Graureihe des Zeichens), je groß, im Kreis und bei 40 und 24 px in einer Zeitleiste: A die heutige Kachelwand fürs Rund, B drei gefächerte Umschläge, der oberste in Rost, C ein heller Umschlag mit dunklem Preisschild auf Rost, D die Wortmarke „Buy Its Covers" in Xanh kursiv auf Rost. Bild lokal unter `docs/tests/2026-10-04-avatars-v1.png`. Befund am Bild: A wird im Kreis an den Ecken beschnitten und ist bei 24 px Rauschen; D ist bei 40 px kaum, bei 24 px nicht lesbar; B und C halten auch klein. Auswahl bei Julian; danach Banner (X 1500 × 500, Bluesky 3000 × 1000).
 
+**Profilbilder, zweite Runde (2026-10-04)** (Julian zu D: „mach eine wortmarke aber mit judge a book, buy its covers und in den fonts wie auf der website · nimm sonst noch den logo vorschlag aus der calibre covers app auf"). Bild lokal unter `docs/tests/2026-10-04-avatars-v2.png`; die Zeichnungen liegen als SVG in der Sitzung und sind schnell neu gesetzt.
+
+- **W1–W3, Wortmarke:** der Satz der Startseite in Xanh Proportional (`assets/fonts/`), wie in `app/page.tsx`: „Judge a book," aufrecht, „buy its covers." kursiv in der Akzentfarbe; W1 auf Papier (`#f4f0e8`, Tinte `#1f1b18`, Rost `#945138`), W2 Papier auf Rost, W3 wie der Dunkelmodus (`#1a1714`, `#efe8dd`, `#dbac94`). Im großen Kreis gut, bei 40 px nur noch als Form zu erkennen, bei 24 px nicht lesbar.
+- **E1/E2, das Calibre-App-Logo** (`lab/calibre/macos/icon.ts`, ROADMAP 5.16b): drei Umschläge nebeneinander auf Terrakotta — hell, schwarz mit Titelzeilen, senfgelb. E1 in seinen eigenen Farben (`#b5532f`, `#f6f3ee`, `#1d1b19`, `#e2b25c`), E2 in denen der Seite (Rost, Papier, Tinte, `#d9cfc1`). Hält auch bei 24 px.
+- **Banner 1500 × 500:** die Wortmarke groß links auf Papier, rechts zwei Reihen Kacheln mit einer in Rost (das Zeichen der Seite), `buyitscovers.com` unten rechts — unten links bleibt frei, weil X dort das Profilbild darüberlegt.
+
+Vorschlag: **Profilbild E2 (oder E1), Banner mit der Wortmarke** — der Satz braucht Platz, das Bildzeichen nicht. Auswahl bei Julian.
+
