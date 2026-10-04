@@ -4229,3 +4229,13 @@ Julian, nach dem ersten echten Lauf von 5.16: „ok, hat funktioniert. jetzt las
 
 1.048 Tests, tsc und Lint grün.
 
+## 2026-10-03 · Calibre-App: große Cover vorn, das Raster zeigt das aktuelle Cover (ROADMAP 5.16a)
+
+Julian nach dem ersten Gebrauch: „sort the images that are big enough to use as covers the front / in the general preview show always the cover that is currently used".
+
+**Größe:** Open Library nennt die Größe eines Scans nirgends; die App holt deshalb jedes Cover des geöffneten Werks (über die Cover-ID, die Open Library nicht begrenzt), liest das Maß aus dem Dateikopf und verwirft die Bytes. Vier gleichzeitig; die Maße bleiben in `cover-sizes.json` neben den Backups, weil eine Cover-ID ihr Bild nie wechselt. Sortiert wird: groß genug (≥ 90 % der Pixel des Covers in Calibre, dieselbe Schwelle wie beim Schreiben) — noch nicht vermessen — kleiner — Größe unbekannt — zu klein für ein Cover; innerhalb der Großen die eigene Ausgabe vorn, dann nach Pixelzahl. **Gemessen an *Rendezvous with Rama*** (Calibre: 948 × 1558): 33 Cover in 3 s vermessen; von 16 englischen 8 groß genug, die größten 2813 × 4536, 2568 × 4370 und 2208 × 3349 — die Annahme aus 5.16, Open Library habe meist nur ~310 × 500, galt für die SF-Masterworks-Drucke, nicht für viel gescannte Bücher. Die Cover der eigenen Ausgabe waren mit 284 × 475 die kleinen. Das größte gesetzt: Bild in 1,0 s geholt und ganz dekodiert, in 2,5 s geschrieben; Calibre verkleinerte es auf 1364 × 2200 (sein Höchstmaß), die Kontrolle nahm es als dasselbe Bild an (gleiche Proportion, Breite nicht gewachsen).
+
+**Aktuelles Cover:** die Bilder des Rasters waren eine Stunde im Browser gecacht und nur innerhalb eines Seitenaufrufs versioniert — nach einem Neuladen oder einer Änderung außerhalb der Seite zeigte das Raster das alte Cover. Jetzt trägt jede Bildadresse die Änderungszeit der Datei, `/api/state` liest die Bibliothek jedes Mal neu, und die Seite fragt beim Zurückkommen ins Fenster nach. Geprüft: Cover in der Seite gesetzt, mit `undo.ts` im Terminal zurückgenommen, Fenster wieder aktiviert — Kachel, Kopf und Zählung zeigten das alte Cover mit seinem Maß, die Bildadresse eine neue Version.
+
+1.049 Tests, tsc und Lint grün.
+

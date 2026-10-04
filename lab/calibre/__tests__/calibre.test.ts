@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { PNG } from 'pngjs';
 import type { CollectionRecord } from '../../../lib/collections';
 import type { PublicWall } from '../../../lib/walls/model';
@@ -7,6 +7,7 @@ import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pickCovers } from '../covers';
+import { CoverSizes } from '../download';
 import { cleanBookTitle, firstAuthor, hitFromSummary, proposal, WorkMap } from '../find';
 import { checkCover, imageFacts, imageSizeFast, isSmaller } from '../image';
 import { bookDir, booksFromRows, type BookRow, type CalibreBook } from '../library';
@@ -294,5 +295,25 @@ describe('the size of a cover from its header', () => {
   it('says nothing about a file that is neither, or cut off before the frame', () => {
     expect(imageSizeFast(Buffer.from('<html>'))).toBeNull();
     expect(imageSizeFast(Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x04, 0x00, 0x00]))).toBeNull();
+  });
+});
+
+describe('the sizes of the catalogue’s covers', () => {
+  it('keeps what was measured across runs, and never asks for it again', async () => {
+    vi.useFakeTimers();
+    const file = join(mkdtempSync(join(tmpdir(), 'calibre-sizes-')), 'deep', 'cover-sizes.json');
+    const sizes = new CoverSizes(file, 'http://localhost');
+    expect(sizes.peek('ol:1')).toBeUndefined();
+    sizes.remember('ol:1', { width: 754, height: 1200 });
+    sizes.remember('ol:2', { width: 128, height: 195 });
+    // A second answer for the same cover changes nothing: an id never changes its image.
+    sizes.remember('ol:1', { width: 1, height: 1 });
+    vi.advanceTimersByTime(2000);
+    vi.useRealTimers();
+    const again = new CoverSizes(file, 'http://localhost');
+    expect(again.peek('ol:1')).toEqual({ width: 754, height: 1200 });
+    // Known sizes are answered without a request (there is no network in a test).
+    expect(await again.get('ol:2')).toEqual({ width: 128, height: 195 });
+    expect(await again.get('not a cover id')).toBeNull();
   });
 });

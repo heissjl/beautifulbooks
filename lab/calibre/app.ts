@@ -30,7 +30,7 @@ import { parseEditions } from '../../lib/sources/openlibrary-parse';
 import { isWorkId } from '../../lib/work';
 import type { Work } from '../../lib/model';
 import { pickCovers } from './covers';
-import { CoverDownloads } from './download';
+import { CoverDownloads, CoverSizes } from './download';
 import { findWorks, WorkMap } from './find';
 import { jsonBody, refused, send } from './http';
 import { imageFacts, imageSizeFast, isSmaller, type ImageFacts } from './image';
@@ -54,19 +54,27 @@ const library = findLibrary(flag('library'));
 const writer = new CoverWriter({ library, calibredb: findCalibredb(), backupRoot: defaultBackupRoot() });
 const works = new WorkMap(join(writer.root, 'works.json'));
 const downloads = new CoverDownloads(SITE);
+// Cover ids are the catalogue's, not a library's: one file of sizes for every library.
+const coverSizes = new CoverSizes(join(defaultBackupRoot(), 'cover-sizes.json'), SITE);
 let books = readLibrary(library);
 
-/* The size of every cover, from the file header; read again only when the file changed. */
-const sizes = new Map<number, { mtimeMs: number; size: { width: number; height: number } | null }>();
-function sizeOf(book: CalibreBook): { width: number; height: number } | null {
+/*
+ * The size of every cover in Calibre, from the file header; read again only
+ * when the file changed. The file's change time is also the picture's version
+ * in the page's address: the wall must show the cover the book has *now*,
+ * whoever changed it — this app, an undo, or Calibre itself (Julian,
+ * 2026-10-03: „in the general preview show always the cover that is currently used").
+ */
+const sizes = new Map<number, { v: number; size: { width: number; height: number } | null }>();
+function coverNow(book: CalibreBook): { v: number; size: { width: number; height: number } | null } | null {
   const file = coverFile(library, book);
   if (!existsSync(file)) return null;
-  const mtimeMs = statSync(file).mtimeMs;
+  const v = Math.round(statSync(file).mtimeMs);
   const known = sizes.get(book.id);
-  if (known && known.mtimeMs === mtimeMs) return known.size;
-  const size = imageSizeFast(readFileSync(file));
-  sizes.set(book.id, { mtimeMs, size });
-  return size;
+  if (known && known.v === v) return known;
+  const fresh = { v, size: imageSizeFast(readFileSync(file)) };
+  sizes.set(book.id, fresh);
+  return fresh;
 }
 
 function oldFacts(book: CalibreBook): ImageFacts | { missing: string } {
@@ -76,6 +84,12 @@ function oldFacts(book: CalibreBook): ImageFacts | { missing: string } {
 }
 
 function state() {
+  // Read anew every time: a book added or a cover changed in Calibre shows up on the next look.
+  try {
+    books = readLibrary(library);
+  } catch {
+    // Calibre may be writing this very moment; the list from a moment ago is still the best answer.
+  }
   const stacks = undoStacks(writer.journal());
   const remembered = works.all();
   return {
@@ -85,6 +99,7 @@ function state() {
     backupRoot: writer.root,
     books: books.map((b) => {
       const stack = stacks.get(b.id);
+      const cover = coverNow(b);
       return {
         id: b.id,
         title: b.title,
@@ -93,7 +108,8 @@ function state() {
         languages: b.languages,
         formats: b.formats,
         hasCover: b.hasCover,
-        size: sizeOf(b),
+        size: cover?.size ?? null,
+        v: cover?.v ?? 0,
         ...(remembered[b.id] ? { workId: remembered[b.id] } : {}),
         // The cover the tool last put there, while that write can still be taken back.
         ...(stack ? { applied: stack[stack.length - 1].coverId, canUndo: !!stack[stack.length - 1].backup } : {}),
@@ -156,16 +172,23 @@ const server = createServer(async (req, res) => {
       try {
         const page = await coverPage(coversOf[1], offset);
         const next = offset + 100 < page.size && offset + 100 <= MAX_OFFSET ? offset + 100 : null;
-        return send(res, 200, { covers: page.covers, editions: page.size, next });
+        // Sizes already known ride along, so a work opened before sorts at once.
+        const covers = page.covers.map((c) => ({ ...c, ...(coverSizes.peek(c.coverId) ? { size: coverSizes.peek(c.coverId) } : {}) }));
+        return send(res, 200, { covers, editions: page.size, next });
       } catch {
         return send(res, 502, { error: 'Open Library did not answer. Try again in a moment.' });
       }
     }
 
     const coverId = url.searchParams.get('cover') ?? '';
+    if (req.method === 'GET' && path === '/api/size') {
+      if (!COVER_ID.test(coverId)) return send(res, 400, { error: 'Bad cover id.' });
+      return send(res, 200, { size: await coverSizes.get(coverId) });
+    }
     if (req.method === 'GET' && (path === '/api/new' || path === '/new')) {
       if (!COVER_ID.test(coverId)) return send(res, 400, { error: 'Bad cover id.' });
       const f = await downloads.get(coverId);
+      if (f.check.ok) coverSizes.remember(coverId, f.check);
       if (path === '/api/new') return send(res, 200, f.check);
       if (!f.check.ok || !f.bytes) return send(res, 502, { error: f.check.ok ? 'No image.' : f.check.reason });
       return send(res, 200, f.bytes, `image/${f.check.format}`);

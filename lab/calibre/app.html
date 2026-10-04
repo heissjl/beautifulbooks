@@ -65,6 +65,10 @@
   .cover.mine .frame { border-color: var(--ok); box-shadow: 0 0 0 1px var(--ok); }
   .cover.inuse .frame { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
   .cover .c { font-size: 11px; color: var(--soft); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cover .z { font-size: 11px; margin-top: 3px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .cover .z + .c { margin-top: 0; }
+  .cover.less .frame { opacity: .5; }
+  .cover.less .z { color: var(--warn); }
   #compare { position: fixed; inset: 0; z-index: 20; background: var(--shade); display: flex; align-items: center; justify-content: center; padding: 16px; }
   #compare .box { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 18px; max-width: 760px; width: 100%; max-height: 100%; overflow-y: auto; }
   .pair { display: flex; gap: 16px; justify-content: center; align-items: flex-end; flex-wrap: wrap; }
@@ -117,9 +121,20 @@ const AUTO_PAGES = 3;               // edition pages loaded without asking; Open
 const REASON = { isbn: 'by its ISBN', remembered: 'your choice', 'author+title': 'title and author agree', author: 'same author — check the title', 'title-only': 'same title — check the author' };
 const LANG = { en: 'English', de: 'German', es: 'Spanish', fr: 'French', it: 'Italian', nl: 'Dutch', pt: 'Portuguese', ru: 'Russian', pl: 'Polish', sv: 'Swedish', ja: 'Japanese' };
 const langName = (l) => LANG[l] ?? l;
+const area = (z) => (z ? z.width * z.height : 0);
+/*
+ * Where a cover of the work stands against the one in Calibre:
+ * 0 large enough · 1 not measured yet · 2 fewer pixels · 3 size unknown · 4 too small to be a cover at all.
+ * 0.9 is SMALLER_BELOW and 200 × 280 the minimum in image.ts — the server decides the same way.
+ */
+function tier(c, current) {
+  if (c.size === undefined) return 1;
+  if (c.size === null) return 3;
+  if (c.size.width < 200 || c.size.height < 280) return 4;
+  return !current || area(c.size) >= 0.9 * area(current) ? 0 : 2;
+}
 
 let S = null;                       // the server's state
-let version = 0;                    // busts the image cache after a write
 const view = { q: '', chip: 'all', sort: 'author' };
 let open = null;                    // the book in the drawer and everything loaded for it
 let picked = null;                  // the cover in the compare box
@@ -156,7 +171,7 @@ function shown() {
 function tile(b) {
   return el('button', { class: 'book', id: `book-${b.id}`, onclick: () => openBook(b.id) },
     el('div', { class: 'frame' },
-      b.size ? el('img', { src: `/old/${b.id}?t=${token}&v=${version}`, alt: '', loading: 'lazy' }) : el('span', { class: 'none' }, b.hasCover ? 'cover not on this Mac' : 'no cover'),
+      b.size ? el('img', { src: `/old/${b.id}?t=${token}&v=${b.v}`, alt: '', loading: 'lazy' }) : el('span', { class: 'none' }, b.hasCover ? 'cover not on this Mac' : 'no cover'),
       b.applied ? el('span', { class: 'mark' }, 'changed') : null),
     el('div', { class: 't' }, b.title),
     el('div', { class: 'a' }, b.authors.join(', ') || '—'),
@@ -181,7 +196,7 @@ function renderGrid() {
 /* ---------- one book ---------- */
 
 async function openBook(id) {
-  open = { id, found: null, workId: null, covers: [], editions: 0, next: null, pages: 0, loading: false, lang: null, error: null, query: '', others: false };
+  open = { id, found: null, workId: null, covers: [], editions: 0, next: null, pages: 0, loading: false, lang: null, error: null, query: '', others: false, bigOnly: false };
   $('shade').hidden = false;
   $('drawer').hidden = false;
   $('drawer').scrollTop = 0;
@@ -239,6 +254,7 @@ async function loadCovers(pages) {
     for (const c of body.covers) {
       const have = mine.covers.find((x) => x.coverId === c.coverId);
       if (!have) { mine.covers.push(c); continue; }
+      if (have.size === undefined && c.size) have.size = c.size;
       for (const l of c.languages) if (!have.languages.includes(l)) have.languages.push(l);
       for (const p of c.publishers) if (!have.publishers.includes(p)) have.publishers.push(p);
       if (c.year && (!have.year || c.year > have.year)) have.year = c.year;
@@ -250,9 +266,32 @@ async function loadCovers(pages) {
     const own = bookOf(mine.id).languages[0];
     if (mine.lang === null && own && mine.covers.some((c) => c.languages.includes(own))) mine.lang = own;
     renderCovers();
+    measure(mine);
   }
   mine.loading = false;
   renderCovers();
+}
+
+/*
+ * How large each cover really is. Open Library says so only when the image is
+ * fetched, so every cover of the open work is asked for, four at a time; the
+ * wall re-sorts as the answers come, a few at once rather than tile by tile.
+ */
+let sorting = null;
+function measure(mine) {
+  mine.measuring ??= 0;
+  const next = () => mine.covers.find((c) => c.size === undefined && !c.asked);
+  const work = async () => {
+    for (let c = next(); c && open === mine; c = next()) {
+      c.asked = true;
+      const { status, body } = await api(`/api/size?cover=${encodeURIComponent(c.coverId)}`);
+      c.size = status === 200 ? body.size : null;
+      if (open !== mine) return;
+      clearTimeout(sorting);
+      sorting = setTimeout(() => { if (open === mine) renderCovers(); }, 250);
+    }
+  };
+  for (; mine.measuring < 4; mine.measuring++) work().finally(() => { mine.measuring--; });
 }
 
 function renderDrawer() {
@@ -268,7 +307,7 @@ function renderHead() {
     el('button', { class: 'close', onclick: closeBook, 'aria-label': 'Close' }, 'Close'),
     el('div', { class: 'head' },
       el('div', { class: 'now' },
-        el('div', { class: 'frame' }, b.size ? el('img', { src: `/old/${b.id}?t=${token}&v=${version}`, alt: 'the cover in Calibre' }) : el('span', { class: 'none' }, 'no cover')),
+        el('div', { class: 'frame' }, b.size ? el('img', { src: `/old/${b.id}?t=${token}&v=${b.v}`, alt: 'the cover in Calibre' }) : el('span', { class: 'none' }, 'no cover')),
         el('div', { class: `meta${isSmall(b) ? ' note warn' : ''}` }, b.size ? px(b.size) : '')),
       el('div', { style: 'min-width:0' },
         el('h2', {}, b.title),
@@ -315,18 +354,29 @@ function renderCovers() {
   const mine = new Set(open.found?.editionCovers ?? []);
   const langs = [...new Set(open.covers.flatMap((c) => c.languages))].sort((x, y) => langName(x).localeCompare(langName(y)));
   const lang = open.lang ?? 'all';
-  const list = open.covers
-    .filter((c) => lang === 'all' || c.languages.includes(lang) || mine.has(c.coverId))
-    .sort((x, y) => (mine.has(y.coverId) - mine.has(x.coverId)) || ((y.year ?? 0) - (x.year ?? 0)));
+  const inLang = open.covers.filter((c) => lang === 'all' || c.languages.includes(lang) || mine.has(c.coverId));
+  const large = inLang.filter((c) => tier(c, b.size) === 0);
+  const pending = inLang.filter((c) => c.size === undefined).length;
+  // Large enough first; among those the own edition, then the most pixels.
+  const list = (open.bigOnly ? large : inLang).slice().sort((x, y) =>
+    (tier(x, b.size) - tier(y, b.size)) || (mine.has(y.coverId) - mine.has(x.coverId)) || (area(y.size) - area(x.size)) || ((y.year ?? 0) - (x.year ?? 0)));
   const count = (l) => open.covers.filter((c) => c.languages.includes(l)).length;
   const chip = (key, label) => el('button', { class: 'chip', 'aria-pressed': String(lang === key), onclick: () => { open.lang = key; renderCovers(); } }, label);
   const seen = Math.min(open.pages * 100, open.editions);
+  const against = b.size ? `the cover in Calibre (${px(b.size)})` : 'a cover needs (200 × 280 px)';
+  const sizeLine = (c) => c.size ? `${c.size.width} × ${c.size.height}` : c.size === null ? 'size unknown' : '…';
   box.replaceChildren(
     el('h3', {}, 'Covers of this work'),
-    el('div', { class: 'row', style: 'margin:0 0 10px' }, chip('all', `All (${open.covers.length})`), langs.map((l) => chip(l, `${langName(l)} (${count(l)})`))),
-    el('div', { class: 'covers' }, list.map((c) => el('button', { class: `cover${mine.has(c.coverId) ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}`, onclick: () => pick(c), title: c.publishers.join(', ') },
+    el('div', { class: 'row', style: 'margin:0 0 10px' }, chip('all', `All (${open.covers.length})`), langs.map((l) => chip(l, `${langName(l)} (${count(l)})`)),
+      el('button', { class: 'chip', 'aria-pressed': String(open.bigOnly), onclick: () => { open.bigOnly = !open.bigOnly; renderCovers(); } }, `Large enough only (${large.length})`)),
+    el('p', { class: 'meta', style: 'margin:0 0 10px' },
+      pending ? `Measuring… ${inLang.length - pending} of ${inLang.length} covers; ${large.length} so far at least as large as ${against}.`
+        : `${large.length} of ${inLang.length} are at least as large as ${against}. They come first; the faded ones have fewer pixels.`),
+    el('div', { class: 'covers' }, list.map((c) => el('button', { class: `cover${mine.has(c.coverId) ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}${tier(c, b.size) >= 2 ? ' less' : ''}`, onclick: () => pick(c), title: c.publishers.join(', ') },
       el('div', { class: 'frame' }, el('img', { src: c.thumb, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' })),
+      el('div', { class: 'z' }, sizeLine(c) + (tier(c, b.size) === 4 ? ' · too small' : '')),
       el('div', { class: 'c' }, [mine.has(c.coverId) ? 'your edition' : '', c.year, c.languages.map((l) => l.toUpperCase()).join(' ')].filter(Boolean).join(' · ') || '—')))),
+    open.bigOnly && !list.length && !pending ? el('p', { class: 'meta' }, 'None of the covers seen so far is large enough.') : null,
     open.error ? el('p', { class: 'note bad' }, open.error) : null,
     el('p', { class: 'meta', style: 'margin-top:12px' },
       open.loading ? `Loading… ${open.covers.length} covers so far.` : `${open.covers.length} covers seen in ${seen} of ${open.editions} edition records at Open Library.`),
@@ -361,7 +411,7 @@ function renderCompare() {
   $('compare').replaceChildren(el('div', { class: 'box' },
     el('div', { class: 'pair' },
       el('figure', {},
-        el('div', { class: 'frame' }, p.old && !p.old.missing ? el('img', { src: `/old/${b.id}?t=${token}&v=${version}`, alt: 'the cover in Calibre' }) : el('span', { class: 'none' }, p.old?.missing ?? '…')),
+        el('div', { class: 'frame' }, p.old && !p.old.missing ? el('img', { src: `/old/${b.id}?t=${token}&v=${b.v}`, alt: 'the cover in Calibre' }) : el('span', { class: 'none' }, p.old?.missing ?? '…')),
         el('figcaption', {}, 'in Calibre now', el('br'), p.old && !p.old.missing ? px(p.old) : '')),
       el('span', { class: 'arrow' }, '→'),
       el('figure', {},
@@ -379,7 +429,6 @@ function renderCompare() {
 
 function refreshAfterWrite(state, bookId) {
   S = state;
-  version++;
   renderTop();
   document.getElementById(`book-${bookId}`)?.replaceWith(tile(bookOf(bookId)));
   if (open?.id === bookId) { renderHead(); renderCovers(); }
@@ -411,6 +460,21 @@ $('sort').addEventListener('change', (e) => { view.sort = e.target.value; render
 $('shade').addEventListener('click', closeBook);
 $('compare').addEventListener('click', (e) => { if (e.target === $('compare')) closeCompare(); });
 document.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (picked) closeCompare(); else if (open) closeBook(); });
+
+// Coming back to the window: a cover changed elsewhere — in Calibre, by an undo in the terminal — shows at once.
+async function refresh() {
+  if (!S || document.hidden || picked?.busy) return;
+  const { status, body } = await api('/api/state');
+  if (status !== 200) return;
+  const before = JSON.stringify(S.books.map((b) => [b.id, b.v, b.applied, b.title]));
+  S = body;
+  if (before === JSON.stringify(S.books.map((b) => [b.id, b.v, b.applied, b.title]))) return;
+  renderTop();
+  renderGrid();
+  if (open && bookOf(open.id)) { renderHead(); renderCovers(); } else if (open) closeBook();
+}
+window.addEventListener('focus', refresh);
+document.addEventListener('visibilitychange', refresh);
 
 (async () => {
   const first = await api('/api/state');
