@@ -673,3 +673,5 @@ Noch nicht entschieden, nichts geändert. Der Schutz auf `byitscovers.com` (Null
 
 Vorschlag: **Profilbild E2 (oder E1), Banner mit der Wortmarke** — der Satz braucht Platz, das Bildzeichen nicht. Auswahl bei Julian.
 
+**Gewählt: W1 als Profilbild, der Banner mit der Wortmarke** (Julian, 2026-10-04: „vorerst W1 und das banner wie unten, mir war nicht klar, dass es das calibre-logo ist"). Fertige Dateien im Repository unter `assets/social/` (mit README und den SVG-Vorlagen): `avatar-400.png`, `avatar-1000.png`, `banner-1500x500.png` (X, Mastodon), `banner-3000x1000.png` (Bluesky). Hochladen ist Julians Schritt, im jeweiligen Konto angemeldet. Beim ersten Setzen kamen zwei Kacheln des Banners schwarz heraus (zsh zählt Listen ab 1, eine Farbe blieb leer) — vor dem Commit gesehen und behoben.
+
