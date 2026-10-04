@@ -4255,3 +4255,15 @@ Aus den 328 Treffern werden 319 Kacheln (zwei Ausgaben eines Buchs sind eine Kac
 **Offen:** Julians Entscheidungen (Plan §6) und danach der eine Lauf gegen die echte Seite; die 69 Vorschläge durchsehen; die echte Bibliothek schreibt `lab/calibre` (5.16). Nicht gemacht: die Cover-Erkennung des vorhandenen Covers (Plan §5, optional).
 
 1.089 Tests, tsc und Lint grün. `npm run build` lief nicht — `app/`, `components/` und `lib/` sind unverändert.
+
+## 2026-10-03 · 5.17 einmal gegen die echte Seite, als Test-Besucher
+
+Julian zur Frage, ob die Liste seiner Bücher in den Speicher der Seite darf: „ja, aber benutze vielleicht eine dedizierte test-user ID, mit der wir in production testen". Und zum Befund über den Editor: „das soll ja einfach erstmal nur eine sammlung initialisieren aus einer calibre datei, die man hochlädt oder verbindet / was ist an deiner version anders?"
+
+**Die Test-ID:** `BB_TEST_VISITOR` in der `.env.local` des Hauptordners, einmal erzeugt (`newVisitorId()`), nie ausgegeben; `serve.ts --as-test` liest sie statt `BB_VISITOR` und nennt die Sammlung „My Calibre library (test)". Ein Test hält fest, dass das Werkzeug, nach dem Test-Besucher gefragt, nie auf die eigene ID ausweicht. Die Regel gilt über dieses Werkzeug hinaus: was auf der echten Seite zum Ausprobieren angelegt wird, gehört dem Test-Besucher.
+
+**Der Lauf:** eine Anfrage, `POST https://buyitscovers.com/api/walls`, 328 angehakte Bücher (nur die Treffer, kein Vorschlag) → **319 Kacheln, Antwort nach 1,0 s**, Sammlung `y3lsl27ot5`, nicht gespeichert — sie verfällt nach 48 Stunden (2026-10-05), wenn niemand „Keep it" drückt. Die Zuordnungsdatei liegt unter `…/calibre/maps/y3lsl27ot5.json`. Produktion danach **einmal** angesehen (`/c/y3lsl27ot5`): Titel und „319 covers." stehen, die Bilder kommen, erste Antwort nach 133 ms, 29 KB HTML. Breite und Höhe sind dabei nicht gemessen (das Browserfenster hatte in dem Moment keine Breite); dafür gelten die Zahlen vom Dev-Server oben.
+
+**Was an der gebauten Fassung anders ist als „eine Calibre-Datei hochladen":** das Ergebnis ist dasselbe, der Weg nicht. Gebaut ist ein Kommando auf Julians Mac, das den Bibliotheksordner liest, eine Prüfseite zeigt und die Sammlung über die Schnittstelle anlegt; es braucht seine ID in einer Datei und merkt sich für den Rückweg, welches Buch welches Werk ist. Auf der Seite gibt es dafür keinen Knopf, und ein anderer Leser kann es nicht benutzen. Der Befund über den Editor (ein Buch unter 320 Kacheln nur durch Scrollen zu finden) betrifft das Wählen danach, nicht das Anlegen. Die Fassung für die Seite steht als Vorschlag 5.17a in der Roadmap; die Zahlen dieser Messung sagen, was sie kostet: 421 Bücher sind 593 Anfragen an Open Library und vier Minuten — der Foto-Import der Seite hört heute bei 80 Büchern auf.
+
+43 Tests im Import, tsc und Lint grün.

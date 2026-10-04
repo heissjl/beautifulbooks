@@ -20,7 +20,9 @@
  * named explicitly, once, by Julian. The visitor id comes from `BB_VISITOR`
  * (see `upload.ts`) and is never shown, logged or stored by this tool.
  * `--test-visitor` makes a throwaway id for a dev server and prints the link
- * that hands it to the browser.
+ * that hands it to the browser. `--as-test` uploads as the test visitor
+ * (`BB_TEST_VISITOR`): tests on the live site go there, never among Julian's
+ * own collections.
  */
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { existsSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from 'node:fs';
@@ -37,7 +39,7 @@ import { defaultBackupRoot, libraryKey } from '../calibre/safety';
 import { tally, tilesOf, type Assignment } from './assign';
 import { Catalogue, DiskCache, stateDir } from './lookup';
 import { included, rowsOf, type Decisions } from './review';
-import { DEFAULT_TITLE, isLocalBase, uploadWall, UploadError, visitorFromEnv } from './upload';
+import { DEFAULT_TITLE, isLocalBase, TEST_VISITOR_VAR, uploadWall, UploadError, visitorFromEnv, VISITOR_VAR } from './upload';
 
 const args = process.argv.slice(2);
 const flag = (name: string): string | undefined => {
@@ -95,8 +97,10 @@ async function main(): Promise<void> {
   const catalogue = new Catalogue(cache);
 
   /* The id never leaves this variable except as the cookie of the one upload request. */
-  let visitor = visitorFromEnv();
-  let visitorNote = visitor ? 'BB_VISITOR is set' : 'BB_VISITOR is not set';
+  const AS_TEST = args.includes('--as-test');
+  const visitorVar = AS_TEST ? TEST_VISITOR_VAR : VISITOR_VAR;
+  let visitor = visitorFromEnv(process.env, process.cwd(), visitorVar);
+  let visitorNote = `${visitorVar} is ${visitor ? 'set' : 'not set'}${AS_TEST ? ' — the test visitor, not Julian’s own collections' : ''}`;
   if (args.includes('--test-visitor')) {
     if (!isLocalBase(BASE)) throw new Error('--test-visitor is for a dev server only. For the site, set BB_VISITOR to the ID shown on /create ("Your ID").');
     visitor = newVisitorId();
@@ -104,6 +108,8 @@ async function main(): Promise<void> {
     // A throwaway on a dev server, printed so the browser can take it over (5.13l); a real id is never printed.
     console.log(`test id: open ${BASE}/create#id=${visitor} once, so the browser owns what this run creates`);
   }
+
+  const TITLE = AS_TEST ? `${DEFAULT_TITLE} (test)` : DEFAULT_TITLE;
 
   /* Works a search of this run returned: a row may only be given one of these, never an id from the page. */
   const offered = new Map<string, WorkSummary>();
@@ -118,7 +124,7 @@ async function main(): Promise<void> {
       tally: tally(assignments),
       rows: all,
       ticked: { books: included(all).length, tiles: tiles.length },
-      upload: { base: BASE, local: isLocalBase(BASE), ready: !!visitor, visitorNote, title: DEFAULT_TITLE, past: uploads },
+      upload: { base: BASE, local: isLocalBase(BASE), ready: !!visitor, visitorNote, title: TITLE, past: uploads },
     };
   };
 
@@ -168,13 +174,13 @@ async function main(): Promise<void> {
             return send(res, 409, {
               error: isLocalBase(BASE)
                 ? 'No visitor ID. Start the tool with --test-visitor for a dev server, or set BB_VISITOR.'
-                : 'No visitor ID. Put BB_VISITOR=<your ID> into the main folder’s .env.local — the ID is on /create under "Your ID".',
+                : `No visitor ID. Put ${visitorVar}=<ID> into the main folder’s .env.local${AS_TEST ? '' : ' — your ID is on /create under "Your ID"'}.`,
             });
           }
           const chosen = included(rows());
           const { tiles, bookWorks } = tilesOf(chosen);
           try {
-            const up = await uploadWall({ base: BASE, visitor, title: cleanTitle(body.title) || DEFAULT_TITLE, tiles });
+            const up = await uploadWall({ base: BASE, visitor, title: cleanTitle(body.title) || TITLE, tiles });
             const mapFile = writeMap(defaultBackupRoot(), { wall: up.wallId, library: libraryKey(library), createdAt: new Date().toISOString(), books: bookWorks });
             uploads.push({ wallId: up.wallId, base: BASE, at: new Date().toISOString(), tiles: up.tiles, books: bookWorks.length });
             writeJson(uploadsFile, uploads);

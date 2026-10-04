@@ -7,7 +7,9 @@
  * (5.13j); this tool never sends `save`.
  *
  * **The visitor id is the key to Julian's collections.** It comes from
- * `BB_VISITOR` (the environment, else the main folder's `.env.local`), goes
+ * `BB_VISITOR` — or, with `--as-test`, from `BB_TEST_VISITOR`, the visitor
+ * kept for tests on the live site — (the environment, else the main folder's
+ * `.env.local`), goes
  * into the cookie header and nowhere else: no message, no file, no address
  * built here carries it, and a test holds every output against it.
  *
@@ -27,16 +29,25 @@ export class UploadError extends Error {}
 
 export const isLocalBase = (base: string): boolean => /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(base);
 
-/** `BB_VISITOR` from the environment, else from the main folder's `.env.local`; null when neither has a usable id. */
-export function visitorFromEnv(env: Record<string, string | undefined> = process.env, cwd: string = process.cwd()): string | null {
-  const given = env.BB_VISITOR;
+/** Julian's own id. */
+export const VISITOR_VAR = 'BB_VISITOR';
+/**
+ * A visitor of its own for tests on the live site (Julian, 2026-10-03: „benutze
+ * vielleicht eine dedizierte test-user ID, mit der wir in production testen").
+ * What a test creates there never lands among Julian's own collections.
+ */
+export const TEST_VISITOR_VAR = 'BB_TEST_VISITOR';
+
+/** The named variable from the environment, else from the main folder's `.env.local`; null when neither has a usable id. */
+export function visitorFromEnv(env: Record<string, string | undefined> = process.env, cwd: string = process.cwd(), name: string = VISITOR_VAR): string | null {
+  const given = env[name];
   if (given) return isVisitorId(normalVisitorId(given)) ? normalVisitorId(given) : null;
   try {
     // A worktree has no .env.local of its own; the main folder is where git keeps the common directory.
     const common = execFileSync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'], { cwd, encoding: 'utf8' }).trim();
     const file = join(dirname(common), '.env.local');
     if (!existsSync(file)) return null;
-    const value = parseEnv(readFileSync(file, 'utf8')).get('BB_VISITOR');
+    const value = parseEnv(readFileSync(file, 'utf8')).get(name);
     return value && isVisitorId(normalVisitorId(value)) ? normalVisitorId(value) : null;
   } catch {
     return null;

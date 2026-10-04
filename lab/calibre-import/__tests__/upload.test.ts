@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Tile } from '../../../lib/walls/model';
-import { isLocalBase, uploadWall, UploadError, visitorFromEnv } from '../upload';
+import { isLocalBase, TEST_VISITOR_VAR, uploadWall, UploadError, visitorFromEnv } from '../upload';
 
 const VISITOR = '0f8fad5b-d9cb-469f-a165-70867728950e';
 const tile = (n: number): Tile => ({ workId: `OL${n}W`, coverId: String(1000 + n), title: `Book ${n}`, author: 'A B', printings: [] });
@@ -76,6 +76,15 @@ describe('where the id comes from', () => {
   it('takes BB_VISITOR from the environment, lower-cased, and nothing that is not an id', () => {
     expect(visitorFromEnv({ BB_VISITOR: ` ${VISITOR.toUpperCase()} ` })).toBe(VISITOR);
     expect(visitorFromEnv({ BB_VISITOR: 'not-an-id' })).toBeNull();
+  });
+
+  it('keeps the test visitor apart from Julian’s own', () => {
+    const other = '1b4e28ba-2fa1-41d2-883f-0016d3cca427';
+    const env = { BB_VISITOR: VISITOR, BB_TEST_VISITOR: other };
+    expect(visitorFromEnv(env)).toBe(VISITOR);
+    expect(visitorFromEnv(env, process.cwd(), TEST_VISITOR_VAR)).toBe(other);
+    // Asked for the test visitor, the tool never falls back to the real one.
+    expect(visitorFromEnv({ BB_VISITOR: VISITOR, BB_TEST_VISITOR: 'nope' }, process.cwd(), TEST_VISITOR_VAR)).toBeNull();
   });
 
   it('knows a dev server from the site', () => {

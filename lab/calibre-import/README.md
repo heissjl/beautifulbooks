@@ -16,13 +16,16 @@ Für wie viele Bücher der Calibre-Bibliothek findet sich das richtige Werk bei 
 npx tsx lab/calibre-import/measure.ts              # 1. den Katalog fragen (einmal; jede Antwort bleibt auf der Platte)
 npx tsx lab/calibre-import/measure.ts --sample 40  #    dazu 40 Treffer zum Nachsehen, mit festem Zufall
 npx tsx lab/calibre-import/serve.ts --test-visitor # 2. die Prüfseite; lädt zu `npm run dev` hoch, mit einer Wegwerf-ID
-npx tsx lab/calibre-import/serve.ts --base https://buyitscovers.com   # 3. die echte Seite — einmal, von Julian
+npx tsx lab/calibre-import/serve.ts --base https://buyitscovers.com --as-test   # 3a. die echte Seite, als Test-Besucher
+npx tsx lab/calibre-import/serve.ts --base https://buyitscovers.com   # 3b. die echte Seite, unter Julians eigener ID
 npx tsx lab/calibre/serve.ts <Sammlungs-ID>        # 4. zurück: die gewählten Cover in Calibre (Sicherungen dort)
 ```
 
 Die Prüfseite (Port 4328, 127.0.0.1, Token) zeigt je Buch eine Zeile: links Cover und Titel aus Calibre, rechts das gefundene Werk und der Grund. **Treffer sind angehakt, Vorschläge nicht.** „another work…" sucht für eine Zeile von Hand im Katalog; „Create the collection" schickt die angehakten Zeilen in einer Anfrage an die Seite und schreibt die Zuordnungsdatei für den Rückweg.
 
-Für Schritt 3 braucht das Werkzeug Julians Besucher-ID: `BB_VISITOR=<ID>` in der `.env.local` des Hauptordners (die ID steht auf `/create` unter „Your ID"). Ohne sie lädt es nicht hoch. Die neue Sammlung ist **nicht gespeichert** und verfällt nach 48 Stunden, wenn Julian auf der Seite nicht „Keep it" drückt — das Werkzeug schickt nie `save`.
+**Tests auf der echten Seite laufen unter einer eigenen Test-ID** (Julian, 2026-10-03: „benutze vielleicht eine dedizierte test-user ID, mit der wir in production testen"): `BB_TEST_VISITOR` in der `.env.local` des Hauptordners, benutzt mit `--as-test`; die Sammlung heißt dann „My Calibre library (test)" und steht nie unter Julians eigenen. Um sie im Browser zu bearbeiten: ein privates Fenster, `https://buyitscovers.com/create#id=<Wert von BB_TEST_VISITOR>` (der Wert steht nur in der `.env.local`; das Cockpit zeigt ihn unter „Dienste & Einstellungen"). Ansehen kann sie jeder mit dem Link `/c/<id>`.
+
+Für Schritt 3b braucht das Werkzeug Julians eigene Besucher-ID: `BB_VISITOR=<ID>` in der `.env.local` des Hauptordners (die ID steht auf `/create` unter „Your ID"). Ohne sie lädt es nicht hoch. Die neue Sammlung ist **nicht gespeichert** und verfällt nach 48 Stunden, wenn Julian auf der Seite nicht „Keep it" drückt — das Werkzeug schickt nie `save`.
 
 ## Regeln
 
@@ -49,7 +52,7 @@ Für Schritt 3 braucht das Werkzeug Julians Besucher-ID: `BB_VISITOR=<ID>` in de
 
 ## Status
 
-**Gebaut und gemessen am 2026-10-03; gegen `npm run dev` hochgeladen, auf der Seite ein Cover getauscht und auf einer Probe-Kopie zurückgeschrieben. Die echte Seite und die echte Bibliothek stehen aus — beides macht Julian.** Zahlen und Einzelheiten: [Historie](../../docs/history.md#2026-10-03--die-calibre-bibliothek-als-eigene-sammlung-lab-roadmap-517).
+**Gebaut und gemessen am 2026-10-03; gegen `npm run dev` hochgeladen, auf der Seite ein Cover getauscht und auf einer Probe-Kopie zurückgeschrieben; am selben Abend einmal gegen die echte Seite, als Test-Besucher: `https://buyitscovers.com/c/y3lsl27ot5`, 319 Kacheln aus 328 Büchern, nicht gespeichert (verfällt am 2026-10-05 ohne „Keep it"). Unter Julians eigener ID und an der echten Bibliothek ist noch nichts geschehen.** Zahlen und Einzelheiten: [Historie](../../docs/history.md#2026-10-03--die-calibre-bibliothek-als-eigene-sammlung-lab-roadmap-517).
 
 Gemessen an Julians Bibliothek (445 Bücher, 131 mit ISBN):
 
@@ -60,6 +63,8 @@ Gemessen an Julians Bibliothek (445 Bücher, 131 mit ISBN):
 - **Die Seite trägt 320 Kacheln:** kein Überlauf bei 390 und 1280 px, die Bilder laden erst beim Scrollen. Aber die Sammlung ist 20.000–24.000 px hoch, und im Editor lässt sich ein Buch nur durch Scrollen finden.
 - **Rückweg:** mit der Zuordnungsdatei 314 von 320 Kacheln sicher bei ihrem Buch (ohne sie 300); die 6 übrigen sind Werke mit zwei oder drei Büchern in Calibre. „Das Lied von Vogel und Schlange" bekam auf der Probe-Kopie das auf der Seite gewählte Oetinger-Cover und nach der Rücknahme sein altes zurück; danach alle 423 Cover bytegleich mit dem Original.
 
-**Offen, bei Julian** (Plan §6): ob die Liste seiner Bücher in den Speicher der Seite darf — dann Schritt 3 oben, einmal; die Vorschläge durchsehen und anhaken; `lab/calibre --write` an der echten Bibliothek (5.16).
+**Offen, bei Julian:** die Test-Sammlung ansehen; die 69 Vorschläge durchsehen und anhaken; wenn es passt, dasselbe unter der eigenen ID (Schritt 3b); `lab/calibre --write` an der echten Bibliothek (5.16).
+
+**Was dieses Werkzeug nicht ist:** Julian, 2026-10-03: „das soll ja einfach erstmal nur eine sammlung initialisieren aus einer calibre datei, die man hochlädt oder verbindet". Das Ergebnis ist dasselbe — eine Sammlung aus der Bibliothek —, der Weg ein anderer: hier läuft ein Kommando auf Julians Mac, liest den Bibliotheksordner und braucht seine ID in einer Datei. Auf der Seite lädt niemand etwas hoch. Die Fassung für die Seite ist als 5.17a in der Roadmap vorgeschlagen; was sie von hier übernehmen kann, sind `clean.ts` und `assign.ts`.
 
 **Was das Experiment nicht kann:** 55 der 328 Werke haben bei Open Library höchstens vier Ausgaben — dort gibt es auf der Seite wenig zu wählen. Manche davon sind verirrte Einzelwerke neben dem großen („Der Prozess" traf ein Werk mit einer Ausgabe statt Kafkas *Proceß*); die Suche von Hand auf der Prüfseite behebt den Einzelfall, eine Regel dafür gibt es nicht.
