@@ -12,7 +12,8 @@
     "test:run": "vitest run",
     "worktrees": "npx tsx scripts/worktrees.ts",
     "kanban": "npx tsx scripts/cockpit/main.ts --build --board",
-    "cockpit": "npx tsx scripts/cockpit/main.ts"
+    "cockpit": "npx tsx scripts/cockpit/main.ts",
+    "calibre": "npx tsx lab/calibre/app.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",

@@ -10,7 +10,7 @@ import { assignAll, assignBook, report, sample, tally, tilesOf, type Assignment,
 import { included, rowsOf } from '../review';
 import { Catalogue, DiskCache, type CatalogueSources } from '../lookup';
 
-const book = (b: Partial<CalibreBook> & { id: number }): CalibreBook => ({ title: 'T', authors: ['A B'], isbns: [], hasCover: true, path: `A/T (${b.id})`, formats: ['EPUB'], ...b });
+const book = (b: Partial<CalibreBook> & { id: number }): CalibreBook => ({ title: 'T', authors: ['A B'], isbns: [], hasCover: true, path: `A/T (${b.id})`, formats: ['EPUB'], languages: [], ...b });
 const work = (w: Partial<WorkSummary> & { id: string }): WorkSummary => ({ title: 'T', authors: ['A B'], coverUrls: ['https://covers.openlibrary.org/b/id/111-M.jpg'], languages: ['en'], ...w });
 
 const RAMA = work({ id: 'OL17365W', title: 'Rendezvous with Rama', authors: ['Arthur C. Clarke'], coverUrls: ['https://covers.openlibrary.org/b/id/222-M.jpg'] });

@@ -4194,82 +4194,6 @@ Julian schickte ein Mockup der Kopfzeile: Wortmarke, dann „Collections · Game
 
 Julian zum Screenshot der Startseite: „das deutsch ist noch kein gutes copywriting“. Die Zeile „Ein Buch hat viele Cover. Such dir deins aus.“ war wahr, aber Behauptung plus Aufforderung, ohne Haken. Jetzt nimmt das Deutsche das Sprichwort selbst — man soll ein Buch nicht nach dem Umschlag beurteilen — und dreht es um: **„Ein Buch nach dem Cover beurteilen? *Unbedingt.*“** Das Versprechen darunter in Alltagssprache und ehrlich (N12): „Tipp einen Titel ein, und du siehst die Cover, die wir zu dem Buch gefunden haben — sortiert nach Sprache und Jahr. Und dann die Ausgabe, die in dein Regal gehört.“ Gemessen: die Überschrift bleibt bei 390 und 1280 zweizeilig. Zwei Alternativen, falls die Frage zu kokett ist: „Urteile ruhig nach dem Cover. *Und nimm das schönste.*“ und „Ein Buch, viele Gesichter. *Deins ist dabei.*“ (Letzteres verspricht mehr, als die Kataloge halten.)
 
-## 2026-10-03 · Cover von der Seite in die Calibre-Bibliothek, Lab (ROADMAP 5.16)
-
-Julian: „gibt es eine möglichkeit dass ich die cover-seiten meiner bücher in meiner calibre bibliothek anpasse nach denen, die ich … in einer collection auf der website auswähle?", dann: „mache sicherheitsvorkehrungen, dass es mir nicht meine bibliothek zerschießt / baue die lokale variante / bereite die calibre -> online collection variante als zweites lab-experiment vor".
-
-**Die Bibliothek** (nur gelesen, `sqlite3 -readonly`): Calibre 7.26, in iCloud Drive, 445 Bücher, 423 mit Cover, 131 mit ISBN; `metadata.db` 1,1 MB. Vorhandene Cover meist 600 × 800, einzelne bis 1059 × 1600.
-
-**Gebaut:** `lab/calibre/` — `serve.ts` (Port 4327, 127.0.0.1, Token), `safety.ts` (der einzige Ort, der schreibt), `selftest.ts`, `rehearsal.ts`, `undo.ts`; 24 Tests. Geschrieben wird ausschließlich mit `calibredb set_metadata <id> --field cover:<Datei>`.
-
-**Zuordnung**, gemessen gegen alle 56 Sammlungen in `data/collections.json` (4.353 Cover): 125 sichere Zuordnungen, davon nur 4 über die ISBN — eine kuratierte Sammlung trägt je Cover höchstens eine ISBN, und nur 131 Bücher haben überhaupt eine. Der Titel trägt. Für „SF Masterworks" (73 Cover): 17 sicher (15 Titel + Autor, 2 ISBN), alle 17 von Hand geprüft und richtig; 2 „ähnlicher Titel" („1974-Rendezvous With Rama", „Roadside Picnic" mit anders geschriebenem Autor) — beide richtig, aber zu Recht nicht automatisch; 12 nur „gleicher Autor". Calibre schreibt Autoren teils „Dick, Philip K.", Titel teils „[Philip K. Dick 04] • Flow My Tears…" und „RINGWORLD" — die ersten beiden Formen fängt `lib/normalize.ts`, die Reihen-Vorsätze nicht.
-
-**Bildgröße — die eigentliche Grenze:** die 17 Bilder (Open Library, Original ohne Größenbuchstaben, `?default=false`) kamen in 5 s, alle dekodierbar; typisch 310 × 500 px, das kleinste 200 × 309, das größte 415 × 635. **12 von 17 haben weniger Pixel als das Cover, das Calibre schon hat**; mit einer Toleranz von 10 % (322 × 500 gegen 325 × 500 ist derselbe Scan) sind es 10. Deshalb verlangt ein kleineres Bild eine eigene Bestätigung, und der Sammelknopf lässt es aus. Ein Cover (*The Invisible Man*) war mit 309 × 475 exakt so groß wie das neue — vermutlich schon derselbe Open-Library-Scan.
-
-**Schreibweg, nie an der echten Bibliothek:** `selftest.ts` auf einer Wegwerf-Bibliothek, 21 von 21 Prüfungen (erstes Cover, zweites darüber, Fehlerseite und Vorschaubild abgelehnt, zwei Rücknahmen, E-Book-Datei bytegleich, Calibres `check_library` ohne Befund). Dann eine Probe-Kopie der echten Bibliothek (`rehearsal.ts`: `metadata.db` und 423 Cover, 66 MB, keine E-Book-Dateien): 9 Schreibvorgänge über Seite, Sammelknopf und `curl`, 9 Rücknahmen über Seite und `undo.ts --all` — danach **alle 423 Cover bytegleich mit dem Original**. Abgelehnt wie vorgesehen: ohne Token 403, fremder Host 403, fremde Herkunft 403, Formular statt JSON 415, unbekanntes Buch und unbekannte Zeile 404, kleineres Bild ohne Bestätigung 409, und jeder Schreibversuch, solange ein Calibre-Programm lief (geprüft mit `calibre-debug`). `metadata.db` der echten Bibliothek trug danach dieselbe Änderungszeit wie vorher.
-
-**Zwei Dinge, die anders waren als angenommen:** Calibre kodiert ein PNG beim Setzen in JPEG um, lässt die Maße aber gleich und verkleinert erst über seinem eigenen Höchstmaß — die Kontrolle nach dem Schreiben vergleicht deshalb Proportionen und Breite, nicht Bytes. Und `ps` nennt das eigene Werkzeug mit einer Zeile, in der „calibre" steht (`lab/calibre/serve.ts`) — die Prüfung „läuft Calibre?" geht über den Programmnamen, nie über eine Suche in der Kommandozeile.
-
-**Offen:** Julians erster Lauf an der echten Bibliothek; eine eigene Sammlung als Quelle (dort tragen die Kacheln die ISBNs ihrer Drucke — bisher nur über Tests gedeckt, nicht gegen eine echte Sammlung gelaufen); das Cover in der EPUB-Datei ändert erst Calibre beim Senden an den Reader. Die Gegenrichtung ist als 5.17 geplant ([PLAN-5.17](plans/PLAN-5.17-calibre-zur-sammlung.md)), nichts davon gebaut.
-
-1.039 Tests, tsc und Lint grün.
-
-## 2026-10-03 · Die Calibre-Bibliothek als eigene Sammlung, Lab (ROADMAP 5.17)
-
-Julian: „geh das projekt Calibre → Sammlung (5.17) an". Umgesetzt nach [PLAN-5.17](plans/PLAN-5.17-calibre-zur-sammlung.md), Schritte 1–5 und 7; Schritt 6 (einmal gegen die echte Seite) ist Julians. Der Plan und `lab/calibre/` lagen nur auf `claude/calibre-book-covers-df06e1` und sind in diesen Branch gemergt.
-
-**Gebaut:** `lab/calibre-import/` — `clean.ts`, `lookup.ts`, `assign.ts`, `review.ts`, `upload.ts`, `measure.ts`, `serve.ts` (Port 4328, 127.0.0.1, Token), `index.html`; dazu in `lab/calibre/` die Zuordnungsdatei (`map.ts`) und die sichere Art `mapped` in `match.ts`, `serve.ts --map`. 50 neue Tests (42 im Import, 8 für die Zuordnungsdatei), ohne Netz, eine aufgezeichnete ISBN-Antwort als Fixture. Die Website ist unverändert.
-
-**Vor der Messung:** Open Library lehnte am Abend etwa eine halbe Stunde lang jede Verbindung ab (`ECONNREFUSED` auf 207.241.234.205:443, auch von außerhalb; `covers.openlibrary.org` und archive.org antworteten). In der Zeit entstand, was kein Netz braucht.
-
-**Was in Calibre-Titeln steht** (gelesen, nie geschrieben): von 445 Büchern haben 24 keinen brauchbaren Autor (Lizenztexte, READMEs, Aufsätze unter ihrem Dateinamen) und werden übersprungen; bei 115 ändert das Glätten Titel oder Autor. Die Formen: Reihe davor („[Philip K. Dick 04] • …", „Foundation 1 - …", „Hey 3318 – …"), Jahr davor („1974-Rendezvous With Rama"), Autor im Titel davor oder dahinter („Crichton, Michael - Sphere"), Titel und Autor vertauscht („1954 Ray Bradbury - Fahrenheit 451" unter dem Autor „Fahrenheit 451"), Herkunfts-Etikett einer Schattenbibliothek mit „by <Autor>", Dateiendung, Untertitel. Autoren stehen als „Nachname, Vorname", mit Lebensdaten, mit Titeln („Preston, Psy.D., ABPP, John D.") oder zu zweit in einem Feld.
-
-**Die Messung** (`measure.ts`, 2026-10-03, die ganze Bibliothek, drei Anfragen gleichzeitig): **593 Anfragen an Open Library in 240 s, keine ohne Antwort**; 132 ISBN-Abrufe (22 kennt Open Library nicht, 33 Ausgaben ohne Cover) und 478 Suchen; der Cache ist 584 KB groß, ein zweiter Lauf stellt keine Anfrage.
-
-| | Bücher | Anteil an 421 fragbaren |
-|---|---|---|
-| Treffer | 328 | 78 % (74 % aller 445) |
-| – über die ISBN | 102 | |
-| – über Autor und Titel | 226 | |
-| Vorschlag | 69 | 16 % |
-| – gleicher Autor, anderer Titel | 27 | |
-| – nur der Titel | 33 | |
-| – gleicher Autor, längerer Werktitel | 7 | |
-| – ISBN, sonst stimmt nichts | 2 | |
-| nicht gefunden | 24 | 6 % |
-| übersprungen | 24 | |
-
-Aus den 328 Treffern werden 319 Kacheln (zwei Ausgaben eines Buchs sind eine Kachel; „Winnetou 1–3" liegen auf einem Werk). 75 der 102 ISBN-Treffer tragen das Cover genau ihres Drucks und die ISBN als Druck an der Kachel. **Das Erfolgsmaß des Plans (≥ 70 % der Bücher) ist erreicht.**
-
-**Stichprobe:** 40 Treffer mit festem Zufall (Seed 517), jeder von Hand gegen Titel und Autor geprüft: **39 richtig, 1 falsch** — „MaddAddam" traf *MADDADDAM TRILOGY BOX*. Daraufhin alle zwölf Treffer angesehen, bei denen der Titel nur enthalten war: ist der **Werktitel** der längere, waren von 7 zwei ein anderes Buch (die Box; „Pippi Langstrumpf" → *Guck mal, Pippi Langstrumpf*), zwei fraglich („Sherlock Holmes" → *The Adventures of …*, „Südamerika" → *Aus Nord- und Südamerika*), drei richtig; ist der **Buchtitel** der längere (Bandnummer, Untertitel ohne Doppelpunkt), waren 5 von 5 richtig. Die erste Form ist seitdem ein Vorschlag (`author+part`); die Tabelle oben ist der Stand danach (vorher 335 Treffer).
-
-**Die Vorschläge, durchgesehen:** von 27 „gleicher Autor, anderer Titel" sind rund 23 das richtige Werk — es sind die **übersetzten Titel** („Der Schnupfen" → *Katar*, „Die Stimme des Herrn" → *Głos pana*, „By Night in Chile" → *Nocturno de Chile*, „Das Lied von Vogel und Schlange" → *The Ballad of Songbirds and Snakes*) und Schreibvarianten („Effie Briest"). Die Sorge des Plans, deutsche Titel fänden ihr Werk nicht, trifft so nicht zu: Open Librarys Suche findet sie über die Ausgabentitel, nur bestätigen kann der Titelvergleich sie nicht. Sie bleiben Vorschläge (vier waren falsch: eine Erzählung traf den Sammelband, zwei Sachbücher ein anderes Buch desselben Autors). Von 33 „nur der Titel" sind rund 20 richtig — der Autor steht bei Open Library in anderer Schrift (刘慈欣, Аркадий Стругацкий) oder Form („Juan Valera y Alcalá-Galiano") — und 13 falsch („Quick Start Guide" → *Hadoop 2 Quick-Start Guide*). Die beiden „ISBN, sonst stimmt nichts" sind richtig (japanisches und chinesisches Original). Nicht gefunden: vor allem deutsche Abenteuerromane des 19. Jahrhunderts und abgeschnittene Dateinamen.
-
-**Wie viel es auf der Seite zu wählen gibt:** von den 328 Werken haben 167 zwanzig oder mehr Ausgaben, 106 fünf bis neunzehn, 38 zwei bis vier, 17 eine einzige. Bei 55 Werken (17 %) ist die Wand also dünn. Ein Teil davon sind verirrte Einzelwerke: „Der Prozess" traf OL42602621W (eine Ausgabe) statt Kafkas *Der Proceß* (OL498463W), weil der Titel dort genau stimmt. Die Suche von Hand auf der Prüfseite behebt das je Zeile; gezählt, wie viele der 55 so ein Fall sind, ist nicht.
-
-**Hochladen, gegen `npm run dev`** (eigener Dev-Server auf Port 3017 ohne `.env.local`, also mit dem Speicher im Prozess und nie der Produktions-Redis; Wegwerf-ID): 329 angehakte Bücher → eine Anfrage → 320 Kacheln, „My Calibre library", nicht gespeichert. Der Browser übernahm die ID über `/create#id=…` und zeigte die Sammlung unter „Your collections". **Die Seite trägt sie:** `/c/<id>` liefert 36 KB HTML, 320 Bilder mit `loading=lazy` (ohne Scrollen 25 geladen bei 1280 px, 97 bei 390 px), kein waagrechter Überlauf; 5 Spalten und 23.920 px Höhe bei 1280 × 800, 3 Spalten und 20.147 px bei 390 × 844; der Editor in „Arrange" 18.778 px (1280) und 23.749 px (390), 2.733 DOM-Knoten. Zeiten im Dev-Modus (1,3–2,2 s bis zur ersten Antwort) sagen nichts über Produktion. **Befund:** in einer Sammlung dieser Größe findet man ein Buch nur durch Scrollen — die Kacheln im Editor tragen keinen Titel, und es gibt keine Suche in der Sammlung.
-
-**Der Rückweg, auf einer Probe-Kopie:** im Editor das Cover von *The Ballad of Songbirds and Snakes* gegen das deutsche getauscht (Oetinger 2020, `ol:14858983`; das Werk der Kachel bleibt dasselbe). `lab/calibre/serve.ts` gegen die Probe-Kopie: ohne Zuordnungsdatei 300 von 320 Kacheln sicher, und die Datei wird abgelehnt („made for another library" — die Kopie hat einen anderen Schlüssel); mit `--map` **314 sicher, alle 314 über `mapped`**, die 6 übrigen sind Werke mit zwei oder drei Büchern. Buch 277, „Das Lied von Vogel und Schlange", bekam das Oetinger-Cover (1052 × 1500 statt 713 × 1024), die Rücknahme gab das alte zurück; danach **alle 423 Cover der Kopie bytegleich mit dem Original**. Die echte Bibliothek wurde nur gelesen.
-
-**Die Besucher-ID:** `upload.ts` nimmt sie aus `BB_VISITOR` (Umgebung, sonst `.env.local` des Hauptordners) und setzt sie nur in den Cookie-Kopf der einen Anfrage. Ein Test führt acht Wege durch (Erfolg, 404, 429, 503 mit der ID im Antworttext, Antwort mit der ID als Sammlungs-ID, Netzfehler mit den Köpfen in der Meldung, keine Kachel, zu viele) und findet sie in keiner Rückgabe, Meldung oder Spur.
-
-**Aufgeräumt:** die Entscheidungen, der Upload-Vermerk und die Zuordnungsdatei des Tests sowie die Probe-Kopie sind wieder gelöscht; geblieben sind Cache und Ergebnis der Messung unter `~/Library/Application Support/BuyItsCovers/calibre/import/`, damit Julians erster Lauf keine Anfrage stellt.
-
-**Offen:** Julians Entscheidungen (Plan §6) und danach der eine Lauf gegen die echte Seite; die 69 Vorschläge durchsehen; die echte Bibliothek schreibt `lab/calibre` (5.16). Nicht gemacht: die Cover-Erkennung des vorhandenen Covers (Plan §5, optional).
-
-1.089 Tests, tsc und Lint grün. `npm run build` lief nicht — `app/`, `components/` und `lib/` sind unverändert.
-
-## 2026-10-03 · 5.17 einmal gegen die echte Seite, als Test-Besucher
-
-Julian zur Frage, ob die Liste seiner Bücher in den Speicher der Seite darf: „ja, aber benutze vielleicht eine dedizierte test-user ID, mit der wir in production testen". Und zum Befund über den Editor: „das soll ja einfach erstmal nur eine sammlung initialisieren aus einer calibre datei, die man hochlädt oder verbindet / was ist an deiner version anders?"
-
-**Die Test-ID:** `BB_TEST_VISITOR` in der `.env.local` des Hauptordners, einmal erzeugt (`newVisitorId()`), nie ausgegeben; `serve.ts --as-test` liest sie statt `BB_VISITOR` und nennt die Sammlung „My Calibre library (test)". Ein Test hält fest, dass das Werkzeug, nach dem Test-Besucher gefragt, nie auf die eigene ID ausweicht. Die Regel gilt über dieses Werkzeug hinaus: was auf der echten Seite zum Ausprobieren angelegt wird, gehört dem Test-Besucher.
-
-**Der Lauf:** eine Anfrage, `POST https://buyitscovers.com/api/walls`, 328 angehakte Bücher (nur die Treffer, kein Vorschlag) → **319 Kacheln, Antwort nach 1,0 s**, Sammlung `y3lsl27ot5`, nicht gespeichert — sie verfällt nach 48 Stunden (2026-10-05), wenn niemand „Keep it" drückt. Die Zuordnungsdatei liegt unter `…/calibre/maps/y3lsl27ot5.json`. Produktion danach **einmal** angesehen (`/c/y3lsl27ot5`): Titel und „319 covers." stehen, die Bilder kommen, erste Antwort nach 133 ms, 29 KB HTML. Breite und Höhe sind dabei nicht gemessen (das Browserfenster hatte in dem Moment keine Breite); dafür gelten die Zahlen vom Dev-Server oben.
-
-**Was an der gebauten Fassung anders ist als „eine Calibre-Datei hochladen":** das Ergebnis ist dasselbe, der Weg nicht. Gebaut ist ein Kommando auf Julians Mac, das den Bibliotheksordner liest, eine Prüfseite zeigt und die Sammlung über die Schnittstelle anlegt; es braucht seine ID in einer Datei und merkt sich für den Rückweg, welches Buch welches Werk ist. Auf der Seite gibt es dafür keinen Knopf, und ein anderer Leser kann es nicht benutzen. Der Befund über den Editor (ein Buch unter 320 Kacheln nur durch Scrollen zu finden) betrifft das Wählen danach, nicht das Anlegen. Die Fassung für die Seite steht als Vorschlag 5.17a in der Roadmap; die Zahlen dieser Messung sagen, was sie kostet: 421 Bücher sind 593 Anfragen an Open Library und vier Minuten — der Foto-Import der Seite hört heute bei 80 Büchern auf.
-
-43 Tests im Import, tsc und Lint grün.
 ## 2026-10-03 — Launch auf der eigenen Domain: Canonical überall, und die alte Adresse leitet nicht von selbst um (ROADMAP 2.15, 4.13)
 
 Julian: „wir haben jetzt eine domain und können jetzt endlich das live gehen in einen richtigen shop vorbereiten. was sind die wichtigen schritte, sitemap, etc?"
@@ -4344,6 +4268,155 @@ Julian: „lass uns die grenze für die dichte hochsetzen, damit wir nicht aus v
 
 Julian: „make a milestone to continue from later, merge the earlier fixes and deploy“. Beim Zusammenführen mit main (die Analyse, 3.1) zeigte deren Preistabelle, dass die Kosten des Regalfotos in allen Einträgen seit dem 2026-09-30 mit angenommenen 3 $ / 15 $ je Million Token gerechnet waren; der Listenpreis von `claude-sonnet-5` ist 2 $ / 10 $. Ein gewöhnliches Foto kostet also rund 1,5 ct, ein dichtes 6–9 ct. Das Tagesbudget und das Auswertungsskript rechnen jetzt mit `lib/insights/prices.ts`, damit Analyse und Stopp nicht verschieden rechnen können; eine Absage am Budget zählt in der Analyse wie die an der Zahlgrenze („capped“, K13); die Token eines dichten Fotos gehen als Summe beider Blicke in K13 ein. Stand und Fortsetzung: [Plan, „Meilenstein 2026-10-04“](plans/PLAN-5.11a-regalfoto-zuverlaessig.md#meilenstein-2026-10-04--stand-und-fortsetzung).
 
+## 2026-10-03 · Cover von der Seite in die Calibre-Bibliothek, Lab (ROADMAP 5.16)
+
+Julian: „gibt es eine möglichkeit dass ich die cover-seiten meiner bücher in meiner calibre bibliothek anpasse nach denen, die ich … in einer collection auf der website auswähle?", dann: „mache sicherheitsvorkehrungen, dass es mir nicht meine bibliothek zerschießt / baue die lokale variante / bereite die calibre -> online collection variante als zweites lab-experiment vor".
+
+**Die Bibliothek** (nur gelesen, `sqlite3 -readonly`): Calibre 7.26, in iCloud Drive, 445 Bücher, 423 mit Cover, 131 mit ISBN; `metadata.db` 1,1 MB. Vorhandene Cover meist 600 × 800, einzelne bis 1059 × 1600.
+
+**Gebaut:** `lab/calibre/` — `serve.ts` (Port 4327, 127.0.0.1, Token), `safety.ts` (der einzige Ort, der schreibt), `selftest.ts`, `rehearsal.ts`, `undo.ts`; 24 Tests. Geschrieben wird ausschließlich mit `calibredb set_metadata <id> --field cover:<Datei>`.
+
+**Zuordnung**, gemessen gegen alle 56 Sammlungen in `data/collections.json` (4.353 Cover): 125 sichere Zuordnungen, davon nur 4 über die ISBN — eine kuratierte Sammlung trägt je Cover höchstens eine ISBN, und nur 131 Bücher haben überhaupt eine. Der Titel trägt. Für „SF Masterworks" (73 Cover): 17 sicher (15 Titel + Autor, 2 ISBN), alle 17 von Hand geprüft und richtig; 2 „ähnlicher Titel" („1974-Rendezvous With Rama", „Roadside Picnic" mit anders geschriebenem Autor) — beide richtig, aber zu Recht nicht automatisch; 12 nur „gleicher Autor". Calibre schreibt Autoren teils „Dick, Philip K.", Titel teils „[Philip K. Dick 04] • Flow My Tears…" und „RINGWORLD" — die ersten beiden Formen fängt `lib/normalize.ts`, die Reihen-Vorsätze nicht.
+
+**Bildgröße — die eigentliche Grenze:** die 17 Bilder (Open Library, Original ohne Größenbuchstaben, `?default=false`) kamen in 5 s, alle dekodierbar; typisch 310 × 500 px, das kleinste 200 × 309, das größte 415 × 635. **12 von 17 haben weniger Pixel als das Cover, das Calibre schon hat**; mit einer Toleranz von 10 % (322 × 500 gegen 325 × 500 ist derselbe Scan) sind es 10. Deshalb verlangt ein kleineres Bild eine eigene Bestätigung, und der Sammelknopf lässt es aus. Ein Cover (*The Invisible Man*) war mit 309 × 475 exakt so groß wie das neue — vermutlich schon derselbe Open-Library-Scan.
+
+**Schreibweg, nie an der echten Bibliothek:** `selftest.ts` auf einer Wegwerf-Bibliothek, 21 von 21 Prüfungen (erstes Cover, zweites darüber, Fehlerseite und Vorschaubild abgelehnt, zwei Rücknahmen, E-Book-Datei bytegleich, Calibres `check_library` ohne Befund). Dann eine Probe-Kopie der echten Bibliothek (`rehearsal.ts`: `metadata.db` und 423 Cover, 66 MB, keine E-Book-Dateien): 9 Schreibvorgänge über Seite, Sammelknopf und `curl`, 9 Rücknahmen über Seite und `undo.ts --all` — danach **alle 423 Cover bytegleich mit dem Original**. Abgelehnt wie vorgesehen: ohne Token 403, fremder Host 403, fremde Herkunft 403, Formular statt JSON 415, unbekanntes Buch und unbekannte Zeile 404, kleineres Bild ohne Bestätigung 409, und jeder Schreibversuch, solange ein Calibre-Programm lief (geprüft mit `calibre-debug`). `metadata.db` der echten Bibliothek trug danach dieselbe Änderungszeit wie vorher.
+
+**Zwei Dinge, die anders waren als angenommen:** Calibre kodiert ein PNG beim Setzen in JPEG um, lässt die Maße aber gleich und verkleinert erst über seinem eigenen Höchstmaß — die Kontrolle nach dem Schreiben vergleicht deshalb Proportionen und Breite, nicht Bytes. Und `ps` nennt das eigene Werkzeug mit einer Zeile, in der „calibre" steht (`lab/calibre/serve.ts`) — die Prüfung „läuft Calibre?" geht über den Programmnamen, nie über eine Suche in der Kommandozeile.
+
+**Der erste Lauf an der echten Bibliothek**, am selben Abend, nachdem Julian die Schritte der Sitzung übergab („kannst du die schritte machen?") und auf die Rückfrage, welche Cover, antwortete: „teste mit ubik und invisible man". Vorher noch einmal Selbsttest (21 von 21) und eine Probe-Kopie am regulären Ort, auf der 7 sichere Cover geschrieben und 10 kleinere ausgelassen wurden. Dann in die echte Bibliothek: *Ubik* (#457, Titel + Autor, 315 × 500 → 319 × 500) und *The Invisible Man* (#364, ISBN, 309 × 475 → 309 × 475 — gleiche Maße, andere Datei). Geprüft danach: 445 Bücher und 423 Cover wie vorher; `Ubik - Philip K. Dick.epub` und die beiden Dateien des Wells-Bands tragen ihre alte Änderungszeit; `calibredb list` nennt beide Cover; im Backup-Ordner liegen beide alten Cover und eine Kopie von `metadata.db`; `undo.ts` führt beide Schritte. Calibres `metadata.opf` der beiden Bücher wurde dabei nicht neu geschrieben — das holt Calibre beim nächsten Start nach.
+
+**Und zurück:** Julian startete danach selbst `npx tsx lab/calibre/undo.ts --all` — beide „put back". Nachgemessen: beide `cover.jpg` haben wieder die SHA-256 von vor dem Schreiben (*Ubik* 315 × 500, *The Invisible Man* 309 × 475), 445 Bücher, 423 Cover, „Nothing to undo". Schreiben, Prüfen und Zurücknehmen sind damit an der echten Bibliothek gelaufen. **Die Rücknahme war ein Versehen** — Julian: „ich wollte nicht zurücknehmen, ich dachte der befehl öffnet calibre"; das Kommando stand in der Antwort der Sitzung als ausführbarer Block unter „schau in Calibre nach". Beide Cover gleich danach noch einmal geschrieben, mit denselben Prüfsummen wie beim ersten Mal; sie stehen jetzt in der Bibliothek, und `undo.ts` führt wieder zwei Schritte. Lehre für solche Antworten: ein Kommando, das etwas zurücknimmt, nicht als Startknopf neben die Aufforderung zum Ansehen stellen.
+
+**Offen:** eine eigene Sammlung als Quelle (dort tragen die Kacheln die ISBNs ihrer Drucke — bisher nur über Tests gedeckt, nicht gegen eine echte Sammlung gelaufen); das Cover in der EPUB-Datei ändert erst Calibre beim Senden an den Reader. Die Gegenrichtung ist als 5.17 geplant ([PLAN-5.17](plans/PLAN-5.17-calibre-zur-sammlung.md)), nichts davon gebaut.
+
+1.039 Tests, tsc und Lint grün.
+
+## 2026-10-03 · Die Calibre-Bibliothek als Cover-Wand, lokale App (ROADMAP 5.16a)
+
+Julian, nach dem ersten echten Lauf von 5.16: „ok, hat funktioniert. jetzt lass uns daraus eine lokale app bauen mit gui die mir meine calibre cover anzeigt und dann die website benutzt, damit ich gezielt cover ersetzen kann".
+
+**Gebaut:** `lab/calibre/app.ts` und `app.html` (`npm run calibre`, Port 4329), dazu `find.ts` (Buch → Werk), `covers.ts` (Ausgaben → wählbare Cover), `download.ts` und `http.ts` (aus `serve.ts` herausgezogen, von beiden Servern benutzt), Sprachen im Bibliotheksleser, Bildmaß aus dem Dateikopf. Geschrieben wird durch `safety.ts` aus 5.16, unverändert.
+
+**Entschieden beim Bauen — „die Website benutzen":** ihr Code und ihr Katalog, lokal ausgeführt (`lib/search.ts`, `pickWork`, `getEditionsPage`, `parseEditions`), nicht ihre Adresse. Ein geöffnetes Buch wäre an der laufenden Seite eine Suche und eine Werkseite — die Werkseite kostet kalt bis zu zwei Google-Anfragen und hängt am `google`-Eimer mit fünf je Minute; wer zwanzig Bücher durchklickt, stünde im eigenen Rate-Limit und äße das Kontingent der Besucher. Folge: die App zeigt Open-Library-Cover, ungefaltet und ohne Google-Bilder; je Werk gibt es einen Link auf seine Seite bei buyitscovers.com.
+
+**Gemessen an Julians Bibliothek** (nur gelesen): 423 Cover, davon **76 schmaler als 400 px**, 22 Bücher ohne Cover; Sprachen laut Calibre 277 englisch, 67 deutsch, 26 spanisch, 3 niederländisch, 72 ohne Angabe (Calibre schreibt `deu`, Open Library `ger` — eine kleine Tabelle übersetzt). Werk finden 1,4–5,6 s, erste Seite Cover 2,5–3,3 s. Fünf Stichproben: *Flow My Tears* (Titel in Calibre „[Philip K. Dick 04] • Flow My Tears…") und *Rendezvous with Rama* („1974-Rendezvous With Rama") über die ISBN richtig, mit den Covern der eigenen Ausgabe; *Jenny* (Fanny Lewald) und *Ochsenkrieg* (Ganghofer) über Titel + Autor richtig; *Francisco Pizarro, der Eroberer von Peru* (Arthur Schurig) nicht gefunden. Für *Jenny* hatte Open Library ein größeres Bild (754 × 1200) als das vorhandene (600 × 800); ein anderes Cover desselben Werks kam mit 128 × 208 und wurde als zu klein abgelehnt.
+
+**Geprüft:** an der echten Bibliothek nur schauend (Raster mit 445 Kacheln, Buch öffnen, Vergleich; der Schreibknopf ist aus, die Schreibanfrage 403). Schreibend auf einer Probe-Kopie, über die Schnittstelle und im Browser durchgeklickt: filtern, öffnen, Werk vorgeschlagen und gemerkt („your choice" beim zweiten Öffnen), Cover wählen, schreiben, Kachel und Kopf zeigen das neue Maß und „changed", zurücknehmen — danach bytegleich mit dem Original. Abgelehnt: falsche Werk-ID 400, Cover-ID, die eine Adresse ist, 400, krummer Offset 400.
+
+1.048 Tests, tsc und Lint grün.
+
+## 2026-10-03 · Calibre-App: große Cover vorn, das Raster zeigt das aktuelle Cover (ROADMAP 5.16a)
+
+Julian nach dem ersten Gebrauch: „sort the images that are big enough to use as covers the front / in the general preview show always the cover that is currently used".
+
+**Größe:** Open Library nennt die Größe eines Scans nirgends; die App holt deshalb jedes Cover des geöffneten Werks (über die Cover-ID, die Open Library nicht begrenzt), liest das Maß aus dem Dateikopf und verwirft die Bytes. Vier gleichzeitig; die Maße bleiben in `cover-sizes.json` neben den Backups, weil eine Cover-ID ihr Bild nie wechselt. Sortiert wird: groß genug (≥ 90 % der Pixel des Covers in Calibre, dieselbe Schwelle wie beim Schreiben) — noch nicht vermessen — kleiner — Größe unbekannt — zu klein für ein Cover; innerhalb der Großen die eigene Ausgabe vorn, dann nach Pixelzahl. **Gemessen an *Rendezvous with Rama*** (Calibre: 948 × 1558): 33 Cover in 3 s vermessen; von 16 englischen 8 groß genug, die größten 2813 × 4536, 2568 × 4370 und 2208 × 3349 — die Annahme aus 5.16, Open Library habe meist nur ~310 × 500, galt für die SF-Masterworks-Drucke, nicht für viel gescannte Bücher. Die Cover der eigenen Ausgabe waren mit 284 × 475 die kleinen. Das größte gesetzt: Bild in 1,0 s geholt und ganz dekodiert, in 2,5 s geschrieben; Calibre verkleinerte es auf 1364 × 2200 (sein Höchstmaß), die Kontrolle nahm es als dasselbe Bild an (gleiche Proportion, Breite nicht gewachsen).
+
+**Aktuelles Cover:** die Bilder des Rasters waren eine Stunde im Browser gecacht und nur innerhalb eines Seitenaufrufs versioniert — nach einem Neuladen oder einer Änderung außerhalb der Seite zeigte das Raster das alte Cover. Jetzt trägt jede Bildadresse die Änderungszeit der Datei, `/api/state` liest die Bibliothek jedes Mal neu, und die Seite fragt beim Zurückkommen ins Fenster nach. Geprüft: Cover in der Seite gesetzt, mit `undo.ts` im Terminal zurückgenommen, Fenster wieder aktiviert — Kachel, Kopf und Zählung zeigten das alte Cover mit seinem Maß, die Bildadresse eine neue Version.
+
+1.049 Tests, tsc und Lint grün.
+
+## 2026-10-03 · „Calibre Covers.app" und der PocketBook-Knopf (ROADMAP 5.16b)
+
+Julian: „maybe include the pocketbook app from the other project in it? and wrap it as a local macos app?" Drei Rückfragen, drei Antworten: eigenes Fenster; ein Knopf, der sein Skript startet; „lokales main aber eigener bereich, damit ich es später einzeln weiterführen kann?".
+
+**Das andere Projekt** (`05_Projects/pocketbook`, github.com/heissjl/pocketbook-sync): ein Python-Skript, das Markierungen vom PocketBook-Reader als Markdown in die Notizen schreibt, mit einer `Pocketbook Sync.app`, die ein Terminal öffnet. Es fragt per `input()` nach fehlenden Pfaden — ohne Terminal ginge das schief; deshalb bietet die App den Sync nur an, wenn die Konfiguration vollständig und die Datenbank des Readers (`system/config/books.db`) erreichbar ist. Das Skript wird nicht kopiert und nicht geändert.
+
+**Die macOS-App:** `swiftc` 5.8.1 aus den Kommandozeilenwerkzeugen reicht; eine Swift-Datei, AppKit und WebKit, kein Xcode-Projekt. Drei Dinge, die sie anders macht als ein Starter-Skript: (1) der Server bekommt einen **freien Port** (`--port auto`), damit ein `npm run calibre` im Terminal nicht im Weg ist; (2) der Server **endet mit der App** (`--exit-with-parent`: er beobachtet die Leitung, die die App hält) — `terminate()` allein hätte bei `npx → tsx → node` den eigentlichen Prozess stehen lassen; (3) eine aus dem Finder gestartete App sieht den `PATH` der Shell nicht (node liegt unter `~/.nvm`), deshalb schreibt `build.sh` den Ort von node und den Projektordner in `Info.plist`. `NSAllowsLocalNetworking` erlaubt das unverschlüsselte `http://127.0.0.1`; ein Bearbeiten-Menü ist nötig, sonst tun ⌘C und ⌘V in den Suchfeldern nichts.
+
+**Geprüft:** gebaut (Ad-hoc-Signatur), mit `CALIBRE_APP_SELFCHECK=quit` gegen die Probe-Kopie gestartet: das Fenster meldete „445 books; writing is on; 445 books · 423 with a cover · 76 small" und beendete sich; danach lief kein Server mehr. `--exit-with-parent` einzeln: Leitung geschlossen, Server in unter 10 s beendet. Sync: mit Julians Konfiguration Skript gefunden, Reader `/Volumes/PB626` nicht angeschlossen, Start mit 409 abgelehnt; mit Stellvertreter-Skript, -Reader und -Notizordner (`POCKETBOOK_SYNC`, `POCKETBOOK_CONFIG`) durchgelaufen, Ausgabe samt Fehlerkanal angezeigt. **Nicht geprüft: der echte Sync mit angeschlossenem Reader** — er schreibt in Julians Notizen und braucht das Gerät.
+
+**Eigener Bereich:** `lab/calibre/site.ts` führt alles auf, was das Werkzeug aus `lib/` und `scripts/` nimmt (Suche, Werke und Ausgaben, Titel- und Autorenvergleich, ISBN- und Sprachcodes, Bilddekoder, die Form einer Sammlung, die Tür des lokalen Servers); alle anderen Dateien importieren nur von dort, ein Test prüft es. **Parallel dazu** hat die Sitzung für 5.17 (`claude/calibre-sammlung-5-17-10363d`) `lab/calibre/match.ts`, `serve.ts`, `index.html` und die README geändert und `map.ts` angelegt, auf dem Stand vor diesem Umbau — wer beide Zweige zusammenführt, löst dort Konflikte und führt die Importe von `map.ts` über `site.ts`, sonst schlägt der Test an.
+
+**Ort:** der Zweig `claude/calibre-book-covers-df06e1` ist nach `origin/main` (26 Commits anderer Sitzungen, ein Konflikt am Ende dieser Datei, beide Seiten behalten) in das lokale `main` geführt, ohne Push — `main` steht 15 Commits vor `origin/main`. Die App ist aus dem Hauptordner nach `~/Applications/Calibre Covers.app` gebaut und zeigt auf ihn; sie lief nach dem Bau mit ihrem Server.
+
+1.053 Tests vor dem Zusammenführen, 1.127 danach; tsc und Lint grün.
+
+## 2026-10-04 · Drei Ideen am Testsatz, zur Hälfte — das Guthaben war leer (ROADMAP 5.11a)
+
+Julian: „miss die drei ideen am testsatz“. Gemessen: die Schärfezahl ohne Modell trennt das verwackelte Foto von den anderen dreizehn (0,33 gegen 0,43–0,74), aber erst kachelweise — über das ganze Bild lag ein scharfer Umschlag vor unscharfem Laden darunter. Der Prompt-Satz gegen angeschnittene Bücher trägt nicht: die Stümpfe bleiben, ein echtes Buch geht verloren. Dann meldete die Anthropic-API ein leeres Guthaben; die Varianten „Randstreifen auslassen“ und „Feld für Unsicheres“ sind gebaut und ungemessen, und die Website liest bis zum Aufladen kein Foto. Der wichtigste Befund kam nebenbei: zwei gleiche Läufe unterscheiden sich um acht Bücher, weil die am selben Tag hochgesetzte Schwelle 40 in der Spanne liegt, die ein erster Blick auf einem dichten Regal liest — ob der zweite Blick kommt, ist dort Zufall. [Bericht](tests/2026-10-04-regalfoto-testsatz.md).
+
+## 2026-10-04 · Die Schwelle wieder bei 30 (ROADMAP 5.11a)
+
+Julian: „setz die schwelle zurück auf 30 und pushe“. Einen Tag stand sie bei 40; der Testsatz zeigte, dass ein erster Blick auf einem dichten Regal 35–55 Bücher liest und der zweite Blick bei 40 vom Zufall abhing (dasselbe Foto 35 von 46 in einem Lauf, 45 im nächsten; die Galeriewand in einem Lauf ohne zweiten Blick). Bei 30 kam er auf allen sechs dichten Fotos. Die Ausgaben begrenzt seit demselben Tag das Tagesbudget. Die Zahl der im Bild gefundenen Regalböden als Signal, das nicht schwankt, bleibt eine Idee — sie gilt nur für Regale (Julian).
+
+## 2026-10-04 · Search Console und Bing Webmaster Tools eingerichtet (ROADMAP 2.5, 2.15 Schritt 4)
+
+Julians Prompt („Richte die Seite bei Google Search Console und Bing Webmaster Tools ein"), in seinem Chrome mit angemeldetem Google-, Microsoft- und INWX-Konto, 06:40–07:05 MESZ.
+
+**Google:** Property vom Typ *Domain* `buyitscovers.com`; der TXT-Eintrag `google-site-verification=…` auf `@` bei INWX (nach Julians „ja, speichern"), bestätigt beim ersten Klick. Sitemap `https://buyitscovers.com/sitemap.xml` gesendet — Status „Couldn't fetch" ohne „Last read", auch zehn Minuten später; dieselbe Datei mit Googlebot-Kennung einmal abgerufen: 200, `application/xml`, 148.575 Bytes, `x-vercel-cache: HIT`, 875 `<loc>`, alle auf `buyitscovers.com`; robots.txt erlaubt alles außer `/api/`, `/go/`, `/admin/` und nennt die Sitemap. Bei einer neuen Property ist das der übliche Zustand vor dem ersten Abruf, kein Befund über die Datei.
+
+**URL-Prüfung** (Live-Test, Googlebot Smartphone):
+
+| Adresse | Index | Live-Test | Kanonisch (vom Nutzer) | Antrag |
+|---|---|---|---|---|
+| `/` | unbekannt | kann indexiert werden | `https://buyitscovers.com/` | gestellt |
+| `/book/OL1168083W` | unbekannt | kann indexiert werden | = geprüfte URL | gestellt |
+| `/collections/sf-masterworks` | unbekannt | kann indexiert werden | = geprüfte URL | gestellt |
+| `/book/OL1168083W/decades` | unbekannt | kann indexiert werden | = geprüfte URL | gestellt |
+
+Alle vier: „URL has no enhancements" — das Book-JSON-LD ist kein Typ, den die Search Console als Erweiterung berichtet; das sagt nichts über seine Gültigkeit (Rich-Results-Test bleibt 2.15 Schritt 5).
+
+**Bing:** angemeldet mit Julians Google-Konto, Import aus der Search Console mit Lesezugriff (`webmasters.readonly`): eine Website, importiert und damit bestätigt; Sitemaps-Zahl 0, weil Google sie noch nicht gelesen hatte, daher in Bing von Hand eingereicht — „Processing".
+
+**Offen:** 2.5 abhaken, sobald die Search Console „Success" und gefundene Seiten meldet; nach zwei bis drei Wochen Leistung und Seiten lesen (Buchseiten „Gecrawlt – zurzeit nicht indexiert" wären der Auslöser für 5.2); Core Web Vitals erst nach 28 Tagen Felddaten; IndexNow erst, wenn Seiten in Mengen entstehen (5.3/5.4).
+
+## 2026-10-03 · Die Calibre-Bibliothek als eigene Sammlung, Lab (ROADMAP 5.17)
+
+Julian: „geh das projekt Calibre → Sammlung (5.17) an". Umgesetzt nach [PLAN-5.17](plans/PLAN-5.17-calibre-zur-sammlung.md), Schritte 1–5 und 7; Schritt 6 (einmal gegen die echte Seite) ist Julians. Der Plan und `lab/calibre/` lagen nur auf `claude/calibre-book-covers-df06e1` und sind in diesen Branch gemergt.
+
+**Gebaut:** `lab/calibre-import/` — `clean.ts`, `lookup.ts`, `assign.ts`, `review.ts`, `upload.ts`, `measure.ts`, `serve.ts` (Port 4328, 127.0.0.1, Token), `index.html`; dazu in `lab/calibre/` die Zuordnungsdatei (`map.ts`) und die sichere Art `mapped` in `match.ts`, `serve.ts --map`. 50 neue Tests (42 im Import, 8 für die Zuordnungsdatei), ohne Netz, eine aufgezeichnete ISBN-Antwort als Fixture. Die Website ist unverändert.
+
+**Vor der Messung:** Open Library lehnte am Abend etwa eine halbe Stunde lang jede Verbindung ab (`ECONNREFUSED` auf 207.241.234.205:443, auch von außerhalb; `covers.openlibrary.org` und archive.org antworteten). In der Zeit entstand, was kein Netz braucht.
+
+**Was in Calibre-Titeln steht** (gelesen, nie geschrieben): von 445 Büchern haben 24 keinen brauchbaren Autor (Lizenztexte, READMEs, Aufsätze unter ihrem Dateinamen) und werden übersprungen; bei 115 ändert das Glätten Titel oder Autor. Die Formen: Reihe davor („[Philip K. Dick 04] • …", „Foundation 1 - …", „Hey 3318 – …"), Jahr davor („1974-Rendezvous With Rama"), Autor im Titel davor oder dahinter („Crichton, Michael - Sphere"), Titel und Autor vertauscht („1954 Ray Bradbury - Fahrenheit 451" unter dem Autor „Fahrenheit 451"), Herkunfts-Etikett einer Schattenbibliothek mit „by <Autor>", Dateiendung, Untertitel. Autoren stehen als „Nachname, Vorname", mit Lebensdaten, mit Titeln („Preston, Psy.D., ABPP, John D.") oder zu zweit in einem Feld.
+
+**Die Messung** (`measure.ts`, 2026-10-03, die ganze Bibliothek, drei Anfragen gleichzeitig): **593 Anfragen an Open Library in 240 s, keine ohne Antwort**; 132 ISBN-Abrufe (22 kennt Open Library nicht, 33 Ausgaben ohne Cover) und 478 Suchen; der Cache ist 584 KB groß, ein zweiter Lauf stellt keine Anfrage.
+
+| | Bücher | Anteil an 421 fragbaren |
+|---|---|---|
+| Treffer | 328 | 78 % (74 % aller 445) |
+| – über die ISBN | 102 | |
+| – über Autor und Titel | 226 | |
+| Vorschlag | 69 | 16 % |
+| – gleicher Autor, anderer Titel | 27 | |
+| – nur der Titel | 33 | |
+| – gleicher Autor, längerer Werktitel | 7 | |
+| – ISBN, sonst stimmt nichts | 2 | |
+| nicht gefunden | 24 | 6 % |
+| übersprungen | 24 | |
+
+Aus den 328 Treffern werden 319 Kacheln (zwei Ausgaben eines Buchs sind eine Kachel; „Winnetou 1–3" liegen auf einem Werk). 75 der 102 ISBN-Treffer tragen das Cover genau ihres Drucks und die ISBN als Druck an der Kachel. **Das Erfolgsmaß des Plans (≥ 70 % der Bücher) ist erreicht.**
+
+**Stichprobe:** 40 Treffer mit festem Zufall (Seed 517), jeder von Hand gegen Titel und Autor geprüft: **39 richtig, 1 falsch** — „MaddAddam" traf *MADDADDAM TRILOGY BOX*. Daraufhin alle zwölf Treffer angesehen, bei denen der Titel nur enthalten war: ist der **Werktitel** der längere, waren von 7 zwei ein anderes Buch (die Box; „Pippi Langstrumpf" → *Guck mal, Pippi Langstrumpf*), zwei fraglich („Sherlock Holmes" → *The Adventures of …*, „Südamerika" → *Aus Nord- und Südamerika*), drei richtig; ist der **Buchtitel** der längere (Bandnummer, Untertitel ohne Doppelpunkt), waren 5 von 5 richtig. Die erste Form ist seitdem ein Vorschlag (`author+part`); die Tabelle oben ist der Stand danach (vorher 335 Treffer).
+
+**Die Vorschläge, durchgesehen:** von 27 „gleicher Autor, anderer Titel" sind rund 23 das richtige Werk — es sind die **übersetzten Titel** („Der Schnupfen" → *Katar*, „Die Stimme des Herrn" → *Głos pana*, „By Night in Chile" → *Nocturno de Chile*, „Das Lied von Vogel und Schlange" → *The Ballad of Songbirds and Snakes*) und Schreibvarianten („Effie Briest"). Die Sorge des Plans, deutsche Titel fänden ihr Werk nicht, trifft so nicht zu: Open Librarys Suche findet sie über die Ausgabentitel, nur bestätigen kann der Titelvergleich sie nicht. Sie bleiben Vorschläge (vier waren falsch: eine Erzählung traf den Sammelband, zwei Sachbücher ein anderes Buch desselben Autors). Von 33 „nur der Titel" sind rund 20 richtig — der Autor steht bei Open Library in anderer Schrift (刘慈欣, Аркадий Стругацкий) oder Form („Juan Valera y Alcalá-Galiano") — und 13 falsch („Quick Start Guide" → *Hadoop 2 Quick-Start Guide*). Die beiden „ISBN, sonst stimmt nichts" sind richtig (japanisches und chinesisches Original). Nicht gefunden: vor allem deutsche Abenteuerromane des 19. Jahrhunderts und abgeschnittene Dateinamen.
+
+**Wie viel es auf der Seite zu wählen gibt:** von den 328 Werken haben 167 zwanzig oder mehr Ausgaben, 106 fünf bis neunzehn, 38 zwei bis vier, 17 eine einzige. Bei 55 Werken (17 %) ist die Wand also dünn. Ein Teil davon sind verirrte Einzelwerke: „Der Prozess" traf OL42602621W (eine Ausgabe) statt Kafkas *Der Proceß* (OL498463W), weil der Titel dort genau stimmt. Die Suche von Hand auf der Prüfseite behebt das je Zeile; gezählt, wie viele der 55 so ein Fall sind, ist nicht.
+
+**Hochladen, gegen `npm run dev`** (eigener Dev-Server auf Port 3017 ohne `.env.local`, also mit dem Speicher im Prozess und nie der Produktions-Redis; Wegwerf-ID): 329 angehakte Bücher → eine Anfrage → 320 Kacheln, „My Calibre library", nicht gespeichert. Der Browser übernahm die ID über `/create#id=…` und zeigte die Sammlung unter „Your collections". **Die Seite trägt sie:** `/c/<id>` liefert 36 KB HTML, 320 Bilder mit `loading=lazy` (ohne Scrollen 25 geladen bei 1280 px, 97 bei 390 px), kein waagrechter Überlauf; 5 Spalten und 23.920 px Höhe bei 1280 × 800, 3 Spalten und 20.147 px bei 390 × 844; der Editor in „Arrange" 18.778 px (1280) und 23.749 px (390), 2.733 DOM-Knoten. Zeiten im Dev-Modus (1,3–2,2 s bis zur ersten Antwort) sagen nichts über Produktion. **Befund:** in einer Sammlung dieser Größe findet man ein Buch nur durch Scrollen — die Kacheln im Editor tragen keinen Titel, und es gibt keine Suche in der Sammlung.
+
+**Der Rückweg, auf einer Probe-Kopie:** im Editor das Cover von *The Ballad of Songbirds and Snakes* gegen das deutsche getauscht (Oetinger 2020, `ol:14858983`; das Werk der Kachel bleibt dasselbe). `lab/calibre/serve.ts` gegen die Probe-Kopie: ohne Zuordnungsdatei 300 von 320 Kacheln sicher, und die Datei wird abgelehnt („made for another library" — die Kopie hat einen anderen Schlüssel); mit `--map` **314 sicher, alle 314 über `mapped`**, die 6 übrigen sind Werke mit zwei oder drei Büchern. Buch 277, „Das Lied von Vogel und Schlange", bekam das Oetinger-Cover (1052 × 1500 statt 713 × 1024), die Rücknahme gab das alte zurück; danach **alle 423 Cover der Kopie bytegleich mit dem Original**. Die echte Bibliothek wurde nur gelesen.
+
+**Die Besucher-ID:** `upload.ts` nimmt sie aus `BB_VISITOR` (Umgebung, sonst `.env.local` des Hauptordners) und setzt sie nur in den Cookie-Kopf der einen Anfrage. Ein Test führt acht Wege durch (Erfolg, 404, 429, 503 mit der ID im Antworttext, Antwort mit der ID als Sammlungs-ID, Netzfehler mit den Köpfen in der Meldung, keine Kachel, zu viele) und findet sie in keiner Rückgabe, Meldung oder Spur.
+
+**Aufgeräumt:** die Entscheidungen, der Upload-Vermerk und die Zuordnungsdatei des Tests sowie die Probe-Kopie sind wieder gelöscht; geblieben sind Cache und Ergebnis der Messung unter `~/Library/Application Support/BuyItsCovers/calibre/import/`, damit Julians erster Lauf keine Anfrage stellt.
+
+**Offen:** Julians Entscheidungen (Plan §6) und danach der eine Lauf gegen die echte Seite; die 69 Vorschläge durchsehen; die echte Bibliothek schreibt `lab/calibre` (5.16). Nicht gemacht: die Cover-Erkennung des vorhandenen Covers (Plan §5, optional).
+
+1.089 Tests, tsc und Lint grün. `npm run build` lief nicht — `app/`, `components/` und `lib/` sind unverändert.
+
+## 2026-10-03 · 5.17 einmal gegen die echte Seite, als Test-Besucher
+
+Julian zur Frage, ob die Liste seiner Bücher in den Speicher der Seite darf: „ja, aber benutze vielleicht eine dedizierte test-user ID, mit der wir in production testen". Und zum Befund über den Editor: „das soll ja einfach erstmal nur eine sammlung initialisieren aus einer calibre datei, die man hochlädt oder verbindet / was ist an deiner version anders?"
+
+**Die Test-ID:** `BB_TEST_VISITOR` in der `.env.local` des Hauptordners, einmal erzeugt (`newVisitorId()`), nie ausgegeben; `serve.ts --as-test` liest sie statt `BB_VISITOR` und nennt die Sammlung „My Calibre library (test)". Ein Test hält fest, dass das Werkzeug, nach dem Test-Besucher gefragt, nie auf die eigene ID ausweicht. Die Regel gilt über dieses Werkzeug hinaus: was auf der echten Seite zum Ausprobieren angelegt wird, gehört dem Test-Besucher.
+
+**Der Lauf:** eine Anfrage, `POST https://buyitscovers.com/api/walls`, 328 angehakte Bücher (nur die Treffer, kein Vorschlag) → **319 Kacheln, Antwort nach 1,0 s**, Sammlung `y3lsl27ot5`, nicht gespeichert — sie verfällt nach 48 Stunden (2026-10-05), wenn niemand „Keep it" drückt. Die Zuordnungsdatei liegt unter `…/calibre/maps/y3lsl27ot5.json`. Produktion danach **einmal** angesehen (`/c/y3lsl27ot5`): Titel und „319 covers." stehen, die Bilder kommen, erste Antwort nach 133 ms, 29 KB HTML. Breite und Höhe sind dabei nicht gemessen (das Browserfenster hatte in dem Moment keine Breite); dafür gelten die Zahlen vom Dev-Server oben.
+
+**Was an der gebauten Fassung anders ist als „eine Calibre-Datei hochladen":** das Ergebnis ist dasselbe, der Weg nicht. Gebaut ist ein Kommando auf Julians Mac, das den Bibliotheksordner liest, eine Prüfseite zeigt und die Sammlung über die Schnittstelle anlegt; es braucht seine ID in einer Datei und merkt sich für den Rückweg, welches Buch welches Werk ist. Auf der Seite gibt es dafür keinen Knopf, und ein anderer Leser kann es nicht benutzen. Der Befund über den Editor (ein Buch unter 320 Kacheln nur durch Scrollen zu finden) betrifft das Wählen danach, nicht das Anlegen. Die Fassung für die Seite steht als Vorschlag 5.17a in der Roadmap; die Zahlen dieser Messung sagen, was sie kostet: 421 Bücher sind 593 Anfragen an Open Library und vier Minuten — der Foto-Import der Seite hört heute bei 80 Büchern auf.
+
+43 Tests im Import, tsc und Lint grün.
 
 ## 2026-10-04 · Eine Calibre-Bibliothek auf der Seite (ROADMAP 5.17a)
 

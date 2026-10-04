@@ -9,7 +9,7 @@
  * read again in pieces cut from the full-size photo (lib/walls/dense.ts).
  */
 import { crop, shrink, toJpeg, type PreparedPhoto } from '@/lib/photoprep';
-import { recognize, type RecognizedBook } from '@/lib/recognize';
+import { recognize, type ReadVariant, type RecognizedBook } from '@/lib/recognize';
 import { shelvesOf } from '@/lib/shelfrows';
 import { DENSE_AT, inWhole, mergeReads, piecesOf } from './dense';
 
@@ -49,10 +49,10 @@ export interface ReadHooks {
   onAgain?: (pieces: number, done: number) => void;
 }
 
-/** Throws when the model does not answer the first look; a piece that fails is counted and left out. */
-export async function readPhoto(prepared: PreparedPhoto, hooks: ReadHooks = {}): Promise<PhotoReading> {
+/** Throws when the model does not answer the first look; a piece that fails is counted and left out. `variant` is for measuring (lab/shelf/evaluate.ts); the site passes none. */
+export async function readPhoto(prepared: PreparedPhoto, hooks: ReadHooks = {}, variant: ReadVariant & { trim?: boolean } = {}): Promise<PhotoReading> {
   const started = Date.now();
-  const first = await recognize(prepared.bytes, 'image/jpeg', hooks.onBook, hooks.secondLook === false ? undefined : denseAt());
+  const first = await recognize(prepared.bytes, 'image/jpeg', hooks.onBook, hooks.secondLook === false ? undefined : denseAt(), variant);
   const reading: PhotoReading = {
     books: first.books,
     model: first.model,
@@ -65,13 +65,13 @@ export async function readPhoto(prepared: PreparedPhoto, hooks: ReadHooks = {}):
   };
   if (!first.stopped) return reading;
 
-  const cut = piecesOf(prepared.full.width, prepared.full.height, shelvesOf(prepared.full));
+  const cut = piecesOf(prepared.full.width, prepared.full.height, shelvesOf(prepared.full, { dropEdgeStrips: variant.trim }));
   reading.pieces = cut.length;
   hooks.onAgain?.(cut.length, 0);
   let done = 0;
   const runs = await Promise.allSettled(
     cut.map(async (piece) => {
-      const r = await recognize(toJpeg(shrink(crop(prepared.full, ...piece))), 'image/jpeg');
+      const r = await recognize(toJpeg(shrink(crop(prepared.full, ...piece))), 'image/jpeg', undefined, undefined, variant);
       hooks.onAgain?.(cut.length, ++done);
       return { ...r, books: r.books.map((b) => inWhole(b, piece)) };
     }),

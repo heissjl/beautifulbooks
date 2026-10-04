@@ -15,7 +15,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { isWallId } from '../../lib/walls/model';
+import { isWallId } from './site';
 
 export interface BookWork {
   bookId: number;

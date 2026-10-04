@@ -1,16 +1,22 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { PNG } from 'pngjs';
-import type { CollectionRecord } from '../../../lib/collections';
-import type { PublicWall } from '../../../lib/walls/model';
-import { checkCover, imageFacts, isSmaller } from '../image';
+import { mkdtempSync, readdirSync, readFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { type CollectionRecord, type PublicWall, type SourceEdition, type WorkSummary } from '../site';
+import { pickCovers } from '../covers';
+import { CoverSizes } from '../download';
+import { cleanBookTitle, firstAuthor, hitFromSummary, proposal, WorkMap } from '../find';
+import { checkCover, imageFacts, imageSizeFast, isSmaller } from '../image';
 import { bookDir, booksFromRows, type BookRow, type CalibreBook } from '../library';
 import { matchPick } from '../match';
+import { pocketbookStatus } from '../pocketbook';
 import { changedFiles, coverAsGiven, libraryKey, parseJournal, runningCalibre, undoStacks, unexpectedChange, type JournalEntry } from '../safety';
 import { imageUrls, parseSourceArg, picksFromCurated, picksFromWall, type CoverPick } from '../source';
 
 const SEP = String.fromCharCode(31);
 const row = (r: Partial<BookRow> & { id: number }): BookRow => ({ title: 'T', path: `A/T (${r.id})`, has_cover: 1, authors: 'A', isbns: null, formats: 'EPUB', ...r });
-const book = (b: Partial<CalibreBook> & { id: number }): CalibreBook => ({ title: 'T', authors: ['A'], isbns: [], hasCover: true, path: `A/T (${b.id})`, formats: ['EPUB'], ...b });
+const book = (b: Partial<CalibreBook> & { id: number }): CalibreBook => ({ title: 'T', authors: ['A'], isbns: [], hasCover: true, path: `A/T (${b.id})`, formats: ['EPUB'], languages: [], ...b });
 const pick = (p: Partial<CoverPick>): CoverPick => ({ workId: 'OL1W', coverId: 'ol:1', title: 'T', isbns: [], ...p });
 
 function png(width: number, height: number): Buffer {
@@ -26,6 +32,12 @@ describe('reading the library', () => {
     expect(b.isbns).toEqual(['9780441172719']);
     expect(b.formats).toEqual(['EPUB', 'MOBI']);
     expect(b.hasCover).toBe(true);
+  });
+
+  it('reads Calibre’s language codes as the site writes them', () => {
+    const [b] = booksFromRows([row({ id: 3, languages: `deu${SEP}eng${SEP}deu${SEP}xxx` })]);
+    expect(b.languages).toEqual(['de', 'en']);
+    expect(booksFromRows([row({ id: 4 })])[0].languages).toEqual([]);
   });
 
   it('survives a book without authors, identifiers or formats', () => {
@@ -207,5 +219,135 @@ describe('the guards around a write', () => {
 
   it('reads a journal whose last line was cut off', () => {
     expect(parseJournal('{"bookId":1,"state":"done","action":"apply"}\n{"bookId":2,"sta')).toHaveLength(1);
+  });
+});
+
+describe('the app: which work a book is', () => {
+  it('takes the prefixes of download sites off a title, and nothing else', () => {
+    expect(cleanBookTitle('[Philip K. Dick 04] • Flow My Tears, the Policeman Said')).toBe('Flow My Tears, the Policeman Said');
+    expect(cleanBookTitle('1974-Rendezvous With Rama')).toBe('Rendezvous With Rama');
+    expect(cleanBookTitle('1984')).toBe('1984');
+    expect(cleanBookTitle('2001: A Space Odyssey')).toBe('2001: A Space Odyssey');
+    expect(cleanBookTitle('Solaris:  A Novel')).toBe('Solaris: A Novel');
+    expect(cleanBookTitle('[Untitled]')).toBe('[Untitled]');
+  });
+
+  it('does not search for Calibre’s "Unknown"', () => {
+    expect(firstAuthor({ authors: ['Unknown'] })).toBe('');
+    expect(firstAuthor({ authors: [] })).toBe('');
+    expect(firstAuthor({ authors: ['Dick, Philip K.', 'x'] })).toBe('Dick, Philip K.');
+  });
+
+  const work = (w: Partial<WorkSummary> & { id: string; title: string }): WorkSummary => ({ authors: ['Philip K. Dick'], coverUrls: [], languages: [], ...w });
+  it('proposes a work only when the author agrees or the title does, never the bare first result', () => {
+    const works = [work({ id: 'OL1W', title: 'A study guide to Ubik', authors: ['Someone Else'] }), work({ id: 'OL2W', title: 'Ubik' })];
+    expect(proposal(works, { title: 'Ubik', author: 'Dick, Philip K.' })).toEqual({ id: 'OL2W', reason: 'author+title' });
+    expect(proposal(works, { title: 'Der dunkle Schirm', author: 'Philip K. Dick' })).toEqual({ id: 'OL2W', reason: 'author' });
+    expect(proposal(works, { title: 'Middlemarch', author: 'George Eliot' })).toBeNull();
+    expect(proposal([], { title: 'Ubik', author: 'Philip K. Dick' })).toBeNull();
+  });
+
+  it('shows a search hit with a small picture where the catalogue has one', () => {
+    const hit = hitFromSummary(work({ id: 'OL2W', title: 'Ubik', firstPublishYear: 1969, editionCount: 40, coverUrls: ['https://covers.openlibrary.org/b/id/911137-L.jpg'] }));
+    expect(hit).toEqual({ id: 'OL2W', title: 'Ubik', author: 'Philip K. Dick', year: 1969, editions: 40, thumb: 'https://covers.openlibrary.org/b/id/911137-M.jpg' });
+    expect(hitFromSummary(work({ id: 'OL3W', title: 'X' })).thumb).toBeUndefined();
+  });
+
+  it('remembers which work a book is, across runs', () => {
+    const file = join(mkdtempSync(join(tmpdir(), 'calibre-map-')), 'deep', 'works.json');
+    const map = new WorkMap(file);
+    expect(map.get(7)).toBeUndefined();
+    map.set(7, 'OL2W');
+    map.set(8, 'OL3W');
+    map.set(7, 'OL9W');
+    expect(new WorkMap(file).all()).toEqual({ 7: 'OL9W', 8: 'OL3W' });
+  });
+});
+
+describe('the app: the covers of a work', () => {
+  const edition = ({ covers, ...e }: Partial<Omit<SourceEdition, 'covers'>> & { id: string; covers: string[] }): SourceEdition => ({
+    workId: 'OL1W', source: 'openlibrary', title: 'T', ...e,
+    covers: covers.map((id) => ({ id, url: `https://covers.openlibrary.org/b/id/${id.slice(3)}-L.jpg`, urlSmall: `https://covers.openlibrary.org/b/id/${id.slice(3)}-M.jpg` })),
+  });
+
+  it('lists each image once, with the languages, years and ISBNs of its printings — e-books included', () => {
+    const covers = pickCovers([
+      edition({ id: 'ol:OL1M', covers: ['ol:10'], language: 'de', year: 1999, publisher: 'Heyne', isbn13: '9783453000001' }),
+      edition({ id: 'ol:OL2M', covers: ['ol:10', 'ol:11'], language: 'en', year: 2005, publisher: 'Gollancz', format: 'ebook' }),
+      edition({ id: 'ol:OL3M', covers: ['ol:10'], language: 'de', year: 1987, publisher: 'Heyne' }),
+      edition({ id: 'gb:x', covers: ['gb:abc'] }),
+    ]);
+    expect(covers).toEqual([
+      { coverId: 'ol:10', thumb: 'https://covers.openlibrary.org/b/id/10-M.jpg', languages: ['de', 'en'], publishers: ['Heyne', 'Gollancz'], isbns: ['9783453000001'], year: 2005 },
+      { coverId: 'ol:11', thumb: 'https://covers.openlibrary.org/b/id/11-M.jpg', languages: ['en'], publishers: ['Gollancz'], isbns: [], year: 2005 },
+    ]);
+  });
+});
+
+describe('the size of a cover from its header', () => {
+  it('reads a PNG and a JPEG without decoding them', () => {
+    expect(imageSizeFast(png(300, 450))).toEqual({ width: 300, height: 450 });
+    // A minimal JPEG: SOI, an APP0 segment to skip, then a baseline frame header saying 475 high, 309 wide.
+    const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x04, 0x00, 0x00, 0xff, 0xc0, 0x00, 0x11, 0x08, 0x01, 0xdb, 0x01, 0x35, 0x03, 0x01, 0x22, 0x00]);
+    expect(imageSizeFast(jpeg)).toEqual({ width: 309, height: 475 });
+  });
+  it('says nothing about a file that is neither, or cut off before the frame', () => {
+    expect(imageSizeFast(Buffer.from('<html>'))).toBeNull();
+    expect(imageSizeFast(Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x04, 0x00, 0x00]))).toBeNull();
+  });
+});
+
+describe('the sizes of the catalogue’s covers', () => {
+  it('keeps what was measured across runs, and never asks for it again', async () => {
+    vi.useFakeTimers();
+    const file = join(mkdtempSync(join(tmpdir(), 'calibre-sizes-')), 'deep', 'cover-sizes.json');
+    const sizes = new CoverSizes(file, 'http://localhost');
+    expect(sizes.peek('ol:1')).toBeUndefined();
+    sizes.remember('ol:1', { width: 754, height: 1200 });
+    sizes.remember('ol:2', { width: 128, height: 195 });
+    // A second answer for the same cover changes nothing: an id never changes its image.
+    sizes.remember('ol:1', { width: 1, height: 1 });
+    vi.advanceTimersByTime(2000);
+    vi.useRealTimers();
+    const again = new CoverSizes(file, 'http://localhost');
+    expect(again.peek('ol:1')).toEqual({ width: 754, height: 1200 });
+    // Known sizes are answered without a request (there is no network in a test).
+    expect(await again.get('ol:2')).toEqual({ width: 128, height: 195 });
+    expect(await again.get('not a cover id')).toBeNull();
+  });
+});
+
+describe('the tool as an area of its own', () => {
+  it('reaches the rest of the repository through site.ts and nowhere else', () => {
+    const dir = join(__dirname, '..');
+    const files = [...readdirSync(dir), ...readdirSync(__dirname).map((f) => `__tests__/${f}`)].filter((f) => f.endsWith('.ts') && f !== 'site.ts');
+    const outside = files.filter((f) => /from '(\.\.\/)+(lib|scripts|app|components|data)\//.test(readFileSync(join(dir, f), 'utf8')));
+    expect(outside).toEqual([]);
+  });
+});
+
+describe('the PocketBook sync, offered only when it can run', () => {
+  const config = { pocketbook_path: '/Volumes/PB626', obsidian_vault_path: '/notes' };
+  const there = (...paths: string[]) => (p: string) => paths.includes(p);
+
+  it('is ready when the script, the reader’s database and the notes folder are there', () => {
+    const s = pocketbookStatus('/p/sync_highlights.py', config, there('/Volumes/PB626/system/config/books.db', '/notes'));
+    expect(s).toEqual({ script: '/p/sync_highlights.py', reader: '/Volumes/PB626', connected: true, notes: '/notes', problems: [] });
+  });
+
+  it('says the reader is not connected — a mounted volume without its database is not enough', () => {
+    const s = pocketbookStatus('/p/sync_highlights.py', config, there('/Volumes/PB626', '/notes'));
+    expect(s.connected).toBe(false);
+    expect(s.problems).toHaveLength(1);
+    expect(s.problems[0]).toMatch(/not connected/);
+  });
+
+  it('names a missing script, a missing setup and a missing notes folder, each as itself', () => {
+    expect(pocketbookStatus(undefined, config, () => true).problems[0]).toMatch(/script was not found/);
+    expect(pocketbookStatus('/p/s.py', null, () => true).problems[0]).toMatch(/not set up/);
+    expect(pocketbookStatus('/p/s.py', { pocketbook_path: '/r' }, () => true).problems[0]).toMatch(/no notes folder/);
+    expect(pocketbookStatus('/p/s.py', config, there('/Volumes/PB626/system/config/books.db')).problems[0]).toMatch(/notes folder is not there/);
+    // The newer key of the sync's setup wins over the older one.
+    expect(pocketbookStatus('/p/s.py', { ...config, notes_vault_path: '/vault' }, () => true).notes).toBe('/vault');
   });
 });

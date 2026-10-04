@@ -7,7 +7,7 @@ import { booksByWork, loadMap, mapFile, parseMap, writeMap, type WorkMap } from 
 import { matchPick } from '../match';
 import type { CoverPick } from '../source';
 
-const book = (b: Partial<CalibreBook> & { id: number }): CalibreBook => ({ title: 'T', authors: ['A'], isbns: [], hasCover: true, path: `A/T (${b.id})`, formats: ['EPUB'], ...b });
+const book = (b: Partial<CalibreBook> & { id: number }): CalibreBook => ({ title: 'T', authors: ['A'], isbns: [], hasCover: true, path: `A/T (${b.id})`, formats: ['EPUB'], languages: [], ...b });
 const pick = (p: Partial<CoverPick>): CoverPick => ({ workId: 'OL1W', coverId: 'ol:1', title: 'T', isbns: [], ...p });
 const WALL = 'abcdefghij';
 const map = (books: WorkMap['books']): WorkMap => ({ wall: WALL, library: 'Calibre Library-12345678', createdAt: '2026-10-03T12:00:00.000Z', books });

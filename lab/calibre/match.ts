@@ -7,7 +7,7 @@
  * durch die Galaxis" for "The Hitchhiker's Guide to the Galaxy") matches
  * nothing — the same author's books are then offered, and Julian picks.
  */
-import { sameAuthor, titleScore } from '../../lib/bookmatch';
+import { sameAuthor, titleScore } from './site';
 import type { CalibreBook } from './library';
 import type { CoverPick } from './source';
 
