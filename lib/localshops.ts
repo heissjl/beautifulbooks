@@ -241,6 +241,14 @@ export function localShopLinks(country: LocalCountry, edition: LocalShopInput): 
 }
 
 /** Wording of the section, in one place. */
+/** Every sentence the fold can show, for the catalogue test (ROADMAP 6.85). */
+export function localShopCopy(): string[] {
+  return [
+    ...Object.values(LOCAL_SHOPS_COPY),
+    ...COUNTRIES.flatMap(c => [c.label, ...c.services.map(s => s.note)]),
+  ];
+}
+
 export const LOCAL_SHOPS_COPY = {
   summary: 'Buy from a local bookshop',
   lead: 'Find it at an independent bookshop near you.',

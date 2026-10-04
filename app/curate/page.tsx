@@ -10,6 +10,9 @@ import { liveCollections } from '@/lib/collections-live';
 import { draftStoreFromEnv, listDrafts, type Draft } from '@/lib/curate/drafts';
 import { SESSION_COOKIE, sessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { adminSignedIn } from '@/lib/suggest/session';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/translate';
+import { rich } from '@/components/rich';
 
 /**
  * The collection curation tool, online for friends (ROADMAP 5.10b, SPEC
@@ -30,9 +33,11 @@ export const metadata: Metadata = {
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
+  locale?: Locale;
 }
 
-export default async function CuratePage({ searchParams }: PageProps) {
+export default async function CuratePage({ searchParams, locale = DEFAULT_LOCALE }: PageProps) {
+  const t = translator(locale);
   if (!suggestEnabled()) notFound();
   const signedIn = sessionValid((await cookies()).get(SESSION_COOKIE)?.value);
   const d = (await searchParams).d;
@@ -41,12 +46,12 @@ export default async function CuratePage({ searchParams }: PageProps) {
   let storeError = '';
   if (signedIn) {
     const store = draftStoreFromEnv();
-    if (!store) storeError = 'The draft store is not configured on this deployment.';
+    if (!store) storeError = t('The draft store is not configured on this deployment.');
     else {
       try {
         drafts = await listDrafts(store);
       } catch {
-        storeError = 'The draft store did not answer. Reload in a moment.';
+        storeError = t('The draft store did not answer. Reload in a moment.');
       }
     }
   }
@@ -64,11 +69,10 @@ export default async function CuratePage({ searchParams }: PageProps) {
           at the password field learns no name.
         */}
         {signedIn && <p className="mb-4 inline-block rounded-md border border-accent/40 px-3 py-1 text-sm text-accent" lang="de">Für Caitlin</p>}
-        <h1 className="text-3xl leading-tight text-ink sm:text-4xl">Curate a collection</h1>
+        <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{t('Curate a collection')}</h1>
         <p className="mt-4 max-w-2xl text-base text-ink-2">
           {/* Julian, 2026-09-25: only this sentence stays of the introduction. */}
-          For a single book, the{' '}
-          <Link href="/suggest" className="text-accent underline underline-offset-4">quick suggestion form</Link> is faster.
+          {rich(t('For a single book, the {form} is faster.'), { form: <Link href="/suggest" className="text-accent underline underline-offset-4">{t('quick suggestion form')}</Link> })}
         </p>
         {/* Signed in as a friend: the admin password can be entered here (5.10g). */}
         {signedIn && !admin && (

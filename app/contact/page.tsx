@@ -3,17 +3,16 @@ import Link from 'next/link';
 import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
+import { rich } from '@/components/rich';
 import { readImprint } from '@/lib/imprint';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/translate';
 
 /**
- * The legal notice — Impressum — required of every public telemedium in
- * Germany that is not purely personal (§ 18 Abs. 1 MStV: name and an address
- * where post can be served) and, should the site count as commercial, § 5
- * DDG, which for a private person adds only the e-mail address. Both are
- * satisfied here (docs/recht-hobbyseite.md §2).
- *
- * The values come from the environment, never from the repository. A build
- * without them fails in `readImprint` rather than shipping a blank notice.
+ * The legal notice (SPEC F6, ROADMAP 2.3): name, address and e-mail from
+ * `IMPRINT_*`, never from the repository. The German words „Impressum“ and
+ * the paragraph line stay in both languages, because the law they cite is
+ * German (docs/recht-hobbyseite.md §2).
  */
 export const metadata: Metadata = {
   title: 'Impressum',
@@ -21,17 +20,19 @@ export const metadata: Metadata = {
   description: 'Legal notice: who runs this site and how to reach them.',
 };
 
-export default function ContactPage() {
+const ext = 'underline underline-offset-2 hover:text-accent';
+
+export default function ContactPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
+  const t = translator(locale);
   const imprint = readImprint();
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 pb-24 pt-12 sm:px-6">
         <h1 className="text-4xl leading-[1.1] text-ink">Impressum</h1>
-        <p className="mt-2 text-sm text-ink-3">Legal notice · Angaben gemäß § 5 DDG und § 18 Abs. 1 MStV</p>
-
+        <p className="mt-2 text-sm text-ink-3">{t('Legal notice')} · Angaben gemäß § 5 DDG und § 18 Abs. 1 MStV</p>
         <section className="mt-10 text-[15px] leading-relaxed text-ink-2">
-          <p className="kicker">Responsible for this site</p>
+          <p className="kicker">{t('Responsible for this site')}</p>
           <address className="mt-3 not-italic text-ink">
             {imprint.name}
             <br />
@@ -40,23 +41,21 @@ export default function ContactPage() {
             {imprint.city}
           </address>
           <p className="mt-4">
-            E-mail:{' '}
-            <a href={`mailto:${imprint.email}`} className="underline underline-offset-2 hover:text-accent">{imprint.email}</a>
+            {t('E-mail')}:{' '}
+            <a href={`mailto:${imprint.email}`} className={ext}>{imprint.email}</a>
           </p>
         </section>
-
         <section className="mt-10 space-y-4 text-[15px] leading-relaxed text-ink-2">
           <p>
-            This is a private, non-commercial site. Book data comes from{' '}
-            <a className="underline underline-offset-2 hover:text-accent" href="https://openlibrary.org" target="_blank" rel="noopener noreferrer">Open Library</a>{' '}
-            and{' '}
-            <a className="underline underline-offset-2 hover:text-accent" href="https://books.google.com" target="_blank" rel="noopener noreferrer">Google Books</a>;
-            cover images are shown from those catalogues and belong to their publishers. If you hold
-            rights to an image and want it removed from view here, write to the address above.
+            {rich(t('This is a private, non-commercial site. Book data comes from {openlibrary} and {googlebooks}; cover images are shown from those catalogues and belong to their publishers. If you hold rights to an image and want it removed from view here, write to the address above.'), {
+              openlibrary: <a className={ext} href="https://openlibrary.org" target="_blank" rel="noopener noreferrer">Open Library</a>,
+              googlebooks: <a className={ext} href="https://books.google.com" target="_blank" rel="noopener noreferrer">Google Books</a>,
+            })}
           </p>
           <p>
-            What the site does with data is described in the{' '}
-            <Link href="/privacy" className="underline underline-offset-2 hover:text-accent">privacy notice</Link>.
+            {rich(t('What the site does with data is described in the {privacy}.'), {
+              privacy: <Link href="/privacy" className={ext}>{t('privacy notice')}</Link>,
+            })}
           </p>
         </section>
       </main>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import CoverImage from './CoverImage';
+import { rich, useT } from './i18n';
 import { olCover } from '@/lib/curated';
 import type { CollectionKind } from '@/lib/collections';
 import type { SearchResult } from '@/lib/search';
@@ -43,6 +44,7 @@ function coverNumber(id: string): number {
  * asks Google, and the search makes its one Open Library call as for anyone.
  */
 export default function SuggestTool({ collections }: { collections: SuggestCollection[] }) {
+  const t = useT();
   const [slug, setSlug] = useState(collections[0]?.slug ?? NEW);
   const [newTitle, setNewTitle] = useState('');
   const [query, setQuery] = useState('');
@@ -67,7 +69,7 @@ export default function SuggestTool({ collections }: { collections: SuggestColle
     setBook(null);
     try {
       const res = await fetch(`/api/search?q=${encodeURIComponent(query.trim())}`);
-      if (!res.ok) throw new Error(res.status === 429 ? 'Too many searches. Wait a minute.' : 'The search did not answer.');
+      if (!res.ok) throw new Error(res.status === 429 ? t('Too many searches. Wait a minute.') : t('The search did not answer.'));
       const body = (await res.json()) as SearchResult;
       setResults(
         body.works
@@ -78,7 +80,7 @@ export default function SuggestTool({ collections }: { collections: SuggestColle
     } catch (e) {
       // A search that failed is not "no books" (N12): say which it was.
       setResults(null);
-      setError(e instanceof Error ? e.message : 'The search did not answer.');
+      setError(e instanceof Error ? e.message : t('The search did not answer.'));
     } finally {
       setBusy(null);
     }
@@ -90,14 +92,14 @@ export default function SuggestTool({ collections }: { collections: SuggestColle
     try {
       const res = await fetch(`/api/suggest/covers?id=${target.id}&offset=${offset}`);
       const body = (await res.json()) as { covers?: CoverChoice[]; next?: number | null; error?: string };
-      if (!res.ok) throw new Error(body.error ?? 'The covers did not load.');
+      if (!res.ok) throw new Error(body.error ?? t('The covers did not load.'));
       setCovers(prev => {
         const known = new Set(prev.map(c => c.id));
         return [...(offset === 0 ? [] : prev), ...(body.covers ?? []).filter(c => offset === 0 || !known.has(c.id))];
       });
       setNextOffset(body.next ?? null);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'The covers did not load.');
+      setError(e instanceof Error ? e.message : t('The covers did not load.'));
     } finally {
       setBusy(null);
     }
@@ -128,14 +130,14 @@ export default function SuggestTool({ collections }: { collections: SuggestColle
         }),
       });
       const body = (await res.json().catch(() => ({}))) as { error?: string };
-      if (!res.ok) throw new Error(res.status === 401 ? 'You were signed out. Reload the page.' : (body.error ?? 'Not sent.'));
+      if (!res.ok) throw new Error(res.status === 401 ? t('You were signed out. Reload the page.') : (body.error ?? t('Not sent.')));
       setSent(prev => [{ title: book.title, collection: slug === NEW ? newTitle : (collection?.title ?? slug), coverId: cover }, ...prev]);
       setBook(null);
       setCover(null);
       setCovers([]);
       setNote('');
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Not sent.');
+      setError(e instanceof Error ? e.message : t('Not sent.'));
     } finally {
       setBusy(null);
     }
@@ -147,41 +149,41 @@ export default function SuggestTool({ collections }: { collections: SuggestColle
   return (
     <div className="space-y-10">
       <section>
-        <h2 className="font-display text-2xl text-ink">1. Collection</h2>
+        <h2 className="font-display text-2xl text-ink">{t('1. Collection')}</h2>
         <select value={slug} onChange={e => setSlug(e.target.value)} className={`${field} mt-3 max-w-md`}>
           {collections.map(c => (
-            <option key={c.slug} value={c.slug}>{c.title} ({c.works.length} books)</option>
+            <option key={c.slug} value={c.slug}>{c.title} ({t('{n} books', { n: c.works.length })})</option>
           ))}
-          <option value={NEW}>An idea for a new collection…</option>
+          <option value={NEW}>{t('An idea for a new collection…')}</option>
         </select>
         {slug === NEW ? (
           <input
             value={newTitle}
             onChange={e => setNewTitle(e.target.value)}
             maxLength={120}
-            placeholder="What would it be called? e.g. Penguin Modern Classics"
+            placeholder={t('What would it be called? e.g. Penguin Modern Classics')}
             className={`${field} mt-3 max-w-md`}
           />
         ) : collection && (
           <div className="mt-3 max-w-2xl text-sm text-ink-2">
             {collection.kind === 'authors' && collection.scope.length > 0 && (
-              <p>Authors in this collection: {collection.scope.join(', ')}. A book by someone else is welcome as a suggestion — Julian decides who joins the list.</p>
+              <p>{t('Authors in this collection: {authors}. A book by someone else is welcome as a suggestion — Julian decides who joins the list.', { authors: collection.scope.join(', ') })}</p>
             )}
-            {collection.kind === 'series' && collection.scope.length > 0 && <p>Publisher: {collection.scope.join(', ')}.</p>}
+            {collection.kind === 'series' && collection.scope.length > 0 && <p>{t('Publisher: {publishers}.', { publishers: collection.scope.join(', ') })}</p>}
             {collection.works.length > 0 && (
-              <p className="mt-2 text-ink-3">Already in it: {collection.works.map(w => w.title).join(' · ')}</p>
+              <p className="mt-2 text-ink-3">{t('Already in it: {titles}', { titles: collection.works.map(w => w.title).join(' · ') })}</p>
             )}
           </div>
         )}
       </section>
 
       <section>
-        <h2 className="font-display text-2xl text-ink">2. Book</h2>
+        <h2 className="font-display text-2xl text-ink">{t('2. Book')}</h2>
         <form onSubmit={search} className="mt-3 flex max-w-md gap-2">
-          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Title or author" className={field} />
-          <button type="submit" disabled={busy === 'search'} className={button}>{busy === 'search' ? 'Searching…' : 'Search'}</button>
+          <input value={query} onChange={e => setQuery(e.target.value)} placeholder={t('Title or author')} className={field} />
+          <button type="submit" disabled={busy === 'search'} className={button}>{busy === 'search' ? t('Searching…') : t('Search')}</button>
         </form>
-        {results && results.length === 0 && <p className="mt-3 text-sm text-ink-3">Open Library found no book for that.</p>}
+        {results && results.length === 0 && <p className="mt-3 text-sm text-ink-3">{t('Open Library found no book for that.')}</p>}
         {results && results.length > 0 && (
           <ul className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
             {results.map(r => (
@@ -207,11 +209,11 @@ export default function SuggestTool({ collections }: { collections: SuggestColle
 
       {book && (
         <section>
-          <h2 className="font-display text-2xl text-ink">3. Cover of <em>{book.title}</em></h2>
-          {alreadyIn && <p className="mt-2 text-sm text-ink-2">This book is already in the collection. Suggest a cover if you think a different one is better.</p>}
-          {offList && <p className="mt-2 text-sm text-ink-2">{book.author} is not on this collection&rsquo;s list yet. Julian decides whether to add them.</p>}
-          {busy === 'covers' && covers.length === 0 && <p className="mt-3 text-sm text-ink-3">Loading covers…</p>}
-          {busy !== 'covers' && covers.length === 0 && !error && <p className="mt-3 text-sm text-ink-3">No covers among the editions Open Library lists for this record.</p>}
+          <h2 className="font-display text-2xl text-ink">{rich(t('3. Cover of {title}'), { title: <em>{book.title}</em> })}</h2>
+          {alreadyIn && <p className="mt-2 text-sm text-ink-2">{t('This book is already in the collection. Suggest a cover if you think a different one is better.')}</p>}
+          {offList && <p className="mt-2 text-sm text-ink-2">{t('{author} is not on this collection’s list yet. Julian decides whether to add them.', { author: book.author })}</p>}
+          {busy === 'covers' && covers.length === 0 && <p className="mt-3 text-sm text-ink-3">{t('Loading covers…')}</p>}
+          {busy !== 'covers' && covers.length === 0 && !error && <p className="mt-3 text-sm text-ink-3">{t('No covers among the editions Open Library lists for this record.')}</p>}
           <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
             {covers.map(c => (
               <li key={c.id}>
@@ -222,7 +224,7 @@ export default function SuggestTool({ collections }: { collections: SuggestColle
                   className="group block w-full text-left"
                 >
                   <span className={`cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 ${cover === c.id ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'group-hover:ring-1 group-hover:ring-line'}`}>
-                    <CoverImage src={olCover(coverNumber(c.id), 'M')} alt={`Cover ${[c.year, c.publisher].filter(Boolean).join(', ')}`} sizes="(max-width: 640px) 33vw, 16vw" fit="contain" />
+                    <CoverImage src={olCover(coverNumber(c.id), 'M')} alt={t('Cover {detail}', { detail: [c.year, c.publisher].filter(Boolean).join(', ') })} sizes="(max-width: 640px) 33vw, 16vw" fit="contain" />
                   </span>
                   <span className="mt-1 block truncate text-xs text-ink-3">{[c.year, c.publisher].filter(Boolean).join(' · ') || ' '}</span>
                 </button>
@@ -231,7 +233,7 @@ export default function SuggestTool({ collections }: { collections: SuggestColle
           </ul>
           {nextOffset !== null && (
             <button type="button" disabled={busy === 'covers'} onClick={() => loadCovers(book, nextOffset)} className={`${button} mt-4`}>
-              {busy === 'covers' ? 'Loading…' : 'More covers'}
+              {busy === 'covers' ? t('Loading…') : t('More covers')}
             </button>
           )}
         </section>
@@ -239,24 +241,24 @@ export default function SuggestTool({ collections }: { collections: SuggestColle
 
       {book && cover && (
         <section className="max-w-xl">
-          <h2 className="font-display text-2xl text-ink">4. Send</h2>
+          <h2 className="font-display text-2xl text-ink">{t('4. Send')}</h2>
           <textarea
             value={note}
             onChange={e => setNote(e.target.value)}
             maxLength={500}
             rows={3}
-            placeholder="Why this one? (optional)"
+            placeholder={t('Why this one? (optional)')}
             className={`${field} mt-3`}
           />
           <input
             value={by}
             onChange={e => setBy(e.target.value)}
             maxLength={60}
-            placeholder="Your name, so Julian knows who to thank (optional)"
+            placeholder={t('Your name, so Julian knows who to thank (optional)')}
             className={`${field} mt-3`}
           />
           <button type="button" onClick={send} disabled={busy === 'send' || (slug === NEW && !newTitle.trim())} className={`${button} mt-3`}>
-            {busy === 'send' ? 'Sending…' : 'Send suggestion'}
+            {busy === 'send' ? t('Sending…') : t('Send suggestion')}
           </button>
         </section>
       )}
@@ -265,14 +267,14 @@ export default function SuggestTool({ collections }: { collections: SuggestColle
 
       {sent.length > 0 && (
         <section>
-          <h2 className="font-display text-xl text-ink">Sent, thank you</h2>
+          <h2 className="font-display text-xl text-ink">{t('Sent, thank you')}</h2>
           <ul className="mt-3 space-y-2">
             {sent.map((s, i) => (
               <li key={i} className="flex items-center gap-3 text-sm text-ink-2">
                 <span className="relative block aspect-[2/3] w-8 shrink-0 overflow-hidden rounded bg-surface-2">
                   <CoverImage src={olCover(coverNumber(s.coverId), 'M')} alt="" sizes="32px" />
                 </span>
-                <span><b className="font-medium text-ink">{s.title}</b> for {s.collection}</span>
+                <span>{rich(t('{title} for {collection}'), { title: <b className="font-medium text-ink">{s.title}</b>, collection: s.collection })}</span>
               </li>
             ))}
           </ul>

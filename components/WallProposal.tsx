@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import CoverImage from './CoverImage';
+import { useT } from './i18n';
 import { coverUrlFor } from '@/lib/coverurl';
 import { standingOf, type Standing } from '@/lib/walls/edit';
 import { tileCoverId, type PublicWall, type Tile } from '@/lib/walls/model';
@@ -59,6 +60,7 @@ export default function WallProposal({
   /** Search for a title that was read but not found. */
   onSearchFor?: (label: string) => void;
 }) {
+  const t = useT();
   const standing = (p: Proposal): Standing | null => (p.tile ? standingOf(p.tile, target) : null);
   // Ticked by default: a found cover that is new to the collection and not a guess. The reader's
   // choices are kept as exceptions to that rule, so a row that arrives later — the list grows
@@ -92,7 +94,7 @@ export default function WallProposal({
     try {
       await onCommit(dest, tiles);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'That did not work.');
+      setError(err instanceof Error ? err.message : t('That did not work.'));
     } finally {
       setBusy(false);
     }
@@ -110,7 +112,7 @@ export default function WallProposal({
           onClick={() => setFlipped(anyTicked ? new Set(proposals.flatMap((p, i) => (byDefault(p) ? [i] : []))) : new Set())}
           className="mt-1 text-xs text-ink-2 underline underline-offset-2 hover:text-accent"
         >
-          {anyTicked ? 'Untick all' : 'Tick all new ones'}
+          {anyTicked ? t('Untick all') : t('Tick all new ones')}
         </button>
       )}
       {/* Two columns on a wide screen (Julian, 2026-10-01: „on desktop there's too much empty space here“); the link stays at the row's end, now half as far away. */}
@@ -130,25 +132,25 @@ export default function WallProposal({
                     <span className="min-w-0">
                       <span className={`block truncate text-sm ${st === 'in' ? 'text-ink-2' : 'text-ink'}`}>{p.tile.title}</span>
                       <span className={`block truncate text-xs ${st === 'new' && !p.unsure ? 'text-ink-3' : 'text-accent'}`}>
-                        {st === 'in' ? 'already in this collection' : st === 'work' ? 'in this collection with another cover' : p.unsure ? `maybe — the photo reads “${p.label}${p.sub ? `, ${p.sub}` : ''}”` : (p.sub ?? p.tile.author)}
+                        {st === 'in' ? t('already in this collection') : st === 'work' ? t('in this collection with another cover') : p.unsure ? t('maybe — the photo reads “{read}”', { read: `${p.label}${p.sub ? `, ${p.sub}` : ''}` }) : (p.sub ?? p.tile.author)}
                       </span>
                     </span>
                   </label>
                   {p.unsure && onSearchFor ? (
                     <button type="button" onClick={() => onSearchFor(p.label)} className="shrink-0 text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
-                      search instead
+                      {t('search instead')}
                     </button>
                   ) : (
                     onOtherCover && (
                       <button type="button" onClick={() => onOtherCover(p.tile as Tile)} className="shrink-0 text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
-                        another cover
+                        {t('another cover')}
                       </button>
                     )
                   )}
                 </>
               ) : p.pending ? (
                 <span className="text-sm text-ink-3">
-                  &ldquo;{p.label}&rdquo;{p.sub ? ` — ${p.sub}` : ''}: <span className="italic">looking it up…</span>
+                  &ldquo;{p.label}&rdquo;{p.sub ? ` — ${p.sub}` : ''}: <span className="italic">{t('looking it up…')}</span>
                 </span>
               ) : (
                 <span className="text-sm text-ink-3">
@@ -157,7 +159,7 @@ export default function WallProposal({
                     <>
                       {' — '}
                       <button type="button" onClick={() => onSearchFor(p.label)} className="underline underline-offset-2 hover:text-accent">
-                        {p.failed ? 'try the search' : 'search for it'}
+                        {p.failed ? t('try the search') : t('search for it')}
                       </button>
                     </>
                   )}
@@ -171,10 +173,10 @@ export default function WallProposal({
       {target && !asNew ? (
         <div className="mt-4 flex flex-col items-start gap-2">
           <button type="button" disabled={count === 0 || busy} onClick={() => commit({ wall: target })} className={button}>
-            {busy ? 'Adding…' : `Add ${count} to ${target.title}`}{!busy && pending > 0 ? ` (${pending} still looking)` : ''}
+            {busy ? t('Adding…') : t('Add {n} to {title}', { n: count, title: target.title })}{!busy && pending > 0 ? ` ${t('({n} still looking)', { n: pending })}` : ''}
           </button>
           <button type="button" onClick={() => setAsNew(true)} className="text-sm text-ink-2 underline underline-offset-2 hover:text-accent">
-            or make a new collection of them
+            {t('or make a new collection of them')}
           </button>
         </div>
       ) : (
@@ -183,13 +185,13 @@ export default function WallProposal({
             <select
               value={chosen}
               onChange={(e) => setChosen(e.target.value)}
-              aria-label="Where the covers go"
+              aria-label={t('Where the covers go')}
               className="w-0 min-w-[9rem] max-w-full flex-1 truncate rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-ink"
             >
-              <option value={NEW}>A new collection</option>
+              <option value={NEW}>{t('A new collection')}</option>
               {walls.map((w) => (
                 <option key={w.id} value={w.id}>
-                  Add to {w.title} ({w.tiles.length})
+                  {t('Add to {title} ({n})', { title: w.title, n: w.tiles.length })}
                 </option>
               ))}
             </select>
@@ -198,16 +200,16 @@ export default function WallProposal({
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              aria-label="Title of the new collection"
+              aria-label={t('Title of the new collection')}
               className="w-0 min-w-[9rem] flex-1 rounded-full border border-line bg-surface px-4 py-1.5 text-sm text-ink"
             />
           )}
           <button type="button" disabled={count === 0 || busy} onClick={() => commit(intoNew || !existing ? { title } : { wall: existing })} className={button}>
-            {busy ? 'Working…' : intoNew || !existing ? `Make a collection of ${count}` : `Add ${count} to ${existing.title}`}
+            {busy ? t('Working…') : intoNew || !existing ? t('Make a collection of {n}', { n: count }) : t('Add {n} to {title}', { n: count, title: existing.title })}
           </button>
           {target && (
             <button type="button" onClick={() => setAsNew(false)} className="text-sm text-ink-2 underline underline-offset-2 hover:text-accent">
-              back
+              {t('back')}
             </button>
           )}
         </div>

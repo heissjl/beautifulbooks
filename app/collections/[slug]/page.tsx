@@ -11,6 +11,8 @@ import { authorsShown, coverLine } from '@/lib/collections';
 import { liveCollectionBySlug } from '@/lib/collections-live';
 import { SITE_URL } from '@/lib/seo';
 import { friendSignedIn } from '@/lib/suggest/session';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator, type Translate } from '@/lib/i18n/translate';
 
 /**
  * One thematic collection (ROADMAP 5.10, SPEC F8): a title, a paragraph and
@@ -32,6 +34,8 @@ export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+  /** Set by the German tree (ROADMAP 6.85); Next itself passes none. */
+  locale?: Locale;
 }
 
 /** The published collection, or — for a signed-in friend only — the draft. */
@@ -43,10 +47,10 @@ async function findCollection(slug: string) {
 
 
 /** "A, B and C" — or "A, B and 4 more" once the list stops being readable. */
-function nameLine(names: string[], max = 4): string {
+function nameLine(names: string[], max = 4, t: Translate = translator(DEFAULT_LOCALE)): string {
   if (names.length <= 1) return names[0] ?? '';
-  if (names.length <= max) return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
-  return `${names.slice(0, max - 1).join(', ')} and ${names.length - (max - 1)} more`;
+  if (names.length <= max) return t('{list} and {last}', { list: names.slice(0, -1).join(', '), last: names[names.length - 1] });
+  return t('{list} and {n} more', { list: names.slice(0, max - 1).join(', '), n: names.length - (max - 1) });
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -66,7 +70,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function CollectionPage({ params }: PageProps) {
+export default async function CollectionPage({ params, locale = DEFAULT_LOCALE }: PageProps) {
+  const t = translator(locale);
   const { slug } = await params;
   const c = await findCollection(slug);
   if (!c) notFound();
@@ -77,7 +82,7 @@ export default async function CollectionPage({ params }: PageProps) {
       <SiteHeader
         left={
           <Link href="/collections" className="rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
-            ← Collections
+            ← {t('Collections')}
           </Link>
         }
         search={<HeaderSearch />}
@@ -85,7 +90,7 @@ export default async function CollectionPage({ params }: PageProps) {
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">
         {!c.published && (
           <p className="mb-6 inline-block rounded-md border border-accent/40 px-3 py-1 text-xs text-accent">
-            Draft — not on the public site; visible under <code>next dev</code> and to friends signed in on /curate
+            {t('Draft — not on the public site; visible under')} <code>next dev</code> {t('and to friends signed in on /curate')}
           </p>
         )}
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{c.title}</h1>
@@ -101,16 +106,16 @@ export default async function CollectionPage({ params }: PageProps) {
         */}
         {!c.works.some(w => w.image) && (
           <p className="mt-3 text-sm text-ink-3">
-            {c.works.length} {c.works.length === 1 ? 'book' : 'books'}
-            {names.length > 0 && <> by {names.length} {names.length === 1 ? 'author' : 'authors'}</>}
-            , {coverLine(c.kind, c.coverSource, 0, c.scope)}.
+            {c.works.length === 1 ? t('{n} book', { n: 1 }) : t('{n} books', { n: c.works.length })}
+            {names.length > 0 && <> {names.length === 1 ? t('by 1 author') : t('by {n} authors', { n: names.length })}</>}
+            , {coverLine(c.kind, c.coverSource, 0, c.scope, t)}.
           </p>
         )}
         <div className="mt-8">
           <CoverWall works={c.works} selectCover setSize={c.setSize} />
         </div>
         {/* Under a wall someone else chose: the way to one's own (5.13b). */}
-        {wallsEnabled() && <WallsInvite className="mt-8">Create your own collection — from any cover, or from a photo of your shelf</WallsInvite>}
+        {wallsEnabled() && <WallsInvite className="mt-8">{t('Create your own collection — from any cover, or from a photo of your shelf')}</WallsInvite>}
         {/*
           The source of the cover credits, required by its licence (CC BY 4.0)
           and by N12: the names are ISFDB's, for the printing shown, and a tile
@@ -118,14 +123,14 @@ export default async function CollectionPage({ params }: PageProps) {
         */}
         {c.coverCredits === 'isfdb' && (
           <p className="mt-10 max-w-2xl text-xs text-ink-3">
-            Cover artists as named by the{' '}
+            {t('Cover artists as named by the')}{' '}
             <a href="https://www.isfdb.org/" className="underline underline-offset-2 hover:text-accent">Internet Speculative Fiction Database</a>{' '}
-            for the printing shown (<a href="https://creativecommons.org/licenses/by/4.0/" className="underline underline-offset-2 hover:text-accent">CC BY 4.0</a>). Where a tile names nobody, ISFDB does not credit that printing, or credits several artists.
+            {t('for the printing shown')} (<a href="https://creativecommons.org/licenses/by/4.0/" className="underline underline-offset-2 hover:text-accent">CC BY 4.0</a>). {t('Where a tile names nobody, ISFDB does not credit that printing, or credits several artists.')}
           </p>
         )}
         {c.coverCredits === 'artwork' && (
           <p className="mt-10 max-w-2xl text-xs text-ink-3">
-            The paintings are named as the books credit them on the back cover, for the printing shown, read from scans at the Internet Archive or from collectors quoting their own copies. Where a tile names nothing, no such credit was found — the picture is not therefore anonymous.
+            {t('The paintings are named as the books credit them on the back cover, for the printing shown, read from scans at the Internet Archive or from collectors quoting their own copies. Where a tile names nothing, no such credit was found — the picture is not therefore anonymous.')}
           </p>
         )}
       </main>

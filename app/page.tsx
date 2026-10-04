@@ -9,6 +9,8 @@ import CollectionsShelf from '@/components/CollectionsShelf';
 import WallsInvite from '@/components/WallsInvite';
 import { wallsEnabled } from '@/lib/walls/switch';
 import { liveCollections } from '@/lib/collections-live';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/translate';
 
 /**
  * The URL is the single source of truth for search state (SPEC §3 F1.5):
@@ -30,6 +32,8 @@ import { liveCollections } from '@/lib/collections-live';
  */
 interface HomeProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
+  /** Set by the German tree (`app/de/page.tsx`, ROADMAP 6.85); Next itself passes none. */
+  locale?: Locale;
 }
 
 const first = (value: string | string[] | undefined): string =>
@@ -51,7 +55,8 @@ export async function generateMetadata({ searchParams }: HomeProps): Promise<Met
   };
 }
 
-export default async function Home({ searchParams }: HomeProps) {
+export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: HomeProps) {
+  const t = translator(locale);
   const params = await searchParams;
   const searchQuery = first(params.q);
   const language = first(params.lang);
@@ -89,12 +94,13 @@ export default async function Home({ searchParams }: HomeProps) {
             <div className="min-w-0 flex-1">
               {isHero && (
                 <div className="mb-8 max-w-2xl">
+                  {/* Two halves, so the accent can sit on the German verb as it sits on the English object. */}
                   <h1 className="text-4xl leading-[1.1] text-ink sm:text-5xl">
-                    Judge a book, <em className="text-accent">buy its covers.</em>
+                    {t('Judge a book,')} <em className="text-accent">{t('buy its covers.')}</em>
                   </h1>
                   <p className="mt-4 max-w-xl text-base text-ink-2 sm:text-lg">
-                    Type a title and see the covers it has been printed with, by language and year.
-                    Then find the edition you&rsquo;d actually want on your shelf.
+                    {t('Type a title and see the covers it has been printed with, by language and year.')}{' '}
+                    {t('Then find the edition you’d actually want on your shelf.')}
                   </p>
                 </div>
               )}
@@ -119,9 +125,9 @@ export default async function Home({ searchParams }: HomeProps) {
                       href="/versus"
                       className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
                     >
-                      Help us find the prettiest cover of all time!
+                      {t('Help us find the prettiest cover of all time!')}
                     </Link>
-                    {wallsEnabled() && <WallsInvite>Create your own collection of covers</WallsInvite>}
+                    {wallsEnabled() && <WallsInvite>{t('Create your own collection of covers')}</WallsInvite>}
                   </div>
                 )}
               </div>
@@ -147,7 +153,7 @@ export default async function Home({ searchParams }: HomeProps) {
             5.10d). It used to be a line under the promise in the hero; Julian
             wanted it at the bottom, with covers.
           */}
-          <CollectionsShelf collections={collections} />
+          <CollectionsShelf collections={collections} locale={locale} />
         </section>
       </main>
 

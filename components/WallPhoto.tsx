@@ -2,6 +2,8 @@
 
 import { useRef, useState } from 'react';
 import WallProposal, { type Destination, type Proposal } from './WallProposal';
+import { rich, useT } from './i18n';
+import type { Translate } from '@/lib/i18n/translate';
 import type { PublicWall, Tile } from '@/lib/walls/model';
 import type { PhotoMatch, PhotoRead } from '@/lib/walls/photo';
 
@@ -44,10 +46,10 @@ function canvasIsHonest(): boolean {
  * be trusted, otherwise the file as it is — the server turns and shrinks it
  * then (`lib/photoprep.ts`), at the price of a bigger upload.
  */
-async function prepare(file: File): Promise<Blob> {
+async function prepare(file: File, t: Translate): Promise<Blob> {
   if (!canvasIsHonest()) {
-    if (file.type !== 'image/jpeg' && file.type !== 'image/png') throw new Error('This browser keeps its canvas private, so the photo goes as it is — and that works for a JPEG or PNG only. Save it as a JPEG first.');
-    if (file.size > MAX_ORIGINAL_BYTES) throw new Error('This browser keeps its canvas private, so the photo would go as it is — and this one is larger than 12 MB. Choose a smaller copy.');
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') throw new Error(t('This browser keeps its canvas private, so the photo goes as it is — and that works for a JPEG or PNG only. Save it as a JPEG first.'));
+    if (file.size > MAX_ORIGINAL_BYTES) throw new Error(t('This browser keeps its canvas private, so the photo would go as it is — and this one is larger than 12 MB. Choose a smaller copy.'));
     return file;
   }
   let bitmap: ImageBitmap;
@@ -55,7 +57,7 @@ async function prepare(file: File): Promise<Blob> {
     bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
   } catch {
     // Chrome says "The source image could not be decoded." — for a HEIC from an iPhone, measured 2026-09-30.
-    throw new Error('This browser cannot open this photo’s format (an iPhone HEIC, perhaps). Save it as a JPEG first, or set the camera to “Most Compatible”.');
+    throw new Error(t('This browser cannot open this photo’s format (an iPhone HEIC, perhaps). Save it as a JPEG first, or set the camera to “Most Compatible”.'));
   }
   const scale = Math.min(1, PHOTO_EDGE / Math.max(bitmap.width, bitmap.height));
   const canvas = document.createElement('canvas');
@@ -63,8 +65,8 @@ async function prepare(file: File): Promise<Blob> {
   canvas.height = Math.round(bitmap.height * scale);
   const ctx = canvas.getContext('2d');
   ctx?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-  if (ctx && looksBlank(ctx, canvas.width, canvas.height)) throw new Error('The photo came out blank when it was prepared. Choose it again, or another copy of it.');
-  return new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('The photo could not be prepared.'))), 'image/jpeg', 0.9));
+  if (ctx && looksBlank(ctx, canvas.width, canvas.height)) throw new Error(t('The photo came out blank when it was prepared. Choose it again, or another copy of it.'));
+  return new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error(t('The photo could not be prepared.')))), 'image/jpeg', 0.9));
 }
 
 /** No photograph of a shelf is one flat tone: a 16 × 16 sample whose brightest and darkest pixels are within 8 of each other is empty. */
@@ -144,6 +146,7 @@ export default function WallPhoto({
   onOtherCover?: (tile: Tile) => void;
   onSearchFor?: (label: string) => void;
 }) {
+  const t = useT();
   const [state, setState] = useState<State>({ step: 'idle' });
   const [over, setOver] = useState(false);
   const input = useRef<HTMLInputElement>(null);
@@ -153,11 +156,11 @@ export default function WallPhoto({
     const preview = URL.createObjectURL(file);
     setState({ step: 'reading', preview, reads: [] });
     try {
-      const body = await prepare(file);
+      const body = await prepare(file, t);
       const res = await fetch('/api/walls/photo', { method: 'POST', headers: { 'content-type': body.type || 'image/jpeg' }, body });
       if (!res.ok || !res.body) {
         const data = (await res.json().catch(() => ({}))) as { error?: string };
-        throw new Error(data.error ?? 'The photo could not be read.');
+        throw new Error(data.error ?? t('The photo could not be read.'));
       }
       let reads: PhotoRead[] = [];
       let matches: (PhotoMatch | undefined)[] = [];
@@ -179,9 +182,9 @@ export default function WallPhoto({
           setState({ step: 'read', preview, matches: matches.map((m, i) => m ?? { read: reads[i], failed: true }), capped });
         }
       }
-      setState((s) => (s.step === 'looking' || s.step === 'reading' ? { step: 'error', preview, message: 'The answer broke off. Try again in a moment.' } : s));
+      setState((s) => (s.step === 'looking' || s.step === 'reading' ? { step: 'error', preview, message: t('The answer broke off. Try again in a moment.') } : s));
     } catch (err) {
-      setState({ step: 'error', preview, message: err instanceof Error ? err.message : 'The photo could not be read.' });
+      setState({ step: 'error', preview, message: err instanceof Error ? err.message : t('The photo could not be read.') });
     }
   }
 
@@ -211,7 +214,7 @@ export default function WallPhoto({
     ...(m
       ? {
           tile: m.tile,
-          missing: m.failed ? 'the search did not answer' : 'not in the catalogue',
+          missing: m.failed ? t('the search did not answer') : t('not in the catalogue'),
           ...(m.failed ? { failed: true } : {}),
           ...(m.unsure ? { unsure: true } : {}),
         }
@@ -224,20 +227,21 @@ export default function WallPhoto({
   const failed = matches.filter((m) => m.failed).length;
   const capped = state.step === 'looking' || state.step === 'read' ? state.capped : false;
   const counts = [
-    `${found} found with a cover`,
-    maybe ? `${maybe} maybe` : '',
-    notFound ? `${notFound} not in the catalogue` : '',
-    failed ? `${failed} ${failed === 1 ? 'search' : 'searches'} did not answer` : '',
+    t('{n} found with a cover', { n: found }),
+    maybe ? t('{n} maybe', { n: maybe }) : '',
+    notFound ? t('{n} not in the catalogue', { n: notFound }) : '',
+    failed ? (failed === 1 ? t('1 search did not answer') : t('{n} searches did not answer', { n: failed })) : '',
   ].filter(Boolean);
+  const booksRead = rows.length === 1 ? t('1 book read') : t('{n} books read', { n: rows.length });
   const summary =
     state.step === 'looking'
-      ? `${rows.length} ${rows.length === 1 ? 'book' : 'books'} read, looking them up… ${matches.length} of ${rows.length}${counts.length && found ? `: ${counts.join(', ')}` : ''}. You can tick and add while the rest come in.`
-      : `${rows.length} ${rows.length === 1 ? 'book' : 'books'} read${capped ? ' (the first 80 of more)' : ''}: ${counts.join(', ')}. Each gets the book’s usual cover — ${onOtherCover ? '“another cover” shows all of its covers' : 'you can change it in the collection’s editor'}.`;
+      ? `${booksRead}, ${t('looking them up… {done} of {total}', { done: matches.length, total: rows.length })}${counts.length && found ? `: ${counts.join(', ')}` : ''}. ${t('You can tick and add while the rest come in.')}`
+      : `${booksRead}${capped ? ` ${t('(the first 80 of more)')}` : ''}: ${counts.join(', ')}. ${onOtherCover ? t('Each gets the book’s usual cover — “another cover” shows the others it has had.') : t('Each gets the book’s usual cover — you can change it in the collection’s editor.')}`;
 
   return (
     <div className="mt-4">
       {!photoOn && (
-        <p className="mb-3 text-xs text-ink-3">Reading photos needs a key this server does not have yet — you can choose a photo, but it will not be read.</p>
+        <p className="mb-3 text-xs text-ink-3">{t('Reading photos needs a key this server does not have yet — you can choose a photo, but it will not be read.')}</p>
       )}
       <label
         onDragOver={(e) => {
@@ -253,8 +257,8 @@ export default function WallPhoto({
         className={`block cursor-pointer rounded-card border-[1.5px] border-dashed bg-surface px-4 py-7 text-center text-sm text-ink-2 transition-colors ${over ? 'border-accent' : 'border-line hover:border-accent'}`}
       >
         <input ref={input} type="file" accept="image/*" className="sr-only" onChange={(e) => read(e.target.files?.[0])} />
-        <span className="font-medium text-ink">Choose a photo</span> or drop it here
-        <span className="mt-1 block text-xs text-ink-3">Spines or covers, as sharp as you can. It is read once and not kept.</span>
+        {rich(t('{choose} or drop it here'), { choose: <span className="font-medium text-ink">{t('Choose a photo')}</span> })}
+        <span className="mt-1 block text-xs text-ink-3">{t('Spines or covers, as sharp as you can. It is read once and not kept.')}</span>
       </label>
 
       {preview && (
@@ -262,7 +266,7 @@ export default function WallPhoto({
           {/* A local object URL, never uploaded as such; next/image has nothing to optimise here. */}
           {/* 44rem, not 28: a portrait photo of a gallery wall was 336 px wide at 28rem and forty pins overlapped (2026-10-01). */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={preview} alt="Your photo" className="block max-h-[44rem] max-w-full rounded-card" />
+          <img src={preview} alt={t('Your photo')} className="block max-h-[44rem] max-w-full rounded-card" />
           {markers.map((m, i) => {
             const box = m.read.box;
             if (!box) return null;
@@ -287,18 +291,18 @@ export default function WallPhoto({
 
       {state.step === 'reading' && (
         <p className="mt-3 text-sm text-ink-2" role="status">
-          {state.reads.length === 0 ? 'Reading the photo…' : `Reading the photo… ${state.reads.length} ${state.reads.length === 1 ? 'book' : 'books'} so far.`}
+          {state.reads.length === 0 ? t('Reading the photo…') : state.reads.length === 1 ? t('Reading the photo… 1 book so far.') : t('Reading the photo… {n} books so far.', { n: state.reads.length })}
         </p>
       )}
       {state.step === 'error' && <p className="mt-3 text-sm text-accent" role="alert">{state.message}</p>}
       {(state.step === 'looking' || state.step === 'read') &&
         (rows.length === 0 ? (
-          <p className="mt-3 text-sm text-ink-2">No title could be read in this photo.</p>
+          <p className="mt-3 text-sm text-ink-2">{t('No title could be read in this photo.')}</p>
         ) : (
           <WallProposal
             key={preview}
             proposals={proposals}
-            defaultTitle="My shelf"
+            defaultTitle={t('My shelf')}
             target={target}
             walls={walls}
             onCommit={onCommit}

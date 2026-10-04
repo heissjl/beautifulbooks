@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Clearing, type MosaicScene } from './mosaicClearing';
+import { useT } from './i18n';
 import {
   frameHeight, pickImage, pickTemplate, revealOrder, shuffledSources, unpackBytes,
   type MosaicEntry, type MosaicManifest,
@@ -118,6 +119,7 @@ function takeMosaic(): Promise<MosaicScene> {
 }
 
 export default function MosaicLoader({ caption }: { caption: string }) {
+  const t = useT();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [scene, setScene] = useState<MosaicScene | null>(null);
   const [failed, setFailed] = useState(false);
@@ -261,8 +263,7 @@ export default function MosaicLoader({ caption }: { caption: string }) {
         (SPEC §4 N12). It says what was actually used and nothing more.
       */}
       <p className="mt-3 text-center text-xs text-ink-3">
-        {scene.manifest.author} &middot; made of {scene.manifest.tiles.toLocaleString('en')} covers
-        of {scene.manifest.works} of their books
+        {scene.manifest.author} &middot; {t('made of {covers} covers of {works} of their books', { covers: scene.manifest.tiles, works: scene.manifest.works })}
       </p>
     </div>
   );

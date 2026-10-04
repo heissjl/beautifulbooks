@@ -1,92 +1,76 @@
-# Anleitung: Partnerprogramme für die Kauf-Links
+# Anleitung: die Partnerprogramme, von heute bis zum Umschalttag
 
-Geschrieben 2026-10-03 für Julian (ROADMAP 4.1, 4.2, 4.3; Zeile 6 der Sperrliste 4.13; Julian: „mach eine anleitung für die affiliate link programme"). Stand der Quellen: am selben Tag gesucht, überwiegend Verzeichnisse und Hilfeseiten der Programme. **Provisionssätze ändern sich; maßgeblich ist, was im jeweiligen Konto nach der Freischaltung steht** — die Zahlen hier sind zum Sortieren, nicht zum Rechnen. Für Bookshop.org gibt es die ausführliche Anleitung [bookshop-affiliate.md](bookshop-affiliate.md); Steuer und Gewerbe stehen in [gewerbe-anmeldung.md](gewerbe-anmeldung.md).
+Geschrieben 2026-10-03 für Julian (ROADMAP Phase 4). Was der Code heute kann, ist gelesen und stimmt; was die Programme verlangen, stammt aus den Roadmap-Punkten 4.1–4.4, 4.10, 4.11 und der [Bookshop-Anleitung](bookshop-affiliate.md) vom 2026-09-26 — **Provisionssätze und Fristen vor jeder Bewerbung auf der Seite des Programms nachlesen**, sie ändern sich, und von hier aus war am 2026-10-03 kein Abruf möglich. Keine Rechts- oder Steuerberatung.
 
-## Das Wichtigste vorab
+*Sätze, Netzwerke und Bewerbungstext je Programm, im Netz nachgelesen am 2026-10-03: [affiliate-programme-recherche.md](affiliate-programme-recherche.md).*
 
-1. **Nur zwei Händler sind heute im Code angeschlossen: Amazon und Bookshop.org** (`AFFILIATE_AMAZON_TAG_US|UK|DE`, `AFFILIATE_BOOKSHOP_ID_US|UK`, SPEC §2). Jedes andere Programm braucht erst Code (unten „Was Claude danach baut"), bevor eine Freischaltung etwas einbringt. Wer bei Thalia angenommen ist, verdient nichts, bis der Link umgebaut ist.
-2. **Im Hobby-Modus werden alle Kennungen ignoriert** (E20). Bewerben ja, Variablen setzen ja — wirksam wird es erst am Umschalttag (4.13).
-3. **Bewerben erst, wenn `buyitscovers.com` antwortet** (2.15 Schritt 1). Jedes Programm prüft die Seite; eine Bewerbung mit `beautifulcovers.vercel.app` muss später umgeschrieben werden, und bei Amazon ist die Website-Liste Teil der Prüfung.
-4. **Ein Awin-Konto deckt drei Programme ab** (Thalia, genialokal, Waterstones). Das ist der beste Aufwand-Ertrag-Schritt nach Bookshop.
+## 1. Was die Seite schon kann, ohne dass du etwas tust
 
-## Reihenfolge
+- **Jeder Händler-Link ist eine URL-Schablone** (`lib/buylinks.ts`), je Markt US / UK / DE (E9). Trägt ein Händler eine Umgebungsvariable (`affiliateEnv`), wird ihr Wert in den Link gesetzt — Amazon als `tag=`, Bookshop als `/a/<ID>/<ISBN>`. **Ohne Variable entsteht der neutrale Link.** Die fünf Stellen heute:
 
-| # | Programm | Markt | Netzwerk | Provision laut Verzeichnis | Code vorhanden? | Wann |
-|---|---|---|---|---|---|---|
-| 1 | **Bookshop.org US** | US | direkt (Stripe) | 10 % | ja | sobald die Domain antwortet |
-| 2 | **Awin**: Thalia, genialokal, Waterstones | DE, DE, UK | Awin | Thalia bis 12 % (preisgebundene Bücher), genialokal 7,5 %, Waterstones 4 % Neukunden / 1 % Bestandskunden | **nein** | mit 1 |
-| 3 | **Bookshop.org UK** | UK | direkt, eigenes Konto | 10 % | ja | nach 1, mit eigenem Konto |
-| 4 | **Hugendubel** | DE | Tradedoubler | bis 10 % (preisgebunden) | **nein** | nach 2 |
-| 5 | **AbeBooks / ZVAB** | US, UK, DE | Impact | 5 % auf die ersten 500 USD je Artikel | **nein** | nach 2; wichtig für vergriffene Ausgaben (4.10) |
-| 6 | **Amazon** .com / .co.uk / .de | alle | direkt | Bücher 4,5 % (US; DE laut Ratgebern ebenso, im Vergütungskatalog prüfen) | ja | **erst mit Verkehr** — siehe unten |
-| 7 | Booklooker | DE | eigenes Programm | 5 % + 1 € je Neukunde | nein | wenn 4.10 entschieden ist |
-| 8 | buch7 | DE | eigenes Programm | nicht veröffentlicht, anfragen | nein (buch7 ist heute nicht in der Linkliste) | optional, 4.3 |
-| 9 | eBay Partner Network | US, UK | direkt | 1–4 % je Kategorie | nein | zuletzt; kleine Beträge |
-| — | ThriftBooks | US | über Netzwerke (FlexOffers u. a.) | 4–6,5 %, **7 Tage** Cookie | nein | nur bei Nachfrage |
-| — | Blackwell's | UK | eigenes Programm | 6 % | nein | **nimmt seit 09/2025 niemanden auf** („on hold") |
+  | Variable | Händler | Markt | Wirkung mit Wert |
+  |---|---|---|---|
+  | `AFFILIATE_BOOKSHOP_ID_US` | Bookshop.org | US | Produktseite statt Suchseite (die Suchseite ist per robots.txt gesperrt, also heute ein kaputter Link) |
+  | `AFFILIATE_BOOKSHOP_ID_UK` | uk.bookshop.org | UK | dito |
+  | `AFFILIATE_AMAZON_TAG_US` | amazon.com | US | `tag=` am `/dp/<ISBN-10>`-Link und an der Titelsuche |
+  | `AFFILIATE_AMAZON_TAG_UK` | amazon.co.uk | UK | dito |
+  | `AFFILIATE_AMAZON_TAG_DE` | amazon.de | DE | dito |
 
-## Was jede Bewerbung fragt — einmal vorbereiten
+  AbeBooks/ZVAB, ThriftBooks, eBay, Blackwell's, Waterstones, Thalia, genialokal, Hugendubel, Booklooker haben **keine** Stelle: ihre Programme laufen über Netzwerke (Impact, Awin, Adcell, eBay Partner Network), die andere Linkformen verlangen. Das ist 4.3 und braucht je Händler eine Zeile in der Tabelle plus Variable — eine Stunde Claude je Programm, sobald die Kennung da ist.
+- **Der Schalter ist `NEXT_PUBLIC_SITE_MODE`** (`lib/sitemode.ts`, E20): `hobby` (Default) ignoriert jede Affiliate-Variable; erst `shop` setzt sie ein. Ein anderer Wert bricht den Build. Du kannst also Kennungen in Vercel eintragen, bevor umgeschaltet wird; sie tun nichts.
+- **Mit `shop` ändert sich die Seite an vier Stellen von selbst:** (1) die Links tragen die Kennung und `rel="sponsored"`; (2) unter der ersten Shop-Reihe steht der Provisionshinweis (`commissionNote`, 4.11), bei einem Amazon-Tag mit Amazons Pflichtsatz wörtlich dahinter; (3) die Fußzeile sagt „Purchase links may earn us a commission."; (4) About und Datenschutz wechseln ihren Satz von „kein Link verdient" zu „manche Links tragen einen Partner-Parameter". Im Hobby-Modus steht überall das Gegenteil, und das ist wahr (N12).
+- **Jeder Klick auf einen ISBN-Link geht über `/go/<provider>/<isbn>?market=`**, das den Klick zählt (Händler, Markt, ISBN, Art, Zeit — nichts über den Leser) und das Ziel aus der Tabelle neu baut. Das ist deine spätere Messung: welche Shops die Leser überhaupt anklicken, bevor ein Programm Verkäufe meldet.
+- **Der Verfügbarkeits-Button bleibt aus** (0.1): Amazons Partnerbedingungen untersagen automatisierte Zugriffe, und vier von sechs Shops sperren den geprüften Pfad. Im Shop-Modus wäre er sichtbar — vor dem Umschalttag ist 0.1 zu entscheiden, sonst gefährdet er das Amazon-Konto am ersten Tag.
 
-Ein Textbaustein, den du überall einfügst (englisch für US/UK, deutsch für die DE-Netzwerke):
+## 2. Was vor dem Umschalttag erledigt sein muss (nicht vor der ersten Bewerbung)
 
-> **Buy Its Covers** (https://buyitscovers.com) shows the covers a book has been printed with, side by side, from Open Library and Google Books, and links each edition to bookshops by ISBN. Visitors come to compare editions and buy a specific one. Links are editorial: one row per bookshop under each edition, labelled with the shop's name; no coupons, no cashback, no paid search, no email. Disclosure sits under the links and on the About page.
+Bewerben kannst du dich jetzt. **Auf `shop` umschalten** erst, wenn diese vier stehen; alle vier sind deine, nicht meine:
 
-> **Buy Its Covers** (https://buyitscovers.com) zeigt die Umschläge, mit denen ein Buch gedruckt wurde, nebeneinander (Daten: Open Library, Google Books) und verlinkt jede Ausgabe über die ISBN zu Buchhandlungen. Besucher vergleichen Ausgaben und kaufen eine bestimmte. Redaktionelle Links, je Händler eine Zeile unter der Ausgabe; keine Gutscheine, kein Cashback, keine bezahlte Suche, keine E-Mails. Der Hinweis auf Provisionen steht unter den Links und auf der About-Seite.
+1. **0.12 Vercel Pro** (20 USD/Monat): mit Provision ist die Seite kommerziell, der Hobby-Plan erlaubt das nicht, und erst Pro hat den Auftragsverarbeitungsvertrag (Art. 28 DSGVO).
+2. **4.4 Gewerbe und Steuer:** Affiliate-Einnahmen sind Einkünfte aus Gewerbebetrieb — Gewerbeanmeldung, Kleinunternehmerregelung prüfen; die US-Programme fragen W-8BEN (du: in Deutschland steuerpflichtig) oder W-9.
+3. **Impressum nach § 5 DDG** statt nur § 18 MStV: mit Affiliate-Links ist die Seite „geschäftsmäßig" ([recht-hobbyseite.md §2](../recht-hobbyseite.md)). Praktisch ist das die E-Mail-Zeile, die schon da ist; prüfen, dass nichts fehlt.
+4. **4.12 About in der ersten Person:** wer an Links verdient, sagt, wer er ist. Du schreibst, ich baue ein.
 
-Dazu überall gefragt:
-- **Werbeform / Promotional method:** Content / Editorial website. **Nicht** „Cashback", „Voucher", „Sub-Network".
-- **Besucherzahlen:** ehrlich; die Web Analytics in Vercel zeigen sie. Kleine Zahlen sind kein Ablehnungsgrund bei Bookshop und Amazon, bei Awin und Tradedoubler entscheidet jeder Händler selbst.
-- **Steuerangaben:** Kleinunternehmer, USt-IdNr. sobald da (DE/EU-Netzwerke); W-8BEN für US-Programme (oder W-9, falls US-Bürger — siehe Gewerbe-Anleitung Schritt 0).
-- **Auszahlung:** US-Konto für Bookshop US, Amazon.com und Impact; deutsches Konto (IBAN) für Awin, Tradedoubler, Amazon.de.
+Dazu **0.1** (Verfügbarkeits-Button: entscheiden, Empfehlung streichen) und **0.5/2.2**: bewirb dich unter dem Namen und der Domain, die bleiben (`buyitscovers.com`, sobald sie verbunden ist) — ein Programm, das die Seite unter `beautifulcovers.vercel.app` geprüft hat, muss bei Domainwechsel teils neu prüfen.
 
-## Die Programme Schritt für Schritt
+## 3. Die Programme, in der Reihenfolge der Roadmap
 
-### 1. Bookshop.org US (und später UK)
-Alles Nötige steht in [bookshop-affiliate.md](bookshop-affiliate.md). Ergebnis: eine ID → `AFFILIATE_BOOKSHOP_ID_US` in Vercel (Production). UK ist ein zweites, getrenntes Konto → `AFFILIATE_BOOKSHOP_ID_UK`.
+### 3.1 Bookshop.org (4.1) — jetzt, ohne Wartezeit
 
-### 2. Awin (Thalia, genialokal, Waterstones)
-1. Auf awin.com als **Publisher** registrieren; Land Deutschland, Rechtsform Einzelunternehmen. Awin verlangt eine **Kaution von 5 €/5 USD** per Karte, die mit der ersten Auszahlung zurückkommt (bei Ablehnung nur auf Anfrage beim Compliance-Team).
-2. Website `https://buyitscovers.com` eintragen, Werbeform „Content", Textbaustein von oben.
-3. Nach der Freischaltung des Kontos im Advertiser-Verzeichnis **einzeln bewerben**: *Thalia.de*, *genialokal.de*, *Waterstones*. Jeder Händler entscheidet selbst, meist in ein bis vierzehn Tagen.
-4. Notieren und Claude geben: deine **Publisher-ID** (Zahl, „awinaffid") und je Händler die **Advertiser-ID** („awinmid"; steht im Händlerprofil, z. B. `ui.awin.com/merchant-profile/<mid>`).
-5. **genialokal**: Provisionen auf preisgebundene Bücher dürfen nicht an Kunden weitergereicht werden (Buchpreisbindung) — betrifft uns nicht, kein Cashback; bei Bestellungen mit Gutschein gibt es keine Provision.
+Schritt für Schritt in [bookshop-affiliate.md](bookshop-affiliate.md). Kurz: zwei Konten (US, UK) oder nur US; „Non-bookstore affiliate"; Profiltext dort — **mit dem neuen Namen und der neuen Adresse einsetzen**, die Anleitung nennt noch die alten. Keine Mindestreichweite, Auszahlung über Stripe auf dein US-Konto ab 20 USD, nach der 30-Tage-Rückgabefrist. **Nach der Freigabe:** die ID (der Teil nach `/a/` in deinen Links) an mich → Variable in Vercel, Deploy, ein Klick auf `/go/bookshop/<ISBN>?market=us` muss auf die Produktseite führen. Bis `shop` eingeschaltet ist, bleibt der Link neutral, also kaputt; das ist der Grund, warum 4.1 vor allem anderen steht.
 
-### 3. Hugendubel (Tradedoubler)
-Auf tradedoubler.com als Publisher registrieren (Website, Kategorie Content), dann beim Programm *Hugendubel* bewerben. Nach der Annahme: **Site-ID** und **Programm-ID** an Claude.
+### 3.2 Amazon Associates (US), Amazon Associates UK, PartnerNet (DE) (4.2) — erst mit Reichweite
 
-### 4. AbeBooks / ZVAB (Impact)
-Auf abebooks.com/books/affiliateprogram auf „Join" → führt zu Impact. Konto als Media Partner anlegen, AbeBooks-Programm beantragen; **prüfen, ob ZVAB und abebooks.co.uk/.de als eigene Programme im Marktplatz stehen** — in der Suche war das nicht zu klären. Auszahlung monatlich über Impact. Nach der Annahme: **Impact-Partner-ID** und die **Tracking-Link-Vorlage** an Claude.
+- **Ein Konto je Marktplatz**, je ein Tag; die drei Variablen oben.
+- **Die Falle:** innerhalb von **180 Tagen drei qualifizierte Verkäufe**, sonst schließt Amazon das Konto, und eine zweite Bewerbung ist schwerer. Darum: erst bewerben, wenn die Search Console Besucher zeigt (2.5) und `/go/amazon/…` in den Logs regelmäßig vorkommt. Zu früh beworben ist das Konto verbrannt.
+- **Pflichten, die der Code schon kennt:** der Hinweissatz steht (4.11; **offen:** ob amazon.de den deutschen Wortlaut „Als Amazon-Partner verdiene ich an qualifizierten Verkäufen" verlangt — vor dem DE-Konto nachlesen, dann gehört er in den Katalog `lib/i18n/de.ts`), keine Preise ohne ihre API (die Seite zeigt keine), keine Links in E-Mails (die Seite verschickt keine), keine automatisierten Zugriffe (0.1).
+- **Zweiter Gewinn:** nach der Freigabe die **Product Advertising API** — zur ISBN das Bild, das Amazon wirklich ausliefert; hebt das Verdikt bei den heute vielen „unknown"-ISBNs auf eine Aussage (4.5). Erst nach der Freigabe, die API verlangt ein aktives Konto mit Verkäufen.
 
-### 5. Amazon — warum zuletzt
-- **Drei qualifizierte Verkäufe in 180 Tagen**, sonst wird das Konto geschlossen; die eigentliche Prüfung der Seite findet erst danach statt. Die Kennung geht nicht verloren, aber eine Neubewerbung kostet Zeit. Bewerben also erst, wenn der Shop-Modus läuft und Verkehr da ist — vorher verbrennt die Uhr.
-- **Ein Konto je Marktplatz** (affiliate-program.amazon.com, .co.uk, partnernet.amazon.de). Mit „Earn globally" aus dem US-Konto lässt sich die Teilnahme an UK und DE einschalten; die Tags je Land trotzdem einzeln in `AFFILIATE_AMAZON_TAG_US|UK|DE` eintragen. **OneLink nicht nötig**: die Seite wählt den Markt selbst (E9), und OneLink bräuchte ein Skript von Amazon auf der Seite.
-- **Pflichten**: der Pflichtsatz ist gebaut (4.11; offen: deutscher Wortlaut für PartnerNet); **keine Preise** ohne Amazons API; **keine Links in E-Mails oder PDFs**; Links dürfen nicht verschleiern, dass es zu Amazon geht — unsere Links tragen den Namen „Amazon", `/go/` leitet nur weiter. ⚠ Ob die Weiterleitung über `/go/` Amazons Regel gegen „cloaking" berührt, vor der Bewerbung einmal in der Operating Agreement nachlesen; Ausweg wäre, Amazon-Links direkt statt über `/go/` zu setzen (der Klick wird dann nicht gezählt).
-- **0.1 muss vorher entschieden sein**: der Verfügbarkeits-Button des Shop-Modus fragt Amazon automatisiert ab, was die Bedingungen verbieten (4.13 Zeile 1).
+### 3.3 Die Netzwerke (4.3) — nach Bookshop, je nachdem, was die Leser klicken
 
-### 6. Booklooker, buch7, eBay
-Erst, wenn 4.10 (Antiquariate) entschieden ist bzw. Zeit übrig ist. buch7: per Mail anfragen (Satz nicht veröffentlicht), vorher die robots.txt des Zielpfads prüfen (Problem aus 4.1). eBay Partner Network: Konto direkt bei eBay, Kampagnen-ID an Claude.
+Lies vorher die Klickzahlen aus `/go/` (`vercel logs --query bb.click` innerhalb der Stunde, oder 3.1, sobald es die Analyse-Seite gibt): ein Programm für einen Shop, den niemand anklickt, ist Verwaltung ohne Ertrag.
 
-## Was Claude danach baut
+| Händler | Programm | Für wen wichtig | Was ich brauche |
+|---|---|---|---|
+| AbeBooks / ZVAB | über **Impact** | vergriffene Ausgaben, also die mit den interessanten Covern; in allen drei Märkten vorn (4.10) | die Impact-Linkform (meist ein Tracking-Link mit Ziel-URL als Parameter) und die Kennung |
+| Thalia, Hugendubel, genialokal | **Awin** oder **Adcell** | der DE-Markt | je Shop Kennung und Linkform; genialokal nur, wenn der Ziellink weiter die ISBN-Suche trägt |
+| eBay | **eBay Partner Network** | Sammlerausgaben | Campaign-ID; eBay baut `mkcid`/`campid`-Parameter an die Such-URL |
+| buch7.de | eigenes Programm, Satz nicht veröffentlicht | der eine DE-Link, der Provision bringt und spendet (PLAN-4 §3 D) | anfragen; vorher robots.txt des Zielpfads prüfen, damit nicht das Bookshop-Problem von vorn beginnt |
+| Better World Books | über Impact prüfen | gebraucht, US | wie AbeBooks |
 
-- **Netzwerk-Links** in `lib/buylinks.ts`: heute kennt die Tabelle nur „ID in die URL" (Amazon-Tag, Bookshop-Pfad). Awin, Tradedoubler und Impact funktionieren anders — der Zielpfad wird in einen Link des Netzwerks gepackt (Awin: `https://www.awin1.com/cread.php?awinmid=<Händler>&awinaffid=<du>&ued=<Ziel-URL kodiert>`). Neue Variablen, je Netzwerk eine Kennung (`AFFILIATE_AWIN_ID`, `AFFILIATE_TRADEDOUBLER_ID`, `AFFILIATE_IMPACT_…`), die Händler-IDs als Konstanten im Code. Wichtig bleibt: **`/go/` baut das Ziel aus der Tabelle, nie aus der Anfrage** (offene Weiterleitung, CLAUDE.md). Ein Test je Netzwerk, dass ohne Variable der neutrale Link entsteht und im Hobby-Modus nie eine Kennung.
-- `commissionNote` und `rel="sponsored"` greifen dann von selbst, weil sie an `BuyLink.affiliate` hängen.
-- Datenschutzerklärung: die Netzwerke als Ziel von Links nennen (die Seite setzt kein Cookie, das Netzwerk beim Klick schon) — 4.13 Zeile 5.
-- Etwa ein halber Tag für Awin; Tradedoubler und Impact je eine Stunde dazu, sobald die IDs da sind.
+Für jedes: Bewerbung durch dich (die Netzwerke verlangen Impressum, Datenschutz, oft eine Seitenbeschreibung und manchmal Mindesttraffic), Kennung an mich, eine Tabellenzeile plus Variable `AFFILIATE_<HÄNDLER>_<MARKT>` plus Test — und `commissionNote` zählt den Shop dann von selbst mit.
 
-## Was du mir am Ende gibst
+## 4. Der Umschalttag, als Checkliste
 
-Nur Kennungen, keine Passwörter — und **nicht in den Chat, wenn es sich vermeiden lässt**: direkt in Vercel → Project → Settings → Environment Variables (Production), Namen wie oben. Für die Händler-IDs bei Awin genügt die Liste im Chat, sie sind öffentlich.
+1. Punkte aus Abschnitt 2 abgehakt (0.12, 4.4, Impressum, 4.12), 0.1 entschieden.
+2. Kennungen in Vercel für **Production** eingetragen (`vercel env add AFFILIATE_… production`); Preview ohne, damit Vorschauen keine Klicks zählen.
+3. `NEXT_PUBLIC_SITE_MODE=shop` in Production setzen, deployen.
+4. **Einmal** prüfen, nicht pollen (ROADMAP 2.4): eine Buchseite mit gewähltem Cover — Provisionshinweis da, Amazons Satz da, wenn ein Tag gesetzt ist; `/go/bookshop/<ISBN>?market=us` führt auf `bookshop.org/a/<ID>/<ISBN>`; Fußzeile, About und Datenschutz zeigen die Shop-Fassung.
+5. Datenschutzerklärung: der Satz zu den Partner-Parametern schaltet von selbst; die Liste der Empfänger (Bookshop, Amazon, ggf. Impact/Awin) **von Hand** ergänzen, weil ein Netzwerk-Link den Leser über dessen Server leitet — das ist der eine Punkt, den der Code nicht automatisch richtig macht.
+6. ROADMAP 4.1/4.2 abhaken, Historie mit Datum und den ersten Klickzahlen.
 
-## Quellen (gelesen 2026-10-03)
+## 5. Was sich nicht lohnt, und warum (damit es nicht wieder gefragt wird)
 
-- Amazon: [Provisionen nach Kategorie](https://affiliatexblocks.com/amazon-affiliate-commission-rates/), [PartnerNet Vergütungskatalog](https://partnernet.amazon.de/help/node/topic/GRXPHT8U84RAYDXZ), [drei Verkäufe in 180 Tagen](https://azonpress.com/key-amazon-affiliate-requirements/), [OneLink / Earn globally](https://affiliate-program.amazon.com/resource-center/onelink/)
-- Awin-Kaution: [awin.com Anleitung](https://www.awin.com/us/how-to-use-awin/awin-guide-on-how-to-start-affiliate-marketing), [favly.com](https://favly.com/awin-affiliate-program)
-- Thalia: [affiliate-marketing.de](https://www.affiliate-marketing.de/partnerprogramme/thalia.de), [Thalia Partnerprogramm](https://www.thalia.at/vorteile/partnerprogramm)
-- genialokal: [affiliate-marketing.de](https://www.affiliate-marketing.de/partnerprogramme/genialokal.de), [genialokal Besonderheiten](https://www.genialokal.de/Besonderheiten-Affiliate/)
-- Hugendubel: [Hugendubel Partnerprogramm](https://www.hugendubel.de/de/category/93926/affiliate_partnerprogramm.html), [Tradedoubler-Verzeichnis](https://directory.tradedoubler.com/de/programs/249407-Hugendubel)
-- Waterstones: [Waterstones Affiliate Programme](https://www.waterstones.com/help/affiliate-programme/45)
-- Blackwell's: [Affiliates 2025](https://blackwells.zendesk.com/hc/en-gb/articles/23457032075164-Affiliates-2025)
-- AbeBooks: [abebooks.com Affiliate Program](https://www.abebooks.com/books/affiliateprogram/), [getlasso.co](https://getlasso.co/affiliate/abebooks/)
-- ThriftBooks: [getlasso.co](https://getlasso.co/affiliate/thriftbooks/)
-- eBay: [strackr.com](https://strackr.com/blog/ebay-affiliate-program)
-- Booklooker, buch7: [affiliate-marketing.de](https://www.affiliate-marketing.de/partnerprogramme/booklooker.de), [buch7 Partner](https://www.buch7.de/store/list_partners)
+- **Alle Programme auf einmal:** jedes verlangt Pflege (Steuerformulare, Mindestumsätze, Kündigung bei Inaktivität). Bookshop zuerst, Amazon bei Reichweite, der Rest nach Klickzahlen.
+- **Reihenfolge der Shops nach Provision:** ausgeschlossen durch §2.4 und die About-Seite; die Reihenfolge folgt der Registrierungsgruppe der ISBN (`lib/linkplan.ts`). Ein Programm ändert die Reihenfolge nicht.
+- **Preise oder Verfügbarkeit anzeigen:** ohne die API des jeweiligen Programms verboten (Amazon) oder technisch nicht möglich (0.1). Die Seite verspricht ein Cover, nie einen Preis.

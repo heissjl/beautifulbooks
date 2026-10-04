@@ -5,6 +5,7 @@ import { useState } from 'react';
 import CoverImage from './CoverImage';
 import WallProposal, { type Destination } from './WallProposal';
 import { postJson } from './useMyWalls';
+import { useT } from './i18n';
 import { coverUrlFor } from '@/lib/coverurl';
 import { editHref } from '@/lib/walls/edit';
 import type { StartOption } from '@/lib/walls/jumpstart';
@@ -33,6 +34,7 @@ export default function StartFromPicker({
   onOtherCover?: (tile: Tile) => void;
 }) {
   const router = useRouter();
+  const t = useT();
   const [chosen, setChosen] = useState(options[0] ? `${options[0].kind}:${options[0].key}` : '');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -52,7 +54,7 @@ export default function StartFromPicker({
       const { wall } = await postJson<{ wall: PublicWall }>('/api/walls/from', query);
       router.push(editHref(wall.id));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'That did not work.');
+      setError(err instanceof Error ? err.message : t('That did not work.'));
       setBusy(false);
     }
   }
@@ -63,45 +65,45 @@ export default function StartFromPicker({
     try {
       const res = await fetch(`/api/walls/from?${new URLSearchParams(query)}`, { cache: 'no-store' });
       const data = (await res.json().catch(() => ({}))) as { title?: string; tiles?: Tile[]; skipped?: number; error?: string };
-      if (!res.ok || !data.tiles) throw new Error(data.error ?? 'The collection did not answer.');
+      if (!res.ok || !data.tiles) throw new Error(data.error ?? t('The collection did not answer.'));
       setLoaded({ key, title: data.title ?? option.title, tiles: data.tiles, skipped: data.skipped ?? 0 });
     } catch (err) {
-      setLoaded({ key, error: err instanceof Error ? err.message : 'The collection did not answer.' });
+      setLoaded({ key, error: err instanceof Error ? err.message : t('The collection did not answer.') });
     } finally {
       setBusy(false);
     }
   }
 
-  const label = (o: StartOption) => `${o.title}${o.by ? ` — by ${o.by}` : ''} (${o.count}${!into && o.taken < o.count ? `, the first ${o.taken} go in` : ''})`;
+  const label = (o: StartOption) => `${o.title}${o.by ? ` — ${t('by {name}', { name: o.by })}` : ''} (${o.count}${!into && o.taken < o.count ? `, ${t('the first {n} go in', { n: o.taken })}` : ''})`;
   const current = loaded && loaded.key === key ? loaded : null;
   return (
     <div className={into ? '' : 'mt-8'}>
       {into ? (
-        <h3 className="font-display text-lg text-ink">From another collection</h3>
+        <h3 className="font-display text-lg text-ink">{t('From another collection')}</h3>
       ) : (
-        <h3 className="text-sm font-medium text-ink">Or start from a collection</h3>
+        <h3 className="text-sm font-medium text-ink">{t('Or start from a collection')}</h3>
       )}
       <p className="mt-1 text-sm text-ink-2">
         {into
-          ? 'One of ours or one a reader showed — tick the covers you want in this one.'
-          : 'Take one of ours or one a reader made as your first draft, then keep, drop and add covers.'}
+          ? t('One of ours or one a reader showed — tick the covers you want in this one.')
+          : t('Take one of ours or one a reader made as your first draft, then keep, drop and add covers.')}
       </p>
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <select
           value={key}
           onChange={(e) => setChosen(e.target.value)}
-          aria-label={into ? 'Collection to take covers from' : 'Collection to start from'}
+          aria-label={into ? t('Collection to take covers from') : t('Collection to start from')}
           className="w-0 min-w-[10rem] max-w-full flex-1 truncate rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-ink"
         >
           {ours.length > 0 && (
-            <optgroup label="Our collections">
+            <optgroup label={t('Our collections')}>
               {ours.map((o) => (
                 <option key={o.key} value={`curated:${o.key}`}>{label(o)}</option>
               ))}
             </optgroup>
           )}
           {readers.length > 0 && (
-            <optgroup label="Collections by readers">
+            <optgroup label={t('Collections by readers')}>
               {readers.map((o) => (
                 <option key={o.key} value={`reader:${o.key}`}>{label(o)}</option>
               ))}
@@ -109,11 +111,11 @@ export default function StartFromPicker({
           )}
         </select>
         <button type="button" onClick={into ? show : start} disabled={busy} className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent disabled:opacity-50">
-          {busy ? (into ? 'Loading…' : 'Starting…') : into ? 'Show its covers' : 'Start my own from this'}
+          {busy ? (into ? t('Loading…') : t('Starting…')) : into ? t('Show its covers') : t('Start my own from this')}
         </button>
       </div>
       {!current && (
-        <ul className="mt-3 flex gap-1.5" aria-label={`First covers of ${option.title}`}>
+        <ul className="mt-3 flex gap-1.5" aria-label={t('First covers of {title}', { title: option.title })}>
           {option.covers.map((id) => (
             <li key={id} className="relative h-16 w-11 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">
               <CoverImage src={coverUrlFor(tileCoverId(id), 'S') ?? ''} alt="" sizes="44px" />
@@ -131,7 +133,7 @@ export default function StartFromPicker({
           target={into}
           onCommit={onCommit}
           onOtherCover={onOtherCover}
-          summary={`${current.tiles.length} ${current.tiles.length === 1 ? 'cover' : 'covers'} from ${current.title}${current.skipped ? `; ${current.skipped} the site shows from its own images cannot go into a collection` : ''}.`}
+          summary={`${current.tiles.length === 1 ? t('1 cover from {title}', { title: current.title }) : t('{n} covers from {title}', { n: current.tiles.length, title: current.title })}${current.skipped ? `; ${t('{n} the site shows from its own images cannot go into a collection', { n: current.skipped })}` : ''}.`}
         />
       )}
     </div>

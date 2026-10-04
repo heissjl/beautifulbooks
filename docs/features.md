@@ -1,6 +1,6 @@
 # Was die Seite heute kann
 
-Stand: 2026-09-26. Eine Bestandsliste der Funktionen, die **ausgeliefert oder auf `main` gebaut** sind — je Zeile, was der Leser bekommt, seit wann, wo es in der [Spec](../SPEC.md) steht, welcher [Roadmap](../ROADMAP.md)-Punkt es gebaut hat und wo der Code liegt. Die Spec sagt, was die Seite *sein soll*; diese Liste sagt, was sie *ist*. Wer einen Punkt abhakt, trägt hier eine Zeile nach.
+Stand: 2026-10-03. Eine Bestandsliste der Funktionen, die **ausgeliefert oder auf `main` gebaut** sind — je Zeile, was der Leser bekommt, seit wann, wo es in der [Spec](../SPEC.md) steht, welcher [Roadmap](../ROADMAP.md)-Punkt es gebaut hat und wo der Code liegt. Die Spec sagt, was die Seite *sein soll*; diese Liste sagt, was sie *ist*. Wer einen Punkt abhakt, trägt hier eine Zeile nach.
 
 Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
@@ -75,6 +75,8 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
+| Kopfzeile: „Collections“ und „Game“ als Links auf jeder Seite ab 640 px, davor Wortmarke, danach Suchfeld und Sprachwahl | 2026-10-03 | F6 | 6.88 | `components/SiteHeader.tsx` |
+| Die Seite auf Deutsch: Knopf „Deutsch“ / „English“ oben rechts auf jeder Seite, Cookie `locale`, Adressen unverändert (`proxy.ts` → `app/de/`); seit dem 2026-10-04 ist die ganze Oberfläche übersetzt (839 Sätze: auch About, Impressum, Datenschutz, Spiel, eigene Sammlung, `/curate`, `/suggest`); Metadaten, Daten und API-Fehlersätze bleiben englisch | 2026-10-02 | §2.6, E23 | 6.85 | `lib/i18n/`, `components/i18n.tsx`, `components/LocaleSwitcher.tsx`, `proxy.ts`, `app/de/`, `lib/__tests__/i18n.test.ts` |
 | Jahrzehnte-Seite `/book/<id>/decades`: dieselben Cover nach dem Jahrzehnt ihres frühesten Drucks, gefaltet aus dem Index, Schwelle 20 Cover über 4 Jahrzehnte, sonst 404; Mosaik als Ladebild | 2026-09-09 / 09-10 | F6 | 5.4a, 6.19a | `app/book/[id]/decades/`, `lib/decades.ts`, `data/decade-pages.json` |
 | Jahrzehnte-Seite liest bis 1.500 Datensätze wie die Wand; ein abgebrochener Lauf wird nie gecacht, ein Ausfall heißt „Open Library did not answer“ mit „Try again“ statt 404 | 2026-09-30 | N12 | 6.43, 6.71 | `app/book/[id]/decades/page.tsx`, `error.tsx`, `lib/work.ts` (`complete`) |
 | About mit Verdikten im Wortlaut der Oberfläche, Quellen, Lücken, „Looks like this“ | 2026-09-07 / 09-08 | F6, N13 | PLAN-B B7, 1.5 | `app/about/page.tsx` |

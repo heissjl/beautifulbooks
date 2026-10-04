@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Cover, EditionView } from '@/lib/model';
 import { MAX_PRINTINGS, storedCoverId, type Printing, type PublicWall, type Tile } from '@/lib/walls/model';
 import { useEditingId } from './editingSession';
+import { useT } from './i18n';
 import { announceWall, createWall, postJson, useMyWalls } from './useMyWalls';
 import { defaultTitle, editHref } from '@/lib/walls/edit';
 
@@ -66,6 +67,7 @@ interface AddToWallProps {
  * this tab is editing comes first, marked "editing".
  */
 export default function AddToWall({ workId, title, author, cover, editions, compact = false }: AddToWallProps) {
+  const t = useT();
   const { me, setMe } = useMyWalls();
   const editingId = useEditingId();
   const [lastTarget] = useState<string | null>(readTarget);
@@ -108,7 +110,7 @@ export default function AddToWall({ workId, title, author, cover, editions, comp
       replace(wall);
       writeTarget(wall.id);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'That did not work.');
+      setError(err instanceof Error ? err.message : t('That did not work.'));
     } finally {
       setBusy(null);
     }
@@ -116,7 +118,7 @@ export default function AddToWall({ workId, title, author, cover, editions, comp
 
   const create = () =>
     run('new', async () => {
-      const made = await createWall(defaultTitle(me.walls), [tile]);
+      const made = await createWall(defaultTitle(me.walls, t), [tile]);
       // The first collection set the cookie; ask again so the ID is known here too.
       if (!me.visitor) {
         const mine = await fetch('/api/walls/me', { cache: 'no-store' }).then((r) => r.json() as Promise<{ visitor: string | null }>).catch(() => ({ visitor: null }));
@@ -130,7 +132,7 @@ export default function AddToWall({ workId, title, author, cover, editions, comp
     return run(wall.id, async () => (await postJson<{ wall: PublicWall }>(`/api/walls/${wall.id}`, { ops: [inIt ? { op: 'remove', coverId } : { op: 'add', tile }] })).wall);
   };
 
-  const long = holding.length === 0 ? '+ Add to collection' : holding.length === 1 ? `In ${holding[0].title} ✓` : `In ${holding.length} collections ✓`;
+  const long = holding.length === 0 ? t('+ Add to collection') : holding.length === 1 ? t('In {title} ✓', { title: holding[0].title }) : t('In {n} collections ✓', { n: holding.length });
   const label = compact && holding.length > 0 ? '✓' : long;
 
   return (
@@ -152,8 +154,8 @@ export default function AddToWall({ workId, title, author, cover, editions, comp
       </button>
 
       {open && walls.length > 0 && (
-        <div className="absolute left-0 top-full z-30 mt-2 w-72 rounded-card border border-line bg-surface p-3 shadow-xl" role="group" aria-label="Put this cover into">
-          <p className="kicker">Put this cover into</p>
+        <div className="absolute left-0 top-full z-30 mt-2 w-72 rounded-card border border-line bg-surface p-3 shadow-xl" role="group" aria-label={t('Put this cover into')}>
+          <p className="kicker">{t('Put this cover into')}</p>
           <ul className="mt-2 max-h-64 space-y-0.5 overflow-y-auto">
             {walls.map((w) => {
               const inIt = w.tiles.some((t) => t.coverId === coverId);
@@ -163,7 +165,7 @@ export default function AddToWall({ workId, title, author, cover, editions, comp
                     <input type="checkbox" checked={inIt} disabled={busy === w.id} onChange={() => toggle(w)} />
                     <span className="min-w-0 flex-1 truncate text-ink">{w.title}</span>
                     <span className={`shrink-0 text-xs ${w.id === editingId ? 'text-accent' : 'text-ink-3'}`}>
-                      {w.id === editingId ? 'editing · ' : w.unsaved ? 'not saved yet · ' : ''}
+                      {w.id === editingId ? `${t('editing')} · ` : w.unsaved ? `${t('not saved yet')} · ` : ''}
                       {w.tiles.length}
                     </span>
                   </label>
@@ -173,11 +175,11 @@ export default function AddToWall({ workId, title, author, cover, editions, comp
           </ul>
           <div className="mt-2 flex items-center justify-between gap-2 border-t border-line pt-2 text-xs">
             <button type="button" onClick={create} disabled={busy === 'new'} className="text-accent underline underline-offset-2 disabled:opacity-50">
-              + New collection with it
+              {t('+ New collection with it')}
             </button>
             {editorOf && (
               <Link href={editHref(editorOf.id)} className="text-ink-2 underline underline-offset-2 hover:text-accent">
-                Open the editor
+                {t('Open the editor')}
               </Link>
             )}
           </div>
