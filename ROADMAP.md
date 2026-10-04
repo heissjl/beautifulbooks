@@ -130,7 +130,7 @@ Die Urteile sind ein festes Vokabular, weil das Brett des Cockpits (`npm run coc
 | 5.13b | mit 5.13a | — | Links auf Startseite und Sammlungen gebaut; drei weitere Stellen vorgeschlagen |
 | 5.13c | mit 5.13a | — | Picker auf `/walls`, sechs Zufallscover, Fotoupload sichtbar; gebaut |
 | 5.13d | Julian | Schwelle, Index, Startseite | „Collections by readers“ ohne Freigabe, gemischte Reihenfolge, Nachladen; gebaut |
-| 5.16 | messen | Julian (fünf Regalfotos; Schlüssel lokal seit 2026-09-28) | Lab-Prototyp „Regal nach Farben“ gebaut 2026-09-28, auch als Farbschritt im Regal-Ablauf von 5.11; braucht echte Fotos |
+| 5.16 | messen | Julian (Foto neu hochladen, dann fünf Regalfotos) | Lab-Prototyp „Regal nach Farben“ im Regal-Ablauf von 5.11: gedrehte Rechtecke, Ausgabe vom Rücken, sortiertes Regal am Ende (2026-09-29, in `main` seit 2026-10-03). Nächster Schritt: dasselbe Foto in Chrome noch einmal — liest das Modell den Verlag wieder (3 statt 25)? |
 | 5.13e | Julian | — | Aufbewahrung und Grenze je Browser; gemessen, Vorschlag steht |
 | 5.13f | Julian | Nachfrage-Schwelle | Schritt 2 als ein Stück: Bücher auf Keilen in einem Rahmen, Bücher finden, Nachfrage zählen; gebaut |
 | 5.13g | Julian | Penguin fragen, Rechtsprüfung | Drucke statt Bücher: Recherche fertig — ohne Lizenz nicht erlaubt, Provision kaum zu haben, Bilder zu klein |
