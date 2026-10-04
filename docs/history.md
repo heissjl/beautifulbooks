@@ -4375,3 +4375,5 @@ Das deckt sich mit der Lab-Messung (328 Treffer bei 421 Fragen, darin die 7 dopp
 **Nicht gebaut:** „Verbinden“ mit Calibres Content-Server; ein Weg aus dem Editor (`/c/<id>/edit`, „Add covers“) — die Liste bietet aber schon „Add to <Sammlung>“ neben „A new collection“; der Rückweg der gewählten Cover nach Calibre bleibt lokal (5.16). Nicht deployt.
 
 1.186 Tests, tsc, Lint und `npm run build` grün.
+
+**Nachtrag 2026-10-04 — hochladen statt im Browser lesen?** Julian fragte, ob das Senden der Datei weniger eingreife und welche Berechtigungen Leser dafür freigeben müssten. Keine, in beiden Fällen: der Dateidialog gibt der Seite genau die gewählte Datei und nichts sonst. Hochladen ist dieselbe Lesung plus das Senden der ganzen Datei; Julians `metadata.db` enthält außer Titeln und Autoren 170 Klappentexte, 300 Schlagwörter, 128 Verlage und 5 Bewertungen (gezählt, nur gelesen; Anmerkungen 0, eigene Spalten 0). Deshalb bleibt es beim Lesen im Browser; die Begründung steht in SPEC F9.4 (e).
