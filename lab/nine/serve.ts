@@ -14,7 +14,7 @@ import { createServer, type ServerResponse } from 'node:http';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { coverUrlFor, coverIdFromSegment, coverRefFromUrl } from '../../lib/coverurl';
-import { SITE_NAME, SITE_URL } from '../../lib/seo';
+import { SITE_NAME } from '../../lib/seo';
 import { fetchBytes } from '../../lib/sources/http';
 import { getEditionsPage, getWork, searchWorks } from '../../lib/sources/openlibrary';
 import { parseEditions, type OlEditionEntry } from '../../lib/sources/openlibrary-parse';
@@ -25,8 +25,13 @@ import { renderPoster } from './poster';
 
 const PORT = Number(process.env.PORT ?? 4333);
 const HERE = __dirname;
+/**
+ * The live site, not SITE_URL: run locally, SITE_URL is localhost:3000, and a
+ * poster saying so would lead nowhere (as lab/shelf does, NINE_SITE overrides).
+ */
+const SITE = (process.env.NINE_SITE ?? 'https://buyitscovers.com').replace(/\/$/, '');
 /** What the poster prints as the address: the site's host and the page's path. */
-const ADDRESS = `${new URL(SITE_URL).host}/9`;
+const ADDRESS = `${new URL(SITE).host}/9`;
 const TITLE = 'The 9 books that made me';
 
 let olCalls = 0;
@@ -80,7 +85,7 @@ createServer(async (req, res) => {
   try {
     if (req.method !== 'GET') return send(res, 405, { error: 'GET only.' });
     if (path === '/') {
-      const html = readFileSync(join(HERE, 'index.html'), 'utf8').replaceAll('{{SITE_NAME}}', SITE_NAME).replaceAll('{{SITE_URL}}', SITE_URL);
+      const html = readFileSync(join(HERE, 'index.html'), 'utf8').replaceAll('{{SITE_NAME}}', SITE_NAME).replaceAll('{{SITE_URL}}', SITE);
       return send(res, 200, html, 'text/html');
     }
     if (path === '/api/search') {
