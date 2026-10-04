@@ -2,6 +2,8 @@
 
 Stand: 2026-10-03, **offen, nichts gebaut**. Geschrieben für eine Sitzung, die den Code nicht kennt. Julian, 2026-10-03: „bereite die calibre -> online collection variante als zweites lab-experiment vor. schreibe einen plan dafür, ich setze es dann in einer anderen session um".
 
+**Nachtrag vom selben Abend:** Julian ließ danach die lokale App bauen (5.16a, `npm run calibre`): sie geht von der Bibliothek aus, findet je Buch das Werk und lässt das Cover direkt wählen — ohne Sammlung auf der Seite. Damit ist der Hauptzweck dieses Plans (Cover für die eigenen Bücher wählen) auf kürzerem Weg erreicht. Was von 5.17 bleibt: die Bibliothek als **Sammlung auf der Seite** (zeigen, teilen, im Editor der Seite mit gefalteten Covern und Google-Bildern wählen) und die **Messung** aus Schritt 1. Zwei Bausteine des Plans gibt es seither schon: `lab/calibre/find.ts` (`cleanBookTitle`, `findWorks` — ISBN-Abruf und Suche) und die Zuordnungsdatei Buch → Werk (`WorkMap`, `works.json` neben den Backups; §4.4 kann sie statt einer eigenen `maps/`-Datei benutzen). Ob 5.17 noch gebaut wird, entscheidet Julian.
+
 Lab-Experiment, Ordner `lab/calibre-import/`, nur lokal und nur für Julian. Die Website wird dafür **nicht** geändert; was das Experiment an ihr braucht, gibt es schon.
 
 ## 1. Worum es geht

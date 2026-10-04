@@ -19,16 +19,17 @@
  * Open Library and Google are asked for image files only, one per cover and
  * at most two at a time; no Google Books API request is made (lab rule 6).
  */
-import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
+import { createServer } from 'node:http';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { userAgent } from '../../lib/seo';
-import { hostAllowed, makeToken, originAllowed, tokenMatches } from '../../scripts/cockpit/guard';
-import { checkCover, imageFacts, isSmaller, type CoverCheck, type ImageFacts } from './image';
+import { makeToken } from '../../scripts/cockpit/guard';
+import { CoverDownloads } from './download';
+import { jsonBody, refused, send } from './http';
+import { imageFacts, isSmaller, type ImageFacts } from './image';
 import { coverFile, findLibrary, readLibrary, type CalibreBook } from './library';
 import { matchPicks } from './match';
 import { CoverWriter, defaultBackupRoot, findCalibredb, undoStacks } from './safety';
-import { imageUrls, loadSource, type Source } from './source';
+import { loadSource, type Source } from './source';
 
 const args = process.argv.slice(2);
 const flag = (name: string): string | undefined => {
@@ -43,24 +44,6 @@ const sourceArg = args.find((a, i) => !a.startsWith('--') && !VALUE_FLAGS.has(ar
 const ROOT = join(__dirname, '../..');
 const TOKEN = makeToken();
 
-function send(res: ServerResponse, status: number, body: unknown, type = 'application/json'): void {
-  const payload = Buffer.isBuffer(body) ? body : type === 'application/json' ? JSON.stringify(body) : String(body);
-  // Pictures do not change within a run (the page versions the address after a write); everything else is never cached.
-  const image = type.startsWith('image/');
-  res.writeHead(status, { 'content-type': image ? type : `${type}; charset=utf-8`, 'cache-control': image ? 'private, max-age=3600' : 'no-store' });
-  res.end(payload);
-}
-
-async function jsonBody(req: IncomingMessage): Promise<Record<string, unknown>> {
-  let raw = '';
-  for await (const chunk of req) {
-    raw += chunk;
-    if (raw.length > 10_000) throw new SyntaxError('Too large.');
-  }
-  const parsed: unknown = raw ? JSON.parse(raw) : {};
-  return parsed && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {};
-}
-
 async function main(): Promise<void> {
   if (!sourceArg) {
     console.error('Usage: npx tsx lab/calibre/serve.ts <collection address, id or curated slug> [--write] [--library <folder>]');
@@ -72,55 +55,8 @@ async function main(): Promise<void> {
   const source: Source = await loadSource(sourceArg, ROOT, BASE);
 
   /* The new images: fetched once, checked, kept in memory for the run. */
-  type Fetched = { check: CoverCheck; bytes?: Buffer };
-  const fetched = new Map<number, Promise<Fetched>>();
-  let active = 0;
-  const waiting: (() => void)[] = [];
-  const slot = async (): Promise<void> => {
-    if (active >= 2) await new Promise<void>((go) => waiting.push(go));
-    active++;
-  };
-  const release = (): void => {
-    active--;
-    waiting.shift()?.();
-  };
-  const download = async (index: number): Promise<Fetched> => {
-    await slot();
-    try {
-      let last = 'No address for this cover.';
-      for (const url of imageUrls(source.picks[index].coverId)) {
-        try {
-          const res = await fetch(url, { headers: { 'user-agent': userAgent(BASE) }, signal: AbortSignal.timeout(45_000) });
-          if (!res.ok) {
-            last = `The image source answered ${res.status}.`;
-            continue;
-          }
-          const bytes = Buffer.from(await res.arrayBuffer());
-          const check = checkCover(bytes);
-          if (check.ok) return { check, bytes };
-          last = check.reason;
-        } catch {
-          // A source that did not answer is not "no cover" (SPEC N12).
-          last = 'The image source did not answer in time. Reload to try again.';
-        }
-      }
-      return { check: { ok: false, reason: last } };
-    } finally {
-      release();
-    }
-  };
-  const newImage = (index: number): Promise<Fetched> => {
-    let p = fetched.get(index);
-    if (!p) {
-      p = download(index).then((f) => {
-        // A failed download is not remembered: the next look tries again.
-        if (!f.check.ok) fetched.delete(index);
-        return f;
-      });
-      fetched.set(index, p);
-    }
-    return p;
-  };
+  const downloads = new CoverDownloads(BASE);
+  const newImage = (index: number) => downloads.get(source.picks[index].coverId);
 
   const oldFacts = (book: CalibreBook): ImageFacts | { missing: string } => {
     const file = coverFile(library, book);
@@ -148,10 +84,8 @@ async function main(): Promise<void> {
     const url = new URL(req.url ?? '/', `http://127.0.0.1:${PORT}`);
     const path = url.pathname;
     try {
-      if (!hostAllowed(req.headers.host, PORT)) return send(res, 403, { error: 'Wrong host.' });
+      if (refused(req, res, url, PORT, TOKEN)) return;
       if (req.method === 'GET' && path === '/') return send(res, 200, readFileSync(join(__dirname, 'index.html'), 'utf8'), 'text/html');
-      const given = req.headers['x-token'] ?? url.searchParams.get('t');
-      if (!tokenMatches(typeof given === 'string' ? given : null, TOKEN)) return send(res, 403, { error: 'Open the address the terminal printed — it carries the token.' });
 
       if (req.method === 'GET' && path === '/api/state') return send(res, 200, state());
 
@@ -178,8 +112,6 @@ async function main(): Promise<void> {
       }
 
       if (req.method === 'POST' && (path === '/api/apply' || path === '/api/undo')) {
-        if (!originAllowed(req.headers.origin, PORT)) return send(res, 403, { error: 'Wrong origin.' });
-        if (!(req.headers['content-type'] ?? '').startsWith('application/json')) return send(res, 415, { error: 'Send JSON.' });
         if (!WRITE) return send(res, 403, { error: 'This run only looks. Start it with --write to change the library.' });
         const body = await jsonBody(req);
         const book = books.find((b) => b.id === body.bookId);

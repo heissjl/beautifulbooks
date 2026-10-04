@@ -4214,3 +4214,18 @@ Julian: „gibt es eine möglichkeit dass ich die cover-seiten meiner bücher in
 **Offen:** eine eigene Sammlung als Quelle (dort tragen die Kacheln die ISBNs ihrer Drucke — bisher nur über Tests gedeckt, nicht gegen eine echte Sammlung gelaufen); das Cover in der EPUB-Datei ändert erst Calibre beim Senden an den Reader. Die Gegenrichtung ist als 5.17 geplant ([PLAN-5.17](plans/PLAN-5.17-calibre-zur-sammlung.md)), nichts davon gebaut.
 
 1.039 Tests, tsc und Lint grün.
+
+## 2026-10-03 · Die Calibre-Bibliothek als Cover-Wand, lokale App (ROADMAP 5.16a)
+
+Julian, nach dem ersten echten Lauf von 5.16: „ok, hat funktioniert. jetzt lass uns daraus eine lokale app bauen mit gui die mir meine calibre cover anzeigt und dann die website benutzt, damit ich gezielt cover ersetzen kann".
+
+**Gebaut:** `lab/calibre/app.ts` und `app.html` (`npm run calibre`, Port 4329), dazu `find.ts` (Buch → Werk), `covers.ts` (Ausgaben → wählbare Cover), `download.ts` und `http.ts` (aus `serve.ts` herausgezogen, von beiden Servern benutzt), Sprachen im Bibliotheksleser, Bildmaß aus dem Dateikopf. Geschrieben wird durch `safety.ts` aus 5.16, unverändert.
+
+**Entschieden beim Bauen — „die Website benutzen":** ihr Code und ihr Katalog, lokal ausgeführt (`lib/search.ts`, `pickWork`, `getEditionsPage`, `parseEditions`), nicht ihre Adresse. Ein geöffnetes Buch wäre an der laufenden Seite eine Suche und eine Werkseite — die Werkseite kostet kalt bis zu zwei Google-Anfragen und hängt am `google`-Eimer mit fünf je Minute; wer zwanzig Bücher durchklickt, stünde im eigenen Rate-Limit und äße das Kontingent der Besucher. Folge: die App zeigt Open-Library-Cover, ungefaltet und ohne Google-Bilder; je Werk gibt es einen Link auf seine Seite bei buyitscovers.com.
+
+**Gemessen an Julians Bibliothek** (nur gelesen): 423 Cover, davon **76 schmaler als 400 px**, 22 Bücher ohne Cover; Sprachen laut Calibre 277 englisch, 67 deutsch, 26 spanisch, 3 niederländisch, 72 ohne Angabe (Calibre schreibt `deu`, Open Library `ger` — eine kleine Tabelle übersetzt). Werk finden 1,4–5,6 s, erste Seite Cover 2,5–3,3 s. Fünf Stichproben: *Flow My Tears* (Titel in Calibre „[Philip K. Dick 04] • Flow My Tears…") und *Rendezvous with Rama* („1974-Rendezvous With Rama") über die ISBN richtig, mit den Covern der eigenen Ausgabe; *Jenny* (Fanny Lewald) und *Ochsenkrieg* (Ganghofer) über Titel + Autor richtig; *Francisco Pizarro, der Eroberer von Peru* (Arthur Schurig) nicht gefunden. Für *Jenny* hatte Open Library ein größeres Bild (754 × 1200) als das vorhandene (600 × 800); ein anderes Cover desselben Werks kam mit 128 × 208 und wurde als zu klein abgelehnt.
+
+**Geprüft:** an der echten Bibliothek nur schauend (Raster mit 445 Kacheln, Buch öffnen, Vergleich; der Schreibknopf ist aus, die Schreibanfrage 403). Schreibend auf einer Probe-Kopie, über die Schnittstelle und im Browser durchgeklickt: filtern, öffnen, Werk vorgeschlagen und gemerkt („your choice" beim zweiten Öffnen), Cover wählen, schreiben, Kachel und Kopf zeigen das neue Maß und „changed", zurücknehmen — danach bytegleich mit dem Original. Abgelehnt: falsche Werk-ID 400, Cover-ID, die eine Adresse ist, 400, krummer Offset 400.
+
+1.048 Tests, tsc und Lint grün.
+

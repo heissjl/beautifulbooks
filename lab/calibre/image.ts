@@ -53,3 +53,35 @@ export function imageFacts(bytes: Uint8Array): ImageFacts | null {
 export const SMALLER_BELOW = 0.9;
 export const isSmaller = (next: Pick<ImageFacts, 'width' | 'height'>, old: Pick<ImageFacts, 'width' | 'height'>): boolean =>
   next.width * next.height < SMALLER_BELOW * old.width * old.height;
+
+/**
+ * Width and height from the file's header alone, without decoding — for a
+ * whole library's covers at once. Null for anything that is not a JPEG or PNG
+ * with a readable header; says nothing about whether the rest decodes.
+ */
+export function imageSizeFast(bytes: Uint8Array): { width: number; height: number } | null {
+  const format = imageFormat(bytes);
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  if (format === 'png') return bytes.length >= 24 ? { width: view.getUint32(16), height: view.getUint32(20) } : null;
+  if (format !== 'jpeg') return null;
+  let at = 2;
+  while (at + 9 < bytes.length) {
+    if (bytes[at] !== 0xff) return null;
+    const marker = bytes[at + 1];
+    if (marker === 0xff) {
+      at++;
+      continue;
+    }
+    // Start-of-frame markers carry the size; C4, C8 and CC are tables, not frames.
+    if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+      return { width: view.getUint16(at + 7), height: view.getUint16(at + 5) };
+    }
+    // Markers without a length: restart markers and start/end of image.
+    if ((marker >= 0xd0 && marker <= 0xd9) || marker === 0x01) {
+      at += 2;
+      continue;
+    }
+    at += 2 + view.getUint16(at + 2);
+  }
+  return null;
+}

@@ -1,6 +1,6 @@
 # lab/calibre — Cover von der Seite in die eigene Calibre-Bibliothek
 
-Roadmap 5.16. Julian, 2026-10-03: „gibt es eine möglichkeit dass ich die cover-seiten meiner bücher in meiner calibre bibliothek anpasse nach denen, die ich auf der website oder in einer collection auf der website auswähle? das ganze muss nicht für alle user funktionieren, sondern kann für mich lokal umgesetzt werden" — und danach: „mache sicherheitsvorkehrungen, dass es mir nicht meine bibliothek zerschießt".
+Roadmap 5.16 und 5.16a. Julian, 2026-10-03: „gibt es eine möglichkeit dass ich die cover-seiten meiner bücher in meiner calibre bibliothek anpasse nach denen, die ich auf der website oder in einer collection auf der website auswähle? das ganze muss nicht für alle user funktionieren, sondern kann für mich lokal umgesetzt werden" — und danach: „mache sicherheitsvorkehrungen, dass es mir nicht meine bibliothek zerschießt".
 
 Nur lokal, nur für Julian. Nichts davon ist auf der Website, und die Website ändert sich dafür nicht.
 
@@ -10,7 +10,22 @@ Lassen sich die Cover, die Julian auf der Seite in einer Sammlung wählt, in sei
 
 **Erfolg:** Julian wählt auf der Seite zehn Cover, startet ein Kommando, und zehn Bücher in Calibre tragen sie — mit weniger als einer falschen Zuordnung und einem Weg zurück.
 
-## Benutzen
+## Die App: Bibliothek zuerst (5.16a)
+
+Julian, 2026-10-03, nach dem ersten echten Lauf: „lass uns daraus eine lokale app bauen mit gui die mir meine calibre cover anzeigt und dann die website benutzt, damit ich gezielt cover ersetzen kann".
+
+```bash
+npm run calibre               # nur schauen: blättern, Werk finden, Cover vergleichen
+npm run calibre -- --write    # „Use this cover" schreibt, ein Buch je Klick (Calibre geschlossen)
+```
+
+Das Werkzeug druckt eine Adresse mit Token (Port 4329). Die Seite zeigt **jedes Buch der Bibliothek mit dem Cover, das es hat**, samt Pixelmaß; filtern nach Titel oder Autor, nach „Small covers" (unter 400 px Breite), „No cover", „Changed here"; sortieren nach Autor, Titel, kleinstem Cover.
+
+Ein Klick auf ein Buch öffnet es: die App sucht das Werk bei Open Library — über die ISBN, wo es eine gibt, sonst über Titel und Autor mit der Suche der Seite (`lib/search.ts`, `pickWork`) — und legt darunter **die Cover des Werks** aus, mit Jahr und Sprache, die Sprache des Buchs vorgewählt, die Cover der eigenen Ausgabe („your edition", aus der ISBN) vorn. Stimmt das Werk nicht, gibt es die anderen Treffer und ein Suchfeld; die Wahl merkt sich die App je Bibliothek (`works.json` neben den Backups). Ein Klick auf ein Cover holt das Bild in voller Größe und stellt es neben das in Calibre; „Use this cover" schreibt es — durch dieselbe `safety.ts` mit allen Sicherungen unten —, „Put the previous cover back" nimmt es zurück.
+
+**„Die Website benutzen" heißt hier: ihr Code und ihr Katalog, lokal ausgeführt.** Die laufende Seite wird nicht gefragt — ihre Rate-Limits und ihr Google-Kontingent gehören den Besuchern —, und Google Books wird nie gefragt (Lab-Regel 6). Was die App zeigt, sind deshalb die Open-Library-Cover des Werks, ungefaltet; je Werk führt ein Link auf dessen Seite bei buyitscovers.com.
+
+## Aus einer Sammlung (5.16)
 
 ```bash
 npx tsx lab/calibre/selftest.ts                 # 1. der Schreibweg auf einer Wegwerf-Bibliothek (Calibre geschlossen)
@@ -55,7 +70,11 @@ Jede steht im Code, nicht nur hier ([safety.ts](safety.ts)):
 | `match.ts` | Cover ↔ Calibre-Buch: ISBN, Titel + Autor, Vorschläge — rein, getestet |
 | `image.ts` | ist das ein Bild, das Cover werden darf? — rein, getestet |
 | `safety.ts` | der einzige Ort, der schreibt: Prüfungen, Backup, Journal, Kontrolle danach, Rücknahme |
-| `serve.ts`, `index.html` | der lokale Server (Port 4327) und die Seite |
+| `app.ts`, `app.html` | **die App** (Port 4329): Bibliothek als Cover-Wand, Werk finden, Cover wählen, schreiben |
+| `find.ts` | Buch → Werk: Titel glätten, ISBN-Abruf, Suche, Vorschlag; die gemerkten Zuordnungen (`WorkMap`) |
+| `covers.ts` | Ausgaben eines Werks → wählbare Cover mit Sprache, Jahr, Verlag — rein, getestet |
+| `download.ts`, `http.ts` | Bild holen und prüfen; Antworten und die Tür (127.0.0.1, Token) — von beiden Servern benutzt |
+| `serve.ts`, `index.html` | der Sammlungs-Modus (Port 4327) und seine Seite |
 | `selftest.ts` | der ganze Schreibweg auf einer Wegwerf-Bibliothek, 21 Prüfungen |
 | `rehearsal.ts` | Probe-Kopie der echten Bibliothek (nur `metadata.db` und Cover) |
 | `undo.ts` | zurücknehmen ohne Seite |
@@ -71,5 +90,7 @@ Gemessen an Julians Bibliothek (445 Bücher, 423 mit Cover, 131 mit ISBN) und de
 - **Zuordnung:** 17 sicher (15 über Titel + Autor, 2 über ISBN), alle 17 von Hand geprüft und richtig; 2 „ähnlicher Titel" (beide richtig, aber nicht automatisch); 12 nur „gleicher Autor". Über alle 56 Sammlungen: 125 sichere Zuordnungen bei 4.353 Covern, davon 4 über die ISBN — **der Titel trägt, nicht die ISBN.**
 - **Bildgröße:** alle 17 Bilder kamen in 5 s; typisch 310 × 500 px, das größte 415 × 635. **12 von 17 sind kleiner als das Cover, das Calibre schon hat** (mit der 90-%-Schwelle 10). Für die Bibliotheksansicht eines Readers reicht das, als Vollbild ist es weich. Das ist die Grenze des Experiments, nicht des Werkzeugs: größere Bilder hat Open Library für diese Drucke nicht.
 - **Schreibweg:** 9 Schreibvorgänge und 9 Rücknahmen auf der Probe-Kopie (Seite, Sammelknopf, `undo.ts --all`); danach waren alle 423 Cover bytegleich mit dem Original. Ein laufendes Calibre-Programm hat das Schreiben blockiert, wie es soll.
+
+**Die App (5.16a), gebaut am selben Abend:** gegen die echte Bibliothek nur schauend geprüft, schreibend auf einer Probe-Kopie. Die Bibliothek in Zahlen: 423 Cover, **76 unter 400 px Breite**, 22 Bücher ohne Cover; Sprachen laut Calibre 277 englisch, 67 deutsch, 26 spanisch, 3 niederländisch, 72 ohne Angabe. Ein Buch öffnen dauert 1,4–5,6 s für das Werk und 2,5–3,3 s für die erste Seite Cover. Fünf Stichproben: zwei über die ISBN richtig (samt „your edition"-Covern), zwei deutsche Titel über Titel + Autor richtig (*Jenny*, *Ochsenkrieg*), einer nicht gefunden (*Francisco Pizarro, der Eroberer von Peru*). Für *Jenny* (600 × 800) hatte Open Library ein **größeres** Bild (754 × 1200) — die Grenze „meist kleiner" gilt für die SF-Masterworks-Drucke, nicht überall. Durchgeklickt auf der Kopie: filtern, öffnen, wählen, schreiben, zurücknehmen; danach bytegleich. 33 Tests.
 
 **Offen:** eine eigene Sammlung statt einer kuratierten (die Kacheln tragen dort die ISBNs ihrer Drucke); übersetzte Titel finden kein Buch („Per Anhalter durch die Galaxis") — das löst die Gegenrichtung, [5.17](../../docs/plans/PLAN-5.17-calibre-zur-sammlung.md), die sich merkt, welches Buch welches Werk ist.

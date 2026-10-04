@@ -13,7 +13,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join, resolve, sep } from 'node:path';
-import { cleanIsbn, isbn10to13 } from '../../lib/normalize';
+import { cleanIsbn, isbn10to13, toIsoLanguage } from '../../lib/normalize';
 
 export interface CalibreBook {
   id: number;
@@ -26,6 +26,8 @@ export interface CalibreBook {
   /** The book's folder, relative to the library. */
   path: string;
   formats: string[];
+  /** ISO 639-1 (`de`, `en`) where Calibre names a language the site knows. */
+  languages: string[];
 }
 
 /** One row of QUERY as sqlite3 -json prints it. */
@@ -37,6 +39,7 @@ export interface BookRow {
   authors: string | null;
   isbns: string | null;
   formats: string | null;
+  languages?: string | null;
 }
 
 const SEP = String.fromCharCode(31);
@@ -45,10 +48,15 @@ export const QUERY = `
 select b.id, b.title, b.path, b.has_cover,
   (select group_concat(a.name, char(31)) from books_authors_link l join authors a on a.id = l.author where l.book = b.id) as authors,
   (select group_concat(i.val, char(31)) from identifiers i where i.book = b.id and lower(i.type) = 'isbn') as isbns,
-  (select group_concat(d.format, char(31)) from data d where d.book = b.id) as formats
+  (select group_concat(d.format, char(31)) from data d where d.book = b.id) as formats,
+  (select group_concat(g.lang_code, char(31)) from books_languages_link bl join languages g on g.id = bl.lang_code where bl.book = b.id) as languages
 from books b order by b.id`;
 
-const list = (s: string | null): string[] => (s ? s.split(SEP).map((x) => x.trim()).filter(Boolean) : []);
+/** Calibre writes ISO 639-2/T (`deu`), Open Library the bibliographic code (`ger`); these are the ones that differ. */
+const CALIBRE_LANGUAGE: Record<string, string> = { deu: 'de', fra: 'fr', nld: 'nl', zho: 'zh', ces: 'cs', ell: 'el', ron: 'ro', slk: 'sk', fas: 'fa', isl: 'is' };
+const isoLanguage = (code: string): string | undefined => CALIBRE_LANGUAGE[code.toLowerCase()] ?? toIsoLanguage(code);
+
+const list = (s: string | null | undefined): string[] => (s ? s.split(SEP).map((x) => x.trim()).filter(Boolean) : []);
 
 /** Rows to books. Calibre stores a comma inside an author's name as `|`. */
 export function booksFromRows(rows: readonly BookRow[]): CalibreBook[] {
@@ -65,6 +73,7 @@ export function booksFromRows(rows: readonly BookRow[]): CalibreBook[] {
       hasCover: r.has_cover === 1,
       path: r.path ?? '',
       formats: list(r.formats),
+      languages: [...new Set(list(r.languages).map(isoLanguage).filter((l): l is string => !!l))],
     };
   });
 }
