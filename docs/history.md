@@ -4203,3 +4203,15 @@ Julian: „wir haben jetzt eine domain und können jetzt endlich das live gehen 
 
 Die Reihenfolge des Umzugs steht als ROADMAP 2.15, die Sperrliste vor dem Shop-Modus als 4.13 — mit dem Befund, dass `NEXT_PUBLIC_SITE_MODE=shop` den nicht freigegebenen Verfügbarkeits-Button einschaltet, 0.1 also vor dem Umschalttag entschieden sein muss.
 
+## 2026-10-04 — Die Klicks zum Händler werden gezählt, und Julian sieht sie online (ROADMAP 3.1a)
+
+Julian: „ja, bau 3.1a“, nach dem [Plan](plans/PLAN-3.1-analyse.md) und der Entscheidung vom selben Tag, die Ansicht online zu haben („ich glaub ich will es schon auch online“).
+
+**Gebaut:** `lib/insights/model.ts` (rein: Schlüssel `ins:<UTC-Tag>:clicks|ops`, Feld `<anbieter>|<markt>|<linkart>`, Summen, Vergleich), `store.ts` (HINCRBY + EXPIRE 400 Tage, nur bei `VERCEL_ENV=production`, wirft nie), `report.ts` (Zeitraum und Zeitraum davor). `/go/` zählt nach dem Weiterleiten über `after()` (`app/api/count.ts`), nicht mit gültigem `bb_admin`. Die Suche zählt `ol-failed`, wenn Open Library schweigt; `lib/googlequota.ts` reicht Tagesstopps an `/api/works` und `/api/isbn` weiter. `adminTokenValid` prüft das Admin-Cookie ohne `SUGGEST_PASSWORD`; `/curate` und die Moderation behalten `adminSessionValid`. `/admin/insights` (deutsch, 404 ohne Cookie), `/api/insights` (Cookie oder Bearer), `robots.txt` sperrt `/admin/`, `proxy.ts` nimmt `/admin/` vom deutschen Spiegel aus, der Spiegel-Test ebenso. Die Datenschutzerklärung nennt die Tagessumme (englisch und deutsch, Stand 4. Oktober 2026).
+
+**Ein Fehler, den der Test fand:** eine zweite 403 `dailyLimitExceeded` aus einer Anfrage, die schon unterwegs war, verlängerte die Pause um Millisekunden und zählte als zweiter Tagesstopp. Jetzt zählt ein Stopp nur, wenn der vorige abgelaufen ist (`dailyUntil`).
+
+**Geprüft** im Produktions-Build gegen eine lokale `redis-server` (Port 6390): ohne Cookie `/admin/insights` und `/api/insights` 404; vier Klicks über `/go/` → Hash `ins:2026-10-04:clicks` mit `bookshop|us|search 2`, `amazon|us|product 1`, `thalia|de|search 1`, TTL 34.559.998 s; ein Klick mit Admin-Cookie zählte nicht (1 → 1); Bearer liefert das JSON; mit Sprach-Cookie `de` 200. Mit Beispieldaten über 14 Tage bei 1280 × 800 (hell) und 390 × 844 (dunkel) angesehen, ohne seitliches Scrollen; die Achsenbeschriftung des Tagesdiagramms stand zuerst im SVG und wurde am Telefon 5 px klein — jetzt HTML. 1.031 Tests, Lint und Build grün.
+
+**Was die Zahl nicht ist:** ein Klick ist kein Kauf; Titelsuchen bei Händlern und „Find this exact cover“ laufen noch nicht über `/go/` und fehlen (Plan §4).
+

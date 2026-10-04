@@ -1,6 +1,6 @@
 # Plan 3.1: Kennzahlen und Analyse-Ansicht
 
-Stand: 2026-10-03, **offen**, nichts gebaut; Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
+Stand: 2026-10-04, **3.1a gebaut** (Branch, nicht deployt); 3.1b offen. Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
 
 ## 1. Grundsatz
 

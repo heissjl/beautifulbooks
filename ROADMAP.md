@@ -887,7 +887,7 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 Nichts davon lohnt ohne Besucher: auf `localhost` misst man sich selbst. Vercels eigene Zählung beantwortet keine der Fragen aus 3.1 (Hobby: keine Custom Events).
 
-- [ ] **3.1 Eine Analyse-Seite für diese Website.** (Julian, 2026-09-07.) Vorläufiger Plan in [docs/plans/PLAN-B.md](docs/plans/PLAN-B.md), Abschnitt nach B4. Die Klick-Logs zeigen nur, *dass* geklickt wird; sie sind kurzlebig und nicht auswertbar. Fertige Werkzeuge beantworten „wie viele Besucher, woher, welche Seite“; die Fragen dieser Seite sind andere, und keine ist eine Seitenzahl:
+- [ ] **3.1 Eine Analyse-Seite für diese Website.** (Julian, 2026-09-07.) **3.1a gebaut am 2026-10-04** (Julian: „ja, bau 3.1a“), auf dem Branch `claude/gallant-davinci-qgndje`, nicht deployt: `/go/` zählt jeden Klick als Tagessumme je Händler × Markt × Linkart in die Redis des Spiels (ohne ISBN, nur Production, nicht mit Admin-Cookie, 400 Tage), dazu `ol-failed` und `google-stop`; `/admin/insights` zeigt es online hinter dem Admin-Cookie aus `/curate`, `/api/insights` liefert JSON. Geprüft gegen eine lokale Redis im Produktions-Build, bei 1280 und 390 ([Historie](docs/history.md)). **Offen: 3.1b** (Signale aus dem Browser, wartet auf Julians zwei Entscheidungen, Plan §9) und die Titelsuchen über `/go/` (Plan §4). Vorläufiger Plan in [docs/plans/PLAN-B.md](docs/plans/PLAN-B.md), Abschnitt nach B4. Die Klick-Logs zeigen nur, *dass* geklickt wird; sie sind kurzlebig und nicht auswertbar. Fertige Werkzeuge beantworten „wie viele Besucher, woher, welche Seite“; die Fragen dieser Seite sind andere, und keine ist eine Seitenzahl:
 
   | Frage | Warum |
   |---|---|

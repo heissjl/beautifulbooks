@@ -78,7 +78,17 @@ export function adminSessionToken(now = Date.now(), env: Env = process.env): str
 }
 
 export function adminSessionValid(token: string | undefined, now = Date.now(), env: Env = process.env): boolean {
-  if (!token || !suggestEnabled(env) || !env.SUGGEST_ADMIN_PASSWORD?.trim()) return false;
+  return suggestEnabled(env) && adminTokenValid(token, now, env);
+}
+
+/**
+ * The admin cookie checked on its own, without the friends' tools being
+ * switched on (ROADMAP 3.1a): the analytics belong to Julian whether or not
+ * /suggest exists. The cookie is still issued only by the login on /curate,
+ * so this widens who may *read*, never who may sign in.
+ */
+export function adminTokenValid(token: string | undefined, now = Date.now(), env: Env = process.env): boolean {
+  if (!token || !env.SUGGEST_ADMIN_PASSWORD?.trim()) return false;
   const [raw, signature] = token.split('.');
   const expires = Number(raw);
   if (!Number.isInteger(expires) || expires < now || !signature) return false;

@@ -126,13 +126,36 @@ export function noteGoogleFailure(error: unknown, now = Date.now()): QuotaVerdic
   const pause = verdict === 'daily' ? pacificMsUntilReset(new Date(now)) : RATE_PAUSE_MS;
   const until = now + pause;
   if (until > closedUntil) {
+    // A request already in flight when the day ran out fails a moment later
+    // and pushes the pause by milliseconds; that is the same stop, not a new one.
+    if (verdict === 'daily' && now >= dailyUntil) dailyStops += 1;
+    if (verdict === 'daily') dailyUntil = until;
     closedUntil = until;
     logQuotaEvent(verdict, pause, now);
   }
   return verdict;
 }
 
+/**
+ * Daily stops noted since the last call, for the analytics (ROADMAP 3.1a,
+ * K11). Kept here and handed out rather than written from this module,
+ * because counting needs the request's `after()`, which a library cannot
+ * reach; the routes that can spend a Google request take them after
+ * answering. Per instance, like the breaker itself.
+ */
+let dailyStops = 0;
+/** Until when the current daily stop lasts, so a late refusal is not counted twice. */
+let dailyUntil = 0;
+
+export function takeDailyStops(): number {
+  const n = dailyStops;
+  dailyStops = 0;
+  return n;
+}
+
 /** For tests. */
 export function resetGoogleQuota(): void {
   closedUntil = 0;
+  dailyStops = 0;
+  dailyUntil = 0;
 }

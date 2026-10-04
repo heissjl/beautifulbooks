@@ -4,6 +4,9 @@ import { recordClick } from '@/lib/clicks';
 import { isIsbn13 } from '@/lib/isbn';
 import { cleanIsbn } from '@/lib/normalize';
 import { marketFromRequest } from '@/app/api/works/[id]/route';
+import { later } from '@/app/api/count';
+import { countClick } from '@/lib/insights/store';
+import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
 
 /**
  * GET /go/<provider>/<isbn13>?market=<us|uk|de> — records the click and
@@ -29,6 +32,14 @@ export async function GET(request: NextRequest, context: { params: Promise<{ pro
   if (!link) return NextResponse.redirect(home, 302);
 
   recordClick({ provider: link.provider, market, isbn13, kind: link.kind ?? 'search' });
+  /*
+    The daily total for the analytics (ROADMAP 3.1a): shop, market and link
+    kind, after the redirect has left, and not for Julian's own clicks — his
+    admin cookie travels with a top-level navigation like any other.
+  */
+  if (!adminTokenValid(request.cookies.get(ADMIN_COOKIE)?.value)) {
+    later(() => countClick({ provider: link.provider, market, kind: link.kind ?? 'search' }));
+  }
   return NextResponse.redirect(link.url, {
     status: 302,
     // A redirect that is cached is a click that is never counted.

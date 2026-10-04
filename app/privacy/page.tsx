@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   description: 'What this site does with data, which is little, and who is responsible for it.',
 };
 
-const UPDATED = '19 September 2026';
+const UPDATED = '4 October 2026';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -97,7 +97,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
 
         <Section title={t('Shop links and click counting')}>
           <p>
-            {t('Clicking a shop link takes you through this site to the shop, and the click is written to the server log: which shop, which market, which ISBN, and when. Nothing about you is recorded — no IP address, no cookie, no browser details, no referrer — and the log is kept for the same hour as the hosting log. From the moment you arrive at the shop, its own privacy notice applies.')}{' '}
+            {t('Clicking a shop link takes you through this site to the shop, and the click is written to the server log: which shop, which market, which ISBN, and when; the log is kept for the same hour as the hosting log. The site also adds one to a daily total per shop, market and kind of link, without the ISBN, and keeps those totals for about thirteen months. Nothing about you is recorded in either — no IP address, no cookie, no browser details, no referrer. From the moment you arrive at the shop, its own privacy notice applies.')}{' '}
             {shop
               ? t('Some links carry an affiliate parameter, which tells the shop that you came from here; it does not tell this site who you are.')
               : t('The links carry no affiliate or tracking parameter.')}
