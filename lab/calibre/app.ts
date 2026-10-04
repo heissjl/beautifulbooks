@@ -39,6 +39,7 @@ import { join } from 'node:path';
 import { isWorkId, makeToken } from './site';
 import { CatalogueError, directCatalogue, siteCatalogue, withFallback, type Catalogue } from './catalogue';
 import { CoverDownloads, CoverSizes } from './download';
+import { FileMap } from './filemap';
 import { editionByIsbn, findWorks, refusedConnection, WorkMap, type IsbnEdition } from './find';
 import { jsonBody, refused, send } from './http';
 import { imageFacts, imageSizeFast, isSmaller, type ImageFacts } from './image';
@@ -66,6 +67,16 @@ const MAX_OFFSET = 900;
 const library = findLibrary(flag('library'));
 const writer = new CoverWriter({ library, calibredb: findCalibredb(), backupRoot: defaultBackupRoot() });
 const works = new WorkMap(join(writer.root, 'works.json'));
+/*
+ * Book number -> the cover Julian marked as sent to the reader. A new cover is
+ * in Calibre at once but on the reader only when the book is sent again
+ * (README: „Kommt das neue Cover von selbst auf den Reader?"), so every
+ * changed book is a thing still to do in Calibre until he says it is done
+ * (Julian, 2026-10-04: „stell die geänderten werke vorne in der übersicht
+ * heraus, damit ich weiß welche ich in calibre ändern muss"). The mark names
+ * the cover: a book changed again is to send again.
+ */
+const sent = new FileMap(join(writer.root, 'sent.json'));
 const downloads = new CoverDownloads(SITE);
 // Cover ids are the catalogue's, not a library's: one file of sizes for every library.
 const coverSizes = new CoverSizes(join(defaultBackupRoot(), 'cover-sizes.json'), SITE);
@@ -126,7 +137,7 @@ function state() {
         v: cover?.v ?? 0,
         ...(remembered[b.id] ? { workId: remembered[b.id] } : {}),
         // The cover the tool last put there, while that write can still be taken back.
-        ...(stack ? { applied: stack[stack.length - 1].coverId, canUndo: !!stack[stack.length - 1].backup } : {}),
+        ...(stack ? { applied: stack[stack.length - 1].coverId, appliedAt: stack[stack.length - 1].at, canUndo: !!stack[stack.length - 1].backup, sent: sent.get(b.id) === stack[stack.length - 1].coverId } : {}),
       };
     }),
   };
@@ -254,7 +265,7 @@ const server = createServer(async (req, res) => {
       return send(res, 200, f.bytes, `image/${f.check.format}`);
     }
 
-    if (req.method === 'POST' && (path === '/api/work' || path === '/api/apply' || path === '/api/undo')) {
+    if (req.method === 'POST' && (path === '/api/work' || path === '/api/sent' || path === '/api/apply' || path === '/api/undo')) {
       const body = await jsonBody(req);
       const book = books.find((b) => b.id === body.bookId);
       if (!book) return send(res, 404, { error: 'No such book in the library.' });
@@ -264,6 +275,15 @@ const server = createServer(async (req, res) => {
         if (typeof body.workId !== 'string' || !isWorkId(body.workId) || !/^OL\d+W$/.test(body.workId)) return send(res, 400, { error: 'Bad work id.' });
         works.set(book.id, body.workId);
         return send(res, 200, { ok: true });
+      }
+
+      // So does the mark „sent to the reader": it says what Julian did in Calibre, and changes nothing there.
+      if (path === '/api/sent') {
+        const top = undoStacks(writer.journal()).get(book.id)?.at(-1);
+        if (!top) return send(res, 409, { error: 'This book’s cover was not changed here.' });
+        if (body.sent === false) sent.delete(book.id);
+        else sent.set(book.id, top.coverId);
+        return send(res, 200, { ok: true, state: state() });
       }
 
       if (!WRITE) return send(res, 403, { error: 'This run only looks. Start it with --write to change the library.' });
