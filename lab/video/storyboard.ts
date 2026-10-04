@@ -32,7 +32,7 @@ import { foldDuplicateCovers } from '../../lib/works';
 
 export const CLIP_WIDTH = 1080;
 export const CLIP_HEIGHT = 1920;
-export const SITE_URL_DEFAULT = 'beautifulcovers.vercel.app';
+export const SITE_URL_DEFAULT = 'buyitscovers.com';
 
 export interface StoryboardOptions {
   /** Most covers to show. Default 30. */
