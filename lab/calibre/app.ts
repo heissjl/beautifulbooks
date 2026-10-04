@@ -19,6 +19,11 @@
  * the website; `--site <address>` names another one (a local `npm run dev`). Google Books is never asked, either way (lab rule 6). Only on
  * a click: nothing here walks the library by itself.
  *
+ * What the catalogue answered is kept on this Mac for thirty days (`kept.ts`),
+ * so a book opened before asks nobody — not after a restart either, and not
+ * while Open Library refuses this Mac. The page says when what it shows is a
+ * kept answer, and „Ask the catalogue again" sends `since=<now>`.
+ *
  * `--library <folder>` points at another library (a rehearsal copy).
  * `--port auto` takes any free port and `--exit-with-parent` ends the server
  * when its standard input closes — both for the macOS app (`macos/`), which
@@ -32,11 +37,12 @@ import type { AddressInfo } from 'node:net';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { isWorkId, makeToken } from './site';
-import { CatalogueError, directCatalogue, remembering, siteCatalogue, withFallback } from './catalogue';
+import { CatalogueError, directCatalogue, siteCatalogue, withFallback, type Catalogue } from './catalogue';
 import { CoverDownloads, CoverSizes } from './download';
-import { findWorks, refusedConnection, WorkMap } from './find';
+import { editionByIsbn, findWorks, refusedConnection, WorkMap, type IsbnEdition } from './find';
 import { jsonBody, refused, send } from './http';
 import { imageFacts, imageSizeFast, isSmaller, type ImageFacts } from './image';
+import { AnswerStore, KEEP_DAYS, keptCatalogue, type AskOptions, type Served } from './kept';
 import { coverFile, findLibrary, readLibrary, type CalibreBook } from './library';
 import { findSyncScript, pocketbookStatus, readSyncConfig, runSync } from './pocketbook';
 import { CoverWriter, defaultBackupRoot, findCalibredb, undoStacks } from './safety';
@@ -148,7 +154,43 @@ const paused = (): { error: string; pausedUntil: number } | null =>
 
 /* Through the website first; Open Library directly when the website fails and Open Library is not refusing this Mac. */
 const SOURCE = flag('source') === 'direct' ? 'direct' : 'site';
-const catalogue = remembering(SOURCE === 'site' ? withFallback(siteCatalogue(SITE), directCatalogue(), () => !paused()) : directCatalogue());
+const direct = directCatalogue();
+// Asked directly, the pause is the catalogue's answer — in its own words, so a kept answer can still stand in for it.
+const unlessPaused = <T>(ask: () => Promise<T>): Promise<T> => {
+  const pause = paused();
+  return pause ? Promise.reject(new CatalogueError(pause.error)) : ask();
+};
+const source: Catalogue =
+  SOURCE === 'site'
+    ? withFallback(siteCatalogue(SITE), direct, () => !paused())
+    : { search: (q) => unlessPaused(() => direct.search(q)), page: (id, offset) => unlessPaused(() => direct.page(id, offset)) };
+
+// The catalogue's answers are the catalogue's, not a library's: one store for every library, like the sizes.
+const answers = new AnswerStore(join(defaultBackupRoot(), 'catalogue'));
+
+/** The catalogue for one request: what the store has, and a note of what came out of it. */
+function asking(url: URL) {
+  const since = Number(url.searchParams.get('since') ?? 0);
+  const served: Served[] = [];
+  const options: AskOptions = { ...(Number.isSafeInteger(since) && since > 0 ? { notBefore: since } : {}), served: (s) => served.push(s) };
+  return {
+    options,
+    catalogue: keptCatalogue(answers, source, options),
+    /** Open Library shut the door behind an answer that was served from the store all the same. */
+    refused: () => served.some((s) => refusedConnection(s.error)),
+    /** For the page: the oldest answer that was not asked for just now, and whether the catalogue was silent. */
+    kept: (): { kept?: { at: number; unanswered?: true } } =>
+      served.length ? { kept: { at: Math.min(...served.map((s) => s.at)), ...(served.some((s) => s.error !== undefined) ? { unanswered: true as const } : {}) } } : {},
+  };
+}
+
+/** The covers Open Library lists under an ISBN. While it refuses this Mac only the store is looked at; undefined says "not asked". */
+async function isbnEdition(isbn: string, options: AskOptions): Promise<IsbnEdition | null | undefined> {
+  if (!paused()) return answers.answer('isbn', isbn, () => editionByIsbn(isbn, SITE), options);
+  const have = answers.read<IsbnEdition | null>('isbn', isbn);
+  if (have) options.served?.({ at: have.at });
+  return have?.value;
+}
 
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://127.0.0.1:${PORT}`);
@@ -163,13 +205,13 @@ const server = createServer(async (req, res) => {
       const book = books.find((b) => b.id === Number(bookPath[2]));
       if (!book) return send(res, 404, { error: 'No such book.' });
       if (bookPath[1] === 'find') {
-        if (SOURCE === 'direct' && paused()) return send(res, 503, paused());
         const q = (url.searchParams.get('q') ?? '').trim().slice(0, 200);
-        const found = await findWorks(book, catalogue, { site: SITE, remembered: works.get(book.id), query: q || undefined, askEdition: !paused() });
-        if (found.refused) pausedUntil = Date.now() + PAUSE_MS;
-        // Refused and nothing to show: say why, once, instead of an empty list.
-        if (found.refused && found.hits.length === 0) return send(res, 503, paused());
-        return send(res, 200, found);
+        const ask = asking(url);
+        const found = await findWorks(book, ask.catalogue, { remembered: works.get(book.id), query: q || undefined, edition: (isbn) => isbnEdition(isbn, ask.options) });
+        if (found.refused || ask.refused()) pausedUntil = Date.now() + PAUSE_MS;
+        // Refused and nothing to show — nothing kept either: say why, once, instead of an empty list.
+        if ((found.refused || (SOURCE === 'direct' && paused())) && found.hits.length === 0) return send(res, 503, paused());
+        return send(res, 200, { ...found, ...ask.kept() });
       }
       if (path.startsWith('/api/')) return send(res, 200, oldFacts(book));
       const file = coverFile(library, book);
@@ -181,19 +223,18 @@ const server = createServer(async (req, res) => {
     if (req.method === 'GET' && coversOf && isWorkId(coversOf[1])) {
       const offset = Number(url.searchParams.get('offset') ?? 0);
       if (!Number.isInteger(offset) || offset < 0 || offset > MAX_OFFSET || offset % 100 !== 0) return send(res, 400, { error: 'Bad offset.' });
-      if (SOURCE === 'direct' && paused()) return send(res, 503, paused());
+      const ask = asking(url);
       try {
-        const page = await catalogue.page(coversOf[1], offset);
+        const page = await ask.catalogue.page(coversOf[1], offset);
+        if (ask.refused()) pausedUntil = Date.now() + PAUSE_MS;
         if (!page) return send(res, 404, { error: 'The catalogue does not know this work.' });
         const next = page.next !== null && page.next <= MAX_OFFSET ? page.next : null;
         // Sizes already known ride along, so a work opened before sorts at once.
         const covers = page.covers.map((c) => ({ ...c, ...(coverSizes.peek(c.coverId) ? { size: coverSizes.peek(c.coverId) } : {}) }));
-        return send(res, 200, { covers, editions: page.editions, next });
+        return send(res, 200, { covers, editions: page.editions, next, ...ask.kept() });
       } catch (err) {
-        if (refusedConnection(err)) {
-          pausedUntil = Date.now() + PAUSE_MS;
-          return send(res, 503, paused());
-        }
+        if (refusedConnection(err)) pausedUntil = Date.now() + PAUSE_MS;
+        if (paused() && (SOURCE === 'direct' || refusedConnection(err))) return send(res, 503, paused());
         if (err instanceof CatalogueError) return send(res, 502, { error: err.message });
         return send(res, 502, { error: 'The catalogue did not answer. Try again in a moment.' });
       }
@@ -279,6 +320,7 @@ server
     console.log(WRITE ? `mode:    WRITE — backups and journal in ${writer.root}` : 'mode:    look only (add --write to change the library)');
     for (const p of WRITE ? writer.problems() : []) console.log(`         ! ${p}`);
     console.log(`asks:    ${SOURCE === 'site' ? `${SITE} (Open Library directly when it does not answer)` : 'Open Library directly'}`);
+    console.log(`keeps:   the catalogue's answers for ${KEEP_DAYS} days in ${answers.dir}`);
     console.log(`open:    http://127.0.0.1:${PORT}/?t=${TOKEN}`);
   });
 

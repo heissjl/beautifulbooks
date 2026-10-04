@@ -200,7 +200,8 @@ function renderGrid() {
 /* ---------- one book ---------- */
 
 async function openBook(id) {
-  open = { id, found: null, workId: null, covers: [], editions: 0, next: null, pages: 0, loading: false, lang: null, error: null, query: '', others: false, bigOnly: false };
+  // t0: answers the catalogue gave before this moment are "kept"; since: the moment of „Ask the catalogue again", sent along.
+  open = { id, found: null, workId: null, covers: [], editions: 0, next: null, pages: 0, loading: false, lang: null, error: null, query: '', others: false, bigOnly: false, t0: Date.now(), since: 0, kept: null };
   $('shade').hidden = false;
   $('drawer').hidden = false;
   $('drawer').scrollTop = 0;
@@ -222,8 +223,10 @@ async function find(query) {
   mine.found = null;
   mine.error = null;
   renderWork();
-  const { status, body } = await api(`/api/find/${mine.id}${query ? `?q=${encodeURIComponent(query)}` : ''}`);
+  const params = new URLSearchParams({ ...(query ? { q: query } : {}), ...(mine.since ? { since: mine.since } : {}) }).toString();
+  const { status, body } = await api(`/api/find/${mine.id}${params ? `?${params}` : ''}`);
   if (open !== mine) return;
+  noteKept(mine, body.kept);
   if (status !== 200) { mine.found = { hits: [], editionCovers, failed: status === 503 ? undefined : body.error }; mine.error = body.error; mine.pausedUntil = body.pausedUntil; renderWork(); return; }
   // A search Julian typed replaces the list, not the edition's own covers found by ISBN.
   mine.found = { ...body, editionCovers: body.editionCovers.length ? body.editionCovers : editionCovers };
@@ -252,8 +255,9 @@ async function loadCovers(pages) {
   mine.error = null;
   renderCovers();
   for (let n = 0; n < pages && mine.next != null; n++) {
-    const { status, body } = await api(`/api/covers/${workId}?offset=${mine.next}`);
+    const { status, body } = await api(`/api/covers/${workId}?offset=${mine.next}${mine.since ? `&since=${mine.since}` : ''}`);
     if (open !== mine || mine.workId !== workId) return;
+    noteKept(mine, body.kept);
     if (status !== 200) { mine.error = body.error; break; }
     for (const c of body.covers) {
       const have = mine.covers.find((x) => x.coverId === c.coverId);
@@ -274,6 +278,44 @@ async function loadCovers(pages) {
   }
   mine.loading = false;
   renderCovers();
+}
+
+/*
+ * The app keeps what the catalogue answered (kept.ts) and says so when what
+ * is shown was not asked for just now: the oldest such answer, and whether the
+ * catalogue was asked and stayed silent. An answer from after the drawer
+ * opened is this look's own — the first page of covers, asked a second ago
+ * while finding the work — and is not called kept.
+ */
+function noteKept(mine, kept) {
+  if (!kept || kept.at >= mine.t0) return;
+  mine.kept = { at: Math.min(kept.at, mine.kept?.at ?? Infinity), unanswered: !!(kept.unanswered || mine.kept?.unanswered) };
+  renderKept();
+}
+
+function renderKept() {
+  if (!open) return;
+  const k = open.kept;
+  if (!k) { $('d-kept').replaceChildren(); return; }
+  const day = new Date(k.at);
+  const when = day.toDateString() === new Date().toDateString()
+    ? `today at ${day.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`
+    : `on ${day.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+  fill($('d-kept'), el('p', { class: k.unanswered ? 'note warn' : 'meta', style: 'margin-top:14px' },
+    k.unanswered ? `The catalogue did not answer just now. Shown is what it said before, the oldest of it ${when}. `
+      : `Some or all of this is what the catalogue answered before, kept on this Mac — the oldest of it ${when}. `,
+    el('button', { class: 'chip', onclick: askAgain }, k.unanswered ? 'Try again' : 'Ask the catalogue again')));
+}
+
+async function askAgain() {
+  const mine = open;
+  const workId = mine.workId;
+  mine.t0 = mine.since = Date.now();
+  mine.kept = null;
+  renderKept();
+  await find(mine.query || undefined);
+  // Without typed words find() lays out the proposed work's covers itself; with them it leaves the chosen work alone.
+  if (open === mine && mine.query && workId && mine.workId === workId) await chooseWork(workId, false);
 }
 
 /*
@@ -299,10 +341,11 @@ function measure(mine) {
 }
 
 function renderDrawer() {
-  $('drawer').replaceChildren(el('div', { id: 'd-head' }), el('div', { id: 'd-work' }), el('div', { id: 'd-covers' }));
+  $('drawer').replaceChildren(el('div', { id: 'd-head' }), el('div', { id: 'd-work' }), el('div', { id: 'd-covers' }), el('div', { id: 'd-kept' }));
   renderHead();
   renderWork();
   renderCovers();
+  renderKept();
 }
 
 function renderHead() {
@@ -361,7 +404,7 @@ function renderCovers() {
   const inLang = open.covers.filter((c) => lang === 'all' || c.languages.includes(lang) || mine.has(c.coverId));
   const large = inLang.filter((c) => tier(c, b.size) === 0);
   const pending = inLang.filter((c) => c.size === undefined).length;
-  // Large enough first; among those the own edition, then the most pixels.
+  // Large enough first; among those the ones listed under the book's ISBN, then the most pixels.
   const list = (open.bigOnly ? large : inLang).slice().sort((x, y) =>
     (tier(x, b.size) - tier(y, b.size)) || (mine.has(y.coverId) - mine.has(x.coverId)) || (area(y.size) - area(x.size)) || ((y.year ?? 0) - (x.year ?? 0)));
   const count = (l) => open.covers.filter((c) => c.languages.includes(l)).length;

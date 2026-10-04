@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CatalogueError, remembering, siteCatalogue, withFallback, type Catalogue, type CataloguePage } from '../catalogue';
+import { CatalogueError, siteCatalogue, withFallback, type Catalogue, type CataloguePage } from '../catalogue';
 import { pickCoversFromPage } from '../covers';
 import { findWorks, refusedConnection } from '../find';
 import type { CalibreBook } from '../library';
@@ -24,7 +24,7 @@ function fake(searches: Record<string, WorkSummary[]>, pages: Record<string, Cat
     },
   };
 }
-const options = { site: 'http://localhost', askEdition: false };
+const options = {};
 
 describe('the covers of a page the website answers with', () => {
   it('joins each cover with its editions and rebuilds the image address from the id', () => {
@@ -111,22 +111,6 @@ describe('the website first, Open Library when it fails', () => {
     expect((await withFallback(broken, second, () => true).search('q'))[0].id).toBe('OL2W');
     expect((await withFallback(broken, second, () => true).page('OL2W', 0))?.editions).toBe(3);
     await expect(withFallback(broken, second, () => false).search('q')).rejects.toThrow('busy');
-  });
-
-  it('remembers an answer for the run and forgets a failure', async () => {
-    let calls = 0;
-    const flaky: Catalogue = {
-      search: async () => {
-        if (++calls === 1) throw new Error('silent');
-        return [summary({ id: 'OL1W', title: 'Ubik' })];
-      },
-      page: async () => null,
-    };
-    const kept = remembering(flaky);
-    await expect(kept.search('ubik')).rejects.toThrow('silent');
-    expect((await kept.search('ubik'))[0].id).toBe('OL1W');
-    await kept.search('ubik');
-    expect(calls).toBe(2);
   });
 });
 
