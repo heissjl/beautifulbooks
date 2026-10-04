@@ -216,7 +216,7 @@ export function titleSearchLinksFor(
   return RETAILERS[market].flatMap(r => {
     if (!r.searchUrl) return [];
     const affiliate = commerce && r.affiliateEnv ? env[r.affiliateEnv] || undefined : undefined;
-    return [{ provider: `${r.id}-title`, label: r.label, url: r.searchUrl(query, affiliate), kind: 'search' as const }];
+    return [{ provider: `${r.id}-title`, label: r.label, url: r.searchUrl(query, affiliate), kind: 'search' as const, ...(affiliate ? { affiliate: true } : {}) }];
   });
 }
 
@@ -233,8 +233,30 @@ export function buyLinksFor(edition: Pick<Edition, 'isbn13'>, market: Market = D
       label: r.label,
       url: r.url(isbn13, affiliate),
       kind: r.kind ? r.kind(isbn13, affiliate) : 'search',
+      ...(affiliate ? { affiliate: true } : {}),
     };
   });
+}
+
+/**
+ * The sentence under the shop links in shop mode (ROADMAP 4.11, prepared for
+ * the day E20 switches to `shop`).
+ *
+ * Read off the links actually shown, not off the mode: a market without a
+ * programme, or a printing whose only links are searches without an id,
+ * earns nothing and must not say it does. Amazon's operating agreement asks
+ * for its own sentence in so many words, so that one is added verbatim
+ * whenever an Amazon link carries a tag (docs/vergleich-whichedition.md).
+ * The order clause is true because the order follows the ISBN (SPEC 2.4).
+ */
+export const COMMISSION_NOTE = 'Some of these links earn this site a small commission if you buy through them, at no cost to you. It does not change their order.';
+export const AMAZON_ASSOCIATE_NOTE = 'As an Amazon Associate I earn from qualifying purchases.';
+
+export function commissionNote(links: ReadonlyArray<Pick<BuyLink, 'provider' | 'affiliate'>>): string | undefined {
+  const earning = links.filter(l => l.affiliate);
+  if (earning.length === 0) return undefined;
+  const amazon = earning.some(l => l.provider.replace(/-(title|search)$/, '') === 'amazon');
+  return amazon ? `${COMMISSION_NOTE} ${AMAZON_ASSOCIATE_NOTE}` : COMMISSION_NOTE;
 }
 
 /**
@@ -258,6 +280,12 @@ export interface SearchLinkInput {
   coverUrl?: string;
   /** Open Library edition id (`ol:OL123M`) for the provenance link. */
   editionId?: string;
+  /**
+   * The printing's ISBN. When there is one, WorldCat is asked for that number
+   * (`bn:`) rather than for title, publisher and year, which lists every
+   * printing a library holds (ROADMAP 6.83).
+   */
+  isbn13?: string;
 }
 
 /**
@@ -331,9 +359,84 @@ export function searchLinksFor(input: SearchLinkInput, market: Market = DEFAULT_
     out.push({ provider: 'tineye', label: 'TinEye', url: `https://tineye.com/search?url=${q(input.coverUrl)}` });
   }
 
-  out.push({ provider: 'worldcat', label: 'WorldCat', url: `https://search.worldcat.org/search?q=${q(terms)}` });
+  out.push({ provider: 'worldcat', label: 'WorldCat', url: `https://search.worldcat.org/search?q=${input.isbn13 ? `bn:${input.isbn13}` : q(terms)}` });
   if (input.editionId?.startsWith('ol:')) {
     out.push({ provider: 'openlibrary', label: 'Open Library', url: `https://openlibrary.org/books/${input.editionId.slice(3)}` });
   }
   return out;
+}
+
+/**
+ * Shop searches by words rather than by number (ROADMAP 3.1, plan §4):
+ * `-search` asks a shop about *this printing* by title, author, publisher and
+ * year; `-title` asks about the work, any edition. Recognised by the suffix
+ * the two builders above give them. Google Lens, TinEye, WorldCat and Open
+ * Library are not shops and never go through the counting redirect.
+ */
+export function isWordsProvider(provider: string): boolean {
+  return /^[a-z0-9-]+-(search|title)$/.test(provider);
+}
+
+export interface WordsQuery {
+  title: string;
+  author?: string;
+  /** As the catalogue holds it; `searchLinksFor` trims it for the shop itself. */
+  publisher?: string;
+  year?: number;
+}
+
+/** Longest text a counted search carries; a title longer than this is not one a shop would find anyway. */
+const MAX_WORDS = 300;
+
+/**
+ * The counted form of a shop search: `/go/<provider>/title?t=…&a=…&p=…&y=…`.
+ *
+ * Only the words travel, never an address. The redirect rebuilds the shop's
+ * URL from this file's table, so whatever someone types into `t` ends up as a
+ * search term at that shop and never as the place the reader is sent — the
+ * route cannot become an open redirect (CLAUDE.md).
+ */
+export function trackedSearchHref(provider: string, query: WordsQuery, market: Market): string {
+  const params = new URLSearchParams({ t: query.title });
+  if (query.author) params.set('a', query.author);
+  if (provider.endsWith('-search')) {
+    if (query.publisher) params.set('p', query.publisher);
+    if (query.year) params.set('y', String(query.year));
+  }
+  params.set('market', market);
+  return `/go/${encodeURIComponent(provider)}/title?${params}`;
+}
+
+function clipWords(value: string | null): string | undefined {
+  // Control characters out: they have no place in a search and would only travel into a log line.
+  const text = value?.replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, MAX_WORDS);
+  return text || undefined;
+}
+
+/** The words of a counted search, or null when there is no title to search for. */
+export function parseWordsQuery(params: URLSearchParams): WordsQuery | null {
+  const title = clipWords(params.get('t'));
+  if (!title) return null;
+  const year = params.get('y');
+  return {
+    title,
+    author: clipWords(params.get('a')),
+    publisher: clipWords(params.get('p')),
+    ...(year && /^\d{3,4}$/.test(year) ? { year: Number(year) } : {}),
+  };
+}
+
+/**
+ * The shop search a counted link stands for, rebuilt from the table exactly as
+ * the page built it: `-title` links with the market's affiliate id where shop
+ * mode sets one (`titleSearchLinksFor`), `-search` links without
+ * (`searchLinksFor`). Undefined for anything that is not a shop search here.
+ */
+export function wordsLinkFor(provider: string, query: WordsQuery, market: Market, env: Env = process.env): BuyLink | undefined {
+  if (!isWordsProvider(provider)) return undefined;
+  if (provider.endsWith('-title')) {
+    return titleSearchLinksFor({ title: query.title, author: query.author }, market, env).find(l => l.provider === provider);
+  }
+  return searchLinksFor({ title: query.title, author: query.author, publisher: query.publisher, year: query.year }, market)
+    .find(l => l.provider === provider);
 }

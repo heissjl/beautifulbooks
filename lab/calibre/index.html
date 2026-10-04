@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Covers into Calibre</title>
+<style>
+  :root { --bg: #f6f3ee; --card: #fff; --ink: #1d1b19; --soft: #6d665e; --line: #ddd6cc; --accent: #b5532f; --ok: #2f6b3f; --warn: #8a5a00; --bad: #a12c2c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #171614; --card: #211f1c; --ink: #ece7df; --soft: #a39b90; --line: #38342f; --accent: #e08a63; --ok: #7fc393; --warn: #e0b45a; --bad: #ef8a8a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 80px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--soft); margin: 0 0 16px; }
+  .banner { border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
+  .banner.write { border-color: var(--accent); }
+  .banner.bad { border-color: var(--bad); color: var(--bad); }
+  .banner p { margin: 0 0 4px; }
+  .banner p:last-child { margin: 0; }
+  code { font: 13px ui-monospace, Menlo, monospace; word-break: break-all; }
+  .bar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0; }
+  button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  label.filter { color: var(--soft); display: flex; gap: 6px; align-items: center; }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+  .pics { display: flex; gap: 10px; align-items: flex-end; }
+  figure { margin: 0; width: 124px; }
+  figure .frame { height: 180px; display: flex; align-items: flex-end; justify-content: center; background: var(--bg); border-radius: 4px; overflow: hidden; }
+  figure img { max-width: 100%; max-height: 180px; display: block; }
+  figure .none { align-self: center; color: var(--soft); font-size: 13px; padding: 8px; text-align: center; }
+  figcaption { font-size: 12px; color: var(--soft); margin-top: 4px; min-height: 34px; }
+  .arrow { align-self: center; color: var(--soft); font-size: 20px; }
+  .info { flex: 1 1 320px; min-width: 0; }
+  .info h2 { font-size: 16px; margin: 0; }
+  .info .by { color: var(--soft); margin: 0 0 8px; }
+  select { font: inherit; max-width: 100%; width: 100%; padding: 5px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--ink); }
+  .tag { display: inline-block; font-size: 12px; border-radius: 10px; padding: 1px 8px; border: 1px solid currentColor; margin: 6px 6px 6px 0; }
+  .tag.sure { color: var(--ok); } .tag.maybe { color: var(--warn); } .tag.none { color: var(--soft); }
+  .note { font-size: 13px; margin: 6px 0; }
+  .note.warn { color: var(--warn); } .note.bad { color: var(--bad); } .note.ok { color: var(--ok); }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+</style>
+</head>
+<body>
+<main>
+  <h1 id="title">Covers into Calibre</h1>
+  <p class="sub" id="sub">Loading…</p>
+  <div id="banners"></div>
+  <div class="bar">
+    <button class="primary" id="all" disabled>Use all sure matches</button>
+    <label class="filter"><input type="checkbox" id="onlyMatched" checked> only rows with a book in my library</label>
+    <span id="progress" class="sub" style="margin:0"></span>
+  </div>
+  <div id="rows"></div>
+</main>
+<script>
+const token = new URLSearchParams(location.search).get('t') || '';
+const api = (path, body) => fetch(path, {
+  method: body ? 'POST' : 'GET',
+  headers: { 'x-token': token, ...(body ? { 'content-type': 'application/json' } : {}) },
+  body: body ? JSON.stringify(body) : undefined,
+}).then(async (r) => ({ status: r.status, body: await r.json() }));
+const el = (tag, attrs = {}, ...kids) => {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') n.className = v; else if (k.startsWith('on')) n.addEventListener(k.slice(2), v); else if (v !== false && v != null) n.setAttribute(k, v === true ? '' : v);
+  }
+  for (const kid of kids.flat()) if (kid != null && kid !== false) n.append(kid);
+  return n;
+};
+const px = (f) => `${f.width} × ${f.height} px`;
+const SURE = new Set(['isbn', 'title+author']);
+const KIND = { isbn: 'same ISBN', 'title+author': 'same title and author', maybe: 'similar title', author: 'same author' };
+
+let state = null;
+const chosen = new Map();   // row index -> book id (or null)
+const fresh = new Map();    // row index -> check of the new image
+const olds = new Map();     // book id -> facts of the current cover
+const errors = new Map();   // row index -> last error
+let version = 0;            // busts the image cache after a write
+
+const book = (id) => state.books.find((b) => b.id === id);
+const bookLabel = (b) => `${b.title} — ${b.authors.join(', ') || 'unknown'} (#${b.id})`;
+const isApplied = (row) => { const a = state.applied[chosen.get(row.index)]; return !!a && a.coverId === row.pick.coverId; };
+const smaller = (row) => { const n = fresh.get(row.index), o = olds.get(chosen.get(row.index)); return !!(n && n.ok && o && !o.missing && n.width * n.height < 0.9 * o.width * o.height); }; // 0.9: SMALLER_BELOW in image.ts, the server decides the same way
+const bulkReady = (row) => row.sure !== undefined && chosen.get(row.index) === row.sure && fresh.get(row.index)?.ok && !smaller(row) && !isApplied(row);
+
+async function loadOld(id) {
+  if (id == null) return;
+  olds.set(id, (await api(`/api/old/${id}`)).body);
+}
+
+function renderBanners() {
+  const box = document.getElementById('banners');
+  box.replaceChildren();
+  const s = state;
+  document.getElementById('title').textContent = `„${s.source.title}" into Calibre`;
+  const matched = s.rows.filter((r) => r.candidates.length).length;
+  const sure = s.rows.filter((r) => r.sure !== undefined).length;
+  document.getElementById('sub').textContent = `${s.rows.length} covers in the collection · ${sure} with a sure match, ${matched - sure} with suggestions · library of ${s.library.books} books (${s.library.withIsbn} with an ISBN)`;
+  if (s.mode === 'preview') {
+    box.append(el('div', { class: 'banner' }, el('p', {}, el('strong', {}, 'Looking only. '), 'Nothing can be written in this run. Start the tool with ', el('code', {}, '--write'), ' to change the library.')));
+  } else {
+    box.append(el('div', { class: 'banner write' },
+      el('p', {}, el('strong', {}, 'Writing is on. '), 'Each click changes one cover through calibredb; the old cover is copied away first and every change can be undone.'),
+      el('p', {}, 'Library: ', el('code', {}, s.library.path)),
+      el('p', {}, 'Backups and journal: ', el('code', {}, s.backupRoot))));
+  }
+  for (const p of s.problems) box.append(el('div', { class: 'banner bad' }, el('p', {}, p)));
+  if (s.source.skipped.length) box.append(el('div', { class: 'banner' }, el('p', {}, `${s.source.skipped.length} covers left out: ${s.source.skipped.join('; ')}`)));
+}
+
+function renderRow(row) {
+  const id = chosen.get(row.index) ?? null;
+  const b = id != null ? book(id) : null;
+  const n = fresh.get(row.index);
+  const o = id != null ? olds.get(id) : null;
+  const applied = isApplied(row);
+  const canWrite = state.mode === 'write' && state.problems.length === 0;
+  const kind = row.candidates.find((c) => c.bookId === id)?.kind;
+
+  const oldFig = el('figure', {},
+    el('div', { class: 'frame' }, b && o && !o.missing ? el('img', { src: `/old/${id}?t=${token}&v=${version}`, alt: 'current cover', loading: 'lazy' }) : el('span', { class: 'none' }, b ? (o?.missing ?? '…') : 'no book chosen')),
+    el('figcaption', {}, 'in Calibre now', el('br'), o && !o.missing ? px(o) : ''));
+  const newFig = el('figure', {},
+    el('div', { class: 'frame' }, n?.ok ? el('img', { src: `/new/${row.index}?t=${token}`, alt: 'chosen cover', loading: 'lazy' }) : el('span', { class: 'none' }, n ? n.reason : 'loading…')),
+    el('figcaption', {}, 'from the collection', el('br'), n?.ok ? px(n) : ''));
+
+  const select = el('select', { onchange: async (e) => { chosen.set(row.index, e.target.value ? Number(e.target.value) : null); errors.delete(row.index); await loadOld(chosen.get(row.index)); want(row); refresh(row); } },
+    el('option', { value: '' }, '— no book —'),
+    row.candidates.length ? el('optgroup', { label: 'Suggested' }, row.candidates.map((c) => el('option', { value: c.bookId, selected: c.bookId === id }, `${bookLabel(book(c.bookId))} · ${KIND[c.kind]}`))) : null,
+    el('optgroup', { label: 'Whole library' }, state.books.map((x) => el('option', { value: x.id, selected: x.id === id && !row.candidates.some((c) => c.bookId === id) }, bookLabel(x)))));
+
+  const notes = [];
+  if (b) notes.push(el('span', { class: `tag ${SURE.has(kind) ? 'sure' : 'maybe'}` }, kind ? KIND[kind] : 'chosen by hand'));
+  else notes.push(el('span', { class: 'tag none' }, row.candidates.length ? 'suggestions only — choose a book' : 'not in the library'));
+  if (smaller(row)) notes.push(el('p', { class: 'note warn' }, `Fewer pixels than the cover the book has (${px(n)} against ${px(o)}).`));
+  if (applied) notes.push(el('p', { class: 'note ok' }, 'This cover is in Calibre.'));
+  if (errors.has(row.index)) notes.push(el('p', { class: 'note bad' }, errors.get(row.index)));
+
+  const use = el('button', { class: 'primary', disabled: !canWrite || !b || !n?.ok || applied, title: state.mode === 'preview' ? 'Start with --write' : '', onclick: () => apply(row, false) }, 'Use this cover');
+  const undo = b && state.applied[id]?.canUndo ? el('button', { disabled: !canWrite, onclick: () => undoBook(row, id) }, 'Undo last change to this book') : null;
+
+  return el('div', { class: 'row', id: `row-${row.index}` },
+    el('div', { class: 'pics' }, oldFig, el('span', { class: 'arrow' }, '→'), newFig),
+    el('div', { class: 'info' },
+      el('h2', {}, row.pick.title), el('p', { class: 'by' }, row.pick.author ?? ''),
+      select, el('div', {}, notes), el('div', { class: 'actions' }, use, undo)));
+}
+
+function renderBar() {
+  const ready = state.rows.filter(bulkReady).length;
+  const all = document.getElementById('all');
+  all.textContent = `Use all sure matches (${ready})`;
+  all.disabled = state.mode !== 'write' || state.problems.length > 0 || ready === 0;
+}
+
+function render() {
+  renderBanners();
+  const only = document.getElementById('onlyMatched').checked;
+  const rows = state.rows.filter((r) => !only || r.candidates.length || chosen.get(r.index) != null);
+  document.getElementById('rows').replaceChildren(...rows.map(renderRow));
+  rows.forEach(want);
+  renderBar();
+}
+
+/** One row again, without touching the pictures of the others. */
+function refresh(row) {
+  document.getElementById(`row-${row.index}`)?.replaceWith(renderRow(row));
+  renderBar();
+}
+
+/* New images only for rows that are shown, two at a time: Open Library is slow. */
+const requested = new Set();
+const queue = [];
+let workers = 0;
+function want(row) {
+  if (requested.has(row.index)) return;
+  requested.add(row.index);
+  queue.push(row);
+  pump();
+}
+function pump() {
+  while (workers < 2 && queue.length) {
+    const row = queue.shift();
+    workers++;
+    api(`/api/new/${row.index}`)
+      .then((r) => fresh.set(row.index, r.body), () => fresh.set(row.index, { ok: false, reason: 'The tool did not answer.' }))
+      .finally(() => { workers--; refresh(row); pump(); });
+  }
+}
+
+async function apply(row, quiet) {
+  const bookId = chosen.get(row.index);
+  let allowSmaller = false;
+  if (smaller(row)) {
+    if (quiet || !confirm('The new cover has fewer pixels than the one the book has. Use it anyway?')) return false;
+    allowSmaller = true;
+  }
+  const { status, body } = await api('/api/apply', { index: row.index, bookId, allowSmaller });
+  if (status === 200) { state = body.state; errors.delete(row.index); version++; await loadOld(bookId); render(); return true; }
+  errors.set(row.index, body.error ?? 'The write failed.');
+  if (body.halted) state = (await api('/api/state')).body;
+  render();
+  return false;
+}
+
+async function undoBook(row, bookId) {
+  const { status, body } = await api('/api/undo', { bookId });
+  if (status === 200) { state = body.state; errors.delete(row.index); version++; await loadOld(bookId); }
+  else { errors.set(row.index, body.error ?? 'The undo failed.'); if (body.halted) state = (await api('/api/state')).body; }
+  render();
+}
+
+document.getElementById('all').addEventListener('click', async () => {
+  const todo = state.rows.filter(bulkReady);
+  if (!confirm(`Write ${todo.length} covers into Calibre? Each old cover is backed up first.`)) return;
+  const progress = document.getElementById('progress');
+  let done = 0;
+  for (const row of todo) {
+    progress.textContent = `${done} of ${todo.length}…`;
+    if (!(await apply(row, true))) { progress.textContent = `Stopped after ${done} of ${todo.length}: see the row „${row.pick.title}".`; return; }
+    done++;
+  }
+  progress.textContent = `${done} covers written.`;
+});
+document.getElementById('onlyMatched').addEventListener('change', render);
+
+(async () => {
+  const first = await api('/api/state');
+  if (first.status !== 200) { document.getElementById('sub').textContent = first.body.error; return; }
+  state = first.body;
+  for (const row of state.rows) chosen.set(row.index, row.sure ?? null);
+  // The current covers are local files: known before the first paint.
+  await Promise.all([...new Set(state.rows.map((r) => r.sure).filter((id) => id !== undefined))].map(loadOld));
+  render();
+})();
+</script>
+</body>
+</html>

@@ -22,41 +22,20 @@ export interface RecognizedBook {
   title: string;
   author: string;
   kind: BookKind;
-  /** [x, y, w, h] as fractions of the picture, clamped to 0..1. */
+  /**
+   * The centre of the spine or cover, as fractions of the picture's width and
+   * height — the model's estimate, good for a pin and nothing more. Until
+   * 2026-10-01 the model gave a shelf row and a horizontal centre; on a pile
+   * of books lying flat every book then shared one spot (Julian's photo of
+   * two stacks: fifteen pins on six points). A point per book has no such
+   * assumption about how books stand.
+   */
+  x?: number;
+  y?: number;
+  /** The model read the title only in part and said so (the `unsure` variant, measured before it is used). */
+  unsure?: true;
+  /** [x, y, w, h] as fractions of the picture: the book's outline. Nothing sets it yet — the model cannot draw one (PLAN-5.11a); it waits for a segmenter. */
   box?: [number, number, number, number];
-  /** 0..1, the model's own estimate. */
-  confidence: number;
-  /**
-   * The publisher as printed, only when asked for (`RecognizeOptions`):
-   * lab/shelf uses it to find the edition a spine belongs to (ROADMAP 5.16).
-   */
-  publisher?: string;
-  /**
-   * With `RecognizeOptions.axis`: the line along the middle of the spine, end to end, and its
-   * thickness, as [ax, ay, bx, by, t] with x and t as fractions of the width
-   * and y of the height. Unlike `box` it describes a leaning or lying book.
-   */
-  axis?: [number, number, number, number, number];
-}
-
-export interface RecognizeOptions {
-  /** Also read the publisher's name or logo text. Off for the website. */
-  publisher?: boolean;
-  /**
-   * Ask for boxes in pixels of this image instead of fractions (lab/shelf,
-   * ROADMAP 5.16). Current models give image coordinates 1:1 in pixels; a
-   * fraction is arithmetic the model does in its head, and on the first real
-   * photo (2026-09-29) its fractional boxes came back evenly spaced and off
-   * by half a shelf. `parseRecognition` turns pixels back into fractions, so
-   * callers see the same `box` either way.
-   */
-  pixels?: { width: number; height: number };
-  /**
-   * Ask for each book's centre line and thickness instead of a box (needs
-   * `pixels`). Julian, 2026-09-29: „teilweise liegen die bücher ja auch oder
-   * sind schief im regal". `box` is then the rectangle around it.
-   */
-  axis?: boolean;
 }
 
 export interface Recognition {
@@ -70,84 +49,87 @@ export interface RecognitionRun extends Recognition {
   ms: number;
   inputTokens: number;
   outputTokens: number;
+  /** The read was stopped at `stopAt` books: the caller has seen enough to decide to look closer. */
+  stopped?: true;
 }
 
 export function hasApiKey(): boolean {
   return !!process.env.ANTHROPIC_API_KEY?.trim();
 }
 
-const PROMPT = `This is a photo of books: a shelf of spines, a pile, or covers laid out.
-List every book whose title you can read, in reading order (left to right, top to bottom).
+/**
+ * The model is asked only for what it can do (5.11a, measured 2026-09-30 and
+ * 2026-10-01): the reading order and a point on each book. Boxes with a
+ * height per book were wrong on every dense shelf and cost most of the
+ * answer, so the keys are short, the numbers are whole percentages, and
+ * there is no confidence figure; rows of a shelf were dropped again because
+ * books also lie in piles.
+ */
+/**
+ * Variants of the read that are being measured against the test set before
+ * any becomes the rule (lab/shelf/evaluate.ts --variant …; ROADMAP 5.11a):
+ * `cut` tells the model to leave out a book the picture's edge cuts off;
+ * `unsure` lets it give a half-read title and mark it, instead of the choice
+ * between claiming it and leaving it out.
+ */
+export interface ReadVariant {
+  cut?: boolean;
+  unsure?: boolean;
+}
+
+function promptFor(v: ReadVariant): string {
+  const fields = [
+    '- t: the title as printed, without series names or "a novel"',
+    '- a: the author as printed; "" if not visible and you are not sure',
+    '- k: "cover" if the front cover faces the camera, "spine" if only the spine is visible',
+    '- x: the horizontal centre of the spine (or of the cover) as a whole percentage of the picture width (0-100)',
+    '- y: its vertical centre as a whole percentage of the picture height (0-100)',
+    ...(v.unsure ? ['- u: false if you read the title clearly; true if you could read it only in part or are not sure of it'] : []),
+  ];
+  const rule = v.unsure
+    ? 'A book whose title you can read only in part: give your best reading and set u to true. Do not guess titles from colours or shapes.'
+    : 'Leave out books whose title you cannot read; do not guess titles from colours or shapes.';
+  const cut = v.cut ? '\nLeave out a book that the edge of the picture cuts off so that its title is not whole.' : '';
+  const example = v.unsure ? '{"t": "...", "a": "...", "k": "spine", "x": 12, "y": 40, "u": false}' : '{"t": "...", "a": "...", "k": "spine", "x": 12, "y": 40}';
+  return `This is a photo of books: a shelf of spines, a pile of books lying flat, or covers laid out.
+
+List every book whose title you can read. Go through the picture in an order a person would: a shelf row by row from the top, left to right; a pile from top to bottom, one pile after another from the left.
 
 For each book give:
-- title: the title as printed, without series names or "a novel"
-- author: the author as printed; "" if not visible and you are not sure
-{PUBLISHER}- kind: "cover" if the front cover faces the camera, "spine" if only the spine is visible
-{BOX}
-- confidence: 0..1, how sure you are of title and author together
+${fields.join('\n')}
 
-Leave out books whose title you cannot read; do not guess titles from colours or shapes.
-Answer with JSON only: {"books": [...]}.`;
-
-const PUBLISHER_LINE = `- publisher: the publisher's name or imprint as printed on the book (on a spine usually at the foot, often as a logo with a word); "" if none is readable. Do not guess it from the design.
-`;
-
-const FRACTION_BOX = `- box: [x, y, w, h], the book's outline in the photo as fractions of the picture width and height (0..1), top-left origin`;
-
-/**
- * The prompt for a set of options. Exported for the test that pins the
- * website's prompt (no options) to its wording: lab/shelf adds fields, the
- * website must not notice.
- */
-export function promptFor(options: RecognizeOptions): string {
-  const box = options.pixels && options.axis
-    ? `- axis: [x1, y1, x2, y2, t] in pixels of this image, which is ${options.pixels.width} × ${options.pixels.height} pixels, top-left origin: a line along the middle of the book's spine over its whole length, from one short end of the spine to the other (x1,y1 and x2,y2 are those two ends), and t the spine's width across that line in pixels. The line always runs along the long side: vertical for a book standing upright, slanted for one leaning, horizontal for one lying flat in a stack. For a front cover facing the camera: the line along its height, and t its width. Always five numbers.
-- A book lying flat in a stack whose spine faces the camera is kind "spine", not "cover"`
-    : options.pixels
-    ? `- box: [x0, y0, x1, y1], the book's outline in pixels of this image, which is ${options.pixels.width} × ${options.pixels.height} pixels; top-left origin, x0 < x1, y0 < y1. For a spine: its left and right edge, and its top and its foot where it stands on the shelf`
-    : FRACTION_BOX;
-  return PROMPT.replace('{BOX}', box).replace('{PUBLISHER}', options.publisher ? PUBLISHER_LINE : '');
+${rule}${cut}
+Answer with JSON only: {"books": [${example}, ...]}.`;
 }
 
-function schemaFor(options: RecognizeOptions) {
-  if (!options.publisher && !options.axis) return SCHEMA;
-  const item = SCHEMA.properties.books.items;
-  const required: string[] = item.required.filter(k => !(options.axis && k === 'box'));
-  const properties: Record<string, unknown> = { ...item.properties };
-  if (options.axis) { delete properties.box; properties.axis = { type: 'array', items: { type: 'number' } }; required.push('axis'); }
-  if (options.publisher) { properties.publisher = { type: 'string' }; required.push('publisher'); }
-  // Right after the author, as in the prompt: the model fills fields in this order, and the
-  // publisher came back for 3 of 58 books when it followed the geometry, 25 of 64 before.
-  const order = ['title', 'author', 'publisher', 'kind', 'box', 'axis', 'confidence'];
-  const ordered = Object.fromEntries(order.filter(k => k in properties).map(k => [k, properties[k]]));
+function schemaFor(v: ReadVariant) {
   return {
-    ...SCHEMA,
-    properties: { books: { ...SCHEMA.properties.books, items: { ...item, required, properties: ordered } } },
-  };
-}
-
-const SCHEMA = {
-  type: 'object',
-  additionalProperties: false,
-  required: ['books'],
-  properties: {
-    books: {
-      type: 'array',
-      items: {
-        type: 'object',
-        additionalProperties: false,
-        required: ['title', 'author', 'kind', 'box', 'confidence'],
-        properties: {
-          title: { type: 'string' },
-          author: { type: 'string' },
-          kind: { type: 'string', enum: ['spine', 'cover'] },
-          box: { type: 'array', items: { type: 'number' } },
-          confidence: { type: 'number' },
+    type: 'object',
+    additionalProperties: false,
+    required: ['books'],
+    properties: {
+      books: {
+        type: 'array',
+        items: {
+          type: 'object',
+          additionalProperties: false,
+          required: ['t', 'a', 'k', 'x', 'y', ...(v.unsure ? ['u'] : [])],
+          properties: {
+            t: { type: 'string' },
+            a: { type: 'string' },
+            k: { type: 'string', enum: ['spine', 'cover'] },
+            x: { type: 'integer' },
+            y: { type: 'integer' },
+            ...(v.unsure ? { u: { type: 'boolean' } } : {}),
+          },
         },
       },
     },
-  },
-} as const;
+  } as const;
+}
+
+/** The prompt as the site sends it, for the tests that hold it to its word. */
+export const PROMPT = promptFor({});
 
 /** The first JSON value in a text: past a code fence or a sentence of prose. */
 function extractJson(text: string): unknown {
@@ -170,45 +152,61 @@ function extractJson(text: string): unknown {
   }
 }
 
-const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
-
-function parseBox(raw: unknown): RecognizedBook['box'] {
-  if (!Array.isArray(raw) || raw.length !== 4 || !raw.every(n => typeof n === 'number' && Number.isFinite(n))) return undefined;
-  let [x, y, w, h] = raw as number[];
-  // Some answers give pixels or percent; anything above 1 is not a fraction.
-  if ([x, y, w, h].some(n => n > 1.0001)) return undefined;
-  x = clamp01(x); y = clamp01(y);
-  w = Math.min(clamp01(w), 1 - x); h = Math.min(clamp01(h), 1 - y);
-  if (w <= 0.005 || h <= 0.005) return undefined;
-  return [x, y, w, h];
+/**
+ * A whole percentage (or, from an older answer, a fraction) as a fraction of
+ * the picture; undefined when it is no number. Not clamped at the top: on a
+ * wide strip of thirty spines the model counts along rather than measures and
+ * arrives at 150 "per cent" (measured 2026-10-03) — `settle` deals with that
+ * once the whole answer is there.
+ */
+function fraction(raw: unknown): number | undefined {
+  if (typeof raw !== 'number' || !Number.isFinite(raw)) return undefined;
+  return Math.max(0, raw > 1 ? raw / 100 : raw);
 }
 
-/** Pixel corners [x0, y0, x1, y1] to the fraction box [x, y, w, h]; undefined when unusable. */
-function pixelBox(raw: unknown, { width, height }: { width: number; height: number }): unknown {
-  if (!Array.isArray(raw) || raw.length !== 4 || !raw.every(n => typeof n === 'number' && Number.isFinite(n))) return undefined;
-  const [x0, y0, x1, y1] = raw as number[];
-  if (x1 <= x0 || y1 <= y0) return undefined;
-  return [x0 / width, y0 / height, (x1 - x0) / width, (y1 - y0) / height];
-}
+/** Where the last book of an answer that overshot is put: near the edge, not on it. */
+const FAR_EDGE = 0.97;
 
-/** Pixel axis [ax, ay, bx, by, t] to fractions, and the upright box around the turned rectangle. */
-function pixelAxis(raw: unknown, { width, height }: { width: number; height: number }): { axis: NonNullable<RecognizedBook['axis']>; box: unknown } | undefined {
-  if (!Array.isArray(raw) || raw.length !== 5 || !raw.every(n => typeof n === 'number' && Number.isFinite(n))) return undefined;
-  const [ax, ay, bx, by, t] = raw as number[];
-  const length = Math.hypot(bx - ax, by - ay);
-  if (length < 2 || t <= 0) return undefined;
-  const nx = -(by - ay) / length, ny = (bx - ax) / length;
-  const xs = [ax + nx * t / 2, ax - nx * t / 2, bx + nx * t / 2, bx - nx * t / 2];
-  const ys = [ay + ny * t / 2, ay - ny * t / 2, by + ny * t / 2, by - ny * t / 2];
-  const x0 = Math.max(0, Math.min(...xs)), x1 = Math.min(width, Math.max(...xs));
-  const y0 = Math.max(0, Math.min(...ys)), y1 = Math.min(height, Math.max(...ys));
-  return {
-    axis: [ax / width, ay / height, bx / width, by / height, t / width],
-    box: [x0 / width, y0 / height, (x1 - x0) / width, (y1 - y0) / height],
+/**
+ * Points inside the picture. An answer whose largest x (or y) lies beyond the
+ * picture was counted, not measured; its books keep their order and their
+ * spacing and are drawn back so that the last one stands at the edge. One
+ * book of a partial answer can only be clamped.
+ */
+export function settle(books: readonly RecognizedBook[]): RecognizedBook[] {
+  const scale = (key: 'x' | 'y') => {
+    const max = Math.max(0, ...books.map((b) => b[key] ?? 0));
+    return max > 1 ? FAR_EDGE / max : 1;
   };
+  const sx = scale('x');
+  const sy = scale('y');
+  return books.map((b) => ({
+    ...b,
+    ...(b.x !== undefined ? { x: Math.min(1, b.x * sx) } : {}),
+    ...(b.y !== undefined ? { y: Math.min(1, b.y * sy) } : {}),
+  }));
 }
 
-export function parseRecognition(text: string, pixels?: { width: number; height: number }): Recognition {
+/** One book as the model wrote it (short keys since 5.11a; the old long keys still read). */
+function parseBook(raw: unknown, i: number, problems: string[]): RecognizedBook | undefined {
+  if (!raw || typeof raw !== 'object') { problems.push(`#${i + 1}: kein Objekt`); return undefined; }
+  const r = raw as Record<string, unknown>;
+  const titleRaw = r.t ?? r.title;
+  const title = typeof titleRaw === 'string' ? titleRaw.replace(/\s+/g, ' ').trim() : '';
+  if (!title) { problems.push(`#${i + 1}: ohne Titel`); return undefined; }
+  const authorRaw = r.a ?? r.author;
+  const author = typeof authorRaw === 'string' ? authorRaw.replace(/\s+/g, ' ').trim() : '';
+  const kindRaw = r.k ?? r.kind;
+  const kind: BookKind = kindRaw === 'cover' ? 'cover' : 'spine';
+  if (kindRaw !== 'cover' && kindRaw !== 'spine') problems.push(`#${i + 1}: kind "${String(kindRaw)}" als spine gelesen`);
+  const x = fraction(r.x);
+  if (r.x !== undefined && x === undefined) problems.push(`#${i + 1}: Mitte unbrauchbar`);
+  const y = fraction(r.y);
+  if (r.y !== undefined && y === undefined) problems.push(`#${i + 1}: Höhe unbrauchbar`);
+  return { title, author, kind, ...(x !== undefined ? { x } : {}), ...(y !== undefined ? { y } : {}), ...(r.u === true ? { unsure: true as const } : {}) };
+}
+
+export function parseRecognition(text: string): Recognition {
   const problems: string[] = [];
   const value = extractJson(text);
   if (value === undefined) return { books: [], problems: ['Antwort war kein JSON'] };
@@ -221,53 +219,127 @@ export function parseRecognition(text: string, pixels?: { width: number; height:
 
   const books: RecognizedBook[] = [];
   list.forEach((raw, i) => {
-    if (!raw || typeof raw !== 'object') { problems.push(`#${i + 1}: kein Objekt`); return; }
-    const r = raw as Record<string, unknown>;
-    const title = typeof r.title === 'string' ? r.title.replace(/\s+/g, ' ').trim() : '';
-    if (!title) { problems.push(`#${i + 1}: ohne Titel`); return; }
-    const author = typeof r.author === 'string' ? r.author.replace(/\s+/g, ' ').trim() : '';
-    const kind: BookKind = r.kind === 'cover' ? 'cover' : 'spine';
-    if (r.kind !== 'cover' && r.kind !== 'spine') problems.push(`#${i + 1}: kind "${String(r.kind)}" als spine gelesen`);
-    const turned = pixels && r.axis !== undefined ? pixelAxis(r.axis, pixels) : undefined;
-    const box = parseBox(turned ? turned.box : pixels ? pixelBox(r.box, pixels) : r.box);
-    if ((r.box !== undefined || r.axis !== undefined) && !box) {
-      // The raw numbers, so a rejected answer can be understood from the log.
-      const raw = JSON.stringify(r.axis ?? r.box).slice(0, 60);
-      problems.push(`#${i + 1}: Ausschnitt unbrauchbar${pixels ? ` ${raw}` : ''}`);
-    }
-    const confidence = typeof r.confidence === 'number' && Number.isFinite(r.confidence) ? clamp01(r.confidence) : 0.5;
-    const publisher = typeof r.publisher === 'string' ? r.publisher.replace(/\s+/g, ' ').trim() : '';
-    books.push({ title, author, kind, ...(box ? { box } : {}), ...(turned && box ? { axis: turned.axis } : {}), confidence, ...(publisher ? { publisher } : {}) });
+    const book = parseBook(raw, i, problems);
+    if (book) books.push(book);
   });
-  return { books, problems };
+  return { books: settle(books), problems };
+}
+
+/**
+ * The books in an answer that is still arriving (5.11a; Julian, 2026-09-30:
+ * „the overlay spine by spine in the picture as it is being detected“). The
+ * answer is one object per book, so every object that has closed can be read
+ * before the rest exists. Pure: give it the whole text so far, it returns
+ * every complete book; the caller remembers how many it has already passed on.
+ */
+export function scanPartial(text: string): { books: RecognizedBook[] } {
+  const booksAt = text.indexOf('"books"');
+  if (booksAt < 0) return { books: [] };
+  const listAt = text.indexOf('[', booksAt);
+  const books: RecognizedBook[] = [];
+  if (listAt < 0) return { books };
+  // Balanced braces outside strings: each closed object is one book.
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+  let start = -1;
+  const problems: string[] = [];
+  for (let i = listAt + 1; i < text.length; i++) {
+    const c = text[i];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (c === '\\') escaped = true;
+      else if (c === '"') inString = false;
+      continue;
+    }
+    if (c === '"') inString = true;
+    else if (c === '{') { if (depth === 0) start = i; depth++; }
+    else if (c === '}') {
+      depth--;
+      if (depth === 0 && start >= 0) {
+        try {
+          const book = parseBook(JSON.parse(text.slice(start, i + 1)), books.length, problems);
+          // A partial answer cannot be settled yet; a point beyond the picture waits at its edge.
+          if (book) books.push({ ...book, ...(book.x !== undefined ? { x: Math.min(1, book.x) } : {}), ...(book.y !== undefined ? { y: Math.min(1, book.y) } : {}) });
+        } catch {
+          // A broken object is dropped here; parseRecognition on the whole answer reports it.
+        }
+        start = -1;
+      }
+    } else if (c === ']' && depth === 0) break;
+  }
+  return { books };
 }
 
 /**
  * Sends the photo to the model and parses its answer. Throws when there is no
  * key or the API fails; an empty `books` means the model answered and read
  * nothing — the two must not be confused (CLAUDE.md).
+ *
+ * The answer is streamed (5.11a): `onBook` gets every book as soon as its
+ * object has closed, and with `stopAt` the read ends there — the books so far
+ * come back with `stopped`.
  */
-export async function recognize(image: Buffer, mediaType: 'image/jpeg' | 'image/png', options: RecognizeOptions = {}): Promise<RecognitionRun> {
+export async function recognize(
+  image: Buffer,
+  mediaType: 'image/jpeg' | 'image/png',
+  onBook?: (book: RecognizedBook, index: number) => void,
+  /** Stop reading once this many books have come (5.11a: a dense photo is then read again in pieces, and the rest of this answer would be paid for twice). */
+  stopAt?: number,
+  variant: ReadVariant = {},
+): Promise<RecognitionRun> {
   if (!hasApiKey()) throw new Error('ANTHROPIC_API_KEY ist nicht gesetzt');
   const client = new Anthropic();
   const data = image.toString('base64');
 
-  const ask = (model: string) => client.messages.create({
-    model,
-    max_tokens: 16000,
-    output_config: { effort: 'high', format: { type: 'json_schema', schema: schemaFor(options) } },
-    messages: [{
-      role: 'user',
-      content: [
-        { type: 'image', source: { type: 'base64', media_type: mediaType, data } },
-        { type: 'text', text: promptFor(options) },
-      ],
-    }],
-  });
+  let sofar = '';
+  let stopped = false;
+  let usage = { input: 0, output: 0 };
+
+  const ask = async (model: string): Promise<Anthropic.Message | null> => {
+    sofar = '';
+    const stream = client.messages.stream({
+      model,
+      max_tokens: 8000,
+      // No thinking. Measured 2026-10-03 on three pieces of the gallery wall: with it 96 books for 6,762 answer
+      // tokens in 14–20 s a piece, without it 95 for 4,133 in 10–13 s — it costs and reads nothing more.
+      thinking: { type: 'disabled' },
+      // effort medium. With the point prompt (2026-10-01) high cost the gallery wall 3,100–5,200 answer tokens
+      // and 24–40 s for 42–47 books; medium reads 33–40 for 1,400–1,700 in 11–13 s.
+      output_config: { effort: 'medium', format: { type: 'json_schema', schema: schemaFor(variant) } },
+      messages: [{
+        role: 'user',
+        content: [
+          { type: 'image', source: { type: 'base64', media_type: mediaType, data } },
+          { type: 'text', text: promptFor(variant) },
+        ],
+      }],
+    });
+    let handed = 0;
+    stream.on('text', (delta) => {
+      if (stopped) return;
+      sofar += delta;
+      const partial = scanPartial(sofar);
+      for (; handed < partial.books.length; handed++) onBook?.(partial.books[handed], handed);
+      if (stopAt !== undefined && handed >= stopAt) {
+        stopped = true;
+        const now = stream.currentMessage?.usage;
+        // The answer's tokens so far are not in the snapshot; four characters a token is the usual estimate.
+        usage = { input: now?.input_tokens ?? 0, output: Math.round(sofar.length / 4) };
+        stream.abort();
+      }
+    });
+    try {
+      return await stream.finalMessage();
+    } catch (err) {
+      if (stopped) return null;
+      throw err;
+    }
+  };
 
   const started = Date.now();
   let model = PRIMARY_MODEL;
-  let response: Anthropic.Message;
+  let response: Anthropic.Message | null;
   try {
     response = await ask(model);
   } catch (err) {
@@ -277,10 +349,13 @@ export async function recognize(image: Buffer, mediaType: 'image/jpeg' | 'image/
     model = FALLBACK_MODEL;
     response = await ask(model);
   }
+  if (!response) {
+    return { books: scanPartial(sofar).books, problems: [], model, ms: Date.now() - started, inputTokens: usage.input, outputTokens: usage.output, stopped: true };
+  }
   if (response.stop_reason === 'refusal') throw new Error(`${model} hat das Foto abgelehnt`);
 
   const text = response.content.map(b => (b.type === 'text' ? b.text : '')).join('');
-  const parsed = parseRecognition(text, options.pixels);
+  const parsed = parseRecognition(text);
   if (response.stop_reason === 'max_tokens') parsed.problems.push('Antwort abgeschnitten (max_tokens)');
   return {
     ...parsed,

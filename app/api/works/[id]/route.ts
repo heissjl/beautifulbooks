@@ -10,6 +10,7 @@ import { displayTitle } from '@/lib/normalize';
 import { getWorkPage, isWorkId } from '@/lib/work';
 import { MOSAIC_CANDIDATES, type SiblingWork } from '@/lib/works';
 import { rateLimited } from '@/app/api/rate';
+import { countGoogleStopsAfter } from '@/app/api/count';
 
 /**
  * Response of GET /api/works/[id] (SPEC §2.3: covers are the unit).
@@ -90,6 +91,7 @@ export function offsetFromRequest(raw: string | null): number {
 export const maxDuration = 30;
 
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+  countGoogleStopsAfter();
   const { id } = await context.params;
   if (!isWorkId(id)) {
     return NextResponse.json({ error: 'Malformed work id' }, { status: 400 });

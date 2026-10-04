@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calibre covers</title>
+<style>
+  :root { --bg: #f6f3ee; --card: #fff; --ink: #1d1b19; --soft: #6d665e; --line: #ddd6cc; --accent: #b5532f; --ok: #2f6b3f; --warn: #8a5a00; --bad: #a12c2c; --shade: rgba(20, 16, 12, .45); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #171614; --card: #211f1c; --ink: #ece7df; --soft: #a39b90; --line: #38342f; --accent: #e08a63; --ok: #7fc393; --warn: #e0b45a; --bad: #ef8a8a; --shade: rgba(0, 0, 0, .6); }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  button, input, select { font: inherit; color: inherit; }
+  button { border: 1px solid var(--line); background: var(--card); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  input[type=search], input[type=text], select { border: 1px solid var(--line); background: var(--card); border-radius: 6px; padding: 6px 10px; }
+  header.top { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px; }
+  header.top h1 { font-size: 18px; margin: 0; display: inline; }
+  .stats { color: var(--soft); margin-left: 10px; }
+  .pill { display: inline-block; font-size: 12px; border: 1px solid currentColor; border-radius: 10px; padding: 1px 8px; margin-left: 8px; color: var(--soft); }
+  .pill.write { color: var(--accent); }
+  .tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+  .tools input[type=search] { flex: 1 1 220px; min-width: 0; }
+  .chip { border-radius: 14px; padding: 3px 10px; font-size: 13px; }
+  .chip[aria-pressed=true] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .problem { margin: 10px 16px 0; border: 1px solid var(--bad); color: var(--bad); border-radius: 8px; padding: 8px 12px; background: var(--card); }
+  #grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 16px 12px; padding: 16px; }
+  .book { all: unset; cursor: pointer; display: block; min-width: 0; }
+  .book:focus-visible .frame { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .frame { aspect-ratio: 2 / 3; background: var(--card); border: 1px solid var(--line); border-radius: 4px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; position: relative; }
+  .frame img { max-width: 100%; max-height: 100%; display: block; }
+  .frame .none { align-self: center; color: var(--soft); font-size: 12px; padding: 8px; text-align: center; }
+  .frame .mark { position: absolute; top: 4px; right: 4px; background: var(--ok); color: #fff; font-size: 11px; border-radius: 8px; padding: 0 6px; }
+  .book .t { font-size: 13px; font-weight: 600; margin-top: 6px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .book .a, .book .s { font-size: 12px; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .book .s.small { color: var(--warn); }
+  #shade { position: fixed; inset: 0; background: var(--shade); z-index: 10; }
+  #drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(680px, 100vw); background: var(--bg); z-index: 11; overflow-y: auto; border-left: 1px solid var(--line); padding: 16px 16px 60px; }
+  #drawer h2 { font-size: 20px; margin: 0; }
+  #drawer h3 { font-size: 13px; text-transform: none; color: var(--soft); font-weight: 600; margin: 22px 0 8px; }
+  .head { display: flex; gap: 14px; }
+  .head .now { width: 130px; flex: none; }
+  .head .now .frame { aspect-ratio: auto; height: 190px; }
+  .meta { color: var(--soft); font-size: 13px; margin: 2px 0; }
+  .close { float: right; }
+  .note { font-size: 13px; margin: 6px 0; }
+  .note.warn { color: var(--warn); } .note.bad { color: var(--bad); } .note.ok { color: var(--ok); }
+  .hits { display: flex; flex-direction: column; gap: 6px; }
+  .hit { all: unset; cursor: pointer; display: flex; gap: 10px; align-items: center; border: 1px solid var(--line); background: var(--card); border-radius: 6px; padding: 6px 8px; }
+  .hit[aria-pressed=true] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .hit img, .hit .ph { width: 30px; height: 44px; object-fit: cover; background: var(--bg); border-radius: 2px; flex: none; }
+  .hit .w { min-width: 0; flex: 1; }
+  .hit .w b { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hit .w span { color: var(--soft); font-size: 13px; }
+  .tag { font-size: 12px; border-radius: 10px; padding: 1px 8px; border: 1px solid currentColor; color: var(--ok); white-space: nowrap; }
+  .tag.maybe { color: var(--warn); }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+  .row input[type=text] { flex: 1 1 200px; min-width: 0; }
+  a { color: var(--accent); }
+  .covers { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 12px 10px; }
+  .cover { all: unset; cursor: pointer; display: block; min-width: 0; }
+  .cover .frame { aspect-ratio: 2 / 3; }
+  .cover.mine .frame { border-color: var(--ok); box-shadow: 0 0 0 1px var(--ok); }
+  .cover.inuse .frame { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+  .cover .c { font-size: 11px; color: var(--soft); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cover .z { font-size: 11px; margin-top: 3px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .cover .z + .c { margin-top: 0; }
+  .cover.less .frame { opacity: .5; }
+  .cover.less .z { color: var(--warn); }
+  #compare { position: fixed; inset: 0; z-index: 20; background: var(--shade); display: flex; align-items: center; justify-content: center; padding: 16px; }
+  #compare .box { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 18px; max-width: 760px; width: 100%; max-height: 100%; overflow-y: auto; }
+  .pair { display: flex; gap: 16px; justify-content: center; align-items: flex-end; flex-wrap: wrap; }
+  .pair figure { margin: 0; text-align: center; }
+  .pair .frame { aspect-ratio: auto; height: min(52vh, 420px); min-width: 120px; border: none; background: transparent; }
+  .pair figcaption { font-size: 13px; color: var(--soft); margin-top: 6px; }
+  .pair .arrow { align-self: center; font-size: 22px; color: var(--soft); }
+  #compare pre { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 10px; font: 12px/1.5 ui-monospace, Menlo, monospace; white-space: pre-wrap; max-height: 44vh; overflow-y: auto; margin: 10px 0 0; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header class="top">
+  <button id="pb" style="float:right">PocketBook highlights</button>
+  <h1>Calibre covers</h1><span class="stats" id="stats">Loading…</span><span class="pill" id="mode"></span>
+  <div class="tools">
+    <input type="search" id="q" placeholder="Filter by title or author" aria-label="Filter by title or author">
+    <span id="chips"></span>
+    <select id="sort" aria-label="Sort">
+      <option value="author">by author</option>
+      <option value="title">by title</option>
+      <option value="size">smallest cover first</option>
+      <option value="id">newest in Calibre first</option>
+    </select>
+  </div>
+</header>
+<div id="problems"></div>
+<main id="grid"></main>
+<div id="shade" hidden></div>
+<aside id="drawer" hidden aria-label="Book"></aside>
+<div id="compare" hidden></div>
+
+<script>
+const token = new URLSearchParams(location.search).get('t') || '';
+const api = (path, body) => fetch(path, {
+  method: body ? 'POST' : 'GET',
+  headers: { 'x-token': token, ...(body ? { 'content-type': 'application/json' } : {}) },
+  body: body ? JSON.stringify(body) : undefined,
+}).then(async (r) => ({ status: r.status, body: await r.json() }), () => ({ status: 0, body: { error: 'The app did not answer — is it still running in the terminal?' } }));
+const el = (tag, attrs = {}, ...kids) => {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') n.className = v; else if (k.startsWith('on')) n.addEventListener(k.slice(2), v); else if (v !== false && v != null) n.setAttribute(k, v === true ? '' : v);
+  }
+  for (const kid of kids.flat()) if (kid != null && kid !== false) n.append(kid);
+  return n;
+};
+const $ = (id) => document.getElementById(id);
+const px = (f) => `${f.width} × ${f.height} px`;
+const SMALL_WIDTH = 400;            // a cover narrower than this is soft on a reader's full screen
+const AUTO_PAGES = 3;               // edition pages loaded without asking; Open Library takes seconds for each
+const REASON = { isbn: 'by its ISBN', remembered: 'your choice', 'author+title': 'title and author agree', author: 'same author — check the title', 'title-only': 'same title — check the author' };
+const LANG = { en: 'English', de: 'German', es: 'Spanish', fr: 'French', it: 'Italian', nl: 'Dutch', pt: 'Portuguese', ru: 'Russian', pl: 'Polish', sv: 'Swedish', ja: 'Japanese' };
+const langName = (l) => LANG[l] ?? l;
+const area = (z) => (z ? z.width * z.height : 0);
+/*
+ * Where a cover of the work stands against the one in Calibre:
+ * 0 large enough · 1 not measured yet · 2 fewer pixels · 3 size unknown · 4 too small to be a cover at all.
+ * 0.9 is SMALLER_BELOW and 200 × 280 the minimum in image.ts — the server decides the same way.
+ */
+function tier(c, current) {
+  if (c.size === undefined) return 1;
+  if (c.size === null) return 3;
+  if (c.size.width < 200 || c.size.height < 280) return 4;
+  return !current || area(c.size) >= 0.9 * area(current) ? 0 : 2;
+}
+
+let S = null;                       // the server's state
+const view = { q: '', chip: 'all', sort: 'author' };
+let open = null;                    // the book in the drawer and everything loaded for it
+let picked = null;                  // the cover in the compare box
+
+const bookOf = (id) => S.books.find((b) => b.id === id);
+const isSmall = (b) => b.size && b.size.width < SMALL_WIDTH;
+const canWrite = () => S.mode === 'write' && S.problems.length === 0;
+// Calibre writes an author as "Philip K. Dick" or as "Dick, Philip K."; both sort under D.
+const sortName = (b) => { const a = (b.authors[0] ?? '').trim(); return (a.includes(',') ? a.split(',')[0] : a.split(/\s+/).pop()).toLowerCase(); };
+
+/* ---------- the library ---------- */
+
+const CHIPS = [
+  ['all', 'All', () => true],
+  ['small', 'Small covers', isSmall],
+  ['none', 'No cover', (b) => !b.size],
+  ['changed', 'Changed here', (b) => !!b.applied],
+];
+
+function shown() {
+  const q = view.q.trim().toLowerCase();
+  const test = CHIPS.find((c) => c[0] === view.chip)[2];
+  const list = S.books.filter((b) => test(b) && (!q || `${b.title} ${b.authors.join(' ')}`.toLowerCase().includes(q)));
+  const area = (b) => (b.size ? b.size.width * b.size.height : 0);
+  const by = {
+    author: (a, b) => sortName(a).localeCompare(sortName(b)) || a.title.localeCompare(b.title),
+    title: (a, b) => a.title.localeCompare(b.title),
+    size: (a, b) => area(a) - area(b),
+    id: (a, b) => b.id - a.id,
+  }[view.sort];
+  return list.sort(by);
+}
+
+function tile(b) {
+  return el('button', { class: 'book', id: `book-${b.id}`, onclick: () => openBook(b.id) },
+    el('div', { class: 'frame' },
+      b.size ? el('img', { src: `/old/${b.id}?t=${token}&v=${b.v}`, alt: '', loading: 'lazy' }) : el('span', { class: 'none' }, b.hasCover ? 'cover not on this Mac' : 'no cover'),
+      b.applied ? el('span', { class: 'mark' }, 'changed') : null),
+    el('div', { class: 't' }, b.title),
+    el('div', { class: 'a' }, b.authors.join(', ') || '—'),
+    el('div', { class: `s${isSmall(b) ? ' small' : ''}` }, b.size ? px(b.size) : ''));
+}
+
+function renderTop() {
+  $('stats').textContent = `${S.library.books} books · ${S.books.filter((b) => b.size).length} with a cover · ${S.books.filter(isSmall).length} small`;
+  $('mode').textContent = S.mode === 'write' ? 'writing is on' : 'looking only';
+  $('mode').className = `pill${S.mode === 'write' ? ' write' : ''}`;
+  $('mode').title = S.mode === 'write' ? `Backups and journal: ${S.backupRoot}` : 'Start the app with --write to change the library.';
+  $('chips').replaceChildren(...CHIPS.map(([key, label, test]) =>
+    el('button', { class: 'chip', 'aria-pressed': String(view.chip === key), onclick: () => { view.chip = key; renderTop(); renderGrid(); } }, `${label} (${S.books.filter(test).length})`)));
+  $('problems').replaceChildren(...S.problems.map((p) => el('div', { class: 'problem' }, p)));
+}
+
+function renderGrid() {
+  const list = shown();
+  $('grid').replaceChildren(...(list.length ? list.map(tile) : [el('p', { class: 'meta' }, 'No book matches.')]));
+}
+
+/* ---------- one book ---------- */
+
+async function openBook(id) {
+  open = { id, found: null, workId: null, covers: [], editions: 0, next: null, pages: 0, loading: false, lang: null, error: null, query: '', others: false, bigOnly: false };
+  $('shade').hidden = false;
+  $('drawer').hidden = false;
+  $('drawer').scrollTop = 0;
+  renderDrawer();
+  await find();
+}
+
+function closeBook() {
+  open = null;
+  picked = null;
+  $('shade').hidden = true;
+  $('drawer').hidden = true;
+  $('compare').hidden = true;
+}
+
+async function find(query) {
+  const mine = open;
+  const editionCovers = mine.found?.editionCovers ?? [];
+  mine.found = null;
+  mine.error = null;
+  renderWork();
+  const { status, body } = await api(`/api/find/${mine.id}${query ? `?q=${encodeURIComponent(query)}` : ''}`);
+  if (open !== mine) return;
+  if (status !== 200) { mine.found = { hits: [], editionCovers }; mine.error = body.error; renderWork(); return; }
+  // A search Julian typed replaces the list, not the edition's own covers found by ISBN.
+  mine.found = { ...body, editionCovers: body.editionCovers.length ? body.editionCovers : editionCovers };
+  renderWork();
+  if (!query && body.picked) await chooseWork(body.picked, false);
+}
+
+async function chooseWork(workId, remember) {
+  const mine = open;
+  mine.workId = workId;
+  mine.covers = [];
+  mine.editions = 0;
+  mine.next = 0;
+  mine.pages = 0;
+  mine.lang = null;
+  mine.others = false;
+  renderWork();
+  if (remember) api('/api/work', { bookId: mine.id, workId });
+  await loadCovers(AUTO_PAGES);
+}
+
+async function loadCovers(pages) {
+  const mine = open;
+  const workId = mine.workId;
+  mine.loading = true;
+  mine.error = null;
+  renderCovers();
+  for (let n = 0; n < pages && mine.next != null; n++) {
+    const { status, body } = await api(`/api/covers/${workId}?offset=${mine.next}`);
+    if (open !== mine || mine.workId !== workId) return;
+    if (status !== 200) { mine.error = body.error; break; }
+    for (const c of body.covers) {
+      const have = mine.covers.find((x) => x.coverId === c.coverId);
+      if (!have) { mine.covers.push(c); continue; }
+      if (have.size === undefined && c.size) have.size = c.size;
+      for (const l of c.languages) if (!have.languages.includes(l)) have.languages.push(l);
+      for (const p of c.publishers) if (!have.publishers.includes(p)) have.publishers.push(p);
+      if (c.year && (!have.year || c.year > have.year)) have.year = c.year;
+    }
+    mine.editions = body.editions;
+    mine.next = body.next;
+    mine.pages++;
+    // The book's own language first, once it is known that covers in it exist.
+    const own = bookOf(mine.id).languages[0];
+    if (mine.lang === null && own && mine.covers.some((c) => c.languages.includes(own))) mine.lang = own;
+    renderCovers();
+    measure(mine);
+  }
+  mine.loading = false;
+  renderCovers();
+}
+
+/*
+ * How large each cover really is. Open Library says so only when the image is
+ * fetched, so every cover of the open work is asked for, four at a time; the
+ * wall re-sorts as the answers come, a few at once rather than tile by tile.
+ */
+let sorting = null;
+function measure(mine) {
+  mine.measuring ??= 0;
+  const next = () => mine.covers.find((c) => c.size === undefined && !c.asked);
+  const work = async () => {
+    for (let c = next(); c && open === mine; c = next()) {
+      c.asked = true;
+      const { status, body } = await api(`/api/size?cover=${encodeURIComponent(c.coverId)}`);
+      c.size = status === 200 ? body.size : null;
+      if (open !== mine) return;
+      clearTimeout(sorting);
+      sorting = setTimeout(() => { if (open === mine) renderCovers(); }, 250);
+    }
+  };
+  for (; mine.measuring < 4; mine.measuring++) work().finally(() => { mine.measuring--; });
+}
+
+function renderDrawer() {
+  $('drawer').replaceChildren(el('div', { id: 'd-head' }), el('div', { id: 'd-work' }), el('div', { id: 'd-covers' }));
+  renderHead();
+  renderWork();
+  renderCovers();
+}
+
+function renderHead() {
+  const b = bookOf(open.id);
+  $('d-head').replaceChildren(
+    el('button', { class: 'close', onclick: closeBook, 'aria-label': 'Close' }, 'Close'),
+    el('div', { class: 'head' },
+      el('div', { class: 'now' },
+        el('div', { class: 'frame' }, b.size ? el('img', { src: `/old/${b.id}?t=${token}&v=${b.v}`, alt: 'the cover in Calibre' }) : el('span', { class: 'none' }, 'no cover')),
+        el('div', { class: `meta${isSmall(b) ? ' note warn' : ''}` }, b.size ? px(b.size) : '')),
+      el('div', { style: 'min-width:0' },
+        el('h2', {}, b.title),
+        el('p', { class: 'meta' }, b.authors.join(', ') || 'no author'),
+        el('p', { class: 'meta' }, [b.formats.join(', '), b.languages.map(langName).join(', '), b.isbns[0] ? `ISBN ${b.isbns[0]}` : 'no ISBN', `#${b.id}`].filter(Boolean).join(' · ')),
+        b.applied ? el('p', { class: 'note ok' }, 'This cover was put here by the app.') : null,
+        open.undoError ? el('p', { class: 'note bad' }, open.undoError) : null,
+        b.canUndo ? el('button', { disabled: !canWrite(), onclick: undo }, 'Put the previous cover back') : null)));
+}
+
+function renderWork() {
+  if (!open) return;
+  const box = $('d-work');
+  const f = open.found;
+  const kids = [el('h3', {}, 'Which book is this in the catalogue?')];
+  if (!f) kids.push(el('p', { class: 'meta' }, 'Searching Open Library…'));
+  else {
+    if (f.failed) kids.push(el('p', { class: 'note warn' }, `${f.failed} What is listed may be incomplete.`));
+    if (open.error && !open.workId) kids.push(el('p', { class: 'note bad' }, open.error));
+    if (f.hits.length === 0 && !f.failed) kids.push(el('p', { class: 'meta' }, 'Nothing found under this title and author. Try other words below — the original title often works.'));
+    // Once a work is chosen the others fold away: the covers are what the drawer is for.
+    const chosen = f.hits.some((h) => h.id === open.workId);
+    const hits = chosen && !open.others ? f.hits.filter((h) => h.id === open.workId) : f.hits;
+    kids.push(el('div', { class: 'hits' }, hits.map((h) => el('button', { class: 'hit', 'aria-pressed': String(h.id === open.workId), onclick: () => chooseWork(h.id, true) },
+      h.thumb ? el('img', { src: h.thumb, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' }) : el('span', { class: 'ph' }),
+      el('span', { class: 'w' }, el('b', {}, h.title), el('span', {}, [h.author, h.year, h.editions ? `${h.editions} edition${h.editions === 1 ? '' : 's'}` : ''].filter(Boolean).join(' · '))),
+      h.id === f.picked && f.reason ? el('span', { class: `tag${f.reason === 'author' || f.reason === 'title-only' ? ' maybe' : ''}` }, REASON[f.reason]) : null))));
+    if (chosen && !open.others && f.hits.length > 1) kids.push(el('div', { class: 'row' }, el('button', { class: 'chip', onclick: () => { open.others = true; renderWork(); } }, `Not this book? Show ${f.hits.length - 1} other${f.hits.length === 2 ? '' : 's'}`)));
+    if (f.hits.length && !open.workId) kids.push(el('p', { class: 'note warn' }, 'None of these is sure. Choose the work, or search with other words.'));
+  }
+  const input = el('input', { type: 'text', placeholder: 'Search with other words', value: open.query, 'aria-label': 'Search the catalogue' });
+  const go = () => { open.query = input.value.trim(); if (open.query.length >= 3) find(open.query); };
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+  kids.push(el('div', { class: 'row' }, input, el('button', { onclick: go }, 'Search'),
+    open.workId ? el('a', { href: `https://buyitscovers.com/book/${open.workId}`, target: '_blank', rel: 'noreferrer' }, 'Open on buyitscovers.com') : null));
+  box.replaceChildren(...kids);
+}
+
+function renderCovers() {
+  if (!open) return;
+  const box = $('d-covers');
+  if (!open.workId) { box.replaceChildren(); return; }
+  const b = bookOf(open.id);
+  const mine = new Set(open.found?.editionCovers ?? []);
+  const langs = [...new Set(open.covers.flatMap((c) => c.languages))].sort((x, y) => langName(x).localeCompare(langName(y)));
+  const lang = open.lang ?? 'all';
+  const inLang = open.covers.filter((c) => lang === 'all' || c.languages.includes(lang) || mine.has(c.coverId));
+  const large = inLang.filter((c) => tier(c, b.size) === 0);
+  const pending = inLang.filter((c) => c.size === undefined).length;
+  // Large enough first; among those the own edition, then the most pixels.
+  const list = (open.bigOnly ? large : inLang).slice().sort((x, y) =>
+    (tier(x, b.size) - tier(y, b.size)) || (mine.has(y.coverId) - mine.has(x.coverId)) || (area(y.size) - area(x.size)) || ((y.year ?? 0) - (x.year ?? 0)));
+  const count = (l) => open.covers.filter((c) => c.languages.includes(l)).length;
+  const chip = (key, label) => el('button', { class: 'chip', 'aria-pressed': String(lang === key), onclick: () => { open.lang = key; renderCovers(); } }, label);
+  const seen = Math.min(open.pages * 100, open.editions);
+  const against = b.size ? `the cover in Calibre (${px(b.size)})` : 'a cover needs (200 × 280 px)';
+  const sizeLine = (c) => c.size ? `${c.size.width} × ${c.size.height}` : c.size === null ? 'size unknown' : '…';
+  box.replaceChildren(
+    el('h3', {}, 'Covers of this work'),
+    el('div', { class: 'row', style: 'margin:0 0 10px' }, chip('all', `All (${open.covers.length})`), langs.map((l) => chip(l, `${langName(l)} (${count(l)})`)),
+      el('button', { class: 'chip', 'aria-pressed': String(open.bigOnly), onclick: () => { open.bigOnly = !open.bigOnly; renderCovers(); } }, `Large enough only (${large.length})`)),
+    el('p', { class: 'meta', style: 'margin:0 0 10px' },
+      pending ? `Measuring… ${inLang.length - pending} of ${inLang.length} covers; ${large.length} so far at least as large as ${against}.`
+        : `${large.length} of ${inLang.length} are at least as large as ${against}. They come first; the faded ones have fewer pixels.`),
+    el('div', { class: 'covers' }, list.map((c) => el('button', { class: `cover${mine.has(c.coverId) ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}${tier(c, b.size) >= 2 ? ' less' : ''}`, onclick: () => pick(c), title: c.publishers.join(', ') },
+      el('div', { class: 'frame' }, el('img', { src: c.thumb, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' })),
+      el('div', { class: 'z' }, sizeLine(c) + (tier(c, b.size) === 4 ? ' · too small' : '')),
+      el('div', { class: 'c' }, [mine.has(c.coverId) ? 'your edition' : '', c.year, c.languages.map((l) => l.toUpperCase()).join(' ')].filter(Boolean).join(' · ') || '—')))),
+    open.bigOnly && !list.length && !pending ? el('p', { class: 'meta' }, 'None of the covers seen so far is large enough.') : null,
+    open.error ? el('p', { class: 'note bad' }, open.error) : null,
+    el('p', { class: 'meta', style: 'margin-top:12px' },
+      open.loading ? `Loading… ${open.covers.length} covers so far.` : `${open.covers.length} covers seen in ${seen} of ${open.editions} edition records at Open Library.`),
+    !open.loading && open.next != null ? el('button', { onclick: () => loadCovers(AUTO_PAGES) }, 'Look through more editions') : null,
+    !open.loading && open.error ? el('button', { onclick: () => loadCovers(1) }, 'Try again') : null);
+}
+
+/* ---------- one cover against the one in Calibre ---------- */
+
+async function pick(cover) {
+  const mine = { cover, bookId: open.id, check: null, old: null, error: null, done: false, busy: false };
+  picked = mine;
+  $('compare').hidden = false;
+  renderCompare();
+  const [fresh, old] = await Promise.all([api(`/api/new?cover=${encodeURIComponent(cover.coverId)}`), api(`/api/old/${mine.bookId}`)]);
+  if (picked !== mine) return;
+  mine.check = fresh.status === 200 ? fresh.body : { ok: false, reason: fresh.body.error };
+  mine.old = old.body;
+  renderCompare();
+}
+
+function closeCompare() {
+  picked = null;
+  pocket = null;
+  $('compare').hidden = true;
+}
+
+function renderCompare() {
+  const p = picked;
+  const b = bookOf(p.bookId);
+  const smaller = p.check?.ok && p.old && !p.old.missing && p.check.width * p.check.height < 0.9 * p.old.width * p.old.height; // 0.9: SMALLER_BELOW in image.ts
+  const facts = [p.cover.year, p.cover.languages.map(langName).join(', '), p.cover.publishers.slice(0, 2).join(', ')].filter(Boolean).join(' · ');
+  $('compare').replaceChildren(el('div', { class: 'box' },
+    el('div', { class: 'pair' },
+      el('figure', {},
+        el('div', { class: 'frame' }, p.old && !p.old.missing ? el('img', { src: `/old/${b.id}?t=${token}&v=${b.v}`, alt: 'the cover in Calibre' }) : el('span', { class: 'none' }, p.old?.missing ?? '…')),
+        el('figcaption', {}, 'in Calibre now', el('br'), p.old && !p.old.missing ? px(p.old) : '')),
+      el('span', { class: 'arrow' }, '→'),
+      el('figure', {},
+        el('div', { class: 'frame' }, p.check?.ok ? el('img', { src: `/new?cover=${encodeURIComponent(p.cover.coverId)}&t=${token}`, alt: 'the chosen cover' }) : el('span', { class: 'none' }, p.check ? p.check.reason : 'fetching the full image…')),
+        el('figcaption', {}, facts || 'from the catalogue', el('br'), p.check?.ok ? px(p.check) : ''))),
+    el('h2', { style: 'font-size:17px;margin:14px 0 0' }, b.title),
+    smaller ? el('p', { class: 'note warn' }, `Fewer pixels than the cover the book has (${px(p.check)} against ${px(p.old)}). It will look softer on a full screen.`) : null,
+    p.error ? el('p', { class: 'note bad' }, p.error) : null,
+    p.done ? el('p', { class: 'note ok' }, 'This cover is in Calibre now.') : null,
+    S.mode !== 'write' ? el('p', { class: 'meta' }, 'Looking only: start the app with --write to change the library.') : null,
+    el('div', { class: 'row' },
+      p.done ? null : el('button', { class: 'primary', disabled: !canWrite() || !p.check?.ok || p.busy, onclick: () => use(smaller) }, p.busy ? 'Writing…' : smaller ? 'Use it anyway' : 'Use this cover'),
+      el('button', { onclick: closeCompare }, p.done ? 'Done' : 'Cancel'))));
+}
+
+function refreshAfterWrite(state, bookId) {
+  S = state;
+  renderTop();
+  document.getElementById(`book-${bookId}`)?.replaceWith(tile(bookOf(bookId)));
+  if (open?.id === bookId) { renderHead(); renderCovers(); }
+}
+
+async function use(allowSmaller) {
+  const p = picked;
+  p.busy = true;
+  p.error = null;
+  renderCompare();
+  const { status, body } = await api('/api/apply', { bookId: p.bookId, coverId: p.cover.coverId, allowSmaller: !!allowSmaller });
+  p.busy = false;
+  if (status === 200) { p.done = true; refreshAfterWrite(body.state, p.bookId); const old = await api(`/api/old/${p.bookId}`); p.old = old.body; }
+  else { p.error = body.error ?? 'The write failed.'; if (body.halted) { S = (await api('/api/state')).body; renderTop(); } }
+  if (picked === p) renderCompare();
+}
+
+async function undo() {
+  const id = open.id;
+  const { status, body } = await api('/api/undo', { bookId: id });
+  if (status === 200) { open.undoError = null; refreshAfterWrite(body.state, id); }
+  else { open.undoError = body.error ?? 'The undo failed.'; if (body.halted) { S = (await api('/api/state')).body; renderTop(); } renderHead(); }
+}
+
+/* ---------- PocketBook highlights: Julian's own sync script, started from here ---------- */
+
+let pocket = null;
+
+async function openPocket() {
+  pocket = { status: null, run: null, busy: false };
+  $('compare').hidden = false;
+  renderPocket();
+  pocket.status = (await api('/api/pocketbook')).body;
+  if (pocket) renderPocket();
+}
+
+function renderPocket() {
+  const p = pocket;
+  const s = p.status;
+  const kids = [el('h2', { style: 'font-size:17px;margin:0 0 6px' }, 'PocketBook highlights')];
+  if (!s) kids.push(el('p', { class: 'meta' }, 'Looking for the reader…'));
+  else if (s.error) kids.push(el('p', { class: 'note bad' }, s.error));
+  else {
+    kids.push(el('p', { class: 'meta' }, 'Copies the highlights from the reader into your notes, one Markdown file per book. This runs your own sync script as it is.'));
+    if (s.reader) kids.push(el('p', { class: `note ${s.connected ? 'ok' : 'warn'}` }, s.connected ? `Reader connected: ${s.reader}` : `Reader not connected: ${s.reader}`));
+    if (s.notes) kids.push(el('p', { class: 'meta' }, `Notes go to: ${s.notes}`));
+    for (const problem of s.problems.filter((x) => !x.startsWith('The reader is not connected'))) kids.push(el('p', { class: 'note bad' }, problem));
+    if (!s.connected && s.reader) kids.push(el('p', { class: 'meta' }, 'Plug the reader in by USB, wait until it shows in Finder, then check again.'));
+  }
+  if (p.run) kids.push(el('p', { class: `note ${p.run.ok ? 'ok' : 'bad'}` }, p.run.ok ? 'The sync finished.' : 'The sync did not finish cleanly — see what it said:'), el('pre', {}, p.run.output || p.run.error || '(no output)'));
+  kids.push(el('div', { class: 'row' },
+    el('button', { class: 'primary', disabled: !s || !!s.error || s.problems.length > 0 || p.busy, onclick: syncPocket }, p.busy ? 'Syncing…' : 'Sync highlights'),
+    el('button', { disabled: p.busy, onclick: openPocket }, 'Check again'),
+    el('button', { onclick: closeCompare }, 'Close')));
+  $('compare').replaceChildren(el('div', { class: 'box' }, kids));
+}
+
+async function syncPocket() {
+  const p = pocket;
+  p.busy = true;
+  p.run = null;
+  renderPocket();
+  const { body } = await api('/api/pocketbook', {});
+  p.busy = false;
+  p.run = body;
+  if (pocket === p) renderPocket();
+}
+
+/* ---------- start ---------- */
+
+$('q').addEventListener('input', (e) => { view.q = e.target.value; renderGrid(); });
+$('sort').addEventListener('change', (e) => { view.sort = e.target.value; renderGrid(); });
+$('pb').addEventListener('click', openPocket);
+$('shade').addEventListener('click', closeBook);
+$('compare').addEventListener('click', (e) => { if (e.target === $('compare')) closeCompare(); });
+document.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (picked || pocket) closeCompare(); else if (open) closeBook(); });
+
+// Coming back to the window: a cover changed elsewhere — in Calibre, by an undo in the terminal — shows at once.
+async function refresh() {
+  if (!S || document.hidden || picked?.busy) return;
+  const { status, body } = await api('/api/state');
+  if (status !== 200) return;
+  const before = JSON.stringify(S.books.map((b) => [b.id, b.v, b.applied, b.title]));
+  S = body;
+  if (before === JSON.stringify(S.books.map((b) => [b.id, b.v, b.applied, b.title]))) return;
+  renderTop();
+  renderGrid();
+  if (open && bookOf(open.id)) { renderHead(); renderCovers(); } else if (open) closeBook();
+}
+window.addEventListener('focus', refresh);
+document.addEventListener('visibilitychange', refresh);
+
+(async () => {
+  const first = await api('/api/state');
+  if (first.status !== 200) { $('stats').textContent = first.body.error; return; }
+  S = first.body;
+  renderTop();
+  renderGrid();
+})();
+</script>
+</body>
+</html>

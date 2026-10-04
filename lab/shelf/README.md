@@ -87,7 +87,7 @@ Julian: „it doesnt recognize the photos i am uploading, but the same photo wor
 Julian, 2026-09-28: „der plan ist auch, dass du die seite das entsprechende cover der im foto gezeigten version findet. schwierig vom buchrücken aus, aber lass es uns versuchen".
 
 Ein Rücken zeigt weder Vorderseite noch ISBN. Zwei Dinge auf ihm sagen etwas über die Ausgabe:
-1. **Der Verlag am Fuß.** Das Modell liest ihn jetzt mit. `recognize(…, { publisher: true })` erweitert Prompt und Schema; die Website ruft ohne die Option auf und bleibt Wort für Wort gleich. `samePublisher` in `edition.ts` vergleicht locker: gemeinsames Wort ohne „Verlag/Books/Press/…", oder Initialen („dtv" = Deutscher Taschenbuch Verlag).
+1. **Der Verlag am Fuß.** Das Modell liest ihn jetzt mit. `recognize(…, { publisher: true })` in `lab/shelf/recognize.ts` erweitert Prompt und Schema. Bis 2026-10-03 waren das Optionen von `lib/recognize.ts`; seit die Website dort nur noch einen Punkt je Buch abfragt (5.11a), hat das Lab seine eigene Anfrage, und keine der beiden hängt an der anderen. `samePublisher` in `edition.ts` vergleicht locker: gemeinsames Wort ohne „Verlag/Books/Press/…", oder Initialen („dtv" = Deutscher Taschenbuch Verlag).
 2. **Die Farbe.** Verlage ziehen die Farbe der Vorderseite meist über den Rücken. Der Rücken-Kasten wird auf die Kanten geschoben (`refineSpineBox`), seine Farbe gelesen. Von jedem Kandidaten-Cover lädt der Server das kleine Bild (`-S.jpg`, vier gleichzeitig, im Speicher gemerkt) und nimmt seine drei Hauptfarben. Abstand = OKLab-Abstand zur nächsten Hauptfarbe mit ≥ 15 % Anteil.
 
 **Regel** (`pickBySpine`, gesetzt, nicht gemessen): Kandidaten sind die Cover von Seite 0 des Werks mit demselben Verlag, ohne Verlag die ersten 16. Gewählt wird bei Verlagstreffer das farblich nächste Cover, wenn der Abstand ≤ 0,10 ist; ohne Verlag nur, wenn es außerdem das zweitbeste um ≥ 0,03 schlägt. Sonst bleibt das Standardcover, und die Kachel sagt, was verglichen wurde. Der Verlag allein reicht nie: ein Verlag druckt ein Werk unter vielen Umschlägen.
@@ -108,6 +108,23 @@ Ein Rücken zeigt weder Vorderseite noch ISBN. Zwei Dinge auf ihm sagen etwas ü
 - **Beispielmodus, kalt:** 12 von 12 Werken gefunden, alle als `author+title`, **7,9 s** Open Library für zwölf Suchen nacheinander; warm 0,1 s.
 - **Ausschnitt-Vergleich mit einem idealen „Foto"** (ein Open-Library-Scan in einen grauen Rahmen geklebt, Kasten exakt): Gatsby Abstand 2 unter 7 Covern, *Beloved* Abstand 0 unter 52 — der Weg Ausschnitt → Signatur → Cover funktioniert. Über echte Fotos (Perspektive, Glanz, Regalkante) sagt das **nichts**; die Schwelle 14 ist gesetzt, nicht gemessen.
 - Geprüft im Browser-Pane: Beispielmodus, Entfernen, Neu-Suchen („Animal Farm Orwell" → 12 Treffer, ersetzt), anderes Cover (Gatsby: 7 auf Seite 0), Link erzeugen, geteilte Wand aus dem Link (11 Titel von Open Library nachgeladen). Bei 375 px: drei Kacheln je Reihe à 104 px, keine waagrechte Verschiebung.
+
+## Gemessen an zwei echten Fotos (2026-09-30)
+
+Julians Galeriewand (rund neunzig Rücken) und ein Brett mit 22 Romanen, lokal durch den Code der Website (`lib/recognize.ts`, derselbe Prompt): Sonnet liest 19–20 von 22 bzw. 58; Haiku erfindet Bücher; die Kästen des Modells treffen in einer Reihe x, nie y; die Zeit geht in die Suchen nacheinander. Zahlen, Bilder und der Vorschlag (Reihen statt Kästen, Strom, Umschlag → Ausgabe) in [docs/plans/PLAN-5.11a-regalfoto-zuverlaessig.md](../../docs/plans/PLAN-5.11a-regalfoto-zuverlaessig.md). Die Schwelle Hamming ≤ 14 ist weiter ungemessen: beide Fotos zeigen Rücken.
+
+**Seit 2026-10-01 liefert die Erkennung keinen Kasten mehr** (`box` bleibt leer, je Buch nur ein Punkt `x`, `y`): der Ausschnitt-Vergleich für Umschläge in `match.ts` läuft damit nicht, bis ein Segmentierer den Umriss liefert (Plan 5.11a, Abschnitt „Die Kästen sollen die Bücher zeigen“); die Lab-Seite zeichnet entsprechend keine Kästen.
+
+## Der Testsatz (seit 2026-10-04)
+
+Vierzehn Fotos von Julian (lokal unter `docs/tests/regalfoto-set-NN.jpg`, git-ignoriert), je Foto eine Wahrheitsliste in `testset/truth.json` (Entwurf von Claude, von Julian zu korrigieren), und `evaluate.ts`, das jedes Foto durch `lib/walls/readphoto.ts` schickt — dieselbe Funktion wie die Website — und zählt: wie viele Bücher der Liste gelesen wurden, wie viele mit Autor, was darüber hinaus kam, Zeit und Kosten. Jeder Lauf schreibt `testset/results/<Zeit>-<Etikett>.json`; der erste (`baseline`) liest 292 von 322 (91 %). Bericht: [docs/tests/2026-10-04-regalfoto-testsatz.md](../../docs/tests/2026-10-04-regalfoto-testsatz.md). **Jede Änderung an Prompt, Schwelle oder Schnitt läuft zuerst hier** — die Zahlen vom 2026-09-30 bis 2026-10-03 stammten von drei Fotos und haben mindestens eine falsche Erklärung getragen.
+
+```bash
+set -a; source ../../../.env.local; set +a
+npx tsx lab/shelf/evaluate.ts --label "was geändert wurde"      # alle; --only 02,08 für einzelne
+```
+
+Ein Lauf über alle kostet rund 80 ct und dauert drei Minuten. Kein Katalog wird gefragt, nur das Modell.
 
 ## Was noch fehlt — die eigentliche Messung
 

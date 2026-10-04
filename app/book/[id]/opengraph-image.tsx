@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
-import { authorLine, coverImages } from '@/lib/seo';
-import { Display, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
+import { SITE_NAME, authorLine, coverImages } from '@/lib/seo';
+import { asJpeg, Display, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
 import { getWorkPage, isWorkId } from '@/lib/work';
 
 /**
@@ -17,11 +17,11 @@ export const runtime = 'nodejs';
 export const revalidate = 86400;
 export const alt = 'Covers of this book, side by side';
 export const size = { width: 1200, height: 630 };
-export const contentType = 'image/png';
+export const contentType = 'image/jpeg';
 
 export default async function Image({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  let title = 'Beautiful Books';
+  let title: string = SITE_NAME;
   let author = '';
   let urls: string[] = [];
 
@@ -38,7 +38,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     }
   }
 
-  return new ImageResponse(
+  return asJpeg(new ImageResponse(
     (
       <div
         style={{
@@ -68,5 +68,5 @@ export default async function Image({ params }: { params: Promise<{ id: string }
       </div>
     ),
     { ...size, fonts: await ogFonts() },
-  );
+  ));
 }

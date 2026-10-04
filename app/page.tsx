@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import BookGrid from '@/components/BookGrid';
 import HeroSlot from '@/components/HeroSlot';
@@ -8,6 +9,8 @@ import CollectionsShelf from '@/components/CollectionsShelf';
 import WallsInvite from '@/components/WallsInvite';
 import { wallsEnabled } from '@/lib/walls/switch';
 import { liveCollections } from '@/lib/collections-live';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/translate';
 
 /**
  * The URL is the single source of truth for search state (SPEC §3 F1.5):
@@ -29,12 +32,31 @@ import { liveCollections } from '@/lib/collections-live';
  */
 interface HomeProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
+  /** Set by the German tree (`app/de/page.tsx`, ROADMAP 6.85); Next itself passes none. */
+  locale?: Locale;
 }
 
 const first = (value: string | string[] | undefined): string =>
   (Array.isArray(value) ? value[0] : value) ?? '';
 
-export default async function Home({ searchParams }: HomeProps) {
+/**
+ * One address for the home page, whatever host answered (ROADMAP 2.2): the
+ * same page is served under `beautifulcovers.vercel.app` until that host
+ * redirects. A search or author result (`?q=`, `?author=`) is a question, not
+ * a document (the sitemap leaves it out for the same reason): it is kept out
+ * of the index, but its links to book pages are followed.
+ */
+export async function generateMetadata({ searchParams }: HomeProps): Promise<Metadata> {
+  const params = await searchParams;
+  const isResult = Boolean(first(params.q) || first(params.author) || first(params.key));
+  return {
+    alternates: { canonical: '/' },
+    ...(isResult ? { robots: { index: false, follow: true } } : {}),
+  };
+}
+
+export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: HomeProps) {
+  const t = translator(locale);
   const params = await searchParams;
   const searchQuery = first(params.q);
   const language = first(params.lang);
@@ -54,7 +76,7 @@ export default async function Home({ searchParams }: HomeProps) {
       <SiteHeader />
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <section className={`${isHero ? 'pb-12 pt-16 sm:pt-24' : 'pb-8 pt-8'} transition-[padding]`}>
+        <section className={`${isHero ? 'pb-12 pt-10 sm:pt-24' : 'pb-8 pt-8'} transition-[padding]`}>
           {/*
             The headline and the search field on the left, and from `lg` up
             the promise as a picture beside both (ROADMAP 1.9): seven covers
@@ -72,29 +94,14 @@ export default async function Home({ searchParams }: HomeProps) {
             <div className="min-w-0 flex-1">
               {isHero && (
                 <div className="mb-8 max-w-2xl">
+                  {/* Two halves, so the accent can sit on the German verb as it sits on the English object. */}
                   <h1 className="text-4xl leading-[1.1] text-ink sm:text-5xl">
-                    Judge a book <em className="text-accent">by its covers.</em>
+                    {t('Judge a book,')} <em className="text-accent">{t('buy its covers.')}</em>
                   </h1>
                   <p className="mt-4 max-w-xl text-base text-ink-2 sm:text-lg">
-                    Type a title and see the covers it has been printed with, by language and year.
-                    Then find the edition you&rsquo;d actually want on your shelf.
+                    {t('Type a title and see the covers it has been printed with, by language and year.')}{' '}
+                    {t('Then find the edition you’d actually want on your shelf.')}
                   </p>
-                  {/*
-                    The way into the cover game (ROADMAP 5.8a, SPEC F7): under the promise,
-                    not in the header — it is an invitation, not a part of the search. One
-                    line, so the search field keeps the page.
-                  */}
-                  <p className="mt-5 text-sm">
-                    <Link
-                      href="/versus"
-                      className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
-                    >
-                      Help us find the prettiest cover of all time!
-                      <span aria-hidden="true">&rarr;</span>
-                    </Link>
-                  </p>
-                  {/* The reader's own wall (5.13b): the second invitation, same form, behind its switch. */}
-                  {wallsEnabled() && <WallsInvite className="mt-2">Create your own collection of covers</WallsInvite>}
                 </div>
               )}
               <div className="max-w-3xl">
@@ -104,6 +111,25 @@ export default async function Home({ searchParams }: HomeProps) {
                   language={language}
                   hero={isHero}
                 />
+                {/*
+                  The two invitations, under the field rather than above it
+                  (ROADMAP 6.76): the search is what the page is for, and a
+                  reader who knows the site should reach it without passing two
+                  links first. One line where it fits, two on a phone. The way
+                  into the cover game (5.8a, SPEC F7) and the reader's own
+                  collection (5.13b, behind its switch).
+                */}
+                {isHero && (
+                  <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                    <Link
+                      href="/versus"
+                      className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
+                    >
+                      {t('Help us find the prettiest cover of all time!')}
+                    </Link>
+                    {wallsEnabled() && <WallsInvite>{t('Create your own collection of covers')}</WallsInvite>}
+                  </div>
+                )}
               </div>
             </div>
             {isHero && (
@@ -127,7 +153,7 @@ export default async function Home({ searchParams }: HomeProps) {
             5.10d). It used to be a line under the promise in the hero; Julian
             wanted it at the bottom, with covers.
           */}
-          <CollectionsShelf collections={collections} />
+          <CollectionsShelf collections={collections} locale={locale} />
         </section>
       </main>
 

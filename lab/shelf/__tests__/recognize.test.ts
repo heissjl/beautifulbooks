@@ -91,11 +91,7 @@ describe('centre line and thickness (ROADMAP 5.16)', () => {
   });
 });
 
-describe('the website prompt', () => {
-  it('is word for word what it was before lab/shelf added options', () => {
-    expect(promptFor({})).toBe('This is a photo of books: a shelf of spines, a pile, or covers laid out.\nList every book whose title you can read, in reading order (left to right, top to bottom).\n\nFor each book give:\n- title: the title as printed, without series names or "a novel"\n- author: the author as printed; "" if not visible and you are not sure\n- kind: "cover" if the front cover faces the camera, "spine" if only the spine is visible\n- box: [x, y, w, h], the book\'s outline in the photo as fractions of the picture width and height (0..1), top-left origin\n- confidence: 0..1, how sure you are of title and author together\n\nLeave out books whose title you cannot read; do not guess titles from colours or shapes.\nAnswer with JSON only: {"books": [...]}.');
-  });
-
+describe('the prompt', () => {
   it('asks for the publisher right after the author', () => {
     const p = promptFor({ publisher: true, axis: true, pixels: { width: 100, height: 100 } });
     expect(p.indexOf('- publisher:')).toBeGreaterThan(p.indexOf('- author:'));

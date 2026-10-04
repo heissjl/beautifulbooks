@@ -5,9 +5,13 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import BookWorkCard, { type ResultOrigin } from './BookWorkCard';
 import { shapeOf } from '@/lib/queryshape';
+import { groupByAuthor } from '@/lib/searchgroups';
 import CuratedWall from './CuratedWall';
 import MosaicLoader from './MosaicLoader';
 import type { AuthorSearchResult, SearchCorrection, SearchResult } from '@/lib/search';
+import { rich, useT } from './i18n';
+import type { Translate } from '@/lib/i18n/translate';
+import { useSearchSignal } from './useInsights';
 
 interface BookGridProps {
   searchQuery: string;
@@ -19,6 +23,13 @@ interface BookGridProps {
 }
 
 type AnyResult = SearchResult | AuthorSearchResult;
+
+/**
+ * Up to this many books by other authors stand open under their heading;
+ * more are folded behind it, with the number (ROADMAP 6.81). Four is one row
+ * on a desktop, two on a phone.
+ */
+const OPEN_OTHERS = 4;
 
 /** What went wrong, in words the reader can act on. */
 interface Failure {
@@ -39,25 +50,26 @@ type Outcome = { key: string; result?: AnyResult; failure?: Failure };
  * books found" (SPEC §3 F1.7). Measured on 2026-09-07, four of roughly
  * fourteen cold searches ended here.
  */
-async function failureFor(res: Response): Promise<Failure> {
+async function failureFor(res: Response, t: Translate): Promise<Failure> {
+  // The route's own sentence is translated where the catalogue knows it, and shown as it came otherwise.
   const detail = await res
     .json()
-    .then((body: { error?: string }) => body.error)
+    .then((body: { error?: string }) => (body.error ? t(body.error) : undefined))
     .catch(() => undefined);
   if (res.status === 503) {
     return {
-      title: 'The catalogue did not answer',
-      detail: 'Open Library was too slow just now. This says nothing about the book you looked for.',
+      title: t('The catalogue did not answer'),
+      detail: t('Open Library was too slow just now. This says nothing about the book you looked for.'),
       retryable: true,
     };
   }
   if (res.status === 429) {
-    return { title: 'Too many searches at once', detail: 'Give it a few seconds and try again.', retryable: true };
+    return { title: t('Too many searches at once'), detail: t('Give it a few seconds and try again.'), retryable: true };
   }
   if (res.status === 400) {
-    return { title: 'Not enough to go on', detail: detail ?? 'Type a little more.', retryable: false };
+    return { title: t('Not enough to go on'), detail: detail ?? t('Type a little more.'), retryable: false };
   }
-  return { title: 'Something went wrong', detail: detail ?? `The search failed (${res.status}).`, retryable: true };
+  return { title: t('Something went wrong'), detail: detail ?? t('The search failed ({status}).', { status: String(res.status) }), retryable: true };
 }
 
 function Notice({
@@ -68,13 +80,14 @@ function Notice({
   tone?: 'neutral' | 'error';
   onRetry?: () => void;
 }) {
+  const t = useT();
   return (
     <div className="py-16 text-center">
       <p className={`font-display text-2xl ${tone === 'error' ? 'text-accent' : 'text-ink'}`}>{title}</p>
       <p className="mx-auto mt-2 max-w-md text-sm text-ink-2">{children}</p>
       {onRetry && (
         <button type="button" onClick={onRetry} className="btn btn-accent mt-5">
-          Try again
+          {t('Try again')}
         </button>
       )}
     </div>
@@ -88,8 +101,11 @@ function Notice({
  * field of its size that breathes as the picture will (ROADMAP 6.33).
  */
 export function GridSkeleton({ query }: { query?: string }) {
-  return <MosaicLoader caption={query ? `Looking for \u201c${query}\u201d in Open Library` : 'Searching'} />;
+  const t = useT();
+  return <MosaicLoader caption={query ? t('Looking for “{query}” in Open Library', { query }) : t('Searching')} />;
 }
+
+const GRID = 'grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5';
 
 /** `/?q=…` for a search, as the result list itself would link it. */
 function textSearchHref(q: string, language: string, exact = false): string {
@@ -106,15 +122,16 @@ function textSearchHref(q: string, language: string, exact = false): string {
  * reader's word wrong.
  */
 function CorrectionLine({ correction, language, authorName }: { correction: SearchCorrection; language: string; authorName?: string }) {
+  const t = useT();
   return (
     <p className="mb-4 text-sm text-ink-2" role="status">
       {authorName ? (
-        <>Showing books by <strong className="font-medium text-ink">{authorName}</strong> for &ldquo;{correction.from}&rdquo;.</>
+        rich(t('Showing books by {author} for “{from}”.', { from: correction.from }), { author: <strong className="font-medium text-ink">{authorName}</strong> })
       ) : (
         <>
-          Showing results for <strong className="font-medium text-ink">{correction.to}</strong>.{' '}
+          {rich(t('Showing results for {to}.'), { to: <strong className="font-medium text-ink">{correction.to}</strong> })}{' '}
           <Link href={textSearchHref(correction.from, language, true)} className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
-            Search for &ldquo;{correction.from}&rdquo; instead
+            {t('Search for “{from}” instead', { from: correction.from })}
           </Link>
         </>
       )}
@@ -123,6 +140,7 @@ function CorrectionLine({ correction, language, authorName }: { correction: Sear
 }
 
 export default function BookGrid({ searchQuery, language, exact = false, author }: BookGridProps) {
+  const t = useT();
   // A retry has to change the request key, or the effect would not run again
   // and the reader would press a button that does nothing.
   const [attempt, setAttempt] = useState(0);
@@ -132,6 +150,12 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
     ? `author:${authorName}:${authorKey} #${attempt}`
     : searchQuery ? `${searchQuery} ${exact ? 'exact' : ''} #${attempt}` : '';
   const [outcome, setOutcome] = useState<Outcome | null>(null);
+  /*
+    Which search the reader unfolded "By other authors" for (ROADMAP 6.81).
+    Keyed by the request, so a new search starts folded again without an
+    effect resetting anything.
+  */
+  const [othersOpenFor, setOthersOpenFor] = useState<string | null>(null);
   const router = useRouter();
   // Memoised: the effect depends on it, and a fresh object each render would
   // restart the search on every render.
@@ -165,7 +189,7 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
     fetch(`/api/search?${params}`, { signal: controller.signal })
       .then(async res => {
         if (!res.ok) {
-          setOutcome({ key, failure: await failureFor(res) });
+          setOutcome({ key, failure: await failureFor(res, t) });
           return;
         }
         setOutcome({ key, result: (await res.json()) as AnyResult });
@@ -174,12 +198,27 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
         if (controller.signal.aborted) return;
         setOutcome({
           key,
-          failure: { title: 'No connection', detail: 'The search could not be sent. Check the connection and try again.', retryable: true },
+          failure: { title: t('No connection'), detail: t('The search could not be sent. Check the connection and try again.'), retryable: true },
         });
       });
 
     return () => controller.abort();
-  }, [key, searchQuery, exact, authorName, authorKey, pasted, router]);
+  }, [key, searchQuery, exact, authorName, authorKey, pasted, router, t]);
+
+  /*
+    One summary of this search when the reader leaves it or asks another
+    (ROADMAP 3.1b): outcome, number of books in classes, which card was
+    clicked, and the words only when nothing was found (kept 90 days).
+  */
+  const answered = outcome?.key === key ? outcome : null;
+  useSearchSignal({
+    key,
+    outcome: !answered ? null : answered.failure ? 'failed' : (answered.result as AnyResult | undefined)?.works.length ? 'results' : 'empty',
+    results: (answered?.result as AnyResult | undefined)?.works.length ?? 0,
+    mode: author ? 'author' : pasted.kind === 'isbn' ? 'isbn' : 'title',
+    query: authorName || searchQuery,
+    hrefs: () => [...document.querySelectorAll('[data-results] a[href^="/book/"]')].map(a => a.getAttribute('href') ?? ''),
+  });
 
   if (!key) return <CuratedWall />;
 
@@ -189,7 +228,7 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
 
   // An outcome carries a result or a failure, never both and never neither.
   if (!current.result) {
-    const failure: Failure = current.failure ?? { title: 'Something went wrong', detail: 'The search failed.', retryable: true };
+    const failure: Failure = current.failure ?? { title: t('Something went wrong'), detail: t('The search failed.'), retryable: true };
     return (
       <Notice title={failure.title} tone="error" onRetry={failure.retryable ? () => setAttempt(a => a + 1) : undefined}>
         {failure.detail}
@@ -211,21 +250,20 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
     */
     if (shape.kind === 'isbn') {
       return (
-        <Notice title="No book under this ISBN">
-          The number is a valid ISBN, but Open Library has no edition recorded under it. Searching
-          for the title and author usually finds the book anyway.
+        <Notice title={t('No book under this ISBN')}>
+          {t('The number is a valid ISBN, but Open Library has no edition recorded under it. Searching for the title and author usually finds the book anyway.')}
         </Notice>
       );
     }
     return (
-      <Notice title="No books found">
-        Open Library knows nothing under this title. Try another spelling, or add the author.
+      <Notice title={t('No books found')}>
+        {t('Open Library knows nothing under this title. Try another spelling, or add the author.')}
         {/* A suggestion the catalogue was not asked about in time: offered, not claimed (N12). */}
         {correction && !correction.applied && (
           <>
             {' '}
             <Link href={textSearchHref(correction.to, language)} className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
-              Did you mean &ldquo;{correction.to}&rdquo;?
+              {t('Did you mean “{to}”?', { to: correction.to })}
             </Link>
           </>
         )}
@@ -234,9 +272,25 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
   }
 
   const totalEditions = works.reduce((sum, w) => sum + (w.editionCount ?? 0), 0);
+  // With several hits an ISBN matched nothing and these are loose text matches (6.29): no first author to group by.
+  const { main, others } = shape.kind === 'isbn' && works.length > 1 ? { main: works, others: [] } : groupByAuthor(works);
+  const othersOpen = othersOpenFor === key;
+  const card = (work: (typeof works)[number]) => (
+    <BookWorkCard
+      key={work.id}
+      work={work}
+      origin={{ query: correction?.applied ? correction.to : searchQuery, language }}
+      /*
+        Only when the ISBN picked out a single book: with several hits
+        the number did not identify one edition, and pointing at a cover
+        would claim more than was asked (ROADMAP 6.29).
+      */
+      isbn={shape.kind === 'isbn' && works.length === 1 ? shape.isbn13 : undefined}
+    />
+  );
 
   return (
-    <section aria-label="Search results">
+    <section aria-label={t('Search results')} data-results>
       {/*
         The number was an ISBN, and Open Library did not find an edition under
         it — it fell back to searching for the digits (ROADMAP 6.29). Measured
@@ -247,30 +301,42 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
         Potter* for the book in their hand (N12).
       */}
       {shape.kind === 'isbn' && works.length > 1 && (
-        <Notice title="No edition under this ISBN">
-          Open Library has nothing recorded under this number and searched for the digits instead.
-          What follows are text matches, not the book you are holding.
+        <Notice title={t('No edition under this ISBN')}>
+          {t('Open Library has nothing recorded under this number and searched for the digits instead. What follows are text matches, not the book you are holding.')}
         </Notice>
       )}
       {correction?.applied && <CorrectionLine correction={correction} language={language} />}
       <p className="kicker mb-5">
-        {works.length} {works.length === 1 ? 'book' : 'books'} · {totalEditions.toLocaleString('en')} editions
+        {works.length === 1 ? t('{n} book', { n: 1 }) : t('{n} books', { n: works.length })}, {t('{n} editions', { n: totalEditions })}
       </p>
-      <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {works.map(work => (
-          <BookWorkCard
-            key={work.id}
-            work={work}
-            origin={{ query: correction?.applied ? correction.to : searchQuery, language }}
-            /*
-              Only when the ISBN picked out a single book: with several hits
-              the number did not identify one edition, and pointing at a cover
-              would claim more than was asked (ROADMAP 6.29).
-            */
-            isbn={shape.kind === 'isbn' && works.length === 1 ? shape.isbn13 : undefined}
-          />
-        ))}
-      </div>
+      <div className={GRID}>{main.map(card)}</div>
+      {/*
+        The first card's author on top, everyone else below (ROADMAP 6.81,
+        SPEC F1.11): "the great gatsby" returned twelve books by other authors
+        among fifteen, most of them study guides called plainly "The Great
+        Gatsby". Who wrote a book is on the record; whether it is *about* the
+        novel is not, so the heading says only the first. Folded above four,
+        and the cards are not even rendered until unfolded, so their mosaics
+        do not load for a reader who never looks.
+      */}
+      {others.length > 0 && (
+        <section className="mt-12 border-t border-line pt-6" aria-label={t('By other authors')}>
+          {others.length <= OPEN_OTHERS ? (
+            <h2 className="kicker">{t('By other authors ({n})', { n: others.length })}</h2>
+          ) : (
+            <button
+              type="button"
+              aria-expanded={othersOpen}
+              onClick={() => setOthersOpenFor(othersOpen ? null : key)}
+              className="kicker inline-flex items-center gap-2 transition-colors hover:text-ink"
+            >
+              <span aria-hidden="true" className={`inline-block text-accent transition-transform ${othersOpen ? 'rotate-90' : ''}`}>▸</span>
+              {t('By other authors ({n})', { n: others.length })}
+            </button>
+          )}
+          {(others.length <= OPEN_OTHERS || othersOpen) && <div className={`${GRID} mt-5`}>{others.map(card)}</div>}
+        </section>
+      )}
     </section>
   );
 }
@@ -281,16 +347,17 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
  * different facts: nobody under this name, or a person without a covered book.
  */
 function AuthorResults({ result, typed, origin }: { result: AuthorSearchResult; typed: string; origin: ResultOrigin }) {
+  const t = useT();
   const { works, author, correction } = result;
   if (!author) {
     return (
-      <Notice title="No author found">
-        Open Library knows no one under this name. Try another spelling, or search titles and authors together.
+      <Notice title={t('No author found')}>
+        {t('Open Library knows no one under this name. Try another spelling, or search titles and authors together.')}
         {typed && (
           <>
             {' '}
             <Link href={textSearchHref(typed, '')} className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
-              Search &ldquo;{typed}&rdquo; everywhere
+              {t('Search “{q}” everywhere', { q: typed })}
             </Link>
           </>
         )}
@@ -299,18 +366,18 @@ function AuthorResults({ result, typed, origin }: { result: AuthorSearchResult; 
   }
   if (works.length === 0) {
     return (
-      <Notice title={`No books by ${author.name} with a cover`}>
-        Open Library lists {author.name}, but none of the records under this name has a cover.
+      <Notice title={t('No books by {author} with a cover', { author: author.name })}>
+        {t('Open Library lists {author}, but none of the records under this name has a cover.', { author: author.name })}
       </Notice>
     );
   }
   const totalEditions = works.reduce((sum, w) => sum + (w.editionCount ?? 0), 0);
   return (
-    <section aria-label={`Books by ${author.name}`}>
+    <section aria-label={t('Books by {author}', { author: author.name })} data-results>
       {correction?.applied && <CorrectionLine correction={correction} language="" authorName={author.name} />}
-      <h2 className="mb-1 text-2xl leading-tight text-ink sm:text-3xl">Books by {author.name}</h2>
+      <h2 className="mb-1 text-2xl leading-tight text-ink sm:text-3xl">{t('Books by {author}', { author: author.name })}</h2>
       <p className="kicker mb-5">
-        {works.length} {works.length === 1 ? 'book' : 'books'} · {totalEditions.toLocaleString('en')} editions · most printed first
+        {works.length === 1 ? t('{n} book', { n: 1 }) : t('{n} books', { n: works.length })} {t('and {n} editions, the most printed first.', { n: totalEditions })}
       </p>
       <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {works.map(work => (

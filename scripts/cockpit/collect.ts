@@ -16,6 +16,7 @@ import { latestFeatureDate, parseFeatures, parseHistory, parseLabTable, parsePla
 import { envChecks, envNamesInCode, isSecret, type VercelVar } from './env';
 import { fileAtProduction, git, itemsInSubject, lastProductionChange, mainRoot, parseWorktrees, productionHead, readBranches, workByItem, PRODUCTION } from './git';
 import { deriveHints, type Hint } from './hints';
+import { collectIdentity, type IdentityData } from './identity';
 import { renderBody } from './markdown';
 import type { ProductionSnapshot } from './production';
 import { openWaits, parseRoadmap, statusOf, STATUSES, THEMES, type Assessment, type NextStep, type Status } from './roadmap';
@@ -80,6 +81,7 @@ export interface CockpitData {
     remote: Omit<ProductionSnapshot, 'drafts' | 'content' | 'switches'> & { drafts: number | null; content: number | null; switches: number | null };
   };
   hints: Hint[];
+  identity: IdentityData;
 }
 
 function read(file: string): string {
@@ -320,6 +322,7 @@ export function collect(input: CollectInput): CockpitData {
       },
     },
     hints: [],
+    identity: collectIdentity(root),
   };
   data.hints = deriveHints({
     items: items.map(i => ({ ...i, workBranches: i.work.map(w => w.branch), roadmapOnlyBranches: i.roadmapOnly })),
@@ -330,6 +333,7 @@ export function collect(input: CollectInput): CockpitData {
     sync: rows,
     envChecks: checks,
     history,
+    nextSteps: data.nextSteps,
   });
   return data;
 }

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import CoverImage from './CoverImage';
 import MoreBelow from './MoreBelow';
 import { useOverflowsY } from './useOverflowsY';
+import { useT } from './i18n';
 
 interface CoverSheetProps {
   coverUrl: string;
@@ -11,6 +12,12 @@ interface CoverSheetProps {
   caption: string;
   /** Sits beside "Details" in the bar: sharing belongs where the cover is. */
   share?: React.ReactNode;
+  /**
+   * In the sheet's header beside "Close", in place of the "Selected cover"
+   * line (ROADMAP 6.77: "Add to collection"). The dialog keeps its
+   * name for a screen reader either way.
+   */
+  headerAction?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -27,7 +34,8 @@ interface CoverSheetProps {
  * So: a bar pinned to the bottom answers "did my tap do anything?" without a
  * single scroll, and doubles as the handle of a sheet holding the details.
  */
-export default function CoverSheet({ coverUrl, caption, share, children }: CoverSheetProps) {
+export default function CoverSheet({ coverUrl, caption, share, headerAction, children }: CoverSheetProps) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   // The sheet's body scrolls; the same sign as the sidebar while there is more below.
   const { scroller: bodyScroller, content: bodyContent, overflows: bodyOverflows, atEnd: bodyAtEnd, onScroll: measureBody, scrollMore: bodyMore } = useOverflowsY();
@@ -127,33 +135,33 @@ export default function CoverSheet({ coverUrl, caption, share, children }: Cover
             <CoverImage src={coverUrl} alt="" sizes="40px" />
           </span>
           <span className="min-w-0 flex-1">
-            <span className="block text-sm font-medium text-ink">Selected cover</span>
-            <span className="block truncate text-xs text-ink-3">{caption || 'Publisher, ISBN and where to find it'}</span>
+            <span className="block text-sm font-medium text-ink">{t('Selected cover')}</span>
+            <span className="block truncate text-xs text-ink-3">{caption || t('Publisher, ISBN and where to find it')}</span>
           </span>
-          <span className="btn shrink-0 py-1.5 text-xs">Details</span>
+          <span className="btn shrink-0 py-1.5 text-xs">{t('Details')}</span>
         </button>
         {share}
       </div>
 
       {open && (
-        <div ref={dialog} className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Selected cover">
+        <div ref={dialog} className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label={t('Selected cover')}>
           <button
             type="button"
-            aria-label="Close"
+            aria-label={t('Close')}
             tabIndex={-1}
             className="absolute inset-0 bg-black/50"
             onClick={() => setOpen(false)}
           />
           <div className="absolute inset-x-0 bottom-0 top-12 flex flex-col rounded-t-2xl bg-bg shadow-2xl">
-            <div className="flex items-center justify-between border-b border-line px-4 py-3">
-              <p className="kicker">Selected cover</p>
+            <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
+              {headerAction ? <div className="min-w-0">{headerAction}</div> : <p className="kicker">{t('Selected cover')}</p>}
               <button
                 ref={closeButton}
                 type="button"
                 onClick={() => setOpen(false)}
                 className="btn py-1.5 text-xs"
               >
-                Close
+                {t('Close')}
               </button>
             </div>
             <div ref={bodyScroller} onScroll={measureBody} className="min-h-0 flex-1 overflow-y-auto px-4 pb-10 pt-5">

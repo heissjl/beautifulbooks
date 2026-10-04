@@ -10,6 +10,8 @@
  * mail went out when none did). The mail names the collection and the count,
  * nothing about who reported it.
  */
+import { SITE_NAME } from '../seo';
+
 export interface ReportMail {
   id: string;
   title: string;
@@ -46,7 +48,7 @@ export async function sendReportMail(m: ReportMail, env: Env = process.env, fetc
     const res = await fetchImpl('https://api.resend.com/emails', {
       method: 'POST',
       headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
-      body: JSON.stringify({ from: env.WALLS_REPORT_FROM || 'Beautiful Books <onboarding@resend.dev>', to: [to], subject, text }),
+      body: JSON.stringify({ from: env.WALLS_REPORT_FROM || `${SITE_NAME} <onboarding@resend.dev>`, to: [to], subject, text }),
       signal: AbortSignal.timeout(5000),
     });
     return res.ok ? 'sent' : 'failed';

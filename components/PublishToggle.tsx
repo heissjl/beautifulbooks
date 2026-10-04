@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useT } from './i18n';
 
 /**
  * Publish or unpublish a collection from /curate, for Julian signed in as
@@ -9,12 +10,13 @@ import { useState } from 'react';
  */
 export default function PublishToggle({ slug, title, published }: { slug: string; title: string; published: boolean }) {
   const router = useRouter();
+  const t = useT();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
   async function toggle() {
     const next = !published;
-    if (!window.confirm(next ? `Publish „${title}" on the site now?` : `Take „${title}" off the site?`)) return;
+    if (!window.confirm(next ? t('Publish “{title}” on the site now?', { title }) : t('Take “{title}” off the site?', { title }))) return;
     setBusy(true);
     setError('');
     try {
@@ -24,10 +26,10 @@ export default function PublishToggle({ slug, title, published }: { slug: string
         body: JSON.stringify({ slug, published: next }),
       });
       const body = (await res.json().catch(() => ({}))) as { error?: string };
-      if (!res.ok) throw new Error(body.error ?? 'Not changed.');
+      if (!res.ok) throw new Error(body.error ?? t('Not changed.'));
       router.refresh();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Not changed.');
+      setError(e instanceof Error ? e.message : t('Not changed.'));
     } finally {
       setBusy(false);
     }
@@ -41,7 +43,7 @@ export default function PublishToggle({ slug, title, published }: { slug: string
         disabled={busy}
         className="rounded-md border border-line px-2 py-0.5 text-xs text-ink transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
       >
-        {busy ? '…' : published ? 'Unpublish' : 'Publish'}
+        {busy ? '…' : published ? t('Unpublish') : t('Publish')}
       </button>
       {error && <span className="text-xs text-accent" role="alert">{error}</span>}
     </span>

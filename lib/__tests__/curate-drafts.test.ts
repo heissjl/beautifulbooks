@@ -91,3 +91,33 @@ describe('listDrafts', () => {
     expect((await listDrafts(store)).map(d => d.title)).toEqual(['B', 'A']);
   });
 });
+
+describe('a work shown twice (two printings, two designs; Julian 2026-09-29)', () => {
+  const series = () => {
+    let d = newDraft({ title: 'Haffmans', kind: 'series' }, now);
+    d = applyOp(d, { op: 'pick', id: 'OL18067W', title: 'Lone Star', author: 'Kinky Friedman', coverId: 'ol:1' }, now);
+    return applyOp(d, { op: 'pick', id: 'OL18067W', title: 'Lone Star', author: 'Kinky Friedman', coverId: 'ol:2', again: true }, now);
+  };
+
+  it('keeps both covers when the second is added with again', () => {
+    expect(series().works.map(w => w.coverId)).toEqual(['ol:1', 'ol:2']);
+  });
+
+  it('changes only the tile named by was, and without was still the first tile, as before', () => {
+    const d = series();
+    expect(applyOp(d, { op: 'pick', id: 'OL18067W', title: 'Lone Star', author: 'Kinky Friedman', coverId: 'ol:3', was: 'ol:2' }, later).works.map(w => w.coverId)).toEqual(['ol:1', 'ol:3']);
+    expect(applyOp(d, { op: 'pick', id: 'OL18067W', title: 'Lone Star', author: 'Kinky Friedman', coverId: 'ol:3' }, later).works.map(w => w.coverId)).toEqual(['ol:3', 'ol:2']);
+  });
+
+  it('removes one tile by cover, or the whole work without one, and orders by tile keys', () => {
+    const d = series();
+    expect(applyOp(d, { op: 'remove', id: 'OL18067W', coverId: 'ol:1' }, later).works.map(w => w.coverId)).toEqual(['ol:2']);
+    expect(applyOp(d, { op: 'remove', id: 'OL18067W' }, later).works).toEqual([]);
+    expect(applyOp(d, { op: 'order', ids: ['OL18067W|ol:2', 'OL18067W|ol:1'] }, later).works.map(w => w.coverId)).toEqual(['ol:2', 'ol:1']);
+    expect(applyOp(d, { op: 'order', ids: ['OL18067W'] }, later).works.map(w => w.coverId)).toEqual(['ol:1', 'ol:2']);
+  });
+
+  it('refuses a was that is not a cover', () => {
+    expect(() => applyOp(series(), { op: 'pick', id: 'OL18067W', title: 'Lone Star', author: 'Kinky Friedman', coverId: 'ol:3', was: 'x' }, later)).toThrow(/cover/);
+  });
+});

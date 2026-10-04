@@ -5,6 +5,7 @@ import CoverImage from './CoverImage';
 import { useRowFit, type RowMeasure } from './useRowFit';
 import type { Cover } from '@/lib/model';
 import { languageName } from '@/lib/normalize';
+import { useLocale, useT } from './i18n';
 import { fitCount } from '@/lib/rowfit';
 
 export interface CoverTab {
@@ -84,6 +85,8 @@ function visibleLanguages(
 }
 
 export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked, allFirst }: CoverGalleryProps) {
+  const t = useT();
+  const locale = useLocale();
   // The tab follows the selected cover unless the user picked a tab since
   // the selection last changed (derived state, no effect needed).
   const [picked, setPicked] = useState<{ key: string; forSelectedId: string | null } | null>(null);
@@ -134,10 +137,10 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       <span className="text-xs opacity-70">{count}</span>
     </button>
   );
-  const tab = (g: CoverTab) => pill(tabKey(g), languageName(g.language), g.covers.length, isTucked(g) ? tuckedClass : '');
+  const tab = (g: CoverTab) => pill(tabKey(g), languageName(g.language, locale), g.covers.length, isTucked(g) ? tuckedClass : '');
 
   return (
-    <section aria-label="Covers">
+    <section aria-label={t('Covers')}>
       {/*
         The pills **wrap** (ROADMAP 6.8, Julian 2026-09-11, "Weg 1"), and take
         **at most two rows on a phone and three on a desktop**: what does not
@@ -146,17 +149,16 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
         of sight there while a desktop showed it (SPEC N14).
       */}
       <div className="relative mb-4">
-      <div ref={pillRow} className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Language">
-        <span className="kicker mr-2 w-full sm:w-auto">{total} cover{total !== 1 ? 's' : ''}</span>
+      <div ref={pillRow} className="flex flex-wrap items-center gap-2" role="tablist" aria-label={t('Language')}>
         {named.map(tab)}
         {tucked.length > 0 && (
           <button
             type="button"
             onClick={() => setExpanded(true)}
             className={`chip shrink-0 ${measured ? '' : 'sm:hidden'}`}
-            aria-label={`Show ${tucked.length} more languages`}
+            aria-label={t('Show {n} more languages', { n: tucked.length })}
           >
-            +{tucked.length} more
+            {t('+{n} more', { n: tucked.length })}
           </button>
         )}
         {unknown && tab(unknown)}
@@ -165,7 +167,7 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
           and undo the language order of F2.4, which exists so that the
           searched language comes first (Julian, 2026-09-07).
         */}
-        {hasAll && pill(ALL, 'All languages', total)}
+        {hasAll && pill(ALL, t('All languages'), total)}
       </div>
       {/*
         One copy of every pill, invisible and out of the flow, so the widths of
@@ -183,16 +185,15 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       */}
       <div aria-hidden="true" className="pointer-events-none invisible absolute inset-x-0 top-0 h-0 overflow-hidden">
         <div ref={pillProbe} className="flex w-max gap-2">
-          <span data-k="kicker" className="kicker">{total} cover{total !== 1 ? 's' : ''}</span>
           {groups.map(g => (
             <span key={tabKey(g)} data-k={tabKey(g)} className="chip shrink-0">
-              {languageName(g.language)}
+              {languageName(g.language, locale)}
               <span className="text-xs opacity-70">{g.covers.length}</span>
             </span>
           ))}
-          <span data-k={MORE} className="chip shrink-0">+99 more</span>
+          <span data-k={MORE} className="chip shrink-0">{t('+{n} more', { n: 99 })}</span>
           <span data-k={ALL} className="chip shrink-0">
-            All languages
+            {t('All languages')}
             <span className="text-xs opacity-70">{total}</span>
           </span>
         </div>
@@ -218,7 +219,7 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
                 onSelectCover(cover);
               }}
               aria-pressed={selected}
-              aria-label={caption ? `Cover, ${caption}` : 'Cover'}
+              aria-label={caption ? t('Cover, {caption}', { caption }) : t('Cover')}
               /*
                 Selected and focused must look different (ROADMAP 6.55, found in a
                 real keyboard test on 2026-09-26): both drew the same accent ring,
@@ -235,7 +236,7 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
             >
               <CoverImage
                 src={cover.urlSmall ?? cover.url}
-                alt={caption ? `Cover, ${caption}` : 'Cover'}
+                alt={caption ? t('Cover, {caption}', { caption }) : t('Cover')}
                 sizes="(max-width: 640px) 33vw, (max-width: 1280px) 20vw, 12vw"
               />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-2 pb-2 pt-8 text-left text-[11px] font-medium leading-tight text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
@@ -243,11 +244,11 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
               </div>
               {onWall && (
                 <span className="pointer-events-none absolute left-1.5 top-1.5 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-medium text-on-accent">
-                  Added
+                  {t('Added')}
                 </span>
               )}
               {cover.similarIds && cover.similarIds.length > 0 && (
-                <span className="pointer-events-none absolute right-1.5 top-1.5 rounded-full bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white" title={`${cover.similarIds.length} more scan${cover.similarIds.length > 1 ? 's' : ''} of this cover`}>
+                <span className="pointer-events-none absolute right-1.5 top-1.5 rounded-full bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white" title={cover.similarIds.length === 1 ? t('1 more scan of this cover') : t('{n} more scans of this cover', { n: cover.similarIds.length })}>
                   +{cover.similarIds.length}
                 </span>
               )}

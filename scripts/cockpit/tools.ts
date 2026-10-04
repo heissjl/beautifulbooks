@@ -39,7 +39,7 @@ export interface Tool {
 
 export interface SourceFile { path: string; text: string }
 
-export const LIVE = 'https://beautifulcovers.vercel.app';
+export const LIVE = 'https://buyitscovers.com';
 export const DEV = 'http://localhost:3000';
 
 /** The doc comment at the top of a file, without stars. */

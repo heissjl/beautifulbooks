@@ -27,7 +27,7 @@ const HTML_FILE = join(import.meta.dirname, 'index.html');
 const SAMPLE_FILE = join(import.meta.dirname, 'sample.json');
 const PORT = Number(process.env.PORT ?? 4330);
 /** Where a tile links: the site's own wall for that work and cover. */
-const SITE = (process.env.SHELF_SITE ?? 'https://beautifulcovers.vercel.app').replace(/\/$/, '');
+const SITE = (process.env.SHELF_SITE ?? 'https://buyitscovers.com').replace(/\/$/, '');
 /** The browser scales the photo down first; anything larger is refused. */
 const MAX_PHOTO_BYTES = 12 * 1024 * 1024;
 

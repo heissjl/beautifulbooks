@@ -31,6 +31,10 @@ export interface WallStore {
   /** Someone pressed "Report" on a shown wall; answers the count so far. Nothing about who. */
   report(id: string): Promise<number>;
   reports(): Promise<Map<string, number>>;
+  /** One more photo read on this day (UTC, `YYYY-MM-DD`); answers the day's count so far, for the daily cap (5.11a). Nothing about who. */
+  countPhoto(day: string): Promise<number>;
+  /** Adds what a read cost to the day's spend (thousandths of a cent, lib/walls/photobudget.ts) and answers the day's total; 0 only asks. */
+  spendPhoto(day: string, units: number): Promise<number>;
 }
 
 /** The store did not answer — never to be shown as "no such wall" (SPEC N12). */
@@ -53,8 +57,20 @@ export function memoryWallStore(now: () => number = Date.now): WallStore {
   const showcase: string[] = [];
   const counts = new Map<string, number>();
   const flags = new Map<string, number>();
+  const photos = new Map<string, number>();
+  const spent = new Map<string, number>();
   return {
     kind: 'memory',
+    async spendPhoto(day, units) {
+      const n = (spent.get(day) ?? 0) + units;
+      spent.set(day, n);
+      return n;
+    },
+    async countPhoto(day) {
+      const n = (photos.get(day) ?? 0) + 1;
+      photos.set(day, n);
+      return n;
+    },
     async get(id) {
       const raw = walls.get(id);
       const until = expires.get(id);
@@ -108,6 +124,8 @@ const KEYS = {
   wall: (id: string) => `wall:${id}`,
   owner: (hash: string) => `walls:owner:${hash}`,
   all: 'walls:all',
+  photos: 'walls:photos',
+  photoSpend: 'walls:photos:spend',
   showcase: 'walls:showcase',
   views: 'walls:views',
   reports: 'walls:reports',
@@ -161,6 +179,10 @@ export function commandsWallStore(commands: RedisCommands): WallStore {
     views: () => guarded(commands.hGetAll(KEYS.views).then(countsFrom)),
     report: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.reports, id, 1) : Promise.resolve(0)).then((n) => Number(n) || 0)),
     reports: () => guarded(commands.hGetAll(KEYS.reports).then(countsFrom)),
+    // Without HINCRBY (a test double) the cap cannot count and does not bind.
+    // Without HINCRBY the budget cannot count and does not bind, like the cap.
+    spendPhoto: (day, units) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.photoSpend, day, Math.round(units)) : Promise.resolve(0)).then((n) => Number(n) || 0)),
+    countPhoto: (day) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.photos, day, 1) : Promise.resolve(0)).then((n) => Number(n) || 0)),
   };
 }
 

@@ -4,11 +4,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import CoverImage from './CoverImage';
 import AdminCollections, { type AdminCollection } from './AdminCollections';
+import { rich, useLocale, useT } from './i18n';
+import { intlTag, type Locale } from '@/lib/i18n/locale';
+import type { Translate } from '@/lib/i18n/translate';
 import { olCover } from '@/lib/curated';
 import type { Candidate } from '@/lib/collectionedit';
 import type { Draft } from '@/lib/curate/drafts';
 import type { FoundAuthor } from '@/lib/curate/catalog';
-import { NOTHING_PENDING, hasPending, moveTo, pendingOps, pendingWorks, type Pending, type WallPick } from '@/lib/curate/pending';
+import { NOTHING_PENDING, hasPending, moveTo, pendingOps, pendingWorks, pickKey, removeTile, type Pending, type WallPick } from '@/lib/curate/pending';
 
 /** A collection in the site's file that a friend can start a draft from. */
 export interface StartingPoint {
@@ -50,21 +53,21 @@ const coverNumber = (id: string) => (id.startsWith('ol:') ? Number(id.slice(3)) 
 /** A hand edit counts if it came more than a few seconds after Claude's last push. */
 const EDIT_AFTER_PUSH_MS = 5000;
 
-async function call<T>(url: string, body?: unknown): Promise<T> {
+async function call<T>(t: Translate, url: string, body?: unknown): Promise<T> {
   const res = await fetch(url, body === undefined ? {} : {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body),
   });
   const data = (await res.json().catch(() => ({}))) as T & { error?: string };
-  if (res.status === 401) throw new Error('You were signed out. Reload the page and enter the password again.');
-  if (res.status === 429) throw new Error('Too many requests. Wait a minute.');
-  if (!res.ok) throw new Error(data.error ?? 'That did not work.');
+  if (res.status === 401) throw new Error(t('You were signed out. Reload the page and enter the password again.'));
+  if (res.status === 429) throw new Error(t('Too many requests. Wait a minute.'));
+  if (!res.ok) throw new Error(data.error ?? t('That did not work.'));
   return data;
 }
 
-function when(iso: string): string {
-  return new Date(iso).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+function when(iso: string, locale: Locale): string {
+  return new Date(iso).toLocaleString(intlTag(locale), { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 }
 
 function originOf(d: Draft): Origin {
@@ -76,24 +79,27 @@ function editedSincePush(d: Draft): boolean {
 }
 
 function Thumb({ coverId, size, sizes }: { coverId: string; size: 'S' | 'M'; sizes: string }) {
+  const t = useT();
   const n = coverNumber(coverId);
-  return n ? <CoverImage src={olCover(n, size)} alt="" sizes={sizes} /> : <span className="flex h-full items-center justify-center text-[9px] text-ink-3">own image</span>;
+  return n ? <CoverImage src={olCover(n, size)} alt="" sizes={sizes} /> : <span className="flex h-full items-center justify-center text-[9px] text-ink-3">{t('own image')}</span>;
 }
 
 /** Where a draft came from and what happened to it since, in a row of small labels. */
 function DraftBadges({ d, collections }: { d: Draft; collections: AdminCollection[] }) {
+  const t = useT();
+  const locale = useLocale();
   const site = collections.find(c => c.slug === d.slug);
   return (
     <span className="flex flex-wrap gap-1">
       {d.pushedAt
-        ? <span className={`${badge} border-ink-3/40 text-ink-2`} title={`Last pushed by Claude ${when(d.pushedAt)}`}>Claude · {when(d.pushedAt)}</span>
-        : <span className={`${badge} border-accent/40 text-accent`}>by hand{d.by ? ` · ${d.by}` : ''}</span>}
-      {editedSincePush(d) && <span className={`${badge} border-accent/40 text-accent`}>edited by hand since</span>}
-      {d.publishedOn && <span className={`${badge} border-ink-3/40 text-ink-2`}>published from here {when(d.publishedOn)}</span>}
-      {d.importedOn && <span className={`${badge} border-ink-3/40 text-ink-2`}>taken into the file {d.importedOn}</span>}
+        ? <span className={`${badge} border-ink-3/40 text-ink-2`} title={t('Last pushed by Claude {when}', { when: when(d.pushedAt, locale) })}>Claude · {when(d.pushedAt, locale)}</span>
+        : <span className={`${badge} border-accent/40 text-accent`}>{t('by hand')}{d.by ? ` · ${d.by}` : ''}</span>}
+      {editedSincePush(d) && <span className={`${badge} border-accent/40 text-accent`}>{t('edited by hand since')}</span>}
+      {d.publishedOn && <span className={`${badge} border-ink-3/40 text-ink-2`}>{t('published from here {when}', { when: when(d.publishedOn, locale) })}</span>}
+      {d.importedOn && <span className={`${badge} border-ink-3/40 text-ink-2`}>{t('taken into the file {date}', { date: d.importedOn })}</span>}
       {site
-        ? <span className={`${badge} border-line text-ink-3`}>{site.published ? 'collection is live' : 'collection not published'}</span>
-        : <span className={`${badge} border-line text-ink-3`}>new collection</span>}
+        ? <span className={`${badge} border-line text-ink-3`}>{site.published ? t('collection is live') : t('collection not published')}</span>
+        : <span className={`${badge} border-line text-ink-3`}>{t('new collection')}</span>}
     </span>
   );
 }
@@ -120,6 +126,8 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
   /** Julian signed in as admin: he may publish a draft on the site (5.10g). */
   admin?: boolean;
 }) {
+  const t = useT();
+  const locale = useLocale();
   const [drafts, setDrafts] = useState(initialDrafts);
   const [currentId, setCurrentId] = useState<string | null>(
     initialDrafts.some(d => d.id === initialId) ? (initialId ?? null) : null,
@@ -135,6 +143,8 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
   const [candidates, setCandidates] = useState<Record<string, Candidate[] | 'loading' | { error: string }>>({});
   const [picking, setPicking] = useState<Picking | null>(null);
   const [drag, setDrag] = useState<string | null>(null);
+  /** In the cover picker: add the cover as a further tile and keep the one on the wall (two printings, two designs). */
+  const [pickAgain, setPickAgain] = useState(false);
   const [dropAt, setDropAt] = useState<string | null>(null);
   const [filter, setFilter] = useState<{ origin: 'all' | Origin; slug: string; text: string }>({ origin: 'all', slug: '', text: '' });
   // Which work the cover window is searching for; read only in handlers, so the
@@ -154,7 +164,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
   }, [dirty]);
 
   function open(id: string | null) {
-    if (dirty && !window.confirm('You have unsaved changes. Leave without saving?')) return;
+    if (dirty && !window.confirm(t('You have unsaved changes. Leave without saving?'))) return;
     setPending(NOTHING_PENDING);
     setCurrentId(id);
     setFound(null);
@@ -169,7 +179,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
 
   function take(next: Draft) {
     setDrafts(prev => (prev.some(d => d.id === next.id) ? prev.map(d => (d.id === next.id ? next : d)) : [next, ...prev]));
-    setSaved(`Saved ${new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`);
+    setSaved(t('Saved {time}', { time: new Date().toLocaleTimeString(intlTag(locale), { hour: '2-digit', minute: '2-digit' }) }));
   }
 
   /** A change that goes to the server at once: authors, publishers, publish, delete. */
@@ -177,7 +187,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
     if (!draft) return;
     setError('');
     try {
-      const { draft: next } = await call<{ draft: Draft }>(`/api/curate/drafts/${draft.id}`, op);
+      const { draft: next } = await call<{ draft: Draft }>(t, `/api/curate/drafts/${draft.id}`, op);
       if (next.deleted) {
         setDrafts(prev => prev.filter(d => d.id !== next.id));
         setPending(NOTHING_PENDING);
@@ -186,7 +196,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
       }
       take(next);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Not saved.');
+      setError(e instanceof Error ? e.message : t('Not saved.'));
     }
   }
 
@@ -195,26 +205,26 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
     setError('');
     setSaving(true);
     try {
-      const { draft: next } = await call<{ draft: Draft }>(`/api/curate/drafts/${draft.id}`, { op: 'batch', ops: pendingOps(pending, wall.map(w => w.id)) });
+      const { draft: next } = await call<{ draft: Draft }>(t, `/api/curate/drafts/${draft.id}`, { op: 'batch', ops: pendingOps(pending, wall.map(pickKey)) });
       take(next);
       setPending(NOTHING_PENDING);
     } catch (e) {
-      setError(`${e instanceof Error ? e.message : 'Not saved.'} Your changes are still here; try Save again.`);
+      setError(`${e instanceof Error ? e.message : t('Not saved.')} ${t('Your changes are still here; try Save again.')}`);
     } finally {
       setSaving(false);
     }
   }
 
   function discard() {
-    if (window.confirm('Throw away the changes since the last save?')) setPending(NOTHING_PENDING);
+    if (window.confirm(t('Throw away the changes since the last save?'))) setPending(NOTHING_PENDING);
   }
 
   async function refresh() {
     setError('');
     try {
-      setDrafts((await call<{ drafts: Draft[] }>('/api/curate/drafts')).drafts);
+      setDrafts((await call<{ drafts: Draft[] }>(t, '/api/curate/drafts')).drafts);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Could not load the drafts.');
+      setError(e instanceof Error ? e.message : t('Could not load the drafts.'));
     }
   }
 
@@ -222,7 +232,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
     event.preventDefault();
     setError('');
     try {
-      const { draft: d } = await call<{ draft: Draft }>('/api/curate/drafts', {
+      const { draft: d } = await call<{ draft: Draft }>(t, '/api/curate/drafts', {
         title: creating.title,
         kind: creating.kind,
         by: creating.by,
@@ -232,7 +242,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
       open(d.id);
       setCreating(c => ({ ...c, title: '', from: '' }));
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Not created.');
+      setError(e instanceof Error ? e.message : t('Not created.'));
     }
   }
 
@@ -241,9 +251,9 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
     setError('');
     setFound(null);
     try {
-      setFound((await call<{ found: FoundAuthor[] }>(`/api/curate/find-author?q=${encodeURIComponent(authorQuery)}`)).found);
+      setFound((await call<{ found: FoundAuthor[] }>(t, `/api/curate/find-author?q=${encodeURIComponent(authorQuery)}`)).found);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'The search did not answer.');
+      setError(e instanceof Error ? e.message : t('The search did not answer.'));
     }
   }
 
@@ -255,12 +265,13 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
     setCandidates(c => ({ ...c, [key]: 'loading' }));
     try {
       const { candidates: list } = await call<{ candidates: Candidate[] }>(
+        t,
         `/api/curate/candidates?draft=${draft.id}&source=${encodeURIComponent(source)}`,
       );
       setCandidates(c => ({ ...c, [key]: list }));
     } catch (e) {
       // A failure is said as one, and the next open asks again (N12).
-      setCandidates(c => ({ ...c, [key]: { error: e instanceof Error ? e.message : 'Open Library did not answer.' } }));
+      setCandidates(c => ({ ...c, [key]: { error: e instanceof Error ? e.message : t('Open Library did not answer.') } }));
     }
   }
 
@@ -281,6 +292,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
     while (at !== null) {
       try {
         const body: { covers: CoverChoice[]; next: number | null; scanned: number; total: number; capped: boolean } = await call(
+          t,
           `/api/curate/covers?draft=${draft.id}&work=${workId}&offset=${at}`,
         );
         if (searching.current !== workId) return; // closed, or another book opened
@@ -298,7 +310,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
         at = body.next;
       } catch (e) {
         if (searching.current !== workId) return;
-        setPicking({ ...state, loading: false, error: e instanceof Error ? e.message : 'The covers did not load.' });
+        setPicking({ ...state, loading: false, error: e instanceof Error ? e.message : t('The covers did not load.') });
         return;
       }
     }
@@ -307,6 +319,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
   function startPicking(work: Picking['work'], chosen?: string) {
     const p: Picking = { work, chosen, covers: [], next: 0, loading: true, error: '', scanned: 0, total: null, capped: false };
     setPicking(p);
+    setPickAgain(false);
     void loadCovers(p, 0);
   }
 
@@ -315,32 +328,47 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
     setPicking(null);
   }
 
-  /** A chosen cover waits for Save like every other edit; choosing takes a removed book back. */
+  /**
+   * A chosen cover waits for Save like every other edit; choosing takes a
+   * removed book back. The tile being changed is the one the picker opened
+   * from (its current cover is `chosen`); with `again`, the cover becomes a
+   * further tile and the old one stays.
+   */
   function choose(coverId: string) {
     if (!picking) return;
-    const { work } = picking;
+    const { work, chosen } = picking;
+    const again = pickAgain;
     closePicking();
-    setPending(p => ({ ...p, removed: p.removed.filter(id => id !== work.id), picks: { ...p.picks, [work.id]: { ...work, coverId } } }));
-  }
-
-  function remove(id: string) {
+    const shownKey = chosen !== undefined && wall.some(w => w.id === work.id && w.coverId === chosen) ? `${work.id}|${chosen}` : null;
+    const nextKey = `${work.id}|${coverId}`;
     setPending(p => {
       const picks = { ...p.picks };
-      const wasNew = !draft?.works.some(w => w.id === id);
-      delete picks[id];
-      return { ...p, picks, removed: wasNew ? p.removed : [...new Set([...p.removed, id])], order: p.order?.filter(x => x !== id) ?? null };
+      if (again || !shownKey) {
+        if (wall.some(w => pickKey(w) === nextKey)) return p;
+        picks[nextKey] = { ...work, coverId, ...(again ? { again: true } : {}) };
+        return { ...p, picks, order: p.order ? [...p.order, nextKey] : null };
+      }
+      // A tile whose cover was already changed keeps its saved key, so Save can say which tile it replaces.
+      const savedKey = Object.keys(picks).find(k => pickKey(picks[k]) === shownKey) ?? shownKey;
+      picks[savedKey] = { ...picks[savedKey], ...work, coverId };
+      return { ...p, picks, removed: p.removed.filter(k => k !== savedKey), order: p.order?.map(k => (k === shownKey ? nextKey : k)) ?? null };
     });
   }
 
-  function place(id: string, to: number) {
-    const ids = wall.map(w => w.id);
-    const next = moveTo(ids, id, to);
-    if (next.join() !== ids.join()) setPending(p => ({ ...p, order: next }));
+  function remove(key: string) {
+    const saved = new Set((draft?.works ?? []).map(pickKey));
+    setPending(p => removeTile(p, saved, key));
+  }
+
+  function place(key: string, to: number) {
+    const keys = wall.map(pickKey);
+    const next = moveTo(keys, key, to);
+    if (next.join() !== keys.join()) setPending(p => ({ ...p, order: next }));
   }
 
   function drop(onto: string) {
     if (!drag || drag === onto) return;
-    place(drag, wall.findIndex(w => w.id === onto));
+    place(drag, wall.findIndex(w => pickKey(w) === onto));
     setDrag(null);
     setDropAt(null);
   }
@@ -350,7 +378,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
   const shownTitle = pending.title ?? draft?.title ?? '';
   const shownIntro = pending.intro ?? draft?.intro ?? '';
   const shownBy = pending.by ?? draft?.by ?? '';
-  const pendingCount = pendingOps(pending, wall.map(w => w.id)).length;
+  const pendingCount = pendingOps(pending, wall.map(pickKey)).length;
 
   const draftsBySlug = useMemo(() => {
     const out: Record<string, number> = {};
@@ -380,12 +408,14 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
 
           <section id="drafts" className="scroll-mt-20">
             <div className="flex flex-wrap items-baseline justify-between gap-3">
-              <h2 className="font-display text-2xl text-ink">Drafts</h2>
-              <button type="button" onClick={refresh} className={button}>Refresh</button>
+              <h2 className="font-display text-2xl text-ink">{t('Drafts')}</h2>
+              <button type="button" onClick={refresh} className={button}>{t('Refresh')}</button>
             </div>
             <p className="mt-1 text-xs text-ink-3">
-              <b className="font-medium text-ink-2">Claude</b> marks a draft Claude pushed from the collections file; <b className="font-medium text-accent">by hand</b> one started here.
-              A draft changes no page until it is published.
+              {rich(t('{claude} marks a draft Claude pushed from the collections file; {hand} one started here. A draft changes no page until it is published.'), {
+                claude: <b className="font-medium text-ink-2">Claude</b>,
+                hand: <b className="font-medium text-accent">{t('by hand')}</b>,
+              })}
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-2">
               {(['all', 'claude', 'hand'] as const).map(o => (
@@ -396,7 +426,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
                   aria-pressed={filter.origin === o}
                   className={`${badge} px-3 py-1 text-xs ${filter.origin === o ? 'border-accent bg-accent text-on-accent' : 'border-line text-ink-2 hover:border-accent'}`}
                 >
-                  {o === 'all' ? 'All' : o === 'claude' ? 'Pushed by Claude' : 'By hand'} ({counts[o]})
+                  {o === 'all' ? t('All') : o === 'claude' ? t('Pushed by Claude') : t('By hand')} ({counts[o]})
                 </button>
               ))}
               {filter.slug && (
@@ -404,9 +434,9 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
                   {collections.find(c => c.slug === filter.slug)?.title ?? filter.slug} ×
                 </button>
               )}
-              <input value={filter.text} onChange={e => setFilter(f => ({ ...f, text: e.target.value }))} placeholder="Find a draft" className="ml-auto w-full rounded-md border border-line bg-surface px-3 py-1 text-sm text-ink focus:border-accent focus:outline-none sm:w-56" />
+              <input value={filter.text} onChange={e => setFilter(f => ({ ...f, text: e.target.value }))} placeholder={t('Find a draft')} className="ml-auto w-full rounded-md border border-line bg-surface px-3 py-1 text-sm text-ink focus:border-accent focus:outline-none sm:w-56" />
             </div>
-            {listed.length === 0 && <p className="mt-3 text-sm text-ink-3">{drafts.length === 0 ? 'No drafts yet. Start one below.' : 'No draft matches.'}</p>}
+            {listed.length === 0 && <p className="mt-3 text-sm text-ink-3">{drafts.length === 0 ? t('No drafts yet. Start one below.') : t('No draft matches.')}</p>}
             <ul className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
               {listed.map(d => (
                 <li key={d.id}>
@@ -421,9 +451,9 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
                     <span className="min-w-0 flex-1 space-y-1">
                       <span className="flex items-baseline gap-2">
                         <span className="min-w-0 flex-1 truncate font-medium text-ink">{d.title}</span>
-                        <span className="shrink-0 text-xs tabular-nums text-ink-3">{d.works.length} {d.works.length === 1 ? 'book' : 'books'}</span>
+                        <span className="shrink-0 text-xs tabular-nums text-ink-3">{d.works.length === 1 ? t('1 book') : t('{n} books', { n: d.works.length })}</span>
                       </span>
-                      <span className="block text-xs text-ink-3">changed {when(d.updatedAt)} · /collections/{d.slug}{draftsBySlug[d.slug] > 1 ? ` · ${draftsBySlug[d.slug]} drafts for this address` : ''}</span>
+                      <span className="block text-xs text-ink-3">{t('changed {when}', { when: when(d.updatedAt, locale) })} · /collections/{d.slug}{draftsBySlug[d.slug] > 1 ? ` · ${t('{n} drafts for this address', { n: draftsBySlug[d.slug] })}` : ''}</span>
                       <DraftBadges d={d} collections={collections} />
                     </span>
                   </button>
@@ -433,29 +463,29 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
           </section>
 
           <section className="max-w-xl">
-            <h2 className="font-display text-2xl text-ink">Start a draft</h2>
+            <h2 className="font-display text-2xl text-ink">{t('Start a draft')}</h2>
             <form onSubmit={create} className="mt-4 space-y-3">
               <select value={creating.from} onChange={e => setCreating(c => ({ ...c, from: e.target.value }))} className={field}>
-                <option value="">A new collection</option>
+                <option value="">{t('A new collection')}</option>
                 {startingPoints.map(p => (
-                  <option key={p.slug} value={p.slug}>Continue “{p.title}” ({p.works} books)</option>
+                  <option key={p.slug} value={p.slug}>{t('Continue “{title}” ({n} books)', { title: p.title, n: p.works })}</option>
                 ))}
               </select>
               {!creating.from && (
                 <>
-                  <input value={creating.title} onChange={e => setCreating(c => ({ ...c, title: e.target.value }))} maxLength={120} placeholder="Title, e.g. Penguin Modern Classics" className={field} />
+                  <input value={creating.title} onChange={e => setCreating(c => ({ ...c, title: e.target.value }))} maxLength={120} placeholder={t('Title, e.g. Penguin Modern Classics')} className={field} />
                   <div className="flex gap-4 text-sm text-ink-2">
                     <label className="flex items-center gap-2">
-                      <input type="radio" checked={creating.kind === 'authors'} onChange={() => setCreating(c => ({ ...c, kind: 'authors' }))} /> Books by a list of authors
+                      <input type="radio" checked={creating.kind === 'authors'} onChange={() => setCreating(c => ({ ...c, kind: 'authors' }))} /> {t('Books by a list of authors')}
                     </label>
                     <label className="flex items-center gap-2">
-                      <input type="radio" checked={creating.kind === 'series'} onChange={() => setCreating(c => ({ ...c, kind: 'series' }))} /> A publisher&rsquo;s series
+                      <input type="radio" checked={creating.kind === 'series'} onChange={() => setCreating(c => ({ ...c, kind: 'series' }))} /> {t('A publisher’s series')}
                     </label>
                   </div>
                 </>
               )}
-              <input value={creating.by} onChange={e => setCreating(c => ({ ...c, by: e.target.value }))} maxLength={60} placeholder="Your name, so Julian knows who to thank (optional)" className={field} />
-              <button type="submit" disabled={!creating.from && !creating.title.trim()} className={button}>Start</button>
+              <input value={creating.by} onChange={e => setCreating(c => ({ ...c, by: e.target.value }))} maxLength={60} placeholder={t('Your name, so Julian knows who to thank (optional)')} className={field} />
+              <button type="submit" disabled={!creating.from && !creating.title.trim()} className={button}>{t('Start')}</button>
             </form>
           </section>
         </>
@@ -465,55 +495,56 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
         <>
           {/* The save bar stays in view while scrolling a long wall. */}
           <div className="sticky top-0 z-20 -mx-4 flex flex-wrap items-center gap-3 border-b border-line bg-bg/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
-            <button type="button" onClick={() => open(null)} className="text-sm text-ink-2 hover:text-accent">← All drafts</button>
+            <button type="button" onClick={() => open(null)} className="text-sm text-ink-2 hover:text-accent">{t('← All drafts')}</button>
             <span className="min-w-0 flex-1 truncate font-display text-lg text-ink">{shownTitle}</span>
             {dirty ? (
               <>
-                <span className="text-xs text-accent">{pendingCount} unsaved {pendingCount === 1 ? 'change' : 'changes'}</span>
-                <button type="button" onClick={discard} disabled={saving} className={button}>Discard</button>
-                <button type="button" onClick={save} disabled={saving} className={primary}>{saving ? 'Saving…' : 'Save'}</button>
+                <span className="text-xs text-accent">{pendingCount === 1 ? t('1 unsaved change') : t('{n} unsaved changes', { n: pendingCount })}</span>
+                <button type="button" onClick={discard} disabled={saving} className={button}>{t('Discard')}</button>
+                <button type="button" onClick={save} disabled={saving} className={primary}>{saving ? t('Saving…') : t('Save')}</button>
               </>
             ) : (
-              <span className="text-xs text-ink-3">{saved || 'No unsaved changes'}</span>
+              <span className="text-xs text-ink-3">{saved || t('No unsaved changes')}</span>
             )}
           </div>
 
           <div className="space-y-2">
             <DraftBadges d={draft} collections={collections} />
             <p className="text-xs text-ink-3">
-              /collections/{draft.slug} · {draft.works.length} books · changed {when(draft.updatedAt)}
-              {collections.some(c => c.slug === draft.slug) && <> · <Link href={`/collections/${draft.slug}`} className="underline underline-offset-2 hover:text-accent">see the collection</Link></>}
+              /collections/{draft.slug} · {t('{n} books', { n: draft.works.length })} · {t('changed {when}', { when: when(draft.updatedAt, locale) })}
+              {collections.some(c => c.slug === draft.slug) && <> · <Link href={`/collections/${draft.slug}`} className="underline underline-offset-2 hover:text-accent">{t('see the collection')}</Link></>}
             </p>
-            {draft.importedOn && <p className="text-xs text-accent">Taken over by Julian on {draft.importedOn}; later changes are not on the site until published.</p>}
+            {draft.importedOn && <p className="text-xs text-accent">{t('Taken over by Julian on {date}; later changes are not on the site until published.', { date: draft.importedOn })}</p>}
           </div>
 
           <section className="max-w-2xl space-y-3">
-            <h2 className={heading}>Page</h2>
-            <input value={shownTitle} maxLength={120} onChange={e => { const v = e.target.value; setPending(p => ({ ...p, title: v === draft.title ? undefined : v })); }} className={`${field} font-display text-xl`} aria-label="Title" />
-            <textarea value={shownIntro} maxLength={1200} rows={3} onChange={e => { const v = e.target.value; setPending(p => ({ ...p, intro: v === draft.intro ? undefined : v })); }} placeholder="A paragraph for the page: what holds these books together?" className={field} aria-label="Introduction" />
-            <input value={shownBy} maxLength={60} onChange={e => { const v = e.target.value; setPending(p => ({ ...p, by: v === (draft.by ?? '') ? undefined : v })); }} placeholder="Your name (optional)" className={field} aria-label="Your name" />
+            <h2 className={heading}>{t('Page')}</h2>
+            <input value={shownTitle} maxLength={120} onChange={e => { const v = e.target.value; setPending(p => ({ ...p, title: v === draft.title ? undefined : v })); }} className={`${field} font-display text-xl`} aria-label={t('Title')} />
+            <textarea value={shownIntro} maxLength={1200} rows={3} onChange={e => { const v = e.target.value; setPending(p => ({ ...p, intro: v === draft.intro ? undefined : v })); }} placeholder={t('A paragraph for the page: what holds these books together?')} className={field} aria-label={t('Introduction')} />
+            <input value={shownBy} maxLength={60} onChange={e => { const v = e.target.value; setPending(p => ({ ...p, by: v === (draft.by ?? '') ? undefined : v })); }} placeholder={t('Your name (optional)')} className={field} aria-label={t('Your name')} />
           </section>
 
           <section>
-            <h2 className={heading}>Wall ({wall.length})</h2>
+            <h2 className={heading}>{t('Wall ({n})', { n: wall.length })}</h2>
             <p className="mt-1 text-xs text-ink-3">
-              Drag a cover onto another to put it there, or use <b className="font-medium">⇤</b> (to the front), the arrows and ×. Tap a cover to choose another. Nothing is kept until you press <b className="font-medium">Save</b>.
+              {rich(t('Drag a cover onto another to put it there, or use {front} (to the front), the arrows and ×. Tap a cover to choose another. Nothing is kept until you press {save}.'), { front: <b className="font-medium">⇤</b>, save: <b className="font-medium">{t('Save')}</b> })}
             </p>
-            {wall.length === 0 && <p className="mt-3 text-sm text-ink-3">Nothing on the wall yet. Open an author below and pick a book.</p>}
+            {wall.length === 0 && <p className="mt-3 text-sm text-ink-3">{t('Nothing on the wall yet. Open an author below and pick a book.')}</p>}
             <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
               {wall.map((w, i) => {
-                const changed = w.id in pending.picks;
+                const key = pickKey(w);
+                const changed = Object.values(pending.picks).some(x => pickKey(x) === key);
                 return (
                   <li
-                    key={w.id}
+                    key={key}
                     draggable
-                    onDragStart={e => { setDrag(w.id); e.dataTransfer.effectAllowed = 'move'; }}
+                    onDragStart={e => { setDrag(key); e.dataTransfer.effectAllowed = 'move'; }}
                     onDragEnd={() => { setDrag(null); setDropAt(null); }}
-                    onDragOver={e => { if (drag) { e.preventDefault(); setDropAt(w.id); } }}
-                    onDrop={e => { e.preventDefault(); drop(w.id); }}
-                    className={`relative cursor-grab active:cursor-grabbing ${drag === w.id ? 'opacity-40' : ''}`}
+                    onDragOver={e => { if (drag) { e.preventDefault(); setDropAt(key); } }}
+                    onDrop={e => { e.preventDefault(); drop(key); }}
+                    className={`relative cursor-grab active:cursor-grabbing ${drag === key ? 'opacity-40' : ''}`}
                   >
-                    {dropAt === w.id && drag !== w.id && <span aria-hidden="true" className="absolute -left-2 top-0 bottom-0 w-1 rounded-full bg-accent sm:-left-2.5" />}
+                    {dropAt === key && drag !== key && <span aria-hidden="true" className="absolute -left-2 top-0 bottom-0 w-1 rounded-full bg-accent sm:-left-2.5" />}
                     <button type="button" onClick={() => startPicking(w, w.coverId)} className="block w-full text-left">
                       <span className={`cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 ${changed ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}>
                         <Thumb coverId={w.coverId} size="M" sizes="(max-width: 640px) 33vw, 16vw" />
@@ -523,9 +554,9 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
                     {/* Taking a book off the wall, where the eye already is (Julian, 2026-09-25: „i also need a button to delete a work"). */}
                     <button
                       type="button"
-                      onClick={() => remove(w.id)}
-                      aria-label={`Remove ${w.title} from the collection`}
-                      title="Remove from the collection"
+                      onClick={() => remove(key)}
+                      aria-label={t('Remove {title} from the collection', { title: w.title })}
+                      title={t('Remove from the collection')}
                       className="absolute right-1 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-bg/90 text-base leading-none text-ink shadow transition-colors hover:bg-accent hover:text-on-accent"
                     >
                       ×
@@ -533,9 +564,9 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
                     <p className="mt-1.5 line-clamp-2 text-xs font-medium leading-snug text-ink">{w.title}</p>
                     <p className="line-clamp-1 text-xs text-ink-3">{w.author}</p>
                     <div className="mt-1 flex items-center gap-0.5 text-xs text-ink-3">
-                      <button type="button" disabled={i === 0} onClick={() => place(w.id, 0)} aria-label={`Move ${w.title} to the front`} title="To the front" className="rounded px-1.5 text-sm leading-none hover:text-accent disabled:opacity-30">⇤</button>
-                      <button type="button" disabled={i === 0} onClick={() => place(w.id, i - 1)} aria-label="Move earlier" className="ml-auto rounded px-1.5 hover:text-accent disabled:opacity-30">←</button>
-                      <button type="button" disabled={i === wall.length - 1} onClick={() => place(w.id, i + 1)} aria-label="Move later" className="rounded px-1.5 hover:text-accent disabled:opacity-30">→</button>
+                      <button type="button" disabled={i === 0} onClick={() => place(key, 0)} aria-label={t('Move {title} to the front', { title: w.title })} title={t('To the front')} className="rounded px-1.5 text-sm leading-none hover:text-accent disabled:opacity-30">⇤</button>
+                      <button type="button" disabled={i === 0} onClick={() => place(key, i - 1)} aria-label={t('Move earlier')} className="ml-auto rounded px-1.5 hover:text-accent disabled:opacity-30">←</button>
+                      <button type="button" disabled={i === wall.length - 1} onClick={() => place(key, i + 1)} aria-label={t('Move later')} className="rounded px-1.5 hover:text-accent disabled:opacity-30">→</button>
                     </div>
                   </li>
                 );
@@ -544,20 +575,20 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
           </section>
 
           <section>
-            <h2 className={heading}>{draft.kind === 'authors' ? `Authors (${sources.length})` : `Publisher spellings (${sources.length})`}</h2>
+            <h2 className={heading}>{draft.kind === 'authors' ? t('Authors ({n})', { n: sources.length }) : t('Publisher spellings ({n})', { n: sources.length })}</h2>
             <p className="mt-1 text-xs text-ink-3">
               {draft.kind === 'authors'
-                ? 'Only books whose first author is on this list can go on the wall. Removing an author takes their books off it.'
-                : 'Only covers of editions filed under exactly one of these names, as Open Library spells them.'}
-              {' '}These changes are saved at once{dirty ? ' — save the wall first' : ''}.
+                ? t('Only books whose first author is on this list can go on the wall. Removing an author takes their books off it.')
+                : t('Only covers of editions filed under exactly one of these names, as Open Library spells them.')}
+              {' '}{dirty ? t('These changes are saved at once — save the wall first.') : t('These changes are saved at once.')}
             </p>
             <ul className="mt-3 flex flex-wrap gap-2">
               {sources.map(name => (
                 <li key={name} className="inline-flex items-center gap-1 rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2">
                   {name}
-                  <button type="button" disabled={dirty} aria-label={`Remove ${name}`} className="px-1 text-ink-3 hover:text-accent disabled:opacity-30" onClick={() => {
+                  <button type="button" disabled={dirty} aria-label={t('Remove {name}', { name })} className="px-1 text-ink-3 hover:text-accent disabled:opacity-30" onClick={() => {
                     const n = draft.works.filter(w => w.author === name).length;
-                    if (n && !window.confirm(`Remove ${name}? ${n} book(s) leave the wall with them.`)) return;
+                    if (n && !window.confirm(t('Remove {name}? {n} book(s) leave the wall with them.', { name, n }))) return;
                     void change(draft.kind === 'authors' ? { op: 'removeAuthor', name } : { op: 'removePublisher', name });
                   }}>×</button>
                 </li>
@@ -566,19 +597,19 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
             {draft.kind === 'authors' ? (
               <>
                 <form onSubmit={findAuthor} className="mt-3 flex max-w-md gap-2">
-                  <input value={authorQuery} onChange={e => setAuthorQuery(e.target.value)} placeholder="Add an author, e.g. Virginia Woolf" className={field} />
-                  <button type="submit" className={button}>Find</button>
+                  <input value={authorQuery} onChange={e => setAuthorQuery(e.target.value)} placeholder={t('Add an author, e.g. Virginia Woolf')} className={field} />
+                  <button type="submit" className={button}>{t('Find')}</button>
                 </form>
                 {found && (
                   <ul className="mt-2 max-w-2xl divide-y divide-line text-sm">
-                    {found.length === 0 && <li className="py-2 text-ink-3">Open Library knows nobody by that name.</li>}
+                    {found.length === 0 && <li className="py-2 text-ink-3">{t('Open Library knows nobody by that name.')}</li>}
                     {found.map(a => (
                       <li key={a.key} className="flex items-center gap-3 py-2">
                         <span className="min-w-0 flex-1">
                           <b className="font-medium text-ink">{a.name}</b>{' '}
-                          <span className="text-xs text-ink-3">{a.works} works{a.topWork ? ` · ${a.topWork}` : ''}{a.born ? ` · born ${a.born}` : ''}</span>
+                          <span className="text-xs text-ink-3">{t('{n} works', { n: a.works })}{a.topWork ? ` · ${a.topWork}` : ''}{a.born ? ` · ${t('born {year}', { year: a.born })}` : ''}</span>
                         </span>
-                        <button type="button" disabled={dirty} className={button} onClick={() => { setFound(null); setAuthorQuery(''); void change({ op: 'addAuthor', name: a.name, key: a.key }); }}>Add</button>
+                        <button type="button" disabled={dirty} className={button} onClick={() => { setFound(null); setAuthorQuery(''); void change({ op: 'addAuthor', name: a.name, key: a.key }); }}>{t('Add')}</button>
                       </li>
                     ))}
                   </ul>
@@ -586,15 +617,15 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
               </>
             ) : (
               <form onSubmit={e => { e.preventDefault(); void change({ op: 'addPublisher', name: publisher }); setPublisher(''); }} className="mt-3 flex max-w-md gap-2">
-                <input value={publisher} onChange={e => setPublisher(e.target.value)} placeholder="e.g. Penguin Classics" className={field} />
-                <button type="submit" disabled={dirty} className={button}>Add</button>
+                <input value={publisher} onChange={e => setPublisher(e.target.value)} placeholder={t('e.g. Penguin Classics')} className={field} />
+                <button type="submit" disabled={dirty} className={button}>{t('Add')}</button>
               </form>
             )}
           </section>
 
           <section>
-            <h2 className={heading}>Books to choose from</h2>
-            <p className="mt-1 text-xs text-ink-3">The most-printed works at Open Library. Open a name to list them; tap a book to see its covers.</p>
+            <h2 className={heading}>{t('Books to choose from')}</h2>
+            <p className="mt-1 text-xs text-ink-3">{t('The most-printed works at Open Library. Open a name to list them; tap a book to see its covers.')}</p>
             <div className="mt-3 space-y-2">
               {sources.map(source => {
                 const list = candidates[`${draft.id}|${source}`];
@@ -603,11 +634,11 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
                     <summary className="cursor-pointer px-3 py-2 font-medium text-ink">{source}</summary>
                     <div className="px-3 pb-3">
                       {list === undefined || list === 'loading' ? (
-                        <p className="text-sm text-ink-3">Loading…</p>
+                        <p className="text-sm text-ink-3">{t('Loading…')}</p>
                       ) : 'error' in list ? (
-                        <p className="text-sm text-accent">{list.error} Close and open again to retry.</p>
+                        <p className="text-sm text-accent">{list.error} {t('Close and open again to retry.')}</p>
                       ) : list.length === 0 ? (
-                        <p className="text-sm text-ink-3">No works found with this name as first author.</p>
+                        <p className="text-sm text-ink-3">{t('No works found with this name as first author.')}</p>
                       ) : (
                         <ul className="grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-3">
                           {list.map(c => (
@@ -617,8 +648,8 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
                                   {c.coverId && <Thumb coverId={c.coverId} size="S" sizes="32px" />}
                                 </span>
                                 <span className="min-w-0">
-                                  <span className="block truncate text-sm text-ink">{c.title}{onWall.has(c.id) && <span className="text-accent"> · on the wall</span>}</span>
-                                  <span className="block text-xs text-ink-3">{c.firstPublished ?? '?'} · {c.editions} editions{draft.kind === 'series' && c.author ? ` · ${c.author}` : ''}</span>
+                                  <span className="block truncate text-sm text-ink">{c.title}{onWall.has(c.id) && <span className="text-accent"> · {t('on the wall')}</span>}</span>
+                                  <span className="block text-xs text-ink-3">{c.firstPublished ?? '?'} · {t('{n} editions', { n: c.editions })}{draft.kind === 'series' && c.author ? ` · ${c.author}` : ''}</span>
                                 </span>
                               </button>
                             </li>
@@ -638,40 +669,47 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
           */}
           {admin && (
             <section className="max-w-2xl rounded-md border border-accent/40 p-4">
-              <h2 className={heading}>Publish · admin</h2>
+              <h2 className={heading}>{t('Publish · admin')}</h2>
               <p className="mt-1 text-sm text-ink-2">
-                Puts this draft on the site now, at /collections/{draft.slug}
-                {startingPoints.some(p => p.slug === draft.slug) ? ', in place of the collection there' : ', as a new collection'}. No deploy needed.
-                {draft.publishedOn ? ` Last published ${when(draft.publishedOn)}.` : ''}
-                {dirty ? ' Save your changes first.' : ''}
+                {startingPoints.some(p => p.slug === draft.slug)
+                  ? t('Puts this draft on the site now, at /collections/{slug}, in place of the collection there. No deploy needed.', { slug: draft.slug })
+                  : t('Puts this draft on the site now, at /collections/{slug}, as a new collection. No deploy needed.', { slug: draft.slug })}
+                {draft.publishedOn ? ` ${t('Last published {when}.', { when: when(draft.publishedOn, locale) })}` : ''}
+                {dirty ? ` ${t('Save your changes first.')}` : ''}
               </p>
               <button
                 type="button"
                 disabled={dirty}
                 className={`${button} mt-3`}
-                onClick={() => window.confirm(`Publish the draft “${draft.title}” (${draft.works.length} books) on the site now?`) && change({ op: 'publish' })}
+                onClick={() => window.confirm(t('Publish the draft “{title}” ({n} books) on the site now?', { title: draft.title, n: draft.works.length })) && change({ op: 'publish' })}
               >
-                Publish this draft
+                {t('Publish this draft')}
               </button>
             </section>
           )}
 
           <section>
-            <button type="button" className={button} onClick={() => window.confirm(`Delete the draft “${draft.title}” for everybody?`) && change({ op: 'delete' })}>
-              Delete this draft
+            <button type="button" className={button} onClick={() => window.confirm(t('Delete the draft “{title}” for everybody?', { title: draft.title })) && change({ op: 'delete' })}>
+              {t('Delete this draft')}
             </button>
           </section>
         </>
       )}
 
       {picking && (
-        <div className="fixed inset-0 z-30 flex items-start justify-center overflow-y-auto bg-black/50 p-4 sm:p-8" role="dialog" aria-modal="true" aria-label={`Covers of ${picking.work.title}`} onClick={e => e.target === e.currentTarget && closePicking()}>
+        <div className="fixed inset-0 z-30 flex items-start justify-center overflow-y-auto bg-black/50 p-4 sm:p-8" role="dialog" aria-modal="true" aria-label={t('Covers of {title}', { title: picking.work.title })} onClick={e => e.target === e.currentTarget && closePicking()}>
           <div className="w-full max-w-5xl rounded-lg border border-line bg-bg p-4 sm:p-6">
             <div className="flex items-baseline gap-3">
               <h3 className="min-w-0 flex-1 truncate font-display text-xl text-ink">{picking.work.title}</h3>
-              <button type="button" onClick={closePicking} className={button}>Close</button>
+              <button type="button" onClick={closePicking} className={button}>{t('Close')}</button>
             </div>
-            <p className="mt-1 text-sm text-ink-3">{picking.work.author} · {picking.covers.length} covers · tap one to put it on the wall (then Save)</p>
+            <p className="mt-1 text-sm text-ink-3">{picking.work.author} · {t('{n} covers', { n: picking.covers.length })} · {t('tap one to put it on the wall (then Save)')}</p>
+            {wall.some(w => w.id === picking.work.id) && (
+              <label className="mt-2 inline-flex items-center gap-2 text-sm text-ink-2">
+                <input id="curate-pick-again" type="checkbox" checked={pickAgain} onChange={e => setPickAgain(e.target.checked)} />
+                {t('Add as a further cover and keep the one on the wall')}
+              </label>
+            )}
             {/* Where the search stands: still looking, done, or stopped by an error (N12: a stop is not an end). */}
             <div className="mt-3" aria-live="polite">
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-2">
@@ -682,27 +720,29 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
               </div>
               <p className="mt-1.5 text-xs text-ink-3">
                 {picking.error
-                  ? `Search stopped after ${picking.scanned} of ${picking.total ?? '?'} editions. `
+                  ? `${t('Search stopped after {scanned} of {total} editions.', { scanned: picking.scanned, total: picking.total ?? '?' })} `
                   : picking.loading
-                    ? `Still looking — ${picking.scanned}${picking.total ? ` of ${picking.total}` : ''} editions looked through…`
-                    : `Done — looked through ${picking.total === 0 ? 'the editions' : `all ${picking.total} editions`}${picking.capped ? ' (the site stops at 1,500)' : ''}.`}
+                    ? picking.total
+                      ? t('Still looking — {scanned} of {total} editions looked through…', { scanned: picking.scanned, total: picking.total })
+                      : t('Still looking — {scanned} editions looked through…', { scanned: picking.scanned })
+                    : `${picking.total === 0 ? t('Done — looked through the editions') : t('Done — looked through {total} editions', { total: picking.total ?? 0 })}${picking.capped ? ` ${t('(the site stops at 1,500)')}` : ''}.`}
                 {picking.error && (
                   <button type="button" onClick={() => loadCovers(picking, picking.next ?? picking.scanned)} className="underline underline-offset-2 hover:text-accent">
-                    Try again
+                    {t('Try again')}
                   </button>
                 )}
               </p>
             </div>
             {picking.error && <p className="mt-2 text-sm text-accent">{picking.error}</p>}
             {!picking.loading && !picking.error && picking.covers.length === 0 && (
-              <p className="mt-3 text-sm text-ink-3">{draft?.kind === 'series' ? 'No edition with a cover under these publisher names.' : 'No covers among these editions.'}</p>
+              <p className="mt-3 text-sm text-ink-3">{draft?.kind === 'series' ? t('No edition with a cover under these publisher names.') : t('No covers among these editions.')}</p>
             )}
             <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6">
               {picking.covers.map(c => (
                 <li key={c.id}>
                   <button type="button" onClick={() => choose(c.id)} className="group block w-full text-left">
                     <span className={`cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 ${picking.chosen === c.id ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'group-hover:ring-2 group-hover:ring-line'}`}>
-                      <CoverImage src={olCover(coverNumber(c.id), 'M')} alt={`Cover ${[c.year, c.publisher].filter(Boolean).join(', ')}`} sizes="(max-width: 640px) 33vw, 16vw" fit="contain" />
+                      <CoverImage src={olCover(coverNumber(c.id), 'M')} alt={t('Cover {detail}', { detail: [c.year, c.publisher].filter(Boolean).join(', ') })} sizes="(max-width: 640px) 33vw, 16vw" fit="contain" />
                     </span>
                     <span className="mt-1 block truncate text-xs text-ink-3">{[c.year, c.publisher].filter(Boolean).join(' · ') || ' '}</span>
                   </button>

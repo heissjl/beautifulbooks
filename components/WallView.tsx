@@ -2,23 +2,30 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { rememberWall, tileAnchor } from './cameFrom';
 import CoverImage from './CoverImage';
 import WallIdField from './WallIdField';
+import { rich, useT } from './i18n';
+import type { Translate } from '@/lib/i18n/translate';
 import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
-import { MAX_BY, MAX_INTRO, MIN_SHOWCASE_TILES, UNSAVED_HOURS, type PublicWall, type WallOp } from '@/lib/walls/model';
+import { editHref } from '@/lib/walls/edit';
+import { MIN_SHOWCASE_TILES, tileCoverId, UNSAVED_HOURS, type PublicWall, type WallOp } from '@/lib/walls/model';
 
 /**
  * A reader's wall (ROADMAP 5.13a). A cover wall like every other on the site
  * — no frames (Julian, 2026-09-28: „das soll nicht wie individuell geframte
- * cover aussehen, mache hier eine klassische cover wall“). Everyone sees it;
- * its owner, the browser whose visitor id made it (E22), also gets the tools.
+ * cover aussehen, mache hier eine klassische cover wall“). Everyone sees the
+ * same wall; its owner, the browser whose visitor id made it (E22), gets
+ * "Edit collection" into the editor (5.13m) — no tools on the wall itself
+ * (Julian, 2026-09-29) — and keeps, shows and withdraws it here.
  */
 export default function WallView({ initial }: { initial: PublicWall }) {
   const [wall, setWall] = useState(initial);
   const [canEdit, setCanEdit] = useState(false);
   const [note, setNote] = useState('');
   const { me, setMe } = useMyWalls();
+  const t = useT();
 
   // Whether this browser owns the wall is the server's answer, asked once a visitor id is known.
   const visitor = me.visitor;
@@ -39,18 +46,15 @@ export default function WallView({ initial }: { initial: PublicWall }) {
       const d = await postJson<{ wall: PublicWall }>(`/api/walls/${wall.id}`, { ops });
       setWall(d.wall);
       setMe((m) => ({ ...m, walls: m.walls.map((w) => (w.id === d.wall.id ? d.wall : w)) }));
-      setNote('Saved.');
+      setNote('');
     } catch (err) {
-      setNote(err instanceof Error ? err.message : 'That did not work.');
+      setNote(err instanceof Error ? err.message : t('That did not work.'));
     }
   }
 
+  // Logged out on this page: the tools go with the ID.
+  const editable = canEdit && !!me.visitor;
   const others = me.walls.filter((w) => w.id !== wall.id);
-  const moreCovers = (
-    <Link href="/create" className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
-      Go back to search and choose more covers
-    </Link>
-  );
 
   return (
     <>
@@ -58,110 +62,83 @@ export default function WallView({ initial }: { initial: PublicWall }) {
         A collection is a try until its owner saves it (5.13j): tries expire by
         themselves, so six random covers someone looked at once do not pile up.
       */}
-      {canEdit && wall.unsaved && (
+      {editable && wall.unsaved && (
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-card border border-accent/50 bg-surface p-4" role="status">
           <p className="text-sm text-ink-2">
-            <strong className="font-medium text-ink">Not saved yet.</strong> Unsaved collections are deleted after {UNSAVED_HOURS / 24} days.
+            <strong className="font-medium text-ink">{t('Not saved yet.')}</strong> {t('Collections nobody keeps are deleted after {days} days.', { days: UNSAVED_HOURS / 24 })}
           </p>
           <button type="button" onClick={() => send([{ op: 'save' }])} className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent">
-            Save collection
+            {t('Keep it')}
           </button>
         </div>
       )}
       <div className="flex flex-wrap items-end justify-between gap-4">
-        {canEdit ? (
-          <input
-            defaultValue={wall.title}
-            key={wall.title}
-            onBlur={(e) => e.target.value.trim() !== wall.title && send([{ op: 'title', title: e.target.value }])}
-            onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
-            aria-label="Title of the collection"
-            className="min-w-0 flex-1 border-b border-transparent bg-transparent font-display text-3xl leading-tight text-ink hover:border-line focus:border-accent focus:outline-none sm:text-4xl"
-          />
-        ) : (
-          <h1 className="font-display text-3xl leading-tight text-ink sm:text-4xl">{wall.title}</h1>
-        )}
-        <button
-          type="button"
-          onClick={() => navigator.clipboard.writeText(`${location.origin}/c/${wall.id}`).then(() => setNote('Link copied.'))}
-          className="rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent"
-        >
-          Copy link
-        </button>
+        <h1 className="font-display text-3xl leading-tight text-ink sm:text-4xl">{wall.title}</h1>
+        <div className="flex flex-wrap gap-2">
+          {/* Into Arrange, not Add covers: the wall is what one came from (Julian, 2026-09-29). An empty collection still opens on Add covers below. */}
+          {editable && (
+            <Link href={editHref(wall.id, { mode: 'arrange' })} className="rounded-full bg-accent px-4 py-1 text-sm text-on-accent transition-opacity hover:opacity-90">
+              {t('Edit collection')}
+            </Link>
+          )}
+          <button
+            type="button"
+            onClick={() => navigator.clipboard.writeText(`${location.origin}/c/${wall.id}`).then(() => setNote(t('Link copied.')))}
+            className="rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent"
+          >
+            {t('Copy link')}
+          </button>
+        </div>
       </div>
-
-      {canEdit ? (
-        <input
-          defaultValue={wall.by ?? ''}
-          key={`by-${wall.by ?? ''}`}
-          maxLength={MAX_BY}
-          placeholder="Your name (optional, shown with the collection)"
-          onBlur={(e) => e.target.value.trim() !== (wall.by ?? '') && send([{ op: 'by', by: e.target.value }])}
-          onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
-          aria-label="Your name"
-          className="mt-3 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink-2 placeholder:text-ink-3"
-        />
-      ) : (
-        wall.by && <p className="mt-2 text-sm text-ink-3">by {wall.by}</p>
-      )}
-
-      {canEdit ? (
-        <textarea
-          defaultValue={wall.intro ?? ''}
-          key={wall.intro ?? ''}
-          maxLength={MAX_INTRO}
-          rows={2}
-          placeholder="A few lines about this collection — what ties it together."
-          onBlur={(e) => e.target.value.trim() !== (wall.intro ?? '') && send([{ op: 'intro', intro: e.target.value }])}
-          aria-label="A few lines about this collection"
-          className="mt-4 block w-full max-w-2xl resize-y rounded-md border border-line bg-surface px-3 py-2 text-base text-ink-2 placeholder:text-ink-3"
-        />
-      ) : (
-        wall.intro && <p className="mt-4 max-w-2xl whitespace-pre-line text-base text-ink-2">{wall.intro}</p>
-      )}
+      {wall.by && <p className="mt-2 text-sm text-ink-3">{t('by {name}', { name: wall.by })}</p>}
+      {wall.intro && <p className="mt-4 max-w-2xl whitespace-pre-line text-base text-ink-2">{wall.intro}</p>}
 
       <p className="mt-3 text-sm text-ink-3" role="status">
-        {wall.tiles.length === 0 ? 'No covers yet.' : `${wall.tiles.length} ${wall.tiles.length === 1 ? 'cover' : 'covers'}.`}
+        {wall.tiles.length === 0 ? t('No covers yet.') : wall.tiles.length === 1 ? t('1 cover.') : t('{n} covers.', { n: wall.tiles.length })}
+        {editable && ` ${t('Yours.')}`}
         {note && <span className="ml-2 text-ink-2">{note}</span>}
       </p>
 
       {wall.tiles.length === 0 ? (
-        <p className="mt-8 text-sm text-ink-2">{canEdit ? moreCovers : 'This collection is empty.'}</p>
+        <p className="mt-8 text-sm text-ink-2">
+          {editable ? (
+            <Link href={editHref(wall.id)} className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
+              {t('Add covers in the editor')}
+            </Link>
+          ) : (
+            t('This collection is empty.')
+          )}
+        </p>
       ) : (
         <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5">
-          {wall.tiles.map((t, i) => {
-            const src = coverUrlFor(`ol:${t.coverId}`, 'M');
-            const label = t.author ? `${t.title} by ${t.author}` : t.title;
+          {wall.tiles.map((tile) => {
+            const src = coverUrlFor(tileCoverId(tile), 'M');
+            const label = tile.author ? t('{title} by {author}', { title: tile.title, author: tile.author }) : tile.title;
             return (
-              <li key={t.coverId} className="group relative">
-                <Link href={`/book/${t.workId}?cover=ol:${t.coverId}`} title={label} className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out hover:-translate-y-1">
+              <li key={tile.coverId} id={tileAnchor(tile.workId, tile.coverId)} className="scroll-mt-24">
+                <Link
+                  href={`/book/${tile.workId}?cover=${tileCoverId(tile)}`}
+                  title={label}
+                  onClick={() => rememberWall({ href: `/c/${wall.id}#${tileAnchor(tile.workId, tile.coverId)}`, title: wall.title, workId: tile.workId })}
+                  className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out hover:-translate-y-1">
                   {src && <CoverImage src={src} alt={label} sizes="(max-width: 640px) 33vw, (max-width: 1280px) 25vw, 20vw" />}
                 </Link>
-                {canEdit && (
-                  <div className="absolute inset-x-1.5 bottom-1.5 flex justify-between opacity-100 transition-opacity sm:opacity-0 sm:group-focus-within:opacity-100 sm:group-hover:opacity-100">
-                    <ToolButton label="Move left" hidden={i === 0} onClick={() => send([{ op: 'move', coverId: t.coverId, to: i - 1 }])}>←</ToolButton>
-                    <ToolButton label="Remove" onClick={() => send([{ op: 'remove', coverId: t.coverId }])}>✕</ToolButton>
-                    <ToolButton label="Move right" hidden={i === wall.tiles.length - 1} onClick={() => send([{ op: 'move', coverId: t.coverId, to: i + 1 }])}>→</ToolButton>
-                  </div>
-                )}
               </li>
             );
           })}
         </ul>
       )}
 
-      {canEdit && wall.tiles.length > 0 && <p className="mt-6 text-sm">{moreCovers}</p>}
-
-      {canEdit && <Showcase wall={wall} onSend={send} />}
-      {!canEdit && wall.showcase === 'shown' && <Report id={wall.id} />}
+      {editable && <Showcase wall={wall} onSend={send} t={t} />}
+      {!editable && wall.showcase === 'shown' && <Report id={wall.id} t={t} />}
 
       {others.length > 0 && (
-        <nav className="mt-12" aria-label="Your other collections">
-          <h2 className="kicker">Your other collections</h2>
+        <nav className="mt-12" aria-label={t('Your other collections')}>
+          <h2 className="text-xl leading-snug text-ink">{t('Your other collections')}</h2>
           <ul className="mt-2 flex flex-wrap gap-2">
             {others.map((w) => (
               <li key={w.id}>
-                <Link href={`/c/${w.id}`} className="inline-block rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent">
+                <Link href={editHref(w.id)} className="inline-block rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent">
                   {w.title} <span className="text-ink-3">{w.tiles.length}</span>
                 </Link>
               </li>
@@ -175,34 +152,22 @@ export default function WallView({ initial }: { initial: PublicWall }) {
   );
 }
 
-function ToolButton({ label, hidden, onClick, children }: { label: string; hidden?: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      title={label}
-      onClick={onClick}
-      className={`h-7 w-7 rounded-full bg-black/75 text-sm text-white hover:bg-accent ${hidden ? 'invisible' : ''}`}
-    >
-      {children}
-    </button>
-  );
-}
-
 /**
  * Showing the wall among readers' walls (ROADMAP 5.13d): at once, without a
  * review (Julian, 2026-09-28). A wall Julian took down stays down.
  */
-function Showcase({ wall, onSend }: { wall: PublicWall; onSend: (ops: WallOp[]) => void }) {
+function Showcase({ wall, onSend, t }: { wall: PublicWall; onSend: (ops: WallOp[]) => void; t: Translate }) {
   const short = wall.tiles.length < MIN_SHOWCASE_TILES;
   const unsaved = !!wall.unsaved;
   return (
     <section className="mt-10" aria-labelledby="showcase">
-      <h2 id="showcase" className="text-sm font-medium text-ink">Show it to others</h2>
+      <h2 id="showcase" className="text-sm font-medium text-ink">{t('Show it to others')}</h2>
       {!wall.showcase && (
         <>
           <p className="mt-1 text-sm text-ink-2">
-            Put this collection on <Link href="/collections/readers" className="underline underline-offset-2 hover:text-accent">Collections by readers</Link>, with its title and your lines. Much-visited ones also stand among our own collections.
+            {rich(t('Put this collection on {readers}, with its title and your lines. Much-visited ones also stand among our own collections.'), {
+              readers: <Link href="/collections/readers" className="underline underline-offset-2 hover:text-accent">{t('Collections by readers')}</Link>,
+            })}
           </p>
           <button
             type="button"
@@ -210,34 +175,34 @@ function Showcase({ wall, onSend }: { wall: PublicWall; onSend: (ops: WallOp[]) 
             onClick={() => onSend([{ op: 'submit' }])}
             className="mt-3 rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent disabled:opacity-40"
           >
-            Show it
+            {t('Show it')}
           </button>
           {unsaved ? (
-            <p className="mt-1 text-xs text-ink-3">Save the collection first.</p>
+            <p className="mt-1 text-xs text-ink-3">{t('Keep the collection first.')}</p>
           ) : (
-            short && <p className="mt-1 text-xs text-ink-3">Add a cover first.</p>
+            short && <p className="mt-1 text-xs text-ink-3">{t('Add a cover first.')}</p>
           )}
         </>
       )}
       {wall.showcase === 'shown' && (
         <p className="mt-1 text-sm text-ink-2">
-          Shown on <Link href="/collections/readers" className="underline underline-offset-2 hover:text-accent">Collections by readers</Link>.{' '}
-          <button type="button" className="underline underline-offset-2 hover:text-accent" onClick={() => onSend([{ op: 'withdraw' }])}>Stop showing it</button>
+          {rich(t('Shown on {readers}.'), { readers: <Link href="/collections/readers" className="underline underline-offset-2 hover:text-accent">{t('Collections by readers')}</Link> })}{' '}
+          <button type="button" className="underline underline-offset-2 hover:text-accent" onClick={() => onSend([{ op: 'withdraw' }])}>{t('Stop showing it')}</button>
         </p>
       )}
       {wall.showcase === 'hidden' && (
         <p className="mt-1 text-sm text-ink-2">
           {wall.hiddenBy === 'reports'
-            ? 'Several readers reported this collection, so it is off Collections by readers until we have looked at it.'
-            : 'We took this collection down from Collections by readers.'}{' '}
-          The link still works for you and anyone you share it with.
+            ? t('Several readers reported this collection, so it is off Collections by readers until we have looked at it.')
+            : t('We took this collection down from Collections by readers.')}{' '}
+          {t('The link still works for you and anyone you share it with.')}
         </p>
       )}
     </section>
   );
 }
 
-function Report({ id }: { id: string }) {
+function Report({ id, t }: { id: string; t: Translate }) {
   const [done, setDone] = useState<string | null>(null);
   return (
     <p className="mt-10 text-xs text-ink-3">
@@ -247,11 +212,11 @@ function Report({ id }: { id: string }) {
           className="underline underline-offset-2 hover:text-accent"
           onClick={() =>
             fetch(`/api/walls/${id}/report`, { method: 'POST' })
-              .then((r) => setDone(r.ok ? 'Thank you — we will have a look.' : 'That did not go through.'))
-              .catch(() => setDone('That did not go through.'))
+              .then((r) => setDone(r.ok ? t('Thank you — we will have a look.') : t('That did not go through.')))
+              .catch(() => setDone(t('That did not go through.')))
           }
         >
-          Report this collection
+          {t('Report this collection')}
         </button>
       )}
     </p>

@@ -40,8 +40,8 @@ const ROOT = join(import.meta.dirname, '..');
 const POOL_FILE = join(ROOT, 'data', 'versus-pool.json');
 const MEASURES_FILE = join(ROOT, 'data', 'cover-measures.json');
 const SUFFIX = '-collections';
-/** Left out on Julian's word: author portraits, edition suhrkamp, and the Library of America („national library"). */
-const LEFT_OUT = ['suhrkamp-taschenbuch-author-portraits', 'edition-suhrkamp', 'library-of-america'];
+/** Left out on Julian's word: author portraits, edition suhrkamp, the Library of America („national library"), and since 2026-09-30 the Suhrkamp BasisBibliothek („entferne die suhrkamp basisbibliothek aus dem spiel"). */
+const LEFT_OUT = ['suhrkamp-taschenbuch-author-portraits', 'edition-suhrkamp', 'library-of-america', 'suhrkamp-basisbibliothek', 'rowohlts-monographien'];
 const CONCURRENCY = 4;
 const TIMEOUT_MS = 40_000;
 
@@ -57,7 +57,9 @@ interface PoolFile {
 }
 
 const pool = JSON.parse(readFileSync(POOL_FILE, 'utf8')) as PoolFile;
-const records = (JSON.parse(readFileSync(join(ROOT, 'data', 'collections.json'), 'utf8')) as { collections: CollectionRecord[] }).collections;
+// COLLECTIONS_FILE: the collections as the site shows them (drafts published on /curate replace the file's
+// record), so the game takes Julian's online edits rather than the file's older version (2026-09-30).
+const records = (JSON.parse(readFileSync(process.env.COLLECTIONS_FILE ?? join(ROOT, 'data', 'collections.json'), 'utf8')) as { collections: CollectionRecord[] }).collections;
 const index = JSON.parse(readFileSync(join(ROOT, 'data', 'cover-index.json'), 'utf8')) as RawIndex;
 const measuresFile = JSON.parse(readFileSync(MEASURES_FILE, 'utf8')) as { measuredAt: string; measures: Record<string, CoverMeasure> };
 const measures = measuresFile.measures;

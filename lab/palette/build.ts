@@ -83,7 +83,7 @@ function panel(scheme: Scheme, srcs: string[], mode: string): string {
   <section class="panel" style="${vars(scheme)}">
     <p class="mode">${mode}</p>
     <div class="chrome">
-      <div class="searchbar"><span>Judge a book by its covers.</span><button class="primary">Search</button></div>
+      <div class="searchbar"><span>Judge a book, buy its covers.</span><button class="primary">Search</button></div>
       <div class="pills">
         <span class="pill on">English 34</span><span class="pill">German 6</span><span class="pill">French 5</span><span class="pill">Unknown 3</span>
       </div>

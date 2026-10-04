@@ -33,7 +33,7 @@ Die Liste ist ein Array `{ no, title, isbn, fallbackIsbns? }`, hier aus den ISBN
 Freunde schlagen auf der Website unter `/suggest` Bücher vor (Passwort `SUGGEST_PASSWORD`). Der Reiter **Vorschläge** holt sie ab:
 
 ```bash
-SUGGEST_REMOTE=https://beautifulcovers.vercel.app SUGGEST_ADMIN_PASSWORD=… npx tsx lab/collections/serve.ts
+SUGGEST_REMOTE=https://buyitscovers.com SUGGEST_ADMIN_PASSWORD=… npx tsx lab/collections/serve.ts
 ```
 
 „Übernehmen" setzt Buch und Cover auf die Wand der Sammlung — bei einer Autorin, die nicht auf der Liste steht, erst nachdem Julian sie oben hinzugefügt hat — und markiert den Vorschlag; „Ablehnen" markiert nur. Vorschläge für eine neue Sammlung werden als „erledigt" markiert, anlegen muss Julian sie selbst. Die Produktion wird nur beim Öffnen des Reiters und bei jeder Entscheidung gefragt, nie in einer Schleife.
