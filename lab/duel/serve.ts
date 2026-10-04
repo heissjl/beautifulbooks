@@ -1,7 +1,7 @@
 /**
  * Two people, one link, the same covers — a prototype (ROADMAP 5.8, Spielart 2).
  *
- *   npx tsx lab/duel/serve.ts        # http://localhost:4322
+ *   npx tsx lab/duel/serve.ts        # http://localhost:4326
  *
  * Both open `/?seed=<word>&me=<name>`, see the same books in the same order
  * with the same covers offered, choose without seeing each other, and get a
@@ -25,7 +25,7 @@ const ROOT = join(import.meta.dirname, '..', '..');
 const INDEX_FILE = join(ROOT, 'data', 'cover-index.json');
 const ROUNDS_FILE = join(import.meta.dirname, 'rounds.json');
 const HTML_FILE = join(import.meta.dirname, 'index.html');
-const PORT = Number(process.env.PORT ?? 4322);
+const PORT = Number(process.env.PORT ?? 4326); // 4322 is lab/collections, 4323 lab/loading (Cockpit hint „Port doppelt“, 2026-10-03)
 
 interface RawIndex {
   works: Array<[id: string, title: string, author: string]>;

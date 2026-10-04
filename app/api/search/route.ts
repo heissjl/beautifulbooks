@@ -3,6 +3,7 @@ import { MIN_QUERY_LENGTH, normalizeQuery, search, searchByAuthor } from '@/lib/
 import { parseAuthorQuery } from '@/lib/authorsearch';
 import { SourceUnavailableError } from '@/lib/sources/http';
 import { rateLimited } from '@/app/api/rate';
+import { countOpAfter } from '@/app/api/count';
 
 /**
  * GET /api/search?q=<query>[&exact=1]   (a `lang` parameter is ignored since 6.60)
@@ -71,6 +72,7 @@ async function answer(run: () => Promise<unknown>, tooShort: boolean): Promise<N
     });
   } catch (err) {
     if (err instanceof SourceUnavailableError) {
+      countOpAfter('ol-failed');
       return NextResponse.json(
         { error: 'Open Library did not answer' },
         { status: 503, headers: { 'Cache-Control': 'no-store' } },

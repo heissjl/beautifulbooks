@@ -5,6 +5,7 @@ import CoverMosaic from './CoverMosaic';
 import { useCardCovers } from './useCardCovers';
 import { storeWorkPreview } from './useWorkPreview';
 import type { WorkSummary } from '@/lib/model';
+import { useT } from './i18n';
 
 /** The search a card was found by, carried to the detail page for its back link (SPEC F2.7). */
 export interface ResultOrigin {
@@ -54,12 +55,13 @@ export function detailHref(workId: string, query?: string, language?: string, is
 export default function BookWorkCard({ work, origin = {}, isbn }: BookWorkCardProps) {
   // The search gives one cover; the rest of the mosaic is fetched once the
   // card nears the viewport (SPEC §9.3 step 14).
+  const t = useT();
   const coverUrls = useCardCovers(work.id, work.coverUrls);
   const editionCount = work.editionCount ?? work.coverUrls.length;
   const href = detailHref(work.id, origin.query, origin.language, isbn, { name: origin.author, key: origin.authorKey });
   const facts = [
-    editionCount > 1 ? `${editionCount} editions` : undefined,
-    work.languages.length > 1 ? `${work.languages.length} languages` : undefined,
+    editionCount > 1 ? t('{n} editions', { n: editionCount }) : undefined,
+    work.languages.length > 1 ? t('{n} languages', { n: work.languages.length }) : undefined,
   ].filter(Boolean).join(' · ');
 
   return (

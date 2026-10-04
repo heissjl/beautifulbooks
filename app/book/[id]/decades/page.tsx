@@ -9,8 +9,10 @@ import SiteHeader from '@/components/SiteHeader';
 import { indexSignatures } from '@/lib/coverindex';
 import { decadeLine, groupByDecade, worthAPage } from '@/lib/decades';
 import { authorLine, SITE_URL } from '@/lib/seo';
-import { getWorkDetail, isWorkId } from '@/lib/work';
+import { getWorkDetail, isWorkId, MAX_EDITIONS_SCANNED } from '@/lib/work';
 import { foldDuplicateCovers } from '@/lib/works';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/translate';
 
 /**
  * One book through the decades (ROADMAP 5.4a, PLAN-5 §3).
@@ -42,41 +44,63 @@ const EAGER_TILES = 12;
 
 interface PageProps {
   params: Promise<{ id: string }>;
+  /** Set by the German tree (ROADMAP 6.85); Next itself passes none. */
+  locale?: Locale;
 }
+
+/**
+ * Records read for one decade page: the same cap as the wall's walk
+ * (`MAX_EDITIONS_SCANNED`). It was 600 until 2026-09-30, the cap of the
+ * candidate scan, and *The Great Gatsby* then read 600 of its 1,180 records
+ * and showed 159 covers beside a wall of 293 (ROADMAP 6.71). Measured cold:
+ * 1,500 gives Gatsby 348 covers in 6 s, *Pride and Prejudice* 194 in 10 s.
+ * Raising it only adds covers, so a work the candidate scan qualified still
+ * qualifies.
+ */
+const DECADE_RECORDS = MAX_EDITIONS_SCANNED;
+
+/**
+ * Thrown when the catalogue stopped answering part of the way (ROADMAP 6.43,
+ * 6.71). Rendering what arrived would be a failure presented as a finding,
+ * and ISR would keep it for a day; a thrown render keeps the last good page,
+ * or shows the error page, which is never cached (N12).
+ */
+class CatalogueSilent extends Error {}
 
 async function load(id: string) {
   if (!isWorkId(id)) return null;
-  try {
-    /*
-      Three deliberate limits, all measured on 2026-09-09:
-      - `googleBooks: false`, or a cold render spends a request of the daily
-        thousand for data this page does not use (E10);
-      - `dedupeCovers: false`, because folding downloads and hashes every
-        cover server-side, which is seconds a page render cannot afford — the
-        wall folds in the browser instead (SPEC §9.3 step 11);
-      - 600 records, the same cap the candidate scan used, so a work cannot
-        qualify there and come up short here.
-    */
-    const detail = await getWorkDetail(id, { maxEntries: 600, dedupeCovers: false, googleBooks: false });
-    if (!detail) return null;
-    /*
-      Folded from the **built index** rather than by hashing here (Julian,
-      2026-09-09: „hier fallen ähnliche cover schneller auf"). A decade group
-      puts printings of one era side by side, so two scans of one jacket land
-      next to each other where the wall would have spread them out.
+  /*
+    No catch-all here any more (6.71): it turned a silent catalogue into
+    `null`, and `null` into a 404 — "no such page" for a book that has one.
+    `getWorkDetail` answers null only when the work does not exist.
+  */
+  /*
+    Three deliberate limits, all measured on 2026-09-09:
+    - `googleBooks: false`, or a cold render spends a request of the daily
+      thousand for data this page does not use (E10);
+    - `dedupeCovers: false`, because folding downloads and hashes every
+      cover server-side, which is seconds a page render cannot afford — the
+      wall folds in the browser instead (SPEC §9.3 step 11);
+    - `DECADE_RECORDS` records (above).
+  */
+  const detail = await getWorkDetail(id, { maxEntries: DECADE_RECORDS, dedupeCovers: false, googleBooks: false });
+  if (!detail) return null;
+  if (!detail.complete) throw new CatalogueSilent(`Open Library stopped answering for ${id}`);
+  /*
+    Folded from the **built index** rather than by hashing here (Julian,
+    2026-09-09: „hier fallen ähnliche cover schneller auf"). A decade group
+    puts printings of one era side by side, so two scans of one jacket land
+    next to each other where the wall would have spread them out.
 
-      `indexSignatures` reads signatures that are already on disk, so this
-      costs no request and no decoding — unlike `dedupeCovers: true`, which
-      downloads and hashes every cover and is what made this page time out.
-      Covers the index does not know keep their own tile; that is a gap, not
-      a claim of uniqueness (N12).
-    */
-    const covers = foldDuplicateCovers(detail.covers, indexSignatures(detail.covers.map(c => c.id)), detail.editions);
-    const decades = groupByDecade(covers, detail.editions);
-    return { work: detail.work, editions: detail.editions, decades };
-  } catch {
-    return null;
-  }
+    `indexSignatures` reads signatures that are already on disk, so this
+    costs no request and no decoding — unlike `dedupeCovers: true`, which
+    downloads and hashes every cover and is what made this page time out.
+    Covers the index does not know keep their own tile; that is a gap, not
+    a claim of uniqueness (N12).
+  */
+  const covers = foldDuplicateCovers(detail.covers, indexSignatures(detail.covers.map(c => c.id)), detail.editions);
+  const decades = groupByDecade(covers, detail.editions);
+  return { work: detail.work, editions: detail.editions, decades };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -97,7 +121,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params, locale = DEFAULT_LOCALE }: PageProps) {
+  const t = translator(locale);
   const { id } = await params;
   const loaded = await load(id);
   if (!loaded || !worthAPage(loaded.decades)) notFound();
@@ -120,27 +145,28 @@ export default async function Page({ params }: PageProps) {
       <SiteHeader
         left={
           <Link href={`/book/${id}`} className="rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
-            ← The wall
+            ← {t('The wall')}
           </Link>
         }
         search={<HeaderSearch />}
       />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-8 sm:px-6">
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">
-          {work.title} <em className="text-accent">by decade</em>
+          {work.title} <em className="text-accent">{t('by decade')}</em>
         </h1>
         <p className="mt-2 text-ink-2">{author}</p>
         <p className="mt-1 text-sm text-ink-3">
-          {decades.coverCount} covers from {editions.length.toLocaleString('en')} edition records
-          {decades.from && decades.to ? `, ${decades.to}s back to ${decades.from}s` : ''}
+          {/* Only printings with a year can sit in a decade; the count says so (6.71). */}
+          {t('{covers} covers from {records} printings with a known year', { covers: decades.coverCount, records: editions.filter(e => e.year).length })}
+          {decades.from && decades.to ? t(', {to}s back to {from}s', { to: String(decades.to), from: String(decades.from) }) : ''}
         </p>
 
         <div className="mt-10 space-y-12">
           {decades.groups.map(group => (
             <section key={group.decade}>
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line pb-2">
-                <h2 className="font-display text-2xl text-ink">{group.decade}s</h2>
-                <p className="text-sm text-ink-3">{decadeLine(group)}</p>
+                <h2 className="font-display text-2xl text-ink">{t('{decade}s', { decade: String(group.decade) })}</h2>
+                <p className="text-sm text-ink-3">{decadeLine(group, t)}</p>
               </div>
               <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
                 {group.covers.map(cover => {
@@ -162,8 +188,8 @@ export default async function Page({ params }: PageProps) {
           {decades.undated.length > 0 && (
             <section>
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line pb-2">
-                <h2 className="font-display text-2xl text-ink">No year on record</h2>
-                <p className="text-sm text-ink-3">{decades.undated.length} covers</p>
+                <h2 className="font-display text-2xl text-ink">{t('No year on record')}</h2>
+                <p className="text-sm text-ink-3">{decades.undated.length === 1 ? t('{n} cover', { n: 1 }) : t('{n} covers', { n: decades.undated.length })}</p>
               </div>
               <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
                 {decades.undated.map(cover => (
@@ -199,9 +225,8 @@ export default async function Page({ params }: PageProps) {
           belong in SPEC §9.3, not under a reader's eyes.
         */}
         <p className="mt-16 border-t border-line pt-4 text-xs leading-relaxed text-ink-3">
-          Covers from Open Library, each in the decade of the earliest printing that carries it.
-          What the catalogues never scanned is missing here too.{' '}
-          <Link href={`/book/${id}`} className="underline underline-offset-2 hover:text-accent">See the whole wall</Link>.
+          {t('Covers from Open Library, each in the decade of the earliest printing that carries it. What the catalogues never scanned is missing here too.')}{' '}
+          <Link href={`/book/${id}`} className="underline underline-offset-2 hover:text-accent">{t('See the whole wall')}</Link>.
         </p>
       </main>
       <SiteFooter />

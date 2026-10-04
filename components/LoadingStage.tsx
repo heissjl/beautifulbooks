@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useT } from './i18n';
 import Image from 'next/image';
 import { proxiedCoverSrc } from '@/lib/coverurl';
 import MosaicLoader from './MosaicLoader';
@@ -43,6 +44,7 @@ const TILTS = [-4, 3, -2, 5];
  * slots when the scene ends.
  */
 export default function LoadingStage({ covers, hero, expected }: LoadingStageProps) {
+  const t = useT();
   /*
     Which staged covers have actually painted.
 
@@ -59,10 +61,10 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
   const heroSrc = hero ? proxiedCoverSrc(hero) : null;
   const caption =
     covers.length === 0
-      ? 'Collecting covers'
+      ? t('Collecting covers')
       : expected
-        ? `${covers.length} of ${expected} covers here`
-        : `${covers.length} cover${covers.length === 1 ? '' : 's'} here`;
+        ? t('{n} of {total} covers here', { n: covers.length, total: expected })
+        : covers.length === 1 ? t('{n} cover here', { n: 1 }) : t('{n} covers here', { n: covers.length });
 
   /*
     Nothing of this book has arrived yet and no card sent a cover along.
@@ -90,7 +92,7 @@ export default function LoadingStage({ covers, hero, expected }: LoadingStagePro
       thing this text must not be: it says what is being waited for, not what
       is shown.
     */
-    <div className="stage flex min-h-[26rem] flex-col items-center justify-center gap-5 py-6 sm:min-h-[38rem]" aria-live="polite" aria-busy="true" aria-label="Loading covers">
+    <div className="stage flex min-h-[26rem] flex-col items-center justify-center gap-5 py-6 sm:min-h-[38rem]" aria-live="polite" aria-busy="true" aria-label={t('Loading covers')}>
       <p className="stage-pulse text-center text-sm text-ink-3">{caption}</p>
       <div className="relative h-[20rem] w-full max-w-3xl sm:h-[30rem]">
         {shown.length === 0 && hero && (

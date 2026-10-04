@@ -147,8 +147,16 @@
   .cover-img.is-loaded {
     opacity: 1;
   }
+  /*
+    Tabs and toggles as plain words, the chosen one filled with ink (6.84,
+    docs/gestaltung-ki-anmutung.md): the rounded pill with a count was the
+    filter part of every generated dashboard. Same padding top and bottom
+    and an explicit line height, so the words sit in the vertical middle of
+    the filled box (Julian, 2026-10-02: „die sprachbuttons die schrift
+    vertikal mittig").
+  */
   .chip {
-    @apply inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1 text-sm text-ink-2 transition-colors hover:border-ink-3 hover:text-ink;
+    @apply inline-flex items-center gap-1.5 rounded-[3px] border border-transparent px-2 py-1 text-sm leading-5 text-ink-2 transition-colors hover:text-ink;
   }
   .chip[aria-pressed="true"],
   .chip[aria-selected="true"] {
@@ -160,8 +168,13 @@
   .btn-accent {
     @apply border-transparent bg-accent text-on-accent hover:bg-accent hover:opacity-90;
   }
+  /*
+    A small label in sentence case (6.84). It was tracked capitals, the
+    single most recognisable mark of a generated page; a box gets a label
+    only where it would be unclear without one.
+  */
   .kicker {
-    @apply text-xs font-medium uppercase tracking-[0.12em] text-ink-3;
+    @apply text-sm text-ink-2;
   }
 }
 

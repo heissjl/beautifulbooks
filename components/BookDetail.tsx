@@ -16,9 +16,10 @@ import MarketSwitcher from '@/components/MarketSwitcher';
 import MoreBelow from '@/components/MoreBelow';
 import { useOverflowsY } from '@/components/useOverflowsY';
 import LocalShops from '@/components/LocalShops';
-import SiteFooter from '@/components/SiteFooter';
+import SiteFooterView from '@/components/SiteFooterView';
 import AddToWall from '@/components/AddToWall';
 import EditingBand from '@/components/EditingBand';
+import { useCameFrom } from '@/components/cameFrom';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
@@ -33,7 +34,8 @@ import { buildWall, captionFor, progressLabel } from '@/components/workWall';
 import { leadCover } from '@/lib/scene';
 import { isbnRuns } from '@/lib/isbnformat';
 import { useOverflowsX } from '@/components/useOverflowsX';
-import { searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
+import { useBookSignal, useReportVerdict, VerdictReport } from './useInsights';
+import { commissionNote, isWordsProvider, searchFacts, searchLinksFor, trackedBuyHref, trackedSearchHref, type WordsQuery } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
@@ -41,12 +43,14 @@ import { VERDICT_LEAD } from '@/lib/verdicts';
 import { commerceEnabled } from '@/lib/sitemode';
 import type { ShopStatus } from '@/lib/availability';
 import type { Market } from '@/lib/market';
+import type { Translate } from '@/lib/i18n/translate';
 import type { BuyLink, Cover, EditionView } from '@/lib/model';
 import { displayTitle, languageName, normalizeTitle } from '@/lib/normalize';
 import { coverForId, leadLanguagesSettled } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
 import { shapeOf } from '@/lib/queryshape';
 import { verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
+import { useLocale, useT } from '@/components/i18n';
 
 /*
   It said "Search" until 2026-09-10, which stopped working the moment a search
@@ -59,13 +63,19 @@ import { verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
   makes an address other than `/`, and it leads to the home page with a filter
   rather than to results (caught on the dev server, 2026-09-10).
 */
-function BackLink({ href, toResults }: { href: string; toResults: boolean }) {
+function BackLink({ href, toResults, wall }: { href: string; toResults: boolean; wall?: string }) {
+  const t = useT();
   return (
-    <Link href={href} className="inline-flex items-center gap-1.5 rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
-      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <Link
+      href={href}
+      title={wall ? t('Back to {wall}', { wall }) : undefined}
+      className="inline-flex min-w-0 items-center gap-1.5 rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink"
+    >
+      <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
       </svg>
-      {toResults ? 'Results' : 'Home'}
+      {/* The wall one came from, by name (Julian, 2026-10-03); cut short, the header has a logo and a search beside it. */}
+      {wall ? <span className="max-w-[9rem] truncate sm:max-w-[16rem]">{wall}</span> : toResults ? t('Results') : t('Home')}
     </Link>
   );
 }
@@ -77,14 +87,17 @@ function BackLink({ href, toResults }: { href: string; toResults: boolean }) {
  */
 const WallsOn = createContext(false);
 
-function Shell({ children, backHref, toResults, right }: { children: React.ReactNode; backHref: string; toResults: boolean; right?: React.ReactNode }) {
+function Shell({ children, backHref, toResults, right, workId }: { children: React.ReactNode; backHref: string; toResults: boolean; right?: React.ReactNode; workId?: string }) {
   const walls = useContext(WallsOn);
+  // A result list one came from wins: it is in the address. Otherwise the wall whose tile opened this book, if any.
+  const from = useCameFrom(workId);
+  const wall = !toResults && from ? from : null;
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader left={<BackLink href={backHref} toResults={toResults} />} right={right} search={<HeaderSearch />} />
+      <SiteHeader left={<BackLink href={wall ? wall.href : backHref} toResults={toResults} wall={wall?.title} />} right={right} search={<HeaderSearch />} />
       {walls && <EditingBand />}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
-      <SiteFooter walls={walls} />
+      <SiteFooterView walls={walls} />
     </div>
   );
 }
@@ -106,19 +119,20 @@ function LoadFailed({ httpStatus, onRetry, backHref, toResults }: {
   backHref: string;
   toResults: boolean;
 }) {
+  const t = useT();
   const busy = httpStatus === 429;
   return (
     <div className="py-24 text-center">
-      <p className="font-display text-2xl text-ink">{busy ? 'Too many requests at once' : 'Open Library did not answer'}</p>
+      <p className="font-display text-2xl text-ink">{busy ? t('Too many requests at once') : t('Open Library did not answer')}</p>
       <p className="mx-auto mt-2 max-w-md text-sm text-ink-2">
         {busy
-          ? 'Give it a few seconds, then try again.'
-          : 'The catalogue this page is built from is slow or down at the moment. That says nothing about the book.'}
+          ? t('Give it a few seconds, then try again.')
+          : t('The catalogue this page is built from is slow or down at the moment. That says nothing about the book.')}
       </p>
       <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
-        <button type="button" onClick={onRetry} className="btn btn-accent">Try again</button>
+        <button type="button" onClick={onRetry} className="btn btn-accent">{t('Try again')}</button>
         <Link href={backHref} className="text-sm text-accent hover:underline">
-          {toResults ? 'Back to the results' : 'Search for another book'}
+          {toResults ? t('Back to the results') : t('Search for another book')}
         </Link>
       </div>
     </div>
@@ -167,6 +181,7 @@ function backHrefFrom(searchParams: URLSearchParams): string {
 }
 
 function BookDetail() {
+  const t = useT();
   const wallsOn = useContext(WallsOn);
   const params = useParams<{ id: string; coverId?: string }>();
   const router = useRouter();
@@ -323,15 +338,17 @@ function BookDetail() {
   }, [inScene, view, scene.staged, requestKey]);
 
   const selected = useMemo<Cover | null>(() => (view ? coverForId(view, selectedId) : null), [view, selectedId]);
+  // One summary of this visit when the reader leaves (ROADMAP 3.1b); nothing is kept on the device.
+  const reportVerdict = useBookSignal({ workId: params.id, market: pages.market ?? chosenMarket ?? 'us', pagesLoaded: pages.pagesLoaded, picked: !!selected });
 
 
   if (pages.status === 'notfound' || pages.status === 'error') {
     return (
-      <Shell backHref={backHref} toResults={cameFromResults}>
+      <Shell workId={params.id} backHref={backHref} toResults={cameFromResults}>
         {pages.status === 'notfound' ? (
           <div className="py-24 text-center">
-            <p className="font-display text-2xl text-ink">Book not found</p>
-            <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">Back to search</Link>
+            <p className="font-display text-2xl text-ink">{t('Book not found')}</p>
+            <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">{t('Back to search')}</Link>
           </div>
         ) : (
           <LoadFailed httpStatus={pages.httpStatus} onRetry={pages.retry} backHref={backHref} toResults={cameFromResults} />
@@ -343,11 +360,11 @@ function BookDetail() {
   if (inScene || !view) {
     const work = view?.work;
     return (
-      <Shell backHref={backHref} toResults={cameFromResults}>
+      <Shell workId={params.id} backHref={backHref} toResults={cameFromResults}>
         <TitleBlock
           title={work?.title ?? preview?.title}
           authors={work?.authors ?? preview?.authors}
-          meta={work?.editionCount ? `${work.editionCount.toLocaleString('en')} editions` : undefined}
+          meta={work?.editionCount ? t('{n} editions', { n: work.editionCount }) : undefined}
         />
         <LoadingStage
           covers={scene.presented}
@@ -414,12 +431,14 @@ function BookDetail() {
   const decadesPossible = merged.done && worthAPage(groupByDecade(view.covers, merged.editions));
   const hasDecades = decadesPossible || decadePages.pages.some(p => p.id === work.id);
   const meta = [
-    work.firstPublishYear ? `Open Library dates it to ${work.firstPublishYear}` : undefined,
-    progressLabel(view.covers.length, merged),
-  ].filter(Boolean).join(' · ');
+    `${progressLabel(view.covers.length, merged, t)}.`,
+    work.firstPublishYear ? t('Open Library dates the book to {year}.', { year: String(work.firstPublishYear) }) : undefined,
+  ].filter(Boolean).join(' ');
 
   return (
+    <VerdictReport.Provider value={reportVerdict}>
     <Shell
+      workId={params.id}
       backHref={backHref}
       toResults={cameFromResults}
       /*
@@ -433,7 +452,7 @@ function BookDetail() {
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
 
       {view.groups.length === 0 ? (
-        <p className="text-ink-2">Neither catalogue has a cover for this book.</p>
+        <p className="text-ink-2">{t('Neither catalogue has a cover for this book.')}</p>
       ) : (
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
           <div className="min-w-0 lg:col-span-2">
@@ -446,8 +465,7 @@ function BookDetail() {
               belowTabs={hasDecades ? <DecadeLink workId={work.id} /> : undefined}
             />
             <p className="mt-6 max-w-prose text-xs leading-relaxed text-ink-3">
-              Covers come from Open Library and Google Books. Most edition records carry no
-              scan, so a book has had covers neither catalogue knows.
+              {t('Covers come from Open Library and Google Books. Most edition records carry no scan, so a book has had covers neither catalogue knows.')}
             </p>
           </div>
           {/*
@@ -523,18 +541,20 @@ function BookDetail() {
         </CoverSheet>
       )}
     </Shell>
+    </VerdictReport.Provider>
   );
 }
 
 /** A quiet line that fills while later edition pages load; gone when done. */
 function ScanProgress({ checked, total, done }: { checked: number; total: number; done: boolean }) {
+  const t = useT();
   if (done || total === 0) return null;
   const pct = Math.min(100, Math.round((checked / total) * 100));
   return (
     <div
       className="mb-6 h-px w-full max-w-3xl bg-line"
       role="progressbar"
-      aria-label="Editions checked"
+      aria-label={t('Editions checked')}
       aria-valuenow={pct}
       aria-valuemin={0}
       aria-valuemax={100}
@@ -583,11 +603,12 @@ interface CoverDetailsProps {
  * empty. A hundred works are indexed, not the catalogue.
  */
 function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
+  const t = useT();
   const similar = useSimilarCovers(coverId).slice(0, 3);
   if (similar.length === 0) return null;
   return (
-    <section className="mt-4" aria-label="Covers that look like this one">
-      <p className="kicker">Looks like this</p>
+    <section className="mt-4" aria-label={t('Covers that look like this one')}>
+      <h3 className="text-lg leading-snug text-ink">{t('Covers that look like this one')}</h3>
       {/*
         A fixed three-column grid, not `flex-1` per item (ROADMAP 6.10a).
         With three matches the two are the same; with one, `flex-1` gave that
@@ -607,7 +628,7 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
               title={`${match.title} — ${match.author}`}
             >
               <span className="cover-shadow relative block aspect-[2/3] overflow-hidden rounded-[3px] bg-surface-2">
-                <CoverImage src={match.url} alt={`${match.title} by ${match.author}`} sizes="125px" />
+                <CoverImage src={match.url} alt={t('{title} by {author}', { title: match.title, author: match.author })} sizes="125px" />
               </span>
               <span className="mt-1 block truncate text-[11px] leading-tight text-ink-3 group-hover:text-ink-2">
                 {match.title}
@@ -621,6 +642,7 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
 }
 
 function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+  const t = useT();
   const wallsOn = useContext(WallsOn);
   const isDesktop = useIsDesktop();
   const addToWall = wallsOn ? <AddToWall workId={workId} title={workTitle} author={author} cover={cover} editions={editions} /> : null;
@@ -642,18 +664,31 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
   const scans = [cover.id, ...(cover.similarIds ?? [])].filter(id => coverUrlFor(id, 'L'));
   const [pickedScan, setPickedScan] = useState<string | null>(null);
   const { scroller: scanScroller, content: scanContent, overflows: scanOverflows, atStart: scanAtStart, atEnd: scanAtEnd, onScroll: measureScanRow } = useOverflowsX();
+  const verdictOf = (isbn13: string) => verdictFor(isbn13).status;
+  /*
+    Without a pick, the scan follows the printing that leads (ROADMAP 6.78).
+    Ordered once from the wall's scan: when that scan's carrier has no ISBN
+    and another printing of the cover has one, the other leads, and the
+    picture shown large is its own scan — so the buttons and the image name
+    the same printing. A printing without a scan of its own keeps the wall's.
+  */
+  const lead = orderEditionsForMarket(editions, market, { carriedBy: new Set(editionsByScan.get(cover.id) ?? []), verdictOf })[0];
+  const leadScan = lead && !(editionsByScan.get(cover.id) ?? []).includes(lead.id)
+    ? scans.find(scan => (editionsByScan.get(scan) ?? []).includes(lead.id))
+    : undefined;
   // Derived, like the printing above it: another cover replaces the list.
-  const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : cover.id;
+  const shownScan = pickedScan && scans.includes(pickedScan) ? pickedScan : leadScan ?? cover.id;
   const shownUrl = shownScan === cover.id ? cover.url : coverUrlFor(shownScan, 'L') ?? cover.url;
 
   /*
     Which printing leads is a decision now, not the catalogue's arrival order
     (ROADMAP 1.11 lever 2, sharpened by Julian on 2026-09-09). It follows the
     scan on screen: pick another scan of the same design above, and the
-    printing that carried *that* one comes to the front.
+    printing that carried *that* one comes to the front — among the printings
+    a shop can look up, when there are any (6.78).
   */
   const carriedBy = new Set(editionsByScan.get(shownScan) ?? []);
-  const ordered = orderEditionsForMarket(editions, market, { carriedBy, verdictOf: isbn13 => verdictFor(isbn13).status });
+  const ordered = orderEditionsForMarket(editions, market, { carriedBy, verdictOf });
   const [pickedId, setPicked] = useState<string | null>(null);
   /*
     Derived, never corrected from an effect: picking another cover replaces
@@ -693,7 +728,17 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         const tier = (p: { e: EditionView; scans: string[] }) => (p.scans.includes(cover.id) ? 0 : p.e.isbn13 ? 1 : 2);
         return tier(a) - tier(b) || a.i - b.i;
       });
-    const several = printings.filter(p => p.scans.length > 1).length;
+    /*
+      The note counts, it does not assume: "one with 2 scans" was a fixed
+      string, and *Solaris* (Faber and Faber 2003, three scans) said "2"
+      under three tiles (Julian, 2026-09-30). With a single printing
+      "one with …" reads as a riddle, so it says only how many scans.
+    */
+    const multi = printings.filter(p => p.scans.length > 1);
+    const note = multi.length === 0 ? null
+      : printings.length === 1 ? t('{n} scans', { n: multi[0].scans.length })
+      : multi.length === 1 ? t('one with {n} scans', { n: multi[0].scans.length })
+      : t('{n} with several scans', { n: multi.length });
     const scrollBy = (event: React.MouseEvent<HTMLButtonElement>, direction: 1 | -1) => {
       const box = event.currentTarget.closest('[data-strip]')?.querySelector<HTMLElement>('[data-strip-scroller]');
       box?.scrollBy({ left: direction * box.clientWidth * 0.8, behavior: 'smooth' });
@@ -704,14 +749,10 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         lit ? `ring-2 ring-offset-2 ring-offset-bg ${big ? 'ring-accent' : 'ring-accent/50'}` : 'opacity-80 hover:opacity-100'
       }`;
     return (
-      <section className="mt-4" aria-label="Printings with this cover" data-strip>
+      <section className="mt-4" aria-label={t('Printings with this cover')} data-strip>
         <div className="flex items-baseline justify-between gap-3">
-          <p className="kicker">{editions.length} {editions.length === 1 ? 'printing' : 'printings'} with this cover</p>
-          {several > 0 && (
-            <p className="text-right text-xs text-ink-3">
-              {several === 1 ? 'one with 2 scans' : `${several} with several scans`}
-            </p>
-          )}
+          <p className="kicker">{editions.length === 1 ? t('1 printing with this cover') : t('{n} printings with this cover', { n: editions.length })}</p>
+          {note && <p className="text-right text-xs text-ink-3">{note}</p>}
         </div>
         <div className="relative mt-3">
           <div ref={scanScroller} onScroll={measureScanRow} data-strip-scroller className="snap-x overflow-x-auto pb-2 [scrollbar-width:thin]">
@@ -726,7 +767,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
                           type="button"
                           onClick={() => setPicked(e.id)}
                           aria-pressed={lit}
-                          title="This printing carries the cover, without a scan of its own"
+                          title={t('This printing carries the cover, without a scan of its own')}
                           className={`block h-[5.25rem] w-14 rounded-[3px] border border-dashed border-line ${lit ? 'border-accent' : ''}`}
                         />
                       ) : own.map((scan, k) => (
@@ -735,16 +776,16 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
                           type="button"
                           onClick={() => { setPickedScan(scan); setPicked(e.id); }}
                           aria-pressed={lit && scan === shownScan}
-                          title={own.length > 1 ? `Scan ${k + 1} of ${own.length} of this printing` : scan === cover.id ? 'The scan the wall shows' : undefined}
+                          title={own.length > 1 ? t('Scan {k} of {n} of this printing', { k: k + 1, n: own.length }) : scan === cover.id ? t('The scan the wall shows') : undefined}
                           className={tileClass(lit, scan === shownScan)}
                         >
-                          <CoverImage src={coverUrlFor(scan, 'M') ?? ''} alt={`${e.publisher ?? 'A printing'}${e.year ? `, ${e.year}` : ''}${own.length > 1 ? `, scan ${k + 1} of ${own.length}` : ''}`} sizes="56px" />
+                          <CoverImage src={coverUrlFor(scan, 'M') ?? ''} alt={`${e.publisher ?? t('A printing')}${e.year ? `, ${e.year}` : ''}${own.length > 1 ? `, ${t('scan {k} of {n}', { k: k + 1, n: own.length })}` : ''}`} sizes="56px" />
                         </button>
                       ))}
                     </div>
                     <div className="mt-1 w-14 text-[10px] leading-tight">
-                      <p className={`line-clamp-2 ${lit ? 'text-accent' : 'text-ink-2'}`}>{e.publisher || 'Publisher unknown'}</p>
-                      <p className="mt-0.5 text-ink-3">{[e.year, e.isbn13 ? undefined : 'no ISBN'].filter(Boolean).join(' · ')}</p>
+                      <p className={`line-clamp-2 ${lit ? 'text-accent' : 'text-ink-2'}`}>{e.publisher || t('Publisher unknown')}</p>
+                      <p className="mt-0.5 text-ink-3">{[e.year, e.isbn13 ? undefined : t('no ISBN')].filter(Boolean).join(', ')}</p>
                     </div>
                   </li>
                 );
@@ -754,13 +795,13 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
           {scanOverflows && !scanAtStart && (
             <>
               <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-bg to-transparent" />
-              <button type="button" onClick={e => scrollBy(e, -1)} className={`${arrow} left-0`} aria-label="Earlier printings">‹</button>
+              <button type="button" onClick={e => scrollBy(e, -1)} className={`${arrow} left-0`} aria-label={t('Earlier printings')}>‹</button>
             </>
           )}
           {scanOverflows && !scanAtEnd && (
             <>
               <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-bg to-transparent" />
-              <button type="button" onClick={e => scrollBy(e, 1)} className={`${arrow} right-0`} aria-label="More printings">›</button>
+              <button type="button" onClick={e => scrollBy(e, 1)} className={`${arrow} right-0`} aria-label={t('More printings')}>›</button>
             </>
           )}
         </div>
@@ -803,12 +844,12 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         with it (ROADMAP 1.2, candidate b).
       */}
       <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 lg:max-w-[min(100%,31vh)]">
-        <CoverImage src={shownUrl} alt="Selected cover" sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
+        <CoverImage src={shownUrl} alt={t('Selected cover')} sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
       </div>
       <p className="mt-2 text-xs text-ink-3">
         {/* Named for the scan on screen, not for the tile it was folded into. */}
-        Image from {shownScan.startsWith('gb:') ? 'Google Books' : 'Open Library'}
-        {editions.length > 1 ? ` · on ${editions.length} editions` : ''}
+        {t('Image from {source}', { source: shownScan.startsWith('gb:') ? 'Google Books' : 'Open Library' })}
+        {editions.length > 1 ? `, ${t('on {n} editions', { n: editions.length })}` : ''}
       </p>
       {shown && (
         <>
@@ -820,7 +861,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
             workTitle={workTitle}
             author={author}
             otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
-            searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id }, market)}
+            searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id, isbn13: shown.isbn13 }, market)}
+            searchWords={{ title: shown.title, author, ...searchFacts(shown) }}
             anyEditionLinks={anyEditionLinks}
             market={market}
             onMarketChange={onMarketChange}
@@ -841,6 +883,8 @@ interface EditionBlockProps {
   author?: string;
   otherCovers: number;
   searchLinks: EditionView['buyLinks'];
+  /** The words `searchLinks` were built from, so the counting redirect can rebuild them (ROADMAP 3.1). */
+  searchWords: WordsQuery;
   anyEditionLinks: BuyLink[];
   market: Market;
   onMarketChange: (market: Market) => void;
@@ -861,22 +905,29 @@ interface EditionBlockProps {
  * them into three zones instead, and everything that is not one of the two or
  * three shops with a chance goes behind a fold.
  */
-function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict, afterLead, gap = 'mt-6' }: EditionBlockProps) {
+function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, searchWords, anyEditionLinks, market, onMarketChange, verdict, afterLead, gap = 'mt-6' }: EditionBlockProps) {
+  const t = useT();
+  const locale = useLocale();
   // Reset whenever the edition or the market changes: an answer belongs to
   // one ISBN in one market's shops.
   const [checked, setChecked] = useState<{ key: string; byProvider: Map<string, ShopStatus> } | null>(null);
   const key = `${edition.id} ${market}`;
   const shops = checked?.key === key ? checked.byProvider : null;
 
+  // The analytics note which verdict the reader saw (ROADMAP 3.1b, K8).
+  useReportVerdict(edition.isbn13 ? verdict.status : undefined);
   const plan = useMemo(
-    () => linkPlan({ edition, buyLinks: edition.buyLinks, searchLinks, anyEditionLinks, market, verdict: verdict.status }),
-    [edition, searchLinks, anyEditionLinks, market, verdict.status],
+    () => linkPlan({ edition, buyLinks: edition.buyLinks, searchLinks, anyEditionLinks, market, verdict: verdict.status, t }),
+    [edition, searchLinks, anyEditionLinks, market, verdict.status, t],
   );
   // Which of the links were built from the ISBN, and so go through the count.
   const fromIsbn = useMemo(() => new Set(edition.buyLinks.map(l => l.provider)), [edition.buyLinks]);
 
   const hint = [edition.publisher, edition.year].filter(Boolean).join(' ');
-  const head = [edition.publisher, edition.year ? String(edition.year) : undefined, languageName(edition.language)].filter(Boolean).join(' · ');
+  // Like a catalogue card, "Penguin Books, 2010 (English)" — not a row of dots (6.84).
+  const language = edition.language ? languageName(edition.language, locale) : undefined;
+  const head = [[edition.publisher, edition.year ? String(edition.year) : undefined].filter(Boolean).join(', '), language ? `(${language})` : undefined]
+    .filter(Boolean).join(' ');
   /*
     56 % of cover-bearing editions carry a title of their own — "Die Enden der
     Parabel", "El arco iris de gravedad". That is worth a line; repeating the
@@ -884,20 +935,21 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
   */
   const ownTitle = normalizeTitle(edition.title) === normalizeTitle(workTitle) ? undefined : edition.title;
   const details: Array<[string, string | undefined]> = [
-    ['Published', edition.publishedDate],
-    ['Format', edition.format],
-    ['Pages', edition.pageCount ? String(edition.pageCount) : undefined],
-    ['Also printed with', otherCovers > 0 ? `${otherCovers} other cover${otherCovers > 1 ? 's' : ''}` : undefined],
+    [t('Published'), edition.publishedDate],
+    [t('Format'), edition.format],
+    [t('Pages'), edition.pageCount ? String(edition.pageCount) : undefined],
+    [t('Also printed with'), otherCovers > 0 ? (otherCovers === 1 ? t('1 other cover') : t('{n} other covers', { n: otherCovers })) : undefined],
   ];
   const rows = details.filter(([, v]) => v);
   const moreLinks = plan.rest.length;
+  const commission = commissionNote([...plan.lead, ...plan.rest, ...plan.anyEdition]);
   // In hobby mode the availability probe is off (E20), so the fold holds links only.
   const hasFold = moreLinks > 0 || (commerceEnabled() && !!edition.isbn13);
   const hasInfo = !!edition.previewUrl || rows.length > 0 || !!edition.description;
 
   return (
     <div className={gap}>
-      <p className="text-sm text-ink">{head || 'Publisher and year unknown'}</p>
+      <p className="text-sm text-ink">{head || t('Publisher and year unknown')}</p>
       {ownTitle && <p className="mt-0.5 text-sm text-ink-2">{ownTitle}</p>}
       {edition.isbn13 && <p className="mt-0.5 text-[13px] text-ink-3">ISBN <IsbnText isbn={edition.isbn13} /></p>}
 
@@ -915,11 +967,11 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
         )}
         {/* The pills sit right after the heading, not pushed to the far edge (Julian, 2026-09-26: „less gap before the pills"). */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <p className="kicker">
+          <h3 className="text-lg leading-snug text-ink">
             {verdict.status === 'differs'
-              ? 'Find the cover you picked'
-              : edition.isbn13 ? 'Get this printing' : 'Find this printing'}
-          </p>
+              ? t('Find the cover you picked')
+              : edition.isbn13 ? t('Get this printing') : t('Find this printing')}
+          </h3>
           <MarketSwitcher market={market} onChange={onMarketChange} compact />
         </div>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -930,6 +982,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
               isbn13={edition.isbn13}
               market={market}
               counted={fromIsbn.has(link.provider)}
+              words={searchWords}
               status={shops?.get(link.provider)}
             />
           ))}
@@ -940,6 +993,13 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
           is the same line `lib/verdicts.ts` holds one level up.
         */}
         {plan.note && <p className="mt-2 text-xs leading-relaxed text-ink-3">{plan.note}</p>}
+        {/*
+          Shop mode only, and only when a link shown here carries an id
+          (ROADMAP 4.11): under the first row, not on the About page alone,
+          because that is where the reader decides to click. Hobby mode
+          builds no affiliate links, so it never appears there (E20).
+        */}
+        {commission && <p className="mt-2 text-xs leading-relaxed text-ink-3">{commission}</p>}
       </div>
 
       {afterLead}
@@ -948,7 +1008,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
         <details className="group mt-4 border-t border-line pt-3">
           <summary className="cursor-pointer list-none text-sm text-ink-2 transition-colors hover:text-ink">
             <span className="mr-1 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
-            {moreLinks > 0 ? `Other ways to find it (${moreLinks})` : 'Check the shops'}
+            {moreLinks > 0 ? t('Other ways to find it ({n})', { n: moreLinks }) : t('Check the shops')}
           </summary>
           <div className="mt-3 space-y-4">
             {plan.rest.length > 0 && (
@@ -960,6 +1020,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
                     isbn13={edition.isbn13}
                     market={market}
                     counted={fromIsbn.has(link.provider)}
+                    words={searchWords}
                     status={shops?.get(link.provider)}
                   />
                 ))}
@@ -975,10 +1036,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
             )}
             {shops && (
               <p className="text-xs leading-relaxed text-ink-3">
-                Each shop was asked whether its page for this ISBN differs from its page for an ISBN
-                that cannot exist. Only &ldquo;found it&rdquo; tells you anything: some shops refuse the
-                question, and others build their results in the browser, where this check cannot follow.
-                Nothing here is a stock check.
+                {t('Each shop was asked whether its page for this ISBN differs from its page for an ISBN that cannot exist. Only “found it” tells you anything: some shops refuse the question, and others build their results in the browser, where this check cannot follow. Nothing here is a stock check.')}
               </p>
             )}
           </div>
@@ -1003,7 +1061,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
         <div className="mt-5 space-y-3 border-t border-line pt-4">
           {edition.previewUrl && (
             <a href={edition.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-sm text-accent hover:underline">
-              Preview on Google Books
+              {t('Preview on Google Books')}
             </a>
           )}
           {rows.length > 0 && (
@@ -1030,17 +1088,23 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
       */}
       {plan.anyEdition.length > 0 && (
         <div className="mt-5 border-t border-line pt-4">
-          <p className="kicker">Or read it in another edition</p>
+          <h3 className="text-lg leading-snug text-ink">{t('Or read it in another edition')}</h3>
           <div className="mt-2 flex flex-wrap gap-2">
             {plan.anyEdition.map(link => (
-              <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
+              <a
+                key={link.provider}
+                // Through the counting redirect, which rebuilds the same search from the table (ROADMAP 3.1).
+                href={trackedSearchHref(link.provider, { title: displayTitle(workTitle), author }, market)}
+                target="_blank"
+                rel={link.affiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'}
+                className="btn"
+              >
                 {link.label}
               </a>
             ))}
           </div>
           <p className="mt-2 text-xs leading-relaxed text-ink-3">
-            These search for &ldquo;{displayTitle(workTitle)}&rdquo; by title. Whatever they carry
-            is a different printing from the one above, with a cover of its own.
+            {t('These search for “{title}” by title. Whatever they carry is a different printing from the one above, with a cover of its own.', { title: displayTitle(workTitle) })}
           </p>
         </div>
       )}
@@ -1091,22 +1155,23 @@ function VerdictNote({ verdict, hint }: {
   verdict: Extract<IsbnVerdict, { status: 'differs' | 'uncompared' }>;
   hint: string;
 }) {
+  const t = useT();
   return (
     <div className="mb-4 flex items-start gap-3">
-      <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label="See the publisher's current image for this ISBN">
+      <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label={t('See the publisher’s current image for this ISBN')}>
         <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
-          <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt="The publisher's current image for this ISBN" sizes="55px" />
+          <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt={t('The publisher’s current image for this ISBN')} sizes="55px" />
         </span>
       </a>
       <p className="text-xs leading-relaxed text-ink-3">
-        <span className="text-ink-2">{VERDICT_LEAD[verdict.status]}</span>{' '}
+        <span className="text-ink-2">{t(VERDICT_LEAD[verdict.status])}</span>{' '}
         {verdict.status === 'differs' ? (
           <>
-            It is the one beside this note, so that is what a new copy is likely to be.
-            {hint ? ` The searches below look for ${hint} second-hand instead.` : ' The searches below look for this printing instead.'}
+            {t('It is the one beside this note, so that is what a new copy is likely to be.')}
+            {hint ? ` ${t('The searches below look for {hint} second-hand instead.', { hint })}` : ` ${t('The searches below look for this printing instead.')}`}
           </>
         ) : (
-          'It is the one beside this note; if it looks like the cover on screen, a new copy probably will too.'
+          t('It is the one beside this note; if it looks like the cover on screen, a new copy probably will too.')
         )}
       </p>
     </div>
@@ -1118,25 +1183,32 @@ function VerdictNote({ verdict, hint }: {
  *
  * A link built from the ISBN goes through our own redirect, which counts the
  * click and rebuilds the target from the table, so it can never become an
- * open redirect (SPEC §10 C9). A search by title has no ISBN to count
- * against and is a plain link.
+ * open redirect (SPEC §10 C9). A shop searched by words goes through it too
+ * since ROADMAP 3.1: only the words travel, and the redirect rebuilds the
+ * shop's URL from the same table. Image searches and catalogues stay plain.
  */
-function ShopLink({ link, isbn13, market, counted, status }: {
+function ShopLink({ link, isbn13, market, counted, words, status }: {
   link: BuyLink;
   isbn13?: string;
   market: Market;
   /** Built from the ISBN, so the counting redirect applies. */
   counted: boolean;
+  /** The words a shop search was built from. */
+  words?: WordsQuery;
   status?: ShopStatus;
 }) {
+  const t = useT();
+  const href = counted && isbn13
+    ? trackedBuyHref(link.provider, isbn13, market)
+    : words && isWordsProvider(link.provider) ? trackedSearchHref(link.provider, words, market) : link.url;
   return (
     <a
-      href={counted && isbn13 ? trackedBuyHref(link.provider, isbn13, market) : link.url}
+      href={href}
       target="_blank"
       // `sponsored` states a paid relationship; in hobby mode there is none (E20).
       rel={counted && commerceEnabled() ? 'noopener noreferrer sponsored' : 'noopener noreferrer'}
       className="btn"
-      title={status ? SHOP_STATUS_TITLE[status] : shopLinkTitle(link)}
+      title={status ? t(SHOP_STATUS_TITLE[status]) : shopLinkTitle(link, t)}
     >
       {link.label}
       {/*
@@ -1144,7 +1216,7 @@ function ShopLink({ link, isbn13, market, counted, status }: {
         button). The label names the question the button puts, and whether
         the URL opens a results page or a book's page stays in the tooltip.
       */}
-      {status && <span className="ml-1 text-[10px] uppercase tracking-wide opacity-60">{SHOP_STATUS_LABEL[status]}</span>}
+      {status && <span className="ml-1 text-[10px] uppercase tracking-wide opacity-60">{t(SHOP_STATUS_LABEL[status])}</span>}
     </a>
   );
 }
@@ -1155,9 +1227,9 @@ function ShopLink({ link, isbn13, market, counted, status }: {
   so a foreign ISBN never gets "this book's page" written under it — that
   would be a claim about a shop nobody asked (ROADMAP 1.11 lever 3).
 */
-function shopLinkTitle(link: BuyLink): string {
-  if (link.kind === 'product') return `${link.label}: this book’s page`;
-  if (link.kind === 'search') return `${link.label}: search results`;
+function shopLinkTitle(link: BuyLink, t: Translate): string {
+  if (link.kind === 'product') return t('{shop}: this book’s page', { shop: link.label });
+  if (link.kind === 'search') return t('{shop}: search results', { shop: link.label });
   return link.label;
 }
 

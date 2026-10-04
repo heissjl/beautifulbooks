@@ -3,9 +3,11 @@ import Link from 'next/link';
 import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
+import { rich } from '@/components/rich';
 import { VERDICT_LEAD, VERDICT_MEANING, VERDICT_ORDER } from '@/lib/verdicts';
-import { indexBuiltAt, indexSize } from '@/lib/coverindex';
 import { commerceEnabled } from '@/lib/sitemode';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/translate';
 
 /**
  * What the site knows, what it does not, and what its judgements mean
@@ -14,15 +16,18 @@ import { commerceEnabled } from '@/lib/sitemode';
  * The detail page says some of this in footnotes. Trust comes from stating
  * the gaps in one place and in order, which is what SPEC §9.2 asks for. Every
  * number here has been measured; none of it claims completeness.
+ *
+ * Shortened 2026-10-02 (Julian: "can you shorten the about page"), from
+ * about 1,000 words to about 500. Rewriting it in the first person is still
+ * ROADMAP 4.12, Julian's. German since 6.85: every sentence goes through
+ * `t`, the verdict lines are the same constants the sidebar renders.
  */
 export const metadata: Metadata = {
   title: 'About',
+  alternates: { canonical: '/about' },
   description:
     'Where the cover images come from, what is missing from them, and what the notes under each buy link mean.',
 };
-
-const INDEXED = indexSize();
-const INDEX_BUILT_AT = indexBuiltAt();
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -33,160 +38,81 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-export default function AboutPage() {
+const ext = 'underline underline-offset-2 hover:text-accent';
+
+export default function AboutPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
+  const t = translator(locale);
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 pb-24 pt-12 sm:px-6">
-        <h1 className="text-4xl leading-[1.1] text-ink">About</h1>
+        <h1 className="text-4xl leading-[1.1] text-ink">{t('About')}</h1>
 
-        <Section title="What this is">
+        <Section title={t('What this is')}>
+          <p>{t('A book is printed again and again, often with a new cover each time. This site puts those covers side by side, by language and year, so you can find the edition you would want on your shelf.')}</p>
+        </Section>
+
+        <Section title={t('Where the images come from')}>
           <p>
-            A book is printed again and again, and each printing gets a new cover. This site puts
-            those covers next to each other, grouped by language and sorted by year, so you can pick
-            the edition you would actually want on a shelf &mdash; and then find a copy of it.
+            {rich(t('Almost all of them from {openlibrary}, a few from {googlebooks}, which also says which picture a publisher currently files under an ISBN. The two catalogues hold only part of what has been printed: you see the covers someone scanned and uploaded.'), {
+              openlibrary: <a className={ext} href="https://openlibrary.org" target="_blank" rel="noopener noreferrer">Open Library</a>,
+              googlebooks: <a className={ext} href="https://books.google.com" target="_blank" rel="noopener noreferrer">Google Books</a>,
+            })}
           </p>
         </Section>
 
-        <Section title="Where the images come from">
-          <p>
-            Two open catalogues:{' '}
-            <a className="underline underline-offset-2 hover:text-accent" href="https://openlibrary.org" target="_blank" rel="noopener noreferrer">Open Library</a>,
-            which supplies almost all of the covers and the edition records behind them, and{' '}
-            <a className="underline underline-offset-2 hover:text-accent" href="https://books.google.com" target="_blank" rel="noopener noreferrer">Google Books</a>,
-            which adds a few images and, more usefully, the picture a publisher currently attaches to
-            an ISBN. Measured across three books, Google contributed between 1 and 23 percent of the
-            covers &mdash; for <em>Nineteen Eighty-Four</em>, four images out of 282.
-          </p>
-          <p>
-            Both catalogues together know a fraction of what has been printed. Nothing here is a
-            complete record of a book&rsquo;s editions, and it cannot become one: the covers you see
-            are the ones somebody took the trouble to scan and upload.
-          </p>
-        </Section>
-
-        <Section title="“Looks like this”">
-          <p>
-            Pick a cover and, now and then, a row of three appears under it: covers of{' '}
-            <em>other</em> books whose jackets share its colours and its layout. Nothing is asked of
-            anyone to work that out. Every cover of {INDEXED.works} books &mdash; {INDEXED.covers.toLocaleString('en')}{' '}
-            of them &mdash; has been measured once and reduced to a handful of numbers: a hash of
-            its light and dark, its colourfulness, and where its colours sit on the wheel. Those
-            numbers live in a file that ships with the site. No image is stored, only measurements.
-          </p>
-          <p>
-            The comparison is deliberately hard to pass, so most covers show no row at all. Setting
-            it loosely made every cover match something, and the matches were nonsense. Two covers
-            now have to agree on both colour and layout before either sees the other, which about
-            one cover in nine manages.
-          </p>
-          <p>
-            The measurements were taken on {INDEX_BUILT_AT}, and they cover those {INDEXED.works}{' '}
-            books rather than the catalogue. So the row is a find when it appears, and its absence
-            means only that nothing indexed resembles what you are looking at.
-          </p>
-        </Section>
-
-        <Section title="What is missing, and why">
+        <Section title={t('What is missing')}>
           <ul className="list-disc space-y-3 pl-5 marker:text-ink-3">
             <li>
-              <strong className="font-medium text-ink">Editions without a scan.</strong> Most edition
-              records carry no image at all. The counter under a book&rsquo;s title says how many
-              records were checked and how many covers came out of them, so you can see the ratio for
-              yourself.
+              <strong className="font-medium text-ink">{t('Editions without a scan.')}</strong>{' '}
+              {t('Most records have no image. The line under a book’s title shows how many were checked.')}
             </li>
             <li>
-              <strong className="font-medium text-ink">Editions without an ISBN.</strong> Anything
-              printed before about 1970, and plenty of records since, has none. Shops cannot look
-              those up, so the page offers searches by title, publisher and year, and a reverse image
-              search on the cover itself.
+              <strong className="font-medium text-ink">{t('Editions without an ISBN.')}</strong>{' '}
+              {t('Most books printed before about 1970 have none, so shops cannot look them up. For those you get searches by title, publisher and year, and a reverse image search.')}
             </li>
             <li>
-              <strong className="font-medium text-ink">The same cover, scanned twice.</strong> One
-              printing often exists as several records with several scans. Near-identical images are
-              folded into one tile marked &ldquo;+2&rdquo;. The comparison is by image, and it errs
-              towards showing you two tiles rather than hiding a cover that merely looked like
-              another.
+              <strong className="font-medium text-ink">{t('The same cover twice.')}</strong>{' '}
+              {t('Near-identical scans are folded into one tile marked “+2”. When in doubt, both are shown.')}
             </li>
             <li>
-              <strong className="font-medium text-ink">Very long records.</strong> Editions load in
-              pages while you look, and the scan stops at 1,500 records. Past that a work is usually
-              an anthology or a bible, and the wall is long enough already.
+              <strong className="font-medium text-ink">{t('Very long records.')}</strong>{' '}
+              {t('The scan stops after 1,500 editions.')}
             </li>
           </ul>
         </Section>
 
-        <Section title="What the note under a buy link means">
-          <p>
-            Pick a cover and the buy links carry a short verdict. It compares the cover on your
-            screen with the image the publisher has registered for that ISBN, and it says one of
-            five things:
-          </p>
-          {/*
-            Quoted from lib/verdicts.ts, the same constants the sidebar
-            renders. Written out by hand, this list drifted: it went on
-            teaching "Shops show this cover" long after that wording had been
-            retired for claiming more than is checked.
-          */}
+        <Section title={t('The note under a buy link')}>
+          <p>{t('When you pick a cover, the buy links get a short note. It compares your cover with the image the publisher has filed for that ISBN. That image is the only thing checked; no shop is asked. The note says one of these:')}</p>
+          {/* Quoted from lib/verdicts.ts, the same constants the sidebar renders; written out by hand, the list drifted. */}
           <ul className="list-disc space-y-3 pl-5 marker:text-ink-3">
             {VERDICT_ORDER.map(status => (
               <li key={status}>
-                <strong className="font-medium text-ink">{VERDICT_LEAD[status]}</strong>{' '}
-                {VERDICT_MEANING[status]}
+                <strong className="font-medium text-ink">{t(VERDICT_LEAD[status])}</strong>{' '}
+                {t(VERDICT_MEANING[status])}
               </li>
             ))}
           </ul>
-          <p>
-            <strong className="font-medium text-ink">No shop is contacted for this.</strong> The only
-            lookup is Google Books, and the evidence is the publisher&rsquo;s own image. A verdict is
-            never a promise about what arrives in the post.
-          </p>
+          <p>{t('It describes the publisher’s image, not what a shop will send.')}</p>
         </Section>
 
-        <Section title="Buy links, commission and counting">
-          {/*
-            Hobby mode (E20): the public site carries neutral links and says
-            so. The shop-mode paragraph is the one Phase 4 will need, kept
-            here so the two never drift apart.
-          */}
+        <Section title={t('Buy links')}>
+          {/* Hobby mode (E20): neutral links, and the page says so; the shop-mode sentence waits here so the two never drift apart. */}
           {commerceEnabled() ? (
-            <p>
-              Some links can earn a commission. The order of the shops is not sorted by what they pay,
-              and no shop pays to appear.
-            </p>
+            <p>{t('Some links can earn a commission. The order of the shops is not sorted by what they pay, and no shop pays to appear.')}</p>
           ) : (
-            <p>
-              No link on this site earns anything: there are no affiliate parameters, no advertising
-              and no paid placement. The shops are listed because they are where a printed book can be
-              found, in an order that is not sorted by anyone&rsquo;s interest, and no shop pays to appear.
-            </p>
+            <p>{t('No link on this site earns money. There are no affiliate links, ads or paid placements.')}</p>
           )}
-          {/*
-            There is now one sorting, and saying "no order" while sorting would
-            be the same kind of quiet claim the verdicts exist to prevent
-            (ROADMAP 1.11, plan §4). What it rests on is a fact about the
-            number, never about a shop: no shop is asked anything.
-          */}
+          <p>{t('The order of the shops follows the ISBN. Its first digits show where it was registered, 978-3 for the German-language area, for example. For a number from another country, marketplaces that sell copies from many countries come first.')}</p>
           <p>
-            There is one thing the order does follow, and it is not money. The first digits of an
-            ISBN say where the number was registered &mdash; 978-3 in the German-language area,
-            978-975 and 978-9944 in Turkey &mdash; and most covers here carry a number from
-            somewhere other than your own market. When they do, the marketplaces that list copies
-            from anywhere come first and the shops around you move down, because a shop can only
-            look up a number it was given. That is read off the ISBN alone. No shop is asked, and
-            what any of them actually has is not something this site knows.
-          </p>
-          <p>
-            A click on a buy link passes through this site so it can be counted. Recorded are the
-            shop, the market, the ISBN and the time &mdash; nothing about you. No cookie, no address,
-            no identifier, nothing that could be traced back to a person. The{' '}
-            <Link href="/privacy" className="underline underline-offset-2 hover:text-accent">privacy notice</Link>{' '}
-            lists everything else the site does with data, which is little.
+            {rich(t('Clicks on buy links are counted: shop, market, ISBN and time. Nothing about you is recorded. Details are in the {privacy}.'), {
+              privacy: <Link href="/privacy" className={ext}>{t('privacy notice')}</Link>,
+            })}
           </p>
         </Section>
 
         <p className="mt-12 text-sm">
-          <Link href="/" className="text-accent underline underline-offset-2">Search for a book</Link>
+          <Link href="/" className="text-accent underline underline-offset-2">{t('Search for a book')}</Link>
         </p>
       </main>
       <SiteFooter />

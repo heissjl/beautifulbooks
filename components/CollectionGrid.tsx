@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import CoverImage from './CoverImage';
+import { rememberWall } from './cameFrom';
 import { storeWorkPreview } from './useWorkPreview';
 import { wallCover } from '@/lib/curated';
 import type { WallWork } from '@/lib/collections';
 import { coverProxyPath } from '@/lib/coverurl';
+import { useT } from './i18n';
 
 /** Covers a card can show before the mosaic: two rows of five. */
 export const GRID_SHOWN = 9;
@@ -30,13 +32,14 @@ const MOSAIC = 9;
  * fenstergröße“).
  */
 export default function CollectionGrid({ slug, title, works, total }: { slug: string; title: string; works: WallWork[]; total: number }) {
+  const t = useT();
   const shown = works.slice(0, GRID_SHOWN);
   const more = total > shown.length;
   const next = works.slice(GRID_SHOWN);
   const pool = next.length > 0 ? next : works;
   const minis = more ? Array.from({ length: MOSAIC }, (_, i) => pool[i % pool.length]) : [];
   return (
-    <ul className="mt-4 grid grid-cols-4 gap-3 sm:grid-cols-5 lg:grid-cols-4 xl:grid-cols-5" aria-label={`Covers from ${title}`}>
+    <ul className="mt-4 grid grid-cols-4 gap-3 sm:grid-cols-5 lg:grid-cols-4 xl:grid-cols-5" aria-label={t('Covers from {title}', { title })}>
       {shown.map((w, i) => {
         const target = w.coverWork ?? w.id;
         // Where a row holds four (phone, and two cards at lg), the 8th and 9th step aside for the mosaic.
@@ -45,11 +48,15 @@ export default function CollectionGrid({ slug, title, works, total }: { slug: st
           <li key={`${w.id}:${w.image ?? w.coverId}`} className={aside}>
             <Link
               href={w.image ? `/book/${target}` : `/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}`}
-              onClick={() => storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [wallCover(w, 'L')] })}
+              onClick={() => {
+                storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [wallCover(w, 'L')] });
+                // Back to the overview, at this collection's card (components/cameFrom.ts).
+                rememberWall({ href: `/collections#${slug}`, title: t('Collections'), workId: target });
+              }}
               className="group block focus-visible:outline-none"
             >
               <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
-                <CoverImage src={wallCover(w, 'M')} alt={`${w.title} by ${w.author}`} sizes="(max-width: 640px) 25vw, (max-width: 1024px) 20vw, 120px" />
+                <CoverImage src={wallCover(w, 'M')} alt={t('{title} by {author}', { title: w.title, author: w.author })} sizes="(max-width: 640px) 25vw, (max-width: 1024px) 20vw, 120px" />
               </div>
             </Link>
           </li>
@@ -69,7 +76,7 @@ export default function CollectionGrid({ slug, title, works, total }: { slug: st
             </div>
             <div className="absolute inset-0 flex items-center justify-center bg-black/45 transition-colors group-hover:bg-black/35">
               <span className="max-w-[92%] whitespace-nowrap rounded-full bg-bg/90 px-[0.75em] py-[0.35em] text-[clamp(9px,10cqw,13px)] font-medium leading-tight text-ink shadow">
-                All {total} <span aria-hidden="true">&rarr;</span>
+                {t('All {n}', { n: total })}
               </span>
             </div>
           </Link>

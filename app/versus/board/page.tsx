@@ -9,6 +9,9 @@ import { bookPath, cachedBoard, type Board, type BoardEntry, type Verdict } from
 import { StoreUnavailableError, missingStoreMessage, storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { SITE_CARD, SITE_URL } from '@/lib/seo';
+import { rich } from '@/components/rich';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator, type Translate } from '@/lib/i18n/translate';
 
 /**
  * The standings of the cover game (ROADMAP 5.8a). Rendered on the server from
@@ -40,14 +43,14 @@ export const metadata: Metadata = {
 const pct = (x: number) => `${Math.round(x * 100)} %`;
 
 /** One sentence per end, and only what the votes support (N12). Julian found the first wording confusing (2026-09-11). */
-function say(verdict: Verdict, need: number): string {
-  if (verdict === 'exact') return `Settled: it has stayed in front for ${need} rounds in a row.`;
-  if (verdict === 'rising') return `In front, but not settled: that takes ${need} rounds in a row.`;
-  if (verdict === 'three') return 'One of the first three, but not yet which.';
-  return 'Too early to say. It needs more votes.';
+function say(verdict: Verdict, need: number, t: Translate): string {
+  if (verdict === 'exact') return t('Settled: it has stayed in front for {n} rounds in a row.', { n: need });
+  if (verdict === 'rising') return t('In front, but not settled: that takes {n} rounds in a row.', { n: need });
+  if (verdict === 'three') return t('One of the first three, but not yet which.');
+  return t('Too early to say. It needs more votes.');
 }
 
-function Row({ entries }: { entries: BoardEntry[] }) {
+function Row({ entries, t }: { entries: BoardEntry[]; t: Translate }) {
   return (
     <ol className="mt-4 grid grid-cols-3 gap-4 sm:grid-cols-5">
       {entries.map((c, i) => (
@@ -55,13 +58,13 @@ function Row({ entries }: { entries: BoardEntry[] }) {
           {/* The book page with this cover selected: where its buy links are. */}
           <Link href={!c.workId ? '#' : c.image ? `/book/${c.workId}` : bookPath(c.workId, c.id)} className="group block">
             <div className={`relative aspect-[2/3] overflow-hidden rounded-card bg-surface ${i === 0 ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}>
-              <CoverImage src={c.src} alt={`${c.title} by ${c.author}`} sizes="(min-width: 640px) 140px, 30vw" fit="contain" />
+              <CoverImage src={c.src} alt={t('{title} by {author}', { title: c.title, author: c.author })} sizes="(min-width: 640px) 140px, 30vw" fit="contain" />
             </div>
             <p className="mt-2 text-[13px] leading-snug text-ink group-hover:underline">{c.title}</p>
           </Link>
           <p className="text-xs text-ink-3">{c.author}</p>
           <p className="mt-1 text-xs tabular-nums text-ink-3">
-            won {c.wins} of {c.games}
+            {t('won {wins} of {games}', { wins: c.wins, games: c.games })}
           </p>
         </li>
       ))}
@@ -94,7 +97,8 @@ function Toggle({ href, children }: { href: string; children: React.ReactNode })
   );
 }
 
-export default async function BoardPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+export default async function BoardPage({ searchParams, locale = DEFAULT_LOCALE }: { searchParams: Promise<Record<string, string | string[] | undefined>>; locale?: Locale }) {
+  const t = translator(locale);
   if (!versusEnabled()) notFound();
   const params = await searchParams;
   const top = lengthOf(params.top);
@@ -103,13 +107,13 @@ export default async function BoardPage({ searchParams }: { searchParams: Promis
   let result: Board | null = null;
   let problem: string | null = null;
   if (!store) {
-    problem = missingStoreMessage();
+    problem = t(missingStoreMessage());
   } else {
     try {
       result = await cachedBoard(store, { top, bottom: flop });
     } catch (err) {
       if (!(err instanceof StoreUnavailableError)) throw err;
-      problem = 'The vote store did not answer. Reload in a moment.';
+      problem = t('The vote store did not answer. Reload in a moment.');
     }
   }
 
@@ -117,49 +121,49 @@ export default async function BoardPage({ searchParams }: { searchParams: Promis
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-24 pt-8 sm:px-6">
-        <p className="kicker">Which cover?</p>
-        <h1 className="mt-1 text-4xl leading-[1.1] text-ink [text-wrap:balance]">The standings</h1>
+        <h1 className="text-4xl leading-[1.1] text-ink [text-wrap:balance]">{t('The standings')}</h1>
         {problem || !result ? (
           <Unavailable>{problem}</Unavailable>
         ) : (
           <>
             <p className="mt-4 max-w-prose text-[15px] leading-relaxed text-ink-2">
-              <b className="text-ink tabular-nums">{result.votes}</b> {result.votes === 1 ? 'vote' : 'votes'} on{' '}
-              <b className="text-ink tabular-nums">{result.covers}</b> covers. Each vote sets two covers side by side.
+              {rich(result.votes === 1 ? t('{votes} vote on {covers} covers. Each vote sets two covers side by side.') : t('{votes} votes on {covers} covers. Each vote sets two covers side by side.'), {
+                votes: <b className="text-ink tabular-nums">{result.votes}</b>,
+                covers: <b className="text-ink tabular-nums">{result.covers}</b>,
+              })}
               {result.favourite.decided >= 50 && (
-                <> The cover in front wins <b className="text-ink">{pct(result.favourite.rate)}</b> of its votes; at 50 % no one would agree.</>
+                <> {rich(t('The cover in front wins {rate} of its votes; at 50 % no one would agree.'), { rate: <b className="text-ink">{pct(result.favourite.rate)}</b> })}</>
               )}
             </p>
             <p className="mt-2 max-w-prose text-[15px] leading-relaxed text-ink-2">
-              A cover is called the best or the ugliest only when it has stayed in front for {result.hold} rounds of {result.covers} votes.
-              Until then the lists show who leads.
+              {t('A cover is called the best or the ugliest only when it has stayed in front for {hold} rounds of {covers} votes. Until then the lists show who leads.', { hold: result.hold, covers: result.covers })}
             </p>
             {result.store === 'memory' && (
-              <p className="mt-3 text-sm text-ink-3">Development: these votes live in this server&rsquo;s memory and vanish with it.</p>
+              <p className="mt-3 text-sm text-ink-3">{t('Development: these votes live in this server’s memory and vanish with it.')}</p>
             )}
 
             <section className="mt-10">
-              <h2 className="text-2xl text-ink">The best-looking</h2>
-              {result.top[0] && <p className="mt-1 text-sm text-ink-2">{say(result.best.verdict, result.hold)}</p>}
-              <Row entries={result.top} />
-              <Toggle href={boardHref(top === SHORT ? LONG : SHORT, flop)}>{top === SHORT ? `Show top ${LONG}` : `Show top ${SHORT}`}</Toggle>
+              <h2 className="text-2xl text-ink">{t('The best-looking')}</h2>
+              {result.top[0] && <p className="mt-1 text-sm text-ink-2">{say(result.best.verdict, result.hold, t)}</p>}
+              <Row entries={result.top} t={t} />
+              <Toggle href={boardHref(top === SHORT ? LONG : SHORT, flop)}>{t('Show top {n}', { n: top === SHORT ? LONG : SHORT })}</Toggle>
             </section>
 
             <section className="mt-12">
-              <h2 className="text-2xl text-ink">The ugliest</h2>
-              {result.bottom[0] && <p className="mt-1 text-sm text-ink-2">{say(result.worst.verdict, result.hold)}</p>}
-              <Row entries={result.bottom} />
-              <Toggle href={boardHref(top, flop === SHORT ? LONG : SHORT)}>{flop === SHORT ? `Show bottom ${LONG}` : `Show bottom ${SHORT}`}</Toggle>
+              <h2 className="text-2xl text-ink">{t('The ugliest')}</h2>
+              {result.bottom[0] && <p className="mt-1 text-sm text-ink-2">{say(result.worst.verdict, result.hold, t)}</p>}
+              <Row entries={result.bottom} t={t} />
+              <Toggle href={boardHref(top, flop === SHORT ? LONG : SHORT)}>{t('Show bottom {n}', { n: flop === SHORT ? LONG : SHORT })}</Toggle>
             </section>
 
             <p className="mt-10 text-sm text-ink-3">
-              {result.flagged} {result.flagged === 1 ? 'cover was' : 'covers were'} reported as not a cover and taken out. The standings
-              are counted once a minute.
+              {result.flagged === 1 ? t('1 cover was reported as not a cover and taken out.') : t('{n} covers were reported as not a cover and taken out.', { n: result.flagged })}{' '}
+              {t('The standings are counted once a minute.')}
             </p>
           </>
         )}
         <p className="mt-10">
-          <Link href="/versus" className="text-accent underline underline-offset-4">Back to the game</Link>
+          <Link href="/versus" className="text-accent underline underline-offset-4">{t('Back to the game')}</Link>
         </p>
       </main>
       <SiteFooter />

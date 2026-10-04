@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
+import { useT } from './i18n';
 
 /**
  * The link to a work's decade page, which fetches that page ahead of time
@@ -22,6 +23,7 @@ import { useRef } from 'react';
  * navigating to.
  */
 export default function DecadeLink({ workId }: { workId: string }) {
+  const t = useT();
   const router = useRouter();
   const done = useRef(false);
 
@@ -41,9 +43,10 @@ export default function DecadeLink({ workId }: { workId: string }) {
         prefetch={false}
         onMouseEnter={warm}
         onFocus={warm}
-        className="text-sm text-accent hover:underline"
+        className="text-sm text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
       >
-        See these covers by decade →
+        {/* No arrow: the underline says it is a link (Julian, 2026-10-02, docs/gestaltung-ki-anmutung.md). */}
+        {t('See these covers by decade')}
       </Link>
     </p>
   );

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buyLinksFor, retailersFor, searchLinksFor } from '../buylinks';
+import { AMAZON_ASSOCIATE_NOTE, buyLinksFor, COMMISSION_NOTE, commissionNote, retailersFor, searchLinksFor, titleSearchLinksFor } from '../buylinks';
 import { cookieValue, detectMarket, normalizeMarket } from '../market';
 import { isbn13to10 } from '../normalize';
 
@@ -118,6 +118,40 @@ describe('searchLinksFor (no ISBN needed)', () => {
     expect(url('abebooks-search')).toContain('zvab.com');
     expect(url('ebay-search')).toContain('ebay.de');
     expect(url('amazon-search')).toContain('amazon.de');
+  });
+
+  it('asks WorldCat for the ISBN when the printing has one, and for the words when not (6.83)', () => {
+    const worldcat = (isbn13?: string) =>
+      searchLinksFor({ title: 'The Iliad', author: 'Homer', publisher: 'Penguin Classics', year: 1998, isbn13 }, 'us').find(l => l.provider === 'worldcat')!.url;
+    expect(worldcat('9780140275360')).toBe('https://search.worldcat.org/search?q=bn:9780140275360');
+    expect(worldcat()).toBe('https://search.worldcat.org/search?q=The%20Iliad%20Homer%20Penguin%20Classics%201998');
+  });
+});
+
+describe('commissionNote (4.11, prepared for shop mode)', () => {
+  const isbn = { isbn13: '9780684824772' };
+  const shop = { NEXT_PUBLIC_SITE_MODE: 'shop' };
+
+  it('says nothing in hobby mode, even with every variable set (E20)', () => {
+    const env = { AFFILIATE_AMAZON_TAG_US: 'bb-20', AFFILIATE_BOOKSHOP_ID_US: 'shop1' };
+    for (const mode of [undefined, 'hobby']) {
+      const links = [...buyLinksFor(isbn, 'us', { ...env, NEXT_PUBLIC_SITE_MODE: mode }), ...titleSearchLinksFor({ title: 'Gatsby' }, 'us', { ...env, NEXT_PUBLIC_SITE_MODE: mode })];
+      expect(links.some(l => l.affiliate)).toBe(false);
+      expect(commissionNote(links)).toBeUndefined();
+    }
+  });
+  it('says nothing in shop mode when no shop shown carries an id', () => {
+    expect(commissionNote(buyLinksFor(isbn, 'de', { ...shop, AFFILIATE_AMAZON_TAG_US: 'bb-20' }))).toBeUndefined();
+  });
+  it('states the commission, and adds Amazon\'s own sentence verbatim only for a tagged Amazon link', () => {
+    const bookshopOnly = buyLinksFor(isbn, 'us', { ...shop, AFFILIATE_BOOKSHOP_ID_US: 'shop1' });
+    expect(commissionNote(bookshopOnly)).toBe(COMMISSION_NOTE);
+    const withAmazon = buyLinksFor(isbn, 'us', { ...shop, AFFILIATE_AMAZON_TAG_US: 'bb-20' });
+    expect(withAmazon.find(l => l.provider === 'amazon')!.affiliate).toBe(true);
+    expect(commissionNote(withAmazon)).toBe(`${COMMISSION_NOTE} ${AMAZON_ASSOCIATE_NOTE}`);
+    expect(AMAZON_ASSOCIATE_NOTE).toBe('As an Amazon Associate I earn from qualifying purchases.');
+    // A tagged title search counts as well: it is the "another edition" row.
+    expect(commissionNote(titleSearchLinksFor({ title: 'Gatsby' }, 'us', { ...shop, AFFILIATE_AMAZON_TAG_US: 'bb-20' }))).toContain('Amazon Associate');
   });
 });
 

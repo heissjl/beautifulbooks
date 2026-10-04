@@ -137,6 +137,8 @@ export interface RedisCommands {
   hIncrBy?(key: string, field: string, by: number): Promise<unknown>;
   /** SET key value EX ttl: an unsaved collection that disappears by itself (5.13j). Optional, like hIncrBy. */
   setEx?(key: string, value: string, ttlSeconds: number): Promise<unknown>;
+  /** EXPIRE key seconds: the daily totals of the analytics (3.1a) age out by themselves. Optional, like hIncrBy. */
+  expire?(key: string, seconds: number): Promise<unknown>;
 }
 
 /**
@@ -249,6 +251,7 @@ export function upstashCommands(url: string, token: string, fetchImpl: typeof fe
     set: (key, value) => command(['SET', key, value]),
     hIncrBy: (key, field, by) => command(['HINCRBY', key, field, by]),
     setEx: (key, value, ttlSeconds) => command(['SET', key, value, 'EX', ttlSeconds]),
+    expire: (key, seconds) => command(['EXPIRE', key, seconds]),
     // HGETALL answers a flat list over REST: field, value, field, value, …
     hGetAll: async key => {
       const flat = await command(['HGETALL', key]);
@@ -341,6 +344,7 @@ export function redisCommands(url: string): RedisCommands {
     setNx: (key, value, ttlSeconds) => run(client => client.set(key, value, { NX: true, EX: ttlSeconds })),
     hIncrBy: (key, field, by) => run(client => client.hIncrBy(key, field, by)),
     setEx: (key, value, ttlSeconds) => run(client => client.set(key, value, { EX: ttlSeconds })),
+    expire: (key, seconds) => run(client => client.expire(key, seconds)),
   };
 }
 

@@ -26,11 +26,29 @@ export interface HintInput {
   sync: SlugSync[];
   envChecks: Array<{ level: string; text: string }>;
   history: HistoryEntry[];
+  /** The „Nächste Schritte“ table; a step that names only finished items is stale. */
+  nextSteps?: Array<{ what: string }>;
 }
 
 export function deriveHints(input: HintInput): Hint[] {
   const hints: Hint[] = [];
   const byNum = new Map(input.items.map(i => [i.num, i]));
+
+  // The same number twice: two sessions each took „the next free one“ on consecutive days (6.82, 2026-10-01/02).
+  const seen = new Map<string, number>();
+  for (const i of input.items) seen.set(i.num, (seen.get(i.num) ?? 0) + 1);
+  const twice = [...seen].filter(([, n]) => n > 1).map(([num]) => num);
+  if (twice.length) {
+    hints.push({ level: 'act', title: 'Dieselbe Nummer zweimal', text: `${twice.join(', ')} steht mehrfach in ROADMAP.md. Nummern ändern sich nie — der jüngere Punkt bekommt die nächste freie.`, item: twice[0] });
+  }
+
+  // A next step whose numbers are all ticked is a step nobody removed.
+  for (const step of input.nextSteps ?? []) {
+    const nums = [...new Set([...step.what.matchAll(/(?<![\w.])(\d\.\d{1,2}[a-z]?)(?![\w.])/g)].map(m => m[1]))].filter(n => byNum.has(n));
+    if (nums.length && nums.every(n => byNum.get(n)!.done)) {
+      hints.push({ level: 'info', title: 'Nächster Schritt ist erledigt', text: `Der Schritt „${step.what.replace(/\*\*/g, '').slice(0, 80)}…“ nennt nur abgehakte Punkte (${nums.join(', ')}).`, item: nums[0] });
+    }
+  }
 
   // Collections first: they are the layer that loses work when nobody looks.
   for (const row of input.sync) {

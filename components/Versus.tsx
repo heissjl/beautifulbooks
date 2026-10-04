@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ShareMenu from '@/components/ShareMenu';
+import { useT } from '@/components/i18n';
+import type { Translate } from '@/lib/i18n/translate';
 
 /**
  * The cover game's playing field (ROADMAP 5.8a): two covers, one click.
@@ -78,16 +80,15 @@ const PRELOAD_CAP_MS = 2500;
 /** Covers kept out of the next pair: the last 50 pairs. */
 const RECENT = 100;
 
-const OFFLINE = 'The game could not reach the site. Check the connection and try again.';
 
-async function failureText(res: Response): Promise<string> {
+async function failureText(res: Response, t: Translate): Promise<string> {
   try {
     const body = (await res.json()) as { error?: string };
-    if (body.error) return body.error;
+    if (body.error) return t(body.error);
   } catch {
-    // fall through to the status
+    // no JSON body: the status says what it can
   }
-  return res.status === 429 ? 'Too many clicks at once. Give it a few seconds.' : `The game did not answer (${res.status}).`;
+  return res.status === 429 ? t('Too many clicks at once. Give it a few seconds.') : t('The game did not answer ({status}).', { status: String(res.status) });
 }
 
 function reducedMotion(): boolean {
@@ -108,20 +109,20 @@ function preload(src: string): Promise<void> {
 }
 
 /** One pair, its two images already on their way into the cache. Never rejects. */
-async function fetchPair(seen: readonly string[]): Promise<Answer> {
+async function fetchPair(seen: readonly string[], t: Translate): Promise<Answer> {
   const params = new URLSearchParams();
   if (seen.length >= 2) params.set('last', seen.slice(-2).join(','));
   if (seen.length > 0) params.set('seen', seen.join(','));
   const query = params.toString();
   try {
     const res = await fetch(`/api/versus/pair${query ? `?${query}` : ''}`, { cache: 'no-store' });
-    if (!res.ok) return { failure: await failureText(res) };
+    if (!res.ok) return { failure: await failureText(res, t) };
     const body = (await res.json()) as Pair | { done: true };
     if ('done' in body) return { done: true };
     await Promise.all([preload(body.a.src), preload(body.b.src)]);
     return { pair: body };
   } catch {
-    return { failure: OFFLINE };
+    return { failure: t('The game could not reach the site. Check the connection and try again.') };
   }
 }
 
@@ -135,16 +136,16 @@ const AHEAD = 2;
  * with the covers of the one before counted as seen — so they are asked for one after another,
  * never at once. Every pair is still asked for exactly once; only earlier.
  */
-function askAhead(cache: Map<string, Promise<Answer>>, seen: readonly string[], depth: number) {
+function askAhead(cache: Map<string, Promise<Answer>>, seen: readonly string[], depth: number, t: Translate) {
   const key = seen.join(',');
   let answer = cache.get(key);
   if (!answer) {
-    answer = fetchPair(seen);
+    answer = fetchPair(seen, t);
     cache.set(key, answer);
   }
   if (depth > 1) {
     void answer.then(result => {
-      if ('pair' in result) askAhead(cache, withSeen(seen, result.pair), depth - 1);
+      if ('pair' in result) askAhead(cache, withSeen(seen, result.pair), depth - 1, t);
     });
   }
 }
@@ -153,6 +154,9 @@ function askAhead(cache: Map<string, Promise<Answer>>, seen: readonly string[], 
  * The pairs that came with the page (Julian, 2026-09-25: „have a set of preloaded pairs ready"),
  * put into the cache under the `seen` lists the game will ask with — so the first ones show at
  * once and the server is asked only from the pair after them.
+ *
+ * They carry no images: `askAhead` finds them here and never calls `fetchPair`, which is what
+ * fetches the two pictures. That is `usePreloadSeeded`'s job (ROADMAP 6.82).
  */
 function seeded(pairs: readonly Pair[]): Map<string, Promise<Answer>> {
   const cache = new Map<string, Promise<Answer>>();
@@ -164,7 +168,33 @@ function seeded(pairs: readonly Pair[]): Map<string, Promise<Answer>> {
   return cache;
 }
 
+/**
+ * The images of the pairs that came with the page (ROADMAP 6.82).
+ *
+ * Only the first pair's two covers are in the page's `preload` hints, and the seeded pairs skip
+ * `fetchPair`, so pairs two and three used to start loading their pictures at the moment they
+ * appeared: measured on 2026-10-01, a cover that no edge holds yet takes 1.2 to 2.3 s, against
+ * 0.37 s once it is cached. That was a second of emptiness after each of the first two clicks.
+ *
+ * One pair after another, both of its covers at once: the browser has the first pair's images
+ * from the page's own hints, so the chain spends its bandwidth on what comes next, in the order
+ * it will be needed. In an effect, because `preload` needs a browser, and once, because a second
+ * run would build Images for pictures already on their way.
+ */
+function usePreloadSeeded(pairs: readonly Pair[]) {
+  const started = useRef(false);
+  useEffect(() => {
+    if (started.current || pairs.length === 0) return;
+    started.current = true;
+    void pairs.reduce(
+      (before, pair) => before.then(() => Promise.all([preload(pair.a.src), preload(pair.b.src)]).then(() => undefined)),
+      Promise.resolve(),
+    );
+  }, [pairs]);
+}
+
 export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] }) {
+  const t = useT();
   const [request, setRequest] = useState(0);
   const [seen, setSeen] = useState<readonly string[]>([]);
   const [loaded, setLoaded] = useState<Loaded | null>(null);
@@ -175,12 +205,13 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
   const holdUntil = useRef(0);
   /** The pairs behind the one on screen, asked for early. Keyed by the `seen` list each was asked with. */
   const ahead = useRef(seeded(initialPairs));
+  usePreloadSeeded(initialPairs);
 
   useEffect(() => {
     let cancelled = false;
     const key = seen.join(',');
     const cache = ahead.current;
-    const answer = cache.get(key) ?? fetchPair(seen);
+    const answer = cache.get(key) ?? fetchPair(seen, t);
     const hold = holdUntil.current;
     answer.then(async result => {
       await pause(Math.max(0, hold - Date.now()));
@@ -194,12 +225,12 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
       cache.delete(key);
       setLeaving(null);
       setLoaded({ ...result, request });
-      if ('pair' in result) askAhead(cache, withSeen(seen, result.pair), AHEAD);
+      if ('pair' in result) askAhead(cache, withSeen(seen, result.pair), AHEAD, t);
     });
     return () => {
       cancelled = true;
     };
-  }, [request, seen]);
+  }, [request, seen, t]);
 
   const current = loaded?.request === request ? loaded : null;
   const pair = current && 'pair' in current ? current.pair : null;
@@ -233,7 +264,7 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
       });
       // 409 is a pair already used — a double click. The next pair is the right answer to it.
       if (!res.ok && res.status !== 409) {
-        const failure = await failureText(res);
+        const failure = await failureText(res, t);
         holdUntil.current = 0;
         setLeaving(null);
         setLoaded({ request, failure });
@@ -247,11 +278,11 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
     } catch {
       holdUntil.current = 0;
       setLeaving(null);
-      setLoaded({ request, failure: OFFLINE });
+      setLoaded({ request, failure: t('The game could not reach the site. Check the connection and try again.') });
     } finally {
       setSending(false);
     }
-  }, [pair, sending, leaving, request, leave, next]);
+  }, [pair, sending, leaving, request, leave, next, t]);
 
   const vote = useCallback((winner: Side) => send('/api/versus/vote', { winner: winner.id }, winner), [send]);
   const report = useCallback((side: Side) => send('/api/versus/flag', { id: side.id, reason: 'reported' }, null), [send]);
@@ -279,26 +310,26 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
   return (
     <div>
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-        <h1 className="text-3xl leading-tight text-ink [text-wrap:balance] sm:text-4xl">Which cover would you rather look at?</h1>
-        <Link href="/versus/board" className="text-sm text-accent underline underline-offset-4">Standings</Link>
+        <h1 className="text-3xl leading-tight text-ink [text-wrap:balance] sm:text-4xl">{t('Which cover would you rather look at?')}</h1>
+        <Link href="/versus/board" className="text-sm text-accent underline underline-offset-4">{t('Standings')}</Link>
       </div>
-      <p className="mt-2 text-[15px] text-ink-2">Judge the cover, not the book!</p>
+      <p className="mt-2 text-[15px] text-ink-2">{t('Judge the cover, not the book!')}</p>
       <p className="mt-1 text-sm tabular-nums text-ink-3" aria-live="polite">
         {shown
           ? shown.votes === null
-            ? `${shown.covers} covers`
-            : `${shown.votes} ${shown.votes === 1 ? 'vote' : 'votes'} so far · ${shown.covers} covers`
+            ? t('{n} covers', { n: shown.covers })
+            : shown.votes === 1 ? t('1 vote so far · {covers} covers', { covers: shown.covers }) : t('{votes} votes so far · {covers} covers', { votes: shown.votes, covers: shown.covers })
           : ' '}
-        {shown?.store === 'memory' ? ' · development: votes live in memory' : ''}
+        {shown?.store === 'memory' ? ` · ${t('development: votes live in memory')}` : ''}
       </p>
 
       {current && 'failure' in current ? (
         <div className="mt-10 max-w-prose">
           <p className="text-[15px] leading-relaxed text-ink-2">{current.failure}</p>
-          <button type="button" onClick={() => next(null)} className="btn btn-accent mt-5">Try again</button>
+          <button type="button" onClick={() => next(null)} className="btn btn-accent mt-5">{t('Try again')}</button>
         </div>
       ) : current && 'done' in current ? (
-        <p className="mt-10 text-[15px] text-ink-2">Too few covers are left to make a pair.</p>
+        <p className="mt-10 text-[15px] text-ink-2">{t('Too few covers are left to make a pair.')}</p>
       ) : (
         <>
           {/*
@@ -320,7 +351,7 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
                       type="button"
                       disabled={!side || busy}
                       onClick={() => side && vote(side)}
-                      aria-label={i === 0 ? 'Choose the left cover' : 'Choose the right cover'}
+                      aria-label={i === 0 ? t('Choose the left cover') : t('Choose the right cover')}
                       className={`group relative block aspect-[2/3] w-full overflow-hidden rounded-card bg-surface shadow-sm transition-all duration-[260ms] ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent disabled:cursor-default [@media(hover:hover)]:enabled:hover:-translate-y-0.5 motion-reduce:enabled:hover:translate-y-0 ${
                         won ? '-translate-y-2 scale-[1.04] ring-4 ring-accent ring-offset-4 ring-offset-bg motion-reduce:translate-y-0 motion-reduce:scale-100' : ''
                       } ${lost ? 'scale-95 opacity-25 motion-reduce:scale-100' : ''}`}
@@ -378,16 +409,16 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
                       author={side.author}
                       compact
                       align={i === 0 ? 'left' : 'right'}
-                      text={`Beautiful or ugly? ${side.title}${side.author ? ` by ${side.author}` : ''}`}
+                      text={t('Beautiful or ugly? {book}', { book: side.author ? t('{title} by {author}', { title: side.title, author: side.author }) : side.title })}
                     />
                     <Link
                       href={`/book/${side.workId}`}
                       target="_blank"
                       rel="noopener"
-                      aria-label={`All covers of ${side.title}`}
+                      aria-label={t('All covers of {title}', { title: side.title })}
                       className="whitespace-nowrap text-xs text-ink-3 underline underline-offset-2 hover:text-accent"
                     >
-                      All covers
+                      {t('All covers')}
                     </Link>
                   </div>
                 ) : (
@@ -398,39 +429,39 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
           )}
           <div className="mt-6 flex flex-col items-center gap-3">
             <button type="button" disabled={!pair || busy} onClick={() => pair && skip(pair)} className="btn">
-              Can&rsquo;t decide
+              {t('Can’t decide')}
             </button>
             <p className="text-xs text-ink-3">
-              Not a cover?{' '}
+              {t('Not a cover?')}{' '}
               <button type="button" disabled={!pair || busy} onClick={() => pair && report(pair.a)} className="underline underline-offset-2 hover:text-ink-2 disabled:opacity-50">
-                Report the left one
+                {t('Report the left one')}
               </button>
               {' · '}
               <button type="button" disabled={!pair || busy} onClick={() => pair && report(pair.b)} className="underline underline-offset-2 hover:text-ink-2 disabled:opacity-50">
-                the right one
+                {t('the right one')}
               </button>
             </p>
             {lastPick && (
               <div className="flex max-w-md items-center gap-3 rounded-card border border-line px-3 py-2">
                 <Image src={lastPick.src} alt="" width={28} height={42} unoptimized className="h-[42px] w-[28px] shrink-0 object-contain" />
                 <p className="min-w-0 text-[13px] leading-snug text-ink-2">
-                  Your last pick: <span className="text-ink">{lastPick.title}</span>
-                  {lastPick.author ? ` by ${lastPick.author}` : ''}.{' '}
+                  {t('Your last pick:')} <span className="text-ink">{lastPick.title}</span>
+                  {lastPick.author ? ` ${t('by {author}', { author: lastPick.author })}` : ''}.{' '}
                   <Link href={lastPick.href} target="_blank" rel="noopener" className="whitespace-nowrap text-accent underline underline-offset-2">
-                    See this edition
+                    {t('See this edition')}
                   </Link>
                   {lastPick.workId ? (
                     <>
                       {' · '}
                       <Link href={`/book/${lastPick.workId}`} target="_blank" rel="noopener" className="whitespace-nowrap text-accent underline underline-offset-2">
-                        all its covers
+                        {t('all its covers')}
                       </Link>
                     </>
                   ) : null}
                 </p>
               </div>
             )}
-            <p className="hidden text-center text-xs text-ink-3 [@media(hover:hover)]:block">← and → choose, ↓ skips.</p>
+            <p className="hidden text-center text-xs text-ink-3 [@media(hover:hover)]:block">{t('← and → choose, ↓ skips.')}</p>
           </div>
         </>
       )}

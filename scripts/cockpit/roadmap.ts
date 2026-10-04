@@ -76,12 +76,13 @@ export interface Roadmap {
 
 export interface Theme { id: string; name: string; hint: string }
 
-/** The twelve themes of the mock, in board order. */
+/** The twelve themes of the mock, in board order, plus „Oberfläche & Texte“ since 2026-10-03 (6.C had no theme of its own and 6.85 landed under „Daten“). */
 export const THEMES: Theme[] = [
   { id: 'samml', name: 'Sammlungen', hint: '/collections, lab/collections, /curate, /suggest' },
   { id: 'start', name: 'Startseite', hint: 'Rondell, kuratierte Wand, Regal' },
   { id: 'suche', name: 'Suche', hint: 'Suchfeld, Karten, Ranking' },
   { id: 'detail', name: 'Detailseite', hint: 'Wand, Seitenleiste, Jahrzehnte, Ladeszene' },
+  { id: 'ui', name: 'Oberfläche & Texte', hint: 'Wortlaut, Sprache, Kopf- und Fußzeile, Form' },
   { id: 'cover', name: 'Cover & Faltung', hint: 'Signaturen, Dubletten, Index' },
   { id: 'daten', name: 'Daten & Quellen', hint: 'Open Library, Google, ISFDB, Jahre' },
   { id: 'spiel', name: 'Cover-Spiel', hint: '/versus, Redis, Stimmen' },
@@ -109,6 +110,7 @@ const TITLE_RULES: Array<[RegExp, string]> = [
   [/Suche|Suchfeld|Ranking|Tippfehler|Query/i, 'suche'],
   [/Falt|Dublette|Signatur|Index|Ähnlich|gleiche[rn]? Entwurf|Hash/i, 'cover'],
   [/Detailseite|Werkseite|Wand|Seitenleiste|Jahrzehnt|Ladeszene|Ladebild|Kauf-Link/i, 'detail'],
+  [/auf Deutsch|Oberfläche|Wortlaut|Kopfzeile|Fußzeile|Zurück-Link|die neue Form|Etikett/i, 'ui'],
   [/Open Library|Google|ISFDB|ISBNdb|Übersetzung|Quelle|Jahr\b|Erstausgabe|Klappentext|Cover-Gestalter|Wer hat das Cover/i, 'daten'],
   [/Domain|Search Console|Sitemap|Analyse|Messen|Reichweite|Gattung|SEO|Kanal/i, 'reich'],
   [/Firewall|Impressum|Datenschutz|Kontingent|Hobby|Überwachung|Recht|Konto|Abnahme/i, 'betrieb'],
@@ -116,7 +118,7 @@ const TITLE_RULES: Array<[RegExp, string]> = [
 ];
 
 /** Subsection of phase 6 → theme. */
-const GROUP_RULES: Record<string, string> = { '6.D': 'start', '6.E': 'werk' };
+const GROUP_RULES: Record<string, string> = { '6.C': 'ui', '6.D': 'start', '6.E': 'werk' };
 
 /** Paths named in the text → theme, used when title and group say nothing. */
 const PATH_RULES: Array<[RegExp, string]> = [
@@ -127,6 +129,7 @@ const PATH_RULES: Array<[RegExp, string]> = [
   [/^(lib\/search|components\/SearchBar|components\/BookGrid|app\/api\/search)/, 'suche'],
   [/^(lib\/sources|lib\/isbn|lib\/googlequota|lib\/blurb)/, 'daten'],
   [/^(components\/Hero|lib\/hero|data\/curated|lab\/curate|app\/page\.tsx)/, 'start'],
+  [/^(lib\/i18n|components\/i18n|components\/SiteHeader|components\/SiteFooter|lib\/verdicts|lib\/seo)/, 'ui'],
   [/^(scripts\/kanban|scripts\/worktrees|scripts\/cockpit|\.claude\/)/, 'werk'],
   [/^lab\//, 'lab'],
 ];

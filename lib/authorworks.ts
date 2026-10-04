@@ -11,6 +11,7 @@
 import type { WorkSummary } from './model';
 import { looksLikeNonBook, looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeTitle } from './normalize';
 import { mergeWorks } from './works';
+import { english, type Translate } from './i18n/translate';
 
 /** One tile of the row: one cover, a title, the way to its wall. */
 export interface AuthorWork {
@@ -155,8 +156,8 @@ export function excludeCurrent(
  * the author and nothing else: no count, no "all" — the row shows the
  * most-printed records of one catalogue, and says nothing about the rest.
  */
-export function authorRowHeading(author: string): string {
-  return `More by ${author}`;
+export function authorRowHeading(author: string, t: Translate = english): string {
+  return t('More by {author}', { author });
 }
 
 /**

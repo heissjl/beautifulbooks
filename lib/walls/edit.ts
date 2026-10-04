@@ -6,6 +6,7 @@
  * collection, and requests cut to the size the change route takes.
  */
 import type { PublicWall, Tile, WallOp } from './model';
+import { english, type Translate } from '@/lib/i18n/translate';
 
 /** Operations one `POST /api/walls/<id>` applies; the route drops the rest (app/api/walls/[id]/route.ts). */
 export const OPS_PER_REQUEST = 50;
@@ -88,6 +89,6 @@ export function addRequests(tiles: readonly Tile[], wall?: Pick<PublicWall, 'til
 }
 
 /** The title a new collection gets before its owner names it. */
-export function defaultTitle(walls: readonly unknown[]): string {
-  return walls.length ? `Collection ${walls.length + 1}` : 'My collection';
+export function defaultTitle(walls: readonly unknown[], t: Translate = english): string {
+  return walls.length ? t('Collection {n}', { n: walls.length + 1 }) : t('My collection');
 }
