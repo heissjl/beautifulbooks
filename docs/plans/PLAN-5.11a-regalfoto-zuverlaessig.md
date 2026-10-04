@@ -139,3 +139,61 @@ Julian zu den Streifen: „i still want the overlay to be better portraying the 
 
 **Die Liste wächst mit** (gebaut 2026-10-01; Julian: „während die bücher nachgeschaut werden können die ersten ergebnisse auch schon angezeigt werden, dann kann der user schonmal cover auswählen etc“). `WallProposal` nimmt Zeilen mit `pending`; der Standard „vorgehakt“ ist eine Regel (gefunden, neu in der Sammlung, kein Rateversuch) und die Klicks des Lesers sind Ausnahmen (`flipped`), nicht mehr eine beim ersten Rendern gefüllte Menge — so bekommt eine Zeile, die während der Suche eintrifft, denselben Standard, und ein Häkchen, das der Leser während der Suche setzt, bleibt. Der Knopf sagt „(k still looking)“, solange Zeilen fehlen. Geprüft headless an der Galeriewand: ein Häkchen während „looking them up… 8 of 40“ entfernt, am Ende noch entfernt, die übrigen gesetzt.
 
+## Stapel: ein Punkt je Buch statt Reihe und Mitte (2026-10-01)
+
+Julian, mit einem Foto zweier Bücherstapel aus der Produktion: „Hier gibt es noch einen Bug bei der Darstellung der gefundenen Bücher wenn sie seitlich sind“ — fünfzehn gelesene Bücher, sechs sichtbare Pins. Der Fehler lag im Ansatz: der Prompt kannte nur Regalreihen mit einer waagrechten Mitte je Buch; in einem Stapel liegen alle Bücher an derselben waagrechten Stelle, und die senkrechte Mitte der „Reihe“ war für alle gleich.
+
+**Gebaut:** der Prompt fragt je Buch `x` **und** `y` (ganze Prozent), keine Reihen mehr; `placeBooks`, `rows` und die Streifen sind aus `lib/recognize.ts` entfernt (`box` bleibt als leeres Feld für einen späteren Segmentierer). `PhotoRead.at` trägt den Punkt zur Seite. `lib/walls/pins.ts` (`spreadPins`, rein, getestet) rückt einen Pin, der einen früheren überdecken würde, quer zur Richtung seines Nachbarn: auf dem Brett auf und ab, im Stapel nach links und rechts; die Seite misst dafür die gezeigte Bildgröße beim Laden. Die Versetzung nur am Telefon (`max-sm`) entfällt.
+
+**Gemessen** (lokal; `docs/tests/2026-10-01-regalfoto-stapel-punkte.png`, `…-pins-phone.png`): auf Julians Stapelfoto (als Bildschirmfoto, 739 × 1600) neun bis zehn Bücher, jedes mit eigenem Punkt in seinem Stapel; auf dem Brett 20–22 von 22, alle Pins am Telefon sichtbar. **effort wieder medium:** mit dem Punkt-Prompt denkt „high“ vor der Antwort nach — die Galeriewand kostete 3.131–5.241 Ausgabetoken und 24–40 s für 42–47 Bücher (5–9 ct), „medium“ liest 33–40 für 1.383–1.699 Token in 11–13 s (≈ 3 ct), das Brett 21–22 in 8 s. Am Vortag, mit dem Reihen-Prompt, war es umgekehrt (25–27 gegen 38–41): die Einstellung hängt am Prompt und gehört bei jeder Prompt-Änderung neu gemessen.
+
+## Variante 3: ein zweiter Blick auf dichte Fotos (2026-10-03)
+
+Julian nach der Frage, ob sich etwas vorschalten lässt, das Prompt und Denk-Einstellung wählt: „mach variante 3“ — das Ergebnis des ersten Lesens als Weiche. Vier Anläufe an der Galeriewand (1500 × 2000), jeder gemessen:
+
+| Schnitt | Bücher | Zeit zweiter Blick | Kosten gesamt | Befund |
+|---|---|---|---|---|
+| nur ein Blick (Stand vorher) | 33–39 | — | ≈ 3 ct | viele ohne Autor |
+| drei Bänder nach den y-Werten des Modells | 73 | 12 s | — | die y-Werte lagen einen halben Boden daneben, das oberste Band schnitt durch die Bücher (14 statt ~30 gelesen) |
+| drei feste Streifen über die volle Breite (je halbe Höhe, ein Viertel versetzt) | 68–76 | 12–37 s | ≈ 11–20 ct | gute Lesung mit Autoren, aber das Modell **zählt** die waagrechte Lage bis „150 %“ — Punkte wertlos |
+| sechs feste Stücke (3 × 2) | 95 | 12 s | ≈ 15 ct | Punkte im Bild, aber waagrechte Schnitte gehen durch die Rückentitel: „Edo to Performance“, „S Party“, „Tar“ |
+| **je Boden, an den Brettern geschnitten, 2–3 Teile nebeneinander** | **97–100** | **9–10 s** | **≈ 13 ct** | saubere Titel, Autoren, Punkte im richtigen Boden |
+
+**Gebaut:** `recognize(…, stopAt)` bricht den ersten Durchgang beim 30. Buch ab (`DENSE_AT`, `stream.abort()`); `lib/shelfrows.ts` findet die Bretter (mittlere Helligkeitsänderung je Pixelzeile, geglättet; ruhige Bänder unter 45 % des Medians und mindestens 1,2 % hoch sind Bretter; 6–8 ms je Foto; Wand: Böden bei 0,117 / 0,436 / 0,691, das Brett und der Stapel haben keine teilenden Bretter); `piecesOf` schneidet je Boden zwei Teile (0–0,6 und 0,4–1) oder drei, wenn der Boden mehr als viermal so breit wie hoch ist; `mergeReads` führt zusammen (gleiche Buchstaben, höchstens 15 % verlesen, oder ein Titel ab zwei Wörtern ganz in Titel und Autor des anderen; die vollere Lesung, der Punkt aus dem Stück); `settle` zieht Antworten, deren Lage über das Bild hinausgezählt wurde, proportional zurück. Die Route streamt `{"again": n, "done": k}`. Der Browser schickt 2000 statt 1600 px lange Kante, damit die Stücke mehr Pixel haben als der erste Blick; Grenze 100 statt 80 Bücher; ein dichtes Foto zählt mit jedem Teil auf die Tagesgrenze.
+
+**Denken abgeschaltet** (`thinking: { type: 'disabled' }`), an drei Streifen der Wand gemessen: mit Denken 96 Bücher für 6.762 Ausgabetoken in 14–20 s je Streifen, ohne 95 für 4.133 in 10–13 s. Gilt für alle Aufrufe.
+
+**Im Browser** (headless, 1280 px, `docs/tests/2026-10-03-regalfoto-wand-zweiter-blick.png`): erster Pin nach 5 s, „Many books — reading the photo again in 9 parts“ bei 12,8 s, 100 Bücher gelesen nach 22,6 s (14.592 / 6.069 Token ≈ 13,5 ct), die Suche nach 100 Titeln weitere 45 s — 6 gefunden, 42 „maybe“, 52 nicht im Katalog: es sind Galeriekataloge. Das Brett: unverändert ein Durchgang, 20 Bücher in 7,8 s. Julian hatte „nur die Wand zahlt doppelt“ gelesen — es ist das Vierfache; die Grenze `DENSE_AT` und die Zahl der Teile sind die Stellschrauben.
+
+**Offen:** ein Testsatz von acht bis zehn Fotos mit gezählter Wahrheit, bevor an Prompt, Schwelle oder Schnitt weiter gedreht wird — alle Zahlen hier stammen von drei Fotos.
+
+## Der Testsatz (2026-10-04)
+
+Julian lieferte zwölf Fotos; mit den zwei ersten sind es vierzehn, je mit einer Wahrheitsliste (Entwurf, von Julian zu korrigieren) und einem Auswertungsskript, das den Lesecode der Website selbst benutzt (`lib/walls/readphoto.ts`, aus der Route herausgezogen). Erster Lauf: **292 von 322 Büchern der Listen gelesen (91 %)**, 94 % davon mit dem Autor, der auf dem Foto steht; auf den sieben vollzähligen Fotos ein einziger Fehler; Umschläge 1–2,4 ct und 2–7 s, dichte Regale 9–13 ct und 17–24 s; das verwackelte Regal 52 %. Bericht mit Tabelle, Fehlbildern und vier Vorschlägen: [docs/tests/2026-10-04-regalfoto-testsatz.md](../tests/2026-10-04-regalfoto-testsatz.md). Ab jetzt läuft jede Änderung an Prompt, Schwelle oder Schnitt zuerst gegen diesen Satz.
+
+## Schwelle 40, Tagesbudget, Mail (2026-10-04)
+
+Julian: „lass uns die grenze für die dichte hochsetzen, damit wir nicht aus versehen viel ausgeben. außerdem braucht die website einen stopp falls wir zu viel traffic oder verbrauch bekommen. zb eine email an mich als info.“
+
+**Die Schwelle, am Testsatz gemessen** (`PHOTO_DENSE_AT=off`, Lauf `one-look`): ein einziger Blick liest auf den sechs dichten Fotos 35–55 Bücher, auf allen anderen höchstens 21, und über alle vierzehn **261 von 322 (81 %) für 38 ct** — gegen **292 von 322 (91 %) für 80 ct** mit dem zweiten Blick. `DENSE_AT` steht jetzt bei **40** statt 30: fünf der sechs dichten Fotos bekommen den zweiten Blick weiter, das sechste (die Schuber, 35 Bücher) hatte durch ihn nichts gewonnen. `PHOTO_DENSE_AT` überschreibt die Zahl ohne Deploy; `off` schaltet den zweiten Blick ab.
+
+**Das Budget** (`lib/walls/photobudget.ts`, `WallStore.spendPhoto`): Kosten je Lesung aus den Token, auf den UTC-Tag summiert; Voreinstellung 200 ct am Tag (`PHOTO_BUDGET_CENTS`). Ab der Hälfte nur noch ein Blick, am Budget ist das Foto aus (429). Probelauf lokal mit 3 ct: Lesung 1 und 2 je 1,04 ct, Lesung 3 mit `oneLook: budget`, Lesung 4 abgewiesen mit `capped: budget`. Die Zahlgrenze von 300 Lesungen bleibt daneben.
+
+**Die Mail** (`lib/alerts.ts`): je Schwelle und Tag eine, über Resend, Empfänger `ALERT_TO` → `WALLS_REPORT_TO` → Impressum; Dublettenschutz im Speicher (`alerts:<Schlüssel>`, zwei Tage). Dazu eine Mail, wenn Google das Tageskontingent als erschöpft meldet. Ohne `RESEND_API_KEY` geht nichts hinaus — **ob der Schlüssel in Produktion gesetzt ist, konnte diese Sitzung nicht prüfen** (`vercel env ls` gab im Worktree nichts aus).
+
+## Meilenstein 2026-10-04 — Stand und Fortsetzung
+
+**In Produktion seit 2026-10-04** (Julian: „make a milestone to continue from later, merge the earlier fixes and deploy“): ein Punkt je Buch statt Reihen (Stapel gehen), Pins statt Kästen, der zweite Blick auf dichte Fotos ab 40 Büchern mit Schnitt an den Regalbrettern, das Modell ohne Denken, 100 Bücher je Foto, das Tagesbudget mit Stopp und Mail, der Rückweg von der Buchseite zur Wand (6.89). Der Testsatz und sein Auswertungsskript liegen im Lab.
+
+**Wo weitermachen — in dieser Reihenfolge:**
+
+1. **Julian korrigiert die Wahrheitslisten** (`lab/shelf/testset/truth.json`, Fotos 04, 07, 09, 10, 12, 13): erst dann ist „darüber hinaus“ eine Fehlerzahl. Bis dahin sind die 91 % eine Trefferquote gegen Claudes eigenen Entwurf.
+2. **Drei Ideen am Testsatz messen**, je ein Lauf (`npx tsx lab/shelf/evaluate.ts --label …`, 80 ct, drei Minuten), nie wieder an Einzelfotos: (a) Bruchstücke angeschnittener Bücher am Bildrand auslassen („GO“, „Self“, „SETH“ auf Foto 10) — per Prompt oder indem der angeschnittene Randstreifen beim zweiten Blick nicht gelesen wird; (b) ein Feld für Unsicheres, damit *Collected Novellas* und die vier Pettersons als „maybe“ kommen statt zu fehlen; (c) ein Hinweis bei Unschärfe statt eines halben Ergebnisses (Foto 05: 52 %), erkannt an der Kantenstärke ohne Modell.
+3. **Schritt 4 des Plans, Umschlag → Ausgabe:** jetzt gibt es Umschlagfotos (01, 02, 03, 06, 08, 11). Der Ausschnitt braucht einen Umriss; den liefert das Modell nicht — entweder der Segmentierer (unten) oder, einfacher für frontale Umschläge, ein Zuschnitt um den Punkt mit fester Größe, an den sechs Fotos zu messen.
+4. **Echte Umrisse** (MobileSAM mit den Punkten als Aufforderung, Lab-Experiment `lab/shelf/segment/`) — Julian hat noch nicht entschieden, ob es laufen soll.
+5. **Von Julian zu setzen:** das Monatslimit in der Anthropic-Konsole; `RESEND_API_KEY` in Vercel prüfen, sonst kommen die Mails nicht; optional `ALERT_TO`, `PHOTO_BUDGET_CENTS`, `PHOTO_DENSE_AT`.
+
+**Was man wissen muss, bevor man etwas anfasst:** die Denk-Einstellung hängt am Prompt (mit Reihen-Prompt las „high“ mehr, mit Punkt-Prompt „medium“ gleich viel für ein Drittel) — nach jeder Prompt-Änderung neu messen. Das Modell misst keine Lage, es zählt (in breiten Streifen bis „150 %“); `settle` fängt das ab, und geschnitten wird nur an Brettern und zwischen Rücken. LibreWolf, Firefox mit RFP und Tor geben ein Canvas nicht ehrlich zurück; der Server bereitet darum jedes Foto selbst auf. Die Route streamt JSON-Zeilen; die Liste im Browser wächst mit.
+
+**Berichtigung der Preise (2026-10-04, beim Zusammenführen mit main):** alle Cent-Angaben in diesem Dokument bis hierher rechnen mit **angenommenen** 3 $ / 15 $ je Million Token. Die Analyse-Sitzung (ROADMAP 3.1, K13) hat den Listenpreis nachgeschlagen: `claude-sonnet-5` kostet **2 $ / 10 $** (`lib/insights/prices.ts`). Alle Kosten sind also um ein Drittel niedriger als oben genannt: ein gewöhnliches Foto rund **1,5 ct** statt 2, ein dichtes **6–9 ct** statt 9–13, der Testsatz-Lauf mit zweitem Blick **53 ct** statt 80, mit einem Blick 25 statt 38. Die Verhältnisse (zweiter Blick ≈ doppelte Kosten über den ganzen Satz, Vierfaches bei einer dichten Wand) bleiben. Budget und Auswertungsskript rechnen seitdem mit der gemeinsamen Tabelle.
+

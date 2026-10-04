@@ -19,7 +19,8 @@ import type { Market } from './market';
 export interface ClickEvent {
   provider: string;
   market: Market;
-  isbn13: string;
+  /** Absent for a shop searched by words (ROADMAP 3.1): its terms stay out of the log. */
+  isbn13?: string;
   /** Does the target open one book's page or a list of results? */
   kind: 'product' | 'search';
 }

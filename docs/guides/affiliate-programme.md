@@ -2,6 +2,8 @@
 
 Geschrieben 2026-10-03 für Julian (ROADMAP Phase 4). Was der Code heute kann, ist gelesen und stimmt; was die Programme verlangen, stammt aus den Roadmap-Punkten 4.1–4.4, 4.10, 4.11 und der [Bookshop-Anleitung](bookshop-affiliate.md) vom 2026-09-26 — **Provisionssätze und Fristen vor jeder Bewerbung auf der Seite des Programms nachlesen**, sie ändern sich, und von hier aus war am 2026-10-03 kein Abruf möglich. Keine Rechts- oder Steuerberatung.
 
+*Sätze, Netzwerke und Bewerbungstext je Programm, im Netz nachgelesen am 2026-10-03: [affiliate-programme-recherche.md](affiliate-programme-recherche.md).*
+
 ## 1. Was die Seite schon kann, ohne dass du etwas tust
 
 - **Jeder Händler-Link ist eine URL-Schablone** (`lib/buylinks.ts`), je Markt US / UK / DE (E9). Trägt ein Händler eine Umgebungsvariable (`affiliateEnv`), wird ihr Wert in den Link gesetzt — Amazon als `tag=`, Bookshop als `/a/<ID>/<ISBN>`. **Ohne Variable entsteht der neutrale Link.** Die fünf Stellen heute:

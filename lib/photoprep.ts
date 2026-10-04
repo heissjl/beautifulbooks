@@ -103,6 +103,35 @@ export function shrink(img: RgbaImage, edge: number = PHOTO_EDGE): RgbaImage {
   return { width: W, height: H, rgba: out };
 }
 
+/** The rectangle [x0, y0, x1, y1] (fractions of the picture) as its own image; clamped to the picture, at least one pixel. */
+export function crop(img: RgbaImage, x0: number, y0: number, x1: number, y1: number): RgbaImage {
+  const clamp = (n: number) => Math.min(1, Math.max(0, n));
+  const left = Math.floor(clamp(Math.min(x0, x1)) * img.width);
+  const top = Math.floor(clamp(Math.min(y0, y1)) * img.height);
+  const width = Math.max(1, Math.min(img.width - left, Math.ceil(clamp(Math.max(x0, x1)) * img.width) - left));
+  const height = Math.max(1, Math.min(img.height - top, Math.ceil(clamp(Math.max(y0, y1)) * img.height) - top));
+  const out = new Uint8Array(width * height * 4);
+  for (let y = 0; y < height; y++) {
+    const from = ((top + y) * img.width + left) * 4;
+    out.set(img.rgba.subarray(from, from + width * 4), y * width * 4);
+  }
+  return { width, height, rgba: out };
+}
+
+/** An image as a plain JPEG, without EXIF. */
+export function toJpeg(img: RgbaImage, quality: number = 85): Buffer {
+  return jpeg.encode({ width: img.width, height: img.height, data: Buffer.from(img.rgba.buffer, img.rgba.byteOffset, img.rgba.byteLength) }, quality).data;
+}
+
+/** The photo decoded and upright at the size it arrived in — what a closer second look cuts its pieces from (5.11a). Null when the bytes cannot be read. */
+export function uprightPhoto(bytes: Uint8Array): { image: RgbaImage; orientation: number } | null {
+  // A 12-megapixel photo is 48 MB of RGBA plus jpeg-js's own buffers; 50 MP is more than any phone.
+  const decoded = decode(bytes, { maxMemoryUsageInMB: 512, maxResolutionInMP: 50 });
+  if (!decoded) return null;
+  const orientation = bytes[0] === 0xff ? exifOrientation(bytes) : 1;
+  return { image: orient(decoded, orientation), orientation };
+}
+
 export interface PreparedPhoto {
   bytes: Buffer;
   width: number;
@@ -110,16 +139,14 @@ export interface PreparedPhoto {
   /** What was done, for the log line: the orientation found and whether it was shrunk. */
   orientation: number;
   shrunk: boolean;
+  /** The upright photo at the size it arrived in, for a closer second look at a part of it. */
+  full: RgbaImage;
 }
 
 /** The photo as the model gets it: upright, at most PHOTO_EDGE on the long edge, a plain JPEG without EXIF. Null when the bytes are not a JPEG or PNG the decoder reads. */
 export function preparePhoto(bytes: Uint8Array, quality: number = 85): PreparedPhoto | null {
-  // A 12-megapixel photo is 48 MB of RGBA plus jpeg-js's own buffers; 50 MP is more than any phone.
-  const decoded = decode(bytes, { maxMemoryUsageInMB: 512, maxResolutionInMP: 50 });
-  if (!decoded) return null;
-  const orientation = bytes[0] === 0xff ? exifOrientation(bytes) : 1;
-  const upright = orient(decoded, orientation);
-  const small = shrink(upright);
-  const encoded = jpeg.encode({ width: small.width, height: small.height, data: Buffer.from(small.rgba.buffer, small.rgba.byteOffset, small.rgba.byteLength) }, quality);
-  return { bytes: encoded.data, width: small.width, height: small.height, orientation, shrunk: small !== upright };
+  const up = uprightPhoto(bytes);
+  if (!up) return null;
+  const small = shrink(up.image);
+  return { bytes: toJpeg(small, quality), width: small.width, height: small.height, orientation: up.orientation, shrunk: small !== up.image, full: up.image };
 }

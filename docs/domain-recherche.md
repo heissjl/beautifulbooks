@@ -510,7 +510,7 @@ Vercel meldet alle sieben als „verified" (niemand sonst beansprucht sie), aber
 | othercovers.com | A | `@` | `76.76.21.21` |
 | othercovers.de | A | `@` | `76.76.21.21` |
 
-Vorhandene A- oder AAAA-Einträge auf `@` (INWX legt bei manchen Domains eine Parkseite an) vorher löschen; sonst nichts anfassen, die Nameserver bleiben bei INWX. Nach dem Setzen prüft Vercel von selbst, stellt das Zertifikat aus (Let's Encrypt, Minuten bis eine Stunde) und schickt eine Mail. Ein CAA-Eintrag ist nicht nötig; **wer einen setzt, muss `letsencrypt.org` erlauben**, sonst bleibt das Zertifikat aus. `beautifulcovers.vercel.app` bleibt als Adresse bestehen; Vercel leitet sie auf die Hauptdomain um, sobald die steht.
+Vorhandene A- oder AAAA-Einträge auf `@` (INWX legt bei manchen Domains eine Parkseite an) vorher löschen; sonst nichts anfassen, die Nameserver bleiben bei INWX. Nach dem Setzen prüft Vercel von selbst, stellt das Zertifikat aus (Let's Encrypt, Minuten bis eine Stunde) und schickt eine Mail. Ein CAA-Eintrag ist nicht nötig; **wer einen setzt, muss `letsencrypt.org` erlauben**, sonst bleibt das Zertifikat aus. `beautifulcovers.vercel.app` bleibt als Adresse bestehen; Vercel leitet sie auf die Hauptdomain um, sobald die steht. **Korrektur 2026-10-03:** das stimmt nicht — über den Connector abgelesen steht `beautifulcovers.vercel.app` mit `redirect: null` im Projekt; die Umleitung ist von Hand zu setzen (Vercel → Domains → Edit → Redirect to `buyitscovers.com`, 308), und zwar erst, wenn das DNS steht (ROADMAP 2.15 Schritt 3).
 
 **Danach:** Sitemap in der Search Console unter `https://buyitscovers.com/sitemap.xml` neu einreichen (2.5), Konten (§12, Prompt), DNS härten (2.14).
 

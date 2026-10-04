@@ -19,15 +19,15 @@ import { CURATED_LIST, CURATED_WORKS } from '@/lib/curated';
 import type { WorkSummary } from '@/lib/model';
 import { validTile, type Tile } from './model';
 
-/** Julian's gallery wall read 50–58 (2026-09-30); a wall holds 500, and the searches run three at a time since 5.11a. */
-export const MAX_PHOTO_BOOKS = 80;
+/** Julian's gallery wall, read shelf by shelf, comes to 97 (2026-10-03); a wall holds 500, and the searches run three at a time. */
+export const MAX_PHOTO_BOOKS = 100;
 
 /** Open Library searches in flight at once for one photo: three cut a 40-book photo from 35 s to about 12 without leaning on the catalogue. */
 export const PHOTO_SEARCHES_AT_ONCE = 3;
 
 export interface PhotoMatch {
-  /** What the photo showed, as read, with where in the photo (fractions, for the numbered boxes). */
-  read: { title: string; author: string; kind?: 'spine' | 'cover'; box?: [number, number, number, number] };
+  /** What the photo showed, as read, with the point the model put on the book (fractions of width and height, for the numbered pin). */
+  read: { title: string; author: string; kind?: 'spine' | 'cover'; at?: [number, number] };
   /** The tile to offer, absent when nothing was found or the search failed. */
   tile?: Tile;
   reason?: WorkReason;
@@ -45,7 +45,7 @@ export interface PhotoMatch {
 export type PhotoRead = PhotoMatch['read'];
 
 export function photoRead(book: RecognizedBook): PhotoRead {
-  return { title: book.title, author: book.author, kind: book.kind, ...(book.box ? { box: book.box } : {}) };
+  return { title: book.title, author: book.author, kind: book.kind, ...(book.x !== undefined && book.y !== undefined ? { at: [book.x, book.y] as [number, number] } : {}) };
 }
 
 type Search = (query: string) => Promise<WorkSummary[]>;

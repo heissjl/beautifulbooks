@@ -16,6 +16,7 @@ import { translator } from '@/lib/i18n/translate';
  */
 export const metadata: Metadata = {
   title: 'Impressum',
+  alternates: { canonical: '/contact' },
   description: 'Legal notice: who runs this site and how to reach them.',
 };
 
