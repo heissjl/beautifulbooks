@@ -4,7 +4,7 @@ import { emptyBoard, place } from '../board';
 import { posterLayout } from '../layout';
 import { renderPoster } from '../poster';
 
-const TEXT = { title: 'The 9 books that made me', site: 'Buy Its Covers', address: 'buyitscovers.com/9' };
+const TEXT = { title: 'My favourite books', site: 'Buy Its Covers', address: 'buyitscovers.com/favourites' };
 
 /** A flat red "cover" of an awkward size, no network. */
 const red = () => sharp({ create: { width: 180, height: 290, channels: 3, background: '#d00000' } }).jpeg().toBuffer();

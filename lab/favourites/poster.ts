@@ -1,5 +1,5 @@
 /**
- * The poster as a PNG (lab/nine). The geometry is `layout.ts`, which is pure
+ * The poster as a PNG (lab/favourites). The geometry is `layout.ts`, which is pure
  * and tested; this file only paints it.
  *
  * Painted with sharp (a devDependency already) and an SVG for the text, so
@@ -18,7 +18,7 @@ const INK2 = '#a8a09a';
 const EMPTY = '#2a2522';
 
 export interface PosterText {
-  /** Top line, e.g. "The 9 books that made me". */
+  /** Top line, e.g. "My favourite books". */
   title: string;
   /** Bottom line: the site's name. */
   site: string;

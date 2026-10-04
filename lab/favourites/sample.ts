@@ -1,8 +1,8 @@
 /**
- * A poster from nine flat colours, no network (lab/nine): for looking at the
+ * A poster from nine flat colours, no network (lab/favourites): for looking at the
  * layout where Open Library cannot be reached.
  *
- *   npx tsx lab/nine/sample.ts [outdir]
+ *   npx tsx lab/favourites/sample.ts [outdir]
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -22,7 +22,7 @@ async function main() {
   // Scans are rarely exactly 2:3; 180 × 290 shows the trim.
   const load = async (id: string) => sharp({ create: { width: 180, height: 290, channels: 3, background: COLOURS[Number(id.slice(3)) - 1] } }).jpeg().toBuffer();
   for (const format of ['story', 'feed'] as const) {
-    const png = await renderPoster(board, format, { title: 'The 9 books that made me', site: SITE_NAME, address: 'buyitscovers.com/9' }, load);
+    const png = await renderPoster(board, format, { title: 'My favourite books', site: SITE_NAME, address: 'buyitscovers.com/favourites' }, load);
     await writeFile(join(out, `sample-${format}.png`), png);
     console.log(join(out, `sample-${format}.png`));
   }

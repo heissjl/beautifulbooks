@@ -1,5 +1,5 @@
 /**
- * Where things go on the poster (lab/nine, pure).
+ * Where things go on the poster (lab/favourites, pure).
  *
  * Book covers are 2:3, album covers 1:1, so a 3 × 3 of covers is itself 2:3
  * (1080 × 1620 at full width) and fits neither a story nor a feed post
@@ -18,7 +18,7 @@ export interface PosterLayout {
   height: number;
   /** Nine rectangles, row by row. */
   tiles: Rect[];
-  /** Top band: "The 9 books that made me" and the name. */
+  /** Top band: "My favourite books" and the name. */
   head: Rect;
   /** Bottom band: the site's name and address. */
   foot: Rect;
