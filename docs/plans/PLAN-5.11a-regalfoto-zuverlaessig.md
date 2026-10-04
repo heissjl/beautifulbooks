@@ -197,3 +197,14 @@ Julian: „lass uns die grenze für die dichte hochsetzen, damit wir nicht aus v
 
 **Berichtigung der Preise (2026-10-04, beim Zusammenführen mit main):** alle Cent-Angaben in diesem Dokument bis hierher rechnen mit **angenommenen** 3 $ / 15 $ je Million Token. Die Analyse-Sitzung (ROADMAP 3.1, K13) hat den Listenpreis nachgeschlagen: `claude-sonnet-5` kostet **2 $ / 10 $** (`lib/insights/prices.ts`). Alle Kosten sind also um ein Drittel niedriger als oben genannt: ein gewöhnliches Foto rund **1,5 ct** statt 2, ein dichtes **6–9 ct** statt 9–13, der Testsatz-Lauf mit zweitem Blick **53 ct** statt 80, mit einem Blick 25 statt 38. Die Verhältnisse (zweiter Blick ≈ doppelte Kosten über den ganzen Satz, Vierfaches bei einer dichten Wand) bleiben. Budget und Auswertungsskript rechnen seitdem mit der gemeinsamen Tabelle.
 
+## Die drei Ideen am Testsatz (2026-10-04, abends) — halb gemessen
+
+Julian: „miss die drei ideen am testsatz“. Während der Läufe ging das Anthropic-Guthaben aus („credit balance is too low“) — **damit liest auch die Website kein Foto mehr, bis aufgeladen ist**. Ergebnis bis dahin ([Bericht](../tests/2026-10-04-regalfoto-testsatz.md#dritter-durchgang-die-drei-ideen-2026-10-04-abends--zur-hälfte-gemessen-dann-war-das-guthaben-leer)):
+
+- **(c) Unschärfe:** `lib/sharpness.ts` trennt das verwackelte Foto (0,33) von den dreizehn anderen (0,43–0,74), ohne Modell, 30 ms. Reif für einen Hinweis an den Leser; nicht gebaut.
+- **(a) Bruchstücke, per Prompt:** trägt nicht — die Stümpfe bleiben, ein echtes angeschnittenes Buch geht verloren. Der gezielte Weg (`trim`: Randstreifen beim zweiten Blick auslassen) ist gebaut, aber ungemessen.
+- **(b) Feld für Unsicheres:** gebaut, ungemessen.
+- **Nebenbefund, der vorgeht:** zwei gleiche Läufe unterscheiden sich um acht Bücher, und der Grund ist die Schwelle 40 — sie liegt in der Spanne dessen, was ein erster Blick auf einem dichten Regal liest, und ob der zweite Blick kommt, ist dort Zufall (Foto 10: einmal 35, einmal 45 von 46; die Galeriewand in einem Lauf ohne zweiten Blick). Zurück auf 30 oder ein Signal, das nicht schwankt (Zahl der gefundenen Böden) — Julian entscheidet.
+
+Die Schalter (`ReadVariant`, `shelvesOf(…, { dropEdgeStrips })`, `--variant`) bleiben im Code, die Website benutzt keinen.
+

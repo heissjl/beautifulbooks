@@ -110,8 +110,9 @@ export function sameBook(a: RecognizedBook, b: RecognizedBook): boolean {
   return inside(ta, b) || inside(tb, a);
 }
 
-/** Of two readings of one book, the one that says more: an author over none, then the longer title. */
+/** Of two readings of one book, the one that says more: a title read clearly over one read in part, an author over none, then the longer title. */
 function better(a: RecognizedBook, b: RecognizedBook): RecognizedBook {
+  if (!!a.unsure !== !!b.unsure) return a.unsure ? b : a;
   if (!!a.author !== !!b.author) return a.author ? a : b;
   return b.title.length > a.title.length ? b : a;
 }
