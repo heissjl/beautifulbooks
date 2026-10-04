@@ -19,7 +19,7 @@ export type Channel = (typeof CHANNELS)[number];
 export const STATUSES = ['vorschlag', 'freigegeben', 'gepostet', 'verworfen'] as const;
 export type Status = (typeof STATUSES)[number];
 
-export const KINDS = ['setup', 'expose', 'collection', 'decades', 'feature', 'launch', 'answer', 'outreach', 'batch', 'review'] as const;
+export const KINDS = ['setup', 'expose', 'collection', 'decades', 'feature', 'launch', 'answer', 'outreach', 'batch', 'review', 'galerie'] as const;
 export type Kind = (typeof KINDS)[number];
 
 export interface Post {
@@ -100,10 +100,20 @@ export function linkFor(post: Pick<Post, 'path' | 'channel'>, site: string): str
   return url.toString();
 }
 
+/**
+ * Where the link does not go into the post: Instagram and TikTok take it in the
+ * profile only, and a gallery (Julian, 2026-10-04, after a Depero gallery on X
+ * with 48K views) is one sentence and four pictures — its link goes into the
+ * first reply, because a link in the post itself shrinks its reach.
+ */
+export function linkElsewhere(post: Pick<Post, 'channel' | 'kind'>): boolean {
+  return post.channel === 'instagram' || post.channel === 'tiktok' || post.kind === 'galerie';
+}
+
 /** What the tool puts on the clipboard: the text, and the link where the platform takes it inline. */
 export function clipboardFor(post: Post, site: string): string {
   const link = linkFor(post, site);
-  if (!link || post.channel === 'instagram' || post.channel === 'tiktok') return post.text;
+  if (!link || linkElsewhere(post)) return post.text;
   return `${post.text}\n\n${link}`;
 }
 
@@ -185,6 +195,7 @@ export function warnings(cal: Calendar, today: string): Warning[] {
     if (p.status !== 'gepostet' && p.date < today) out.push({ postId: p.id, level: 'hinweis', message: `überfällig seit ${p.date}: posten, verschieben oder verwerfen` });
     if (p.status === 'freigegeben' && open.length > 0 && daysBetween(today, p.date) <= 3)
       out.push({ postId: p.id, level: 'stop', message: `freigegeben, aber es fehlt noch: ${open.join(', ')}` });
+    if (p.kind === 'galerie' && !(p.needs ?? []).includes('rechte')) out.push({ postId: p.id, level: 'stop', message: 'eine Galerie lädt Cover hoch: sie wartet auf die Rechte-Entscheidung' });
     if (p.status === 'gepostet' && open.includes('rechte')) out.push({ postId: p.id, level: 'stop', message: 'als gepostet markiert, obwohl die Rechte-Entscheidung offen ist' });
 
     const limit = p.kind === 'setup' || p.kind === 'review' || p.kind === 'answer' || p.kind === 'outreach' || p.kind === 'batch' ? undefined : LIMITS[p.channel];
@@ -228,7 +239,7 @@ export function warnings(cal: Calendar, today: string): Warning[] {
   for (let i = 0; i < posts.length; i++)
     for (let j = i + 1; j < posts.length; j++) {
       const a = posts[i], b = posts[j];
-      if (a.path && a.path === b.path && a.channel === b.channel && a.kind !== 'answer' && daysBetween(a.date, b.date) < 14)
+      if (a.path && a.path === b.path && a.channel === b.channel && a.kind !== 'answer' && a.kind !== 'galerie' && b.kind !== 'galerie' && daysBetween(a.date, b.date) < 14)
         out.push({ postId: b.id, level: 'hinweis', message: `${a.path} schon am ${a.date} auf ${a.channel}` });
     }
 

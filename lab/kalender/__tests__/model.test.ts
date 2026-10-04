@@ -27,6 +27,17 @@ describe('clipboardFor', () => {
   });
 });
 
+describe('galleries', () => {
+  const gallery = post({ kind: 'galerie', path: '/collections/sf-masterworks', text: "Chris Moore's covers", needs: ['rechte'] });
+  it('copy the sentence only: the link goes into the first reply', () => {
+    expect(clipboardFor(gallery, SITE)).toBe("Chris Moore's covers");
+  });
+  it('wait on the rights decision on every channel, Bluesky too, because they upload covers', () => {
+    expect(warnings(cal([{ ...gallery, needs: [] }]), '2026-10-01').some(w => w.level === 'stop' && w.message.includes('Rechte'))).toBe(true);
+    expect(warnings(cal([gallery]), '2026-10-01')).toEqual([]);
+  });
+});
+
 describe('dates', () => {
   it('finds the Monday of a week and shifts across a month', () => {
     expect(weekOf('2026-10-18')).toBe('2026-10-12');

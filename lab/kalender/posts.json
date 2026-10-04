@@ -35,19 +35,19 @@
       "status": "vorschlag"
     },
     {
-      "id": "setup-reddit",
-      "date": "2026-10-07",
-      "channel": "reddit",
-      "kind": "setup",
-      "text": "Eigenes Konto prüfen (Alter, Karma); die Regeln von r/InternetIsBeautiful, r/books, r/printSF und r/suggestmeabook lesen und hier notieren, was für Selbstwerbung gilt.",
-      "status": "vorschlag"
-    },
-    {
       "id": "setup-deploy",
       "date": "2026-10-07",
       "channel": "alle",
       "kind": "setup",
       "text": "Vor dem ersten Link: 5.6a deployen (Satz der Datenschutzerklärung freigeben), damit ?via= zählt. Vor HN und Reddit zusätzlich 0.2, 0.13, 2.4 (Kapazität).",
+      "status": "vorschlag"
+    },
+    {
+      "id": "setup-reddit",
+      "date": "2026-10-07",
+      "channel": "reddit",
+      "kind": "setup",
+      "text": "Eigenes Konto prüfen (Alter, Karma); die Regeln von r/InternetIsBeautiful, r/books, r/printSF und r/suggestmeabook lesen und hier notieren, was für Selbstwerbung gilt.",
       "status": "vorschlag"
     },
     {
@@ -158,6 +158,22 @@
       "image": "Pin 1000×1500 (5.5a) mit der Startseite"
     },
     {
+      "id": "gal-chris-moore",
+      "date": "2026-10-18",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Chris Moore's covers for the SF Masterworks (1999–2007)",
+      "status": "vorschlag",
+      "path": "/collections/sf-masterworks",
+      "image": "Vier Cover von Chris Moore aus der Sammlung (ISFDB nennt ihn bei 40 der 73), z. B. The Forever War, Do Androids Dream of Electric Sheep?, The Stars My Destination, Babel-17",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+    },
+    {
       "id": "bsky-feminist-press",
       "date": "2026-10-19",
       "channel": "bluesky",
@@ -171,22 +187,22 @@
       ]
     },
     {
-      "id": "reddit-answers-w2",
+      "id": "mail-outreach",
       "date": "2026-10-19",
-      "channel": "reddit",
-      "kind": "answer",
-      "text": "Fenster für bis zu drei Antworten diese Woche, nur wo jemand nach einer Ausgabe oder einem Cover fragt. Die Antwort hilft auch ohne Link; der Link geht auf das passende Cover (/book/<id>/cover/<coverId>?via=reddit). Nie kopiert. Claude liefert auf Zuruf eine Suchliste.",
+      "channel": "mail",
+      "kind": "outreach",
+      "text": "Fünf Blogger oder BookTok-Leute, deren Bücher in den Sammlungen stehen: Claude liefert je Person einen Link auf „ihr“ Buch oder Cover (mit ?via=blog bzw. ?via=mail) und prüft die Vorschaukarte. Das Anschreiben schreibst du.",
       "status": "vorschlag",
       "needs": [
         "5.6a"
       ]
     },
     {
-      "id": "mail-outreach",
+      "id": "reddit-answers-w2",
       "date": "2026-10-19",
-      "channel": "mail",
-      "kind": "outreach",
-      "text": "Fünf Blogger oder BookTok-Leute, deren Bücher in den Sammlungen stehen: Claude liefert je Person einen Link auf „ihr“ Buch oder Cover (mit ?via=blog bzw. ?via=mail) und prüft die Vorschaukarte. Das Anschreiben schreibst du.",
+      "channel": "reddit",
+      "kind": "answer",
+      "text": "Fenster für bis zu drei Antworten diese Woche, nur wo jemand nach einer Ausgabe oder einem Cover fragt. Die Antwort hilft auch ohne Link; der Link geht auf das passende Cover (/book/<id>/cover/<coverId>?via=reddit). Nie kopiert. Claude liefert auf Zuruf eine Suchliste.",
       "status": "vorschlag",
       "needs": [
         "5.6a"
@@ -207,6 +223,19 @@
         "kapazitaet"
       ],
       "note": "Ziel ist die Startseite (vorgerendert, kostet kein Kontingent). Den ganzen Tag in den Kommentaren bleiben; Antworten auf Quellenfragen stehen in /about. Werktags, US-Vormittag. HN zeigt keinen ?via=-Wert an, die Herkunft kommt dort über den Referrer."
+    },
+    {
+      "id": "pin-batch-w2",
+      "date": "2026-10-21",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins, über die Woche verteilt (Pinterests Planung): SF Masterworks, edition suhrkamp, Feminist Press, Gatsby durch die Jahrzehnte, Dune durch die Jahrzehnte. Titel und Beschreibung je Pin nach PLAN-5.5-5.6 §7; Link mit ?via=pinterest.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
     },
     {
       "id": "ig-edition-suhrkamp",
@@ -253,17 +282,20 @@
       "image": "Bildschirmfoto der Wand, dann drei bis fünf Cover einzeln"
     },
     {
-      "id": "pin-batch-w2",
-      "date": "2026-10-21",
-      "channel": "pinterest",
-      "kind": "batch",
-      "text": "Fünf Pins, über die Woche verteilt (Pinterests Planung): SF Masterworks, edition suhrkamp, Feminist Press, Gatsby durch die Jahrzehnte, Dune durch die Jahrzehnte. Titel und Beschreibung je Pin nach PLAN-5.5-5.6 §7; Link mit ?via=pinterest.",
+      "id": "gal-dominic-harman",
+      "date": "2026-10-25",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Dominic Harman's covers for the SF Masterworks, after the 2010 relaunch",
       "status": "vorschlag",
+      "path": "/collections/sf-masterworks-relaunch",
+      "image": "Vier Cover von Dominic Harman (ISFDB nennt ihn bei 22 der 182)",
       "needs": [
-        "rechte",
-        "5.5a",
-        "konto:pinterest"
-      ]
+        "konto:bluesky",
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "bsky-hugo",
@@ -318,6 +350,19 @@
       ]
     },
     {
+      "id": "pin-batch-w3",
+      "date": "2026-10-28",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins: Hugo-Preisträger, SF Masterworks Relaunch, Nineteen Eighty-Four durch die Jahrzehnte, Otherwise Award, The Hobbit durch die Jahrzehnte.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
+    },
+    {
       "id": "tt-expose-dune",
       "date": "2026-10-29",
       "channel": "tiktok",
@@ -362,17 +407,21 @@
       "image": "Je Jahrzehnt ein Cover als Folie, in Reihenfolge; Verlag und Jahr in die Bildbeschreibung"
     },
     {
-      "id": "pin-batch-w3",
-      "date": "2026-10-28",
-      "channel": "pinterest",
-      "kind": "batch",
-      "text": "Fünf Pins: Hugo-Preisträger, SF Masterworks Relaunch, Nineteen Eighty-Four durch die Jahrzehnte, Otherwise Award, The Hobbit durch die Jahrzehnte.",
+      "id": "gal-edelmann-hanser",
+      "date": "2026-11-01",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Heinz Edelmann's covers for the Reihe Hanser paperbacks",
       "status": "vorschlag",
+      "path": "/collections/reihe-hanser-covers-by-heinz-edelmann",
+      "image": "Vier Cover aus der Sammlung",
       "needs": [
+        "konto:bluesky",
+        "5.6a",
         "rechte",
-        "5.5a",
-        "konto:pinterest"
-      ]
+        "publish:reihe-hanser-covers-by-heinz-edelmann"
+      ],
+      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky. Jahre fehlen in unseren Daten: nur mit belegtem Zeitraum ergänzen."
     },
     {
       "id": "bsky-versus",
@@ -414,6 +463,19 @@
         "kapazitaet"
       ],
       "note": "r/InternetIsBeautiful. Zwei Wochen nach HN, damit die Messung die beiden trennt. Vorher die Regeln der Community noch einmal lesen; Reddit-Apps senden oft keinen Referrer, deshalb ?via=reddit."
+    },
+    {
+      "id": "pin-batch-w4",
+      "date": "2026-11-04",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins: Pride and Prejudice, Jane Eyre, Brave New World, Fahrenheit 451 und Moby Dick durch die Jahrzehnte.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
     },
     {
       "id": "ig-otherwise",
@@ -487,17 +549,21 @@
       ]
     },
     {
-      "id": "pin-batch-w4",
-      "date": "2026-11-04",
-      "channel": "pinterest",
-      "kind": "batch",
-      "text": "Fünf Pins: Pride and Prejudice, Jane Eyre, Brave New World, Fahrenheit 451 und Moby Dick durch die Jahrzehnte.",
+      "id": "gal-piatti",
+      "date": "2026-11-08",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Celestino Piatti's covers for dtv phantastica",
       "status": "vorschlag",
+      "path": "/collections/dtv-phantastica-covers-by-celestino-piatti",
+      "image": "Vier Cover aus der Sammlung",
       "needs": [
+        "konto:bluesky",
+        "5.6a",
         "rechte",
-        "5.5a",
-        "konto:pinterest"
-      ]
+        "publish:dtv-phantastica-covers-by-celestino-piatti"
+      ],
+      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "bsky-edelmann-hanser",
@@ -555,6 +621,19 @@
       ]
     },
     {
+      "id": "pin-batch-w5",
+      "date": "2026-11-11",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins aus den neu veröffentlichten Sammlungen (Edelmann, Piatti, Penguin black band) und ein Jahrzehnte-Pin.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
+    },
+    {
       "id": "bsky-piatti",
       "date": "2026-11-12",
       "channel": "bluesky",
@@ -601,17 +680,21 @@
       "note": "Die Gemälde sind in der Sammlung belegt (coverCredits: artwork); in der Bildbeschreibung nennen."
     },
     {
-      "id": "pin-batch-w5",
-      "date": "2026-11-11",
-      "channel": "pinterest",
-      "kind": "batch",
-      "text": "Fünf Pins aus den neu veröffentlichten Sammlungen (Edelmann, Piatti, Penguin black band) und ein Jahrzehnte-Pin.",
+      "id": "gal-kurt-wirth",
+      "date": "2026-11-15",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Kurt Wirth's covers for the Fischer Bücherei",
       "status": "vorschlag",
+      "path": "/collections/fischer-bucherei-covers-by-kurt-wirth",
+      "image": "Vier Cover aus der Sammlung",
       "needs": [
+        "konto:bluesky",
+        "5.6a",
         "rechte",
-        "5.5a",
-        "konto:pinterest"
-      ]
+        "publish:fischer-bucherei-covers-by-kurt-wirth"
+      ],
+      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "bsky-virago",
@@ -667,6 +750,19 @@
       ]
     },
     {
+      "id": "pin-batch-w6",
+      "date": "2026-11-18",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins: Virago, Penguin Great Ideas, Alice, Metamorphosis, Der Steppenwolf.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
+    },
+    {
       "id": "ig-virago",
       "date": "2026-11-19",
       "channel": "instagram",
@@ -696,17 +792,21 @@
       ]
     },
     {
-      "id": "pin-batch-w6",
-      "date": "2026-11-18",
-      "channel": "pinterest",
-      "kind": "batch",
-      "text": "Fünf Pins: Virago, Penguin Great Ideas, Alice, Metamorphosis, Der Steppenwolf.",
+      "id": "gal-grieder",
+      "date": "2026-11-22",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Walter Grieder's covers for the Herder Bücherei",
       "status": "vorschlag",
+      "path": "/collections/herder-bucherei-covers-by-walter-grieder",
+      "image": "Vier Cover aus der Sammlung",
       "needs": [
+        "konto:bluesky",
+        "5.6a",
         "rechte",
-        "5.5a",
-        "konto:pinterest"
-      ]
+        "publish:herder-bucherei-covers-by-walter-grieder"
+      ],
+      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "bsky-sf-relaunch",
@@ -761,6 +861,19 @@
       ]
     },
     {
+      "id": "pin-batch-w7",
+      "date": "2026-11-25",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins nach dem, was in den Statistiken getragen hat.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
+    },
+    {
       "id": "ig-1984-decades",
       "date": "2026-11-26",
       "channel": "instagram",
@@ -775,17 +888,21 @@
       "time": "18:00"
     },
     {
-      "id": "pin-batch-w7",
-      "date": "2026-11-25",
-      "channel": "pinterest",
-      "kind": "batch",
-      "text": "Fünf Pins nach dem, was in den Statistiken getragen hat.",
+      "id": "gal-heidelbach",
+      "date": "2026-11-29",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Nikolaus Heidelbach's covers for Haffmans",
       "status": "vorschlag",
+      "path": "/collections/haffmans-covers-by-nikolaus-heidelbach",
+      "image": "Vier Cover aus der Sammlung",
       "needs": [
+        "konto:bluesky",
+        "5.6a",
         "rechte",
-        "5.5a",
-        "konto:pinterest"
-      ]
+        "publish:haffmans-covers-by-nikolaus-heidelbach"
+      ],
+      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "review-w8",

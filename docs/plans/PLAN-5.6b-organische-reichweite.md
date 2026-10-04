@@ -1,6 +1,6 @@
 # Plan für 5.6b: organische Reichweite, mit einem Kalender zum Eingreifen
 
-**Stand 2026-10-04: Strategie geschrieben, Kalender und Werkzeug gebaut** (`lab/kalender/`, 63 Einträge über neun Wochen, nichts davon gepostet). Geschrieben auf Julians Bitte („starte von PLAN-5.5-5.6-kanaele.md und erstelle eine strategie für organische reichweite“), mit drei Wünschen von ihm:
+**Stand 2026-10-04: Strategie geschrieben, Kalender und Werkzeug gebaut** (`lab/kalender/`, 70 Einträge über neun Wochen, nichts davon gepostet; das Galerie-Format aus §4a kam am selben Tag dazu). Geschrieben auf Julians Bitte („starte von PLAN-5.5-5.6-kanaele.md und erstelle eine strategie für organische reichweite“), mit drei Wünschen von ihm:
 
 1. ein Posting-Kalender für alle Kanäle, die wir haben werden, mit Vorschlägen, was er wann postet, und der Möglichkeit, zu kuratieren oder einzugreifen;
 2. auf jedem Kanal ein Exposé-Post, der die Seite erklärt und früh oder als Erstes kommt;
@@ -77,6 +77,33 @@ Dazwischen **Jahrzehnte-Seiten** (`/book/<id>/decades`): Gatsby, Nineteen Eighty
 
 **Was in Bildunterschriften steht:** Künstler, wo die Sammlung sie kennt (ISFDB bei den SF-Reihen, belegte Gemälde bei Virago und Penguin), und der Satz, dass die Cover aus offenen Katalogen kommen. Fakten, die nicht aus unseren Daten stammen (Fleckhaus 1963, Edelmann und Yellow Submarine), sind im Eintrag als „prüfen“ markiert.
 
+## 4a. Format: die Gestalter-Galerie
+
+(Julian, 2026-10-04, mit einem Beitrag von @luusssso auf X als Beispiel: „posts like this are an idea. just for covers“.) Der Beitrag: „The Italian Futurism of Campari advertisements by Fortunato Depero (1925–1933)“, **ein Satz und vier Bilder, kein Link**, am Tag des Ansehens rund 48.000 Aufrufe und 2.000 Likes.
+
+Warum es zu uns passt: Unsere Sammlungen nach Gestaltern sind genau dieser Stoff. Ein Name, eine Reihe, ein Zeitraum, und die Bilder tragen den Rest. Es ist das Gegenteil eines Werbeposts, und genau deshalb wird er geteilt.
+
+**Die Regeln für den Kalender (Art `galerie`):**
+
+- **Ein Satz:** „<Gestalter>'s covers for <Reihe> (<Jahre>)“. Die Jahre nur, wenn sie belegt sind. Unsere Daten kennen den Zeitraum der SF Masterworks (1999–2007), nicht aber den der Edelmann-, Piatti-, Wirth-, Grieder- oder Heidelbach-Umschläge; dort fehlen sie, bis jemand sie belegt.
+- **Vier Cover desselben Gestalters**, aus der Sammlung, in der Reihenfolge, die am besten aussieht.
+- **Kein Link im Post.** Der Link kommt als erste Antwort, weil Plattformen Posts mit Link knapper ausspielen. „Kopieren“ gibt deshalb nur den Satz mit, und der Zeichenzähler zählt den Link nicht.
+- **Eine Galerie lädt Cover hoch, auch auf Bluesky.** Sie wartet deshalb immer auf `rechte`, und das Werkzeug hält sie sonst an. Das ist die eine Ausnahme von „Bluesky ist ein Link-Kanal“ in §1.
+
+**Im Kalender sonntags auf Bluesky**, sieben Galerien vom 18.10. bis 29.11.:
+
+- Chris Moore für die SF Masterworks: ISFDB nennt ihn bei 40 der 73, veröffentlicht.
+- Dominic Harman für den Relaunch: 22 der 182, veröffentlicht.
+- Heinz Edelmann für die Reihe Hanser.
+- Celestino Piatti für dtv phantastica.
+- Kurt Wirth für die Fischer Bücherei.
+- Walter Grieder für die Herder Bücherei.
+- Nikolaus Heidelbach für Haffmans.
+
+Ab Edelmann warten die Posts auf `publish:<slug>`. Auf Instagram ist es dasselbe Format als Karussell.
+
+**X ist der Kanal des Vorbilds, steht aber nicht im Kalender:** 5.6a kennt keine Klasse `x`, und ohne sie ist ein Besuch von dort „social“ oder „direkt“. Soll X dazukommen, braucht `VIA` den Eintrag (Analyse-Regel 6, Julian gibt den Satz frei), dann ist es ein weiterer Kanal im Werkzeug.
+
 ## 5. Der Kalender und wie man eingreift
 
 **Wo:** `lab/kalender/posts.json` ist die einzige Liste. Das Werkzeug liest und schreibt nur diese Datei; man kann sie auch von Hand ändern.
@@ -121,9 +148,10 @@ Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender 
 
 ## 7. Offene Entscheidungen, alle Julians
 
-1. **Die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1). Sie hält 23 der 63 Einträge zurück, alles auf Instagram außer dem Exposé, alles auf Pinterest und TikTok.
+1. **Die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1). Sie hält 30 der 70 Einträge zurück: alles auf Instagram außer dem Exposé, alles auf Pinterest und TikTok, und die sieben Galerien.
 2. **Welche Kanäle es wirklich gibt.** Der Kalender plant acht; ein Kanal, den Julian nicht will, wird im Werkzeug ausgeblendet oder seine Einträge verworfen.
 3. **Startdatum.** Der Kalender beginnt mit einer Einrichtungswoche ab Mo 5.10. und dem ersten Post am Mo 12.10. Wer später anfängt, schiebt mit „Ab hier verschieben“ alles in einem Schritt.
 4. **Welche Entwürfe veröffentlicht werden** (Woche 5 und 6).
 5. **Englisch oder zweisprachig.** Die Vorschläge sind englisch, weil das Publikum der Kanäle es ist; bei edition suhrkamp und Edelmann bietet sich ein deutscher Post daneben an.
 6. **Der erste Satz des Show HN**, Julians eigener Grund für die Seite.
+7. **X als Kanal** für die Galerien (§4a): ja heißt eine neue `VIA`-Klasse in 5.6a.

@@ -202,7 +202,7 @@ function linkOf(p) {
 function counters() {
   const p = current(), lim = S.limits[p.channel] || {};
   const link = linkOf(p);
-  const inline = p.channel === 'bluesky' && link;
+  const inline = p.channel === 'bluesky' && p.kind !== 'galerie' && link;
   const n = [...p.text].length + (inline ? 2 + link.length : 0);
   $('#textCount').textContent = lim.text ? `${n} / ${lim.text} Zeichen${inline ? ' (mit Link)' : ''}` : `${n} Zeichen`;
   $('#textCount').className = 'count' + (lim.text && n > lim.text ? ' over' : '');
@@ -240,8 +240,10 @@ $('#posted').onclick = async () => {
 };
 $('#copy').onclick = async () => {
   const p = current(), link = linkOf(p);
-  const text = link && p.channel !== 'instagram' && p.channel !== 'tiktok' ? `${p.text}\n\n${link}` : p.text;
-  try { await navigator.clipboard.writeText(text); toast(link && (p.channel === 'instagram' || p.channel === 'tiktok') ? 'Text kopiert — der Link gehört ins Profil' : 'Kopiert'); }
+  const elsewhere = p.channel === 'instagram' || p.channel === 'tiktok' || p.kind === 'galerie';
+  const text = link && !elsewhere ? `${p.text}\n\n${link}` : p.text;
+  const hint = p.kind === 'galerie' ? 'Text kopiert — der Link kommt als erste Antwort' : 'Text kopiert — der Link gehört ins Profil';
+  try { await navigator.clipboard.writeText(text); toast(link && elsewhere ? hint : 'Kopiert'); }
   catch { prompt('Zum Kopieren:', text); }
 };
 $('#shift').onclick = async () => {
