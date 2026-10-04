@@ -13,13 +13,16 @@ import type { RecognizedBook } from '@/lib/recognize';
 
 /**
  * From this many books in the first read on, the photo is read again in
- * pieces. 40, not the 30 it began with (Julian, 2026-10-04: „die grenze für
- * die dichte hochsetzen, damit wir nicht aus versehen viel ausgeben“): on the
- * test set one look reads 35–55 books of a dense shelf and at most 21 of
- * anything else, so 40 still catches five of the six dense photos and leaves
- * out the one a second look added nothing to.
+ * pieces. 30. It stood at 40 for a day (Julian, 2026-10-04: „die grenze für
+ * die dichte hochsetzen, damit wir nicht aus versehen viel ausgeben“), and
+ * the test set showed what that did: one look reads 35–55 books of a dense
+ * shelf, so 40 lay inside that span and whether the second look came was
+ * chance — the same photo read 35 of 46 in one run and 45 in the next. At 30
+ * it came on all six dense photos; nothing else in the set reads more than
+ * 21. What a day may cost is the budget's job (photobudget.ts), not this
+ * number's.
  */
-export const DENSE_AT = 40;
+export const DENSE_AT = 30;
 
 /** [x0, y0, x1, y1] as fractions of the picture. */
 export type Piece = [number, number, number, number];

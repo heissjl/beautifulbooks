@@ -208,3 +208,5 @@ Julian: „miss die drei ideen am testsatz“. Während der Läufe ging das Anth
 
 Die Schalter (`ReadVariant`, `shelvesOf(…, { dropEdgeStrips })`, `--variant`) bleiben im Code, die Website benutzt keinen.
 
+**Entschieden (Julian, 2026-10-04):** „setz die schwelle zurück auf 30 und pushe“. Zur Bodenzahl als Dichtesignal: „das klingt sinnvoll aber eben nur für regale“ — richtig, Stapel, Büchertische und Auslagen haben keine Bretter; sie bleibt eine Idee für später und ersetzt die Zählung nicht. `DENSE_AT` ist 30; die offenen Messungen (`trim`, `unsure`, je zweimal, gegen zwei Vergleichsläufe) laufen mit dieser Schwelle, sobald wieder Guthaben da ist.
+
