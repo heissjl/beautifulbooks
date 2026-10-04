@@ -16,7 +16,7 @@
  * site's servers and kept a day at its CDN. When the website does not answer,
  * the same code runs here against Open Library directly — unless Open Library
  * is refusing this Mac, in which case the app waits. `--source direct` skips
- * the website. Google Books is never asked, either way (lab rule 6). Only on
+ * the website; `--site <address>` names another one (a local `npm run dev`). Google Books is never asked, either way (lab rule 6). Only on
  * a click: nothing here walks the library by itself.
  *
  * `--library <folder>` points at another library (a rehearsal copy).
@@ -50,7 +50,8 @@ const WRITE = args.includes('--write');
 // `auto`: the system picks a free port; the real number is known once the server listens.
 let PORT = flag('port') === 'auto' ? 0 : Number(flag('port') ?? process.env.PORT ?? 4329);
 const ROOT = join(__dirname, '../..');
-const SITE = 'https://buyitscovers.com';
+// `--site http://localhost:3000` asks a local `npm run dev` instead of the live site.
+const SITE = (flag('site') ?? 'https://buyitscovers.com').replace(/\/$/, '');
 const TOKEN = makeToken();
 const COVER_ID = /^(ol:\d{1,12}|gb:[A-Za-z0-9_-]{1,40})$/;
 /** Open Library hands out 100 editions a page; ten pages reach the older printings of a much-printed book. */

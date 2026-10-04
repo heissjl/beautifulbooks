@@ -117,6 +117,8 @@ const el = (tag, attrs = {}, ...kids) => {
   return n;
 };
 const $ = (id) => document.getElementById(id);
+// replaceChildren writes a bare null as the word "null"; this leaves the gaps out.
+const fill = (node, ...kids) => node.replaceChildren(...kids.flat().filter((k) => k != null && k !== false));
 const px = (f) => `${f.width} × ${f.height} px`;
 const SMALL_WIDTH = 400;            // a cover narrower than this is soft on a reader's full screen
 const AUTO_PAGES = 3;               // edition pages loaded without asking; Open Library takes seconds for each
@@ -305,7 +307,7 @@ function renderDrawer() {
 
 function renderHead() {
   const b = bookOf(open.id);
-  $('d-head').replaceChildren(
+  fill($('d-head'),
     el('button', { class: 'close', onclick: closeBook, 'aria-label': 'Close' }, 'Close'),
     el('div', { class: 'head' },
       el('div', { class: 'now' },
@@ -367,7 +369,7 @@ function renderCovers() {
   const seen = Math.min(open.pages * 100, open.editions);
   const against = b.size ? `the cover in Calibre (${px(b.size)})` : 'a cover needs (200 × 280 px)';
   const sizeLine = (c) => c.size ? `${c.size.width} × ${c.size.height}` : c.size === null ? 'size unknown' : '…';
-  box.replaceChildren(
+  fill(box,
     el('h3', {}, 'Covers of this work'),
     el('div', { class: 'row', style: 'margin:0 0 10px' }, chip('all', `All (${open.covers.length})`), langs.map((l) => chip(l, `${langName(l)} (${count(l)})`)),
       el('button', { class: 'chip', 'aria-pressed': String(open.bigOnly), onclick: () => { open.bigOnly = !open.bigOnly; renderCovers(); } }, `Large enough only (${large.length})`)),

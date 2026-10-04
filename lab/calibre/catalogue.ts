@@ -64,7 +64,13 @@ interface SitePage {
 
 export function siteCatalogue(base: string, fetcher: typeof fetch = fetch): Catalogue {
   const get = async <T>(path: string): Promise<T | null> => {
-    const res = await fetcher(`${base}${path}`, { headers: { 'user-agent': userAgent(base), accept: 'application/json' }, signal: AbortSignal.timeout(35_000) });
+    let res: Response;
+    try {
+      res = await fetcher(`${base}${path}`, { headers: { 'user-agent': userAgent(base), accept: 'application/json' }, signal: AbortSignal.timeout(35_000) });
+    } catch {
+      // Without its cause on purpose: a website that cannot be reached must not be read as Open Library shutting the door (`refusedConnection`).
+      throw new Error('The website did not answer.');
+    }
     if (res.status === 404) return null;
     if (res.status === 429) throw new CatalogueError('The website is holding back: too many requests in a short time. Wait a minute and open the book again.');
     if (res.status === 403) throw new CatalogueError('The website turned the app away (its bot protection). Try again in a few minutes.');
