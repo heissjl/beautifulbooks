@@ -107,7 +107,7 @@ export default async function CollectionPage({ params }: PageProps) {
           </p>
         )}
         <div className="mt-8">
-          <CoverWall works={c.works} selectCover setSize={c.setSize} />
+          <CoverWall works={c.works} selectCover setSize={c.setSize} from={{ href: `/collections/${c.slug}`, title: c.title }} />
         </div>
         {/* Under a wall someone else chose: the way to one's own (5.13b). */}
         {wallsEnabled() && <WallsInvite className="mt-8">Create your own collection — from any cover, or from a photo of your shelf</WallsInvite>}

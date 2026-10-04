@@ -19,6 +19,7 @@ import LocalShops from '@/components/LocalShops';
 import SiteFooter from '@/components/SiteFooter';
 import AddToWall from '@/components/AddToWall';
 import EditingBand from '@/components/EditingBand';
+import { useCameFrom } from '@/components/cameFrom';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
@@ -59,13 +60,18 @@ import { verifyIsbnCover, type IsbnVerdict } from '@/lib/works';
   makes an address other than `/`, and it leads to the home page with a filter
   rather than to results (caught on the dev server, 2026-09-10).
 */
-function BackLink({ href, toResults }: { href: string; toResults: boolean }) {
+function BackLink({ href, toResults, wall }: { href: string; toResults: boolean; wall?: string }) {
   return (
-    <Link href={href} className="inline-flex items-center gap-1.5 rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
-      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <Link
+      href={href}
+      title={wall ? `Back to ${wall}` : undefined}
+      className="inline-flex min-w-0 items-center gap-1.5 rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink"
+    >
+      <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
       </svg>
-      {toResults ? 'Results' : 'Home'}
+      {/* The wall one came from, by name (Julian, 2026-10-03); cut short, the header has a logo and a search beside it. */}
+      {wall ? <span className="max-w-[9rem] truncate sm:max-w-[16rem]">{wall}</span> : toResults ? 'Results' : 'Home'}
     </Link>
   );
 }
@@ -77,11 +83,14 @@ function BackLink({ href, toResults }: { href: string; toResults: boolean }) {
  */
 const WallsOn = createContext(false);
 
-function Shell({ children, backHref, toResults, right }: { children: React.ReactNode; backHref: string; toResults: boolean; right?: React.ReactNode }) {
+function Shell({ children, backHref, toResults, right, workId }: { children: React.ReactNode; backHref: string; toResults: boolean; right?: React.ReactNode; workId?: string }) {
   const walls = useContext(WallsOn);
+  // A result list one came from wins: it is in the address. Otherwise the wall whose tile opened this book, if any.
+  const from = useCameFrom(workId);
+  const wall = !toResults && from ? from : null;
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader left={<BackLink href={backHref} toResults={toResults} />} right={right} search={<HeaderSearch />} />
+      <SiteHeader left={<BackLink href={wall ? wall.href : backHref} toResults={toResults} wall={wall?.title} />} right={right} search={<HeaderSearch />} />
       {walls && <EditingBand />}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
       <SiteFooter walls={walls} />
@@ -327,7 +336,7 @@ function BookDetail() {
 
   if (pages.status === 'notfound' || pages.status === 'error') {
     return (
-      <Shell backHref={backHref} toResults={cameFromResults}>
+      <Shell workId={params.id} backHref={backHref} toResults={cameFromResults}>
         {pages.status === 'notfound' ? (
           <div className="py-24 text-center">
             <p className="font-display text-2xl text-ink">Book not found</p>
@@ -343,7 +352,7 @@ function BookDetail() {
   if (inScene || !view) {
     const work = view?.work;
     return (
-      <Shell backHref={backHref} toResults={cameFromResults}>
+      <Shell workId={params.id} backHref={backHref} toResults={cameFromResults}>
         <TitleBlock
           title={work?.title ?? preview?.title}
           authors={work?.authors ?? preview?.authors}
@@ -420,6 +429,7 @@ function BookDetail() {
 
   return (
     <Shell
+      workId={params.id}
       backHref={backHref}
       toResults={cameFromResults}
       /*

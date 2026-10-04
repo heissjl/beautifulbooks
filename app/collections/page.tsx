@@ -50,7 +50,7 @@ export default async function CollectionsPage() {
         {wallsEnabled() && <WallsInvite className="mt-3">Create your own collection</WallsInvite>}
         <ul className="mt-10 grid grid-cols-1 gap-x-12 gap-y-14 lg:grid-cols-2">
           {collections.map(c => (
-            <li key={c.slug} className="min-w-0">
+            <li key={c.slug} id={c.slug} className="min-w-0 scroll-mt-24">
               <Link href={`/collections/${c.slug}`} className="group block">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line pb-2">
                   <h2 className="font-display text-2xl text-ink transition-colors group-hover:text-accent">
