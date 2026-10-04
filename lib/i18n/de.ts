@@ -530,6 +530,8 @@ export const de: Readonly<Record<string, string>> = {
   'See this edition': 'Diese Ausgabe ansehen',
   'all its covers': 'seine Cover-Wand',
   '← and → choose, ↓ skips.': '← und → wählen, ↓ überspringt.',
+  // app/api/rate.ts answers this to every route; the game shows the server's sentence through t.
+  'Too many requests, try again shortly': 'Zu viele Anfragen, versuch es gleich noch einmal',
   // Readers' collections (6.85, 2026-10-04): /create, the collection page, its editor, the ID field.
   // Readers see „Sammlung“; the ID stays „ID“. Buttons are short and in the infinitive, as German UIs have them.
   'Create your collection': 'Deine Sammlung anlegen',
@@ -626,7 +628,8 @@ export const de: Readonly<Record<string, string>> = {
   'Your ID': 'Deine ID',
   'Your collections belong to this ID, kept in a cookie in this browser. To go on with collections from another device or from someone else, paste their ID here and press {use} — or open the link that carries it. Anyone with your ID or its link can change your collections, so share it only with whom you mean to.': 'Deine Sammlungen gehören zu dieser ID, die in einem Cookie in diesem Browser liegt. Um mit Sammlungen von einem anderen Gerät oder von jemand anderem weiterzumachen, füg deren ID hier ein und drück {use} – oder öffne den Link, der sie trägt. Wer deine ID oder ihren Link hat, kann deine Sammlungen ändern; gib sie also nur weiter, wem du es zutraust.',
   'Use this ID': 'Diese ID verwenden',
-  'Paste an ID to go on with its collections': 'ID einfügen, um mit ihren Sammlungen weiterzumachen',
+  // 30 characters: the field beside „Kopieren“ is 256 px wide at 390 px and shows about 37 (measured 2026-10-04).
+  'Paste an ID to go on with its collections': 'ID einfügen, um weiterzumachen',
   'Copied.': 'Kopiert.',
   'Copying did not work here; select the ID and copy it by hand.': 'Kopieren ging hier nicht; markier die ID und kopier sie von Hand.',
   'Copy': 'Kopieren',

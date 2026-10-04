@@ -17,6 +17,7 @@ import { VERDICT_LEAD, VERDICT_MEANING } from '../verdicts';
 import { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import { MODES } from '@/components/SearchBar';
 import { TAB_LABELS } from '@/components/CollectionEditor';
+import { RATE_LIMITED } from '@/app/api/rate';
 import { localShopCopy, LOCAL_COUNTRIES } from '../localshops';
 import { registrationPlaces } from '../normalize';
 import { AREA_NAME } from '../linkplan';
@@ -62,6 +63,7 @@ function tableKeys(): string[] {
     ...Object.values(SHOP_STATUS_TITLE),
     ...MODES.map(m => m.label),
     ...Object.values(TAB_LABELS),
+    RATE_LIMITED,
     ...MARKETS.map(m => m.label),
     ...localShopCopy(),
     ...LOCAL_COUNTRIES.map(c => c.label),
