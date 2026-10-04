@@ -455,6 +455,10 @@ Keine davon ist Code. Für den Hobby-Betrieb sind 0.1, 0.6, 0.9 und 0.11 beantwo
   7. **Überwachung** (2.4): UptimeRobot auf `https://buyitscovers.com/api/search?q=1984`, nicht auf die alte Adresse.
   8. **Erst danach** Konten (§12) und Launch-Links (5.6) — jeder Link vorher verschenkt Reichweite an die Umleitung.
 
+- [ ] **2.16 Search Console nach zwei bis drei Wochen lesen.** (Aus 2.5, eingerichtet 2026-10-04.) **Zuerst, in ein bis zwei Tagen:** Search Console → Sitemaps — steht dort „Success" mit gefundenen Seiten, 2.5 abhaken; steht nach zwei Tagen noch „Couldn't fetch", einmal neu einreichen (Bing: Status von „Processing" ablesen). **Ab etwa 2026-10-18:** *Leistung* (Suchanfragen, Klicks, Positionen) und *Seiten* (indexiert / nicht indexiert, mit Grund) lesen und die Zahlen in die [Historie](docs/history.md) schreiben. Werden Buchseiten als „Gecrawlt – zurzeit nicht indexiert" gemeldet, ist das der Auslöser für **5.2** (Seite 0 serverseitig rendern); zeigt die Leistung, welche Anfragen ankommen, speist das 5.1 und 6.9. **Core Web Vitals** erst nach 28 Tagen Chrome-Felddaten und genug Besuchen — „nicht genügend Daten" ist bis dahin kein Fehler. Julian (oder Claude in seinem Chrome), zehn Minuten.
+
+- [ ] **2.17 IndexNow — zurückgestellt.** (Aus 2.5, 2026-10-04.) Bing, Yandex und Seznam nehmen neue Adressen über IndexNow sofort an, Google nicht. Es wäre eine Datei mit Schlüssel im Webroot und ein Aufruf bei jeder neuen Seite. **Auslöser:** Seiten entstehen in größerer Zahl (5.3, 5.4); bis dahin reicht die Sitemap, die Bing seit 2026-10-04 kennt. Claude, eine Stunde.
+
 ### Erledigt in Phase 2
 
 - [x] **2.0 Der Hobby-MVP.** Erledigt 2026-09-08: ein Schalter `NEXT_PUBLIC_SITE_MODE` (E20), Hobby ohne Provisionsparameter und ohne Verfügbarkeits-Button; seither online unter https://beautifulcovers.vercel.app. Der Umschalttag auf `shop` braucht 0.4 und 0.12. → [Historie](docs/history.md#2026-09-08--der-hobby-modus-ein-schalter-statt-zweier-branches-roadmap-20-dazu-17-und-615-schritt-12) · [PLAN-2](docs/plans/PLAN-2-mvp-hobby.md) · [Archiv](docs/roadmap-archive.md#20)
