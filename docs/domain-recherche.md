@@ -600,3 +600,16 @@ Julian, 2026-10-04: „bereite die erstellung der social media konten für buyit
 
 **Prüfeintrag gesetzt, 2026-10-04 um 05:20 MESZ.** Julian hat den Wert in den Chat kopiert (`protonmail-verification=6a4fe6f20a3899cab30812646d412f9a3ac330c1`); bei INWX als TXT auf `@` von `buyitscovers.com` eingetragen, neben `v=spf1 -all`. Sichtbar bei `ns.inwx.de`, `1.1.1.1` und `8.8.8.8`. Protons Assistent hat nach zwei Versuchen („Next" im Schritt „Verify", „Refresh status") noch nicht bestätigt — vermutlich hält Protons Resolver die TXT-Antwort von vor dem Eintrag (TTL 3600). **Nächster Versuch frühestens um 06:20 MESZ, einmal.** Zwei Fehlversuche auf dem Weg, damit sie niemand wiederholt: Protons Kopierknopf schreibt aus einem Hintergrund-Reiter nicht in die Zwischenablage (eingefügt wurde, was vorher darin lag), und `navigator.clipboard.writeText` aus dem Hintergrund-Reiter hängt.
 
+**Proton hat bestätigt, abgelesen am 2026-10-04 um 07:00 MESZ.** Status bei Proton: Verified und DMARC grün (das vorhandene `v=DMARC1; p=reject;` genügt), MX und SPF rot, DKIM offen, 0 Adressen. Protons Werte, von der Seite abgelesen:
+
+| Typ | Name | Wert | Prio |
+|---|---|---|---|
+| MX | `@` | `mail.protonmail.ch` | 10 |
+| MX | `@` | `mailsec.protonmail.ch` | 20 |
+| TXT | `@` | `v=spf1 include:_spf.protonmail.ch ~all` | |
+| CNAME | `protonmail._domainkey` | `protonmail.domainkey.deuelplllho2z6zusolimbuincirx42sx7o2gq5kztfgxf22deg3q.domains.proton.ch.` | |
+| CNAME | `protonmail2._domainkey` | `protonmail2.domainkey.deuelplllho2z6zusolimbuincirx42sx7o2gq5kztfgxf22deg3q.domains.proton.ch.` | |
+| CNAME | `protonmail3._domainkey` | `protonmail3.domainkey.deuelplllho2z6zusolimbuincirx42sx7o2gq5kztfgxf22deg3q.domains.proton.ch.` | |
+
+Bei INWX für `buyitscovers.com` dafür zu löschen: MX `@` 0 `.` (Null-MX) und TXT `@` `v=spf1 -all`. Bleiben: A, CNAME `www`, TXT `protonmail-verification=…`, TXT `_dmarc`. Die INWX-Sitzung war wieder abgelaufen; gesetzt ist noch nichts davon.
+
