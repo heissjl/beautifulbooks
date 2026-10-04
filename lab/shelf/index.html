@@ -65,6 +65,15 @@
   .share { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin: 20px 0; }
   .share code { display: block; word-break: break-all; font-size: 12px; background: var(--surface-2); padding: 8px; border-radius: 6px; margin: 8px 0; }
   .stats { font-size: 12px; color: var(--ink-3); }
+  .shelfbox { margin: 28px 0; }
+  .shelfbox h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: 1.3rem; margin: 0 0 4px; }
+  #sortedShelf { display: block; width: 100%; height: auto; border-radius: 6px; margin-top: 10px; }
+  .order { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 16px 0 0; }
+  .order button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .strip { display: flex; height: 14px; border-radius: 3px; overflow: hidden; margin: 10px 0 0; }
+  .strip span { flex: 1; }
+  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: -1px; margin-right: 4px; box-shadow: 0 0 0 1px rgb(var(--shadow) / .2); }
+  .photo .box span.sw { position: static; display: inline-block; margin: 0 2px 0 0; padding: 0; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -72,25 +81,40 @@
 <main>
   <section id="make">
     <h1>Vom Regal zur Wand</h1>
-    <p class="sub">Ein Foto deiner Bücher — Rücken oder Umschläge. Die Seite sucht die Werke und, wo ein Umschlag zu sehen ist, genau diese Ausgabe. Dann ein Link zum Teilen.</p>
-    <p class="note">Lab-Prototyp (ROADMAP 5.11). Das Foto geht einmal an das Bildmodell von Anthropic und wird nirgends gespeichert; Werke und Cover kommen von Open Library.</p>
+    <p class="sub">Ein Foto deiner Bücher — Rücken oder Umschläge. Die Seite sucht die Werke und, wo ein Umschlag zu sehen ist, genau diese Ausgabe; auf Wunsch ordnet sie die Sammlung nach den Farben der Bücher im Foto. Dann ein Link zum Teilen.</p>
+    <p class="note">Lab-Prototyp (ROADMAP 5.11, Farben 5.16). Das Foto geht einmal an das Bildmodell von Anthropic und wird nirgends gespeichert; die Farben liest dieser Browser selbst aus dem Foto; Werke und Cover kommen von Open Library.</p>
     <div id="nokey" class="warn" hidden></div>
 
     <label class="drop" id="drop">
-      <input type="file" id="file" accept="image/*" hidden>
+      <input type="file" id="file" accept="image/*,.heic,.heif" hidden>
       <strong>Foto wählen</strong> oder hierher ziehen
       <div class="note">Wird im Browser auf 1600 px verkleinert, bevor es den Rechner verlässt.</div>
     </label>
     <div class="row">
       <button id="sample">Mit der Beispielliste ausprobieren</button>
-      <span class="note">zwölf Bücher aus <code>sample.json</code>, ohne Foto und ohne Schlüssel</span>
+      <span class="note">zwölf Bücher aus <code>sample.json</code>, ohne Schlüssel; als Foto ein gemaltes Regal mit erfundenen Farben</span>
     </div>
 
     <div class="progress" id="progress" aria-live="polite"></div>
     <div class="photo" id="photo" hidden><img id="photoImg" alt="Das hochgeladene Foto"></div>
     <div class="stats" id="stats"></div>
 
+    <div class="order" id="orderbox" hidden role="group" aria-label="Reihenfolge">
+      <span class="note">Reihenfolge:</span>
+      <button data-order="photo" aria-pressed="true">wie im Foto</button>
+      <button data-order="rainbow" aria-pressed="false">nach Farben</button>
+      <button data-order="light-dark" aria-pressed="false">hell nach dunkel</button>
+      <span class="note" id="ordernote"></span>
+    </div>
+    <div class="strip" id="strip" aria-hidden="true"></div>
     <ul class="wall" id="wall"></ul>
+
+    <section class="shelfbox" id="shelfbox" hidden>
+      <h2>Dein Regal, nach Farben eingeräumt</h2>
+      <p class="note" id="shelfnote">Aus den Rücken deines Fotos zusammengesetzt: jedes Buch aufgerichtet, die Reihen der Reihe nach gefüllt, jede so breit, wie ihre Bücher auf dem Foto waren.</p>
+      <canvas id="sortedShelf"></canvas>
+      <div class="row"><button id="saveShelf">Bild sichern</button></div>
+    </section>
 
     <div class="share" id="sharebox" hidden>
       <div class="row" style="margin-top:0">
@@ -113,6 +137,7 @@
   </section>
 </main>
 
+<script src="/colors.js"></script>
 <script>
 /* ---------- share link: the same bytes as lab/shelf/sharelink.ts ---------- */
 function encodeShelf(entries) {
@@ -139,6 +164,10 @@ function decodeShelf(s) {
 }
 
 const $ = id => document.getElementById(id);
+/** Report to the lab server's terminal; the page's own message stays as it is. */
+const report = msg => fetch('/api/log', { method: 'POST', body: String(msg) }).catch(() => {});
+window.addEventListener('error', e => report(`error: ${e.message} @${e.lineno}`));
+window.addEventListener('unhandledrejection', e => report(`rejection: ${e.reason?.message ?? e.reason}`));
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const cover = (id, size = 'M') => `https://covers.openlibrary.org/b/id/${id}-${size}.jpg`;
 let SITE = 'https://buyitscovers.com';
@@ -151,12 +180,22 @@ const WHY = {
   'default': () => 'Buchrücken — Standardcover des Werks',
   'no-cover': () => 'Open Library hat kein Cover',
   'chosen': () => 'von Hand gewählt',
+  'spine-edition': c => `Ausgabe nach dem Rücken: ${c.publisherMatch ? `Verlag „${c.publisher}“${c.editionPublisher && c.editionPublisher !== c.publisher ? ` (${c.editionPublisher})` : ''} und ` : ''}Farbe (Abstand ${c.gap}) unter ${c.compared} Covern${c.year ? `, ${c.year}` : ''}`,
+  'spine-no-match': c => `Rücken mit ${c.compared} Covern verglichen${c.publisher ? `, Verlag „${c.publisher}“ ${c.publisherMatch ? 'gefunden' : 'bei keiner Ausgabe'}` : ', kein Verlag lesbar'}; keins sicher genug${c.gap !== undefined ? ` (nächstes ${c.gap})` : ''} — Standardcover`,
 };
 const WORK_WHY = { 'author+title': '', 'author': 'Titel weicht ab', 'title-only': 'Autor passt nicht', 'first-result': 'unsicher: weder Titel noch Autor passen' };
 
 /* ---------- state ---------- */
-let items = [];        // { recognized, work?, cover?, workReason?, error?, removed?, panel? }
+let items = [];        // { recognized, color?, work?, cover?, workReason?, error?, removed?, panel? }
 let photoBooks = [];   // for the box overlay
+let photoCanvas = null; // the shrunk photo, kept in the browser for the colour step
+let sampleBoxes = null; // painted-shelf boxes for the sample mode
+let order = 'photo';    // 'photo' | 'rainbow' | 'light-dark'
+let colors = [];        // per recognized book: { hex, lch, box, refined } or null
+let rowBands = [];      // the shelf rows the photo was read by, as fractions
+let pendingColors = null; // colours already read in readByRows, used once by readColors
+/** OKLab of a colour the page read, for the server's edition step. */
+const labOf = c => { const h = c.lch.h * Math.PI / 180; return { L: c.lch.L, a: c.lch.C * Math.cos(h), b: c.lch.C * Math.sin(h) }; };
 
 async function init() {
   const hash = new URLSearchParams(location.hash.slice(1));
@@ -177,26 +216,135 @@ async function shrink(file) {
   canvas.width = Math.round(bitmap.width * scale);
   canvas.height = Math.round(bitmap.height * scale);
   canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  photoCanvas = canvas;
+  return new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.9));
+}
+
+const isHeic = file => /image\/hei[cf]/i.test(file.type) || /\.hei[cf]$/i.test(file.name);
+
+/** The photo as something this browser can draw: HEIC goes through the local server first. */
+async function readable(file) {
+  try {
+    await createImageBitmap(file).then(b => b.close());
+    return file;
+  } catch (err) {
+    if (!isHeic(file)) throw new Error(`Dieser Browser kann die Datei „${file.name}“ nicht als Bild lesen (${err.message}).`);
+  }
+  $('progress').textContent = 'HEIC-Foto — wird auf diesem Rechner in JPEG umgewandelt …';
+  const res = await fetch('/api/heic', { method: 'POST', body: file });
+  if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || `HEIC-Umwandlung: HTTP ${res.status}`);
+  return res.blob();
+}
+
+/** Largest picture the model reads without shrinking it: 2576 px long edge, 3.75 MP (claude-sonnet-5). */
+const MODEL_EDGE = 2576, MODEL_PIXELS = 3.7e6;
+
+/** A region of the full-size photo as a JPEG at the most the model reads. */
+function cropForModel(bitmap, sx, sy, sw, sh) {
+  const scale = Math.min(1, MODEL_EDGE / Math.max(sw, sh), Math.sqrt(MODEL_PIXELS / (sw * sh)));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(sw * scale); canvas.height = Math.round(sh * scale);
+  canvas.getContext('2d').drawImage(bitmap, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
   return new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.9));
 }
 
 async function usePhoto(file) {
-  if (!file || !file.type.startsWith('image/')) return;
-  const blob = await shrink(file);
+  if (!file) return;
+  report(`photo chosen: type "${file.type}", ${Math.round(file.size / 1024)} KB, extension ${(file.name.match(/\.[^.]+$/) || ['none'])[0]}`);
+  let source, blob, full;
+  try {
+    source = await readable(file);
+    blob = await shrink(source);
+    full = await createImageBitmap(source);
+  } catch (err) {
+    // Never silent: a photo that could not be read must say so (CLAUDE.md).
+    $('progress').textContent = `Fehler: ${err.message}`;
+    report(`photo failed: ${err.message}`);
+    return;
+  }
+  sampleBoxes = null;
   $('photoImg').src = URL.createObjectURL(blob);
   $('photo').hidden = false;
-  run('/api/recognize', blob);
+  try {
+    await readByRows(full, blob);
+  } catch (err) {
+    $('progress').textContent = `Fehler: ${err.message}`;
+    report(`read failed: ${err.message}`);
+  } finally {
+    full.close();
+  }
 }
 
-async function run(path, body) {
-  items = []; photoBooks = []; render(); drawBoxes();
+/**
+ * Reads the photo row by row (ROADMAP 5.16): the shelf boards come from the
+ * photo itself, each row goes to the model on its own at up to 2576 px, and
+ * the model's boxes — in pixels of the row — are mapped back onto the photo.
+ * One row, or none found: the whole photo, at the same resolution.
+ */
+async function readByRows(full, shrunk) {
+  items = []; photoBooks = []; colors = []; render(); drawBoxes();
+  $('stats').textContent = ''; $('sharebox').hidden = true; $('linkout').hidden = true;
+  const found = window.shelfColors ? window.shelfColors.detectShelf(photoCanvas) : { rows: [] };
+  const H = photoCanvas.height;
+  const bands = found.rows.length >= 2
+    ? found.rows.map(r => ({ y0: r.y0 / H, y1: r.y1 / H }))
+    : [{ y0: 0, y1: 1 }];
+  rowBands = bands.length > 1 ? bands : [];
+  drawBoxes();
+  const started = performance.now();
+  let done = 0;
+  $('progress').textContent = bands.length > 1
+    ? `${bands.length} Regalreihen gefunden — das Bildmodell liest jede einzeln … (0 von ${bands.length})`
+    : 'Das Bildmodell liest das Foto … (dauert meist 10–40 s)';
+  const runs = await Promise.all(bands.map(async band => {
+    const sy = Math.floor(band.y0 * full.height), sh = Math.ceil((band.y1 - band.y0) * full.height);
+    const crop = await cropForModel(full, 0, sy, full.width, sh);
+    const res = await fetch('/api/read', { method: 'POST', body: crop, headers: { 'content-type': 'image/jpeg' } });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+    done++;
+    if (bands.length > 1) $('progress').textContent = `${bands.length} Regalreihen gefunden — das Bildmodell liest jede einzeln … (${done} von ${bands.length})`;
+    // Boxes and axes are fractions of the row; make them fractions of the photo.
+    const bh = band.y1 - band.y0;
+    data.books = data.books.map(b => ({
+      ...b,
+      ...(b.box ? { box: [b.box[0], band.y0 + b.box[1] * bh, b.box[2], b.box[3] * bh] } : {}),
+      ...(b.axis ? { axis: [b.axis[0], band.y0 + b.axis[1] * bh, b.axis[2], band.y0 + b.axis[3] * bh, b.axis[4]] } : {}),
+      row: bands.indexOf(band),
+    }));
+    return data;
+  }));
+  const read = runs.flatMap(r => r.books);
+  // The colour step runs here, before matching, so the server compares editions with the same colours the page shows.
+  const started2 = performance.now();
+  const found2 = window.shelfColors ? window.shelfColors.colorsForBooks(photoCanvas, read) : read.map(() => null);
+  pendingColors = found2;
+  const books = read.map((b, k) => found2[k] ? { ...b, spineColor: { hex: found2[k].hex, lab: labOf(found2[k]) } } : b);
+  const turned = found2.filter(c => c?.corners);
+  const tilts = { upright: turned.filter(c => c.tilt < 5).length, leaning: turned.filter(c => c.tilt >= 5 && c.tilt < 60).length, lying: turned.filter(c => c.tilt >= 60).length };
+  const mean = xs => xs.length ? (xs.reduce((s, v) => s + v, 0) / xs.length).toFixed(2) : '–';
+  report(`segmentation: ${turned.length} turned rectangles (${tilts.upright} upright, ${tilts.leaning} leaning, ${tilts.lying} lying), moved ${turned.filter(c => c.refined).length}, both edges ${turned.filter(c => c.edges === 2).length}, one edge ${turned.filter(c => c.edges === 1).length}, main-colour share ${mean(turned.map(c => c.shareBefore))} → ${mean(turned.map(c => c.share))}, ${Math.round(performance.now() - started2)} ms`);
+  const meta = {
+    model: runs[0]?.model, ms: Math.round(performance.now() - started),
+    inputTokens: runs.reduce((s, r) => s + (r.inputTokens || 0), 0),
+    outputTokens: runs.reduce((s, r) => s + (r.outputTokens || 0), 0),
+    problems: runs.flatMap(r => r.problems || []),
+    rows: bands.length, cached: runs.every(r => r.cached),
+  };
+  report(`read: ${bands.length} row(s), ${books.length} books, ${books.filter(b => b.publisher).length} with publisher, ${meta.inputTokens}+${meta.outputTokens} tokens${meta.cached ? ', cached' : ''}`);
+  const photo = await new Promise(res => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.readAsDataURL(shrunk); });
+  await run('/api/match', JSON.stringify({ photo, books, meta }), 'application/json', true);
+}
+
+async function run(path, body, type = 'image/jpeg', keepProgress = false) {
+  items = []; photoBooks = []; colors = []; render(); drawBoxes();
   $('stats').textContent = '';
   $('sharebox').hidden = true; $('linkout').hidden = true;
-  $('progress').textContent = body ? 'Das Bildmodell liest das Foto … (dauert meist 10–40 s)' : 'Beispielliste …';
+  if (!keepProgress) $('progress').textContent = body ? 'Das Bildmodell liest das Foto … (dauert meist 10–40 s)' : 'Beispielliste …';
   $('sample').disabled = true;
   const started = performance.now();
   try {
-    const res = await fetch(path, { method: 'POST', body, headers: body ? { 'content-type': 'image/jpeg' } : {} });
+    const res = await fetch(path, { method: 'POST', body, headers: body ? { 'content-type': type } : {} });
     if (!res.ok || !res.headers.get('content-type')?.includes('ndjson')) {
       const err = await res.json().catch(() => ({}));
       throw new Error(err.error || `HTTP ${res.status}`);
@@ -212,23 +360,41 @@ async function run(path, body) {
       while ((nl = buf.indexOf('\n')) >= 0) {
         const line = JSON.parse(buf.slice(0, nl)); buf = buf.slice(nl + 1);
         if (line.type === 'recognized') {
-          meta = line; total = line.books.length; photoBooks = line.books;
-          items = line.books.map(b => ({ recognized: b, pending: true }));
+          meta = line; total = line.books.length;
+          // Sample mode: the painted shelf's boxes stand in for a model's.
+          photoBooks = sampleBoxes ? line.books.map((b, k) => ({ ...b, kind: 'spine', box: sampleBoxes[k] })) : line.books;
+          readColors();
+          items = line.books.map((b, k) => ({ recognized: b, color: colors[k], pending: true }));
           drawBoxes(); render();
           $('progress').textContent = total ? `${total} Bücher erkannt — suche sie bei Open Library, eins nach dem anderen …` : 'Das Modell hat auf dem Foto keinen lesbaren Titel gefunden.';
         } else if (line.type === 'match') {
-          items[line.index] = line.result; done++;
+          items[line.index] = { ...line.result, color: colors[line.index] }; done++;
           $('progress').textContent = `Zugeordnet ${done} von ${total} …`;
+          render();
+        } else if (line.type === 'edition-start') {
+          items[line.index].editionPending = true;
+          $('progress').textContent = `Werke zugeordnet. Suche die Ausgabe zu jedem Rücken (Verlag und Farbe) — Buch ${line.index + 1} von ${total} …`;
+          render();
+        } else if (line.type === 'edition') {
+          const it = items[line.index];
+          it.editionPending = false;
+          if (line.error) it.editionError = line.error;
+          else {
+            // A cover chosen by hand in the meantime stays.
+            if (it.cover?.reason !== 'chosen') it.cover = line.cover;
+            it.ranked = line.ranked;
+          }
           render();
         } else if (line.type === 'done') {
           const secs = ((performance.now() - started) / 1000).toFixed(1);
-          $('progress').textContent = `Fertig in ${secs} s. Falsches wegklicken, Fehlendes neu suchen, dann teilen.`;
+          $('progress').textContent = `Fertig in ${secs} s${line.editions ? ` — ${line.picked} von ${line.editions} Rücken einer Ausgabe zugeordnet` : ''}. Falsches wegklicken, Fehlendes neu suchen, dann teilen.`;
           stats(meta, line);
         } else if (line.type === 'error') throw new Error(line.error);
       }
     }
   } catch (e) {
     $('progress').textContent = `Fehler: ${e.message}`;
+    report(`run failed: ${e.message}`);
   } finally {
     $('sample').disabled = false;
     $('sharebox').hidden = !items.some(i => i.work && !i.removed);
@@ -241,8 +407,11 @@ function stats(meta, done) {
   // Only covers that were actually compared with a crop of the photo count here.
   const covers = items.filter(i => ['matched-edition', 'no-close-cover'].includes(i.cover?.reason)).length;
   const parts = [`Modell: ${meta.model}`, meta.ms ? `Erkennung ${(meta.ms / 1000).toFixed(1)} s` : null,
-    meta.inputTokens ? `${meta.inputTokens} + ${meta.outputTokens} Tokens` : null,
-    `Open Library ${(done.matchMs / 1000).toFixed(1)} s`, `${found}/${items.length} Werke gefunden`,
+    meta.inputTokens ? `${meta.inputTokens} + ${meta.outputTokens} Tokens${meta.cached ? ' (aus dem Speicher, nicht neu bezahlt)' : ''}` : null,
+    meta.rows > 1 ? `${meta.rows} Reihen einzeln gelesen` : null,
+    `Open Library ${(done.matchMs / 1000).toFixed(1)} s`, done.editionMs ? `Ausgaben ${(done.editionMs / 1000).toFixed(1)} s` : null,
+    done.editions ? `${done.picked}/${done.editions} Rücken einer Ausgabe zugeordnet` : null,
+    meta.books?.some(b => b.publisher) ? `Verlag gelesen bei ${meta.books.filter(b => b.publisher).length}/${meta.books.length}` : null, `${found}/${items.length} Werke gefunden`,
     covers ? `${matched}/${covers} Umschläge einer Ausgabe zugeordnet` : null,
     meta.problems?.length ? `Beim Lesen verworfen: ${meta.problems.join('; ')}` : null];
   $('stats').textContent = parts.filter(Boolean).join(' · ');
@@ -250,14 +419,33 @@ function stats(meta, done) {
 
 function drawBoxes() {
   const host = $('photo');
-  host.querySelectorAll('.box').forEach(b => b.remove());
+  host.querySelectorAll('.box, .rowline').forEach(b => b.remove());
+  rowBands.slice(1).forEach(b => {
+    const d = document.createElement('div');
+    d.className = 'rowline';
+    d.style.cssText = `position:absolute;left:0;right:0;top:${b.y0 * 100}%;border-top:2px dashed rgba(0,160,255,.9);pointer-events:none`;
+    host.appendChild(d);
+  });
+  host.querySelector('svg.turned')?.remove();
+  const polys = colors.map((c, i) => c?.corners ? `<polygon points="${c.corners.map(p => p.join(',')).join(' ')}" fill="none" stroke="${c.refined ? '#1fb36b' : '#e0a030'}" stroke-width="0.0025" vector-effect="non-scaling-stroke" style="stroke-width:1.5px"/><text x="${c.corners[0][0]}" y="${c.corners[0][1]}" font-size="0.012" fill="#fff" stroke="#000" stroke-width="0.002" paint-order="stroke">${i + 1}</text>` : '').join('');
+  if (polys) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'turned');
+    svg.setAttribute('viewBox', '0 0 1 1');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
+    svg.innerHTML = polys;
+    host.appendChild(svg);
+  }
   photoBooks.forEach((b, i) => {
-    if (!b.box) return;
+    if (colors[i]?.corners) return; // drawn as a turned rectangle
+    const box = colors[i]?.box ?? b.box;
+    if (!box) return;
     const d = document.createElement('div');
     d.className = 'box';
-    d.style.left = `${b.box[0] * 100}%`; d.style.top = `${b.box[1] * 100}%`;
-    d.style.width = `${b.box[2] * 100}%`; d.style.height = `${b.box[3] * 100}%`;
-    d.innerHTML = `<span>${i + 1}</span>`;
+    d.style.left = `${box[0] * 100}%`; d.style.top = `${box[1] * 100}%`;
+    d.style.width = `${box[2] * 100}%`; d.style.height = `${box[3] * 100}%`;
+    d.innerHTML = `<span>${colors[i] ? `<i class="sw" style="background:${colors[i].hex}"></i>` : ''}${i + 1}</span>`;
     host.appendChild(d);
   });
 }
@@ -266,12 +454,19 @@ function drawBoxes() {
 function render() {
   const wall = $('wall');
   wall.innerHTML = '';
-  items.forEach((it, i) => {
-    if (it.removed) return;
+  const shown = orderedIndices().filter(i => !items[i].removed);
+  $('strip').innerHTML = order === 'photo' ? '' : shown.map(i => `<span style="background:${items[i].color?.hex ?? 'transparent'}"></span>`).join('');
+  $('orderbox').hidden = !colors.some(Boolean);
+  document.querySelectorAll('[data-order]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.order === order)));
+  const uncoloured = shown.filter(i => !items[i].color).length;
+  $('ordernote').textContent = order !== 'photo' && uncoloured ? `${uncoloured} ohne Kasten im Foto stehen am Ende` : '';
+  shown.forEach(i => {
+    const it = items[i];
     const li = document.createElement('li');
     li.className = 'tile' + (it.work ? '' : ' missing');
     const r = it.recognized;
-    const readAs = `${i + 1}. gelesen: „${r.title}“${r.author ? ` — ${r.author}` : ''}`;
+    const readAs = `${i + 1}. gelesen: „${r.title}“${r.author ? ` — ${r.author}` : ''}${r.publisher ? ` · ${r.publisher}` : ''}`;
+    const swatch = it.color ? `<i class="sw" style="background:${it.color.hex}" title="Farbe im Foto ${it.color.hex}${it.color.refined ? ', Kasten an den Rücken angepasst' : ''}"></i>` : '';
     if (it.pending) {
       li.innerHTML = `<div class="cover"><div class="none">sucht …</div></div><p class="t">${esc(r.title)}</p><p class="a">${esc(r.author)}</p>`;
     } else if (it.work) {
@@ -281,11 +476,11 @@ function render() {
       li.innerHTML = `<a href="${tileHref(it.work.id, c)}" target="_blank" rel="noopener">
           <div class="cover">${c ? `<img src="${cover(c)}" alt="${esc(it.work.title)} von ${esc(it.work.author)}" loading="lazy">` : '<div class="none">kein Cover</div>'}</div>
           <p class="t">${esc(it.work.title)}</p><p class="a">${esc(it.work.author)}</p></a>
-        <p class="why ${it.cover?.reason === 'matched-edition' ? 'good' : ''}">${esc(why)}${workWhy ? ` · ${esc(workWhy)}` : ''}</p>
-        <p class="read">${esc(readAs)}</p>`;
+        <p class="why ${['matched-edition', 'spine-edition'].includes(it.cover?.reason) ? 'good' : ''}">${it.editionPending ? 'sucht die Ausgabe zum Rücken …' : esc(why)}${it.editionError ? ` · ${esc(it.editionError)}` : ''}${workWhy ? ` · ${esc(workWhy)}` : ''}</p>
+        <p class="read">${swatch}${esc(readAs)}</p>`;
     } else {
       li.innerHTML = `<div class="cover"><div class="none">${it.error ? esc(it.error) : 'bei Open Library nicht gefunden'}</div></div>
-        <p class="t">${esc(r.title)}</p><p class="a">${esc(r.author)}</p><p class="read">${esc(readAs)}</p>`;
+        <p class="t">${esc(r.title)}</p><p class="a">${esc(r.author)}</p><p class="read">${swatch}${esc(readAs)}</p>`;
     }
     if (!it.pending) {
       const acts = document.createElement('div');
@@ -297,6 +492,38 @@ function render() {
     wall.appendChild(li);
   });
   $('sharebox').hidden = !items.some(i => i.work && !i.removed);
+  drawShelf();
+}
+
+/* ---------- colour ---------- */
+function readColors() {
+  colors = [];
+  if (pendingColors && pendingColors.length === photoBooks.length) { colors = pendingColors; pendingColors = null; return; }
+  pendingColors = null;
+  if (!photoCanvas || !window.shelfColors) return;
+  const started = performance.now();
+  colors = window.shelfColors.colorsForBooks(photoCanvas, photoBooks);
+  const n = colors.filter(Boolean).length;
+  const refined = colors.filter(c => c?.refined).length;
+  console.info(`colours: ${n} of ${photoBooks.length} books, ${refined} boxes moved onto a spine, ${Math.round(performance.now() - started)} ms`);
+}
+
+function orderedIndices() {
+  const all = items.map((_, i) => i);
+  if (order === 'photo' || !window.shelfColors) return all;
+  return window.shelfColors.colourOrder(items.map(it => it.color ?? null), order);
+}
+
+/** The sorted shelf at the end: the photo's own spines in the chosen colour order. */
+function drawShelf() {
+  const box = $('shelfbox');
+  if (!photoCanvas || !window.shelfColors || !colors.some(Boolean)) { box.hidden = true; return; }
+  const mode = order === 'light-dark' ? 'light-dark' : 'rainbow';
+  const kept = items.map((it, i) => (it.removed ? null : colors[i] ?? null));
+  const sequence = window.shelfColors.colourOrder(kept, mode).filter(i => kept[i]);
+  const drawn = window.shelfColors.drawSortedShelf($('sortedShelf'), photoCanvas, kept, photoBooks.map(b => b.row ?? 0), sequence);
+  box.hidden = drawn === 0;
+  $('shelfnote').textContent = `${drawn} Bücher ${mode === 'light-dark' ? 'von hell nach dunkel' : 'nach Farben: Weiß, dann reihum ab Rot, zuletzt Grau und Schwarz'} — aus den Rücken deines Fotos zusammengesetzt, jedes Buch aufgerichtet, die Reihen der Reihe nach gefüllt, jede so breit, wie ihre Bücher auf dem Foto waren.`;
 }
 
 async function action(i, act, li) {
@@ -331,6 +558,16 @@ async function action(i, act, li) {
         hits.appendChild(d);
       }
     });
+  } else if (act === 'covers' && it.ranked?.length) {
+    // Spine: the covers in order of likeness, with what the order rests on.
+    panel.innerHTML = '<div class="note">nach Ähnlichkeit zum Rücken: Verlag, dann Farbe</div><div class="grid"></div>';
+    for (const c of it.ranked) {
+      const fig = document.createElement('figure');
+      fig.style.margin = '0';
+      fig.innerHTML = `<img src="${cover(c.coverId, 'S')}" alt="Cover ${c.coverId}" loading="lazy"><figcaption class="stats" style="font-size:10px;line-height:1.2">${c.publisherMatch ? '✓ ' : ''}${esc(c.publisher ?? '')}${c.year ? ` ${c.year}` : ''}${c.gap !== undefined ? ` · ${c.gap.toFixed(2)}` : ''}</figcaption>`;
+      fig.onclick = () => { it.cover = { coverId: c.coverId, reason: 'chosen' }; render(); };
+      panel.querySelector('.grid').appendChild(fig);
+    }
   } else if (act === 'covers') {
     panel.innerHTML = '<div class="note">lädt die Cover der ersten Ausgabenseite …</div>';
     const res = await fetch(`/api/covers?id=${it.work.id}`).then(r => r.json()).catch(e => ({ error: e.message }));
@@ -348,7 +585,7 @@ async function action(i, act, li) {
 
 /* ---------- share ---------- */
 function shareLink() {
-  const entries = items.filter(i => i.work && !i.removed).map(i => ({ workId: i.work.id, coverId: i.cover?.coverId || 0 }));
+  const entries = orderedIndices().map(k => items[k]).filter(i => i.work && !i.removed).map(i => ({ workId: i.work.id, coverId: i.cover?.coverId || 0 }));
   const t = $('title').value.trim();
   return `${location.origin}/#s=${encodeShelf(entries)}${t ? `&t=${encodeURIComponent(t)}` : ''}`;
 }
@@ -359,6 +596,12 @@ $('share').onclick = () => {
   const n = items.filter(i => i.work && !i.removed).length;
   $('linklen').textContent = `${link.length} Zeichen für ${n} Bücher`;
   $('linkout').hidden = false;
+};
+$('saveShelf').onclick = () => {
+  const a = document.createElement('a');
+  a.href = $('sortedShelf').toDataURL('image/jpeg', 0.9);
+  a.download = 'regal-nach-farben.jpg';
+  a.click();
 };
 $('copy').onclick = async () => {
   try { await navigator.clipboard.writeText($('link').textContent); $('copy').textContent = 'Kopiert'; }
@@ -401,7 +644,23 @@ window.addEventListener('hashchange', () => location.reload());
 
 /* ---------- input ---------- */
 $('file').onchange = e => usePhoto(e.target.files[0]);
-$('sample').onclick = () => { $('photo').hidden = true; run('/api/sample', null); };
+$('sample').onclick = () => {
+  rowBands = [];
+  if (window.shelfColors) {
+    const painted = window.shelfColors.paintedSample(12);
+    photoCanvas = painted.canvas; sampleBoxes = painted.boxes;
+    $('photoImg').src = painted.canvas.toDataURL('image/png');
+    $('photo').hidden = false;
+  } else {
+    photoCanvas = null; sampleBoxes = null; $('photo').hidden = true;
+  }
+  run('/api/sample', null);
+};
+document.querySelectorAll('[data-order]').forEach(b => b.addEventListener('click', () => {
+  order = b.dataset.order;
+  $('linkout').hidden = true; // an old link would carry the old order
+  render();
+}));
 const drop = $('drop');
 ['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
 ['dragleave', 'drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));

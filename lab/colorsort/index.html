@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regal nach Farben</title>
+<style>
+  :root {
+    --paper: #fbfaf7; --ink: #1d1b18; --ink-2: #4a453e; --ink-3: #746c62;
+    --line: #e2ddd4; --accent: #945138; --wall: #e9e4da;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #171614; --ink: #eeeae3; --ink-2: #c4bdb2; --ink-3: #a39b8f;
+      --line: #34312c; --accent: #dbac94; --wall: #24221f;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #171614; --ink: #eeeae3; --ink-2: #c4bdb2; --ink-3: #a39b8f;
+    --line: #34312c; --accent: #dbac94; --wall: #24221f;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font: 600 26px/1.2 Georgia, serif; margin: 0 0 6px; }
+  h2 { font: 600 17px/1.3 Georgia, serif; margin: 28px 0 8px; }
+  p { margin: 0 0 10px; color: var(--ink-2); }
+  .lede { max-width: 62ch; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  button, .file {
+    font: inherit; border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+    border-radius: 999px; padding: 7px 14px; cursor: pointer;
+  }
+  .file.primary { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+  .file input { display: none; }
+  button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  button:focus-visible, .file:focus-within, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #status { color: var(--ink-3); font-size: 13px; min-height: 1.5em; margin-top: 10px; }
+  canvas { display: block; width: 100%; height: auto; border-radius: 6px; background: var(--wall); }
+  #photo { cursor: crosshair; touch-action: manipulation; }
+  .grid { display: grid; gap: 24px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .options { display: grid; gap: 10px 16px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); margin: 12px 0; }
+  .options label { display: grid; gap: 2px; font-size: 13px; color: var(--ink-2); }
+  .options output { color: var(--ink-3); }
+  select, input[type=range] { width: 100%; font: inherit; }
+  select { padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--ink); }
+  #start-sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; margin-left: 4px; }
+  #strip { display: flex; height: 22px; border-radius: 4px; overflow: hidden; margin: 12px 0 4px; }
+  #strip span { min-width: 2px; }
+  #summary { color: var(--ink-3); font-size: 13px; }
+  details { margin-top: 12px; }
+  summary { cursor: pointer; color: var(--ink-2); }
+  #moves { columns: 2 260px; padding: 0; list-style: none; font-size: 13px; color: var(--ink-2); }
+  #moves li { break-inside: avoid; padding: 2px 0; display: flex; gap: 6px; align-items: center; }
+  #moves li.stays { color: var(--ink-3); }
+  .sw { width: 12px; height: 12px; border-radius: 3px; flex: none; border: 1px solid var(--line); }
+  .hint { font-size: 13px; color: var(--ink-3); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Regal nach Farben</h1>
+  <p class="lede">Ein Foto vom eigenen Regal, und die Seite zeigt dieselben Bücher nach Farben sortiert — aus den Buchrücken des Fotos zusammengesetzt, mit der Liste, was wohin wandert. Das Foto bleibt auf diesem Gerät; nichts wird hochgeladen.</p>
+  <div class="row">
+    <label class="file primary">Foto aufnehmen<input id="camera" type="file" accept="image/*" capture="environment"></label>
+    <label class="file">Foto wählen<input id="file" type="file" accept="image/*"></label>
+    <button id="sample" type="button">Gemaltes Beispielregal</button>
+  </div>
+  <p class="hint">Am besten gerade von vorn, eine oder mehrere Reihen, Rücken senkrecht. Liegende und schräg lehnende Bücher erkennt es nicht.</p>
+  <div id="status" role="status"></div>
+
+  <div id="work" hidden>
+    <div class="grid">
+      <section>
+        <h2>Das Foto</h2>
+        <div class="row" role="group" aria-label="Werkzeug">
+          <button type="button" data-tool="line">Trennlinie setzen/entfernen</button>
+          <button type="button" data-tool="exclude">Kein Buch</button>
+          <button type="button" data-tool="row">Regalboden</button>
+          <button type="button" id="redetect">Neu erkennen</button>
+        </div>
+        <p class="hint">Weiße Linien trennen Bücher, blaue gestrichelte die Reihen. Tippen setzt eine Linie oder nimmt die nächste weg; „Kein Buch“ graut eine Lücke, eine Stütze oder ein Stück Wand aus. Die Zahl im Punkt ist der neue Platz.</p>
+        <canvas id="photo"></canvas>
+      </section>
+      <section>
+        <h2>Nach Farben</h2>
+        <div class="options">
+          <label>Ordnung
+            <select id="mode">
+              <option value="rainbow">Regenbogen: Weiß, Farben, Grau, Schwarz</option>
+              <option value="light-dark">Hell nach dunkel</option>
+            </select>
+          </label>
+          <label>Der Kreis beginnt bei <output id="start-v"></output><span id="start-sw"></span>
+            <input id="start" type="range" min="0" max="359" value="10">
+          </label>
+          <label>Unter dieser Buntheit gilt ein Buch als grau: <output id="neutral-v"></output>
+            <input id="neutral" type="range" min="0" max="120" value="40">
+          </label>
+          <label>Farbton-Stufen, je hell nach dunkel: <output id="bucket-v"></output>
+            <input id="bucket" type="range" min="0" max="90" step="5" value="30">
+          </label>
+        </div>
+        <canvas id="sorted"></canvas>
+        <div id="strip" aria-hidden="true"></div>
+        <div id="summary"></div>
+        <div class="row" style="margin-top:8px"><button type="button" id="download">Bild sichern</button></div>
+        <details>
+          <summary>Was wohin wandert</summary>
+          <ol id="moves"></ol>
+        </details>
+      </section>
+    </div>
+  </div>
+</main>
+<script>"use strict";(()=>{function v(t){let e=t/255;return e<=.04045?e/12.92:((e+.055)/1.055)**2.4}function B(t){let e=t<=.0031308?12.92*t:1.055*t**.4166666666666667-.055;return Math.round(Math.min(1,Math.max(0,e))*255)}function T(t,e,o){let r=v(t),s=v(e),n=v(o),a=Math.cbrt(.4122214708*r+.5363325363*s+.0514459929*n),i=Math.cbrt(.2119034982*r+.6806995451*s+.1073969566*n),u=Math.cbrt(.0883024619*r+.2817188376*s+.6299787005*n);return{L:.2104542553*a+.793617785*i-.0040720468*u,a:1.9779984951*a-2.428592205*i+.4505937099*u,b:.0259040371*a+.7827717662*i-.808675766*u}}function at({L:t,a:e,b:o}){let r=(t+.3963377774*e+.2158037573*o)**3,s=(t-.1055613458*e-.0638541728*o)**3,n=(t-.0894841775*e-1.291485548*o)**3;return[B(4.0767416621*r-3.3077115913*s+.2309699292*n),B(-1.2684380046*r+2.6097574011*s-.3413193965*n),B(-.0041960863*r-.7034186147*s+1.707614701*n)]}function st({L:t,a:e,b:o}){let r=Math.atan2(o,e)*180/Math.PI;return{L:t,C:Math.hypot(e,o),h:r<0?r+360:r}}function R(t){return`#${at(t).map(e=>e.toString(16).padStart(2,"0")).join("")}`}function P(t,e){return Math.hypot(t.L-e.L,t.a-e.a,t.b-e.b)}function ct(t){let e=t>>>0;return()=>{e=e+1831565813>>>0;let o=e;return o=Math.imul(o^o>>>15,o|1),o^=o+Math.imul(o^o>>>7,o|61),((o^o>>>14)>>>0)/4294967296}}function ut(t,e,o=12,r=1){if(t.length===0)return[];let s=ct(r),n=[t[Math.floor(s()*t.length)]];for(;n.length<Math.min(e,t.length);){let u=t.map(b=>Math.min(...n.map(d=>P(b,d)**2))),h=u.reduce((b,d)=>b+d,0);if(h===0)break;let c=s()*h,m=0;for(;c>u[m]&&m<t.length-1;)c-=u[m++];n.push(t[m])}let a=new Int32Array(t.length);for(let u=0;u<o;u++){for(let c=0;c<t.length;c++){let m=0,b=1/0;for(let d=0;d<n.length;d++){let p=P(t[c],n[d]);p<b&&(b=p,m=d)}a[c]=m}let h=n.map(()=>({L:0,a:0,b:0,n:0}));for(let c=0;c<t.length;c++){let m=h[a[c]];m.L+=t[c].L,m.a+=t[c].a,m.b+=t[c].b,m.n++}for(let c=0;c<n.length;c++){let m=h[c];m.n>0&&(n[c]={L:m.L/m.n,a:m.a/m.n,b:m.b/m.n})}}let i=n.map(()=>0);for(let u=0;u<t.length;u++)i[a[u]]++;return n.map((u,h)=>({centre:u,size:i[h]})).filter(u=>u.size>0).sort((u,h)=>h.size-u.size)}function $(t,e,o,r=1500){let s=o.x1-o.x0,n=o.y1-o.y0,a=Math.round(o.x0+s*.15),i=Math.max(a+1,Math.round(o.x1-s*.15)),u=Math.round(o.y0+n*.08),h=Math.max(u+1,Math.round(o.y1-n*.08)),c=(i-a)*(h-u),m=Math.max(1,Math.round(Math.sqrt(c/r))),b=[];for(let w=u;w<h;w+=m)for(let x=a;x<i;x+=m){let f=(w*e+x)*4;b.push(T(t[f],t[f+1],t[f+2]))}let d=ut(b,3),p=b.length||1,M=d[0]?.centre??{L:0,a:0,b:0};return{hex:R(M),lab:M,lch:st(M),share:(d[0]?.size??0)/p,clusters:d.map(w=>({hex:R(w.centre),share:w.size/p}))}}function z(t,e,o){let r=new Float32Array(e*o*3),s=new Map;for(let n=0,a=0;n<e*o*4;n+=4,a+=3){let i=t[n]<<16|t[n+1]<<8|t[n+2],u=s.get(i);if(!u){let h=T(t[n],t[n+1],t[n+2]);u=[h.L,h.a,h.b],s.set(i,u)}r[a]=u[0],r[a+1]=u[1],r[a+2]=u[2]}return{width:e,height:o,data:r}}function D(t,e,o,r,s){let n=(o*t.width+e)*3,a=(s*t.width+r)*3,i=t.data;return Math.hypot(i[n]-i[a],i[n+1]-i[a+1],i[n+2]-i[a+2])}function U(t,e){if(t.length===0)return 0;let o=Float32Array.from(t).sort();return o[Math.min(o.length-1,Math.floor(o.length*e))]}var I=t=>U(t,.5);function N(t){let e=new Float32Array(t.length);for(let o=0;o<t.length;o++){let r=t[Math.max(0,o-1)],s=t[o],n=t[Math.min(t.length-1,o+1)];e[o]=(r+2*s+n)/4}return e}function j(t,e,o=4,r=.02){let s=I(t),n=I(t.map(h=>Math.abs(h-s))),a=Math.max(r,s+o*Math.max(n,.002)),i=[];for(let h=1;h<t.length-1;h++)t[h]>=a&&t[h]>=t[h-1]&&t[h]>=t[h+1]&&i.push(h);i.sort((h,c)=>t[c]-t[h]);let u=[];for(let h of i)u.every(c=>Math.abs(c-h)>=e)&&u.push(h);return u.sort((h,c)=>h-c)}function O(t){let{width:e,height:o}=t,r=new Float32Array(o),s=new Float32Array(e-2);for(let n=1;n<o-1;n++){for(let a=1;a<e-1;a++)s[a-1]=D(t,a,n-1,a,n+1);r[n]=I(s)}return j(N(r),Math.max(4,Math.round(o*.02)),6,.04)}function G(t,e,o=.12){let r=[0,...t.filter(n=>n>0&&n<e).sort((n,a)=>n-a),e],s=[];for(let n=0;n<r.length-1;n++)r[n+1]-r[n]>=e*o&&s.push({y0:r[n],y1:r[n+1]});return s.length>0?s:[{y0:0,y1:e}]}var lt=.2;function _(t,e){let o=e.y1-e.y0,r=Math.round(e.y0+o*.35),s=Math.round(e.y1-o*.05),n=new Float32Array(t.width),a=new Float32Array(Math.max(1,s-r));for(let i=1;i<t.width-1;i++){for(let u=r;u<s;u++)a[u-r]=D(t,i-1,u,i+1,u);n[i]=U(a,lt)}return j(N(n),W(e))}function W(t){return Math.max(4,Math.round((t.y1-t.y0)*.035))}function X(t,e,o){let r=[0,...t.filter(a=>a>0&&a<o).sort((a,i)=>a-i),o],s=W(e),n=[];for(let a=0;a<r.length-1;a++)r[a+1]-r[a]>=s&&n.push({x0:r[a],x1:r[a+1],y0:e.y0,y1:e.y1});return n}var S={mode:"rainbow",neutralChroma:.04,startHue:10,bucket:30};function Q(t,e=S){return t.C>=e.neutralChroma?"colour":t.L>=.7?"white":"dark"}function V(t,e=S){let o=(n,a)=>n.row-a.row||n.pos-a.pos;if(e.mode==="light-dark")return[...t].sort((n,a)=>a.lch.L-n.lch.L||o(n,a));let r=n=>(n-e.startHue+360)%360,s={white:0,colour:1,dark:2};return[...t].sort((n,a)=>{let i=Q(n.lch,e),u=Q(a.lch,e);if(i!==u)return s[i]-s[u];if(i==="colour"){let h=r(n.lch.h),c=r(a.lch.h);if(e.bucket>0){let m=Math.floor(h/e.bucket),b=Math.floor(c/e.bucket);return m!==b?m-b:a.lch.L-n.lch.L||o(n,a)}return h-c||o(n,a)}return a.lch.L-n.lch.L||o(n,a)})}function Y(t,e){let o=[],r=0,s=0,n=0;for(let a of t)!(r>=e.length-1)&&n>0&&s+a.width>e[r]*1.02&&(r++,s=0,n=0),o.push({book:a,row:r,pos:n}),s+=a.width,n++;return o}function J(t){return t.filter(e=>e.book.row===e.row&&e.book.pos===e.pos).length}var K=[[196,40,44],[226,112,36],[236,196,58],[66,140,72],[32,92,150],[96,58,140],[232,128,160],[240,236,224],[34,32,36],[128,124,120],[120,72,40],[20,120,130],[180,200,90],[150,30,70],[70,90,110]];function it(t){let e=t>>>0;return()=>(e=e*1664525+1013904223>>>0,e/4294967296)}function Z(t=900,e=620,o=2,r=7){let s=it(r),n=new Uint8ClampedArray(t*e*4),a=(b,d,[p,M,w],x=1)=>{let f=(d*t+b)*4,g=(s()-.5)*10;n[f]=p*x+g,n[f+1]=M*x+g,n[f+2]=w*x+g,n[f+3]=255},i=[214,206,192],u=[150,110,72];for(let b=0;b<e;b++)for(let d=0;d<t;d++)a(d,b,i);let h=Math.round(e*.04),c=Math.floor((e-h*(o+1))/o),m=[];for(let b=0;b<o;b++){let d=h+b*(c+h),p=d+c;for(let f=p;f<p+h&&f<e;f++)for(let g=0;g<t;g++)a(g,f,u);if(b===0)for(let f=0;f<h;f++)for(let g=0;g<t;g++)a(g,f,u);let M=[],w=[],x=Math.round(t*.02);for(M.push(x);x<t*.95;){let f=Math.round(c*(.07+s()*.12));if(x+f>t*.97)break;let g=K[Math.floor(s()*K.length)],k=p-Math.round(c*(.72+s()*.26)),nt=g[0]+g[1]+g[2]>380?[30,30,30]:[235,225,200];for(let C=k;C<p;C++)for(let L=x;L<x+f;L++){let ot=L-x<2||x+f-L<=2?.45:.9+.1*Math.sin((L-x)/f*Math.PI),rt=Math.abs(L-(x+f/2))<f*.18&&(C-k)%14<9&&C>k+c*.15&&C<p-c*.2;a(L,C,rt?nt:g,ot)}w.push(g),x+=f,M.push(x)}m.push({y0:d,y1:p,cuts:M,colors:w})}return{width:t,height:e,rgba:n,rows:m}}var ht=1400,l={width:0,height:0,rgba:null,lab:null,source:null,rowCuts:[],rows:[],tool:"line",options:{...S}},y=t=>document.getElementById(t);function F(t){y("status").textContent=t}function q(t){let e=t.spines;t.spines=X(t.cuts,t.band,l.width).map(o=>({box:o,color:$(l.rgba,l.width,o),excluded:e.some(r=>r.excluded&&r.box.x0===o.x0&&r.box.x1===o.x1)}))}function H(t,e){let o=G(l.rowCuts,l.height);l.rows=o.map(r=>{let s=e?.find(a=>a.band.y0===r.y0&&a.band.y1===r.y1),n={band:r,cuts:s&&!t?s.cuts:_(l.lab,r),spines:s?.spines??[]};return q(n),n})}function tt(t){let e=performance.now(),r=t.getContext("2d",{willReadFrequently:!0}).getImageData(0,0,t.width,t.height).data;l.source=t,l.width=t.width,l.height=t.height,l.rgba=r,l.lab=z(r,t.width,t.height),l.rowCuts=O(l.lab),H(!0);let s=l.rows.reduce((n,a)=>n+a.spines.length,0);F(`${l.rows.length} Reihe(n), ${s} B\xFCcher erkannt in ${Math.round(performance.now()-e)} ms \u2014 Linien antippen, um zu korrigieren.`),y("work").hidden=!1,E()}async function mt(t){F("Foto wird gelesen \u2026");let e=await createImageBitmap(t),o=Math.min(1,ht/Math.max(e.width,e.height)),r=document.createElement("canvas");r.width=Math.round(e.width*o),r.height=Math.round(e.height*o),r.getContext("2d").drawImage(e,0,0,r.width,r.height),e.close(),tt(r)}function bt(){let t=Z(900,620,2,Math.floor(Math.random()*1e3)),e=document.createElement("canvas");e.width=t.width,e.height=t.height;let o=e.getContext("2d"),r=o.createImageData(t.width,t.height);r.data.set(t.rgba),o.putImageData(r,0,0),tt(e)}function dt(){let t=[];return l.rows.forEach((e,o)=>{let r=0;e.spines.forEach((s,n)=>{s.excluded||t.push({id:o*1e3+n,row:o,pos:r++,width:s.box.x1-s.box.x0,lch:s.color.lch})})}),t}function A(t){return l.rows[Math.floor(t.id/1e3)].spines[t.id%1e3]}function ft(){let t=y("photo");t.width=l.width,t.height=l.height;let e=t.getContext("2d");e.drawImage(l.source,0,0);let o=Math.max(1,l.width/700);e.lineWidth=2*o;for(let s of l.rowCuts)e.strokeStyle="rgba(0, 170, 255, 0.9)",e.setLineDash([8*o,6*o]),e.beginPath(),e.moveTo(0,s),e.lineTo(l.width,s),e.stroke();e.setLineDash([]);let r=new Map;et().forEach((s,n)=>r.set(s.book.id,n+1)),l.rows.forEach((s,n)=>{let{y0:a,y1:i}=s.band;e.strokeStyle="rgba(255, 255, 255, 0.95)";for(let u of s.cuts)e.beginPath(),e.moveTo(u,a),e.lineTo(u,i),e.stroke();s.spines.forEach((u,h)=>{let{x0:c,x1:m}=u.box,b=m-c;if(u.excluded){e.fillStyle="rgba(0, 0, 0, 0.55)",e.fillRect(c,a,b,i-a);return}let d=Math.min(b*.7,22*o),p=c+b/2,M=i-d*.9;e.fillStyle=u.color.hex,e.strokeStyle="#fff",e.beginPath(),e.arc(p,M,d/2,0,Math.PI*2),e.fill(),e.stroke();let w=r.get(n*1e3+h);w!==void 0&&d>10&&(e.fillStyle=u.color.lch.L>.6?"#000":"#fff",e.font=`600 ${Math.round(d*.5)}px system-ui, sans-serif`,e.textAlign="center",e.textBaseline="middle",e.fillText(String(w),p,M+1))})})}function et(){let t=dt(),e=l.rows.map(o=>o.spines.filter(r=>!r.excluded).reduce((r,s)=>r+s.box.x1-s.box.x0,0));return Y(V(t,l.options),e)}function pt(){let t=et(),e=y("sorted"),o=Math.round(l.height*.03),r=l.rows.map(c=>c.band.y1-c.band.y0),s=l.rows.map((c,m)=>t.filter(b=>b.row===m).reduce((b,d)=>b+d.book.width,0));e.width=Math.max(l.width,...s),e.height=r.reduce((c,m)=>c+m+o,o);let n=e.getContext("2d");n.fillStyle=getComputedStyle(document.body).getPropertyValue("--wall").trim()||"#e9e4da",n.fillRect(0,0,e.width,e.height);let a=o;l.rows.forEach((c,m)=>{let b=Math.round((e.width-s[m])/2),d=a+r[m];for(let p of t.filter(M=>M.row===m)){let M=A(p.book),{x0:w,y0:x,x1:f,y1:g}=M.box,k=g-x;n.drawImage(l.source,w,x,f-w,k,b,d-k,f-w,k),b+=f-w}n.fillStyle="#8a6a4a",n.fillRect(0,d,e.width,Math.max(3,o*.4)),a=d+o}),y("strip").replaceChildren(...t.map(c=>{let m=document.createElement("span");return m.style.background=A(c.book).color.hex,m.style.flexGrow=String(c.book.width),m.title=A(c.book).color.hex,m}));let u=J(t);y("summary").textContent=`${t.length} B\xFCcher \xB7 ${u} bleiben stehen, ${t.length-u} ziehen um.`,y("moves").replaceChildren(...t.map((c,m)=>{let b=document.createElement("li"),d=document.createElement("span");d.className="sw",d.style.background=A(c.book).color.hex;let p=c.book.row===c.row&&c.book.pos===c.pos;return b.append(d,`${m+1}. Reihe ${c.row+1}, Platz ${c.pos+1} \u2190 ${p?"steht schon da":`jetzt Reihe ${c.book.row+1}, Platz ${c.book.pos+1}`}`),p&&(b.className="stays"),b}))}function E(){ft(),pt(),document.querySelectorAll("[data-tool]").forEach(t=>t.setAttribute("aria-pressed",String(t.dataset.tool===l.tool)))}function xt(t){let o=y("photo").getBoundingClientRect();return[(t.clientX-o.left)/o.width*l.width,(t.clientY-o.top)/o.height*l.height]}function yt(t){if(!l.lab)return;let[e,o]=xt(t),r=Math.max(6,l.width/120);if(l.tool==="row"){let n=l.rowCuts.findIndex(a=>Math.abs(a-o)<r);n>=0?l.rowCuts.splice(n,1):l.rowCuts.push(Math.round(o)),l.rowCuts.sort((a,i)=>a-i),H(!1,l.rows),E();return}let s=l.rows.find(n=>o>=n.band.y0&&o<n.band.y1);if(s){if(l.tool==="line"){let n=s.cuts.findIndex(a=>Math.abs(a-e)<r);n>=0?s.cuts.splice(n,1):s.cuts.push(Math.round(e)),s.cuts.sort((a,i)=>a-i),q(s)}else{let n=s.spines.find(a=>e>=a.box.x0&&e<a.box.x1);n&&(n.excluded=!n.excluded)}E()}}function wt(){let t=y("mode"),e=y("start"),o=y("neutral"),r=y("bucket"),s=()=>{l.options={mode:t.value,startHue:Number(e.value),neutralChroma:Number(o.value)/1e3,bucket:Number(r.value)},y("start-v").textContent=`${e.value}\xB0`,y("neutral-v").textContent=(Number(o.value)/1e3).toFixed(3),y("bucket-v").textContent=r.value==="0"?"aus":`${r.value}\xB0`,y("start-sw").style.background=`oklch(0.65 0.15 ${e.value})`;for(let n of[e,o,r])n.disabled=t.value!=="rainbow";l.lab&&E()};for(let n of[t,e,o,r])n.addEventListener("input",s);s()}function gt(){for(let t of["file","camera"])y(t).addEventListener("change",e=>{let o=e.target.files?.[0];o&&mt(o).catch(r=>F(`Das Foto lie\xDF sich nicht lesen: ${r instanceof Error?r.message:r}`))});y("sample").addEventListener("click",bt),y("redetect").addEventListener("click",()=>{l.lab&&(l.rowCuts=O(l.lab),H(!0),E())}),y("photo").addEventListener("click",yt),document.querySelectorAll("[data-tool]").forEach(t=>t.addEventListener("click",()=>{l.tool=t.dataset.tool,E()})),y("download").addEventListener("click",()=>{let t=document.createElement("a");t.href=y("sorted").toDataURL("image/jpeg",.9),t.download="regal-nach-farben.jpg",t.click()}),wt()}gt();})();
+</script>
+</body>
+</html>

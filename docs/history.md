@@ -3605,6 +3605,70 @@ Die Regel damit: **ein geteiltes Cover** (`/book/<id>/cover/<coverId>`) zeigt di
 Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/create/review`) setzen kein eigenes `openGraph` und erben die Karte ohne Änderung. `/contact` und `/privacy` antworteten im Dev-Server mit 500, weil dort die `IMPRINT_*`-Variablen fehlen (bekannt, nicht neu); `/curate`, `/suggest` und eine unbekannte `/c/<id>` mit 404, weil Passwort bzw. Sammlung fehlen — das `og:image` steht trotzdem im Kopf.
 
 
+## 2026-09-28 — Das eigene Regal nach Farben, ein Lab-Prototyp (ROADMAP 5.16)
+
+Julian: „start a new lab project. i want an option to take a picture of my library and then have an algorithm to sort the books by colours"
+
+- Gebaut in [`lab/colorsort/`](../lab/colorsort/README.md): eine einzige HTML-Datei (18,8 KB, esbuild), die ohne Server läuft. Kein Bildmodell, kein Netz — das Foto bleibt auf dem Gerät.
+- Erkennung ohne Modell: Regalböden als Zeilen, deren Farbkante (OKLab) im **Median** über die ganze Breite hoch ist; Trennlinien zwischen Rücken als Spalten, deren Farbkante im **20-%-Quantil** über den unteren Teil der Reihe hoch ist. Farbe je Rücken: größter von drei k-means-Clustern ohne die Ränder.
+- **Der Median reichte für die Rücken nicht:** am gemalten Regal fand er 27 Linien zu viel, die Ränder der Titelzeile. Mit dem 20-%-Quantil auf sechs gemalten Regalen (Seeds 7, 1–5): **295 von 295 Trennlinien auf ±3 px, keine zu viel**, beide Reihen gefunden. Im Browser 175 ms vom Bild bis zur Ansicht.
+- Ordnung: Weiß → Farbkreis ab 10° (Rot) in 30°-Stufen, je hell nach dunkel → Grau/Schwarz; Schwelle für Grau Buntheit 0,04. Alle gesetzt, nicht gemessen, als Schieber auf der Seite.
+- Befund: Wandstücke an den Reihenenden werden als helle Bücher gelesen; die Seite hat dafür „Kein Buch".
+- **Offen:** kein echtes Foto gesehen. Fünf Fotos von Julian (hell, schummrig, voll, mit Lücken, mit Stützen), Ziel ≥ 90 % der Linien ohne Eingriff.
+
+## 2026-09-28 — Die Farbordnung als Schritt im Regal-Ablauf (ROADMAP 5.16 auf 5.11)
+
+Julian: „use the book detection by the other lab project for the collection curation to better find the books from the picture and make the colours sorting part of that process"
+
+- Im Regal-Ablauf von [`lab/shelf/`](../lab/shelf/README.md) findet das Bildmodell (`lib/recognize.ts`) die Bücher. `refineSpineBox` aus [`lab/colorsort/`](../lab/colorsort/README.md) schiebt die linke und rechte Kante jedes Rücken-Kastens auf die nächste Trennlinie. Danach liest der Browser die Farbe und ordnet die Wand „wie im Foto“, „nach Farben“ oder „hell nach dunkel“. Der geteilte Link trägt die gewählte Reihenfolge.
+- **Kanten-Anpassung, gemessen** an sechs gemalten Regalen (283 Rücken), beide Kanten um einen Anteil der Rückenbreite verschoben: 10 % → 283/283 auf ±3 px zurück, 25 % → 274, 35 % → 199, 50 % → 5. Die erste Fassung nahm die *stärkste* Linie im Fenster statt der *nächsten* und kam bei 25 % nur auf 79 %: die Außenkante eines schmalen Nachbarn war stärker.
+- Beispielmodus im Browser: 12 von 12 Farben gelesen, 71 ms; die Reihenfolge im Link stimmt mit der Wand überein.
+- **Offen:** ein echtes Foto (Schlüssel fehlt lokal). Die Kacheln zeigen Open-Library-Cover, geordnet wird nach der Farbe des eigenen Exemplars. Ob das auf der Wand stimmig aussieht, entscheidet Julian.
+
+## 2026-09-28 — Die Ausgabe vom Buchrücken (ROADMAP 5.16 auf 5.11)
+
+Julian: „der plan ist auch, dass du die seite das entsprechende cover der im foto gezeigten version findet. schwierig vom buchrücken aus, aber lass es uns versuchen"
+
+- **Verlag:** `lib/recognize.ts` hat die Option `{ publisher: true }`. Das Modell liest dann den Verlag vom Buch mit. Die Website ruft ohne die Option auf; Prompt und Schema sind dort unverändert.
+- **Auswahl** (`lab/shelf/edition.ts`, `Matcher.spineEdition`): Kandidaten sind die Cover von Seite 0 des Werks mit demselben Verlag, ohne Verlagstreffer die ersten 16. Gereiht wird nach dem OKLab-Abstand der Rückenfarbe zur nächsten Hauptfarbe des Covers. Gewählt wird bei Verlagstreffer ab Abstand ≤ 0,10; ohne Verlag nur, wenn das Cover außerdem das zweitbeste um ≥ 0,03 schlägt. Die Kacheln zeigen die Gründe, „anderes Cover" die Reihung.
+- **Gestellte Messung:** Streifen aus der Mitte echter Cover als „Rücken", drei Werke. Mit Verlag 22 von 23 richtig. Nur mit Farbe 7 von 17 gewählt, alle richtig; das richtige stand in 13 von 17 Fällen auf Platz 1. Kalt 8,8 s für sechs Rücken.
+- **Offen:** echte Rücken, deren Farbe von der Vorderseite abweicht, und ob Sonnet den Verlag lesen kann — dafür braucht es Julians Fotos. Außerdem sieht der Vergleich nur Seite 0 (Gatsby: 7 von 379 Covern).
+
+## 2026-09-28 — HEIC-Fotos im Regal-Prototyp (ROADMAP 5.11/5.16)
+
+Julian: „it doesnt recognize the photos i am uploading, but the same photo worked online for a collection creation already"
+
+- Gemessen im Browser-Pane (Chrome): eine `.HEIC`-Datei hat einen leeren `file.type`. `createImageBitmap` scheitert mit „The source image could not be decoded“, `<img>` ebenso. Der Prototyp prüfte `file.type.startsWith('image/')` und kehrte ohne Meldung zurück; beim Server kam nie eine Anfrage an.
+- Behoben in `lab/shelf/`: Lesefehler stehen in der Statuszeile. HEIC geht an `POST /api/heic` (heic-decode → JPEG, im Speicher). Ende-zu-Ende geprüft: HEIC → JPEG → `claude-sonnet-5`, 2,2 s.
+- `/create` auf der Website (`components/WallPhoto.tsx`) dekodiert ebenfalls mit `createImageBitmap` und scheitert in Chrome an HEIC. Nicht angefasst.
+
+## 2026-09-29 — Das erste echte Foto im Regal-Prototyp (ROADMAP 5.11/5.16)
+
+Julian: „the picture works now, but the colour detection seems still off"
+
+- Ganzes Regal im Hochformat, auf 1200 × 1600 verkleinert, 38 Rücken. Erkennung 20,1 s, 3224 + 2767 Tokens; 38 Werke, mindestens eines falsch (unsicher markiert, aber gezählt). Open Library 19,7 s, Ausgaben 53,1 s, 10 von 38 Rücken einer Ausgabe zugeordnet. **Verlag bei 0 von 38 gelesen.**
+- **Befund:** Die Kästen des Modells lagen waagrecht ungefähr richtig. Senkrecht begannen sie mitten auf dem Rücken und liefen über das Brett in die nächste Reihe. In der unteren Reihe waren sie gleichmäßig verteilt (alle 0,025 breit, Schritt 0,035) — geschätzt. Die Farben kamen zum Teil vom Brett und von Nachbarreihen.
+- Die Kantenerkennung fand die drei Regalböden sauber (364 ms). Zwischen den Rücken fand sie nur 21 von 38 Linien.
+- **Geändert:** Kästen werden auf ihre Reihe geschnitten (`fitBoxToRows`). Die Seite liest Reihe für Reihe in bis zu 2576 px statt das ganze Regal in 1600 px. Die Kästen kommen in Pixeln (`recognize(…, { pixels })`); die Website-Anfrage bleibt unverändert. Antworten werden per Prüfsumme gemerkt.
+- **Dasselbe Foto, zweiter Durchgang:** 64 statt 38 Bücher gelesen, Verlag bei 25 statt 0. 26 von 63 Rücken einer Ausgabe zugeordnet (vorher 10 von 38). Lesen 14,3 s in drei parallelen Aufrufen, 12 919 + 4572 Tokens; Open Library 40,4 s, Ausgaben 82,0 s. Die Kästen sitzen senkrecht auf den Rücken. Die Farbordnung ist auf den ersten Blick plausibel, Buch für Buch nicht geprüft.
+
+## 2026-09-29 — Gedrehte Rechtecke für schräge und liegende Bücher (ROADMAP 5.16)
+
+Julian: „teilweise liegen die bücher ja auch oder sind schief im regal. die segmentierung sollte hier deutlich genauer sein"
+
+- `lab/colorsort/oriented.ts`: ein Buch ist eine Mittellinie mit einer Breite. Die Längskanten werden quer zur Buchrichtung gesucht, mit Drehungen bis ±8°; es gewinnt das Kantenpaar, das Mitte und Dicke des Modells am nächsten bleibt. Die Farbe wird im gedrehten Rechteck gelesen. `lib/recognize.ts` hat dafür die Option `axis` (die Website nutzt sie nicht).
+- Ohne Modell, drei gemalte Szenen, 42 Bücher mit verschobenen, verdrehten und falsch dicken Rechtecken: Die erste Fassung suchte jede Kante einzeln und traf 21–36 %. Mit der Paarsuche sind es 40 von 42.
+- Mit `claude-sonnet-5`, gemalte Szene mit echten Titeln (5 stehend, 2 lehnend, 3 liegend). Erster Versuch: Die lehnenden Bücher gab das Modell 4–7° zu steil an, die Winkelsuche bis ±3° reichte nicht. Die liegenden kamen als „Umschlag“ und wurden verworfen, danach als kurze Linie quer übers Buch („Fuß → Kopf“ verstand das Modell als unten → oben). Nach drei Korrekturen (±8°, „entlang der langen Seite“, Drehen einer zu kurzen Linie): **10 von 10 auf ≤ 2 px**, Dicke ≤ 3 px, alle Farben richtig. Das Modell allein lag bis zu 12 px daneben.
+- Offen: ein echtes Foto mit schrägen und liegenden Büchern.
+
+## 2026-09-29 — Das sortierte Regal; gedrehte Rechtecke am echten Foto (ROADMAP 5.16)
+
+Julian: „baue noch die funktion ein, dass am ende das sortierte regal gezeigt wird"
+
+- `drawSortedShelf` schneidet jedes Buch entlang seines gedrehten Rechtecks aus dem Foto, richtet es auf und räumt die Reihen in Farbordnung neu ein, jede so breit wie im Foto. An der gemalten Szene trifft eine Linie über dem Brett die zehn Rücken in Regenbogenordnung.
+- Echtes Foto mit gedrehten Rechtecken: 58 Bücher (50 stehend, 8 lehnend), 37 verschoben, Hauptfarbe 0,55 → 0,58. **Verlag nur bei 3 von 58** (vorher 25 von 64). Seitdem fragt die Anweisung den Verlag direkt nach dem Autor; ein Test hält die Anfrage der Website Wort für Wort fest. Zuordnung kalt 589 s.
+- Firefox: drei Reihen-Ausschnitte mit 5,1–5,7 MB (Chrome 0,4–0,6 MB) scheiterten an der Speichergrenze von jpeg-js, weil `/api/read` sie nur für die Bildgröße dekodierte. Jetzt kommt die Größe aus dem Dateikopf (`imagesize.ts`).
+
 **dtv phantastica (Piatti), fertig am 2026-09-28.** 30 neue Ausgaben angelegt, OL62603158M–OL62603190M (Zuordnung in `created.json` im Manifest-Ordner), und 36 Umschläge hochgeladen.
 - Nr. 1859 (Handke) ist ohne ISBN angelegt. Die DNB gibt dem Druck von 1980 die alte ISBN von dtv 783, die bei Open Library zum Druck von 1971 gehört.
 - Die Wand `dtv-phantastica-covers-by-celestino-piatti` zeigt 36 von 36, laut Kontaktbogen alle von Piatti. Online als Entwurf.
@@ -4394,3 +4458,7 @@ Julian nach der Sperre durch Open Library: „vielleicht wär es deshalb doch be
 **Auswirkung auf die Analyse (3.1):** keine — die App liest nur die gecachten Routen `/api/search` und `/api/works`, in denen nichts gezählt wird; an der Website ist nur ein Kommentar neu.
 
 1.145 Tests (56 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-03 — 5.16 in `main`: die Lab-Anfrage zieht aus `lib/recognize.ts` aus
+
+Beim Zusammenführen mit `main` stieß der Branch von 5.16 auf den Umbau von 5.11a: Die Website fragt das Modell seit 2026-10-01 nur noch nach Titel, Autor, Art und einem Punkt je Buch (kurze Schlüssel, ganze Prozent, keine Kästen). Die Optionen, die das Lab angehängt hatte — Verlag, Kästen in Pixeln, Mittellinie und Breite —, passten nicht mehr in diesen Prompt. Sie stehen jetzt in `lab/shelf/recognize.ts`, einer eigenen Anfrage mit den langen Schlüsseln von vorher; `lib/recognize.ts` ist die Fassung aus `main`, unverändert. Der Test, der den alten Website-Prompt Wort für Wort festhielt, ist entfallen, weil das Lab ihn nicht mehr berührt. 1165 Tests grün, der Regal-Server startet und liefert `/colors.js`.
