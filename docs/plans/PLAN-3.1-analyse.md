@@ -71,7 +71,7 @@ Heute laufen **nur die Links, die aus einer ISBN gebaut sind,** über `/go/` (`S
 - „Or read it in another edition" (`plan.anyEdition`);
 - „Find this exact cover" (AbeBooks, eBay, Lens, TinEye, WorldCat), die lokalen Buchhandlungen (5.12) und Google-Vorschau.
 
-Daraus zwei Wege, je nach Art des Links:
+Daraus zwei Wege, je nach Art des Links (Aufwand zusammen etwa zwei Stunden, ohne Entscheidung Julians; Vorschlag 2026-10-04: AbeBooks und eBay unter „Find this exact cover“ sind Händler und laufen wie Weg 1 über `/go/`, Lens, TinEye und WorldCat nicht):
 1. **Händler-Links ohne ISBN durch `/go/` schicken** (Server, exakt): `/go/<provider>/title?q=<Titel Autor>&market=<m>`. Die Route baut das Ziel mit `searchUrl` aus der Tabelle — Host und Pfad kommen aus `lib/buylinks.ts`, aus der Anfrage nur der Suchtext, der als Parameter kodiert wird; damit bleibt es **keine offene Weiterleitung** (CLAUDE.md). Gezählt als `kind=title`. Ein Test: ein Suchtext mit `//`, `@` oder einer URL landet als Suchtext beim Händler, nie als Ziel.
 2. **Alles, was kein Händler ist** (Find this cover, lokale Läden, Vorschau), zählt nur das Signal `book` im Browser, als eigenes Feld `found` (ja/nein), nicht als Klick zum Händler.
 
@@ -100,6 +100,10 @@ Die Redis des Spiels (F7.3), über `commandsFromEnv` aus `lib/hotornot/store.ts`
 Was den Browser verlässt, steht vollständig in §4; nichts davon bezieht sich auf eine Person, und gespeichert wird nur die Summe. Die IP sieht die Funktion wie bei jeder Anfrage, sie wird weder gespeichert noch geloggt. Satz für die Datenschutzerklärung (Entwurf, Julian prüft):
 
 > When you leave a book page or a search, your browser sends one anonymous summary — for example which book, how many covers came into view, whether a shop link was used — and the site adds it to daily totals. No identifier, cookie, IP address or referrer is stored, so a summary cannot be linked to you or to another visit. Searches that found nothing are kept as text for 90 days to improve the catalogue.
+
+**Kein Einwilligungsbanner, nach Claudes Einschätzung (2026-10-04, keine Rechtsberatung):** § 25 TDDDG verlangt eine Einwilligung, wenn auf dem Gerät des Lesers Informationen *gespeichert* oder dort gespeicherte *ausgelesen* werden. Das Signal speichert nichts auf dem Gerät (kein Cookie, kein localStorage — der Schalter `bb.self` liegt nur in Julians Browser) und liest nur, was die Seite ohnehin im Speicher hat (welche Kacheln im Bild waren, ob geklickt wurde); `document.referrer` wird im Browser zur Klasse verdichtet. Wer es strenger liest, könnte das Auslesen des Referrers als Zugriff werten; dann fiele die Herkunft (K9) weg, der Rest bliebe. Vor dem Bau von 3.1b einmal gegen [docs/recht-hobbyseite.md](../recht-hobbyseite.md) halten.
+
+**Der Satz auf Deutsch** (für `lib/i18n/de.ts`, Entwurf): „Wenn du eine Buchseite oder eine Suche verlässt, schickt dein Browser eine anonyme Zusammenfassung — etwa welches Buch, wie viele Cover zu sehen waren, ob ein Shop-Link benutzt wurde —, und die Seite zählt sie zu Tagessummen. Eine Kennung, ein Cookie, die IP-Adresse oder der Referrer werden nicht gespeichert; eine Zusammenfassung lässt sich also weder dir noch einem anderen Besuch zuordnen. Suchen ohne Ergebnis werden 90 Tage als Text aufbewahrt, um den Katalog zu verbessern."
 
 **Die Suchbegriffe ohne Ergebnis sind die einzige freie Eingabe**, die gespeichert wird; ein Leser könnte einen Namen eintippen. Deshalb nur bei `empty`, nur 90 Tage, und die Ansicht zeigt einen Begriff erst ab **zwei** gleichen Anfragen. Julian entscheidet, ob das bleibt (§9).
 
