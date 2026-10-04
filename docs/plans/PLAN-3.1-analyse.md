@@ -1,6 +1,6 @@
 # Plan 3.1: Kennzahlen und Analyse-Ansicht
 
-Stand: 2026-10-04, **3.1a gebaut** (Branch, nicht deployt); 3.1b offen. Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
+Stand: 2026-10-04, **3.1a gebaut** (Branch, nicht deployt); 3.1b offen, alle Entscheidungen getroffen, baubereit. Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
 
 ## 1. Grundsatz
 
@@ -141,8 +141,8 @@ Unter jedem Abschnitt eine Zeile „gezählt wird …", damit niemand eine Zahl 
 ## 9. Was Julian entscheidet
 
 1. ~~**Ort**~~ — entschieden 2026-10-04: online unter `/admin/insights`, hinter dem vorhandenen Admin-Zugang; das Cockpit liest denselben Endpunkt.
-2. **Suchbegriffe ohne Ergebnis** speichern (90 Tage, ab zwei gleichen gezeigt) — ja oder nur die Anzahl.
-3. **Der Satz** für die Datenschutzerklärung (§6).
+2. ~~**Suchbegriffe ohne Ergebnis**~~ — entschieden 2026-10-04 (Julian: „ok“ auf die Empfehlung): **als Text speichern**, nur bei null Treffern, 90 Tage, gezeigt ab zwei gleichen Anfragen.
+3. ~~**Der Satz**~~ — entschieden 2026-10-04 (Julian: „ok i guess“): der Entwurf aus §6, englisch und deutsch, so wie er steht. **Kein Einwilligungsbanner** (Julian: „erstmal keins“) — die Einschätzung zu § 25 TDDDG in §6 gilt, bis jemand fragt; dann fällt als Erstes die Herkunft (K9) weg.
 4. ~~Ein `INSIGHTS_TOKEN`~~ — entfällt, der Admin-Zugang genügt. Zu prüfen ist nur, dass `SUGGEST_ADMIN_PASSWORD` in Production gesetzt und lang ist.
 
 ## 10. Bau, Reihenfolge, Aufwand
