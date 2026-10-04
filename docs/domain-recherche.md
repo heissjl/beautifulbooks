@@ -619,3 +619,21 @@ Bei INWX für `buyitscovers.com` dafür zu löschen: MX `@` 0 `.` (Null-MX) und 
 
 **Warum drei DKIM-Einträge** (Julian fragte): Proton signiert ausgehende Mails mit einem Schlüssel und tauscht diesen Schlüssel regelmäßig aus. Die drei CNAMEs zeigen auf drei Plätze bei Proton (aktueller, nächster, vorheriger Schlüssel), sodass Proton den Wechsel selbst vornimmt, ohne dass jemand bei INWX etwas ändern muss, und Mails, die mit dem alten Schlüssel unterschrieben sind, noch geprüft werden können.
 
+**Adressen angelegt, 2026-10-04 um 07:40 MESZ** (Julian hat sein Passwort bei Proton selbst eingegeben): `judgeabook@buyitscovers.com` und `mail@buyitscovers.com`, beide aktiv, Anzeigename „Buy Its Covers". **Zuordnung (Julian: „andersrum"): `mail@buyitscovers.com` für die `buyitscovers`-Konten, `judgeabook@buyitscovers.com` für die `byitscovers`-Konten.**
+
+**Anmeldeseiten offen in Julians Chrome, nichts ausgefüllt:** X (`x.com/i/flow/signup`), TikTok (`tiktok.com/signup`), Bluesky (`bsky.app`), Instagram (`instagram.com/accounts/emailsignup/`, verlangt ein Meta-Konto), Mastodon (`mastodon.social/auth/sign_up`, erst Regeln annehmen). GitHub: Julian hat am 2026-10-02 schon eine Organisation **`OtherCovers`** angelegt — sie lässt sich unter Settings → „Rename organization" in `buyitscovers` umbenennen; `byitscovers` wäre eine zweite Organisation. YouTube braucht ein Google-Konto (ein Google-Konto kann mit einer fremden Adresse wie `mail@buyitscovers.com` angelegt werden).
+
+| Plattform | `buyitscovers` (mail@) | `byitscovers` (judgeabook@) |
+|---|---|---|
+| X | frei | vergeben (gesperrtes Konto) |
+| Instagram / Threads | frei | vergeben (privat) |
+| TikTok | frei | frei |
+| Bluesky | Handle `@buyitscovers.com` | Handle `@byitscovers.com` |
+| Mastodon (mastodon.social) | frei | frei |
+| GitHub | `OtherCovers` umbenennen | neue Organisation |
+| YouTube | frei, Google-Konto nötig | frei, Google-Konto nötig |
+
+**Bluesky mit der Domain als Name:** nach dem Anlegen Settings → Account → Handle → „I have my own domain"; Bluesky nennt einen TXT-Eintrag `_atproto` mit `did=did:plc:…`, der bei INWX in die Domain kommt (`buyitscovers.com` bzw. `byitscovers.com`). Diesen Wert liest Claude von Blueskys Seite ab, sobald das Konto steht.
+
+**Offen bei Proton:** MX und SPF zeigte Proton um 07:20 MESZ noch rot (Protons Resolver hält die alten Antworten bis zu einer Stunde); bis Proton sie grün zeigt, kann Mail an die neuen Adressen noch an der Prüfung scheitern. DKIM auch noch zu bestätigen. Einmal ansehen frühestens um 08:20 MESZ.
+
