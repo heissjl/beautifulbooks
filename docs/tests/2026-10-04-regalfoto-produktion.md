@@ -54,6 +54,12 @@ Julian: „problem earlier was i didn't see this link on mobile“. Gemessen mit
 
 Dazu: das Foto im Editor („Add covers → Photo“) benutzt jetzt dasselbe Fenster wie `/create`. Vorher sprang „another cover“ in den Reiter „Search“, und die Fotoliste verschwand. Nachgestellt bei 390 und 1280: Link sichtbar, Wahl ersetzt die Zeile, die Liste bleibt, „Add 1 to Shelf“ legt das gewählte Cover (`13853193`) in die Sammlung.
 
+## Nachtrag 3: „Accept“ für ein „maybe“, „find another cover“
+
+Julian: „can we add an accept-button there and once accepted, we show the another cover link. i also think we should rename another cover to 'find another cover'“. Gebaut in `WallProposal`: eine „maybe“-Zeile (Titel-Treffer, 5.11a) hat einen Knopf „Accept“ (deutsch „Stimmt“), im Editor darunter weiter „search instead“; nach „Accept“ ist die Zeile ein gefundenes Buch — angehakt, mit Autor statt „maybe — the photo reads …“, und mit „find another cover“. Nur die Liste weiß davon; nichts geht an den Server. Der Link heißt überall „find another cover“ („anderes Cover finden“); der Satz über der Liste erklärt „maybe“, wenn es eins gibt. Vorher hatten „maybe“-Zeilen auf `/create` (ohne Suche) still „another cover“ und im Editor nur „search instead“.
+
+Nachgestellt auf `/create` und im Editor bei 390 und 1280 mit einem langen Titel: vorher nicht angehakt, „Accept“ sichtbar (rechter Rand 374 bei 390, Seite 390 breit), kein Link; danach angehakt, kein „maybe“ mehr, „find another cover“ öffnet das Fenster, die Sammlung trägt beide Bücher mit dem gewählten Cover (`14369845`, `13853193`). Die Zahl „1 maybe“ im Satz darüber bleibt, was das Foto ergab.
+
 ## Offen (in ROADMAP 5.11a eingetragen)
 
 - **Die Titel von Foto 1** — Julian, falls er sie noch weiß oder das Foto hat: als Foto 15 in den Testsatz (Wahrheitsliste), dann ist der Fall nachstellbar.

@@ -270,7 +270,7 @@ export default function WallPhoto({
   const summary =
     state.step === 'looking'
       ? `${booksRead}, ${t('looking them up… {done} of {total}', { done: matches.length, total: rows.length })}${counts.length && found ? `: ${counts.join(', ')}` : ''}. ${t('You can tick and add while the rest come in.')}`
-      : `${booksRead}${capped ? ` ${t('(the first 100 of more)')}` : ''}: ${counts.join(', ')}. ${t('Each gets the book’s usual cover — “another cover” shows the others it has had.')}`;
+      : `${booksRead}${capped ? ` ${t('(the first 100 of more)')}` : ''}: ${counts.join(', ')}. ${t('Each gets the book’s usual cover — “find another cover” shows the others it has had.')}${maybe ? ` ${t('A “maybe” is a guess from the title alone: accept it if it is your book.')}` : ''}`;
 
   return (
     <div className="mt-4">
