@@ -37,7 +37,7 @@ Jede steht im Code, nicht nur hier ([safety.ts](safety.ts)):
 6. **Ein kleineres Bild braucht eine eigene Bestätigung** (weniger als 90 % der Pixel des alten); der Sammelknopf lässt solche Zeilen aus.
 7. **Nach jedem Schreiben wird die Bibliothek neu gelesen:** gleiche Bücher, jede andere Zeile unverändert, bei diesem Buch Titel, Autoren, Ordner und Formate unverändert, die E-Book-Dateien im Ordner unberührt (Größe und Änderungszeit), das neue Cover lässt sich dekodieren und hat die Proportionen des gegebenen Bilds. Stimmt etwas davon nicht, kommt das alte Cover zurück und die Sitzung **schreibt nicht weiter**.
 8. **Ein Journal** hält jeden Schreibvorgang mit seinem Backup fest; jeder lässt sich zurücknehmen, von der Seite aus oder mit `undo.ts` — auch ohne die Sammlung, die ihn ausgelöst hat.
-9. **Nur sichere Zuordnungen ohne Klick auf die Zeile:** sicher ist eine gemeinsame ISBN oder gleicher Titel **und** gleicher Autor, und nur wenn genau ein Buch passt. Alles andere ist ein Vorschlag, den Julian in der Zeile selbst wählt.
+9. **Nur sichere Zuordnungen ohne Klick auf die Zeile:** sicher ist eine gemeinsame ISBN oder gleicher Titel **und** gleicher Autor, und nur wenn genau ein Buch passt. Alles andere ist ein Vorschlag, den Julian in der Zeile selbst wählt. Seit 5.17 gibt es eine dritte sichere Art, `mapped`: die Sammlung kam aus dem Import (`lab/calibre-import`), und der hat aufgeschrieben, aus welchem Buch jede Kachel wurde (`map.ts`, Datei unter `…/calibre/maps/<Sammlungs-ID>.json`). Sie gilt nur für die Bibliothek, für die sie geschrieben wurde; für eine Probe-Kopie (gleiche Buchnummern, anderer Ort) nennt `--map <Datei>` sie ausdrücklich. Zwei Bücher desselben Werks bleiben Julians Wahl.
 10. **Der Server hört nur auf 127.0.0.1**, nimmt Anfragen nur mit dem Token aus dem Terminal, Schreibanfragen nur als JSON von der eigenen Seite, und nimmt aus einer Anfrage nie einen Pfad, eine Adresse oder ein Kommando — nur eine Zeilennummer und eine Buchnummer, beide gegen das Geladene geprüft.
 
 **Wo die Backups liegen:** `~/Library/Application Support/BuyItsCovers/calibre/<Name der Bibliothek>-<Kürzel>/` — `snapshots/` (Kopien von `metadata.db`), `covers/<Buchnummer>/` (alte Cover), `journal.jsonl`. Außerhalb des Repositorys (ein Worktree wird gelöscht) und außerhalb der Bibliothek (der Ordner gehört Calibre). Jede Bibliothek hat ihr eigenes Journal, weil eine Probe-Kopie dieselben Buchnummern hat wie das Original. Das Werkzeug löscht dort nie etwas; `CALIBRE_BACKUP_DIR` verlegt den Ort.
@@ -52,7 +52,8 @@ Jede steht im Code, nicht nur hier ([safety.ts](safety.ts)):
 |---|---|
 | `library.ts` | die Bibliothek lesen, nur lesen (`sqlite3 -readonly`) |
 | `source.ts` | eine Sammlung als Liste von Covern: eigene (ein Abruf bei der Seite) oder kuratierte (aus `data/collections.json`) |
-| `match.ts` | Cover ↔ Calibre-Buch: ISBN, Titel + Autor, Vorschläge — rein, getestet |
+| `match.ts` | Cover ↔ Calibre-Buch: Zuordnungsdatei, ISBN, Titel + Autor, Vorschläge — rein, getestet |
+| `map.ts` | die Zuordnungsdatei des Imports (5.17): welches Buch welches Werk ist |
 | `image.ts` | ist das ein Bild, das Cover werden darf? — rein, getestet |
 | `safety.ts` | der einzige Ort, der schreibt: Prüfungen, Backup, Journal, Kontrolle danach, Rücknahme |
 | `serve.ts`, `index.html` | der lokale Server (Port 4327) und die Seite |
@@ -72,4 +73,4 @@ Gemessen an Julians Bibliothek (445 Bücher, 423 mit Cover, 131 mit ISBN) und de
 - **Bildgröße:** alle 17 Bilder kamen in 5 s; typisch 310 × 500 px, das größte 415 × 635. **12 von 17 sind kleiner als das Cover, das Calibre schon hat** (mit der 90-%-Schwelle 10). Für die Bibliotheksansicht eines Readers reicht das, als Vollbild ist es weich. Das ist die Grenze des Experiments, nicht des Werkzeugs: größere Bilder hat Open Library für diese Drucke nicht.
 - **Schreibweg:** 9 Schreibvorgänge und 9 Rücknahmen auf der Probe-Kopie (Seite, Sammelknopf, `undo.ts --all`); danach waren alle 423 Cover bytegleich mit dem Original. Ein laufendes Calibre-Programm hat das Schreiben blockiert, wie es soll.
 
-**Offen:** Julians erster Lauf auf der echten Bibliothek; eine eigene Sammlung statt einer kuratierten (die Kacheln tragen dort die ISBNs ihrer Drucke); übersetzte Titel finden kein Buch („Per Anhalter durch die Galaxis") — das löst die Gegenrichtung, [5.17](../../docs/plans/PLAN-5.17-calibre-zur-sammlung.md), die sich merkt, welches Buch welches Werk ist.
+**Offen:** Julians erster Lauf auf der echten Bibliothek; eine eigene Sammlung statt einer kuratierten (die Kacheln tragen dort die ISBNs ihrer Drucke); übersetzte Titel finden ohne Zuordnungsdatei kein Buch („Per Anhalter durch die Galaxis") — mit einer Sammlung aus dem Import ([lab/calibre-import](../calibre-import/README.md), 5.17) finden sie es: auf der Probe-Kopie 314 von 320 Kacheln sicher statt 300, darunter „Das Lied von Vogel und Schlange" für *The Ballad of Songbirds and Snakes* (2026-10-03).

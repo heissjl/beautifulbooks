@@ -4210,3 +4210,48 @@ Julian: „gibt es eine möglichkeit dass ich die cover-seiten meiner bücher in
 **Offen:** Julians erster Lauf an der echten Bibliothek; eine eigene Sammlung als Quelle (dort tragen die Kacheln die ISBNs ihrer Drucke — bisher nur über Tests gedeckt, nicht gegen eine echte Sammlung gelaufen); das Cover in der EPUB-Datei ändert erst Calibre beim Senden an den Reader. Die Gegenrichtung ist als 5.17 geplant ([PLAN-5.17](plans/PLAN-5.17-calibre-zur-sammlung.md)), nichts davon gebaut.
 
 1.039 Tests, tsc und Lint grün.
+
+## 2026-10-03 · Die Calibre-Bibliothek als eigene Sammlung, Lab (ROADMAP 5.17)
+
+Julian: „geh das projekt Calibre → Sammlung (5.17) an". Umgesetzt nach [PLAN-5.17](plans/PLAN-5.17-calibre-zur-sammlung.md), Schritte 1–5 und 7; Schritt 6 (einmal gegen die echte Seite) ist Julians. Der Plan und `lab/calibre/` lagen nur auf `claude/calibre-book-covers-df06e1` und sind in diesen Branch gemergt.
+
+**Gebaut:** `lab/calibre-import/` — `clean.ts`, `lookup.ts`, `assign.ts`, `review.ts`, `upload.ts`, `measure.ts`, `serve.ts` (Port 4328, 127.0.0.1, Token), `index.html`; dazu in `lab/calibre/` die Zuordnungsdatei (`map.ts`) und die sichere Art `mapped` in `match.ts`, `serve.ts --map`. 50 neue Tests (42 im Import, 8 für die Zuordnungsdatei), ohne Netz, eine aufgezeichnete ISBN-Antwort als Fixture. Die Website ist unverändert.
+
+**Vor der Messung:** Open Library lehnte am Abend etwa eine halbe Stunde lang jede Verbindung ab (`ECONNREFUSED` auf 207.241.234.205:443, auch von außerhalb; `covers.openlibrary.org` und archive.org antworteten). In der Zeit entstand, was kein Netz braucht.
+
+**Was in Calibre-Titeln steht** (gelesen, nie geschrieben): von 445 Büchern haben 24 keinen brauchbaren Autor (Lizenztexte, READMEs, Aufsätze unter ihrem Dateinamen) und werden übersprungen; bei 115 ändert das Glätten Titel oder Autor. Die Formen: Reihe davor („[Philip K. Dick 04] • …", „Foundation 1 - …", „Hey 3318 – …"), Jahr davor („1974-Rendezvous With Rama"), Autor im Titel davor oder dahinter („Crichton, Michael - Sphere"), Titel und Autor vertauscht („1954 Ray Bradbury - Fahrenheit 451" unter dem Autor „Fahrenheit 451"), Herkunfts-Etikett einer Schattenbibliothek mit „by <Autor>", Dateiendung, Untertitel. Autoren stehen als „Nachname, Vorname", mit Lebensdaten, mit Titeln („Preston, Psy.D., ABPP, John D.") oder zu zweit in einem Feld.
+
+**Die Messung** (`measure.ts`, 2026-10-03, die ganze Bibliothek, drei Anfragen gleichzeitig): **593 Anfragen an Open Library in 240 s, keine ohne Antwort**; 132 ISBN-Abrufe (22 kennt Open Library nicht, 33 Ausgaben ohne Cover) und 478 Suchen; der Cache ist 584 KB groß, ein zweiter Lauf stellt keine Anfrage.
+
+| | Bücher | Anteil an 421 fragbaren |
+|---|---|---|
+| Treffer | 328 | 78 % (74 % aller 445) |
+| – über die ISBN | 102 | |
+| – über Autor und Titel | 226 | |
+| Vorschlag | 69 | 16 % |
+| – gleicher Autor, anderer Titel | 27 | |
+| – nur der Titel | 33 | |
+| – gleicher Autor, längerer Werktitel | 7 | |
+| – ISBN, sonst stimmt nichts | 2 | |
+| nicht gefunden | 24 | 6 % |
+| übersprungen | 24 | |
+
+Aus den 328 Treffern werden 319 Kacheln (zwei Ausgaben eines Buchs sind eine Kachel; „Winnetou 1–3" liegen auf einem Werk). 75 der 102 ISBN-Treffer tragen das Cover genau ihres Drucks und die ISBN als Druck an der Kachel. **Das Erfolgsmaß des Plans (≥ 70 % der Bücher) ist erreicht.**
+
+**Stichprobe:** 40 Treffer mit festem Zufall (Seed 517), jeder von Hand gegen Titel und Autor geprüft: **39 richtig, 1 falsch** — „MaddAddam" traf *MADDADDAM TRILOGY BOX*. Daraufhin alle zwölf Treffer angesehen, bei denen der Titel nur enthalten war: ist der **Werktitel** der längere, waren von 7 zwei ein anderes Buch (die Box; „Pippi Langstrumpf" → *Guck mal, Pippi Langstrumpf*), zwei fraglich („Sherlock Holmes" → *The Adventures of …*, „Südamerika" → *Aus Nord- und Südamerika*), drei richtig; ist der **Buchtitel** der längere (Bandnummer, Untertitel ohne Doppelpunkt), waren 5 von 5 richtig. Die erste Form ist seitdem ein Vorschlag (`author+part`); die Tabelle oben ist der Stand danach (vorher 335 Treffer).
+
+**Die Vorschläge, durchgesehen:** von 27 „gleicher Autor, anderer Titel" sind rund 23 das richtige Werk — es sind die **übersetzten Titel** („Der Schnupfen" → *Katar*, „Die Stimme des Herrn" → *Głos pana*, „By Night in Chile" → *Nocturno de Chile*, „Das Lied von Vogel und Schlange" → *The Ballad of Songbirds and Snakes*) und Schreibvarianten („Effie Briest"). Die Sorge des Plans, deutsche Titel fänden ihr Werk nicht, trifft so nicht zu: Open Librarys Suche findet sie über die Ausgabentitel, nur bestätigen kann der Titelvergleich sie nicht. Sie bleiben Vorschläge (vier waren falsch: eine Erzählung traf den Sammelband, zwei Sachbücher ein anderes Buch desselben Autors). Von 33 „nur der Titel" sind rund 20 richtig — der Autor steht bei Open Library in anderer Schrift (刘慈欣, Аркадий Стругацкий) oder Form („Juan Valera y Alcalá-Galiano") — und 13 falsch („Quick Start Guide" → *Hadoop 2 Quick-Start Guide*). Die beiden „ISBN, sonst stimmt nichts" sind richtig (japanisches und chinesisches Original). Nicht gefunden: vor allem deutsche Abenteuerromane des 19. Jahrhunderts und abgeschnittene Dateinamen.
+
+**Wie viel es auf der Seite zu wählen gibt:** von den 328 Werken haben 167 zwanzig oder mehr Ausgaben, 106 fünf bis neunzehn, 38 zwei bis vier, 17 eine einzige. Bei 55 Werken (17 %) ist die Wand also dünn. Ein Teil davon sind verirrte Einzelwerke: „Der Prozess" traf OL42602621W (eine Ausgabe) statt Kafkas *Der Proceß* (OL498463W), weil der Titel dort genau stimmt. Die Suche von Hand auf der Prüfseite behebt das je Zeile; gezählt, wie viele der 55 so ein Fall sind, ist nicht.
+
+**Hochladen, gegen `npm run dev`** (eigener Dev-Server auf Port 3017 ohne `.env.local`, also mit dem Speicher im Prozess und nie der Produktions-Redis; Wegwerf-ID): 329 angehakte Bücher → eine Anfrage → 320 Kacheln, „My Calibre library", nicht gespeichert. Der Browser übernahm die ID über `/create#id=…` und zeigte die Sammlung unter „Your collections". **Die Seite trägt sie:** `/c/<id>` liefert 36 KB HTML, 320 Bilder mit `loading=lazy` (ohne Scrollen 25 geladen bei 1280 px, 97 bei 390 px), kein waagrechter Überlauf; 5 Spalten und 23.920 px Höhe bei 1280 × 800, 3 Spalten und 20.147 px bei 390 × 844; der Editor in „Arrange" 18.778 px (1280) und 23.749 px (390), 2.733 DOM-Knoten. Zeiten im Dev-Modus (1,3–2,2 s bis zur ersten Antwort) sagen nichts über Produktion. **Befund:** in einer Sammlung dieser Größe findet man ein Buch nur durch Scrollen — die Kacheln im Editor tragen keinen Titel, und es gibt keine Suche in der Sammlung.
+
+**Der Rückweg, auf einer Probe-Kopie:** im Editor das Cover von *The Ballad of Songbirds and Snakes* gegen das deutsche getauscht (Oetinger 2020, `ol:14858983`; das Werk der Kachel bleibt dasselbe). `lab/calibre/serve.ts` gegen die Probe-Kopie: ohne Zuordnungsdatei 300 von 320 Kacheln sicher, und die Datei wird abgelehnt („made for another library" — die Kopie hat einen anderen Schlüssel); mit `--map` **314 sicher, alle 314 über `mapped`**, die 6 übrigen sind Werke mit zwei oder drei Büchern. Buch 277, „Das Lied von Vogel und Schlange", bekam das Oetinger-Cover (1052 × 1500 statt 713 × 1024), die Rücknahme gab das alte zurück; danach **alle 423 Cover der Kopie bytegleich mit dem Original**. Die echte Bibliothek wurde nur gelesen.
+
+**Die Besucher-ID:** `upload.ts` nimmt sie aus `BB_VISITOR` (Umgebung, sonst `.env.local` des Hauptordners) und setzt sie nur in den Cookie-Kopf der einen Anfrage. Ein Test führt acht Wege durch (Erfolg, 404, 429, 503 mit der ID im Antworttext, Antwort mit der ID als Sammlungs-ID, Netzfehler mit den Köpfen in der Meldung, keine Kachel, zu viele) und findet sie in keiner Rückgabe, Meldung oder Spur.
+
+**Aufgeräumt:** die Entscheidungen, der Upload-Vermerk und die Zuordnungsdatei des Tests sowie die Probe-Kopie sind wieder gelöscht; geblieben sind Cache und Ergebnis der Messung unter `~/Library/Application Support/BuyItsCovers/calibre/import/`, damit Julians erster Lauf keine Anfrage stellt.
+
+**Offen:** Julians Entscheidungen (Plan §6) und danach der eine Lauf gegen die echte Seite; die 69 Vorschläge durchsehen; die echte Bibliothek schreibt `lab/calibre` (5.16). Nicht gemacht: die Cover-Erkennung des vorhandenen Covers (Plan §5, optional).
+
+1.089 Tests, tsc und Lint grün. `npm run build` lief nicht — `app/`, `components/` und `lib/` sind unverändert.

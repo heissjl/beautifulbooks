@@ -180,19 +180,19 @@ function renderRow(r) {
 
 function render() {
   const s = state, t = s.tally, u = s.upload;
-  document.getElementById('sub').textContent = `${s.library.books} books · ${t.match} with a work (${t.byReason.isbn} by ISBN, ${t.byReason['author+title']} by author and title) · ${t.suggestion} suggestions · ${t.none} not found · ${t.skipped} skipped${t.failed ? ` · ${t.failed} without an answer` : ''} · measured ${s.measuredAt.slice(0, 10)}`;
+  document.getElementById('sub').textContent = `${s.library.books} books · ${t.match} with a work (${t.byReason.isbn} by ISBN, ${t.byReason['author+title']} by author and title) · ${t.suggestion} suggestions · ${t.none} not found · ${t.skipped} skipped${t.failed ? ` · ${t.failed} without an answer` : ''} · measured ${new Date(s.measuredAt).toLocaleDateString('en-CA')}`;
 
   const banners = document.getElementById('banners');
-  banners.replaceChildren(
+  banners.replaceChildren(...[
     el('div', { class: `banner ${u.local ? '' : 'go'}` },
       el('p', {}, el('strong', {}, u.local ? 'Uploads go to the dev server. ' : 'Uploads go to the site. '), el('code', {}, u.base), ` — ${u.visitorNote}.`),
       el('p', {}, 'Ticked rows become one collection, one tile per work. Calibre is only read here; a suggestion goes nowhere without its tick.'),
-      u.past.length ? el('p', {}, 'Already created: ', u.past.map((p, i) => [i ? ', ' : '', el('a', { href: `${p.base}/c/${p.wallId}/edit`, target: '_blank', rel: 'noreferrer' }, `${p.wallId} (${p.tiles} covers, ${p.at.slice(0, 10)})`)])) : null),
-    message ? el('div', { class: `banner ${message.kind}` }, el('p', {}, message.nodes)) : null);
+      u.past.length ? el('p', {}, 'Already created: ', u.past.map((p, i) => [i ? ', ' : '', el('a', { href: `${p.base}/c/${p.wallId}/edit`, target: '_blank', rel: 'noreferrer' }, `${p.wallId} (${p.tiles} covers, ${new Date(p.at).toLocaleDateString('en-CA')})`)])) : null),
+    message ? el('div', { class: `banner ${message.kind}` }, el('p', {}, message.nodes)) : null].filter(Boolean));
 
   const bar = document.getElementById('bar');
   bar.replaceChildren(
-    FILTERS.map(([key, label, test]) => el('button', { class: 'chip', 'aria-pressed': String(filter === key), onclick: () => { filter = key; render(); } }, `${label} ${s.rows.filter(test).length}`)),
+    ...FILTERS.map(([key, label, test]) => el('button', { class: 'chip', 'aria-pressed': String(filter === key), onclick: () => { filter = key; render(); } }, `${label} ${s.rows.filter(test).length}`)),
     el('span', { class: 'spacer' }),
     el('span', { class: 'by' }, `${s.ticked.books} books ticked → ${s.ticked.tiles} covers`),
     el('button', { class: 'primary', disabled: busy || !u.ready || s.ticked.tiles === 0, title: u.ready ? '' : u.visitorNote, onclick: upload }, busy ? 'Creating…' : 'Create the collection'));

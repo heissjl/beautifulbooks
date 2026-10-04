@@ -29,9 +29,9 @@ import type { IsbnEdition } from './lookup';
  * names a work that shares neither with the book — Calibre's metadata
  * download can attach a wrong ISBN. `author+part`: the author agrees and the
  * work's title is longer than the book's and merely contains it — measured
- * on Julian's library (2026-10-03), four of seven such works were another
- * book: the box of the trilogy for "MaddAddam", a picture book for "Pippi
- * Langstrumpf". The other way round (the book's title is the longer one: a
+ * on Julian's library (2026-10-03), of seven such works two were plainly
+ * another book (the box of the trilogy for "MaddAddam", a picture book for
+ * "Pippi Langstrumpf"), two were doubtful and three right. The other way round (the book's title is the longer one: a
  * volume number, an unmarked subtitle) was right five times of five and
  * stays a match. The other three are `pickWork`'s.
  */

@@ -1,6 +1,6 @@
 # PLAN 5.17 — Die Calibre-Bibliothek als eigene Sammlung auf der Seite
 
-Stand: 2026-10-03, **offen, nichts gebaut**. Geschrieben für eine Sitzung, die den Code nicht kennt. Julian, 2026-10-03: „bereite die calibre -> online collection variante als zweites lab-experiment vor. schreibe einen plan dafür, ich setze es dann in einer anderen session um".
+Stand: 2026-10-03, **Schritte 1–5 und 7 umgesetzt** (`lab/calibre-import/`, [README](../../lab/calibre-import/README.md), [Historie](../history.md#2026-10-03--die-calibre-bibliothek-als-eigene-sammlung-lab-roadmap-517)); **offen ist Schritt 6** — einmal gegen die echte Seite, von Julian — und seine Entscheidungen in §6. Abweichung vom Plan: Cache und Entscheidungen liegen nicht in `lab/calibre-import/`, sondern neben den Backups unter `~/Library/Application Support/BuyItsCovers/calibre/import/` (ein Worktree wird gelöscht, und die Dateien sind die Liste von Julians Büchern). Ursprünglicher Stand: offen, nichts gebaut. Geschrieben für eine Sitzung, die den Code nicht kennt. Julian, 2026-10-03: „bereite die calibre -> online collection variante als zweites lab-experiment vor. schreibe einen plan dafür, ich setze es dann in einer anderen session um".
 
 Lab-Experiment, Ordner `lab/calibre-import/`, nur lokal und nur für Julian. Die Website wird dafür **nicht** geändert; was das Experiment an ihr braucht, gibt es schon.
 
