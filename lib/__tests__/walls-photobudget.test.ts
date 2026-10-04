@@ -59,12 +59,12 @@ describe('the day\'s budget for reading photos (5.11a)', () => {
     expect(await store.spendPhoto('2026-10-05', 0)).toBe(0);
   });
 
-  it('reads a photo twice from forty books on, unless the environment says otherwise or off', () => {
-    expect(DENSE_AT).toBe(40);
-    expect(denseAt({})).toBe(40);
+  it('reads a photo twice from thirty books on, unless the environment says otherwise or off', () => {
+    expect(DENSE_AT).toBe(30);
+    expect(denseAt({})).toBe(30);
     expect(denseAt({ PHOTO_DENSE_AT: '60' })).toBe(60);
     expect(denseAt({ PHOTO_DENSE_AT: 'off' })).toBeUndefined();
     expect(denseAt({ PHOTO_DENSE_AT: '0' })).toBeUndefined();
-    expect(denseAt({ PHOTO_DENSE_AT: 'many' })).toBe(40);
+    expect(denseAt({ PHOTO_DENSE_AT: 'many' })).toBe(30);
   });
 });

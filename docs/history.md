@@ -4352,6 +4352,35 @@ Julian, mit Bildschirmfoto aus „Calibre Covers": „Open Library did not answe
 
 **Nicht gelöst:** die Sperre selbst — nur Warten hilft. Und die App fragt bei jedem Öffnen eines Buchs neu; ein Speicher für Werke und Ausgaben-Seiten auf der Platte würde die Anfragen senken, ist aber nicht gebaut.
 
+## 2026-10-04 · Drei Ideen am Testsatz, zur Hälfte — das Guthaben war leer (ROADMAP 5.11a)
+
+Julian: „miss die drei ideen am testsatz“. Gemessen: die Schärfezahl ohne Modell trennt das verwackelte Foto von den anderen dreizehn (0,33 gegen 0,43–0,74), aber erst kachelweise — über das ganze Bild lag ein scharfer Umschlag vor unscharfem Laden darunter. Der Prompt-Satz gegen angeschnittene Bücher trägt nicht: die Stümpfe bleiben, ein echtes Buch geht verloren. Dann meldete die Anthropic-API ein leeres Guthaben; die Varianten „Randstreifen auslassen“ und „Feld für Unsicheres“ sind gebaut und ungemessen, und die Website liest bis zum Aufladen kein Foto. Der wichtigste Befund kam nebenbei: zwei gleiche Läufe unterscheiden sich um acht Bücher, weil die am selben Tag hochgesetzte Schwelle 40 in der Spanne liegt, die ein erster Blick auf einem dichten Regal liest — ob der zweite Blick kommt, ist dort Zufall. [Bericht](tests/2026-10-04-regalfoto-testsatz.md).
+
+## 2026-10-04 · Die Schwelle wieder bei 30 (ROADMAP 5.11a)
+
+Julian: „setz die schwelle zurück auf 30 und pushe“. Einen Tag stand sie bei 40; der Testsatz zeigte, dass ein erster Blick auf einem dichten Regal 35–55 Bücher liest und der zweite Blick bei 40 vom Zufall abhing (dasselbe Foto 35 von 46 in einem Lauf, 45 im nächsten; die Galeriewand in einem Lauf ohne zweiten Blick). Bei 30 kam er auf allen sechs dichten Fotos. Die Ausgaben begrenzt seit demselben Tag das Tagesbudget. Die Zahl der im Bild gefundenen Regalböden als Signal, das nicht schwankt, bleibt eine Idee — sie gilt nur für Regale (Julian).
+
+## 2026-10-04 · Search Console und Bing Webmaster Tools eingerichtet (ROADMAP 2.5, 2.15 Schritt 4)
+
+Julians Prompt („Richte die Seite bei Google Search Console und Bing Webmaster Tools ein"), in seinem Chrome mit angemeldetem Google-, Microsoft- und INWX-Konto, 06:40–07:05 MESZ.
+
+**Google:** Property vom Typ *Domain* `buyitscovers.com`; der TXT-Eintrag `google-site-verification=…` auf `@` bei INWX (nach Julians „ja, speichern"), bestätigt beim ersten Klick. Sitemap `https://buyitscovers.com/sitemap.xml` gesendet — Status „Couldn't fetch" ohne „Last read", auch zehn Minuten später; dieselbe Datei mit Googlebot-Kennung einmal abgerufen: 200, `application/xml`, 148.575 Bytes, `x-vercel-cache: HIT`, 875 `<loc>`, alle auf `buyitscovers.com`; robots.txt erlaubt alles außer `/api/`, `/go/`, `/admin/` und nennt die Sitemap. Bei einer neuen Property ist das der übliche Zustand vor dem ersten Abruf, kein Befund über die Datei.
+
+**URL-Prüfung** (Live-Test, Googlebot Smartphone):
+
+| Adresse | Index | Live-Test | Kanonisch (vom Nutzer) | Antrag |
+|---|---|---|---|---|
+| `/` | unbekannt | kann indexiert werden | `https://buyitscovers.com/` | gestellt |
+| `/book/OL1168083W` | unbekannt | kann indexiert werden | = geprüfte URL | gestellt |
+| `/collections/sf-masterworks` | unbekannt | kann indexiert werden | = geprüfte URL | gestellt |
+| `/book/OL1168083W/decades` | unbekannt | kann indexiert werden | = geprüfte URL | gestellt |
+
+Alle vier: „URL has no enhancements" — das Book-JSON-LD ist kein Typ, den die Search Console als Erweiterung berichtet; das sagt nichts über seine Gültigkeit (Rich-Results-Test bleibt 2.15 Schritt 5).
+
+**Bing:** angemeldet mit Julians Google-Konto, Import aus der Search Console mit Lesezugriff (`webmasters.readonly`): eine Website, importiert und damit bestätigt; Sitemaps-Zahl 0, weil Google sie noch nicht gelesen hatte, daher in Bing von Hand eingereicht — „Processing".
+
+**Offen:** 2.5 abhaken, sobald die Search Console „Success" und gefundene Seiten meldet; nach zwei bis drei Wochen Leistung und Seiten lesen (Buchseiten „Gecrawlt – zurzeit nicht indexiert" wären der Auslöser für 5.2); Core Web Vitals erst nach 28 Tagen Felddaten; IndexNow erst, wenn Seiten in Mengen entstehen (5.3/5.4).
+
 ## 2026-10-04 · Die Calibre-App fragt über die Website, ohne Google (ROADMAP 5.16a)
 
 Julian nach der Sperre durch Open Library: „vielleicht wär es deshalb doch besser die lokale app mit der website zu verbinden und von dort die abfrage machen zu lassen?" Auf die Abwägung drei Rückfragen — was von Google geholt wird („klappentext brauchen wir ja nicht. google können wir doch für diese app weglassen"), was an der Website zu ändern wäre, und ob Open Library so viele gute Bilder fehlen — und dann: „überarbeite das jetzt ohne google und mit verbindung über die website".

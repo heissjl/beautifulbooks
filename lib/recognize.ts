@@ -32,6 +32,8 @@ export interface RecognizedBook {
    */
   x?: number;
   y?: number;
+  /** The model read the title only in part and said so (the `unsure` variant, measured before it is used). */
+  unsure?: true;
   /** [x, y, w, h] as fractions of the picture: the book's outline. Nothing sets it yet — the model cannot draw one (PLAN-5.11a); it waits for a segmenter. */
   box?: [number, number, number, number];
 }
@@ -63,42 +65,71 @@ export function hasApiKey(): boolean {
  * there is no confidence figure; rows of a shelf were dropped again because
  * books also lie in piles.
  */
-const PROMPT = `This is a photo of books: a shelf of spines, a pile of books lying flat, or covers laid out.
+/**
+ * Variants of the read that are being measured against the test set before
+ * any becomes the rule (lab/shelf/evaluate.ts --variant …; ROADMAP 5.11a):
+ * `cut` tells the model to leave out a book the picture's edge cuts off;
+ * `unsure` lets it give a half-read title and mark it, instead of the choice
+ * between claiming it and leaving it out.
+ */
+export interface ReadVariant {
+  cut?: boolean;
+  unsure?: boolean;
+}
+
+function promptFor(v: ReadVariant): string {
+  const fields = [
+    '- t: the title as printed, without series names or "a novel"',
+    '- a: the author as printed; "" if not visible and you are not sure',
+    '- k: "cover" if the front cover faces the camera, "spine" if only the spine is visible',
+    '- x: the horizontal centre of the spine (or of the cover) as a whole percentage of the picture width (0-100)',
+    '- y: its vertical centre as a whole percentage of the picture height (0-100)',
+    ...(v.unsure ? ['- u: false if you read the title clearly; true if you could read it only in part or are not sure of it'] : []),
+  ];
+  const rule = v.unsure
+    ? 'A book whose title you can read only in part: give your best reading and set u to true. Do not guess titles from colours or shapes.'
+    : 'Leave out books whose title you cannot read; do not guess titles from colours or shapes.';
+  const cut = v.cut ? '\nLeave out a book that the edge of the picture cuts off so that its title is not whole.' : '';
+  const example = v.unsure ? '{"t": "...", "a": "...", "k": "spine", "x": 12, "y": 40, "u": false}' : '{"t": "...", "a": "...", "k": "spine", "x": 12, "y": 40}';
+  return `This is a photo of books: a shelf of spines, a pile of books lying flat, or covers laid out.
 
 List every book whose title you can read. Go through the picture in an order a person would: a shelf row by row from the top, left to right; a pile from top to bottom, one pile after another from the left.
 
 For each book give:
-- t: the title as printed, without series names or "a novel"
-- a: the author as printed; "" if not visible and you are not sure
-- k: "cover" if the front cover faces the camera, "spine" if only the spine is visible
-- x: the horizontal centre of the spine (or of the cover) as a whole percentage of the picture width (0-100)
-- y: its vertical centre as a whole percentage of the picture height (0-100)
+${fields.join('\n')}
 
-Leave out books whose title you cannot read; do not guess titles from colours or shapes.
-Answer with JSON only: {"books": [{"t": "...", "a": "...", "k": "spine", "x": 12, "y": 40}, ...]}.`;
+${rule}${cut}
+Answer with JSON only: {"books": [${example}, ...]}.`;
+}
 
-const SCHEMA = {
-  type: 'object',
-  additionalProperties: false,
-  required: ['books'],
-  properties: {
-    books: {
-      type: 'array',
-      items: {
-        type: 'object',
-        additionalProperties: false,
-        required: ['t', 'a', 'k', 'x', 'y'],
-        properties: {
-          t: { type: 'string' },
-          a: { type: 'string' },
-          k: { type: 'string', enum: ['spine', 'cover'] },
-          x: { type: 'integer' },
-          y: { type: 'integer' },
+function schemaFor(v: ReadVariant) {
+  return {
+    type: 'object',
+    additionalProperties: false,
+    required: ['books'],
+    properties: {
+      books: {
+        type: 'array',
+        items: {
+          type: 'object',
+          additionalProperties: false,
+          required: ['t', 'a', 'k', 'x', 'y', ...(v.unsure ? ['u'] : [])],
+          properties: {
+            t: { type: 'string' },
+            a: { type: 'string' },
+            k: { type: 'string', enum: ['spine', 'cover'] },
+            x: { type: 'integer' },
+            y: { type: 'integer' },
+            ...(v.unsure ? { u: { type: 'boolean' } } : {}),
+          },
         },
       },
     },
-  },
-} as const;
+  } as const;
+}
+
+/** The prompt as the site sends it, for the tests that hold it to its word. */
+export const PROMPT = promptFor({});
 
 /** The first JSON value in a text: past a code fence or a sentence of prose. */
 function extractJson(text: string): unknown {
@@ -172,7 +203,7 @@ function parseBook(raw: unknown, i: number, problems: string[]): RecognizedBook 
   if (r.x !== undefined && x === undefined) problems.push(`#${i + 1}: Mitte unbrauchbar`);
   const y = fraction(r.y);
   if (r.y !== undefined && y === undefined) problems.push(`#${i + 1}: Höhe unbrauchbar`);
-  return { title, author, kind, ...(x !== undefined ? { x } : {}), ...(y !== undefined ? { y } : {}) };
+  return { title, author, kind, ...(x !== undefined ? { x } : {}), ...(y !== undefined ? { y } : {}), ...(r.u === true ? { unsure: true as const } : {}) };
 }
 
 export function parseRecognition(text: string): Recognition {
@@ -255,6 +286,7 @@ export async function recognize(
   onBook?: (book: RecognizedBook, index: number) => void,
   /** Stop reading once this many books have come (5.11a: a dense photo is then read again in pieces, and the rest of this answer would be paid for twice). */
   stopAt?: number,
+  variant: ReadVariant = {},
 ): Promise<RecognitionRun> {
   if (!hasApiKey()) throw new Error('ANTHROPIC_API_KEY ist nicht gesetzt');
   const client = new Anthropic();
@@ -274,12 +306,12 @@ export async function recognize(
       thinking: { type: 'disabled' },
       // effort medium. With the point prompt (2026-10-01) high cost the gallery wall 3,100–5,200 answer tokens
       // and 24–40 s for 42–47 books; medium reads 33–40 for 1,400–1,700 in 11–13 s.
-      output_config: { effort: 'medium', format: { type: 'json_schema', schema: SCHEMA } },
+      output_config: { effort: 'medium', format: { type: 'json_schema', schema: schemaFor(variant) } },
       messages: [{
         role: 'user',
         content: [
           { type: 'image', source: { type: 'base64', media_type: mediaType, data } },
-          { type: 'text', text: PROMPT },
+          { type: 'text', text: promptFor(variant) },
         ],
       }],
     });
