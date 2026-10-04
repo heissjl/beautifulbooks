@@ -126,9 +126,7 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
         <div className="mt-6 rounded-card bg-surface-2 px-5 py-6 sm:px-8 sm:py-8">
           <h3 className="font-display text-2xl text-ink sm:text-3xl">{t('From a book')}</h3>
           <p className="mt-2 max-w-2xl text-sm text-ink-2 sm:text-base">{t('Find a book and pick the covers you love from the ones it has had.')}</p>
-          <div className="max-w-2xl">
-            <BookSearch key={q} q={q} workId={workId} onSearch={(value) => go({ q: value, work: null })} onPick={(id) => go({ work: id })} />
-          </div>
+          <BookSearch key={q} q={q} workId={workId} wide onSearch={(value) => go({ q: value, work: null })} onPick={(id) => go({ work: id })} />
         </div>
 
         {workId && (
