@@ -105,6 +105,9 @@ export function cleanBook(book: Pick<CalibreBook, 'title' | 'authors' | 'isbns'>
     if (!author && !/\d/.test(lead[1])) author = cleanAuthor(lead[1]);
   }
 
+  // Notes in brackets at the end go first: "Wool Omnibus Edition (Wool 1 - 5)" has its dash inside one.
+  title = displayTitle(title);
+
   // "Author - Title", "Title - Author", "Series 2 - Title", "Series - 02 Title"
   const dash = /^(.+?)\s+[-–—]\s+(.+)$/.exec(title);
   if (dash) {
@@ -130,7 +133,7 @@ export function cleanBook(book: Pick<CalibreBook, 'title' | 'authors' | 'isbns'>
 
   // "1974-Rendezvous With Rama"
   title = title.replace(new RegExp(`${LEADING_YEAR.source}\\s*[-–—]\\s*(?=\\p{L})`, 'u'), '');
-  // Notes in brackets at the end, a bundle's contents, the subtitle, quotation marks.
+  // A bundle's contents, the subtitle, quotation marks.
   title = displayTitle(title).split(' · ')[0].split(/:\s/)[0];
   if (/^["“„]/.test(title)) title = title.replace(/^["“„]+|["”“]+$/g, '');
   title = title.replace(/\s+/g, ' ').trim();

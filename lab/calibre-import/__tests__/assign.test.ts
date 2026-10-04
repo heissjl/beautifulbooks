@@ -74,6 +74,15 @@ describe('assignBook', () => {
     expect(a).toMatchObject({ status: 'suggestion', reason: 'author' });
   });
 
+  it('only suggests a work whose title merely contains the book’s, and keeps the other way round', async () => {
+    const box = work({ id: 'OL20513408W', title: 'MADDADDAM TRILOGY BOX', authors: ['Margaret Atwood'] });
+    const a = await assignBook(book({ id: 11, title: 'MaddAddam', authors: ['Margaret Atwood'] }), sources({ 'MaddAddam Margaret Atwood': [box] }));
+    expect(a).toMatchObject({ status: 'suggestion', reason: 'author+part' });
+    const winnetou = work({ id: 'OL83012W', title: 'Winnetou', authors: ['Karl May'] });
+    const b = await assignBook(book({ id: 12, title: 'Winnetou 1', authors: ['Karl May'] }), sources({ 'Winnetou 1 Karl May': [winnetou] }));
+    expect(b).toMatchObject({ status: 'match', reason: 'author+title' });
+  });
+
   it('only suggests a title that agrees without its author', async () => {
     const s = sources({ 'The Virgin Suicides': [VIRGIN] });
     const a = await assignBook(book({ id: 6, title: 'The Virgin Suicides', authors: ['Somebody Else'] }), s);

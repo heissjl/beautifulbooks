@@ -81,6 +81,7 @@ describe('cleanBook', () => {
   it('drops notes in brackets and the subtitle', () => {
     expect(q('The Causal Angel (Jean le Flambeur)', ['Hannu Rajaniemi'])?.title).toBe('The Causal Angel');
     expect(q('We Are Legion (We Are Bob) (Bobiverse Book 1)', ['Dennis E. Taylor'])?.title).toBe('We Are Legion');
+    expect(q('Wool Omnibus Edition (Wool 1 - 5)', ['Howey, Hugh'])?.title).toBe('Wool Omnibus Edition');
     expect(q('State of Fear: A Novel', ['Michael Crichton'])?.title).toBe('State of Fear');
     expect(q('"Who he?"', ['Alfred Bester'])?.title).toBe('Who he?');
   });

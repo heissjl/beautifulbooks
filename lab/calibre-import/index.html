@@ -79,6 +79,7 @@ const el = (tag, attrs = {}, ...kids) => {
 const REASON = {
   isbn: ['sure', 'by its ISBN'],
   'author+title': ['sure', 'same author and title'],
+  'author+part': ['maybe', 'same author, a longer title'],
   author: ['maybe', 'same author, another title'],
   'title-only': ['maybe', 'the title only'],
   'isbn-only': ['maybe', 'its ISBN names this, nothing else agrees'],

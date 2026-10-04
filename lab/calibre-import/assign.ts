@@ -17,6 +17,7 @@
  */
 import { sameAuthor, titleScore } from '../../lib/bookmatch';
 import type { WorkSummary } from '../../lib/model';
+import { normalizeTitle } from '../../lib/normalize';
 import { validTile, type Tile } from '../../lib/walls/model';
 import { matchPhotoBook, tileFromWork } from '../../lib/walls/photo';
 import type { CalibreBook } from '../calibre/library';
@@ -26,9 +27,15 @@ import type { IsbnEdition } from './lookup';
 /**
  * `isbn`: the ISBN's work, and author or title agree. `isbn-only`: the ISBN
  * names a work that shares neither with the book — Calibre's metadata
- * download can attach a wrong ISBN. The other three are `pickWork`'s.
+ * download can attach a wrong ISBN. `author+part`: the author agrees and the
+ * work's title is longer than the book's and merely contains it — measured
+ * on Julian's library (2026-10-03), four of seven such works were another
+ * book: the box of the trilogy for "MaddAddam", a picture book for "Pippi
+ * Langstrumpf". The other way round (the book's title is the longer one: a
+ * volume number, an unmarked subtitle) was right five times of five and
+ * stays a match. The other three are `pickWork`'s.
  */
-export type AssignReason = 'isbn' | 'isbn-only' | 'author+title' | 'author' | 'title-only';
+export type AssignReason = 'isbn' | 'isbn-only' | 'author+title' | 'author+part' | 'author' | 'title-only';
 
 export type AssignStatus =
   /** Goes into the collection. */
@@ -57,6 +64,11 @@ export interface AssignSources {
 }
 
 export const isMatch = (reason: AssignReason): boolean => reason === 'isbn' || reason === 'author+title';
+
+/** The work's title contains the book's and says more. */
+function onlyPart(bookTitle: string, workTitle: string): boolean {
+  return titleScore(bookTitle, workTitle) === 1 && normalizeTitle(workTitle).length > normalizeTitle(bookTitle).length;
+}
 
 /** The tile for an ISBN's edition: its own cover with the ISBN as a printing, else the work's usual cover without one (E8). */
 function isbnTile(edition: IsbnEdition, work: WorkSummary, isbn13: string): Tile | undefined {
@@ -95,7 +107,8 @@ export async function assignBook(book: CalibreBook, sources: AssignSources): Pro
   const found = await matchPhotoBook({ title: query.title, author: query.author, kind: 'spine' }, sources.find);
   if (found.failed) return { bookId: book.id, status: 'failed', query };
   if (!found.tile || !found.reason || found.reason === 'first-result') return { bookId: book.id, status: 'none', query };
-  return { bookId: book.id, status: isMatch(found.reason) ? 'match' : 'suggestion', reason: found.reason, query, tile: found.tile };
+  const reason: AssignReason = found.reason === 'author+title' && onlyPart(query.title, found.tile.title) ? 'author+part' : found.reason;
+  return { bookId: book.id, status: isMatch(reason) ? 'match' : 'suggestion', reason, query, tile: found.tile };
 }
 
 /** Every book, a few at a time, each result handed on as it arrives. Resolves in the library's order. */
@@ -132,7 +145,7 @@ export interface Tally {
 }
 
 export function tally(assignments: readonly Assignment[]): Tally {
-  const t: Tally = { books: assignments.length, match: 0, suggestion: 0, none: 0, skipped: 0, failed: 0, askable: 0, byReason: { isbn: 0, 'isbn-only': 0, 'author+title': 0, author: 0, 'title-only': 0 } };
+  const t: Tally = { books: assignments.length, match: 0, suggestion: 0, none: 0, skipped: 0, failed: 0, askable: 0, byReason: { isbn: 0, 'isbn-only': 0, 'author+title': 0, 'author+part': 0, author: 0, 'title-only': 0 } };
   for (const a of assignments) {
     t[a.status]++;
     if (a.reason) t.byReason[a.reason]++;
@@ -171,6 +184,7 @@ export function report(assignments: readonly Assignment[]): string {
     `    by ISBN            ${t.byReason.isbn}`,
     `    by author + title  ${t.byReason['author+title']}`,
     `  suggestion   ${t.suggestion}  (${pct(t.suggestion, t.askable)})`,
+    `    same author, a longer title ${t.byReason['author+part']}`,
     `    same author, another title  ${t.byReason.author}`,
     `    title only                  ${t.byReason['title-only']}`,
     `    ISBN, nothing else agrees   ${t.byReason['isbn-only']}`,
