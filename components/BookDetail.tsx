@@ -34,7 +34,8 @@ import { buildWall, captionFor, progressLabel } from '@/components/workWall';
 import { leadCover } from '@/lib/scene';
 import { isbnRuns } from '@/lib/isbnformat';
 import { useOverflowsX } from '@/components/useOverflowsX';
-import { commissionNote, searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
+import { useBookSignal, useReportVerdict, VerdictReport } from './useInsights';
+import { commissionNote, isWordsProvider, searchFacts, searchLinksFor, trackedBuyHref, trackedSearchHref, type WordsQuery } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
@@ -337,6 +338,8 @@ function BookDetail() {
   }, [inScene, view, scene.staged, requestKey]);
 
   const selected = useMemo<Cover | null>(() => (view ? coverForId(view, selectedId) : null), [view, selectedId]);
+  // One summary of this visit when the reader leaves (ROADMAP 3.1b); nothing is kept on the device.
+  const reportVerdict = useBookSignal({ workId: params.id, market: pages.market ?? chosenMarket ?? 'us', pagesLoaded: pages.pagesLoaded, picked: !!selected });
 
 
   if (pages.status === 'notfound' || pages.status === 'error') {
@@ -433,6 +436,7 @@ function BookDetail() {
   ].filter(Boolean).join(' ');
 
   return (
+    <VerdictReport.Provider value={reportVerdict}>
     <Shell
       workId={params.id}
       backHref={backHref}
@@ -537,6 +541,7 @@ function BookDetail() {
         </CoverSheet>
       )}
     </Shell>
+    </VerdictReport.Provider>
   );
 }
 
@@ -857,6 +862,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
             author={author}
             otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
             searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id, isbn13: shown.isbn13 }, market)}
+            searchWords={{ title: shown.title, author, ...searchFacts(shown) }}
             anyEditionLinks={anyEditionLinks}
             market={market}
             onMarketChange={onMarketChange}
@@ -877,6 +883,8 @@ interface EditionBlockProps {
   author?: string;
   otherCovers: number;
   searchLinks: EditionView['buyLinks'];
+  /** The words `searchLinks` were built from, so the counting redirect can rebuild them (ROADMAP 3.1). */
+  searchWords: WordsQuery;
   anyEditionLinks: BuyLink[];
   market: Market;
   onMarketChange: (market: Market) => void;
@@ -897,7 +905,7 @@ interface EditionBlockProps {
  * them into three zones instead, and everything that is not one of the two or
  * three shops with a chance goes behind a fold.
  */
-function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict, afterLead, gap = 'mt-6' }: EditionBlockProps) {
+function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, searchWords, anyEditionLinks, market, onMarketChange, verdict, afterLead, gap = 'mt-6' }: EditionBlockProps) {
   const t = useT();
   const locale = useLocale();
   // Reset whenever the edition or the market changes: an answer belongs to
@@ -906,6 +914,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
   const key = `${edition.id} ${market}`;
   const shops = checked?.key === key ? checked.byProvider : null;
 
+  // The analytics note which verdict the reader saw (ROADMAP 3.1b, K8).
+  useReportVerdict(edition.isbn13 ? verdict.status : undefined);
   const plan = useMemo(
     () => linkPlan({ edition, buyLinks: edition.buyLinks, searchLinks, anyEditionLinks, market, verdict: verdict.status, t }),
     [edition, searchLinks, anyEditionLinks, market, verdict.status, t],
@@ -972,6 +982,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
               isbn13={edition.isbn13}
               market={market}
               counted={fromIsbn.has(link.provider)}
+              words={searchWords}
               status={shops?.get(link.provider)}
             />
           ))}
@@ -1009,6 +1020,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
                     isbn13={edition.isbn13}
                     market={market}
                     counted={fromIsbn.has(link.provider)}
+                    words={searchWords}
                     status={shops?.get(link.provider)}
                   />
                 ))}
@@ -1079,7 +1091,14 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
           <h3 className="text-lg leading-snug text-ink">{t('Or read it in another edition')}</h3>
           <div className="mt-2 flex flex-wrap gap-2">
             {plan.anyEdition.map(link => (
-              <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
+              <a
+                key={link.provider}
+                // Through the counting redirect, which rebuilds the same search from the table (ROADMAP 3.1).
+                href={trackedSearchHref(link.provider, { title: displayTitle(workTitle), author }, market)}
+                target="_blank"
+                rel={link.affiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'}
+                className="btn"
+              >
                 {link.label}
               </a>
             ))}
@@ -1164,21 +1183,27 @@ function VerdictNote({ verdict, hint }: {
  *
  * A link built from the ISBN goes through our own redirect, which counts the
  * click and rebuilds the target from the table, so it can never become an
- * open redirect (SPEC §10 C9). A search by title has no ISBN to count
- * against and is a plain link.
+ * open redirect (SPEC §10 C9). A shop searched by words goes through it too
+ * since ROADMAP 3.1: only the words travel, and the redirect rebuilds the
+ * shop's URL from the same table. Image searches and catalogues stay plain.
  */
-function ShopLink({ link, isbn13, market, counted, status }: {
+function ShopLink({ link, isbn13, market, counted, words, status }: {
   link: BuyLink;
   isbn13?: string;
   market: Market;
   /** Built from the ISBN, so the counting redirect applies. */
   counted: boolean;
+  /** The words a shop search was built from. */
+  words?: WordsQuery;
   status?: ShopStatus;
 }) {
   const t = useT();
+  const href = counted && isbn13
+    ? trackedBuyHref(link.provider, isbn13, market)
+    : words && isWordsProvider(link.provider) ? trackedSearchHref(link.provider, words, market) : link.url;
   return (
     <a
-      href={counted && isbn13 ? trackedBuyHref(link.provider, isbn13, market) : link.url}
+      href={href}
       target="_blank"
       // `sponsored` states a paid relationship; in hobby mode there is none (E20).
       rel={counted && commerceEnabled() ? 'noopener noreferrer sponsored' : 'noopener noreferrer'}

@@ -7,9 +7,13 @@ import { memoryWallStore } from '../walls/store';
 const cents = (n: number) => n * UNITS_PER_CENT;
 
 describe('the day\'s budget for reading photos (5.11a)', () => {
-  it('reckons a read from its tokens: an ordinary photo about two cents, a dense one about thirteen', () => {
-    expect(spendUnits(3189, 926) / UNITS_PER_CENT).toBeCloseTo(2.35, 1);
-    expect(spendUnits(14592, 6069) / UNITS_PER_CENT).toBeCloseTo(13.48, 1);
+  it('reckons a read from its tokens at its model\'s list price: an ordinary photo about a cent and a half, a dense one about nine', () => {
+    expect(spendUnits('claude-sonnet-5', 3189, 926) / UNITS_PER_CENT).toBeCloseTo(1.56, 1);
+    expect(spendUnits('claude-sonnet-5', 14592, 6069) / UNITS_PER_CENT).toBeCloseTo(8.99, 1);
+  });
+
+  it('reckons a model the price table does not know at the dearest price, never at nothing', () => {
+    expect(spendUnits('claude-unknown-9', 1_000_000, 0)).toBe(5 * 100 * UNITS_PER_CENT);
   });
 
   it('takes the budget from the environment, and the default when that says nothing sensible', () => {

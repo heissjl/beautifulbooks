@@ -32,9 +32,10 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   /*
-    Pages only. Not the API, the image proxy, the click counter, Next's own
+    Pages only. Not the API, the image proxy, the click counter, Julian's
+    analytics (German only, no mirror under /de), Next's own
     files, anything with an extension, nor the generated images and feeds that
     have none (`/opengraph-image`, `/sitemap.xml` has one, `/icon.svg` too).
   */
-  matcher: ['/((?!api/|img/|go/|_next/|.*\\..*|.*/opengraph-image$|opengraph-image$).*)'],
+  matcher: ['/((?!api/|img/|go/|admin/|_next/|.*\\..*|.*/opengraph-image$|opengraph-image$).*)'],
 };

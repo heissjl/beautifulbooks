@@ -4,20 +4,17 @@
  * client-safe; the counting is the store's (`WallStore.spendPhoto`), the
  * mail is lib/alerts.ts.
  *
- * Reading a photo is the one thing the site pays for per use: about 2 ct an
- * ordinary photo, 9–13 ct a dense one read twice (measured on the test set,
- * 2026-10-04). The day's spend is added up from the tokens each read
+ * Reading a photo is the one thing the site pays for per use: about 1.5 ct
+ * an ordinary photo, 6–9 ct a dense one read twice (measured on the test
+ * set, 2026-10-04, at the list price in lib/insights/prices.ts). The day's spend is added up from the tokens each read
  * reports. At half the budget dense photos get one look instead of two; at
  * the whole budget photos are off until the next day (UTC). Each threshold
  * sends Julian one mail.
  */
+import { costUsd, MODEL_PRICES } from '@/lib/insights/prices';
 
-/** A day's budget in cents when `PHOTO_BUDGET_CENTS` says nothing. Two euros: a hundred ordinary photos, or about twenty dense ones. */
+/** A day's budget in cents when `PHOTO_BUDGET_CENTS` says nothing. Two dollars: about 130 ordinary photos, or 25 dense ones. */
 export const PHOTO_BUDGET_CENTS = 200;
-
-/** List prices the spend is reckoned with, US cents per million tokens (Sonnet, as in PLAN-5.11a). A dearer model needs these changed, or the budget buys less than it says. */
-export const CENTS_PER_MILLION_IN = 300;
-export const CENTS_PER_MILLION_OUT = 1500;
 
 /** The store counts in thousandths of a cent, so that a 1.2 ct photo is not rounded away. */
 export const UNITS_PER_CENT = 1000;
@@ -27,9 +24,19 @@ export function budgetCents(env: Record<string, string | undefined> = process.en
   return Number.isFinite(n) && n > 0 ? n : PHOTO_BUDGET_CENTS;
 }
 
-/** What a read cost, in the store's units. */
-export function spendUnits(tokensIn: number, tokensOut: number): number {
-  return Math.round(((tokensIn * CENTS_PER_MILLION_IN + tokensOut * CENTS_PER_MILLION_OUT) / 1_000_000) * UNITS_PER_CENT);
+/** The dearest model of the price table, in USD: what a read on a model the table does not know is reckoned at — a guard errs on the dear side. */
+function dearestUsd(tokensIn: number, tokensOut: number): number {
+  return Math.max(...Object.values(MODEL_PRICES).map((p) => (tokensIn * p.inputPerMTok + tokensOut * p.outputPerMTok) / 1_000_000));
+}
+
+/**
+ * What a read cost, in the store's units, at the list price of its model
+ * (lib/insights/prices.ts — one table for the analytics and for this guard,
+ * so the two cannot disagree about a photo).
+ */
+export function spendUnits(model: string, tokensIn: number, tokensOut: number): number {
+  const usd = costUsd(model, tokensIn, tokensOut) ?? dearestUsd(tokensIn, tokensOut);
+  return Math.round(usd * 100 * UNITS_PER_CENT);
 }
 
 export type BudgetState = 'open' | 'half' | 'full';

@@ -65,7 +65,7 @@ describe('storyboard on the Gatsby fixtures', () => {
     const grid = board.shots.at(-2) as GridShot;
     expect(grid.kind).toBe('grid');
     expect(grid.coverIds).toEqual(shots.map(s => s.coverId));
-    expect(board.shots.at(-1)).toMatchObject({ kind: 'end', wordmark: SITE_NAME, url: 'beautifulcovers.vercel.app' });
+    expect(board.shots.at(-1)).toMatchObject({ kind: 'end', wordmark: SITE_NAME, url: 'buyitscovers.com' });
   });
 
   it('starts slow and accelerates', () => {

@@ -22,7 +22,7 @@ import { DRAFT_LIMITS } from '../../lib/curate/drafts';
 import { draftDelta, type DraftLike } from './draftdelta';
 
 const ROOT = join(import.meta.dirname, '..', '..');
-const REMOTE = (process.env.SUGGEST_REMOTE ?? 'https://beautifulcovers.vercel.app').replace(/\/$/, '');
+const REMOTE = (process.env.SUGGEST_REMOTE ?? 'https://buyitscovers.com').replace(/\/$/, '');
 const TOKEN = process.env.SUGGEST_ADMIN_PASSWORD;
 
 async function call<T>(path: string, body?: unknown): Promise<T> {

@@ -7,7 +7,7 @@
   const D = JSON.parse(document.getElementById('cockpit-data').textContent);
   const S = window.COCKPIT_SERVER || null;
   const GH = 'https://github.com/heissjl/beautifulbooks/blob/main/';
-  const LIVE = 'https://beautifulcovers.vercel.app';
+  const LIVE = 'https://buyitscovers.com';
   const DEV = 'http://localhost:3000';
   const $ = s => document.querySelector(s);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

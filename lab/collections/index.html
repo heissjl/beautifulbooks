@@ -371,7 +371,7 @@ async function renderDrafts() {
   }
   const data = state.drafts;
   if (data.off) {
-    $('main').innerHTML = `<p>Keine Quelle eingestellt. Starten mit<br><code>SUGGEST_REMOTE=https://beautifulcovers.vercel.app SUGGEST_ADMIN_PASSWORD=… npx tsx lab/collections/serve.ts</code></p>`;
+    $('main').innerHTML = `<p>Keine Quelle eingestellt. Starten mit<br><code>SUGGEST_REMOTE=https://buyitscovers.com SUGGEST_ADMIN_PASSWORD=… npx tsx lab/collections/serve.ts</code></p>`;
     return;
   }
   $('main').innerHTML = `<section><h2>Entwürfe von Freunden (${data.drafts.length})</h2>
@@ -420,7 +420,7 @@ async function renderSuggestions() {
   }
   const data = state.suggestions;
   if (data.off) {
-    $('main').innerHTML = `<p>Keine Quelle für Vorschläge eingestellt. Starten mit<br><code>SUGGEST_REMOTE=https://beautifulcovers.vercel.app SUGGEST_ADMIN_PASSWORD=… npx tsx lab/collections/serve.ts</code></p>`;
+    $('main').innerHTML = `<p>Keine Quelle für Vorschläge eingestellt. Starten mit<br><code>SUGGEST_REMOTE=https://buyitscovers.com SUGGEST_ADMIN_PASSWORD=… npx tsx lab/collections/serve.ts</code></p>`;
     return;
   }
   const decided = data.decisions || {};

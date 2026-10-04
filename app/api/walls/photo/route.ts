@@ -7,6 +7,8 @@ import { SITE_NAME } from '@/lib/seo';
 import { budgetCents, budgetMail, budgetState, crossed, spendUnits, UNITS_PER_CENT } from '@/lib/walls/photobudget';
 import { readPhoto } from '@/lib/walls/readphoto';
 import { json, openWalls } from '../guard';
+import { later } from '@/app/api/count';
+import { countPhoto } from '@/lib/insights/store';
 
 /**
  * POST /api/walls/photo — a photo of books (JPEG or PNG, the browser has
@@ -63,6 +65,7 @@ export async function POST(request: NextRequest) {
   }
   if (today > PHOTOS_PER_DAY) {
     recordPhoto({ capped: true, today });
+    later(() => countPhoto({ outcome: 'capped' }));
     return json({ error: 'Today’s photos are used up — the site reads a limited number a day. Tomorrow again.' }, 429);
   }
 
@@ -78,6 +81,8 @@ export async function POST(request: NextRequest) {
   const state = budgetState(spentBefore, budget);
   if (state === 'full') {
     recordPhoto({ capped: 'budget', spentCents: spentBefore / UNITS_PER_CENT, budget, today });
+    // The analytics count a photo turned away the same, whichever guard did it (K13).
+    later(() => countPhoto({ outcome: 'capped' }));
     await sendAlert(`photo-full:${day}`, budgetMail('full', { day, spentCents: spentBefore / UNITS_PER_CENT, budget, photos: today, site: SITE_NAME }));
     return json({ error: 'Today’s photos are used up — the site reads a limited number a day. Tomorrow again.' }, 429);
   }
@@ -111,7 +116,7 @@ export async function POST(request: NextRequest) {
         pieces = reading.pieces;
         piecesFailed = reading.piecesFailed;
         // What this read cost goes onto the day, and a threshold crossed sends Julian one mail.
-        const units = spendUnits(reading.tokensIn, reading.tokensOut);
+        const units = spendUnits(reading.model, reading.tokensIn, reading.tokensOut);
         const after = await open.store.spendPhoto(day, units).catch(() => 0);
         spentCents = after / UNITS_PER_CENT;
         for (const level of crossed(after - units, after, budget)) {
@@ -124,6 +129,8 @@ export async function POST(request: NextRequest) {
       } catch {
         // Never "no books": the model did not answer, which is something else (N12).
         recordPhoto({ failed: 'model', bytes: bytes.length, ms: Date.now() - started });
+        // Awaited inside the stream, before it closes, so the function is still alive for the write; it never throws.
+        await countPhoto({ outcome: 'failed' });
         line({ error: 'The photo could not be read just now. Try again in a moment.' });
         controller.close();
         return;
@@ -137,6 +144,16 @@ export async function POST(request: NextRequest) {
         controller.close();
         return;
       }
+      // What the photo cost, for the analytics (ROADMAP 3.1, K13): tokens per model, books read and found.
+      await countPhoto({
+        outcome: 'read',
+        model,
+        inputTokens: tokens.in,
+        outputTokens: tokens.out,
+        books: books.length,
+        found: matches.filter((m) => m.tile && !m.unsure).length,
+        maybe: matches.filter((m) => m.unsure).length,
+      });
       recordPhoto({
         bytes: bytes.length,
         sent: `${prepared.width}x${prepared.height}`,

@@ -8,7 +8,7 @@
  *   npx tsx lab/shelf/evaluate.ts                        # all photos
  *   npx tsx lab/shelf/evaluate.ts --only 02,08 --label "point prompt"
  *
- * It calls the model (about 2 ct a photo, 13 ct for a dense one) and no
+ * It calls the model (about 1.5 ct a photo, 6–9 ct for a dense one) and no
  * catalogue. The photos are Julian's and stay local (git-ignored); the truth
  * lists and the results are text and are committed, so a change to the
  * prompt, the threshold or the cutting can be compared with the run before.
@@ -16,6 +16,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { costUsd } from '../../lib/insights/prices';
 import { preparePhoto } from '../../lib/photoprep';
 import type { RecognizedBook } from '../../lib/recognize';
 import { sameBook, wordsOf } from '../../lib/walls/dense';
@@ -123,7 +124,8 @@ async function main() {
     try {
       const reading = await readPhoto(prepared);
       const s = score(photo, reading.books);
-      const cents = Math.round(((reading.tokensIn * 3 + reading.tokensOut * 15) / 10000) * 10) / 10;
+      // List price of the model that read it (lib/insights/prices.ts); 0 for a model the table does not know.
+      const cents = Math.round((costUsd(reading.model, reading.tokensIn, reading.tokensOut) ?? 0) * 1000) / 10;
       scores.push({ file: photo.file, what: photo.what, complete: photo.complete, ...s, pieces: reading.pieces, ms: reading.msModel, tokensIn: reading.tokensIn, tokensOut: reading.tokensOut, cents });
       console.error(`${photo.file}: ${s.hit}/${s.truth} read, ${s.extra} beyond the list, ${reading.pieces} pieces, ${(reading.msModel / 1000).toFixed(1)} s, ${cents} ct`);
     } catch (err) {

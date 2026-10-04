@@ -54,3 +54,5 @@ Für die Frage, ab wie vielen Büchern sich der zweite Blick lohnt (Julian, 2026
 
 Alle anderen Fotos lesen im ersten Blick höchstens 21 Bücher. Die Schwelle steht seitdem bei 40: sie trifft die fünf Fotos, bei denen der zweite Blick etwas bringt, und lässt die Schuber aus. Ergebnisse: `lab/shelf/testset/results/*-one-look.json`.
 
+**Berichtigung der Preise (2026-10-04, beim Zusammenführen mit main):** alle Cent-Angaben in diesem Dokument bis hierher rechnen mit **angenommenen** 3 $ / 15 $ je Million Token. Die Analyse-Sitzung (ROADMAP 3.1, K13) hat den Listenpreis nachgeschlagen: `claude-sonnet-5` kostet **2 $ / 10 $** (`lib/insights/prices.ts`). Alle Kosten sind also um ein Drittel niedriger als oben genannt: ein gewöhnliches Foto rund **1,5 ct** statt 2, ein dichtes **6–9 ct** statt 9–13, der Testsatz-Lauf mit zweitem Blick **53 ct** statt 80, mit einem Blick 25 statt 38. Die Verhältnisse (zweiter Blick ≈ doppelte Kosten über den ganzen Satz, Vierfaches bei einer dichten Wand) bleiben. Budget und Auswertungsskript rechnen seitdem mit der gemeinsamen Tabelle.
+
