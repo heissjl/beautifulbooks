@@ -93,10 +93,10 @@
       <div class="label">Klickrate der Buchseite</div>
       <div class="value">8,4 %</div>
       <div class="delta up">+1,1 Pkt. <span class="vs">gegen die 30 Tage davor</span></div>
-      <div class="note">Buchseiten-Besuche mit mindestens einem Kauf-Klick ÷ Buchseiten-Besuche. Signale erfasst: ~91 % (Abgleich mit /go/).</div>
+      <div class="note">Buchseiten-Besuche mit mindestens einem Klick zum Händler ÷ Buchseiten-Besuche. Signale erfasst: ~91 % (Abgleich mit /go/).</div>
     </div>
     <div class="card"><div class="label">Buchseiten-Besuche</div><div class="value">3.412</div><div class="delta up">+18 %</div><svg class="spark" data-series="visits" height="28"></svg></div>
-    <div class="card"><div class="label">Kauf-Klicks</div><div class="value">287</div><div class="delta up">+34 %</div><svg class="spark" data-series="clicks" height="28"></svg></div>
+    <div class="card"><div class="label">Klicks zum Händler</div><div class="value">287</div><div class="delta up">+34 %</div><svg class="spark" data-series="clicks" height="28"></svg></div>
     <div class="card"><div class="label">Suchen</div><div class="value">1.960</div><div class="delta up">+9 %</div><svg class="spark" data-series="searches" height="28"></svg></div>
     <div class="card"><div class="label">Suche ohne Ergebnis</div><div class="value">6,1 %</div><div class="delta down">+0,8 Pkt.</div><div class="note">davon Quelle ausgefallen: 0,7 %</div></div>
   </section>
@@ -106,7 +106,7 @@
     <p class="sub">Zwei Diagramme mit gemeinsamer Zeitachse, keine zweite y-Achse.</p>
     <div class="label">Buchseiten-Besuche</div>
     <svg id="lineVisits" height="140"></svg>
-    <div class="label" style="margin-top:12px">Kauf-Klicks</div>
+    <div class="label" style="margin-top:12px">Klicks zum Händler</div>
     <svg id="lineClicks" height="110"></svg>
   </section>
 
@@ -119,7 +119,7 @@
     </div>
     <div class="card">
       <h2>Händler</h2>
-      <p class="sub">Kauf-Klicks aus /go/, exakt gezählt.</p>
+      <p class="sub">Klicks aus /go/, exakt gezählt. Ein Klick ist kein Kauf; Käufe stehen im Partner-Dashboard.</p>
       <div class="tablewrap"><table id="retailers"><thead><tr><th>Händler</th><th>Markt</th><th class="barcell">Anteil</th><th class="num">Klicks</th><th class="num">Produktlink</th></tr></thead><tbody></tbody></table></div>
       <p class="note">Mit dem Shop-Modus kommt eine Spalte „Provision je 100 Klicks“ dazu, von Hand aus den Partner-Dashboards.</p>
     </div>
@@ -252,10 +252,10 @@
     hit.addEventListener('pointerleave', () => { hair.setAttribute('visibility', 'hidden'); dot.setAttribute('visibility', 'hidden'); hideTip(); });
   }
   line('lineVisits', visits, 'Buchseiten-Besuche');
-  line('lineClicks', clicks, 'Kauf-Klicks');
+  line('lineClicks', clicks, 'Klicks zum Händler');
 
   // Funnel: one series, bars from a shared baseline.
-  const funnel = [['Besuch', 100], ['Wand geladen', 93], ['Cover gewählt', 31], ['Kauf-Klick', 8.4]];
+  const funnel = [['Besuch', 100], ['Wand geladen', 93], ['Cover gewählt', 31], ['Klick zum Händler', 8.4]];
   const fWrap = document.getElementById('funnel');
   funnel.forEach(([name, pct], i) => {
     const row = document.createElement('div'); row.className = 'funnel-row';

@@ -1,6 +1,6 @@
 # Plan 3.1: Kennzahlen und Analyse-Ansicht
 
-Stand: 2026-10-03, **offen**, nichts gebaut. Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
+Stand: 2026-10-03, **offen**, nichts gebaut; Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
 
 ## 1. Grundsatz
 
@@ -22,7 +22,7 @@ Wöchentlich gelesen, Zeitraum wählbar (7 / 30 / 90 Tage), Vergleich mit dem Ze
 |---|---|---|---|---|
 | **K1** | **Klickrate der Buchseite** (die Leitzahl) | Buchseiten-Besuche mit ≥ 1 Kauf-Klick ÷ Buchseiten-Besuche | Signal `book` | Trägt der Shop-Modus? Unter 2 % nach vier Wochen mit ≥ 500 Besuchen: Händlerliste und Verdikt ansehen, bevor Partnerprogramme beworben werden. Ist die Zahl, die eine Bewerbung bei Awin oder Amazon glaubwürdig macht |
 | K2 | Buchseiten-Besuche | Anzahl Signale `book` | Signal `book` | Nenner von K1; Herkunft (K9) |
-| K3 | Kauf-Klicks je Händler × Markt × Linkart | Zähler in `/go/` | Server, exakt | Reihenfolge der Händler (1.2, 3.3); welches Programm zuerst (4.1–4.3). Ein Händler unter 2 % Anteil nach 90 Tagen wandert hinter die Klappe |
+| K3 | Klicks zum Händler je Händler × Markt × Linkart (Produkt, Suche nach ISBN, Titelsuche) | Zähler in `/go/` — nach dem Umbau in §4 auch für Titelsuchen | Server, exakt | Reihenfolge der Händler (1.2, 3.3); welches Programm zuerst (4.1–4.3). Ein Händler unter 2 % Anteil nach 90 Tagen wandert hinter die Klappe |
 | K4 | Weg zum Kauf | Besuch → Wand geladen (≥ 1 Seite) → Cover gewählt → Kauf-Klick, je als Anteil | Signal `book` | Wo der Weg bricht: vor „Cover gewählt" ist es die Wand (6.3 Laden, Faltung), danach die Händlerliste |
 | K5 | Suche ohne Ergebnis | Anteil Suchen mit 0 Treffern, **getrennt** von Suchen, deren Quelle ausfiel | Signal `search` | Leer → Kuratierung, Tippfehler (6.5); ausgefallen → Open Library (1.4, N12). Ausgefallen über 3 % an einem Tag ist ein Betriebsfehler |
 | K6 | Klickposition in der Suche | Verteilung 1 / 2 / 3 / 4–10 / mehr / kein Klick | Signal `search` | Ranking (alte §9.3 Schritt 10): Liegt Position 1 unter 50 %, stimmt die Reihenfolge nicht |
@@ -64,6 +64,23 @@ Zwei Signale aus dem Browser, je **eines pro Seitenbesuch**, gesendet beim Verla
 
 **`/go/`** — der vorhandene `recordClick` zählt zusätzlich `provider|market|kind` in Redis; die Logzeile `bb.click` bleibt.
 
+**Was als „Klick zum Händler" zählt, und wie** (Julian, 2026-10-04: „wie zählen wir den kaufklick"). Das Wort im Mock-up war falsch: **gezählt wird ein Klick auf einen Händler-Link, kein Kauf.** Ob gekauft wurde, weiß nur der Händler; im Shop-Modus steht es im Partner-Dashboard (3.3). Die Ansicht heißt die Stufe deshalb „Klick zum Händler".
+
+Heute laufen **nur die Links, die aus einer ISBN gebaut sind,** über `/go/` (`ShopLink` in `components/BookDetail.tsx`, `counted`). Gelesen am 2026-10-04, **ungezählt** sind:
+- die **Titelsuchen** bei Händlern (`searchLinksFor`, `-title`-Provider) — gerade für Drucke ohne ISBN, also die alten Ausgaben, und im Shop-Modus tragen sie die Partnerkennung mit (`searchUrl(query, affiliate)`): Klicks, die Geld bringen können, ohne gezählt zu werden;
+- „Or read it in another edition" (`plan.anyEdition`);
+- „Find this exact cover" (AbeBooks, eBay, Lens, TinEye, WorldCat), die lokalen Buchhandlungen (5.12) und Google-Vorschau.
+
+Daraus zwei Wege, je nach Art des Links:
+1. **Händler-Links ohne ISBN durch `/go/` schicken** (Server, exakt): `/go/<provider>/title?q=<Titel Autor>&market=<m>`. Die Route baut das Ziel mit `searchUrl` aus der Tabelle — Host und Pfad kommen aus `lib/buylinks.ts`, aus der Anfrage nur der Suchtext, der als Parameter kodiert wird; damit bleibt es **keine offene Weiterleitung** (CLAUDE.md). Gezählt als `kind=title`. Ein Test: ein Suchtext mit `//`, `@` oder einer URL landet als Suchtext beim Händler, nie als Ziel.
+2. **Alles, was kein Händler ist** (Find this cover, lokale Läden, Vorschau), zählt nur das Signal `book` im Browser, als eigenes Feld `found` (ja/nein), nicht als Klick zum Händler.
+
+**Wie der Browser den Klick merkt:** ein Listener auf der Buchseite für `click` und `auxclick` (Mittelklick, „in neuem Tab öffnen" über Tastatur) auf Links, deren `href` mit `/go/` beginnt, setzt `bought=1` im Besuch; gesendet wird beim Verlassen wie alles andere. Ein Rechtsklick → „Link kopieren" zählt nicht, ein Doppelklick einmal im Signal, zweimal in `/go/` (zwei Weiterleitungen).
+
+**Warum beide Zahlen, Server und Browser:** `/go/` zählt Klicks exakt, kennt aber den Besuch nicht (keine Kennung) — er sagt „287 Klicks", nicht „in wie vielen Besuchen". Das Signal kennt den Besuch, verliert aber Meldungen. Die Klickrate (K1) kommt aus dem Signal; der Abgleich beider ist die Erfassungsquote. Crawler fallen bei `/go/` fast ganz heraus (`robots.txt` sperrt `/go/`, `target=_blank`-Links werden nicht vorgeladen).
+
+**Im Shop-Modus** kommt eine Herkunftsangabe *an den Händler* dazu, wo das Programm sie erlaubt (Awin `clickref`, Impact `subId`, Amazon eigene Tracking-IDs je Seitentyp): nur der **Seitentyp** (`book`, `collection`, `decades`), nie etwas über den Leser. Dann zeigt das Dashboard des Partners, welche Seitenart Käufe bringt, und 3.3 kann Klicks und Käufe je Händler und Seitentyp nebeneinanderlegen.
+
 **Der Empfänger** `POST /api/seen` (bewusst kein Name wie `track`, `event`, `analytics`, den Werbeblocker-Listen sperren): nimmt nur JSON bis 1 KB, prüft jedes Feld gegen die feste Liste oben und verwirft alles andere stumm (204), Rate-Limit-Bucket `seen` (60/min je IP, wie die übrigen pro Instanz), antwortet immer 204 — auch wenn der Speicher schweigt, denn ein Leser darf nie merken, dass gezählt wird oder nicht. Nur in Production (`VERCEL_ENV`), nie unter `next dev` und nie in Previews; dort ein `DEBUG`-Log.
 
 **Julians eigene Besuche:** die Analyse-Ansicht setzt beim Öffnen in Julians Browser `localStorage['bb.self'] = 1`; die Seite sendet dann nichts. Das ist ein Schalter auf Julians Gerät, keine Kennung eines Lesers.
@@ -76,7 +93,7 @@ Die Redis des Spiels (F7.3), über `commandsFromEnv` aus `lib/hotornot/store.ts`
 - `ins:<tag>:clicks` (`provider|market|kind`), `ins:<tag>:search`, `ins:<tag>:empty` (Anfrage → Anzahl), `ins:<tag>:ops` (`google-stop`, `ol-failed`).
 - Aufbewahrung: `EXPIRE` 400 Tage auf jedem Tageshash, **90 Tage** auf `empty`.
 - Je Signal ein Pipeline-Aufruf mit 2–3 Befehlen. Bei 1.000 Besuchen am Tag rund 3.000 Befehle und unter 1 MB im Jahr — vor dem Bau am Konto der Redis ablesen, welches Kontingent gilt (die Verbindung ist eine direkte `redis://`-Adresse, `STORAGE_REDIS_URL`).
-- Ausgelesen wird nur über `GET /api/insights?from=&to=` mit `Authorization: Bearer <INSIGHTS_TOKEN>`, `no-store`; summiert die Tage auf dem Server und liefert fertige Kennzahlen.
+- Ausgelesen wird nur über `GET /api/insights?from=&to=` hinter dem Admin-Cookie `bb_admin` (die Seite) bzw. dem Admin-Passwort als Bearer (das Cockpit), `no-store`; summiert die Tage auf dem Server und liefert fertige Kennzahlen.
 
 ## 6. Datenschutz
 
@@ -95,7 +112,13 @@ Was den Browser verlässt, steht vollständig in §4; nichts davon bezieht sich 
 
 ## 8. Die Ansicht
 
-**Wo:** als Ansicht im **Cockpit** (`npm run cockpit`, 6.54) statt als Seite auf der öffentlichen Website. Das Cockpit fragt die Produktion schon jetzt einmal je Erzeugung mit Bearer-Token; es läuft nur auf Julians Rechner auf 127.0.0.1, braucht also keine Anmeldeseite, kein Cookie, keine Admin-Route mit HTML im Netz. Öffentlich ist nur der JSON-Endpunkt hinter dem Token. Nachteil: nicht vom Telefon aus. Alternative: `/admin/insights` mit Passwortformular — doppelter Aufwand für die Anmeldung.
+**Wo: online, unter `/admin/insights`** (Julian, 2026-10-04: „ich glaub ich will es schon auch online" — die Empfehlung „nur im Cockpit" ist damit verworfen; Grund war das Telefon). Dafür ist fast alles schon da:
+- **Anmeldung: der vorhandene Admin-Zugang.** `/curate` setzt nach dem Admin-Passwort (`SUGGEST_ADMIN_PASSWORD`) das Cookie `bb_admin`, sieben Tage gültig, HMAC über das Ablaufdatum, ohne Angabe über die Person (`lib/suggest/auth.ts`, `adminSignedIn()` in `session.ts`); `/create/review` (5.13d) und das Veröffentlichen aus `/curate` (5.10g) prüfen es schon. Die Analyse prüft dasselbe — **kein neues Passwort, kein `INSIGHTS_TOKEN`, keine neue Anmeldeseite.** Ohne gültiges Cookie antwortet die Seite **404**, nicht 401, damit sie sich nicht ankündigt; `noindex`, `force-dynamic`, `Cache-Control: no-store`, nicht in der Sitemap, `/admin/` in `robots.txt` gesperrt.
+- **Eine Kopplung, die vorher zu lösen ist:** `adminSessionValid` verlangt heute zusätzlich `SUGGEST_PASSWORD` (das Passwort der Freunde) — ohne `/suggest` gäbe es also keine Analyse. Claude trennt das: eine Funktion `adminEnabled()` hängt nur an `SUGGEST_ADMIN_PASSWORD`; `/suggest` und `/curate` behalten ihre eigene Bedingung. Ein Test hält beides fest.
+- **Daten:** die Seite ist eine Server-Komponente und liest Redis direkt (ein Pipeline-Aufruf mit `HGETALL` je Tag und Hash, bei 90 Tagen rund 500 Befehle je Aufruf; Ergebnis 5 Minuten im Speicher der Funktion). Der JSON-Endpunkt `/api/insights` bleibt für das Cockpit, mit dem Admin-Passwort als Bearer, wie das Cockpit die Produktion schon heute fragt.
+- **Das Telefon** ist der Grund für online: die Ansicht folgt N14 (390 × 844 und 1280 × 800); das Mock-up ist bei beiden Breiten angesehen, ohne seitliches Scrollen.
+- **Eigene Besuche:** öffnet Julian `/admin/insights`, setzt die Seite `localStorage['bb.self'] = 1` in diesem Browser; danach sendet die Website von dort keine Signale. Auf jedem Gerät einmal die Analyse öffnen genügt.
+- **Was das Risiko ist:** die Analyse zeigt nur Summen und Suchbegriffe ohne Ergebnis, nichts über Leser; ein erratenes Admin-Passwort öffnete aber auch `/curate` und die Moderation — das gilt schon heute, die Analyse vergrößert es nicht. Das Passwort lang wählen; die Anmeldung läuft durch das Rate-Limit der Login-Route.
 
 **Aufbau** (Mock-up: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html)), von oben nach unten in der Reihenfolge, in der eine Woche gelesen wird:
 
@@ -113,16 +136,16 @@ Unter jedem Abschnitt eine Zeile „gezählt wird …", damit niemand eine Zahl 
 
 ## 9. Was Julian entscheidet
 
-1. **Ort**: Cockpit (Empfehlung) oder `/admin` auf der Website.
+1. ~~**Ort**~~ — entschieden 2026-10-04: online unter `/admin/insights`, hinter dem vorhandenen Admin-Zugang; das Cockpit liest denselben Endpunkt.
 2. **Suchbegriffe ohne Ergebnis** speichern (90 Tage, ab zwei gleichen gezeigt) — ja oder nur die Anzahl.
 3. **Der Satz** für die Datenschutzerklärung (§6).
-4. Ein **`INSIGHTS_TOKEN`** in Vercel (Production).
+4. ~~Ein `INSIGHTS_TOKEN`~~ — entfällt, der Admin-Zugang genügt. Zu prüfen ist nur, dass `SUGGEST_ADMIN_PASSWORD` in Production gesetzt und lang ist.
 
 ## 10. Bau, Reihenfolge, Aufwand
 
 | Schritt | Was | Aufwand | Wann |
 |---|---|---|---|
-| 3.1a | `/go/`-Zähler in Redis, `lib/insights/` (rein + Server, Tests), `/api/insights` mit Token, K3 und K11 in der Ansicht | ½ Tag | **sofort** — jeder Tag ohne ihn ist ein Tag ohne Klickzahlen; vor jeder Partnerbewerbung |
+| 3.1a | `/go/`-Zähler in Redis, `lib/insights/` (rein + Server, Tests), `adminEnabled()` von `/suggest` getrennt, `/admin/insights` und `/api/insights`, K3 und K11 in der Ansicht | ¾ Tag | **sofort** — jeder Tag ohne ihn ist ein Tag ohne Klickzahlen; vor jeder Partnerbewerbung |
 | 3.1b | `/api/seen`, die Signale `book` und `search`, K1, K2, K4–K10, Eichung gegen `/go/`, Datenschutzsatz | 1 Tag | nach Julians Entscheidungen §9; sinnvoll, sobald 2.5 Besucher bringt |
 | 3.1c | Spalte Provision je 100 Klicks (von Hand), K12 aus den vorhandenen Beständen | 2 h | mit dem Shop-Modus |
 
