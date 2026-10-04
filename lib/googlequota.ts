@@ -101,6 +101,14 @@ function logQuotaEvent(verdict: 'daily' | 'rate', pauseMs: number, now: number):
   } catch {
     // A log line is not worth breaking a page over.
   }
+  // A mail to Julian when the day's quota is gone (lib/alerts.ts), once a Pacific day. Loaded only now:
+  // the alert knows the store, and this module is imported where the store must not follow.
+  if (verdict === 'daily') {
+    const until = new Date(now + pauseMs);
+    void import('./alerts')
+      .then(({ sendAlert, googleQuotaMail }) => sendAlert(`google-quota:${until.toISOString().slice(0, 10)}`, googleQuotaMail(until)))
+      .catch(() => {});
+  }
 }
 
 /** When the breaker opens, in ms since the epoch; 0 while it is shut. */

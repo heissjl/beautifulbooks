@@ -11,8 +11,15 @@
  */
 import type { RecognizedBook } from '@/lib/recognize';
 
-/** From this many books in the first read on, the photo is read again in pieces. */
-export const DENSE_AT = 30;
+/**
+ * From this many books in the first read on, the photo is read again in
+ * pieces. 40, not the 30 it began with (Julian, 2026-10-04: „die grenze für
+ * die dichte hochsetzen, damit wir nicht aus versehen viel ausgeben“): on the
+ * test set one look reads 35–55 books of a dense shelf and at most 21 of
+ * anything else, so 40 still catches five of the six dense photos and leaves
+ * out the one a second look added nothing to.
+ */
+export const DENSE_AT = 40;
 
 /** [x0, y0, x1, y1] as fractions of the picture. */
 export type Piece = [number, number, number, number];

@@ -28,7 +28,21 @@ export interface PhotoReading {
   piecesFailed: number;
 }
 
+/**
+ * From how many books in the first look a photo is read again. `PHOTO_DENSE_AT`
+ * overrides the default without a deploy; 0 or "off" turns the second look
+ * off altogether — the switch for a day the reads cost too much.
+ */
+export function denseAt(env: Record<string, string | undefined> = process.env): number | undefined {
+  const raw = env.PHOTO_DENSE_AT?.trim().toLowerCase();
+  if (raw === 'off' || raw === '0') return undefined;
+  const n = Number(raw);
+  return raw && Number.isInteger(n) && n > 0 ? n : DENSE_AT;
+}
+
 export interface ReadHooks {
+  /** false: one look only, whatever the photo holds (the day's budget is running low). */
+  secondLook?: boolean;
   /** A book of the first look, the moment the model has written it. */
   onBook?: (book: RecognizedBook, index: number) => void;
   /** The second look began (`done` 0) or one more of its pieces is back. */
@@ -38,7 +52,7 @@ export interface ReadHooks {
 /** Throws when the model does not answer the first look; a piece that fails is counted and left out. */
 export async function readPhoto(prepared: PreparedPhoto, hooks: ReadHooks = {}): Promise<PhotoReading> {
   const started = Date.now();
-  const first = await recognize(prepared.bytes, 'image/jpeg', hooks.onBook, DENSE_AT);
+  const first = await recognize(prepared.bytes, 'image/jpeg', hooks.onBook, hooks.secondLook === false ? undefined : denseAt());
   const reading: PhotoReading = {
     books: first.books,
     model: first.model,

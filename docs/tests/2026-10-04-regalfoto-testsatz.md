@@ -38,3 +38,19 @@ ROADMAP 5.11a. Julian lieferte am 2026-10-04 zwölf Fotos aus Buchhandlungen (�
 2. **Bruchstücke am Rand:** ein Satz im Prompt („ein Buch, dessen Titel der Bildrand abschneidet, auslassen“) oder der angeschnittene oberste und unterste Streifen wird beim zweiten Blick nicht gelesen — am Testsatz zu messen.
 3. **Ein Feld für Unsicheres** (die Vermutung vom 2026-10-03: ohne Konfidenz verschweigt das Modell, was es halb liest) — am Testsatz zu messen, ob es *Collected Novellas* und die Pettersons zurückbringt, ohne die Fehler auf den vollzähligen Fotos zu erhöhen.
 4. **Das verwackelte Foto** braucht keinen besseren Prompt, sondern einen Satz an den Leser: „the photo is blurred — try again, holding still“ — erkennbar an der Schärfe des Bilds (Kantenstärke), ohne Modell.
+
+## Zweiter Lauf: nur ein Blick (`PHOTO_DENSE_AT=off`)
+
+Für die Frage, ab wie vielen Büchern sich der zweite Blick lohnt (Julian, 2026-10-04: „die grenze für die dichte hochsetzen“). Über alle vierzehn Fotos: **261 von 322 (81 %) für 37,8 ct**, gegen 292 von 322 (91 %) für 79,8 ct mit zweitem Blick.
+
+| Foto | ein Blick | zwei Blicke | Lesungen im ersten Blick | Kosten ein / zwei |
+|---|---|---|---|---|
+| 04 Jazz | 37 / 46 | 43 / 46 | 55 | 4,6 / 9,9 ct |
+| 07 übersetzte Literatur | 38 / 49 | 43 / 49 | 44 | 4,6 / 10,5 ct |
+| 09 City Lights | 29 / 38 | 32 / 38 | 43 | 3,7 / 12,1 ct |
+| 10 Belletristik | 38 / 46 | 46 / 46 | 42 | 4,1 / 11,9 ct |
+| 12 Schuber | 20 / 20 | 20 / 20 | 35 | 3,6 / 8,8 ct |
+| 13 Galeriewand | 30 / 39 | 38 / 39 | 44 | 3,8 / 13,1 ct |
+
+Alle anderen Fotos lesen im ersten Blick höchstens 21 Bücher. Die Schwelle steht seitdem bei 40: sie trifft die fünf Fotos, bei denen der zweite Blick etwas bringt, und lässt die Schuber aus. Ergebnisse: `lab/shelf/testset/results/*-one-look.json`.
+

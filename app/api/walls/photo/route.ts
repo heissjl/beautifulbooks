@@ -2,6 +2,9 @@ import { NextRequest } from 'next/server';
 import { hasApiKey, type RecognizedBook } from '@/lib/recognize';
 import { matchPhotoBooksEach, photoRead, MAX_PHOTO_BOOKS, type PhotoMatch } from '@/lib/walls/photo';
 import { preparePhoto } from '@/lib/photoprep';
+import { sendAlert } from '@/lib/alerts';
+import { SITE_NAME } from '@/lib/seo';
+import { budgetCents, budgetMail, budgetState, crossed, spendUnits, UNITS_PER_CENT } from '@/lib/walls/photobudget';
 import { readPhoto } from '@/lib/walls/readphoto';
 import { json, openWalls } from '../guard';
 
@@ -63,6 +66,22 @@ export async function POST(request: NextRequest) {
     return json({ error: 'Today’s photos are used up — the site reads a limited number a day. Tomorrow again.' }, 429);
   }
 
+  // The day's budget in cents (lib/walls/photobudget.ts): used up → no photo; past half → one look only.
+  const day = new Date().toISOString().slice(0, 10);
+  const budget = budgetCents();
+  let spentBefore = 0;
+  try {
+    spentBefore = await open.store.spendPhoto(day, 0);
+  } catch {
+    // A silent store does not stop a reader; the budget is a guard, not a right.
+  }
+  const state = budgetState(spentBefore, budget);
+  if (state === 'full') {
+    recordPhoto({ capped: 'budget', spentCents: spentBefore / UNITS_PER_CENT, budget, today });
+    await sendAlert(`photo-full:${day}`, budgetMail('full', { day, spentCents: spentBefore / UNITS_PER_CENT, budget, photos: today, site: SITE_NAME }));
+    return json({ error: 'Today’s photos are used up — the site reads a limited number a day. Tomorrow again.' }, 429);
+  }
+
   const encoder = new TextEncoder();
   const started = Date.now();
   const stream = new ReadableStream<Uint8Array>({
@@ -75,9 +94,11 @@ export async function POST(request: NextRequest) {
       let problems = 0;
       let pieces = 0;
       let piecesFailed = 0;
+      let spentCents = spentBefore / UNITS_PER_CENT;
       try {
         // One look, and for a dense photo a second, shelf by shelf (lib/walls/readphoto.ts).
         const reading = await readPhoto(prepared, {
+          secondLook: state === 'open',
           onBook: (book, i) => {
             if (i < MAX_PHOTO_BOOKS) line({ book: photoRead(book), i });
           },
@@ -89,7 +110,14 @@ export async function POST(request: NextRequest) {
         problems = reading.problems;
         pieces = reading.pieces;
         piecesFailed = reading.piecesFailed;
-        // A dense photo is several reads, and the day's budget counts reads.
+        // What this read cost goes onto the day, and a threshold crossed sends Julian one mail.
+        const units = spendUnits(reading.tokensIn, reading.tokensOut);
+        const after = await open.store.spendPhoto(day, units).catch(() => 0);
+        spentCents = after / UNITS_PER_CENT;
+        for (const level of crossed(after - units, after, budget)) {
+          await sendAlert(`photo-${level}:${day}`, budgetMail(level, { day, spentCents, budget, photos: today + reading.pieces, site: SITE_NAME }));
+        }
+        // A dense photo is several reads, and the day's count counts reads.
         for (let i = 0; i < pieces; i++) open.store.countPhoto(new Date().toISOString().slice(0, 10)).catch(() => {});
         books = reading.books.slice(0, MAX_PHOTO_BOOKS);
         line({ read: books.map(photoRead), problems, capped: reading.books.length > MAX_PHOTO_BOOKS });
@@ -128,6 +156,9 @@ export async function POST(request: NextRequest) {
         tokensIn: tokens.in,
         tokensOut: tokens.out,
         today,
+        spentCents,
+        budget,
+        ...(state === 'half' ? { oneLook: 'budget' } : {}),
       });
       line({ done: true });
       controller.close();

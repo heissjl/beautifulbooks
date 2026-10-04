@@ -171,3 +171,27 @@ Julian nach der Frage, ob sich etwas vorschalten lässt, das Prompt und Denk-Ein
 
 Julian lieferte zwölf Fotos; mit den zwei ersten sind es vierzehn, je mit einer Wahrheitsliste (Entwurf, von Julian zu korrigieren) und einem Auswertungsskript, das den Lesecode der Website selbst benutzt (`lib/walls/readphoto.ts`, aus der Route herausgezogen). Erster Lauf: **292 von 322 Büchern der Listen gelesen (91 %)**, 94 % davon mit dem Autor, der auf dem Foto steht; auf den sieben vollzähligen Fotos ein einziger Fehler; Umschläge 1–2,4 ct und 2–7 s, dichte Regale 9–13 ct und 17–24 s; das verwackelte Regal 52 %. Bericht mit Tabelle, Fehlbildern und vier Vorschlägen: [docs/tests/2026-10-04-regalfoto-testsatz.md](../tests/2026-10-04-regalfoto-testsatz.md). Ab jetzt läuft jede Änderung an Prompt, Schwelle oder Schnitt zuerst gegen diesen Satz.
 
+## Schwelle 40, Tagesbudget, Mail (2026-10-04)
+
+Julian: „lass uns die grenze für die dichte hochsetzen, damit wir nicht aus versehen viel ausgeben. außerdem braucht die website einen stopp falls wir zu viel traffic oder verbrauch bekommen. zb eine email an mich als info.“
+
+**Die Schwelle, am Testsatz gemessen** (`PHOTO_DENSE_AT=off`, Lauf `one-look`): ein einziger Blick liest auf den sechs dichten Fotos 35–55 Bücher, auf allen anderen höchstens 21, und über alle vierzehn **261 von 322 (81 %) für 38 ct** — gegen **292 von 322 (91 %) für 80 ct** mit dem zweiten Blick. `DENSE_AT` steht jetzt bei **40** statt 30: fünf der sechs dichten Fotos bekommen den zweiten Blick weiter, das sechste (die Schuber, 35 Bücher) hatte durch ihn nichts gewonnen. `PHOTO_DENSE_AT` überschreibt die Zahl ohne Deploy; `off` schaltet den zweiten Blick ab.
+
+**Das Budget** (`lib/walls/photobudget.ts`, `WallStore.spendPhoto`): Kosten je Lesung aus den Token, auf den UTC-Tag summiert; Voreinstellung 200 ct am Tag (`PHOTO_BUDGET_CENTS`). Ab der Hälfte nur noch ein Blick, am Budget ist das Foto aus (429). Probelauf lokal mit 3 ct: Lesung 1 und 2 je 1,04 ct, Lesung 3 mit `oneLook: budget`, Lesung 4 abgewiesen mit `capped: budget`. Die Zahlgrenze von 300 Lesungen bleibt daneben.
+
+**Die Mail** (`lib/alerts.ts`): je Schwelle und Tag eine, über Resend, Empfänger `ALERT_TO` → `WALLS_REPORT_TO` → Impressum; Dublettenschutz im Speicher (`alerts:<Schlüssel>`, zwei Tage). Dazu eine Mail, wenn Google das Tageskontingent als erschöpft meldet. Ohne `RESEND_API_KEY` geht nichts hinaus — **ob der Schlüssel in Produktion gesetzt ist, konnte diese Sitzung nicht prüfen** (`vercel env ls` gab im Worktree nichts aus).
+
+## Meilenstein 2026-10-04 — Stand und Fortsetzung
+
+**In Produktion seit 2026-10-04** (Julian: „make a milestone to continue from later, merge the earlier fixes and deploy“): ein Punkt je Buch statt Reihen (Stapel gehen), Pins statt Kästen, der zweite Blick auf dichte Fotos ab 40 Büchern mit Schnitt an den Regalbrettern, das Modell ohne Denken, 100 Bücher je Foto, das Tagesbudget mit Stopp und Mail, der Rückweg von der Buchseite zur Wand (6.89). Der Testsatz und sein Auswertungsskript liegen im Lab.
+
+**Wo weitermachen — in dieser Reihenfolge:**
+
+1. **Julian korrigiert die Wahrheitslisten** (`lab/shelf/testset/truth.json`, Fotos 04, 07, 09, 10, 12, 13): erst dann ist „darüber hinaus“ eine Fehlerzahl. Bis dahin sind die 91 % eine Trefferquote gegen Claudes eigenen Entwurf.
+2. **Drei Ideen am Testsatz messen**, je ein Lauf (`npx tsx lab/shelf/evaluate.ts --label …`, 80 ct, drei Minuten), nie wieder an Einzelfotos: (a) Bruchstücke angeschnittener Bücher am Bildrand auslassen („GO“, „Self“, „SETH“ auf Foto 10) — per Prompt oder indem der angeschnittene Randstreifen beim zweiten Blick nicht gelesen wird; (b) ein Feld für Unsicheres, damit *Collected Novellas* und die vier Pettersons als „maybe“ kommen statt zu fehlen; (c) ein Hinweis bei Unschärfe statt eines halben Ergebnisses (Foto 05: 52 %), erkannt an der Kantenstärke ohne Modell.
+3. **Schritt 4 des Plans, Umschlag → Ausgabe:** jetzt gibt es Umschlagfotos (01, 02, 03, 06, 08, 11). Der Ausschnitt braucht einen Umriss; den liefert das Modell nicht — entweder der Segmentierer (unten) oder, einfacher für frontale Umschläge, ein Zuschnitt um den Punkt mit fester Größe, an den sechs Fotos zu messen.
+4. **Echte Umrisse** (MobileSAM mit den Punkten als Aufforderung, Lab-Experiment `lab/shelf/segment/`) — Julian hat noch nicht entschieden, ob es laufen soll.
+5. **Von Julian zu setzen:** das Monatslimit in der Anthropic-Konsole; `RESEND_API_KEY` in Vercel prüfen, sonst kommen die Mails nicht; optional `ALERT_TO`, `PHOTO_BUDGET_CENTS`, `PHOTO_DENSE_AT`.
+
+**Was man wissen muss, bevor man etwas anfasst:** die Denk-Einstellung hängt am Prompt (mit Reihen-Prompt las „high“ mehr, mit Punkt-Prompt „medium“ gleich viel für ein Drittel) — nach jeder Prompt-Änderung neu messen. Das Modell misst keine Lage, es zählt (in breiten Streifen bis „150 %“); `settle` fängt das ab, und geschnitten wird nur an Brettern und zwischen Rücken. LibreWolf, Firefox mit RFP und Tor geben ein Canvas nicht ehrlich zurück; der Server bereitet darum jedes Foto selbst auf. Die Route streamt JSON-Zeilen; die Liste im Browser wächst mit.
+
