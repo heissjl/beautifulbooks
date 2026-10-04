@@ -55,6 +55,7 @@ Steps 1–9 (data layer) and 10–16 (the trust plan: ranking, paged cover wall,
 - Open Library editions carry a `covers` array with possibly several ids; take all of them, not just `[0]`.
 - Google Books cover URLs: keep `zoom=1` and request size with `&fife=w800`. `zoom=2`+ is a page from the book scan and may not be the cover at all.
 - Google Books has no work concept. Its results must be matched to an Open Library work by normalized title + primary author and must never create a work of their own (decision E5).
+- **Open Library shuts the door on an address that asks too much**: on 2026-10-04 `openlibrary.org` refused every connection from Julian's Mac (`ECONNREFUSED` on ports 80 and 443, while `covers.openlibrary.org`, `archive.org` and the live site's own requests went through) after lab measurements from two sessions and the Calibre app had asked within the same hour. It is not an outage and it looks like one. Lab scripts ask the catalogue one request at a time with a pause, never in a loop and never beside another session's bulk run; a tool that meets a refused connection stops asking for a while (`refusedConnection` in `lab/calibre/find.ts`).
 - Open Library regularly takes 2–7 s for a search and 3–10 s for an editions page from Germany, occasionally much longer. Every external call needs a timeout and a cache (§4 N3, N4); the values live in `OL_TIMEOUTS`.
 
 ## Layout

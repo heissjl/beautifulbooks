@@ -222,7 +222,7 @@ async function find(query) {
   renderWork();
   const { status, body } = await api(`/api/find/${mine.id}${query ? `?q=${encodeURIComponent(query)}` : ''}`);
   if (open !== mine) return;
-  if (status !== 200) { mine.found = { hits: [], editionCovers }; mine.error = body.error; renderWork(); return; }
+  if (status !== 200) { mine.found = { hits: [], editionCovers, failed: status === 503 ? undefined : body.error }; mine.error = body.error; mine.pausedUntil = body.pausedUntil; renderWork(); return; }
   // A search Julian typed replaces the list, not the edition's own covers found by ISBN.
   mine.found = { ...body, editionCovers: body.editionCovers.length ? body.editionCovers : editionCovers };
   renderWork();
@@ -329,7 +329,7 @@ function renderWork() {
   else {
     if (f.failed) kids.push(el('p', { class: 'note warn' }, `${f.failed} What is listed may be incomplete.`));
     if (open.error && !open.workId) kids.push(el('p', { class: 'note bad' }, open.error));
-    if (f.hits.length === 0 && !f.failed) kids.push(el('p', { class: 'meta' }, 'Nothing found under this title and author. Try other words below — the original title often works.'));
+    if (f.hits.length === 0 && !f.failed && !open.error) kids.push(el('p', { class: 'meta' }, 'Nothing found under this title and author. Try other words below — the original title often works.'));
     // Once a work is chosen the others fold away: the covers are what the drawer is for.
     const chosen = f.hits.some((h) => h.id === open.workId);
     const hits = chosen && !open.others ? f.hits.filter((h) => h.id === open.workId) : f.hits;

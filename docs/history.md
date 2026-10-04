@@ -4342,3 +4342,13 @@ Julian, nachdem die App für *Rendezvous with Rama* Scans bis 2813 × 4536 fand,
 
 **Was daraus folgt:** für die Seite nichts — sie zeigt Cover höchstens 500 px hoch. Für Calibre nur auf dem Weg über eine Sammlung: die Kachel trägt die ID des Vertreters, und der kann der kleine Scan sein. Der Sammlungs-Modus (`serve.ts`) könnte je Kachel den größten Scan desselben Motivs nachschlagen (dieselbe Rechnung wie die Messung); nicht gebaut, zwei Werke sind keine Grundlage für eine Zahl, wie oft es vorkommt.
 
+## 2026-10-04 · Open Library sperrt die Adresse: die App pausiert (ROADMAP 5.16a)
+
+Julian, mit Bildschirmfoto aus „Calibre Covers": „Open Library did not answer for the ISBN. The search did not answer. … im getting this for all books".
+
+**Befund:** `openlibrary.org` verweigerte von Julians Mac jede Verbindung — `ECONNREFUSED` an 207.241.234.205, Port 443 und 80, nach 10 ms. `covers.openlibrary.org` antwortete (200 in 0,13 s), `archive.org` ebenso, und die laufende Seite bekam auf eine frische, ungecachte Suche („der ochsenkrieg ganghofer", `x-vercel-cache: MISS`) zwei Werke. Also kein Ausfall, sondern eine Sperre dieser Adresse durch das Internet Archive. **Was davor von hier aus gefragt hatte:** zwei Läufe von `lab/calibre/measure-fold.ts` über 17 Werke und drei Einzelwerke (zusammen rund 100 Katalog-Anfragen in wenigen Minuten, nacheinander, ohne Pause), Julians Klicks in der App (2–5 Anfragen je Buch, bei einer stillen Suche mit Wiederholung), und in einem anderen Worktree die Messung für 5.17 über die ganze Bibliothek. Welcher Anteil die Sperre ausgelöst hat, ist von hier nicht festzustellen; die Summe war es. Wie lange sie hält, ist nicht bekannt.
+
+**Geändert:** `refusedConnection` (lab/calibre/find.ts) erkennt die verweigerte Verbindung durch alle Fehlerhüllen; die App meldet dann statt „did not answer" den Grund und fragt **15 Minuten nicht mehr** — weder Suche noch Ausgaben-Seiten —, weil jede weitere Anfrage die Sperre verlängern kann. Bibliothek, Vergleich und Schreiben bleiben benutzbar, soweit die Bilder schon da sind. `measure-fold.ts` fragt den Katalog mit 1,5 s Pause und sagt im Kopf, dass es einmal läuft und nicht neben einem anderen Massenlauf. Eine Zeile in CLAUDE.md unter den API-Fakten. Geprüft an der bestehenden Sperre: erstes Buch 503 mit Erklärung nach 0,43 s, zweites Buch und Cover-Seite 503 nach 0,0 s ohne Anfrage, die Bibliothek mit 445 Büchern weiter da.
+
+**Nicht gelöst:** die Sperre selbst — nur Warten hilft. Und die App fragt bei jedem Öffnen eines Buchs neu; ein Speicher für Werke und Ausgaben-Seiten auf der Platte würde die Anfragen senken, ist aber nicht gebaut.
+

@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { type CollectionRecord, type PublicWall, type SourceEdition, type WorkSummary } from '../site';
 import { pickCovers } from '../covers';
 import { CoverSizes } from '../download';
-import { cleanBookTitle, firstAuthor, hitFromSummary, proposal, WorkMap } from '../find';
+import { cleanBookTitle, firstAuthor, hitFromSummary, proposal, refusedConnection, WorkMap } from '../find';
 import { checkCover, imageFacts, imageSizeFast, isSmaller } from '../image';
 import { bookDir, booksFromRows, type BookRow, type CalibreBook } from '../library';
 import { matchPick } from '../match';
@@ -349,5 +349,17 @@ describe('the PocketBook sync, offered only when it can run', () => {
     expect(pocketbookStatus('/p/s.py', config, there('/Volumes/PB626/system/config/books.db')).problems[0]).toMatch(/notes folder is not there/);
     // The newer key of the sync's setup wins over the older one.
     expect(pocketbookStatus('/p/s.py', { ...config, notes_vault_path: '/vault' }, () => true).notes).toBe('/vault');
+  });
+});
+
+describe('a catalogue that shuts the door', () => {
+  it('tells a refused connection from a slow or a wrong answer, however deep it is wrapped', () => {
+    const refused = Object.assign(new Error('connect ECONNREFUSED 207.241.234.205:443'), { code: 'ECONNREFUSED' });
+    expect(refusedConnection(refused)).toBe(true);
+    expect(refusedConnection(new TypeError('fetch failed', { cause: refused }))).toBe(true);
+    expect(refusedConnection(new Error('openlibrary did not answer: fetch failed', { cause: new TypeError('fetch failed', { cause: refused }) }))).toBe(true);
+    expect(refusedConnection(new Error('The operation was aborted due to timeout'))).toBe(false);
+    expect(refusedConnection(new Error('HTTP 503'))).toBe(false);
+    expect(refusedConnection(undefined)).toBe(false);
   });
 });

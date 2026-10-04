@@ -36,6 +36,22 @@ export function firstAuthor(book: Pick<CalibreBook, 'authors'>): string {
   return /^(unknown|unbekannt|various|n\/a)$/i.test(name) ? '' : name;
 }
 
+/**
+ * Did the catalogue refuse the connection outright? Not a slow answer and not
+ * an error page: the Internet Archive shuts the door on an address that asked
+ * too much in a short time, and every further knock risks keeping it shut
+ * (measured 2026-10-04: `ECONNREFUSED` from this Mac on both ports while the
+ * live site still got answers). The app then stops asking for a while.
+ */
+export function refusedConnection(err: unknown): boolean {
+  for (let e: unknown = err, depth = 0; e && depth < 6; depth++) {
+    const x = e as { code?: unknown; message?: unknown; cause?: unknown };
+    if (x.code === 'ECONNREFUSED' || (typeof x.message === 'string' && x.message.includes('ECONNREFUSED'))) return true;
+    e = x.cause;
+  }
+  return false;
+}
+
 export interface WorkHit {
   id: string;
   title: string;
@@ -57,6 +73,8 @@ export interface Found {
   editionCovers: string[];
   /** A source did not answer: not the same as "not found" (SPEC N12). */
   failed?: string;
+  /** The catalogue refused the connection (`refusedConnection`): the caller should stop asking for a while. */
+  refused?: true;
 }
 
 export function hitFromSummary(w: WorkSummary): WorkHit {
@@ -138,6 +156,7 @@ export async function findWorks(book: CalibreBook, site: string, remembered?: st
   let reason: FindReason | undefined;
   let editionCovers: string[] = [];
   const failures: string[] = [];
+  let refused = false;
 
   const byIsbn = async () => {
     if (query || !book.isbns[0]) return;
@@ -152,7 +171,8 @@ export async function findWorks(book: CalibreBook, site: string, remembered?: st
       picked = work.id;
       reason = 'isbn';
       editionCovers = edition.covers;
-    } catch {
+    } catch (err) {
+      refused ||= refusedConnection(err);
       failures.push('Open Library did not answer for the ISBN.');
     }
   };
@@ -175,7 +195,8 @@ export async function findWorks(book: CalibreBook, site: string, remembered?: st
         picked = chosen.id;
         reason = chosen.reason;
       }
-    } catch {
+    } catch (err) {
+      refused ||= refusedConnection(err);
       failures.push('The search did not answer.');
     }
   };
@@ -187,7 +208,8 @@ export async function findWorks(book: CalibreBook, site: string, remembered?: st
       try {
         const work = await getWork(remembered);
         if (work) hits.unshift({ id: work.id, title: work.title, author: work.authors[0] ?? '', ...(work.firstPublishYear ? { year: work.firstPublishYear } : {}) });
-      } catch {
+      } catch (err) {
+        refused ||= refusedConnection(err);
         failures.push('Open Library did not answer for the remembered work.');
       }
     }
@@ -196,5 +218,5 @@ export async function findWorks(book: CalibreBook, site: string, remembered?: st
       reason = 'remembered';
     }
   }
-  return { hits, ...(picked ? { picked, reason } : {}), editionCovers, ...(failures.length ? { failed: failures.join(' ') } : {}) };
+  return { hits, ...(picked ? { picked, reason } : {}), editionCovers, ...(failures.length ? { failed: failures.join(' ') } : {}), ...(refused ? { refused: true as const } : {}) };
 }

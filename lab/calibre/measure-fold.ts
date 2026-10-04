@@ -13,6 +13,12 @@
  * same design the work has (dHash distance ≤ 8, the fold's unconditional
  * tier), and how large the largest of them is.
  *
+ * **Run it once, not in a loop, and not beside another script that asks Open
+ * Library.** On 2026-10-04, after two runs of this measurement and a parallel
+ * session's own, openlibrary.org refused every connection from this Mac
+ * (`ECONNREFUSED`, the Internet Archive's block for an address that asked too
+ * much). Requests to the catalogue are therefore one at a time with a pause.
+ *
  * Reads the library, writes nothing. Open Library only: the editions of each
  * work, a medium image per cover for the hash, and the full image of the
  * same-design ones for their size (cached in cover-sizes.json).
@@ -34,6 +40,9 @@ const SAME_IMAGE = 8;
 /** The loosest tier, which the site applies only with matching colours (SAME_DESIGN_MAX_DISTANCE): counted here to see what lies just beyond. */
 const NEAR = 13;
 const MAX_PAGES = 3;
+/** Between two requests to the catalogue (not the image host, which is not rate-limited by cover id). */
+const PAUSE_MS = 1500;
+const pause = () => new Promise((r) => setTimeout(r, PAUSE_MS));
 
 async function hashOf(coverId: string): Promise<string | null> {
   try {
@@ -57,6 +66,7 @@ async function coversOfWork(workId: string): Promise<{ ids: string[]; editions: 
   const ids = new Set<string>();
   let editions = 0;
   for (let offset = 0; offset < MAX_PAGES * 100; offset += 100) {
+    await pause();
     const page = await getEditionsPage(workId, offset);
     editions = page.size;
     for (const c of pickCovers(parseEditions(page.entries, work))) ids.add(c.coverId);
@@ -116,11 +126,13 @@ async function main(): Promise<void> {
     const book = books.find((b) => b.id === bookId);
     const file = book ? coverFile(library, book) : '';
     const inCalibre = file && existsSync(file) ? imageSizeFast(readFileSync(file)) : null;
+    await pause();
     const work = await getWork(pick.workId);
     if (!work) continue;
     const coverIds = new Set<string>([pick.coverId]);
     let editions = 0;
     for (let offset = 0; offset < MAX_PAGES * 100; offset += 100) {
+      await pause();
       const page = await getEditionsPage(pick.workId, offset);
       editions = page.size;
       for (const c of pickCovers(parseEditions(page.entries, work))) coverIds.add(c.coverId);

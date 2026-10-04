@@ -31,7 +31,7 @@ import { join } from 'node:path';
 import { getEditionsPage, getWork, isWorkId, makeToken, parseEditions, type Work } from './site';
 import { pickCovers } from './covers';
 import { CoverDownloads, CoverSizes } from './download';
-import { findWorks, WorkMap } from './find';
+import { findWorks, refusedConnection, WorkMap } from './find';
 import { jsonBody, refused, send } from './http';
 import { imageFacts, imageSizeFast, isSmaller, type ImageFacts } from './image';
 import { coverFile, findLibrary, readLibrary, type CalibreBook } from './library';
@@ -148,6 +148,24 @@ function coverPage(workId: string, offset: number) {
 
 let syncing = false;
 
+/*
+ * When Open Library refuses the connection, the app stops asking for a
+ * quarter of an hour: the refusal is the Internet Archive's answer to too many
+ * requests from this address, and asking on would only keep the door shut.
+ */
+const PAUSE_MS = 15 * 60_000;
+let pausedUntil = 0;
+const paused = (): { error: string; pausedUntil: number } | null =>
+  Date.now() < pausedUntil
+    ? {
+        pausedUntil,
+        error:
+          'Open Library is refusing connections from this Mac — most likely a temporary block after too many requests in a short time. ' +
+          `The app has stopped asking until ${new Date(pausedUntil).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })} so the block is not prolonged. ` +
+          'Your library and the covers in Calibre are not affected.',
+      }
+    : null;
+
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://127.0.0.1:${PORT}`);
   const path = url.pathname;
@@ -161,8 +179,14 @@ const server = createServer(async (req, res) => {
       const book = books.find((b) => b.id === Number(bookPath[2]));
       if (!book) return send(res, 404, { error: 'No such book.' });
       if (bookPath[1] === 'find') {
+        if (paused()) return send(res, 503, paused());
         const q = (url.searchParams.get('q') ?? '').trim().slice(0, 200);
-        return send(res, 200, await findWorks(book, SITE, works.get(book.id), q || undefined));
+        const found = await findWorks(book, SITE, works.get(book.id), q || undefined);
+        if (found.refused) {
+          pausedUntil = Date.now() + PAUSE_MS;
+          return send(res, 503, paused());
+        }
+        return send(res, 200, found);
       }
       if (path.startsWith('/api/')) return send(res, 200, oldFacts(book));
       const file = coverFile(library, book);
@@ -174,13 +198,18 @@ const server = createServer(async (req, res) => {
     if (req.method === 'GET' && coversOf && isWorkId(coversOf[1])) {
       const offset = Number(url.searchParams.get('offset') ?? 0);
       if (!Number.isInteger(offset) || offset < 0 || offset > MAX_OFFSET || offset % 100 !== 0) return send(res, 400, { error: 'Bad offset.' });
+      if (paused()) return send(res, 503, paused());
       try {
         const page = await coverPage(coversOf[1], offset);
         const next = offset + 100 < page.size && offset + 100 <= MAX_OFFSET ? offset + 100 : null;
         // Sizes already known ride along, so a work opened before sorts at once.
         const covers = page.covers.map((c) => ({ ...c, ...(coverSizes.peek(c.coverId) ? { size: coverSizes.peek(c.coverId) } : {}) }));
         return send(res, 200, { covers, editions: page.size, next });
-      } catch {
+      } catch (err) {
+        if (refusedConnection(err)) {
+          pausedUntil = Date.now() + PAUSE_MS;
+          return send(res, 503, paused());
+        }
         return send(res, 502, { error: 'Open Library did not answer. Try again in a moment.' });
       }
     }
