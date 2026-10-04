@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import CoverImage from './CoverImage';
+import { useT } from './i18n';
 import { coverUrlFor } from '@/lib/coverurl';
 import { tileCoverId, type PublicWall } from '@/lib/walls/model';
 
@@ -15,6 +16,7 @@ import { tileCoverId, type PublicWall } from '@/lib/walls/model';
  * Escape closes, focus goes in and comes back.
  */
 export default function CollectionSheet({ wall, fresh, children }: { wall: PublicWall; fresh: ReadonlySet<string>; children: React.ReactNode }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const bar = useRef<HTMLDivElement>(null);
   const opener = useRef<HTMLButtonElement>(null);
@@ -65,23 +67,23 @@ export default function CollectionSheet({ wall, fresh, children }: { wall: Publi
             ))}
           </span>
           <span className="min-w-0 flex-1">
-            <span className="block text-[10px] uppercase tracking-[0.14em] text-accent">You are adding to</span>
+            <span className="block text-[10px] uppercase tracking-[0.14em] text-accent">{t('You are adding to')}</span>
             <span className="block truncate text-sm text-ink">
               {wall.title} <span className="text-ink-3">· {wall.tiles.length}</span>
             </span>
           </span>
-          <span className="btn shrink-0 py-1.5 text-xs">Open</span>
+          <span className="btn shrink-0 py-1.5 text-xs">{t('Open')}</span>
         </button>
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label={`The collection ${wall.title}`}>
-          <button type="button" aria-label="Close" tabIndex={-1} className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} />
+        <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label={t('The collection {title}', { title: wall.title })}>
+          <button type="button" aria-label={t('Close')} tabIndex={-1} className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} />
           <div className="absolute inset-x-0 bottom-0 top-12 flex flex-col rounded-t-2xl bg-bg shadow-2xl">
             <div className="flex items-center justify-between border-b border-line px-4 py-3">
-              <p className="kicker">Your collection</p>
+              <p className="kicker">{t('Your collection')}</p>
               <button ref={closer} type="button" onClick={() => setOpen(false)} className="btn py-1.5 text-xs">
-                Close
+                {t('Close')}
               </button>
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-10 pt-4">{children}</div>

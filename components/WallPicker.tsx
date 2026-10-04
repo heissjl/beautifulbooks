@@ -7,6 +7,7 @@ import { printingsOf } from './AddToWall';
 import { postJson } from './useMyWalls';
 import { useWorkPages } from './useWorkPages';
 import { buildWall, captionFor, progressLabel } from './workWall';
+import { rich, useT } from './i18n';
 import type { Cover, EditionView } from '@/lib/model';
 import { swapOps } from '@/lib/walls/edit';
 import { storedCoverId, tileCoverId, type PublicWall, type Tile, type WallOp } from '@/lib/walls/model';
@@ -14,7 +15,7 @@ import { storedCoverId, tileCoverId, type PublicWall, type Tile, type WallOp } f
 export default function WallPicker({
   workId,
   target,
-  newTitle = 'My collection',
+  newTitle,
   replace,
   onWall,
   onReplaced,
@@ -34,13 +35,14 @@ export default function WallPicker({
   /** The section's own frame; a dialog brings its own. */
   className?: string;
 }) {
+  const t = useT();
   const pages = useWorkPages(workId, '', undefined);
   const [error, setError] = useState('');
   // The message follows the reader: a line at the top is out of sight when the cover clicked is far down (Julian, 2026-09-29).
   useEffect(() => {
     if (!error) return;
-    const t = setTimeout(() => setError(''), 7000);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setError(''), 7000);
+    return () => clearTimeout(timer);
   }, [error]);
   const [busy, setBusy] = useState(false);
 
@@ -66,7 +68,7 @@ export default function WallPicker({
       const { wall } = await run();
       onWall(wall);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'That did not work.');
+      setError(err instanceof Error ? err.message : t('That did not work.'));
     } finally {
       setBusy(false);
     }
@@ -76,15 +78,15 @@ export default function WallPicker({
     if (!view || busy) return;
     const stored = storedCoverId(cover.id);
     if (!stored) {
-      setError('This image has no id a collection can keep.');
+      setError(t('This image has no id a collection can keep.'));
       return;
     }
     const ids = new Set([cover.id, ...(cover.similarIds ?? [])]);
-    const onIt = (target?.tiles ?? []).filter((t) => ids.has(tileCoverId(t)));
+    const onIt = (target?.tiles ?? []).filter((tile) => ids.has(tileCoverId(tile)));
     const editions = cover.editionIds.map((id) => view.editionsById.get(id)).filter((e): e is EditionView => !!e);
     const tile: Tile = { workId: view.work.id, coverId: stored, title: view.work.title, ...(view.work.authors[0] ? { author: view.work.authors[0] } : {}), printings: printingsOf(editions) };
     if (!target) {
-      change(() => postJson('/api/walls', { title: newTitle, tiles: [tile] }));
+      change(() => postJson('/api/walls', { title: newTitle ?? t('My collection'), tiles: [tile] }));
       return;
     }
     if (replace) {
@@ -93,7 +95,7 @@ export default function WallPicker({
       change(() => postJson(`/api/walls/${target.id}`, { ops })).then(() => onReplaced?.());
       return;
     }
-    const ops: WallOp[] = onIt.length ? onIt.map((t) => ({ op: 'remove', coverId: t.coverId })) : [{ op: 'add', tile }];
+    const ops: WallOp[] = onIt.length ? onIt.map((tile) => ({ op: 'remove', coverId: tile.coverId })) : [{ op: 'add', tile }];
     change(() => postJson(`/api/walls/${target.id}`, { ops }));
   }
 
@@ -101,55 +103,49 @@ export default function WallPicker({
     <section id="picker" aria-labelledby="picker-title" className={className}>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="kicker">Pick covers</p>
+          <p className="kicker">{t('Pick covers')}</p>
           <h2 id="picker-title" className="font-display text-2xl text-ink">
             {view?.work.title ?? '…'}
             {view?.work.authors[0] && <span className="text-ink-3"> · {view.work.authors[0]}</span>}
           </h2>
           <p className="mt-1 text-xs text-ink-3">
-            {view ? progressLabel(view.covers.length, view.merged) : pages.status === 'loading' ? 'Loading covers…' : ''}
+            {view ? progressLabel(view.covers.length, view.merged, t) : pages.status === 'loading' ? t('Loading covers…') : ''}
             {view && (
               <>
                 {' · '}
                 <Link href={`/book/${workId}`} className="underline underline-offset-2 hover:text-accent">
-                  the book&rsquo;s page
+                  {t('the book’s page')}
                 </Link>
               </>
             )}
           </p>
         </div>
         <button type="button" onClick={onClose} className="rounded-full border border-line px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent">
-          Close
+          {t('Close')}
         </button>
       </div>
 
       {/* Which collection a click fills is said here, not left to guess (5.13m). */}
       <p className="mt-3 text-sm text-ink-2">
-        {replace ? (
-          <>
-            Pick another cover for this book: it takes the place of the one marked in <strong className="font-medium text-ink">{target?.title}</strong>.
-          </>
-        ) : target ? (
-          <>
-            A click puts a cover into <strong className="font-medium text-ink">{target.title}</strong>, a second click takes it out.
-          </>
-        ) : (
-          'Your first cover starts a new collection; you go on adding in its editor.'
-        )}
+        {replace
+          ? rich(t('Pick another cover for this book: it takes the place of the one marked in {title}.'), { title: <strong className="font-medium text-ink">{target?.title}</strong> })
+          : target
+            ? rich(t('A click puts a cover into {title}, a second click takes it out.'), { title: <strong className="font-medium text-ink">{target.title}</strong> })
+            : t('Your first cover starts a new collection; you go on adding in its editor.')}
       </p>
       {error && (
         <div className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-lg rounded-card border border-accent bg-surface px-4 py-3 text-sm text-ink shadow-xl" role="alert">
           {error}
           <button type="button" onClick={() => setError('')} className="ml-3 text-ink-2 underline underline-offset-2 hover:text-accent">
-            Close
+            {t('Close')}
           </button>
         </div>
       )}
 
       <div className="mt-6">
-        {pages.status === 'notfound' && <p className="text-sm text-ink-2">Open Library has no such book.</p>}
-        {pages.status === 'error' && <p className="text-sm text-accent">{pages.message ?? 'Open Library did not answer. Try again in a moment.'}</p>}
-        {view && view.groups.length === 0 && pages.merged?.done && <p className="text-sm text-ink-2">Neither catalogue has a cover for this book.</p>}
+        {pages.status === 'notfound' && <p className="text-sm text-ink-2">{t('Open Library has no such book.')}</p>}
+        {pages.status === 'error' && <p className="text-sm text-accent">{pages.message ?? t('Open Library did not answer. Try again in a moment.')}</p>}
+        {view && view.groups.length === 0 && pages.merged?.done && <p className="text-sm text-ink-2">{t('Neither catalogue has a cover for this book.')}</p>}
         {view && view.groups.length > 0 && (
           <CoverGallery groups={view.groups} allCovers={view.all} selectedCover={null} onSelectCover={toggle} captions={view.captions} marked={marked} allFirst />
         )}

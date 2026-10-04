@@ -14,6 +14,8 @@ import type { Destination } from './WallProposal';
 import WallSample from './WallSample';
 import CollectionSheet from './CollectionSheet';
 import { useIsDesktop } from './useIsDesktop';
+import { rich, useT } from './i18n';
+import type { Translate } from '@/lib/i18n/translate';
 import { addTiles, createWall, postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import { defaultTitle, editHref, readEditState, type AddTab, type EditState } from '@/lib/walls/edit';
@@ -22,7 +24,8 @@ import { MAX_BY, MAX_INTRO, tileCoverId, UNSAVED_HOURS, type PublicWall, type Ti
 
 type Access = 'checking' | 'owner' | 'down';
 
-const TAB_LABELS: Record<AddTab, string> = { search: 'Search', photo: 'Photo', ideas: 'Ideas' };
+/** The tab names reach `t` through this table; lib/__tests__/i18n.test.ts lists them. */
+export const TAB_LABELS: Record<AddTab, string> = { search: 'Search', photo: 'Photo', ideas: 'Ideas' };
 
 /**
  * The editing mode of a reader's collection, `/c/<id>/edit` (ROADMAP 5.13m;
@@ -45,6 +48,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
   const params = useSearchParams();
   const state = readEditState((key) => params.get(key));
   const { me, setMe } = useMyWalls();
+  const t = useT();
   const isDesktop = useIsDesktop();
   const [wall, setWall] = useState(initial);
   const [access, setAccess] = useState<Access>('checking');
@@ -101,7 +105,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
     try {
       accept((await postJson<{ wall: PublicWall }>(`/api/walls/${id}`, { ops })).wall);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'That did not work.');
+      setError(err instanceof Error ? err.message : t('That did not work.'));
     }
   }
 
@@ -116,10 +120,10 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
 
   async function newCollection() {
     try {
-      const made = await createWall(defaultTitle(me.walls));
+      const made = await createWall(defaultTitle(me.walls, t));
       router.push(editHref(made.id, { add: state.add, q: state.q, work: state.work }));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'The collection could not be made.');
+      setError(err instanceof Error ? err.message : t('The collection could not be made.'));
     }
   }
 
@@ -131,17 +135,17 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
   if (access !== 'owner') {
     return (
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-24 text-center text-ink-2 sm:px-6 lg:px-8" role="status">
-        {access === 'down' ? 'The store did not answer. Try again in a moment.' : 'Opening the collection…'}
+        {access === 'down' ? t('The store did not answer. Try again in a moment.') : t('Opening the collection…')}
       </main>
     );
   }
 
-  const count = `${wall.tiles.length} ${wall.tiles.length === 1 ? 'cover' : 'covers'}`;
+  const count = wall.tiles.length === 1 ? t('1 cover') : t('{n} covers', { n: wall.tiles.length });
   const others = me.walls.filter((w) => w.id !== id);
   const tabs: AddTab[] = photoOn ? ['search', 'photo', 'ideas'] : ['search', 'ideas'];
   const tab = tabs.includes(state.add) ? state.add : 'search';
   const panel = (
-    <TargetPanel wall={wall} fresh={fresh} others={others} state={state} onSend={send} onArrange={() => go({ mode: 'arrange' })} onNew={newCollection} />
+    <TargetPanel wall={wall} fresh={fresh} others={others} state={state} onSend={send} onArrange={() => go({ mode: 'arrange' })} onNew={newCollection} t={t} />
   );
   const pill = (active: boolean) =>
     `rounded-full border px-4 py-1 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
@@ -151,32 +155,32 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
       {/* The band: what is being edited, kept in sight while scrolling. */}
       <div className="sticky top-14 z-10 bg-ink text-bg">
         <div className="mx-auto flex min-h-12 max-w-7xl flex-wrap items-center gap-x-4 gap-y-1 px-4 py-2 sm:px-6 lg:px-8">
-          <span className="text-[11px] uppercase tracking-[0.14em] text-bg/70">Editing</span>
+          <span className="text-[11px] uppercase tracking-[0.14em] text-bg/70">{t('Editing')}</span>
           <span className="min-w-0 flex-1 truncate font-display text-lg sm:flex-none sm:text-xl">{wall.title}</span>
           <span className="hidden text-sm text-bg/70 sm:inline">
             {count}
-            {wall.unsaved && ' · not saved yet'}
+            {wall.unsaved && ` · ${t('not saved yet')}`}
           </span>
           <span className="ml-auto flex items-center gap-3">
             {wall.unsaved && (
-              <button type="button" onClick={() => send([{ op: 'save' }])} title={`Unkept collections are deleted after ${UNSAVED_HOURS / 24} days.`} className="rounded-full border border-bg/50 px-3 py-0.5 text-sm hover:border-bg">
-                Keep it
+              <button type="button" onClick={() => send([{ op: 'save' }])} title={t('Unkept collections are deleted after {days} days.', { days: UNSAVED_HOURS / 24 })} className="rounded-full border border-bg/50 px-3 py-0.5 text-sm hover:border-bg">
+                {t('Keep it')}
               </button>
             )}
             <Link href={`/c/${id}`} onClick={stopEditing} className="rounded-full bg-bg px-4 py-0.5 text-sm text-ink hover:bg-surface">
-              Stop editing
+              {t('Stop editing')}
             </Link>
           </span>
         </div>
       </div>
 
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-16 pt-6 sm:px-6 sm:pb-24 lg:px-8">
-        <div className="flex gap-2" role="tablist" aria-label="What to do">
+        <div className="flex gap-2" role="tablist" aria-label={t('What to do')}>
           <button type="button" role="tab" aria-selected={state.mode === 'add'} onClick={() => go({ mode: 'add' })} className={pill(state.mode === 'add')}>
-            Add covers
+            {t('Add covers')}
           </button>
           <button type="button" role="tab" aria-selected={state.mode === 'arrange'} onClick={() => go({ mode: 'arrange' })} className={pill(state.mode === 'arrange')}>
-            Arrange
+            {t('Arrange')}
           </button>
         </div>
         {error && <p className="mt-3 text-sm text-accent" role="alert">{error}</p>}
@@ -191,7 +195,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
           the three ways in. Nothing hidden here loads an image the other
           mode would load again: the covers are the same tiles.
         */}
-        {state.mode === 'arrange' && <Arrange wall={wall} onSend={send} onAdd={() => go({ mode: 'add' })} onPick={(t) => go({ swap: t.coverId })} />}
+        {state.mode === 'arrange' && <Arrange wall={wall} onSend={send} onAdd={() => go({ mode: 'add' })} onPick={(tile) => go({ swap: tile.coverId })} t={t} />}
         {/*
           Another cover for a tile, in place (Julian, 2026-09-29: „lieber eine
           in-place änderung durch ein pop-up so wie das bei der curate-seite“):
@@ -204,7 +208,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
             className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4 sm:p-8"
             role="dialog"
             aria-modal="true"
-            aria-label={`Covers of ${swapTarget.tile.title}`}
+            aria-label={t('Covers of {title}', { title: swapTarget.tile.title })}
             onClick={(e) => e.target === e.currentTarget && go({ swap: undefined })}
           >
             <div className="w-full max-w-5xl rounded-lg border border-line bg-bg p-4 sm:p-6">
@@ -224,11 +228,11 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
         <div hidden={state.mode !== 'add'} className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
             <section aria-labelledby="add-title" className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2 border-b border-line pb-2">
-                <h2 id="add-title" className="font-display text-2xl text-ink">Add covers</h2>
-                <div className="flex gap-1.5" role="tablist" aria-label="Where covers come from">
-                  {tabs.map((t) => (
-                    <button key={t} type="button" role="tab" aria-selected={tab === t} onClick={() => go({ add: t })} className={pill(tab === t)}>
-                      {TAB_LABELS[t]}
+                <h2 id="add-title" className="font-display text-2xl text-ink">{t('Add covers')}</h2>
+                <div className="flex gap-1.5" role="tablist" aria-label={t('Where covers come from')}>
+                  {tabs.map((name) => (
+                    <button key={name} type="button" role="tab" aria-selected={tab === name} onClick={() => go({ add: name })} className={pill(tab === name)}>
+                      {t(TAB_LABELS[name])}
                     </button>
                   ))}
                 </div>
@@ -258,14 +262,14 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
               {photoOn && (
                 <div hidden={tab !== 'photo'}>
                   <p className="mt-4 text-sm text-ink-2">
-                    Photograph a shelf or a pile of books. The books we can read are offered for <strong className="font-medium text-ink">{wall.title}</strong> — you tick which go in.
+                    {rich(t('Photograph a shelf or a pile of books. The books we can read are offered for {title} — you tick which go in.'), { title: <strong className="font-medium text-ink">{wall.title}</strong> })}
                   </p>
                   <WallPhoto photoOn={photoOn} target={wall} onCommit={commit} onOtherCover={showCovers} onSearchFor={(q) => go({ add: 'search', q, work: undefined })} />
                 </div>
               )}
               <div hidden={tab !== 'ideas'} className="mt-5 space-y-10">
                   <div>
-                    <h3 className="font-display text-lg text-ink">Six random favourites</h3>
+                    <h3 className="font-display text-lg text-ink">{t('Six random favourites')}</h3>
                     <div className="mt-2">
                       <WallSample target={wall} onCommit={commit} onOtherCover={showCovers} />
                     </div>
@@ -291,7 +295,7 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
  * every cover's tools always in sight — the narrow column is for gathering,
  * not for ordering forty covers.
  */
-function Arrange({ wall, onSend, onAdd, onPick }: { wall: PublicWall; onSend: (ops: WallOp[]) => void; onAdd: () => void; onPick: (tile: Tile) => void }) {
+function Arrange({ wall, onSend, onAdd, onPick, t }: { wall: PublicWall; onSend: (ops: WallOp[]) => void; onAdd: () => void; onPick: (tile: Tile) => void; t: Translate }) {
   /*
     Dragging a cover to its place (5.13m step 6). Pointer events, one drag at
     a time: `from` is the tile picked up, `over` the tile under the pointer.
@@ -335,23 +339,23 @@ function Arrange({ wall, onSend, onAdd, onPick }: { wall: PublicWall; onSend: (o
   const handlers = { onPointerMove: track, onPointerUp: drop, onPointerCancel: () => setDrag(null) };
 
   return (
-    <section className="mt-6" aria-label="Arrange the collection">
+    <section className="mt-6" aria-label={t('Arrange the collection')}>
       <input
         defaultValue={wall.title}
         key={wall.title}
         onBlur={(e) => e.target.value.trim() !== wall.title && onSend([{ op: 'title', title: e.target.value }])}
         onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
-        aria-label="Title of the collection"
+        aria-label={t('Title of the collection')}
         className="block w-full border-b border-line bg-transparent font-display text-3xl leading-tight text-ink focus:border-accent focus:outline-none sm:text-4xl"
       />
       <input
         defaultValue={wall.by ?? ''}
         key={`by-${wall.by ?? ''}`}
         maxLength={MAX_BY}
-        placeholder="Your name (optional, shown with the collection)"
+        placeholder={t('Your name (optional, shown with the collection)')}
         onBlur={(e) => e.target.value.trim() !== (wall.by ?? '') && onSend([{ op: 'by', by: e.target.value }])}
         onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
-        aria-label="Your name"
+        aria-label={t('Your name')}
         className="mt-4 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink-2 placeholder:text-ink-3"
       />
       <textarea
@@ -359,35 +363,35 @@ function Arrange({ wall, onSend, onAdd, onPick }: { wall: PublicWall; onSend: (o
         key={wall.intro ?? ''}
         maxLength={MAX_INTRO}
         rows={2}
-        placeholder="A few lines about this collection — what ties it together."
+        placeholder={t('A few lines about this collection — what ties it together.')}
         onBlur={(e) => e.target.value.trim() !== (wall.intro ?? '') && onSend([{ op: 'intro', intro: e.target.value }])}
-        aria-label="A few lines about this collection"
+        aria-label={t('A few lines about this collection')}
         className="mt-3 block w-full max-w-2xl resize-y rounded-md border border-line bg-surface px-3 py-2 text-base text-ink-2 placeholder:text-ink-3"
       />
 
       {wall.tiles.length === 0 ? (
         <p className="mt-8 text-sm text-ink-2">
-          No covers yet.{' '}
+          {t('No covers yet.')}{' '}
           <button type="button" onClick={onAdd} className="text-accent underline underline-offset-4">
-            Add some
+            {t('Add some')}
           </button>
         </p>
       ) : (
         <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
-          {wall.tiles.map((t, i) => {
-            const src = coverUrlFor(tileCoverId(t), 'M');
-            const label = t.author ? `${t.title} by ${t.author}` : t.title;
+          {wall.tiles.map((tile, i) => {
+            const src = coverUrlFor(tileCoverId(tile), 'M');
+            const label = tile.author ? t('{title} by {author}', { title: tile.title, author: tile.author }) : tile.title;
             const lifted = drag?.from === i;
             const target = drag !== null && drag.over === i && drag.from !== i;
             return (
-              <li key={t.coverId} data-index={i} className={lifted ? 'opacity-40' : ''}>
+              <li key={tile.coverId} data-index={i} className={lifted ? 'opacity-40' : ''}>
                 <button
                   type="button"
-                  aria-label={`${label} — pick another cover for it`}
+                  aria-label={t('{label} — pick another cover for it', { label })}
                   className={`cover-shadow relative block aspect-[2/3] w-full cursor-grab select-none overflow-hidden rounded-card border-0 bg-surface-2 p-0 text-left ${target ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}
-                  title="Click for another cover of this book, drag to move it"
+                  title={t('Click for another cover of this book, drag to move it')}
                   onPointerDown={(e) => e.pointerType === 'mouse' && pickUp(e, i)}
-                  onClick={() => !start.current?.moved && onPick(t)}
+                  onClick={() => !start.current?.moved && onPick(tile)}
                   // The browser's own image drag would cancel the pointer events (seen in headless Chrome).
                   onDragStart={(e) => e.preventDefault()}
                   {...handlers}
@@ -395,19 +399,19 @@ function Arrange({ wall, onSend, onAdd, onPick }: { wall: PublicWall; onSend: (o
                   {src && <CoverImage src={src} alt={label} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />}
                 </button>
                 <span className="mt-1.5 flex items-center justify-between">
-                  <ToolButton label={`Move ${t.title} left`} hidden={i === 0} onClick={() => onSend([{ op: 'move', coverId: t.coverId, to: i - 1 }])}>←</ToolButton>
+                  <ToolButton label={t('Move {title} left', { title: tile.title })} hidden={i === 0} onClick={() => onSend([{ op: 'move', coverId: tile.coverId, to: i - 1 }])}>←</ToolButton>
                   <button
                     type="button"
-                    aria-label={`Drag ${t.title} to another place`}
-                    title="Drag to another place"
+                    aria-label={t('Drag {title} to another place', { title: tile.title })}
+                    title={t('Drag to another place')}
                     onPointerDown={(e) => pickUp(e, i)}
                     {...handlers}
                     className="h-8 w-8 cursor-grab touch-none rounded-full text-ink-3 hover:text-accent"
                   >
                     ⠿
                   </button>
-                  <ToolButton label={`Take ${t.title} out`} onClick={() => onSend([{ op: 'remove', coverId: t.coverId }])}>✕</ToolButton>
-                  <ToolButton label={`Move ${t.title} right`} hidden={i === wall.tiles.length - 1} onClick={() => onSend([{ op: 'move', coverId: t.coverId, to: i + 1 }])}>→</ToolButton>
+                  <ToolButton label={t('Take {title} out', { title: tile.title })} onClick={() => onSend([{ op: 'remove', coverId: tile.coverId }])}>✕</ToolButton>
+                  <ToolButton label={t('Move {title} right', { title: tile.title })} hidden={i === wall.tiles.length - 1} onClick={() => onSend([{ op: 'move', coverId: tile.coverId, to: i + 1 }])}>→</ToolButton>
                 </span>
               </li>
             );
@@ -445,6 +449,7 @@ function TargetPanel({
   onSend,
   onArrange,
   onNew,
+  t,
 }: {
   wall: PublicWall;
   fresh: ReadonlySet<string>;
@@ -453,54 +458,55 @@ function TargetPanel({
   onSend: (ops: WallOp[]) => void;
   onArrange: () => void;
   onNew: () => void;
+  t: Translate;
 }) {
-  const count = `${wall.tiles.length} ${wall.tiles.length === 1 ? 'cover' : 'covers'}`;
+  const count = wall.tiles.length === 1 ? t('1 cover') : t('{n} covers', { n: wall.tiles.length });
   return (
     <>
       <div className="rounded-card border border-accent bg-surface p-4">
-        <p id="target-title" className="text-[11px] uppercase tracking-[0.14em] text-accent">You are adding to</p>
+        <p id="target-title" className="text-[11px] uppercase tracking-[0.14em] text-accent">{t('You are adding to')}</p>
         <input
           defaultValue={wall.title}
           key={wall.title}
           onBlur={(e) => e.target.value.trim() !== wall.title && onSend([{ op: 'title', title: e.target.value }])}
           onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
-          aria-label="Title of the collection"
+          aria-label={t('Title of the collection')}
           className="mt-0.5 block w-full border-b border-line bg-transparent py-0.5 font-display text-2xl text-ink focus:border-accent focus:outline-none"
         />
         <p className="mt-1.5 flex justify-between gap-3 text-xs text-ink-3">
           <span>{count}</span>
           <button type="button" onClick={onArrange} className="text-accent underline underline-offset-2">
-            Arrange, your name, a few lines
+            {t('Arrange, your name, a few lines')}
           </button>
         </p>
         {wall.tiles.length === 0 ? (
-          <p className="mt-4 text-sm text-ink-2">No covers yet. Pick some on the left.</p>
+          <p className="mt-4 text-sm text-ink-2">{t('No covers yet. Pick some on the left.')}</p>
         ) : (
-          <ul className="mt-3 grid max-h-[55vh] grid-cols-4 gap-2 overflow-y-auto pr-1" aria-label={`Covers in ${wall.title}`}>
-            {wall.tiles.map((t) => (
-              <li key={t.coverId} className="relative">
-                <span className={`relative block aspect-[2/3] overflow-hidden rounded-[3px] bg-surface-2 ${fresh.has(t.coverId) ? 'ring-2 ring-accent ring-offset-1 ring-offset-surface' : ''}`}>
-                  <CoverImage src={coverUrlFor(tileCoverId(t), 'S') ?? ''} alt={t.title} sizes="80px" />
+          <ul className="mt-3 grid max-h-[55vh] grid-cols-4 gap-2 overflow-y-auto pr-1" aria-label={t('Covers in {title}', { title: wall.title })}>
+            {wall.tiles.map((tile) => (
+              <li key={tile.coverId} className="relative">
+                <span className={`relative block aspect-[2/3] overflow-hidden rounded-[3px] bg-surface-2 ${fresh.has(tile.coverId) ? 'ring-2 ring-accent ring-offset-1 ring-offset-surface' : ''}`}>
+                  <CoverImage src={coverUrlFor(tileCoverId(tile), 'S') ?? ''} alt={tile.title} sizes="80px" />
                 </span>
                 <button
                   type="button"
-                  aria-label={`Take ${t.title} out`}
-                  title="Take it out"
-                  onClick={() => onSend([{ op: 'remove', coverId: t.coverId }])}
+                  aria-label={t('Take {title} out', { title: tile.title })}
+                  title={t('Take it out')}
+                  onClick={() => onSend([{ op: 'remove', coverId: tile.coverId }])}
                   className="absolute right-1 top-1 h-6 w-6 rounded-full bg-black/75 text-xs text-white hover:bg-accent"
                 >
                   ✕
                 </button>
-                {fresh.has(t.coverId) && <span className="absolute bottom-1 left-1 rounded-full bg-accent px-1.5 text-[10px] text-on-accent">new</span>}
+                {fresh.has(tile.coverId) && <span className="absolute bottom-1 left-1 rounded-full bg-accent px-1.5 text-[10px] text-on-accent">{t('new')}</span>}
               </li>
             ))}
           </ul>
         )}
-        <p className="mt-3 border-t border-line pt-2 text-xs text-ink-3">Every change is kept at once.</p>
+        <p className="mt-3 border-t border-line pt-2 text-xs text-ink-3">{t('Every change is kept at once.')}</p>
       </div>
 
       <div className="mt-4">
-        <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3">Add to another instead</p>
+        <p className="text-[11px] uppercase tracking-[0.14em] text-ink-3">{t('Add to another instead')}</p>
         <div className="mt-1.5 flex flex-wrap gap-1.5 text-sm">
           {others.map((w) => (
             <Link
@@ -512,7 +518,7 @@ function TargetPanel({
             </Link>
           ))}
           <button type="button" onClick={onNew} className="rounded-full border border-dashed border-line px-3 py-0.5 text-ink-2 hover:border-accent hover:text-accent">
-            + New collection
+            {t('+ New collection')}
           </button>
         </div>
       </div>

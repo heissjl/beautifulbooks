@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import CoverImage from './CoverImage';
+import { useT } from './i18n';
 import type { WorkSummary } from '@/lib/model';
 
 type Results = { q: string; works: WorkSummary[] } | { q: string; error: string };
@@ -22,6 +23,7 @@ export default function BookSearch({
   onSearch: (q: string) => void;
   onPick: (workId: string) => void;
 }) {
+  const t = useT();
   const [query, setQuery] = useState(q);
   const [results, setResults] = useState<Results | null>(null);
 
@@ -32,11 +34,11 @@ export default function BookSearch({
     fetch(`/api/search?q=${encodeURIComponent(q)}`)
       .then((res) => (res.ok ? (res.json() as Promise<{ works: WorkSummary[] }>) : Promise.reject(new Error())))
       .then((d) => live && setResults({ q, works: d.works.slice(0, 12) }))
-      .catch(() => live && setResults({ q, error: 'Open Library did not answer. Try again in a moment.' }));
+      .catch(() => live && setResults({ q, error: t('Open Library did not answer. Try again in a moment.') }));
     return () => {
       live = false;
     };
-  }, [q]);
+  }, [q, t]);
 
   const shown = results && results.q === q ? results : null;
   return (
@@ -52,17 +54,17 @@ export default function BookSearch({
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Title or author"
-          aria-label="Title or author"
+          placeholder={t('Title or author')}
+          aria-label={t('Title or author')}
           className="min-w-0 flex-1 rounded-full border border-line bg-surface px-4 py-1.5 text-sm text-ink placeholder:text-ink-3"
         />
-        <button className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent">Search</button>
+        <button className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent">{t('Search')}</button>
       </form>
-      {q.trim().length >= 3 && !shown && <p className="mt-3 text-sm text-ink-3" role="status">Searching&hellip;</p>}
+      {q.trim().length >= 3 && !shown && <p className="mt-3 text-sm text-ink-3" role="status">{t('Searching…')}</p>}
       {shown && 'error' in shown && <p className="mt-3 text-sm text-accent">{shown.error}</p>}
       {shown && 'works' in shown &&
         (shown.works.length === 0 ? (
-          <p className="mt-3 text-sm text-ink-2">Open Library has nothing under &ldquo;{shown.q}&rdquo;.</p>
+          <p className="mt-3 text-sm text-ink-2">{t('Open Library has nothing under “{q}”.', { q: shown.q })}</p>
         ) : (
           <ul className="mt-4 grid gap-1 sm:grid-cols-2">
             {shown.works.map((w) => (
@@ -78,7 +80,7 @@ export default function BookSearch({
                   </span>
                   <span className="min-w-0">
                     <span className="block truncate text-sm text-ink">{w.title}</span>
-                    <span className="block truncate text-xs text-ink-3">{[w.authors[0], w.editionCount ? `${w.editionCount} editions` : ''].filter(Boolean).join(' · ')}</span>
+                    <span className="block truncate text-xs text-ink-3">{[w.authors[0], w.editionCount ? t('{n} editions', { n: w.editionCount }) : ''].filter(Boolean).join(' · ')}</span>
                   </span>
                 </button>
               </li>
