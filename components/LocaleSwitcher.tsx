@@ -5,7 +5,7 @@ import { useLocale } from './i18n';
 import { LOCALE_COOKIE, LOCALE_NAME, LOCALES, type Locale } from '@/lib/i18n/locale';
 
 /**
- * The language switch in the header (ROADMAP 6.82, E23). One small button
+ * The language switch in the header (ROADMAP 6.85, E23). One small button
  * naming the *other* language, as Wikipedia does: on a 390 px phone the
  * header already holds the back link, the wordmark, the magnifier and the
  * share button, and two chips did not fit beside them.

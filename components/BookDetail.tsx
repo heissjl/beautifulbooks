@@ -19,6 +19,7 @@ import LocalShops from '@/components/LocalShops';
 import SiteFooterView from '@/components/SiteFooterView';
 import AddToWall from '@/components/AddToWall';
 import EditingBand from '@/components/EditingBand';
+import { useCameFrom } from '@/components/cameFrom';
 import SiteHeader from '@/components/SiteHeader';
 import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
@@ -33,7 +34,8 @@ import { buildWall, captionFor, progressLabel } from '@/components/workWall';
 import { leadCover } from '@/lib/scene';
 import { isbnRuns } from '@/lib/isbnformat';
 import { useOverflowsX } from '@/components/useOverflowsX';
-import { commissionNote, searchFacts, searchLinksFor, trackedBuyHref } from '@/lib/buylinks';
+import { useBookSignal, useReportVerdict, VerdictReport } from './useInsights';
+import { commissionNote, isWordsProvider, searchFacts, searchLinksFor, trackedBuyHref, trackedSearchHref, type WordsQuery } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
@@ -61,14 +63,19 @@ import { useLocale, useT } from '@/components/i18n';
   makes an address other than `/`, and it leads to the home page with a filter
   rather than to results (caught on the dev server, 2026-09-10).
 */
-function BackLink({ href, toResults }: { href: string; toResults: boolean }) {
+function BackLink({ href, toResults, wall }: { href: string; toResults: boolean; wall?: string }) {
   const t = useT();
   return (
-    <Link href={href} className="inline-flex items-center gap-1.5 rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
-      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <Link
+      href={href}
+      title={wall ? t('Back to {wall}', { wall }) : undefined}
+      className="inline-flex min-w-0 items-center gap-1.5 rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink"
+    >
+      <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
       </svg>
-      {toResults ? t('Results') : t('Home')}
+      {/* The wall one came from, by name (Julian, 2026-10-03); cut short, the header has a logo and a search beside it. */}
+      {wall ? <span className="max-w-[9rem] truncate sm:max-w-[16rem]">{wall}</span> : toResults ? t('Results') : t('Home')}
     </Link>
   );
 }
@@ -80,11 +87,14 @@ function BackLink({ href, toResults }: { href: string; toResults: boolean }) {
  */
 const WallsOn = createContext(false);
 
-function Shell({ children, backHref, toResults, right }: { children: React.ReactNode; backHref: string; toResults: boolean; right?: React.ReactNode }) {
+function Shell({ children, backHref, toResults, right, workId }: { children: React.ReactNode; backHref: string; toResults: boolean; right?: React.ReactNode; workId?: string }) {
   const walls = useContext(WallsOn);
+  // A result list one came from wins: it is in the address. Otherwise the wall whose tile opened this book, if any.
+  const from = useCameFrom(workId);
+  const wall = !toResults && from ? from : null;
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader left={<BackLink href={backHref} toResults={toResults} />} right={right} search={<HeaderSearch />} />
+      <SiteHeader left={<BackLink href={wall ? wall.href : backHref} toResults={toResults} wall={wall?.title} />} right={right} search={<HeaderSearch />} />
       {walls && <EditingBand />}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
       <SiteFooterView walls={walls} />
@@ -328,11 +338,13 @@ function BookDetail() {
   }, [inScene, view, scene.staged, requestKey]);
 
   const selected = useMemo<Cover | null>(() => (view ? coverForId(view, selectedId) : null), [view, selectedId]);
+  // One summary of this visit when the reader leaves (ROADMAP 3.1b); nothing is kept on the device.
+  const reportVerdict = useBookSignal({ workId: params.id, market: pages.market ?? chosenMarket ?? 'us', pagesLoaded: pages.pagesLoaded, picked: !!selected });
 
 
   if (pages.status === 'notfound' || pages.status === 'error') {
     return (
-      <Shell backHref={backHref} toResults={cameFromResults}>
+      <Shell workId={params.id} backHref={backHref} toResults={cameFromResults}>
         {pages.status === 'notfound' ? (
           <div className="py-24 text-center">
             <p className="font-display text-2xl text-ink">{t('Book not found')}</p>
@@ -348,7 +360,7 @@ function BookDetail() {
   if (inScene || !view) {
     const work = view?.work;
     return (
-      <Shell backHref={backHref} toResults={cameFromResults}>
+      <Shell workId={params.id} backHref={backHref} toResults={cameFromResults}>
         <TitleBlock
           title={work?.title ?? preview?.title}
           authors={work?.authors ?? preview?.authors}
@@ -424,7 +436,9 @@ function BookDetail() {
   ].filter(Boolean).join(' ');
 
   return (
+    <VerdictReport.Provider value={reportVerdict}>
     <Shell
+      workId={params.id}
       backHref={backHref}
       toResults={cameFromResults}
       /*
@@ -527,6 +541,7 @@ function BookDetail() {
         </CoverSheet>
       )}
     </Shell>
+    </VerdictReport.Provider>
   );
 }
 
@@ -847,6 +862,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
             author={author}
             otherCovers={(coversPerEdition.get(shown.id) ?? 1) - 1}
             searchLinks={searchLinksFor({ title: shown.title, author, ...searchFacts(shown), coverUrl: cover.url, editionId: shown.id, isbn13: shown.isbn13 }, market)}
+            searchWords={{ title: shown.title, author, ...searchFacts(shown) }}
             anyEditionLinks={anyEditionLinks}
             market={market}
             onMarketChange={onMarketChange}
@@ -867,6 +883,8 @@ interface EditionBlockProps {
   author?: string;
   otherCovers: number;
   searchLinks: EditionView['buyLinks'];
+  /** The words `searchLinks` were built from, so the counting redirect can rebuild them (ROADMAP 3.1). */
+  searchWords: WordsQuery;
   anyEditionLinks: BuyLink[];
   market: Market;
   onMarketChange: (market: Market) => void;
@@ -887,7 +905,7 @@ interface EditionBlockProps {
  * them into three zones instead, and everything that is not one of the two or
  * three shops with a chance goes behind a fold.
  */
-function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, anyEditionLinks, market, onMarketChange, verdict, afterLead, gap = 'mt-6' }: EditionBlockProps) {
+function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, searchWords, anyEditionLinks, market, onMarketChange, verdict, afterLead, gap = 'mt-6' }: EditionBlockProps) {
   const t = useT();
   const locale = useLocale();
   // Reset whenever the edition or the market changes: an answer belongs to
@@ -896,6 +914,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
   const key = `${edition.id} ${market}`;
   const shops = checked?.key === key ? checked.byProvider : null;
 
+  // The analytics note which verdict the reader saw (ROADMAP 3.1b, K8).
+  useReportVerdict(edition.isbn13 ? verdict.status : undefined);
   const plan = useMemo(
     () => linkPlan({ edition, buyLinks: edition.buyLinks, searchLinks, anyEditionLinks, market, verdict: verdict.status, t }),
     [edition, searchLinks, anyEditionLinks, market, verdict.status, t],
@@ -962,6 +982,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
               isbn13={edition.isbn13}
               market={market}
               counted={fromIsbn.has(link.provider)}
+              words={searchWords}
               status={shops?.get(link.provider)}
             />
           ))}
@@ -999,6 +1020,7 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
                     isbn13={edition.isbn13}
                     market={market}
                     counted={fromIsbn.has(link.provider)}
+                    words={searchWords}
                     status={shops?.get(link.provider)}
                   />
                 ))}
@@ -1069,7 +1091,14 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, an
           <h3 className="text-lg leading-snug text-ink">{t('Or read it in another edition')}</h3>
           <div className="mt-2 flex flex-wrap gap-2">
             {plan.anyEdition.map(link => (
-              <a key={link.provider} href={link.url} target="_blank" rel="noopener noreferrer" className="btn">
+              <a
+                key={link.provider}
+                // Through the counting redirect, which rebuilds the same search from the table (ROADMAP 3.1).
+                href={trackedSearchHref(link.provider, { title: displayTitle(workTitle), author }, market)}
+                target="_blank"
+                rel={link.affiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'}
+                className="btn"
+              >
                 {link.label}
               </a>
             ))}
@@ -1154,21 +1183,27 @@ function VerdictNote({ verdict, hint }: {
  *
  * A link built from the ISBN goes through our own redirect, which counts the
  * click and rebuilds the target from the table, so it can never become an
- * open redirect (SPEC §10 C9). A search by title has no ISBN to count
- * against and is a plain link.
+ * open redirect (SPEC §10 C9). A shop searched by words goes through it too
+ * since ROADMAP 3.1: only the words travel, and the redirect rebuilds the
+ * shop's URL from the same table. Image searches and catalogues stay plain.
  */
-function ShopLink({ link, isbn13, market, counted, status }: {
+function ShopLink({ link, isbn13, market, counted, words, status }: {
   link: BuyLink;
   isbn13?: string;
   market: Market;
   /** Built from the ISBN, so the counting redirect applies. */
   counted: boolean;
+  /** The words a shop search was built from. */
+  words?: WordsQuery;
   status?: ShopStatus;
 }) {
   const t = useT();
+  const href = counted && isbn13
+    ? trackedBuyHref(link.provider, isbn13, market)
+    : words && isWordsProvider(link.provider) ? trackedSearchHref(link.provider, words, market) : link.url;
   return (
     <a
-      href={counted && isbn13 ? trackedBuyHref(link.provider, isbn13, market) : link.url}
+      href={href}
       target="_blank"
       // `sponsored` states a paid relationship; in hobby mode there is none (E20).
       rel={counted && commerceEnabled() ? 'noopener noreferrer sponsored' : 'noopener noreferrer'}

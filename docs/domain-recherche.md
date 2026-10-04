@@ -510,11 +510,61 @@ Vercel meldet alle sieben als „verified" (niemand sonst beansprucht sie), aber
 | othercovers.com | A | `@` | `76.76.21.21` |
 | othercovers.de | A | `@` | `76.76.21.21` |
 
-Vorhandene A- oder AAAA-Einträge auf `@` (INWX legt bei manchen Domains eine Parkseite an) vorher löschen; sonst nichts anfassen, die Nameserver bleiben bei INWX. Nach dem Setzen prüft Vercel von selbst, stellt das Zertifikat aus (Let's Encrypt, Minuten bis eine Stunde) und schickt eine Mail. Ein CAA-Eintrag ist nicht nötig; **wer einen setzt, muss `letsencrypt.org` erlauben**, sonst bleibt das Zertifikat aus. `beautifulcovers.vercel.app` bleibt als Adresse bestehen; Vercel leitet sie auf die Hauptdomain um, sobald die steht.
+Vorhandene A- oder AAAA-Einträge auf `@` (INWX legt bei manchen Domains eine Parkseite an) vorher löschen; sonst nichts anfassen, die Nameserver bleiben bei INWX. Nach dem Setzen prüft Vercel von selbst, stellt das Zertifikat aus (Let's Encrypt, Minuten bis eine Stunde) und schickt eine Mail. Ein CAA-Eintrag ist nicht nötig; **wer einen setzt, muss `letsencrypt.org` erlauben**, sonst bleibt das Zertifikat aus. `beautifulcovers.vercel.app` bleibt als Adresse bestehen; Vercel leitet sie auf die Hauptdomain um, sobald die steht. **Korrektur 2026-10-03:** das stimmt nicht — über den Connector abgelesen steht `beautifulcovers.vercel.app` mit `redirect: null` im Projekt; die Umleitung ist von Hand zu setzen (Vercel → Domains → Edit → Redirect to `buyitscovers.com`, 308), und zwar erst, wenn das DNS steht (ROADMAP 2.15 Schritt 3).
 
 **Danach:** Sitemap in der Search Console unter `https://buyitscovers.com/sitemap.xml` neu einreichen (2.5), Konten (§12, Prompt), DNS härten (2.14).
 
 **Deployt am 2026-10-02 nachts** (`0bb16b3..65fc975`, Ready nach rund zwei Minuten), einmal angesehen unter `beautifulcovers.vercel.app`: Titel „Buy Its Covers", Überschrift „Judge a book, buy its covers.", Canonical, `og:image`, `robots.txt` und Sitemap nennen `https://buyitscovers.com`. **Bis das DNS steht, zeigen diese Adressen ins Leere** — ein in dieser Zeit geteilter Link bekommt keine Vorschaukarte. Alle sechs Domains antworten im DNS noch mit `185.181.104.242` (INWX' Parkseite); genau dieser A-Eintrag ist je Domain durch `76.76.21.21` zu ersetzen.
+
+**DNS bei INWX, angefangen am 2026-10-03 um 00:30 MESZ** (Julian: „beides ja, die alte vercel adresse auch umleiten wenn es geht" und, zu `www` auf den fünf anderen Domains, „mache das auch"; Prompt [prompt-dns-inwx.md](prompt-dns-inwx.md), über Julians Chrome bei angemeldetem INWX-Konto).
+
+*Vorher, bei allen sechs Domains gleich:* `*` A `185.181.104.242`, `@` A `185.181.104.242`, `www` A `185.181.104.242` (je TTL 3600), dazu NS `ns.inwx.de`, `ns2.inwx.de`, `ns3.inwx.eu` und der SOA — sonst nichts, kein AAAA, kein CNAME.
+
+*Erledigt — nur `buyitscovers.com`:* die drei Parkeinträge gelöscht (INWX fragt „Wollen Sie den Eintrag wirklich löschen?" und löscht sofort); angelegt **A `@` → `76.76.21.21`**, **CNAME `www` → `cname.vercel-dns.com`** und **TXT `@` `v=spf1 -all`**, alle TTL 3600. INWX' Liste danach: NS ×3, SOA, A 76.76.21.21, CNAME www, TXT v=spf1 -all. Um 00:36 MESZ direkt bei `ns.inwx.de` gefragt: A `76.76.21.21`, `www` CNAME `cname.vercel-dns.com.`, TXT `"v=spf1 -all"` — gesetzt. Der lokale Resolver nannte für die Domain selbst noch `185.181.104.242` (zwischengespeichert, TTL 3600), für `www` schon Vercel.
+
+*Abgebrochen:* danach hat die automatische Freigabe von Claude Code jede weitere DNS-Änderung gesperrt („DNS / Domain / Cert Changes"). **Offen, also von Julian oder nach seiner Freigabe der Aktion:**
+
+| Domain | löschen | anlegen |
+|---|---|---|
+| buyitscovers.com | — | TXT `_dmarc` `v=DMARC1; p=reject;` · MX `@` Prio 0 Wert `.` (Null-MX; wenn INWX `.` nicht annimmt, weglassen) |
+| buyitscovers.de, byitscovers.com, byitscovers.de, othercovers.com, othercovers.de | `*` A, `@` A, `www` A (alle `185.181.104.242`) | A `@` → `76.76.21.21` · CNAME `www` → `cname.vercel-dns.com` · TXT `@` `v=spf1 -all` · TXT `_dmarc` `v=DMARC1; p=reject;` · MX `@` 0 `.` |
+
+Bei Vercel dazu (ebenfalls gesperrt, nicht angefangen): `www.buyitscovers.de`, `www.byitscovers.com`, `www.byitscovers.de`, `www.othercovers.com`, `www.othercovers.de` als Weiterleitung (308) auf `buyitscovers.com` anlegen — bisher kennt Vercel nur `www.buyitscovers.com` —, und `beautifulcovers.vercel.app` auf `buyitscovers.com` umleiten. **Korrektur zu oben:** Vercel leitet `beautifulcovers.vercel.app` **nicht** von selbst um; die Projektdomains nennen sie am 2026-10-03 ohne Weiterleitung. Ob Vercel eine `*.vercel.app`-Adresse überhaupt als Weiterleitung zulässt, ist nicht geprüft.
+
+Danach, wie im Prompt: je Domain einmal `dig +short A`, `vercel domains inspect` für buyitscovers.com, buyitscovers.de, othercovers.com, und nach dem Zertifikat buyitscovers.com und othercovers.com je einmal im Browser.
+
+**Fortgesetzt am 2026-10-03 um 02:50 MESZ** (Julian: „mach die änderungen fertig", nach erneutem Anmelden bei INWX), danach brach die App ab. **Geprüft am 2026-10-04 um 02:56 MESZ**, nur lesend (`dig` bei `ns.inwx.de` und `1.1.1.1`, `vercel domains inspect`, je eine HTTPS-Anfrage):
+
+| Domain | A `@` | `www` | `*` | SPF | DMARC | Null-MX | HTTPS |
+|---|---|---|---|---|---|---|---|
+| buyitscovers.com | 76.76.21.21 | CNAME Vercel | – | ✓ | ✓ | ✓ | 200, Titel „Buy Its Covers", Zertifikat gültig |
+| buyitscovers.de | 76.76.21.21 | CNAME Vercel | – | ✓ | ✓ | ✓ | 308 → buyitscovers.com |
+| byitscovers.com | 76.76.21.21 | CNAME Vercel | – | ✓ | ✓ | ✓ | 308 → buyitscovers.com |
+| byitscovers.de | 76.76.21.21 | CNAME Vercel | – | ✓ | **fehlt** | **fehlt** | (nicht abgefragt) |
+| othercovers.com | **185.181.104.242** | Parkseite | Parkseite | – | – | – | – |
+| othercovers.de | **185.181.104.242** | Parkseite | Parkseite | – | – | – | – |
+
+`www.buyitscovers.com` antwortet 308 → `buyitscovers.com`. Vercel meldet `buyitscovers.com` und `buyitscovers.de` als konfiguriert, `othercovers.com` noch „not configured properly". INWX hat den Null-MX (`MX @ 0 .`) angenommen. Nameserver überall unverändert `ns.inwx.de`, `ns2.inwx.de`, `ns3.inwx.eu`; kein AAAA.
+
+**Offen:**
+1. byitscovers.de: TXT `_dmarc` `v=DMARC1; p=reject;` und MX `@` 0 `.`.
+2. othercovers.com und othercovers.de: die drei Parkeinträge (`*`, `@`, `www`) löschen; A `@` → `76.76.21.21`, CNAME `www` → `cname.vercel-dns.com`, TXT `v=spf1 -all`, TXT `_dmarc` `v=DMARC1; p=reject;`, MX `@` 0 `.`.
+3. Vercel: `www.buyitscovers.de`, `www.byitscovers.com`, `www.byitscovers.de`, `www.othercovers.com`, `www.othercovers.de` als Weiterleitung (308) auf `buyitscovers.com` anlegen. Bis dahin zeigen die `www`-CNAMEs dieser Domains auf Vercel, das für sie kein Zertifikat hat: `https://www.buyitscovers.de/` scheitert am TLS-Handshake.
+4. `beautifulcovers.vercel.app` ist weiter ohne Weiterleitung.
+
+**Punkt 3 erledigt am 2026-10-04 um 03:00 MESZ** (Julian: „mach die restlichen Einträge fertig"): über den Vercel-Connector `www.buyitscovers.de`, `www.byitscovers.com`, `www.byitscovers.de`, `www.othercovers.com`, `www.othercovers.de` am Projekt `beautifulbooks` angelegt, je Weiterleitung 308 auf `buyitscovers.com`, alle „verified". Punkte 1 und 2 warten auf Julians erneute Anmeldung bei INWX (die Sitzung war abgelaufen).
+
+**Punkte 1, 2 und 4 erledigt am 2026-10-04 zwischen 03:50 und 04:15 MESZ** (Julian: „ich bin angemeldet, mach weiter — mach auch die umleitung im code"):
+
+- **byitscovers.de:** TXT `_dmarc` `v=DMARC1; p=reject;` und MX `@` 0 `.` angelegt.
+- **othercovers.com, othercovers.de:** je `*` A, `@` A, `www` A (`185.181.104.242`) gelöscht; angelegt A `@` → `76.76.21.21`, CNAME `www` → `cname.vercel-dns.com`, TXT `v=spf1 -all`, TXT `_dmarc` `v=DMARC1; p=reject;`, MX `@` 0 `.` (TTL 3600).
+- **Wie:** über INWX' eigene Seitenfunktionen (`editNs`, `addNewRecord`, `editSubdomain`, `deleteSubdomain`) in Julians Chrome, weil die Elementsuche der Erweiterung ihr Wochenlimit erreicht hatte. Gelöscht wurde nur, was zugleich Typ A und `185.181.104.242` war. Zwei Fallen: die Eingabefelder haben kein `type`-Attribut (`input[type=text]` findet nichts), und `deleteSubdomain` löscht auf dem Server, ohne die Liste neu zu zeichnen — erst ein Neuladen zeigt den Stand.
+- **Geprüft:** INWX' Oberfläche zeigt für alle sechs Domains genau NS ×3, SOA, A `76.76.21.21`, CNAME `www`, TXT SPF, TXT `_dmarc`, MX `0 .`. **Die INWX-Nameserver halten Antworten zwischengespeichert** (bis zur TTL von 3600 s): eine Frage, die schon einmal gestellt war, bekam nach dem Speichern noch die alte Antwort (othercovers.com A `185.181.104.242`, `_dmarc.byitscovers.de` leer), obwohl die Zonen-Seriennummer auf allen drei Servern gleich und neu war; dieselbe Frage mit `+dnssec` oder über TCP, oder ein nie gefragter Name, lieferte sofort den neuen Stand (A `76.76.21.21`, CNAME, DMARC vorhanden, Platzhalter `*` weg). Wer nach einer Änderung prüft, fragt also mit `dig +dnssec`, nicht zweimal dasselbe.
+- **Code (Punkt 4):** `next.config.ts` leitet jede Anfrage an den Host `beautifulcovers.vercel.app` mit 308 auf `https://buyitscovers.com/<Pfad>` um, Abfrage eingeschlossen; Vorschau-Deployments und `localhost` sind nicht betroffen (am Dev-Server mit gesetztem `Host`-Kopf geprüft: alter Host 308 mit Pfad und Abfrage, anderer Host 200). Weil eine Umleitung auf einen anderen Host den `Authorization`-Kopf verwirft, zeigen die eigenen Werkzeuge, die die Produktion mit Admin-Passwort fragen, jetzt direkt auf `https://buyitscovers.com`: Cockpit (`scripts/cockpit/tools.ts`, `client.js`), `lab/collections/push-draft.ts`, `lab/shelf`; dazu die Schlusskarte des Films (`lab/video`). Wirksam erst nach dem nächsten Deploy.
+
+**Deployt am 2026-10-04 um 04:46 MESZ** (Julian: „ja, push"; `aa9ec29..6b78fd9`, mit `origin/main` zusammengeführt, 1.015 Tests, Build grün; Deployment `dpl_F7F8Mo8z4Ev3zjG2q9YM7FKKt4t6`). Einmal angesehen: `https://beautifulcovers.vercel.app/about` → 308 `https://buyitscovers.com/about`; `https://othercovers.com/` → 308 `https://buyitscovers.com/`; `https://www.byitscovers.com/` → 308, Zertifikat gültig; `https://buyitscovers.com/` Titel „Buy Its Covers". **2.2 ist damit bis auf die Sitemap (2.5) erledigt.**
+
+**Search Console und Bing, 2026-10-04 um 06:40 MESZ** (ROADMAP 2.5, Julian: „ja, speichern"): bei `buyitscovers.com` **ein neuer TXT-Eintrag auf `@`**, `google-site-verification=…` (TTL 3600), angelegt über INWX' Formular „Add DNS entry"; sonst nichts geändert. Die Zone hatte inzwischen die Proton-Einträge aus 2.14 (drei DKIM-CNAMEs, MX 10/20 Proton, TXT `protonmail-verification`, SPF jetzt `v=spf1 include:_spf.protonmail.ch ~all`) — es bleibt genau ein `v=spf1`. INWX' Liste danach: A `76.76.21.21`, CNAME ×3 `protonmail*._domainkey`, CNAME `www`, MX ×2, NS ×3, SOA, TXT `protonmail-verification`, TXT SPF, TXT `_dmarc`, TXT `google-site-verification`. `dig @8.8.8.8` sah ihn sofort, `ns.inwx.de` (mit `+dnssec`) noch nicht — Google bestätigte trotzdem beim ersten Versuch. **Den TXT-Eintrag nie löschen:** Google prüft ihn regelmäßig, ohne ihn fällt die Property weg. Bing brauchte keinen Eintrag (Import aus der Search Console, kein CNAME).
 
 ## 21. E-Mail unter der Domain (2026-10-02)
 
@@ -535,3 +585,57 @@ Posteo, Julians heutige Adresse, nimmt keine eigenen Domains an. Die eine Adress
 **3. Verhindern, dass andere im Namen der Domain schreiben** (2.14). Solange kein Postfach da ist: TXT `@` `v=spf1 -all`, TXT `_dmarc` `v=DMARC1; p=reject;`, und ein Null-MX (`MX @ 0 .`) — dann weiß jeder Empfänger, dass von dieser Domain keine Mail kommt. Sobald ein Postfach oder Resend eingerichtet ist, ersetzen deren Einträge SPF und MX; DMARC bleibt, zuerst mit `p=quarantine`, nach einer Woche ohne Fehlzustellung `p=reject`. Dasselbe für die fünf Weiterleitungs-Domains, von denen nie Mail kommen wird.
 
 Was ich hier **nicht** prüfen konnte: ob INWX selbst eine Weiterleitung anbietet und ob Julian iCloud+ hat.
+
+## 22. Konten für `buyitscovers` und `byitscovers`, mit Mail über die Domain (2026-10-04)
+
+Julian, 2026-10-04: „bereite die erstellung der social media konten für buyitscovers vor und lass uns auch byitscovers besetzen wo es geht. außerdem möchte ich dafür die email-adresse für die konten über die domain laufen lassen. ich habe protonmail, da müsste ich das einrichten können".
+
+**`byitscovers` auf den Plattformen** (wie §12: öffentliche Adresse ohne Anmeldung, „frei" heißt nur, dass dort nichts liegt): GitHub, Bluesky (`byitscovers.bsky.social` nicht aufzulösen; mit der Domain hieße das Konto `@byitscovers.com`), YouTube, Mastodon (mastodon.social), Substack, Medium, Facebook (keine öffentliche Seite), TikTok (allgemeine Seite statt Profil), `byitscovers.vercel.app` — **frei**. **Vergeben:** Instagram (privates Konto, §19, damit auch Threads) und **X — `@byitscovers` ist ein gesperrtes Konto** („Account suspended"); gesperrte Namen gibt X nicht frei. **Nicht zu entscheiden:** Tumblr (leitet auf „Trending" um statt „nicht gefunden"). `buyitscovers` siehe §19: überall frei, wo es sich entscheiden ließ; GitHub `buyitscovers` am 2026-10-04 weiterhin 404.
+
+**Proton Mail mit eigener Domain.** Geht nur mit einem **bezahlten** Proton-Tarif: Mail Plus erlaubt eine eigene Domain, Unlimited drei; das kostenlose Konto keine (proton.me/support/proton-plans, proton.me/mail/pricing, abgefragt 2026-10-04). Ob Julians Konto bezahlt ist, ist nicht geprüft — der Browser war bei Proton nicht angemeldet. Eine Domain reicht: alle Adressen können unter `buyitscovers.com` liegen, auch die für die `byitscovers`-Konten (jede Plattform will eine eigene Adresse je Konto). Vorschlag: `hello@buyitscovers.com` für die `buyitscovers`-Konten, `byits@buyitscovers.com` für die `byitscovers`-Konten — Julians Entscheidung.
+
+**Was das am DNS von `buyitscovers.com` ändert:** Proton nennt beim Anlegen der Domain (Einstellungen → Domain names → Add domain) einen TXT-Eintrag zur Bestätigung, zwei MX-Einträge, einen SPF-Eintrag, drei DKIM-CNAMEs und einen DMARC-Vorschlag. Dafür müssen bei INWX der **Null-MX (`MX @ 0 .`) und das `v=spf1 -all` von `buyitscovers.com` weichen** (§20, 2.14) — sie sagen genau das Gegenteil. DMARC `p=reject` kann bleiben, solange Protons DKIM steht; die fünf anderen Domains behalten den Schutz. Die Werte werden von Protons Seite abgelesen, nicht aus dem Gedächtnis.
+
+**Reihenfolge:** (1) Proton: Domain anlegen, Werte ablesen; (2) INWX: Null-MX und SPF bei `buyitscovers.com` ersetzen, Protons Einträge setzen; (3) Proton: prüfen lassen, Adressen anlegen; (4) Konten anlegen mit diesen Adressen — Konten, Passwörter und Bedingungen sind Julians Schritt.
+
+**Proton, 2026-10-04 um 05:05 MESZ** (Julian: „ich bin bei proton angemeldet, nimm judgeabook@buyitscovers.com und mail@buyitscovers.com"). Julians Proton-Konto erlaubt eine eigene Domain („0 / 1 domain used" vorher), also ein bezahlter Tarif. **`buyitscovers.com` ist bei Proton angelegt.** Protons Assistent verlangt als ersten Schritt einen TXT-Eintrag auf `@` mit dem Wert `protonmail-verification=6a4fe6…` (64 Zeichen); die Schritte MX, SPF, DKIM und DMARC zeigt er erst nach der Bestätigung. Die Chrome-Erweiterung gibt den vollen Wert nicht heraus, weil er wie ein Token aussieht; er wird deshalb mit Protons Kopierknopf in das INWX-Feld übertragen und danach mit `dig` geprüft (ein TXT-Eintrag im DNS ist ohnehin öffentlich). Unterbrochen, weil die INWX-Sitzung wieder abgelaufen war. Die Adressen `judgeabook@buyitscovers.com` und `mail@buyitscovers.com` werden angelegt, sobald Proton die Domain bestätigt hat.
+
+**Prüfeintrag gesetzt, 2026-10-04 um 05:20 MESZ.** Julian hat den Wert in den Chat kopiert (`protonmail-verification=6a4fe6f20a3899cab30812646d412f9a3ac330c1`); bei INWX als TXT auf `@` von `buyitscovers.com` eingetragen, neben `v=spf1 -all`. Sichtbar bei `ns.inwx.de`, `1.1.1.1` und `8.8.8.8`. Protons Assistent hat nach zwei Versuchen („Next" im Schritt „Verify", „Refresh status") noch nicht bestätigt — vermutlich hält Protons Resolver die TXT-Antwort von vor dem Eintrag (TTL 3600). **Nächster Versuch frühestens um 06:20 MESZ, einmal.** Zwei Fehlversuche auf dem Weg, damit sie niemand wiederholt: Protons Kopierknopf schreibt aus einem Hintergrund-Reiter nicht in die Zwischenablage (eingefügt wurde, was vorher darin lag), und `navigator.clipboard.writeText` aus dem Hintergrund-Reiter hängt.
+
+**Proton hat bestätigt, abgelesen am 2026-10-04 um 07:00 MESZ.** Status bei Proton: Verified und DMARC grün (das vorhandene `v=DMARC1; p=reject;` genügt), MX und SPF rot, DKIM offen, 0 Adressen. Protons Werte, von der Seite abgelesen:
+
+| Typ | Name | Wert | Prio |
+|---|---|---|---|
+| MX | `@` | `mail.protonmail.ch` | 10 |
+| MX | `@` | `mailsec.protonmail.ch` | 20 |
+| TXT | `@` | `v=spf1 include:_spf.protonmail.ch ~all` | |
+| CNAME | `protonmail._domainkey` | `protonmail.domainkey.deuelplllho2z6zusolimbuincirx42sx7o2gq5kztfgxf22deg3q.domains.proton.ch.` | |
+| CNAME | `protonmail2._domainkey` | `protonmail2.domainkey.deuelplllho2z6zusolimbuincirx42sx7o2gq5kztfgxf22deg3q.domains.proton.ch.` | |
+| CNAME | `protonmail3._domainkey` | `protonmail3.domainkey.deuelplllho2z6zusolimbuincirx42sx7o2gq5kztfgxf22deg3q.domains.proton.ch.` | |
+
+Bei INWX für `buyitscovers.com` dafür zu löschen: MX `@` 0 `.` (Null-MX) und TXT `@` `v=spf1 -all`. Bleiben: A, CNAME `www`, TXT `protonmail-verification=…`, TXT `_dmarc`. Die INWX-Sitzung war wieder abgelaufen; gesetzt ist noch nichts davon.
+
+**Bei INWX gesetzt, 2026-10-04 um 07:20 MESZ** (Julian: „ja, bin wieder bei inwx angemeldet, mach weiter"): für `buyitscovers.com` Null-MX und `v=spf1 -all` gelöscht; angelegt MX `@` 10 `mail.protonmail.ch`, MX `@` 20 `mailsec.protonmail.ch`, TXT `@` `v=spf1 include:_spf.protonmail.ch ~all` und die drei DKIM-CNAMEs aus der Tabelle oben. Mit `dig +dnssec` bei `ns.inwx.de` geprüft: alle sechs da, dazu A, Prüf-TXT und DMARC `p=reject` unverändert. Protons Status zeigte MX und SPF danach noch rot — Protons Resolver hält die alten Antworten (TTL 3600); erneut ansehen frühestens um 08:20 MESZ.
+
+**Adressen:** Das Formular für `judgeabook@buyitscovers.com` (Anzeigename „Buy Its Covers") ist ausgefüllt und abgeschickt; Proton verlangt dafür Julians Passwort („Enter your password" → „Authenticate"), das Claude nicht eingibt. `mail@buyitscovers.com` folgt danach. Das Konto erlaubt 10 Adressen, 9 sind frei.
+
+**Warum drei DKIM-Einträge** (Julian fragte): Proton signiert ausgehende Mails mit einem Schlüssel und tauscht diesen Schlüssel regelmäßig aus. Die drei CNAMEs zeigen auf drei Plätze bei Proton (aktueller, nächster, vorheriger Schlüssel), sodass Proton den Wechsel selbst vornimmt, ohne dass jemand bei INWX etwas ändern muss, und Mails, die mit dem alten Schlüssel unterschrieben sind, noch geprüft werden können.
+
+**Adressen angelegt, 2026-10-04 um 07:40 MESZ** (Julian hat sein Passwort bei Proton selbst eingegeben): `judgeabook@buyitscovers.com` und `mail@buyitscovers.com`, beide aktiv, Anzeigename „Buy Its Covers". **Zuordnung (Julian: „andersrum"): `mail@buyitscovers.com` für die `buyitscovers`-Konten, `judgeabook@buyitscovers.com` für die `byitscovers`-Konten.**
+
+**Anmeldeseiten offen in Julians Chrome, nichts ausgefüllt:** X (`x.com/i/flow/signup`), TikTok (`tiktok.com/signup`), Bluesky (`bsky.app`), Instagram (`instagram.com/accounts/emailsignup/`, verlangt ein Meta-Konto), Mastodon (`mastodon.social/auth/sign_up`, erst Regeln annehmen). GitHub: Julian hat am 2026-10-02 schon eine Organisation **`OtherCovers`** angelegt — sie lässt sich unter Settings → „Rename organization" in `buyitscovers` umbenennen; `byitscovers` wäre eine zweite Organisation. YouTube braucht ein Google-Konto (ein Google-Konto kann mit einer fremden Adresse wie `mail@buyitscovers.com` angelegt werden).
+
+| Plattform | `buyitscovers` (mail@) | `byitscovers` (judgeabook@) |
+|---|---|---|
+| X | frei | vergeben (gesperrtes Konto) |
+| Instagram / Threads | frei | vergeben (privat) |
+| TikTok | frei | frei |
+| Bluesky | Handle `@buyitscovers.com` | Handle `@byitscovers.com` |
+| Mastodon (mastodon.social) | frei | frei |
+| GitHub | `OtherCovers` umbenennen | neue Organisation |
+| YouTube | frei, Google-Konto nötig | frei, Google-Konto nötig |
+
+**Bluesky mit der Domain als Name:** nach dem Anlegen Settings → Account → Handle → „I have my own domain"; Bluesky nennt einen TXT-Eintrag `_atproto` mit `did=did:plc:…`, der bei INWX in die Domain kommt (`buyitscovers.com` bzw. `byitscovers.com`). Diesen Wert liest Claude von Blueskys Seite ab, sobald das Konto steht.
+
+**Offen bei Proton:** MX und SPF zeigte Proton um 07:20 MESZ noch rot (Protons Resolver hält die alten Antworten bis zu einer Stunde); bis Proton sie grün zeigt, kann Mail an die neuen Adressen noch an der Prüfung scheitern. DKIM auch noch zu bestätigen. Einmal ansehen frühestens um 08:20 MESZ.
+

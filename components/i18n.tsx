@@ -5,7 +5,7 @@ import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator, type Translate } from '@/lib/i18n/translate';
 
 /**
- * The locale for client components (ROADMAP 6.82). `app/de/layout.tsx`
+ * The locale for client components (ROADMAP 6.85). `app/de/layout.tsx`
  * provides `de`; the root tree has no provider and so speaks English. Server
  * components take the locale as a prop from their page instead.
  */
@@ -25,17 +25,4 @@ export function useT(): Translate {
   return useMemo(() => translator(locale), [locale]);
 }
 
-/**
- * A sentence with an element inside it: `rich(translated, { q: <strong>…</strong> })`
- * where the translated sentence still carries `{q}`.
- * Splits on the placeholders left in the translated text and puts the nodes
- * in their place, so the German may order them differently.
- */
-export function rich(text: string, parts: Record<string, ReactNode>): ReactNode[] {
-  return text.split(/(\{\w+\})/g).map((piece, i) => {
-    const m = /^\{(\w+)\}$/.exec(piece);
-    if (!m) return piece;
-    const node = parts[m[1]];
-    return node === undefined ? piece : <span key={i} className="contents">{node}</span>;
-  });
-}
+export { rich } from './rich';

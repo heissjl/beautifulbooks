@@ -9,6 +9,18 @@ function input(over: Partial<HintInput>): HintInput {
 }
 
 describe('deriveHints', () => {
+  it('flags a number that stands twice and a next step that names only finished items', () => {
+    const hints = deriveHints(input({
+      items: [item('6.82', { done: true }), item('6.82'), item('2.6', { done: true }), item('2.5')],
+      nextSteps: [{ what: '**2.6 zu Ende**: OG-Bild' }, { what: '**2.5 Search Console**' }],
+    }));
+    expect(hints.map(h => h.title)).toContain('Dieselbe Nummer zweimal');
+    expect(hints.find(h => h.title === 'Dieselbe Nummer zweimal')?.text).toContain('6.82');
+    const stale = hints.filter(h => h.title === 'Nächster Schritt ist erledigt');
+    expect(stale).toHaveLength(1);
+    expect(stale[0].text).toContain('2.6');
+  });
+
   it('finds the contradictions the mock listed', () => {
     const hints = deriveHints(input({
       items: [

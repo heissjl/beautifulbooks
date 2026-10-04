@@ -3,7 +3,7 @@ import { LOCALE_COOKIE, normalizeLocale, DEFAULT_LOCALE } from '@/lib/i18n/local
 
 /**
  * Serves the site in the reader's language without changing its addresses
- * (ROADMAP 6.82, SPEC E23).
+ * (ROADMAP 6.85, SPEC E23).
  *
  * A request carrying `locale=de` is rewritten to the mirrored tree under
  * `app/de/`, whose pages render the same modules with the German locale. The
@@ -32,9 +32,10 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   /*
-    Pages only. Not the API, the image proxy, the click counter, Next's own
+    Pages only. Not the API, the image proxy, the click counter, Julian's
+    analytics (German only, no mirror under /de), Next's own
     files, anything with an extension, nor the generated images and feeds that
     have none (`/opengraph-image`, `/sitemap.xml` has one, `/icon.svg` too).
   */
-  matcher: ['/((?!api/|img/|go/|_next/|.*\\..*|.*/opengraph-image$|opengraph-image$).*)'],
+  matcher: ['/((?!api/|img/|go/|admin/|_next/|.*\\..*|.*/opengraph-image$|opengraph-image$).*)'],
 };

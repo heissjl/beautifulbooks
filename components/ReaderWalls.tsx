@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import ReaderWallCard from './ReaderWallCard';
+import { useT } from './i18n';
 import type { PublicWall } from '@/lib/walls/model';
 
 /**
@@ -11,6 +12,7 @@ import type { PublicWall } from '@/lib/walls/model';
  * loading bei scrollen“). The seed from the server keeps one order.
  */
 export default function ReaderWalls({ initial, next: firstNext, seed }: { initial: PublicWall[]; next: number | null; seed: number }) {
+  const t = useT();
   const [walls, setWalls] = useState(initial);
   const [next, setNext] = useState(firstNext);
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
@@ -51,11 +53,11 @@ export default function ReaderWalls({ initial, next: firstNext, seed }: { initia
         ))}
       </ul>
       {next !== null && state !== 'error' && <div ref={sentinel} className="h-px" aria-hidden="true" />}
-      {state === 'loading' && <p className="mt-8 text-center text-sm text-ink-3" role="status">Loading more collections…</p>}
+      {state === 'loading' && <p className="mt-8 text-center text-sm text-ink-3" role="status">{t('Loading more collections…')}</p>}
       {state === 'error' && (
         <p className="mt-8 text-center text-sm text-ink-2">
-          The next collections did not load.{' '}
-          <button type="button" onClick={() => setState('idle')} className="underline underline-offset-2 hover:text-accent">Try again</button>
+          {t('The next collections did not load.')}{' '}
+          <button type="button" onClick={() => setState('idle')} className="underline underline-offset-2 hover:text-accent">{t('Try again')}</button>
         </p>
       )}
     </>

@@ -34,7 +34,7 @@ export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
-  /** Set by the German tree (ROADMAP 6.82); Next itself passes none. */
+  /** Set by the German tree (ROADMAP 6.85); Next itself passes none. */
   locale?: Locale;
 }
 
@@ -112,7 +112,7 @@ export default async function CollectionPage({ params, locale = DEFAULT_LOCALE }
           </p>
         )}
         <div className="mt-8">
-          <CoverWall works={c.works} selectCover setSize={c.setSize} />
+          <CoverWall works={c.works} selectCover setSize={c.setSize} from={{ href: `/collections/${c.slug}`, title: c.title }} />
         </div>
         {/* Under a wall someone else chose: the way to one's own (5.13b). */}
         {wallsEnabled() && <WallsInvite className="mt-8">{t('Create your own collection — from any cover, or from a photo of your shelf')}</WallsInvite>}

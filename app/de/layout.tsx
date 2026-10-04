@@ -2,7 +2,7 @@ import HtmlLang from '@/components/HtmlLang';
 import { LocaleProvider } from '@/components/i18n';
 
 /**
- * The German tree (ROADMAP 6.82, SPEC E23). Nothing under `app/de/` is a page
+ * The German tree (ROADMAP 6.85, SPEC E23). Nothing under `app/de/` is a page
  * of its own: each file renders the English route's module with `locale="de"`,
  * and this layout gives the client components the same locale. `proxy.ts`
  * rewrites here for a reader whose cookie says `de`; the address never shows

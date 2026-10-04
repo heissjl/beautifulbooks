@@ -95,6 +95,11 @@ export const RATE_RULES = {
    * not a bill; the switch keeps it off in production until Julian says.
    */
   wallsPhoto: { capacity: 3, refillPerMinute: 1 },
+  /**
+   * The analytics' signals from the browser (ROADMAP 3.1b): one per page a
+   * reader leaves. Generous for a reader, tight for someone feeding numbers.
+   */
+  seen: { capacity: 60, refillPerMinute: 60 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

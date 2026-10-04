@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import CoverImage from './CoverImage';
+import { rememberWall } from './cameFrom';
 import { storeWorkPreview } from './useWorkPreview';
 import { wallCover } from '@/lib/curated';
 import type { WallWork } from '@/lib/collections';
@@ -47,7 +48,11 @@ export default function CollectionGrid({ slug, title, works, total }: { slug: st
           <li key={`${w.id}:${w.image ?? w.coverId}`} className={aside}>
             <Link
               href={w.image ? `/book/${target}` : `/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}`}
-              onClick={() => storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [wallCover(w, 'L')] })}
+              onClick={() => {
+                storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [wallCover(w, 'L')] });
+                // Back to the overview, at this collection's card (components/cameFrom.ts).
+                rememberWall({ href: `/collections#${slug}`, title: t('Collections'), workId: target });
+              }}
               className="group block focus-visible:outline-none"
             >
               <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">

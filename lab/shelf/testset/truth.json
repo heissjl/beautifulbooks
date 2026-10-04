@@ -1,0 +1,1445 @@
+{
+ "note": "Wahrheitslisten zum Testsatz Regalfoto (ROADMAP 5.11a). ENTWURF von Claude am 2026-10-04 aus den Fotos gelesen, von Julian zu korrigieren. books: was ein Mensch auf dem Foto lesen kann, jedes Buch einmal, Haupttitel und Autor wie gedruckt (Autor leer, wenn nicht zu sehen). complete=true: die Liste ist vollzählig, jede weitere Lesung ist ein Fehler; false: die Liste ist eine Untergrenze, weitere Lesungen sind ungeprüft. optional: angeschnittene Bücher — sie zu lesen ist kein Fehler, sie nicht zu lesen auch nicht. Die Fotos liegen lokal unter docs/tests/ (git-ignoriert).",
+ "photos": [
+  {
+   "file": "regalfoto-set-01.jpg",
+   "what": "Schaufenster, Umschläge hinter Glas mit Spiegelung, oben und rechts angeschnitten",
+   "complete": true,
+   "books": [
+    [
+     "Blood Dawn",
+     "Hans van de Ven"
+    ],
+    [
+     "Berlin Before and After",
+     "Wendy Lesser"
+    ],
+    [
+     "City on the Edge",
+     "Jonathan Weber"
+    ],
+    [
+     "The Majesty of Chicago Jazz",
+     ""
+    ]
+   ],
+   "optional": [
+    [
+     "A Century",
+     "Anthony Tommasini"
+    ],
+    [
+     "The Westerners",
+     "Megan Kate Nelson"
+    ],
+    [
+     "Mythmaking and Belonging on the American Frontier",
+     "Megan Kate Nelson"
+    ],
+    [
+     "How Slavery Made the Roman Empire",
+     "Emma Southon"
+    ]
+   ]
+  },
+  {
+   "file": "regalfoto-set-02.jpg",
+   "what": "ein Umschlag in der Hand, unscharfe Rücken dahinter",
+   "complete": true,
+   "books": [
+    [
+     "Writing in Pictures",
+     "Joseph McBride"
+    ]
+   ],
+   "optional": []
+  },
+  {
+   "file": "regalfoto-set-03.jpg",
+   "what": "ein Umschlag frontal, daneben zwei Rücken, unten angeschnittene Bücher",
+   "complete": true,
+   "books": [
+    [
+     "The Sound and the Fury",
+     "William Faulkner"
+    ],
+    [
+     "Uncollected Stories",
+     "William Faulkner"
+    ]
+   ],
+   "optional": []
+  },
+  {
+   "file": "regalfoto-set-04.jpg",
+   "what": "Jazz-Regal, vier Böden plus Nachbarregal, Umschläge und Rücken gemischt, schräg",
+   "complete": false,
+   "books": [
+    [
+     "Jazz Cultures",
+     ""
+    ],
+    [
+     "Jazz Matters",
+     ""
+    ],
+    [
+     "Jazz/Not Jazz",
+     ""
+    ],
+    [
+     "Sound Experiments",
+     "Paul Steinbeck"
+    ],
+    [
+     "A Power Stronger Than Itself",
+     "George E. Lewis"
+    ],
+    [
+     "American Singers",
+     "Whitney Balliett"
+    ],
+    [
+     "Good Morning Blues",
+     "Count Basie"
+    ],
+    [
+     "Possibilities",
+     "Herbie Hancock"
+    ],
+    [
+     "Swing, That Modern Sound",
+     "Kenneth J. Bindas"
+    ],
+    [
+     "Jazz Worlds/World Jazz",
+     ""
+    ],
+    [
+     "Ornette Coleman: The Territory and the Adventure",
+     "Maria Golia"
+    ],
+    [
+     "Ascension",
+     ""
+    ],
+    [
+     "Monument Eternal",
+     "Alice Coltrane"
+    ],
+    [
+     "The Day Is So Long and the Wages So Small",
+     "Samuel Charters"
+    ],
+    [
+     "A Listener's Guide to Free Improvisation",
+     "John Corbett"
+    ],
+    [
+     "Jazz Anecdotes",
+     ""
+    ],
+    [
+     "Miles: The Autobiography",
+     "Miles Davis"
+    ],
+    [
+     "Miles & Me",
+     ""
+    ],
+    [
+     "The Fierce Urgency of Now",
+     ""
+    ],
+    [
+     "Going Back to T-Town",
+     ""
+    ],
+    [
+     "The Autobiography of Pops Foster",
+     ""
+    ],
+    [
+     "Bill Frisell, Beautiful Dreamer",
+     "Philip Watson"
+    ],
+    [
+     "Dizzy",
+     "Donald L. Maggin"
+    ],
+    [
+     "West Coast Jazz",
+     "Ted Gioia"
+    ],
+    [
+     "How to Listen to Jazz",
+     "Ted Gioia"
+    ],
+    [
+     "Jammin' at the Margins",
+     "Krin Gabbard"
+    ],
+    [
+     "The Jazz Barn",
+     "John Gennari"
+    ],
+    [
+     "Blowin' Hot and Cool",
+     "John Gennari"
+    ],
+    [
+     "Loft Jazz",
+     ""
+    ],
+    [
+     "Can't Stand Still",
+     "Michael K. Johnson"
+    ],
+    [
+     "Tonight at Noon",
+     "Sue Graham Mingus"
+    ],
+    [
+     "Beneath the Underdog",
+     "Charles Mingus"
+    ],
+    [
+     "Better Git It in Your Soul",
+     ""
+    ],
+    [
+     "Mingus Speaks",
+     ""
+    ],
+    [
+     "Voices of the Jazz Age",
+     ""
+    ],
+    [
+     "Thelonious Monk",
+     "Robin D. G. Kelley"
+    ],
+    [
+     "Albert Murray: Collected Essays & Memoirs",
+     "Albert Murray"
+    ],
+    [
+     "Why Jazz Happened",
+     ""
+    ],
+    [
+     "High Times Hard Times",
+     ""
+    ],
+    [
+     "The Williamsburg Avant-Garde",
+     "Cisco Bradley"
+    ],
+    [
+     "But Beautiful",
+     "Geoff Dyer"
+    ],
+    [
+     "Jazz in the Hill",
+     ""
+    ],
+    [
+     "Wicked Theory, Naked Practice",
+     ""
+    ],
+    [
+     "The Dark Tree",
+     ""
+    ],
+    [
+     "Blutopia",
+     "Graham Lock"
+    ],
+    [
+     "Universal Tonality",
+     ""
+    ]
+   ],
+   "optional": []
+  },
+  {
+   "file": "regalfoto-set-05.jpg",
+   "what": "Science-Fiction-Regal, vier Böden, verwackelt",
+   "complete": false,
+   "books": [
+    [
+     "The Found and the Lost",
+     "Ursula K. Le Guin"
+    ],
+    [
+     "A Wizard of Earthsea",
+     "Ursula K. Le Guin"
+    ],
+    [
+     "The Fallen Fruit",
+     "Shawntelle Madison"
+    ],
+    [
+     "Ashes to Ashes",
+     ""
+    ],
+    [
+     "Dream Your Animal Dreams",
+     "Carole Martinez"
+    ],
+    [
+     "Dragon Rider",
+     "Taran Matharu"
+    ],
+    [
+     "Drowning Practice",
+     "Mike Meginnis"
+    ],
+    [
+     "King Rat",
+     "China Miéville"
+    ],
+    [
+     "The House on Vesper Sands",
+     ""
+    ],
+    [
+     "Curandera",
+     "Irenosen Okojie"
+    ],
+    [
+     "Ninetails",
+     "Sally Wen Mao"
+    ],
+    [
+     "Who Fears Death",
+     "Nnedi Okorafor"
+    ],
+    [
+     "The Book of Phoenix",
+     "Nnedi Okorafor"
+    ],
+    [
+     "Goliath",
+     "Tochi Onyebuchi"
+    ],
+    [
+     "Braking Day",
+     "Adam Oyebanji"
+    ],
+    [
+     "Green Earth",
+     "Kim Stanley Robinson"
+    ],
+    [
+     "Galileo's Dream",
+     "Kim Stanley Robinson"
+    ],
+    [
+     "Red Mars",
+     "Kim Stanley Robinson"
+    ],
+    [
+     "Blue Mars",
+     "Kim Stanley Robinson"
+    ],
+    [
+     "The Devil by Name",
+     ""
+    ],
+    [
+     "Fever House",
+     ""
+    ],
+    [
+     "The Door on the Sea",
+     "Caskey Russell"
+    ],
+    [
+     "Bright Segments",
+     "James Sallis"
+    ]
+   ],
+   "optional": []
+  },
+  {
+   "file": "regalfoto-set-06.jpg",
+   "what": "Büchertisch von oben, Umschläge, ringsum angeschnitten",
+   "complete": true,
+   "books": [
+    [
+     "Enshittification",
+     "Cory Doctorow"
+    ],
+    [
+     "Pretty",
+     ""
+    ],
+    [
+     "A Short History of the Gaza Strip",
+     ""
+    ]
+   ],
+   "optional": [
+    [
+     "Slavery's Capitalism",
+     ""
+    ]
+   ]
+  },
+  {
+   "file": "regalfoto-set-07.jpg",
+   "what": "übersetzte Literatur, drei Böden plus Anschnitt, Rücken und drei Umschläge",
+   "complete": false,
+   "books": [
+    [
+     "The Man Without Qualities",
+     "Robert Musil"
+    ],
+    [
+     "Precision and Soul",
+     "Robert Musil"
+    ],
+    [
+     "A Working Woman",
+     "Elvira Navarro"
+    ],
+    [
+     "The Malcontents",
+     "Sacha Naspini"
+    ],
+    [
+     "Needle's Eye",
+     "Wiesław Myśliwski"
+    ],
+    [
+     "Blood Is Dripping onto the Courtyard",
+     "Elvira Navarro"
+    ],
+    [
+     "Ultramarine",
+     "Mariette Navarro"
+    ],
+    [
+     "My Heart Hemmed In",
+     "Marie NDiaye"
+    ],
+    [
+     "Vengeance Is Mine",
+     "Marie NDiaye"
+    ],
+    [
+     "The Witch",
+     "Marie NDiaye"
+    ],
+    [
+     "That Time of Year",
+     "Marie NDiaye"
+    ],
+    [
+     "Three Strong Women",
+     "Marie NDiaye"
+    ],
+    [
+     "The Salt Smugglers",
+     "Gérard de Nerval"
+    ],
+    [
+     "A History of Light",
+     "Jan Němec"
+    ],
+    [
+     "Nothing Grows by Moonlight",
+     "Torborg Nedreaas"
+    ],
+    [
+     "Suite Française",
+     "Irène Némirovsky"
+    ],
+    [
+     "White Moss",
+     "Anna Nerkagi"
+    ],
+    [
+     "Come On Up",
+     "Jordi Nopca"
+    ],
+    [
+     "Karate Chop",
+     "Dorthe Nors"
+    ],
+    [
+     "So Much for That Winter",
+     "Dorthe Nors"
+    ],
+    [
+     "Dialogues with Leucò",
+     "Cesare Pavese"
+    ],
+    [
+     "The Selected Works of Cesare Pavese",
+     "Cesare Pavese"
+    ],
+    [
+     "The Moon and the Bonfires",
+     "Cesare Pavese"
+    ],
+    [
+     "Dictionary of the Khazars",
+     "Milorad Pavić"
+    ],
+    [
+     "Moscardino",
+     "Enrico Pea"
+    ],
+    [
+     "The Blue Lantern",
+     "Victor Pelevin"
+    ],
+    [
+     "The Sacred Book of the Werewolf",
+     "Victor Pelevin"
+    ],
+    [
+     "Omon Ra",
+     "Victor Pelevin"
+    ],
+    [
+     "Buddha's Little Finger",
+     "Victor Pelevin"
+    ],
+    [
+     "The Yellow Arrow",
+     "Victor Pelevin"
+    ],
+    [
+     "The Art of Asking Your Boss for a Raise",
+     "Georges Perec"
+    ],
+    [
+     "A Void",
+     "Georges Perec"
+    ],
+    [
+     "Things: A Story of the Sixties",
+     "Georges Perec"
+    ],
+    [
+     "The Book of Disquiet",
+     "Fernando Pessoa"
+    ],
+    [
+     "The Girl from the Metropol Hotel",
+     "Ludmilla Petrushevskaya"
+    ],
+    [
+     "Echoland",
+     "Per Petterson"
+    ],
+    [
+     "In the Wake",
+     "Per Petterson"
+    ],
+    [
+     "To Siberia",
+     "Per Petterson"
+    ],
+    [
+     "Out Stealing Horses",
+     "Per Petterson"
+    ],
+    [
+     "Cooking in the Wrong Century",
+     "Teresa Präauer"
+    ],
+    [
+     "The Arthritic Grasshopper",
+     "Gisèle Prassinos"
+    ],
+    [
+     "The Law of White Spaces",
+     "Giorgio Pressburger"
+    ],
+    [
+     "Manon Lescaut",
+     "Prévost"
+    ],
+    [
+     "The Guermantes Way",
+     "Marcel Proust"
+    ],
+    [
+     "Letters to His Neighbor",
+     "Marcel Proust"
+    ],
+    [
+     "Remembrance of Things Past",
+     "Marcel Proust"
+    ],
+    [
+     "Swann's Way",
+     "Marcel Proust"
+    ],
+    [
+     "In the Shadow of Young Girls in Flower",
+     "Marcel Proust"
+    ],
+    [
+     "Sodom and Gomorrah",
+     "Marcel Proust"
+    ]
+   ],
+   "optional": [
+    [
+     "Gargantua and Pantagruel",
+     ""
+    ]
+   ]
+  },
+  {
+   "file": "regalfoto-set-08.jpg",
+   "what": "Staff-Picks-Ständer, fünfzehn Umschläge frontal, Laden im Hintergrund",
+   "complete": true,
+   "books": [
+    [
+     "Hijab Butch Blues",
+     "Lamya H"
+    ],
+    [
+     "Cruising Utopia",
+     "José Esteban Muñoz"
+    ],
+    [
+     "The Broken King",
+     "Michael Thomas"
+    ],
+    [
+     "The Odyssey",
+     "Homer"
+    ],
+    [
+     "Pushout",
+     "Monique Couvson"
+    ],
+    [
+     "Flyboy in the Buttermilk",
+     "Greg Tate"
+    ],
+    [
+     "Babel",
+     "R. F. Kuang"
+    ],
+    [
+     "Assata",
+     "Assata Shakur"
+    ],
+    [
+     "The Last Days of Roger Federer",
+     "Geoff Dyer"
+    ],
+    [
+     "Barbarian Days",
+     "William Finnegan"
+    ],
+    [
+     "Monsters",
+     "Claire Dederer"
+    ],
+    [
+     "The Shock Doctrine",
+     "Naomi Klein"
+    ],
+    [
+     "The Chronicles of DOOM",
+     "S. H. Fernando Jr."
+    ],
+    [
+     "The Snow Leopard",
+     "Peter Matthiessen"
+    ],
+    [
+     "Frederick Douglass",
+     "David W. Blight"
+    ]
+   ],
+   "optional": []
+  },
+  {
+   "file": "regalfoto-set-09.jpg",
+   "what": "City-Lights-Regal, vier Böden plus Anschnitt, Rücken und Umschläge gemischt, viele Doppelte",
+   "complete": false,
+   "books": [
+    [
+     "The Gilda Stories",
+     "Jewelle Gomez"
+    ],
+    [
+     "The New World Border",
+     "Guillermo Gómez-Peña"
+    ],
+    [
+     "Whistleblower at the CIA",
+     "Melvin A. Goodman"
+    ],
+    [
+     "National Insecurity",
+     "Melvin A. Goodman"
+    ],
+    [
+     "The Scale of Maps",
+     "Belén Gopegui"
+    ],
+    [
+     "Stay This Day and Night with Me",
+     "Belén Gopegui"
+    ],
+    [
+     "Crossing Zero",
+     ""
+    ],
+    [
+     "Landscapes of War",
+     "Juan Goytisolo"
+    ],
+    [
+     "State of Siege",
+     "Juan Goytisolo"
+    ],
+    [
+     "The Marx Family Saga",
+     "Juan Goytisolo"
+    ],
+    [
+     "A Cock-Eyed Comedy",
+     "Juan Goytisolo"
+    ],
+    [
+     "The Novel of the Tupinamba Indian",
+     "E. F. Granell"
+    ],
+    [
+     "Criminal of Poverty",
+     ""
+    ],
+    [
+     "Redefining Black Power",
+     ""
+    ],
+    [
+     "Death in Troy",
+     "Bilge Karasu"
+    ],
+    [
+     "Impossible Princess",
+     "Kevin Killian"
+    ],
+    [
+     "Who's to Say What's Obscene?",
+     "Paul Krassner"
+    ],
+    [
+     "The Gnostics",
+     "Jacques Lacarrière"
+    ],
+    [
+     "Points of Departure",
+     ""
+    ],
+    [
+     "Cha-Ching!",
+     ""
+    ],
+    [
+     "The Back Room",
+     "Carmen Martín Gaite"
+    ],
+    [
+     "The Gunman",
+     "Jean-Patrick Manchette"
+    ],
+    [
+     "The Prone Gunman",
+     "Jean-Patrick Manchette"
+    ],
+    [
+     "The Speed of Dreams",
+     ""
+    ],
+    [
+     "Border Patrol Nation",
+     "Todd Miller"
+    ],
+    [
+     "Build Bridges, Not Walls",
+     "Todd Miller"
+    ],
+    [
+     "Storming the Wall",
+     "Todd Miller"
+    ],
+    [
+     "No Fascist USA!",
+     "Hilary Moore"
+    ],
+    [
+     "Breaking Through Power",
+     "Ralph Nader"
+    ],
+    [
+     "Lojman",
+     "Ebru Ojen"
+    ],
+    [
+     "Against Empire",
+     "Michael Parenti"
+    ],
+    [
+     "Blackshirts & Reds",
+     "Michael Parenti"
+    ],
+    [
+     "Contrary Notions",
+     "Michael Parenti"
+    ],
+    [
+     "Dirty Truths",
+     "Michael Parenti"
+    ],
+    [
+     "Love Will Save Us, Right?",
+     "Suzette Partido"
+    ],
+    [
+     "Life As We Show It",
+     ""
+    ],
+    [
+     "Beautiful Chaos",
+     ""
+    ],
+    [
+     "The Unknown Poe",
+     ""
+    ]
+   ],
+   "optional": [
+    [
+     "To Die for the People",
+     "Huey P. Newton"
+    ],
+    [
+     "Little Red Barns",
+     "Will Potter"
+    ],
+    [
+     "Rad American Women A-Z",
+     ""
+    ]
+   ]
+  },
+  {
+   "file": "regalfoto-set-10.jpg",
+   "what": "Belletristik, drei Böden plus Anschnitt, Rücken und fünf Umschläge",
+   "complete": false,
+   "books": [
+    [
+     "Great Circle",
+     "Maggie Shipstead"
+    ],
+    [
+     "You Have a Friend in 10A",
+     "Maggie Shipstead"
+    ],
+    [
+     "Checker and the Derailleurs",
+     "Lionel Shriver"
+    ],
+    [
+     "Lake Success",
+     "Gary Shteyngart"
+    ],
+    [
+     "The Russian Debutante's Handbook",
+     "Gary Shteyngart"
+    ],
+    [
+     "Super Sad True Love Story",
+     "Gary Shteyngart"
+    ],
+    [
+     "Absurdistan",
+     "Gary Shteyngart"
+    ],
+    [
+     "Vera, or Faith",
+     "Gary Shteyngart"
+    ],
+    [
+     "The History of a Difficult Child",
+     "Mihret Sibhat"
+    ],
+    [
+     "Love in a Dead Language",
+     "Lee Siegel"
+    ],
+    [
+     "In the City",
+     "Joan Silber"
+    ],
+    [
+     "Mercy",
+     "Joan Silber"
+    ],
+    [
+     "Ceremony",
+     "Leslie Marmon Silko"
+    ],
+    [
+     "Storyteller",
+     "Leslie Marmon Silko"
+    ],
+    [
+     "Almanac of the Dead",
+     "Leslie Marmon Silko"
+    ],
+    [
+     "The Loneliness of the Long-Distance Runner",
+     "Alan Sillitoe"
+    ],
+    [
+     "Moggerhanger",
+     "Alan Sillitoe"
+    ],
+    [
+     "Saturday Night and Sunday Morning",
+     "Alan Sillitoe"
+    ],
+    [
+     "Sourdough",
+     "Robin Sloan"
+    ],
+    [
+     "The Island of Last Things",
+     "Emma Sloley"
+    ],
+    [
+     "By Grand Central Station I Sat Down and Wept",
+     "Elizabeth Smart"
+    ],
+    [
+     "The All-True Travels and Adventures of Lidie Newton",
+     "Jane Smiley"
+    ],
+    [
+     "Companion Piece",
+     "Ali Smith"
+    ],
+    [
+     "Gliff",
+     "Ali Smith"
+    ],
+    [
+     "Winter",
+     "Ali Smith"
+    ],
+    [
+     "Novel on Yellow Paper",
+     "Stevie Smith"
+    ],
+    [
+     "The Autograph Man",
+     "Zadie Smith"
+    ],
+    [
+     "Changing My Mind",
+     "Zadie Smith"
+    ],
+    [
+     "Model Home",
+     "Rivers Solomon"
+    ],
+    [
+     "Sorrowland",
+     "Rivers Solomon"
+    ],
+    [
+     "Realistic Fiction",
+     "Anton Solomonik"
+    ],
+    [
+     "Chlorine",
+     "Jade Song"
+    ],
+    [
+     "Flashout",
+     "Alexis Soloski"
+    ],
+    [
+     "Debriefing",
+     "Susan Sontag"
+    ],
+    [
+     "In America",
+     "Susan Sontag"
+    ],
+    [
+     "Mulligan Stew",
+     "Gilbert Sorrentino"
+    ],
+    [
+     "Pack of Lies",
+     "Gilbert Sorrentino"
+    ],
+    [
+     "Blue Movie",
+     "Terry Southern"
+    ],
+    [
+     "Paradise Close",
+     "Lisa Russ Spaar"
+    ],
+    [
+     "Aiding and Abetting",
+     "Muriel Spark"
+    ],
+    [
+     "The Finishing School",
+     "Muriel Spark"
+    ],
+    [
+     "The Ghost Stories of Muriel Spark",
+     "Muriel Spark"
+    ],
+    [
+     "The Girls of Slender Means",
+     "Muriel Spark"
+    ],
+    [
+     "Loitering with Intent",
+     "Muriel Spark"
+    ],
+    [
+     "Symposium",
+     "Muriel Spark"
+    ],
+    [
+     "The Unfinished World",
+     "Amber Sparks"
+    ]
+   ],
+   "optional": []
+  },
+  {
+   "file": "regalfoto-set-11.jpg",
+   "what": "Kunstbücher, sechzehn Umschläge frontal, eines mit Lichtreflex",
+   "complete": true,
+   "books": [
+    [
+     "Poetics of Memory",
+     "Mildred Howard"
+    ],
+    [
+     "Tumbados",
+     ""
+    ],
+    [
+     "Search & Destroy",
+     ""
+    ],
+    [
+     "Visualizing Palestine",
+     ""
+    ],
+    [
+     "Soul City",
+     "Ken Light"
+    ],
+    [
+     "Primary",
+     "Alexis Pauline Gumbs"
+    ],
+    [
+     "Rupert García",
+     "Mario T. García"
+    ],
+    [
+     "Memories of Distant Mountains",
+     "Orhan Pamuk"
+    ],
+    [
+     "Rythm Mastr",
+     "Kerry James Marshall"
+    ],
+    [
+     "Out of Character",
+     "Tom Hare"
+    ],
+    [
+     "The Eames Houses",
+     ""
+    ],
+    [
+     "Printing the Revolution",
+     ""
+    ],
+    [
+     "Chinese Movie Magazines",
+     "Paul Fonoroff"
+    ],
+    [
+     "Transcendence",
+     ""
+    ],
+    [
+     "New African Masquerades",
+     ""
+    ]
+   ],
+   "optional": []
+  },
+  {
+   "file": "regalfoto-set-12.jpg",
+   "what": "Schuber und Kassetten, Querformat, schräg von oben, drei Böden",
+   "complete": false,
+   "books": [
+    [
+     "Go Tell It on the Mountain",
+     ""
+    ],
+    [
+     "Giovanni's Room",
+     ""
+    ],
+    [
+     "If Beale Street Could Talk",
+     ""
+    ],
+    [
+     "Nocilla Experience",
+     "Agustín Fernández Mallo"
+    ],
+    [
+     "Meditations",
+     "Marcus Aurelius"
+    ],
+    [
+     "Letters from a Stoic",
+     "Seneca"
+    ],
+    [
+     "An Ember in the Ashes",
+     "Sabaa Tahir"
+    ],
+    [
+     "A Torch Against the Night",
+     "Sabaa Tahir"
+    ],
+    [
+     "A Reaper at the Gates",
+     "Sabaa Tahir"
+    ],
+    [
+     "A Sky Beyond the Storm",
+     "Sabaa Tahir"
+    ],
+    [
+     "The Debate on the Constitution",
+     ""
+    ],
+    [
+     "Finn and Hengest",
+     "J. R. R. Tolkien"
+    ],
+    [
+     "The Story of Kullervo",
+     "J. R. R. Tolkien"
+    ],
+    [
+     "The Battle of Maldon",
+     "J. R. R. Tolkien"
+    ],
+    [
+     "The Frederick Douglass Collection",
+     ""
+    ],
+    [
+     "The Ray Bradbury Collection",
+     "Ray Bradbury"
+    ],
+    [
+     "Decline and Fall",
+     "Edward Gibbon"
+    ],
+    [
+     "Harlem Renaissance",
+     ""
+    ],
+    [
+     "Atlas of Mid-Century Modern Houses",
+     ""
+    ],
+    [
+     "Atlas of Never Built Architecture",
+     ""
+    ]
+   ],
+   "optional": []
+  },
+  {
+   "file": "regalfoto-set-13.jpg",
+   "what": "Galeriewand, Kunstkataloge, drei Fächer und drei Böden, rund neunzig Rücken (Julians erstes Foto vom 2026-09-30)",
+   "complete": false,
+   "books": [
+    [
+     "Robert Indiana",
+     ""
+    ],
+    [
+     "Jasper Johns: Catalogue Raisonné of Monotypes",
+     ""
+    ],
+    [
+     "Ron Mueck",
+     ""
+    ],
+    [
+     "Murakami",
+     ""
+    ],
+    [
+     "Wangechi Mutu",
+     ""
+    ],
+    [
+     "Sub Rosa",
+     "Ron Nagle"
+    ],
+    [
+     "Shirin Neshat",
+     ""
+    ],
+    [
+     "Sites Unseen",
+     "Trevor Paglen"
+    ],
+    [
+     "Nam June Paik: Becoming Robot",
+     ""
+    ],
+    [
+     "Erik Parker",
+     ""
+    ],
+    [
+     "Nicolas Party",
+     ""
+    ],
+    [
+     "Giuseppe Penone: Matrice",
+     ""
+    ],
+    [
+     "Homage to Frank Stella",
+     ""
+    ],
+    [
+     "Crossing Over",
+     "John Stezaker"
+    ],
+    [
+     "Yayoi Kusama",
+     ""
+    ],
+    [
+     "Ways of Being",
+     "Maria Lassnig"
+    ],
+    [
+     "Picasso and Françoise Gilot",
+     ""
+    ],
+    [
+     "Picasso: Mosqueteros",
+     ""
+    ],
+    [
+     "Folksongs",
+     "Richard Prince"
+    ],
+    [
+     "Rob Pruitt",
+     ""
+    ],
+    [
+     "David Reed",
+     ""
+    ],
+    [
+     "Paula Rego: Obedience and Defiance",
+     ""
+    ],
+    [
+     "Paula Rego: The Art of Story",
+     ""
+    ],
+    [
+     "Ottomania",
+     "Piotr Uklański"
+    ],
+    [
+     "Warhol",
+     ""
+    ],
+    [
+     "Julie Mehretu",
+     ""
+    ],
+    [
+     "Gerhard Richter",
+     ""
+    ],
+    [
+     "Bridget Riley",
+     ""
+    ],
+    [
+     "Sterling Ruby",
+     ""
+    ],
+    [
+     "Ruscha",
+     ""
+    ],
+    [
+     "Tea Ceremony Manual",
+     "Tom Sachs"
+    ],
+    [
+     "Thomas Schütte",
+     ""
+    ],
+    [
+     "The End Is Here",
+     "Jim Shaw"
+    ],
+    [
+     "Walking, Talking, Lying",
+     "Laurie Simmons"
+    ],
+    [
+     "The Human Factor",
+     ""
+    ],
+    [
+     "Now Dig This!",
+     ""
+    ],
+    [
+     "True Believers",
+     ""
+    ],
+    [
+     "Julian Schnabel",
+     ""
+    ],
+    [
+     "Louise Fishman",
+     ""
+    ]
+   ],
+   "optional": []
+  },
+  {
+   "file": "regalfoto-set-14.jpg",
+   "what": "ein Brett, 22 Romane in Schutzumschlägen (Julians zweites Foto vom 2026-09-30)",
+   "complete": true,
+   "books": [
+    [
+     "The Heart of a Woman",
+     "Maya Angelou"
+    ],
+    [
+     "Metroland",
+     "Julian Barnes"
+    ],
+    [
+     "Flaubert's Parrot",
+     "Julian Barnes"
+    ],
+    [
+     "The Time of Friendship",
+     "Paul Bowles"
+    ],
+    [
+     "Silence",
+     "John Cage"
+    ],
+    [
+     "Players",
+     "Don DeLillo"
+    ],
+    [
+     "Collected Novellas",
+     "Gabriel García Márquez"
+    ],
+    [
+     "The Autumn of the Patriarch",
+     "Gabriel García Márquez"
+    ],
+    [
+     "Leaf Storm",
+     "Gabriel García Márquez"
+    ],
+    [
+     "White Shroud",
+     "Allen Ginsberg"
+    ],
+    [
+     "The Joke",
+     "Milan Kundera"
+    ],
+    [
+     "Laughable Loves",
+     "Milan Kundera"
+    ],
+    [
+     "Stephen Hero",
+     "James Joyce"
+    ],
+    [
+     "Tar Baby",
+     "Toni Morrison"
+    ],
+    [
+     "Playing in the Dark",
+     "Toni Morrison"
+    ],
+    [
+     "Song of Solomon",
+     "Toni Morrison"
+    ],
+    [
+     "Lord Malquist & Mr Moon",
+     "Tom Stoppard"
+    ],
+    [
+     "Rosencrantz and Guildenstern Are Dead",
+     "Tom Stoppard"
+    ],
+    [
+     "The Great Railway Bazaar",
+     "Paul Theroux"
+    ],
+    [
+     "A Valentine for Noël",
+     "Emmett Williams"
+    ],
+    [
+     "Of Time and the River",
+     "Thomas Wolfe"
+    ]
+   ],
+   "optional": []
+  }
+ ]
+}

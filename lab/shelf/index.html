@@ -141,7 +141,7 @@ function decodeShelf(s) {
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const cover = (id, size = 'M') => `https://covers.openlibrary.org/b/id/${id}-${size}.jpg`;
-let SITE = 'https://beautifulcovers.vercel.app';
+let SITE = 'https://buyitscovers.com';
 const tileHref = (workId, coverId) => coverId ? `${SITE}/book/${workId}?cover=${encodeURIComponent(`ol:${coverId}`)}` : `${SITE}/book/${workId}`;
 
 const WHY = {

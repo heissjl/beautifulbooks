@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import BookGrid from '@/components/BookGrid';
 import HeroSlot from '@/components/HeroSlot';
@@ -31,12 +32,28 @@ import { translator } from '@/lib/i18n/translate';
  */
 interface HomeProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
-  /** Set by the German tree (`app/de/page.tsx`, ROADMAP 6.82); Next itself passes none. */
+  /** Set by the German tree (`app/de/page.tsx`, ROADMAP 6.85); Next itself passes none. */
   locale?: Locale;
 }
 
 const first = (value: string | string[] | undefined): string =>
   (Array.isArray(value) ? value[0] : value) ?? '';
+
+/**
+ * One address for the home page, whatever host answered (ROADMAP 2.2): the
+ * same page is served under `beautifulcovers.vercel.app` until that host
+ * redirects. A search or author result (`?q=`, `?author=`) is a question, not
+ * a document (the sitemap leaves it out for the same reason): it is kept out
+ * of the index, but its links to book pages are followed.
+ */
+export async function generateMetadata({ searchParams }: HomeProps): Promise<Metadata> {
+  const params = await searchParams;
+  const isResult = Boolean(first(params.q) || first(params.author) || first(params.key));
+  return {
+    alternates: { canonical: '/' },
+    ...(isResult ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: HomeProps) {
   const t = translator(locale);

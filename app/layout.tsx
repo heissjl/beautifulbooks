@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { SITE_NAME, SITE_URL } from "@/lib/seo";
 import Analytics from "@/components/Analytics";
+import { NavMemory } from "@/components/useInsights";
+import { Suspense } from "react";
 
 // Typography (ROADMAP 6.61, SPEC §5): Xanh where Fraunces stood — every
 // heading, the wordmark and the font-display lines — and Jost where Geist
@@ -59,6 +61,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jost.variable} ${xanh.variable} ${geistMono.variable}`}>
       <body className="min-h-screen bg-bg text-ink antialiased">
+        {/* Remembers the previous address in memory, for the analytics' "came from" (ROADMAP 3.1b). Before the page, so its effect runs first. */}
+        <Suspense>
+          <NavMemory />
+        </Suspense>
         {children}
         <Analytics />
       </body>

@@ -1,5 +1,5 @@
 /**
- * The language the site speaks (SPEC §2.6, decision E23, ROADMAP 6.82).
+ * The language the site speaks (SPEC §2.6, decision E23, ROADMAP 6.85).
  *
  * English is the default and the only language a crawler sees. A reader
  * switches at the top of the page; the choice is a cookie, and `proxy.ts`
