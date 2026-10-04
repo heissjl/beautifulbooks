@@ -14,6 +14,15 @@ const nextConfig: NextConfig = {
     return [
       // The collection was renamed (Julian, 2026-09-25): its works are the Feminist Press list.
       { source: "/collections/women-writers", destination: "/collections/feminist-press", permanent: true },
+      // The project's first address, kept by Vercel, sends readers and crawlers
+      // to the domain (ROADMAP 2.2). Matched on the exact host, so preview
+      // deployments and localhost are untouched.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "beautifulcovers.vercel.app" }],
+        destination: "https://buyitscovers.com/:path*",
+        permanent: true,
+      },
     ];
   },
 };

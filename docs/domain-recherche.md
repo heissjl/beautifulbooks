@@ -516,6 +516,52 @@ Vorhandene A- oder AAAA-Einträge auf `@` (INWX legt bei manchen Domains eine Pa
 
 **Deployt am 2026-10-02 nachts** (`0bb16b3..65fc975`, Ready nach rund zwei Minuten), einmal angesehen unter `beautifulcovers.vercel.app`: Titel „Buy Its Covers", Überschrift „Judge a book, buy its covers.", Canonical, `og:image`, `robots.txt` und Sitemap nennen `https://buyitscovers.com`. **Bis das DNS steht, zeigen diese Adressen ins Leere** — ein in dieser Zeit geteilter Link bekommt keine Vorschaukarte. Alle sechs Domains antworten im DNS noch mit `185.181.104.242` (INWX' Parkseite); genau dieser A-Eintrag ist je Domain durch `76.76.21.21` zu ersetzen.
 
+**DNS bei INWX, angefangen am 2026-10-03 um 00:30 MESZ** (Julian: „beides ja, die alte vercel adresse auch umleiten wenn es geht" und, zu `www` auf den fünf anderen Domains, „mache das auch"; Prompt [prompt-dns-inwx.md](prompt-dns-inwx.md), über Julians Chrome bei angemeldetem INWX-Konto).
+
+*Vorher, bei allen sechs Domains gleich:* `*` A `185.181.104.242`, `@` A `185.181.104.242`, `www` A `185.181.104.242` (je TTL 3600), dazu NS `ns.inwx.de`, `ns2.inwx.de`, `ns3.inwx.eu` und der SOA — sonst nichts, kein AAAA, kein CNAME.
+
+*Erledigt — nur `buyitscovers.com`:* die drei Parkeinträge gelöscht (INWX fragt „Wollen Sie den Eintrag wirklich löschen?" und löscht sofort); angelegt **A `@` → `76.76.21.21`**, **CNAME `www` → `cname.vercel-dns.com`** und **TXT `@` `v=spf1 -all`**, alle TTL 3600. INWX' Liste danach: NS ×3, SOA, A 76.76.21.21, CNAME www, TXT v=spf1 -all. Um 00:36 MESZ direkt bei `ns.inwx.de` gefragt: A `76.76.21.21`, `www` CNAME `cname.vercel-dns.com.`, TXT `"v=spf1 -all"` — gesetzt. Der lokale Resolver nannte für die Domain selbst noch `185.181.104.242` (zwischengespeichert, TTL 3600), für `www` schon Vercel.
+
+*Abgebrochen:* danach hat die automatische Freigabe von Claude Code jede weitere DNS-Änderung gesperrt („DNS / Domain / Cert Changes"). **Offen, also von Julian oder nach seiner Freigabe der Aktion:**
+
+| Domain | löschen | anlegen |
+|---|---|---|
+| buyitscovers.com | — | TXT `_dmarc` `v=DMARC1; p=reject;` · MX `@` Prio 0 Wert `.` (Null-MX; wenn INWX `.` nicht annimmt, weglassen) |
+| buyitscovers.de, byitscovers.com, byitscovers.de, othercovers.com, othercovers.de | `*` A, `@` A, `www` A (alle `185.181.104.242`) | A `@` → `76.76.21.21` · CNAME `www` → `cname.vercel-dns.com` · TXT `@` `v=spf1 -all` · TXT `_dmarc` `v=DMARC1; p=reject;` · MX `@` 0 `.` |
+
+Bei Vercel dazu (ebenfalls gesperrt, nicht angefangen): `www.buyitscovers.de`, `www.byitscovers.com`, `www.byitscovers.de`, `www.othercovers.com`, `www.othercovers.de` als Weiterleitung (308) auf `buyitscovers.com` anlegen — bisher kennt Vercel nur `www.buyitscovers.com` —, und `beautifulcovers.vercel.app` auf `buyitscovers.com` umleiten. **Korrektur zu oben:** Vercel leitet `beautifulcovers.vercel.app` **nicht** von selbst um; die Projektdomains nennen sie am 2026-10-03 ohne Weiterleitung. Ob Vercel eine `*.vercel.app`-Adresse überhaupt als Weiterleitung zulässt, ist nicht geprüft.
+
+Danach, wie im Prompt: je Domain einmal `dig +short A`, `vercel domains inspect` für buyitscovers.com, buyitscovers.de, othercovers.com, und nach dem Zertifikat buyitscovers.com und othercovers.com je einmal im Browser.
+
+**Fortgesetzt am 2026-10-03 um 02:50 MESZ** (Julian: „mach die änderungen fertig", nach erneutem Anmelden bei INWX), danach brach die App ab. **Geprüft am 2026-10-04 um 02:56 MESZ**, nur lesend (`dig` bei `ns.inwx.de` und `1.1.1.1`, `vercel domains inspect`, je eine HTTPS-Anfrage):
+
+| Domain | A `@` | `www` | `*` | SPF | DMARC | Null-MX | HTTPS |
+|---|---|---|---|---|---|---|---|
+| buyitscovers.com | 76.76.21.21 | CNAME Vercel | – | ✓ | ✓ | ✓ | 200, Titel „Buy Its Covers", Zertifikat gültig |
+| buyitscovers.de | 76.76.21.21 | CNAME Vercel | – | ✓ | ✓ | ✓ | 308 → buyitscovers.com |
+| byitscovers.com | 76.76.21.21 | CNAME Vercel | – | ✓ | ✓ | ✓ | 308 → buyitscovers.com |
+| byitscovers.de | 76.76.21.21 | CNAME Vercel | – | ✓ | **fehlt** | **fehlt** | (nicht abgefragt) |
+| othercovers.com | **185.181.104.242** | Parkseite | Parkseite | – | – | – | – |
+| othercovers.de | **185.181.104.242** | Parkseite | Parkseite | – | – | – | – |
+
+`www.buyitscovers.com` antwortet 308 → `buyitscovers.com`. Vercel meldet `buyitscovers.com` und `buyitscovers.de` als konfiguriert, `othercovers.com` noch „not configured properly". INWX hat den Null-MX (`MX @ 0 .`) angenommen. Nameserver überall unverändert `ns.inwx.de`, `ns2.inwx.de`, `ns3.inwx.eu`; kein AAAA.
+
+**Offen:**
+1. byitscovers.de: TXT `_dmarc` `v=DMARC1; p=reject;` und MX `@` 0 `.`.
+2. othercovers.com und othercovers.de: die drei Parkeinträge (`*`, `@`, `www`) löschen; A `@` → `76.76.21.21`, CNAME `www` → `cname.vercel-dns.com`, TXT `v=spf1 -all`, TXT `_dmarc` `v=DMARC1; p=reject;`, MX `@` 0 `.`.
+3. Vercel: `www.buyitscovers.de`, `www.byitscovers.com`, `www.byitscovers.de`, `www.othercovers.com`, `www.othercovers.de` als Weiterleitung (308) auf `buyitscovers.com` anlegen. Bis dahin zeigen die `www`-CNAMEs dieser Domains auf Vercel, das für sie kein Zertifikat hat: `https://www.buyitscovers.de/` scheitert am TLS-Handshake.
+4. `beautifulcovers.vercel.app` ist weiter ohne Weiterleitung.
+
+**Punkt 3 erledigt am 2026-10-04 um 03:00 MESZ** (Julian: „mach die restlichen Einträge fertig"): über den Vercel-Connector `www.buyitscovers.de`, `www.byitscovers.com`, `www.byitscovers.de`, `www.othercovers.com`, `www.othercovers.de` am Projekt `beautifulbooks` angelegt, je Weiterleitung 308 auf `buyitscovers.com`, alle „verified". Punkte 1 und 2 warten auf Julians erneute Anmeldung bei INWX (die Sitzung war abgelaufen).
+
+**Punkte 1, 2 und 4 erledigt am 2026-10-04 zwischen 03:50 und 04:15 MESZ** (Julian: „ich bin angemeldet, mach weiter — mach auch die umleitung im code"):
+
+- **byitscovers.de:** TXT `_dmarc` `v=DMARC1; p=reject;` und MX `@` 0 `.` angelegt.
+- **othercovers.com, othercovers.de:** je `*` A, `@` A, `www` A (`185.181.104.242`) gelöscht; angelegt A `@` → `76.76.21.21`, CNAME `www` → `cname.vercel-dns.com`, TXT `v=spf1 -all`, TXT `_dmarc` `v=DMARC1; p=reject;`, MX `@` 0 `.` (TTL 3600).
+- **Wie:** über INWX' eigene Seitenfunktionen (`editNs`, `addNewRecord`, `editSubdomain`, `deleteSubdomain`) in Julians Chrome, weil die Elementsuche der Erweiterung ihr Wochenlimit erreicht hatte. Gelöscht wurde nur, was zugleich Typ A und `185.181.104.242` war. Zwei Fallen: die Eingabefelder haben kein `type`-Attribut (`input[type=text]` findet nichts), und `deleteSubdomain` löscht auf dem Server, ohne die Liste neu zu zeichnen — erst ein Neuladen zeigt den Stand.
+- **Geprüft:** INWX' Oberfläche zeigt für alle sechs Domains genau NS ×3, SOA, A `76.76.21.21`, CNAME `www`, TXT SPF, TXT `_dmarc`, MX `0 .`. **Die INWX-Nameserver halten Antworten zwischengespeichert** (bis zur TTL von 3600 s): eine Frage, die schon einmal gestellt war, bekam nach dem Speichern noch die alte Antwort (othercovers.com A `185.181.104.242`, `_dmarc.byitscovers.de` leer), obwohl die Zonen-Seriennummer auf allen drei Servern gleich und neu war; dieselbe Frage mit `+dnssec` oder über TCP, oder ein nie gefragter Name, lieferte sofort den neuen Stand (A `76.76.21.21`, CNAME, DMARC vorhanden, Platzhalter `*` weg). Wer nach einer Änderung prüft, fragt also mit `dig +dnssec`, nicht zweimal dasselbe.
+- **Code (Punkt 4):** `next.config.ts` leitet jede Anfrage an den Host `beautifulcovers.vercel.app` mit 308 auf `https://buyitscovers.com/<Pfad>` um, Abfrage eingeschlossen; Vorschau-Deployments und `localhost` sind nicht betroffen (am Dev-Server mit gesetztem `Host`-Kopf geprüft: alter Host 308 mit Pfad und Abfrage, anderer Host 200). Weil eine Umleitung auf einen anderen Host den `Authorization`-Kopf verwirft, zeigen die eigenen Werkzeuge, die die Produktion mit Admin-Passwort fragen, jetzt direkt auf `https://buyitscovers.com`: Cockpit (`scripts/cockpit/tools.ts`, `client.js`), `lab/collections/push-draft.ts`, `lab/shelf`; dazu die Schlusskarte des Films (`lab/video`). Wirksam erst nach dem nächsten Deploy.
+
 ## 21. E-Mail unter der Domain (2026-10-02)
 
 Julian: „what do i need to do to set up emails from that domain". Drei getrennte Fragen, drei getrennte Antworten.
