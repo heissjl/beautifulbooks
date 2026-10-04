@@ -564,6 +564,8 @@ Danach, wie im Prompt: je Domain einmal `dig +short A`, `vercel domains inspect`
 
 **Deployt am 2026-10-04 um 04:46 MESZ** (Julian: „ja, push"; `aa9ec29..6b78fd9`, mit `origin/main` zusammengeführt, 1.015 Tests, Build grün; Deployment `dpl_F7F8Mo8z4Ev3zjG2q9YM7FKKt4t6`). Einmal angesehen: `https://beautifulcovers.vercel.app/about` → 308 `https://buyitscovers.com/about`; `https://othercovers.com/` → 308 `https://buyitscovers.com/`; `https://www.byitscovers.com/` → 308, Zertifikat gültig; `https://buyitscovers.com/` Titel „Buy Its Covers". **2.2 ist damit bis auf die Sitemap (2.5) erledigt.**
 
+**Search Console und Bing, 2026-10-04 um 06:40 MESZ** (ROADMAP 2.5, Julian: „ja, speichern"): bei `buyitscovers.com` **ein neuer TXT-Eintrag auf `@`**, `google-site-verification=…` (TTL 3600), angelegt über INWX' Formular „Add DNS entry"; sonst nichts geändert. Die Zone hatte inzwischen die Proton-Einträge aus 2.14 (drei DKIM-CNAMEs, MX 10/20 Proton, TXT `protonmail-verification`, SPF jetzt `v=spf1 include:_spf.protonmail.ch ~all`) — es bleibt genau ein `v=spf1`. INWX' Liste danach: A `76.76.21.21`, CNAME ×3 `protonmail*._domainkey`, CNAME `www`, MX ×2, NS ×3, SOA, TXT `protonmail-verification`, TXT SPF, TXT `_dmarc`, TXT `google-site-verification`. `dig @8.8.8.8` sah ihn sofort, `ns.inwx.de` (mit `+dnssec`) noch nicht — Google bestätigte trotzdem beim ersten Versuch. **Den TXT-Eintrag nie löschen:** Google prüft ihn regelmäßig, ohne ihn fällt die Property weg. Bing brauchte keinen Eintrag (Import aus der Search Console, kein CNAME).
+
 ## 21. E-Mail unter der Domain (2026-10-02)
 
 Julian: „what do i need to do to set up emails from that domain". Drei getrennte Fragen, drei getrennte Antworten.
