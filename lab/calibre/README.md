@@ -64,7 +64,7 @@ Open Library und Google werden nur nach Bilddateien gefragt, eine je Cover, höc
 
 ## Status
 
-**Gebaut und auf einer Probe-Kopie durchgespielt am 2026-10-03** ([Historie](../../docs/history.md)). Die echte Bibliothek wurde dabei nur gelesen; ihren ersten Schreiblauf macht Julian selbst.
+**Gebaut und auf einer Probe-Kopie durchgespielt am 2026-10-03** ([Historie](../../docs/history.md)). **Der erste Lauf an der echten Bibliothek, am selben Abend auf Julians Wort („teste mit ubik und invisible man"):** zwei Cover geschrieben — *Ubik* (#457, 315 × 500 → 319 × 500) und *The Invisible Man* (#364, 309 × 475 → 309 × 475, eine andere Datei gleicher Größe). Danach 445 Bücher und 423 Cover wie vorher, die E-Book-Dateien beider Ordner mit unveränderter Änderungszeit, beide alten Cover und eine Kopie von `metadata.db` im Backup-Ordner, beide Schritte in `undo.ts` aufgeführt. Ob die Cover in Calibre und auf dem Reader so aussehen, wie Julian sie will, ist sein Blick.
 
 Gemessen an Julians Bibliothek (445 Bücher, 423 mit Cover, 131 mit ISBN) und der Sammlung „SF Masterworks" (73 Cover):
 
@@ -72,4 +72,4 @@ Gemessen an Julians Bibliothek (445 Bücher, 423 mit Cover, 131 mit ISBN) und de
 - **Bildgröße:** alle 17 Bilder kamen in 5 s; typisch 310 × 500 px, das größte 415 × 635. **12 von 17 sind kleiner als das Cover, das Calibre schon hat** (mit der 90-%-Schwelle 10). Für die Bibliotheksansicht eines Readers reicht das, als Vollbild ist es weich. Das ist die Grenze des Experiments, nicht des Werkzeugs: größere Bilder hat Open Library für diese Drucke nicht.
 - **Schreibweg:** 9 Schreibvorgänge und 9 Rücknahmen auf der Probe-Kopie (Seite, Sammelknopf, `undo.ts --all`); danach waren alle 423 Cover bytegleich mit dem Original. Ein laufendes Calibre-Programm hat das Schreiben blockiert, wie es soll.
 
-**Offen:** Julians erster Lauf auf der echten Bibliothek; eine eigene Sammlung statt einer kuratierten (die Kacheln tragen dort die ISBNs ihrer Drucke); übersetzte Titel finden kein Buch („Per Anhalter durch die Galaxis") — das löst die Gegenrichtung, [5.17](../../docs/plans/PLAN-5.17-calibre-zur-sammlung.md), die sich merkt, welches Buch welches Werk ist.
+**Offen:** Julians Blick auf die zwei Cover in Calibre; eine eigene Sammlung statt einer kuratierten (die Kacheln tragen dort die ISBNs ihrer Drucke); übersetzte Titel finden kein Buch („Per Anhalter durch die Galaxis") — das löst die Gegenrichtung, [5.17](../../docs/plans/PLAN-5.17-calibre-zur-sammlung.md), die sich merkt, welches Buch welches Werk ist.
