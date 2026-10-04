@@ -17,6 +17,7 @@ export default function WallPicker({
   target,
   newTitle,
   replace,
+  choose,
   onWall,
   onReplaced,
   onClose,
@@ -28,6 +29,12 @@ export default function WallPicker({
   newTitle?: string;
   /** From Arrange (5.13m): the picked cover takes this tile's place instead of joining at the end. */
   replace?: { tile: Tile; index: number };
+  /**
+   * Before there is a collection (the photo list on /create, Julian 2026-10-04: „i want a user
+   * to be able to change covers in the from photo funnel before they create a collection“):
+   * the picked cover goes back to the list and nothing is written.
+   */
+  choose?: { current: Tile; onChoose: (tile: Tile) => void };
   onWall: (wall: PublicWall) => void;
   /** After a replacement, so the editor can return to Arrange. */
   onReplaced?: () => void;
@@ -56,10 +63,12 @@ export default function WallPicker({
   }, [pages]);
 
   // A tile on the wall marks the gallery cover it is, or the one it was folded into.
+  // Before a collection exists (`choose`), the row's own cover is the one marked.
+  const current = choose?.current;
   const marked = useMemo(() => {
-    const onWall = new Set((target?.tiles ?? []).map(tileCoverId));
+    const onWall = new Set([...(target?.tiles ?? []), ...(current ? [current] : [])].map(tileCoverId));
     return new Set((view?.covers ?? []).filter((c) => onWall.has(c.id) || c.similarIds?.some((id) => onWall.has(id))).map((c) => c.id));
-  }, [view, target]);
+  }, [view, target, current]);
 
   async function change(run: () => Promise<{ wall: PublicWall }>) {
     setBusy(true);
@@ -85,6 +94,11 @@ export default function WallPicker({
     const onIt = (target?.tiles ?? []).filter((tile) => ids.has(tileCoverId(tile)));
     const editions = cover.editionIds.map((id) => view.editionsById.get(id)).filter((e): e is EditionView => !!e);
     const tile: Tile = { workId: view.work.id, coverId: stored, title: view.work.title, ...(view.work.authors[0] ? { author: view.work.authors[0] } : {}), printings: printingsOf(editions) };
+    if (choose) {
+      if (tileCoverId(choose.current) !== tile.coverId) choose.onChoose(tile);
+      else onClose();
+      return;
+    }
     if (!target) {
       change(() => postJson('/api/walls', { title: newTitle ?? t('My collection'), tiles: [tile] }));
       return;
@@ -127,11 +141,13 @@ export default function WallPicker({
 
       {/* Which collection a click fills is said here, not left to guess (5.13m). */}
       <p className="mt-3 text-sm text-ink-2">
-        {replace
-          ? rich(t('Pick another cover for this book: it takes the place of the one marked in {title}.'), { title: <strong className="font-medium text-ink">{target?.title}</strong> })
-          : target
-            ? rich(t('A click puts a cover into {title}, a second click takes it out.'), { title: <strong className="font-medium text-ink">{target.title}</strong> })
-            : t('Your first cover starts a new collection; you go on adding in its editor.')}
+        {choose
+          ? t('Pick another cover for this book: it takes the place of the marked one in your list.')
+          : replace
+            ? rich(t('Pick another cover for this book: it takes the place of the one marked in {title}.'), { title: <strong className="font-medium text-ink">{target?.title}</strong> })
+            : target
+              ? rich(t('A click puts a cover into {title}, a second click takes it out.'), { title: <strong className="font-medium text-ink">{target.title}</strong> })
+              : t('Your first cover starts a new collection; you go on adding in its editor.')}
       </p>
       {error && (
         <div className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-lg rounded-card border border-accent bg-surface px-4 py-3 text-sm text-ink shadow-xl" role="alert">
@@ -147,7 +163,7 @@ export default function WallPicker({
         {pages.status === 'error' && <p className="text-sm text-accent">{pages.message ?? t('Open Library did not answer. Try again in a moment.')}</p>}
         {view && view.groups.length === 0 && pages.merged?.done && <p className="text-sm text-ink-2">{t('Neither catalogue has a cover for this book.')}</p>}
         {view && view.groups.length > 0 && (
-          <CoverGallery groups={view.groups} allCovers={view.all} selectedCover={null} onSelectCover={toggle} captions={view.captions} marked={marked} allFirst />
+          <CoverGallery groups={view.groups} allCovers={view.all} selectedCover={null} onSelectCover={toggle} captions={view.captions} marked={marked} markLabel={choose ? t('In your list') : undefined} allFirst />
         )}
       </div>
     </section>

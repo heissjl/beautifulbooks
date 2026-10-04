@@ -55,8 +55,8 @@ export default function WallProposal({
   target?: PublicWall;
   walls?: PublicWall[];
   onCommit: (dest: Destination, tiles: Tile[]) => Promise<void>;
-  /** Show all covers of this tile's book (the editor's search). */
-  onOtherCover?: (tile: Tile) => void;
+  /** Show all covers of this tile's book: the editor's search, or on /create a picker that swaps the row's cover (`index`). */
+  onOtherCover?: (tile: Tile, index: number) => void;
   /** Search for a title that was read but not found. */
   onSearchFor?: (label: string) => void;
 }) {
@@ -142,7 +142,7 @@ export default function WallProposal({
                     </button>
                   ) : (
                     onOtherCover && (
-                      <button type="button" onClick={() => onOtherCover(p.tile as Tile)} className="shrink-0 text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
+                      <button type="button" onClick={() => onOtherCover(p.tile as Tile, i)} className="shrink-0 text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
                         {t('another cover')}
                       </button>
                     )

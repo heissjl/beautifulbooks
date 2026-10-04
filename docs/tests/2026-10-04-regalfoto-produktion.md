@@ -42,6 +42,12 @@ read 29 · found 18 · maybe 8 · notFound 3 · failed 0 · covers 2 · msModel 
 1. `components/WallsStart.tsx`: wer auf `/create` Cover in eine Sammlung gibt (Foto, Zufall, fremde Sammlung), landet im Editor auf **Arrange** (`?mode=arrange`); die leere Sammlung bleibt bei „Add covers“.
 2. `components/CollectionEditor.tsx`: über dem Raster steht „Tap or click a cover to swap it for another cover of the same book.“ (deutsch in `lib/i18n/de.ts`). Angesehen bei 390 × 844 und 1280 × 800 gegen `npm run dev`: eine Zeile, 358 bzw. 1216 px breit, kein waagrechtes Scrollen.
 
+## Nachtrag: „another cover“ schon vor der Sammlung
+
+Julian, auf diesen Bericht: „i want a user to be able to change covers in the from photo funnel before they create a collection“. Gebaut: `WallPhoto` gibt auf `/create` jeder gefundenen Zeile „another cover“; es öffnet `WallPicker` mit `choose` als Fenster — alle Cover des Buchs, das Cover der Zeile markiert „In your list“ (`CoverGallery markLabel`), die Wahl ersetzt den Tile der Zeile und schließt; Escape und ein Klick daneben schließen ohne Wahl. Geschrieben wird nichts, bis „Make a collection“. Ein neues Foto verwirft die Wahl. Im Editor bleibt das bisherige `onOtherCover` (die Suche des Editors). Der Satz „you can change it in the collection’s editor“ entfällt, die Liste sagt jetzt überall „“another cover” shows the others it has had“.
+
+Nachgestellt gegen `npm run dev` mit Playwright, Foto-Antwort gestubbt (Gatsby gefunden, ein Titel nicht), `/api/works/OL468431W` aus den Gatsby-Fixtures (123 Cover aus drei Seiten), bei 390 × 844 (Touch) und 1280 × 800: markiert war das Cover der Zeile (`ol:14369845`), gewählt `ol:13853193`, das Vorschaubild der Zeile wechselte, `POST /api/walls` trug `13853193`, danach `/c/<id>/edit?mode=arrange`.
+
 ## Offen (in ROADMAP 5.11a eingetragen)
 
 - **Die Titel von Foto 1** — Julian, falls er sie noch weiß oder das Foto hat: als Foto 15 in den Testsatz (Wahrheitsliste), dann ist der Fall nachstellbar.

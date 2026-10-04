@@ -38,6 +38,8 @@ interface CoverGalleryProps {
    * was tried on the selected tile and removed (6.55).
    */
   marked?: ReadonlySet<string>;
+  /** The mark's word; "Added" unless the cover is not on a wall yet (the photo list on /create says "In your list"). */
+  markLabel?: string;
   /** Open on "All languages" rather than the first language (the wall picker; Julian, 2026-09-28). */
   allFirst?: boolean;
 }
@@ -84,7 +86,7 @@ function visibleLanguages(
   return new Set([...others.slice(0, kept), activeKey]);
 }
 
-export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked, allFirst }: CoverGalleryProps) {
+export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked, markLabel, allFirst }: CoverGalleryProps) {
   const t = useT();
   const locale = useLocale();
   // The tab follows the selected cover unless the user picked a tab since
@@ -244,7 +246,7 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
               </div>
               {onWall && (
                 <span className="pointer-events-none absolute left-1.5 top-1.5 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-medium text-on-accent">
-                  {t('Added')}
+                  {markLabel ?? t('Added')}
                 </span>
               )}
               {cover.similarIds && cover.similarIds.length > 0 && (
