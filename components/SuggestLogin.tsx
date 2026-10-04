@@ -2,10 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useT } from './i18n';
 
 /** The password field in front of the suggestion tool (ROADMAP 5.10a). */
 export default function SuggestLogin() {
   const router = useRouter();
+  const t = useT();
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -22,9 +24,9 @@ export default function SuggestLogin() {
       });
       if (res.ok) return router.refresh();
       const body = (await res.json().catch(() => ({}))) as { error?: string };
-      setError(res.status === 429 ? 'Too many tries. Wait a minute.' : (body.error ?? 'That did not work.'));
+      setError(res.status === 429 ? t('Too many tries. Wait a minute.') : (body.error ?? t('That did not work.')));
     } catch {
-      setError('The site did not answer. Try again.');
+      setError(t('The site did not answer. Try again.'));
     } finally {
       setBusy(false);
     }
@@ -32,7 +34,7 @@ export default function SuggestLogin() {
 
   return (
     <form onSubmit={submit} className="max-w-sm">
-      <label htmlFor="suggest-password" className="block text-sm text-ink-2">Password</label>
+      <label htmlFor="suggest-password" className="block text-sm text-ink-2">{t('Password')}</label>
       <div className="mt-2 flex gap-2">
         <input
           id="suggest-password"
@@ -43,12 +45,12 @@ export default function SuggestLogin() {
           className="min-w-0 flex-1 rounded-md border border-line bg-surface px-3 py-2 text-ink focus:border-accent focus:outline-none"
         />
         <button type="submit" disabled={busy || !password} className="rounded-md border border-line px-4 py-2 text-sm text-ink hover:border-accent hover:text-accent disabled:opacity-50">
-          Enter
+          {t('Enter')}
         </button>
       </div>
       {error && <p className="mt-2 text-sm text-accent" role="alert">{error}</p>}
       <p className="mt-4 text-xs text-ink-3">
-        Signing in sets one cookie that keeps you signed in for 30 days. It holds an expiry date and a signature, nothing about you.
+        {t('Signing in sets one cookie that keeps you signed in for 30 days. It holds an expiry date and a signature, nothing about you.')}
       </p>
     </form>
   );

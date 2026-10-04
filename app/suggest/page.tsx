@@ -8,6 +8,9 @@ import SuggestLogin from '@/components/SuggestLogin';
 import SuggestTool, { type SuggestCollection } from '@/components/SuggestTool';
 import { allCollections } from '@/lib/collections';
 import { SESSION_COOKIE, sessionValid, suggestEnabled } from '@/lib/suggest/auth';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/translate';
+import { rich } from '@/components/rich';
 
 /**
  * Suggestions for collections, for friends with the password (ROADMAP 5.10a,
@@ -41,7 +44,8 @@ function forTool(): SuggestCollection[] {
   }));
 }
 
-export default async function SuggestPage() {
+export default async function SuggestPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
+  const t = translator(locale);
   if (!suggestEnabled()) notFound();
   const signedIn = sessionValid((await cookies()).get(SESSION_COOKIE)?.value);
 
@@ -55,11 +59,11 @@ export default async function SuggestPage() {
           at the password field learns no name.
         */}
         {signedIn && <p className="mb-4 inline-block rounded-md border border-accent/40 px-3 py-1 text-sm text-accent" lang="de">Für Caitlin</p>}
-        <h1 className="text-3xl leading-tight text-ink sm:text-4xl">Suggest a book for a collection</h1>
+        <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{t('Suggest a book for a collection')}</h1>
         <p className="mt-4 max-w-2xl text-base text-ink-2">
-          Pick a collection, find a book, choose the cover you would put on the wall. Julian looks at every
-          suggestion and decides what goes in; nothing you send appears on the site by itself. To build a whole
-          collection instead, <Link href="/curate" className="text-accent underline underline-offset-4">curate one</Link>.
+          {rich(t('Pick a collection, find a book, choose the cover you would put on the wall. Julian looks at every suggestion and decides what goes in; nothing you send appears on the site by itself. To build a whole collection instead, {curate}.'), {
+            curate: <Link href="/curate" className="text-accent underline underline-offset-4">{t('curate one')}</Link>,
+          })}
         </p>
         <div className="mt-8">{signedIn ? <SuggestTool collections={forTool()} /> : <SuggestLogin />}</div>
       </main>

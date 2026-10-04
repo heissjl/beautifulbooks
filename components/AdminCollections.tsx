@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import PublishToggle from './PublishToggle';
+import { useT } from './i18n';
 import { moveTo } from '@/lib/curate/pending';
 
 export interface AdminCollection {
@@ -34,6 +35,7 @@ export default function AdminCollections({ collections, admin, draftsBySlug, onD
   onDrafts: (slug: string) => void;
 }) {
   const router = useRouter();
+  const t = useT();
   const [list, setList] = useState(collections);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -52,11 +54,11 @@ export default function AdminCollections({ collections, admin, draftsBySlug, onD
         body: JSON.stringify({ slugs: next.map(c => c.slug) }),
       });
       const body = (await res.json().catch(() => ({}))) as { error?: string };
-      if (!res.ok) throw new Error(body.error ?? 'Not saved.');
+      if (!res.ok) throw new Error(body.error ?? t('Not saved.'));
       router.refresh();
     } catch (e) {
       setList(before);
-      setError(e instanceof Error ? e.message : 'Not saved.');
+      setError(e instanceof Error ? e.message : t('Not saved.'));
     } finally {
       setBusy(false);
     }
@@ -72,14 +74,14 @@ export default function AdminCollections({ collections, admin, draftsBySlug, onD
   return (
     <section>
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="font-display text-2xl text-ink">Collections on the site</h2>
+        <h2 className="font-display text-2xl text-ink">{t('Collections on the site')}</h2>
         <p className="text-xs text-ink-3">
-          {list.filter(c => c.published).length} published · {list.filter(c => !c.published).length} not published
+          {t('{n} published', { n: list.filter(c => c.published).length })} · {t('{n} not published', { n: list.filter(c => !c.published).length })}
         </p>
       </div>
       {admin && (
         <p className="mt-1 text-xs text-ink-3">
-          Drag a row to reorder — saved at once. The order here is the order on the site; the first {ON_HOME} published ones are on the home page.
+          {t('Drag a row to reorder — saved at once. The order here is the order on the site; the first {n} published ones are on the home page.', { n: ON_HOME })}
         </p>
       )}
       {error && <p className="mt-2 text-xs text-accent" role="alert">{error}</p>}
@@ -107,22 +109,22 @@ export default function AdminCollections({ collections, admin, draftsBySlug, onD
                 <span className="flex shrink-0 items-center gap-1 text-ink-3">
                   <span aria-hidden="true" className="select-none px-1 text-base leading-none">⠿</span>
                   <span className="flex flex-col sm:hidden">
-                    <button type="button" disabled={busy || i === 0} onClick={() => place(c.slug, i - 1)} aria-label={`Move ${c.title} up`} className="px-1 leading-none hover:text-accent disabled:opacity-30">▲</button>
-                    <button type="button" disabled={busy || i === list.length - 1} onClick={() => place(c.slug, i + 1)} aria-label={`Move ${c.title} down`} className="px-1 leading-none hover:text-accent disabled:opacity-30">▼</button>
+                    <button type="button" disabled={busy || i === 0} onClick={() => place(c.slug, i - 1)} aria-label={t('Move {title} up', { title: c.title })} className="px-1 leading-none hover:text-accent disabled:opacity-30">▲</button>
+                    <button type="button" disabled={busy || i === list.length - 1} onClick={() => place(c.slug, i + 1)} aria-label={t('Move {title} down', { title: c.title })} className="px-1 leading-none hover:text-accent disabled:opacity-30">▼</button>
                   </span>
                 </span>
               )}
               <span className="w-6 shrink-0 text-right text-xs tabular-nums text-ink-3">{i + 1}</span>
               <Link href={`/collections/${c.slug}`} draggable={false} className="min-w-0 flex-1 truncate text-ink underline-offset-4 hover:text-accent hover:underline">{c.title}</Link>
-              {onHome && <span className="hidden rounded-full border border-accent/40 px-2 py-0.5 text-[11px] text-accent sm:inline">home page</span>}
+              {onHome && <span className="hidden rounded-full border border-accent/40 px-2 py-0.5 text-[11px] text-accent sm:inline">{t('home page')}</span>}
               {drafts > 0 && (
                 <button type="button" onClick={() => onDrafts(c.slug)} className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11px] text-ink-2 hover:border-accent hover:text-accent">
-                  {drafts} {drafts === 1 ? 'draft' : 'drafts'}
+                  {drafts === 1 ? t('1 draft') : t('{n} drafts', { n: drafts })}
                 </button>
               )}
-              <span className="hidden shrink-0 text-xs tabular-nums text-ink-3 sm:inline">{c.works} books</span>
+              <span className="hidden shrink-0 text-xs tabular-nums text-ink-3 sm:inline">{t('{n} books', { n: c.works })}</span>
               {/* On a phone the button says it; the title needs the room. */}
-              <span className={`${admin ? 'hidden sm:inline' : ''} shrink-0 text-xs ${c.published ? 'text-ink-2' : 'text-accent'}`}>{c.published ? 'published' : 'not published'}</span>
+              <span className={`${admin ? 'hidden sm:inline' : ''} shrink-0 text-xs ${c.published ? 'text-ink-2' : 'text-accent'}`}>{c.published ? t('published') : t('not published')}</span>
               {admin && <PublishToggle slug={c.slug} title={c.title} published={c.published} />}
             </li>
           );
