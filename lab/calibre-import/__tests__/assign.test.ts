@@ -5,7 +5,9 @@ import { describe, expect, it } from 'vitest';
 import type { WorkSummary } from '../../../lib/model';
 import { SourceUnavailableError } from '../../../lib/sources/http';
 import type { CalibreBook } from '../../calibre/library';
-import { assignAll, assignBook, report, sample, tally, tilesOf, type AssignSources } from '../assign';
+import type { Tile } from '../../../lib/walls/model';
+import { assignAll, assignBook, report, sample, tally, tilesOf, type Assignment, type AssignSources } from '../assign';
+import { included, rowsOf } from '../review';
 import { Catalogue, DiskCache, editionFromDoc, type CatalogueSources } from '../lookup';
 
 const book = (b: Partial<CalibreBook> & { id: number }): CalibreBook => ({ title: 'T', authors: ['A B'], isbns: [], hasCover: true, path: `A/T (${b.id})`, formats: ['EPUB'], ...b });
@@ -201,5 +203,39 @@ describe('the catalogue and its cache', () => {
     expect(cache.has('search:dune')).toBe(false);
     silent = false;
     expect(await catalogue.find('Dune')).toEqual([RAMA]);
+  });
+});
+
+describe('the review', () => {
+  const tileOf = (workId: string): Tile => ({ workId, coverId: '1', title: 'T', printings: [] });
+  const books = [book({ id: 1 }), book({ id: 2 }), book({ id: 3 }), book({ id: 4 })];
+  const assignments: Assignment[] = [
+    { bookId: 1, status: 'match', reason: 'author+title', tile: tileOf('OL1W') },
+    { bookId: 2, status: 'suggestion', reason: 'author', tile: tileOf('OL2W') },
+    { bookId: 3, status: 'none' },
+  ];
+
+  it('ticks matches, leaves suggestions unticked, and knows a book that was never asked about', () => {
+    const rows = rowsOf(books, assignments, {});
+    expect(rows.map((r) => [r.status, r.include])).toEqual([
+      ['match', true],
+      ['suggestion', false],
+      ['none', false],
+      ['unasked', false],
+    ]);
+    expect(included(rows)).toEqual([{ bookId: 1, tile: tileOf('OL1W') }]);
+  });
+
+  it('lets a decision override, and a work chosen by hand replace the catalogue’s', () => {
+    const rows = rowsOf(books, assignments, { 1: { include: false }, 2: { include: true }, 3: { tile: tileOf('OL9W') } });
+    expect(included(rows).map((r) => [r.bookId, r.tile.workId])).toEqual([
+      [2, 'OL2W'],
+      [3, 'OL9W'],
+    ]);
+    expect(rows[2].byHand).toBe(true);
+  });
+
+  it('never includes a book without a work, even when it was ticked', () => {
+    expect(rowsOf(books, assignments, { 3: { include: true } })[2].include).toBe(false);
   });
 });

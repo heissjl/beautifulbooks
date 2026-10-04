@@ -145,7 +145,7 @@ export function tally(assignments: readonly Assignment[]): Tally {
  * The collection's tiles: one per work, in the library's order. Two copies of
  * a book in Calibre are one tile; `bookWorks` keeps both books for the way back.
  */
-export function tilesOf(chosen: readonly Assignment[]): { tiles: Tile[]; bookWorks: Array<{ bookId: number; workId: string }> } {
+export function tilesOf(chosen: ReadonlyArray<Pick<Assignment, 'bookId' | 'tile'>>): { tiles: Tile[]; bookWorks: Array<{ bookId: number; workId: string }> } {
   const tiles: Tile[] = [];
   const seen = new Set<string>();
   const bookWorks: Array<{ bookId: number; workId: string }> = [];
