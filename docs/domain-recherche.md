@@ -562,6 +562,8 @@ Danach, wie im Prompt: je Domain einmal `dig +short A`, `vercel domains inspect`
 - **Geprüft:** INWX' Oberfläche zeigt für alle sechs Domains genau NS ×3, SOA, A `76.76.21.21`, CNAME `www`, TXT SPF, TXT `_dmarc`, MX `0 .`. **Die INWX-Nameserver halten Antworten zwischengespeichert** (bis zur TTL von 3600 s): eine Frage, die schon einmal gestellt war, bekam nach dem Speichern noch die alte Antwort (othercovers.com A `185.181.104.242`, `_dmarc.byitscovers.de` leer), obwohl die Zonen-Seriennummer auf allen drei Servern gleich und neu war; dieselbe Frage mit `+dnssec` oder über TCP, oder ein nie gefragter Name, lieferte sofort den neuen Stand (A `76.76.21.21`, CNAME, DMARC vorhanden, Platzhalter `*` weg). Wer nach einer Änderung prüft, fragt also mit `dig +dnssec`, nicht zweimal dasselbe.
 - **Code (Punkt 4):** `next.config.ts` leitet jede Anfrage an den Host `beautifulcovers.vercel.app` mit 308 auf `https://buyitscovers.com/<Pfad>` um, Abfrage eingeschlossen; Vorschau-Deployments und `localhost` sind nicht betroffen (am Dev-Server mit gesetztem `Host`-Kopf geprüft: alter Host 308 mit Pfad und Abfrage, anderer Host 200). Weil eine Umleitung auf einen anderen Host den `Authorization`-Kopf verwirft, zeigen die eigenen Werkzeuge, die die Produktion mit Admin-Passwort fragen, jetzt direkt auf `https://buyitscovers.com`: Cockpit (`scripts/cockpit/tools.ts`, `client.js`), `lab/collections/push-draft.ts`, `lab/shelf`; dazu die Schlusskarte des Films (`lab/video`). Wirksam erst nach dem nächsten Deploy.
 
+**Deployt am 2026-10-04 um 04:46 MESZ** (Julian: „ja, push"; `aa9ec29..6b78fd9`, mit `origin/main` zusammengeführt, 1.015 Tests, Build grün; Deployment `dpl_F7F8Mo8z4Ev3zjG2q9YM7FKKt4t6`). Einmal angesehen: `https://beautifulcovers.vercel.app/about` → 308 `https://buyitscovers.com/about`; `https://othercovers.com/` → 308 `https://buyitscovers.com/`; `https://www.byitscovers.com/` → 308, Zertifikat gültig; `https://buyitscovers.com/` Titel „Buy Its Covers". **2.2 ist damit bis auf die Sitemap (2.5) erledigt.**
+
 ## 21. E-Mail unter der Domain (2026-10-02)
 
 Julian: „what do i need to do to set up emails from that domain". Drei getrennte Fragen, drei getrennte Antworten.
@@ -581,3 +583,39 @@ Posteo, Julians heutige Adresse, nimmt keine eigenen Domains an. Die eine Adress
 **3. Verhindern, dass andere im Namen der Domain schreiben** (2.14). Solange kein Postfach da ist: TXT `@` `v=spf1 -all`, TXT `_dmarc` `v=DMARC1; p=reject;`, und ein Null-MX (`MX @ 0 .`) — dann weiß jeder Empfänger, dass von dieser Domain keine Mail kommt. Sobald ein Postfach oder Resend eingerichtet ist, ersetzen deren Einträge SPF und MX; DMARC bleibt, zuerst mit `p=quarantine`, nach einer Woche ohne Fehlzustellung `p=reject`. Dasselbe für die fünf Weiterleitungs-Domains, von denen nie Mail kommen wird.
 
 Was ich hier **nicht** prüfen konnte: ob INWX selbst eine Weiterleitung anbietet und ob Julian iCloud+ hat.
+
+## 22. Konten für `buyitscovers` und `byitscovers`, mit Mail über die Domain (2026-10-04)
+
+Julian, 2026-10-04: „bereite die erstellung der social media konten für buyitscovers vor und lass uns auch byitscovers besetzen wo es geht. außerdem möchte ich dafür die email-adresse für die konten über die domain laufen lassen. ich habe protonmail, da müsste ich das einrichten können".
+
+**`byitscovers` auf den Plattformen** (wie §12: öffentliche Adresse ohne Anmeldung, „frei" heißt nur, dass dort nichts liegt): GitHub, Bluesky (`byitscovers.bsky.social` nicht aufzulösen; mit der Domain hieße das Konto `@byitscovers.com`), YouTube, Mastodon (mastodon.social), Substack, Medium, Facebook (keine öffentliche Seite), TikTok (allgemeine Seite statt Profil), `byitscovers.vercel.app` — **frei**. **Vergeben:** Instagram (privates Konto, §19, damit auch Threads) und **X — `@byitscovers` ist ein gesperrtes Konto** („Account suspended"); gesperrte Namen gibt X nicht frei. **Nicht zu entscheiden:** Tumblr (leitet auf „Trending" um statt „nicht gefunden"). `buyitscovers` siehe §19: überall frei, wo es sich entscheiden ließ; GitHub `buyitscovers` am 2026-10-04 weiterhin 404.
+
+**Proton Mail mit eigener Domain.** Geht nur mit einem **bezahlten** Proton-Tarif: Mail Plus erlaubt eine eigene Domain, Unlimited drei; das kostenlose Konto keine (proton.me/support/proton-plans, proton.me/mail/pricing, abgefragt 2026-10-04). Ob Julians Konto bezahlt ist, ist nicht geprüft — der Browser war bei Proton nicht angemeldet. Eine Domain reicht: alle Adressen können unter `buyitscovers.com` liegen, auch die für die `byitscovers`-Konten (jede Plattform will eine eigene Adresse je Konto). Vorschlag: `hello@buyitscovers.com` für die `buyitscovers`-Konten, `byits@buyitscovers.com` für die `byitscovers`-Konten — Julians Entscheidung.
+
+**Was das am DNS von `buyitscovers.com` ändert:** Proton nennt beim Anlegen der Domain (Einstellungen → Domain names → Add domain) einen TXT-Eintrag zur Bestätigung, zwei MX-Einträge, einen SPF-Eintrag, drei DKIM-CNAMEs und einen DMARC-Vorschlag. Dafür müssen bei INWX der **Null-MX (`MX @ 0 .`) und das `v=spf1 -all` von `buyitscovers.com` weichen** (§20, 2.14) — sie sagen genau das Gegenteil. DMARC `p=reject` kann bleiben, solange Protons DKIM steht; die fünf anderen Domains behalten den Schutz. Die Werte werden von Protons Seite abgelesen, nicht aus dem Gedächtnis.
+
+**Reihenfolge:** (1) Proton: Domain anlegen, Werte ablesen; (2) INWX: Null-MX und SPF bei `buyitscovers.com` ersetzen, Protons Einträge setzen; (3) Proton: prüfen lassen, Adressen anlegen; (4) Konten anlegen mit diesen Adressen — Konten, Passwörter und Bedingungen sind Julians Schritt.
+
+**Proton, 2026-10-04 um 05:05 MESZ** (Julian: „ich bin bei proton angemeldet, nimm judgeabook@buyitscovers.com und mail@buyitscovers.com"). Julians Proton-Konto erlaubt eine eigene Domain („0 / 1 domain used" vorher), also ein bezahlter Tarif. **`buyitscovers.com` ist bei Proton angelegt.** Protons Assistent verlangt als ersten Schritt einen TXT-Eintrag auf `@` mit dem Wert `protonmail-verification=6a4fe6…` (64 Zeichen); die Schritte MX, SPF, DKIM und DMARC zeigt er erst nach der Bestätigung. Die Chrome-Erweiterung gibt den vollen Wert nicht heraus, weil er wie ein Token aussieht; er wird deshalb mit Protons Kopierknopf in das INWX-Feld übertragen und danach mit `dig` geprüft (ein TXT-Eintrag im DNS ist ohnehin öffentlich). Unterbrochen, weil die INWX-Sitzung wieder abgelaufen war. Die Adressen `judgeabook@buyitscovers.com` und `mail@buyitscovers.com` werden angelegt, sobald Proton die Domain bestätigt hat.
+
+**Prüfeintrag gesetzt, 2026-10-04 um 05:20 MESZ.** Julian hat den Wert in den Chat kopiert (`protonmail-verification=6a4fe6f20a3899cab30812646d412f9a3ac330c1`); bei INWX als TXT auf `@` von `buyitscovers.com` eingetragen, neben `v=spf1 -all`. Sichtbar bei `ns.inwx.de`, `1.1.1.1` und `8.8.8.8`. Protons Assistent hat nach zwei Versuchen („Next" im Schritt „Verify", „Refresh status") noch nicht bestätigt — vermutlich hält Protons Resolver die TXT-Antwort von vor dem Eintrag (TTL 3600). **Nächster Versuch frühestens um 06:20 MESZ, einmal.** Zwei Fehlversuche auf dem Weg, damit sie niemand wiederholt: Protons Kopierknopf schreibt aus einem Hintergrund-Reiter nicht in die Zwischenablage (eingefügt wurde, was vorher darin lag), und `navigator.clipboard.writeText` aus dem Hintergrund-Reiter hängt.
+
+**Proton hat bestätigt, abgelesen am 2026-10-04 um 07:00 MESZ.** Status bei Proton: Verified und DMARC grün (das vorhandene `v=DMARC1; p=reject;` genügt), MX und SPF rot, DKIM offen, 0 Adressen. Protons Werte, von der Seite abgelesen:
+
+| Typ | Name | Wert | Prio |
+|---|---|---|---|
+| MX | `@` | `mail.protonmail.ch` | 10 |
+| MX | `@` | `mailsec.protonmail.ch` | 20 |
+| TXT | `@` | `v=spf1 include:_spf.protonmail.ch ~all` | |
+| CNAME | `protonmail._domainkey` | `protonmail.domainkey.deuelplllho2z6zusolimbuincirx42sx7o2gq5kztfgxf22deg3q.domains.proton.ch.` | |
+| CNAME | `protonmail2._domainkey` | `protonmail2.domainkey.deuelplllho2z6zusolimbuincirx42sx7o2gq5kztfgxf22deg3q.domains.proton.ch.` | |
+| CNAME | `protonmail3._domainkey` | `protonmail3.domainkey.deuelplllho2z6zusolimbuincirx42sx7o2gq5kztfgxf22deg3q.domains.proton.ch.` | |
+
+Bei INWX für `buyitscovers.com` dafür zu löschen: MX `@` 0 `.` (Null-MX) und TXT `@` `v=spf1 -all`. Bleiben: A, CNAME `www`, TXT `protonmail-verification=…`, TXT `_dmarc`. Die INWX-Sitzung war wieder abgelaufen; gesetzt ist noch nichts davon.
+
+**Bei INWX gesetzt, 2026-10-04 um 07:20 MESZ** (Julian: „ja, bin wieder bei inwx angemeldet, mach weiter"): für `buyitscovers.com` Null-MX und `v=spf1 -all` gelöscht; angelegt MX `@` 10 `mail.protonmail.ch`, MX `@` 20 `mailsec.protonmail.ch`, TXT `@` `v=spf1 include:_spf.protonmail.ch ~all` und die drei DKIM-CNAMEs aus der Tabelle oben. Mit `dig +dnssec` bei `ns.inwx.de` geprüft: alle sechs da, dazu A, Prüf-TXT und DMARC `p=reject` unverändert. Protons Status zeigte MX und SPF danach noch rot — Protons Resolver hält die alten Antworten (TTL 3600); erneut ansehen frühestens um 08:20 MESZ.
+
+**Adressen:** Das Formular für `judgeabook@buyitscovers.com` (Anzeigename „Buy Its Covers") ist ausgefüllt und abgeschickt; Proton verlangt dafür Julians Passwort („Enter your password" → „Authenticate"), das Claude nicht eingibt. `mail@buyitscovers.com` folgt danach. Das Konto erlaubt 10 Adressen, 9 sind frei.
+
+**Warum drei DKIM-Einträge** (Julian fragte): Proton signiert ausgehende Mails mit einem Schlüssel und tauscht diesen Schlüssel regelmäßig aus. Die drei CNAMEs zeigen auf drei Plätze bei Proton (aktueller, nächster, vorheriger Schlüssel), sodass Proton den Wechsel selbst vornimmt, ohne dass jemand bei INWX etwas ändern muss, und Mails, die mit dem alten Schlüssel unterschrieben sind, noch geprüft werden können.
+
