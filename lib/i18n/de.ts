@@ -397,8 +397,10 @@ export const de: Readonly<Record<string, string>> = {
 
   // After the merge of 2026-10-03: the site was renamed (0.5) and the headline now says the proverb to its end. German has no such proverb, so the line is its own.
   // The German turns the proverb into the question and answers it (Julian, 2026-10-03: the earlier line was „noch kein gutes copywriting“).
-  'Judge a book,': 'Ein Buch nach dem Cover beurteilen?',
-  'buy its covers.': 'Unbedingt.',
+  // Julian's choice (2026-10-04) among the seven in docs/copy-hero-de.md. „alle Einbände“ is the one place the German
+  // says „alle“ about covers: a headline's promise, decided by Julian, not a count (SPEC §2.6).
+  'Judge a book,': 'Ein Buch,',
+  'buy its covers.': 'alle Einbände.',
   'Recent searches': 'Zuletzt gesucht',
   'and {n} editions, the most printed first.': 'und {n} Ausgaben, die meistgedruckten zuerst.',
   'All collections by readers': 'Alle Sammlungen von Lesern',
