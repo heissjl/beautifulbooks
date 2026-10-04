@@ -3865,7 +3865,7 @@ Julian, an der Skizze im neuen Cockpit-Tab „Identität": „ich will doch dies
 | `national-book-award-fiction` | 83 von 83 | en.wikipedia | Nicht der Open-Library-Tag (267 Treffer mit Nicht-Preisträgern). *Cold Mountain* zeigte die französische Ausgabe; ersetzt durch die Sceptre-Erstausgabe 1997 (OL31920608M). |
 
 - Die Preiswände heißen wie die Hugo-Wand („Nebula Award — best novel“, „National Book Award — fiction“) und sind Reihen-Sammlungen ohne Verlagsliste.
-- **robots.txt:** Open Library sperrt `/search` für alle Nutzer; ob das `search.json` meint, ist ROADMAP 6.63.
+- **robots.txt:** Open Library sperrt `/search` für alle Nutzer; ob das `search.json` meint, ist ROADMAP 6.87 (bis 2026-10-03 als zweites 6.63 geführt).
 
 **Preiswände: der Umschlag-Wähler fand keine Alternativen, 2026-09-30.** Julian: „beim deutschen buchpreis finde ich keine alternativen cover?“
 - **Ursache:** Die Preiswände sind Reihen-Sammlungen ohne Verlagsliste. `app/api/curate/covers` zeigt bei einer Reihe nur Ausgaben der eingetragenen Verlage (`inSeries`), und bei leerer Liste blieb keine übrig.
@@ -3923,6 +3923,10 @@ Julian zu den Sammlungskarten: „das ist schon recht groß, nach dem Deploy sol
 **Ergebnis im Build:** Sammlungskarten 53 KB (*SF Masterworks – rounded corners*, eine Reihe) bis 139 KB (*SF Masterworks – the relaunch*), vorher 352 KB bis 1,15 MB; *Feminist Press* 106 KB. Am Dev-Server: Werk-Karte *Frankenstein* 108 KB, Cover-Karte 50 KB, die Website-Karte als Ersatz einer unbekannten Sammlung 35 KB (JPEG, weil die Route JPEG deklariert). Die Website-Karte selbst bleibt PNG, 53 KB — Flächen und Schrift, die JPEG verschmieren würde. Die Schrift unter der Wand bleibt im JPEG scharf (vergrößert angesehen).
 
 
+**Cover-Spiel: die Rowohlts Monographien gehen raus, 2026-10-01.** Julian: „nimm die rororo konterfei serie aus dem cover-spiel“ — gemeint sind die Rowohlts Monographien mit ihren eingefärbten Porträtfotos.
+- `rowohlts-monographien` steht in `LEFT_OUT` von `scripts/add-collection-covers-to-pool.ts`, neben den Suhrkamp-Autorenporträts, edition suhrkamp, Library of America und der BasisBibliothek.
+- Neu gebaut aus demselben Online-Stand wie am 30.9. (`COLLECTIONS_FILE`): genau die 128 Umschläge der Reihe sind weg, keiner kam dazu. Der Vorrat `mix-2000-paperwhite-collections` hat jetzt **4884 Umschläge** aus 42 Sammlungen; die Stimmen zählen weiter.
+
 ## 2026-09-29 · Ein Bearbeitungsmodus für die eigene Sammlung, Schritte 1–3 (ROADMAP 5.13m)
 
 Julian: „die bearbeitung für user von ihren bestehenden collections muss einfacher werden …“; Plan und Mockup am selben Tag ([PLAN-5.13m](plans/PLAN-5.13m-sammlung-bearbeiten.md)), Entscheidungen im Chat (eigene Adresse, „Keep it“, „Arrange“ im Editor statt Werkzeugen auf der Ansicht, Band auf der Buchseite, Reihenfolge 1–3 → 4 → 5). Gebaut auf `claude/collection-editing-ux-562eba`, nicht gemergt, nicht deployt.
@@ -3974,6 +3978,82 @@ Julian: „für geteilte User-Collections soll auch eine Vorschaukarte kommen." 
 
 **Geprüft am Dev-Server** mit einer Sammlung aus sechzehn Covern der Hugo-Wand: Karte 115 KB, JPEG, vierzehn Cover in zwei Reihen, Titel und „16 covers"; eine unbekannte Kennung ergibt die Website-Karte (35 KB); die Karte von *Feminist Press* nach dem Umbau unverändert 106 KB.
 
+
+---
+
+## 2026-10-01 · Warum sich das Cover-Spiel langsam anfühlt (ROADMAP 6.82)
+
+Julian: „checke, ob nach wie vor 3 paare vorgeladen werden und paare für den kaltstart bereitstehen. es fühlt sich derzeit langsam an, aber vllt ist mein internet langsam."
+
+**Beides steht noch, im Code und in der Produktion gemessen:**
+
+| Gemessen an https://beautifulcovers.vercel.app | Wert |
+|---|---|
+| `/versus` ausgeliefert | **0,58 s** (TTFB 0,48 s), 44.757 Byte |
+| Fertige Paare im HTML | **3** (`readyPairs(secret, 3)`, `signPair`-Token mitgezählt) |
+| `preload`-Hinweise für Bilder | **2** — die beiden Cover des ersten Paars |
+| `/api/versus/pair` | **0,58 s** und **0,32 s** bei zwei Abrufen |
+| Paare hinter dem gezeigten | **2** (`AHEAD`), jedes mit `fetchPair` samt Bild-Vorladen |
+
+Das Netz des Spielers ist also nicht das Thema, und die Paarung auch nicht.
+
+**Die Bilder sind es.** Dasselbe Cover über `/img/L/…`:
+
+| Abruf | Zeit | Vercels Zwischenspeicher |
+|---|---|---|
+| erster | **2,30 s** bzw. 1,44 s | `x-vercel-cache: MISS` |
+| zweiter | **0,37 s** | `HIT`, `age: 22` |
+
+Vercels Zwischenspeicher (der CDN-Knoten, der den Besucher bedient) hält ein Bild 30 Tage (`s-maxage`), aber bei inzwischen 5.012 Covern und wenigen Spielern hat der Knoten fast jedes Bild beim ersten Zeigen noch nie gesehen — dann holen wir es von archive.org.
+
+**Und daraus wird ein Fehler, den die drei fertigen Paare selbst machen:** `seeded()` legt sie als `Promise.resolve({ pair })` in den Zwischenspeicher — ohne `preload`. `askAhead` findet den Eintrag und ruft `fetchPair` gar nicht erst auf, das die Bilder holen würde. **Die Bilder von Paar 2 und 3 beginnen also erst zu laden, wenn das Paar auf dem Schirm steht** — ein bis zwei Sekunden Leere nach genau den ersten zwei Klicks. Der Server legt nur für das erste Paar `preload`-Hinweise in den Kopf (`initialPairs.slice(0, 1)`).
+
+**Behoben am selben Tag** (Julian: „baue und committe es"). `usePreloadSeeded` stößt die Bilder der mitgelieferten Paare nach dem Mounten an: ein Paar nach dem anderen, beide Cover zugleich, in der Reihenfolge, in der sie gebraucht werden. In einem Effekt, weil `preload` einen Browser braucht, und genau einmal, weil ein zweiter Lauf Bilder noch einmal anstieße, die schon unterwegs sind. **Nachgemessen am Dev-Server:** vor dem ersten Klick sind **sechs** Cover geladen, während **zwei** Kacheln zu sehen sind; nach einem Klick steht das zweite Paar nach **767 ms** — und seine Bilder waren schon im Zwischenspeicher, die Zeit ist Übergang und Rendern. 972 Tests, `tsc`, Lint und Build grün.
+
+Was bleibt: **das allererste Bild eines Besuchs** kostet weiter 1,2 bis 2,3 s, solange kein CDN-Knoten es hält. Dagegen hülfe nur, den Vorrat vorzuwärmen — die Cover einmal durch `/img` zu ziehen, damit die Knoten sie haben; das ist eine eigene Entscheidung und steht hier nur als Notiz.
+
+**Nachgeprüft am 2026-10-01, nachdem der Vorrat auf 5.012 Cover aus 2.907 Büchern gewachsen war** (`mix-2000-paperwhite-collections`, gebaut 2026-09-30): Der Befund hält, und die Rechnung wird durch die Zahl nur deutlicher — je mehr Cover, desto seltener hat ein CDN-Knoten eines davon schon gesehen. **Die drei fertigen Paare bauen zu lassen kostet weiterhin nichts:** `readyPairs(3)` über 5.012 Cover braucht **5,3 ms** im Mittel von zwanzig Läufen (4,1 bis 7,1 ms, `scripts/measure-ready-pairs.ts`), obwohl es für jedes Cover einen Elo-Startwert anlegt; die Seite ist dynamisch, das fällt also je Besuch an. Die Produktion liefert `/versus` weiterhin mit **drei** Paaren und zwei Bild-Hinweisen aus.
+
+## 2026-09-29 — Deploy der Durchsichts-Punkte (ROADMAP 6.75, 6.76, 6.77, 6.79, 6.81 Teil 1)
+
+Julian: „deploye“. Vor dem Push drei neue Commits aus `origin/main` eingemischt (5.8a, 5.10l), Typen, Lint, Build und 963 Tests grün; `main` vorgespult und als `3843e9b` nach `origin/main` geschoben. Vercel-Deploy `beautifulbooks-8vyc6nicr`, Ready. Ein Prüfabruf gegen https://beautifulcovers.vercel.app/: HTTP 200, das Suchfeld steht im Server-HTML vor der Einladung ins Spiel (6.76). Die übrigen Punkte sind Browser-Code und wurden unter `next dev` geprüft, nicht in Produktion.
+
+
+## 2026-09-30 — Die Notiz der Druck-Reihe zählte nicht (ROADMAP 6.77, Nachtrag)
+
+Julian in Produktion, *Solaris*, Faber and Faber 2003: drei Kacheln unter „1 printing with this cover“, rechts „one with 2 scans“ — „ich glaube die notiz kam, bevor alle 3 scans geladen waren“. Die Ursache war einfacher: „2“ stand fest im Text. Der dritte Scan war tatsächlich später gekommen — das Bild, das Google Books zur ISBN führt („Image from Google Books“), faltet nach der Auswahl in die Kachel (F2.8) —, aber Notiz und Kacheln entstehen im selben Rendern aus denselben Daten, die Notiz hätte also mitgezählt. Jetzt zählt sie: bei einem Druck nur „3 scans“, bei mehreren „one with 3 scans“ oder „2 with several scans“. Lokal nachgeprüft an derselben Kachel (`ol:10534042`): „1 printing with this cover · 2 scans“ — lokal ohne Google-Schlüssel, also ohne den dritten Scan.
+
+## 2026-09-30 — „eBay und Amazon zeigen eine Fehlerseite“: kein Block der Seite
+
+Julian auf https://beautifulcovers.vercel.app/book/OL17417W?cover=ol:10801406 (*Rendezvous with Rama*, Harcourt Brace Jovanovich 1973): der eBay-Knopf und danach der Amazon-Knopf führten auf eine Fehlerseite, am Vortag nicht. Befund: der Druck hat keine ISBN, die Knöpfe sind direkte Titelsuchen („eBay · title & year“, „Amazon · title & year“) und gehen **nicht** über `/go/` — die Seite steht zwischen Leser und Laden gar nicht, und die Produktions-Logs zeigen in der letzten Stunde keinen einzigen `/go/`-Aufruf. Von hier aus mit Browser-Kennung abgerufen: Amazon 200 mit Treffern; eBay 403 „Error Page“ — aber ebenso für `ebay.com/` ohne Suche und ohne Referer, also eBays Bot-Prüfung gegen das Werkzeug (CLAUDE.md: eBay verweigert automatische Abrufe), kein Urteil über die Seite. Was eBay und Amazon von uns sehen, ist höchstens der Referer; gesperrt werden kann der Browser des Lesers (IP, VPN, Erweiterungen, viele Suchen kurz hintereinander), nicht die Seite. Julians Browser zeigte bei eBay Akamais Ablehnung („Something went wrong on our end“, Referenz `0.9f23df17.1790823900.24790ef`), bei Amazon die Hundeseite derselben Art, während ebay.com selbst lud. **Auflösung:** auf dem Handy über Mobilfunk gingen beide Links, kurz darauf auch wieder am Rechner. Also der Ruf der Verbindung hier für eine Weile, vermutlich durch die automatischen Abrufe dieses Rechners (Prüfungen, Headless-Chrome, parallele Sessions), nicht die Seite. Lehre: von Julians Anschluss aus keine Laden-Seiten automatisch abrufen.
+
+## 2026-09-30 — Hörbücher am Verlag erkannt (ROADMAP 6.80)
+
+Anlass: auf Gatsbys Wand standen „Audible 2013“ und „Jake Gyllenhaal performs“ (Teil A der Durchsicht, und beim Messen von 6.77 noch einmal gesehen). Ursache: `parseEditions` warf ein Hörbuch nur am Format („audio“) oder an Titelwörtern weg; Audibles Datensatz `OL40233722M` trägt als Format „Digital“. Neu: `looksLikeAudioPublisher` (`lib/normalize.ts`), nur Namen aus den Daten — Audible, Audio (als Wort), Audiobooks, Audiofy, audiolibri, Brilliance, Caedmon, Hörbuch/Hörverlag. Gegen alle 250 Verlagsnamen der Fixtures: 11 Treffer, jeder ein Hörbuch (Formate Audio CD, Kassette, MP3 CD oder leer/Digital), kein gedruckter Verlag. Auf dem Dev-Server über alle Seiten von Gatsby: Cover `ol:12991845` nicht mehr auf der Wand; dabei zwei weitere ohne Hörbuch-Format gefunden, Audiofy/Naxos 1999 und Audiofy/Hayes 2006, und „Audiofy“ in die Liste genommen; danach kein Hörbuchverlag mehr unter 342 Ausgaben. Test `lib/__tests__/audiobooks.test.ts` an den Gatsby-Fixtures. Nicht angefasst: der eingefrorene Vorrat des Cover-Spiels und der gebaute Cover-Index, die beim nächsten Bau neu entstehen.
+
+## 2026-09-30 — Kaufen über den Druck mit ISBN (ROADMAP 6.78)
+
+Teil A der Durchsicht (zweiter Durchgang): beim Cover „+22“ von *Nineteen Eighty-Four* führte Perma-Bound 1981 ohne ISBN, die Knöpfe waren nur Titelsuchen. Gemessen unter `npm run dev`, jedes Cover der Wand einmal gewählt: **15 von 261** Orwell-Covern zeigten „Find this printing“ (kein ISBN-Knopf), obwohl ein anderer Druck desselben Covers eine ISBN trug; Gatsby 0 von 282. Ursache: `orderEditionsForMarket` stellte den Träger des gezeigten Scans vor alles andere. Neu: hat ein Cover einen Druck mit ISBN, führt keiner ohne; unter denen mit ISBN gilt die alte Ordnung. Damit Bild und Knöpfe denselben Druck meinen, zeigt die Seitenleiste ohne Wahl des Lesers den Scan des führenden Drucks, wenn er einen eigenen hat. Danach: 0 von 261 und 0 von 282, und bei keinem der 543 Cover zeigt das große Bild einen anderen Druck als den über den Knöpfen. Beispiel `ol:15256129`: führt jetzt „Harcourt, Brace & World, Inc. 1949“ mit ISBN 978-0-15-166035-3 und dessen Scan `ol:15256128` — eine Nummer, die es 1949 nicht gab, also ein Katalogeintrag für einen späteren Druck; ob dieser die Jacke trägt, prüft das Urteil (F2.9) wie bei jeder ISBN. *Rendezvous with Rama* (`ol:10801406`, Harcourt Brace Jovanovich 1973) bleibt bei Titelsuchen: das Cover hat nur diesen einen Druck. Test in `lib/__tests__/linkplan.test.ts`.
+
+## 2026-09-30 — Jahrzehnte-Seite: volle Strecke, kein Cache für einen abgebrochenen Lauf, kein 404 für einen Ausfall (ROADMAP 6.71, 6.43)
+
+Teil B der Durchsicht: Gatsby mit 293 Covern auf der Wand, 162 aus 181 Datensätzen auf der Jahrzehnte-Seite. Gemessen mit `getWorkDetail` gegen Open Library, Seite für Seite: **kein Abbruch** — alle sechs Seiten bis Datensatz 600 kamen (0,5–3,6 s je Seite). Die Ursache war die Grenze von 600 Datensätzen, gesetzt am 2026-09-09 als Grenze des Kandidaten-Laufs; Gatsby hat 1.180. Mit der Grenze der Wand (1.500):
+
+| Werk | 600 | 1.500 | Zeit (kalt, 1.500) |
+|---|---|---|---|
+| The Great Gatsby | 159 Cover aus 178 Drucken | 348 aus 340 | 6,2 s |
+| Nineteen Eighty-Four | 270 aus 268 | 343 aus 354 | 5,4 s |
+| Pride and Prejudice | 115 aus 117 | 194 aus 199 | 10,4 s |
+| The Lord of the Rings | 140 aus 120 | gleich | 2,3 s |
+
+Dazu 6.43: `getWorkDetail` meldet jetzt `complete`; ein Lauf, der wegen einer zweimal schweigenden Seite endete, lässt die Seite werfen, statt einen Teil des Buchs einen Tag lang zu cachen. Und beim Lesen gefunden: `load()` fing **jeden** Fehler ab und machte daraus eine 404-Seite — ein schweigender Katalog hieß „diese Seite gibt es nicht“. Jetzt antwortet `null` (404) nur ein Werk, das es nicht gibt; ein Ausfall zeigt `error.tsx` („Open Library did not answer“, „Try again“, Weg zur Wand), die nie gecacht wird. Der Satz unter dem Titel sagt „348 covers from 340 printings with a known year“ statt „… edition records“, weil nur datierte Drucke in ein Jahrzehnt kommen. Im Dev-Server bei 1280 und 390 px: 11 Jahrzehnte, 348 Kacheln, keine Überbreite.
+
+**Bleibt:** die Wand faltet stärker (293), weil sie Signaturen im Server rechnet; die Jahrzehnte-Seite faltet nur über den gebauten Index und zeigt deshalb mehr Kacheln. Die Zahlen widersprechen sich jetzt in die andere Richtung. Die Seite selbst zu hashen kostete die Zeitgrenze (darum `dedupeCovers: false` seit 2026-09-09); Gatsby im Index nachzubauen würde es für diesen einen Fall lösen. Nicht entschieden.
+
+## 2026-09-30 — Die Reihenfolge der Wand ist stabil (ROADMAP 6.65)
+
+Teil B der Durchsicht: „First tile differed on reload“. Gemessen unter `npm run dev` mit Headless-Chrome, jeder Lauf ein frischer Browser (also ohne den Tab-Speicher `FINISHED` aus `useWorkPages`): *The Great Gatsby* und *Nineteen Eighty-Four* je dreimal, die ersten 20 Kacheln des ersten Reiters beim ersten Erscheinen und nach dem letzten Stapel — **gleich in allen sechs Läufen**; der frühe Schnappschuss unterschied sich bei Orwell nur in der Zahl der schon angekommenen Kacheln (17, 24, 17), nicht in ihrer Folge. Dann der kalte Fall, in dem nicht jede Signatur rechtzeitig da ist: Faltung und Reiter je zwanzigmal mit einer zufälligen Hälfte der Signaturen aus dem Index gebaut — die ersten sechs Kacheln des englischen Reiters **in 0 von 40 Fällen anders**, weil `groupCoversByLanguage` nach Ankunft ordnet (E17, 6.31) und die Faltung nur bestimmt, welche Kacheln zu einer werden, nicht wo sie stehen. Kein Code geändert. Was eine andere erste Kachel erklären könnte, ohne Fehler zu sein: eine Adresse mit `?cover=` stellt dieses Cover an die Spitze seiner Gruppe (seit 2026-09-26, Sammlungen); und Open Library liefert die neuesten Datensätze zuerst, ein frisch angelegter Druck rückt also nach vorn, sobald der 24-Stunden-Cache abläuft.
+
 - **„Edit collection“ öffnet „Arrange“** (Julian, 2026-09-29: „wenn ich in der normalen ansicht einer collection auf edit collection klicke, will ich erst im arrange modus landen, nicht beim add cover tab“): der Knopf auf `/c/<id>` führt auf `?mode=arrange`; die leere Sammlung bietet weiter „Add covers in the editor“. Nur committet, nicht gepusht (Julians Wort).
 
 ## 2026-09-30 · „Log out“ bei der ID (ROADMAP 5.13a, SPEC F9.1)
@@ -4015,4 +4095,102 @@ Julian: „merge die commits in main“. Fünfzehn Commits des Branches `claude/
 ## 2026-10-01 · Stapel: ein Punkt je Buch (ROADMAP 5.11a)
 
 Julian fotografierte zwei Bücherstapel gegen die frische Produktion: fünfzehn Bücher gelesen, sechs Pins zu sehen. Der Prompt kannte nur Regalreihen und eine waagrechte Mitte; im Stapel teilen sich alle Bücher diese Stelle. Jetzt nennt das Modell je Buch einen Punkt (`x`, `y`), Reihen und Streifen sind aus dem Code, und `spreadPins` (`lib/walls/pins.ts`) lässt einen Pin, der einen anderen verdecken würde, quer zum Nachbarn ausweichen — auf dem Brett auf und ab, im Stapel seitlich. Nebenbefund der Messung: mit dem Punkt-Prompt ist **effort medium** die richtige Einstellung (Galeriewand 33–40 Bücher für rund 3 ct in 11–13 s; „high“ denkt nach und kostet 5–9 ct in 24–40 s für 42–47), das Brett liest es mit 21–22 von 22. Zahlen im [Plan](plans/PLAN-5.11a-regalfoto-zuverlaessig.md#stapel-ein-punkt-je-buch-statt-reihe-und-mitte-2026-10-01).
+
+## 2026-10-02 · Die Seite auf Deutsch (ROADMAP 6.85, SPEC E23)
+
+Julian: „start a new branch and create a feature to display the whole site in a different language, to be changed at the top of the site. first only do german. can we do this easily and is it possible to maintain over future copy writing changes etc?“ — und auf den Befund, dass die Texte über rund 140 Dateien verteilt sind: „does it make sense and/or is it possible to centralize this more?“
+
+**Befund vorher.** Keine Übersetzungsschicht; etwa 720 Zeilen mit Prosa in `app/`, `components/` und `lib/`, davon rund 300 auf dem Weg eines Lesers (Kopf, Start, Suche, Buchseite, Blatt, Jahrzehnte, Sammlungen, 404). Ein Teil der Sätze entsteht in reinen Funktionen (`progressLabel`, `editionSpan`, `decadeLine`, `coverLine`, `linkPlan`, die Verdikte), ein Teil in Tabellen (Shop-Status, lokale Buchhandlungen, Registrierungsgruppen).
+
+**Drei Entscheidungen, jede mit Grund.**
+
+1. **Nicht alles in eine Registry mit IDs.** Die Sätze hier stehen neben der Begründung ihrer Wortwahl, oft mit Julians Zitat, und `lib/seo.ts` hat Tests gegen „all“ und „every“. Eine ID-Registry trennt den Satz von der Begründung. Stattdessen: der englische Satz bleibt in der Komponente und **ist der Schlüssel**; nur das Deutsche ist zentral (`lib/i18n/de.ts`). Reine Funktionen bekommen einen optionalen `t`-Parameter (Default Englisch, die bestehenden Tests laufen unverändert).
+2. **Cookie statt Pfadpräfix, aber Spiegelbaum statt Cookie in der Wurzel.** `cookies()` in `app/layout.tsx` hätte jede Route dynamisch gemacht — der Grund, aus dem die Cover-Route vorher auf `searchParams` in `generateMetadata` verzichtet hat. `proxy.ts` schreibt eine Anfrage mit `locale=de` auf `app/de/…` um; jede Datei dort rendert das englische Modul mit `locale="de"` (Server-Seiten als Prop, Client-Komponenten über `LocaleProvider`). **Gemessen am Build:** die englische Tabelle ist unverändert (`/book/[id]` ● vorgerendert, About/Impressum/Datenschutz ○ statisch), die deutschen Spiegel sind ƒ mit `revalidate` wie die englische Cover- und Jahrzehnte-Route, `/de/about`, `/de/contact`, `/de/privacy` ○. Preis: ein Proxy-Lauf je Seitenanfrage (`ƒ Proxy (Middleware)`), nicht für `/api/`, `/img/`, `/go/`, Dateien und die OG-Bilder.
+3. **Der Test ist die Wartung.** `lib/__tests__/i18n.test.ts` liest jeden `t('…')`-Aufruf per Regex aus dem Code plus die Tabellen und prüft: jeder englische Satz hat einen deutschen, kein deutscher ist verwaist, Platzhalter stimmen überein, kein deutscher Satz ist unverändert englisch (außer Namen), keine Vollständigkeitsbehauptung über Cover, Ausgaben, Drucke oder Bücher. Beim ersten Lauf listete er 356 fehlende Sätze — das war die Arbeitsliste.
+
+**Gebaut.** `lib/i18n/{locale,translate,de}.ts`, `components/i18n.tsx` (`LocaleProvider`, `useT`, `rich` für Sätze mit einem Element darin), `components/LocaleSwitcher.tsx`, `components/HtmlLang.tsx`, `proxy.ts`, `app/de/` (21 Dateien, je ein bis sechs Zeilen; Segment-Konfiguration wiederholt, weil Next sie aus der Datei liest), `SiteFooter` in Server-Hülle und Client-`SiteFooterView` geteilt, `languageName(code, locale)` mit deutscher Tabelle. 356 Sätze im Katalog. Die Anrede ist „du“.
+
+**Im Browser geprüft** (headless Chromium gegen `next dev`, 390 × 844 und 1280 × 800): der Knopf schaltet in beide Richtungen per `router.refresh()`, `<html lang>` folgt; Startseite, Sammlungen und Buchseite ohne Überlauf; deutscher Platzhalter 199 von 212 px Feldbreite am Telefon; `/de/collections` → 308 auf `/collections`. **Ein Fund:** eine unbekannte Adresse mit deutschem Cookie bekam die englische 404, weil Next für eine Route ohne Treffer die `not-found.tsx` der Wurzel nimmt — `app/de/[...rest]/page.tsx` wirft `notFound()` und damit die deutsche. Open Library ist aus der Sandbox nicht erreichbar (403 am Proxy), die Buchseite wurde deshalb aus den Gatsby-Fixtures gespeist (Seiten 0–300, 125 Cover aus 400 Datensätzen): Reiter, Zeile, Spalte, Blatt, Drucke, Shops und Notiz deutsch; englisch blieb „Add to collection“ (eigene Sammlung, nicht übersetzt).
+
+998 Tests, Build durch. Nicht deployt. Offen bei Julian: du/Sie, automatische Erkennung, die Reihenfolge der restlichen Seiten, eine deutsche Datenschutzerklärung, `/de/`-Adressen mit `hreflang`.
+
+## 2026-10-04 · Die restliche Oberfläche auf Deutsch (ROADMAP 6.85)
+
+Julian: „außerdem noch die restlichen teile wie die about page auf deutsch übersetzen“. Bis dahin waren 356 Sätze übersetzt und sieben Bereiche englisch (SPEC §2.6, Stand 2026-10-02).
+
+**Gebaut, in drei Commits.** (1) About, Impressum, Datenschutzerklärung, Spiel und Rangliste: die drei Textseiten und `app/versus/` nehmen `locale` als Prop, `rich()` zieht nach `components/rich.tsx`, damit eine Server-Seite es ohne den Client-Provider nutzt. (2) Die eigene Sammlung: `/create`, `/c/<id>`, der Editor, das Review, 16 Komponenten; `defaultTitle(walls, t)` in `lib/walls/edit.ts`, damit die erste Sammlung eines deutschen Lesers „Meine Sammlung“ heißt — der Titel ist Daten und wechselt danach nicht mehr mit dem Knopf; `ReaderWallCard` wird Client-Komponente, weil die Sammlungsseite (Server) und die Leserliste (Client) dieselbe Karte rendern; die Reiter des Editors erreichen `t` über `TAB_LABELS`, das der Katalog-Test als Tabelle liest. (3) `/suggest` und `/curate` mit Login, Vorschlagswerkzeug, Kurationswerkzeug und Admin-Liste; der Request-Helfer des Kurationswerkzeugs nimmt `t` für seine drei Fehlersätze, Datumsangaben folgen `intlTag(locale)`.
+
+**Katalog: 839 Sätze** (356 → 839). Rechtsgrundlagen wörtlich (Art. 6 Abs. 1 lit. f DSGVO, § 25 Abs. 2 TDDDG), Überschriften nach deutschem Brauch („Anbieterkennzeichnung“, „Datenschutzerklärung“, „Rangliste“). Der Vollständigkeits-Test schlug einmal an: „Jedes Cover dort führt zu seinem Buch“ (Rangliste) — umformuliert zu „Von dort führt der Weg zu jedem Buch“, obwohl der Satz wahr war; die Regel ist mechanisch und soll es bleiben.
+
+**Was ein Server im Body schickt, bleibt englisch** — mit einer Ausnahme: das Spiel reicht `body.error` durch `t`, und die 429-Antwort aus `app/api/rate.ts` erschien im Browser-Test auf Deutsch neben einem englischen „Too many requests, try again shortly“. Der Satz ist jetzt `RATE_LIMITED`, im Katalog und in der Tabellenliste des Tests. Die übrigen Routen-Sätze (`guard.ts`, `api/walls/*`, `api/curate/*`) zeigt der Browser, wie sie kommen; sie zu übersetzen hieße, jede Route nach der Sprache des Lesers zu fragen — nicht gemacht, in SPEC §2.6 als Grenze notiert.
+
+**Im Browser geprüft** (headless Chromium gegen `next dev` mit Platzhaltern für `IMPRINT_*`, `SUGGEST_PASSWORD`, `WALLS=on`; 390 × 844 und 1280 × 800; `/about`, `/contact`, `/privacy`, `/versus`, `/versus/board`, `/create`, `/collections/readers`, `/suggest`, `/curate`): `lang=de`, kein horizontaler Überlauf, kein englischer Satz außer Buchtiteln und Namen der Sammlungen (Daten). **Ein Fund:** der Platzhalter des ID-Felds („ID einfügen, um mit ihren Sammlungen weiterzumachen“, 51 Zeichen) wurde am Telefon abgeschnitten — das Feld neben „Kopieren“ ist 256 px breit und zeigt etwa 37 Zeichen; jetzt „ID einfügen, um weiterzumachen“ (30). Der englische Platzhalter hat 41 Zeichen und ist dort ebenfalls um ein Wort beschnitten; nicht geändert, weil Julians Wortlaut, notiert. Nicht gemacht: `components/StartFromCollection.tsx` wird nirgends importiert (toter Code, englisch gelassen; für 6.86).
+
+1.015 Tests, `tsc`, Lint und Build grün (Build mit `IMPRINT_*`-Platzhaltern, ohne sie bricht `/contact` beim Vorab-Rendern ab — so gewollt, `lib/imprint.ts`).
+
+## 2026-10-02 — WorldCat nach ISBN und der Provisionshinweis (ROADMAP 6.83, 4.11)
+
+Beide aus dem Vergleich mit whichedition.com ([docs/vergleich-whichedition.md](vergleich-whichedition.md)). **6.83:** der WorldCat-Link fragt `bn:<ISBN-13>`, wo der gewählte Druck eine ISBN hat. Geprüft nur im Test; WorldCat antwortete am 2026-10-02 auf die erste Anfrage aus diesem Netz (ein `curl`) mit HTTP 429 und danach im Browser mit Cloudflare 1015 — ein Leser, der einmal klickt, ist davon nicht betroffen, ein Prüfskript schon. **4.11:** `commissionNote` liest an den gezeigten Links ab, ob einer eine Partner-Kennung trägt, und erst dann erscheint der Satz, mit Amazons Pflichtformel, wenn ein Amazon-Link getaggt ist. Im Hobby-Modus kann keine Kennung entstehen; der Test prüft das für `undefined` und `hobby` mit allen Variablen gesetzt. `npm run test:run` und `npx tsc --noEmit` grün.
+
+## 2026-10-02 — Die neue Form (ROADMAP 6.84)
+
+Julian wählte im Mockup `lab/look/` die Fassung „Heutige Farben, neue Form". Umgesetzt wie im Archiv unter 6.84. **Senkrechte Mitte der Sprachreiter gemessen** (Headless-Chrome, 2× Pixeldichte, Gatsby, gewählter Reiter „English"): der Versal E hat 19 px Abstand nach oben und 21 px nach unten, also einen halben CSS-Pixel aus der Mitte; mit Unterlänge (g) 17 und 15. Im Mockup war die Schrift sichtbar zu hoch, weil der Reiter 2 px oben und 4 px unten Innenabstand plus eine 2-px-Unterkante hatte; auf der Seite und im Mockup jetzt `py-1` mit Zeilenhöhe 20 px. **Turbopack lieferte erst das alte `globals.css`** — nach Löschen nur von `.next/dev/cache/turbopack` (Fetch-Cache behalten) kamen die neuen Regeln. Geprüft bei 1280 × 800 und 500 px Breite (Headless-Minimum): Gatsby-Wand, Seitenleiste mit gewähltem Cover, Startseite. `npm run test:run` (981), `npx tsc --noEmit`, `eslint` und `npm run build` grün.
+
+## 2026-10-02 · Die Seite heißt im lokalen main „Other Covers“ (ROADMAP 0.5)
+
+Julian: „merge die anderen änderungen mit der umbenennung in main, ohne zu pushen". Der Name steht seit diesem Tag einmal im Code (`SITE_NAME` in `lib/seo.ts`, vorher an acht Stellen), der User-Agent gegenüber den Katalogen kommt aus `userAgent()` (vorher ein Repository, das es nicht gibt), und ein Test weist eine zweite Kopie des Namens zurück. Die Wortmarke bekam 0,01em Buchstabenabstand statt −0,025em: die Lücke zwischen „Other" und „Covers" wuchs bei 1280 px von 4,08 auf 4,78 px, die Wortmarke von 87 auf 95,4 px. Vor dem Merge geprüft: 1.003 von 1.003 Tests, `next build`, Startseite und Buchseite bei 1280 × 800 und 390 × 844. **Am selben Tag gepusht** (Julian: „push it now even though it has a different vercel name rn"; `84195cb..0bb16b3`, Deployment Ready nach rund zwei Minuten) und Produktion einmal angesehen: Startseite mit Titel „Other Covers", Buchseite *Frankenstein* mit „… · Other Covers", `/opengraph-image` 200 mit 51 KB; die Adresse bleibt `beautifulcovers.vercel.app`, bis die Domain gekauft ist. Recherche, Markenregister, Konten, die Schritte des Umschalttags und die Preise bei INWX (`othercovers.com` 14,60 €, `othercovers.de` 5,02 €, `othercover.com` 14,60 € im Jahr) in [domain-recherche.md](domain-recherche.md) Teil B.
+
+## 2026-10-02 · Sicherheits-Durchsicht, und eine Lücke in den strukturierten Daten (ROADMAP 2.8–2.14)
+
+Julian fragte nach Cybersecurity, Bots und Sicherungen. Gelesen: alle 31 Routen, die Anmeldung, die Cookies, die Kostengrenzen; die git-Historie aller Branches auf Schlüssel (keine; fünf Treffer sind Testwerte); `npm audit` (**`next` 16.1.4 mit 33 Hinweisen, zwei critical; aktuell 16.3.8**; `sharp` 0.34.5 mit vier); die Antwort-Header der Produktion (nur HSTS); GitHub (Dependabot aus, Geheimnis-Suche und Push-Schutz an, `main` ungeschützt); Vercel (keine Firewall-Konfiguration, Vorschauen hinter Anmeldung). **Gefunden und behoben:** die strukturierten Daten der Buchseite standen unmaskiert in einem `<script>`, ein Katalogtitel mit `</script>` wäre als Code gelaufen (2.8, `jsonLdHtml` in `lib/seo.ts`, im lokalen `main`). **Die größte Lücke im Betrieb:** von der Redis gibt es keine Sicherung (2.11). Alles Weitere in [sicherheit-2026-10-02.md](sicherheit-2026-10-02.md).
+
+## 2026-10-02 · „Buy Its Covers“ — der Name, der das Sprichwort zu Ende sagt (ROADMAP 0.5)
+
+Am Abend desselben Tages, an dem „Other Covers“ online ging: Julian, „we're switching the name to buyitscovers(.com) … make the tagline read 'Judge a book, buy its covers'“. Eine Zeile in `lib/seo.ts`, die Überschrift auf Startseite und Karte, Spec, README, CLAUDE.md, der Prompt für die Domain-Sitzung. `buyitscovers.com` und `.de` sind frei, die Einzahl seit 2013 vergeben; Markenregister und Konten für den neuen Namen nicht geprüft. Geprüft wie bei der ersten Umbenennung: Tests, Build, Startseite und Buchseite bei 1280 × 800 und 390 × 844 — die Wortmarke ist mit drei Wörtern breiter, die Messung steht in [domain-recherche.md](domain-recherche.md) §18.
+
+## 2026-10-02 · Sechs Domains gekauft, bei Vercel angelegt, die Seite geht als „Buy Its Covers“ online (ROADMAP 0.5, 2.2)
+
+Julian kaufte bei INWX `buyitscovers.com`/`.de`, `byitscovers.com`/`.de`, `othercovers.com`/`.de`. Über den Vercel-Connector: `buyitscovers.com` als Domain des Projekts, die anderen fünf und `www` als 308-Weiterleitung darauf; `NEXT_PUBLIC_SITE_URL` auf `https://buyitscovers.com`. Gepusht wurde der Stand mit dem neuen Namen (`SITE_NAME`, Überschrift „Judge a book, buy its covers.“, JSON-LD-Maskierung 2.8, Sicherheits-Durchsicht). Was fehlt, ist das DNS bei INWX (A `@ → 76.76.21.21` je Domain); bis dahin antwortet nur `beautifulcovers.vercel.app`. Tabelle in [domain-recherche.md](domain-recherche.md) §20.
+
+## 2026-10-02 — Die About-Seite gekürzt (zu ROADMAP 4.12)
+
+Julian: „can you shorten the about page". Gezählt im Browser unter `npm run dev`: **516 Wörter im `<main>`**, vorher rund 1.000 (aus dem Quelltext geschätzt: 968 gegen 486). Was blieb: woher die Bilder kommen und dass die Kataloge nur einen Teil kennen, „Looks like this" mit Zahl und Datum des Index, die vier Lücken, die sechs Verdikte (Überschriften unverändert aus `VERDICT_LEAD`, die Erklärungen in `VERDICT_MEANING` gekürzt — sie werden nur hier gelesen, die Seitenleiste bleibt gleich), dass kein Laden gefragt wird, die Reihenfolge nach ISBN, was ein Klick aufzeichnet. Was ging: die Messprotokolle (Google-Anteil an drei Büchern, „one cover in nine"), die Verneinungsketten und Nachsätze. Die Tests auf den Wortlaut der Verdikte (kein Laden-Anspruch, keine Vollständigkeit) laufen unverändert grün; geprüft bei 1280 und 500 px.
+
+Nachtrag am selben Tag: Julian ließ auch den Abschnitt „Looks like this" streichen („lösch das noch"); damit liest die About-Seite `lib/coverindex.ts` nicht mehr, und SPEC F2.14 sagt es. Rund 440 Wörter.
+
+## 2026-10-03 · 6.85 trifft den neuen Namen (Zusammenführung mit `origin/main`)
+
+Zwischen dem Bau von 6.85 und der Zusammenführung waren 50 Commits anderer Sessions auf `origin/main` gelandet: der Name „Buy Its Covers“ (0.5), die Domains (2.2), die neue Form (6.84), die gekürzte About-Seite (4.12), WorldCat nach ISBN (6.83). 17 Dateien mit Konflikten, alle derselben Art: dort ein neuer englischer Satz, hier derselbe Satz in `t()`. Aufgelöst wurde immer zugunsten des neuen Wortlauts, in `t()` gehüllt. **Danach tat der Katalog-Test, wofür er da ist:** 20 englische Sätze ohne deutschen Eintrag, 22 deutsche Einträge ohne englischen Satz — die Arbeitsliste der Nachübersetzung, darunter die sechs gekürzten Verdikt-Erklärungen und die Meta-Zeile der Wand. Der Hero heißt gegen „Judge a book, buy its covers.“ nun gegen den neuen Namen weiter „Ein Buch hat viele Cover. Such dir deins aus.“ (Julian: „such dir deins“) Kein neuer Seitenpfad kam hinzu, der Spiegelbaum ist vollständig. 1.012 Tests und Build grün, die englische Routentabelle unverändert (`/book/[id]` ● vorgerendert, About statisch, die deutschen Spiegel ƒ mit `revalidate`). Im Browser (390 × 844 und 1280 × 800, Buchseite aus den Gatsby-Fixtures): der Knopf schaltet in beide Richtungen, kein Überlauf, der Platzhalter 199 von 212 px, die neue Form der Spalte („Arcturus, 2011 (Englisch)“, „ZVAB nach ISBN“, „Weitere Quellen (14)“) auf Deutsch. Gepusht am 2026-10-03 (Julian: „push it“) als `aedb484`, Vercel-Deploy `dpl_2VnEeCRyXF6JNAQ4N994oLsHfx9d` READY. Die eine Produktionsprüfung konnte nicht aus der Sandbox kommen (`vercel.app` am Proxy gesperrt, Status 000); Julian sieht sie selbst: Startseite, „Deutsch“ klicken, eine deutsche Buchseite zweimal öffnen.
+
+## 2026-10-03 · Aufgeräumt: Roadmap-Kopf, Pläne, Domain in CLAUDE.md, eine Doppelnummer, und eine Durchsicht des Codes (ROADMAP 6.86)
+
+Julian: „clean up the different plans and roadmaps / adjust the claude md files for the new domain / think about whether we need to do some re-factoring of the codebase“.
+
+- **Doppelnummer:** zwei Sessions hatten am 2026-10-01 und 10-02 je ein 6.82 angelegt (Cover-Spiel: die mitgelieferten Paare; die deutsche Oberfläche). Das Spiel behält 6.82, die Oberfläche heißt jetzt **6.85** — in Code-Kommentaren, SPEC, CLAUDE.md, Archiv, Historie, features.md nachgezogen (26 Stellen).
+- **Roadmap-Kopf** auf den 2026-10-03: Name, gekaufte Domains, das offene DNS (2.2) als Schritt 3, Bookshop (4.1) als 3a, Zählung **111 offen / 81 erledigt** per `grep` (am 2026-09-26: 74 / 57). **Pläne-Index:** 6.63-Zeile halbiert (6.65, 6.71a, 6.75–6.80 sind gebaut), 2.0 und Suche nachgezogen.
+- **CLAUDE.md, README, SPEC-Kopf:** die Lage der Adresse steht jetzt wörtlich — `NEXT_PUBLIC_SITE_URL` zeigt auf `buyitscovers.com`, das bis zu Julians A-Einträgen die INWX-Parkseite ist; Prüfungen weiter gegen `vercel.app`.
+- **Durchsicht des Codes** ([docs/refactoring-2026-10-03.md](refactoring-2026-10-03.md)): kein Umbau. Zwei Funde am selben Tag behoben — `@anthropic-ai/sdk` lag unter `devDependencies`, obwohl `/api/walls/photo` es zur Laufzeit ruft (lief nur, weil Vercel Dev-Abhängigkeiten mitinstalliert); und ein Test verlangt nun für jede Seite ihren Spiegel unter `app/de/`. Vier Schnitte als 6.86 für das nächste Anfassen: `BookDetail.tsx` (1.217 Zeilen) teilen, `lib/works.ts` (947) nach Anliegen teilen mit Sammelexport, eine `PageShell` für 15 gleich gebaute Seiten, ein Hook für vier localStorage-Speicher. Ausdrücklich nicht: `lib/` umsortieren, `lab/` löschen, die drei Editoren zusammenlegen.
+
+1.014 Tests, tsc und Lint grün.
+
+## 2026-10-03 · Das Cockpit nachgeschärft (ROADMAP 6.54)
+
+Julian: „can you now refine the project cockpit?“. Gebaut mit `--offline` und im Browser angesehen; was die Seite selbst zeigte, war die Arbeitsliste.
+
+- **Name:** Kopf und Titel sagten noch „Beautiful Books“ — jetzt aus `SITE_NAME` (`lib/seo.ts`), wie überall.
+- **Ein Thema fehlte:** Abschnitt 6.C „Oberfläche und Texte“ hatte keine Regel, die deutsche Oberfläche lag unter „Daten & Quellen“. Neu: **Oberfläche & Texte** (`ui`), Regel für 6.C, Titelwörter („auf Deutsch“, „Zurück-Link“, „die neue Form“, „Etikett“) und Pfade (`lib/i18n`, `SiteHeader`, `verdicts`, `seo`); 8 offene, 5 erledigte Punkte liegen dort. Das Spiel-Paar 6.82 bekam sein Thema per `Thema: Cover-Spiel` im Punkt, wie die Regel es will.
+- **Zwei neue Hinweise, mit Tests:** „Dieselbe Nummer zweimal“ (die Panne mit 6.82 vom Vortag soll nie wieder still bleiben) und „Nächster Schritt ist erledigt“ (ein Schritt der Tabelle, der nur abgehakte Punkte nennt). **Der erste fand sofort den nächsten Fall:** 6.63 stand ebenfalls zweimal — die Robots-Frage zu Open Library heißt jetzt 6.87.
+- **Website-Karte:** die 19 Spiegel unter `app/de/` sind keine 19 Zeilen mehr, sondern ein Etikett „auch deutsch“ an ihrer Route; 19 Seiten statt 37.
+- **Was die Hinweise sonst sagten, ist erledigt:** `lab/palette` steht in der Lab-Tabelle; `lab/duel` lief auf dem Port der Sammlungs-App und dann auf dem der Ladebilder — jetzt 4326; 6.9 hat eine Bewertung mit lebendem Auslöser (2.5 statt des erledigten 6.53); die 13 Punkte ohne Bewertung (2.9–2.14, 4.12, 5.10j, 5.13k, 6.59, 6.61, 6.71b, 6.86) haben eine Zeile; **0.5 ist abgehakt** (Name und Domains sind da, der Rest ist 2.2) und die Zeilen zu 0.5 und 2.2 sagen das.
+- **Nicht gelungen:** der zusammengeführte Branch `claude/dazzling-ride-27fb28` lässt sich von hier nicht löschen (der Push der Löschung bricht am Proxy ab); der Hinweis dazu bleibt wahr, bis Julian `git push origin --delete claude/dazzling-ride-27fb28` ausführt.
+
+Stand danach: Offen 56 · Wartet auf Julian 28 · Zurückgestellt 27 · Erledigt 82; Hinweise 0 (6.87 bekam als Letztes seine Bewertungszeile; den Branch zählt das Cockpit nicht mehr, sobald er lokal weg ist). 1.015 Tests.
+
+## 2026-10-03 · „Collections“ und „Game“ in der Kopfzeile (ROADMAP 6.88)
+
+Julian schickte ein Mockup der Kopfzeile: Wortmarke, dann „Collections · Game · DE“. Gebaut als zwei Textlinks vor Suchfeld und Sprachwahl, ab 640 px; die Sprachwahl bleibt „Deutsch“ / „English“ (6.85), nicht „DE“ — das Mockup zeigte das Kürzel, entschieden ist nichts. Gemessen gegen `next dev` bei 390, 640 und 1280 in beiden Sprachen: kein Überlauf, bei 390 trägt die Zeile die Links nicht (bewusst). 1.015 Tests.
+
+## 2026-10-03 · Der deutsche Hero, dritter Anlauf (ROADMAP 6.85)
+
+Julian zum Screenshot der Startseite: „das deutsch ist noch kein gutes copywriting“. Die Zeile „Ein Buch hat viele Cover. Such dir deins aus.“ war wahr, aber Behauptung plus Aufforderung, ohne Haken. Jetzt nimmt das Deutsche das Sprichwort selbst — man soll ein Buch nicht nach dem Umschlag beurteilen — und dreht es um: **„Ein Buch nach dem Cover beurteilen? *Unbedingt.*“** Das Versprechen darunter in Alltagssprache und ehrlich (N12): „Tipp einen Titel ein, und du siehst die Cover, die wir zu dem Buch gefunden haben — sortiert nach Sprache und Jahr. Und dann die Ausgabe, die in dein Regal gehört.“ Gemessen: die Überschrift bleibt bei 390 und 1280 zweizeilig. Zwei Alternativen, falls die Frage zu kokett ist: „Urteile ruhig nach dem Cover. *Und nimm das schönste.*“ und „Ein Buch, viele Gesichter. *Deins ist dabei.*“ (Letzteres verspricht mehr, als die Kataloge halten.)
 

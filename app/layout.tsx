@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Jost } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_NAME, SITE_URL } from "@/lib/seo";
 import Analytics from "@/components/Analytics";
 
 // Typography (ROADMAP 6.61, SPEC §5): Xanh where Fraunces stood — every
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   // NEXT_PUBLIC_SITE_URL in the deployment (SPEC §10 D10).
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Beautiful Books",
-    template: "%s · Beautiful Books",
+    default: SITE_NAME,
+    template: `%s · ${SITE_NAME}`,
   },
   description:
     "Compare the covers and editions a book has been printed with, side by side. Data from Open Library and Google Books.",

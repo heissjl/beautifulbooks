@@ -3,6 +3,7 @@
  * typed errors. No logging here; callers decide what a failure means.
  */
 import { debug } from '../debug';
+import { userAgent } from '../seo';
 
 /** How much of an error response to keep; enough to read a reason code. */
 export const ERROR_BODY_MAX = 500;
@@ -59,7 +60,7 @@ export interface FetchJsonOptions {
   revalidate: number;
 }
 
-const USER_AGENT = 'BeautifulBooks/0.1 (https://github.com/julianheiss/beautifulbooks)';
+const USER_AGENT = userAgent();
 
 /**
  * Fetches JSON with a timeout. Throws HttpError for non-2xx, and the

@@ -236,12 +236,12 @@
   /* ------------------------------------------------------------ Website-Karte */
   function vSite() {
     const kinds = [['page', 'Seiten'], ['route', 'Weitere Routen'], ['api', 'Schnittstellen']];
-    return topbar('Website-Karte', 'aus app/**/page.tsx und route.ts: Zustände aus loading.tsx, notFound(), Statuscodes; Komponenten aus den Imports; APIs aus den Aufrufen') +
+    return topbar('Website-Karte', 'aus app/**/page.tsx und route.ts: Zustände aus loading.tsx, notFound(), Statuscodes; Komponenten aus den Imports; APIs aus den Aufrufen; „auch deutsch“ = Spiegel unter app/de/ (6.85)') +
       kinds.map(([k, label]) => {
         const rs = D.site.filter(r => r.kind === k && matches(r.route + ' ' + r.what + ' ' + r.components.join(' ')));
         if (!rs.length) return '';
         return `<h2>${label}</h2><div class="box scroll"><table><tr><th>Route</th><th>was</th><th>Zustände</th><th>fragt</th></tr>` +
-          rs.map(r => `<tr class="click" data-route="${esc(r.route)}"><td class="mono small"><b>${esc(r.route)}</b>${r.methods.length ? `<div class="muted">${esc(r.methods.join(' '))}</div>` : ''}</td><td class="small">${esc(r.what)}</td><td class="small">${r.states.map(s => `<span class="tag">${esc(s)}</span>`).join('')}</td><td class="small mono">${esc(r.apis.join(' '))}</td></tr>`).join('') + '</table></div>';
+          rs.map(r => `<tr class="click" data-route="${esc(r.route)}"><td class="mono small"><b>${esc(r.route)}</b>${r.methods.length ? `<div class="muted">${esc(r.methods.join(' '))}</div>` : ''}</td><td class="small">${esc(r.what)}${r.mirror ? ' <span class="tag">auch deutsch</span>' : ''}</td><td class="small">${r.states.map(s => `<span class="tag">${esc(s)}</span>`).join('')}</td><td class="small mono">${esc(r.apis.join(' '))}</td></tr>`).join('') + '</table></div>';
       }).join('');
   }
 

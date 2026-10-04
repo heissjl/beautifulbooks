@@ -333,6 +333,7 @@ export function collect(input: CollectInput): CockpitData {
     sync: rows,
     envChecks: checks,
     history,
+    nextSteps: data.nextSteps,
   });
   return data;
 }

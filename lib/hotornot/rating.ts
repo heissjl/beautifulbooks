@@ -5,7 +5,7 @@
  * the mechanism Facemash made famous in 2003. What is taken from it is the
  * pairwise vote and the Elo rating. What it rated — photographs of people,
  * taken without asking — is exactly what a cover is not: a cover is made to
- * be judged, and "judge a book by its covers" is this site's first line.
+ * be judged, and "judge a book, buy its covers" is this site's first line.
  *
  * Pure, no I/O. Three tools, each for its own job:
  *

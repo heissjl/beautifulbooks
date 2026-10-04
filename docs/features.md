@@ -1,6 +1,6 @@
 # Was die Seite heute kann
 
-Stand: 2026-09-26. Eine Bestandsliste der Funktionen, die **ausgeliefert oder auf `main` gebaut** sind — je Zeile, was der Leser bekommt, seit wann, wo es in der [Spec](../SPEC.md) steht, welcher [Roadmap](../ROADMAP.md)-Punkt es gebaut hat und wo der Code liegt. Die Spec sagt, was die Seite *sein soll*; diese Liste sagt, was sie *ist*. Wer einen Punkt abhakt, trägt hier eine Zeile nach.
+Stand: 2026-10-03. Eine Bestandsliste der Funktionen, die **ausgeliefert oder auf `main` gebaut** sind — je Zeile, was der Leser bekommt, seit wann, wo es in der [Spec](../SPEC.md) steht, welcher [Roadmap](../ROADMAP.md)-Punkt es gebaut hat und wo der Code liegt. Die Spec sagt, was die Seite *sein soll*; diese Liste sagt, was sie *ist*. Wer einen Punkt abhakt, trägt hier eine Zeile nach.
 
 Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
@@ -55,24 +55,30 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
 | ISBN-Nachschau bei Google **nur** bei Auswahl; Verdikt `verified / differs / uncompared / unknown / pending / unavailable`, Wortlaut an einer Stelle; ohne Signatur nie „different" | 2026-09-07 / 09-11 | F2.8, F2.9 | Schritt 13, 13a, 1.5, 6.32 | `lib/isbn.ts`, `components/useIsbnCovers.ts`, `lib/works.ts` (`verifyIsbnCover`), `lib/verdicts.ts` |
-| Nur gedruckte Bücher: eine E-Book-ISBN (Open Librarys Format, dieselbe Nummer auch bei Google) wird nie gezeigt, verlinkt oder geprüft, das Cover bleibt; Hörbücher fallen ganz weg; die Suche nach einer Ausgabe nennt Verlag und Jahr nur aus einem gedruckten Katalog-Datensatz | 2026-09-11 | E21 | 6.35 | `lib/works.ts` (`assembleEditions`), `lib/buylinks.ts` (`searchFacts`), `lib/sources/openlibrary-parse.ts` |
+| Nur gedruckte Bücher: eine E-Book-ISBN (Open Librarys Format, dieselbe Nummer auch bei Google) wird nie gezeigt, verlinkt oder geprüft, das Cover bleibt; Hörbücher fallen ganz weg (auch am Verlag erkannt, wenn das Format fehlt, seit 2026-09-29, 6.80); die Suche nach einer Ausgabe nennt Verlag und Jahr nur aus einem gedruckten Katalog-Datensatz | 2026-09-11 | E21 | 6.35 | `lib/works.ts` (`assembleEditions`), `lib/buylinks.ts` (`searchFacts`), `lib/sources/openlibrary-parse.ts` |
 | Erste Reihe nach ISBN-Registrierungsgruppe: **home / foreign / kdp / no-isbn**; Marktplätze führen bei fremder ISBN, Katalog-Händler bekommen Titelsuchen; `differs` ersetzt die Reihe durch Suchen | 2026-09-09 | §2.4, F2.9 | 1.11 (PLAN-1.11) | `lib/linkplan.ts`, `lib/normalize.ts` (`registrationArea`), `lib/buylinks.ts` |
 | „Or read it in another edition“ nur, wenn kein Link auf *diese* Ausgabe möglich ist | 2026-09-09 | §2.4 | 1.11 | `lib/linkplan.ts` |
 | Jeder Laden wird **zuerst mit der ISBN** gefragt, sobald es eine gibt (außer bei `differs`); die Wortsuche folgt hinter der Klappe, und ein Laden mit zwei Fragen sagt im Label welche („AbeBooks · ISBN“ / „· title & year“); Verlagsnamen werden als Suchbegriff normalisiert (Rechtsform, Klammerzusatz, Selbstverlag weg) | 2026-09-10 | §2.4, F2.9 | 1.11, 1.11a | `lib/linkplan.ts` (`pick`), `lib/normalize.ts` (`searchablePublisher`) |
 | Fünf sichtbare Bedienelemente statt vierzehn; alles Übrige hinter „Other ways to find it“; Cover an der Fensterhöhe gedeckelt | 2026-09-09 | F2.6 | 1.2 | `components/BookDetail.tsx` (`EditionBlock`) |
 | Unter einem gefalteten Cover führt der Druck, der den gezeigten Scan trug, dann das Verdikt, dann Markt und Jahr | 2026-09-09 | §2.4 | 6.14, 1.11 | `lib/linkplan.ts` (`orderEditionsForMarket`) |
 | „N printings with this cover“: eine seitlich scrollende Reihe zwischen Cover und Läden, je Druck eine Kachel pro Scan mit Verlag und Jahr darunter; ein Klick tauscht das große Bild und den Druck der Kauf-Knöpfe; ein Druck mit zwei Scans leuchtet mit beiden, die Notiz dazu rechts in der Überschrift; Pfeile am Desktop, Verlaufskanten an beiden Enden; am Telefon „Add to collection“ im Kopf des Blatts neben „Close“ (danach „✓“) | 2026-09-09 / 09-10 / 09-29 | §2.3, F2.6, F9.3 | 6.14, 6.14a, 6.77 | `components/BookDetail.tsx` (`CoverDetails`), `CoverSheet.tsx`, `AddToWall.tsx`, `useOverflowsX.ts` |
+| Kauf-Knöpfe über einen Druck mit ISBN, wenn das Cover einen hat; ohne Wahl zeigt die Seitenleiste dessen eigenen Scan | 2026-09-30 | §2.3 | 6.78 | `lib/linkplan.ts` (`orderEditionsForMarket`), `components/BookDetail.tsx` |
 | „Looks like this“: bis zu drei Cover **anderer** Bücher aus dem gebauten Index, drei feste Spalten | 2026-09-08 / 09-09 | F2.14, §2.5 | 6.10, 6.10a | `lib/coverindex.ts`, `data/cover-index.json`, `app/api/similar/`, `components/BookDetail.tsx` (`SimilarCovers`) |
 | Markt US/UK/DE aus Wahl, Länder-Header oder Accept-Language; Händlertabelle je Markt | 2026-09-06 | §2.4, E9 | — | `lib/market.ts`, `lib/buylinks.ts` |
 | Jeder Kauf-Link läuft über `/go/`, das Ziel wird aus der Tabelle neu gebaut; eine Logzeile ohne jede Kennung | 2026-09-07 | F5, E14 | PLAN-B B6 | `app/go/[provider]/[isbn]/`, `lib/clicks.ts` |
 | Teilen: Menü mit Link kopieren, `navigator.share`, Pinterest, WhatsApp, Bluesky, X, E-Mail — nur Links, kein Skript; eigene Adresse `/book/<werk>/cover/<cover>` mit dem gewählten Cover als Vorschaubild | 2026-09-09 | F2.13 | 6.20, 6.21 | `components/ShareButton.tsx`, `app/book/[id]/cover/[cover]/` |
 | Verfügbarkeits-Button — **nur im Shop-Modus**, nicht freigegeben | 2026-09-06 | F2.10, E12 | 0.1 | `lib/availability.ts`, `app/api/availability/` |
+| WorldCat fragt nach der ISBN des gewählten Drucks (`bn:`), ohne ISBN nach Titel, Autor, Verlag und Jahr | 2026-10-02 | §8.5 | 6.83 | `lib/buylinks.ts` (`searchLinksFor`) |
+| Provisionshinweis unter der ersten Reihe der Läden, nur wenn ein gezeigter Link eine Partner-Kennung trägt (also nie im Hobby-Modus), mit Amazons Pflichtsatz bei getaggtem Amazon-Link | 2026-10-02 (vorbereitet) | 2.4, E20 | 4.11 | `lib/buylinks.ts` (`commissionNote`), `components/BookDetail.tsx` |
 
 ## Weitere Seiten
 
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
+| Kopfzeile: „Collections“ und „Game“ als Links auf jeder Seite ab 640 px, davor Wortmarke, danach Suchfeld und Sprachwahl | 2026-10-03 | F6 | 6.88 | `components/SiteHeader.tsx` |
+| Die Seite auf Deutsch: Knopf „Deutsch“ / „English“ oben rechts auf jeder Seite, Cookie `locale`, Adressen unverändert (`proxy.ts` → `app/de/`); seit dem 2026-10-04 ist die ganze Oberfläche übersetzt (839 Sätze: auch About, Impressum, Datenschutz, Spiel, eigene Sammlung, `/curate`, `/suggest`); Metadaten, Daten und API-Fehlersätze bleiben englisch | 2026-10-02 | §2.6, E23 | 6.85 | `lib/i18n/`, `components/i18n.tsx`, `components/LocaleSwitcher.tsx`, `proxy.ts`, `app/de/`, `lib/__tests__/i18n.test.ts` |
 | Jahrzehnte-Seite `/book/<id>/decades`: dieselben Cover nach dem Jahrzehnt ihres frühesten Drucks, gefaltet aus dem Index, Schwelle 20 Cover über 4 Jahrzehnte, sonst 404; Mosaik als Ladebild | 2026-09-09 / 09-10 | F6 | 5.4a, 6.19a | `app/book/[id]/decades/`, `lib/decades.ts`, `data/decade-pages.json` |
+| Jahrzehnte-Seite liest bis 1.500 Datensätze wie die Wand; ein abgebrochener Lauf wird nie gecacht, ein Ausfall heißt „Open Library did not answer“ mit „Try again“ statt 404 | 2026-09-30 | N12 | 6.43, 6.71 | `app/book/[id]/decades/page.tsx`, `error.tsx`, `lib/work.ts` (`complete`) |
 | About mit Verdikten im Wortlaut der Oberfläche, Quellen, Lücken, „Looks like this“ | 2026-09-07 / 09-08 | F6, N13 | PLAN-B B7, 1.5 | `app/about/page.tsx` |
 | Impressum und Datenschutz aus `IMPRINT_*`; Build bricht ohne die Werte | 2026-09-08 | F6 | 2.3 | `app/contact/`, `app/privacy/`, `lib/imprint.ts` |
 | Titel, Beschreibung, Schema.org `Book`, OG-Bild 1200×630 mit vier verschiedenen Covern, Sitemap, robots | 2026-09-07 | F2.13 | PLAN-B B3 | `lib/seo.ts`, `app/book/[id]/opengraph-image.tsx`, `app/sitemap.ts`, `app/robots.ts` |
@@ -91,6 +97,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Bildmarke (Richtung A: Wand aus Buchrechtecken, eines hervorgehoben) in der Kopfzeile und als Browser-Icon, hell und dunkel | 2026-09-29 | §5 | 6.61 | `components/BrandMark.tsx`, `app/icon.svg`, `app/favicon.ico`, `app/apple-icon.png`, `scripts/build-icons.py` |
 | Vorschaukarte je veröffentlichter Sammlung: vierzehn ihrer Cover als Wand, beim Build vorberechnet; langsame Cover werden ersetzt statt leer gelassen | 2026-09-29 | F2.13 | 6.61 | `app/collections/[slug]/opengraph-image.tsx`, `app/og.tsx` (`loadCovers`) |
 | Vorschaukarte für die Sammlungen der Leser (`/c/<id>`): ihre Cover, ihr Titel, der selbst gewählte Name; abgeschaltete und leere zeigen die Website-Karte | 2026-09-29 | F2.13, F9 | 6.61, 5.13a | `app/c/[id]/opengraph-image.tsx`, `app/og.tsx` (`coverWallCard`) |
+| Die Form ohne Vorlage: Sprachreiter als Wörter (gewählter gefüllt, Schrift mittig), Etiketten in normaler Schreibung oder als Serifenüberschrift, keine Pfeile hinter Links, Angaben als Sätze oder „Verlag, Jahr (Sprache)", kein Slogan im Kopf | 2026-10-02 | §5 | 6.84 | `app/globals.css`, `components/BookDetail.tsx`, `components/CoverGallery.tsx`, `components/workWall.ts`, `lib/linkplan.ts` |
 
 ## Betrieb und Schutz
 

@@ -5,16 +5,19 @@ import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import WallView from '@/components/WallView';
+import { SITE_NAME } from '@/lib/seo';
 import { isWallId, toPublic, type PublicWall } from '@/lib/walls/model';
 import { isOwner, VISITOR_COOKIE } from '@/lib/walls/owner';
 import { wallStoreFromEnv } from '@/lib/walls/store';
 import { wallsEnabled } from '@/lib/walls/switch';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/translate';
 
 /**
  * One reader's wall (ROADMAP 5.13a). Never indexed: the title is a reader's
  * own text, and a wall is theirs to share, not ours to publish.
  */
-type Props = { params: Promise<{ id: string }> };
+type Props = { params: Promise<{ id: string }>; locale?: Locale };
 
 export const dynamic = 'force-dynamic';
 
@@ -41,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Shared links get the card beside this file (opengraph-image.tsx); these give it words: the
   // reader's own introduction if they wrote one, otherwise what the wall holds.
   const description = found
-    ? (found.intro?.trim() || `${found.tiles.length} ${found.tiles.length === 1 ? 'cover' : 'covers'}${found.by ? `, collected by ${found.by}` : ''}, on Beautiful Books.`).slice(0, 200)
+    ? (found.intro?.trim() || `${found.tiles.length} ${found.tiles.length === 1 ? 'cover' : 'covers'}${found.by ? `, collected by ${found.by}` : ''}, on ${SITE_NAME}.`).slice(0, 200)
     : undefined;
   return {
     title,
@@ -52,7 +55,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function WallPage({ params }: Props) {
+export default async function WallPage({ params, locale = DEFAULT_LOCALE }: Props) {
+  const t = translator(locale);
   const wall = await loadWall((await params).id, true);
   if (!wall) notFound();
   return (
@@ -61,7 +65,7 @@ export default async function WallPage({ params }: Props) {
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">
         {wall === 'down' ? (
           // A silent store is not a missing wall (SPEC N12).
-          <p className="py-24 text-center text-ink-2">The store did not answer. Try again in a moment.</p>
+          <p className="py-24 text-center text-ink-2">{t('The store did not answer. Try again in a moment.')}</p>
         ) : (
           <WallView initial={wall} />
         )}

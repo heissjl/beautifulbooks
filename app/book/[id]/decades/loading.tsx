@@ -1,6 +1,8 @@
 import HeaderSearch from '@/components/HeaderSearch';
 import MosaicLoader from '@/components/MosaicLoader';
 import SiteHeader from '@/components/SiteHeader';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/translate';
 
 /**
  * What the reader sees while the decade page is being built (Julian,
@@ -26,7 +28,8 @@ import SiteHeader from '@/components/SiteHeader';
  * No back link: the header's own is enough, and a link to a page that is
  * still assembling would be a second thing to reason about.
  */
-export default function Loading() {
+export default function Loading({ locale = DEFAULT_LOCALE }: { locale?: Locale }) {
+  const t = translator(locale);
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
@@ -34,7 +37,7 @@ export default function Loading() {
         {/* Same rhythm as the finished page: a title-sized block, then the picture. */}
         <div className="h-9 w-2/3 max-w-md animate-pulse rounded-md bg-surface-2 sm:h-10" />
         <div className="mt-3 h-4 w-40 animate-pulse rounded-md bg-surface-2" />
-        <MosaicLoader caption="Sorting these covers by decade" />
+        <MosaicLoader caption={t('Sorting these covers by decade')} />
       </main>
     </div>
   );

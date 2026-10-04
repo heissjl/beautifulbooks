@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { preloadMosaic } from './MosaicLoader';
 import { useRecentSearches } from './useRecentSearches';
+import { useT } from './i18n';
 
 /** What the field searches (ROADMAP 6.60): titles and authors together, or one author's books. */
 export type SearchMode = 'any' | 'author';
@@ -26,13 +27,14 @@ export const POPULAR_SEARCHES = [
   { query: 'The Hobbit', author: 'J. R. R. Tolkien' },
 ];
 
-/** The two modes as chips; the labels say what the field will look in. */
-const MODES: { mode: SearchMode; label: string }[] = [
+/** The two modes as chips; the labels say what the field will look in (translated where rendered). */
+export const MODES: { mode: SearchMode; label: string }[] = [
   { mode: 'any', label: 'Titles & authors' },
   { mode: 'author', label: 'Author only' },
 ];
 
 export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: SearchBarProps) {
+  const t = useT();
   const [inputValue, setInputValue] = useState(searchQuery);
   const [syncedQuery, setSyncedQuery] = useState(searchQuery);
   const [currentMode, setCurrentMode] = useState<SearchMode>(mode);
@@ -130,8 +132,8 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
             preloadMosaic();
           }}
           onFocus={() => setShowSuggestions(true)}
-          placeholder={authorMode ? "An author\u2019s name" : 'A title, or a title and author'}
-          aria-label={authorMode ? 'Search an author' : 'Search a book title'}
+          placeholder={authorMode ? t('An author’s name') : t('A title, or a title and author')}
+          aria-label={authorMode ? t('Search an author') : t('Search a book title')}
           autoComplete="off"
           /*
             On a phone the hero field is set a size smaller and gives the
@@ -145,7 +147,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
           }`}
         />
         <button type="submit" className="btn btn-accent absolute right-2 top-1/2 -translate-y-1/2 py-1.5">
-          Search
+          {t('Search')}
         </button>
 
         {showDropdown && (
@@ -155,7 +157,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
           >
             {recentSearches.length > 0 && (
               <div className="border-b border-line py-1">
-                <p className="kicker px-4 py-2">Recent</p>
+                <p className="kicker px-4 py-2">{t('Recent searches')}</p>
                 {recentSearches.map(search => (
                   <button key={search} type="button" onClick={() => submit(search)} className="flex w-full items-center gap-3 px-4 py-2 text-left text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink">
                     <svg className="h-4 w-4 text-ink-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -168,7 +170,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
             )}
             {filteredSuggestions.length > 0 && (
               <div className="py-1">
-                <p className="kicker px-4 py-2">Popular</p>
+                <p className="kicker px-4 py-2">{t('Popular')}</p>
                 {filteredSuggestions.map(s => (
                   // In the author mode a suggestion is the author, and the title says why she is here.
                   <button key={s.query} type="button" onClick={() => submit(authorMode ? s.author : s.query)} className="flex w-full items-baseline justify-between gap-3 px-4 py-2 text-left transition-colors hover:bg-surface-2">
@@ -190,10 +192,10 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
         hoped for sit on the detail page's language tabs anyway. An old
         `?lang=` is still carried to the detail page as the tab to open.
       */}
-      <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Search in">
+      <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label={t('Search in')}>
         {MODES.map(m => (
           <button key={m.mode} type="button" className="chip" aria-pressed={currentMode === m.mode} onClick={() => switchMode(m.mode)}>
-            {m.label}
+            {t(m.label)}
           </button>
         ))}
       </div>

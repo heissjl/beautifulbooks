@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { AvailabilityResponse } from '@/app/api/availability/route';
 import type { ShopStatus } from '@/lib/availability';
+import { useT } from './i18n';
 
 interface AvailabilityCheckProps {
   isbn13: string;
@@ -17,6 +18,7 @@ interface AvailabilityCheckProps {
  * would rather not be asked.
  */
 export default function AvailabilityCheck({ isbn13, onResult, checked }: AvailabilityCheckProps) {
+  const t = useT();
   const [state, setState] = useState<'idle' | 'checking' | 'failed'>('idle');
 
   if (checked) return null;
@@ -37,7 +39,7 @@ export default function AvailabilityCheck({ isbn13, onResult, checked }: Availab
           .catch(() => setState('failed'));
       }}
     >
-      {state === 'checking' ? 'Asking the shops…' : state === 'failed' ? 'Check failed, try again' : 'Check availability'}
+      {state === 'checking' ? t('Asking the shops…') : state === 'failed' ? t('Check failed, try again') : t('Check availability')}
     </button>
   );
 }

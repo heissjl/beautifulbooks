@@ -220,9 +220,23 @@ export const LANGUAGE_NAMES: Record<string, string> = {
   sl: 'Slovenian', lt: 'Lithuanian', lv: 'Latvian', et: 'Estonian', is: 'Icelandic',
 };
 
-export function languageName(code: string | undefined): string {
-  if (!code) return 'Unknown';
-  return LANGUAGE_NAMES[code] ?? code.toUpperCase();
+/** The same languages in German (ROADMAP 6.85); a code missing here falls back to the English name. */
+export const LANGUAGE_NAMES_DE: Record<string, string> = {
+  en: 'Englisch', de: 'Deutsch', fr: 'Französisch', es: 'Spanisch', it: 'Italienisch',
+  pt: 'Portugiesisch', ru: 'Russisch', ja: 'Japanisch', zh: 'Chinesisch', nl: 'Niederländisch',
+  sv: 'Schwedisch', da: 'Dänisch', no: 'Norwegisch', fi: 'Finnisch', pl: 'Polnisch',
+  cs: 'Tschechisch', hu: 'Ungarisch', tr: 'Türkisch', ar: 'Arabisch', he: 'Hebräisch',
+  el: 'Griechisch', ko: 'Koreanisch', la: 'Latein', ca: 'Katalanisch', uk: 'Ukrainisch',
+  ro: 'Rumänisch', hi: 'Hindi', fa: 'Persisch', vi: 'Vietnamesisch', th: 'Thai',
+  id: 'Indonesisch', bg: 'Bulgarisch', hr: 'Kroatisch', sr: 'Serbisch', sk: 'Slowakisch',
+  sl: 'Slowenisch', lt: 'Litauisch', lv: 'Lettisch', et: 'Estnisch', is: 'Isländisch',
+};
+
+/** The language's name for the reader; `locale` picks the table (English without one). */
+export function languageName(code: string | undefined, locale: 'en' | 'de' = 'en'): string {
+  if (!code) return locale === 'de' ? 'Unbekannt' : 'Unknown';
+  const own = locale === 'de' ? LANGUAGE_NAMES_DE[code] : undefined;
+  return own ?? LANGUAGE_NAMES[code] ?? code.toUpperCase();
 }
 
 export function stripHtml(s: string | undefined): string | undefined {
@@ -232,6 +246,23 @@ export function stripHtml(s: string | undefined): string | undefined {
 }
 
 const NON_BOOK_TITLE = /\b(audiobook|audio book|audio cd|mp3 cd|journal|proceedings)\b/i;
+
+/**
+ * Publishers that only make recordings (ROADMAP 6.80). The format field
+ * catches most audiobooks ("Audio CD", "Audio cassette"), but not all: *The
+ * Great Gatsby* carried Audible's 2013 recording read by Jake Gyllenhaal as a
+ * tile on the wall, because its record says "Digital". Every name here occurs
+ * in the recorded fixtures or in Gatsby's live records (Audiofy/Naxos 1999,
+ * Audiofy/Hayes 2006, both without an audio format); none is guessed. A word
+ * boundary keeps "Audio" from matching inside another word, and "Hörbuch",
+ * "Hörverlag" and "audiolibri" are the German and Italian imprints.
+ */
+const AUDIO_PUBLISHER = /\b(audible|audio|audiobooks?|audiofy|audiolibri|brilliance|caedmon)\b|h(ö|o|oe)r(buch|verlag)/i;
+
+/** True for a publisher that only makes recordings; the cover stays if a printed record carries it. */
+export function looksLikeAudioPublisher(publisher: string | undefined): boolean {
+  return !!publisher && AUDIO_PUBLISHER.test(publisher);
+}
 
 /** SPEC §3 F3.4: audiobooks, journals and proceedings are filtered out. */
 export function looksLikeNonBook(title: string, description?: string): boolean {
@@ -307,6 +338,11 @@ export interface IsbnRegistration {
 }
 
 /** Leading digits of an ISBN-13 (prefix + registration group) -> what they mean. */
+/** The place names the link note can quote, for the catalogue test (ROADMAP 6.85). */
+export function registrationPlaces(): string[] {
+  return [...new Set(Object.values(REGISTRATION_GROUPS).map(r => r.place).filter((p): p is string => !!p))];
+}
+
 const REGISTRATION_GROUPS: Record<string, IsbnRegistration> = {
   // Language areas that span many countries; named as areas, not countries.
   '9780': { area: 'en', place: 'the English-language area' },

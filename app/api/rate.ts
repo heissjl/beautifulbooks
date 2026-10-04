@@ -11,13 +11,16 @@ import { clientKey, consume, type RateBucketName } from '@/lib/ratelimit';
  * route's own bucket — the narrower statement about what the caller did —
  * decides the wait it is told to observe.
  */
+/** The one 429 sentence; the cover game shows it through `t`, so the catalogue test lists it. */
+export const RATE_LIMITED = 'Too many requests, try again shortly';
+
 export function rateLimited(request: NextRequest, ...buckets: RateBucketName[]): NextResponse | null {
   const client = clientKey(request.headers);
   for (const bucket of buckets) {
     const decision = consume(bucket, client);
     if (decision.ok) continue;
     return NextResponse.json(
-      { error: 'Too many requests, try again shortly' },
+      { error: RATE_LIMITED },
       { status: 429, headers: { 'Retry-After': String(decision.retryAfter), 'Cache-Control': 'no-store' } },
     );
   }
