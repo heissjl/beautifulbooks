@@ -552,6 +552,8 @@ Danach, wie im Prompt: je Domain einmal `dig +short A`, `vercel domains inspect`
 3. Vercel: `www.buyitscovers.de`, `www.byitscovers.com`, `www.byitscovers.de`, `www.othercovers.com`, `www.othercovers.de` als Weiterleitung (308) auf `buyitscovers.com` anlegen. Bis dahin zeigen die `www`-CNAMEs dieser Domains auf Vercel, das für sie kein Zertifikat hat: `https://www.buyitscovers.de/` scheitert am TLS-Handshake.
 4. `beautifulcovers.vercel.app` ist weiter ohne Weiterleitung.
 
+**Punkt 3 erledigt am 2026-10-04 um 03:00 MESZ** (Julian: „mach die restlichen Einträge fertig"): über den Vercel-Connector `www.buyitscovers.de`, `www.byitscovers.com`, `www.byitscovers.de`, `www.othercovers.com`, `www.othercovers.de` am Projekt `beautifulbooks` angelegt, je Weiterleitung 308 auf `buyitscovers.com`, alle „verified". Punkte 1 und 2 warten auf Julians erneute Anmeldung bei INWX (die Sitzung war abgelaufen).
+
 ## 21. E-Mail unter der Domain (2026-10-02)
 
 Julian: „what do i need to do to set up emails from that domain". Drei getrennte Fragen, drei getrennte Antworten.
