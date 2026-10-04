@@ -3,6 +3,8 @@ import { hasApiKey, recognize, type RecognizedBook } from '@/lib/recognize';
 import { matchPhotoBooksEach, photoRead, MAX_PHOTO_BOOKS, type PhotoMatch } from '@/lib/walls/photo';
 import { preparePhoto } from '@/lib/photoprep';
 import { json, openWalls } from '../guard';
+import { later } from '@/app/api/count';
+import { countPhoto } from '@/lib/insights/store';
 
 /**
  * POST /api/walls/photo — a photo of books (JPEG or PNG, the browser has
@@ -58,6 +60,7 @@ export async function POST(request: NextRequest) {
   }
   if (today > PHOTOS_PER_DAY) {
     recordPhoto({ capped: true, today });
+    later(() => countPhoto({ outcome: 'capped' }));
     return json({ error: 'Today’s photos are used up — the site reads a limited number a day. Tomorrow again.' }, 429);
   }
 
@@ -84,6 +87,8 @@ export async function POST(request: NextRequest) {
       } catch {
         // Never "no books": the model did not answer, which is something else (N12).
         recordPhoto({ failed: 'model', bytes: bytes.length, ms: Date.now() - started });
+        // Awaited inside the stream, before it closes, so the function is still alive for the write; it never throws.
+        await countPhoto({ outcome: 'failed' });
         line({ error: 'The photo could not be read just now. Try again in a moment.' });
         controller.close();
         return;
@@ -97,6 +102,16 @@ export async function POST(request: NextRequest) {
         controller.close();
         return;
       }
+      // What the photo cost, for the analytics (ROADMAP 3.1, K13): tokens per model, books read and found.
+      await countPhoto({
+        outcome: 'read',
+        model,
+        inputTokens: tokens.in,
+        outputTokens: tokens.out,
+        books: books.length,
+        found: matches.filter((m) => m.tile && !m.unsure).length,
+        maybe: matches.filter((m) => m.unsure).length,
+      });
       recordPhoto({
         bytes: bytes.length,
         sent: `${prepared.width}x${prepared.height}`,

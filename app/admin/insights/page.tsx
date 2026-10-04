@@ -7,6 +7,8 @@ import type { ProviderRow } from '@/lib/insights/model';
 import { buildReport, parseMarket, parseRange, RANGES, type InsightsReport } from '@/lib/insights/report';
 import type { Market } from '@/lib/market';
 import { adminCookieValid } from '@/lib/suggest/session';
+import { PRICES_AS_OF } from '@/lib/insights/prices';
+import { PHOTOS_PER_DAY } from '@/app/api/walls/photo/route';
 
 /**
  * Julian's analytics (ROADMAP 3.1a, docs/plans/PLAN-3.1-analyse.md §8):
@@ -275,6 +277,15 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
       </section>
 
       <section className="mt-6">
+        <Card
+          title="Regalfoto → Sammlung: Verbrauch und Kosten"
+          sub="Fotos, die das Bildmodell beim Anlegen einer Sammlung gelesen hat, und was sie gekostet haben (K13)."
+        >
+          <PhotoSection photos={report.photos} />
+        </Card>
+      </section>
+
+      <section className="mt-6">
         <Card title="Betrieb" sub="Ereignisse, keine Anfragen.">
           <ul className="space-y-2 text-sm">
             <Status
@@ -299,6 +310,63 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
           </Note>
         </Card>
       </section>
+    </>
+  );
+}
+
+const usd = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 3 });
+
+function PhotoSection({ photos }: { photos: Extract<InsightsReport, { ok: true }>['photos'] }) {
+  const perPhoto = photos.read > 0 ? photos.costUsd / photos.read : null;
+  const models = Object.entries(photos.tokens).sort((a, b) => b[1].input + b[1].output - (a[1].input + a[1].output));
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <Tile label="Fotos gelesen" value={photos.read} note={`gescheitert ${nf.format(photos.failed)} · am Tageslimit abgewiesen ${nf.format(photos.capped)}`} />
+        <Tile label="Bücher erkannt" value={photos.books} note={`gefunden ${nf.format(photos.found)} · unsicher ${nf.format(photos.maybe)}`} />
+        <div className="rounded-lg border border-line bg-surface p-3 sm:p-4">
+          <div className="text-sm text-ink-2">Kosten im Zeitraum</div>
+          <div className="mt-1 text-2xl font-medium text-ink">{usd.format(photos.costUsd)}</div>
+          <div className="mt-1 text-xs text-ink-3">{photos.unpricedTokens > 0 ? `dazu ${nf.format(photos.unpricedTokens)} Tokens ohne bekannten Preis` : 'zu Listenpreisen'}</div>
+        </div>
+        <div className="rounded-lg border border-line bg-surface p-3 sm:p-4">
+          <div className="text-sm text-ink-2">Kosten je Foto</div>
+          <div className="mt-1 text-2xl font-medium text-ink">{perPhoto === null ? '—' : usd.format(perPhoto)}</div>
+          <div className="mt-1 text-xs text-ink-3">
+            {perPhoto === null ? 'noch kein Foto gelesen' : `Tageslimit ${nf.format(PHOTOS_PER_DAY)} Fotos ≈ höchstens ${usd.format(perPhoto * PHOTOS_PER_DAY)} am Tag`}
+          </div>
+        </div>
+      </div>
+      <div className="mt-4">
+        <DayColumns perDay={photos.perDay.map(d => ({ day: d.day, clicks: d.costUsd }))} format={v => usd.format(v)} label="Kosten der Fotos je Tag" />
+      </div>
+      {models.length > 0 && (
+        <table className="mt-3 w-full text-sm">
+          <thead>
+            <tr className="border-b border-line text-left text-xs text-ink-3">
+              <th className="py-1.5 pr-2 font-normal">Modell</th>
+              <th className="py-1.5 pr-2 text-right font-normal">Eingabe-Tokens</th>
+              <th className="py-1.5 pr-2 text-right font-normal">Ausgabe-Tokens</th>
+              <th className="py-1.5 text-right font-normal">Kosten</th>
+            </tr>
+          </thead>
+          <tbody>
+            {models.map(([model, t]) => (
+              <tr key={model} className="border-b border-line">
+                <td className="py-1.5 pr-2 font-mono text-xs text-ink">{model}</td>
+                <td className="py-1.5 pr-2 text-right tabular-nums text-ink-2">{nf.format(t.input)}</td>
+                <td className="py-1.5 pr-2 text-right tabular-nums text-ink-2">{nf.format(t.output)}</td>
+                <td className="py-1.5 text-right tabular-nums text-ink">{t.costUsd === null ? 'Preis unbekannt' : usd.format(t.costUsd)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      <Note>
+        Gerechnet aus den Tokens, die die Antwort des Modells meldet (das Foto zählt als Eingabe), zu den Listenpreisen vom {PRICES_AS_OF} in USD
+        (lib/insights/prices.ts); maßgeblich ist die Rechnung in der Anthropic-Konsole. Ein Foto am Tageslimit kostet nichts, ein gescheitertes
+        kann Tokens gekostet haben, die hier fehlen. Deine eigenen Fotos zählen mit — sie kosten dasselbe.
+      </Note>
     </>
   );
 }
@@ -348,9 +416,19 @@ function Tile({ label, value, note }: { label: string; value: number; note?: str
 }
 
 /** One column per day, single series, value on hover and in the table below the chart for screen readers. */
-function DayColumns({ perDay }: { perDay: Array<{ day: string; clicks: number }> }) {
+function DayColumns({
+  perDay,
+  format = v => plural(v, 'Klick', 'Klicks'),
+  label = 'Klicks zum Händler je Tag',
+}: {
+  perDay: Array<{ day: string; clicks: number }>;
+  /** How one day's value reads in the tooltip and the caption. */
+  format?: (value: number) => string;
+  label?: string;
+}) {
   const peak = Math.max(0, ...perDay.map(d => d.clicks));
-  const max = Math.max(1, peak);
+  // Scaled to the highest day; a range with nothing in it keeps a flat baseline.
+  const max = peak > 0 ? peak : 1;
   const w = 720;
   const h = 140;
   const band = w / perDay.length;
@@ -358,7 +436,7 @@ function DayColumns({ perDay }: { perDay: Array<{ day: string; clicks: number }>
   const ticks = [0, Math.floor((perDay.length - 1) / 2), perDay.length - 1];
   return (
     <figure>
-      <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" className="h-36 w-full" role="img" aria-label="Klicks zum Händler je Tag">
+      <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" className="h-36 w-full" role="img" aria-label={label}>
         <line x1={0} x2={w} y1={h} y2={h} stroke="var(--line)" strokeWidth={1} />
         {perDay.map((d, i) => {
           const bh = (d.clicks / max) * (h - 8);
@@ -371,7 +449,7 @@ function DayColumns({ perDay }: { perDay: Array<{ day: string; clicks: number }>
                 fill="var(--accent)"
               />
               <rect x={band * i} y={0} width={band} height={h} fill="transparent">
-                <title>{`${shortDay(d.day)}: ${nf.format(d.clicks)}`}</title>
+                <title>{`${shortDay(d.day)}: ${format(d.clicks)}`}</title>
               </rect>
             </g>
           );
@@ -383,7 +461,7 @@ function DayColumns({ perDay }: { perDay: Array<{ day: string; clicks: number }>
           <span key={i}>{shortDay(perDay[i]?.day ?? '')}</span>
         ))}
       </div>
-      <figcaption className="mt-1 text-xs text-ink-3">Höchster Tag: {plural(peak, 'Klick', 'Klicks')}. Werte beim Darüberfahren.</figcaption>
+      <figcaption className="mt-1 text-xs text-ink-3">Höchster Tag: {format(peak)}. Werte beim Darüberfahren.</figcaption>
     </figure>
   );
 }

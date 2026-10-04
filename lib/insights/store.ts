@@ -31,11 +31,11 @@ export function countingEnabled(env: Env = process.env): boolean {
 
 export type CountResult = 'counted' | 'off' | 'no-store' | 'invalid' | 'failed';
 
-async function add(commands: RedisCommands, hash: InsightsHash, field: string, now: Date): Promise<CountResult> {
+async function add(commands: RedisCommands, hash: InsightsHash, field: string, now: Date, by = 1): Promise<CountResult> {
   if (!commands.hIncrBy) return 'no-store';
   const key = insightsKey(dayOf(now), hash);
   try {
-    await commands.hIncrBy(key, field, 1);
+    await commands.hIncrBy(key, field, by);
     // Every write renews the day's expiry; the last write of a day sets it for good.
     await commands.expire?.(key, hash === 'empty' ? EMPTY_RETENTION_SECONDS : RETENTION_SECONDS);
     return 'counted';
@@ -114,6 +114,41 @@ export async function countSignal(signal: Signal, options: CountOptions = {}): P
       ? [['book', bookField(signal)], ['works', workField(signal)]]
       : [['search', searchField(signal)], ...(signal.q ? [['empty', signal.q] as [InsightsHash, string]] : [])];
   const results = await Promise.all(writes.map(([hash, field]) => add(commands, hash, field, now)));
+  return results.find(r => r !== 'counted') ?? 'counted';
+}
+
+/**
+ * One photo of a shelf read by the image model (ROADMAP 3.1, K13; the photo
+ * route of 5.13a). `capped` is a photo turned away by the day's limit before
+ * the model was asked, `failed` one the model did not answer, `read` one it
+ * did — with its tokens per model, which is what it costs. Julian's own
+ * photos count too: they cost the same.
+ */
+export type PhotoCount =
+  | { outcome: 'capped' }
+  | { outcome: 'failed' }
+  | { outcome: 'read'; model: string; inputTokens: number; outputTokens: number; books: number; found: number; maybe: number };
+
+const MODEL_ID = /^[a-z0-9][a-z0-9.-]{0,47}$/;
+
+export async function countPhoto(photo: PhotoCount, options: CountOptions = {}): Promise<CountResult> {
+  const commands = setup(options);
+  if (commands === 'off') return 'off';
+  if (!commands) return 'no-store';
+  const now = options.now ?? new Date();
+  const writes: Array<[string, number]> = [[photo.outcome, 1]];
+  if (photo.outcome === 'read') {
+    if (!MODEL_ID.test(photo.model)) return 'invalid';
+    const whole = (n: number) => (Number.isFinite(n) && n > 0 ? Math.floor(n) : 0);
+    writes.push(
+      [`in|${photo.model}`, whole(photo.inputTokens)],
+      [`out|${photo.model}`, whole(photo.outputTokens)],
+      ['books', whole(photo.books)],
+      ['found', whole(photo.found)],
+      ['maybe', whole(photo.maybe)],
+    );
+  }
+  const results = await Promise.all(writes.filter(([, n]) => n > 0).map(([field, n]) => add(commands, 'photos', field, now, n)));
   return results.find(r => r !== 'counted') ?? 'counted';
 }
 

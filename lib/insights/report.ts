@@ -9,7 +9,8 @@ import { LOCAL_COUNTRIES, localShopLinks } from '../localshops';
 import type { Market } from '../market';
 import { change, FEW_CLICKS, lastDays, MAX_RANGE_DAYS, summarizeClicks, summarizeOps, type ClickSummary, type OpsSummary } from './model';
 import { readDays } from './store';
-import { emptySearches, summarizeBooks, summarizeSearches, topWorks, type BookSummary, type SearchSummary, type WorkRow } from './visits';
+import { emptySearches, summarizePhotos, summarizeBooks, summarizeSearches, topWorks, type BookSummary, type PhotoSummary, type SearchSummary, type WorkRow } from './visits';
+import { costUsd } from './prices';
 import { PUBLISHED_WORKS } from '../published';
 
 export const RANGES = [7, 30, 90] as const;
@@ -45,6 +46,8 @@ export type InsightsReport =
       searches: SearchSummary;
       works: Array<WorkRow & { title?: string }>;
       empty: Array<{ q: string; n: number }>;
+      /** K13: shelf photos read by the image model, and what they cost. */
+      photos: PhotoSummary;
     }
   | { ok: false; reason: 'no-store' | 'failed' };
 
@@ -86,10 +89,11 @@ export async function buildReport(
     readDays(current, 'search', commands),
     readDays(current, 'works', commands),
     readDays(current, 'empty', commands),
+    readDays(current, 'photos', commands),
   ]);
   const failed = reads.find(r => !r.ok);
   if (failed && !failed.ok) return { ok: false, reason: failed.reason };
-  const [clickRead, previousRead, opsRead, bookRead, previousBookRead, searchRead, worksRead, emptyRead] = reads.map(r => (r.ok ? r.hashes : []));
+  const [clickRead, previousRead, opsRead, bookRead, previousBookRead, searchRead, worksRead, emptyRead, photoRead] = reads.map(r => (r.ok ? r.hashes : []));
   const clicks = summarizeClicks(current, clickRead, market);
   const previousTotal = summarizeClicks(previous, previousRead, market).total;
   const titles = new Map(PUBLISHED_WORKS.map(w => [w.id, w.title]));
@@ -110,5 +114,6 @@ export async function buildReport(
     searches: summarizeSearches(searchRead),
     works: topWorks(worksRead).map(w => ({ ...w, title: titles.get(w.work) })),
     empty: emptySearches(emptyRead),
+    photos: summarizePhotos(current, photoRead, costUsd),
   };
 }

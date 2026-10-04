@@ -1,6 +1,6 @@
 # Plan 3.1: Kennzahlen und Analyse-Ansicht
 
-Stand: 2026-10-04, **gebaut** (3.1a, 3.1b und die Händlersuchen über `/go/`; Branch, nicht deployt). Abweichungen vom Plan stehen jeweils dabei. Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
+Stand: 2026-10-04, **gebaut**, mit K13 (Fotos und Kosten) und der Regel in CLAUDE.md, die bei jeder Änderung nach den Folgen für die Analyse fragt; (3.1a, 3.1b und die Händlersuchen über `/go/`; Branch, nicht deployt). Abweichungen vom Plan stehen jeweils dabei. Ort entschieden 2026-10-04 (online, §8). Julian: „mache erst einen plan was für kpis du bauen würdest und wie das analyse-dashboard aussieht". Ersetzt die Skizze in ROADMAP 3.1 und den Abschnitt nach B4 in [PLAN-B](PLAN-B.md). Mock-up mit **Beispieldaten**: [PLAN-3.1-analyse-mockup.html](PLAN-3.1-analyse-mockup.html) (im Browser öffnen; hell und dunkel).
 
 ## 1. Grundsatz
 
@@ -32,6 +32,7 @@ Wöchentlich gelesen, Zeitraum wählbar (7 / 30 / 90 Tage), Vergleich mit dem Ze
 | K10 | Werke | Top 20 nach Besuchen, mit K1 je Werk; dazu Suchbegriffe ohne Ergebnis (§6) | Signale `book`, `search` | Liste für die Kuratierung (5.1, 6.18) |
 | K11 | Betrieb | Google-Tagesstopps (`dailyLimitExceeded`), Ausfälle Open Library je Tag | Server, exakt (zählt Ereignisse, nicht Anfragen) | 0.3, 0.7, 4.5. **Den Google-Verbrauch selbst kann der Code nicht zählen** (Datencache, CLAUDE.md) — er steht in der Cloud-Konsole (0.13); die Ansicht verlinkt dorthin, statt eine falsche Zahl zu zeigen |
 | K12 | Gemeinschaft | Stimmen im Spiel, neue Sammlungen, Vorschläge je Tag | Bestand in Redis | 5.8b, das Tor aus 5.13a (30 Sammlungen mit ≥ 6 Covern in vier Wochen) |
+| K13 | Regalfoto → Sammlung: Verbrauch und Kosten (2026-10-04, Julian: „füge noch eine kpi hinzu die den verbrauch von der photo-analyse beim collection erstellen trackt. und auch die kosten“) | Fotos gelesen / gescheitert / am Tageslimit abgewiesen, Bücher erkannt und gefunden, Tokens je Modell, Kosten in USD zu Listenpreisen (`lib/insights/prices.ts`), je Tag und je Foto, Hochrechnung aufs Tageslimit | Server, exakt: die Foto-Route zählt nach der Antwort des Modells (`countPhoto`) | Ob das Tageslimit (`PHOTOS_PER_DAY`, 300) und der Modellwechsel (Sonnet → Opus nur bei Fehler) tragen; Schwelle als Vorschlag, von Julian zu bestätigen: steigen die Kosten je Foto über 5 ct oder je Tag über 5 USD, das Limit senken oder das Modell wechseln. Julians eigene Fotos zählen mit, sie kosten dasselbe |
 
 **Nicht hier, mit Grund:** Aufrufe, Länder, Geräte, Referrer im Einzelnen — das zeigt Vercel Web Analytics schon (2.1), nachbauen wäre doppelt. Suchanfragen *bei Google* und Positionen dort — Search Console (2.5). **Umsatz** — nur die Partner-Dashboards kennen ihn; mit dem Shop-Modus kommt eine Spalte „Provision je 100 Klicks" je Händler dazu, monatlich von Hand übertragen (3.3), nicht im Repository.
 

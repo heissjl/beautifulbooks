@@ -123,3 +123,68 @@ export function emptySearches(hashes: ReadonlyArray<DayHash | null>, limit = 30)
     .slice(0, limit)
     .map(([q, k]) => ({ q, n: k }));
 }
+
+export interface PhotoSummary {
+  /** Photos the model read. */
+  read: number;
+  /** Photos the model did not answer. */
+  failed: number;
+  /** Photos turned away by the day's limit, before the model was asked. */
+  capped: number;
+  books: number;
+  found: number;
+  maybe: number;
+  /** Tokens per model. */
+  tokens: Record<string, { input: number; output: number; costUsd: number | null }>;
+  /** Total cost in USD of the tokens whose model has a price. */
+  costUsd: number;
+  /** Tokens of models without a price: their cost is unknown, not zero (N12). */
+  unpricedTokens: number;
+  /** Cost per day in USD, in the order of the days asked for. */
+  perDay: Array<{ day: string; costUsd: number; read: number }>;
+}
+
+/**
+ * K13: what reading shelf photos used and cost. `price` is
+ * `costUsd` from `prices.ts`, passed in so this stays a pure sum.
+ */
+export function summarizePhotos(
+  days: string[],
+  hashes: ReadonlyArray<DayHash | null>,
+  price: (model: string, input: number, output: number) => number | null,
+): PhotoSummary {
+  const s: PhotoSummary = { read: 0, failed: 0, capped: 0, books: 0, found: 0, maybe: 0, tokens: {}, costUsd: 0, unpricedTokens: 0, perDay: [] };
+  days.forEach((day, i) => {
+    const hash = hashes[i] ?? {};
+    const dayTokens: Record<string, { input: number; output: number }> = {};
+    for (const [field, value] of Object.entries(hash)) {
+      const k = n(value);
+      if (k === 0) continue;
+      const [kind, model] = field.split('|');
+      if ((kind === 'in' || kind === 'out') && model) {
+        const t = (dayTokens[model] ??= { input: 0, output: 0 });
+        if (kind === 'in') t.input += k;
+        else t.output += k;
+      } else if (kind === 'read' || kind === 'failed' || kind === 'capped' || kind === 'books' || kind === 'found' || kind === 'maybe') {
+        s[kind] += k;
+      }
+    }
+    let dayCost = 0;
+    for (const [model, t] of Object.entries(dayTokens)) {
+      const total = (s.tokens[model] ??= { input: 0, output: 0, costUsd: 0 });
+      total.input += t.input;
+      total.output += t.output;
+      const cost = price(model, t.input, t.output);
+      if (cost === null) {
+        total.costUsd = null;
+        s.unpricedTokens += t.input + t.output;
+      } else {
+        if (total.costUsd !== null) total.costUsd += cost;
+        dayCost += cost;
+      }
+    }
+    s.costUsd += dayCost;
+    s.perDay.push({ day, costUsd: dayCost, read: n(hash.read) });
+  });
+  return s;
+}

@@ -4229,3 +4229,13 @@ Julian: „ja, bau beides, aber teste ob das auch bei allen händlern/suchmaschi
 
 Ansicht mit diesen Daten bei 1280 × 800 (hell) und 390 × 844 (dunkel) angesehen, ohne seitliches Scrollen; unter 100 Besuchen sind die Raten grau und als „zu wenig Daten“ markiert. 1.058 Tests, Lint und Build grün.
 
+## 2026-10-04 — Was die Regalfotos kosten (K13), und eine Regel gegen eine Analyse, die still veraltet (ROADMAP 3.1)
+
+Julian: „füge noch eine kpi hinzu die den verbrauch von der photo-analyse beim collection erstellen trackt. und auch die kosten“ und „baue eine claude md regel rein, damit bei zukünftigen änderungen gecheckt wird ob das das tracking/die analyse beeinflusst“.
+
+**Gebaut:** `countPhoto` (`lib/insights/store.ts`) zählt im Hash `ins:<tag>:photos` je Foto `read`, `failed` oder `capped`, dazu `in|<modell>` und `out|<modell>` (Tokens aus `response.usage`, das Foto zählt als Eingabe), `books`, `found`, `maybe`; die Foto-Route ruft es auf, im Stream vor dem Schließen abgewartet, am Tageslimit über `after`. `lib/insights/prices.ts`: Listenpreise in USD je Million Tokens, gelesen am 2026-10-04 aus der Claude-API-Referenz (Stand der Tabelle 2026-09-25) — `claude-sonnet-5` 2/10, `claude-opus-5-5` 4/20, dazu Sonnet 5.5, Opus 5, Haiku 4.5. Ein Modell ohne Preis kostet „unbekannt“, nicht null. `summarizePhotos` rechnet Kosten je Tag und Modell; die Ansicht hat den Abschnitt „Regalfoto → Sammlung: Verbrauch und Kosten“ mit Kosten je Foto und der Hochrechnung aufs Tageslimit (300 Fotos).
+
+**Wächter in Tests:** jedes Modell, das `lib/recognize.ts` rufen kann (`PRIMARY_MODEL`, `FALLBACK_MODEL`), muss einen Preis haben; jeder Zustand von `IsbnVerdict` muss in `VERDICTS` stehen (sonst kompiliert der Test nicht). Die Regel in CLAUDE.md nennt sieben Stellen, an denen eine Änderung die Analyse verschiebt, und verlangt Anpassung im selben Commit oder einen Satz in der Commit-Nachricht, warum nichts betroffen ist.
+
+**Grenze:** ein gescheitertes Foto kann Tokens gekostet haben, die nicht gezählt sind (die Antwort fehlt); maßgeblich bleibt die Rechnung in der Anthropic-Konsole.
+
