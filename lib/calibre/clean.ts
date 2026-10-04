@@ -1,7 +1,9 @@
 /**
- * A Calibre book as a question for the catalogue (lab/calibre-import, ROADMAP 5.17).
+ * A Calibre book as a question for the catalogue (ROADMAP 5.17, on the site
+ * since 5.17a; written for lab/calibre-import).
  *
- * Pure. Calibre titles carry what the file was called: a series in front
+ * Pure and client-safe: the page cleans the books in the browser and sends
+ * only the result. Calibre titles carry what the file was called: a series in front
  * ("[Philip K. Dick 04] • Flow My Tears…", "Foundation 1 - Foundation",
  * "1974-Rendezvous With Rama"), the author in front or behind ("Crichton,
  * Michael - Sphere"), the tag of the place it came from, a subtitle. All of
@@ -11,9 +13,9 @@
  * Nothing here guesses a book: a title that cleans to nothing, or a book
  * without an author, is skipped and reported, not searched by half a name.
  */
-import { sameAuthor } from '../../lib/bookmatch';
-import { displayTitle, normalizeTitle } from '../../lib/normalize';
-import type { CalibreBook } from '../calibre/library';
+import { sameAuthor } from '../bookmatch';
+import { displayTitle, normalizeTitle } from '../normalize';
+import type { LibraryBook } from './library';
 
 export interface BookQuery {
   title: string;
@@ -72,7 +74,7 @@ const articleFirst = (t: string): string => t.replace(/^(.*?),\s*(The|A|An|Der|D
  * ask with: no title left, or no author (the library also holds READMEs,
  * licence texts and papers named after their file).
  */
-export function cleanBook(book: Pick<CalibreBook, 'title' | 'authors' | 'isbns'>): BookQuery | null {
+export function cleanBook(book: Pick<LibraryBook, 'title' | 'authors' | 'isbns'>): BookQuery | null {
   let title = book.title.normalize('NFC').trim();
   let author = primaryAuthor(book.authors);
   const isbns = [...book.isbns];

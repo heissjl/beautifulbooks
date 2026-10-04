@@ -13,29 +13,20 @@
  * usable hit; for an import that writes covers back into a library it is
  * not, so the reason is read here and not taken from `unsure`.
  *
- * The catalogue is passed in, so the tests run without a network.
+ * The catalogue is passed in, so the tests run without a network. The
+ * rules themselves moved to `lib/walls/calibre.ts` with 5.17a; this file
+ * keeps what only the lab needs: the book number, "skipped", the numbers.
  */
-import { sameAuthor, titleScore } from '../../lib/bookmatch';
 import type { WorkSummary } from '../../lib/model';
-import { normalizeTitle } from '../../lib/normalize';
-import { validTile, type Tile } from '../../lib/walls/model';
-import { matchPhotoBook, tileFromWork } from '../../lib/walls/photo';
+import type { Tile } from '../../lib/walls/model';
+import { isMatch, matchCalibreBook, type CalibreReason } from '../../lib/walls/calibre';
+import type { IsbnEdition } from '../../lib/sources/openlibrary';
 import type { CalibreBook } from '../calibre/library';
-import { cleanBook, type BookQuery } from './clean';
-import type { IsbnEdition } from './lookup';
+import { cleanBook, type BookQuery } from '../../lib/calibre/clean';
 
-/**
- * `isbn`: the ISBN's work, and author or title agree. `isbn-only`: the ISBN
- * names a work that shares neither with the book — Calibre's metadata
- * download can attach a wrong ISBN. `author+part`: the author agrees and the
- * work's title is longer than the book's and merely contains it — measured
- * on Julian's library (2026-10-03), of seven such works two were plainly
- * another book (the box of the trilogy for "MaddAddam", a picture book for
- * "Pippi Langstrumpf"), two were doubtful and three right. The other way round (the book's title is the longer one: a
- * volume number, an unmarked subtitle) was right five times of five and
- * stays a match. The other three are `pickWork`'s.
- */
-export type AssignReason = 'isbn' | 'isbn-only' | 'author+title' | 'author+part' | 'author' | 'title-only';
+/** Since 5.17a the rules live in `lib/walls/calibre.ts`, where the site uses them too. */
+export type AssignReason = CalibreReason;
+export { isMatch };
 
 export type AssignStatus =
   /** Goes into the collection. */
@@ -63,52 +54,11 @@ export interface AssignSources {
   find(query: string): Promise<WorkSummary[]>;
 }
 
-export const isMatch = (reason: AssignReason): boolean => reason === 'isbn' || reason === 'author+title';
-
-/** The work's title contains the book's and says more. */
-function onlyPart(bookTitle: string, workTitle: string): boolean {
-  return titleScore(bookTitle, workTitle) === 1 && normalizeTitle(workTitle).length > normalizeTitle(bookTitle).length;
-}
-
-/** The tile for an ISBN's edition: its own cover with the ISBN as a printing, else the work's usual cover without one (E8). */
-function isbnTile(edition: IsbnEdition, work: WorkSummary, isbn13: string): Tile | undefined {
-  if (edition.covers.length === 0) return tileFromWork(work);
-  try {
-    return validTile({ workId: work.id, coverId: String(edition.covers[0]), title: work.title, author: work.authors[0], printings: [{ isbn13 }] });
-  } catch {
-    return undefined;
-  }
-}
-
-async function byIsbn(query: BookQuery, sources: AssignSources): Promise<Pick<Assignment, 'reason' | 'tile'> | null> {
-  for (const isbn of query.isbns) {
-    const edition = await sources.isbn(isbn);
-    if (!edition) continue;
-    // Title, author and the usual cover come from the search index; a work missing there is found by title below.
-    const work = (await sources.find(`key:/works/${edition.workId}`)).find((w) => w.id === edition.workId);
-    if (!work) continue;
-    const tile = isbnTile(edition, work, isbn);
-    if (!tile) continue;
-    const agrees = sameAuthor(query.author, work.authors[0] ?? '') || titleScore(query.title, work.title) > 0;
-    return { reason: agrees ? 'isbn' : 'isbn-only', tile };
-  }
-  return null;
-}
-
 export async function assignBook(book: CalibreBook, sources: AssignSources): Promise<Assignment> {
   const query = cleanBook(book);
   if (!query) return { bookId: book.id, status: 'skipped' };
-  try {
-    const hit = await byIsbn(query, sources);
-    if (hit?.reason && hit.tile) return { bookId: book.id, status: isMatch(hit.reason) ? 'match' : 'suggestion', reason: hit.reason, query, tile: hit.tile };
-  } catch {
-    return { bookId: book.id, status: 'failed', query };
-  }
-  const found = await matchPhotoBook({ title: query.title, author: query.author, kind: 'spine' }, sources.find);
-  if (found.failed) return { bookId: book.id, status: 'failed', query };
-  if (!found.tile || !found.reason || found.reason === 'first-result') return { bookId: book.id, status: 'none', query };
-  const reason: AssignReason = found.reason === 'author+title' && onlyPart(query.title, found.tile.title) ? 'author+part' : found.reason;
-  return { bookId: book.id, status: isMatch(reason) ? 'match' : 'suggestion', reason, query, tile: found.tile };
+  const m = await matchCalibreBook(query, sources);
+  return { bookId: book.id, status: m.status, ...(m.reason ? { reason: m.reason } : {}), query, ...(m.tile ? { tile: m.tile } : {}) };
 }
 
 /** Every book, a few at a time, each result handed on as it arrives. Resolves in the library's order. */

@@ -17,31 +17,11 @@ import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from '
 import { dirname, join } from 'node:path';
 import type { WorkSummary } from '../../lib/model';
 import { search } from '../../lib/search';
-import { fetchJson, HttpError, isSilence, SourceUnavailableError } from '../../lib/sources/http';
+import { getEditionByIsbn, type IsbnEdition } from '../../lib/sources/openlibrary';
 import { defaultBackupRoot, libraryKey } from '../calibre/safety';
 
 /** Where one library's import keeps its cache, its results and Julian's decisions. */
 export const stateDir = (library: string): string => join(defaultBackupRoot(), 'import', libraryKey(library));
-
-/** The edition an ISBN names: its work and the covers on record for this very printing. */
-export interface IsbnEdition {
-  workId: string;
-  covers: number[];
-}
-
-/** `/isbn/<isbn>.json` as far as the import reads it. */
-export interface OlEditionDoc {
-  works?: Array<{ key?: string }>;
-  covers?: number[];
-}
-
-/** Pure: the edition document to what the import needs, null when it names no work. */
-export function editionFromDoc(doc: OlEditionDoc): IsbnEdition | null {
-  const workId = /^\/works\/(OL\d+W)$/.exec(doc.works?.[0]?.key ?? '')?.[1];
-  if (!workId) return null;
-  // Open Library marks a deleted image with -1.
-  return { workId, covers: (doc.covers ?? []).filter((c) => Number.isInteger(c) && c > 0) };
-}
 
 /** A JSON file of answers. Written whole, through a temporary file, so a stopped run leaves the old one. */
 export class DiskCache {
@@ -76,32 +56,14 @@ export class DiskCache {
 }
 
 export interface CatalogueSources {
-  /** The edition document of an ISBN, null on 404. Throws when the catalogue does not answer. */
-  edition(isbn13: string): Promise<OlEditionDoc | null>;
+  /** The edition of an ISBN, null when Open Library has none. Throws when the catalogue does not answer. */
+  edition(isbn13: string): Promise<IsbnEdition | null>;
   /** The site's search. Throws when the catalogue does not answer. */
   works(query: string): Promise<WorkSummary[]>;
 }
 
-const ISBN_TIMEOUT_MS = 12_000;
-
-async function fetchEdition(isbn13: string): Promise<OlEditionDoc | null> {
-  const url = `https://openlibrary.org/isbn/${isbn13}.json`;
-  let failure: unknown;
-  // Silence is asked once more, as the search does (SEARCH_RETRY).
-  for (let attempt = 1; attempt <= 2; attempt++) {
-    try {
-      return await fetchJson<OlEditionDoc>(url, { timeoutMs: ISBN_TIMEOUT_MS, revalidate: 0 });
-    } catch (err) {
-      if (err instanceof HttpError && err.status === 404) return null;
-      failure = err;
-      if (!isSilence(err)) break;
-    }
-  }
-  throw new SourceUnavailableError('openlibrary', failure);
-}
-
 export const liveSources: CatalogueSources = {
-  edition: fetchEdition,
+  edition: getEditionByIsbn,
   // `exact`: no second request for a spelling correction — a Calibre title is not a typo.
   works: async (query) => (await search(query, { exact: true })).works,
 };
@@ -120,8 +82,7 @@ export class Catalogue {
     const key = `isbn:${isbn13}`;
     if (this.cache.has(key)) return this.cache.get<IsbnEdition | null>(key);
     this.asked++;
-    const doc = await this.sources.edition(isbn13);
-    const edition = doc ? editionFromDoc(doc) : null;
+    const edition = await this.sources.edition(isbn13);
     this.cache.set(key, edition);
     return edition;
   }

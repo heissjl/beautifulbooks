@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import BookSearch from './BookSearch';
 import CoverImage from './CoverImage';
 import IdLinkNotice from './IdLinkNotice';
+import WallCalibre from './WallCalibre';
 import WallIdField from './WallIdField';
 import WallPhoto from './WallPhoto';
 import WallPicker from './WallPicker';
@@ -25,7 +26,8 @@ const WORK = /^OL\d+W$/;
  * own collections, each opening in its editor (Julian, 2026-09-29: „wenn ich
  * eine collection in der create ansicht anklicke lande ich in der
  * anzeigesicht, dort kann ich aber nichts machen“), and three ways to start a
- * new one — a book, six random favourites or another collection, a photo.
+ * new one — a book, six random favourites or another collection, a photo,
+ * a Calibre library (5.17a).
  * Every start ends in the editor of the new collection. A search result opens
  * the book's covers here, between two rules; the first cover picked makes the
  * collection and the page becomes its editor with the same book open.
@@ -115,7 +117,7 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
             <h2 id="new" className={heading}>{t('Start a new one')}</h2>
           </div>
         )}
-        <div className={`mt-6 grid gap-12 ${photoOn ? 'lg:grid-cols-2' : 'max-w-2xl'}`}>
+        <div className="mt-6 grid gap-12 lg:grid-cols-2">
           <div className="min-w-0">
             <h3 className="font-display text-xl text-ink">{t('From a book')}</h3>
             <p className="mt-2 text-sm text-ink-2">{t('Find a book and pick the covers you love from the ones it has had.')}</p>
@@ -133,14 +135,19 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
             <StartFromPicker options={startOptions} />
           </div>
 
-          {/* Without a key the photo cannot be read, so the section is not shown at all (Julian, 2026-09-28). */}
-          {photoOn && (
-            <div className="min-w-0">
-              <h3 className="font-display text-xl text-ink">{t('From a photo')}</h3>
-              <p className="mt-2 text-sm text-ink-2">{t('Photograph a shelf or a pile of books. We read the titles and offer them as covers.')}</p>
-              <WallPhoto photoOn={photoOn} walls={me.walls} onCommit={commit} />
-            </div>
-          )}
+          <div className="min-w-0">
+            {/* Without a key the photo cannot be read, so the section is not shown at all (Julian, 2026-09-28). */}
+            {photoOn && (
+              <div className="mb-12">
+                <h3 className="font-display text-xl text-ink">{t('From a photo')}</h3>
+                <p className="mt-2 text-sm text-ink-2">{t('Photograph a shelf or a pile of books. We read the titles and offer them as covers.')}</p>
+                <WallPhoto photoOn={photoOn} walls={me.walls} onCommit={commit} />
+              </div>
+            )}
+            <h3 className="font-display text-xl text-ink">{t('From your Calibre library')}</h3>
+            <p className="mt-2 text-sm text-ink-2">{t('Choose your Calibre library’s database. We look the books up and offer their covers.')}</p>
+            <WallCalibre walls={me.walls} onCommit={commit} />
+          </div>
         </div>
       </section>
 

@@ -22,6 +22,8 @@ export interface Proposal {
   unsure?: boolean;
   /** Its catalogue search has not answered yet (5.11a): the row is there, the tile is not. */
   pending?: boolean;
+  /** What a "maybe" row says instead of what the photo read — a library import has no photo (5.17a). */
+  why?: string;
 }
 
 /** Where the ticked covers go: an existing collection, or a new one with this title. */
@@ -48,6 +50,7 @@ export default function WallProposal({
   onCommit,
   onOtherCover,
   onSearchFor,
+  scroll = false,
 }: {
   proposals: Proposal[];
   defaultTitle: string;
@@ -59,6 +62,8 @@ export default function WallProposal({
   onOtherCover?: (tile: Tile) => void;
   /** Search for a title that was read but not found. */
   onSearchFor?: (label: string) => void;
+  /** A long list scrolls in its own box, so the button stays near (a Calibre library is hundreds of rows, 5.17a). */
+  scroll?: boolean;
 }) {
   const t = useT();
   const standing = (p: Proposal): Standing | null => (p.tile ? standingOf(p.tile, target) : null);
@@ -116,7 +121,7 @@ export default function WallProposal({
         </button>
       )}
       {/* Two columns on a wide screen (Julian, 2026-10-01: „on desktop there's too much empty space here“); the link stays at the row's end, now half as far away. */}
-      <ul className="mt-3 grid gap-x-8 gap-y-1.5 lg:grid-cols-2">
+      <ul className={`mt-3 grid grid-cols-[minmax(0,1fr)] gap-x-8 gap-y-1.5 lg:grid-cols-2 ${scroll ? 'max-h-[32rem] overflow-y-auto overscroll-contain rounded-card border border-line p-3' : ''}`}>
         {proposals.map((p, i) => {
           const st = standing(p);
           return (
@@ -132,7 +137,7 @@ export default function WallProposal({
                     <span className="min-w-0">
                       <span className={`block truncate text-sm ${st === 'in' ? 'text-ink-2' : 'text-ink'}`}>{p.tile.title}</span>
                       <span className={`block truncate text-xs ${st === 'new' && !p.unsure ? 'text-ink-3' : 'text-accent'}`}>
-                        {st === 'in' ? t('already in this collection') : st === 'work' ? t('in this collection with another cover') : p.unsure ? t('maybe — the photo reads “{read}”', { read: `${p.label}${p.sub ? `, ${p.sub}` : ''}` }) : (p.sub ?? p.tile.author)}
+                        {st === 'in' ? t('already in this collection') : st === 'work' ? t('in this collection with another cover') : p.unsure ? (p.why ?? t('maybe — the photo reads “{read}”', { read: `${p.label}${p.sub ? `, ${p.sub}` : ''}` })) : (p.sub ?? p.tile.author)}
                       </span>
                     </span>
                   </label>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cleanAuthor, cleanBook, primaryAuthor } from '../clean';
+import { cleanAuthor, cleanBook, primaryAuthor } from '../calibre/clean';
 
 const q = (title: string, authors: string[], isbns: string[] = []) => cleanBook({ title, authors, isbns });
 

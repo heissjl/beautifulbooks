@@ -4344,3 +4344,34 @@ Julian: „lass uns die grenze für die dichte hochsetzen, damit wir nicht aus v
 
 Julian: „make a milestone to continue from later, merge the earlier fixes and deploy“. Beim Zusammenführen mit main (die Analyse, 3.1) zeigte deren Preistabelle, dass die Kosten des Regalfotos in allen Einträgen seit dem 2026-09-30 mit angenommenen 3 $ / 15 $ je Million Token gerechnet waren; der Listenpreis von `claude-sonnet-5` ist 2 $ / 10 $. Ein gewöhnliches Foto kostet also rund 1,5 ct, ein dichtes 6–9 ct. Das Tagesbudget und das Auswertungsskript rechnen jetzt mit `lib/insights/prices.ts`, damit Analyse und Stopp nicht verschieden rechnen können; eine Absage am Budget zählt in der Analyse wie die an der Zahlgrenze („capped“, K13); die Token eines dichten Fotos gehen als Summe beider Blicke in K13 ein. Stand und Fortsetzung: [Plan, „Meilenstein 2026-10-04“](plans/PLAN-5.11a-regalfoto-zuverlaessig.md#meilenstein-2026-10-04--stand-und-fortsetzung).
 
+
+## 2026-10-04 · Eine Calibre-Bibliothek auf der Seite (ROADMAP 5.17a)
+
+Julian: „ja, bau 5.17a“. Vorher `origin/main` (26 Commits) hereingeholt; in `docs/history.md` hatten beide Seiten nur angehängt, beide Einträge behalten.
+
+**Die Datei im Browser lesen.** `lib/calibre/sqlite.ts` liest Tabellen aus dem SQLite-Format selbst — Kopf, Tabellen-B-Bäume, Überlaufseiten, Datensätze, UTF-8 und UTF-16 —, statt sql.js (rund 600 KB WebAssembly) für vier Tabellenscans zu laden. An Julians `metadata.db` (1,1 MB, Seitengröße 4096, UTF-8, kein WAL): **445 von 445 Büchern gleich wie `sqlite3`** — Titel, Autoren in Calibres Reihenfolge, ISBNs —, gelesen in 8 ms. Die erste Fassung brach an der echten Datei ab: Calibre 7 hat vier Tabellen `WITHOUT ROWID` (`annotations_fts_*`, der Volltextindex der Anmerkungen); sie werden jetzt übersprungen. Getestet an zwei kleinen Datenbanken aus `lib/__fixtures__/calibre/library.sql` (Seitengröße 512, damit 300 Bücher innere Seiten und ein Titel von 3.005 Zeichen Überlaufseiten brauchen; eine davon UTF-16), dazu eine abgeschnittene Datei und eine Seite, die auf sich selbst zeigt.
+
+**Umgezogen aus dem Lab:** `clean.ts` nach `lib/calibre/clean.ts` (läuft im Browser), die Zuordnung nach `lib/walls/calibre.ts` (Server), der ISBN-Abruf nach `lib/sources/openlibrary.ts` (`getEditionByIsbn`, fragt Schweigen einmal nach, wirft dann `SourceUnavailableError`). `lab/calibre-import` benutzt dieselben Regeln und hat keine eigene Kopie mehr.
+
+**Gegen `npm run dev`** (eigener Server auf 3017 ohne `.env.local`, also Speicher im Prozess), Julians `metadata.db` über einen lokalen Dateiserver und `DataTransfer` ins Dateifeld gegeben, weil das Browserfenster keine Dateiauswahl bedienen kann:
+
+| | |
+|---|---|
+| Bücher in der Datei | 445 |
+| ohne Autor oder Titel ausgelassen | 24 |
+| doppelt (gleicher Titel und Autor) | 7 |
+| gefragt | 414, in 52 Anfragen |
+| Treffer / maybe / nicht gefunden / ohne Antwort | 321 / 69 / 24 / 0 |
+| Dauer, kalt | 4 min 16 s (je Anfrage Median 5,0 s, höchstens 9,3 s) |
+| Dauer, zweiter Lauf (Next-Datencache) | etwa 15 s |
+| angehakt → Sammlung | 321 → 319 Cover (zwei Treffer teilten ein Cover) |
+
+Das deckt sich mit der Lab-Messung (328 Treffer bei 421 Fragen, darin die 7 doppelten). Die Seite stellte dabei nur die 52 Anfragen an `/api/walls/calibre`; die Datei selbst ging nirgendwohin.
+
+**Zwei Dinge, die der Blick zeigte:** die Liste mit 418 Zeilen machte `/create` 12.181 px hoch und schob „Make a collection of 321“ ans Ende — sie scrollt jetzt in einem eigenen Kasten (`WallProposal scroll`), die Seite ist 1.473 px hoch. Und am Telefon lief der Kasten waagrecht über, weil ein Grid in einem scrollenden Kasten auf die Breite seiner längsten Zeile wächst; mit `grid-cols-[minmax(0,1fr)]` kürzen die Zeilen wieder (390 px: kein Überlauf, 82 Zeilen mit Auslassungspunkten). Das gilt auch für die Liste des Fotos.
+
+**Fehlerwege im Browser:** eine Textdatei → „This is not a Calibre library file…“; die ersten 5.000 Byte der echten Datei → „The file could not be read — it may be damaged or cut off…“. Eine SQLite-Datei ohne Calibre-Tabellen deckt ein Test ab.
+
+**Nicht gebaut:** „Verbinden“ mit Calibres Content-Server; ein Weg aus dem Editor (`/c/<id>/edit`, „Add covers“) — die Liste bietet aber schon „Add to <Sammlung>“ neben „A new collection“; der Rückweg der gewählten Cover nach Calibre bleibt lokal (5.16). Nicht deployt.
+
+1.186 Tests, tsc, Lint und `npm run build` grün.

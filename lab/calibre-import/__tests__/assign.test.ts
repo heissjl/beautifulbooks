@@ -8,7 +8,7 @@ import type { CalibreBook } from '../../calibre/library';
 import type { Tile } from '../../../lib/walls/model';
 import { assignAll, assignBook, report, sample, tally, tilesOf, type Assignment, type AssignSources } from '../assign';
 import { included, rowsOf } from '../review';
-import { Catalogue, DiskCache, editionFromDoc, type CatalogueSources, type OlEditionDoc } from '../lookup';
+import { Catalogue, DiskCache, type CatalogueSources } from '../lookup';
 
 const book = (b: Partial<CalibreBook> & { id: number }): CalibreBook => ({ title: 'T', authors: ['A B'], isbns: [], hasCover: true, path: `A/T (${b.id})`, formats: ['EPUB'], ...b });
 const work = (w: Partial<WorkSummary> & { id: string }): WorkSummary => ({ title: 'T', authors: ['A B'], coverUrls: ['https://covers.openlibrary.org/b/id/111-M.jpg'], languages: ['en'], ...w });
@@ -155,24 +155,13 @@ describe('the whole library', () => {
 });
 
 describe('the catalogue and its cache', () => {
-  it('reads an answer as Open Library gave it (recorded 2026-10-03)', () => {
-    const doc = JSON.parse(readFileSync(join(__dirname, '../__fixtures__/isbn-9780553287899.json'), 'utf8')) as OlEditionDoc;
-    expect(editionFromDoc(doc)).toEqual({ workId: 'OL17417W', covers: [369135] });
-  });
-
-  it('reads the work and the covers of an edition, and drops the deleted image', () => {
-    expect(editionFromDoc({ works: [{ key: '/works/OL17365W' }], covers: [-1, 333] })).toEqual({ workId: 'OL17365W', covers: [333] });
-    expect(editionFromDoc({ works: [{ key: '/works/OL17365W' }] })).toEqual({ workId: 'OL17365W', covers: [] });
-    expect(editionFromDoc({ covers: [1] })).toBeNull();
-  });
-
   it('asks each question once, also across runs, and remembers "no such ISBN"', async () => {
     const file = join(mkdtempSync(join(tmpdir(), 'calibre-import-')), 'cache.json');
     let calls = 0;
     const live: CatalogueSources = {
       edition: async (isbn) => {
         calls++;
-        return isbn === '9780553287899' ? { works: [{ key: '/works/OL17365W' }], covers: [333] } : null;
+        return isbn === '9780553287899' ? { workId: 'OL17365W', covers: [333] } : null;
       },
       works: async () => {
         calls++;

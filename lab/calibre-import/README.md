@@ -41,9 +41,8 @@ Für Schritt 3b braucht das Werkzeug Julians eigene Besucher-ID: `BB_VISITOR=<ID
 
 | Datei | |
 |---|---|
-| `clean.ts` | ein Calibre-Buch als Frage an den Katalog: Reihen-Vorsatz, Jahr, Autor im Titel, Dateinamen-Reste, Untertitel — rein, getestet |
 | `lookup.ts` | die zwei Fragen (Ausgabe einer ISBN, Suche der Seite) und der Cache auf der Platte |
-| `assign.ts` | Buch → Werk → Kachel, Treffer oder Vorschlag; die Zahlen; die Stichprobe — rein bis auf den übergebenen Katalog, getestet |
+| `assign.ts` | Buch → Werk → Kachel für das Lab (Buchnummer, „skipped“), die Zahlen, die Stichprobe; die Regeln selbst sind seit 5.17a `lib/walls/calibre.ts`, das Glätten `lib/calibre/clean.ts` — dieselben, die die Seite benutzt |
 | `review.ts` | Julians Entscheidungen über dem Ergebnis — rein, getestet |
 | `upload.ts` | die eine Anfrage an die Seite; woher die Besucher-ID kommt |
 | `measure.ts` | Schritt 1 als Kommando |
@@ -65,6 +64,6 @@ Gemessen an Julians Bibliothek (445 Bücher, 131 mit ISBN):
 
 **Offen, bei Julian:** die Test-Sammlung ansehen; die 69 Vorschläge durchsehen und anhaken; wenn es passt, dasselbe unter der eigenen ID (Schritt 3b); `lab/calibre --write` an der echten Bibliothek (5.16).
 
-**Was dieses Werkzeug nicht ist:** Julian, 2026-10-03: „das soll ja einfach erstmal nur eine sammlung initialisieren aus einer calibre datei, die man hochlädt oder verbindet". Das Ergebnis ist dasselbe — eine Sammlung aus der Bibliothek —, der Weg ein anderer: hier läuft ein Kommando auf Julians Mac, liest den Bibliotheksordner und braucht seine ID in einer Datei. Auf der Seite lädt niemand etwas hoch. Die Fassung für die Seite ist als 5.17a in der Roadmap vorgeschlagen; was sie von hier übernehmen kann, sind `clean.ts` und `assign.ts`.
+**Was dieses Werkzeug nicht ist:** Julian, 2026-10-03: „das soll ja einfach erstmal nur eine sammlung initialisieren aus einer calibre datei, die man hochlädt oder verbindet". Das Ergebnis ist dasselbe — eine Sammlung aus der Bibliothek —, der Weg ein anderer: hier läuft ein Kommando auf Julians Mac, liest den Bibliotheksordner und braucht seine ID in einer Datei. Auf der Seite lädt niemand etwas hoch. Die Fassung für die Seite ist seit 2026-10-04 gebaut (5.17a): auf `/create` „From your Calibre library“, die Datei wird im Browser gelesen; Glätten und Zuordnen sind dafür nach `lib/` umgezogen und gelten für beide.
 
 **Was das Experiment nicht kann:** 55 der 328 Werke haben bei Open Library höchstens vier Ausgaben — dort gibt es auf der Seite wenig zu wählen. Manche davon sind verirrte Einzelwerke neben dem großen („Der Prozess" traf ein Werk mit einer Ausgabe statt Kafkas *Proceß*); die Suche von Hand auf der Prüfseite behebt den Einzelfall, eine Regel dafür gibt es nicht.

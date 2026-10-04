@@ -10,7 +10,7 @@
 import type { Tile } from '../../lib/walls/model';
 import type { CalibreBook } from '../calibre/library';
 import type { Assignment, AssignReason, AssignStatus } from './assign';
-import type { BookQuery } from './clean';
+import type { BookQuery } from '../../lib/calibre/clean';
 
 export interface Decision {
   include?: boolean;
