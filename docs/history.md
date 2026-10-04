@@ -4239,3 +4239,17 @@ Julian nach dem ersten Gebrauch: „sort the images that are big enough to use a
 
 1.049 Tests, tsc und Lint grün.
 
+## 2026-10-03 · „Calibre Covers.app" und der PocketBook-Knopf (ROADMAP 5.16b)
+
+Julian: „maybe include the pocketbook app from the other project in it? and wrap it as a local macos app?" Drei Rückfragen, drei Antworten: eigenes Fenster; ein Knopf, der sein Skript startet; „lokales main aber eigener bereich, damit ich es später einzeln weiterführen kann?".
+
+**Das andere Projekt** (`05_Projects/pocketbook`, github.com/heissjl/pocketbook-sync): ein Python-Skript, das Markierungen vom PocketBook-Reader als Markdown in die Notizen schreibt, mit einer `Pocketbook Sync.app`, die ein Terminal öffnet. Es fragt per `input()` nach fehlenden Pfaden — ohne Terminal ginge das schief; deshalb bietet die App den Sync nur an, wenn die Konfiguration vollständig und die Datenbank des Readers (`system/config/books.db`) erreichbar ist. Das Skript wird nicht kopiert und nicht geändert.
+
+**Die macOS-App:** `swiftc` 5.8.1 aus den Kommandozeilenwerkzeugen reicht; eine Swift-Datei, AppKit und WebKit, kein Xcode-Projekt. Drei Dinge, die sie anders macht als ein Starter-Skript: (1) der Server bekommt einen **freien Port** (`--port auto`), damit ein `npm run calibre` im Terminal nicht im Weg ist; (2) der Server **endet mit der App** (`--exit-with-parent`: er beobachtet die Leitung, die die App hält) — `terminate()` allein hätte bei `npx → tsx → node` den eigentlichen Prozess stehen lassen; (3) eine aus dem Finder gestartete App sieht den `PATH` der Shell nicht (node liegt unter `~/.nvm`), deshalb schreibt `build.sh` den Ort von node und den Projektordner in `Info.plist`. `NSAllowsLocalNetworking` erlaubt das unverschlüsselte `http://127.0.0.1`; ein Bearbeiten-Menü ist nötig, sonst tun ⌘C und ⌘V in den Suchfeldern nichts.
+
+**Geprüft:** gebaut (Ad-hoc-Signatur), mit `CALIBRE_APP_SELFCHECK=quit` gegen die Probe-Kopie gestartet: das Fenster meldete „445 books; writing is on; 445 books · 423 with a cover · 76 small" und beendete sich; danach lief kein Server mehr. `--exit-with-parent` einzeln: Leitung geschlossen, Server in unter 10 s beendet. Sync: mit Julians Konfiguration Skript gefunden, Reader `/Volumes/PB626` nicht angeschlossen, Start mit 409 abgelehnt; mit Stellvertreter-Skript, -Reader und -Notizordner (`POCKETBOOK_SYNC`, `POCKETBOOK_CONFIG`) durchgelaufen, Ausgabe samt Fehlerkanal angezeigt. **Nicht geprüft: der echte Sync mit angeschlossenem Reader** — er schreibt in Julians Notizen und braucht das Gerät.
+
+**Eigener Bereich:** `lab/calibre/site.ts` führt alles auf, was das Werkzeug aus `lib/` und `scripts/` nimmt (Suche, Werke und Ausgaben, Titel- und Autorenvergleich, ISBN- und Sprachcodes, Bilddekoder, die Form einer Sammlung, die Tür des lokalen Servers); alle anderen Dateien importieren nur von dort, ein Test prüft es. **Parallel dazu** hat die Sitzung für 5.17 (`claude/calibre-sammlung-5-17-10363d`) `lab/calibre/match.ts`, `serve.ts`, `index.html` und die README geändert und `map.ts` angelegt, auf dem Stand vor diesem Umbau — wer beide Zweige zusammenführt, löst dort Konflikte und führt die Importe von `map.ts` über `site.ts`, sonst schlägt der Test an.
+
+1.053 Tests, tsc und Lint grün.
+

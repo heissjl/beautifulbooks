@@ -76,11 +76,13 @@
   .pair .frame { aspect-ratio: auto; height: min(52vh, 420px); min-width: 120px; border: none; background: transparent; }
   .pair figcaption { font-size: 13px; color: var(--soft); margin-top: 6px; }
   .pair .arrow { align-self: center; font-size: 22px; color: var(--soft); }
+  #compare pre { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 10px; font: 12px/1.5 ui-monospace, Menlo, monospace; white-space: pre-wrap; max-height: 44vh; overflow-y: auto; margin: 10px 0 0; }
   [hidden] { display: none !important; }
 </style>
 </head>
 <body>
 <header class="top">
+  <button id="pb" style="float:right">PocketBook highlights</button>
   <h1>Calibre covers</h1><span class="stats" id="stats">Loading…</span><span class="pill" id="mode"></span>
   <div class="tools">
     <input type="search" id="q" placeholder="Filter by title or author" aria-label="Filter by title or author">
@@ -400,6 +402,7 @@ async function pick(cover) {
 
 function closeCompare() {
   picked = null;
+  pocket = null;
   $('compare').hidden = true;
 }
 
@@ -453,13 +456,58 @@ async function undo() {
   else { open.undoError = body.error ?? 'The undo failed.'; if (body.halted) { S = (await api('/api/state')).body; renderTop(); } renderHead(); }
 }
 
+/* ---------- PocketBook highlights: Julian's own sync script, started from here ---------- */
+
+let pocket = null;
+
+async function openPocket() {
+  pocket = { status: null, run: null, busy: false };
+  $('compare').hidden = false;
+  renderPocket();
+  pocket.status = (await api('/api/pocketbook')).body;
+  if (pocket) renderPocket();
+}
+
+function renderPocket() {
+  const p = pocket;
+  const s = p.status;
+  const kids = [el('h2', { style: 'font-size:17px;margin:0 0 6px' }, 'PocketBook highlights')];
+  if (!s) kids.push(el('p', { class: 'meta' }, 'Looking for the reader…'));
+  else if (s.error) kids.push(el('p', { class: 'note bad' }, s.error));
+  else {
+    kids.push(el('p', { class: 'meta' }, 'Copies the highlights from the reader into your notes, one Markdown file per book. This runs your own sync script as it is.'));
+    if (s.reader) kids.push(el('p', { class: `note ${s.connected ? 'ok' : 'warn'}` }, s.connected ? `Reader connected: ${s.reader}` : `Reader not connected: ${s.reader}`));
+    if (s.notes) kids.push(el('p', { class: 'meta' }, `Notes go to: ${s.notes}`));
+    for (const problem of s.problems.filter((x) => !x.startsWith('The reader is not connected'))) kids.push(el('p', { class: 'note bad' }, problem));
+    if (!s.connected && s.reader) kids.push(el('p', { class: 'meta' }, 'Plug the reader in by USB, wait until it shows in Finder, then check again.'));
+  }
+  if (p.run) kids.push(el('p', { class: `note ${p.run.ok ? 'ok' : 'bad'}` }, p.run.ok ? 'The sync finished.' : 'The sync did not finish cleanly — see what it said:'), el('pre', {}, p.run.output || p.run.error || '(no output)'));
+  kids.push(el('div', { class: 'row' },
+    el('button', { class: 'primary', disabled: !s || !!s.error || s.problems.length > 0 || p.busy, onclick: syncPocket }, p.busy ? 'Syncing…' : 'Sync highlights'),
+    el('button', { disabled: p.busy, onclick: openPocket }, 'Check again'),
+    el('button', { onclick: closeCompare }, 'Close')));
+  $('compare').replaceChildren(el('div', { class: 'box' }, kids));
+}
+
+async function syncPocket() {
+  const p = pocket;
+  p.busy = true;
+  p.run = null;
+  renderPocket();
+  const { body } = await api('/api/pocketbook', {});
+  p.busy = false;
+  p.run = body;
+  if (pocket === p) renderPocket();
+}
+
 /* ---------- start ---------- */
 
 $('q').addEventListener('input', (e) => { view.q = e.target.value; renderGrid(); });
 $('sort').addEventListener('change', (e) => { view.sort = e.target.value; renderGrid(); });
+$('pb').addEventListener('click', openPocket);
 $('shade').addEventListener('click', closeBook);
 $('compare').addEventListener('click', (e) => { if (e.target === $('compare')) closeCompare(); });
-document.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (picked) closeCompare(); else if (open) closeBook(); });
+document.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (picked || pocket) closeCompare(); else if (open) closeBook(); });
 
 // Coming back to the window: a cover changed elsewhere — in Calibre, by an undo in the terminal — shows at once.
 async function refresh() {

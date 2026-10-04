@@ -10,13 +10,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
-import { pickWork, type WorkReason } from '../../lib/bookmatch';
-import { coverRefFromUrl } from '../../lib/coverurl';
-import type { WorkSummary } from '../../lib/model';
-import { search } from '../../lib/search';
-import { userAgent } from '../../lib/seo';
-import { getWork } from '../../lib/sources/openlibrary';
-import { isWorkId } from '../../lib/work';
+import { coverRefFromUrl, getWork, isWorkId, pickWork, search, userAgent, type WorkReason, type WorkSummary } from './site';
 import type { CalibreBook } from './library';
 
 /* ---------- pure ---------- */

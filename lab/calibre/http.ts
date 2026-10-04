@@ -4,7 +4,7 @@
  * 127.0.0.1 only, a random token per run, writes only as JSON from the own page.
  */
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { hostAllowed, originAllowed, tokenMatches } from '../../scripts/cockpit/guard';
+import { hostAllowed, originAllowed, tokenMatches } from './site';
 
 export function send(res: ServerResponse, status: number, body: unknown, type = 'application/json'): void {
   const payload = Buffer.isBuffer(body) ? body : type === 'application/json' ? JSON.stringify(body) : String(body);

@@ -1,6 +1,6 @@
 # lab/calibre — Cover von der Seite in die eigene Calibre-Bibliothek
 
-Roadmap 5.16 und 5.16a. Julian, 2026-10-03: „gibt es eine möglichkeit dass ich die cover-seiten meiner bücher in meiner calibre bibliothek anpasse nach denen, die ich auf der website oder in einer collection auf der website auswähle? das ganze muss nicht für alle user funktionieren, sondern kann für mich lokal umgesetzt werden" — und danach: „mache sicherheitsvorkehrungen, dass es mir nicht meine bibliothek zerschießt".
+Roadmap 5.16, 5.16a und 5.16b. Julian, 2026-10-03: „gibt es eine möglichkeit dass ich die cover-seiten meiner bücher in meiner calibre bibliothek anpasse nach denen, die ich auf der website oder in einer collection auf der website auswähle? das ganze muss nicht für alle user funktionieren, sondern kann für mich lokal umgesetzt werden" — und danach: „mache sicherheitsvorkehrungen, dass es mir nicht meine bibliothek zerschießt".
 
 Nur lokal, nur für Julian. Nichts davon ist auf der Website, und die Website ändert sich dafür nicht.
 
@@ -24,6 +24,20 @@ Das Werkzeug druckt eine Adresse mit Token (Port 4329). Die Seite zeigt **jedes 
 Ein Klick auf ein Buch öffnet es: die App sucht das Werk bei Open Library — über die ISBN, wo es eine gibt, sonst über Titel und Autor mit der Suche der Seite (`lib/search.ts`, `pickWork`) — und legt darunter **die Cover des Werks** aus, mit Jahr und Sprache, die Sprache des Buchs vorgewählt, die Cover der eigenen Ausgabe („your edition", aus der ISBN) vorn. Stimmt das Werk nicht, gibt es die anderen Treffer und ein Suchfeld; die Wahl merkt sich die App je Bibliothek (`works.json` neben den Backups). **Große Cover stehen vorn** (Julian, 2026-10-03: „sort the images that are big enough to use as covers the front"): die App misst jedes Cover des geöffneten Werks — Open Library sagt die Größe eines Scans erst, wenn man ihn holt —, zeigt das Maß unter jeder Kachel und sortiert die nach vorn, die mindestens so viele Pixel haben wie das Cover in Calibre (90-%-Schwelle wie beim Schreiben); die kleineren stehen verblasst dahinter, „Large enough only" blendet sie aus. Gemessene Größen bleiben in `cover-sizes.json` neben den Backups. **Das Raster zeigt immer das Cover, das das Buch jetzt hat** („in the general preview show always the cover that is currently used"): die Adresse jedes Bilds trägt die Änderungszeit der Datei, und beim Zurückkommen ins Fenster liest die App die Bibliothek neu — auch nach einer Änderung in Calibre selbst oder einem `undo.ts` im Terminal. Ein Klick auf ein Cover holt das Bild in voller Größe und stellt es neben das in Calibre; „Use this cover" schreibt es — durch dieselbe `safety.ts` mit allen Sicherungen unten —, „Put the previous cover back" nimmt es zurück.
 
 **„Die Website benutzen" heißt hier: ihr Code und ihr Katalog, lokal ausgeführt.** Die laufende Seite wird nicht gefragt — ihre Rate-Limits und ihr Google-Kontingent gehören den Besuchern —, und Google Books wird nie gefragt (Lab-Regel 6). Was die App zeigt, sind deshalb die Open-Library-Cover des Werks, ungefaltet; je Werk führt ein Link auf dessen Seite bei buyitscovers.com.
+
+## Als macOS-App, mit dem PocketBook-Sync (5.16b)
+
+Julian, 2026-10-03: „maybe include the pocketbook app from the other project in it? and wrap it as a local macos app?" — entschieden als eigenes Fenster, als Knopf, der sein Skript startet, und als eigener Bereich im lokalen `main`, „damit ich es später einzeln weiterführen kann".
+
+```bash
+lab/calibre/macos/build.sh    # baut „Calibre Covers.app" nach ~/Applications
+```
+
+**Die App** ist ein Fenster um `app.ts`: `macos/CalibreCovers.swift` (eine Datei, AppKit und WebKit) startet den lokalen Server im Schreibmodus auf einem freien Port, wartet auf die Adresse und zeigt sie. Der Server endet mit der App — er hängt an einer Leitung, die die App hält, also auch nach Absturz oder erzwungenem Beenden. Links nach außen („Open on buyitscovers.com") öffnet der Browser. Der Projektordner und der Ort von `node` werden beim Bauen in die App geschrieben: **aus dem Ordner bauen, den die App benutzen soll** (der Hauptordner, kein Worktree), und nach einem Umzug oder einem neuen node noch einmal. Unsigniert bis auf eine Ad-hoc-Signatur; gedacht für diesen Mac. `build.sh` braucht die Xcode-Kommandozeilenwerkzeuge (`swiftc`).
+
+**„PocketBook highlights"** (Knopf oben rechts) startet Julians eigenes Sync-Skript aus dem Nachbarprojekt (`../pocketbook/sync_highlights.py`, github.com/heissjl/pocketbook-sync), unverändert und ohne Argumente, und zeigt, was es ausgibt. Das Skript bleibt in seinem Repository. Angeboten wird der Sync nur, wenn seine Konfiguration (`~/.pocketbook_sync_config.json`) vollständig ist und der Reader angeschlossen — ohne Terminal könnte das Skript seine Rückfragen nicht stellen. `POCKETBOOK_SYNC` zeigt auf ein Skript an anderem Ort.
+
+**Ein eigener Bereich:** alles liegt in `lab/calibre/`, und [site.ts](site.ts) ist die einzige Tür zum Rest des Repositorys — keine andere Datei importiert aus `lib/` oder `scripts/` (ein Test hält das). Herauslösen heißt später: `git subtree split -P lab/calibre` für die Geschichte des Ordners, und `site.ts` ersetzen — durch Kopien der dort genannten Funktionen oder durch die Seite als Abhängigkeit. Von außen gehören nur die Zeile `calibre` in `package.json` und die Einträge in Roadmap und Doku dazu.
 
 ## Aus einer Sammlung (5.16)
 
@@ -73,6 +87,9 @@ Jede steht im Code, nicht nur hier ([safety.ts](safety.ts)):
 | `app.ts`, `app.html` | **die App** (Port 4329): Bibliothek als Cover-Wand, Werk finden, Cover wählen, schreiben |
 | `find.ts` | Buch → Werk: Titel glätten, ISBN-Abruf, Suche, Vorschlag; die gemerkten Zuordnungen (`WorkMap`) |
 | `covers.ts` | Ausgaben eines Werks → wählbare Cover mit Sprache, Jahr, Verlag — rein, getestet |
+| `site.ts` | **die einzige Tür** zum Code der Website: alles, was das Werkzeug aus `lib/` und `scripts/` nimmt |
+| `pocketbook.ts` | den PocketBook-Sync finden, prüfen, ob er laufen kann, und ihn starten |
+| `macos/` | die macOS-App: `CalibreCovers.swift`, `icon.ts`, `build.sh` |
 | `download.ts`, `http.ts` | Bild holen und prüfen; Antworten und die Tür (127.0.0.1, Token) — von beiden Servern benutzt |
 | `serve.ts`, `index.html` | der Sammlungs-Modus (Port 4327) und seine Seite |
 | `selftest.ts` | der ganze Schreibweg auf einer Wegwerf-Bibliothek, 21 Prüfungen |
@@ -92,5 +109,7 @@ Gemessen an Julians Bibliothek (445 Bücher, 423 mit Cover, 131 mit ISBN) und de
 - **Schreibweg:** 9 Schreibvorgänge und 9 Rücknahmen auf der Probe-Kopie (Seite, Sammelknopf, `undo.ts --all`); danach waren alle 423 Cover bytegleich mit dem Original. Ein laufendes Calibre-Programm hat das Schreiben blockiert, wie es soll.
 
 **Die App (5.16a), gebaut am selben Abend:** gegen die echte Bibliothek nur schauend geprüft, schreibend auf einer Probe-Kopie. Die Bibliothek in Zahlen: 423 Cover, **76 unter 400 px Breite**, 22 Bücher ohne Cover; Sprachen laut Calibre 277 englisch, 67 deutsch, 26 spanisch, 3 niederländisch, 72 ohne Angabe. Ein Buch öffnen dauert 1,4–5,6 s für das Werk und 2,5–3,3 s für die erste Seite Cover. Fünf Stichproben: zwei über die ISBN richtig (samt „your edition"-Covern), zwei deutsche Titel über Titel + Autor richtig (*Jenny*, *Ochsenkrieg*), einer nicht gefunden (*Francisco Pizarro, der Eroberer von Peru*). Für *Jenny* (600 × 800) hatte Open Library ein **größeres** Bild (754 × 1200) — die Grenze „meist kleiner" gilt für die SF-Masterworks-Drucke, nicht überall. Durchgeklickt auf der Kopie: filtern, öffnen, wählen, schreiben, zurücknehmen; danach bytegleich. **Mit der Größensortierung:** für *Rendezvous with Rama* (in Calibre 948 × 1558) waren 8 von 16 englischen Covern groß genug, das größte 2813 × 4536 — Open Library hat für viel gescannte Bücher sehr große Originale; alle 33 Cover des Werks waren in 3 s vermessen. Calibre verkleinert ein so großes Bild beim Setzen auf sein Höchstmaß (hier 1364 × 2200), was die Kontrolle nach dem Schreiben als dasselbe Bild erkennt. 34 Tests.
+
+**macOS-App und PocketBook-Knopf (5.16b):** die App gebaut und gegen die Probe-Kopie gestartet — das Fenster lud die Seite („445 books; writing is on"), nach dem Beenden lief kein Server mehr. Der Sync-Knopf mit Julians echter Konfiguration: Skript gefunden, Reader nicht angeschlossen, Sync abgelehnt (409); mit einem Stellvertreter-Skript und -Reader lief er durch und zeigte die Ausgabe. **Der echte Sync mit angeschlossenem Reader ist nicht gelaufen.** 38 Tests.
 
 **Offen:** eine eigene Sammlung statt einer kuratierten (die Kacheln tragen dort die ISBNs ihrer Drucke); übersetzte Titel finden kein Buch („Per Anhalter durch die Galaxis") — das löst die Gegenrichtung, [5.17](../../docs/plans/PLAN-5.17-calibre-zur-sammlung.md), die sich merkt, welches Buch welches Werk ist.

@@ -22,7 +22,7 @@
 import { createServer } from 'node:http';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { makeToken } from '../../scripts/cockpit/guard';
+import { makeToken } from './site';
 import { CoverDownloads } from './download';
 import { jsonBody, refused, send } from './http';
 import { imageFacts, isSmaller, type ImageFacts } from './image';

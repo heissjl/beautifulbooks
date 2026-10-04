@@ -1,17 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 import { PNG } from 'pngjs';
-import type { CollectionRecord } from '../../../lib/collections';
-import type { PublicWall } from '../../../lib/walls/model';
-import type { SourceEdition, WorkSummary } from '../../../lib/model';
-import { mkdtempSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { type CollectionRecord, type PublicWall, type SourceEdition, type WorkSummary } from '../site';
 import { pickCovers } from '../covers';
 import { CoverSizes } from '../download';
 import { cleanBookTitle, firstAuthor, hitFromSummary, proposal, WorkMap } from '../find';
 import { checkCover, imageFacts, imageSizeFast, isSmaller } from '../image';
 import { bookDir, booksFromRows, type BookRow, type CalibreBook } from '../library';
 import { matchPick } from '../match';
+import { pocketbookStatus } from '../pocketbook';
 import { changedFiles, coverAsGiven, libraryKey, parseJournal, runningCalibre, undoStacks, unexpectedChange, type JournalEntry } from '../safety';
 import { imageUrls, parseSourceArg, picksFromCurated, picksFromWall, type CoverPick } from '../source';
 
@@ -315,5 +314,40 @@ describe('the sizes of the catalogue’s covers', () => {
     // Known sizes are answered without a request (there is no network in a test).
     expect(await again.get('ol:2')).toEqual({ width: 128, height: 195 });
     expect(await again.get('not a cover id')).toBeNull();
+  });
+});
+
+describe('the tool as an area of its own', () => {
+  it('reaches the rest of the repository through site.ts and nowhere else', () => {
+    const dir = join(__dirname, '..');
+    const files = [...readdirSync(dir), ...readdirSync(__dirname).map((f) => `__tests__/${f}`)].filter((f) => f.endsWith('.ts') && f !== 'site.ts');
+    const outside = files.filter((f) => /from '(\.\.\/)+(lib|scripts|app|components|data)\//.test(readFileSync(join(dir, f), 'utf8')));
+    expect(outside).toEqual([]);
+  });
+});
+
+describe('the PocketBook sync, offered only when it can run', () => {
+  const config = { pocketbook_path: '/Volumes/PB626', obsidian_vault_path: '/notes' };
+  const there = (...paths: string[]) => (p: string) => paths.includes(p);
+
+  it('is ready when the script, the reader’s database and the notes folder are there', () => {
+    const s = pocketbookStatus('/p/sync_highlights.py', config, there('/Volumes/PB626/system/config/books.db', '/notes'));
+    expect(s).toEqual({ script: '/p/sync_highlights.py', reader: '/Volumes/PB626', connected: true, notes: '/notes', problems: [] });
+  });
+
+  it('says the reader is not connected — a mounted volume without its database is not enough', () => {
+    const s = pocketbookStatus('/p/sync_highlights.py', config, there('/Volumes/PB626', '/notes'));
+    expect(s.connected).toBe(false);
+    expect(s.problems).toHaveLength(1);
+    expect(s.problems[0]).toMatch(/not connected/);
+  });
+
+  it('names a missing script, a missing setup and a missing notes folder, each as itself', () => {
+    expect(pocketbookStatus(undefined, config, () => true).problems[0]).toMatch(/script was not found/);
+    expect(pocketbookStatus('/p/s.py', null, () => true).problems[0]).toMatch(/not set up/);
+    expect(pocketbookStatus('/p/s.py', { pocketbook_path: '/r' }, () => true).problems[0]).toMatch(/no notes folder/);
+    expect(pocketbookStatus('/p/s.py', config, there('/Volumes/PB626/system/config/books.db')).problems[0]).toMatch(/notes folder is not there/);
+    // The newer key of the sync's setup wins over the older one.
+    expect(pocketbookStatus('/p/s.py', { ...config, notes_vault_path: '/vault' }, () => true).notes).toBe('/vault');
   });
 });

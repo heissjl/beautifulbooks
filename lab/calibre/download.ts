@@ -7,7 +7,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
-import { userAgent } from '../../lib/seo';
+import { userAgent } from './site';
 import { checkCover, imageSizeFast, type CoverCheck } from './image';
 import { imageUrls } from './source';
 

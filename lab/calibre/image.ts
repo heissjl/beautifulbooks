@@ -1,3 +1,4 @@
+import { decode } from './site';
 /**
  * Is this a picture Calibre may be given as a cover? (lab/calibre, ROADMAP 5.16)
  *
@@ -5,7 +6,6 @@
  * check decodes the whole image, so a truncated JPEG is caught before it
  * replaces a good cover. Pure.
  */
-import { decode } from '../../lib/imagehash';
 
 export interface ImageFacts {
   format: 'jpeg' | 'png';

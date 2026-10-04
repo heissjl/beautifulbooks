@@ -1,3 +1,4 @@
+import { type SourceEdition } from './site';
 /**
  * The covers of one work as the app's picker shows them (lab/calibre, ROADMAP 5.16a).
  *
@@ -5,7 +6,6 @@
  * languages and years of the printings that carried it. Unlike the picker of
  * lab/walls, e-book printings stay in — a Calibre library *is* e-books. Pure.
  */
-import type { SourceEdition } from '../../lib/model';
 
 export interface PickCover {
   /** `ol:<number>` */

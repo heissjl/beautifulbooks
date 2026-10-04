@@ -11,11 +11,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { CollectionRecord } from '../../lib/collections';
-import { coverUrlFor } from '../../lib/coverurl';
-import { cleanIsbn, isbn10to13 } from '../../lib/normalize';
-import { userAgent } from '../../lib/seo';
-import { isWallId, tileCoverId, type PublicWall } from '../../lib/walls/model';
+import { cleanIsbn, type CollectionRecord, coverUrlFor, isbn10to13, isWallId, type PublicWall, tileCoverId, userAgent } from './site';
 
 export interface CoverPick {
   workId: string;

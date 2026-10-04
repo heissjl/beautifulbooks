@@ -16,25 +16,26 @@
  * reads them. The live site is not called — its rate limits and its Google
  * quota belong to its visitors — and Google Books is never asked (lab rule 6).
  *
- * `--library <folder>` points at another library (a rehearsal copy). Local
+ * `--library <folder>` points at another library (a rehearsal copy).
+ * `--port auto` takes any free port and `--exit-with-parent` ends the server
+ * when its standard input closes — both for the macOS app (`macos/`), which
+ * starts this file and must not leave a server behind when it quits. Local
  * only: 127.0.0.1, a token per run, and every write goes through `safety.ts`
  * with all its guards. A request names a book number and a cover id, both
  * checked; never a path, an address or a command.
  */
 import { createServer } from 'node:http';
+import type { AddressInfo } from 'node:net';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { makeToken } from '../../scripts/cockpit/guard';
-import { getEditionsPage, getWork } from '../../lib/sources/openlibrary';
-import { parseEditions } from '../../lib/sources/openlibrary-parse';
-import { isWorkId } from '../../lib/work';
-import type { Work } from '../../lib/model';
+import { getEditionsPage, getWork, isWorkId, makeToken, parseEditions, type Work } from './site';
 import { pickCovers } from './covers';
 import { CoverDownloads, CoverSizes } from './download';
 import { findWorks, WorkMap } from './find';
 import { jsonBody, refused, send } from './http';
 import { imageFacts, imageSizeFast, isSmaller, type ImageFacts } from './image';
 import { coverFile, findLibrary, readLibrary, type CalibreBook } from './library';
+import { findSyncScript, pocketbookStatus, readSyncConfig, runSync } from './pocketbook';
 import { CoverWriter, defaultBackupRoot, findCalibredb, undoStacks } from './safety';
 
 const args = process.argv.slice(2);
@@ -43,7 +44,9 @@ const flag = (name: string): string | undefined => {
   return at >= 0 ? args[at + 1] : undefined;
 };
 const WRITE = args.includes('--write');
-const PORT = Number(flag('port') ?? process.env.PORT ?? 4329);
+// `auto`: the system picks a free port; the real number is known once the server listens.
+let PORT = flag('port') === 'auto' ? 0 : Number(flag('port') ?? process.env.PORT ?? 4329);
+const ROOT = join(__dirname, '../..');
 const SITE = 'https://buyitscovers.com';
 const TOKEN = makeToken();
 const COVER_ID = /^(ol:\d{1,12}|gb:[A-Za-z0-9_-]{1,40})$/;
@@ -143,6 +146,8 @@ function coverPage(workId: string, offset: number) {
   return forget(pageCache, key, p);
 }
 
+let syncing = false;
+
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://127.0.0.1:${PORT}`);
   const path = url.pathname;
@@ -224,6 +229,22 @@ const server = createServer(async (req, res) => {
       if (result.ok) books = result.books;
       return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, state: state() } : result);
     }
+    /* The PocketBook highlights sync: Julian's own script, started as it is (pocketbook.ts). */
+    if (path === '/api/pocketbook') {
+      const script = findSyncScript(ROOT);
+      const status = pocketbookStatus(script, readSyncConfig(), existsSync);
+      if (req.method === 'GET') return send(res, 200, { ...status, running: syncing });
+      if (req.method === 'POST') {
+        if (status.problems.length || !script) return send(res, 409, { error: status.problems.join(' ') });
+        if (syncing) return send(res, 409, { error: 'A sync is already running.' });
+        syncing = true;
+        try {
+          return send(res, 200, await runSync(script));
+        } finally {
+          syncing = false;
+        }
+      }
+    }
     return send(res, 404, { error: 'Not found.' });
   } catch (err) {
     if (err instanceof SyntaxError) return send(res, 400, { error: err.message });
@@ -238,9 +259,17 @@ server
     process.exit(1);
   })
   .listen(PORT, '127.0.0.1', () => {
+    PORT = (server.address() as AddressInfo).port;
     console.log(`calibre: ${books.length} books, ${books.filter((b) => b.hasCover).length} with a cover`);
     console.log(`library: ${library}`);
     console.log(WRITE ? `mode:    WRITE — backups and journal in ${writer.root}` : 'mode:    look only (add --write to change the library)');
     for (const p of WRITE ? writer.problems() : []) console.log(`         ! ${p}`);
     console.log(`open:    http://127.0.0.1:${PORT}/?t=${TOKEN}`);
   });
+
+// Started by the macOS app: when the app goes — quit, crash, force quit — its end of the pipe closes and the server goes with it.
+if (args.includes('--exit-with-parent')) {
+  process.stdin.resume();
+  process.stdin.on('end', () => process.exit(0));
+  process.stdin.on('close', () => process.exit(0));
+}
