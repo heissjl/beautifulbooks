@@ -10,10 +10,9 @@
  * proposed; which work it really is stays Julian's click, and the click is
  * remembered.
  */
-import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
-import { dirname } from 'node:path';
 import { coverRefFromUrl, isWorkId, pickWork, userAgent, type WorkReason, type WorkSummary } from './site';
 import { CatalogueError, type Catalogue } from './catalogue';
+import { FileMap } from './filemap';
 import type { CalibreBook } from './library';
 
 /* ---------- pure ---------- */
@@ -102,28 +101,7 @@ export function proposal(works: readonly WorkSummary[], book: { title: string; a
 /* ---------- the remembered choices ---------- */
 
 /** Book number -> work id, per library, beside its backups: what Julian clicked once is not asked again. */
-export class WorkMap {
-  private map: Record<string, string>;
-
-  constructor(private readonly file: string) {
-    this.map = existsSync(file) ? (JSON.parse(readFileSync(file, 'utf8')) as Record<string, string>) : {};
-  }
-
-  get(bookId: number): string | undefined {
-    return this.map[String(bookId)];
-  }
-
-  all(): Record<string, string> {
-    return { ...this.map };
-  }
-
-  set(bookId: number, workId: string): void {
-    this.map[String(bookId)] = workId;
-    mkdirSync(dirname(this.file), { recursive: true });
-    writeFileSync(`${this.file}.tmp`, JSON.stringify(this.map, null, 1));
-    renameSync(`${this.file}.tmp`, this.file);
-  }
-}
+export class WorkMap extends FileMap {}
 
 /* ---------- Open Library ---------- */
 

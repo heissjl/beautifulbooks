@@ -18,14 +18,26 @@
  *
  * Open Library and Google are asked for image files only, one per cover and
  * at most two at a time; no Google Books API request is made (lab rule 6).
+ *
+ * „Look for a larger scan" (`larger.ts`) is the one thing that asks the
+ * catalogue: the covers of a row's work, through the website and kept on this
+ * Mac (`catalogue.ts`, `kept.ts`), to find the largest scan of the design the
+ * collection chose. A larger scan found stands in for the collection's from
+ * then on — remembered by cover id beside the backups, in this run and later
+ * ones — until Julian takes the row back to the collection's own.
  */
 import { createServer } from 'node:http';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { makeToken } from './site';
-import { CoverDownloads } from './download';
+import { CatalogueError, directCatalogue, siteCatalogue, withFallback, type Catalogue } from './catalogue';
+import { CoverDownloads, CoverHashes, CoverSizes } from './download';
+import { FileMap } from './filemap';
+import { refusedConnection } from './find';
 import { jsonBody, refused, send } from './http';
 import { imageFacts, isSmaller, type ImageFacts } from './image';
+import { AnswerStore, keptCatalogue, type Served } from './kept';
+import { LargerError, largerScan, type LargerScan } from './larger';
 import { coverFile, findLibrary, readLibrary, type CalibreBook } from './library';
 import { matchPicks } from './match';
 import { CoverWriter, defaultBackupRoot, findCalibredb, undoStacks } from './safety';
@@ -54,9 +66,25 @@ async function main(): Promise<void> {
   let books = readLibrary(library);
   const source: Source = await loadSource(sourceArg, ROOT, BASE);
 
+  /*
+   * The scan a row uses: the collection's, or the larger one of the same
+   * design that a look found. Cover id against cover id — true of the two
+   * images whatever the library or the collection, so one file for all.
+   */
+  const larger = new FileMap(join(defaultBackupRoot(), 'larger-scans.json'));
+  const coverOf = (index: number): string => larger.get(source.picks[index].coverId) ?? source.picks[index].coverId;
+  /** What this run's looks found, per row. */
+  const looked = new Map<number, LargerScan>();
+  const hashes = new CoverHashes(join(defaultBackupRoot(), 'cover-hashes.json'), BASE);
+  const sizes = new CoverSizes(join(defaultBackupRoot(), 'cover-sizes.json'), BASE);
+  const answers = new AnswerStore(join(defaultBackupRoot(), 'catalogue'));
+  // As in the app: the website first, Open Library directly when it fails — unless Open Library is refusing this Mac.
+  let pausedUntil = 0;
+  const asked: Catalogue = withFallback(siteCatalogue(BASE), directCatalogue(), () => Date.now() >= pausedUntil);
+
   /* The new images: fetched once, checked, kept in memory for the run. */
   const downloads = new CoverDownloads(BASE);
-  const newImage = (index: number) => downloads.get(source.picks[index].coverId);
+  const newImage = (index: number) => downloads.get(coverOf(index));
 
   const oldFacts = (book: CalibreBook): ImageFacts | { missing: string } => {
     const file = coverFile(library, book);
@@ -73,7 +101,8 @@ async function main(): Promise<void> {
       library: { path: library, books: books.length, withIsbn: books.filter((b) => b.isbns.length).length },
       backupRoot: writer.root,
       source: { kind: source.kind, ref: source.ref, title: source.title, skipped: source.skipped },
-      rows: source.picks.map((pick, index) => ({ index, pick, ...matches[index] })),
+      // `use`: the scan the row writes; it differs from the pick's when a larger scan of the same design stands in.
+      rows: source.picks.map((pick, index) => ({ index, pick, ...matches[index], use: coverOf(index), ...(looked.has(index) ? { looked: looked.get(index) } : {}) })),
       books: books.map((b) => ({ id: b.id, title: b.title, authors: b.authors, hasCover: b.hasCover })),
       // Per book: the cover the tool last put there, if that write can still be taken back.
       applied: Object.fromEntries([...stacks].map(([id, stack]) => [id, { coverId: stack[stack.length - 1].coverId, canUndo: !!stack[stack.length - 1].backup }])),
@@ -111,6 +140,38 @@ async function main(): Promise<void> {
         return send(res, 200, readFileSync(file), 'image/jpeg');
       }
 
+      /* Which scan a row uses touches only the tool's own file, so it works without --write. */
+      if (req.method === 'POST' && path === '/api/larger') {
+        const body = await jsonBody(req);
+        const index = typeof body.index === 'number' ? body.index : -1;
+        const pick = source.picks[index];
+        if (!pick) return send(res, 404, { error: 'No such row.' });
+        if (body.own === true) {
+          larger.delete(pick.coverId);
+          return send(res, 200, { ok: true, state: state() });
+        }
+        // Whether the catalogue was asked just now: the page pauses between such rows and not between kept ones.
+        let fresh = 0;
+        const served: Served[] = [];
+        const counting: Catalogue = { search: (q) => asked.search(q), page: (id, offset) => (fresh++, asked.page(id, offset)) };
+        try {
+          const found = await largerScan(pick, { catalogue: keptCatalogue(answers, counting, { served: (s) => served.push(s) }), hashes, sizes });
+          if (served.some((s) => refusedConnection(s.error))) pausedUntil = Date.now() + 15 * 60_000;
+          looked.set(index, found);
+          if (found.larger) larger.set(pick.coverId, found.use.coverId);
+          else larger.delete(pick.coverId);
+          return send(res, 200, { ok: true, asked: fresh > 0, state: state() });
+        } catch (err) {
+          if (err instanceof LargerError) return send(res, 409, { error: err.message });
+          if (refusedConnection(err)) {
+            pausedUntil = Date.now() + 15 * 60_000;
+            return send(res, 503, { error: 'Open Library is refusing connections from this Mac, and the website did not answer either. The tool stops asking the catalogue for a quarter of an hour.' });
+          }
+          if (err instanceof CatalogueError) return send(res, 502, { error: err.message });
+          return send(res, 502, { error: 'The catalogue did not answer. Try again in a moment.' });
+        }
+      }
+
       if (req.method === 'POST' && (path === '/api/apply' || path === '/api/undo')) {
         if (!WRITE) return send(res, 403, { error: 'This run only looks. Start it with --write to change the library.' });
         const body = await jsonBody(req);
@@ -131,7 +192,7 @@ async function main(): Promise<void> {
         if (!('missing' in current) && isSmaller(f.check, current) && body.allowSmaller !== true) {
           return send(res, 409, { smaller: true, error: `The new cover (${f.check.width} × ${f.check.height}) has fewer pixels than the one the book has (${current.width} × ${current.height}).` });
         }
-        const result = writer.apply(book.id, f.bytes, row.coverId);
+        const result = writer.apply(book.id, f.bytes, coverOf(body.index as number));
         if (result.ok) books = result.books;
         return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, state: state() } : result);
       }
