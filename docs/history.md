@@ -4242,6 +4242,12 @@ Julian: „füge noch eine kpi hinzu die den verbrauch von der photo-analyse bei
 
 **Grenze:** ein gescheitertes Foto kann Tokens gekostet haben, die nicht gezählt sind (die Antwort fehlt); maßgeblich bleibt die Rechnung in der Anthropic-Konsole.
 
+## 2026-10-04 — 3.1 in Produktion
+
+Julian: „merge den branch nach main und deploy“. `origin/main` (2.2: DNS fertig, `beautifulcovers.vercel.app` leitet per `next.config.ts` auf die Domain) ohne Konflikt eingearbeitet, 1.063 Tests, Lint und Build grün, als Fast-Forward nach `main` geschoben (`599996c`). Vercel-Deploy `dpl_6FtyDMWkXMrjfYens79CibisRzS8` READY nach rund 85 s, auf `buyitscovers.com` und allen Weiterleitungsdomains. `SUGGEST_ADMIN_PASSWORD` ist in Production gesetzt (Name über den Connector abgelesen, kein Wert).
+
+**Einmal geprüft, ohne einen Klick zu zählen:** `https://buyitscovers.com/robots.txt` sperrt `/api/`, `/go/`, `/admin/`; `/admin/insights` ohne Cookie 404 mit `noindex, nofollow` und `no-store`; `/privacy` zeigt „last updated 4 October 2026“, den neuen Absatz „What is counted when you leave a page“ und den Canonical `https://buyitscovers.com/privacy`. Ein `/go/`-Klick wurde bewusst nicht ausgelöst, weil er als echter Klick gezählt würde.
+
 ## 2026-10-03 · Von der Buchseite zurück zur Wand (ROADMAP 6.89)
 
 Julian: „wenn man von einer wand auf eine detailseite geschickt wird muss es eine möglichkeit geben leichter zur wand zurückzukommen als nur über den browser zurückbutton“. Der Zurück-Link der Buchseite sagte bis dahin „Results“ oder „Home“; wer aus einer Sammlung mit 182 Covern kam, landete mit ihm auf der Startseite. Jetzt merkt sich die Kachel beim Klick ihre Wand, und der Link nennt sie und führt auf die Kachel zurück. Geprüft headless: SF Masterworks, Kachel 41 — Link „SF Masterworks“, zurück bei `scrollY` 2.394 mit der Kachel 96 px unter dem Fensterrand; am Telefon die Neuauflage, Kachel 101 — zurück bei 8.842 px; ein anderes Buch danach sagt wieder „Home“. Beim Zusammenführen mit main (die deutsche Oberfläche, 6.85) laufen die zwei neuen Texte durch `t` („Zurück zu {wall}“).
