@@ -1,9 +1,26 @@
 /**
  * A cover's image, fetched once per run and checked (lab/calibre, ROADMAP 5.16).
  *
- * The address is rebuilt from the cover id (`imageUrls`), two downloads run
- * at a time, and only image files are asked for — never the Google Books API
- * (lab rule 6). A failed download is not remembered: the next look tries again.
+ * The address is rebuilt from the cover id (`imageUrls`) and only image files
+ * are asked for — never the Google Books API (lab rule 6). A failed download
+ * is not remembered: the next look tries again.
+ *
+ * **The image Julian is waiting for goes first** (2026-10-04: „das ist sehr
+ * langsam, kann man den download priorisieren?"). Measured that evening, in a
+ * quiet moment, nothing in the app stood before a clicked cover: the request
+ * left 11 ms after the click and a 3.2 MB original was checked 0.4 s later.
+ * The wait is the image host's — the same day an original took 4 to 10 s. So
+ * three things, none of which makes the host faster:
+ *
+ *  - `get` never stands in line. `warm` — the pointer rests on a tile — does:
+ *    two at a time, three waiting at most, and a waiting one that is then
+ *    clicked starts at once.
+ *  - an address that has not answered within `SECOND_ASK_MS` is asked a second
+ *    time and the first answer wins. The Internet Archive keeps two copies of
+ *    each archive on different machines (seen in the redirects: ia800506 and
+ *    ia600506 for the same zip), so the second ask may reach the other one.
+ *  - every download is noted with its time (`DownloadNote`), so the next slow
+ *    moment is a measurement and not a memory.
  */
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -16,17 +33,72 @@ export interface Fetched {
   bytes?: Buffer;
 }
 
+/** An address silent for this long is asked a second time. */
+export const SECOND_ASK_MS = 2500;
+/** Downloads ahead of a click: this many at once, this many waiting. */
+const WARM_AT_ONCE = 2;
+const WARM_WAITING = 3;
+
+/** One download as it went: how long, and whether the second ask was needed and won. */
+export interface DownloadNote {
+  coverId: string;
+  ms: number;
+  ok: boolean;
+  bytes?: number;
+  /** Started ahead of a click. */
+  warm?: true;
+  /** The address was asked a second time; `won` says which answer was used. */
+  second?: true;
+  won?: 1 | 2;
+}
+
+export interface DownloadOptions {
+  secondAskAfter?: number;
+  fetch?: typeof fetch;
+  note?: (n: DownloadNote) => void;
+}
+
+const NOT_FETCHED = 'Not fetched: other covers were pointed at since.';
+
 export class CoverDownloads {
   private readonly done = new Map<string, Promise<Fetched>>();
   private active = 0;
-  private readonly waiting: (() => void)[] = [];
+  /** Warm downloads that have not started, oldest first; called with false they give up. */
+  private readonly waiting = new Map<string, (run: boolean) => void>();
+  private readonly secondAskAfter: number;
+  private readonly fetch: typeof fetch;
+  private readonly note: (n: DownloadNote) => void;
 
-  constructor(private readonly site: string, private readonly atOnce = 2) {}
+  constructor(private readonly site: string, options: DownloadOptions = {}) {
+    this.secondAskAfter = options.secondAskAfter ?? SECOND_ASK_MS;
+    this.fetch = options.fetch ?? fetch;
+    this.note = options.note ?? (() => {});
+  }
 
+  /** The image someone is waiting for: started at once, whatever else is running. */
   get(coverId: string): Promise<Fetched> {
+    // Asked for ahead and still in line: it starts now.
+    if (this.waiting.has(coverId)) this.release(true, coverId);
+    return this.start(coverId, false);
+  }
+
+  /** The image someone may click next: fetched when there is room, so the click finds it there. */
+  warm(coverId: string): void {
+    void this.start(coverId, true);
+  }
+
+  /** Lets a waiting download go — the oldest, unless one is named — or tells it to give up. */
+  private release(run: boolean, coverId: string | undefined = this.waiting.keys().next().value): void {
+    if (coverId === undefined) return;
+    const go = this.waiting.get(coverId);
+    this.waiting.delete(coverId);
+    go?.(run);
+  }
+
+  private start(coverId: string, warm: boolean): Promise<Fetched> {
     let p = this.done.get(coverId);
     if (!p) {
-      p = this.download(coverId).then((f) => {
+      p = this.download(coverId, warm).then((f) => {
         if (!f.check.ok) this.done.delete(coverId);
         return f;
       });
@@ -35,32 +107,72 @@ export class CoverDownloads {
     return p;
   }
 
-  private async download(coverId: string): Promise<Fetched> {
-    if (this.active >= this.atOnce) await new Promise<void>((go) => this.waiting.push(go));
+  private async download(coverId: string, warm: boolean): Promise<Fetched> {
+    if (warm && this.active >= WARM_AT_ONCE) {
+      // The pointer has moved on over more covers than are worth fetching: the oldest in line gives up.
+      if (this.waiting.size >= WARM_WAITING) this.release(false);
+      const run = await new Promise<boolean>((go) => this.waiting.set(coverId, go));
+      if (!run) return { check: { ok: false, reason: NOT_FETCHED } };
+    }
     this.active++;
+    const t0 = Date.now();
+    const asked: Pick<DownloadNote, 'second' | 'won'> = {};
     try {
       let last = 'No address for this cover.';
       for (const url of imageUrls(coverId)) {
-        try {
-          const res = await fetch(url, { headers: { 'user-agent': userAgent(this.site) }, signal: AbortSignal.timeout(45_000) });
-          if (!res.ok) {
-            last = `The image source answered ${res.status}.`;
-            continue;
-          }
-          const bytes = Buffer.from(await res.arrayBuffer());
-          const check = checkCover(bytes);
-          if (check.ok) return { check, bytes };
-          last = check.reason;
-        } catch {
-          // A source that did not answer is not "no cover" (SPEC N12).
-          last = 'The image source did not answer in time. Try again.';
+        const got = await this.ask(url, asked);
+        if (typeof got === 'string') {
+          last = got;
+          continue;
         }
+        const check = checkCover(got);
+        if (check.ok) {
+          this.note({ coverId, ms: Date.now() - t0, ok: true, bytes: got.length, ...(warm ? { warm: true as const } : {}), ...asked });
+          return { check, bytes: got };
+        }
+        last = check.reason;
       }
+      this.note({ coverId, ms: Date.now() - t0, ok: false, ...(warm ? { warm: true as const } : {}), ...asked });
       return { check: { ok: false, reason: last } };
     } finally {
       this.active--;
-      this.waiting.shift()?.();
+      if (this.active < WARM_AT_ONCE) this.release(true);
     }
+  }
+
+  /** The bytes at an address, or why not. Asked a second time when the first ask is slow; whichever answers first is used. */
+  private ask(url: string, asked: Pick<DownloadNote, 'second' | 'won'>): Promise<Buffer | string> {
+    return new Promise((settle) => {
+      const stop = new AbortController();
+      let open = 0;
+      let failure = '';
+      let settled = false;
+      const one = (n: 1 | 2): void => {
+        open++;
+        this.fetch(url, { headers: { 'user-agent': userAgent(this.site) }, signal: AbortSignal.any([stop.signal, AbortSignal.timeout(45_000)]) })
+          .then(async (res) => (res.ok ? Buffer.from(await res.arrayBuffer()) : `The image source answered ${res.status}.`))
+          // A source that did not answer is not "no cover" (SPEC N12).
+          .catch(() => 'The image source did not answer in time. Try again.')
+          .then((got) => {
+            open--;
+            if (settled) return;
+            if (typeof got === 'string') {
+              failure ||= got;
+              // The other ask may still bring the image; only when nothing is on its way is this the answer.
+              if (open > 0) return;
+            } else if (asked.second) asked.won = n;
+            settled = true;
+            clearTimeout(second);
+            stop.abort();
+            settle(typeof got === 'string' ? failure : got);
+          });
+      };
+      const second = setTimeout(() => {
+        asked.second = true;
+        one(2);
+      }, this.secondAskAfter);
+      one(1);
+    });
   }
 }
 

@@ -34,7 +34,7 @@
  */
 import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { appendFileSync, existsSync, readFileSync, statSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { isWorkId, makeToken } from './site';
 import { CatalogueError, directCatalogue, siteCatalogue, withFallback, type Catalogue } from './catalogue';
@@ -89,7 +89,21 @@ const readerNow = (): { root: string; covers: ReaderCovers } | null => {
   const root = findReader();
   return root ? { root, covers: new ReaderCovers(root, join(writer.root, 'reader')) } : null;
 };
-const downloads = new CoverDownloads(SITE);
+/*
+ * How long each full image took, one line per download, beside the backups:
+ * the image host is quick most of the time and very slow now and then
+ * (download.ts), and only a note taken in the slow moment says which.
+ */
+const downloadTimes = join(defaultBackupRoot(), 'download-times.jsonl');
+const downloads = new CoverDownloads(SITE, {
+  note: (n) => {
+    try {
+      appendFileSync(downloadTimes, `${JSON.stringify({ at: new Date().toISOString(), ...n })}\n`);
+    } catch {
+      // A note that could not be written costs a measurement, not a cover.
+    }
+  },
+});
 // Cover ids are the catalogue's, not a library's: one file of sizes for every library.
 const coverSizes = new CoverSizes(join(defaultBackupRoot(), 'cover-sizes.json'), SITE);
 let books = readLibrary(library);
@@ -281,6 +295,11 @@ const server = createServer(async (req, res) => {
     }
     if (req.method === 'GET' && (path === '/api/new' || path === '/new')) {
       if (!COVER_ID.test(coverId)) return send(res, 400, { error: 'Bad cover id.' });
+      // The pointer rests on this cover: fetch it when there is room, and do not make the page wait.
+      if (path === '/api/new' && url.searchParams.get('ahead') === '1') {
+        downloads.warm(coverId);
+        return send(res, 202, {});
+      }
       const f = await downloads.get(coverId);
       if (f.check.ok) coverSizes.remember(coverId, f.check);
       if (path === '/api/new') return send(res, 200, f.check);

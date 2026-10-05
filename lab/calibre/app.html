@@ -499,6 +499,10 @@ function coverTile(c, b, mine) {
   let t = open.tiles.get(c.coverId);
   if (!t) {
     t = el('button', { onclick: () => pick(c) }, el('div', { class: 'frame' }, thumb(c.thumb)), el('div', { class: 'z' }), el('div', { class: 'c' }));
+    // The pointer rests on a cover: its full image is asked for now, so a click finds it there or on its way.
+    let resting = null;
+    t.addEventListener('pointerenter', () => { if (!c.ahead) resting = setTimeout(() => { c.ahead = true; api(`/api/new?cover=${encodeURIComponent(c.coverId)}&ahead=1`); }, 150); });
+    t.addEventListener('pointerleave', () => clearTimeout(resting));
     open.tiles.set(c.coverId, t);
   }
   const own = mine.has(c.coverId);
@@ -567,7 +571,9 @@ function closeCompare() {
 function renderCompare() {
   const p = picked;
   const b = bookOf(p.bookId);
-  const smaller = p.check?.ok && p.old && !p.old.missing && p.check.width * p.check.height < 0.9 * p.old.width * p.old.height; // 0.9: SMALLER_BELOW in image.ts
+  // The size is known before the image is here: Open Library's record of the cover states it (the wall sorted by it).
+  const size = p.check?.ok ? p.check : !p.check ? p.cover.size : null;
+  const smaller = size && p.old && !p.old.missing && size.width * size.height < 0.9 * p.old.width * p.old.height; // 0.9: SMALLER_BELOW in image.ts
   const facts = [p.cover.year, p.cover.languages.map(langName).join(', '), p.cover.publishers.slice(0, 2).join(', ')].filter(Boolean).join(' · ');
   $('compare').replaceChildren(el('div', { class: 'box' },
     el('div', { class: 'pair' },
@@ -580,14 +586,15 @@ function renderCompare() {
         el('div', { class: 'frame' }, p.check?.ok ? el('img', { src: `/new?cover=${encodeURIComponent(p.cover.coverId)}&t=${token}`, alt: 'the chosen cover' })
           : p.check ? el('span', { class: 'none' }, p.check.reason)
           : el('img', { src: p.cover.thumb, alt: '', referrerpolicy: 'no-referrer', style: 'opacity:.4' })),
-        el('figcaption', {}, facts || 'from the catalogue', el('br'), p.check?.ok ? px(p.check) : p.check ? '' : 'fetching the full image…'))),
+        el('figcaption', {}, facts || 'from the catalogue', el('br'), p.check?.ok ? px(p.check) : p.check ? '' : `${size ? `${px(size)} · ` : ''}fetching the full image…`))),
     el('h2', { style: 'font-size:17px;margin:14px 0 0' }, b.title),
-    smaller ? el('p', { class: 'note warn' }, `Fewer pixels than the cover the book has (${px(p.check)} against ${px(p.old)}). It will look softer on a full screen.`) : null,
+    smaller ? el('p', { class: 'note warn' }, `Fewer pixels than the cover the book has (${px(size)} against ${px(p.old)}). It will look softer on a full screen.`) : null,
     p.error ? el('p', { class: 'note bad' }, p.error) : null,
     p.done ? el('p', { class: 'note ok' }, 'This cover is in Calibre now.') : null,
     S.mode !== 'write' ? el('p', { class: 'meta' }, 'Looking only: start the app with --write to change the library.') : null,
     el('div', { class: 'row' },
-      p.done ? null : el('button', { class: 'primary', disabled: !canWrite() || !p.check?.ok || p.busy, onclick: () => use(smaller) }, p.busy ? 'Writing…' : smaller ? 'Use it anyway' : 'Use this cover'),
+      // The choice does not wait for the full image: the write does, on the server, and checks the image there before it touches the library.
+      p.done ? null : el('button', { class: 'primary', disabled: !canWrite() || !size || !p.old || p.busy, onclick: () => use(smaller) }, p.busy ? (p.check?.ok ? 'Writing…' : 'Fetching the image, then writing…') : smaller ? 'Use it anyway' : 'Use this cover'),
       el('button', { onclick: closeCompare }, p.done ? 'Done' : 'Cancel'))));
 }
 

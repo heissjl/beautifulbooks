@@ -4694,3 +4694,52 @@ Julian: „jetzt ist er im finder zu sehen, mach du es". (Zweimal davor hieß es
 **Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
 
 1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · Calibre-App: das volle Bild zuerst, und wie groß die Bilder sind (ROADMAP 5.16a)
+
+Julian, mit einem Bild des Vergleichs für *Foundation* (rechts die verblasste Vorschau, „fetching the full image…"): „das ist sehr langsam, kann man den download priorisieren?" und „überfordern wir jetzt das gerät, wenn wir so viele hochauflösende bilder reinladen?"
+
+**Gemessen, wo die Zeit bleibt** (abends, ein ruhiger Moment der Bildquelle; eine zweite, nur schauende Instanz der App auf einer Kopie ihrer eigenen Dateien):
+
+| Was | Zeit |
+|---|---|
+| sechs Originale einzeln mit `curl`, erste Anfrage (32 KB bis 3,2 MB) | 0,15–0,31 s |
+| dieselben, zweite Anfrage | 0,08–0,44 s |
+| in Node: bis zu den Kopfzeilen / der Rest / Prüfen (Dekodieren) | 19–293 ms / 1–109 ms / 21–190 ms |
+| sieben Originale durch `CoverDownloads`, zwei gleichzeitig | 0,79 s zusammen |
+| in der App, Klick auf ein 3,2-MB-Cover (1464 × 2200), während die Wand lädt: Anfrage geht hinaus nach | 11 ms |
+| … Bild geholt und geprüft nach | 0,41 s |
+| 42 Vorschaubilder der Wand, vom Browser geholt | alle in 0,5 s (Median 0,37 s) |
+
+In der App wartet das angeklickte Bild also auf nichts als die Quelle. Die schwankt: am Vormittag desselben Tages brauchte ein Original 4–10 s (Eintrag „Cover, die nicht erschienen"). Den langsamen Moment konnte ich abends nicht nachstellen — alles Folgende ist deshalb gegen die Schwankung gebaut, nicht an ihr gemessen. Neuere Cover (Nummern um 15 Millionen) liefert `covers.openlibrary.org` selbst aus, ältere leitet es an eine Zip-Datei beim Internet Archive weiter; für dieselbe Zip-Datei nannte die Weiterleitung einmal `ia800506` und einmal `ia600506` — zwei Maschinen mit derselben Kopie.
+
+**Gebaut** (`download.ts`, `app.ts`, `app.html`):
+
+- `CoverDownloads.get` — das Bild, auf das jemand wartet — steht nie an. `warm` holt voraus: ruht der Zeiger 0,15 s auf einer Kachel, fragt die Seite `/api/new?…&ahead=1`; zwei solche Downloads gleichzeitig, höchstens drei wartend (der älteste gibt auf), und ein wartendes Bild, das angeklickt wird, startet sofort.
+- Eine Adresse, die `SECOND_ASK_MS` (2,5 s) nicht geantwortet hat, wird ein zweites Mal gefragt; die erste Antwort gilt, die andere Anfrage wird abgebrochen. Eine Absage (404) wird nicht wiederholt.
+- Jeder Download steht mit Dauer, Bytes, „voraus", „zweite Anfrage" und „welche gewann" als Zeile in `download-times.jsonl` neben den Backups.
+- Im Vergleich steht das Pixelmaß sofort (aus dem Cover-Datensatz, den die Wand schon hat), die Warnung „weniger Pixel" ebenso, und „Use this cover" ist klickbar, sobald Maß und das Cover in Calibre bekannt sind — der Server holt und prüft das Bild beim Schreiben selbst. Während er noch holt, heißt der Knopf „Fetching the image, then writing…".
+
+**Geprüft** auf einer Probe-Kopie der Bibliothek im Testordner, schreibend: Zeiger 0,7 s auf einer Kachel, dann Klick — Bild 56 ms nach dem Klick da (voraus geholt in 271 ms). Ein anderes Cover angeklickt und sofort „Use this cover": Knopf frei nach 16 ms, Cover in Calibre 1,09 s nach dem Klick auf die Kachel (Download 160 ms, der Rest `calibredb`); das Buch hat danach 1225 × 2200 aus einem Original von 1351 × 2425. Sieben neue Tests ohne Netz (`__tests__/download.test.ts`).
+
+**Nicht gemessen:** ob die zweite Anfrage in einem langsamen Moment früher ankommt als die erste. Die Notizen sagen es beim nächsten.
+
+**Wie groß die Bilder sind** (echte Bibliothek und angeschlossener Reader, nur gelesen):
+
+| Was | Gemessen |
+|---|---|
+| Cover, die die App bis dahin gesetzt hat | 26 Bücher |
+| davon aus dem Katalog größer als 1650 × 2200 | 11 (bis 3402 × 5032) |
+| … in Calibre danach | alle auf 2200 px Höhe oder 1650 px Breite verkleinert — Calibres `maximum_cover_size` |
+| größte Cover-Datei in Calibre | 891 KB (*Motherless Brooklyn*, 1375 × 2200) |
+| die 26 Cover vorher / jetzt | 2,4 MB / 8,9 MB |
+| alle 425 Cover der Bibliothek | 70,8 MB |
+| vom Werkzeug geschriebene Bilder auf dem Reader | 32, zusammen 1.050 KB (die des Readers an ihrer Stelle: 448 KB) |
+| alle Bibliotheksbilder des Readers | 483 Dateien, 7,1 MB |
+| freier Speicher des Readers | 2,61 von 3,46 GB |
+
+Auf den Reader kommt durch das Werkzeug kein großes Bild und keine geänderte Buchdatei. Nicht gemessen ist, wie der Reader ein Cover von 1650 × 2200 in einer neu gesendeten Datei verarbeitet (er verkleinert es beim Öffnen für den Ruhezustand); *Ubik* mit 996 × 1500 wird angezeigt.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.294 Tests (128 davon in `lab/calibre/`), tsc und Lint grün.
