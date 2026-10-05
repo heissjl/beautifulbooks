@@ -5,9 +5,9 @@ Chosen by Julian on 2026-10-04 ("vorerst W1 und das banner wie unten"; docs/doma
 | File | Use |
 |---|---|
 | `avatar-400.png`, `avatar-1000.png` | profile picture on X, Bluesky, Mastodon, TikTok, GitHub (the platforms crop it to a circle; the text stays inside it) |
-| `banner-1500x500.png` | header on X and Mastodon |
-| `banner-3000x1000.png` | header on X at double size |
-| `banner-right-1500x500.png` | header on Mastodon |
+| `banner-1500x500.png` | not in use (the line on the left; every platform's profile picture covered the start of „buy") |
+| `banner-3000x1000.png` | not in use, same |
+| `banner-right-1500x500.png` | header on X and Mastodon (and Pinterest's cover) |
 | `banner-right-3000x1000.png` | header on Bluesky |
 | `avatar-360.png` | profile image of the Bookshop.org shop page (the form asks for 180 × 180; this is twice that, for sharp screens) — added 2026-10-04 |
 | `banner-2048x600.png` | banner of the Bookshop.org shop page (the form asks for 2048 × 600) — added 2026-10-04 |
