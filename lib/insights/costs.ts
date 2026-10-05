@@ -43,6 +43,7 @@ export interface FixedCost {
 export const FIXED_COSTS: readonly FixedCost[] = [
   { id: 'vercel-pro', label: 'Vercel Pro', amount: 20, currency: 'USD', per: 'month', since: '2026-10-05', note: 'ein Platz; deckt 20 USD Nutzung im Monat' },
   { id: 'domains', label: 'Sechs Domains bei INWX', amount: 73.46, currency: 'EUR', per: 'year', since: '2026-10-02', note: 'erstes Jahr; Verlängerungen weichen ab (docs/domain-recherche.md)' },
+  { id: 'redis', label: 'Redis 250 MB (redis-pink-yacht)', amount: 8, currency: 'USD', per: 'month', since: '2026-10-05', note: 'über den Vercel Marketplace, zzgl. Steuern; Persistenz, 1.000 Befehle/s, 256 Verbindungen (J4)' },
 ];
 
 const DAYS = { month: 30.4375, year: 365.25 } as const;
@@ -103,7 +104,7 @@ export function summarizeCosts(
       'Vercel: CDN-Anfragen und Übertragung (auf Pro pauschal, wenn „Flat Rate CDN“ gilt), Speicher der Funktionen, ISR, der Proxy',
       'Vercel: Bildoptimierung der Cover seit 2.18o (Transformationen, Cache-Schreiben und -Lesen) — steht unter Usage → Images',
       'Anthropic: was mit demselben Schlüssel außerhalb der Seite gefragt wird',
-      'Redis, Google Books, Open Library, Resend: heute ohne Rechnung',
+      'Google Books, Open Library, Resend: heute ohne Rechnung',
     ],
   };
 }

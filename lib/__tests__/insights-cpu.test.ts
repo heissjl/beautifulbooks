@@ -3,7 +3,7 @@ import { agentClass, CpuMeter, CPU_AGENTS, CPU_ROUTES, summarizeCpu } from '../i
 import { summarizeCosts, VERCEL_PRICES, type FixedCost } from '../insights/costs';
 import { countCpu } from '../insights/store';
 import { insightsKey } from '../insights/model';
-import type { RedisCommands } from '../hotornot/store';
+import { HINCRBY_MANY_SCRIPT, upstashCommands, type RedisCommands } from '../hotornot/store';
 
 /** A meter on a clock the test moves. */
 function meterAt() {
@@ -137,6 +137,28 @@ describe('writing the CPU totals', () => {
     const key = insightsKey('2026-10-05', 'cpu');
     expect(result).toBe('counted');
     expect(calls).toEqual([`HINCRBY ${key} img|browser|cpu 5`, `HINCRBY ${key} img|browser|n 1`, `EXPIRE ${key}`]);
+  });
+
+  it('sends a flush as one command where the store can (2.18d)', async () => {
+    const calls: unknown[][] = [];
+    const commands = {
+      hIncrBy: async () => { throw new Error('must not be called'); },
+      hIncrByMany: async (...args: unknown[]) => { calls.push(args); return 2; },
+    } as unknown as RedisCommands;
+    const now = new Date('2026-10-05T12:00:00Z');
+    const result = await countCpu([['img|browser|cpu', 5], ['img|browser|n', 1]], { env: { VERCEL_ENV: 'production' }, commands, now });
+    expect(result).toBe('counted');
+    expect(calls).toEqual([[insightsKey('2026-10-05', 'cpu'), [['img|browser|cpu', 5], ['img|browser|n', 1]], expect.any(Number)]]);
+  });
+
+  it('speaks the batch over REST as one EVAL: key, expiry, then field and amount', async () => {
+    const bodies: unknown[] = [];
+    const fetchImpl = (async (_url: string, init: RequestInit) => {
+      bodies.push(JSON.parse(String(init.body)));
+      return new Response(JSON.stringify({ result: 2 }), { status: 200 });
+    }) as unknown as typeof fetch;
+    await upstashCommands('https://redis.example', 'token', fetchImpl).hIncrByMany!('ins:2026-10-05:cpu', [['a', 5], ['b', 1]], 3600);
+    expect(bodies).toEqual([['EVAL', HINCRBY_MANY_SCRIPT, 1, 'ins:2026-10-05:cpu', '3600', 'a', '5', 'b', '1']]);
   });
 
   it('writes nothing outside production and nothing for an empty take', async () => {

@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // lab/visitcost (ROADMAP 2.18b) builds into a directory of its own, so its fake catalogue never mixes with a real build.
+  ...(process.env.NEXT_DIST_DIR ? { distDir: process.env.NEXT_DIST_DIR } : {}),
   // Covers through Vercel's image optimization (ROADMAP 2.18o, lib/coverurl.ts):
   // on in a Vercel build unless COVER_CDN=off; `next dev` asks /img directly.
   env: {
