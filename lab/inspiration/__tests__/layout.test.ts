@@ -29,8 +29,10 @@ describe.each(['story', 'feed'] as PosterFormat[])('%s poster', format => {
   it('leaves the head and foot their room', () => {
     expect(L.tiles[0].y).toBe(L.head.height);
     expect(L.foot.y).toBe(L.tiles[8].y + L.tiles[8].height);
-    expect(L.head.height).toBeGreaterThanOrEqual(L.type.title + L.type.byline);
-    expect(L.foot.height).toBeGreaterThanOrEqual(2 * L.type.foot);
+    expect(L.head.height).toBeGreaterThanOrEqual(2 * L.type.title);
+    // Two lines with their leading, and the address's descenders stay on the canvas.
+    expect(L.foot.height).toBeGreaterThanOrEqual(L.type.site + 1.6 * L.type.address);
+    expect(L.foot.y + L.foot.height).toBe(L.height);
   });
 });
 

@@ -70,11 +70,13 @@ export async function renderPoster(
   }));
 
   const { head, foot, type } = L;
+  // One line at the top: the title already carries the name ("… inspired Julian"), and a
+  // byline under it printed the name twice on the first poster made from a real board.
+  const siteY = foot.y + (foot.height - type.site - type.address) / 2 + type.site * 0.85;
   const svg = textSvg(L.width, L.height, [
-    line(text.title, head, head.height - type.byline - type.title * 0.9, type.title, INK),
-    ...(board.by ? [line(`— ${board.by}`, head, head.height - type.byline * 0.9, type.byline, INK2, true)] : []),
-    line(text.site, foot, foot.y + foot.height / 2 + type.foot * 0.1, type.foot, INK, true),
-    line(text.address, foot, foot.y + foot.height / 2 + type.foot * 1.4, type.foot * 0.8, INK2),
+    line(text.title, head, head.height - type.title * 0.75, type.title, INK),
+    line(text.site, foot, siteY, type.site, INK, true),
+    line(text.address, foot, siteY + type.address * 1.3, type.address, INK2),
   ]);
 
   return sharp({ create: { width: L.width, height: L.height, channels: 3, background: BG } })

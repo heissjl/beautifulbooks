@@ -4372,3 +4372,51 @@ Julian am 2026-10-04: „we need a backup way for this“, dann „implement thi
 **Gemessen:** nur an Tests — 1.157 grün, davon neu: Fallback nach zwei Google-Fehlern, bei verbrauchtem Kontingent (null Google-Anfragen, eine Open-Library-Anfrage), ohne Schlüssel, 404 als Antwort, doppelte Stille als `unavailable`; die vier Zustände in `verifyIsbnCover`. Nicht gemessen: wie oft Open Librarys ISBN-Eintrag überhaupt ein Cover trägt, und ob er dasselbe Cover trägt wie die Edition in der Wand (dann wäre `catalogueVerified` die Regel und der Satz ein Trost). Beides liest sich aus `/admin/insights`, sobald ein Tag mit verbrauchtem Kontingent kommt.
 
 **Offen:** mehr Kontingent (0.3); die ISBN-Nachschau von 24 h auf 7 Tage cachen (N4) — Julian.
+
+## 2026-10-05 · lab/inspiration zum ersten Mal mit echten Covern (ROADMAP 5.18)
+
+Julians Prompt ([docs/prompt-inspiration-lokal.md](prompt-inspiration-lokal.md)), auf seinem Rechner im Worktree `bb-nine`, Branch `claude/sleepy-wozniak-lodegp`; Open Library war erreichbar (ein `curl` vorab: 200 in 0,8 s). **Gespielt hat Claude im eingebauten Browser, kein Mensch** — die Zeiten unten sind darum eine Maschinenzeit mit Werkzeugpausen, kein Maß 1. Nichts blockierte den Durchlauf: Suche, Cover-Bilder über `/img/…`, Ausgaben, Kurzlink, geteilte Seite und beide Poster liefen beim ersten Versuch. 22 Tests grün vorher und nachher.
+
+**Das Brett:** *The Great Gatsby*, *Nineteen Eighty-Four*, *Der Meister und Margarita*, *Die unsichtbaren Städte*, *The Left Hand of Darkness*, *Slaughterhouse-Five*, *Der Proceß*, *Beloved*, *Der Name der Rose*; Name „Julian“; Kurzlink `/inspiration/bqnihxi6` (`b=a1fz.88x6x~p1ar.5imne~ehm1.4vk0b~bsx.1l42~1a54.6bl9b~23yz.7ks7t~aom7.ldm7~1304.4x2if~5ctp3.54agn&by=Julian` — 108 Zeichen, mit `https://buyitscovers.com/inspiration?` davor 145).
+
+**Die fünf Maße**
+
+| Maß | Ergebnis | Stand |
+|---|---|---|
+| 1 Zeit bis zum Bild | 137,5 s bis neun Bücher lagen; 260,5 s bis zur geteilten Seite (mit drei Ausgabenwechseln und Name); **283 s (4 min 43 s)** bis zum Klick auf „Save for a story“. Davon Warten auf Open Library: neun Suchen zusammen 17,0 s (Median 0,5 s, **eine 12,5 s**), Ausgaben 2,5 s und 2,2 s, Poster kalt 0,55 s, geteilte Seite kalt 0,23 s | **nicht das Maß** — das sind Julian und zwei Freunde, Ziel Median unter 3 min; offen |
+| 2 Wird die Ausgabe gewählt? | **3 von 9** gewechselt (Gatsby, Bulgakow, Calvino). Aber: bei **4 von 9** war das Standardcover keins, das man posten würde — Gatsby eine Schulausgabe („OCR Oxford“), *1984* Leineneinband ohne Umschlag, Bulgakow russisch, Calvino französisch. Der Wechsel war also zur Hälfte Reparatur, nicht „die Ausgabe, die ich las“ | ein Lauf, kein Schnitt; mit Menschen offen |
+| 3 Lesbarkeit am Telefon | Story auf 390 px Breite verkleinert und angesehen: **alle neun Cover erkennbar**, Titel auf den Covern lesbar. Adresse: war 27 px auf der Leinwand = 9,8 CSS-px am Telefon, **jetzt 40 px = 14,4 CSS-px** (Seitenname 34 → 44). **Nicht in Instagrams Vorschau gesehen** — das braucht Julians Telefon | Rechnung und Verkleinerung, keine Messung am Gerät; offen |
+| 4 Kosten je Brett | **34 Open-Library-Anfragen** laut Serverausgabe: 9 Suchen, 10 für drei Ausgaben-Listen (4 + 4 + 2: je ein Werk und ein bis drei Editionsseiten), 6 Werke für die Titel bei „Done“, 9 Bilder (L) fürs Poster. Ohne Ausgabenwechsel 27; allgemein **27 + Zahl der geladenen Editionsseiten**. Das zweite Poster (Post) kostet 0. Geteilte Seite und Poster auf frisch gestartetem Server: 9 + 9 = 18 | gemessen |
+| 4 Google | **0** — der Importgraph von `serve.ts` hat 18 Module, keins ist der Google-Client; kein Schlüssel in der Umgebung; alle neun Cover-IDs sind `ol:` | bestätigt |
+| 5 Funnels | Nur durch Zusehen: die Kachel öffnet `buyitscovers.com/book/OL468431W/cover/ol-13853193` mit dem gewählten Cover in der Seitenleiste und Läden nach ISBN (ein Besuch der Produktion); `/create#inspiration=…` öffnet `/create` und liest das Fragment nicht (bekannt); X nimmt den Intent an und leitet zur Anmeldung mit dem ganzen Text in `redirect_after_login` | kein Leserverhalten gemessen; offen |
+
+**Was der Server nicht zählt:** die Vorschaubilder. `/img/…` antwortet mit 302, das Bild holt der Browser selbst bei covers.openlibrary.org. Für dieses Brett gerechnet (der Ressourcen-Puffer des Browsers war bei 250 voll, darum nicht gezählt): bis zu 73 Bilder in den Trefferlisten, 85 + 146 + 25 = 256 in den drei Ausgaben-Listen, 12 Kacheln — **rund 340 Bildanfragen**, alle von der Adresse des Lesers, nicht von der Seite.
+
+**Repariert** (nichts davon blockierte; es sind die Fehler, die erst mit echten Daten sichtbar wurden):
+
+1. **Der Name stand zweimal auf dem Poster** — „The books that inspired Julian“ und darunter „— Julian“. Die Unterzeile ist weg (`poster.ts`, `layout.ts`: `type` heißt jetzt `title`/`site`/`address`).
+2. **Adresse und Seitenname auf dem Poster größer:** Story 27 → 40 px und 34 → 44 px; Post 22 → 32 px und 28 → 34 px, dazu Kopf 170 → 140 und Fuß 100 → 130, die Kacheln bleiben 232 × 348. Die Adresse ist der einzige Weg zurück von einem Bild ohne Link.
+3. **Ein Klick auf ein Buch zeigte nichts:** die Werkzeuge („The edition I read“, ◀ ▶, Remove) liegen unter dem Brett, in einem Fenster von 800 × 600 px 1.059 px unter dem oberen Rand. Jetzt rollt die Seite dorthin.
+4. **Die Ausgaben-Auswahl war unscharf:** S-Scans (34–41 px breit) auf rund 87 px gezogen. Jetzt M mit `loading="lazy"`; die gewählte Ausgabe bekommt einen Rahmen (vorher keine Rückmeldung, das Brett liegt außerhalb des Bildes); die letzte Reihe stieß an das Namensfeld.
+5. **Nach „Done — share it“ stand die geteilte Seite an ihrem Ende** („Buy these books“ statt der Wand). Jetzt oben.
+6. **„Link copied.“ stand auch da, wenn der Browser die Zwischenablage verweigerte** (N12), und überschrieb den Link. Jetzt „Copied: <Link>“ oder „Not copied — select it here: <Link>“.
+7. **Ein Brett aus der Adresse (Neuladen, eingefügter Link) nannte Bücher „OL15297W“:** die Titel kamen nur aus Suchtreffern. Jetzt fragt die Seite `/api/board` — bis zu neun Werk-Anfragen beim ersten Mal je Server, danach keine.
+8. **Zurück nach „Done“** änderte die Adresse und ließ die geteilte Ansicht stehen. Jetzt zeichnet sich die Seite neu.
+
+**Offen geblieben, mit dem, was gesehen wurde:**
+
+- **Die Auswahl ist zu lang und stumm.** 85 Cover für *Gatsby*, 146 für Bulgakow, 25 für Calvino, neueste zuerst, ohne Sprachfilter, Jahr und Verlag nur als Tooltip (am Telefon unsichtbar), dasselbe Bild bis zu dreimal nebeneinander. 146 sind am Telefon 30 Reihen. Und es sind nur die ersten 300 Editionen: *Gatsby* hat 1.180, die Buchseite zeigt aus denselben 300 schon 105 Cover.
+- **Das gewählte Cover ist nicht die gelesene Ausgabe.** Das blaue Cugat-Cover hängt im Katalog an „Lulu.com, 2021“ (ISBN 9781716075735); die Buchseite bietet also den Nachdruck an, nicht Scribner. „The cover I remember“ wäre ehrlicher als „The edition I read“ — Julians Entscheidung, gehört zum Satz.
+- **Titel in der Sprache des Werks:** „Мастер и Маргарита“, „Le città invisibili“, „Der Proceß“, „Il nome della rosa“ in „Buy these books“ und in den Werkzeugen — 4 von 9, obwohl englische Ausgaben gewählt waren. `getWork` liefert den Werktitel; der Titel der gewählten Ausgabe bräuchte die Edition.
+- **Das Standardcover** kommt aus dem Suchtreffer (`cover_i`) und ist bei 4 von 9 unpassend (Maß 2).
+- **Instagrams Schutzzonen:** Meta empfiehlt für Storys oben und unten je 250 px frei (aus dem Gedächtnis, nicht nachgeschlagen). Der Titel (Grundlinie y = 254) liegt in der oberen Zone, Seitenname und Adresse (1.814, 1.866) und die untersten 48 px der dritten Reihe in der unteren (ab 1.670). Hielte man beide ein, wären die Kacheln etwa 250 × 375 statt 304 × 456. Erst am Telefon ansehen, dann entscheiden.
+- **Eine Suche brauchte 12,5 s** und zeigte so lange nur „Looking…“.
+- **Das Suchfeld liegt am Desktop unter dem Brett** (das Raster ist bei 560 px Breite 830 px hoch); am Telefon (375 × 812) beginnt die Werkzeugzeile bei 791 px.
+- **„Save for a story/post“:** der Server lieferte das PNG (Story **3,05 MB**, Post 1,88 MB); der eingebaute Browser speichert keine Downloads, die Datei ist darum mit `curl` geholt, das `download`-Attribut ungeprüft. Ob 3 MB fürs Teilen zu viel sind (JPEG), nicht gemessen.
+- **„Share the picture…“** (Web-Share-API) erscheint am Desktop nicht (`navigator.canShare` fehlt) — nur am Telefon prüfbar.
+- **Beschnitt:** `fit: cover` schneidet bei *Slaughterhouse-Five* den rechten Rand der Schrift an.
+- **Unterzeile der geteilten Seite:** frisch gebaut „Nine books, in the editions they were read in.“, über den Kurzlink geladen mit „What inspired you?“ dahinter; „Nine“ steht auch bei weniger als neun. Wortlaut, darum nicht angefasst — wie Hashtag und Satz oben.
+
+**Bilder** (lokal, `docs/tests/2026-10-05-inspiration-*`): beide Poster vorher und nachher, die Story auf 390 px, die Story mit den Schutzzonen, das Brett mit den Standardcovern, die unscharfe Auswahl, die geteilte Seite bei 375 px.
+
+**Nächster Schritt, Julian:** das Story-Bild aufs Telefon und in Instagrams Vorschau; ein eigenes Brett mit Stoppuhr, dann zwei Freunde (Maß 1 und 2); danach Hashtag, Satz und ob „edition“ das richtige Wort ist.

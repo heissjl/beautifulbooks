@@ -18,12 +18,17 @@ export interface PosterLayout {
   height: number;
   /** Nine rectangles, row by row. */
   tiles: Rect[];
-  /** Top band: "The books that inspired me" and the name. */
+  /** Top band: one line, "The books that inspired me" or "… inspired <name>". */
   head: Rect;
   /** Bottom band: the site's name and address. */
   foot: Rect;
-  /** Font sizes in px for head title, byline and foot. */
-  type: { title: number; byline: number; foot: number };
+  /**
+   * Font sizes in px for the title, the site's name and the address. The
+   * address is the only way back from a picture that carries no link, so it is
+   * sized for a phone: a 1080 px canvas shown 390 CSS px wide makes 40 px read
+   * as 14 (it was 27, which read as under 10).
+   */
+  type: { title: number; site: number; address: number };
 }
 
 interface Spec {
@@ -38,9 +43,9 @@ interface Spec {
 
 const SPECS: Record<PosterFormat, Spec> = {
   // 9:16, Instagram/WhatsApp story and TikTok photo.
-  story: { width: 1080, height: 1920, head: 300, foot: 200, margin: 60, gap: 24, type: { title: 64, byline: 40, foot: 34 } },
+  story: { width: 1080, height: 1920, head: 300, foot: 200, margin: 60, gap: 24, type: { title: 64, site: 44, address: 40 } },
   // 4:5, the tallest a feed post may be.
-  feed: { width: 1080, height: 1350, head: 170, foot: 100, margin: 60, gap: 18, type: { title: 52, byline: 32, foot: 28 } },
+  feed: { width: 1080, height: 1350, head: 140, foot: 130, margin: 60, gap: 18, type: { title: 52, site: 34, address: 32 } },
 };
 
 export const POSTER_SIZES: Record<PosterFormat, { width: number; height: number }> = {

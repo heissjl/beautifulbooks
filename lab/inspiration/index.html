@@ -32,8 +32,9 @@
   .results img { width: 40px; height: 60px; object-fit: cover; background: var(--empty); }
   .meta { color: var(--ink2); font-size: 14px; }
   .editions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 8px; }
-  .editions button { padding: 0; border: 0; aspect-ratio: 2 / 3; background: var(--empty); }
-  .editions img { width: 100%; height: 100%; object-fit: cover; }
+  .editions button { padding: 0; border: 0; aspect-ratio: 2 / 3; background: var(--empty); overflow: hidden; }
+  .editions button.chosen { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .editions img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .status { color: var(--ink2); font-size: 14px; min-height: 1.4em; margin: 6px 0; }
   .books { list-style: none; padding: 0; margin: 8px 0 0; }
   .books li { padding: 6px 0; border-bottom: 1px solid var(--line); }
@@ -199,6 +200,9 @@ function select(i) {
   if (s) $('slottitle').textContent = titles.get(s.workId) || s.workId;
   else $('q').focus();
   render();
+  // The tools sit under the board, a screen further down at any width: without this a click
+  // on a book showed only an outline, and "The edition I read" stayed out of sight.
+  if (s) $('slotpanel').scrollIntoView({ block: 'start' });
 }
 
 async function search() {
@@ -241,10 +245,17 @@ async function editions() {
   $('editions').textContent = res.ok ? '' : body.error;
   for (const c of body.covers || []) {
     const b = document.createElement('button');
-    b.innerHTML = '<img alt="">';
-    b.querySelector('img').src = `/img/S/${coverSegment(c.coverId)}`;
+    // M, not S: an S scan is about 40 px wide and was shown at 90 — too blurred to tell one printing from the next.
+    b.innerHTML = '<img alt="" loading="lazy">';
+    b.querySelector('img').src = `/img/M/${coverSegment(c.coverId)}`;
     b.title = [c.year, c.publisher].filter(Boolean).join(', ');
-    b.onclick = () => { board = setCover(board, target, c.coverId); render(); };
+    if (c.coverId === s.coverId) b.className = 'chosen';
+    b.onclick = () => {
+      board = setCover(board, target, c.coverId);
+      render();
+      // The board is off screen above; the mark says the click was taken.
+      for (const other of $('editions').children) other.classList.toggle('chosen', other === b);
+    };
     $('editions').append(b);
   }
 }
@@ -277,8 +288,11 @@ $('finish').onclick = async () => {
 
 function showShared(d) {
   described = d;
+  for (const b of d.books) if (b?.title) titles.set(b.workId, b.title);
   board = parseBoard(new URLSearchParams(d.posterQuery));
   show(false);
+  // "Done" is pressed at the foot of the editor; the wall is at the top of this view.
+  window.scrollTo(0, 0);
   $('sharedtitle').textContent = d.by ? `The books that inspired ${d.by}` : 'The books that inspired me';
   const grid = $('sharedgrid');
   grid.textContent = '';
@@ -331,13 +345,18 @@ function showShared(d) {
 
 $('copy').onclick = async () => {
   if (!described?.link) return;
-  await navigator.clipboard.writeText(described.link).catch(() => {});
-  $('linktext').textContent = 'Link copied.';
+  // Say "copied" only when it was: a browser may refuse the clipboard, and the link stays readable either way.
+  const copied = await navigator.clipboard.writeText(described.link).then(() => true, () => false);
+  $('linktext').textContent = copied ? `Copied: ${described.link}` : `Not copied — select it here: ${described.link}`;
 };
 $('mine').onclick = () => { board = emptyBoard(); target = 0; show(true); render(); $('q').focus(); };
 $('editthis').onclick = () => { target = firstEmpty(board); show(true); render(); };
 
 /* ---------- start ---------- */
+
+// "Done" pushes the short link onto the history; Back changed the address and left the shared view
+// standing under it. Each address knows how to draw itself from scratch, so let it.
+window.onpopstate = () => location.reload();
 
 if (shortId) {
   show(false);
@@ -352,6 +371,15 @@ if (shortId) {
   show(true);
   target = firstEmpty(board);
   render();
+  // A board that came with the address (a reload, a pasted link) brings ids, not titles;
+  // without this the tools named a book "OL15297W". One request here; the server asks Open Library
+  // once per book it has not met (up to nine) and answers from memory after that.
+  if (filledCount(board)) fetch(`/api/board?${boardQuery(board)}`).then(res => (res.ok ? res.json() : null)).then(d => {
+    for (const b of d?.books ?? []) if (b?.title && !titles.has(b.workId)) titles.set(b.workId, b.title);
+    render();
+    const s = board.slots[target];
+    if (s) $('slottitle').textContent = titles.get(s.workId) || s.workId;
+  }).catch(() => {});
 }
 </script>
 </body>
