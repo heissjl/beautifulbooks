@@ -60,6 +60,8 @@ Julian: „can we add an accept-button there and once accepted, we show the anot
 
 Nachgestellt auf `/create` und im Editor bei 390 und 1280 mit einem langen Titel: vorher nicht angehakt, „Accept“ sichtbar (rechter Rand 374 bei 390, Seite 390 breit), kein Link; danach angehakt, kein „maybe“ mehr, „find another cover“ öffnet das Fenster, die Sammlung trägt beide Bücher mit dem gewählten Cover (`14369845`, `13853193`). Die Zahl „1 maybe“ im Satz darüber bleibt, was das Foto ergab.
 
+**Deployt 2026-10-05** (Julian: „merge into main and deploy“): `main` = `4d9af70`, nach dem Merge von 5.17/5.17a/5.17b — beide Seiten hatten das Spaltenproblem gelöst, es gilt `grid-cols-[minmax(0,1fr)]` aus `main`; die Calibre-Liste bekommt „Accept“ für ihre Vorschläge, ohne „find another cover“ danach (sie hat kein Fenster). Vor dem Push: 1204 Tests, Build, die Abläufe auf `/create` und im Editor bei 390 und 1280. Vercel `dpl_t2GCV1vLeUUq46Q97iAr9Yoma6n8` READY auf allen Produktionsadressen; die Seite selbst ist aus dem Container nicht erreichbar, also nicht in Produktion angesehen.
+
 ## Offen (in ROADMAP 5.11a eingetragen)
 
 - **Die Titel von Foto 1** — Julian, falls er sie noch weiß oder das Foto hat: als Foto 15 in den Testsatz (Wahrheitsliste), dann ist der Fall nachstellbar.
