@@ -1227,6 +1227,7 @@ Prinzip (SPEC 2.4): Affiliate-Parameter aus Umgebungsvariablen pro Markt; ohne V
   7. **4.11 Rest**: Amazons deutscher Pflichtsatz für PartnerNet; **4.12** About in der ersten Person.
   8. **Am Tag selbst**: Variable in Production setzen, neu bauen (sie wirkt zur Bauzeit), eine Buchseite je Markt einmal prüfen (Kennung im Link, `rel="sponsored"`, Provisionssatz sichtbar), ein Klick über `/go/` im Log.
   Julian und Claude; Claude baut, was Code ist (1, 5, 7-Text), Julian den Rest.
+  **Stand 2026-10-05** (Julian: „was fehlt jetzt noch um auf shop modus umzustellen?"): **erfüllt** sind 6 (Bookshop US angenommen, ID 129426 in Vercel Production; UK beantragt) und der Grundstock von 3 (`IMPRINT_NAME`, `_STREET`, `_CITY`, `_EMAIL` in Production gesetzt). **Offen:** 1 (0.1, Julians Entscheidung: Code entfernen oder eigener Schalter — Claude baut beides in etwa einer Stunde), 2 (Vercel Pro, 20 USD/Monat, oder ein anderer Hoster, 0.12), 4 (Gewerbe und USt-IdNr., danach `IMPRINT_VAT_ID` — Claude), 5 (Datenschutz: Bookshop als Linkziel mit Cookie beim Klick, Redis-Region; Claude schreibt, Julian gibt den Satz frei), 7 (4.12 About in der ersten Person — Claude schreibt, Julian gibt frei; der deutsche Amazon-Pflichtsatz aus 4.11 erst mit PartnerNet), 8 (der Tag selbst).
 
 ### Erledigt in Phase 4
 
