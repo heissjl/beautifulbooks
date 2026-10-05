@@ -1,5 +1,6 @@
 import Link from './Link';
 import CoverImage from './CoverImage';
+import InspirationBuyList from './InspirationBuyList';
 import InspirationMine from './InspirationMine';
 import InspirationToCollection from './InspirationToCollection';
 import { CopyLink, PictureShare } from './InspirationShareTools';
@@ -148,6 +149,11 @@ export default function InspirationShared({ board, query, link, walls, versus }:
             })}
           </ol>
         </details>
+
+        {/* A trial beside the list above, on a laptop only (see the component): the list as step 2 of the collection funnel does it. */}
+        {process.env.NODE_ENV === 'development' && (
+          <InspirationBuyList books={books.flatMap((b) => (b.title ? [{ workId: b.workId, coverId: b.coverId, title: b.title, author: b.author, href: b.href }] : []))} />
+        )}
 
         {/* The way on from a board: the same covers as a collection one keeps, adds to and arranges (5.13a). */}
         {walls && <InspirationToCollection title={title} books={books.flatMap((b) => (b.title ? [{ workId: b.workId, coverId: b.coverId, title: b.title, author: b.author }] : []))} />}
