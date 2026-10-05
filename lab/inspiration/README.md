@@ -43,6 +43,8 @@ Trägt das my9albums-Format bei Büchern — und ist **„in the edition I read�
 
 **Umbau am selben Tag:** der Editor folgt jetzt „Arrange“ (Werkzeuge unter jedem Cover, Ziehen, Pop-up am Desktop, Blatt am Telefon) — history, „der Editor nach dem Muster von Arrange“. Die Zahlen oben stammen vom Lauf davor; an den Kosten ändert der Umbau nichts.
 
+**Seit 2026-10-05 auf der Seite (ROADMAP 5.18b):** `/inspiration`, hinter dem Schalter `INSPIRATION`, in der Produktion aus. `board.ts`, `layout.ts`, `share.ts` und die Kurz-ID liegen jetzt in `lib/inspiration/` und werden von hier nur noch gelesen; Editor und geteilte Ansicht sind dort React-Komponenten, das Poster kommt aus `next/og`. **Weiterentwickelt wird auf der Seite.** Dieses Lab bleibt lauffähig als Messwerkzeug — sein Server druckt die Open-Library-Aufrufe je Anfrage, was `next dev` nicht tut — und wird nicht mehr nachgezogen.
+
 **Als Nächstes, Julian:** Story-Bild in Instagrams Vorschau ansehen; ein eigenes Brett mit Stoppuhr, dann zwei Freunde — am Telefon auch das Ziehen am Griff und das Blatt mit offener Tastatur, beides nur mit synthetischen Ereignissen geprüft.
 
 ## Wie lang ist ein Link — und warum kein fremder Kürzer
@@ -66,4 +68,4 @@ Julian, 2026-10-04: „but then shared links are gigantic? can we use an url sho
 - **Titel in der Sprache des Werks** („Мастер и Маргарита“, „Der Proceß“) in „Buy these books“, auch wenn eine englische Ausgabe gewählt ist.
 - **Instagrams Schutzzonen** (je 250 px oben und unten): Titel und Adresse liegen darin. Erst am Telefon ansehen.
 - **Die Ausgabe sichtbar machen.** Auf dem Poster steht nur das Bild. Ein Jahr unter jeder Kachel („1961“) zeigte, was Alben nicht können — braucht eine Nachschau beim Rendern (das Jahr steht nicht in der Adresse).
-- **Auf der Seite** (eigener Punkt, nicht dieser): die zweite Redis (`LINKS_`-Variablen, `SET NX`, kein Ablauf); `/create` liest `#inspiration=`; `next/og` mit Xanh und Jost statt sharp; das Poster mit langem `s-maxage` (hängt nur an der Adresse); eine `og:image`-Karte 1200 × 630 für den Kurzlink; `googleBooks: false`; ein Schalter wie `HOTORNOT`; `originOf` (CLAUDE.md Punkt 3) und ein Signal „poster gespeichert“ als Klasse ohne Kennung (Punkt 6/7); deutsche Fassung (§2.6: Überschrift neu geschrieben, nicht übersetzt) und Spiegeldatei unter `app/de/`.
+- **Auf der Seite:** umgezogen am 2026-10-05 (5.18b). Dort erledigt: `next/og` mit Xanh und Jost, die Karte 1200 × 630, das Poster mit langem `s-maxage`, kein Google, der Schalter, die Spiegeldateien unter `app/de/`, der Store für die zweite Redis. Dort offen (Liste in ROADMAP 5.18b): die Redis selbst, `/create` liest `#inspiration=`, `originOf`, Deutsch, der Datenschutzsatz.

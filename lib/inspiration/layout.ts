@@ -1,5 +1,5 @@
 /**
- * Where things go on the poster (lab/inspiration, pure).
+ * Where things go on the poster (ROADMAP 5.18, pure; the site's poster route and the lab's both paint from it).
  *
  * Book covers are 2:3, album covers 1:1, so a 3 × 3 of covers is itself 2:3
  * (1080 × 1620 at full width) and fits neither a story nor a feed post

@@ -14,31 +14,11 @@
  * public anyway. No owner, no visitor id (N11): a short link is a bookmark,
  * not an account.
  */
-import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
-import { type Board, boardQuery, filledCount, parseBoard } from './board';
+import { type Board, boardQuery, filledCount, parseBoard } from '../../lib/inspiration/board';
+import { ID, shortId } from '../../lib/inspiration/shortid';
 
-export const ID = /^[a-z2-7]{8}$/;
-
-/** RFC 4648 base 32, lower case: readable aloud, no 0/O or 1/l confusion. */
-const ALPHABET = 'abcdefghijklmnopqrstuvwxyz234567';
-
-export function shortId(board: Board): string {
-  const digest = createHash('sha256').update(boardQuery(board)).digest();
-  let bits = 0;
-  let value = 0;
-  let out = '';
-  for (const byte of digest) {
-    value = (value << 8) | byte;
-    bits += 8;
-    while (bits >= 5 && out.length < 8) {
-      out += ALPHABET[(value >>> (bits - 5)) & 31];
-      bits -= 5;
-    }
-    if (out.length === 8) break;
-  }
-  return out;
-}
+export { ID, shortId };
 
 export interface LinkStore {
   /** Returns the id; a board already stored is not written again. */

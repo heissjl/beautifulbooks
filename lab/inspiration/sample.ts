@@ -8,7 +8,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import sharp from 'sharp';
 import { SITE_NAME } from '../../lib/seo';
-import { emptyBoard, place } from './board';
+import { emptyBoard, place } from '../../lib/inspiration/board';
 import { renderPoster } from './poster';
 
 const COLOURS = ['#c8102e', '#f2c500', '#1d3c6e', '#e87722', '#2f6b4f', '#f4f0e8', '#111111', '#7a4ea3', '#9bc4cb'];

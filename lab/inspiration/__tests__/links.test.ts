@@ -2,7 +2,7 @@ import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { emptyBoard, place } from '../board';
+import { emptyBoard, place } from '../../../lib/inspiration/board';
 import { fileLinkStore, ID, shortId } from '../links';
 
 const dirs: string[] = [];

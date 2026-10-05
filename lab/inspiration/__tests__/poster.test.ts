@@ -1,7 +1,7 @@
 import sharp from 'sharp';
 import { describe, expect, it } from 'vitest';
-import { emptyBoard, place } from '../board';
-import { posterLayout } from '../layout';
+import { emptyBoard, place } from '../../../lib/inspiration/board';
+import { posterLayout } from '../../../lib/inspiration/layout';
 import { renderPoster } from '../poster';
 
 const TEXT = { title: 'The books that inspired me', site: 'Buy Its Covers', address: 'buyitscovers.com/inspiration' };

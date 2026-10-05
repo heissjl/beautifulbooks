@@ -23,11 +23,11 @@ import { fetchBytes } from '../../lib/sources/http';
 import { getEditionsPage, getWork, searchWorks } from '../../lib/sources/openlibrary';
 import { parseEditions, type OlEditionEntry } from '../../lib/sources/openlibrary-parse';
 import { coversFromEditions } from '../walls/covers';
-import { type Board, boardQuery, coverSegment, encodeBoard, isWorkId, parseBoard } from './board';
-import type { PosterFormat } from './layout';
+import { type Board, boardQuery, coverSegment, encodeBoard, isWorkId, parseBoard } from '../../lib/inspiration/board';
+import type { PosterFormat } from '../../lib/inspiration/layout';
 import { fileLinkStore, ID } from './links';
 import { renderPoster } from './poster';
-import { shareTargets, shareText } from './share';
+import { shareTargets, shareText } from '../../lib/inspiration/share';
 
 const PORT = Number(process.env.PORT ?? 4333);
 const HERE = __dirname;
@@ -168,7 +168,7 @@ function send(res: ServerResponse, status: number, body: unknown, type = 'applic
 }
 
 /** board.ts for the browser: the same module, types stripped, so the page and the server cannot drift. */
-const boardJs = ts.transpileModule(readFileSync(join(HERE, 'board.ts'), 'utf8'), {
+const boardJs = ts.transpileModule(readFileSync(join(HERE, '..', '..', 'lib', 'inspiration', 'board.ts'), 'utf8'), {
   compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2020 },
 }).outputText;
 

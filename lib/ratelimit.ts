@@ -108,6 +108,18 @@ export const RATE_RULES = {
    * reader leaves. Generous for a reader, tight for someone feeding numbers.
    */
   seen: { capacity: 60, refillPerMinute: 60 },
+  /**
+   * "The books that inspired me" (ROADMAP 5.18b): the lists, a book's editions
+   * (two to four Open Library requests when nobody asked before) and a board's
+   * link. A reader building a board asks a few dozen times.
+   */
+  inspiration: { capacity: 60, refillPerMinute: 30 },
+  /**
+   * A poster or a link card: nine covers fetched and one picture drawn, the
+   * heaviest thing this feature does. The CDN keeps the answer, so a reader
+   * needs one per format and board.
+   */
+  inspirationPoster: { capacity: 12, refillPerMinute: 6 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

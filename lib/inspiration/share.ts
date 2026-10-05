@@ -1,5 +1,5 @@
 /**
- * What a share button sends, per platform (lab/inspiration, pure).
+ * What a share button sends, per platform (ROADMAP 5.18, pure).
  *
  * The picture travels on its own: Instagram, WhatsApp and the story formats
  * take no link, so the poster carries the address. Where text can go with a

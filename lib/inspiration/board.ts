@@ -1,6 +1,6 @@
 /**
  * Nine books that inspired someone, on one board held entirely in the
- * address (lab/inspiration, pure, ROADMAP 5.18).
+ * address (ROADMAP 5.18, pure and client-safe).
  *
  * Nine slots fit in a query string, so a board being made needs no store, no
  * visitor id and no question of how long it is kept — the address *is* the
@@ -20,8 +20,8 @@
  * Parsing is tolerant: whatever a stranger types into the address bar yields
  * a board, with every slot that does not parse left empty.
  *
- * **This file is also served to the browser** (`serve.ts` strips the types
- * with the TypeScript compiler), so it imports nothing and uses no Node API.
+ * **Imports nothing and uses no Node API:** the editor runs it in the browser,
+ * and the lab's server hands the same file to its page with the types stripped.
  */
 
 export const SLOTS = 9;

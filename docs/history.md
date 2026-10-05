@@ -4595,3 +4595,31 @@ Genommen ist **`already_read`**: wie viele Leser das Werk als gelesen markiert h
 **Offen:** wo geschnitten wird (5 Ausgaben ist ein erster Wert, an 50 Zeilen angesehen); ob Ratgeber und Liebesromane in einer Liste für „books that inspired me“ richtig stehen oder ob Themen-Listen (`subject:…&sort=already_read`) besser tragen; die Liste altert — neu bauen kostet zehn Anfragen.
 
 **Bilder** (lokal): `docs/tests/2026-10-05-inspiration-browse-*`.
+
+## 2026-10-05 · „The books that inspired me“ auf der Seite, hinter einem Schalter (ROADMAP 5.18b)
+
+Julian, nachdem die Vercel-Vorschau das Lab nicht zeigte: „können wir das vom lab in einen online-preview stand bringen? lass uns damit weiterentwickeln“. Der Prototyp ist darum von `lab/inspiration` auf die Website gezogen — als `/inspiration`, **in der Produktion aus** (`INSPIRATION`, dieselbe Regel wie `HOTORNOT`: ungesetzt heißt an, außer bei `VERCEL_ENV=production`), `noindex`, nirgends verlinkt. Vorher `origin/main` in den Branch gezogen (20 Commits; drei Konflikte, beide Seiten behalten).
+
+**Was wohin kam**
+
+| Lab | Seite |
+|---|---|
+| `board.ts`, `layout.ts`, `share.ts`, die Kurz-ID | `lib/inspiration/` (rein; die Tests nach `lib/__tests__/inspiration-*.test.ts`). Das Lab läuft weiter und liest sie von dort |
+| `links.json` | `lib/inspiration/store.ts`: **eine eigene Redis unter dem Präfix `LINKS_`** (Julian, 2026-10-04), gefunden wie die des Spiels (`storeConfig` nimmt jetzt ein Präfix). Ein Schlüssel je ID, einmal geschrieben, ohne Ablauf, **ohne Besitzer und Besucher-ID**: der Eintrag ist die Adresse des Bretts und der Tag. Unter `next dev` Arbeitsspeicher. **Ohne Store gibt es trotzdem einen Link:** die lange Form `/inspiration/board?b=…`, die keinen braucht — so arbeitet eine Vorschau, bevor es die zweite Redis gibt |
+| `serve.ts`: Suche | die vorhandene `/api/search` (ein Open-Library-Aufruf, seit 6.60 nie Google, einen Tag am CDN) |
+| `serve.ts`: Ausgaben | `/api/inspiration/covers/<Werk>` über `lib/inspiration/covers.ts`. **Nicht `/api/works`**, dessen erste Seite die Google-Titelsuche fährt |
+| `serve.ts`: Listen, Titel, Link | `/api/inspiration/browse` (eine Woche am CDN), `/board`, `/link` |
+| `poster.ts` (sharp, SVG-Text) | `/api/inspiration/poster?format=story|feed|card` mit `next/og` in **Xanh und Jost** wie die Link-Karten; die Cover holt die Route selbst, je 8 s, und schneidet sie auf die Kachel. **JPEG:** die Story ist 287 KB statt 3,05 MB. Ein Bild mit allen Covern hängt nur an seiner Adresse und liegt einen Monat am CDN; fehlt eins, wird es nicht gecacht |
+| — | **eine Karte 1200 × 630** (`format=card`) als `og:image` der geteilten Seite: Titel links, die neun Cover rechts |
+| `index.html` | `components/InspirationEditor.tsx` (Band, Brett wie Arrange, Fenster mit Search/Browse und den Ausgaben), `InspirationShared.tsx` (auf dem Server gerendert) und `InspirationShareTools.tsx` (Kopieren, Web-Share) |
+| eine Seite, zwei Ansichten | drei Adressen: `/inspiration?b=…` (bauen), `/inspiration/<8 Zeichen>` (Kurzlink), `/inspiration/board?b=…` (lange Form), je mit Spiegel unter `app/de/` |
+
+**Anders als im Lab:** die Titel eines Bretts aus der Adresse kommen schon mit der Seite (der Server schlägt sie nach), nicht in einer zweiten Anfrage. Am Desktop steht der Text neben dem Brett (27rem), sodass bei 1280 × 800 zwei Reihen und der Anfang der dritten im Bild sind; das Brett endet 120 px unter dem Rand. Die Erklärung „What is *Buy Its Covers*?“ steht nur noch auf der geteilten Seite. **„Make it a collection“ fehlt**: `/create` liest `#inspiration=` nicht, und ein Knopf ins Leere ist schlechter als keiner.
+
+**Gemessen auf dem Dev-Server** (`next dev`, Port 3033): Seite mit sieben Büchern 200 in 2,2 s kalt (davon 1,7 s Kompilieren); Ausgaben von *Le città invisibili* 25 Cover aus 45 Editionen in 0,7 s; Kurzlink 201; Story 4,0 s kalt, **287 KB**; Post 1,4 s, 167 KB; Karte 4,7 s, 75 KB. Ziehen (Platz 1 auf 5 und 1 auf 2), Suche („beloved toni morrison“ → erster Treffer → nächster Platz), Browse (115 und 945), Auto-Schließen beim neunten Buch, Ausgaben-Fenster mit Markierung, „Done“ → `/inspiration/ixvnywve` mit neun Kacheln, fünf Share-Knöpfen, `og:image` und `noindex` — alles mit synthetischen Ereignissen, weil das Browser-Fenster verdeckt war. **375 × 812** (DOM-Messung): kein seitliches Rollen auf beiden Ansichten und im Blatt, Kachel 109 × 164, darunter nur Griff und ✕ (je 36 px), das Band unten bei 762 px, der Footer endet darüber (756). Bilder aus Headless-Chrome bei 1280 und 500 px (dunkles Schema) lokal unter `docs/tests/2026-10-05-inspiration-site-*`.
+
+**Ein Fehler dabei gefunden:** nach einem Ziehen schluckte der Editor den nächsten Klick, wenn ihm kein Zeigerdruck vorausging — eine Kachel, die mit der Tastatur geöffnet wird. Das Merkmal „wurde gezogen“ lebt jetzt nur bis zum Klick, der dem Loslassen folgt.
+
+**Tests:** 39 für das Feature (neu: Ausgaben gruppieren, Link-Store, Schalter), 1.247 im Ganzen; `tsc`, ESLint und `npm run build` sauber. Beim ersten vollen Lauf nach dem Merge schlugen 4 Tests fehl, bei den zwei Läufen danach keiner — nicht nachgestellt, nicht geklärt.
+
+**Vor dem Einschalten in der Produktion** (steht so in ROADMAP 5.18b): die zweite Redis (Julian im Dashboard, Präfix `LINKS`); die Sätze durch `t()` und Deutsch — die Seite ist **nur englisch**, bis Überschrift, Hashtag und „edition“ entschieden sind; ein Satz in der Datenschutzerklärung (ein Kurzlink speichert den Namen, den jemand aufs Bild schreibt) — Julian gibt ihn frei; eine Herkunftsklasse in `originOf`, damit K9 Besuche von dort sieht; SPEC-Abschnitt und Zeile in `docs/features.md`; `/create` liest `#inspiration=`.

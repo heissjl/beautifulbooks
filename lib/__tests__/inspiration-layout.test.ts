@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { posterLayout, type PosterFormat, type Rect } from '../layout';
+import { posterLayout, type PosterFormat, type Rect } from '../inspiration/layout';
 
 const overlaps = (a: Rect, b: Rect) =>
   a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;

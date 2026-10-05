@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   boardQuery, cleanName, decodeSlot, emptyBoard, encodeSlot, filledCount, firstEmpty, NAME_MAX, parseBoard, place, remove, setCover,
   SLOTS, swap,
-} from '../board';
+} from '../inspiration/board';
 
 const gatsby = { workId: 'OL468431W', coverId: 'ol:12547191' };
 const dune = { workId: 'OL893415W', coverId: 'gb:abc_D-1' };

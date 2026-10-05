@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BLUESKY_LIMIT, HASHTAG, shareTargets, shareText, THREADS_LIMIT, X_LIMIT, X_LINK_LENGTH } from '../share';
+import { BLUESKY_LIMIT, HASHTAG, shareTargets, shareText, THREADS_LIMIT, X_LIMIT, X_LINK_LENGTH } from '../inspiration/share';
 
 const link = 'https://buyitscovers.com/inspiration/k3x9q2ab';
 const longName = 'x'.repeat(40);

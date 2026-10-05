@@ -8,8 +8,8 @@
  * are (`app/og.tsx`); that is the promotion step, not this experiment.
  */
 import sharp from 'sharp';
-import type { Board } from './board';
-import { posterLayout, type PosterFormat, type Rect } from './layout';
+import type { Board } from '../../lib/inspiration/board';
+import { posterLayout, type PosterFormat, type Rect } from '../../lib/inspiration/layout';
 
 /** The link cards' dark ground and paper ink (`OG` in app/og.tsx), copied: lab never imports app/. */
 const BG = '#131110';

@@ -365,8 +365,8 @@ type Env = Record<string, string | undefined>;
 
 export type StoreConfig = { kind: 'rest'; url: string; token: string } | { kind: 'redis'; url: string };
 
-export function storeConfig(env: Env = process.env): StoreConfig | null {
-  const names = Object.keys(env).filter(k => k.startsWith(STORE_PREFIX) && env[k]).sort();
+export function storeConfig(env: Env = process.env, prefix: string = STORE_PREFIX): StoreConfig | null {
+  const names = Object.keys(env).filter(k => k.startsWith(prefix) && env[k]).sort();
   const url = names.find(k => /REST(_API)?_URL$/.test(k));
   // The read-only token is useless here: a vote is a write.
   const token = names.find(k => /REST(_API)?_TOKEN$/.test(k) && !k.includes('READ_ONLY'));
@@ -422,10 +422,12 @@ export function storeFromEnv(env: Env = process.env): VoteStore | null {
 /**
  * The Redis commands this deployment has, or null: the same choice as
  * `storeFromEnv` (REST first, then a direct connection), without the dev
- * memory fallback, which each store keeps for itself.
+ * memory fallback, which each store keeps for itself. `prefix` names another
+ * store's variables: the short links of 5.18b live in a Redis of their own
+ * (`LINKS_…`), found by the same matching.
  */
-export function commandsFromEnv(env: Env = process.env): RedisCommands | null {
-  const config = storeConfig(env);
+export function commandsFromEnv(env: Env = process.env, prefix: string = STORE_PREFIX): RedisCommands | null {
+  const config = storeConfig(env, prefix);
   if (config?.kind === 'rest') return upstashCommands(config.url, config.token);
   if (config?.kind === 'redis') return redisCommands(config.url);
   return null;
