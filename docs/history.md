@@ -4782,4 +4782,6 @@ Befunde dazu: **nichts sichert den Store** — kein Skript, kein Export; die ein
 
 **Geprüft** lokal: die Bilder mit drei Covern (Story dunkel, Post auf Papier mit Titeln) und die Karten mit neun und sechs angesehen; die geteilte Seite als Erbauer, nach Neuladen und als Besucher durchgeklickt; der neue Satz im FAQ steht mit seinem Verweis in der Seite. 1.260 Tests grün (neu: die Anordnung eins über zwei), `tsc`, ESLint und `npm run build` sauber.
 
+**Einmal in der Vorschau** (Commit `f25b859`): der Editor mit dem neuen Satz im FAQ und dem Verweis auf `openlibrary.org/books/add`; die geteilte Seite, wie der Server sie einem Besucher schickt, ohne „Share it“ und ohne „Save the picture“, mit „Take your Shelf-Portrait“, „Start from this one“ und der Kaufliste; der Post mit drei Büchern, eins über zwei (5,6 s, 267 KB); die Karte mit drei, „Judge a book,“ über der größeren Adresse (3,2 s, 92 KB).
+
 **Weiter offen, Julian:** was mit „Paper in der Farbe der Website“ gemeint ist (Paper ist `#f4f0e8`, der helle Grund der Seite); ob der Share-Satz auf „Take your Shelf-Portrait“ endet; Kurzlinks in den bezahlten Store (ja/nein); die Story und die sicheren Ränder.
