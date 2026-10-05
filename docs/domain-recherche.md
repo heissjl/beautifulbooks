@@ -683,3 +683,9 @@ Vorschlag: **Profilbild E2 (oder E1), Banner mit der Wortmarke** — der Satz br
 
 **Offen:** eine Fassung des Banners für Bluesky und Mastodon mit dem Satz weiter rechts und höher (dort liegt das Profilbild weiter oben über dem Banner als bei X); Profilbild W1 hochladen, wo gewünscht; Anzeigenamen auf „Buy Its Covers".
 
+**Zweite Banner-Fassung, Profilbilder, Namen (2026-10-04)** (Julian: „ja · außerdem bau noch ein pinterest konto"). Neu `assets/social/banner-right.svg` (+ PNG 1500 × 500 und 3000 × 1000): der Satz rechts mit der Adresse darunter, die Kacheln links, wo Profilbild und Zurück-Pfeil sie teils verdecken dürfen; `assets/social/render.mjs` rendert jede SVG des Ordners neu (das Aufnahmeskript lag vorher nur im Scratchpad und war weg).
+- **Bluesky:** Banner `banner-right-3000x1000.png`, Profilbild `avatar-1000.png`, Anzeigename „Buy Its Covers" — gespeichert und auf der Profilseite angesehen: Satz frei, Adresse ganz, Profilbild rund mit dem Satz.
+- **Mastodon:** Header `banner-right-1500x500.png` (Alt-Text „A wall of book-cover tiles in greys, one in rust; beside it "Judge a book, buy its covers." buyitscovers.com"), Profilbild `avatar-1000.png` (Alt-Text „"Judge a book, buy its covers." in a serif typeface, dark and rust on paper") — beide laut Schnittstelle gespeichert. **Der Anzeigename ist noch leer**: beim Speichern brach die Verbindung zur Chrome-Erweiterung ab.
+- **X:** Profilbild und Name noch nicht angefasst (der Name lautet „Julian Heiss").
+- **Pinterest:** nicht begonnen. Konten legt Claude nicht an; Claude bringt die Anmeldung bis zum Formular. Pinterest bietet ein kostenloses Unternehmenskonto mit Statistiken an, für eine Seite mit Bildern das passende; ob `pinterest.com/buyitscovers` frei ist, war von außen nicht zu entscheiden (§14).
+
