@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The address carries the token; no image host is told it. -->
+<meta name="referrer" content="no-referrer">
+<title>Calibre into a collection</title>
+<style>
+  :root { --bg: #f6f3ee; --card: #fff; --ink: #1d1b19; --soft: #6d665e; --line: #ddd6cc; --accent: #b5532f; --ok: #2f6b3f; --warn: #8a5a00; --bad: #a12c2c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #171614; --card: #211f1c; --ink: #ece7df; --soft: #a39b90; --line: #38342f; --accent: #e08a63; --ok: #7fc393; --warn: #e0b45a; --bad: #ef8a8a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 120px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--soft); margin: 0 0 16px; }
+  .banner { border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
+  .banner.go { border-color: var(--accent); }
+  .banner.bad { border-color: var(--bad); color: var(--bad); }
+  .banner.ok { border-color: var(--ok); }
+  .banner p { margin: 0 0 4px; }
+  .banner p:last-child { margin: 0; }
+  code { font: 13px ui-monospace, Menlo, monospace; word-break: break-all; }
+  a { color: var(--accent); }
+  .bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 16px 0; position: sticky; top: 0; background: var(--bg); padding: 8px 0; z-index: 2; border-bottom: 1px solid var(--line); }
+  button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.chip[aria-pressed="true"] { border-color: var(--ink); font-weight: 600; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .spacer { flex: 1; }
+  .row { display: grid; grid-template-columns: 28px 64px minmax(0, 1fr) 24px 64px minmax(0, 1fr); gap: 12px; align-items: center; border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
+  .row.off { opacity: .72; }
+  .row input[type=checkbox] { width: 18px; height: 18px; }
+  .pic { width: 64px; height: 96px; background: var(--bg); border-radius: 3px; display: flex; align-items: center; justify-content: center; overflow: hidden; color: var(--soft); font-size: 11px; text-align: center; }
+  .pic img { max-width: 100%; max-height: 100%; display: block; }
+  .t { font-weight: 600; overflow-wrap: anywhere; }
+  .by { color: var(--soft); font-size: 13px; overflow-wrap: anywhere; }
+  .arrow { color: var(--soft); text-align: center; }
+  .tag { display: inline-block; font-size: 12px; border-radius: 10px; padding: 1px 8px; border: 1px solid currentColor; margin: 4px 6px 0 0; }
+  .tag.sure { color: var(--ok); } .tag.maybe { color: var(--warn); } .tag.none { color: var(--soft); } .tag.bad { color: var(--bad); }
+  .link { background: none; border: none; padding: 0; color: var(--accent); text-decoration: underline; font-size: 13px; }
+  .finder { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 10px; }
+  .finder form { display: flex; gap: 8px; }
+  .finder input[type=search] { flex: 1; font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+  .hits { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .hit { width: 120px; text-align: left; padding: 6px; font-size: 12px; }
+  .hit .pic { width: 100%; height: 150px; margin-bottom: 4px; }
+  .note { font-size: 13px; margin: 6px 0 0; color: var(--soft); }
+  .note.bad { color: var(--bad); }
+  @media (max-width: 760px) { .row { grid-template-columns: 28px 64px minmax(0, 1fr); } .arrow { display: none; } .row > .pic.new { grid-column: 2; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Calibre into a collection</h1>
+  <p class="sub" id="sub">Loading…</p>
+  <div id="banners"></div>
+  <div class="bar" id="bar"></div>
+  <div id="rows"></div>
+</main>
+<script>
+const token = new URLSearchParams(location.search).get('t') || '';
+const api = (path, body) => fetch(path, {
+  method: body ? 'POST' : 'GET',
+  headers: { 'x-token': token, ...(body ? { 'content-type': 'application/json' } : {}) },
+  body: body ? JSON.stringify(body) : undefined,
+}).then(async (r) => ({ status: r.status, body: await r.json() }));
+const el = (tag, attrs = {}, ...kids) => {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') n.className = v; else if (k.startsWith('on')) n.addEventListener(k.slice(2), v); else if (v !== false && v != null) n.setAttribute(k, v === true ? '' : v);
+  }
+  for (const kid of kids.flat()) if (kid != null && kid !== false) n.append(kid);
+  return n;
+};
+
+const REASON = {
+  isbn: ['sure', 'by its ISBN'],
+  'author+title': ['sure', 'same author and title'],
+  'author+part': ['maybe', 'same author, a longer title'],
+  author: ['maybe', 'same author, another title'],
+  'title-only': ['maybe', 'the title only'],
+  'isbn-only': ['maybe', 'its ISBN names this, nothing else agrees'],
+};
+const STATUS = {
+  none: ['none', 'the catalogue has nothing like it'],
+  skipped: ['none', 'no author or no title to ask with'],
+  failed: ['bad', 'the catalogue did not answer — run measure.ts again'],
+  unasked: ['bad', 'new in the library — run measure.ts again'],
+};
+const FILTERS = [
+  ['all', 'All', () => true],
+  ['match', 'With a work', (r) => r.status === 'match' || r.byHand],
+  ['suggestion', 'Suggestions', (r) => r.status === 'suggestion' && !r.byHand],
+  ['none', 'Not found', (r) => r.status === 'none' && !r.byHand],
+  ['open', 'No answer', (r) => (r.status === 'failed' || r.status === 'unasked') && !r.byHand],
+  ['skipped', 'Skipped', (r) => r.status === 'skipped' && !r.byHand],
+];
+
+let state = null;
+let filter = 'all';
+let finder = null;        // book id whose search is open
+let hits = null;          // { works } | { error } | 'loading'
+let message = null;       // { kind, nodes }
+let busy = false;
+
+const coverUrl = (id) => (/^\d+$/.test(String(id)) ? `https://covers.openlibrary.org/b/id/${id}-M.jpg` : null);
+const pic = (src, cls = '') => el('div', { class: `pic ${cls}` }, src ? el('img', { src, loading: 'lazy', alt: '', referrerpolicy: 'no-referrer' }) : 'no cover');
+
+async function act(path, body) {
+  const r = await api(path, body);
+  if (r.body.state) state = r.body.state;
+  if (r.status !== 200) message = { kind: 'bad', nodes: [r.body.error || `The tool answered ${r.status}.`] };
+  render();
+  return r;
+}
+
+async function search(bookId, q) {
+  hits = 'loading';
+  render();
+  const r = await api(`/api/search?q=${encodeURIComponent(q)}`);
+  hits = r.status === 200 ? { works: r.body.works } : { error: r.body.error || `The tool answered ${r.status}.` };
+  render();
+}
+
+async function upload() {
+  const u = state.upload;
+  const where = u.local ? `the dev server at ${u.base}` : `THE SITE at ${u.base} — the list of these books goes into its store`;
+  const again = u.past.length ? `\n\nThis library was already uploaded ${u.past.length} time(s); this makes another collection.` : '';
+  if (!confirm(`Create a collection of ${state.ticked.tiles} covers on ${where}?${again}`)) return;
+  busy = true;
+  message = null;
+  render();
+  const r = await api('/api/upload', { title: u.title });
+  busy = false;
+  if (r.body.state) state = r.body.state;
+  message = r.status === 200
+    ? { kind: 'ok', nodes: [el('strong', {}, `Created: ${r.body.tiles} covers from ${r.body.books} books. `), 'It is not saved yet and lapses in 48 hours unless you press “Keep it” there. ', el('a', { href: r.body.editUrl, target: '_blank', rel: 'noreferrer' }, r.body.editUrl)] }
+    : { kind: 'bad', nodes: [r.body.error || `The tool answered ${r.status}.`] };
+  render();
+}
+
+function renderRow(r) {
+  const tile = r.tile;
+  const [cls, why] = r.byHand ? ['sure', 'chosen by hand'] : r.reason ? REASON[r.reason] : STATUS[r.status];
+  const open = finder === r.book.id;
+  const asked = r.query ? `${r.query.title} ${r.query.author}` : r.book.title;
+  const row = el('div', { class: `row ${r.include ? '' : 'off'}` },
+    el('input', { type: 'checkbox', checked: r.include, disabled: !tile, title: tile ? 'Into the collection' : 'No work to put there', onchange: (e) => act('/api/decide', { bookId: r.book.id, include: e.target.checked }) }),
+    pic(r.book.hasCover ? `/old/${r.book.id}?t=${encodeURIComponent(token)}` : null),
+    el('div', {},
+      el('div', { class: 't' }, r.book.title),
+      el('div', { class: 'by' }, `${r.book.authors.join('; ') || 'no author'} · #${r.book.id}`),
+      r.query && (r.query.title !== r.book.title) ? el('div', { class: 'by' }, `asked as: ${asked}`) : null),
+    el('div', { class: 'arrow' }, '→'),
+    pic(tile ? coverUrl(tile.coverId) : null, 'new'),
+    el('div', {},
+      tile ? el('div', { class: 't' }, el('a', { href: `https://openlibrary.org/works/${tile.workId}`, target: '_blank', rel: 'noreferrer' }, tile.title)) : null,
+      tile ? el('div', { class: 'by' }, tile.author || 'no author on record') : null,
+      el('span', { class: `tag ${cls}` }, why),
+      tile && tile.printings.length ? el('span', { class: 'tag none' }, 'the cover of this printing') : null,
+      el('div', {},
+        el('button', { class: 'link', onclick: () => { finder = open ? null : r.book.id; hits = null; render(); if (!open) search(r.book.id, asked); } }, open ? 'close' : tile ? 'another work…' : 'search…'),
+        r.byHand ? [' · ', el('button', { class: 'link', onclick: () => act('/api/choose', { bookId: r.book.id, workId: null }) }, 'back to what the catalogue said')] : null)),
+  );
+  if (open) {
+    const input = el('input', { type: 'search', value: asked, 'aria-label': 'Search the catalogue' });
+    row.append(el('div', { class: 'finder' },
+      el('form', { onsubmit: (e) => { e.preventDefault(); search(r.book.id, input.value); } }, input, el('button', {}, 'Search')),
+      hits === 'loading' ? el('p', { class: 'note' }, 'Asking Open Library…') : null,
+      hits && hits.error ? el('p', { class: 'note bad' }, hits.error) : null,
+      hits && hits.works && !hits.works.length ? el('p', { class: 'note' }, 'Open Library answered and has nothing with a cover for this.') : null,
+      hits && hits.works ? el('div', { class: 'hits' }, hits.works.map((w) => el('button', { class: 'hit', onclick: async () => { finder = null; hits = null; await act('/api/choose', { bookId: r.book.id, workId: w.id }); } },
+        pic(coverUrl(w.coverId)), el('div', { class: 't' }, w.title), el('div', { class: 'by' }, `${w.authors.join(', ')}${w.year ? ` · ${w.year}` : ''}`)))) : null));
+  }
+  return row;
+}
+
+function render() {
+  const s = state, t = s.tally, u = s.upload;
+  document.getElementById('sub').textContent = `${s.library.books} books · ${t.match} with a work (${t.byReason.isbn} by ISBN, ${t.byReason['author+title']} by author and title) · ${t.suggestion} suggestions · ${t.none} not found · ${t.skipped} skipped${t.failed ? ` · ${t.failed} without an answer` : ''} · measured ${new Date(s.measuredAt).toLocaleDateString('en-CA')}`;
+
+  const banners = document.getElementById('banners');
+  banners.replaceChildren(...[
+    el('div', { class: `banner ${u.local ? '' : 'go'}` },
+      el('p', {}, el('strong', {}, u.local ? 'Uploads go to the dev server. ' : 'Uploads go to the site. '), el('code', {}, u.base), ` — ${u.visitorNote}.`),
+      el('p', {}, 'Ticked rows become one collection, one tile per work. Calibre is only read here; a suggestion goes nowhere without its tick.'),
+      u.past.length ? el('p', {}, 'Already created: ', u.past.map((p, i) => [i ? ', ' : '', el('a', { href: `${p.base}/c/${p.wallId}/edit`, target: '_blank', rel: 'noreferrer' }, `${p.wallId} (${p.tiles} covers, ${new Date(p.at).toLocaleDateString('en-CA')})`)])) : null),
+    message ? el('div', { class: `banner ${message.kind}` }, el('p', {}, message.nodes)) : null].filter(Boolean));
+
+  const bar = document.getElementById('bar');
+  bar.replaceChildren(
+    ...FILTERS.map(([key, label, test]) => el('button', { class: 'chip', 'aria-pressed': String(filter === key), onclick: () => { filter = key; render(); } }, `${label} ${s.rows.filter(test).length}`)),
+    el('span', { class: 'spacer' }),
+    el('span', { class: 'by' }, `${s.ticked.books} books ticked → ${s.ticked.tiles} covers`),
+    el('button', { class: 'primary', disabled: busy || !u.ready || s.ticked.tiles === 0, title: u.ready ? '' : u.visitorNote, onclick: upload }, busy ? 'Creating…' : 'Create the collection'));
+
+  const test = FILTERS.find(([key]) => key === filter)[2];
+  document.getElementById('rows').replaceChildren(...s.rows.filter(test).map(renderRow));
+}
+
+api('/api/state').then((r) => {
+  if (r.status !== 200) { document.getElementById('sub').textContent = r.body.error || 'The tool did not answer.'; return; }
+  state = r.body;
+  render();
+});
+</script>
+</body>
+</html>

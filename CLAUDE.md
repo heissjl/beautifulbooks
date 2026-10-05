@@ -77,7 +77,7 @@ app/                Next.js App Router pages and API routes
   create/, c/[id]/  a reader's own collection (5.13a, SPEC F9), behind WALLS; /c is noindex.
                     Readers see "collection"; code, API and store say "wall"
   collections/readers/  Collections by readers (5.13d), shown without review; create/review/ is Julian's take-down page
-  api/walls/        create, read, change (owner only), me (the visitor id), photo, sample, readers, review, report
+  api/walls/        create, read, change (owner only), me (the visitor id), photo, calibre, sample, readers, review, report
   collections/      thematic collections (5.10, SPEC F8), from data/collections.json
   suggest/          friends' suggestions behind a password (5.10a); api/suggest/ beside it
   curate/           the collection curation tool online for friends (5.10b); api/curate/ beside it
