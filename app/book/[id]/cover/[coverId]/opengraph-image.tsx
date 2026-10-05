@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
+import { isHiddenCover } from '@/lib/hiddencovers';
 import { SITE_NAME, authorLine } from '@/lib/seo';
 import { asJpeg, Display, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
 import { getWorkPage, isWorkId } from '@/lib/work';
@@ -27,7 +28,7 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
   measure('og');
   const { id, coverId } = await params;
   const cover = coverIdFromSegment(coverId);
-  const url = cover ? coverUrlFor(cover, 'L') : null;
+  const url = cover && !isHiddenCover(cover) ? coverUrlFor(cover, 'L') : null;
 
   let title: string = SITE_NAME;
   let author = '';

@@ -8,6 +8,7 @@ import { VERDICT_LEAD, VERDICT_MEANING, VERDICT_ORDER } from '@/lib/verdicts';
 import { commerceEnabled } from '@/lib/sitemode';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
+import { readImprint } from '@/lib/imprint';
 
 /**
  * What the site knows, what it does not, and what its judgements mean
@@ -42,6 +43,7 @@ const ext = 'underline underline-offset-2 hover:text-accent';
 
 export default function AboutPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
   const t = translator(locale);
+  const { email } = readImprint();
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
@@ -57,6 +59,12 @@ export default function AboutPage({ locale = DEFAULT_LOCALE }: { locale?: Locale
             {rich(t('Almost all of them from {openlibrary}, a few from {googlebooks}, which also says which picture a publisher currently files under an ISBN. The two catalogues hold only part of what has been printed: you see the covers someone scanned and uploaded.'), {
               openlibrary: <a className={ext} href="https://openlibrary.org" target="_blank" rel="noopener noreferrer">Open Library</a>,
               googlebooks: <a className={ext} href="https://books.google.com" target="_blank" rel="noopener noreferrer">Google Books</a>,
+            })}
+          </p>
+          {/* The way to have a cover taken down (ROADMAP 2.18k): an entry in data/hidden-covers.json and a deploy. */}
+          <p>
+            {rich(t('Is one of these covers yours, and you want it off this site? Write to {email} with the address of the page, and it will be taken down. The image stays in the catalogue it came from; that is where it can be deleted.'), {
+              email: <a className={ext} href={`mailto:${email}`}>{email}</a>,
             })}
           </p>
         </Section>

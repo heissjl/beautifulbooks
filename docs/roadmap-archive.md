@@ -1037,3 +1037,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 ## 2.18n
 
 **2.18n Crawler: ClaudeBot hat die Rechenzeit verbraucht — was dürfen Crawler?** — **Julian entscheidet.** Gemessen 2026-10-05 (2.18l): ClaudeBot folgt den Links von Buch zu Buch („More by …") in einen Raum ohne Ende — jede Werk-ID ist eine Seite, die beim ersten Abruf gerendert wird und den Katalog fragt — und holt jedes Bild über `/img`; dazu MJ12bot (719 Buchseiten in zwei Tagen). Plan 2.4 §3.3 nahm an, KI-Crawler kosteten kaum, weil sie nur vorgerenderte Seiten läsen; das ist widerlegt. Auf Pro kostet es wenig Geld (0,35 CPU-Stunden am Tag sind 6 Cent), aber es sind tausende Katalog-Anfragen von unserer Adresse, und Open Library sperrt, wer zu viel fragt. **Vorschlag:** `robots.ts` erlaubt den benannten KI- und SEO-Crawlern (ClaudeBot, GPTBot, CCBot, Bytespider, Amazonbot, Meta-ExternalAgent, MJ12bot, AhrefsBot, SemrushBot) nur die Seiten der Sitemap — `Disallow: /book/` mit einem `Allow` je veröffentlichtem Werk, `Disallow: /img/`, `Crawl-delay: 10`; Googlebot und Bingbot bleiben wie heute und werden an K14 beobachtet. Alternativen: Vercels Regelsatz „AI Bots" auf *Deny* (sperrt auch die Abrufe, mit denen Claude oder ChatGPT eine Seite für einen Leser lesen), oder nichts tun. Claude, 2 h nach der Entscheidung. Thema: Betrieb.
+
+## 2.18k
+
+**2.18k Ein Cover auf Zuruf ausblenden.** (J6, Julian 2026-10-05: „jetzt gleich"; offen seit dem [Risikoregister](risiken-2026-09-12.md), Abschnitt C.) Eine Liste von Cover-IDs im Repository, die Wand, Mosaik, Sammlungen, Spiel, Vorschaukarten und `/img` auslassen; ein Satz auf About mit der Adresse für Rechteinhaber (englisch und deutsch); ein Test je Weg. Claude, ½ Tag, **nach 2.18a**. Thema: Betrieb.
+
+**Erledigt 2026-10-05** (nicht deployt): `data/hidden-covers.json`, `lib/hiddencovers.ts`, eingehängt an zwölf Stellen; `lib/__tests__/hiddencovers.test.ts` (13 Tests). → [Historie](history.md)

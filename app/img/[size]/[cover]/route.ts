@@ -3,6 +3,7 @@ import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import { rateLimited } from '@/app/api/rate';
 import { recordCoverFailure, type CoverFailure } from '@/lib/coverlog';
 import { measure } from '@/app/api/measure';
+import { isHiddenCover } from '@/lib/hiddencovers';
 
 /**
  * GET /img/<S|M|L>/<ol-12345 | gb-abc123> — one cover image, through us.
@@ -64,6 +65,9 @@ export async function GET(request: NextRequest, context: { params: Promise<{ siz
   const { size, cover } = await context.params;
   const coverId = coverIdFromSegment(decodeURIComponent(cover));
   if (!coverId || !SIZES.has(size)) return refuse(400, 'Malformed cover reference');
+  // Taken off the site on request (2.18k): no upstream call, nothing cached,
+  // so taking the entry out brings the image back with the next deploy.
+  if (isHiddenCover(coverId)) return refuse(404, 'Cover withdrawn');
 
   const upstream = coverUrlFor(coverId, size as 'S' | 'M' | 'L');
   if (!upstream) return refuse(400, 'Malformed cover reference');

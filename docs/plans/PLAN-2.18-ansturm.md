@@ -80,7 +80,7 @@ In dieser Reihenfolge. Jeder Schritt ist ein Roadmap-Punkt und ein Commit; „An
 | **2.18h** | **Fotos schließen, wenn der Speicher schweigt** — entschieden (J3). Heute läuft ein Foto weiter, wenn Zähler und Budget nicht lesbar sind (`app/api/walls/photo/route.ts`: „a silent store does not stop a reader") | 1 h | K13 bekommt den Ausgang „store" |
 | **2.18i** | **Probe unter Last, lokal:** 200 gleichzeitige Leser gegen `next start`, eine Redis mit `maxclients 30` und die Katalog-Attrappe aus 2.18b; bestanden, wenn die Seiten aus §2 ohne Fehler antworten, während Redis und Katalog abweisen. Nie gegen Produktion | ½ Tag | keine |
 | **2.18j** | **Bilder länger im Browser:** `/img` antwortet mit `max-age=3600`; ein Cover unter einer Cover-ID ändert sich nicht, eine Woche spart jede Wiederkehr | 1 h | keine |
-| **2.18k** | **Ein Cover auf Zuruf ausblenden** (J6: „jetzt gleich", also nach 2.18a). Eine Liste von Cover-IDs im Repository (`data/hidden-covers.json`), die Wand, Mosaik, Sammlungen, Spiel, Vorschaukarten und `/img` auslassen; ein Satz auf About mit der Adresse, an die sich ein Rechteinhaber wendet; ein Test, dass eine ID der Liste auf keinem der Wege erscheint. Wirkt mit einem Deploy | ½ Tag | die Kacheln der Wand (`data-cover-id`) werden weniger — in der Historie nennen |
+| **2.18k** ✅ | **Ein Cover auf Zuruf ausblenden** (J6: „jetzt gleich", also nach 2.18a; gebaut 2026-10-05). Eine Liste von Cover-IDs im Repository (`data/hidden-covers.json`), die Wand, Mosaik, Sammlungen, Spiel, Vorschaukarten und `/img` auslassen; ein Satz auf About mit der Adresse, an die sich ein Rechteinhaber wendet; ein Test, dass eine ID der Liste auf keinem der Wege erscheint. Wirkt mit einem Deploy | ½ Tag | die Kacheln der Wand (`data-cover-id`) werden weniger — in der Historie nennen |
 | **2.18l**, **2.18m** | gebaut 2026-10-05: Rechenzeit je Route und Abrufer (K14) und Kosten (K15) in `/admin/insights` | — | neue Kennzahlen, Plan 3.1 §3 |
 | **2.18n** | gebaut 2026-10-05 (Julian: „ok"): benannte KI- und SEO-Crawler dürfen die Buchseiten der Sitemap lesen, nichts sonst unter `/book/`, keine Abfragen, keine Bilder (`lib/robots.ts`) | — | K14 zeigt die Wirkung |
 | dazu | Der Picker ohne Google (Vorschlag der Sitzung `claude/sleepy-wozniak-lodegp`, dort als 6.88 notiert — **die Nummer ist auf `main` schon vergeben**), 6.47 (Suche belastet den `google`-Eimer), **2.11** (Sicherung der Redis, vor jedem Tarifwechsel) | | |
@@ -156,7 +156,7 @@ Sammlungen der Leser werden nicht gesperrt (J5).
 
 ## 10. Messungen, die fehlen
 
-Wohin die CPU ging (§0) · Kosten je Seitentyp (2.18b) · ob ein Deploy den Bild-Cache leert und wie lange ein Schalter braucht (2.18f) · ob Pro ein pausiertes Hobby-Projekt sofort zurückholt (Frage an Vercel, nicht ausprobieren) · Verdrängungsregel, Region und Füllstand der Redis (§5) · Größe von `collections:content` in Produktion · Resends Tagesgrenze (nicht nachgelesen).
+Wohin die CPU ging (§0, beantwortet) · Kosten je Seitentyp (2.18b) · ~~ob ein Deploy den Bild-Cache leert~~ **ja**, laut Doku enthält der Cache-Schlüssel die Deploy-Adresse — nach jedem Deploy geht jedes Bild einmal neu durch `/img` (→ 2.18j; vor einem erwarteten Ansturm nicht deployen) · wie lange ein Schalter braucht (2.18f) · ob Pro ein pausiertes Hobby-Projekt sofort zurückholt (Frage an Vercel, nicht ausprobieren) · Verdrängungsregel, Region und Füllstand der Redis (§5) · Größe von `collections:content` in Produktion · Resends Tagesgrenze (nicht nachgelesen).
 
 ## Quellen
 

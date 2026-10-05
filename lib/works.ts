@@ -7,6 +7,7 @@ import type { Cover, Edition, LanguageGroup, SourceEdition, Work, WorkSummary } 
 import type { EditionCandidate } from './sources/googlebooks-parse';
 import { authorMatchKey, looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeTitle, titleAuthorKey } from './normalize';
 import { colourDistance, hamming, looksLikeScannedPage, type ImageSignature } from './imagesig';
+import { isHiddenCover, isHiddenCoverUrl } from './hiddencovers';
 
 export const MOSAIC_COVERS = 4;
 /** How many covers the card route sends, so a card can replace a repeat (ROADMAP 6.34). */
@@ -250,6 +251,8 @@ export function assembleEditions(sources: readonly SourceEdition[]): EditionsAnd
     const survivor = existing ? mergeEditionMeta(existing, edition) : edition;
     editionsByKey.set(key, survivor);
     for (const c of covers) {
+      // Taken off the site on request (2.18k); the edition stays.
+      if (isHiddenCover(c.id)) continue;
       const cover = coversById.get(c.id);
       if (cover) {
         if (!cover.editionIds.includes(survivor.id)) cover.editionIds.push(survivor.id);
@@ -451,7 +454,7 @@ export function filterWorksByLanguage(works: readonly WorkSummary[], language: s
 
 /** Up to MOSAIC_COVERS distinct cover URLs (SPEC §3 F4). */
 export function mosaicCovers(work: WorkSummary): string[] {
-  return uniq(work.coverUrls).slice(0, MOSAIC_COVERS);
+  return uniq(work.coverUrls).filter(url => !isHiddenCoverUrl(url)).slice(0, MOSAIC_COVERS);
 }
 
 /** Language of a cover: the most common language among the editions carrying it. */
@@ -740,6 +743,13 @@ export function withRetailCovers(covers: readonly Cover[], extra: readonly Cover
   const at = new Map(covers.map((c, i) => [c.id, i]));
   for (const e of extra) {
     const i = at.get(e.id);
+    /*
+      A shop's image that was taken off the site (2.18k) does not join the
+      wall. It stays in the ISBN answer, because the verdict compares by id and
+      dropping it there would turn "the shop shows a different cover" into
+      "no image on record" — a claim nobody checked.
+    */
+    if (i === undefined && isHiddenCover(e.id)) continue;
     if (i === undefined) {
       at.set(e.id, out.length);
       out.push(e);
