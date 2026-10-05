@@ -5,6 +5,12 @@ they are free: docs/plans/research-gemeinfreie-cover.md).
 
     python3 lab/kalender/render_gemeinfrei.py      # writes lab/kalender/out/
 
+It also lays out a second carousel and pin from author portraits made of the
+authors' covers (Julian, 2026-10-05: mosaics of covers that are not public
+domain "should pragmatically not cause rights problems"). The mosaics
+themselves come from lab/mosaic, one command each, documented in
+lab/kalender/README.md; this script only adds the captions.
+
 Python because Pillow sets type with real fonts; the site's Xanh Mono and Jost
 are fetched once from the google/fonts repository. Covers come from archive.org
 scans where one is large enough, otherwise Open Library's L size; both are
@@ -180,8 +186,82 @@ def pin():
     s.convert('RGB').save(os.path.join(OUT, 'pinterest-1.jpg'), quality=92)
 
 
+# Portraits whose face reads in the mosaic (Wilde and Woolf were tried and did
+# not: Woolf's light face dissolves into her light background, Wilde sits too
+# small in his seated photograph). Credits from lab/loading/templates.json.
+PORTRAITS = [
+    dict(key='mark-twain', name='Mark Twain', books='his eight most-printed books', search='mark twain',
+         credit='Portrait: photograph, 1907 (public domain)'),
+    dict(key='jane-austen', name='Jane Austen', books='her eight most-printed books', search='jane austen',
+         credit='Portrait: engraving after Cassandra Austen, 1870 (public domain)'),
+    dict(key='edgar-allan-poe', name='Edgar Allan Poe', books='his eight most-printed books', search='edgar allan poe',
+         credit='Portrait: daguerreotype, 1849 (public domain)'),
+    dict(key='charles-dickens', name='Charles Dickens', books='his eight most-printed books', search='charles dickens',
+         credit='Portrait: Jeremiah Gurney, 1867–68 (public domain)'),
+]
+
+
+def mosaic_carousel():
+    W, H = 1080, 1350
+    n = len(PORTRAITS) + 2
+    slides = []
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    d = ImageDraw.Draw(s)
+    d.text((80, 80), 'Buy Its Covers', font=font('xanh-italic', 44), fill=INK)
+    counter(d, 1, n, W)
+    big, big_i = font('xanh', 104), font('xanh-italic', 104)
+    d.text((80, 700), 'Four writers,', font=big, fill=INK)
+    d.text((80, 828), 'made of their', font=big, fill=INK)
+    d.text((80, 956), 'own covers.', font=big_i, fill=ACCENT)
+    f = font('jost', 36, 400)
+    d.text((84, 1150), 'Every tile is a printing of their books', font=f, fill=INK)
+    slides.append(s)
+    for i, p in enumerate(PORTRAITS, start=2):
+        s = Image.new('RGBA', (W, H), BG + (255,))
+        m = Image.open(os.path.join(OUT, f"mosaic-{p['key']}.png")).convert('RGB')
+        m = m.resize((W, round(m.height * W / m.width)), Image.LANCZOS).crop((0, 0, W, 1152))
+        s.paste(m, (0, 0))
+        d = ImageDraw.Draw(s)
+        d.text((64, 1176), p['name'], font=font('xanh', 52), fill=INK)
+        d.text((66, 1242), f"made of covers of {p['books']}", font=font('jost', 30, 400), fill=INK)
+        d.text((66, 1284), p['credit'], font=font('jost', 24, 400), fill=MUTED)
+        t = f'{i}/{n}'
+        cf = font('jost', 26, 400)
+        d.text((W - 64 - d.textlength(t, font=cf), 1184), t, font=cf, fill=MUTED)
+        slides.append(s)
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    d = ImageDraw.Draw(s)
+    counter(d, n, n, W)
+    f, y = font('xanh', 72), 330
+    for text in ['Type a title or a name.', 'See the covers', 'their books have been', 'printed with.', 'Find the edition', "you'd want on your shelf."]:
+        d.text((80, y), text, font=f, fill=INK)
+        y += 92
+    d.text((80, 1060), 'buyitscovers.com', font=font('xanh-italic', 64), fill=ACCENT)
+    d.text((84, 1150), 'Link in bio', font=font('jost', 32, 400), fill=MUTED)
+    slides.append(s)
+    for i, s in enumerate(slides, start=1):
+        s.convert('RGB').save(os.path.join(OUT, f'instagram-mosaik-{i}.jpg'), quality=92)
+
+
+def mosaic_pin():
+    W, H = 1000, 1500
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    m = Image.open(os.path.join(OUT, 'mosaic-mark-twain-pin.png')).convert('RGB')
+    m = m.resize((W, round(m.height * W / m.width)), Image.LANCZOS).crop((0, 0, W, 1290))
+    s.paste(m, (0, 0))
+    d = ImageDraw.Draw(s)
+    d.text((60, 1312), 'Mark Twain, made of his covers', font=font('xanh', 54), fill=INK)
+    d.text((62, 1382), 'Tom Sawyer, Huck Finn and six more, in every tile.', font=font('jost', 28, 400), fill=INK)
+    d.text((62, 1424), 'buyitscovers.com', font=font('xanh-italic', 40), fill=ACCENT)
+    s.convert('RGB').save(os.path.join(OUT, 'pinterest-mosaik-1.jpg'), quality=92)
+
+
 if __name__ == '__main__':
     os.makedirs(CACHE, exist_ok=True)
     carousel()
     pin()
+    if os.path.exists(os.path.join(OUT, 'mosaic-mark-twain.png')):
+        mosaic_carousel()
+    if os.path.exists(os.path.join(OUT, 'mosaic-mark-twain-pin.png')):
+        mosaic_pin()
     print('written to', OUT)

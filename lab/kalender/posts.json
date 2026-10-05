@@ -946,6 +946,38 @@
         "kapazitaet"
       ],
       "note": "Optional. Nur, wenn HN und Reddit ausgewertet sind und Zeit für Galerie (Bildschirmfotos der Seite), Maker-Kommentar und einen Tag Antworten da ist."
+    },
+    {
+      "id": "ig-mosaik-autoren",
+      "date": "2026-10-16",
+      "time": "18:00",
+      "channel": "instagram",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Four writers, made of their own covers. Every tile is a printing of one of their books:\n\nMark Twain, from Tom Sawyer, Huckleberry Finn and six more\nJane Austen, from Pride and Prejudice, Emma and five more\nEdgar Allan Poe, from his tales and poems\nCharles Dickens, from Oliver Twist, Great Expectations and six more\n\nThe covers come from Open Library; the portraits are in the public domain. Buy Its Covers shows the covers a book has been printed with, and finds you the edition behind the one you like.\n\nLink in bio.\n\n#bookcovers #mosaic #marktwain #janeausten #edgarallanpoe #charlesdickens",
+      "path": "/",
+      "image": "Karussell, sechs Folien 1080×1350: lab/kalender/out/instagram-mosaik-1.jpg bis -6.jpg",
+      "needs": [
+        "konto:instagram",
+        "5.6a"
+      ],
+      "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Werklisten gegen lab/mosaic/out/cache/author_*_8.json geprüft (Austen: sieben Werke)."
+    },
+    {
+      "id": "pin-mosaik-twain",
+      "date": "2026-10-19",
+      "channel": "pinterest",
+      "kind": "feature",
+      "status": "vorschlag",
+      "title": "Mark Twain, made of the covers of his books",
+      "text": "A portrait of Mark Twain built from the covers of his eight most-printed books, Tom Sawyer and Huckleberry Finn among them. On Buy Its Covers: the covers his books have been printed with, and the editions behind them.",
+      "path": "/?author=mark%20twain",
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-mosaik-1.jpg",
+      "needs": [
+        "konto:pinterest",
+        "5.6a"
+      ],
+      "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Pinnwand „Writers made of their covers“."
     }
   ]
 }

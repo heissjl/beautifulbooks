@@ -15,3 +15,11 @@ npx tsx lab/kalender/serve.ts     # dann http://localhost:4325
 **Stand 2026-10-04:** gebaut, 70 Einträge (davon sieben Gestalter-Galerien, PLAN-5.6b §4a) vom 5.10. bis 1.12.2026, nichts gepostet; im Browser geprüft (Karte öffnen, freigeben, Voraussetzung abhaken, einen Kanal um eine Woche verschieben).
 
 **Bilder:** `python3 lab/kalender/render_gemeinfrei.py` rendert das Instagram-Karussell und den ersten Pin aus fünf gemeinfreien Einbänden nach `out/` (git-ignoriert, Cache unter `out/cache`). Grundlage: docs/plans/research-gemeinfreie-cover.md.
+
+**Mosaike** (Julian, 2026-10-05, freigegeben): die Porträts aus `lab/loading/templates.json`, zugeschnitten auf 1080×1170 nach `out/portraits/<id>-ig.png`, dann je Autor
+
+```bash
+npx tsx lab/mosaic/render.ts --author "mark twain" --target lab/kalender/out/portraits/mark-twain-ig.png --cols 45 --width 1080 --colour-weight 0.15 --out lab/kalender/out/mosaic-mark-twain.png
+```
+
+(die Cover kommen aus dem Cache von lab/mosaic). Danach setzt `render_gemeinfrei.py` das Karussell `instagram-mosaik-*.jpg` und den Pin `pinterest-mosaik-1.jpg`.
