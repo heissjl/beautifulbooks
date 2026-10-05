@@ -22,6 +22,8 @@ export interface Proposal {
   unsure?: boolean;
   /** Its catalogue search has not answered yet (5.11a): the row is there, the tile is not. */
   pending?: boolean;
+  /** What a "maybe" row says instead of what the photo read — a library import has no photo (5.17a). */
+  why?: string;
 }
 
 /** Where the ticked covers go: an existing collection, or a new one with this title. */
@@ -48,6 +50,7 @@ export default function WallProposal({
   onCommit,
   onOtherCover,
   onSearchFor,
+  scroll = false,
 }: {
   proposals: Proposal[];
   defaultTitle: string;
@@ -59,6 +62,8 @@ export default function WallProposal({
   onOtherCover?: (tile: Tile, index: number) => void;
   /** Search for a title that was read but not found. */
   onSearchFor?: (label: string) => void;
+  /** A long list scrolls in its own box, so the button stays near (a Calibre library is hundreds of rows, 5.17a). */
+  scroll?: boolean;
 }) {
   const t = useT();
   const standing = (p: Proposal): Standing | null => (p.tile ? standingOf(p.tile, target) : null);
@@ -120,7 +125,7 @@ export default function WallProposal({
   const count = tiles.length;
 
   return (
-    <div className="mt-4">
+    <div className="@container mt-4">
       <p className="text-sm text-ink-2" aria-live="polite">{summary}</p>
       {proposals.length > 8 && (
         <button
@@ -131,14 +136,13 @@ export default function WallProposal({
           {anyTicked ? t('Untick all') : t('Tick all new ones')}
         </button>
       )}
-      {/* Two columns on a wide screen (Julian, 2026-10-01: „on desktop there's too much empty space here“); the link stays at the row's end, now half as far away. */}
       {/*
-        grid-cols-1, not the implicit column: an implicit track is as wide as the longest
-        `truncate` title, so on a phone one long title pushed every row's "find another cover"
-        off the right edge (Julian, 2026-10-04: „i didn't see this link on mobile“; measured
-        614 px rows on a 390 px screen).
+        Two columns where there is room (Julian, 2026-10-01: „on desktop there's too much empty space here“) — measured on the box, not the screen, since 5.17a put the list into a third of a row.
+        minmax(0, 1fr), never the implicit column: an implicit track is as wide as the longest `truncate`
+        title, so on a phone one long title pushed every row's "find another cover" off the right edge
+        (Julian, 2026-10-04: „i didn't see this link on mobile“; measured 614 px rows on a 390 px screen).
       */}
-      <ul className="mt-3 grid grid-cols-1 gap-x-8 gap-y-1.5 lg:grid-cols-2">
+      <ul className={`mt-3 grid grid-cols-[minmax(0,1fr)] gap-x-8 gap-y-1.5 @2xl:grid-cols-2 ${scroll ? 'max-h-[32rem] overflow-y-auto overscroll-contain rounded-card border border-line p-3' : ''}`}>
         {proposals.map((p, i) => {
           const st = standing(p);
           const maybe = guess(p, i);
@@ -155,7 +159,7 @@ export default function WallProposal({
                     <span className="min-w-0">
                       <span className={`block truncate text-sm ${st === 'in' ? 'text-ink-2' : 'text-ink'}`}>{p.tile.title}</span>
                       <span className={`block truncate text-xs ${st === 'new' && !maybe ? 'text-ink-3' : 'text-accent'}`}>
-                        {st === 'in' ? t('already in this collection') : st === 'work' ? t('in this collection with another cover') : maybe ? t('maybe — the photo reads “{read}”', { read: `${p.label}${p.sub ? `, ${p.sub}` : ''}` }) : p.unsure ? p.tile.author : (p.sub ?? p.tile.author)}
+                        {st === 'in' ? t('already in this collection') : st === 'work' ? t('in this collection with another cover') : maybe ? (p.why ?? t('maybe — the photo reads “{read}”', { read: `${p.label}${p.sub ? `, ${p.sub}` : ''}` })) : p.unsure ? p.tile.author : (p.sub ?? p.tile.author)}
                       </span>
                     </span>
                   </label>

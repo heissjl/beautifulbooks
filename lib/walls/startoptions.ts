@@ -1,6 +1,7 @@
 /**
  * The collections a reader may start from or take covers from (ROADMAP 5.13k,
- * 5.13m): the published curated ones and the most visited of those readers
+ * 5.13m): the published curated ones (under `next dev` the drafts too, as on
+ * every page of the site) and the most visited of those readers
  * show. Server only — it reads the collections file and the store. A silent
  * store leaves the readers' out rather than failing the page.
  */
@@ -13,7 +14,7 @@ import { shownWalls, wallStoreFromEnv } from './store';
 const READER_OPTIONS = 30;
 
 export async function startOptions(): Promise<StartOption[]> {
-  const curated = (await liveCollections({ includeDrafts: false }).catch(() => [])).map(curatedOption);
+  const curated = (await liveCollections().catch(() => [])).map(curatedOption);
   const store = wallStoreFromEnv();
   const shown = store ? await shownWalls(store).catch(() => []) : [];
   const readers = shown
