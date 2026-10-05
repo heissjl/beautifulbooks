@@ -24,13 +24,18 @@
  * and the lab's server hands the same file to its page with the types stripped.
  */
 
-/** Nine places is the board; six is the alternative Julian asked to see beside it (2026-10-05). */
+/**
+ * Nine places is the board a link without a size means; three and six are
+ * the reader's choice when making one (Julian, 2026-10-05: „gib die
+ * möglichkeit sich zwischen 3, 6 und 9 zu entscheiden beim erstellen").
+ */
 export const SLOTS = 9;
-export type BoardSize = 6 | 9;
+export type BoardSize = 3 | 6 | 9;
+export const SIZES: readonly BoardSize[] = [3, 6, 9];
 export const NAME_MAX = 40;
 
 /** "Nine" and "Six", for the sentences that count the books. */
-export const SIZE_WORD: Record<BoardSize, string> = { 6: 'Six', 9: 'Nine' };
+export const SIZE_WORD: Record<BoardSize, string> = { 3: 'Three', 6: 'Six', 9: 'Nine' };
 
 export interface Slot {
   /** `OL…W` */
@@ -40,7 +45,7 @@ export interface Slot {
 }
 
 export interface Board {
-  /** Nine entries, or six on the smaller board, row by row; null is an empty slot. The length is the board's size. */
+  /** Nine entries, or six or three on a smaller board, row by row; null is an empty slot. The length is the board's size. */
   slots: (Slot | null)[];
   /** The name the reader chose to show, possibly empty. */
   by: string;
@@ -57,9 +62,9 @@ export function emptyBoard(size: BoardSize = SLOTS): Board {
   return { slots: Array.from({ length: size }, () => null), by: '' };
 }
 
-export const sizeOf = (board: Board): BoardSize => (board.slots.length === 6 ? 6 : 9);
+export const sizeOf = (board: Board): BoardSize => (board.slots.length === 3 ? 3 : board.slots.length === 6 ? 6 : 9);
 
-/** The same books on a board of another size: the first six stay when a board of nine shrinks. */
+/** The same books on a board of another size: the first ones stay when a board shrinks. */
 export function resize(board: Board, size: BoardSize): Board {
   return { ...board, slots: Array.from({ length: size }, (_, i) => board.slots[i] ?? null) };
 }
@@ -99,9 +104,10 @@ export function decodeBoard(b: string, size: BoardSize = SLOTS): (Slot | null)[]
   return Array.from({ length: size }, (_, i) => (codes[i] ? decodeSlot(codes[i]) : null));
 }
 
-/** `n=6` in the address is the smaller board; anything else is nine. */
+/** `n=3` or `n=6` in the address is a smaller board; anything else is nine. */
 export function parseBoard(params: URLSearchParams): Board {
-  const size: BoardSize = params.get('n') === '6' ? 6 : SLOTS;
+  const n = params.get('n');
+  const size: BoardSize = n === '3' ? 3 : n === '6' ? 6 : SLOTS;
   return { slots: decodeBoard(params.get('b') ?? '', size), by: cleanName(params.get('by') ?? '') };
 }
 
@@ -110,8 +116,8 @@ export function boardQuery(board: Board): string {
   const b = encodeBoard(board);
   const parts: string[] = [];
   if (b) parts.push(`b=${b}`);
-  // Nine is the default and stays unsaid, so every address made before the smaller board reads as it did.
-  if (sizeOf(board) === 6) parts.push('n=6');
+  // Nine is the default and stays unsaid, so every address made before the smaller boards reads as it did.
+  if (sizeOf(board) !== SLOTS) parts.push(`n=${sizeOf(board)}`);
   if (board.by) parts.push(`by=${encodeURIComponent(board.by)}`);
   return parts.join('&');
 }

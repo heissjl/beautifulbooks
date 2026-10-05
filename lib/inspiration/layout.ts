@@ -16,7 +16,7 @@ export interface Rect { x: number; y: number; width: number; height: number }
 export interface PosterLayout {
   width: number;
   height: number;
-  /** Nine rectangles, or six, row by row. */
+  /** Nine rectangles, or six or three, row by row. */
   tiles: Rect[];
   /** Top band: one line, "The books that inspired me" or "… inspired <name>". */
   head: Rect;
@@ -29,6 +29,8 @@ export interface PosterLayout {
    * as 14 (it was 27, which read as under 10).
    */
   type: { title: number; site: number; address: number };
+  /** The room under each cover and its type sizes, or null when the picture carries no titles. */
+  caption: { height: number; title: number; author: number } | null;
 }
 
 interface Spec {
@@ -54,34 +56,43 @@ export const POSTER_SIZES: Record<PosterFormat, { width: number; height: number 
 };
 
 /**
- * How six covers stand: two wide and three high in a story, which fills its
- * height at the size nine have there (304 × 456), and three wide and two high
- * in a feed post, where they come out a third larger than nine (308 × 462
- * against 232 × 348) — the one place the smaller board shows its covers bigger.
+ * How fewer than nine covers stand. Six: two wide and three high in a story,
+ * which fills its height at the size nine have there (304 × 456), and three
+ * wide and two high in a feed post, where they come out a third larger than
+ * nine (308 × 462 against 232 × 348). Three: two above and one below in a
+ * story — half as large again as nine (465 wide) — and side by side in a post.
+ * A last row that is not full is centred.
  */
-const GRID: Record<PosterFormat, Record<6 | 9, { cols: number; rows: number }>> = {
-  story: { 9: { cols: 3, rows: 3 }, 6: { cols: 2, rows: 3 } },
-  feed: { 9: { cols: 3, rows: 3 }, 6: { cols: 3, rows: 2 } },
+const GRID: Record<PosterFormat, Record<3 | 6 | 9, { cols: number; rows: number }>> = {
+  story: { 9: { cols: 3, rows: 3 }, 6: { cols: 2, rows: 3 }, 3: { cols: 2, rows: 2 } },
+  feed: { 9: { cols: 3, rows: 3 }, 6: { cols: 3, rows: 2 }, 3: { cols: 3, rows: 1 } },
 };
 
-export function posterLayout(format: PosterFormat, count: 6 | 9 = 9): PosterLayout {
+/** Room under each cover for its title and author, when the reader asks for them; type sizes go with it. */
+const CAPTION: Record<PosterFormat, { height: number; title: number; author: number }> = {
+  story: { height: 84, title: 27, author: 23 },
+  feed: { height: 70, title: 23, author: 20 },
+};
+
+export function posterLayout(format: PosterFormat, count: 3 | 6 | 9 = 9, captions = false): PosterLayout {
   const s = SPECS[format];
   const { cols, rows } = GRID[format][count];
-  const byHeight = Math.floor((s.height - s.head - s.foot - (rows - 1) * s.gap) / rows);
+  const cap = captions ? CAPTION[format].height : 0;
+  const byHeight = Math.floor((s.height - s.head - s.foot - (rows - 1) * s.gap - rows * cap) / rows);
   const byWidth = Math.floor(((s.width - 2 * s.margin - (cols - 1) * s.gap) / cols) * 1.5);
   // A multiple of three, so that width = height * 2/3 is a whole number exactly.
   const tileH = Math.min(byHeight, byWidth) - (Math.min(byHeight, byWidth) % 3);
   const tileW = (tileH / 3) * 2;
-  const gridW = cols * tileW + (cols - 1) * s.gap;
-  const gridH = rows * tileH + (rows - 1) * s.gap;
-  const x0 = Math.round((s.width - gridW) / 2);
+  const gridH = rows * (tileH + cap) + (rows - 1) * s.gap;
   // The grid sits in the middle of what head and foot leave.
   const y0 = s.head + Math.round((s.height - s.head - s.foot - gridH) / 2);
   const tiles: Rect[] = [];
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      tiles.push({ x: x0 + col * (tileW + s.gap), y: y0 + row * (tileH + s.gap), width: tileW, height: tileH });
-    }
+  for (let i = 0; i < count; i++) {
+    const row = Math.floor(i / cols);
+    const inRow = Math.min(cols, count - row * cols);
+    const rowW = inRow * tileW + (inRow - 1) * s.gap;
+    const x0 = Math.round((s.width - rowW) / 2);
+    tiles.push({ x: x0 + (i % cols) * (tileW + s.gap), y: y0 + row * (tileH + cap + s.gap), width: tileW, height: tileH });
   }
   return {
     width: s.width,
@@ -90,5 +101,6 @@ export function posterLayout(format: PosterFormat, count: 6 | 9 = 9): PosterLayo
     head: { x: s.margin, y: 0, width: s.width - 2 * s.margin, height: y0 },
     foot: { x: s.margin, y: y0 + gridH, width: s.width - 2 * s.margin, height: s.height - y0 - gridH },
     type: s.type,
+    caption: captions ? CAPTION[format] : null,
   };
 }

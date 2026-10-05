@@ -4,13 +4,15 @@ import sharp from 'sharp';
 import { closed, json } from '@/app/api/inspiration/guard';
 import { asJpeg, DISPLAY, OG, ogFonts, TEXT, Wordmark } from '@/app/og';
 import { coverUrlFor } from '@/lib/coverurl';
-import { filledCount, parseBoard, SIZE_WORD, sizeOf } from '@/lib/inspiration/board';
+import { type BoardSize, filledCount, parseBoard, sizeOf } from '@/lib/inspiration/board';
+import { describeBoard } from '@/lib/inspiration/describe';
 import { posterLayout, type PosterFormat, type Rect } from '@/lib/inspiration/layout';
+import { subtitleOf, titleOf } from '@/lib/inspiration/share';
 import { SITE_URL } from '@/lib/seo';
 
 /**
- * GET /api/inspiration/poster?b=…&by=…&format=story|feed|card[&look=…] — the
- * picture of a board (ROADMAP 5.18b).
+ * GET /api/inspiration/poster?b=…&by=…&format=story|feed|card[&look=…][&titles=1]
+ * — the picture of a board (ROADMAP 5.18b).
  *
  * `story` (1080 × 1920) and `feed` (1080 × 1350) are what a reader saves and
  * posts; `card` (1200 × 630) is what a messenger shows for the link. Painted
@@ -79,8 +81,9 @@ const dataUrl = (jpeg: Buffer) => `data:image/jpeg;base64,${jpeg.toString('base6
  * and below the covers black, with an edge where the colour began.
  */
 async function wash(width: number, height: number, rects: Rect[], tiles: (Buffer | null)[]): Promise<Buffer> {
-  const cols = new Set(rects.map((r) => r.x)).size;
-  const rows = rects.length / cols;
+  // Three across, whatever the picture's own arrangement: only the colours and roughly where they are matter here.
+  const cols = 3;
+  const rows = Math.ceil(rects.length / cols);
   const cell = { w: 12, h: 18 };
   const cells = await Promise.all(tiles.map(async (t, i) => (t
     ? { input: await sharp(t).resize(cell.w, cell.h, { fit: 'fill' }).toBuffer(), left: (i % cols) * cell.w, top: Math.floor(i / cols) * cell.h }
@@ -171,17 +174,41 @@ function titleSize(title: string, size: number): number {
   return title.length <= 30 ? size : Math.max(Math.round(size * 0.62), Math.round((size * 30) / title.length));
 }
 
-function poster(format: PosterFormat, count: 6 | 9, title: string, images: (string | null)[], look: Look, under: string | null) {
-  const P = posterLayout(format, count);
+/** The largest size at which the longest word of `text` still fits `width` — a narrow column breaks between words, never inside one. */
+function wordFit(text: string, width: number, max: number): number {
+  // A hyphen is a place to break too: "Shelf-Portrait" may stand on two lines.
+  const longest = Math.max(...text.split(/[\s-]+/).map((w) => w.length), 1);
+  return Math.min(max, Math.floor(width / (longest * 0.5)));
+}
+
+/** A line cut to what `width` holds at `size`; the generator's own ellipsis is not relied on. */
+function clip(text: string, width: number, size: number): string {
+  const max = Math.max(4, Math.floor(width / (size * 0.47)));
+  return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text;
+}
+
+type Caption = { title: string; author: string } | null;
+
+function poster(format: PosterFormat, count: BoardSize, by: string, images: (string | null)[], look: Look, under: string | null, captions: Caption[] | null) {
+  const P = posterLayout(format, count, !!captions);
   const L = LOOKS[look];
   const { head, foot, type } = P;
+  const title = titleOf(by);
   return (
     <div style={{ position: 'relative', width: P.width, height: P.height, display: 'flex', background: L.bg }}>
       <Ground src={under} width={P.width} height={P.height} />
-      <div style={{ position: 'absolute', left: head.x, top: 0, width: head.width, height: head.height - type.title * 0.45, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+      {/* Two lines (Julian, 2026-10-05): the name of the thing, and under it what it is. */}
+      <div style={{ position: 'absolute', left: head.x, top: 0, width: head.width, height: head.height - type.title * 0.3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
         <div style={{ ...DISPLAY, display: 'flex', textAlign: 'center', fontSize: titleSize(title, type.title), lineHeight: 1.12, color: L.ink }}>{title}</div>
+        <div style={{ ...TEXT, display: 'flex', textAlign: 'center', fontSize: Math.round(type.title * 0.5), color: L.ink2, marginTop: type.title * 0.12 }}>{clip(subtitleOf(by), head.width, type.title * 0.5)}</div>
       </div>
       <Tiles rects={P.tiles} images={images} look={look} />
+      {captions && P.caption && P.tiles.map((r, i) => captions[i] && (
+        <div key={i} style={{ position: 'absolute', left: r.x, top: r.y + r.height + 10, width: r.width, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ ...TEXT, display: 'flex', fontSize: P.caption?.title, lineHeight: 1.2, color: L.ink }}>{clip(captions[i]?.title ?? '', r.width, P.caption?.title ?? 24)}</div>
+          <div style={{ ...TEXT, display: 'flex', fontSize: P.caption?.author, lineHeight: 1.25, color: L.ink2 }}>{clip(captions[i]?.author ?? '', r.width, P.caption?.author ?? 20)}</div>
+        </div>
+      ))}
       <div style={{ position: 'absolute', left: foot.x, top: foot.y, width: foot.width, height: foot.height, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         <Wordmark size={type.site} color={L.mark} />
         <div style={{ ...TEXT, display: 'flex', fontSize: type.address, color: L.ink2, marginTop: type.address * 0.15 }}>{ADDRESS}</div>
@@ -190,37 +217,60 @@ function poster(format: PosterFormat, count: 6 | 9, title: string, images: (stri
   );
 }
 
-const CARD = { width: 1200, height: 630, gap: 12, right: 40 };
+/**
+ * The link card, 1200 × 630 (Julian, 2026-10-05: „the space usage in der
+ * vorschaukachel muss noch besser sein … es sollte BuyItsCovers.com heißen").
+ * The first card set nine covers at 120 × 180 into the right third and left
+ * the rest to a title. Now the covers take the height they can get:
+ * - nine: two rows of five places, the words in the first place and a cover in
+ *   each of the other nine — 186 × 279, two and a half times the area;
+ * - six: three by two at the same size on the right, the words beside them;
+ * - three: side by side at 264 × 396, the words beside them.
+ */
+const CARD = { width: 1200, height: 630, gap: 12 };
 
-/** The covers of a link card, at its right: three by three, or three by two and larger for six. */
-function cardRects(count: 6 | 9): Rect[] {
-  const rows = count / 3;
-  const tileH = rows === 3 ? 180 : 264;
-  const tileW = (tileH / 3) * 2;
-  const x0 = CARD.width - CARD.right - (3 * tileW + 2 * CARD.gap);
-  const y0 = Math.round((CARD.height - (rows * tileH + (rows - 1) * CARD.gap)) / 2);
-  return Array.from({ length: count }, (_, i) => ({
-    x: x0 + (i % 3) * (tileW + CARD.gap),
-    y: y0 + Math.floor(i / 3) * (tileH + CARD.gap),
-    width: tileW,
-    height: tileH,
-  }));
+function cardPlan(count: BoardSize): { covers: Rect[]; words: Rect; title: number } {
+  const place = (x0: number, y0: number, w: number, h: number, cols: number, n: number, skip = 0): Rect[] =>
+    Array.from({ length: n }, (_, k) => {
+      const i = k + skip;
+      return { x: x0 + (i % cols) * (w + CARD.gap), y: y0 + Math.floor(i / cols) * (h + CARD.gap), width: w, height: h };
+    });
+  if (count === 9) {
+    const w = 186, h = 279;
+    const x0 = Math.round((CARD.width - (5 * w + 4 * CARD.gap)) / 2);
+    const y0 = Math.round((CARD.height - (2 * h + CARD.gap)) / 2);
+    return { covers: place(x0, y0, w, h, 5, 9, 1), words: { x: x0, y: y0, width: w - 14, height: h }, title: 38 };
+  }
+  if (count === 6) {
+    const w = 186, h = 279;
+    const x0 = CARD.width - 40 - (3 * w + 2 * CARD.gap);
+    const y0 = Math.round((CARD.height - (2 * h + CARD.gap)) / 2);
+    return { covers: place(x0, y0, w, h, 3, 6), words: { x: 56, y: y0, width: x0 - 56 - 44, height: 2 * h + CARD.gap }, title: 72 };
+  }
+  const w = 264, h = 396;
+  const x0 = CARD.width - 40 - (3 * w + 2 * CARD.gap);
+  const y0 = Math.round((CARD.height - h) / 2);
+  return { covers: place(x0, y0, w, h, 3, 3), words: { x: 48, y: y0, width: x0 - 48 - 36, height: h }, title: 50 };
 }
 
-function card(count: 6 | 9, title: string, images: (string | null)[], look: Look, under: string | null) {
-  const rects = cardRects(count);
+function card(count: BoardSize, by: string, images: (string | null)[], look: Look, under: string | null) {
+  const plan = cardPlan(count);
   const L = LOOKS[look];
+  const title = titleOf(by);
+  const { words } = plan;
+  const size = wordFit(title, words.width, plan.title);
   return (
     <div style={{ position: 'relative', width: CARD.width, height: CARD.height, display: 'flex', background: L.bg }}>
       <Ground src={under} width={CARD.width} height={CARD.height} />
-      <div style={{ position: 'absolute', left: 64, top: 0, width: rects[0].x - 64 - 48, height: CARD.height, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        <div style={{ ...DISPLAY, display: 'flex', fontSize: titleSize(title, count === 9 ? 68 : 60), lineHeight: 1.1, color: L.ink }}>{title}</div>
-        <div style={{ ...TEXT, display: 'flex', fontSize: 28, color: L.ink2, marginTop: 20 }}>{`${SIZE_WORD[count]} books, each with a favourite cover.`}</div>
-        <div style={{ display: 'flex', marginTop: 44 }}>
-          <Wordmark size={36} color={look === 'paper' ? OG.accent : OG.accentDark} />
+      <div style={{ position: 'absolute', left: words.x, top: words.y, width: words.width, height: words.height, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ ...DISPLAY, display: 'flex', fontSize: size, lineHeight: 1.06, color: L.ink }}>{title}</div>
+          <div style={{ ...TEXT, display: 'flex', fontSize: Math.max(17, Math.round(size * 0.46)), lineHeight: 1.25, color: L.ink2, marginTop: Math.round(size * 0.3) }}>{subtitleOf(by)}</div>
         </div>
+        {/* The address as one word, the way it is typed: "BuyItsCovers.com". */}
+        <div style={{ ...DISPLAY, display: 'flex', fontStyle: 'italic', fontSize: Math.max(20, Math.round(size * 0.5)), color: look === 'paper' ? OG.accent : OG.accentDark }}>BuyItsCovers.com</div>
       </div>
-      <Tiles rects={rects} images={images} look={look} />
+      <Tiles rects={plan.covers} images={images} look={look} />
     </div>
   );
 }
@@ -233,19 +283,29 @@ export async function GET(request: NextRequest) {
   const format: Format = rawFormat === 'feed' || rawFormat === 'card' ? rawFormat : 'story';
   const rawLook = params.get('look');
   const look: Look = rawLook === 'paper' || rawLook === 'plain' ? rawLook : 'ambient';
+  // Titles and authors under the covers, when the reader asks for them; a link card has no room for them.
+  const withTitles = params.get('titles') === '1' && format !== 'card';
   const board = parseBoard(params);
   if (filledCount(board) === 0) return json({ error: 'An empty board has no picture.' }, 400);
 
   const count = sizeOf(board);
-  const title = board.by ? `The books that inspired ${board.by}` : 'The books that inspired me';
-  const rects = format === 'card' ? cardRects(count) : posterLayout(format, count).tiles;
-  const size = format === 'card' ? { width: CARD.width, height: CARD.height } : { width: posterLayout(format, count).width, height: posterLayout(format, count).height };
-  const tiles = await Promise.all(board.slots.map((s, i) => (s ? tile(s.coverId, rects[i].width, rects[i].height) : null)));
-  const whole = board.slots.every((s, i) => !s || tiles[i]);
+  const layout = format === 'card' ? null : posterLayout(format, count, withTitles);
+  const rects = layout ? layout.tiles : cardPlan(count).covers;
+  const size = layout ? { width: layout.width, height: layout.height } : { width: CARD.width, height: CARD.height };
+  const [tiles, described] = await Promise.all([
+    Promise.all(board.slots.map((s, i) => (s ? tile(s.coverId, rects[i].width, rects[i].height) : null))),
+    withTitles ? describeBoard(board) : null,
+  ]);
+  const captions = described ? described.books.map((b) => (b?.title ? { title: b.title, author: b.author ?? '' } : null)) : null;
+  // Kept only when it is whole: every cover came, and every title that was asked for.
+  const whole = board.slots.every((s, i) => !s || tiles[i]) && (!captions || board.slots.every((s, i) => !s || captions[i]));
   const under = await ground(look, size.width, size.height, rects, tiles);
   const images = tiles.map((t) => (t ? dataUrl(t) : null));
 
-  const picture = await asJpeg(new ImageResponse(format === 'card' ? card(count, title, images, look, under) : poster(format, count, title, images, look, under), { ...size, fonts: await ogFonts() }));
+  const picture = await asJpeg(new ImageResponse(
+    format === 'card' ? card(count, board.by, images, look, under) : poster(format, count, board.by, images, look, under, captions),
+    { ...size, fonts: await ogFonts() },
+  ));
   const headers = new Headers(picture.headers);
   headers.set('Cache-Control', whole ? 'public, max-age=3600, s-maxage=2592000' : 'no-store');
   return new Response(picture.body, { status: 200, headers });

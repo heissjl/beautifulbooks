@@ -10,7 +10,25 @@
  * Bluesky 300, Threads 500.
  */
 
-export const HASHTAG = '#booksthatinspiredme';
+/**
+ * `#shelfportrait` since the page is called "My Shelf-Portrait" (2026-10-05);
+ * it was `#booksthatinspiredme`. Claude's choice to follow the name — Julian
+ * settled the name, not yet the hashtag.
+ */
+export const HASHTAG = '#shelfportrait';
+
+/**
+ * The two lines every page and picture carries (Julian, 2026-10-05: „Oben: My
+ * Shelf-Portrait, unten: The books that inspire me"). With a name on the
+ * board they speak of that person.
+ */
+export function titleOf(by: string): string {
+  return by ? `${by}’s Shelf-Portrait` : 'My Shelf-Portrait';
+}
+
+export function subtitleOf(by: string): string {
+  return by ? `The books that inspire ${by}` : 'The books that inspire me';
+}
 
 export interface ShareTarget {
   id: 'x' | 'threads' | 'bluesky' | 'whatsapp' | 'telegram';
@@ -25,8 +43,8 @@ export interface ShareTarget {
  * printing they held.
  */
 export function shareText(by: string): string {
-  const whose = by ? `The books that inspired ${by}, each with a favourite cover` : 'The books that inspired me, with my favourite covers';
-  return `${whose}. What inspired you? ${HASHTAG}`;
+  const what = by ? `the books that inspire ${by}, each with a favourite cover` : 'the books that inspire me, with my favourite covers';
+  return `${titleOf(by)}: ${what}. What’s yours? ${HASHTAG}`;
 }
 
 export function shareTargets(link: string, by: string): ShareTarget[] {
