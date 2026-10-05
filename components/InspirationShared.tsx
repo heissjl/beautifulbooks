@@ -137,7 +137,12 @@ export default function InspirationShared({ board, query, link, walls, versus }:
                     {b.title ?? 'A book whose title did not load'}
                     {b.author && <span className="text-ink-3"> — {b.author}</span>}
                   </span>
-                  <Link href={b.href} className={`shrink-0 whitespace-nowrap text-xs ${more}`}>Where to find it</Link>
+                  {/*
+                    In a new tab (Julian, 2026-10-05): the list is worked through book by book, and the portrait should
+                    still be there after each. `noopener` only, not `noreferrer` — the book page reads the referrer to
+                    class this visit as coming from a Shelf-Portrait (K9).
+                  */}
+                  <Link href={b.href} target="_blank" rel="noopener" className={`shrink-0 whitespace-nowrap text-xs ${more}`}>Where to find it</Link>
                 </li>
               );
             })}
