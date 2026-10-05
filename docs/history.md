@@ -4648,3 +4648,21 @@ Julian: „can we push the new covers onto the pocketbook ourselves? without usi
 **Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
 
 1.283 Tests (117 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: drei Bilder je Buch — Bibliothek und Startseite geschrieben, Ruhezustand nicht (ROADMAP 5.16c)
+
+Julian, nach dem Blick auf den Reader: „in der library auf dem reader wurde es mit dem neuen angezeigt, auf der startseite und im standby nicht. was heißt das?" Reader wieder angeschlossen, nur gelesen:
+
+- Das Bild der Bibliothek war noch das geschriebene (57.166 Bytes, 232 × 393), obwohl *Roadside Picnic* inzwischen geöffnet worden war (`cache.dat`: `rb.1` ist das Buch) — der Reader nimmt es und behält es.
+- **Startseite:** `system/cache/desktop/` mit `cache.dat` (787 Zeilen `rb.<n>.…` und `t.<n>.…`: Pfad, Titel, Buchnummer, Prüfsumme je Platz), `1/<Pfad>_<B>x<H>.png` (142 Dateien: 40 × 123x184, 33 × 234x343, 33 × 250x368, 36 × 268x396), `rb/` (9 Bilder: Platz 1 in 268×396, Platz 2 in 250×368, Platz 3 in 234×343) und `t/` (40 Kacheln, 123 × 184). Die vier Größen von *Roadside Picnic* trugen das Datum November 2025; `rb/1.png` das dieses Abends, gleiche Maße wie die 268×396-Datei, andere Bytes.
+- **Ruhezustand:** `system/cache/bookcover/` mit 11 Dateien `<32 Hex>.<295…305>`, jede 389.238 Bytes: BMP, 758 × 1024, 4 Bit. `system/logo/bookcover.lnk` zeigt auf `….305`; angesehen ist es das alte Cover von *Roadside Picnic* aus der Datei. `global.cfg`: `offlogo=@cover_logo`. Je Öffnen eine neue Nummer; woraus der Name gebildet wird, ist nicht gefunden (kein MD5 von Pfad, Name, Titel oder Prüfsumme).
+
+**Gebaut:** `picturesOf` (Bibliothek; jede vorhandene Größe der Startseite; die Plätze aus `cache.dat`, die den Pfad des Buchs tragen, mit der Größe, deren Maß sie haben), `homePositions`, `makeThumb` mit Rahmen; `put` und `back` gehen über alle Bilder, das Journal nennt jedes; ein Eintrag aus der ersten Fassung (ohne Dateiname) wird weiter richtig zurückgelegt. `cache.dat` wird nur gelesen. Vier Tests dazu.
+
+**Geschrieben:** *Roadside Picnic*, 6 Bilder — Bibliothek 232 × 393, Startseite 108 × 184, 202 × 343, 217 × 368, 233 × 396 und `rb/1.png` 233 × 396. Vorher/nachher gleich: Buchdatei `d98442a5…`, `books.db` `6a71361a…`, `explorer-3.db` `7f1aedb9…`, `cache.dat` `9f3a7f60…`; keine `._`-Dateien.
+
+**Der Ruhezustand ist nicht gemacht und so nicht zu machen:** das Bild entsteht bei jedem Öffnen aus der Datei; es zu überschreiben hielte bis zum nächsten Öffnen. **Nicht bekannt:** ob die Startseite die neuen Bilder zeigt und behält.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.

@@ -5,15 +5,16 @@
  *   npx tsx lab/calibre/reader-covers.ts --put <book>    # the cover Calibre has for this book, as its picture on the reader
  *   npx tsx lab/calibre/reader-covers.ts --back <book>   # the picture the reader had before
  *
- * `<book>` is Calibre's book number. Only the reader's own picture of the
- * book is written (`reader.ts`): no book file, no database. The picture that
- * was there is kept beside the library's backups, under `reader/`.
+ * `<book>` is Calibre's book number. Only the reader's own pictures of the
+ * book are written (`reader.ts`) — the library's, and the home screen's where
+ * the reader has made them: no book file, no database. The pictures that
+ * were there are kept beside the library's backups, under `reader/`.
  */
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { imageSizeFast } from './image';
 import { coverFile, findLibrary, readLibrary } from './library';
-import { findReader, ReaderCovers, readBooksOnReader, thumbFile } from './reader';
+import { findReader, picturesOf, ReaderCovers, readBooksOnReader, thumbFile } from './reader';
 import { CoverWriter, defaultBackupRoot, findCalibredb, undoStacks } from './safety';
 
 const args = process.argv.slice(2);
@@ -50,7 +51,8 @@ if (put || back) {
     console.error(result.error);
     process.exit(1);
   }
-  for (const lpath of result.lpaths) console.log(`#${book.id} „${book.title}": ${put ? 'picture written' : 'old picture back'} — ${thumbFile(root, lpath)} (${px(thumbFile(root, lpath))})`);
+  console.log(`#${book.id} „${book.title}": ${result.pictures.length} picture${result.pictures.length === 1 ? '' : 's'} ${put ? 'written' : 'put back as the reader had them'}`);
+  for (const file of result.pictures) console.log(`   ${file} (${px(join(root, file))})`);
   console.log(`kept:   ${join(writer.root, 'reader')}`);
 } else {
   const stacks = undoStacks(writer.journal());
@@ -61,7 +63,7 @@ if (put || back) {
   for (const [id, stack] of stacks) {
     const book = books.find((b) => b.id === id);
     const lpaths = onReader.get(id) ?? [];
-    const where = lpaths.length ? lpaths.map((l) => `${l} [picture ${px(thumbFile(root, l))}]`).join('; ') : 'not on the reader';
+    const where = lpaths.length ? lpaths.map((l) => `${l} [library ${px(thumbFile(root, l))}, home screen ${picturesOf(root, l).length - 1}]`).join('; ') : 'not on the reader';
     console.log(`#${id} ${(book?.title ?? stack[0].title).slice(0, 34).padEnd(34)} ${status.get(id)?.put ? 'put  ' : '     '} ${where}`);
   }
 }

@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { PNG } from 'pngjs';
 import { afterEach, describe, expect, it } from 'vitest';
-import { booksOnReader, findReader, isReader, makeThumb, ReaderCovers, thumbFile, thumbSize } from '../reader';
+import { booksOnReader, findReader, homePositions, isReader, makeThumb, picturesOf, ReaderCovers, thumbFile, thumbSize } from '../reader';
 
 const dirs: string[] = [];
 const folder = (): string => {
@@ -86,6 +86,89 @@ describe('finding the reader and its books', () => {
   });
 });
 
+describe('the pictures of the home screen', () => {
+  const lpath = 'Books/Strugatsky, Arkady & Strugatsky, Boris/Roadside Picnic - Arkady Strugatsky & Boris Strugatsky.epub';
+  const index = [
+    'rb.1.author=Arkady Strugatsky, Boris Strugatsky',
+    `rb.1.path=/mnt/ext1/${lpath}`,
+    'rb.1.title=Roadside Picnic',
+    'rb.2.path=/mnt/ext1/Books/Frisch, Max/Montauk - Frisch, Max.epub',
+    't.1.path=',
+    `t.41.path=/mnt/ext1/${lpath}`,
+    `t.7.title=/mnt/ext1/${lpath}`,
+  ].join('\n');
+
+  /** The fake reader, with the home screen's pictures as the firmware makes them: one per size, and copies by position. */
+  function withHome(): { root: string; old: Buffer } {
+    const { root, old } = fakeReader();
+    const sized = join(root, 'system/cache/desktop/1/Books/Strugatsky, Arkady & Strugatsky, Boris');
+    mkdirSync(sized, { recursive: true });
+    const picture = cover(1000, 1600);
+    for (const [w, h] of [[268, 396], [250, 368], [123, 184]]) writeFileSync(join(sized, `Roadside Picnic - Arkady Strugatsky & Boris Strugatsky.epub_${w}x${h}.png`), makeThumb(picture, { width: w, height: h }) as Buffer);
+    // Another book's picture in the same folder, and one whose name only starts alike.
+    writeFileSync(join(sized, 'Ugly Swans, The - Arkady Strugatsky & Boris Strugatsky.epub_268x396.png'), old);
+    writeFileSync(join(sized, 'Roadside Picnic - Arkady Strugatsky & Boris Strugatsky.epub.bak_268x396.png'), old);
+    for (const dir of ['rb', 't']) mkdirSync(join(root, 'system/cache/desktop', dir), { recursive: true });
+    writeFileSync(join(root, 'system/cache/desktop/rb/1.png'), makeThumb(cover(1000, 1600), { width: 268, height: 396 }) as Buffer);
+    writeFileSync(join(root, 'system/cache/desktop/rb/2.png'), old);
+    writeFileSync(join(root, 'system/cache/desktop/t/41.png'), makeThumb(cover(1000, 1600), { width: 123, height: 184 }) as Buffer);
+    writeFileSync(join(root, 'system/cache/desktop/cache.dat'), index);
+    return { root, old };
+  }
+
+  it('finds the positions that show a book, by its path and nothing else', () => {
+    expect(homePositions(index, lpath)).toEqual(['rb/1.png', 't/41.png']);
+    expect(homePositions(index, 'Books/Frisch, Max/Montauk - Frisch, Max.epub')).toEqual(['rb/2.png']);
+    expect(homePositions(index, '')).toEqual([]);
+  });
+
+  it('lists the library’s picture, each size the reader made, and the positions with the size they show', () => {
+    const { root } = withHome();
+    const rel = (file: string) => file.slice(root.length + 1);
+    expect(picturesOf(root, lpath).map((p) => [rel(p.file), p.box.width, p.box.height, p.where])).toEqual([
+      [`system/cover_chache/1/${lpath}.png`, 260, 393, 'library'],
+      [`system/cache/desktop/1/${lpath}_123x184.png`, 123, 184, 'home'],
+      [`system/cache/desktop/1/${lpath}_250x368.png`, 250, 368, 'home'],
+      [`system/cache/desktop/1/${lpath}_268x396.png`, 268, 396, 'home'],
+      ['system/cache/desktop/rb/1.png', 268, 396, 'home'],
+      ['system/cache/desktop/t/41.png', 123, 184, 'home'],
+    ]);
+    // A book that never stood on the home screen has the library's picture only.
+    expect(picturesOf(root, 'Books/Frisch, Max/Montauk - Frisch, Max.epub')).toHaveLength(1);
+  });
+
+  it('writes them all in their own sizes, leaves the index and the other books alone, and puts every one back', () => {
+    const { root, old } = withHome();
+    const before = new Map(picturesOf(root, lpath).map((p) => [p.file, readFileSync(p.file)]));
+    const reader = new ReaderCovers(root, join(folder(), 'reader'));
+    const result = reader.put(403, cover(1080, 1832), 'ol:1');
+    expect(result.ok && result.pictures).toHaveLength(6);
+    expect(header(readFileSync(join(root, 'system/cache/desktop/rb/1.png')))).toMatchObject({ width: 233, height: 396, colorType: 0 });
+    expect(header(readFileSync(join(root, `system/cache/desktop/1/${lpath}_123x184.png`)))).toMatchObject({ width: 108, height: 184 });
+    expect(readFileSync(join(root, 'system/cache/desktop/cache.dat'), 'utf8')).toBe(index);
+    expect(readFileSync(join(root, 'system/cache/desktop/rb/2.png')).equals(old)).toBe(true);
+    expect(readFileSync(join(root, 'system/cache/desktop/1/Books/Strugatsky, Arkady & Strugatsky, Boris/Ugly Swans, The - Arkady Strugatsky & Boris Strugatsky.epub_268x396.png')).equals(old)).toBe(true);
+    expect(readFileSync(join(root, lpath), 'utf8')).toBe('the book itself');
+
+    const back = reader.back(403);
+    expect(back.ok && back.pictures).toHaveLength(6);
+    for (const [file, bytes] of before) expect(readFileSync(file).equals(bytes)).toBe(true);
+  });
+
+  it('puts back the reader’s own library picture when the first write was recorded before pictures had names in the record', () => {
+    const { root, old } = withHome();
+    const keep = join(folder(), 'reader');
+    mkdirSync(join(keep, 'pictures/403'), { recursive: true });
+    writeFileSync(join(keep, 'pictures/403/first.png'), old);
+    writeFileSync(join(keep, 'reader.jsonl'), `${JSON.stringify({ at: '2026-10-05T01:25:21.056Z', action: 'put', bookId: 403, lpath, coverId: 'ol:1', backup: join(keep, 'pictures/403/first.png') })}\n`);
+    writeFileSync(join(root, 'system/cover_chache/1', `${lpath}.png`), makeThumb(cover(600, 900)) as Buffer);
+    const reader = new ReaderCovers(root, keep);
+    reader.put(403, cover(1080, 1832), 'ol:2');
+    reader.back(403);
+    expect(readFileSync(join(root, 'system/cover_chache/1', `${lpath}.png`)).equals(old)).toBe(true);
+  });
+});
+
 describe('putting a cover on the reader', () => {
   it('writes the picture and nothing else, keeps the old one, and puts it back', () => {
     const { root, lpath, old } = fakeReader();
@@ -94,7 +177,7 @@ describe('putting a cover on the reader', () => {
     const picture = join(root, 'system/cover_chache/1', `${lpath}.png`);
 
     const result = reader.put(403, cover(1080, 1832), 'ol:1');
-    expect(result).toEqual({ ok: true, lpaths: [lpath] });
+    expect(result).toEqual({ ok: true, lpaths: [lpath], pictures: [`system/cover_chache/1/${lpath}.png`] });
     expect(header(readFileSync(picture))).toMatchObject({ width: 232, height: 393, colorType: 0 });
     expect(readFileSync(join(root, lpath), 'utf8')).toBe('the book itself');
     expect(readdirSync(join(root, 'system/cover_chache/1/Books/Strugatsky, Arkady & Strugatsky, Boris'))).toHaveLength(1);
@@ -102,7 +185,7 @@ describe('putting a cover on the reader', () => {
 
     // A second cover later: what goes back is still the reader's own picture, not the first of ours.
     reader.put(403, cover(600, 900), 'ol:2');
-    expect(reader.back(403)).toEqual({ ok: true, lpaths: [lpath] });
+    expect(reader.back(403)).toEqual({ ok: true, lpaths: [lpath], pictures: [`system/cover_chache/1/${lpath}.png`] });
     expect(readFileSync(picture).equals(old)).toBe(true);
     expect(reader.status([403]).get(403)).toEqual({ onReader: true });
     expect(reader.back(403)).toMatchObject({ ok: false });
