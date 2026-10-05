@@ -4835,3 +4835,19 @@ Julian, spät am Abend: „beim standby bild wurde gerade immer noch das alte co
 **Was es ändern würde, und was es kostet** (nichts davon gebaut): (1) das Buch aus Calibre neu senden und danach die Bilder schreiben — neues Cover überall, aber der Reader hält die neue Datei für ein neues Buch, Lesestand und Markierungen bleiben am alten Eintrag (an *Ubik* gesehen); ohne Verlust nur bei Büchern, die nicht angefangen sind. (2) Dem Reader in seiner Datenbank sagen, dass die neue Datei das alte Buch ist — nicht untersucht, und es hieße, eine Datenbank des Readers zu schreiben, was das Werkzeug bisher nie tut. (3) Das Bild im Ruhezustand überschreiben — hält nur bis zum nächsten Öffnen des Buchs.
 
 **Auswirkung auf die Analyse (3.1):** keine — nur Dokumente.
+
+## 2026-10-05 · Calibre-App: Calibre und PocketBook als zwei Ziele; der Weg für neue Bücher (ROADMAP 5.16a, 5.16c)
+
+Julian: „können wir das cover der buchdatei auch ohne probleme ändern?", „i added new books to my calibre library, what is the right pipeline now to get a nice picture all around" und „i don't [want] the app to write automatically, but after a push. and i want to decide whether to write to calibre or pocketbook".
+
+**Gebaut** (`app.ts`, `app.html`, `reader.ts`): im Vergleich zwei Knöpfe statt „Use this cover" — „Write to Calibre" und „Write to the PocketBook" —, darunter „Nothing is written until you press a button" und der Stand des Readers. `/api/reader` nimmt neben `{bookId}` (Calibres Cover) jetzt `{bookId, coverId}`: das Katalog-Cover wird geholt, geprüft und als Bilder des Readers geschrieben; Calibre wird nicht angefasst, der Haken „sent" nur gesetzt, wenn es dasselbe Cover ist, das Calibre hat. Der Zustand sagt für jedes Buch `onReader` (vorher nur für geänderte) und `readerCover`; welche Bücher auf dem Reader liegen, wird einmal je Änderungszeit von `metadata.calibre` nachgesehen (`ReaderCovers.present`), nicht bei jeder Anfrage. Die Reader-Knöpfe hängen nicht mehr daran, dass Calibre geschlossen ist. Die Seite fragt beim Öffnen des Vergleichs den Zustand neu, damit ein inzwischen angeschlossener Reader gesehen wird.
+
+**Geprüft** an der Probe-Kopie im Testordner und einem nachgebauten Reader-Ordner (zwei Bücher, Regalbilder, ein Platz der Startseite), während Calibre lief: beide Bücher als „auf dem Reader" erkannt; *Foundation and Empire* (#308), Cover `ol:12585750` (1459 × 2447, 913 KB, geholt in 568 ms) → „Write to the PocketBook" fertig nach 0,44 s, zwei Bilder geschrieben, Cover in der Probe-Bibliothek unverändert 281 × 475, „Write to Calibre" derweil gesperrt (Calibre läuft); „Put the reader's old pictures back" → `shasum` über jede Datei des Reader-Ordners gleich wie vor dem Schreiben. Das Schreiben in Calibre selbst ist der Weg vom Vorabend (dort an der Probe-Kopie gelaufen); heute nicht wiederholt, weil Calibre offen war.
+
+**Nicht geprüft:** der neue Knopf am echten Reader (nicht angeschlossen). Und der Weg für neue Bücher — erst Cover in Calibre, dann senden, der Reader macht alle drei Bilder aus der gesendeten Datei — ist aus dem Befund an *Ubik* geschlossen, nicht an einem neuen Buch gesehen.
+
+**Zur Buchdatei:** ändern lässt sie sich; der Reader hält sie dann für ein neues Buch (Prüfsumme der Datei), Lesestand und Markierungen bleiben am alten Eintrag. Nicht untersucht ist, worüber die Prüfsumme geht und ob die Zuordnung in `explorer-3.db` umzuschreiben wäre.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.331 Tests (128 davon in `lab/calibre/`), tsc und Lint grün.

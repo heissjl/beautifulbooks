@@ -94,6 +94,18 @@ const readerNow = (): { root: string; covers: ReaderCovers } | null => {
  * the image host is quick most of the time and very slow now and then
  * (download.ts), and only a note taken in the slow moment says which.
  */
+/*
+ * Which of Calibre's books are on the reader. Looking costs one question per
+ * file over USB, and the answer only changes when Calibre sends or removes a
+ * book — which rewrites its list there. So: once per state of that list.
+ */
+let shelf: { key: string; ids: Set<number> } | null = null;
+function booksOnShelf(reader: { root: string; covers: ReaderCovers }): Set<number> {
+  const key = `${reader.root}:${statSync(join(reader.root, 'metadata.calibre')).mtimeMs}`;
+  if (shelf?.key !== key) shelf = { key, ids: reader.covers.present() };
+  return shelf.ids;
+}
+
 const downloadTimes = join(defaultBackupRoot(), 'download-times.jsonl');
 const downloads = new CoverDownloads(SITE, {
   note: (n) => {
@@ -143,9 +155,13 @@ function state() {
   const stacks = undoStacks(writer.journal());
   const remembered = works.all();
   const reader = readerNow();
-  let onReader = new Map<number, { onReader: boolean; put?: string }>();
+  let onShelf = new Set<number>();
+  let readerCover = new Map<number, string>();
   try {
-    if (reader) onReader = reader.covers.status([...stacks.keys()]);
+    if (reader) {
+      onShelf = booksOnShelf(reader);
+      readerCover = reader.covers.lastPut();
+    }
   } catch {
     // Its list did not read — unplugged this moment, or Calibre is writing it: then nothing is said about any book.
   }
@@ -173,8 +189,10 @@ function state() {
         ...(remembered[b.id] ? { workId: remembered[b.id] } : {}),
         // The cover the tool last put there, while that write can still be taken back.
         ...(stack ? { applied: stack[stack.length - 1].coverId, appliedAt: stack[stack.length - 1].at, canUndo: !!stack[stack.length - 1].backup, sent: sent.get(b.id) === stack[stack.length - 1].coverId } : {}),
-        // On the connected reader, and whether the pictures this app wrote there are of the cover the book has now.
-        ...(stack && onReader.get(b.id)?.onReader ? { onReader: true, readerHas: onReader.get(b.id)?.put === stack[stack.length - 1].coverId } : {}),
+        // On the connected reader; the cover whose pictures this app wrote there; and whether that is the cover the book has now.
+        ...(onShelf.has(b.id)
+          ? { onReader: true, ...(readerCover.has(b.id) ? { readerCover: readerCover.get(b.id) } : {}), ...(stack ? { readerHas: readerCover.get(b.id) === stack[stack.length - 1].coverId } : {}) }
+          : {}),
       };
     }),
   };
@@ -340,6 +358,17 @@ const server = createServer(async (req, res) => {
           return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, pictures: result.pictures.length, state: state() } : result);
         }
         const top = undoStacks(writer.journal()).get(book.id)?.at(-1);
+        // A cover from the catalogue straight onto the reader's shelves: Calibre keeps the cover it has (Julian, 2026-10-05:
+        // „i want to decide whether to write to calibre or pocketbook").
+        if (body.coverId !== undefined) {
+          if (typeof body.coverId !== 'string' || !COVER_ID.test(body.coverId)) return send(res, 400, { error: 'Bad cover id.' });
+          const f = await downloads.get(body.coverId);
+          if (!f.check.ok || !f.bytes) return send(res, 409, { error: f.check.ok ? 'No image.' : f.check.reason });
+          const result = reader.covers.put(book.id, f.bytes, body.coverId);
+          // The same cover Calibre has: then the book is as good as sent.
+          if (result.ok && top?.coverId === body.coverId) sent.set(book.id, body.coverId);
+          return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, pictures: result.pictures.length, state: state() } : result);
+        }
         if (!top) return send(res, 409, { error: 'This book’s cover was not changed here.' });
         const file = coverFile(library, book);
         if (!existsSync(file)) return send(res, 409, { error: 'The cover file is not on this Mac (iCloud).' });

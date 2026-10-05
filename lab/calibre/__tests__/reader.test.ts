@@ -189,12 +189,16 @@ describe('putting a cover on the reader', () => {
     expect(readFileSync(join(root, lpath), 'utf8')).toBe('the book itself');
     expect(readdirSync(join(root, 'system/cover_chache/1/Books/Strugatsky, Arkady & Strugatsky, Boris'))).toHaveLength(1);
     expect(reader.status([403, 7, 99])).toEqual(new Map([[403, { onReader: true, put: 'ol:1' }], [7, { onReader: false }], [99, { onReader: false }]]));
+    // For the app's overview: the books whose file is there (7 is listed, its file is gone), and the cover last put.
+    expect(reader.present()).toEqual(new Set([403]));
+    expect(reader.lastPut()).toEqual(new Map([[403, 'ol:1']]));
 
     // A second cover later: what goes back is still the reader's own picture, not the first of ours.
     reader.put(403, cover(600, 900), 'ol:2');
     expect(reader.back(403)).toEqual({ ok: true, lpaths: [lpath], pictures: [`system/cover_chache/1/${lpath}.png`] });
     expect(readFileSync(picture).equals(old)).toBe(true);
     expect(reader.status([403]).get(403)).toEqual({ onReader: true });
+    expect(reader.lastPut().size).toBe(0);
     expect(reader.back(403)).toMatchObject({ ok: false });
   });
 

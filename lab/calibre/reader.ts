@@ -269,7 +269,7 @@ export class ReaderCovers {
     }
     if (!lpaths.length) return { ok: false, error: 'This book is not on the reader — Calibre has not sent it there.' };
     const img = decode(cover, { maxMemoryUsageInMB: 256, maxResolutionInMP: 40 });
-    if (!img) return { ok: false, error: 'The cover in Calibre does not decode.' };
+    if (!img) return { ok: false, error: 'The cover does not decode.' };
     const written: string[] = [];
     try {
       let n = 0;
@@ -317,6 +317,23 @@ export class ReaderCovers {
       return { ok: false, error: `Writing to the reader failed: ${(err as Error).message}` };
     }
     return { ok: true, lpaths: [...new Set(todo.map(([, e]) => e.lpath))], pictures: todo.map(([file]) => file) };
+  }
+
+  /** The books Calibre's list names whose file is on the reader. One look at each file: ask once per state of the list, not per request. */
+  present(): Set<number> {
+    const out = new Set<number>();
+    for (const [id, lpaths] of readBooksOnReader(this.root)) if (lpaths.some((lpath) => existsSync(join(this.root, lpath)))) out.add(id);
+    return out;
+  }
+
+  /** Per book number, the cover this tool last put on the reader as its pictures — none once they were put back. */
+  lastPut(): Map<number, string> {
+    const out = new Map<number, string>();
+    for (const e of this.journal()) {
+      if (e.action === 'put' && e.coverId) out.set(e.bookId, e.coverId);
+      else out.delete(e.bookId);
+    }
+    return out;
   }
 
   /**
