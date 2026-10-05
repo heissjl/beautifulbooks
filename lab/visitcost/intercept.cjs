@@ -136,6 +136,14 @@ function redis(args) {
       return l.slice(start < 0 ? Math.max(0, l.length + start) : start, stop < 0 ? l.length + stop + 1 : stop + 1);
     }
     case 'KEYS': return [...strings.keys(), ...hashes.keys(), ...lists.keys()];
+    case 'EVAL': {
+      // Only the site's one script, HINCRBY_MANY_SCRIPT (lib/hotornot/store.ts): ARGV[1] the expiry, then pairs.
+      const hashKey = rest[1];
+      const argv = rest.slice(2);
+      const h = hashes.get(hashKey) || new Map(); hashes.set(hashKey, h);
+      for (let i = 1; i + 1 < argv.length; i += 2) h.set(argv[i], String(Number(h.get(argv[i]) || 0) + Number(argv[i + 1])));
+      return (argv.length - 1) / 2;
+    }
     case 'INCR': { const v = Number(strings.get(key) || 0) + 1; strings.set(key, String(v)); return v; }
     default: return null;
   }
@@ -156,7 +164,7 @@ globalThis.fetch = async function visitcostFetch(input, init) {
     const args = JSON.parse(body);
     const value = redis(args);
     // The key's shape, not the key: days and ids become placeholders.
-    const shape = String(args[1] ?? '').replace(/\d{4}-\d{2}-\d{2}/g, '<day>').replace(/[A-Za-z0-9_-]{16,}/g, '<id>');
+    const shape = String((String(args[0]).toUpperCase() === 'EVAL' ? args[3] : args[1]) ?? '').replace(/\d{4}-\d{2}-\d{2}/g, '<day>').replace(/[A-Za-z0-9_-]{16,}/g, '<id>');
     log({ kind: 'redis', cmd: String(args[0]).toUpperCase(), key: shape, bytes: body.length + JSON.stringify(value ?? null).length });
     return json({ result: value });
   }
