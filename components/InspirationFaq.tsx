@@ -18,6 +18,8 @@ import { SITE_NAME } from '@/lib/seo';
  * No hooks: the editor takes it as `children`, so it is rendered on the
  * server and its words are in the page a crawler reads.
  */
+const LINK = 'text-accent underline decoration-line underline-offset-4 hover:decoration-accent';
+
 const FAQ: { q: string; a: React.ReactNode }[] = [
   {
     q: 'What is a Shelf-Portrait?',
@@ -31,7 +33,9 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     q: 'My book, or my cover, is not there.',
     a: (
       <>
-        The search asks <a href="https://openlibrary.org" className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent" rel="noopener">Open Library</a>, an open catalogue anyone can add to. Try the original title or the author’s name. A cover nobody has scanned yet cannot be shown here; once it is added there, it can be chosen here too.
+        The search asks <a href="https://openlibrary.org" className={LINK} rel="noopener">Open Library</a>, an open catalogue. Try the original title or the author’s name. A cover nobody has scanned yet cannot be shown here.{' '}
+        {/* Julian, 2026-10-05: say that people can add to Open Library, and link there. */}
+        You can add it yourself: Open Library is free to edit with an account — <a href="https://openlibrary.org/books/add" className={LINK} rel="noopener">add a missing book</a>, or upload a cover on the book’s page there. Once it is there, it can be chosen here too.
       </>
     ),
   },

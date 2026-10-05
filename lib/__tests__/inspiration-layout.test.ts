@@ -64,3 +64,22 @@ it('six covers stand two wide in a story and three wide in a post, where they ar
   expect(feed.tiles[0].width).toBeGreaterThan(posterLayout('feed', 9).tiles[0].width);
   expect(story.tiles[0].width).toBe(posterLayout('story', 9).tiles[0].width);
 });
+
+it('three covers stand one above and two below, in a story and in a post', () => {
+  for (const format of ['story', 'feed'] as const) {
+    const L = posterLayout(format, 3);
+    const [top, left, right] = L.tiles;
+    expect(L.tiles).toHaveLength(3);
+    expect(left.y).toBe(right.y);
+    expect(top.y).toBeLessThan(left.y);
+    // The one above is centred over the two below.
+    expect(top.x * 2 + top.width).toBe(left.x + right.x + right.width);
+    expect(top.x * 2 + top.width).toBe(L.width);
+    for (const t of L.tiles) {
+      expect(t.width * 3).toBe(t.height * 2);
+      expect(t.y).toBeGreaterThanOrEqual(L.head.height);
+      expect(t.y + t.height).toBeLessThanOrEqual(L.foot.y);
+    }
+  }
+  expect(posterLayout('feed', 3).tiles[0].width).toBeGreaterThan(posterLayout('feed', 6).tiles[0].width);
+});

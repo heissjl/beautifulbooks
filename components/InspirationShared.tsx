@@ -85,24 +85,34 @@ export default function InspirationShared({ board, query, link, walls, versus }:
           card with the covers, drawn here so nobody has to guess. The picture itself has to be saved
           and attached, or handed to an app by the phone.
         */}
-        <section className="mt-10 border-t border-line pt-6">
-          <h2 className="font-display text-2xl text-ink">Share it</h2>
+        {/*
+          For the one who made the board, not for whoever follows its link (Julian, 2026-10-05): a
+          visitor is asked to make their own, not to pass on someone else's.
+        */}
+        <InspirationMine
+          query={query}
+          visitor={null}
+          maker={
+    <section className="mt-10 border-t border-line pt-6">
+              <h2 className="font-display text-2xl text-ink">Share it</h2>
 
-          <h3 className="mt-4 text-lg text-ink">As a picture</h3>
-          <p className="mt-1 text-sm text-ink-2">For Instagram, a story, a status — wherever a link does not travel. The picture carries the address.</p>
-          <PictureShare query={query} link={link} text={shareText(board.by)} />
+              <h3 className="mt-4 text-lg text-ink">As a picture</h3>
+              <p className="mt-1 text-sm text-ink-2">For Instagram, a story, a status — wherever a link does not travel. The picture carries the address.</p>
+              <PictureShare query={query} link={link} text={shareText(board.by)} />
 
-          <h3 className="mt-7 text-lg text-ink">As a link</h3>
-          <p className="mt-1 text-sm text-ink-2">The post is one sentence and the link. The link shows as this card:</p>
-          {/* eslint-disable-next-line @next/next/no-img-element -- a picture this site draws itself, at the size it is shown; next/image would transform it again */}
-          <img src={`/api/inspiration/poster?${query}&format=card`} alt={`The link card: ${title}, with the covers`} width={1200} height={630} loading="lazy" className="mt-3 w-full max-w-sm rounded-card border border-line bg-surface-2" />
-          <div className="mt-3 flex flex-wrap items-center gap-1.5">
-            {shareTargets(link, board.by).map((s) => (
-              <a key={s.id} href={s.href} target="_blank" rel="noopener" className={pill}>{s.label}</a>
-            ))}
-            <CopyLink link={link} />
-          </div>
-        </section>
+              <h3 className="mt-7 text-lg text-ink">As a link</h3>
+              <p className="mt-1 text-sm text-ink-2">The post is one sentence and the link. The link shows as this card:</p>
+              {/* eslint-disable-next-line @next/next/no-img-element -- a picture this site draws itself, at the size it is shown; next/image would transform it again */}
+              <img src={`/api/inspiration/poster?${query}&format=card`} alt={`The link card: ${title}, with the covers`} width={1200} height={630} loading="lazy" className="mt-3 w-full max-w-sm rounded-card border border-line bg-surface-2" />
+              <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                {shareTargets(link, board.by).map((s) => (
+                  <a key={s.id} href={s.href} target="_blank" rel="noopener" className={pill}>{s.label}</a>
+                ))}
+                <CopyLink link={link} />
+              </div>
+            </section>
+          }
+        />
 
         {/*
           Open, and plainer than a collection's list (Julian, 2026-10-05: „aufklappen" — it was folded

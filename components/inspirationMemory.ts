@@ -7,9 +7,20 @@
  * of its content, with no visitor id (N11). So the editor notes the board it
  * handed over in this module's memory, as `NavMemory` keeps the previous
  * address — "Done" is a client-side navigation, and the module lives through
- * it. Nothing is written to the device; after a reload the reader is a
- * visitor like any other, which costs them one button's wording.
+ * it. Nothing is written to the device.
+ *
+ * Since the ways to share are shown to the maker only (Julian, 2026-10-05:
+ * „the sharing options should only be there when you edited the picture, not
+ * when you get on the portrait from a link"), the memory alone is too short:
+ * a phone reloads a tab it had put away, and the maker would come back to a
+ * page without its share buttons. So "Done" also lands on the address with
+ * `#mine` behind it. A fragment is never sent to the server, survives a
+ * reload, and is still nothing stored. The links the page hands out do not
+ * carry it; whoever copies the address bar instead passes the maker's view
+ * along, which shows a visitor nothing they may not see.
  */
+export const MINE = '#mine';
+
 let made: string | null = null;
 
 export function rememberMade(query: string): void {
@@ -17,7 +28,13 @@ export function rememberMade(query: string): void {
 }
 
 export function wasMade(query: string): boolean {
-  return made === query;
+  return made === query || (typeof window !== 'undefined' && window.location.hash === MINE);
+}
+
+/** For `useSyncExternalStore`: the answer changes when the fragment does. */
+export function watchMade(onChange: () => void): () => void {
+  window.addEventListener('hashchange', onChange);
+  return () => window.removeEventListener('hashchange', onChange);
 }
 
 /**

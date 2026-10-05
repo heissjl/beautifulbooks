@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CoverImage from './CoverImage';
 import { coverRefFromUrl, coverUrlFor } from '@/lib/coverurl';
-import { keepNames, keptNames, rememberMade } from './inspirationMemory';
+import { keepNames, keptNames, MINE, rememberMade } from './inspirationMemory';
 import {
   NAME_MAX,
   SIZES,
@@ -242,7 +242,7 @@ export default function InspirationEditor({ initialQuery, initialNames, children
       if (!res.ok || !body?.path) throw new Error(body?.error ?? 'The link could not be made. Try again in a moment.');
       // So the shared page can tell its maker from a visitor without an id (components/inspirationMemory.ts).
       rememberMade(boardQuery(board));
-      router.push(body.path);
+      router.push(`${body.path}${MINE}`);
     } catch (err) {
       setLink({ busy: false, note: err instanceof Error ? err.message : 'The link could not be made. Try again in a moment.' });
     }

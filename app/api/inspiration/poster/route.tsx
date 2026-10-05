@@ -267,8 +267,9 @@ function card(count: BoardSize, by: string, images: (string | null)[], look: Loo
   const title = titleOf(by);
   const { words } = plan;
   const size = wordFit(title, words.width, plan.title);
-  // The address must fit its column with the spacing: sixteen letters at about 0.47 em each.
-  const sign = Math.min(Math.max(20, Math.round(size * 0.5)), Math.floor(words.width / (16 * 0.5)));
+  // The address must fit its column with the spacing: sixteen letters, measured at 0.41 em each in Xanh italic.
+  // "A little larger" (Julian, 2026-10-05): it was half the title's size and capped at 21 px on the card of nine.
+  const sign = Math.min(Math.max(22, Math.round(size * 0.6)), Math.floor(words.width / (16 * 0.44)));
   return (
     <div style={{ position: 'relative', width: CARD.width, height: CARD.height, display: 'flex', background: L.bg }}>
       <Ground src={under} width={CARD.width} height={CARD.height} />
@@ -283,7 +284,7 @@ function card(count: BoardSize, by: string, images: (string | null)[], look: Loo
           phrase for the link (Julian, 2026-10-05); the address a little spaced out, as he asked.
         */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ ...TEXT, display: 'flex', fontSize: Math.max(15, Math.round(sign * 0.6)), color: L.ink2, marginBottom: Math.round(sign * 0.12) }}>Judge a book,</div>
+          <div style={{ ...TEXT, display: 'flex', fontSize: Math.max(17, Math.round(sign * 0.7)), color: L.ink2, marginBottom: Math.round(sign * 0.12) }}>Judge a book,</div>
           <div style={{ ...DISPLAY, display: 'flex', fontStyle: 'italic', fontSize: sign, letterSpacing: sign * 0.045, color: look === 'paper' ? OG.accent : OG.accentDark }}>BuyItsCovers.com</div>
         </div>
       </div>
