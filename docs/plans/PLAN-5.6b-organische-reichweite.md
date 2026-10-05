@@ -57,7 +57,7 @@ Die Texte stehen vollständig in `lab/kalender/posts.json` und sind im Werkzeug 
 
 ## 4. Die Sammlungen, in dieser Reihenfolge
 
-**Am 2026-10-04 in `data/collections.json` veröffentlicht** (online geschaltete Entwürfe können dazukommen; die Cockpit-Ansicht „Sammlungen & Synchronisation“ zeigt den Stand):
+**In `data/collections.json` veröffentlicht.** Online sind es mehr: 46 von 56, weil Julian Entwürfe über /curate ohne Deploy freischaltet (5.10g). Gelesen wurde das am 2026-10-04 mit einer Anfrage an `buyitscovers.com/collections`; die Datei allein führt hier in die Irre (Julian: „ich glaub du bist hier nicht auf dem neuesten stand“). Die Reihenfolge der ersten Wochen:
 
 | Woche | Sammlung | Warum zuerst |
 |---|---|---|
@@ -71,7 +71,7 @@ Die Texte stehen vollständig in `lab/kalender/posts.json` und sind im Werkzeug 
 
 Dazwischen **Jahrzehnte-Seiten** (`/book/<id>/decades`): Gatsby, Nineteen Eighty-Four, Dune, The Hobbit, Pride and Prejudice, Alice, Der Steppenwolf. Sie sind das Format, nach dem auf Pinterest gesucht wird, und zeigen die Kernidee an einem Buch, das jeder kennt.
 
-**Ab Woche 5 plant der Kalender mit Entwürfen**, die Julian erst veröffentlichen müsste, weil sie zu den schönsten Wänden gehören: Heinz Edelmann (Reihe Hanser, Tolkien), Celestino Piatti (dtv phantastica), Penguin Classics mit schwarzem Band, Virago Modern Classics, Penguin Great Ideas. Jeder dieser Posts wartet auf `publish:<slug>`; welche erscheinen, entscheidet Julian (Setup-Eintrag am 9.10.). Bis dahin rückt der Kalender nicht von selbst nach, aber „Ab hier verschieben“ schiebt die Woche mit einem Klick.
+**Ab Woche 5 kommen die Gestalter- und Designreihen.** Online veröffentlicht sind davon Edelmann (Reihe Hanser, Tolkien), Piatti (dtv phantastica), Kurt Wirth, Heidelbach und Penguin Great Ideas; in `posts.json` sind sie unter `done` abgehakt. **Noch Entwurf sind Herder Bücherei/Grieder, Penguin Classics black band und Virago Modern Classics.** Der ursprüngliche Satz lautete: Heinz Edelmann (Reihe Hanser, Tolkien), Celestino Piatti (dtv phantastica), Penguin Classics mit schwarzem Band, Virago Modern Classics, Penguin Great Ideas. Jeder dieser Posts wartet auf `publish:<slug>`; welche erscheinen, entscheidet Julian (Setup-Eintrag am 9.10.). Bis dahin rückt der Kalender nicht von selbst nach, aber „Ab hier verschieben“ schiebt die Woche mit einem Klick.
 
 **Inhaltsmischung über acht Wochen:** etwa die Hälfte Sammlungen, ein Drittel Jahrzehnte, der Rest die Seite selbst (das Exposé, das Cover-Spiel, die eigene Sammlung). Posts über die Mitmach-Teile warten auf `spiel` bzw. `walls`, weil der Kalender nicht weiß, ob sie in Produktion eingeschaltet sind.
 
@@ -100,7 +100,7 @@ Warum es zu uns passt: Unsere Sammlungen nach Gestaltern sind genau dieser Stoff
 - Walter Grieder für die Herder Bücherei.
 - Nikolaus Heidelbach für Haffmans.
 
-Ab Edelmann warten die Posts auf `publish:<slug>`. Auf Instagram ist es dasselbe Format als Karussell.
+Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walter-grieder`; die übrigen Sammlungen sind online veröffentlicht. Auf Instagram ist es dasselbe Format als Karussell.
 
 **X ist der Kanal des Vorbilds, steht aber nicht im Kalender:** 5.6a kennt keine Klasse `x`, und ohne sie ist ein Besuch von dort „social“ oder „direkt“. Soll X dazukommen, braucht `VIA` den Eintrag (Analyse-Regel 6, Julian gibt den Satz frei), dann ist es ein weiterer Kanal im Werkzeug.
 
@@ -151,7 +151,7 @@ Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender 
 1. **Die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1). Sie hält 30 der 70 Einträge zurück: alles auf Instagram außer dem Exposé, alles auf Pinterest und TikTok, und die sieben Galerien.
 2. **Welche Kanäle es wirklich gibt.** Der Kalender plant acht; ein Kanal, den Julian nicht will, wird im Werkzeug ausgeblendet oder seine Einträge verworfen.
 3. **Startdatum.** Der Kalender beginnt mit einer Einrichtungswoche ab Mo 5.10. und dem ersten Post am Mo 12.10. Wer später anfängt, schiebt mit „Ab hier verschieben“ alles in einem Schritt.
-4. **Welche Entwürfe veröffentlicht werden** (Woche 5 und 6).
+4. **Ob die drei restlichen Entwürfe erscheinen** (Grieder/Herder, Penguin black band, Virago); sonst werden ihre Posts verworfen.
 5. **Englisch oder zweisprachig.** Die Vorschläge sind englisch, weil das Publikum der Kanäle es ist; bei edition suhrkamp und Edelmann bietet sich ein deutscher Post daneben an.
 6. **Der erste Satz des Show HN**, Julians eigener Grund für die Seite.
 7. **X als Kanal** für die Galerien (§4a): ja heißt eine neue `VIA`-Klasse in 5.6a.

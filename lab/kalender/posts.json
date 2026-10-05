@@ -1,6 +1,13 @@
 {
   "site": "https://buyitscovers.com",
-  "done": [],
+  "done": [
+    "publish:dtv-phantastica-covers-by-celestino-piatti",
+    "publish:fischer-bucherei-covers-by-kurt-wirth",
+    "publish:haffmans-covers-by-nikolaus-heidelbach",
+    "publish:penguin-great-ideas",
+    "publish:reihe-hanser-covers-by-heinz-edelmann",
+    "publish:tolkien-covers-by-heinz-edelmann"
+  ],
   "posts": [
     {
       "id": "setup-bluesky",
@@ -63,7 +70,7 @@
       "date": "2026-10-09",
       "channel": "alle",
       "kind": "setup",
-      "text": "Entwürfe veröffentlichen, auf die der Kalender ab Woche 5 wartet (in /curate oder im Sammlungs-Tool): Reihe Hanser und Tolkien von Heinz Edelmann, dtv phantastica von Celestino Piatti, Penguin Classics black band, Virago Modern Classics, Penguin Great Ideas. Welche davon, entscheidest du; der Kalender rückt nach.",
+      "text": "Online schon veröffentlicht (Stand 2026-10-04, einmal von buyitscovers.com/collections gelesen): Edelmann (Reihe Hanser, Tolkien, Jules Verne, Fischer), Piatti (dtv phantastica, Steinbeck), Kurt Wirth, Heidelbach (Haffmans, Kipling), Penguin Great Ideas und 30 weitere. Noch Entwurf, und der Kalender wartet darauf: Herder Bücherei von Walter Grieder (Galerie 22.11.), Penguin Classics black band (13.11.), Virago Modern Classics (16./19.11.). Veröffentlichen oder die Posts verwerfen; abhaken im Werkzeug unter „Erfüllt“.",
       "status": "vorschlag"
     },
     {
