@@ -95,7 +95,7 @@
       "date": "2026-10-13",
       "channel": "instagram",
       "kind": "expose",
-      "text": "A book is printed many times, and each printing can wear a different face.\n\nBuy Its Covers shows the covers a title has been printed with, by language and year, and points you to the edition behind the one you like.\n\nThe covers come from two open catalogues, Open Library and Google Books: a fraction of what was printed, but often a surprising one.\n\nLink in bio.\n\n#bookcovers #coverdesign #bookdesign",
+      "text": "A book is printed many times, and each printing can wear a different face. Here are five from before 1931, all in the public domain:\n\nPeter and Wendy (Scribner, 1911), cover by F. D. Bedford\nLe avventure di Pinocchio (Bemporad, 1902), cover by Carlo Chiostri\nThe Jungle Book (Macmillan, 1894), cover by John Lockwood Kipling\nAlice's Adventures in Wonderland (The Bodley Head, 1928), cover by W. H. Walker\nLa guerre des mondes (Vandamme, 1906), cover by Henrique Alvim Corrêa\n\nBuy Its Covers shows the covers a title has been printed with, by language and year, and points you to the edition behind the one you like. From two open catalogues, Open Library and Google Books.\n\nScans: Internet Archive and Open Library. Link in bio.\n\n#bookcovers #bookdesign #antiquebooks #publicdomain",
       "status": "vorschlag",
       "path": "/",
       "time": "18:00",
@@ -103,8 +103,8 @@
         "konto:instagram",
         "5.6a"
       ],
-      "image": "Karussell, fünf Folien nur Schrift (Xanh Mono auf dem Hintergrund der Seite), ohne Cover: 1 „Judge a book, buy its covers.“ · 2 „Type a title.“ · 3 „See the covers it has been printed with — by language and year.“ · 4 „Pick the one you want. Find that edition.“ · 5 „buyitscovers.com“",
-      "note": "Anpinnen. Braucht keine Rechte-Entscheidung, weil es keine Cover zeigt."
+      "image": "Karussell, sieben Folien 1080×1350: lab/kalender/out/instagram-1.jpg bis -7.jpg (python3 lab/kalender/render_gemeinfrei.py). Folie 1 der Schriftzug, 2–6 je ein gemeinfreies Cover mit Verlag, Jahr und Gestalter, 7 was die Seite tut.",
+      "note": "Anpinnen. Die Cover sind gemeinfrei (Gestalter vor 1956 gestorben, alle vor 1931 erschienen; docs/plans/research-gemeinfreie-cover.md) und brauchen deshalb keine Rechte-Entscheidung. Restrisiken: Jungle Book ist ein Foto des Buches, nicht ein Flachscan; Alice und La guerre des mondes sind nur mittelstark zugeschrieben."
     },
     {
       "id": "bsky-sf-masterworks",
@@ -154,16 +154,16 @@
       "date": "2026-10-17",
       "channel": "pinterest",
       "kind": "expose",
-      "text": "See the covers a book has been printed with, by language and year, and find the edition you'd want on your shelf. From two open catalogues, Open Library and Google Books.",
+      "text": "J. M. Barrie's Peter and Wendy in Scribner's 1911 edition: green cloth stamped in gold, cover by F. D. Bedford, now in the public domain. On Buy Its Covers, the covers Peter Pan has been printed with since, decade by decade, from two open catalogues.",
       "status": "vorschlag",
-      "title": "Buy Its Covers: the covers a book has been printed with",
-      "path": "/",
+      "title": "Peter and Wendy, 1911: F. D. Bedford's cover, and Peter Pan through the decades",
+      "path": "/book/OL462007W/decades",
       "needs": [
-        "rechte",
-        "5.5a",
-        "konto:pinterest"
+        "konto:pinterest",
+        "5.6a"
       ],
-      "image": "Pin 1000×1500 (5.5a) mit der Startseite"
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-1.jpg (von Hand gebaut, ohne 5.5a)",
+      "note": "Erster Pin, zugleich das Exposé auf Pinterest. Gemeinfrei (Bedford †1954), braucht deshalb keine Rechte-Entscheidung. Pinnwand „Covers through the decades“. Belegt in docs/plans/research-gemeinfreie-cover.md."
     },
     {
       "id": "gal-chris-moore",

@@ -162,7 +162,7 @@ Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender 
      - **Gesucht 2026-10-05, auf Julians Wunsch abgebrochen:** [research-gemeinfreie-cover.md](research-gemeinfreie-cover.md).
        - Fünf Cover taugen: Peter and Wendy 1911 (Bedford †1954), The Jungle Book 1894 (J. L. Kipling †1911), Pinocchio 1902 (Chiostri †1939), Alice 1928 (W. H. Walker †1938), La guerre des mondes 1906 (Alvim Corrêa †1910).
        - Dazu zwei schlichte Leinen und 15 unklare oder nicht freie.
-       - Das Karussell mit diesen Covern ist nicht gebaut.
+       - Gebaut am 2026-10-05: das Instagram-Exposé als Karussell mit diesen fünf Einbänden und der erste Pin (Peter and Wendy, 1911, verlinkt auf die Jahrzehnte-Seite von Peter Pan). Beide brauchen damit keine Rechte-Entscheidung mehr, nur Konto und 5.6a. Die Bilder rendert `lab/kalender/render_gemeinfrei.py`.
 2. **Welche Kanäle es wirklich gibt.** Der Kalender plant acht; ein Kanal, den Julian nicht will, wird im Werkzeug ausgeblendet oder seine Einträge verworfen.
 3. **Startdatum.** Der Kalender beginnt mit einer Einrichtungswoche ab Mo 5.10. und dem ersten Post am Mo 12.10. Wer später anfängt, schiebt mit „Ab hier verschieben“ alles in einem Schritt.
 4. **Ob die drei restlichen Entwürfe erscheinen** (Grieder/Herder, Penguin black band, Virago); sonst werden ihre Posts verworfen.

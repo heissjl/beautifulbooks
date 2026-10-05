@@ -1,0 +1,187 @@
+"""
+Renders the Instagram exposé carousel (1080x1350) and the first Pinterest pin
+(1000x1500) from five public-domain covers (ROADMAP 5.6b; the covers and why
+they are free: docs/plans/research-gemeinfreie-cover.md).
+
+    python3 lab/kalender/render_gemeinfrei.py      # writes lab/kalender/out/
+
+Python because Pillow sets type with real fonts; the site's Xanh Mono and Jost
+are fetched once from the google/fonts repository. Covers come from archive.org
+scans where one is large enough, otherwise Open Library's L size; both are
+cached under out/cache, one request at a time with a pause (Open Library shuts
+the door on bursts, CLAUDE.md). Nothing here asks Google.
+"""
+import os
+import time
+import urllib.request
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(HERE, 'out')
+CACHE = os.path.join(OUT, 'cache')
+
+# The site's tokens (app/globals.css, light theme).
+BG = (244, 240, 232)
+INK = (26, 23, 20)
+MUTED = (110, 101, 91)
+ACCENT = (148, 81, 56)
+
+FONTS = {
+    'xanh': 'https://raw.githubusercontent.com/google/fonts/main/ofl/xanhmono/XanhMono-Regular.ttf',
+    'xanh-italic': 'https://raw.githubusercontent.com/google/fonts/main/ofl/xanhmono/XanhMono-Italic.ttf',
+    'jost': 'https://raw.githubusercontent.com/google/fonts/main/ofl/jost/Jost%5Bwght%5D.ttf',
+}
+
+# In carousel order. `crop` trims scan borders as fractions (left, top, right, bottom).
+COVERS = [
+    dict(key='peter', title='Peter and Wendy', imprint="Charles Scribner's Sons, New York, 1911",
+         credit='Cover: F. D. Bedford (d. 1954)', work='OL462007W',
+         url='https://archive.org/download/peterwendy00barr2/page/n0.jpg', crop=(0.012, 0.008, 0.012, 0.008)),
+    dict(key='pinocchio', title='Le avventure di Pinocchio', imprint='R. Bemporad & Figlio, Florence, 1902',
+         credit='Cover: Carlo Chiostri (d. 1939)', work='OL1527356W',
+         url='https://covers.openlibrary.org/b/id/6527327-L.jpg', crop=(0, 0, 0, 0)),
+    dict(key='jungle', title='The Jungle Book', imprint='Macmillan and Co., London, 1894',
+         credit='Cover: John Lockwood Kipling (d. 1911)', work='OL19870W',
+         url='https://covers.openlibrary.org/b/id/6252570-L.jpg', crop=(0, 0, 0, 0)),
+    dict(key='alice', title="Alice's Adventures in Wonderland", imprint='John Lane, The Bodley Head, London, 1928',
+         credit='Cover: W. H. Walker (d. 1938)', work='OL138052W',
+         url='https://archive.org/download/alicesadventures0000unse_v7d2/page/n0.jpg', crop=(0.012, 0.008, 0.012, 0.008)),
+    dict(key='guerre', title='La guerre des mondes', imprint='L. Vandamme & Co., Brussels, 1906',
+         credit='Cover: Henrique Alvim Corrêa (d. 1910)', work='OL52114W',
+         url='https://covers.openlibrary.org/b/id/14614995-L.jpg', crop=(0, 0, 0, 0)),
+]
+
+
+def fetch(url: str, name: str) -> str:
+    path = os.path.join(CACHE, name)
+    if not os.path.exists(path):
+        req = urllib.request.Request(url, headers={'User-Agent': 'Buy Its Covers lab (render_gemeinfrei.py)'})
+        with urllib.request.urlopen(req, timeout=60) as r, open(path, 'wb') as f:
+            f.write(r.read())
+        time.sleep(3)
+    return path
+
+
+def font(name: str, size: int, weight: int | None = None) -> ImageFont.FreeTypeFont:
+    f = ImageFont.truetype(fetch(FONTS[name], f'{name}.ttf'), size)
+    if weight is not None:
+        f.set_variation_by_axes([weight])
+    return f
+
+
+def cover_image(c: dict) -> Image.Image:
+    im = Image.open(fetch(c['url'], f"{c['key']}{os.path.splitext(c['url'])[1]}")).convert('RGB')
+    l, t, r, b = c['crop']
+    w, h = im.size
+    return im.crop((int(w * l), int(h * t), int(w * (1 - r)), int(h * (1 - b))))
+
+
+def place_cover(canvas: Image.Image, im: Image.Image, box_h: int, top: int) -> tuple[int, int, int, int]:
+    """Centres the cover at height box_h with a soft shadow, returns its box."""
+    w = round(im.width * box_h / im.height)
+    im = im.resize((w, box_h), Image.LANCZOS)
+    x = (canvas.width - w) // 2
+    shadow = Image.new('RGBA', canvas.size, (0, 0, 0, 0))
+    ImageDraw.Draw(shadow).rectangle((x + 6, top + 14, x + w + 6, top + box_h + 14), fill=(20, 16, 12, 70))
+    canvas.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(18)))
+    canvas.paste(im, (x, top))
+    return x, top, x + w, top + box_h
+
+
+def centred(d: ImageDraw.ImageDraw, y: int, text: str, f, fill, width: int) -> int:
+    tw = d.textlength(text, font=f)
+    d.text(((width - tw) / 2, y), text, font=f, fill=fill)
+    return y + f.size
+
+
+def wrap(d: ImageDraw.ImageDraw, text: str, f, max_w: int) -> list[str]:
+    lines, line = [], ''
+    for word in text.split():
+        trial = f'{line} {word}'.strip()
+        if d.textlength(trial, font=f) <= max_w:
+            line = trial
+        else:
+            lines.append(line)
+            line = word
+    return lines + [line]
+
+
+def counter(d, i: int, n: int, W: int):
+    f = font('jost', 26, 400)
+    t = f'{i}/{n}'
+    d.text((W - 64 - d.textlength(t, font=f), 52), t, font=f, fill=MUTED)
+
+
+def carousel():
+    W, H, n = 1080, 1350, len(COVERS) + 2
+    slides = []
+
+    # 1: the line, and what follows.
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    d = ImageDraw.Draw(s)
+    d.text((80, 80), 'Buy Its Covers', font=font('xanh-italic', 44), fill=INK)
+    counter(d, 1, n, W)
+    big, big_i = font('xanh', 118), font('xanh-italic', 118)
+    d.text((80, 760), 'Judge a book,', font=big, fill=INK)
+    d.text((80, 900), 'buy its covers.', font=big_i, fill=ACCENT)
+    f = font('jost', 36, 400)
+    d.text((84, 1110), 'Five covers from before 1931,', font=f, fill=INK)
+    d.text((84, 1158), 'all in the public domain', font=f, fill=INK)
+    # Jost has no arrow glyph, so the arrow is drawn.
+    x0 = 84 + d.textlength('all in the public domain', font=f) + 24
+    y0 = 1158 + 24
+    d.line((x0, y0, x0 + 56, y0), fill=INK, width=3)
+    d.line((x0 + 40, y0 - 14, x0 + 57, y0), fill=INK, width=3)
+    d.line((x0 + 40, y0 + 14, x0 + 57, y0), fill=INK, width=3)
+    slides.append(s)
+
+    # 2..6: one cover each.
+    for i, c in enumerate(COVERS, start=2):
+        s = Image.new('RGBA', (W, H), BG + (255,))
+        d = ImageDraw.Draw(s)
+        counter(d, i, n, W)
+        place_cover(s, cover_image(c), 860, 120)
+        d = ImageDraw.Draw(s)
+        y = 1040
+        title_f = font('xanh', 54)
+        for line in wrap(d, c['title'], title_f, W - 160):
+            y = centred(d, y, line, title_f, INK, W) + 6
+        y = centred(d, y + 14, c['imprint'], font('jost', 30, 400), INK, W) + 10
+        centred(d, y, c['credit'], font('jost', 28, 400), MUTED, W)
+        slides.append(s)
+
+    # Last: what the site does.
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    d = ImageDraw.Draw(s)
+    counter(d, n, n, W)
+    f, y = font('xanh', 72), 330
+    for text in ['Type a title.', 'See the covers it', 'has been printed with,', 'by language and year.', 'Find the edition', "you'd want on your shelf."]:
+        d.text((80, y), text, font=f, fill=INK)
+        y += 92
+    d.text((80, 1060), 'buyitscovers.com', font=font('xanh-italic', 64), fill=ACCENT)
+    d.text((84, 1150), 'Link in bio', font=font('jost', 32, 400), fill=MUTED)
+    slides.append(s)
+
+    for i, s in enumerate(slides, start=1):
+        s.convert('RGB').save(os.path.join(OUT, f'instagram-{i}.jpg'), quality=92)
+
+
+def pin():
+    W, H = 1000, 1500
+    c = COVERS[0]
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    d = ImageDraw.Draw(s)
+    d.text((70, 70), 'Buy Its Covers', font=font('xanh-italic', 40), fill=INK)
+    place_cover(s, cover_image(c), 980, 170)
+    d = ImageDraw.Draw(s)
+    d.text((70, 1200), 'Peter and Wendy, 1911', font=font('xanh', 64), fill=INK)
+    d.text((72, 1286), 'Cover: F. D. Bedford. Peter Pan, decade by decade:', font=font('jost', 30, 400), fill=INK)
+    d.text((72, 1328), 'buyitscovers.com', font=font('xanh-italic', 44), fill=ACCENT)
+    s.convert('RGB').save(os.path.join(OUT, 'pinterest-1.jpg'), quality=92)
+
+
+if __name__ == '__main__':
+    os.makedirs(CACHE, exist_ok=True)
+    carousel()
+    pin()
+    print('written to', OUT)

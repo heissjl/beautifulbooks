@@ -66,5 +66,8 @@ Einschränkungen zu einzelnen Funden:
 
 ## Offen
 
-- Das Karussell mit den fünf Covern ist **nicht gebaut**; das Artefakt zeigt weiter die Schrift-Variante. Vorschlag war: Folie 1 der Schriftzug, dann je ein gemeinfreies Cover mit Zeile „Titel · Verlag, Jahr · Einband: Name (†Jahr)“, zuletzt die Adresse.
+- **Gebaut 2026-10-05** (Julian: „baue mit den freien covers das insta karussel und einen ersten pinterest post“):
+  - `lab/kalender/render_gemeinfrei.py` rendert sieben Instagram-Folien (1080×1350) und den ersten Pin (1000×1500, Peter and Wendy) nach `lab/kalender/out/`, in der Schrift und den Farben der Seite.
+  - Peter and Wendy und Alice stammen aus den archive.org-Scans (`/page/n0.jpg`, rund 2.400 px hoch). Pinocchio, Jungle Book und La guerre des mondes kommen in Open Librarys L-Größe (500 px hoch) und sind auf der Folie leicht hochskaliert.
+  - Bei Pinocchio hat das archive.org-Exemplar einen Bibliothekseinband ohne den farbigen Umschlag.
 - Bevor gepostet wird: die Zuschreibungen von Alice und La guerre des mondes noch einmal prüfen, oder diese beiden weglassen.
