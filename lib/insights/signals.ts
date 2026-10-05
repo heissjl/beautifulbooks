@@ -15,7 +15,11 @@ export type Origin = (typeof ORIGINS)[number];
 
 export const PAGES = ['0', '1', '2', '3', '4+'] as const;
 export const SEEN = ['0-12', '13-40', '41-100', '101-250', '250+'] as const;
-export const VERDICTS = ['none', 'verified', 'differs', 'uncompared', 'unknown', 'unavailable', 'pending'] as const;
+export const VERDICTS = [
+  'none', 'verified', 'differs', 'uncompared', 'unknown', 'unavailable', 'pending',
+  // Open Library stood in for Google (ROADMAP 1.12): how often the fallback is what readers see.
+  'catalogueVerified', 'catalogueDiffers', 'catalogueUncompared', 'catalogueUnknown',
+] as const;
 export const OUTCOMES = ['results', 'empty', 'failed'] as const;
 export const COUNTS = ['0', '1', '2-5', '6-20', '20+'] as const;
 export const POSITIONS = ['1', '2', '3', '4-10', '11+', 'none'] as const;

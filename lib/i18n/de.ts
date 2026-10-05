@@ -257,6 +257,18 @@ export const de: Readonly<Record<string, string>> = {
   'No current publisher image is on record for this ISBN.': 'Zu dieser ISBN ist kein aktuelles Verlagsbild verzeichnet.',
   'Checking which cover the publisher has registered for this ISBN…': 'Es wird geprüft, welches Cover der Verlag zu dieser ISBN hinterlegt hat…',
   'The catalogue that holds publishers’ current images did not answer.': 'Der Katalog mit den aktuellen Bildern der Verlage hat nicht geantwortet.',
+  // The fallback through Open Library's record (ROADMAP 1.12): every sentence opens with what was not checked.
+  'The publisher’s image could not be checked; Open Library’s record for this ISBN carries this cover.': 'Das Verlagsbild konnte nicht geprüft werden; Open Librarys Eintrag zu dieser ISBN trägt dieses Cover.',
+  'The publisher’s image could not be checked; Open Library’s record for this ISBN carries a different cover.': 'Das Verlagsbild konnte nicht geprüft werden; Open Librarys Eintrag zu dieser ISBN trägt ein anderes Cover.',
+  'The publisher’s image could not be checked; Open Library has a cover for this ISBN, but it could not be compared with this one.': 'Das Verlagsbild konnte nicht geprüft werden; Open Library hat ein Cover zu dieser ISBN, aber es konnte nicht mit diesem verglichen werden.',
+  'The publisher’s image could not be checked, and Open Library has no cover on record for this ISBN.': 'Das Verlagsbild konnte nicht geprüft werden, und Open Library hat zu dieser ISBN kein Cover verzeichnet.',
+  'Weaker evidence than the publisher’s image: the catalogue’s scan may be older than what ships today.': 'Schwächerer Beleg als das Verlagsbild: der Scan des Katalogs kann älter sein als das, was heute verschickt wird.',
+  'The catalogue’s scan is shown beside the note. The shops stay, because a scan says less about a new copy than the publisher’s image does.': 'Der Scan des Katalogs steht neben der Notiz. Die Läden bleiben, weil ein Scan weniger über ein neues Exemplar sagt als das Verlagsbild.',
+  'One of the two pictures could not be loaded; the catalogue’s scan is shown for you to compare.': 'Eines der beiden Bilder konnte nicht geladen werden; der Scan des Katalogs steht zum Vergleich daneben.',
+  'Google Books was out of reach or its daily quota spent, so the site asked Open Library instead. It says nothing about whether a shop has the book.': 'Google Books war nicht erreichbar oder sein Tageskontingent verbraucht, darum hat die Seite stattdessen Open Library gefragt. Es sagt nichts darüber, ob ein Shop das Buch hat.',
+  'See Open Library’s cover for this ISBN': 'Open Librarys Cover zu dieser ISBN ansehen',
+  'Open Library’s cover for this ISBN': 'Open Librarys Cover zu dieser ISBN',
+  'It is the one beside this note.': 'Es ist das neben dieser Notiz.',
 
   // The link plan's note (lib/linkplan.ts). The German place names carry their preposition.
   'This number is from the 979-8 range, which Amazon issues for its own print-on-demand titles.': 'Diese Nummer stammt aus dem Bereich 979-8, den Amazon für seine eigenen Print-on-Demand-Titel vergibt.',

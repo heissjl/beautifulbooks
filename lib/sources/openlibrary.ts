@@ -435,3 +435,29 @@ export async function getEditionsPage(workId: string, offset = 0, limit = OL_EDI
     throw err;
   }
 }
+
+/**
+ * The cover ids Open Library's own record for an ISBN carries (ROADMAP 1.12).
+ *
+ * The fallback behind the verdict when Google Books cannot be asked — its
+ * daily quota spent, or two attempts failed. It answers a weaker question
+ * than Google does: not "what does the publisher show for this ISBN today"
+ * but "what has the catalogue scanned for it", and `lib/verdicts.ts` words it
+ * as exactly that. A 404 is a real answer: no record, so no cover on record.
+ * Anything else that fails is thrown, so the caller can report "did not
+ * answer" rather than "nothing known" (SPEC N12). Per-IP limits do not apply:
+ * `/isbn/` is the JSON API (3 requests a second with the e-mail in the user
+ * agent), not the rate-limited cover lookup by ISBN.
+ */
+export async function lookupIsbnRecordCoversOrThrow(isbn13: string): Promise<number[]> {
+  const url = `${BASE}/isbn/${encodeURIComponent(isbn13)}.json`;
+  try {
+    const data = await fetchJson<{ covers?: unknown }>(url, { timeoutMs: OL_TIMEOUTS.work, revalidate: OL_REVALIDATE.work });
+    const ids = Array.isArray(data.covers) ? data.covers : [];
+    // Open Library marks a removed scan with -1; it is not a cover.
+    return ids.filter((id): id is number => typeof id === 'number' && Number.isInteger(id) && id > 0);
+  } catch (err) {
+    if (err instanceof HttpError && err.status === 404) return [];
+    throw err;
+  }
+}
