@@ -181,11 +181,19 @@ function wordFit(text: string, width: number, max: number): number {
   return Math.min(max, Math.floor(width / (longest * 0.5)));
 }
 
-/** A line cut to what `width` holds at `size`; the generator's own ellipsis is not relied on. */
+/**
+ * A line cut to what `width` holds at `size`; the generator's own ellipsis is
+ * not relied on. Half an em a letter: at 0.47 "A Confederacy of D…" was let
+ * through as fitting, ran over and broke into two lines on the preview —
+ * which is why a caption is also `ONE_LINE`.
+ */
 function clip(text: string, width: number, size: number): string {
-  const max = Math.max(4, Math.floor(width / (size * 0.47)));
+  const max = Math.max(4, Math.floor(width / (size * 0.5)));
   return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text;
 }
+
+/** A caption never takes a second line: the next row of covers begins where it would stand. */
+const ONE_LINE = { whiteSpace: 'nowrap', overflow: 'hidden' } as const;
 
 type Caption = { title: string; author: string } | null;
 
@@ -205,8 +213,8 @@ function poster(format: PosterFormat, count: BoardSize, by: string, images: (str
       <Tiles rects={P.tiles} images={images} look={look} />
       {captions && P.caption && P.tiles.map((r, i) => captions[i] && (
         <div key={i} style={{ position: 'absolute', left: r.x, top: r.y + r.height + 10, width: r.width, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ ...TEXT, display: 'flex', fontSize: P.caption?.title, lineHeight: 1.2, color: L.ink }}>{clip(captions[i]?.title ?? '', r.width, P.caption?.title ?? 24)}</div>
-          <div style={{ ...TEXT, display: 'flex', fontSize: P.caption?.author, lineHeight: 1.25, color: L.ink2 }}>{clip(captions[i]?.author ?? '', r.width, P.caption?.author ?? 20)}</div>
+          <div style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.title, lineHeight: 1.2, color: L.ink }}>{clip(captions[i]?.title ?? '', r.width, P.caption?.title ?? 24)}</div>
+          <div style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.author, lineHeight: 1.25, color: L.ink2 }}>{clip(captions[i]?.author ?? '', r.width, P.caption?.author ?? 20)}</div>
         </div>
       ))}
       <div style={{ position: 'absolute', left: foot.x, top: foot.y, width: foot.width, height: foot.height, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
