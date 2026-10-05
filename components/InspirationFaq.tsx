@@ -3,12 +3,13 @@ import { SITE_NAME } from '@/lib/seo';
 /**
  * Questions and answers under the board (ROADMAP 5.18b; Julian, 2026-10-05:
  * „make a faq similar to my9albums.org. mach einen vorschlag, ich werde dann
- * anpassen und kürzen"). **A proposal, longer than it should stay**: thirteen
- * questions, in the order someone meets them while making a board — Julian
- * cuts and rewords. The questions my9albums answers are here (what it is, why
- * this many, no account, how long, the picture's sizes, changing it later),
- * and four it has no reason to ask: another cover, a book the catalogue does
- * not hold, where to buy, whose pictures these are.
+ * anpassen und kürzen"). Thirteen questions were proposed; Julian struck four
+ * the same day — why this many, how long, another cover, the order — which
+ * the page's three steps already say. Nine stand, in the order someone meets
+ * them while making a board, and are his to reword: the ones my9albums asks
+ * (what it is, no account, the picture's sizes, changing it later) and three
+ * it has no reason to: a book the catalogue does not hold, where to buy,
+ * whose pictures these are.
  *
  * Every answer is something the page does today. The one on what is stored
  * describes the links' store and is Julian's to approve with the privacy
@@ -23,20 +24,8 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     a: 'A picture of the books that inspire you — three, six or nine of them, each with the cover you love. You put it together here and share it wherever you like.',
   },
   {
-    q: 'Why three, six or nine?',
-    a: 'Because choosing is the point. Nine make a full square, six and three are for saying it shorter. You can switch while you build: a smaller board sets your later books aside and a bigger one brings them back.',
-  },
-  {
     q: 'Do I need an account?',
     a: 'No. No account, no e-mail address, no app. While you build it, your board lives in the address of this page — reload it, and it is still there.',
-  },
-  {
-    q: 'How long does it take?',
-    a: 'A few minutes. Deciding takes longer than clicking.',
-  },
-  {
-    q: 'Can I choose another cover for a book?',
-    a: 'Yes — that is what this site is about. A book arrives with its best-known cover; tap it and you see the others on record, each with its year and publisher. Pick the edition you read or the one you love the most.',
   },
   {
     q: 'My book, or my cover, is not there.',
@@ -45,10 +34,6 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
         The search asks <a href="https://openlibrary.org" className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent" rel="noopener">Open Library</a>, an open catalogue anyone can add to. Try the original title or the author’s name. A cover nobody has scanned yet cannot be shown here; once it is added there, it can be chosen here too.
       </>
     ),
-  },
-  {
-    q: 'Can I change the order?',
-    a: 'Drag a cover to another place — on a phone by the ⠿ under it. On a wide screen the arrows under a cover do the same.',
   },
   {
     q: 'What do I get to share?',

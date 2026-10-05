@@ -116,9 +116,11 @@ export const CARD_JPEG_QUALITY = 82;
  * 82. The site card stays PNG: it is flat colour and type, which PNG keeps
  * small and JPEG would smear.
  */
-export async function asJpeg(card: Response): Promise<Response> {
+export async function asJpeg(card: Response, fine = false): Promise<Response> {
   const png = Buffer.from(await card.arrayBuffer());
-  const jpeg = await sharp(png).jpeg({ quality: CARD_JPEG_QUALITY, mozjpeg: true }).toBuffer();
+  // `fine` is for a picture that is posted and compressed once more by the app that takes it: full colour
+  // resolution, so that small type keeps its edges (at 4:2:0 coloured letters fray), and less loss.
+  const jpeg = await sharp(png).jpeg(fine ? { quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true } : { quality: CARD_JPEG_QUALITY, mozjpeg: true }).toBuffer();
   const headers = new Headers(card.headers);
   headers.set('content-type', 'image/jpeg');
   headers.delete('content-length');

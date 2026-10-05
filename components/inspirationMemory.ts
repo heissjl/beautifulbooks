@@ -19,3 +19,18 @@ export function rememberMade(query: string): void {
 export function wasMade(query: string): boolean {
   return made === query;
 }
+
+/**
+ * The titles of the books on the board being made, for the editor that
+ * mounts again after "Back": the page it is given then is the one first
+ * loaded, which knew none of the books added since.
+ */
+let names: Record<string, { title: string; author?: string | null }> = {};
+
+export function keepNames(next: Record<string, { title: string; author?: string | null }>): void {
+  names = next;
+}
+
+export function keptNames(): Record<string, { title: string; author?: string | null }> {
+  return names;
+}

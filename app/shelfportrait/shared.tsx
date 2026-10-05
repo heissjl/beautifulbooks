@@ -12,7 +12,7 @@ import { wallsEnabled } from '@/lib/walls/switch';
 
 /**
  * What the two shared addresses have in common (ROADMAP 5.18b): the short
- * link `/inspiration/<id>` and the long form `/inspiration/board?b=…`, which
+ * link `/shelfportrait/<id>` and the long form `/shelfportrait/board?b=…`, which
  * needs no store. Not a route itself — a file beside the pages.
  */
 
@@ -36,7 +36,7 @@ export async function origin(): Promise<string> {
 
 export async function sharedMetadata(board: Board | null): Promise<Metadata> {
   const title = titleOf(board?.by ?? '');
-  const description = `${subtitleOf(board?.by ?? '')}: ${(board ? SIZE_WORD[sizeOf(board)] : 'Nine').toLowerCase()} books, each with a favourite cover. What’s yours?`;
+  const description = `${subtitleOf(board?.by ?? '')}: ${(board ? SIZE_WORD[sizeOf(board)] : 'Nine').toLowerCase()} books, each with a favourite cover. Take your Shelf-Portrait.`;
   // Not indexed while the page lives behind its switch; the card makes a shared link show the covers.
   const images = board ? [{ url: `${await origin()}/api/inspiration/poster?${boardQuery(board)}&format=card`, width: 1200, height: 630 }] : undefined;
   return {

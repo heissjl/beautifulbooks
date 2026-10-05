@@ -52,7 +52,8 @@ export function shareTargets(link: string, by: string): ShareTarget[] {
   const t = encodeURIComponent(text);
   const u = encodeURIComponent(link);
   return [
-    { id: 'x', label: 'X', href: `https://x.com/intent/post?text=${t}&url=${u}` },
+    // `/intent/tweet`, the address X documents and its apps open as a new post; `/intent/post` opened a message on Julian's phone (2026-10-05).
+    { id: 'x', label: 'X', href: `https://x.com/intent/tweet?text=${t}&url=${u}` },
     { id: 'threads', label: 'Threads', href: `https://www.threads.net/intent/post?text=${encodeURIComponent(`${text} ${link}`)}` },
     { id: 'bluesky', label: 'Bluesky', href: `https://bsky.app/intent/compose?text=${encodeURIComponent(`${text} ${link}`)}` },
     { id: 'whatsapp', label: 'WhatsApp', href: `https://wa.me/?text=${encodeURIComponent(`${text} ${link}`)}` },

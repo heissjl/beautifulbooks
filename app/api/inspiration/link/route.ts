@@ -26,11 +26,11 @@ export async function POST(request: NextRequest) {
   }
   const board = parseBoard(new URLSearchParams(q));
   if (filledCount(board) === 0) return json({ error: 'An empty board gets no link.' }, 400);
-  const long = `/inspiration/board?${boardQuery(board)}`;
+  const long = `/shelfportrait/board?${boardQuery(board)}`;
   const store = linkStoreFromEnv();
   if (!store) return json({ path: long, short: false });
   try {
-    return json({ path: `/inspiration/${await store.put(board)}`, short: true }, 201);
+    return json({ path: `/shelfportrait/${await store.put(board)}`, short: true }, 201);
   } catch {
     return json({ path: long, short: false });
   }

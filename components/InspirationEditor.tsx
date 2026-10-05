@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CoverImage from './CoverImage';
 import { coverRefFromUrl, coverUrlFor } from '@/lib/coverurl';
-import { rememberMade } from './inspirationMemory';
+import { keepNames, keptNames, rememberMade } from './inspirationMemory';
 import {
   NAME_MAX,
   SIZES,
@@ -81,6 +81,15 @@ const LIST_LABELS: Record<BrowseList['id'], string> = {
   popular: 'Most read on Open Library',
 };
 
+const SIZE_LINE: Record<(typeof SIZES)[number], string> = {
+  3: 'Your must-reads.',
+  6: 'A few books that altered your brain chemistry.',
+  9: 'A stack of books that changed your outlook.',
+};
+
+/** The editor's public address; the code keeps the name it was built under (`inspiration`). */
+const EDITOR = '/shelfportrait';
+
 const CHUNK = 60;
 const pill = (active: boolean) =>
   `rounded-full border px-4 py-1 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
@@ -88,10 +97,20 @@ const plain = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerC
 
 export default function InspirationEditor({ initialQuery, initialNames, children }: { initialQuery: string; initialNames: Record<string, Named>; children?: React.ReactNode }) {
   const router = useRouter();
-  const [board, setBoard] = useState<Board>(() => parseBoard(new URLSearchParams(initialQuery)));
+  /*
+    The board is read from the address the browser shows, not only from what the server was asked:
+    "Back" from the shared page brings the page as it was first loaded — an empty board — while the
+    address of that step still holds the books, and the editor then wrote the empty board over it
+    (Julian, 2026-10-05: „when i go back in the browser … all the progress is gone"). On a first
+    load both are the same address, so the server's page and the browser's agree.
+  */
+  // Only while the browser is already at the editor: a link that leads here is still at the page it left when this runs.
+  const [board, setBoard] = useState<Board>(() => parseBoard(new URLSearchParams(typeof window !== 'undefined' && window.location.pathname === EDITOR ? window.location.search : initialQuery)));
   // What the reader types, kept apart from the cleaned name: cleaning trims, and a trimmed field cannot take a space.
-  const [nameDraft, setNameDraft] = useState(() => parseBoard(new URLSearchParams(initialQuery)).by);
-  const [names, setNames] = useState(initialNames);
+  const [nameDraft, setNameDraft] = useState(() => board.by);
+  // Titles the server did not send with that first page are remembered from before the step away.
+  const [names, setNames] = useState(() => ({ ...keptNames(), ...initialNames }));
+  useEffect(() => keepNames(names), [names]);
   const [win, setWin] = useState<Win>(null);
   // The place the next book goes into; the window stays open from one book to the next.
   const [target, setTarget] = useState(-1);
@@ -104,7 +123,7 @@ export default function InspirationEditor({ initialQuery, initialNames, children
 
   useEffect(() => {
     const q = boardQuery(board);
-    window.history.replaceState(null, '', q ? `/inspiration?${q}` : '/inspiration');
+    window.history.replaceState(null, '', q ? `${EDITOR}?${q}` : EDITOR);
   }, [board]);
 
   const filled = filledCount(board);
@@ -266,7 +285,8 @@ export default function InspirationEditor({ initialQuery, initialNames, children
           {/* Two lines, the name above and what it is below (Julian, 2026-10-05: „Oben: My Shelf-Portrait, unten: The books that inspire me"). */}
           <h1 className="text-3xl leading-tight text-ink sm:text-4xl">My Shelf-Portrait</h1>
           <p className="mt-1 font-display text-xl italic text-ink-2 sm:text-2xl">The books that inspire me</p>
-          <p className="mt-3 text-base text-ink-2">{SIZE_WORD[size]} books that changed how you see things, with your favourite covers.</p>
+          {/* One line per size, Julian's (2026-10-05). */}
+          <p className="mt-3 text-base text-ink-2">{SIZE_LINE[size]}</p>
 
           {/*
             Three, six or nine (Julian, 2026-10-05: „gib die möglichkeit sich zwischen 3, 6 und 9 zu

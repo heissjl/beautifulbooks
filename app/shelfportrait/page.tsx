@@ -5,7 +5,7 @@ import InspirationEditor, { type Named } from '@/components/InspirationEditor';
 import InspirationFaq from '@/components/InspirationFaq';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
-import { boardFromSearch } from '@/app/inspiration/shared';
+import { boardFromSearch } from '@/app/shelfportrait/shared';
 import { boardQuery } from '@/lib/inspiration/board';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { inspirationEnabled } from '@/lib/inspiration/switch';

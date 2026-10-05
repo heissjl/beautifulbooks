@@ -81,7 +81,10 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
     try {
       const blob = await (await fetch(src)).blob();
       const picture = new File([blob], file, { type: 'image/jpeg' });
-      await navigator.share(navigator.canShare({ files: [picture] }) ? { files: [picture], text } : { text: `${text} ${link}` });
+      // The link goes with the picture, inside the sentence (Julian, 2026-10-05: WhatsApp shows the words under the picture, and
+      // a `url` of its own makes some apps drop the file).
+      const words = `${text} ${link}`;
+      await navigator.share(navigator.canShare({ files: [picture] }) ? { files: [picture], text: words } : { text: words });
     } catch {
       // Closing the share sheet is not an error worth a sentence.
     }

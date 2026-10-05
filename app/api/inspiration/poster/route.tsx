@@ -41,7 +41,7 @@ export const maxDuration = 30;
 
 const COVER_TIMEOUT_MS = 8000;
 /** The address a reader types from a picture that carries no link. Never localhost or a preview's host: the picture travels. */
-const ADDRESS = `${/^https?:\/\/(localhost|127\.|\[::1\])/.test(SITE_URL) || SITE_URL.includes('vercel.app') ? 'buyitscovers.com' : new URL(SITE_URL).host}/inspiration`;
+const ADDRESS = `${/^https?:\/\/(localhost|127\.|\[::1\])/.test(SITE_URL) || SITE_URL.includes('vercel.app') ? 'buyitscovers.com' : new URL(SITE_URL).host}/shelfportrait`;
 
 type Format = PosterFormat | 'card';
 type Look = 'ambient' | 'paper' | 'plain';
@@ -141,7 +141,7 @@ async function ground(look: Look, width: number, height: number, rects: Rect[], 
       ? await wash(width, height, rects, tiles)
       : await sharp({ create: { width, height, channels: 3, background: L.bg } }).png().toBuffer();
     const cast = await shadows(width, height, rects, tiles, L.shadow);
-    return dataUrl(await sharp(base).composite(cast ? [{ input: cast }] : []).jpeg({ quality: 82 }).toBuffer());
+    return dataUrl(await sharp(base).composite(cast ? [{ input: cast }] : []).jpeg({ quality: 90 }).toBuffer());
   } catch {
     return null;
   }
@@ -267,6 +267,8 @@ function card(count: BoardSize, by: string, images: (string | null)[], look: Loo
   const title = titleOf(by);
   const { words } = plan;
   const size = wordFit(title, words.width, plan.title);
+  // The address must fit its column with the spacing: sixteen letters at about 0.47 em each.
+  const sign = Math.min(Math.max(20, Math.round(size * 0.5)), Math.floor(words.width / (16 * 0.5)));
   return (
     <div style={{ position: 'relative', width: CARD.width, height: CARD.height, display: 'flex', background: L.bg }}>
       <Ground src={under} width={CARD.width} height={CARD.height} />
@@ -275,8 +277,15 @@ function card(count: BoardSize, by: string, images: (string | null)[], look: Loo
           <div style={{ ...DISPLAY, display: 'flex', fontSize: size, lineHeight: 1.06, color: L.ink }}>{title}</div>
           <div style={{ ...TEXT, display: 'flex', fontSize: Math.max(17, Math.round(size * 0.46)), lineHeight: 1.25, color: L.ink2, marginTop: Math.round(size * 0.3) }}>{subtitleOf(by)}</div>
         </div>
-        {/* The address as one word, the way it is typed: "BuyItsCovers.com". */}
-        <div style={{ ...DISPLAY, display: 'flex', fontStyle: 'italic', fontSize: Math.max(20, Math.round(size * 0.5)), color: look === 'paper' ? OG.accent : OG.accentDark }}>BuyItsCovers.com</div>
+        {/*
+          The site's line, "Judge a book, buy its covers", with its second half as the address — one
+          word, the way it is typed. Two faces and two colours, so that nobody takes the whole
+          phrase for the link (Julian, 2026-10-05); the address a little spaced out, as he asked.
+        */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ ...TEXT, display: 'flex', fontSize: Math.max(15, Math.round(sign * 0.6)), color: L.ink2, marginBottom: Math.round(sign * 0.12) }}>Judge a book,</div>
+          <div style={{ ...DISPLAY, display: 'flex', fontStyle: 'italic', fontSize: sign, letterSpacing: sign * 0.045, color: look === 'paper' ? OG.accent : OG.accentDark }}>BuyItsCovers.com</div>
+        </div>
       </div>
       <Tiles rects={plan.covers} images={images} look={look} />
     </div>
@@ -313,7 +322,8 @@ export async function GET(request: NextRequest) {
   const picture = await asJpeg(new ImageResponse(
     format === 'card' ? card(count, board.by, images, look, under) : poster(format, count, board.by, images, look, under, captions),
     { ...size, fonts: await ogFonts() },
-  ));
+  // A story or a post is compressed again by Instagram; the card stays small for the messengers.
+  ), format !== 'card');
   const headers = new Headers(picture.headers);
   headers.set('Cache-Control', whole ? 'public, max-age=3600, s-maxage=2592000' : 'no-store');
   return new Response(picture.body, { status: 200, headers });

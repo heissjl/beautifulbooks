@@ -34,7 +34,7 @@ describe('board in the address', () => {
     let b = emptyBoard();
     works.forEach((w, i) => { b = place(b, i, { workId: w, coverId: `ol:${12547191 + i * 1000}` }); });
     b = { ...b, by: 'Julian' };
-    expect(`https://buyitscovers.com/inspiration?${boardQuery(b)}`.length).toBeLessThan(150);
+    expect(`https://buyitscovers.com/shelfportrait?${boardQuery(b)}`.length).toBeLessThan(150);
     // Nine Google ids and the longest name still paste.
     let g = emptyBoard();
     for (let i = 0; i < SLOTS; i++) g = place(g, i, { workId: `OL${1234567890 + i}W`, coverId: 'gb:AbCdEfGhIjKl' });

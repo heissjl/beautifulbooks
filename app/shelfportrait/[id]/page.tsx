@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { sharedMetadata, SharedPage } from '@/app/inspiration/shared';
+import { sharedMetadata, SharedPage } from '@/app/shelfportrait/shared';
 import type { Board } from '@/lib/inspiration/board';
 import { ID } from '@/lib/inspiration/shortid';
 import { linkStoreFromEnv } from '@/lib/inspiration/store';
@@ -8,7 +8,7 @@ import { inspirationEnabled } from '@/lib/inspiration/switch';
 import type { Locale } from '@/lib/i18n/locale';
 
 /**
- * A shared board under its short link, `/inspiration/<8 characters>`
+ * A shared board under its short link, `/shelfportrait/<8 characters>`
  * (ROADMAP 5.18b). The id is looked up in the links' own store.
  *
  * Three answers that must not be mixed up (SPEC N12): the board; "not on
@@ -43,7 +43,7 @@ export default async function InspirationLinkPage({ params }: Props) {
   return (
     <SharedPage
       board={typeof found === 'string' ? null : found}
-      path={`/inspiration/${id}`}
+      path={`/shelfportrait/${id}`}
       missing={found === 'down' ? 'The store of the links did not answer. Try again in a moment.' : 'This link’s board is not on record here.'}
     />
   );

@@ -1,6 +1,6 @@
-import Page from '@/app/inspiration/page';
+import Page from '@/app/shelfportrait/board/page';
 
-export { metadata } from '@/app/inspiration/page';
+export { generateMetadata } from '@/app/shelfportrait/board/page';
 export const dynamic = 'force-dynamic';
 
 export default function German(props: { searchParams?: Promise<Record<string, string | string[] | undefined>> }) {

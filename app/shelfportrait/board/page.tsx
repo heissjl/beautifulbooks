@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { boardFromSearch, sharedMetadata, SharedPage } from '@/app/inspiration/shared';
+import { boardFromSearch, sharedMetadata, SharedPage } from '@/app/shelfportrait/shared';
 import { boardQuery, filledCount } from '@/lib/inspiration/board';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import type { Locale } from '@/lib/i18n/locale';
 
 /**
- * A shared board under its long address, `/inspiration/board?b=…&by=…`
+ * A shared board under its long address, `/shelfportrait/board?b=…&by=…`
  * (ROADMAP 5.18b): the board is in the address, so this page needs no store.
  * It is what "Done — share it" hands out on a deployment without the links'
  * Redis, and it keeps working after one exists.
@@ -24,5 +24,5 @@ export default async function InspirationBoardPage({ searchParams }: Props) {
   if (!inspirationEnabled()) notFound();
   const board = await boardFromSearch(searchParams);
   const filled = filledCount(board) > 0;
-  return <SharedPage board={filled ? board : null} path={`/inspiration/board?${boardQuery(board)}`} missing="This address holds no books. Make a board of your own at /inspiration." />;
+  return <SharedPage board={filled ? board : null} path={`/shelfportrait/board?${boardQuery(board)}`} missing="This address holds no books. Make a board of your own at /shelfportrait." />;
 }

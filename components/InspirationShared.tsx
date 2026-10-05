@@ -28,7 +28,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
   const books = board.books.flatMap((b) => (b ? [b] : []));
   const size = board.books.length === 3 ? 3 : board.books.length === 6 ? 6 : 9;
   const word = SIZE_WORD[size];
-  const fresh = size === 9 ? '/inspiration' : `/inspiration?n=${size}`;
+  const fresh = size === 9 ? '/shelfportrait' : `/shelfportrait?n=${size}`;
   const pill = 'rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent';
   const accentPill = 'rounded-full bg-accent px-4 py-1 text-sm text-on-accent transition-opacity hover:opacity-90';
   const more = 'text-accent underline decoration-line underline-offset-4 hover:decoration-accent';
@@ -44,17 +44,22 @@ export default function InspirationShared({ board, query, link, walls, versus }:
           <div className="flex flex-wrap gap-2">
             <InspirationMine
               query={query}
-              maker={<Link href={`/inspiration?${query}`} className={accentPill}>Change it</Link>}
+              maker={<Link href={`/shelfportrait?${query}`} className={accentPill}>Change it</Link>}
               visitor={
                 <>
-                  <Link href={fresh} className={accentPill}>Make your own</Link>
-                  <Link href={`/inspiration?${query}`} className={pill}>Start from this one</Link>
+                  <Link href={`/shelfportrait?${query}`} className={pill}>Start from this one</Link>
                 </>
               }
             />
           </div>
         </div>
-        <p className="mt-3 text-base text-ink-2">{word} books, each with a favourite cover. What’s yours?</p>
+        <p className="mt-3 text-base text-ink-2">{word} books, each with a favourite cover.</p>
+        {/*
+          The invitation, for the maker as for a visitor (Julian, 2026-10-05: not "What's yours?" behind
+          the sentence but „Take your Shelf-Portrait" with a link under it to start a new one of one's own).
+        */}
+        <p className="mt-4 font-display text-xl text-ink">Take your Shelf-Portrait</p>
+        <p className="mt-0.5 text-sm"><Link href={fresh} className={more}>Start a new one of your own</Link></p>
 
         <ul className="mt-6 grid grid-cols-3 gap-2 sm:gap-3">
           {board.books.map((b, i) => {
@@ -135,7 +140,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
           maker={null}
           visitor={
             <div className="mt-10 border-t border-line pt-6">
-              <Link href={fresh} className="btn btn-accent">What inspires you? Make your own</Link>
+              <Link href={fresh} className="btn btn-accent">Take your Shelf-Portrait</Link>
             </div>
           }
         />
