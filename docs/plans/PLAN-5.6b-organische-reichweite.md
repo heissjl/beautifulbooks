@@ -153,6 +153,12 @@ Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender 
 ## 7. Offene Entscheidungen, alle Julians
 
 1. **Die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1). Sie hält 30 der 70 Einträge zurück: alles auf Instagram außer dem Exposé, alles auf Pinterest und TikTok, und die sieben Galerien.
+   - *Cover im Instagram-Exposé* (Julian, 2026-10-05, als Kommentar im Artefakt: „ich würde gerne hier cover zeigen. mit welchen wäre das möglich?“). Die Antwort stützt sich auf research-cover-prints.md:
+     - **Gemeinfreie Cover:** Gestalter vor 1956 gestorben; ein Scan begründet keinen neuen Schutz (§ 68 UrhG). Kandidaten sind Pride and Prejudice mit Hugh Thomson (1894) und Alice mit Tenniel. Das ist der sicherste Weg.
+     - **Reine Schriftcover**, etwa die edition suhrkamp: „typischerweise“ nicht geschützt, ein Restrisiko bleibt.
+     - **Mit Erlaubnis lebender Gestalter**, etwa Harman oder Heidelbach; das Anschreiben ist Julians.
+     - **Ein Foto des eigenen Exemplars hilft nicht.**
+     - Vorschlag: Folie 1 mit einer gemeinfreien Ausgabe. Gestalter und Sterbejahr sind je Cover zu belegen; Claude bietet das an.
 2. **Welche Kanäle es wirklich gibt.** Der Kalender plant acht; ein Kanal, den Julian nicht will, wird im Werkzeug ausgeblendet oder seine Einträge verworfen.
 3. **Startdatum.** Der Kalender beginnt mit einer Einrichtungswoche ab Mo 5.10. und dem ersten Post am Mo 12.10. Wer später anfängt, schiebt mit „Ab hier verschieben“ alles in einem Schritt.
 4. **Ob die drei restlichen Entwürfe erscheinen** (Grieder/Herder, Penguin black band, Virago); sonst werden ihre Posts verworfen.
