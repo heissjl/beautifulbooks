@@ -4743,3 +4743,11 @@ Auf den Reader kommt durch das Werkzeug kein großes Bild und keine geänderte B
 **Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
 
 1.294 Tests (128 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: der Ruhezustand zeigt weiter das alte Cover — am Gerät gesehen (ROADMAP 5.16c)
+
+Julian, spät am Abend: „beim standby bild wurde gerade immer noch das alte cover von roadside picnic angezeigt". Das ist der Befund, den die Dateien des Readers vorhergesagt hatten: das Bild im Ruhezustand (`system/cache/bookcover/`) zeichnet der Reader bei jedem Öffnen des Buchs neu aus dem Cover in der Buchdatei, und die Buchdatei fasst das Werkzeug nicht an. Der Reader war bei dieser Meldung nicht eingebunden; nachgesehen wurde nichts Neues.
+
+**Was es ändern würde, und was es kostet** (nichts davon gebaut): (1) das Buch aus Calibre neu senden und danach die Bilder schreiben — neues Cover überall, aber der Reader hält die neue Datei für ein neues Buch, Lesestand und Markierungen bleiben am alten Eintrag (an *Ubik* gesehen); ohne Verlust nur bei Büchern, die nicht angefangen sind. (2) Dem Reader in seiner Datenbank sagen, dass die neue Datei das alte Buch ist — nicht untersucht, und es hieße, eine Datenbank des Readers zu schreiben, was das Werkzeug bisher nie tut. (3) Das Bild im Ruhezustand überschreiben — hält nur bis zum nächsten Öffnen des Buchs.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur Dokumente.
