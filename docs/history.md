@@ -4674,3 +4674,13 @@ Je Tag (Sekunden): 09-08 65 · 09-09 144 · 09-10 266 · 09-11 259 · 09-12 138 
 **Nicht geprüft:** die zwei neuen Abschnitte im Browser (lokal gibt es keinen Speicher, ohne den die Ansicht „kein Speicher" zeigt) — nach dem Deploy bei 390 und 1280 px ansehen. **Datenschutz:** gespeichert werden Tagessummen je Routen- und Abrufer-Klasse, nichts über einen Leser; die Datenschutzerklärung habe ich nicht geändert — Julian entscheidet, ob ein Satz dazukommt (CLAUDE.md, Analyse-Regel 6).
 
 **Analyse (3.1):** zwei neue Kennzahlen, K14 und K15, im Plan §3; neuer Tages-Hash `cpu`; `/api/seen`, `/go/` und die Fotoroute zählen wie zuvor.
+
+## 2026-10-05 · Crawler bleiben auf den Seiten der Sitemap (ROADMAP 2.18n)
+
+Julian zum Vorschlag aus 2.18l: „ok". Gebaut, nicht deployt. `lib/robots.ts` (`robotsRules`, `BOUNDED_CRAWLERS`, `mayFetch`), `app/robots.ts` liest dieselben zwei Listen wie die Sitemap.
+
+**Die ausgelieferte Datei** (aus dem Build gelesen): 23.091 Byte; eine Gruppe `*` wie zuvor (`/api/`, `/go/`, `/admin/` gesperrt), eine Gruppe mit sechzehn `User-Agent`-Zeilen, 822 `Allow`-Zeilen (`/book/<id>$` für 500 Werke, `/book/<id>/decades$` für 322), `Disallow` für `/book/`, `/img/`, `/c/`, `/*?` und die drei allgemeinen, `Crawl-delay: 10`.
+
+**Geprüft mit `mayFetch`** (längste passende Regel, bei Gleichstand erlaubt — RFC 9309), sechs Tests: jeder benannte Crawler darf ein veröffentlichtes Buch und seine Jahrzehnte-Seite, nicht `OL999999999W`, nicht `/book/<id>/cover/…`, nicht `?cover=`, nicht `/?author=` und `/?q=`, nicht `/img/…`; Startseite, About, Sammlungen und Spiel bleiben offen; Googlebot, bingbot, Claude-User und ChatGPT-User sind unverändert. 1.299 Tests, tsc, Lint und Build grün.
+
+**Nicht geprüft:** ob sich ClaudeBot daran hält — das zeigt K14 nach dem Deploy (Anthropic schreibt, ClaudeBot achte robots.txt und `Crawl-delay`; aus der Erinnerung, heute nicht nachgelesen). **Analyse (3.1):** nicht berührt; K14 misst die Wirkung.

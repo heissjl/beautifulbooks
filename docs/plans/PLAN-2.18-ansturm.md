@@ -12,7 +12,7 @@ Vercel meldete 90 % der 4 CPU-Stunden des Hobby-Plans; bei 100 % wäre das Proje
 
 - 30 Tage: 2,14 CPU-Stunden in Funktionsaufrufen (die Differenz zu Vercels 3,6 ist nicht aufgeklärt — der Proxy läuft als eigene Funktion). **49 % Bildroute** `/img` (115.465 Läufe, 32 ms CPU je Bild), **25 % Buchseite** (17.253 Renderings, 106 ms), 7 % `/api/works`, 4 % Sammlungsseiten, 3 % Startseite.
 - Je Tag lagen 20–270 CPU-Sekunden an, am 2026-09-26 994, am 2026-10-03 1.379, am 2026-10-04 1.187.
-- **Wer:** in den zwei Tagen vor der Mail kamen **31.657 von 44.438 Bildabrufen und 6.776 von 8.281 Buchseiten von ClaudeBot**, Anthropics Crawler; dazu MJ12bot mit 719 Buchseiten. Er folgt den Links von Buch zu Buch, und jede Werk-ID ist eine Seite, die beim ersten Abruf gerendert wird. Was mit Crawlern geschieht, ist **2.18n** (Julian entscheidet).
+- **Wer:** in den zwei Tagen vor der Mail kamen **31.657 von 44.438 Bildabrufen und 6.776 von 8.281 Buchseiten von ClaudeBot**, Anthropics Crawler; dazu MJ12bot mit 719 Buchseiten. Er folgt den Links von Buch zu Buch, und jede Werk-ID ist eine Seite, die beim ersten Abruf gerendert wird. Seit **2.18n** hält `robots.txt` die benannten Crawler auf den Seiten der Sitemap.
 - **Dazu der Verstärker im Browser:** ein einzelner Besuch von 81 Sekunden ließ 14 Buchseiten rendern, die niemand geöffnet hat (Vorladen von `next/link`) — abgestellt mit **2.18a**.
 
 Damit die Frage nie wieder nur Vercel beantworten kann, misst die Seite seit **2.18l** selbst (CPU je Route und Abrufer-Klasse in `/admin/insights`), und **2.18m** rechnet daraus und aus den festen Kosten, was die Seite kostet.
@@ -82,7 +82,7 @@ In dieser Reihenfolge. Jeder Schritt ist ein Roadmap-Punkt und ein Commit; „An
 | **2.18j** | **Bilder länger im Browser:** `/img` antwortet mit `max-age=3600`; ein Cover unter einer Cover-ID ändert sich nicht, eine Woche spart jede Wiederkehr | 1 h | keine |
 | **2.18k** | **Ein Cover auf Zuruf ausblenden** (J6: „jetzt gleich", also nach 2.18a). Eine Liste von Cover-IDs im Repository (`data/hidden-covers.json`), die Wand, Mosaik, Sammlungen, Spiel, Vorschaukarten und `/img` auslassen; ein Satz auf About mit der Adresse, an die sich ein Rechteinhaber wendet; ein Test, dass eine ID der Liste auf keinem der Wege erscheint. Wirkt mit einem Deploy | ½ Tag | die Kacheln der Wand (`data-cover-id`) werden weniger — in der Historie nennen |
 | **2.18l**, **2.18m** | gebaut 2026-10-05: Rechenzeit je Route und Abrufer (K14) und Kosten (K15) in `/admin/insights` | — | neue Kennzahlen, Plan 3.1 §3 |
-| **2.18n** | Crawler nur auf die Seiten der Sitemap lassen — Julian entscheidet (Vorschlag im Roadmap-Punkt) | 2 h | K14 zeigt die Wirkung |
+| **2.18n** | gebaut 2026-10-05 (Julian: „ok"): benannte KI- und SEO-Crawler dürfen die Buchseiten der Sitemap lesen, nichts sonst unter `/book/`, keine Abfragen, keine Bilder (`lib/robots.ts`) | — | K14 zeigt die Wirkung |
 | dazu | Der Picker ohne Google (Vorschlag der Sitzung `claude/sleepy-wozniak-lodegp`, dort als 6.88 notiert — **die Nummer ist auf `main` schon vergeben**), 6.47 (Suche belastet den `google`-Eimer), **2.11** (Sicherung der Redis, vor jedem Tarifwechsel) | | |
 
 ## 5. Was Julian einrichtet
