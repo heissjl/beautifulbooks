@@ -139,6 +139,21 @@ export interface RedisCommands {
   setEx?(key: string, value: string, ttlSeconds: number): Promise<unknown>;
   /** EXPIRE key seconds: the daily totals of the analytics (3.1a) age out by themselves. Optional, like hIncrBy. */
   expire?(key: string, seconds: number): Promise<unknown>;
+  /**
+   * Many HINCRBYs on one hash and its EXPIRE as **one** command, a Lua script
+   * (ROADMAP 2.18d): the CPU meter's flush was 14–35 commands every thirty
+   * seconds per instance (measured 2.18b). Optional, like hIncrBy.
+   */
+  hIncrByMany?(key: string, increments: ReadonlyArray<readonly [field: string, by: number]>, ttlSeconds: number): Promise<unknown>;
+}
+
+/** ARGV[1] is the expiry, then field and amount in turns. Returns how many fields it added to. */
+export const HINCRBY_MANY_SCRIPT =
+  "for i = 2, #ARGV, 2 do redis.call('HINCRBY', KEYS[1], ARGV[i], ARGV[i + 1]) end " +
+  "redis.call('EXPIRE', KEYS[1], ARGV[1]) return (#ARGV - 1) / 2";
+
+function hIncrByManyArgs(increments: ReadonlyArray<readonly [string, number]>, ttlSeconds: number): string[] {
+  return [String(ttlSeconds), ...increments.flatMap(([field, by]) => [field, String(by)])];
 }
 
 /**
@@ -266,6 +281,7 @@ export function upstashCommands(url: string, token: string, fetchImpl: typeof fe
     },
     hSetNX: (key, field, value) => command(['HSETNX', key, field, value]),
     setNx: (key, value, ttlSeconds) => command(['SET', key, value, 'NX', 'EX', ttlSeconds]),
+    hIncrByMany: (key, increments, ttlSeconds) => command(['EVAL', HINCRBY_MANY_SCRIPT, 1, key, ...hIncrByManyArgs(increments, ttlSeconds)]),
   };
 }
 
@@ -345,6 +361,8 @@ export function redisCommands(url: string): RedisCommands {
     hIncrBy: (key, field, by) => run(client => client.hIncrBy(key, field, by)),
     setEx: (key, value, ttlSeconds) => run(client => client.set(key, value, { EX: ttlSeconds })),
     expire: (key, seconds) => run(client => client.expire(key, seconds)),
+    hIncrByMany: (key, increments, ttlSeconds) =>
+      run(client => client.eval(HINCRBY_MANY_SCRIPT, { keys: [key], arguments: hIncrByManyArgs(increments, ttlSeconds) })),
   };
 }
 

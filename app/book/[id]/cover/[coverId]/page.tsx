@@ -26,6 +26,16 @@ import { measure } from '@/app/api/measure';
  */
 export const revalidate = 86400;
 
+/**
+ * No path is built ahead; each is rendered on its first request and then kept
+ * for `revalidate` (ROADMAP 2.18p). Without this export Next treats the
+ * dynamic segment as dynamic: measured 2026-10-05 (2.18b), every call answered
+ * `no-store` and rendered in a function, crawlers included.
+ */
+export function generateStaticParams(): Array<{ id: string; coverId: string }> {
+  return [];
+}
+
 interface PageProps {
   params: Promise<{ id: string; coverId: string }>;
 }

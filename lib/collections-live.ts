@@ -7,6 +7,7 @@
  * seconds leaves the file's own `published` in force — the site then shows
  * what was last deployed, never an error page, and never a draft (N12).
  */
+import { cache } from 'react';
 import { commandsFromEnv, type RedisCommands } from '@/lib/hotornot/store';
 import {
   applyContent,
@@ -119,10 +120,18 @@ export async function collectionOrder(): Promise<string[]> {
   return store ? withTimeout(store.getOrder(), 2000, []) : [];
 }
 
-export async function liveRecords(): Promise<CollectionRecord[]> {
+/**
+ * Once per request, however many parts of a page ask (ROADMAP 2.18c).
+ * Measured 2026-10-05 (2.18b): a collection page read its three keys twice,
+ * once for `generateMetadata` and once for the page — 6 `GET` where 3 do.
+ * React's `cache` keeps the answer for the render it was asked in and forgets
+ * it after; outside a render (a route handler, a script) it asks every time.
+ * No caller writes and then reads in one request, so nothing sees an old answer.
+ */
+export const liveRecords = cache(async function liveRecords(): Promise<CollectionRecord[]> {
   const [content, switches, order] = await Promise.all([contentOverrides(), publishOverrides(), collectionOrder()]);
   return applyOrder(applyOverrides(applyContent(collectionRecords(), content), switches), order);
-}
+});
 
 /** Every collection the site shows now, drafts included only when asked (or under `next dev`). */
 export async function liveCollections({ includeDrafts = draftsVisible() }: { includeDrafts?: boolean } = {}): Promise<Collection[]> {

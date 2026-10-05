@@ -5236,3 +5236,34 @@ Beim ersten Lauf gefunden und behoben: der Knopf hieß „Write 0 to the PocketB
 **Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
 
 1.398 Tests (130 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-05 · 2.18o in Produktion; Redis 250 MB mit Backup; das Fehlprojekt gelöscht
+
+**2.18o deployt** (Julian: „ja"): `origin/main` von `df77809` auf `fb5ea95`, nach einem Merge der 5.18b-Commits einer anderen Sitzung (ein Konflikt am Ende der Historie, beide Seiten behalten). Der lokale Build lief bei einer Last von 11–15 (iCloud synchronisierte) nicht durch und wurde nach 30 min abgebrochen, im TypeScript-Schritt; `tsc --noEmit` und Lint waren grün, der volle Testlauf hatte einen wechselnden Ausfall durch Zeitüberschreitung (`Test timed out in 5000ms`, je Lauf ein anderer Test in `integration.test.ts`, ein Lauf ganz grün). Als Nachweis des Builds diente Vercels Vorschau desselben Commits (Status „success"). **Einmal gegen die Produktion geprüft:** `/collections` trägt `/_next/image?url=https%3A%2F%2Fbuyitscovers.com%2Fimg%2FM%2Fol-683284&w=384`, und diese Adresse kam als `image/webp` mit **`x-vercel-cache: HIT`** — das Cover hatte die Vorschau in den Cache gelegt, die Produktion las es von dort: **der Cache der Bildoptimierung gilt über Deploys und Deploy-Arten hinweg**, was 2.18o sollte.
+
+**Redis (J4)** nach Julians Ja zu 8 USD: `redis-pink-yacht` auf 250 MB (Status kurz „Initializing", dann „Available"; `/versus` und `/collections` antworteten dabei 200). Redis-Konsole: AWS eu-central-1, Redis 8.6, Persistenz Append-only jede Sekunde, **Remote backup an, alle 24 h, Redis-managed repo** (kam mit dem Tarif), Verdrängung `noeviction`, belegt 3,7 MB, Netz im Oktober 1,7 GB. `FIXED_COSTS` hat die Zeile „Redis 250 MB", 8 USD im Monat seit 2026-10-05 (K15). Damit ist auch der Kern von 2.11 erfüllt: es gibt eine Sicherung, die nicht von Hand läuft.
+
+**Das versehentliche Vercel-Projekt `annas-archive-cover-scraping-115241` ist gelöscht** (Julian: „Ja, löschen"; `vercel project rm`). Die andere Sitzung hatte es in ihrem 5.18b-Eintrag ebenfalls bemerkt („a second Vercel project hangs on the repository"). Das Vercel-Team heißt inzwischen „ByItsCovers", Slug `byitscovers`.
+
+## 2026-10-05 · Was ein Besuch kostet, gemessen (ROADMAP 2.18b)
+
+**Werkzeug** `lab/visitcost/` (Julian: „mach weiter mit 2.18b"). `next build` und `next start` mit festen Variablen und einem Preload (`intercept.cjs`), der jedes `fetch` aus dem Prozess abfängt: Open Library und Google aus `lib/__fixtures__`, Cover als kleines JPEG, Redis als Attrappe des Upstash-REST-Protokolls (die Seite nimmt REST, sobald ein REST-Paar gesetzt ist), **jeder andere Host abgewiesen**. Ein kopfloses Chrome besucht neun Seitentypen je zweimal in frischem Profil (1280 × 800), scrollt bis zum Ende und verlässt die Seite. Eigenes Build-Verzeichnis `.next-visitcost` (dafür liest `next.config.ts` `NEXT_DIST_DIR`), dessen Datencache vor jedem Lauf geleert wird.
+
+**Ergebnis** (Tabelle in PLAN-2.18 §3): eine Seite kostet höchstens **eine Funktion je Aufruf**, nämlich das Dokument (Startseite, Suche, Sammlungen, Spiel, Jahrzehnte); die kuratierte Buchseite ist vorgerendert und kostet keine, ihre sechs API-Aufrufe (vier Ausgabenseiten, „More by", Seite 0) tragen `s-maxage` und kosten erst den ersten Leser. Kalt fragt die Buchseite Open Library 5-mal und Google einmal (Seite 0), ein gewähltes Cover Google einmal (`/api/isbn`), die Suche Open Library 7-mal, die Jahrzehnte-Seite 6-mal. Redis: 3 `GET` je Startseite, 6 je `/collections` (3 Sammlungs-, 3 Wand-Schlüssel), 6 je Sammlung, 2–4 für das Signal einer Buch- oder Suchseite, keiner beim Aufruf des Spiels. 83 Anfragen auf der Startseite (61 Bilder), 135 auf `/collections` (117 Bilder); JavaScript, CSS und Schriften 290–470 KB je Seite.
+
+**Befunde:** (1) **`/book/[id]/decades` ist dynamisch** — `revalidate` ohne `generateStaticParams`, Build-Klasse ƒ, zweimal hintereinander `Cache-Control: private, no-cache, no-store`; jeder Aufruf rendert in einer Funktion (→ 2.18p). (2) **`/collections/<slug>` liest seine drei Redis-Schlüssel doppelt** (`generateMetadata` und Seite; → 2.18c). (3) **Die CPU-Messung schreibt alle 30 s je Instanz 14–35 `HINCRBY`** (→ 2.18d). (4) `/api/seen` sendet nur auf Buch- und Suchseiten, wie geplant.
+
+**Unterwegs:** zwei frühe Läufe teilten `.next` mit den normalen Builds und schrieben 39 Attrappen-Antworten in dessen Datencache; diese 39 Einträge (alle vom 2026-10-05) sind gelöscht, die 166 echten vom Vortag geblieben. Eine `.env.local`, die `vercel link` angelegt hatte (nur `VERCEL_OIDC_TOKEN`), ist gelöscht, damit die Messung nichts erbt. **Analyse:** nicht berührt; `NEXT_DIST_DIR` wirkt nur, wenn gesetzt.
+
+## 2026-10-05 · Die drei Befunde aus 2.18b behoben (ROADMAP 2.18p, 2.18c Teil, 2.18d Teil)
+
+Julian: „mach weiter damit". Drei Commits, nicht deployt; nachgemessen mit einem vollen Lauf von `lab/visitcost` (neuer Build, leerer Datencache), vorher und nachher:
+
+| | vorher | nachher |
+|---|---|---|
+| `/book/[id]/decades`, `/book/[id]/cover/[coverId]` im Build | ƒ (dynamisch), `no-store` | **●**, Rendern beim ersten Abruf, dann ISR einen Tag |
+| Jahrzehnte-Seite, Funktion je Aufruf | 1, jedes Mal | 0 ab dem zweiten Leser (`s-maxage`) |
+| Redis je Aufruf von `/collections/<slug>` | 6 `GET` | **3** |
+| Redis je Abgabe der CPU-Messung | 5–35 `HINCRBY` + `EXPIRE` | **1** `EVAL` |
+
+**2.18p:** `generateStaticParams` mit leerer Liste in beiden Routen und den deutschen Spiegeln. **2.18c (Teil):** `liveRecords` in React `cache()` — eine Antwort je Rendern, `generateMetadata` und Seite teilen sie; kein Aufrufer schreibt und liest in derselben Anfrage. **2.18d (Teil):** `RedisCommands.hIncrByMany`, ein Lua-Skript (`HINCRBY_MANY_SCRIPT`) für alle Felder und das `EXPIRE`, über die direkte Verbindung (`client.eval`) und über REST (`EVAL`); `countCpu` nimmt es, wo es da ist, sonst wie zuvor Feld für Feld. Zwei neue Tests (ein Befehl; die REST-Form). 1.379 Tests grün, tsc und Lint sauber. **Analyse:** K14 zählt weniger `page-decades`/`page-cover`-Renderings, was gewollt ist; die Felder in `ins:<Tag>:cpu` bleiben dieselben.
