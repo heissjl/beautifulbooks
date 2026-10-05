@@ -675,3 +675,11 @@ Vorschlag: **Profilbild E2 (oder E1), Banner mit der Wortmarke** — der Satz br
 
 **Gewählt: W1 als Profilbild, der Banner mit der Wortmarke** (Julian, 2026-10-04: „vorerst W1 und das banner wie unten, mir war nicht klar, dass es das calibre-logo ist"). Fertige Dateien im Repository unter `assets/social/` (mit README und den SVG-Vorlagen): `avatar-400.png`, `avatar-1000.png`, `banner-1500x500.png` (X, Mastodon), `banner-3000x1000.png` (Bluesky). Hochladen ist Julians Schritt, im jeweiligen Konto angemeldet. Beim ersten Setzen kamen zwei Kacheln des Banners schwarz heraus (zsh zählt Listen ab 1, eine Farbe blieb leer) — vor dem Commit gesehen und behoben.
 
+**Banner hochgeladen, 2026-10-04** (Julian: „upload the banners in chrome"), in Julians Chrome, je angemeldet:
+- **X:** `banner-1500x500.png`, Profil gespeichert. Das Profilbild ist nicht geändert. Auffällig: der öffentliche Name des Kontos ist „Julian Heiss", nicht „Buy Its Covers".
+- **Bluesky:** `banner-3000x1000.png`; die öffentliche Schnittstelle nennt danach ein Banner und den Handle `buyitscovers.com`. Auf der Profilseite liegt der Zurück-Pfeil über dem „J", das Profilbild stößt an „buy", und unten rechts schneidet Bluesky die Adresse ab.
+- **Mastodon** (neuer Profil-Editor unter `/profile/edit`): `banner-1500x500.png` mit dem Alt-Text „"Judge a book, buy its covers." Beside it, a wall of book-cover tiles in greys, one in rust. buyitscovers.com"; die Schnittstelle nennt ein Header-Bild. Auch hier überdeckt das Profilbild den Anfang von „buy". Profilbild und Anzeigename sind bei Mastodon noch leer.
+- **Wie:** X hat feste Datei-Eingänge; Bluesky und Mastodon legen den Eingang erst beim Klick an und öffnen sonst den Dateidialog des Systems — abgefangen, indem `HTMLInputElement.prototype.click` und `dispatchEvent` für Datei-Eingänge den Eingang in die Seite hängen statt den Dialog zu öffnen; dann `file_upload` auf diesen Eingang.
+
+**Offen:** eine Fassung des Banners für Bluesky und Mastodon mit dem Satz weiter rechts und höher (dort liegt das Profilbild weiter oben über dem Banner als bei X); Profilbild W1 hochladen, wo gewünscht; Anzeigenamen auf „Buy Its Covers".
+
