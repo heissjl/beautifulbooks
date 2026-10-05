@@ -418,7 +418,7 @@
       "date": "2026-11-01",
       "channel": "bluesky",
       "kind": "galerie",
-      "text": "Heinz Edelmann's covers for the Reihe Hanser paperbacks",
+      "text": "Heinz Edelmann's covers for the Reihe Hanser paperbacks, from 1968",
       "status": "vorschlag",
       "path": "/collections/reihe-hanser-covers-by-heinz-edelmann",
       "image": "Vier Cover aus der Sammlung",
@@ -428,7 +428,7 @@
         "rechte",
         "publish:reihe-hanser-covers-by-heinz-edelmann"
       ],
-      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky. Jahre fehlen in unseren Daten: nur mit belegtem Zeitraum ergänzen."
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Das Ende (~1975) ist nur ungefähr belegt, deshalb „from 1968“. Antwort-Idee: derselbe Mann war Art Director von Yellow Submarine. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "bsky-versus",
@@ -560,7 +560,7 @@
       "date": "2026-11-08",
       "channel": "bluesky",
       "kind": "galerie",
-      "text": "Celestino Piatti's covers for dtv phantastica",
+      "text": "Celestino Piatti's covers for dtv phantastica (1979–1983)",
       "status": "vorschlag",
       "path": "/collections/dtv-phantastica-covers-by-celestino-piatti",
       "image": "Vier Cover aus der Sammlung",
@@ -570,14 +570,14 @@
         "rechte",
         "publish:dtv-phantastica-covers-by-celestino-piatti"
       ],
-      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Aufhänger für die Antwort: für das Unheimliche drehte er sein eigenes weißes dtv-Gesicht um, schwarzer Grund. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "bsky-edelmann-hanser",
       "date": "2026-11-09",
       "channel": "bluesky",
       "kind": "collection",
-      "text": "Heinz Edelmann, who art-directed Yellow Submarine, drew covers for the Reihe Hanser paperbacks. A hundred of them on one wall.",
+      "text": "Heinz Edelmann, who art-directed Yellow Submarine, also gave the Reihe Hanser paperbacks their face from 1968 on. A hundred of his covers on one wall.",
       "status": "vorschlag",
       "path": "/collections/reihe-hanser-covers-by-heinz-edelmann",
       "needs": [
@@ -585,7 +585,7 @@
         "5.6a",
         "publish:reihe-hanser-covers-by-heinz-edelmann"
       ],
-      "note": "Yellow Submarine aus allgemeinem Wissen: prüfen. Gern auch auf Deutsch."
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Yellow Submarine belegt (en.wikipedia). Gern auch auf Deutsch."
     },
     {
       "id": "reddit-answers-w5",
@@ -645,14 +645,15 @@
       "date": "2026-11-12",
       "channel": "bluesky",
       "kind": "collection",
-      "text": "Celestino Piatti's covers for dtv phantastica: bold lines, few colours, unmistakable.",
+      "text": "dtv phantastica (1979–1983): Celestino Piatti, who drew more than 6,000 white dtv covers, turned his own design black for the uncanny.",
       "status": "vorschlag",
       "path": "/collections/dtv-phantastica-covers-by-celestino-piatti",
       "needs": [
         "konto:bluesky",
         "5.6a",
         "publish:dtv-phantastica-covers-by-celestino-piatti"
-      ]
+      ],
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. "
     },
     {
       "id": "tt-1984",
