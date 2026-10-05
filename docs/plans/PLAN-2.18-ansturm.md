@@ -95,7 +95,7 @@ In dieser Reihenfolge. Jeder Schritt ist ein Roadmap-Punkt und ein Commit; „An
 | **0.13** Google-Alarm und **0.3** (hebt ein Abrechnungskonto das Kontingent?) | Google Cloud | 20 min |
 | Redis: Verdrängungsregel (eviction policy), Region, belegter Speicher ablesen; Preis und Weg des 250-MB-Tarifs (256 Verbindungen, 1.000 Befehle/s, 100 GB) notieren. **Bei einer Regel, die Schlüssel ohne Ablauf verdrängt, löscht ein voller Speicher Sammlungen der Leser** | Redis-Konsole über Vercel → Storage | 10 min |
 | Vercel-Benachrichtigungen (Nutzung) auf eine Adresse, die das Telefon meldet | Vercel → Settings → Notifications | 5 min |
-| **Vorbereitet 2026-10-05, wartet auf eine Anmeldung bei Vercel in Chrome** (Julian: „ok, bereite vor"; in Julians Chrome ist Vercel abgemeldet, Claude gibt kein Passwort ein): (1) **Ausgabenlimit** (J2): Settings → Billing → Spend Management → einschalten, 100 USD, „Pause production deployments" an, Benachrichtigungen 50/75/100 %. (2) **Redis** (J4): Storage → `redis-pink-yacht` → Tarif 250 MB, angezeigten Preis mit rund 5 USD/Monat vergleichen, dann in der Redis-Konsole „Remote backup" mit „Redis-managed repo", täglich; Verdrängungsregel und Region ablesen. Danach trägt Claude den Tarif in `FIXED_COSTS` ein. Claude führt beides aus, sobald Julian angemeldet ist, und bestätigt erst nach Abgleich des angezeigten Preises | Vercel, Redis-Konsole | 10 min |
+| ✅ **Ausgabenlimit** (J2) gesetzt am 2026-10-05 von Claude in Julians Chrome: das Team-Budget stand schon auf 200 USD **ohne** Pause und steht jetzt auf **100 USD mit „Pause production deployments"**, Warnungen bei 50/75/100 %, kein Webhook. **Redis** (J4) **nicht umgestellt:** der Dialog zeigt für 250 MB **8 USD im Monat** (nicht die rund 5 USD aus redis.io), dazu 1 GB 25, 2,5 GB 49, 5 GB 94, 12 GB 234 USD; „Persistence included" ab 250 MB. Abgelesen: Region Frankfurt (fra1), nur RAM, keine Hochverfügbarkeit; die Verdrängungsregel steht nur in der Redis-Konsole. Wartet auf Julians Ja zum Preis | Vercel | — |
 
 ## 6. Was Julian entschieden hat (2026-10-05)
 
@@ -157,7 +157,7 @@ Sammlungen der Leser werden nicht gesperrt (J5).
 
 ## 10. Messungen, die fehlen
 
-Wohin die CPU ging (§0, beantwortet) · Kosten je Seitentyp (2.18b) · ~~ob ein Deploy den Bild-Cache leert~~ **ja**, laut Doku enthält der Cache-Schlüssel die Deploy-Adresse — nach jedem Deploy geht jedes Bild einmal neu durch `/img` (→ 2.18j; vor einem erwarteten Ansturm nicht deployen) · wie lange ein Schalter braucht (2.18f) · ob Pro ein pausiertes Hobby-Projekt sofort zurückholt (Frage an Vercel, nicht ausprobieren) · Verdrängungsregel, Region und Füllstand der Redis (§5) · Größe von `collections:content` in Produktion · Resends Tagesgrenze (nicht nachgelesen).
+Wohin die CPU ging (§0, beantwortet) · Kosten je Seitentyp (2.18b) · ~~ob ein Deploy den Bild-Cache leert~~ **ja** für Funktionsantworten — seit 2.18o stehen die Cover hinter der Bildoptimierung, deren Cache einen Deploy übersteht · wie lange ein Schalter braucht (2.18f) · ob Pro ein pausiertes Hobby-Projekt sofort zurückholt (Frage an Vercel, nicht ausprobieren) · Verdrängungsregel, Region und Füllstand der Redis (§5) · Größe von `collections:content` in Produktion · Resends Tagesgrenze (nicht nachgelesen).
 
 ## Quellen
 

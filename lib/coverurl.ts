@@ -68,7 +68,54 @@ export function coverIdFromSegment(segment: string | undefined): string | null {
  * request is an open proxy, and this one cannot be pointed anywhere.
  */
 export function coverProxyPath(coverId: string, size: 'S' | 'M' | 'L'): string {
-  return `/img/${size}/${coverPathSegment(coverId)}`;
+  const path = `/img/${size}/${coverPathSegment(coverId)}`;
+  return coverCdnOn() ? optimizedCoverSrc(path, size) : path;
+}
+
+/**
+ * **Vercel's image optimization in front of the route** (ROADMAP 2.18o).
+ *
+ * The CDN keys a function's answer by deployment, so after every deploy each
+ * region asked `/img` — and Open Library — for every cover again; the route
+ * carried half the site's CPU (2.18l). The optimizer's cache is keyed by
+ * project, source URL, width, quality and `Accept`, not by deployment, and it
+ * has a global layer behind the regions: a cover passes through our function
+ * once per size, and a deploy leaves it cached.
+ *
+ * The source is still our own route, as an absolute address, so the optimizer
+ * can only fetch what `/img` would serve: no open proxy, and a hidden cover
+ * (2.18k) answers 404 there. A hidden cover already in the optimizer's cache
+ * needs `vercel cache invalidate --srcimg <source>` once per size —
+ * `scripts/hide-cover.ts` prints the three commands.
+ *
+ * One width per size, so one transformation per cover and size, as many as
+ * `/img` answers today. The optimizer never enlarges, so a 180-pixel Open
+ * Library `M` stays 180 pixels. Every width here must be in
+ * `images.imageSizes` or `deviceSizes` in next.config.ts, or Vercel answers 400.
+ *
+ * On only in a Vercel build (`NEXT_PUBLIC_COVER_CDN`, set in next.config.ts
+ * from `VERCEL_ENV`; `COVER_CDN=off` in the project settings turns it off with
+ * the next deploy). `next dev` and the tests keep asking `/img` directly.
+ */
+export const COVER_ORIGIN = 'https://buyitscovers.com';
+export const OPTIMIZED_WIDTH = { S: 128, M: 384, L: 828 } as const;
+const OPTIMIZED_QUALITY = 75;
+
+export function coverCdnOn(): boolean {
+  return process.env.NEXT_PUBLIC_COVER_CDN === 'on';
+}
+
+export function optimizedCoverSrc(path: string, size: 'S' | 'M' | 'L'): string {
+  return `/_next/image?url=${encodeURIComponent(`${COVER_ORIGIN}${path}`)}&w=${OPTIMIZED_WIDTH[size]}&q=${OPTIMIZED_QUALITY}`;
+}
+
+/** The `/img/…` path inside an optimizer address, or the address itself when it is one. */
+export function coverRoutePath(href: string): string | null {
+  if (href.startsWith('/img/')) return href;
+  if (!href.startsWith('/_next/image?')) return null;
+  const source = new URLSearchParams(href.slice('/_next/image?'.length)).get('url');
+  if (!source?.startsWith(`${COVER_ORIGIN}/img/`)) return null;
+  return source.slice(COVER_ORIGIN.length);
 }
 
 /**
@@ -117,8 +164,13 @@ export function proxiedCoverSrc(url: string): string {
  * size-encoded address, and the retry there is a fresh element instead.
  */
 export function retryCoverSrc(href: string): string {
-  if (!href.startsWith('/img/')) return href;
-  return `${href}${href.includes('?') ? '&' : '?'}retry=1`;
+  const marked = (path: string) => `${path}${path.includes('?') ? '&' : '?'}retry=1`;
+  if (href.startsWith('/img/')) return marked(href);
+  // Through the optimizer the marker goes on the source, the part the optimizer keys by.
+  const path = coverRoutePath(href);
+  if (!path) return href;
+  const size = path.split('/')[2] as 'S' | 'M' | 'L';
+  return optimizedCoverSrc(marked(path), size in OPTIMIZED_WIDTH ? size : 'M');
 }
 
 /**
