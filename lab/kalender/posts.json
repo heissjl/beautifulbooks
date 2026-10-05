@@ -4,6 +4,7 @@
     "publish:dtv-phantastica-covers-by-celestino-piatti",
     "publish:fischer-bucherei-covers-by-kurt-wirth",
     "publish:haffmans-covers-by-nikolaus-heidelbach",
+    "publish:kipling-at-haffmans-covers-by-nikolaus-heidelbach",
     "publish:penguin-great-ideas",
     "publish:reihe-hanser-covers-by-heinz-edelmann",
     "publish:tolkien-covers-by-heinz-edelmann"
@@ -178,7 +179,7 @@
         "5.6a",
         "rechte"
       ],
-      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Antwort-Aufhänger: Band 1, The Forever War (1999), trägt sein Bild; sein erstes SF-Cover war 1976. Nie „wiederverwendet“ behaupten. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "bsky-feminist-press",
@@ -302,7 +303,7 @@
         "5.6a",
         "rechte"
       ],
-      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Antwort-Aufhänger: er malte für beide Gesichter der Reihe, schon für Nr. 59, 64, 66, 70 der nummerierten. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "bsky-hugo",
@@ -907,7 +908,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a",
-        "rechte"
+        "rechte",
+        "publish:kipling-at-haffmans-covers-by-nikolaus-heidelbach"
       ],
       "note": "Belegt in docs/plans/research-gestalter-galerien.md. Statt der ganzen Haffmans-Wand die Kipling-Ausgabe, weil nur sie einen belegten Zeitraum hat (10 Bände, rotes Leinen nach Kiplings Uniform Edition). Die Haffmans-Wand kann die Antwort verlinken. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },

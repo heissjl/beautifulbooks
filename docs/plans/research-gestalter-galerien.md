@@ -157,6 +157,76 @@ Für die Galerie-Sätze zählt vor allem der **belegte Zeitraum**. Er steht am E
 
 ---
 
-## Chris Moore, Dominic Harman
+## Chris Moore (1947–2025) — SF Masterworks, die nummerierte Reihe
 
-Die Recherche läuft noch.
+Die ISFDB selbst war für den Agenten nicht abrufbar, weil sie eine Cloudflare-Prüfung zeigt. Die Zuordnungen hier stützen sich auf die Cover-Galerien von Bear Alley (Steve Holland), auf Nachrufe und auf Händler. **Unsere eigene Zahl („ISFDB nennt ihn bei 40 der 73“) kommt aus den ISFDB-Angaben in `data/collections.json`** (lab/isfdb, 6.50). Bear Alley kommt auf etwa 33, lässt aber bei mehreren Titeln den Künstler offen. Für einen Post gilt die vorsichtigere Formulierung.
+
+**Herkunft.**
+- Christopher Norton Moore, geboren am 1.6.1947, aus Rotherham.
+- Grafikdesign in Maidstone (1966–69), Illustration am Royal College of Art (1969–72).
+- 1972 gründete er mit Michael Morris Moore Morris Ltd.; sie machten Plattenhüllen für Rod Stewart, Fleetwood Mac und Status Quo (bis 1980).
+- Gestorben am 7.2.2025.
+- Quellen: [en.wikipedia](https://en.wikipedia.org/wiki/Chris_Moore_(illustrator)), [eigene Seite](http://www.chrismooreillustration.co.uk/about/), [DownTheTubes](https://downthetubes.net/in-memoriam-artist-chris-moore/).
+
+**SF und Technik.**
+- 1974 regte der Art Director Peter Bennett ihn zu SF-Covern an; sein erstes war 1976 Besters *Extro* ([70s sci-fi art](https://70s-sci-fi-art.ghost.io/chris-moore-1947-2025/)).
+- Airbrush, glänzende verchromte Raumschiffe; zeitweise zwei Cover pro Woche. Um 2000 wechselte er zum Computer.
+- Er malte für Asimov, Clarke, Dick und Reynolds, außerdem für Forsyth und Wilbur Smith.
+- Kunstbände: *Parallel Lines* (mit Peter Elson; die Quellen nennen 1980 oder 1981), *Journeyman* (2000).
+- Rund 45 Jahre bei der Agentur Artist Partners.
+
+**SF Masterworks.**
+- Band 1, *The Forever War* (Millennium, Januar 1999), trägt sein Bild ([Bear Alley 1–25](https://bearalley.blogspot.com/2019/06/sf-masterworks-cover-gallery-part-1-1-25.html), [26–50](https://bearalley.blogspot.com/2019/06/sf-masterworks-cover-gallery-part-2-26.html), [51–73](https://bearalley.blogspot.com/2019/06/sf-masterworks-cover-gallery-part-3-51.html)).
+- **Neu gemalt oder wiederverwendet?** Für *The Stars My Destination*, *The Forever War* und *The Dispossessed* erscheinen seine Bilder laut Bear Alley 1999 zum ersten Mal; frühere britische Ausgaben hatten andere Künstler. Das spricht für Aufträge, ist aber eine Schlussfolgerung.
+- Bei *Do Androids Dream…?* gab es schon 1997 ein Moore-Cover bei Voyager. Ob es dasselbe Bild ist, ist ungeprüft.
+- Dass Bilder wiederverwendet wurden, behauptet nur ein Leserkommentar (*Babel-17*). **Kein Post sagt deshalb pauschal „wiederverwendet“.**
+- Ein Art Director der Reihe und ein Interview über diese Arbeit sind nicht gefunden.
+- Die Behauptung, Moore habe das schwarze Reihendesign entworfen, ist unbelegt: **nicht verwenden.**
+
+**Aufhänger, belegt:**
+- Sein erstes SF-Cover malte er 1976; 1999 trug Band 1 der SF Masterworks sein Bild.
+- Vor der SF: Plattenhüllen für Rod Stewart und Fleetwood Mac.
+
+**Zeitraum für den Galerie-Satz:** die nummerierte Reihe, 1999–2007.
+
+---
+
+## Dominic Harman — SF Masterworks nach dem Relaunch
+
+**Herkunft.**
+- Aufgewachsen in Southwick bei Brighton, wo er bis heute lebt. Das Geburtsjahr nennt keine Quelle; „um 1973/74“ ist aus seinem Alter beim ersten Verkauf errechnet.
+- Foundation-Kurs in Worthing; brachte sich viel selbst bei, indem er Dalí, Velázquez und Beksiński in Öl kopierte. Später lernte er an der Angel Academy in Florenz.
+- Quellen: [Children's Illustrators](https://childrensillustrators.com/interviews/dominic_harman), [Eric Brown](https://ericbrown.co.uk/interviews/), [bleedingdreams](https://www.bleedingdreams.com/about).
+
+**Laufbahn.**
+- Erster Verkauf 1997 an das Magazin *Interzone*; Durchbruch bei Buchumschlägen 2001 mit Kelley Armstrongs *Bitten*.
+- Von Öl und Airbrush zu Photoshop, mit Fotografie, 3D und Skulptur gemischt. Ölbilder malt er unter dem Namen „Emile Parks“.
+- Reihen: *Temeraire* (Novik), *The Demonata* (Shan), Clive-Barker-Neuausgaben (2008).
+- Bei den Preisen widersprechen sich die Quellen: zwei oder drei BSFA Awards, dazu Asimov's und Paper Tiger.
+
+**SF Masterworks.**
+- Er malte schon für die **alte nummerierte Reihe**: Nr. 59 *Dying Inside*, 64 *Tau Zero*, 66 *Life During Wartime*, 70 *Mockingbird*.
+- Nach dem Relaunch unter anderem *The Body Snatchers* und *The Female Man* (2010), *Floating Worlds* (2011), *Rogue Moon* (2012) ([Bear Alley, neue Reihe](https://bearalley.blogspot.com/2019/06/sf-masterworks-cover-gallery-part-4-new.html)).
+- *Inverted World* schreiben die Quellen mal Moore, mal Harman zu.
+- **Der Relaunch** begann am 29.3.2010: gelb-weiße Rücken, das Logo senkrecht über dem Bild, keine Nummern mehr ([en.wikipedia](https://en.wikipedia.org/wiki/SF_Masterworks)). Graham Sleight verbindet das Gelb mit dem alten „Gollancz Yellow“ der Hardcover ([grahamsleight.com](https://grahamsleight.com/sf-masterworks/)).
+- Wer die Vorlage entworfen hat, nennt keine gefundene Quelle.
+
+**Aufhänger, belegt:** Er malte für beide Gesichter der Reihe, das schwarze bis 2007 und das gelbe ab 2010.
+
+**Zeitraum für den Galerie-Satz:** nach dem Relaunch, ab 2010.
+
+---
+
+## Was daraus für die Galerien folgt
+
+| Galerie | Satz | Stand |
+|---|---|---|
+| Chris Moore | „…for the SF Masterworks (1999–2007)“ | belegt; Antwort-Aufhänger: Band 1 trug sein Bild |
+| Dominic Harman | „…after the 2010 relaunch“ | belegt; Aufhänger: beide Gesichter der Reihe |
+| Heinz Edelmann | „…Reihe Hanser paperbacks, from 1968“ | Ende nur ungefähr |
+| Celestino Piatti | „…dtv phantastica (1979–1983)“ | belegt |
+| Kurt Wirth | ohne Jahre | 180 Umschläge (AGI), nur 1958 als Jahr belegt |
+| Walter Grieder | — | **seine Herder-Umschläge sind nicht belegt**: erst ein Exemplar mit Vermerk, sonst verwerfen |
+| Nikolaus Heidelbach | „…Kipling at Haffmans (1987–1995)“ | belegt (Antiquariat, sehr konkret) |
+
+Von Hand nachzusehen, bevor ein Post etwas über Erstverwendung sagt: die ISFDB-Einträge der Moore- und Harman-Cover.

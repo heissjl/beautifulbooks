@@ -102,6 +102,8 @@ Warum es zu uns passt: Unsere Sammlungen nach Gestaltern sind genau dieser Stoff
 
 Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walter-grieder`; die übrigen Sammlungen sind online veröffentlicht. Auf Instagram ist es dasselbe Format als Karussell.
 
+**Wer die sieben Gestalter waren** und welche Jahre belegt sind: [research-gestalter-galerien.md](research-gestalter-galerien.md). Kurz: Heidelbach läuft als Kipling-Ausgabe (1987–1995), Wirth ohne Jahre, und Grieders Galerie wartet, weil seine Herder-Umschläge nirgends belegt sind.
+
 **X ist der Kanal des Vorbilds, steht aber nicht im Kalender:** 5.6a kennt keine Klasse `x`, und ohne sie ist ein Besuch von dort „social“ oder „direkt“. Soll X dazukommen, braucht `VIA` den Eintrag (Analyse-Regel 6, Julian gibt den Satz frei), dann ist es ein weiterer Kanal im Werkzeug.
 
 ## 5. Der Kalender und wie man eingreift
