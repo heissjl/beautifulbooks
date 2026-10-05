@@ -55,6 +55,8 @@ Was in jedem Exposé steht: was man tut (Titel eingeben), was man sieht (die Cov
 
 Die Texte stehen vollständig in `lab/kalender/posts.json` und sind im Werkzeug zu ändern.
 
+**Als Ansicht, wie es auf jeder Plattform aussähe:** das private Artefakt [Buy Its Covers Exposés](https://claude.ai/artifact/YGoSUegNAdyytMeCuwXobQ) (2026-10-04). Es zeigt Mock-ups je Kanal, Link, Voraussetzungen und einen Kopierknopf und ist aus `posts.json` erzeugt, zusammen mit der Vorschaukarte der Startseite, einmal von der Produktion geholt. Die Karte zeigt nur Farbflächen, keine Cover: Deshalb brauchen Bluesky, HN, Reddit und Product Hunt für das Exposé keine Rechte-Entscheidung.
+
 ## 4. Die Sammlungen, in dieser Reihenfolge
 
 **In `data/collections.json` veröffentlicht.** Online sind es mehr: 46 von 56, weil Julian Entwürfe über /curate ohne Deploy freischaltet (5.10g). Gelesen wurde das am 2026-10-04 mit einer Anfrage an `buyitscovers.com/collections`; die Datei allein führt hier in die Irre (Julian: „ich glaub du bist hier nicht auf dem neuesten stand“). Die Reihenfolge der ersten Wochen:
