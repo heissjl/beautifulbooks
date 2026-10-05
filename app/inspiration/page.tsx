@@ -11,8 +11,8 @@ import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 
 /**
- * "The books that inspired me" (ROADMAP 5.18b): nine books on a board, in the
- * editions they were read in, and a picture to share. Behind a switch like
+ * "The books that inspired me" (ROADMAP 5.18b): nine books on a board, each
+ * with the cover its reader loves, and a picture to share. Behind a switch like
  * the cover game — on in previews and on a laptop, off in production until
  * it is switched on (`lib/inspiration/switch.ts`).
  *
@@ -25,7 +25,7 @@ import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
  */
 export const metadata: Metadata = {
   title: 'The books that inspired me',
-  description: 'Nine books that changed how you see things, in the editions you read them in. Pick them, then share the picture.',
+  description: 'Nine books that changed how you see things, with your favourite covers. Pick them, then share the picture.',
   robots: { index: false, follow: false },
 };
 

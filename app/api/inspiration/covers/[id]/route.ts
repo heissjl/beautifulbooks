@@ -5,7 +5,7 @@ import { workCovers } from '@/lib/inspiration/covers';
 
 /**
  * GET /api/inspiration/covers/<OL…W> — the covers of a work's editions, for
- * the window "The edition I read" (ROADMAP 5.18b).
+ * the window "Your favourite cover" (ROADMAP 5.18b).
  *
  * **Never Google**, and therefore not `/api/works/<id>`, whose first page
  * runs the Google title search: a page made to be passed around must not

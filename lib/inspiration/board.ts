@@ -24,8 +24,13 @@
  * and the lab's server hands the same file to its page with the types stripped.
  */
 
+/** Nine places is the board; six is the alternative Julian asked to see beside it (2026-10-05). */
 export const SLOTS = 9;
+export type BoardSize = 6 | 9;
 export const NAME_MAX = 40;
+
+/** "Nine" and "Six", for the sentences that count the books. */
+export const SIZE_WORD: Record<BoardSize, string> = { 6: 'Six', 9: 'Nine' };
 
 export interface Slot {
   /** `OL…W` */
@@ -35,7 +40,7 @@ export interface Slot {
 }
 
 export interface Board {
-  /** Always nine entries, row by row; null is an empty slot. */
+  /** Nine entries, or six on the smaller board, row by row; null is an empty slot. The length is the board's size. */
   slots: (Slot | null)[];
   /** The name the reader chose to show, possibly empty. */
   by: string;
@@ -48,8 +53,15 @@ const GB_COVER = /^gb:[\w.-]{1,64}$/;
 export const isWorkId = (s: string): boolean => WORK.test(s);
 export const isCoverId = (s: string): boolean => OL_COVER.test(s) || GB_COVER.test(s);
 
-export function emptyBoard(): Board {
-  return { slots: Array.from({ length: SLOTS }, () => null), by: '' };
+export function emptyBoard(size: BoardSize = SLOTS): Board {
+  return { slots: Array.from({ length: size }, () => null), by: '' };
+}
+
+export const sizeOf = (board: Board): BoardSize => (board.slots.length === 6 ? 6 : 9);
+
+/** The same books on a board of another size: the first six stay when a board of nine shrinks. */
+export function resize(board: Board, size: BoardSize): Board {
+  return { ...board, slots: Array.from({ length: size }, (_, i) => board.slots[i] ?? null) };
 }
 
 /** A name as the poster can print it: one line, no control characters, at most NAME_MAX. */
@@ -82,13 +94,15 @@ export function encodeBoard(board: Board): string {
   return board.slots.map(s => (s ? encodeSlot(s) : '')).join('~');
 }
 
-export function decodeBoard(b: string): (Slot | null)[] {
+export function decodeBoard(b: string, size: BoardSize = SLOTS): (Slot | null)[] {
   const codes = b.split('~');
-  return Array.from({ length: SLOTS }, (_, i) => (codes[i] ? decodeSlot(codes[i]) : null));
+  return Array.from({ length: size }, (_, i) => (codes[i] ? decodeSlot(codes[i]) : null));
 }
 
+/** `n=6` in the address is the smaller board; anything else is nine. */
 export function parseBoard(params: URLSearchParams): Board {
-  return { slots: decodeBoard(params.get('b') ?? ''), by: cleanName(params.get('by') ?? '') };
+  const size: BoardSize = params.get('n') === '6' ? 6 : SLOTS;
+  return { slots: decodeBoard(params.get('b') ?? '', size), by: cleanName(params.get('by') ?? '') };
 }
 
 /** The query string of a board, without the leading `?`; empty for an empty board. */
@@ -96,6 +110,8 @@ export function boardQuery(board: Board): string {
   const b = encodeBoard(board);
   const parts: string[] = [];
   if (b) parts.push(`b=${b}`);
+  // Nine is the default and stays unsaid, so every address made before the smaller board reads as it did.
+  if (sizeOf(board) === 6) parts.push('n=6');
   if (board.by) parts.push(`by=${encodeURIComponent(board.by)}`);
   return parts.join('&');
 }
@@ -108,7 +124,7 @@ function withSlots(board: Board, slots: (Slot | null)[]): Board {
 
 /** Puts a book into a slot, replacing whatever was there. A work already on the board moves. */
 export function place(board: Board, index: number, slot: Slot): Board {
-  if (index < 0 || index >= SLOTS || !isWorkId(slot.workId) || !isCoverId(slot.coverId)) return board;
+  if (index < 0 || index >= board.slots.length || !isWorkId(slot.workId) || !isCoverId(slot.coverId)) return board;
   const slots = board.slots.map(s => (s?.workId === slot.workId ? null : s));
   slots[index] = slot;
   return withSlots(board, slots);
@@ -124,7 +140,7 @@ export function remove(board: Board, index: number): Board {
 
 /** Swaps two slots; moving into an empty slot is a swap with nothing. */
 export function swap(board: Board, a: number, b: number): Board {
-  if (a === b || a < 0 || b < 0 || a >= SLOTS || b >= SLOTS) return board;
+  if (a === b || a < 0 || b < 0 || a >= board.slots.length || b >= board.slots.length) return board;
   const slots = [...board.slots];
   [slots[a], slots[b]] = [slots[b], slots[a]];
   return withSlots(board, slots);

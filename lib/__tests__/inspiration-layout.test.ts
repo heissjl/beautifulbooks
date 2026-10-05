@@ -39,3 +39,28 @@ describe.each(['story', 'feed'] as PosterFormat[])('%s poster', format => {
 it('a story gives bigger tiles than a feed post (why the story comes first)', () => {
   expect(posterLayout('story').tiles[0].width).toBeGreaterThan(posterLayout('feed').tiles[0].width);
 });
+
+describe.each(['story', 'feed'] as PosterFormat[])('%s poster with six covers', format => {
+  const L = posterLayout(format, 6);
+
+  it('has six 2:3 tiles inside the canvas, between head and foot', () => {
+    expect(L.tiles).toHaveLength(6);
+    for (const t of L.tiles) {
+      expect(t.width * 3).toBe(t.height * 2);
+      expect(t.x).toBeGreaterThanOrEqual(0);
+      expect(t.x + t.width).toBeLessThanOrEqual(L.width);
+    }
+    for (let i = 0; i < 6; i++) for (let j = i + 1; j < 6; j++) expect(overlaps(L.tiles[i], L.tiles[j])).toBe(false);
+    expect(L.tiles[0].y).toBe(L.head.height);
+    expect(L.foot.y).toBe(L.tiles[5].y + L.tiles[5].height);
+  });
+});
+
+it('six covers stand two wide in a story and three wide in a post, where they are larger than nine', () => {
+  const story = posterLayout('story', 6);
+  const feed = posterLayout('feed', 6);
+  expect(new Set(story.tiles.map(t => t.x)).size).toBe(2);
+  expect(new Set(feed.tiles.map(t => t.x)).size).toBe(3);
+  expect(feed.tiles[0].width).toBeGreaterThan(posterLayout('feed', 9).tiles[0].width);
+  expect(story.tiles[0].width).toBe(posterLayout('story', 9).tiles[0].width);
+});

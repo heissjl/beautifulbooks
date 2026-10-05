@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CoverImage from './CoverImage';
 import { coverRefFromUrl, coverUrlFor } from '@/lib/coverurl';
+import { rememberMade } from './inspirationMemory';
 import {
-  SLOTS,
   NAME_MAX,
+  SIZE_WORD,
   type Board,
   boardQuery,
   cleanName,
@@ -15,7 +16,9 @@ import {
   parseBoard,
   place,
   remove,
+  resize,
   setCover,
+  sizeOf,
   swap,
 } from '@/lib/inspiration/board';
 import type { BrowseList, BrowseWork } from '@/lib/inspiration/browse';
@@ -100,6 +103,7 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
   }, [board]);
 
   const filled = filledCount(board);
+  const size = sizeOf(board);
   const nameOf = (workId: string) => names[workId]?.title ?? 'This book';
 
   /*
@@ -212,6 +216,8 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
       const res = await fetch('/api/inspiration/link', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ q: boardQuery(board) }) });
       const body = (await res.json().catch(() => null)) as { path?: string; error?: string } | null;
       if (!res.ok || !body?.path) throw new Error(body?.error ?? 'The link could not be made. Try again in a moment.');
+      // So the shared page can tell its maker from a visitor without an id (components/inspirationMemory.ts).
+      rememberMade(boardQuery(board));
       router.push(body.path);
     } catch (err) {
       setLink({ busy: false, note: err instanceof Error ? err.message : 'The link could not be made. Try again in a moment.' });
@@ -227,7 +233,7 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
         <div className="mx-auto flex min-h-12 max-w-5xl items-center gap-4 px-4 py-2 sm:px-6 lg:px-8">
           <span className="text-[11px] uppercase tracking-[0.14em] text-bg/70">Your board</span>
           <span className="flex-1 font-display text-lg sm:text-xl" role="status">
-            {link.busy ? 'Making the link…' : filled === SLOTS ? 'Nine. Done.' : `${filled} of 9`}
+            {link.busy ? 'Making the link…' : filled === size ? `${SIZE_WORD[size]}. Done.` : `${filled} of ${size}`}
           </span>
           <button type="button" onClick={finish} disabled={filled === 0 || link.busy} className="rounded-full bg-bg px-4 py-0.5 text-sm text-ink hover:bg-surface disabled:opacity-40">
             Done — share it
@@ -243,7 +249,16 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-8 sm:px-6 sm:pb-24 lg:grid lg:grid-cols-[minmax(0,1fr)_27rem] lg:items-start lg:gap-x-16 lg:px-8">
         <div className="max-w-xl lg:sticky lg:top-32">
           <h1 className="text-3xl leading-tight text-ink sm:text-4xl">The books that inspired me</h1>
-          <p className="mt-3 text-base text-ink-2">Nine books that changed how you see things — in the editions you read them in. Pick them, then share the picture.</p>
+          <p className="mt-3 text-base text-ink-2">{SIZE_WORD[size]} books that changed how you see things, with your favourite covers.</p>
+          {/*
+            The way through it, on the page and not only in the windows (Julian, 2026-10-05): that a cover
+            can be changed after the book is placed was said nowhere a reader looked before they clicked.
+          */}
+          <ol className="mt-4 space-y-1.5 text-sm text-ink-2">
+            <li><span className="mr-2 text-ink-3 tabular-nums">1</span>Add {SIZE_WORD[size].toLowerCase()} books — search for them or browse a list.</li>
+            <li><span className="mr-2 text-ink-3 tabular-nums">2</span><strong className="font-medium text-ink">Then change the covers.</strong> Each book arrives with its best-known one; a tap on it shows the others.</li>
+            <li><span className="mr-2 text-ink-3 tabular-nums">3</span>Share the picture.</li>
+          </ol>
           {link.note && <p className="mt-3 text-sm text-accent" role="alert">{link.note}</p>}
 
           <input
@@ -257,6 +272,28 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
             }}
             className="mt-5 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink placeholder:text-ink-3"
           />
+          {/*
+            The board of six, to look at beside the board of nine (Julian, 2026-10-05: „mach eine lokale
+            alternative mit nur 6 büchern"). The switch shows under `next dev` only; the address `?n=6`
+            works wherever the page is on, so a board of six can be passed around and compared.
+          */}
+          {process.env.NODE_ENV === 'development' && (
+            <p className="mt-4 text-xs text-ink-3">
+              Local only:{' '}
+              <button
+                type="button"
+                className="underline underline-offset-2 hover:text-accent"
+                onClick={() => {
+                  const next = resize(board, size === 9 ? 6 : 9);
+                  setBoard(next);
+                  setTarget(firstEmpty(next));
+                }}
+              >
+                {size === 9 ? 'try the board with six books' : 'back to the board with nine books'}
+              </button>
+              {size === 9 && filled > 6 && ' (keeps the first six)'}
+            </p>
+          )}
         </div>
 
         <section className="mt-6 max-w-xl lg:mt-0" aria-label="Your nine books">
@@ -266,8 +303,8 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
                 'Tap or click a + to add your first book.'
               ) : (
                 <>
-                  <span className="sm:hidden">Tap a cover to pick the edition you read. Drag ⠿ to move it.</span>
-                  <span className="hidden sm:inline">Click a cover to pick the edition you read. Drag a cover to move it.</span>
+                  <span className="sm:hidden">Tap a cover to change it for your favourite. Drag ⠿ to move it.</span>
+                  <span className="hidden sm:inline">Click a cover to change it for your favourite. Drag a cover to move it.</span>
                 </>
               )}
             </p>
@@ -296,8 +333,8 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
                   <li key={i} data-index={i} className={lifted ? 'opacity-40' : ''}>
                     <button
                       type="button"
-                      aria-label={`${name} — pick the edition you read`}
-                      title="Click for the edition you read, drag to move it"
+                      aria-label={`${name} — choose another cover`}
+                      title="Click for another cover of this book, drag to move it"
                       className={`cover-shadow relative block aspect-[2/3] w-full cursor-grab select-none overflow-hidden rounded-card border-0 bg-surface-2 p-0 ${over ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}
                       onPointerDown={(e) => {
                         // Every press starts clean: a drag whose click never came must not swallow the next tap.
@@ -325,7 +362,7 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
                         ⠿
                       </button>
                       <ToolButton label={`Take ${name} out`} onClick={() => setBoard((b) => remove(b, i))}>✕</ToolButton>
-                      <ToolButton label={`Move ${name} right`} hidden={i === SLOTS - 1} wide onClick={() => setBoard((b) => swap(b, i, i + 1))}>→</ToolButton>
+                      <ToolButton label={`Move ${name} right`} hidden={i === size - 1} wide onClick={() => setBoard((b) => swap(b, i, i + 1))}>→</ToolButton>
                     </span>
                   </li>
                 );
@@ -336,9 +373,9 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
 
       {win?.kind === 'add' && (
         <Sheet
-          kicker={`Book ${Math.min(filled + 1, SLOTS)} of 9`}
+          kicker={`Book ${Math.min(filled + 1, size)} of ${size}`}
           title="Add a book"
-          sub="Search for a book or browse a list. A click puts it on your board; you pick the edition afterwards."
+          sub="Search for a book or browse a list. A click puts it on your board with its best-known cover — you change the cover afterwards."
           onClose={() => setWin(null)}
         >
           {/* The board in small: the window covers the real one. */}
@@ -368,7 +405,7 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
 
       {win?.kind === 'covers' && coversSlot && (
         <Sheet
-          kicker="The edition I read"
+          kicker="Your favourite cover"
           title={[names[coversSlot.workId]?.title, names[coversSlot.workId]?.author].filter(Boolean).join(' · ') || 'This book'}
           // Julian's wording, 2026-10-05: the cover one loves counts as much as the printing one held.
           sub="Pick the cover of the edition you read or the one you love the most: it takes the place of the marked one on your board."
@@ -538,7 +575,7 @@ function SearchPane({ active, onPick }: { active: boolean; onPick: (work: { id: 
                   onClick={() => {
                     if (!w.coverId) return;
                     onPick({ id: w.id, title: w.title, author: w.author, coverId: w.coverId });
-                    setPlaced(`${w.title} is on your board.`);
+                    setPlaced(`${w.title} is on your board. Tap its cover there to change it.`);
                     setFound({ state: 'idle' });
                     setQ('');
                     field.current?.focus();

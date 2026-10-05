@@ -4,8 +4,10 @@ import HeaderSearch from '@/components/HeaderSearch';
 import InspirationShared from '@/components/InspirationShared';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
-import { type Board, boardQuery, parseBoard } from '@/lib/inspiration/board';
+import { type Board, boardQuery, parseBoard, SIZE_WORD, sizeOf } from '@/lib/inspiration/board';
+import { versusEnabled } from '@/lib/hotornot/switch';
 import { describeBoard } from '@/lib/inspiration/describe';
+import { wallsEnabled } from '@/lib/walls/switch';
 
 /**
  * What the two shared addresses have in common (ROADMAP 5.18b): the short
@@ -17,7 +19,7 @@ import { describeBoard } from '@/lib/inspiration/describe';
 export async function boardFromSearch(searchParams: Promise<Record<string, string | string[] | undefined>> | undefined): Promise<Board> {
   const raw = (await searchParams) ?? {};
   const params = new URLSearchParams();
-  for (const name of ['b', 'by']) {
+  for (const name of ['b', 'by', 'n']) {
     const value = raw[name];
     const first = Array.isArray(value) ? value[0] : value;
     if (first) params.set(name, first);
@@ -33,7 +35,7 @@ export async function origin(): Promise<string> {
 
 export async function sharedMetadata(board: Board | null): Promise<Metadata> {
   const title = board?.by ? `The books that inspired ${board.by}` : 'The books that inspired me';
-  const description = 'Nine books, in the editions they were read in. What inspired you?';
+  const description = `${board ? SIZE_WORD[sizeOf(board)] : 'Nine'} books, each with a favourite cover. What inspired you?`;
   // Not indexed while the page lives behind its switch; the card makes a shared link show the nine covers.
   const images = board ? [{ url: `${await origin()}/api/inspiration/poster?${boardQuery(board)}&format=card`, width: 1200, height: 630 }] : undefined;
   return {
@@ -52,7 +54,7 @@ export async function SharedPage({ board, path, missing }: { board: Board | null
       <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">
         {board ? (
-          <InspirationShared board={await describeBoard(board)} query={boardQuery(board)} link={`${await origin()}${path}`} />
+          <InspirationShared board={await describeBoard(board)} query={boardQuery(board)} link={`${await origin()}${path}`} walls={wallsEnabled()} versus={versusEnabled()} />
         ) : (
           <p className="py-24 text-center text-ink-2">{missing}</p>
         )}

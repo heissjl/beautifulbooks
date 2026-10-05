@@ -16,7 +16,7 @@ export interface Rect { x: number; y: number; width: number; height: number }
 export interface PosterLayout {
   width: number;
   height: number;
-  /** Nine rectangles, row by row. */
+  /** Nine rectangles, or six, row by row. */
   tiles: Rect[];
   /** Top band: one line, "The books that inspired me" or "… inspired <name>". */
   head: Rect;
@@ -53,21 +53,33 @@ export const POSTER_SIZES: Record<PosterFormat, { width: number; height: number 
   feed: { width: SPECS.feed.width, height: SPECS.feed.height },
 };
 
-export function posterLayout(format: PosterFormat): PosterLayout {
+/**
+ * How six covers stand: two wide and three high in a story, which fills its
+ * height at the size nine have there (304 × 456), and three wide and two high
+ * in a feed post, where they come out a third larger than nine (308 × 462
+ * against 232 × 348) — the one place the smaller board shows its covers bigger.
+ */
+const GRID: Record<PosterFormat, Record<6 | 9, { cols: number; rows: number }>> = {
+  story: { 9: { cols: 3, rows: 3 }, 6: { cols: 2, rows: 3 } },
+  feed: { 9: { cols: 3, rows: 3 }, 6: { cols: 3, rows: 2 } },
+};
+
+export function posterLayout(format: PosterFormat, count: 6 | 9 = 9): PosterLayout {
   const s = SPECS[format];
-  const byHeight = Math.floor((s.height - s.head - s.foot - 2 * s.gap) / 3);
-  const byWidth = Math.floor(((s.width - 2 * s.margin - 2 * s.gap) / 3) * 1.5);
+  const { cols, rows } = GRID[format][count];
+  const byHeight = Math.floor((s.height - s.head - s.foot - (rows - 1) * s.gap) / rows);
+  const byWidth = Math.floor(((s.width - 2 * s.margin - (cols - 1) * s.gap) / cols) * 1.5);
   // A multiple of three, so that width = height * 2/3 is a whole number exactly.
   const tileH = Math.min(byHeight, byWidth) - (Math.min(byHeight, byWidth) % 3);
   const tileW = (tileH / 3) * 2;
-  const gridW = 3 * tileW + 2 * s.gap;
-  const gridH = 3 * tileH + 2 * s.gap;
+  const gridW = cols * tileW + (cols - 1) * s.gap;
+  const gridH = rows * tileH + (rows - 1) * s.gap;
   const x0 = Math.round((s.width - gridW) / 2);
   // The grid sits in the middle of what head and foot leave.
   const y0 = s.head + Math.round((s.height - s.head - s.foot - gridH) / 2);
   const tiles: Rect[] = [];
-  for (let row = 0; row < 3; row++) {
-    for (let col = 0; col < 3; col++) {
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
       tiles.push({ x: x0 + col * (tileW + s.gap), y: y0 + row * (tileH + s.gap), width: tileW, height: tileH });
     }
   }

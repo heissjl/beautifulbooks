@@ -9,6 +9,10 @@ describe('share texts', () => {
     expect(shareText('')).toMatch(/^The books that inspired me/);
     expect(shareText('Julian')).toMatch(/^The books that inspired Julian/);
     expect(shareText('Julian')).toContain(HASHTAG);
+    // "Favourite covers", not "editions read" (Julian, 2026-10-05).
+    expect(shareText('')).toContain('my favourite covers');
+    expect(shareText('Julian')).toContain('a favourite cover');
+    expect(shareText('Julian')).not.toMatch(/edition/);
   });
 
   it('stay inside every platform’s limit, even with the longest name', () => {

@@ -18,10 +18,15 @@ export interface ShareTarget {
   href: string;
 }
 
-/** The sentence that goes with the link, with or without a name. */
+/**
+ * The sentence that goes with the link, with or without a name. "Favourite
+ * covers", not "the editions they were read in" (Julian, 2026-10-05): what a
+ * reader picks is a picture, and the one they love counts as much as the
+ * printing they held.
+ */
 export function shareText(by: string): string {
-  const whose = by ? `The books that inspired ${by}` : 'The books that inspired me';
-  return `${whose}, in the editions they were read in. What inspired you? ${HASHTAG}`;
+  const whose = by ? `The books that inspired ${by}, each with a favourite cover` : 'The books that inspired me, with my favourite covers';
+  return `${whose}. What inspired you? ${HASHTAG}`;
 }
 
 export function shareTargets(link: string, by: string): ShareTarget[] {

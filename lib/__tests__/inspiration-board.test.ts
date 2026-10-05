@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
-  boardQuery, cleanName, decodeSlot, emptyBoard, encodeSlot, filledCount, firstEmpty, NAME_MAX, parseBoard, place, remove, setCover,
-  SLOTS, swap,
+  boardQuery, cleanName, decodeSlot, emptyBoard, encodeSlot, filledCount, firstEmpty, NAME_MAX, parseBoard, place, remove, resize, setCover,
+  SIZE_WORD, sizeOf, SLOTS, swap,
 } from '../inspiration/board';
 
 const gatsby = { workId: 'OL468431W', coverId: 'ol:12547191' };
@@ -82,5 +82,46 @@ describe('editing', () => {
     b = remove(b, 8);
     expect(filledCount(b)).toBe(0);
     expect(firstEmpty(place(b, 0, gatsby))).toBe(1);
+  });
+});
+
+describe('the board of six', () => {
+  const six = () => place(place(emptyBoard(6), 0, gatsby), 5, dune);
+
+  it('says its size in the address, and nine stays unsaid', () => {
+    expect(boardQuery(six())).toBe('b=a1fz.7gxh3~~~~~j5d3.gabc_D-1&n=6');
+    expect(boardQuery(place(emptyBoard(), 0, gatsby))).not.toContain('n=');
+    expect(boardQuery(emptyBoard(6))).toBe('n=6');
+  });
+
+  it('reads back with six places', () => {
+    const b = parseBoard(new URLSearchParams(boardQuery({ ...six(), by: 'Julian' })));
+    expect(b.slots).toHaveLength(6);
+    expect(sizeOf(b)).toBe(6);
+    expect(b.slots[5]).toEqual(dune);
+    expect(b.by).toBe('Julian');
+  });
+
+  it('takes any other n for nine, and ignores places past the sixth', () => {
+    expect(parseBoard(new URLSearchParams('b=a1fz.7gxh3&n=7')).slots).toHaveLength(9);
+    const crowded = parseBoard(new URLSearchParams('b=a1fz.7gxh3~~~~~~~~j5d3.gabc_D-1&n=6'));
+    expect(crowded.slots).toHaveLength(6);
+    expect(filledCount(crowded)).toBe(1);
+  });
+
+  it('keeps its bounds when a book is placed or moved', () => {
+    expect(place(six(), 6, dune)).toEqual(six());
+    expect(swap(six(), 0, 8)).toEqual(six());
+    expect(swap(six(), 0, 5).slots[0]).toEqual(dune);
+  });
+
+  it('shrinks to the first six and grows back with empty places', () => {
+    let nine = emptyBoard();
+    [0, 3, 7].forEach((i, n) => { nine = place(nine, i, { workId: `OL${n + 1}W`, coverId: `ol:${n + 1}` }); });
+    const small = resize(nine, 6);
+    expect(small.slots).toHaveLength(6);
+    expect(filledCount(small)).toBe(2);
+    expect(resize(small, 9).slots).toHaveLength(9);
+    expect(SIZE_WORD[sizeOf(small)]).toBe('Six');
   });
 });
