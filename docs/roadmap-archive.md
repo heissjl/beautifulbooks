@@ -1059,3 +1059,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **2.18b Messung: was ein Besuch kostet.** Lokal gegen `next start` mit zählenden Attrappen für Katalog und Redis: Anfragen, Funktionsaufrufe, Redis-Befehle, Katalog-Anfragen und Bytes je Seitentyp; ersetzt die Überschläge in Plan §3. Claude, ½ Tag. Thema: Betrieb.
 
 **Erledigt 2026-10-05.** Werkzeug `lab/visitcost/`, Ergebnisse `lab/visitcost/results.json`, Tabelle in PLAN-2.18 §3. → [Historie](history.md)
+
+## 2.18p
+
+**2.18p Die Jahrzehnte-Seite rendert bei jedem Aufruf.** (Befund aus 2.18b, 2026-10-05.) `/book/[id]/decades` hat `revalidate = 86400`, aber kein `generateStaticParams`; der Build stuft sie als dynamisch ein (ƒ), und `next start` antwortet zweimal hintereinander mit `Cache-Control: private, no-cache, no-store`. Jeder Aufruf rendert also in einer Funktion und liest den Katalog aus dem Datencache — bei 322 Seiten, die `robots.txt` den Crawlern freigibt. Dasselbe gilt für die deutsche Spiegelseite und vermutlich für `/book/[id]/cover/[coverId]`. **Vorschlag:** `generateStaticParams` mit leerer Liste (Rendern beim ersten Abruf, dann ISR) und mit `lab/visitcost` nachmessen. Claude, 1 h. Thema: Betrieb.
+
+**Erledigt 2026-10-05.** → [Historie](history.md)

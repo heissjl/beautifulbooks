@@ -69,13 +69,13 @@ Abgelesen am Code (Stand `origin/main` vom 2026-10-04). **Gemessen am 2026-10-05
 | Suche `/?q=the great gatsby` | 38 | 10 | 1 (das Dokument) | 14 (`/api/search`, 3 Mosaike, Bilder) | 7 | 0 | 2 (Signal) | 475 |
 | Buchseite, kuratiert (Gatsby) | 66 | 35 | **0** (vorgerendert) | 41 (4 Ausgabenseiten, „More by", Bilder) | 5 | 1 | 4 (Signal) | 583 |
 | Buchseite mit gewähltem Cover | 53 | 19 | 0 | 27 (dazu `/api/isbn`, `/api/similar`) | 0 | 1 | 4 (Signal) | 599 |
-| Jahrzehnte-Seite | 43 | 21 | **1 (das Dokument, jedes Mal — Befund 2.18p)** | 22 | 6 | 0 | 0 | 335 |
+| Jahrzehnte-Seite | 43 | 21 | 1 (das Dokument, jedes Mal) — **seit 2.18p 0, ab dem 2. Leser CDN** | 22 | 6 | 0 | 0 | 335 |
 | `/collections` | 135 | 117 | 1 | 117 | 0 | 0 | 6 (3 Sammlungen, 3 Leser-Wände) | 342 |
-| `/collections/sf-masterworks` | 92 | 73 | 1 | 73 | 0 | 0 | **6 — dieselben 3 Schlüssel zweimal (Befund, → 2.18c)** | 329 |
+| `/collections/sf-masterworks` | 92 | 73 | 1 | 73 | 0 | 0 | 6 — dieselben 3 Schlüssel zweimal; **seit 2.18c (Teil) 3** | 329 |
 | `/versus` | 25 | 6 | 1 | 6 | 0 | 0 | 0 beim Aufruf | 327 |
 | `/about` | 17 | 0 | 0 | 0 | 0 | 0 | 0 | 291 |
 
-Daraus: **Eine Seite kostet höchstens eine Funktion je Aufruf** — das Dokument der Startseite, der Sammlungen, des Spiels, der Suche und (Befund) der Jahrzehnte-Seite; alle API-Aufrufe der Buchseite tragen `s-maxage` und kosten den zweiten Leser nichts. **Redis:** 3 `GET` je Startseite, 6 je Sammlungsseite (doppelt gelesen), 6 je `/collections`, 2–4 für das Signal beim Verlassen einer Buch- oder Suchseite; **dazu schreibt die CPU-Messung (2.18l) höchstens alle 30 s je Instanz einen Stoß von 14–35 `HINCRBY`** (ein Befehl je Route × Abrufer × Maß) — bei 10 Instanzen ein bis zwölf Befehle je Sekunde, unabhängig von der Zahl der Leser. **JavaScript:** 290–470 KB je Seite, mehr als die Bilder einer Buchseite.
+Daraus: **Eine Seite kostet höchstens eine Funktion je Aufruf** — das Dokument der Startseite, der Sammlungen, des Spiels, der Suche und (Befund) der Jahrzehnte-Seite; alle API-Aufrufe der Buchseite tragen `s-maxage` und kosten den zweiten Leser nichts. **Redis:** 3 `GET` je Startseite, 6 je Sammlungsseite (doppelt gelesen), 6 je `/collections`, 2–4 für das Signal beim Verlassen einer Buch- oder Suchseite; dazu schrieb die CPU-Messung (2.18l) höchstens alle 30 s je Instanz einen Stoß von 14–35 `HINCRBY` (ein Befehl je Route × Abrufer × Maß); **seit 2.18d (Teil) ist es ein `EVAL` je Abgabe**, bei 10 Instanzen also ein Befehl je drei Sekunden. **JavaScript:** 290–470 KB je Seite, mehr als die Bilder einer Buchseite.
 
 Was daraus folgt: bei 10 Seitenaufrufen je Sekunde — ein mittlerer Abend auf einer geteilten Seite — fallen ohne Änderung 40 Redis-Befehle allein für die Analyse an, dazu 30 für Startseite und Sammlungen, und das Vorladen vervielfacht beides. Die Grenze von 100 je Sekunde ist damit erreicht, bevor ein Leser etwas schreibt.
 

@@ -5075,3 +5075,16 @@ Julian zum Schalter: „stell auf on“; zum Entwurf des Satzes für die Datensc
 **Befunde:** (1) **`/book/[id]/decades` ist dynamisch** — `revalidate` ohne `generateStaticParams`, Build-Klasse ƒ, zweimal hintereinander `Cache-Control: private, no-cache, no-store`; jeder Aufruf rendert in einer Funktion (→ 2.18p). (2) **`/collections/<slug>` liest seine drei Redis-Schlüssel doppelt** (`generateMetadata` und Seite; → 2.18c). (3) **Die CPU-Messung schreibt alle 30 s je Instanz 14–35 `HINCRBY`** (→ 2.18d). (4) `/api/seen` sendet nur auf Buch- und Suchseiten, wie geplant.
 
 **Unterwegs:** zwei frühe Läufe teilten `.next` mit den normalen Builds und schrieben 39 Attrappen-Antworten in dessen Datencache; diese 39 Einträge (alle vom 2026-10-05) sind gelöscht, die 166 echten vom Vortag geblieben. Eine `.env.local`, die `vercel link` angelegt hatte (nur `VERCEL_OIDC_TOKEN`), ist gelöscht, damit die Messung nichts erbt. **Analyse:** nicht berührt; `NEXT_DIST_DIR` wirkt nur, wenn gesetzt.
+
+## 2026-10-05 · Die drei Befunde aus 2.18b behoben (ROADMAP 2.18p, 2.18c Teil, 2.18d Teil)
+
+Julian: „mach weiter damit". Drei Commits, nicht deployt; nachgemessen mit einem vollen Lauf von `lab/visitcost` (neuer Build, leerer Datencache), vorher und nachher:
+
+| | vorher | nachher |
+|---|---|---|
+| `/book/[id]/decades`, `/book/[id]/cover/[coverId]` im Build | ƒ (dynamisch), `no-store` | **●**, Rendern beim ersten Abruf, dann ISR einen Tag |
+| Jahrzehnte-Seite, Funktion je Aufruf | 1, jedes Mal | 0 ab dem zweiten Leser (`s-maxage`) |
+| Redis je Aufruf von `/collections/<slug>` | 6 `GET` | **3** |
+| Redis je Abgabe der CPU-Messung | 5–35 `HINCRBY` + `EXPIRE` | **1** `EVAL` |
+
+**2.18p:** `generateStaticParams` mit leerer Liste in beiden Routen und den deutschen Spiegeln. **2.18c (Teil):** `liveRecords` in React `cache()` — eine Antwort je Rendern, `generateMetadata` und Seite teilen sie; kein Aufrufer schreibt und liest in derselben Anfrage. **2.18d (Teil):** `RedisCommands.hIncrByMany`, ein Lua-Skript (`HINCRBY_MANY_SCRIPT`) für alle Felder und das `EXPIRE`, über die direkte Verbindung (`client.eval`) und über REST (`EVAL`); `countCpu` nimmt es, wo es da ist, sonst wie zuvor Feld für Feld. Zwei neue Tests (ein Befehl; die REST-Form). 1.379 Tests grün, tsc und Lint sauber. **Analyse:** K14 zählt weniger `page-decades`/`page-cover`-Renderings, was gewollt ist; die Felder in `ins:<Tag>:cpu` bleiben dieselben.

@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-10-05T15:54:25.784Z",
+  "measuredAt": "2026-10-05T16:08:30.158Z",
   "viewport": "1280x800",
   "buildCalls": 149,
   "results": [
@@ -10,11 +10,11 @@
       "note": "Startseite",
       "requests": 83,
       "failed": [],
-      "bytes": 639551,
+      "bytes": 639553,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 13365
+          "bytes": 13367
         },
         "static": {
           "n": 21,
@@ -43,7 +43,7 @@
         "GET collections:order": 1
       },
       "redisCommands": 3,
-      "cpuFlush": 5,
+      "cpuFlush": 1,
       "catalogue": {},
       "functionList": {
         "function document /": 1
@@ -56,15 +56,15 @@
       "note": "Suche mit Trefferliste und Mosaiken",
       "requests": 38,
       "failed": [],
-      "bytes": 524775,
+      "bytes": 532653,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 6331
+          "bytes": 6334
         },
         "static": {
           "n": 23,
-          "bytes": 472730
+          "bytes": 480605
         },
         "api": {
           "n": 4,
@@ -112,15 +112,15 @@
       "note": "Buchseite, kuratiert (Gatsby, drei Ausgabenseiten)",
       "requests": 66,
       "failed": [],
-      "bytes": 732353,
+      "bytes": 729936,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 3889
+          "bytes": 3892
         },
         "static": {
           "n": 24,
-          "bytes": 464786
+          "bytes": 462366
         },
         "api": {
           "n": 6,
@@ -174,15 +174,15 @@
       "note": "Buchseite mit gewähltem Cover (Vermerk; ISBN 9783730600009)",
       "requests": 53,
       "failed": [],
-      "bytes": 687275,
+      "bytes": 691926,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 3889
+          "bytes": 3892
         },
         "static": {
           "n": 25,
-          "bytes": 481126
+          "bytes": 485774
         },
         "api": {
           "n": 8,
@@ -235,11 +235,11 @@
       "note": "Jahrzehnte-Seite",
       "requests": 43,
       "failed": [],
-      "bytes": 424869,
+      "bytes": 418879,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 13548
+          "bytes": 7558
         },
         "static": {
           "n": 20,
@@ -256,8 +256,8 @@
       },
       "model": {
         "cdn": 20,
-        "cdn-after-first": 22,
-        "function": 1
+        "cdn-after-first": 23,
+        "function": 0
       },
       "openLibrary": 6,
       "google": 0,
@@ -274,7 +274,7 @@
         "openlibrary /search/authors.json": 1
       },
       "functionList": {
-        "function document /book/<work>/decades": 1,
+        "cdn-after-first document /book/<work>/decades": 1,
         "cdn-after-first api /api/authors/OL118077A/works?name=George%20Orwell": 1
       }
     },
@@ -285,11 +285,11 @@
       "note": "Sammlungen, Übersicht",
       "requests": 135,
       "failed": [],
-      "bytes": 805156,
+      "bytes": 805159,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 37198
+          "bytes": 37201
         },
         "static": {
           "n": 17,
@@ -323,7 +323,7 @@
         "HGETALL walls:reports": 1
       },
       "redisCommands": 6,
-      "cpuFlush": 35,
+      "cpuFlush": 1,
       "catalogue": {},
       "functionList": {
         "function document /collections": 1
@@ -336,11 +336,11 @@
       "note": "Eine Sammlung",
       "requests": 92,
       "failed": [],
-      "bytes": 621367,
+      "bytes": 621370,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 14682
+          "bytes": 14685
         },
         "static": {
           "n": 18,
@@ -361,14 +361,14 @@
       "images": 73,
       "blocked": [],
       "redis": {
-        "GET": 6
+        "GET": 3
       },
       "redisKeys": {
-        "GET collections:content": 2,
-        "GET collections:published": 2,
-        "GET collections:order": 2
+        "GET collections:content": 1,
+        "GET collections:published": 1,
+        "GET collections:order": 1
       },
-      "redisCommands": 6,
+      "redisCommands": 3,
       "cpuFlush": 0,
       "catalogue": {},
       "functionList": {
@@ -382,11 +382,11 @@
       "note": "Das Spiel",
       "requests": 25,
       "failed": [],
-      "bytes": 357501,
+      "bytes": 357585,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 11176
+          "bytes": 11260
         },
         "static": {
           "n": 18,
@@ -422,11 +422,11 @@
       "note": "About (statisch)",
       "requests": 17,
       "failed": [],
-      "bytes": 298753,
+      "bytes": 298756,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 6745
+          "bytes": 6748
         },
         "static": {
           "n": 16,
@@ -456,11 +456,11 @@
       "note": "Startseite",
       "requests": 83,
       "failed": [],
-      "bytes": 639551,
+      "bytes": 639553,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 13365
+          "bytes": 13367
         },
         "static": {
           "n": 21,
@@ -502,15 +502,15 @@
       "note": "Suche mit Trefferliste und Mosaiken",
       "requests": 38,
       "failed": [],
-      "bytes": 518682,
+      "bytes": 517021,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 6331
+          "bytes": 6334
         },
         "static": {
           "n": 23,
-          "bytes": 466637
+          "bytes": 464973
         },
         "api": {
           "n": 4,
@@ -539,7 +539,7 @@
         "EXPIRE ins:<day>:search": 1
       },
       "redisCommands": 2,
-      "cpuFlush": 14,
+      "cpuFlush": 1,
       "catalogue": {
         "openlibrary /works/<id>.json": 2
       },
@@ -556,15 +556,15 @@
       "note": "Buchseite, kuratiert (Gatsby, drei Ausgabenseiten)",
       "requests": 66,
       "failed": [],
-      "bytes": 731729,
+      "bytes": 745568,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 3889
+          "bytes": 3892
         },
         "static": {
           "n": 24,
-          "bytes": 464162
+          "bytes": 477998
         },
         "api": {
           "n": 6,
@@ -613,15 +613,15 @@
       "note": "Buchseite mit gewähltem Cover (Vermerk; ISBN 9783730600009)",
       "requests": 53,
       "failed": [],
-      "bytes": 695324,
+      "bytes": 701373,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 3889
+          "bytes": 3892
         },
         "static": {
           "n": 25,
-          "bytes": 489175
+          "bytes": 495221
         },
         "api": {
           "n": 8,
@@ -672,11 +672,11 @@
       "note": "Jahrzehnte-Seite",
       "requests": 43,
       "failed": [],
-      "bytes": 423096,
+      "bytes": 418878,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 11775
+          "bytes": 7557
         },
         "static": {
           "n": 20,
@@ -692,9 +692,9 @@
         }
       },
       "model": {
-        "cdn": 20,
+        "cdn": 21,
         "cdn-after-first": 22,
-        "function": 1
+        "function": 0
       },
       "openLibrary": 0,
       "google": 0,
@@ -706,7 +706,6 @@
       "cpuFlush": 0,
       "catalogue": {},
       "functionList": {
-        "function document /book/<work>/decades": 1,
         "cdn-after-first api /api/authors/OL118077A/works?name=George%20Orwell": 1
       }
     },
@@ -717,11 +716,11 @@
       "note": "Sammlungen, Übersicht",
       "requests": 135,
       "failed": [],
-      "bytes": 805156,
+      "bytes": 805159,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 37198
+          "bytes": 37201
         },
         "static": {
           "n": 17,
@@ -768,11 +767,11 @@
       "note": "Eine Sammlung",
       "requests": 92,
       "failed": [],
-      "bytes": 621367,
+      "bytes": 621370,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 14682
+          "bytes": 14685
         },
         "static": {
           "n": 18,
@@ -793,15 +792,15 @@
       "images": 73,
       "blocked": [],
       "redis": {
-        "GET": 6
+        "GET": 3
       },
       "redisKeys": {
-        "GET collections:content": 2,
-        "GET collections:published": 2,
-        "GET collections:order": 2
+        "GET collections:content": 1,
+        "GET collections:published": 1,
+        "GET collections:order": 1
       },
-      "redisCommands": 6,
-      "cpuFlush": 32,
+      "redisCommands": 3,
+      "cpuFlush": 1,
       "catalogue": {},
       "functionList": {
         "function document /collections/sf-masterworks": 1
@@ -814,11 +813,11 @@
       "note": "Das Spiel",
       "requests": 25,
       "failed": [],
-      "bytes": 357594,
+      "bytes": 357613,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 11269
+          "bytes": 11288
         },
         "static": {
           "n": 18,
@@ -854,11 +853,11 @@
       "note": "About (statisch)",
       "requests": 17,
       "failed": [],
-      "bytes": 298753,
+      "bytes": 298756,
       "byKlass": {
         "document": {
           "n": 1,
-          "bytes": 6745
+          "bytes": 6748
         },
         "static": {
           "n": 16,
