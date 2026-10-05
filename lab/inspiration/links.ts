@@ -1,5 +1,5 @@
 /**
- * Short links for a finished board (lab/favourites).
+ * Short links for a finished board (lab/inspiration).
  *
  * Julian, 2026-10-04: „i'm thinking we should set up a second redis for it".
  * The lab stands in for that store with a JSON file; the shape is what a

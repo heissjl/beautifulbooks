@@ -1,7 +1,7 @@
 /**
- * „My favourite books" — the local prototype (lab/favourites, ROADMAP 5.18).
+ * „The books that inspired me" — the local prototype (lab/inspiration, ROADMAP 5.18).
  *
- *   npx tsx lab/favourites/serve.ts     # then open http://localhost:4333
+ *   npx tsx lab/inspiration/serve.ts     # then open http://localhost:4333
  *
  * Local only, never deployed. A board being made lives in the address
  * (`board.ts`); a shared one gets a short id (`links.ts`, a JSON file here,
@@ -31,13 +31,13 @@ const PORT = Number(process.env.PORT ?? 4333);
 const HERE = __dirname;
 /**
  * The live site, not SITE_URL: run locally, SITE_URL is localhost:3000, and a
- * poster saying so would lead nowhere (as lab/shelf does, FAVOURITES_SITE overrides).
+ * poster saying so would lead nowhere (as lab/shelf does, INSPIRATION_SITE overrides).
  */
-const SITE = (process.env.FAVOURITES_SITE ?? 'https://buyitscovers.com').replace(/\/$/, '');
+const SITE = (process.env.INSPIRATION_SITE ?? 'https://buyitscovers.com').replace(/\/$/, '');
 /** The page's path on the site, and what the poster prints under the covers. */
-const PATH = '/favourites';
+const PATH = '/inspiration';
 const ADDRESS = `${new URL(SITE).host}${PATH}`;
-const links = fileLinkStore(process.env.FAVOURITES_LINKS ?? join(HERE, 'links.json'));
+const links = fileLinkStore(process.env.INSPIRATION_LINKS ?? join(HERE, 'links.json'));
 
 let olCalls = 0;
 const counted = <T>(p: Promise<T>): Promise<T> => {
@@ -111,7 +111,7 @@ async function describe(board: Board, id: string | null) {
     share: link ? shareTargets(link, board.by) : [],
     text: shareText(board.by),
     // The funnel into a collection of one's own (SPEC F9): the site reads the fragment on /create. Not built there yet.
-    collectionHref: `${SITE}/create#favourites=${encodeBoard(board)}`,
+    collectionHref: `${SITE}/create#inspiration=${encodeBoard(board)}`,
     posterQuery: boardQuery(board),
   };
 }
@@ -129,6 +129,8 @@ const boardJs = ts.transpileModule(readFileSync(join(HERE, 'board.ts'), 'utf8'),
 function page(): string {
   return readFileSync(join(HERE, 'index.html'), 'utf8')
     .replaceAll('{{SITE_NAME}}', SITE_NAME)
+    // The brand is set in italics wherever prose names it (Julian, 2026-10-05), as the wordmark is.
+    .replaceAll('{{BRAND}}', `<i class="brand">${SITE_NAME}</i>`)
     .replaceAll('{{SITE}}', SITE)
     .replaceAll('{{PATH}}', PATH);
 }
@@ -203,7 +205,7 @@ createServer(async (req, res) => {
     if (path === '/poster.png') {
       const format: PosterFormat = url.searchParams.get('format') === 'feed' ? 'feed' : 'story';
       const board = parseBoard(url.searchParams);
-      const title = board.by ? `${board.by}’s favourite books` : 'My favourite books';
+      const title = board.by ? `The books that inspired ${board.by}` : 'The books that inspired me';
       const png = await renderPoster(board, format, { title, site: SITE_NAME, address: ADDRESS }, loadCover);
       res.writeHead(200, { 'content-type': 'image/png', 'cache-control': 'no-store' });
       return res.end(png);
@@ -223,4 +225,4 @@ createServer(async (req, res) => {
     console.error(`Port ${PORT} is taken. Start with PORT=4334.`);
     process.exit(1);
   })
-  .listen(PORT, () => console.log(`favourites: http://localhost:${PORT}`));
+  .listen(PORT, () => console.log(`inspiration: http://localhost:${PORT}${PATH}`));

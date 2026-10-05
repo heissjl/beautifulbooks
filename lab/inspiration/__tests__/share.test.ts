@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { BLUESKY_LIMIT, HASHTAG, shareTargets, shareText, THREADS_LIMIT, X_LIMIT, X_LINK_LENGTH } from '../share';
 
-const link = 'https://buyitscovers.com/favourites/k3x9q2ab';
+const link = 'https://buyitscovers.com/inspiration/k3x9q2ab';
 const longName = 'x'.repeat(40);
 
 describe('share texts', () => {
   it('name the owner when there is one and carry the hashtag', () => {
-    expect(shareText('')).toMatch(/^My favourite books/);
-    expect(shareText('Julian')).toMatch(/^Julian’s favourite books/);
+    expect(shareText('')).toMatch(/^The books that inspired me/);
+    expect(shareText('Julian')).toMatch(/^The books that inspired Julian/);
     expect(shareText('Julian')).toContain(HASHTAG);
   });
 

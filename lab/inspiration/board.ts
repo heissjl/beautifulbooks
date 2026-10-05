@@ -1,6 +1,6 @@
 /**
- * Nine favourite books on one board, held entirely in the address
- * (lab/favourites, pure, ROADMAP 5.18).
+ * Nine books that inspired someone, on one board held entirely in the
+ * address (lab/inspiration, pure, ROADMAP 5.18).
  *
  * Nine slots fit in a query string, so a board being made needs no store, no
  * visitor id and no question of how long it is kept — the address *is* the

@@ -1,5 +1,5 @@
 /**
- * What a share button sends, per platform (lab/favourites, pure).
+ * What a share button sends, per platform (lab/inspiration, pure).
  *
  * The picture travels on its own: Instagram, WhatsApp and the story formats
  * take no link, so the poster carries the address. Where text can go with a
@@ -10,7 +10,7 @@
  * Bluesky 300, Threads 500.
  */
 
-export const HASHTAG = '#myfavouritebooks';
+export const HASHTAG = '#booksthatinspiredme';
 
 export interface ShareTarget {
   id: 'x' | 'threads' | 'bluesky' | 'whatsapp' | 'telegram';
@@ -20,8 +20,8 @@ export interface ShareTarget {
 
 /** The sentence that goes with the link, with or without a name. */
 export function shareText(by: string): string {
-  const whose = by ? `${by}’s favourite books` : 'My favourite books';
-  return `${whose}, in the editions they were read in. What are yours? ${HASHTAG}`;
+  const whose = by ? `The books that inspired ${by}` : 'The books that inspired me';
+  return `${whose}, in the editions they were read in. What inspired you? ${HASHTAG}`;
 }
 
 export function shareTargets(link: string, by: string): ShareTarget[] {

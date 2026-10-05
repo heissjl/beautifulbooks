@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>My favourite books — {{SITE_NAME}} lab</title>
+<title>The books that inspired me — {{SITE_NAME}} lab</title>
 <style>
   :root { --bg: #f4f0e8; --ink: #1f1b18; --ink2: #746c62; --line: #d8d0c4; --accent: #945138; --empty: #e6dfd3; --surface: #fff; }
   * { box-sizing: border-box; }
@@ -43,6 +43,7 @@
   aside { font-size: 15px; color: var(--ink2); border-left: 2px solid var(--line); padding-left: 16px; margin-top: 24px; }
   aside strong { color: var(--ink); }
   aside a { color: var(--accent); }
+  .brand { font-style: italic; }
   .hidden { display: none !important; }
   .share { gap: 6px; }
   .share a { font-size: 14px; padding: 6px 10px; }
@@ -51,8 +52,8 @@
 <body>
 <main>
   <section id="editor">
-    <h1>My favourite books</h1>
-    <p class="sub">Nine books that stayed with you — in the editions you read them in. Pick them, then share the picture.</p>
+    <h1>The books that inspired me</h1>
+    <p class="sub">Nine books that changed how you see things — in the editions you read them in. Pick them, then share the picture.</p>
 
     <div class="grid" id="grid"></div>
 
@@ -88,7 +89,7 @@
   </section>
 
   <section id="shared" class="hidden">
-    <h1 id="sharedtitle">My favourite books</h1>
+    <h1 id="sharedtitle">The books that inspired me</h1>
     <p class="sub" id="sharedsub">Nine books, in the editions they were read in.</p>
     <div class="grid" id="sharedgrid"></div>
 
@@ -96,8 +97,8 @@
       <h2>Share the picture</h2>
       <p class="meta">Instagram and stories take no link — the picture carries the address. Everywhere else the link goes with it.</p>
       <div class="row" style="margin-top:8px">
-        <a class="btn primary" id="story" download="my-favourite-books-story.png">Save for a story</a>
-        <a class="btn" id="feed" download="my-favourite-books.png">Save for a post</a>
+        <a class="btn primary" id="story" download="books-that-inspired-me-story.png">Save for a story</a>
+        <a class="btn" id="feed" download="books-that-inspired-me.png">Save for a post</a>
         <button id="native" class="hidden">Share the picture…</button>
       </div>
       <div class="row share" id="sharerow" style="margin-top:8px"></div>
@@ -109,15 +110,15 @@
 
     <section class="panel">
       <h2>Buy these books</h2>
-      <p class="meta">Each one opens on {{SITE_NAME}} with this cover selected: the shops that list the edition, and whether a new copy still looks like it.</p>
+      <p class="meta">Each one opens on {{BRAND}} with this cover selected: the shops that list the edition, and whether a new copy still looks like it.</p>
       <ol class="books" id="books"></ol>
     </section>
 
     <section class="panel">
       <h2>Keep them as a collection</h2>
-      <p class="meta">A collection on {{SITE_NAME}} has no limit of nine and no account: it lives in your browser and in a link you can send.</p>
+      <p class="meta">A collection on {{BRAND}} has no limit of nine and no account: it lives in your browser and in a link you can send.</p>
       <div class="row" style="margin-top:8px">
-        <a class="btn" id="collection">Make it a collection on {{SITE_NAME}}</a>
+        <a class="btn" id="collection">Make it a collection on {{BRAND}}</a>
       </div>
     </section>
 
@@ -130,8 +131,8 @@
   </section>
 
   <aside id="about">
-    <h2>What is {{SITE_NAME}}?</h2>
-    <p><strong>A book has many covers.</strong> {{SITE_NAME}} shows the ones two open catalogues hold for a title — decades of printings side by side — and, for each, where to buy that edition.</p>
+    <h2>What is {{BRAND}}?</h2>
+    <p><strong>A book has many covers.</strong> {{BRAND}} shows the ones two open catalogues hold for a title — decades of printings side by side — and, for each, where to buy that edition.</p>
     <p>Pick a cover and the site says whether the publisher’s current image for the ISBN still matches it, so you know what arrives. It never promises a cover a shop does not show.</p>
     <p><a href="{{SITE}}" target="_blank" rel="noopener">{{SITE}}</a></p>
   </aside>
@@ -278,7 +279,7 @@ function showShared(d) {
   described = d;
   board = parseBoard(new URLSearchParams(d.posterQuery));
   show(false);
-  $('sharedtitle').textContent = d.by ? `${d.by}’s favourite books` : 'My favourite books';
+  $('sharedtitle').textContent = d.by ? `The books that inspired ${d.by}` : 'The books that inspired me';
   const grid = $('sharedgrid');
   grid.textContent = '';
   d.books.forEach((b, i) => {
@@ -321,7 +322,7 @@ function showShared(d) {
     $('native').classList.remove('hidden');
     $('native').onclick = async () => {
       const blob = await (await fetch($('story').href)).blob();
-      const file = new File([blob], 'my-favourite-books.png', { type: 'image/png' });
+      const file = new File([blob], 'books-that-inspired-me.png', { type: 'image/png' });
       const data = navigator.canShare({ files: [file] }) ? { files: [file], text: d.text } : { text: `${d.text} ${d.link}` };
       await navigator.share(data).catch(() => {});
     };
@@ -344,7 +345,7 @@ if (shortId) {
   fetch(`/api/link/${shortId}`).then(async res => {
     const body = await res.json();
     if (!res.ok) { $('sharedsub').textContent = body.error; return; }
-    $('sharedsub').textContent = 'Nine books, in the editions they were read in. What are yours?';
+    $('sharedsub').textContent = 'Nine books, in the editions they were read in. What inspired you?';
     showShared(body);
   });
 } else {

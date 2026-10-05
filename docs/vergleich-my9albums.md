@@ -30,4 +30,4 @@ Julian, 2026-10-04: „check what we can learn from this website that went viral
 
 ## Vorschlag
 
-Ein eigener Punkt in Phase 5 (2.2 ist erledigt) — **als Lab angelegt: 5.18 „My favourite books“, [lab/favourites/](../lab/favourites/README.md)** (Julian, 2026-10-04: nicht die Neun als Thema, sondern Favoriten): „9 books that made you" unter eigener Adresse, Zustand nur in der URL, bekanntestes Cover als Standard mit Ausgabewahl, Download als 1080×1920 mit Adresse, Teil-Seite mit neun Buchseiten-Links, keine Google-Anfrage. Ob, und wie es heißt, entscheidet Julian.
+Ein eigener Punkt in Phase 5 (2.2 ist erledigt) — **als Lab angelegt: 5.18 „The books that inspired me“, [lab/inspiration/](../lab/inspiration/README.md)** (Julian, 2026-10-04: nicht die Neun als Thema; 2026-10-05: Inspiration, nicht Favoriten): „9 books that made you" unter eigener Adresse, Zustand nur in der URL, bekanntestes Cover als Standard mit Ausgabewahl, Download als 1080×1920 mit Adresse, Teil-Seite mit neun Buchseiten-Links, keine Google-Anfrage. Ob, und wie es heißt, entscheidet Julian.
