@@ -8,7 +8,6 @@ import { readImprint } from '@/lib/imprint';
 import { commerceEnabled } from '@/lib/sitemode';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
-import { suggestEnabled } from '@/lib/suggest/auth';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
 
@@ -54,7 +53,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
         <p className="mt-2 text-sm text-ink-3">Datenschutzerklärung · {t('last updated {date}', { date: t(UPDATED) })}</p>
 
         <Section title={t('In short')}>
-          <p>{t('This site has no accounts, no forms, no advertising and no tracking. It does not set a tracking cookie and does not need a consent banner. What it does process is listed below, in full, because a short list is easier to check than a reassuring sentence.')}</p>
+          <p>{t('This site has no accounts, no forms, no advertising and no tracking. It does not set a tracking cookie and does not need a consent banner. What it does process is listed below.')}</p>
         </Section>
 
         <Section title={t('Who is responsible')}>
@@ -124,12 +123,6 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
         {inspirationEnabled() && (
           <Section title={t('Your Shelf-Portrait')}>
             <p>{t('A Shelf-Portrait you finish is kept under its link: the books, the covers you chose, and the name you typed if you typed one. Nothing else about you is stored with it, and no cookie is set for it. Send us the link and we remove it.')}</p>
-          </Section>
-        )}
-
-        {suggestEnabled() && (
-          <Section title={t('Suggestions for collections (invitation only)')}>
-            <p>{t('Friends of the site can suggest books for its collections on a page protected by a password. Entering the password sets one cookie, “bb_suggest”, for 30 days: it holds an expiry date and a signature and nothing about you, and exists only to keep you signed in (§ 25(2) TDDDG). A suggestion stores what you chose and typed — the collection, the book, the cover, your note, the day, and a name only if you give one — in the same Redis database as the cover game, and nothing else: no IP address, no browser details. Suggestions are kept until they have been looked at; ask via the contact page to have one removed. Legal basis: your consent in sending it (Art. 6(1)(a) GDPR).')}</p>
           </Section>
         )}
 
