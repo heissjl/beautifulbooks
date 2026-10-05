@@ -206,7 +206,7 @@ function poster(format: PosterFormat, count: BoardSize, by: string, images: (str
     <div style={{ position: 'relative', width: P.width, height: P.height, display: 'flex', background: L.bg }}>
       <Ground src={under} width={P.width} height={P.height} />
       {/* Two lines (Julian, 2026-10-05): the name of the thing, and under it what it is. */}
-      <div style={{ position: 'absolute', left: head.x, top: 0, width: head.width, height: head.height - type.title * 0.3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
+      <div style={{ position: 'absolute', left: head.x, top: head.y, width: head.width, height: head.height - type.title * 0.3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
         <div style={{ ...DISPLAY, display: 'flex', textAlign: 'center', fontSize: titleSize(title, type.title), lineHeight: 1.12, color: L.ink }}>{title}</div>
         <div style={{ ...TEXT, display: 'flex', textAlign: 'center', fontSize: Math.round(type.title * 0.5), color: L.ink2, marginTop: type.title * 0.12 }}>{clip(subtitleOf(by), head.width, type.title * 0.5)}</div>
       </div>

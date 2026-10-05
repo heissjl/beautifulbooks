@@ -74,7 +74,7 @@ export async function renderPoster(
   // byline under it printed the name twice on the first poster made from a real board.
   const siteY = foot.y + (foot.height - type.site - type.address) / 2 + type.site * 0.85;
   const svg = textSvg(L.width, L.height, [
-    line(text.title, head, head.height - type.title * 0.75, type.title, INK),
+    line(text.title, head, head.y + head.height - type.title * 0.75, type.title, INK),
     line(text.site, foot, siteY, type.site, INK, true),
     line(text.address, foot, siteY + type.address * 1.3, type.address, INK2),
   ]);

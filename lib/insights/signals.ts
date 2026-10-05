@@ -10,7 +10,8 @@
  */
 import type { Market } from '../market';
 
-export const ORIGINS = ['home', 'search', 'collection', 'book', 'engine', 'social', 'other', 'direct'] as const;
+// `shelf`: a book page reached from a Shelf-Portrait (`/shelfportrait…`, ROADMAP 5.18b) — every cover on a shared board leads to one.
+export const ORIGINS = ['home', 'search', 'collection', 'shelf', 'book', 'engine', 'social', 'other', 'direct'] as const;
 export type Origin = (typeof ORIGINS)[number];
 
 export const PAGES = ['0', '1', '2', '3', '4+'] as const;
@@ -101,6 +102,7 @@ function internalOrigin(path: string, search: string): Origin {
     return p.get('q') || p.get('author') || p.get('key') ? 'search' : 'home';
   }
   if (path.startsWith('/collections') || path.startsWith('/c/')) return 'collection';
+  if (path === '/shelfportrait' || path.startsWith('/shelfportrait/')) return 'shelf';
   if (path.startsWith('/book/')) return 'book';
   return 'other';
 }

@@ -43,6 +43,8 @@ export const de: Readonly<Record<string, string>> = {
   'Then find the edition you’d actually want on your shelf.': 'Und dann die Ausgabe, die in dein Regal gehört.',
   'Help us find the prettiest cover of all time!': 'Hilf mit, das schönste Cover aller Zeiten zu küren!',
   'Create your own collection of covers': 'Stell dir deine eigene Coverwand zusammen',
+  // The name stays as it is: it is what the picture is called and what the hashtag says.
+  'Take your Shelf-Portrait: the books that inspire you': 'Mach dein Shelf-Portrait: die Bücher, die dich prägen',
   'Start with a classic': 'Zum Einstieg ein paar Klassiker',
   'Collections': 'Sammlungen',
   'Game': 'Spiel',

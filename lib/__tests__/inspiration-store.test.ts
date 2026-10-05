@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { emptyBoard, place } from '../inspiration/board';
 import { shortId } from '../inspiration/shortid';
-import { commandsLinkStore, linkStoreFromEnv, memoryLinkStore } from '../inspiration/store';
+import { commandsLinkStore, linkStoreFromEnv, LinkStoreFull, memoryLinkStore } from '../inspiration/store';
 import { inspirationEnabled } from '../inspiration/switch';
 
 const board = (by = 'Julian') => ({ ...place(emptyBoard(), 0, { workId: 'OL468431W', coverId: 'ol:13853193' }), by });
@@ -47,9 +47,23 @@ describe('the link store', () => {
     await expect(silent.get('aaaaaaaa')).rejects.toThrow('down');
   });
 
-  it('has no store in a production build without the LINKS_ variables, and never borrows the game’s', () => {
+  it('stops at its cap, and a board already on record still gets its link', async () => {
+    const store = memoryLinkStore(1);
+    const first = await store.put(board());
+    await expect(store.put(board('Someone else'))).rejects.toBeInstanceOf(LinkStoreFull);
+    expect(await store.put(board())).toBe(first);
+    // The refused link was not counted: the place it left is not lost.
+    await expect(store.put(board('A third'))).rejects.toBeInstanceOf(LinkStoreFull);
+    expect(await store.get(shortId(board('Someone else')))).toBeNull();
+  });
+
+  it('has no store in a production build with no Redis at all', () => {
     expect(linkStoreFromEnv({ NODE_ENV: 'production' })).toBeNull();
-    expect(linkStoreFromEnv({ NODE_ENV: 'production', STORAGE_REDIS_URL: 'redis://game.example:6379' })).toBeNull();
+  });
+
+  it('lives in the site’s store, or in one of its own under LINKS_ where that is set', () => {
+    expect(linkStoreFromEnv({ NODE_ENV: 'production', STORAGE_REDIS_URL: 'redis://site.example:6379' })).not.toBeNull();
+    expect(linkStoreFromEnv({ NODE_ENV: 'production', LINKS_REDIS_URL: 'redis://links.example:6379' })).not.toBeNull();
   });
 });
 

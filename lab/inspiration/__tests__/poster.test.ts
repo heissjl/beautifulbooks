@@ -18,7 +18,8 @@ describe('renderPoster', () => {
 
     const { data, info } = await sharp(png).raw().toBuffer({ resolveWithObject: true });
     expect([info.width, info.height]).toEqual([1080, 1920]);
-    const px = (x: number, y: number) => [...data.subarray((y * info.width + x) * info.channels, (y * info.width + x) * info.channels + 3)];
+    // Whole pixels: a tile's height may be odd (375 in a story since its words moved into the safe block).
+    const px = (fx: number, fy: number) => { const x = Math.floor(fx), y = Math.floor(fy); return [...data.subarray((y * info.width + x) * info.channels, (y * info.width + x) * info.channels + 3)]; };
     const [t0, , , , t4] = posterLayout('story').tiles;
     const [r, g, b] = px(t0.x + t0.width / 2, t0.y + t0.height / 2);
     expect(r).toBeGreaterThan(180);

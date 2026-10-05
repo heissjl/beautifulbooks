@@ -18,9 +18,9 @@ export interface PosterLayout {
   height: number;
   /** Nine rectangles, or six or three, row by row. */
   tiles: Rect[];
-  /** Top band: one line, "The books that inspired me" or "… inspired <name>". */
+  /** Where the two title lines stand: from the safe edge at the top down to the covers. */
   head: Rect;
-  /** Bottom band: the site's name and address. */
+  /** Where the site's name and address stand: from the covers down to the safe edge at the bottom. */
   foot: Rect;
   /**
    * Font sizes in px for the title, the site's name and the address. The
@@ -40,14 +40,23 @@ interface Spec {
   foot: number;
   margin: number;
   gap: number;
+  /** What the app that shows the picture may lay its own controls over, at the top and at the bottom. */
+  safe: number;
   type: PosterLayout['type'];
 }
 
 const SPECS: Record<PosterFormat, Spec> = {
-  // 9:16, Instagram/WhatsApp story and TikTok photo.
-  story: { width: 1080, height: 1920, head: 300, foot: 200, margin: 60, gap: 24, type: { title: 64, site: 44, address: 40 } },
-  // 4:5, the tallest a feed post may be.
-  feed: { width: 1080, height: 1350, head: 140, foot: 130, margin: 60, gap: 18, type: { title: 52, site: 34, address: 32 } },
+  /*
+    9:16, Instagram/WhatsApp story and TikTok photo. Instagram lays its own controls over the top
+    250 px (name, close) and the bottom 250 px (the reply field) of a story; the title stood at
+    y = 96–206 and the address at 1770–1866, inside both. The address is the only way back from a
+    picture, so the words moved into the block between (Julian, 2026-10-05, on the question
+    whether that is worth smaller covers: „ja"): 130 px under the top band for the two title lines,
+    110 px over the bottom band for name and address. Nine covers are 250 × 375 there, not 304 × 456.
+  */
+  story: { width: 1080, height: 1920, head: 380, foot: 360, margin: 60, gap: 24, safe: 250, type: { title: 64, site: 44, address: 40 } },
+  // 4:5, the tallest a feed post may be. Nothing is laid over a post.
+  feed: { width: 1080, height: 1350, head: 140, foot: 130, margin: 60, gap: 18, safe: 0, type: { title: 52, site: 34, address: 32 } },
 };
 
 export const POSTER_SIZES: Record<PosterFormat, { width: number; height: number }> = {
@@ -57,7 +66,7 @@ export const POSTER_SIZES: Record<PosterFormat, { width: number; height: number 
 
 /**
  * How fewer than nine covers stand. Six: two wide and three high in a story,
- * which fills its height at the size nine have there (304 × 456), and three
+ * which fills its height at the size nine have there (250 × 375), and three
  * wide and two high in a feed post, where they come out a third larger than
  * nine (308 × 462 against 232 × 348). Three: **one above and two below**
  * (Julian, 2026-10-05: „mach bei 3 bildern eines oben und 2 unten") in a story
@@ -102,8 +111,8 @@ export function posterLayout(format: PosterFormat, count: 3 | 6 | 9 = 9, caption
     width: s.width,
     height: s.height,
     tiles,
-    head: { x: s.margin, y: 0, width: s.width - 2 * s.margin, height: y0 },
-    foot: { x: s.margin, y: y0 + gridH, width: s.width - 2 * s.margin, height: s.height - y0 - gridH },
+    head: { x: s.margin, y: s.safe, width: s.width - 2 * s.margin, height: y0 - s.safe },
+    foot: { x: s.margin, y: y0 + gridH, width: s.width - 2 * s.margin, height: s.height - s.safe - y0 - gridH },
     type: s.type,
     caption: captions ? CAPTION[format] : null,
   };

@@ -27,12 +27,14 @@ describe.each(['story', 'feed'] as PosterFormat[])('%s poster', format => {
   });
 
   it('leaves the head and foot their room', () => {
-    expect(L.tiles[0].y).toBe(L.head.height);
+    expect(L.tiles[0].y).toBe(L.head.y + L.head.height);
     expect(L.foot.y).toBe(L.tiles[8].y + L.tiles[8].height);
     expect(L.head.height).toBeGreaterThanOrEqual(2 * L.type.title);
     // Two lines with their leading, and the address's descenders stay on the canvas.
     expect(L.foot.height).toBeGreaterThanOrEqual(L.type.site + 1.6 * L.type.address);
-    expect(L.foot.y + L.foot.height).toBe(L.height);
+    // A story keeps its words out of the bands the app lays its controls over; a post has none.
+    expect(L.head.y).toBe(format === 'story' ? 250 : 0);
+    expect(L.foot.y + L.foot.height).toBe(format === 'story' ? L.height - 250 : L.height);
   });
 });
 
@@ -51,7 +53,7 @@ describe.each(['story', 'feed'] as PosterFormat[])('%s poster with six covers', 
       expect(t.x + t.width).toBeLessThanOrEqual(L.width);
     }
     for (let i = 0; i < 6; i++) for (let j = i + 1; j < 6; j++) expect(overlaps(L.tiles[i], L.tiles[j])).toBe(false);
-    expect(L.tiles[0].y).toBe(L.head.height);
+    expect(L.tiles[0].y).toBe(L.head.y + L.head.height);
     expect(L.foot.y).toBe(L.tiles[5].y + L.tiles[5].height);
   });
 });
@@ -77,7 +79,7 @@ it('three covers stand one above and two below, in a story and in a post', () =>
     expect(top.x * 2 + top.width).toBe(L.width);
     for (const t of L.tiles) {
       expect(t.width * 3).toBe(t.height * 2);
-      expect(t.y).toBeGreaterThanOrEqual(L.head.height);
+      expect(t.y).toBeGreaterThanOrEqual(L.head.y + L.head.height);
       expect(t.y + t.height).toBeLessThanOrEqual(L.foot.y);
     }
   }
