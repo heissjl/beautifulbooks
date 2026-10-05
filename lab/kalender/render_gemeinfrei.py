@@ -316,7 +316,7 @@ def versus_pin():
     q = font('xanh', 62)
     d.text((70, 170), 'Which cover would you', font=q, fill=INK)
     d.text((70, 246), 'rather look at?', font=q, fill=INK)
-    left, right = COVERS[1], COVERS[2]  # Pinocchio 1902, The Jungle Book 1894
+    left, right = COVERS[0], COVERS[4]  # Peter and Wendy 1911, La guerre des mondes 1906 (Julian: two others)
     box_h, top = 600, 420
     boxes = []
     for c, cx in ((left, W // 4 + 10), (right, 3 * W // 4 - 10)):
@@ -339,7 +339,7 @@ def versus_pin():
     lf = font('jost', 26, 400)
     for cx, c in boxes:
         year = c['imprint'].rsplit(', ', 1)[1]
-        label = f"{c['title'].replace('Le avventure di ', '')}, {year}"
+        label = f"{c['title']}, {year}"
         d.text((cx - d.textlength(label, font=lf) / 2, top + box_h + 30), label, font=lf, fill=MUTED)
     d.text((70, 1150), 'Judge the cover, not the book.', font=font('xanh-italic', 54), fill=ACCENT)
     bf = font('jost', 32, 400)

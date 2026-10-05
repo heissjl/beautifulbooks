@@ -172,7 +172,7 @@ Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender 
      - **Weniger Kacheln im Mosaik** (26 bis 28 Spalten statt 45) lesen sich schlechter; mit 20 % Überblendung ginge es, aber Julian will keine.
    - **Das Pinterest-Exposé zeigt das Cover-Spiel** (Julian, 2026-10-05: „bereite ein pinterest expose der website vor, dass das versus spiel zeigt“).
      - Frage und Zeile kommen aus dem Spiel: „Which cover would you rather look at?“ und „Judge the cover, not the book.“
-     - Gezeigt mit zwei gemeinfreien Covern (Pinocchio 1902, The Jungle Book 1894), verlinkt auf `/versus`. /versus läuft in Produktion, einmal geprüft am 2026-10-05.
+     - Gezeigt mit zwei gemeinfreien Covern: Peter and Wendy 1911 und La guerre des mondes 1906, verlinkt auf `/versus`. Zuerst waren es Pinocchio und das Jungle Book; Julian wollte zwei andere, weil diese schon im Instagram-Exposé stehen. /versus läuft in Produktion, einmal geprüft am 2026-10-05.
      - Der Peter-and-Wendy-Pin ist damit der zweite Pin (21.10.).
 2. **Welche Kanäle es wirklich gibt.** Der Kalender plant acht; ein Kanal, den Julian nicht will, wird im Werkzeug ausgeblendet oder seine Einträge verworfen.
 3. **Startdatum.** Der Kalender beginnt mit einer Einrichtungswoche ab Mo 5.10. und dem ersten Post am Mo 12.10. Wer später anfängt, schiebt mit „Ab hier verschieben“ alles in einem Schritt.
