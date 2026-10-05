@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { PNG } from 'pngjs';
 import { afterEach, describe, expect, it } from 'vitest';
-import { booksOnReader, findReader, homePositions, isReader, makeThumb, picturesOf, ReaderCovers, thumbFile, thumbSize } from '../reader';
+import { booksOnReader, findReader, homePositions, isReader, makeThumb, picturesOf, positionBox, ReaderCovers, thumbFile, thumbSize } from '../reader';
 
 const dirs: string[] = [];
 const folder = (): string => {
@@ -133,8 +133,15 @@ describe('the pictures of the home screen', () => {
       ['system/cache/desktop/rb/1.png', 268, 396, 'home'],
       ['system/cache/desktop/t/41.png', 123, 184, 'home'],
     ]);
-    // A book that never stood on the home screen has the library's picture only.
-    expect(picturesOf(root, 'Books/Frisch, Max/Montauk - Frisch, Max.epub')).toHaveLength(1);
+    // A book the reader keeps no sizes of still has the position that shows it, in that position's size.
+    expect(picturesOf(root, 'Books/Frisch, Max/Montauk - Frisch, Max.epub').map((p) => [rel(p.file), p.box.width, p.box.height])).toEqual([
+      ['system/cover_chache/1/Books/Frisch, Max/Montauk - Frisch, Max.epub.png', 260, 393],
+      ['system/cache/desktop/rb/2.png', 250, 368],
+    ]);
+    // And one that stands nowhere on the home screen has the library's picture only.
+    expect(picturesOf(root, 'Books/Dick, Philip K_/Ubik - Philip K. Dick.epub')).toHaveLength(1);
+    expect([1, 2, 3, 4, 5, 9].map((n) => positionBox(`rb/${n}.png`).width)).toEqual([268, 250, 234, 268, 250, 234]);
+    expect(positionBox('t/41.png')).toEqual({ width: 123, height: 184 });
   });
 
   it('writes them all in their own sizes, leaves the index and the other books alone, and puts every one back', () => {

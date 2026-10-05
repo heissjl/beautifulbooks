@@ -39,7 +39,6 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import { PNG } from 'pngjs';
-import { imageSizeFast } from './image';
 import { decode } from './site';
 
 export interface Box {
@@ -153,6 +152,18 @@ export function homePositions(cacheDat: string, lpath: string): string[] {
   return out;
 }
 
+/**
+ * The size a position on the home screen shows, read off the reader: the
+ * recent books stand three to a page, large, middle, small — `rb/1`, `4`, `7`
+ * in 268 × 396, `2`, `5`, `8` in 250 × 368, `3`, `6`, `9` in 234 × 343 — and
+ * every tile under `t/` is 123 × 184.
+ */
+const RECENT_BOXES: Box[] = [{ width: 268, height: 396 }, { width: 250, height: 368 }, { width: 234, height: 343 }];
+export function positionBox(position: string): Box {
+  const m = /^(rb|t)\/(\d+)\.png$/.exec(position);
+  return m && m[1] === 'rb' ? RECENT_BOXES[(Number(m[2]) - 1) % 3] : { width: 123, height: 184 };
+}
+
 export interface Picture {
   /** The file on the reader. */
   file: string;
@@ -163,8 +174,8 @@ export interface Picture {
 /**
  * Every picture the reader keeps of a book file. The library's always — the
  * reader makes one for every book. The home screen's only where the reader
- * has made them: it draws them for books that have stood there, and a picture
- * it never asked for would be one nobody reads.
+ * has them: the sizes it once made for the book, and the positions that show
+ * it at this moment. A picture it never asked for would be one nobody reads.
  */
 export function picturesOf(root: string, lpath: string): Picture[] {
   const out: Picture[] = [{ file: thumbFile(root, lpath), box: LIBRARY_BOX, where: 'library' }];
@@ -179,17 +190,12 @@ export function picturesOf(root: string, lpath: string): Picture[] {
     }
   }
   out.push(...sized);
-  // A position shows one of the sizes; which one, its own measure says — the reader names positions by number only.
+  // The positions that show the book now — also for a book the reader keeps no sizes of (most, on Julian's: of nine recent books two had them).
   const index = join(root, HOME, 'cache.dat');
-  if (sized.length && existsSync(index)) {
-    const measure = (file: string) => imageSizeFast(readFileSync(file));
-    const measured = sized.map((p) => ({ p, size: measure(p.file) }));
+  if (existsSync(index)) {
     for (const position of homePositions(readFileSync(index, 'utf8'), lpath)) {
       const file = inside(root, HOME, position);
-      if (!existsSync(file)) continue;
-      const size = measure(file);
-      const same = measured.find((s) => s.size && size && s.size.width === size.width && s.size.height === size.height);
-      if (same) out.push({ file, box: same.p.box, where: 'home' });
+      if (existsSync(file)) out.push({ file, box: positionBox(position), where: 'home' });
     }
   }
   return out;

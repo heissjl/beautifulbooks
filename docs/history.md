@@ -4680,3 +4680,17 @@ Julian: „startseite zeigt jetzt auch das neue cover, mach die übrigen". Der R
 **Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
 
 1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: die übrigen elf Bücher geschrieben (ROADMAP 5.16c)
+
+Julian: „jetzt ist er im finder zu sehen, mach du es". (Zweimal davor hieß es „eingebunden", während der Mac kein Laufwerk und kein USB-Gerät sah; `/Volumes` und `system_profiler` zeigten nur Hub und Telefon.)
+
+**Vor dem Schreiben gefunden:** `metadata.calibre` führt jetzt 418 von Calibres Büchern. Von den neun zuletzt gelesenen Büchern haben nur zwei die vier Größen-Dateien unter `desktop/1/`; für die anderen gibt es allein die Plätze. Deren Maße: `rb/1,4,7` 268 × 396, `rb/2,5,8` 250 × 368, `rb/3,6,9` 234 × 343 (bei Büchern ohne Größen-Dateien füllt das Bild des Readers den Rahmen genau: 250 × 368, 234 × 343, 268 × 396), `t/<n>` 123 × 184. `picturesOf` nimmt die Größe eines Platzes deshalb aus dieser Regel (`positionBox`) statt aus dem Maß einer Größen-Datei.
+
+**Geschrieben**, eins nach dem anderen mit `reader-covers.ts --put`: #457 *Ubik* (2 Bilder), #364 *Invisible Man* (1), #333 *Count Zero* (2), #481 *Nocturno de Chile* (7), #431 *Berlin Alexanderplatz* (1), #334 *Mona Lisa Overdrive* (3), #445 *Olympos* (3), #330 *Endymion* (1), #473 *East of Eden* (3), #315 *Snow Crash* (1), #363 *Montauk* (2) — 26 Bilder. Vorher/nachher gleich: Größe und Änderungszeit jeder Buchdatei unter `Books/` (eine Prüfsumme über die Liste), SHA-256 dreier Buchdateien, `books.db`, `explorer-3.db`, `cache.dat`, `metadata.calibre`; keine `._`- oder `.new`-Dateien. Alle zwölf in `sent.json` abgehakt; 33 gesicherte Bilder liegen unter `reader/pictures/` (die 26 von heute und die sieben von *Roadside Picnic*).
+
+**Nicht bekannt:** ob der Reader einen Platz der Startseite aus dem Cover in der Datei neu zeichnet, wenn sich die Reihe verschiebt. Julian hat die elf noch nicht am Gerät angesehen.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.
