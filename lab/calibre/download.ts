@@ -82,8 +82,8 @@ class CoverFacts<T> {
     private readonly file: string,
     private readonly site: string,
     private readonly atOnce: number,
-    private readonly urls: (coverId: string) => string[],
-    private readonly read: (bytes: Buffer) => T | null,
+    /** Where to ask, in order, and how to read each answer; the first that yields the fact wins. */
+    private readonly sources: (coverId: string) => { url: string; read: (bytes: Buffer) => T | null }[],
   ) {
     this.known = existsSync(file) ? (JSON.parse(readFileSync(file, 'utf8')) as Record<string, T>) : {};
   }
@@ -121,11 +121,11 @@ class CoverFacts<T> {
     if (this.active >= this.atOnce) await new Promise<void>((go) => this.waiting.push(go));
     this.active++;
     try {
-      for (const url of this.urls(coverId)) {
+      for (const { url, read } of this.sources(coverId)) {
         try {
           const res = await fetch(url, { headers: { 'user-agent': userAgent(this.site) }, signal: AbortSignal.timeout(45_000) });
           if (!res.ok) continue;
-          const fact = this.read(Buffer.from(await res.arrayBuffer()));
+          const fact = read(Buffer.from(await res.arrayBuffer()));
           if (fact) {
             this.remember(coverId, fact);
             return fact;
@@ -143,17 +143,40 @@ class CoverFacts<T> {
 }
 
 /**
- * How large a cover's image is, without keeping the image (ROADMAP 5.16a;
+ * How large a cover's image is, without fetching the image (ROADMAP 5.16a;
  * Julian, 2026-10-03: „sort the images that are big enough to use as covers
- * the front"). Open Library does not say how large a scan is until it is
- * fetched, so the picker asks for every cover of the open work, reads the
- * size out of the file header and forgets the bytes.
+ * the front").
+ *
+ * Open Library's cover host says so itself: `/b/id/<n>.json` is the cover's
+ * record, with `width` and `height` of the scan as uploaded, answered in
+ * about 0.08 s. Until 2026-10-04 the app fetched every original instead —
+ * 4 to 10 s each from the Internet Archive's zip files, eighty of them for
+ * one much-printed work — and those downloads crowded out the thumbnails and
+ * the one full image Julian had clicked on („manchmal lädt es die cover nicht
+ * oder zeigt sie zumindest nicht an"). Measured that day on 40 covers whose
+ * size the app had read from the image: 39 records state the same size, one
+ * states none. For that one, and for a Google image, the image itself is
+ * still fetched and its header read.
  */
 export type CoverSize = { width: number; height: number };
 
+/** The size a cover record states, or null when it states none. */
+export function sizeFromRecord(bytes: Buffer): CoverSize | null {
+  try {
+    const record = JSON.parse(bytes.toString('utf8')) as { width?: unknown; height?: unknown };
+    const { width, height } = record;
+    return typeof width === 'number' && typeof height === 'number' && Number.isInteger(width) && Number.isInteger(height) && width > 0 && height > 0 ? { width, height } : null;
+  } catch {
+    return null;
+  }
+}
+
 export class CoverSizes extends CoverFacts<CoverSize> {
   constructor(file: string, site: string, atOnce = 4) {
-    super(file, site, atOnce, imageUrls, imageSizeFast);
+    super(file, site, atOnce, (coverId) => [
+      ...(/^ol:\d{1,12}$/.test(coverId) ? [{ url: `https://covers.openlibrary.org/b/id/${coverId.slice(3)}.json`, read: sizeFromRecord }] : []),
+      ...imageUrls(coverId).map((url) => ({ url, read: imageSizeFast })),
+    ]);
   }
 
   remember(coverId: string, size: CoverSize): void {
@@ -169,12 +192,8 @@ export class CoverSizes extends CoverFacts<CoverSize> {
  */
 export class CoverHashes extends CoverFacts<string> {
   constructor(file: string, site: string, atOnce = 6) {
-    super(
-      file,
-      site,
-      atOnce,
-      (coverId) => (/^ol:\d{1,12}$/.test(coverId) ? [`https://covers.openlibrary.org/b/id/${coverId.slice(3)}-M.jpg?default=false`] : []),
-      (bytes) => signature(bytes)?.hash ?? null,
+    super(file, site, atOnce, (coverId) =>
+      /^ol:\d{1,12}$/.test(coverId) ? [{ url: `https://covers.openlibrary.org/b/id/${coverId.slice(3)}-M.jpg?default=false`, read: (bytes: Buffer) => signature(bytes)?.hash ?? null }] : [],
     );
   }
 }

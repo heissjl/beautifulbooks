@@ -111,3 +111,15 @@ describe('a few names in a file', () => {
     }
   });
 });
+
+describe('the size a cover record states', () => {
+  it('is taken when width and height are whole and positive, and nothing else is', async () => {
+    const { sizeFromRecord } = await import('../download');
+    const record = (r: unknown) => Buffer.from(JSON.stringify(r));
+    expect(sizeFromRecord(record({ id: 6557353, width: 2002, height: 3401, filename: 'covers_0006_55.tar' }))).toEqual({ width: 2002, height: 3401 });
+    expect(sizeFromRecord(record({ id: 1008445, width: null, height: null }))).toBeNull();
+    expect(sizeFromRecord(record({ width: 0, height: 475 }))).toBeNull();
+    expect(sizeFromRecord(record({ width: '300', height: 475 }))).toBeNull();
+    expect(sizeFromRecord(Buffer.from('<html>502 Bad Gateway</html>'))).toBeNull();
+  });
+});

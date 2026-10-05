@@ -235,7 +235,7 @@ async function markSent(ids, sent) {
 
 async function openBook(id) {
   // t0: answers the catalogue gave before this moment are "kept"; since: the moment of „Ask the catalogue again", sent along.
-  open = { id, found: null, workId: null, covers: [], editions: 0, next: null, pages: 0, loading: false, lang: null, error: null, query: '', others: false, bigOnly: false, t0: Date.now(), since: 0, kept: null };
+  open = { id, found: null, workId: null, covers: [], editions: 0, next: null, pages: 0, loading: false, lang: null, error: null, query: '', others: false, bigOnly: false, t0: Date.now(), since: 0, kept: null, tiles: new Map() };
   $('shade').hidden = false;
   $('drawer').hidden = false;
   $('drawer').scrollTop = 0;
@@ -272,6 +272,7 @@ async function chooseWork(workId, remember) {
   const mine = open;
   mine.workId = workId;
   mine.covers = [];
+  mine.tiles = new Map();
   mine.editions = 0;
   mine.next = 0;
   mine.pages = 0;
@@ -429,6 +430,44 @@ function renderWork() {
   box.replaceChildren(...kids);
 }
 
+/*
+ * A small picture from Open Library. The cover host hands most of them on to
+ * the Internet Archive, where one takes anything from a tenth of a second to
+ * six and now and then fails; a failed one is asked for twice more before the
+ * tile says so.
+ */
+function thumb(src) {
+  const img = el('img', { src, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' });
+  let tries = 0;
+  img.addEventListener('error', () => {
+    if (++tries > 2) { img.replaceWith(el('span', { class: 'none' }, 'picture did not load')); return; }
+    setTimeout(() => { img.src = `${src}${src.includes('?') ? '&' : '?'}again=${tries}`; }, 1500 * tries);
+  });
+  return img;
+}
+
+/*
+ * One tile per cover for as long as the work is open. The wall is laid out
+ * anew whenever a size arrives or a filter changes; a new <img> each time
+ * would drop the picture that was still on its way and ask for it again —
+ * while the sizes came in, most pictures never arrived (Julian, 2026-10-04:
+ * „manchmal lädt es die cover nicht oder zeigt sie zumindest nicht an").
+ * Moving the same element keeps its picture.
+ */
+function coverTile(c, b, mine) {
+  let t = open.tiles.get(c.coverId);
+  if (!t) {
+    t = el('button', { onclick: () => pick(c) }, el('div', { class: 'frame' }, thumb(c.thumb)), el('div', { class: 'z' }), el('div', { class: 'c' }));
+    open.tiles.set(c.coverId, t);
+  }
+  const own = mine.has(c.coverId);
+  t.className = `cover${own ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}${tier(c, b.size) >= 2 ? ' less' : ''}`;
+  t.title = [own ? 'Open Library lists this cover under the ISBN that Calibre has for the book. An ISBN names a printing, not a picture: it need not be the cover your file came with.' : '', c.publishers.join(', ')].filter(Boolean).join('\n');
+  t.children[1].textContent = (c.size ? `${c.size.width} × ${c.size.height}` : c.size === null ? 'size unknown' : '…') + (tier(c, b.size) === 4 ? ' · too small' : '');
+  t.children[2].textContent = [own ? 'same ISBN' : '', c.year, c.languages.map((l) => l.toUpperCase()).join(' ')].filter(Boolean).join(' · ') || '—';
+  return t;
+}
+
 function renderCovers() {
   if (!open) return;
   const box = $('d-covers');
@@ -447,7 +486,6 @@ function renderCovers() {
   const chip = (key, label) => el('button', { class: 'chip', 'aria-pressed': String(lang === key), onclick: () => { open.lang = key; renderCovers(); } }, label);
   const seen = Math.min(open.pages * 100, open.editions);
   const against = b.size ? `the cover in Calibre (${px(b.size)})` : 'a cover needs (200 × 280 px)';
-  const sizeLine = (c) => c.size ? `${c.size.width} × ${c.size.height}` : c.size === null ? 'size unknown' : '…';
   fill(box,
     el('h3', {}, 'Covers of this work'),
     el('div', { class: 'row', style: 'margin:0 0 10px' }, chip('all', `All (${open.covers.length})`), langs.map((l) => chip(l, `${langName(l)} (${count(l)})`)),
@@ -455,10 +493,7 @@ function renderCovers() {
     el('p', { class: 'meta', style: 'margin:0 0 10px' },
       pending ? `Measuring… ${inLang.length - pending} of ${inLang.length} covers; ${large.length} so far at least as large as ${against}.`
         : `${large.length} of ${inLang.length} are at least as large as ${against}. They come first; the faded ones have fewer pixels.`),
-    el('div', { class: 'covers' }, list.map((c) => el('button', { class: `cover${mine.has(c.coverId) ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}${tier(c, b.size) >= 2 ? ' less' : ''}`, onclick: () => pick(c), title: [mine.has(c.coverId) ? 'Open Library lists this cover under the ISBN that Calibre has for the book. An ISBN names a printing, not a picture: it need not be the cover your file came with.' : '', c.publishers.join(', ')].filter(Boolean).join('\n') },
-      el('div', { class: 'frame' }, el('img', { src: c.thumb, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' })),
-      el('div', { class: 'z' }, sizeLine(c) + (tier(c, b.size) === 4 ? ' · too small' : '')),
-      el('div', { class: 'c' }, [mine.has(c.coverId) ? 'same ISBN' : '', c.year, c.languages.map((l) => l.toUpperCase()).join(' ')].filter(Boolean).join(' · ') || '—')))),
+    el('div', { class: 'covers' }, list.map((c) => coverTile(c, b, mine))),
     open.bigOnly && !list.length && !pending ? el('p', { class: 'meta' }, 'None of the covers seen so far is large enough.') : null,
     open.error ? el('p', { class: 'note bad' }, open.error) : null,
     el('p', { class: 'meta', style: 'margin-top:12px' },
@@ -474,10 +509,11 @@ async function pick(cover) {
   picked = mine;
   $('compare').hidden = false;
   renderCompare();
-  const [fresh, old] = await Promise.all([api(`/api/new?cover=${encodeURIComponent(cover.coverId)}`), api(`/api/old/${mine.bookId}`)]);
+  // The cover in Calibre is a file on this Mac and there at once; it does not wait for the full image, which takes seconds.
+  api(`/api/old/${mine.bookId}`).then((old) => { if (picked === mine) { mine.old = old.body; renderCompare(); } });
+  const fresh = await api(`/api/new?cover=${encodeURIComponent(cover.coverId)}`);
   if (picked !== mine) return;
   mine.check = fresh.status === 200 ? fresh.body : { ok: false, reason: fresh.body.error };
-  mine.old = old.body;
   renderCompare();
 }
 
@@ -499,8 +535,11 @@ function renderCompare() {
         el('figcaption', {}, 'in Calibre now', el('br'), p.old && !p.old.missing ? px(p.old) : '')),
       el('span', { class: 'arrow' }, '→'),
       el('figure', {},
-        el('div', { class: 'frame' }, p.check?.ok ? el('img', { src: `/new?cover=${encodeURIComponent(p.cover.coverId)}&t=${token}`, alt: 'the chosen cover' }) : el('span', { class: 'none' }, p.check ? p.check.reason : 'fetching the full image…')),
-        el('figcaption', {}, facts || 'from the catalogue', el('br'), p.check?.ok ? px(p.check) : ''))),
+        // Until the full image is here, the small one the wall already has stands in, faded.
+        el('div', { class: 'frame' }, p.check?.ok ? el('img', { src: `/new?cover=${encodeURIComponent(p.cover.coverId)}&t=${token}`, alt: 'the chosen cover' })
+          : p.check ? el('span', { class: 'none' }, p.check.reason)
+          : el('img', { src: p.cover.thumb, alt: '', referrerpolicy: 'no-referrer', style: 'opacity:.4' })),
+        el('figcaption', {}, facts || 'from the catalogue', el('br'), p.check?.ok ? px(p.check) : p.check ? '' : 'fetching the full image…'))),
     el('h2', { style: 'font-size:17px;margin:14px 0 0' }, b.title),
     smaller ? el('p', { class: 'note warn' }, `Fewer pixels than the cover the book has (${px(p.check)} against ${px(p.old)}). It will look softer on a full screen.`) : null,
     p.error ? el('p', { class: 'note bad' }, p.error) : null,

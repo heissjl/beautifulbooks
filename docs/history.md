@@ -4492,3 +4492,19 @@ Julian: „baue jetzt den größten scan desselben motivs im sammlungs-modus" un
 **Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
 
 1.202 Tests (75 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · Calibre-App: Cover erschienen manchmal nicht — Maße aus dem Cover-Datensatz, Kacheln bleiben (ROADMAP 5.16a)
+
+Julian, mit einem Bild von *Ender's Game* (80 Cover): leere Kacheln mit Maßen darunter, im Vergleich „…" statt des Covers aus Calibre und „fetching the full image…" — „manchmal lädt es die cover nicht oder zeigt sie zumindest nicht an".
+
+**Ursachen**, am Code und am Netz nachgesehen: (1) `CoverSizes` holte für das Maß jedes Original — 80 Dateien für dieses Werk, vier gleichzeitig. `covers.openlibrary.org` reicht die meisten Bilder an Zip-Archive des Internet Archive weiter (`…/view_archive.php?archive=…zip&file=…`); gemessen an dem Abend mit curl: Originale 611 KB in 9,6 s und 858 KB in 4,2 s, ein mittleres Bild 0,07 s (vom Cover-Host selbst) bis 5,9 s (über das Archiv). (2) `renderCovers` baute bei jedem Maß (alle 250 ms) alle Kacheln samt `<img>` neu — ein noch ladendes Bild wurde verworfen und neu angefragt. (3) `pick()` wartete mit dem Calibre-Cover auf das große Bild (`Promise.all`). Keine Sperre: `openlibrary.org` und der Cover-Host antworteten.
+
+**Gefunden:** `https://covers.openlibrary.org/b/id/<n>.json` — der Datensatz des Covers, mit `width` und `height`, in 0,05–0,3 s. Geprüft an 40 zufälligen der 652 Maße, die Julians App aus den Bildern selbst gelesen hatte (0,4 s Pause je Anfrage): 39 identisch, 0 abweichend, 1 Datensatz ohne Maß (`ol:1008445`). Steht jetzt bei den API-Fakten in CLAUDE.md.
+
+**Gebaut:** `CoverSizes` fragt erst den Datensatz (`sizeFromRecord`), das Bild nur noch, wenn er kein Maß nennt (und für Google-Bilder); `CoverFacts` nimmt dafür eine Liste von Quellen mit je eigener Leseart. Davon hat auch die Suche nach dem größten Scan im Sammlungs-Modus etwas. `app.html`: eine Kachel je Cover für die Dauer des geöffneten Werks (`coverTile`, in `open.tiles`), nur Klasse und Text ändern sich; `thumb()` fragt ein gescheitertes kleines Bild zweimal neu an und schreibt dann „picture did not load"; das Calibre-Cover im Vergleich kommt unabhängig vom großen Bild; bis das da ist, steht das kleine verblasst an seiner Stelle.
+
+**Nachgemessen** (echte Bibliothek, nur schauend, leere Speicher): *Ender's Game* — Werk nach 1,0 s, alle 80 Maße 2,5 s nach dem Klick, 80 von 80 kleinen Bildern geladen, 0 gescheitert; Vergleich mit `ol:8186457`: Calibre-Cover nach 0,3 s, großes Bild (639 × 1000, 625 KB) nach 0,5 s, Maß aus dem Datensatz gleich dem des geholten Bilds. Die Browser-Fläche der Sitzung war verdeckt, verzögertes Laden griff dort nicht; die Bilder wurden für die Messung auf sofortiges Laden gestellt. Ein Vorher-Wert für die Wand ist nicht gemessen.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/` und ein Satz in CLAUDE.md.
+
+1.203 Tests (76 davon in `lab/calibre/`), tsc und Lint grün.
