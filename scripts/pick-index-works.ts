@@ -4,7 +4,10 @@
  * A first cut at the ~500 list of 5.1, at fifty. Not scraped from a "most
  * popular" endpoint, because for a site about covers the useful measure is
  * not how many people read a book but **how often it has been dressed
- * again** — and because Open Library has no such endpoint anyway.
+ * again** — and because Open Library has no such endpoint anyway. (It has:
+ * `search.json?q=*:*&sort=already_read`, found on 2026-10-05; the list built
+ * from it is `data/popular-works.json`, see `lib/popularworks.ts`. The reason
+ * above still holds for this list.)
  *
  * So: a seed list of titles, resolved through our own search, which already
  * ranks the work above its study guides (F1.4). Each hit must clear a

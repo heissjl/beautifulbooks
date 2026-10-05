@@ -42,6 +42,9 @@ describe('where a visit came from', () => {
     expect(originOf({ path: '/', search: '' }, 'https://www.google.com/', HOST)).toBe('home');
     expect(originOf({ path: '/collections/sf-masterworks', search: '' }, '', HOST)).toBe('collection');
     expect(originOf({ path: '/book/OL1W', search: '' }, '', HOST)).toBe('book');
+    expect(originOf({ path: '/shelfportrait/k3x9q2ab', search: '' }, '', HOST)).toBe('shelf');
+    expect(originOf({ path: '/shelfportrait/board', search: '?b=a1fz.7gxh3' }, '', HOST)).toBe('shelf');
+    expect(originOf({ path: '/shelfportraits', search: '' }, '', HOST)).toBe('other');
     expect(originOf({ path: '/about', search: '' }, '', HOST)).toBe('other');
   });
 

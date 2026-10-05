@@ -101,6 +101,7 @@ export function summarizeCosts(
     vercelCreditUsd,
     notMeasured: [
       'Vercel: CDN-Anfragen und Übertragung (auf Pro pauschal, wenn „Flat Rate CDN“ gilt), Speicher der Funktionen, ISR, der Proxy',
+      'Vercel: Bildoptimierung der Cover seit 2.18o (Transformationen, Cache-Schreiben und -Lesen) — steht unter Usage → Images',
       'Anthropic: was mit demselben Schlüssel außerhalb der Seite gefragt wird',
       'Redis, Google Books, Open Library, Resend: heute ohne Rechnung',
     ],

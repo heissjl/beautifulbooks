@@ -90,11 +90,12 @@ In dieser Reihenfolge. Jeder Schritt ist ein Roadmap-Punkt und ein Commit; „An
 | Was | Wo | Dauer |
 |---|---|---|
 | CPU je Tag und je Route ablesen (§0), danach die vier Zähler aus 2.7 | Vercel → Usage, Observability | 10 min |
-| **2.4**: Firewall-Entwurf veröffentlichen (Log), UptimeRobot als Keyword-Monitor mit Meldung aufs Telefon | Vercel, UptimeRobot | 20 min |
+| **2.4**: Firewall-Entwurf veröffentlichen (Log). ~~UptimeRobot~~ eingerichtet 2026-10-05 (zwei Monitore, Push aufs iPhone) | Vercel | 10 min |
 | **2.10**: Monatslimit im Anthropic-Konto — die einzige Grenze der Fotos, die nicht an der Redis hängt | Anthropic-Konsole | 5 min |
 | **0.13** Google-Alarm und **0.3** (hebt ein Abrechnungskonto das Kontingent?) | Google Cloud | 20 min |
 | Redis: Verdrängungsregel (eviction policy), Region, belegter Speicher ablesen; Preis und Weg des 250-MB-Tarifs (256 Verbindungen, 1.000 Befehle/s, 100 GB) notieren. **Bei einer Regel, die Schlüssel ohne Ablauf verdrängt, löscht ein voller Speicher Sammlungen der Leser** | Redis-Konsole über Vercel → Storage | 10 min |
 | Vercel-Benachrichtigungen (Nutzung) auf eine Adresse, die das Telefon meldet | Vercel → Settings → Notifications | 5 min |
+| ✅ **Ausgabenlimit** (J2) gesetzt am 2026-10-05 von Claude in Julians Chrome: das Team-Budget stand schon auf 200 USD **ohne** Pause und steht jetzt auf **100 USD mit „Pause production deployments"**, Warnungen bei 50/75/100 %, kein Webhook. **Redis** (J4) **nicht umgestellt:** der Dialog zeigt für 250 MB **8 USD im Monat** (nicht die rund 5 USD aus redis.io), dazu 1 GB 25, 2,5 GB 49, 5 GB 94, 12 GB 234 USD; „Persistence included" ab 250 MB. Abgelesen: Region Frankfurt (fra1), nur RAM, keine Hochverfügbarkeit; die Verdrängungsregel steht nur in der Redis-Konsole. Wartet auf Julians Ja zum Preis | Vercel | — |
 
 ## 6. Was Julian entschieden hat (2026-10-05)
 
@@ -156,7 +157,7 @@ Sammlungen der Leser werden nicht gesperrt (J5).
 
 ## 10. Messungen, die fehlen
 
-Wohin die CPU ging (§0, beantwortet) · Kosten je Seitentyp (2.18b) · ~~ob ein Deploy den Bild-Cache leert~~ **ja**, laut Doku enthält der Cache-Schlüssel die Deploy-Adresse — nach jedem Deploy geht jedes Bild einmal neu durch `/img` (→ 2.18j; vor einem erwarteten Ansturm nicht deployen) · wie lange ein Schalter braucht (2.18f) · ob Pro ein pausiertes Hobby-Projekt sofort zurückholt (Frage an Vercel, nicht ausprobieren) · Verdrängungsregel, Region und Füllstand der Redis (§5) · Größe von `collections:content` in Produktion · Resends Tagesgrenze (nicht nachgelesen).
+Wohin die CPU ging (§0, beantwortet) · Kosten je Seitentyp (2.18b) · ~~ob ein Deploy den Bild-Cache leert~~ **ja** für Funktionsantworten — seit 2.18o stehen die Cover hinter der Bildoptimierung, deren Cache einen Deploy übersteht · wie lange ein Schalter braucht (2.18f) · ob Pro ein pausiertes Hobby-Projekt sofort zurückholt (Frage an Vercel, nicht ausprobieren) · Verdrängungsregel, Region und Füllstand der Redis (§5) · Größe von `collections:content` in Produktion · Resends Tagesgrenze (nicht nachgelesen).
 
 ## Quellen
 

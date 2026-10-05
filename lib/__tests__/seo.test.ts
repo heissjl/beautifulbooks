@@ -161,17 +161,19 @@ describe('jsonLdHtml', () => {
 });
 
 describe('userAgent', () => {
-  it('names the site without a space and gives the deployed address', async () => {
-    const { SITE_NAME, userAgent } = await import('../seo');
+  it('names the site without a space and gives the deployed address and the mailbox', async () => {
+    const { SITE_CONTACT, SITE_NAME, userAgent } = await import('../seo');
     const agent = userAgent('https://example.org');
-    expect(agent).toBe(`${SITE_NAME.replace(/\s+/g, '')}/0.1 (https://example.org)`);
+    expect(agent).toBe(`${SITE_NAME.replace(/\s+/g, '')}/0.1 (https://example.org; ${SITE_CONTACT})`);
+    // Open Library's condition for the higher limit: an application name and a contact e-mail.
+    expect(SITE_CONTACT).toMatch(/^[^@\s]+@buyitscovers\.com$/);
     expect(agent.split('/')[0]).not.toMatch(/\s/);
   });
 
   it('gives the repository instead of a localhost address', async () => {
     const { SITE_REPOSITORY, userAgent } = await import('../seo');
     for (const local of ['http://localhost:3000', 'http://127.0.0.1:3411', 'http://localhost']) {
-      expect(userAgent(local)).toContain(`(${SITE_REPOSITORY})`);
+      expect(userAgent(local)).toContain(`(${SITE_REPOSITORY};`);
     }
   });
 });

@@ -7,6 +7,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 import ringsFile from '@/data/hero-rings.json';
 import { isHiddenCover, isHiddenCoverUrl, parseHiddenCovers, setHiddenCoversForTest, withoutHiddenCovers } from '../hiddencovers';
+import { browseLists } from '../inspiration/browse';
+import { coversOfEditions } from '../inspiration/covers';
 import { assembleEditions, mosaicCovers, withRetailCovers } from '../works';
 import type { Cover, SourceEdition, WorkSummary } from '../model';
 import { similarTo } from '../coverindex';
@@ -151,5 +153,16 @@ describe('every path a cover takes', () => {
     expect(HERO_RINGS.some(r => r.coverIds.includes(first))).toBe(false);
     vi.doUnmock('@/data/hidden-covers.json');
     vi.resetModules();
+  });
+
+  it('a Shelf-Portrait: not offered among a book’s covers, nor in the lists to browse', () => {
+    const edition = { id: 'e1', workId: 'OL1W', title: 'T', authors: ['A'], source: 'openlibrary', year: 1990, covers: [{ id: 'ol:8', url: '' }, { id: 'ol:9', url: '' }] } as unknown as SourceEdition;
+    setHiddenCoversForTest(['ol:9']);
+    expect(coversOfEditions([edition]).map(c => c.coverId)).toEqual(['ol:8']);
+    const first = browseLists()[0].works[0];
+    setHiddenCoversForTest([first.coverId]);
+    expect(browseLists()[0].works.some(w => w.id === first.id)).toBe(false);
+    setHiddenCoversForTest(null);
+    expect(browseLists()[0].works[0].id).toBe(first.id);
   });
 });

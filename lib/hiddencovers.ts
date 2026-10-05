@@ -15,10 +15,14 @@
  * who asked. Nothing is deleted: the image stays at Open Library or Google,
  * and taking an entry out brings the cover back with the next deploy.
  *
+ * Since 2.18o the covers reach readers through Vercel's image optimizer,
+ * whose cache outlives a deploy: `scripts/hide-cover.ts` adds the entry and
+ * prints the `vercel cache invalidate --srcimg` commands that empty it.
+ *
  * Pure and small, so client components may import it.
  */
 import hiddenFile from '@/data/hidden-covers.json';
-import { coverRefFromUrl } from './coverurl';
+import { coverRefFromUrl, coverRoutePath } from './coverurl';
 
 export interface HiddenCover {
   id: string;
@@ -63,7 +67,7 @@ export function isHiddenCoverUrl(url: string | null | undefined): boolean {
   if (!url || hidden.size === 0) return false;
   const ref = coverRefFromUrl(url);
   if (ref) return hidden.has(ref.coverId);
-  const proxied = url.match(/^\/img\/[SML]\/(ol|gb)-([\w.-]{1,128})(?:\?|$)/);
+  const proxied = (coverRoutePath(url) ?? '').match(/^\/img\/[SML]\/(ol|gb)-([\w.-]{1,128})(?:\?|$)/);
   return !!proxied && hidden.has(`${proxied[1]}:${proxied[2]}`);
 }
 

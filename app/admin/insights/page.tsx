@@ -107,7 +107,7 @@ function StoreDown({ reason }: { reason: 'no-store' | 'failed' }) {
 }
 
 const ORIGIN_NAMES: Record<string, string> = {
-  engine: 'Suchmaschine', search: 'Suche auf der Seite', home: 'Startseite', collection: 'Sammlung',
+  engine: 'Suchmaschine', search: 'Suche auf der Seite', home: 'Startseite', collection: 'Sammlung', shelf: 'Shelf-Portrait',
   book: 'Andere Buchseite', social: 'Sozial', other: 'Andere Seite', direct: 'Direkt / unbekannt',
 };
 const VERDICT_NAMES: Record<string, string> = {

@@ -839,7 +839,17 @@ export type IsbnVerdict =
   | { status: 'unknown' }
   /** Asked, and the source did not answer: nothing may be concluded. */
   | { status: 'unavailable' }
-  | { status: 'pending' };
+  | { status: 'pending' }
+  /*
+    The same four answers from Open Library's record for the ISBN, asked only
+    when Google could not be (ROADMAP 1.12). Separate states, not a flag: the
+    evidence is weaker — a catalogue scan, not the publisher's current image —
+    so the wording says so, and `linkPlan` does not move the shops for it.
+  */
+  | { status: 'catalogueVerified' }
+  | { status: 'catalogueDiffers'; cover: Cover }
+  | { status: 'catalogueUncompared'; cover: Cover }
+  | { status: 'catalogueUnknown' };
 
 export function verifyIsbnCover(
   selected: Cover,
@@ -850,14 +860,16 @@ export function verifyIsbnCover(
   unavailable = false,
   /** Every signature the wall was folded with, the ISBN lookups' included. */
   signatures: ReadonlyMap<string, ImageSignature> = new Map(),
+  /** The answer came from Open Library's record, not from Google (ROADMAP 1.12). */
+  catalogue = false,
 ): IsbnVerdict {
   // Order matters: a failed lookup must never read as "no image on record".
   if (unavailable) return { status: 'unavailable' };
   if (!asked) return { status: 'pending' };
-  if (retailCoverIds.length === 0) return { status: 'unknown' };
+  if (retailCoverIds.length === 0) return { status: catalogue ? 'catalogueUnknown' : 'unknown' };
 
   const isSelected = (id: string) => id === selected.id || (selected.similarIds ?? []).includes(id);
-  if (retailCoverIds.some(isSelected)) return { status: 'verified' };
+  if (retailCoverIds.some(isSelected)) return { status: catalogue ? 'catalogueVerified' : 'verified' };
 
   /*
     The shop's image survived folding, or folded into some other cover: that
@@ -871,11 +883,10 @@ export function verifyIsbnCover(
   for (const id of retailCoverIds) {
     const shown = wall.find(c => c.id === id || (c.similarIds ?? []).includes(id));
     if (!shown) continue;
-    return selectedSigned && signatures.has(id)
-      ? { status: 'differs', cover: shown }
-      : { status: 'uncompared', cover: shown };
+    if (selectedSigned && signatures.has(id)) return { status: catalogue ? 'catalogueDiffers' : 'differs', cover: shown };
+    return { status: catalogue ? 'catalogueUncompared' : 'uncompared', cover: shown };
   }
-  return { status: 'unknown' };
+  return { status: catalogue ? 'catalogueUnknown' : 'unknown' };
 }
 
 /**
