@@ -1,6 +1,6 @@
 # Plan 2.18: Bereit für einen Ansturm
 
-Stand: 2026-10-05 nachts. **Vorschlag, nichts gebaut.** Anlass: Julian, 2026-10-04: „i want to plan for virality and have everything either robust or prepared for quick change when it happens. this covers availability of the site, quotas, databases, etc". Während der Arbeit daran kam Vercels Mail: **90 % der 4 Stunden „Fluid Active CPU" sind verbraucht** — ohne dass es einen Ansturm gab. Der Plan beginnt deshalb mit dem, was diese Woche reißt (§0), und erst dann mit dem Ansturm.
+Stand: 2026-10-05 nachts. **Nichts gebaut; J1–J6 hat Julian am 2026-10-05 entschieden (§6).** Anlass: Julian, 2026-10-04: „i want to plan for virality and have everything either robust or prepared for quick change when it happens. this covers availability of the site, quotas, databases, etc". Während der Arbeit daran kam Vercels Mail: **90 % der 4 Stunden „Fluid Active CPU" sind verbraucht** — ohne dass es einen Ansturm gab. Der Plan beginnt deshalb mit dem, was diese Woche reißt (§0), und erst dann mit dem Ansturm.
 
 Was hier „gelesen" heißt, stand am 2026-10-04/05 in der Doku des Anbieters (Quellen am Ende); „gemessen" ist am Code oder an den Produktions-Logs dieser Nacht abgelesen; alles andere ist als Überschlag gekennzeichnet.
 
@@ -10,7 +10,7 @@ Was hier „gelesen" heißt, stand am 2026-10-04/05 in der Doku des Anbieters (Q
 - **Nicht gefunden: wohin die 3,6 Stunden gingen.** Die CLI liest CPU je Route auf Hobby nicht („Observability Plus is required"), `vercel usage` antwortet 404, und die Logs reichen eine Stunde zurück. In dieser Stunde war kaum Verkehr: 50 Anfragen in 13 Minuten, dann ein Besuch. Die Zahl steht nur im Dashboard (Usage → Fluid Active CPU je Tag; Observability → Vercel Functions je Route). **Julian liest sie ab, oder Claude liest sie in Julians Chrome.** Verdächtig, in dieser Reihenfolge: das Hashen von Covern in `/api/works?signatures=1` (jpeg-js, reines JavaScript), Lab-Läufe und die Calibre-App, die seit dem 2026-10-04 über die Website fragen, die Fotoroute (der Server bereitet das Foto auf), die Vorschaukarten (`opengraph-image`), und der Mechanismus der nächsten Zeile.
 - **Gemessen, ein Verstärker:** ein einzelner Besuch von 81 Sekunden (2026-10-05, 00:09–00:11 UTC) erzeugte 139 Einträge im Laufzeit-Log, darunter 54 Bildabrufe ohne CDN-Treffer, **14 Buchseiten, die niemand geöffnet hat** (je einmal `MISS`, also neu gerendert, mit ihren Katalog-Anfragen), und je 4–6 Abrufe von `/`, `/create`, `/versus`, die bei jedem Aufruf in einer Funktion rendern. Ursache ist das Vorladen von `next/link`: jeder sichtbare Link wird geholt, in Next 16 in mehreren Teilen. 39 Dateien nutzen `<Link>`, nur `DecadeLink` schaltet es ab. Eine Sammlung mit 198 Büchern lädt beim Scrollen 198 Buchseiten vor.
 
-**Heute zu tun:** (1) Julian liest die CPU je Tag und je Route ab. (2) Julian entscheidet J1 (§6) — bei 90 % ist die Empfehlung, **jetzt** auf Pro zu gehen. (3) Claude baut 2.18a (Vorladen aus), sobald der Stand von `origin/main` in einem Arbeitsbaum liegt.
+**Heute zu tun:** (1) Julian liest die CPU je Tag und je Route ab. (2) Julian wechselt auf Pro (J1, entschieden) und setzt das Ausgabenlimit (J2). (3) Claude baut 2.18a (Vorladen aus), sobald der Stand von `origin/main` in einem Arbeitsbaum liegt.
 
 ## 1. Kurzfassung
 
@@ -70,11 +70,12 @@ In dieser Reihenfolge. Jeder Schritt ist ein Roadmap-Punkt und ein Commit; „An
 | **2.18d** | **Analyse gebündelt.** `countSignal` und der `/go/`-Zähler sammeln je Instanz und schreiben höchstens alle 10 s die Summen (ein `EXPIRE` je Schlüssel und Stunde statt je Signal); Schalter `INSIGHTS=off` | ½ Tag | **ja**: Plan 3.1 §4 und der Summentest; bei einem Abbruch der Instanz gehen bis zu 10 s Zählung verloren — das steht dann in der Ansicht |
 | **2.18e** | **Der Katalog wird geschont.** Je Instanz höchstens vier gleichzeitige Anfragen an `openlibrary.org` (Bilder ausgenommen); ein Automat wie `lib/googlequota.ts`: nach abgewiesenen Verbindungen oder 403/429 fragt die Instanz 60–120 s nicht und sagt „The catalogue is busy" (N12: kein „No books found"); `stale-if-error` an den Antworten von Suche, Werk und ISBN, damit das CDN bei einem Ausfall die alte Antwort gibt | 1 Tag | keine |
 | **6.45** | **Kaltreserve** (steht schon in der Roadmap): die veröffentlichten Werke als gebaute Daten. Für den Ansturm erweitert um die Werke der veröffentlichten Sammlungen, damit jede Buchseite, die von einer Sammlung aus erreichbar ist, ohne Katalog rendert | 1–2 Tage | keine |
-| **2.18f** | **Schalter, an einer Stelle beschrieben** (`.env.example`, dieser Plan §8): `WALLS=readonly` (ansehen ja, anlegen und ändern nein), `PHOTO=off`, `INSIGHTS=off`, `GOOGLE_TITLE_SEARCH=off` (die 1.000 gehören dann dem Verdikt), dazu das bestehende `HOTORNOT`. Gemessen wird, wie lange ein Schalter braucht (er wirkt erst mit einem Redeploy) und **ob ein Deploy den Bild-Cache des CDN leert** — einmal, nach einem ohnehin fälligen Deploy | ½ Tag | `WALLS=readonly` und `PHOTO=off` ändern, was K13 zählt — in der Ansicht benennen |
+| **2.18f** | **Schalter, an einer Stelle beschrieben** (`.env.example`, dieser Plan §8): `PHOTO=off`, `INSIGHTS=off`, `GOOGLE_TITLE_SEARCH=off` (die 1.000 gehören dann dem Verdikt), dazu das bestehende `HOTORNOT`. Gemessen wird, wie lange ein Schalter braucht (er wirkt erst mit einem Redeploy) und **ob ein Deploy den Bild-Cache des CDN leert** — einmal, nach einem ohnehin fälligen Deploy | ½ Tag | `PHOTO=off` ändert, was K13 zählt — in der Ansicht benennen |
 | **2.18g** | **Betriebsblock in `/admin/insights`:** aus `INFO` der Redis belegter Speicher, Verbindungen und Befehle je Sekunde, dazu Zahl der Sammlungen, Fotoausgaben heute, Google-Stopps heute, je mit der Grenze daneben. Nur auf Abruf, hinter dem Admin-Cookie | ½ Tag | neue Kacheln, keine neue Kennzahl über Leser |
-| **2.18h** | **Fotos schließen, wenn der Speicher schweigt** — nach J3. Heute läuft ein Foto weiter, wenn Zähler und Budget nicht lesbar sind (`app/api/walls/photo/route.ts`: „a silent store does not stop a reader") | 1 h | K13 bekommt den Ausgang „store" |
+| **2.18h** | **Fotos schließen, wenn der Speicher schweigt** — entschieden (J3). Heute läuft ein Foto weiter, wenn Zähler und Budget nicht lesbar sind (`app/api/walls/photo/route.ts`: „a silent store does not stop a reader") | 1 h | K13 bekommt den Ausgang „store" |
 | **2.18i** | **Probe unter Last, lokal:** 200 gleichzeitige Leser gegen `next start`, eine Redis mit `maxclients 30` und die Katalog-Attrappe aus 2.18b; bestanden, wenn die Seiten aus §2 ohne Fehler antworten, während Redis und Katalog abweisen. Nie gegen Produktion | ½ Tag | keine |
 | **2.18j** | **Bilder länger im Browser:** `/img` antwortet mit `max-age=3600`; ein Cover unter einer Cover-ID ändert sich nicht, eine Woche spart jede Wiederkehr | 1 h | keine |
+| **2.18k** | **Ein Cover auf Zuruf ausblenden** (J6: „jetzt gleich", also nach 2.18a). Eine Liste von Cover-IDs im Repository (`data/hidden-covers.json`), die Wand, Mosaik, Sammlungen, Spiel, Vorschaukarten und `/img` auslassen; ein Satz auf About mit der Adresse, an die sich ein Rechteinhaber wendet; ein Test, dass eine ID der Liste auf keinem der Wege erscheint. Wirkt mit einem Deploy | ½ Tag | die Kacheln der Wand (`data-cover-id`) werden weniger — in der Historie nennen |
 | dazu | Der Picker ohne Google (Vorschlag der Sitzung `claude/sleepy-wozniak-lodegp`, dort als 6.88 notiert — **die Nummer ist auf `main` schon vergeben**), 6.47 (Suche belastet den `google`-Eimer), **2.11** (Sicherung der Redis, vor jedem Tarifwechsel) | | |
 
 ## 5. Was Julian einrichtet
@@ -88,30 +89,42 @@ In dieser Reihenfolge. Jeder Schritt ist ein Roadmap-Punkt und ein Commit; „An
 | Redis: Verdrängungsregel (eviction policy), Region, belegter Speicher ablesen; Preis und Weg des 250-MB-Tarifs (256 Verbindungen, 1.000 Befehle/s, 100 GB) notieren. **Bei einer Regel, die Schlüssel ohne Ablauf verdrängt, löscht ein voller Speicher Sammlungen der Leser** | Redis-Konsole über Vercel → Storage | 10 min |
 | Vercel-Benachrichtigungen (Nutzung) auf eine Adresse, die das Telefon meldet | Vercel → Settings → Notifications | 5 min |
 
-## 6. Was Julian entscheidet
+## 6. Was Julian entschieden hat (2026-10-05)
 
-| | Frage | Empfehlung |
+| | Frage | Entscheidung |
 |---|---|---|
-| **J1** | **Wann Pro?** (a) jetzt, (b) vor jedem absichtlichen Anstoß (ein Post, „My favourite books" 5.18, Hacker News), (c) erst wenn ein Alarm kommt | **(a), wegen der 90 %.** Ohne die Mail wäre es (b) gewesen. (c) heißt: ein Ansturm in einer deutschen Nacht pausiert die Seite für bis zu 30 Tage |
-| **J2** | Ausgabenlimit auf Pro: Summe, und ob bei der Summe pausiert wird | 100 USD, Pause an. Die Prüfung läuft „every few minutes", die Summe kann also leicht überschritten werden |
-| **J3** | Fotos schließen, wenn die Redis schweigt (2.18h)? | Ja. Es ist das Einzige, was je Nutzung Geld kostet |
-| **J4** | Redis auf den 250-MB-Tarif: mit Pro zusammen, oder erst bei einem Auslöser aus §7? | Bei einem Auslöser; nach 2.18c und 2.18d trägt der freie Tarif den Alltag |
-| **J5** | Die Reihenfolge des Verzichts im Ernstfall (§8) | wie dort |
-| **J6** | Ein Weg, ein Cover auf Zuruf auszublenden (offen seit dem Risikoregister, Abschnitt C) — mit Reichweite kommt die erste Anfrage eines Rechteinhabers | bauen, bevor absichtlich angestoßen wird |
+| **J1** | Wann Pro? | **Jetzt.** Julian wechselt im Dashboard (Settings → Billing) |
+| **J2** | Ausgabenlimit auf Pro | **100 USD, Pause an.** Davor seine Frage, was den Preis treibt — die Tabelle darunter |
+| **J3** | Fotos schließen, wenn die Redis schweigt? | **Ja** (2.18h) |
+| **J4** | Redis auf 250 MB | **Jetzt, mit Pro** (rund 5 USD im Monat nach Redis' Preisseite; der Preis über den Marketplace steht in der Konsole). Vorher einmal sichern (2.11), auch wenn ein Tarifwechsel die Daten nicht anfassen soll |
+| **J5** | Reihenfolge des Verzichts | wie in §8, aber **Sammlungen werden nie gesperrt** — `WALLS=readonly` wird nicht gebaut. Die Bremsen für die Sammlungen sind damit das Rate-Limit beim Anlegen, der Betriebsblock (2.18g) und der größere Redis-Tarif |
+| **J6** | Ein Cover auf Zuruf ausblenden | **Jetzt gleich** (2.18k, nach 2.18a) |
+
+**Was auf Pro den Preis treibt** (Frankfurt, gelesen 2026-10-05; 20 USD Guthaben im Monat sind enthalten). Der Überschlag rechnet 100.000 Wand-Besuche an einem Tag:
+
+| Posten | Preis | Überschlag |
+|---|---|---|
+| CDN-Anfragen | 2,60 USD je Million | 15 Mio. ≈ 39 USD — 0, wenn „Flat Rate CDN" gilt (nach dem Wechsel unter Billing nachsehen) |
+| Fast Data Transfer | 0,15 USD je GB | 300 GB ≈ 45 USD — 0 innerhalb der Pauschale (1 TB) |
+| **Fluid Active CPU** | 0,184 USD je Stunde | 5 USD bei 1 s je Besuch, **über 150 USD, wenn jede kalte Wand 30 s rechnet** — dieselbe unbekannte Zahl wie in §0 |
+| Funktionsaufrufe | 0,60 USD je Million | rund 2 USD |
+| Fluid Provisioned Memory | 0,0152 USD je GB-Stunde | einstellig |
+| Fast Origin Transfer | 0,06 USD je GB | rund 6 USD |
+| ISR | 5,20 USD je Mio. Schreib-, 0,52 je Mio. Leseeinheiten | unter 1 USD |
 
 ## 7. Stufen und Auslöser
 
 | Stufe | Auslöser | Was dann |
 |---|---|---|
-| **Ruhe** | kein Zähler über 30 % | einmal im Monat 2.7 ablesen |
-| **Wachsam** | ein Hobby-Zähler über 50 %; Redis über 15 MB oder über 20 Verbindungen; mehr als 1.000 Besuche an einem Tag; ein geplanter Anstoß in den nächsten Tagen | Pro (falls noch Hobby), Sicherung der Redis (2.11), Redis-Tarif, andere Sitzungen deployen nur noch nach Absprache |
+| **Ruhe** | unter 30 % des Ausgabenlimits | einmal im Monat 2.7 ablesen |
+| **Wachsam** | 50 % des Ausgabenlimits; Redis über 125 MB oder über 128 Verbindungen; mehr als 1.000 Besuche an einem Tag; ein geplanter Anstoß in den nächsten Tagen | Sicherung der Redis (2.11), nächster Redis-Tarif (1 GB: 1.024 Verbindungen, 2.000 Befehle/s), Ausgabenlimit prüfen, andere Sitzungen deployen nur noch nach Absprache |
 | **Ansturm** | UptimeRobot meldet; Vercel meldet 75 % des Limits; die Seite antwortet langsam | §8 |
 
 ## 8. Wenn es passiert
 
 1. **Nicht deployen**, und den anderen Sitzungen sagen, dass nichts nach `origin/main` geht: ein Deploy rendert alle Seiten neu und leert vermutlich den Bild-Cache (Messung in 2.18f), mitten im Ansturm.
-2. Falls noch Hobby: **auf Pro** (Settings → Billing, fünf Minuten), Ausgabenlimit nach J2.
-3. **Redis auf 250 MB**, wenn der Betriebsblock (2.18g) Verbindungen oder Befehle an der Grenze zeigt.
+2. Meldet Vercel 75 % des Ausgabenlimits: ansehen, was es treibt (Usage), dann das Limit heben oder verzichten (Schritt 5) — bei 100 % pausiert die Seite, und jedes Projekt wird von Hand fortgesetzt.
+3. **Redis auf den nächsten Tarif**, wenn der Betriebsblock (2.18g) Verbindungen oder Befehle an der Grenze zeigt.
 4. Hinsehen: `/admin/insights`, `vercel logs --project beautifulbooks --follow`.
 5. **Verzichten, in dieser Reihenfolge** — jeder Schalter ist eine Variable und ein Redeploy, also zusammen umlegen, nicht einzeln:
 
@@ -121,7 +134,8 @@ In dieser Reihenfolge. Jeder Schritt ist ein Roadmap-Punkt und ein Commit; „An
 | `PHOTO=off` | das Regalfoto | Geld, Funktionszeit |
 | `GOOGLE_TITLE_SEARCH=off` | wenige zusätzliche Cover, Klappentexte kommen aus Open Library (6.46) | das Tageskontingent bleibt dem Verdikt |
 | `HOTORNOT=off` | das Spiel | Redis |
-| `WALLS=readonly` | neue Sammlungen; bestehende bleiben sichtbar | Redis-Speicher, Katalog-Anfragen |
+
+Sammlungen der Leser werden nicht gesperrt (J5).
 
 6. Weist Open Library ab, tut der Automat aus 2.18e seine Arbeit; mehr ist nicht zu tun außer einer Mail an Open Library, wer wir sind und was gerade geschieht.
 7. Danach: Zahlen in die Historie, Schalter zurück, J4 und der Tarif neu entscheiden.
@@ -129,9 +143,9 @@ In dieser Reihenfolge. Jeder Schritt ist ein Roadmap-Punkt und ein Commit; „An
 ## 9. Was der Plan nicht löst
 
 - **Open Library bleibt die Lebensader.** Suche und neue Bücher brauchen den Katalog; 2.18e und 6.45 halten die Einstiegsseiten, nicht die Suche. Der Weg darüber hinaus ist ein eigener Bestand aus dem Dump (0.10, 0.14).
-- **Inhalte von Lesern.** Sammlungen erscheinen ohne Durchsicht (5.13d); bei tausend neuen am Tag reicht Julians Seite zum Zurücknehmen nicht. `WALLS=readonly` ist die Notbremse, keine Moderation.
+- **Inhalte von Lesern.** Sammlungen erscheinen ohne Durchsicht (5.13d); bei tausend neuen am Tag reicht Julians Seite zum Zurücknehmen nicht. Eine Notbremse dafür gibt es nach J5 nicht; es bleibt das Rate-Limit beim Anlegen.
 - **Recht.** Reichweite macht die Cover sichtbar für die, denen sie gehören (J6), und Hobby bleibt nicht-kommerziell.
-- **Eine Person.** Kein Schalter legt sich selbst um; was nachts geschieht, wartet bis zum Morgen. Deshalb J1.
+- **Eine Person.** Kein Schalter legt sich selbst um; was nachts geschieht, wartet bis zum Morgen. Auf Pro heißt das: schlimmstenfalls pausiert die Seite bei 100 USD, statt für 30 Tage.
 
 ## 10. Messungen, die fehlen
 
@@ -139,4 +153,4 @@ Wohin die CPU ging (§0) · Kosten je Seitentyp (2.18b) · ob ein Deploy den Bil
 
 ## Quellen
 
-Gelesen am 2026-10-04/05: [Vercel Hobby](https://vercel.com/docs/plans/hobby) · [Fair Use und Preise](https://vercel.com/docs/limits/fair-use-guidelines) · [Spend Management](https://vercel.com/docs/spend-management) · [CDN Cache](https://vercel.com/docs/caching/cdn-cache) (je Region, `stale-if-error` unterstützt) · [Flat Rate CDN auf Pro](https://vercel.com/changelog/flat-rate-cdn-is-now-ga-for-pro-teams) · [Redis Cloud Essentials](https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/). Aus dem Repository: [Risikoregister](../risiken-2026-09-12.md), [Plan 2.4](PLAN-2.4-firewall.md), [Sicherheits-Durchsicht](../sicherheit-2026-10-02.md).
+Gelesen am 2026-10-04/05: [Vercel Hobby](https://vercel.com/docs/plans/hobby) · [Fair Use und Preise](https://vercel.com/docs/limits/fair-use-guidelines) · [Spend Management](https://vercel.com/docs/spend-management) · [CDN Cache](https://vercel.com/docs/caching/cdn-cache) (je Region, `stale-if-error` unterstützt) · [Flat Rate CDN auf Pro](https://vercel.com/changelog/flat-rate-cdn-is-now-ga-for-pro-teams) · [Vercel-Preise Frankfurt](https://vercel.com/docs/pricing/regional-pricing/fra1) · [Redis-Preise](https://redis.io/pricing/) · [Redis Cloud Essentials](https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/). Aus dem Repository: [Risikoregister](../risiken-2026-09-12.md), [Plan 2.4](PLAN-2.4-firewall.md), [Sicherheits-Durchsicht](../sicherheit-2026-10-02.md).
